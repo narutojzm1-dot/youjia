@@ -29,6 +29,8 @@ var _hint_label: Label
 var _album_chip: Button
 var _weather_chip: Button
 var _pause_button: Button
+var _action_button: Button
+var _ui_layer: CanvasLayer
 var _pause_screen: Control
 var _pause_title: Label
 var _resume_button: Button
@@ -43,6 +45,8 @@ var _pending_destructive_action := ""
 var _album_screen: Control
 var _album_title: Label
 var _album_grid: GridContainer
+var _album_scroll: ScrollContainer
+var _album_panel: PanelContainer
 var _album_back_button: Button
 var _notice: Label
 var _notice_time := 0.0
@@ -52,8 +56,10 @@ var _cam_target_zoom := 1.0
 var _cam_offset := Vector2.ZERO
 var _cam_target_offset := Vector2.ZERO
 var _latest_photo := ""
+var _last_touch_ms := -1000
 
 func _ready() -> void:
+	mouse_filter = Control.MOUSE_FILTER_IGNORE
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	I18n.set_locale("zh-CN")
 	_build_layers()
@@ -63,6 +69,11 @@ func _ready() -> void:
 	_build_confirmation_screen()
 	_build_album_screen()
 	_build_notice()
+	_ui_layer = CanvasLayer.new()
+	_ui_layer.layer = 10
+	add_child(_ui_layer)
+	for panel in [_paper,_title_screen,_hud,_pause_screen,_confirm_screen,_album_screen,_notice]:
+		panel.reparent(_ui_layer, false)
 	I18n.locale_changed.connect(_on_locale_changed)
 	TuningStore.value_changed.connect(_on_tuning_value_changed)
 	resized.connect(_layout)
@@ -83,6 +94,7 @@ func _process(delta: float) -> void:
 		_notice_time -= delta
 		if _notice_time <= 0.0:
 			_notice.visible = false
+	_notice.visible = _notice_time > 0.0 and _screen == "game" and not _pause_screen.visible and not _album_screen.visible and not _confirm_screen.visible
 	if _screen == "game" and _world != null and not _pause_screen.visible and not _album_screen.visible and not _confirm_screen.visible:
 		var move := Vector2.ZERO
 		if _world.input_enabled:
@@ -92,11 +104,40 @@ func _process(delta: float) -> void:
 	var lerp_rate := 12.0 if reduced else 3.2
 	_cam_zoom = lerpf(_cam_zoom, _cam_target_zoom, 1.0 - exp(-delta * lerp_rate))
 	_cam_offset = _cam_offset.lerp(_cam_target_offset, 1.0 - exp(-delta * (12.0 if reduced else 3.0)))
-	var zoom := _cam_zoom * float(TuningStore.get_value("environment.camera.zoom", 1.0))
+	var hud_space := 140.0 if size.x < 700.0 else 76.0
+	var fit := minf(size.x/YardWorld.WORLD_SIZE.x,maxf(100.0,size.y-hud_space)/YardWorld.WORLD_SIZE.y)
+	var zoom := _cam_zoom * float(TuningStore.get_value("environment.camera.zoom", 1.0)) * fit
 	_camera.zoom = Vector2(zoom, zoom)
-	_camera.position = YardWorld.WORLD_SIZE * 0.5 + _cam_offset
+	_camera.position = YardWorld.WORLD_SIZE * 0.5 + _cam_offset + Vector2(0,hud_space/(2.0*zoom))
 	if _screen == "game":
 		_refresh_hud()
+
+
+func _input(event: InputEvent) -> void:
+	# Native browser touch and synthesized mouse must produce exactly one action.
+	if event is InputEventMouseButton and Time.get_ticks_msec()-_last_touch_ms < 400:
+		get_viewport().set_input_as_handled()
+		return
+	if not (event is InputEventScreenTouch) or not event.pressed:
+		return
+	var buttons: Array = []
+	if _confirm_screen.visible:
+		buttons = [_confirm_accept_button,_confirm_cancel_button]
+	elif _pause_screen.visible:
+		buttons = [_resume_button,_restart_button,_pause_title_button]
+	elif _album_screen.visible:
+		buttons = [_album_back_button]
+	elif _screen == "title":
+		buttons = [_play_button,_album_button,_licenses_button]
+	else:
+		buttons = [_action_button,_album_chip,_weather_chip,_pause_button]
+	for button: Button in buttons:
+		var local: Vector2 = button.get_global_transform_with_canvas().affine_inverse()*event.position
+		if button.is_visible_in_tree() and not button.disabled and Rect2(Vector2.ZERO,button.size).has_point(local):
+			_last_touch_ms = Time.get_ticks_msec()
+			button.pressed.emit()
+			get_viewport().set_input_as_handled()
+			return
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -115,10 +156,14 @@ func _unhandled_input(event: InputEvent) -> void:
 		_world.try_interact()
 		get_viewport().set_input_as_handled()
 		return
-	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
-		var world_point := _screen_to_world(event.position)
-		if not _world.try_walk_to(world_point):
-			_world.try_interact()
+	if event is InputEventScreenTouch and event.pressed:
+		_last_touch_ms = Time.get_ticks_msec()
+		_world.request_pointer_action(_screen_to_world(event.position))
+		get_viewport().set_input_as_handled()
+	elif event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+		# Browsers can synthesize a mouse event for the same touch.
+		if Time.get_ticks_msec() - _last_touch_ms > 400:
+			_world.request_pointer_action(_screen_to_world(event.position))
 		get_viewport().set_input_as_handled()
 
 
@@ -195,6 +240,9 @@ func _build_hud() -> void:
 	_pause_button = _chip_button()
 	_pause_button.pressed.connect(_toggle_pause)
 	_hud.add_child(_pause_button)
+	_action_button = _chip_button()
+	_action_button.pressed.connect(func(): _world.request_primary_action())
+	_hud.add_child(_action_button)
 
 
 func _build_pause_screen() -> void:
@@ -238,10 +286,12 @@ func _build_album_screen() -> void:
 	_album_screen = _overlay()
 	add_child(_album_screen)
 	var box := _centered_column(Vector2(860, 560), _album_screen)
+	_album_panel = box.get_parent()
 	_album_title = _label(24, INK)
 	_album_title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	box.add_child(_album_title)
 	var scroll := ScrollContainer.new()
+	_album_scroll = scroll
 	scroll.custom_minimum_size = Vector2(800, 400)
 	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	box.add_child(scroll)
@@ -445,11 +495,7 @@ func _on_release_focus() -> void:
 
 
 func _screen_to_world(screen: Vector2) -> Vector2:
-	var view := get_viewport_rect().size
-	var zoom := _camera.zoom
-	if zoom.x == 0.0 or zoom.y == 0.0:
-		zoom = Vector2.ONE
-	return _camera.get_screen_center_position() + (screen - view * 0.5) / zoom
+	return get_viewport().get_canvas_transform().affine_inverse() * screen
 
 
 func _show_notice_key(key: String) -> void:
@@ -464,14 +510,49 @@ func _open_licenses() -> void:
 
 func _layout() -> void:
 	var pad := 20.0
-	if _hint_label:
-		_hint_label.position = Vector2(pad, 16.0)
-		# 给暂停按钮留出右边，提示整句都留在画面里。
-		_hint_label.size = Vector2(maxf(320.0, size.x - 188.0), 72.0)
-	if _album_chip:
-		_album_chip.position = Vector2(pad, size.y - 68.0)
-		_weather_chip.position = Vector2(pad + 210.0, size.y - 68.0)
-		_pause_button.position = Vector2(size.x - 132.0, pad)
+	if _album_chip == null: return
+	var compact := size.x < 700.0
+	var title_column: Control = _title_label.get_parent()
+	var title_width := minf(480.0,size.x-40.0)
+	title_column.offset_left = -title_width*0.5
+	title_column.offset_right = title_width*0.5
+	title_column.offset_top = -(size.y-40.0)*0.5
+	title_column.offset_bottom = (size.y-40.0)*0.5
+	title_column.add_theme_constant_override("separation",8 if size.y<500 else 14)
+	_title_label.add_theme_font_size_override("font_size",28 if size.y<500 else 40)
+	_tagline_label.add_theme_font_size_override("font_size",14 if size.y<500 else 16)
+	_title_hint.add_theme_font_size_override("font_size",12 if size.y<500 else 14)
+	var album_width := minf(860.0,size.x-32.0)
+	var album_height := minf(560.0,size.y-32.0)
+	_album_panel.custom_minimum_size = Vector2(album_width,album_height)
+	_album_panel.offset_left = -album_width*0.5
+	_album_panel.offset_right = album_width*0.5
+	_album_panel.offset_top = -album_height*0.5
+	_album_panel.offset_bottom = album_height*0.5
+	_album_scroll.custom_minimum_size = Vector2(album_width-40.0,maxf(80.0,album_height-150.0))
+	_album_grid.columns = maxi(1,floori((album_width-40.0)/256.0))
+	_notice.offset_left = -minf(220,size.x*0.5-20)
+	_notice.offset_right = minf(220,size.x*0.5-20)
+	_notice.offset_top = -170 if compact else -110
+	_notice.offset_bottom = -130 if compact else -70
+	_notice.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+
+	var half := maxf(100.0,(size.x-pad*3.0)*0.5)
+	var chip_width := half if compact else 188.0
+	for button in [_album_chip,_weather_chip]:
+		button.custom_minimum_size = Vector2(chip_width,48)
+		button.size = Vector2(chip_width,48)
+	_action_button.custom_minimum_size = Vector2(size.x-pad*2.0 if compact else 188.0,48)
+	_action_button.size = _action_button.custom_minimum_size
+	_pause_button.custom_minimum_size = Vector2(120.0 if compact else 188.0,48)
+	_pause_button.size = _pause_button.custom_minimum_size
+	_pause_button.position = Vector2(size.x-_pause_button.size.x-pad,pad)
+	_hint_label.position = Vector2(pad,16)
+	_hint_label.size = Vector2(maxf(120.0,size.x-_pause_button.size.x-pad*3.0),72)
+	var row := size.y-124.0 if compact else size.y-68.0
+	_album_chip.position = Vector2(pad,row)
+	_weather_chip.position = Vector2(size.x-half-pad if compact else pad+210.0,row)
+	_action_button.position = Vector2(pad if compact else size.x-_action_button.size.x-pad,size.y-68.0)
 
 
 func _refresh_hud() -> void:
@@ -482,6 +563,7 @@ func _refresh_hud() -> void:
 	_weather_chip.text = I18n.t("hud.weather.%s" % _world.weather)
 	_pause_button.text = I18n.t("hud.pause")
 	_hint_label.text = I18n.t("hud.hint")
+	_action_button.text = I18n.t(_world.primary_action_key())
 
 
 func _on_locale_changed(_locale: String) -> void:

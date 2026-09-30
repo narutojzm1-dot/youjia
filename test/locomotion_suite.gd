@@ -69,6 +69,7 @@ func _animal(start: Vector2, kind: String = "llama") -> FeltActor:
 		"wander": Rect2(300, 440, 500, 80),
 		"textures": {"idle": "res://assets/holiday/characters/%s.png" % kind},
 	})
+	animal.state = "wander" # This fixture explicitly tests an active walking animal.
 	return animal
 
 
@@ -308,7 +309,7 @@ func _test_facing_and_swimming() -> void:
 	for frame: int in 30:
 		walker.tick(1.0 / 60, WORLD_SIZE)
 	_check(walker._rig == null, "default-world llama keeps accepted original-art gait")
-	_check(float(walker._sprite.material.get_shader_parameter("amount")) > 0.5, "default-world llama shader gait is active while moving")
+	_check(float(walker._sprite.material.get_shader_parameter("amount")) > 0.1, "default-world llama restrained limb motion is active while moving")
 	world.free()
 
 

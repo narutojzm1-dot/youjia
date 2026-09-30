@@ -83,6 +83,9 @@ func setup(config: Dictionary) -> void:
 	scale = Vector2(_base_scale, _base_scale)
 	_target = _random_point()
 	_build_spit()
+	if species != "duck":
+		state = "graze"
+		_idle_time = randf_range(5.0,12.0)
 
 
 func enable_experimental_planted_gait() -> void:
@@ -111,13 +114,38 @@ func hold_expression(expression_id: String, seconds: float) -> void:
 	_hold_expression = maxf(_hold_expression, seconds)
 
 
-func spit() -> void:
-	if _spit == null:
+func spit(target: Vector2 = Vector2.INF) -> void:
+	if _spit == null or target == Vector2.INF:
 		return
 	var density := float(TuningStore.get_value("environment.particles.density", 0.4))
 	if density <= 0.0:
 		return
-	_spit.amount = clampi(roundi(6.0 * density), 1, 18)
+	# Face the actual goose first; use a short world-space arc from the mouth.
+	if absf(target.x-global_position.x) > 2.0:
+		facing = signf(target.x-global_position.x)
+		_gait.face = facing
+		_gait._turning = false
+		_gait._next_face = facing
+		_gait.turn_width = 1.0
+		scale.x = absf(scale.x)*facing
+	var mouth := to_global(_spit_origin)
+	_spit.top_level = true
+	_spit.global_transform = Transform2D(0.0, mouth)
+	var flight := 0.42
+	var gravity := Vector2(0,260)
+	var velocity := (target-mouth-0.5*gravity*flight*flight)/flight
+	_spit.direction = velocity.normalized()
+	_spit.gravity = gravity
+	_spit.initial_velocity_min = velocity.length()
+	_spit.initial_velocity_max = velocity.length()*1.03
+	_spit.scale_amount_min = 0.07
+	_spit.scale_amount_max = 0.11
+	_spit.lifetime = flight
+	_spit.spread = 3.0
+	_spit.amount = clampi(roundi(4.0*density),1,4)
+	state = "graze"
+	_idle_time = maxf(_idle_time,1.2)
+	_velocity = Vector2.ZERO
 	_spit.restart()
 	_spit.emitting = true
 
@@ -162,7 +190,7 @@ func tick(delta: float, world_size: Vector2) -> void:
 	var reduced := bool(TuningStore.get_value("ui.reduced_motion", false))
 	var breath := 1.0
 	if not reduced:
-		breath = 1.0 + sin(_breath * 1.6) * 0.018
+		breath = 1.0 + sin(_breath * 1.6) * 0.003
 		if _base_texture_path.is_empty() and current_expression == "annoyed":
 			breath = 1.0 + sin(_breath * 3.4) * 0.012
 		elif _base_texture_path.is_empty() and current_expression == "happy":
@@ -226,7 +254,7 @@ func tick(delta: float, world_size: Vector2) -> void:
 				# A quiet pause between purposeful walks, rather than a new
 				# random destination and a sudden reversal every few seconds.
 				state = "graze"
-				_idle_time = randf_range(1.8, 5.5)
+				_idle_time = randf_range(7.0, 14.0)
 			else:
 				desired = motion.normalized() * minf(speed * depth, motion.length() * 1.8)
 	var response := 5.0 if species == "duck" else 7.0
@@ -264,10 +292,15 @@ func tick(delta: float, world_size: Vector2) -> void:
 	_gait.advance(delta, moved, depth, stride)
 	_step_phase = _gait.phase
 	_gait.apply(_sprite, delta, facing, reduced, species == "duck" and use_ellipse)
+	# Painted animal bodies stay rigid; avoid whole-cutout hops and pivot squash.
+	if _ground_anchor.x >= 0.0:
+		_sprite.position = Vector2.ZERO
+		_sprite.rotation = 0.0
+		_gait._material.set_shader_parameter("amount", 0.0 if reduced or use_ellipse else _gait.weight*0.35)
 	var visual := _base_scale * visual_scale * YardGround.depth_at(position.y)
 	# Breathing belongs to resting animals; don't squash a walking silhouette.
 	var resting_breath := lerpf(breath, 1.0, _gait.weight)
-	scale = Vector2(visual * _gait.face * _gait.turn_width, visual * resting_breath)
+	scale = Vector2(visual * _gait.face * (1.0 if _ground_anchor.x >= 0.0 else _gait.turn_width), visual * resting_breath)
 	_sprite.scale.x = _native_facing
 	if _rig != null:
 		scale.x = visual * _gait.face
@@ -292,16 +325,14 @@ func _random_point() -> Vector2:
 		var angle := randf() * TAU
 		var radius := sqrt(randf())
 		return ellipse_center + Vector2(cos(angle) * ellipse_radius.x * radius, sin(angle) * ellipse_radius.y * radius)
-	for _try: int in 16:
-		var point := Vector2(
-			randf_range(wander_rect.position.x, wander_rect.end.x),
-			randf_range(wander_rect.position.y, wander_rect.end.y)
-		)
-		if _stands_on(point):
-			return point
-	if not walk_ground.is_empty():
-		return walk_ground[0]
-	return wander_rect.get_center()
+	for _try: int in 24:
+		# Grazers move to the next patch, not a random point across the whole yard.
+		var angle := randf()*TAU
+		var point := position + Vector2(cos(angle),sin(angle)*0.45)*randf_range(18.0,48.0)
+		point.x = clampf(point.x,wander_rect.position.x,wander_rect.end.x)
+		point.y = clampf(point.y,wander_rect.position.y,wander_rect.end.y)
+		if _stands_on(point): return point
+	return position
 
 
 func adopt_ground(poly: PackedVector2Array, hole_pond: bool) -> void:

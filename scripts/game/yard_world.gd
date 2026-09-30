@@ -48,6 +48,8 @@ var _spot := "door"
 var _move_held := false
 var _has_walk_goal := false
 var _walk_goal := Vector2.ZERO
+var _pending_interaction := ""
+var _walk_path: Array[Vector2] = []
 
 
 func setup(saved_photos: Array = []) -> void:
@@ -151,9 +153,22 @@ func tick(delta: float, move: Vector2) -> void:
 	if input_enabled:
 		if move.length() > 0.2:
 			_has_walk_goal = false
+			_pending_interaction = ""
+			_walk_path.clear()
 		elif _has_walk_goal:
-			var to_goal := _walk_goal - _player.position
-			if to_goal.length() < 12.0:
+			if _pending_interaction == "llama":
+				_walk_goal = actor_named("llama").position
+			if not _pending_interaction.is_empty() and _player.position.distance_to(_walk_goal) < 64.0:
+				_has_walk_goal = false
+				_walk_path.clear()
+				_pending_interaction = ""
+				try_interact()
+			var destination := _walk_path[0] if not _walk_path.is_empty() else _walk_goal
+			if not _walk_path.is_empty() and _player.position.distance_to(destination) < (12.0 if _walk_path.size()==1 else 4.0):
+				_walk_path.pop_front()
+				destination = _walk_path[0] if not _walk_path.is_empty() else _walk_goal
+			var to_goal := destination - _player.position
+			if not _has_walk_goal or (to_goal.length() < 12.0 and _walk_path.is_empty()):
 				_has_walk_goal = false
 				move = Vector2.ZERO
 			else:
@@ -174,13 +189,16 @@ func tick(delta: float, move: Vector2) -> void:
 		if actor_id == "goose" and weather == "overcast":
 			var llama: FeltActor = _actors.get("llama")
 			var nosiness := float(TuningStore.get_value("enemies.goose.nosiness", 1.0))
-			if llama != null and actor.position.distance_to(llama.position) > 110.0 and randf() < 1.0 - exp(-0.24 * nosiness * delta):
-				actor.nudge_toward(llama.position)
+			if llama != null and actor.position.distance_to(llama.position) > 88.0 and randf() < 1.0 - exp(-0.24 * nosiness * delta):
+				actor.nudge_toward(llama.position + (actor.position-llama.position).normalized()*72.0)
 		# 晴天一只羊偶尔从羊圈走到草泥马附近，走的是同一块草地。
 		if actor_id == "sheep_a" and weather == "sun" and not _leading:
 			var sun_llama: FeltActor = _actors.get("llama")
 			if sun_llama != null and actor.position.distance_to(sun_llama.position) > 140.0 and randf() < 1.0 - exp(-0.18 * delta):
-				actor.nudge_toward(sun_llama.position)
+				actor.nudge_toward(sun_llama.position + (actor.position-sun_llama.position).normalized()*76.0)
+		if actor_id == "llama" and _pending_interaction == "llama" and not _leading:
+			actor.state = "graze"
+			actor._idle_time = maxf(actor._idle_time, 0.5)
 		actor.tick(delta, WORLD_SIZE)
 		actor.current_zone = _zone_at(actor.position)
 	_player.player_state = _player.snapshot_state()
@@ -232,6 +250,49 @@ func try_interact() -> void:
 	notice_requested.emit("notice.idle")
 
 
+func primary_action_key() -> String:
+	if _leading: return "action.release"
+	if _player != null and _player.carrying_grass: return "action.feed"
+	return "action.grass"
+
+
+func request_primary_action() -> void:
+	if not input_enabled: return
+	if _leading:
+		_leading = false
+		_player.leading = false
+		actor_named("llama").end_lead()
+		notice_requested.emit("notice.lead_stop")
+	elif _player.carrying_grass:
+		request_pointer_action(actor_named("llama").position)
+	else:
+		request_pointer_action(_grass_point())
+
+
+func request_pointer_action(point: Vector2) -> void:
+	if not input_enabled or _player == null:
+		return
+	_pending_interaction = ""
+	var goal := point
+	var llama := actor_named("llama")
+	if point.distance_to(_grass_point()) < 45.0:
+		_pending_interaction = "grass"
+		goal = _grass_point()
+	elif llama != null and (point.distance_to(llama.position) < 45.0 or point.distance_to(llama.position + Vector2(0,-48)) < 50.0):
+		_pending_interaction = "llama"
+		goal = llama.position
+	if not _pending_interaction.is_empty() and _player.position.distance_to(goal) < 64.0:
+		_has_walk_goal = false
+		_walk_path.clear()
+		_pending_interaction = ""
+		try_interact()
+		return
+	if not try_walk_to(goal):
+		_pending_interaction = ""
+		notice_requested.emit("notice.cannot_walk")
+
+
+
 func try_walk_to(point: Vector2) -> bool:
 	if not input_enabled or _player == null:
 		return false
@@ -247,6 +308,9 @@ func try_walk_to(point: Vector2) -> bool:
 	if not YardGround.allows(goal, YardGround.lawn(), true):
 		return false
 	if _player.position.distance_to(goal) < 28.0:
+		return false
+	_walk_path = YardGround.route(_player.position, goal)
+	if _walk_path.is_empty():
 		return false
 	_has_walk_goal = true
 	_walk_goal = goal
@@ -530,7 +594,8 @@ func _spawn_grass() -> void:
 func _apply_weather_art() -> void:
 	if _backdrop == null:
 		return
-	_backdrop.texture = OVERCAST if weather == "overcast" else SUNNY
+	# Weather changes light, never the ground layout under the actors.
+	_backdrop.texture = SUNNY
 	if _backdrop.texture != null:
 		var tex_size := _backdrop.texture.get_size()
 		_backdrop.scale = Vector2(WORLD_SIZE.x / tex_size.x, WORLD_SIZE.y / tex_size.y)
@@ -595,6 +660,12 @@ func _rule_matches(rule: Dictionary, snapshot: Dictionary) -> bool:
 	var actors := _species_actors(owner)
 	if actors.is_empty():
 		return false
+	if bool(rule.get("observe_nearby",false)):
+		var close := false
+		for subject in actors:
+			if _player != null and _player.position.distance_to(subject.position) < 205.0:
+				close = true
+		if not close: return false
 	if rule.has("weather") and str(rule.weather) != str(snapshot.weather):
 		return false
 	if rule.has("player") and str(rule.player) != str(snapshot.player):
@@ -699,7 +770,9 @@ func _apply_rule(rule: Dictionary, force: bool) -> void:
 	_held[rule_id] = hold
 	_cooldowns[rule_id] = hold + float(TuningStore.get_value("gameplay.expression.cooldown", 16.0))
 	if bool(rule.get("spit", false)):
-		actor.spit()
+		var goose := actor_named("goose")
+		if goose != null:
+			actor.spit(goose.global_position + Vector2(0,-30))
 	if bool(rule.get("polaroid", false)) and rule_id not in collected:
 		collected.append(rule_id)
 		last_photo = rule_id
@@ -709,6 +782,19 @@ func _apply_rule(rule: Dictionary, force: bool) -> void:
 
 
 func _draw() -> void:
+	if _leading and _player != null:
+		var llama := actor_named("llama")
+		if llama != null:
+			var hand := _player.position + Vector2(12.0*_player.facing,-32.0)
+			var collar := llama.position + Vector2(18.0*llama.facing,-55.0*YardGround.depth_at(llama.position.y))
+			var midpoint := (hand+collar)*0.5+Vector2(0,13)
+			var cord := PackedVector2Array()
+			for i in 13:
+				var t := float(i)/12.0
+				cord.append(hand.lerp(midpoint,t).lerp(midpoint.lerp(collar,t),t))
+			draw_polyline(cord,Color(0.48,0.34,0.22,0.75),1.5,true)
+	if _has_walk_goal:
+		draw_arc(_walk_goal, 10.0, 0.0, TAU, 24, Color(1.0,0.92,0.65,0.85), 2.0)
 	var shadow := Color(0.35, 0.22, 0.38, 0.16)
 	if _player != null:
 		draw_set_transform(_player.position + Vector2(0, 2), 0.0, Vector2(1.0, 0.3))
