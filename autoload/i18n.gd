@@ -8,28 +8,25 @@ const CATALOG_PATHS := {
 }
 
 var _catalogs: Dictionary = {}
-var _locale := "en"
+var _locale := "zh-CN"
 
 
 func _ready() -> void:
 	for locale: String in CATALOG_PATHS:
 		_catalogs[locale] = _load_catalog(str(CATALOG_PATHS[locale]))
-	# A saved player choice wins; otherwise follow the OS/browser language on first launch.
-	_locale = resolve_locale(SaveStore.get_locale(), OS.get_locale())
+	_locale = "zh-CN"
 	if not _catalogs.has(_locale):
-		_locale = "en"
+		_locale = "zh-CN"
 
 
 ## Map an OS/browser locale ("zh_CN", "zh-Hans-TW", "en_US", ...) to a supported catalog.
 static func detect_locale(os_locale: String) -> String:
-	return "zh-CN" if os_locale.strip_edges().to_lower().begins_with("zh") else "en"
+	return "zh-CN"
 
 
 ## `saved` is the persisted player choice, or "" when the player never picked a language.
 static func resolve_locale(saved: String, os_locale: String) -> String:
-	if saved in ["en", "zh-CN"]:
-		return saved
-	return detect_locale(os_locale)
+	return "zh-CN"
 
 
 func _load_catalog(path: String) -> Dictionary:
@@ -47,7 +44,7 @@ func _load_catalog(path: String) -> Dictionary:
 
 func text(key: String, replacements: Dictionary = {}) -> String:
 	var active: Dictionary = _catalogs.get(_locale, {})
-	var fallback: Dictionary = _catalogs.get("en", {})
+	var fallback: Dictionary = _catalogs.get("zh-CN", {})
 	var result := str(active.get(key, fallback.get(key, key)))
 	for token: Variant in replacements:
 		result = result.replace("{%s}" % str(token), str(replacements[token]))
@@ -65,17 +62,10 @@ func get_locale() -> String:
 func set_locale(locale: String) -> void:
 	if not _catalogs.has(locale):
 		return
-	# An explicit choice is persisted even when it matches the auto-detected language.
-	if SaveStore.get_locale() != locale:
-		SaveStore.set_locale(locale)
 	if locale == _locale:
 		return
 	_locale = locale
 	locale_changed.emit(locale)
-
-
-func toggle_locale() -> void:
-	set_locale("zh-CN" if _locale == "en" else "en")
 
 
 func catalog_keys(locale: String) -> Array:

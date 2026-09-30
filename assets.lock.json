@@ -1,6 +1,14 @@
 {
   "version": 2,
   "groups": {
+    "holiday": {
+      "name": "Holiday",
+      "order": 20
+    },
+    "share": {
+      "name": "Share",
+      "order": 30
+    },
     "template": {
       "name": "Template",
       "order": 0
@@ -8,6 +16,174 @@
   },
   "bundles": {},
   "assets": {
+    "assets/holiday/characters/cow.png": {
+      "path": "/manus-storage/game/sha256/96ccc8cf7a4a17f9b918cf08a0c2f2dd78d0a9a3093e6e891b9f5de8969cf204.png",
+      "sha256": "sha256:96ccc8cf7a4a17f9b918cf08a0c2f2dd78d0a9a3093e6e891b9f5de8969cf204",
+      "size": 105604,
+      "assetType": "image",
+      "groupId": "holiday",
+      "used": true
+    },
+    "assets/holiday/characters/duck.png": {
+      "path": "/manus-storage/game/sha256/d4068444b4fffd3e28052c668e35ac3483a8204260533613e701166b656f2235.png",
+      "sha256": "sha256:d4068444b4fffd3e28052c668e35ac3483a8204260533613e701166b656f2235",
+      "size": 17849,
+      "assetType": "image",
+      "groupId": "holiday",
+      "used": true
+    },
+    "assets/holiday/characters/goose.png": {
+      "path": "/manus-storage/game/sha256/ae59873263522c4b18da3d97958b79fe92a3ac7264ac2a2835dbaacc58809813.png",
+      "sha256": "sha256:ae59873263522c4b18da3d97958b79fe92a3ac7264ac2a2835dbaacc58809813",
+      "size": 34455,
+      "assetType": "image",
+      "groupId": "holiday",
+      "used": true
+    },
+    "assets/holiday/characters/llama.png": {
+      "path": "/manus-storage/game/sha256/beb6c2827b94abb77596904a3096a151106d2b1435c12dd1d837486c60d3b652.png",
+      "sha256": "sha256:beb6c2827b94abb77596904a3096a151106d2b1435c12dd1d837486c60d3b652",
+      "size": 77375,
+      "assetType": "image",
+      "groupId": "holiday",
+      "used": true
+    },
+    "assets/holiday/characters/llama_annoyed.png": {
+      "path": "/manus-storage/game/sha256/a4a853a50b835746e245ffdad1b51deea642aeb3a71fa1a973f7b0c704473058.png",
+      "sha256": "sha256:a4a853a50b835746e245ffdad1b51deea642aeb3a71fa1a973f7b0c704473058",
+      "size": 101369,
+      "assetType": "image",
+      "groupId": "holiday",
+      "used": true
+    },
+    "assets/holiday/characters/llama_happy.png": {
+      "path": "/manus-storage/game/sha256/b3d915c4cb2cbea7516fcbd25c276fe7a239b001f5db536e846e700e61d0585f.png",
+      "sha256": "sha256:b3d915c4cb2cbea7516fcbd25c276fe7a239b001f5db536e846e700e61d0585f",
+      "size": 102999,
+      "assetType": "image",
+      "groupId": "holiday",
+      "used": true
+    },
+    "assets/holiday/characters/llama_smirk.png": {
+      "path": "/manus-storage/game/sha256/547dac11bb6178db07b6412cf5cd910b264c1f45a1808d80a9f7f81e8335abca.png",
+      "sha256": "sha256:547dac11bb6178db07b6412cf5cd910b264c1f45a1808d80a9f7f81e8335abca",
+      "size": 96500,
+      "assetType": "image",
+      "groupId": "holiday",
+      "used": true
+    },
+    "assets/holiday/characters/player.png": {
+      "path": "/manus-storage/game/sha256/20cc74011286a1b095d80aee7ee9dc1fb601235e2a386b803e0c7f213ae2e3b0.png",
+      "sha256": "sha256:20cc74011286a1b095d80aee7ee9dc1fb601235e2a386b803e0c7f213ae2e3b0",
+      "size": 37817,
+      "assetType": "image",
+      "groupId": "holiday",
+      "used": true
+    },
+    "assets/holiday/characters/sheep_clingy.png": {
+      "path": "/manus-storage/game/sha256/2e1e82de637184c069951ba2da516398f1b07999e56a56fdaa0954a9dd434791.png",
+      "sha256": "sha256:2e1e82de637184c069951ba2da516398f1b07999e56a56fdaa0954a9dd434791",
+      "size": 61040,
+      "assetType": "image",
+      "groupId": "holiday",
+      "used": true
+    },
+    "assets/holiday/characters/sheep_dull.png": {
+      "path": "/manus-storage/game/sha256/0142f3d419894b619100bb7e77f14c7ffb27305165d92007f2e98feabe293cfc.png",
+      "sha256": "sha256:0142f3d419894b619100bb7e77f14c7ffb27305165d92007f2e98feabe293cfc",
+      "size": 93925,
+      "assetType": "image",
+      "groupId": "holiday",
+      "used": true
+    },
+    "assets/holiday/environment/yard_overcast.png": {
+      "path": "/manus-storage/game/sha256/3d1aa3589f3d4d1838987310130afbfbff3b3384999543cb2ed5b3c9655e66f8.png",
+      "sha256": "sha256:3d1aa3589f3d4d1838987310130afbfbff3b3384999543cb2ed5b3c9655e66f8",
+      "size": 3427343,
+      "assetType": "image",
+      "groupId": "holiday",
+      "used": true
+    },
+    "assets/holiday/environment/yard_sunny.png": {
+      "path": "/manus-storage/game/sha256/7f29181eac79c89b18eff65fe1a18c37230573b55f8c8993a0365dc480219d73.png",
+      "sha256": "sha256:7f29181eac79c89b18eff65fe1a18c37230573b55f8c8993a0365dc480219d73",
+      "size": 4019432,
+      "assetType": "image",
+      "groupId": "holiday",
+      "used": true
+    },
+    "assets/holiday/fx/felt_spit.png": {
+      "path": "/manus-storage/game/sha256/f703d28197b78381b2f19906c191ee9fe28d928d5ad4b033e91ea387df3dc0c8.png",
+      "sha256": "sha256:f703d28197b78381b2f19906c191ee9fe28d928d5ad4b033e91ea387df3dc0c8",
+      "size": 5613,
+      "assetType": "image",
+      "groupId": "holiday",
+      "used": true
+    },
+    "assets/holiday/fx/grass_bundle.png": {
+      "path": "/manus-storage/game/sha256/0933c9ebd9d771f818b822a58e04b82119c7f5f7d9e5da36f4959be253cd66b1.png",
+      "sha256": "sha256:0933c9ebd9d771f818b822a58e04b82119c7f5f7d9e5da36f4959be253cd66b1",
+      "size": 11000,
+      "assetType": "image",
+      "groupId": "holiday",
+      "used": true
+    },
+    "assets/holiday/sharing/favicon.png": {
+      "path": "/manus-storage/game/sha256/7714a221eaffcf32fe6b18bfbba7372536b763efb7ebc869a59288464d25ab1e.png",
+      "sha256": "sha256:7714a221eaffcf32fe6b18bfbba7372536b763efb7ebc869a59288464d25ab1e",
+      "size": 4819139,
+      "assetType": "image",
+      "groupId": "holiday",
+      "used": false
+    },
+    "assets/holiday/sharing/favicon_fallback.png": {
+      "path": "/manus-storage/game/sha256/22045f722b675a31de9243d6b0eee23e8a4e474890f643b739c36f58ba121cac.png",
+      "sha256": "sha256:22045f722b675a31de9243d6b0eee23e8a4e474890f643b739c36f58ba121cac",
+      "size": 44174,
+      "assetType": "image",
+      "groupId": "holiday",
+      "used": false
+    },
+    "assets/holiday/sharing/og.png": {
+      "path": "/manus-storage/game/sha256/9b0cc305844a3eea6e2c635cb66b3e3075d4d7f55191ec3e07e0eb437a74a086.png",
+      "sha256": "sha256:9b0cc305844a3eea6e2c635cb66b3e3075d4d7f55191ec3e07e0eb437a74a086",
+      "size": 6364377,
+      "assetType": "image",
+      "groupId": "holiday",
+      "used": false
+    },
+    "assets/holiday/ui/polaroid_frame.png": {
+      "path": "/manus-storage/game/sha256/9cf85844f275e90013d9e116fb33e04ef974fdcb5d084f30f1e126a5b29bd545.png",
+      "sha256": "sha256:9cf85844f275e90013d9e116fb33e04ef974fdcb5d084f30f1e126a5b29bd545",
+      "size": 110181,
+      "assetType": "image",
+      "groupId": "holiday",
+      "used": true
+    },
+    "assets/holiday/ui/scrapbook_paper.png": {
+      "path": "/manus-storage/game/sha256/6f104bd1eab5244f63de54c2c3228ed6b33315abd1477af090b88401b2465be3.png",
+      "sha256": "sha256:6f104bd1eab5244f63de54c2c3228ed6b33315abd1477af090b88401b2465be3",
+      "size": 1604105,
+      "assetType": "image",
+      "groupId": "holiday",
+      "used": true
+    },
+    "assets/share/favicon.png": {
+      "path": "/manus-storage/game/sha256/7e67d7987c0566aa7608d8069d8c49d1e195bf0ff0aa5c82d7808f2d470e45a3.png",
+      "sha256": "sha256:7e67d7987c0566aa7608d8069d8c49d1e195bf0ff0aa5c82d7808f2d470e45a3",
+      "size": 382395,
+      "assetType": "image",
+      "groupId": "share",
+      "used": true
+    },
+    "assets/share/og.png": {
+      "path": "/manus-storage/game/sha256/744c4ef4ff02a5c20b4bf6b258cd91327cc6f16e40105c4b640c10bec936a509.png",
+      "sha256": "sha256:744c4ef4ff02a5c20b4bf6b258cd91327cc6f16e40105c4b640c10bec936a509",
+      "size": 1365017,
+      "assetType": "image",
+      "groupId": "share",
+      "used": true
+    },
     "assets/template/characters/runner.png": {
       "path": "https://d1oupeiobkpcny.cloudfront.net/assets/dashboard/materials/2026/09/06/game-template/game-generic/2026.09.07-minimalist-v1/c88485773d6ff9361e036f37d8ac76fb77b8c3f7c041c3f52c8dd222adc8cc21/assets/characters/runner.png",
       "sha256": "sha256:c88485773d6ff9361e036f37d8ac76fb77b8c3f7c041c3f52c8dd222adc8cc21",
@@ -30,7 +206,7 @@
       "size": 971282,
       "assetType": "image",
       "groupId": "template",
-      "used": true
+      "used": false
     },
     "assets/template/environment/foreground.png": {
       "path": "https://d1oupeiobkpcny.cloudfront.net/assets/dashboard/materials/2026/09/06/game-template/game-generic/2026.09.07-minimalist-v1/4b6916024c69961fbfa7cdc929c68f547fea4561e61ebdb3405b3aba0efbd94d/assets/environment/foreground.png",
@@ -38,7 +214,7 @@
       "size": 58603,
       "assetType": "image",
       "groupId": "template",
-      "used": true
+      "used": false
     },
     "assets/template/fonts/Figtree-VF.subset.woff2": {
       "path": "https://d1oupeiobkpcny.cloudfront.net/assets/dashboard/materials/2026/09/25/game-template/game-generic/2026.09.25-typography-v1/b3976c5969c8b1afd81dc3e314b61d8ffe3f3f58cf40906443105d330e6e0bdf/assets/template/fonts/Figtree-VF.subset.woff2",
@@ -118,7 +294,7 @@
       "size": 115691,
       "assetType": "image",
       "groupId": "template",
-      "used": true
+      "used": false
     },
     "assets/template/ui/title_glass.png": {
       "path": "https://d1oupeiobkpcny.cloudfront.net/assets/dashboard/materials/2026/09/06/game-template/game-generic/2026.09.07-minimalist-v1/8860db07768f093d4effea10b51431f76a1552d4bc7fd4e57757f189c51f0429/assets/ui/title_glass.png",
@@ -126,7 +302,7 @@
       "size": 155592,
       "assetType": "image",
       "groupId": "template",
-      "used": true
+      "used": false
     }
   }
 }

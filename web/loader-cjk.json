@@ -13,11 +13,12 @@
     400,
     700
   ],
-  "sha256": "3883b8c37d201e562e214df5e47ab1443512b6d87415b05e5d3bdd784d6419f8",
-  "bytes": 22280,
+  "sha256": "667511a66de968e1f5b8b0b85b4eddf9da3451e21b35683923896bd31b4da063",
+  "bytes": 56212,
   "corpusSources": [
     "web/loading.html",
-    "runtime shared loading-shell.html baseline"
+    "runtime shared loading-shell.html baseline",
+    "game title 悠长的假期"
   ],
   "codepoints": [
     32,
@@ -120,6 +121,7 @@
     19979,
     20173,
     20197,
+    20551,
     21040,
     21152,
     21160,
@@ -129,10 +131,12 @@
     22833,
     24230,
     24453,
+    24736,
     25103,
     25110,
     26032,
     26242,
+    26399,
     26410,
     27491,
     28216,
@@ -147,8 +151,9 @@
     36733,
     36827,
     37325,
+    38271,
     65292
   ],
-  "corpus": " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~…。下仍以到加动可启在失度待戏或新暂未正游的看等继续试请败载进重，",
-  "generator": "scripts/build-game-loader-fonts.py (fontTools); Puzzle uses its tools/prepare_web.py"
+  "corpus": " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~…。下仍以假到加动可启在失度待悠戏或新暂期未正游的看等继续试请败载进重长，",
+  "generator": "tools/rebuild_loader_cjk.py (fontTools)"
 }

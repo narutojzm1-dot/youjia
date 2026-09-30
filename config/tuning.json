@@ -15,11 +15,7 @@
       "integrity": "COSMETIC",
       "label_key": "tuning.ui.hud_opacity",
       "description_key": "tuning.ui.hud_opacity.description",
-      "tags": [
-        "hud",
-        "opacity",
-        "accessibility"
-      ]
+      "tags": ["hud", "opacity", "accessibility"]
     },
     {
       "id": "ui.reduced_motion",
@@ -31,71 +27,55 @@
       "integrity": "COSMETIC",
       "label_key": "tuning.ui.reduced_motion",
       "description_key": "tuning.ui.reduced_motion.description",
-      "tags": [
-        "motion",
-        "accessibility",
-        "effects"
-      ]
+      "tags": ["motion", "accessibility", "effects"]
     },
     {
-      "id": "gameplay.pickup.duration_multiplier",
+      "id": "gameplay.expression.pulse",
       "category": "Gameplay",
       "type": "number",
-      "default": 1,
-      "min": 0.5,
-      "max": 2,
-      "step": 0.1,
-      "decimals": 1,
-      "unit_key": "unit.multiplier",
-      "apply_mode": "NEXT_ACTION",
-      "integrity": "GAMEPLAY",
-      "label_key": "tuning.gameplay.pickup_duration",
-      "description_key": "tuning.gameplay.pickup_duration.description",
-      "tags": [
-        "pickup",
-        "powerup",
-        "duration"
-      ]
-    },
-    {
-      "id": "gameplay.respawn.invulnerability",
-      "category": "Gameplay",
-      "type": "number",
-      "default": 1.2,
-      "min": 0.4,
-      "max": 3,
+      "default": 1.6,
+      "min": 0.8,
+      "max": 4,
       "step": 0.1,
       "decimals": 1,
       "unit_key": "unit.seconds",
-      "apply_mode": "NEXT_ACTION",
+      "apply_mode": "LIVE",
       "integrity": "GAMEPLAY",
-      "label_key": "tuning.gameplay.invulnerability",
-      "description_key": "tuning.gameplay.invulnerability.description",
-      "tags": [
-        "respawn",
-        "damage",
-        "safety"
-      ]
+      "label_key": "tuning.gameplay.expression_pulse",
+      "description_key": "tuning.gameplay.expression_pulse.description",
+      "tags": ["expression", "pace"]
     },
     {
-      "id": "gameplay.stage.transition_delay",
+      "id": "gameplay.expression.cooldown",
       "category": "Gameplay",
       "type": "number",
-      "default": 1,
-      "min": 0.4,
-      "max": 2.5,
-      "step": 0.1,
-      "decimals": 1,
+      "default": 16,
+      "min": 4,
+      "max": 40,
+      "step": 1,
+      "decimals": 0,
       "unit_key": "unit.seconds",
-      "apply_mode": "NEXT_STAGE",
+      "apply_mode": "NEXT_ACTION",
       "integrity": "GAMEPLAY",
-      "label_key": "tuning.gameplay.transition_delay",
-      "description_key": "tuning.gameplay.transition_delay.description",
-      "tags": [
-        "stage",
-        "transition",
-        "timing"
-      ]
+      "label_key": "tuning.gameplay.expression_cooldown",
+      "description_key": "tuning.gameplay.expression_cooldown.description",
+      "tags": ["expression", "cooldown"]
+    },
+    {
+      "id": "gameplay.proximity.radius",
+      "category": "Gameplay",
+      "type": "number",
+      "default": 92,
+      "min": 60,
+      "max": 140,
+      "step": 2,
+      "decimals": 0,
+      "unit_key": "unit.px",
+      "apply_mode": "LIVE",
+      "integrity": "GAMEPLAY",
+      "label_key": "tuning.gameplay.proximity",
+      "description_key": "tuning.gameplay.proximity.description",
+      "tags": ["proximity", "animals"]
     },
     {
       "id": "audio.master.volume_db",
@@ -111,11 +91,7 @@
       "integrity": "COSMETIC",
       "label_key": "tuning.audio.master",
       "description_key": "tuning.audio.master.description",
-      "tags": [
-        "master",
-        "volume",
-        "mute"
-      ]
+      "tags": ["master", "volume", "mute"]
     },
     {
       "id": "audio.master.muted",
@@ -127,11 +103,7 @@
       "integrity": "COSMETIC",
       "label_key": "tuning.audio.mute",
       "description_key": "tuning.audio.mute.description",
-      "tags": [
-        "master",
-        "mute",
-        "accessibility"
-      ]
+      "tags": ["master", "mute", "accessibility"]
     },
     {
       "id": "audio.music.volume_db",
@@ -147,11 +119,7 @@
       "integrity": "COSMETIC",
       "label_key": "tuning.audio.music",
       "description_key": "tuning.audio.music.description",
-      "tags": [
-        "music",
-        "volume",
-        "title"
-      ]
+      "tags": ["music", "volume"]
     },
     {
       "id": "audio.sfx.volume_db",
@@ -167,11 +135,7 @@
       "integrity": "COSMETIC",
       "label_key": "tuning.audio.sfx",
       "description_key": "tuning.audio.sfx.description",
-      "tags": [
-        "effects",
-        "sfx",
-        "volume"
-      ]
+      "tags": ["effects", "sfx", "volume"]
     },
     {
       "id": "audio.ui.volume_db",
@@ -187,51 +151,39 @@
       "integrity": "COSMETIC",
       "label_key": "tuning.audio.ui",
       "description_key": "tuning.audio.ui.description",
-      "tags": [
-        "menu",
-        "ui",
-        "volume"
-      ]
+      "tags": ["menu", "ui", "volume"]
     },
     {
       "id": "player.move.max_speed",
       "category": "Player",
       "type": "number",
-      "default": 170,
-      "min": 90,
-      "max": 280,
-      "step": 5,
+      "default": 96,
+      "min": 50,
+      "max": 160,
+      "step": 2,
       "decimals": 0,
       "unit_key": "unit.px_per_second",
       "apply_mode": "LIVE",
       "integrity": "GAMEPLAY",
       "label_key": "tuning.player.speed",
       "description_key": "tuning.player.speed.description",
-      "tags": [
-        "movement",
-        "speed",
-        "runner"
-      ]
+      "tags": ["movement", "speed"]
     },
     {
-      "id": "player.lives",
+      "id": "player.lead.speed_multiplier",
       "category": "Player",
       "type": "number",
-      "default": 3,
-      "min": 1,
-      "max": 6,
-      "step": 1,
-      "decimals": 0,
-      "unit_key": "unit.count",
+      "default": 0.72,
+      "min": 0.4,
+      "max": 1,
+      "step": 0.02,
+      "decimals": 2,
+      "unit_key": "unit.multiplier",
       "apply_mode": "NEXT_RUN",
       "integrity": "GAMEPLAY",
-      "label_key": "tuning.player.lives",
-      "description_key": "tuning.player.lives.description",
-      "tags": [
-        "lives",
-        "difficulty",
-        "run"
-      ]
+      "label_key": "tuning.player.lead",
+      "description_key": "tuning.player.lead.description",
+      "tags": ["lead", "llama"]
     },
     {
       "id": "player.visual.scale",
@@ -247,11 +199,7 @@
       "integrity": "COSMETIC",
       "label_key": "tuning.player.scale",
       "description_key": "tuning.player.scale.description",
-      "tags": [
-        "character",
-        "scale",
-        "visibility"
-      ]
+      "tags": ["character", "scale"]
     },
     {
       "id": "enemies.move.speed_multiplier",
@@ -267,31 +215,23 @@
       "integrity": "GAMEPLAY",
       "label_key": "tuning.enemies.speed",
       "description_key": "tuning.enemies.speed.description",
-      "tags": [
-        "enemy",
-        "speed",
-        "difficulty"
-      ]
+      "tags": ["animals", "speed"]
     },
     {
-      "id": "enemies.ai.aggression",
+      "id": "enemies.goose.nosiness",
       "category": "Enemies",
       "type": "number",
       "default": 1,
       "min": 0.5,
-      "max": 1.5,
+      "max": 1.8,
       "step": 0.1,
       "decimals": 1,
       "unit_key": "unit.multiplier",
       "apply_mode": "NEXT_STAGE",
       "integrity": "GAMEPLAY",
-      "label_key": "tuning.enemies.aggression",
-      "description_key": "tuning.enemies.aggression.description",
-      "tags": [
-        "ai",
-        "chase",
-        "difficulty"
-      ]
+      "label_key": "tuning.enemies.goose",
+      "description_key": "tuning.enemies.goose.description",
+      "tags": ["goose", "weather"]
     },
     {
       "id": "enemies.visual.scale",
@@ -307,11 +247,7 @@
       "integrity": "COSMETIC",
       "label_key": "tuning.enemies.scale",
       "description_key": "tuning.enemies.scale.description",
-      "tags": [
-        "enemy",
-        "scale",
-        "visibility"
-      ]
+      "tags": ["animals", "scale"]
     },
     {
       "id": "environment.filter.enabled",
@@ -323,17 +259,13 @@
       "integrity": "COSMETIC",
       "label_key": "tuning.environment.filter",
       "description_key": "tuning.environment.filter.description",
-      "tags": [
-        "filter",
-        "post process",
-        "visual"
-      ]
+      "tags": ["filter", "visual"]
     },
     {
       "id": "environment.filter.intensity",
       "category": "Environment",
       "type": "number",
-      "default": 0.18,
+      "default": 0.12,
       "min": 0,
       "max": 0.8,
       "step": 0.02,
@@ -343,11 +275,7 @@
       "integrity": "COSMETIC",
       "label_key": "tuning.environment.filter_intensity",
       "description_key": "tuning.environment.filter_intensity.description",
-      "tags": [
-        "filter",
-        "shader",
-        "strength"
-      ]
+      "tags": ["filter", "shader"]
     },
     {
       "id": "environment.particles.density",
@@ -363,11 +291,7 @@
       "integrity": "COSMETIC",
       "label_key": "tuning.environment.particles",
       "description_key": "tuning.environment.particles.description",
-      "tags": [
-        "particles",
-        "ambient",
-        "effects"
-      ]
+      "tags": ["particles", "spit"]
     },
     {
       "id": "environment.camera.zoom",
@@ -383,11 +307,7 @@
       "integrity": "COSMETIC",
       "label_key": "tuning.environment.zoom",
       "description_key": "tuning.environment.zoom.description",
-      "tags": [
-        "camera",
-        "zoom",
-        "layout"
-      ]
+      "tags": ["camera", "zoom"]
     }
   ]
 }

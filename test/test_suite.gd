@@ -14,8 +14,6 @@ func _ready() -> void:
 
 
 func _run() -> void:
-	# macOS does not redirect Godot user:// with XDG_DATA_HOME. Preserve files
-	# explicitly and start from an empty fixture instead of the player's top ten.
 	for path: String in [SaveStore.SAVE_PATH]:
 		_saved_user_files[path] = FileAccess.get_file_as_bytes(path) if FileAccess.file_exists(path) else null
 	_i18n = get_tree().root.get_node_or_null("I18n")
@@ -28,18 +26,15 @@ func _run() -> void:
 		[_save_store, "SaveStore"], [_audio, "AudioDirector"],
 	]:
 		_check(item[0] != null, "%s autoload must exist" % item[1])
-	# First-launch language follows the machine locale; pin English so checks are machine-independent.
-	_i18n.call("set_locale", "en")
+	_i18n.call("set_locale", "zh-CN")
 	_test_locale_detection()
-	_test_stage_catalog()
+	_test_expression_catalog()
 	_test_localization_catalogs()
 	_test_tuning_schema_and_integrity()
-	_test_score_service()
-	_test_local_leaderboard()
+	_test_album_save()
 	_test_audio_architecture()
 	_test_assets()
 	_test_font_glyph_coverage()
-	await _test_effect_pool()
 	await _test_runtime_scene()
 	_audio.call("release_streams")
 	await get_tree().process_frame
@@ -70,36 +65,24 @@ func _restore_user_files() -> void:
 
 
 func _test_locale_detection() -> void:
-	# Pure functions only: results must not depend on this machine's OS locale.
 	var i18n_script: Script = load("res://autoload/i18n.gd")
 	for case: Array in [
-		["zh_CN", "zh-CN"], ["zh-CN", "zh-CN"], ["zh-Hans-CN", "zh-CN"], ["zh_TW", "zh-CN"], ["ZH", "zh-CN"],
-		["en_US", "en"], ["en", "en"], ["fr_FR", "en"], ["ja_JP", "en"], ["", "en"],
+		["zh_CN", "zh-CN"], ["zh-CN", "zh-CN"], ["en_US", "zh-CN"], ["fr_FR", "zh-CN"], ["", "zh-CN"],
 	]:
-		_check(i18n_script.call("detect_locale", case[0]) == case[1], "OS locale %s must map to %s" % case)
-	_check(i18n_script.call("resolve_locale", "", "zh_CN") == "zh-CN", "first launch follows a Chinese browser")
-	_check(i18n_script.call("resolve_locale", "", "de_DE") == "en", "first launch defaults other languages to English")
-	_check(i18n_script.call("resolve_locale", "en", "zh_CN") == "en", "a saved English choice beats a Chinese browser")
-	_check(i18n_script.call("resolve_locale", "zh-CN", "en_US") == "zh-CN", "a saved Chinese choice beats an English browser")
-	_check(i18n_script.call("resolve_locale", "xx", "en_US") == "en", "unknown saved values fall back to detection")
+		_check(i18n_script.call("detect_locale", case[0]) == case[1], "OS locale %s must pin to %s" % case)
+	_check(i18n_script.call("resolve_locale", "", "en_US") == "zh-CN", "first launch stays Chinese")
+	_check(i18n_script.call("resolve_locale", "en", "en_US") == "zh-CN", "saved English cannot switch the pinned locale")
 
 
-func _test_stage_catalog() -> void:
-	_check(StageCatalog.count() == 2, "catalog must expose two stages")
-	var stage_maximum := 0
-	for index: int in StageCatalog.count():
-		var stage := StageCatalog.get_stage(index)
-		var errors := StageCatalog.validate_stage(stage)
-		_check(errors.is_empty(), "stage %d validation failed: %s" % [index + 1, ", ".join(errors)])
-		_check(StageCatalog.dimensions(stage) == Vector2i(21, 17), "stage %d must retain authored dimensions" % (index + 1))
-		var symbols := ""
-		for row: String in stage.get("rows", []):
-			symbols += row
-		for symbol: String in ["s", "t", "m"]:
-			_check(symbols.count(symbol) == 1, "stage %d needs one '%s' power-up" % [index + 1, symbol])
-		_check(symbols.count("o") >= 1, "stage %d needs a Overdrive" % (index + 1))
-		stage_maximum += RunScoreService.authored_collectible_maximum(stage)
-	_check(stage_maximum > 2000, "authored two-stage score maximum must be meaningful")
+func _test_expression_catalog() -> void:
+	var ids := ExpressionCatalog.all_ids()
+	_check(ids.size() == 6, "album must contain six polaroid expressions")
+	var mainline := ExpressionCatalog.llama_mainline_ids()
+	_check(mainline.size() == 4, "llama mainline must have four expressions")
+	_check(str(ExpressionCatalog.find_rule("llama_overcast_goose_annoyed").get("expression", "")) == "annoyed", "overcast goose rule must annoy the llama")
+	_check(bool(ExpressionCatalog.find_rule("llama_overcast_goose_annoyed").get("spit", false)), "annoyed llama must spit felt")
+	_check(str(ExpressionCatalog.find_rule("llama_sun_sheep_happy").get("expression", "")) == "happy", "sun sheep rule must smile")
+	_check(str(ExpressionCatalog.find_rule("llama_sheep_cow_smirk").get("expression", "")) == "smirk", "sheep-cow grazing must smirk")
 
 
 func _test_localization_catalogs() -> void:
@@ -108,13 +91,12 @@ func _test_localization_catalogs() -> void:
 	english.sort()
 	chinese.sort()
 	_check(english == chinese, "EN and zh-CN catalogs must have identical keys")
-	_check(english.size() >= 120, "catalogs must cover the full template UI")
-	_i18n.call("set_locale", "en")
-	_check(str(_i18n.call("t", "app.title")) == "Generic Game Template", "t() must resolve the English title")
+	_check(english.size() >= 100, "catalogs must cover holiday UI")
 	_i18n.call("set_locale", "zh-CN")
-	_check(str(_i18n.call("t", "menu.play")) == "开始游戏", "Chinese locale must resolve")
+	_check(str(_i18n.call("t", "app.title")) == "悠长的假期", "t() must resolve the Chinese title")
+	_check(str(_i18n.call("t", "menu.play")) == "走进院子", "play label must stay holiday-specific")
 	_check("调校" in str(_i18n.call("t", "tuning.quick_tooltip")), "Chinese tuning guidance must resolve")
-	_i18n.call("set_locale", "en")
+	_check(str(_i18n.call("t", "hud.album", {"count": "1", "total": "6"})) == "相册 1/6", "album HUD must interpolate")
 
 
 func _test_tuning_schema_and_integrity() -> void:
@@ -136,15 +118,15 @@ func _test_tuning_schema_and_integrity() -> void:
 	_tuning.call("end_run")
 	_tuning.call("reset_defaults")
 	_check(not bool(_tuning.call("set_value", "player.move.max_speed", 9999.0)), "out-of-range tuning must be rejected")
-	_check(is_equal_approx(float(_tuning.call("get_value", "player.move.max_speed")), 170.0), "a rejected value must not mutate active state")
-	_check(bool(_tuning.call("set_value", "player.lives", 5.0)), "a valid deferred value must be accepted")
-	_check(is_equal_approx(float(_tuning.call("get_requested_value", "player.lives")), 5.0), "requested state must update")
-	_check(is_equal_approx(float(_tuning.call("get_active_value", "player.lives")), 3.0), "NEXT_RUN state must remain deferred")
+	_check(is_equal_approx(float(_tuning.call("get_value", "player.move.max_speed")), 96.0), "a rejected value must not mutate active state")
+	_check(bool(_tuning.call("set_value", "player.lead.speed_multiplier", 0.5)), "a valid deferred value must be accepted")
+	_check(is_equal_approx(float(_tuning.call("get_requested_value", "player.lead.speed_multiplier")), 0.5), "requested state must update")
+	_check(is_equal_approx(float(_tuning.call("get_active_value", "player.lead.speed_multiplier")), 0.72), "NEXT_RUN state must remain deferred")
 	_check(int(_tuning.call("pending_count")) == 1, "pending value count must be observable")
 	_tuning.call("begin_run", false)
-	_check(is_equal_approx(float(_tuning.call("get_active_value", "player.lives")), 5.0), "NEXT_RUN state must apply at run boundary")
+	_check(is_equal_approx(float(_tuning.call("get_active_value", "player.lead.speed_multiplier")), 0.5), "NEXT_RUN state must apply at run boundary")
 	_check(not bool(_tuning.call("is_ranked_eligible")), "non-default gameplay tuning must mark the run unranked")
-	_tuning.call("reset_setting", "player.lives")
+	_tuning.call("reset_setting", "player.lead.speed_multiplier")
 	_check(not bool(_tuning.call("is_ranked_eligible")), "ranked ineligibility must remain sticky after reset")
 	_tuning.call("end_run")
 	_tuning.call("reset_defaults")
@@ -152,53 +134,22 @@ func _test_tuning_schema_and_integrity() -> void:
 	_check(bool(_tuning.call("is_ranked_eligible")), "a fresh default run must be ranked")
 	_tuning.call("set_value", "environment.filter.intensity", 0.5)
 	_check(bool(_tuning.call("is_ranked_eligible")), "cosmetic tuning must preserve ranked eligibility")
-	_tuning.call("set_value", "player.move.max_speed", 180.0)
+	_tuning.call("set_value", "player.move.max_speed", 110.0)
 	_check(not bool(_tuning.call("is_ranked_eligible")), "live gameplay tuning must revoke ranked eligibility")
 	var before: Dictionary = _tuning.call("get_requested_values")
-	_check(not bool(_tuning.call("set_values", {"audio.music.volume_db": -12.0, "player.lives": 99.0})), "transactional updates must reject an invalid bundle")
+	_check(not bool(_tuning.call("set_values", {"audio.music.volume_db": -12.0, "player.lead.speed_multiplier": 9.0})), "transactional updates must reject an invalid bundle")
 	_check((_tuning.call("get_requested_values") as Dictionary) == before, "invalid transactional updates must be atomic")
 	_tuning.call("end_run")
 	_tuning.call("reset_defaults")
 	_check(str(_tuning.call("configuration_marker")).begins_with("cfg-"), "configuration marker must be stable and explicit")
 
 
-func _test_score_service() -> void:
-	var scorer := RunScoreService.new()
-	scorer.begin()
-	_check(scorer.award("energy") == 10, "energy score must be named and deterministic")
-	_check(scorer.award("overdrive") == 60, "Overdrive score must be named and deterministic")
-	_check(scorer.award("powerup", 2) == 210, "power-up score multiplication must be deterministic")
-	_check(scorer.award("unknown") == 210, "unknown events must not change score")
-	var first := scorer.finalize(2, "victory", 12.5, true, "cfg-test")
-	var second := scorer.finalize(1, "defeat", 1.0, false, "cfg-other")
-	_check(first == second, "run finalization must be idempotent")
-	_check(bool(first.ranked_eligible), "eligible non-tutorial result must remain ranked")
-	first.score = 0
-	_check(int(scorer.get_result().score) == 210, "returned run results must be defensive copies")
-	var tutorial_scorer := RunScoreService.new()
-	tutorial_scorer.begin(50)
-	var tutorial_result := tutorial_scorer.finalize(1, "victory", 2.0, true, "cfg-default", true)
-	_check(not bool(tutorial_result.ranked_eligible), "tutorial results must never be globally ranked")
-
-
-func _test_local_leaderboard() -> void:
-	var result := {
-		"score": 2400, "stage": 2, "duration": 70.0, "outcome": "victory",
-		"configuration_marker": "cfg-default", "ranked_eligible": true, "finalized_at": 1,
-	}
-	_check(bool(_save_store.call("record_result", "ALPHA", result)), "local result persistence must succeed")
-	result.score = 1200
-	result.ranked_eligible = false
-	_check(bool(_save_store.call("record_result", "BETA", result)), "practice result persistence must succeed")
-	var rows: Array = _save_store.call("get_leaderboard")
-	_check(rows.size() >= 2, "local standings must retain submitted rows")
-	_check(str((rows[0] as Dictionary).get("name")) == "ALPHA", "local standings must sort highest score first")
-	_check((rows[0] as Dictionary).has("configuration_marker"), "local rows must retain configuration provenance")
+func _test_album_save() -> void:
+	_check(bool(_save_store.call("set_album", PackedStringArray(["llama_fed_gentle"]))), "album persistence must succeed")
+	var album: Array = _save_store.call("get_album")
+	_check(album.size() == 1 and str(album[0]) == "llama_fed_gentle", "album must retain collected ids")
 	_save_store.call("_load")
-	_check(_save_store.call("get_leaderboard") == rows, "local standings must survive disk reload unchanged")
-	var detached: Array = _save_store.call("get_leaderboard")
-	detached.clear()
-	_check(_save_store.call("get_leaderboard") == rows, "standings callers must not mutate saved rows")
+	_check(_save_store.call("get_album") == album, "album must survive disk reload")
 
 
 func _test_audio_architecture() -> void:
@@ -216,7 +167,7 @@ func _test_audio_architecture() -> void:
 	_check(not bool(_audio.call("register_cue", "ui.confirm", "")), "empty audio path must be safe")
 	_check(not bool(_audio.call("register_cue", "ui.confirm", "res://assets/template/audio/missing.ogg")), "missing SFX file must be safe")
 	_check(not bool(_audio.call("register_cue", "music.title", "res://assets/template/audio/missing.ogg")), "missing BGM file must be safe")
-	_check(not bool(_audio.call("register_cue", "ui.confirm", "res://assets/template/characters/runner.png")), "non-audio resources must be rejected")
+	_check(not bool(_audio.call("register_cue", "ui.confirm", "res://assets/holiday/characters/llama.png")), "non-audio resources must be rejected")
 	var fixture := AudioStreamWAV.new()
 	fixture.format = AudioStreamWAV.FORMAT_8_BITS
 	fixture.mix_rate = 8000
@@ -245,20 +196,31 @@ func _test_audio_architecture() -> void:
 
 func _test_assets() -> void:
 	for path: String in [
-		"res://assets/template/environment/backdrop.png", "res://assets/template/environment/foreground.png",
-		"res://assets/template/characters/runner.png", "res://assets/template/characters/sentinel.png",
-		"res://assets/template/powerups/overdrive.png", "res://assets/template/powerups/shield.png",
-		"res://assets/template/powerups/slow_field.png", "res://assets/template/powerups/magnet.png",
-		"res://assets/template/ui/title_glass.png", "res://assets/template/ui/pause_glass.png",
+		"res://assets/holiday/environment/yard_sunny.png",
+		"res://assets/holiday/environment/yard_overcast.png",
+		"res://assets/holiday/characters/llama.png",
+		"res://assets/holiday/characters/llama_annoyed.png",
+		"res://assets/holiday/characters/llama_happy.png",
+		"res://assets/holiday/characters/llama_smirk.png",
+		"res://assets/holiday/characters/goose.png",
+		"res://assets/holiday/characters/sheep_clingy.png",
+		"res://assets/holiday/characters/sheep_dull.png",
+		"res://assets/holiday/characters/cow.png",
+		"res://assets/holiday/characters/duck.png",
+		"res://assets/holiday/characters/player.png",
+		"res://assets/holiday/fx/grass_bundle.png",
+		"res://assets/holiday/fx/felt_spit.png",
+		"res://assets/holiday/ui/polaroid_frame.png",
+		"res://assets/holiday/ui/scrapbook_paper.png",
+		"res://assets/share/favicon.png",
+		"res://assets/share/og.png",
 		"res://assets/template/fonts/NotoSansSC-VF.subset.woff2",
 		"res://assets/template/fonts/Figtree-VF.subset.woff2",
-		"res://assets/template/fonts/display/Sora-VF.subset.woff2",
 	]:
 		_check(ResourceLoader.exists(path), "required visual asset is missing: " + path)
-	var foreground := (load("res://assets/template/environment/foreground.png") as Texture2D).get_image()
-	_check(foreground.get_pixel(foreground.get_width() / 2, foreground.get_height() / 2).a == 0.0, "foreground center must be transparent")
+	var llama := (load("res://assets/holiday/characters/llama.png") as Texture2D).get_image()
+	_check(llama.detect_alpha() != Image.ALPHA_NONE, "felt llama must keep an alpha cutout")
 	_check(not DirAccess.dir_exists_absolute("res://assets/template/audio/placeholders"), "default audio assets must not ship")
-	_check(ResourceLoader.exists("res://assets/template/powerups/energy.png"), "energy node artwork must ship")
 
 
 func _test_font_glyph_coverage() -> void:
@@ -272,50 +234,25 @@ func _test_font_glyph_coverage() -> void:
 	_check(font == load("res://assets/template/fonts/ui_regular.tres"), "ui_regular must be the primary project font")
 	_check(font is FontVariation and font.base_font.resource_path.ends_with("Figtree-VF.subset.woff2"), "primary font must use the Figtree body face")
 	_check(font is FontVariation and not font.fallbacks.is_empty() and (font.fallbacks[0] as FontVariation).base_font.resource_path.ends_with("NotoSansSC-VF.subset.woff2"), "Chinese must fall back to Noto Sans SC")
-	var label := Label.new()
-	get_tree().root.add_child(label)
-	_check(label.get_theme_font("font") == font, "dynamic controls must inherit the UI font")
-	label.queue_free()
 	var missing := PackedInt32Array()
 	var seen := {}
-	for locale: String in ["en", "zh-CN"]:
-		_i18n.call("set_locale", locale)
-		for key: String in _i18n.call("catalog_keys", locale):
-			var localized := str(_i18n.call("t", key))
-			for index: int in localized.length():
-				var codepoint := localized.unicode_at(index)
-				if codepoint >= 32 and not font.has_char(codepoint) and not seen.has(codepoint):
-					seen[codepoint] = true
-					missing.append(codepoint)
-	for symbol: String in ["·", "×", "→", "←", "↑", "↓", "…"]:
+	_i18n.call("set_locale", "zh-CN")
+	for key: String in _i18n.call("catalog_keys", "zh-CN"):
+		var localized := str(_i18n.call("t", key))
+		for index: int in localized.length():
+			var codepoint := localized.unicode_at(index)
+			if codepoint >= 32 and not font.has_char(codepoint) and not seen.has(codepoint):
+				seen[codepoint] = true
+				missing.append(codepoint)
+	for symbol: String in ["·", "…"]:
 		var codepoint := symbol.unicode_at(0)
 		if not font.has_char(codepoint) and not seen.has(codepoint):
 			seen[codepoint] = true
 			missing.append(codepoint)
-	_i18n.call("set_locale", "en")
 	_check(missing.is_empty(), "bundled font is missing localized/runtime code points: %s" % [missing])
 
 
-func _test_effect_pool() -> void:
-	var effects := EffectsDirector.new()
-	get_tree().root.add_child(effects)
-	await get_tree().process_frame
-	effects.configure(Vector2(588.0, 476.0))
-	var baseline := effects.get_child_count()
-	for index: int in 40:
-		effects.burst(Vector2(index, index), Color.WHITE)
-	_check(effects.get_child_count() == baseline, "bursts must recycle a fixed emitter pool")
-	var snapshot := effects.debug_snapshot()
-	_check(int(snapshot.burst_capacity) == 12, "burst pool must have a documented hard cap")
-	_check(bool(snapshot.ambient), "effects must include an ambient emitter")
-	_check(not snapshot.has("trail"), "effects must not recreate a continuous player trail")
-	_check(int(snapshot.child_count) == 13, "effects must contain only the burst pool and ambient emitter")
-	effects.queue_free()
-	await get_tree().process_frame
-
-
 func _test_runtime_scene() -> void:
-	_save_store.call("set_tutorial_completed", false)
 	var packed: PackedScene = load("res://scenes/main.tscn")
 	_check(packed != null, "main scene must load")
 	if packed == null:
@@ -327,94 +264,47 @@ func _test_runtime_scene() -> void:
 	_check(instance.get("_title_screen") != null and bool((instance.get("_title_screen") as Control).visible), "title screen must be visible on boot")
 	_check(not instance.has_method("_open_tuning"), "Addon owns tuning UI; no duplicate game panel")
 	_check(not FileAccess.file_exists("res://scripts/ui/tuning_panel.gd"), "native tuning panel is absent")
-	instance.size = Vector2(1280.0, 1706.0)
-	instance.call("_apply_responsive_layout")
+	_check((instance.get("_title_label") as Label).text == "悠长的假期", "title must use the holiday identity")
+	_check((instance.get("_play_button") as Button).text == "走进院子", "play button must enter the yard")
+	instance.call("_start_holiday")
 	await get_tree().process_frame
-	var title_rect: Rect2 = (instance.get("_title_panel") as Control).get_global_rect()
-	_check(Rect2(Vector2.ZERO, instance.size).encloses(title_rect), "portrait title must fit the viewport")
-	_check(title_rect.get_center().distance_to(instance.size * 0.5) < 2.0, "portrait title must remain centered")
-	instance.call("_start_new_run")
-	await get_tree().process_frame
-	var world: MazeWorld = instance.get("_world")
-	_check(world != null, "starting a run must create the maze world")
+	var world: YardWorld = instance.get("_world")
+	_check(world != null, "starting a holiday must create the yard")
 	if world != null:
-		_check(world.remaining_collectibles() > 100, "stage must contain a meaningful collectible route")
-		_check(world.get_pixel_size() == Vector2(588.0, 476.0), "world dimensions must be 21 by 17 at 28 pixels")
-		_check(int(world.call("_wall_edge_mask", Vector2i(0, 0))) == 0, "outer wall corner must not draw internal borders")
-		_check(int(world.call("_wall_edge_mask", Vector2i(1, 0))) == MazeWorld.WALL_EDGE_BOTTOM, "wall border must face the path only")
-		_check(int(world.call("_wall_edge_mask", Vector2i(2, 2))) == MazeWorld.WALL_EDGE_TOP | MazeWorld.WALL_EDGE_BOTTOM | MazeWorld.WALL_EDGE_LEFT, "connected wall tiles must omit their internal divider")
-		var before_score := world.score
-		world.call("_on_runner_entered_cell", Vector2i(2, 1))
-		_check(world.score == before_score + RunScoreService.event_value("energy"), "world scoring must use named score events")
-		var effects_snapshot: Dictionary = world.call("debug_effects_snapshot")
-		_check(int(effects_snapshot.get("burst_capacity", 0)) == 12, "runtime world must use the bounded effects director")
-	var tutorial: Control = instance.get("_tutorial")
-	_check(bool(tutorial.visible), "first Stage 1 run must show versioned event-driven onboarding")
-	_check(not bool(_tuning.call("is_ranked_eligible")), "tutorial run must be unranked")
-	_check((instance.get("_title_label") as Label).text == "Generic Game Template", "title must use the generic identity")
-	for step: int in [0, 1, 2, 3, 4]:
-		instance.call("_begin_tutorial")
-		instance.set("_tutorial_state", step)
-		_check((instance.get("_skip_tutorial_button") as Button).visible, "skip must remain visible at every tutorial step")
-		instance.call("_skip_tutorial")
-		_check(not tutorial.visible and int(instance.get("_tutorial_state")) == -1, "skipping must dismiss all tutorial state")
-		_check(bool(world.get("_simulation_active")) and bool(world.get("_input_enabled")), "skipping must release input and simulation")
-		_check(bool(_save_store.call("is_tutorial_completed")), "skipping must persist dismissal")
-	instance.call("_begin_tutorial")
-	tutorial.call("_on_continue")
-	instance.set("_tutorial_state", 4)
-	instance.call("_on_tutorial_continued")
-	instance.call("_set_input_method", "touch")
-	_check(bool((instance.get("_touch_controls") as Control).visible), "touch input must expose on-screen direction controls")
-	_check(Rect2(Vector2.ZERO, instance.size).encloses((instance.get("_touch_controls") as Control).get_global_rect()), "touch controls must stay within the portrait viewport")
-	instance.call("_set_input_method", "gamepad")
-	_check(not bool((instance.get("_touch_controls") as Control).visible), "gamepad input must hide touch controls")
+		_check(world.get_world_size() == Vector2(1280, 720), "yard panorama must stay 1280x720")
+		_check(world.actor_named("llama") != null, "yard must include the llama")
+		_check(world.actor_named("goose") != null, "yard must include the goose")
+		_check(world.collectible_total() == 6, "album total must be six polaroids")
+		world.set_weather("overcast")
+		world.debug_place_actor("llama", Vector2(640, 400))
+		world.debug_place_actor("goose", Vector2(700, 400))
+		_check(bool(world.debug_force_rule("llama_overcast_goose_annoyed")), "annoyed llama polaroid must collect")
+		_check(world.actor_named("llama").current_expression == "annoyed", "llama sprite must swap to annoyed")
+		world.set_weather("sun")
+		world.debug_place_actor("sheep_a", Vector2(620, 400))
+		world.debug_place_actor("cow", Vector2(560, 420))
+		_check(bool(world.debug_force_rule("llama_sun_sheep_happy")), "sun-sheep polaroid must collect")
+		_check(bool(world.debug_force_rule("llama_sheep_cow_smirk")), "sheep-cow smirk must collect")
+		world.debug_place_player(Vector2(180, 390))
+		world.try_interact()
+		_check(bool(world.get_player().carrying_grass), "yard grass pile must be pickable")
+		world.debug_place_player(world.actor_named("llama").position + Vector2(-40, 0))
+		world.try_interact()
+		_check(not bool(world.get_player().carrying_grass), "feeding must consume the grass")
+		_check("llama_fed_gentle" in world.collected or world.last_photo != "", "feeding should be photographable")
+		_check(world.collected_count() >= 3, "forced mainline photos must land in the album")
 	instance.call("_toggle_pause")
 	_check(bool((instance.get("_pause_screen") as Control).visible), "pause command must show the pause menu")
 	instance.call("_request_destructive_action", "restart")
-	_check(bool((instance.get("_confirm_screen") as Control).visible), "restart must require confirmation before discarding progress")
+	_check(bool((instance.get("_confirm_screen") as Control).visible), "restart must require confirmation")
 	instance.call("_cancel_destructive_action")
-	_check(bool((instance.get("_pause_screen") as Control).visible), "canceling confirmation must preserve the paused run")
+	_check(bool((instance.get("_pause_screen") as Control).visible), "canceling confirmation must preserve the paused holiday")
 	instance.call("_toggle_pause")
-	instance.call("_on_effects_changed", {"overdrive": 7.0, "shield": 10.0, "slow_field": 6.0, "magnet": 8.0})
-	_check((instance.get("_power_label") as Label).visible, "active effect timers must remain visible")
-	instance.set("_run_score", 250)
-	instance.call("_finish_run", false)
-	_check(bool((instance.get("_result_screen") as Control).visible), "defeat must reach the debrief screen")
-	_check((instance.get("_result_score") as Label).text == "0", "debrief starts its score reveal at zero without flashing the final score")
-	instance.call("_set_result_reveal", 1.0)
-	_check((instance.get("_result_score") as Label).text == "250", "debrief ends its score reveal at the final score")
-	_check(str((instance.get("_run_result") as Dictionary).get("outcome")) == "defeat", "defeat result must be immutable and explicit")
-	_save_store.call("set_tutorial_completed", true)
-	_tuning.call("reset_defaults")
-	instance.call("_start_new_run")
-	await get_tree().process_frame
-	instance.set("_stage_index", 1)
-	instance.call("_start_stage")
-	await get_tree().process_frame
-	var second_world: MazeWorld = instance.get("_world")
-	_check(second_world != null and str(second_world.stage_data.get("id")) == "stage_2", "Stage 2 must instantiate from the data catalog")
-	instance.call("_finish_run", true)
-	_check(str((instance.get("_run_result") as Dictionary).get("outcome")) == "victory", "victory must reach a deterministic finalized result")
-	(instance.get("_name_input") as LineEdit).text = "CLEANUP"
-	instance.call("_submit_score")
-	var saved_rows: Array = _save_store.call("get_leaderboard")
-	_check(saved_rows.any(func(row: Dictionary) -> bool: return row.name == "CLEANUP"), "result submission must reach local standings")
-	_check((instance.get("_result_status") as Label).text == _i18n.call("t", "result.saved_local"), "local submission must show its localized confirmation")
-	_check((instance.get("_submit_button") as Button).disabled, "saved results must disable duplicate submissions")
-	instance.call("_submit_score")
-	_check(_save_store.call("get_leaderboard") == saved_rows, "repeated submit must not duplicate a result")
-	instance.call("_show_leaderboard")
-	await get_tree().process_frame
-	_check((instance.get("_leaderboard_rows") as VBoxContainer).get_child_count() == saved_rows.size(), "leaderboard must render every local row")
-	_i18n.call("set_locale", "zh-CN")
-	_check((instance.get("_leaderboard_title") as Label).text == _i18n.call("t", "leaderboard.title"), "leaderboard must still switch languages")
+	instance.call("_show_album")
+	_check(bool((instance.get("_album_screen") as Control).visible), "album must open from the holiday")
+	instance.call("_hide_album")
 	instance.call("_show_title")
-	_check((instance.get("_title_screen") as Control).visible, "leaderboard must return to title")
-	instance.call("_start_new_run")
-	await get_tree().process_frame
-	_check(instance.get("_world") != null and str(instance.get("_screen")) == "game", "a saved run must restart without the removed host adapter")
-	_i18n.call("set_locale", "en")
+	_check(bool((instance.get("_title_screen") as Control).visible), "returning to the door must restore the title")
 	instance.queue_free()
 	await get_tree().process_frame
 

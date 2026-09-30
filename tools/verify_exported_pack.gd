@@ -8,21 +8,19 @@ func _initialize() -> void:
 
 
 func _verify() -> void:
-	_check(ProjectSettings.get_setting("application/config/name") == "Generic Game Template", "exported identity")
+	_check(ProjectSettings.get_setting("application/config/name") == "悠长的假期", "exported identity")
 	for path: String in [
-		"environment/backdrop.png", "environment/foreground.png",
-		"characters/runner.png", "characters/sentinel.png",
-		"powerups/energy.png", "powerups/overdrive.png", "powerups/shield.png",
-		"powerups/slow_field.png", "powerups/magnet.png",
-		"ui/title_glass.png", "ui/pause_glass.png",
-		"fonts/Figtree-VF.subset.woff2", "fonts/NotoSansSC-VF.subset.woff2", "fonts/display/Sora-VF.subset.woff2",
+		"environment/yard_sunny.png", "environment/yard_overcast.png",
+		"characters/llama.png", "characters/llama_annoyed.png", "characters/llama_happy.png",
+		"characters/llama_smirk.png", "characters/goose.png", "characters/cow.png",
+		"characters/duck.png", "characters/player.png", "fx/felt_spit.png", "ui/polaroid_frame.png",
 	]:
-		_check(ResourceLoader.exists("res://assets/template/" + path), "pack resource: " + path)
+		_check(ResourceLoader.exists("res://assets/holiday/" + path), "pack resource: " + path)
+	_check(ResourceLoader.exists("res://assets/share/favicon.png"), "pack favicon")
+	_check(ResourceLoader.exists("res://assets/share/og.png"), "pack og cover")
 	_check(not ResourceLoader.exists("res://test/test_suite.tscn"), "test scene excluded")
 	_check(not ResourceLoader.exists("res://tools/capture_native.gd"), "native capture tool excluded")
-	_check(not ResourceLoader.exists("res://autoload/global_leaderboard.gd"), "retired host adapter excluded")
 	_check(not root.has_node("GlobalLeaderboard"), "no dormant network autoload")
-	_check(not DirAccess.dir_exists_absolute("res://assets/template/generated"), "retired creative assets excluded")
 	_check(not DirAccess.dir_exists_absolute("res://assets/template/audio"), "no default audio assets")
 	var font := load("res://assets/template/fonts/ui_regular.tres") as Font
 	_check(font != null, "exported font")
@@ -43,12 +41,11 @@ func _verify() -> void:
 		await process_frame
 		await process_frame
 		_check(bool((main.get("_title_screen") as Control).visible), "pack boots to title")
+		_check((main.get("_title_label") as Label).text == "悠长的假期", "pack title copy")
 		_check(not main.has_method("_maybe_capture"), "capture routing removed from runtime")
-		# The shared release projection strips development controls even when
-		# this Web PCK is inspected by a debug-capable native editor binary.
 		_check(not main.has_method("_open_tuning"), "release tuning entry point excluded")
 		_check(not ResourceLoader.exists("res://scripts/ui/tuning_panel.gd"), "release tuning panel excluded")
-		main.call("_start_new_run")
+		main.call("_start_holiday")
 		await process_frame
 		_check(main.get("_world") != null, "pack starts gameplay")
 		var audio := root.get_node("AudioDirector")

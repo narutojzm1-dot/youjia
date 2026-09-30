@@ -1,33 +1,483 @@
 {
   "assets": {
+    "assets/holiday/characters/cow.png": {
+      "declaredUseEvidence": [],
+      "generator": {},
+      "inputs": [],
+      "license": {},
+      "origin": "unknown",
+      "referenceEvidence": [
+        "scripts/game/yard_world.gd"
+      ],
+      "regions": [],
+      "sha256": "sha256:96ccc8cf7a4a17f9b918cf08a0c2f2dd78d0a9a3093e6e891b9f5de8969cf204",
+      "shipped": true,
+      "size": 105604,
+      "source": {},
+      "status": "present",
+      "transformations": [],
+      "useEvidence": [
+        "scripts/game/yard_world.gd"
+      ],
+      "used": true,
+      "usedBy": []
+    },
+    "assets/holiday/characters/duck.png": {
+      "declaredUseEvidence": [],
+      "generator": {},
+      "inputs": [],
+      "license": {},
+      "origin": "unknown",
+      "referenceEvidence": [
+        "scripts/game/yard_world.gd"
+      ],
+      "regions": [],
+      "sha256": "sha256:d4068444b4fffd3e28052c668e35ac3483a8204260533613e701166b656f2235",
+      "shipped": true,
+      "size": 17849,
+      "source": {},
+      "status": "present",
+      "transformations": [],
+      "useEvidence": [
+        "scripts/game/yard_world.gd"
+      ],
+      "used": true,
+      "usedBy": []
+    },
+    "assets/holiday/characters/goose.png": {
+      "declaredUseEvidence": [],
+      "generator": {},
+      "inputs": [],
+      "license": {},
+      "origin": "unknown",
+      "referenceEvidence": [
+        "scripts/game/yard_world.gd"
+      ],
+      "regions": [],
+      "sha256": "sha256:ae59873263522c4b18da3d97958b79fe92a3ac7264ac2a2835dbaacc58809813",
+      "shipped": true,
+      "size": 34455,
+      "source": {},
+      "status": "present",
+      "transformations": [],
+      "useEvidence": [
+        "scripts/game/yard_world.gd"
+      ],
+      "used": true,
+      "usedBy": []
+    },
+    "assets/holiday/characters/llama.png": {
+      "declaredUseEvidence": [],
+      "generator": {},
+      "inputs": [],
+      "license": {},
+      "origin": "unknown",
+      "referenceEvidence": [
+        "scripts/game/yard_world.gd"
+      ],
+      "regions": [],
+      "sha256": "sha256:beb6c2827b94abb77596904a3096a151106d2b1435c12dd1d837486c60d3b652",
+      "shipped": true,
+      "size": 77375,
+      "source": {},
+      "status": "present",
+      "transformations": [],
+      "useEvidence": [
+        "scripts/game/yard_world.gd"
+      ],
+      "used": true,
+      "usedBy": []
+    },
+    "assets/holiday/characters/llama_annoyed.png": {
+      "declaredUseEvidence": [],
+      "generator": {},
+      "inputs": [],
+      "license": {},
+      "origin": "unknown",
+      "referenceEvidence": [
+        "scripts/game/yard_world.gd",
+        "scripts/main.gd"
+      ],
+      "regions": [],
+      "sha256": "sha256:a4a853a50b835746e245ffdad1b51deea642aeb3a71fa1a973f7b0c704473058",
+      "shipped": true,
+      "size": 101369,
+      "source": {},
+      "status": "present",
+      "transformations": [],
+      "useEvidence": [
+        "scripts/game/yard_world.gd",
+        "scripts/main.gd"
+      ],
+      "used": true,
+      "usedBy": []
+    },
+    "assets/holiday/characters/llama_happy.png": {
+      "declaredUseEvidence": [],
+      "generator": {},
+      "inputs": [],
+      "license": {},
+      "origin": "unknown",
+      "referenceEvidence": [
+        "scripts/game/yard_world.gd",
+        "scripts/main.gd"
+      ],
+      "regions": [],
+      "sha256": "sha256:b3d915c4cb2cbea7516fcbd25c276fe7a239b001f5db536e846e700e61d0585f",
+      "shipped": true,
+      "size": 102999,
+      "source": {},
+      "status": "present",
+      "transformations": [],
+      "useEvidence": [
+        "scripts/game/yard_world.gd",
+        "scripts/main.gd"
+      ],
+      "used": true,
+      "usedBy": []
+    },
+    "assets/holiday/characters/llama_smirk.png": {
+      "declaredUseEvidence": [],
+      "generator": {},
+      "inputs": [],
+      "license": {},
+      "origin": "unknown",
+      "referenceEvidence": [
+        "scripts/game/yard_world.gd",
+        "scripts/main.gd"
+      ],
+      "regions": [],
+      "sha256": "sha256:547dac11bb6178db07b6412cf5cd910b264c1f45a1808d80a9f7f81e8335abca",
+      "shipped": true,
+      "size": 96500,
+      "source": {},
+      "status": "present",
+      "transformations": [],
+      "useEvidence": [
+        "scripts/game/yard_world.gd",
+        "scripts/main.gd"
+      ],
+      "used": true,
+      "usedBy": []
+    },
+    "assets/holiday/characters/player.png": {
+      "declaredUseEvidence": [],
+      "generator": {},
+      "inputs": [],
+      "license": {},
+      "origin": "unknown",
+      "referenceEvidence": [
+        "scripts/entities/vacationer.gd"
+      ],
+      "regions": [],
+      "sha256": "sha256:20cc74011286a1b095d80aee7ee9dc1fb601235e2a386b803e0c7f213ae2e3b0",
+      "shipped": true,
+      "size": 37817,
+      "source": {},
+      "status": "present",
+      "transformations": [],
+      "useEvidence": [
+        "scripts/entities/vacationer.gd"
+      ],
+      "used": true,
+      "usedBy": []
+    },
+    "assets/holiday/characters/sheep_clingy.png": {
+      "declaredUseEvidence": [],
+      "generator": {},
+      "inputs": [],
+      "license": {},
+      "origin": "unknown",
+      "referenceEvidence": [
+        "scripts/game/yard_world.gd"
+      ],
+      "regions": [],
+      "sha256": "sha256:2e1e82de637184c069951ba2da516398f1b07999e56a56fdaa0954a9dd434791",
+      "shipped": true,
+      "size": 61040,
+      "source": {},
+      "status": "present",
+      "transformations": [],
+      "useEvidence": [
+        "scripts/game/yard_world.gd"
+      ],
+      "used": true,
+      "usedBy": []
+    },
+    "assets/holiday/characters/sheep_dull.png": {
+      "declaredUseEvidence": [],
+      "generator": {},
+      "inputs": [],
+      "license": {},
+      "origin": "unknown",
+      "referenceEvidence": [
+        "scripts/game/yard_world.gd"
+      ],
+      "regions": [],
+      "sha256": "sha256:0142f3d419894b619100bb7e77f14c7ffb27305165d92007f2e98feabe293cfc",
+      "shipped": true,
+      "size": 93925,
+      "source": {},
+      "status": "present",
+      "transformations": [],
+      "useEvidence": [
+        "scripts/game/yard_world.gd"
+      ],
+      "used": true,
+      "usedBy": []
+    },
+    "assets/holiday/environment/yard_overcast.png": {
+      "declaredUseEvidence": [],
+      "generator": {},
+      "inputs": [],
+      "license": {},
+      "origin": "unknown",
+      "referenceEvidence": [
+        "scripts/game/yard_world.gd"
+      ],
+      "regions": [],
+      "sha256": "sha256:3d1aa3589f3d4d1838987310130afbfbff3b3384999543cb2ed5b3c9655e66f8",
+      "shipped": true,
+      "size": 3427343,
+      "source": {},
+      "status": "present",
+      "transformations": [],
+      "useEvidence": [
+        "scripts/game/yard_world.gd"
+      ],
+      "used": true,
+      "usedBy": []
+    },
+    "assets/holiday/environment/yard_sunny.png": {
+      "declaredUseEvidence": [],
+      "generator": {},
+      "inputs": [],
+      "license": {},
+      "origin": "unknown",
+      "referenceEvidence": [
+        "scripts/game/yard_world.gd"
+      ],
+      "regions": [],
+      "sha256": "sha256:7f29181eac79c89b18eff65fe1a18c37230573b55f8c8993a0365dc480219d73",
+      "shipped": true,
+      "size": 4019432,
+      "source": {},
+      "status": "present",
+      "transformations": [],
+      "useEvidence": [
+        "scripts/game/yard_world.gd"
+      ],
+      "used": true,
+      "usedBy": []
+    },
+    "assets/holiday/fx/felt_spit.png": {
+      "declaredUseEvidence": [],
+      "generator": {},
+      "inputs": [],
+      "license": {},
+      "origin": "unknown",
+      "referenceEvidence": [
+        "scripts/entities/felt_actor.gd"
+      ],
+      "regions": [],
+      "sha256": "sha256:f703d28197b78381b2f19906c191ee9fe28d928d5ad4b033e91ea387df3dc0c8",
+      "shipped": true,
+      "size": 5613,
+      "source": {},
+      "status": "present",
+      "transformations": [],
+      "useEvidence": [
+        "scripts/entities/felt_actor.gd"
+      ],
+      "used": true,
+      "usedBy": []
+    },
+    "assets/holiday/fx/grass_bundle.png": {
+      "declaredUseEvidence": [],
+      "generator": {},
+      "inputs": [],
+      "license": {},
+      "origin": "unknown",
+      "referenceEvidence": [
+        "scripts/entities/vacationer.gd",
+        "scripts/game/yard_world.gd"
+      ],
+      "regions": [],
+      "sha256": "sha256:0933c9ebd9d771f818b822a58e04b82119c7f5f7d9e5da36f4959be253cd66b1",
+      "shipped": true,
+      "size": 11000,
+      "source": {},
+      "status": "present",
+      "transformations": [],
+      "useEvidence": [
+        "scripts/entities/vacationer.gd",
+        "scripts/game/yard_world.gd"
+      ],
+      "used": true,
+      "usedBy": []
+    },
+    "assets/holiday/sharing/favicon.png": {
+      "declaredUseEvidence": [],
+      "generator": {},
+      "inputs": [],
+      "license": {},
+      "origin": "unknown",
+      "referenceEvidence": [],
+      "regions": [],
+      "sha256": "sha256:7714a221eaffcf32fe6b18bfbba7372536b763efb7ebc869a59288464d25ab1e",
+      "shipped": true,
+      "size": 4819139,
+      "source": {},
+      "status": "present",
+      "transformations": [],
+      "useEvidence": [],
+      "used": false,
+      "usedBy": []
+    },
+    "assets/holiday/sharing/favicon_fallback.png": {
+      "declaredUseEvidence": [],
+      "generator": {},
+      "inputs": [],
+      "license": {},
+      "origin": "unknown",
+      "referenceEvidence": [],
+      "regions": [],
+      "sha256": "sha256:22045f722b675a31de9243d6b0eee23e8a4e474890f643b739c36f58ba121cac",
+      "shipped": true,
+      "size": 44174,
+      "source": {},
+      "status": "present",
+      "transformations": [],
+      "useEvidence": [],
+      "used": false,
+      "usedBy": []
+    },
+    "assets/holiday/sharing/og.png": {
+      "declaredUseEvidence": [],
+      "generator": {},
+      "inputs": [],
+      "license": {},
+      "origin": "unknown",
+      "referenceEvidence": [],
+      "regions": [],
+      "sha256": "sha256:9b0cc305844a3eea6e2c635cb66b3e3075d4d7f55191ec3e07e0eb437a74a086",
+      "shipped": true,
+      "size": 6364377,
+      "source": {},
+      "status": "present",
+      "transformations": [],
+      "useEvidence": [],
+      "used": false,
+      "usedBy": []
+    },
+    "assets/holiday/ui/polaroid_frame.png": {
+      "declaredUseEvidence": [],
+      "generator": {},
+      "inputs": [],
+      "license": {},
+      "origin": "unknown",
+      "referenceEvidence": [
+        "scripts/main.gd"
+      ],
+      "regions": [],
+      "sha256": "sha256:9cf85844f275e90013d9e116fb33e04ef974fdcb5d084f30f1e126a5b29bd545",
+      "shipped": true,
+      "size": 110181,
+      "source": {},
+      "status": "present",
+      "transformations": [],
+      "useEvidence": [
+        "scripts/main.gd"
+      ],
+      "used": true,
+      "usedBy": []
+    },
+    "assets/holiday/ui/scrapbook_paper.png": {
+      "declaredUseEvidence": [],
+      "generator": {},
+      "inputs": [],
+      "license": {},
+      "origin": "unknown",
+      "referenceEvidence": [
+        "scripts/main.gd"
+      ],
+      "regions": [],
+      "sha256": "sha256:6f104bd1eab5244f63de54c2c3228ed6b33315abd1477af090b88401b2465be3",
+      "shipped": true,
+      "size": 1604105,
+      "source": {},
+      "status": "present",
+      "transformations": [],
+      "useEvidence": [
+        "scripts/main.gd"
+      ],
+      "used": true,
+      "usedBy": []
+    },
+    "assets/share/favicon.png": {
+      "declaredUseEvidence": [],
+      "generator": {},
+      "inputs": [],
+      "license": {},
+      "origin": "unknown",
+      "referenceEvidence": [
+        "game-sharing.json",
+        "project.godot"
+      ],
+      "regions": [],
+      "sha256": "sha256:7e67d7987c0566aa7608d8069d8c49d1e195bf0ff0aa5c82d7808f2d470e45a3",
+      "shipped": true,
+      "size": 382395,
+      "source": {},
+      "status": "present",
+      "transformations": [],
+      "useEvidence": [
+        "game-sharing.json",
+        "project.godot"
+      ],
+      "used": true,
+      "usedBy": []
+    },
+    "assets/share/og.png": {
+      "declaredUseEvidence": [],
+      "generator": {},
+      "inputs": [],
+      "license": {},
+      "origin": "unknown",
+      "referenceEvidence": [
+        "game-sharing.json"
+      ],
+      "regions": [],
+      "sha256": "sha256:744c4ef4ff02a5c20b4bf6b258cd91327cc6f16e40105c4b640c10bec936a509",
+      "shipped": true,
+      "size": 1365017,
+      "source": {},
+      "status": "present",
+      "transformations": [],
+      "useEvidence": [
+        "game-sharing.json"
+      ],
+      "used": true,
+      "usedBy": []
+    },
     "assets/template/characters/runner.png": {
       "declaredUseEvidence": [],
       "generator": {},
       "inputs": [],
       "license": {},
       "origin": "template",
-      "referenceEvidence": [
-        "project.godot",
-        "scripts/entities/runner.gd",
-        "scripts/main.gd",
-        "scripts/ui/title_art.gd"
-      ],
+      "referenceEvidence": [],
       "regions": [],
       "sha256": "sha256:c88485773d6ff9361e036f37d8ac76fb77b8c3f7c041c3f52c8dd222adc8cc21",
-      "shipped": null,
+      "shipped": true,
       "size": 68885,
       "source": {
         "starterId": "game-generic-v56"
       },
-      "status": "awaiting-restoration",
+      "status": "present",
       "transformations": [],
-      "useEvidence": [
-        "project.godot",
-        "scripts/entities/runner.gd",
-        "scripts/main.gd",
-        "scripts/ui/title_art.gd"
-      ],
-      "used": true,
+      "useEvidence": [],
+      "used": false,
       "usedBy": []
     },
     "assets/template/characters/sentinel.png": {
@@ -36,24 +486,18 @@
       "inputs": [],
       "license": {},
       "origin": "template",
-      "referenceEvidence": [
-        "scripts/entities/sentinel.gd",
-        "scripts/ui/title_art.gd"
-      ],
+      "referenceEvidence": [],
       "regions": [],
       "sha256": "sha256:0d9fb751bca5507ba14f7090573e6605a94753390a9e7c53bf2f590f0a24918d",
-      "shipped": null,
+      "shipped": true,
       "size": 64998,
       "source": {
         "starterId": "game-generic-v56"
       },
-      "status": "awaiting-restoration",
+      "status": "present",
       "transformations": [],
-      "useEvidence": [
-        "scripts/entities/sentinel.gd",
-        "scripts/ui/title_art.gd"
-      ],
-      "used": true,
+      "useEvidence": [],
+      "used": false,
       "usedBy": []
     },
     "assets/template/environment/backdrop.png": {
@@ -62,22 +506,18 @@
       "inputs": [],
       "license": {},
       "origin": "template",
-      "referenceEvidence": [
-        "scripts/main.gd"
-      ],
+      "referenceEvidence": [],
       "regions": [],
       "sha256": "sha256:ec4ab7867e60fb483dd438459f587b478aac4c1e71ec4fe509ce74a18de34216",
-      "shipped": null,
+      "shipped": true,
       "size": 971282,
       "source": {
         "starterId": "game-generic-v56"
       },
-      "status": "awaiting-restoration",
+      "status": "present",
       "transformations": [],
-      "useEvidence": [
-        "scripts/main.gd"
-      ],
-      "used": true,
+      "useEvidence": [],
+      "used": false,
       "usedBy": []
     },
     "assets/template/environment/foreground.png": {
@@ -86,22 +526,18 @@
       "inputs": [],
       "license": {},
       "origin": "template",
-      "referenceEvidence": [
-        "scripts/main.gd"
-      ],
+      "referenceEvidence": [],
       "regions": [],
       "sha256": "sha256:4b6916024c69961fbfa7cdc929c68f547fea4561e61ebdb3405b3aba0efbd94d",
-      "shipped": null,
+      "shipped": true,
       "size": 58603,
       "source": {
         "starterId": "game-generic-v56"
       },
-      "status": "awaiting-restoration",
+      "status": "present",
       "transformations": [],
-      "useEvidence": [
-        "scripts/main.gd"
-      ],
-      "used": true,
+      "useEvidence": [],
+      "used": false,
       "usedBy": []
     },
     "assets/template/fonts/Figtree-VF.subset.woff2": {
@@ -117,12 +553,12 @@
       ],
       "regions": [],
       "sha256": "sha256:b3976c5969c8b1afd81dc3e314b61d8ffe3f3f58cf40906443105d330e6e0bdf",
-      "shipped": null,
+      "shipped": true,
       "size": 23660,
       "source": {
         "starterId": "game-generic-v56"
       },
-      "status": "awaiting-restoration",
+      "status": "present",
       "transformations": [],
       "useEvidence": [
         "assets/template/fonts/ui_bold.tres",
@@ -148,7 +584,7 @@
       ],
       "regions": [],
       "sha256": "sha256:38f4c5f927f746b3dfa4c3a5d7edf0b7a3e828e27438418fa54f9e1565289412",
-      "shipped": null,
+      "shipped": true,
       "size": 1869368,
       "source": {
         "name": "NotoSansSC-VF.subset.woff2",
@@ -170,28 +606,18 @@
       "inputs": [],
       "license": {},
       "origin": "template",
-      "referenceEvidence": [
-        "assets/template/fonts/display/generic_eyebrow.tres",
-        "assets/template/fonts/display/generic_heading.tres",
-        "assets/template/fonts/display/generic_menu.tres",
-        "assets/template/fonts/display/generic_title.tres"
-      ],
+      "referenceEvidence": [],
       "regions": [],
       "sha256": "sha256:438fbf4582548e76b266a738f2c11bcbd5137978f2d2e2f3aaabd49df69186f2",
-      "shipped": null,
+      "shipped": true,
       "size": 41696,
       "source": {
         "starterId": "game-generic-v56"
       },
-      "status": "awaiting-restoration",
+      "status": "present",
       "transformations": [],
-      "useEvidence": [
-        "assets/template/fonts/display/generic_eyebrow.tres",
-        "assets/template/fonts/display/generic_heading.tres",
-        "assets/template/fonts/display/generic_menu.tres",
-        "assets/template/fonts/display/generic_title.tres"
-      ],
-      "used": true,
+      "useEvidence": [],
+      "used": false,
       "usedBy": []
     },
     "assets/template/powerups/energy.png": {
@@ -200,26 +626,18 @@
       "inputs": [],
       "license": {},
       "origin": "template",
-      "referenceEvidence": [
-        "scripts/game/maze_world.gd",
-        "scripts/main.gd",
-        "scripts/ui/title_art.gd"
-      ],
+      "referenceEvidence": [],
       "regions": [],
       "sha256": "sha256:ffd7906f240f928e785d7c19a9e7a7b5dfab0d7483be5205dda3e4ba17ebe06a",
-      "shipped": null,
+      "shipped": true,
       "size": 50950,
       "source": {
         "starterId": "game-generic-v56"
       },
-      "status": "awaiting-restoration",
+      "status": "present",
       "transformations": [],
-      "useEvidence": [
-        "scripts/game/maze_world.gd",
-        "scripts/main.gd",
-        "scripts/ui/title_art.gd"
-      ],
-      "used": true,
+      "useEvidence": [],
+      "used": false,
       "usedBy": []
     },
     "assets/template/powerups/magnet.png": {
@@ -228,22 +646,18 @@
       "inputs": [],
       "license": {},
       "origin": "template",
-      "referenceEvidence": [
-        "scripts/game/maze_world.gd"
-      ],
+      "referenceEvidence": [],
       "regions": [],
       "sha256": "sha256:6e7354aa6510a462717218b09b9d784bb161b87878bff62ef4f2a9d03c053de7",
-      "shipped": null,
+      "shipped": true,
       "size": 53724,
       "source": {
         "starterId": "game-generic-v56"
       },
-      "status": "awaiting-restoration",
+      "status": "present",
       "transformations": [],
-      "useEvidence": [
-        "scripts/game/maze_world.gd"
-      ],
-      "used": true,
+      "useEvidence": [],
+      "used": false,
       "usedBy": []
     },
     "assets/template/powerups/overdrive.png": {
@@ -252,24 +666,18 @@
       "inputs": [],
       "license": {},
       "origin": "template",
-      "referenceEvidence": [
-        "scripts/game/maze_world.gd",
-        "scripts/ui/title_art.gd"
-      ],
+      "referenceEvidence": [],
       "regions": [],
       "sha256": "sha256:6a48a85886c0551c1af0df576b0225f0ec3ae86b326fd84fc614083fbfe2908b",
-      "shipped": null,
+      "shipped": true,
       "size": 37238,
       "source": {
         "starterId": "game-generic-v56"
       },
-      "status": "awaiting-restoration",
+      "status": "present",
       "transformations": [],
-      "useEvidence": [
-        "scripts/game/maze_world.gd",
-        "scripts/ui/title_art.gd"
-      ],
-      "used": true,
+      "useEvidence": [],
+      "used": false,
       "usedBy": []
     },
     "assets/template/powerups/shield.png": {
@@ -278,24 +686,18 @@
       "inputs": [],
       "license": {},
       "origin": "template",
-      "referenceEvidence": [
-        "scripts/game/maze_world.gd",
-        "scripts/ui/title_art.gd"
-      ],
+      "referenceEvidence": [],
       "regions": [],
       "sha256": "sha256:8cebf0cf730ca35c8c8697192ef78121c926442328a0725e0bd3e31701d64f13",
-      "shipped": null,
+      "shipped": true,
       "size": 39659,
       "source": {
         "starterId": "game-generic-v56"
       },
-      "status": "awaiting-restoration",
+      "status": "present",
       "transformations": [],
-      "useEvidence": [
-        "scripts/game/maze_world.gd",
-        "scripts/ui/title_art.gd"
-      ],
-      "used": true,
+      "useEvidence": [],
+      "used": false,
       "usedBy": []
     },
     "assets/template/powerups/slow_field.png": {
@@ -304,22 +706,18 @@
       "inputs": [],
       "license": {},
       "origin": "template",
-      "referenceEvidence": [
-        "scripts/game/maze_world.gd"
-      ],
+      "referenceEvidence": [],
       "regions": [],
       "sha256": "sha256:96874c000866b2e7503b40da73888afb918ae36e462f51488415157da52a8637",
-      "shipped": null,
+      "shipped": true,
       "size": 49145,
       "source": {
         "starterId": "game-generic-v56"
       },
-      "status": "awaiting-restoration",
+      "status": "present",
       "transformations": [],
-      "useEvidence": [
-        "scripts/game/maze_world.gd"
-      ],
-      "used": true,
+      "useEvidence": [],
+      "used": false,
       "usedBy": []
     },
     "assets/template/ui/loading-background.png": {
@@ -333,7 +731,7 @@
       ],
       "regions": [],
       "sha256": "sha256:16dde3061f4e60802f8f0d1a6b875e72b6add05192237b03fef1fd313968a13a",
-      "shipped": null,
+      "shipped": true,
       "size": 473356,
       "source": {
         "starterId": "game-generic-v56"
@@ -352,22 +750,18 @@
       "inputs": [],
       "license": {},
       "origin": "template",
-      "referenceEvidence": [
-        "scripts/main.gd"
-      ],
+      "referenceEvidence": [],
       "regions": [],
       "sha256": "sha256:c88a4725838df85e72c7270865848f275b62c525c5679a2a8b7ecefb1af82d4b",
-      "shipped": null,
+      "shipped": true,
       "size": 115691,
       "source": {
         "starterId": "game-generic-v56"
       },
-      "status": "awaiting-restoration",
+      "status": "present",
       "transformations": [],
-      "useEvidence": [
-        "scripts/main.gd"
-      ],
-      "used": true,
+      "useEvidence": [],
+      "used": false,
       "usedBy": []
     },
     "assets/template/ui/title_glass.png": {
@@ -376,99 +770,146 @@
       "inputs": [],
       "license": {},
       "origin": "template",
-      "referenceEvidence": [
-        "scripts/main.gd"
-      ],
+      "referenceEvidence": [],
       "regions": [],
       "sha256": "sha256:8860db07768f093d4effea10b51431f76a1552d4bc7fd4e57757f189c51f0429",
-      "shipped": null,
+      "shipped": true,
       "size": 155592,
       "source": {
         "starterId": "game-generic-v56"
       },
-      "status": "awaiting-restoration",
+      "status": "present",
       "transformations": [],
-      "useEvidence": [
-        "scripts/main.gd"
-      ],
-      "used": true,
+      "useEvidence": [],
+      "used": false,
       "usedBy": []
     }
   },
   "discoveries": {},
   "downloads": {},
+  "export": {
+    "coverage": "verified",
+    "hostMedia": [
+      {
+        "contentMatches": [],
+        "path": "index.apple-touch-icon.png",
+        "sha256": "sha256:80d91adb306354c6e4d1af546d062e1e9236699ad0fd53153ab3d2fc34cd11d4",
+        "size": 59343,
+        "sourcePaths": []
+      },
+      {
+        "contentMatches": [],
+        "path": "index.icon.png",
+        "sha256": "sha256:1c591b9eb1b7af2a840a59a9feb637a0a7aeba2b0abde28042abf44f77d0acb3",
+        "size": 389674,
+        "sourcePaths": []
+      },
+      {
+        "contentMatches": [],
+        "path": "index.png",
+        "sha256": "sha256:5743a648b82437e0e60db5e4aa08103cea96b01e110961082223c0e7fa819ebf",
+        "size": 1010767,
+        "sourcePaths": []
+      },
+      {
+        "contentMatches": [],
+        "path": "share/744c4ef4ff02a5c20b4bf6b258cd91327cc6f16e40105c4b640c10bec936a509.png",
+        "sha256": "sha256:744c4ef4ff02a5c20b4bf6b258cd91327cc6f16e40105c4b640c10bec936a509",
+        "size": 1365017,
+        "sourcePaths": [
+          "assets/share/og.png"
+        ]
+      },
+      {
+        "contentMatches": [],
+        "path": "share/7e67d7987c0566aa7608d8069d8c49d1e195bf0ff0aa5c82d7808f2d470e45a3.png",
+        "sha256": "sha256:7e67d7987c0566aa7608d8069d8c49d1e195bf0ff0aa5c82d7808f2d470e45a3",
+        "size": 382395,
+        "sourcePaths": [
+          "assets/share/favicon.png"
+        ]
+      }
+    ],
+    "pckSha256": "sha256:5d2fe0679b5c62a22ad1ded197d39e947b9ef0a598ee739072333dc5e84fe4b6",
+    "profile": "release",
+    "sourceFingerprint": "sha256:eb2ee26aa433b80166f9527426c7f914f6c2a3cedcc09b3d5c1dfda7432d01d1"
+  },
   "procedures": {},
   "summary": {
     "ancestry": {
       "ai": {
         "retained": 0,
-        "shipped": null,
+        "shipped": 0,
         "used": 0
       },
       "catalog": {
         "retained": 0,
-        "shipped": null,
+        "shipped": 0,
         "used": 0
       },
       "procedural": {
         "retained": 0,
-        "shipped": null,
+        "shipped": 0,
         "used": 0
       }
     },
     "derivatives": {
       "retained": 0,
-      "shipped": null,
+      "shipped": 0,
       "used": 0
     },
-    "exportedHostMedia": null,
+    "exportedHostMedia": {
+      "paths": 5,
+      "uniqueHashes": 5,
+      "unmatchedSourcePaths": 3
+    },
     "files": {
       "downloaded": 0,
-      "retained": 15,
-      "shipped": null,
-      "used": 15
+      "retained": 36,
+      "shipped": 36,
+      "used": 21
     },
     "origins": {
       "ai": {
         "retained": 0,
-        "shipped": null,
+        "shipped": 0,
         "used": 0
       },
       "catalog": {
         "retained": 0,
-        "shipped": null,
+        "shipped": 0,
         "used": 0
       },
       "derivative": {
         "retained": 0,
-        "shipped": null,
+        "shipped": 0,
         "used": 0
       },
       "external": {
         "retained": 0,
-        "shipped": null,
+        "shipped": 0,
         "used": 0
       },
       "procedural": {
         "retained": 0,
-        "shipped": null,
+        "shipped": 0,
         "used": 0
       },
       "template": {
         "retained": 15,
-        "shipped": null,
-        "used": 15
+        "shipped": 15,
+        "used": 3
       },
       "unknown": {
-        "retained": 0,
-        "shipped": null,
-        "used": 0
+        "retained": 21,
+        "shipped": 21,
+        "used": 18
       }
     },
     "packs": {
       "discovered": 0,
       "downloaded": 0,
-      "shipped": null,
+      "shipped": 0,
       "used": 0
     },
     "proceduralSystems": {
@@ -477,9 +918,161 @@
     },
     "spriteRegions": {
       "retained": 0,
-      "shipped": null,
+      "shipped": 0,
       "used": 0
+    },
+    "visualCoverage": {
+      "approvedRevision": 3,
+      "blueprintId": "gbp_93372411ed09b67d8bb6d805",
+      "committedRoles": 9,
+      "expectedDigest": "c0f41a12b58dcdbd137c859db95de3d9b8dd0fd6aab39b1c30ec1d33132c8540",
+      "fulfilledRoles": 0,
+      "roles": [
+        {
+          "id": "fixed_yard_panorama",
+          "reasons": [
+            "unresolved"
+          ],
+          "status": "unresolved"
+        },
+        {
+          "id": "vacationer_character",
+          "reasons": [
+            "unresolved"
+          ],
+          "status": "unresolved"
+        },
+        {
+          "id": "alpaca_main_character",
+          "reasons": [
+            "unresolved"
+          ],
+          "status": "unresolved"
+        },
+        {
+          "id": "duck_group",
+          "reasons": [
+            "unresolved"
+          ],
+          "status": "unresolved"
+        },
+        {
+          "id": "sheep_pair",
+          "reasons": [
+            "unresolved"
+          ],
+          "status": "unresolved"
+        },
+        {
+          "id": "cow_character",
+          "reasons": [
+            "unresolved"
+          ],
+          "status": "unresolved"
+        },
+        {
+          "id": "goose_character",
+          "reasons": [
+            "unresolved"
+          ],
+          "status": "unresolved"
+        },
+        {
+          "id": "modular_animal_faces",
+          "reasons": [
+            "unresolved"
+          ],
+          "status": "unresolved"
+        },
+        {
+          "id": "polaroid_scrapbook_ui",
+          "reasons": [
+            "unresolved"
+          ],
+          "status": "unresolved"
+        }
+      ],
+      "search": {
+        "checkedPages": 0,
+        "outcomes": 0,
+        "overflowEvents": 0,
+        "requests": 0
+      },
+      "selectedButUnusedAssets": [],
+      "staleRenderedEvidence": [],
+      "status": "incomplete",
+      "unexplainedFallbacks": [],
+      "unresolvedRoles": [
+        "fixed_yard_panorama",
+        "vacationer_character",
+        "alpaca_main_character",
+        "duck_group",
+        "sheep_pair",
+        "cow_character",
+        "goose_character",
+        "modular_animal_faces",
+        "polaroid_scrapbook_ui"
+      ],
+      "visualQuality": "requires_agent_review"
     }
   },
-  "version": 1
+  "version": 1,
+  "visualCoverage": {
+    "attempts": {},
+    "expected": {
+      "approvedRevision": 3,
+      "blueprintId": "gbp_93372411ed09b67d8bb6d805",
+      "digest": "c0f41a12b58dcdbd137c859db95de3d9b8dd0fd6aab39b1c30ec1d33132c8540",
+      "roles": [
+        {
+          "description": "为你的唯一可玩场景提供 2D 固定全景：开放式院子、前方小水塘、羊圈和类似欧洲阿尔卑斯山脉的远景，并以可分层的水粉涂感表现天气、季节与天光变化。",
+          "id": "fixed_yard_panorama",
+          "label": "固定院子全景与水粉环境层"
+        },
+        {
+          "description": "为你的走近、喂草、牵行草泥马和发呆观看提供简洁可读的 2D 毛毡角色；角色应融入固定院子尺度，不呈现农场主、战斗者或 RPG 英雄气质。",
+          "id": "vacationer_character",
+          "label": "被放假的玩家角色"
+        },
+        {
+          "description": "为你的表情收集主线提供一只高辨识度的 2D 毛毡草泥马，支持待机、走动、吃草、被牵行、多组情绪表情，以及用毛球粒子而非液体表现吐痰。",
+          "id": "alpaca_main_character",
+          "label": "草泥马主线动物"
+        },
+        {
+          "description": "为你的小水塘和动物关系条件提供几只 2D 毛毡鸭子，支持成群待机、缓慢移动、进食及可被相册捕捉的表情变化。",
+          "id": "duck_group",
+          "label": "水塘鸭群"
+        },
+        {
+          "description": "为你的羊圈和草泥马互动条件提供两只可区分但风格统一的 2D 毛毡羊，支持待机、移动、吃草与基础表情变化。",
+          "id": "sheep_pair",
+          "label": "羊圈双羊"
+        },
+        {
+          "description": "为你的同地吃草和动物空间关系条件提供一只 2D 毛毡牛，支持待机、缓慢移动、吃草及基础表情变化。",
+          "id": "cow_character",
+          "label": "独立牛角色"
+        },
+        {
+          "description": "为你的阴天靠近草泥马等关系触发提供一只轮廓清晰的 2D 毛毡大鹅，支持待机、行走、靠近及基础表情变化。",
+          "id": "goose_character",
+          "label": "独立大鹅角色"
+        },
+        {
+          "description": "为你的数据驱动表情系统提供可替换的眼睛、嘴和耳朵层，使草泥马主线表情及其他动物支线表情在轻推近镜头时仍清晰，并保持手作毛毡质感。",
+          "id": "modular_animal_faces",
+          "label": "动物可替换表情层"
+        },
+        {
+          "description": "为你的偶遇表情收藏提供简体中文手帐与拍立得相册框架；不使用 RPG 面板、任务红点、倒计时、金币、体力或“今日待办”式视觉。",
+          "id": "polaroid_scrapbook_ui",
+          "label": "手帐式拍立得相册界面"
+        }
+      ]
+    },
+    "overflowEvents": 0,
+    "resolutions": {},
+    "version": 1
+  }
 }
