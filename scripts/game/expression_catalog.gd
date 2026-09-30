@@ -32,8 +32,9 @@ const RULES := [
 	{
 		"id": "llama_sheep_cow_smirk",
 		"owner": "llama",
-		"priority": 80,
-		"same_zone": ["sheep", "cow"],
+		"priority": 65,
+		# Historical ID is retained for existing collected-photo saves.
+		"same_zone": ["cow", "horse"],
 		"zone": "pasture",
 		"sees": true,
 		"expression": "smirk",

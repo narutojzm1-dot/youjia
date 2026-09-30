@@ -38,6 +38,17 @@ var ellipse_center := Vector2.ZERO
 var ellipse_radius := Vector2.ZERO
 var _step_phase := 0.0
 var _stuck := 0.0
+var _velocity := Vector2.ZERO
+var _gait := GroundedGait.new()
+var _rig: PlantedGait
+var _following := false
+var _native_facing := 1.0
+var _ground_anchor:=Vector2(-1,-1)
+var _spit_origin:=Vector2(28,-42)
+var _particle_art_scale:=1.0
+var _base_texture_path:=""
+var _face_region:=Rect2()
+var _expression_texture: Texture2D
 
 
 func setup(config: Dictionary) -> void:
@@ -50,6 +61,11 @@ func setup(config: Dictionary) -> void:
 	speed = float(config.get("speed", 28.0))
 	_base_scale = float(config.get("scale", 1.0))
 	z_index = 4
+	_base_texture_path=str(config.get("base_texture",""))
+	_face_region=config.get("face_region",Rect2())
+	_ground_anchor=config.get("ground_anchor",Vector2(-1,-1))
+	_spit_origin=config.get("spit_origin",Vector2(28,-42))
+	_particle_art_scale=float(config.get("particle_art_scale",1.0))
 	_textures = config.get("textures", {})
 	_sprite = Sprite2D.new()
 	_sprite.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
@@ -57,9 +73,26 @@ func setup(config: Dictionary) -> void:
 	_sprite.offset = Vector2(0, -8)
 	add_child(_sprite)
 	set_expression("idle")
+	_native_facing = float(config.get("native_facing", 1.0))
+	_gait.setup(_sprite, float(config.get("leg_start",0.74 if species in ["goose", "duck"] else 0.68)))
+	_apply_face_override()
+	if species == "llama" and bool(config.get("experimental_planted_gait", false)):
+		enable_experimental_planted_gait()
+	_breath = randf_range(0.0, TAU)
+	_gait.phase = randf_range(0.0, TAU)
 	scale = Vector2(_base_scale, _base_scale)
 	_target = _random_point()
 	_build_spit()
+
+
+func enable_experimental_planted_gait() -> void:
+	# Neutral-pose prototype only. Its limb material is not yet a visual match,
+	# so the shipped yard keeps the first-pass llama until art review approves it.
+	if species != "llama" or _rig != null or not _base_texture_path.is_empty():
+		return
+	_rig=PlantedGait.new()
+	_sprite.add_child(_rig)
+	_rig.setup(_sprite,"llama")
 
 
 func set_expression(expression_id: String) -> void:
@@ -67,7 +100,9 @@ func set_expression(expression_id: String) -> void:
 	var path := str(_textures.get(expression_id, _textures.get("idle", "")))
 	if path.is_empty() or not ResourceLoader.exists(path):
 		return
-	_sprite.texture = load(path) as Texture2D
+	_expression_texture=load(path) as Texture2D
+	_sprite.texture=load(_base_texture_path) as Texture2D if not _base_texture_path.is_empty() else _expression_texture
+	_apply_face_override()
 	_anchor_feet()
 
 
@@ -94,9 +129,13 @@ func set_pose(point: Vector2, next_scale: float, face: float) -> void:
 	state = "pose"
 	facing = face if face != 0.0 else facing
 	position = point
+	if _rig != null:
+		_rig.reset_contacts()
 
 
 func begin_lead(target: Node2D) -> void:
+	if state != "lead":
+		_following = false
 	posed = false
 	state = "lead"
 	_lead_target = target
@@ -104,6 +143,7 @@ func begin_lead(target: Node2D) -> void:
 
 func end_lead() -> void:
 	state = "wander"
+	_following = false
 	_lead_target = null
 	_target = _random_point()
 
@@ -123,9 +163,9 @@ func tick(delta: float, world_size: Vector2) -> void:
 	var breath := 1.0
 	if not reduced:
 		breath = 1.0 + sin(_breath * 1.6) * 0.018
-		if current_expression == "annoyed":
+		if _base_texture_path.is_empty() and current_expression == "annoyed":
 			breath = 1.0 + sin(_breath * 3.4) * 0.012
-		elif current_expression == "happy":
+		elif _base_texture_path.is_empty() and current_expression == "happy":
 			breath = 1.0 + sin(_breath * 1.1) * 0.022
 	var visual_scale := float(get_meta("visual_scale", 1.0))
 	if _hold_expression > 0.0:
@@ -143,14 +183,35 @@ func tick(delta: float, world_size: Vector2) -> void:
 		var depth_now := YardGround.depth_at(position.y)
 		var visual := _base_scale * visual_scale * depth_now
 		scale = Vector2(visual * facing, visual * breath)
+		_sprite.scale.x = _native_facing
+		_gait.weight = 0.0
+		_gait.face = facing
+		_gait.apply(_sprite, delta, facing, reduced)
+		_velocity = Vector2.ZERO
+		if _rig != null:
+			_rig.tick(delta, Vector2.ZERO, depth_now, reduced)
 		z_index = 4 + int(position.y / 8.0)
 		return
 	var motion := Vector2.ZERO
+	var depth := YardGround.depth_at(position.y)
+	var desired := Vector2.ZERO
 	match state:
 		"lead":
-			if _lead_target != null:
-				var desired: Vector2 = _lead_target.position + Vector2(-70.0 * signf(facing if facing != 0.0 else 1.0), 8.0)
-				motion = desired - position
+			grazing = false
+			if is_instance_valid(_lead_target):
+				# Follow the person's ground point, not a side chosen by our own
+				# facing. That old target jumped 140px every time we turned.
+				motion = _lead_target.position - position
+				if motion.length() > 78.0 * depth:
+					_following = true
+				elif motion.length() < 60.0 * depth:
+					_following = false
+				if _following:
+					var follow_multiplier := float(TuningStore.get_value("enemies.move.speed_multiplier", 1.0))
+					var follow_speed := maxf(speed, 84.0 * follow_multiplier) * depth
+					desired = motion.normalized() * minf(follow_speed, maxf(0.0, motion.length() - 56.0 * depth) * 2.5)
+			else:
+				end_lead()
 		"graze":
 			_idle_time -= delta
 			grazing = true
@@ -161,46 +222,58 @@ func tick(delta: float, world_size: Vector2) -> void:
 		_:
 			grazing = false
 			motion = _target - position
-			if motion.length() < 6.0:
-				if randf() < 0.45:
-					state = "graze"
-					_idle_time = randf_range(2.2, 6.0)
-				else:
-					_target = _random_point()
-	if motion.length() > 1.0:
-		var depth := YardGround.depth_at(position.y)
-		var ease := clampf(motion.length() / 36.0, 0.42, 1.0)
-		var step := motion.limit_length(speed * depth * ease * delta)
-		var before := position
-		if walk_ground.is_empty() and not use_ellipse:
-			position += step
-			position.x = clampf(position.x, 48.0, world_size.x - 48.0)
-			# 上半幅是山脉和屋顶，动物留在草坪、池边和羊圈。
-			position.y = clampf(position.y, 400.0, world_size.y - 56.0)
-		else:
-			position = _move_on_own_ground(step)
-		if position.distance_to(before) < 0.35:
-			_stuck += delta
-			if _stuck > 0.65:
-				_target = _random_point()
-				_stuck = 0.0
-		else:
+			if motion.length() < 5.0:
+				# A quiet pause between purposeful walks, rather than a new
+				# random destination and a sudden reversal every few seconds.
+				state = "graze"
+				_idle_time = randf_range(1.8, 5.5)
+			else:
+				desired = motion.normalized() * minf(speed * depth, motion.length() * 1.8)
+	var response := 5.0 if species == "duck" else 7.0
+	_velocity = _velocity.lerp(desired, 1.0 - exp(-response * delta))
+	if desired.is_zero_approx() and _velocity.length() < 0.3:
+		_velocity = Vector2.ZERO
+	var step := _velocity * delta
+	var before := position
+	if walk_ground.is_empty() and not use_ellipse:
+		position += step
+		position.x = clampf(position.x, 48.0, world_size.x - 48.0)
+		position.y = clampf(position.y, 400.0, world_size.y - 56.0)
+	else:
+		position = _move_on_own_ground(step)
+	var moved := position - before
+	var actual_speed := moved.length() / maxf(delta, 0.0001)
+	if desired.length() > 2.0 and actual_speed < 1.0:
+		_stuck += delta
+		if _stuck > 0.65 and state != "lead":
+			_target = _random_point()
 			_stuck = 0.0
-		if absf(position.x - before.x) > 0.12:
-			facing = 1.0 if position.x >= before.x else -1.0
-		if not reduced:
-			_step_phase += delta * 8.2
-			# 抬脚留在贴图上，脚的逻辑坐标还在地面，影子不跟着跳。
-			_sprite.position.y = -absf(sin(_step_phase * PI)) * 3.4 * depth
 	else:
 		_stuck = 0.0
-		_sprite.position.y = lerpf(_sprite.position.y, 0.0, 1.0 - exp(-delta * 8.0))
-	var depth_now := YardGround.depth_at(position.y)
-	var visual := _base_scale * visual_scale * depth_now
-	var squash := 1.0
-	if motion.length() > 1.0 and not reduced:
-		squash = 1.0 - 0.04 * absf(sin(_step_phase * PI))
-	scale = Vector2(visual * facing, visual * breath * squash)
+	if absf(step.x) > 0.00001 and absf(moved.x) < 0.00001:
+		_velocity.x = 0.0
+	if absf(step.y) > 0.00001 and absf(moved.y) < 0.00001:
+		_velocity.y = 0.0
+	if absf(moved.x) / maxf(delta, 0.0001) > 2.0:
+		facing = signf(moved.x)
+	var stride := 30.0
+	if species in ["cow","horse"]:
+		stride = 38.0
+	elif species in ["goose", "duck"]:
+		stride = 22.0
+	_gait.advance(delta, moved, depth, stride)
+	_step_phase = _gait.phase
+	_gait.apply(_sprite, delta, facing, reduced, species == "duck" and use_ellipse)
+	var visual := _base_scale * visual_scale * YardGround.depth_at(position.y)
+	# Breathing belongs to resting animals; don't squash a walking silhouette.
+	var resting_breath := lerpf(breath, 1.0, _gait.weight)
+	scale = Vector2(visual * _gait.face * _gait.turn_width, visual * resting_breath)
+	_sprite.scale.x = _native_facing
+	if _rig != null:
+		scale.x = visual * _gait.face
+		_sprite.position.y = 0.0
+		_sprite.rotation = 0.0
+		_rig.tick(delta, moved, depth, reduced)
 	z_index = 4 + int(position.y / 8.0)
 
 
@@ -208,7 +281,10 @@ func _anchor_feet() -> void:
 	if _sprite == null or _sprite.texture == null:
 		return
 	# 贴图默认以中心为锚点，脚会悬在逻辑坐标上方。收到脚底，影子和站位才对齐院子。
-	_sprite.offset = Vector2(0, -_sprite.texture.get_height() * 0.5)
+	if _ground_anchor.x>=0.0:
+		_sprite.offset=_sprite.texture.get_size()*0.5-_ground_anchor
+	else:
+		_sprite.offset = Vector2(0, -_sprite.texture.get_height() * 0.5)
 
 
 func _random_point() -> Vector2:
@@ -280,11 +356,22 @@ func _build_spit() -> void:
 	_spit.explosiveness = 0.86
 	_spit.direction = Vector2(1, -0.2)
 	_spit.spread = 18.0
-	_spit.gravity = Vector2(0, 90)
-	_spit.initial_velocity_min = 70.0
-	_spit.initial_velocity_max = 110.0
-	_spit.scale_amount_min = 0.45
-	_spit.scale_amount_max = 0.8
-	_spit.position = Vector2(28, -42)
+	_spit.gravity = Vector2(0, 90)*_particle_art_scale
+	_spit.initial_velocity_min = 70.0*_particle_art_scale
+	_spit.initial_velocity_max = 110.0*_particle_art_scale
+	_spit.scale_amount_min = 0.45*_particle_art_scale
+	_spit.scale_amount_max = 0.8*_particle_art_scale
+	_spit.position = _spit_origin
 	_spit.z_index = 20
 	add_child(_spit)
+
+
+func _apply_face_override() -> void:
+	if _gait._material==null or _sprite==null or _sprite.texture==null:
+		return
+	var enabled:=not _base_texture_path.is_empty() and _expression_texture!=null
+	_gait._material.set_shader_parameter("face_override",enabled)
+	if enabled:
+		var size:=_sprite.texture.get_size()
+		_gait._material.set_shader_parameter("expression_texture",_expression_texture)
+		_gait._material.set_shader_parameter("face_region",Vector4(_face_region.position.x/size.x,_face_region.position.y/size.y,_face_region.size.x/size.x,_face_region.size.y/size.y))

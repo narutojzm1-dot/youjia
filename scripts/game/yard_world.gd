@@ -60,7 +60,7 @@ func setup(saved_photos: Array = []) -> void:
 	_backdrop = Sprite2D.new()
 	_backdrop.centered = false
 	_backdrop.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
-	_backdrop.z_index = 0
+	_backdrop.z_index = -1
 	add_child(_backdrop)
 	_apply_weather_art()
 	_define_zones()
@@ -124,6 +124,9 @@ func debug_place_actor(actor_id: String, point: Vector2) -> void:
 	if actor == null:
 		return
 	actor.position = point
+	if actor._rig != null:
+		actor._rig.reset_contacts()
+	actor._velocity=Vector2.ZERO
 	actor.current_zone = _zone_at(point)
 	actor.end_lead()
 
@@ -132,6 +135,7 @@ func debug_place_player(point: Vector2) -> void:
 	if _player == null:
 		return
 	_player.position = point
+	_player.reset_locomotion()
 
 
 func tick(delta: float, move: Vector2) -> void:
@@ -153,7 +157,7 @@ func tick(delta: float, move: Vector2) -> void:
 				_has_walk_goal = false
 				move = Vector2.ZERO
 			else:
-				move = to_goal.normalized()
+				move = to_goal.normalized() * minf(1.0, to_goal.length() / 44.0)
 		_player.tick(delta, move, WORLD_SIZE)
 	else:
 		_player.tick(delta, Vector2.ZERO, WORLD_SIZE)
@@ -170,12 +174,12 @@ func tick(delta: float, move: Vector2) -> void:
 		if actor_id == "goose" and weather == "overcast":
 			var llama: FeltActor = _actors.get("llama")
 			var nosiness := float(TuningStore.get_value("enemies.goose.nosiness", 1.0))
-			if llama != null and actor.position.distance_to(llama.position) > 110.0 and randf() < 0.004 * nosiness:
+			if llama != null and actor.position.distance_to(llama.position) > 110.0 and randf() < 1.0 - exp(-0.24 * nosiness * delta):
 				actor.nudge_toward(llama.position)
 		# 晴天一只羊偶尔从羊圈走到草泥马附近，走的是同一块草地。
 		if actor_id == "sheep_a" and weather == "sun" and not _leading:
 			var sun_llama: FeltActor = _actors.get("llama")
-			if sun_llama != null and actor.position.distance_to(sun_llama.position) > 140.0 and randf() < 0.003:
+			if sun_llama != null and actor.position.distance_to(sun_llama.position) > 140.0 and randf() < 1.0 - exp(-0.18 * delta):
 				actor.nudge_toward(sun_llama.position)
 		actor.tick(delta, WORLD_SIZE)
 		actor.current_zone = _zone_at(actor.position)
@@ -312,6 +316,7 @@ func _place_player_spot() -> void:
 		return
 	var spot: Dictionary = PICTURE_SPOTS[_spot]
 	_player.position = spot.position
+	_player.reset_locomotion()
 	_player.facing = float(spot.facing)
 	_player.picture_depth = float(spot.depth)
 	_player.player_state = "idle"
@@ -330,7 +335,7 @@ func _pose_cast() -> void:
 		if _leading and actor_id == "llama":
 			pose = _lead_pose()
 		actor.set_meta("visual_scale", animal_scale)
-		actor.set_pose(pose.position, float(pose.scale), float(pose.facing))
+		actor.set_pose(pose.position, float(pose.scale)*float(actor.get_meta("source_scale_ratio",1.0)), float(pose.facing))
 		actor.current_zone = _zone_at(actor.position)
 
 
@@ -350,7 +355,8 @@ func _cast_layout() -> Dictionary:
 	var goose_scale := 0.32 if weather == "overcast" else 0.34
 	return {
 		"llama": {"position": Vector2(636, 452), "scale": 0.30, "facing": -1.0},
-		"cow": {"position": Vector2(508, 516), "scale": 0.40, "facing": 1.0},
+		"cow": {"position": Vector2(400, 516), "scale": 0.40, "facing": 1.0},
+		"horse": {"position": Vector2(560, 505), "scale": 0.36, "facing": -1.0},
 		"goose": {"position": goose_point, "scale": goose_scale, "facing": -1.0},
 		"sheep_a": {"position": Vector2(990, 448), "scale": 0.28, "facing": -1.0},
 		"sheep_b": {"position": Vector2(1088, 505), "scale": 0.34, "facing": -1.0},
@@ -382,6 +388,7 @@ func _spawn_cast() -> void:
 		},
 		{
 			"id": "goose",
+			"native_facing": -1.0,
 			"species": "goose",
 			"position": Vector2(800, 490),
 			"wander": Rect2(720, 455, 150, 75),
@@ -402,6 +409,7 @@ func _spawn_cast() -> void:
 		},
 		{
 			"id": "sheep_b",
+			"native_facing": -1.0,
 			"species": "sheep",
 			"position": Vector2(1120, 530),
 			"wander": Rect2(1040, 500, 130, 55),
@@ -412,6 +420,7 @@ func _spawn_cast() -> void:
 		},
 		{
 			"id": "cow",
+			"native_facing": -1.0,
 			"species": "cow",
 			"position": Vector2(430, 510),
 			"wander": Rect2(370, 470, 170, 80),
@@ -419,6 +428,17 @@ func _spawn_cast() -> void:
 			"speed": 14.0,
 			"scale": 0.36,
 			"textures": {"idle": "res://assets/holiday/characters/cow.png"},
+		},
+		{
+			"id": "horse",
+			"native_facing": -1.0,
+			"species": "horse",
+			"position": Vector2(650, 480),
+			"wander": Rect2(570, 455, 155, 62),
+			"zone": "pasture",
+			"speed": 15.0,
+			"scale": 0.36,
+			"textures": {"idle": "res://assets/holiday/characters/cast_v2/horse.png"},
 		},
 		{
 			"id": "duck_a",
@@ -451,10 +471,12 @@ func _spawn_cast() -> void:
 			"textures": {"idle": "res://assets/holiday/characters/duck.png"},
 		},
 	]
-	for config: Dictionary in configs:
+	for original: Dictionary in configs:
+		var config:=CastArt.configure(original)
 		var actor: FeltActor = FeltActorType.new()
 		add_child(actor)
 		actor.setup(config)
+		actor.set_meta("source_scale_ratio",float(config.get("source_scale_ratio",1.0)))
 		actor.set_meta("base_speed", float(config.get("speed", 28.0)))
 		_actors[str(config.id)] = actor
 
@@ -689,7 +711,10 @@ func _apply_rule(rule: Dictionary, force: bool) -> void:
 func _draw() -> void:
 	var shadow := Color(0.35, 0.22, 0.38, 0.16)
 	if _player != null:
-		draw_circle(_player.position + Vector2(0, 8), 11.0 * YardGround.depth_at(_player.position.y), shadow)
+		draw_set_transform(_player.position + Vector2(0, 2), 0.0, Vector2(1.0, 0.3))
+		draw_circle(Vector2.ZERO, 11.0 * YardGround.depth_at(_player.position.y), shadow)
 	for actor_id: String in _actors:
 		var actor: FeltActor = _actors[actor_id]
-		draw_circle(actor.position + Vector2(0, 6), 14.0 * YardGround.depth_at(actor.position.y), shadow)
+		draw_set_transform(actor.position + Vector2(0, 2), 0.0, Vector2(1.0, 0.3))
+		draw_circle(Vector2.ZERO, 14.0 * YardGround.depth_at(actor.position.y), shadow)
+	draw_set_transform(Vector2.ZERO)
