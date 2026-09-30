@@ -13,6 +13,17 @@ const GRASS := preload("res://assets/holiday/fx/grass_bundle.png")
 const FeltActorType := preload("res://scripts/entities/felt_actor.gd")
 const VacationerType := preload("res://scripts/entities/vacationer.gd")
 const WORLD_SIZE := Vector2(1280, 720)
+# 人只站在画里已经对上地面的几个位置。圆点是可以走过去的下一处。
+const PICTURE_SPOTS := {
+	"door": {"position": Vector2(250, 508), "depth": 1.0, "facing": 1.0, "neighbors": ["grass"]},
+	"grass": {"position": Vector2(420, 548), "depth": 1.1, "facing": 1.0, "neighbors": ["door", "by_llama", "pond"]},
+	"by_llama": {"position": Vector2(578, 478), "depth": 0.88, "facing": 1.0, "neighbors": ["grass", "by_cow", "by_goose"]},
+	"by_cow": {"position": Vector2(545, 508), "depth": 1.02, "facing": -1.0, "neighbors": ["by_llama", "grass"]},
+	"pond": {"position": Vector2(620, 575), "depth": 1.16, "facing": -1.0, "neighbors": ["grass"]},
+	"by_goose": {"position": Vector2(760, 500), "depth": 0.96, "facing": -1.0, "neighbors": ["by_llama", "pen"]},
+	"pen": {"position": Vector2(980, 488), "depth": 0.9, "facing": -1.0, "neighbors": ["by_goose", "shed"]},
+	"shed": {"position": Vector2(1100, 536), "depth": 1.06, "facing": -1.0, "neighbors": ["pen"]},
+}
 
 var weather := "sun"
 var season := "late_summer"
@@ -33,6 +44,10 @@ var _focus_seconds := 0.0
 var _leading := false
 var _day_seconds := 0.0
 var _grass_sprite: Sprite2D
+var _spot := "door"
+var _move_held := false
+var _has_walk_goal := false
+var _walk_goal := Vector2.ZERO
 
 
 func setup(saved_photos: Array = []) -> void:
@@ -51,6 +66,7 @@ func setup(saved_photos: Array = []) -> void:
 	_define_zones()
 	_spawn_grass()
 	_spawn_cast()
+	_bind_grounds()
 	_weather_timer = randf_range(42.0, 78.0)
 	queue_redraw()
 
@@ -129,6 +145,15 @@ func tick(delta: float, move: Vector2) -> void:
 	if _player == null:
 		return
 	if input_enabled:
+		if move.length() > 0.2:
+			_has_walk_goal = false
+		elif _has_walk_goal:
+			var to_goal := _walk_goal - _player.position
+			if to_goal.length() < 12.0:
+				_has_walk_goal = false
+				move = Vector2.ZERO
+			else:
+				move = to_goal.normalized()
 		_player.tick(delta, move, WORLD_SIZE)
 	else:
 		_player.tick(delta, Vector2.ZERO, WORLD_SIZE)
@@ -145,8 +170,13 @@ func tick(delta: float, move: Vector2) -> void:
 		if actor_id == "goose" and weather == "overcast":
 			var llama: FeltActor = _actors.get("llama")
 			var nosiness := float(TuningStore.get_value("enemies.goose.nosiness", 1.0))
-			if llama != null and randf() < 0.012 * nosiness:
+			if llama != null and actor.position.distance_to(llama.position) > 110.0 and randf() < 0.004 * nosiness:
 				actor.nudge_toward(llama.position)
+		# 晴天一只羊偶尔从羊圈走到草泥马附近，走的是同一块草地。
+		if actor_id == "sheep_a" and weather == "sun" and not _leading:
+			var sun_llama: FeltActor = _actors.get("llama")
+			if sun_llama != null and actor.position.distance_to(sun_llama.position) > 140.0 and randf() < 0.003:
+				actor.nudge_toward(sun_llama.position)
 		actor.tick(delta, WORLD_SIZE)
 		actor.current_zone = _zone_at(actor.position)
 	_player.player_state = _player.snapshot_state()
@@ -198,19 +228,151 @@ func try_interact() -> void:
 	notice_requested.emit("notice.idle")
 
 
+func try_walk_to(point: Vector2) -> bool:
+	if not input_enabled or _player == null:
+		return false
+	var goal := point
+	for actor_id: String in _actors:
+		var actor: FeltActor = _actors[actor_id]
+		var body := actor.position + Vector2(0, -36)
+		if point.distance_to(actor.position) < 64.0 or point.distance_to(body) < 72.0:
+			goal = actor.position
+			break
+	if point.distance_to(_grass_point()) < 56.0:
+		goal = _grass_point()
+	if not YardGround.allows(goal, YardGround.lawn(), true):
+		return false
+	if _player.position.distance_to(goal) < 28.0:
+		return false
+	_has_walk_goal = true
+	_walk_goal = goal
+	return true
+
+
+func try_step_to_point(point: Vector2) -> bool:
+	if not input_enabled:
+		return false
+	var best := ""
+	var best_distance := 76.0
+	for spot_name: String in PICTURE_SPOTS:
+		var spot: Dictionary = PICTURE_SPOTS[spot_name]
+		var spot_pos: Vector2 = spot.position
+		var distance := point.distance_to(spot_pos)
+		if distance < best_distance:
+			best_distance = distance
+			best = spot_name
+	if best == "" or best == _spot:
+		return false
+	_spot = best
+	_apply_picture()
+	notice_requested.emit("notice.step")
+	return true
+
+
+func _latch_move(move: Vector2) -> void:
+	if move.length() < 0.25:
+		_move_held = false
+		return
+	if _move_held:
+		return
+	_move_held = true
+	_step_toward(move)
+
+
+func _step_toward(direction: Vector2) -> void:
+	var here: Dictionary = PICTURE_SPOTS[_spot]
+	var origin: Vector2 = here.position
+	var best := ""
+	var best_dot := 0.34
+	var aim := direction.normalized()
+	for next_name: String in here.neighbors:
+		var next_spot: Dictionary = PICTURE_SPOTS[next_name]
+		var next_pos: Vector2 = next_spot.position
+		var delta := next_pos - origin
+		if delta.length() < 1.0:
+			continue
+		var alignment := delta.normalized().dot(aim)
+		if alignment > best_dot:
+			best_dot = alignment
+			best = next_name
+	if best == "":
+		return
+	_spot = best
+	_apply_picture()
+	notice_requested.emit("notice.step")
+
+
+func _apply_picture() -> void:
+	_place_player_spot()
+	_pose_cast()
+
+
+func _place_player_spot() -> void:
+	if _player == null:
+		return
+	var spot: Dictionary = PICTURE_SPOTS[_spot]
+	_player.position = spot.position
+	_player.facing = float(spot.facing)
+	_player.picture_depth = float(spot.depth)
+	_player.player_state = "idle"
+
+
+func _pose_cast() -> void:
+	if _actors.is_empty():
+		return
+	var layout := _cast_layout()
+	var animal_scale := float(TuningStore.get_value("enemies.visual.scale", 1.0))
+	for actor_id: String in layout:
+		var actor: FeltActor = _actors.get(actor_id)
+		if actor == null:
+			continue
+		var pose: Dictionary = layout[actor_id]
+		if _leading and actor_id == "llama":
+			pose = _lead_pose()
+		actor.set_meta("visual_scale", animal_scale)
+		actor.set_pose(pose.position, float(pose.scale), float(pose.facing))
+		actor.current_zone = _zone_at(actor.position)
+
+
+func _lead_pose() -> Dictionary:
+	var spot: Dictionary = PICTURE_SPOTS[_spot]
+	var face := float(spot.facing)
+	return {
+		"position": _player.position + Vector2(-58.0 * face, 10.0),
+		"scale": 0.32 * float(spot.depth),
+		"facing": face,
+	}
+
+
+func _cast_layout() -> Dictionary:
+	# 晴天各就各位。阴天大鹅改站到草泥马旁边，整张画换一个构图，而不是自己滑过去。
+	var goose_point := Vector2(700, 466) if weather == "overcast" else Vector2(812, 496)
+	var goose_scale := 0.32 if weather == "overcast" else 0.34
+	return {
+		"llama": {"position": Vector2(636, 452), "scale": 0.30, "facing": -1.0},
+		"cow": {"position": Vector2(508, 516), "scale": 0.40, "facing": 1.0},
+		"goose": {"position": goose_point, "scale": goose_scale, "facing": -1.0},
+		"sheep_a": {"position": Vector2(990, 448), "scale": 0.28, "facing": -1.0},
+		"sheep_b": {"position": Vector2(1088, 505), "scale": 0.34, "facing": -1.0},
+		"duck_a": {"position": Vector2(688, 562), "scale": 0.26, "facing": 1.0},
+		"duck_b": {"position": Vector2(746, 570), "scale": 0.24, "facing": -1.0},
+		"duck_c": {"position": Vector2(652, 568), "scale": 0.25, "facing": 1.0},
+	}
+
+
 func _spawn_cast() -> void:
 	_player = VacationerType.new()
 	add_child(_player)
-	_player.setup(Vector2(210, 430))
+	_player.setup(Vector2(260, 540))
 	var configs := [
 		{
 			"id": "llama",
 			"species": "llama",
-			"position": Vector2(640, 390),
-			"wander": Rect2(480, 330, 280, 140),
+			"position": Vector2(560, 470),
+			"wander": Rect2(500, 445, 240, 80),
 			"zone": "pasture",
 			"speed": 26.0,
-			"scale": 0.92,
+			"scale": 0.36,
 			"textures": {
 				"idle": "res://assets/holiday/characters/llama.png",
 				"annoyed": "res://assets/holiday/characters/llama_annoyed.png",
@@ -221,71 +383,71 @@ func _spawn_cast() -> void:
 		{
 			"id": "goose",
 			"species": "goose",
-			"position": Vector2(820, 470),
-			"wander": Rect2(700, 400, 220, 130),
+			"position": Vector2(800, 490),
+			"wander": Rect2(720, 455, 150, 75),
 			"zone": "pond",
 			"speed": 34.0,
-			"scale": 0.82,
+			"scale": 0.38,
 			"textures": {"idle": "res://assets/holiday/characters/goose.png"},
 		},
 		{
 			"id": "sheep_a",
 			"species": "sheep",
-			"position": Vector2(980, 360),
-			"wander": Rect2(520, 310, 580, 180),
+			"position": Vector2(1020, 505),
+			"wander": Rect2(970, 485, 150, 60),
 			"zone": "pen",
 			"speed": 22.0,
-			"scale": 0.78,
+			"scale": 0.36,
 			"textures": {"idle": "res://assets/holiday/characters/sheep_clingy.png"},
 		},
 		{
 			"id": "sheep_b",
 			"species": "sheep",
-			"position": Vector2(1040, 400),
-			"wander": Rect2(520, 330, 560, 170),
+			"position": Vector2(1120, 530),
+			"wander": Rect2(1040, 500, 130, 55),
 			"zone": "pen",
 			"speed": 16.0,
-			"scale": 0.84,
+			"scale": 0.34,
 			"textures": {"idle": "res://assets/holiday/characters/sheep_dull.png"},
 		},
 		{
 			"id": "cow",
 			"species": "cow",
-			"position": Vector2(540, 470),
-			"wander": Rect2(430, 400, 240, 120),
+			"position": Vector2(430, 510),
+			"wander": Rect2(370, 470, 170, 80),
 			"zone": "pasture",
 			"speed": 14.0,
-			"scale": 0.9,
+			"scale": 0.36,
 			"textures": {"idle": "res://assets/holiday/characters/cow.png"},
 		},
 		{
 			"id": "duck_a",
 			"species": "duck",
-			"position": Vector2(690, 545),
+			"position": Vector2(680, 582),
 			"wander": Rect2(620, 500, 160, 70),
 			"zone": "pond",
 			"speed": 18.0,
-			"scale": 0.7,
+			"scale": 0.32,
 			"textures": {"idle": "res://assets/holiday/characters/duck.png"},
 		},
 		{
 			"id": "duck_b",
 			"species": "duck",
-			"position": Vector2(740, 560),
+			"position": Vector2(740, 594),
 			"wander": Rect2(640, 510, 150, 70),
 			"zone": "pond",
 			"speed": 17.0,
-			"scale": 0.66,
+			"scale": 0.30,
 			"textures": {"idle": "res://assets/holiday/characters/duck.png"},
 		},
 		{
 			"id": "duck_c",
 			"species": "duck",
-			"position": Vector2(650, 555),
+			"position": Vector2(650, 590),
 			"wander": Rect2(610, 505, 170, 75),
 			"zone": "pond",
 			"speed": 19.0,
-			"scale": 0.68,
+			"scale": 0.31,
 			"textures": {"idle": "res://assets/holiday/characters/duck.png"},
 		},
 	]
@@ -314,8 +476,24 @@ func _zone_at(point: Vector2) -> String:
 	return "pasture"
 
 
+func _bind_grounds() -> void:
+	_player.walk_ground = YardGround.lawn()
+	_player.avoid_pond = true
+	if not YardGround.allows(_player.position, YardGround.lawn(), true):
+		_player.position = Vector2(260, 540)
+	for actor_id: String in _actors:
+		var actor: FeltActor = _actors[actor_id]
+		if actor_id.begins_with("duck"):
+			actor.adopt_ellipse(YardGround.POND_CENTER, Vector2(96, 28))
+		elif actor_id.begins_with("sheep"):
+			actor.adopt_ground(YardGround.pen_and_lawn(), true)
+		else:
+			actor.adopt_ground(YardGround.lawn(), true)
+
+
 func _grass_point() -> Vector2:
-	return Vector2(180, 390)
+	# 草堆在门前小路边，人可以走过去拿。
+	return Vector2(340, 600)
 
 
 func _spawn_grass() -> void:
@@ -421,23 +599,56 @@ func _rule_matches(rule: Dictionary, snapshot: Dictionary) -> bool:
 			for blocked: Variant in rule.not_nearby:
 				if str(blocked) in near:
 					return false
-	if rule.has("same_zone"):
-		var zone_name := ""
-		for species: Variant in rule.same_zone:
-			var group := _species_actors(str(species))
-			if group.is_empty():
-				return false
-			var species_zone: String = group[0].current_zone
-			for actor: FeltActor in group:
-				if actor.current_zone != species_zone:
-					return false
-			if zone_name == "":
-				zone_name = species_zone
-			elif zone_name != species_zone:
-				return false
-		if rule.has("zone") and zone_name != str(rule.zone):
-			return false
+	if rule.has("same_zone") and not _species_share_zone(rule):
+		return false
+	# sees 表示玩家得站在近处，这张表情才算被看见。
+	if bool(rule.get("sees", false)) and not _player_sees(actors):
+		return false
 	return true
+
+
+func _species_share_zone(rule: Dictionary) -> bool:
+	# 每种动物只要有一只在同一片区域即可。两只羊不必同时离开羊圈。
+	var shared := str(rule.get("zone", ""))
+	var species_list: Array = rule.same_zone
+	if shared != "":
+		for species: Variant in species_list:
+			if not _species_in_zone(str(species), shared):
+				return false
+		return true
+	var zones: Dictionary = {}
+	for species: Variant in species_list:
+		var group := _species_actors(str(species))
+		if group.is_empty():
+			return false
+		for actor: FeltActor in group:
+			zones[actor.current_zone] = true
+	for zone_name: String in zones:
+		var all_present := true
+		for species: Variant in species_list:
+			if not _species_in_zone(str(species), zone_name):
+				all_present = false
+				break
+		if all_present:
+			return true
+	return false
+
+
+func _species_in_zone(species: String, zone_name: String) -> bool:
+	for actor: FeltActor in _species_actors(species):
+		if actor.current_zone == zone_name:
+			return true
+	return false
+
+
+func _player_sees(actors: Array) -> bool:
+	if _player == null:
+		return false
+	var radius := float(TuningStore.get_value("gameplay.proximity.radius", 92.0)) * 2.2
+	for actor: FeltActor in actors:
+		if _player.position.distance_to(actor.position) <= radius:
+			return true
+	return false
 
 
 func _contains_all(haystack: Array, needles: Array) -> bool:
@@ -478,7 +689,7 @@ func _apply_rule(rule: Dictionary, force: bool) -> void:
 func _draw() -> void:
 	var shadow := Color(0.35, 0.22, 0.38, 0.16)
 	if _player != null:
-		draw_circle(_player.position + Vector2(0, 18), 16.0, shadow)
+		draw_circle(_player.position + Vector2(0, 8), 11.0 * YardGround.depth_at(_player.position.y), shadow)
 	for actor_id: String in _actors:
 		var actor: FeltActor = _actors[actor_id]
-		draw_circle(actor.position + Vector2(0, 16), 20.0, shadow)
+		draw_circle(actor.position + Vector2(0, 6), 14.0 * YardGround.depth_at(actor.position.y), shadow)

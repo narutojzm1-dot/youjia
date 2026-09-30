@@ -24,6 +24,8 @@ func _capture() -> void:
 		main._toggle_pause()
 	elif OS.get_environment("GENERIC2D_CAPTURE_GAME") == "1":
 		main._start_holiday()
+		if OS.get_environment("GENERIC2D_CAPTURE_WEATHER") == "overcast":
+			main.get("_world").set_weather("overcast")
 	elif OS.get_environment("GENERIC2D_CAPTURE_CONFIRM") == "1":
 		main._start_holiday()
 		await process_frame
@@ -31,7 +33,8 @@ func _capture() -> void:
 		main._request_destructive_action("restart")
 	for _frame: int in 8:
 		await process_frame
-	await create_timer(0.25).timeout
+	var extra := float(OS.get_environment("GENERIC2D_CAPTURE_WAIT"))
+	await create_timer(0.25 + extra).timeout
 	var image := root.get_texture().get_image()
 	var error := image.save_png(capture_path)
 	print("[capture] %s (%s)" % [capture_path, error_string(error)])

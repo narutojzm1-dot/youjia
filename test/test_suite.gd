@@ -273,6 +273,14 @@ func _test_runtime_scene() -> void:
 	if world != null:
 		_check(world.get_world_size() == Vector2(1280, 720), "yard panorama must stay 1280x720")
 		_check(world.actor_named("llama") != null, "yard must include the llama")
+		var llama: FeltActor = world.actor_named("llama")
+		_check(YardGround.allows(llama.position, YardGround.lawn(), true), "llama starts on the lawn")
+		llama.nudge_toward(Vector2(700, 490))
+		var before: Vector2 = llama.position
+		for _step: int in 12:
+			world.tick(0.1, Vector2.ZERO)
+		_check(llama.position.distance_to(before) > 8.0, "llama walks across the grass")
+		_check(YardGround.allows(llama.position, YardGround.lawn(), true), "llama stays on the lawn")
 		_check(world.actor_named("goose") != null, "yard must include the goose")
 		_check(world.collectible_total() == 6, "album total must be six polaroids")
 		world.set_weather("overcast")
@@ -285,7 +293,7 @@ func _test_runtime_scene() -> void:
 		world.debug_place_actor("cow", Vector2(560, 420))
 		_check(bool(world.debug_force_rule("llama_sun_sheep_happy")), "sun-sheep polaroid must collect")
 		_check(bool(world.debug_force_rule("llama_sheep_cow_smirk")), "sheep-cow smirk must collect")
-		world.debug_place_player(Vector2(180, 390))
+		world.debug_place_player(Vector2(340, 600))
 		world.try_interact()
 		_check(bool(world.get_player().carrying_grass), "yard grass pile must be pickable")
 		world.debug_place_player(world.actor_named("llama").position + Vector2(-40, 0))

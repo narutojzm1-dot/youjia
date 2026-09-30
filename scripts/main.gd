@@ -104,8 +104,14 @@ func _unhandled_input(event: InputEvent) -> void:
 		return
 	if _pause_screen.visible or _album_screen.visible or _confirm_screen.visible:
 		return
-	if event.is_action_pressed("ui_accept") or (event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT):
+	if event.is_action_pressed("ui_accept"):
 		_world.try_interact()
+		get_viewport().set_input_as_handled()
+		return
+	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+		var world_point := _screen_to_world(event.position)
+		if not _world.try_walk_to(world_point):
+			_world.try_interact()
 		get_viewport().set_input_as_handled()
 
 
@@ -431,6 +437,14 @@ func _on_release_focus() -> void:
 	_cam_target_offset = Vector2.ZERO
 
 
+func _screen_to_world(screen: Vector2) -> Vector2:
+	var view := get_viewport_rect().size
+	var zoom := _camera.zoom
+	if zoom.x == 0.0 or zoom.y == 0.0:
+		zoom = Vector2.ONE
+	return _camera.get_screen_center_position() + (screen - view * 0.5) / zoom
+
+
 func _show_notice_key(key: String) -> void:
 	_notice.text = I18n.t(key)
 	_notice.visible = true
@@ -443,6 +457,10 @@ func _open_licenses() -> void:
 
 func _layout() -> void:
 	var pad := 20.0
+	if _hint_label:
+		_hint_label.position = Vector2(pad, 16.0)
+		# 给暂停按钮留出右边，提示整句都留在画面里。
+		_hint_label.size = Vector2(maxf(320.0, size.x - 188.0), 72.0)
 	if _album_chip:
 		_album_chip.position = Vector2(pad, size.y - 68.0)
 		_weather_chip.position = Vector2(pad + 210.0, size.y - 68.0)

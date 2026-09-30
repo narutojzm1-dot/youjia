@@ -27,6 +27,17 @@ var _hold_expression := 0.0
 var _spit: CPUParticles2D
 var _lead_target: Node2D
 var _base_scale := 1.0
+# 画中站位。posed 时不再沿矩形游荡，只在落点上呼吸。
+var posed := false
+var pose_point := Vector2.ZERO
+# 各自的地面。空多边形表示还没绑地，沿用原来的矩形夹取。
+var walk_ground: PackedVector2Array = PackedVector2Array()
+var avoid_pond := false
+var use_ellipse := false
+var ellipse_center := Vector2.ZERO
+var ellipse_radius := Vector2.ZERO
+var _step_phase := 0.0
+var _stuck := 0.0
 
 
 func setup(config: Dictionary) -> void:
@@ -57,6 +68,7 @@ func set_expression(expression_id: String) -> void:
 	if path.is_empty() or not ResourceLoader.exists(path):
 		return
 	_sprite.texture = load(path) as Texture2D
+	_anchor_feet()
 
 
 func hold_expression(expression_id: String, seconds: float) -> void:
@@ -75,7 +87,17 @@ func spit() -> void:
 	_spit.emitting = true
 
 
+func set_pose(point: Vector2, next_scale: float, face: float) -> void:
+	posed = true
+	pose_point = point
+	_base_scale = next_scale
+	state = "pose"
+	facing = face if face != 0.0 else facing
+	position = point
+
+
 func begin_lead(target: Node2D) -> void:
+	posed = false
 	state = "lead"
 	_lead_target = target
 
@@ -105,10 +127,24 @@ func tick(delta: float, world_size: Vector2) -> void:
 			breath = 1.0 + sin(_breath * 3.4) * 0.012
 		elif current_expression == "happy":
 			breath = 1.0 + sin(_breath * 1.1) * 0.022
-	var visual := _base_scale * float(get_meta("visual_scale", 1.0))
-	scale = Vector2(visual * facing, visual * breath)
+	var visual_scale := float(get_meta("visual_scale", 1.0))
 	if _hold_expression > 0.0:
 		_hold_expression -= delta
+		# 表情只停留一小会儿，过后回到平时的脸，避免第一张表情黏住不放。
+		if _hold_expression <= 0.0:
+			_hold_expression = 0.0
+			set_expression("idle")
+	# 活的画：脚钉在落点上。鸭子只在水面轻轻起伏，不横着滑过院子。
+	if posed and state == "pose":
+		var bob := 0.0
+		if species == "duck" and not reduced:
+			bob = sin(_breath * 1.4) * 2.0
+		position = pose_point + Vector2(0, bob)
+		var depth_now := YardGround.depth_at(position.y)
+		var visual := _base_scale * visual_scale * depth_now
+		scale = Vector2(visual * facing, visual * breath)
+		z_index = 4 + int(position.y / 8.0)
+		return
 	var motion := Vector2.ZERO
 	match state:
 		"lead":
@@ -132,20 +168,106 @@ func tick(delta: float, world_size: Vector2) -> void:
 				else:
 					_target = _random_point()
 	if motion.length() > 1.0:
-		var step := motion.limit_length(speed * delta)
-		position += step
-		if absf(step.x) > 0.15:
-			facing = 1.0 if step.x >= 0.0 else -1.0
-	position.x = clampf(position.x, 48.0, world_size.x - 48.0)
-	position.y = clampf(position.y, 220.0, world_size.y - 48.0)
+		var depth := YardGround.depth_at(position.y)
+		var ease := clampf(motion.length() / 36.0, 0.42, 1.0)
+		var step := motion.limit_length(speed * depth * ease * delta)
+		var before := position
+		if walk_ground.is_empty() and not use_ellipse:
+			position += step
+			position.x = clampf(position.x, 48.0, world_size.x - 48.0)
+			# 上半幅是山脉和屋顶，动物留在草坪、池边和羊圈。
+			position.y = clampf(position.y, 400.0, world_size.y - 56.0)
+		else:
+			position = _move_on_own_ground(step)
+		if position.distance_to(before) < 0.35:
+			_stuck += delta
+			if _stuck > 0.65:
+				_target = _random_point()
+				_stuck = 0.0
+		else:
+			_stuck = 0.0
+		if absf(position.x - before.x) > 0.12:
+			facing = 1.0 if position.x >= before.x else -1.0
+		if not reduced:
+			_step_phase += delta * 8.2
+			# 抬脚留在贴图上，脚的逻辑坐标还在地面，影子不跟着跳。
+			_sprite.position.y = -absf(sin(_step_phase * PI)) * 3.4 * depth
+	else:
+		_stuck = 0.0
+		_sprite.position.y = lerpf(_sprite.position.y, 0.0, 1.0 - exp(-delta * 8.0))
+	var depth_now := YardGround.depth_at(position.y)
+	var visual := _base_scale * visual_scale * depth_now
+	var squash := 1.0
+	if motion.length() > 1.0 and not reduced:
+		squash = 1.0 - 0.04 * absf(sin(_step_phase * PI))
+	scale = Vector2(visual * facing, visual * breath * squash)
 	z_index = 4 + int(position.y / 8.0)
 
 
+func _anchor_feet() -> void:
+	if _sprite == null or _sprite.texture == null:
+		return
+	# 贴图默认以中心为锚点，脚会悬在逻辑坐标上方。收到脚底，影子和站位才对齐院子。
+	_sprite.offset = Vector2(0, -_sprite.texture.get_height() * 0.5)
+
+
 func _random_point() -> Vector2:
-	return Vector2(
-		randf_range(wander_rect.position.x, wander_rect.end.x),
-		randf_range(wander_rect.position.y, wander_rect.end.y)
-	)
+	if use_ellipse:
+		var angle := randf() * TAU
+		var radius := sqrt(randf())
+		return ellipse_center + Vector2(cos(angle) * ellipse_radius.x * radius, sin(angle) * ellipse_radius.y * radius)
+	for _try: int in 16:
+		var point := Vector2(
+			randf_range(wander_rect.position.x, wander_rect.end.x),
+			randf_range(wander_rect.position.y, wander_rect.end.y)
+		)
+		if _stands_on(point):
+			return point
+	if not walk_ground.is_empty():
+		return walk_ground[0]
+	return wander_rect.get_center()
+
+
+func adopt_ground(poly: PackedVector2Array, hole_pond: bool) -> void:
+	walk_ground = poly
+	avoid_pond = hole_pond
+	use_ellipse = false
+	if not _stands_on(position):
+		position = _random_point()
+	_target = _random_point()
+
+
+func adopt_ellipse(center: Vector2, radius: Vector2) -> void:
+	use_ellipse = true
+	ellipse_center = center
+	ellipse_radius = radius
+	avoid_pond = false
+	if not _stands_on(position):
+		position = center
+	_target = _random_point()
+
+
+func _stands_on(point: Vector2) -> bool:
+	if use_ellipse:
+		return YardGround.in_ellipse(point, ellipse_center, ellipse_radius)
+	if walk_ground.is_empty():
+		return true
+	return YardGround.allows(point, walk_ground, avoid_pond)
+
+
+func _move_on_own_ground(step: Vector2) -> Vector2:
+	if use_ellipse:
+		var next := position + step
+		if YardGround.in_ellipse(next, ellipse_center, ellipse_radius):
+			return next
+		var along_x := Vector2(next.x, position.y)
+		if YardGround.in_ellipse(along_x, ellipse_center, ellipse_radius):
+			return along_x
+		var along_y := Vector2(position.x, next.y)
+		if YardGround.in_ellipse(along_y, ellipse_center, ellipse_radius):
+			return along_y
+		return position
+	return YardGround.move_inside(position, step, walk_ground, avoid_pond)
 
 
 func _build_spit() -> void:
