@@ -1,24 +1,26 @@
 {
   "schema": "youjia.release/v1",
-  "sourceCommit": "44838200866727297089430fa4f639fbf1512c24",
+  "sourceCommit": "adfc3817cb6c7489b483323902f1aa0aebeaed19",
   "engine": "4.6.3.stable.official.7d41c59c4",
   "tests": {
     "general": 389,
     "locomotion": 399,
+    "loader": "PASS",
     "isolatedExportedPack": "PASS"
   },
+  "entry": "game-adfc381",
   "files": {
+    "index.html": "4c01d055e417510dfb73071873a6429427c5ff70a4c2a04f45d22d556536521e",
+    "game-adfc381.js": "e3f56ee40e6f84371053db06692cfac15e2c8659547b11c6b2dfa1996dabd981",
     ".nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-    "open-source-licenses.html": "9215f5fdd50039a9b6f3d8f0271cbc21bbdf64b917fb118dd29c8a16b9974e00",
+    "game-adfc381.audio.position.worklet.js": "be33985bc7160d6bf9646f259cd86b259cd67b02ccb297ee5c44f8ac84327bc8",
+    "game-adfc381.pck": "38daf3be134af52ce1ce0d2b702588141972660fda747d0e1f240547dbf498a7",
+    "game-adfc381.png": "5743a648b82437e0e60db5e4aa08103cea96b01e110961082223c0e7fa819ebf",
+    "game-adfc381.audio.worklet.js": "5b476a9c9ce642c0ee4256436d1bc31d9c38f868aca0f9a8e2a57c18d2dec2a3",
+    "game-adfc381.apple-touch-icon.png": "80d91adb306354c6e4d1af546d062e1e9236699ad0fd53153ab3d2fc34cd11d4",
     "THIRD_PARTY_NOTICES.txt": "c729a77bf07eb9745b2d89c3ce4ead3357438366f41743d2755ae35f98509cf9",
-    "index.apple-touch-icon.png": "80d91adb306354c6e4d1af546d062e1e9236699ad0fd53153ab3d2fc34cd11d4",
-    "index.icon.png": "1c591b9eb1b7af2a840a59a9feb637a0a7aeba2b0abde28042abf44f77d0acb3",
-    "index.png": "5743a648b82437e0e60db5e4aa08103cea96b01e110961082223c0e7fa819ebf",
-    "index.html": "8007981cd663225c892b918ea77f0bec19cbf4dc0fa9e2149c761aedacef67da",
-    "index.audio.position.worklet.js": "be33985bc7160d6bf9646f259cd86b259cd67b02ccb297ee5c44f8ac84327bc8",
-    "index.audio.worklet.js": "5b476a9c9ce642c0ee4256436d1bc31d9c38f868aca0f9a8e2a57c18d2dec2a3",
-    "index.wasm": "26b61ce95247012ab3dca3ff51e96d1cdbff44ee91a8c20a83e150afca83f1b6",
-    "index.js": "e3f56ee40e6f84371053db06692cfac15e2c8659547b11c6b2dfa1996dabd981",
-    "index.pck": "2b2da0b3e4443d10206b633f28cdd9b716263ec53b46830bfd84335535831ecc"
+    "game-adfc381.icon.png": "1c591b9eb1b7af2a840a59a9feb637a0a7aeba2b0abde28042abf44f77d0acb3",
+    "game-adfc381.wasm": "26b61ce95247012ab3dca3ff51e96d1cdbff44ee91a8c20a83e150afca83f1b6",
+    "open-source-licenses.html": "9215f5fdd50039a9b6f3d8f0271cbc21bbdf64b917fb118dd29c8a16b9974e00"
   }
 }
