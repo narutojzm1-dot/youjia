@@ -161,8 +161,9 @@ func tick(delta: float, move: Vector2) -> void:
 			if not _pending_interaction.is_empty() and _player.position.distance_to(_walk_goal) < 64.0:
 				_has_walk_goal = false
 				_walk_path.clear()
+				var target := _pending_interaction
 				_pending_interaction = ""
-				try_interact()
+				_interact_with_target(target)
 			var destination := _walk_path[0] if not _walk_path.is_empty() else _walk_goal
 			if not _walk_path.is_empty() and _player.position.distance_to(destination) < (12.0 if _walk_path.size()==1 else 4.0):
 				_walk_path.pop_front()
@@ -222,16 +223,27 @@ func tick(delta: float, move: Vector2) -> void:
 	queue_redraw()
 
 
+# Space is intentionally contextual. Pointer/HUD commands keep their selected target.
 func try_interact() -> void:
 	if not input_enabled or _player == null:
 		return
-	TuningStore.apply_boundary("NEXT_ACTION")
 	if _player.position.distance_to(_grass_point()) < 78.0 and not _player.carrying_grass:
-		_player.pick_grass()
-		notice_requested.emit("notice.picked_grass")
+		_interact_with_target("grass")
+		return
+	_interact_with_target("llama")
+
+
+func _interact_with_target(target: String) -> void:
+	if not input_enabled or _player == null:
+		return
+	TuningStore.apply_boundary("NEXT_ACTION")
+	if target == "grass":
+		if _player.position.distance_to(_grass_point()) < 78.0 and not _player.carrying_grass:
+			_player.pick_grass()
+			notice_requested.emit("notice.picked_grass")
 		return
 	var llama: FeltActor = _actors.get("llama")
-	if llama != null and _player.position.distance_to(llama.position) < 88.0:
+	if target == "llama" and llama != null and _player.position.distance_to(llama.position) < 88.0:
 		if _player.carrying_grass:
 			_player.consume_grass()
 			llama.hold_expression("happy", 4.0)
@@ -264,47 +276,41 @@ func request_primary_action() -> void:
 		actor_named("llama").end_lead()
 		notice_requested.emit("notice.lead_stop")
 	elif _player.carrying_grass:
-		request_pointer_action(actor_named("llama").position)
+		_request_action("llama", actor_named("llama").position)
 	else:
-		request_pointer_action(_grass_point())
+		_request_action("grass", _grass_point())
 
 
 func request_pointer_action(point: Vector2) -> void:
 	if not input_enabled or _player == null:
 		return
-	_pending_interaction = ""
-	var goal := point
 	var llama := actor_named("llama")
 	if point.distance_to(_grass_point()) < 45.0:
-		_pending_interaction = "grass"
-		goal = _grass_point()
+		_request_action("grass", _grass_point())
 	elif llama != null and (point.distance_to(llama.position) < 45.0 or point.distance_to(llama.position + Vector2(0,-48)) < 50.0):
-		_pending_interaction = "llama"
-		goal = llama.position
-	if not _pending_interaction.is_empty() and _player.position.distance_to(goal) < 64.0:
-		_has_walk_goal = false
-		_walk_path.clear()
+		_request_action("llama", llama.position)
+	else:
+		_request_action("", point)
+
+
+func _request_action(target: String, goal: Vector2) -> void:
+	_pending_interaction = target
+	_has_walk_goal = false
+	_walk_path.clear()
+	if not target.is_empty() and _player.position.distance_to(goal) < 64.0:
 		_pending_interaction = ""
-		try_interact()
+		_interact_with_target(target)
 		return
 	if not try_walk_to(goal):
 		_pending_interaction = ""
 		notice_requested.emit("notice.cannot_walk")
 
 
-
-func try_walk_to(point: Vector2) -> bool:
+func try_walk_to(goal: Vector2) -> bool:
 	if not input_enabled or _player == null:
 		return false
-	var goal := point
-	for actor_id: String in _actors:
-		var actor: FeltActor = _actors[actor_id]
-		var body := actor.position + Vector2(0, -36)
-		if point.distance_to(actor.position) < 64.0 or point.distance_to(body) < 72.0:
-			goal = actor.position
-			break
-	if point.distance_to(_grass_point()) < 56.0:
-		goal = _grass_point()
+	# Hit-testing happens once, in request_pointer_action. Re-snapping here could
+	# replace an explicit llama destination with nearby grass or another animal.
 	if not YardGround.allows(goal, YardGround.lawn(), true):
 		return false
 	if _player.position.distance_to(goal) < 28.0:
