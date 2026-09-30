@@ -403,17 +403,17 @@ func _photo_card(rule: Dictionary, owned: bool) -> Control:
 	if owned:
 		var owner := str(rule.get("owner", "llama"))
 		var expression := str(rule.get("expression", "idle"))
-		var path := "res://assets/holiday/characters/%s.png" % owner
-		if owner == "llama":
-			match expression:
-				"annoyed":
-					path = "res://assets/holiday/characters/llama_annoyed.png"
-				"happy":
-					path = "res://assets/holiday/characters/llama_happy.png"
-				"smirk":
-					path = "res://assets/holiday/characters/llama_smirk.png"
+		var path := CastArt.texture_path(owner,expression)
 		if ResourceLoader.exists(path):
 			portrait.texture = load(path)
+			if owner=="llama" and ResourceLoader.exists(CastArt.DIRECTORY+"llama_smirk.png"):
+				portrait.texture=load(CastArt.DIRECTORY+"llama_smirk.png")
+				var material:=ShaderMaterial.new()
+				material.shader=preload("res://shaders/felt_walk.gdshader")
+				material.set_shader_parameter("face_override",true)
+				material.set_shader_parameter("expression_texture",load(path))
+				material.set_shader_parameter("face_region",Vector4(805.0/1254,225.0/1254,225.0/1254,160.0/1254))
+				portrait.material=material
 	else:
 		portrait.modulate = Color(1, 1, 1, 0.08)
 	holder.add_child(portrait)

@@ -1,0 +1,241 @@
+{
+  "llama_smirk": {
+    "width": 1254,
+    "height": 1254,
+    "alpha_bbox": [
+      180,
+      21,
+      909,
+      1207
+    ],
+    "ground_anchor": [
+      556.5,
+      1227
+    ],
+    "native_facing": 1,
+    "alpha_zero_fraction": 0.603,
+    "alpha_median_inside": 253,
+    "border_pixels_alpha_gt16": 0,
+    "canonical_ground_anchor": [
+      556.5,
+      1227
+    ],
+    "mouth_anchor": [
+      962,
+      341
+    ],
+    "face_region_xywh": [
+      810,
+      225,
+      220,
+      155
+    ]
+  },
+  "llama_idle": {
+    "width": 1254,
+    "height": 1254,
+    "alpha_bbox": [
+      179,
+      21,
+      912,
+      1209
+    ],
+    "ground_anchor": [
+      557.5,
+      1229
+    ],
+    "native_facing": 1,
+    "alpha_zero_fraction": 0.6038,
+    "alpha_median_inside": 253,
+    "border_pixels_alpha_gt16": 0,
+    "canonical_ground_anchor": [
+      556.5,
+      1227
+    ],
+    "mouth_anchor": [
+      962,
+      341
+    ],
+    "face_region_xywh": [
+      810,
+      225,
+      220,
+      155
+    ],
+    "body_silhouette_iou_vs_smirk": 0.984157
+  },
+  "llama_happy": {
+    "width": 1254,
+    "height": 1254,
+    "alpha_bbox": [
+      180,
+      20,
+      912,
+      1210
+    ],
+    "ground_anchor": [
+      557.5,
+      1229
+    ],
+    "native_facing": 1,
+    "alpha_zero_fraction": 0.6043,
+    "alpha_median_inside": 253,
+    "border_pixels_alpha_gt16": 0,
+    "canonical_ground_anchor": [
+      556.5,
+      1227
+    ],
+    "mouth_anchor": [
+      962,
+      341
+    ],
+    "face_region_xywh": [
+      810,
+      225,
+      220,
+      155
+    ],
+    "body_silhouette_iou_vs_smirk": 0.985273
+  },
+  "llama_annoyed": {
+    "width": 1254,
+    "height": 1254,
+    "alpha_bbox": [
+      180,
+      20,
+      911,
+      1209
+    ],
+    "ground_anchor": [
+      557.5,
+      1228
+    ],
+    "native_facing": 1,
+    "alpha_zero_fraction": 0.6039,
+    "alpha_median_inside": 253,
+    "border_pixels_alpha_gt16": 0,
+    "canonical_ground_anchor": [
+      556.5,
+      1227
+    ],
+    "mouth_anchor": [
+      962,
+      341
+    ],
+    "face_region_xywh": [
+      810,
+      225,
+      220,
+      155
+    ],
+    "body_silhouette_iou_vs_smirk": 0.984977
+  },
+  "cow": {
+    "width": 1254,
+    "height": 1254,
+    "alpha_bbox": [
+      128,
+      164,
+      1053,
+      961
+    ],
+    "ground_anchor": [
+      719.0,
+      1124
+    ],
+    "native_facing": -1,
+    "alpha_zero_fraction": 0.6386,
+    "alpha_median_inside": 253,
+    "border_pixels_alpha_gt16": 0
+  },
+  "horse": {
+    "width": 1254,
+    "height": 1254,
+    "alpha_bbox": [
+      53,
+      68,
+      1192,
+      1117
+    ],
+    "ground_anchor": [
+      799.5,
+      1184
+    ],
+    "native_facing": -1,
+    "alpha_zero_fraction": 0.5472,
+    "alpha_median_inside": 253,
+    "border_pixels_alpha_gt16": 0
+  },
+  "sheep_clingy": {
+    "width": 1254,
+    "height": 1254,
+    "alpha_bbox": [
+      149,
+      96,
+      1040,
+      1083
+    ],
+    "ground_anchor": [
+      576.0,
+      1178
+    ],
+    "native_facing": 1,
+    "alpha_zero_fraction": 0.5557,
+    "alpha_median_inside": 252,
+    "border_pixels_alpha_gt16": 0
+  },
+  "sheep_dull": {
+    "width": 1254,
+    "height": 1254,
+    "alpha_bbox": [
+      40,
+      209,
+      1210,
+      916
+    ],
+    "ground_anchor": [
+      732.5,
+      1124
+    ],
+    "native_facing": -1,
+    "alpha_zero_fraction": 0.5081,
+    "alpha_median_inside": 252,
+    "border_pixels_alpha_gt16": 0
+  },
+  "goose": {
+    "width": 1254,
+    "height": 1254,
+    "alpha_bbox": [
+      37,
+      78,
+      1187,
+      1109
+    ],
+    "ground_anchor": [
+      628.0,
+      1186
+    ],
+    "native_facing": 1,
+    "alpha_zero_fraction": 0.6092,
+    "alpha_median_inside": 252,
+    "border_pixels_alpha_gt16": 0
+  },
+  "duck": {
+    "width": 1254,
+    "height": 1254,
+    "alpha_bbox": [
+      202,
+      66,
+      931,
+      1140
+    ],
+    "ground_anchor": [
+      670.0,
+      1205
+    ],
+    "native_facing": 1,
+    "alpha_zero_fraction": 0.6246,
+    "alpha_median_inside": 252,
+    "border_pixels_alpha_gt16": 0
+  }
+}

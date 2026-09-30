@@ -16,6 +16,10 @@ func _verify() -> void:
 		"characters/duck.png", "characters/player.png", "fx/felt_spit.png", "ui/polaroid_frame.png",
 	]:
 		_check(ResourceLoader.exists("res://assets/holiday/" + path), "pack resource: " + path)
+	_check(FileAccess.file_exists("res://assets/holiday/characters/cast_v2/manifest.json"),"cast metadata included in exported pack")
+	for stem: String in ["llama_idle","llama_happy","llama_annoyed","llama_smirk","cow","horse","goose","duck","sheep_clingy","sheep_dull"]:
+		_check(ResourceLoader.exists("res://assets/holiday/characters/cast_v2/"+stem+".png"),"approved cast export: "+stem)
+	_check(ResourceLoader.exists("res://assets/holiday/characters/resident_walk_authored_v1/idle.png"),"accepted hero idle exported")
 	_check(ResourceLoader.exists("res://assets/share/favicon.png"), "pack favicon")
 	_check(ResourceLoader.exists("res://assets/share/og.png"), "pack og cover")
 	_check(not ResourceLoader.exists("res://test/test_suite.tscn"), "test scene excluded")
@@ -48,6 +52,9 @@ func _verify() -> void:
 		main.call("_start_holiday")
 		await process_frame
 		_check(main.get("_world") != null, "pack starts gameplay")
+		var world=main.get("_world")
+		_check(world.actor_named("horse")!=null and world.actor_named("horse")._ground_anchor.x>=0,"exported horse loads calibrated art metadata")
+		_check(world.get_player().sequence_walker_enabled,"export keeps accepted sequence hero default")
 		var audio := root.get_node("AudioDirector")
 		_check(not bool(audio.call("play_cue", "ui.confirm")), "pack missing SFX is silent")
 		_check(not bool(audio.call("play_music", "music.gameplay")), "pack missing BGM is silent")

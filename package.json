@@ -14,6 +14,7 @@
     "doctor": "node scripts/manus/runtime-command.cjs ./doctor.mjs",
     "check": "node scripts/manus/runtime-command.cjs ./verify.mjs",
     "inspect": "node scripts/manus/runtime-command.cjs ./inspect-file.mjs",
-    "assets:report": "node scripts/manus/runtime-command.cjs ./asset-provenance.mjs"
+    "assets:report": "node scripts/manus/runtime-command.cjs ./asset-provenance.mjs",
+    "verify:locomotion": "./tools/verify_locomotion.sh"
   }
 }

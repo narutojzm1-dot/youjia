@@ -1,0 +1,55 @@
+{
+  "status": "accepted_and_integrated_default",
+  "runtime": "AnimatedSprite2D",
+  "authorship": "Eight explicit joint-angle poses, one rigid in-between each, rendered to sixteen complete frames; not independently hand-drawn animation",
+  "canvas": [
+    384,
+    448
+  ],
+  "anchor": [
+    192,
+    420
+  ],
+  "game_scale": 0.25,
+  "fps": 12,
+  "default_changed": true,
+  "source_sha256": {
+    "tools/bake_resident_walk.gd": "14c9f8d56bcf4ec3bd36ec31fb805a980306fbc2288a18569c67857e6a11bd64",
+    "scripts/entities/resident_walker.gd": "f048bf04d73b11bf687282233dece14984b7a2856885141e372e8e42c4cd37c6",
+    "scripts/entities/painted_walker.gd": "7db5ff60697b547519480a6fd97fa24ae4fe8301ba5cfb4de7be4743aea4669e",
+    "assets/holiday/characters/approved_resident_upper_v1.png": "4fd91b466c653ceeadb9f19a18ed3b71e14b51d2653cb1c25a775c02f1909294",
+    "assets/holiday/characters/approved_traveler_pants_v1.png": "cb0c47b9aad3ba59490fca24463f60d069208ef2fa2b10b4a097d90a8ce01f8f"
+  },
+  "frame_sha256": {
+    "00.png": "1b89e43dc78bd8812b20cd751bf5497814d4e08a67abd84cff491ca16853ae51",
+    "01.png": "23d7b892dfffbaf84ed0ca52640ddf110fad59831cd17dcd851232a606d84ea9",
+    "02.png": "baa40267a740c82bd2f855bf705d013aec340709fb79599b5f7e05ec1e3ab1cc",
+    "03.png": "db54e352c7aec8d2998db786f78ebbc07eb21f448326f1e15fc0ef3646e59cf8",
+    "04.png": "fac6cfabf7367b1a80855d4c7dd23d8ec8bc9cb8cb36339135b0aebabe0e104f",
+    "05.png": "5c39647456d1da13dba692fb6f8d1391c6f88c53e0d08703187dfd689cbb7dfc",
+    "06.png": "2485c72855b5836bc5904f641a8b9cccb605ff5acd5ce349b98544818b6c9c3a",
+    "07.png": "b27ff324998687068616d76b42f74c2d7b8e2b0c4353b69aef8f2c8a0681f3e4",
+    "08.png": "a95f5fb572cfe7f70d575eae0e4538652d825e9464547919ede9161cdbf39642",
+    "09.png": "6b28cf93d7701dc4c8c4336a110d22fcd09f92c1e2ca94d0dbe36b6734f7818e",
+    "10.png": "7b3da6250051d64e9d3572bb123db94072eb1368d5748daae4792f5ed3f4cb5e",
+    "11.png": "f7fc7ad2cbba586dbe20118f9db827e21eb4e53dd447ab5d34f985ae1ebc202c",
+    "12.png": "49a900ffbd18f2d781338022add9a0bc15fc8205088617fa289fb720a60cd6d5",
+    "13.png": "fada1cbeb4e2a56d0e984a09e61bab86f9b56b3ecf21de90d961a35216824ced",
+    "14.png": "9fac8b72fccdd9c05256da34fd00b00b2594aac0c408027e741feadd66484684",
+    "15.png": "6fafacb9a2696afbd67cf17ef68f1f39392b143a4008dd9fe9972110abecb43f"
+  },
+  "limits": [
+    "Shoe view mismatch between near and far feet",
+    "Small sole alignment drift",
+    "Left direction uses horizontal mirror of approved right-facing art"
+  ],
+  "idle_sha256": "8bed85da92599145c415d7b8abca75002555af597f58feba83fccf5c856932f7",
+  "idle_bake_script_sha256": "72f23874baab8580898a0cd078af3748a64cc1baab6e534ab9ca2811af1fce2b",
+  "root_motion": {
+    "stride_world_px": 52,
+    "base_speed_world_px_s": 39,
+    "tuning_multiplier": 0.40625,
+    "frame_progress": "actual traveled distance after collision",
+    "reduced_motion": "static idle"
+  }
+}

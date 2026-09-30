@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="SpriteFrames" path="res://scenes/experimental/resident_walk_authored_v1.tres" id="1"]
+
+[node name="ResidentWalkAuthoredCandidate" type="AnimatedSprite2D"]
+sprite_frames = ExtResource("1")
+animation = &"walk"
+autoplay = "walk"
+centered = false
+offset = Vector2(-192,-420)
+scale = Vector2(0.25,0.25)
