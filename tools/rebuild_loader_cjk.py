@@ -11,7 +11,7 @@ from pathlib import Path
 from fontTools.subset import Subsetter, Options
 from fontTools.ttLib import TTFont
 
-ROOT = Path("/home/ubuntu/youjia")
+ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / "assets/template/fonts/NotoSansSC-VF.subset.woff2"
 LOADING = ROOT / "web/loading.html"
 META = ROOT / "web/loader-cjk.json"
@@ -26,7 +26,9 @@ EXTRA = "悠长的假期"
 
 
 def main() -> None:
-    corpus = "".join(sorted(set(EXISTING + EXTRA), key=lambda ch: ord(ch)))
+    loader_text = LOADING.read_text(encoding="utf-8")
+    chinese = "".join(ch for ch in loader_text if "\u4e00" <= ch <= "\u9fff")
+    corpus = "".join(sorted(set(EXISTING + EXTRA + chinese), key=lambda ch: ord(ch)))
     options = Options()
     options.layout_features = ["*"]
     options.desubroutinize = True

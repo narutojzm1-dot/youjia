@@ -20,3 +20,4 @@ run_check() {
 run_check --headless --path "$ROOT" --editor --import --quit
 run_check --headless --path "$ROOT" res://test/test_suite.tscn
 run_check --headless --path "$ROOT" res://test/locomotion_suite.tscn
+node "$ROOT/test/loading_shell_test.cjs"

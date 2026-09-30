@@ -69,6 +69,13 @@ func _ready() -> void:
 	_refresh_texts()
 	_show_title()
 	call_deferred("_layout")
+	if OS.has_feature("web"):
+		call_deferred("_report_web_first_frame")
+
+
+func _report_web_first_frame() -> void:
+	await RenderingServer.frame_post_draw
+	JavaScriptBridge.eval("window.dispatchEvent(new Event('youjia:first-frame'));", true)
 
 
 func _process(delta: float) -> void:
