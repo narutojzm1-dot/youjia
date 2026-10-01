@@ -44,6 +44,7 @@ var _focus_seconds := 0.0
 var _leading := false
 var _day_seconds := 0.0
 var _grass_patch: GrassPatch
+var _lead_rope: Line2D
 var _spot := "door"
 var _move_held := false
 var _has_walk_goal := false
@@ -70,6 +71,14 @@ func setup(saved_photos: Array = []) -> void:
 	_spawn_grass()
 	_spawn_cast()
 	_bind_grounds()
+	_lead_rope = Line2D.new()
+	_lead_rope.width = 2.2
+	_lead_rope.default_color = Color(0.38,0.25,0.13,0.90)
+	_lead_rope.begin_cap_mode = Line2D.LINE_CAP_ROUND
+	_lead_rope.end_cap_mode = Line2D.LINE_CAP_ROUND
+	_lead_rope.antialiased = true
+	add_child(_lead_rope)
+	_lead_rope.visible = false
 	_weather_timer = randf_range(42.0, 78.0)
 	queue_redraw()
 
@@ -205,6 +214,7 @@ func tick(delta: float, move: Vector2) -> void:
 		actor.body_obstacles = physical_obstacles(actor_id)
 		actor.tick(delta, WORLD_SIZE)
 		actor.current_zone = _zone_at(actor.position)
+	_update_lead_rope()
 	_player.player_state = _player.snapshot_state()
 	for key: Variant in _cooldowns.keys():
 		_cooldowns[key] = float(_cooldowns[key]) - delta
@@ -322,8 +332,8 @@ func try_walk_to(goal: Vector2) -> bool:
 		return false
 	_walk_path = YardBodies.route(_player.position, goal, _player.body_radius*YardGround.depth_at(_player.position.y), _routing_obstacles(), YardGround.lawn())
 	_body_repath = 0.7
-	if _walk_path.is_empty():
-		return false
+	# A valid lawn destination can be occupied by a moving animal at click time.
+	# Retain it and let the normal waiting/repath loop resume when it clears.
 	_has_walk_goal = true
 	_walk_goal = goal
 	return true
@@ -594,7 +604,7 @@ func _spawn_cast() -> void:
 		"horse": Rect2(568, 444, 94, 45),
 		"sheep_a": Rect2(282, 490, 54, 37),
 		"sheep_b": Rect2(346, 473, 52, 36),
-		"goose": Rect2(785, 495, 66, 30),
+		"goose": Rect2(746, 492, 40, 20),
 		"llama": Rect2(370, 447, 440, 78),
 	}
 	for original: Dictionary in configs:
@@ -847,26 +857,38 @@ func _apply_rule(rule: Dictionary, force: bool) -> void:
 		camera_focus_requested.emit(actor.global_position + Vector2(0, -40), 1.16)
 
 
+func _update_lead_rope() -> void:
+	if _lead_rope == null: return
+	_lead_rope.visible = _leading and _player != null
+	if not _lead_rope.visible: return
+	var llama := actor_named("llama")
+	var hand := _player.grass_hand_global_position()
+	# Actual approved llama art's lower-neck point, relative to its foot anchor.
+	var collar := llama.to_global(Vector2(875, 665) - llama._ground_anchor)
+	var midpoint := (hand+collar)*0.5 + Vector2(0,10)
+	var cord := PackedVector2Array()
+	for i in 17:
+		var t := float(i)/16.0
+		cord.append(to_local(hand.lerp(midpoint,t).lerp(midpoint.lerp(collar,t),t)))
+	_lead_rope.points = cord
+	# A held rope belongs above its wearers' clothing, not behind every sprite.
+	_lead_rope.z_index = maxi(_player.z_index,llama.z_index)+2
+
+
 func _draw() -> void:
-	if _leading and _player != null:
-		var llama := actor_named("llama")
-		if llama != null:
-			var hand := _player.position + Vector2(12.0*_player.facing,-32.0)
-			var collar := llama.position + Vector2(18.0*llama.facing,-55.0*YardGround.depth_at(llama.position.y))
-			var midpoint := (hand+collar)*0.5+Vector2(0,13)
-			var cord := PackedVector2Array()
-			for i in 13:
-				var t := float(i)/12.0
-				cord.append(hand.lerp(midpoint,t).lerp(midpoint.lerp(collar,t),t))
-			draw_polyline(cord,Color(0.48,0.34,0.22,0.75),1.5,true)
 	if _has_walk_goal:
 		draw_arc(_walk_goal, 10.0, 0.0, TAU, 24, Color(1.0,0.92,0.65,0.85), 2.0)
-	var shadow := Color(0.35, 0.22, 0.38, 0.16)
 	if _player != null:
-		draw_set_transform(_player.position + Vector2(0, 2), 0.0, Vector2(1.0, 0.3))
-		draw_circle(Vector2.ZERO, 11.0 * YardGround.depth_at(_player.position.y), shadow)
+		_draw_contact_shadow(_player.position,Vector2(11,4)*YardGround.depth_at(_player.position.y))
 	for actor_id: String in _actors:
 		var actor: FeltActor = _actors[actor_id]
-		draw_set_transform(actor.position + Vector2(0, 2), 0.0, Vector2(1.0, 0.3))
-		draw_circle(Vector2.ZERO, 14.0 * YardGround.depth_at(actor.position.y), shadow)
+		var extent := Vector2(actor.body_radius.x,actor.body_radius.y*0.42)*YardGround.depth_at(actor.position.y)
+		_draw_contact_shadow(actor.position,extent)
 	draw_set_transform(Vector2.ZERO)
+
+
+func _draw_contact_shadow(point: Vector2, extent: Vector2) -> void:
+	draw_set_transform(point+Vector2(0,1.5),0.0,extent)
+	draw_circle(Vector2.ZERO,1.20,Color(0.29,0.25,0.16,0.035))
+	draw_circle(Vector2.ZERO,0.97,Color(0.29,0.25,0.16,0.060))
+	draw_circle(Vector2.ZERO,0.70,Color(0.29,0.25,0.16,0.055))

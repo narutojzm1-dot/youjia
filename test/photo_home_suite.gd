@@ -64,12 +64,16 @@ func _test_visits_and_release(fps: int) -> void:
 	_walk_to(world, cottage_goal, fps, "cottage sheep")
 	_wait_for_photo(world, "llama_sun_sheep_happy", fps)
 	_check("llama_sun_sheep_happy" in world.collected, "%s visiting home sheep in sun earns the happy photo" % label)
+	# The leader can arrive first while the llama finishes a collision detour.
+	for frame: int in fps * 8:
+		if llama.position.distance_to(player.position) < 90.0: break
+		_tick_checked(world, fps)
 	_check(world._leading and llama.position.distance_to(player.position) < 90.0, "%s llama follows to cottage sheep" % label)
 
 	# Cross the same reachable lawn to the goose's pond-side home.
 	world.set_weather("overcast")
 	var goose_home: Rect2 = world.actor_named("goose").wander_rect
-	var goose_goal := goose_home.get_center() + Vector2(48, -5)
+	var goose_goal := goose_home.get_center() + Vector2(32, 20)
 	_walk_to(world, goose_goal, fps, "pond-side goose")
 	_wait_for_photo(world, "llama_overcast_goose_annoyed", fps)
 	_check("llama_overcast_goose_annoyed" in world.collected, "%s visiting home goose in overcast earns the annoyed photo" % label)

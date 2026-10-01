@@ -114,6 +114,25 @@ func _process(delta: float) -> void:
 
 
 func _input(event: InputEvent) -> void:
+	# Keyboard controls must also work after a mouse click focused a HUD button.
+	if event.is_action_pressed("pause") and not event.is_echo():
+		if _confirm_screen.visible:
+			_cancel_destructive_action()
+		elif _album_screen.visible:
+			_hide_album()
+		elif _screen == "game":
+			_toggle_pause()
+		get_viewport().set_input_as_handled()
+		return
+	if _screen == "game" and _world != null and _world.input_enabled and not _pause_screen.visible and not _album_screen.visible and not _confirm_screen.visible:
+		if event.is_action_pressed("ui_accept") and not event.is_echo():
+			_world.try_interact()
+			get_viewport().set_input_as_handled()
+			return
+		if event is InputEventKey and (event.is_action("move_left") or event.is_action("move_right") or event.is_action("move_up") or event.is_action("move_down")):
+			# Arrow keys move the person in the yard, never focus HUD buttons.
+			get_viewport().set_input_as_handled()
+			return
 	# Native browser touch and synthesized mouse must produce exactly one action.
 	if event is InputEventMouseButton and Time.get_ticks_msec()-_last_touch_ms < 400:
 		get_viewport().set_input_as_handled()
@@ -141,20 +160,9 @@ func _input(event: InputEvent) -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if event.is_action_pressed("pause"):
-		if _album_screen.visible:
-			_hide_album()
-		elif _screen == "game":
-			_toggle_pause()
-		get_viewport().set_input_as_handled()
-		return
 	if _screen != "game" or _world == null or not _world.input_enabled:
 		return
 	if _pause_screen.visible or _album_screen.visible or _confirm_screen.visible:
-		return
-	if event.is_action_pressed("ui_accept"):
-		_world.try_interact()
-		get_viewport().set_input_as_handled()
 		return
 	if event is InputEventScreenTouch and event.pressed:
 		_last_touch_ms = Time.get_ticks_msec()
@@ -243,6 +251,8 @@ func _build_hud() -> void:
 	_action_button = _chip_button()
 	_action_button.pressed.connect(func(): _world.request_primary_action())
 	_hud.add_child(_action_button)
+	for button: Button in [_album_chip,_weather_chip,_pause_button,_action_button]:
+		button.focus_mode = Control.FOCUS_NONE
 
 
 func _build_pause_screen() -> void:

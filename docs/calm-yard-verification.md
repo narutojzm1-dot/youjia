@@ -27,3 +27,13 @@ Headless accelerated simulation proves outcomes, not device performance. Native 
 - All character/animal draw depth is derived from the same foot Y coordinate. The former player-only 32px foreground bias is removed.
 - `test/physical_yard_suite.gd` independently checks pairwise ellipse clearance, common depth ordering, four-sided approaches, six crossing routes and five leading legs at 30/60/120 Hz. No test teleports animals to make the route pass.
 - `tools/capture_physical_routes.gd` renders multiple raw-viewport touch routes, including repeated lead reversals and walking in front of/behind cattle. It remains native software-renderer evidence rather than a browser/device benchmark.
+
+## Manual playtest follow-up: keyboard, fence and lead
+
+- Ordinary keyboard events were rejected by custom input bindings pinned to device16. Bindings now accept all keyboard devices; device0 raw key tests cover WASD, arrows and Escape after HUD focus.
+- Escape is handled before GUI focus consumption, cancels a restart confirmation without resetting, closes the album, and pauses/resumes. Repeated key echoes do not toggle repeatedly.
+- The right-hand walkable boundary now follows the foreground foot line of the painted fence. The previous triangle included rail/gate-top artwork and let the free-roaming llama appear on the fence.
+- Contact shadows use the animals' footprint width with soft overlapping opacity layers. The lead uses the accepted hero's real palm and the llama artwork's neck anchor, and is drawn above the wearers instead of behind all sprites.
+- Earlier route fixtures that clicked the painted fence were moved to actual foreground grass; explicit tests now reject those former rail points. Collision, intended-target and natural-photo assertions remain.
+- Manual candidate playtest is required before publication; headless tests cannot judge whether the new rope/ground contact reads clearly at default scale.
+- Native free-input candidate3 verification: held D/Down/Right moved the person; HUD stayed unfocused; Escape paused/resumed after a HUD click; Left then Space did not open the album; the previously blocked near-right grass point became reachable without stepping onto rails. The lead was visibly attached to the hand/neck and the llama's feet/shadow read as grounded at the fence front.

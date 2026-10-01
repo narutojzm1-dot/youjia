@@ -5,7 +5,7 @@ var main: Control
 var stage := 0
 var since := 0
 var events: Array = []
-var routes := [Vector2(520,455),Vector2(310,550),Vector2(850,495),Vector2(490,526),Vector2(700,460)]
+var routes := [Vector2(520,455),Vector2(310,550),Vector2(840,535),Vector2(490,526),Vector2(700,460)]
 var route_index := 0
 func _initialize(): call_deferred("record")
 func tap_world(point: Vector2):

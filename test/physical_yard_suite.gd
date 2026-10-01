@@ -121,7 +121,7 @@ func _test_keyboard_approaches(fps: int) -> void:
 
 func _approach_point(world, actor, side: Vector2) -> Vector2:
 	var combined: Vector2 = _radius(world.get_player()) + _radius(actor)
-	for margin: float in [28.0, 18.0, 9.0]:
+	for margin: float in [28.0, 18.0]:
 		var point: Vector2 = actor.position + side * (combined + Vector2.ONE * margin)
 		if YardGround.allows(point, YardGround.lawn(), true) and _clear_for_player(world, point):
 			return point
@@ -136,8 +136,8 @@ func _test_resident_routes(fps: int) -> void:
 	# The first west-to-east path crosses the cow and horse homes. Later legs
 	# reverse direction, cross both sheep homes, and turn along the pond rim.
 	var goals: Array[Vector2] = [
-		Vector2(865, 478), Vector2(252, 472), Vector2(860, 530),
-		Vector2(392, 552), Vector2(758, 442), Vector2(228, 564),
+		Vector2(830, 540), Vector2(252, 472), Vector2(850, 540),
+		Vector2(392, 552), Vector2(725, 455), Vector2(228, 564),
 	]
 	for index: int in goals.size():
 		_walk_to(world, goals[index], fps, metric, "resident crossing %d at %dHz" % [index + 1, fps])
@@ -162,10 +162,10 @@ func _test_leading_routes(fps: int) -> void:
 		"natural pointer approach starts leading at %dHz" % fps)
 	if world._leading:
 		var goals: Array[Vector2] = [
-			Vector2(820, 454), # east pasture, past horse and goose
+			Vector2(740, 480), # east pasture, west of the painted fence
 			Vector2(267, 561), # cottage, around cow and both sheep
 			Vector2(545, 526), # west pond rim
-			Vector2(856, 529), # east pond rim
+			Vector2(845, 540), # east pond rim
 			Vector2(447, 442), # back through the pasture in the other direction
 		]
 		for index: int in goals.size():

@@ -54,7 +54,7 @@ func record()->void:
 			tap_world(main._world.actor_named("llama").position)
 			advance("touch: lead llama",frame)
 		elif stage==5 and main._world._leading and frame-since>30:
-			tap_world(Vector2(835,505))
+			tap_world(Vector2(840,535))
 			advance("touch: walk together",frame)
 		elif stage==6 and not main._world._has_walk_goal and frame-since>150:
 			button("_action_button")
@@ -72,7 +72,7 @@ func record()->void:
 			button("_album_back_button")
 			advance("touch UI: return to yard",frame)
 		elif stage==11 and frame-since>30:
-			tap_world(Vector2(800,490))
+			tap_world(Vector2(790,515))
 			button("_weather_chip")
 			advance("touch UI: overcast, observe goose reaction",frame)
 		elif stage==12 and main._world.actor_named("llama").current_expression=="annoyed":

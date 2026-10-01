@@ -14,9 +14,14 @@ static func lawn() -> PackedVector2Array:
 		Vector2(200, 525),
 		Vector2(248, 458),
 		Vector2(400, 432),
-		Vector2(860, 418),
-		Vector2(915, 468),
-		Vector2(885, 548),
+		# Follow the FRONT foot line of the painted fence. The old top-right
+		# triangle included rails/gate tops, letting a roaming llama stand on them.
+		Vector2(690, 430),
+		Vector2(738, 442),
+		Vector2(765, 464),
+		Vector2(810, 483),
+		Vector2(860, 515),
+		Vector2(900, 548),
 		Vector2(760, 538),
 		Vector2(500, 548),
 		Vector2(370, 590),
