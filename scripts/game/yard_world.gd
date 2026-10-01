@@ -150,9 +150,15 @@ func tod_fraction() -> float:
 
 
 ## 根据玩家当前位置返回合适的上下文提示键
+## 牵行/持草时优先显示操作提示（来自 P0.1 PR #3），其余按位置决定
 func hint_context() -> String:
 	if _player == null:
 		return "hud.hint.default"
+	# 高优先级：牵行和持草状态的操作提示
+	if _leading:
+		return "hud.hint.leading"
+	if _player.carrying_grass:
+		return "hud.hint.carrying"
 	var pos := _player.position
 	# 钓鱼区域
 	if pos.distance_to(_fishing_point()) < 90.0:
@@ -194,6 +200,21 @@ func collected_count() -> int:
 
 func collectible_total() -> int:
 	return ExpressionCatalog.all_ids().size()
+
+
+# P0.1: 供 HUD 读取当前是否正在牵行，用来显示上下文提示文字。
+func is_leading() -> bool:
+	return _leading
+
+
+# P1.3: 供 HUD 读取玩家是否正在持草，用来切换上下文提示文字。
+func is_player_carrying_grass() -> bool:
+	return _player != null and _player.carrying_grass
+
+
+# P1.3: 供 HUD 读取玩家是否靠近草堆（距离 < 78px），不用于现在但保留供后续 HUD 逻辑。
+func is_near_grass() -> bool:
+	return _player != null and not _player.carrying_grass and _player.position.distance_to(_grass_point()) < 78.0
 
 
 func is_mainline_complete() -> bool:
@@ -346,6 +367,15 @@ func tick(delta: float, move: Vector2) -> void:
 		_focus_seconds -= delta
 		if _focus_seconds <= 0.0:
 			camera_release_requested.emit()
+	# P1.3: 玩家靠近草堆时，草堆缓慢呼吸发亮，提示可拾取；离开或已持草则恢复原色。
+	# 用 _day_seconds（单调递增）而非 _pulse（每隔 interval 重置）避免亮度跳变。
+	if _grass_patch != null and _player != null:
+		var near_grass := not _player.carrying_grass and _player.position.distance_to(_grass_point()) < 78.0
+		if near_grass:
+			var glow := 1.0 + 0.14 * sin(_day_seconds * 3.4)
+			_grass_patch.modulate = Color(glow, glow, glow, 1.0)
+		else:
+			_grass_patch.modulate = Color.WHITE
 	queue_redraw()
 
 
