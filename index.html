@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="manus-game-loading-screen" content="1">
   <title>悠长的假期</title>
-  <link id="-gd-engine-icon" rel="icon" type="image/png" href="game-9485305.icon.png" />
-<link rel="apple-touch-icon" href="game-9485305.apple-touch-icon.png"/>
+  <link id="-gd-engine-icon" rel="icon" type="image/png" href="game-091ba04.icon.png" />
+<link rel="apple-touch-icon" href="game-091ba04.apple-touch-icon.png"/>
 
   <!-- Project-owned starting point, not the platform default. Customize the presentation below. -->
   <!-- Embedded Noto Sans SC loader subset: SIL Open Font License 1.1; license text: assets/template/fonts/NotoSansSC-OFL.txt. -->
@@ -60,12 +60,12 @@ Source SHA-256: 38f4c5f927f746b3dfa4c3a5d7edf0b7a3e828e27438418fa54f9e1565289412
     <progress id="loading-progress" aria-label="Download progress"></progress>
     <p id="loading-notice" hidden></p>
     <button id="loading-retry" type="button" hidden>Retry</button>
-    <p id="loading-build" style="opacity:0.45;font-size:11px;margin-top:8px">game-9485305</p>
+    <p id="loading-build" style="opacity:0.45;font-size:11px;margin-top:8px"></p>
     <noscript>JavaScript is required to play this game.</noscript>
   </section>
   <script>
     (() => {
-      const config = {"args":[],"canvasResizePolicy":2,"emscriptenPoolSize":8,"ensureCrossOriginIsolationHeaders":true,"executable":"game-9485305","experimentalVK":false,"fileSizes":{"game-9485305.pck":10505600,"game-9485305.wasm":39514754},"focusCanvas":true,"gdextensionLibs":[],"godotPoolSize":4};
+      const config = {"args":[],"canvasResizePolicy":2,"emscriptenPoolSize":8,"ensureCrossOriginIsolationHeaders":true,"executable":"game-091ba04","experimentalVK":false,"fileSizes":{"game-091ba04.pck":10512704,"game-091ba04.wasm":39514754},"focusCanvas":true,"gdextensionLibs":[],"godotPoolSize":4};
       const threads = false;
       const canvas = document.getElementById('canvas');
       const loading = document.getElementById('loading');
@@ -74,10 +74,10 @@ Source SHA-256: 38f4c5f927f746b3dfa4c3a5d7edf0b7a3e828e27438418fa54f9e1565289412
       const detail = document.getElementById('loading-detail');
       const notice = document.getElementById('loading-notice');
       const retry = document.getElementById('loading-retry');
-      // 显示 build ID 以便调试（与 executable 名称对应）
       const buildLabel = document.getElementById('loading-build');
-      if (buildLabel && config.executable) buildLabel.textContent = config.executable;
       document.getElementById('game-title').textContent = document.title;
+      // 显示 build ID（即 executable 名称，如 game-ca1fb67）
+      if (buildLabel && config.executable) buildLabel.textContent = config.executable;
       // Single-language holiday: pin Simplified Chinese on the loader.
       const zh = true;
       document.documentElement.lang = 'zh-CN';
@@ -139,6 +139,7 @@ Source SHA-256: 38f4c5f927f746b3dfa4c3a5d7edf0b7a3e828e27438418fa54f9e1565289412
         console.error('[game-loading] Startup failed', error);
         loading.hidden = false;
         const errMsg = String(error.message || error);
+        // 分类错误信息：WebGL2 缺失 / 其他缺失浏览器特性 / 一般失败
         if (errMsg.includes('WebGL2')) {
           status.textContent = '此浏览器不支持 WebGL2，无法启动游戏。';
         } else if (errMsg.includes('Missing browser features')) {
@@ -146,7 +147,7 @@ Source SHA-256: 38f4c5f927f746b3dfa4c3a5d7edf0b7a3e828e27438418fa54f9e1565289412
         } else {
           status.textContent = '游戏加载失败，请重试。';
         }
-        detail.textContent = String(error.message || error).slice(0, 240);
+        detail.textContent = errMsg.slice(0, 240);
         stamp('failed');
         progress.hidden = true;
         notice.hidden = true;
@@ -198,7 +199,7 @@ Source SHA-256: 38f4c5f927f746b3dfa4c3a5d7edf0b7a3e828e27438418fa54f9e1565289412
         }
       };
       const script = document.createElement('script');
-      script.src = 'game-9485305.js';
+      script.src = 'game-091ba04.js';
       script.addEventListener('load', start, { once: true });
       script.addEventListener('error', () => fail(new Error('Engine script could not be loaded')), { once: true });
       document.head.appendChild(script);
