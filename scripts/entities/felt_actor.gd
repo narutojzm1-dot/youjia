@@ -56,6 +56,10 @@ var _particle_art_scale:=1.0
 var _base_texture_path:=""
 var _face_region:=Rect2()
 var _expression_texture: Texture2D
+## 生态闲置扫视：当动物静止且玩家在近旁时，偶尔短暂转向玩家
+## _glance_timer > 0 时处于扫视状态；=0 时处于冷却等待
+var _glance_timer := 0.0        # 正数=正在扫视中（秒），负数=冷却中
+var _glance_saved_facing := 0.0 # 扫视前保存的原始朝向
 
 
 func setup(config: Dictionary) -> void:
@@ -92,6 +96,8 @@ func setup(config: Dictionary) -> void:
 	scale = Vector2(_base_scale, _base_scale)
 	_target = _random_point()
 	_build_spit()
+	# 给每只动物一个随机的初始扫视冷却，避免所有动物同时转头
+	_glance_timer = -randf_range(8.0, 22.0)
 	if daily_routine:
 		_routine_step = int(abs(actor_id.hash()) % 4)
 		_start_rest()
@@ -203,6 +209,46 @@ func nudge_toward(point: Vector2) -> void:
 
 func is_near(other: FeltActor, radius: float = 92.0) -> bool:
 	return other != null and other != self and position.distance_to(other.position) <= radius
+
+
+## 由 YardWorld.tick() 每帧调用，传入玩家位置，更新扫视状态
+## 只对可抚摸动物（非草泥马、鸭、大鹅）生效
+func tick_glance(delta: float, player_pos: Vector2) -> void:
+	# 只有静止状态（graze/rest/pose）才做扫视，走动时不强行转头
+	if state not in ["graze", "rest", "pose"]:
+		# 若正在扫视途中动物开始走动，立即结束扫视
+		if _glance_timer > 0.0:
+			facing = _glance_saved_facing
+			_glance_timer = -randf_range(12.0, 20.0)
+		return
+	if _glance_timer > 0.0:
+		# 正在扫视：倒计时
+		_glance_timer -= delta
+		if _glance_timer <= 0.0:
+			# 扫视结束，恢复原始朝向
+			facing = _glance_saved_facing
+			# 进入冷却
+			_glance_timer = -randf_range(14.0, 26.0)
+	else:
+		# 冷却中：等候下一次扫视机会
+		_glance_timer += delta
+		if _glance_timer >= 0.0:
+			# 冷却结束：检查玩家是否在附近
+			var dist := position.distance_to(player_pos)
+			if dist < 180.0 and dist > 20.0:
+				# 概率触发扫视（距离越近越容易触发）
+				var chance := lerpf(0.35, 0.80, 1.0 - dist / 180.0)
+				if randf() < chance:
+					_glance_saved_facing = facing
+					# 短暂面向玩家方向
+					facing = signf(player_pos.x - position.x)
+					_glance_timer = randf_range(1.2, 2.8)
+				else:
+					# 本次不扫，再等一会儿
+					_glance_timer = -randf_range(10.0, 18.0)
+			else:
+				# 玩家不在附近，继续冷却
+				_glance_timer = -randf_range(8.0, 15.0)
 
 
 func tick(delta: float, world_size: Vector2) -> void:
