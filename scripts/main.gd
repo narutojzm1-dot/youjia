@@ -83,8 +83,26 @@ var _tod_canvas: CanvasLayer
 var _tod_rect: ColorRect
 # 季节底色（渲染在昼夜层之下，随假期天数推进）
 var _season_rect: ColorRect
-# P1.5: 拍立得入账时短暂亮一次屏，提示照片已捕获。
+# 拍立得入账时短暂亮一次屏，提示照片已捕获。
 var _photo_flash: ColorRect
+## 钓到鱼时的蓝色庆祝闪光（独立于拍立得闪光，更冷更蓝）
+var _fish_flash: ColorRect
+## 空闲引导提示计时器：玩家无操作一定时间后轮播软提示
+var _idle_hint_timer := 0.0
+## 下一条软提示的索引（轮询 IDLE_HINTS 数组）
+var _idle_hint_index := 0
+## 玩家进院后是否已给过第一条引导提示
+var _first_hint_shown := false
+## 轮播软提示列表（引导玩家发现各活动）
+const IDLE_HINTS := [
+	"notice.hint.go_fish",
+	"notice.hint.go_pet",
+	"notice.hint.go_plant",
+	"notice.hint.go_grass",
+	"notice.hint.go_explore",
+]
+## TOD 变化追踪，用于在日段切换时显示氛围通知
+var _last_tod_phase := ""
 
 func _ready() -> void:
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -102,12 +120,18 @@ func _ready() -> void:
 	add_child(_ui_layer)
 	for panel in [_paper,_title_screen,_hud,_pause_screen,_confirm_screen,_album_screen,_notice]:
 		panel.reparent(_ui_layer, false)
-	# P1.5: 拍立得闪光叠加层加入 _ui_layer，确保渲染在所有 UI 之上。
+	# 拍立得闪光叠加层加入 _ui_layer，确保渲染在所有 UI 之上。
 	_photo_flash = ColorRect.new()
 	_photo_flash.color = Color(CREAM, 0.0)
 	_photo_flash.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_photo_flash.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	_ui_layer.add_child(_photo_flash)
+	# 钓到鱼的蓝色庆祝闪光层（渲染在拍立得闪光之上）
+	_fish_flash = ColorRect.new()
+	_fish_flash.color = Color(0.42, 0.75, 0.92, 0.0)
+	_fish_flash.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_fish_flash.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	_ui_layer.add_child(_fish_flash)
 	I18n.locale_changed.connect(_on_locale_changed)
 	TuningStore.value_changed.connect(_on_tuning_value_changed)
 	resized.connect(_layout)
@@ -142,13 +166,33 @@ func _process(delta: float) -> void:
 	var fit := minf(size.x/YardWorld.WORLD_SIZE.x,maxf(100.0,size.y-hud_space)/YardWorld.WORLD_SIZE.y)
 	var zoom := _cam_zoom * float(TuningStore.get_value("environment.camera.zoom", 1.0)) * fit
 	_camera.zoom = Vector2(zoom, zoom)
-	_camera.position = YardWorld.WORLD_SIZE * 0.5 + _cam_offset + Vector2(0,hud_space/(2.0*zoom))
+	# 轻微玩家跟随：相机中心向玩家位置偏移约 8%，给院子更大的空间感
+	## 仅在非焦点缩放时生效；焦点镜头已通过 _cam_target_offset 指定目标
+	var player_follow := Vector2.ZERO
+	if _world != null and _world.get_player() != null and _cam_target_zoom <= 1.05:
+		var pp := _world.get_player().position
+		player_follow = (pp - YardWorld.WORLD_SIZE * 0.5) * 0.08
+	_camera.position = YardWorld.WORLD_SIZE * 0.5 + _cam_offset + player_follow + Vector2(0,hud_space/(2.0*zoom))
 	if _screen == "game":
 		_refresh_hud()
 		# 更新昼夜色调覆盖层与季节底色
 		if _world != null:
-			_update_tod_tint(_world.tod_fraction())
+			var tod := _world.tod_fraction()
+			_update_tod_tint(tod)
 			_update_season_tint(_world.holiday_day)
+			# 空闲提示轮播：玩家无操作60秒后，每75秒给一次软引导
+			if not _pause_screen.visible and not _album_screen.visible:
+				_idle_hint_timer -= delta
+				if _idle_hint_timer <= 0.0:
+					_idle_hint_timer = 75.0
+					_show_idle_hint()
+			# 追踪昼夜相位变化，切换时显示氛围文字
+			var phase := _tod_phase_name(tod)
+			if phase != _last_tod_phase and not _last_tod_phase.is_empty():
+				var key := "notice.tod.%s" % phase
+				if I18n.has_key(key):
+					_show_notice_key(key)
+			_last_tod_phase = phase
 
 
 func _input(event: InputEvent) -> void:
@@ -173,30 +217,39 @@ func _input(event: InputEvent) -> void:
 			# Arrow keys move the person in the yard, never focus HUD buttons.
 			get_viewport().set_input_as_handled()
 			return
-	# Native browser touch and synthesized mouse must produce exactly one action.
-	if event is InputEventMouseButton and Time.get_ticks_msec()-_last_touch_ms < 400:
-		get_viewport().set_input_as_handled()
-		return
-	if not (event is InputEventScreenTouch) or not event.pressed:
-		return
-	var buttons: Array = []
-	if _confirm_screen.visible:
-		buttons = [_confirm_accept_button,_confirm_cancel_button]
-	elif _pause_screen.visible:
-		buttons = [_resume_button,_restart_button,_pause_title_button]
-	elif _album_screen.visible:
-		buttons = [_album_back_button]
-	elif _screen == "title":
-		buttons = [_play_button,_album_button,_licenses_button]
-	else:
-		buttons = [_action_button,_album_chip,_weather_chip,_pause_button]
-	for button: Button in buttons:
-		var local: Vector2 = button.get_global_transform_with_canvas().affine_inverse()*event.position
-		if button.is_visible_in_tree() and not button.disabled and Rect2(Vector2.ZERO,button.size).has_point(local):
-			_last_touch_ms = Time.get_ticks_msec()
-			button.pressed.emit()
+	# ── 统一鼠标/触屏按钮命中测试 ────────────────────────────────────────────────
+	# 此处对鼠标左键与触屏触点使用同一套命中测试路径，确保 web 桌面端相册等按钮
+	# 每次点击都可靠响应，不依赖 Godot GUI 系统对 CanvasLayer 中 Button 的默认行为。
+	var is_mouse_click := event is InputEventMouseButton and (event as InputEventMouseButton).pressed and (event as InputEventMouseButton).button_index == MOUSE_BUTTON_LEFT
+	var is_touch_press := event is InputEventScreenTouch and (event as InputEventScreenTouch).pressed
+	if is_mouse_click or is_touch_press:
+		# 去重：触屏合成的鼠标事件在400ms内屏蔽，只处理真实点击
+		var event_pos: Vector2 = (event as InputEventMouseButton).position if is_mouse_click else (event as InputEventScreenTouch).position
+		if is_mouse_click and Time.get_ticks_msec() - _last_touch_ms < 400:
 			get_viewport().set_input_as_handled()
 			return
+		var buttons: Array = []
+		if _confirm_screen.visible:
+			buttons = [_confirm_accept_button, _confirm_cancel_button]
+		elif _pause_screen.visible:
+			buttons = [_resume_button, _restart_button, _pause_title_button]
+		elif _album_screen.visible:
+			buttons = [_album_back_button]
+		elif _screen == "title":
+			buttons = [_play_button, _album_button, _licenses_button]
+		else:
+			buttons = [_action_button, _album_chip, _weather_chip, _pause_button]
+		for button: Button in buttons:
+			var local: Vector2 = button.get_global_transform_with_canvas().affine_inverse() * event_pos
+			if button.is_visible_in_tree() and not button.disabled and Rect2(Vector2.ZERO, button.size).has_point(local):
+				_last_touch_ms = Time.get_ticks_msec()
+				button.pressed.emit()
+				get_viewport().set_input_as_handled()
+				return
+		# 触屏点到空白处：交给 _unhandled_input 处理世界点击
+		if is_touch_press:
+			_last_touch_ms = Time.get_ticks_msec()
+		return
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -204,14 +257,15 @@ func _unhandled_input(event: InputEvent) -> void:
 		return
 	if _pause_screen.visible or _album_screen.visible or _confirm_screen.visible:
 		return
-	if event is InputEventScreenTouch and event.pressed:
-		_last_touch_ms = Time.get_ticks_msec()
-		_world.request_pointer_action(_screen_to_world(event.position))
-		get_viewport().set_input_as_handled()
-	elif event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
-		# Browsers can synthesize a mouse event for the same touch.
+	# 触屏和鼠标世界点击：触屏已在 _input() 中更新 _last_touch_ms，此处只处理
+	# 真正落到世界画布上的点击（HUD 命中测试未拦截的情况）。
+	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 		if Time.get_ticks_msec() - _last_touch_ms > 400:
 			_world.request_pointer_action(_screen_to_world(event.position))
+		get_viewport().set_input_as_handled()
+	elif event is InputEventScreenTouch and event.pressed:
+		# 触屏已在 _input() 中标记时间戳；此分支只处理落到世界的触点
+		_world.request_pointer_action(_screen_to_world(event.position))
 		get_viewport().set_input_as_handled()
 
 
@@ -430,11 +484,15 @@ func _start_holiday() -> void:
 	_confirm_screen.visible = false
 	_album_screen.visible = false
 	get_tree().paused = false
-	# P0.2: HUD 可见后立即重算布局，确保相册按钮落在正确的点击区域。
+	# HUD 可见后立即重算布局，确保相册等按钮落在正确点击区域（同帧 + 延迟各执行一次）
 	_layout()
+	call_deferred("_layout")
+	_idle_hint_timer = 55.0  # 进院后55秒内不显示空闲提示，让玩家先看看
+	_first_hint_shown = false
+	_last_tod_phase = ""
 	_show_notice_key("notice.arrive")
 	_refresh_hud()
-	# 首次进院（第1天且相册为空）时，延迟发送柔性引导提示，帮助玩家发现活动
+	# 首次进院（第1天且相册为空）时，延迟发送柔性引导提示
 	if _world.holiday_day == 1 and SaveStore.get_album().is_empty():
 		_show_delayed_soft_hint()
 
@@ -707,23 +765,44 @@ func _refresh_hud() -> void:
 		_day_label.text = I18n.t("hud.day", {"n": str(_world.holiday_day)})
 
 
-func _on_day_advanced(_day: int) -> void:
-	# 翻天时刷新 HUD（天数已在 _world.holiday_day 中更新）
+func _on_day_advanced(day: int) -> void:
+	# 翻天时刷新 HUD，并显示带天数的氛围通知
 	_refresh_hud()
+	# 重置空闲提示计时（新一天开始，给玩家一段呼吸时间）
+	_idle_hint_timer = 50.0
+	# 选取带天数的通知文字（轮换三条，保持新鲜感）
+	var day_notices: Array[String] = [
+		"notice.new_day.a",
+		"notice.new_day.b",
+		"notice.new_day.c",
+	]
+	_show_notice_key(day_notices[(day - 1) % day_notices.size()])
 
 
-## 收杆成功：行动按钮做一次更强的双弹脉冲，让 Enter/Space 收杆有明确的手感确认
-func _on_fish_caught(_carry_type: String) -> void:
-	if _action_button == null:
-		return
+## 收杆成功：蓝色屏幕闪光 + 行动按钮双弹脉冲，让"钓到了"有清晰的庆祝感
+func _on_fish_caught(carry_type: String) -> void:
 	if bool(TuningStore.get_value("ui.reduced_motion", false)):
 		return
-	# 双弹：快速亮→暗→再亮→归位，模拟收杆的拉力感
-	var tween := create_tween()
-	tween.tween_property(_action_button, "modulate", Color(1.55, 1.18, 0.72, 1.0), 0.06).set_trans(Tween.TRANS_QUAD)
-	tween.tween_property(_action_button, "modulate", Color(0.90, 0.90, 0.90, 1.0), 0.08).set_trans(Tween.TRANS_QUAD)
-	tween.tween_property(_action_button, "modulate", Color(1.40, 1.10, 0.78, 1.0), 0.07).set_trans(Tween.TRANS_QUAD)
-	tween.tween_property(_action_button, "modulate", Color.WHITE, 0.30).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	# 蓝色屏幕闪光：快速亮起再消散，比拍立得闪光更冷更蓝
+	if _fish_flash != null:
+		_fish_flash.color.a = 0.0
+		var ft := create_tween()
+		# 普通鱼：蓝绿；中等鱼：更蓝；奇怪的鱼：蓝紫
+		var flash_color: Color
+		match carry_type:
+			"medium": flash_color = Color(0.32, 0.60, 0.92, 0.0)
+			"odd":    flash_color = Color(0.50, 0.42, 0.88, 0.0)
+			_:        flash_color = Color(0.42, 0.75, 0.88, 0.0)
+		_fish_flash.color = flash_color
+		ft.tween_property(_fish_flash, "color:a", 0.38, 0.07).set_trans(Tween.TRANS_QUAD)
+		ft.tween_property(_fish_flash, "color:a", 0.0, 0.70).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	# 行动按钮双弹脉冲：快速亮→暗→再亮→归位，模拟收杆的拉力感
+	if _action_button != null:
+		var tween := create_tween()
+		tween.tween_property(_action_button, "modulate", Color(1.55, 1.18, 0.72, 1.0), 0.06).set_trans(Tween.TRANS_QUAD)
+		tween.tween_property(_action_button, "modulate", Color(0.90, 0.90, 0.90, 1.0), 0.08).set_trans(Tween.TRANS_QUAD)
+		tween.tween_property(_action_button, "modulate", Color(1.40, 1.10, 0.78, 1.0), 0.07).set_trans(Tween.TRANS_QUAD)
+		tween.tween_property(_action_button, "modulate", Color.WHITE, 0.30).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 
 
 ## 第1天进院且相册为空时，延迟 4.5 秒发送柔性引导提示（淡出后已看不到 arrive 通知）
@@ -731,7 +810,50 @@ func _show_delayed_soft_hint() -> void:
 	await get_tree().create_timer(4.5).timeout
 	if _screen != "game" or _world == null:
 		return
+	_first_hint_shown = true
 	_show_notice_key("notice.first_hint")
+
+
+## 轮播空闲提示：从 IDLE_HINTS 数组里依次取出一条，针对玩家当前状态过滤
+func _show_idle_hint() -> void:
+	if _screen != "game" or _world == null:
+		return
+	if _pause_screen.visible or _album_screen.visible:
+		return
+	# 根据玩家当前状态选择最合适的提示，而不是死板轮询
+	var candidates: Array[String] = []
+	# 如果相册是空的且还没引导过，优先给综合引导
+	if not _first_hint_shown and _world.collected_count() == 0:
+		_first_hint_shown = true
+		_show_notice_key("notice.first_hint")
+		return
+	var player := _world.get_player()
+	var pos := player.position if player != null else Vector2(640, 500)
+	# 离钓鱼点远（>220px）→ 提示去钓鱼
+	if pos.distance_to(Vector2(700, 535)) > 220.0:
+		candidates.append("notice.hint.go_fish")
+	# 植物/宠物/探索提示始终加入候选
+	candidates.append("notice.hint.go_plant")
+	candidates.append("notice.hint.go_pet")
+	candidates.append("notice.hint.go_explore")
+	# 若玩家没有拿草（不在门口附近），加入草堆提示
+	if player == null or not player.carrying_grass:
+		candidates.append("notice.hint.go_grass")
+	if candidates.is_empty():
+		return
+	# 轮询取下一条（保证 index 在有效范围内）
+	_idle_hint_index = (_idle_hint_index + 1) % candidates.size()
+	_show_notice_key(candidates[_idle_hint_index])
+
+
+## 将 tod_fraction 映射到日段名称（用于 TOD 相位变化通知）
+func _tod_phase_name(t: float) -> String:
+	if t < 0.10: return "dawn"
+	if t < 0.30: return "morning"
+	if t < 0.55: return "noon"
+	if t < 0.72: return "afternoon"
+	if t < 0.87: return "evening"
+	return "night"
 
 
 ## 行动按钮按下时触发短暂视觉脉冲：暖光闪亮再消散，给触控/鼠标点击明确反馈
@@ -752,7 +874,7 @@ func _pulse_button(btn: Button) -> void:
 
 
 ## 根据假期天数计算并应用季节底色（叠加在昼夜层之下）
-## 天数越大，色调从春绿→夏白→仲夏琥珀→秋金，alpha 极低，保持视觉干净
+## alpha 适当加强，使季节感更明显，配合昼夜层共同营造"假期很长"的感觉
 func _update_season_tint(day: int) -> void:
 	if _season_rect == null:
 		return
@@ -761,55 +883,56 @@ func _update_season_tint(day: int) -> void:
 	if day <= 3:
 		# 第 1-3 天：春意，淡翠绿渐现
 		sc = SEASON_COLORS.spring
-		alpha = lerpf(0.0, 0.04, float(day - 1) / 2.0)
+		alpha = lerpf(0.0, 0.06, float(day - 1) / 2.0)
 	elif day <= 7:
 		# 第 4-7 天：盛夏，近乎无色
 		sc = SEASON_COLORS.summer
-		alpha = 0.01
+		alpha = 0.02
 	elif day <= 12:
-		# 第 8-12 天：仲夏末，暖琥珀渐浓
+		# 第 8-12 天：仲夏末，暖琥珀渐浓（明显的色调转变）
 		sc = SEASON_COLORS.late_summer
-		alpha = lerpf(0.02, 0.05, float(day - 8) / 4.0)
+		alpha = lerpf(0.04, 0.08, float(day - 8) / 4.0)
 	else:
-		# 第 13 天起：金秋，上限 0.08
+		# 第 13 天起：金秋，上限 0.12
 		sc = SEASON_COLORS.autumn
-		alpha = minf(0.08, 0.05 + float(day - 13) * 0.005)
+		alpha = minf(0.12, 0.08 + float(day - 13) * 0.007)
 	_season_rect.color = Color(sc.r, sc.g, sc.b, alpha)
 
 
 ## 根据 tod_fraction (0.0-1.0) 计算并应用昼夜渐变覆盖色
 ## 0.0 = 日出, 0.5 = 正午, 0.85 = 黄昏, 1.0 = 深夜
+## alpha 加强约 1.5x，让昼夜变化肉眼可见，假期"很长"的感觉更明显
 func _update_tod_tint(t: float) -> void:
 	if _tod_rect == null:
 		return
 	var base_color: Color
 	var alpha: float
 	if t < 0.10:
-		# 日出：金橙暖光
+		# 日出：金橙暖光（更明显）
 		base_color = TOD_COLORS.dawn
-		alpha = lerpf(0.08, 0.05, t / 0.10)
+		alpha = lerpf(0.14, 0.08, t / 0.10)
 	elif t < 0.25:
 		# 早晨：淡金渐隐
 		base_color = TOD_COLORS.morning
-		alpha = lerpf(0.05, 0.01, (t - 0.10) / 0.15)
+		alpha = lerpf(0.08, 0.02, (t - 0.10) / 0.15)
 	elif t < 0.55:
 		# 正午：几乎无色
 		base_color = TOD_COLORS.noon
 		alpha = 0.0
 	elif t < 0.72:
-		# 下午：暖琥珀渐强
+		# 下午：暖琥珀渐强（加深约50%）
 		base_color = TOD_COLORS.afternoon
-		alpha = lerpf(0.0, 0.09, (t - 0.55) / 0.17)
+		alpha = lerpf(0.0, 0.14, (t - 0.55) / 0.17)
 	elif t < 0.87:
-		# 傍晚/黄昏：桃橙
+		# 傍晚/黄昏：桃橙（更浓郁）
 		var frac := (t - 0.72) / 0.15
 		base_color = TOD_COLORS.afternoon.lerp(TOD_COLORS.evening, frac)
-		alpha = lerpf(0.09, 0.16, frac)
+		alpha = lerpf(0.14, 0.24, frac)
 	else:
-		# 夜晚：蓝紫
+		# 夜晚：蓝紫（更深沉）
 		var frac := (t - 0.87) / 0.13
 		base_color = TOD_COLORS.evening.lerp(TOD_COLORS.night, frac)
-		alpha = lerpf(0.16, 0.22, frac)
+		alpha = lerpf(0.24, 0.32, frac)
 	_tod_rect.color = Color(base_color.r, base_color.g, base_color.b, alpha)
 
 

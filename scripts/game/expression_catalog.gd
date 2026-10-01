@@ -121,6 +121,37 @@ const RULES := [
 		"title_key": "photo.sheep_pet.title",
 		"note_key": "photo.sheep_pet.note",
 	},
+	# ── 新增：抚摸牛（第2天后解锁）──────────────────────────────────────────────
+	{
+		"id": "cow_pet_gentle",
+		"owner": "cow",
+		"priority": 52,
+		"player": "just_petted",
+		"expression": "idle",
+		"hold": 4.0,
+		"polaroid": true,
+		"observe_nearby": true,
+		"spit": false,
+		"min_day": 2,
+		"title_key": "photo.cow_pet.title",
+		"note_key": "photo.cow_pet.note",
+	},
+	# ── 新增：抚摸马（第3天后解锁，搭配晴天）────────────────────────────────────
+	{
+		"id": "horse_pet_sunny",
+		"owner": "horse",
+		"priority": 48,
+		"player": "just_petted",
+		"weather": "sun",
+		"expression": "idle",
+		"hold": 4.5,
+		"polaroid": true,
+		"observe_nearby": true,
+		"spit": false,
+		"min_day": 3,
+		"title_key": "photo.horse_pet.title",
+		"note_key": "photo.horse_pet.note",
+	},
 	# ── 新增：植物开花（手动触发，manual_only 防止自动匹配）─────────────────────
 	{
 		"id": "plant_first_bloom",

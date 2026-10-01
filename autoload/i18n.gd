@@ -68,6 +68,12 @@ func set_locale(locale: String) -> void:
 	locale_changed.emit(locale)
 
 
+func has_key(key: String) -> bool:
+	var active: Dictionary = _catalogs.get(_locale, {})
+	var fallback: Dictionary = _catalogs.get("zh-CN", {})
+	return active.has(key) or fallback.has(key)
+
+
 func catalog_keys(locale: String) -> Array:
 	var catalog: Dictionary = _catalogs.get(locale, {})
 	return catalog.keys()
