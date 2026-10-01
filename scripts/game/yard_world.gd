@@ -107,6 +107,21 @@ func collectible_total() -> int:
 	return ExpressionCatalog.all_ids().size()
 
 
+# P0.1: 供 HUD 读取当前是否正在牵行，用来显示上下文提示文字。
+func is_leading() -> bool:
+	return _leading
+
+
+# P1.3: 供 HUD 读取玩家是否正在持草，用来切换上下文提示文字。
+func is_player_carrying_grass() -> bool:
+	return _player != null and _player.carrying_grass
+
+
+# P1.3: 供 HUD 读取玩家是否靠近草堆（距离 < 78px），不用于现在但保留供后续 HUD 逻辑。
+func is_near_grass() -> bool:
+	return _player != null and not _player.carrying_grass and _player.position.distance_to(_grass_point()) < 78.0
+
+
 func is_mainline_complete() -> bool:
 	for rule_id: String in ExpressionCatalog.llama_mainline_ids():
 		if rule_id not in collected:
@@ -244,6 +259,15 @@ func tick(delta: float, move: Vector2) -> void:
 		_focus_seconds -= delta
 		if _focus_seconds <= 0.0:
 			camera_release_requested.emit()
+	# P1.3: 玩家靠近草堆时，草堆缓慢呼吸发亮，提示可拾取；离开或已持草则恢复原色。
+	# 用 _day_seconds（单调递增）而非 _pulse（每隔 interval 重置）避免亮度跳变。
+	if _grass_patch != null and _player != null:
+		var near_grass := not _player.carrying_grass and _player.position.distance_to(_grass_point()) < 78.0
+		if near_grass:
+			var glow := 1.0 + 0.14 * sin(_day_seconds * 3.4)
+			_grass_patch.modulate = Color(glow, glow, glow, 1.0)
+		else:
+			_grass_patch.modulate = Color.WHITE
 	queue_redraw()
 
 
