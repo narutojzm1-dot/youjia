@@ -37,3 +37,11 @@ Headless accelerated simulation proves outcomes, not device performance. Native 
 - Earlier route fixtures that clicked the painted fence were moved to actual foreground grass; explicit tests now reject those former rail points. Collision, intended-target and natural-photo assertions remain.
 - Manual candidate playtest is required before publication; headless tests cannot judge whether the new rope/ground contact reads clearly at default scale.
 - Native free-input candidate3 verification: held D/Down/Right moved the person; HUD stayed unfocused; Escape paused/resumed after a HUD click; Left then Space did not open the album; the previously blocked near-right grass point became reachable without stepping onto rails. The lead was visibly attached to the hand/neck and the llama's feet/shadow read as grounded at the fence front.
+
+## Recorded event photos
+
+- New photos retain the actual encounter's character frames, poses, expressions, held/loose grass, lead, weather tint and yard background. Event-specific crops show the relevant people/animals/pond, rather than repeated white-background catalog portraits.
+- Snapshots are inert JSON scene records (~7–8 KB per event), rendered from the existing approved assets. No new character artwork, waiting, chores, screenshot readback or image upload is introduced.
+- Save version4 preserves every existing collected ID. Old IDs without a scene acquire one only when that encounter really happens again, without another unlock notice or camera jump. Malformed scene data is discarded without deleting album progress.
+- Renderer/data tests cover six events, clipping, backdrop bounds, immutable state, existing hero frames and shader/atlas fidelity. Save integration tests cover real harvest/feed, scene cards, reload, old-save migration and silent upgrades.
+- Native free-input candidate4 validation: fresh0/6; ordinary harvest/feed and pond observation produced distinct event photos; cards remained unchanged after walking elsewhere, returning to the menu, and exiting/restarting the process. Album scrolling, close, Escape and confirmation remained usable. Neighboring non-subject animals can be partially cropped like a normal local photograph; no subject/frame clipping blocker was observed.

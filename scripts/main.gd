@@ -333,7 +333,7 @@ func _start_holiday() -> void:
 	_clear_world()
 	_world = YardWorldType.new()
 	_world_root.add_child(_world)
-	_world.setup(SaveStore.get_album())
+	_world.setup(SaveStore.get_album(),SaveStore.get_photo_moments())
 	_world.album_updated.connect(_on_album_updated)
 	_world.notice_requested.connect(_show_notice_key)
 	_world.weather_changed.connect(func(_w: String) -> void: _refresh_hud())
@@ -420,11 +420,13 @@ func _on_weather_pressed() -> void:
 
 
 func _on_album_updated(collected: PackedStringArray, latest_id: String) -> void:
-	_latest_photo = latest_id
-	SaveStore.set_album(collected)
-	_show_notice_key("notice.photo")
+	var fresh := latest_id not in SaveStore.get_album()
+	SaveStore.set_album(collected,_world.photo_moments if _world != null else {})
+	if fresh:
+		_latest_photo = latest_id
+		_show_notice_key("notice.photo")
 	_refresh_hud()
-	_rebuild_album(collected)
+	if _album_screen.visible: _rebuild_album(collected)
 
 
 func _show_album() -> void:
@@ -445,6 +447,7 @@ func _hide_album() -> void:
 
 func _rebuild_album(collected: PackedStringArray) -> void:
 	for child in _album_grid.get_children():
+		_album_grid.remove_child(child)
 		child.queue_free()
 	for rule: Dictionary in ExpressionCatalog.RULES:
 			if not bool(rule.get("polaroid", false)):
@@ -467,7 +470,15 @@ func _photo_card(rule: Dictionary, owned: bool) -> Control:
 	portrait.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 	portrait.position = Vector2(28, 28)
 	portrait.size = Vector2(184, 184)
-	if owned:
+	var moment := SaveStore.get_photo_moment(str(rule.get("id",""))) if owned else {}
+	if owned and not moment.is_empty():
+		var photograph := PhotoMoment.new()
+		photograph.position = portrait.position
+		photograph.size = portrait.size
+		photograph.setup(moment)
+		holder.add_child(photograph)
+		portrait.visible = false
+	elif owned:
 		var owner := str(rule.get("owner", "llama"))
 		var expression := str(rule.get("expression", "idle"))
 		var path := CastArt.texture_path(owner,expression)

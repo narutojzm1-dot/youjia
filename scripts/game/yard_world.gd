@@ -29,6 +29,7 @@ var weather := "sun"
 var season := "late_summer"
 var collected: PackedStringArray = []
 var last_photo := ""
+var photo_moments: Dictionary = {}
 var simulation_active := true
 var input_enabled := true
 
@@ -54,13 +55,17 @@ var _walk_path: Array[Vector2] = []
 var _body_repath := 0.0
 
 
-func setup(saved_photos: Array = []) -> void:
+func setup(saved_photos: Array = [], saved_moments: Dictionary = {}) -> void:
 	process_mode = Node.PROCESS_MODE_PAUSABLE
 	collected = PackedStringArray()
+	photo_moments.clear()
 	for item: Variant in saved_photos:
 		var photo_id := str(item)
 		if photo_id not in collected:
 			collected.append(photo_id)
+		var moment := PhotoMoment.sanitize(saved_moments.get(photo_id,{}))
+		if not moment.is_empty() and str(moment.get("rule_id","")) == photo_id:
+			photo_moments[photo_id] = moment
 	_backdrop = Sprite2D.new()
 	_backdrop.centered = false
 	_backdrop.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
@@ -849,12 +854,20 @@ func _apply_rule(rule: Dictionary, force: bool) -> void:
 		var goose := actor_named("goose")
 		if goose != null:
 			actor.spit(goose.global_position + Vector2(0,-30))
-	if bool(rule.get("polaroid", false)) and rule_id not in collected:
-		collected.append(rule_id)
-		last_photo = rule_id
-		album_updated.emit(collected, rule_id)
-		_focus_seconds = 2.4
-		camera_focus_requested.emit(actor.global_position + Vector2(0, -40), 1.16)
+	if bool(rule.get("polaroid", false)):
+		var first_collection := rule_id not in collected
+		# Old saves keep all earned IDs. A missing scene photo is filled only
+		# on the next real matching encounter, without another unlock or camera jump.
+		if first_collection or not photo_moments.has(rule_id):
+			var moment := PhotoMoment.capture(self,rule)
+			if not moment.is_empty(): photo_moments[rule_id] = moment
+			if first_collection:
+				collected.append(rule_id)
+				last_photo = rule_id
+			if first_collection or not moment.is_empty(): album_updated.emit(collected, rule_id)
+			if first_collection:
+				_focus_seconds = 2.4
+				camera_focus_requested.emit(actor.global_position + Vector2(0, -40), 1.16)
 
 
 func _update_lead_rope() -> void:
