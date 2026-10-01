@@ -21,6 +21,7 @@ var _grass_hold_delay := 0.0
 var player_state := "idle"
 var facing := 1.0
 var just_fed_seconds := 0.0
+var just_petted_seconds := 0.0
 var leading := false
 # 当前落点的远近。越远越小，和画的透视一起用。
 var picture_depth := 1.0
@@ -134,6 +135,10 @@ func tick(delta: float, input_vector: Vector2, world_size: Vector2) -> void:
 		just_fed_seconds -= delta
 		if just_fed_seconds <= 0.0 and player_state != "walking":
 			player_state = "idle"
+	if just_petted_seconds > 0.0:
+		just_petted_seconds -= delta
+		if just_petted_seconds <= 0.0 and player_state != "walking":
+			player_state = "idle"
 	var visual := float(TuningStore.get_value("player.visual.scale", 1.0)) * DISPLAY_SCALE * depth
 	if planted_gait_enabled:
 		_sprite.scale = Vector2(_gait.face * visual, visual)
@@ -239,6 +244,8 @@ func consume_grass() -> bool:
 func snapshot_state() -> String:
 	if just_fed_seconds > 0.0:
 		return "just_fed"
+	if just_petted_seconds > 0.0:
+		return "just_petted"
 	if leading:
 		return "leading"
 	return player_state

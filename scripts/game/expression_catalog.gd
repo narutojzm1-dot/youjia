@@ -2,6 +2,7 @@ class_name ExpressionCatalog
 extends RefCounted
 
 const RULES := [
+	# ── 草泥马主线（4张）────────────────────────────────────────────────────────
 	{
 		"id": "llama_overcast_goose_annoyed",
 		"owner": "llama",
@@ -44,6 +45,8 @@ const RULES := [
 		"polaroid": true,
 		"observe_nearby": true,
 		"spit": false,
+		# 需要在第3天之后才解锁，让玩家先理解游戏再收集
+		"min_day": 3,
 		"title_key": "photo.llama_smirk.title",
 		"note_key": "photo.llama_smirk.note",
 	},
@@ -60,6 +63,7 @@ const RULES := [
 		"title_key": "photo.llama_fed.title",
 		"note_key": "photo.llama_fed.note",
 	},
+	# ── 其他动物（非主线）────────────────────────────────────────────────────────
 	{
 		"id": "goose_overcast_patrol",
 		"owner": "goose",
@@ -82,6 +86,8 @@ const RULES := [
 		"polaroid": true,
 		"observe_nearby": true,
 		"spit": false,
+		# 第2天后才解锁，避免第一次进院子就全部集齐
+		"min_day": 2,
 		"title_key": "photo.duck.title",
 		"note_key": "photo.duck.note",
 	},
@@ -96,8 +102,48 @@ const RULES := [
 		"polaroid": true,
 		"observe_nearby": true,
 		"spit": false,
+		# 第2天后才解锁
+		"min_day": 2,
 		"title_key": "photo.cow.title",
 		"note_key": "photo.cow.note",
+	},
+	# ── 新增：抚摸羊（玩家触碰后由表情脉冲抓拍）──────────────────────────────────
+	{
+		"id": "sheep_pet_gentle",
+		"owner": "sheep",
+		"priority": 55,
+		"player": "just_petted",
+		"expression": "idle",
+		"hold": 3.0,
+		"polaroid": true,
+		"observe_nearby": true,
+		"spit": false,
+		"title_key": "photo.sheep_pet.title",
+		"note_key": "photo.sheep_pet.note",
+	},
+	# ── 新增：植物开花（手动触发，manual_only 防止自动匹配）─────────────────────
+	{
+		"id": "plant_first_bloom",
+		"owner": "duck",
+		"priority": 50,
+		"expression": "idle",
+		"hold": 4.0,
+		"polaroid": true,
+		"manual_only": true,
+		"title_key": "photo.plant_bloom.title",
+		"note_key": "photo.plant_bloom.note",
+	},
+	# ── 新增：第一次钓到鱼（手动触发）────────────────────────────────────────────
+	{
+		"id": "fish_first_catch",
+		"owner": "goose",
+		"priority": 50,
+		"expression": "idle",
+		"hold": 4.0,
+		"polaroid": true,
+		"manual_only": true,
+		"title_key": "photo.fish_catch.title",
+		"note_key": "photo.fish_catch.note",
 	},
 ]
 
