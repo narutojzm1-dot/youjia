@@ -1479,40 +1479,61 @@ func _draw() -> void:
 	_draw_pet_target_arc()
 
 
-## 用简单几何图形绘制植物床（与院子风格匹配的暖棕/绿色调）
+## 绘制种植槽：用同心椭圆叠加模拟透视土壤斑，不使用矩形。
+## 椭圆宽/高比约 4:1，符合院子伪等距透视；无直角边，与水彩背景融合更自然。
+## 架构注意：仍是 Canvas 层叠加，无 3D 遮挡；根本改善需后续将院子重构为真实场景。
 func _draw_plant_bed() -> void:
 	var pt := _plant_point()
-	# 土壤底色：小矩形
-	var plot := Rect2(pt + Vector2(-26, -9), Vector2(52, 18))
-	draw_rect(plot, Color(0.62, 0.47, 0.31, 0.78))
-	draw_rect(plot, Color(0.40, 0.28, 0.17, 0.72), false, 1.5)
-	# 根据状态绘制植物（发芽/开花阶段有轻微摇曳动画）
+	# ── 步骤 1：最外层软阴影椭圆（让土壤斑"沉"进地面）
+	draw_set_transform(pt + Vector2(0, 4), 0.0, Vector2(32.0, 8.0))
+	draw_circle(Vector2.ZERO, 1.0, Color(0.16, 0.11, 0.07, 0.30))
+	draw_set_transform(Vector2.ZERO)
+	# ── 步骤 2：土壤主体（三层同心椭圆：深→中→浅，模拟翻松泥土）
+	draw_set_transform(pt, 0.0, Vector2(26.0, 7.0))
+	draw_circle(Vector2.ZERO, 1.0, Color(0.38, 0.25, 0.14, 0.85))  # 深色底层
+	draw_set_transform(Vector2.ZERO)
+	draw_set_transform(pt + Vector2(0, -1), 0.0, Vector2(21.0, 5.5))
+	draw_circle(Vector2.ZERO, 1.0, Color(0.54, 0.38, 0.24, 0.80))  # 中层（主色）
+	draw_set_transform(Vector2.ZERO)
+	draw_set_transform(pt + Vector2(0, -2.5), 0.0, Vector2(14.0, 3.5))
+	draw_circle(Vector2.ZERO, 1.0, Color(0.68, 0.50, 0.32, 0.60))  # 顶光（最浅）
+	draw_set_transform(Vector2.ZERO)
+	# ── 步骤 3：状态相关内容
 	match _plant_state:
 		PLANT_EMPTY:
-			# 空地：中央画小十字（可种植的暗示）
-			var c := Color(0.48, 0.34, 0.22, 0.55)
-			draw_line(pt + Vector2(-6, 0), pt + Vector2(6, 0), c, 1.5, true)
-			draw_line(pt + Vector2(0, -5), pt + Vector2(0, 5), c, 1.5, true)
+			# 空槽：两个小暗椭圆（凹坑），暗示"这里可以种"
+			for sx: float in [-9.0, 9.0]:
+				draw_set_transform(pt + Vector2(sx, 0), 0.0, Vector2(5.5, 2.0))
+				draw_circle(Vector2.ZERO, 1.0, Color(0.22, 0.14, 0.08, 0.65))
+				draw_set_transform(Vector2.ZERO)
 		PLANT_PLANTED:
-			# 种子：实心小圆
-			draw_circle(pt + Vector2(0, 1), 2.8, Color(0.52, 0.36, 0.20, 0.90))
+			# 种子：两个小鼓包，带高光点
+			for sx: float in [-9.0, 9.0]:
+				var seed_pt := pt + Vector2(sx, 0)
+				draw_set_transform(seed_pt, 0.0, Vector2(3.8, 2.0))
+				draw_circle(Vector2.ZERO, 1.0, Color(0.36, 0.23, 0.13, 0.95))
+				draw_set_transform(Vector2.ZERO)
+				draw_circle(seed_pt + Vector2(-0.8, -0.8), 1.0, Color(0.62, 0.46, 0.30, 0.55))
 		PLANT_SPROUTING:
-			# 嫩芽：茎 + 两片叶（轻微侧倾动画）
+			# 嫩芽：茎从椭圆中心上方冒出（-3px 偏移到土面位置）
 			var lean := sin(_day_seconds * 0.9) * 1.2
-			var tip := pt + Vector2(lean, -8)
-			draw_line(pt + Vector2(0, 4), tip, Color(0.38, 0.62, 0.32, 0.92), 2.0, true)
-			draw_line(pt + Vector2(lean * 0.5, -2), tip + Vector2(-6, -1), Color(0.42, 0.68, 0.36, 0.88), 2.0, true)
-			draw_line(pt + Vector2(lean * 0.5, -4), tip + Vector2(6, -2), Color(0.42, 0.68, 0.36, 0.88), 2.0, true)
+			var base := pt + Vector2(0, -3)
+			var tip := base + Vector2(lean, -11)
+			draw_circle(base + Vector2(0, 1), 2.8, Color(0.20, 0.14, 0.08, 0.40))  # 茎基阴影
+			draw_line(base, tip, Color(0.38, 0.62, 0.32, 0.95), 2.2, true)
+			draw_line(base + Vector2(lean * 0.4, -3), tip + Vector2(-6, 0), Color(0.44, 0.68, 0.36, 0.88), 2.0, true)
+			draw_line(base + Vector2(lean * 0.5, -5), tip + Vector2(6, -1), Color(0.44, 0.68, 0.36, 0.88), 2.0, true)
 		PLANT_BLOOMED:
-			# 花朵：茎 + 花芯 + 5片花瓣（轻微摇曳）
+			# 花朵：茎从土面中心长出，带茎基圆形阴影增强接地感
 			var sway := sin(_day_seconds * 1.2) * 1.8
-			var tip := pt + Vector2(sway, -12)
-			draw_line(pt + Vector2(0, 4), tip, Color(0.38, 0.62, 0.32, 0.88), 2.0, true)
+			var base := pt + Vector2(0, -3)
+			var tip := base + Vector2(sway, -15)
+			draw_circle(base + Vector2(0, 2), 4.0, Color(0.18, 0.12, 0.07, 0.38))  # 茎基接地阴影
+			draw_line(base, tip, Color(0.38, 0.62, 0.32, 0.92), 2.2, true)
 			for i: int in 5:
 				var angle := float(i) / 5.0 * TAU - PI * 0.5
-				var petal_pos := tip + Vector2(0, -1) + Vector2(cos(angle), sin(angle)) * 5.5
-				draw_circle(petal_pos, 3.2, Color(0.92, 0.68, 0.76, 0.88))
-			draw_circle(tip + Vector2(0, -1), 3.0, Color(0.98, 0.90, 0.55, 0.92))
+				draw_circle(tip + Vector2(0, -1) + Vector2(cos(angle), sin(angle)) * 5.5, 3.2, Color(0.92, 0.68, 0.76, 0.90))
+			draw_circle(tip + Vector2(0, -1), 3.0, Color(0.98, 0.90, 0.55, 0.95))
 	# 收获庆祝：花瓣爆散动画（_plant_harvest_flash > 0 时激活）
 	if _plant_harvest_flash > 0.0:
 		var t := 1.0 - clampf(_plant_harvest_flash / 1.8, 0.0, 1.0)
@@ -1524,14 +1545,22 @@ func _draw_plant_bed() -> void:
 			draw_circle(px, lerpf(4.0, 1.5, t), Color(0.92, 0.68, 0.76, burst_a))
 		draw_circle(pt, lerpf(8.0, 1.0, t), Color(0.98, 0.90, 0.55, burst_a * 0.80))
 	# 植物床指示圆：开花时使用明显的粉色脉冲圆，提示玩家可以收获
-	## 其余阶段：近时棕色显眼，远时极淡
+	# 交互指示：椭圆轮廓（与土壤形状一致，融入透视，不用圆弧）
+	var _ellipse_pts := PackedVector2Array()
+	const _ELLIPSE_SEGS := 24
 	if _plant_state == PLANT_BLOOMED:
-		var bloom_pulse := 0.28 + 0.22 * absf(sin(_day_seconds * 2.2))
-		draw_arc(pt, 32.0, 0.0, TAU, 28, Color(0.92, 0.68, 0.76, bloom_pulse), 2.8, true)
+		var bloom_pulse := 0.30 + 0.25 * absf(sin(_day_seconds * 2.2))
+		for _ei: int in _ELLIPSE_SEGS + 1:
+			var _a := float(_ei) / float(_ELLIPSE_SEGS) * TAU
+			_ellipse_pts.append(pt + Vector2(cos(_a) * 34.0, sin(_a) * 12.0))
+		draw_polyline(_ellipse_pts, Color(0.92, 0.68, 0.76, bloom_pulse), 2.8, true)
 	else:
 		var near_plant := _player != null and _player.position.distance_to(pt) < 80.0
-		var indicator_alpha := 0.28 if near_plant else 0.06
-		draw_arc(pt, 28.0, 0.0, TAU, 24, Color(0.62, 0.47, 0.31, indicator_alpha), 1.2, true)
+		var indicator_alpha := 0.22 if near_plant else 0.04
+		for _ei: int in _ELLIPSE_SEGS + 1:
+			var _a := float(_ei) / float(_ELLIPSE_SEGS) * TAU
+			_ellipse_pts.append(pt + Vector2(cos(_a) * 30.0, sin(_a) * 10.0))
+		draw_polyline(_ellipse_pts, Color(0.58, 0.42, 0.26, indicator_alpha), 1.4, true)
 
 
 ## 绘制钓鱼点标记与钓鱼状态（鱼竿、鱼线）
