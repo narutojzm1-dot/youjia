@@ -50,6 +50,7 @@ var _has_walk_goal := false
 var _walk_goal := Vector2.ZERO
 var _pending_interaction := ""
 var _walk_path: Array[Vector2] = []
+var _body_repath := 0.0
 
 
 func setup(saved_photos: Array = []) -> void:
@@ -150,6 +151,8 @@ func tick(delta: float, move: Vector2) -> void:
 		_weather_timer = randf_range(48.0, 90.0)
 	if _player == null:
 		return
+	_player.body_obstacles = physical_obstacles("player")
+	_body_repath = maxf(0.0,_body_repath-delta)
 	if input_enabled:
 		if move.length() > 0.2:
 			_has_walk_goal = false
@@ -164,6 +167,12 @@ func tick(delta: float, move: Vector2) -> void:
 				var target := _pending_interaction
 				_pending_interaction = ""
 				_interact_with_target(target)
+			var obstacles := _routing_obstacles()
+			if _has_walk_goal and _body_repath <= 0.0 and (_walk_path.is_empty() or not YardBodies.clear_segment(_player.position,_walk_path[0],_player.body_radius*YardGround.depth_at(_player.position.y),obstacles)):
+				_walk_path = YardBodies.route(_player.position,_walk_goal,_player.body_radius*YardGround.depth_at(_player.position.y),obstacles,YardGround.lawn())
+				_body_repath = 0.7
+				# A moving animal may occupy the destination briefly. Keep intent
+				# and retry while standing; never silently abandon the tap.
 			var destination := _walk_path[0] if not _walk_path.is_empty() else _walk_goal
 			if not _walk_path.is_empty() and _player.position.distance_to(destination) < (12.0 if _walk_path.size()==1 else 4.0):
 				_walk_path.pop_front()
@@ -172,8 +181,10 @@ func tick(delta: float, move: Vector2) -> void:
 			if not _has_walk_goal or (to_goal.length() < 12.0 and _walk_path.is_empty()):
 				_has_walk_goal = false
 				move = Vector2.ZERO
+			elif _walk_path.is_empty():
+				move = Vector2.ZERO
 			else:
-				move = to_goal.normalized() * minf(1.0, to_goal.length() / 44.0)
+				move = to_goal.normalized() * (1.0 if _walk_path.size() > 1 else minf(1.0, to_goal.length() / 44.0))
 		_player.tick(delta, move, WORLD_SIZE)
 	else:
 		_player.tick(delta, Vector2.ZERO, WORLD_SIZE)
@@ -191,6 +202,7 @@ func tick(delta: float, move: Vector2) -> void:
 		if actor_id == "llama" and _pending_interaction == "llama" and not _leading:
 			actor.state = "graze"
 			actor._idle_time = maxf(actor._idle_time, 0.5)
+		actor.body_obstacles = physical_obstacles(actor_id)
 		actor.tick(delta, WORLD_SIZE)
 		actor.current_zone = _zone_at(actor.position)
 	_player.player_state = _player.snapshot_state()
@@ -285,6 +297,8 @@ func request_pointer_action(point: Vector2) -> void:
 
 
 func _request_action(target: String, goal: Vector2) -> void:
+	if target.is_empty() and YardGround.allows(goal,YardGround.lawn(),true):
+		goal = _open_goal_near_body(goal)
 	_pending_interaction = target
 	_has_walk_goal = false
 	_walk_path.clear()
@@ -304,14 +318,55 @@ func try_walk_to(goal: Vector2) -> bool:
 	# replace an explicit llama destination with nearby grass or another animal.
 	if not YardGround.allows(goal, YardGround.lawn(), true):
 		return false
-	if _player.position.distance_to(goal) < 28.0:
+	if _player.position.distance_to(goal) < 12.0:
 		return false
-	_walk_path = YardGround.route(_player.position, goal)
+	_walk_path = YardBodies.route(_player.position, goal, _player.body_radius*YardGround.depth_at(_player.position.y), _routing_obstacles(), YardGround.lawn())
+	_body_repath = 0.7
 	if _walk_path.is_empty():
 		return false
 	_has_walk_goal = true
 	_walk_goal = goal
 	return true
+
+
+func physical_obstacles(exclude_id: String = "") -> Array:
+	var result: Array = []
+	if exclude_id != "player" and _player != null:
+		result.append({"id":"player", "position":_player.position, "radius":_player.body_radius*YardGround.depth_at(_player.position.y)})
+	for id: String in _actors:
+		var actor: FeltActor = _actors[id]
+		if id == exclude_id or actor.species == "duck": continue
+		result.append({"id":id,"position":actor.position,"radius":actor.body_radius*YardGround.depth_at(actor.position.y)})
+	return result
+
+
+func _routing_obstacles() -> Array:
+	var obstacles := physical_obstacles("player")
+	# The selected llama is an interaction destination, not a walk-through
+	# point. Leading still routes around it when the person reverses direction.
+	if _pending_interaction == "llama":
+		obstacles = obstacles.filter(func(item: Dictionary) -> bool: return item.id != "llama")
+	return obstacles
+
+
+func _open_goal_near_body(goal: Vector2) -> Vector2:
+	var radius := _player.body_radius*YardGround.depth_at(_player.position.y)
+	var obstacles := physical_obstacles("player")
+	if YardBodies.clear_at(goal,radius,obstacles): return goal
+	var best := goal
+	var distance := INF
+	for item: Dictionary in obstacles:
+		var extent: Vector2 = radius + item.radius + Vector2(5,4)
+		if ((goal-item.position)/extent).length_squared()>1.0: continue
+		for i in 16:
+			var angle := float(i)*TAU/16.0
+			var candidate: Vector2 = item.position + Vector2(cos(angle),sin(angle))*extent
+			if not YardGround.allows(candidate,YardGround.lawn(),true) or not YardBodies.clear_at(candidate,radius,obstacles): continue
+			var score := candidate.distance_squared_to(_player.position)
+			if score < distance:
+				distance = score
+				best = candidate
+	return best
 
 
 func try_step_to_point(point: Vector2) -> bool:

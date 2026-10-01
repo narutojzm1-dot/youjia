@@ -42,6 +42,8 @@ var sequence_walker_enabled:=false
 var _sequence_walker: SequenceResident
 var walk_ground: PackedVector2Array = PackedVector2Array()
 var avoid_pond := false
+var body_radius := Vector2(10,6)
+var body_obstacles: Array = []
 
 
 func setup(start: Vector2) -> void:
@@ -107,6 +109,8 @@ func tick(delta: float, input_vector: Vector2, world_size: Vector2) -> void:
 		position.y = clampf(position.y, 390.0, world_size.y - 36.0)
 	else:
 		position = YardGround.move_inside(position, step, walk_ground, avoid_pond)
+	if not body_obstacles.is_empty():
+		position = YardBodies.move_inside(before, position-before, body_radius*depth, body_obstacles, walk_ground, avoid_pond)
 	var moved := position - before
 	# A fixed per-frame 0.2px cutoff made slow motion stick at high frame rates.
 	if absf(step.x) > 0.00001 and absf(moved.x) < 0.00001:
@@ -150,7 +154,7 @@ func tick(delta: float, input_vector: Vector2, world_size: Vector2) -> void:
 	if bool(TuningStore.get_value("ui.reduced_motion", false)):
 		_grass_hold_delay = 0.0
 	_update_grass_visual()
-	z_index = 8 + int(position.y / 8.0)
+	z_index = roundi(position.y)
 
 
 func set_planted_gait_enabled(enabled: bool) -> void:

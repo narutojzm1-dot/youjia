@@ -36,6 +36,10 @@ var pose_point := Vector2.ZERO
 # 各自的地面。空多边形表示还没绑地，沿用原来的矩形夹取。
 var walk_ground: PackedVector2Array = PackedVector2Array()
 var avoid_pond := false
+var body_radius := Vector2(16,8)
+var body_obstacles: Array = []
+var _lead_path: Array[Vector2] = []
+var _lead_repath := 0.0
 var use_ellipse := false
 var ellipse_center := Vector2.ZERO
 var ellipse_radius := Vector2.ZERO
@@ -58,6 +62,7 @@ func setup(config: Dictionary) -> void:
 	actor_id = str(config.get("id", ""))
 	daily_routine = bool(config.get("daily_routine", false))
 	species = str(config.get("species", actor_id))
+	body_radius = YardBodies.radius_for(species)
 	display_name_key = str(config.get("name_key", "actor.%s" % species))
 	position = config.get("position", Vector2.ZERO)
 	wander_rect = config.get("wander", Rect2(position - Vector2(40, 20), Vector2(80, 40)))
@@ -181,6 +186,7 @@ func end_lead() -> void:
 	state = "wander"
 	_following = false
 	_lead_target = null
+	_lead_path.clear()
 	_target = _random_point()
 	if daily_routine:
 		_start_rest()
@@ -201,6 +207,7 @@ func is_near(other: FeltActor, radius: float = 92.0) -> bool:
 
 func tick(delta: float, world_size: Vector2) -> void:
 	_breath += delta
+	_lead_repath = maxf(0.0, _lead_repath-delta)
 	var reduced := bool(TuningStore.get_value("ui.reduced_motion", false))
 	var breath := 1.0
 	if not reduced:
@@ -232,7 +239,7 @@ func tick(delta: float, world_size: Vector2) -> void:
 		_velocity = Vector2.ZERO
 		if _rig != null:
 			_rig.tick(delta, Vector2.ZERO, depth_now, reduced)
-		z_index = 4 + int(position.y / 8.0)
+		z_index = roundi(position.y)
 		return
 	var motion := Vector2.ZERO
 	var depth := YardGround.depth_at(position.y)
@@ -251,7 +258,18 @@ func tick(delta: float, world_size: Vector2) -> void:
 				if _following:
 					var follow_multiplier := float(TuningStore.get_value("enemies.move.speed_multiplier", 1.0))
 					var follow_speed := maxf(speed, 84.0 * follow_multiplier) * depth
-					desired = motion.normalized() * minf(follow_speed, maxf(0.0, motion.length() - 56.0 * depth) * 2.5)
+					var direction := motion.normalized()
+					var obstacles: Array = body_obstacles.filter(func(item: Dictionary) -> bool: return str(item.get("id","")) != "player")
+					if not YardBodies.clear_segment(position,_lead_target.position,body_radius*depth,obstacles) or not YardGround._clear_segment(position,_lead_target.position):
+						if _lead_repath <= 0.0:
+							_lead_path = YardBodies.route(position,_lead_target.position,body_radius*depth,obstacles,walk_ground,avoid_pond)
+							_lead_repath = 0.7
+						while not _lead_path.is_empty() and position.distance_to(_lead_path[0]) < 5.0: _lead_path.pop_front()
+						if not _lead_path.is_empty(): direction = position.direction_to(_lead_path[0])
+						else: direction = Vector2.ZERO
+					else:
+						_lead_path.clear()
+					desired = direction * minf(follow_speed, maxf(0.0, motion.length() - 56.0 * depth) * 2.5)
 			else:
 				end_lead()
 		"graze", "rest":
@@ -294,6 +312,8 @@ func tick(delta: float, world_size: Vector2) -> void:
 		position.y = clampf(position.y, 400.0, world_size.y - 56.0)
 	else:
 		position = _move_on_own_ground(step)
+	if not use_ellipse and not body_obstacles.is_empty():
+		position = YardBodies.move_inside(before, position-before, body_radius*depth, body_obstacles, walk_ground, avoid_pond)
 	var moved := position - before
 	var actual_speed := moved.length() / maxf(delta, 0.0001)
 	if desired.length() > 2.0 and actual_speed < 1.0:
@@ -339,7 +359,7 @@ func tick(delta: float, world_size: Vector2) -> void:
 		_sprite.position.y = 0.0
 		_sprite.rotation = 0.0
 		_rig.tick(delta, moved, depth, reduced)
-	z_index = 4 + int(position.y / 8.0)
+	z_index = roundi(position.y)
 
 
 func _anchor_feet() -> void:
@@ -374,6 +394,7 @@ func _local_destination() -> Vector2:
 		var point := position + Vector2(cos(angle), sin(angle)*0.42) * randf_range(distance_span.x, distance_span.y)
 		if species != "llama" and not use_ellipse and not wander_rect.has_point(point): continue
 		if not _stands_on(point): continue
+		if not YardBodies.clear_segment(position,point,body_radius*YardGround.depth_at(position.y),body_obstacles): continue
 		var reachable := true
 		for i in range(1, 9):
 			if not _stands_on(position.lerp(point, float(i)/8.0)):

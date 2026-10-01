@@ -18,3 +18,12 @@
 - Existing UI/capture feeding wait checks both photo and consumed inventory, so an album from an earlier run cannot falsely finish the action.
 
 Headless accelerated simulation proves outcomes, not device performance. Native Godot render captures exercise real viewport input but use a software renderer/fixed simulation cadence; they are not iOS or browser/WebGL performance evidence.
+
+## Physical bodies and depth follow-up
+
+- Player and land animals have elliptical foot-ground footprints. Swept contact stops penetration; tangential movement can slide along contact instead of teleporting either body.
+- Pointer paths use current animal footprints, follow safe intermediate waypoints at walking speed, and replan for moving obstacles. A temporarily occupied goal keeps its intent and retries rather than disappearing.
+- Reversing while leading routes the player around the llama. The llama separately routes around residents and the pond when following.
+- All character/animal draw depth is derived from the same foot Y coordinate. The former player-only 32px foreground bias is removed.
+- `test/physical_yard_suite.gd` independently checks pairwise ellipse clearance, common depth ordering, four-sided approaches, six crossing routes and five leading legs at 30/60/120 Hz. No test teleports animals to make the route pass.
+- `tools/capture_physical_routes.gd` renders multiple raw-viewport touch routes, including repeated lead reversals and walking in front of/behind cattle. It remains native software-renderer evidence rather than a browser/device benchmark.

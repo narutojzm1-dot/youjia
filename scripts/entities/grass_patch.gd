@@ -18,7 +18,7 @@ var _harvest_count := 0
 
 func setup(point: Vector2) -> void:
 	position = point
-	z_index = 8 + int(point.y / 8.0)
+	z_index = roundi(point.y)
 	for index: int in 2:
 		var width := 18.0 if index == 0 else 16.0
 		var origin := Vector2(-10, 0) if index == 0 else Vector2(10, -3)
