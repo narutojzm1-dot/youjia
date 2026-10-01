@@ -22,6 +22,14 @@ const TOD_COLORS := {
 	"night":   Color(0.52, 0.54, 0.78), # 夜晚：蓝紫
 }
 
+# 季节色调（随假期天数推进，叠加在昼夜层下方）
+const SEASON_COLORS := {
+	"spring":      Color(0.88, 0.97, 0.90),  # 春：淡翠绿
+	"summer":      Color(1.00, 1.00, 0.95),  # 夏：几乎无色
+	"late_summer": Color(1.00, 0.95, 0.82),  # 仲夏末：暖琥珀
+	"autumn":      Color(1.00, 0.90, 0.72),  # 秋：金黄
+}
+
 var _paper: TextureRect
 var _world_root: Node2D
 var _world: YardWorld
@@ -73,6 +81,8 @@ var _day_label: Label
 # 昼夜色调覆盖层
 var _tod_canvas: CanvasLayer
 var _tod_rect: ColorRect
+# 季节底色（渲染在昼夜层之下，随假期天数推进）
+var _season_rect: ColorRect
 # P1.5: 拍立得入账时短暂亮一次屏，提示照片已捕获。
 var _photo_flash: ColorRect
 
@@ -135,9 +145,10 @@ func _process(delta: float) -> void:
 	_camera.position = YardWorld.WORLD_SIZE * 0.5 + _cam_offset + Vector2(0,hud_space/(2.0*zoom))
 	if _screen == "game":
 		_refresh_hud()
-		# 更新昼夜色调覆盖层
+		# 更新昼夜色调覆盖层与季节底色
 		if _world != null:
 			_update_tod_tint(_world.tod_fraction())
+			_update_season_tint(_world.holiday_day)
 
 
 func _input(event: InputEvent) -> void:
@@ -215,10 +226,17 @@ func _build_layers() -> void:
 	_camera.position = YardWorld.WORLD_SIZE * 0.5
 	_camera.enabled = false
 	_world_root.add_child(_camera)
-	# 昼夜覆盖层：在世界(0)之上、HUD(10)之下
+	# 昼夜/季节覆盖层：在世界(0)之上、HUD(10)之下（layer 5）
 	_tod_canvas = CanvasLayer.new()
 	_tod_canvas.layer = 5
 	add_child(_tod_canvas)
+	# 季节底色（渲染顺序在昼夜之下，先加入）
+	_season_rect = ColorRect.new()
+	_season_rect.color = Color(0, 0, 0, 0)
+	_season_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_season_rect.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	_tod_canvas.add_child(_season_rect)
+	# 昼夜色调（覆盖在季节之上）
 	_tod_rect = ColorRect.new()
 	_tod_rect.color = Color(0, 0, 0, 0)
 	_tod_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -294,7 +312,8 @@ func _build_hud() -> void:
 	_pause_button.pressed.connect(_toggle_pause)
 	_hud.add_child(_pause_button)
 	_action_button = _chip_button()
-	_action_button.pressed.connect(func(): _world.request_primary_action())
+	# 按下时先触发视觉脉冲，再执行动作，让触控/鼠标点击有明确反馈
+	_action_button.pressed.connect(func(): _pulse_button(_action_button); _world.request_primary_action())
 	_hud.add_child(_action_button)
 	for button: Button in [_album_chip,_weather_chip,_pause_button,_action_button]:
 		button.focus_mode = Control.FOCUS_NONE
@@ -411,6 +430,9 @@ func _start_holiday() -> void:
 	_layout()
 	_show_notice_key("notice.arrive")
 	_refresh_hud()
+	# 首次进院（第1天且相册为空）时，延迟发送柔性引导提示，帮助玩家发现活动
+	if _world.holiday_day == 1 and SaveStore.get_album().is_empty():
+		_show_delayed_soft_hint()
 
 
 func _clear_world() -> void:
@@ -432,9 +454,11 @@ func _show_title() -> void:
 	_pause_screen.visible = false
 	_confirm_screen.visible = false
 	_album_screen.visible = false
-	# 回到标题时清除昼夜叠色
+	# 回到标题时清除昼夜叠色与季节底色
 	if _tod_rect != null:
 		_tod_rect.color = Color(0, 0, 0, 0)
+	if _season_rect != null:
+		_season_rect.color = Color(0, 0, 0, 0)
 	_refresh_texts()
 
 
@@ -678,6 +702,51 @@ func _refresh_hud() -> void:
 func _on_day_advanced(_day: int) -> void:
 	# 翻天时刷新 HUD（天数已在 _world.holiday_day 中更新）
 	_refresh_hud()
+
+
+## 第1天进院且相册为空时，延迟 4.5 秒发送柔性引导提示（淡出后已看不到 arrive 通知）
+func _show_delayed_soft_hint() -> void:
+	await get_tree().create_timer(4.5).timeout
+	if _screen != "game" or _world == null:
+		return
+	_show_notice_key("notice.first_hint")
+
+
+## 行动按钮按下时触发短暂视觉脉冲：暖光闪亮再消散，给触控/鼠标点击明确反馈
+func _pulse_button(btn: Button) -> void:
+	if btn == null:
+		return
+	if bool(TuningStore.get_value("ui.reduced_motion", false)):
+		return
+	var tween := create_tween()
+	tween.tween_property(btn, "modulate", Color(1.35, 1.10, 0.88, 1.0), 0.07).set_trans(Tween.TRANS_QUAD)
+	tween.tween_property(btn, "modulate", Color.WHITE, 0.22).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+
+
+## 根据假期天数计算并应用季节底色（叠加在昼夜层之下）
+## 天数越大，色调从春绿→夏白→仲夏琥珀→秋金，alpha 极低，保持视觉干净
+func _update_season_tint(day: int) -> void:
+	if _season_rect == null:
+		return
+	var sc: Color
+	var alpha: float
+	if day <= 3:
+		# 第 1-3 天：春意，淡翠绿渐现
+		sc = SEASON_COLORS.spring
+		alpha = lerpf(0.0, 0.04, float(day - 1) / 2.0)
+	elif day <= 7:
+		# 第 4-7 天：盛夏，近乎无色
+		sc = SEASON_COLORS.summer
+		alpha = 0.01
+	elif day <= 12:
+		# 第 8-12 天：仲夏末，暖琥珀渐浓
+		sc = SEASON_COLORS.late_summer
+		alpha = lerpf(0.02, 0.05, float(day - 8) / 4.0)
+	else:
+		# 第 13 天起：金秋，上限 0.08
+		sc = SEASON_COLORS.autumn
+		alpha = minf(0.08, 0.05 + float(day - 13) * 0.005)
+	_season_rect.color = Color(sc.r, sc.g, sc.b, alpha)
 
 
 ## 根据 tod_fraction (0.0-1.0) 计算并应用昼夜渐变覆盖色
