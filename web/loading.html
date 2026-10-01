@@ -58,7 +58,7 @@ Source SHA-256: 38f4c5f927f746b3dfa4c3a5d7edf0b7a3e828e27438418fa54f9e1565289412
     <progress id="loading-progress" aria-label="Download progress"></progress>
     <p id="loading-notice" hidden></p>
     <button id="loading-retry" type="button" hidden>Retry</button>
-    <p id="loading-build" style="opacity:0.45;font-size:11px;margin-top:8px"></p>
+    <p id="loading-build" style="opacity:0.55;font-size:12px;margin-top:8px;font-family:monospace;letter-spacing:0.03em"></p>
     <noscript>JavaScript is required to play this game.</noscript>
   </section>
   <script>
@@ -74,8 +74,12 @@ Source SHA-256: 38f4c5f927f746b3dfa4c3a5d7edf0b7a3e828e27438418fa54f9e1565289412
       const retry = document.getElementById('loading-retry');
       const buildLabel = document.getElementById('loading-build');
       document.getElementById('game-title').textContent = document.title;
-      // 显示 build ID（即 executable 名称，如 game-ca1fb67）
-      if (buildLabel && config.executable) buildLabel.textContent = config.executable;
+      // 显示 build ID（即 executable 名称，如 game-ca1fb67），可用于快速核验缓存是否命中最新版本
+      if (buildLabel && config.executable) {
+        buildLabel.textContent = config.executable;
+        // 将版本 ID 同步写入 document.documentElement.dataset.build，方便控制台查询
+        document.documentElement.dataset.build = config.executable;
+      }
       // Single-language holiday: pin Simplified Chinese on the loader.
       const zh = true;
       document.documentElement.lang = 'zh-CN';
