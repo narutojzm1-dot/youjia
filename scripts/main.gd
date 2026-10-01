@@ -12,6 +12,16 @@ const SAGE := Color("8fb389")
 const CREAM := Color("fffaf1")
 const LAVENDER := Color("cbb6d6")
 
+# 昼夜渐变覆盖层（CanvasLayer 5，介于世界与 HUD 之间）
+const TOD_COLORS := {
+	"dawn":    Color(1.0, 0.92, 0.68),  # 晨光：暖金
+	"morning": Color(1.0, 0.95, 0.82),  # 早晨：淡金
+	"noon":    Color(1.0, 1.0, 0.96),   # 正午：几乎无色
+	"afternoon": Color(1.0, 0.80, 0.52), # 下午：暖琥珀
+	"evening": Color(0.90, 0.60, 0.42), # 傍晚：桃橙
+	"night":   Color(0.52, 0.54, 0.78), # 夜晚：蓝紫
+}
+
 var _paper: TextureRect
 var _world_root: Node2D
 var _world: YardWorld
@@ -58,6 +68,11 @@ var _cam_offset := Vector2.ZERO
 var _cam_target_offset := Vector2.ZERO
 var _latest_photo := ""
 var _last_touch_ms := -1000
+# 假期天数标签
+var _day_label: Label
+# 昼夜色调覆盖层
+var _tod_canvas: CanvasLayer
+var _tod_rect: ColorRect
 
 func _ready() -> void:
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -112,6 +127,9 @@ func _process(delta: float) -> void:
 	_camera.position = YardWorld.WORLD_SIZE * 0.5 + _cam_offset + Vector2(0,hud_space/(2.0*zoom))
 	if _screen == "game":
 		_refresh_hud()
+		# 更新昼夜色调覆盖层
+		if _world != null:
+			_update_tod_tint(_world.tod_fraction())
 
 
 func _input(event: InputEvent) -> void:
@@ -189,6 +207,15 @@ func _build_layers() -> void:
 	_camera.position = YardWorld.WORLD_SIZE * 0.5
 	_camera.enabled = false
 	_world_root.add_child(_camera)
+	# 昼夜覆盖层：在世界(0)之上、HUD(10)之下
+	_tod_canvas = CanvasLayer.new()
+	_tod_canvas.layer = 5
+	add_child(_tod_canvas)
+	_tod_rect = ColorRect.new()
+	_tod_rect.color = Color(0, 0, 0, 0)
+	_tod_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_tod_rect.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	_tod_canvas.add_child(_tod_rect)
 
 
 func _build_title_screen() -> void:
@@ -240,6 +267,12 @@ func _build_hud() -> void:
 	_hint_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	_hint_label.size = Vector2(520, 70)
 	_hud.add_child(_hint_label)
+	# 假期天数标签：居中上方
+	_day_label = _label(14, MUTED)
+	_day_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_day_label.size = Vector2(160, 28)
+	_day_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_hud.add_child(_day_label)
 	_album_chip = _chip_button()
 	_album_chip.pressed.connect(_show_album)
 	_hud.add_child(_album_chip)
@@ -334,13 +367,21 @@ func _start_holiday() -> void:
 	_clear_world()
 	_world = YardWorldType.new()
 	_world_root.add_child(_world)
-	_world.setup(SaveStore.get_album(),SaveStore.get_photo_moments())
+	_world.setup(
+		SaveStore.get_album(),
+		SaveStore.get_photo_moments(),
+		SaveStore.get_holiday_day(),
+		SaveStore.get_holiday_day_elapsed(),
+		SaveStore.get_plant_state(),
+		SaveStore.get_first_fish_caught()
+	)
 	_world.album_updated.connect(_on_album_updated)
 	_world.notice_requested.connect(_show_notice_key)
 	_world.notice_dismiss_requested.connect(_dismiss_notice_key)
 	_world.weather_changed.connect(func(_w: String) -> void: _refresh_hud())
 	_world.camera_focus_requested.connect(_on_focus)
 	_world.camera_release_requested.connect(_on_release_focus)
+	_world.day_advanced.connect(_on_day_advanced)
 	_camera.enabled = true
 	_cam_zoom = 1.0
 	_cam_target_zoom = 1.0
@@ -378,6 +419,9 @@ func _show_title() -> void:
 	_pause_screen.visible = false
 	_confirm_screen.visible = false
 	_album_screen.visible = false
+	# 回到标题时清除昼夜叠色
+	if _tod_rect != null:
+		_tod_rect.color = Color(0, 0, 0, 0)
 	_refresh_texts()
 
 
@@ -579,6 +623,10 @@ func _layout() -> void:
 	_pause_button.position = Vector2(size.x-_pause_button.size.x-pad,pad)
 	_hint_label.position = Vector2(pad,16)
 	_hint_label.size = Vector2(maxf(120.0,size.x-_pause_button.size.x-pad*3.0),72)
+	# 天数标签居中顶部
+	if _day_label != null:
+		_day_label.size = Vector2(160, 28)
+		_day_label.position = Vector2(size.x * 0.5 - 80.0, pad)
 	var row := size.y-124.0 if compact else size.y-68.0
 	_album_chip.position = Vector2(pad,row)
 	_weather_chip.position = Vector2(size.x-half-pad if compact else pad+210.0,row)
@@ -592,8 +640,53 @@ func _refresh_hud() -> void:
 	_album_chip.text = I18n.t("hud.album", {"count": str(_world.collected_count()), "total": str(_world.collectible_total())})
 	_weather_chip.text = I18n.t("hud.weather.%s" % _world.weather)
 	_pause_button.text = I18n.t("hud.pause")
-	_hint_label.text = I18n.t("hud.hint")
+	# 使用上下文提示替换静态提示
+	_hint_label.text = I18n.t(_world.hint_context())
 	_action_button.text = I18n.t(_world.primary_action_key())
+	# 更新假期天数标签
+	if _day_label != null:
+		_day_label.text = I18n.t("hud.day", {"n": str(_world.holiday_day)})
+
+
+func _on_day_advanced(_day: int) -> void:
+	# 翻天时刷新 HUD（天数已在 _world.holiday_day 中更新）
+	_refresh_hud()
+
+
+## 根据 tod_fraction (0.0-1.0) 计算并应用昼夜渐变覆盖色
+## 0.0 = 日出, 0.5 = 正午, 0.85 = 黄昏, 1.0 = 深夜
+func _update_tod_tint(t: float) -> void:
+	if _tod_rect == null:
+		return
+	var base_color: Color
+	var alpha: float
+	if t < 0.10:
+		# 日出：金橙暖光
+		base_color = TOD_COLORS.dawn
+		alpha = lerpf(0.08, 0.05, t / 0.10)
+	elif t < 0.25:
+		# 早晨：淡金渐隐
+		base_color = TOD_COLORS.morning
+		alpha = lerpf(0.05, 0.01, (t - 0.10) / 0.15)
+	elif t < 0.55:
+		# 正午：几乎无色
+		base_color = TOD_COLORS.noon
+		alpha = 0.0
+	elif t < 0.72:
+		# 下午：暖琥珀渐强
+		base_color = TOD_COLORS.afternoon
+		alpha = lerpf(0.0, 0.09, (t - 0.55) / 0.17)
+	elif t < 0.87:
+		# 傍晚/黄昏：桃橙
+		var frac := (t - 0.72) / 0.15
+		base_color = TOD_COLORS.afternoon.lerp(TOD_COLORS.evening, frac)
+		alpha = lerpf(0.09, 0.16, frac)
+	else:
+		# 夜晚：蓝紫
+		var frac := (t - 0.87) / 0.13
+		base_color = TOD_COLORS.evening.lerp(TOD_COLORS.night, frac)
+		alpha = lerpf(0.16, 0.22, frac)
+	_tod_rect.color = Color(base_color.r, base_color.g, base_color.b, alpha)
 
 
 func _on_locale_changed(_locale: String) -> void:

@@ -19,6 +19,15 @@ func _default_data() -> Dictionary:
 		"tutorial_version": 0,
 		"album": [],
 		"photo_moments": {},
+		# 假期天数系统（v4 兼容新增字段）
+		"holiday_day": 1,
+		"holiday_day_elapsed": 0.0,
+		# 植物床状态（0=空, 1=已种, 2=发芽, 3=开花）
+		"plant_state": 0,
+		"plant_day_planted": 0,
+		"plant_watered_day": -1,
+		# 钓鱼记录
+		"first_fish_caught": false,
 	}
 
 
@@ -46,6 +55,13 @@ func _load() -> void:
 				album.append(photo_id)
 	_data.album = album
 	_data.photo_moments = _clean_moments(candidate.get("photo_moments",{}),album)
+	# 读取假期进度（旧存档没有这些字段时用默认值）
+	_data.holiday_day = maxi(1, int(candidate.get("holiday_day", 1)))
+	_data.holiday_day_elapsed = maxf(0.0, float(candidate.get("holiday_day_elapsed", 0.0)))
+	_data.plant_state = clampi(int(candidate.get("plant_state", 0)), 0, 3)
+	_data.plant_day_planted = maxi(0, int(candidate.get("plant_day_planted", 0)))
+	_data.plant_watered_day = int(candidate.get("plant_watered_day", -1))
+	_data.first_fish_caught = bool(candidate.get("first_fish_caught", false))
 
 
 func save() -> bool:
@@ -105,6 +121,50 @@ func get_photo_moments() -> Dictionary:
 
 func get_photo_moment(photo_id: String) -> Dictionary:
 	return ((_data.get("photo_moments",{}) as Dictionary).get(photo_id,{}) as Dictionary).duplicate(true)
+
+
+# ── 假期天数 ──────────────────────────────────────────────────────────────────
+
+func get_holiday_day() -> int:
+	return maxi(1, int(_data.get("holiday_day", 1)))
+
+
+func get_holiday_day_elapsed() -> float:
+	return maxf(0.0, float(_data.get("holiday_day_elapsed", 0.0)))
+
+
+func set_holiday_progress(day: int, elapsed: float) -> void:
+	_data.holiday_day = maxi(1, day)
+	_data.holiday_day_elapsed = maxf(0.0, elapsed)
+	save()
+
+
+# ── 植物床 ────────────────────────────────────────────────────────────────────
+
+func get_plant_state() -> Dictionary:
+	return {
+		"state": int(_data.get("plant_state", 0)),
+		"day_planted": int(_data.get("plant_day_planted", 0)),
+		"watered_day": int(_data.get("plant_watered_day", -1)),
+	}
+
+
+func set_plant_state(state: int, day_planted: int, watered_day: int) -> void:
+	_data.plant_state = clampi(state, 0, 3)
+	_data.plant_day_planted = maxi(0, day_planted)
+	_data.plant_watered_day = watered_day
+	save()
+
+
+# ── 钓鱼记录 ──────────────────────────────────────────────────────────────────
+
+func get_first_fish_caught() -> bool:
+	return bool(_data.get("first_fish_caught", false))
+
+
+func set_first_fish_caught() -> void:
+	_data.first_fish_caught = true
+	save()
 
 
 func _clean_moments(raw: Variant, album: Array) -> Dictionary:

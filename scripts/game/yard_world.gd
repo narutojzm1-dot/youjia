@@ -7,6 +7,7 @@ signal notice_requested(key: String)
 signal notice_dismiss_requested(key: String)
 signal camera_focus_requested(world_point: Vector2, zoom: float)
 signal camera_release_requested
+signal day_advanced(day: int)
 
 const SUNNY := preload("res://assets/holiday/environment/yard_sunny.png")
 const OVERCAST := preload("res://assets/holiday/environment/yard_overcast.png")
@@ -34,6 +35,34 @@ var photo_moments: Dictionary = {}
 var simulation_active := true
 var input_enabled := true
 
+# ── 假期天数 / 昼夜 ───────────────────────────────────────────────────────────
+## 每 DAY_DURATION_SECONDS 真实游玩秒数 = 1个假期天
+const DAY_DURATION_SECONDS := 600.0
+var holiday_day := 1
+var _day_elapsed := 0.0       # 本天内已流逝的秒数
+var _save_interval := 60.0    # 每隔60秒自动存档一次
+
+# ── 植物床状态 ─────────────────────────────────────────────────────────────────
+## 0=空, 1=已种, 2=发芽, 3=开花
+const PLANT_EMPTY := 0
+const PLANT_PLANTED := 1
+const PLANT_SPROUTING := 2
+const PLANT_BLOOMED := 3
+var _plant_state := 0
+var _plant_day_planted := 0
+var _plant_watered_day := -1
+
+# ── 钓鱼状态 ──────────────────────────────────────────────────────────────────
+## 0=空闲, 1=已抛竿（等待）, 2=有反应！, 3=钓到了
+const FISH_IDLE := 0
+const FISH_CASTING := 1
+const FISH_BITE := 2
+const FISH_CAUGHT := 3
+var _fish_state := 0
+var _fish_timer := 0.0
+var _fish_caught_total := 0
+var _first_fish_polaroid_done := false
+
 var _backdrop: Sprite2D
 var _player: Vacationer
 var _actors: Dictionary = {}
@@ -58,7 +87,14 @@ var _rejected_point := Vector2.ZERO
 var _rejected_seconds := 0.0
 
 
-func setup(saved_photos: Array = [], saved_moments: Dictionary = {}) -> void:
+func setup(
+	saved_photos: Array = [],
+	saved_moments: Dictionary = {},
+	saved_day: int = 1,
+	saved_day_elapsed: float = 0.0,
+	saved_plant: Dictionary = {},
+	saved_fish_caught: bool = false
+) -> void:
 	process_mode = Node.PROCESS_MODE_PAUSABLE
 	collected = PackedStringArray()
 	photo_moments.clear()
@@ -69,6 +105,15 @@ func setup(saved_photos: Array = [], saved_moments: Dictionary = {}) -> void:
 		var moment := PhotoMoment.sanitize(saved_moments.get(photo_id,{}))
 		if not moment.is_empty() and str(moment.get("rule_id","")) == photo_id:
 			photo_moments[photo_id] = moment
+	# 读取假期天数进度
+	holiday_day = maxi(1, saved_day)
+	_day_elapsed = maxf(0.0, saved_day_elapsed)
+	# 读取植物床进度
+	_plant_state = clampi(int(saved_plant.get("state", 0)), 0, 3)
+	_plant_day_planted = maxi(0, int(saved_plant.get("day_planted", 0)))
+	_plant_watered_day = int(saved_plant.get("watered_day", -1))
+	# 读取钓鱼记录
+	_first_fish_polaroid_done = saved_fish_caught
 	_backdrop = Sprite2D.new()
 	_backdrop.centered = false
 	_backdrop.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
@@ -97,6 +142,50 @@ func get_player() -> Vacationer:
 
 func get_world_size() -> Vector2:
 	return WORLD_SIZE
+
+
+## 当天已流逝比例（0.0=天刚亮, 1.0=接近夜末），用于昼夜渐变
+func tod_fraction() -> float:
+	return _day_elapsed / DAY_DURATION_SECONDS
+
+
+## 根据玩家当前位置返回合适的上下文提示键
+func hint_context() -> String:
+	if _player == null:
+		return "hud.hint.default"
+	var pos := _player.position
+	# 钓鱼区域
+	if pos.distance_to(_fishing_point()) < 90.0:
+		if _fish_state == FISH_IDLE:
+			return "hud.hint.near_pond"
+		if _fish_state == FISH_CASTING:
+			return "hud.hint.fishing"
+		if _fish_state == FISH_BITE:
+			return "hud.hint.fish_bite"
+	# 植物床区域
+	if pos.distance_to(_plant_point()) < 80.0:
+		match _plant_state:
+			PLANT_EMPTY:
+				return "hud.hint.plant_empty"
+			PLANT_PLANTED:
+				return "hud.hint.plant_water"
+			PLANT_SPROUTING:
+				return "hud.hint.plant_water"
+			PLANT_BLOOMED:
+				return "hud.hint.plant_bloomed"
+	# 可抚摸动物
+	for pet_id: String in ["cow", "sheep_a", "sheep_b", "horse"]:
+		var pet_actor := actor_named(pet_id)
+		if pet_actor != null and pos.distance_to(pet_actor.position) < 85.0:
+			return "hud.hint.near_animal"
+	# 草泥马附近
+	var llama := actor_named("llama")
+	if llama != null and pos.distance_to(llama.position) < 90.0:
+		return "hud.hint.near_llama"
+	# 草堆附近
+	if pos.distance_to(_grass_point()) < 90.0:
+		return "hud.hint.near_grass"
+	return "hud.hint.default"
 
 
 func collected_count() -> int:
@@ -163,6 +252,19 @@ func tick(delta: float, move: Vector2) -> void:
 		return
 	_rejected_seconds = maxf(0.0, _rejected_seconds - delta)
 	_day_seconds += delta
+	# 推进假期天数（每 DAY_DURATION_SECONDS 秒 = 1天）
+	_day_elapsed += delta
+	if _day_elapsed >= DAY_DURATION_SECONDS:
+		_day_elapsed -= DAY_DURATION_SECONDS
+		holiday_day += 1
+		_on_new_day()
+	# 定时自动存档
+	_save_interval -= delta
+	if _save_interval <= 0.0:
+		_save_interval = 60.0
+		_save_progress()
+	# 钓鱼计时
+	_tick_fishing(delta)
 	_weather_timer -= delta
 	if _weather_timer <= 0.0:
 		toggle_weather()
@@ -251,9 +353,26 @@ func tick(delta: float, move: Vector2) -> void:
 func try_interact() -> void:
 	if not input_enabled or _player == null:
 		return
-	if _player.position.distance_to(_grass_point()) < 78.0 and not _player.carrying_grass:
+	var pos := _player.position
+	# 钓鱼
+	if pos.distance_to(_fishing_point()) < 85.0:
+		_interact_with_target("fishing")
+		return
+	# 植物床
+	if pos.distance_to(_plant_point()) < 75.0:
+		_interact_with_target("plant")
+		return
+	# 拿草
+	if pos.distance_to(_grass_point()) < 78.0 and not _player.carrying_grass:
 		_interact_with_target("grass")
 		return
+	# 可抚摸动物
+	for pet_id: String in ["cow", "sheep_a", "sheep_b", "horse"]:
+		var pet_actor := actor_named(pet_id)
+		if pet_actor != null and pos.distance_to(pet_actor.position) < 80.0:
+			_interact_with_target("pet_%s" % pet_actor.species)
+			return
+	# 默认：草泥马
 	_interact_with_target("llama")
 
 
@@ -291,12 +410,60 @@ func _interact_with_target(target: String) -> void:
 			llama.end_lead()
 			notice_requested.emit("notice.lead_stop")
 		return
+	# 钓鱼互动
+	if target == "fishing":
+		_consume_pending_action()
+		_start_fishing()
+		return
+	# 植物床互动
+	if target == "plant":
+		_consume_pending_action()
+		_interact_plant()
+		return
+	# 抚摸动物（pet_cow / pet_sheep / pet_horse）
+	if target.begins_with("pet_"):
+		var species_name := target.substr(4)  # "cow", "sheep", "horse"
+		# 找到最近的对应动物
+		var closest: FeltActor = null
+		var closest_dist := 90.0
+		for actor_id: String in _actors:
+			var actor: FeltActor = _actors[actor_id]
+			if actor.species == species_name:
+				var d := _player.position.distance_to(actor.position)
+				if d < closest_dist:
+					closest_dist = d
+					closest = actor
+		if closest != null:
+			_consume_pending_action()
+			_player.just_petted_seconds = 6.0
+			_player.player_state = "just_petted"
+			notice_requested.emit("notice.pet.%s" % species_name)
+			_evaluate_expressions()
+			return
 	notice_requested.emit("notice.idle")
 
 
 func primary_action_key() -> String:
 	if _leading: return "action.release"
-	if _player != null and _player.carrying_grass: return "action.feed"
+	if _player == null: return "action.grass"
+	if _player.carrying_grass: return "action.feed"
+	var pos := _player.position
+	# 钓鱼区域
+	if pos.distance_to(_fishing_point()) < 85.0:
+		match _fish_state:
+			FISH_IDLE: return "action.fish"
+			FISH_CASTING: return "action.fish_waiting"
+			FISH_BITE: return "action.reel"
+	# 植物床区域
+	if pos.distance_to(_plant_point()) < 75.0:
+		match _plant_state:
+			PLANT_EMPTY: return "action.plant"
+			PLANT_PLANTED, PLANT_SPROUTING: return "action.water"
+	# 可抚摸动物
+	for pet_id: String in ["cow", "sheep_a", "sheep_b", "horse"]:
+		var pet_actor := actor_named(pet_id)
+		if pet_actor != null and pos.distance_to(pet_actor.position) < 85.0:
+			return "action.pet"
 	return "action.grass"
 
 
@@ -307,10 +474,27 @@ func request_primary_action() -> void:
 		_player.leading = false
 		actor_named("llama").end_lead()
 		notice_requested.emit("notice.lead_stop")
-	elif _player.carrying_grass:
+		return
+	if _player.carrying_grass:
 		_request_action("llama", actor_named("llama").position)
-	else:
-		_request_action("grass", _grass_point())
+		return
+	var pos := _player.position
+	# 钓鱼
+	if pos.distance_to(_fishing_point()) < 85.0:
+		_interact_with_target("fishing")
+		return
+	# 植物床
+	if pos.distance_to(_plant_point()) < 75.0 and _plant_state in [PLANT_EMPTY, PLANT_PLANTED, PLANT_SPROUTING]:
+		_interact_with_target("plant")
+		return
+	# 抚摸动物
+	for pet_id: String in ["cow", "sheep_a", "sheep_b", "horse"]:
+		var pet_actor := actor_named(pet_id)
+		if pet_actor != null and pos.distance_to(pet_actor.position) < 85.0:
+			_interact_with_target("pet_%s" % pet_actor.species)
+			return
+	# 默认：去拿草
+	_request_action("grass", _grass_point())
 
 
 func request_pointer_action(point: Vector2) -> void:
@@ -321,8 +505,22 @@ func request_pointer_action(point: Vector2) -> void:
 		_request_action("grass", _grass_point())
 	elif llama != null and (point.distance_to(llama.position) < 45.0 or point.distance_to(llama.position + Vector2(0,-48)) < 50.0):
 		_request_action("llama", llama.position)
+	elif point.distance_to(_fishing_point()) < 65.0 or YardGround.in_pond(point):
+		# 点击水塘或钓鱼点附近 → 去钓鱼
+		_request_action("fishing", _fishing_point())
+	elif point.distance_to(_plant_point()) < 50.0:
+		_request_action("plant", _plant_point())
 	else:
-		_request_action("", point)
+		# 检查可抚摸动物
+		var found_pet := false
+		for pet_id: String in ["cow", "sheep_a", "sheep_b", "horse"]:
+			var pet_actor := actor_named(pet_id)
+			if pet_actor != null and point.distance_to(pet_actor.position) < 50.0:
+				_request_action("pet_%s" % pet_actor.species, pet_actor.position)
+				found_pet = true
+				break
+		if not found_pet:
+			_request_action("", point)
 
 
 func _request_action(target: String, goal: Vector2) -> void:
@@ -759,9 +957,15 @@ func _species_actors(species: String) -> Array:
 
 
 func _rule_matches(rule: Dictionary, snapshot: Dictionary) -> bool:
+	# manual_only 规则只能通过 _apply_rule(rule, true) 手动触发
+	if bool(rule.get("manual_only", false)):
+		return false
 	var owner := str(rule.get("owner", ""))
 	var actors := _species_actors(owner)
 	if actors.is_empty():
+		return false
+	# min_day 节奏门控：防止玩家第一次进院就集齐所有拍立得
+	if rule.has("min_day") and holiday_day < int(rule.min_day):
 		return false
 	if bool(rule.get("observe_nearby",false)):
 		var close := false
@@ -895,6 +1099,149 @@ func _apply_rule(rule: Dictionary, force: bool) -> void:
 				camera_focus_requested.emit(actor.global_position + Vector2(0, -40), 1.16)
 
 
+## 当假期翻天时调用：推进植物床、发送通知、保存进度
+func _on_new_day() -> void:
+	day_advanced.emit(holiday_day)
+	notice_requested.emit("notice.new_day")
+	# 推进植物生长
+	if _plant_state == PLANT_PLANTED and holiday_day >= _plant_day_planted + 1:
+		_plant_state = PLANT_SPROUTING
+		notice_requested.emit("notice.plant.sprouting")
+	elif _plant_state == PLANT_SPROUTING and holiday_day >= _plant_day_planted + 3 and _plant_watered_day >= _plant_day_planted:
+		_plant_state = PLANT_BLOOMED
+		notice_requested.emit("notice.plant.bloomed")
+		# 首次开花触发拍立得（手动规则）
+		if "plant_first_bloom" not in collected:
+			var bloom_rule := ExpressionCatalog.find_rule("plant_first_bloom")
+			if not bloom_rule.is_empty():
+				_apply_rule(bloom_rule, true)
+	_save_progress()
+	queue_redraw()
+
+
+## 保存当前假期进度到 SaveStore
+func _save_progress() -> void:
+	SaveStore.set_holiday_progress(holiday_day, _day_elapsed)
+	SaveStore.set_plant_state(_plant_state, _plant_day_planted, _plant_watered_day)
+
+
+## 钓鱼点（水塘北岸，玩家可以站到的最近处）
+func _fishing_point() -> Vector2:
+	return Vector2(700, 535)
+
+
+## 植物床中心（门左侧小角落）
+func _plant_point() -> Vector2:
+	return Vector2(205, 575)
+
+
+## 每帧推进钓鱼状态
+func _tick_fishing(delta: float) -> void:
+	if _fish_state == FISH_IDLE or _fish_state == FISH_CAUGHT:
+		return
+	if _fish_state == FISH_CASTING:
+		_fish_timer -= delta
+		# 玩家走远则取消
+		if _player != null and _player.position.distance_to(_fishing_point()) > 110.0:
+			_fish_state = FISH_IDLE
+			return
+		if _fish_timer <= 0.0:
+			# 50% 概率钓到，50% 跑了
+			if randf() < 0.55:
+				_fish_state = FISH_BITE
+				_fish_timer = 4.0  # 4秒内需要收杆
+				notice_requested.emit("notice.fishing.bite")
+			else:
+				_fish_state = FISH_IDLE
+				notice_requested.emit("notice.fishing.miss")
+	elif _fish_state == FISH_BITE:
+		_fish_timer -= delta
+		if _fish_timer <= 0.0:
+			# 没有收杆，鱼跑了
+			_fish_state = FISH_IDLE
+			notice_requested.emit("notice.fishing.miss")
+	queue_redraw()
+
+
+## 开始钓鱼
+func _start_fishing() -> void:
+	if _player == null:
+		return
+	if _fish_state == FISH_IDLE:
+		# 玩家需要走到钓鱼点附近
+		if _player.position.distance_to(_fishing_point()) > 85.0:
+			_request_action("fishing", _fishing_point())
+			return
+		_fish_state = FISH_CASTING
+		_fish_timer = randf_range(9.0, 16.0)
+		notice_requested.emit("notice.fishing.cast")
+		queue_redraw()
+	elif _fish_state == FISH_BITE:
+		# 收杆！
+		_reel_in_fish()
+	elif _fish_state == FISH_CASTING:
+		# 早收杆，这次没钓到
+		_fish_state = FISH_IDLE
+		notice_requested.emit("notice.fishing.miss")
+		queue_redraw()
+
+
+## 收杆并处理收获
+func _reel_in_fish() -> void:
+	_fish_caught_total += 1
+	_fish_state = FISH_CAUGHT
+	notice_requested.emit("notice.fishing.caught")
+	# 首次钓到 → 触发拍立得
+	if not _first_fish_polaroid_done:
+		_first_fish_polaroid_done = true
+		SaveStore.set_first_fish_caught()
+		var fish_rule := ExpressionCatalog.find_rule("fish_first_catch")
+		if not fish_rule.is_empty():
+			_apply_rule(fish_rule, true)
+	# 2秒后自动回到空闲（放回水里）
+	await get_tree().create_timer(2.0).timeout
+	# 节点可能已在等待期间被释放（切回标题等场景），安全检查
+	if not is_instance_valid(self):
+		return
+	if _fish_state == FISH_CAUGHT:
+		_fish_state = FISH_IDLE
+		notice_requested.emit("notice.fishing.release")
+		queue_redraw()
+
+
+## 与植物床互动（种植 / 浇水）
+func _interact_plant() -> void:
+	if _player == null:
+		return
+	if _player.position.distance_to(_plant_point()) > 75.0:
+		_request_action("plant", _plant_point())
+		return
+	match _plant_state:
+		PLANT_EMPTY:
+			_plant_state = PLANT_PLANTED
+			_plant_day_planted = holiday_day
+			_plant_watered_day = -1
+			notice_requested.emit("notice.plant.planted")
+			SaveStore.set_plant_state(_plant_state, _plant_day_planted, _plant_watered_day)
+		PLANT_PLANTED:
+			if _plant_watered_day < holiday_day:
+				_plant_watered_day = holiday_day
+				notice_requested.emit("notice.plant.watered")
+				SaveStore.set_plant_state(_plant_state, _plant_day_planted, _plant_watered_day)
+			else:
+				notice_requested.emit("notice.plant.already_watered")
+		PLANT_SPROUTING:
+			if _plant_watered_day < holiday_day:
+				_plant_watered_day = holiday_day
+				notice_requested.emit("notice.plant.watered")
+				SaveStore.set_plant_state(_plant_state, _plant_day_planted, _plant_watered_day)
+			else:
+				notice_requested.emit("notice.plant.already_watered")
+		PLANT_BLOOMED:
+			notice_requested.emit("notice.plant.bloomed_notice")
+	queue_redraw()
+
+
 func _update_lead_rope() -> void:
 	if _lead_rope == null: return
 	_lead_rope.visible = _leading and _player != null
@@ -928,7 +1275,79 @@ func _draw() -> void:
 		var actor: FeltActor = _actors[actor_id]
 		var extent := Vector2(actor.body_radius.x,actor.body_radius.y*0.42)*YardGround.depth_at(actor.position.y)
 		_draw_contact_shadow(actor.position,extent)
+	# 绘制植物床
+	_draw_plant_bed()
+	# 绘制钓鱼区域与鱼竿
+	_draw_fishing_spot()
 	draw_set_transform(Vector2.ZERO)
+
+
+## 用简单几何图形绘制植物床（与院子风格匹配的暖棕/绿色调）
+func _draw_plant_bed() -> void:
+	var pt := _plant_point()
+	# 土壤底色：小矩形
+	var plot := Rect2(pt + Vector2(-26, -9), Vector2(52, 18))
+	draw_rect(plot, Color(0.62, 0.47, 0.31, 0.78))
+	draw_rect(plot, Color(0.40, 0.28, 0.17, 0.72), false, 1.5)
+	# 根据状态绘制植物
+	match _plant_state:
+		PLANT_EMPTY:
+			# 空地：中央画小十字（可种植的暗示）
+			var c := Color(0.48, 0.34, 0.22, 0.55)
+			draw_line(pt + Vector2(-6, 0), pt + Vector2(6, 0), c, 1.5, true)
+			draw_line(pt + Vector2(0, -5), pt + Vector2(0, 5), c, 1.5, true)
+		PLANT_PLANTED:
+			# 种子：实心小圆
+			draw_circle(pt + Vector2(0, 1), 2.8, Color(0.52, 0.36, 0.20, 0.90))
+		PLANT_SPROUTING:
+			# 嫩芽：茎 + 两片叶
+			draw_line(pt + Vector2(0, 4), pt + Vector2(0, -8), Color(0.38, 0.62, 0.32, 0.92), 2.0, true)
+			draw_line(pt + Vector2(0, -2), pt + Vector2(-7, -9), Color(0.42, 0.68, 0.36, 0.88), 2.0, true)
+			draw_line(pt + Vector2(0, -4), pt + Vector2(7, -10), Color(0.42, 0.68, 0.36, 0.88), 2.0, true)
+		PLANT_BLOOMED:
+			# 花朵：茎 + 花芯 + 5片花瓣
+			draw_line(pt + Vector2(0, 4), pt + Vector2(0, -10), Color(0.38, 0.62, 0.32, 0.88), 2.0, true)
+			for i: int in 5:
+				var angle := float(i) / 5.0 * TAU - PI * 0.5
+				var petal_pos := pt + Vector2(0, -13) + Vector2(cos(angle), sin(angle)) * 5.5
+				draw_circle(petal_pos, 3.2, Color(0.92, 0.68, 0.76, 0.88))
+			draw_circle(pt + Vector2(0, -13), 3.0, Color(0.98, 0.90, 0.55, 0.92))
+	# 如果玩家在附近，画一个轻微的指示圆
+	if _player != null and _player.position.distance_to(pt) < 80.0:
+		draw_arc(pt, 28.0, 0.0, TAU, 24, Color(0.62, 0.47, 0.31, 0.28), 1.2, true)
+
+
+## 绘制钓鱼点标记与钓鱼状态（鱼竿、鱼线）
+func _draw_fishing_spot() -> void:
+	var fp := _fishing_point()
+	var player_near := _player != null and _player.position.distance_to(fp) < 100.0
+	if not player_near and _fish_state == FISH_IDLE:
+		return
+	# 指示圆（靠近时才显示）
+	if player_near and _fish_state == FISH_IDLE:
+		draw_arc(fp, 22.0, 0.0, TAU, 24, Color(0.48, 0.60, 0.75, 0.30), 1.2, true)
+	# 鱼竿（总是显示，玩家在附近时）
+	if player_near or _fish_state != FISH_IDLE:
+		var rod_base := fp + Vector2(-4, -2)
+		var rod_tip := fp + Vector2(20, -32)
+		draw_line(rod_base, rod_tip, Color(0.40, 0.28, 0.18, 0.82), 2.5, true)
+		# 钓鱼中：画鱼线和浮标
+		if _fish_state == FISH_CASTING or _fish_state == FISH_BITE:
+			var float_target := fp + Vector2(28, 18)
+			draw_line(rod_tip, float_target, Color(0.38, 0.28, 0.18, 0.65), 1.2, true)
+			# 浮标颜色：有咬钩时变红
+			var bob_color := Color(0.90, 0.32, 0.25, 0.92) if _fish_state == FISH_BITE else Color(0.80, 0.88, 0.96, 0.85)
+			draw_circle(float_target, 3.8, bob_color)
+			# 有咬钩时浮标加闪烁提示
+			if _fish_state == FISH_BITE:
+				var pulse_alpha := 0.5 + 0.5 * sin(Time.get_ticks_msec() * 0.008)
+				draw_circle(float_target, 5.5, Color(0.90, 0.32, 0.25, pulse_alpha * 0.4))
+		elif _fish_state == FISH_CAUGHT:
+			# 钓上来！画一条小鱼
+			var fish_pos := fp + Vector2(28, 8)
+			draw_line(rod_tip, fish_pos, Color(0.38, 0.28, 0.18, 0.65), 1.2, true)
+			draw_circle(fish_pos, 4.0, Color(0.55, 0.75, 0.82, 0.90))
+			draw_arc(fish_pos + Vector2(4, 0), 3.0, PI * 0.6, PI * 1.4, 8, Color(0.45, 0.65, 0.72, 0.88), 2.0, true)
 
 
 func _draw_contact_shadow(point: Vector2, extent: Vector2) -> void:
