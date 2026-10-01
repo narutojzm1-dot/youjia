@@ -16,6 +16,8 @@ const OVERCAST := preload("res://assets/holiday/environment/yard_overcast.png")
 const GrassPatchType := preload("res://scripts/entities/grass_patch.gd")
 const FeltActorType := preload("res://scripts/entities/felt_actor.gd")
 const VacationerType := preload("res://scripts/entities/vacationer.gd")
+## 世界特效覆盖层（z_index=50），解决宠物目标弧和钓鱼庆祝环被动物精灵遮挡的根因
+const WorldEffectsOverlayType := preload("res://scripts/game/world_effects_overlay.gd")
 const WORLD_SIZE := Vector2(1280, 720)
 # 人只站在画里已经对上地面的几个位置。圆点是可以走过去的下一处。
 const PICTURE_SPOTS := {
@@ -92,6 +94,8 @@ var _leading := false
 var _day_seconds := 0.0
 var _grass_patch: GrassPatch
 var _lead_rope: Line2D
+## 世界特效覆盖层节点（z_index=50）
+var _effects_overlay: Node2D
 var _spot := "door"
 var _move_held := false
 var _has_walk_goal := false
@@ -150,6 +154,12 @@ func setup(
 	_lead_rope.antialiased = true
 	add_child(_lead_rope)
 	_lead_rope.visible = false
+	# 特效覆盖层：z_index=50，渲染在所有动物精灵之上（动物默认 z_index=0）
+	## 这是宠物目标弧和钓鱼庆祝环不可见的根本修复——之前在 _draw() 绘制时
+	## 因同处 z_index=0 但场景树顺序靠前，被动物子节点精灵完全遮挡。
+	_effects_overlay = WorldEffectsOverlayType.new()
+	_effects_overlay.z_index = 50
+	add_child(_effects_overlay)
 	_weather_timer = randf_range(42.0, 78.0)
 	queue_redraw()
 
@@ -404,6 +414,8 @@ func tick(delta: float, move: Vector2) -> void:
 			camera_release_requested.emit()
 	# 更新当前软选中动物（最近可抚摸动物，无光标坐标）
 	_target_animal = _nearest_pettable_actor(85.0)
+	# 更新特效覆盖层：宠物目标弧（alpha 修正：线性衰减，不再平方，确保在感应边缘也可见）
+	_update_effects_overlay(delta)
 	# P1.3: 玩家靠近草堆时，草堆缓慢呼吸发亮；远离时保持极轻微的呼吸感暗示互动性。
 	if _grass_patch != null and _player != null:
 		var near_grass := not _player.carrying_grass and _player.position.distance_to(_grass_point()) < 78.0
@@ -1304,6 +1316,10 @@ func _tick_fishing(delta: float) -> void:
 	if _fish_catch_flash > 0.0:
 		_fish_catch_flash -= delta
 		queue_redraw()
+	# 同步特效覆盖层的庆祝环计时（overlay 自行处理 queue_redraw）
+	if _effects_overlay != null and _effects_overlay.fish_ring_time > 0.0:
+		_effects_overlay.fish_ring_time = maxf(0.0, _effects_overlay.fish_ring_time - delta)
+		_effects_overlay.queue_redraw()
 	if _fish_state == FISH_IDLE or _fish_state == FISH_CAUGHT:
 		return
 	if _fish_state == FISH_CASTING:
@@ -1392,6 +1408,12 @@ func _reel_in_fish() -> void:
 	# 启动钓到庆祝闪光：2.6 秒多环扩散 + 粒子爆射，并记录鱼种以区分颜色
 	_fish_catch_flash = 2.6
 	_fish_catch_type = carry_type
+	# 同步到特效覆盖层（z_index=50，在鸭/鹅精灵之上渲染，确保玩家必然看见庆祝环）
+	if _effects_overlay != null:
+		_effects_overlay.fish_ring_time = 2.6
+		_effects_overlay.fish_ring_type = carry_type
+		_effects_overlay.fish_ring_pos = _fishing_point()
+		_effects_overlay.queue_redraw()
 	queue_redraw()
 
 
@@ -1453,6 +1475,43 @@ func _update_lead_rope() -> void:
 	_lead_rope.z_index = maxi(_player.z_index,llama.z_index)+2
 
 
+## 每帧更新特效覆盖层的宠物目标弧数据
+## alpha 修正：改用线性衰减（不再平方），确保在感应边缘（60-105px）也能清晰显示
+func _update_effects_overlay(_delta: float) -> void:
+	if _effects_overlay == null:
+		return
+	_effects_overlay.pet_day_t = _day_seconds
+	# 不可抚摸状态：清除目标
+	if _player == null or _leading or not _fish_carry_type.is_empty() or _player.carrying_grass:
+		_effects_overlay.pet_pos = Vector2.INF
+		_effects_overlay.pet_alpha = 0.0
+		_effects_overlay.queue_redraw()
+		return
+	# 找最近的可抚摸动物（感应半径 105px）
+	var nearest: FeltActor = null
+	var nearest_dist := 105.0
+	for pet_id: String in ["cow", "sheep_a", "sheep_b", "horse"]:
+		var a := actor_named(pet_id)
+		if a == null:
+			continue
+		var d := _player.position.distance_to(a.position)
+		if d < nearest_dist:
+			nearest_dist = d
+			nearest = a
+	if nearest == null:
+		_effects_overlay.pet_pos = Vector2.INF
+		_effects_overlay.pet_alpha = 0.0
+		_effects_overlay.queue_redraw()
+		return
+	# 线性衰减（原平方衰减在 85px 时 alpha<0.05 → 完全不可见，这是 playtest 失败根因）
+	## 新公式：60px 内全亮，60-105px 线性淡出——在任何感应距离内都清晰可见
+	var proximity := clampf(1.0 - (nearest_dist - 60.0) / 45.0, 0.0, 1.0)
+	var pulse := 0.70 + 0.30 * absf(sin(_day_seconds * 2.4))
+	_effects_overlay.pet_pos = nearest.position
+	_effects_overlay.pet_alpha = 0.95 * proximity * pulse
+	_effects_overlay.queue_redraw()
+
+
 func _draw() -> void:
 	if _rejected_seconds > 0.0:
 		var alpha := minf(1.0, _rejected_seconds / 0.35) * 0.80
@@ -1473,67 +1532,77 @@ func _draw() -> void:
 	draw_set_transform(Vector2.ZERO)
 	# 绘制植物床
 	_draw_plant_bed()
-	# 绘制钓鱼区域与鱼竿
+	# 绘制钓鱼区域与鱼竿（庆祝扩散环已移至 _effects_overlay，此处保留鱼竿/浮标/常驻涟漪）
 	_draw_fishing_spot()
-	# 绘制最近可抚摸动物的软目标指示弧（更强、带脉冲，覆盖 _draw_target_indicator 的小圆圈）
-	_draw_pet_target_arc()
+	# 宠物目标弧和钓鱼庆祝环现在由 _effects_overlay（z_index=50）绘制，不再在此调用
+	## 保留 _draw_pet_target_arc() 和 _draw_target_indicator() 函数定义（供调试/测试引用）
 
 
 ## 绘制种植槽：用同心椭圆叠加模拟透视土壤斑，不使用矩形。
-## 椭圆宽/高比约 4:1，符合院子伪等距透视；无直角边，与水彩背景融合更自然。
+## 土壤随玩家距离渐显（>180px 完全隐藏），避免远处"棕色贴纸"感。
 ## 架构注意：仍是 Canvas 层叠加，无 3D 遮挡；根本改善需后续将院子重构为真实场景。
 func _draw_plant_bed() -> void:
 	var pt := _plant_point()
-	# ── 步骤 1：最外层软阴影椭圆（让土壤斑"沉"进地面）
-	draw_set_transform(pt + Vector2(0, 4), 0.0, Vector2(32.0, 8.0))
-	draw_circle(Vector2.ZERO, 1.0, Color(0.16, 0.11, 0.07, 0.30))
-	draw_set_transform(Vector2.ZERO)
-	# ── 步骤 2：土壤主体（三层同心椭圆：深→中→浅，模拟翻松泥土）
-	draw_set_transform(pt, 0.0, Vector2(26.0, 7.0))
-	draw_circle(Vector2.ZERO, 1.0, Color(0.38, 0.25, 0.14, 0.85))  # 深色底层
-	draw_set_transform(Vector2.ZERO)
-	draw_set_transform(pt + Vector2(0, -1), 0.0, Vector2(21.0, 5.5))
-	draw_circle(Vector2.ZERO, 1.0, Color(0.54, 0.38, 0.24, 0.80))  # 中层（主色）
-	draw_set_transform(Vector2.ZERO)
-	draw_set_transform(pt + Vector2(0, -2.5), 0.0, Vector2(14.0, 3.5))
-	draw_circle(Vector2.ZERO, 1.0, Color(0.68, 0.50, 0.32, 0.60))  # 顶光（最浅）
-	draw_set_transform(Vector2.ZERO)
+	# 土壤可见度：随玩家距离平滑渐隐，消除远处"棕色贴纸"感。
+	## 80px 以内：完全可见；80-200px：线性衰减（平方使靠近时揭示更自然）；>200px：完全隐藏。
+	var dist_to_pt := _player.position.distance_to(pt) if _player != null else 300.0
+	var soil_reveal := clampf(1.0 - (dist_to_pt - 80.0) / 120.0, 0.0, 1.0)
+	soil_reveal = soil_reveal * soil_reveal
+	# ── 步骤 1：最外层软阴影椭圆（随距离渐显）
+	if soil_reveal > 0.02:
+		draw_set_transform(pt + Vector2(0, 4), 0.0, Vector2(32.0, 8.0))
+		draw_circle(Vector2.ZERO, 1.0, Color(0.16, 0.11, 0.07, 0.30 * soil_reveal))
+		draw_set_transform(Vector2.ZERO)
+		# ── 步骤 2：土壤主体（三层同心椭圆：深→中→浅）
+		draw_set_transform(pt, 0.0, Vector2(26.0, 7.0))
+		draw_circle(Vector2.ZERO, 1.0, Color(0.38, 0.25, 0.14, 0.85 * soil_reveal))
+		draw_set_transform(Vector2.ZERO)
+		draw_set_transform(pt + Vector2(0, -1), 0.0, Vector2(21.0, 5.5))
+		draw_circle(Vector2.ZERO, 1.0, Color(0.54, 0.38, 0.24, 0.80 * soil_reveal))
+		draw_set_transform(Vector2.ZERO)
+		draw_set_transform(pt + Vector2(0, -2.5), 0.0, Vector2(14.0, 3.5))
+		draw_circle(Vector2.ZERO, 1.0, Color(0.68, 0.50, 0.32, 0.60 * soil_reveal))
+		draw_set_transform(Vector2.ZERO)
 	# ── 步骤 3：状态相关内容
 	match _plant_state:
 		PLANT_EMPTY:
-			# 空槽：两个小暗椭圆（凹坑），暗示"这里可以种"
-			for sx: float in [-9.0, 9.0]:
-				draw_set_transform(pt + Vector2(sx, 0), 0.0, Vector2(5.5, 2.0))
-				draw_circle(Vector2.ZERO, 1.0, Color(0.22, 0.14, 0.08, 0.65))
-				draw_set_transform(Vector2.ZERO)
+			# 空槽：两个小暗椭圆（凹坑），随土壤一起淡隐
+			if soil_reveal > 0.05:
+				for sx: float in [-9.0, 9.0]:
+					draw_set_transform(pt + Vector2(sx, 0), 0.0, Vector2(5.5, 2.0))
+					draw_circle(Vector2.ZERO, 1.0, Color(0.22, 0.14, 0.08, 0.65 * soil_reveal))
+					draw_set_transform(Vector2.ZERO)
 		PLANT_PLANTED:
-			# 种子：两个小鼓包，带高光点
-			for sx: float in [-9.0, 9.0]:
-				var seed_pt := pt + Vector2(sx, 0)
-				draw_set_transform(seed_pt, 0.0, Vector2(3.8, 2.0))
-				draw_circle(Vector2.ZERO, 1.0, Color(0.36, 0.23, 0.13, 0.95))
-				draw_set_transform(Vector2.ZERO)
-				draw_circle(seed_pt + Vector2(-0.8, -0.8), 1.0, Color(0.62, 0.46, 0.30, 0.55))
+			# 种子：小鼓包随土壤渐显；远处不强迫玩家关注未种植的床
+			if soil_reveal > 0.05:
+				for sx: float in [-9.0, 9.0]:
+					var seed_pt := pt + Vector2(sx, 0)
+					draw_set_transform(seed_pt, 0.0, Vector2(3.8, 2.0))
+					draw_circle(Vector2.ZERO, 1.0, Color(0.36, 0.23, 0.13, 0.95 * soil_reveal))
+					draw_set_transform(Vector2.ZERO)
+					draw_circle(seed_pt + Vector2(-0.8, -0.8), 1.0, Color(0.62, 0.46, 0.30, 0.55 * soil_reveal))
 		PLANT_SPROUTING:
-			# 嫩芽：茎从椭圆中心上方冒出（-3px 偏移到土面位置）
+			# 嫩芽：茎/叶始终显示（绿色嫩芽在草地上自然），土壤底色随距离渐显
 			var lean := sin(_day_seconds * 0.9) * 1.2
 			var base := pt + Vector2(0, -3)
-			var tip := base + Vector2(lean, -11)
-			draw_circle(base + Vector2(0, 1), 2.8, Color(0.20, 0.14, 0.08, 0.40))  # 茎基阴影
-			draw_line(base, tip, Color(0.38, 0.62, 0.32, 0.95), 2.2, true)
-			draw_line(base + Vector2(lean * 0.4, -3), tip + Vector2(-6, 0), Color(0.44, 0.68, 0.36, 0.88), 2.0, true)
-			draw_line(base + Vector2(lean * 0.5, -5), tip + Vector2(6, -1), Color(0.44, 0.68, 0.36, 0.88), 2.0, true)
+			var sprout_tip := base + Vector2(lean, -11)
+			if soil_reveal > 0.05:
+				draw_circle(base + Vector2(0, 1), 2.8, Color(0.20, 0.14, 0.08, 0.40 * soil_reveal))
+			draw_line(base, sprout_tip, Color(0.38, 0.62, 0.32, 0.95), 2.2, true)
+			draw_line(base + Vector2(lean * 0.4, -3), sprout_tip + Vector2(-6, 0), Color(0.44, 0.68, 0.36, 0.88), 2.0, true)
+			draw_line(base + Vector2(lean * 0.5, -5), sprout_tip + Vector2(6, -1), Color(0.44, 0.68, 0.36, 0.88), 2.0, true)
 		PLANT_BLOOMED:
-			# 花朵：茎从土面中心长出，带茎基圆形阴影增强接地感
+			# 花朵：始终显示（花朵是亮眼功能，不随距离隐藏）；茎基阴影随土壤渐显
 			var sway := sin(_day_seconds * 1.2) * 1.8
 			var base := pt + Vector2(0, -3)
-			var tip := base + Vector2(sway, -15)
-			draw_circle(base + Vector2(0, 2), 4.0, Color(0.18, 0.12, 0.07, 0.38))  # 茎基接地阴影
-			draw_line(base, tip, Color(0.38, 0.62, 0.32, 0.92), 2.2, true)
+			var bloom_tip := base + Vector2(sway, -15)
+			if soil_reveal > 0.05:
+				draw_circle(base + Vector2(0, 2), 4.0, Color(0.18, 0.12, 0.07, 0.38 * soil_reveal))
+			draw_line(base, bloom_tip, Color(0.38, 0.62, 0.32, 0.92), 2.2, true)
 			for i: int in 5:
 				var angle := float(i) / 5.0 * TAU - PI * 0.5
-				draw_circle(tip + Vector2(0, -1) + Vector2(cos(angle), sin(angle)) * 5.5, 3.2, Color(0.92, 0.68, 0.76, 0.90))
-			draw_circle(tip + Vector2(0, -1), 3.0, Color(0.98, 0.90, 0.55, 0.95))
+				draw_circle(bloom_tip + Vector2(0, -1) + Vector2(cos(angle), sin(angle)) * 5.5, 3.2, Color(0.92, 0.68, 0.76, 0.90))
+			draw_circle(bloom_tip + Vector2(0, -1), 3.0, Color(0.98, 0.90, 0.55, 0.95))
 	# 收获庆祝：花瓣爆散动画（_plant_harvest_flash > 0 时激活）
 	if _plant_harvest_flash > 0.0:
 		var t := 1.0 - clampf(_plant_harvest_flash / 1.8, 0.0, 1.0)
@@ -1563,54 +1632,19 @@ func _draw_plant_bed() -> void:
 		draw_polyline(_ellipse_pts, Color(0.58, 0.42, 0.26, indicator_alpha), 1.4, true)
 
 
-## 绘制钓鱼点标记与钓鱼状态（鱼竿、鱼线）
+## 绘制钓鱼点标记与钓鱼状态（常驻波纹、鱼竿、浮标）
+## 注意：庆祝扩散环已移至 WorldEffectsOverlay（z_index=50），此处不再绘制，
+## 避免在 z_index=0 时被鸭/鹅精灵遮挡（这是 playtest #3 中庆祝环"不可见"的根因）
 func _draw_fishing_spot() -> void:
 	var fp := _fishing_point()
 	var player_near := _player != null and _player.position.distance_to(fp) < 100.0
-	# 水塘常驻波纹：三圈相位错开的扩散涟漪，给水面带来生气（alpha 提高至 0.22 增强可见度）
+	# 水塘常驻波纹：三圈相位错开的扩散涟漪，给水面带来生气
 	var ripple_t := float(Time.get_ticks_msec()) * 0.001
 	for i: int in 3:
 		var phase := fmod(ripple_t * 0.4 + float(i) / 3.0, 1.0)
-		# draw_arc 比 draw_circle 更水感（环而非实心）
 		var r := lerpf(6.0, 30.0, phase)
 		var a := (1.0 - phase) * 0.22
 		draw_arc(fp + Vector2(10, 12), r, 0.0, TAU, 20, Color(0.42, 0.68, 0.88, a), 1.8, true)
-	# 钓到庆祝闪光：多轮扩散 + 8方向粒子爆射（约 2.6 秒），随鱼种变色
-	if _fish_catch_flash > 0.0:
-		var total := 2.6
-		var t := 1.0 - clampf(_fish_catch_flash / total, 0.0, 1.0)
-		var main_col: Color
-		match _fish_catch_type:
-			"medium": main_col = Color(0.32, 0.60, 0.92)
-			"odd":    main_col = Color(0.50, 0.42, 0.88)
-			_:        main_col = Color(0.42, 0.72, 0.88)
-		# ── 金色最外圈（快速扩散，先声夺人）
-		var r_gold := lerpf(12.0, 80.0, t)
-		var a_gold := (1.0 - t) * 0.75
-		draw_arc(fp, r_gold, 0.0, TAU, 48, Color(0.96, 0.82, 0.42, a_gold), 4.5, true)
-		# ── 主色外圈
-		var r_outer := lerpf(8.0, 55.0, minf(t * 1.3, 1.0))
-		var a_outer := maxf(0.0, 1.0 - t * 1.3) * 0.90
-		draw_circle(fp, r_outer, Color(main_col.r, main_col.g, main_col.b, a_outer * 0.18))
-		draw_arc(fp, r_outer, 0.0, TAU, 36, Color(main_col.r, main_col.g + 0.12, main_col.b + 0.06, a_outer), 3.8, true)
-		# ── 内圈（浅蓝亮白，持续更久）
-		var r_inner := lerpf(4.0, 34.0, minf(t * 1.8, 1.0))
-		var a_inner := maxf(0.0, 1.0 - t * 1.8) * 1.00
-		draw_arc(fp, r_inner, 0.0, TAU, 28, Color(0.80, 0.95, 1.0, a_inner), 3.0, true)
-		# ── 中心：金色衬底 + 白色亮核
-		var center_r := 10.0 * maxf(0.0, 1.0 - t * 2.5)
-		if center_r > 0.5:
-			draw_circle(fp, center_r * 1.5, Color(0.98, 0.88, 0.55, a_inner * 0.80))
-			draw_circle(fp, center_r, Color(0.98, 1.0, 1.0, a_inner * 1.15))
-		# ── 8 方向爆射粒子（前 0.6s）
-		if t < 0.6:
-			var particle_t := t / 0.6
-			var particle_a := (1.0 - particle_t) * 0.85
-			for pi: int in 8:
-				var angle := float(pi) * TAU / 8.0
-				var dist := lerpf(8.0, 46.0, particle_t)
-				var px := fp + Vector2(cos(angle), sin(angle) * 0.6) * dist
-				draw_circle(px, lerpf(4.5, 1.5, particle_t), Color(main_col.r, main_col.g + 0.20, 1.0, particle_a))
 	if not player_near and _fish_state == FISH_IDLE:
 		return
 	# 指示圆（靠近时才显示）
