@@ -1,0 +1,151 @@
+#!/usr/bin/env bash
+# 将 Godot Web 导出产物发布到 gh-pages 分支
+#
+# 使用方式:
+#   bash tools/publish_gh_pages.sh [commit-sha]
+#
+# 如不提供 commit-sha，则使用当前 HEAD 的短 SHA。
+# 导出产物来自 dist/ 目录（export_path = dist/index.html）。
+#
+# 本脚本完成以下任务:
+#   1. 将 dist/index.* 重命名为 game-{sha}.*（用于强制浏览器缓存清除）
+#   2. 在 index.html 中将 executable 从 "index" 改为 "game-{sha}"
+#   3. 在 index.html 中将 script.src 从 'index.js' 改为 'game-{sha}.js'
+#   4. 将 fileSizes 键从 index.* 改为 game-{sha}.*（保持与 executable 一致）
+#   5. 将所有文件推送到 gh-pages 分支
+
+set -euo pipefail
+
+REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+DIST_DIR="$REPO_ROOT/dist"
+SHA="${1:-$(git -C "$REPO_ROOT" rev-parse --short HEAD)}"
+ENTRY="game-${SHA}"
+
+echo "[publish] source commit: ${SHA}"
+echo "[publish] bundle entry name: ${ENTRY}"
+
+# 确认 dist/ 存在且有导出产物
+if [[ ! -f "$DIST_DIR/index.html" ]]; then
+    echo "[publish] ERROR: dist/index.html not found. Run Godot Web export first." >&2
+    exit 1
+fi
+if [[ ! -f "$DIST_DIR/index.js" ]]; then
+    echo "[publish] ERROR: dist/index.js not found. Godot export may have failed." >&2
+    exit 1
+fi
+
+# ---- 准备工作目录 ----
+WORK_DIR="$(mktemp -d)"
+trap 'rm -rf "$WORK_DIR"' EXIT
+echo "[publish] staging in $WORK_DIR"
+
+# 复制静态文件（不重命名）
+for f in index.html; do
+    cp "$DIST_DIR/$f" "$WORK_DIR/$f"
+done
+
+# 复制并重命名 index.* → game-{sha}.*（以及保留 index.* 作为 symlink-level alias）
+for ext in js wasm pck \
+           audio.worklet.js audio.position.worklet.js \
+           icon.png apple-touch-icon.png png; do
+    src="$DIST_DIR/index.${ext}"
+    if [[ -f "$src" ]]; then
+        cp "$src" "$WORK_DIR/${ENTRY}.${ext}"
+        # 也保留 index.* 让旧链接仍可访问（内容与 game-{sha}.* 完全相同）
+        cp "$src" "$WORK_DIR/index.${ext}"
+    fi
+done
+
+# ---- 修补 index.html 中的三处关键配置 ----
+HTML="$WORK_DIR/index.html"
+
+# 1. executable: "index" → "game-{sha}"
+sed -i "s/\"executable\":\"index\"/\"executable\":\"${ENTRY}\"/" "$HTML"
+
+# 2. fileSizes 键: index.pck / index.wasm → game-{sha}.pck / game-{sha}.wasm
+sed -i "s/\"index\.pck\":/\"${ENTRY}.pck\":/g" "$HTML"
+sed -i "s/\"index\.wasm\":/\"${ENTRY}.wasm\":/g" "$HTML"
+
+# 3. script.src = 'index.js' → 'game-{sha}.js'（匹配单引号版本）
+sed -i "s/script\.src = 'index\.js'/script.src = '${ENTRY}.js'/" "$HTML"
+
+# 4. icon href 已由导出过程正确设置；如有需要也修补
+sed -i "s/href=\"index\.icon\.png\"/href=\"${ENTRY}.icon.png\"/" "$HTML"
+sed -i "s/href=\"index\.apple-touch-icon\.png\"/href=\"${ENTRY}.apple-touch-icon.png\"/" "$HTML"
+
+# 验证三处均已替换
+echo "[publish] verifying HTML patches..."
+python3 - "$HTML" "$ENTRY" <<'PYEOF'
+import sys, json, re
+
+html_path = sys.argv[1]
+entry = sys.argv[2]
+content = open(html_path).read()
+
+# 提取 config 对象
+m = re.search(r'const config = ({.*?});', content)
+if not m:
+    print("ERROR: could not find config in HTML", file=sys.stderr)
+    sys.exit(1)
+cfg = json.loads(m.group(1))
+
+errors = []
+if cfg.get('executable') != entry:
+    errors.append(f"executable is '{cfg.get('executable')}', expected '{entry}'")
+
+file_sizes = cfg.get('fileSizes', {})
+pck_key = f"{entry}.pck"
+wasm_key = f"{entry}.wasm"
+if pck_key not in file_sizes:
+    errors.append(f"fileSizes missing key '{pck_key}' (got: {list(file_sizes.keys())})")
+if wasm_key not in file_sizes:
+    errors.append(f"fileSizes missing key '{wasm_key}'")
+
+if f"script.src = '{entry}.js'" not in content:
+    errors.append(f"script.src not updated to '{entry}.js'")
+
+if errors:
+    for e in errors:
+        print(f"ERROR: {e}", file=sys.stderr)
+    sys.exit(1)
+else:
+    print(f"[publish] HTML verification passed: executable={entry}, fileSizes keys correct, script.src={entry}.js")
+PYEOF
+
+# ---- 更新 game-release.json ----
+RELEASE_JSON="$WORK_DIR/game-release.json"
+if [[ -f "$DIST_DIR/../site/game-release.json" ]]; then
+    cp "$DIST_DIR/../site/game-release.json" "$RELEASE_JSON"
+fi
+cat > "$RELEASE_JSON" <<JSON
+{
+  "schema": "youjia.release/v1",
+  "sourceCommit": "$(git -C "$REPO_ROOT" rev-parse HEAD)",
+  "engine": "$(grep -o '[0-9]\+\.[0-9]\+\.[0-9]\+[^"]*' "$REPO_ROOT/export_presets.cfg" 2>/dev/null | head -1 || echo 'unknown')",
+  "entry": "${ENTRY}",
+  "publishedAt": "$(date -u '+%Y-%m-%dT%H:%M:%SZ')"
+}
+JSON
+
+# ---- 推送到 gh-pages ----
+echo "[publish] switching to gh-pages branch..."
+cd "$REPO_ROOT"
+git fetch origin gh-pages 2>/dev/null || true
+
+# 检出 gh-pages（orphan-safe）
+GH_PAGES_DIR="$(mktemp -d)"
+trap 'rm -rf "$WORK_DIR" "$GH_PAGES_DIR"' EXIT
+git worktree add "$GH_PAGES_DIR" origin/gh-pages
+
+# 不删除旧的 game-* bundle（保留历史版本），只更新 index.* 和当前 game-{sha}.*
+cp "$WORK_DIR"/* "$GH_PAGES_DIR/"
+touch "$GH_PAGES_DIR/.nojekyll"
+
+cd "$GH_PAGES_DIR"
+git add -A
+git commit -m "Publish $(git -C "$REPO_ROOT" log --oneline -1 | sed 's/^[a-f0-9]* //'|head -c 80) (${SHA})" \
+    --author="Cursor Agent <cursoragent@cursor.com>"
+git push origin HEAD:gh-pages
+
+git -C "$REPO_ROOT" worktree remove --force "$GH_PAGES_DIR"
+echo "[publish] done. Entry: ${ENTRY}"
