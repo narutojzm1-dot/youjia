@@ -1403,11 +1403,13 @@ func _draw() -> void:
 		var actor: FeltActor = _actors[actor_id]
 		var extent := Vector2(actor.body_radius.x,actor.body_radius.y*0.42)*YardGround.depth_at(actor.position.y)
 		_draw_contact_shadow(actor.position,extent)
+	# Contact shadows leave a translated/scaled draw transform. Props below
+	# are expressed in world coordinates, so restore identity before drawing.
+	draw_set_transform(Vector2.ZERO)
 	# 绘制植物床
 	_draw_plant_bed()
 	# 绘制钓鱼区域与鱼竿
 	_draw_fishing_spot()
-	draw_set_transform(Vector2.ZERO)
 
 
 ## 用简单几何图形绘制植物床（与院子风格匹配的暖棕/绿色调）
