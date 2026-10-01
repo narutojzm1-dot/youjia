@@ -303,6 +303,7 @@ func _build_hud() -> void:
 	_day_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_hud.add_child(_day_label)
 	_album_chip = _chip_button()
+	# _show_album() 内部已调用 _pulse_button，此处直接连接即可
 	_album_chip.pressed.connect(_show_album)
 	# P0.2: tooltip 告知玩家此处可点，辅助鼠标悬停时的发现性。
 	_album_chip.tooltip_text = I18n.t("hud.album.tooltip")

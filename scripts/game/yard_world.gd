@@ -70,6 +70,8 @@ var _fish_carry_type: String = ""
 var _fish_carry_timer: float = 0.0
 ## 咬钩提醒计时器：BITE 期间每隔一段时间重发通知，防止玩家错过
 var _fish_bite_nudge: float = 0.0
+## 钓到鱼后的视觉庆祝闪光计时（秒）；> 0 时绘制扩散环动画
+var _fish_catch_flash: float = 0.0
 ## 最近一次抚摸的动物物种名，防止跨物种拍立得误触发
 var _just_petted_species: String = ""
 
@@ -1290,6 +1292,10 @@ func _plant_point() -> Vector2:
 
 ## 每帧推进钓鱼状态
 func _tick_fishing(delta: float) -> void:
+	# 钓到庆祝闪光计时：独立于钓鱼状态机，IDLE 时也继续倒计时
+	if _fish_catch_flash > 0.0:
+		_fish_catch_flash -= delta
+		queue_redraw()
 	if _fish_state == FISH_IDLE or _fish_state == FISH_CAUGHT:
 		return
 	if _fish_state == FISH_CASTING:
@@ -1371,10 +1377,12 @@ func _reel_in_fish() -> void:
 		var fish_rule := ExpressionCatalog.find_rule("fish_first_catch")
 		if not fish_rule.is_empty():
 			_apply_rule(fish_rule, true)
-	# 拍立得拍摄后立即重置视觉状态：钓鱼点收杆，改用携带计时器跟踪
+	# 拍立得拍摄后重置钓鱼逻辑，改用携带计时器跟踪
 	_fish_state = FISH_IDLE
 	_fish_carry_type = carry_type
-	_fish_carry_timer = 20.0  # 20秒内可投喂给鸭/鹅（原 12秒），给玩家充裕时间走到鸭鹅旁
+	_fish_carry_timer = 20.0  # 20秒内可投喂给鸭/鹅，给玩家充裕时间走到鸭鹅旁
+	# 启动钓到庆祝闪光：1.4 秒扩散环动画，让"钓到了"的反馈清晰可靠
+	_fish_catch_flash = 1.4
 	queue_redraw()
 
 
@@ -1456,8 +1464,8 @@ func _draw() -> void:
 	_draw_plant_bed()
 	# 绘制钓鱼区域与鱼竿
 	_draw_fishing_spot()
-	# 绘制目标动物软选中圆圈
-	_draw_target_indicator()
+	# 绘制最近可抚摸动物的软目标指示弧（更强、带脉冲，覆盖 _draw_target_indicator 的小圆圈）
+	_draw_pet_target_arc()
 
 
 ## 用简单几何图形绘制植物床（与院子风格匹配的暖棕/绿色调）
@@ -1516,6 +1524,20 @@ func _draw_fishing_spot() -> void:
 		var r := lerpf(6.0, 26.0, phase)
 		var a := (1.0 - phase) * 0.10  # 由内向外淡出
 		draw_circle(fp + Vector2(10, 12), r, Color(0.52, 0.70, 0.85, a))
+	# 钓到庆祝闪光：2 轮扩散环 + 亮点，让"钓到了"的反馈持续可见（约 1.4 秒）
+	if _fish_catch_flash > 0.0:
+		var t := 1.0 - clampf(_fish_catch_flash / 1.4, 0.0, 1.0)  # 0→1 随时间推进
+		# 外圈：快速扩散淡出
+		var r_outer := lerpf(10.0, 52.0, t)
+		var a_outer := (1.0 - t) * 0.75
+		draw_circle(fp, r_outer, Color(0.55, 0.82, 0.92, a_outer * 0.18))
+		draw_arc(fp, r_outer, 0.0, TAU, 32, Color(0.42, 0.72, 0.88, a_outer), 3.2, true)
+		# 内圈：稍慢，双脉冲节奏感
+		var r_inner := lerpf(6.0, 32.0, minf(t * 1.6, 1.0))
+		var a_inner := maxf(0.0, 1.0 - t * 1.6) * 0.90
+		draw_arc(fp, r_inner, 0.0, TAU, 24, Color(0.75, 0.92, 0.98, a_inner), 2.5, true)
+		# 闪光中心圆：暖白色，强调"成功"感
+		draw_circle(fp, 7.0 * (1.0 - t), Color(0.95, 0.98, 1.0, a_inner * 1.1))
 	if not player_near and _fish_state == FISH_IDLE:
 		return
 	# 指示圆（靠近时才显示）
@@ -1533,12 +1555,13 @@ func _draw_fishing_spot() -> void:
 			# 浮标颜色：有咬钩时变红
 			var bob_color := Color(0.90, 0.32, 0.25, 0.92) if _fish_state == FISH_BITE else Color(0.80, 0.88, 0.96, 0.85)
 			draw_circle(float_target, 3.8, bob_color)
-			# 有咬钩时浮标加闪烁提示
+			# 有咬钩时浮标加闪烁提示（两段脉冲，速度加快，更难错过）
 			if _fish_state == FISH_BITE:
-				var pulse_alpha := 0.5 + 0.5 * sin(Time.get_ticks_msec() * 0.008)
-				draw_circle(float_target, 5.5, Color(0.90, 0.32, 0.25, pulse_alpha * 0.4))
+				var pulse1 := 0.5 + 0.5 * sin(Time.get_ticks_msec() * 0.012)
+				draw_circle(float_target, 7.5, Color(0.90, 0.32, 0.25, pulse1 * 0.55))
+				draw_arc(float_target, 10.0, 0.0, TAU, 16, Color(0.95, 0.50, 0.38, pulse1 * 0.40), 2.2, true)
 		elif _fish_state == FISH_CAUGHT:
-			# 钓上来！画一条小鱼
+			# 钓上来！画一条小鱼（此状态极短，主要由 _fish_catch_flash 提供视觉反馈）
 			var fish_pos := fp + Vector2(28, 8)
 			draw_line(rod_tip, fish_pos, Color(0.38, 0.28, 0.18, 0.65), 1.2, true)
 			draw_circle(fish_pos, 4.0, Color(0.55, 0.75, 0.82, 0.90))
@@ -1569,3 +1592,44 @@ func _draw_contact_shadow(point: Vector2, extent: Vector2) -> void:
 	draw_circle(Vector2.ZERO,1.20,Color(0.29,0.25,0.16,0.035))
 	draw_circle(Vector2.ZERO,0.97,Color(0.29,0.25,0.16,0.060))
 	draw_circle(Vector2.ZERO,0.70,Color(0.29,0.25,0.16,0.055))
+
+
+## 绘制最近可抚摸动物的软目标弧 + 箭头（暖橙色，带呼吸脉冲）
+## 仅当玩家位于抚摸感应范围内（< 100px）且非牵行/携带状态时显示
+func _draw_pet_target_arc() -> void:
+	if _player == null or _leading or not _fish_carry_type.is_empty() or _player.carrying_grass:
+		return
+	# 找最近的可抚摸动物（感应半径 100px）
+	var nearest_pet: FeltActor = null
+	var nearest_dist := 100.0
+	for pet_id: String in ["cow", "sheep_a", "sheep_b", "horse"]:
+		var pet_actor := actor_named(pet_id)
+		if pet_actor == null:
+			continue
+		var d := _player.position.distance_to(pet_actor.position)
+		if d < nearest_dist:
+			nearest_dist = d
+			nearest_pet = pet_actor
+	if nearest_pet == null:
+		return
+	# 透明度随距离线性衰减：40px 以内全强，100px 时归零
+	var proximity := 1.0 - clampf((nearest_dist - 38.0) / 62.0, 0.0, 1.0)
+	# 呼吸脉冲：约 1.2 秒一个周期（sin 取绝对值，避免负值闪烁）
+	var pulse := 0.55 + 0.45 * absf(sin(_day_seconds * 2.6))
+	var arc_alpha := 0.72 * proximity * pulse
+	if arc_alpha < 0.04:
+		return
+	var pt := nearest_pet.position
+	# 顶部半圆弧（约 144°，横跨动物头部上方）
+	## 角度参考：Godot 屏幕坐标 0=右/PI/2=下/-PI/2=上，弧从左上到右上穿过最顶点
+	draw_arc(pt, 36.0, -PI * 0.80, -PI * 0.20, 28, Color(0.90, 0.68, 0.38, arc_alpha), 3.5, true)
+	# 内圈细弧增加层次感
+	draw_arc(pt, 27.0, -PI * 0.75, -PI * 0.25, 22, Color(0.98, 0.82, 0.52, arc_alpha * 0.50), 1.8, true)
+	# 向下三角形箭头（↓），尖端指向动物，两翼向上张开
+	## 尖端（tip）位于弧内侧，靠近动物头部；翼（wl/wr）向上延伸
+	var tip := pt + Vector2(0.0, -29.0)   # 尖端：靠近动物上方（Y 小 = 屏幕上方）
+	var wl  := tip + Vector2(-10.0, -10.0) # 左翼：尖端上方偏左
+	var wr  := tip + Vector2(10.0, -10.0)  # 右翼：尖端上方偏右
+	draw_line(wl, tip, Color(0.90, 0.68, 0.38, arc_alpha * 1.15), 3.2, true)
+	draw_line(wr, tip, Color(0.90, 0.68, 0.38, arc_alpha * 1.15), 3.2, true)
+	draw_line(wl, wr, Color(0.90, 0.68, 0.38, arc_alpha * 0.50), 1.6, true)

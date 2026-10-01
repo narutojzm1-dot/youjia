@@ -12,7 +12,12 @@
 #   2. 在 index.html 中将 executable 从 "index" 改为 "game-{sha}"
 #   3. 在 index.html 中将 script.src 从 'index.js' 改为 'game-{sha}.js'
 #   4. 将 fileSizes 键从 index.* 改为 game-{sha}.*（保持与 executable 一致）
-#   5. 将所有文件推送到 gh-pages 分支
+#   5. 注入 cache-control meta 标签，对抗浏览器/CDN 缓存 index.html
+#   6. 将所有文件推送到 gh-pages 分支
+#   7. 自动剪除超出 KEEP_BUNDLES 数量的旧 game-* 资源包（默认保留最近 4 个）
+#
+# 环境变量:
+#   KEEP_BUNDLES=N  保留最近 N 组 game-* 资源包（默认 4）；设 0 则不剪除
 
 set -euo pipefail
 
@@ -20,6 +25,7 @@ REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 DIST_DIR="$REPO_ROOT/dist"
 SHA="${1:-$(git -C "$REPO_ROOT" rev-parse --short HEAD)}"
 ENTRY="game-${SHA}"
+KEEP_BUNDLES="${KEEP_BUNDLES:-4}"
 
 echo "[publish] source commit: ${SHA}"
 echo "[publish] bundle entry name: ${ENTRY}"
@@ -79,6 +85,14 @@ sed -i "s/script\.src = 'index\.js'/script.src = '${ENTRY}.js'/" "$HTML"
 # 4. icon href 已由导出过程正确设置；如有需要也修补
 sed -i "s/href=\"index\.icon\.png\"/href=\"${ENTRY}.icon.png\"/" "$HTML"
 sed -i "s/href=\"index\.apple-touch-icon\.png\"/href=\"${ENTRY}.apple-touch-icon.png\"/" "$HTML"
+
+# 5. 注入 cache-control meta 标签至 <head>
+# GitHub Pages CDN (Fastly) 默认缓存 HTML；meta 标签可降低浏览器层缓存的生命周期
+# 同时用 data-build 属性将版本 SHA 嵌入 <html> 根节点，便于控制台快速核验
+sed -i "s|<html|<html data-build=\"${ENTRY}\"|" "$HTML"
+sed -i "s|<head>|<head>\n  <meta http-equiv=\"Cache-Control\" content=\"no-cache, must-revalidate, max-age=0\">\n  <meta http-equiv=\"Pragma\" content=\"no-cache\">|" "$HTML"
+
+echo "[publish] cache-control meta tags injected; data-build=${ENTRY}"
 
 # 验证三处均已替换
 echo "[publish] verifying HTML patches..."
@@ -158,9 +172,36 @@ GH_PAGES_DIR="$(mktemp -d)"
 trap 'rm -rf "$WORK_DIR" "$GH_PAGES_DIR"' EXIT
 git worktree add "$GH_PAGES_DIR" origin/gh-pages
 
-# 不删除旧的 game-* bundle（保留历史版本），只更新 index.* 和当前 game-{sha}.*
+# 复制新产物到 gh-pages 工作目录
 cp "$WORK_DIR"/* "$GH_PAGES_DIR/"
 touch "$GH_PAGES_DIR/.nojekyll"
+
+# ---- 剪除旧 game-* 资源包（可选，由 KEEP_BUNDLES 控制）----
+# 识别所有已存在的 game-* 组（以 .pck 为锚点），按名称排序后剪除超出数量的旧组
+cd "$GH_PAGES_DIR"
+if [[ "${KEEP_BUNDLES}" -gt 0 ]]; then
+    # 收集所有 game-*.pck 对应的基名（如 game-abc1234），按字典序升序排列（旧在前）
+    mapfile -t ALL_BUNDLES < <(ls game-*.pck 2>/dev/null | sed 's/\.pck$//' | sort)
+    TOTAL="${#ALL_BUNDLES[@]}"
+    if [[ "$TOTAL" -gt "$KEEP_BUNDLES" ]]; then
+        DELETE_COUNT=$(( TOTAL - KEEP_BUNDLES ))
+        echo "[publish] pruning ${DELETE_COUNT} old bundle(s) (keeping ${KEEP_BUNDLES} of ${TOTAL})..."
+        for (( i=0; i<DELETE_COUNT; i++ )); do
+            OLD="${ALL_BUNDLES[$i]}"
+            # 不删除当前正在发布的包（以防 SHA 冲突导致误删）
+            if [[ "$OLD" == "$ENTRY" ]]; then
+                echo "[publish]   skip ${OLD} (current entry)"
+                continue
+            fi
+            echo "[publish]   removing ${OLD}.*"
+            rm -f "${OLD}".* || true
+        done
+    else
+        echo "[publish] bundle count ${TOTAL} ≤ KEEP_BUNDLES ${KEEP_BUNDLES}, no pruning needed."
+    fi
+else
+    echo "[publish] KEEP_BUNDLES=0, skipping pruning."
+fi
 
 cd "$GH_PAGES_DIR"
 git add -A
@@ -169,4 +210,9 @@ git commit -m "Publish $(git -C "$REPO_ROOT" log --oneline -1 | sed 's/^[a-f0-9]
 git push origin HEAD:gh-pages
 
 git -C "$REPO_ROOT" worktree remove --force "$GH_PAGES_DIR"
-echo "[publish] done. Entry: ${ENTRY}"
+
+# ---- 摘要报告 ----
+echo "[publish] ✓ done."
+echo "[publish]   entry:  ${ENTRY}"
+echo "[publish]   pages:  https://narutojzm1-dot.github.io/youjia/"
+echo "[publish]   verify: document.documentElement.dataset.build in browser console should equal '${ENTRY}'"
