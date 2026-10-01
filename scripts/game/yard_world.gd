@@ -1381,8 +1381,8 @@ func _reel_in_fish() -> void:
 	_fish_state = FISH_IDLE
 	_fish_carry_type = carry_type
 	_fish_carry_timer = 20.0  # 20秒内可投喂给鸭/鹅，给玩家充裕时间走到鸭鹅旁
-	# 启动钓到庆祝闪光：1.4 秒扩散环动画，让"钓到了"的反馈清晰可靠
-	_fish_catch_flash = 1.4
+	# 启动钓到庆祝闪光：2.0 秒三环扩散动画（金色+蓝色+白色），让"钓到了"的反馈清晰有力
+	_fish_catch_flash = 2.0
 	queue_redraw()
 
 
@@ -1517,27 +1517,34 @@ func _draw_plant_bed() -> void:
 func _draw_fishing_spot() -> void:
 	var fp := _fishing_point()
 	var player_near := _player != null and _player.position.distance_to(fp) < 100.0
-	# 水塘常驻波纹：三圈相位错开的扩散涟漪，给水面带来生气
+	# 水塘常驻波纹：三圈相位错开的扩散涟漪，给水面带来生气（alpha 提高至 0.22 增强可见度）
 	var ripple_t := float(Time.get_ticks_msec()) * 0.001
 	for i: int in 3:
 		var phase := fmod(ripple_t * 0.4 + float(i) / 3.0, 1.0)  # 各圈相位错开 1/3
-		var r := lerpf(6.0, 26.0, phase)
-		var a := (1.0 - phase) * 0.10  # 由内向外淡出
-		draw_circle(fp + Vector2(10, 12), r, Color(0.52, 0.70, 0.85, a))
-	# 钓到庆祝闪光：2 轮扩散环 + 亮点，让"钓到了"的反馈持续可见（约 1.4 秒）
+		var r := lerpf(6.0, 30.0, phase)
+		var a := (1.0 - phase) * 0.22  # 提高到 0.22（原 0.10），水面更有生气
+		draw_arc(fp + Vector2(10, 12), r, 0.0, TAU, 20, Color(0.42, 0.68, 0.88, a), 1.8, true)
+	# 钓到庆祝闪光：3 轮扩散环 + 亮点 + 金色外圈，让"钓到了"的反馈清晰有力（约 2.0 秒）
+	## 时间从 1.4s 延长到 2.0s，给玩家更长的欣赏窗口
 	if _fish_catch_flash > 0.0:
-		var t := 1.0 - clampf(_fish_catch_flash / 1.4, 0.0, 1.0)  # 0→1 随时间推进
-		# 外圈：快速扩散淡出
-		var r_outer := lerpf(10.0, 52.0, t)
-		var a_outer := (1.0 - t) * 0.75
-		draw_circle(fp, r_outer, Color(0.55, 0.82, 0.92, a_outer * 0.18))
-		draw_arc(fp, r_outer, 0.0, TAU, 32, Color(0.42, 0.72, 0.88, a_outer), 3.2, true)
-		# 内圈：稍慢，双脉冲节奏感
-		var r_inner := lerpf(6.0, 32.0, minf(t * 1.6, 1.0))
-		var a_inner := maxf(0.0, 1.0 - t * 1.6) * 0.90
-		draw_arc(fp, r_inner, 0.0, TAU, 24, Color(0.75, 0.92, 0.98, a_inner), 2.5, true)
-		# 闪光中心圆：暖白色，强调"成功"感
-		draw_circle(fp, 7.0 * (1.0 - t), Color(0.95, 0.98, 1.0, a_inner * 1.1))
+		var t := 1.0 - clampf(_fish_catch_flash / 2.0, 0.0, 1.0)  # 0→1 随时间推进（2s总长）
+		# 最外圈：金色暖光，快速扩散，第一眼抓住注意力
+		var r_gold := lerpf(12.0, 68.0, t)
+		var a_gold := (1.0 - t) * 0.82
+		draw_arc(fp, r_gold, 0.0, TAU, 40, Color(0.96, 0.82, 0.42, a_gold), 5.0, true)
+		# 外圈：蓝白水色，稍慢扩散，与池塘主题呼应
+		var r_outer := lerpf(8.0, 52.0, t)
+		var a_outer := (1.0 - t) * 0.95
+		draw_circle(fp, r_outer, Color(0.55, 0.82, 0.92, a_outer * 0.22))
+		draw_arc(fp, r_outer, 0.0, TAU, 36, Color(0.42, 0.72, 0.88, a_outer), 4.0, true)
+		# 内圈：更亮的浅蓝，双脉冲节奏感
+		var r_inner := lerpf(4.0, 32.0, minf(t * 1.5, 1.0))
+		var a_inner := maxf(0.0, 1.0 - t * 1.5) * 1.00
+		draw_arc(fp, r_inner, 0.0, TAU, 28, Color(0.78, 0.94, 1.00, a_inner), 3.0, true)
+		# 中心亮点：暖白色 + 金色双层，强调"收杆成功"的瞬间感
+		var center_r := 10.0 * (1.0 - t)
+		draw_circle(fp, center_r * 1.6, Color(0.98, 0.88, 0.55, a_inner * 0.80))
+		draw_circle(fp, center_r, Color(0.98, 1.00, 1.00, a_inner * 1.15))
 	if not player_near and _fish_state == FISH_IDLE:
 		return
 	# 指示圆（靠近时才显示）
@@ -1594,8 +1601,9 @@ func _draw_contact_shadow(point: Vector2, extent: Vector2) -> void:
 	draw_circle(Vector2.ZERO,0.70,Color(0.29,0.25,0.16,0.055))
 
 
-## 绘制最近可抚摸动物的软目标弧 + 箭头（暖橙色，带呼吸脉冲）
+## 绘制最近可抚摸动物的软目标弧 + 箭头 + 地面光晕（暖橙色，带呼吸脉冲）
 ## 仅当玩家位于抚摸感应范围内（< 100px）且非牵行/携带状态时显示
+## 设计原则：在保持水彩风格的同时足够醒目——玩家一眼就能确认目标是哪只动物
 func _draw_pet_target_arc() -> void:
 	if _player == null or _leading or not _fish_carry_type.is_empty() or _player.carrying_grass:
 		return
@@ -1612,24 +1620,31 @@ func _draw_pet_target_arc() -> void:
 			nearest_pet = pet_actor
 	if nearest_pet == null:
 		return
-	# 透明度随距离线性衰减：40px 以内全强，100px 时归零
-	var proximity := 1.0 - clampf((nearest_dist - 38.0) / 62.0, 0.0, 1.0)
-	# 呼吸脉冲：约 1.2 秒一个周期（sin 取绝对值，避免负值闪烁）
-	var pulse := 0.55 + 0.45 * absf(sin(_day_seconds * 2.6))
-	var arc_alpha := 0.72 * proximity * pulse
-	if arc_alpha < 0.04:
+	# 透明度随距离平方衰减：40px 以内全强，100px 时归零（比线性衰减更明显）
+	var proximity := 1.0 - clampf((nearest_dist - 30.0) / 70.0, 0.0, 1.0)
+	proximity = proximity * proximity  # 平方让近处更亮，远处更快衰减
+	# 呼吸脉冲：约 1.4 秒一个周期（正弦绝对值，无负值闪烁，振幅更大）
+	var pulse := 0.60 + 0.40 * absf(sin(_day_seconds * 2.2))
+	var arc_alpha := 0.88 * proximity * pulse
+	if arc_alpha < 0.05:
 		return
 	var pt := nearest_pet.position
-	# 顶部半圆弧（约 144°，横跨动物头部上方）
-	## 角度参考：Godot 屏幕坐标 0=右/PI/2=下/-PI/2=上，弧从左上到右上穿过最顶点
-	draw_arc(pt, 36.0, -PI * 0.80, -PI * 0.20, 28, Color(0.90, 0.68, 0.38, arc_alpha), 3.5, true)
-	# 内圈细弧增加层次感
-	draw_arc(pt, 27.0, -PI * 0.75, -PI * 0.25, 22, Color(0.98, 0.82, 0.52, arc_alpha * 0.50), 1.8, true)
-	# 向下三角形箭头（↓），尖端指向动物，两翼向上张开
-	## 尖端（tip）位于弧内侧，靠近动物头部；翼（wl/wr）向上延伸
-	var tip := pt + Vector2(0.0, -29.0)   # 尖端：靠近动物上方（Y 小 = 屏幕上方）
-	var wl  := tip + Vector2(-10.0, -10.0) # 左翼：尖端上方偏左
-	var wr  := tip + Vector2(10.0, -10.0)  # 右翼：尖端上方偏右
-	draw_line(wl, tip, Color(0.90, 0.68, 0.38, arc_alpha * 1.15), 3.2, true)
-	draw_line(wr, tip, Color(0.90, 0.68, 0.38, arc_alpha * 1.15), 3.2, true)
-	draw_line(wl, wr, Color(0.90, 0.68, 0.38, arc_alpha * 0.50), 1.6, true)
+	# 地面柔光环（软橙色填充圆，半透明）：一眼告知脚下有目标
+	## 半径跟随脉冲轻微呼吸，增强"活"的感觉
+	var ground_r := 22.0 + 4.0 * absf(sin(_day_seconds * 2.2))
+	draw_circle(pt, ground_r, Color(0.95, 0.72, 0.38, arc_alpha * 0.28))
+	draw_circle(pt, ground_r * 0.55, Color(1.00, 0.85, 0.55, arc_alpha * 0.18))
+	# 顶部大弧（约 180°，完整半圆，横跨动物上方）
+	## 线宽 4.5px，高对比橙色，比原来宽约 1px 且更亮
+	draw_arc(pt, 42.0, -PI * 0.90, -PI * 0.10, 32, Color(0.96, 0.70, 0.32, arc_alpha), 4.5, true)
+	# 内圈辅助弧（约 150°），提供层次感且不显杂乱
+	draw_arc(pt, 31.0, -PI * 0.82, -PI * 0.18, 26, Color(1.00, 0.88, 0.58, arc_alpha * 0.55), 2.2, true)
+	# 向下三角形箭头（↓），尖端指向动物头顶，两翼宽且粗
+	## 比旧版尺寸大 30%，线宽从 3.2→4.0px，更易在彩色背景上辨认
+	var tip := pt + Vector2(0.0, -32.0)    # 尖端：靠近动物上方
+	var wl  := tip + Vector2(-13.0, -13.0) # 左翼：尖端左上
+	var wr  := tip + Vector2(13.0, -13.0)  # 右翼：尖端右上
+	draw_line(wl, tip, Color(0.96, 0.70, 0.32, arc_alpha * 1.20), 4.0, true)
+	draw_line(wr, tip, Color(0.96, 0.70, 0.32, arc_alpha * 1.20), 4.0, true)
+	# 翼横线：辅助闭合三角形顶部，增加完整感
+	draw_line(wl, wr, Color(0.96, 0.70, 0.32, arc_alpha * 0.60), 2.0, true)

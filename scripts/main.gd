@@ -173,11 +173,23 @@ func _input(event: InputEvent) -> void:
 			# Arrow keys move the person in the yard, never focus HUD buttons.
 			get_viewport().set_input_as_handled()
 			return
-	# Native browser touch and synthesized mouse must produce exactly one action.
-	if event is InputEventMouseButton and Time.get_ticks_msec()-_last_touch_ms < 400:
-		get_viewport().set_input_as_handled()
-		return
-	if not (event is InputEventScreenTouch) or not event.pressed:
+	# 触屏/鼠标同源去重：触屏处理后，400ms 内合成鼠标左键直接吞掉，防止重复触发
+	if event is InputEventMouseButton:
+		var _mb := event as InputEventMouseButton
+		if _mb.button_index == MOUSE_BUTTON_LEFT and _mb.pressed and Time.get_ticks_msec() - _last_touch_ms < 400:
+			get_viewport().set_input_as_handled()
+			return
+	# 仅响应"按下"动作：触屏 pressed=true，或（仅限游戏 HUD 场景）鼠标左键 pressed=true
+	## 标题/暂停/确认/相册界面的按钮均使用 Godot 内置 GUI 行为，享有视觉按压反馈
+	## 游戏 HUD 按钮有 focus_mode=NONE，在 web 导出中内置 GUI 路由不可靠，需手动处理
+	var is_touch_press := event is InputEventScreenTouch and (event as InputEventScreenTouch).pressed
+	var _in_game_hud := (_screen == "game" and not _pause_screen.visible
+		and not _album_screen.visible and not _confirm_screen.visible)
+	var is_mouse_press := (_in_game_hud
+		and event is InputEventMouseButton
+		and (event as InputEventMouseButton).pressed
+		and (event as InputEventMouseButton).button_index == MOUSE_BUTTON_LEFT)
+	if not is_touch_press and not is_mouse_press:
 		return
 	var buttons: Array = []
 	if _confirm_screen.visible:
@@ -190,9 +202,10 @@ func _input(event: InputEvent) -> void:
 		buttons = [_play_button,_album_button,_licenses_button]
 	else:
 		buttons = [_action_button,_album_chip,_weather_chip,_pause_button]
+	# 使用 get_global_rect() 做命中检测：在 web 导出中比 get_global_transform_with_canvas()
+	## 更可靠，因为后者在 CanvasLayer 子节点上可能返回过时变换
 	for button: Button in buttons:
-		var local: Vector2 = button.get_global_transform_with_canvas().affine_inverse()*event.position
-		if button.is_visible_in_tree() and not button.disabled and Rect2(Vector2.ZERO,button.size).has_point(local):
+		if button.is_visible_in_tree() and not button.disabled and button.get_global_rect().has_point(event.position):
 			_last_touch_ms = Time.get_ticks_msec()
 			button.pressed.emit()
 			get_viewport().set_input_as_handled()
@@ -641,6 +654,22 @@ func _flash_photo() -> void:
 	tween.tween_property(_photo_flash, "color:a", 0.0, 0.55).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 
 
+## 收杆成功时的全屏水蓝闪光：快速淡入淡蓝色（水/鱼质感），比拍立得闪光轻柔，不喧宾夺主
+func _flash_catch() -> void:
+	if _photo_flash == null:
+		return
+	if bool(TuningStore.get_value("ui.reduced_motion", false)):
+		return
+	# 将 _photo_flash 临时变为淡蓝色系（收杆后复原），避免与拍立得奶白色混淆
+	var prev_color := _photo_flash.color
+	_photo_flash.color = Color(0.62, 0.86, 0.96, 0.0)  # 水蓝，alpha=0 起点
+	var tween := create_tween()
+	tween.tween_property(_photo_flash, "color:a", 0.28, 0.07)   # 快速淡入
+	tween.tween_property(_photo_flash, "color:a", 0.0, 0.65).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	# 动画结束后把颜色还原到奶油白（供下次拍照用）
+	tween.tween_callback(func() -> void: _photo_flash.color = Color(CREAM, 0.0))
+
+
 func _layout() -> void:
 	var pad := 20.0
 	if _album_chip == null: return
@@ -712,18 +741,21 @@ func _on_day_advanced(_day: int) -> void:
 	_refresh_hud()
 
 
-## 收杆成功：行动按钮做一次更强的双弹脉冲，让 Enter/Space 收杆有明确的手感确认
+## 收杆成功：行动按钮双弹脉冲 + 全屏淡蓝闪光，让"钓到了"的反馈在 HUD 和世界层同时传达
 func _on_fish_caught(_carry_type: String) -> void:
 	if _action_button == null:
 		return
 	if bool(TuningStore.get_value("ui.reduced_motion", false)):
 		return
-	# 双弹：快速亮→暗→再亮→归位，模拟收杆的拉力感
+	# 双弹：快速亮→暗→再亮→归位，模拟收杆拉力感（峰值亮度提高到 1.65）
 	var tween := create_tween()
-	tween.tween_property(_action_button, "modulate", Color(1.55, 1.18, 0.72, 1.0), 0.06).set_trans(Tween.TRANS_QUAD)
-	tween.tween_property(_action_button, "modulate", Color(0.90, 0.90, 0.90, 1.0), 0.08).set_trans(Tween.TRANS_QUAD)
-	tween.tween_property(_action_button, "modulate", Color(1.40, 1.10, 0.78, 1.0), 0.07).set_trans(Tween.TRANS_QUAD)
-	tween.tween_property(_action_button, "modulate", Color.WHITE, 0.30).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	tween.tween_property(_action_button, "modulate", Color(1.65, 1.28, 0.72, 1.0), 0.06).set_trans(Tween.TRANS_QUAD)
+	tween.tween_property(_action_button, "modulate", Color(0.88, 0.88, 0.88, 1.0), 0.09).set_trans(Tween.TRANS_QUAD)
+	tween.tween_property(_action_button, "modulate", Color(1.48, 1.18, 0.78, 1.0), 0.07).set_trans(Tween.TRANS_QUAD)
+	tween.tween_property(_action_button, "modulate", Color.WHITE, 0.35).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	# 全屏水蓝闪光叠加层：比照片入账的奶油闪光稍深，呈现水/鱼的质感
+	## 淡蓝色（接近水塘波纹色调），强度比拍立得闪光低，维持宁静感
+	_flash_catch()
 
 
 ## 第1天进院且相册为空时，延迟 4.5 秒发送柔性引导提示（淡出后已看不到 arrive 通知）
