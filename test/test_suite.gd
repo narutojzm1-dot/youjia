@@ -76,7 +76,8 @@ func _test_locale_detection() -> void:
 
 func _test_expression_catalog() -> void:
 	var ids := ExpressionCatalog.all_ids()
-	_check(ids.size() == 6, "album must contain six polaroid expressions")
+	# 相册拍立得总数随新互动增加而更新（当前 11 张：4 草泥马 + 2 鸭/牛 + 3 抚摸 + 植物 + 钓鱼）
+	_check(ids.size() == 11, "album must contain eleven polaroid expressions")
 	var mainline := ExpressionCatalog.llama_mainline_ids()
 	_check(mainline.size() == 4, "llama mainline must have four expressions")
 	_check(str(ExpressionCatalog.find_rule("llama_overcast_goose_annoyed").get("expression", "")) == "annoyed", "overcast goose rule must annoy the llama")
@@ -282,7 +283,8 @@ func _test_runtime_scene() -> void:
 		_check(llama.position.distance_to(before) > 8.0, "llama walks across the grass")
 		_check(YardGround.allows(llama.position, YardGround.lawn(), true), "llama stays on the lawn")
 		_check(world.actor_named("goose") != null, "yard must include the goose")
-		_check(world.collectible_total() == 6, "album total must be six polaroids")
+		# 相册总数随新互动增加而更新（当前 11 张）
+		_check(world.collectible_total() == 11, "album total must be eleven polaroids")
 		world.set_weather("overcast")
 		world.debug_place_actor("llama", Vector2(640, 400))
 		world.debug_place_actor("goose", Vector2(700, 400))
@@ -290,12 +292,18 @@ func _test_runtime_scene() -> void:
 		_check(world.actor_named("llama").current_expression == "annoyed", "llama sprite must swap to annoyed")
 		world.set_weather("sun")
 		world.debug_place_actor("sheep_a", Vector2(620, 400))
-		world.debug_place_actor("cow", Vector2(560, 420))
+		# 牛和马也先移走，以免在喂草测试时误触发抚摸优先分支
+		world.debug_place_actor("cow", Vector2(300, 560))
+		world.debug_place_actor("horse", Vector2(200, 560))
 		_check(bool(world.debug_force_rule("llama_sun_sheep_happy")), "sun-sheep polaroid must collect")
 		_check(bool(world.debug_force_rule("llama_sheep_cow_smirk")), "sheep-cow smirk must collect")
+		# 喂草测试前把所有可抚摸动物移走，确保 try_interact() 走到喂草泥马分支
+		world.debug_place_actor("sheep_a", Vector2(200, 460))
+		world.debug_place_actor("sheep_b", Vector2(200, 490))
 		world.debug_place_player(Vector2(340, 600))
 		world.try_interact()
 		_check(bool(world.get_player().carrying_grass), "yard grass pile must be pickable")
+		# 玩家走到草泥马旁边喂草（草泥马在 640,400；玩家在 600,400；可抚摸动物已远离）
 		world.debug_place_player(world.actor_named("llama").position + Vector2(-40, 0))
 		world.try_interact()
 		_check(not bool(world.get_player().carrying_grass), "feeding must consume the grass")
