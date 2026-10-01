@@ -180,12 +180,18 @@ func _process(delta: float) -> void:
 			var tod := _world.tod_fraction()
 			_update_tod_tint(tod)
 			_update_season_tint(_world.holiday_day)
-			# 空闲提示轮播：玩家无操作60秒后，每75秒给一次软引导
+			# 空闲提示轮播：初次 55s 后，每 75s 给一条软引导
+			## playtest #3 修复：原版通知 3.2s/16px 太短太小；现在等待活跃通知结束后再显示
 			if not _pause_screen.visible and not _album_screen.visible:
 				_idle_hint_timer -= delta
 				if _idle_hint_timer <= 0.0:
-					_idle_hint_timer = 75.0
-					_show_idle_hint()
+					if _notice_time <= 0.5:
+						# 没有活跃通知，立刻显示空闲提示
+						_idle_hint_timer = 75.0
+						_show_idle_hint()
+					else:
+						# 有活跃通知（如 TOD 切换），延迟 6 秒重试，避免覆盖
+						_idle_hint_timer = 6.0
 			# 追踪昼夜相位变化，切换时显示氛围文字
 			var phase := _tod_phase_name(tod)
 			if phase != _last_tod_phase and not _last_tod_phase.is_empty():
@@ -688,6 +694,8 @@ func _show_notice_key(key: String) -> void:
 	_notice.text = I18n.t(key)
 	_notice.visible = true
 	_notice_time = 3.2
+	# 每次普通通知都重置字体大小（钓到鱼/空闲提示会在后续覆盖为更大字号）
+	_notice.add_theme_font_size_override("font_size", 16)
 
 
 func _open_licenses() -> void:
@@ -707,6 +715,8 @@ func _flash_photo() -> void:
 
 
 ## 收杆成功时的全屏水蓝闪光：快速淡入淡蓝色（水/鱼质感），比拍立得闪光轻柔，不喧宾夺主
+## 旧实现已弃用（_photo_flash 会与拍立得奶白闪光复用同一节点，竞态问题）
+## 新实现请看 _on_fish_caught()，使用独立 _fish_flash 节点
 func _flash_catch() -> void:
 	if _photo_flash == null:
 		return
@@ -802,11 +812,14 @@ func _on_day_advanced(day: int) -> void:
 	_show_notice_key(day_notices[(day - 1) % day_notices.size()])
 
 
-## 收杆成功：独立蓝色闪光层 + 行动按钮双弹脉冲，让"钓到了"的庆祝感清晰可见
+## 收杆成功：独立蓝色闪光层 + 行动按钮双弹脉冲 + 大字通知
+## playtest #3 根因：_fish_flash 旧版 alpha=0.38 在水彩背景上几乎不可见；
+## 庆祝环在 z_index=0 被鸭精灵遮挡；通知字号/时长不足。均已修复。
 func _on_fish_caught(carry_type: String) -> void:
 	if bool(TuningStore.get_value("ui.reduced_motion", false)):
 		return
 	# 独立蓝色屏幕闪光（_fish_flash ColorRect，不干扰拍立得奶白闪光）
+	## alpha 由 0.38 提升至 0.62，持续更长（0.15s 淡入 + 0.90s 消退），确保不可错过
 	if _fish_flash != null:
 		var flash_color: Color
 		match carry_type:
@@ -815,8 +828,9 @@ func _on_fish_caught(carry_type: String) -> void:
 			_:        flash_color = Color(0.42, 0.75, 0.88, 0.0)
 		_fish_flash.color = flash_color
 		var ft := create_tween()
-		ft.tween_property(_fish_flash, "color:a", 0.38, 0.07).set_trans(Tween.TRANS_QUAD)
-		ft.tween_property(_fish_flash, "color:a", 0.0, 0.70).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+		ft.tween_property(_fish_flash, "color:a", 0.62, 0.10).set_trans(Tween.TRANS_QUAD)   # 淡入加强
+		ft.tween_property(_fish_flash, "color:a", 0.42, 0.12)                                # 短暂保持
+		ft.tween_property(_fish_flash, "color:a", 0.0, 0.90).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 	# 行动按钮双弹脉冲（峰值 1.65，模拟收杆拉力感）
 	if _action_button != null:
 		var tween := create_tween()
@@ -824,6 +838,11 @@ func _on_fish_caught(carry_type: String) -> void:
 		tween.tween_property(_action_button, "modulate", Color(0.88, 0.88, 0.88, 1.0), 0.09).set_trans(Tween.TRANS_QUAD)
 		tween.tween_property(_action_button, "modulate", Color(1.48, 1.18, 0.78, 1.0), 0.07).set_trans(Tween.TRANS_QUAD)
 		tween.tween_property(_action_button, "modulate", Color.WHITE, 0.35).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	# 钓到通知：延长至 6 秒（原 3.2s），字号放大至 20px，确保庆祝感明确可读
+	## 通知文字由 YardWorld.notice_requested 信号在 fish_caught 之前发出，
+	## 这里在同帧覆盖 duration 和 font_size，不会出现竞态问题。
+	_notice_time = maxf(_notice_time, 6.0)
+	_notice.add_theme_font_size_override("font_size", 20)
 
 
 ## 第1天进院且相册为空时，延迟 4.5 秒发送柔性引导提示（淡出后已看不到 arrive 通知）
@@ -835,36 +854,41 @@ func _show_delayed_soft_hint() -> void:
 	_show_notice_key("notice.first_hint")
 
 
-## 轮播空闲提示：从 IDLE_HINTS 数组里依次取出一条，针对玩家当前状态过滤
+## 轮播空闲提示：从候选列表里依次取出一条，针对玩家当前状态过滤。
+## playtest #3 修复：提示字号升至 18px，时长延至 8s；首条不跳索引，从 [0] 开始。
 func _show_idle_hint() -> void:
 	if _screen != "game" or _world == null:
 		return
 	if _pause_screen.visible or _album_screen.visible:
 		return
-	# 根据玩家当前状态选择最合适的提示，而不是死板轮询
-	var candidates: Array[String] = []
-	# 如果相册是空的且还没引导过，优先给综合引导
+	# 如果相册是空的且还没给过综合引导，优先发一次
 	if not _first_hint_shown and _world.collected_count() == 0:
 		_first_hint_shown = true
 		_show_notice_key("notice.first_hint")
+		_notice_time = 8.0
+		_notice.add_theme_font_size_override("font_size", 18)
 		return
 	var player := _world.get_player()
 	var pos := player.position if player != null else Vector2(640, 500)
-	# 离钓鱼点远（>220px）→ 提示去钓鱼
+	# 根据玩家当前位置动态构建候选列表
+	var candidates: Array[String] = []
+	# 离钓鱼点远（>220px）时提示去钓鱼
 	if pos.distance_to(Vector2(700, 535)) > 220.0:
 		candidates.append("notice.hint.go_fish")
-	# 植物/宠物/探索提示始终加入候选
 	candidates.append("notice.hint.go_plant")
 	candidates.append("notice.hint.go_pet")
 	candidates.append("notice.hint.go_explore")
-	# 若玩家没有拿草（不在门口附近），加入草堆提示
 	if player == null or not player.carrying_grass:
 		candidates.append("notice.hint.go_grass")
 	if candidates.is_empty():
 		return
-	# 轮询取下一条（保证 index 在有效范围内）
-	_idle_hint_index = (_idle_hint_index + 1) % candidates.size()
+	# 循环取下一条（首次 index=0，不跳过第一个候选）
+	_idle_hint_index = _idle_hint_index % candidates.size()
 	_show_notice_key(candidates[_idle_hint_index])
+	_idle_hint_index = (_idle_hint_index + 1) % candidates.size()
+	# 延长时长 + 加大字号（比普通通知更醒目，帮助玩家在安静状态下发现活动）
+	_notice_time = 8.0
+	_notice.add_theme_font_size_override("font_size", 18)
 
 
 ## 将 tod_fraction 映射到日段名称（用于 TOD 相位变化通知）
@@ -878,7 +902,7 @@ func _tod_phase_name(t: float) -> String:
 
 
 ## 行动按钮按下时触发短暂视觉脉冲：暖光闪亮再消散，给触控/鼠标点击明确反馈
-## 调高峰值亮度（1.35→1.50）并加入轻微 scale 弹跳，让反馈更清晰
+## scale 弹跳从 1.04 提升至 1.08，更清晰地确认"按下"这个动作（尤其是相册按钮）
 func _pulse_button(btn: Button) -> void:
 	if btn == null:
 		return
@@ -886,12 +910,12 @@ func _pulse_button(btn: Button) -> void:
 		return
 	var tween := create_tween()
 	tween.set_parallel(false)
-	tween.tween_property(btn, "modulate", Color(1.50, 1.12, 0.80, 1.0), 0.07).set_trans(Tween.TRANS_QUAD)
+	tween.tween_property(btn, "modulate", Color(1.55, 1.15, 0.82, 1.0), 0.07).set_trans(Tween.TRANS_QUAD)
 	tween.tween_property(btn, "modulate", Color.WHITE, 0.26).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 	# 同步 scale 弹跳（独立 tween，避免与 modulate 链冲突）
 	var st := create_tween()
-	st.tween_property(btn, "scale", Vector2(1.04, 1.04), 0.06).set_trans(Tween.TRANS_QUAD)
-	st.tween_property(btn, "scale", Vector2(1.0, 1.0), 0.18).set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
+	st.tween_property(btn, "scale", Vector2(1.08, 1.08), 0.06).set_trans(Tween.TRANS_QUAD)
+	st.tween_property(btn, "scale", Vector2(1.0, 1.0), 0.20).set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
 
 
 ## 根据假期天数计算并应用季节底色（叠加在昼夜层之下）
