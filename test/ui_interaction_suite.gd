@@ -51,7 +51,7 @@ func review():
  var llama_start=w.actor_named("llama").position
  for i in 1500:
   await frames(1)
-  if "llama_fed_gentle" in w.collected:break
+  if "llama_fed_gentle" in w.collected and not p.carrying_grass:break
  check("llama_fed_gentle" in w.collected and not p.carrying_grass,"raw touch reaches llama and collects exact feeding photo")
  print("AUDIT moving llama displacement=",llama_start.distance_to(w.actor_named("llama").position)," final reach=",p.position.distance_to(w.actor_named("llama").position))
  var pause_origin=main._pause_button.get_global_transform_with_canvas().origin

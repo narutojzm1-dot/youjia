@@ -275,7 +275,7 @@ func _test_runtime_scene() -> void:
 		_check(world.actor_named("llama") != null, "yard must include the llama")
 		var llama: FeltActor = world.actor_named("llama")
 		_check(YardGround.allows(llama.position, YardGround.lawn(), true), "llama starts on the lawn")
-		llama.nudge_toward(Vector2(700, 490))
+		llama.nudge_toward(llama.position + Vector2(40, -10))
 		var before: Vector2 = llama.position
 		for _step: int in 12:
 			world.tick(0.1, Vector2.ZERO)

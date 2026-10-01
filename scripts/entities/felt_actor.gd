@@ -17,6 +17,9 @@ var current_expression := "idle"
 var nearby_ids: Dictionary = {}
 var state := "wander"
 var grazing := false
+var daily_routine := false
+var _routine_step := 0
+var _turn_pause := 0.0
 
 var _sprite: Sprite2D
 var _textures: Dictionary = {}
@@ -53,6 +56,7 @@ var _expression_texture: Texture2D
 
 func setup(config: Dictionary) -> void:
 	actor_id = str(config.get("id", ""))
+	daily_routine = bool(config.get("daily_routine", false))
 	species = str(config.get("species", actor_id))
 	display_name_key = str(config.get("name_key", "actor.%s" % species))
 	position = config.get("position", Vector2.ZERO)
@@ -83,7 +87,11 @@ func setup(config: Dictionary) -> void:
 	scale = Vector2(_base_scale, _base_scale)
 	_target = _random_point()
 	_build_spit()
-	if species != "duck":
+	if daily_routine:
+		_routine_step = int(abs(actor_id.hash()) % 4)
+		_start_rest()
+		_idle_time *= randf_range(0.35, 1.0)
+	elif species != "duck":
 		state = "graze"
 		_idle_time = randf_range(5.0,12.0)
 
@@ -174,11 +182,17 @@ func end_lead() -> void:
 	_following = false
 	_lead_target = null
 	_target = _random_point()
+	if daily_routine:
+		_start_rest()
 
 
 func nudge_toward(point: Vector2) -> void:
+	if daily_routine and species != "llama" and not wander_rect.has_point(point):
+		return
+	if not _stands_on(point):
+		return
 	state = "wander"
-	_target = point + Vector2(randf_range(-18.0, 18.0), randf_range(-10.0, 10.0))
+	_target = point
 
 
 func is_near(other: FeltActor, radius: float = 92.0) -> bool:
@@ -240,13 +254,15 @@ func tick(delta: float, world_size: Vector2) -> void:
 					desired = motion.normalized() * minf(follow_speed, maxf(0.0, motion.length() - 56.0 * depth) * 2.5)
 			else:
 				end_lead()
-		"graze":
+		"graze", "rest":
 			_idle_time -= delta
-			grazing = true
+			grazing = state == "graze"
 			if _idle_time <= 0.0:
 				state = "wander"
 				grazing = false
 				_target = _random_point()
+				if daily_routine:
+					_turn_pause = 0.55
 		_:
 			grazing = false
 			motion = _target - position
@@ -255,8 +271,17 @@ func tick(delta: float, world_size: Vector2) -> void:
 				# random destination and a sudden reversal every few seconds.
 				state = "graze"
 				_idle_time = randf_range(7.0, 14.0)
+				if daily_routine:
+					_start_rest()
 			else:
 				desired = motion.normalized() * minf(speed * depth, motion.length() * 1.8)
+	# A resident chooses its next direction while planted, then takes a few steps.
+	# No reversing in motion or repeated boundary bounces.
+	if daily_routine and _turn_pause > 0.0 and state == "wander":
+		_turn_pause -= delta
+		desired = Vector2.ZERO
+		if absf(motion.x) > 3.0:
+			facing = signf(motion.x)
 	var response := 5.0 if species == "duck" else 7.0
 	_velocity = _velocity.lerp(desired, 1.0 - exp(-response * delta))
 	if desired.is_zero_approx() and _velocity.length() < 0.3:
@@ -275,6 +300,7 @@ func tick(delta: float, world_size: Vector2) -> void:
 		_stuck += delta
 		if _stuck > 0.65 and state != "lead":
 			_target = _random_point()
+			if daily_routine: _start_rest()
 			_stuck = 0.0
 	else:
 		_stuck = 0.0
@@ -296,7 +322,13 @@ func tick(delta: float, world_size: Vector2) -> void:
 	if _ground_anchor.x >= 0.0:
 		_sprite.position = Vector2.ZERO
 		_sprite.rotation = 0.0
-		_gait._material.set_shader_parameter("amount", 0.0 if reduced or use_ellipse else _gait.weight*0.35)
+		var artwork_width := _sprite.texture.get_width() * _base_scale * visual_scale
+		var artwork_height := _sprite.texture.get_height() * _base_scale * visual_scale
+		_gait._material.set_shader_parameter("grounded_stride", true)
+		_gait._material.set_shader_parameter("stride_uv", stride / maxf(artwork_width, 1.0))
+		_gait._material.set_shader_parameter("lift_uv", 2.0 / maxf(artwork_height, 1.0))
+		_gait._material.set_shader_parameter("native_walk_face", _native_facing)
+		_gait._material.set_shader_parameter("amount", 0.0 if reduced or use_ellipse else minf(_gait.weight * 3.0, 1.0))
 	var visual := _base_scale * visual_scale * YardGround.depth_at(position.y)
 	# Breathing belongs to resting animals; don't squash a walking silhouette.
 	var resting_breath := lerpf(breath, 1.0, _gait.weight)
@@ -320,7 +352,39 @@ func _anchor_feet() -> void:
 		_sprite.offset = Vector2(0, -_sprite.texture.get_height() * 0.5)
 
 
+func _start_rest() -> void:
+	_routine_step += 1
+	state = "rest" if _routine_step % 3 == 0 else "graze"
+	var durations := {"cow": Vector2(18, 26), "horse": Vector2(16, 23), "sheep": Vector2(13, 21), "goose": Vector2(10, 17), "duck": Vector2(8, 14), "llama": Vector2(6, 11)}
+	var span: Vector2 = durations.get(species, Vector2(12, 20))
+	_idle_time = randf_range(span.x, span.y)
+	if species == "goose":
+		_idle_time /= maxf(0.5, float(TuningStore.get_value("enemies.goose.nosiness", 1.0)))
+	_turn_pause = 0.0
+
+
+func _local_destination() -> Vector2:
+	# Nearby reachable feeding spots only. Trying a new heading happens while
+	# resting, never by clamping a distant point and sliding along a boundary.
+	var distance_span := Vector2(14, 29)
+	if species == "llama": distance_span = Vector2(40, 90)
+	elif species == "duck": distance_span = Vector2(20, 38)
+	for attempt in 32:
+		var angle := randf() * TAU
+		var point := position + Vector2(cos(angle), sin(angle)*0.42) * randf_range(distance_span.x, distance_span.y)
+		if species != "llama" and not use_ellipse and not wander_rect.has_point(point): continue
+		if not _stands_on(point): continue
+		var reachable := true
+		for i in range(1, 9):
+			if not _stands_on(position.lerp(point, float(i)/8.0)):
+				reachable = false
+				break
+		if reachable: return point
+	return position
+
+
 func _random_point() -> Vector2:
+	if daily_routine: return _local_destination()
 	if use_ellipse:
 		var angle := randf() * TAU
 		var radius := sqrt(randf())

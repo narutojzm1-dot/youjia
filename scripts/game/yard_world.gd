@@ -9,7 +9,7 @@ signal camera_release_requested
 
 const SUNNY := preload("res://assets/holiday/environment/yard_sunny.png")
 const OVERCAST := preload("res://assets/holiday/environment/yard_overcast.png")
-const GRASS := preload("res://assets/holiday/fx/grass_bundle.png")
+const GrassPatchType := preload("res://scripts/entities/grass_patch.gd")
 const FeltActorType := preload("res://scripts/entities/felt_actor.gd")
 const VacationerType := preload("res://scripts/entities/vacationer.gd")
 const WORLD_SIZE := Vector2(1280, 720)
@@ -43,7 +43,7 @@ var _held: Dictionary = {}
 var _focus_seconds := 0.0
 var _leading := false
 var _day_seconds := 0.0
-var _grass_sprite: Sprite2D
+var _grass_patch: GrassPatch
 var _spot := "door"
 var _move_held := false
 var _has_walk_goal := false
@@ -177,6 +177,7 @@ func tick(delta: float, move: Vector2) -> void:
 		_player.tick(delta, move, WORLD_SIZE)
 	else:
 		_player.tick(delta, Vector2.ZERO, WORLD_SIZE)
+	if _grass_patch != null: _grass_patch.tick(delta)
 	var animal_scale := float(TuningStore.get_value("enemies.visual.scale", 1.0))
 	var animal_speed := float(TuningStore.get_value("enemies.move.speed_multiplier", 1.0))
 	for actor_id: String in _actors:
@@ -187,16 +188,6 @@ func tick(delta: float, move: Vector2) -> void:
 			actor.begin_lead(_player)
 		elif actor.state == "lead" and actor_id == "llama":
 			actor.end_lead()
-		if actor_id == "goose" and weather == "overcast":
-			var llama: FeltActor = _actors.get("llama")
-			var nosiness := float(TuningStore.get_value("enemies.goose.nosiness", 1.0))
-			if llama != null and actor.position.distance_to(llama.position) > 88.0 and randf() < 1.0 - exp(-0.24 * nosiness * delta):
-				actor.nudge_toward(llama.position + (actor.position-llama.position).normalized()*72.0)
-		# 晴天一只羊偶尔从羊圈走到草泥马附近，走的是同一块草地。
-		if actor_id == "sheep_a" and weather == "sun" and not _leading:
-			var sun_llama: FeltActor = _actors.get("llama")
-			if sun_llama != null and actor.position.distance_to(sun_llama.position) > 140.0 and randf() < 1.0 - exp(-0.18 * delta):
-				actor.nudge_toward(sun_llama.position + (actor.position-sun_llama.position).normalized()*76.0)
 		if actor_id == "llama" and _pending_interaction == "llama" and not _leading:
 			actor.state = "graze"
 			actor._idle_time = maxf(actor._idle_time, 0.5)
@@ -239,7 +230,7 @@ func _interact_with_target(target: String) -> void:
 	TuningStore.apply_boundary("NEXT_ACTION")
 	if target == "grass":
 		if _player.position.distance_to(_grass_point()) < 78.0 and not _player.carrying_grass:
-			_player.pick_grass()
+			_grass_patch.harvest(_player)
 			notice_requested.emit("notice.picked_grass")
 		return
 	var llama: FeltActor = _actors.get("llama")
@@ -541,7 +532,24 @@ func _spawn_cast() -> void:
 			"textures": {"idle": "res://assets/holiday/characters/duck.png"},
 		},
 	]
+	# Small non-overlapping homes follow the painted lawn, not the fence artwork.
+	# Residents never chase the llama out of these homes; the llama can visit them.
+	var homes := {
+		"cow": Rect2(430, 465, 72, 48),
+		"horse": Rect2(568, 444, 94, 45),
+		"sheep_a": Rect2(282, 490, 54, 37),
+		"sheep_b": Rect2(346, 473, 52, 36),
+		"goose": Rect2(785, 495, 66, 30),
+		"llama": Rect2(370, 447, 440, 78),
+	}
 	for original: Dictionary in configs:
+		var id := str(original.id)
+		original.daily_routine = true
+		if homes.has(id):
+			original.wander = homes[id]
+			original.position = homes[id].get_center()
+		if id == "llama": original.position = Vector2(705, 500)
+		original.speed = {"cow": 10.0, "horse": 12.0, "sheep": 11.0, "goose": 13.0, "duck": 10.0, "llama": 23.0}[str(original.species)]
 		var config:=CastArt.configure(original)
 		var actor: FeltActor = FeltActorType.new()
 		add_child(actor)
@@ -578,7 +586,7 @@ func _bind_grounds() -> void:
 		if actor_id.begins_with("duck"):
 			actor.adopt_ellipse(YardGround.POND_CENTER, Vector2(96, 28))
 		elif actor_id.begins_with("sheep"):
-			actor.adopt_ground(YardGround.pen_and_lawn(), true)
+			actor.adopt_ground(YardGround.lawn(), true)
 		else:
 			actor.adopt_ground(YardGround.lawn(), true)
 
@@ -589,12 +597,9 @@ func _grass_point() -> Vector2:
 
 
 func _spawn_grass() -> void:
-	_grass_sprite = Sprite2D.new()
-	_grass_sprite.texture = GRASS
-	_grass_sprite.position = _grass_point()
-	_grass_sprite.z_index = 3
-	_grass_sprite.scale = Vector2(0.9, 0.9)
-	add_child(_grass_sprite)
+	_grass_patch = GrassPatchType.new()
+	add_child(_grass_patch)
+	_grass_patch.setup(_grass_point())
 
 
 func _apply_weather_art() -> void:

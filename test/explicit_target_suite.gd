@@ -93,9 +93,12 @@ func review():
  check(w._leading and not p.carrying_grass,"explicit llama tap restarts lead instead of picking nearby grass")
  # Repeat from outside llama reach: the same intent must survive walking arrival.
  touch_button("_action_button")
- key(KEY_S, true)
- await frames(40)
- key(KEY_S, false)
+ # Walk along the valid lawn, not south into its painted edge.
+ # Calm release no longer moves the llama away for this fixture.
+ tap(Vector2(355,545))
+ for i in 240:
+  await frames(1)
+  if not w._has_walk_goal:break
  check(p.position.distance_to(w.actor_named("llama").position)>64,"second llama selection begins outside interaction range")
  tap(w.actor_named("llama").position+Vector2(0,-48))
  check(w._pending_interaction=="llama" and w._walk_goal.distance_to(w.actor_named("llama").position)<0.01,"explicit llama route is not snapped to nearby grass or animals")
