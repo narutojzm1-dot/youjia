@@ -59,6 +59,13 @@ done
 # ---- 修补 index.html 中的三处关键配置 ----
 HTML="$WORK_DIR/index.html"
 
+# 0. 注入 Cache-Control meta，防止浏览器将 index.html 长期缓存（gh-pages 无自定义响应头）
+#    只在尚未注入时才添加，避免重复发布时重复插入。
+if ! grep -q 'Cache-Control.*no-cache' "$HTML"; then
+    sed -i 's|<meta charset="utf-8">|<meta charset="utf-8">\n  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">\n  <meta http-equiv="Pragma" content="no-cache">\n  <meta http-equiv="Expires" content="0">|' "$HTML"
+    echo "[publish] injected cache-control meta into index.html"
+fi
+
 # 1. executable: "index" → "game-{sha}"
 sed -i "s/\"executable\":\"index\"/\"executable\":\"${ENTRY}\"/" "$HTML"
 
