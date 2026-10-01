@@ -117,11 +117,25 @@ RELEASE_JSON="$WORK_DIR/game-release.json"
 if [[ -f "$DIST_DIR/../site/game-release.json" ]]; then
     cp "$DIST_DIR/../site/game-release.json" "$RELEASE_JSON"
 fi
+# 检测 Godot 引擎版本：优先 $GODOT 环境变量，再尝试 PATH 中的 godot，最后回退 unknown
+_detect_engine_version() {
+    for _bin in "${GODOT:-}" godot4 godot /tmp/Godot_v4.7.2-stable_linux.x86_64; do
+        [[ -z "$_bin" ]] && continue
+        if command -v "$_bin" &>/dev/null || [[ -x "$_bin" ]]; then
+            _ver="$("$_bin" --version 2>/dev/null || true)"
+            if [[ -n "$_ver" ]]; then echo "$_ver"; return; fi
+        fi
+    done
+    echo "unknown"
+}
+ENGINE_VERSION="$(_detect_engine_version)"
+echo "[publish] engine version: ${ENGINE_VERSION}"
+
 cat > "$RELEASE_JSON" <<JSON
 {
   "schema": "youjia.release/v1",
   "sourceCommit": "$(git -C "$REPO_ROOT" rev-parse HEAD)",
-  "engine": "$(grep -o '[0-9]\+\.[0-9]\+\.[0-9]\+[^"]*' "$REPO_ROOT/export_presets.cfg" 2>/dev/null | head -1 || echo 'unknown')",
+  "engine": "${ENGINE_VERSION}",
   "entry": "${ENTRY}",
   "publishedAt": "$(date -u '+%Y-%m-%dT%H:%M:%SZ')"
 }

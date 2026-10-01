@@ -66,6 +66,10 @@ var _first_fish_polaroid_done := false
 var _fish_carry_type: String = ""
 ## 携带倒计时（秒），归零后鱼自动溜走
 var _fish_carry_timer: float = 0.0
+## 咬钩提醒计时器：BITE 期间每隔一段时间重发通知，防止玩家错过
+var _fish_bite_nudge: float = 0.0
+## 最近一次抚摸的动物物种名，防止跨物种拍立得误触发
+var _just_petted_species: String = ""
 
 var _backdrop: Sprite2D
 var _player: Vacationer
@@ -400,11 +404,11 @@ func try_interact() -> void:
 	if not input_enabled or _player == null:
 		return
 	var pos := _player.position
-	# 手持鱼时：优先投喂附近的鸭/鹅
+	# 手持鱼时：优先投喂附近的鸭/鹅（扩大感应范围至 110px，更易命中）
 	if not _fish_carry_type.is_empty():
 		for toss_id: String in ["duck_a", "duck_b", "duck_c", "goose"]:
 			var toss_target := actor_named(toss_id)
-			if toss_target != null and pos.distance_to(toss_target.position) < 85.0:
+			if toss_target != null and pos.distance_to(toss_target.position) < 110.0:
 				_interact_with_target("toss_fish_%s" % toss_target.species)
 				return
 	# 钓鱼
@@ -515,6 +519,8 @@ func _interact_with_target(target: String) -> void:
 					closest = actor
 		if closest != null:
 			_consume_pending_action()
+			# 记录被抚摸的物种，防止拍立得跨物种误触发（例如抚摸牛时解锁羊的拍立得）
+			_just_petted_species = species_name
 			_player.just_petted_seconds = 6.0
 			_player.player_state = "just_petted"
 			notice_requested.emit("notice.pet.%s" % species_name)
@@ -1092,6 +1098,10 @@ func _rule_matches(rule: Dictionary, snapshot: Dictionary) -> bool:
 		return false
 	if rule.has("player") and str(rule.player) != str(snapshot.player):
 		return false
+	# 抚摸类规则（player=just_petted）只匹配对应物种，防止抚摸牛时解锁羊的拍立得
+	if rule.has("player") and str(rule.player) == "just_petted" and not _just_petted_species.is_empty():
+		if str(rule.get("owner", "")) != _just_petted_species:
+			return false
 	if rule.has("zone"):
 		var wanted := str(rule.zone)
 		var any_in_zone := false
@@ -1261,16 +1271,22 @@ func _tick_fishing(delta: float) -> void:
 			_fish_state = FISH_IDLE
 			return
 		if _fish_timer <= 0.0:
-			# 50% 概率钓到，50% 跑了
-			if randf() < 0.55:
+			# 75% 概率钓到（原 55%），让玩家更容易走完钓鱼→携带→投喂的完整流程
+			if randf() < 0.75:
 				_fish_state = FISH_BITE
-				_fish_timer = 4.0  # 4秒内需要收杆
+				_fish_timer = 6.0  # 6秒收杆窗口（原 4秒），减少突然错过的挫败感
+				_fish_bite_nudge = 2.0  # 首次提示立即发出，之后每 2 秒重发
 				notice_requested.emit("notice.fishing.bite")
 			else:
 				_fish_state = FISH_IDLE
 				notice_requested.emit("notice.fishing.miss")
 	elif _fish_state == FISH_BITE:
 		_fish_timer -= delta
+		# 每隔 2 秒重发咬钩提示，帮助玩家不错过收杆时机
+		_fish_bite_nudge -= delta
+		if _fish_bite_nudge <= 0.0:
+			_fish_bite_nudge = 2.0
+			notice_requested.emit("notice.fishing.bite")
 		if _fish_timer <= 0.0:
 			# 没有收杆，鱼跑了
 			_fish_state = FISH_IDLE
@@ -1288,17 +1304,17 @@ func _start_fishing() -> void:
 			_request_action("fishing", _fishing_point())
 			return
 		_fish_state = FISH_CASTING
-		_fish_timer = randf_range(9.0, 16.0)
+		# 等待时间缩短至 5-10 秒（原 9-16 秒），让玩家更快进入咬钩环节
+		_fish_timer = randf_range(5.0, 10.0)
 		notice_requested.emit("notice.fishing.cast")
 		queue_redraw()
 	elif _fish_state == FISH_BITE:
 		# 收杆！
 		_reel_in_fish()
 	elif _fish_state == FISH_CASTING:
-		# 早收杆，这次没钓到
-		_fish_state = FISH_IDLE
-		notice_requested.emit("notice.fishing.miss")
-		queue_redraw()
+		# 还在等咬钩：按 Space/Enter 不取消钓鱼，提示玩家继续等待
+		## 取消方式改为走离钓鱼点 110px 以上，避免与收杆操作混淆
+		notice_requested.emit("notice.fishing.wait")
 
 
 ## 收杆并处理收获
@@ -1328,7 +1344,7 @@ func _reel_in_fish() -> void:
 	# 拍立得拍摄后立即重置视觉状态：钓鱼点收杆，改用携带计时器跟踪
 	_fish_state = FISH_IDLE
 	_fish_carry_type = carry_type
-	_fish_carry_timer = 12.0  # 12秒内可投喂给鸭/鹅，否则鱼自动溜走
+	_fish_carry_timer = 20.0  # 20秒内可投喂给鸭/鹅（原 12秒），给玩家充裕时间走到鸭鹅旁
 	queue_redraw()
 
 
@@ -1446,10 +1462,15 @@ func _draw_plant_bed() -> void:
 				var petal_pos := tip + Vector2(0, -1) + Vector2(cos(angle), sin(angle)) * 5.5
 				draw_circle(petal_pos, 3.2, Color(0.92, 0.68, 0.76, 0.88))
 			draw_circle(tip + Vector2(0, -1), 3.0, Color(0.98, 0.90, 0.55, 0.92))
-	# 植物床指示圆：玩家近时显眼，远时极淡（始终提示此处可互动）
-	var near_plant := _player != null and _player.position.distance_to(pt) < 80.0
-	var indicator_alpha := 0.28 if near_plant else 0.06
-	draw_arc(pt, 28.0, 0.0, TAU, 24, Color(0.62, 0.47, 0.31, indicator_alpha), 1.2, true)
+	# 植物床指示圆：开花时使用明显的粉色脉冲圆，提示玩家可以收获
+	## 其余阶段：近时棕色显眼，远时极淡
+	if _plant_state == PLANT_BLOOMED:
+		var bloom_pulse := 0.22 + 0.18 * absf(sin(_day_seconds * 2.2))
+		draw_arc(pt, 30.0, 0.0, TAU, 24, Color(0.92, 0.68, 0.76, bloom_pulse), 2.2, true)
+	else:
+		var near_plant := _player != null and _player.position.distance_to(pt) < 80.0
+		var indicator_alpha := 0.28 if near_plant else 0.06
+		draw_arc(pt, 28.0, 0.0, TAU, 24, Color(0.62, 0.47, 0.31, indicator_alpha), 1.2, true)
 
 
 ## 绘制钓鱼点标记与钓鱼状态（鱼竿、鱼线）

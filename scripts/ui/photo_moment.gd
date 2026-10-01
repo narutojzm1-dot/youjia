@@ -303,6 +303,14 @@ static func _event_frame(rule: Dictionary, actors: Dictionary, items: Array) -> 
 		"cow_rare_calm":
 			selected = ["cow"]
 			minimum = 240.0
+		"plant_first_bloom":
+			# 植物床是程序绘制的，不被 _collect 捕获；留 selected 为空，
+			# 在循环后用植物床坐标作为构图兜底
+			minimum = 200.0
+		"fish_first_catch":
+			# 以持竿的玩家为构图中心（钓鱼竿/浮标是程序绘制，不可捕获）
+			selected = ["player"]
+			minimum = 200.0
 		_:
 			selected = [str(rule.get("owner", "llama"))]
 	var bounds := Rect2()
@@ -321,6 +329,10 @@ static func _event_frame(rule: Dictionary, actors: Dictionary, items: Array) -> 
 	if event_id == "duck_pond_chorus":
 		var pond := Rect2(YardGround.POND_CENTER - YardGround.POND_RADIUS, YardGround.POND_RADIUS * 2.0)
 		bounds = bounds.merge(pond) if found else pond
+		found = true
+	if event_id == "plant_first_bloom" and not found:
+		# 植物床位于院子左上角 (205, 575)；硬编码构图以确保拍立得聚焦在正确位置
+		bounds = Rect2(179, 555, 52, 40)
 		found = true
 	if not found: bounds = Rect2(540, 390, 180, 160)
 	bounds = bounds.grow(18.0)

@@ -164,6 +164,8 @@ func _input(event: InputEvent) -> void:
 		return
 	if _screen == "game" and _world != null and _world.input_enabled and not _pause_screen.visible and not _album_screen.visible and not _confirm_screen.visible:
 		if event.is_action_pressed("ui_accept") and not event.is_echo():
+			# 键盘 Space/Enter 触发动作时同步触发行动按钮视觉脉冲，保持键盘与触控体验一致
+			_pulse_button(_action_button)
 			_world.try_interact()
 			get_viewport().set_input_as_handled()
 			return
