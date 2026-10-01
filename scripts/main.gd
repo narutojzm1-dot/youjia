@@ -58,6 +58,8 @@ var _cam_offset := Vector2.ZERO
 var _cam_target_offset := Vector2.ZERO
 var _latest_photo := ""
 var _last_touch_ms := -1000
+# P1.5: 拍立得入账时短暂亮一次屏，提示照片已捕获。
+var _photo_flash: ColorRect
 
 func _ready() -> void:
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -75,6 +77,12 @@ func _ready() -> void:
 	add_child(_ui_layer)
 	for panel in [_paper,_title_screen,_hud,_pause_screen,_confirm_screen,_album_screen,_notice]:
 		panel.reparent(_ui_layer, false)
+	# P1.5: 拍立得闪光叠加层加入 _ui_layer，确保渲染在所有 UI 之上。
+	_photo_flash = ColorRect.new()
+	_photo_flash.color = Color(CREAM, 0.0)
+	_photo_flash.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_photo_flash.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	_ui_layer.add_child(_photo_flash)
 	I18n.locale_changed.connect(_on_locale_changed)
 	TuningStore.value_changed.connect(_on_tuning_value_changed)
 	resized.connect(_layout)
@@ -232,7 +240,8 @@ func _build_title_screen() -> void:
 func _build_hud() -> void:
 	_hud = Control.new()
 	_hud.visible = false
-	_hud.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	# P0.2: MOUSE_FILTER_PASS 确保子控件在 web 导出时可靠收到点击。
+	_hud.mouse_filter = Control.MOUSE_FILTER_PASS
 	_hud.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	add_child(_hud)
 	_hint_label = _label(15, INK)
@@ -242,6 +251,8 @@ func _build_hud() -> void:
 	_hud.add_child(_hint_label)
 	_album_chip = _chip_button()
 	_album_chip.pressed.connect(_show_album)
+	# P0.2: tooltip 告知玩家此处可点，辅助鼠标悬停时的发现性。
+	_album_chip.tooltip_text = I18n.t("hud.album.tooltip")
 	_hud.add_child(_album_chip)
 	_weather_chip = _chip_button()
 	_weather_chip.pressed.connect(_on_weather_pressed)
@@ -355,6 +366,8 @@ func _start_holiday() -> void:
 	_confirm_screen.visible = false
 	_album_screen.visible = false
 	get_tree().paused = false
+	# P0.2: HUD 可见后立即重算布局，确保相册按钮落在正确的点击区域。
+	_layout()
 	_show_notice_key("notice.arrive")
 	_refresh_hud()
 
@@ -427,6 +440,8 @@ func _on_album_updated(collected: PackedStringArray, latest_id: String) -> void:
 	if fresh:
 		_latest_photo = latest_id
 		_show_notice_key("notice.photo")
+		# P1.5: 拍立得入账时短暂发白，让玩家明确感知到照片已拍入手帐。
+		_flash_photo()
 	_refresh_hud()
 	if _album_screen.visible: _rebuild_album(collected)
 
@@ -538,6 +553,18 @@ func _open_licenses() -> void:
 	OpenSourceLicenses.open(self)
 
 
+# P1.5: 触发拍立得入账的短暂亮屏动画：快速淡入奶油白，再慢慢消散。
+func _flash_photo() -> void:
+	if _photo_flash == null:
+		return
+	if bool(TuningStore.get_value("ui.reduced_motion", false)):
+		return
+	_photo_flash.color.a = 0.0
+	var tween := create_tween()
+	tween.tween_property(_photo_flash, "color:a", 0.46, 0.08)
+	tween.tween_property(_photo_flash, "color:a", 0.0, 0.55).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+
+
 func _layout() -> void:
 	var pad := 20.0
 	if _album_chip == null: return
@@ -592,7 +619,13 @@ func _refresh_hud() -> void:
 	_album_chip.text = I18n.t("hud.album", {"count": str(_world.collected_count()), "total": str(_world.collectible_total())})
 	_weather_chip.text = I18n.t("hud.weather.%s" % _world.weather)
 	_pause_button.text = I18n.t("hud.pause")
-	_hint_label.text = I18n.t("hud.hint")
+	# P0.1: 牵行和持草时显示上下文提示，帮助玩家发现松开和喂草操作。
+	if _world.is_leading():
+		_hint_label.text = I18n.t("hud.hint.leading")
+	elif _world.is_player_carrying_grass():
+		_hint_label.text = I18n.t("hud.hint.carrying")
+	else:
+		_hint_label.text = I18n.t("hud.hint")
 	_action_button.text = I18n.t(_world.primary_action_key())
 
 
@@ -624,6 +657,9 @@ func _refresh_texts() -> void:
 	_confirm_cancel_button.text = I18n.t("confirm.cancel")
 	_album_title.text = I18n.t("album.title")
 	_album_back_button.text = I18n.t("album.back")
+	# P0.2: locale 切换时同步更新相册 tooltip。
+	if _album_chip != null:
+		_album_chip.tooltip_text = I18n.t("hud.album.tooltip")
 	if _world != null:
 		_refresh_hud()
 
