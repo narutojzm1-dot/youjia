@@ -45,3 +45,18 @@ Headless accelerated simulation proves outcomes, not device performance. Native 
 - Save version4 preserves every existing collected ID. Old IDs without a scene acquire one only when that encounter really happens again, without another unlock notice or camera jump. Malformed scene data is discarded without deleting album progress.
 - Renderer/data tests cover six events, clipping, backdrop bounds, immutable state, existing hero frames and shader/atlas fidelity. Save integration tests cover real harvest/feed, scene cards, reload, old-save migration and silent upgrades.
 - Native free-input candidate4 validation: fresh0/6; ordinary harvest/feed and pond observation produced distinct event photos; cards remained unchanged after walking elsewhere, returning to the menu, and exiting/restarting the process. Album scrolling, close, Escape and confirmation remained usable. Neighboring non-subject animals can be partially cropped like a normal local photograph; no subject/frame clipping blocker was observed.
+
+## Pointer boundary feedback
+
+- Rejected clicks now show a brief warm broken ring at the actual selected point and a short footing explanation. No walkable geometry was expanded.
+- A click at the player's feet stops the previous route without a false unreachable warning. A newer valid click immediately clears the rejection.
+- `boundary_feedback_suite.gd` checks the exact rejected point, fade lifetime, replacement by a valid route, feet-stop behavior, and disabled input (11 checks).
+
+- Candidate5 actual native input review found the rejection text remained briefly after a valid new destination. Candidate6 clears only that obsolete rejection on newer clicks or keyboard movement, preserving unrelated event notices.
+
+## Independent review corrections
+
+- Mixed pointer/Space input could feed within 88px while preserving a pending 64px approach, then unintentionally start leading at arrival. Successful immediate interactions now consume the pending intent and path. A raw device0 Space regression covers the complete delayed outcome.
+- Spitting can flip a led llama immediately. The photo capture now refreshes the rope after that reaction so its stored collar endpoint uses the same pose. The regression asserts the actual stored photo, and the general photo renderer suite now checks stored event snapshots rather than a manually refreshed recapture.
+- Candidate6 real native CUA review confirmed boundary ring, click-to-walk replacement, keyboard clearing, and own-feet stop. Post-review interaction/photo changes require final candidate regression before publication.
+- Review also found that the person could stand beside the cow where the larger llama cannot fit. Following now falls back to a reachable point within trailing distance if the exact player footprint is blocked, rather than abandoning approach. Natural-cast seed1102026 regression at30/60/120Hz verifies substantial movement, arrival under78px, no pond/fence crossing and normalized body separation>=0.995 (18 checks).

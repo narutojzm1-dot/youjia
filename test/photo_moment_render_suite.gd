@@ -81,16 +81,16 @@ func _test_event(rule: Dictionary, index: int) -> void:
 		_check(_count_atlases(carrying) >= 3, "grass patch and held bundle retain atlas regions")
 		world.try_interact()
 	else:
+		if rule_id == "llama_overcast_goose_annoyed":
+			world._leading = true
+			world._update_lead_rope()
 		world.debug_force_rule(rule_id)
-	if rule_id == "llama_overcast_goose_annoyed":
-		world._leading = true
-		world._update_lead_rope()
 	var positions: Dictionary = {}
 	for id: String in world._actors:
 		positions[id] = world.actor_named(id).position
 	var player_position: Vector2 = player.position
 	var collection: PackedStringArray = world.collected.duplicate()
-	var snapshot := Moment.capture(world, rule)
+	var snapshot: Dictionary = world.photo_moments.get(rule_id,{})
 	_check(not snapshot.is_empty(), "%s creates a snapshot" % rule_id)
 	if snapshot.is_empty():
 		world.free()

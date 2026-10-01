@@ -262,7 +262,7 @@ func tick(delta: float, world_size: Vector2) -> void:
 					var obstacles: Array = body_obstacles.filter(func(item: Dictionary) -> bool: return str(item.get("id","")) != "player")
 					if not YardBodies.clear_segment(position,_lead_target.position,body_radius*depth,obstacles) or not YardGround._clear_segment(position,_lead_target.position):
 						if _lead_repath <= 0.0:
-							_lead_path = YardBodies.route(position,_lead_target.position,body_radius*depth,obstacles,walk_ground,avoid_pond)
+							_lead_path = _route_to_leader(depth, obstacles)
 							_lead_repath = 0.7
 						while not _lead_path.is_empty() and position.distance_to(_lead_path[0]) < 5.0: _lead_path.pop_front()
 						if not _lead_path.is_empty(): direction = position.direction_to(_lead_path[0])
@@ -491,3 +491,16 @@ func _apply_face_override() -> void:
 		var size:=_sprite.texture.get_size()
 		_gait._material.set_shader_parameter("expression_texture",_expression_texture)
 		_gait._material.set_shader_parameter("face_region",Vector4(_face_region.position.x/size.x,_face_region.position.y/size.y,_face_region.size.x/size.x,_face_region.size.y/size.y))
+
+
+func _route_to_leader(depth: float, obstacles: Array) -> Array[Vector2]:
+	var path := YardBodies.route(position,_lead_target.position,body_radius*depth,obstacles,walk_ground,avoid_pond)
+	if not path.is_empty(): return path
+	# A person can fit beside a resident where the larger llama cannot. The
+	# companion only needs a safe trailing spot, not the person's exact footprint.
+	var toward_us := _lead_target.position.direction_to(position)
+	for offset: float in [0.0, PI/8, -PI/8, PI/4, -PI/4, 3*PI/8, -3*PI/8, PI/2, -PI/2, 5*PI/8, -5*PI/8, 3*PI/4, -3*PI/4, 7*PI/8, -7*PI/8, PI]:
+		var goal := _lead_target.position + toward_us.rotated(offset) * 56.0 * depth
+		path = YardBodies.route(position,goal,body_radius*depth,obstacles,walk_ground,avoid_pond)
+		if not path.is_empty(): return path
+	return []

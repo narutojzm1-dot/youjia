@@ -50,6 +50,7 @@ var _album_panel: PanelContainer
 var _album_back_button: Button
 var _notice: Label
 var _notice_time := 0.0
+var _notice_key := ""
 var _screen := "title"
 var _cam_zoom := 1.0
 var _cam_target_zoom := 1.0
@@ -336,6 +337,7 @@ func _start_holiday() -> void:
 	_world.setup(SaveStore.get_album(),SaveStore.get_photo_moments())
 	_world.album_updated.connect(_on_album_updated)
 	_world.notice_requested.connect(_show_notice_key)
+	_world.notice_dismiss_requested.connect(_dismiss_notice_key)
 	_world.weather_changed.connect(func(_w: String) -> void: _refresh_hud())
 	_world.camera_focus_requested.connect(_on_focus)
 	_world.camera_release_requested.connect(_on_release_focus)
@@ -519,7 +521,14 @@ func _screen_to_world(screen: Vector2) -> Vector2:
 	return get_viewport().get_canvas_transform().affine_inverse() * screen
 
 
+func _dismiss_notice_key(key: String) -> void:
+	if _notice_key == key:
+		_notice_time = 0.0
+		_notice.visible = false
+
+
 func _show_notice_key(key: String) -> void:
+	_notice_key = key
 	_notice.text = I18n.t(key)
 	_notice.visible = true
 	_notice_time = 3.2

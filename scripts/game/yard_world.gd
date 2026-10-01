@@ -4,6 +4,7 @@ extends Node2D
 signal album_updated(collected: PackedStringArray, latest_id: String)
 signal weather_changed(weather: String)
 signal notice_requested(key: String)
+signal notice_dismiss_requested(key: String)
 signal camera_focus_requested(world_point: Vector2, zoom: float)
 signal camera_release_requested
 
@@ -53,6 +54,8 @@ var _walk_goal := Vector2.ZERO
 var _pending_interaction := ""
 var _walk_path: Array[Vector2] = []
 var _body_repath := 0.0
+var _rejected_point := Vector2.ZERO
+var _rejected_seconds := 0.0
 
 
 func setup(saved_photos: Array = [], saved_moments: Dictionary = {}) -> void:
@@ -158,6 +161,7 @@ func debug_place_player(point: Vector2) -> void:
 func tick(delta: float, move: Vector2) -> void:
 	if not simulation_active:
 		return
+	_rejected_seconds = maxf(0.0, _rejected_seconds - delta)
 	_day_seconds += delta
 	_weather_timer -= delta
 	if _weather_timer <= 0.0:
@@ -169,6 +173,8 @@ func tick(delta: float, move: Vector2) -> void:
 	_body_repath = maxf(0.0,_body_repath-delta)
 	if input_enabled:
 		if move.length() > 0.2:
+			_rejected_seconds = 0.0
+			notice_dismiss_requested.emit("notice.cannot_walk")
 			_has_walk_goal = false
 			_pending_interaction = ""
 			_walk_path.clear()
@@ -251,17 +257,25 @@ func try_interact() -> void:
 	_interact_with_target("llama")
 
 
+func _consume_pending_action() -> void:
+	_pending_interaction = ""
+	_has_walk_goal = false
+	_walk_path.clear()
+
+
 func _interact_with_target(target: String) -> void:
 	if not input_enabled or _player == null:
 		return
 	TuningStore.apply_boundary("NEXT_ACTION")
 	if target == "grass":
 		if _player.position.distance_to(_grass_point()) < 78.0 and not _player.carrying_grass:
+			_consume_pending_action()
 			_grass_patch.harvest(_player)
 			notice_requested.emit("notice.picked_grass")
 		return
 	var llama: FeltActor = _actors.get("llama")
 	if target == "llama" and llama != null and _player.position.distance_to(llama.position) < 88.0:
+		_consume_pending_action()
 		if _player.carrying_grass:
 			_player.consume_grass()
 			llama.hold_expression("happy", 4.0)
@@ -312,6 +326,8 @@ func request_pointer_action(point: Vector2) -> void:
 
 
 func _request_action(target: String, goal: Vector2) -> void:
+	notice_dismiss_requested.emit("notice.cannot_walk")
+	_rejected_seconds = 0.0
 	if target.is_empty() and YardGround.allows(goal,YardGround.lawn(),true):
 		goal = _open_goal_near_body(goal)
 	_pending_interaction = target
@@ -321,8 +337,14 @@ func _request_action(target: String, goal: Vector2) -> void:
 		_pending_interaction = ""
 		_interact_with_target(target)
 		return
+	# A tap at our feet means stop here, not an unreachable destination.
+	if target.is_empty() and YardGround.allows(goal,YardGround.lawn(),true) and _player.position.distance_to(goal) < 12.0:
+		return
 	if not try_walk_to(goal):
 		_pending_interaction = ""
+		_rejected_point = goal
+		_rejected_seconds = 1.2
+		queue_redraw()
 		notice_requested.emit("notice.cannot_walk")
 
 
@@ -859,6 +881,9 @@ func _apply_rule(rule: Dictionary, force: bool) -> void:
 		# Old saves keep all earned IDs. A missing scene photo is filled only
 		# on the next real matching encounter, without another unlock or camera jump.
 		if first_collection or not photo_moments.has(rule_id):
+			# Event reactions may flip the actor immediately; capture the same pose
+			# and attached rope together, not the preceding tick's endpoints.
+			_update_lead_rope()
 			var moment := PhotoMoment.capture(self,rule)
 			if not moment.is_empty(): photo_moments[rule_id] = moment
 			if first_collection:
@@ -889,6 +914,12 @@ func _update_lead_rope() -> void:
 
 
 func _draw() -> void:
+	if _rejected_seconds > 0.0:
+		var alpha := minf(1.0, _rejected_seconds / 0.35) * 0.80
+		var ink := Color(0.52,0.31,0.20,alpha)
+		# Two quiet broken arcs mark the actual tap without implying a new path.
+		draw_arc(_rejected_point, 12.0, 0.30, PI-0.30, 20, ink, 2.2, true)
+		draw_arc(_rejected_point, 12.0, PI+0.30, TAU-0.30, 20, ink, 2.2, true)
 	if _has_walk_goal:
 		draw_arc(_walk_goal, 10.0, 0.0, TAU, 24, Color(1.0,0.92,0.65,0.85), 2.0)
 	if _player != null:
