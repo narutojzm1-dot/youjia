@@ -415,6 +415,8 @@ func _start_holiday() -> void:
 
 func _clear_world() -> void:
 	if _world != null:
+		# Preserve the partial day before title/restart replaces this world.
+		_world._save_progress()
 		_world.queue_free()
 		_world = null
 
