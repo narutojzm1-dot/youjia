@@ -1389,7 +1389,7 @@ func _reel_in_fish() -> void:
 	_fish_state = FISH_IDLE
 	_fish_carry_type = carry_type
 	_fish_carry_timer = 20.0  # 20秒内可投喂给鸭/鹅，给玩家充裕时间走到鸭鹅旁
-	# 启动钓到庆祝闪光：2.6 秒扩散环动画，并记录鱼种以区分颜色
+	# 启动钓到庆祝闪光：2.6 秒多环扩散 + 粒子爆射，并记录鱼种以区分颜色
 	_fish_catch_flash = 2.6
 	_fish_catch_type = carry_type
 	queue_redraw()
@@ -1538,50 +1538,50 @@ func _draw_plant_bed() -> void:
 func _draw_fishing_spot() -> void:
 	var fp := _fishing_point()
 	var player_near := _player != null and _player.position.distance_to(fp) < 100.0
-	# 水塘常驻波纹：三圈相位错开的扩散涟漪，给水面带来生气
+	# 水塘常驻波纹：三圈相位错开的扩散涟漪，给水面带来生气（alpha 提高至 0.22 增强可见度）
 	var ripple_t := float(Time.get_ticks_msec()) * 0.001
 	for i: int in 3:
-		var phase := fmod(ripple_t * 0.4 + float(i) / 3.0, 1.0)  # 各圈相位错开 1/3
-		var r := lerpf(6.0, 26.0, phase)
-		var a := (1.0 - phase) * 0.10  # 由内向外淡出
-		draw_circle(fp + Vector2(10, 12), r, Color(0.52, 0.70, 0.85, a))
-	# 钓到庆祝闪光：多轮扩散环 + 爆点粒子（约 2.6 秒），庆祝感强
+		var phase := fmod(ripple_t * 0.4 + float(i) / 3.0, 1.0)
+		# draw_arc 比 draw_circle 更水感（环而非实心）
+		var r := lerpf(6.0, 30.0, phase)
+		var a := (1.0 - phase) * 0.22
+		draw_arc(fp + Vector2(10, 12), r, 0.0, TAU, 20, Color(0.42, 0.68, 0.88, a), 1.8, true)
+	# 钓到庆祝闪光：多轮扩散 + 8方向粒子爆射（约 2.6 秒），随鱼种变色
 	if _fish_catch_flash > 0.0:
 		var total := 2.6
-		var t := 1.0 - clampf(_fish_catch_flash / total, 0.0, 1.0)  # 0→1 随时间推进
-		# 根据鱼种选择主色
+		var t := 1.0 - clampf(_fish_catch_flash / total, 0.0, 1.0)
 		var main_col: Color
 		match _fish_catch_type:
 			"medium": main_col = Color(0.32, 0.60, 0.92)
 			"odd":    main_col = Color(0.50, 0.42, 0.88)
 			_:        main_col = Color(0.42, 0.72, 0.88)
-		# ── 最外圈：极大扩散（10→90px），早期亮度高
-		var r_max := lerpf(10.0, 90.0, t)
-		var a_max := maxf(0.0, 1.0 - t * 1.2) * 0.65
-		draw_circle(fp, r_max, Color(main_col.r, main_col.g, main_col.b, a_max * 0.12))
-		draw_arc(fp, r_max, 0.0, TAU, 48, Color(main_col.r, main_col.g, main_col.b, a_max), 4.0, true)
-		# ── 外圈：中速扩散（8→58px）
-		var r_outer := lerpf(8.0, 58.0, minf(t * 1.3, 1.0))
-		var a_outer := maxf(0.0, 1.0 - t * 1.3) * 0.82
-		draw_arc(fp, r_outer, 0.0, TAU, 36, Color(main_col.r, main_col.g + 0.15, main_col.b + 0.08, a_outer), 3.5, true)
-		# ── 内圈：稍慢扩散（6→38px），持续更久
-		var r_inner := lerpf(6.0, 38.0, minf(t * 1.8, 1.0))
-		var a_inner := maxf(0.0, 1.0 - t * 1.8) * 0.95
+		# ── 金色最外圈（快速扩散，先声夺人）
+		var r_gold := lerpf(12.0, 80.0, t)
+		var a_gold := (1.0 - t) * 0.75
+		draw_arc(fp, r_gold, 0.0, TAU, 48, Color(0.96, 0.82, 0.42, a_gold), 4.5, true)
+		# ── 主色外圈
+		var r_outer := lerpf(8.0, 55.0, minf(t * 1.3, 1.0))
+		var a_outer := maxf(0.0, 1.0 - t * 1.3) * 0.90
+		draw_circle(fp, r_outer, Color(main_col.r, main_col.g, main_col.b, a_outer * 0.18))
+		draw_arc(fp, r_outer, 0.0, TAU, 36, Color(main_col.r, main_col.g + 0.12, main_col.b + 0.06, a_outer), 3.8, true)
+		# ── 内圈（浅蓝亮白，持续更久）
+		var r_inner := lerpf(4.0, 34.0, minf(t * 1.8, 1.0))
+		var a_inner := maxf(0.0, 1.0 - t * 1.8) * 1.00
 		draw_arc(fp, r_inner, 0.0, TAU, 28, Color(0.80, 0.95, 1.0, a_inner), 3.0, true)
-		# ── 中心亮圆（成功标志）
+		# ── 中心：金色衬底 + 白色亮核
 		var center_r := 10.0 * maxf(0.0, 1.0 - t * 2.5)
 		if center_r > 0.5:
-			draw_circle(fp, center_r, Color(1.0, 1.0, 1.0, a_inner * 1.2))
-		# ── 爆射粒子点（8个方向，随 t 扩散）
+			draw_circle(fp, center_r * 1.5, Color(0.98, 0.88, 0.55, a_inner * 0.80))
+			draw_circle(fp, center_r, Color(0.98, 1.0, 1.0, a_inner * 1.15))
+		# ── 8 方向爆射粒子（前 0.6s）
 		if t < 0.6:
 			var particle_t := t / 0.6
 			var particle_a := (1.0 - particle_t) * 0.85
-			for i: int in 8:
-				var angle := float(i) * TAU / 8.0
+			for pi: int in 8:
+				var angle := float(pi) * TAU / 8.0
 				var dist := lerpf(8.0, 46.0, particle_t)
 				var px := fp + Vector2(cos(angle), sin(angle) * 0.6) * dist
-				var pr := lerpf(4.5, 1.5, particle_t)
-				draw_circle(px, pr, Color(main_col.r, main_col.g + 0.20, 1.0, particle_a))
+				draw_circle(px, lerpf(4.5, 1.5, particle_t), Color(main_col.r, main_col.g + 0.20, 1.0, particle_a))
 	if not player_near and _fish_state == FISH_IDLE:
 		return
 	# 指示圆（靠近时才显示）
@@ -1656,28 +1656,28 @@ func _draw_pet_target_arc() -> void:
 			nearest_pet = pet_actor
 	if nearest_pet == null:
 		return
-	# 透明度：35px 以内全强，105px 时归零（线性衰减）
-	var proximity := 1.0 - clampf((nearest_dist - 35.0) / 70.0, 0.0, 1.0)
-	# 呼吸脉冲：约 1.1 秒一个周期
-	var pulse := 0.65 + 0.35 * absf(sin(_day_seconds * 2.8))
+	# 透明度随距离平方衰减（近处超亮，远处快速衰减），叠加脉冲
+	var proximity := 1.0 - clampf((nearest_dist - 30.0) / 75.0, 0.0, 1.0)
+	proximity = proximity * proximity
+	var pulse := 0.62 + 0.38 * absf(sin(_day_seconds * 2.4))
 	var arc_alpha := 0.95 * proximity * pulse
 	if arc_alpha < 0.05:
 		return
 	var pt := nearest_pet.position
-	# ── 地面椭圆环（动物脚下，纯橙色，明确标出"站在这里互动"）
-	draw_arc(pt, 20.0, 0.0, TAU, 32, Color(1.0, 0.55, 0.08, arc_alpha * 0.70), 3.0, true)
-	# ── 头部上方大弧（约 144°，从左上扫到右上）高对比度橙
-	## 先画一层较暗宽弧做"光晕底"，再画亮弧，增加可见度
-	draw_arc(pt, 40.0, -PI * 0.82, -PI * 0.18, 32, Color(0.60, 0.30, 0.0, arc_alpha * 0.40), 8.0, true)
-	draw_arc(pt, 40.0, -PI * 0.82, -PI * 0.18, 32, Color(1.0, 0.55, 0.08, arc_alpha), 5.5, true)
-	# ── 内圈细弧（奶油橙，增加层次感）
-	draw_arc(pt, 30.0, -PI * 0.76, -PI * 0.24, 24, Color(1.0, 0.80, 0.45, arc_alpha * 0.60), 2.2, true)
-	# ── 向下箭头（↓）：尖端指向动物头部，翼在上方张开，线更粗
+	# ── 地面柔光（填充圆 + 实心橙圈）：一眼告知脚下有目标
+	var ground_r := 22.0 + 3.0 * absf(sin(_day_seconds * 2.4))
+	draw_circle(pt, ground_r, Color(0.95, 0.68, 0.32, arc_alpha * 0.30))
+	draw_arc(pt, 20.0, 0.0, TAU, 28, Color(1.0, 0.55, 0.08, arc_alpha * 0.75), 2.8, true)
+	# ── 头部半圆弧（180°，5.5px，纯橙色 + 暗色光晕底）
+	draw_arc(pt, 42.0, -PI * 0.90, -PI * 0.10, 36, Color(0.55, 0.26, 0.0, arc_alpha * 0.35), 9.0, true)
+	draw_arc(pt, 42.0, -PI * 0.90, -PI * 0.10, 36, Color(1.0, 0.55, 0.08, arc_alpha), 5.5, true)
+	# ── 内圈辅助弧
+	draw_arc(pt, 31.0, -PI * 0.82, -PI * 0.18, 26, Color(1.0, 0.80, 0.45, arc_alpha * 0.58), 2.2, true)
+	# ── 向下箭头（↓）：5.0px，尖端实心圆
 	var tip := pt + Vector2(0.0, -33.0)
 	var wl  := tip + Vector2(-13.0, -13.0)
 	var wr  := tip + Vector2(13.0, -13.0)
-	draw_line(wl, tip, Color(1.0, 0.55, 0.08, arc_alpha * 1.10), 5.0, true)
-	draw_line(wr, tip, Color(1.0, 0.55, 0.08, arc_alpha * 1.10), 5.0, true)
-	draw_line(wl, wr, Color(1.0, 0.55, 0.08, arc_alpha * 0.50), 2.2, true)
-	# ── 箭头尖端实心圆（强调"目标点"）
-	draw_circle(tip, 3.5, Color(1.0, 0.80, 0.45, arc_alpha * 0.90))
+	draw_line(wl, tip, Color(1.0, 0.55, 0.08, arc_alpha * 1.15), 5.0, true)
+	draw_line(wr, tip, Color(1.0, 0.55, 0.08, arc_alpha * 1.15), 5.0, true)
+	draw_line(wl, wr, Color(1.0, 0.55, 0.08, arc_alpha * 0.55), 2.2, true)
+	draw_circle(tip, 3.5, Color(1.0, 0.80, 0.45, arc_alpha * 0.92))

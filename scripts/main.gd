@@ -217,39 +217,46 @@ func _input(event: InputEvent) -> void:
 			# Arrow keys move the person in the yard, never focus HUD buttons.
 			get_viewport().set_input_as_handled()
 			return
-	# ── 统一鼠标/触屏按钮命中测试 ────────────────────────────────────────────────
-	# 此处对鼠标左键与触屏触点使用同一套命中测试路径，确保 web 桌面端相册等按钮
-	# 每次点击都可靠响应，不依赖 Godot GUI 系统对 CanvasLayer 中 Button 的默认行为。
-	var is_mouse_click := event is InputEventMouseButton and (event as InputEventMouseButton).pressed and (event as InputEventMouseButton).button_index == MOUSE_BUTTON_LEFT
-	var is_touch_press := event is InputEventScreenTouch and (event as InputEventScreenTouch).pressed
-	if is_mouse_click or is_touch_press:
-		# 去重：触屏合成的鼠标事件在400ms内屏蔽，只处理真实点击
-		var event_pos: Vector2 = (event as InputEventMouseButton).position if is_mouse_click else (event as InputEventScreenTouch).position
-		if is_mouse_click and Time.get_ticks_msec() - _last_touch_ms < 400:
+	# 触屏/鼠标同源去重：触屏处理后，400ms 内合成鼠标左键直接吞掉，防止重复触发
+	if event is InputEventMouseButton:
+		var _mb := event as InputEventMouseButton
+		if _mb.button_index == MOUSE_BUTTON_LEFT and _mb.pressed and Time.get_ticks_msec() - _last_touch_ms < 400:
 			get_viewport().set_input_as_handled()
 			return
-		var buttons: Array = []
-		if _confirm_screen.visible:
-			buttons = [_confirm_accept_button, _confirm_cancel_button]
-		elif _pause_screen.visible:
-			buttons = [_resume_button, _restart_button, _pause_title_button]
-		elif _album_screen.visible:
-			buttons = [_album_back_button]
-		elif _screen == "title":
-			buttons = [_play_button, _album_button, _licenses_button]
-		else:
-			buttons = [_action_button, _album_chip, _weather_chip, _pause_button]
-		for button: Button in buttons:
-			var local: Vector2 = button.get_global_transform_with_canvas().affine_inverse() * event_pos
-			if button.is_visible_in_tree() and not button.disabled and Rect2(Vector2.ZERO, button.size).has_point(local):
-				_last_touch_ms = Time.get_ticks_msec()
-				button.pressed.emit()
-				get_viewport().set_input_as_handled()
-				return
-		# 触屏点到空白处：交给 _unhandled_input 处理世界点击
-		if is_touch_press:
-			_last_touch_ms = Time.get_ticks_msec()
+	# 触屏 pressed：覆盖所有界面（标题/暂停/相册/游戏）的按钮命中测试
+	# 游戏 HUD 鼠标左键：focus_mode=NONE 按钮在 web 导出中 GUI 路由不可靠，需手动命中
+	# 标题/暂停/相册界面鼠标：保留 Godot 内置 GUI 行为（FOCUS_ALL 按钮不干预）
+	var is_touch_press := event is InputEventScreenTouch and (event as InputEventScreenTouch).pressed
+	var _in_game_hud := (_screen == "game" and not _pause_screen.visible
+		and not _album_screen.visible and not _confirm_screen.visible)
+	var is_mouse_press := (_in_game_hud
+		and event is InputEventMouseButton
+		and (event as InputEventMouseButton).pressed
+		and (event as InputEventMouseButton).button_index == MOUSE_BUTTON_LEFT)
+	if not is_touch_press and not is_mouse_press:
 		return
+	var event_pos: Vector2 = (event as InputEventMouseButton).position if is_mouse_press else (event as InputEventScreenTouch).position
+	var buttons: Array = []
+	if _confirm_screen.visible:
+		buttons = [_confirm_accept_button, _confirm_cancel_button]
+	elif _pause_screen.visible:
+		buttons = [_resume_button, _restart_button, _pause_title_button]
+	elif _album_screen.visible:
+		buttons = [_album_back_button]
+	elif _screen == "title":
+		buttons = [_play_button, _album_button, _licenses_button]
+	else:
+		buttons = [_action_button, _album_chip, _weather_chip, _pause_button]
+	# get_global_rect() 在 web 导出的 CanvasLayer 中比 get_global_transform_with_canvas() 更可靠
+	for button: Button in buttons:
+		if button.is_visible_in_tree() and not button.disabled and button.get_global_rect().has_point(event_pos):
+			_last_touch_ms = Time.get_ticks_msec()
+			button.pressed.emit()
+			get_viewport().set_input_as_handled()
+			return
+	# 触屏点到空白处：更新时间戳，交给 _unhandled_input 处理世界点击
+	if is_touch_press:
+		_last_touch_ms = Time.get_ticks_msec()
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -699,6 +706,22 @@ func _flash_photo() -> void:
 	tween.tween_property(_photo_flash, "color:a", 0.0, 0.55).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 
 
+## 收杆成功时的全屏水蓝闪光：快速淡入淡蓝色（水/鱼质感），比拍立得闪光轻柔，不喧宾夺主
+func _flash_catch() -> void:
+	if _photo_flash == null:
+		return
+	if bool(TuningStore.get_value("ui.reduced_motion", false)):
+		return
+	# 将 _photo_flash 临时变为淡蓝色系（收杆后复原），避免与拍立得奶白色混淆
+	var prev_color := _photo_flash.color
+	_photo_flash.color = Color(0.62, 0.86, 0.96, 0.0)  # 水蓝，alpha=0 起点
+	var tween := create_tween()
+	tween.tween_property(_photo_flash, "color:a", 0.28, 0.07)   # 快速淡入
+	tween.tween_property(_photo_flash, "color:a", 0.0, 0.65).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	# 动画结束后把颜色还原到奶油白（供下次拍照用）
+	tween.tween_callback(func() -> void: _photo_flash.color = Color(CREAM, 0.0))
+
+
 func _layout() -> void:
 	var pad := 20.0
 	if _album_chip == null: return
@@ -779,30 +802,28 @@ func _on_day_advanced(day: int) -> void:
 	_show_notice_key(day_notices[(day - 1) % day_notices.size()])
 
 
-## 收杆成功：蓝色屏幕闪光 + 行动按钮双弹脉冲，让"钓到了"有清晰的庆祝感
+## 收杆成功：独立蓝色闪光层 + 行动按钮双弹脉冲，让"钓到了"的庆祝感清晰可见
 func _on_fish_caught(carry_type: String) -> void:
 	if bool(TuningStore.get_value("ui.reduced_motion", false)):
 		return
-	# 蓝色屏幕闪光：快速亮起再消散，比拍立得闪光更冷更蓝
+	# 独立蓝色屏幕闪光（_fish_flash ColorRect，不干扰拍立得奶白闪光）
 	if _fish_flash != null:
-		_fish_flash.color.a = 0.0
-		var ft := create_tween()
-		# 普通鱼：蓝绿；中等鱼：更蓝；奇怪的鱼：蓝紫
 		var flash_color: Color
 		match carry_type:
 			"medium": flash_color = Color(0.32, 0.60, 0.92, 0.0)
 			"odd":    flash_color = Color(0.50, 0.42, 0.88, 0.0)
 			_:        flash_color = Color(0.42, 0.75, 0.88, 0.0)
 		_fish_flash.color = flash_color
+		var ft := create_tween()
 		ft.tween_property(_fish_flash, "color:a", 0.38, 0.07).set_trans(Tween.TRANS_QUAD)
 		ft.tween_property(_fish_flash, "color:a", 0.0, 0.70).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
-	# 行动按钮双弹脉冲：快速亮→暗→再亮→归位，模拟收杆的拉力感
+	# 行动按钮双弹脉冲（峰值 1.65，模拟收杆拉力感）
 	if _action_button != null:
 		var tween := create_tween()
-		tween.tween_property(_action_button, "modulate", Color(1.55, 1.18, 0.72, 1.0), 0.06).set_trans(Tween.TRANS_QUAD)
-		tween.tween_property(_action_button, "modulate", Color(0.90, 0.90, 0.90, 1.0), 0.08).set_trans(Tween.TRANS_QUAD)
-		tween.tween_property(_action_button, "modulate", Color(1.40, 1.10, 0.78, 1.0), 0.07).set_trans(Tween.TRANS_QUAD)
-		tween.tween_property(_action_button, "modulate", Color.WHITE, 0.30).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+		tween.tween_property(_action_button, "modulate", Color(1.65, 1.28, 0.72, 1.0), 0.06).set_trans(Tween.TRANS_QUAD)
+		tween.tween_property(_action_button, "modulate", Color(0.88, 0.88, 0.88, 1.0), 0.09).set_trans(Tween.TRANS_QUAD)
+		tween.tween_property(_action_button, "modulate", Color(1.48, 1.18, 0.78, 1.0), 0.07).set_trans(Tween.TRANS_QUAD)
+		tween.tween_property(_action_button, "modulate", Color.WHITE, 0.35).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 
 
 ## 第1天进院且相册为空时，延迟 4.5 秒发送柔性引导提示（淡出后已看不到 arrive 通知）
