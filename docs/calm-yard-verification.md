@@ -60,3 +60,9 @@ Headless accelerated simulation proves outcomes, not device performance. Native 
 - Spitting can flip a led llama immediately. The photo capture now refreshes the rope after that reaction so its stored collar endpoint uses the same pose. The regression asserts the actual stored photo, and the general photo renderer suite now checks stored event snapshots rather than a manually refreshed recapture.
 - Candidate6 real native CUA review confirmed boundary ring, click-to-walk replacement, keyboard clearing, and own-feet stop. Post-review interaction/photo changes require final candidate regression before publication.
 - Review also found that the person could stand beside the cow where the larger llama cannot fit. Following now falls back to a reachable point within trailing distance if the exact player footprint is blocked, rather than abandoning approach. Natural-cast seed1102026 regression at30/60/120Hz verifies substantial movement, arrival under78px, no pond/fence crossing and normalized body separation>=0.995 (18 checks).
+
+## Engine-independent accept input
+
+External merge d62df69 retains the reviewed source tree but its Web release was exported with Godot4.7.2. A same-source engine comparison showed the built-in `ui_accept` keyboard device changed from0 in4.6.3 to16 in4.7.2. Native4.7.2 real input still worked, so the device0 injected-test failures alone are not evidence of a user-visible regression.
+
+The compatibility candidate explicitly binds the same Enter, keypad Enter and Space keys to all devices (-1), matching the project's existing movement/pause policy. `portable_accept_suite.gd` verifies12 logical-only and logical-plus-physical key/device0/device16 combinations, plus4 raw Space gameplay outcomes under both engines; original raw-device0 keyboard45 and mixed-input6 tests also pass unchanged on both. This is cross-engine input hardening, not a claim that native4.7.2 Space was broken.
