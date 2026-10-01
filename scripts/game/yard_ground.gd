@@ -14,9 +14,14 @@ static func lawn() -> PackedVector2Array:
 		Vector2(200, 525),
 		Vector2(248, 458),
 		Vector2(400, 432),
-		Vector2(860, 418),
-		Vector2(915, 468),
-		Vector2(885, 548),
+		# Follow the FRONT foot line of the painted fence. The old top-right
+		# triangle included rails/gate tops, letting a roaming llama stand on them.
+		Vector2(690, 430),
+		Vector2(738, 442),
+		Vector2(765, 464),
+		Vector2(810, 483),
+		Vector2(860, 515),
+		Vector2(900, 548),
 		Vector2(760, 538),
 		Vector2(500, 548),
 		Vector2(370, 590),
@@ -82,3 +87,53 @@ static func move_inside(current: Vector2, delta: Vector2, poly: PackedVector2Arr
 	if allows(along_y, poly, avoid_pond):
 		return along_y
 	return current
+
+
+static func _clear_segment(a: Vector2, b: Vector2) -> bool:
+	var steps := maxi(1, ceili(a.distance_to(b) / 5.0))
+	for i in range(steps + 1):
+		if not allows(a.lerp(b, float(i) / steps), lawn(), true):
+			return false
+	return true
+
+
+static func route(start: Vector2, goal: Vector2) -> Array[Vector2]:
+	# Tiny visibility graph follows the concave lawn instead of pushing into its edge.
+	if not allows(goal, lawn(), true):
+		return []
+	if _clear_segment(start, goal):
+		return [goal]
+	var nodes: Array[Vector2] = [start, goal]
+	for corner in lawn():
+		for offset in [Vector2(6,6),Vector2(-6,6),Vector2(6,-6),Vector2(-6,-6)]:
+			if allows(corner+offset,lawn(),true):
+				nodes.append(corner+offset)
+	var distances: Array[float] = []
+	var previous: Array[int] = []
+	var visited: Array[bool] = []
+	for i in nodes.size():
+		distances.append(INF)
+		previous.append(-1)
+		visited.append(false)
+	distances[0] = 0.0
+	for iteration in nodes.size():
+		var best := -1
+		for i in nodes.size():
+			if not visited[i] and (best == -1 or distances[i] < distances[best]):
+				best = i
+		if best == -1 or distances[best] == INF: break
+		if best == 1: break
+		visited[best] = true
+		for i in nodes.size():
+			if visited[i] or not _clear_segment(nodes[best],nodes[i]): continue
+			var cost := distances[best] + nodes[best].distance_to(nodes[i])
+			if cost < distances[i]:
+				distances[i] = cost
+				previous[i] = best
+	if previous[1] == -1: return []
+	var result: Array[Vector2] = []
+	var index := 1
+	while index > 0:
+		result.push_front(nodes[index])
+		index = previous[index]
+	return result

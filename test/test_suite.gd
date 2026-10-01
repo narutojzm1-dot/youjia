@@ -275,7 +275,7 @@ func _test_runtime_scene() -> void:
 		_check(world.actor_named("llama") != null, "yard must include the llama")
 		var llama: FeltActor = world.actor_named("llama")
 		_check(YardGround.allows(llama.position, YardGround.lawn(), true), "llama starts on the lawn")
-		llama.nudge_toward(Vector2(700, 490))
+		llama.nudge_toward(llama.position + Vector2(40, -10))
 		var before: Vector2 = llama.position
 		for _step: int in 12:
 			world.tick(0.1, Vector2.ZERO)
@@ -299,7 +299,7 @@ func _test_runtime_scene() -> void:
 		world.debug_place_player(world.actor_named("llama").position + Vector2(-40, 0))
 		world.try_interact()
 		_check(not bool(world.get_player().carrying_grass), "feeding must consume the grass")
-		_check("llama_fed_gentle" in world.collected or world.last_photo != "", "feeding should be photographable")
+		_check("llama_fed_gentle" in world.collected, "feeding should be photographable")
 		_check(world.collected_count() >= 3, "forced mainline photos must land in the album")
 	instance.call("_toggle_pause")
 	_check(bool((instance.get("_pause_screen") as Control).visible), "pause command must show the pause menu")

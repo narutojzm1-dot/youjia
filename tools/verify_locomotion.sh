@@ -20,3 +20,10 @@ run_check() {
 run_check --headless --path "$ROOT" --editor --import --quit
 run_check --headless --path "$ROOT" res://test/test_suite.tscn
 run_check --headless --path "$ROOT" res://test/locomotion_suite.tscn
+node "$ROOT/test/loading_shell_test.cjs"
+
+run_check --headless --path "$ROOT" --script res://test/ui_interaction_suite.gd
+
+run_check --headless --path "$ROOT" --script res://test/ui_viewports.gd
+
+run_check --headless --path "$ROOT" --script res://test/explicit_target_suite.gd

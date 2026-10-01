@@ -4,8 +4,8 @@
   "app.tagline": "A quiet Alpine yard. Feed grass, walk the llama, or do nothing. Expressions arrive on their own.",
   "menu.play": "Enter the yard",
   "menu.album": "Open the album",
-  "menu.hint": "WASD, or click the grass: walk there\nSpace: pick grass / feed / lead\nEsc: pause\nThere is no failure.",
-  "hud.hint": "Walk on the grass. Farther away, you are smaller. The grass bundle is by the path.",
+  "menu.hint": "Touch or mouse: tap lawn to walk, grass to pick up, llama to interact.\nWASD to walk, Space to interact, Esc to pause.",
+  "hud.hint": "Tap lawn to walk · grass to pick up · llama to feed / lead",
   "hud.pause": "Rest",
   "hud.album": "Album {count}/{total}",
   "hud.weather.sun": "Sun",
@@ -127,5 +127,9 @@
   "tuning.local_session": "Changes stay in this preview.",
   "tuning.local_ready": "Changes save as a local preview draft.",
   "tuning.local_saving": "Saving…",
-  "actor.horse": "Horse"
+  "actor.horse": "Horse",
+  "notice.cannot_walk": "No footing here. Stay on the lawn inside the yard.",
+  "action.release": "Stop leading",
+  "action.feed": "Feed the llama",
+  "action.grass": "Pick up grass"
 }

@@ -2,11 +2,22 @@ class_name Vacationer
 extends Node2D
 
 const TEXTURE := preload("res://assets/holiday/characters/player.png")
-const GRASS := preload("res://assets/holiday/fx/grass_bundle.png")
+const GRASS_ART := preload("res://scripts/entities/grass_art.gd")
+# Palm anchors for the accepted painted sequence, in unscaled source pixels.
+# Only the carried prop moves: the original hero frames stay untouched.
+const GRASS_SEQUENCE_HAND := [
+	Vector2(248, 254), Vector2(247, 255), Vector2(246, 255), Vector2(245, 254),
+	Vector2(243, 254), Vector2(242, 255), Vector2(240, 257), Vector2(239, 258),
+	Vector2(238, 259), Vector2(239, 257), Vector2(241, 254), Vector2(242, 252),
+	Vector2(243, 251), Vector2(245, 251), Vector2(246, 252), Vector2(247, 253),
+]
 # 原图按近景画的，缩进院子全景里才像站在草地上的人。
 const DISPLAY_SCALE := 0.4
 
 var carrying_grass := false
+# A pickup/consume generation prevents an old transfer from reappearing.
+var grass_visual_revision := 0
+var _grass_hold_delay := 0.0
 var player_state := "idle"
 var facing := 1.0
 var just_fed_seconds := 0.0
@@ -31,6 +42,8 @@ var sequence_walker_enabled:=false
 var _sequence_walker: SequenceResident
 var walk_ground: PackedVector2Array = PackedVector2Array()
 var avoid_pond := false
+var body_radius := Vector2(10,6)
+var body_obstacles: Array = []
 
 
 func setup(start: Vector2) -> void:
@@ -67,11 +80,11 @@ func setup(start: Vector2) -> void:
 	if sequence_walker_enabled:
 		_sprite.visible=false
 	_grass = Sprite2D.new()
-	_grass.texture = GRASS
+	GRASS_ART.configure_bundle(_grass)
 	_grass.visible = false
-	_grass.position = Vector2(18, -28)
-	_grass.scale = Vector2(0.55, 0.55)
+	_grass.z_index = 1
 	add_child(_grass)
+	_update_grass_visual()
 
 
 func tick(delta: float, input_vector: Vector2, world_size: Vector2) -> void:
@@ -96,6 +109,8 @@ func tick(delta: float, input_vector: Vector2, world_size: Vector2) -> void:
 		position.y = clampf(position.y, 390.0, world_size.y - 36.0)
 	else:
 		position = YardGround.move_inside(position, step, walk_ground, avoid_pond)
+	if not body_obstacles.is_empty():
+		position = YardBodies.move_inside(before, position-before, body_radius*depth, body_obstacles, walk_ground, avoid_pond)
 	var moved := position - before
 	# A fixed per-frame 0.2px cutoff made slow motion stick at high frame rates.
 	if absf(step.x) > 0.00001 and absf(moved.x) < 0.00001:
@@ -135,10 +150,11 @@ func tick(delta: float, input_vector: Vector2, world_size: Vector2) -> void:
 		_painted_walker.animate(delta,moved,depth,bool(TuningStore.get_value("ui.reduced_motion",false)))
 	if sequence_walker_enabled:
 		_sequence_walker.advance(delta,moved,depth,_gait.face,bool(TuningStore.get_value("ui.reduced_motion",false)),float(TuningStore.get_value("player.visual.scale",1.0)))
-	_grass.visible = carrying_grass
-	_grass.position = Vector2(18.0 * _gait.face * depth, -28.0 * depth + _sprite.position.y)
-	_grass.scale = Vector2(0.55, 0.55) * depth
-	z_index = 8 + int(position.y / 8.0)
+	_grass_hold_delay = maxf(0.0, _grass_hold_delay - delta)
+	if bool(TuningStore.get_value("ui.reduced_motion", false)):
+		_grass_hold_delay = 0.0
+	_update_grass_visual()
+	z_index = roundi(position.y)
 
 
 func set_planted_gait_enabled(enabled: bool) -> void:
@@ -168,14 +184,53 @@ func reset_locomotion() -> void:
 	_rig.reset_contacts()
 
 
-func pick_grass() -> void:
+func grass_hand_global_position() -> Vector2:
+	if sequence_walker_enabled and is_instance_valid(_sequence_walker):
+		var palm := Vector2(242, 253)
+		if _sequence_walker.animation == &"walk":
+			palm = GRASS_SEQUENCE_HAND[_sequence_walker.frame % GRASS_SEQUENCE_HAND.size()]
+		return _sequence_walker.to_global(_sequence_walker.offset + palm)
+	if native_walker_enabled and is_instance_valid(_native_walker) and _native_walker.forearms.size() > 1:
+		return _native_walker.forearms[1].to_global(Vector2(0, 12))
+	if resident_walker_enabled and is_instance_valid(_painted_walker):
+		var resident := _painted_walker as ResidentWalker
+		if resident.elbows.size() > 1:
+			return resident.elbows[1].to_global(Vector2(0, 13))
+	return to_global(Vector2(18.0 * _gait.face, -28.0) * picture_depth + Vector2(0, _sprite.position.y))
+
+
+func grass_hand_facing() -> float:
+	return _gait.face
+
+
+func grass_hand_scale() -> float:
+	return GRASS_ART.HELD_WIDTH / GRASS_ART.LOOSE.size.x * picture_depth * float(TuningStore.get_value("player.visual.scale", 1.0))
+
+
+func _update_grass_visual() -> void:
+	if not is_instance_valid(_grass):
+		return
+	_grass.visible = carrying_grass and _grass_hold_delay <= 0.0
+	_grass.global_position = grass_hand_global_position()
+	_grass.scale = Vector2(grass_hand_facing(), 1.0) * grass_hand_scale()
+	_grass.rotation = GRASS_ART.HELD_ROTATION * grass_hand_facing()
+
+
+func pick_grass(visual_delay: float = 0.0) -> void:
+	# Inventory changes now, so feeding can happen during the cosmetic pickup.
+	grass_visual_revision += 1
 	carrying_grass = true
+	_grass_hold_delay = maxf(0.0, visual_delay)
+	_update_grass_visual()
 
 
 func consume_grass() -> bool:
 	if not carrying_grass:
 		return false
 	carrying_grass = false
+	grass_visual_revision += 1
+	_grass_hold_delay = 0.0
+	_update_grass_visual()
 	just_fed_seconds = 6.0
 	player_state = "just_fed"
 	return true

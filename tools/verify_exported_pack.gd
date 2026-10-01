@@ -23,6 +23,8 @@ func _verify() -> void:
 	_check(ResourceLoader.exists("res://assets/share/favicon.png"), "pack favicon")
 	_check(ResourceLoader.exists("res://assets/share/og.png"), "pack og cover")
 	_check(not ResourceLoader.exists("res://test/test_suite.tscn"), "test scene excluded")
+	for unused: String in ["res://assets/holiday/sharing/og.png", "res://assets/holiday/sharing/favicon.png", "res://site/index.png", "res://assets/template/environment/backdrop.png"]:
+		_check(not ResourceLoader.exists(unused), "unused promo/old-site art excluded: "+unused)
 	_check(not ResourceLoader.exists("res://tools/capture_native.gd"), "native capture tool excluded")
 	_check(not root.has_node("GlobalLeaderboard"), "no dormant network autoload")
 	_check(not DirAccess.dir_exists_absolute("res://assets/template/audio"), "no default audio assets")

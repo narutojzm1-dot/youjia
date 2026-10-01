@@ -69,6 +69,7 @@ func _animal(start: Vector2, kind: String = "llama") -> FeltActor:
 		"wander": Rect2(300, 440, 500, 80),
 		"textures": {"idle": "res://assets/holiday/characters/%s.png" % kind},
 	})
+	animal.state = "wander" # This fixture explicitly tests an active walking animal.
 	return animal
 
 
@@ -308,7 +309,7 @@ func _test_facing_and_swimming() -> void:
 	for frame: int in 30:
 		walker.tick(1.0 / 60, WORLD_SIZE)
 	_check(walker._rig == null, "default-world llama keeps accepted original-art gait")
-	_check(float(walker._sprite.material.get_shader_parameter("amount")) > 0.5, "default-world llama shader gait is active while moving")
+	_check(float(walker._sprite.material.get_shader_parameter("amount")) > 0.1, "default-world llama restrained limb motion is active while moving")
 	world.free()
 
 
@@ -727,7 +728,8 @@ func _test_sequence_default() -> void:
 	var player:=world.get_player()
 	world.debug_place_player(Vector2(340,600))
 	world.try_interact()
-	player.tick(1.0/60,Vector2.ZERO,WORLD_SIZE)
+	_check(player.carrying_grass and world._grass_patch._loose.visible,"harvest grants inventory immediately and shows loose pickup")
+	for frame in 30: world.tick(1.0/60,Vector2.ZERO)
 	_check(player.carrying_grass and player._grass.visible,"sequence character can carry grass visibly")
 	world.debug_place_player(world.actor_named("llama").position+Vector2(-40,0))
 	world.try_interact()

@@ -17,6 +17,9 @@ var current_expression := "idle"
 var nearby_ids: Dictionary = {}
 var state := "wander"
 var grazing := false
+var daily_routine := false
+var _routine_step := 0
+var _turn_pause := 0.0
 
 var _sprite: Sprite2D
 var _textures: Dictionary = {}
@@ -33,6 +36,10 @@ var pose_point := Vector2.ZERO
 # 各自的地面。空多边形表示还没绑地，沿用原来的矩形夹取。
 var walk_ground: PackedVector2Array = PackedVector2Array()
 var avoid_pond := false
+var body_radius := Vector2(16,8)
+var body_obstacles: Array = []
+var _lead_path: Array[Vector2] = []
+var _lead_repath := 0.0
 var use_ellipse := false
 var ellipse_center := Vector2.ZERO
 var ellipse_radius := Vector2.ZERO
@@ -53,7 +60,9 @@ var _expression_texture: Texture2D
 
 func setup(config: Dictionary) -> void:
 	actor_id = str(config.get("id", ""))
+	daily_routine = bool(config.get("daily_routine", false))
 	species = str(config.get("species", actor_id))
+	body_radius = YardBodies.radius_for(species)
 	display_name_key = str(config.get("name_key", "actor.%s" % species))
 	position = config.get("position", Vector2.ZERO)
 	wander_rect = config.get("wander", Rect2(position - Vector2(40, 20), Vector2(80, 40)))
@@ -83,6 +92,13 @@ func setup(config: Dictionary) -> void:
 	scale = Vector2(_base_scale, _base_scale)
 	_target = _random_point()
 	_build_spit()
+	if daily_routine:
+		_routine_step = int(abs(actor_id.hash()) % 4)
+		_start_rest()
+		_idle_time *= randf_range(0.35, 1.0)
+	elif species != "duck":
+		state = "graze"
+		_idle_time = randf_range(5.0,12.0)
 
 
 func enable_experimental_planted_gait() -> void:
@@ -111,13 +127,38 @@ func hold_expression(expression_id: String, seconds: float) -> void:
 	_hold_expression = maxf(_hold_expression, seconds)
 
 
-func spit() -> void:
-	if _spit == null:
+func spit(target: Vector2 = Vector2.INF) -> void:
+	if _spit == null or target == Vector2.INF:
 		return
 	var density := float(TuningStore.get_value("environment.particles.density", 0.4))
 	if density <= 0.0:
 		return
-	_spit.amount = clampi(roundi(6.0 * density), 1, 18)
+	# Face the actual goose first; use a short world-space arc from the mouth.
+	if absf(target.x-global_position.x) > 2.0:
+		facing = signf(target.x-global_position.x)
+		_gait.face = facing
+		_gait._turning = false
+		_gait._next_face = facing
+		_gait.turn_width = 1.0
+		scale.x = absf(scale.x)*facing
+	var mouth := to_global(_spit_origin)
+	_spit.top_level = true
+	_spit.global_transform = Transform2D(0.0, mouth)
+	var flight := 0.42
+	var gravity := Vector2(0,260)
+	var velocity := (target-mouth-0.5*gravity*flight*flight)/flight
+	_spit.direction = velocity.normalized()
+	_spit.gravity = gravity
+	_spit.initial_velocity_min = velocity.length()
+	_spit.initial_velocity_max = velocity.length()*1.03
+	_spit.scale_amount_min = 0.07
+	_spit.scale_amount_max = 0.11
+	_spit.lifetime = flight
+	_spit.spread = 3.0
+	_spit.amount = clampi(roundi(4.0*density),1,4)
+	state = "graze"
+	_idle_time = maxf(_idle_time,1.2)
+	_velocity = Vector2.ZERO
 	_spit.restart()
 	_spit.emitting = true
 
@@ -145,12 +186,19 @@ func end_lead() -> void:
 	state = "wander"
 	_following = false
 	_lead_target = null
+	_lead_path.clear()
 	_target = _random_point()
+	if daily_routine:
+		_start_rest()
 
 
 func nudge_toward(point: Vector2) -> void:
+	if daily_routine and species != "llama" and not wander_rect.has_point(point):
+		return
+	if not _stands_on(point):
+		return
 	state = "wander"
-	_target = point + Vector2(randf_range(-18.0, 18.0), randf_range(-10.0, 10.0))
+	_target = point
 
 
 func is_near(other: FeltActor, radius: float = 92.0) -> bool:
@@ -159,10 +207,11 @@ func is_near(other: FeltActor, radius: float = 92.0) -> bool:
 
 func tick(delta: float, world_size: Vector2) -> void:
 	_breath += delta
+	_lead_repath = maxf(0.0, _lead_repath-delta)
 	var reduced := bool(TuningStore.get_value("ui.reduced_motion", false))
 	var breath := 1.0
 	if not reduced:
-		breath = 1.0 + sin(_breath * 1.6) * 0.018
+		breath = 1.0 + sin(_breath * 1.6) * 0.003
 		if _base_texture_path.is_empty() and current_expression == "annoyed":
 			breath = 1.0 + sin(_breath * 3.4) * 0.012
 		elif _base_texture_path.is_empty() and current_expression == "happy":
@@ -190,7 +239,7 @@ func tick(delta: float, world_size: Vector2) -> void:
 		_velocity = Vector2.ZERO
 		if _rig != null:
 			_rig.tick(delta, Vector2.ZERO, depth_now, reduced)
-		z_index = 4 + int(position.y / 8.0)
+		z_index = roundi(position.y)
 		return
 	var motion := Vector2.ZERO
 	var depth := YardGround.depth_at(position.y)
@@ -209,16 +258,29 @@ func tick(delta: float, world_size: Vector2) -> void:
 				if _following:
 					var follow_multiplier := float(TuningStore.get_value("enemies.move.speed_multiplier", 1.0))
 					var follow_speed := maxf(speed, 84.0 * follow_multiplier) * depth
-					desired = motion.normalized() * minf(follow_speed, maxf(0.0, motion.length() - 56.0 * depth) * 2.5)
+					var direction := motion.normalized()
+					var obstacles: Array = body_obstacles.filter(func(item: Dictionary) -> bool: return str(item.get("id","")) != "player")
+					if not YardBodies.clear_segment(position,_lead_target.position,body_radius*depth,obstacles) or not YardGround._clear_segment(position,_lead_target.position):
+						if _lead_repath <= 0.0:
+							_lead_path = _route_to_leader(depth, obstacles)
+							_lead_repath = 0.7
+						while not _lead_path.is_empty() and position.distance_to(_lead_path[0]) < 5.0: _lead_path.pop_front()
+						if not _lead_path.is_empty(): direction = position.direction_to(_lead_path[0])
+						else: direction = Vector2.ZERO
+					else:
+						_lead_path.clear()
+					desired = direction * minf(follow_speed, maxf(0.0, motion.length() - 56.0 * depth) * 2.5)
 			else:
 				end_lead()
-		"graze":
+		"graze", "rest":
 			_idle_time -= delta
-			grazing = true
+			grazing = state == "graze"
 			if _idle_time <= 0.0:
 				state = "wander"
 				grazing = false
 				_target = _random_point()
+				if daily_routine:
+					_turn_pause = 0.55
 		_:
 			grazing = false
 			motion = _target - position
@@ -226,9 +288,18 @@ func tick(delta: float, world_size: Vector2) -> void:
 				# A quiet pause between purposeful walks, rather than a new
 				# random destination and a sudden reversal every few seconds.
 				state = "graze"
-				_idle_time = randf_range(1.8, 5.5)
+				_idle_time = randf_range(7.0, 14.0)
+				if daily_routine:
+					_start_rest()
 			else:
 				desired = motion.normalized() * minf(speed * depth, motion.length() * 1.8)
+	# A resident chooses its next direction while planted, then takes a few steps.
+	# No reversing in motion or repeated boundary bounces.
+	if daily_routine and _turn_pause > 0.0 and state == "wander":
+		_turn_pause -= delta
+		desired = Vector2.ZERO
+		if absf(motion.x) > 3.0:
+			facing = signf(motion.x)
 	var response := 5.0 if species == "duck" else 7.0
 	_velocity = _velocity.lerp(desired, 1.0 - exp(-response * delta))
 	if desired.is_zero_approx() and _velocity.length() < 0.3:
@@ -241,12 +312,15 @@ func tick(delta: float, world_size: Vector2) -> void:
 		position.y = clampf(position.y, 400.0, world_size.y - 56.0)
 	else:
 		position = _move_on_own_ground(step)
+	if not use_ellipse and not body_obstacles.is_empty():
+		position = YardBodies.move_inside(before, position-before, body_radius*depth, body_obstacles, walk_ground, avoid_pond)
 	var moved := position - before
 	var actual_speed := moved.length() / maxf(delta, 0.0001)
 	if desired.length() > 2.0 and actual_speed < 1.0:
 		_stuck += delta
 		if _stuck > 0.65 and state != "lead":
 			_target = _random_point()
+			if daily_routine: _start_rest()
 			_stuck = 0.0
 	else:
 		_stuck = 0.0
@@ -264,17 +338,28 @@ func tick(delta: float, world_size: Vector2) -> void:
 	_gait.advance(delta, moved, depth, stride)
 	_step_phase = _gait.phase
 	_gait.apply(_sprite, delta, facing, reduced, species == "duck" and use_ellipse)
+	# Painted animal bodies stay rigid; avoid whole-cutout hops and pivot squash.
+	if _ground_anchor.x >= 0.0:
+		_sprite.position = Vector2.ZERO
+		_sprite.rotation = 0.0
+		var artwork_width := _sprite.texture.get_width() * _base_scale * visual_scale
+		var artwork_height := _sprite.texture.get_height() * _base_scale * visual_scale
+		_gait._material.set_shader_parameter("grounded_stride", true)
+		_gait._material.set_shader_parameter("stride_uv", stride / maxf(artwork_width, 1.0))
+		_gait._material.set_shader_parameter("lift_uv", 2.0 / maxf(artwork_height, 1.0))
+		_gait._material.set_shader_parameter("native_walk_face", _native_facing)
+		_gait._material.set_shader_parameter("amount", 0.0 if reduced or use_ellipse else minf(_gait.weight * 3.0, 1.0))
 	var visual := _base_scale * visual_scale * YardGround.depth_at(position.y)
 	# Breathing belongs to resting animals; don't squash a walking silhouette.
 	var resting_breath := lerpf(breath, 1.0, _gait.weight)
-	scale = Vector2(visual * _gait.face * _gait.turn_width, visual * resting_breath)
+	scale = Vector2(visual * _gait.face * (1.0 if _ground_anchor.x >= 0.0 else _gait.turn_width), visual * resting_breath)
 	_sprite.scale.x = _native_facing
 	if _rig != null:
 		scale.x = visual * _gait.face
 		_sprite.position.y = 0.0
 		_sprite.rotation = 0.0
 		_rig.tick(delta, moved, depth, reduced)
-	z_index = 4 + int(position.y / 8.0)
+	z_index = roundi(position.y)
 
 
 func _anchor_feet() -> void:
@@ -287,21 +372,52 @@ func _anchor_feet() -> void:
 		_sprite.offset = Vector2(0, -_sprite.texture.get_height() * 0.5)
 
 
+func _start_rest() -> void:
+	_routine_step += 1
+	state = "rest" if _routine_step % 3 == 0 else "graze"
+	var durations := {"cow": Vector2(18, 26), "horse": Vector2(16, 23), "sheep": Vector2(13, 21), "goose": Vector2(10, 17), "duck": Vector2(8, 14), "llama": Vector2(6, 11)}
+	var span: Vector2 = durations.get(species, Vector2(12, 20))
+	_idle_time = randf_range(span.x, span.y)
+	if species == "goose":
+		_idle_time /= maxf(0.5, float(TuningStore.get_value("enemies.goose.nosiness", 1.0)))
+	_turn_pause = 0.0
+
+
+func _local_destination() -> Vector2:
+	# Nearby reachable feeding spots only. Trying a new heading happens while
+	# resting, never by clamping a distant point and sliding along a boundary.
+	var distance_span := Vector2(14, 29)
+	if species == "llama": distance_span = Vector2(40, 90)
+	elif species == "duck": distance_span = Vector2(20, 38)
+	for attempt in 32:
+		var angle := randf() * TAU
+		var point := position + Vector2(cos(angle), sin(angle)*0.42) * randf_range(distance_span.x, distance_span.y)
+		if species != "llama" and not use_ellipse and not wander_rect.has_point(point): continue
+		if not _stands_on(point): continue
+		if not YardBodies.clear_segment(position,point,body_radius*YardGround.depth_at(position.y),body_obstacles): continue
+		var reachable := true
+		for i in range(1, 9):
+			if not _stands_on(position.lerp(point, float(i)/8.0)):
+				reachable = false
+				break
+		if reachable: return point
+	return position
+
+
 func _random_point() -> Vector2:
+	if daily_routine: return _local_destination()
 	if use_ellipse:
 		var angle := randf() * TAU
 		var radius := sqrt(randf())
 		return ellipse_center + Vector2(cos(angle) * ellipse_radius.x * radius, sin(angle) * ellipse_radius.y * radius)
-	for _try: int in 16:
-		var point := Vector2(
-			randf_range(wander_rect.position.x, wander_rect.end.x),
-			randf_range(wander_rect.position.y, wander_rect.end.y)
-		)
-		if _stands_on(point):
-			return point
-	if not walk_ground.is_empty():
-		return walk_ground[0]
-	return wander_rect.get_center()
+	for _try: int in 24:
+		# Grazers move to the next patch, not a random point across the whole yard.
+		var angle := randf()*TAU
+		var point := position + Vector2(cos(angle),sin(angle)*0.45)*randf_range(18.0,48.0)
+		point.x = clampf(point.x,wander_rect.position.x,wander_rect.end.x)
+		point.y = clampf(point.y,wander_rect.position.y,wander_rect.end.y)
+		if _stands_on(point): return point
+	return position
 
 
 func adopt_ground(poly: PackedVector2Array, hole_pond: bool) -> void:
@@ -375,3 +491,16 @@ func _apply_face_override() -> void:
 		var size:=_sprite.texture.get_size()
 		_gait._material.set_shader_parameter("expression_texture",_expression_texture)
 		_gait._material.set_shader_parameter("face_region",Vector4(_face_region.position.x/size.x,_face_region.position.y/size.y,_face_region.size.x/size.x,_face_region.size.y/size.y))
+
+
+func _route_to_leader(depth: float, obstacles: Array) -> Array[Vector2]:
+	var path := YardBodies.route(position,_lead_target.position,body_radius*depth,obstacles,walk_ground,avoid_pond)
+	if not path.is_empty(): return path
+	# A person can fit beside a resident where the larger llama cannot. The
+	# companion only needs a safe trailing spot, not the person's exact footprint.
+	var toward_us := _lead_target.position.direction_to(position)
+	for offset: float in [0.0, PI/8, -PI/8, PI/4, -PI/4, 3*PI/8, -3*PI/8, PI/2, -PI/2, 5*PI/8, -5*PI/8, 3*PI/4, -3*PI/4, 7*PI/8, -7*PI/8, PI]:
+		var goal := _lead_target.position + toward_us.rotated(offset) * 56.0 * depth
+		path = YardBodies.route(position,goal,body_radius*depth,obstacles,walk_ground,avoid_pond)
+		if not path.is_empty(): return path
+	return []

@@ -4,12 +4,13 @@ extends Node2D
 signal album_updated(collected: PackedStringArray, latest_id: String)
 signal weather_changed(weather: String)
 signal notice_requested(key: String)
+signal notice_dismiss_requested(key: String)
 signal camera_focus_requested(world_point: Vector2, zoom: float)
 signal camera_release_requested
 
 const SUNNY := preload("res://assets/holiday/environment/yard_sunny.png")
 const OVERCAST := preload("res://assets/holiday/environment/yard_overcast.png")
-const GRASS := preload("res://assets/holiday/fx/grass_bundle.png")
+const GrassPatchType := preload("res://scripts/entities/grass_patch.gd")
 const FeltActorType := preload("res://scripts/entities/felt_actor.gd")
 const VacationerType := preload("res://scripts/entities/vacationer.gd")
 const WORLD_SIZE := Vector2(1280, 720)
@@ -29,6 +30,7 @@ var weather := "sun"
 var season := "late_summer"
 var collected: PackedStringArray = []
 var last_photo := ""
+var photo_moments: Dictionary = {}
 var simulation_active := true
 var input_enabled := true
 
@@ -43,20 +45,30 @@ var _held: Dictionary = {}
 var _focus_seconds := 0.0
 var _leading := false
 var _day_seconds := 0.0
-var _grass_sprite: Sprite2D
+var _grass_patch: GrassPatch
+var _lead_rope: Line2D
 var _spot := "door"
 var _move_held := false
 var _has_walk_goal := false
 var _walk_goal := Vector2.ZERO
+var _pending_interaction := ""
+var _walk_path: Array[Vector2] = []
+var _body_repath := 0.0
+var _rejected_point := Vector2.ZERO
+var _rejected_seconds := 0.0
 
 
-func setup(saved_photos: Array = []) -> void:
+func setup(saved_photos: Array = [], saved_moments: Dictionary = {}) -> void:
 	process_mode = Node.PROCESS_MODE_PAUSABLE
 	collected = PackedStringArray()
+	photo_moments.clear()
 	for item: Variant in saved_photos:
 		var photo_id := str(item)
 		if photo_id not in collected:
 			collected.append(photo_id)
+		var moment := PhotoMoment.sanitize(saved_moments.get(photo_id,{}))
+		if not moment.is_empty() and str(moment.get("rule_id","")) == photo_id:
+			photo_moments[photo_id] = moment
 	_backdrop = Sprite2D.new()
 	_backdrop.centered = false
 	_backdrop.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
@@ -67,6 +79,14 @@ func setup(saved_photos: Array = []) -> void:
 	_spawn_grass()
 	_spawn_cast()
 	_bind_grounds()
+	_lead_rope = Line2D.new()
+	_lead_rope.width = 2.2
+	_lead_rope.default_color = Color(0.38,0.25,0.13,0.90)
+	_lead_rope.begin_cap_mode = Line2D.LINE_CAP_ROUND
+	_lead_rope.end_cap_mode = Line2D.LINE_CAP_ROUND
+	_lead_rope.antialiased = true
+	add_child(_lead_rope)
+	_lead_rope.visible = false
 	_weather_timer = randf_range(42.0, 78.0)
 	queue_redraw()
 
@@ -141,6 +161,7 @@ func debug_place_player(point: Vector2) -> void:
 func tick(delta: float, move: Vector2) -> void:
 	if not simulation_active:
 		return
+	_rejected_seconds = maxf(0.0, _rejected_seconds - delta)
 	_day_seconds += delta
 	_weather_timer -= delta
 	if _weather_timer <= 0.0:
@@ -148,19 +169,46 @@ func tick(delta: float, move: Vector2) -> void:
 		_weather_timer = randf_range(48.0, 90.0)
 	if _player == null:
 		return
+	_player.body_obstacles = physical_obstacles("player")
+	_body_repath = maxf(0.0,_body_repath-delta)
 	if input_enabled:
 		if move.length() > 0.2:
+			_rejected_seconds = 0.0
+			notice_dismiss_requested.emit("notice.cannot_walk")
 			_has_walk_goal = false
+			_pending_interaction = ""
+			_walk_path.clear()
 		elif _has_walk_goal:
-			var to_goal := _walk_goal - _player.position
-			if to_goal.length() < 12.0:
+			if _pending_interaction == "llama":
+				_walk_goal = actor_named("llama").position
+			if not _pending_interaction.is_empty() and _player.position.distance_to(_walk_goal) < 64.0:
+				_has_walk_goal = false
+				_walk_path.clear()
+				var target := _pending_interaction
+				_pending_interaction = ""
+				_interact_with_target(target)
+			var obstacles := _routing_obstacles()
+			if _has_walk_goal and _body_repath <= 0.0 and (_walk_path.is_empty() or not YardBodies.clear_segment(_player.position,_walk_path[0],_player.body_radius*YardGround.depth_at(_player.position.y),obstacles)):
+				_walk_path = YardBodies.route(_player.position,_walk_goal,_player.body_radius*YardGround.depth_at(_player.position.y),obstacles,YardGround.lawn())
+				_body_repath = 0.7
+				# A moving animal may occupy the destination briefly. Keep intent
+				# and retry while standing; never silently abandon the tap.
+			var destination := _walk_path[0] if not _walk_path.is_empty() else _walk_goal
+			if not _walk_path.is_empty() and _player.position.distance_to(destination) < (12.0 if _walk_path.size()==1 else 4.0):
+				_walk_path.pop_front()
+				destination = _walk_path[0] if not _walk_path.is_empty() else _walk_goal
+			var to_goal := destination - _player.position
+			if not _has_walk_goal or (to_goal.length() < 12.0 and _walk_path.is_empty()):
 				_has_walk_goal = false
 				move = Vector2.ZERO
+			elif _walk_path.is_empty():
+				move = Vector2.ZERO
 			else:
-				move = to_goal.normalized() * minf(1.0, to_goal.length() / 44.0)
+				move = to_goal.normalized() * (1.0 if _walk_path.size() > 1 else minf(1.0, to_goal.length() / 44.0))
 		_player.tick(delta, move, WORLD_SIZE)
 	else:
 		_player.tick(delta, Vector2.ZERO, WORLD_SIZE)
+	if _grass_patch != null: _grass_patch.tick(delta)
 	var animal_scale := float(TuningStore.get_value("enemies.visual.scale", 1.0))
 	var animal_speed := float(TuningStore.get_value("enemies.move.speed_multiplier", 1.0))
 	for actor_id: String in _actors:
@@ -171,18 +219,13 @@ func tick(delta: float, move: Vector2) -> void:
 			actor.begin_lead(_player)
 		elif actor.state == "lead" and actor_id == "llama":
 			actor.end_lead()
-		if actor_id == "goose" and weather == "overcast":
-			var llama: FeltActor = _actors.get("llama")
-			var nosiness := float(TuningStore.get_value("enemies.goose.nosiness", 1.0))
-			if llama != null and actor.position.distance_to(llama.position) > 110.0 and randf() < 1.0 - exp(-0.24 * nosiness * delta):
-				actor.nudge_toward(llama.position)
-		# 晴天一只羊偶尔从羊圈走到草泥马附近，走的是同一块草地。
-		if actor_id == "sheep_a" and weather == "sun" and not _leading:
-			var sun_llama: FeltActor = _actors.get("llama")
-			if sun_llama != null and actor.position.distance_to(sun_llama.position) > 140.0 and randf() < 1.0 - exp(-0.18 * delta):
-				actor.nudge_toward(sun_llama.position)
+		if actor_id == "llama" and _pending_interaction == "llama" and not _leading:
+			actor.state = "graze"
+			actor._idle_time = maxf(actor._idle_time, 0.5)
+		actor.body_obstacles = physical_obstacles(actor_id)
 		actor.tick(delta, WORLD_SIZE)
 		actor.current_zone = _zone_at(actor.position)
+	_update_lead_rope()
 	_player.player_state = _player.snapshot_state()
 	for key: Variant in _cooldowns.keys():
 		_cooldowns[key] = float(_cooldowns[key]) - delta
@@ -204,16 +247,35 @@ func tick(delta: float, move: Vector2) -> void:
 	queue_redraw()
 
 
+# Space is intentionally contextual. Pointer/HUD commands keep their selected target.
 func try_interact() -> void:
 	if not input_enabled or _player == null:
 		return
-	TuningStore.apply_boundary("NEXT_ACTION")
 	if _player.position.distance_to(_grass_point()) < 78.0 and not _player.carrying_grass:
-		_player.pick_grass()
-		notice_requested.emit("notice.picked_grass")
+		_interact_with_target("grass")
+		return
+	_interact_with_target("llama")
+
+
+func _consume_pending_action() -> void:
+	_pending_interaction = ""
+	_has_walk_goal = false
+	_walk_path.clear()
+
+
+func _interact_with_target(target: String) -> void:
+	if not input_enabled or _player == null:
+		return
+	TuningStore.apply_boundary("NEXT_ACTION")
+	if target == "grass":
+		if _player.position.distance_to(_grass_point()) < 78.0 and not _player.carrying_grass:
+			_consume_pending_action()
+			_grass_patch.harvest(_player)
+			notice_requested.emit("notice.picked_grass")
 		return
 	var llama: FeltActor = _actors.get("llama")
-	if llama != null and _player.position.distance_to(llama.position) < 88.0:
+	if target == "llama" and llama != null and _player.position.distance_to(llama.position) < 88.0:
+		_consume_pending_action()
 		if _player.carrying_grass:
 			_player.consume_grass()
 			llama.hold_expression("happy", 4.0)
@@ -232,25 +294,116 @@ func try_interact() -> void:
 	notice_requested.emit("notice.idle")
 
 
-func try_walk_to(point: Vector2) -> bool:
+func primary_action_key() -> String:
+	if _leading: return "action.release"
+	if _player != null and _player.carrying_grass: return "action.feed"
+	return "action.grass"
+
+
+func request_primary_action() -> void:
+	if not input_enabled: return
+	if _leading:
+		_leading = false
+		_player.leading = false
+		actor_named("llama").end_lead()
+		notice_requested.emit("notice.lead_stop")
+	elif _player.carrying_grass:
+		_request_action("llama", actor_named("llama").position)
+	else:
+		_request_action("grass", _grass_point())
+
+
+func request_pointer_action(point: Vector2) -> void:
+	if not input_enabled or _player == null:
+		return
+	var llama := actor_named("llama")
+	if point.distance_to(_grass_point()) < 45.0:
+		_request_action("grass", _grass_point())
+	elif llama != null and (point.distance_to(llama.position) < 45.0 or point.distance_to(llama.position + Vector2(0,-48)) < 50.0):
+		_request_action("llama", llama.position)
+	else:
+		_request_action("", point)
+
+
+func _request_action(target: String, goal: Vector2) -> void:
+	notice_dismiss_requested.emit("notice.cannot_walk")
+	_rejected_seconds = 0.0
+	if target.is_empty() and YardGround.allows(goal,YardGround.lawn(),true):
+		goal = _open_goal_near_body(goal)
+	_pending_interaction = target
+	_has_walk_goal = false
+	_walk_path.clear()
+	if not target.is_empty() and _player.position.distance_to(goal) < 64.0:
+		_pending_interaction = ""
+		_interact_with_target(target)
+		return
+	# A tap at our feet means stop here, not an unreachable destination.
+	if target.is_empty() and YardGround.allows(goal,YardGround.lawn(),true) and _player.position.distance_to(goal) < 12.0:
+		return
+	if not try_walk_to(goal):
+		_pending_interaction = ""
+		_rejected_point = goal
+		_rejected_seconds = 1.2
+		queue_redraw()
+		notice_requested.emit("notice.cannot_walk")
+
+
+func try_walk_to(goal: Vector2) -> bool:
 	if not input_enabled or _player == null:
 		return false
-	var goal := point
-	for actor_id: String in _actors:
-		var actor: FeltActor = _actors[actor_id]
-		var body := actor.position + Vector2(0, -36)
-		if point.distance_to(actor.position) < 64.0 or point.distance_to(body) < 72.0:
-			goal = actor.position
-			break
-	if point.distance_to(_grass_point()) < 56.0:
-		goal = _grass_point()
+	# Hit-testing happens once, in request_pointer_action. Re-snapping here could
+	# replace an explicit llama destination with nearby grass or another animal.
 	if not YardGround.allows(goal, YardGround.lawn(), true):
 		return false
-	if _player.position.distance_to(goal) < 28.0:
+	if _player.position.distance_to(goal) < 12.0:
 		return false
+	_walk_path = YardBodies.route(_player.position, goal, _player.body_radius*YardGround.depth_at(_player.position.y), _routing_obstacles(), YardGround.lawn())
+	_body_repath = 0.7
+	# A valid lawn destination can be occupied by a moving animal at click time.
+	# Retain it and let the normal waiting/repath loop resume when it clears.
 	_has_walk_goal = true
 	_walk_goal = goal
 	return true
+
+
+func physical_obstacles(exclude_id: String = "") -> Array:
+	var result: Array = []
+	if exclude_id != "player" and _player != null:
+		result.append({"id":"player", "position":_player.position, "radius":_player.body_radius*YardGround.depth_at(_player.position.y)})
+	for id: String in _actors:
+		var actor: FeltActor = _actors[id]
+		if id == exclude_id or actor.species == "duck": continue
+		result.append({"id":id,"position":actor.position,"radius":actor.body_radius*YardGround.depth_at(actor.position.y)})
+	return result
+
+
+func _routing_obstacles() -> Array:
+	var obstacles := physical_obstacles("player")
+	# The selected llama is an interaction destination, not a walk-through
+	# point. Leading still routes around it when the person reverses direction.
+	if _pending_interaction == "llama":
+		obstacles = obstacles.filter(func(item: Dictionary) -> bool: return item.id != "llama")
+	return obstacles
+
+
+func _open_goal_near_body(goal: Vector2) -> Vector2:
+	var radius := _player.body_radius*YardGround.depth_at(_player.position.y)
+	var obstacles := physical_obstacles("player")
+	if YardBodies.clear_at(goal,radius,obstacles): return goal
+	var best := goal
+	var distance := INF
+	for item: Dictionary in obstacles:
+		var extent: Vector2 = radius + item.radius + Vector2(5,4)
+		if ((goal-item.position)/extent).length_squared()>1.0: continue
+		for i in 16:
+			var angle := float(i)*TAU/16.0
+			var candidate: Vector2 = item.position + Vector2(cos(angle),sin(angle))*extent
+			if not YardGround.allows(candidate,YardGround.lawn(),true) or not YardBodies.clear_at(candidate,radius,obstacles): continue
+			var score := candidate.distance_squared_to(_player.position)
+			if score < distance:
+				distance = score
+				best = candidate
+	return best
 
 
 func try_step_to_point(point: Vector2) -> bool:
@@ -471,7 +624,24 @@ func _spawn_cast() -> void:
 			"textures": {"idle": "res://assets/holiday/characters/duck.png"},
 		},
 	]
+	# Small non-overlapping homes follow the painted lawn, not the fence artwork.
+	# Residents never chase the llama out of these homes; the llama can visit them.
+	var homes := {
+		"cow": Rect2(430, 465, 72, 48),
+		"horse": Rect2(568, 444, 94, 45),
+		"sheep_a": Rect2(282, 490, 54, 37),
+		"sheep_b": Rect2(346, 473, 52, 36),
+		"goose": Rect2(746, 492, 40, 20),
+		"llama": Rect2(370, 447, 440, 78),
+	}
 	for original: Dictionary in configs:
+		var id := str(original.id)
+		original.daily_routine = true
+		if homes.has(id):
+			original.wander = homes[id]
+			original.position = homes[id].get_center()
+		if id == "llama": original.position = Vector2(705, 500)
+		original.speed = {"cow": 10.0, "horse": 12.0, "sheep": 11.0, "goose": 13.0, "duck": 10.0, "llama": 23.0}[str(original.species)]
 		var config:=CastArt.configure(original)
 		var actor: FeltActor = FeltActorType.new()
 		add_child(actor)
@@ -508,7 +678,7 @@ func _bind_grounds() -> void:
 		if actor_id.begins_with("duck"):
 			actor.adopt_ellipse(YardGround.POND_CENTER, Vector2(96, 28))
 		elif actor_id.begins_with("sheep"):
-			actor.adopt_ground(YardGround.pen_and_lawn(), true)
+			actor.adopt_ground(YardGround.lawn(), true)
 		else:
 			actor.adopt_ground(YardGround.lawn(), true)
 
@@ -519,18 +689,16 @@ func _grass_point() -> Vector2:
 
 
 func _spawn_grass() -> void:
-	_grass_sprite = Sprite2D.new()
-	_grass_sprite.texture = GRASS
-	_grass_sprite.position = _grass_point()
-	_grass_sprite.z_index = 3
-	_grass_sprite.scale = Vector2(0.9, 0.9)
-	add_child(_grass_sprite)
+	_grass_patch = GrassPatchType.new()
+	add_child(_grass_patch)
+	_grass_patch.setup(_grass_point())
 
 
 func _apply_weather_art() -> void:
 	if _backdrop == null:
 		return
-	_backdrop.texture = OVERCAST if weather == "overcast" else SUNNY
+	# Weather changes light, never the ground layout under the actors.
+	_backdrop.texture = SUNNY
 	if _backdrop.texture != null:
 		var tex_size := _backdrop.texture.get_size()
 		_backdrop.scale = Vector2(WORLD_SIZE.x / tex_size.x, WORLD_SIZE.y / tex_size.y)
@@ -595,6 +763,12 @@ func _rule_matches(rule: Dictionary, snapshot: Dictionary) -> bool:
 	var actors := _species_actors(owner)
 	if actors.is_empty():
 		return false
+	if bool(rule.get("observe_nearby",false)):
+		var close := false
+		for subject in actors:
+			if _player != null and _player.position.distance_to(subject.position) < 205.0:
+				close = true
+		if not close: return false
 	if rule.has("weather") and str(rule.weather) != str(snapshot.weather):
 		return false
 	if rule.has("player") and str(rule.player) != str(snapshot.player):
@@ -699,22 +873,66 @@ func _apply_rule(rule: Dictionary, force: bool) -> void:
 	_held[rule_id] = hold
 	_cooldowns[rule_id] = hold + float(TuningStore.get_value("gameplay.expression.cooldown", 16.0))
 	if bool(rule.get("spit", false)):
-		actor.spit()
-	if bool(rule.get("polaroid", false)) and rule_id not in collected:
-		collected.append(rule_id)
-		last_photo = rule_id
-		album_updated.emit(collected, rule_id)
-		_focus_seconds = 2.4
-		camera_focus_requested.emit(actor.global_position + Vector2(0, -40), 1.16)
+		var goose := actor_named("goose")
+		if goose != null:
+			actor.spit(goose.global_position + Vector2(0,-30))
+	if bool(rule.get("polaroid", false)):
+		var first_collection := rule_id not in collected
+		# Old saves keep all earned IDs. A missing scene photo is filled only
+		# on the next real matching encounter, without another unlock or camera jump.
+		if first_collection or not photo_moments.has(rule_id):
+			# Event reactions may flip the actor immediately; capture the same pose
+			# and attached rope together, not the preceding tick's endpoints.
+			_update_lead_rope()
+			var moment := PhotoMoment.capture(self,rule)
+			if not moment.is_empty(): photo_moments[rule_id] = moment
+			if first_collection:
+				collected.append(rule_id)
+				last_photo = rule_id
+			if first_collection or not moment.is_empty(): album_updated.emit(collected, rule_id)
+			if first_collection:
+				_focus_seconds = 2.4
+				camera_focus_requested.emit(actor.global_position + Vector2(0, -40), 1.16)
+
+
+func _update_lead_rope() -> void:
+	if _lead_rope == null: return
+	_lead_rope.visible = _leading and _player != null
+	if not _lead_rope.visible: return
+	var llama := actor_named("llama")
+	var hand := _player.grass_hand_global_position()
+	# Actual approved llama art's lower-neck point, relative to its foot anchor.
+	var collar := llama.to_global(Vector2(875, 665) - llama._ground_anchor)
+	var midpoint := (hand+collar)*0.5 + Vector2(0,10)
+	var cord := PackedVector2Array()
+	for i in 17:
+		var t := float(i)/16.0
+		cord.append(to_local(hand.lerp(midpoint,t).lerp(midpoint.lerp(collar,t),t)))
+	_lead_rope.points = cord
+	# A held rope belongs above its wearers' clothing, not behind every sprite.
+	_lead_rope.z_index = maxi(_player.z_index,llama.z_index)+2
 
 
 func _draw() -> void:
-	var shadow := Color(0.35, 0.22, 0.38, 0.16)
+	if _rejected_seconds > 0.0:
+		var alpha := minf(1.0, _rejected_seconds / 0.35) * 0.80
+		var ink := Color(0.52,0.31,0.20,alpha)
+		# Two quiet broken arcs mark the actual tap without implying a new path.
+		draw_arc(_rejected_point, 12.0, 0.30, PI-0.30, 20, ink, 2.2, true)
+		draw_arc(_rejected_point, 12.0, PI+0.30, TAU-0.30, 20, ink, 2.2, true)
+	if _has_walk_goal:
+		draw_arc(_walk_goal, 10.0, 0.0, TAU, 24, Color(1.0,0.92,0.65,0.85), 2.0)
 	if _player != null:
-		draw_set_transform(_player.position + Vector2(0, 2), 0.0, Vector2(1.0, 0.3))
-		draw_circle(Vector2.ZERO, 11.0 * YardGround.depth_at(_player.position.y), shadow)
+		_draw_contact_shadow(_player.position,Vector2(11,4)*YardGround.depth_at(_player.position.y))
 	for actor_id: String in _actors:
 		var actor: FeltActor = _actors[actor_id]
-		draw_set_transform(actor.position + Vector2(0, 2), 0.0, Vector2(1.0, 0.3))
-		draw_circle(Vector2.ZERO, 14.0 * YardGround.depth_at(actor.position.y), shadow)
+		var extent := Vector2(actor.body_radius.x,actor.body_radius.y*0.42)*YardGround.depth_at(actor.position.y)
+		_draw_contact_shadow(actor.position,extent)
 	draw_set_transform(Vector2.ZERO)
+
+
+func _draw_contact_shadow(point: Vector2, extent: Vector2) -> void:
+	draw_set_transform(point+Vector2(0,1.5),0.0,extent)
+	draw_circle(Vector2.ZERO,1.20,Color(0.29,0.25,0.16,0.035))
+	draw_circle(Vector2.ZERO,0.97,Color(0.29,0.25,0.16,0.060))
+	draw_circle(Vector2.ZERO,0.70,Color(0.29,0.25,0.16,0.055))

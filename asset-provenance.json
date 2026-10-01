@@ -783,6 +783,33 @@
       "useEvidence": [],
       "used": false,
       "usedBy": []
+    },
+    "assets/holiday/fx/grass_states_v2.png": {
+      "origin": "generated",
+      "generator": {
+        "name": "OpenAI imagegen",
+        "brief": "Transparent painterly Alpine meadow-grass atlas: sparse upright sage/olive blades, clipped stems and loose bunch. No external reference images."
+      },
+      "inputs": [],
+      "license": {},
+      "source": {},
+      "sha256": "sha256:d70dcd06d3b00d6c3c2d729240c8a5bcb171629c56a2b3f9714a57de3d782978",
+      "size": 1555671,
+      "status": "present",
+      "shipped": true,
+      "used": true,
+      "referenceEvidence": [
+        "scripts/entities/grass_art.gd"
+      ],
+      "useEvidence": [
+        "scripts/entities/grass_art.gd"
+      ],
+      "transformations": [
+        "Unmodified generated pixels, AtlasTexture regions and uniform runtime scale; Godot WebP import quality 0.85"
+      ],
+      "regions": [],
+      "usedBy": [],
+      "declaredUseEvidence": []
     }
   },
   "discoveries": {},
