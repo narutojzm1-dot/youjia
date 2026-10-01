@@ -60,11 +60,12 @@ Source SHA-256: 38f4c5f927f746b3dfa4c3a5d7edf0b7a3e828e27438418fa54f9e1565289412
     <progress id="loading-progress" aria-label="Download progress"></progress>
     <p id="loading-notice" hidden></p>
     <button id="loading-retry" type="button" hidden>Retry</button>
+    <p id="loading-build" style="opacity:0.45;font-size:11px;margin-top:8px">game-ca1fb67</p>
     <noscript>JavaScript is required to play this game.</noscript>
   </section>
   <script>
     (() => {
-      const config = {"args":[],"canvasResizePolicy":2,"emscriptenPoolSize":8,"ensureCrossOriginIsolationHeaders":true,"executable":"index","experimentalVK":false,"fileSizes":{"game-ca1fb67.pck":10505600,"game-ca1fb67.wasm":39514754},"focusCanvas":true,"gdextensionLibs":[],"godotPoolSize":4};
+      const config = {"args":[],"canvasResizePolicy":2,"emscriptenPoolSize":8,"ensureCrossOriginIsolationHeaders":true,"executable":"game-ca1fb67","experimentalVK":false,"fileSizes":{"game-ca1fb67.pck":10505600,"game-ca1fb67.wasm":39514754},"focusCanvas":true,"gdextensionLibs":[],"godotPoolSize":4};
       const threads = false;
       const canvas = document.getElementById('canvas');
       const loading = document.getElementById('loading');
@@ -73,6 +74,9 @@ Source SHA-256: 38f4c5f927f746b3dfa4c3a5d7edf0b7a3e828e27438418fa54f9e1565289412
       const detail = document.getElementById('loading-detail');
       const notice = document.getElementById('loading-notice');
       const retry = document.getElementById('loading-retry');
+      // 显示 build ID 以便调试（与 executable 名称对应）
+      const buildLabel = document.getElementById('loading-build');
+      if (buildLabel && config.executable) buildLabel.textContent = config.executable;
       document.getElementById('game-title').textContent = document.title;
       // Single-language holiday: pin Simplified Chinese on the loader.
       const zh = true;
@@ -134,8 +138,14 @@ Source SHA-256: 38f4c5f927f746b3dfa4c3a5d7edf0b7a3e828e27438418fa54f9e1565289412
         stopObserving();
         console.error('[game-loading] Startup failed', error);
         loading.hidden = false;
-        status.textContent = String(error.message || error).includes('WebGL2')
-          ? '此浏览器不支持 WebGL2，无法启动游戏。' : '游戏加载失败，请重试。';
+        const errMsg = String(error.message || error);
+        if (errMsg.includes('WebGL2')) {
+          status.textContent = '此浏览器不支持 WebGL2，无法启动游戏。';
+        } else if (errMsg.includes('Missing browser features')) {
+          status.textContent = '浏览器缺少必要特性，无法启动游戏。';
+        } else {
+          status.textContent = '游戏加载失败，请重试。';
+        }
         detail.textContent = String(error.message || error).slice(0, 240);
         stamp('failed');
         progress.hidden = true;
@@ -188,7 +198,7 @@ Source SHA-256: 38f4c5f927f746b3dfa4c3a5d7edf0b7a3e828e27438418fa54f9e1565289412
         }
       };
       const script = document.createElement('script');
-      script.src = 'index.js';
+      script.src = 'game-ca1fb67.js';
       script.addEventListener('load', start, { once: true });
       script.addEventListener('error', () => fail(new Error('Engine script could not be loaded')), { once: true });
       document.head.appendChild(script);
