@@ -16,7 +16,7 @@
 
 **验证：** Godot 4.7.2 自然行动、照片序列化与竖屏视口检查；路线遇上动物挡住落脚点时，在安全距离内结束散步。
 
-**当前状态：** 实施中。
+**当前状态：** 已完成，PR #14 已合并并发布。
 
 ---
 
@@ -140,4 +140,14 @@ Scale 弹跳从 1.04 提升至 1.08，点击可靠性不变。
 **Pages 状态：** 无需二次导出；`gh-pages` 已在 PR 合并前由代理发布 `game-8280e92`（gh-pages `index.html` `data-build="game-8280e92"` 确认正确）。  
 **main 顶端：** `70888c7 Merge pull request #13`
 
-*最后更新：2026-10-01*
+### 2026-10-02 · PR #14 合并与 Pages 发布
+
+**功能 PR：** [#14](https://github.com/narutojzm1-dot/youjia/pull/14)，合并提交 `dc51e1f`。为恢复发布流程，随后合并发布器分支 [#15](https://github.com/narutojzm1-dot/youjia/pull/15)、自动发布工作流 [#16](https://github.com/narutojzm1-dot/youjia/pull/16)、runner 修复 [#17](https://github.com/narutojzm1-dot/youjia/pull/17) 与 Pages 提交身份修复 [#18](https://github.com/narutojzm1-dot/youjia/pull/18)。
+
+**验证：** Godot 4.7.2 完整日常测试、Web 导出及 Actions 发布工作流均通过；Actions run [36967101265](https://github.com/narutojzm1-dot/youjia/actions/runs/36967101265)。
+
+**Pages：** `game-1347743`，来源提交 `13477438ddffac609ff7a6b118bac0c065d3bdba`；线上 `game-release.json`、HTML `data-build` 和版本化 JS/PCK/WASM 已核对。PCK SHA-256：`9230d31846dfac2583ac0551fe383a979d9d384c674e65428f3c9310b7459fd7`。
+
+---
+
+*最后更新：2026-10-02*
