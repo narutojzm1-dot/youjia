@@ -91,6 +91,22 @@ func run():
   if child is YardPropVisual and child.subject == "fishing":
    found = child.state.fish_state == world.FISH_CAUGHT
  check(found, "album instantiates the same frozen fishing prop")
+ # A fish can slip away while walking toward a bird. Cancel only that
+ # impossible feed route, not an unrelated walk in progress.
+ world.debug_place_player(Vector2(400, 540))
+ world.debug_place_actor("goose", Vector2(700, 470))
+ world._fish_carry_type = "small"
+ world._fish_carry_timer = 0.01
+ world.request_pointer_action(world.actor_named("goose").visual_hit_rect().get_center())
+ check(world._pending_interaction == "toss_fish:goose" and world._has_walk_goal, "fish feed begins an approach toward the selected bird")
+ world.tick(0.02, Vector2.ZERO)
+ check(world._fish_carry_type.is_empty() and world._pending_interaction.is_empty() and not world._has_walk_goal and world._walk_path.is_empty(), "expired fish cancels its impossible feeding approach")
+ world._fish_carry_type = "small"
+ world._fish_carry_timer = 0.01
+ world.request_pointer_action(Vector2(310, 535))
+ check(world._pending_interaction.is_empty() and world._has_walk_goal, "ordinary walk starts while carrying fish")
+ world.tick(0.02, Vector2.ZERO)
+ check(world._fish_carry_type.is_empty() and world._has_walk_goal, "fish expiry preserves an unrelated walk")
  album.free();world.free()
  root.get_node("AudioDirector").call("release_streams")
  print("[interaction-photo-tests] %d checks, failures=%s" % [checks, failures])
