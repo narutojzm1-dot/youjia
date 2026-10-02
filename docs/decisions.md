@@ -19,6 +19,7 @@
 | REQ-20261002-004 | 2026-10-02 | 为大鹅和其他动物补足动作与表情变化 | 待实施 | [在线版复核](playtests/2026-10-02-game-1347743.md#p1动物动态)。 |
 | REQ-20261002-005 | 2026-10-02 | 让天气与季节可感知；评估新增美术资源 | 待实施 | [在线版复核](playtests/2026-10-02-game-1347743.md#p1天气与季节)；晴/阴切换存在但绘制效果不明显。 |
 | REQ-20261002-006 | 2026-10-02 | 深入体验当前版本并提出大型玩法建设顺序 | 复核完成 | [game-1347743 体验记录](playtests/2026-10-02-game-1347743.md)；玩法建议已进入策划基准。 |
+| REQ-20261002-007 | 2026-10-02 | 携带的鱼在靠近鸭/鹅途中消失后，角色应停止已失效的投喂追踪，但继续普通散步 | 已发布；待浏览器体验复核 | [PR #19](https://github.com/narutojzm1-dot/youjia/pull/19)、[game-b82a7f5 发布核查](playtests/2026-10-02-game-b82a7f5.md)；未改变现有 20 秒携鱼时限。 |
 | DOC-20261002-001 | 2026-10-02 | 所有维护者可查阅需求/变更台账；始终维护一份游戏策划基准 | 已采纳 | 本规则、README 文档入口与 [策划基准](game-design.md) 已建立；PR #20 由合并提交 `aa821820d9b51c3cbc79e1eb4e362959df11cd95` 合入。 |
 | DOC-20261002-002 | 2026-10-02 | 在 GitHub PR 流程中提示引用需求编号、同步策划文档并附体验证据 | 已采纳 | [.github/PULL_REQUEST_TEMPLATE.md](../.github/PULL_REQUEST_TEMPLATE.md) 增加协作记录字段；PR #20 已合入。 |
 | DOC-20261002-003 | 2026-10-02 | 由 Codex 负责集成与 PR 合入，GROK/其他参与者提交独立功能 PR；明确并行分支和冲突处理规则 | 已变更（由 DOC-20261002-005 取代） | 原决定随 PR #20 合入；后续采用 PR 作者自行合入、独立子代理审核、Codex 总体兜底的分工。 |
@@ -183,6 +184,12 @@ Scale 弹跳从 1.04 提升至 1.08，点击可靠性不变。
 **验证：** Godot 4.7.2 完整日常测试、Web 导出及 Actions 发布工作流均通过；Actions run [36967101265](https://github.com/narutojzm1-dot/youjia/actions/runs/36967101265)。
 
 **Pages：** `game-1347743`，来源提交 `13477438ddffac609ff7a6b118bac0c065d3bdba`；线上 `game-release.json`、HTML `data-build` 和版本化 JS/PCK/WASM 已核对。PCK SHA-256：`9230d31846dfac2583ac0551fe383a979d9d384c674e65428f3c9310b7459fd7`。
+
+### 2026-10-02 · REQ-20261002-007 / PR #19 合并与 Pages 发布
+
+**历史：** 初始缺陷是携鱼向鸭/鹅移动期间鱼过期，投喂已不可能完成但角色继续追踪；[PR #19](https://github.com/narutojzm1-dot/youjia/pull/19) 在鱼消失时只清除 `toss_fish:*` 待执行路线，不改变普通散步或既有计时规则。合并提交 `b82a7f5c90a9f66acffbfac322681fe0466dccf0`。
+
+**验证和发布：** Godot 4.7.2 日常回归通过（核心 389 项、交互/照片 34 项）；Web 导出成功；[Actions run 36977273205](https://github.com/narutojzm1-dot/youjia/actions/runs/36977273205) 成功。线上 `game-release.json`、HTML 与 JS/WASM/PCK 对齐，版本 `game-b82a7f5`，PCK SHA-256 `20cb983f28209665aeed97b4110769cb28bc25a20821d9938e2b8b6ebe73e067`。尚未完成浏览器实际投喂操作复核，见[发布核查](playtests/2026-10-02-game-b82a7f5.md)。
 
 ---
 
