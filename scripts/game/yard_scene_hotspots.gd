@@ -5,6 +5,7 @@ extends RefCounted
 # balcony is not walkable: hit, safe approach and art anchors stay independent.
 const WINDOWBOX := "windowbox"
 const SHORE_STONES := "shore_stones"
+const FENCE_GATE := "fence_gate"
 static var CATALOG: Array[Dictionary] = [
 	{
 		"id": WINDOWBOX,
@@ -34,6 +35,22 @@ static var CATALOG: Array[Dictionary] = [
 		"reach": 54.0,
 		"label_key": "action.touch_shore",
 		"target_key": "target.shore_stones",
+	},
+	{
+		# The gate is only a painted background detail. The player remains
+		# well inside the yard while observing it; opening it needs separate art.
+		"id": FENCE_GATE,
+		"hit_polygon": PackedVector2Array([
+			Vector2(907, 412), Vector2(959, 412), Vector2(967, 440),
+			Vector2(970, 487), Vector2(961, 506), Vector2(910, 506),
+			Vector2(905, 480), Vector2(903, 444),
+		]),
+		"approach_points": [Vector2(830, 510), Vector2(820, 505)],
+		"visual_anchor": Vector2(929, 507),
+		"ambient_anchor": Vector2(1008, 393),
+		"reach": 64.0,
+		"label_key": "action.observe_fence",
+		"target_key": "target.fence_gate",
 	}
 ]
 
