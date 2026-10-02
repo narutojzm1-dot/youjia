@@ -118,6 +118,16 @@ static func sanitize(data: Variant) -> Dictionary:
 	}
 
 
+static func has_event_subject(snapshot: Dictionary, rule_id: String) -> bool:
+	if snapshot.is_empty(): return false
+	var subject := "plant" if rule_id == "plant_first_bloom" else "fishing" if rule_id == "fish_first_catch" else ""
+	if subject.is_empty(): return true
+	for item: Dictionary in snapshot.get("items", []):
+		if item.kind == "prop" and item.subject == subject:
+			return true
+	return false
+
+
 func setup(snapshot: Dictionary) -> void:
 	_snapshot = sanitize(snapshot)
 	if is_instance_valid(_stage):
@@ -155,6 +165,10 @@ func setup(snapshot: Dictionary) -> void:
 			if item.has("gait"):
 				sprite.material = _load_gait(item.gait)
 			visual = sprite
+		elif item.kind == "prop":
+			var prop := YardPropVisual.new()
+			prop.configure(item.subject, item.state)
+			visual = prop
 		else:
 			var line := Line2D.new()
 			for point: Array in item.points:
@@ -220,7 +234,11 @@ static func _collect(node: Node, world: Node2D, backdrop: Node, subject: String,
 		subject = "grass"
 	if node != backdrop:
 		var item: Dictionary = {}
-		if node is Sprite2D or node is AnimatedSprite2D:
+		if node is YardPropVisual:
+			item = {"kind": "prop", "subject": node.subject, "depth": _depth(node, world), "order": items.size(),
+				"transform": _matrix(world.global_transform.affine_inverse() * node.global_transform),
+				"modulate": _rgba(_tint(node, world)), "state": node.state.duplicate(true)}
+		elif node is Sprite2D or node is AnimatedSprite2D:
 			item = _capture_sprite(node, world, subject, _depth(node, world), items.size())
 		elif node is Line2D and node.points.size() >= 2:
 			var points: Array = []
@@ -304,18 +322,21 @@ static func _event_frame(rule: Dictionary, actors: Dictionary, items: Array) -> 
 			selected = ["cow"]
 			minimum = 240.0
 		"plant_first_bloom":
-			# 植物床是程序绘制的，不被 _collect 捕获；留 selected 为空，
-			# 在循环后用植物床坐标作为构图兜底
-			minimum = 200.0
+			selected = ["plant"]
+			minimum = 128.0
 		"fish_first_catch":
-			# 以持竿的玩家为构图中心（钓鱼竿/浮标是程序绘制，不可捕获）
-			selected = ["player"]
+			selected = ["player", "fishing"]
 			minimum = 200.0
 		_:
 			selected = [str(rule.get("owner", "llama"))]
 	var bounds := Rect2()
 	var found := false
 	for item: Dictionary in items:
+		if item.kind == "prop" and item.subject in selected:
+			var prop_bounds := _transform(item.transform) * YardPropVisual.bounds(item.subject)
+			bounds = bounds.merge(prop_bounds) if found else prop_bounds
+			found = true
+			continue
 		if item.kind != "sprite" or item.subject not in selected:
 			continue
 		var texture := _load_texture(item.texture)
@@ -341,7 +362,7 @@ static func _event_frame(rule: Dictionary, actors: Dictionary, items: Array) -> 
 
 
 static func _sanitize_item(raw: Variant) -> Dictionary:
-	if not raw is Dictionary or raw.get("kind") not in ["sprite", "line"]:
+	if not raw is Dictionary or raw.get("kind") not in ["sprite", "line", "prop"]:
 		return {}
 	if not raw.get("subject") is String or raw.subject.length() > 64:
 		return {}
@@ -353,6 +374,11 @@ static func _sanitize_item(raw: Variant) -> Dictionary:
 		if absf(float(raw.transform[index])) > 64.0: return {}
 	var item := {"kind": raw.kind, "subject": raw.subject, "depth": int(raw.depth), "order": int(raw.order),
 		"transform": raw.transform.duplicate(), "modulate": raw.modulate.duplicate()}
+	if raw.kind == "prop":
+		var state := YardPropVisual.sanitize_state(raw.subject, raw.get("state"))
+		if state.is_empty(): return {}
+		item.state = state
+		return item
 	if raw.kind == "line":
 		if not _number(raw.get("width"), 0.01, 32.0) or not _numbers(raw.get("color"), 4, 0, 4): return {}
 		if not _numbers(raw.get("caps"), 2, 0, 2) or not _number(raw.get("joint"), 0, 2): return {}

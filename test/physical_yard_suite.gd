@@ -210,8 +210,10 @@ func _walk_to(world, goal: Vector2, fps: int, metric: Dictionary, label: String,
 		_observe(world, metric)
 		if not world._has_walk_goal:
 			break
-	var reached: bool = player.position.distance_to(goal) <= 14.0 and not world._has_walk_goal
-	_check(reached, label + " reaches its goal without a deadlock (player %s, goal %s, gap %.1fpx)" % [player.position, goal, player.position.distance_to(goal)])
+	var gap: float = player.position.distance_to(goal)
+	var occupied_goal := not YardBodies.clear_at(goal, player.body_radius * YardGround.depth_at(goal.y), world.physical_obstacles("player"))
+	var reached: bool = gap <= (16.0 if occupied_goal else 14.0) and not world._has_walk_goal
+	_check(reached, label + (" settles safely beside an occupied destination" if occupied_goal else " reaches its clear destination") + " (player %s, goal %s, gap %.1fpx)" % [player.position, goal, gap])
 	if not reached:
 		_print_route_state(world, label)
 	return reached

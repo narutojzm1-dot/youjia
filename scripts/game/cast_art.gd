@@ -37,6 +37,7 @@ static func configure(original: Dictionary) -> Dictionary:
 	config.source_scale_ratio=ratio
 	config.native_facing=float(data.native_facing)
 	config.ground_anchor=Vector2(float(anchor[0]),float(anchor[1]))
+	config.art_bounds=Rect2(float(bounds[0]),float(bounds[1]),float(bounds[2]),float(bounds[3]))
 	config.particle_art_scale=1.0/ratio
 	if data.has("mouth_anchor"):
 		var mouth: Array=data.mouth_anchor

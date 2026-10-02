@@ -35,7 +35,7 @@ func review():
  var w=main._world;var p=w._player
  await create_timer(0.5).timeout
  var start=p.position
- mouse(root.get_canvas_transform()*Vector2(310,530))
+ mouse(root.get_canvas_transform()*Vector2(320,555))
  await frames(30)
  check(p.position.distance_to(start)>2,"raw mouse moves initial player through GUI")
  tap(Vector2(340,600))

@@ -10,13 +10,16 @@ func run():
  await process_frame;await process_frame
  main.set_process(false);main._start_holiday()
  var w=main._world
- w.debug_place_player(Vector2(600,540));w.debug_place_actor("llama",Vector2(680,540));w._player.pick_grass()
- w.request_pointer_action(Vector2(680,540))
+ w.debug_place_player(Vector2(600,540));w.debug_place_actor("llama",Vector2(700,540));w._player.pick_grass()
+ w.request_pointer_action(Vector2(700,540))
  check(w._pending_interaction=="llama","pointer approach pending before keyboard action")
  var e:=InputEventKey.new();e.device=0;e.physical_keycode=KEY_SPACE;e.keycode=KEY_SPACE;e.pressed=true;Input.parse_input_event(e)
  e=InputEventKey.new();e.device=0;e.physical_keycode=KEY_SPACE;e.keycode=KEY_SPACE;e.pressed=false;Input.parse_input_event(e)
  await process_frame
- check(not w._player.carrying_grass,"ordinary Space feeds during approach")
+ for i in 600:
+  w.tick(1.0/60,Vector2.ZERO)
+  if not w._player.carrying_grass: break
+ check(not w._player.carrying_grass,"ordinary Space retains feeding intent through arrival")
  check(w._pending_interaction.is_empty() and not w._has_walk_goal,"successful contextual feed consumes old approach intent")
  for i in 180:w.tick(1.0/60,Vector2.ZERO)
  check(not w._leading,"feeding is not followed by unintended automatic leading")

@@ -1,13 +1,6 @@
 extends Node2D
-## 世界特效覆盖层：z_index=50，在所有动物精灵之上渲染。
-## 由 YardWorld 在 setup() 中创建并每帧更新。
-## 包含：宠物目标弧（解决 z_index 遮挡问题）、钓鱼庆祝扩散环。
-##
-## 根因修复说明（playtest #3 硬刷新失败）：
-## YardWorld._draw() 在 z_index=0 的世界层渲染，所有动物精灵作为子节点
-## 在同一 z_index 但更晚加入场景树，因此渲染顺序在 _draw() 之上。
-## 目标弧和庆祝环因此被动物精灵完全遮挡——玩家无论如何都看不到。
-## 通过将这两种特效移至独立 Node2D（z_index=50），确保始终渲染在动物之上。
+## YardWorld places this layer above the actual maximum foot-Y depth each tick.
+## Target selection is shared with the HUD and keyboard action resolver.
 
 # ── 宠物目标弧（可抚摸动物的橙色选中指示）─────────────────────────────────────
 ## Vector2.INF = 无目标（跳过绘制）
@@ -52,7 +45,7 @@ func _draw_pet_arc() -> void:
 
 
 ## 钓鱼庆祝扩散环：金色最外圈 + 主色外圈 + 白内圈 + 8方向粒子，约 2.6 秒
-## z_index=50 确保渲染在鸭/鹅等水塘精灵之上，玩家必然看到
+## Layer depth follows the yard residents, including ducks and geese.
 func _draw_fish_rings() -> void:
 	if fish_ring_time <= 0.0:
 		return
