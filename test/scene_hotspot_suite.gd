@@ -36,6 +36,7 @@ func run() -> void:
 	check(YardInteraction.pointer(world, shore_click).target == "shore_stones", "tapping the real painted bank stone resolves a distinct water-touch action")
 	check(not YardGround.in_pond(Vector2(510, 612)) and YardInteraction.pointer(world, Vector2(510, 612)).target == "shore_stones", "the prominent painted boulder below the stone rim is clickable too")
 	check(YardInteraction.pointer(world, Vector2(445, 615)).target != "shore_stones" and YardInteraction.pointer(world, Vector2(565, 580)).target == "fishing", "expanded boulder region remains separate from grass and actual pond water")
+	check(YardInteraction.pointer(world, Vector2(923, 470)).target == "fence_gate", "the painted wooden gate is a distinct yard-side observation target")
 	# Start away from the cottage, with animals outside the route. Real tick()
 	# advances the route; teleportation is only used to prepare the fixture.
 	for actor_id: String in world._actors:
@@ -96,6 +97,7 @@ func run() -> void:
 	check(world._pending_interaction.is_empty() and world._scene_feedback.active_snapshot().is_empty(), "new walk cancels an unfinished flower-box approach without a false bloom")
 	world.free()
 	check_shore_stones()
+	check_fence_gate()
 	root.get_node("AudioDirector").call("release_streams")
 	print("[scene-hotspot-tests] %d checks, failures=%s" % [checks, failures])
 	quit(0 if failures.is_empty() else 1)
@@ -175,3 +177,94 @@ func check_shore_stones() -> void:
 	check(world._scene_feedback.dragonfly_snapshot().is_empty() and world._scene_feedback.ripple_snapshot().is_empty(), "pause and album cancellation clear both shore paintings")
 	root.get_node("TuningStore").set_value("ui.reduced_motion", false)
 	world.free()
+
+func check_fence_gate() -> void:
+	var world = load("res://scripts/game/yard_world.gd").new()
+	root.add_child(world)
+	world.setup()
+	var player = world.get_player()
+	var gate := Vector2(923, 470)
+	var fence := YardSceneHotspots.get_hotspot("fence_gate")
+	var approach: Vector2 = fence.approach_points[0]
+	check(Geometry2D.is_point_in_polygon(gate, fence.hit_polygon), "the actual painted wooden gate is in the authored hit polygon")
+	check(not Geometry2D.is_point_in_polygon(Vector2(1070, 430), fence.hit_polygon) and not Geometry2D.is_point_in_polygon(Vector2(830, 470), fence.hit_polygon) and not Geometry2D.is_point_in_polygon(Vector2(895, 480), fence.hit_polygon), "shed wall, old non-walkable rail, and bare lawn are not mislabeled as a gate")
+	check(not YardGround.allows(gate, YardGround.lawn(), true) and YardGround.allows(approach, YardGround.lawn(), true) and approach.distance_to(gate) > 75.0, "gate art is outside the lawn but its observation footpoint is safely inside")
+	check(fence.ambient_anchor.x - approach.x <= 190.0, "shed-feather encounter remains within the actual portrait camera beside the yard-side approach")
+	check(YardInteraction.pointer(world, world._fishing_point()).target == "fishing" and YardInteraction.pointer(world, world._plant_point()).target == "plant", "existing pond and garden clicks still keep priority")
+	for actor_id: String in world._actors:
+		world.debug_place_actor(actor_id, Vector2(330, 445) + Vector2(world._actors.keys().find(actor_id) * 32, 0))
+	world.debug_place_player(Vector2(500, 518))
+	var album = world.collected.duplicate()
+	var moments = world.photo_moments.duplicate(true)
+	var notices: Array[String] = []
+	world.notice_requested.connect(func(key: String): notices.append(key))
+	world.request_pointer_action(gate)
+	check(world._pending_interaction == "fence_gate" and world._has_walk_goal and world._walk_goal == approach, "distant gate click starts only a safe yard-side route")
+	check(world.primary_action().target == "fence_gate" and world.primary_action_key() == "action.observe_fence" and world.action_target_key(world.primary_action()) == "target.fence_gate", "HUD, keyboard and action button retain the selected wooden fence")
+	world.try_interact()
+	world.request_primary_action()
+	check(world._pending_interaction == "fence_gate" and world._scene_feedback.fence_snapshot().is_empty(), "Space and button while approaching do not falsely move any painted grass")
+	for frame in 960:
+		world.tick(1.0 / 60.0, Vector2.ZERO)
+		if not world._scene_feedback.fence_snapshot().is_empty():
+			break
+	var response: Dictionary = world._scene_feedback.fence_snapshot()
+	check(not response.is_empty() and response.get("anchor", Vector2.INF) == fence.visual_anchor and not world._has_walk_goal, "only real arrival within the yard paints the gate-side grass")
+	check(YardGround.allows(player.position, YardGround.lawn(), true) and player.position.distance_to(approach) < 64.0, "player stays inside the fence instead of passing through the painted gate")
+	check(notices.count("notice.fence_gate") == 1 and not notices.has("notice.fishing.cast"), "fence success has its own one-time line and does not fish")
+	check(world.collected == album and world.photo_moments == moments and not player.carrying_grass, "observing the gate never changes items, photo moments or saved album")
+	world.request_pointer_action(Vector2(650, 515))
+	check(world._scene_feedback.fence_snapshot().is_empty() and world._scene_feedback.feather_snapshot().is_empty(), "moving away cancels both grass and shed-feather paintings immediately")
+	world.debug_place_player(Vector2(500, 518))
+	world.request_pointer_action(gate)
+	check(world._pending_interaction == "fence_gate" and world._scene_feedback.fence_snapshot().is_empty(), "a second distant gate tap waits for another genuine arrival")
+	world.request_pointer_action(Vector2(650, 515))
+	check(world._pending_interaction.is_empty() and world._scene_feedback.fence_snapshot().is_empty(), "new grass walk cancels a pending gate observation without a false response")
+	player.carrying_grass = true
+	check(YardInteraction.pointer(world, gate).target != "fence_gate", "grass held for the llama cannot be stolen by a gate tap")
+	player.carrying_grass = false
+	world._fish_carry_type = "small"
+	check(YardInteraction.pointer(world, gate).target != "fence_gate", "fish held for a bird cannot be stolen by a gate tap")
+	world._fish_carry_type = ""
+	world._fish_state = world.FISH_CASTING
+	check(YardInteraction.pointer(world, gate).target != "fence_gate", "an active cast cannot be replaced by looking at the fence")
+	world._fish_state = world.FISH_IDLE
+	world.free()
+
+	var ambient = load("res://scripts/game/yard_world.gd").new()
+	root.add_child(ambient)
+	ambient.setup()
+	var guest_album = ambient.collected.duplicate()
+	var guest_moments = ambient.photo_moments.duplicate(true)
+	for actor_id: String in ambient._actors:
+		ambient.debug_place_actor(actor_id, Vector2(340, 455) + Vector2(ambient._actors.keys().find(actor_id) * 32, 0))
+	ambient.debug_place_player(Vector2(695, 510))
+	ambient.tick(0.02, Vector2.ZERO)
+	check(ambient._scene_feedback.feather_snapshot().is_empty(), "shed feather does not appear far from the gate")
+	ambient.request_pointer_action(Vector2(830, 510)) # Ordinary grass walk, not the gate.
+	check(ambient._pending_interaction.is_empty(), "ambient breeze never requires tapping the gate or spending a resource")
+	for frame in 720:
+		ambient.tick(1.0 / 60.0, Vector2.ZERO)
+		if not ambient._scene_feedback.feather_snapshot().is_empty():
+			break
+	var guest: Dictionary = ambient._scene_feedback.feather_snapshot()
+	check(not guest.is_empty() and guest.get("anchor", Vector2.INF) == fence.ambient_anchor and ambient._scene_feedback.fence_snapshot().is_empty(), "an independent feather drifts from the actual shed eave while walking nearby")
+	ambient.cancel_scene_feedback()
+	check(not ambient._scene_feedback.feather_seen() and ambient._scene_feedback.feather_snapshot().is_empty(), "a first brief glimpse can be seen again after walking away")
+	ambient.debug_place_player(Vector2(695, 510))
+	ambient.tick(0.02, Vector2.ZERO)
+	ambient.debug_place_player(approach + Vector2(3, 2))
+	ambient.tick(0.02, Vector2.ZERO)
+	check(not ambient._scene_feedback.feather_snapshot().is_empty(), "returning to the same fence restores a missed encounter without a daily cooldown")
+	ambient.set_weather("overcast")
+	check(ambient._scene_feedback.modulate == ambient._backdrop.modulate, "feather and grass follow the painted overcast tint")
+	root.get_node("TuningStore").set_value("ui.reduced_motion", true)
+	ambient.tick(0.02, Vector2.ZERO)
+	guest = ambient._scene_feedback.feather_snapshot()
+	check(guest.get("reduced_motion", false) and ambient._scene_feedback._feather.texture.resource_path.ends_with("shed_feather.png"), "reduced motion shows a full still feather painting at the shed")
+	ambient.tick(1.25, Vector2.ZERO)
+	check(ambient._scene_feedback.feather_seen() and ambient.collected == guest_album and ambient.photo_moments == guest_moments, "only a viewed feather is remembered for this session, never stored as a reward")
+	ambient.cancel_scene_feedback()
+	check(ambient._scene_feedback.feather_snapshot().is_empty(), "pause or album removes the transient feather immediately")
+	root.get_node("TuningStore").set_value("ui.reduced_motion", false)
+	ambient.free()
