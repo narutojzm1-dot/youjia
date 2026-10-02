@@ -61,6 +61,7 @@ var _posture_metadata: Dictionary = {}
 var _posture_id := "idle"
 var _idle_ground_anchor := Vector2(-1,-1)
 var _idle_art_bounds := Rect2()
+var _encounter_saved_base_scale := -1.0
 ## 生态闲置扫视：当动物静止且玩家在近旁时，偶尔短暂转向玩家
 ## _glance_timer > 0 时处于扫视状态；=0 时处于冷却等待
 var _glance_timer := 0.0        # 正数=正在扫视中（秒），负数=冷却中
@@ -223,6 +224,12 @@ func set_pose(point: Vector2, next_scale: float, face: float) -> void:
 		_rig.reset_contacts()
 
 
+func set_encounter_pose(point: Vector2, next_scale: float, face: float) -> void:
+	if _encounter_saved_base_scale < 0.0:
+		_encounter_saved_base_scale = _base_scale
+	set_pose(point, next_scale, face)
+
+
 func show_goose_encounter_cel(cel: String) -> void:
 	if species != "goose" or not _textures.has(cel) or _sprite == null:
 		return
@@ -241,6 +248,9 @@ func show_goose_encounter_cel(cel: String) -> void:
 
 
 func release_encounter_pose() -> void:
+	if _encounter_saved_base_scale >= 0.0:
+		_base_scale = _encounter_saved_base_scale
+		_encounter_saved_base_scale = -1.0
 	posed = false
 	_following = false
 	_lead_target = null

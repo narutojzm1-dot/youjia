@@ -477,8 +477,8 @@ func _tick_goose_mount_encounter(delta: float, move: Vector2) -> void:
 				_goose_mount_phase = 2
 				_goose_mount_seconds = 0.0
 				var back_point := horse.position + Vector2(10, -52)
-				goose.set_pose(back_point, 0.30, -1.0)
-				horse.set_pose(horse.position, 0.36, horse.facing)
+				goose.set_encounter_pose(back_point, 0.30, -1.0)
+				horse.set_encounter_pose(horse.position, 0.36, horse.facing)
 				goose.show_goose_encounter_cel("idle")
 				var close_focus := (goose.position + horse.position) * 0.5 + Vector2(0, -24)
 				cinematic_view_changed.emit("close")
