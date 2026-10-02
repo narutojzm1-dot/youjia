@@ -17,6 +17,12 @@ func same_numbers(a:Array,b:Array)->bool:
  for i in a.size():
   if absf(float(a[i])-float(b[i]))>0.00001:return false
  return true
+func descendants(node:Node)->Array:
+ var result:Array=[]
+ for child in node.get_children():
+  result.append(child)
+  result.append_array(descendants(child))
+ return result
 func feed_naturally(world):
  world.request_pointer_action(world._grass_point())
  for i in 2400:
@@ -43,18 +49,30 @@ func run():
  check(fed_id in store.get_album(),"new photo ID is saved")
  check(not moment.is_empty() and moment.get("rule_id")==fed_id,"real encounter scene is saved with its photo ID")
  check(moment.get("day",0)==world.holiday_day,"new travel photograph retains the real in-game day")
+ check(moment.has("caption_variant") and int(moment.caption_variant) in [0,1],"new photo chooses a bounded caption variant at capture time")
  check(main._cam_target_zoom==1.0,"new travel photograph is explained by a visible print instead of an unexplained camera zoom")
  var photo_arrival:Node=main._ui_layer.get_node_or_null("PhotoArrival")
  check(photo_arrival!=null and photo_arrival.visible,"new travel photograph shows its real captured image before tucking into the album")
  check(photo_arrival.mouse_filter==Control.MOUSE_FILTER_IGNORE and photo_arrival._picture.mouse_filter==Control.MOUSE_FILTER_IGNORE,"the print and its true picture never block walking or touch input")
  check(photo_arrival!=null and photo_arrival._caption.text.contains("假期第1天") and photo_arrival._caption.text.contains("草泥马"),"the first print names the real vacation day and photographed animal")
  var i18n:Node=root.get_node("I18n")
+ var original_caption:=PhotoDiary.caption(moment)
  i18n.set_locale("en")
  check(photo_arrival!=null and photo_arrival._caption.text.contains("Holiday day 1") and photo_arrival._caption.text.contains("llama"),"existing first print changes to the same English day and event without inventing a new encounter")
+ check(PhotoDiary.caption(moment)!=original_caption and PhotoDiary.caption(moment).contains("llama"),"English uses the same saved event/variant rather than drawing a new caption")
  i18n.set_locale("zh-CN")
- var old_moment:Dictionary=moment.duplicate(true);old_moment.erase("day")
+ check(PhotoDiary.caption(moment)==original_caption,"switching back to Chinese restores the exact saved caption")
+ var old_moment:Dictionary=moment.duplicate(true);old_moment.erase("day");old_moment.erase("caption_variant")
  check(not PhotoMoment.sanitize(old_moment).is_empty() and not PhotoMoment.sanitize(old_moment).has("day"),"a version-one photograph without a date remains valid without a fake first day")
  check(PhotoDiary.caption(old_moment)==i18n.t("photo.llama_fed.title"),"legacy undated photographs retain their original title")
+ var dated_legacy:=moment.duplicate(true);dated_legacy.erase("caption_variant")
+ check(PhotoDiary.caption(dated_legacy)==i18n.t("photo.diary.day",{"day":str(moment.day),"moment":i18n.t("photo.diary.llama_fed_gentle")}),"legacy dated photos retain original title and do not retroactively change wording")
+ var bad_variant:=moment.duplicate(true);bad_variant.caption_variant=3
+ check(PhotoMoment.sanitize(bad_variant).is_empty(),"out-of-range caption variant cannot enter saved photo")
+ bad_variant.caption_variant=2
+ check(PhotoMoment.sanitize(bad_variant).is_empty(),"a two-sentence photo rejects variant two even though other events allow it")
+ bad_variant.caption_variant=1.5
+ check(PhotoMoment.sanitize(bad_variant).is_empty(),"fractional caption variant cannot enter saved photo")
  var wrong_day:Dictionary=moment.duplicate(true);wrong_day.day=0
  check(PhotoMoment.sanitize(wrong_day).is_empty(),"an invalid photo day never survives snapshot validation")
  photo_arrival.dismiss()
@@ -72,16 +90,13 @@ func run():
  check(same_numbers(pose,player_pose(store.get_photo_moment(fed_id))),"saved moment does not follow later player movement")
  store._load()
  check(fed_id in store.get_album() and same_numbers(pose,player_pose(store.get_photo_moment(fed_id))),"photo pose and progress survive reload")
+ check(store.get_photo_moment(fed_id).get("caption_variant",-1)==moment.caption_variant and PhotoDiary.caption(store.get_photo_moment(fed_id))==original_caption,"saved variant and Chinese sentence survive real disk reload")
  main._show_album();await process_frame
  var scene_cards:=0
  var matching_diary:=false
- for card in main._album_grid.get_children():
-  for child in card.get_children():
-   if child is PhotoMoment:
-    scene_cards+=1
-    if child._snapshot.get("rule_id")==fed_id:
-     for label in card.get_children():
-      if label is Label and label.text==PhotoDiary.caption(moment): matching_diary=true
+ for child in descendants(main._album_spread):
+  if child is PhotoMoment and child._snapshot.get("rule_id")==fed_id:scene_cards+=1
+  if child is Label and child.text==PhotoDiary.caption(moment):matching_diary=true
  check(scene_cards>=1,"album actually uses event-scene cards")
  check(matching_diary,"the album presents the exact same day and sentence as the newly captured print")
  main._hide_album()
@@ -102,7 +117,7 @@ func run():
   if main._photo_arrival._snapshot.get("rule_id","")==horse_id:break
   if main._photo_arrival._tween!=null:main._photo_arrival._tween.kill()
   main._photo_arrival._finish()
- check(main._photo_arrival.visible and main._photo_arrival._caption.text.contains("晴天低下了头") and not main._photo_arrival._caption.text.contains("生气"),"the real horse print describes its lowered head, never invents an angry horse")
+ check(main._photo_arrival.visible and main._photo_arrival._caption.text==PhotoDiary.caption(horse_photo) and not main._photo_arrival._caption.text.contains("生气"),"the horse print uses its saved truthful sentence, never invents an angry horse")
  check(PhotoMoment.has_event_subject(horse_photo,horse_id),"the horse diary entry contains the captured subject and not just a fabricated title")
  # Existing version3 progress remains earned; missing images are captured only
  # when those events actually occur again, silently, without a new camera jump.

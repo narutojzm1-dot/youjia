@@ -72,6 +72,16 @@ func _test_event(rule: Dictionary, index: int) -> void:
 			world.debug_place_player(Vector2(560, 532))
 		"duck_pond_chorus":
 			world.debug_place_player(Vector2(830, 530))
+		"goose_pond_rest":
+			world.debug_place_player(Vector2(755, 522))
+			world.actor_named("goose").state = "rest"
+			world.actor_named("goose")._idle_time = 8.0
+		"goose_duck_shore":
+			world.debug_place_actor("duck_a", Vector2(769, 534))
+			world.debug_place_player(Vector2(739, 512))
+		"sheep_pair_near":
+			world.debug_place_actor("sheep_b", world.actor_named("sheep_a").position + Vector2(48, 8))
+			world.debug_place_player(Vector2(343, 515))
 		"cow_rare_calm":
 			world.debug_place_player(Vector2(416, 535))
 	if rule_id == "plant_first_bloom": world._plant_state = world.PLANT_BLOOMED
@@ -102,6 +112,7 @@ func _test_event(rule: Dictionary, index: int) -> void:
 		return
 	_check(snapshot.version == 1 and snapshot.rule_id == rule_id, "%s version and keyed identity" % rule_id)
 	_check(snapshot.weather == world.weather, "%s preserves light" % rule_id)
+	_check(snapshot.has("caption_variant") and int(snapshot.caption_variant) >= 0 and int(snapshot.caption_variant) < int(rule.get("caption_variants", 1)), "%s saves exactly one permitted caption variant" % rule_id)
 	var crop_focus := Vector2(float(snapshot.focus[0]), float(snapshot.focus[1]))
 	var crop_extent := Vector2.ONE * float(snapshot.span)
 	var crop_bounds := Rect2(crop_focus - crop_extent * 0.5, crop_extent)
@@ -143,6 +154,12 @@ func _test_event(rule: Dictionary, index: int) -> void:
 		var focus := Vector2(snapshot.focus[0], snapshot.focus[1])
 		var crop := Rect2(focus - Vector2.ONE * float(snapshot.span) * 0.5, Vector2.ONE * float(snapshot.span))
 		_check(crop.encloses(Rect2(YardGround.POND_CENTER - YardGround.POND_RADIUS, YardGround.POND_RADIUS * 2)), "duck composition contains the real pond")
+	if rule_id == "goose_pond_rest":
+		_check(world.actor_named("goose")._posture_id == "rest" and _has_subject(snapshot, "goose"), "the goose photo contains the actually painted resting pose")
+	if rule_id == "goose_duck_shore":
+		_check(_has_subject(snapshot, "goose") and _has_subject(snapshot, "duck_a"), "pond-side snapshot contains the real goose and nearby duck")
+	if rule_id == "sheep_pair_near":
+		_check(_has_subject(snapshot, "sheep_a") and _has_subject(snapshot, "sheep_b"), "sheep pair snapshot contains both real sheep")
 	var card := Moment.new()
 	card.position = Vector2(30 + (index % 3) * 405, 30 + (index / 3) * 335)
 	card.setup(restored)
@@ -222,6 +239,13 @@ func _count_atlases(snapshot: Dictionary) -> int:
 	for item: Dictionary in snapshot.get("items", []):
 		if item.kind == "sprite" and item.texture.has("atlas"): count += 1
 	return count
+
+
+func _has_subject(snapshot: Dictionary, subject: String) -> bool:
+	for item: Dictionary in snapshot.get("items", []):
+		if item.get("subject", "") == subject and item.get("kind", "") == "sprite":
+			return true
+	return false
 
 
 func _check(condition: bool, message: String) -> void:

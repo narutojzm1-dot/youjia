@@ -1051,12 +1051,42 @@ func _rule_matches(rule: Dictionary, snapshot: Dictionary) -> bool:
 	# min_day 节奏门控：防止玩家第一次进院就集齐所有拍立得
 	if rule.has("min_day") and holiday_day < int(rule.min_day):
 		return false
+	# A resting goose is only photographable when its complete lying-down cel
+	# is actually being shown, not merely when an internal timer says "rest".
+	if rule.has("owner_posture"):
+		var painted := false
+		for actor: FeltActor in actors:
+			if actor.state == "rest" and actor._posture_id == str(rule.owner_posture):
+				painted = true
+		if not painted: return false
 	if bool(rule.get("observe_nearby",false)):
 		var close := false
 		for subject in actors:
 			if _player != null and _player.position.distance_to(subject.position) < 205.0:
 				close = true
 		if not close: return false
+	if rule.has("observe_species"):
+		var visible_companions := _species_actors(str(rule.observe_species))
+		if not _player_sees(visible_companions): return false
+	if rule.has("observe_nearest_companion"):
+		# PhotoMoment frames the closest companion to the owner. Validate that
+		# exact animal, not a different duck standing in the traveler's view.
+		var photographed_owner: FeltActor = actors[0]
+		var photographed_companion: FeltActor = null
+		var nearest_distance := INF
+		for candidate: FeltActor in _species_actors(str(rule.observe_nearest_companion)):
+			var distance: float = photographed_owner.position.distance_squared_to(candidate.position)
+			if distance < nearest_distance:
+				nearest_distance = distance
+				photographed_companion = candidate
+		if photographed_companion == null:
+			return false
+		if not photographed_owner.is_near(photographed_companion, float(TuningStore.get_value("gameplay.proximity.radius", 92.0))):
+			return false
+		if rule.has("zone") and photographed_companion.current_zone != str(rule.zone):
+			return false
+		if not _player_sees([photographed_companion]):
+			return false
 	if rule.has("weather") and str(rule.weather) != str(snapshot.weather):
 		return false
 	if rule.has("player") and str(rule.player) != str(snapshot.player):
