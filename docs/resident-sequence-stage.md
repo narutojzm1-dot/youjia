@@ -66,12 +66,24 @@ while movement and interaction remain available. Turning uses the existing
 facing hysteresis and mirrors the right-facing art.
 
 Minimal root calibration uses 52 world pixels per full cycle. At the accepted
-12 frames/sec, sixteen frames take 1.333 seconds, giving 39px/s at unit depth.
-The sequence mode applies 39/96 to the existing base movement tuning value;
-thus its default96 reference gives39 actualpx/s, and leading/depth multipliers
-still apply. This is intentionally slower than the old96px/s character. Visual
-scale is included when converting distance to frame progress. No accepted pose
-or walk PNG was redrawn or re-timed independently.
+12 frames/sec authoring rate, sixteen frames take 1.333 seconds. The original
+integration applied a 39/96 movement multiplier, yielding 39px/s at unit depth;
+player feedback later identified this as too slow.
+
+### Speed follow-up in progress · REQ-20261002-001
+
+The active implementation changes the sequence movement multiplier to 0.64,
+giving about 61.4px/s at the default 96px/s tuning and unit depth. Frame phase
+continues to follow actual post-collision travel, preserving the stride-to-root
+registration. At that speed the animation advances at about 18.9 frames/sec
+(about 1.18 stride cycles/sec) at unit depth; 12 fps is the original authoring
+reference, not a playback cap. The approved poses and walk PNGs remain
+unchanged. The speed adjustment was browser-playtested on 2026-10-02 in the
+exported Web build: keyboard movement, stop-to-idle, and left/right mirroring
+were exercised at 1280×720 with no browser errors. Measured test-scene
+displacement was 167.2–167.9 world pixels over 3 seconds at 30/60/120 Hz. This
+confirms frame-rate stability and the rendered state transitions; naturalness
+remains a human product judgment.
 
 Regression coverage includes default/legacy selection isolation, 30/60/120Hz
 travel stability, keyboard and existing click-goal travel, start/stop/turn,
@@ -79,3 +91,15 @@ teleport reset, visible grass carrying, feeding, photo collection, leading,
 and reduced motion. Actual rendered yard evidence covers walking, stopping,
 mirroring and returning to idle. Small residual foot drift and the two shoes'
 different viewing angles remain the accepted art limitations.
+
+
+### Speed playtest follow-up · 2026-10-02
+
+The earlier locomotion assertion still enforced the old 100–112px/3s range after
+the multiplier changed. It now asserts 160–175px/3s at the standard fixture,
+while the existing cross-rate stability assertion remains. `npm run
+verify:locomotion` passes all 410 locomotion checks plus interaction and
+viewport audits. A fresh Web export loaded in Chromium (HTTP 200, canvas ready,
+no JavaScript errors); keyboard walk, stop-to-idle, and mirrored turning were
+visually checked. This is evidence for the speed revision, not a claim that
+walking quality is fully solved.

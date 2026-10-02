@@ -721,7 +721,7 @@ func _test_sequence_default() -> void:
 		_check(actor._sequence_walker.distance_phase==0.0,"relocation clears sequence phase")
 		actor.free()
 	_check(distances.max()-distances.min()<1.0,"calibrated sequence movement is frame-rate stable")
-	_check(distances[1]>100.0 and distances[1]<112.0,"accepted 12fps walk uses calibrated leisurely root speed")
+	_check(distances[1]>160.0 and distances[1]<175.0,"accepted sequence walk uses the updated leisurely root speed")
 	var world:=YardWorld.new()
 	add_child(world)
 	world.setup([])
