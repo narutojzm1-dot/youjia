@@ -483,6 +483,7 @@ func _interact_with_target(target: String) -> void:
 			_just_petted_species = pet.species
 			_player.just_petted_seconds = 6.0
 			_player.player_state = "just_petted"
+			_effects_overlay.play_pet_feedback(pet)
 			notice_requested.emit("notice.pet.%s" % pet.species)
 			_evaluate_expressions()
 		return
@@ -1312,6 +1313,7 @@ func _interact_plant() -> void:
 		PLANT_PLANTED:
 			if _plant_watered_day < holiday_day:
 				_plant_watered_day = holiday_day
+				_effects_overlay.play_plant_water_feedback(_plant_point())
 				notice_requested.emit("notice.plant.watered")
 				SaveStore.set_plant_state(_plant_state, _plant_day_planted, _plant_watered_day)
 			else:
@@ -1319,6 +1321,7 @@ func _interact_plant() -> void:
 		PLANT_SPROUTING:
 			if _plant_watered_day < holiday_day:
 				_plant_watered_day = holiday_day
+				_effects_overlay.play_plant_water_feedback(_plant_point())
 				notice_requested.emit("notice.plant.watered")
 				SaveStore.set_plant_state(_plant_state, _plant_day_planted, _plant_watered_day)
 			else:
@@ -1359,6 +1362,7 @@ func _update_effects_overlay(delta: float) -> void:
 	if _effects_overlay == null:
 		return
 	_effects_overlay.advance_bird_feedback(delta)
+	_effects_overlay.advance_object_feedback(delta)
 	# FeltActor / Vacationer 用 z_index = roundi(foot_y)，覆盖层必须压过当前最前角色
 	var front := _player.z_index if _player != null else 0
 	for actor: FeltActor in _actors.values():

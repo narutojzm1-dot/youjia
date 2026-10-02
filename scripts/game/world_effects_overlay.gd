@@ -23,6 +23,55 @@ const BIRD_FEEDBACK_DURATION := 1.8
 var _bird_feedback_actor: WeakRef
 var _bird_feedback_time := 0.0
 
+# New feedback cels keep the transient response in the same painted world as
+# the animals. These timers, unlike watering/plant state, never enter a save.
+const PET_CEL := preload("res://assets/holiday/fx/pet_heart_watercolor.png")
+const WATER_CEL := preload("res://assets/holiday/fx/water_splash_watercolor.png")
+const OBJECT_FEEDBACK_DURATION := 1.6
+var _pet_feedback_actor: WeakRef
+var _pet_feedback_time := 0.0
+var _plant_feedback_pos := Vector2.ZERO
+var _plant_feedback_time := 0.0
+
+
+func play_pet_feedback(animal: FeltActor) -> void:
+	if animal == null or animal.species not in ["cow", "sheep", "horse"]:
+		return
+	_pet_feedback_actor = weakref(animal)
+	_pet_feedback_time = OBJECT_FEEDBACK_DURATION
+	queue_redraw()
+
+
+func play_plant_water_feedback(point: Vector2) -> void:
+	_plant_feedback_pos = point
+	_plant_feedback_time = OBJECT_FEEDBACK_DURATION
+	queue_redraw()
+
+
+func advance_object_feedback(delta: float) -> void:
+	_pet_feedback_time = maxf(0.0, _pet_feedback_time - delta)
+	_plant_feedback_time = maxf(0.0, _plant_feedback_time - delta)
+	if _pet_feedback_time <= 0.0:
+		_pet_feedback_actor = null
+
+
+func pet_feedback_snapshot() -> Dictionary:
+	if _pet_feedback_time <= 0.0 or _pet_feedback_actor == null:
+		return {}
+	var animal := _pet_feedback_actor.get_ref() as FeltActor
+	if animal == null:
+		return {}
+	return {"actor_id": animal.actor_id, "position": animal.position,
+		"remaining": _pet_feedback_time,
+		"reduced_motion": bool(TuningStore.get_value("ui.reduced_motion", false))}
+
+
+func plant_feedback_snapshot() -> Dictionary:
+	if _plant_feedback_time <= 0.0:
+		return {}
+	return {"position": _plant_feedback_pos, "remaining": _plant_feedback_time,
+		"reduced_motion": bool(TuningStore.get_value("ui.reduced_motion", false))}
+
 
 func play_fish_feed_feedback(bird: FeltActor) -> void:
 	if bird == null or bird.species not in ["duck", "goose"]:
@@ -58,6 +107,35 @@ func _draw() -> void:
 	_draw_pet_arc()
 	_draw_fish_rings()
 	_draw_bird_feedback()
+	_draw_pet_feedback()
+	_draw_plant_water_feedback()
+
+
+func _draw_pet_feedback() -> void:
+	var feedback := pet_feedback_snapshot()
+	if feedback.is_empty():
+		return
+	var animal := _pet_feedback_actor.get_ref() as FeltActor
+	var progress := 1.0 - _pet_feedback_time / OBJECT_FEEDBACK_DURATION
+	var reduced := bool(feedback.reduced_motion)
+	var rise := 0.0 if reduced else 10.0 * progress
+	var opacity := clampf(_pet_feedback_time / 0.38, 0.0, 1.0)
+	var crown := animal.position + Vector2(0.0, -animal.marker_crown_lift() - 25.0 - rise)
+	# A full painted cel, not a polygonal UI heart; subtle fade only.
+	draw_texture_rect(PET_CEL, Rect2(crown - Vector2(24.0, 24.0), Vector2(48.0, 48.0)),
+		false, Color(1.0, 1.0, 1.0, opacity))
+
+
+func _draw_plant_water_feedback() -> void:
+	var feedback := plant_feedback_snapshot()
+	if feedback.is_empty():
+		return
+	var progress := 1.0 - _plant_feedback_time / OBJECT_FEEDBACK_DURATION
+	var rise := 0.0 if bool(feedback.reduced_motion) else 5.0 * progress
+	var opacity := clampf(_plant_feedback_time / 0.38, 0.0, 1.0)
+	var top_left := _plant_feedback_pos + Vector2(-30.0, -54.0 - rise)
+	draw_texture_rect(WATER_CEL, Rect2(top_left, Vector2(60.0, 60.0)),
+		false, Color(1.0, 1.0, 1.0, opacity))
 
 
 ## 宠物目标：脚底柔光 + 明确画在头顶上方的半圆弧与向下箭头
