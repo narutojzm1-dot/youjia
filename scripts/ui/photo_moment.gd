@@ -84,6 +84,7 @@ static func capture(world: Node2D, rule: Dictionary) -> Dictionary:
 	return sanitize({
 		"version": VERSION, "rule_id": event_id,
 		"day": int(_property(world, "holiday_day", 1)),
+		"caption_variant": randi_range(0, clampi(int(rule.get("caption_variants", 1)), 1, 3) - 1),
 		"weather": str(_property(world, "weather", "sun")),
 		"world_size": [world_size.x, world_size.y],
 		"focus": [focus.x, focus.y], "span": span,
@@ -99,6 +100,10 @@ static func sanitize(data: Variant) -> Dictionary:
 	if not data.get("rule_id") is String or data.rule_id.is_empty() or data.rule_id.length() > 96:
 		return {}
 	if data.has("day") and (not _number(data.day, 1, 10000) or float(data.day) != floorf(float(data.day))):
+		return {}
+	if data.has("caption_variant") and (
+			not _number(data.caption_variant, 0, 2)
+			or float(data.caption_variant) != floorf(float(data.caption_variant))):
 		return {}
 	if not data.get("weather") is String or data.weather not in ["sun", "overcast"]:
 		return {}
@@ -132,11 +137,20 @@ static func sanitize(data: Variant) -> Dictionary:
 	}
 	if data.has("day"):
 		cleaned.day = int(data.day)
+	if data.has("caption_variant"):
+		cleaned.caption_variant = int(data.caption_variant)
 	return cleaned
 
 
 static func has_event_subject(snapshot: Dictionary, rule_id: String) -> bool:
 	if snapshot.is_empty(): return false
+	if rule_id in ["goose_pond_rest", "goose_duck_shore", "sheep_pair_near"]:
+		var seen: Dictionary = {}
+		for item: Dictionary in snapshot.get("items", []):
+			if item.get("kind", "") == "sprite": seen[str(item.get("subject", ""))] = true
+		if rule_id == "goose_pond_rest": return seen.has("goose")
+		if rule_id == "sheep_pair_near": return seen.has("sheep_a") and seen.has("sheep_b")
+		return seen.has("goose") and (seen.has("duck_a") or seen.has("duck_b") or seen.has("duck_c"))
 	var subject := "plant" if rule_id == "plant_first_bloom" else "fishing" if rule_id == "fish_first_catch" else ""
 	if subject.is_empty(): return true
 	for item: Dictionary in snapshot.get("items", []):
@@ -335,6 +349,26 @@ static func _event_frame(rule: Dictionary, actors: Dictionary, items: Array) -> 
 		"duck_pond_chorus":
 			selected = ["duck_a", "duck_b", "duck_c"]
 			minimum = 330.0
+		"goose_pond_rest":
+			selected = ["goose"]
+			minimum = 230.0
+		"goose_duck_shore":
+			selected = ["goose"]
+			var goose: Variant = actors.get("goose")
+			var nearest := ""
+			var distance := INF
+			for id: Variant in actors:
+				var duck: Variant = actors[id]
+				if goose is Node2D and duck is Node2D and _property(duck, "species", "") == "duck":
+					var next_distance: float = goose.position.distance_squared_to(duck.position)
+					if next_distance < distance:
+						distance = next_distance
+						nearest = str(id)
+			if not nearest.is_empty(): selected.append(nearest)
+			minimum = 260.0
+		"sheep_pair_near":
+			selected = ["sheep_a", "sheep_b"]
+			minimum = 260.0
 		"cow_rare_calm":
 			selected = ["cow"]
 			minimum = 240.0

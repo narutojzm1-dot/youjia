@@ -62,6 +62,7 @@ const RULES := [
 		"spit": false,
 		"title_key": "photo.llama_fed.title",
 		"note_key": "photo.llama_fed.note",
+		"caption_variants": 2,
 	},
 	# ── 其他动物（非主线）────────────────────────────────────────────────────────
 	{
@@ -90,6 +91,36 @@ const RULES := [
 		"min_day": 2,
 		"title_key": "photo.duck.title",
 		"note_key": "photo.duck.note",
+		"caption_variants": 2,
+	},
+	{
+		"id": "goose_pond_rest",
+		"owner": "goose",
+		"priority": 46,
+		"owner_posture": "rest",
+		"min_day": 2,
+		"expression": "idle",
+		"hold": 3.0,
+		"polaroid": true,
+		"observe_nearby": true,
+		"title_key": "photo.goose_rest.title",
+		"note_key": "photo.goose_rest.note",
+		"caption_variants": 3,
+	},
+	{
+		"id": "goose_duck_shore",
+		"owner": "goose",
+		"priority": 41,
+		"nearby": ["duck"],
+		"observe_species": "duck",
+		"min_day": 3,
+		"expression": "idle",
+		"hold": 3.0,
+		"polaroid": true,
+		"observe_nearby": true,
+		"title_key": "photo.goose_duck.title",
+		"note_key": "photo.goose_duck.note",
+		"caption_variants": 3,
 	},
 	{
 		"id": "cow_rare_calm",
@@ -106,6 +137,7 @@ const RULES := [
 		"min_day": 2,
 		"title_key": "photo.cow.title",
 		"note_key": "photo.cow.note",
+		"caption_variants": 2,
 	},
 	# ── 新增：抚摸羊（玩家触碰后由表情脉冲抓拍）──────────────────────────────────
 	{
@@ -120,6 +152,20 @@ const RULES := [
 		"spit": false,
 		"title_key": "photo.sheep_pet.title",
 		"note_key": "photo.sheep_pet.note",
+	},
+	{
+		"id": "sheep_pair_near",
+		"owner": "sheep",
+		"priority": 36,
+		"nearby": ["sheep"],
+		"min_day": 2,
+		"expression": "idle",
+		"hold": 3.0,
+		"polaroid": true,
+		"observe_nearby": true,
+		"title_key": "photo.sheep_pair.title",
+		"note_key": "photo.sheep_pair.note",
+		"caption_variants": 3,
 	},
 	# ── 新增：抚摸牛（第2天后解锁）──────────────────────────────────────────────
 	{
@@ -151,6 +197,7 @@ const RULES := [
 		"min_day": 3,
 		"title_key": "photo.horse_pet.title",
 		"note_key": "photo.horse_pet.note",
+		"caption_variants": 2,
 	},
 	# ── 新增：植物开花（手动触发，manual_only 防止自动匹配）─────────────────────
 	{

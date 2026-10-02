@@ -63,10 +63,16 @@ var _confirm_cancel_button: Button
 var _pending_destructive_action := ""
 var _album_screen: Control
 var _album_title: Label
-var _album_grid: GridContainer
-var _album_scroll: ScrollContainer
 var _album_panel: PanelContainer
+var _album_spread: HBoxContainer
+var _album_previous_button: Button
+var _album_next_button: Button
 var _album_back_button: Button
+var _album_entries := PackedStringArray()
+var _album_index := 0
+var _album_two_pages := true
+var _album_page_size := Vector2(380, 420)
+var _album_touch_origin := Vector2.INF
 var _notice: Label
 var _notice_time := 0.0
 var _notice_key := ""
@@ -239,6 +245,22 @@ func _input(event: InputEvent) -> void:
 			_toggle_pause()
 		get_viewport().set_input_as_handled()
 		return
+	if _album_screen.visible:
+		if event is InputEventKey and event.pressed and not event.is_echo():
+			if event.keycode == KEY_LEFT or event.keycode == KEY_RIGHT:
+				_flip_album(-1 if event.keycode == KEY_LEFT else 1)
+				get_viewport().set_input_as_handled()
+				return
+		if event is InputEventScreenTouch:
+			if event.pressed:
+				_album_touch_origin = event.position
+			elif _album_touch_origin != Vector2.INF:
+				var sweep: Vector2 = event.position - _album_touch_origin
+				_album_touch_origin = Vector2.INF
+				if absf(sweep.x) > 78.0 and absf(sweep.y) < 100.0:
+					_flip_album(-1 if sweep.x > 0.0 else 1)
+					get_viewport().set_input_as_handled()
+					return
 	if _screen == "game" and _world != null and _world.input_enabled and not _pause_screen.visible and not _album_screen.visible and not _confirm_screen.visible:
 		if event.is_action_pressed("ui_accept") and not event.is_echo():
 			# 键盘 Space/Enter 触发动作时同步触发行动按钮视觉脉冲，保持键盘与触控体验一致
@@ -275,7 +297,7 @@ func _input(event: InputEvent) -> void:
 	elif _pause_screen.visible:
 		buttons = [_resume_button, _restart_button, _pause_title_button]
 	elif _album_screen.visible:
-		buttons = [_album_back_button]
+		buttons = [_album_previous_button, _album_next_button, _album_back_button]
 	elif _screen == "title":
 		buttons = [_play_button, _album_button, _licenses_button]
 	else:
@@ -459,25 +481,37 @@ func _build_confirmation_screen() -> void:
 
 func _build_album_screen() -> void:
 	_album_screen = _overlay()
+	(_album_screen.get_child(0) as ColorRect).color = Color(0.35, 0.26, 0.2, 0.42)
 	add_child(_album_screen)
 	var box := _centered_column(Vector2(860, 560), _album_screen)
 	_album_panel = box.get_parent()
+	_album_panel.add_theme_stylebox_override("panel", _flat(Color("e8d5bb"), MUTED, 2, 12))
+	box.add_theme_constant_override("separation", 8)
 	_album_title = _label(24, INK)
 	_album_title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	box.add_child(_album_title)
-	var scroll := ScrollContainer.new()
-	_album_scroll = scroll
-	scroll.custom_minimum_size = Vector2(800, 400)
-	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	box.add_child(scroll)
-	_album_grid = GridContainer.new()
-	_album_grid.columns = 3
-	_album_grid.add_theme_constant_override("h_separation", 16)
-	_album_grid.add_theme_constant_override("v_separation", 16)
-	scroll.add_child(_album_grid)
+	_album_spread = HBoxContainer.new()
+	_album_spread.add_theme_constant_override("separation", 0)
+	box.add_child(_album_spread)
+	var controls := HBoxContainer.new()
+	controls.add_theme_constant_override("separation", 8)
+	controls.custom_minimum_size = Vector2(800, 42)
+	box.add_child(controls)
+	_album_previous_button = _soft_button()
+	_album_previous_button.custom_minimum_size = Vector2(0, 42)
+	_album_previous_button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	_album_previous_button.pressed.connect(func() -> void: _flip_album(-1))
+	controls.add_child(_album_previous_button)
+	_album_next_button = _soft_button()
+	_album_next_button.custom_minimum_size = Vector2(0, 42)
+	_album_next_button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	_album_next_button.pressed.connect(func() -> void: _flip_album(1))
+	controls.add_child(_album_next_button)
 	_album_back_button = _soft_button()
+	_album_back_button.custom_minimum_size = Vector2(0, 42)
+	_album_back_button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	_album_back_button.pressed.connect(_hide_album)
-	box.add_child(_album_back_button)
+	controls.add_child(_album_back_button)
 
 
 func _build_notice() -> void:
@@ -659,11 +693,13 @@ func _on_photo_tucked() -> void:
 
 func _show_album() -> void:
 	_cancel_photo_arrivals()
+	_album_index = 0
 	_album_screen.visible = true
 	# 打开相册：更强脉冲 + 居中 pivot，让桌面 Web 一次点击就有明确“开了”的反馈
 	if _album_chip != null:
 		_album_chip.pivot_offset = _album_chip.size * 0.5
 	_pulse_button(_album_chip)
+	if _screen == "game": _hud.visible = false
 	if _world != null:
 		_world.input_enabled = false
 		_world.cancel_scene_feedback()
@@ -675,24 +711,112 @@ func _show_album() -> void:
 
 func _hide_album() -> void:
 	_album_screen.visible = false
+	_album_touch_origin = Vector2.INF
+	if _screen == "game": _hud.visible = true
 	if _world != null and not _pause_screen.visible:
 		_world.input_enabled = true
 
 
 func _rebuild_album(collected: PackedStringArray) -> void:
-	for child in _album_grid.get_children():
-		_album_grid.remove_child(child)
+	_album_entries.clear()
+	for id: String in collected:
+		if not ExpressionCatalog.find_rule(id).is_empty() and id not in _album_entries:
+			_album_entries.append(id)
+	_render_album_pages()
+
+
+func _flip_album(direction: int) -> void:
+	var stride := 2 if _album_two_pages else 1
+	var last := maxi(0, ((_album_entries.size() - 1) / stride) * stride)
+	var next_index := clampi(_album_index + direction * stride, 0, last)
+	if next_index == _album_index: return
+	_album_index = next_index
+	_render_album_pages()
+
+
+func _render_album_pages() -> void:
+	if _album_spread == null: return
+	var stride := 2 if _album_two_pages else 1
+	var last := maxi(0, ((_album_entries.size() - 1) / stride) * stride)
+	_album_index = clampi((_album_index / stride) * stride, 0, last)
+	for child in _album_spread.get_children():
+		_album_spread.remove_child(child)
 		child.queue_free()
-	for rule: Dictionary in ExpressionCatalog.RULES:
-			if not bool(rule.get("polaroid", false)):
-				continue
-			var card := _photo_card(rule, str(rule.get("id", "")) in collected)
-			_album_grid.add_child(card)
+	_album_spread.add_child(_album_page(_album_index))
+	if _album_two_pages:
+		var spine := ColorRect.new()
+		spine.color = Color("a89078")
+		spine.custom_minimum_size = Vector2(10, _album_page_size.y)
+		spine.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		_album_spread.add_child(spine)
+		_album_spread.add_child(_album_page(_album_index + 1))
+	_album_previous_button.disabled = _album_entries.is_empty() or _album_index == 0
+	_album_next_button.disabled = _album_entries.is_empty() or _album_index + stride >= _album_entries.size()
 
 
-func _photo_card(rule: Dictionary, owned: bool) -> Control:
+func _album_page(index: int) -> Control:
+	var page := Control.new()
+	page.custom_minimum_size = _album_page_size
+	var paper := TextureRect.new()
+	var half := AtlasTexture.new()
+	half.atlas = TITLE_PAPER
+	half.region = Rect2(640 if index % 2 else 0, 0, 640, 720)
+	paper.texture = half
+	paper.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	paper.stretch_mode = TextureRect.STRETCH_SCALE
+	paper.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	paper.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	page.add_child(paper)
+	var edge := Panel.new()
+	edge.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	edge.add_theme_stylebox_override("panel", _flat(Color(1, 0.99, 0.95, 0.13), Color("d5bea1"), 1, 3))
+	edge.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	page.add_child(edge)
+	if index >= _album_entries.size():
+		if _album_entries.is_empty() and index == 0:
+			var empty := _label(17, INK)
+			empty.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+			empty.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+			empty.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+			empty.text = I18n.t("album.empty")
+			empty.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+			page.add_child(empty)
+		return page
+	var content := VBoxContainer.new()
+	content.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	content.offset_left = 22
+	content.offset_right = -22
+	content.offset_top = 15
+	content.offset_bottom = -10
+	content.add_theme_constant_override("separation", 5)
+	page.add_child(content)
+	var heading := _label(14, MUTED)
+	heading.text = I18n.t("album.page_label")
+	content.add_child(heading)
+	var rule_id := _album_entries[index]
+	var rule := ExpressionCatalog.find_rule(rule_id)
+	var center := CenterContainer.new()
+	center.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	content.add_child(center)
+	var card_width := minf(280.0, minf(_album_page_size.x - 52.0, (_album_page_size.y - 138.0) * 0.8))
+	center.add_child(_photo_card(rule, true, card_width))
+	var note := _label(14, INK)
+	note.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	note.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	note.custom_minimum_size.y = 36.0
+	note.text = I18n.t(str(rule.get("note_key", "")))
+	content.add_child(note)
+	var footer := _label(12, MUTED)
+	footer.text = I18n.t("album.page", {"page": str(index + 1)})
+	footer.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	content.add_child(footer)
+	return page
+
+
+func _photo_card(rule: Dictionary, owned: bool, width: float = 240.0) -> Control:
+	var card_scale := width / 240.0
 	var holder := Control.new()
-	holder.custom_minimum_size = Vector2(240, 300)
+	holder.custom_minimum_size = Vector2(240, 300) * card_scale
 	var frame := TextureRect.new()
 	frame.texture = POLAROID
 	frame.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
@@ -702,8 +826,8 @@ func _photo_card(rule: Dictionary, owned: bool) -> Control:
 	var portrait := TextureRect.new()
 	portrait.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	portrait.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-	portrait.position = Vector2(28, 28)
-	portrait.size = Vector2(184, 184)
+	portrait.position = Vector2(28, 28) * card_scale
+	portrait.size = Vector2(184, 184) * card_scale
 	var moment := SaveStore.get_photo_moment(str(rule.get("id",""))) if owned else {}
 	if owned and not moment.is_empty():
 		var photograph := PhotoMoment.new()
@@ -729,9 +853,9 @@ func _photo_card(rule: Dictionary, owned: bool) -> Control:
 	else:
 		portrait.modulate = Color(1, 1, 1, 0.08)
 	holder.add_child(portrait)
-	var caption := _label(13, INK if owned else MUTED)
-	caption.position = Vector2(24, 232)
-	caption.size = Vector2(192, 52)
+	var caption := _label(maxi(12, roundi(13.0 * card_scale)), INK if owned else MUTED)
+	caption.position = Vector2(24, 232) * card_scale
+	caption.size = Vector2(192, 52) * card_scale
 	caption.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	caption.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	caption.text = (PhotoDiary.caption(moment, str(rule.get("id", "")))
@@ -828,8 +952,15 @@ func _layout() -> void:
 	_album_panel.offset_right = album_width*0.5
 	_album_panel.offset_top = -album_height*0.5
 	_album_panel.offset_bottom = album_height*0.5
-	_album_scroll.custom_minimum_size = Vector2(album_width-40.0,maxf(80.0,album_height-150.0))
-	_album_grid.columns = maxi(1,floori((album_width-40.0)/256.0))
+	var was_two_pages := _album_two_pages
+	_album_two_pages = album_width >= 670.0 and size.y >= 460.0
+	var book_width := album_width - 32.0
+	var book_height := album_height - 122.0
+	_album_spread.custom_minimum_size = Vector2(book_width, book_height)
+	_album_previous_button.get_parent().custom_minimum_size = Vector2(book_width, 42)
+	_album_page_size = Vector2((book_width - 10.0) * 0.5 if _album_two_pages else book_width, book_height)
+	if _album_screen.visible or was_two_pages != _album_two_pages:
+		_render_album_pages()
 	_notice.offset_left = -minf(220,size.x*0.5-20)
 	_notice.offset_right = minf(220,size.x*0.5-20)
 	_notice.offset_top = -170 if compact else -110
@@ -864,7 +995,7 @@ func _refresh_hud() -> void:
 	if _world == null:
 		return
 	_hud.modulate.a = float(TuningStore.get_value("ui.hud.opacity", 0.94))
-	_album_chip.text = I18n.t("hud.album", {"count": str(_world.collected_count()), "total": str(_world.collectible_total())})
+	_album_chip.text = I18n.t("hud.album")
 	_weather_chip.text = I18n.t("hud.weather.%s" % _world.weather)
 	_pause_button.text = I18n.t("hud.pause")
 	# 显示与空格/行动按钮完全相同的实时目标和动作；橙色说明对应脚边标记。
@@ -1104,6 +1235,8 @@ func _refresh_texts() -> void:
 	_confirm_accept_button.text = I18n.t("confirm.accept")
 	_confirm_cancel_button.text = I18n.t("confirm.cancel")
 	_album_title.text = I18n.t("album.title")
+	_album_previous_button.text = I18n.t("album.previous")
+	_album_next_button.text = I18n.t("album.next")
 	_album_back_button.text = I18n.t("album.back")
 	# P0.2: locale 切换时同步更新相册 tooltip。
 	if _album_chip != null:

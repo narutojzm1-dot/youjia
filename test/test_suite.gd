@@ -76,8 +76,8 @@ func _test_locale_detection() -> void:
 
 func _test_expression_catalog() -> void:
 	var ids := ExpressionCatalog.all_ids()
-	# 相册拍立得总数随新互动增加而更新（当前 11 张：4 草泥马 + 2 鸭/牛 + 3 抚摸 + 植物 + 钓鱼）
-	_check(ids.size() == 11, "album must contain eleven polaroid expressions")
+	# Three new true animal-life moments join the existing eleven photographs.
+	_check(ids.size() == 14, "album must include fourteen photographable real events")
 	var mainline := ExpressionCatalog.llama_mainline_ids()
 	_check(mainline.size() == 4, "llama mainline must have four expressions")
 	_check(str(ExpressionCatalog.find_rule("llama_overcast_goose_annoyed").get("expression", "")) == "annoyed", "overcast goose rule must annoy the llama")
@@ -97,7 +97,7 @@ func _test_localization_catalogs() -> void:
 	_check(str(_i18n.call("t", "app.title")) == "悠长的假期", "t() must resolve the Chinese title")
 	_check(str(_i18n.call("t", "menu.play")) == "走进院子", "play label must stay holiday-specific")
 	_check("调校" in str(_i18n.call("t", "tuning.quick_tooltip")), "Chinese tuning guidance must resolve")
-	_check(str(_i18n.call("t", "hud.album", {"count": "1", "total": "6"})) == "相册 1/6", "album HUD must interpolate")
+	_check(str(_i18n.call("t", "hud.album")) == "翻开手帐", "album HUD invites browsing without a completion counter")
 
 
 func _test_tuning_schema_and_integrity() -> void:
@@ -283,8 +283,7 @@ func _test_runtime_scene() -> void:
 		_check(llama.position.distance_to(before) > 8.0, "llama walks across the grass")
 		_check(YardGround.allows(llama.position, YardGround.lawn(), true), "llama stays on the lawn")
 		_check(world.actor_named("goose") != null, "yard must include the goose")
-		# 相册总数随新互动增加而更新（当前 11 张）
-		_check(world.collectible_total() == 11, "album total must be eleven polaroids")
+		_check(world.collectible_total() == ExpressionCatalog.all_ids().size(), "all real expression rules are photographable without showing a progress checklist")
 		world.set_weather("overcast")
 		world.debug_place_actor("llama", Vector2(640, 400))
 		world.debug_place_actor("goose", Vector2(700, 400))
