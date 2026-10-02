@@ -66,17 +66,20 @@ while movement and interaction remain available. Turning uses the existing
 facing hysteresis and mirrors the right-facing art.
 
 Minimal root calibration uses 52 world pixels per full cycle. At the accepted
-12 frames/sec, sixteen frames take 1.333 seconds. The original integration
-applied a 39/96 movement multiplier, yielding 39px/s at unit depth; player
-feedback later identified this as too slow.
+12 frames/sec authoring rate, sixteen frames take 1.333 seconds. The original
+integration applied a 39/96 movement multiplier, yielding 39px/s at unit depth;
+player feedback later identified this as too slow.
 
 ### Speed follow-up in progress · REQ-20261002-001
 
 The active implementation changes the sequence movement multiplier to 0.64,
 giving about 61.4px/s at the default 96px/s tuning and unit depth. Frame phase
 continues to follow actual post-collision travel, preserving the stride-to-root
-registration. The approved poses and walk PNGs remain unchanged. This speed
-adjustment has not yet received rendered or browser playtest validation.
+registration. At that speed the animation advances at about 18.9 frames/sec
+(about 1.18 stride cycles/sec) at unit depth; 12 fps is the original authoring
+reference, not a playback cap. The approved poses and walk PNGs remain
+unchanged. This speed adjustment has not yet received rendered or browser
+playtest validation.
 
 Regression coverage includes default/legacy selection isolation, 30/60/120Hz
 travel stability, keyboard and existing click-goal travel, start/stop/turn,
