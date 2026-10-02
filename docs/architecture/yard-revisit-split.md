@@ -1,6 +1,6 @@
 # REQ-012 · 熟悉小院反复有新意：设计拆分
 
-- 状态：设计拆分。**不批准**新美术、摄影 UI、静坐过场或运行时改动。
+- 状态：设计拆分已合入 `main`（[PR #61](https://github.com/narutojzm1-dot/youjia/pull/61)，合并提交 `4318656117db39754f55408cca42e141687c2937`）。**仍不批准**新美术、摄影 UI、静坐过场或运行时改动。
 - 认领：`GROK-BUILD` 只负责这次拆分。用户于 2026-10-02 指定认领当时唯一无负责人的需求。
 - 日期：2026-10-02
 - 关联：[issue #48](https://github.com/narutojzm1-dot/youjia/issues/48)、[策划基准](../game-design.md)、[天空云层方案](sky-cloud-plan.md)
