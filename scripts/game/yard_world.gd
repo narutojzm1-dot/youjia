@@ -462,6 +462,7 @@ func _interact_with_target(target: String) -> void:
 		_fish_carry_type = ""
 		_fish_carry_timer = 0.0
 		bird.hold_expression("idle", 3.5)
+		_effects_overlay.play_fish_feed_feedback(bird)
 		notice_requested.emit("notice.toss_fish.%s" % bird.species)
 		queue_redraw()
 		return
@@ -1352,11 +1353,12 @@ func _update_lead_rope() -> void:
 	_lead_rope.z_index = maxi(_player.z_index,llama.z_index)+2
 
 
-## 每帧更新特效覆盖层的宠物目标弧数据
+## 每帧更新目标弧与短时对象回应
 ## 目标来自同一个动作解析器；层级必须跟脚底深度排序，不能写死 z_index。
-func _update_effects_overlay(_delta: float) -> void:
+func _update_effects_overlay(delta: float) -> void:
 	if _effects_overlay == null:
 		return
+	_effects_overlay.advance_bird_feedback(delta)
 	# FeltActor / Vacationer 用 z_index = roundi(foot_y)，覆盖层必须压过当前最前角色
 	var front := _player.z_index if _player != null else 0
 	for actor: FeltActor in _actors.values():

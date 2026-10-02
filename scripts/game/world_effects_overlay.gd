@@ -17,10 +17,47 @@ var fish_ring_time: float = 0.0
 var fish_ring_type: String = ""        # "small" / "medium" / "odd"
 var fish_ring_pos: Vector2 = Vector2.ZERO
 
+# Success feedback belongs to the one bird that received the fish. A weak
+# reference keeps this visual-only cue out of snapshots and save data.
+const BIRD_FEEDBACK_DURATION := 1.8
+var _bird_feedback_actor: WeakRef
+var _bird_feedback_time := 0.0
+
+
+func play_fish_feed_feedback(bird: FeltActor) -> void:
+	if bird == null or bird.species not in ["duck", "goose"]:
+		return
+	_bird_feedback_actor = weakref(bird)
+	_bird_feedback_time = BIRD_FEEDBACK_DURATION
+	queue_redraw()
+
+
+func advance_bird_feedback(delta: float) -> void:
+	if _bird_feedback_time <= 0.0:
+		return
+	_bird_feedback_time = maxf(0.0, _bird_feedback_time - delta)
+	if _bird_feedback_time <= 0.0:
+		_bird_feedback_actor = null
+
+
+func bird_feedback_snapshot() -> Dictionary:
+	if _bird_feedback_time <= 0.0 or _bird_feedback_actor == null:
+		return {}
+	var bird := _bird_feedback_actor.get_ref() as FeltActor
+	if bird == null:
+		return {}
+	return {
+		"actor_id": bird.actor_id,
+		"position": bird.position,
+		"remaining": _bird_feedback_time,
+		"reduced_motion": bool(TuningStore.get_value("ui.reduced_motion", false)),
+	}
+
 
 func _draw() -> void:
 	_draw_pet_arc()
 	_draw_fish_rings()
+	_draw_bird_feedback()
 
 
 ## 宠物目标：脚底柔光 + 明确画在头顶上方的半圆弧与向下箭头
@@ -92,3 +129,34 @@ func _draw_fish_rings() -> void:
 		var bp := fp + Vector2(0.0, -48.0)
 		draw_circle(bp, 22.0, Color(0.12, 0.22, 0.38, banner_a * 0.55))
 		draw_arc(bp, 22.0, 0.0, TAU, 28, Color(1.0, 0.92, 0.55, banner_a), 3.0, true)
+
+
+func _draw_bird_feedback() -> void:
+	var feedback := bird_feedback_snapshot()
+	if feedback.is_empty():
+		return
+	var bird := _bird_feedback_actor.get_ref() as FeltActor
+	var elapsed := 1.0 - _bird_feedback_time / BIRD_FEEDBACK_DURATION
+	var reduced := bool(feedback.reduced_motion)
+	var rise := 0.0 if reduced else 20.0 * elapsed
+	var alpha := clampf(_bird_feedback_time / 0.45, 0.0, 1.0)
+	var ring_radius := 18.0 if reduced else lerpf(13.0, 30.0, elapsed)
+	var ring_alpha := alpha * maxf(0.0, 1.0 - elapsed * 1.3) * 0.68
+	draw_arc(bird.position, ring_radius, 0.0, TAU, 32, Color(0.95, 0.51, 0.57, ring_alpha), 2.2, true)
+	# Anchor near the live bird's crown; the bubbles follow a wandering duck.
+	var origin := bird.position + Vector2(8.0, -minf(bird.marker_crown_lift(), 68.0) - 8.0 - rise)
+	_draw_heart(origin + Vector2(-8.0, 0.0), 18.0, alpha)
+	_draw_heart(origin + Vector2(18.0, -14.0), 9.0, alpha * 0.78)
+
+
+func _draw_heart(center: Vector2, radius: float, alpha: float) -> void:
+	var outline := PackedVector2Array()
+	for i: int in 32:
+		var angle := float(i) * TAU / 32.0
+		var x := 16.0 * pow(sin(angle), 3.0)
+		var y := -(13.0 * cos(angle) - 5.0 * cos(2.0 * angle) - 2.0 * cos(3.0 * angle) - cos(4.0 * angle))
+		outline.append(center + Vector2(x, y) * (radius / 18.0))
+	draw_colored_polygon(outline, Color(0.97, 0.53, 0.57, alpha * 0.92))
+	outline.append(outline[0])
+	draw_polyline(outline, Color(0.58, 0.26, 0.31, alpha * 0.75), 1.3, true)
+	draw_circle(center + Vector2(-radius * 0.35, -radius * 0.35), radius * 0.14, Color(1.0, 0.91, 0.78, alpha * 0.86))

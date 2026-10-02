@@ -40,9 +40,14 @@
 
 ![Web 候选行动按钮按下并显示绵羊回应](2026-10-02-REQ-002/web-sheep-action.webp)
 
+## 正式发布核查（非人工游玩验收）
+
+- [PR #25](https://github.com/narutojzm1-dot/youjia/pull/25) 经独立子代理核准最终 SHA 后合入：`9fe0d3986cc4167de122df26f9ed41d645d053e3`。[Actions run 36987478579](https://github.com/narutojzm1-dot/youjia/actions/runs/36987478579) 的 Godot 4.7.2 验证、Web 导出和 Pages 发布全部成功。
+- 2026-10-02 从 [线上游戏](https://narutojzm1-dot.github.io/youjia/) 读取 `game-release.json`：`sourceCommit=9fe0d3986cc4167de122df26f9ed41d645d053e3`，`entry=game-9fe0d39`。HTML 指向该版本的 PCK，WASM 返回 200；线上**实际下载** PCK 的 SHA-256 `ba2873e0ef11061fc8772915ca7d0745a67c072589817baa12cf3a75a0d53e0a` 与 `gh-pages` 分支相同。这证明代码对应资源已公开，不证明交互都经人工验收。
+
 ## 未覆盖与后续
 
 - 候选浏览器实玩只覆盖新档载入、HUD 目标说明和按钮操作；鼠标点击正在移动的具体动物、手机真实触屏及键盘连续输入仍由场景和设备模拟回归覆盖，未声称已完成人工浏览器体验。原生 390×844 画面检查不等于 Web 手机触屏验收。
-- 合入并发布后应从新存档在最新 Pages 构建实际走近动物、点选草堆/水塘/一只绵羊、按空格与行动按钮，检查长文案在实际屏幕上的可读性与一致性，并记录构建号、步骤、截图和遗留问题。
+- 后续仍应从新存档在 `game-9fe0d39` Pages 构建实际走近动物、点选草堆/水塘/一只绵羊、按空格与行动按钮，检查长文案在实际屏幕上的可读性与一致性，另记步骤、截图和遗留问题；`REQ-002` 暂保持「待验收」。
 - 用户另提出所有主动交互应有明确正反馈，尤其鸭/鹅吃鱼后的爱心或啄食动作；独立需求见 [REQ-20261002-008 / issue #30](https://github.com/narutojzm1-dot/youjia/issues/30)，不混入本 PR。
 - 当前主分支的 `docs/decisions.md` 出现乱码历史，详见 [issue #31](https://github.com/narutojzm1-dot/youjia/issues/31)；修复前本 PR 不覆盖该文件。
