@@ -303,9 +303,6 @@ func tick(delta: float, move: Vector2) -> void:
 		_fish_carry_timer -= delta
 		if _fish_carry_timer <= 0.0 and not _fish_carry_type.is_empty():
 			_fish_carry_type = ""
-			# The bird cannot be fed after the fish slips away. Keep unrelated walks.
-			if _pending_interaction.begins_with("toss_fish:"):
-				_consume_pending_action()
 			notice_requested.emit("notice.fishing.release")
 			queue_redraw()
 	_weather_timer -= delta
@@ -1343,8 +1340,8 @@ func _update_effects_overlay(_delta: float) -> void:
 	if _plant_visual != null: front = maxi(front, _plant_visual.z_index)
 	if _fishing_visual != null: front = maxi(front, _fishing_visual.z_index)
 	_effects_overlay.z_index = front + 8
-	# 保证在场景树末尾绘制（同 z 时后加入者在上）
-	if _effects_overlay.get_index() != get_child_count() - 1:
+	# 保证在场景树末尾绘制（同 z 时后加入者在上）；setup() 在 add_child 前也会调用，需跳过
+	if _effects_overlay.get_parent() == self and _effects_overlay.get_index() != get_child_count() - 1:
 		move_child(_effects_overlay, get_child_count() - 1)
 	_effects_overlay.pet_day_t = _day_seconds
 	_effects_overlay.pet_pos = Vector2.INF
