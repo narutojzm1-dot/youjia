@@ -18,6 +18,7 @@ const FeltActorType := preload("res://scripts/entities/felt_actor.gd")
 const VacationerType := preload("res://scripts/entities/vacationer.gd")
 ## 世界特效层每帧位于角色脚底排序之上。
 const WorldEffectsOverlayType := preload("res://scripts/game/world_effects_overlay.gd")
+const YardSceneFeedbackType := preload("res://scripts/game/yard_scene_feedback.gd")
 const WORLD_SIZE := Vector2(1280, 720)
 # 人只站在画里已经对上地面的几个位置。圆点是可以走过去的下一处。
 const PICTURE_SPOTS := {
@@ -98,6 +99,7 @@ var _grass_patch: GrassPatch
 var _lead_rope: Line2D
 ## 世界特效覆盖层节点（动态置于最高角色层之上）
 var _effects_overlay: Node2D
+var _scene_feedback: YardSceneFeedback
 var _spot := "door"
 var _move_held := false
 var _has_walk_goal := false
@@ -143,6 +145,10 @@ func setup(
 	_backdrop.z_index = -1
 	add_child(_backdrop)
 	_apply_weather_art()
+	_scene_feedback = YardSceneFeedbackType.new()
+	_scene_feedback.setup()
+	_scene_feedback.modulate = _backdrop.modulate
+	add_child(_scene_feedback)
 	_define_zones()
 	_spawn_grass()
 	_spawn_cast()
@@ -321,6 +327,7 @@ func tick(delta: float, move: Vector2) -> void:
 	_body_repath = maxf(0.0,_body_repath-delta)
 	if input_enabled:
 		if move.length() > 0.2:
+			_scene_feedback.cancel()
 			_rejected_seconds = 0.0
 			notice_dismiss_requested.emit("notice.cannot_walk")
 			_has_walk_goal = false
@@ -399,6 +406,7 @@ func tick(delta: float, move: Vector2) -> void:
 			camera_release_requested.emit()
 	# 更新特效覆盖层：宠物目标弧（alpha 修正：线性衰减，不再平方，确保在感应边缘也可见）
 	_update_effects_overlay(delta)
+	_scene_feedback.advance(delta)
 	_refresh_prop_visuals()
 	# P1.3: 玩家靠近草堆时，草堆缓慢呼吸发亮；远离时保持极轻微的呼吸感暗示互动性。
 	if _grass_patch != null and _player != null:
@@ -430,6 +438,14 @@ func _interact_with_target(target: String) -> void:
 	if not input_enabled or _player == null:
 		return
 	TuningStore.apply_boundary("NEXT_ACTION")
+	if target == YardSceneHotspots.WINDOWBOX:
+		var scene_action := YardSceneHotspots.resolve(self, target)
+		if scene_action.is_empty() or _player.position.distance_to(scene_action.point) >= scene_action.reach:
+			return
+		_consume_pending_action()
+		_scene_feedback.play_windowbox(YardSceneHotspots.get_hotspot(target).visual_anchor)
+		notice_requested.emit("notice.windowbox.butterfly" if not _scene_feedback.butterfly_seen() else "notice.windowbox")
+		return
 	if target == "grass":
 		if _player.position.distance_to(_grass_point()) < 78.0 and not _player.carrying_grass:
 			_consume_pending_action()
@@ -508,7 +524,12 @@ func action_target_key(action: Dictionary) -> String:
 		return "target.%s" % actor.actor_id if actor != null else ""
 	if target in ["grass", "plant", "fishing"]:
 		return "target.%s" % target
-	return ""
+	return str(YardSceneHotspots.get_hotspot(target).get("target_key", ""))
+
+
+func cancel_scene_feedback() -> void:
+	if _scene_feedback != null:
+		_scene_feedback.cancel()
 
 
 func request_primary_action() -> void:
@@ -544,6 +565,7 @@ func _interaction_actor(target: String) -> FeltActor:
 
 
 func _request_action(target: String, goal: Vector2) -> void:
+	_scene_feedback.cancel()
 	notice_dismiss_requested.emit("notice.cannot_walk")
 	_rejected_seconds = 0.0
 	if target.is_empty() and YardGround.allows(goal,YardGround.lawn(),true):
@@ -945,11 +967,13 @@ func _apply_weather_art() -> void:
 	var intensity := float(TuningStore.get_value("environment.filter.intensity", 0.12))
 	if not filter_on:
 		_backdrop.modulate = Color.WHITE
+		if _scene_feedback != null: _scene_feedback.modulate = _backdrop.modulate
 		return
 	if weather == "overcast":
 		_backdrop.modulate = Color(0.92, 0.90, 0.96).lerp(Color.WHITE, 1.0 - intensity)
 	else:
 		_backdrop.modulate = Color(1.0, 0.97, 0.90).lerp(Color.WHITE, 1.0 - intensity)
+	if _scene_feedback != null: _scene_feedback.modulate = _backdrop.modulate
 
 
 func _evaluate_expressions() -> void:

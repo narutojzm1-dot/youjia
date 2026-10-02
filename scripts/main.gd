@@ -567,6 +567,7 @@ func _toggle_pause() -> void:
 	AudioDirector.set_game_paused(paused)
 	if _world != null:
 		_world.input_enabled = not paused
+		if paused: _world.cancel_scene_feedback()
 	_refresh_texts()
 
 
@@ -618,6 +619,7 @@ func _show_album() -> void:
 	_pulse_button(_album_chip)
 	if _world != null:
 		_world.input_enabled = false
+		_world.cancel_scene_feedback()
 		_rebuild_album(_world.collected)
 	else:
 		_rebuild_album(PackedStringArray(SaveStore.get_album()))

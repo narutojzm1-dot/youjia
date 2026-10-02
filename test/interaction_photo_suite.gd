@@ -17,6 +17,10 @@ func run():
  var world = load("res://scripts/game/yard_world.gd").new()
  root.add_child(world);world.setup()
  var player = world.get_player()
+ # The painted balcony flowers are a background hotspot, not the walk goal.
+ var box_action := YardInteraction.pointer(world, Vector2(285, 275))
+ check(box_action.get("target", "") == "windowbox", "painted balcony flowers resolve to their own interaction target")
+ check(YardGround.allows(box_action.get("point", Vector2.ZERO), YardGround.lawn(), true), "windowbox approach stays on the safe painted lawn")
  world.debug_place_player(world._fishing_point() + Vector2(0, 5))
  world.debug_place_actor("llama", Vector2(500,540))
  player.carrying_grass = true

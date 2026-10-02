@@ -33,6 +33,9 @@ static func primary(world: Node2D) -> Dictionary:
 	if player.position.distance_to(world._grass_point()) < 78.0:
 		return action("grass", world._grass_point(), "action.grass", 78.0)
 	var candidates: Array[Dictionary] = [plant(world), fishing(world)]
+	var scene_action := YardSceneHotspots.near_player(world)
+	if not scene_action.is_empty():
+		candidates.append(scene_action)
 	for id: String in world._actors:
 		var actor = world.actor_named(id)
 		if actor.species == "llama":
@@ -71,6 +74,9 @@ static func selected(world: Node2D, target: String) -> Dictionary:
 		return plant(world)
 	if target == "fishing" and world._fish_carry_type.is_empty():
 		return fishing(world)
+	var scene_action := YardSceneHotspots.resolve(world, target)
+	if not scene_action.is_empty():
+		return scene_action
 	return {}
 
 static func pointer(world: Node2D, point: Vector2) -> Dictionary:
@@ -100,6 +106,9 @@ static func pointer(world: Node2D, point: Vector2) -> Dictionary:
 		return plant(world)
 	if YardGround.in_pond(point) or point.distance_to(world._fishing_point()) < 38.0:
 		return fishing(world)
+	var scene_action := YardSceneHotspots.at_point(world, point)
+	if not scene_action.is_empty():
+		return scene_action
 	return action("", point, "", 12.0)
 
 static func nearest(world: Node2D, species: Array):
@@ -130,4 +139,4 @@ static func reach(target: String) -> float:
 	if target == "fishing": return 85.0
 	if target.begins_with("pet:"): return PET_REACH
 	if target.begins_with("toss_fish:"): return FEED_REACH
-	return 0.0
+	return YardSceneHotspots.reach(target)
