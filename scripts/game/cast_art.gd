@@ -44,6 +44,14 @@ static func configure(original: Dictionary) -> Dictionary:
 		config.spit_origin=(Vector2(float(mouth[0]),float(mouth[1]))-config.ground_anchor)*Vector2(config.native_facing,1.0)
 	config.leg_start=(float(bounds[1])+float(bounds[3])*float(LEG_START[species]))/float(data.height)
 	config.textures={"idle":DIRECTORY+stem+".png"}
+	if species=="goose":
+		# A posture is a different whole painted cel, not a scaled/deformed angry goose.
+		config.textures["calm"]=DIRECTORY+"goose_calm.png"
+		config.textures["rest"]=DIRECTORY+"goose_rest.png"
+		config.posture_metadata={
+			"calm": manifest().get("goose_calm",{}),
+			"rest": manifest().get("goose_rest",{}),
+		}
 	if species=="llama":
 		config.base_texture=DIRECTORY+"llama_smirk.png"
 		config.face_region=Rect2(805,225,225,160)

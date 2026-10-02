@@ -57,6 +57,10 @@ var _particle_art_scale:=1.0
 var _base_texture_path:=""
 var _face_region:=Rect2()
 var _expression_texture: Texture2D
+var _posture_metadata: Dictionary = {}
+var _posture_id := "idle"
+var _idle_ground_anchor := Vector2(-1,-1)
+var _idle_art_bounds := Rect2()
 ## 生态闲置扫视：当动物静止且玩家在近旁时，偶尔短暂转向玩家
 ## _glance_timer > 0 时处于扫视状态；=0 时处于冷却等待
 var _glance_timer := 0.0        # 正数=正在扫视中（秒），负数=冷却中
@@ -79,6 +83,9 @@ func setup(config: Dictionary) -> void:
 	_face_region=config.get("face_region",Rect2())
 	_ground_anchor=config.get("ground_anchor",Vector2(-1,-1))
 	_art_bounds=config.get("art_bounds",Rect2())
+	_idle_ground_anchor=_ground_anchor
+	_idle_art_bounds=_art_bounds
+	_posture_metadata=config.get("posture_metadata",{})
 	_spit_origin=config.get("spit_origin",Vector2(28,-42))
 	_particle_art_scale=float(config.get("particle_art_scale",1.0))
 	_textures = config.get("textures", {})
@@ -107,6 +114,7 @@ func setup(config: Dictionary) -> void:
 	elif species != "duck":
 		state = "graze"
 		_idle_time = randf_range(5.0,12.0)
+	_refresh_goose_posture()
 
 
 func enable_experimental_planted_gait() -> void:
@@ -121,13 +129,42 @@ func enable_experimental_planted_gait() -> void:
 
 func set_expression(expression_id: String) -> void:
 	current_expression = expression_id
-	var path := str(_textures.get(expression_id, _textures.get("idle", "")))
+	var texture_key := _goose_posture() if species == "goose" else expression_id
+	var path := str(_textures.get(texture_key, _textures.get("idle", "")))
 	if path.is_empty() or not ResourceLoader.exists(path):
 		return
 	_expression_texture=load(path) as Texture2D
 	_sprite.texture=load(_base_texture_path) as Texture2D if not _base_texture_path.is_empty() else _expression_texture
+	if species == "goose":
+		_posture_id = texture_key
+		var posture: Dictionary = _posture_metadata.get(texture_key,{})
+		if posture.is_empty():
+			_ground_anchor=_idle_ground_anchor
+			_art_bounds=_idle_art_bounds
+		else:
+			var anchor: Array=posture.ground_anchor
+			var bounds: Array=posture.alpha_bbox
+			_ground_anchor=Vector2(float(anchor[0]),float(anchor[1]))
+			_art_bounds=Rect2(float(bounds[0]),float(bounds[1]),float(bounds[2]),float(bounds[3]))
 	_apply_face_override()
 	_anchor_feet()
+
+
+func _goose_posture() -> String:
+	if species != "goose" or posed or _velocity.length() > 0.3 or _gait.weight > 0.08:
+		return "idle"
+	if state == "rest":
+		return "rest"
+	if state == "graze":
+		return "calm"
+	return "idle"
+
+
+func _refresh_goose_posture() -> void:
+	if species != "goose" or posed:
+		return
+	if _goose_posture() != _posture_id:
+		set_expression(current_expression)
 
 
 func hold_expression(expression_id: String, seconds: float) -> void:
@@ -176,6 +213,10 @@ func set_pose(point: Vector2, next_scale: float, face: float) -> void:
 	pose_point = point
 	_base_scale = next_scale
 	state = "pose"
+	# The staged photo lineup must use the standing cel, not carry over a lying
+	# silhouette whose old anchor would float when the actor is repositioned.
+	if species == "goose":
+		set_expression(current_expression)
 	facing = face if face != 0.0 else facing
 	position = point
 	if _rig != null:
@@ -378,6 +419,7 @@ func tick(delta: float, world_size: Vector2) -> void:
 		_velocity.y = 0.0
 	if absf(moved.x) / maxf(delta, 0.0001) > 2.0:
 		facing = signf(moved.x)
+	_refresh_goose_posture()
 	var stride := 30.0
 	if species in ["cow","horse"]:
 		stride = 38.0
@@ -440,7 +482,9 @@ func marker_crown_lift() -> float:
 
 func _start_rest() -> void:
 	_routine_step += 1
-	state = "rest" if _routine_step % 3 == 0 else "graze"
+	# The goose settles every other pause so folded wings and lying down can both
+	# be observed naturally; the other species keep their established rhythm.
+	state = "rest" if _routine_step % (2 if species == "goose" else 3) == 0 else "graze"
 	var durations := {"cow": Vector2(18, 26), "horse": Vector2(16, 23), "sheep": Vector2(13, 21), "goose": Vector2(10, 17), "duck": Vector2(8, 14), "llama": Vector2(6, 11)}
 	var span: Vector2 = durations.get(species, Vector2(12, 20))
 	_idle_time = randf_range(span.x, span.y)

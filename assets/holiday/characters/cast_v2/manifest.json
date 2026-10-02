@@ -237,5 +237,41 @@
     "alpha_zero_fraction": 0.6246,
     "alpha_median_inside": 252,
     "border_pixels_alpha_gt16": 0
+  },
+  "goose_calm": {
+    "width": 1254,
+    "height": 1254,
+    "alpha_bbox": [
+      182,
+      50,
+      945,
+      1167
+    ],
+    "ground_anchor": [
+      694.5,
+      1216
+    ],
+    "native_facing": 1,
+    "alpha_zero_fraction": 0.7153,
+    "alpha_median_inside": 252,
+    "border_pixels_alpha_gt16": 0
+  },
+  "goose_rest": {
+    "width": 1254,
+    "height": 1254,
+    "alpha_bbox": [
+      39,
+      227,
+      1190,
+      853
+    ],
+    "ground_anchor": [
+      696.5,
+      1078
+    ],
+    "native_facing": 1,
+    "alpha_zero_fraction": 0.652,
+    "alpha_median_inside": 252,
+    "border_pixels_alpha_gt16": 0
   }
 }

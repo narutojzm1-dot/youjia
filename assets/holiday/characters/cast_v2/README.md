@@ -1,6 +1,6 @@
-# Approved cast v2: production sources
+# Approved cast v2: production sources and goose pose extension
 
-Ten transparent PNG sources, all 1254 × 1254, generated with the built-in image tool from the approved seven-design sheet. No shipped original asset was overwritten. Source prompts are under `art/concepts/animal_cast_v2/prompt_*.txt`.
+Ten original transparent PNG sources, all 1254 × 1254, generated with the built-in image tool from the approved seven-design sheet. No shipped original asset was overwritten. Source prompts are under `art/concepts/animal_cast_v2/prompt_*.txt`. The subsequent goose pose extension adds two more 1254 × 1254 transparent painted cels, sourced from the approved `goose.png`; high-resolution masters and measured hashes are kept under `art/concepts/animal_cast_v2/goose_poses/`.
 
 ## Files and facing
 
@@ -13,6 +13,8 @@ Ten transparent PNG sources, all 1254 × 1254, generated with the built-in image
 - `sheep_clingy.png`: affectionate sheep, right-facing
 - `sheep_dull.png`: sleepy grass-chewing sheep, left-facing
 - `goose.png`: angry honking white goose, right-facing
+- `goose_calm.png`: the same white goose standing quietly with wings folded, right-facing
+- `goose_rest.png`: the same white goose lying with its belly on the ground and wings folded, right-facing
 - `duck.png`: yellow duckling, right-facing, reused by three actors
 
 `manifest.json` gives native-facing sign, complete canvas dimensions, alpha bounds `[x,y,width,height]`, ground anchor, and alpha audit. Bounds use alpha > 16. Ground anchors use the lower foot region with alpha > 128. The art keeps its original generated alpha; no raster cleanup was applied.
@@ -23,7 +25,7 @@ All ten files have real alpha transparency. Approximately 51–64% of each canva
 
 The first cow extraction touched the right edge near the tail. The delivered `cow.png` uses a corrected, smaller frame with the full tail inside the canvas; the original extraction is retained only as a concept reference.
 
-All animals' visible hooves/feet, ears and tails are present. The horse keeps single equine hooves and no tack. The goose's broad flared wing is intentional and retains the approved angry posture. These are high-resolution painterly recreations of the approved design rather than literal lossless crops; some brush-detail variation is unavoidable.
+All animals' visible hooves/feet, ears and tails are present. The horse keeps single equine hooves and no tack. The original goose's broad flared wing is intentional and retains the approved active/alert posture. The newly requested calm and resting paintings make it possible to observe the goose without permanently flared wings. Each new pose has its own measured `alpha_bbox` and `ground_anchor` in `manifest.json`, while the original record and image remain unchanged. These are high-resolution painterly recreations of the approved design rather than literal lossless crops; some brush-detail variation is unavoidable.
 
 ## Important llama expression constraint
 

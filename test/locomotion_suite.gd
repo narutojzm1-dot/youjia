@@ -764,6 +764,37 @@ func _test_cow_horse_cast() -> void:
 		_check(actor._ground_anchor.x>=0,"approved cast has explicit ground anchor: "+id)
 		var anchored:=actor._ground_anchor-actor._sprite.texture.get_size()*0.5+actor._sprite.offset
 		_check(anchored.length()<0.001,"source ground anchor is at actor origin: "+id)
+	var goose:=world.actor_named("goose")
+	var goose_at:=goose.position
+	goose.state="graze"
+	goose._velocity=Vector2.ZERO
+	goose.tick(1.0/60.0,WORLD_SIZE)
+	_check(goose._sprite.texture.resource_path.ends_with("/goose_calm.png"),"quiet goose has hand-painted folded-wing standing pose")
+	var calm_height:=goose.visual_hit_rect().size.y
+	goose.state="rest"
+	goose.tick(1.0/60.0,WORLD_SIZE)
+	_check(goose._sprite.texture.resource_path.ends_with("/goose_rest.png"),"resting goose uses genuinely lying-down painted pose")
+	_check(goose.visual_hit_rect().size.y<calm_height*0.9,"lying goose sits visibly lower than calm standing goose")
+	_check((goose._ground_anchor-goose._sprite.texture.get_size()*0.5+goose._sprite.offset).length()<0.001,"lying goose ground anchor remains at actor origin")
+	_check(goose.position.distance_to(goose_at)<0.001,"goose changes pose without teleporting across the yard")
+	world._fish_carry_type="small"
+	var lying_target:=YardInteraction.pointer(world,goose.visual_hit_rect().get_center())
+	_check(str(lying_target.get("target",""))=="toss_fish:goose","lying goose remains an accurate clickable fish recipient")
+	world._fish_carry_type=""
+	var lying_photo:=PhotoMoment.capture(world,{"id":"llama_overcast_goose_annoyed"})
+	var goose_in_photo:=false
+	for item: Dictionary in lying_photo.get("items",[]):
+		if str(item.get("subject",""))=="goose" and str(item.get("kind",""))=="sprite":
+			goose_in_photo=str(item.texture.get("path", "")).ends_with("/goose_rest.png")
+	_check(goose_in_photo,"album captures the actual lying goose rather than an obsolete spread-wing image")
+	TuningStore.set_value("ui.reduced_motion",true)
+	goose.tick(1.0/60.0,WORLD_SIZE)
+	_check(goose._sprite.texture.resource_path.ends_with("/goose_rest.png") and goose.position.distance_to(goose_at)<0.001,"reduced motion preserves a still, legible resting goose")
+	TuningStore.set_value("ui.reduced_motion",false)
+	goose.state="wander"
+	goose._target=goose.position+Vector2(16,0)
+	goose.tick(1.0/60.0,WORLD_SIZE)
+	_check(goose._sprite.texture.resource_path.ends_with("/goose.png"),"walking goose retains original expressive wing artwork")
 	world.debug_place_player(Vector2(570,480))
 	world.debug_place_actor("llama",Vector2(600,480))
 	world.debug_place_actor("cow",Vector2(450,490))
@@ -800,4 +831,7 @@ func _test_cow_horse_cast() -> void:
 	_check(inside,"horse wandering remains on grass and outside pond")
 	world._pose_cast()
 	_check(horse.posed and horse.pose_point==world._cast_layout().horse.position,"horse is included in photo layout")
+	_check(goose.posed and goose._sprite.texture.resource_path.ends_with("/goose.png")
+		and (goose._ground_anchor-goose._sprite.texture.get_size()*0.5+goose._sprite.offset).length()<0.001,
+		"staged photo lineup gives goose its grounded original standing painting")
 	world.free()
