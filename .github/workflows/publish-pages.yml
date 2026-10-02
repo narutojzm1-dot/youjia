@@ -1,0 +1,47 @@
+name: Verify and publish web game
+
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - 'docs/**'
+      - 'README.md'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: publish-pages
+  cancel-in-progress: false
+
+jobs:
+  verify-export-publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out source with Pages write access
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install Godot 4.7.2 and Web export templates
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/godot" "$RUNNER_TEMP/template-files"
+          curl -fsSL https://github.com/godotengine/godot/releases/download/4.7.2-stable/Godot_v4.7.2-stable_linux.x86_64.zip -o "$RUNNER_TEMP/godot.zip"
+          unzip -q "$RUNNER_TEMP/godot.zip" -d "$RUNNER_TEMP/godot"
+          curl -fsSL https://github.com/godotengine/godot/releases/download/4.7.2-stable/Godot_v4.7.2-stable_export_templates.tpz -o "$RUNNER_TEMP/templates.tpz"
+          mkdir -p "$HOME/.local/share/godot/export_templates/4.7.2.stable"
+          unzip -q "$RUNNER_TEMP/templates.tpz" 'templates/web*' -d "$RUNNER_TEMP/template-files"
+          cp "$RUNNER_TEMP/template-files/templates/"web* "$HOME/.local/share/godot/export_templates/4.7.2.stable/"
+          chmod +x "$RUNNER_TEMP/godot/Godot_v4.7.2-stable_linux.x86_64"
+
+      - name: Run game verification
+        run: GODOT="$RUNNER_TEMP/godot/Godot_v4.7.2-stable_linux.x86_64" bash tools/verify_daily_life.sh
+
+      - name: Export Web build
+        run: GODOT="$RUNNER_TEMP/godot/Godot_v4.7.2-stable_linux.x86_64" "$RUNNER_TEMP/godot/Godot_v4.7.2-stable_linux.x86_64" --headless --path . --export-release Web dist/index.html
+
+      - name: Publish versioned build to GitHub Pages
+        run: GODOT="$RUNNER_TEMP/godot/Godot_v4.7.2-stable_linux.x86_64" bash tools/publish_gh_pages.sh "${GITHUB_SHA::7}"
