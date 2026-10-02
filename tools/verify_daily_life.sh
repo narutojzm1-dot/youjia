@@ -7,7 +7,7 @@ export XDG_DATA_HOME="$state/data" XDG_CONFIG_HOME="$state/config" XDG_CACHE_HOM
 mkdir -p "$XDG_DATA_HOME" "$XDG_CONFIG_HOME" "$XDG_CACHE_HOME"
 run_godot() {
   timeout 300 "${GODOT:-godot}" "$@" 2>&1 | tee "$state/run.log"
-  if rg -q '^(SCRIPT ERROR|ERROR:)' "$state/run.log"; then
+  if grep -Eq '^(SCRIPT ERROR|ERROR:)' "$state/run.log"; then
     echo "[daily-check] Godot reported an error" >&2
     exit 1
   fi
