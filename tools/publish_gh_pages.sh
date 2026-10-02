@@ -165,7 +165,7 @@ JSON
 # ---- 推送到 gh-pages ----
 echo "[publish] switching to gh-pages branch..."
 cd "$REPO_ROOT"
-git fetch origin gh-pages 2>/dev/null || true
+git fetch origin gh-pages:refs/remotes/origin/gh-pages
 
 # 检出 gh-pages（orphan-safe）
 GH_PAGES_DIR="$(mktemp -d)"
