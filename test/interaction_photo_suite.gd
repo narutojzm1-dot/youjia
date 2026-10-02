@@ -160,6 +160,52 @@ func run():
   root.get_node("TuningStore").set_value("ui.reduced_motion", true)
   check(bool(overlay.bird_feedback_snapshot().get("reduced_motion", false)), "reduced-motion feed keeps a readable still reaction")
   root.get_node("TuningStore").set_value("ui.reduced_motion", false)
+ # Petting must be acknowledged by the actual touched animal, not a generic
+ # toast or a different sheep that the player happened to walk past.
+ world.debug_place_actor("cow", Vector2(530, 490))
+ world.debug_place_actor("sheep_b", Vector2(360, 500))
+ world.debug_place_player(Vector2(300, 535))
+ world._interact_with_target("pet:cow")
+ check(overlay.has_method("pet_feedback_snapshot"), "pet response is attached to an actual animal")
+ if overlay.has_method("pet_feedback_snapshot"):
+  check(overlay.pet_feedback_snapshot().is_empty(), "distant pet cannot create a success heart")
+  world.debug_place_player(Vector2(490, 505))
+  world._interact_with_target("pet:cow")
+  var pet_cue: Dictionary = overlay.pet_feedback_snapshot()
+  check(pet_cue.get("actor_id", "") == "cow" and float(pet_cue.get("remaining", 0.0)) > 0.0, "only the petted cow reacts when reached")
+  world.debug_place_actor("cow", Vector2(535, 490))
+  check(overlay.pet_feedback_snapshot().get("position", Vector2.INF) == world.actor_named("cow").position, "painted pet reaction follows its living cow")
+  root.get_node("TuningStore").set_value("ui.reduced_motion", true)
+  check(bool(overlay.pet_feedback_snapshot().get("reduced_motion", false)), "reduced motion keeps a still readable pet response")
+  root.get_node("TuningStore").set_value("ui.reduced_motion", false)
+  world.tick(2.0, Vector2.ZERO)
+  check(overlay.pet_feedback_snapshot().is_empty(), "pet reaction expires and does not persist in the album")
+  for eligible: String in ["sheep_b", "horse"]:
+   world.debug_place_actor(eligible, Vector2(570, 470))
+   world.debug_place_player(Vector2(520, 485))
+   world._interact_with_target("pet:" + eligible)
+   check(overlay.pet_feedback_snapshot().get("actor_id", "") == eligible, "a successful pet acknowledges the selected " + eligible)
+   world.tick(2.0, Vector2.ZERO)
+ # Watering is meaningful once per day. A repeated attempt must not counterfeit
+ # a success effect or alter the recorded planted/watered day.
+ world.debug_place_player(Vector2(700, 540))
+ world._plant_state = world.PLANT_PLANTED
+ world._plant_watered_day = -1
+ check(overlay.has_method("plant_feedback_snapshot"), "watering has an inspectable plant-bed visual response")
+ if overlay.has_method("plant_feedback_snapshot"):
+  world._interact_plant()
+  check(world._plant_watered_day == -1 and overlay.plant_feedback_snapshot().is_empty(), "distant flowerbed cannot falsely celebrate watering")
+  world.debug_place_player(world._plant_point() + Vector2(-38, 10))
+  world._interact_plant()
+  check(world._plant_watered_day == world.holiday_day and overlay.plant_feedback_snapshot().get("position", Vector2.INF) == world._plant_point(), "first real watering reacts at the flower bed")
+  world.tick(2.0, Vector2.ZERO)
+  check(overlay.plant_feedback_snapshot().is_empty(), "watercolor splash ends without entering saved plant state")
+  world._interact_plant()
+  check(overlay.plant_feedback_snapshot().is_empty(), "already-watered flowerbed cannot replay the success splash")
+  world.holiday_day += 1
+  world._plant_state = world.PLANT_SPROUTING
+  world._interact_plant()
+  check(overlay.plant_feedback_snapshot().get("position", Vector2.INF) == world._plant_point(), "new day real sprout watering also acknowledges the bed")
  album.free();world.free()
  root.get_node("AudioDirector").call("release_streams")
  print("[interaction-photo-tests] %d checks, failures=%s" % [checks, failures])
