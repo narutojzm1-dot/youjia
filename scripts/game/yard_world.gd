@@ -1232,16 +1232,18 @@ func _reel_in_fish() -> void:
 	# 随机决定鱼的类型：小鱼(60%) / 中等(25%) / 奇怪(15%)
 	var roll := randf()
 	var carry_type: String
+	var catch_notice: String
 	if roll < 0.60:
 		carry_type = "small"
-		notice_requested.emit("notice.fishing.caught")
+		catch_notice = "notice.fishing.caught"
 	elif roll < 0.85:
 		carry_type = "medium"
-		notice_requested.emit("notice.fishing.caught.medium")
+		catch_notice = "notice.fishing.caught.medium"
 	else:
 		carry_type = "odd"
-		notice_requested.emit("notice.fishing.caught.odd")
+		catch_notice = "notice.fishing.caught.odd"
 	_fish_catch_type = carry_type
+	notice_requested.emit(catch_notice)
 	# 收杆成功信号：供 HUD 做明确的视觉反馈（区别于普通按钮脉冲）
 	fish_caught.emit(carry_type)
 	# 首次钓到 → 触发拍立得（在 FISH_CAUGHT 状态下拍摄）
@@ -1251,16 +1253,18 @@ func _reel_in_fish() -> void:
 		var fish_rule := ExpressionCatalog.find_rule("fish_first_catch")
 		if not fish_rule.is_empty():
 			_apply_rule(fish_rule, true)
+		# 拍立得会发出 notice.photo，盖住钓到通知；立刻重发庆祝文案，保证玩家看到收杆反馈
+		notice_requested.emit(catch_notice)
 	# 拍立得拍摄后重置钓鱼逻辑，改用携带计时器跟踪
 	_fish_state = FISH_IDLE
 	_fish_carry_type = carry_type
 	_fish_carry_timer = 20.0  # 20秒内可投喂给鸭/鹅，给玩家充裕时间走到鸭鹅旁
-	# 启动钓到庆祝闪光：2.6 秒多环扩散 + 粒子爆射，并记录鱼种以区分颜色
-	_fish_catch_flash = 2.6
+	# 启动钓到庆祝闪光：3.2 秒多环扩散 + 粒子爆射（覆盖层时长同步）
+	_fish_catch_flash = 3.2
 	_fish_catch_type = carry_type
 	# 同步到特效覆盖层（动态置于角色上方）
 	if _effects_overlay != null:
-		_effects_overlay.fish_ring_time = 2.6
+		_effects_overlay.fish_ring_time = 3.2
 		_effects_overlay.fish_ring_type = carry_type
 		_effects_overlay.fish_ring_pos = _fishing_point()
 		_effects_overlay.queue_redraw()
@@ -1326,27 +1330,37 @@ func _update_lead_rope() -> void:
 
 
 ## 每帧更新特效覆盖层的宠物目标弧数据
-## 目标来自同一个动作解析器，层级来自实际角色排序。
+## 目标来自同一个动作解析器；层级必须跟脚底深度排序，不能写死 z_index。
 func _update_effects_overlay(_delta: float) -> void:
 	if _effects_overlay == null:
 		return
+	# FeltActor / Vacationer 用 z_index = roundi(foot_y)，覆盖层必须压过当前最前角色
 	var front := _player.z_index if _player != null else 0
 	for actor: FeltActor in _actors.values():
 		front = maxi(front, actor.z_index)
 	if _grass_patch != null: front = maxi(front, _grass_patch.z_index)
 	if _lead_rope != null: front = maxi(front, _lead_rope.z_index)
-	_effects_overlay.z_index = front + 1
+	if _plant_visual != null: front = maxi(front, _plant_visual.z_index)
+	if _fishing_visual != null: front = maxi(front, _fishing_visual.z_index)
+	_effects_overlay.z_index = front + 8
+	# 保证在场景树末尾绘制（同 z 时后加入者在上）
+	if _effects_overlay.get_index() != get_child_count() - 1:
+		move_child(_effects_overlay, get_child_count() - 1)
 	_effects_overlay.pet_day_t = _day_seconds
 	_effects_overlay.pet_pos = Vector2.INF
 	_effects_overlay.pet_alpha = 0.0
+	_effects_overlay.pet_lift = 64.0
 	var action := YardInteraction.primary(self)
 	if str(action.get("target", "")).begins_with("pet:"):
 		var pet := _interaction_actor(action.target)
-		_effects_overlay.pet_pos = pet.position
-		var distance := _player.position.distance_to(pet.position)
-		var proximity := clampf(1.0 - (distance - 60.0) / 45.0, 0.0, 1.0)
-		var pulse := 0.70 + 0.30 * absf(sin(_day_seconds * 2.4))
-		_effects_overlay.pet_alpha = 0.95 * proximity * pulse
+		if pet != null:
+			_effects_overlay.pet_pos = pet.position
+			_effects_overlay.pet_lift = pet.marker_crown_lift()
+			var distance := _player.position.distance_to(pet.position)
+			# 线性衰减：60px 内全亮，向外至 105px 淡出（避免平方衰减在边缘不可见）
+			var proximity := clampf(1.0 - (distance - 60.0) / 45.0, 0.0, 1.0)
+			var pulse := 0.75 + 0.25 * absf(sin(_day_seconds * 2.4))
+			_effects_overlay.pet_alpha = 0.98 * proximity * pulse
 	_effects_overlay.queue_redraw()
 
 
