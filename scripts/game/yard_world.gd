@@ -406,6 +406,7 @@ func tick(delta: float, move: Vector2) -> void:
 			camera_release_requested.emit()
 	# 更新特效覆盖层：宠物目标弧（alpha 修正：线性衰减，不再平方，确保在感应边缘也可见）
 	_update_effects_overlay(delta)
+	_scene_feedback.consider_shore(self)
 	_scene_feedback.advance(delta)
 	_refresh_prop_visuals()
 	# P1.3: 玩家靠近草堆时，草堆缓慢呼吸发亮；远离时保持极轻微的呼吸感暗示互动性。
@@ -445,6 +446,14 @@ func _interact_with_target(target: String) -> void:
 		_consume_pending_action()
 		_scene_feedback.play_windowbox(YardSceneHotspots.get_hotspot(target).visual_anchor)
 		notice_requested.emit("notice.windowbox.butterfly" if not _scene_feedback.butterfly_seen() else "notice.windowbox")
+		return
+	if target == YardSceneHotspots.SHORE_STONES:
+		var shore_action := YardSceneHotspots.resolve(self, target)
+		if shore_action.is_empty() or _player.position.distance_to(shore_action.point) >= shore_action.reach:
+			return
+		_consume_pending_action()
+		_scene_feedback.play_shore_ripple(YardSceneHotspots.get_hotspot(target).visual_anchor)
+		notice_requested.emit("notice.shore_stones")
 		return
 	if target == "grass":
 		if _player.position.distance_to(_grass_point()) < 78.0 and not _player.carrying_grass:

@@ -31,6 +31,11 @@ func run() -> void:
 	check(YardInteraction.pointer(world, world._fishing_point()).target == "fishing", "pond still owns the fishing tap")
 	check(YardInteraction.pointer(world, world._plant_point()).target == "plant", "garden bed still owns planting tap")
 	check(YardInteraction.pointer(world, world._grass_point()).target == "grass", "grass still owns pickup tap")
+	var shore_click := Vector2(515, 560)
+	check(not YardGround.in_pond(shore_click) and shore_click.distance_to(world._fishing_point()) > 38.0, "painted bank stone is distinct from pond water and the fishing tap")
+	check(YardInteraction.pointer(world, shore_click).target == "shore_stones", "tapping the real painted bank stone resolves a distinct water-touch action")
+	check(not YardGround.in_pond(Vector2(510, 612)) and YardInteraction.pointer(world, Vector2(510, 612)).target == "shore_stones", "the prominent painted boulder below the stone rim is clickable too")
+	check(YardInteraction.pointer(world, Vector2(445, 615)).target != "shore_stones" and YardInteraction.pointer(world, Vector2(565, 580)).target == "fishing", "expanded boulder region remains separate from grass and actual pond water")
 	# Start away from the cottage, with animals outside the route. Real tick()
 	# advances the route; teleportation is only used to prepare the fixture.
 	for actor_id: String in world._actors:
@@ -90,6 +95,83 @@ func run() -> void:
 	world.request_pointer_action(Vector2(395, 530))
 	check(world._pending_interaction.is_empty() and world._scene_feedback.active_snapshot().is_empty(), "new walk cancels an unfinished flower-box approach without a false bloom")
 	world.free()
+	check_shore_stones()
 	root.get_node("AudioDirector").call("release_streams")
 	print("[scene-hotspot-tests] %d checks, failures=%s" % [checks, failures])
 	quit(0 if failures.is_empty() else 1)
+
+
+func check_shore_stones() -> void:
+	var world = load("res://scripts/game/yard_world.gd").new()
+	root.add_child(world)
+	world.setup()
+	var player = world.get_player()
+	var stone := Vector2(515, 560)
+	var shore := YardSceneHotspots.get_hotspot("shore_stones")
+	var approach: Vector2 = shore.approach_points[0]
+	check(Geometry2D.is_point_in_polygon(stone, shore.hit_polygon), "only the visible west-bank rocks resolve as a shore touch")
+	check(not Geometry2D.is_point_in_polygon(world._fishing_point(), shore.hit_polygon) and not Geometry2D.is_point_in_polygon(Vector2(550, 520), shore.hit_polygon), "pond fishing point and adjacent grass do not become stones")
+	check(YardGround.allows(approach, YardGround.lawn(), true) and not YardGround.in_pond(stone) and YardGround.in_pond(shore.visual_anchor), "stone click, safe grass feet and painted water response each use their own coordinates")
+	check(YardInteraction.pointer(world, shore.visual_anchor).target == "fishing", "water beneath the new painted ripple still means fishing")
+	check(YardInteraction.pointer(world, world._grass_point()).target == "grass" and YardInteraction.pointer(world, world._plant_point()).target == "plant", "old plant and grass taps retain their owners")
+	var album = world.collected.duplicate()
+	var moments = world.photo_moments.duplicate(true)
+	var notices: Array[String] = []
+	world.notice_requested.connect(func(key: String): notices.append(key))
+	for actor_id: String in world._actors:
+		if not actor_id.begins_with("duck") and actor_id != "goose":
+			world.debug_place_actor(actor_id, Vector2(810, 455) + Vector2(world._actors.keys().find(actor_id) * 26, 0))
+	world.debug_place_player(Vector2(700, 455))
+	world.request_pointer_action(stone)
+	check(world._pending_interaction == "shore_stones" and world._has_walk_goal and world._walk_goal == approach, "distant rock tap approaches only the safe grass footpoint")
+	check(world.primary_action().target == "shore_stones" and world.primary_action_key() == "action.touch_shore" and world.action_target_key(world.primary_action()) == "target.shore_stones", "HUD, Space and action button retain exactly the selected stone")
+	check(world._scene_feedback.ripple_snapshot().is_empty(), "a far-away tap does not celebrate before the shore is reached")
+	world.try_interact()
+	world.request_primary_action()
+	check(world._pending_interaction == "shore_stones" and world._scene_feedback.ripple_snapshot().is_empty(), "Space and button while approaching neither redirect nor falsely splash")
+	for frame in 720:
+		world.tick(1.0 / 60.0, Vector2.ZERO)
+		if not world._scene_feedback.ripple_snapshot().is_empty():
+			break
+	var ripple: Dictionary = world._scene_feedback.ripple_snapshot()
+	check(not ripple.is_empty() and ripple.get("anchor", Vector2.INF) == shore.visual_anchor and not world._has_walk_goal, "only successful shore arrival paints a ripple on real pond water")
+	check(world._fish_state == world.FISH_IDLE and world._fish_carry_type.is_empty() and not player.carrying_grass and world.collected == album and world.photo_moments == moments, "shore touch never casts, catches, consumes or creates a photo")
+	check(notices.has("notice.shore_stones") and not notices.has("notice.fishing.cast"), "shore success uses its own restrained notice, never the catch or cast copy")
+	world.request_pointer_action(Vector2(440, 520))
+	check(world._scene_feedback.ripple_snapshot().is_empty(), "ordinary walking cancels the transient watercolor ripple immediately")
+	world.debug_place_player(Vector2(700, 455))
+	world._fish_state = world.FISH_CASTING
+	check(YardInteraction.pointer(world, stone).target != "shore_stones" and YardInteraction.pointer(world, world._fishing_point()).target == "fishing", "an active cast reserves the pond and cannot be stolen by the stones")
+	world._fish_state = world.FISH_IDLE
+	world._fish_carry_type = "small"
+	check(YardInteraction.pointer(world, stone).target != "shore_stones" and YardInteraction.pointer(world, world.actor_named("duck_a").visual_hit_rect().get_center()).target.begins_with("toss_fish:"), "carried fish retains exact bird-feeding priority")
+	world._fish_carry_type = ""
+	world.tick(0.02, Vector2.ZERO)
+	check(world._scene_feedback.dragonfly_snapshot().is_empty(), "a dragonfly does not appear at the far bank without approaching it")
+	world.request_pointer_action(Vector2(515, 520)) # A normal grass walk, not the painted rock.
+	check(world._pending_interaction.is_empty(), "ambient encounter needs no tap or shore success")
+	for frame in 720:
+		world.tick(1.0 / 60.0, Vector2.ZERO)
+		if not world._scene_feedback.dragonfly_snapshot().is_empty():
+			break
+	var guest: Dictionary = world._scene_feedback.dragonfly_snapshot()
+	check(not guest.is_empty() and world._scene_feedback.ripple_snapshot().is_empty() and notices.count("notice.shore_stones") == 1, "walking to the shoreline independently reveals a painted dragonfly, not an extra splash")
+	world.cancel_scene_feedback()
+	check(not world._scene_feedback.dragonfly_seen() and world._scene_feedback.dragonfly_snapshot().is_empty(), "leaving a first short sighting does not mark the dragonfly as missed or consumed")
+	world.debug_place_player(Vector2(700, 455))
+	world.tick(0.02, Vector2.ZERO)
+	world.debug_place_player(approach + Vector2(4, 3))
+	world.tick(0.02, Vector2.ZERO)
+	check(not world._scene_feedback.dragonfly_snapshot().is_empty(), "returning to the same shore offers a missed first encounter again without a daily cooldown")
+	world.set_weather("overcast")
+	check(world._scene_feedback.modulate == world._backdrop.modulate, "dragonfly and ripple inherit the pond backdrop's overcast tint")
+	root.get_node("TuningStore").set_value("ui.reduced_motion", true)
+	world.tick(0.02, Vector2.ZERO)
+	guest = world._scene_feedback.dragonfly_snapshot()
+	check(guest.get("reduced_motion", false) and world._scene_feedback._dragonfly.texture.resource_path.ends_with("shore_dragonfly_rest.png"), "reduced motion holds a complete still dragonfly painting")
+	world.tick(1.25, Vector2.ZERO)
+	check(world._scene_feedback.dragonfly_seen() and world.collected == album and world.photo_moments == moments, "only genuinely witnessed dragonfly stays session-scoped, never in saved rewards")
+	world.cancel_scene_feedback()
+	check(world._scene_feedback.dragonfly_snapshot().is_empty() and world._scene_feedback.ripple_snapshot().is_empty(), "pause and album cancellation clear both shore paintings")
+	root.get_node("TuningStore").set_value("ui.reduced_motion", false)
+	world.free()
