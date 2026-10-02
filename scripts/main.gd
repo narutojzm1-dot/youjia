@@ -1148,22 +1148,24 @@ func _update_season_tint(day: int) -> void:
 		return
 	var sc: Color
 	var alpha: float
-	if day <= 3:
-		# 第 1-3 天：春意，淡翠绿渐现
+	# REQ-005：压缩季节节奏，让新档在约一小时游玩内就能看见明显色调变化。
+	# 一天仍是 600s 模拟；不引入任务或离席惩罚。
+	if day <= 2:
+		# 第 1-2 天：春意淡出
 		sc = SEASON_COLORS.spring
-		alpha = lerpf(0.0, 0.06, float(day - 1) / 2.0)
-	elif day <= 7:
-		# 第 4-7 天：盛夏，近乎无色
+		alpha = lerpf(0.02, 0.06, float(maxi(day, 1) - 1) / 1.0)
+	elif day <= 4:
+		# 第 3-4 天：盛夏，轻微暖绿
 		sc = SEASON_COLORS.summer
-		alpha = 0.02
-	elif day <= 12:
-		# 第 8-12 天：仲夏末，暖琥珀渐浓（明显的色调转变）
+		alpha = 0.03
+	elif day <= 6:
+		# 第 5-6 天：仲夏末，暖琥珀已可读
 		sc = SEASON_COLORS.late_summer
-		alpha = lerpf(0.04, 0.08, float(day - 8) / 4.0)
+		alpha = lerpf(0.06, 0.10, float(day - 5) / 1.0)
 	else:
-		# 第 13 天起：金秋，上限 0.12
+		# 第 7 天起：金秋，上限 0.14
 		sc = SEASON_COLORS.autumn
-		alpha = minf(0.12, 0.08 + float(day - 13) * 0.007)
+		alpha = minf(0.14, 0.10 + float(day - 7) * 0.01)
 	_season_rect.color = Color(sc.r, sc.g, sc.b, alpha)
 
 
