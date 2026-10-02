@@ -43,6 +43,9 @@
 ## 产品文档
 
 - [游戏策划基准](docs/game-design.md)：玩家承诺、体验循环、设计边界、当前系统和未决方向。
+- [需求列表](docs/requirements.md)：可认领/可指定的需求、优先级、状态、验收条件和负责人。
+- [开发者身份登记表](docs/agents.md)：Codex、GROK、MANUS 等参与代理的 Agent-ID 与角色。
 - [产品决策与需求变更台账](docs/decisions.md)：需求编号、状态、决策依据、实现记录和线上复核。
 - [在线版游玩复核](docs/playtests/2026-10-02-game-1347743.md)：构建 `game-1347743` 的体验步骤与截图证据。
 - [协作与合入规范](CONTRIBUTING.md)：用户、Codex 集成负责人和 GROK/其他功能贡献者的分工与冲突处理。
+- [代理开发入口](AGENTS.md)：所有代理开始任务前必读的仓库规则与同步方式。
