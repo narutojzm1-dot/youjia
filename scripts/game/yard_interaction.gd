@@ -14,6 +14,12 @@ static func primary(world: Node2D) -> Dictionary:
 		return {}
 	if world.is_leading():
 		return action("release", player.position, "action.release", INF)
+	# HUD, keyboard and pointer share the clicked/approached actor even while it wanders.
+	for target: String in [world._pending_interaction, world._selected_target]:
+		if not target.is_empty():
+			var chosen := selected(world, target)
+			if not chosen.is_empty():
+				return chosen
 	if not world._fish_carry_type.is_empty():
 		var bird = nearest(world, ["duck", "goose"])
 		if bird != null:
@@ -41,6 +47,31 @@ static func primary(world: Node2D) -> Dictionary:
 			distance = gap
 			selected = candidate
 	return selected if not selected.is_empty() else action("grass", world._grass_point(), "action.grass", 78.0)
+
+static func selected(world: Node2D, target: String) -> Dictionary:
+	var player = world.get_player()
+	if player == null:
+		return {}
+	if target.begins_with("pet:") or target.begins_with("toss_fish:"):
+		var actor = world.actor_named(target.get_slice(":", 1))
+		if actor == null:
+			return {}
+		if target.begins_with("pet:") and actor.species in ["cow", "sheep", "horse"]:
+			return action(target, actor.position, "action.pet", PET_REACH)
+		if target.begins_with("toss_fish:") and actor.species in ["duck", "goose"] and not world._fish_carry_type.is_empty():
+			return action(target, actor.position, "action.toss_fish", FEED_REACH)
+		return {}
+	if target == "llama":
+		var llama = world.actor_named("llama")
+		if llama != null:
+			return action(target, llama.position, "action.feed" if player.carrying_grass else "action.lead", 88.0)
+	if target == "grass" and not player.carrying_grass:
+		return action(target, world._grass_point(), "action.grass", 78.0)
+	if target == "plant":
+		return plant(world)
+	if target == "fishing" and world._fish_carry_type.is_empty():
+		return fishing(world)
+	return {}
 
 static func pointer(world: Node2D, point: Vector2) -> Dictionary:
 	var selected = null

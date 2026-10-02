@@ -43,6 +43,7 @@ var _album_button: Button
 var _licenses_button: Button
 var _title_hint: Label
 var _hud: Control
+var _hint_panel: Panel
 var _hint_label: Label
 var _album_chip: Button
 var _weather_chip: Button
@@ -371,6 +372,10 @@ func _build_hud() -> void:
 	_hud.mouse_filter = Control.MOUSE_FILTER_PASS
 	_hud.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	add_child(_hud)
+	_hint_panel = Panel.new()
+	_hint_panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_hint_panel.add_theme_stylebox_override("panel", _flat(Color(PAPER, 0.90), Color(APRICOT, 0.65), 1, 12))
+	_hud.add_child(_hint_panel)
 	_hint_label = _label(15, INK)
 	_hint_label.position = Vector2(24, 18)
 	_hint_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
@@ -791,11 +796,13 @@ func _layout() -> void:
 	_pause_button.size = _pause_button.custom_minimum_size
 	_pause_button.position = Vector2(size.x-_pause_button.size.x-pad,pad)
 	_hint_label.position = Vector2(pad,16)
-	_hint_label.size = Vector2(maxf(120.0,size.x-_pause_button.size.x-pad*3.0),72)
+	_hint_label.size = Vector2(minf(520.0,maxf(120.0,size.x-_pause_button.size.x-pad*3.0)), 64 if compact else 48)
+	_hint_panel.position = Vector2(pad-9.0, 9.0)
+	_hint_panel.size = _hint_label.size + Vector2(18.0, 16.0)
 	# 天数标签居中顶部
 	if _day_label != null:
 		_day_label.size = Vector2(160, 28)
-		_day_label.position = Vector2(pad, pad + 64.0) if compact else Vector2(size.x * 0.5 - 80.0, pad)
+		_day_label.position = Vector2(pad, pad + 80.0) if compact else Vector2(size.x * 0.5 - 80.0, pad)
 	var row := size.y-124.0 if compact else size.y-68.0
 	_album_chip.position = Vector2(pad,row)
 	_weather_chip.position = Vector2(size.x-half-pad if compact else pad+210.0,row)
@@ -809,9 +816,23 @@ func _refresh_hud() -> void:
 	_album_chip.text = I18n.t("hud.album", {"count": str(_world.collected_count()), "total": str(_world.collectible_total())})
 	_weather_chip.text = I18n.t("hud.weather.%s" % _world.weather)
 	_pause_button.text = I18n.t("hud.pause")
-	# 上下文提示：牵行/持草时使用高优先级提示，其余情况由 hint_context() 根据位置决定
-	_hint_label.text = I18n.t(_world.hint_context())
-	_action_button.text = I18n.t(_world.primary_action_key())
+	# 显示与空格/行动按钮完全相同的实时目标和动作；橙色说明对应脚边标记。
+	var action := _world.primary_action()
+	var verb := I18n.t(str(action.get("label", "action.grass")))
+	var target_key := _world.action_target_key(action)
+	if not target_key.is_empty():
+		var marked := str(action.get("target", "")).begins_with("pet:")
+		var hint_key := "hud.hint.marked_target" if marked else "hud.hint.action_target"
+		if size.x < 700.0:
+			hint_key += ".compact"
+		_hint_label.text = I18n.t(hint_key, {
+			"target": I18n.t(target_key), "action": verb,
+		})
+		_hint_label.add_theme_color_override("font_color", Color("9a540f") if marked else INK)
+	else:
+		_hint_label.text = I18n.t(_world.hint_context())
+		_hint_label.add_theme_color_override("font_color", INK)
+	_action_button.text = verb
 	# 更新假期天数标签
 	if _day_label != null:
 		_day_label.text = I18n.t("hud.day", {"n": str(_world.holiday_day)})
