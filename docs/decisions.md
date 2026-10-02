@@ -65,7 +65,7 @@
 - 制作人要求之后每条新想法都要同时分析玩家体验与技术影响；缺少美术/音频/动画等资源时单独建立 issue。
 - 边界清楚、验收明确的实现切片可以交由登记过的贡献者认领；聊天或截图里的认领由 Codex 同步到 GitHub 和需求表，并标清只负责哪个切片。
 - 高耦合框架与核心机制（例如动物关系模型）由 Codex 先梳理领域边界、数据/存档策略和小步验证方案，再拆给贡献者实现。
-- 天气晴阴资源切换由 Cursor Local 承担首切片（issue #50）；额外季节/天空美术缺口独立记录在 issue #51。REQ-011 关系架构提案由 Codex 负责，见 [架构文档](architecture/animal-relationship-model.md) 与 issue #45。
+- Cursor Local 已通过 PR #52 完成天气晴/阴底图切换首切片；issue #50 随实现合入而关闭。额外季节/天空美术缺口独立记录在 issue #51。REQ-011 关系架构提案由 Codex 负责，见 [架构文档](architecture/animal-relationship-model.md) 与 issue #45。
 
 ### 状态历史 · REQ-20261002-001
 
