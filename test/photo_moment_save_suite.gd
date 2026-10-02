@@ -69,6 +69,8 @@ func run():
  check(PhotoDiary.caption(dated_legacy)==i18n.t("photo.diary.day",{"day":str(moment.day),"moment":i18n.t("photo.diary.llama_fed_gentle")}),"legacy dated photos retain original title and do not retroactively change wording")
  var bad_variant:=moment.duplicate(true);bad_variant.caption_variant=3
  check(PhotoMoment.sanitize(bad_variant).is_empty(),"out-of-range caption variant cannot enter saved photo")
+ bad_variant.caption_variant=2
+ check(PhotoMoment.sanitize(bad_variant).is_empty(),"a two-sentence photo rejects variant two even though other events allow it")
  bad_variant.caption_variant=1.5
  check(PhotoMoment.sanitize(bad_variant).is_empty(),"fractional caption variant cannot enter saved photo")
  var wrong_day:Dictionary=moment.duplicate(true);wrong_day.day=0

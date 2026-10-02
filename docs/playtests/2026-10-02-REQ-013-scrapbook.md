@@ -6,14 +6,14 @@
 
 | 场景 | 观察与结果 |
 | --- | --- |
-| 大鹅卧姿 | 第一天或站姿/远处不触发；第二天玩家靠近、鹅的实际完整卧姿 `rest` 帧出现时才入册。照片中为同一幅伏卧原画。 |
+| 大鹅卧姿 | 第一天、站姿、远处或草地上休息均不触发；第二天鹅实际位于 `pond` 区域，玩家靠近、实际完整卧姿 `rest` 帧出现时才入册。照片中为同一幅伏卧原画。 |
 | 两只羊 | 分开不触发；真实位置接近且旅人在旁时照片同时含 `sheep_a` 和 `sheep_b`。 |
-| 池边鸭鹅 | 第三天前、鸭子离鹅远、玩家不在旁时都不触发；第三天真实鸭鹅临近且玩家可见时拍下最近的鸭与鹅。同规则重复不新增照片。 |
-| 题词和存档 | 成片保存 `caption_variant` 0–2，越界/小数被拒；旧无变体照片维持原句，旧无日期照片只显示原标题。照片重开相册、磁盘重载、中英切换均不重新抽签；真实马照片不捏造“生气”。 |
+| 池边鸭鹅 | 第三天前、鹅/鸭不在池边、鸭子离鹅远或玩家只看见另一只鸭时都不触发；第三天**真正被取景的最近鸭**与鹅均在 `pond` 区域、相互邻近且旅人看见这同一对动物时才拍。同规则重复不新增照片。 |
+| 题词和存档 | 成片保存按**所属规则的实际短句数**限制的 `caption_variant`；两句羊驼规则拒绝值 2，三句鹅规则接受值 2，越界/小数被拒；旧无变体照片维持原句，旧无日期照片只显示原标题。照片重开相册、磁盘重载、中英切换均不重新抽签；真实马照片不捏造“生气”。 |
 | 手账操作 | 桌面双页有书脊与页码，390×844 竖屏单页；只有真实已拍记忆，空页不显示未解锁目标。鼠标/触屏按钮、触屏横扫和键盘左右键可翻；合上归还院子输入与 HUD。低动效静态换页。 |
-| 回归 | `test/scrapbook_encounter_suite.gd` **16/16**；`test/photo_moment_render_suite.gd` **1162/1162**；`test/photo_moment_save_suite.gd` **41/41**；更新后的 `test/ui_interaction_suite.gd` **无失败**。`npm run verify:daily` 完整通过（包括基本 389、走路 410、动物家园 1005、物理院子 640、书页/真实新照/旧场景和多视口测试）。 |
-| Web 导出 | Godot 4.7.2 Web 导出 `dist/index.html` / `dist/index.pck` 成功；候选 PCK 12,775,740 字节，SHA-256 `8d2ea0182f3ff7e0d81f535eaadf67b0f205efc616d5ffcfc45dffe5a10fa562`。这是候选包**不是正式发布包**。 |
-| Chromium 候选 | 公网临时测试服务器能加载 WASM 游戏。浏览器实际历史存档已有旧照片，标题页与院子 HUD 均能打开手账；翻到第 3/4 页和合上都可用。旧快照无日期只显示旧标题，未伪造“第一天”；院子打开手账时 HUD 确实隐藏。Web 候选未使用人为新照注入，三种新增事件的实际画面见下面的原生现场 fixture。 |
+| 回归 | 修复独立 reviewer 的三项问题后，`test/scrapbook_encounter_suite.gd` **20/20**；`test/photo_moment_render_suite.gd` **1162/1162**；`test/photo_moment_save_suite.gd` **42/42**；更新后的 `test/ui_interaction_suite.gd` **无失败**。修正后 `npm run verify:daily` 完整通过（基本 389、走路 410、动物家园 1005、物理院子 640，以及书页/旧场景和多视口测试）；Godot 没有脚本解析错误。 |
+| Web 导出 | Godot 4.7.2 Web 导出 `dist/index.html` / `dist/index.pck` 成功；修正后候选 PCK 12,776,556 字节，SHA-256 `9b7de19b29c0602b7521271fd77f69aa8a8f85a31d9fceb32e610dcdf071d4ef`。这是候选包**不是正式发布包**。 |
+| Chromium 候选 | 浏览器从服务器实际下载**修正后 12,776,556 字节 PCK**。历史存档中旧快照无日期只显示旧标题；标题页与院子 HUD 均能打开手账，翻页/合上可用，院子打开书页时 HUD 确实隐藏。在原有第 8 天存档中，院子**自然遇到两羊真实靠近**，相册末页出现“假期第8天，两只羊靠近了一点”的新场景照片；没有向 Web 包注入任何测试照片。其余新事件画面见原生 YardWorld fixture。 |
 
 ## 可视证据
 
@@ -23,7 +23,7 @@
 - [桌面：池边鸭鹅同框与留白末页](2026-10-02-REQ-013-scrapbook/desktop-duck-goose-book.png)
 - [手机：鸭鹅照片中文单页](2026-10-02-REQ-013-scrapbook/mobile-duck-goose-zh.png)
 - [手机：同一鸭鹅照片英文单页](2026-10-02-REQ-013-scrapbook/mobile-duck-goose-en.png)
-- [Chromium 候选：标题页旧照片翻至最后双页](2026-10-02-REQ-013-scrapbook/web-candidate-last-spread.webp)
+- [Chromium 最终候选：自然抓到假期第 8 天两羊的末页](2026-10-02-REQ-013-scrapbook/web-candidate-last-spread.webp)
 - [Chromium 候选：从院子打开相册后底层 HUD 隐藏](2026-10-02-REQ-013-scrapbook/web-yard-album.webp)
 
 **遗留与下一步：** 旧规则的早期固定题词及旧存档无世界照片时沿用原有卡片降级展示，不能反写历史现场；更自由的玩家角度/构图属于并行 REQ-012，不在本切片。下一步待本 PR 最终 SHA 独立审查通过，再合并并核对 GitHub Actions、公开 release 清单及 PCK 字节哈希，用户届时在正式 Pages 试玩。

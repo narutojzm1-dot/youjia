@@ -1067,6 +1067,25 @@ func _rule_matches(rule: Dictionary, snapshot: Dictionary) -> bool:
 	if rule.has("observe_species"):
 		var visible_companions := _species_actors(str(rule.observe_species))
 		if not _player_sees(visible_companions): return false
+	if rule.has("observe_nearest_companion"):
+		# PhotoMoment frames the closest companion to the owner. Validate that
+		# exact animal, not a different duck standing in the traveler's view.
+		var photographed_owner: FeltActor = actors[0]
+		var photographed_companion: FeltActor = null
+		var nearest_distance := INF
+		for candidate: FeltActor in _species_actors(str(rule.observe_nearest_companion)):
+			var distance: float = photographed_owner.position.distance_squared_to(candidate.position)
+			if distance < nearest_distance:
+				nearest_distance = distance
+				photographed_companion = candidate
+		if photographed_companion == null:
+			return false
+		if not photographed_owner.is_near(photographed_companion, float(TuningStore.get_value("gameplay.proximity.radius", 92.0))):
+			return false
+		if rule.has("zone") and photographed_companion.current_zone != str(rule.zone):
+			return false
+		if not _player_sees([photographed_companion]):
+			return false
 	if rule.has("weather") and str(rule.weather) != str(snapshot.weather):
 		return false
 	if rule.has("player") and str(rule.player) != str(snapshot.player):

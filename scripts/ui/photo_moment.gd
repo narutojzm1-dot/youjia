@@ -101,8 +101,9 @@ static func sanitize(data: Variant) -> Dictionary:
 		return {}
 	if data.has("day") and (not _number(data.day, 1, 10000) or float(data.day) != floorf(float(data.day))):
 		return {}
+	var caption_count := clampi(int(ExpressionCatalog.find_rule(str(data.rule_id)).get("caption_variants", 1)), 1, 3)
 	if data.has("caption_variant") and (
-			not _number(data.caption_variant, 0, 2)
+			not _number(data.caption_variant, 0, caption_count - 1)
 			or float(data.caption_variant) != floorf(float(data.caption_variant))):
 		return {}
 	if not data.get("weather") is String or data.weather not in ["sun", "overcast"]:

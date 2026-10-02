@@ -51,12 +51,19 @@ func _run() -> void:
 	goose._idle_time = 10.0
 	world.tick(1.0 / 60.0, Vector2.ZERO)
 	check(goose._posture_id == "rest" and matches(world, "goose_pond_rest"), "painted resting goose near the traveler is eligible")
+	world.debug_place_actor("goose", Vector2(425, 504))
+	world.debug_place_player(Vector2(410, 530))
+	check(not matches(world, "goose_pond_rest"), "a real resting goose on grass cannot be captioned as resting by the pond")
+	world.debug_place_actor("goose", Vector2(766, 508))
 	world.debug_place_player(Vector2(270, 515))
 	check(not matches(world, "goose_pond_rest"), "distant resting goose cannot be photographed")
 	world.debug_place_player(Vector2(741, 524))
 	world._evaluate_expressions()
 	var rest: Dictionary = world.photo_moments.get("goose_pond_rest", {})
 	check("goose_pond_rest" in world.collected and has_subject(rest, "goose"), "genuine resting goose is saved with its painted body")
+	var third_sentence := rest.duplicate(true)
+	third_sentence.caption_variant = 2
+	check(not PhotoMoment.sanitize(third_sentence).is_empty(), "a three-sentence photo still accepts its valid third caption")
 	var goose_art := str(goose._sprite.texture.resource_path)
 	var recorded_art := false
 	for item: Dictionary in rest.get("items", []):
@@ -87,6 +94,17 @@ func _run() -> void:
 	world.debug_place_actor("duck_a", Vector2(771, 533))
 	check(not matches(world, "goose_duck_shore"), "shore companionship does not unlock before day three")
 	world.holiday_day = 3
+	world.debug_place_actor("goose", Vector2(430, 505))
+	world.debug_place_actor("duck_a", Vector2(475, 534))
+	world.debug_place_player(Vector2(418, 521))
+	check(not matches(world, "goose_duck_shore"), "grassland goose and duck cannot become a pond-side photograph")
+	world.debug_place_actor("goose", Vector2(766, 508))
+	world.debug_place_actor("duck_a", Vector2(848, 534))
+	world.debug_place_actor("duck_b", Vector2(640, 574))
+	world.debug_place_player(Vector2(568, 520))
+	check(not matches(world, "goose_duck_shore"), "seeing another duck does not justify photographing the closest duck hidden from the traveler")
+	world.debug_place_actor("duck_a", Vector2(771, 533))
+	world.debug_place_actor("duck_b", Vector2(650, 580))
 	world.debug_place_player(Vector2(200, 520))
 	check(not matches(world, "goose_duck_shore"), "unseen duck and goose cannot be photographed")
 	world.debug_place_player(Vector2(748, 523))
