@@ -5,8 +5,9 @@ const WALK := preload("res://scenes/experimental/resident_walk_authored_v1.tres"
 const IDLE := preload("res://assets/holiday/characters/resident_walk_authored_v1/idle.png")
 const STRIDE := 52.0
 const NOMINAL_FPS := 12.0
-# 52 world pixels / (16 frames / 12fps) = 39px/s at unit depth/scale.
-const SPEED_MULTIPLIER := 39.0/96.0
+# A brisk, comfortable walk while keeping the authored stride registered to travel.
+# At the default 96px/s tuning this gives 61.4px/s; frame phase still follows distance.
+const SPEED_MULTIPLIER := 0.64
 var distance_phase:=0.0
 
 func _ready() -> void:
