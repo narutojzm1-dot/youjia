@@ -51,7 +51,6 @@ var _rig: PlantedGait
 var _following := false
 var _native_facing := 1.0
 var _ground_anchor:=Vector2(-1,-1)
-var _art_bounds := Rect2()
 var _spit_origin:=Vector2(28,-42)
 var _particle_art_scale:=1.0
 var _base_texture_path:=""
@@ -78,7 +77,6 @@ func setup(config: Dictionary) -> void:
 	_base_texture_path=str(config.get("base_texture",""))
 	_face_region=config.get("face_region",Rect2())
 	_ground_anchor=config.get("ground_anchor",Vector2(-1,-1))
-	_art_bounds=config.get("art_bounds",Rect2())
 	_spit_origin=config.get("spit_origin",Vector2(28,-42))
 	_particle_art_scale=float(config.get("particle_art_scale",1.0))
 	_textures = config.get("textures", {})
@@ -410,12 +408,6 @@ func tick(delta: float, world_size: Vector2) -> void:
 	z_index = roundi(position.y)
 
 
-func visual_hit_rect() -> Rect2:
-	var bounds := _art_bounds if _art_bounds.has_area() else Rect2(Vector2.ZERO, _sprite.texture.get_size())
-	var origin := _sprite.offset - _sprite.texture.get_size() * 0.5
-	return get_parent().global_transform.affine_inverse() * _sprite.global_transform * Rect2(origin + bounds.position, bounds.size)
-
-
 func _anchor_feet() -> void:
 	if _sprite == null or _sprite.texture == null:
 		return
@@ -424,6 +416,19 @@ func _anchor_feet() -> void:
 		_sprite.offset=_sprite.texture.get_size()*0.5-_ground_anchor
 	else:
 		_sprite.offset = Vector2(0, -_sprite.texture.get_height() * 0.5)
+
+
+## 脚底锚点到精灵冠顶的世界像素高度（用于 WorldEffectsOverlay 把弧/箭头画在头顶上方，而非脚边）
+func marker_crown_lift() -> float:
+	var visual := absf(scale.y)
+	if visual < 0.01:
+		visual = _base_scale * float(get_meta("visual_scale", 1.0)) * YardGround.depth_at(position.y)
+	if _ground_anchor.x >= 0.0 and _ground_anchor.y > 0.0:
+		# ground_anchor.y = 贴图像素中脚底距顶部的距离；乘以节点 scale 得到世界高度
+		return maxf(48.0, _ground_anchor.y * visual)
+	if _sprite != null and _sprite.texture != null:
+		return maxf(48.0, _sprite.texture.get_height() * visual * 0.92)
+	return 64.0
 
 
 func _start_rest() -> void:

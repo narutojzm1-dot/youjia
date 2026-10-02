@@ -127,7 +127,8 @@ Scale 弹跳从 1.04 提升至 1.08，点击可靠性不变。
 
 #### 架构决策（本次固化）
 
-- **WorldEffectsOverlay**（z_index=50）：任何需要"渲染在所有动物之上"的世界层特效，均应置入此节点，不得在 `YardWorld._draw()` 中直接绘制。
+- **WorldEffectsOverlay**：任何需要"渲染在所有动物之上"的世界层特效，均应置入此节点，不得在 `YardWorld._draw()` 中直接绘制。
+- **变更（2026-10-02 playtest #4）：** 禁止写死 `z_index=50`。`FeltActor` / 玩家使用 `z_index = roundi(position.y)`（约 400–600），覆盖层必须每帧设为 `max(角色z) + N`。PR #13 / `game-8280e92` 的失败正是因为固定 50 画在动物脚下。
 - **土壤渐显规则**：植物床土壤绘制必须基于玩家距离渐显，禁止在 >200px 时以高 alpha 强制显示棕色椭圆。
 - **下一步（仍未开始）**：核心院子场景化——将院子从单张水彩图重构为真实 2D 场景（独立 Sprite 节点 + 碰撞多边形），这是所有视觉遮挡问题的根本修复路径。此步骤 playtest 明确说"还未准备好"，本次 PR 未触碰。
 
@@ -147,6 +148,41 @@ Scale 弹跳从 1.04 提升至 1.08，点击可靠性不变。
 **验证：** Godot 4.7.2 完整日常测试、Web 导出及 Actions 发布工作流均通过；Actions run [36967101265](https://github.com/narutojzm1-dot/youjia/actions/runs/36967101265)。
 
 **Pages：** `game-1347743`，来源提交 `13477438ddffac609ff7a6b118bac0c065d3bdba`；线上 `game-release.json`、HTML `data-build` 和版本化 JS/PCK/WASM 已核对。PCK SHA-256：`9230d31846dfac2583ac0551fe383a979d9d384c674e65428f3c9310b7459fd7`。
+
+---
+
+### 2026-10-02 · Playtest #4 (game-8280e92) — PR #13 真根因与结构性修复
+
+**背景：** 硬刷新 playtest 再次 FAIL：宠物弧出现在牛/羊脚边而非上方、箭头缺失；钓到无闪光/扩环/庆祝文案；相册 chip 一次点击反馈不清。植物床近距渐显 PASS。
+
+#### 真根因（相对 PR #13 文档的纠正）
+
+1. **宠物/钓鱼覆盖层 z 写死为 50（主因）**  
+   PR #13 假设动物在 `z_index=0`，于是 `WorldEffectsOverlay.z_index=50` 即可压过精灵。实际上 `FeltActor.tick` / 玩家每帧执行 `z_index = roundi(position.y)`（院子里约 400–600）。覆盖层整层画在角色**脚下**。玩家看到的橙色只是脚底柔光从精灵边缘漏出 → 「弧在脚下/周围」；头顶弧与箭头被精灵盖住 → 「箭头缺失」。钓鱼扩环同理被鸭鹅盖住。
+
+2. **几何锚点错误（次因）**  
+   弧与箭头以脚底 `position` 为圆心、仅上移 ~33px，对牛/马精灵高度远远不够，即使 z 正确也仍像「围着身体」而非「在头顶上方」。
+
+3. **首次钓到通知被拍立得盖掉**  
+   `_reel_in_fish` 先发 `notice.fishing.caught*`，再 `_apply_rule(fish_first_catch)` → `notice.photo` 覆盖庆祝文案。屏幕闪光若遇 `reduced_motion` 会整段 return，连通知延长也不做。
+
+4. **相册 pulse 过弱**  
+   scale 1.08 + 无 pivot_offset，桌面 Web 上一次点击的「开了」反馈不够。
+
+#### 修复（本 PR）
+
+- 覆盖层每帧 `z_index = max(所有角色/道具 z) + 8`，并 `move_child` 到场景树末尾。
+- `FeltActor.marker_crown_lift()`：按 ground_anchor / 贴图高度算冠顶抬升；弧与箭头画在冠顶上方，脚底只留次要柔光。
+- 钓鱼环时长 3.2s、更大更亮；首次拍立得后重发钓到通知；HUD 闪光峰值 0.78 且移到 UI 层最前；通知延长不受 reduced_motion 短路。
+- 相册 chip：`pivot_offset=size/2`，pulse scale 1.16 / modulate 更高。
+
+#### 残留风险
+
+- 冠顶高度依赖 ground_anchor / 贴图近似，极端缩放或未配置 anchor 的物种可能略偏；若仍「贴身」需按物种微调 lift。
+- 核心院子仍是单张水彩 + Canvas 叠加，未做场景化遮挡（out of scope）。
+- Idle hint ~90s 未在 #4 观察到：55s 首启 + 繁忙通知仍可能推迟；未作为本次硬失败项重写。
+
+**新 tip：** 见本 PR 合并后的 `game-<sha>`（Pages `data-build`）。
 
 ---
 

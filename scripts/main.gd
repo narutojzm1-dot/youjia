@@ -607,7 +607,9 @@ func _on_album_updated(collected: PackedStringArray, latest_id: String) -> void:
 
 func _show_album() -> void:
 	_album_screen.visible = true
-	# 打开相册时对相册按钮做轻微脉冲，确认动作已被接收
+	# 打开相册：更强脉冲 + 居中 pivot，让桌面 Web 一次点击就有明确“开了”的反馈
+	if _album_chip != null:
+		_album_chip.pivot_offset = _album_chip.size * 0.5
 	_pulse_button(_album_chip)
 	if _world != null:
 		_world.input_enabled = false
@@ -830,36 +832,35 @@ func _on_day_advanced(day: int) -> void:
 
 
 ## 收杆成功：独立蓝色闪光层 + 行动按钮双弹脉冲 + 大字通知
-## playtest #3 根因：_fish_flash 旧版 alpha=0.38 在水彩背景上几乎不可见；
-## 庆祝环在 z_index=0 被鸭精灵遮挡；通知字号/时长不足。均已修复。
+## playtest #4：通知优先于 reduced_motion；闪光峰值抬高并提到 UI 层最前。
 func _on_fish_caught(carry_type: String) -> void:
+	# 钓到通知：无论是否减动效都拉长可读时间（拍立得可能抢通知，YardWorld 会重发）
+	_notice_time = maxf(_notice_time, 6.5)
+	_notice.add_theme_font_size_override("font_size", 22)
+	_notice.visible = true
 	if bool(TuningStore.get_value("ui.reduced_motion", false)):
 		return
-	# 独立蓝色屏幕闪光（_fish_flash ColorRect，不干扰拍立得奶白闪光）
-	## alpha 由 0.38 提升至 0.62，持续更长（0.15s 淡入 + 0.90s 消退），确保不可错过
+	# 独立蓝色屏幕闪光（提到 UI 层最前，峰值更高，桌面 Web 不可错过）
 	if _fish_flash != null:
+		_ui_layer.move_child(_fish_flash, _ui_layer.get_child_count() - 1)
 		var flash_color: Color
 		match carry_type:
-			"medium": flash_color = Color(0.32, 0.60, 0.92, 0.0)
-			"odd":    flash_color = Color(0.50, 0.42, 0.88, 0.0)
-			_:        flash_color = Color(0.42, 0.75, 0.88, 0.0)
+			"medium": flash_color = Color(0.28, 0.58, 0.95, 0.0)
+			"odd":    flash_color = Color(0.55, 0.40, 0.92, 0.0)
+			_:        flash_color = Color(0.35, 0.78, 0.95, 0.0)
 		_fish_flash.color = flash_color
 		var ft := create_tween()
-		ft.tween_property(_fish_flash, "color:a", 0.62, 0.10).set_trans(Tween.TRANS_QUAD)   # 淡入加强
-		ft.tween_property(_fish_flash, "color:a", 0.42, 0.12)                                # 短暂保持
-		ft.tween_property(_fish_flash, "color:a", 0.0, 0.90).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
-	# 行动按钮双弹脉冲（峰值 1.65，模拟收杆拉力感）
+		ft.tween_property(_fish_flash, "color:a", 0.78, 0.08).set_trans(Tween.TRANS_QUAD)
+		ft.tween_property(_fish_flash, "color:a", 0.55, 0.18)
+		ft.tween_property(_fish_flash, "color:a", 0.0, 1.05).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	# 行动按钮双弹脉冲（峰值 1.75）
 	if _action_button != null:
+		_action_button.pivot_offset = _action_button.size * 0.5
 		var tween := create_tween()
-		tween.tween_property(_action_button, "modulate", Color(1.65, 1.28, 0.72, 1.0), 0.06).set_trans(Tween.TRANS_QUAD)
+		tween.tween_property(_action_button, "modulate", Color(1.75, 1.35, 0.70, 1.0), 0.06).set_trans(Tween.TRANS_QUAD)
 		tween.tween_property(_action_button, "modulate", Color(0.88, 0.88, 0.88, 1.0), 0.09).set_trans(Tween.TRANS_QUAD)
-		tween.tween_property(_action_button, "modulate", Color(1.48, 1.18, 0.78, 1.0), 0.07).set_trans(Tween.TRANS_QUAD)
+		tween.tween_property(_action_button, "modulate", Color(1.55, 1.22, 0.78, 1.0), 0.07).set_trans(Tween.TRANS_QUAD)
 		tween.tween_property(_action_button, "modulate", Color.WHITE, 0.35).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
-	# 钓到通知：延长至 6 秒（原 3.2s），字号放大至 20px，确保庆祝感明确可读
-	## 通知文字由 YardWorld.notice_requested 信号在 fish_caught 之前发出，
-	## 这里在同帧覆盖 duration 和 font_size，不会出现竞态问题。
-	_notice_time = maxf(_notice_time, 6.0)
-	_notice.add_theme_font_size_override("font_size", 20)
 
 
 ## 第1天进院且相册为空时，延迟 4.5 秒发送柔性引导提示（淡出后已看不到 arrive 通知）
@@ -919,20 +920,22 @@ func _tod_phase_name(t: float) -> String:
 
 
 ## 行动按钮按下时触发短暂视觉脉冲：暖光闪亮再消散，给触控/鼠标点击明确反馈
-## scale 弹跳从 1.04 提升至 1.08，更清晰地确认"按下"这个动作（尤其是相册按钮）
+## scale 弹跳提到 1.16，modulate 更亮；调用方应先设 pivot_offset=size/2
 func _pulse_button(btn: Button) -> void:
 	if btn == null:
 		return
 	if bool(TuningStore.get_value("ui.reduced_motion", false)):
 		return
+	if btn.pivot_offset == Vector2.ZERO and btn.size != Vector2.ZERO:
+		btn.pivot_offset = btn.size * 0.5
 	var tween := create_tween()
 	tween.set_parallel(false)
-	tween.tween_property(btn, "modulate", Color(1.55, 1.15, 0.82, 1.0), 0.07).set_trans(Tween.TRANS_QUAD)
-	tween.tween_property(btn, "modulate", Color.WHITE, 0.26).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	tween.tween_property(btn, "modulate", Color(1.70, 1.28, 0.78, 1.0), 0.07).set_trans(Tween.TRANS_QUAD)
+	tween.tween_property(btn, "modulate", Color.WHITE, 0.28).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 	# 同步 scale 弹跳（独立 tween，避免与 modulate 链冲突）
 	var st := create_tween()
-	st.tween_property(btn, "scale", Vector2(1.08, 1.08), 0.06).set_trans(Tween.TRANS_QUAD)
-	st.tween_property(btn, "scale", Vector2(1.0, 1.0), 0.20).set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
+	st.tween_property(btn, "scale", Vector2(1.16, 1.16), 0.07).set_trans(Tween.TRANS_QUAD)
+	st.tween_property(btn, "scale", Vector2(1.0, 1.0), 0.22).set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
 
 
 ## 根据假期天数计算并应用季节底色（叠加在昼夜层之下）
