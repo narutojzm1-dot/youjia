@@ -4,6 +4,7 @@ extends RefCounted
 # All positions use the existing 1280x720 YardWorld coordinates. The painted
 # balcony is not walkable: hit, safe approach and art anchors stay independent.
 const WINDOWBOX := "windowbox"
+const SHORE_STONES := "shore_stones"
 static var CATALOG: Array[Dictionary] = [
 	{
 		"id": WINDOWBOX,
@@ -17,6 +18,22 @@ static var CATALOG: Array[Dictionary] = [
 		"reach": 64.0,
 		"label_key": "action.observe_windowbox",
 		"target_key": "target.windowbox",
+	},
+	{
+		# Only the painted stones on the west bank are clickable. The nearby
+		# water remains fishing; the feet stop on grass above the shore.
+		"id": SHORE_STONES,
+		"hit_polygon": PackedVector2Array([
+			Vector2(477, 545), Vector2(494, 538), Vector2(522, 542),
+			Vector2(537, 550), Vector2(543, 580), Vector2(537, 610),
+			Vector2(529, 634), Vector2(511, 638), Vector2(486, 627),
+			Vector2(469, 606), Vector2(464, 575),
+		]),
+		"approach_points": [Vector2(515, 527), Vector2(499, 521)],
+		"visual_anchor": Vector2(568, 580),
+		"reach": 54.0,
+		"label_key": "action.touch_shore",
+		"target_key": "target.shore_stones",
 	}
 ]
 

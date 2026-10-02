@@ -4,16 +4,32 @@ extends Node2D
 const PETALS := preload("res://assets/holiday/fx/windowbox_petals.png")
 const BUTTERFLY_OPEN := preload("res://assets/holiday/fx/windowbox_butterfly_open.png")
 const BUTTERFLY_REST := preload("res://assets/holiday/fx/windowbox_butterfly_rest.png")
+const RIPPLE_START := preload("res://assets/holiday/fx/shore_ripple_start.png")
+const RIPPLE_WIDE := preload("res://assets/holiday/fx/shore_ripple_wide.png")
+const DRAGONFLY_FLIGHT := preload("res://assets/holiday/fx/shore_dragonfly_flight.png")
+const DRAGONFLY_REST := preload("res://assets/holiday/fx/shore_dragonfly_rest.png")
 const PETAL_DURATION := 1.8
 const BUTTERFLY_DURATION := 2.8
+const RIPPLE_DURATION := 1.65
+const DRAGONFLY_DURATION := 2.8
 
 var _petals: Sprite2D
 var _butterfly: Sprite2D
+var _ripple: Sprite2D
+var _dragonfly: Sprite2D
 var _anchor := Vector2.ZERO
 var _elapsed := 0.0
 var _duration := 0.0
 var _has_butterfly := false
 var _butterfly_seen := false
+var _ripple_anchor := Vector2.ZERO
+var _ripple_elapsed := 0.0
+var _ripple_duration := 0.0
+var _dragonfly_anchor := Vector2.ZERO
+var _dragonfly_elapsed := 0.0
+var _dragonfly_duration := 0.0
+var _dragonfly_seen := false
+var _shore_was_near := false
 
 
 func setup() -> void:
@@ -31,6 +47,16 @@ func setup() -> void:
 	_butterfly.texture = BUTTERFLY_REST
 	_butterfly.scale = Vector2(0.22, 0.22)
 	add_child(_butterfly)
+	_ripple = Sprite2D.new()
+	_ripple.name = "PaintedShoreRipple"
+	_ripple.texture = RIPPLE_START
+	_ripple.scale = Vector2(0.25, 0.25)
+	add_child(_ripple)
+	_dragonfly = Sprite2D.new()
+	_dragonfly.name = "PaintedShoreDragonfly"
+	_dragonfly.texture = DRAGONFLY_REST
+	_dragonfly.scale = Vector2(0.18, 0.18)
+	add_child(_dragonfly)
 	visible = false
 
 
@@ -39,19 +65,54 @@ func play_windowbox(anchor: Vector2) -> void:
 	_elapsed = 0.0
 	_has_butterfly = not _butterfly_seen
 	_duration = BUTTERFLY_DURATION if _has_butterfly else PETAL_DURATION
-	visible = true
+	_sync_visible()
 	_update_paint(bool(TuningStore.get_value("ui.reduced_motion", false)))
+
+
+func play_shore_ripple(anchor: Vector2) -> void:
+	# A touch on the actual bank is the only source of this response. An ambient
+	# dragonfly may remain visible at the same time; neither creates a fish.
+	_ripple_anchor = anchor
+	_ripple_elapsed = 0.0
+	_ripple_duration = RIPPLE_DURATION
+	_sync_visible()
+	_update_shore_paint(bool(TuningStore.get_value("ui.reduced_motion", false)))
+
+
+func consider_shore(world: Node2D) -> void:
+	# A different discovery from the windowbox: ordinary walking near the bank,
+	# without tapping a hotspot, can briefly reveal the painted dragonfly.
+	var shore := YardSceneHotspots.get_hotspot(YardSceneHotspots.SHORE_STONES)
+	var near := false
+	if not shore.is_empty() and YardSceneHotspots.available(world) \
+		and world._pending_interaction in ["", YardSceneHotspots.SHORE_STONES] \
+		and world._selected_target in ["", YardSceneHotspots.SHORE_STONES]:
+		var player = world.get_player()
+		near = player != null and player.position.distance_to(shore.approach_points[0]) < 64.0
+	if near and not _shore_was_near and not _dragonfly_seen and _dragonfly_duration <= 0.0:
+		_dragonfly_anchor = shore.visual_anchor
+		_dragonfly_elapsed = 0.0
+		_dragonfly_duration = DRAGONFLY_DURATION
+		_sync_visible()
+		_update_shore_paint(bool(TuningStore.get_value("ui.reduced_motion", false)))
+	_shore_was_near = near
 
 
 func cancel() -> void:
 	_duration = 0.0
 	_elapsed = 0.0
 	_has_butterfly = false
-	visible = false
+	_ripple_duration = 0.0
+	_ripple_elapsed = 0.0
+	_dragonfly_duration = 0.0
+	_dragonfly_elapsed = 0.0
+	_sync_visible()
 
 
 func active_snapshot() -> Dictionary:
-	if not visible:
+	# Preserve the original flower-box contract even if a second scene response
+	# is playing elsewhere in the yard.
+	if _duration <= 0.0:
 		return {}
 	return {
 		"anchor": _anchor, "remaining": _duration - _elapsed,
@@ -61,22 +122,68 @@ func active_snapshot() -> Dictionary:
 	}
 
 
+func ripple_snapshot() -> Dictionary:
+	if _ripple_duration <= 0.0:
+		return {}
+	return {
+		"anchor": _ripple_anchor, "remaining": _ripple_duration - _ripple_elapsed,
+		"reduced_motion": bool(TuningStore.get_value("ui.reduced_motion", false)),
+	}
+
+
+func dragonfly_snapshot() -> Dictionary:
+	if _dragonfly_duration <= 0.0:
+		return {}
+	return {
+		"anchor": _dragonfly_anchor, "remaining": _dragonfly_duration - _dragonfly_elapsed,
+		"seen": _dragonfly_seen,
+		"reduced_motion": bool(TuningStore.get_value("ui.reduced_motion", false)),
+	}
+
+
 func butterfly_seen() -> bool:
 	return _butterfly_seen
 
 
+func dragonfly_seen() -> bool:
+	return _dragonfly_seen
+
+
 func advance(delta: float) -> void:
-	if not visible:
-		return
-	_elapsed += delta
-	# A player who immediately walks away has not missed a once-per-session
-	# discovery; only actual time spent viewing it completes the encounter.
-	if _has_butterfly and _elapsed >= 1.3:
-		_butterfly_seen = true
-	if _elapsed >= _duration:
-		cancel()
-		return
-	_update_paint(bool(TuningStore.get_value("ui.reduced_motion", false)))
+	if _duration > 0.0:
+		_elapsed += delta
+		# A player who walks away early has not missed a once-per-session view.
+		if _has_butterfly and _elapsed >= 1.3:
+			_butterfly_seen = true
+		if _elapsed >= _duration:
+			_duration = 0.0
+			_has_butterfly = false
+		else:
+			_update_paint(bool(TuningStore.get_value("ui.reduced_motion", false)))
+	if _ripple_duration > 0.0:
+		_ripple_elapsed += delta
+		if _ripple_elapsed >= _ripple_duration:
+			_ripple_duration = 0.0
+		else:
+			_update_shore_paint(bool(TuningStore.get_value("ui.reduced_motion", false)))
+	if _dragonfly_duration > 0.0:
+		_dragonfly_elapsed += delta
+		if _dragonfly_elapsed >= 1.2:
+			_dragonfly_seen = true
+		if _dragonfly_elapsed >= _dragonfly_duration:
+			_dragonfly_duration = 0.0
+		else:
+			_update_shore_paint(bool(TuningStore.get_value("ui.reduced_motion", false)))
+	_sync_visible()
+
+
+func _sync_visible() -> void:
+	visible = _duration > 0.0 or _ripple_duration > 0.0 or _dragonfly_duration > 0.0
+	if _petals != null:
+		_petals.visible = _duration > 0.0
+		_butterfly.visible = _duration > 0.0 and _has_butterfly
+		_ripple.visible = _ripple_duration > 0.0
+		_dragonfly.visible = _dragonfly_duration > 0.0
 
 
 func _update_paint(reduced_motion: bool) -> void:
@@ -97,3 +204,15 @@ func _update_paint(reduced_motion: bool) -> void:
 		_butterfly.texture = BUTTERFLY_OPEN if fmod(_elapsed, 0.38) < 0.19 and _elapsed < 1.9 else BUTTERFLY_REST
 		_butterfly.position = _anchor + Vector2(10.0 + _elapsed * 3.0, 18.0 + sin(_elapsed * 5.4) * 2.5)
 		_butterfly.modulate.a = fade
+
+
+func _update_shore_paint(reduced_motion: bool) -> void:
+	if _ripple_duration > 0.0:
+		# Replace the entire painted water cel; do not stretch one geometric ring.
+		_ripple.texture = RIPPLE_WIDE if reduced_motion or _ripple_elapsed >= 0.72 else RIPPLE_START
+		_ripple.position = _ripple_anchor
+		_ripple.modulate.a = 1.0 if reduced_motion else clampf((_ripple_duration - _ripple_elapsed) / 0.38, 0.0, 1.0)
+	if _dragonfly_duration > 0.0:
+		_dragonfly.texture = DRAGONFLY_REST if reduced_motion or fmod(_dragonfly_elapsed, 0.44) >= 0.22 else DRAGONFLY_FLIGHT
+		_dragonfly.position = _dragonfly_anchor + (Vector2(19.0, -24.0) if reduced_motion else Vector2(18.0 + _dragonfly_elapsed * 1.8, -24.0 + sin(_dragonfly_elapsed * 5.0) * 2.2))
+		_dragonfly.modulate.a = 1.0 if reduced_motion else clampf((_dragonfly_duration - _dragonfly_elapsed) / 0.4, 0.0, 1.0)
