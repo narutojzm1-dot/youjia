@@ -1182,12 +1182,6 @@ func _apply_rule(rule: Dictionary, force: bool) -> void:
 				collected.append(rule_id)
 				last_photo = rule_id
 			if first_collection or not moment.is_empty(): album_updated.emit(collected, rule_id)
-			if first_collection:
-				_focus_seconds = 2.4
-				var focus := actor.position + Vector2(0, -40)
-				if rule_id == "plant_first_bloom": focus = _plant_point() + Vector2(0, -12)
-				if rule_id == "fish_first_catch": focus = _fishing_point()
-				camera_focus_requested.emit(to_global(focus), 1.16)
 
 
 ## 当假期翻天时调用：推进植物床、发送通知、保存进度

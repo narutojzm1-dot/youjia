@@ -1,6 +1,6 @@
 # 代理开发入口
 
-此文件适用于 Codex、GROK、MANUS 及其他参与本仓库的开发代理。每次开始任务时，先阅读以下仓库记录：
+此文件适用于 Codex、GROK、MANUS、Cursor Local（`CURSOR-CONTRIBUTOR-LOCAL`）及其他参与本仓库的开发代理。每次开始任务时，先阅读以下仓库记录：
 
 1. [`CONTRIBUTING.md`](CONTRIBUTING.md)：角色、分支、PR 与冲突处理规范。
 2. [`docs/agents.md`](docs/agents.md)：开发者身份登记表。

@@ -132,8 +132,10 @@ func _test_event(rule: Dictionary, index: int) -> void:
 			_check(item.gait.face_override, "llama canonical body keeps face override")
 			_check(item.gait.expression.path == llama._expression_texture.resource_path, "live expression texture retained")
 			_check(item.transform == Moment._matrix(world.global_transform.affine_inverse() * llama._sprite.global_transform), "actual llama transform retained")
-	_check(found_hero and found_llama, "%s captures accepted hero and llama" % rule_id)
-	_check(found_rope == world._lead_rope.visible, "%s captures rope only if visible" % rule_id)
+	var traveler_expected: bool = rule_id in ["llama_fed_gentle", "fish_first_catch"] or (rule_id == "llama_overcast_goose_annoyed" and bool(world._leading))
+	_check(found_hero == traveler_expected, "%s only includes the traveler when their action belongs in the photograph" % rule_id)
+	_check(found_llama, "%s retains the actual llama painting" % rule_id)
+	_check(found_rope == (world._lead_rope.visible and traveler_expected), "%s captures the rope only when its traveler is in the photograph" % rule_id)
 	if rule_id == "llama_fed_gentle":
 		_check(not player.carrying_grass, "feeding fixture actually consumes the bundle")
 		_check(_count_atlases(snapshot) == 2, "feeding record does not invent a consumed bundle")

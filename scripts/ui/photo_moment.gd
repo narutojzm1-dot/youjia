@@ -45,11 +45,22 @@ static func capture(world: Node2D, rule: Dictionary) -> Dictionary:
 		return {}
 	var items: Array = []
 	_collect(world, world, backdrop, "", items)
+	# In an animal portrait the traveler holds the camera behind the frame;
+	# otherwise their foreground body can completely hide the subject. Keep
+	# the traveler only when their action is part of the event being recorded.
+	var traveler_in_frame := event_id in ["llama_fed_gentle", "fish_first_catch"] \
+		or (event_id == "llama_overcast_goose_annoyed" and bool(_property(world, "_leading", false)))
+	if not traveler_in_frame:
+		var portrait_items: Array = []
+		for item: Dictionary in items:
+			if str(item.get("subject", "")) != "player" and str(item.get("kind", "")) != "line":
+				portrait_items.append(item)
+		items = portrait_items
 	items.sort_custom(_draws_before)
 	var shadows: Array = []
 	var actors: Dictionary = _property(world, "_actors", {})
 	var player: Variant = world.call("get_player") if world.has_method("get_player") else null
-	if player is Node2D:
+	if traveler_in_frame and player is Node2D:
 		var point: Vector2 = world.to_local(player.global_position)
 		var extent := Vector2(11, 4) * YardGround.depth_at(point.y)
 		shadows.append([point.x, point.y, extent.x, extent.y])
@@ -72,6 +83,7 @@ static func capture(world: Node2D, rule: Dictionary) -> Dictionary:
 		clampf(frame.position.y, half_span, world_size.y - half_span))
 	return sanitize({
 		"version": VERSION, "rule_id": event_id,
+		"day": int(_property(world, "holiday_day", 1)),
 		"weather": str(_property(world, "weather", "sun")),
 		"world_size": [world_size.x, world_size.y],
 		"focus": [focus.x, focus.y], "span": span,
@@ -85,6 +97,8 @@ static func sanitize(data: Variant) -> Dictionary:
 	if not data is Dictionary or not _number(data.get("version"), VERSION, VERSION):
 		return {}
 	if not data.get("rule_id") is String or data.rule_id.is_empty() or data.rule_id.length() > 96:
+		return {}
+	if data.has("day") and (not _number(data.day, 1, 10000) or float(data.day) != floorf(float(data.day))):
 		return {}
 	if not data.get("weather") is String or data.weather not in ["sun", "overcast"]:
 		return {}
@@ -111,11 +125,14 @@ static func sanitize(data: Variant) -> Dictionary:
 		if not _numbers(shadow, 4, -MAX_COORD, MAX_COORD) or float(shadow[2]) <= 0.0 or float(shadow[3]) <= 0.0 or float(shadow[2]) > 256.0 or float(shadow[3]) > 256.0:
 			return {}
 		shadows.append(shadow.duplicate())
-	return {
+	var cleaned := {
 		"version": VERSION, "rule_id": data.rule_id, "weather": data.weather,
 		"world_size": data.world_size.duplicate(), "focus": data.focus.duplicate(),
 		"span": float(data.span), "background": background, "items": items, "shadows": shadows,
 	}
+	if data.has("day"):
+		cleaned.day = int(data.day)
+	return cleaned
 
 
 static func has_event_subject(snapshot: Dictionary, rule_id: String) -> bool:

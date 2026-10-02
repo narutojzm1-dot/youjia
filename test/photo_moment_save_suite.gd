@@ -42,6 +42,30 @@ func run():
  var moment:Dictionary=store.get_photo_moment(fed_id)
  check(fed_id in store.get_album(),"new photo ID is saved")
  check(not moment.is_empty() and moment.get("rule_id")==fed_id,"real encounter scene is saved with its photo ID")
+ check(moment.get("day",0)==world.holiday_day,"new travel photograph retains the real in-game day")
+ check(main._cam_target_zoom==1.0,"new travel photograph is explained by a visible print instead of an unexplained camera zoom")
+ var photo_arrival:Node=main._ui_layer.get_node_or_null("PhotoArrival")
+ check(photo_arrival!=null and photo_arrival.visible,"new travel photograph shows its real captured image before tucking into the album")
+ check(photo_arrival.mouse_filter==Control.MOUSE_FILTER_IGNORE and photo_arrival._picture.mouse_filter==Control.MOUSE_FILTER_IGNORE,"the print and its true picture never block walking or touch input")
+ check(photo_arrival!=null and photo_arrival._caption.text.contains("假期第1天") and photo_arrival._caption.text.contains("草泥马"),"the first print names the real vacation day and photographed animal")
+ var i18n:Node=root.get_node("I18n")
+ i18n.set_locale("en")
+ check(photo_arrival!=null and photo_arrival._caption.text.contains("Holiday day 1") and photo_arrival._caption.text.contains("llama"),"existing first print changes to the same English day and event without inventing a new encounter")
+ i18n.set_locale("zh-CN")
+ var old_moment:Dictionary=moment.duplicate(true);old_moment.erase("day")
+ check(not PhotoMoment.sanitize(old_moment).is_empty() and not PhotoMoment.sanitize(old_moment).has("day"),"a version-one photograph without a date remains valid without a fake first day")
+ check(PhotoDiary.caption(old_moment)==i18n.t("photo.llama_fed.title"),"legacy undated photographs retain their original title")
+ var wrong_day:Dictionary=moment.duplicate(true);wrong_day.day=0
+ check(PhotoMoment.sanitize(wrong_day).is_empty(),"an invalid photo day never survives snapshot validation")
+ photo_arrival.dismiss()
+ check(photo_arrival.play(moment,main._album_chip.get_global_rect().get_center(),true),"reduced motion still presents the genuine saved print")
+ var still_pos:Vector2=photo_arrival._card.position
+ await create_timer(0.25).timeout
+ check(photo_arrival.visible and photo_arrival._card.position==still_pos and photo_arrival._card.scale==Vector2.ONE,"reduced motion holds a readable still photograph rather than shrinking it")
+ main._toggle_pause()
+ check(not photo_arrival.visible and main._pause_screen.visible,"pausing immediately dismisses the print without blocking the menu")
+ main._toggle_pause()
+ check(main._world.input_enabled,"dismissing the print restores ordinary yard controls")
  var pose:=player_pose(moment)
  check(pose.size()==6,"photo includes the accepted hero frame and pose")
  for i in 180:world.tick(1.0/60,Vector2.LEFT)
@@ -50,11 +74,36 @@ func run():
  check(fed_id in store.get_album() and same_numbers(pose,player_pose(store.get_photo_moment(fed_id))),"photo pose and progress survive reload")
  main._show_album();await process_frame
  var scene_cards:=0
+ var matching_diary:=false
  for card in main._album_grid.get_children():
   for child in card.get_children():
-   if child is PhotoMoment:scene_cards+=1
+   if child is PhotoMoment:
+    scene_cards+=1
+    if child._snapshot.get("rule_id")==fed_id:
+     for label in card.get_children():
+      if label is Label and label.text==PhotoDiary.caption(moment): matching_diary=true
  check(scene_cards>=1,"album actually uses event-scene cards")
+ check(matching_diary,"the album presents the exact same day and sentence as the newly captured print")
  main._hide_album()
+ world.tick(6.1,Vector2.ZERO)
+ world.holiday_day=3
+ world.set_weather("sun")
+ world.debug_place_actor("horse",Vector2(880,480))
+ world.debug_place_player(Vector2(837,492))
+ world._interact_with_target("pet:horse")
+ var horse_id:="horse_pet_sunny"
+ var horse_photo:Dictionary=store.get_photo_moment(horse_id)
+ check(horse_id in store.get_album() and horse_photo.get("day",0)==3,"a real third-day sunny horse pet produces a saved dated photograph")
+ var horse_in_queue:=false
+ for waiting:Dictionary in main._photo_arrival_queue:
+  if waiting.get("rule_id","")==horse_id:horse_in_queue=true
+ check(main._photo_arrival._snapshot.get("rule_id","")==horse_id or horse_in_queue,"if another yard event is photographed in the same tick, the horse print waits rather than being overwritten")
+ for step in 4:
+  if main._photo_arrival._snapshot.get("rule_id","")==horse_id:break
+  if main._photo_arrival._tween!=null:main._photo_arrival._tween.kill()
+  main._photo_arrival._finish()
+ check(main._photo_arrival.visible and main._photo_arrival._caption.text.contains("晴天低下了头") and not main._photo_arrival._caption.text.contains("生气"),"the real horse print describes its lowered head, never invents an angry horse")
+ check(PhotoMoment.has_event_subject(horse_photo,horse_id),"the horse diary entry contains the captured subject and not just a fabricated title")
  # Existing version3 progress remains earned; missing images are captured only
  # when those events actually occur again, silently, without a new camera jump.
  var old_ids:Array=Array(ExpressionCatalog.all_ids())
