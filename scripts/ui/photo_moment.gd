@@ -347,6 +347,9 @@ static func _event_frame(rule: Dictionary, actors: Dictionary, items: Array) -> 
 		"llama_sheep_cow_smirk":
 			selected = ["llama", "cow", "horse"]
 			minimum = 300.0
+		"goose_horse_mount":
+			selected = ["goose", "horse"]
+			minimum = 230.0
 		"duck_pond_chorus":
 			selected = ["duck_a", "duck_b", "duck_c"]
 			minimum = 330.0

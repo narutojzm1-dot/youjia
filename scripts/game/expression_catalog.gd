@@ -2,6 +2,17 @@ class_name ExpressionCatalog
 extends RefCounted
 
 const RULES := [
+	{
+		"id": "goose_horse_mount",
+		"owner": "goose",
+		"priority": 96,
+		"expression": "idle",
+		"hold": 0.0,
+		"polaroid": true,
+		"title_key": "photo.goose_horse_mount.title",
+		"note_key": "photo.goose_horse_mount.note",
+		"caption_variants": 3,
+	},
 	# ── 草泥马主线（4张）────────────────────────────────────────────────────────
 	{
 		"id": "llama_overcast_goose_annoyed",

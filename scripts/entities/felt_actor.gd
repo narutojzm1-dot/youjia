@@ -223,6 +223,36 @@ func set_pose(point: Vector2, next_scale: float, face: float) -> void:
 		_rig.reset_contacts()
 
 
+func show_goose_encounter_cel(cel: String) -> void:
+	if species != "goose" or not _textures.has(cel) or _sprite == null:
+		return
+	_posture_id = cel
+	_sprite.texture = load(str(_textures[cel])) as Texture2D
+	var posture: Dictionary = _posture_metadata.get(cel, {})
+	if posture.is_empty():
+		_ground_anchor = _idle_ground_anchor
+		_art_bounds = _idle_art_bounds
+	else:
+		var anchor: Array = posture.ground_anchor
+		var bounds: Array = posture.alpha_bbox
+		_ground_anchor = Vector2(float(anchor[0]), float(anchor[1]))
+		_art_bounds = Rect2(float(bounds[0]), float(bounds[1]), float(bounds[2]), float(bounds[3]))
+	_anchor_feet()
+
+
+func release_encounter_pose() -> void:
+	posed = false
+	_following = false
+	_lead_target = null
+	_lead_path.clear()
+	state = "graze"
+	grazing = false
+	_idle_time = randf_range(2.0, 5.0)
+	_target = _random_point()
+	_velocity = Vector2.ZERO
+	_refresh_goose_posture()
+
+
 func begin_lead(target: Node2D) -> void:
 	if state != "lead":
 		_following = false
