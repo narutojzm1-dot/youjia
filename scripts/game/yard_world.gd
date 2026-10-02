@@ -303,6 +303,9 @@ func tick(delta: float, move: Vector2) -> void:
 		_fish_carry_timer -= delta
 		if _fish_carry_timer <= 0.0 and not _fish_carry_type.is_empty():
 			_fish_carry_type = ""
+			# 鱼溜走后无法再投喂；取消进行中的 toss_fish 接近，保留无关散步
+			if _pending_interaction.begins_with("toss_fish:"):
+				_consume_pending_action()
 			notice_requested.emit("notice.fishing.release")
 			queue_redraw()
 	_weather_timer -= delta
