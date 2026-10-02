@@ -5,7 +5,7 @@
 ## 台账
 
 - 需求/变更编号：
-- Agent-ID（见 `docs/agents.md`）：
+- Agent-ID（见 `docs/agents.md`；首次身份登记 PR 可填 `REGISTER:<Agent-ID>`）：
 - 需求列表中的 Owner/状态是否匹配：是 / 否（原因）
 - 独立子代理 reviewer Agent-ID：
 - reviewer 审查的完整 commit SHA：
