@@ -78,8 +78,12 @@ continues to follow actual post-collision travel, preserving the stride-to-root
 registration. At that speed the animation advances at about 18.9 frames/sec
 (about 1.18 stride cycles/sec) at unit depth; 12 fps is the original authoring
 reference, not a playback cap. The approved poses and walk PNGs remain
-unchanged. This speed adjustment has not yet received rendered or browser
-playtest validation.
+unchanged. The speed adjustment was browser-playtested on 2026-10-02 in the
+exported Web build: keyboard movement, stop-to-idle, and left/right mirroring
+were exercised at 1280×720 with no browser errors. Measured test-scene
+displacement was 167.2–167.9 world pixels over 3 seconds at 30/60/120 Hz. This
+confirms frame-rate stability and the rendered state transitions; naturalness
+remains a human product judgment.
 
 Regression coverage includes default/legacy selection isolation, 30/60/120Hz
 travel stability, keyboard and existing click-goal travel, start/stop/turn,
@@ -87,3 +91,15 @@ teleport reset, visible grass carrying, feeding, photo collection, leading,
 and reduced motion. Actual rendered yard evidence covers walking, stopping,
 mirroring and returning to idle. Small residual foot drift and the two shoes'
 different viewing angles remain the accepted art limitations.
+
+
+### Speed playtest follow-up · 2026-10-02
+
+The earlier locomotion assertion still enforced the old 100–112px/3s range after
+the multiplier changed. It now asserts 160–175px/3s at the standard fixture,
+while the existing cross-rate stability assertion remains. `npm run
+verify:locomotion` passes all 410 locomotion checks plus interaction and
+viewport audits. A fresh Web export loaded in Chromium (HTTP 200, canvas ready,
+no JavaScript errors); keyboard walk, stop-to-idle, and mirrored turning were
+visually checked. This is evidence for the speed revision, not a claim that
+walking quality is fully solved.
