@@ -92,7 +92,7 @@ func _new_metrics(start: Vector2) -> Dictionary:
 		"quiet_seconds": 0.0, "longest_quiet": 0.0,
 		"leg_seconds": 0.0, "leg_distance": 0.0,
 		"longest_leg": 0.0, "farthest_leg": 0.0, "completed_legs": 0,
-		"states": {}, "invalid_frames": 0, "moving_in_pause": 0,
+		"states": {}, "visual_postures": {}, "invalid_frames": 0, "moving_in_pause": 0,
 	}
 
 
@@ -114,6 +114,9 @@ func _observe(actor, metric: Dictionary, delta: float) -> void:
 		if metric.first_outside == Vector2.INF:
 			metric.first_outside = actor.position
 	metric.states[actor.state] = int(metric.states.get(actor.state, 0)) + 1
+	if actor.species == "goose" and metric.frames % 30 == 0:
+		var frame_name: String = actor._sprite.texture.resource_path.get_file()
+		metric.visual_postures[frame_name] = int(metric.visual_postures.get(frame_name, 0)) + 1
 	if quiet:
 		metric.quiet_frames += 1
 		metric.quiet_seconds += delta
@@ -172,6 +175,10 @@ func _assert_rhythm(actor, metric: Dictionary, weather: String, fps: int) -> voi
 	_check(metric.states.has("wander"), "%s spends time moving between activities" % label)
 	if actor.species != "duck":
 		_check(metric.states.has("graze"), "%s spends time grazing" % label)
+	if actor.species == "goose":
+		for painting: String in ["goose.png", "goose_calm.png", "goose_rest.png"]:
+			_check(int(metric.visual_postures.get(painting, 0)) > 0,
+				"%s naturally shows the %s painted posture" % [label, painting])
 
 
 func _check(condition: bool, message: String) -> void:
