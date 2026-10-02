@@ -174,9 +174,13 @@ func review():
  check(not main._album_screen.visible and w.input_enabled and main._hud.visible,"actual album close restores yard HUD and walking")
  root.size=Vector2i(1280,720);await frames(2);main._layout()
  var before=w._backdrop.texture
+ var before_scale=w._backdrop.scale
  var walk=w._player.walk_ground.duplicate()
  w.toggle_weather()
- check(before==w._backdrop.texture and walk==w._player.walk_ground,"weather preserves backdrop geometry and collision")
+ check(w.weather=="overcast" and w._backdrop.texture==w.OVERCAST and w._backdrop.texture!=before,"overcast uses the painted overcast yard")
+ check(before_scale==w._backdrop.scale and walk==w._player.walk_ground,"weather preserves backdrop scale and collision")
+ w.toggle_weather()
+ check(w.weather=="sun" and w._backdrop.texture==w.SUNNY,"sun restores the painted sunny yard")
  w.debug_place_player(YardSceneHotspots.get_hotspot("windowbox").approach_points[0] + Vector2(5, 5))
  w.request_pointer_action(Vector2(285, 275))
  check(not w._scene_feedback.active_snapshot().is_empty(), "real windowbox observation paints a temporary world response")
