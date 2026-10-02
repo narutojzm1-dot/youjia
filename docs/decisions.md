@@ -17,7 +17,7 @@
 | REQ-20261002-002 | 2026-10-02 | 解释靠近动物时出现的橙色提示，并让动作目标更明确 | 已上线；待实玩验收 | [PR #25](https://github.com/narutojzm1-dot/youjia/pull/25)、[目标提示体验记录](playtests/2026-10-02-REQ-002-target-clarity.md)；移动动物点选和手机触屏仍待验收。 |
 | REQ-20261002-003 | 2026-10-02 | 确定长期定位与停留/回访循环 | 已决策：轻陪伴为主、轻放置为辅 | 用户确认互动可留下回响，让动物之后的行为或小故事发生细微变化；不得引入缺席惩罚或强制任务。具体切片见 [REQ-20261002-011](requirements.md)。 |
 | REQ-20261002-004 | 2026-10-02 | 为大鹅和其他动物补足动作与表情变化 | 进行中 | [PR #34](https://github.com/narutojzm1-dot/youjia/pull/34) 已发布大鹅收翅站立与卧姿；其他动物动作仍待补。 |
-| REQ-20261002-005 | 2026-10-02 | 让天气与季节可感知；评估新增美术资源 | 已拆分，天气首切片已指定 | 制作人从 Cursor Local 认领信息指定晴/阴背景绑定首切片，已记录为 [issue #50](https://github.com/narutojzm1-dot/youjia/issues/50)；新云层、火烧云、雨雪及季节资源另列 [issue #51](https://github.com/narutojzm1-dot/youjia/issues/51)，尚未认领。 |
+| REQ-20261002-005 | 2026-10-02 | 让天气与季节可感知；评估新增美术资源 | 晴/阴底图首切片已合入；扩展待拆 | Cursor Local 首切片接通现有 `yard_overcast.png`（[PR #52](https://github.com/narutojzm1-dot/youjia/pull/52)）；晨午晚、云形和季节未完成。新增资源由 [issue #51](https://github.com/narutojzm1-dot/youjia/issues/51) 盘点。 |
 | REQ-20261002-006 | 2026-10-02 | 深入体验当前版本并提出大型玩法建设顺序 | 复核完成 | [game-1347743 体验记录](playtests/2026-10-02-game-1347743.md)；玩法建议已进入策划基准。 |
 | REQ-20261002-007 | 2026-10-02 | 携带的鱼在靠近鸭/鹅途中消失后，角色应停止已失效的投喂追踪，但继续普通散步 | 已发布；待浏览器体验复核 | [PR #19](https://github.com/narutojzm1-dot/youjia/pull/19)、[game-b82a7f5 发布核查](playtests/2026-10-02-game-b82a7f5.md)；未改变现有 20 秒携鱼时限。 |
 | REQ-20261002-008 | 2026-10-02 | 为主动互动补足真实对象回应 | 进行中 | 鸭鹅投鱼见 [PR #32](https://github.com/narutojzm1-dot/youjia/pull/32)，抚摸和浇水见 [PR #35](https://github.com/narutojzm1-dot/youjia/pull/35)；更多互动仍待盘点。 |
@@ -35,6 +35,10 @@
 | DOC-20261002-008 | 2026-10-02 | 建立新想法的产品/技术拆解、资源缺口开单与框架工作分流规则 | 已采纳 | [协作规范](../CONTRIBUTING.md)新增分流准则：边界清楚切片可认领；高耦合框架由 Codex 先出架构；资源缺口独立开单；聊天认领及时同步到 GitHub 和需求表。 |
 
 之后出现的需求继续追加新编号；完成或调整时保留此表和历史记录，不删除旧项。
+
+### 状态历史 · REQ-20261002-005
+
+- **2026-10-02：** 用户指定 `CURSOR-CONTRIBUTOR-LOCAL` 认领。首切片接通已有阴天院子画 `yard_overcast.png`，修正 `_apply_weather_art()` 无论晴阴都贴晴天资源的问题；不新增雨雪、火烧云或时段天空资产。晨午晚光线与季节缩短仍待后续切片。
 
 ### 2026-10-02 · REQ-009 第三处热点发布与台账恢复
 

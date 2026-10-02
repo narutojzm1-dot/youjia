@@ -976,8 +976,9 @@ func _spawn_grass() -> void:
 func _apply_weather_art() -> void:
 	if _backdrop == null:
 		return
-	# Weather changes light, never the ground layout under the actors.
-	_backdrop.texture = SUNNY
+	# 天气只换已经对齐构图的晴/阴院子画，不改地面碰撞与可行走布局。
+	# 阴天必须用 OVERCAST 原画，不能只改 modulate 假装换天。
+	_backdrop.texture = OVERCAST if weather == "overcast" else SUNNY
 	if _backdrop.texture != null:
 		var tex_size := _backdrop.texture.get_size()
 		_backdrop.scale = Vector2(WORLD_SIZE.x / tex_size.x, WORLD_SIZE.y / tex_size.y)
