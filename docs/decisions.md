@@ -24,7 +24,7 @@
 | REQ-20261002-009 | 2026-10-02 | 让院子里的可见地点成为可选互动和彩蛋 | 进行中 | 花箱、岸石和栅栏三处已发布至 `game-df8b92d`（[PR #38](https://github.com/narutojzm1-dot/youjia/pull/38)、[#39](https://github.com/narutojzm1-dot/youjia/pull/39)、[#41](https://github.com/narutojzm1-dot/youjia/pull/41)）；更多热点与可变背景仍待实现。 |
 | REQ-20261002-010 | 2026-10-02 | 让旅人随手拍有清晰的成片、题词和收入相册反馈 | 已发布；用户认可显影效果 | [PR #43](https://github.com/narutojzm1-dot/youjia/pull/43) 已发布为正式 `game-e2d12b7`；Pages 公网 PCK 哈希已核实；用户试玩后提出真实抓拍、稳定题词与翻页手账的下一切片 REQ-013。 |
 | REQ-20261002-011 | 2026-10-02 | 让玩家互动在之后留下轻微、可感知的世界回响与后续故事 | 架构设计中 | 用户补充动物羁绊/关系可解释鹅与马冲突、与草泥马相处融洽等行为差异。Codex 负责先设计数据边界、关系记忆、行为选择与存档迁移，再拆垂直切片；见 [issue #45](https://github.com/narutojzm1-dot/youjia/issues/45) 和[架构提案](architecture/animal-relationship-model.md)。 |
-| REQ-20261002-012 | 2026-10-02 | 让熟悉的小院因时段天空与玩家取景持续有新发现 | 进行中（GROK-BUILD 仅设计拆分） | 用户指定认领唯一无主需求。边界见 [yard-revisit-split.md](architecture/yard-revisit-split.md)。不接管 REQ-005 天空、REQ-010/013 相册、REQ-011 关系。静坐镜头与自由构图仍待产品决策。原记录：[issue #48](https://github.com/narutojzm1-dot/youjia/issues/48)、[策划基准](game-design.md)。 |
+| REQ-20261002-012 | 2026-10-02 | 让熟悉的小院因时段天空与玩家取景持续有新发现 | 设计拆分已合入；实现待产品决策 | [PR #61](https://github.com/narutojzm1-dot/youjia/pull/61) 合并提交 `4318656117db39754f55408cca42e141687c2937`。边界见 [yard-revisit-split.md](architecture/yard-revisit-split.md)。不接管 REQ-005 天空、REQ-010/013 相册、REQ-011 关系。静坐镜头与自由构图仍待产品决策。[issue #48](https://github.com/narutojzm1-dot/youjia/issues/48)。 |
 | REQ-20261002-013 | 2026-10-02 | 加入真实动物抓拍、稳定在照片内的有限题词和可翻页旅人手账 | 已发布；用户正式版试玩待反馈 | [PR #53](https://github.com/narutojzm1-dot/youjia/pull/53) 经独立审查后合并至 `b560dec94f08a1597e2b834e74c41841893ba36b`；[Actions 37025345857](https://github.com/narutojzm1-dot/youjia/actions/runs/37025345857) 与 Pages 发布成功。公开 PCK SHA-256 `e5b9c3f931b957ac4dd288e1c6786f6b9fc1d9ace946eac711e3bed723ac3d58` 已核验；详见[体验记录](playtests/2026-10-02-REQ-013-scrapbook.md)。不编造动作或旧照日期、不显示进度催促；与 REQ-012 自由构图及 REQ-011 关系回响独立。 |
 | DOC-20261002-001 | 2026-10-02 | 所有维护者可查阅需求/变更台账；始终维护一份游戏策划基准 | 已采纳 | 本规则、README 文档入口与 [策划基准](game-design.md) 已建立；PR #20 由合并提交 `aa821820d9b51c3cbc79e1eb4e362959df11cd95` 合入。 |
 | DOC-20261002-002 | 2026-10-02 | 在 GitHub PR 流程中提示引用需求编号、同步策划文档并附体验证据 | 已采纳 | [.github/PULL_REQUEST_TEMPLATE.md](../.github/PULL_REQUEST_TEMPLATE.md) 增加协作记录字段；PR #20 已合入。 |
@@ -83,6 +83,7 @@
 - 天空与云层方案仍属于 REQ-005，候选负责人是 `CURSOR-CONTRIBUTOR-LOCAL`，制作未批准。
 - 相册与手账仍属于 `MANUS-CONTRIBUTOR`。动物关系仍属于 `CODEX-LEAD`。主角动作仍属于 REQ-001。
 - 静坐观察演出和玩家自由构图写入拆分文档，状态保持待产品决策。本轮不改脚本、资源和存档。
+- **2026-10-02（合入）：** 设计拆分经独立评审后由 [PR #61](https://github.com/narutojzm1-dot/youjia/pull/61) 合入，合并提交 `4318656117db39754f55408cca42e141687c2937`。父需求不标已完成，因为晨午晚天空、自由构图和静坐演出都还没做，而且后两项仍待产品决策。
 
 ### 状态历史 · REQ-20261002-001
 
