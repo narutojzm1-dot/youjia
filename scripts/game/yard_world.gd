@@ -103,6 +103,7 @@ var _move_held := false
 var _has_walk_goal := false
 var _walk_goal := Vector2.ZERO
 var _pending_interaction := ""
+var _selected_target := ""
 var _walk_path: Array[Vector2] = []
 var _body_repath := 0.0
 var _rejected_point := Vector2.ZERO
@@ -306,6 +307,8 @@ func tick(delta: float, move: Vector2) -> void:
 			# 鱼溜走后无法再投喂；取消进行中的 toss_fish 接近，保留无关散步
 			if _pending_interaction.begins_with("toss_fish:"):
 				_consume_pending_action()
+			if _selected_target.begins_with("toss_fish:"):
+				_selected_target = ""
 			notice_requested.emit("notice.fishing.release")
 			queue_redraw()
 	_weather_timer -= delta
@@ -322,6 +325,7 @@ func tick(delta: float, move: Vector2) -> void:
 			notice_dismiss_requested.emit("notice.cannot_walk")
 			_has_walk_goal = false
 			_pending_interaction = ""
+			_selected_target = ""
 			_walk_path.clear()
 		elif _has_walk_goal:
 			var selected_actor := _interaction_actor(_pending_interaction)
@@ -417,6 +421,7 @@ func try_interact() -> void:
 
 func _consume_pending_action() -> void:
 	_pending_interaction = ""
+	_selected_target = ""
 	_has_walk_goal = false
 	_walk_path.clear()
 
@@ -488,6 +493,22 @@ func primary_action_key() -> String:
 	return str(action.get("label", "action.grass"))
 
 
+func primary_action() -> Dictionary:
+	return YardInteraction.primary(self)
+
+
+func action_target_key(action: Dictionary) -> String:
+	var target := str(action.get("target", ""))
+	if target == "release" or target == "llama":
+		return "target.llama"
+	if target.begins_with("pet:") or target.begins_with("toss_fish:"):
+		var actor := _interaction_actor(target)
+		return "target.%s" % actor.actor_id if actor != null else ""
+	if target in ["grass", "plant", "fishing"]:
+		return "target.%s" % target
+	return ""
+
+
 func request_primary_action() -> void:
 	if not input_enabled or _player == null:
 		return
@@ -508,6 +529,7 @@ func request_pointer_action(point: Vector2) -> void:
 	if not input_enabled or _player == null:
 		return
 	var action := YardInteraction.pointer(self, point)
+	_selected_target = str(action.target)
 	_request_action(action.target, action.point)
 
 
@@ -536,6 +558,7 @@ func _request_action(target: String, goal: Vector2) -> void:
 		return
 	if not try_walk_to(goal):
 		_pending_interaction = ""
+		_selected_target = ""
 		_rejected_point = goal
 		_rejected_seconds = 1.2
 		queue_redraw()
@@ -1359,6 +1382,8 @@ func _update_effects_overlay(_delta: float) -> void:
 			var distance := _player.position.distance_to(pet.position)
 			# 线性衰减：60px 内全亮，向外至 105px 淡出（避免平方衰减在边缘不可见）
 			var proximity := clampf(1.0 - (distance - 60.0) / 45.0, 0.0, 1.0)
+			if str(action.target) in [_selected_target, _pending_interaction]:
+				proximity = maxf(proximity, 0.82)
 			var pulse := 0.75 + 0.25 * absf(sin(_day_seconds * 2.4))
 			_effects_overlay.pet_alpha = 0.98 * proximity * pulse
 	_effects_overlay.queue_redraw()

@@ -41,8 +41,20 @@ func run():
  check(YardInteraction.pointer(world, click).target == "pet:sheep_b", "pointer resolves the selected sheep silhouette")
  world.request_pointer_action(click)
  check(world._pending_interaction == "pet:sheep_b", "walk approach retains selected sheep ID")
+ check(YardInteraction.primary(world).target == "pet:sheep_b", "Space and HUD retain the clicked sheep while approaching")
+ check(world.action_target_key(YardInteraction.primary(world)) == "target.sheep_b", "HUD names the second sheep rather than a different nearby animal")
+ world.try_interact()
+ check(world._pending_interaction == "pet:sheep_b", "Space acts on the same clicked sheep during approach")
+ world.request_primary_action()
+ check(world._pending_interaction == "pet:sheep_b", "HUD button acts on the same clicked sheep during approach")
+ world.tick(0.016, Vector2.ZERO)
+ check(world._effects_overlay.pet_pos.distance_to(sheep.position) < 0.1 and world._effects_overlay.pet_alpha > 0.5, "orange marker follows the selected sheep even from a distance")
  world.request_pointer_action(Vector2(100,100))
  check(not world._has_walk_goal and world._pending_interaction.is_empty(), "invalid newer pointer cancels approach")
+ check(YardInteraction.primary(world).target != "pet:sheep_b", "invalid tap clears the selected target as well as its route")
+ world.request_pointer_action(world._fishing_point())
+ check(YardInteraction.primary(world).target == "fishing" and world.primary_action_key() == "action.fish", "pond tap and Space/HUD agree on fishing during approach")
+ world.request_pointer_action(Vector2(100,100))
  world.debug_place_player(world.actor_named("cow").position + Vector2(-50,20))
  world.tick(0.016, Vector2.ZERO)
  var overlay = world._effects_overlay
@@ -101,6 +113,7 @@ func run():
  check(world._pending_interaction == "toss_fish:goose" and world._has_walk_goal, "fish feed begins an approach toward the selected bird")
  world.tick(0.02, Vector2.ZERO)
  check(world._fish_carry_type.is_empty() and world._pending_interaction.is_empty() and not world._has_walk_goal and world._walk_path.is_empty(), "expired fish cancels its impossible feeding approach")
+ check(YardInteraction.primary(world).target != "toss_fish:goose", "expired fish also removes the stale bird from the HUD and keyboard target")
  world._fish_carry_type = "small"
  world._fish_carry_timer = 0.01
  world.request_pointer_action(Vector2(310, 535))
