@@ -87,6 +87,8 @@ var _tod_rect: ColorRect
 var _season_rect: ColorRect
 # 拍立得入账时短暂亮一次屏，提示照片已捕获。
 var _photo_flash: ColorRect
+var _photo_arrival: PhotoArrival
+var _photo_arrival_queue: Array[Dictionary] = []
 ## 钓到鱼时的蓝色庆祝闪光（独立于拍立得闪光，更冷更蓝）
 var _fish_flash: ColorRect
 ## 空闲引导提示计时器：玩家无操作一定时间后轮播软提示
@@ -134,6 +136,10 @@ func _ready() -> void:
 	_fish_flash.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_fish_flash.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	_ui_layer.add_child(_fish_flash)
+	_photo_arrival = PhotoArrival.new()
+	_photo_arrival.name = "PhotoArrival"
+	_ui_layer.add_child(_photo_arrival)
+	_photo_arrival.tucked_away.connect(_on_photo_tucked)
 	I18n.locale_changed.connect(_on_locale_changed)
 	TuningStore.value_changed.connect(_on_tuning_value_changed)
 	resized.connect(_layout)
@@ -216,6 +222,13 @@ func _process(delta: float) -> void:
 
 
 func _input(event: InputEvent) -> void:
+	# A captured print is never a modal: the next ordinary player input both
+	# dismisses its presentation and continues to its original destination.
+	if _photo_arrival != null and _photo_arrival.visible and (
+		(event is InputEventMouseButton and event.pressed)
+		or (event is InputEventScreenTouch and event.pressed)
+		or (event is InputEventKey and event.pressed and not event.is_echo())):
+		_cancel_photo_arrivals()
 	# Keyboard controls must also work after a mouse click focused a HUD button.
 	if event.is_action_pressed("pause") and not event.is_echo():
 		if _confirm_screen.visible:
@@ -530,6 +543,7 @@ func _start_holiday() -> void:
 
 
 func _clear_world() -> void:
+	_cancel_photo_arrivals()
 	if _world != null:
 		# Preserve the partial day before title/restart replaces this world.
 		_world._save_progress()
@@ -562,6 +576,8 @@ func _toggle_pause() -> void:
 	if _screen != "game":
 		return
 	var paused := not _pause_screen.visible
+	if paused:
+		_cancel_photo_arrivals()
 	_pause_screen.visible = paused
 	get_tree().paused = paused
 	AudioDirector.set_game_paused(paused)
@@ -601,17 +617,48 @@ func _on_weather_pressed() -> void:
 
 func _on_album_updated(collected: PackedStringArray, latest_id: String) -> void:
 	var fresh := latest_id not in SaveStore.get_album()
-	SaveStore.set_album(collected,_world.photo_moments if _world != null else {})
-	if fresh:
+	var saved := SaveStore.set_album(collected,_world.photo_moments if _world != null else {})
+	if fresh and saved:
 		_latest_photo = latest_id
-		_show_notice_key("notice.photo")
-		# P1.5: 拍立得入账时短暂发白，让玩家明确感知到照片已拍入手帐。
-		_flash_photo()
+		var snapshot := SaveStore.get_photo_moment(latest_id)
+		if not snapshot.is_empty() and _photo_arrival != null and _screen == "game":
+			_photo_arrival_queue.append(snapshot)
+			if not _photo_arrival.visible:
+				_play_next_photo_arrival()
+		else:
+			_show_notice_key("notice.photo.saved")
 	_refresh_hud()
 	if _album_screen.visible: _rebuild_album(collected)
 
 
+func _play_next_photo_arrival() -> void:
+	if _photo_arrival_queue.is_empty() or _photo_arrival == null:
+		return
+	var snapshot: Dictionary = _photo_arrival_queue.pop_front()
+	_flash_photo()
+	_photo_arrival.play(snapshot, _album_chip.get_global_rect().get_center(),
+		bool(TuningStore.get_value("ui.reduced_motion", false)))
+
+
+func _cancel_photo_arrivals() -> void:
+	_photo_arrival_queue.clear()
+	if _photo_arrival != null:
+		_photo_arrival.dismiss()
+
+
+func _on_photo_tucked() -> void:
+	if _screen != "game" or _album_screen.visible or _pause_screen.visible:
+		_photo_arrival_queue.clear()
+		return
+	if not _photo_arrival_queue.is_empty():
+		_play_next_photo_arrival()
+		return
+	_show_notice_key("notice.photo.saved")
+	_pulse_button(_album_chip)
+
+
 func _show_album() -> void:
+	_cancel_photo_arrivals()
 	_album_screen.visible = true
 	# 打开相册：更强脉冲 + 居中 pivot，让桌面 Web 一次点击就有明确“开了”的反馈
 	if _album_chip != null:
@@ -687,7 +734,9 @@ func _photo_card(rule: Dictionary, owned: bool) -> Control:
 	caption.size = Vector2(192, 52)
 	caption.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	caption.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	caption.text = I18n.t(str(rule.get("title_key", ""))) if owned else I18n.t("album.empty_slot")
+	caption.text = (PhotoDiary.caption(moment, str(rule.get("id", "")))
+		if owned and not moment.is_empty() else
+		I18n.t(str(rule.get("title_key", ""))) if owned else I18n.t("album.empty_slot"))
 	holder.add_child(caption)
 	return holder
 
@@ -736,8 +785,8 @@ func _flash_photo() -> void:
 		return
 	_photo_flash.color.a = 0.0
 	var tween := create_tween()
-	tween.tween_property(_photo_flash, "color:a", 0.46, 0.08)
-	tween.tween_property(_photo_flash, "color:a", 0.0, 0.55).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	tween.tween_property(_photo_flash, "color:a", 0.23, 0.06)
+	tween.tween_property(_photo_flash, "color:a", 0.0, 0.38).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 
 
 ## 收杆成功时的全屏水蓝闪光：快速淡入淡蓝色（水/鱼质感），比拍立得闪光轻柔，不喧宾夺主
@@ -1026,6 +1075,10 @@ func _update_tod_tint(t: float) -> void:
 
 func _on_locale_changed(_locale: String) -> void:
 	_refresh_texts()
+	if _photo_arrival != null:
+		_photo_arrival.refresh_locale()
+	if _album_screen != null and _album_screen.visible:
+		_rebuild_album(_world.collected if _world != null else PackedStringArray(SaveStore.get_album()))
 
 
 func _on_tuning_value_changed(_id: String, _requested: Variant, _active: Variant) -> void:
