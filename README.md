@@ -11,7 +11,8 @@
 | 按键 | 作用 |
 | --- | --- |
 | WASD / 方向键 | 散步 |
-| 空格 / 鼠标左键 | 拿草、喂草、牵行草泥马 |
+| 空格 / 底部行动按钮 | 执行按钮显示的动作（拿草、喂草、牵行、放开、抚摸、种植、钓鱼） |
+| 鼠标点击 / 触屏 | 选择动物、花圃、水塘，或点击草地散步 |
 | Esc | 暂停 / 歇一会儿 |
 
 ## 画风
@@ -23,6 +24,9 @@
 ## 项目结构
 
 - `scripts/game/expression_catalog.gd`：数据驱动的表情条件表（天气 × 谁在谁旁边 × 所在区域 × 玩家状态）
+- `scripts/game/yard_interaction.gd`：统一键盘和行动按钮的上下文动作，保留点击选择的具体动物
+- `scripts/game/yard_prop_visual.gd`：花圃和钓鱼道具的共享绘制，供院子与照片使用
+- `scripts/ui/photo_moment.gd`：记录事件当时的姿态、道具与状态，兼容旧相册
 - `scripts/game/yard_world.gd`：固定院子、动物模拟与表情评估
 - `scripts/entities/felt_actor.gd`：毛毡动物（换表情贴图、毛球吐痰粒子）
 - `scripts/main.gd`：标题、HUD、暂停与拍立得相册
@@ -31,3 +35,7 @@
 `gh-pages` 分支是 Web 导出后的静态站点，由 GitHub Pages 直接托管。
 
 字体使用 SIL Open Font License（见 `assets/template/fonts/*-OFL.txt`），第三方声明见站点中的 `THIRD_PARTY_NOTICES.txt`。
+
+## 验证
+
+使用 Godot 4.7.2 执行 `npm run verify:daily`，或指定 `GODOT=/path/to/godot`。测试使用隔离的 XDG 存档目录，覆盖交互、自然行走、照片读写、旧存档兼容和手机视口。原生画面检查与 Web 浏览器实测应分别记录。

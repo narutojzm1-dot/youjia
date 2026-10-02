@@ -70,6 +70,7 @@ var _notice: Label
 var _notice_time := 0.0
 var _notice_key := ""
 var _screen := "title"
+var _portrait_camera_x := 640.0
 var _cam_zoom := 1.0
 var _cam_target_zoom := 1.0
 var _cam_offset := Vector2.ZERO
@@ -164,6 +165,10 @@ func _process(delta: float) -> void:
 	_cam_offset = _cam_offset.lerp(_cam_target_offset, 1.0 - exp(-delta * (12.0 if reduced else 3.0)))
 	var hud_space := 140.0 if size.x < 700.0 else 76.0
 	var fit := minf(size.x/YardWorld.WORLD_SIZE.x,maxf(100.0,size.y-hud_space)/YardWorld.WORLD_SIZE.y)
+	var portrait := size.x < 700.0 and size.y > size.x
+	if portrait:
+		# Fill the playable height and follow the resident across the panorama.
+		fit = maxf(size.x/YardWorld.WORLD_SIZE.x, maxf(100.0,size.y-hud_space)/YardWorld.WORLD_SIZE.y)
 	var zoom := _cam_zoom * float(TuningStore.get_value("environment.camera.zoom", 1.0)) * fit
 	_camera.zoom = Vector2(zoom, zoom)
 	# 轻微玩家跟随：相机中心向玩家位置偏移约 8%，给院子更大的空间感
@@ -172,7 +177,15 @@ func _process(delta: float) -> void:
 	if _world != null and _world.get_player() != null and _cam_target_zoom <= 1.05:
 		var pp := _world.get_player().position
 		player_follow = (pp - YardWorld.WORLD_SIZE * 0.5) * 0.08
-	_camera.position = YardWorld.WORLD_SIZE * 0.5 + _cam_offset + player_follow + Vector2(0,hud_space/(2.0*zoom))
+	var home := YardWorld.WORLD_SIZE * 0.5
+	if portrait and _world != null and _world.get_player() != null:
+		if _cam_target_zoom <= 1.05:
+			var half_width := size.x / (2.0 * zoom)
+			var target_x := clampf(_world.get_player().position.x, half_width, YardWorld.WORLD_SIZE.x - half_width)
+			_portrait_camera_x = lerpf(_portrait_camera_x, target_x, 1.0 - exp(-delta * 5.0))
+		home.x = _portrait_camera_x
+		player_follow = Vector2.ZERO
+	_camera.position = home + _cam_offset + player_follow + Vector2(0,hud_space/(2.0*zoom))
 	if _screen == "game":
 		_refresh_hud()
 		# 更新昼夜色调覆盖层与季节底色
@@ -484,6 +497,7 @@ func _start_holiday() -> void:
 	_world.day_advanced.connect(_on_day_advanced)
 	_world.fish_caught.connect(_on_fish_caught)
 	_camera.enabled = true
+	_portrait_camera_x = _world.get_player().position.x
 	_cam_zoom = 1.0
 	_cam_target_zoom = 1.0
 	_cam_offset = Vector2.ZERO
@@ -671,7 +685,10 @@ func _photo_card(rule: Dictionary, owned: bool) -> Control:
 
 func _on_focus(world_point: Vector2, zoom: float) -> void:
 	_cam_target_zoom = zoom
-	_cam_target_offset = (world_point - YardWorld.WORLD_SIZE * 0.5) * 0.35
+	var home := YardWorld.WORLD_SIZE * 0.5
+	var portrait := size.x < 700.0 and size.y > size.x
+	if portrait: home.x = _portrait_camera_x
+	_cam_target_offset = (world_point - home) * (1.0 if portrait else 0.35)
 
 
 func _on_release_focus() -> void:
@@ -776,7 +793,7 @@ func _layout() -> void:
 	# 天数标签居中顶部
 	if _day_label != null:
 		_day_label.size = Vector2(160, 28)
-		_day_label.position = Vector2(size.x * 0.5 - 80.0, pad)
+		_day_label.position = Vector2(pad, pad + 64.0) if compact else Vector2(size.x * 0.5 - 80.0, pad)
 	var row := size.y-124.0 if compact else size.y-68.0
 	_album_chip.position = Vector2(pad,row)
 	_weather_chip.position = Vector2(size.x-half-pad if compact else pad+210.0,row)

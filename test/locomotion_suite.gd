@@ -755,7 +755,7 @@ func _test_cow_horse_cast() -> void:
 	add_child(world)
 	world.setup([legacy_id])
 	_check(world._actors.size()==9,"approved cast contains nine actors including horse")
-	_check(world.collected.has(legacy_id) and world.collectible_total()==6,"old smirk photo remains compatible without adding chores or album slots")
+	_check(world.collected.has(legacy_id) and world.collectible_total()==ExpressionCatalog.all_ids().size(),"old smirk photo remains compatible with the current album catalog")
 	var horse:=world.actor_named("horse")
 	_check(horse!=null and horse.species=="horse" and horse.avoid_pond,"horse shares lawn constraints and avoids water")
 	for id: String in world._actors:
@@ -775,6 +775,7 @@ func _test_cow_horse_cast() -> void:
 		llama.set_expression(expression)
 		_check(llama._sprite.texture==canonical and llama._sprite.offset==origin,"llama body and feet remain canonical for "+expression)
 		_check(bool(llama._gait._material.get_shader_parameter("face_override")),"llama changes only the face region for "+expression)
+	world.holiday_day=3
 	var rule:=ExpressionCatalog.find_rule(legacy_id)
 	_check(world._rule_matches(rule,world._world_snapshot()),"cow and horse sharing pasture enables llama teasing")
 	world.actor_named("horse").current_zone="pond"

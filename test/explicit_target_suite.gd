@@ -38,7 +38,7 @@ func review():
  var w=main._world;var p=w._player
  await create_timer(0.5).timeout
  var start=p.position
- mouse(root.get_canvas_transform()*Vector2(310,530))
+ mouse(root.get_canvas_transform()*Vector2(320,555))
  await frames(30)
  check(p.position.distance_to(start)>2,"raw mouse moves initial player through GUI")
  tap(Vector2(340,600))
@@ -99,7 +99,7 @@ func review():
  for i in 240:
   await frames(1)
   if not w._has_walk_goal:break
- check(p.position.distance_to(w.actor_named("llama").position)>64,"second llama selection begins outside interaction range")
+ check(p.position.distance_to(w.actor_named("llama").position)>88,"second llama selection begins outside interaction range")
  tap(w.actor_named("llama").position+Vector2(0,-48))
  check(w._pending_interaction=="llama" and w._walk_goal.distance_to(w.actor_named("llama").position)<0.01,"explicit llama route is not snapped to nearby grass or animals")
  for i in 900:
@@ -111,9 +111,9 @@ func review():
  key(KEY_SPACE, true)
  key(KEY_SPACE, false)
  await frames(1)
- check(p.carrying_grass and w._leading,"Space retains contextual grass-first interaction")
- touch_button("_action_button")
- check(not w._leading and p.carrying_grass,"HUD release preserves carried grass")
+ check(not w._leading and not p.carrying_grass,"Space performs the same release displayed by HUD")
+ tap(w._grass_point());await frames(1)
+ check(not w._leading and p.carrying_grass,"explicit grass tap picks grass after release")
  touch_button("_action_button")
  for i in 900:
   await frames(1)

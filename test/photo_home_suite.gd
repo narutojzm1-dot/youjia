@@ -82,7 +82,7 @@ func _test_visits_and_release(fps: int) -> void:
 	# Return home and release far outside the llama's configured initial area.
 	# A local destination clipped to that old rectangle used to freeze here.
 	world.set_weather("sun")
-	_walk_to(world, Vector2(240, 550), fps, "cottage release")
+	_walk_to(world, Vector2(240, 530), fps, "cottage release")
 	for frame: int in fps * 3:
 		_tick_checked(world, fps)
 	world.request_primary_action()

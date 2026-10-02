@@ -1,0 +1,97 @@
+extends SceneTree
+
+# Focused fixtures exercise overlapping action contexts and old photo records.
+# Natural travel and viewport dispatch remain covered by the other suites.
+var checks := 0
+var failures: Array[String] = []
+func _initialize(): call_deferred("run")
+func check(ok: bool, label: String):
+ checks += 1
+ if not ok: failures.append(label); push_error(label)
+func prop(snapshot: Dictionary, subject: String) -> Dictionary:
+ for item: Dictionary in snapshot.get("items", []):
+  if item.kind == "prop" and item.subject == subject: return item
+ return {}
+func run():
+ seed(129)
+ var world = load("res://scripts/game/yard_world.gd").new()
+ root.add_child(world);world.setup()
+ var player = world.get_player()
+ world.debug_place_player(world._fishing_point() + Vector2(0, 5))
+ world.debug_place_actor("llama", Vector2(500,540))
+ player.carrying_grass = true
+ check(world.primary_action_key() == "action.feed", "carried grass has feed priority beside pond")
+ world.try_interact()
+ check(world._pending_interaction == "llama" and world._fish_state == world.FISH_IDLE, "Space feeds instead of casting beside pond")
+ world.request_primary_action()
+ check(world._pending_interaction == "llama", "HUD carries the same feed intent")
+ player.carrying_grass = false
+ world._leading = true; player.leading = true
+ world.actor_named("llama").begin_lead(player)
+ world.debug_place_player(world._plant_point() + Vector2(40, 0))
+ check(world.primary_action_key() == "action.release", "leading has release priority at flowerbed")
+ world.try_interact()
+ check(not world._leading and not player.leading and world._plant_state == world.PLANT_EMPTY, "Space releases without planting")
+ world._leading = true; player.leading = true
+ world.request_primary_action()
+ check(not world._leading and world._plant_state == world.PLANT_EMPTY, "HUD releases without planting")
+ # Two sheep have distinct IDs: a distant click must retain its exact subject.
+ var sheep = world.actor_named("sheep_b")
+ var click = sheep.visual_hit_rect().get_center()
+ check(YardInteraction.pointer(world, click).target == "pet:sheep_b", "pointer resolves the selected sheep silhouette")
+ world.request_pointer_action(click)
+ check(world._pending_interaction == "pet:sheep_b", "walk approach retains selected sheep ID")
+ world.request_pointer_action(Vector2(100,100))
+ check(not world._has_walk_goal and world._pending_interaction.is_empty(), "invalid newer pointer cancels approach")
+ world.debug_place_player(world.actor_named("cow").position + Vector2(-50,20))
+ world.tick(0.016, Vector2.ZERO)
+ var overlay = world._effects_overlay
+ check(overlay.pet_alpha > 0.5, "available pet action has a visible indicator")
+ check(overlay.z_index > player.z_index, "indicator renders above the player")
+ for id: String in world._actors:
+  check(overlay.z_index > world.actor_named(id).z_index, "indicator renders above " + id)
+ player.carrying_grass = true
+ world.tick(0.016, Vector2.ZERO)
+ check(overlay.pet_alpha == 0.0, "feed priority suppresses an unrelated pet indicator")
+ player.carrying_grass = false
+ # Real day transition blooms the plant, repairing an already earned legacy ID.
+ var bloom_id = "plant_first_bloom"
+ world.collected.append(bloom_id)
+ world._plant_state = world.PLANT_SPROUTING
+ world._plant_day_planted = 1;world._plant_watered_day = 1;world.holiday_day = 4
+ world._on_new_day()
+ var bloom = world.photo_moments.get(bloom_id, {})
+ var flower = prop(bloom, "plant")
+ check(not flower.is_empty() and flower.state.plant_state == world.PLANT_BLOOMED, "old earned bloom receives actual flowers on next bloom")
+ check(world.collected.count(bloom_id) == 1, "repair preserves collected IDs without duplicating rewards")
+ var record = JSON.stringify(bloom)
+ world._plant_state = world.PLANT_EMPTY;world.tick(1.0, Vector2.ZERO)
+ check(JSON.stringify(bloom) == record, "live harvest cannot change the recorded flower state")
+ check(not PhotoMoment.sanitize(JSON.parse_string(record)).is_empty(), "flower photograph survives JSON reload")
+ var bad = bloom.duplicate(true)
+ for item: Dictionary in bad.items:
+  if item.kind == "prop" and item.subject == "plant": item.state.plant_state = 999
+ check(PhotoMoment.sanitize(bad).is_empty(), "out-of-range prop state rejects the photograph")
+ # A subsequent real reel repairs a legacy fish snapshot and freezes the catch.
+ var fish_id = "fish_first_catch"
+ world._first_fish_polaroid_done = true;world.collected.append(fish_id)
+ world.debug_place_player(world._fishing_point() + Vector2(0,30))
+ world._fish_state = world.FISH_BITE
+ world._reel_in_fish()
+ var catch_photo = world.photo_moments.get(fish_id,{})
+ var fish = prop(catch_photo, "fishing")
+ check(not fish.is_empty() and fish.state.fish_state == world.FISH_CAUGHT, "old earned catch receives the actual caught-fish visual")
+ check(not fish.is_empty() and fish.state.fish_type == world._fish_carry_type, "photograph records the caught fish type")
+ var catch_record = JSON.stringify(catch_photo)
+ world.tick(4.0, Vector2.ZERO)
+ check(JSON.stringify(catch_photo) == catch_record, "celebration expiry cannot change the photograph")
+ var album = PhotoMoment.new();root.add_child(album);album.setup(catch_photo)
+ var found := false
+ for child in album._stage.get_children():
+  if child is YardPropVisual and child.subject == "fishing":
+   found = child.state.fish_state == world.FISH_CAUGHT
+ check(found, "album instantiates the same frozen fishing prop")
+ album.free();world.free()
+ root.get_node("AudioDirector").call("release_streams")
+ print("[interaction-photo-tests] %d checks, failures=%s" % [checks, failures])
+ quit(0 if failures.is_empty() else 1)

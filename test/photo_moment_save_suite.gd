@@ -18,7 +18,7 @@ func same_numbers(a:Array,b:Array)->bool:
   if absf(float(a[i])-float(b[i]))>0.00001:return false
  return true
 func feed_naturally(world):
- world.request_primary_action()
+ world.request_pointer_action(world._grass_point())
  for i in 2400:
   world.tick(1.0/60,Vector2.ZERO)
   if world._player.carrying_grass:break

@@ -29,7 +29,7 @@ func _run() -> void:
 		if not bool(rule.get("polaroid", false)): continue
 		_test_event(rule, index)
 		index += 1
-	_check(_completed_events == 6, "all six event fixtures completed without runtime errors")
+	_check(_completed_events == ExpressionCatalog.all_ids().size(), "all current event fixtures completed without runtime errors")
 	await process_frame
 	await process_frame
 	root.get_node("AudioDirector").call("release_streams")
@@ -50,6 +50,7 @@ func _test_event(rule: Dictionary, index: int) -> void:
 	var world = world_script.new()
 	root.add_child(world)
 	world.setup()
+	world.holiday_day = 3
 	world._weather_timer = 10000.0
 	var llama = world.actor_named("llama")
 	var player = world.get_player()
@@ -73,6 +74,10 @@ func _test_event(rule: Dictionary, index: int) -> void:
 			world.debug_place_player(Vector2(830, 530))
 		"cow_rare_calm":
 			world.debug_place_player(Vector2(416, 535))
+	if rule_id == "plant_first_bloom": world._plant_state = world.PLANT_BLOOMED
+	if rule_id == "fish_first_catch":
+		world._fish_state = world.FISH_CAUGHT
+		world._fish_catch_type = "small"
 	world.tick(1.0 / 60.0, Vector2.ZERO)
 	if rule_id == "llama_fed_gentle":
 		# First record a real visible bundle, then prove the fed snapshot lacks it.
