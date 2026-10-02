@@ -22,7 +22,7 @@
 | REQ-20261002-007 | 2026-10-02 | 携带的鱼在靠近鸭/鹅途中消失后，角色应停止已失效的投喂追踪，但继续普通散步 | 已发布；待浏览器体验复核 | [PR #19](https://github.com/narutojzm1-dot/youjia/pull/19)、[game-b82a7f5 发布核查](playtests/2026-10-02-game-b82a7f5.md)；未改变现有 20 秒携鱼时限。 |
 | REQ-20261002-008 | 2026-10-02 | 为主动互动补足真实对象回应 | 进行中 | 鸭鹅投鱼见 [PR #32](https://github.com/narutojzm1-dot/youjia/pull/32)，抚摸和浇水见 [PR #35](https://github.com/narutojzm1-dot/youjia/pull/35)；更多互动仍待盘点。 |
 | REQ-20261002-009 | 2026-10-02 | 让院子里的可见地点成为可选互动和彩蛋 | 进行中 | 花箱、岸石和栅栏三处已发布至 `game-df8b92d`（[PR #38](https://github.com/narutojzm1-dot/youjia/pull/38)、[#39](https://github.com/narutojzm1-dot/youjia/pull/39)、[#41](https://github.com/narutojzm1-dot/youjia/pull/41)）；更多热点与可变背景仍待实现。 |
-| REQ-20261002-010 | 2026-10-02 | 让旅人随手拍有清晰的成片、题词和收入相册反馈 | 待认领 | 用户实测反馈与验收范围见 [issue #40](https://github.com/narutojzm1-dot/youjia/issues/40)；不改变既有照片规则或重复奖励。 |
+| REQ-20261002-010 | 2026-10-02 | 让旅人随手拍有清晰的成片、题词和收入相册反馈 | 待评审 | 用户实测反馈见 [issue #40](https://github.com/narutojzm1-dot/youjia/issues/40)；`MANUS-CONTRIBUTOR` 的 [摄影实现 PR #43](https://github.com/narutojzm1-dot/youjia/pull/43) 已完成候选 Web 实玩与全量回归，待合入后的 Pages 验证。不改变既有照片规则或重复奖励。 |
 | DOC-20261002-001 | 2026-10-02 | 所有维护者可查阅需求/变更台账；始终维护一份游戏策划基准 | 已采纳 | 本规则、README 文档入口与 [策划基准](game-design.md) 已建立；PR #20 由合并提交 `aa821820d9b51c3cbc79e1eb4e362959df11cd95` 合入。 |
 | DOC-20261002-002 | 2026-10-02 | 在 GitHub PR 流程中提示引用需求编号、同步策划文档并附体验证据 | 已采纳 | [.github/PULL_REQUEST_TEMPLATE.md](../.github/PULL_REQUEST_TEMPLATE.md) 增加协作记录字段；PR #20 已合入。 |
 | DOC-20261002-003 | 2026-10-02 | 由 Codex 负责集成与 PR 合入，GROK/其他参与者提交独立功能 PR；明确并行分支和冲突处理规则 | 已变更（由 DOC-20261002-005 取代） | 原决定随 PR #20 合入；后续采用 PR 作者自行合入、独立子代理审核、Codex 总体兜底的分工。 |
