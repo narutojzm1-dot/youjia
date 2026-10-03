@@ -273,5 +273,69 @@
     "alpha_zero_fraction": 0.652,
     "alpha_median_inside": 252,
     "border_pixels_alpha_gt16": 0
+  },
+  "duck_preen": {
+    "width": 1254,
+    "height": 1254,
+    "alpha_bbox": [
+      232,
+      152,
+      790,
+      1051
+    ],
+    "ground_anchor": [
+      552.3,
+      1202
+    ],
+    "native_facing": 1,
+    "border_pixels_alpha_gt16": 0
+  },
+  "horse_tail": {
+    "width": 1254,
+    "height": 1254,
+    "alpha_bbox": [
+      76,
+      339,
+      1097,
+      865
+    ],
+    "ground_anchor": [
+      514.9,
+      1203
+    ],
+    "native_facing": -1,
+    "border_pixels_alpha_gt16": 0
+  },
+  "cow_chew": {
+    "width": 1254,
+    "height": 1254,
+    "alpha_bbox": [
+      75,
+      196,
+      1103,
+      1007
+    ],
+    "ground_anchor": [
+      545.4,
+      1202
+    ],
+    "native_facing": -1,
+    "border_pixels_alpha_gt16": 0
+  },
+  "sheep_shake": {
+    "width": 1254,
+    "height": 1254,
+    "alpha_bbox": [
+      120,
+      151,
+      1013,
+      1053
+    ],
+    "ground_anchor": [
+      765.3,
+      1203
+    ],
+    "native_facing": 1,
+    "border_pixels_alpha_gt16": 0
   }
 }

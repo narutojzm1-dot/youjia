@@ -117,7 +117,7 @@ func setup(config: Dictionary) -> void:
 	elif species != "duck":
 		state = "graze"
 		_idle_time = randf_range(5.0,12.0)
-	_refresh_goose_posture()
+	_refresh_painted_posture()
 
 
 func enable_experimental_planted_gait() -> void:
@@ -132,41 +132,67 @@ func enable_experimental_planted_gait() -> void:
 
 func set_expression(expression_id: String) -> void:
 	current_expression = expression_id
-	var texture_key := _goose_posture() if species == "goose" else expression_id
+	var posture_key := _painted_posture()
+	var texture_key := posture_key if posture_key != "idle" else expression_id
 	var path := str(_textures.get(texture_key, _textures.get("idle", "")))
 	if path.is_empty() or not ResourceLoader.exists(path):
 		return
 	_expression_texture=load(path) as Texture2D
 	_sprite.texture=load(_base_texture_path) as Texture2D if not _base_texture_path.is_empty() else _expression_texture
-	if species == "goose":
+	if _posture_metadata.has(texture_key):
 		_posture_id = texture_key
 		var posture: Dictionary = _posture_metadata.get(texture_key,{})
-		if posture.is_empty():
-			_ground_anchor=_idle_ground_anchor
-			_art_bounds=_idle_art_bounds
-		else:
-			var anchor: Array=posture.ground_anchor
-			var bounds: Array=posture.alpha_bbox
+		var anchor: Array=posture.ground_anchor
+		var bounds: Array=posture.alpha_bbox
+		if anchor.size() >= 2 and bounds.size() >= 4:
 			_ground_anchor=Vector2(float(anchor[0]),float(anchor[1]))
 			_art_bounds=Rect2(float(bounds[0]),float(bounds[1]),float(bounds[2]),float(bounds[3]))
+	elif _posture_id != "idle":
+		_posture_id = "idle"
+		_ground_anchor=_idle_ground_anchor
+		_art_bounds=_idle_art_bounds
 	_apply_face_override()
 	_anchor_feet()
+	if _sprite != null:
+		_sprite.scale.x = _paint_facing()
 
 
-func _goose_posture() -> String:
-	if species != "goose" or posed or _velocity.length() > 0.3 or _gait.weight > 0.08:
+func _paint_facing() -> float:
+	# A rest painting can face the other way from the standing cel. Use that cel's
+	# own facing so a left-facing sheep is not mirrored backwards while resting.
+	if _posture_metadata.has(_posture_id):
+		var posted: Dictionary = _posture_metadata[_posture_id]
+		if posted.has("native_facing"):
+			return float(posted["native_facing"])
+	return _native_facing
+
+
+func _painted_posture() -> String:
+	if posed or _velocity.length() > 0.3 or _gait.weight > 0.08:
 		return "idle"
-	if state == "rest":
-		return "rest"
-	if state == "graze":
-		return "calm"
+	if species == "goose":
+		if state == "rest":
+			return "rest"
+		if state == "graze":
+			return "calm"
+		return "idle"
+	if state != "rest":
+		return "idle"
+	if species == "duck" and _textures.has("preen"):
+		return "preen"
+	if species == "horse" and _textures.has("tail"):
+		return "tail"
+	if species == "cow" and _textures.has("chew"):
+		return "chew"
+	if species == "sheep" and _textures.has("shake"):
+		return "shake"
 	return "idle"
 
 
-func _refresh_goose_posture() -> void:
-	if species != "goose" or posed:
+func _refresh_painted_posture() -> void:
+	if posed:
 		return
-	if _goose_posture() != _posture_id:
+	if _painted_posture() != _posture_id:
 		set_expression(current_expression)
 
 
@@ -268,7 +294,7 @@ func release_encounter_pose() -> void:
 	_idle_time = randf_range(2.0, 5.0)
 	_target = _random_point()
 	_velocity = Vector2.ZERO
-	_refresh_goose_posture()
+	_refresh_painted_posture()
 
 
 func begin_lead(target: Node2D) -> void:
@@ -467,7 +493,7 @@ func tick(delta: float, world_size: Vector2) -> void:
 		_velocity.y = 0.0
 	if absf(moved.x) / maxf(delta, 0.0001) > 2.0:
 		facing = signf(moved.x)
-	_refresh_goose_posture()
+	_refresh_painted_posture()
 	var stride := 30.0
 	if species in ["cow","horse"]:
 		stride = 38.0
@@ -491,7 +517,7 @@ func tick(delta: float, world_size: Vector2) -> void:
 	# Breathing belongs to resting animals; don't squash a walking silhouette.
 	var resting_breath := lerpf(breath, 1.0, _gait.weight)
 	scale = Vector2(visual * _gait.face * (1.0 if _ground_anchor.x >= 0.0 else _gait.turn_width), visual * resting_breath)
-	_sprite.scale.x = _native_facing
+	_sprite.scale.x = _paint_facing()
 	if _rig != null:
 		scale.x = visual * _gait.face
 		_sprite.position.y = 0.0

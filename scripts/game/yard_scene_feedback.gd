@@ -11,6 +11,8 @@ const DRAGONFLY_REST := preload("res://assets/holiday/fx/shore_dragonfly_rest.pn
 const FENCE_GRASS_STILL := preload("res://assets/holiday/fx/fence_grass_still.png")
 const FENCE_GRASS_BENT := preload("res://assets/holiday/fx/fence_grass_bent.png")
 const SHED_FEATHER := preload("res://assets/holiday/fx/shed_feather.png")
+const PATH_SNAIL := preload("res://assets/holiday/fx/path_snail.png")
+const PATH_CLOVER := preload("res://assets/holiday/fx/path_clover.png")
 const PETAL_DURATION := 1.8
 const BUTTERFLY_DURATION := 2.8
 const RIPPLE_DURATION := 1.65
@@ -51,6 +53,17 @@ var _leaf_wants := false
 var _leaf_anchor := Vector2.ZERO
 const LEAF_STILL_SECONDS := 2.5
 const LEAF_GAP_SECONDS := 12.0
+const PATH_POINT := Vector2(300, 620)
+const PATH_STILL_SECONDS := 2.5
+const PATH_HOLD_SECONDS := 3.2
+const PATH_GAP_SECONDS := 14.0
+var _snail: Sprite2D
+var _clover: Sprite2D
+var _path_still := 0.0
+var _path_wait := 0.0
+var _path_wants := false
+var _path_elapsed := 0.0
+var _path_duration := 0.0
 
 
 func setup() -> void:
@@ -88,6 +101,16 @@ func setup() -> void:
 	_feather.texture = SHED_FEATHER
 	_feather.scale = Vector2(0.15, 0.15)
 	add_child(_feather)
+	_snail = Sprite2D.new()
+	_snail.name = "PathSnail"
+	_snail.texture = PATH_SNAIL
+	_snail.scale = Vector2(0.72, 0.72)
+	add_child(_snail)
+	_clover = Sprite2D.new()
+	_clover.name = "PathClover"
+	_clover.texture = PATH_CLOVER
+	_clover.scale = Vector2(0.34, 0.34)
+	add_child(_clover)
 	visible = false
 
 
@@ -160,6 +183,13 @@ func consider_fence(world: Node2D) -> void:
 		_leaf_anchor = fence.visual_anchor
 
 
+func consider_path(world: Node2D) -> void:
+	var player = world.get_player()
+	var near: bool = player != null and player.position.distance_to(PATH_POINT) < 70.0
+	var moving: bool = player == null or world._has_walk_goal or player._velocity.length() > 8.0
+	_path_wants = near and not moving and str(world._pending_interaction) == ""
+
+
 func cancel() -> void:
 	_duration = 0.0
 	_elapsed = 0.0
@@ -174,6 +204,10 @@ func cancel() -> void:
 	_feather_elapsed = 0.0
 	_leaf_still = 0.0
 	_leaf_wants = false
+	_path_still = 0.0
+	_path_wants = false
+	_path_duration = 0.0
+	_path_elapsed = 0.0
 	_sync_visible()
 
 
@@ -289,12 +323,30 @@ func advance(delta: float) -> void:
 			play_fence_grass(_leaf_anchor)
 	else:
 		_leaf_still = 0.0
+	if _path_wait > 0.0:
+		_path_wait = maxf(0.0, _path_wait - delta)
+	if not _path_wants:
+		_path_duration = 0.0
+		_path_still = 0.0
+	elif _path_duration > 0.0:
+		_path_elapsed += delta
+		if _path_elapsed >= _path_duration:
+			_path_duration = 0.0
+			_path_wait = PATH_GAP_SECONDS
+	elif _path_wait <= 0.0:
+		_path_still += delta
+		if _path_still >= PATH_STILL_SECONDS:
+			_path_still = 0.0
+			_path_elapsed = 0.0
+			_path_duration = PATH_HOLD_SECONDS
+			_snail.position = PATH_POINT + Vector2(-16, -8)
+			_clover.position = PATH_POINT + Vector2(22, -4)
 	_sync_visible()
 
 
 func _sync_visible() -> void:
 	visible = _duration > 0.0 or _ripple_duration > 0.0 or _dragonfly_duration > 0.0 \
-		or _fence_duration > 0.0 or _feather_duration > 0.0
+		or _fence_duration > 0.0 or _feather_duration > 0.0 or _path_duration > 0.0
 	if _petals != null:
 		_petals.visible = _duration > 0.0
 		_butterfly.visible = _duration > 0.0 and _has_butterfly
@@ -302,6 +354,8 @@ func _sync_visible() -> void:
 		_dragonfly.visible = _dragonfly_duration > 0.0
 		_fence_grass.visible = _fence_duration > 0.0
 		_feather.visible = _feather_duration > 0.0
+		_snail.visible = _path_duration > 0.0
+		_clover.visible = _path_duration > 0.0
 
 
 func _update_paint(reduced_motion: bool) -> void:
