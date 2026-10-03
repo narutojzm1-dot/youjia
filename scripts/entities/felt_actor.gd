@@ -242,10 +242,9 @@ func set_pose(point: Vector2, next_scale: float, face: float) -> void:
 	pose_point = point
 	_base_scale = next_scale
 	state = "pose"
-	# The staged photo lineup must use the standing cel, not carry over a lying
-	# silhouette whose old anchor would float when the actor is repositioned.
-	if species == "goose":
-		set_expression(current_expression)
+	# The staged photo and riding close-up must use the standing cel, not a rest
+	# painting whose anchor would float or be captured by mistake.
+	set_expression(current_expression)
 	facing = face if face != 0.0 else facing
 	position = point
 	if _rig != null:

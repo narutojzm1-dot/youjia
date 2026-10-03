@@ -33,6 +33,14 @@ func _run() -> void:
 	duck._velocity = Vector2(20, 0)
 	duck.set_expression("idle")
 	_check(duck._posture_id == "idle", "a moving duck keeps the standing painting")
+	var horse = world._actors["horse"]
+	horse.state = "rest"
+	horse._velocity = Vector2.ZERO
+	horse._gait.weight = 0.0
+	horse.posed = false
+	horse.set_expression("idle")
+	horse.set_pose(horse.position, horse._base_scale, horse.facing)
+	_check(horse._posture_id == "idle" and str(horse._sprite.texture.resource_path).ends_with("horse.png"), "a posed horse drops the tail painting")
 	world.debug_place_player(world._scene_feedback.PATH_POINT)
 	world._has_walk_goal = false
 	world._pending_interaction = ""
