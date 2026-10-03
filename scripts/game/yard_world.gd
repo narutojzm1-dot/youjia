@@ -482,7 +482,7 @@ func _interact_with_target(target: String) -> void:
 	if target == "llama" and llama != null and _player.position.distance_to(llama.position) < 88.0:
 		_consume_pending_action()
 		if _player.carrying_grass:
-			_player.consume_grass()
+			_player.consume_grass(llama.global_position)
 			llama.hold_expression("happy", 4.0)
 			notice_requested.emit("notice.fed_llama")
 			_evaluate_expressions()

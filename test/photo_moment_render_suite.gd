@@ -135,9 +135,9 @@ func _test_event(rule: Dictionary, index: int) -> void:
 		if item.kind == "line":
 			found_rope = true
 			_check(item.points.size() == 17, "all actual lead curve points retained")
-		if item.subject == "player" and item.kind == "sprite" and item.texture.get("path", "").contains("resident_walk_authored_v1"):
+		if item.subject == "player" and item.kind == "sprite" and (item.texture.get("path", "").contains("resident_walk_authored_v1") or str(item.texture.get("atlas", "")).contains("resident_grass_actions_v1")):
 			found_hero = true
-			_check(item.texture.path == player._sequence_walker.sprite_frames.get_frame_texture(player._sequence_walker.animation, player._sequence_walker.frame).resource_path, "exact accepted hero frame retained")
+			_check(item.texture == Moment._texture_data(player._sequence_walker.sprite_frames.get_frame_texture(player._sequence_walker.animation, player._sequence_walker.frame)), "exact accepted hero frame retained")
 		if item.subject == "llama" and item.kind == "sprite":
 			found_llama = true
 			_check(item.gait.face_override, "llama canonical body keeps face override")
@@ -237,7 +237,7 @@ func _test_corruptions(snapshot: Dictionary) -> void:
 func _count_atlases(snapshot: Dictionary) -> int:
 	var count := 0
 	for item: Dictionary in snapshot.get("items", []):
-		if item.kind == "sprite" and item.texture.has("atlas"): count += 1
+		if item.kind == "sprite" and item.texture.has("atlas") and not str(item.texture.atlas).contains("resident_grass_actions_v1"): count += 1
 	return count
 
 
