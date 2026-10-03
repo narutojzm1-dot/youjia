@@ -113,3 +113,10 @@
 | 编号 | 优先级 | 工作范围 | 验收条件 | 状态 | Owner | 依赖 / 记录 |
 | --- | --- | --- | --- | --- | --- | --- |
 | VERIFY-EXIT-GATE | P0 | 修复每日Godot回归忽略非零退出码的发布门禁漏洞 | Godot/timeout和tee任一非零、错误/FAIL日志或日志读取失败均阻断；11项故障注入与严格完整回归、独立最终SHA审查通过 | 已合入并核验发布；PR134独立审查批准、主线严格回归/导出/Pages与公开包一致性通过 | `CODEX-LEAD` | [工程督导#130](https://github.com/narutojzm1-dot/youjia/issues/130)；不包含存档协议、完成标记或PR验证workflow。[证据](playtests/2026-10-03-verify-exit-gate.md)。 |
+
+
+## 玩法方向讨论（不开放开发认领）
+
+| 编号 | 范围 | 本阶段交付 | 状态 | Owner | 依赖 / 记录 |
+| --- | --- | --- | --- | --- | --- |
+| DIR-20261003-YARD-GROWTH | 小院渐进成长、休闲院外探索、日夜欣赏与留影归属感 | 记录用户方向；对照现有玩法给出核心循环、成长阶段、探索形式取舍和产品验收问题；区分建议与批准，不改运行时 | 用户方向已记录；具体玩法待产品决策 | `GAME-PRODUCER`（方向提案，不认领实现） | [issue #142](https://github.com/narutojzm1-dot/youjia/issues/142)、[总纲](architecture/yard-growth-and-gentle-exploration.md)。用户保留产品决定权，执行领导/后续拆分由 `CODEX-LEAD` 协调；不扩张 #125/#126 院内首片、不调整 #51/#45/#48 与资源单原 Owner。 |
