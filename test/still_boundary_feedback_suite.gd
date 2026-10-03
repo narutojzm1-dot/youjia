@@ -10,11 +10,10 @@ func _initialize() -> void:
 
 
 func _run() -> void:
-	var world_script = load("res://scripts/game/yard_world.gd")
-	var still_early: Dictionary = world_script.boundary_feedback_pose(1.2, true)
-	var still_late: Dictionary = world_script.boundary_feedback_pose(0.12, true)
-	var live_early: Dictionary = world_script.boundary_feedback_pose(1.2, false)
-	var live_late: Dictionary = world_script.boundary_feedback_pose(0.12, false)
+	var still_early: Dictionary = BoundaryFeedback.pose(1.2, true)
+	var still_late: Dictionary = BoundaryFeedback.pose(0.12, true)
+	var live_early: Dictionary = BoundaryFeedback.pose(1.2, false)
+	var live_late: Dictionary = BoundaryFeedback.pose(0.12, false)
 	_check(is_equal_approx(float(still_early.alpha), 0.80), "reduced motion holds the rejection mark at a fixed readable alpha")
 	_check(is_equal_approx(float(still_early.alpha), float(still_late.alpha)), "reduced motion keeps the rejection mark from fading mid-cue")
 	_check(is_equal_approx(float(still_early.radius), 12.0) and is_equal_approx(float(still_late.radius), 12.0), "reduced motion keeps the rejection mark radius fixed")
