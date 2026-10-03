@@ -156,7 +156,7 @@
 
 | 编号 | 优先级 | 当前交付与验收 | 状态 | Owner | 记录 |
 | --- | --- | --- | --- | --- | --- |
-| AUDIO-TONE-PROPOSAL | P1 | 60–90秒等响度附近A/B小院试听、分层和来源授权，标清候选未接入 | 待认领；可做候选，正式基调待用户核对 | 待认领 | [#170](https://github.com/narutojzm1-dot/youjia/issues/170) |
+| AUDIO-TONE-PROPOSAL | P1 | 60–90秒等响度附近A/B小院试听、分层和来源授权，标清候选未接入 | 样片已交；未接入；基调等听选 | `GROK-BUILD` | [#170](https://github.com/narutojzm1-dot/youjia/issues/170)；用户于 2026-10-03 直接交给 GROK-BUILD。文件在 `art/concepts/audio_tone_v1/`。 |
 | AUDIO-HOST-CONTRACT | P1 | 小院事件/混音/设置/Web生命周期与验收方案，复用现有音频设施 | 已指定；待设计，不阻塞#149/#150 | `CODEX-LEAD` | [#171](https://github.com/narutojzm1-dot/youjia/issues/171) |
 
 来源#162；[分期计划](architecture/audio-delivery-plan.md)。不默认分配现有美术Owner；无正式素材/声音切片完成声明。
