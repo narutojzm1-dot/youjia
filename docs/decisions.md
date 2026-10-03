@@ -41,7 +41,7 @@
 | DOC-20261002-009 | 2026-10-02 | 根据现有动物行为/存档结构深化 REQ-011 架构；记录关系演出资源缺口 | 架构设计中 | 代码核查确认 `FeltActor` 没有社交行为状态、`ExpressionCatalog` 属于表情/相册规则，SaveStore 当前为 v4 且未持久化动物关系；不复用相册触发器建设行为系统。具体边界与分片见[关系模型架构文档](architecture/animal-relationship-model.md)；可能缺少的马互动姿态由 [issue #56](https://github.com/narutojzm1-dot/youjia/issues/56) 先提案，不预先承诺批量制作。 |
 | DOC-20261002-010 | 2026-10-02 | 审核 REQ-011 首批关系演出所需的现有画作与资源缺口 | 提案待产品确认 | 现有鹅已有警觉、安静站立和伏卧整图；草泥马有中性/表情变体；马只有低头站姿，无法清楚表达对峙后的让步。建议首切片复用鹅/草泥马姿态，只在用户确认后新增一张马侧身让步画；资源规格、锚点、来源和 Web 包体验收见[提案](architecture/relationship-art-proposal.md)。 |
 | DOC-20261003-001 | 2026-10-03 | 制作人可见切片用截图或短视频验收；未点头不阻塞下一刀 | 已采纳 | 用户 2026-10-03：需要体验的项直接给截图/视频；未验收时其它工作继续。各待验收项记入本文件「待制作人验收」表，供 `CODEX-LEAD` 向制作人汇总。Owner 负责补证据，不代替制作人点头。 |
-| REQ-20261002-015-WIRE | 2026-10-03 | 把 PR #99 两帧乘骑画接进 REQ-014 `show_goose_encounter_cel` 导演接线 | 已合入发布（issue #64 可关闭） | `WORKBUDDY-CONTRIBUTOR`（用户 2026-10-03 授权越过切片边界）[PR #173](https://github.com/narutojzm1-dot/youjia/pull/173) 将 `yard_world.gd` 鹅马乘骑演出的 `show_goose_encounter_cel` 帧交替由占位 `idle`/`calm` 改为 `riding_up`/`riding_down`，沿用既有 0.28s 扑翼时钟（`_goose_mount_flap_clock`）与低动效定帧；`cast_art.gd` 已注册两帧、`FeltActor.show_goose_encounter_cel` 直接取用；脚底锚点经 PR #99 对齐，交替无 foot 抖动。head `4b550e8e50a628d70afd513fa0672343d6d1d8be`（独立子代理终轮 APPROVE）。 |
+| REQ-20261002-015-WIRE | 2026-10-03 | 把 PR #99 两帧乘骑画接进 REQ-014 `show_goose_encounter_cel` 导演接线 | 已合入；组合体验验收与最终SHA复审待补（#180） | `WORKBUDDY-CONTRIBUTOR`（用户 2026-10-03 授权越过切片边界）[PR #173](https://github.com/narutojzm1-dot/youjia/pull/173) 将 `yard_world.gd` 鹅马乘骑演出的 `show_goose_encounter_cel` 帧交替由占位 `idle`/`calm` 改为 `riding_up`/`riding_down`，沿用既有 0.28s 扑翼时钟（`_goose_mount_flap_clock`）与低动效定帧；`cast_art.gd` 已注册两帧、`FeltActor.show_goose_encounter_cel` 直接取用；脚底锚点经 PR #99 对齐，交替无 foot 抖动。head `4b550e8e50a628d70afd513fa0672343d6d1d8be`（独立子代理终轮 APPROVE）。 |
 
 之后出现的需求继续追加新编号；完成或调整时保留此表和历史记录，不删除旧项。
 
@@ -558,6 +558,30 @@ CODEX-LEAD在独立分支修复SaveStore先删除旧档再rename的窗口。临�
 ## 2026-10-03 日版本节点归档（CODEX-LEAD）
 
 用户要求每日最后一轮作为全员版本关键点，已通过PR #177写入AGENTS.md与日版本规范。本节点PR #175文件层存档恢复通过独立最终SHA审查、完整回归和Web恢复验证后合入；#149继续开放，内存事务与IndexedDB耐久确认不在已完成范围。公开发布源码35a1b788034f0a3f73326cd4b1b84ae869f109b9，构建game-35a1b78；Actions与Pages成功，实际公开包和gh-pages一致。版本详单、哈希、延期Owner与邮件状态见[日版本节点文档](releases/2026-10-03.md)。不将资源候选、探索草案或未验收鹅马组合纳入已发布成果。
+
+
+## 2026-10-04 · REQ-015-WIRE-GATE 后置门禁核查（CODEX-LEAD）
+
+上一日版本2026-10-03已经归档并发邮件，不重复日推。实时main eb8e342ca75c732a30cb6435ce9c3f634671d8b7新增PR #173接线与#179音频候选。本轮仅收尾#173门禁记录：最终head为0066cef9da621530d05d5ad8051be684512ce88c，而独立评论批准4b550e8e50a628d70afd513fa0672343d6d1d8be，并明确之后又改了文档；未找到最终head重新审查证据。即使仅文档变化，按AGENTS.md也须重审。代码已合入不再称未接线，但不能把CI、孤立帧锚点对齐等同于组合美术/摄影验收，也不追认原合入门禁已经满足。
+
+建立[收尾单#180](https://github.com/narutojzm1-dot/youjia/issues/180)，保留WORKBUDDY实现Owner、ART-DIRECTOR组合审画、GAME-QA协助复测、Leader最终兜底。明确远近/双朝向/两帧/低动效/打断/保存重载验收及实际构建证据。没有复现穿模，不要求凭常量猜改或重做资源；#64保留已交付历史，未新增玩法、资源方向或用户决策。本轮只修正共享状态，不回滚运行时、不覆盖作者分支。#179为试听候选，未接入音频；其他存档/探索Owner及未决门禁保持。
+
+发布事实另行核对：Actions37134447801、Pages37134640569均success；公开与gh-pages清单同源eb8e342，实际PCK均19183584字节、逐字节一致，SHA256 ccc6d9daf0407e22402599f94d220f8e5debf9400b13fff2e2de2672c6d39cd0。说明接线已部署，不代表本轮完成组合浏览器验收。本次纯文档收尾不另行部署，也不重复发送上一日版本邮件。
+
+
+### QA-EXP-20261003-003 · Web 加载页缺陷认领
+
+CODEX-LEAD-ASSISTANT按Leader已确认的#167补位修复科幻迷宫封面与水彩小院不一致的问题。独立范围仅Web loading壳背景/配色/文字可读性及必要加载门禁验证；复用已批准晴天院子，不新增世界/画作，不改游戏玩法、存档、版本/缓存/下载/失败重试协议。桌面、844×390横屏、390×844竖屏冷加载及失败/重试/首帧须留真实证据，发布后核对清单/实际资源包；GAME-QA保留复测职责，原报告待修订不阻塞已确认单项缺陷修复。认领时核对main c5d32b3及开放PR/issue无该项实现认领，先经独立认领PR审核合入，再实现；本条不声称已修复、测试或发布。
+
+
+### QA-EXP-20261003-003 · 加载画面修复候选
+
+认领PR183合入后复用批准晴天母版的压缩JPEG嵌入Web壳，替换科幻迷宫封面与深色遮罩，改为小院暖纸配色。引擎启动JS字节保持一致，正常/未知总量、卡住提示、失败重试与首帧顺序门禁通过；桌面/横屏/竖屏受控加载与失败页面实际渲染、重试和首帧隐去检查通过，正常Godot Web导出并进入院子，无pageerror。母版哈希、成本与截图见[专项记录](playtests/2026-10-04-QA-EXP003-loading.md)。当前仍为候选待最终SHA独立审查，不把受控截图冒充公网版本；合入后核对自动回归/正式部署与公开冷加载，GAME-QA继续复测。只修加载壳，不变游戏、存档、音频或探索方向。
+
+
+### QA-EXP-20261003-003 · 正式发布核验与QA交接
+
+PR184通过独立最终SHA审核并合入，正式源码9af244cc327144fb916c108f2b7527c9af0fe866，game-9af244c；Actions37136304252/Pages37136534388均success，公开manifest、加载封面JPEG和实际PCK与部署源码/gh-pages一致。公开包19,183,584bytes，SHA256 ebca0b3671b5ad4e57b48ec1963312932dabcca7f68b53ae7160cb3f013297da；相对game-eb8e342字节净增0，哈希不同，不表示两包同字节。三个全新浏览器上下文实际冷加载1280×720、844×390、390×844新包HTTP200、无pageerror、首帧后隐去壳；另在独立公网浏览器中故意中断PCK请求，失败提示/重试可读，解除拦截后点击重试到达首帧。截图、成本、时序及证据边界见[专项记录](playtests/2026-10-04-QA-EXP003-loading.md)。缺陷实现与发布门禁完成，GAME-QA保留独立复测/重开职责；不声称全游戏心流或稳定加载性能通过，不重复Leader日结或邮件。
 
 **2026-10-03 EXP-CONTRACT 按 ENGINEERING-SUPERVISOR 评阅修订（`CURSOR-CLOUD`）：** 依据 [#150 评阅](https://github.com/narutojzm1-dot/youjia/issues/150)（基线 `4574a59`），修订[契约设计稿](architecture/exploration-module-contract.md)：§7 图改为以宿主当前内存（含院内合法未保存改动）构造候选快照、统一串行写入、只确认当前绑定会话的提案；§7.2 确认通知改为 `(trip_id, record_revision)` 绑定，旧旅程/乱序/超前通知忽略、恢复时初始化、通知不触发保存；§8 增加同代恢复前提、`can_begin` 全局规则与序号不可信（`-1`）时的 `quarantine_and_freeze` / `freeze_new_trips`；含会话的损坏记录改为隔离原文并冻结新旅程（无法判断是否已授予，不授予也不丢弃），仅夹具会话作废后可继续；`committed` 但序号超前改为隔离；§8 每行写明 `host_action`；`record_revision` 递增口径统一，`restore` 改写时要求保存；§10 第 8 项改为工程推荐草案（同代恢复 → 可靠上一代 → 隔离并冻结，不自动重发、不宣称完成），新增第 11、12 项（单序号前提与整数范围、隔离材料持久性）；§12 新增确认通知、隔离测试与宿主侧联合验收清单。本条仅修订设计稿，**不宣布冻结**；冻结仍需 CODEX-LEAD 对齐 #150 并经 ENGINEERING-SUPERVISOR 评阅。不改运行时、存档或资源。
 
