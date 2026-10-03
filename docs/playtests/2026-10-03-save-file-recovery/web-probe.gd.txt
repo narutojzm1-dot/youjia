@@ -1,0 +1,50 @@
+extends Node
+const MARKER := "user://save_recovery_web_phase.txt"
+var failures: Array[String] = []
+
+func check(ok: bool, label: String) -> void:
+	if not ok:
+		failures.append(label)
+
+func write_text(path: String, text: String) -> void:
+	var file := FileAccess.open(path, FileAccess.WRITE)
+	file.store_string(text)
+	file.close()
+
+func report(phase: String) -> void:
+	JavaScriptBridge.eval("window.__saveRecovery=" + JSON.stringify({"phase": phase, "failures": failures, "day": SaveStore.get_holiday_day(), "album": SaveStore.get_album()}), true)
+
+func _ready() -> void:
+	await get_tree().process_frame
+	var phase := FileAccess.get_file_as_string(MARKER) if FileAccess.file_exists(MARKER) else ""
+	if phase.is_empty():
+		SaveStore._data = SaveStore._default_data()
+		SaveStore._data.holiday_day = 9
+		SaveStore._data.plant_state = 2
+		SaveStore._data.plant_day_planted = 7
+		SaveStore._data.first_fish_caught = true
+		SaveStore._data.album = ["llama_fed_gentle"]
+		check(SaveStore.save(), "save old v5")
+		SaveStore._data.holiday_day = 10
+		check(SaveStore.save(), "save next v5")
+		write_text(SaveStore.SAVE_PATH, "{broken")
+		write_text(MARKER, "recover")
+		await get_tree().create_timer(3.0).timeout
+		report("staged")
+		return
+	check(SaveStore.get_holiday_day() == 9, "same origin reboot loads backup day 9")
+	check(SaveStore.get_plant_state().state == 2, "plant restored")
+	check(SaveStore.get_first_fish_caught(), "fish restored")
+	check("llama_fed_gentle" in SaveStore.get_album(), "album restored")
+	if phase == "recover":
+		check(SaveStore.save(), "save after browser recovery")
+		write_text(MARKER, "saved")
+		await get_tree().create_timer(3.0).timeout
+		report("recovered")
+	else:
+		var main: Node = load("res://scenes/main.tscn").instantiate()
+		add_child(main)
+		main._start_holiday()
+		await get_tree().create_timer(0.5).timeout
+		main.process_mode = Node.PROCESS_MODE_DISABLED
+		report("resaved")

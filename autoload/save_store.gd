@@ -2,6 +2,8 @@ extends Node
 
 const SAVE_PATH := "user://youjia_save.json"
 const TEMP_PATH := "user://youjia_save.tmp"
+const BACKUP_PATH := "user://youjia_save.bak"
+const SaveFilesType := preload("res://scripts/persistence/save_files.gd")
 const AnimalRelationshipsType := preload("res://scripts/game/animal_relationships.gd")
 const SAVE_VERSION := 5
 const TUTORIAL_VERSION := 1
@@ -35,16 +37,10 @@ func _default_data() -> Dictionary:
 
 func _load() -> void:
 	_data = _default_data()
-	if not FileAccess.file_exists(SAVE_PATH):
+	var record: Dictionary = SaveFilesType.new().recover(SAVE_PATH, BACKUP_PATH)
+	if record.is_empty():
 		return
-	var file := FileAccess.open(SAVE_PATH, FileAccess.READ)
-	if file == null:
-		return
-	var parsed: Variant = JSON.parse_string(file.get_as_text())
-	file.close()
-	if not parsed is Dictionary:
-		return
-	var candidate: Dictionary = parsed
+	var candidate: Dictionary = record.data
 	var locale := str(candidate.get("locale", "zh-CN"))
 	_data.locale = locale if locale in ["en", "zh-CN"] else "zh-CN"
 	_data.tutorial_version = clampi(int(candidate.get("tutorial_version", 0)), 0, TUTORIAL_VERSION)
@@ -68,18 +64,7 @@ func _load() -> void:
 
 
 func save() -> bool:
-	var file := FileAccess.open(TEMP_PATH, FileAccess.WRITE)
-	if file == null:
-		return false
-	file.store_string(JSON.stringify(_data, "  "))
-	file.close()
-	var temporary := ProjectSettings.globalize_path(TEMP_PATH)
-	var destination := ProjectSettings.globalize_path(SAVE_PATH)
-	if FileAccess.file_exists(SAVE_PATH):
-		var remove_error := DirAccess.remove_absolute(destination)
-		if remove_error != OK:
-			return false
-	return DirAccess.rename_absolute(temporary, destination) == OK
+	return SaveFilesType.new().commit(_data, SAVE_PATH, TEMP_PATH, BACKUP_PATH)
 
 
 func get_locale() -> String:
