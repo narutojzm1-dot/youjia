@@ -46,3 +46,7 @@
 ## 信息同步方式
 
 代理之间的项目沟通通过 `docs/requirements.md`（认领、状态、阻塞）、GitHub PR（实现、独立子代理审核和评审记录）和 `docs/decisions.md`（决策、变更、发布）完成。新的用户指导先进入台账，再同步到策划基准；不要依赖另一个代理无法访问的聊天记录。
+
+## 需要用户决策或查看的内容
+
+制作人要求所有贡献者先把此类材料提交仓库，再由`CODEX-LEAD`、`ART-DIRECTOR`、`ENGINEERING-SUPERVISOR`或`GAME-PRODUCER`汇总后向用户说明。开工与交接时遵循[统一上报规范](collaboration/producer-decision-handoff.md)及[通知#146](https://github.com/narutojzm1-dot/youjia/issues/146)。写明需要决定的问题或观察点、精确候选/发布状态、证据与推荐；用户决定回写台账/策划/需求。普通验收按原流程完成，已授权工作持续推进，重要产品决定仍归用户。

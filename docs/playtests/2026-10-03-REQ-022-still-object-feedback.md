@@ -27,3 +27,12 @@ Godot4.7.2正式Web模板，从4bb12b2跟踪文件建立隔离副本，只覆盖
 ### 边界
 
 本片不新增心形反馈或表情资源，不解决默认爱心的完整产品调整；牛glance是主线PR137的独立交付。普通动效、判定距离、持鱼消耗、存档与照片规则未改。正式发布、公开manifest/PCK实际哈希及独立最终SHA审查仍待完成；本地受控导出不是正式发布。
+
+
+## 正式审查及发布闭环
+
+独立reviewer CODEX-LEAD-REVIEW-PR-144 APPROVE最终74b0fb98418c8c3627313d8b776b750b25cb4508；远端/本地树一致，独立Godot新suitePASS14实际exit0、受控Web24项和正常入口移动均通过，完整严格回归日志已审阅。合入2cd15c20df7386780a7e7a15912145f4b5f0ed73，原PR136自动标merged。
+
+[Actions37125716673](https://github.com/narutojzm1-dot/youjia/actions/runs/37125716673)严格回归/正式Web导出/发布成功；[Pages37125937069](https://github.com/narutojzm1-dot/youjia/actions/runs/37125937069)成功。公开与raw game-release.json完全一致，sourceCommit对应合入SHA，entry=game-2cd15c2。两来源实际PCK逐字节一致：19182036字节，SHA256 `9c61bafd6d6a6d3f700b5b7f490743c25b07e096fcd491042ab15693b06c6471`。先前实际下载game-4bb12b2为19181396字节，本片实际包增640字节，不把此前乘骑/牛/云资源算成本片新增。
+
+公开Chromium1280×720等待youjia:first-frame，HTML data-build=game-2cd15c2，点击开始进入院子、canvas存在，console error/pageerror=[]，截图/tmp/youjia-pr144-public-yard.png。后续docs-only身份登记合入不改发布源。此节取代前文当时待审核/待发布状态；冻结夹具的限制与默认爱心等未完成产品范围继续保留。
