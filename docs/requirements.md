@@ -93,8 +93,8 @@
 
 | 编号 | 优先级 | 资源交付 | 验收条件 | 状态 | Owner | 依赖 / issue |
 | --- | --- | --- | --- | --- | --- | --- |
-| ART-ACK-COW | P0 | 牛：成功互动后的抬眼与温和回应 | 同角色完整画作、稳定接触锚点、透明边界、原尺寸/镜像预览、来源哈希与预算；样张核对后再扩帧，接入单独验收 | 样张已交；未接入；待核对 | `GROK-BUILD` | [#119](https://github.com/narutojzm1-dot/youjia/issues/119)；#30 / MANUS反馈映射接入。候选在 `art/concepts/ack_cow_v1/`，静态预览见 [playtests/2026-10-03-ART-ACK-COW](playtests/2026-10-03-ART-ACK-COW/README.md)。 |
-| ART-ACK-HORSE | P1 | 马：注意玩家与接受轻抚的回应 | 同角色完整画作、稳定接触锚点、透明边界、原尺寸/镜像预览、来源哈希与预算；样张核对后再扩帧，接入单独验收 | 已指定；排队；复用牛单验证的交付规格 | `GROK-BUILD` | [#120](https://github.com/narutojzm1-dot/youjia/issues/120)；#30 / MANUS反馈映射接入 |
+| ART-ACK-COW | P0 | 牛：成功互动后的抬眼与温和回应 | 同角色完整画作、稳定接触锚点、透明边界、原尺寸/镜像预览、来源哈希与预算；样张核对后再扩帧，接入单独验收 | 样张已交；成功抚摸已接上抬眼，其它互动未接 | `GROK-BUILD` | [#119](https://github.com/narutojzm1-dot/youjia/issues/119)；#30 的行为接入原属 MANUS。制作人于 2026-10-03 让 `GROK-BUILD` 接手未完成部分。候选仍在 `art/concepts/ack_cow_v1/`。 |
+| ART-ACK-HORSE | P1 | 马：注意玩家与接受轻抚的回应 | 同角色完整画作、稳定接触锚点、透明边界、原尺寸/镜像预览、来源哈希与预算；样张核对后再扩帧，接入单独验收 | 样张已交；未接入 | `GROK-BUILD` | [#120](https://github.com/narutojzm1-dot/youjia/issues/120)；候选在 `art/concepts/ack_horse_v1/`。#30 的行为映射仍未改。 |
 | ART-ACK-SHEEP | P1 | 两只羊：保留个性的互动回应 | 同角色完整画作、稳定接触锚点、透明边界、原尺寸/镜像预览、来源哈希与预算；样张核对后再扩帧，接入单独验收 | 已指定；排队；先各一张关键姿态 | `GROK-BUILD` | [#121](https://github.com/narutojzm1-dot/youjia/issues/121)；#30 / MANUS反馈映射接入 |
 | ART-ACK-BIRDS | P1 | 鸭与鹅：自然关注和接食姿态资源 | 同角色完整画作、稳定接触锚点、透明边界、原尺寸/镜像预览、来源哈希与预算；样张核对后再扩帧，接入单独验收 | 已指定；排队；鹅先复用盘点再作画 | `GROK-BUILD` | [#122](https://github.com/narutojzm1-dot/youjia/issues/122)；#30 / MANUS反馈映射接入 |
 | ART-RESIDENT-PET | P1 | 旅人：自然轻抚动作的三姿态样张 | 同角色完整画作、稳定接触锚点、透明边界、原尺寸/镜像预览、来源哈希与预算；样张核对后再扩帧，接入单独验收 | 已指定；可先制作三姿态分镜样张；产品核对后烘最终帧 | `GROK-BUILD` | [#123](https://github.com/narutojzm1-dot/youjia/issues/123)；#84 / CODEX主角接入 |
@@ -113,3 +113,17 @@
 | 编号 | 优先级 | 工作范围 | 验收条件 | 状态 | Owner | 依赖 / 记录 |
 | --- | --- | --- | --- | --- | --- | --- |
 | VERIFY-EXIT-GATE | P0 | 修复每日Godot回归忽略非零退出码的发布门禁漏洞 | Godot/timeout和tee任一非零、错误/FAIL日志或日志读取失败均阻断；11项故障注入与严格完整回归、独立最终SHA审查通过 | 已合入并核验发布；PR134独立审查批准、主线严格回归/导出/Pages与公开包一致性通过 | `CODEX-LEAD` | [工程督导#130](https://github.com/narutojzm1-dot/youjia/issues/130)；不包含存档协议、完成标记或PR验证workflow。[证据](playtests/2026-10-03-verify-exit-gate.md)。 |
+
+
+## 追加切片（低动效对象反馈）
+
+| 编号 | 优先级 | 需求 | 验收条件 | 状态 | Owner | 依赖 / 记录 |
+| --- | --- | --- | --- | --- | --- | --- |
+| REQ-20261003-022 | P2 | 低动效下抚摸/浇水/投喂对象反馈保持静止可读 | 开启低动效时水彩心、浇水溅与投喂鸟环心在反馈窗口内不再上浮或中途淡出，固定为可读静帧，倒计时结束仍整段消失；关闭低动效时原有上浮、扩散与淡出仍在。不改互动判定、存档、草堆亮度或乘骑资源。 | 已发布；game-2cd15c2，独立审核/主线严格回归/Web/公开包核验通过 | `GROK-CONTRIBUTOR` | 用户半小时推进自选切片。不改 REQ-017/018/019 已覆盖相位，不改 REQ-020 草堆，不改 PR #99 乘骑画。只动 `WorldEffectsOverlay`；`still_object_feedback_suite.gd` 验收；CODEX-LEAD按PR136交接补标准daily挂载、完整/Web验收与独立最终SHA审查；实现Owner保持GROK。决策见 [decisions/REQ-20261003-022.md](decisions/REQ-20261003-022.md)。 |
+
+
+## 贡献者的用户决策与展示汇总
+
+| 编号 | 范围 | 状态 | Owner | 记录 |
+| --- | --- | --- | --- | --- |
+| COLLAB-PRODUCER-HANDOFF | 所有贡献者把需要用户决策或查看的内容提交仓库；CODEX-LEAD、督导或GAME-PRODUCER汇总告知并回写用户决定 | 制作人已明确；统一上报规范已记录 | `CODEX-LEAD` | [通知#146](https://github.com/narutojzm1-dot/youjia/issues/146)，[交接规范](collaboration/producer-decision-handoff.md)；不改变Owner/审核流程或用户重要产品决策权。 |

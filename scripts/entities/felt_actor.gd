@@ -57,6 +57,8 @@ var _particle_art_scale:=1.0
 var _base_texture_path:=""
 var _face_region:=Rect2()
 var _expression_texture: Texture2D
+var _ack_cel := ""
+var _ack_left := 0.0
 var _posture_metadata: Dictionary = {}
 var _posture_id := "idle"
 var _idle_ground_anchor := Vector2(-1,-1)
@@ -167,9 +169,21 @@ func _paint_facing() -> float:
 	return _native_facing
 
 
+func show_painted_ack(cel: String, seconds: float) -> void:
+	if posed or seconds <= 0.0 or not _textures.has(cel):
+		return
+	_ack_cel = cel
+	_ack_left = seconds
+	_velocity = Vector2.ZERO
+	_gait.weight = 0.0
+	_refresh_painted_posture()
+
+
 func _painted_posture() -> String:
 	if posed or _velocity.length() > 0.3 or _gait.weight > 0.08:
 		return "idle"
+	if _ack_cel != "" and _textures.has(_ack_cel):
+		return _ack_cel
 	if species == "goose":
 		if state == "rest":
 			return "rest"
@@ -239,6 +253,8 @@ func spit(target: Vector2 = Vector2.INF) -> void:
 
 func set_pose(point: Vector2, next_scale: float, face: float) -> void:
 	posed = true
+	_ack_cel = ""
+	_ack_left = 0.0
 	pose_point = point
 	_base_scale = next_scale
 	state = "pose"
@@ -435,7 +451,8 @@ func tick(delta: float, world_size: Vector2) -> void:
 			else:
 				end_lead()
 		"graze", "rest":
-			_idle_time -= delta
+			if _ack_left <= 0.0:
+				_idle_time -= delta
 			grazing = state == "graze"
 			if _idle_time <= 0.0:
 				state = "wander"
@@ -462,6 +479,8 @@ func tick(delta: float, world_size: Vector2) -> void:
 		desired = Vector2.ZERO
 		if absf(motion.x) > 3.0:
 			facing = signf(motion.x)
+	if _ack_cel != "" and _ack_left > 0.0:
+		desired = Vector2.ZERO
 	var response := 5.0 if species == "duck" else 7.0
 	_velocity = _velocity.lerp(desired, 1.0 - exp(-response * delta))
 	if desired.is_zero_approx() and _velocity.length() < 0.3:
@@ -492,6 +511,11 @@ func tick(delta: float, world_size: Vector2) -> void:
 		_velocity.y = 0.0
 	if absf(moved.x) / maxf(delta, 0.0001) > 2.0:
 		facing = signf(moved.x)
+	if _ack_left > 0.0:
+		_ack_left = maxf(0.0, _ack_left - delta)
+	if _ack_cel != "" and (posed or _velocity.length() > 0.3 or _gait.weight > 0.08 or _ack_left <= 0.0):
+		_ack_cel = ""
+		_ack_left = 0.0
 	_refresh_painted_posture()
 	var stride := 30.0
 	if species in ["cow","horse"]:

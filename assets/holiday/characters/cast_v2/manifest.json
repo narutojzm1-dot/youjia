@@ -373,5 +373,21 @@
     "alpha_zero_fraction": 0.7146,
     "alpha_median_inside": 255,
     "border_pixels_alpha_gt16": 0
+  },
+  "cow_glance": {
+    "width": 1254,
+    "height": 1254,
+    "alpha_bbox": [
+      129,
+      160,
+      1053,
+      965
+    ],
+    "ground_anchor": [
+      719.0,
+      1124
+    ],
+    "native_facing": -1,
+    "border_pixels_alpha_gt16": 0
   }
 }
