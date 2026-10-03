@@ -682,7 +682,11 @@ func _return_navigation() -> void:
 	_check(not host.persist() and host.start_next().error == "busy", "an unknown result holds every later write")
 	_check(host.finish().error == "unknown", "an unknown write cannot be finished as a plain success")
 	var record_before := s.record_revision()
-	_check(s.visit("pond").error == "illegal_transition" and s.record_revision() == record_before, "the old view cannot change the pending session")	## 核验后确定未落盘：按明确失败回到可重试，再提交只授予一次
+	_check(s.visit("pond").error == "illegal_transition" and s.record_revision() == record_before, "the old view cannot change the pending session")
+	## 磁盘仍是可信 parent，但旧写入还没确定终止：不能判失败
+	_check(host.resolve_unknown().get("error") == "still_unknown" and host.unknown and host.grants == 0, "the trusted parent alone does not prove a failure")
+	## 旧写入确定终止后：按明确失败回到可重试，再提交只授予一次
+	host.old_write_terminated = true
 	host.resolve_unknown()
 	_check(s.get_state() == C.STATE_FAILURE and host.grants == 0, "a verified non-landing becomes a retryable failure")
 	s.retry_commit()
@@ -690,38 +694,61 @@ func _return_navigation() -> void:
 	host.start_next()
 	host.finish()
 	_check(host.grants == 1 and host.disk["yard"].get("photo") == "dusk", "the retry grants once and the deferred yard save follows")
-	## 迟到成功：其实已落盘，核验后只发布一次
+	## 迟到成功：候选封套精确匹配，核验后只发布一次，且不覆盖未知期间的新院内改动
 	var late = _pending_reed_host()
 	late.go_home()
 	late.enqueue_submit()
 	late.start_next()
 	late.finish_unknown(true)
-	_check(late.grants == 0 and late.session.get_state() == C.STATE_PENDING, "a landed but unknown write publishes nothing yet")
+	late.change_yard("photo", "late")
+	_check(late.grants == 0 and late.session.get_state() == C.STATE_PENDING and late.inventory.is_empty(), "a landed but unknown write publishes nothing yet")
 	late.resolve_unknown()
+	_check(late.grants == 1 and late.yard.get("photo") == "late" and late.has_unsaved_yard(), "an exact match publishes once and keeps the newer yard change")
 	late.persist()
 	late.reboot()
-	_check(late.grants == 1 and late.inventory.size() == 1 and late.disk["watermark"] == 1, "a late success publishes the find once")
-	## 未知后重启：无法核验 → 隔离冻结；核验可信后再 restore 正常收尾
+	_check(late.grants == 1 and late.inventory.size() == 1 and late.disk["watermark"] == 1 and late.yard.get("photo") == "late", "a late success survives a reboot once")
+	## 负例：水位相同但摘要不同、代次跳跃，都不能当作本次候选
+	for tamper: String in ["digest", "generation"]:
+		var odd = _pending_reed_host()
+		odd.enqueue_submit()
+		odd.start_next()
+		odd.finish_unknown(true)
+		odd.old_write_terminated = true
+		var forged: Dictionary = odd.disk.duplicate(true)
+		if tamper == "digest":
+			forged["yard"] = {"photo": "not ours"}
+			forged["digest"] = "0" + String(forged["digest"]).substr(1)
+		else:
+			forged["generation"] = int(forged["generation"]) + 1
+			forged["parent"] = int(forged["parent"]) + 1
+		odd.disk = forged
+		_check(odd.disk["watermark"] == 1, "%s case keeps the same watermark" % tamper)
+		_check(odd.resolve_unknown().get("error") == "still_unknown" and odd.unknown, "a %s mismatch stays unknown" % tamper)
+		_check(odd.grants == 0 and odd.inventory.is_empty() and odd.session.get_state() == C.STATE_PENDING, "a %s mismatch grants nothing and keeps the trip" % tamper)
+	## 未知后重启且无法核验：可玩内存只取可信 parent，候选原文只作隔离，写入冻结
 	var boot = _pending_reed_host()
 	boot.enqueue_submit()
 	boot.start_next()
 	boot.finish_unknown(true)
+	var candidate_digest: String = boot.disk["digest"]
 	var frozen: Dictionary = boot.reboot(false)
 	_check(frozen["host_action"] == C.HOST_QUARANTINE_AND_FREEZE and not frozen["can_begin"] and boot.at_home, "an unverifiable restart quarantines in the yard")
-	boot.persist()
+	_check(boot.inventory.is_empty() and boot.watermark == 0 and boot.grants == 0, "the unconfirmed candidate is not promoted into playable memory")
+	_check(boot.quarantined_candidate["digest"] == candidate_digest, "the candidate is kept only as quarantine material")
+	boot.change_yard("photo", "after boot")
+	_check(not boot.persist() and boot.disk["digest"] == candidate_digest, "no write happens until the restart is verified")
 	var thawed: Dictionary = boot.reboot(true)
-	_check(thawed["host_action"] == C.HOST_CLOSE and boot.inventory.size() == 1, "a later trusted restore settles without granting again")
+	_check(thawed["host_action"] == C.HOST_CLOSE and boot.inventory.size() == 1, "a later trusted restore settles a landed candidate without granting again")
 	var lost = _pending_reed_host()
 	lost.enqueue_submit()
 	lost.start_next()
 	lost.finish_unknown(false)
 	lost.reboot(false)
-	lost.persist()
+	_check(lost.inventory.is_empty() and not lost.persist(), "an unverifiable restart after a non-landing also freezes writes")
 	var retried: Dictionary = lost.reboot(true)
 	_check(retried["host_action"] == C.HOST_SUBMIT_PROPOSAL, "a trusted restore after a non-landing resubmits the same proposal")
 	lost.submit()
 	_check(lost.inventory.size() == 1 and lost.disk["watermark"] == 1, "the resubmission grants once")
-
 
 func _pending_reed_host():
 	var host = FakeHost.new(Fixtures.formal_catalog())

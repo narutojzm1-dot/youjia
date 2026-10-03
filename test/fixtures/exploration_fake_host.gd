@@ -4,8 +4,13 @@ extends RefCounted
 
 const C := preload("res://scripts/exploration/exploration_contract.gd")
 
-## “磁盘”：最后一次成功保存的完整提交（同代）
-var disk := {"inventory": [], "watermark": 0, "exploration": null, "yard": {}}
+## “磁盘”：最近一次落盘的完整提交（同代）；generation / parent / digest 是保存封套身份
+## digest 在写入时计算并随封套保存，核验只比较保存下来的身份，不重新序列化
+var disk := {"inventory": [], "watermark": 0, "exploration": null, "yard": {}, "generation": 0, "parent": -1, "digest": ""}
+## 各代落盘内容，供“无法核验”的重启回到可信 parent
+var history := {}
+## 宿主最近一次**已确认**的封套身份；去重水位只看这里，不看可能未确认的磁盘
+var confirmed := {"generation": 0, "parent": -1, "digest": "", "watermark": 0}
 ## 宿主内存：已发布状态 + 院内未保存改动
 var inventory: Array = []
 var watermark: int = 0
@@ -33,11 +38,17 @@ var at_home := true
 var unknown := false
 ## 导航调用 request_return 的次数，用来证明重复回院只做幂等导航
 var return_calls := 0
+## 重启时无法核验最新落盘：只从可信 parent 恢复可玩内存，冻结一切写入，候选原文仅供隔离核验
+var unverified := false
+var quarantined_candidate := {}
+## 静止核验的前提：旧写入已确定终止、不可能迟到落盘（H2 平台适配器举证，这里由测试设定）
+var old_write_terminated := false
 
 
 func _init(route_catalog: ExplorationCatalog) -> void:
 	catalog = route_catalog
 	session = ExplorationSession.new(catalog, 0)
+	history[0] = disk.duplicate(true)
 
 
 ## 院内产生一项合法但尚未保存的进展（新照片、关系变化等）
@@ -50,11 +61,20 @@ func has_unsaved_yard() -> bool:
 	return yard_saved_revision != yard_revision
 
 
-## 模拟重启：从磁盘读取同一代提交并调用 restore；trusted=false 模拟“上次结果未知且无法核验”
+## 模拟重启：trusted=true 表示静止 / 同代核验已确认最新落盘可信，按它恢复
+## trusted=false 表示无法定论：可玩内存只取可信 parent，最新落盘只作隔离原文，冻结写入，传 -1
 func reboot(trusted := true) -> Dictionary:
-	inventory = disk["inventory"].duplicate()
-	watermark = disk["watermark"]
-	yard = disk["yard"].duplicate(true)
+	var base: Dictionary = disk
+	quarantined_candidate = {}
+	unverified = not trusted
+	if not trusted:
+		quarantined_candidate = disk.duplicate(true)
+		base = history.get(int(disk["parent"]), {"inventory": [], "watermark": 0, "yard": {}})
+	else:
+		confirmed = _identity(disk)
+	inventory = base["inventory"].duplicate()
+	watermark = int(base["watermark"])
+	yard = base["yard"].duplicate(true)
 	queue.clear()
 	in_flight = {}
 	unknown = false
@@ -86,8 +106,8 @@ func go_home(reason := "player") -> void:
 
 ## 出门阶段保存：以当前内存为底写入，并把结果按 (trip_id, revision) 通知核心
 func persist() -> bool:
-	## 同一时刻只有一次写入；在途时只记下“还要再存一次”
-	if not in_flight.is_empty():
+	## 同一时刻只有一次写入；在途或重启未核验时只记下“还要再存一次”
+	if not in_flight.is_empty() or unverified:
 		persist_pending = true
 		return false
 	persist_pending = false
@@ -153,7 +173,7 @@ func _run_head() -> Dictionary:
 	var trip: String = proposal["trip_id"]
 	var serial := int(trip.trim_prefix("trip-"))
 	## 第 1 步：只和此刻已确认持久化的水位比较
-	if serial <= disk["watermark"]:
+	if serial <= int(confirmed["watermark"]):
 		return session.commit_succeeded(trip)
 	## 第 2 步：内容校验，items 取自第 0 步刚读到的当前提案
 	var rejected := PackedStringArray()
@@ -174,7 +194,7 @@ func _run_head() -> Dictionary:
 		"serial": serial,
 		"finds": finds,
 		"yard_revision": yard_revision,
-		"candidate": {"inventory": candidate_inventory, "watermark": serial, "exploration": session.to_record(), "yard": yard.duplicate(true)},
+		"candidate": _envelope({"inventory": candidate_inventory, "watermark": serial, "exploration": session.to_record(), "yard": yard.duplicate(true)}),
 	}
 	return {"ok": true, "waiting": true}
 
@@ -200,20 +220,25 @@ func finish_unknown(landed: bool) -> void:
 		return
 	unknown = true
 	if landed:
-		disk = JSON.parse_string(JSON.stringify(in_flight["candidate"]))
-		disk["watermark"] = int(disk["watermark"])
+		_land(in_flight["candidate"])
 
 
-## 静止核验（#150 H2 的模型）：读可信持久化存储判断候选是否落盘，再按结果收尾
+## 静止核验（#150 H2 的模型）：只按封套身份判断，不按水位猜测
+## 精确匹配本次候选 → 成功；精确匹配可信 parent 且旧写入已确定终止 → 失败；其余保持 unknown
 func resolve_unknown() -> Dictionary:
 	if not unknown:
 		return {"ok": false, "error": "not_unknown"}
-	unknown = false
 	var flight := in_flight
+	var on_disk := _identity(disk)
+	var landed := _same_envelope(on_disk, _identity(flight["candidate"]))
+	var at_parent := _same_envelope(on_disk, confirmed) and old_write_terminated
+	if not landed and not at_parent:
+		return {"ok": false, "error": "still_unknown"}
+	unknown = false
 	in_flight = {}
-	var landed: bool = int(disk["watermark"]) >= int(flight["serial"])
 	var result: Dictionary
 	if landed:
+		confirmed = on_disk
 		inventory.append_array(flight["finds"])
 		watermark = flight["serial"]
 		grants += (flight["finds"] as Array).size()
@@ -259,10 +284,38 @@ func _same_identity(a: Dictionary, b: Dictionary) -> bool:
 	return not a.is_empty() and a.get("trip_id") == b.get("trip_id") and int(a.get("revision", -1)) == int(b.get("revision", -2))
 
 
+## 给一份完整快照加上封套：parent 是写入开始时的已确认代，digest 在此刻固定
+func _envelope(snapshot: Dictionary) -> Dictionary:
+	if snapshot.has("digest"):
+		return snapshot
+	var payload := {"inventory": snapshot["inventory"], "watermark": snapshot["watermark"], "exploration": snapshot["exploration"], "yard": snapshot["yard"]}
+	var sealed := snapshot.duplicate(true)
+	sealed["parent"] = int(confirmed["generation"])
+	sealed["generation"] = int(confirmed["generation"]) + 1
+	sealed["digest"] = JSON.stringify(payload, "", true).sha256_text()
+	return sealed
+
+
+func _identity(snapshot: Dictionary) -> Dictionary:
+	return {"generation": int(snapshot.get("generation", -1)), "parent": int(snapshot.get("parent", -1)), "digest": String(snapshot.get("digest", "")), "watermark": int(snapshot.get("watermark", 0))}
+
+
+func _same_envelope(a: Dictionary, b: Dictionary) -> bool:
+	return a["generation"] == b["generation"] and a["parent"] == b["parent"] and a["digest"] == b["digest"]
+
+
+## 落盘（不代表宿主已确认）
+func _land(snapshot: Dictionary) -> void:
+	disk = JSON.parse_string(JSON.stringify(_envelope(snapshot)))
+	for key: String in ["watermark", "generation", "parent"]:
+		disk[key] = int(disk[key])
+	history[int(disk["generation"])] = disk.duplicate(true)
+
+
 func _write(snapshot: Dictionary) -> bool:
 	if fail_next_saves > 0:
 		fail_next_saves -= 1
 		return false
-	disk = JSON.parse_string(JSON.stringify(snapshot))
-	disk["watermark"] = int(disk["watermark"])
+	_land(snapshot)
+	confirmed = _identity(disk)
 	return true
