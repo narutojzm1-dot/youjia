@@ -19,6 +19,8 @@ const CLOUD_SUNNY := preload("res://assets/holiday/environment/cloud_band_sunny.
 const CLOUD_OVERCAST := preload("res://assets/holiday/environment/cloud_band_overcast.png")
 ## 傍晚暖色云带：只在晴天且 TOD 为傍晚时替换晴天帧，阴天仍用阴云。
 const CLOUD_SUNSET := preload("res://assets/holiday/environment/cloud_band_sunset.png")
+## 早晨薄云：晴天 dawn/morning 窗口，比正午更淡、略偏上。
+const CLOUD_MORNING := preload("res://assets/holiday/environment/cloud_band_morning.png")
 const GrassPatchType := preload("res://scripts/entities/grass_patch.gd")
 const FeltActorType := preload("res://scripts/entities/felt_actor.gd")
 const VacationerType := preload("res://scripts/entities/vacationer.gd")
@@ -1287,11 +1289,20 @@ func _wants_sunset_clouds() -> bool:
 	return t >= 0.72 and t < 0.87
 
 
+## 与 main._tod_phase_name 的 dawn/morning 对齐：t < 0.30。
+func _wants_morning_clouds() -> bool:
+	if weather != "sun":
+		return false
+	return tod_fraction() < 0.30
+
+
 func _cloud_texture_for_now() -> Texture2D:
 	if weather == "overcast":
 		return CLOUD_OVERCAST
 	if _wants_sunset_clouds():
 		return CLOUD_SUNSET
+	if _wants_morning_clouds():
+		return CLOUD_MORNING
 	return CLOUD_SUNNY
 
 
@@ -1332,6 +1343,8 @@ func _apply_cloud_band_modulate(intensity: float) -> void:
 			band.modulate = _backdrop.modulate
 		elif _wants_sunset_clouds():
 			band.modulate = Color(1.04, 1.00, 0.98).lerp(Color.WHITE, 1.0 - intensity * 0.35)
+		elif _wants_morning_clouds():
+			band.modulate = Color(1.06, 1.04, 1.02).lerp(Color.WHITE, 1.0 - intensity * 0.4)
 		else:
 			band.modulate = Color(1.08, 1.05, 1.02).lerp(Color.WHITE, 1.0 - intensity * 0.4)
 
