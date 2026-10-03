@@ -196,7 +196,7 @@ close() ──► idle（宿主保存 to_record()，可与下次任意保存合�
 - **幂等检查在串行提交临界区内**：第 0–2 步的会话、提案版本与水位检查必须在队首、紧挨着第 3–4 步执行，检查 → 构造候选 → 等待持久化确认 → 发布授予与水位是一段串行事务；只有本笔结果发布后才放行下一笔。只把文件写入串行化而在入队前做检查是不够的：已持久化水位为 2 时，同一 trip-3 的请求 A、B 都在 A 确认前通过检查，A 授予后发布水位 3，B 出队时不重查就会再加一次所得；核心之后拒绝重复的成功通知也撤不回已落盘的重复授予。
 - **队列持有提案身份，不持有内容**：队列项只记 `(trip_id, proposal.revision)`，出队时从核心读取当前提案；不能把旧请求带来的 items 与出队时另一份 `to_record()` 拼成一笔提交。身份不一致（提案已因第 2 步的拒绝项升版、会话已收口或换了旅程）的请求在第 0 步丢弃。`settle_empty` 也会升版，但它只能从 `recoverable_failure` 发起，那时旧请求已因状态不是 `pending_commit` 在第 0 步被丢弃。
 - **入队义务（不困住玩家）**：第 0 步可以丢弃请求，所以宿主必须保证“核心处于 `pending_commit` 时，队列里或在途中总有一笔当前身份的请求”。具体是：
-  - 每当核心结果使会话进入或留在 `pending_commit` 且身份变化时，以当前 `(trip_id, proposal.revision)` 入队。包括 `request_return`、`retry_commit`、`settle_empty`、第 2 步拒绝后的升版，以及 §8 的 `submit_proposal`、`retry_commit`、`settle_empty` 三个恢复动作；
+  - 每当核心结果使会话进入 `pending_commit`，或留在 `pending_commit` 而身份变化时，以当前 `(trip_id, proposal.revision)` 入队。包括 `request_return`、`retry_commit`、`settle_empty`、第 2 步拒绝后的升版，以及 §8 的 `submit_proposal`、`retry_commit`、`settle_empty` 三个恢复动作；
   - 兜底：每笔事务结束、队列空闲时，若核心仍是 `pending_commit` 且队列和在途中都没有当前身份，就重新入队。第 4 步“已落盘但成功回调丢失”时就靠这一条收尾：重新入队的请求在第 1 步按已确认水位直接回成功，不再发物。
 
   入队义务只关系到“不困住玩家”，不影响“不重复授予”；后者由第 0–1 步的队首重查保证。
