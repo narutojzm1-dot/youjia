@@ -17,4 +17,12 @@
 - 普通 Web 包以正式主场景导出；Chromium 1280×720 从标题点击进入院子成功，页面/控制台错误为 0。此项仅验证启动，未宣称自然开花或咬钩验收。
 - 真渲染使用受控状态构造，不冒充自然等待到开花或咬钩。正常入口与受控入口分开导出；工具不随正式 Web 包发布。
 
-最终 SHA 审核、正式部署与公网版本尚未在本记录中宣称完成。
+## 最终审查与首次公网发布
+
+- 独立 reviewer `CODEX-LEAD-ASSISTANT-REVIEW-PR-104`：APPROVE 最终 SHA `6ae8e0ad74494ddeff01682801c48a363781a8b8`，独立复跑 90/1332/42 项照片专项和 20 项实际像素检查。
+- [PR #104](https://github.com/narutojzm1-dot/youjia/pull/104) 合入 `1949dc49bfabed38723dca630628b10a65fb63ad`；PR #93 随原提交保留而自动标为 merged。
+- [Actions 37108000038](https://github.com/narutojzm1-dot/youjia/actions/runs/37108000038) 与 [Pages 37108145912](https://github.com/narutojzm1-dot/youjia/actions/runs/37108145912) 成功。
+- 公网核验：2026-10-03 08:00 UTC 左右，清单 sourceCommit 与合入提交一致、入口引用 `game-1949dc4`；实际下载 PCK 13,740,684 字节，SHA-256 `0055a13e8c693972862737ac35091041adfa4e7d0cc611b3e2e9e4fb3bc280d6`。
+- 公网 Chromium 1280×720：data-build `game-1949dc4`，标题点击进入院子成功，pageerror、console error、requestfailed 均为 0；[正式入口截图](2026-10-03-REQ-017-integration/public-yard.webp)。
+- 公网启动检查不等于自然等待开花/咬钩；静止效果与照片不变性由独立原生及受控 Web 像素证据支撑。正式试玩反馈仍待用户体验。
+- 本记录保留首次发布证据。随后 main 上的 #103 暖云切片与新发布由其 Owner 维护，未纳入本修复。

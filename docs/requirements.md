@@ -31,7 +31,7 @@
 | REQ-20261002-016 | P0 | 为旅人递草喂羊驼设计第一组可读互动动作规格 | 盘点现有旅人图集；提交递草前、递出、羊驼接收、收回手臂的动作分镜和锚点/时长/打断/低动效/Web 体积规格；不改玩法逻辑、不制作最终帧，待产品确认后再另开实现任务。 | 待产品确认（规格已提交；动作候选已在 main） | `GROK-BUILD` | 原表写成 `GROK-CONTRIBUTOR`。用户让 Grok Build 做这项指定，故改为 `GROK-BUILD`，不代表接管 GROK BOT 的其他事项。规格见 [architecture/resident-grass-offer-spec.md](architecture/resident-grass-offer-spec.md)。帧已由 REQ-001-GRASS / PR #76 先合入，本需求不另做第二套画。[issue #70](https://github.com/narutojzm1-dot/youjia/issues/70)。 |
 
 | REQ-20261003-001-ACTION | P0 | 为招呼/抚摸成功反馈拆分旅人短动作切片提案 | 盘点现有旅人帧与成功/取消路径，提交短时、可打断、低动效/Web 可读的动作方案；不改距离判定和行为语义，不新增关系值/任务；资源方向先由产品确认。 | 待产品确认 | `未认领` | [issue #84](https://github.com/narutojzm1-dot/youjia/issues/84)。独立于已发布的拿草/递草 [REQ-001-GRASS](#req-001-grass) 与动物回应 REQ-008；确认后开放认领。 |
-| REQ-20261003-017 | P2 | 低动效下花圃、水面涟漪和咬钩浮标保持静止可读 | 开启低动效时嫩芽不左右倾、开花不摇不闪、收获花瓣停在原地、水面只留一圈静止涟漪、咬钩浮标保持红色稳圈而不是快速闪烁；关闭低动效时原有轻摇、三圈涟漪和咬钩明暗仍在。不改钓鱼规则、存档或新资源。 | 待评审 | `GROK-CONTRIBUTOR` | 用户 2026-10-03 让 GROK-CONTRIBUTOR 自选无主切片。不改 REQ-001 抚摸/招呼、REQ-005/012 云带、REQ-008/009 动物与热点、REQ-014/015 鹅马。只动 `YardPropVisual` 的绘制相位。 |
+| REQ-20261003-017 | P2 | 低动效下花圃、水面涟漪和咬钩浮标保持静止可读 | 开启低动效时嫩芽不左右倾、开花不摇不闪、收获花瓣停在原地、水面只留一圈静止涟漪、咬钩浮标保持红色稳圈而不是快速闪烁；关闭低动效时原有轻摇、三圈涟漪和咬钩明暗仍在。不改钓鱼规则、存档或新资源。 | 已合入发布；正式试玩待反馈 | `GROK-CONTRIBUTOR` | 用户 2026-10-03 让 GROK-CONTRIBUTOR 自选无主切片。不改 REQ-001 抚摸/招呼、REQ-005/012 云带、REQ-008/009 动物与热点、REQ-014/015 鹅马。原绘制提交随 [PR #104](https://github.com/narutojzm1-dot/youjia/pull/104) 集成，兼容验证归下方 REQ-017-VERIFY；首次正式版本 `game-1949dc4` 已核验。 |
 | REQ-001-GRASS | P0 | 主角拿草与递草身体动作 | 定稿居民完整帧、固定脚底；成功才演出，移动和低动效可打断；不延迟库存或喂食；实际 Web 复核。 | 已完成（独立切片已发布） | `CODEX-LEAD-ASSISTANT` | [issue #73](https://github.com/narutojzm1-dot/youjia/issues/73)；父 REQ-20261002-001 Owner 保留。仅 Vacationer / SequenceResident、动作帧、独立验证；YardWorld 既有喂草调用只传入对象位置。[PR #76](https://github.com/narutojzm1-dot/youjia/pull/76) 合入 `6c1d6f0`；独立审核和全量回归通过，正式 `game-6c1d6f0` 公网版本与 PCK 已核验；Web 正常拿草/喂草成片及受控完整动作复核。父需求的抚摸/招呼仍待做。[验收记录](playtests/2026-10-03-REQ-001-grass-actions.md)。 |
 
 ## REQ-014 协作验证切片
@@ -53,4 +53,4 @@
 
 | 编号 | 优先级 | 工作范围 | 验收条件 | 状态 | Owner | 依赖 |
 | --- | --- | --- | --- | --- | --- | --- |
-| REQ-20261003-017-VERIFY | P1 | 集成 PR #93，并修复低动效设置改写历史照片及独立脚本编译失败 | 拍摄时保存道具低动效状态，旧快照保留原普通相位；标准照片测试、全量回归、原生及 Web 真渲染通过；独立最终 SHA 审查 | 实现与验证完成，待独立审核合入 | `CODEX-LEAD-ASSISTANT` | [PR #93 范围登记](https://github.com/narutojzm1-dot/youjia/pull/93#issuecomment-5966854032)；父 REQ-017 Owner 保留 `GROK-CONTRIBUTOR`，原提交完整保留。仅状态传递、快照兼容、测试与集成，不改钓鱼规则。 |
+| REQ-20261003-017-VERIFY | P1 | 集成 PR #93，并修复低动效设置改写历史照片及独立脚本编译失败 | 拍摄时保存道具低动效状态，旧快照保留原普通相位；标准照片测试、全量回归、原生及 Web 真渲染通过；独立最终 SHA 审查 | 已完成并发布核验 | `CODEX-LEAD-ASSISTANT` | [PR #93 范围登记](https://github.com/narutojzm1-dot/youjia/pull/93#issuecomment-5966854032)；父 REQ-017 Owner 保留 `GROK-CONTRIBUTOR`，原提交完整保留。PR #104 最终 SHA 独立 APPROVE；Actions 37108000038 / Pages 37108145912 成功，首次公网 `game-1949dc4` 清单、PCK与浏览器核验通过；[验收记录](playtests/2026-10-03-REQ-017-integration.md)。不改钓鱼规则。 |
