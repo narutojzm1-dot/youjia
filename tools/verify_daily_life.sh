@@ -5,15 +5,10 @@ state="$(mktemp -d /tmp/youjia-daily-check.XXXXXX)"
 trap 'rm -rf "$state"' EXIT
 export XDG_DATA_HOME="$state/data" XDG_CONFIG_HOME="$state/config" XDG_CACHE_HOME="$state/cache"
 mkdir -p "$XDG_DATA_HOME" "$XDG_CONFIG_HOME" "$XDG_CACHE_HOME"
+source tools/lib/verified_godot.sh
+bash test/godot_gate_test.sh
 run_godot() {
-  # Godot --script 在 quit(0) 后偶发非零退出码；以日志中的 SCRIPT ERROR/ERROR: 为准，避免 pipefail 误杀后续套件。
-  set +e
-  timeout 300 "${GODOT:-godot}" "$@" 2>&1 | tee "$state/run.log"
-  set -e
-  if grep -Eq '^(SCRIPT ERROR|ERROR:)' "$state/run.log"; then
-    echo "[daily-check] Godot reported an error" >&2
-    exit 1
-  fi
+  run_verified_godot "$state/run.log" "$@"
 }
 run_godot --headless --path . --editor --import --quit
 run_godot --headless --path . res://test/test_suite.tscn

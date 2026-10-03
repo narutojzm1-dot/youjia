@@ -106,3 +106,10 @@
 | --- | --- | --- | --- | --- | --- | --- |
 | REQ-WALK-EXPAND | P1 | 扩大院内连通可走空间，分离玩家与动物安全边界 | 标定真实落脚/禁行/遮挡，原区域可达；统一键鼠触屏/路径/追踪与牵引，镜头/透视自然；方案核对后独立实现并完整回归/Web验收 | 已指定；区域标定与技术设计待做，未实现 | `CODEX-LEAD` | [#125](https://github.com/narutojzm1-dot/youjia/issues/125)；[分期计划](architecture/player-walk-area-expansion.md)，不直接扩大动物作息区。 |
 | ART-GROUND-EXPAND | P1 | 扩展候选地面的资源盘点与补绘提案 | 现画可用则不重画；补绘同院子晴阴坐标/遮挡一致、来源锚点与预算齐全，具体方案确认后制作 | 已指定；先盘点，最终补绘依赖区域确认 | `GROK-BUILD` | [#126](https://github.com/narutojzm1-dot/youjia/issues/126)；依赖REQ-WALK-EXPAND，协调#51 CURSOR天气底图，不抢动物资源订单。 |
+
+
+## 工程门禁：异常退出不得当作验证通过
+
+| 编号 | 优先级 | 工作范围 | 验收条件 | 状态 | Owner | 依赖 / 记录 |
+| --- | --- | --- | --- | --- | --- | --- |
+| VERIFY-EXIT-GATE | P0 | 修复每日Godot回归忽略非零退出码的发布门禁漏洞 | Godot/timeout和tee任一非零、错误/FAIL日志或日志读取失败均阻断；11项故障注入与严格完整回归、独立最终SHA审查通过 | 验证完成待独立审查；11项契约与严格完整回归通过，未合入 | `CODEX-LEAD` | [工程督导#130](https://github.com/narutojzm1-dot/youjia/issues/130)；不包含存档协议、完成标记或PR验证workflow。[证据](playtests/2026-10-03-verify-exit-gate.md)。 |
