@@ -27,6 +27,12 @@ var persist_pending := false
 ## 院内改动版本：用来证明成功回调不会抹掉等待期间的新改动与未保存标记
 var yard_revision := 0
 var yard_saved_revision := 0
+## 表现层是否已回院（契约 §4 回院导航：不等持久化）
+var at_home := true
+## 平台结果未知：在途身份与候选保留，不发确认、不放行下一笔
+var unknown := false
+## 导航调用 request_return 的次数，用来证明重复回院只做幂等导航
+var return_calls := 0
 
 
 func _init(route_catalog: ExplorationCatalog) -> void:
@@ -44,19 +50,38 @@ func has_unsaved_yard() -> bool:
 	return yard_saved_revision != yard_revision
 
 
-## 模拟重启：从磁盘读取同一代提交并调用 restore
-func reboot() -> Dictionary:
+## 模拟重启：从磁盘读取同一代提交并调用 restore；trusted=false 模拟“上次结果未知且无法核验”
+func reboot(trusted := true) -> Dictionary:
 	inventory = disk["inventory"].duplicate()
 	watermark = disk["watermark"]
 	yard = disk["yard"].duplicate(true)
 	queue.clear()
 	in_flight = {}
+	unknown = false
 	persist_pending = false
 	yard_saved_revision = yard_revision
+	at_home = true
 	var record: Variant = JSON.parse_string(JSON.stringify(disk["exploration"])) if disk["exploration"] != null else null
-	var result := ExplorationSession.restore(record, catalog, watermark)
+	var result := ExplorationSession.restore(record, catalog, watermark if trusted else C.WATERMARK_UNTRUSTED)
 	session = result["session"]
 	return result
+
+
+func set_out(route_id: String, clock: Dictionary, seed: Variant = null) -> Dictionary:
+	var result := session.begin(route_id, clock, seed)
+	if result.ok:
+		at_home = false
+	return result
+
+
+## 玩家按“回院”：首次冻结提案并入队，随即切回院子；已在待提交时只做幂等导航
+func go_home(reason := "player") -> void:
+	if session.get_state() == C.STATE_ACTIVE:
+		return_calls += 1
+		if session.request_return(reason).ok:
+			persist()
+			enqueue_submit()
+	at_home = true
 
 
 ## 出门阶段保存：以当前内存为底写入，并把结果按 (trip_id, revision) 通知核心
@@ -159,9 +184,44 @@ func _run_head() -> Dictionary:
 func finish(write_ok := true, deliver := true) -> Dictionary:
 	if in_flight.is_empty():
 		return {"ok": false, "error": "idle"}
+	if unknown:
+		return {"ok": false, "error": "unknown"}
 	var flight := in_flight
 	in_flight = {}
 	var result := _publish(flight, write_ok, deliver)
+	_end_transaction()
+	return result
+
+
+## 平台结果未知（契约 §7.2）：landed 表示候选其实已经落盘，但宿主此刻不知道
+## 不发任何确认、不发布授予；在途身份保留，队列不放行
+func finish_unknown(landed: bool) -> void:
+	if in_flight.is_empty():
+		return
+	unknown = true
+	if landed:
+		disk = JSON.parse_string(JSON.stringify(in_flight["candidate"]))
+		disk["watermark"] = int(disk["watermark"])
+
+
+## 静止核验（#150 H2 的模型）：读可信持久化存储判断候选是否落盘，再按结果收尾
+func resolve_unknown() -> Dictionary:
+	if not unknown:
+		return {"ok": false, "error": "not_unknown"}
+	unknown = false
+	var flight := in_flight
+	in_flight = {}
+	var landed: bool = int(disk["watermark"]) >= int(flight["serial"])
+	var result: Dictionary
+	if landed:
+		inventory.append_array(flight["finds"])
+		watermark = flight["serial"]
+		grants += (flight["finds"] as Array).size()
+		if yard_saved_revision < flight["yard_revision"]:
+			yard_saved_revision = flight["yard_revision"]
+		result = session.commit_succeeded(flight["trip_id"])
+	else:
+		result = session.commit_failed(flight["trip_id"], true)
 	_end_transaction()
 	return result
 

@@ -1,6 +1,7 @@
 extends SceneTree
 # 探索核心隔离测试（#152 草案）：只用夹具目录与假宿主，不加载场景、不碰玩家存档。
-# 对应契约 §12；宿主侧联合验收（#149/#150）不在本 suite 内。
+# 对应契约 §12 第 1–16 项；宿主侧联合验收（#149/#150）不在本 suite 内。
+# 第 15、16 项只证明串行事务与回院导航协议本身，平台持久化确认另行举证。
 
 const C := preload("res://scripts/exploration/exploration_contract.gd")
 const Fixtures := preload("res://test/fixtures/exploration_fixture_routes.gd")
@@ -31,6 +32,7 @@ func _run() -> void:
 	_acks()
 	_untrusted_and_quarantine()
 	_async_interleaving()
+	_return_navigation()
 	if failures.is_empty():
 		print("EXPLORATION CORE PASS ", checks)
 		quit(0)
@@ -654,6 +656,71 @@ func _async_interleaving() -> void:
 	two.persist()
 	two.reboot()
 	_check(two.grants == 1 and two.inventory == ["formal.find.two"] and two.disk["watermark"] == 1, "only the new revision is committed")
+
+
+## 16. 回院导航：回院不等持久化；结果未知期间保持待提交、不发确认、不放行
+func _return_navigation() -> void:
+	var host = FakeHost.new(Fixtures.formal_catalog())
+	var s: ExplorationSession = host.session
+	host.set_out("formal.test_walk", CLOCK, 3)
+	_check(not host.at_home, "setting out leaves the yard")
+	s.visit("pond")
+	s.take("formal.find.reed")
+	host.persist()
+	host.go_home()
+	var proposal := s.get_proposal()
+	_check(host.at_home and s.get_state() == C.STATE_PENDING and host.grants == 0, "the player is home at once while the commit waits")
+	host.go_home()
+	host.go_home()
+	_check(host.return_calls == 1 and host.queue.size() == 1, "repeated return taps only navigate")
+	_check(s.get_proposal() == proposal, "repeated return taps keep the trip and proposal revision")
+	host.start_next()
+	host.finish_unknown(false)
+	_check(s.get_state() == C.STATE_PENDING and s.begin("formal.test_walk", CLOCK).error == "pending_exists", "an unknown result keeps the trip open and blocks new trips")
+	_check(s.get_proposal() == proposal and host.grants == 0, "an unknown result keeps the proposal and grants nothing")
+	host.change_yard("photo", "dusk")
+	_check(not host.persist() and host.start_next().error == "busy", "an unknown result holds every later write")
+	_check(host.finish().error == "unknown", "an unknown write cannot be finished as a plain success")
+	var record_before := s.record_revision()
+	_check(s.visit("pond").error == "illegal_transition" and s.record_revision() == record_before, "the old view cannot change the pending session")	## 核验后确定未落盘：按明确失败回到可重试，再提交只授予一次
+	host.resolve_unknown()
+	_check(s.get_state() == C.STATE_FAILURE and host.grants == 0, "a verified non-landing becomes a retryable failure")
+	s.retry_commit()
+	host.enqueue_submit()
+	host.start_next()
+	host.finish()
+	_check(host.grants == 1 and host.disk["yard"].get("photo") == "dusk", "the retry grants once and the deferred yard save follows")
+	## 迟到成功：其实已落盘，核验后只发布一次
+	var late = _pending_reed_host()
+	late.go_home()
+	late.enqueue_submit()
+	late.start_next()
+	late.finish_unknown(true)
+	_check(late.grants == 0 and late.session.get_state() == C.STATE_PENDING, "a landed but unknown write publishes nothing yet")
+	late.resolve_unknown()
+	late.persist()
+	late.reboot()
+	_check(late.grants == 1 and late.inventory.size() == 1 and late.disk["watermark"] == 1, "a late success publishes the find once")
+	## 未知后重启：无法核验 → 隔离冻结；核验可信后再 restore 正常收尾
+	var boot = _pending_reed_host()
+	boot.enqueue_submit()
+	boot.start_next()
+	boot.finish_unknown(true)
+	var frozen: Dictionary = boot.reboot(false)
+	_check(frozen["host_action"] == C.HOST_QUARANTINE_AND_FREEZE and not frozen["can_begin"] and boot.at_home, "an unverifiable restart quarantines in the yard")
+	boot.persist()
+	var thawed: Dictionary = boot.reboot(true)
+	_check(thawed["host_action"] == C.HOST_CLOSE and boot.inventory.size() == 1, "a later trusted restore settles without granting again")
+	var lost = _pending_reed_host()
+	lost.enqueue_submit()
+	lost.start_next()
+	lost.finish_unknown(false)
+	lost.reboot(false)
+	lost.persist()
+	var retried: Dictionary = lost.reboot(true)
+	_check(retried["host_action"] == C.HOST_SUBMIT_PROPOSAL, "a trusted restore after a non-landing resubmits the same proposal")
+	lost.submit()
+	_check(lost.inventory.size() == 1 and lost.disk["watermark"] == 1, "the resubmission grants once")
 
 
 func _pending_reed_host():
