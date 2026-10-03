@@ -185,11 +185,13 @@ func review():
  check(w.weather=="sun" and w._backdrop.texture==w.SUNNY,"sun restores the painted sunny yard")
  check(w._cloud_band_a.texture==w.CLOUD_SUNNY,"sun restores the sunny cloud band")
  # 低动效：云带保持可读静止帧（滚动偏移不再增加）。
+ # 本套件以 SceneTree 运行，须经 root 取 TuningStore 节点。
  var scroll_before=w._cloud_scroll
- TuningStore.set_value("ui.reduced_motion", true)
+ var tuning=root.get_node("TuningStore")
+ tuning.set_value("ui.reduced_motion", true)
  w.tick(2.0, Vector2.ZERO)
  check(is_equal_approx(w._cloud_scroll, scroll_before),"reduced motion keeps cloud band static")
- TuningStore.set_value("ui.reduced_motion", false)
+ tuning.set_value("ui.reduced_motion", false)
  w.tick(2.0, Vector2.ZERO)
  check(w._cloud_scroll>scroll_before,"cloud band drifts when motion is allowed")
  w.debug_place_player(YardSceneHotspots.get_hotspot("windowbox").approach_points[0] + Vector2(5, 5))
