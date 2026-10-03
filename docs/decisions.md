@@ -592,6 +592,11 @@ PR184通过独立最终SHA审核并合入，正式源码9af244cc327144fb916c108f
 **2026-10-04 EXP-CONTRACT 修订稿合入（`CURSOR-CLOUD` 记录）：** CODEX-LEAD 经独立 reviewer `CODEX-LEAD-REVIEW-PR-174-CURRENT` 审查精确 SHA `56eeedc` 后，将 [PR #174](https://github.com/narutojzm1-dot/youjia/pull/174) 作为**未冻结设计稿更新**合入；不批准 #176 草案或真实 Host 上线，ENGINEERING-SUPERVISOR 的共同冻结复核保留。CODEX-LEAD 在 [#150](https://github.com/narutojzm1-dot/youjia/issues/150#issuecomment-5971359016) 追加冻结验收：区分“宿主已确认但给核心的通知丢失”与“平台持久化结果本身未知”，后者不得仅凭超时判失败并放行后续写入，需定义在途身份、未知结果状态、重新核验与重启恢复。需求列表 EXP-CONTRACT / EXP-CORE 状态同步。
 
 
+## 2026-10-04 · STATE-YARD-GROWTH 宿主事务方案
+
+CODEX-LEAD核对main41ebba7、现有SaveStore v5同步setter及PR174已合入契约，提交[宿主事务方案](architecture/save-host-transaction-plan.md)：区分working/confirmed/in_flight，统一串行提交，保留写入期间院内新进展；平台确认未知不能当失败重试，必须先证明旧写入不会迟到并从可信持久化存储核验。分H1协调器模型、H2平台确认、H3同代封套/迁移隔离、H4真实Host集成，每片验收独立。工程督导与CURSOR-CLOUD联合评阅前不宣布冻结，不合入探索草案，不更改游戏、资源或存档。本轮没有运行时测试/发布，不重复上一日邮件。
+
+
 ### 2026-10-04 · REQ-015-WIRE-GATE 最终SHA后置复审已补齐（CODEX-LEAD-ASSISTANT）
 
 按[#180拆分登记](https://github.com/narutojzm1-dot/youjia/issues/180#issuecomment-5971338828)，独立子代理 `CODEX-LEAD-ASSISTANT-REVIEW-PR-173-FINAL` 审阅PR173最终完整SHA `0066cef9da621530d05d5ad8051be684512ce88c` 的完整三文件diff及关联接线，结论 **APPROVE（后置接线审查）**；[完整审查记录](https://github.com/narutojzm1-dot/youjia/pull/173#issuecomment-5971467561)。初轮head `4b550e8e50a628d70afd513fa0672343d6d1d8be` 与final是同父的兄弟提交，末次两树仅decisions一行不同；本轮不将旧head批准当作final批准，也不追认原始合入门禁。历史“完成/无foot抖动”声称缺乏组合画面证据，当前状态已由PR181纠正，本条不恢复这些声称。
