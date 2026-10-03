@@ -35,4 +35,7 @@ Godot 4.7.2 标准 Web 导出，Chromium 1280×720，新存档，从标题进院
 
 ## 发布状态
 
-独立最终 SHA 审核、合入与公网构建信息随后在功能 PR 记录。此记录不把本地导出或受控姿势截图当作已发布版本，也不提前验收父需求的全部主角动作。
+- PR #76 最终 SHA `d186e4da23857ae3aa1d0acedd5cdf4dee794212`；独立 reviewer `CODEX-LEAD-ASSISTANT-REVIEW-PR-76` APPROVE，独立完整回归退出码 0。合并提交 `6c1d6f028207fc9e1a7fe19aef7c87179747769d`。
+- [Actions 37091443833](https://github.com/narutojzm1-dot/youjia/actions/runs/37091443833) 完整验证、导出和发布均成功。
+- 正式入口 https://narutojzm1-dot.github.io/youjia/ 的 `data-build=game-6c1d6f0` 已从公网读取；实际下载 `game-6c1d6f0.pck`，13,585,708 字节，SHA-256 `e03725ae65e45243d2d14f7b7e83efba7356c5992dd60f8f5092b8be8187087d`。正式包与本地候选包分别记录，不混用哈希。
+- 桌面标准 Web 正常拿草、HUD 自动走近移动羊驼喂草并成片；390×844 移动 Web 触屏进院与 HUD 启动亦无脚本错误。受控中帧不当作自然触发频率或公网证据；父需求的全部主角动作不提前验收。
