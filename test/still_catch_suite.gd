@@ -27,6 +27,7 @@ func _run() -> void:
 	if failures.is_empty():
 		print("STILL CATCH PASS ", checks)
 		quit(0)
+		return
 	for failure: String in failures:
 		push_error(failure)
 	quit(1)
