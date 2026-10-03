@@ -32,6 +32,8 @@ var _last_save_failure: String = ""
 var _quarantined := false
 var _quarantine_raw: Variant = null
 var _quarantine_reason: String = ""
+## 夹具作废是 restore 自己的改写，需要宿主保存新的空闲记录
+var _reset_pending_save := false
 
 
 func _init(catalog: ExplorationCatalog = null, last_committed_trip_serial: int = 0) -> void:
@@ -50,7 +52,7 @@ static func restore(record: Variant, catalog: ExplorationCatalog, last_committed
 		"session": session,
 		"host_action": action,
 		"can_begin": session.can_begin(),
-		"persist": session._record_revision > session._persisted_revision,
+		"persist": session._record_revision > session._persisted_revision or session._reset_pending_save,
 	}
 	if action in [C.HOST_QUARANTINE, C.HOST_QUARANTINE_AND_FREEZE, C.HOST_QUARANTINE_AND_RESET]:
 		result["quarantine_record"] = _copy(record)
@@ -92,6 +94,7 @@ func _restore_from(record: Variant) -> String:
 		_quarantine_reason = "fixture_in_player_save"
 		_restore_meta(record)
 		_next_trip_serial = maxi(_next_trip_serial, int(session_value["trip_serial"]) + 1)
+		_reset_pending_save = true
 		return C.HOST_QUARANTINE_AND_RESET
 	_restore_meta(record)
 	_load_session(session_value)
@@ -175,10 +178,11 @@ static func _is_future_version(record: Dictionary) -> bool:
 ## ───────────── 出门阶段事件 ─────────────
 
 func begin(route_id: String, clock: Dictionary, seed: Variant = null) -> Dictionary:
-	if _quarantined:
-		return _reject("quarantine_frozen")
+	## 拒绝码优先级：watermark_untrusted > quarantine_frozen > exploration_unavailable > pending_exists
 	if _watermark == C.WATERMARK_UNTRUSTED:
 		return _reject("watermark_untrusted")
+	if _quarantined:
+		return _reject("exploration_unavailable" if _quarantine_reason == "future_version" else "quarantine_frozen")
 	if _state == C.STATE_PENDING or _state == C.STATE_FAILURE:
 		return _reject("pending_exists")
 	if _state != C.STATE_IDLE:
@@ -401,7 +405,9 @@ func host_persist_failed(trip_id: String, record_revision: int, code: String = "
 
 
 func _check_ack(trip_id: String, record_revision: int) -> Dictionary:
-	if _quarantined or _state == C.STATE_IDLE or trip_id != _trip_id:
+	if _quarantined:
+		return {"ok": false, "error": "quarantine_frozen", "unsaved_changes": false}
+	if _state == C.STATE_IDLE or trip_id != _trip_id:
 		return {"ok": false, "error": "stale_ack", "unsaved_changes": has_unsaved_changes()}
 	if record_revision > _record_revision:
 		return {"ok": false, "error": "future_ack", "unsaved_changes": has_unsaved_changes()}
@@ -435,7 +441,7 @@ func trip_id() -> String:
 
 
 func get_proposal() -> Dictionary:
-	return _copy(_proposal) if _proposal != null else {}
+	return _copy(_proposal) if _proposal != null and not _quarantined else {}
 
 
 func get_view() -> Dictionary:

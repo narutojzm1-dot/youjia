@@ -303,6 +303,8 @@ func _bad_records() -> void:
 	var future := ExplorationSession.restore({"contract_version": 2, "session": null, "new_field": true}, catalog, 0)
 	_check(future["host_action"] == C.HOST_QUARANTINE and not future["can_begin"], "a future version is kept and blocks trips")
 	_check(future["session"].to_record().has("new_field"), "future fields are not dropped")
+	_check(future["session"].begin("fixture.meadow", CLOCK).error == "exploration_unavailable", "a future version explains trips are unavailable")
+	_check(not future["persist"] and future["session"].get_proposal().is_empty(), "quarantine neither saves nor exposes a proposal")
 
 
 func _with(record: Dictionary, key: String, value: Variant) -> Dictionary:
@@ -354,6 +356,7 @@ func _fixture_gate() -> void:
 	var record: Dictionary = JSON.parse_string(JSON.stringify(s.to_record()))
 	var reset := ExplorationSession.restore(record, formal, 0)
 	_check(reset["host_action"] == C.HOST_QUARANTINE_AND_RESET and reset["can_begin"], "a pure fixture session is voided and trips continue")
+	_check(reset["persist"] and reset["session"].to_record()["session"] == null, "voiding asks the host to save the idle record")
 	var next: ExplorationSession = reset["session"]
 	next.begin("formal.test_walk", CLOCK, 1)
 	_check(next.trip_id() == "trip-2", "the voided fixture serial is not reused")
@@ -506,8 +509,12 @@ func _untrusted_and_quarantine() -> void:
 	var active_record: Dictionary = JSON.parse_string(JSON.stringify(s.to_record()))
 	var frozen := ExplorationSession.restore(active_record, catalog, C.WATERMARK_UNTRUSTED)
 	_check(frozen["host_action"] == C.HOST_QUARANTINE_AND_FREEZE and not frozen["can_begin"], "an open session with an untrusted serial is frozen")
-	_check(frozen["session"].begin("fixture.meadow", CLOCK).error == "quarantine_frozen", "a frozen session cannot begin")
 	_check(frozen["session"].visit("brook").error == "quarantine_frozen", "a frozen session refuses changes")
+	var frozen_ack: Dictionary = frozen["session"].host_persisted("trip-1", 1)
+	_check(frozen_ack.error == "quarantine_frozen" and not frozen_ack.unsaved_changes, "acks during quarantine change nothing")
+	var trusted_frozen: ExplorationSession = ExplorationSession.restore("garbage", catalog, 0)["session"]
+	_check(trusted_frozen.begin("fixture.meadow", CLOCK).error == "quarantine_frozen", "a trusted serial with a frozen record says quarantine_frozen")
+	_check(frozen["session"].begin("fixture.meadow", CLOCK).error == "watermark_untrusted", "an untrusted serial takes priority over the freeze")
 	for record: Variant in [null, {"contract_version": 1, "next_trip_serial": 3, "session": null}]:
 		var idle := ExplorationSession.restore(record, catalog, C.WATERMARK_UNTRUSTED)
 		_check(idle["host_action"] == C.HOST_FREEZE_NEW_TRIPS and not idle["can_begin"], "no session with an untrusted serial freezes new trips")
@@ -530,6 +537,12 @@ func _untrusted_and_quarantine() -> void:
 	host.persist()
 	host.reboot()
 	_check(not host.session.can_begin() and host.disk["exploration"] == "garbage", "a normal save and reboot keep the freeze and the original")
+	var dict_host = FakeHost.new(catalog)
+	dict_host.disk["exploration"] = {"contract_version": 1, "session": {"bad": true}}
+	dict_host.reboot()
+	dict_host.persist()
+	dict_host.reboot()
+	_check(not dict_host.session.can_begin(), "a frozen dictionary record also survives a save and reboot")
 	var bad_serial := ExplorationSession.new(catalog, 2147483647)
 	_check(bad_serial.begin("fixture.meadow", CLOCK).error == "serial_exhausted", "the serial range is enforced")
 
