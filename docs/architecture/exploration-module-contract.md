@@ -92,7 +92,7 @@ route = {
 
 “取消”不是特殊状态：就是 `request_return(reason="cancel")`，提案可以为空，照样走一遍提交。这样“空手回”和“带东西回”是同一条路，宿主也能统一做幂等。
 
-**非法事件**：返回 `{ok: false, error: <code>}`，会话**不做任何修改**。错误码集中定义，例如 `illegal_transition`、`unknown_route`、`unreachable_stop`、`not_offered`、`carry_limit`、`trip_mismatch`、`pending_exists`。重复点击“回院”在 `pending_commit` 下收到 `illegal_transition`，这不算故障，表现层忽略即可。
+**非法事件**：返回 `{ok: false, error: <code>}`，会话**不做任何修改**。错误码集中定义，例如 `illegal_transition`、`unknown_route`、`unreachable_stop`、`not_offered`、`carry_limit`、`trip_mismatch`、`pending_exists`。`quarantine_frozen` 泛指“会话处于隔离模式、不接受变更”，未来版本的隔离也用它（只有 `begin` 按 §4 优先级返回 `exploration_unavailable`），不表示一定有被冻结的旅程。重复点击“回院”在 `pending_commit` 下收到 `illegal_transition`，这不算故障，表现层忽略即可。
 
 **`pending_exists`**：只要还有 `pending_commit` / `recoverable_failure` 的提案，`begin` 一律拒绝。必须先把上一趟收好，避免新旅程覆盖未落盘的所得。恢复时被冻结的隔离旅程同样算作未收口（`begin` 返回 `quarantine_frozen`）；宿主序号不可信时返回 `watermark_untrusted`（§6、§8）。
 
@@ -205,6 +205,7 @@ close() ──► idle（宿主保存 to_record()，可与下次任意保存合�
 
 | 情况 | 核心行为 |
 | --- | --- |
+| 会话处于隔离模式（§8） | 忽略，返回 `quarantine_frozen`、`unsaved_changes = false`，不改任何状态 |
 | `trip_id` 不是当前会话（旧旅程的迟到回调、会话已 `close`、当前为 `idle`） | 忽略，返回 `stale_ack`，不改任何状态 |
 | `record_revision > ` 当前 `record_revision`（超前，宿主或测试出错） | 忽略，返回 `future_ack` 并记日志 |
 | 成功，且 `record_revision <= persisted_revision`（乱序到达的旧成功） | 忽略 |
@@ -326,7 +327,7 @@ func scene_identity() -> Dictionary
 func to_record() -> Variant            # 纯值，可直接 JSON；正常为 Dictionary，只有隔离模式会原样返回读到的非字典原始值（§8）
 ```
 
-所有变更类方法统一返回 `{ok: bool, error?: String, state: String, persist: bool}`。`persist == true` 表示宿主应立即保存 `to_record()`，例如 `begin`、首次到达某点（`offers` 新增）的 `visit`、`take`、`release`、`request_return`、`settle_empty`和提交结果之后；`close` 返回 `persist: false`，其记录可与下一次任意保存合并（与 §7 一致）。
+所有变更类方法统一返回 `{ok: bool, error?: String, state: String, persist: bool}`；例外是保存确认 `host_persisted` / `host_persist_failed`，返回 `{ok, error?, unsaved_changes}`、永不含 `persist`（§7.2）。`persist == true` 表示宿主应立即保存 `to_record()`，例如 `begin`、首次到达某点（`offers` 新增）的 `visit`、`take`、`release`、`request_return`、`settle_empty`和提交结果之后；`close` 返回 `persist: false`，其记录可与下一次任意保存合并（与 §7 一致）。
 
 ## 12. #152 隔离测试计划（独立 suite，纳入 strict daily）
 
@@ -343,7 +344,7 @@ func to_record() -> Variant            # 纯值，可直接 JSON；正常为 Dic
 11. 假宿主故障矩阵（提交阶段）：磁盘序号为 N 时，提交 trip-N+1 首次 `save()` 失败 → 重试成功 → `close` → 重启，断言授予计数为 1、序号为 N+1；首次失败 → 不重试直接重启，断言授予计数为 0、会话仍为待提交并可再次提交成功。
 12. 逐阶段保存失败 / 重启矩阵（出门阶段）：在 `begin`、首次 `visit`、`take`、`release`、`request_return` 各阶段令保存失败后重启，断言恢复到最后一次成功保存的记录、不出现“已保存”假成功、序号不回退；保存失败期间仍可 `request_return` 并在下次保存成功时完成提交。分开两种重启：`pending_commit` 提案曾经落盘（恢复后自动再提交，只授予一次）；`request_return` 本身也没落盘（只恢复到最后持久化的 `active` 或更早状态，再按用户决定安全回院，不做无依据保证）。
 13. 确认通知：旧旅程的迟到确认、乱序到达的旧成功/旧失败、超前 revision，都不改变当前会话，`unsaved_changes` 不被错误清除；失败通知同样绑定会话；任何确认都不返回 `persist: true`；`restore` 后 `persisted_revision` 等于读到的 revision。
-14. 序号不可信与隔离（核心侧）：`last_committed_trip_serial = -1` 时，有未关闭会话 → `quarantine_and_freeze` 且原始记录字节不变、`can_begin = false`；无会话 → `freeze_new_trips`；`committed` 但序号大于水位 → 隔离而不重新提交、不关闭、`can_begin = false`；`-1` 加不是字典 / 字段损坏 / 未来版本的记录都不能得到 `can_begin = true`；冻结后 `to_record()` 与原始记录值语义等价，经普通保存再重启，`can_begin` 仍为 false（分别覆盖字典与非字典原始记录）；隔离时确认通知返回 `quarantine_frozen`；拒绝码优先级与未来版本的 `exploration_unavailable`；`catalog == "fixture"` 但路线或物品为 `formal.` 前缀 → 冻结而不作废；`restore` 改写会话时 `persist: true` 且 `unsaved_changes = true`；`defer_to_yard` 后 `begin` 返回 `pending_exists`；`trip_id` 与序号不一致、序号超出 `2^31 − 1` 按损坏处理。
+14. 序号不可信与隔离（核心侧）：`last_committed_trip_serial = -1` 时，有未关闭会话 → `quarantine_and_freeze` 且 `to_record()` 与原始记录值语义等价、`can_begin = false`；无会话 → `freeze_new_trips`；`committed` 但序号大于水位 → 隔离而不重新提交、不关闭、`can_begin = false`；`-1` 加不是字典 / 字段损坏 / 未来版本的记录都不能得到 `can_begin = true`；冻结后 `to_record()` 与原始记录值语义等价，经普通保存再重启，`can_begin` 仍为 false（分别覆盖字典与非字典原始记录）；隔离时确认通知返回 `quarantine_frozen`；拒绝码优先级与未来版本的 `exploration_unavailable`；`catalog == "fixture"` 但路线或物品为 `formal.` 前缀 → 冻结而不作废；`restore` 改写会话时 `persist: true` 且 `unsaved_changes = true`；`defer_to_yard` 后 `begin` 返回 `pending_exists`；`trip_id` 与序号不一致、序号超出 `2^31 − 1` 按损坏处理。
 
 **宿主侧联合验收**（由 CODEX-LEAD 在 #149/#150 实现与举证，核心以假宿主配合；列在这里是为了两边对同一份清单冻结）：
 
