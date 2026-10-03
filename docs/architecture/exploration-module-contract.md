@@ -99,7 +99,7 @@ route = {
 ## 5. 随机与发现
 
 - 核心不使用全局随机。`begin` 接受可选 `seed`；不给时由宿主注入的随机源生成，只持久化 `rng_seed`。
-- **每个停留点的掷骰只由 `(rng_seed, stop_id)` 决定**：对字符串 `rng_seed + ":" + stop_id` 取 `sha256_text()` 的前 16 位十六进制作为该点专用种子（不用引擎内部的 `String.hash()`，避免跨版本变化），再新建 `RandomNumberGenerator` 掷一次。这样结果与访问顺序无关；崩溃后换个顺序走，也得到同样的发现。同时不需要保存 `rng_state`，也避开了 Godot 中设置 `seed` 会重置 `state` 的顺序陷阱。
+- **每个停留点的掷骰只由 `(rng_seed, stop_id)` 决定**：取 `(rng_seed + ":" + stop_id).sha256_buffer().decode_s64(0)` 作为该点专用种子（有符号 64 位，不经过 `hex_to_int()`，避免高位为 1 时溢出被截断；也不用引擎内部的 `String.hash()`，避免跨版本变化），再新建 `RandomNumberGenerator` 掷一次。这样结果与访问顺序无关；崩溃后换个顺序走，也得到同样的发现。同时不需要保存 `rng_state`，也避开了 Godot 中设置 `seed` 会重置 `state` 的顺序陷阱。
 - **`rng_seed` 以十进制字符串存储（允许负号）**：它是有符号 64 位整数，JSON 数字超过 2^53 会丢精度。
 - 每个停留点**第一次到达时**确定一次：按权重从 `find_pool` 选出 0 或 1 个发现（`empty_weight` 允许什么都没有），结果写进 `offers[stop_id]`，并要求宿主立即保存（§11 `persist`）。以后再来、重启恢复都读记录，不重掷，避免“刷新重掷”变成反复劳动。
 - “每点 0 或 1 个发现”、`carry_limit` 上限 3、每条路线最多 16 个停留点，都是**建议默认值**，需随产品选择的形式确认。
@@ -194,7 +194,7 @@ close() ──► idle（宿主保存 to_record()，可与下次任意保存合�
 | 路线仍在，但 `current_stop` 或部分 `visited` / `offers` 的停留点已被移除（`active`） | 从 `visited` / `offers` 中剔除失效点；`current_stop` 失效时回到 `start_stop`；已携带物保留，提交时由宿主按目录校验；然后按下一行继续处理 | 同下一行 |
 | `active`（路线与 `current_stop` 均有效） | `active`，停在 `current_stop` | **待产品选择**：A 继续旅程（回到该点）/ B 安全回院（`request_return(reason="restored")`，已带上的东西照常提交）。核心两种都支持 |
 | `pending_commit` / `recoverable_failure` | 原状态 | 自动重试提交（`retryable=false` 的失败则提示后 `settle_empty`） |
-| `committed`（但序号大于宿主已提交序号） | `pending_commit` | 说明宿主序号丢失或回退；重新提交同一提案（序号幂等，不会重复授予），不直接关闭以免吞掉所得 |
+| `committed`（但序号大于宿主已提交序号） | `pending_commit` | 说明宿主序号丢失或回退；重新提交同一提案，不直接关闭。此时序号已无法判断物品是否已授予，可能重复授予一次——这是有意的取舍：宁可多给一次，也不吞掉玩家所得 |
 
 推荐 B（安全回院并保留已带上的东西）作为默认候选：重启后回到熟悉的小院，不丢玩家选择，也不需要恢复院外场景状态。最终由产品决定，经 #146 汇总。
 
@@ -253,7 +253,7 @@ func to_record() -> Dictionary         # 纯值，可直接 JSON
 2. 非法转换全表：每个状态下发送每个不允许的事件，断言错误码且记录字节不变。
 3. 重复操作：连续 `request_return`；同一 `trip_id` 重复 `commit_succeeded`；宿主重复提交同一序号时不二次授予（用假宿主计数）。
 4. 提交失败：可重试失败 → 重试成功；`defer_to_yard` → 重启 → 自动重试；不可重试且部分物品被拒 → `revision` 递增、`trip_id` 不变；不可重试且无 `rejected` → `retry_commit` 被拒、`settle_empty` 收尾；全部物品被拒 → 空提案收尾；`rejected` 与提案无交集 → `invalid_rejection` 且记录不变；可重试失败下 `settle_empty` 被拒。断言任何失败序列后都存在到达 `committed` 的路径。
-5. 恢复：每个状态 `to_record` → JSON 字符串 → `restore` 往返一致；负数与超过 2^53 的 `rng_seed` 往返不变；以不同顺序访问停留点得到相同发现。
+5. 恢复：每个状态 `to_record` → JSON 字符串 → `restore` 往返一致；负数与超过 2^53 的 `rng_seed` 往返不变；以不同顺序访问停留点得到相同发现；哈希首字节 ≥ 0x80 的停留点得到与其他点不同的种子且无引擎错误输出。
 6. 坏数据：非字典、缺字段、类型错、超长数组、超 4 KB、非法 ID、前缀不一致、玩家档中的 fixture 会话、未来版本、异常 `next_trip_serial`（负数、小数、超大）；断言只重置旅程、不抛脚本错误。序号：记录缺失或损坏且 `last_committed_trip_serial = N` 时，下一趟序号必须是 N+1 且提交后真实授予（假宿主计数为 1）。
 7. 目录变更：路线删除、停留点删除（含 `current_stop`）、物品删除后的恢复与提交。
 8. 夹具闸门：正式入口 `begin` fixture 路线被拒；fixture 会话提交时物品全部被拒并以空提案收尾；正式目录加载不包含 `fixture.` ID。
