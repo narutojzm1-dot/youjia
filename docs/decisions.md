@@ -590,3 +590,12 @@ PR184通过独立最终SHA审核并合入，正式源码9af244cc327144fb916c108f
 **2026-10-04 EXP-CONTRACT 按独立审核补写入队义务（`CURSOR-CLOUD`）：** 独立 reviewer `CURSOR-CLOUD-REVIEW-PR-174` 审核 `8cc8705` 结论 APPROVE，另提一条 P2：第 0 步可丢弃请求，但契约未写明谁为新身份入队，宿主遗漏时会话会停在 `pending_commit`、要到重启才由 §8 兜底。契约 §7.1 新增“入队义务”：`request_return`、`retry_commit`、`settle_empty`、拒绝升版及 §8 三个提交类恢复动作后以当前身份入队，队列空闲而核心仍为 `pending_commit` 时兜底重新入队（覆盖“已落盘但回调丢失”）；§7 注明在途失败时被合并的请求随之结束、不自动重放；§7.2 注明提交事务以 `commit_succeeded` / `commit_failed` 为准；§10 第 9 项、§12 第 15 项同步。复审 `f5f637c` 为 APPROVE，随后按两条 P3 澄清入队时机措辞并注明 `invalid_rejection` 时停止兜底。仍不宣布冻结。
 
 **2026-10-04 EXP-CONTRACT 修订稿合入（`CURSOR-CLOUD` 记录）：** CODEX-LEAD 经独立 reviewer `CODEX-LEAD-REVIEW-PR-174-CURRENT` 审查精确 SHA `56eeedc` 后，将 [PR #174](https://github.com/narutojzm1-dot/youjia/pull/174) 作为**未冻结设计稿更新**合入；不批准 #176 草案或真实 Host 上线，ENGINEERING-SUPERVISOR 的共同冻结复核保留。CODEX-LEAD 在 [#150](https://github.com/narutojzm1-dot/youjia/issues/150#issuecomment-5971359016) 追加冻结验收：区分“宿主已确认但给核心的通知丢失”与“平台持久化结果本身未知”，后者不得仅凭超时判失败并放行后续写入，需定义在途身份、未知结果状态、重新核验与重启恢复。需求列表 EXP-CONTRACT / EXP-CORE 状态同步。
+
+
+### 2026-10-04 · REQ-015-WIRE-GATE 最终SHA后置复审已补齐（CODEX-LEAD-ASSISTANT）
+
+按[#180拆分登记](https://github.com/narutojzm1-dot/youjia/issues/180#issuecomment-5971338828)，独立子代理 `CODEX-LEAD-ASSISTANT-REVIEW-PR-173-FINAL` 审阅PR173最终完整SHA `0066cef9da621530d05d5ad8051be684512ce88c` 的完整三文件diff及关联接线，结论 **APPROVE（后置接线审查）**；[完整审查记录](https://github.com/narutojzm1-dot/youjia/pull/173#issuecomment-5971467561)。初轮head `4b550e8e50a628d70afd513fa0672343d6d1d8be` 与final是同父的兄弟提交，末次两树仅decisions一行不同；本轮不将旧head批准当作final批准，也不追认原始合入门禁。历史“完成/无foot抖动”声称缺乏组合画面证据，当前状态已由PR181纠正，本条不恢复这些声称。
+
+在明确构建 `f6a8b9a56ab17fb18f5d4432bc2cc269e3b82a81` 上，Godot4.7.2严格wrapper运行鹅马suite通过74项；额外只读探针通过5项，确认实际上下帧路径、最终照片up帧与磁盘重载。均为隔离存档的原生headless受控测试，不是原生GUI、Web实玩或自然触发验收。公网清单及PCK重新下载确认 `game-9af244c` / source `9af244cc327144fb916c108f2b7527c9af0fe866`，PCK19,183,584bytes，SHA256 `ebca0b3671b5ad4e57b48ec1963312932dabcca7f68b53ae7160cb3f013297da`；仅证明部署版本与包，未宣称组合验收。详细操作、测试探针纠正记录、发布Actions与证据边界见[#180记录](https://github.com/narutojzm1-dot/youjia/issues/180#issuecomment-5971468272)。这些是上一轮实测记录，本次文档同步未重跑或冒称测试了后续main。
+
+#180只勾选最终完整SHA后置复审项并保持开放；WORKBUDDY-CONTRIBUTOR仍负责远近位置、马双朝向、鹅上下帧、低动效、打断/退出与照片保存→重启相册的同构建Web证据，受控/自然触发分列；ART-DIRECTOR组合审画，GAME-QA独立复测，CODEX-LEAD最终保底。不因未复现穿模猜改挂点/景深，不接管实现Owner。本次仅同步需求状态与台账，无运行时、资源、存档或发布配置改动，不新增发布或重复日版本邮件。
