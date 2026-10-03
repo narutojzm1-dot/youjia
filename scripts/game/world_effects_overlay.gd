@@ -103,6 +103,39 @@ func bird_feedback_snapshot() -> Dictionary:
 	}
 
 
+
+
+# Low motion keeps the orange target and the catch rings readable without a pulse or flying specks.
+static func celebration_pose(kind: String, t: float, reduced_motion: bool) -> Dictionary:
+	if kind == "target":
+		var radius := 18.0 if reduced_motion else 18.0 + 2.5 * absf(sin(t * 2.4))
+		return {"glow_radius": radius}
+	var progress := clampf(t, 0.0, 1.0)
+	if reduced_motion:
+		return {
+			"outer_radius": 64.0,
+			"outer_alpha": 0.78,
+			"mid_radius": 42.0,
+			"mid_alpha": 0.62,
+			"inner_radius": 24.0,
+			"inner_alpha": 0.70,
+			"core_radius": 8.0,
+			"particle_count": 0,
+			"show_banner": true,
+		}
+	return {
+		"outer_radius": lerpf(16.0, 110.0, progress),
+		"outer_alpha": (1.0 - progress) * 0.95,
+		"mid_radius": lerpf(10.0, 72.0, minf(progress * 1.25, 1.0)),
+		"mid_alpha": maxf(0.0, 1.0 - progress * 1.25),
+		"inner_radius": lerpf(6.0, 44.0, minf(progress * 1.7, 1.0)),
+		"inner_alpha": maxf(0.0, 1.0 - progress * 1.7),
+		"core_radius": 14.0 * maxf(0.0, 1.0 - progress * 2.2),
+		"particle_count": 12 if progress < 0.7 else 0,
+		"show_banner": progress < 0.55,
+	}
+
+
 func _draw() -> void:
 	_draw_pet_arc()
 	_draw_fish_rings()
@@ -147,7 +180,7 @@ func _draw_pet_arc() -> void:
 	# 冠顶中心：脚底向上 lift，再上移一点让弧离开耳朵
 	var crown := feet + Vector2(0.0, -(lift + 18.0))
 	# ── 脚底柔光（次要线索，不抢头顶主信号）
-	var gr := 18.0 + 2.5 * absf(sin(pet_day_t * 2.4))
+	var gr := float(celebration_pose("target", pet_day_t, bool(TuningStore.get_value("ui.reduced_motion", false))).glow_radius)
 	draw_circle(feet, gr, Color(0.95, 0.68, 0.32, pet_alpha * 0.22))
 	draw_arc(feet, 16.0, 0.0, TAU, 24, Color(1.0, 0.55, 0.08, pet_alpha * 0.55), 2.2, true)
 	# ── 头顶主弧（半径更大，明确“在动物上方”）
@@ -171,39 +204,37 @@ func _draw_fish_rings() -> void:
 	var fp := fish_ring_pos
 	const TOTAL := 3.2
 	var t := 1.0 - clampf(fish_ring_time / TOTAL, 0.0, 1.0)
+	var reduced := bool(TuningStore.get_value("ui.reduced_motion", false))
+	var pose := celebration_pose("catch", t, reduced)
 	var mc: Color
 	match fish_ring_type:
 		"medium": mc = Color(0.28, 0.58, 0.95)
 		"odd":    mc = Color(0.55, 0.40, 0.92)
 		_:        mc = Color(0.35, 0.78, 0.95)
-	# ── 金色最外圈
-	draw_arc(fp, lerpf(16.0, 110.0, t), 0.0, TAU, 56,
-		Color(1.0, 0.86, 0.35, (1.0 - t) * 0.95), 6.0, true)
-	# ── 主色外圈 + 填充
-	var ro := lerpf(10.0, 72.0, minf(t * 1.25, 1.0))
-	var ao := maxf(0.0, 1.0 - t * 1.25) * 1.0
+	var outer_a := float(pose.outer_alpha)
+	draw_arc(fp, float(pose.outer_radius), 0.0, TAU, 56,
+		Color(1.0, 0.86, 0.35, outer_a), 6.0, true)
+	var ro := float(pose.mid_radius)
+	var ao := float(pose.mid_alpha)
 	draw_circle(fp, ro, Color(mc.r, mc.g, mc.b, ao * 0.28))
 	draw_arc(fp, ro, 0.0, TAU, 40, Color(mc.r, mc.g + 0.10, mc.b + 0.08, ao), 5.0, true)
-	# ── 白内圈
-	var ri := lerpf(6.0, 44.0, minf(t * 1.7, 1.0))
-	var ai := maxf(0.0, 1.0 - t * 1.7)
+	var ri := float(pose.inner_radius)
+	var ai := float(pose.inner_alpha)
 	draw_arc(fp, ri, 0.0, TAU, 32, Color(0.85, 0.98, 1.0, ai), 4.0, true)
-	# ── 中心亮核
-	var cr := 14.0 * maxf(0.0, 1.0 - t * 2.2)
+	var cr := float(pose.core_radius)
 	if cr > 0.5:
 		draw_circle(fp, cr * 1.6, Color(1.0, 0.90, 0.45, ai * 0.90))
 		draw_circle(fp, cr, Color(1.0, 1.0, 1.0, ai * 1.25))
-	# ── 12 方向粒子（前 0.7s）
-	if t < 0.7:
+	var specks := int(pose.particle_count)
+	if specks > 0:
 		var pt2 := t / 0.7
 		var pa := (1.0 - pt2) * 0.95
-		for i: int in 12:
-			var angle := float(i) * TAU / 12.0
+		for i: int in specks:
+			var angle := float(i) * TAU / float(specks)
 			var px := fp + Vector2(cos(angle), sin(angle) * 0.55) * lerpf(10.0, 64.0, pt2)
 			draw_circle(px, lerpf(6.0, 1.5, pt2), Color(mc.r, mc.g + 0.18, 1.0, pa))
-	# ── 短时大字提示环心上方（前 1.2s），不依赖 HUD 通知也能看见“钓到了”
-	if t < 0.55:
-		var banner_a := (1.0 - t / 0.55) * 0.95
+	if bool(pose.show_banner):
+		var banner_a := 0.95 if reduced else (1.0 - t / 0.55) * 0.95
 		var bp := fp + Vector2(0.0, -48.0)
 		draw_circle(bp, 22.0, Color(0.12, 0.22, 0.38, banner_a * 0.55))
 		draw_arc(bp, 22.0, 0.0, TAU, 28, Color(1.0, 0.92, 0.55, banner_a), 3.0, true)
