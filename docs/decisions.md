@@ -41,6 +41,7 @@
 | DOC-20261002-009 | 2026-10-02 | 根据现有动物行为/存档结构深化 REQ-011 架构；记录关系演出资源缺口 | 架构设计中 | 代码核查确认 `FeltActor` 没有社交行为状态、`ExpressionCatalog` 属于表情/相册规则，SaveStore 当前为 v4 且未持久化动物关系；不复用相册触发器建设行为系统。具体边界与分片见[关系模型架构文档](architecture/animal-relationship-model.md)；可能缺少的马互动姿态由 [issue #56](https://github.com/narutojzm1-dot/youjia/issues/56) 先提案，不预先承诺批量制作。 |
 | DOC-20261002-010 | 2026-10-02 | 审核 REQ-011 首批关系演出所需的现有画作与资源缺口 | 提案待产品确认 | 现有鹅已有警觉、安静站立和伏卧整图；草泥马有中性/表情变体；马只有低头站姿，无法清楚表达对峙后的让步。建议首切片复用鹅/草泥马姿态，只在用户确认后新增一张马侧身让步画；资源规格、锚点、来源和 Web 包体验收见[提案](architecture/relationship-art-proposal.md)。 |
 | DOC-20261003-001 | 2026-10-03 | 制作人可见切片用截图或短视频验收；未点头不阻塞下一刀 | 已采纳 | 用户 2026-10-03：需要体验的项直接给截图/视频；未验收时其它工作继续。各待验收项记入本文件「待制作人验收」表，供 `CODEX-LEAD` 向制作人汇总。Owner 负责补证据，不代替制作人点头。 |
+| REQ-20261002-015-WIRE | 2026-10-03 | 把 PR #99 两帧乘骑画接进 REQ-014 `show_goose_encounter_cel` 导演接线 | 已合入发布（issue #64 可关闭） | `WORKBUDDY-CONTRIBUTOR`（用户 2026-10-03 授权越过切片边界）[PR #173](https://github.com/narutojzm1-dot/youjia/pull/173) 将 `yard_world.gd` 鹅马乘骑演出的 `show_goose_encounter_cel` 帧交替由占位 `idle`/`calm` 改为 `riding_up`/`riding_down`，沿用既有 0.28s 扑翼时钟（`_goose_mount_flap_clock`）与低动效定帧；`cast_art.gd` 已注册两帧、`FeltActor.show_goose_encounter_cel` 直接取用；脚底锚点经 PR #99 对齐，交替无 foot 抖动。head `4b550e8e50a628d70afd513fa0672343d6d1d8be`（独立子代理终轮 APPROVE）。 |
 
 之后出现的需求继续追加新编号；完成或调整时保留此表和历史记录，不删除旧项。
 
