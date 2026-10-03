@@ -138,6 +138,35 @@ static func celebration_pose(kind: String, t: float, reduced_motion: bool) -> Di
 	}
 
 
+
+# REQ-022: one-shot pet/plant/bird cues stay readable under low motion — no mid-cue fade or float.
+static func object_feedback_pose(kind: String, progress: float, remaining: float, reduced_motion: bool) -> Dictionary:
+	progress = clampf(progress, 0.0, 1.0)
+	if kind == "bird":
+		if reduced_motion:
+			return {
+				"rise": 0.0,
+				"ring_radius": 18.0,
+				"ring_alpha": 0.55,
+				"heart_alpha": 0.92,
+			}
+		var alpha := clampf(remaining / 0.45, 0.0, 1.0)
+		return {
+			"rise": 20.0 * progress,
+			"ring_radius": lerpf(13.0, 30.0, progress),
+			"ring_alpha": alpha * maxf(0.0, 1.0 - progress * 1.3) * 0.68,
+			"heart_alpha": alpha,
+		}
+	# pet heart / plant water splash share duration and fade timing.
+	if reduced_motion:
+		return {"rise": 0.0, "opacity": 1.0}
+	var rise_cap := 10.0 if kind == "pet" else 5.0
+	return {
+		"rise": rise_cap * progress,
+		"opacity": clampf(remaining / 0.38, 0.0, 1.0),
+	}
+
+
 func _draw() -> void:
 	_draw_pet_arc()
 	_draw_fish_rings()
@@ -153,12 +182,11 @@ func _draw_pet_feedback() -> void:
 	var animal := _pet_feedback_actor.get_ref() as FeltActor
 	var progress := 1.0 - _pet_feedback_time / OBJECT_FEEDBACK_DURATION
 	var reduced := bool(feedback.reduced_motion)
-	var rise := 0.0 if reduced else 10.0 * progress
-	var opacity := clampf(_pet_feedback_time / 0.38, 0.0, 1.0)
-	var crown := animal.position + Vector2(0.0, -animal.marker_crown_lift() - 25.0 - rise)
-	# A full painted cel, not a polygonal UI heart; subtle fade only.
+	var pose := object_feedback_pose("pet", progress, _pet_feedback_time, reduced)
+	var crown := animal.position + Vector2(0.0, -animal.marker_crown_lift() - 25.0 - float(pose.rise))
+	# A full painted cel, not a polygonal UI heart; low motion holds opacity steady.
 	draw_texture_rect(PET_CEL, Rect2(crown - Vector2(24.0, 24.0), Vector2(48.0, 48.0)),
-		false, Color(1.0, 1.0, 1.0, opacity))
+		false, Color(1.0, 1.0, 1.0, float(pose.opacity)))
 
 
 func _draw_plant_water_feedback() -> void:
@@ -166,11 +194,11 @@ func _draw_plant_water_feedback() -> void:
 	if feedback.is_empty():
 		return
 	var progress := 1.0 - _plant_feedback_time / OBJECT_FEEDBACK_DURATION
-	var rise := 0.0 if bool(feedback.reduced_motion) else 5.0 * progress
-	var opacity := clampf(_plant_feedback_time / 0.38, 0.0, 1.0)
-	var top_left := _plant_feedback_pos + Vector2(-30.0, -54.0 - rise)
+	var reduced := bool(feedback.reduced_motion)
+	var pose := object_feedback_pose("plant", progress, _plant_feedback_time, reduced)
+	var top_left := _plant_feedback_pos + Vector2(-30.0, -54.0 - float(pose.rise))
 	draw_texture_rect(WATER_CEL, Rect2(top_left, Vector2(60.0, 60.0)),
-		false, Color(1.0, 1.0, 1.0, opacity))
+		false, Color(1.0, 1.0, 1.0, float(pose.opacity)))
 
 
 ## 宠物目标：脚底柔光 + 明确画在头顶上方的半圆弧与向下箭头
@@ -257,15 +285,14 @@ func _draw_bird_feedback() -> void:
 	var bird := _bird_feedback_actor.get_ref() as FeltActor
 	var elapsed := 1.0 - _bird_feedback_time / BIRD_FEEDBACK_DURATION
 	var reduced := bool(feedback.reduced_motion)
-	var rise := 0.0 if reduced else 20.0 * elapsed
-	var alpha := clampf(_bird_feedback_time / 0.45, 0.0, 1.0)
-	var ring_radius := 18.0 if reduced else lerpf(13.0, 30.0, elapsed)
-	var ring_alpha := alpha * maxf(0.0, 1.0 - elapsed * 1.3) * 0.68
-	draw_arc(bird.position, ring_radius, 0.0, TAU, 32, Color(0.95, 0.51, 0.57, ring_alpha), 2.2, true)
+	var pose := object_feedback_pose("bird", elapsed, _bird_feedback_time, reduced)
+	draw_arc(bird.position, float(pose.ring_radius), 0.0, TAU, 32,
+		Color(0.95, 0.51, 0.57, float(pose.ring_alpha)), 2.2, true)
 	# Anchor near the live bird's crown; the bubbles follow a wandering duck.
-	var origin := bird.position + Vector2(8.0, -minf(bird.marker_crown_lift(), 68.0) - 8.0 - rise)
-	_draw_heart(origin + Vector2(-8.0, 0.0), 18.0, alpha)
-	_draw_heart(origin + Vector2(18.0, -14.0), 9.0, alpha * 0.78)
+	var origin := bird.position + Vector2(8.0, -minf(bird.marker_crown_lift(), 68.0) - 8.0 - float(pose.rise))
+	var heart_a := float(pose.heart_alpha)
+	_draw_heart(origin + Vector2(-8.0, 0.0), 18.0, heart_a)
+	_draw_heart(origin + Vector2(18.0, -14.0), 9.0, heart_a * 0.78)
 
 
 func _draw_heart(center: Vector2, radius: float, alpha: float) -> void:

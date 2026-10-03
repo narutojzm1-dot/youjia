@@ -454,6 +454,17 @@ CODEX-LEAD本轮优先处理#130第1项：现有daily run_godot在set +e后忽�
 
 PR134最终727f76461e0d2441314e84096cefefc3f65b8882由独立CODEX-LEAD-REVIEW-PR-134批准，合入2b0210aeb0b6403ea67bdd4c9b97c9f4f3c75766。主线Actions37122153076严格回归/Web导出/提交成功，Pages37122339033成功；公开与gh-pages清单一致，PCK实际16875440字节、SHA256 d5a2a7ff91cd4bbdaf8b59a1b776dd19aa4bfdc7a0940ae939490f02ac930f81，公开和raw逐字节一致。Chromium首帧/开始进入院子成功，data-build=game-2b0210a，控制台及pageerror均为空。完成仅#130退出状态门禁和六套成功退出修复；套件完成协议、PR验证workflow、存档恢复/旧照兼容继续未完成，issue不关闭。资源PR99/133保持原Owner，#51/#125/#126既有分工不变。[完整证据](playtests/2026-10-03-verify-exit-gate.md)。
 
+
+### 2026-10-03 · REQ022 最终集成与严格验收
+
+上一轮VERIFY-EXIT-GATE已合入发布并回写。最新main376cae1开放PR99/136/137/138/139/140；本轮只接PR136作者明确留出的CODEX集成范围，保留GROK原3bfb74abfdf820232294a8304df5334ea53bb9db提交，独立分支不改贡献者分支。ASSISTANT已结束的复现确认新suite成功quit(0)后落到quit(1)，标准daily未挂套件；本轮补return和标准挂载，严格完整回归及真实绘制/Web核验后再审最终SHA。
+
+REQ022只让既有抚摸/浇水/投鱼反馈在低动效窗口内静止可读，到期消失；普通模式与成功判定、存档、动物关系保持原样。不把反馈心称为动物表情，不宣称默认爱心问题已解决。PR137牛抬眼接入另由GROK-BUILD交付，其关于MANUS额度不足的用户交接记载仍需按最终共享记录核对；PR140早晨云仅CURSOR范围，不能冒充晴阴同构图问题完成。PR99原Owner候选已更新仍待最终门禁；身份PR138/139独立审核待办。工程#130存档恢复、#125/126空间与资源规划仍保留，本轮不并入。
+
 ### 2026-10-03 · REQ-015 成品画切片：两帧乘骑扑翼交付（`WORKBUDDY-CONTRIBUTOR`）
 
 产品确认乘骑扑翼用**两张交替**而非一张（0.28s 交替的扑翼节奏需要上下两个翼位），原「确认前不要开工绘制」的门禁据此解除。`WORKBUDDY-CONTRIBUTOR` 只认领成品画切片：交付 `goose_riding_up` / `goose_riding_down` 两张独立全身绘画（非站立鹅缩放、非张翅画变形），均为 1254×1254 RGBA、真实 alpha、画布四边无 alpha>16 像素。两帧脚底锚点经整数平移对齐后残余 0.48px 亚像素差（换帧不可见）；运行时键为 `riding_up` / `riding_down`，由 `cast_art.gd` 注册纹理与 `posture_metadata`，`native_facing=1` 与 `cast_v2` 现有鹅族一致（运行时朝向翻转仍由 `scale.x` 负责）。两帧体积分别为 1029972 / 853295 字节，均低于 `goose.png` 的 1,212,584 字节上限。规格切片仍归 `GROK-BUILD`，导演接线仍归 REQ-014 / `CODEX-LEAD`；本切片不改 `yard_world.gd`、`FeltActor`，也不覆盖其他代理已认领的文件范围。
+
+本轮验证期间主线合入PR99资源和PR140早晨云，已手工保留WORKBUDDY交付台账及CURSOR云带/测试/策划更新，同步最新693b311abcb7b0e76e2acd8a2aea4943e35b630d后重新完整严格回归/Web核验；旧376cae1基础的通过结果不当作最终集成通过。REQ015资源注册不表示导演已采用新画。
+
+主线随后合入PR137牛回应与PR138制作人身份（4bb12b2），已保留牛glance注册/状态、成功抚摸接线、原作者测试与角色登记；daily冲突手工同时保留still_object_feedback和cow_glance。再次严格全量及最终Web核验，未拿旧基线测试替代新运行时。#30已有GROK-BUILD交接记录，历史MANUS已发布归属不改。
