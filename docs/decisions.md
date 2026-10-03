@@ -24,7 +24,7 @@
 | REQ-20261002-009 | 2026-10-02 | 让院子里的可见地点成为可选互动和彩蛋 | 进行中 | 花箱、岸石和栅栏三处已发布至 `game-df8b92d`（[PR #38](https://github.com/narutojzm1-dot/youjia/pull/38)、[#39](https://github.com/narutojzm1-dot/youjia/pull/39)、[#41](https://github.com/narutojzm1-dot/youjia/pull/41)）；更多热点与可变背景仍待实现。 |
 | REQ-20261002-010 | 2026-10-02 | 让旅人随手拍有清晰的成片、题词和收入相册反馈 | 已发布；用户认可显影效果 | [PR #43](https://github.com/narutojzm1-dot/youjia/pull/43) 已发布为正式 `game-e2d12b7`；Pages 公网 PCK 哈希已核实；用户试玩后提出真实抓拍、稳定题词与翻页手账的下一切片 REQ-013。 |
 | REQ-20261002-011 | 2026-10-02 | 让玩家互动在之后留下轻微、可感知的世界回响与后续故事 | 已发布；Pages 清单/PCK 已核对 | 制作人于 2026-10-03 确认“玩家牵引羊驼靠近大鹅、双方安静共处后留下记忆”。首个切片通过羊驼自身进入共享范围后才记来源；只存稀疏记忆与低概率行为回响，不涉关系数值、任务、缺席惩罚、相机/相册。独立 reviewer `CODEX-LEAD-REVIEW-PR-71` 批准精确 SHA `219ed34d5299aeaa0e8eff53ec2f6e7f7683d045`；PR #71 合并提交 `6dacd879ea0a2bac724ecfd548779e5d40c44308`。见 [PR #71](https://github.com/narutojzm1-dot/youjia/pull/71)、[issue #45](https://github.com/narutojzm1-dot/youjia/issues/45)与[关系模型](architecture/animal-relationship-model.md)。
-| REQ-20261002-012 | 2026-10-02 | 让熟悉的小院因时段天空与玩家取景持续有新发现 | 进行中（切片 C） | Owner CURSOR-CONTRIBUTOR-LOCAL。A 云带已上线；B 树叶见 REQ-012-STAY / PR #85；本切片做无道具抬头微推；D 延后。见 [familiar-yard-observation.md](architecture/familiar-yard-observation.md)。 |
+| REQ-20261002-012 | 2026-10-02 | 让熟悉的小院因时段天空与玩家取景持续有新发现 | 进行中（切片 C 已发布；D 延后） | Owner CURSOR-CONTRIBUTOR-LOCAL。A 云带已上线；B 树叶见 REQ-012-STAY / PR #85；C 无道具抬头微推已发布 `game-6a20cdc`（Actions 37100630995）；D 延后。见 [familiar-yard-observation.md](architecture/familiar-yard-observation.md)、[体验](playtests/2026-10-03-REQ-012-quiet-sky-look.md)。 |
 | REQ-20261002-013 | 2026-10-02 | 加入真实动物抓拍、稳定在照片内的有限题词和可翻页旅人手账 | 已发布；用户正式版试玩待反馈 | [PR #53](https://github.com/narutojzm1-dot/youjia/pull/53) 经独立审查后合并至 `b560dec94f08a1597e2b834e74c41841893ba36b`；[Actions 37025345857](https://github.com/narutojzm1-dot/youjia/actions/runs/37025345857) 与 Pages 发布成功。公开 PCK SHA-256 `e5b9c3f931b957ac4dd288e1c6786f6b9fc1d9ace946eac711e3bed723ac3d58` 已核验；详见[体验记录](playtests/2026-10-02-REQ-013-scrapbook.md)。不编造动作或旧照日期、不显示进度催促；与 REQ-012 自由构图及 REQ-011 关系回响独立。 |
 | REQ-012-STAY | 2026-10-03 | 站在栅栏边时重播已有草叶画 | 进行中 | `GROK-BUILD`。父 REQ-012 仍属 CURSOR。不催促、不改云带、不记相册。 |
 | REQ-20261002-015 | 2026-10-03 | 为大鹅骑马抓拍补完整乘骑扑翼姿态的规格 | 进行中（仅规格） | `GROK-BUILD` 认领 issue #64 的分镜，不制作最终画，不改 PR #65/#72。见 [goose-mount-pose-spec.md](architecture/goose-mount-pose-spec.md)。 |
@@ -50,6 +50,7 @@
 - **2026-10-02（续）：** 首切片已发布 game-165c7d4 / PR #52。第二切片压缩 _update_season_tint：仲夏末约第 5–6 日、金秋约第 7 日起；不做新美术资源。
 
 - **2026-10-03：** 用户一次性确认：批准叠加云带 B；水彩笔触；缓移 + 低动效静止；暂缓雨雪。CURSOR-CONTRIBUTOR-LOCAL 实现晴/阴各一帧云带并接入 `YardWorld`。
+- **2026-10-03（晴天云带修正）：** 用户试玩反馈晴天叠加云发灰、像脏斑，阴天尚可。重烘焙晴天云带为暖白薄纱（预乘 alpha 模糊，避免透明黑染灰），运行时晴天云带单独提亮 modulate，不再跟院子暖滤色一起变脏；阴天帧不动。
 
 ### 2026-10-02 · REQ-009 第三处热点发布与台账恢复
 
@@ -102,6 +103,7 @@
 - **2026-10-03：** 用户确认切片顺序 A→B→C/D；C 先无道具微推；D 本周延后；Codex 继续负责鹅马摄影与关系记忆。切片 A 与 REQ-005 云带 B 一并开工。
 
 - **2026-10-03（续）：** 切片 A 随云带 `game-31316aa` 上线；切片 B 树叶由 `GROK-BUILD` PR #85 合入。父 Owner 推进切片 C：安静停留后轻微抬头镜头（无道具、可打断、不写相册）。
+- **2026-10-03（切片 C 发布）：** PR #88 功能合入后，#89/#92/#94 稳住 `quiet_sky_look` 测试（含 GDScript 闭包 int 计数修复）。合并 `6a20cdc155d60c5c3259fde7ee0c27543c077ec9`；Actions [37100630995](https://github.com/narutojzm1-dot/youjia/actions/runs/37100630995) 验证并发布 `game-6a20cdc`；公网 PCK 13,744,764 字节，SHA-256 `66846e6003c73a720c324e0e31158566f77bd99db8d3461dff5face863556a2a`。用户浏览器实玩待反馈；切片 D 仍延后。
 
 ### 状态历史 · REQ-20261002-001
 
@@ -366,3 +368,10 @@ PR #65 从现有分支整合 PR #72 验证修复，保留当时 main 上的关�
 - 活动需求表没有无主的「待认领」行。用户让 `GROK-CONTRIBUTOR` 自己选一块不与已认领工作重叠的切片。
 - 花圃嫩芽倾斜、开花摇曳和脉冲圈、收获花瓣飞散、水面三圈涟漪、咬钩浮标快闪都写在 `YardPropVisual`，且不读低动效开关。云带、抚摸爱心和场景彩蛋已经会停。这里补上同一约定。
 - 低动效仍能看出嫩芽、花、水面和「正在咬钩」（红色浮标加一圈稳定光晕）。不缩短钓鱼等待，不把空钩改成失败。不改 `YardWorld`、本地化、鹅马演出或云带文件。
+
+
+### 2026-10-03 · REQ-017-VERIFY 低动效快照兼容与集成
+
+PR #93 原最终 SHA `ac0049e45db0d8940b760ac69c2233ae10b4cd87` 经独立审查 REQUEST CHANGES：道具直接读取全局设置，切换低动效会改写历史照片外观；同一引用也导致独立脚本测试编译失败。Assistant 在 PR 评论登记验证子切片，由独立分支保留原贡献提交并同步最新 main；不强推 GROK 分支。
+
+世界刷新时传入当前 `reduced_motion` 布尔值，照片按拍摄时保存的状态绘制；缺少该字段的旧照沿用原普通动效相位，非法非布尔值拒绝。不提升快照格式版本，不改变钓鱼时间或行为。增加真实拍摄/JSON/回放与旧照兼容断言、独立实际像素验证工具。原生 20 项真渲染及交互照片 90 项通过；Web 与全量验证证据见 [验收记录](playtests/2026-10-03-REQ-017-integration.md)。原 PR 的 Owner 与贡献归属不变。

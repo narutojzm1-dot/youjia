@@ -30,7 +30,8 @@ static func pose_motion(kind: String, phase: float, reduced_motion: bool) -> Dic
 	}
 
 func _reduced() -> bool:
-	return bool(TuningStore.get_value("ui.reduced_motion", false))
+	# Photos render their captured pose, independent of later live preferences.
+	return bool(state.get("reduced_motion", false))
 
 func configure(next_subject: String, next_state: Dictionary) -> void:
 	subject = next_subject
@@ -42,7 +43,10 @@ static func sanitize_state(kind: String, raw: Variant) -> Dictionary:
 		return {}
 	if not raw.get("nearby") is bool or not _number(raw.get("phase"), 0.0, TAU * 10.0):
 		return {}
-	var result := {"nearby": raw.nearby, "phase": float(raw.phase)}
+	if raw.has("reduced_motion") and not raw.reduced_motion is bool:
+		return {}
+	# Legacy snapshots used the ordinary authored phase; preserve that pose.
+	var result := {"nearby": raw.nearby, "phase": float(raw.phase), "reduced_motion": raw.get("reduced_motion", false)}
 	if kind == "plant":
 		if not _integer(raw.get("plant_state"), 0, 3) or not _number(raw.get("soil_reveal"), 0, 1) or not _number(raw.get("harvest_flash"), 0, 1.8):
 			return {}

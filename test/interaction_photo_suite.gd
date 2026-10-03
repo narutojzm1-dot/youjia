@@ -219,7 +219,47 @@ func run():
  var live_bite_b := YardPropVisual.pose_motion("fishing", 0.3, false)
  check(int(still_fish.ripple_count) == 1 and is_equal_approx(float(still_fish.bite_alpha), 0.42), "reduced motion keeps one still ripple and a steady bite halo")
  check(int(live_bite_a.ripple_count) == 3 and not is_equal_approx(float(live_bite_a.bite_alpha), float(live_bite_b.bite_alpha)), "ordinary water and bite halo keep moving")
+ test_motion_snapshots(world)
  album.free();world.free()
  root.get_node("AudioDirector").call("release_streams")
  print("[interaction-photo-tests] %d checks, failures=%s" % [checks, failures])
  quit(0 if failures.is_empty() else 1)
+
+func test_motion_snapshots(world) -> void:
+ var tuning := root.get_node("TuningStore")
+ var moment_script = load("res://scripts/ui/photo_moment.gd")
+ world._plant_state = world.PLANT_BLOOMED
+ world._fish_state = world.FISH_BITE
+ world._day_seconds = 1.4
+ for reduced: bool in [false, true]:
+  tuning.set_value("ui.reduced_motion", reduced, false)
+  world._refresh_prop_visuals()
+  check(world._plant_visual._reduced() == reduced and world._fishing_visual._reduced() == reduced, "live prop state follows current preference")
+  var captured: Dictionary = moment_script.capture(world, ExpressionCatalog.find_rule("plant_first_bloom"))
+  var saved: Dictionary = moment_script.sanitize(JSON.parse_string(JSON.stringify(captured)))
+  check(prop(saved, "plant").get("state", {}).get("reduced_motion") == reduced and prop(saved, "fishing").get("state", {}).get("reduced_motion") == reduced, "actual photo retains both captured prop preferences across JSON")
+  tuning.set_value("ui.reduced_motion", not reduced, false)
+  world._refresh_prop_visuals()
+  var card = moment_script.new()
+  root.add_child(card)
+  card.setup(saved)
+  var found := 0
+  for node in card._stage.get_children():
+   if node is YardPropVisual:
+    found += 1
+    check(node._reduced() == reduced and is_equal_approx(float(node.state.phase), 1.4), "reopened real photo ignores later settings and preserves phase")
+  check(found == 2, "photo reconstructs both static props")
+  card.free()
+  var legacy: Dictionary = saved.duplicate(true)
+  for item: Dictionary in legacy.items:
+   if item.kind == "prop": item.state.erase("reduced_motion")
+  tuning.set_value("ui.reduced_motion", true, false)
+  card = moment_script.new()
+  root.add_child(card)
+  card.setup(moment_script.sanitize(legacy))
+  for node in card._stage.get_children():
+   if node is YardPropVisual: check(not node._reduced(), "legacy prop photo retains its original ordinary pose")
+  card.free()
+ var malformed := {"nearby": true, "phase": 1.4, "plant_state": 3, "soil_reveal": 1.0, "harvest_flash": 0.0, "reduced_motion": "yes"}
+ check(YardPropVisual.sanitize_state("plant", malformed).is_empty(), "invalid captured preference is rejected")
+ tuning.set_value("ui.reduced_motion", false, false)

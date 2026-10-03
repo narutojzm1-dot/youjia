@@ -373,6 +373,9 @@ func tick(delta: float, move: Vector2) -> void:
 	if input_enabled:
 		if move.length() > 0.2:
 			_scene_feedback.cancel()
+			# 走动意图出现时立刻放下抬头镜头，避免只依赖后置 quiet-sky tick。
+			if _quiet_sky_active:
+				_cancel_quiet_sky_look()
 			_rejected_seconds = 0.0
 			notice_dismiss_requested.emit("notice.cannot_walk")
 			_has_walk_goal = false
@@ -1275,10 +1278,14 @@ func _apply_weather_art() -> void:
 		_backdrop.modulate = Color(0.92, 0.90, 0.96).lerp(Color.WHITE, 1.0 - intensity)
 	else:
 		_backdrop.modulate = Color(1.0, 0.97, 0.90).lerp(Color.WHITE, 1.0 - intensity)
-	# 云带跟随院子滤色，避免晴阴切换时出现硬贴矩形。
+	# 阴天云带跟院子滤色；晴天云带单独提亮，避免暖滤色把薄云染成脏斑。
 	for band: Sprite2D in [_cloud_band_a, _cloud_band_b]:
-		if band != null:
+		if band == null:
+			continue
+		if weather == "overcast":
 			band.modulate = _backdrop.modulate
+		else:
+			band.modulate = Color(1.08, 1.05, 1.02).lerp(Color.WHITE, 1.0 - intensity * 0.4)
 	if _scene_feedback != null: _scene_feedback.modulate = _backdrop.modulate
 
 
@@ -1785,11 +1792,12 @@ func _refresh_prop_visuals() -> void:
 	var plant_distance := _player.position.distance_to(_plant_point()) if _player != null else 300.0
 	var reveal := clampf(1.0 - (plant_distance - 80.0) / 120.0, 0.0, 1.0)
 	var phase := fmod(_day_seconds, TAU * 10.0)
+	var reduced := bool(TuningStore.get_value("ui.reduced_motion", false))
 	_plant_visual.configure("plant", {"plant_state": _plant_state, "phase": phase, "soil_reveal": reveal * reveal,
-		"nearby": plant_distance < 80.0, "harvest_flash": maxf(0.0, _plant_harvest_flash)})
+		"nearby": plant_distance < 80.0, "harvest_flash": maxf(0.0, _plant_harvest_flash), "reduced_motion": reduced})
 	var fishing_distance := _player.position.distance_to(_fishing_point()) if _player != null else 300.0
 	_fishing_visual.configure("fishing", {"fish_state": FISH_CAUGHT if _fish_catch_flash > 0.0 and _fish_state == FISH_IDLE else _fish_state,
-		"phase": phase, "nearby": fishing_distance < 100.0, "fish_type": _fish_catch_type})
+		"phase": phase, "nearby": fishing_distance < 100.0, "fish_type": _fish_catch_type, "reduced_motion": reduced})
 
 
 func _draw() -> void:
