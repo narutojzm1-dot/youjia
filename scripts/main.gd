@@ -97,6 +97,10 @@ var _photo_arrival: PhotoArrival
 var _photo_arrival_queue: Array[Dictionary] = []
 ## 钓到鱼时的蓝色庆祝闪光（独立于拍立得闪光，更冷更蓝）
 var _fish_flash: ColorRect
+var _cinematic_layer: CanvasLayer
+var _cinematic_shade: ColorRect
+var _cinematic_top_bar: ColorRect
+var _cinematic_bottom_bar: ColorRect
 ## 空闲引导提示计时器：玩家无操作一定时间后轮播软提示
 var _idle_hint_timer := 0.0
 ## 下一条软提示的索引（轮询 IDLE_HINTS 数组）
@@ -142,6 +146,27 @@ func _ready() -> void:
 	_fish_flash.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_fish_flash.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	_ui_layer.add_child(_fish_flash)
+	_cinematic_layer = CanvasLayer.new()
+	_cinematic_layer.layer = 9
+	add_child(_cinematic_layer)
+	_cinematic_shade = ColorRect.new()
+	_cinematic_shade.color = Color(0.035, 0.045, 0.055, 0.0)
+	_cinematic_shade.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_cinematic_shade.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	_cinematic_layer.add_child(_cinematic_shade)
+	_cinematic_top_bar = ColorRect.new()
+	_cinematic_top_bar.color = Color(0.025, 0.025, 0.025, 0.0)
+	_cinematic_top_bar.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_cinematic_top_bar.anchor_right = 1.0
+	_cinematic_top_bar.offset_bottom = 0.0
+	_cinematic_layer.add_child(_cinematic_top_bar)
+	_cinematic_bottom_bar = ColorRect.new()
+	_cinematic_bottom_bar.color = Color(0.025, 0.025, 0.025, 0.0)
+	_cinematic_bottom_bar.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_cinematic_bottom_bar.anchor_top = 1.0
+	_cinematic_bottom_bar.anchor_right = 1.0
+	_cinematic_bottom_bar.offset_top = 0.0
+	_cinematic_layer.add_child(_cinematic_bottom_bar)
 	_photo_arrival = PhotoArrival.new()
 	_photo_arrival.name = "PhotoArrival"
 	_ui_layer.add_child(_photo_arrival)
@@ -547,6 +572,7 @@ func _start_holiday() -> void:
 	_world.weather_changed.connect(func(_w: String) -> void: _refresh_hud())
 	_world.camera_focus_requested.connect(_on_focus)
 	_world.camera_release_requested.connect(_on_release_focus)
+	_world.cinematic_view_changed.connect(_on_cinematic_view_changed)
 	_world.day_advanced.connect(_on_day_advanced)
 	_world.fish_caught.connect(_on_fish_caught)
 	_camera.enabled = true
@@ -579,6 +605,7 @@ func _start_holiday() -> void:
 
 func _clear_world() -> void:
 	_cancel_photo_arrivals()
+	_on_cinematic_view_changed("")
 	if _world != null:
 		# Preserve the partial day before title/restart replaces this world.
 		_world._save_progress()
@@ -877,6 +904,20 @@ func _on_focus(world_point: Vector2, zoom: float) -> void:
 func _on_release_focus() -> void:
 	_cam_target_zoom = 1.0
 	_cam_target_offset = Vector2.ZERO
+
+
+func _on_cinematic_view_changed(stage: String) -> void:
+	if _cinematic_shade == null:
+		return
+	var active := not stage.is_empty()
+	var reduced := bool(TuningStore.get_value("ui.reduced_motion", false))
+	_cinematic_shade.color.a = 0.08 if active and stage == "first_person" else 0.0
+	var bar_height := 34.0 if reduced else 52.0
+	var bar_alpha := 0.94 if active else 0.0
+	_cinematic_top_bar.offset_bottom = bar_height if active else 0.0
+	_cinematic_bottom_bar.offset_top = -bar_height if active else 0.0
+	_cinematic_top_bar.color.a = bar_alpha
+	_cinematic_bottom_bar.color.a = bar_alpha
 
 
 func _screen_to_world(screen: Vector2) -> Vector2:

@@ -7,6 +7,7 @@ signal notice_requested(key: String)
 signal notice_dismiss_requested(key: String)
 signal camera_focus_requested(world_point: Vector2, zoom: float)
 signal camera_release_requested
+signal cinematic_view_changed(stage: String)
 signal day_advanced(day: int)
 ## 钓到鱼时触发，带上鱼种类字符串，供 HUD 做更强的收杆反馈动画
 signal fish_caught(carry_type: String)
@@ -126,6 +127,12 @@ var _rejected_point := Vector2.ZERO
 var _rejected_seconds := 0.0
 var _relationship_memory: Dictionary = {}
 var _relationship_encounter: AnimalRelationshipEncounter
+var _goose_mount_phase := -1
+var _goose_mount_seconds := 0.0
+var _goose_mount_wait := 0.0
+var _goose_mount_flap_clock := 0.0
+var _goose_mount_flap_open := false
+var _goose_mount_origin := Vector2.ZERO
 
 
 func setup(
@@ -413,6 +420,7 @@ func tick(delta: float, move: Vector2) -> void:
 			actor.tick_glance(delta, _player.position)
 	_update_lead_rope()
 	_tick_relationships(delta)
+	_tick_goose_mount_encounter(delta, move)
 	_player.player_state = _player.snapshot_state()
 	for key: Variant in _cooldowns.keys():
 		_cooldowns[key] = float(_cooldowns[key]) - delta
@@ -449,6 +457,117 @@ func tick(delta: float, move: Vector2) -> void:
 			var ambient := 1.0 + 0.03 * sin(_day_seconds * 0.9)
 			_grass_patch.modulate = Color(ambient, ambient, ambient, 1.0)
 	queue_redraw()
+
+
+func _tick_goose_mount_encounter(delta: float, move: Vector2) -> void:
+	const EVENT_ID := "goose_horse_mount"
+	var goose: FeltActor = actor_named("goose")
+	var horse: FeltActor = actor_named("horse")
+	if goose == null or horse == null:
+		return
+	if _goose_mount_phase < 0:
+		if EVENT_ID in collected or _day_elapsed < 45.0 or not move.is_zero_approx() or _leading or _has_walk_goal \
+				or not input_enabled or _player.carrying_grass or not _fish_carry_type.is_empty() or _fish_state != FISH_IDLE:
+			_goose_mount_wait = 0.0
+			return
+		var scene_center := (goose.position + horse.position) * 0.5
+		var animals_close := goose.position.distance_to(horse.position) <= 190.0
+		var player_observing := _player.position.distance_to(scene_center) <= 225.0
+		var animals_unoccupied := goose.state not in ["lead", "pose"] and horse.state not in ["lead", "pose"]
+		if not animals_close or not player_observing or not animals_unoccupied:
+			_goose_mount_wait = 0.0
+			return
+		_goose_mount_wait += delta
+		if _goose_mount_wait < 3.5:
+			return
+		_goose_mount_phase = 0
+		_goose_mount_seconds = 0.0
+		_goose_mount_flap_clock = 0.0
+		_goose_mount_flap_open = false
+		_focus_seconds = 0.0
+		_goose_mount_origin = scene_center
+		cinematic_view_changed.emit("wide")
+		camera_focus_requested.emit(scene_center, 1.08)
+		return
+	if not move.is_zero_approx() or _has_walk_goal or _leading or not input_enabled:
+		_cancel_goose_mount_encounter()
+		return
+	_goose_mount_seconds += delta
+	match _goose_mount_phase:
+		0:
+			if _goose_mount_seconds >= 1.25:
+				_goose_mount_phase = 1
+				_goose_mount_seconds = 0.0
+				var eyeline := _player.position.lerp(_goose_mount_origin, 0.68) + Vector2(0, -12)
+				_player.visible = false
+				cinematic_view_changed.emit("first_person")
+				camera_focus_requested.emit(eyeline, 1.24)
+		1:
+			if _goose_mount_seconds >= 1.4:
+				_goose_mount_phase = 2
+				_goose_mount_seconds = 0.0
+				var back_point := horse.position + Vector2(10, -52)
+				# CastArt already measured each painting's visible height. The
+				# camera provides the close-up; do not inflate the full PNG canvas.
+				goose.set_encounter_pose(back_point, goose._base_scale, -1.0)
+				horse.set_encounter_pose(horse.position, horse._base_scale, horse.facing)
+				goose.z_index = horse.z_index + 1
+				goose.show_goose_encounter_cel("idle")
+				var close_focus := (goose.position + horse.position) * 0.5 + Vector2(0, -24)
+				cinematic_view_changed.emit("close")
+				camera_focus_requested.emit(close_focus, 1.82)
+		2:
+			# Its foot anchor is elevated onto the back, so normal ground-depth
+			# sorting would hide the goose behind the horse's body.
+			goose.z_index = horse.z_index + 1
+			var reduced_motion := bool(TuningStore.get_value("ui.reduced_motion", false))
+			if not reduced_motion:
+				_goose_mount_flap_clock -= delta
+				if _goose_mount_flap_clock <= 0.0:
+					_goose_mount_flap_clock = 0.28
+					_goose_mount_flap_open = not _goose_mount_flap_open
+					goose.show_goose_encounter_cel("idle" if _goose_mount_flap_open else "calm")
+			if _goose_mount_seconds >= (1.2 if reduced_motion else 3.2):
+				_complete_goose_mount_encounter(goose, horse)
+
+
+func _complete_goose_mount_encounter(goose: FeltActor, horse: FeltActor) -> void:
+	const EVENT_ID := "goose_horse_mount"
+	var rule := ExpressionCatalog.find_rule(EVENT_ID)
+	goose.show_goose_encounter_cel("idle")
+	var moment := PhotoMoment.capture(self, rule)
+	if not moment.is_empty():
+		photo_moments[EVENT_ID] = moment
+		collected.append(EVENT_ID)
+		last_photo = EVENT_ID
+		album_updated.emit(collected, EVENT_ID)
+	goose.release_encounter_pose()
+	horse.release_encounter_pose()
+	if _player != null:
+		_player.visible = true
+	_goose_mount_phase = -1
+	_goose_mount_wait = 0.0
+	_goose_mount_seconds = 0.0
+	camera_release_requested.emit()
+	cinematic_view_changed.emit("")
+
+
+func _cancel_goose_mount_encounter() -> void:
+	if _goose_mount_phase < 0:
+		return
+	var goose := actor_named("goose")
+	var horse := actor_named("horse")
+	if goose != null and goose.posed:
+		goose.release_encounter_pose()
+	if horse != null and horse.posed:
+		horse.release_encounter_pose()
+	if _player != null:
+		_player.visible = true
+	_goose_mount_phase = -1
+	_goose_mount_wait = 0.0
+	_goose_mount_seconds = 0.0
+	camera_release_requested.emit()
+	cinematic_view_changed.emit("")
 
 
 # Keyboard and HUD use the same resolved action and preserve its selected target.
@@ -575,6 +694,8 @@ func action_target_key(action: Dictionary) -> String:
 
 
 func cancel_scene_feedback() -> void:
+	_cancel_goose_mount_encounter()
+	_goose_mount_wait = 0.0
 	if _scene_feedback != null:
 		_scene_feedback.cancel()
 
@@ -582,6 +703,8 @@ func cancel_scene_feedback() -> void:
 func request_primary_action() -> void:
 	if not input_enabled or _player == null:
 		return
+	_cancel_goose_mount_encounter()
+	_goose_mount_wait = 0.0
 	var action := YardInteraction.primary(self)
 	if action.is_empty():
 		return
@@ -598,6 +721,8 @@ func request_primary_action() -> void:
 func request_pointer_action(point: Vector2) -> void:
 	if not input_enabled or _player == null:
 		return
+	_cancel_goose_mount_encounter()
+	_goose_mount_wait = 0.0
 	var action := YardInteraction.pointer(self, point)
 	_selected_target = str(action.target)
 	_request_action(action.target, action.point)
@@ -1079,6 +1204,8 @@ func _apply_weather_art() -> void:
 
 
 func _evaluate_expressions() -> void:
+	if _goose_mount_phase >= 0:
+		return
 	var snapshot := _world_snapshot()
 	var ranked: Array = ExpressionCatalog.RULES.duplicate()
 	ranked.sort_custom(func(a: Dictionary, b: Dictionary) -> bool: return int(a.get("priority", 0)) > int(b.get("priority", 0)))
