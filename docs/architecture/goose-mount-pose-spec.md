@@ -1,9 +1,9 @@
 # REQ-015 · 大鹅乘骑扑翼：一张画的规格
 
 - 状态：规格。**不交付最终 PNG**，也不改场内演出。
-- 认领：需求表里没有无主的「待认领」行。issue #64 写明这是已批准的美术缺口，可以先认领分镜，但要等 PR #65 和 #72 合入后再挂到运行时。`GROK-BUILD` 只做这一页。
+- 认领：需求表里没有无主的「待认领」行。issue #64 允许先写分镜。`GROK-BUILD` 只做这一页，不画最终图。
 - 日期：2026-10-03
-- 关联：[issue #64](https://github.com/narutojzm1-dot/youjia/issues/64)。事件逻辑仍是 `CODEX-LEAD` 的 REQ-014，本文件不改那两个开放 PR。
+- 关联：[issue #64](https://github.com/narutojzm1-dot/youjia/issues/64)。事件逻辑仍是 `CODEX-LEAD` 的 REQ-014。PR #65 已合入，本文件仍不改那场演出。
 
 ## 玩家该看出来什么
 
@@ -36,7 +36,8 @@ issue 里写过「和 goose.png 交替」。那样会把站立鹅嵌进马背。
 ## 包体和接入
 
 - 源 PNG 目标不超过 `goose.png` 的 1,212,584 字节。超过就要说明取舍，并以正式 PCK 的净增量为准。
-- 挂点等 PR #65 / #72 合入 main 之后再定。在那之前不改 `FeltActor`、相册或导演脚本。
+- 2026-10-03：PR #65 已合入。近景在 `YardWorld._tick_goose_mount_encounter` 的阶段 2，用 `FeltActor.set_encounter_pose` 把鹅放到 `horse.position + Vector2(10, -52)`，再调用 `show_goose_encounter_cel`。现在每隔 0.28 秒在 `idle`（站立张翅）和 `calm`（站立收翅）之间换。低动效不换，停在 `idle`。这两张都是地上的站姿，所以近景仍会有脚不在马背上的感觉。
+- 新文件必须是新的 cel 名，不要覆盖 `goose.png` 或 `goose_calm.png`。那两张还被安静站立和这套临时换帧用着。画还没确认之前，不改 `FeltActor`，也不改这场演出。
 - 这张画不表示鹅和马已经结仇或结伴。关系仍只批准了鹅和羊驼安静共处。
 
 ## 产品还要看的
