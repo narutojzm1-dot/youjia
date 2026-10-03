@@ -137,7 +137,7 @@
 | --- | --- | --- | --- | --- | --- |
 | STATE-SAVE-RECOVERY | P0 | 存档提交/恢复，真实失败注入与旧v5/照片/平台持久化不丢进展 | 已指定；未实现 | `CODEX-LEAD` | [#149](https://github.com/narutojzm1-dot/youjia/issues/149)；依赖/正式内容门禁见工单。 |
 | STATE-YARD-GROWTH | P1 | 物品/布置/探索结果共享契约与迁移/去重提交矩阵，先设计 | 已指定；架构待做 | `CODEX-LEAD` | [#150](https://github.com/narutojzm1-dot/youjia/issues/150)；依赖/正式内容门禁见工单。 |
-| EXP-CONTRACT | P1 | 独立探索边界/快照/宿主确认/失败恢复契约，与共享状态对齐 | 已指定；可开始设计 | `CURSOR-CLOUD` | [#151](https://github.com/narutojzm1-dot/youjia/issues/151)；依赖/正式内容门禁见工单。 |
+| EXP-CONTRACT | P1 | 独立探索边界/快照/宿主确认/失败恢复契约，与共享状态对齐 | 设计稿待评阅冻结（CODEX-LEAD/工程督导） | `CURSOR-CLOUD` | [#151](https://github.com/narutojzm1-dot/youjia/issues/151)；[契约设计稿](architecture/exploration-module-contract.md)，与#150待共同冻结项列于其第10节；不含正式地点/物品/形式。 |
 | EXP-CORE | P1 | 形态无关核心状态机/恢复/返回，严格隔离测试；夹具不正式发布 | 已指定；依赖契约冻结 | `CURSOR-CLOUD` | [#152](https://github.com/narutojzm1-dot/youjia/issues/152)；依赖/正式内容门禁见工单。 |
 | EXP-FIRST-SLICE | P1 | 确认的一条近郊往返，空手/取消/重复提交/键鼠触屏低动效与正式发布闭环 | 已指定；正式内容待产品/资源选择与共享存档 | `CURSOR-CLOUD` | [#153](https://github.com/narutojzm1-dot/youjia/issues/153)；依赖/正式内容门禁见工单。 |
 | YARD-DECOR-PROPOSAL | P1 | 比较位置选择/自由摆放、收起/调整的方案与内部原型，保留真实地面与动线 | 待认领；只开放方案/内部原型 | 待认领 | [#154](https://github.com/narutojzm1-dot/youjia/issues/154)；依赖/正式内容门禁见工单。 |
