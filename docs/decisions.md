@@ -23,9 +23,10 @@
 | REQ-20261002-008 | 2026-10-02 | 为主动互动补足真实对象回应 | 进行中 | 鸭鹅投鱼见 [PR #32](https://github.com/narutojzm1-dot/youjia/pull/32)，抚摸和浇水见 [PR #35](https://github.com/narutojzm1-dot/youjia/pull/35)；更多互动仍待盘点。 |
 | REQ-20261002-009 | 2026-10-02 | 让院子里的可见地点成为可选互动和彩蛋 | 进行中 | 花箱、岸石和栅栏三处已发布至 `game-df8b92d`（[PR #38](https://github.com/narutojzm1-dot/youjia/pull/38)、[#39](https://github.com/narutojzm1-dot/youjia/pull/39)、[#41](https://github.com/narutojzm1-dot/youjia/pull/41)）；更多热点与可变背景仍待实现。 |
 | REQ-20261002-010 | 2026-10-02 | 让旅人随手拍有清晰的成片、题词和收入相册反馈 | 已发布；用户认可显影效果 | [PR #43](https://github.com/narutojzm1-dot/youjia/pull/43) 已发布为正式 `game-e2d12b7`；Pages 公网 PCK 哈希已核实；用户试玩后提出真实抓拍、稳定题词与翻页手账的下一切片 REQ-013。 |
-| REQ-20261002-011 | 2026-10-02 | 让玩家互动在之后留下轻微、可感知的世界回响与后续故事 | 架构设计中 | 用户补充动物羁绊/关系可解释鹅与马冲突、与草泥马相处融洽等行为差异。Codex 负责先设计数据边界、关系记忆、行为选择与存档迁移，再拆垂直切片；见 [issue #45](https://github.com/narutojzm1-dot/youjia/issues/45) 和[架构提案](architecture/animal-relationship-model.md)。 |
+| REQ-20261002-011 | 2026-10-02 | 让玩家互动在之后留下轻微、可感知的世界回响与后续故事 | 首个鹅—羊驼切片已获确认，正在实现 | 制作人于 2026-10-03 确认“玩家牵引羊驼靠近大鹅、双方安静共处后留下记忆”。由 CODEX-LEAD 实施稀疏存档记忆与低概率行为回响；不涉及关系数值、任务、缺席惩罚、相机/相册。见 [issue #45](https://github.com/narutojzm1-dot/youjia/issues/45)、[关系模型](architecture/animal-relationship-model.md)和本 PR。 |
 | REQ-20261002-012 | 2026-10-02 | 让熟悉的小院因时段天空与玩家取景持续有新发现 | 设计拆分中（草案） | Owner CURSOR-CONTRIBUTOR-LOCAL 起草观察/构图切片顺序；见 [familiar-yard-observation.md](architecture/familiar-yard-observation.md)。未批准具体 UI 或成套天空资源。 |
 | REQ-20261002-013 | 2026-10-02 | 加入真实动物抓拍、稳定在照片内的有限题词和可翻页旅人手账 | 已发布；用户正式版试玩待反馈 | [PR #53](https://github.com/narutojzm1-dot/youjia/pull/53) 经独立审查后合并至 `b560dec94f08a1597e2b834e74c41841893ba36b`；[Actions 37025345857](https://github.com/narutojzm1-dot/youjia/actions/runs/37025345857) 与 Pages 发布成功。公开 PCK SHA-256 `e5b9c3f931b957ac4dd288e1c6786f6b9fc1d9ace946eac711e3bed723ac3d58` 已核验；详见[体验记录](playtests/2026-10-02-REQ-013-scrapbook.md)。不编造动作或旧照日期、不显示进度催促；与 REQ-012 自由构图及 REQ-011 关系回响独立。 |
+| REQ-20261002-016 | 2026-10-03 | 为旅人递草喂羊驼设计第一组可读互动动作规格 | 提案进行中 | 由制作人关于“主角缺少其他动作，互动显得呆板”的试玩反馈拆出；先做现有图集盘点和递草分镜规格，不先改逻辑或制作最终资源。已指定 `GROK-CONTRIBUTOR`，见 [issue #70](https://github.com/narutojzm1-dot/youjia/issues/70)。 |
 | DOC-20261002-001 | 2026-10-02 | 所有维护者可查阅需求/变更台账；始终维护一份游戏策划基准 | 已采纳 | 本规则、README 文档入口与 [策划基准](game-design.md) 已建立；PR #20 由合并提交 `aa821820d9b51c3cbc79e1eb4e362959df11cd95` 合入。 |
 | DOC-20261002-002 | 2026-10-02 | 在 GitHub PR 流程中提示引用需求编号、同步策划文档并附体验证据 | 已采纳 | [.github/PULL_REQUEST_TEMPLATE.md](../.github/PULL_REQUEST_TEMPLATE.md) 增加协作记录字段；PR #20 已合入。 |
 | DOC-20261002-003 | 2026-10-02 | 由 Codex 负责集成与 PR 合入，GROK/其他参与者提交独立功能 PR；明确并行分支和冲突处理规则 | 已变更（由 DOC-20261002-005 取代） | 原决定随 PR #20 合入；后续采用 PR 作者自行合入、独立子代理审核、Codex 总体兜底的分工。 |
@@ -290,4 +291,16 @@ Scale 弹跳从 1.04 提升至 1.08，点击可靠性不变。
 
 ---
 
-*最后更新：2026-10-02*
+### 2026-10-03 · REQ-011 首个动物关系切片
+
+**产品确认：** 玩家牵引羊驼靠近大鹅，双方在可站立的草地上安静共处后，游戏留下关系记忆；之后偶尔让相处多持续一会儿。该片先验证玩家行为能否造成轻微回响，不推出关系值、任务、缺席惩罚或通用剧情引擎。
+
+**范围：** 复用现有鹅和羊驼画作，不需要新增美术；独立于 REQ-014 鹅骑马摄影演出与 REQ-012 天空/自由构图。Issue #56 的鹅马关系姿态仍是未确认的后续资源提案。
+
+**实现及验证：** 当前 PR 实现稀疏记忆与 SaveStore v5 兼容迁移；Godot 4.7.2 日常回归通过，Web/浏览器验证待本 PR 最终 SHA 重跑并复审。
+
+### 2026-10-03 · REQ-001 旅人互动动作提案拆分
+
+制作人试玩指出步行节奏和角色动作仍影响自然感。步态切片已由 PR #27 验收；为不把多个互动混进同一个宽泛任务，本轮先拆“旅人递草喂羊驼”的动作资源提案，让贡献者盘点现有旅人帧、画出递草动作分镜并写清锚点、时长、中断、低动效和 Web 包体规格。暂不改变现有喂食逻辑，也不预批最终美术；提案经产品确认后再开资源/代码任务。Owner `GROK-CONTRIBUTOR`，见 [issue #70](https://github.com/narutojzm1-dot/youjia/issues/70)。
+
+*最后更新：2026-10-03*

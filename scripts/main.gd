@@ -538,7 +538,8 @@ func _start_holiday() -> void:
 		SaveStore.get_holiday_day(),
 		SaveStore.get_holiday_day_elapsed(),
 		SaveStore.get_plant_state(),
-		SaveStore.get_first_fish_caught()
+		SaveStore.get_first_fish_caught(),
+		SaveStore.get_animal_relationship_memory()
 	)
 	_world.album_updated.connect(_on_album_updated)
 	_world.notice_requested.connect(_show_notice_key)

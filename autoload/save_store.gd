@@ -2,7 +2,8 @@ extends Node
 
 const SAVE_PATH := "user://youjia_save.json"
 const TEMP_PATH := "user://youjia_save.tmp"
-const SAVE_VERSION := 4
+const AnimalRelationshipsType := preload("res://scripts/game/animal_relationships.gd")
+const SAVE_VERSION := 5
 const TUTORIAL_VERSION := 1
 
 var _data: Dictionary = {}
@@ -28,6 +29,7 @@ func _default_data() -> Dictionary:
 		"plant_watered_day": -1,
 		# 钓鱼记录
 		"first_fish_caught": false,
+		"animal_relationship_memory": {},
 	}
 
 
@@ -62,6 +64,7 @@ func _load() -> void:
 	_data.plant_day_planted = maxi(0, int(candidate.get("plant_day_planted", 0)))
 	_data.plant_watered_day = int(candidate.get("plant_watered_day", -1))
 	_data.first_fish_caught = bool(candidate.get("first_fish_caught", false))
+	_data.animal_relationship_memory = AnimalRelationshipsType.sanitize(candidate.get("animal_relationship_memory", {}))
 
 
 func save() -> bool:
@@ -165,6 +168,15 @@ func get_first_fish_caught() -> bool:
 func set_first_fish_caught() -> void:
 	_data.first_fish_caught = true
 	save()
+
+
+func get_animal_relationship_memory() -> Dictionary:
+	return (_data.get("animal_relationship_memory", {}) as Dictionary).duplicate(true)
+
+
+func set_animal_relationship_memory(memory: Dictionary) -> bool:
+	_data.animal_relationship_memory = AnimalRelationshipsType.sanitize(memory)
+	return save()
 
 
 func _clean_moments(raw: Variant, album: Array) -> Dictionary:

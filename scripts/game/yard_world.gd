@@ -19,6 +19,8 @@ const VacationerType := preload("res://scripts/entities/vacationer.gd")
 ## 世界特效层每帧位于角色脚底排序之上。
 const WorldEffectsOverlayType := preload("res://scripts/game/world_effects_overlay.gd")
 const YardSceneFeedbackType := preload("res://scripts/game/yard_scene_feedback.gd")
+const AnimalRelationshipsType := preload("res://scripts/game/animal_relationships.gd")
+const AnimalRelationshipEncounterType := preload("res://scripts/game/animal_relationship_encounter.gd")
 const WORLD_SIZE := Vector2(1280, 720)
 # 人只站在画里已经对上地面的几个位置。圆点是可以走过去的下一处。
 const PICTURE_SPOTS := {
@@ -110,6 +112,8 @@ var _walk_path: Array[Vector2] = []
 var _body_repath := 0.0
 var _rejected_point := Vector2.ZERO
 var _rejected_seconds := 0.0
+var _relationship_memory: Dictionary = {}
+var _relationship_encounter: AnimalRelationshipEncounter
 
 
 func setup(
@@ -118,7 +122,8 @@ func setup(
 	saved_day: int = 1,
 	saved_day_elapsed: float = 0.0,
 	saved_plant: Dictionary = {},
-	saved_fish_caught: bool = false
+	saved_fish_caught: bool = false,
+	saved_relationship_memory: Dictionary = {}
 ) -> void:
 	process_mode = Node.PROCESS_MODE_PAUSABLE
 	collected = PackedStringArray()
@@ -139,6 +144,8 @@ func setup(
 	_plant_watered_day = int(saved_plant.get("watered_day", -1))
 	# 读取钓鱼记录
 	_first_fish_polaroid_done = saved_fish_caught
+	_relationship_memory = AnimalRelationshipsType.sanitize(saved_relationship_memory)
+	_relationship_encounter = AnimalRelationshipEncounterType.new()
 	_backdrop = Sprite2D.new()
 	_backdrop.centered = false
 	_backdrop.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
@@ -386,6 +393,7 @@ func tick(delta: float, move: Vector2) -> void:
 		if _player != null and actor.species in ["cow", "sheep", "horse"]:
 			actor.tick_glance(delta, _player.position)
 	_update_lead_rope()
+	_tick_relationships(delta)
 	_player.player_state = _player.snapshot_state()
 	for key: Variant in _cooldowns.keys():
 		_cooldowns[key] = float(_cooldowns[key]) - delta
@@ -482,10 +490,12 @@ func _interact_with_target(target: String) -> void:
 		_leading = not _leading
 		_player.leading = _leading
 		if _leading:
+			var goose := actor_named("goose")
+			_relationship_encounter.begin_lead(goose, llama)
 			llama.begin_lead(_player)
 			notice_requested.emit("notice.lead_start")
 		else:
-			llama.end_lead()
+			_stop_leading_llama()
 			notice_requested.emit("notice.lead_stop")
 		return
 	if target.begins_with("toss_fish:"):
@@ -560,7 +570,7 @@ func request_primary_action() -> void:
 		_consume_pending_action()
 		_leading = false
 		_player.leading = false
-		actor_named("llama").end_lead()
+		_stop_leading_llama()
 		notice_requested.emit("notice.lead_stop")
 		return
 	_request_action(action.target, action.point)
@@ -1239,6 +1249,34 @@ func _on_new_day() -> void:
 func _save_progress() -> void:
 	SaveStore.set_holiday_progress(holiday_day, _day_elapsed)
 	SaveStore.set_plant_state(_plant_state, _plant_day_planted, _plant_watered_day)
+
+
+func _stop_leading_llama() -> void:
+	var llama := actor_named("llama")
+	if llama == null:
+		return
+	llama.end_lead()
+	var goose := actor_named("goose")
+	if _relationship_encounter != null and _relationship_encounter.release_lead(goose, llama):
+		# A brief, ordinary settling pause after the player releases the lead.
+		# Movement or another interaction remains free to interrupt it.
+		llama.state = "graze"
+		llama._idle_time = maxf(llama._idle_time, AnimalRelationshipsType.CALM_RESOLVE_SECONDS + 0.35)
+
+
+func _tick_relationships(delta: float) -> void:
+	var goose := actor_named("goose")
+	var llama := actor_named("llama")
+	if goose == null or llama == null or _relationship_encounter == null:
+		return
+	var outcome: Dictionary = _relationship_encounter.tick(delta, _leading, goose, llama, _relationship_memory)
+	if bool(outcome.get("remembered", false)):
+		_relationship_memory = {AnimalRelationshipsType.GOOSE_LLAMA_SHARED_SPACE: true}
+		SaveStore.set_animal_relationship_memory(_relationship_memory)
+	if bool(outcome.get("extend_linger", false)):
+		# The remembered pair occasionally shares a few more quiet seconds;
+		# this only adjusts llama's existing graze pause and is never guaranteed.
+		llama._idle_time = maxf(llama._idle_time, randf_range(11.0, 15.0))
 
 
 ## 钓鱼点（水塘北岸，玩家可以站到的最近处）
