@@ -337,5 +337,41 @@
     ],
     "native_facing": 1,
     "border_pixels_alpha_gt16": 0
+  },
+  "goose_riding_up": {
+    "width": 1254,
+    "height": 1254,
+    "alpha_bbox": [
+      108,
+      88,
+      1107,
+      1107
+    ],
+    "ground_anchor": [
+      538.3414634146342,
+      1194.0
+    ],
+    "native_facing": 1,
+    "alpha_zero_fraction": 0.6647,
+    "alpha_median_inside": 255,
+    "border_pixels_alpha_gt16": 0
+  },
+  "goose_riding_down": {
+    "width": 1254,
+    "height": 1254,
+    "alpha_bbox": [
+      147,
+      185,
+      1049,
+      1010
+    ],
+    "ground_anchor": [
+      538.8181818181819,
+      1194.0
+    ],
+    "native_facing": 1,
+    "alpha_zero_fraction": 0.7146,
+    "alpha_median_inside": 255,
+    "border_pixels_alpha_gt16": 0
   }
 }

@@ -48,9 +48,13 @@ static func configure(original: Dictionary) -> Dictionary:
 		# A posture is a different whole painted cel, not a scaled/deformed angry goose.
 		config.textures["calm"]=DIRECTORY+"goose_calm.png"
 		config.textures["rest"]=DIRECTORY+"goose_rest.png"
+		config.textures["riding_up"]=DIRECTORY+"goose_riding_up.png"
+		config.textures["riding_down"]=DIRECTORY+"goose_riding_down.png"
 		config.posture_metadata={
 			"calm": manifest().get("goose_calm",{}),
 			"rest": manifest().get("goose_rest",{}),
+			"riding_up": manifest().get("goose_riding_up",{}),
+			"riding_down": manifest().get("goose_riding_down",{}),
 		}
 	if species=="llama":
 		config.base_texture=DIRECTORY+"llama_smirk.png"
