@@ -76,10 +76,16 @@ func run():
  var wrong_day:Dictionary=moment.duplicate(true);wrong_day.day=0
  check(PhotoMoment.sanitize(wrong_day).is_empty(),"an invalid photo day never survives snapshot validation")
  photo_arrival.dismiss()
- check(photo_arrival.play(moment,main._album_chip.get_global_rect().get_center(),true),"reduced motion still presents the genuine saved print")
+ check(photo_arrival.play(moment,true),"reduced motion still presents the genuine saved print")
+ check(photo_arrival.get_node("PhotoCard").scale == Vector2.ONE,"photo display does not shrink toward the album icon")
  var still_pos:Vector2=photo_arrival._card.position
  await create_timer(0.25).timeout
  check(photo_arrival.visible and photo_arrival._card.position==still_pos and photo_arrival._card.scale==Vector2.ONE,"reduced motion holds a readable still photograph rather than shrinking it")
+ photo_arrival.dismiss()
+ check(photo_arrival.play(moment,false),"standard motion presents the same captured print")
+ var normal_pos:Vector2=photo_arrival._card.position
+ await create_timer(0.35).timeout
+ check(photo_arrival.visible and photo_arrival._card.position==normal_pos and photo_arrival._card.scale==Vector2.ONE,"standard photo development keeps the card centered at full size")
  main._toggle_pause()
  check(not photo_arrival.visible and main._pause_screen.visible,"pausing immediately dismisses the print without blocking the menu")
  main._toggle_pause()
