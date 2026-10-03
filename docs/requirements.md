@@ -139,7 +139,7 @@
 | STATE-YARD-GROWTH | P1 | 物品/布置/探索结果共享契约与迁移/去重提交矩阵，先设计 | 已指定；架构待做 | `CODEX-LEAD` | [#150](https://github.com/narutojzm1-dot/youjia/issues/150)；依赖/正式内容门禁见工单。 |
 | EXP-CONTRACT | P1 | 独立探索边界/快照/宿主确认/失败恢复契约，与共享状态对齐 | 设计稿已合入（PR160，CODEX-LEAD 批准 1c4324c）；待与#150共同冻结并经工程督导评阅 | `CURSOR-CLOUD` | [#151](https://github.com/narutojzm1-dot/youjia/issues/151)；[契约设计稿](architecture/exploration-module-contract.md)，与#150待共同冻结项列于其第10节；不含正式地点/物品/形式。 |
 | EXP-CORE | P1 | 形态无关核心状态机/恢复/返回，严格隔离测试；夹具不正式发布 | 已指定；依赖契约冻结 | `CURSOR-CLOUD` | [#152](https://github.com/narutojzm1-dot/youjia/issues/152)；依赖/正式内容门禁见工单。 |
-| EXP-FIRST-SLICE | P1 | 确认的一条近郊往返，空手/取消/重复提交/键鼠触屏低动效与正式发布闭环 | 已指定；正式内容待产品/资源选择与共享存档 | `CURSOR-CLOUD` | [#153](https://github.com/narutojzm1-dot/youjia/issues/153)；依赖/正式内容门禁见工单；[探索形式候选](architecture/exploration-form-options.md)待用户选择。 |
+| EXP-FIRST-SLICE | P1 | 确认的一条近郊往返，空手/取消/重复提交/键鼠触屏低动效与正式发布闭环 | 已指定；正式内容待产品/资源选择与共享存档 | `CURSOR-CLOUD` | [#153](https://github.com/narutojzm1-dot/youjia/issues/153)；依赖/正式内容门禁见工单；形式已定：[画卷漫步](architecture/exploration-form-options.md)（用户 2026-10-03）；首条去处/带回物待 GROK-BUILD #155 资源提案与样张确认。 |
 | YARD-DECOR-PROPOSAL | P1 | 比较位置选择/自由摆放、收起/调整的方案与内部原型，保留真实地面与动线 | 待认领；只开放方案/内部原型 | 待认领 | [#154](https://github.com/narutojzm1-dot/youjia/issues/154)；依赖/正式内容门禁见工单。 |
 | ART-EXPLORATION-PROPOSAL | P1 | 先资源盘点/规格/构图提案与来源预算；最终画另批 | 已指定；先提案，不接入 | `GROK-BUILD` | [#155](https://github.com/narutojzm1-dot/youjia/issues/155)；依赖/正式内容门禁见工单。 |
 | QA-EXPLORATION-GATE | P1 | 独立失败矩阵/夹具与候选验收、发布和共同维护交接证据 | 待认领；先方案，候选验收随交付 | 待认领 | [#156](https://github.com/narutojzm1-dot/youjia/issues/156)；依赖/正式内容门禁见工单。 |
