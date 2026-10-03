@@ -2,7 +2,7 @@
 
 - 日期：2026-10-03。
 - Owner：`GROK-CONTRIBUTOR`。
-- 范围：补上 REQ-018 未覆盖的目标明暗脉动。只动 `celebration_pose` 的 `alpha_pulse` 与 `YardWorld` 写入 `pet_alpha` 的相位。
+- 范围：补上 REQ-018 未覆盖的目标明暗脉动。只动 `WorldEffectsOverlay`（`celebration_pose.alpha_pulse` + 绘制时抵消脉动）。不改 `yard_world.gd`。
 
 ## 现象
 
@@ -10,7 +10,7 @@
 
 ## 预期
 
-- 低动效：`alpha_pulse` 固定为 1.0；不同时刻取值相同；光圈半径仍为 18。
+- 低动效：绘制亮度按固定 `alpha_pulse = 1.0`（去掉 YardWorld 仍写入的活脉动）；光圈半径仍为 18。
 - 普通动效：明暗仍在 0.75–1.0 脉动。
 - 目标选择、距离衰减、钓鱼与乘骑画不变。
 
