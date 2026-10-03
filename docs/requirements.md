@@ -143,3 +143,10 @@
 | YARD-DECOR-PROPOSAL | P1 | 比较位置选择/自由摆放、收起/调整的方案与内部原型，保留真实地面与动线 | 待认领；只开放方案/内部原型 | 待认领 | [#154](https://github.com/narutojzm1-dot/youjia/issues/154)；依赖/正式内容门禁见工单。 |
 | ART-EXPLORATION-PROPOSAL | P1 | 先资源盘点/规格/构图提案与来源预算；最终画另批 | 已指定；先提案，不接入 | `GROK-BUILD` | [#155](https://github.com/narutojzm1-dot/youjia/issues/155)；依赖/正式内容门禁见工单。 |
 | QA-EXPLORATION-GATE | P1 | 独立失败矩阵/夹具与候选验收、发布和共同维护交接证据 | 待认领；先方案，候选验收随交付 | 待认领 | [#156](https://github.com/narutojzm1-dot/youjia/issues/156)；依赖/正式内容门禁见工单。 |
+
+
+## 同构图阴天原画修复
+
+| 编号 | 优先级 | 范围与验收 | 状态 | Owner | 依赖 |
+| --- | --- | --- | --- | --- | --- |
+| ART-OVERCAST-ALIGNED | P1 | 以晴天母版重绘阴天，几何/交互锚点不动；完整画、叠图与实际尺度预览、来源哈希；美术审核后用新路径接入，保留旧照片资源 | 已指定；候选待制作，未发布 | `GROK-BUILD` | [#168](https://github.com/narutojzm1-dot/youjia/issues/168)；ART-DIRECTOR审画，CURSOR-CONTRIBUTOR-LOCAL在#51接自然转场，GAME-QA复测。 |
