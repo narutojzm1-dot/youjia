@@ -74,7 +74,7 @@ route = {
 
 | 当前 | 事件 | 结果 | 说明 |
 | --- | --- | --- | --- |
-| `idle` | `begin(route_id, clock)` | `active` | 路线必须在已注入目录中；分配新的 `trip_serial`。`can_begin == false` 时拒绝：宿主序号不可信返回 `watermark_untrusted`，存在冻结的隔离旅程返回 `quarantine_frozen`，其余不可出门的恢复结果返回 `exploration_unavailable`（§8） |
+| `idle` | `begin(route_id, clock)` | `active` | 路线必须在已注入目录中；分配新的 `trip_serial`。`can_begin == false` 时拒绝，拒绝码按优先级取第一个命中的：`watermark_untrusted`（宿主序号不可信）> `quarantine_frozen`（`quarantine_and_freeze` 冻结）> `exploration_unavailable`（未来版本 `quarantine` 等其他不可出门结果）> `pending_exists`（有未收口旅程）（§8） |
 | `active` | `visit(stop_id)` | `active` | 只能去 `next` 可达点；首次到达时确定该点的发现（§5） |
 | `active` | `take(find_id)` | `active` | 必须是当前点已出现、未被带走的；超过 `carry_limit` 拒绝 |
 | `active` | `release(find_id)` | `active` | 放回原处，可再拿 |
@@ -241,7 +241,7 @@ close() ──► idle（宿主保存 to_record()，可与下次任意保存合�
 
 **`can_begin` 的全局规则**：“宿主序号可信”“没有未收口的旅程”“没有被冻结的隔离旅程”是 `can_begin == true` 的必要条件；此外，下表中明确给出 `can_begin = false` 的行也不能出门。未收口指 `pending_commit` / `recoverable_failure`（含 `deferred`）；被冻结的隔离旅程指下表动作为 `quarantine_and_freeze` 的记录，在明确的恢复政策处理之前一直算作未收口，保证 §7.1 的“同一时刻最多一趟未收口旅程”。
 
-**隔离跨重启保持**：命中 `quarantine` 或 `quarantine_and_freeze` 的会话进入只读的隔离模式，`to_record()` **原样返回读到的原始记录**（字节语义不变，包括未来版本字段），宿主的每次普通保存都把它原样写回 `exploration` 键；宿主另在 #150 隔离区保存一份原文副本和诊断信息。因此每次重启 `restore` 都会重新命中同一行，冻结不会因普通保存而解除；宿主序号恢复可信或执行明确的恢复政策后，记录才会按正常行重新判定。隔离模式下除 `get_state()` / `get_view()` / `to_record()` 外的变更方法一律返回 `quarantine_frozen`。
+**隔离跨重启保持**：命中 `quarantine` 或 `quarantine_and_freeze` 的会话进入只读的隔离模式，`to_record()` **原样返回读到的原始记录**（JSON 值语义等价，包括未来版本字段和非字典的原始值；Godot 解析 JSON 时数字统一为 float，不要求逐字节相同，测试按值比较），宿主的每次普通保存都把它原样写回 `exploration` 键；宿主另在 #150 隔离区保存一份原文副本和诊断信息。因此每次重启 `restore` 都会重新命中同一行，冻结不会因普通保存而解除；宿主序号恢复可信或执行明确的恢复政策后，记录才会按正常行重新判定。隔离模式下只读方法照常可用：`get_state()`、`to_record()`；`get_view()` 带 `quarantined: true` 且不含旅程细节；`get_proposal()` 返回 `{}`；`scene_identity()` 返回 `{}`。`begin` 按 §4 的优先级返回拒绝码（未来版本为 `exploration_unavailable`，冻结为 `quarantine_frozen`），其余变更方法一律返回 `quarantine_frozen`。进入隔离不改写原始数据、不递增 revision，`restore` 返回 `persist: false`；宿主仍在普通保存中原样写回原文。隔离时宿主不应发送保存确认；即使发了，`host_persisted` / `host_persist_failed` 也返回 `quarantine_frozen`、`unsaved_changes = false`，不改任何状态。
 
 | 读到的记录 | 恢复结果 | `host_action` 与说明 |
 | --- | --- | --- |
@@ -250,7 +250,7 @@ close() ──► idle（宿主保存 to_record()，可与下次任意保存合�
 | 缺失（键不存在或为 JSON `null`） | `idle` | `none` |
 | `contract_version` 比当前新 | 不解析、不改写原始数据，`can_begin = false` | `quarantine`：宿主原样保留这段数据（#150 定位置），本次不开放出门，并给出非阻断提示；其余小院功能照常 |
 | 是字典且 `session == null`（元数据正常，或元数据损坏如 `next_trip_serial` 异常） | `idle` | `none`：最常见的健康空闲状态；元数据损坏时忽略它，序号按 §6 规则取值 |
-| 纯夹具会话：`catalog == "fixture"`，且 `route_id` 以及 `offers`、`carried`、`proposal.items` 中所有 ID 都是 `fixture.` 前缀，其余字段校验通过 | `idle` | `quarantine_and_reset_session`：宿主隔离原文并附诊断，会话重置为 `idle`。只要有任何一个 `formal.` ID 或其他损坏，就不属于本行，落到下一行冻结。夹具物品永远不会被授予（§6 闸门），这份提案和它占用的序号**永久作废**，后续恢复政策不得重交，因此可以继续开始新旅程 |
+| 纯夹具会话：`catalog == "fixture"`，且 `route_id` 以及 `offers`、`carried`、`proposal.items` 中所有 ID 都是 `fixture.` 前缀，其余字段校验通过 | `idle` | `quarantine_and_reset_session`：宿主隔离原文并附诊断，会话重置为 `idle`，`restore` 返回 `persist: true`（这是 restore 自己的改写，宿主应保存新的空闲记录）。只要有任何一个 `formal.` ID 或其他损坏，就不属于本行，落到下一行冻结。夹具物品永远不会被授予（§6 闸门），这份提案和它占用的序号**永久作废**，后续恢复政策不得重交，因此可以继续开始新旅程 |
 | 其余损坏：不是字典、字段损坏、超预算、ID 非法、前缀不一致、`trip_id` 与序号不一致 | 不改写原始数据，`can_begin = false` | `quarantine_and_freeze`：无法判断其中是否有尚未授予的提案，所以不授予、不丢弃，隔离原文并冻结新旅程，直到明确的恢复政策处理。这是明确记录的降级，列入 #152 坏数据测试 |
 | 任意状态，且 `trip_serial <= last_committed_trip_serial` | `committed` | `close`：说明上次已落盘，只是收尾前中断 |
 | 路线已从目录移除（`active`） | 强制 `pending_commit`，提案包含全部已携带物；`persist: true` | `submit_proposal`：提示后回院；失效物品由宿主提交校验拒绝（§7） |
@@ -323,7 +323,7 @@ func get_state() -> String
 func get_view() -> Dictionary
 func get_proposal() -> Dictionary      # 没有时返回 {}
 func scene_identity() -> Dictionary
-func to_record() -> Dictionary         # 纯值，可直接 JSON
+func to_record() -> Variant            # 纯值，可直接 JSON；正常为 Dictionary，只有隔离模式会原样返回读到的非字典原始值（§8）
 ```
 
 所有变更类方法统一返回 `{ok: bool, error?: String, state: String, persist: bool}`。`persist == true` 表示宿主应立即保存 `to_record()`，例如 `begin`、首次到达某点（`offers` 新增）的 `visit`、`take`、`release`、`request_return`、`settle_empty`和提交结果之后；`close` 返回 `persist: false`，其记录可与下一次任意保存合并（与 §7 一致）。
@@ -343,7 +343,7 @@ func to_record() -> Dictionary         # 纯值，可直接 JSON
 11. 假宿主故障矩阵（提交阶段）：磁盘序号为 N 时，提交 trip-N+1 首次 `save()` 失败 → 重试成功 → `close` → 重启，断言授予计数为 1、序号为 N+1；首次失败 → 不重试直接重启，断言授予计数为 0、会话仍为待提交并可再次提交成功。
 12. 逐阶段保存失败 / 重启矩阵（出门阶段）：在 `begin`、首次 `visit`、`take`、`release`、`request_return` 各阶段令保存失败后重启，断言恢复到最后一次成功保存的记录、不出现“已保存”假成功、序号不回退；保存失败期间仍可 `request_return` 并在下次保存成功时完成提交。分开两种重启：`pending_commit` 提案曾经落盘（恢复后自动再提交，只授予一次）；`request_return` 本身也没落盘（只恢复到最后持久化的 `active` 或更早状态，再按用户决定安全回院，不做无依据保证）。
 13. 确认通知：旧旅程的迟到确认、乱序到达的旧成功/旧失败、超前 revision，都不改变当前会话，`unsaved_changes` 不被错误清除；失败通知同样绑定会话；任何确认都不返回 `persist: true`；`restore` 后 `persisted_revision` 等于读到的 revision。
-14. 序号不可信与隔离（核心侧）：`last_committed_trip_serial = -1` 时，有未关闭会话 → `quarantine_and_freeze` 且原始记录字节不变、`can_begin = false`；无会话 → `freeze_new_trips`；`committed` 但序号大于水位 → 隔离而不重新提交、不关闭、`can_begin = false`；`-1` 加不是字典 / 字段损坏 / 未来版本的记录都不能得到 `can_begin = true`；冻结后 `to_record()` 与原始记录一致，经普通保存再重启，`can_begin` 仍为 false；`catalog == "fixture"` 但路线或物品为 `formal.` 前缀 → 冻结而不作废；`restore` 改写会话时 `persist: true` 且 `unsaved_changes = true`；`defer_to_yard` 后 `begin` 返回 `pending_exists`；`trip_id` 与序号不一致、序号超出 `2^31 − 1` 按损坏处理。
+14. 序号不可信与隔离（核心侧）：`last_committed_trip_serial = -1` 时，有未关闭会话 → `quarantine_and_freeze` 且原始记录字节不变、`can_begin = false`；无会话 → `freeze_new_trips`；`committed` 但序号大于水位 → 隔离而不重新提交、不关闭、`can_begin = false`；`-1` 加不是字典 / 字段损坏 / 未来版本的记录都不能得到 `can_begin = true`；冻结后 `to_record()` 与原始记录值语义等价，经普通保存再重启，`can_begin` 仍为 false（分别覆盖字典与非字典原始记录）；隔离时确认通知返回 `quarantine_frozen`；拒绝码优先级与未来版本的 `exploration_unavailable`；`catalog == "fixture"` 但路线或物品为 `formal.` 前缀 → 冻结而不作废；`restore` 改写会话时 `persist: true` 且 `unsaved_changes = true`；`defer_to_yard` 后 `begin` 返回 `pending_exists`；`trip_id` 与序号不一致、序号超出 `2^31 − 1` 按损坏处理。
 
 **宿主侧联合验收**（由 CODEX-LEAD 在 #149/#150 实现与举证，核心以假宿主配合；列在这里是为了两边对同一份清单冻结）：
 
