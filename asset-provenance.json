@@ -810,6 +810,68 @@
       "regions": [],
       "usedBy": [],
       "declaredUseEvidence": []
+    },
+    "assets/holiday/environment/cloud_band_sunny.png": {
+      "origin": "generated",
+      "generator": {
+        "name": "Pillow procedural bake",
+        "brief": "Semi-transparent watercolor-like cloud band sampled from yard sky colors; horizontally tileable soft ellipses with feathered edges."
+      },
+      "inputs": [
+        "assets/holiday/environment/yard_sunny.png"
+      ],
+      "license": {},
+      "source": {
+        "note": "Derived palette from existing yard art; no third-party stock."
+      },
+      "sha256": "sha256:4a1d82a868f825c8600dfa691ad1c1f1705b2a31fd00f5949fa9ce7bba9815d9",
+      "size": 197101,
+      "status": "present",
+      "shipped": true,
+      "used": true,
+      "referenceEvidence": [
+        "scripts/game/yard_world.gd"
+      ],
+      "useEvidence": [
+        "scripts/game/yard_world.gd"
+      ],
+      "transformations": [
+        "Procedural soft blobs + Gaussian blur + vertical feather; Godot texture import compress/mode=1"
+      ],
+      "regions": [],
+      "usedBy": [],
+      "declaredUseEvidence": []
+    },
+    "assets/holiday/environment/cloud_band_overcast.png": {
+      "origin": "generated",
+      "generator": {
+        "name": "Pillow procedural bake",
+        "brief": "Semi-transparent watercolor-like cloud band sampled from yard sky colors; horizontally tileable soft ellipses with feathered edges."
+      },
+      "inputs": [
+        "assets/holiday/environment/yard_overcast.png"
+      ],
+      "license": {},
+      "source": {
+        "note": "Derived palette from existing yard art; no third-party stock."
+      },
+      "sha256": "sha256:56696b35840387be56ac709759d106f56794a63f0f6e69e413be7150f929ed22",
+      "size": 231984,
+      "status": "present",
+      "shipped": true,
+      "used": true,
+      "referenceEvidence": [
+        "scripts/game/yard_world.gd"
+      ],
+      "useEvidence": [
+        "scripts/game/yard_world.gd"
+      ],
+      "transformations": [
+        "Procedural soft blobs + Gaussian blur + vertical feather; Godot texture import compress/mode=1"
+      ],
+      "regions": [],
+      "usedBy": [],
+      "declaredUseEvidence": []
     }
   },
   "discoveries": {},

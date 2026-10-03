@@ -179,8 +179,19 @@ func review():
  w.toggle_weather()
  check(w.weather=="overcast" and w._backdrop.texture==w.OVERCAST and w._backdrop.texture!=before,"overcast uses the painted overcast yard")
  check(before_scale==w._backdrop.scale and walk==w._player.walk_ground,"weather preserves backdrop scale and collision")
+ # 云带 B：阴天换阴云帧，且不改碰撞。
+ check(w._cloud_band_a!=null and w._cloud_band_a.texture==w.CLOUD_OVERCAST,"overcast swaps the overcast cloud band")
  w.toggle_weather()
  check(w.weather=="sun" and w._backdrop.texture==w.SUNNY,"sun restores the painted sunny yard")
+ check(w._cloud_band_a.texture==w.CLOUD_SUNNY,"sun restores the sunny cloud band")
+ # 低动效：云带保持可读静止帧（滚动偏移不再增加）。
+ var scroll_before=w._cloud_scroll
+ TuningStore.set_value("ui.reduced_motion", true)
+ w.tick(2.0, Vector2.ZERO)
+ check(is_equal_approx(w._cloud_scroll, scroll_before),"reduced motion keeps cloud band static")
+ TuningStore.set_value("ui.reduced_motion", false)
+ w.tick(2.0, Vector2.ZERO)
+ check(w._cloud_scroll>scroll_before,"cloud band drifts when motion is allowed")
  w.debug_place_player(YardSceneHotspots.get_hotspot("windowbox").approach_points[0] + Vector2(5, 5))
  w.request_pointer_action(Vector2(285, 275))
  check(not w._scene_feedback.active_snapshot().is_empty(), "real windowbox observation paints a temporary world response")
