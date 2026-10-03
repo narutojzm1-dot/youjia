@@ -10,7 +10,7 @@
 探索是小院生活的**自愿补充**：可以不出门，出门后可以随时回、可以空手回；带回什么由玩家自己选。契约要保证四件事：
 
 1. **形态无关**：同一核心既能接“手绘小景里亲自散步”，也能接“路线卡片/节点”，不预先选定。
-2. **不丢、不重**：玩家已选的东西在宿主确认落盘前一直保留；同一趟旅程无论重复点击、回调、刷新、重启，最多授予一次。
+2. **不丢、不重**：玩家已选的东西在宿主确认落盘前一直保留（唯一例外是内容确实不被接受时的 `settle_empty`，以及探索记录本身损坏，见 §4、§8）；同一趟旅程无论重复点击、回调、刷新、重启，最多授予一次。
 3. **不困住玩家**：任何失败都有“再试一次”和“先回院子”两条出路；损坏或未知的探索记录不会连带清空小院、相册、关系或花圃。
 4. **不新增时钟**：不读现实时间，不做离线收益、过期、体力或冷却；只采样宿主现有的游戏时钟。
 
@@ -80,10 +80,15 @@ route = {
 | `active` | `release(find_id)` | `active` | 放回原处，可再拿 |
 | `active` | `request_return(reason)` | `pending_commit` | 冻结提案：`items` = 当前携带，可为空；`reason ∈ {player, cancel, host_interrupt, restored}` |
 | `pending_commit` | `commit_succeeded(trip_id)` | `committed` | `trip_id` 必须与提案一致 |
-| `pending_commit` | `commit_failed(trip_id, retryable)` | `recoverable_failure` | 记录失败码与尝试次数 |
-| `recoverable_failure` | `retry_commit()` | `pending_commit` | 同一提案、同一 `trip_id` 再交一次 |
+| `pending_commit` | `commit_failed(trip_id, retryable=true)` | `recoverable_failure` | 落盘类失败；记录失败码与尝试次数，提案原样保留 |
+| `pending_commit` | `commit_failed(trip_id, retryable=false, rejected≠[])` | `pending_commit` | 部分物品已失效：移出 `rejected` 中的项，`revision + 1`，`trip_id` 不变，宿主再提交一次 |
+| `pending_commit` | `commit_failed(trip_id, retryable=false, rejected=[])` | `recoverable_failure`（`retryable=false`） | 内容整体不可接受；此时 `retry_commit` 被拒，只能 `settle_empty` |
+| `recoverable_failure` | `retry_commit()` | `pending_commit` | 仅 `retryable=true` 时允许；同一提案、同一 `trip_id` 再交一次 |
+| `recoverable_failure` | `settle_empty()` | `pending_commit` | **终止出口**：提案改为空 `items`、`revision + 1`、`trip_id` 不变。宿主对空提案不做内容校验（§7），只可能因落盘失败而失败，因此一定能收尾 |
 | `recoverable_failure` | `defer_to_yard()` | `recoverable_failure`（标记 `deferred`） | 玩家先回院子；提案保留，宿主下次启动或空闲时自动重试，不丢不重 |
-| `committed` | `close()` | `idle` | 记录 `last_closed_trip_serial`，清掉旅程字段 |
+| `committed` | `close()` | `idle` | 清掉旅程字段 |
+
+**不会困住玩家**：任何停在 `recoverable_failure` 的会话，都至少有一条通往 `committed` 的路。可重试的失败走 `retry_commit`；不可重试的失败走 `settle_empty`，只有“空提案也落盘失败”（磁盘层问题）才会继续停留，而这种情况玩家仍可 `defer_to_yard` 回院正常生活。`settle_empty` 会舍弃这一趟里无法收下的东西；它只在内容确实不被接受时使用，表现层要用温和文案说明，不当作惩罚。
 
 “取消”不是特殊状态：就是 `request_return(reason="cancel")`，提案可以为空，照样走一遍提交。这样“空手回”和“带东西回”是同一条路，宿主也能统一做幂等。
 
@@ -93,9 +98,11 @@ route = {
 
 ## 5. 随机与发现
 
-- 核心不使用全局随机。`begin` 接受可选 `seed`；不给时由宿主注入的随机源生成。会话内部用 `RandomNumberGenerator`，持久化 `rng_seed` 和 `rng_state`。
-- **这两个 64 位整数以十进制字符串存储**，因为 JSON 数字超过 2^53 会丢精度，恢复后随机序列会悄悄变掉。
-- 每个停留点**第一次到达时**掷一次：按权重从 `find_pool` 选出 0 或 1 个发现（`empty_weight` 允许什么都没有），结果写进 `offers[stop_id]`。以后再来、重启恢复都读记录，不重掷，避免“刷新重掷”变成反复劳动。
+- 核心不使用全局随机。`begin` 接受可选 `seed`；不给时由宿主注入的随机源生成，只持久化 `rng_seed`。
+- **每个停留点的掷骰只由 `(rng_seed, stop_id)` 决定**：用二者派生该点专用的种子，再新建 `RandomNumberGenerator` 掷一次。这样结果与访问顺序无关；崩溃后换个顺序走，也得到同样的发现。同时不需要保存 `rng_state`，也避开了 Godot 中设置 `seed` 会重置 `state` 的顺序陷阱。
+- **`rng_seed` 以十进制字符串存储（允许负号）**：它是有符号 64 位整数，JSON 数字超过 2^53 会丢精度。
+- 每个停留点**第一次到达时**确定一次：按权重从 `find_pool` 选出 0 或 1 个发现（`empty_weight` 允许什么都没有），结果写进 `offers[stop_id]`，并要求宿主立即保存（§11 `persist`）。以后再来、重启恢复都读记录，不重掷，避免“刷新重掷”变成反复劳动。
+- “每点 0 或 1 个发现”、`carry_limit` 上限 3、每条路线最多 16 个停留点，都是**建议默认值**，需随产品选择的形式确认。
 - 空手是正常结果：没有“失败”文案，不计数、不惩罚。
 
 ## 6. 持久化记录（纯值）
@@ -103,10 +110,10 @@ route = {
 存放位置由 #150 冻结（建议 SaveStore 下单一键 `exploration`，与小院所得**在同一次原子保存里**写入，见 §7）。只允许 JSON 基本类型：
 
 ```text
+# 核心拥有、宿主原样保存的探索记录
 exploration = {
   contract_version: 1,
-  next_trip_serial: 3,                 # 单调递增，永不回退
-  last_closed_trip_serial: 2,
+  next_trip_serial: 3,                 # 核心的下一个序号提示；实际分配见下方规则
   session: null | {
     trip_id: "trip-3",                 # = "trip-" + serial
     trip_serial: 3,
@@ -118,8 +125,7 @@ exploration = {
     visited: ["gate", "brook"],
     offers: { "brook": "formal.find.xxx" | "" },
     carried: ["formal.find.xxx"],
-    rng_seed: "1234567890123",
-    rng_state: "9876543210987",
+    rng_seed: "-1234567890123",
     proposal: null | {
       trip_id: "trip-3",
       route_id: "formal.xxx",
@@ -130,53 +136,65 @@ exploration = {
     failure: null | { code: "save_failed", retryable: true, attempts: 1, deferred: false }
   }
 }
+
+# 建议放在 #150 共享区、**在 exploration 键之外**，由宿主拥有
+last_committed_trip_serial: 2          # 已成功落盘的最大旅程序号；探索记录损坏时它仍在
 ```
+
+**序号分配规则**：核心在 `restore` 时同时接收 `last_committed_trip_serial`（§11）。`begin` 分配的序号永远是 `max(next_trip_serial, last_committed_trip_serial + 1)`。因此无论探索记录缺失、损坏重置还是被手动删除，新旅程的序号都严格大于已提交序号，不会被宿主误判为“已提交”而吞掉所得。
 
 约束：
 
-- **ID 格式**：`^(formal|fixture)\.[a-z0-9_.]{1,48}$`；`stop_id` 为 `^[a-z0-9_]{1,32}$`。
+- **ID 格式**：`^(formal|fixture)(\.[a-z0-9_]+){1,4}$`，总长不超过 64；`stop_id` 为 `^[a-z0-9_]{1,32}$`。会话的 `catalog` 必须与 `route_id` 前缀一致，所有 `find_id` 前缀也必须与之一致，否则按损坏处理。
 - **尺寸预算**：`stops` 不超过 16 个，`visited`/`offers` 随之有界，`carried` 不超过 `carry_limit`（上限 3）。整段序列化后不超过 4 KB。超限按损坏处理（§8）。
 - **禁止进入记录的内容**：Node 引用、Callable、资源路径、纹理、场景树路径、屏幕坐标、现实时间戳。表现层需要的位置/画面由适配器根据 `route_id + stop_id` 查目录得到。
-- `catalog == "fixture"` 的会话**宿主一律拒绝提交**，返回不可重试失败；正式入口也不能 `begin` fixture 路线。两道闸门保证夹具所得进不了玩家档。
+- 夹具闸门：正式入口不能 `begin` fixture 路线；玩家存档恢复时读到 `catalog == "fixture"` 的会话按损坏处理（§8）；万一仍被提交，宿主拒绝其中所有物品（`rejected` = 全部），核心随即只剩空提案并正常收尾。三道闸门保证夹具所得进不了玩家档，同时不会把探索锁死。
 
-## 7. 宿主提交协议（与 #150 对齐的核心）
+## 7. 宿主提交协议（建议，待与 #150 共同冻结）
+
+以下是本稿对宿主侧的**建议流程**，具体落在 CODEX-LEAD 的 #150 / Host bridge 中，以共同冻结的版本为准：
 
 ```text
 核心                                宿主（CODEX 侧 SaveStore 桥）
 request_return ──► pending_commit
    proposal(trip_id, items) ───────► 1. trip_serial <= last_committed_trip_serial ?
                                          是 → 视为已落盘，直接回 succeeded（不再发物）
-                                     2. 校验 items 都是 formal 目录合法 ID
+                                     2. items 为空 → 跳过内容校验，直接到 3
+                                        否则校验 items 都是 formal 目录合法 ID；
+                                        有失效项 → commit_failed(retryable=false, rejected=[失效项])
                                      3. 同一次原子保存写入：
                                           - 取得物进入 #150 的持有状态
                                           - last_committed_trip_serial = trip_serial
-                                          - exploration.session.state = "committed"
+                                          - 核心当前的 to_record()（此时为 pending_commit）
                                      4. save() 成功 → commit_succeeded(trip_id)
                                         save() 失败 → commit_failed(trip_id, retryable=true)
 committed ◄──────────────────────────
-close() ──► idle（宿主再保存一次，可与下次任意保存合并）
+close() ──► idle（宿主保存 to_record()，可与下次任意保存合并）
 ```
 
 要点：
 
-- **幂等键用单调序号，不用集合**：宿主只需保存一个整数 `last_committed_trip_serial`，比保存所有已提交 ID 的集合更有界，也不会随游戏时长膨胀。序号由核心在 `begin` 时分配并立即持久化。
-- **授予与状态同一次原子保存**：如果“发物”和“标记已提交”分两次写，中间崩溃就会重复发物或丢物。所以要求宿主把两者放进同一次 `save()`。这依赖 #149 的可靠替换（失败不删旧档）。
-- **部分非法物品**：目录变更导致某个 `find_id` 失效时，宿主回 `commit_failed(retryable=false, rejected=[...])`。核心把失效项移出提案、`revision + 1`，再进入 `pending_commit`。`trip_id` 不变，所以仍然最多授予一次。
-- **空提案**也要走提交：成本很低（只推进序号），好处是取消/空手和带物回院共用同一条去重路径。
+- **探索记录只由核心生成**：宿主只原样保存 `to_record()`，不直接改其中字段。即使第 3 步存下的会话仍是 `pending_commit`，恢复时发现 `trip_serial <= last_committed_trip_serial` 就会直接视为 `committed`（§8），不会二次授予。
+- **幂等键用单调序号，不用集合**：宿主只需保存一个整数 `last_committed_trip_serial`，放在探索记录之外（§6）。它比保存所有已提交 ID 的集合更有界，也不会随游戏时长膨胀。
+- **授予与序号同一次原子保存**：如果“发物”和“推进已提交序号”分两次写，中间崩溃就会重复发物或丢物，所以建议放进同一次 `save()`。这依赖 #149 的可靠替换（失败不删旧档）。
+- **部分非法物品**：宿主回 `commit_failed(retryable=false, rejected=[...])`，核心移出失效项、`revision + 1`，仍是 `pending_commit`（§4）。`trip_id` 不变，所以仍然最多授予一次；全部失效时就成为空提案。
+- **空提案永远可收**：取消、空手、`settle_empty` 都产生空提案。宿主对它不做内容校验，只推进序号；只有落盘本身失败才会失败。这是“不困住玩家”的兜底。
 
 ## 8. 恢复与降级
 
-宿主加载存档后调用 `ExplorationSession.restore(record, catalog)`，核心返回“恢复后状态 + 建议宿主动作”：
+宿主加载存档后调用 `ExplorationSession.restore(record, catalog, last_committed_trip_serial)`，核心返回“恢复后状态 + 建议宿主动作”。表格**自上而下匹配，命中第一行即停**；所有 `idle` 结果的下一个序号都按 §6 规则取 `max(next_trip_serial, last_committed_trip_serial + 1)`，绝不回退：
 
 | 读到的记录 | 恢复结果 | 建议宿主动作 |
 | --- | --- | --- |
-| 缺失 / 不是字典 | `idle`，`next_trip_serial = 1` | 无 |
+| 缺失 / 不是字典 | `idle` | 无 |
 | `contract_version` 比当前新 | 不解析、不改写原始数据 | `quarantine`：宿主原样保留这段数据（#150 定位置），本次不开放出门，并给出非阻断提示；其余小院功能照常 |
-| 字段损坏 / 超预算 / ID 非法 | `idle`；**序号取 max(记录值, 已提交序号) + 1**，绝不回退 | `log_and_reset_session`；只丢弃旅程字段，不碰小院其他数据 |
+| 字段损坏 / 超预算 / ID 非法 / 前缀不一致 / 玩家档里出现 `catalog == "fixture"` | `idle` | `log_and_reset_session`：只丢弃旅程字段，不碰小院其他数据。**若损坏记录里有尚未落盘的提案，它会随之丢弃**；这是明确记录的降级，列入 #152 坏数据测试 |
+| 任意状态，且 `trip_serial <= last_committed_trip_serial` | `committed` | 直接 `close()`（说明上次已落盘，只是收尾前中断） |
 | `active` | `active`，停在 `current_stop` | **待产品选择**：A 继续旅程（回到该点）/ B 安全回院（`request_return(reason="restored")`，已带上的东西照常提交）。核心两种都支持 |
-| `pending_commit` / `recoverable_failure` | 原状态 | 自动重试提交；若序号已提交则直接 `committed` |
+| `pending_commit` / `recoverable_failure` | 原状态 | 自动重试提交（`retryable=false` 的失败则提示后 `settle_empty`） |
 | `committed` | `committed` | 直接 `close()` |
 | 路线已从目录移除（`active`） | 强制 `pending_commit`，提案只保留仍合法的携带物 | 提示后回院 |
+| 路线仍在，但 `current_stop` 或部分 `visited` / `offers` 的停留点已被移除（`active`） | `active`；从 `visited` / `offers` 中剔除失效点；`current_stop` 失效时回到 `start_stop`；已携带物保留，提交时由宿主按目录校验 | 无 |
 
 推荐 B（安全回院并保留已带上的东西）作为默认候选：重启后回到熟悉的小院，不丢玩家选择，也不需要恢复院外场景状态。最终由产品决定，经 #146 汇总。
 
@@ -192,9 +210,10 @@ close() ──► idle（宿主再保存一次，可与下次任意保存合并�
 | # | 问题 | 本稿建议 |
 | --- | --- | --- |
 | 1 | 探索记录放在 SaveStore 哪个键、由谁迁移 | 单键 `exploration`，SaveStore v6 迁移由 CODEX 集中负责；缺失时视为 `idle` |
-| 2 | 幂等凭证形式 | 宿主侧单个整数 `last_committed_trip_serial`（§7） |
+| 2 | 幂等凭证形式与位置 | 宿主侧单个整数 `last_committed_trip_serial`，放在共享区、`exploration` 键之外，恢复时传给核心（§6、§7） |
 | 3 | 取得物身份与目录 | `formal.` 前缀 ID 来自 #150 的正式目录；核心只引用 ID，不定义物品字段 |
-| 4 | 授予的原子性 | 授予 + 序号 + 会话状态同一次 `save()`；依赖 #149 |
+| 4 | 授予的原子性 | 授予 + 序号 + 核心当前记录同一次 `save()`；依赖 #149 |
+| 4b | 空提案 | 宿主对空提案不做内容校验，只推进序号，保证 `settle_empty` 一定能收尾 |
 | 5 | 未来版本数据的隔离位置 | #150 提供一个隔离槽，原样保存，不清除 |
 | 6 | 旅程期间院内时钟 | 由 Host 设计定；核心只读采样 |
 | 7 | 重启时 `active` 的玩家策略 | A 继续 / B 安全回院，推荐 B；产品经 #146 选定 |
@@ -204,7 +223,7 @@ close() ──► idle（宿主再保存一次，可与下次任意保存合并�
 ```gdscript
 class_name ExplorationSession extends RefCounted
 
-static func restore(record: Variant, catalog: ExplorationCatalog) -> Dictionary
+static func restore(record: Variant, catalog: ExplorationCatalog, last_committed_trip_serial: int) -> Dictionary
     # → { session: ExplorationSession, host_action: String }
 
 func begin(route_id: String, clock: Dictionary, seed: Variant = null) -> Dictionary
@@ -215,6 +234,7 @@ func request_return(reason: String) -> Dictionary
 func commit_succeeded(trip_id: String) -> Dictionary
 func commit_failed(trip_id: String, retryable: bool, rejected: PackedStringArray = []) -> Dictionary
 func retry_commit() -> Dictionary
+func settle_empty() -> Dictionary
 func defer_to_yard() -> Dictionary
 func close() -> Dictionary
 
@@ -225,18 +245,18 @@ func scene_identity() -> Dictionary
 func to_record() -> Dictionary         # 纯值，可直接 JSON
 ```
 
-所有变更类方法统一返回 `{ok: bool, error?: String, state: String, persist: bool}`。`persist == true` 表示宿主应立即保存 `to_record()`，例如 `begin`、`take`、`release`、`request_return` 和提交结果之后。
+所有变更类方法统一返回 `{ok: bool, error?: String, state: String, persist: bool}`。`persist == true` 表示宿主应立即保存 `to_record()`，例如 `begin`、首次到达某点（`offers` 新增）的 `visit`、`take`、`release`、`request_return`、`settle_empty`、提交结果和 `close` 之后。
 
 ## 12. #152 隔离测试计划（独立 suite，纳入 strict daily）
 
 1. 合法路径：出门 → 走两点 → 带一样 → 回院 → 提交成功 → 关闭；空手回；取消回。
 2. 非法转换全表：每个状态下发送每个不允许的事件，断言错误码且记录字节不变。
 3. 重复操作：连续 `request_return`；同一 `trip_id` 重复 `commit_succeeded`；宿主重复提交同一序号时不二次授予（用假宿主计数）。
-4. 提交失败：可重试失败 → 重试成功；`defer_to_yard` → 重启 → 自动重试；不可重试且部分物品被拒 → `revision` 递增、`trip_id` 不变。
-5. 恢复：每个状态 `to_record` → JSON 字符串 → `restore` 往返一致；`rng_state` 往返后后续发现序列一致。
-6. 坏数据：非字典、缺字段、类型错、超长数组、超 4 KB、非法 ID、未来版本、序号回退；断言只重置旅程、序号不回退、不抛脚本错误。
-7. 目录变更：路线删除、物品删除后的恢复与提交。
-8. 夹具闸门：fixture 会话提交被假宿主拒绝；正式目录加载不包含 `fixture.` ID。
+4. 提交失败：可重试失败 → 重试成功；`defer_to_yard` → 重启 → 自动重试；不可重试且部分物品被拒 → `revision` 递增、`trip_id` 不变；不可重试且无 `rejected` → `retry_commit` 被拒、`settle_empty` 收尾；全部物品被拒 → 空提案收尾。断言任何失败序列后都存在到达 `committed` 的路径。
+5. 恢复：每个状态 `to_record` → JSON 字符串 → `restore` 往返一致；负数与超过 2^53 的 `rng_seed` 往返不变；以不同顺序访问停留点得到相同发现。
+6. 坏数据：非字典、缺字段、类型错、超长数组、超 4 KB、非法 ID、前缀不一致、玩家档中的 fixture 会话、未来版本；断言只重置旅程、不抛脚本错误。序号：记录缺失或损坏且 `last_committed_trip_serial = N` 时，下一趟序号必须是 N+1 且提交后真实授予（假宿主计数为 1）。
+7. 目录变更：路线删除、停留点删除（含 `current_stop`）、物品删除后的恢复与提交。
+8. 夹具闸门：正式入口 `begin` fixture 路线被拒；fixture 会话提交时物品全部被拒并以空提案收尾；正式目录加载不包含 `fixture.` ID。
 9. 生命周期：1000 次 `begin/close` 与适配器 `bind/release`，无残留连接或对象增长。
 10. 不读现实时钟：静态检查 `scripts/exploration/` 不出现 `Time.get_unix_time`、`Time.get_ticks`、`OS.get_unix_time`。
 
