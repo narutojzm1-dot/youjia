@@ -26,6 +26,8 @@
 | REQ-20261002-012 | P1 | 让熟悉的小院随时段天空和玩家构图反复呈现新意 | 同一场景通过晨/午/晚光线、云形与天气、树水细节和偶发趣事支持反复观看；摄影探索玩家选择角度、前景和画面关系的可能性。可研究轻量场内摄影演出：主人静坐时，动物事件从远景进入、经主人视角跟随后聚焦近景并留下照片。先验证美术方案、操作可读性、资源成本与 Web 性能；汽水瓶仅为构图例子，不预设具体道具或 UI。保留安静停留和随机探索，不加入打卡/集齐目标。 | 设计拆分中（草案） | CURSOR-CONTRIBUTOR-LOCAL | [issue #48](https://github.com/narutojzm1-dot/youjia/issues/48)；拆分草案见 [architecture/familiar-yard-observation.md](architecture/familiar-yard-observation.md)。实现需用户确认切片顺序；与 REQ-005 云带方案衔接但不抢 REQ-011。 |
 | REQ-20261002-013 | P0 | 真实可拍动物偶遇、稳定的有限题词与可翻旅人手账 | 大鹅完整卧姿、两羊靠近、池边鸭鹅须实际可见并真实入镜；题词只在首次成片保存变体，旧照不改写、中英切换和重开稳定；宽屏双页、手机单页，按钮/左右键/触摸翻页可靠。只浏览已拍记忆，无锁定槽、红点或完成率。 | 已发布；用户正式版试玩待反馈 | `MANUS-CONTRIBUTOR` | [PR #53](https://github.com/narutojzm1-dot/youjia/pull/53) 合并提交 `b560dec94f08a1597e2b834e74c41841893ba36b`；[Actions 37025345857](https://github.com/narutojzm1-dot/youjia/actions/runs/37025345857) 成功；正式 `game-b560dec` Pages PCK 12,776,620 字节，SHA-256 `e5b9c3f931b957ac4dd288e1c6786f6b9fc1d9ace946eac711e3bed723ac3d58` 已从公网核验；[体验记录](playtests/2026-10-02-REQ-013-scrapbook.md)。与 REQ-011 世界回响及 REQ-012 天空/自由构图分离。 |
 
+| REQ-001-GRASS | P0 | 主角拿草与递草身体动作 | 定稿居民完整帧、固定脚底；成功才演出，移动和低动效可打断；不延迟库存或喂食；实际 Web 复核。 | 已指定（独立切片） | `CODEX-LEAD-ASSISTANT` | [issue #73](https://github.com/narutojzm1-dot/youjia/issues/73)；父 REQ-20261002-001 Owner 保留。仅 Vacationer / SequenceResident、动作帧和独立验证；不接管抚摸/招呼，不修改 PR #65/#71 的场景与动物实现。 |
+
 ## 认领约定
 
 - PR 标题建议：`[REQ-20261002-001][GROK-CONTRIBUTOR] 改善角色移动与互动动作`。
