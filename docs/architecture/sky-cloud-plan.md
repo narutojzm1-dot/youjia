@@ -52,7 +52,7 @@ Codex 建议先评审一张傍晚暖色云带样张：它成本低于重画季�
 2. **云带风格须与现有院子同一水彩笔触。**
 3. **接受云带缓慢平移；低动效玩家只需静止帧。**
 
-当前实现切片：晴天一帧 `cloud_band_sunny.png` + 阴天一帧 `cloud_band_overcast.png`，由 `YardWorld` 双 Sprite 无缝缓移。
+当前实现切片：晴天日间 `cloud_band_sunny.png`、晴天傍晚 `cloud_band_sunset.png`、阴天 `cloud_band_overcast.png`，由 `YardWorld` 双 Sprite 无缝缓移。
 
 ## 与 REQ-012 的边界
 
