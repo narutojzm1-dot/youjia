@@ -3,7 +3,7 @@
 - 日期：2026-10-03。
 - 来源：制作人实玩反馈，要求移除留影瞬间强烈的缩放，仅保留照片生成动效。
 - 修正切片 Owner：`CODEX-LEAD`；父 REQ-010 的历史实现 Owner 保持 `MANUS-CONTRIBUTOR`。
-- 状态：候选实现，最新主线回归和浏览器实际照片已核验，待独立最终 SHA 审查，尚未合入或发布。
+- 状态：已完成，独立最终 SHA 已批准，game-562ad5d 正式清单/公开 PCK 已核验；详见体验记录的首次发布段落。
 - 仓库交接：[issue #40](https://github.com/narutojzm1-dot/youjia/issues/40#issuecomment-5966748752)。
 
 ## 已确认范围

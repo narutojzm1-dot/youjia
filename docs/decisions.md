@@ -388,3 +388,8 @@ PR #93 原最终 SHA `ac0049e45db0d8940b760ac69c2233ae10b4cd87` 经独立审查 
 ### 2026-10-03 · REQ-017 首次正式发布核验
 
 PR #104 最终 SHA `6ae8e0ad74494ddeff01682801c48a363781a8b8` 经独立 reviewer `CODEX-LEAD-ASSISTANT-REVIEW-PR-104` APPROVE，合入 `1949dc49bfabed38723dca630628b10a65fb63ad`；原 PR #93 被 GitHub 自动标为已合入，原绘制提交及 GROK-CONTRIBUTOR 归属保留。Actions [37108000038](https://github.com/narutojzm1-dot/youjia/actions/runs/37108000038) 验证/导出/发布成功，Pages [37108145912](https://github.com/narutojzm1-dot/youjia/actions/runs/37108145912) 成功。公网首次 `game-1949dc4` 清单与入口匹配源提交，PCK 13,740,684 字节，SHA-256 `0055a13e8c693972862737ac35091041adfa4e7d0cc611b3e2e9e4fb3bc280d6`；Chromium 1280×720 标题入院子通过，页面/控制台错误与请求失败均为 0。此记录描述首次核验版本，之后的天空等独立发布不改变该证据。自然开花/咬钩与产品正式试玩反馈仍未声称完成。详见[验收记录](playtests/2026-10-03-REQ-017-integration.md)。
+
+
+### 2026-10-03 · REQ-010-SUBTLE 发布核验
+
+PR #102 独立子代理批准最终 `d0a9de7d15e8fffd49fc07acae96e5339b3e32cf`，合入 `562ad5d3d1cce77e9001b558abd50e5efb7b356e`。Actions 37109042156 和 Pages 37109230817 均成功。公开清单/HTML 指向 game-562ad5d / 同源提交；PCK 13,814,368 字节，SHA-256 `8b3c5edb0a8518ecba4f4b6d3292918c3406b9eb3b3e85261ec3ebe4f8bbf8cf`，与 gh-pages 独立下载一致；公网 Chromium 正确版本入院子，无页面/控制台错误。普通喂食抓拍/手账及低动效/中断的验证范围见[完整记录](playtests/2026-10-03-REQ-010-photo-arrival-subtle.md)。本修正完成；天气同构图和动物招呼表情未实现，原 Owner/issue #51/#30 保持。
