@@ -68,6 +68,9 @@
 | 编号 | 优先级 | 需求 | 验收条件 | 状态 | Owner | 依赖 / 记录 |
 | --- | --- | --- | --- | --- | --- | --- |
 | REQ-20261003-018 | P2 | 低动效下橙色目标光圈和钓到庆祝环保持静止可读 | 开启低动效时目标脚底光圈半径固定、钓到后的金环停在中等大小且没有向外飞的碎点；关闭低动效时原有呼吸光圈、扩散环和碎点仍在。不改钓鱼时长、目标选择或存档。 | 已发布；game-26c93c8 核验通过 | `GROK-CONTRIBUTOR` | 用户 2026-10-03 让 GROK-CONTRIBUTOR 继续自选无主切片。不改 REQ-017 的花圃/涟漪/浮标，不改 REQ-002 的目标文案，不改 REQ-015 乘骑画。只动 `WorldEffectsOverlay` 的绘制相位。[PR #108](https://github.com/narutojzm1-dot/youjia/pull/108) 最终 SHA 独立批准；Actions/Pages/公开 PCK 已核对。[集成与发布证据](playtests/2026-10-03-REQ-018-integration.md)。 |
+| REQ-20261003-019 | P2 | 低动效下橙色目标指示的明暗脉动保持静止可读 | 开启低动效时目标脚底光圈与头顶弧的明暗不再随时间脉动，固定为可读亮度；关闭低动效时原有 0.75–1.0 脉动仍在。不改目标选择、距离衰减、钓鱼或乘骑画。 | 已发布；game-664dfde 公开清单/PCK核验通过 | `GROK-CONTRIBUTOR` | 用户 2026-10-03 让 GROK-CONTRIBUTOR 继续自选无主切片。补上 REQ-018 决策明确未覆盖的目标明暗脉动。不改 REQ-015/#99 乘骑资源，不改 REQ-001/005/012。只动 `WorldEffectsOverlay`：`celebration_pose.alpha_pulse` 与绘制时抵消 YardWorld 仍写入的脉动；不改 `yard_world.gd`、乘骑资源或目标选择。 |
+| REQ-20261003-020 | P2 | 低动效下草堆亮度保持稳定 | 开启低动效时草堆不再一明一暗；人站在旁边时维持略亮，走开后是普通白色。关闭低动效时原来的呼吸亮度还在。不改拿草、库存或走路。 | 待评审 | `GROK-BUILD` | 活动表没有待认领行。不改 REQ-019 的目标明暗，不改 REQ-001-GRASS 的拿草动作，不改 REQ-015 乘骑画。只停 `YardWorld` 里草堆的亮度闪动。 |
+| REQ-20261003-021 | P1 | 补一组动物休息画和路旁小植物 | 鸭休息时用理羽画，马休息时用甩尾画，牛休息时用嚼草画，羊休息时用抖毛画；人在南边小路停住一会儿，会看到一只蜗牛和一株三叶草。走动就收起。不改乘骑演出，不改拿草，不新增任务或相册。 | 待评审 | `GROK-BUILD` | 用户要求用画图补互动资源。父需求 REQ-004 的 Owner 仍是 `MANUS-CONTRIBUTOR`，REQ-009 的 Owner 仍是 `MANUS-CONTRIBUTOR`。本行只加这六张新画和对应的休息/停留显示。不改 PR #99 的乘骑画。 |
 
 
 ## REQ-015 最终合入门禁
@@ -75,3 +78,38 @@
 | 编号 | 优先级 | 工作范围 | 验收条件 | 状态 | Owner | 依赖 / 记录 |
 | --- | --- | --- | --- | --- | --- | --- |
 | REQ-20261002-015-GATE | P1 | 核对 PR #99 同步 main 后的最终 SHA 与资源集成门禁 | 独立审查精确 head、实际引擎导入/回归；阻断写明复现、修复和新 SHA 重验要求 | 门禁检查完成；资源 PR 阻塞，未合入/发布 | `CODEX-LEAD` | head `1620c2abffab3d087a08472d080df39f32c48b75` 的 CastArt:53 解析失败；此前 bec7118 的候选证据不能替代。成品仍归 WORKBUDDY，规格归 GROK-BUILD，导演归 REQ014。[记录](playtests/2026-10-03-REQ-015-final-gate.md)。 |
+
+
+## REQ-019 集成验证
+
+| 编号 | 优先级 | 工作范围 | 验收条件 | 状态 | Owner | 依赖 / 记录 |
+| --- | --- | --- | --- | --- | --- | --- |
+| REQ-019-VERIFY | P1 | 保留 PR113 并恢复标准回归入口可执行权限，补实际目标像素证据 | 标准全量回归、正常Web及真实YardWorld输入绘制通过；独立最终SHA审核后方可合入发布 | 已完成；独立审查、发布与公网核验通过 | `CODEX-LEAD` | 功能Owner保持GROK-CONTRIBUTOR；PR99由ASSISTANT验收，不重复。[验收](playtests/2026-10-03-REQ-019-integration.md)。 |
+
+
+## 制作人指定：互动动作资源订单
+
+资源制作全部指定给 `GROK-BUILD`；行为/接入保持父项原Owner。订单与节奏见[制作清单](art/interaction-resource-orders.md)。PR118/#117休息画沿用，不重复制作；PR99仍归WORKBUDDY。
+
+| 编号 | 优先级 | 资源交付 | 验收条件 | 状态 | Owner | 依赖 / issue |
+| --- | --- | --- | --- | --- | --- | --- |
+| ART-ACK-COW | P0 | 牛：成功互动后的抬眼与温和回应 | 同角色完整画作、稳定接触锚点、透明边界、原尺寸/镜像预览、来源哈希与预算；样张核对后再扩帧，接入单独验收 | 样张已交；未接入；待核对 | `GROK-BUILD` | [#119](https://github.com/narutojzm1-dot/youjia/issues/119)；#30 / MANUS反馈映射接入。候选在 `art/concepts/ack_cow_v1/`，静态预览见 [playtests/2026-10-03-ART-ACK-COW](playtests/2026-10-03-ART-ACK-COW/README.md)。 |
+| ART-ACK-HORSE | P1 | 马：注意玩家与接受轻抚的回应 | 同角色完整画作、稳定接触锚点、透明边界、原尺寸/镜像预览、来源哈希与预算；样张核对后再扩帧，接入单独验收 | 已指定；排队；复用牛单验证的交付规格 | `GROK-BUILD` | [#120](https://github.com/narutojzm1-dot/youjia/issues/120)；#30 / MANUS反馈映射接入 |
+| ART-ACK-SHEEP | P1 | 两只羊：保留个性的互动回应 | 同角色完整画作、稳定接触锚点、透明边界、原尺寸/镜像预览、来源哈希与预算；样张核对后再扩帧，接入单独验收 | 已指定；排队；先各一张关键姿态 | `GROK-BUILD` | [#121](https://github.com/narutojzm1-dot/youjia/issues/121)；#30 / MANUS反馈映射接入 |
+| ART-ACK-BIRDS | P1 | 鸭与鹅：自然关注和接食姿态资源 | 同角色完整画作、稳定接触锚点、透明边界、原尺寸/镜像预览、来源哈希与预算；样张核对后再扩帧，接入单独验收 | 已指定；排队；鹅先复用盘点再作画 | `GROK-BUILD` | [#122](https://github.com/narutojzm1-dot/youjia/issues/122)；#30 / MANUS反馈映射接入 |
+| ART-RESIDENT-PET | P1 | 旅人：自然轻抚动作的三姿态样张 | 同角色完整画作、稳定接触锚点、透明边界、原尺寸/镜像预览、来源哈希与预算；样张核对后再扩帧，接入单独验收 | 已指定；可先制作三姿态分镜样张；产品核对后烘最终帧 | `GROK-BUILD` | [#123](https://github.com/narutojzm1-dot/youjia/issues/123)；#84 / CODEX主角接入 |
+
+
+## 扩大旅人可走范围
+
+| 编号 | 优先级 | 需求 | 验收条件 | 状态 | Owner | 依赖 / 记录 |
+| --- | --- | --- | --- | --- | --- | --- |
+| REQ-WALK-EXPAND | P1 | 扩大院内连通可走空间，分离玩家与动物安全边界 | 标定真实落脚/禁行/遮挡，原区域可达；统一键鼠触屏/路径/追踪与牵引，镜头/透视自然；方案核对后独立实现并完整回归/Web验收 | 已指定；区域标定与技术设计待做，未实现 | `CODEX-LEAD` | [#125](https://github.com/narutojzm1-dot/youjia/issues/125)；[分期计划](architecture/player-walk-area-expansion.md)，不直接扩大动物作息区。 |
+| ART-GROUND-EXPAND | P1 | 扩展候选地面的资源盘点与补绘提案 | 现画可用则不重画；补绘同院子晴阴坐标/遮挡一致、来源锚点与预算齐全，具体方案确认后制作 | 已指定；先盘点，最终补绘依赖区域确认 | `GROK-BUILD` | [#126](https://github.com/narutojzm1-dot/youjia/issues/126)；依赖REQ-WALK-EXPAND，协调#51 CURSOR天气底图，不抢动物资源订单。 |
+
+
+## 工程门禁：异常退出不得当作验证通过
+
+| 编号 | 优先级 | 工作范围 | 验收条件 | 状态 | Owner | 依赖 / 记录 |
+| --- | --- | --- | --- | --- | --- | --- |
+| VERIFY-EXIT-GATE | P0 | 修复每日Godot回归忽略非零退出码的发布门禁漏洞 | Godot/timeout和tee任一非零、错误/FAIL日志或日志读取失败均阻断；11项故障注入与严格完整回归、独立最终SHA审查通过 | 已合入并核验发布；PR134独立审查批准、主线严格回归/导出/Pages与公开包一致性通过 | `CODEX-LEAD` | [工程督导#130](https://github.com/narutojzm1-dot/youjia/issues/130)；不包含存档协议、完成标记或PR验证workflow。[证据](playtests/2026-10-03-verify-exit-gate.md)。 |

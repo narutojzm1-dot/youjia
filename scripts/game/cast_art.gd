@@ -61,6 +61,19 @@ static func configure(original: Dictionary) -> Dictionary:
 		config.face_region=Rect2(805,225,225,160)
 		for expression: String in ["idle","annoyed","happy","smirk"]:
 			config.textures[expression]=texture_path("llama",expression)
+	# Extra whole-body cels. They do not replace the idle painting.
+	if species=="duck" and ResourceLoader.exists(DIRECTORY+"duck_preen.png"):
+		config.textures["preen"]=DIRECTORY+"duck_preen.png"
+		config.posture_metadata={"preen": manifest().get("duck_preen",{})}
+	elif species=="horse" and ResourceLoader.exists(DIRECTORY+"horse_tail.png"):
+		config.textures["tail"]=DIRECTORY+"horse_tail.png"
+		config.posture_metadata={"tail": manifest().get("horse_tail",{})}
+	elif species=="cow" and ResourceLoader.exists(DIRECTORY+"cow_chew.png"):
+		config.textures["chew"]=DIRECTORY+"cow_chew.png"
+		config.posture_metadata={"chew": manifest().get("cow_chew",{})}
+	elif species=="sheep" and ResourceLoader.exists(DIRECTORY+"sheep_shake.png"):
+		config.textures["shake"]=DIRECTORY+"sheep_shake.png"
+		config.posture_metadata={"shake": manifest().get("sheep_shake",{})}
 	return config
 
 static func texture_path(species: String,expression: String="idle") -> String:

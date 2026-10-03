@@ -413,6 +413,45 @@ Assistant核对到REQ018/PR108已由CODEX-LEAD接手，避免重复集成，转�
 
 CODEX-LEAD 检查最新 main e11b250，上一轮已收尾。PR111 由 CODEX-LEAD-ASSISTANT 登记支持验收，不重复；本轮只复核 PR99 新 head `1620c2abffab3d087a08472d080df39f32c48b75`。同步 main 保留了共享记录，但 CastArt 乘骑两行注册缩进退到 goose 分支外，下一行 metadata 产生解析错误。Godot4.7.2 与全量日常入口均复现，独立审查 REQUEST CHANGES。资源不可合入，不导出/发布这个失败候选；旧候选的成功验证不覆盖新 SHA。原 Owner 修复后须重新完整回归、Web 导出/浏览器和独立最终 SHA 审查。导演接线仍为独立 REQ014；天气同构图 #51 与动物表情 #30 保留原 Owner、无新回复，未声称完成。[复现与验收](playtests/2026-10-03-REQ-015-final-gate.md)。
 
+
+### 2026-10-03 · REQ019 独立集成与标准入口修复
+
+PR113替换PR111；功能仍归GROK。独立审查原SHA e8045c76beac63fabf452f14eec8365983431cfe发现daily权限回退，标准入口无法执行。CODEX-LEAD从原提交建独立集成分支恢复100755，保留原提交、不强推贡献者分支；补真实YardWorld输入Web像素16项和正常启动，完整标准回归通过。最终审查/发布待完成。[证据](playtests/2026-10-03-REQ-019-integration.md)。PR99新328298候选由ASSISTANT验证，天气#51/动物回应#30仍待原Owner提案；本轮不重复。
+
+
+### 2026-10-03 · REQ019 正式发布核验
+
+PR115独立子代理批准最终884b0b57bde43f37e4efd058d679bd16c681eb83，合入664dfdeb3151165502f0159402089cd556318e30；GROK原PR113完整保留并自动标合入。标准最终完整回归/Web实际像素16项/普通入口通过；有效回归前一次import清理干扰运行明确作废，不算通过。Actions37119052380和Pages37119238179成功，公开game-664dfde清单同源，PCK13,815,648字节、SHA256 ec653674a078d3ae4e3b2887c5bbb19d7e72aab6ce962e05ab7bb31f31b9b2bf与raw gh-pages相同。完整范围、过程与限制见[验收](playtests/2026-10-03-REQ-019-integration.md)。目标亮度适配依赖YardWorld现有脉动公式；后续改该公式时应同步像素门禁。功能Owner仍GROK，未改乘骑、天气、动物表情或关系规则。
+
+
+### 2026-10-03 · 制作人指定 GROK-BUILD 承担互动动作资源
+
+制作人指出GROK-BUILD资源制作能力强，要求把游戏交互和动物动作丰富度的资源缺口开单并委派给他。本轮明确资源制作Owner GROK-BUILD，保留MANUS的REQ004/008行为与反馈接入、CODEX的主角/关系框架及WORKBUDDY的PR99乘骑画。现有#117/PR118休息资源沿用，不重做；PR118里的路旁彩蛋仍按其原范围单独审核，本分工不批准新增玩法。
+
+新增牛、马、双羊、鸭鹅的成功互动回应，以及旅人轻抚三姿态样张共五单，详见[订单清单](art/interaction-resource-orders.md)。首单牛先建立同角色、接触锚点与实际尺寸基准，主角可并行做分镜样张；其余排队。用户此次授权支持候选资源制作，不要求重复请示分工；具体新画和扩帧通过样张核对后再批量生产。行为映射由MANUS对齐现有成功路径，资源制作不扩大招呼/喂食语义，不默认每次爱心，不引入打卡/缺席惩罚。资源PR和接入PR分离；注册共享文件先协调，不让美术交付和游戏发布状态混淆。2026-10-03 GROK-BUILD 交了 #119 第一张牛抬眼候选，放在 `art/concepts/ack_cow_v1/`，未注册、未接入、未发布。
+
+
+
+### 2026-10-03 · 制作人要求规划扩大旅人可走范围
+
+制作人反馈人物可走范围太小，要求进一步计划扩大。CODEX-LEAD源码核对main e05ff69：玩家/陆生动物共用14顶点lawn，路由/线段校验硬编码同一polygon；直接扩顶点会同时放宽动物边界。当前投影面积80924（画面8.8%），是空间基线而非真实地面比例或新范围。
+
+建立[#125](https://github.com/narutojzm1-dot/youjia/issues/125)由CODEX承担区域标定与玩家独立边界设计；优先审门前小路下段、池塘左岸与院内栏前连通地面，具体坐标尚未确认，不开木门/棚内或直接穿水。资源缺口[#126](https://github.com/narutojzm1-dot/youjia/issues/126)委派GROK-BUILD做盘点/提案，确有缺口再补绘；天气同构图仍由CURSOR #51协调，MANUS热点/动物代码认领不变。先标定与实际脚点核对，再单独实现、回归/Web/独立最终SHA审查与发布；本轮仅计划，无新范围上线。[架构与验收](architecture/player-walk-area-expansion.md)。
+
+
+### 2026-10-03 · 工程督导门禁漏洞最小修复
+
+CODEX-LEAD本轮优先处理#130第1项：现有daily run_godot在set +e后忽略退出码，会放过无ERROR日志的失败/超时/命令不可用。独立分支提取小型执行包装器，立即保存pipeline两个进程状态，非零无条件阻断，不为所谓偶发Godot退出1添加宽泛例外；同时阻断错误/失败断言日志及扫描失败。11项受控故障注入通过；修正六套成功退出控制流后，严格真实全量回归exit=0，待独立最终SHA审查。[证据](playtests/2026-10-03-verify-exit-gate.md)。
+
+每套完成标记、PR阶段验证和存档恢复仍是#130后续独立范围，不能把本片完成写成全部工程风险已解决。PR99最新资源已补引擎验证但分支冲突/旧正文事实仍需原Owner处理，PR133资源反馈低动效由原Owner保留；天气#51有同构图方案与工程督导旧照兼容补充，不接管CURSOR。牛资源PR132在本轮期间已合入候选，只在art/和docs，不表示动物成功互动已接入。空间#125/#126继续既定规划。本轮不扩大产品玩法，不更改运行时美术/动物行为。
+
+严格真实回归进一步定位原“PASS但退出1”并非已证实的引擎异常：六套SceneTree测试成功quit(0)后没有return，随即执行quit(1)。本修复同时补齐这六个成功分支返回，不改断言/失败分支；严格门禁保持非零必阻断。首轮因该真实缺陷失败不计通过，修正后重新逐套与全量验证。
+
+
+### 2026-10-03 · VERIFY-EXIT-GATE 合入与公开发布核验
+
+PR134最终727f76461e0d2441314e84096cefefc3f65b8882由独立CODEX-LEAD-REVIEW-PR-134批准，合入2b0210aeb0b6403ea67bdd4c9b97c9f4f3c75766。主线Actions37122153076严格回归/Web导出/提交成功，Pages37122339033成功；公开与gh-pages清单一致，PCK实际16875440字节、SHA256 d5a2a7ff91cd4bbdaf8b59a1b776dd19aa4bfdc7a0940ae939490f02ac930f81，公开和raw逐字节一致。Chromium首帧/开始进入院子成功，data-build=game-2b0210a，控制台及pageerror均为空。完成仅#130退出状态门禁和六套成功退出修复；套件完成协议、PR验证workflow、存档恢复/旧照兼容继续未完成，issue不关闭。资源PR99/133保持原Owner，#51/#125/#126既有分工不变。[完整证据](playtests/2026-10-03-verify-exit-gate.md)。
+
 ### 2026-10-03 · REQ-015 成品画切片：两帧乘骑扑翼交付（`WORKBUDDY-CONTRIBUTOR`）
 
 产品确认乘骑扑翼用**两张交替**而非一张（0.28s 交替的扑翼节奏需要上下两个翼位），原「确认前不要开工绘制」的门禁据此解除。`WORKBUDDY-CONTRIBUTOR` 只认领成品画切片：交付 `goose_riding_up` / `goose_riding_down` 两张独立全身绘画（非站立鹅缩放、非张翅画变形），均为 1254×1254 RGBA、真实 alpha、画布四边无 alpha>16 像素。两帧脚底锚点经整数平移对齐后残余 0.48px 亚像素差（换帧不可见）；运行时键为 `riding_up` / `riding_down`，由 `cast_art.gd` 注册纹理与 `posture_metadata`，`native_facing=1` 与 `cast_v2` 现有鹅族一致（运行时朝向翻转仍由 `scale.x` 负责）。两帧体积分别为 1029972 / 853295 字节，均低于 `goose.png` 的 1,212,584 字节上限。规格切片仍归 `GROK-BUILD`，导演接线仍归 REQ-014 / `CODEX-LEAD`；本切片不改 `yard_world.gd`、`FeltActor`，也不覆盖其他代理已认领的文件范围。
