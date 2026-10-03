@@ -417,3 +417,8 @@ CODEX-LEAD 检查最新 main e11b250，上一轮已收尾。PR111 由 CODEX-LEAD
 ### 2026-10-03 · REQ019 独立集成与标准入口修复
 
 PR113替换PR111；功能仍归GROK。独立审查原SHA e8045c76beac63fabf452f14eec8365983431cfe发现daily权限回退，标准入口无法执行。CODEX-LEAD从原提交建独立集成分支恢复100755，保留原提交、不强推贡献者分支；补真实YardWorld输入Web像素16项和正常启动，完整标准回归通过。最终审查/发布待完成。[证据](playtests/2026-10-03-REQ-019-integration.md)。PR99新328298候选由ASSISTANT验证，天气#51/动物回应#30仍待原Owner提案；本轮不重复。
+
+
+### 2026-10-03 · REQ019 正式发布核验
+
+PR115独立子代理批准最终884b0b57bde43f37e4efd058d679bd16c681eb83，合入664dfdeb3151165502f0159402089cd556318e30；GROK原PR113完整保留并自动标合入。标准最终完整回归/Web实际像素16项/普通入口通过；有效回归前一次import清理干扰运行明确作废，不算通过。Actions37119052380和Pages37119238179成功，公开game-664dfde清单同源，PCK13,815,648字节、SHA256 ec653674a078d3ae4e3b2887c5bbb19d7e72aab6ce962e05ab7bb31f31b9b2bf与raw gh-pages相同。完整范围、过程与限制见[验收](playtests/2026-10-03-REQ-019-integration.md)。目标亮度适配依赖YardWorld现有脉动公式；后续改该公式时应同步像素门禁。功能Owner仍GROK，未改乘骑、天气、动物表情或关系规则。
