@@ -1,10 +1,10 @@
 # REQ-005 / REQ-012 · 叠加云带 B · 实现记录
 
-- 构建：game-31316aa
-- 来源提交：31316aa24edb5e643cc8ef82fba8a1f8e1a490b3
+- 构建：`game-31316aa`
+- 来源提交：`31316aa24edb5e643cc8ef82fba8a1f8e1a490b3`
 - Actions：37092209977
 - 需求：REQ-20261002-005 云带 B；REQ-20261002-012 切片 A
-- Agent-ID：CURSOR-CONTRIBUTOR-LOCAL
+- Agent-ID：`CURSOR-CONTRIBUTOR-LOCAL`
 - 日期：2026-10-03
 
 ## 用户确认
@@ -15,16 +15,16 @@
 
 ## 实现
 
-- 资源：ssets/holiday/environment/cloud_band_sunny.png、cloud_band_overcast.png
+- 资源：`assets/holiday/environment/cloud_band_sunny.png`、`cloud_band_overcast.png`
   - 自晴/阴院子天空色采样烘焙的半透明水彩云带，可横向平铺
-- 运行时：YardWorld 双 Sprite 首尾相接缓移（CLOUD_DRIFT_SPEED）；ui.reduced_motion 时保持静止
+- 运行时：`YardWorld` 双 Sprite 首尾相接缓移（`CLOUD_DRIFT_SPEED`）；`ui.reduced_motion` 时保持静止
 - 天气切换时云带帧与院子 modulate 同步；不改存档字段
 
 ## 自动化覆盖
 
-- 	est/ui_interaction_suite.gd：晴/阴云带换帧；低动效静止；允许动效时滚动增加
+- `test/ui_interaction_suite.gd`：晴/阴云带换帧；低动效静止；允许动效时滚动增加
 
 ## 发布
 
-- 正式 Web：game-31316aa（Verify/publish 通过）
+- 正式 Web：`game-31316aa`（Verify/publish 通过）
 - 公网抬头观云：建议切换晴/阴核对云带疏密与缓移；低动效下应为静止帧
