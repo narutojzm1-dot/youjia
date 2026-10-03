@@ -186,6 +186,16 @@ func review():
  check(w._cloud_band_a.texture==w.CLOUD_SUNNY,"sun restores the sunny cloud band")
  # 晴天云带 modulate 应偏亮，不跟院子暖滤色一起变脏。
  check(w._cloud_band_a.modulate.r >= 1.0 and w._cloud_band_a.modulate.g >= 1.0,"sunny cloud band stays bright instead of dirty warm tint")
+ # 傍晚暖云：只在晴天 TOD evening 窗口换帧；阴天不抢。
+ w._day_elapsed = w.DAY_DURATION_SECONDS * 0.80
+ w._apply_weather_art()
+ check(w._cloud_band_a.texture==w.CLOUD_SUNSET,"sunny evening uses the warm sunset cloud band")
+ w.toggle_weather()
+ check(w.weather=="overcast" and w._cloud_band_a.texture==w.CLOUD_OVERCAST,"overcast evening keeps the overcast cloud band")
+ w.toggle_weather()
+ w._day_elapsed = w.DAY_DURATION_SECONDS * 0.40
+ w._apply_weather_art()
+ check(w.weather=="sun" and w._cloud_band_a.texture==w.CLOUD_SUNNY,"sunny noon restores the bright cloud band")
  # 低动效：云带保持可读静止帧（滚动偏移不再增加）。
  # 本套件以 SceneTree 运行，须经 root 取 TuningStore 节点。
  var scroll_before=w._cloud_scroll

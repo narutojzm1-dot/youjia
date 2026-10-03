@@ -17,7 +17,7 @@
 | REQ-20261002-002 | 2026-10-02 | 解释靠近动物时出现的橙色提示，并让动作目标更明确 | 已上线；待实玩验收 | [PR #25](https://github.com/narutojzm1-dot/youjia/pull/25)、[目标提示体验记录](playtests/2026-10-02-REQ-002-target-clarity.md)；移动动物点选和手机触屏仍待验收。 |
 | REQ-20261002-003 | 2026-10-02 | 确定长期定位与停留/回访循环 | 已决策：轻陪伴为主、轻放置为辅 | 用户确认互动可留下回响，让动物之后的行为或小故事发生细微变化；不得引入缺席惩罚或强制任务。具体切片见 [REQ-20261002-011](requirements.md)。 |
 | REQ-20261002-004 | 2026-10-02 | 为大鹅和其他动物补足动作与表情变化 | 进行中 | [PR #34](https://github.com/narutojzm1-dot/youjia/pull/34) 已发布大鹅收翅站立与卧姿；其他动物动作仍待补。 |
-| REQ-20261002-005 | 2026-10-02 | 让天气与季节可感知；评估新增美术资源 | 进行中（云带 B 已确认并实现） | Owner CURSOR-CONTRIBUTOR-LOCAL。晴/阴与季节节奏已上线；2026-10-03 用户确认叠加云带 B（水彩、缓移、低动效静止），暂缓雨雪/火烧云。见 [天空云层方案](architecture/sky-cloud-plan.md)。 |
+| REQ-20261002-005 | 2026-10-02 | 让天气与季节可感知；评估新增美术资源 | 进行中（傍晚暖云 C 样张） | Owner CURSOR-CONTRIBUTOR-LOCAL。云带 B 已上线（晴天暖白修正 `game-32ff2d1`）。2026-10-03 用户授权不等待新拍板、按最合理下一刀推进：做方案 C 单帧傍晚暖云；雨雪仍不做。见 [天空云层方案](architecture/sky-cloud-plan.md)。 |
 | REQ-20261002-006 | 2026-10-02 | 深入体验当前版本并提出大型玩法建设顺序 | 复核完成 | [game-1347743 体验记录](playtests/2026-10-02-game-1347743.md)；玩法建议已进入策划基准。 |
 | REQ-20261002-007 | 2026-10-02 | 携带的鱼在靠近鸭/鹅途中消失后，角色应停止已失效的投喂追踪，但继续普通散步 | 已发布；待浏览器体验复核 | [PR #19](https://github.com/narutojzm1-dot/youjia/pull/19)、[game-b82a7f5 发布核查](playtests/2026-10-02-game-b82a7f5.md)；未改变现有 20 秒携鱼时限。 |
 | REQ-20261002-008 | 2026-10-02 | 为主动互动补足真实对象回应 | 进行中 | 鸭鹅投鱼见 [PR #32](https://github.com/narutojzm1-dot/youjia/pull/32)，抚摸和浇水见 [PR #35](https://github.com/narutojzm1-dot/youjia/pull/35)；更多互动仍待盘点。 |
@@ -26,9 +26,10 @@
 | REQ-20261002-011 | 2026-10-02 | 让玩家互动在之后留下轻微、可感知的世界回响与后续故事 | 已发布；Pages 清单/PCK 已核对 | 制作人于 2026-10-03 确认“玩家牵引羊驼靠近大鹅、双方安静共处后留下记忆”。首个切片通过羊驼自身进入共享范围后才记来源；只存稀疏记忆与低概率行为回响，不涉关系数值、任务、缺席惩罚、相机/相册。独立 reviewer `CODEX-LEAD-REVIEW-PR-71` 批准精确 SHA `219ed34d5299aeaa0e8eff53ec2f6e7f7683d045`；PR #71 合并提交 `6dacd879ea0a2bac724ecfd548779e5d40c44308`。见 [PR #71](https://github.com/narutojzm1-dot/youjia/pull/71)、[issue #45](https://github.com/narutojzm1-dot/youjia/issues/45)与[关系模型](architecture/animal-relationship-model.md)。
 | REQ-20261002-012 | 2026-10-02 | 让熟悉的小院因时段天空与玩家取景持续有新发现 | 进行中（切片 C 已发布；D 延后） | Owner CURSOR-CONTRIBUTOR-LOCAL。A 云带已上线；B 树叶见 REQ-012-STAY / PR #85；C 无道具抬头微推已发布 `game-6a20cdc`（Actions 37100630995）；D 延后。见 [familiar-yard-observation.md](architecture/familiar-yard-observation.md)、[体验](playtests/2026-10-03-REQ-012-quiet-sky-look.md)。 |
 | REQ-20261002-013 | 2026-10-02 | 加入真实动物抓拍、稳定在照片内的有限题词和可翻页旅人手账 | 已发布；用户正式版试玩待反馈 | [PR #53](https://github.com/narutojzm1-dot/youjia/pull/53) 经独立审查后合并至 `b560dec94f08a1597e2b834e74c41841893ba36b`；[Actions 37025345857](https://github.com/narutojzm1-dot/youjia/actions/runs/37025345857) 与 Pages 发布成功。公开 PCK SHA-256 `e5b9c3f931b957ac4dd288e1c6786f6b9fc1d9ace946eac711e3bed723ac3d58` 已核验；详见[体验记录](playtests/2026-10-02-REQ-013-scrapbook.md)。不编造动作或旧照日期、不显示进度催促；与 REQ-012 自由构图及 REQ-011 关系回响独立。 |
-| REQ-012-STAY | 2026-10-03 | 站在栅栏边时重播已有草叶画 | 进行中 | `GROK-BUILD`。父 REQ-012 仍属 CURSOR。不催促、不改云带、不记相册。 |
+| REQ-012-STAY | 2026-10-03 | 站在栅栏边时重播已有草叶画 | 已合入 | `GROK-BUILD`。[PR #85](https://github.com/narutojzm1-dot/youjia/pull/85) 合并 `36fa443`。父 REQ-012 仍属 CURSOR。无网页实玩。 |
 | REQ-20261002-015 | 2026-10-03 | 为大鹅骑马抓拍补完整乘骑扑翼姿态的规格 | 进行中（仅规格） | `GROK-BUILD` 认领 issue #64 的分镜，不制作最终画，不改 PR #65/#72。见 [goose-mount-pose-spec.md](architecture/goose-mount-pose-spec.md)。 |
 | REQ-20261002-016 | 2026-10-03 | 为旅人递草喂羊驼设计第一组可读互动动作规格 | 待产品确认 | 规格由 `GROK-BUILD` 写入 [resident-grass-offer-spec.md](architecture/resident-grass-offer-spec.md)。原指定名是 `GROK-CONTRIBUTOR`；用户要求 Grok Build 处理这项认领。动作候选已在 PR #76，本条不改代码。见 [issue #70](https://github.com/narutojzm1-dot/youjia/issues/70)。 |
+| REQ-20261003-017 | 2026-10-03 | 低动效下花圃、水面和咬钩浮标保持静止可读 | 待评审 | `GROK-CONTRIBUTOR` 自选无主切片。花圃嫩芽/开花、收获花瓣、水面涟漪和咬钩光晕原先无视 `ui.reduced_motion`。本切片只停这些绘制相位，不改钓鱼窗口、存档或云带。 |
 | DOC-20261002-001 | 2026-10-02 | 所有维护者可查阅需求/变更台账；始终维护一份游戏策划基准 | 已采纳 | 本规则、README 文档入口与 [策划基准](game-design.md) 已建立；PR #20 由合并提交 `aa821820d9b51c3cbc79e1eb4e362959df11cd95` 合入。 |
 | DOC-20261002-002 | 2026-10-02 | 在 GitHub PR 流程中提示引用需求编号、同步策划文档并附体验证据 | 已采纳 | [.github/PULL_REQUEST_TEMPLATE.md](../.github/PULL_REQUEST_TEMPLATE.md) 增加协作记录字段；PR #20 已合入。 |
 | DOC-20261002-003 | 2026-10-02 | 由 Codex 负责集成与 PR 合入，GROK/其他参与者提交独立功能 PR；明确并行分支和冲突处理规则 | 已变更（由 DOC-20261002-005 取代） | 原决定随 PR #20 合入；后续采用 PR 作者自行合入、独立子代理审核、Codex 总体兜底的分工。 |
@@ -50,6 +51,7 @@
 
 - **2026-10-03：** 用户一次性确认：批准叠加云带 B；水彩笔触；缓移 + 低动效静止；暂缓雨雪。CURSOR-CONTRIBUTOR-LOCAL 实现晴/阴各一帧云带并接入 `YardWorld`。
 - **2026-10-03（晴天云带修正）：** 用户试玩反馈晴天叠加云发灰、像脏斑，阴天尚可。重烘焙晴天云带为暖白薄纱（预乘 alpha 模糊，避免透明黑染灰），运行时晴天云带单独提亮 modulate，不再跟院子暖滤色一起变脏；阴天帧不动。
+- **2026-10-03（傍晚暖云样张）：** 用户要求不等待新拍板、由 Owner 按最合理下一刀推进。选择 sky-cloud-plan 方案 C 单帧：晴天 TOD evening 换 `cloud_band_sunset.png`；阴天不换；不改 600 秒昼夜；雨雪与季节整层仍不做。已在 GROK #93、WORKBUDDY #99 留言避开其代码范围。
 
 ### 2026-10-02 · REQ-009 第三处热点发布与台账恢复
 
@@ -333,10 +335,12 @@ Scale 弹跳从 1.04 提升至 1.08，点击可靠性不变。
 ### 状态历史 · REQ-20261002-015
 
 - **2026-10-03：** 需求表没有「待认领」项。issue #64 允许先认领乘骑姿态的分镜，并禁止在 PR #65/#72 合入前改运行时，也禁止把站立鹅贴到马背上。`GROK-BUILD` 只提交规格。最终绘制仍等产品确认一张是否够用。
+- **2026-10-03：** PR #65 已在 main。近景临时在 `idle` 与 `calm` 两张站立画之间换帧；低动效停在 `idle`。规格改为指明这个挂点。仍不绘制，也不改演出代码。
 
 ### 状态历史 · REQ-012-STAY
 
 - **2026-10-03：** PR #81 合入云带后，切片 B 仍没有人单独认领。`GROK-BUILD` 只认树叶：站在已有栅栏旁约 2.5 秒，播一次现成草叶画，走路就停。不把停留做成任务，不改 CURSOR 的云带，也不改 Codex 的鹅马演出。
+- **2026-10-03：** [PR #85](https://github.com/narutojzm1-dot/youjia/pull/85) 合并 `36fa443`。无界面测试通过。没有网页实玩。
 
 *最后更新：2026-10-03*
 
@@ -361,3 +365,26 @@ PR #65 从现有分支整合 PR #72 验证修复，保留当时 main 上的关�
 ### 2026-10-03 · REQ-001 招呼/抚摸动作提案
 
 考虑到 REQ-001 明确包含成功互动时的角色动作，而拿草/递草已有独立实现、抚摸动物回应又归 REQ-008，本轮新建 [issue #84](https://github.com/narutojzm1-dot/youjia/issues/84)，范围限于旅人招呼/抚摸成功时的短动作设计。先盘点现有角色帧与取消路径，动作资源方向须产品确认；不修改既有距离判定/互动语义，不添加关系值、任务或缺席惩罚。issue 暂不指派，确认后开放认领。
+
+### 2026-10-03 · REQ-20261003-017 低动效道具静止
+
+- 活动需求表没有无主的「待认领」行。用户让 `GROK-CONTRIBUTOR` 自己选一块不与已认领工作重叠的切片。
+- 花圃嫩芽倾斜、开花摇曳和脉冲圈、收获花瓣飞散、水面三圈涟漪、咬钩浮标快闪都写在 `YardPropVisual`，且不读低动效开关。云带、抚摸爱心和场景彩蛋已经会停。这里补上同一约定。
+- 低动效仍能看出嫩芽、花、水面和「正在咬钩」（红色浮标加一圈稳定光晕）。不缩短钓鱼等待，不把空钩改成失败。不改 `YardWorld`、本地化、鹅马演出或云带文件。
+
+
+### 2026-10-03 · REQ-017-VERIFY 低动效快照兼容与集成
+
+PR #93 原最终 SHA `ac0049e45db0d8940b760ac69c2233ae10b4cd87` 经独立审查 REQUEST CHANGES：道具直接读取全局设置，切换低动效会改写历史照片外观；同一引用也导致独立脚本测试编译失败。Assistant 在 PR 评论登记验证子切片，由独立分支保留原贡献提交并同步最新 main；不强推 GROK 分支。
+
+世界刷新时传入当前 `reduced_motion` 布尔值，照片按拍摄时保存的状态绘制；缺少该字段的旧照沿用原普通动效相位，非法非布尔值拒绝。不提升快照格式版本，不改变钓鱼时间或行为。增加真实拍摄/JSON/回放与旧照兼容断言、独立实际像素验证工具。原生 20 项真渲染及交互照片 90 项通过；Web 与全量验证证据见 [验收记录](playtests/2026-10-03-REQ-017-integration.md)。原 PR 的 Owner 与贡献归属不变。
+
+
+### 2026-10-03 · REQ-010-SUBTLE 留影克制修正
+
+制作人要求留影去掉强烈缩放，仅保留照片生成动效。CODEX-LEAD 独立接手此修正：照片固定中心、淡入显影并原位淡出，去掉飞向相册与收尾按钮缩放；不改鹅马镜头、照片触发、存档与其它贡献者认领。PR #102 同步最新 main 保留 REQ-017 快照冻结修复及天气资源。最新主线回归与浏览器普通喂食抓拍/手账保存已核验，独立最终 SHA 审核待完成，尚未发布；[决策与协调](decisions/REQ-010-photo-arrival-subtle.md)、[体验记录](playtests/2026-10-03-REQ-010-photo-arrival-subtle.md)。动物表情与同构图天气资源要求已分别写入 issue #30/#51，由原 Owner 提交规格，暂不混入本实现。
+
+
+### 2026-10-03 · REQ-017 首次正式发布核验
+
+PR #104 最终 SHA `6ae8e0ad74494ddeff01682801c48a363781a8b8` 经独立 reviewer `CODEX-LEAD-ASSISTANT-REVIEW-PR-104` APPROVE，合入 `1949dc49bfabed38723dca630628b10a65fb63ad`；原 PR #93 被 GitHub 自动标为已合入，原绘制提交及 GROK-CONTRIBUTOR 归属保留。Actions [37108000038](https://github.com/narutojzm1-dot/youjia/actions/runs/37108000038) 验证/导出/发布成功，Pages [37108145912](https://github.com/narutojzm1-dot/youjia/actions/runs/37108145912) 成功。公网首次 `game-1949dc4` 清单与入口匹配源提交，PCK 13,740,684 字节，SHA-256 `0055a13e8c693972862737ac35091041adfa4e7d0cc611b3e2e9e4fb3bc280d6`；Chromium 1280×720 标题入院子通过，页面/控制台错误与请求失败均为 0。此记录描述首次核验版本，之后的天空等独立发布不改变该证据。自然开花/咬钩与产品正式试玩反馈仍未声称完成。详见[验收记录](playtests/2026-10-03-REQ-017-integration.md)。

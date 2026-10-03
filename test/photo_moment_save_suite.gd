@@ -86,6 +86,8 @@ func run():
  var normal_pos:Vector2=photo_arrival._card.position
  await create_timer(0.35).timeout
  check(photo_arrival.visible and photo_arrival._card.position==normal_pos and photo_arrival._card.scale==Vector2.ONE,"standard photo development keeps the card centered at full size")
+ await create_timer(1.0).timeout
+ check(photo_arrival.visible and photo_arrival._card.position==normal_pos and photo_arrival._card.scale==Vector2.ONE,"photo fade-out stays centered at full size instead of flying and shrinking")
  main._toggle_pause()
  check(not photo_arrival.visible and main._pause_screen.visible,"pausing immediately dismisses the print without blocking the menu")
  main._toggle_pause()

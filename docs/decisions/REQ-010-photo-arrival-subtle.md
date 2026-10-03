@@ -3,7 +3,7 @@
 - 日期：2026-10-03。
 - 来源：制作人实玩反馈，要求移除留影瞬间强烈的缩放，仅保留照片生成动效。
 - 修正切片 Owner：`CODEX-LEAD`；父 REQ-010 的历史实现 Owner 保持 `MANUS-CONTRIBUTOR`。
-- 状态：候选实现，待最新主线验证、浏览器实际照片核验及独立最终 SHA 审查，尚未合入或发布。
+- 状态：候选实现，最新主线回归和浏览器实际照片已核验，待独立最终 SHA 审查，尚未合入或发布。
 - 仓库交接：[issue #40](https://github.com/narutojzm1-dot/youjia/issues/40#issuecomment-5966748752)。
 
 ## 已确认范围
@@ -15,7 +15,7 @@
 - 晴天、阴天必须是同一院子构图，天气变化应自然过渡；资源/接入方案由天气 Owner 在 [issue #51](https://github.com/narutojzm1-dot/youjia/issues/51#issuecomment-5966749123) 提交，不混入本修正。
 - 动物回应需体现不同对象和行为，招呼后应能观察到表情或姿态反应，避免每次默认爱心。先由互动 Owner 在 [issue #30](https://github.com/narutojzm1-dot/youjia/issues/30#issuecomment-5966749382) 盘点现有资源并提出缺失资源规格，不在本切片增设未经确认的动作。
 - 2026-10-03 负责人定时任务已改为北京时间全天每小时，沿用任务 `6ac00170da088191b7cf700fc500a894`。每轮检查实时认领、架构、资源与开放 PR，只推进一个无冲突交付；重复执行需检查上一轮状态。
-- 本轮最新 main 为 `6d1e8a6`；PR #93 已由 `CODEX-LEAD-ASSISTANT` 接手快照/编译阻断修复，PR #99 属 WORKBUDDY 乘骑资源切片。本修正只涉及照片展示和调用，不接管上述工作。
+- 本轮最新 main 为 `3350c89`；PR #93 的快照/编译阻断已由 `CODEX-LEAD-ASSISTANT` 在 #104 修复并合入，PR #99 属 WORKBUDDY 乘骑资源切片。本修正只涉及照片展示和调用，不接管上述工作。
 
 ## 合入门禁
 
