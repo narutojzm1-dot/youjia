@@ -62,7 +62,7 @@ func _ready() -> void:
 	visible = false
 
 
-func play(snapshot: Dictionary, album_center: Vector2, reduced_motion: bool) -> bool:
+func play(snapshot: Dictionary, reduced_motion: bool) -> bool:
 	var valid := PhotoMoment.sanitize(snapshot)
 	if valid.is_empty():
 		return false
@@ -84,15 +84,11 @@ func play(snapshot: Dictionary, album_center: Vector2, reduced_motion: bool) -> 
 		_tween.tween_interval(1.6)
 		_tween.tween_callback(_finish)
 		return true
-	_card.scale = Vector2(0.90, 0.90)
 	_card.modulate.a = 0.0
 	_tween = create_tween().set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
 	_tween.tween_property(_card, "modulate:a", 1.0, 0.20)
-	_tween.parallel().tween_property(_card, "scale", Vector2.ONE, 0.20).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 	_tween.tween_interval(1.10)
-	_tween.tween_property(_card, "position", album_center - CARD_SIZE * 0.5, 0.62).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN)
-	_tween.parallel().tween_property(_card, "scale", Vector2(0.22, 0.22), 0.62)
-	_tween.parallel().tween_property(_card, "modulate:a", 0.0, 0.62)
+	_tween.tween_property(_card, "modulate:a", 0.0, 0.28).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 	_tween.parallel().tween_property(_shutter, "modulate:a", 0.0, 0.24)
 	_tween.tween_callback(_finish)
 	return true

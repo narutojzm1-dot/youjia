@@ -17,6 +17,8 @@ const OVERCAST := preload("res://assets/holiday/environment/yard_overcast.png")
 ## 叠加云带：晴/阴各一帧半透明水彩带，不替换整张院子底图。
 const CLOUD_SUNNY := preload("res://assets/holiday/environment/cloud_band_sunny.png")
 const CLOUD_OVERCAST := preload("res://assets/holiday/environment/cloud_band_overcast.png")
+## 傍晚暖色云带：只在晴天且 TOD 为傍晚时替换晴天帧，阴天仍用阴云。
+const CLOUD_SUNSET := preload("res://assets/holiday/environment/cloud_band_sunset.png")
 const GrassPatchType := preload("res://scripts/entities/grass_patch.gd")
 const FeltActorType := preload("res://scripts/entities/felt_actor.gd")
 const VacationerType := preload("res://scripts/entities/vacationer.gd")
@@ -366,6 +368,8 @@ func tick(delta: float, move: Vector2) -> void:
 		_weather_timer = randf_range(48.0, 90.0)
 	# 云带缓移：低动效只保留静止可读帧，不改存档字段。
 	_tick_cloud_drift(delta)
+	# 傍晚进入/离开时换暖色云带，不改昼夜节奏长度。
+	_sync_cloud_band_art()
 	if _player == null:
 		return
 	_player.body_obstacles = physical_obstacles("player")
@@ -1253,17 +1257,7 @@ func _apply_weather_art() -> void:
 	if _backdrop.texture != null:
 		var tex_size := _backdrop.texture.get_size()
 		_backdrop.scale = Vector2(WORLD_SIZE.x / tex_size.x, WORLD_SIZE.y / tex_size.y)
-	# 云带随天气换帧，并按底图同一水平缩放对齐天空带。
-	var cloud_tex: Texture2D = CLOUD_OVERCAST if weather == "overcast" else CLOUD_SUNNY
-	for band: Sprite2D in [_cloud_band_a, _cloud_band_b]:
-		if band == null:
-			continue
-		band.texture = cloud_tex
-		if cloud_tex != null:
-			var cloud_size := cloud_tex.get_size()
-			var sx := WORLD_SIZE.x / cloud_size.x
-			# 保持云带原始高宽比，仅按院子宽度缩放。
-			band.scale = Vector2(sx, sx)
+	_apply_cloud_band_art(_cloud_texture_for_now())
 	_layout_cloud_bands()
 	var filter_on := bool(TuningStore.get_value("environment.filter.enabled", true))
 	var intensity := float(TuningStore.get_value("environment.filter.intensity", 0.12))
@@ -1278,15 +1272,65 @@ func _apply_weather_art() -> void:
 		_backdrop.modulate = Color(0.92, 0.90, 0.96).lerp(Color.WHITE, 1.0 - intensity)
 	else:
 		_backdrop.modulate = Color(1.0, 0.97, 0.90).lerp(Color.WHITE, 1.0 - intensity)
-	# 阴天云带跟院子滤色；晴天云带单独提亮，避免暖滤色把薄云染成脏斑。
+	_apply_cloud_band_modulate(intensity)
+	if _scene_feedback != null: _scene_feedback.modulate = _backdrop.modulate
+
+
+## 与 main._tod_phase_name 的 evening 窗口对齐：晴天傍晚才换暖色云。
+func _wants_sunset_clouds() -> bool:
+	if weather != "sun":
+		return false
+	var t := tod_fraction()
+	return t >= 0.72 and t < 0.87
+
+
+func _cloud_texture_for_now() -> Texture2D:
+	if weather == "overcast":
+		return CLOUD_OVERCAST
+	if _wants_sunset_clouds():
+		return CLOUD_SUNSET
+	return CLOUD_SUNNY
+
+
+## tick 里只在需要换帧时重贴，避免每帧重置缩放。
+func _sync_cloud_band_art() -> void:
+	var tex := _cloud_texture_for_now()
+	if _cloud_band_a != null and _cloud_band_a.texture == tex:
+		return
+	_apply_cloud_band_art(tex)
+	_layout_cloud_bands()
+	var intensity := float(TuningStore.get_value("environment.filter.intensity", 0.12))
+	if bool(TuningStore.get_value("environment.filter.enabled", true)):
+		_apply_cloud_band_modulate(intensity)
+	else:
+		for band: Sprite2D in [_cloud_band_a, _cloud_band_b]:
+			if band != null:
+				band.modulate = Color.WHITE
+
+
+func _apply_cloud_band_art(cloud_tex: Texture2D) -> void:
+	for band: Sprite2D in [_cloud_band_a, _cloud_band_b]:
+		if band == null:
+			continue
+		band.texture = cloud_tex
+		if cloud_tex != null:
+			var cloud_size := cloud_tex.get_size()
+			var sx := WORLD_SIZE.x / cloud_size.x
+			# 保持云带原始高宽比，仅按院子宽度缩放。
+			band.scale = Vector2(sx, sx)
+
+
+func _apply_cloud_band_modulate(intensity: float) -> void:
+	# 阴天跟院子滤色；晴天/傍晚单独提亮，避免暖滤色把薄云染脏。
 	for band: Sprite2D in [_cloud_band_a, _cloud_band_b]:
 		if band == null:
 			continue
 		if weather == "overcast":
 			band.modulate = _backdrop.modulate
+		elif _wants_sunset_clouds():
+			band.modulate = Color(1.04, 1.00, 0.98).lerp(Color.WHITE, 1.0 - intensity * 0.35)
 		else:
 			band.modulate = Color(1.08, 1.05, 1.02).lerp(Color.WHITE, 1.0 - intensity * 0.4)
-	if _scene_feedback != null: _scene_feedback.modulate = _backdrop.modulate
 
 
 func _evaluate_expressions() -> void:
@@ -1792,11 +1836,12 @@ func _refresh_prop_visuals() -> void:
 	var plant_distance := _player.position.distance_to(_plant_point()) if _player != null else 300.0
 	var reveal := clampf(1.0 - (plant_distance - 80.0) / 120.0, 0.0, 1.0)
 	var phase := fmod(_day_seconds, TAU * 10.0)
+	var reduced := bool(TuningStore.get_value("ui.reduced_motion", false))
 	_plant_visual.configure("plant", {"plant_state": _plant_state, "phase": phase, "soil_reveal": reveal * reveal,
-		"nearby": plant_distance < 80.0, "harvest_flash": maxf(0.0, _plant_harvest_flash)})
+		"nearby": plant_distance < 80.0, "harvest_flash": maxf(0.0, _plant_harvest_flash), "reduced_motion": reduced})
 	var fishing_distance := _player.position.distance_to(_fishing_point()) if _player != null else 300.0
 	_fishing_visual.configure("fishing", {"fish_state": FISH_CAUGHT if _fish_catch_flash > 0.0 and _fish_state == FISH_IDLE else _fish_state,
-		"phase": phase, "nearby": fishing_distance < 100.0, "fish_type": _fish_catch_type})
+		"phase": phase, "nearby": fishing_distance < 100.0, "fish_type": _fish_catch_type, "reduced_motion": reduced})
 
 
 func _draw() -> void:

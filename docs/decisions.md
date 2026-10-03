@@ -17,7 +17,7 @@
 | REQ-20261002-002 | 2026-10-02 | 解释靠近动物时出现的橙色提示，并让动作目标更明确 | 已上线；待实玩验收 | [PR #25](https://github.com/narutojzm1-dot/youjia/pull/25)、[目标提示体验记录](playtests/2026-10-02-REQ-002-target-clarity.md)；移动动物点选和手机触屏仍待验收。 |
 | REQ-20261002-003 | 2026-10-02 | 确定长期定位与停留/回访循环 | 已决策：轻陪伴为主、轻放置为辅 | 用户确认互动可留下回响，让动物之后的行为或小故事发生细微变化；不得引入缺席惩罚或强制任务。具体切片见 [REQ-20261002-011](requirements.md)。 |
 | REQ-20261002-004 | 2026-10-02 | 为大鹅和其他动物补足动作与表情变化 | 进行中 | [PR #34](https://github.com/narutojzm1-dot/youjia/pull/34) 已发布大鹅收翅站立与卧姿；其他动物动作仍待补。 |
-| REQ-20261002-005 | 2026-10-02 | 让天气与季节可感知；评估新增美术资源 | 进行中（云带 B 已确认并实现） | Owner CURSOR-CONTRIBUTOR-LOCAL。晴/阴与季节节奏已上线；2026-10-03 用户确认叠加云带 B（水彩、缓移、低动效静止），暂缓雨雪/火烧云。见 [天空云层方案](architecture/sky-cloud-plan.md)。 |
+| REQ-20261002-005 | 2026-10-02 | 让天气与季节可感知；评估新增美术资源 | 进行中（傍晚暖云 C 样张） | Owner CURSOR-CONTRIBUTOR-LOCAL。云带 B 已上线（晴天暖白修正 `game-32ff2d1`）。2026-10-03 用户授权不等待新拍板、按最合理下一刀推进：做方案 C 单帧傍晚暖云；雨雪仍不做。见 [天空云层方案](architecture/sky-cloud-plan.md)。 |
 | REQ-20261002-006 | 2026-10-02 | 深入体验当前版本并提出大型玩法建设顺序 | 复核完成 | [game-1347743 体验记录](playtests/2026-10-02-game-1347743.md)；玩法建议已进入策划基准。 |
 | REQ-20261002-007 | 2026-10-02 | 携带的鱼在靠近鸭/鹅途中消失后，角色应停止已失效的投喂追踪，但继续普通散步 | 已发布；待浏览器体验复核 | [PR #19](https://github.com/narutojzm1-dot/youjia/pull/19)、[game-b82a7f5 发布核查](playtests/2026-10-02-game-b82a7f5.md)；未改变现有 20 秒携鱼时限。 |
 | REQ-20261002-008 | 2026-10-02 | 为主动互动补足真实对象回应 | 进行中 | 鸭鹅投鱼见 [PR #32](https://github.com/narutojzm1-dot/youjia/pull/32)，抚摸和浇水见 [PR #35](https://github.com/narutojzm1-dot/youjia/pull/35)；更多互动仍待盘点。 |
@@ -29,6 +29,7 @@
 | REQ-012-STAY | 2026-10-03 | 站在栅栏边时重播已有草叶画 | 已合入 | `GROK-BUILD`。[PR #85](https://github.com/narutojzm1-dot/youjia/pull/85) 合并 `36fa443`。父 REQ-012 仍属 CURSOR。无网页实玩。 |
 | REQ-20261002-015 | 2026-10-03 | 为大鹅骑马抓拍补完整乘骑扑翼姿态的规格 | 进行中（仅规格） | `GROK-BUILD` 认领 issue #64 的分镜，不制作最终画，不改 PR #65/#72。见 [goose-mount-pose-spec.md](architecture/goose-mount-pose-spec.md)。 |
 | REQ-20261002-016 | 2026-10-03 | 为旅人递草喂羊驼设计第一组可读互动动作规格 | 待产品确认 | 规格由 `GROK-BUILD` 写入 [resident-grass-offer-spec.md](architecture/resident-grass-offer-spec.md)。原指定名是 `GROK-CONTRIBUTOR`；用户要求 Grok Build 处理这项认领。动作候选已在 PR #76，本条不改代码。见 [issue #70](https://github.com/narutojzm1-dot/youjia/issues/70)。 |
+| REQ-20261003-017 | 2026-10-03 | 低动效下花圃、水面和咬钩浮标保持静止可读 | 待评审 | `GROK-CONTRIBUTOR` 自选无主切片。花圃嫩芽/开花、收获花瓣、水面涟漪和咬钩光晕原先无视 `ui.reduced_motion`。本切片只停这些绘制相位，不改钓鱼窗口、存档或云带。 |
 | DOC-20261002-001 | 2026-10-02 | 所有维护者可查阅需求/变更台账；始终维护一份游戏策划基准 | 已采纳 | 本规则、README 文档入口与 [策划基准](game-design.md) 已建立；PR #20 由合并提交 `aa821820d9b51c3cbc79e1eb4e362959df11cd95` 合入。 |
 | DOC-20261002-002 | 2026-10-02 | 在 GitHub PR 流程中提示引用需求编号、同步策划文档并附体验证据 | 已采纳 | [.github/PULL_REQUEST_TEMPLATE.md](../.github/PULL_REQUEST_TEMPLATE.md) 增加协作记录字段；PR #20 已合入。 |
 | DOC-20261002-003 | 2026-10-02 | 由 Codex 负责集成与 PR 合入，GROK/其他参与者提交独立功能 PR；明确并行分支和冲突处理规则 | 已变更（由 DOC-20261002-005 取代） | 原决定随 PR #20 合入；后续采用 PR 作者自行合入、独立子代理审核、Codex 总体兜底的分工。 |
@@ -50,6 +51,7 @@
 
 - **2026-10-03：** 用户一次性确认：批准叠加云带 B；水彩笔触；缓移 + 低动效静止；暂缓雨雪。CURSOR-CONTRIBUTOR-LOCAL 实现晴/阴各一帧云带并接入 `YardWorld`。
 - **2026-10-03（晴天云带修正）：** 用户试玩反馈晴天叠加云发灰、像脏斑，阴天尚可。重烘焙晴天云带为暖白薄纱（预乘 alpha 模糊，避免透明黑染灰），运行时晴天云带单独提亮 modulate，不再跟院子暖滤色一起变脏；阴天帧不动。
+- **2026-10-03（傍晚暖云样张）：** 用户要求不等待新拍板、由 Owner 按最合理下一刀推进。选择 sky-cloud-plan 方案 C 单帧：晴天 TOD evening 换 `cloud_band_sunset.png`；阴天不换；不改 600 秒昼夜；雨雪与季节整层仍不做。已在 GROK #93、WORKBUDDY #99 留言避开其代码范围。
 
 ### 2026-10-02 · REQ-009 第三处热点发布与台账恢复
 
@@ -364,8 +366,48 @@ PR #65 从现有分支整合 PR #72 验证修复，保留当时 main 上的关�
 
 考虑到 REQ-001 明确包含成功互动时的角色动作，而拿草/递草已有独立实现、抚摸动物回应又归 REQ-008，本轮新建 [issue #84](https://github.com/narutojzm1-dot/youjia/issues/84)，范围限于旅人招呼/抚摸成功时的短动作设计。先盘点现有角色帧与取消路径，动作资源方向须产品确认；不修改既有距离判定/互动语义，不添加关系值、任务或缺席惩罚。issue 暂不指派，确认后开放认领。
 
+### 2026-10-03 · REQ-20261003-017 低动效道具静止
+
+- 活动需求表没有无主的「待认领」行。用户让 `GROK-CONTRIBUTOR` 自己选一块不与已认领工作重叠的切片。
+- 花圃嫩芽倾斜、开花摇曳和脉冲圈、收获花瓣飞散、水面三圈涟漪、咬钩浮标快闪都写在 `YardPropVisual`，且不读低动效开关。云带、抚摸爱心和场景彩蛋已经会停。这里补上同一约定。
+- 低动效仍能看出嫩芽、花、水面和「正在咬钩」（红色浮标加一圈稳定光晕）。不缩短钓鱼等待，不把空钩改成失败。不改 `YardWorld`、本地化、鹅马演出或云带文件。
+
+
+### 2026-10-03 · REQ-017-VERIFY 低动效快照兼容与集成
+
+PR #93 原最终 SHA `ac0049e45db0d8940b760ac69c2233ae10b4cd87` 经独立审查 REQUEST CHANGES：道具直接读取全局设置，切换低动效会改写历史照片外观；同一引用也导致独立脚本测试编译失败。Assistant 在 PR 评论登记验证子切片，由独立分支保留原贡献提交并同步最新 main；不强推 GROK 分支。
+
+世界刷新时传入当前 `reduced_motion` 布尔值，照片按拍摄时保存的状态绘制；缺少该字段的旧照沿用原普通动效相位，非法非布尔值拒绝。不提升快照格式版本，不改变钓鱼时间或行为。增加真实拍摄/JSON/回放与旧照兼容断言、独立实际像素验证工具。原生 20 项真渲染及交互照片 90 项通过；Web 与全量验证证据见 [验收记录](playtests/2026-10-03-REQ-017-integration.md)。原 PR 的 Owner 与贡献归属不变。
+
+
+### 2026-10-03 · REQ-010-SUBTLE 留影克制修正
+
+制作人要求留影去掉强烈缩放，仅保留照片生成动效。CODEX-LEAD 独立接手此修正：照片固定中心、淡入显影并原位淡出，去掉飞向相册与收尾按钮缩放；不改鹅马镜头、照片触发、存档与其它贡献者认领。PR #102 同步最新 main 保留 REQ-017 快照冻结修复及天气资源。最新主线回归与浏览器普通喂食抓拍/手账保存已核验，独立最终 SHA 审核待完成，尚未发布；[决策与协调](decisions/REQ-010-photo-arrival-subtle.md)、[体验记录](playtests/2026-10-03-REQ-010-photo-arrival-subtle.md)。动物表情与同构图天气资源要求已分别写入 issue #30/#51，由原 Owner 提交规格，暂不混入本实现。
+
+
+### 2026-10-03 · REQ-017 首次正式发布核验
+
+PR #104 最终 SHA `6ae8e0ad74494ddeff01682801c48a363781a8b8` 经独立 reviewer `CODEX-LEAD-ASSISTANT-REVIEW-PR-104` APPROVE，合入 `1949dc49bfabed38723dca630628b10a65fb63ad`；原 PR #93 被 GitHub 自动标为已合入，原绘制提交及 GROK-CONTRIBUTOR 归属保留。Actions [37108000038](https://github.com/narutojzm1-dot/youjia/actions/runs/37108000038) 验证/导出/发布成功，Pages [37108145912](https://github.com/narutojzm1-dot/youjia/actions/runs/37108145912) 成功。公网首次 `game-1949dc4` 清单与入口匹配源提交，PCK 13,740,684 字节，SHA-256 `0055a13e8c693972862737ac35091041adfa4e7d0cc611b3e2e9e4fb3bc280d6`；Chromium 1280×720 标题入院子通过，页面/控制台错误与请求失败均为 0。此记录描述首次核验版本，之后的天空等独立发布不改变该证据。自然开花/咬钩与产品正式试玩反馈仍未声称完成。详见[验收记录](playtests/2026-10-03-REQ-017-integration.md)。
+
+
+### 2026-10-03 · REQ-010-SUBTLE 发布核验
+
+PR #102 独立子代理批准最终 `d0a9de7d15e8fffd49fc07acae96e5339b3e32cf`，合入 `562ad5d3d1cce77e9001b558abd50e5efb7b356e`。Actions 37109042156 和 Pages 37109230817 均成功。公开清单/HTML 指向 game-562ad5d / 同源提交；PCK 13,814,368 字节，SHA-256 `8b3c5edb0a8518ecba4f4b6d3292918c3406b9eb3b3e85261ec3ebe4f8bbf8cf`，与 gh-pages 独立下载一致；公网 Chromium 正确版本入院子，无页面/控制台错误。普通喂食抓拍/手账及低动效/中断的验证范围见[完整记录](playtests/2026-10-03-REQ-010-photo-arrival-subtle.md)。本修正完成；天气同构图和动物招呼表情未实现，原 Owner/issue #51/#30 保持。
+
+
+### 2026-10-03 · REQ018 集成与首次发布
+
+GROK-CONTRIBUTOR 请求 Codex 合入干净替换 PR #108（旧 #101/#106 已关闭）。CODEX-LEAD 在隔离工作区完成完整 Godot4.7.2 回归、Web 实际像素验证及正常入口核验；独立 reviewer CODEX-LEAD-REVIEW-PR-108 批准最终 `245a0ad4a6273ed79bedf61588cb2237003783ce`，合入 `26c93c84eb8685674f2448e851d0461007ee231a`。功能归属保持 GROK；未接管乘骑资源或天气/动物回应。
+
+Actions 37111927956 / Pages 37112060101 成功；公开 `game-26c93c8` 清单/HTML 对应同源提交，PCK 13,815,408 字节、SHA-256 `4b089708ea20c44c85651504aa2f014f8d494c9b67818a27e7f7a0458c850138` 与 gh-pages 独立下载一致；公网 Chromium 正确版本入院子，无页面/控制台错误。受控像素8项验证隔离半径/粒子，不冒充自然钓鱼，既有目标明暗变化仍在；原生图形显示不可用，采用 Web 实际绘制+原生 headless 回归覆盖并获独立 reviewer 接受。[证据与复现夹具](playtests/2026-10-03-REQ-018-integration.md)。
+
+协调：PR #99 当前 head bec7118c95adeefdefa9cfb6e12435b2f561280e 的可追溯审核记录仍指旧 SHA，已请 WORKBUDDY 补最新 head 的独立审核摘要，不改写资源分支。天气同构图/自然过渡 #51 和动物招呼表情 #30 原 Owner 保持，未称已完成。
+
+
+### 2026-10-03 · REQ-015-VERIFY 乘骑画候选补验
+
+Assistant核对到REQ018/PR108已由CODEX-LEAD接手，避免重复集成，转而在PR99登记只做引擎/受控Web验证子切片。精确资源候选 `bec7118c95adeefdefa9cfb6e12435b2f561280e` 实际通过Godot4.7.2导入，原生与Web各8项注册/锚点/真实照片JSON检查，既有照片1332项和鹅马74项通过；后者仍是旧导演。普通本地候选PCK15,016,480字节，不冒充正式发布净增量。原Owner继续最新main同步、最终SHA审核、导演接线和正式发布；本轮不改原分支或抢占父任务。[证据与可复核脚本](playtests/2026-10-03-REQ-015-verify.md)。
+
 ### 2026-10-03 · REQ-015 成品画切片：两帧乘骑扑翼交付（`WORKBUDDY-CONTRIBUTOR`）
 
-用户产品确认（2026-10-03）：乘骑扑翼用**两张**「脚都在马背上」的完整画交替，低动效停在其中一张；该确认解除 goose-mount-pose-spec.md 的「确认前不要开工绘制」闸门。规格切片仍归 `GROK-BUILD`；成品画切片由 `WORKBUDDY-CONTRIBUTOR` 交付（身份登记 PR #78）。
-
-资源事实：`goose_riding_up.png` / `goose_riding_down.png` 均 1254×1254 透明 PNG，共用脚底锚点 `(533.5, 1195)`，`native_facing` 1（场上 -1 由现有节点镜像实现），`border_pixels_alpha_gt16` 0，体积 1,029,387 / 839,572 字节，均低于 `goose.png` 的 1,212,584 字节上限。`cast_art.gd` 暴露 `riding_up`/`riding_down` 纹理与 posture metadata，未覆盖 `goose.png`/`goose_calm.png`（它们仍服务安静站立与临时换帧）；导演把 `_tick_goose_mount_encounter` 阶段 2 的临时 `idle`/`calm` 换成新键属 REQ-014 / `CODEX-LEAD`，本切片不改演出脚本。制作方式（内置图像工具 + 去棋盘格 + 锚点对齐）与 SHA-256 记录在 [goose_poses/README](../art/concepts/animal_cast_v2/goose_poses/README.md)。
+产品确认乘骑扑翼用**两张交替**而非一张（0.28s 交替的扑翼节奏需要上下两个翼位），原「确认前不要开工绘制」的门禁据此解除。`WORKBUDDY-CONTRIBUTOR` 只认领成品画切片：交付 `goose_riding_up` / `goose_riding_down` 两张独立全身绘画（非站立鹅缩放、非张翅画变形），均为 1254×1254 RGBA、真实 alpha、画布四边无 alpha>16 像素；两帧**共用同一脚底锚点 `(533.5,1195)`**，换帧时脚不跳。运行时键为 `riding_up` / `riding_down`，由 `cast_art.gd` 注册纹理与 `posture_metadata`，`native_facing=1` 与 `cast_v2` 现有鹅族一致（运行时朝向翻转仍由 `scale.x` 负责）。两帧体积分别为 1029387 / 839572 字节，均低于 `goose.png` 的 1,212,584 字节上限。规格切片仍归 `GROK-BUILD`，导演接线仍归 REQ-014 / `CODEX-LEAD`；本切片不改 `yard_world.gd`、`FeltActor`，也不覆盖其他代理已认领的文件范围。

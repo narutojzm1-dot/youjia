@@ -1,0 +1,59 @@
+extends Node
+var checks := 0
+var failures: Array[String] = []
+func check(ok: bool, label: String) -> void:
+	checks += 1
+	if not ok:
+		failures.append(label)
+		push_error(label)
+func _ready() -> void:
+	call_deferred("run")
+func run() -> void:
+	var world := YardWorld.new()
+	add_child(world)
+	world.setup()
+	await get_tree().process_frame
+	world.set_process(false)
+	var goose: FeltActor = world.actor_named("goose")
+	for cel: String in ["riding_up", "riding_down"]:
+		goose.show_goose_encounter_cel(cel)
+		check(goose._sprite.texture != null and goose._sprite.texture.get_size() == Vector2(1254,1254), cel + " actual imported texture")
+		check(goose._sprite.texture.resource_path.ends_with("goose_" + cel + ".png"), cel + " registered runtime path")
+		check(goose._ground_anchor == Vector2(533.5,1195), cel + " common runtime ground anchor")
+		var snapshot := PhotoMoment.capture(world, ExpressionCatalog.find_rule("goose_horse_mount"))
+		var frozen := PhotoMoment.sanitize(JSON.parse_string(JSON.stringify(snapshot)))
+		var found := false
+		for item: Dictionary in frozen.get("items", []):
+			if item.get("subject") == "goose" and item.get("kind") == "sprite":
+				found = str(item.get("texture", {})).contains("goose_" + cel + ".png")
+		check(not frozen.is_empty() and found, cel + " genuine captured cel survives JSON validation")
+	world.queue_free()
+	await get_tree().process_frame
+	var paper := ColorRect.new()
+	paper.color = Color("fff6e8")
+	paper.size = Vector2(1280,720)
+	add_child(paper)
+	for index: int in 4:
+		var cel := "riding_up" if index % 2 == 0 else "riding_down"
+		var actor := FeltActor.new()
+		add_child(actor)
+		actor.setup(CastArt.configure({"id":"goose", "species":"goose", "scale":0.38}))
+		actor.set_process(false)
+		actor.show_goose_encounter_cel(cel)
+		actor.scale = Vector2(0.22 if index < 2 else -0.22, 0.22)
+		actor.position = Vector2(150 + index*315,450)
+		var label := Label.new()
+		label.position = Vector2(30 + index*315,530)
+		label.text = cel + (" / native" if index < 2 else " / mirrored")
+		label.add_theme_color_override("font_color",Color("5b4637"))
+		add_child(label)
+	print("[goose-assets] %d checks failures=%s" % [checks, failures])
+	if OS.has_feature("web"):
+		JavaScriptBridge.eval("window.dispatchEvent(new Event('youjia:first-frame')); window.gooseAssetsResult=" + JSON.stringify({"checks":checks,"failures":failures}) + ";",true)
+	await get_tree().process_frame
+	await RenderingServer.frame_post_draw
+	var output := OS.get_environment("YOUJIA_CAPTURE_PATH")
+	if not output.is_empty(): get_viewport().get_texture().get_image().save_png(output)
+	if "--quit-after-test" in OS.get_cmdline_user_args():
+		get_node("/root/AudioDirector").release_streams()
+		get_tree().quit(0 if failures.is_empty() else 1)

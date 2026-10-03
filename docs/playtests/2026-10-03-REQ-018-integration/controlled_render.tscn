@@ -1,0 +1,4 @@
+[gd_scene load_steps=2 format=3]
+[ext_resource type="Script" path="res://docs/playtests/2026-10-03-REQ-018-integration/controlled_render.gd" id="1"]
+[node name="StillCatchRender" type="Node"]
+script = ExtResource("1")

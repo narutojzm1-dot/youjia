@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://tools/verify_still_props_render.gd" id="1"]
+
+[node name="StillPropsRenderCheck" type="Node"]
+script = ExtResource("1")
