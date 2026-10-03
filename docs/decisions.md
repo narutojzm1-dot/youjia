@@ -24,7 +24,7 @@
 | REQ-20261002-009 | 2026-10-02 | 让院子里的可见地点成为可选互动和彩蛋 | 进行中 | 花箱、岸石和栅栏三处已发布至 `game-df8b92d`（[PR #38](https://github.com/narutojzm1-dot/youjia/pull/38)、[#39](https://github.com/narutojzm1-dot/youjia/pull/39)、[#41](https://github.com/narutojzm1-dot/youjia/pull/41)）；更多热点与可变背景仍待实现。 |
 | REQ-20261002-010 | 2026-10-02 | 让旅人随手拍有清晰的成片、题词和收入相册反馈 | 已发布；用户认可显影效果 | [PR #43](https://github.com/narutojzm1-dot/youjia/pull/43) 已发布为正式 `game-e2d12b7`；Pages 公网 PCK 哈希已核实；用户试玩后提出真实抓拍、稳定题词与翻页手账的下一切片 REQ-013。 |
 | REQ-20261002-011 | 2026-10-02 | 让玩家互动在之后留下轻微、可感知的世界回响与后续故事 | 已发布；Pages 清单/PCK 已核对 | 制作人于 2026-10-03 确认“玩家牵引羊驼靠近大鹅、双方安静共处后留下记忆”。首个切片通过羊驼自身进入共享范围后才记来源；只存稀疏记忆与低概率行为回响，不涉关系数值、任务、缺席惩罚、相机/相册。独立 reviewer `CODEX-LEAD-REVIEW-PR-71` 批准精确 SHA `219ed34d5299aeaa0e8eff53ec2f6e7f7683d045`；PR #71 合并提交 `6dacd879ea0a2bac724ecfd548779e5d40c44308`。见 [PR #71](https://github.com/narutojzm1-dot/youjia/pull/71)、[issue #45](https://github.com/narutojzm1-dot/youjia/issues/45)与[关系模型](architecture/animal-relationship-model.md)。
-| REQ-20261002-012 | 2026-10-02 | 让熟悉的小院因时段天空与玩家取景持续有新发现 | 进行中（切片 A） | Owner CURSOR-CONTRIBUTOR-LOCAL。2026-10-03 确认 A→B→C/D；C 先无道具微推；D 延后；鹅马摄影归 Codex。见 [familiar-yard-observation.md](architecture/familiar-yard-observation.md)。 |
+| REQ-20261002-012 | 2026-10-02 | 让熟悉的小院因时段天空与玩家取景持续有新发现 | 进行中（切片 C） | Owner CURSOR-CONTRIBUTOR-LOCAL。A 云带已上线；B 树叶见 REQ-012-STAY / PR #85；本切片做无道具抬头微推；D 延后。见 [familiar-yard-observation.md](architecture/familiar-yard-observation.md)。 |
 | REQ-20261002-013 | 2026-10-02 | 加入真实动物抓拍、稳定在照片内的有限题词和可翻页旅人手账 | 已发布；用户正式版试玩待反馈 | [PR #53](https://github.com/narutojzm1-dot/youjia/pull/53) 经独立审查后合并至 `b560dec94f08a1597e2b834e74c41841893ba36b`；[Actions 37025345857](https://github.com/narutojzm1-dot/youjia/actions/runs/37025345857) 与 Pages 发布成功。公开 PCK SHA-256 `e5b9c3f931b957ac4dd288e1c6786f6b9fc1d9ace946eac711e3bed723ac3d58` 已核验；详见[体验记录](playtests/2026-10-02-REQ-013-scrapbook.md)。不编造动作或旧照日期、不显示进度催促；与 REQ-012 自由构图及 REQ-011 关系回响独立。 |
 | REQ-012-STAY | 2026-10-03 | 站在栅栏边时重播已有草叶画 | 进行中 | `GROK-BUILD`。父 REQ-012 仍属 CURSOR。不催促、不改云带、不记相册。 |
 | REQ-20261002-015 | 2026-10-03 | 为大鹅骑马抓拍补完整乘骑扑翼姿态的规格 | 进行中（仅规格） | `GROK-BUILD` 认领 issue #64 的分镜，不制作最终画，不改 PR #65/#72。见 [goose-mount-pose-spec.md](architecture/goose-mount-pose-spec.md)。 |
@@ -99,6 +99,8 @@
 - **状态：** 代码与本地化题词实施中；待独立审查、自动检查和实际体验后更新。
 - **美术缺口：** 当前技术演示临时以完整的现有张翅/收翅画作交替表示扑翼；要让乘骑接触和双脚锚点达到正式画风，需补独立全身姿态。已开 [REQ-20261002-015 / issue #64](https://github.com/narutojzm1-dot/youjia/issues/64) 供美术资源认领，不在本代码切片里生成或冒充已批准资源。
 - **2026-10-03：** 用户确认切片顺序 A→B→C/D；C 先无道具微推；D 本周延后；Codex 继续负责鹅马摄影与关系记忆。切片 A 与 REQ-005 云带 B 一并开工。
+
+- **2026-10-03（续）：** 切片 A 随云带 `game-31316aa` 上线；切片 B 树叶由 `GROK-BUILD` PR #85 合入。父 Owner 推进切片 C：安静停留后轻微抬头镜头（无道具、可打断、不写相册）。
 
 ### 状态历史 · REQ-20261002-001
 
