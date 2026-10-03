@@ -3,7 +3,7 @@
 - Owner：`CODEX-LEAD-ASSISTANT`，2026-10-03。
 - 父实现：[PR #65](https://github.com/narutojzm1-dot/youjia/pull/65)，基线 `6bd54ddc769bbe3b88e140d737b4978192d80a43`。
 - 本切片仅修复、验证现有候选；不改写父分支，不接管 REQ-014，不制作 REQ-015 原画。
-- 状态：候选补丁，尚未发布。
+- 状态：已合入并发布；受控演出证据与自然触发试玩状态分别记录如下。
 
 ## 已复现并修复
 
@@ -32,12 +32,18 @@
 - [修正后近景](2026-10-03-REQ-014-verification/controlled-corrected-close.webp) 与 [真实成片手账](2026-10-03-REQ-014-verification/controlled-corrected-album.webp)：使用临时 Web 验证场景预置动物位置和时间，然后由真实模拟完成演出和保存。与原生场景测试一样属于受控现场证据，不是自然偶遇或正式线上验收；临时场景未提交、未包含在标准候选包。
 - [标准候选手机触屏入园](2026-10-03-REQ-014-verification/candidate-mobile-yard.webp)。原始 PNG 和执行日志保留在会话工作区。
 
-正式乘骑画仍缺失：当前张翅/收翅画作是现有 PR 的技术占位，不宣称脚掌接触马背、完整平衡姿态已达到最终美术验收。资源由 [issue #64](https://github.com/narutojzm1-dot/youjia/issues/64) 独立跟踪。本次未发布到 GitHub Pages。
+正式乘骑画仍缺失：当前张翅/收翅画作是技术占位，不宣称脚掌接触马背、完整平衡姿态已达到最终美术验收。资源由 [issue #64](https://github.com/narutojzm1-dot/youjia/issues/64) 独立跟踪。
 
-## 最新主线整合复核候选（2026-10-03）
+## 最新主线整合复核（2026-10-03）
 
 - 在最新 main `31316aa24edb5e643cc8ef82fba8a1f8e1a490b3`（含 PR #81 云带与 PR #82 测试修复） 上重放 PR #65 与 PR #72；保留 REQ-011 关系系统、PR #74/#75 文档与互动改动、Grok 的 PR #77 递草动画，以及 Cursor 的 #81 云带、#82 UI 套件修复。
 - Godot 4.7.2 `npm run verify:daily` 全套 PASS：generic 411、locomotion 410、animal-home 1005、photo-home 75、grass 368、grass-action 61、physical-yard 658、photo rendering 1242、photo save 42、goose-mount 74；目标、互动、hotspot、序列、viewport 与 loading shell 检查无失败。
-- 最新本地 Web PCK：13,742,972 bytes，SHA-256 `56f58588ec046b6f4fe6eabffabc65affa21cc2eb5cc70c2c330ac87f1f7688d`。该候选尚未发布。
-- Chromium 1280×720 最新本地页面：HTTP 200、标题《悠长的假期》、一个 Canvas，无 JS 错误/请求失败；进入院子并切换至阴天云带画面正常；[浏览器截图](2026-10-03-REQ-014-verification/final-integrated-cloud-yard.webp)。当前最新树未完成长时自然演出等待，不声称完整事件已实际触发。当前不得声称已通过完整演出实玩。
-- 最终代码 SHA 即将更新至 PR #65，并须由独立 reviewer 审该精确 SHA；review 通过前不合并。
+- 最新本地 Web PCK：13,742,972 bytes，SHA-256 `56f58588ec046b6f4fe6eabffabc65affa21cc2eb5cc70c2c330ac87f1f7688d`。正式 Pages 构建以 `game-521e6c2` 标识；公网字节与哈希另列于下方发布核验。
+- Chromium 1280×720 最新本地页面：HTTP 200、标题《悠长的假期》、一个 Canvas，无 JS 错误/请求失败；进入院子并切换至阴天云带画面正常；[浏览器截图](2026-10-03-REQ-014-verification/final-integrated-cloud-yard.webp)。当前最新树未完成长时自然演出等待，不声称完整事件已实际触发。候选体验并未自然触发完整演出。
+- ## 合入与公网发布（2026-10-03）
+
+- PR #65 最终 SHA `f7f2d0686753f798055809ef23c465d9fc237b0c` 获独立子代理 APPROVE，随后合入 `main`，merge commit `521e6c2180284ab80aa914ec78e0ed513af960ed`。审查确认 REQ-016 需求表仅有一行且 owner/status 与基线一致；运行时未发现阻断。审查备注：演出收尾把动物设回吃草状态，没有恢复其原先休息/闲逛状态；此项未构成阻断。
+- PR #72 验证补丁已经包含在 #65 最终树中，故在 #65 合入后关闭重复 PR。
+- Actions [37092968010](https://github.com/narutojzm1-dot/youjia/actions/runs/37092968010) 的完整验证、标准 Web 导出及发布步骤均成功；Pages 部署 [37093112683](https://github.com/narutojzm1-dot/youjia/actions/runs/37093112683) 成功。
+- 公网 `game-release.json` 指向 `game-521e6c2` 与源提交 `521e6c2180284ab80aa914ec78e0ed513af960ed`，引擎 `4.7.2.stable.official.ed1daf0bf`。直接下载公网 PCK 为 13,742,972 字节，SHA-256 `d46351fbac8d1bbe3d11de110cdbe8001a7cb805bbae07b40e16ffe97be54c1a`。
+- 对正式 Pages 入口做 Chromium 冒烟：HTTP 200、标题《悠长的假期》、`data-build=game-521e6c2`、1280×720 单 Canvas；无 JavaScript 错误或请求失败。这只是启动和画布冒烟；本轮没有自然观察到完整鹅马演出。乘骑角色画仍是技术占位，最终资源由 [issue #64](https://github.com/narutojzm1-dot/youjia/issues/64) 跟进。

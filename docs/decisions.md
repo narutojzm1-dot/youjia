@@ -343,3 +343,12 @@ Scale 弹跳从 1.04 提升至 1.08，点击可靠性不变。
 ### REQ-001-GRASS 合入与正式发布核验
 
 PR #76 经独立最终 SHA `d186e4da23857ae3aa1d0acedd5cdf4dee794212` APPROVE，合入 `6c1d6f028207fc9e1a7fe19aef7c87179747769d`。Actions [37091443833](https://github.com/narutojzm1-dot/youjia/actions/runs/37091443833) 完整回归、导出与发布成功；公网入口已指向 `game-6c1d6f0`，下载 PCK 13,585,708 字节，SHA-256 `e03725ae65e45243d2d14f7b7e83efba7356c5992dd60f8f5092b8be8187087d`。本子切片标已完成；父 REQ-001 保留 CODEX-LEAD Owner，抚摸/招呼等继续待做。详见[验收记录](playtests/2026-10-03-REQ-001-grass-actions.md)。
+
+
+### 2026-10-03 · REQ-014 鹅马摄影演出合入与发布
+
+PR #65 从现有分支整合 PR #72 验证修复，保留当时 main 上的关系系统、递草动作和云带改动。独立子代理审查最终 SHA `f7f2d0686753f798055809ef23c465d9fc237b0c` 并批准；误报的 REQ-016 重复行经直接检查已撤回，最终需求表与基线一致。PR #65 合入 commit `521e6c2180284ab80aa914ec78e0ed513af960ed`；#72 因补丁已在最终树中而关闭。完整验证/导出/发布 Actions `37092968010` 成功，Pages 部署 `37093112683` 成功。公网清单对应 `game-521e6c2` / 同一源 commit；PCK 13,742,972 字节，SHA-256 `d46351fbac8d1bbe3d11de110cdbe8001a7cb805bbae07b40e16ffe97be54c1a`。Chromium 公网入口加载通过。没有自然触发完整演出的证据，因此需求状态保留自然试玩待补；乘骑画还是占位，由 issue #64 跟进。
+
+### 2026-10-03 · REQ-001 招呼/抚摸动作提案
+
+考虑到 REQ-001 明确包含成功互动时的角色动作，而拿草/递草已有独立实现、抚摸动物回应又归 REQ-008，本轮新建 [issue #84](https://github.com/narutojzm1-dot/youjia/issues/84)，范围限于旅人招呼/抚摸成功时的短动作设计。先盘点现有角色帧与取消路径，动作资源方向须产品确认；不修改既有距离判定/互动语义，不添加关系值、任务或缺席惩罚。issue 暂不指派，确认后开放认领。
