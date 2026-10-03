@@ -1,6 +1,6 @@
 # REQ-005 / REQ-012 · 天空与云层表现方案
 
-- 状态：**B 已发布**；**C 傍晚暖云已发布 `game-3350c89`**；**早晨薄云已发布 `game-693b311`**（待制作人看图）；雨雪与专属季节画仍不做。
+- 状态：**B 已发布**；**C 傍晚暖云已发布 `game-3350c89`**；**早晨薄云已发布 `game-693b311`**；**夜里压暗 modulate 推进中**；雨雪与专属季节画仍不做。
 - 关联：REQ-20261002-005（天气/季节）、REQ-20261002-012（时段天空与反复观看）。
 - 运行时与云带 B Owner：`CURSOR-CONTRIBUTOR-LOCAL`；本次资源盘点：`CODEX-LEAD`
 - 日期：2026-10-02（方案）；2026-10-03（用户确认并开工 B）；2026-10-03（资源审计）
@@ -52,7 +52,7 @@ Codex 建议先评审一张傍晚暖色云带样张：它成本低于重画季�
 2. **云带风格须与现有院子同一水彩笔触。**
 3. **接受云带缓慢平移；低动效玩家只需静止帧。**
 
-当前实现切片：晴天早晨 `cloud_band_morning.png`、晴天日间 `cloud_band_sunny.png`、晴天傍晚 `cloud_band_sunset.png`、阴天 `cloud_band_overcast.png`，由 `YardWorld` 双 Sprite 无缝缓移。制作人并排样张见 [playtests/2026-10-03-REQ-005-user-accept](../playtests/2026-10-03-REQ-005-user-accept/README.md)。
+当前实现切片：晴天早晨 `cloud_band_morning.png`、晴天日间 `cloud_band_sunny.png`、晴天傍晚 `cloud_band_sunset.png`、阴天 `cloud_band_overcast.png`，由 `YardWorld` 双 Sprite 无缝缓移。晴天夜里仍用日间云形，modulate 压暗偏冷。制作人并排样张见 [playtests/2026-10-03-REQ-005-user-accept](../playtests/2026-10-03-REQ-005-user-accept/README.md)。
 
 ## 与 REQ-012 的边界
 

@@ -211,6 +211,18 @@ func review():
  w._day_elapsed = w.DAY_DURATION_SECONDS * 0.40
  w._apply_weather_art()
  check(w.weather=="sun" and w._cloud_band_a.texture==w.CLOUD_SUNNY,"sunny noon restores the bright cloud band")
+ # 夜里仍用晴天云形，但 modulate 压暗偏冷，不把正午暖白带到夜空。
+ w._day_elapsed = w.DAY_DURATION_SECONDS * 0.92
+ w._apply_weather_art()
+ check(w._cloud_band_a.texture==w.CLOUD_SUNNY,"sunny night keeps the daytime cloud shape")
+ var night_mod: Color = w._cloud_band_a.modulate
+ check(night_mod.r < 1.0 and night_mod.b > night_mod.r,"sunny night clouds are cooler and dimmer than noon")
+ w.toggle_weather()
+ check(w.weather=="overcast" and w._cloud_band_a.texture==w.CLOUD_OVERCAST,"overcast night keeps the overcast cloud band")
+ w.toggle_weather()
+ w._day_elapsed = w.DAY_DURATION_SECONDS * 0.40
+ w._apply_weather_art()
+ check(w._cloud_band_a.modulate.r >= 1.0,"sunny noon after night restores the bright cloud band")
  # 低动效：云带保持可读静止帧（滚动偏移不再增加）。
  # 本套件以 SceneTree 运行，须经 root 取 TuningStore 节点。
  var scroll_before=w._cloud_scroll
