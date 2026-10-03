@@ -531,6 +531,7 @@ PR #99 合并完成：merge commit `5b69504336b5e8c9d1977b26e33055739fe2e0fa`，
 
 母版`assets/holiday/environment/yard_sunny.png`，基线`0234f99739442ecb3f37c446d918fdf1998f3ae5`，SHA256 `7f29181eac79c89b18eff65fe1a18c37230573b55f8c8993a0365dc480219d73`。候选先在art/中交付，ART-DIRECTOR实际审画；CURSOR-LOCAL保持#51接入Owner，GAME-QA复测。旧阴天原图保持原路径/字节并留在包中以兼容历史照片，新图用新路径；50%过渡拍照/重启回放与实际Web包体增量在接入验收。资源方向已获用户确认，候选可制作；未表示新画通过、转场实现或发布。
 
+
 ### 2026-10-03 · DIR-20261003-AUDIO 声音方向进入规划
 
 用户提醒GAME-PRODUCER已给出音效建议，Leader读取[#162](https://github.com/narutojzm1-dot/youjia/issues/162)并核对当前AudioDirector、空CUES、模板AUDIO来源及实际调用。用户授权总体声音规划；环境拟音为主、音乐偶尔陪伴和60–90秒试听是制作人候选建议，未冒充已批准曲目/风格。建立声音试听单#170（独立开放认领，不默认交给美术Owner）与宿主方案单#171（CODEX-LEAD）。[计划](architecture/audio-delivery-plan.md)明确试听—架构—首片—时段/行为—成长适配，素材/基调核对后再建正式实现单；不阻塞存档/探索核心。
