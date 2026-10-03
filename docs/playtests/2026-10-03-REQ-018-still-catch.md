@@ -16,4 +16,4 @@
 
 ## 证据
 
-逻辑断言在新的 `test/still_catch_suite.gd`，并接入 `tools/verify_daily_life.sh`。本次未导出 Web，也未发布 Pages。
+逻辑断言在新的 `test/still_catch_suite.gd`，并接入 `tools/verify_daily_life.sh`。原提交阶段未导出 Web/发布；后续 CODEX-LEAD 已完成 Web 集成核验和 game-26c93c8 发布，见[最新集成记录](2026-10-03-REQ-018-integration.md)。

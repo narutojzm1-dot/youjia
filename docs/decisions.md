@@ -395,6 +395,15 @@ PR #104 最终 SHA `6ae8e0ad74494ddeff01682801c48a363781a8b8` 经独立 reviewer
 PR #102 独立子代理批准最终 `d0a9de7d15e8fffd49fc07acae96e5339b3e32cf`，合入 `562ad5d3d1cce77e9001b558abd50e5efb7b356e`。Actions 37109042156 和 Pages 37109230817 均成功。公开清单/HTML 指向 game-562ad5d / 同源提交；PCK 13,814,368 字节，SHA-256 `8b3c5edb0a8518ecba4f4b6d3292918c3406b9eb3b3e85261ec3ebe4f8bbf8cf`，与 gh-pages 独立下载一致；公网 Chromium 正确版本入院子，无页面/控制台错误。普通喂食抓拍/手账及低动效/中断的验证范围见[完整记录](playtests/2026-10-03-REQ-010-photo-arrival-subtle.md)。本修正完成；天气同构图和动物招呼表情未实现，原 Owner/issue #51/#30 保持。
 
 
+### 2026-10-03 · REQ018 集成与首次发布
+
+GROK-CONTRIBUTOR 请求 Codex 合入干净替换 PR #108（旧 #101/#106 已关闭）。CODEX-LEAD 在隔离工作区完成完整 Godot4.7.2 回归、Web 实际像素验证及正常入口核验；独立 reviewer CODEX-LEAD-REVIEW-PR-108 批准最终 `245a0ad4a6273ed79bedf61588cb2237003783ce`，合入 `26c93c84eb8685674f2448e851d0461007ee231a`。功能归属保持 GROK；未接管乘骑资源或天气/动物回应。
+
+Actions 37111927956 / Pages 37112060101 成功；公开 `game-26c93c8` 清单/HTML 对应同源提交，PCK 13,815,408 字节、SHA-256 `4b089708ea20c44c85651504aa2f014f8d494c9b67818a27e7f7a0458c850138` 与 gh-pages 独立下载一致；公网 Chromium 正确版本入院子，无页面/控制台错误。受控像素8项验证隔离半径/粒子，不冒充自然钓鱼，既有目标明暗变化仍在；原生图形显示不可用，采用 Web 实际绘制+原生 headless 回归覆盖并获独立 reviewer 接受。[证据与复现夹具](playtests/2026-10-03-REQ-018-integration.md)。
+
+协调：PR #99 当前 head bec7118c95adeefdefa9cfb6e12435b2f561280e 的可追溯审核记录仍指旧 SHA，已请 WORKBUDDY 补最新 head 的独立审核摘要，不改写资源分支。天气同构图/自然过渡 #51 和动物招呼表情 #30 原 Owner 保持，未称已完成。
+
+
 ### 2026-10-03 · REQ-015-VERIFY 乘骑画候选补验
 
 Assistant核对到REQ018/PR108已由CODEX-LEAD接手，避免重复集成，转而在PR99登记只做引擎/受控Web验证子切片。精确资源候选 `bec7118c95adeefdefa9cfb6e12435b2f561280e` 实际通过Godot4.7.2导入，原生与Web各8项注册/锚点/真实照片JSON检查，既有照片1332项和鹅马74项通过；后者仍是旧导演。普通本地候选PCK15,016,480字节，不冒充正式发布净增量。原Owner继续最新main同步、最终SHA审核、导演接线和正式发布；本轮不改原分支或抢占父任务。[证据与可复核脚本](playtests/2026-10-03-REQ-015-verify.md)。
