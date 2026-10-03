@@ -17,7 +17,7 @@
 | REQ-20261002-002 | 2026-10-02 | 解释靠近动物时出现的橙色提示，并让动作目标更明确 | 已上线；待实玩验收 | [PR #25](https://github.com/narutojzm1-dot/youjia/pull/25)、[目标提示体验记录](playtests/2026-10-02-REQ-002-target-clarity.md)；移动动物点选和手机触屏仍待验收。 |
 | REQ-20261002-003 | 2026-10-02 | 确定长期定位与停留/回访循环 | 已决策：轻陪伴为主、轻放置为辅 | 用户确认互动可留下回响，让动物之后的行为或小故事发生细微变化；不得引入缺席惩罚或强制任务。具体切片见 [REQ-20261002-011](requirements.md)。 |
 | REQ-20261002-004 | 2026-10-02 | 为大鹅和其他动物补足动作与表情变化 | 进行中 | [PR #34](https://github.com/narutojzm1-dot/youjia/pull/34) 已发布大鹅收翅站立与卧姿；其他动物动作仍待补。 |
-| REQ-20261002-005 | 2026-10-02 | 让天气与季节可感知；评估新增美术资源 | 进行中（B/C/早晨云已发布；待制作人看图） | Owner CURSOR-CONTRIBUTOR-LOCAL。云带 B `game-32ff2d1`；傍晚暖云 `game-3350c89`（PR #103）；早晨薄云 PR #140 `game-693b311`。雨雪仍不做。样张见下方「待制作人验收」与 [playtests/2026-10-03-REQ-005-user-accept](playtests/2026-10-03-REQ-005-user-accept/README.md)。 |
+| REQ-20261002-005 | 2026-10-02 | 让天气与季节可感知；评估新增美术资源 | 进行中（夜里压暗云带） | Owner CURSOR-CONTRIBUTOR-LOCAL。云带 B `game-32ff2d1`；傍晚暖云 `game-3350c89`（PR #103）；早晨薄云 PR #140 `game-693b311`。本切片：晴天 `tod>=0.87` 仍用日间云形，modulate 压暗偏冷。雨雪仍不做。样张见 [playtests/2026-10-03-REQ-005-user-accept](playtests/2026-10-03-REQ-005-user-accept/README.md)。 |
 | REQ-20261002-006 | 2026-10-02 | 深入体验当前版本并提出大型玩法建设顺序 | 复核完成 | [game-1347743 体验记录](playtests/2026-10-02-game-1347743.md)；玩法建议已进入策划基准。 |
 | REQ-20261002-007 | 2026-10-02 | 携带的鱼在靠近鸭/鹅途中消失后，角色应停止已失效的投喂追踪，但继续普通散步 | 已发布；待浏览器体验复核 | [PR #19](https://github.com/narutojzm1-dot/youjia/pull/19)、[game-b82a7f5 发布核查](playtests/2026-10-02-game-b82a7f5.md)；未改变现有 20 秒携鱼时限。 |
 | REQ-20261002-008 | 2026-10-02 | 为主动互动补足真实对象回应 | 进行中 | 鸭鹅投鱼见 [PR #32](https://github.com/narutojzm1-dot/youjia/pull/32)，抚摸和浇水见 [PR #35](https://github.com/narutojzm1-dot/youjia/pull/35)；更多互动仍待盘点。 |
@@ -51,6 +51,7 @@ CODEX-LEAD 向制作人汇报时以本表为准。状态只用「待看图 / 待
 | 条目 | 请看什么 | 截图或记录 | 构建 | Owner | 状态 |
 | --- | --- | --- | --- | --- | --- |
 | REQ-005 晨午晚/阴云 | 晴天早晨薄云、正午暖白、傍晚杏粉、阴天灰紫是否自然可辨 | [验收样张](playtests/2026-10-03-REQ-005-user-accept/README.md) | `game-693b311` 起（Pages 可能已是更新 tip） | `CURSOR-CONTRIBUTOR-LOCAL` | 待看图 |
+| REQ-005 夜里云带 | 入夜后晴天云是否压暗偏冷，不再像正午暖白贴在夜空上 | [记录](playtests/2026-10-03-REQ-005-night-cloud.md) | 合入后回填 | `CURSOR-CONTRIBUTOR-LOCAL` | 待看图 |
 | REQ-012 切片 C 安静抬头 | 站定约 6 秒镜头轻抬入云；走动立刻回落；无新提示、不写相册 | [实现记录](playtests/2026-10-03-REQ-012-quiet-sky-look.md)（本轮无实机抬头帧） | `game-6a20cdc` | `CURSOR-CONTRIBUTOR-LOCAL` | 待实玩 |
 | REQ-012-STAY 栅栏草叶 | 停约 2.5 秒再播已有草叶，走路立刻停 | [记录](playtests/2026-10-03-REQ-012-STAY.md) | PR #85 `36fa443` | `GROK-BUILD` | 待实玩 |
 | REQ-002 目标提示 | 移动动物点选与手机触屏是否仍清楚 | [记录](playtests/2026-10-02-REQ-002-target-clarity.md) | `game-9fe0d39` | `MANUS-CONTRIBUTOR` | 待实玩 |
@@ -73,6 +74,7 @@ CODEX-LEAD 向制作人汇报时以本表为准。状态只用「待看图 / 待
 - **2026-10-03（傍晚暖云发布）：** PR #103 合入 `3350c892cd45f1c8fb7f2db14bd8fc984fb8e34d`；Actions [37108058746](https://github.com/narutojzm1-dot/youjia/actions/runs/37108058746) 发布 `game-3350c89`。
 - **2026-10-03（早晨薄云）：** 为补齐晨/午/晚云层可辨，增加 `cloud_band_morning.png`（晴天 t<0.30）；阴天不换。已在 GROK #136、WORKBUDDY #99 留言。PR #140 合入 `693b311`。
 - **2026-10-03（制作人验收）：** 用户要求用截图/视频验收、未点头不阻塞后续。云带四态样张写入 [playtests/2026-10-03-REQ-005-user-accept](playtests/2026-10-03-REQ-005-user-accept/README.md)；过程见 DOC-20261003-001。
+- **2026-10-03（夜里云带）：** 傍晚结束后若仍用正午暖白 modulate，夜空上的云会发亮。不新画：晴天 `tod>=0.87` 沿用 `cloud_band_sunny.png`，改冷暗 modulate；阴天不换。`_sync_cloud_band_art` 贴图未变时也刷新 modulate。已在 #143 留言。
 
 ### 2026-10-02 · REQ-009 第三处热点发布与台账恢复
 
