@@ -698,8 +698,7 @@ func _play_next_photo_arrival() -> void:
 		return
 	var snapshot: Dictionary = _photo_arrival_queue.pop_front()
 	_flash_photo()
-	_photo_arrival.play(snapshot, _album_chip.get_global_rect().get_center(),
-		bool(TuningStore.get_value("ui.reduced_motion", false)))
+	_photo_arrival.play(snapshot, bool(TuningStore.get_value("ui.reduced_motion", false)))
 
 
 func _cancel_photo_arrivals() -> void:
@@ -714,9 +713,6 @@ func _on_photo_tucked() -> void:
 		return
 	if not _photo_arrival_queue.is_empty():
 		_play_next_photo_arrival()
-		return
-	_show_notice_key("notice.photo.saved")
-	_pulse_button(_album_chip)
 
 
 func _show_album() -> void:

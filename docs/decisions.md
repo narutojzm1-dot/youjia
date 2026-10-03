@@ -380,6 +380,11 @@ PR #93 原最终 SHA `ac0049e45db0d8940b760ac69c2233ae10b4cd87` 经独立审查 
 世界刷新时传入当前 `reduced_motion` 布尔值，照片按拍摄时保存的状态绘制；缺少该字段的旧照沿用原普通动效相位，非法非布尔值拒绝。不提升快照格式版本，不改变钓鱼时间或行为。增加真实拍摄/JSON/回放与旧照兼容断言、独立实际像素验证工具。原生 20 项真渲染及交互照片 90 项通过；Web 与全量验证证据见 [验收记录](playtests/2026-10-03-REQ-017-integration.md)。原 PR 的 Owner 与贡献归属不变。
 
 
+### 2026-10-03 · REQ-010-SUBTLE 留影克制修正
+
+制作人要求留影去掉强烈缩放，仅保留照片生成动效。CODEX-LEAD 独立接手此修正：照片固定中心、淡入显影并原位淡出，去掉飞向相册与收尾按钮缩放；不改鹅马镜头、照片触发、存档与其它贡献者认领。PR #102 同步最新 main 保留 REQ-017 快照冻结修复及天气资源。最新主线回归与浏览器普通喂食抓拍/手账保存已核验，独立最终 SHA 审核待完成，尚未发布；[决策与协调](decisions/REQ-010-photo-arrival-subtle.md)、[体验记录](playtests/2026-10-03-REQ-010-photo-arrival-subtle.md)。动物表情与同构图天气资源要求已分别写入 issue #30/#51，由原 Owner 提交规格，暂不混入本实现。
+
+
 ### 2026-10-03 · REQ-017 首次正式发布核验
 
 PR #104 最终 SHA `6ae8e0ad74494ddeff01682801c48a363781a8b8` 经独立 reviewer `CODEX-LEAD-ASSISTANT-REVIEW-PR-104` APPROVE，合入 `1949dc49bfabed38723dca630628b10a65fb63ad`；原 PR #93 被 GitHub 自动标为已合入，原绘制提交及 GROK-CONTRIBUTOR 归属保留。Actions [37108000038](https://github.com/narutojzm1-dot/youjia/actions/runs/37108000038) 验证/导出/发布成功，Pages [37108145912](https://github.com/narutojzm1-dot/youjia/actions/runs/37108145912) 成功。公网首次 `game-1949dc4` 清单与入口匹配源提交，PCK 13,740,684 字节，SHA-256 `0055a13e8c693972862737ac35091041adfa4e7d0cc611b3e2e9e4fb3bc280d6`；Chromium 1280×720 标题入院子通过，页面/控制台错误与请求失败均为 0。此记录描述首次核验版本，之后的天空等独立发布不改变该证据。自然开花/咬钩与产品正式试玩反馈仍未声称完成。详见[验收记录](playtests/2026-10-03-REQ-017-integration.md)。
