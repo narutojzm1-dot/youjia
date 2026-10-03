@@ -408,6 +408,11 @@ Actions 37111927956 / Pages 37112060101 成功；公开 `game-26c93c8` 清单/HT
 
 Assistant核对到REQ018/PR108已由CODEX-LEAD接手，避免重复集成，转而在PR99登记只做引擎/受控Web验证子切片。精确资源候选 `bec7118c95adeefdefa9cfb6e12435b2f561280e` 实际通过Godot4.7.2导入，原生与Web各8项注册/锚点/真实照片JSON检查，既有照片1332项和鹅马74项通过；后者仍是旧导演。普通本地候选PCK15,016,480字节，不冒充正式发布净增量。原Owner继续最新main同步、最终SHA审核、导演接线和正式发布；本轮不改原分支或抢占父任务。[证据与可复核脚本](playtests/2026-10-03-REQ-015-verify.md)。
 
+
+### 2026-10-03 · REQ-015 最终合入门禁阻断
+
+CODEX-LEAD 检查最新 main e11b250，上一轮已收尾。PR111 由 CODEX-LEAD-ASSISTANT 登记支持验收，不重复；本轮只复核 PR99 新 head `1620c2abffab3d087a08472d080df39f32c48b75`。同步 main 保留了共享记录，但 CastArt 乘骑两行注册缩进退到 goose 分支外，下一行 metadata 产生解析错误。Godot4.7.2 与全量日常入口均复现，独立审查 REQUEST CHANGES。资源不可合入，不导出/发布这个失败候选；旧候选的成功验证不覆盖新 SHA。原 Owner 修复后须重新完整回归、Web 导出/浏览器和独立最终 SHA 审查。导演接线仍为独立 REQ014；天气同构图 #51 与动物表情 #30 保留原 Owner、无新回复，未声称完成。[复现与验收](playtests/2026-10-03-REQ-015-final-gate.md)。
+
 ### 2026-10-03 · REQ-015 成品画切片：两帧乘骑扑翼交付（`WORKBUDDY-CONTRIBUTOR`）
 
-产品确认乘骑扑翼用**两张交替**而非一张（0.28s 交替的扑翼节奏需要上下两个翼位），原「确认前不要开工绘制」的门禁据此解除。`WORKBUDDY-CONTRIBUTOR` 只认领成品画切片：交付 `goose_riding_up` / `goose_riding_down` 两张独立全身绘画（非站立鹅缩放、非张翅画变形），均为 1254×1254 RGBA、真实 alpha、画布四边无 alpha>16 像素；两帧**共用同一脚底锚点 `(533.5,1195)`**，换帧时脚不跳。运行时键为 `riding_up` / `riding_down`，由 `cast_art.gd` 注册纹理与 `posture_metadata`，`native_facing=1` 与 `cast_v2` 现有鹅族一致（运行时朝向翻转仍由 `scale.x` 负责）。两帧体积分别为 1029387 / 839572 字节，均低于 `goose.png` 的 1,212,584 字节上限。规格切片仍归 `GROK-BUILD`，导演接线仍归 REQ-014 / `CODEX-LEAD`；本切片不改 `yard_world.gd`、`FeltActor`，也不覆盖其他代理已认领的文件范围。
+产品确认乘骑扑翼用**两张交替**而非一张（0.28s 交替的扑翼节奏需要上下两个翼位），原「确认前不要开工绘制」的门禁据此解除。`WORKBUDDY-CONTRIBUTOR` 只认领成品画切片：交付 `goose_riding_up` / `goose_riding_down` 两张独立全身绘画（非站立鹅缩放、非张翅画变形），均为 1254×1254 RGBA、真实 alpha、画布四边无 alpha>16 像素。两帧脚底锚点经整数平移对齐后残余 0.48px 亚像素差（换帧不可见）；运行时键为 `riding_up` / `riding_down`，由 `cast_art.gd` 注册纹理与 `posture_metadata`，`native_facing=1` 与 `cast_v2` 现有鹅族一致（运行时朝向翻转仍由 `scale.x` 负责）。两帧体积分别为 1029972 / 853295 字节，均低于 `goose.png` 的 1,212,584 字节上限。规格切片仍归 `GROK-BUILD`，导演接线仍归 REQ-014 / `CODEX-LEAD`；本切片不改 `yard_world.gd`、`FeltActor`，也不覆盖其他代理已认领的文件范围。
