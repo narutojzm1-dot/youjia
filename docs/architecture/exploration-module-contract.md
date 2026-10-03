@@ -10,7 +10,7 @@
 探索是小院生活的**自愿补充**：可以不出门，出门后可以随时回、可以空手回；带回什么由玩家自己选。契约要保证四件事：
 
 1. **形态无关**：同一核心既能接“手绘小景里亲自散步”，也能接“路线卡片/节点”，不预先选定。
-2. **不丢、不重**：玩家已选的东西在宿主确认落盘前一直保留（唯一例外是内容确实不被接受时的 `settle_empty`，以及探索记录本身损坏，见 §4、§8）；同一趟旅程无论重复点击、回调、刷新、重启，最多授予一次。
+2. **不丢、不重（限定范围）**：在保存正常工作的前提下，玩家已选的东西在宿主确认落盘前一直保留；同一趟旅程无论重复点击、回调、刷新、重启，最多授予一次。明确的例外：内容确实不被接受时的 `settle_empty`（§4）；探索记录本身损坏（§8）；保存持续失败期间又被强制退出，只能恢复到最后一次成功保存的状态（§7.2）；宿主已提交序号丢失时的恢复政策尚待共同冻结（§8、§10）。
 3. **不困住玩家**：任何失败都有“再试一次”和“先回院子”两条出路；损坏或未知的探索记录不会连带清空小院、相册、关系或花圃。
 4. **不新增时钟**：不读现实时间，不做离线收益、过期、体力或冷却；只采样宿主现有的游戏时钟。
 
@@ -117,6 +117,7 @@ exploration = {
   session: null | {
     trip_id: "trip-3",                 # = "trip-" + serial
     trip_serial: 3,
+    record_revision: 7,                # 每次需保存的变更加一；persisted_revision 只在内存中，不存盘
     route_id: "formal.xxx",
     catalog: "formal",                 # "formal" | "fixture"
     state: "active" | "pending_commit" | "recoverable_failure" | "committed",
@@ -157,22 +158,45 @@ last_committed_trip_serial: 2          # 已成功落盘的最大旅程序号；
 ```text
 核心                                宿主（CODEX 侧 SaveStore 桥）
 request_return ──► pending_commit
-   proposal(trip_id, items) ───────► 1. trip_serial <= last_committed_trip_serial ?
+   proposal(trip_id, items) ───────► 1. trip_serial <= 已确认持久化的 last_committed_trip_serial ?
                                          是 → 视为已落盘，直接回 succeeded（不再发物）
                                      2. items 为空 → 跳过内容校验，直接到 3
                                         否则校验 items 都是 formal 目录合法 ID；
                                         有失效项 → commit_failed(retryable=false, rejected=[失效项])
-                                     3. 同一次原子保存写入：
+                                     3. 在**候选快照**（宿主当前已持久化数据的副本）上写入：
                                           - 取得物进入 #150 的持有状态
                                           - last_committed_trip_serial = trip_serial
                                           - 核心当前的 to_record()（此时为 pending_commit）
-                                     4. save() 成功 → commit_succeeded(trip_id)
-                                        save() 失败 → commit_failed(trip_id, retryable=true)
+                                     4. 以候选快照执行一次原子 save()：
+                                        成功 → 候选快照成为宿主的已持久化数据，再回 commit_succeeded(trip_id)
+                                        失败 → 丢弃候选快照，宿主内存中的持有物与序号保持保存前原样，
+                                               回 commit_failed(trip_id, retryable=true)
 committed ◄──────────────────────────
 close() ──► idle（宿主保存 to_record()，可与下次任意保存合并）
 ```
 
-要点：
+### 7.1 内存事务边界
+
+- **比较依据只能是已确认持久化的序号**：第 1 步只能和“最近一次 `save()` 成功时写入磁盘的 `last_committed_trip_serial`”比较，不能和内存里先改过的值比较。
+- **授予与序号先写候选快照，保存成功后才发布**：否则会出现这个反例——磁盘序号为 2；trip-3 先在内存里加物品、把序号改成 3；`save()` 失败；重试时用内存里的 3 判断为“已提交”并回成功；玩家关闭会话后崩溃，磁盘仍是 2，所得丢失。候选快照或“失败即完整回滚授予与序号”二者任选其一，具体由 #150 / 宿主桥（CODEX-LEAD）实现并冻结。
+- 文件层的可靠替换（#149）只保证“失败不删旧档”，不能代替这里的内存事务协议。
+- “提交失败 → 重试 → 成功 → 关闭 → 重启”必须不丢且只授予一次，列入 §10 共同冻结项与 §12 假宿主故障矩阵。
+
+### 7.2 出门阶段的保存确认
+
+`begin`、首次到达某点的 `visit`、`take`、`release` 都会改变需要保存的记录。核心先在内存中生效，并把 `record_revision` 加一，返回 `persist: true`；宿主据此保存，再把结果告诉核心：
+
+- 保存成功：宿主调用 `host_persisted(record_revision)`，核心记下 `persisted_revision`。
+- 保存失败：宿主调用 `host_persist_failed(record_revision)`，核心保持内存状态不变，`get_view()` 中 `unsaved_changes = true`。
+
+玩家确认边界：
+
+- 表现层可以立即显示“带上了”，因为这是玩家在当前会话里的真实选择；但**不得**显示“已收好/已保存”这类持久化成功的提示，直到对应的提交真正成功（§7 第 4 步）。
+- 保存失败期间，玩家仍然可以继续走、可以回院；回院提交会再尝试一次完整保存。不做假成功。
+- **诚实的限制**：如果保存持续失败、回院提交也失败，而玩家此时强制退出，重启只能读到最后一次成功保存的记录，这之后的选择会丢失。本契约不臆造额外的持久化保障；宿主是否在保存失败时给出温和提示，由宿主与表现层设计决定。
+- 具体接口（通知方式、命名、是否合并多次保存）列入 §10 共同冻结项。
+
+### 7.3 其他要点
 
 - **探索记录只由核心生成**：宿主只原样保存 `to_record()`，不直接改其中字段。即使第 3 步存下的会话仍是 `pending_commit`，恢复时发现 `trip_serial <= last_committed_trip_serial` 就会直接视为 `committed`（§8），不会二次授予。
 - **幂等键用单调序号，不用集合**：宿主只需保存一个整数 `last_committed_trip_serial`，放在探索记录之外（§6）。它比保存所有已提交 ID 的集合更有界，也不会随游戏时长膨胀。
@@ -194,7 +218,7 @@ close() ──► idle（宿主保存 to_record()，可与下次任意保存合�
 | 路线仍在，但 `current_stop` 或部分 `visited` / `offers` 的停留点已被移除（`active`） | 从 `visited` / `offers` 中剔除失效点；`current_stop` 失效时回到 `start_stop`；已携带物保留，提交时由宿主按目录校验；然后按下一行继续处理 | 同下一行 |
 | `active`（路线与 `current_stop` 均有效） | `active`，停在 `current_stop` | **用户已选定（2026-10-03）安全回院**：宿主调用 `request_return(reason="restored")`，玩家回到小院，已带上的东西照常提交。核心仍保留“继续旅程”能力，但宿主默认不使用 |
 | `pending_commit` / `recoverable_failure` | 原状态 | 自动重试提交（`retryable=false` 的失败则提示后 `settle_empty`） |
-| `committed`（但序号大于宿主已提交序号） | `pending_commit` | 说明宿主序号丢失或回退；重新提交同一提案，不直接关闭。此时序号已无法判断物品是否已授予，可能重复授予一次——这是有意的取舍：宁可多给一次，也不吞掉玩家所得 |
+| `committed`（但序号大于宿主已提交序号） | `pending_commit` | 说明宿主序号丢失或回退。**候选恢复方案（待 #150 与 ENGINEERING-SUPERVISOR 确认，见 §10 第 8 项）**：重新提交同一提案而不直接关闭；此时序号已无法判断物品是否已授予，可能重复授予一次。备选是直接关闭（可能丢失所得）。本设计稿不批准任何一种 |
 
 用户于 2026-10-03 选定“安全回院并保留已带上的东西”：重启后回到熟悉的小院，不丢玩家选择，也不需要恢复院外场景状态。台账见 EXP-CONTRACT 条目。
 
@@ -217,6 +241,9 @@ close() ──► idle（宿主保存 to_record()，可与下次任意保存合�
 | 5 | 未来版本数据的隔离位置 | #150 提供一个隔离槽，原样保存，不清除 |
 | 6 | 旅程期间院内时钟 | 由 Host 设计定；核心只读采样 |
 | 7 | 重启时 `active` 的玩家策略 | **已由用户决定**：安全回院并保留已带物品（2026-10-03），不再待冻结 |
+| 8 | 宿主已提交序号丢失或回退后的恢复政策 | 候选：重新提交（可能重复授予一次）/ 直接关闭（可能丢失所得）。待 #150 与 ENGINEERING-SUPERVISOR 确认（§8） |
+| 9 | 提交的内存事务边界 | 比较只用已确认持久化的序号；授予与序号写候选快照、保存成功后发布，或失败完整回滚；“失败 → 重试 → 关闭 → 重启”不丢且只授予一次（§7.1） |
+| 10 | 出门阶段保存的确认接口 | `record_revision` + `host_persisted` / `host_persist_failed` 通知；保存失败期间保留内存状态、可回院、禁止假成功（§7.2） |
 
 ## 11. 核心 API 草案（供 #152 实现，名称冻结前可调整）
 
@@ -237,6 +264,8 @@ func retry_commit() -> Dictionary
 func settle_empty() -> Dictionary
 func defer_to_yard() -> Dictionary
 func close() -> Dictionary
+func host_persisted(record_revision: int) -> void
+func host_persist_failed(record_revision: int) -> void
 
 func get_state() -> String
 func get_view() -> Dictionary
@@ -253,12 +282,14 @@ func to_record() -> Dictionary         # 纯值，可直接 JSON
 2. 非法转换全表：每个状态下发送每个不允许的事件，断言错误码且记录字节不变。
 3. 重复操作：连续 `request_return`；同一 `trip_id` 重复 `commit_succeeded`；宿主重复提交同一序号时不二次授予（用假宿主计数）。
 4. 提交失败：可重试失败 → 重试成功；`defer_to_yard` → 重启 → 自动重试；不可重试且部分物品被拒 → `revision` 递增、`trip_id` 不变；不可重试且无 `rejected` → `retry_commit` 被拒、`settle_empty` 收尾；全部物品被拒 → 空提案收尾；`rejected` 与提案无交集 → `invalid_rejection` 且记录不变；可重试失败下 `settle_empty` 被拒。断言任何失败序列后都存在到达 `committed` 的路径。
-5. 恢复：每个状态 `to_record` → JSON 字符串 → `restore` 往返一致；负数与超过 2^53 的 `rng_seed` 往返不变；以不同顺序访问停留点得到相同发现；哈希首字节 ≥ 0x80 的停留点得到与其他点不同的种子且无引擎错误输出。
+5. 恢复：每个状态 `to_record` → JSON 字符串 → `restore` 往返一致；负数与超过 2^53 的 `rng_seed` 往返不变；以不同顺序访问停留点得到相同发现；SHA-256 结果第 8 字节（索引 7）≥ 0x80、即种子为负的停留点（`decode_s64(0)` 为小端序）得到与其他点不同的种子且无引擎错误输出。
 6. 坏数据：非字典、缺字段、类型错、超长数组、超 4 KB、非法 ID、前缀不一致、玩家档中的 fixture 会话、未来版本、异常 `next_trip_serial`（负数、小数、超大）；断言只重置旅程、不抛脚本错误。序号：记录缺失或损坏且 `last_committed_trip_serial = N` 时，下一趟序号必须是 N+1 且提交后真实授予（假宿主计数为 1）。
 7. 目录变更：路线删除、停留点删除（含 `current_stop`）、物品删除后的恢复与提交。
 8. 夹具闸门：正式入口 `begin` fixture 路线被拒；fixture 会话提交时物品全部被拒并以空提案收尾；正式目录加载不包含 `fixture.` ID。
 9. 生命周期：1000 次 `begin/close` 与适配器 `bind/release`，无残留连接或对象增长。
 10. 不读现实时钟：静态检查 `scripts/exploration/` 不出现 `Time.get_unix_time`、`Time.get_ticks`、`OS.get_unix_time`。
+11. 假宿主故障矩阵（提交阶段）：磁盘序号为 N 时，提交 trip-N+1 首次 `save()` 失败 → 重试成功 → `close` → 重启，断言授予计数为 1、序号为 N+1；首次失败 → 不重试直接重启，断言授予计数为 0、会话仍为待提交并可再次提交成功。
+12. 逐阶段保存失败 / 重启矩阵（出门阶段）：在 `begin`、首次 `visit`、`take`、`release`、`request_return` 各阶段令保存失败后重启，断言恢复到最后一次成功保存的记录、不出现“已保存”假成功、序号不回退；保存失败期间仍可 `request_return` 并在下次保存成功时完成提交。
 
 ## 13. 交接
 
