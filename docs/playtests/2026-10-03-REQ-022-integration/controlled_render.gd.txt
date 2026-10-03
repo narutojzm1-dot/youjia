@@ -1,0 +1,76 @@
+extends Node
+var checks := 0
+var failures: Array[String] = []
+var world: YardWorld
+var overlay: Node2D
+var viewport: SubViewport
+var samples: Array[Image] = []
+func _ready() -> void: call_deferred("run")
+func check(ok: bool, label: String) -> void:
+ checks += 1
+ if not ok: failures.append(label); push_error(label)
+func trigger(kind: String) -> void:
+ if kind == "pet":
+  var cow = world.actor_named("cow")
+  world.debug_place_player(cow.position + Vector2(20,0))
+  world._interact_with_target("pet:cow")
+  check(not overlay.pet_feedback_snapshot().is_empty(), "actual successful pet starts cue")
+  overlay.position = Vector2(128,180)-cow.position
+ elif kind == "plant":
+  world.debug_place_player(world._plant_point())
+  world._plant_state = world.PLANT_PLANTED
+  world._plant_watered_day = -1
+  world._interact_with_target("plant")
+  check(not overlay.plant_feedback_snapshot().is_empty(), "actual watering starts cue")
+  overlay.position = Vector2(128,180)-world._plant_point()
+ else:
+  var bird = world.actor_named("duck_a")
+  world.debug_place_player(bird.position + Vector2(20,0))
+  world._fish_carry_type = "small"
+  world._interact_with_target("toss_fish:duck_a")
+  check(not overlay.bird_feedback_snapshot().is_empty() and world._fish_carry_type.is_empty(), "actual fish feed starts cue and consumes held fish")
+  overlay.position = Vector2(128,180)-bird.position
+func picture(kind: String, phase: float, reduced: bool) -> Image:
+ get_node("/root/TuningStore").set_value("ui.reduced_motion",reduced,false)
+ overlay._pet_feedback_time = overlay.OBJECT_FEEDBACK_DURATION*(1.0-phase) if kind=="pet" else 0.0
+ overlay._plant_feedback_time = overlay.OBJECT_FEEDBACK_DURATION*(1.0-phase) if kind=="plant" else 0.0
+ overlay._bird_feedback_time = overlay.BIRD_FEEDBACK_DURATION*(1.0-phase) if kind=="bird" else 0.0
+ overlay.queue_redraw()
+ await get_tree().process_frame
+ await RenderingServer.frame_post_draw
+ await get_tree().process_frame
+ await RenderingServer.frame_post_draw
+ return viewport.get_texture().get_image()
+func run() -> void:
+ world=YardWorld.new(); add_child(world); world.setup();world.set_process(false);world.visible=false
+ world.input_enabled=true
+ for actor: Node in world._actors.values(): actor.set_process(false)
+ world._player.set_process(false)
+ viewport=SubViewport.new();viewport.size=Vector2i(256,256);viewport.transparent_bg=true
+ viewport.render_target_update_mode=SubViewport.UPDATE_ALWAYS;add_child(viewport)
+ overlay=world._effects_overlay;overlay.reparent(viewport);overlay.visible=true
+ overlay.pet_pos=Vector2.INF;overlay.fish_ring_time=0.0
+ for kind: String in ["pet","plant","bird"]:
+  for reduced: bool in [false,true]:
+   trigger(kind)
+   var a:=await picture(kind,0.15,reduced)
+   var b:=await picture(kind,0.94,reduced)
+   check(a.get_data()==b.get_data() if reduced else a.get_data()!=b.get_data(),kind+" low-motion static/ordinary changing real pixels")
+   check(a.get_used_rect().size.x>12 and a.get_used_rect().size.y>12,kind+" cue visible")
+   overlay.advance_object_feedback(2.0);overlay.advance_bird_feedback(2.0);overlay.queue_redraw()
+   await get_tree().process_frame;await RenderingServer.frame_post_draw
+   check(overlay.pet_feedback_snapshot().is_empty() and overlay.plant_feedback_snapshot().is_empty() and overlay.bird_feedback_snapshot().is_empty(),kind+" cue expires")
+   samples.append(a)
+ var paper:=ColorRect.new();paper.size=Vector2(1280,720);paper.color=Color("fff6e8");add_child(paper)
+ for i: int in samples.size():
+  var photo:=TextureRect.new();photo.texture=ImageTexture.create_from_image(samples[i]);photo.position=Vector2(80+(i%3)*400,65+(i/3)*340);photo.size=Vector2(256,256);add_child(photo)
+  var label:=Label.new();label.text=["Pet ordinary","Pet low-motion","Water ordinary","Water low-motion","Feed ordinary","Feed low-motion"][i];label.position=photo.position-Vector2(0,25);label.add_theme_color_override("font_color",Color("5b4637"));add_child(label)
+ print("[object-feedback-render] ",checks," checks, failures=",failures)
+ if OS.has_feature("web"):
+  JavaScriptBridge.eval("window.objectFeedbackResult="+JSON.stringify({"checks":checks,"failures":failures})+";window.dispatchEvent(new Event('youjia:first-frame'));",true)
+ await get_tree().process_frame;await RenderingServer.frame_post_draw
+ var output:=OS.get_environment("YOUJIA_CAPTURE_PATH")
+ if not output.is_empty():get_viewport().get_texture().get_image().save_png(output)
+ if "--quit-after-test" in OS.get_cmdline_user_args():
+  get_node("/root/AudioDirector").call("release_streams")
+  get_tree().quit(0 if failures.is_empty() else 1)
