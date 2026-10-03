@@ -1,1 +1,1 @@
-https://raw.githubusercontent.com/narutojzm1-dot/youjia/639c9a8fd767ff75def2a3929673f067dbfa4e4b/scripts/game/world_effects_overlay.gd
+/workspace/still-catch-v2/scripts/game/world_effects_overlay.gd
