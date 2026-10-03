@@ -85,14 +85,14 @@ route = {
 | `pending_commit` | `commit_failed(trip_id, retryable=false, rejected=[])` | `recoverable_failure`（`retryable=false`） | 内容整体不可接受；此时 `retry_commit` 被拒，只能 `settle_empty` |
 | `recoverable_failure` | `retry_commit()` | `pending_commit` | 仅 `retryable=true` 时允许；同一提案、同一 `trip_id` 再交一次 |
 | `recoverable_failure`（仅 `failure.retryable == false`） | `settle_empty()` | `pending_commit` | **终止出口**：提案改为空 `items`、`revision + 1`、`trip_id` 不变。宿主对空提案不做内容校验（§7），只可能因落盘失败而失败，因此一定能收尾 |
-| `recoverable_failure` | `defer_to_yard()` | `recoverable_failure`（标记 `deferred`） | 玩家先回院子；提案保留，宿主下次启动或空闲时自动重试，不丢不重。延后**不释放**这趟旅程的所有权：未收口前 `begin` 仍返回 `pending_exists` |
+| `recoverable_failure` | `defer_to_yard()` | `recoverable_failure`（标记 `deferred`） | 标记“先在院子里生活，稍后自动重试”（导航本身已在 `request_return` 后完成，见下“回院导航”）；提案保留，宿主下次启动或空闲时自动重试，不丢不重。延后**不释放**这趟旅程的所有权：未收口前 `begin` 仍返回 `pending_exists` |
 | `committed` | `close()` | `idle` | 清掉旅程字段 |
 
-**不会困住玩家**：任何停在 `recoverable_failure` 的会话，都至少有一条通往 `committed` 的路。可重试的失败走 `retry_commit`；不可重试的失败走 `settle_empty`，只有“空提案也落盘失败”（磁盘层问题）才会继续停留，而这种情况玩家仍可 `defer_to_yard` 回院正常生活。玩家主动放弃已带物品不属于本契约默认行为；如需要，作为产品决定另行加入。`settle_empty` 会舍弃这一趟里无法收下的东西；它只在内容确实不被接受时使用，表现层要用温和文案说明，不当作惩罚。
+**不会困住玩家**：任何停在 `recoverable_failure` 的会话，都至少有一条通往 `committed` 的路。可重试的失败走 `retry_commit`；不可重试的失败走 `settle_empty`，只有“空提案也落盘失败”（磁盘层问题）才会继续停留，而这种情况玩家本就已按下文“回院导航”在院内正常生活，`defer_to_yard` 只给失败打上延后标记。玩家主动放弃已带物品不属于本契约默认行为；如需要，作为产品决定另行加入。`settle_empty` 会舍弃这一趟里无法收下的东西；它只在内容确实不被接受时使用，表现层要用温和文案说明，不当作惩罚。
 
 **回院导航不等待持久化**（CODEX-LEAD 在 [#150](https://github.com/narutojzm1-dot/youjia/issues/150#issuecomment-5972467568) 裁定，落实已批准的随时回院，不新增玩法决策）：
 - `request_return` 成功返回、进入 `pending_commit` 后，宿主**立即**把视图切回院子，再调度提交；回院是表现层导航，不以持久化成功为条件。提交结果在后台到达，平台确认长期不返回（§7.2“结果未知”）时玩家也已在院内，可以进行院内合法操作。
-- 这期间核心**保持** `pending_commit`：不调用 `close`，不改提案身份或内容，不释放这趟旅程的所有权，`begin` 仍返回 `pending_exists`。不为此新增核心状态、持久化字段或存档结构；`recoverable_failure` 下的 `defer_to_yard` 保留，与此兼容。
+- 这期间核心**保持** `pending_commit`：不调用 `close`，不改提案身份或内容，不释放这趟旅程的所有权，`begin` 仍返回 `pending_exists`。不为此新增核心状态、持久化字段或存档结构；`recoverable_failure` 下的 `defer_to_yard` 保留，与此兼容，但它不再承担导航，只把失败标记为 `deferred`，供宿主空闲或启动时自动重试。回院**不需要**先等到 `recoverable_failure`。
 - 已在 `pending_commit` 时玩家再次触发“回院”：宿主只做幂等导航，不再调用 `request_return`、不重新冻结提案、不多入队一笔。核心即使收到也返回 `illegal_transition` 且不修改。
 - “已回院”和“所得已收好 / 已保存”分开表述：后者只在 `commit_succeeded` 之后出现（§7.2 玩家确认边界）。
 - 宿主切换视图时按 §9 释放院外表现适配器（断开输入与信号），旧视图不能继续修改核心。
@@ -220,10 +220,10 @@ close() ──► idle（宿主保存 to_record()，可与下次任意保存合�
 
 出门阶段主要是 `begin`、首次到达某点的 `visit`、`take`、`release` 改变需要保存的记录。统一口径：**任何改变 `to_record()` 内容的事件都使 `record_revision` 加一并返回 `persist: true`**（包括 `request_return`、`commit_failed`、`commit_succeeded`、`retry_commit`、`settle_empty`、`defer_to_yard`，以及 `restore` 自己做的改写）；唯一例外是 `close`，它清空会话，返回 `persist: false`（§11）。核心先在内存中生效；宿主据此保存，再把结果告诉核心：
 
-- 宿主每次写入时，连同 `to_record()` 记下当时的 `(trip_id, record_revision)`；写入结束后用这一对值通知核心。宿主侧普通 / 出门阶段写入的在途身份为 `(write_id, trip_id, record_revision)`；回院提交事务的身份另带 `proposal.revision`（§7.1），两种身份不得混用。之后核心 `record_revision` 再增加，也不改已在途的字节。
+- 宿主每次写入时，连同 `to_record()` 记下当时的 `(trip_id, record_revision)`；写入结束后用这一对值通知核心。宿主侧普通 / 出门阶段写入的在途身份为 `(write_id, trip_id, record_revision)`；回院提交事务的在途身份为 `(write_id, trip_id, record_revision, proposal.revision)`，其中 `(trip_id, proposal.revision)` 就是 §7.1 的队列身份，入队义务和兜底只比对这一对。两种身份不得混用：一笔普通写入在途，不算满足提交的入队义务；普通写入的确认也不能当作提交成功。之后核心 `record_revision` 再增加，也不改已在途的字节。
 - 保存成功：宿主调用 `host_persisted(trip_id, record_revision)`。
 - 保存失败：宿主调用 `host_persist_failed(trip_id, record_revision)`。
-- **结果未知不是失败**：平台完成通知丢失、超时或上下文中断而无法确定持久化结果时，宿主**既不调** `host_persisted` **也不调** `host_persist_failed`，核心保持 `unsaved_changes = true`，不显示“已保存”。回院提交事务同理：结果未知时不回 `commit_succeeded` / `commit_failed`，核心停在 `pending_commit`，玩家已按 §4 回院导航在院内。未知状态的判定、静止核验与解除由 #150（H1/H2）负责，核心不新增未知状态。
+- **结果未知不是失败**：平台完成通知丢失、超时或上下文中断而无法确定持久化结果时，宿主**既不调** `host_persisted` **也不调** `host_persist_failed`，核心保持 `unsaved_changes = true`，不显示“已保存”。回院提交事务同理：结果未知时不回 `commit_succeeded` / `commit_failed`，核心停在 `pending_commit`，玩家已按 §4 回院导航在院内。未知状态的判定、静止核验与解除由 #150（H1/H2）负责，核心不新增未知状态。核验得出结果后，宿主按已知结果调用：提交已落盘 → `commit_succeeded`（只发布一次所得），未落盘且旧操作已确定终止 → `commit_failed(retryable=true)`；普通写入同理调用 `host_persisted` / `host_persist_failed`。核心侧不需要新事件。
 
 核心处理确认的规则（`persisted_revision` 只在内存中）：
 
@@ -315,7 +315,7 @@ close() ──► idle（宿主保存 to_record()，可与下次任意保存合�
 | 10 | 出门阶段保存的确认接口 | `host_persisted(trip_id, record_revision)` / `host_persist_failed(trip_id, record_revision)`；旧旅程、乱序、超前通知按 §7.2 表忽略；恢复时以读到的 revision 初始化；通知不触发保存；保存失败期间保留内存状态、可回院、禁止假成功 |
 | 11 | 单序号幂等的前提与整数范围 | 同一时刻最多一趟未收口旅程（`defer_to_yard` 不释放所有权；被冻结的隔离旅程也算未收口，§8 `can_begin` 规则）；`-1` 只作为传给 `restore` 的“不可信”标记，不写入记录、不参与序号分配；宿主只确认当前绑定会话的提案；序号与 revision 为 `0..2^31−1` 的 JSON 整数，`trip_id == "trip-" + serial`（§6、§7.1） |
 | 12 | 隔离材料的保存位置与持久性 | #150 提供隔离区：原文 + 诊断信息，后续普通保存原样保留，`sanitize_record()` 不得清除（§8） |
-| 13 | 回院导航与平台结果未知 | **CODEX-LEAD 已裁定方向**（#150）：`request_return` 成功即回院、提交在后台等待；重复回院只做幂等导航；结果未知时不发任何确认、不重试写入、不放行下一笔，在途身份 `(write_id, trip_id, record_revision)` 与提交身份（另带 `proposal.revision`）分开；重启先核验再 `restore`，无法定论传 `-1`。核心不新增状态或存档字段（§4、§7.2、§8）；宿主实现由 #150 H1–H4 负责 |
+| 13 | 回院导航与平台结果未知 | **CODEX-LEAD 已裁定方向**（#150）：`request_return` 成功即回院、提交在后台等待；重复回院只做幂等导航；结果未知时不发任何确认、不重试写入、不放行下一笔，在途身份 `(write_id, trip_id, record_revision)` 与提交身份（另带 `proposal.revision`）分开；重启先核验再 `restore`，无法定论传 `-1`。核心不新增状态或存档字段（§4、§7.2、§8）；宿主实现由 #150 H1–H4 负责。平台边界（未知判定、静止核验、同代恢复）待 ENGINEERING-SUPERVISOR 复核，随 #150 共同冻结 |
 
 ## 11. 核心 API 草案（供 #152 实现，名称冻结前可调整）
 
@@ -374,7 +374,7 @@ func to_record() -> Variant            # 纯值，可直接 JSON；正常为 Dic
 
 15. 异步提交交错（假宿主可分别控制“写入开始”和“持久化确认”的时机）：A 确认前重复提交同一 trip，A 成功后再放行 B → 只授予一次、B 在队首按新水位收尾；A 失败后重试 → 只授予一次；等待确认期间产生新照片 / 关系变化 → 成功回调不覆盖较新改动、未保存标记保留；旧提案排队期间发生内容拒绝升版 → 旧身份的请求被丢弃、只按新版本提交。A 已落盘但成功回调丢失 → 队列空闲时按入队义务兜底重新入队，在第 1 步按已确认水位收尾、不再写入。断言重启后所得恰好一次、水位正确、新院内进展保留、陈旧请求不修改当前会话。本项与平台持久化确认分别举证。
 
-16. 回院导航（核心侧，假宿主配合）：`request_return` 成功后假宿主立即标记“已回院”而提交未确认；确认长期不来时，会话保持 `pending_commit`、提案与 `trip_id` / `revision` 不变、`begin` 返回 `pending_exists`、`unsaved_changes` 保持 true；重复回院输入不改 `trip_id` / `proposal.revision`、不多入队、不额外授予；迟到成功只授予一次；结果未知期间不发确认、队列不放行下一笔；未知后重启传 `-1` → `quarantine_and_freeze`，之后以可信水位 `restore` 能按 §8 正常收尾且不重复授予。
+16. 回院导航（核心侧，假宿主配合）：`request_return` 成功后假宿主立即标记“已回院”而提交未确认；确认长期不来时，会话保持 `pending_commit`、提案与 `trip_id` / `revision` 不变、`begin` 返回 `pending_exists`；若该 `record_revision` 只由这笔结果未知的提交事务写入、没有其他已确认的写入，`unsaved_changes` 保持 true；重复回院输入不改 `trip_id` / `proposal.revision`、不多入队、不额外授予；迟到成功只授予一次；结果未知期间不发确认、队列不放行下一笔；未知且核验无法定论时重启传 `-1` → `quarantine_and_freeze`；之后以可信水位 `restore`，分两种断言：那次其实已落盘 → `close`、授予计数不变；其实未落盘 → `submit_proposal`，再提交只授予一次。
 
 **宿主侧联合验收**（由 CODEX-LEAD 在 #149/#150 实现与举证，核心以假宿主配合；列在这里是为了两边对同一份清单冻结）：
 
