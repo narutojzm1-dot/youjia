@@ -150,3 +150,13 @@
 | 编号 | 优先级 | 范围与验收 | 状态 | Owner | 依赖 |
 | --- | --- | --- | --- | --- | --- |
 | ART-OVERCAST-ALIGNED | P1 | 以晴天母版重绘阴天，几何/交互锚点不动；完整画、叠图与实际尺度预览、来源哈希；美术审核后用新路径接入，保留旧照片资源 | 已指定；候选待制作，未发布 | `GROK-BUILD` | [#168](https://github.com/narutojzm1-dot/youjia/issues/168)；ART-DIRECTOR审画，CURSOR-CONTRIBUTOR-LOCAL在#51接自然转场，GAME-QA复测。 |
+
+
+## 总体声音规划（待试听核对）
+
+| 编号 | 优先级 | 当前交付与验收 | 状态 | Owner | 记录 |
+| --- | --- | --- | --- | --- | --- |
+| AUDIO-TONE-PROPOSAL | P1 | 60–90秒等响度附近A/B小院试听、分层和来源授权，标清候选未接入 | 待认领；可做候选，正式基调待用户核对 | 待认领 | [#170](https://github.com/narutojzm1-dot/youjia/issues/170) |
+| AUDIO-HOST-CONTRACT | P1 | 小院事件/混音/设置/Web生命周期与验收方案，复用现有音频设施 | 已指定；待设计，不阻塞#149/#150 | `CODEX-LEAD` | [#171](https://github.com/narutojzm1-dot/youjia/issues/171) |
+
+来源#162；[分期计划](architecture/audio-delivery-plan.md)。不默认分配现有美术Owner；无正式素材/声音切片完成声明。
