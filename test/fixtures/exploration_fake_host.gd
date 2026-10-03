@@ -16,10 +16,32 @@ var reject_ids := PackedStringArray()
 var session: ExplorationSession
 var catalog: ExplorationCatalog
 
+## 契约 §7.1 统一串行事务队列：只记提案身份 {trip_id, revision}，不复制 items
+var queue: Array[Dictionary] = []
+## 在途事务：已构造候选快照、正在等待持久化确认；为空表示队列可放行下一笔
+var in_flight := {}
+## 关掉合并只用于测试：证明即使重复请求进了队列，队首重查也能挡住二次授予
+var merge_duplicates := true
+## 写入进行中又请求的保存：不并入在途快照，等本笔结束后重排
+var persist_pending := false
+## 院内改动版本：用来证明成功回调不会抹掉等待期间的新改动与未保存标记
+var yard_revision := 0
+var yard_saved_revision := 0
+
 
 func _init(route_catalog: ExplorationCatalog) -> void:
 	catalog = route_catalog
 	session = ExplorationSession.new(catalog, 0)
+
+
+## 院内产生一项合法但尚未保存的进展（新照片、关系变化等）
+func change_yard(key: String, value: Variant) -> void:
+	yard[key] = value
+	yard_revision += 1
+
+
+func has_unsaved_yard() -> bool:
+	return yard_saved_revision != yard_revision
 
 
 ## 模拟重启：从磁盘读取同一代提交并调用 restore
@@ -27,6 +49,10 @@ func reboot() -> Dictionary:
 	inventory = disk["inventory"].duplicate()
 	watermark = disk["watermark"]
 	yard = disk["yard"].duplicate(true)
+	queue.clear()
+	in_flight = {}
+	persist_pending = false
+	yard_saved_revision = yard_revision
 	var record: Variant = JSON.parse_string(JSON.stringify(disk["exploration"])) if disk["exploration"] != null else null
 	var result := ExplorationSession.restore(record, catalog, watermark)
 	session = result["session"]
@@ -35,48 +61,115 @@ func reboot() -> Dictionary:
 
 ## 出门阶段保存：以当前内存为底写入，并把结果按 (trip_id, revision) 通知核心
 func persist() -> bool:
+	## 同一时刻只有一次写入；在途时只记下“还要再存一次”
+	if not in_flight.is_empty():
+		persist_pending = true
+		return false
+	persist_pending = false
 	var trip := session.trip_id()
 	var revision := session.record_revision()
+	var saving_yard := yard_revision
 	var ok := _write({"inventory": inventory.duplicate(), "watermark": watermark, "exploration": session.to_record(), "yard": yard.duplicate(true)})
 	if ok:
+		yard_saved_revision = saving_yard
 		session.host_persisted(trip, revision)
 	else:
 		session.host_persist_failed(trip, revision)
 	return ok
 
 
-## 回院提交：§7 第 0–4 步
+## 回院提交的同步写法：入队 → 队首事务 → 立即确认 → 收尾保存
 func submit() -> Dictionary:
 	var proposal := session.get_proposal()
 	if proposal.is_empty() or proposal["trip_id"] != session.trip_id():
 		return {"ok": false, "error": "stale_proposal"}
-	var serial := int(String(proposal["trip_id"]).trim_prefix("trip-"))
+	enqueue_submit()
+	var result := start_next()
+	if result.get("waiting", false):
+		result = finish()
+	persist()
+	return result
+
+
+## 提交请求入队：只记 (trip_id, revision)；同一身份已在队列或在途时合并为一笔
+func enqueue_submit() -> bool:
+	var proposal := session.get_proposal()
+	if proposal.is_empty():
+		return false
+	var identity := {"trip_id": proposal["trip_id"], "revision": int(proposal["revision"])}
+	if merge_duplicates:
+		if _same_identity(in_flight, identity):
+			return false
+		for queued: Dictionary in queue:
+			if _same_identity(queued, identity):
+				return false
+	queue.append(identity)
+	return true
+
+
+## 放行队首一笔事务：§7 第 0–3 步；需要写入时停在“等待持久化确认”，由 finish() 收尾
+func start_next() -> Dictionary:
+	if not in_flight.is_empty():
+		return {"ok": false, "error": "busy"}
+	if queue.is_empty():
+		return {"ok": false, "error": "empty"}
+	var identity: Dictionary = queue.pop_front()
+	## 第 0 步：重读核心当前状态，身份不一致就丢弃，不回成功也不回失败
+	var proposal := session.get_proposal()
+	if session.get_state() != C.STATE_PENDING or proposal.is_empty() or not _same_identity(identity, {"trip_id": proposal["trip_id"], "revision": int(proposal["revision"])}):
+		return {"ok": false, "dropped": true}
+	var trip: String = proposal["trip_id"]
+	var serial := int(trip.trim_prefix("trip-"))
+	## 第 1 步：只和此刻已确认持久化的水位比较
 	if serial <= disk["watermark"]:
-		var done := session.commit_succeeded(proposal["trip_id"])
-		persist()
-		return done
+		return session.commit_succeeded(trip)
+	## 第 2 步：内容校验，items 取自第 0 步刚读到的当前提案
 	var rejected := PackedStringArray()
 	for item: Dictionary in proposal["items"]:
 		if not C.is_valid_id(item["find_id"], C.SOURCE_FORMAL) or reject_ids.has(item["find_id"]):
 			rejected.append(item["find_id"])
 	if not rejected.is_empty():
-		var result := session.commit_failed(proposal["trip_id"], false, rejected)
-		persist()
-		return result
-	var candidate_inventory := inventory.duplicate()
+		return session.commit_failed(trip, false, rejected)
+	## 第 3 步：以当前内存为底构造候选快照
+	var finds: Array = []
 	for item: Dictionary in proposal["items"]:
-		candidate_inventory.append(item["find_id"])
-	var candidate := {"inventory": candidate_inventory, "watermark": serial, "exploration": session.to_record(), "yard": yard.duplicate(true)}
-	if _write(candidate):
-		inventory = candidate_inventory
-		watermark = serial
-		grants += (proposal["items"] as Array).size()
-		var success := session.commit_succeeded(proposal["trip_id"])
-		persist()
-		return success
-	var failed := session.commit_failed(proposal["trip_id"], true)
-	persist()
-	return failed
+		finds.append(item["find_id"])
+	var candidate_inventory := inventory.duplicate()
+	candidate_inventory.append_array(finds)
+	in_flight = {
+		"trip_id": trip,
+		"revision": identity["revision"],
+		"serial": serial,
+		"finds": finds,
+		"yard_revision": yard_revision,
+		"candidate": {"inventory": candidate_inventory, "watermark": serial, "exploration": session.to_record(), "yard": yard.duplicate(true)},
+	}
+	return {"ok": true, "waiting": true}
+
+
+## 第 4 步：写入在途候选并处理持久化确认
+## write_ok=false 模拟写入失败；deliver=false 模拟“已落盘但回调丢失”
+func finish(write_ok := true, deliver := true) -> Dictionary:
+	if in_flight.is_empty():
+		return {"ok": false, "error": "idle"}
+	var flight := in_flight
+	in_flight = {}
+	if not write_ok or not _write(flight["candidate"]):
+		## 失败：持有物、水位、院内未保存改动都保持写入前原样
+		return session.commit_failed(flight["trip_id"], true)
+	## 成功：只发布本次确认的授予与水位，不用候选快照覆盖较新的工作内存
+	inventory.append_array(flight["finds"])
+	watermark = flight["serial"]
+	grants += (flight["finds"] as Array).size()
+	if yard_saved_revision < flight["yard_revision"]:
+		yard_saved_revision = flight["yard_revision"]
+	if not deliver:
+		return {"ok": true, "delivered": false}
+	return session.commit_succeeded(flight["trip_id"])
+
+
+func _same_identity(a: Dictionary, b: Dictionary) -> bool:
+	return not a.is_empty() and a.get("trip_id") == b.get("trip_id") and int(a.get("revision", -1)) == int(b.get("revision", -2))
 
 
 func _write(snapshot: Dictionary) -> bool:

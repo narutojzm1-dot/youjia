@@ -30,6 +30,7 @@ func _run() -> void:
 	_stage_fault_matrix()
 	_acks()
 	_untrusted_and_quarantine()
+	_async_interleaving()
 	if failures.is_empty():
 		print("EXPLORATION CORE PASS ", checks)
 		quit(0)
@@ -545,6 +546,107 @@ func _untrusted_and_quarantine() -> void:
 	_check(not dict_host.session.can_begin(), "a frozen dictionary record also survives a save and reboot")
 	var bad_serial := ExplorationSession.new(catalog, 2147483647)
 	_check(bad_serial.begin("fixture.meadow", CLOCK).error == "serial_exhausted", "the serial range is enforced")
+
+
+## 15. 异步提交交错：分别控制“写入开始”和“持久化确认”的时机
+func _async_interleaving() -> void:
+	## A 确认前重复提交同一 trip：同一身份合并为一笔
+	var host = _pending_reed_host()
+	_check(host.enqueue_submit(), "the first request is queued")
+	_check(host.start_next().get("waiting", false), "the first request waits for persistence")
+	_check(not host.enqueue_submit() and host.queue.is_empty(), "a duplicate of the in-flight identity is merged")
+	_check(host.start_next().error == "busy", "the queue holds the next transaction until this one is published")
+	host.finish()
+	host.persist()
+	host.reboot()
+	_check(host.grants == 1 and host.inventory.size() == 1 and host.disk["watermark"] == 1, "a duplicate submission before confirmation grants once")
+	## 即使重复请求进了队列：A 成功但回调丢失，B 在队首按新水位收尾
+	var dup = _pending_reed_host()
+	dup.merge_duplicates = false
+	dup.enqueue_submit()
+	dup.enqueue_submit()
+	dup.start_next()
+	_check(dup.finish(true, false).get("delivered") == false and dup.session.get_state() == C.STATE_PENDING, "A is on disk but its callback is lost")
+	var b: Dictionary = dup.start_next()
+	_check(b.ok and not b.has("waiting") and dup.session.get_state() == C.STATE_COMMITTED, "B re-checks the confirmed serial and settles without writing")
+	dup.persist()
+	dup.reboot()
+	_check(dup.grants == 1 and dup.inventory.size() == 1 and dup.disk["watermark"] == 1, "A then B grants exactly once")
+	## A 成功并回调后，排队的 B 在第 0 步被丢弃
+	var late = _pending_reed_host()
+	late.merge_duplicates = false
+	late.enqueue_submit()
+	late.enqueue_submit()
+	late.start_next()
+	late.finish()
+	var before := JSON.stringify(late.session.to_record())
+	_check(late.start_next().get("dropped", false) and JSON.stringify(late.session.to_record()) == before, "a stale request after commit is dropped without touching the session")
+	_check(late.grants == 1, "the dropped request grants nothing")
+	## A 失败后重试：只授予一次
+	var retry = _pending_reed_host()
+	retry.enqueue_submit()
+	retry.start_next()
+	retry.finish(false)
+	_check(retry.grants == 0 and retry.watermark == 0 and retry.session.get_state() == C.STATE_FAILURE, "a failed write publishes nothing")
+	retry.persist()
+	retry.session.retry_commit()
+	retry.enqueue_submit()
+	retry.start_next()
+	retry.finish()
+	retry.persist()
+	retry.reboot()
+	_check(retry.grants == 1 and retry.inventory.size() == 1 and retry.disk["watermark"] == 1, "fail then retry grants once")
+	## 等待确认期间院内有新进展：成功回调不覆盖，未保存标记保留
+	var yard = _pending_reed_host()
+	yard.enqueue_submit()
+	yard.start_next()
+	yard.change_yard("photo", "sunset")
+	_check(not yard.persist() and yard.persist_pending, "a save during the write is deferred, not merged")
+	yard.finish()
+	_check(yard.yard.get("photo") == "sunset" and yard.has_unsaved_yard(), "the success callback keeps the newer yard change unsaved")
+	_check(yard.disk["yard"].get("photo") == null, "the in-flight snapshot did not include the later change")
+	yard.fail_next_saves = 1
+	yard.persist()
+	_check(yard.yard.get("photo") == "sunset" and yard.has_unsaved_yard(), "a failed follow-up save still keeps the change in memory")
+	yard.persist()
+	_check(yard.disk["yard"].get("photo") == "sunset" and not yard.has_unsaved_yard(), "the rescheduled save writes the newer change")
+	yard.reboot()
+	_check(yard.grants == 1 and yard.yard.get("photo") == "sunset" and yard.disk["watermark"] == 1, "reboot keeps the find once and the new yard progress")
+	## 旧提案排队期间被拒绝项升版：旧身份丢弃，只按新版本提交
+	var two = FakeHost.new(_two_find_catalog())
+	var t: ExplorationSession = two.session
+	t.begin("formal.two", CLOCK, 1)
+	t.visit("a")
+	t.take("formal.find.one")
+	t.visit("b")
+	t.take("formal.find.two")
+	t.request_return("player")
+	two.persist()
+	two.merge_duplicates = false
+	two.reject_ids = PackedStringArray(["formal.find.one"])
+	two.enqueue_submit()
+	two.enqueue_submit()
+	two.start_next()
+	_check(t.get_proposal()["revision"] == 2 and two.grants == 0, "the rejection bumps the proposal revision")
+	var stale_before := JSON.stringify(t.to_record())
+	_check(two.start_next().get("dropped", false) and JSON.stringify(t.to_record()) == stale_before, "the old revision's request is dropped")
+	two.persist()
+	two.enqueue_submit()
+	two.start_next()
+	two.finish()
+	two.persist()
+	two.reboot()
+	_check(two.grants == 1 and two.inventory == ["formal.find.two"] and two.disk["watermark"] == 1, "only the new revision is committed")
+
+
+func _pending_reed_host():
+	var host = FakeHost.new(Fixtures.formal_catalog())
+	host.session.begin("formal.test_walk", CLOCK, 3)
+	host.session.visit("pond")
+	host.session.take("formal.find.reed")
+	host.session.request_return("player")
+	host.persist()
+	return host
 
 
 func _check(condition: bool, message: String) -> void:
