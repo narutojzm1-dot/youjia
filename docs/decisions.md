@@ -51,7 +51,7 @@ CODEX-LEAD 向制作人汇报时以本表为准。状态只用「待看图 / 待
 | 条目 | 请看什么 | 截图或记录 | 构建 | Owner | 状态 |
 | --- | --- | --- | --- | --- | --- |
 | REQ-005 晨午晚/阴云 | 晴天早晨薄云、正午暖白、傍晚杏粉、阴天灰紫是否自然可辨 | [验收样张](playtests/2026-10-03-REQ-005-user-accept/README.md) | `game-693b311` 起（Pages 可能已是更新 tip） | `CURSOR-CONTRIBUTOR-LOCAL` | 待看图 |
-| REQ-005 夜里云带 | 入夜后晴天云是否压暗偏冷，不再像正午暖白贴在夜空上 | [记录](playtests/2026-10-03-REQ-005-night-cloud.md) | 合入后回填 | `CURSOR-CONTRIBUTOR-LOCAL` | 待看图 |
+| REQ-005 夜里云带 | 入夜后晴天云是否压暗偏冷，不再像正午暖白贴在夜空上 | [记录](playtests/2026-10-03-REQ-005-night-cloud.md) | `game-922be64`（PR #158；公网包已核对） | `CURSOR-CONTRIBUTOR-LOCAL` | 待看图 |
 | REQ-012 切片 C 安静抬头 | 站定约 6 秒镜头轻抬入云；走动立刻回落；无新提示、不写相册 | [实现记录](playtests/2026-10-03-REQ-012-quiet-sky-look.md)（本轮无实机抬头帧） | `game-6a20cdc` | `CURSOR-CONTRIBUTOR-LOCAL` | 待实玩 |
 | REQ-012-STAY 栅栏草叶 | 停约 2.5 秒再播已有草叶，走路立刻停 | [记录](playtests/2026-10-03-REQ-012-STAY.md) | PR #85 `36fa443` | `GROK-BUILD` | 待实玩 |
 | REQ-002 目标提示 | 移动动物点选与手机触屏是否仍清楚 | [记录](playtests/2026-10-02-REQ-002-target-clarity.md) | `game-9fe0d39` | `MANUS-CONTRIBUTOR` | 待实玩 |
