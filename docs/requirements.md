@@ -119,4 +119,11 @@
 
 | 编号 | 优先级 | 需求 | 验收条件 | 状态 | Owner | 依赖 / 记录 |
 | --- | --- | --- | --- | --- | --- | --- |
-| REQ-20261003-022 | P2 | 低动效下抚摸/浇水/投喂对象反馈保持静止可读 | 开启低动效时水彩心、浇水溅与投喂鸟环心在反馈窗口内不再上浮或中途淡出，固定为可读静帧，倒计时结束仍整段消失；关闭低动效时原有上浮、扩散与淡出仍在。不改互动判定、存档、草堆亮度或乘骑资源。 | 验证通过待最终审查；严格全量与Web24项通过，未发布 | `GROK-CONTRIBUTOR` | 用户半小时推进自选切片。不改 REQ-017/018/019 已覆盖相位，不改 REQ-020 草堆，不改 PR #99 乘骑画。只动 `WorldEffectsOverlay`；`still_object_feedback_suite.gd` 验收；CODEX-LEAD按PR136交接补标准daily挂载、完整/Web验收与独立最终SHA审查；实现Owner保持GROK。决策见 [decisions/REQ-20261003-022.md](decisions/REQ-20261003-022.md)。 |
+| REQ-20261003-022 | P2 | 低动效下抚摸/浇水/投喂对象反馈保持静止可读 | 开启低动效时水彩心、浇水溅与投喂鸟环心在反馈窗口内不再上浮或中途淡出，固定为可读静帧，倒计时结束仍整段消失；关闭低动效时原有上浮、扩散与淡出仍在。不改互动判定、存档、草堆亮度或乘骑资源。 | 已发布；game-2cd15c2，独立审核/主线严格回归/Web/公开包核验通过 | `GROK-CONTRIBUTOR` | 用户半小时推进自选切片。不改 REQ-017/018/019 已覆盖相位，不改 REQ-020 草堆，不改 PR #99 乘骑画。只动 `WorldEffectsOverlay`；`still_object_feedback_suite.gd` 验收；CODEX-LEAD按PR136交接补标准daily挂载、完整/Web验收与独立最终SHA审查；实现Owner保持GROK。决策见 [decisions/REQ-20261003-022.md](decisions/REQ-20261003-022.md)。 |
+
+
+## 贡献者的用户决策与展示汇总
+
+| 编号 | 范围 | 状态 | Owner | 记录 |
+| --- | --- | --- | --- | --- |
+| COLLAB-PRODUCER-HANDOFF | 所有贡献者把需要用户决策或查看的内容提交仓库；CODEX-LEAD、督导或GAME-PRODUCER汇总告知并回写用户决定 | 制作人已明确；统一上报规范已记录 | `CODEX-LEAD` | [通知#146](https://github.com/narutojzm1-dot/youjia/issues/146)，[交接规范](collaboration/producer-decision-handoff.md)；不改变Owner/审核流程或用户重要产品决策权。 |
