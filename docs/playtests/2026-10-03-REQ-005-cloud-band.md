@@ -1,6 +1,8 @@
 # REQ-005 / REQ-012 · 叠加云带 B · 实现记录
 
-- 构建：合入并发布后回填 `game-<sha>`
+- 构建：`game-31316aa`
+- 来源提交：`31316aa24edb5e643cc8ef82fba8a1f8e1a490b3`
+- Actions：37092209977
 - 需求：REQ-20261002-005 云带 B；REQ-20261002-012 切片 A
 - Agent-ID：`CURSOR-CONTRIBUTOR-LOCAL`
 - 日期：2026-10-03
@@ -22,6 +24,7 @@
 
 - `test/ui_interaction_suite.gd`：晴/阴云带换帧；低动效静止；允许动效时滚动增加
 
-## 待发布后补
+## 发布
 
-- 正式 Web 构建号与公网抬头观云实玩截图
+- 正式 Web：`game-31316aa`（Verify/publish 通过）
+- 公网抬头观云：建议切换晴/阴核对云带疏密与缓移；低动效下应为静止帧
