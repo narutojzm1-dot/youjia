@@ -41,6 +41,7 @@
 | DOC-20261002-009 | 2026-10-02 | 根据现有动物行为/存档结构深化 REQ-011 架构；记录关系演出资源缺口 | 架构设计中 | 代码核查确认 `FeltActor` 没有社交行为状态、`ExpressionCatalog` 属于表情/相册规则，SaveStore 当前为 v4 且未持久化动物关系；不复用相册触发器建设行为系统。具体边界与分片见[关系模型架构文档](architecture/animal-relationship-model.md)；可能缺少的马互动姿态由 [issue #56](https://github.com/narutojzm1-dot/youjia/issues/56) 先提案，不预先承诺批量制作。 |
 | DOC-20261002-010 | 2026-10-02 | 审核 REQ-011 首批关系演出所需的现有画作与资源缺口 | 提案待产品确认 | 现有鹅已有警觉、安静站立和伏卧整图；草泥马有中性/表情变体；马只有低头站姿，无法清楚表达对峙后的让步。建议首切片复用鹅/草泥马姿态，只在用户确认后新增一张马侧身让步画；资源规格、锚点、来源和 Web 包体验收见[提案](architecture/relationship-art-proposal.md)。 |
 | DOC-20261003-001 | 2026-10-03 | 制作人可见切片用截图或短视频验收；未点头不阻塞下一刀 | 已采纳 | 用户 2026-10-03：需要体验的项直接给截图/视频；未验收时其它工作继续。各待验收项记入本文件「待制作人验收」表，供 `CODEX-LEAD` 向制作人汇总。Owner 负责补证据，不代替制作人点头。 |
+| REQ-20261002-015-WIRE | 2026-10-03 | 把 PR #99 两帧乘骑画接进 REQ-014 `show_goose_encounter_cel` 导演接线 | 已合入发布（issue #64 可关闭） | `WORKBUDDY-CONTRIBUTOR`（用户 2026-10-03 授权越过切片边界）[PR #173](https://github.com/narutojzm1-dot/youjia/pull/173) 将 `yard_world.gd` 鹅马乘骑演出的 `show_goose_encounter_cel` 帧交替由占位 `idle`/`calm` 改为 `riding_up`/`riding_down`，沿用既有 0.28s 扑翼时钟（`_goose_mount_flap_clock`）与低动效定帧；`cast_art.gd` 已注册两帧、`FeltActor.show_goose_encounter_cel` 直接取用；脚底锚点经 PR #99 对齐，交替无 foot 抖动。head `4b550e8e50a628d70afd513fa0672343d6d1d8be`（独立子代理终轮 APPROVE）。 |
 
 之后出现的需求继续追加新编号；完成或调整时保留此表和历史记录，不删除旧项。
 
@@ -534,7 +535,7 @@ PR #99 合并完成：merge commit `5b69504336b5e8c9d1977b26e33055739fe2e0fa`，
 
 ### 2026-10-03 · DIR-20261003-AUDIO 声音方向进入规划
 
-用户提醒GAME-PRODUCER已给出音效建议，Leader读取[#162](https://github.com/narutojzm1-dot/youjia/issues/162)并核对当前AudioDirector、空CUES、模板AUDIO来源及实际调用。用户授权总体声音规划；环境拟音为主、音乐偶尔陪伴和60–90秒试听是制作人候选建议，未冒充已批准曲目/风格。建立声音试听单#170（独立开放认领，不默认交给美术Owner）与宿主方案单#171（CODEX-LEAD）。[计划](architecture/audio-delivery-plan.md)明确试听—架构—首片—时段/行为—成长适配，素材/基调核对后再建正式实现单；不阻塞存档/探索核心。
+用户提醒GAME-PRODUCER已给出音效建议，Leader读取[#162](https://github.com/narutojzm1-dot/youjia/issues/162)并核对当前AudioDirector、空CUES、模板AUDIO来源及实际调用。用户授权总体声音规划；环境拟音为主、音乐偶尔陪伴和60–90秒试听是制作人候选建议，未冒充已批准曲目/风格。建立声音试听单#170（独立开放认领，不默认交给美术Owner）与宿主方案单#171（CODEX-LEAD）。[计划](architecture/audio-delivery-plan.md)明确试听—架构—首片—时段/行为—成长适配，素材/基调核对后再建正式实现单；不阻塞存档/探索核心。2026-10-03 用户直接让 GROK-BUILD 做 #170 的试听。两份 78 秒样片在 `art/concepts/audio_tone_v1/`，未接入，也还没有人用扬声器听过。
 
 听验要区分实际出声、逻辑测试和舒适度，不以空路径模板能力当完成。GAME-QA后续复测，工程督导审平台与资源成本，GAME-PRODUCER核对总体体验，用户仅需在样片就绪后判断听感；普通技术参数由开发负责。本轮仅规划文档/工单，没有音频制作、代码或新发布。
 
@@ -545,3 +546,15 @@ PR #99 合并完成：merge commit `5b69504336b5e8c9d1977b26e33055739fe2e0fa`，
 （上面原条目中“未批准任何一种”已由下方用户决定更新。）
 
 **2026-10-03 用户决定（EXP-FORM-OPTIONS）：** 用户回复 `CURSOR-CLOUD`：“可以，先用画卷漫步，这个扩展空间也够高。”外出探索首片形式定为**画卷漫步**（横向可分段扩展长卷，左右走、停留点拿放、随时回院）；其余四种保留为候选，不承诺实施。已写入[探索形式](architecture/exploration-form-options.md)、策划基准与需求表 EXP-FIRST-SLICE（#153）。首条去处与带回物仍待 GROK-BUILD #155 资源提案与用户看样张；#153 实施仍受契约冻结（#151 与 #150 共同冻结、ENGINEERING-SUPERVISOR 评阅）及共享存档 #149 门禁。本条仅为文档，不改运行时、存档或资源。
+
+
+### 2026-10-03 · STATE-SAVE-RECOVERY 文件恢复实现候选
+
+CODEX-LEAD在独立分支修复SaveStore先删除旧档再rename的窗口。临时文件验证后保留完整备份再提交，主档缺失/损坏时启动回退备份；未提交tmp不自动加载。新增24项真实文件故障/恢复检查并挂标准daily，完整回归与正常Web入口通过；[证据](playtests/2026-10-03-save-file-recovery.md)。不变v5字段，不混入探索/布置或其他Owner的YardWorld改动。
+
+本片仅文件层：setter内存事务及Web持久化确认仍待#149/#150完成，save成功不冒称IndexedDB回调确认或断电保障。#149保持开放，探索契约不自动冻结。当前为候选待独立审核，未宣称合入或发布。用户本轮另要求每天最后计划轮次发布Pages，已更新每小时任务的北京时间23:00日结规则，详见#146；重大进展邮件已获授权，仅在验证后的里程碑汇总通知，不把私人收件地址写入公开仓库。
+
+
+## 2026-10-03 日版本节点归档（CODEX-LEAD）
+
+用户要求每日最后一轮作为全员版本关键点，已通过PR #177写入AGENTS.md与日版本规范。本节点PR #175文件层存档恢复通过独立最终SHA审查、完整回归和Web恢复验证后合入；#149继续开放，内存事务与IndexedDB耐久确认不在已完成范围。公开发布源码35a1b788034f0a3f73326cd4b1b84ae869f109b9，构建game-35a1b78；Actions与Pages成功，实际公开包和gh-pages一致。版本详单、哈希、延期Owner与邮件状态见[日版本节点文档](releases/2026-10-03.md)。不将资源候选、探索草案或未验收鹅马组合纳入已发布成果。
