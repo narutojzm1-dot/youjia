@@ -471,15 +471,17 @@ func tick(delta: float, move: Vector2) -> void:
 	_scene_feedback.consider_fence(self)
 	_scene_feedback.advance(delta)
 	_refresh_prop_visuals()
-	# P1.3: 玩家靠近草堆时，草堆缓慢呼吸发亮；远离时保持极轻微的呼吸感暗示互动性。
+	# 靠近草堆时略亮，方便认出可以拿。低动效停在固定亮度，不再一明一暗。
 	if _grass_patch != null and _player != null:
 		var near_grass := not _player.carrying_grass and _player.position.distance_to(_grass_point()) < 78.0
-		if near_grass:
-			# 靠近：明显呼吸
+		var reduced := bool(TuningStore.get_value("ui.reduced_motion", false))
+		if reduced:
+			var steady := 1.08 if near_grass else 1.0
+			_grass_patch.modulate = Color(steady, steady, steady, 1.0)
+		elif near_grass:
 			var glow := 1.0 + 0.14 * sin(_day_seconds * 3.4)
 			_grass_patch.modulate = Color(glow, glow, glow, 1.0)
 		else:
-			# 远离：极轻微常驻呼吸，提示此处有东西
 			var ambient := 1.0 + 0.03 * sin(_day_seconds * 0.9)
 			_grass_patch.modulate = Color(ambient, ambient, ambient, 1.0)
 	queue_redraw()
