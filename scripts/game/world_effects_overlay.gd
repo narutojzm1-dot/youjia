@@ -1,1 +1,1 @@
-/tmp/youjia-sparse/scripts/game/world_effects_overlay.gd
+ref:work/grok-contributor/REQ-20261003-018-still-catch:scripts/game/world_effects_overlay.gd
