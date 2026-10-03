@@ -26,10 +26,12 @@ func confirmed() -> Dictionary:
 func dirty() -> bool:
 	return _revision != _confirmed_revision
 
-func begin_write() -> Dictionary:
+func begin_write(candidate_token: String, parent_token: String) -> Dictionary:
+	if candidate_token.is_empty() or parent_token.is_empty() or candidate_token == parent_token:
+		return {}
 	if not _flight.is_empty() or not dirty():
 		return {}
-	_flight = {"write_id": _next_id, "revision": _revision, "payload": _working.duplicate(true)}
+	_flight = {"write_id": _next_id, "revision": _revision, "payload": _working.duplicate(true), "candidate_token": candidate_token, "parent_token": parent_token}
 	_next_id += 1
 	_unknown = false
 	return _flight.duplicate(true)
@@ -47,13 +49,23 @@ func finish(write_id: int, succeeded: bool) -> bool:
 	_complete(succeeded)
 	return true
 
-func resolve_verified(write_id: int, succeeded: bool) -> bool:
-	# Trusted adapter only: candidate match, or proven terminated + parent match.
-	# No timeout, watermark or memory-file heuristic is implemented here.
-	if not _unknown or not _matches(write_id):
+func resolve_verified(receipt: Dictionary) -> bool:
+	# Tokens are stable envelope identities supplied by the trusted adapter.
+	# This comparison rejects mismatched receipts; it cannot prove I/O quiescence.
+	if not _unknown or not receipt.get("write_id") is int:
 		return false
-	_complete(succeeded)
-	return true
+	if not _matches(receipt.write_id):
+		return false
+	if receipt.get("candidate_token") != _flight.candidate_token or receipt.get("parent_token") != _flight.parent_token:
+		return false
+	var observed: Variant = receipt.get("observed_token")
+	if observed == _flight.candidate_token:
+		_complete(true)
+		return true
+	if observed == _flight.parent_token and receipt.get("old_write_terminated") is bool and receipt.old_write_terminated:
+		_complete(false)
+		return true
+	return false
 
 func blocked() -> bool:
 	return not _flight.is_empty()

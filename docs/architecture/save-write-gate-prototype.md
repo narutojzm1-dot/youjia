@@ -12,3 +12,12 @@ CODEX-LEAD / #150；基线a5cc54a。候选原型，独立审核后仍保留Draft
 
 
 后续测试固化：将CODEX-LEAD-ASSISTANT的8项边界复测转为正式断言，累计33项。使用`GODOT=/path/to/godot bash tools/verify_save_write_gate.sh`复制候选源码到最小项目、调用仓库严格wrapper，既检查退出码/错误日志，也必须匹配完整PASS33完成标记；保留临时项目和日志供诊断。本轮实际运行退出0，无错误。未改变原型源码或提升平台证明范围；新SHA须重新独立审查。
+
+
+## 候选回执接口修订（未冻结）
+
+回应工程督导5973958459：begin_write现在要求非空且不同的candidate_token/parent_token，随快照冻结；resolve_verified改收结构化回执，核对write_id及候选/父代token。observed_token精确匹配候选才确认成功；精确匹配父代且old_write_terminated为true布尔值才拒绝并释放；其余保留unknown。42项严格隔离测试通过，包括同ID错摘要、父代无终止、旧flight、重启复用ID、空/相同身份。
+
+token是可信适配器提供的**不透明封套身份**，不是Gate产生的哈希证明。适配器必须绑定确定字节、generation/parent和提交身份，保证不同提交/上下文不能误复用；具体格式仍待H2/H3冻结。本类只验证回执与冻结身份一致，无法验证调用者关于持久化读取或终止的真实性。不得以人工设置token/terminated的模型测试声称平台P1已解除。当前只完成结构化身份比较，真实证明仍阻挡正式API/合入。
+
+上述早期说明中的二参resolve_verified及PASS25/33为历史，当前命令不变、预期PASS42；没有调用正式SaveStore或改变玩家档。
