@@ -10,7 +10,7 @@
 探索是小院生活的**自愿补充**：可以不出门，出门后可以随时回、可以空手回；带回什么由玩家自己选。契约要保证四件事：
 
 1. **形态无关**：同一核心既能接“手绘小景里亲自散步”，也能接“路线卡片/节点”，不预先选定。
-2. **不丢、不重（限定范围）**：在保存正常工作的前提下，玩家已选的东西在宿主确认落盘前一直保留；同一趟旅程无论重复点击、回调、刷新、重启，最多授予一次。明确的例外：内容确实不被接受时的 `settle_empty`（§4）；探索记录本身损坏（§8）；保存持续失败期间又被强制退出，只能恢复到最后一次成功保存的状态（§7.2）；宿主无法给出可信的已提交序号时，相关旅程被隔离并冻结自动提交，既不重发也不宣称已收好，待明确的恢复政策处理（§8、§10 第 8 项）。仅凭失真的序号，无法在损坏场景下同时保证“不丢”和“不重”。
+2. **不丢、不重（限定范围）**：在保存正常工作的前提下，玩家已选的东西在宿主确认落盘前一直保留；同一趟旅程无论重复点击、回调、刷新、重启，最多授予一次。明确的例外：内容确实不被接受时的 `settle_empty`（§4）；探索记录本身损坏时，含会话的记录被隔离并冻结出门，所得既不授予也不丢弃，待明确的恢复政策处理（§8）；保存持续失败期间又被强制退出，只能恢复到最后一次成功保存的状态（§7.2）；宿主无法给出可信的已提交序号时，相关旅程被隔离并冻结自动提交，既不重发也不宣称已收好，待明确的恢复政策处理（§8、§10 第 8 项）。仅凭失真的序号，无法在损坏场景下同时保证“不丢”和“不重”。
 3. **不困住玩家**：任何失败都有“再试一次”和“先回院子”两条出路；损坏或未知的探索记录不会连带清空小院、相册、关系或花圃。
 4. **不新增时钟**：不读现实时间，不做离线收益、过期、体力或冷却；只采样宿主现有的游戏时钟。
 
@@ -74,7 +74,7 @@ route = {
 
 | 当前 | 事件 | 结果 | 说明 |
 | --- | --- | --- | --- |
-| `idle` | `begin(route_id, clock)` | `active` | 路线必须在已注入目录中；分配新的 `trip_serial` |
+| `idle` | `begin(route_id, clock)` | `active` | 路线必须在已注入目录中；分配新的 `trip_serial`。`can_begin == false` 时拒绝：宿主序号不可信返回 `watermark_untrusted`，存在冻结的隔离旅程返回 `quarantine_frozen`，其余不可出门的恢复结果返回 `exploration_unavailable`（§8） |
 | `active` | `visit(stop_id)` | `active` | 只能去 `next` 可达点；首次到达时确定该点的发现（§5） |
 | `active` | `take(find_id)` | `active` | 必须是当前点已出现、未被带走的；超过 `carry_limit` 拒绝 |
 | `active` | `release(find_id)` | `active` | 放回原处，可再拿 |
@@ -142,7 +142,7 @@ exploration = {
 last_committed_trip_serial: 2          # 已成功落盘的最大旅程序号；探索记录损坏时它仍在
 ```
 
-**序号分配规则**：核心在 `restore` 时同时接收 `last_committed_trip_serial`（§11）。宿主序号可信时：`next_trip_serial` 不在下文整数范围内或大于 `last_committed_trip_serial + 1_000_000` 时视为损坏，忽略它；`begin` 分配的序号永远是 `max(next_trip_serial, last_committed_trip_serial + 1)`。宿主序号不可信（`-1`，§8）时：不分配任何序号，`begin` 一律拒绝（`watermark_untrusted`），也不做上述损坏判定。因此无论探索记录缺失、损坏重置还是被手动删除，新旅程的序号都严格大于已提交序号，不会被宿主误判为“已提交”而吞掉所得。
+**序号分配规则**：核心在 `restore` 时同时接收 `last_committed_trip_serial`（§11）。宿主序号可信时：`next_trip_serial` 不在下文整数范围内或大于 `last_committed_trip_serial + 1_000_000` 时视为损坏，忽略它；`begin` 分配的序号永远是 `max(next_trip_serial, last_committed_trip_serial + 1)`。宿主序号不可信（`-1`，§8）时：不分配任何序号，`begin` 一律拒绝（`watermark_untrusted`），也不做上述损坏判定。因此无论探索记录缺失、元数据损坏还是被手动删除，新旅程的序号都严格大于已提交序号，不会被宿主误判为“已提交”而吞掉所得。
 
 约束：
 
@@ -225,7 +225,7 @@ close() ──► idle（宿主保存 to_record()，可与下次任意保存合�
 
 ### 7.3 其他要点
 
-- **探索记录只由核心生成**：宿主只原样保存 `to_record()`，不直接改其中字段。即使第 3 步存下的会话仍是 `pending_commit`，在同代恢复的前提下（§8），恢复时发现 `trip_serial <= last_committed_trip_serial` 就会直接视为 `committed`（§8），不会二次授予。
+- **探索记录只由核心生成**：宿主只原样保存 `to_record()`，不直接改其中字段。处于隔离（`quarantine` / `quarantine_and_freeze`）时，`to_record()` 原样返回 `restore` 读到的原始记录（§8），保证冻结跨重启保持。即使第 3 步存下的会话仍是 `pending_commit`，在同代恢复的前提下（§8），恢复时发现 `trip_serial <= last_committed_trip_serial` 就会直接视为 `committed`（§8），不会二次授予。
 - **幂等键用单调序号，不用集合**：宿主只需保存一个整数 `last_committed_trip_serial`，放在探索记录之外（§6）。它比保存所有已提交 ID 的集合更有界，也不会随游戏时长膨胀。
 - **授予与序号同一次原子保存**：如果“发物”和“推进已提交序号”分两次写，中间崩溃就会重复发物或丢物，所以建议放进同一次 `save()`。这依赖 #149 的可靠替换（失败不删旧档）。
 - **部分非法物品**：宿主回 `commit_failed(retryable=false, rejected=[...])`，核心移出失效项、`revision + 1`，仍是 `pending_commit`（§4）。`trip_id` 不变，所以仍然最多授予一次；全部失效时就成为空提案。
@@ -237,16 +237,18 @@ close() ──► idle（宿主保存 to_record()，可与下次任意保存合�
 
 宿主加载存档后调用 `ExplorationSession.restore(record, catalog, last_committed_trip_serial)`，核心返回“恢复后状态 + 建议宿主动作 + `can_begin`”。表格**自上而下匹配，命中第一行即停**（唯一例外是“停留点已被移除”这一行：它只做清理，清理后继续匹配紧接着的 `active` 行）。序号可信时，所有 `idle` 结果的下一个序号都按 §6 规则取 `max(next_trip_serial, last_committed_trip_serial + 1)`，绝不回退；序号为 `-1` 时不分配序号。
 
-**`can_begin` 的全局规则**：只有同时满足“宿主序号可信”“没有未收口的旅程”“没有被冻结的隔离旅程”时才为 true。未收口指 `pending_commit` / `recoverable_failure`（含 `deferred`）；被冻结的隔离旅程指下表动作为 `quarantine_and_freeze` 的记录，在明确的恢复政策处理之前一直算作未收口，保证 §7.1 的“同一时刻最多一趟未收口旅程”。
+**`can_begin` 的全局规则**：“宿主序号可信”“没有未收口的旅程”“没有被冻结的隔离旅程”是 `can_begin == true` 的必要条件；此外，下表中明确给出 `can_begin = false` 的行也不能出门。未收口指 `pending_commit` / `recoverable_failure`（含 `deferred`）；被冻结的隔离旅程指下表动作为 `quarantine_and_freeze` 的记录，在明确的恢复政策处理之前一直算作未收口，保证 §7.1 的“同一时刻最多一趟未收口旅程”。
+
+**隔离跨重启保持**：命中 `quarantine` 或 `quarantine_and_freeze` 的会话进入只读的隔离模式，`to_record()` **原样返回读到的原始记录**（字节语义不变，包括未来版本字段），宿主的每次普通保存都把它原样写回 `exploration` 键；宿主另在 #150 隔离区保存一份原文副本和诊断信息。因此每次重启 `restore` 都会重新命中同一行，冻结不会因普通保存而解除；宿主序号恢复可信或执行明确的恢复政策后，记录才会按正常行重新判定。隔离模式下除 `get_state()` / `get_view()` / `to_record()` 外的变更方法一律返回 `quarantine_frozen`。
 
 | 读到的记录 | 恢复结果 | `host_action` 与说明 |
 | --- | --- | --- |
-| 宿主序号为 `-1`，且探索记录存在但无法确认没有会话（不是字典、`session` 不为 null、或无法解析） | 不改写原始数据，`can_begin = false` | `quarantine_and_freeze`：宿主原样隔离这段记录并附诊断信息；**冻结该旅程的自动提交和新旅程分配**；玩家安全在院，其他已验证的院内功能照常。既不自动重发，也不清空提案并宣称完成；补偿或丢弃属于后续明确的恢复政策（§10 第 8 项） |
+| 宿主序号为 `-1`，且探索记录存在但无法确认没有会话（不是字典、`session` 不为 null、无法解析，或 `contract_version` 比当前新） | 不改写原始数据，`can_begin = false` | `quarantine_and_freeze`：宿主原样隔离这段记录并附诊断信息；**冻结该旅程的自动提交和新旅程分配**；玩家安全在院，其他已验证的院内功能照常。既不自动重发，也不清空提案并宣称完成；补偿或丢弃属于后续明确的恢复政策（§10 第 8 项） |
 | 宿主序号为 `-1` 的其余所有情况（记录缺失，或是字典且 `session == null`） | `idle`，`can_begin = false` | `freeze_new_trips`：没有可信序号就无法安全分配新序号；等宿主恢复可信序号或执行恢复政策 |
-| 缺失 | `idle` | `none` |
+| 缺失（键不存在或为 JSON `null`） | `idle` | `none` |
 | `contract_version` 比当前新 | 不解析、不改写原始数据，`can_begin = false` | `quarantine`：宿主原样保留这段数据（#150 定位置），本次不开放出门，并给出非阻断提示；其余小院功能照常 |
-| 是字典且 `session == null`，但元数据损坏（如 `next_trip_serial` 异常） | `idle` | `none`：忽略损坏的元数据，序号按 §6 规则从 `last_committed_trip_serial + 1` 起 |
-| 会话 `catalog == "fixture"`（玩家档中出现夹具） | `idle` | `quarantine_and_reset_session`：宿主隔离原文并附诊断，会话重置为 `idle`。夹具物品永远不会被授予（§6 闸门），这份提案和它占用的序号**永久作废**，后续恢复政策不得重交，因此可以继续开始新旅程 |
+| 是字典且 `session == null`（元数据正常，或元数据损坏如 `next_trip_serial` 异常） | `idle` | `none`：最常见的健康空闲状态；元数据损坏时忽略它，序号按 §6 规则取值 |
+| 纯夹具会话：`catalog == "fixture"`，且 `route_id` 以及 `offers`、`carried`、`proposal.items` 中所有 ID 都是 `fixture.` 前缀，其余字段校验通过 | `idle` | `quarantine_and_reset_session`：宿主隔离原文并附诊断，会话重置为 `idle`。只要有任何一个 `formal.` ID 或其他损坏，就不属于本行，落到下一行冻结。夹具物品永远不会被授予（§6 闸门），这份提案和它占用的序号**永久作废**，后续恢复政策不得重交，因此可以继续开始新旅程 |
 | 其余损坏：不是字典、字段损坏、超预算、ID 非法、前缀不一致、`trip_id` 与序号不一致 | 不改写原始数据，`can_begin = false` | `quarantine_and_freeze`：无法判断其中是否有尚未授予的提案，所以不授予、不丢弃，隔离原文并冻结新旅程，直到明确的恢复政策处理。这是明确记录的降级，列入 #152 坏数据测试 |
 | 任意状态，且 `trip_serial <= last_committed_trip_serial` | `committed` | `close`：说明上次已落盘，只是收尾前中断 |
 | 路线已从目录移除（`active`） | 强制 `pending_commit`，提案包含全部已携带物；`persist: true` | `submit_proposal`：提示后回院；失效物品由宿主提交校验拒绝（§7） |
@@ -339,7 +341,7 @@ func to_record() -> Dictionary         # 纯值，可直接 JSON
 11. 假宿主故障矩阵（提交阶段）：磁盘序号为 N 时，提交 trip-N+1 首次 `save()` 失败 → 重试成功 → `close` → 重启，断言授予计数为 1、序号为 N+1；首次失败 → 不重试直接重启，断言授予计数为 0、会话仍为待提交并可再次提交成功。
 12. 逐阶段保存失败 / 重启矩阵（出门阶段）：在 `begin`、首次 `visit`、`take`、`release`、`request_return` 各阶段令保存失败后重启，断言恢复到最后一次成功保存的记录、不出现“已保存”假成功、序号不回退；保存失败期间仍可 `request_return` 并在下次保存成功时完成提交。分开两种重启：`pending_commit` 提案曾经落盘（恢复后自动再提交，只授予一次）；`request_return` 本身也没落盘（只恢复到最后持久化的 `active` 或更早状态，再按用户决定安全回院，不做无依据保证）。
 13. 确认通知：旧旅程的迟到确认、乱序到达的旧成功/旧失败、超前 revision，都不改变当前会话，`unsaved_changes` 不被错误清除；失败通知同样绑定会话；任何确认都不返回 `persist: true`；`restore` 后 `persisted_revision` 等于读到的 revision。
-14. 序号不可信与隔离（核心侧）：`last_committed_trip_serial = -1` 时，有未关闭会话 → `quarantine_and_freeze` 且原始记录字节不变、`can_begin = false`；无会话 → `freeze_new_trips`；`committed` 但序号大于水位 → 隔离而不重新提交、不关闭、`can_begin = false`；`-1` 加不是字典 / 字段损坏 / 未来版本的记录都不能得到 `can_begin = true`；`restore` 改写会话时 `persist: true` 且 `unsaved_changes = true`；`defer_to_yard` 后 `begin` 返回 `pending_exists`；`trip_id` 与序号不一致、序号超出 `2^31 − 1` 按损坏处理。
+14. 序号不可信与隔离（核心侧）：`last_committed_trip_serial = -1` 时，有未关闭会话 → `quarantine_and_freeze` 且原始记录字节不变、`can_begin = false`；无会话 → `freeze_new_trips`；`committed` 但序号大于水位 → 隔离而不重新提交、不关闭、`can_begin = false`；`-1` 加不是字典 / 字段损坏 / 未来版本的记录都不能得到 `can_begin = true`；冻结后 `to_record()` 与原始记录一致，经普通保存再重启，`can_begin` 仍为 false；`catalog == "fixture"` 但路线或物品为 `formal.` 前缀 → 冻结而不作废；`restore` 改写会话时 `persist: true` 且 `unsaved_changes = true`；`defer_to_yard` 后 `begin` 返回 `pending_exists`；`trip_id` 与序号不一致、序号超出 `2^31 − 1` 按损坏处理。
 
 **宿主侧联合验收**（由 CODEX-LEAD 在 #149/#150 实现与举证，核心以假宿主配合；列在这里是为了两边对同一份清单冻结）：
 
