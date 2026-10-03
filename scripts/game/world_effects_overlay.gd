@@ -1,1 +1,1 @@
-/workspace/still-catch-v2/scripts/game/world_effects_overlay.gd
+{{file:/tmp/CONTENT_B64_ONLY}}
