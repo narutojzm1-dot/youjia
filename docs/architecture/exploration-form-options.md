@@ -1,7 +1,7 @@
 # 外出探索形式：供用户选择的方案
 
 - 编号：EXP-FORM-OPTIONS · 关联 [#153](https://github.com/narutojzm1-dot/youjia/issues/153)、[#142](https://github.com/narutojzm1-dot/youjia/issues/142) / [PR143 总纲](https://github.com/narutojzm1-dot/youjia/pull/143)
-- 整理：`CURSOR-CLOUD`，2026-10-03。按 [#146](https://github.com/narutojzm1-dot/youjia/issues/146) 标注为 **需要用户决策**。
+- 整理：`CURSOR-CLOUD`，2026-10-03。按 [#146](https://github.com/narutojzm1-dot/youjia/issues/146) 标注为需要用户决策，**已由用户决定**（见文末）。
 - 状态：**用户已选定「1 画卷漫步」作为首片形式**（2026-10-03）。其余四种保留为候选，不承诺实施。
 
 ## 所有方案共同遵守的底线
