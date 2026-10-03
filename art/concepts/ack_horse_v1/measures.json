@@ -1,0 +1,54 @@
+{
+  "horse_idle_reference": {
+    "file": "assets/holiday/characters/cast_v2/horse.png",
+    "width": 1254,
+    "height": 1254,
+    "alpha_bbox": [
+      53,
+      68,
+      1192,
+      1117
+    ],
+    "registered_ground_anchor": [
+      799.5,
+      1184
+    ],
+    "lowest_hoof_measured": [
+      589.6,
+      1184
+    ],
+    "native_facing": -1,
+    "bytes": 1508497,
+    "sha256": "3f22e2c9873122cdacf26b5d24684e6bfde720ed98be01dcaa787e2270843801"
+  },
+  "horse_attend": {
+    "file": "art/concepts/ack_horse_v1/horse_attend.png",
+    "width": 1254,
+    "height": 1254,
+    "alpha_bbox": [
+      109,
+      14,
+      1130,
+      1171
+    ],
+    "registered_ground_anchor": [
+      799.5,
+      1184
+    ],
+    "lowest_hoof_measured": [
+      589.9,
+      1184
+    ],
+    "native_facing": -1,
+    "border_pixels_alpha_gt16": 0,
+    "bytes": 1371600,
+    "sha256": "148a0ff412aeedff825e2e03f1d45952fb7f475e5ef3e207a2eb7a07fed7ad10",
+    "fit_scale_vs_keyed": 0.92047,
+    "body_match_scale": 0.94872,
+    "silhouette_iou_vs_idle": 0.877,
+    "body_iou_below_y700": 0.9243,
+    "clipped_opaque_pixels": 0,
+    "canvas_margin_px": 14,
+    "note": "候选未注册。锚点沿用站立图 (799.5, 1184)。先按躯干宽度对齐，再略缩小，让抬起的耳尖和尾巴离开画布边。最低蹄与站立图同一行。不是甩尾休息图。"
+  }
+}
