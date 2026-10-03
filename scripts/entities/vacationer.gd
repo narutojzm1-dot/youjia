@@ -154,6 +154,10 @@ func tick(delta: float, input_vector: Vector2, world_size: Vector2) -> void:
 		_painted_walker.scale=Vector2(_gait.face*depth,depth)
 		_painted_walker.animate(delta,moved,depth,bool(TuningStore.get_value("ui.reduced_motion",false)))
 	if sequence_walker_enabled:
+		if not input_vector.is_zero_approx():
+			# Intent cancels even against an obstacle with no actual movement.
+			if not _sequence_walker.action_kind.is_empty():
+				_sequence_walker.reset_motion()
 		_sequence_walker.advance(delta,moved,depth,_gait.face,bool(TuningStore.get_value("ui.reduced_motion",false)),float(TuningStore.get_value("player.visual.scale",1.0)))
 	_grass_hold_delay = maxf(0.0, _grass_hold_delay - delta)
 	if bool(TuningStore.get_value("ui.reduced_motion", false)):
@@ -194,6 +198,8 @@ func grass_hand_global_position() -> Vector2:
 		var palm := Vector2(242, 253)
 		if _sequence_walker.animation == &"walk":
 			palm = GRASS_SEQUENCE_HAND[_sequence_walker.frame % GRASS_SEQUENCE_HAND.size()]
+		elif _sequence_walker.animation in [&"pickup", &"feed"]:
+			palm = _sequence_walker.action_hand()
 		return _sequence_walker.to_global(_sequence_walker.offset + palm)
 	if native_walker_enabled and is_instance_valid(_native_walker) and _native_walker.forearms.size() > 1:
 		return _native_walker.forearms[1].to_global(Vector2(0, 12))
@@ -226,19 +232,33 @@ func pick_grass(visual_delay: float = 0.0) -> void:
 	grass_visual_revision += 1
 	carrying_grass = true
 	_grass_hold_delay = maxf(0.0, visual_delay)
+	_play_grass_action(&"pickup")
 	_update_grass_visual()
 
 
-func consume_grass() -> bool:
+func consume_grass(target_position: Vector2 = Vector2.INF) -> bool:
 	if not carrying_grass:
 		return false
 	carrying_grass = false
 	grass_visual_revision += 1
 	_grass_hold_delay = 0.0
+	if target_position.is_finite() and absf(target_position.x - global_position.x) > 1.0:
+		facing = signf(target_position.x - global_position.x)
+		_gait.face = facing
+		if is_instance_valid(_sequence_walker):
+			_sequence_walker.scale.x = facing * absf(_sequence_walker.scale.x)
+	_play_grass_action(&"feed")
 	_update_grass_visual()
 	just_fed_seconds = 6.0
 	player_state = "just_fed"
 	return true
+
+
+func _play_grass_action(kind: StringName) -> void:
+	if sequence_walker_enabled and is_instance_valid(_sequence_walker):
+		# Settle arrival momentum; the next movement input still cancels immediately.
+		_velocity = Vector2.ZERO
+		_sequence_walker.begin_action(kind, bool(TuningStore.get_value("ui.reduced_motion", false)))
 
 
 func snapshot_state() -> String:
