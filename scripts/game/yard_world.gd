@@ -543,7 +543,7 @@ func _tick_goose_mount_encounter(delta: float, move: Vector2) -> void:
 				goose.set_encounter_pose(back_point, goose._base_scale, -1.0)
 				horse.set_encounter_pose(horse.position, horse._base_scale, horse.facing)
 				goose.z_index = horse.z_index + 1
-				goose.show_goose_encounter_cel("idle")
+				goose.show_goose_encounter_cel("riding_up")
 				var close_focus := (goose.position + horse.position) * 0.5 + Vector2(0, -24)
 				cinematic_view_changed.emit("close")
 				camera_focus_requested.emit(close_focus, 1.82)
@@ -557,7 +557,7 @@ func _tick_goose_mount_encounter(delta: float, move: Vector2) -> void:
 				if _goose_mount_flap_clock <= 0.0:
 					_goose_mount_flap_clock = 0.28
 					_goose_mount_flap_open = not _goose_mount_flap_open
-					goose.show_goose_encounter_cel("idle" if _goose_mount_flap_open else "calm")
+					goose.show_goose_encounter_cel("riding_up" if _goose_mount_flap_open else "riding_down")
 			if _goose_mount_seconds >= (1.2 if reduced_motion else 3.2):
 				_complete_goose_mount_encounter(goose, horse)
 
@@ -565,7 +565,7 @@ func _tick_goose_mount_encounter(delta: float, move: Vector2) -> void:
 func _complete_goose_mount_encounter(goose: FeltActor, horse: FeltActor) -> void:
 	const EVENT_ID := "goose_horse_mount"
 	var rule := ExpressionCatalog.find_rule(EVENT_ID)
-	goose.show_goose_encounter_cel("idle")
+	goose.show_goose_encounter_cel("riding_up")
 	var moment := PhotoMoment.capture(self, rule)
 	if not moment.is_empty():
 		photo_moments[EVENT_ID] = moment
