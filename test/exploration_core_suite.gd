@@ -749,6 +749,35 @@ func _return_navigation() -> void:
 	_check(retried["host_action"] == C.HOST_SUBMIT_PROPOSAL, "a trusted restore after a non-landing resubmits the same proposal")
 	lost.submit()
 	_check(lost.inventory.size() == 1 and lost.disk["watermark"] == 1, "the resubmission grants once")
+	## 第二代以后：可信 parent 已有可辨认进展（库存、照片、水位），上下文整体丢失后只凭持久材料恢复
+	for landed: bool in [false, true]:
+		var label := "landed" if landed else "not landed"
+		var old = _confirmed_parent_host()
+		var parent_generation: int = old.confirmed["generation"]
+		old.finish_unknown(landed)
+		var flight_digest: String = old.in_flight["candidate"]["digest"]
+		var fresh = FakeHost.new(Fixtures.formal_catalog())
+		fresh.load_persisted(old.persisted())
+		var restored: Dictionary = fresh.reboot(false)
+		_check(fresh.recovery == ("candidate_landed" if landed else "parent_on_disk"), "%s: the restart picks its baseline by exact identity" % label)
+		_check(fresh.inventory == ["formal.find.reed"] and fresh.watermark == 1 and fresh.yard.get("photo") == "kept", "%s: playable memory shows the confirmed parent, not the grandparent or the candidate" % label)
+		_check(fresh.confirmed["generation"] == parent_generation and fresh.confirmed["watermark"] == 1, "%s: the confirmed identity is rebuilt from persisted intent" % label)
+		_check(not restored["can_begin"] and not fresh.persist() and String(fresh.disk["digest"]) == String(old.disk["digest"]), "%s: writes stay frozen" % label)
+		_check(fresh.quarantined_candidate.get("digest", "") == (flight_digest if landed else ""), "%s: only a landed candidate is held as quarantine material" % label)
+	## 磁盘与候选、parent 都不匹配，或没有写入意图：不按代次猜测，不选任何一代
+	for case: String in ["mismatch", "no intent"]:
+		var odd = _confirmed_parent_host()
+		odd.finish_unknown(true)
+		var material: Dictionary = odd.persisted()
+		if case == "mismatch":
+			material["disk"]["digest"] = "0" + String(material["disk"]["digest"]).substr(1)
+		else:
+			material["intent"] = {}
+		var lone = FakeHost.new(Fixtures.formal_catalog())
+		lone.load_persisted(material)
+		lone.reboot(false)
+		_check(lone.recovery == "unrecognized" and lone.inventory.is_empty() and lone.watermark == 0 and lone.yard.is_empty(), "%s: no generation is chosen as the playable baseline" % case)
+		_check(lone.confirmed["generation"] == -1 and not lone.persist() and lone.quarantined_candidate["digest"] == material["disk"]["digest"], "%s: the disk is quarantined whole and writes stay frozen" % case)
 
 func _pending_reed_host():
 	var host = FakeHost.new(Fixtures.formal_catalog())
@@ -757,6 +786,24 @@ func _pending_reed_host():
 	host.session.take("formal.find.reed")
 	host.session.request_return("player")
 	host.persist()
+	return host
+
+
+## 第一趟已确认（库存一根芦苇、水位 1、院内照片），第二趟的候选已放行写入、等待结果
+## 祖父代是第一趟的待提交保存：库存为空、水位 0、无照片，和 parent 可以区分
+func _confirmed_parent_host():
+	var host = _pending_reed_host()
+	host.change_yard("photo", "kept")
+	host.enqueue_submit()
+	host.start_next()
+	host.finish()
+	host.session.close()
+	host.session.begin("formal.test_walk", CLOCK, 4)
+	host.session.visit("pond")
+	host.session.take("formal.find.reed")
+	host.session.request_return("player")
+	host.enqueue_submit()
+	host.start_next()
 	return host
 
 

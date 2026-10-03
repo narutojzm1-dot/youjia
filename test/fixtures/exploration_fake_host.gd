@@ -43,6 +43,11 @@ var unverified := false
 var quarantined_candidate := {}
 ## 静止核验的前提：旧写入已确定终止、不可能迟到落盘（H2 平台适配器举证，这里由测试设定）
 var old_write_terminated := false
+## 写入意图：放行写入时冻结本次 flight 的候选身份与 parent 身份，和 disk / history 一样属于持久恢复材料
+## 写入有确定结果后清空；结果未知时保留，供重启按身份判断磁盘停在哪一代
+var intent := {}
+## 最近一次重启选用的可玩基线：trusted / candidate_landed / parent_on_disk / unrecognized
+var recovery := ""
 
 
 func _init(route_catalog: ExplorationCatalog) -> void:
@@ -61,30 +66,75 @@ func has_unsaved_yard() -> bool:
 	return yard_saved_revision != yard_revision
 
 
-## 模拟重启：trusted=true 表示静止 / 同代核验已确认最新落盘可信，按它恢复
-## trusted=false 表示无法定论：可玩内存只取可信 parent，最新落盘只作隔离原文，冻结写入，传 -1
+## 持久恢复材料：真实重启后只剩这些；confirmed、队列、在途等都是易失内存
+func persisted() -> Dictionary:
+	return {"disk": disk.duplicate(true), "history": history.duplicate(true), "intent": intent.duplicate(true)}
+
+
+## 用持久恢复材料装配一个全新的宿主对象，模拟跨页面 / 跨进程的上下文丢失
+func load_persisted(material: Dictionary) -> void:
+	disk = material["disk"].duplicate(true)
+	history = material["history"].duplicate(true)
+	intent = material["intent"].duplicate(true)
+
+
+## 模拟重启：先丢弃全部易失内存，再只按持久恢复材料重建
+## trusted=true 表示静止 / 同代核验已确认最新落盘可信，按它恢复
+## trusted=false 表示无法定论：按写入意图的身份判断磁盘停在哪一代，冻结写入，传 -1
+##   磁盘精确等于候选 → 可玩基线取该 flight 的 parent，候选只作隔离原文
+##   磁盘精确等于 parent → 可玩基线就是磁盘本身
+##   两者都不等 → 不按代次猜测，不选任何一代作可玩基线，磁盘原文整体隔离
 func reboot(trusted := true) -> Dictionary:
+	_forget_volatile()
+	var empty := {"inventory": [], "watermark": 0, "exploration": null, "yard": {}}
 	var base: Dictionary = disk
-	quarantined_candidate = {}
+	var record_source: Dictionary = disk
 	unverified = not trusted
-	if not trusted:
-		quarantined_candidate = disk.duplicate(true)
-		base = history.get(int(disk["parent"]), {"inventory": [], "watermark": 0, "yard": {}})
-	else:
+	if trusted:
 		confirmed = _identity(disk)
+		intent = {}
+		recovery = "trusted"
+	else:
+		var on_disk := _identity(disk)
+		var parent: Dictionary = intent.get("parent", {})
+		var parent_snapshot: Dictionary = history.get(int(parent.get("generation", -1)), {})
+		if not intent.is_empty() and _same_envelope(on_disk, intent["candidate"]) and not parent_snapshot.is_empty() and _same_envelope(_identity(parent_snapshot), parent):
+			quarantined_candidate = disk.duplicate(true)
+			base = parent_snapshot
+			confirmed = parent.duplicate()
+			recovery = "candidate_landed"
+		elif not intent.is_empty() and _same_envelope(on_disk, parent):
+			confirmed = parent.duplicate()
+			recovery = "parent_on_disk"
+		else:
+			quarantined_candidate = disk.duplicate(true)
+			base = empty
+			record_source = empty
+			recovery = "unrecognized"
 	inventory = base["inventory"].duplicate()
 	watermark = int(base["watermark"])
 	yard = base["yard"].duplicate(true)
+	yard_saved_revision = yard_revision
+	at_home = true
+	var record: Variant = JSON.parse_string(JSON.stringify(record_source["exploration"])) if record_source["exploration"] != null else null
+	var result := ExplorationSession.restore(record, catalog, watermark if trusted else C.WATERMARK_UNTRUSTED)
+	session = result["session"]
+	return result
+
+
+## 重启时丢弃的易失内存；grants、fail_next_saves 等是测试计数与开关，不属于宿主状态
+func _forget_volatile() -> void:
+	confirmed = {"generation": -1, "parent": -1, "digest": "", "watermark": 0}
+	inventory = []
+	watermark = 0
+	yard = {}
 	queue.clear()
 	in_flight = {}
 	unknown = false
 	persist_pending = false
-	yard_saved_revision = yard_revision
-	at_home = true
-	var record: Variant = JSON.parse_string(JSON.stringify(disk["exploration"])) if disk["exploration"] != null else null
-	var result := ExplorationSession.restore(record, catalog, watermark if trusted else C.WATERMARK_UNTRUSTED)
-	session = result["session"]
-	return result
+	old_write_terminated = false
+	quarantined_candidate = {}
+	recovery = ""
 
 
 func set_out(route_id: String, clock: Dictionary, seed: Variant = null) -> Dictionary:
@@ -196,6 +246,7 @@ func _run_head() -> Dictionary:
 		"yard_revision": yard_revision,
 		"candidate": _envelope({"inventory": candidate_inventory, "watermark": serial, "exploration": session.to_record(), "yard": yard.duplicate(true)}),
 	}
+	intent = {"candidate": _identity(in_flight["candidate"]), "parent": confirmed.duplicate()}
 	return {"ok": true, "waiting": true}
 
 
@@ -208,6 +259,7 @@ func finish(write_ok := true, deliver := true) -> Dictionary:
 		return {"ok": false, "error": "unknown"}
 	var flight := in_flight
 	in_flight = {}
+	intent = {}
 	var result := _publish(flight, write_ok, deliver)
 	_end_transaction()
 	return result
@@ -236,6 +288,7 @@ func resolve_unknown() -> Dictionary:
 		return {"ok": false, "error": "still_unknown"}
 	unknown = false
 	in_flight = {}
+	intent = {}
 	var result: Dictionary
 	if landed:
 		confirmed = on_disk
