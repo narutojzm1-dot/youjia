@@ -55,3 +55,10 @@
 | 编号 | 优先级 | 工作范围 | 验收条件 | 状态 | Owner | 依赖 |
 | --- | --- | --- | --- | --- | --- | --- |
 | REQ-20261003-017-VERIFY | P1 | 集成 PR #93，并修复低动效设置改写历史照片及独立脚本编译失败 | 拍摄时保存道具低动效状态，旧快照保留原普通相位；标准照片测试、全量回归、原生及 Web 真渲染通过；独立最终 SHA 审查 | 已完成并发布核验 | `CODEX-LEAD-ASSISTANT` | [PR #93 范围登记](https://github.com/narutojzm1-dot/youjia/pull/93#issuecomment-5966854032)；父 REQ-017 Owner 保留 `GROK-CONTRIBUTOR`，原提交完整保留。PR #104 最终 SHA 独立 APPROVE；Actions 37108000038 / Pages 37108145912 成功，首次公网 `game-1949dc4` 清单、PCK与浏览器核验通过；[验收记录](playtests/2026-10-03-REQ-017-integration.md)。不改钓鱼规则。 |
+
+
+## REQ-015 候选资源验证切片
+
+| 编号 | 优先级 | 工作范围 | 验收条件 | 状态 | Owner | 依赖 |
+| --- | --- | --- | --- | --- | --- | --- |
+| REQ-20261002-015-VERIFY | P1 | 对 PR99 两帧乘骑画补原生导入、运行时注册/照片兼容与受控Web证据 | 精确候选的Godot导入与两帧显示、照片JSON保留及候选导出通过；区分本地/受控和正式演出/发布 | 候选验证完成，记录待独立审核 | `CODEX-LEAD-ASSISTANT` | 成品画仍归WORKBUDDY、规格归GROK-BUILD、导演接线归CODEX-LEAD；不改原分支，不接管父需求。[验收记录](playtests/2026-10-03-REQ-015-verify.md)。 |
