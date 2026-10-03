@@ -17,14 +17,14 @@
 | REQ-20261002-002 | 2026-10-02 | 解释靠近动物时出现的橙色提示，并让动作目标更明确 | 已上线；待实玩验收 | [PR #25](https://github.com/narutojzm1-dot/youjia/pull/25)、[目标提示体验记录](playtests/2026-10-02-REQ-002-target-clarity.md)；移动动物点选和手机触屏仍待验收。 |
 | REQ-20261002-003 | 2026-10-02 | 确定长期定位与停留/回访循环 | 已决策：轻陪伴为主、轻放置为辅 | 用户确认互动可留下回响，让动物之后的行为或小故事发生细微变化；不得引入缺席惩罚或强制任务。具体切片见 [REQ-20261002-011](requirements.md)。 |
 | REQ-20261002-004 | 2026-10-02 | 为大鹅和其他动物补足动作与表情变化 | 进行中 | [PR #34](https://github.com/narutojzm1-dot/youjia/pull/34) 已发布大鹅收翅站立与卧姿；其他动物动作仍待补。 |
-| REQ-20261002-005 | 2026-10-02 | 让天气与季节可感知；评估新增美术资源 | 进行中（早晨薄云） | Owner CURSOR-CONTRIBUTOR-LOCAL。云带 B `game-32ff2d1`；傍晚暖云已发布 `game-3350c89`（PR #103）。下一刀：晴天 dawn/morning 薄云。雨雪仍不做。见 [天空云层方案](architecture/sky-cloud-plan.md)。 |
+| REQ-20261002-005 | 2026-10-02 | 让天气与季节可感知；评估新增美术资源 | 进行中（B/C/早晨云已发布；待制作人看图） | Owner CURSOR-CONTRIBUTOR-LOCAL。云带 B `game-32ff2d1`；傍晚暖云 `game-3350c89`（PR #103）；早晨薄云 PR #140 `game-693b311`。雨雪仍不做。样张见下方「待制作人验收」与 [playtests/2026-10-03-REQ-005-user-accept](playtests/2026-10-03-REQ-005-user-accept/README.md)。 |
 | REQ-20261002-006 | 2026-10-02 | 深入体验当前版本并提出大型玩法建设顺序 | 复核完成 | [game-1347743 体验记录](playtests/2026-10-02-game-1347743.md)；玩法建议已进入策划基准。 |
 | REQ-20261002-007 | 2026-10-02 | 携带的鱼在靠近鸭/鹅途中消失后，角色应停止已失效的投喂追踪，但继续普通散步 | 已发布；待浏览器体验复核 | [PR #19](https://github.com/narutojzm1-dot/youjia/pull/19)、[game-b82a7f5 发布核查](playtests/2026-10-02-game-b82a7f5.md)；未改变现有 20 秒携鱼时限。 |
 | REQ-20261002-008 | 2026-10-02 | 为主动互动补足真实对象回应 | 进行中 | 鸭鹅投鱼见 [PR #32](https://github.com/narutojzm1-dot/youjia/pull/32)，抚摸和浇水见 [PR #35](https://github.com/narutojzm1-dot/youjia/pull/35)；更多互动仍待盘点。 |
 | REQ-20261002-009 | 2026-10-02 | 让院子里的可见地点成为可选互动和彩蛋 | 进行中 | 花箱、岸石和栅栏三处已发布至 `game-df8b92d`（[PR #38](https://github.com/narutojzm1-dot/youjia/pull/38)、[#39](https://github.com/narutojzm1-dot/youjia/pull/39)、[#41](https://github.com/narutojzm1-dot/youjia/pull/41)）；更多热点与可变背景仍待实现。 |
 | REQ-20261002-010 | 2026-10-02 | 让旅人随手拍有清晰的成片、题词和收入相册反馈 | 已发布；用户认可显影效果 | [PR #43](https://github.com/narutojzm1-dot/youjia/pull/43) 已发布为正式 `game-e2d12b7`；Pages 公网 PCK 哈希已核实；用户试玩后提出真实抓拍、稳定题词与翻页手账的下一切片 REQ-013。 |
 | REQ-20261002-011 | 2026-10-02 | 让玩家互动在之后留下轻微、可感知的世界回响与后续故事 | 已发布；Pages 清单/PCK 已核对 | 制作人于 2026-10-03 确认“玩家牵引羊驼靠近大鹅、双方安静共处后留下记忆”。首个切片通过羊驼自身进入共享范围后才记来源；只存稀疏记忆与低概率行为回响，不涉关系数值、任务、缺席惩罚、相机/相册。独立 reviewer `CODEX-LEAD-REVIEW-PR-71` 批准精确 SHA `219ed34d5299aeaa0e8eff53ec2f6e7f7683d045`；PR #71 合并提交 `6dacd879ea0a2bac724ecfd548779e5d40c44308`。见 [PR #71](https://github.com/narutojzm1-dot/youjia/pull/71)、[issue #45](https://github.com/narutojzm1-dot/youjia/issues/45)与[关系模型](architecture/animal-relationship-model.md)。
-| REQ-20261002-012 | 2026-10-02 | 让熟悉的小院因时段天空与玩家取景持续有新发现 | 进行中（切片 C 已发布；D 延后） | Owner CURSOR-CONTRIBUTOR-LOCAL。A 云带已上线；B 树叶见 REQ-012-STAY / PR #85；C 无道具抬头微推已发布 `game-6a20cdc`（Actions 37100630995）；D 延后。见 [familiar-yard-observation.md](architecture/familiar-yard-observation.md)、[体验](playtests/2026-10-03-REQ-012-quiet-sky-look.md)。 |
+| REQ-20261002-012 | 2026-10-02 | 让熟悉的小院因时段天空与玩家取景持续有新发现 | 进行中（切片 C 已发布，待制作人看抬头；D 延后） | Owner CURSOR-CONTRIBUTOR-LOCAL。A 云带已上线；B 树叶见 REQ-012-STAY / PR #85；C 无道具抬头微推已发布 `game-6a20cdc`（Actions 37100630995）；D 延后。见 [familiar-yard-observation.md](architecture/familiar-yard-observation.md)、[体验](playtests/2026-10-03-REQ-012-quiet-sky-look.md)。 |
 | REQ-20261002-013 | 2026-10-02 | 加入真实动物抓拍、稳定在照片内的有限题词和可翻页旅人手账 | 已发布；用户正式版试玩待反馈 | [PR #53](https://github.com/narutojzm1-dot/youjia/pull/53) 经独立审查后合并至 `b560dec94f08a1597e2b834e74c41841893ba36b`；[Actions 37025345857](https://github.com/narutojzm1-dot/youjia/actions/runs/37025345857) 与 Pages 发布成功。公开 PCK SHA-256 `e5b9c3f931b957ac4dd288e1c6786f6b9fc1d9ace946eac711e3bed723ac3d58` 已核验；详见[体验记录](playtests/2026-10-02-REQ-013-scrapbook.md)。不编造动作或旧照日期、不显示进度催促；与 REQ-012 自由构图及 REQ-011 关系回响独立。 |
 | REQ-012-STAY | 2026-10-03 | 站在栅栏边时重播已有草叶画 | 已合入 | `GROK-BUILD`。[PR #85](https://github.com/narutojzm1-dot/youjia/pull/85) 合并 `36fa443`。父 REQ-012 仍属 CURSOR。无网页实玩。 |
 | REQ-20261002-015 | 2026-10-03 | 为大鹅骑马抓拍补完整乘骑扑翼姿态的规格 | 进行中（仅规格） | `GROK-BUILD` 认领 issue #64 的分镜，不制作最终画，不改 PR #65/#72。见 [goose-mount-pose-spec.md](architecture/goose-mount-pose-spec.md)。 |
@@ -40,8 +40,26 @@
 | DOC-20261002-008 | 2026-10-02 | 建立新想法的产品/技术拆解、资源缺口开单与框架工作分流规则 | 已采纳 | [协作规范](../CONTRIBUTING.md)新增分流准则：边界清楚切片可认领；高耦合框架由 Codex 先出架构；资源缺口独立开单；聊天认领及时同步到 GitHub 和需求表。 |
 | DOC-20261002-009 | 2026-10-02 | 根据现有动物行为/存档结构深化 REQ-011 架构；记录关系演出资源缺口 | 架构设计中 | 代码核查确认 `FeltActor` 没有社交行为状态、`ExpressionCatalog` 属于表情/相册规则，SaveStore 当前为 v4 且未持久化动物关系；不复用相册触发器建设行为系统。具体边界与分片见[关系模型架构文档](architecture/animal-relationship-model.md)；可能缺少的马互动姿态由 [issue #56](https://github.com/narutojzm1-dot/youjia/issues/56) 先提案，不预先承诺批量制作。 |
 | DOC-20261002-010 | 2026-10-02 | 审核 REQ-011 首批关系演出所需的现有画作与资源缺口 | 提案待产品确认 | 现有鹅已有警觉、安静站立和伏卧整图；草泥马有中性/表情变体；马只有低头站姿，无法清楚表达对峙后的让步。建议首切片复用鹅/草泥马姿态，只在用户确认后新增一张马侧身让步画；资源规格、锚点、来源和 Web 包体验收见[提案](architecture/relationship-art-proposal.md)。 |
+| DOC-20261003-001 | 2026-10-03 | 制作人可见切片用截图或短视频验收；未点头不阻塞下一刀 | 已采纳 | 用户 2026-10-03：需要体验的项直接给截图/视频；未验收时其它工作继续。各待验收项记入本文件「待制作人验收」表，供 `CODEX-LEAD` 向制作人汇总。Owner 负责补证据，不代替制作人点头。 |
 
 之后出现的需求继续追加新编号；完成或调整时保留此表和历史记录，不删除旧项。
+
+## 待制作人验收
+
+CODEX-LEAD 向制作人汇报时以本表为准。状态只用「待看图 / 待实玩 / 已认可 / 需改」。制作人未点头**不**阻塞 Owner 继续自己范围内的下一刀。
+
+| 条目 | 请看什么 | 截图或记录 | 构建 | Owner | 状态 |
+| --- | --- | --- | --- | --- | --- |
+| REQ-005 晨午晚/阴云 | 晴天早晨薄云、正午暖白、傍晚杏粉、阴天灰紫是否自然可辨 | [验收样张](playtests/2026-10-03-REQ-005-user-accept/README.md) | `game-693b311` 起（Pages 可能已是更新 tip） | `CURSOR-CONTRIBUTOR-LOCAL` | 待看图 |
+| REQ-012 切片 C 安静抬头 | 站定约 6 秒镜头轻抬入云；走动立刻回落；无新提示、不写相册 | [实现记录](playtests/2026-10-03-REQ-012-quiet-sky-look.md)（本轮无实机抬头帧） | `game-6a20cdc` | `CURSOR-CONTRIBUTOR-LOCAL` | 待实玩 |
+| REQ-012-STAY 栅栏草叶 | 停约 2.5 秒再播已有草叶，走路立刻停 | [记录](playtests/2026-10-03-REQ-012-STAY.md) | PR #85 `36fa443` | `GROK-BUILD` | 待实玩 |
+| REQ-002 目标提示 | 移动动物点选与手机触屏是否仍清楚 | [记录](playtests/2026-10-02-REQ-002-target-clarity.md) | `game-9fe0d39` | `MANUS-CONTRIBUTOR` | 待实玩 |
+| REQ-007 鱼过期停追 | 线上钓鱼后鱼过期，停止追踪且仍能散步 | [发布核查](playtests/2026-10-02-game-b82a7f5.md) | `game-b82a7f5` | `CODEX-LEAD` | 待实玩 |
+| REQ-013 手账抓拍 | 正式版真实入镜、题词稳定、翻页 | [记录](playtests/2026-10-02-REQ-013-scrapbook.md) | `game-b560dec` | `MANUS-CONTRIBUTOR` | 待实玩 |
+| REQ-014 鹅马演出 | 自然等待能否看到完整乘骑镜头 | [验收](playtests/2026-10-03-REQ-014-verification.md) | `game-521e6c2` | `CODEX-LEAD` | 待实玩 |
+| REQ-017 低动效静帧 | 低动效下花/水/浮标是否静止可读 | [集成记录](playtests/2026-10-03-REQ-017-integration.md) | `game-1949dc4` | `GROK-CONTRIBUTOR` | 待实玩 |
+
+他项 Owner 应用自己的截图替换「仅文字记录」行；本表由认领者追加，不抢实现。
 
 ### 状态历史 · REQ-20261002-005
 
@@ -53,7 +71,8 @@
 - **2026-10-03（晴天云带修正）：** 用户试玩反馈晴天叠加云发灰、像脏斑，阴天尚可。重烘焙晴天云带为暖白薄纱（预乘 alpha 模糊，避免透明黑染灰），运行时晴天云带单独提亮 modulate，不再跟院子暖滤色一起变脏；阴天帧不动。
 - **2026-10-03（傍晚暖云样张）：** 用户要求不等待新拍板、由 Owner 按最合理下一刀推进。选择 sky-cloud-plan 方案 C 单帧：晴天 TOD evening 换 `cloud_band_sunset.png`；阴天不换；不改 600 秒昼夜；雨雪与季节整层仍不做。已在 GROK #93、WORKBUDDY #99 留言避开其代码范围。
 - **2026-10-03（傍晚暖云发布）：** PR #103 合入 `3350c892cd45f1c8fb7f2db14bd8fc984fb8e34d`；Actions [37108058746](https://github.com/narutojzm1-dot/youjia/actions/runs/37108058746) 发布 `game-3350c89`。
-- **2026-10-03（早晨薄云）：** 为补齐晨/午/晚云层可辨，增加 `cloud_band_morning.png`（晴天 t<0.30）；阴天不换。已在 GROK #136、WORKBUDDY #99 留言。
+- **2026-10-03（早晨薄云）：** 为补齐晨/午/晚云层可辨，增加 `cloud_band_morning.png`（晴天 t<0.30）；阴天不换。已在 GROK #136、WORKBUDDY #99 留言。PR #140 合入 `693b311`。
+- **2026-10-03（制作人验收）：** 用户要求用截图/视频验收、未点头不阻塞后续。云带四态样张写入 [playtests/2026-10-03-REQ-005-user-accept](playtests/2026-10-03-REQ-005-user-accept/README.md)；过程见 DOC-20261003-001。
 
 ### 2026-10-02 · REQ-009 第三处热点发布与台账恢复
 

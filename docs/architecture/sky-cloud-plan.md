@@ -1,6 +1,6 @@
 # REQ-005 / REQ-012 · 天空与云层表现方案
 
-- 状态：**B 已发布**；**C 傍晚暖云已发布 `game-3350c89`**；早晨薄云推进中；雨雪与专属季节画仍不做。
+- 状态：**B 已发布**；**C 傍晚暖云已发布 `game-3350c89`**；**早晨薄云已发布 `game-693b311`**（待制作人看图）；雨雪与专属季节画仍不做。
 - 关联：REQ-20261002-005（天气/季节）、REQ-20261002-012（时段天空与反复观看）。
 - 运行时与云带 B Owner：`CURSOR-CONTRIBUTOR-LOCAL`；本次资源盘点：`CODEX-LEAD`
 - 日期：2026-10-02（方案）；2026-10-03（用户确认并开工 B）；2026-10-03（资源审计）
@@ -32,7 +32,7 @@
 ## 已有资源盘点（2026-10-03，issue #51）
 
 - `yard_sunny.png`：1920×1080 RGB，4,019,432 bytes；`yard_overcast.png`：1920×1080 RGB，3,427,343 bytes。现有两张底图已由天气代码切换，不能把改色副本当成新季节资源。
-- `cloud_band_sunny.png`：1920×237 RGBA，暖白薄纱（不采样蓝天，避免灰蓝脏斑）；`cloud_band_overcast.png`：1920×237 RGBA，阴天灰紫水彩。运行时双 Sprite 无缝循环；晴天 modulate 单独提亮。
+- `cloud_band_sunny.png`：1920×237 RGBA，暖白薄纱（不采样蓝天，避免灰蓝脏斑）；`cloud_band_overcast.png`：1920×237 RGBA，阴天灰紫水彩；`cloud_band_sunset.png`：晴天傍晚杏粉；`cloud_band_morning.png`：晴天 dawn/morning 更淡薄纱。运行时双 Sprite 无缝循环；晴天/晨/晚 modulate 分开，阴天跟院子滤色。
 - 春、夏、仲夏末、秋由 `main.gd::_update_season_tint()` 对颜色层设定：第 1–2 日春、第 3–4 日夏、第 5–6 日仲夏末、第 7 日起秋；一天为 600 秒模拟。现有时间层按晨、正午、下午、傍晚和夜晚调整色调。当前没有专属季节植被图层、冬季或火烧云资源；两张底图本身已有金黄/橙色树叶和花草，因此额外季节图层须避免重复贴花。
 - 天气仍在晴/阴之间自然轮换；云带以 6.5 世界像素/秒缓移，低动效保持静止。REQ-012 的安静抬头镜头属于另一条观察设计，不和本资源需求合并。
 
@@ -52,7 +52,7 @@ Codex 建议先评审一张傍晚暖色云带样张：它成本低于重画季�
 2. **云带风格须与现有院子同一水彩笔触。**
 3. **接受云带缓慢平移；低动效玩家只需静止帧。**
 
-当前实现切片：晴天早晨 `cloud_band_morning.png`、晴天日间 `cloud_band_sunny.png`、晴天傍晚 `cloud_band_sunset.png`、阴天 `cloud_band_overcast.png`，由 `YardWorld` 双 Sprite 无缝缓移。
+当前实现切片：晴天早晨 `cloud_band_morning.png`、晴天日间 `cloud_band_sunny.png`、晴天傍晚 `cloud_band_sunset.png`、阴天 `cloud_band_overcast.png`，由 `YardWorld` 双 Sprite 无缝缓移。制作人并排样张见 [playtests/2026-10-03-REQ-005-user-accept](../playtests/2026-10-03-REQ-005-user-accept/README.md)。
 
 ## 与 REQ-012 的边界
 
