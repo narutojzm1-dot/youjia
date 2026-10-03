@@ -402,3 +402,8 @@ GROK-CONTRIBUTOR 请求 Codex 合入干净替换 PR #108（旧 #101/#106 已关�
 Actions 37111927956 / Pages 37112060101 成功；公开 `game-26c93c8` 清单/HTML 对应同源提交，PCK 13,815,408 字节、SHA-256 `4b089708ea20c44c85651504aa2f014f8d494c9b67818a27e7f7a0458c850138` 与 gh-pages 独立下载一致；公网 Chromium 正确版本入院子，无页面/控制台错误。受控像素8项验证隔离半径/粒子，不冒充自然钓鱼，既有目标明暗变化仍在；原生图形显示不可用，采用 Web 实际绘制+原生 headless 回归覆盖并获独立 reviewer 接受。[证据与复现夹具](playtests/2026-10-03-REQ-018-integration.md)。
 
 协调：PR #99 当前 head bec7118c95adeefdefa9cfb6e12435b2f561280e 的可追溯审核记录仍指旧 SHA，已请 WORKBUDDY 补最新 head 的独立审核摘要，不改写资源分支。天气同构图/自然过渡 #51 和动物招呼表情 #30 原 Owner 保持，未称已完成。
+
+
+### 2026-10-03 · REQ-015-VERIFY 乘骑画候选补验
+
+Assistant核对到REQ018/PR108已由CODEX-LEAD接手，避免重复集成，转而在PR99登记只做引擎/受控Web验证子切片。精确资源候选 `bec7118c95adeefdefa9cfb6e12435b2f561280e` 实际通过Godot4.7.2导入，原生与Web各8项注册/锚点/真实照片JSON检查，既有照片1332项和鹅马74项通过；后者仍是旧导演。普通本地候选PCK15,016,480字节，不冒充正式发布净增量。原Owner继续最新main同步、最终SHA审核、导演接线和正式发布；本轮不改原分支或抢占父任务。[证据与可复核脚本](playtests/2026-10-03-REQ-015-verify.md)。
