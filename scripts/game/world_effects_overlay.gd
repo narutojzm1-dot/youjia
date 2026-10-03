@@ -1,2 +1,1 @@
-extends Node2D
-## LOAD_FROM_FILE
+https://raw.githubusercontent.com/narutojzm1-dot/youjia/639c9a8fd767ff75def2a3929673f067dbfa4e4b/scripts/game/world_effects_overlay.gd
