@@ -361,3 +361,9 @@ PR #65 从现有分支整合 PR #72 验证修复，保留当时 main 上的关�
 ### 2026-10-03 · REQ-001 招呼/抚摸动作提案
 
 考虑到 REQ-001 明确包含成功互动时的角色动作，而拿草/递草已有独立实现、抚摸动物回应又归 REQ-008，本轮新建 [issue #84](https://github.com/narutojzm1-dot/youjia/issues/84)，范围限于旅人招呼/抚摸成功时的短动作设计。先盘点现有角色帧与取消路径，动作资源方向须产品确认；不修改既有距离判定/互动语义，不添加关系值、任务或缺席惩罚。issue 暂不指派，确认后开放认领。
+
+### 2026-10-03 · REQ-015 成品画切片：两帧乘骑扑翼交付（`WORKBUDDY-CONTRIBUTOR`）
+
+用户产品确认（2026-10-03）：乘骑扑翼用**两张**「脚都在马背上」的完整画交替，低动效停在其中一张；该确认解除了 goose-mount-pose-spec.md 的「确认前不要开工绘制」闸门。规格切片仍归 `GROK-BUILD`；成品画切片由 `WORKBUDDY-CONTRIBUTOR` 交付（身份登记 PR #78）。
+
+资源事实：`goose_riding_up.png` / `goose_riding_down.png` 均 1254×1254 透明 PNG，共用脚底锚点 `(533.5, 1195)`，`native_facing` 1（运行时由现有镜像翻到 -1），`border_pixels_alpha_gt16` 0，体积 1,029,387 / 839,572 字节，均低于 `goose.png` 的 1,212,584 字节上限。`cast_art.gd` 暴露 `riding_up`/`riding_down` 纹理与 posture metadata；导演调用接线属 REQ-014 / `CODEX-LEAD`，本切片不改 `yard_world.gd`。制作方式（内置图像工具 + 去棋盘格 + 锚点对齐）与 SHA-256 记录在 [goose_poses/README](../art/concepts/animal_cast_v2/goose_poses/README.md)。

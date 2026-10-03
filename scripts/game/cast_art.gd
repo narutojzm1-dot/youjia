@@ -52,6 +52,10 @@ static func configure(original: Dictionary) -> Dictionary:
 			"calm": manifest().get("goose_calm",{}),
 			"rest": manifest().get("goose_rest",{}),
 		}
+		config.textures["riding_up"]=DIRECTORY+"goose_riding_up.png"
+		config.textures["riding_down"]=DIRECTORY+"goose_riding_down.png"
+		config.posture_metadata["riding_up"]=manifest().get("goose_riding_up",{})
+		config.posture_metadata["riding_down"]=manifest().get("goose_riding_down",{})
 	if species=="llama":
 		config.base_texture=DIRECTORY+"llama_smirk.png"
 		config.face_region=Rect2(805,225,225,160)
