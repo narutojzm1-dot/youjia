@@ -368,8 +368,6 @@ func tick(delta: float, move: Vector2) -> void:
 	_tick_cloud_drift(delta)
 	if _player == null:
 		return
-	# REQ-012 切片 C：无道具抬头微推；须在玩家存在后判定。
-	_tick_quiet_sky_look(delta, move)
 	_player.body_obstacles = physical_obstacles("player")
 	_body_repath = maxf(0.0,_body_repath-delta)
 	if input_enabled:
@@ -435,6 +433,8 @@ func tick(delta: float, move: Vector2) -> void:
 	_update_lead_rope()
 	_tick_relationships(delta)
 	_tick_goose_mount_encounter(delta, move)
+	# 抬头微推放在鹅马之后：鹅马已接管时只让出镜头，不误发 release。
+	_tick_quiet_sky_look(delta, move)
 	_player.player_state = _player.snapshot_state()
 	for key: Variant in _cooldowns.keys():
 		_cooldowns[key] = float(_cooldowns[key]) - delta
@@ -1159,7 +1159,13 @@ func _make_cloud_sprite(node_name: String) -> Sprite2D:
 ## REQ-012 切片 C：安静停留后轻微抬头看天；走动立刻取消；无新提示/道具/相册。
 func _tick_quiet_sky_look(delta: float, move: Vector2) -> void:
 	_quiet_sky_cooldown = maxf(0.0, _quiet_sky_cooldown - delta)
-	var busy := (
+	# 鹅马预热或演出中：只让出镜头，绝不 emit release 打断 Codex 演出。
+	if _goose_mount_phase >= 0 or _goose_mount_wait > 0.0:
+		_quiet_sky_still = 0.0
+		if _quiet_sky_active:
+			_yield_quiet_sky_look_to_encounter()
+		return
+	var player_busy := (
 		not input_enabled
 		or _leading
 		or _has_walk_goal
@@ -1167,10 +1173,9 @@ func _tick_quiet_sky_look(delta: float, move: Vector2) -> void:
 		or _player.carrying_grass
 		or not _fish_carry_type.is_empty()
 		or _fish_state != FISH_IDLE
-		or _goose_mount_phase >= 0
 		or not _pending_interaction.is_empty()
 	)
-	if busy:
+	if player_busy:
 		_quiet_sky_still = 0.0
 		if _quiet_sky_active:
 			_cancel_quiet_sky_look()
@@ -1189,6 +1194,7 @@ func _tick_quiet_sky_look(delta: float, move: Vector2) -> void:
 	camera_focus_requested.emit(sky_point, QUIET_SKY_ZOOM)
 
 
+## 走动/输入取消：释放镜头并进入冷却。
 func _cancel_quiet_sky_look() -> void:
 	if not _quiet_sky_active:
 		return
@@ -1197,6 +1203,17 @@ func _cancel_quiet_sky_look() -> void:
 	_quiet_sky_cooldown = QUIET_SKY_COOLDOWN_SECONDS
 	_focus_seconds = 0.0
 	camera_release_requested.emit()
+
+
+## 鹅马接管：只清抬头状态，不发 release（由鹅马继续 focus）。
+func _yield_quiet_sky_look_to_encounter() -> void:
+	if not _quiet_sky_active:
+		return
+	_quiet_sky_active = false
+	_quiet_sky_still = 0.0
+	_quiet_sky_cooldown = QUIET_SKY_COOLDOWN_SECONDS
+	# 清零计时但不 emit release，避免在鹅马预热/演出中把镜头打回默认。
+	_focus_seconds = 0.0
 
 
 ## 云带缓移；reduced_motion 时保持当前静止帧可读。
