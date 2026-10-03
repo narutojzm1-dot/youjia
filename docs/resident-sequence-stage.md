@@ -70,7 +70,7 @@ Minimal root calibration uses 52 world pixels per full cycle. At the accepted
 integration applied a 39/96 movement multiplier, yielding 39px/s at unit depth;
 player feedback later identified this as too slow.
 
-### Speed follow-up in progress · REQ-20261002-001
+### Speed follow-up shipped · REQ-20261002-001
 
 The active implementation changes the sequence movement multiplier to 0.64,
 giving about 61.4px/s at the default 96px/s tuning and unit depth. Frame phase
@@ -103,3 +103,7 @@ viewport audits. A fresh Web export loaded in Chromium (HTTP 200, canvas ready,
 no JavaScript errors); keyboard walk, stop-to-idle, and mirrored turning were
 visually checked. This is evidence for the speed revision, not a claim that
 walking quality is fully solved.
+
+PR #27 was merged as `fce84fe6749549acba8b509d0f05ebebce286fbe` and published
+as `game-fce84fe`. The release manifest and downloaded public PCK are recorded
+in [`REQ-001 locomotion playtest`](playtests/2026-10-02-REQ-001-locomotion.md).
