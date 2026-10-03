@@ -95,7 +95,7 @@
 | --- | --- | --- | --- | --- | --- | --- |
 | ART-ACK-COW | P0 | 牛：成功互动后的抬眼与温和回应 | 同角色完整画作、稳定接触锚点、透明边界、原尺寸/镜像预览、来源哈希与预算；样张核对后再扩帧，接入单独验收 | 样张已交；成功抚摸已接上抬眼，其它互动未接 | `GROK-BUILD` | [#119](https://github.com/narutojzm1-dot/youjia/issues/119)；#30 的行为接入原属 MANUS。制作人于 2026-10-03 让 `GROK-BUILD` 接手未完成部分。候选仍在 `art/concepts/ack_cow_v1/`。 |
 | ART-ACK-HORSE | P1 | 马：注意玩家与接受轻抚的回应 | 同角色完整画作、稳定接触锚点、透明边界、原尺寸/镜像预览、来源哈希与预算；样张核对后再扩帧，接入单独验收 | 样张已交；未接入 | `GROK-BUILD` | [#120](https://github.com/narutojzm1-dot/youjia/issues/120)；候选在 `art/concepts/ack_horse_v1/`。#30 的行为映射仍未改。 |
-| ART-ACK-SHEEP | P1 | 两只羊：保留个性的互动回应 | 同角色完整画作、稳定接触锚点、透明边界、原尺寸/镜像预览、来源哈希与预算；样张核对后再扩帧，接入单独验收 | 已指定；排队；先各一张关键姿态 | `GROK-BUILD` | [#121](https://github.com/narutojzm1-dot/youjia/issues/121)；#30 / MANUS反馈映射接入 |
+| ART-ACK-SHEEP | P1 | 两只羊：保留个性的互动回应 | 同角色完整画作、稳定接触锚点、透明边界、原尺寸/镜像预览、来源哈希与预算；样张核对后再扩帧，接入单独验收 | 样张已交；未接入 | `GROK-BUILD` | [#121](https://github.com/narutojzm1-dot/youjia/issues/121)；两张候选在 `art/concepts/ack_sheep_v1/`。#30 的行为映射仍未改。 |
 | ART-ACK-BIRDS | P1 | 鸭与鹅：自然关注和接食姿态资源 | 同角色完整画作、稳定接触锚点、透明边界、原尺寸/镜像预览、来源哈希与预算；样张核对后再扩帧，接入单独验收 | 已指定；排队；鹅先复用盘点再作画 | `GROK-BUILD` | [#122](https://github.com/narutojzm1-dot/youjia/issues/122)；#30 / MANUS反馈映射接入 |
 | ART-RESIDENT-PET | P1 | 旅人：自然轻抚动作的三姿态样张 | 同角色完整画作、稳定接触锚点、透明边界、原尺寸/镜像预览、来源哈希与预算；样张核对后再扩帧，接入单独验收 | 已指定；可先制作三姿态分镜样张；产品核对后烘最终帧 | `GROK-BUILD` | [#123](https://github.com/narutojzm1-dot/youjia/issues/123)；#84 / CODEX主角接入 |
 
@@ -143,3 +143,10 @@
 | YARD-DECOR-PROPOSAL | P1 | 比较位置选择/自由摆放、收起/调整的方案与内部原型，保留真实地面与动线 | 待认领；只开放方案/内部原型 | 待认领 | [#154](https://github.com/narutojzm1-dot/youjia/issues/154)；依赖/正式内容门禁见工单。 |
 | ART-EXPLORATION-PROPOSAL | P1 | 先资源盘点/规格/构图提案与来源预算；最终画另批 | 已指定；先提案，不接入 | `GROK-BUILD` | [#155](https://github.com/narutojzm1-dot/youjia/issues/155)；依赖/正式内容门禁见工单。 |
 | QA-EXPLORATION-GATE | P1 | 独立失败矩阵/夹具与候选验收、发布和共同维护交接证据 | 待认领；先方案，候选验收随交付 | 待认领 | [#156](https://github.com/narutojzm1-dot/youjia/issues/156)；依赖/正式内容门禁见工单。 |
+
+
+## 同构图阴天原画修复
+
+| 编号 | 优先级 | 范围与验收 | 状态 | Owner | 依赖 |
+| --- | --- | --- | --- | --- | --- |
+| ART-OVERCAST-ALIGNED | P1 | 以晴天母版重绘阴天，几何/交互锚点不动；完整画、叠图与实际尺度预览、来源哈希；美术审核后用新路径接入，保留旧照片资源 | 已指定；候选待制作，未发布 | `GROK-BUILD` | [#168](https://github.com/narutojzm1-dot/youjia/issues/168)；ART-DIRECTOR审画，CURSOR-CONTRIBUTOR-LOCAL在#51接自然转场，GAME-QA复测。 |

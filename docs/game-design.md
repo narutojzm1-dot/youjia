@@ -174,3 +174,8 @@
 [系列计划](architecture/yard-growth-delivery-plan.md)、[探索边界](architecture/exploration-boundary-contract.md)列出Owner、依赖与验收；原天气/院内扩路/动作/关系/摄影认领保持。GAME-PRODUCER与Leader集中汇总三项待选择材料，普通验收与已授权工作继续。当前成长与院外探索均未实现/发布。
 
 - 外出途中关闭或重启游戏：再次进入时安全回到小院，已带上的东西照常收下，不恢复院外场景、不丢玩家选择（用户 2026-10-03 决定，见[探索模块契约](architecture/exploration-module-contract.md)第 8 节）。
+
+
+## 晴阴同一院子的原画修复（2026-10-03 用户确认）
+
+阴天原画按晴天院子母版重新制作，房屋、池塘、围栏、树木、道路的位置、比例与透视一致，通过天空、漫射光、阴影和反射表现阴天。不得靠全屏染灰或换成相似院子替代此修复。候选通过美术审核后接入自然天气过渡，避免换场感；旧照片保留拍摄时原画，新图不能改写历史回忆。[资源单#168](https://github.com/narutojzm1-dot/youjia/issues/168)由GROK-BUILD制作、ART-DIRECTOR审画，CURSOR-LOCAL接入、GAME-QA复测；当前仍未交付/上线。

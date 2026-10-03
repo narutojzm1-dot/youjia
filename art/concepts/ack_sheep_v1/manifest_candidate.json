@@ -1,0 +1,38 @@
+{
+  "sheep_clingy_attend": {
+    "width": 1254,
+    "height": 1254,
+    "alpha_bbox": [
+      148,
+      98,
+      1034,
+      1081
+    ],
+    "ground_anchor": [
+      576.0,
+      1178
+    ],
+    "native_facing": 1,
+    "border_pixels_alpha_gt16": 0,
+    "bytes": 1293256,
+    "sha256": "84461853a7a015670af0f5fea8c43fe5409c4a78e04ba9b16f4487da089512d4"
+  },
+  "sheep_dull_glance": {
+    "width": 1254,
+    "height": 1254,
+    "alpha_bbox": [
+      40,
+      209,
+      1205,
+      916
+    ],
+    "ground_anchor": [
+      732.5,
+      1124
+    ],
+    "native_facing": -1,
+    "border_pixels_alpha_gt16": 0,
+    "bytes": 1382148,
+    "sha256": "d8809b166da0bff725b048aaf77b8b0cfceab768c07eb110a0f61137a1097573"
+  }
+}
