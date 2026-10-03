@@ -113,6 +113,13 @@ func start_next() -> Dictionary:
 		return {"ok": false, "error": "busy"}
 	if queue.is_empty():
 		return {"ok": false, "error": "empty"}
+	var result := _run_head()
+	if not result.get("waiting", false):
+		_end_transaction()
+	return result
+
+
+func _run_head() -> Dictionary:
 	var identity: Dictionary = queue.pop_front()
 	## 第 0 步：重读核心当前状态，身份不一致就丢弃，不回成功也不回失败
 	var proposal := session.get_proposal()
@@ -154,6 +161,12 @@ func finish(write_ok := true, deliver := true) -> Dictionary:
 		return {"ok": false, "error": "idle"}
 	var flight := in_flight
 	in_flight = {}
+	var result := _publish(flight, write_ok, deliver)
+	_end_transaction()
+	return result
+
+
+func _publish(flight: Dictionary, write_ok: bool, deliver: bool) -> Dictionary:
 	if not write_ok or not _write(flight["candidate"]):
 		## 失败：持有物、水位、院内未保存改动都保持写入前原样
 		return session.commit_failed(flight["trip_id"], true)
@@ -166,6 +179,20 @@ func finish(write_ok := true, deliver := true) -> Dictionary:
 	if not deliver:
 		return {"ok": true, "delivered": false}
 	return session.commit_succeeded(flight["trip_id"])
+
+
+## 一笔事务结束：§7.1 入队义务的兜底，以及写入期间被推迟的保存重排
+func _end_transaction() -> void:
+	if session.get_state() == C.STATE_PENDING:
+		var proposal := session.get_proposal()
+		var identity := {"trip_id": proposal["trip_id"], "revision": int(proposal["revision"])}
+		var held := false
+		for queued: Dictionary in queue:
+			held = held or _same_identity(queued, identity)
+		if not held:
+			queue.append(identity)
+	if persist_pending:
+		persist()
 
 
 func _same_identity(a: Dictionary, b: Dictionary) -> bool:
