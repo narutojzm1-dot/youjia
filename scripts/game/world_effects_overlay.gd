@@ -109,7 +109,9 @@ func bird_feedback_snapshot() -> Dictionary:
 static func celebration_pose(kind: String, t: float, reduced_motion: bool) -> Dictionary:
 	if kind == "target":
 		var radius := 18.0 if reduced_motion else 18.0 + 2.5 * absf(sin(t * 2.4))
-		return {"glow_radius": radius}
+		# REQ-019: brightness/alpha pulse was left out of REQ-018; freeze it under low motion.
+		var alpha_pulse := 1.0 if reduced_motion else 0.75 + 0.25 * absf(sin(t * 2.4))
+		return {"glow_radius": radius, "alpha_pulse": alpha_pulse}
 	var progress := clampf(t, 0.0, 1.0)
 	if reduced_motion:
 		return {
