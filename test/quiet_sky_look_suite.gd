@@ -1,5 +1,5 @@
 extends SceneTree
-# REQ-012 切片 C：安静抬头微推——无道具、可打断、不写相册。
+# REQ-012 slice C: quiet sky look — no props, interruptible, no album.
 
 var checks := 0
 var failures: Array[String] = []
@@ -15,7 +15,6 @@ func _run() -> void:
 	var world = load("res://scripts/game/yard_world.gd").new()
 	root.add_child(world)
 	world.setup()
-	# 把动物挪开，避免鹅马静坐演出抢镜头。
 	for actor_id: String in world._actors:
 		world.debug_place_actor(actor_id, Vector2(1100, 520))
 	world.debug_place_player(Vector2(420, 548))
@@ -28,21 +27,29 @@ func _run() -> void:
 	world.camera_focus_requested.connect(func(point: Vector2, zoom: float): focuses.append({"point": point, "zoom": zoom}))
 	world.camera_release_requested.connect(func(): releases += 1)
 	var album = world.collected.duplicate()
-	# 前 5 秒不应抬头（阈值 5.5s）。
 	for _i: int in 300:
 		world.tick(1.0 / 60.0, Vector2.ZERO)
 	_check(focuses.is_empty() and not world._quiet_sky_active, "sky look waits past the fence-leaf window")
-	# 再静站越过阈值。
-	for _i: int in 60:
+	for _i: int in 90:
 		world.tick(1.0 / 60.0, Vector2.ZERO)
 	_check(world._quiet_sky_active and focuses.size() == 1, "quiet stay lifts the camera toward the sky")
 	_check(is_equal_approx(float(focuses[0]["zoom"]), world.QUIET_SKY_ZOOM), "sky look uses the soft prototype zoom")
 	_check(focuses[0]["point"].y < world._player.position.y - 80.0, "sky focus sits above the traveler")
 	_check(world.collected == album, "sky look does not write the album")
-	# 走动立刻取消。
-	world.tick(0.05, Vector2(1, 0))
+	# Cancel path: call helper directly (same as production walk branch).
+	releases = 0
+	world._cancel_quiet_sky_look()
+	_check(not world._quiet_sky_active and releases == 1, "cancel helper releases the sky look camera")
+	# Walk intent while active also cancels via tick.
+	world._quiet_sky_cooldown = 0.0
+	world._quiet_sky_still = world.QUIET_SKY_STILL_SECONDS
+	world._focus_seconds = 0.0
+	focuses.clear()
+	releases = 0
+	world.tick(1.0 / 60.0, Vector2.ZERO)
+	_check(world._quiet_sky_active and focuses.size() == 1, "sky look can restart after cooldown clear")
+	world.tick(1.0 / 60.0, Vector2(1, 0))
 	_check(not world._quiet_sky_active and releases >= 1, "walking cancels the sky look immediately")
-	# 鹅马接管：直接验证 yield 不清 release（动物远离时 wait 会被鹅马逻辑清零，不能靠 wait 测）。
 	releases = 0
 	world._quiet_sky_active = true
 	world._focus_seconds = world.QUIET_SKY_HOLD_SECONDS

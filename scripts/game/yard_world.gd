@@ -373,6 +373,9 @@ func tick(delta: float, move: Vector2) -> void:
 	if input_enabled:
 		if move.length() > 0.2:
 			_scene_feedback.cancel()
+			# 走动意图出现时立刻放下抬头镜头，避免只依赖后置 quiet-sky tick。
+			if _quiet_sky_active:
+				_cancel_quiet_sky_look()
 			_rejected_seconds = 0.0
 			notice_dismiss_requested.emit("notice.cannot_walk")
 			_has_walk_goal = false
