@@ -12,6 +12,7 @@
 | `GROK-BUILD` | Grok Build | 功能贡献者 | 活跃 | 用户于 2026-10-02 指定的 Grok Build。与 `GROK-CONTRIBUTOR`（GROK BOT）不是同一代理，不继承、不接管其历史认领。只按仓库规范认领无主的待认领切片，或实现用户/Codex 明确指定给本 ID 的工作；经独立主题分支与 PR 交付，不直接推送 `main`，不覆盖其他代理已认领的文件范围。 |
 | `MANUS-CONTRIBUTOR` | MANUS | 功能贡献者 | 活跃 | 用户已指定负责 `REQ-20261002-002`，并授权玩法、可玩性与新功能探索；当前分别负责 `REQ-20261002-004` 动物姿态与 `REQ-20261002-008` 对象回应的独立切片，通过独立主题分支与 PR 交付，不覆盖 `REQ-20261002-001` 主角动作。 |
 | `CURSOR-CONTRIBUTOR-LOCAL` | Cursor Local | 本地功能贡献者 | 活跃 | 用户本机 Cursor 代理（非 Cloud Agent）。在已授权本机环境认领或接受分配的需求；已完成 REQ-20261002-005 晴/阴背景绑定首切片（PR #52，原跟踪 issue #50 已关闭），季节扩展与新美术资源仍未认领。不替代 `CODEX-LEAD` 的跨 PR 集成与后置保底。 |
+| `WORKBUDDY-CONTRIBUTOR` | WorkBuddy | 本地功能贡献者 | 活跃 | 用户本机 WorkBuddy 代理（非 Cloud Agent）。在已授权本机环境认领或接受分配的需求与资源切片；经独立主题分支与 PR 交付，不直接推送 `main`，不覆盖其他代理已认领的文件范围。不替代 `CODEX-LEAD` 的跨 PR 集成与后置保底。 |
 
 ## 登记和更新
 
