@@ -71,6 +71,9 @@ static func configure(original: Dictionary) -> Dictionary:
 	elif species=="cow" and ResourceLoader.exists(DIRECTORY+"cow_chew.png"):
 		config.textures["chew"]=DIRECTORY+"cow_chew.png"
 		config.posture_metadata={"chew": manifest().get("cow_chew",{})}
+		if ResourceLoader.exists(DIRECTORY+"cow_glance.png"):
+			config.textures["glance"]=DIRECTORY+"cow_glance.png"
+			config.posture_metadata["glance"]=manifest().get("cow_glance",{})
 	elif species=="sheep" and ResourceLoader.exists(DIRECTORY+"sheep_shake.png"):
 		config.textures["shake"]=DIRECTORY+"sheep_shake.png"
 		config.posture_metadata={"shake": manifest().get("sheep_shake",{})}

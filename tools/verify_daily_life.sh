@@ -13,7 +13,7 @@ run_godot() {
 run_godot --headless --path . --editor --import --quit
 run_godot --headless --path . res://test/test_suite.tscn
 run_godot --headless --path . res://test/locomotion_suite.tscn
-for suite in animal_home photo_home grass_state grass_action explicit_target ui_interaction physical_yard keyboard_ground scrapbook_encounter photo_moment_render photo_moment_save boundary_feedback mixed_input_photo leading_clearance portable_accept shipped_correctness interaction_photo scene_hotspot authored_sequence goose_mount quiet_stay quiet_sky_look still_catch still_target_pulse still_grass_glow interaction_pose; do
+for suite in animal_home photo_home grass_state grass_action explicit_target ui_interaction physical_yard keyboard_ground scrapbook_encounter photo_moment_render photo_moment_save boundary_feedback mixed_input_photo leading_clearance portable_accept shipped_correctness interaction_photo scene_hotspot authored_sequence goose_mount quiet_stay quiet_sky_look still_catch still_target_pulse still_grass_glow interaction_pose cow_glance; do
   run_godot --headless --path . --script "test/${suite}_suite.gd"
 done
 run_godot --headless --path . --script test/ui_viewports.gd
