@@ -29,3 +29,12 @@
 
 - [Chromium 中院子与牵行状态](2026-10-03-REQ-011/web-leading-llama.webp)：真实 Web 渲染候选截图，仅证明院子启动和牵引 HUD；不作为“关系记忆已完成/玩家已看见后续回响”的证据。
 - [重放最新 main 后的 Web 院子画面](2026-10-03-REQ-011/web-main-rebased-yard.webp)：当前候选导出进入院子后的 Chromium 截图。
+
+
+## 发布核验（2026-10-03）
+
+- PR #71 最终 SHA `219ed34d5299aeaa0e8eff53ec2f6e7f7683d045` 获独立 reviewer 批准并合入，merge commit `6dacd879ea0a2bac724ecfd548779e5d40c44308`。
+- Actions [run 37090111095](https://github.com/narutojzm1-dot/youjia/actions/runs/37090111095) 的验证、Web 导出和 Pages 发布步骤均成功。
+- 公网 `game-release.json`：entry `game-6dacd87`，sourceCommit `6dacd879ea0a2bac724ecfd548779e5d40c44308`。公网 `index.html` 的 `data-build` 为 `game-6dacd87`。
+- 直接下载公开 `game-6dacd87.pck` 核对：12,783,108 bytes，SHA-256 `96be444adf13de8d87cb374b0abccf1ac2998f28e7ad8978d4d85c5759fbf29c`。这与旧公开 PCK 不同。
+- 候选本地导出与 Actions 正式导出 PCK 哈希不同；以公开文件实际字节与哈希为发布证据。公网 Chromium 启动核验：HTTP 200、标题《悠长的假期》、build `game-6dacd87`、Canvas 1280×720，无页面异常或失败请求。此项是加载烟测，不代表完整手动实玩关系记忆概率表现。
