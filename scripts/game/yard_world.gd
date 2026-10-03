@@ -30,6 +30,14 @@ const WORLD_SIZE := Vector2(1280, 720)
 const CLOUD_BAND_Y := 18.0
 ## 云带缓慢平移速度（世界像素/秒）；低动效时为 0。
 const CLOUD_DRIFT_SPEED := 6.5
+## REQ-012 切片 C：安静停留后轻微抬头看天（秒）。长于栅栏草叶 2.5s 与鹅马等待 3.5s，避免抢镜头。
+const QUIET_SKY_STILL_SECONDS := 5.5
+## 抬头镜头保持时长；走动立即取消。
+const QUIET_SKY_HOLD_SECONDS := 4.0
+## 同一次停留结束后的冷却，避免镜头来回抢。
+const QUIET_SKY_COOLDOWN_SECONDS := 28.0
+## 轻微放大；不做成任务式取景 UI。
+const QUIET_SKY_ZOOM := 1.14
 # 人只站在画里已经对上地面的几个位置。圆点是可以走过去的下一处。
 const PICTURE_SPOTS := {
 	"door": {"position": Vector2(250, 508), "depth": 1.0, "facing": 1.0, "neighbors": ["grass"]},
@@ -100,6 +108,10 @@ var _cloud_band_a: Sprite2D
 var _cloud_band_b: Sprite2D
 ## 云带水平滚动偏移（世界像素，对带宽取模）。
 var _cloud_scroll := 0.0
+## 安静抬头：静止累计、冷却、是否占用当前镜头。
+var _quiet_sky_still := 0.0
+var _quiet_sky_cooldown := 0.0
+var _quiet_sky_active := false
 var _player: Vacationer
 var _actors: Dictionary = {}
 var _zones: Dictionary = {}
@@ -421,6 +433,8 @@ func tick(delta: float, move: Vector2) -> void:
 	_update_lead_rope()
 	_tick_relationships(delta)
 	_tick_goose_mount_encounter(delta, move)
+	# 抬头微推放在鹅马之后：鹅马已接管时只让出镜头，不误发 release。
+	_tick_quiet_sky_look(delta, move)
 	_player.player_state = _player.snapshot_state()
 	for key: Variant in _cooldowns.keys():
 		_cooldowns[key] = float(_cooldowns[key]) - delta
@@ -439,6 +453,11 @@ func tick(delta: float, move: Vector2) -> void:
 		_focus_seconds -= delta
 		if _focus_seconds <= 0.0:
 			camera_release_requested.emit()
+			# 抬头镜头自然结束时进入冷却，不催促玩家再站一次。
+			if _quiet_sky_active:
+				_quiet_sky_active = false
+				_quiet_sky_still = 0.0
+				_quiet_sky_cooldown = QUIET_SKY_COOLDOWN_SECONDS
 	# 更新特效覆盖层：宠物目标弧（alpha 修正：线性衰减，不再平方，确保在感应边缘也可见）
 	_update_effects_overlay(delta)
 	_scene_feedback.consider_shore(self)
@@ -1135,6 +1154,66 @@ func _make_cloud_sprite(node_name: String) -> Sprite2D:
 	sprite.z_index = -1
 	sprite.position = Vector2(0.0, CLOUD_BAND_Y)
 	return sprite
+
+
+## REQ-012 切片 C：安静停留后轻微抬头看天；走动立刻取消；无新提示/道具/相册。
+func _tick_quiet_sky_look(delta: float, move: Vector2) -> void:
+	_quiet_sky_cooldown = maxf(0.0, _quiet_sky_cooldown - delta)
+	# 鹅马预热或演出中：只让出镜头，绝不 emit release 打断 Codex 演出。
+	if _goose_mount_phase >= 0 or _goose_mount_wait > 0.0:
+		_quiet_sky_still = 0.0
+		if _quiet_sky_active:
+			_yield_quiet_sky_look_to_encounter()
+		return
+	var player_busy := (
+		not input_enabled
+		or _leading
+		or _has_walk_goal
+		or move.length() > 0.2
+		or _player.carrying_grass
+		or not _fish_carry_type.is_empty()
+		or _fish_state != FISH_IDLE
+		or not _pending_interaction.is_empty()
+	)
+	if player_busy:
+		_quiet_sky_still = 0.0
+		if _quiet_sky_active:
+			_cancel_quiet_sky_look()
+		return
+	_quiet_sky_still += delta
+	if _quiet_sky_active:
+		return
+	if _quiet_sky_cooldown > 0.0 or _focus_seconds > 0.0:
+		return
+	if _quiet_sky_still < QUIET_SKY_STILL_SECONDS:
+		return
+	# 焦点落在玩家上方天空带，让云带进入画面中心附近。
+	var sky_point := Vector2(_player.position.x, clampf(_player.position.y - 240.0, 70.0, 210.0))
+	_quiet_sky_active = true
+	_focus_seconds = QUIET_SKY_HOLD_SECONDS
+	camera_focus_requested.emit(sky_point, QUIET_SKY_ZOOM)
+
+
+## 走动/输入取消：释放镜头并进入冷却。
+func _cancel_quiet_sky_look() -> void:
+	if not _quiet_sky_active:
+		return
+	_quiet_sky_active = false
+	_quiet_sky_still = 0.0
+	_quiet_sky_cooldown = QUIET_SKY_COOLDOWN_SECONDS
+	_focus_seconds = 0.0
+	camera_release_requested.emit()
+
+
+## 鹅马接管：只清抬头状态，不发 release（由鹅马继续 focus）。
+func _yield_quiet_sky_look_to_encounter() -> void:
+	if not _quiet_sky_active:
+		return
+	_quiet_sky_active = false
+	_quiet_sky_still = 0.0
+	_quiet_sky_cooldown = QUIET_SKY_COOLDOWN_SECONDS
+	# 清零计时但不 emit release，避免在鹅马预热/演出中把镜头打回默认。
+	_focus_seconds = 0.0
 
 
 ## 云带缓移；reduced_motion 时保持当前静止帧可读。
