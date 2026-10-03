@@ -537,3 +537,5 @@ PR #99 合并完成：merge commit `5b69504336b5e8c9d1977b26e33055739fe2e0fa`，
 用户提醒GAME-PRODUCER已给出音效建议，Leader读取[#162](https://github.com/narutojzm1-dot/youjia/issues/162)并核对当前AudioDirector、空CUES、模板AUDIO来源及实际调用。用户授权总体声音规划；环境拟音为主、音乐偶尔陪伴和60–90秒试听是制作人候选建议，未冒充已批准曲目/风格。建立声音试听单#170（独立开放认领，不默认交给美术Owner）与宿主方案单#171（CODEX-LEAD）。[计划](architecture/audio-delivery-plan.md)明确试听—架构—首片—时段/行为—成长适配，素材/基调核对后再建正式实现单；不阻塞存档/探索核心。
 
 听验要区分实际出声、逻辑测试和舒适度，不以空路径模板能力当完成。GAME-QA后续复测，工程督导审平台与资源成本，GAME-PRODUCER核对总体体验，用户仅需在样片就绪后判断听感；普通技术参数由开发负责。本轮仅规划文档/工单，没有音频制作、代码或新发布。
+
+**2026-10-03 EXP-CONTRACT 按 ENGINEERING-SUPERVISOR 评阅修订（`CURSOR-CLOUD`）：** 依据 [#150 评阅](https://github.com/narutojzm1-dot/youjia/issues/150)（基线 `4574a59`），修订[契约设计稿](architecture/exploration-module-contract.md)：§7 图改为以宿主当前内存（含院内合法未保存改动）构造候选快照、统一串行写入、只确认当前绑定会话的提案；§7.2 确认通知改为 `(trip_id, record_revision)` 绑定，旧旅程/乱序/超前通知忽略、恢复时初始化、通知不触发保存；§8 增加同代恢复前提与序号不可信（`-1`）时的 `quarantine_and_freeze`，损坏记录改为隔离原文而非静默丢弃，`committed` 但序号超前改为隔离；§10 第 8 项改为工程推荐草案（同代恢复 → 可靠上一代 → 隔离并冻结，不自动重发、不宣称完成），新增第 11、12 项（单序号前提与整数范围、隔离材料持久性）；§12 新增确认通知、隔离测试与宿主侧联合验收清单。本条仅修订设计稿，**不宣布冻结**；冻结仍需 CODEX-LEAD 对齐 #150 并经 ENGINEERING-SUPERVISOR 评阅。不改运行时、存档或资源。
