@@ -1792,11 +1792,12 @@ func _refresh_prop_visuals() -> void:
 	var plant_distance := _player.position.distance_to(_plant_point()) if _player != null else 300.0
 	var reveal := clampf(1.0 - (plant_distance - 80.0) / 120.0, 0.0, 1.0)
 	var phase := fmod(_day_seconds, TAU * 10.0)
+	var reduced := bool(TuningStore.get_value("ui.reduced_motion", false))
 	_plant_visual.configure("plant", {"plant_state": _plant_state, "phase": phase, "soil_reveal": reveal * reveal,
-		"nearby": plant_distance < 80.0, "harvest_flash": maxf(0.0, _plant_harvest_flash)})
+		"nearby": plant_distance < 80.0, "harvest_flash": maxf(0.0, _plant_harvest_flash), "reduced_motion": reduced})
 	var fishing_distance := _player.position.distance_to(_fishing_point()) if _player != null else 300.0
 	_fishing_visual.configure("fishing", {"fish_state": FISH_CAUGHT if _fish_catch_flash > 0.0 and _fish_state == FISH_IDLE else _fish_state,
-		"phase": phase, "nearby": fishing_distance < 100.0, "fish_type": _fish_catch_type})
+		"phase": phase, "nearby": fishing_distance < 100.0, "fish_type": _fish_catch_type, "reduced_motion": reduced})
 
 
 func _draw() -> void:
