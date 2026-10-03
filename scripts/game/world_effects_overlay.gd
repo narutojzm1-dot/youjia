@@ -1,1 +1,1 @@
-file:///tmp/youjia-sparse/scripts/game/world_effects_overlay.gd
+/tmp/youjia-sparse/scripts/game/world_effects_overlay.gd
