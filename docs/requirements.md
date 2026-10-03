@@ -84,3 +84,16 @@
 | 编号 | 优先级 | 工作范围 | 验收条件 | 状态 | Owner | 依赖 / 记录 |
 | --- | --- | --- | --- | --- | --- | --- |
 | REQ-019-VERIFY | P1 | 保留 PR113 并恢复标准回归入口可执行权限，补实际目标像素证据 | 标准全量回归、正常Web及真实YardWorld输入绘制通过；独立最终SHA审核后方可合入发布 | 已完成；独立审查、发布与公网核验通过 | `CODEX-LEAD` | 功能Owner保持GROK-CONTRIBUTOR；PR99由ASSISTANT验收，不重复。[验收](playtests/2026-10-03-REQ-019-integration.md)。 |
+
+
+## 制作人指定：互动动作资源订单
+
+资源制作全部指定给 `GROK-BUILD`；行为/接入保持父项原Owner。订单与节奏见[制作清单](art/interaction-resource-orders.md)。PR118/#117休息画沿用，不重复制作；PR99仍归WORKBUDDY。
+
+| 编号 | 优先级 | 资源交付 | 验收条件 | 状态 | Owner | 依赖 / issue |
+| --- | --- | --- | --- | --- | --- | --- |
+| ART-ACK-COW | P0 | 牛：成功互动后的抬眼与温和回应 | 同角色完整画作、稳定接触锚点、透明边界、原尺寸/镜像预览、来源哈希与预算；样张核对后再扩帧，接入单独验收 | 已指定；首单；可立即制作候选样张 | `GROK-BUILD` | [#119](https://github.com/narutojzm1-dot/youjia/issues/119)；#30 / MANUS反馈映射接入 |
+| ART-ACK-HORSE | P1 | 马：注意玩家与接受轻抚的回应 | 同角色完整画作、稳定接触锚点、透明边界、原尺寸/镜像预览、来源哈希与预算；样张核对后再扩帧，接入单独验收 | 已指定；排队；复用牛单验证的交付规格 | `GROK-BUILD` | [#120](https://github.com/narutojzm1-dot/youjia/issues/120)；#30 / MANUS反馈映射接入 |
+| ART-ACK-SHEEP | P1 | 两只羊：保留个性的互动回应 | 同角色完整画作、稳定接触锚点、透明边界、原尺寸/镜像预览、来源哈希与预算；样张核对后再扩帧，接入单独验收 | 已指定；排队；先各一张关键姿态 | `GROK-BUILD` | [#121](https://github.com/narutojzm1-dot/youjia/issues/121)；#30 / MANUS反馈映射接入 |
+| ART-ACK-BIRDS | P1 | 鸭与鹅：自然关注和接食姿态资源 | 同角色完整画作、稳定接触锚点、透明边界、原尺寸/镜像预览、来源哈希与预算；样张核对后再扩帧，接入单独验收 | 已指定；排队；鹅先复用盘点再作画 | `GROK-BUILD` | [#122](https://github.com/narutojzm1-dot/youjia/issues/122)；#30 / MANUS反馈映射接入 |
+| ART-RESIDENT-PET | P1 | 旅人：自然轻抚动作的三姿态样张 | 同角色完整画作、稳定接触锚点、透明边界、原尺寸/镜像预览、来源哈希与预算；样张核对后再扩帧，接入单独验收 | 已指定；可先制作三姿态分镜样张；产品核对后烘最终帧 | `GROK-BUILD` | [#123](https://github.com/narutojzm1-dot/youjia/issues/123)；#84 / CODEX主角接入 |
