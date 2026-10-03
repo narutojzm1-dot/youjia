@@ -1,1 +1,1 @@
-SEE_FILE:/workspace/youjia-022/scripts/game/world_effects_overlay.gd
+https://raw.githubusercontent.com/narutojzm1-dot/youjia/ad0434fb8adae0f38e65ce2e65b284b25dc42d8d/scripts/game/world_effects_overlay.gd
