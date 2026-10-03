@@ -78,7 +78,7 @@ func _test_locale_detection() -> void:
 func _test_expression_catalog() -> void:
 	var ids := ExpressionCatalog.all_ids()
 	# Three new true animal-life moments join the existing eleven photographs.
-	_check(ids.size() == 14, "album must include fourteen photographable real events")
+	_check(ids.size() == 15, "album must include fifteen photographable real events")
 	var mainline := ExpressionCatalog.llama_mainline_ids()
 	_check(mainline.size() == 4, "llama mainline must have four expressions")
 	_check(str(ExpressionCatalog.find_rule("llama_overcast_goose_annoyed").get("expression", "")) == "annoyed", "overcast goose rule must annoy the llama")

@@ -61,6 +61,9 @@ var _posture_metadata: Dictionary = {}
 var _posture_id := "idle"
 var _idle_ground_anchor := Vector2(-1,-1)
 var _idle_art_bounds := Rect2()
+var _encounter_saved_base_scale := -1.0
+var _encounter_saved_position := Vector2.ZERO
+var _encounter_saved_facing := 1.0
 ## 生态闲置扫视：当动物静止且玩家在近旁时，偶尔短暂转向玩家
 ## _glance_timer > 0 时处于扫视状态；=0 时处于冷却等待
 var _glance_timer := 0.0        # 正数=正在扫视中（秒），负数=冷却中
@@ -221,6 +224,51 @@ func set_pose(point: Vector2, next_scale: float, face: float) -> void:
 	position = point
 	if _rig != null:
 		_rig.reset_contacts()
+
+
+func set_encounter_pose(point: Vector2, next_scale: float, face: float) -> void:
+	if _encounter_saved_base_scale < 0.0:
+		_encounter_saved_base_scale = _base_scale
+		_encounter_saved_position = position
+		_encounter_saved_facing = facing
+	set_pose(point, next_scale, face)
+
+
+func show_goose_encounter_cel(cel: String) -> void:
+	if species != "goose" or not _textures.has(cel) or _sprite == null:
+		return
+	_posture_id = cel
+	_sprite.texture = load(str(_textures[cel])) as Texture2D
+	var posture: Dictionary = _posture_metadata.get(cel, {})
+	if posture.is_empty():
+		_ground_anchor = _idle_ground_anchor
+		_art_bounds = _idle_art_bounds
+	else:
+		var anchor: Array = posture.ground_anchor
+		var bounds: Array = posture.alpha_bbox
+		_ground_anchor = Vector2(float(anchor[0]), float(anchor[1]))
+		_art_bounds = Rect2(float(bounds[0]), float(bounds[1]), float(bounds[2]), float(bounds[3]))
+	_anchor_feet()
+
+
+func release_encounter_pose() -> void:
+	if _encounter_saved_base_scale >= 0.0:
+		_base_scale = _encounter_saved_base_scale
+		position = _encounter_saved_position
+		pose_point = position
+		facing = _encounter_saved_facing
+		z_index = roundi(position.y)
+		_encounter_saved_base_scale = -1.0
+	posed = false
+	_following = false
+	_lead_target = null
+	_lead_path.clear()
+	state = "graze"
+	grazing = false
+	_idle_time = randf_range(2.0, 5.0)
+	_target = _random_point()
+	_velocity = Vector2.ZERO
+	_refresh_goose_posture()
 
 
 func begin_lead(target: Node2D) -> void:
