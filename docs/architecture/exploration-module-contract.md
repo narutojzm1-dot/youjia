@@ -1,7 +1,7 @@
 # 外出探索模块契约（EXP-CONTRACT 设计稿）
 
 - 编号：EXP-CONTRACT · [issue #151](https://github.com/narutojzm1-dot/youjia/issues/151) · Owner `CURSOR-CLOUD`
-- 状态：**设计稿已合入（PR #160），未冻结**。本轮按 ENGINEERING-SUPERVISOR 在 [#150 的评阅](https://github.com/narutojzm1-dot/youjia/issues/150) 修订 §7、§8、§10、§11、§12，待 CODEX-LEAD 与 ENGINEERING-SUPERVISOR 共同冻结。不是已实现接口；本契约保持形态无关，不选定探索形式、地点、带回物或布置方式。
+- 状态：**设计稿已合入（PR #160），未冻结**。本轮按 ENGINEERING-SUPERVISOR 在 [#150 的评阅](https://github.com/narutojzm1-dot/youjia/issues/150) 修订 §7、§8、§10、§11、§12，待 CODEX-LEAD 与 ENGINEERING-SUPERVISOR 共同冻结。不是已实现接口。首片形式已由用户选定为画卷漫步（见[探索形式](exploration-form-options.md)），但本契约保持形态无关，不选定地点、带回物或布置方式。
 - 上位文档：[边界草案](exploration-boundary-contract.md)、[系列计划](yard-growth-delivery-plan.md)。共享持久化与物品身份以 CODEX-LEAD 的 [#150](https://github.com/narutojzm1-dot/youjia/issues/150) 为准；本文第 10 节列出需要双方一起冻结的点。
 - 后续：冻结后 [#152](https://github.com/narutojzm1-dot/youjia/issues/152) 按本文实现纯核心与隔离测试；[#153](https://github.com/narutojzm1-dot/youjia/issues/153) 等产品选定形式与资源后接入首片。
 
@@ -234,6 +234,8 @@ close() ──► idle（宿主保存 to_record()，可与下次任意保存合�
 ## 8. 恢复与降级
 
 **前提：同代恢复**（宿主侧，#149/#150 负责）。授予状态、`last_committed_trip_serial` 和探索记录必须取自**同一份完整、校验通过的提交**；不能拼接“新库存 + 旧序号”，也不能把损坏的序号单独默认成 0。完整性校验只能发现损坏，不能证明玩家没有回滚文件。主档不可信而有可靠的上一代时，按 #149 的整份恢复策略回到上一代，并如实说明回退边界（之后未落盘或已损坏的进展不能声称已恢复）。宿主仍无法得到可信序号时，传入 `last_committed_trip_serial = -1`（`WATERMARK_UNTRUSTED`）。
+
+现状（2026-10-03）：#149 的第一个切片 [PR #175](https://github.com/narutojzm1-dot/youjia/pull/175) 已合入，提供“启动时取有效主档，否则取备份；未提交的临时文件不提升”的整份文件恢复。它还没有代次或完整性标记，#150 的内存事务和 Web 端持久化确认也未完成。所以上面的同代前提目前只在文件层成立，`-1` 的判定条件仍待 #150 定义，不能把“文件可重读”当作序号可信的证明。
 
 宿主加载存档后调用 `ExplorationSession.restore(record, catalog, last_committed_trip_serial)`，核心返回“恢复后状态 + 建议宿主动作 + `can_begin`”。表格**自上而下匹配，命中第一行即停**（唯一例外是“停留点已被移除”这一行：它只做清理，清理后继续匹配紧接着的 `active` 行）。序号可信时，所有 `idle` 结果的下一个序号都按 §6 规则取 `max(next_trip_serial, last_committed_trip_serial + 1)`，绝不回退；序号为 `-1` 时不分配序号。
 
