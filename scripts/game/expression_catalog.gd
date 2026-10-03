@@ -4,6 +4,7 @@ extends RefCounted
 const RULES := [
 	{
 		"id": "goose_horse_mount",
+		"manual_only": true,
 		"owner": "goose",
 		"priority": 96,
 		"expression": "idle",

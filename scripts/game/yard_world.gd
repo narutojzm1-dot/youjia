@@ -439,7 +439,8 @@ func _tick_goose_mount_encounter(delta: float, move: Vector2) -> void:
 	if goose == null or horse == null:
 		return
 	if _goose_mount_phase < 0:
-		if EVENT_ID in collected or _day_elapsed < 45.0 or not move.is_zero_approx() or _leading or _has_walk_goal:
+		if EVENT_ID in collected or _day_elapsed < 45.0 or not move.is_zero_approx() or _leading or _has_walk_goal \
+				or not input_enabled or _player.carrying_grass or not _fish_carry_type.is_empty() or _fish_state != FISH_IDLE:
 			_goose_mount_wait = 0.0
 			return
 		var scene_center := (goose.position + horse.position) * 0.5
@@ -454,12 +455,14 @@ func _tick_goose_mount_encounter(delta: float, move: Vector2) -> void:
 			return
 		_goose_mount_phase = 0
 		_goose_mount_seconds = 0.0
+		_goose_mount_flap_clock = 0.0
+		_goose_mount_flap_open = false
 		_focus_seconds = 0.0
 		_goose_mount_origin = scene_center
 		cinematic_view_changed.emit("wide")
 		camera_focus_requested.emit(scene_center, 1.08)
 		return
-	if not move.is_zero_approx() or _has_walk_goal:
+	if not move.is_zero_approx() or _has_walk_goal or _leading or not input_enabled:
 		_cancel_goose_mount_encounter()
 		return
 	_goose_mount_seconds += delta
@@ -477,13 +480,19 @@ func _tick_goose_mount_encounter(delta: float, move: Vector2) -> void:
 				_goose_mount_phase = 2
 				_goose_mount_seconds = 0.0
 				var back_point := horse.position + Vector2(10, -52)
-				goose.set_encounter_pose(back_point, 0.30, -1.0)
-				horse.set_encounter_pose(horse.position, 0.36, horse.facing)
+				# CastArt already measured each painting's visible height. The
+				# camera provides the close-up; do not inflate the full PNG canvas.
+				goose.set_encounter_pose(back_point, goose._base_scale, -1.0)
+				horse.set_encounter_pose(horse.position, horse._base_scale, horse.facing)
+				goose.z_index = horse.z_index + 1
 				goose.show_goose_encounter_cel("idle")
 				var close_focus := (goose.position + horse.position) * 0.5 + Vector2(0, -24)
 				cinematic_view_changed.emit("close")
 				camera_focus_requested.emit(close_focus, 1.82)
 		2:
+			# Its foot anchor is elevated onto the back, so normal ground-depth
+			# sorting would hide the goose behind the horse's body.
+			goose.z_index = horse.z_index + 1
 			var reduced_motion := bool(TuningStore.get_value("ui.reduced_motion", false))
 			if not reduced_motion:
 				_goose_mount_flap_clock -= delta
@@ -656,6 +665,8 @@ func action_target_key(action: Dictionary) -> String:
 
 
 func cancel_scene_feedback() -> void:
+	_cancel_goose_mount_encounter()
+	_goose_mount_wait = 0.0
 	if _scene_feedback != null:
 		_scene_feedback.cancel()
 
@@ -663,6 +674,8 @@ func cancel_scene_feedback() -> void:
 func request_primary_action() -> void:
 	if not input_enabled or _player == null:
 		return
+	_cancel_goose_mount_encounter()
+	_goose_mount_wait = 0.0
 	var action := YardInteraction.primary(self)
 	if action.is_empty():
 		return
@@ -679,6 +692,8 @@ func request_primary_action() -> void:
 func request_pointer_action(point: Vector2) -> void:
 	if not input_enabled or _player == null:
 		return
+	_cancel_goose_mount_encounter()
+	_goose_mount_wait = 0.0
 	var action := YardInteraction.pointer(self, point)
 	_selected_target = str(action.target)
 	_request_action(action.target, action.point)
