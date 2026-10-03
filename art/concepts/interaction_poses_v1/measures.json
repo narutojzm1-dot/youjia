@@ -1,0 +1,111 @@
+{
+  "duck_preen": {
+    "width": 1254,
+    "height": 1254,
+    "alpha_bbox": [
+      232,
+      152,
+      790,
+      1051
+    ],
+    "ground_anchor": [
+      552.3,
+      1202
+    ],
+    "native_facing": 1,
+    "border_pixels_alpha_gt16": 0,
+    "bytes": 940793,
+    "sha256": "1ef2098cbb594622d8d4f15832e03a5c3430f18b260319fd67d64591f267e724"
+  },
+  "horse_tail": {
+    "width": 1254,
+    "height": 1254,
+    "alpha_bbox": [
+      76,
+      339,
+      1097,
+      865
+    ],
+    "ground_anchor": [
+      514.9,
+      1203
+    ],
+    "native_facing": -1,
+    "border_pixels_alpha_gt16": 0,
+    "bytes": 932078,
+    "sha256": "035a63907fd172f5692a3a7993e8a924acaa7e45570f54be79c02cc9437a0c25"
+  },
+  "cow_chew": {
+    "width": 1254,
+    "height": 1254,
+    "alpha_bbox": [
+      75,
+      196,
+      1103,
+      1007
+    ],
+    "ground_anchor": [
+      545.4,
+      1202
+    ],
+    "native_facing": -1,
+    "border_pixels_alpha_gt16": 0,
+    "bytes": 1181117,
+    "sha256": "cdfdd69d76ecb03a180147d832774072bb9132490cf2bbcc757d3fb1efcb735b"
+  },
+  "sheep_shake": {
+    "width": 1254,
+    "height": 1254,
+    "alpha_bbox": [
+      120,
+      151,
+      1013,
+      1053
+    ],
+    "ground_anchor": [
+      765.3,
+      1203
+    ],
+    "native_facing": 1,
+    "border_pixels_alpha_gt16": 0,
+    "bytes": 1189894,
+    "sha256": "2d80e16128be0ff7cce54be101c38a5fa66942aba1643f665e9c5ac83ef769eb"
+  },
+  "path_snail": {
+    "width": 320,
+    "height": 320,
+    "alpha_bbox": [
+      130,
+      154,
+      64,
+      41
+    ],
+    "ground_anchor": [
+      154.3,
+      194
+    ],
+    "native_facing": 1,
+    "border_pixels_alpha_gt16": 0,
+    "bytes": 6557,
+    "sha256": "ae3129001f25434bb3eb4f31038400bb33bac59c474d96faefb42cf14234b332"
+  },
+  "path_clover": {
+    "width": 320,
+    "height": 320,
+    "alpha_bbox": [
+      58,
+      66,
+      204,
+      188
+    ],
+    "ground_anchor": [
+      107.0,
+      253
+    ],
+    "native_facing": 1,
+    "border_pixels_alpha_gt16": 0,
+    "bytes": 64962,
+    "sha256": "7c76877fd032096e89dc32795e83f92d34c59013d279b8890e7fd51767a5345c",
+    "note": "three leaves"
+  }
+}

@@ -469,6 +469,7 @@ func tick(delta: float, move: Vector2) -> void:
 	_update_effects_overlay(delta)
 	_scene_feedback.consider_shore(self)
 	_scene_feedback.consider_fence(self)
+	_scene_feedback.consider_path(self)
 	_scene_feedback.advance(delta)
 	_refresh_prop_visuals()
 	# 靠近草堆时略亮，方便认出可以拿。低动效停在固定亮度，不再一明一暗。
