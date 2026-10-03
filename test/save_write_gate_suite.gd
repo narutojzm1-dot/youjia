@@ -1,0 +1,52 @@
+extends SceneTree
+const Gate = preload("res://scripts/persistence/save_write_gate.gd")
+var failures: Array[String] = []
+var checks := 0
+func check(value: bool, label: String) -> void:
+	checks += 1
+	if not value: failures.append(label)
+func _initialize() -> void:
+	var initial := {"photos": ["old"], "relation": 1}
+	var gate = Gate.new(initial)
+	initial.photos.append("external")
+	check(gate.working().photos == ["old"], "initial copy")
+	check(gate.begin_write().is_empty(), "clean skips write")
+	gate.replace_working({"photos": ["old", "first"], "relation": 2})
+	var a: Dictionary = gate.begin_write()
+	check(not a.is_empty(), "begin candidate")
+	a.payload.photos.append("mutated return")
+	check(gate.begin_write().is_empty(), "one in flight")
+	gate.replace_working({"photos": ["old", "first", "new"], "relation": 3})
+	check(not gate.finish(999, true), "stale callback ignored")
+	check(gate.mark_unknown(a.write_id), "unknown accepted")
+	check(gate.uncertain() and gate.blocked(), "unknown holds ownership")
+	check(gate.begin_write().is_empty(), "unknown blocks next write")
+	check(not gate.finish(a.write_id, false), "timeout cannot reject unknown")
+	check(not gate.finish(a.write_id, true), "late callback requires verification")
+	check(gate.confirmed().photos == ["old"], "unknown does not publish")
+	check(gate.resolve_verified(a.write_id, true), "verified candidate accepted")
+	check(gate.confirmed().photos == ["old", "first"], "candidate is immutable")
+	check(gate.working().relation == 3 and gate.working().photos.size() == 3, "new changes retained")
+	check(gate.dirty(), "new revision remains dirty")
+	check(not gate.resolve_verified(a.write_id, true), "duplicate verification ignored")
+	var b: Dictionary = gate.begin_write()
+	check(b.write_id != a.write_id and b.payload.relation == 3, "next write is current snapshot")
+	check(not gate.finish(a.write_id, true), "old callback cannot complete new flight")
+	check(gate.finish(b.write_id, false) and gate.dirty(), "rejection retains dirty")
+	check(gate.confirmed().relation == 2, "rejection leaves confirmed")
+	var c: Dictionary = gate.begin_write()
+	gate.mark_unknown(c.write_id)
+	check(gate.resolve_verified(c.write_id, false), "verified terminated parent permits retry")
+	check(gate.dirty() and not gate.blocked(), "failed verification outcome retains working")
+	var d: Dictionary = gate.begin_write()
+	check(gate.finish(d.write_id, true), "retry succeeds")
+	check(not gate.dirty() and gate.confirmed().relation == 3, "current revision confirmed")
+	var copy: Dictionary = gate.confirmed()
+	copy.photos.clear()
+	check(gate.confirmed().photos.size() == 3, "confirmed getter defensive copy")
+	if not failures.is_empty():
+		push_error(str(failures))
+		quit(1)
+		return
+	print("SAVE WRITE GATE PASS ", checks)
+	quit(0)
