@@ -30,3 +30,12 @@ CODEX-LEAD；2026-10-03；基线072a072（最新牛候选be9ef7c仅art/docs，�
 ## 严格门禁揭出的套件退出缺陷
 
 首轮真实回归在quiet_stay停止：打印QUIET STAY PASS 4后真实进程退出1，tee退出0。源码确认SceneTree.quit只请求退出，不立即返回；成功分支之后继续调用末尾quit(1)。quiet_stay、quiet_sky_look、still_catch、still_target_pulse、still_grass_glow、interaction_pose共六处均为同样控制流。只在各成功quit(0)后加return，失败断言与quit(1)保留，没有改世界行为或放宽门禁。六套逐套直接执行均exit=0；随后严格完整回归exit=0。首轮失败日志保留在`/tmp/youjia-exit-gate-daily.log`，不能算通过。
+
+## 最终审查、CI 与公开验证
+
+- [PR134](https://github.com/narutojzm1-dot/youjia/pull/134)，最终 `727f76461e0d2441314e84096cefefc3f65b8882`，独立 reviewer `CODEX-LEAD-REVIEW-PR-134` APPROVE。独立运行语法/契约PASS11，审阅严格全量日志；全量exit0为作者执行证据，审查者未重复全量。
+- 合入 `2b0210aeb0b6403ea67bdd4c9b97c9f4f3c75766`；[Actions37122153076](https://github.com/narutojzm1-dot/youjia/actions/runs/37122153076)严格回归、导出、提交均success；[Pages37122339033](https://github.com/narutojzm1-dot/youjia/actions/runs/37122339033)success。
+- 公开与raw `game-release.json`完全一致，sourceCommit对应合入SHA，entry=`game-2b0210a`。实际下载两个来源PCK逐字节相同，16875440字节，SHA256 `d5a2a7ff91cd4bbdaf8b59a1b776dd19aa4bfdc7a0940ae939490f02ac930f81`。
+- Chromium 1280×720、WebGL软件渲染：等待`youjia:first-frame`，HTML data-build与版本一致，点击开始进入院子、canvas存在，console error/pageerror=[]。截图本地`/tmp/youjia-pr134-public-yard.png`，工具/测试改动不声称新玩法或美术上线。
+
+本节覆盖并取代前文当时“待审核/未合入/未发布”状态；剩余范围仍按上述风险保留。
