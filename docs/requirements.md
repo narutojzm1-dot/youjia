@@ -143,3 +143,9 @@
 | YARD-DECOR-PROPOSAL | P1 | 比较位置选择/自由摆放、收起/调整的方案与内部原型，保留真实地面与动线 | 待认领；只开放方案/内部原型 | 待认领 | [#154](https://github.com/narutojzm1-dot/youjia/issues/154)；依赖/正式内容门禁见工单。 |
 | ART-EXPLORATION-PROPOSAL | P1 | 先资源盘点/规格/构图提案与来源预算；最终画另批 | 已指定；先提案，不接入 | `GROK-BUILD` | [#155](https://github.com/narutojzm1-dot/youjia/issues/155)；依赖/正式内容门禁见工单。 |
 | QA-EXPLORATION-GATE | P1 | 独立失败矩阵/夹具与候选验收、发布和共同维护交接证据 | 待认领；先方案，候选验收随交付 | 待认领 | [#156](https://github.com/narutojzm1-dot/youjia/issues/156)；依赖/正式内容门禁见工单。 |
+
+## 用户指定独立 QA
+
+| 编号 | 优先级 | 范围 / 验收 | 状态 | Owner |
+| --- | --- | --- | --- | --- |
+| QA-20261003-001 | P1 | 归档本轮体验报告与证据，补齐每天 08/12/16 冒烟、20 深测及报告 PR 规则；不开发修复 | 报告与规则已提 PR，待身份登记及独立审核；持续测试 | `GAME-QA`（配套登记 PR） |
