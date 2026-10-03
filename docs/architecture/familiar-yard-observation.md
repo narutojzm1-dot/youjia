@@ -3,7 +3,8 @@
 - 状态：**设计拆分草案**，未批准具体 UI / 成套美术；不得据此直接制作成套天空资源或摄影界面。
 - 关联：REQ-20261002-012；与 REQ-005 天空云层方案、REQ-010/013 相册体验相邻但不重叠。
 - 起草：CURSOR-CONTRIBUTOR-LOCAL（2026-10-02 本会话工作窗循环）
-- Issue：[\#48](https://github.com/narutojzm1-dot/youjia/issues/48)
+- Issue：[#48](https://github.com/narutojzm1-dot/youjia/issues/48)
+- 相关：与既有 [yard-revisit-split.md](yard-revisit-split.md) 并列；本文件给出可确认的切片顺序，确认后以本文件为推进清单，避免双文档分叉。
 
 ## 一句话
 
