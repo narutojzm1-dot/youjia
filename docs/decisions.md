@@ -595,3 +595,12 @@ PR184通过独立最终SHA审核并合入，正式源码9af244cc327144fb916c108f
 ## 2026-10-04 · STATE-YARD-GROWTH 宿主事务方案
 
 CODEX-LEAD核对main41ebba7、现有SaveStore v5同步setter及PR174已合入契约，提交[宿主事务方案](architecture/save-host-transaction-plan.md)：区分working/confirmed/in_flight，统一串行提交，保留写入期间院内新进展；平台确认未知不能当失败重试，必须先证明旧写入不会迟到并从可信持久化存储核验。分H1协调器模型、H2平台确认、H3同代封套/迁移隔离、H4真实Host集成，每片验收独立。工程督导与CURSOR-CLOUD联合评阅前不宣布冻结，不合入探索草案，不更改游戏、资源或存档。本轮没有运行时测试/发布，不重复上一日邮件。
+
+
+### 2026-10-04 · REQ-015-WIRE-GATE 最终SHA后置复审已补齐（CODEX-LEAD-ASSISTANT）
+
+按[#180拆分登记](https://github.com/narutojzm1-dot/youjia/issues/180#issuecomment-5971338828)，独立子代理 `CODEX-LEAD-ASSISTANT-REVIEW-PR-173-FINAL` 审阅PR173最终完整SHA `0066cef9da621530d05d5ad8051be684512ce88c` 的完整三文件diff及关联接线，结论 **APPROVE（后置接线审查）**；[完整审查记录](https://github.com/narutojzm1-dot/youjia/pull/173#issuecomment-5971467561)。初轮head `4b550e8e50a628d70afd513fa0672343d6d1d8be` 与final是同父的兄弟提交，末次两树仅decisions一行不同；本轮不将旧head批准当作final批准，也不追认原始合入门禁。历史“完成/无foot抖动”声称缺乏组合画面证据，当前状态已由PR181纠正，本条不恢复这些声称。
+
+在明确构建 `f6a8b9a56ab17fb18f5d4432bc2cc269e3b82a81` 上，Godot4.7.2严格wrapper运行鹅马suite通过74项；额外只读探针通过5项，确认实际上下帧路径、最终照片up帧与磁盘重载。均为隔离存档的原生headless受控测试，不是原生GUI、Web实玩或自然触发验收。公网清单及PCK重新下载确认 `game-9af244c` / source `9af244cc327144fb916c108f2b7527c9af0fe866`，PCK19,183,584bytes，SHA256 `ebca0b3671b5ad4e57b48ec1963312932dabcca7f68b53ae7160cb3f013297da`；仅证明部署版本与包，未宣称组合验收。详细操作、测试探针纠正记录、发布Actions与证据边界见[#180记录](https://github.com/narutojzm1-dot/youjia/issues/180#issuecomment-5971468272)。这些是上一轮实测记录，本次文档同步未重跑或冒称测试了后续main。
+
+#180只勾选最终完整SHA后置复审项并保持开放；WORKBUDDY-CONTRIBUTOR仍负责远近位置、马双朝向、鹅上下帧、低动效、打断/退出与照片保存→重启相册的同构建Web证据，受控/自然触发分列；ART-DIRECTOR组合审画，GAME-QA独立复测，CODEX-LEAD最终保底。不因未复现穿模猜改挂点/景深，不接管实现Owner。本次仅同步需求状态与台账，无运行时、资源、存档或发布配置改动，不新增发布或重复日版本邮件。
