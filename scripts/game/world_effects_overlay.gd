@@ -109,7 +109,9 @@ func bird_feedback_snapshot() -> Dictionary:
 static func celebration_pose(kind: String, t: float, reduced_motion: bool) -> Dictionary:
 	if kind == "target":
 		var radius := 18.0 if reduced_motion else 18.0 + 2.5 * absf(sin(t * 2.4))
-		return {"glow_radius": radius}
+		# REQ-019: brightness/alpha pulse was left out of REQ-018; freeze it under low motion.
+		var alpha_pulse := 1.0 if reduced_motion else 0.75 + 0.25 * absf(sin(t * 2.4))
+		return {"glow_radius": radius, "alpha_pulse": alpha_pulse}
 	var progress := clampf(t, 0.0, 1.0)
 	if reduced_motion:
 		return {
@@ -179,22 +181,30 @@ func _draw_pet_arc() -> void:
 	var lift := maxf(48.0, pet_lift)
 	# 冠顶中心：脚底向上 lift，再上移一点让弧离开耳朵
 	var crown := feet + Vector2(0.0, -(lift + 18.0))
+	var reduced := bool(TuningStore.get_value("ui.reduced_motion", false))
+	var pose := celebration_pose("target", pet_day_t, reduced)
+	# YardWorld still multiplies proximity by a live pulse; under low motion undo that pulse and use the fixed alpha_pulse.
+	var alpha := pet_alpha
+	if reduced:
+		var live_pulse := 0.75 + 0.25 * absf(sin(pet_day_t * 2.4))
+		if live_pulse > 0.01:
+			alpha = pet_alpha / live_pulse * float(pose.alpha_pulse)
 	# ── 脚底柔光（次要线索，不抢头顶主信号）
-	var gr := float(celebration_pose("target", pet_day_t, bool(TuningStore.get_value("ui.reduced_motion", false))).glow_radius)
-	draw_circle(feet, gr, Color(0.95, 0.68, 0.32, pet_alpha * 0.22))
-	draw_arc(feet, 16.0, 0.0, TAU, 24, Color(1.0, 0.55, 0.08, pet_alpha * 0.55), 2.2, true)
+	var gr := float(pose.glow_radius)
+	draw_circle(feet, gr, Color(0.95, 0.68, 0.32, alpha * 0.22))
+	draw_arc(feet, 16.0, 0.0, TAU, 24, Color(1.0, 0.55, 0.08, alpha * 0.55), 2.2, true)
 	# ── 头顶主弧（半径更大，明确“在动物上方”）
-	draw_arc(crown, 28.0, -PI * 0.95, -PI * 0.05, 36, Color(0.45, 0.20, 0.0, pet_alpha * 0.40), 10.0, true)
-	draw_arc(crown, 28.0, -PI * 0.95, -PI * 0.05, 36, Color(1.0, 0.52, 0.06, pet_alpha), 6.0, true)
-	draw_arc(crown, 18.0, -PI * 0.88, -PI * 0.12, 28, Color(1.0, 0.82, 0.45, pet_alpha * 0.70), 2.6, true)
+	draw_arc(crown, 28.0, -PI * 0.95, -PI * 0.05, 36, Color(0.45, 0.20, 0.0, alpha * 0.40), 10.0, true)
+	draw_arc(crown, 28.0, -PI * 0.95, -PI * 0.05, 36, Color(1.0, 0.52, 0.06, alpha), 6.0, true)
+	draw_arc(crown, 18.0, -PI * 0.88, -PI * 0.12, 28, Color(1.0, 0.82, 0.45, alpha * 0.70), 2.6, true)
 	# ── 向下箭头：尖端指向冠顶，整体完全在精灵轮廓之上
 	var tip := crown + Vector2(0.0, -10.0)
 	var wl := tip + Vector2(-16.0, -16.0)
 	var wr := tip + Vector2(16.0, -16.0)
-	draw_line(wl, tip, Color(1.0, 0.52, 0.06, minf(1.0, pet_alpha * 1.20)), 6.0, true)
-	draw_line(wr, tip, Color(1.0, 0.52, 0.06, minf(1.0, pet_alpha * 1.20)), 6.0, true)
-	draw_line(wl, wr, Color(1.0, 0.52, 0.06, pet_alpha * 0.60), 2.6, true)
-	draw_circle(tip, 4.5, Color(1.0, 0.88, 0.50, pet_alpha * 0.95))
+	draw_line(wl, tip, Color(1.0, 0.52, 0.06, minf(1.0, alpha * 1.20)), 6.0, true)
+	draw_line(wr, tip, Color(1.0, 0.52, 0.06, minf(1.0, alpha * 1.20)), 6.0, true)
+	draw_line(wl, wr, Color(1.0, 0.52, 0.06, alpha * 0.60), 2.6, true)
+	draw_circle(tip, 4.5, Color(1.0, 0.88, 0.50, alpha * 0.95))
 
 
 ## 钓鱼庆祝扩散环：更大、更久、更亮，保证桌面 Web 一眼可见
