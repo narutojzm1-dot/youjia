@@ -160,3 +160,10 @@
 | AUDIO-HOST-CONTRACT | P1 | 小院事件/混音/设置/Web生命周期与验收方案，复用现有音频设施 | 已指定；待设计，不阻塞#149/#150 | `CODEX-LEAD` | [#171](https://github.com/narutojzm1-dot/youjia/issues/171) |
 
 来源#162；[分期计划](architecture/audio-delivery-plan.md)。不默认分配现有美术Owner；无正式素材/声音切片完成声明。
+
+
+## Web 加载画面修复
+
+| 编号 | 优先级 | 范围与验收 | 状态 | Owner | 记录 |
+| --- | --- | --- | --- | --- | --- |
+| QA-EXP-20261003-003 | P2 | 复用已有晴天小院资源恢复加载页风格；桌面/横屏/竖屏文字可读，进度/失败/重试/首帧与版本语义保持，正式发布后冷加载复核 | 已认领；待实现 | `CODEX-LEAD-ASSISTANT` | [#167](https://github.com/narutojzm1-dot/youjia/issues/167)；GAME-QA复测，不改游戏或新资源方向。 |
