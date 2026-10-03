@@ -475,3 +475,11 @@ REQ022只让既有抚摸/浇水/投鱼反馈在低动效窗口内静止可读，
 PR144独立CODEX-LEAD-REVIEW-PR-144批准完整74b0fb98418c8c3627313d8b776b750b25cb4508，合入2cd15c20df7386780a7e7a15912145f4b5f0ed73；原PR136因保留父提交自动合入。Actions37125716673严格回归/导出/发布与Pages37125937069均success。公开/raw清单同源，PCK19182036字节，SHA256 9c61bafd6d6a6d3f700b5b7f490743c25b07e096fcd491042ab15693b06c6471，实际逐字节一致；相对已下载game-4bb12b2仅增640字节。Chromium公开首帧、开始进入院子及版本检查通过，errors=[]。本片只完成REQ022低动效反馈，不解决全部爱心/动物表情/天气同构图或新增关系行为。
 
 用户进一步要求所有贡献者把真正需要用户决策、或给用户看的内容先提交仓库，最后由CODEX-LEAD、相关督导或最新引进的GAME-PRODUCER汇总说明，用户无需逐个阅读各方验收。建立通知[#146](https://github.com/narutojzm1-dot/youjia/issues/146)与[规范](collaboration/producer-decision-handoff.md)，通过每位代理开工必读的身份文档建立入口。材料明确“需决策/供查看”、精确候选/发布状态、证据、推荐及依赖；汇总去重、决定回写。普通审核和已授权工作继续，用户的重要产品决策权与原Owner不改变。发布仓库通知不代表所有人已经阅读或候选已获批准。
+
+### 2026-10-03 · REQ-015 成品画切片已合入 main（`WORKBUDDY-CONTRIBUTOR`）
+
+PR #99 合并完成：merge commit `5b69504336b5e8c9d1977b26e33055739fe2e0fa`，被审 head `f2d2fc217325ebf88f85712b2107aadda22c7234`，相对 main 净 diff 恰 11 个文件。独立评审（身份 `WORKBUDDY-CONTRIBUTOR-REVIEW-PR-99`）共三轮：首轮 REQUEST CHANGES（`cast_art.gd` 缩进跳出 goose 分支、`alpha_zero_fraction` 口径错、去底后轮廓残留棋盘白块），修复后二轮 APPROVE（仅一条文档对照值不可复现的 follow-up，已修正），三轮复核 APPROVE 无阻塞。
+
+已进 main 的产物：`goose_riding_up.png` / `goose_riding_down.png`（1254×1254 RGBA）与各自 `.import`、`art/` 下的两个 1024×1024 master、`manifest.json` 两帧审计条目、`cast_art.gd` 的 `riding_up`/`riding_down` 纹理与 `posture_metadata` 注册。两帧脚底锚点对齐后残余 0.48px（亚像素，换帧不可见），`native_facing=1`，体积均低于 `goose.png` 的 1,212,584 字节上限。
+
+遗留（非阻塞，未在本切片内处理）：1024→1254 为上采样 ×1.22，引擎内边缘柔和度待实测；Web PCK 净增量待正式发布管线实测；down 帧 `ground_anchor.x` 沿用 up 帧的约定建议同步进规格页；需求表 `REQ-20261002-015-GATE` 行仍记着「资源 PR 阻塞、未合入」，该行由 `CODEX-LEAD` 维护，本切片不代改，已在 PR 中提醒更新。导演接线仍属 REQ-014。
