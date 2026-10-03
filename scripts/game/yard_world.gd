@@ -13,6 +13,9 @@ signal fish_caught(carry_type: String)
 
 const SUNNY := preload("res://assets/holiday/environment/yard_sunny.png")
 const OVERCAST := preload("res://assets/holiday/environment/yard_overcast.png")
+## 叠加云带：晴/阴各一帧半透明水彩带，不替换整张院子底图。
+const CLOUD_SUNNY := preload("res://assets/holiday/environment/cloud_band_sunny.png")
+const CLOUD_OVERCAST := preload("res://assets/holiday/environment/cloud_band_overcast.png")
 const GrassPatchType := preload("res://scripts/entities/grass_patch.gd")
 const FeltActorType := preload("res://scripts/entities/felt_actor.gd")
 const VacationerType := preload("res://scripts/entities/vacationer.gd")
@@ -22,6 +25,10 @@ const YardSceneFeedbackType := preload("res://scripts/game/yard_scene_feedback.g
 const AnimalRelationshipsType := preload("res://scripts/game/animal_relationships.gd")
 const AnimalRelationshipEncounterType := preload("res://scripts/game/animal_relationship_encounter.gd")
 const WORLD_SIZE := Vector2(1280, 720)
+## 云带世界坐标 Y：压在天空带内，不盖住前景动物。
+const CLOUD_BAND_Y := 18.0
+## 云带缓慢平移速度（世界像素/秒）；低动效时为 0。
+const CLOUD_DRIFT_SPEED := 6.5
 # 人只站在画里已经对上地面的几个位置。圆点是可以走过去的下一处。
 const PICTURE_SPOTS := {
 	"door": {"position": Vector2(250, 508), "depth": 1.0, "facing": 1.0, "neighbors": ["grass"]},
@@ -87,6 +94,11 @@ var _just_petted_species: String = ""
 var _plant_visual: YardPropVisual
 var _fishing_visual: YardPropVisual
 var _backdrop: Sprite2D
+## 两片首尾相接的云带 Sprite，用于无缝缓移。
+var _cloud_band_a: Sprite2D
+var _cloud_band_b: Sprite2D
+## 云带水平滚动偏移（世界像素，对带宽取模）。
+var _cloud_scroll := 0.0
 var _player: Vacationer
 var _actors: Dictionary = {}
 var _zones: Dictionary = {}
@@ -151,6 +163,11 @@ func setup(
 	_backdrop.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
 	_backdrop.z_index = -1
 	add_child(_backdrop)
+	# 云带叠在底图之上、角色之下；z=-1 与底图同层，靠子节点顺序后绘。
+	_cloud_band_a = _make_cloud_sprite("CloudBandA")
+	_cloud_band_b = _make_cloud_sprite("CloudBandB")
+	add_child(_cloud_band_a)
+	add_child(_cloud_band_b)
 	_apply_weather_art()
 	_scene_feedback = YardSceneFeedbackType.new()
 	_scene_feedback.setup()
@@ -328,6 +345,8 @@ func tick(delta: float, move: Vector2) -> void:
 	if _weather_timer <= 0.0:
 		toggle_weather()
 		_weather_timer = randf_range(48.0, 90.0)
+	# 云带缓移：低动效只保留静止可读帧，不改存档字段。
+	_tick_cloud_drift(delta)
 	if _player == null:
 		return
 	_player.body_obstacles = physical_obstacles("player")
@@ -983,6 +1002,41 @@ func _spawn_grass() -> void:
 	_grass_patch.setup(_grass_point())
 
 
+func _make_cloud_sprite(node_name: String) -> Sprite2D:
+	var sprite := Sprite2D.new()
+	sprite.name = node_name
+	sprite.centered = false
+	sprite.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
+	sprite.z_index = -1
+	sprite.position = Vector2(0.0, CLOUD_BAND_Y)
+	return sprite
+
+
+## 云带缓移；reduced_motion 时保持当前静止帧可读。
+func _tick_cloud_drift(delta: float) -> void:
+	if _cloud_band_a == null or _cloud_band_b == null:
+		return
+	if not bool(TuningStore.get_value("ui.reduced_motion", false)):
+		_cloud_scroll = fposmod(_cloud_scroll + CLOUD_DRIFT_SPEED * delta, _cloud_band_width())
+	_layout_cloud_bands()
+
+
+func _cloud_band_width() -> float:
+	if _cloud_band_a == null or _cloud_band_a.texture == null:
+		return WORLD_SIZE.x
+	return _cloud_band_a.texture.get_size().x * _cloud_band_a.scale.x
+
+
+func _layout_cloud_bands() -> void:
+	if _cloud_band_a == null or _cloud_band_b == null:
+		return
+	var width := _cloud_band_width()
+	if width <= 0.001:
+		return
+	_cloud_band_a.position = Vector2(-_cloud_scroll, CLOUD_BAND_Y)
+	_cloud_band_b.position = Vector2(-_cloud_scroll + width, CLOUD_BAND_Y)
+
+
 func _apply_weather_art() -> void:
 	if _backdrop == null:
 		return
@@ -992,16 +1046,35 @@ func _apply_weather_art() -> void:
 	if _backdrop.texture != null:
 		var tex_size := _backdrop.texture.get_size()
 		_backdrop.scale = Vector2(WORLD_SIZE.x / tex_size.x, WORLD_SIZE.y / tex_size.y)
+	# 云带随天气换帧，并按底图同一水平缩放对齐天空带。
+	var cloud_tex: Texture2D = CLOUD_OVERCAST if weather == "overcast" else CLOUD_SUNNY
+	for band: Sprite2D in [_cloud_band_a, _cloud_band_b]:
+		if band == null:
+			continue
+		band.texture = cloud_tex
+		if cloud_tex != null:
+			var cloud_size := cloud_tex.get_size()
+			var sx := WORLD_SIZE.x / cloud_size.x
+			# 保持云带原始高宽比，仅按院子宽度缩放。
+			band.scale = Vector2(sx, sx)
+	_layout_cloud_bands()
 	var filter_on := bool(TuningStore.get_value("environment.filter.enabled", true))
 	var intensity := float(TuningStore.get_value("environment.filter.intensity", 0.12))
 	if not filter_on:
 		_backdrop.modulate = Color.WHITE
+		for band: Sprite2D in [_cloud_band_a, _cloud_band_b]:
+			if band != null:
+				band.modulate = Color.WHITE
 		if _scene_feedback != null: _scene_feedback.modulate = _backdrop.modulate
 		return
 	if weather == "overcast":
 		_backdrop.modulate = Color(0.92, 0.90, 0.96).lerp(Color.WHITE, 1.0 - intensity)
 	else:
 		_backdrop.modulate = Color(1.0, 0.97, 0.90).lerp(Color.WHITE, 1.0 - intensity)
+	# 云带跟随院子滤色，避免晴阴切换时出现硬贴矩形。
+	for band: Sprite2D in [_cloud_band_a, _cloud_band_b]:
+		if band != null:
+			band.modulate = _backdrop.modulate
 	if _scene_feedback != null: _scene_feedback.modulate = _backdrop.modulate
 
 
