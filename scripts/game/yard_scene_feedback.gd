@@ -45,6 +45,12 @@ var _feather_elapsed := 0.0
 var _feather_duration := 0.0
 var _feather_seen := false
 var _fence_was_near := false
+var _leaf_still := 0.0
+var _leaf_wait := 0.0
+var _leaf_wants := false
+var _leaf_anchor := Vector2.ZERO
+const LEAF_STILL_SECONDS := 2.5
+const LEAF_GAP_SECONDS := 12.0
 
 
 func setup() -> void:
@@ -136,10 +142,10 @@ func consider_fence(world: Node2D) -> void:
 	# walk near the gate; touching the painted gate is not a prerequisite.
 	var fence := YardSceneHotspots.get_hotspot(YardSceneHotspots.FENCE_GATE)
 	var near := false
+	var player = world.get_player()
 	if not fence.is_empty() and YardSceneHotspots.available(world) \
 		and world._pending_interaction in ["", YardSceneHotspots.FENCE_GATE] \
 		and world._selected_target in ["", YardSceneHotspots.FENCE_GATE]:
-		var player = world.get_player()
 		near = player != null and player.position.distance_to(fence.approach_points[0]) < 64.0
 	if near and not _fence_was_near and not _feather_seen and _feather_duration <= 0.0:
 		_feather_anchor = fence.ambient_anchor
@@ -148,6 +154,10 @@ func consider_fence(world: Node2D) -> void:
 		_sync_visible()
 		_update_fence_paint(bool(TuningStore.get_value("ui.reduced_motion", false)))
 	_fence_was_near = near
+	var moving := bool(player == null or world._has_walk_goal or player._velocity.length() > 8.0)
+	_leaf_wants = near and not moving and str(world._pending_interaction) != "fence_gate" and _fence_duration <= 0.0
+	if _leaf_wants:
+		_leaf_anchor = fence.visual_anchor
 
 
 func cancel() -> void:
@@ -162,6 +172,8 @@ func cancel() -> void:
 	_fence_elapsed = 0.0
 	_feather_duration = 0.0
 	_feather_elapsed = 0.0
+	_leaf_still = 0.0
+	_leaf_wants = false
 	_sync_visible()
 
 
@@ -267,6 +279,16 @@ func advance(delta: float) -> void:
 			_feather_duration = 0.0
 		else:
 			_update_fence_paint(bool(TuningStore.get_value("ui.reduced_motion", false)))
+	if _leaf_wait > 0.0:
+		_leaf_wait = maxf(0.0, _leaf_wait - delta)
+	if _leaf_wants and _fence_duration <= 0.0 and _leaf_wait <= 0.0:
+		_leaf_still += delta
+		if _leaf_still >= LEAF_STILL_SECONDS:
+			_leaf_still = 0.0
+			_leaf_wait = LEAF_GAP_SECONDS
+			play_fence_grass(_leaf_anchor)
+	else:
+		_leaf_still = 0.0
 	_sync_visible()
 
 
