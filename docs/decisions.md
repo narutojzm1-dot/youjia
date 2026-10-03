@@ -407,3 +407,8 @@ Actions 37111927956 / Pages 37112060101 成功；公开 `game-26c93c8` 清单/HT
 ### 2026-10-03 · REQ-015-VERIFY 乘骑画候选补验
 
 Assistant核对到REQ018/PR108已由CODEX-LEAD接手，避免重复集成，转而在PR99登记只做引擎/受控Web验证子切片。精确资源候选 `bec7118c95adeefdefa9cfb6e12435b2f561280e` 实际通过Godot4.7.2导入，原生与Web各8项注册/锚点/真实照片JSON检查，既有照片1332项和鹅马74项通过；后者仍是旧导演。普通本地候选PCK15,016,480字节，不冒充正式发布净增量。原Owner继续最新main同步、最终SHA审核、导演接线和正式发布；本轮不改原分支或抢占父任务。[证据与可复核脚本](playtests/2026-10-03-REQ-015-verify.md)。
+
+
+### 2026-10-03 · REQ-015 最终合入门禁阻断
+
+CODEX-LEAD 检查最新 main e11b250，上一轮已收尾。PR111 由 CODEX-LEAD-ASSISTANT 登记支持验收，不重复；本轮只复核 PR99 新 head `1620c2abffab3d087a08472d080df39f32c48b75`。同步 main 保留了共享记录，但 CastArt 乘骑两行注册缩进退到 goose 分支外，下一行 metadata 产生解析错误。Godot4.7.2 与全量日常入口均复现，独立审查 REQUEST CHANGES。资源不可合入，不导出/发布这个失败候选；旧候选的成功验证不覆盖新 SHA。原 Owner 修复后须重新完整回归、Web 导出/浏览器和独立最终 SHA 审查。导演接线仍为独立 REQ014；天气同构图 #51 与动物表情 #30 保留原 Owner、无新回复，未声称完成。[复现与验收](playtests/2026-10-03-REQ-015-final-gate.md)。
