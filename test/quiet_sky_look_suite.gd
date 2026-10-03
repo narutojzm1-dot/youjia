@@ -36,23 +36,18 @@ func _run() -> void:
 	for _i: int in 60:
 		world.tick(1.0 / 60.0, Vector2.ZERO)
 	_check(world._quiet_sky_active and focuses.size() == 1, "quiet stay lifts the camera toward the sky")
-	_check(focuses[0]["zoom"] == world.QUIET_SKY_ZOOM, "sky look uses the soft prototype zoom")
+	_check(is_equal_approx(float(focuses[0]["zoom"]), world.QUIET_SKY_ZOOM), "sky look uses the soft prototype zoom")
 	_check(focuses[0]["point"].y < world._player.position.y - 80.0, "sky focus sits above the traveler")
 	_check(world.collected == album, "sky look does not write the album")
 	# 走动立刻取消。
 	world.tick(0.05, Vector2(1, 0))
 	_check(not world._quiet_sky_active and releases >= 1, "walking cancels the sky look immediately")
-	# 鹅马预热中不得因抬头逻辑误发 release。
+	# 鹅马接管：直接验证 yield 不清 release（动物远离时 wait 会被鹅马逻辑清零，不能靠 wait 测）。
 	releases = 0
-	focuses.clear()
-	world._quiet_sky_cooldown = 0.0
-	world._quiet_sky_still = world.QUIET_SKY_STILL_SECONDS
 	world._quiet_sky_active = true
 	world._focus_seconds = world.QUIET_SKY_HOLD_SECONDS
-	world._goose_mount_wait = 1.0
-	world._goose_mount_phase = -1
-	world.tick(1.0 / 60.0, Vector2.ZERO)
-	_check(not world._quiet_sky_active and releases == 0, "goose-mount warmup yields sky look without camera release")
+	world._yield_quiet_sky_look_to_encounter()
+	_check(not world._quiet_sky_active and releases == 0 and is_equal_approx(world._focus_seconds, 0.0), "goose-mount yield clears sky look without camera release")
 	world.free()
 	if failures.is_empty():
 		print("QUIET SKY LOOK PASS ", checks)
