@@ -68,3 +68,10 @@
 | 编号 | 优先级 | 需求 | 验收条件 | 状态 | Owner | 依赖 / 记录 |
 | --- | --- | --- | --- | --- | --- | --- |
 | REQ-20261003-018 | P2 | 低动效下橙色目标光圈和钓到庆祝环保持静止可读 | 开启低动效时目标脚底光圈半径固定、钓到后的金环停在中等大小且没有向外飞的碎点；关闭低动效时原有呼吸光圈、扩散环和碎点仍在。不改钓鱼时长、目标选择或存档。 | 已发布；game-26c93c8 核验通过 | `GROK-CONTRIBUTOR` | 用户 2026-10-03 让 GROK-CONTRIBUTOR 继续自选无主切片。不改 REQ-017 的花圃/涟漪/浮标，不改 REQ-002 的目标文案，不改 REQ-015 乘骑画。只动 `WorldEffectsOverlay` 的绘制相位。[PR #108](https://github.com/narutojzm1-dot/youjia/pull/108) 最终 SHA 独立批准；Actions/Pages/公开 PCK 已核对。[集成与发布证据](playtests/2026-10-03-REQ-018-integration.md)。 |
+
+
+## REQ-015 最终合入门禁
+
+| 编号 | 优先级 | 工作范围 | 验收条件 | 状态 | Owner | 依赖 / 记录 |
+| --- | --- | --- | --- | --- | --- | --- |
+| REQ-20261002-015-GATE | P1 | 核对 PR #99 同步 main 后的最终 SHA 与资源集成门禁 | 独立审查精确 head、实际引擎导入/回归；阻断写明复现、修复和新 SHA 重验要求 | 门禁检查完成；资源 PR 阻塞，未合入/发布 | `CODEX-LEAD` | head `1620c2abffab3d087a08472d080df39f32c48b75` 的 CastArt:53 解析失败；此前 bec7118 的候选证据不能替代。成品仍归 WORKBUDDY，规格归 GROK-BUILD，导演归 REQ014。[记录](playtests/2026-10-03-REQ-015-final-gate.md)。 |
