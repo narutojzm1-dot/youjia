@@ -61,7 +61,7 @@
 
 | 编号 | 优先级 | 工作范围 | 验收条件 | 状态 | Owner | 依赖 |
 | --- | --- | --- | --- | --- | --- | --- |
-| REQ-20261002-015-VERIFY | P1 | 对 PR99 两帧乘骑画补原生导入、运行时注册/照片兼容与受控Web证据 | 精确候选的Godot导入与两帧显示、照片JSON保留及候选导出通过；区分本地/受控和正式演出/发布 | 候选引擎验证完成；父项待集成 | `CODEX-LEAD-ASSISTANT` | 成品画仍归WORKBUDDY、规格归GROK-BUILD、导演接线归CODEX-LEAD；不改原分支，不接管父需求。[验收记录](playtests/2026-10-03-REQ-015-verify.md)。 |
+| REQ-20261002-015-VERIFY | P1 | 对 PR99 两帧乘骑画补原生导入、运行时注册/照片兼容与受控Web证据 | 精确候选的Godot导入与两帧显示、照片JSON保留及候选导出通过；区分本地/受控和正式演出/发布 | 候选引擎验证完成；父项待集成 | `CODEX-LEAD-ASSISTANT` | 成品画仍归WORKBUDDY、规格归GROK-BUILD、导演出线归CODEX-LEAD；不改原分支，不接管父需求。[验收记录](playtests/2026-10-03-REQ-015-verify.md)。 |
 
 ## 追加切片
 
@@ -70,7 +70,7 @@
 | REQ-20261003-018 | P2 | 低动效下橙色目标光圈和钓到庆祝环保持静止可读 | 开启低动效时目标脚底光圈半径固定、钓到后的金环停在中等大小且没有向外飞的碎点；关闭低动效时原有呼吸光圈、扩散环和碎点仍在。不改钓鱼时长、目标选择或存档。 | 已发布；game-26c93c8 核验通过 | `GROK-CONTRIBUTOR` | 用户 2026-10-03 让 GROK-CONTRIBUTOR 继续自选无主切片。不改 REQ-017 的花圃/涟漪/浮标，不改 REQ-002 的目标文案，不改 REQ-015 乘骑画。只动 `WorldEffectsOverlay` 的绘制相位。[PR #108](https://github.com/narutojzm1-dot/youjia/pull/108) 最终 SHA 独立批准；Actions/Pages/公开 PCK 已核对。[集成与发布证据](playtests/2026-10-03-REQ-018-integration.md)。 |
 | REQ-20261003-019 | P2 | 低动效下橙色目标指示的明暗脉动保持静止可读 | 开启低动效时目标脚底光圈与头顶弧的明暗不再随时间脉动，固定为可读亮度；关闭低动效时原有 0.75–1.0 脉动仍在。不改目标选择、距离衰减、钓鱼或乘骑画。 | 已发布；game-664dfde 公开清单/PCK核验通过 | `GROK-CONTRIBUTOR` | 用户 2026-10-03 让 GROK-CONTRIBUTOR 继续自选无主切片。补上 REQ-018 决策明确未覆盖的目标明暗脉动。不改 REQ-015/#99 乘骑资源，不改 REQ-001/005/012。只动 `WorldEffectsOverlay`：`celebration_pose.alpha_pulse` 与绘制时抵消 YardWorld 仍写入的脉动；不改 `yard_world.gd`、乘骑资源或目标选择。 |
 | REQ-20261003-020 | P2 | 低动效下草堆亮度保持稳定 | 开启低动效时草堆不再一明一暗；人站在旁边时维持略亮，走开后是普通白色。关闭低动效时原来的呼吸亮度还在。不改拿草、库存或走路。 | 待评审 | `GROK-BUILD` | 活动表没有待认领行。不改 REQ-019 的目标明暗，不改 REQ-001-GRASS 的拿草动作，不改 REQ-015 乘骑画。只停 `YardWorld` 里草堆的亮度闪动。 |
-| REQ-20261003-021 | P1 | 补一组动物休息画和路旁小植物 | 鸭休息时用理羽画，马休息时用甩尾画，牛休息时用嚼草画，羊休息时用抖毛画；人在南边小路停住一会儿，会看到一只蜗牛和一株三叶草。走动就收起。不改乘骑演出，不改拿草，不新增任务或相册。 | 待评审 | `GROK-BUILD` | 用户要求用画图补互动资源。父需求 REQ-004 的 Owner 仍是 `MANUS-CONTRIBUTOR`，REQ-009 的 Owner 仍是 `MANUS-CONTRIBUTOR`。本行只加这六张新画和对应的休息/停留显示。不改 PR #99 的乘骑画。 |
+| REQ-20261003-021 | P1 | 补一组动物休息画和路边小植物 | 鸭休息时用理羽画，马休息时用甩尾画，牛休息时用嚼草画，羊休息时用抖毛画；人在南边小路停住一会儿，会看到一只蜗牛和一株三叶草。走动就收起。不改乘骑演出，不改拿草，不新增任务或相册。 | 待评审 | `GROK-BUILD` | 用户要求用画图补互动资源。父需求 REQ-004 的 Owner 仍是 `MANUS-CONTRIBUTOR`，REQ-009 的 Owner 仍是 `MANUS-CONTRIBUTOR`。本行只加这六张新画和对应的休息/停留显示。不改 PR #99 的乘骑画。 |
 
 
 ## REQ-015 最终合入门禁
@@ -94,7 +94,7 @@
 | 编号 | 优先级 | 资源交付 | 验收条件 | 状态 | Owner | 依赖 / issue |
 | --- | --- | --- | --- | --- | --- | --- |
 | ART-ACK-COW | P0 | 牛：成功互动后的抬眼与温和回应 | 同角色完整画作、稳定接触锚点、透明边界、原尺寸/镜像预览、来源哈希与预算；样张核对后再扩帧，接入单独验收 | 样张已交；未接入；待核对 | `GROK-BUILD` | [#119](https://github.com/narutojzm1-dot/youjia/issues/119)；#30 / MANUS反馈映射接入。候选在 `art/concepts/ack_cow_v1/`，静态预览见 [playtests/2026-10-03-ART-ACK-COW](playtests/2026-10-03-ART-ACK-COW/README.md)。 |
-| ART-ACK-HORSE | P1 | 马：注意玩家与接受轻抚的回应 | 同角色完整画作、稳定接触锚点、透明边界、原尺寸/镜像预览、来源哈希与预算；样张核对后再扩帧，接入单独验收 | 已指定；排队；复用牛单验证的交付规格 | `GROK-BUILD` | [#120](https://github.com/narutojzm1-dot/youjia/issues/120)；#30 / MANUS反馈映射接入 |
+| ART-ACK-HORSE | P1 | 马：注意玩家与接受轻抚的回应 | 同角色完整画作、稳定接触锚点、透明边界、原尺寸/镜像预览、来源哈希与预算；样张核对后再扩帧，接入单独验收 | 已指定；排队；复用牛单验收的交付规格 | `GROK-BUILD` | [#120](https://github.com/narutojzm1-dot/youjia/issues/120)；#30 / MANUS反馈映射接入 |
 | ART-ACK-SHEEP | P1 | 两只羊：保留个性的互动回应 | 同角色完整画作、稳定接触锚点、透明边界、原尺寸/镜像预览、来源哈希与预算；样张核对后再扩帧，接入单独验收 | 已指定；排队；先各一张关键姿态 | `GROK-BUILD` | [#121](https://github.com/narutojzm1-dot/youjia/issues/121)；#30 / MANUS反馈映射接入 |
 | ART-ACK-BIRDS | P1 | 鸭与鹅：自然关注和接食姿态资源 | 同角色完整画作、稳定接触锚点、透明边界、原尺寸/镜像预览、来源哈希与预算；样张核对后再扩帧，接入单独验收 | 已指定；排队；鹅先复用盘点再作画 | `GROK-BUILD` | [#122](https://github.com/narutojzm1-dot/youjia/issues/122)；#30 / MANUS反馈映射接入 |
 | ART-RESIDENT-PET | P1 | 旅人：自然轻抚动作的三姿态样张 | 同角色完整画作、稳定接触锚点、透明边界、原尺寸/镜像预览、来源哈希与预算；样张核对后再扩帧，接入单独验收 | 已指定；可先制作三姿态分镜样张；产品核对后烘最终帧 | `GROK-BUILD` | [#123](https://github.com/narutojzm1-dot/youjia/issues/123)；#84 / CODEX主角接入 |
@@ -113,3 +113,10 @@
 | 编号 | 优先级 | 工作范围 | 验收条件 | 状态 | Owner | 依赖 / 记录 |
 | --- | --- | --- | --- | --- | --- | --- |
 | VERIFY-EXIT-GATE | P0 | 修复每日Godot回归忽略非零退出码的发布门禁漏洞 | Godot/timeout和tee任一非零、错误/FAIL日志或日志读取失败均阻断；11项故障注入与严格完整回归、独立最终SHA审查通过 | 已合入并核验发布；PR134独立审查批准、主线严格回归/导出/Pages与公开包一致性通过 | `CODEX-LEAD` | [工程督导#130](https://github.com/narutojzm1-dot/youjia/issues/130)；不包含存档协议、完成标记或PR验证workflow。[证据](playtests/2026-10-03-verify-exit-gate.md)。 |
+
+
+## 追加切片（低动效对象反馈）
+
+| 编号 | 优先级 | 需求 | 验收条件 | 状态 | Owner | 依赖 / 记录 |
+| --- | --- | --- | --- | --- | --- | --- |
+| REQ-20261003-022 | P2 | 低动效下抚摸/浇水/投喂对象反馈保持静止可读 | 开启低动效时水彩心、浇水溅与投喂鸟环心在反馈窗口内不再上浮或中途淡出，固定为可读静帧，倒计时结束仍整段消失；关闭低动效时原有上浮、扩散与淡出仍在。不改互动判定、存档、草堆亮度或乘骑资源。 | 待评审 | `GROK-CONTRIBUTOR` | 用户半小时推进自选切片。不改 REQ-017/018/019 已覆盖相位，不改 REQ-020 草堆，不改 PR #99 乘骑画。只动 `WorldEffectsOverlay`；`still_object_feedback_suite.gd` 验收；verify 挂载留给合入闸。决策见 [decisions/REQ-20261003-022.md](decisions/REQ-20261003-022.md)。 |
