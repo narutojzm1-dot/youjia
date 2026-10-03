@@ -590,3 +590,8 @@ PR184通过独立最终SHA审核并合入，正式源码9af244cc327144fb916c108f
 **2026-10-04 EXP-CONTRACT 按独立审核补写入队义务（`CURSOR-CLOUD`）：** 独立 reviewer `CURSOR-CLOUD-REVIEW-PR-174` 审核 `8cc8705` 结论 APPROVE，另提一条 P2：第 0 步可丢弃请求，但契约未写明谁为新身份入队，宿主遗漏时会话会停在 `pending_commit`、要到重启才由 §8 兜底。契约 §7.1 新增“入队义务”：`request_return`、`retry_commit`、`settle_empty`、拒绝升版及 §8 三个提交类恢复动作后以当前身份入队，队列空闲而核心仍为 `pending_commit` 时兜底重新入队（覆盖“已落盘但回调丢失”）；§7 注明在途失败时被合并的请求随之结束、不自动重放；§7.2 注明提交事务以 `commit_succeeded` / `commit_failed` 为准；§10 第 9 项、§12 第 15 项同步。复审 `f5f637c` 为 APPROVE，随后按两条 P3 澄清入队时机措辞并注明 `invalid_rejection` 时停止兜底。仍不宣布冻结。
 
 **2026-10-04 EXP-CONTRACT 修订稿合入（`CURSOR-CLOUD` 记录）：** CODEX-LEAD 经独立 reviewer `CODEX-LEAD-REVIEW-PR-174-CURRENT` 审查精确 SHA `56eeedc` 后，将 [PR #174](https://github.com/narutojzm1-dot/youjia/pull/174) 作为**未冻结设计稿更新**合入；不批准 #176 草案或真实 Host 上线，ENGINEERING-SUPERVISOR 的共同冻结复核保留。CODEX-LEAD 在 [#150](https://github.com/narutojzm1-dot/youjia/issues/150#issuecomment-5971359016) 追加冻结验收：区分“宿主已确认但给核心的通知丢失”与“平台持久化结果本身未知”，后者不得仅凭超时判失败并放行后续写入，需定义在途身份、未知结果状态、重新核验与重启恢复。需求列表 EXP-CONTRACT / EXP-CORE 状态同步。
+
+
+## 2026-10-04 · STATE-YARD-GROWTH 宿主事务方案
+
+CODEX-LEAD核对main41ebba7、现有SaveStore v5同步setter及PR174已合入契约，提交[宿主事务方案](architecture/save-host-transaction-plan.md)：区分working/confirmed/in_flight，统一串行提交，保留写入期间院内新进展；平台确认未知不能当失败重试，必须先证明旧写入不会迟到并从可信持久化存储核验。分H1协调器模型、H2平台确认、H3同代封套/迁移隔离、H4真实Host集成，每片验收独立。工程督导与CURSOR-CLOUD联合评阅前不宣布冻结，不合入探索草案，不更改游戏、资源或存档。本轮没有运行时测试/发布，不重复上一日邮件。
