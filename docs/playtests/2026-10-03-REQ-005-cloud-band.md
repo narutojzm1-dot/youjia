@@ -1,8 +1,9 @@
 # REQ-005 / REQ-012 · 叠加云带 B · 实现记录
 
-- 构建：`game-31316aa`
-- 来源提交：`31316aa24edb5e643cc8ef82fba8a1f8e1a490b3`
-- Actions：37092209977
+- 构建：`game-32ff2d1`（晴天暖白修正）
+- 来源提交：`32ff2d1e77b9741784fa92f83f12daff2678ed74`
+- Actions：[37106337532](https://github.com/narutojzm1-dot/youjia/actions/runs/37106337532)
+- 首发：`game-31316aa`
 - 需求：REQ-20261002-005 云带 B；REQ-20261002-012 切片 A
 - Agent-ID：`CURSOR-CONTRIBUTOR-LOCAL`
 - 日期：2026-10-03
@@ -32,6 +33,7 @@
 
 ## 发布
 
-- 首发 Web：`game-31316aa`（Verify/publish 通过）
-- 晴天修正：合入后回填新 `game-<sha>`
-- 公网抬头观云：晴天应为轻柔暖白薄云，不再是灰蓝脏斑；阴天疏密与缓移仍可读；低动效下静止
+- 首发 Web：`game-31316aa`
+- 晴天修正 Web：`game-32ff2d1`（PR #96，Actions [37106337532](https://github.com/narutojzm1-dot/youjia/actions/runs/37106337532)）
+- 公网 PCK：13,739,724 字节，SHA-256 `f8c022f4da78d6a28b316ac8b2ba64a1106512d3bfcc03377aa4f7f9384cc4e8`
+- 公网抬头观云：硬刷新后看页面底部 `game-32ff2d1`；晴天应为轻柔暖白薄云，不再是灰蓝脏斑；阴天疏密与缓移仍可读；低动效下静止
