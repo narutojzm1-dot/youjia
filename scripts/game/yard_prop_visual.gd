@@ -13,6 +13,25 @@ const FISH_CAUGHT := 3
 var subject := ""
 var state: Dictionary = {}
 
+
+# Low-motion keeps the same shapes readable, without sway, ripple travel, or a flashing bite.
+static func pose_motion(kind: String, phase: float, reduced_motion: bool) -> Dictionary:
+	var live := 0.0 if reduced_motion else phase
+	if kind == "plant":
+		return {
+			"lean": 0.0 if reduced_motion else sin(live * 0.9) * 1.2,
+			"sway": 0.0 if reduced_motion else sin(live * 1.2) * 1.8,
+			"bloom_alpha": 0.42 if reduced_motion else 0.30 + 0.25 * absf(sin(live * 2.2)),
+			"harvest_still": reduced_motion,
+		}
+	return {
+		"ripple_count": 1 if reduced_motion else 3,
+		"bite_alpha": 0.42 if reduced_motion else 0.5 + 0.5 * sin(live * 12.0),
+	}
+
+func _reduced() -> bool:
+	return bool(TuningStore.get_value("ui.reduced_motion", false))
+
 func configure(next_subject: String, next_state: Dictionary) -> void:
 	subject = next_subject
 	state = sanitize_state(subject, next_state)
@@ -88,7 +107,7 @@ func _draw_plant_bed() -> void:
 					draw_circle(seed_pt + Vector2(-0.8, -0.8), 1.0, Color(0.62, 0.46, 0.30, 0.55 * soil_reveal))
 		PLANT_SPROUTING:
 			# 嫩芽：茎/叶始终显示（绿色嫩芽在草地上自然），土壤底色随距离渐显
-			var lean := sin(float(state.phase) * 0.9) * 1.2
+			var lean := float(pose_motion("plant", float(state.phase), _reduced()).lean)
 			var base := pt + Vector2(0, -3)
 			var sprout_tip := base + Vector2(lean, -11)
 			if soil_reveal > 0.05:
@@ -98,7 +117,7 @@ func _draw_plant_bed() -> void:
 			draw_line(base + Vector2(lean * 0.5, -5), sprout_tip + Vector2(6, -1), Color(0.44, 0.68, 0.36, 0.88), 2.0, true)
 		PLANT_BLOOMED:
 			# 花朵：始终显示（花朵是亮眼功能，不随距离隐藏）；茎基阴影随土壤渐显
-			var sway := sin(float(state.phase) * 1.2) * 1.8
+			var sway := float(pose_motion("plant", float(state.phase), _reduced()).sway)
 			var base := pt + Vector2(0, -3)
 			var bloom_tip := base + Vector2(sway, -15)
 			if soil_reveal > 0.05:
@@ -110,8 +129,9 @@ func _draw_plant_bed() -> void:
 			draw_circle(bloom_tip + Vector2(0, -1), 3.0, Color(0.98, 0.90, 0.55, 0.95))
 	# 收获庆祝：花瓣爆散动画（float(state.harvest_flash) > 0 时激活）
 	if float(state.harvest_flash) > 0.0:
-		var t := 1.0 - clampf(float(state.harvest_flash) / 1.8, 0.0, 1.0)
-		var burst_a := maxf(0.0, 1.0 - t * 1.5) * 0.90
+		var harvest_still := bool(pose_motion("plant", float(state.phase), _reduced()).harvest_still)
+		var t := 0.35 if harvest_still else 1.0 - clampf(float(state.harvest_flash) / 1.8, 0.0, 1.0)
+		var burst_a := 0.72 if harvest_still else maxf(0.0, 1.0 - t * 1.5) * 0.90
 		for i: int in 6:
 			var angle := float(i) * TAU / 6.0 - PI * 0.5
 			var dist := lerpf(5.0, 36.0, t)
@@ -123,7 +143,7 @@ func _draw_plant_bed() -> void:
 	var _ellipse_pts := PackedVector2Array()
 	const _ELLIPSE_SEGS := 24
 	if int(state.plant_state) == PLANT_BLOOMED:
-		var bloom_pulse := 0.30 + 0.25 * absf(sin(float(state.phase) * 2.2))
+		var bloom_pulse := float(pose_motion("plant", float(state.phase), _reduced()).bloom_alpha)
 		for _ei: int in _ELLIPSE_SEGS + 1:
 			var _a := float(_ei) / float(_ELLIPSE_SEGS) * TAU
 			_ellipse_pts.append(pt + Vector2(cos(_a) * 34.0, sin(_a) * 12.0))
@@ -140,10 +160,12 @@ func _draw_plant_bed() -> void:
 func _draw_fishing_spot() -> void:
 	var fp := Vector2.ZERO
 	var player_near := bool(state.nearby)
-	# 水塘常驻波纹：三圈相位错开的扩散涟漪，给水面带来生气
+	# 水塘常驻波纹：三圈相位错开的扩散涟漪，给水面带来生气。低动效只留一圈静止涟漪。
+	var water := pose_motion("fishing", float(state.phase), _reduced())
 	var ripple_t := float(state.phase)
-	for i: int in 3:
-		var phase := fmod(ripple_t * 0.4 + float(i) / 3.0, 1.0)
+	var ripple_count := int(water.ripple_count)
+	for i: int in ripple_count:
+		var phase := 0.45 if ripple_count == 1 else fmod(ripple_t * 0.4 + float(i) / 3.0, 1.0)
 		var r := lerpf(6.0, 30.0, phase)
 		var a := (1.0 - phase) * 0.22
 		draw_arc(fp + Vector2(10, 12), r, 0.0, TAU, 20, Color(0.42, 0.68, 0.88, a), 1.8, true)
@@ -166,7 +188,7 @@ func _draw_fishing_spot() -> void:
 			draw_circle(float_target, 3.8, bob_color)
 			# 有咬钩时浮标加闪烁提示（两段脉冲，速度加快，更难错过）
 			if int(state.fish_state) == FISH_BITE:
-				var pulse1 := 0.5 + 0.5 * sin(float(state.phase) * 12.0)
+				var pulse1 := float(pose_motion("fishing", float(state.phase), _reduced()).bite_alpha)
 				draw_circle(float_target, 7.5, Color(0.90, 0.32, 0.25, pulse1 * 0.55))
 				draw_arc(float_target, 10.0, 0.0, TAU, 16, Color(0.95, 0.50, 0.38, pulse1 * 0.40), 2.2, true)
 		if int(state.fish_state) == FISH_CAUGHT:
