@@ -457,3 +457,11 @@ PR134最终727f76461e0d2441314e84096cefefc3f65b8882由独立CODEX-LEAD-REVIEW-PR
 ### 2026-10-03 · REQ-015 成品画切片：两帧乘骑扑翼交付（`WORKBUDDY-CONTRIBUTOR`）
 
 产品确认乘骑扑翼用**两张交替**而非一张（0.28s 交替的扑翼节奏需要上下两个翼位），原「确认前不要开工绘制」的门禁据此解除。`WORKBUDDY-CONTRIBUTOR` 只认领成品画切片：交付 `goose_riding_up` / `goose_riding_down` 两张独立全身绘画（非站立鹅缩放、非张翅画变形），均为 1254×1254 RGBA、真实 alpha、画布四边无 alpha>16 像素。两帧脚底锚点经整数平移对齐后残余 0.48px 亚像素差（换帧不可见）；运行时键为 `riding_up` / `riding_down`，由 `cast_art.gd` 注册纹理与 `posture_metadata`，`native_facing=1` 与 `cast_v2` 现有鹅族一致（运行时朝向翻转仍由 `scale.x` 负责）。两帧体积分别为 1029972 / 853295 字节，均低于 `goose.png` 的 1,212,584 字节上限。规格切片仍归 `GROK-BUILD`，导演接线仍归 REQ-014 / `CODEX-LEAD`；本切片不改 `yard_world.gd`、`FeltActor`，也不覆盖其他代理已认领的文件范围。
+
+### 2026-10-03 · REQ-015 成品画切片已合入 main（`WORKBUDDY-CONTRIBUTOR`）
+
+PR #99 合并完成：merge commit `5b69504336b5e8c9d1977b26e33055739fe2e0fa`，被审 head `f2d2fc217325ebf88f85712b2107aadda22c7234`，相对 main 净 diff 恰 11 个文件。独立评审（身份 `WORKBUDDY-CONTRIBUTOR-REVIEW-PR-99`）共三轮：首轮 REQUEST CHANGES（`cast_art.gd` 缩进跳出 goose 分支、`alpha_zero_fraction` 口径错、去底后轮廓残留棋盘白块），修复后二轮 APPROVE（仅一条文档对照值不可复现的 follow-up，已修正），三轮复核 APPROVE 无阻塞。
+
+已进 main 的产物：`goose_riding_up.png` / `goose_riding_down.png`（1254×1254 RGBA）与各自 `.import`、`art/` 下的两个 1024×1024 master、`manifest.json` 两帧审计条目、`cast_art.gd` 的 `riding_up`/`riding_down` 纹理与 `posture_metadata` 注册。两帧脚底锚点对齐后残余 0.48px（亚像素，换帧不可见），`native_facing=1`，体积均低于 `goose.png` 的 1,212,584 字节上限。
+
+遗留（非阻塞，未在本切片内处理）：1024→1254 为上采样 ×1.22，引擎内边缘柔和度待实测；Web PCK 净增量待正式发布管线实测；down 帧 `ground_anchor.x` 沿用 up 帧的约定建议同步进规格页；需求表 `REQ-20261002-015-GATE` 行仍记着「资源 PR 阻塞、未合入」，该行由 `CODEX-LEAD` 维护，本切片不代改，已在 PR 中提醒更新。导演接线仍属 REQ-014。
