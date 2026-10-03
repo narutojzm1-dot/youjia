@@ -1,6 +1,6 @@
 # QA-EXP-20261003-003 · Web 加载画面
 
-Agent-ID: CODEX-LEAD-ASSISTANT。范围/认领：[issue167](https://github.com/narutojzm1-dot/youjia/issues/167)、[PR183](https://github.com/narutojzm1-dot/youjia/pull/183)。2026-10-04 北京时间，本记录为候选验证，正式发布证据合入后在实现 PR 补记。
+Agent-ID: CODEX-LEAD-ASSISTANT。范围/认领：[issue167](https://github.com/narutojzm1-dot/youjia/issues/167)、[PR183](https://github.com/narutojzm1-dot/youjia/pull/183)。2026-10-04 北京时间，本记录区分候选验证与正式发布核验，正式证据见下节及实现 PR。
 
 ## 变化与来源
 
@@ -23,6 +23,26 @@ Agent-ID: CODEX-LEAD-ASSISTANT。范围/认领：[issue167](https://github.com/n
 
 ![竖屏加载进度](2026-10-04-QA-EXP003-loading/portrait-progress.jpg)
 
-## 后续门禁
+## 候选时后续门禁（已按下节补齐）
 
 最终完整SHA独立审核、CI完整回归/部署、公开manifest/HTML/PCK核对和公网冷加载画面仍须在实现PR记录。GAME-QA保留复测职责，父报告编号修订归原作者。本轮不是全游戏连续心流测试，不改变已获批准的体验边界。
+
+## 正式版本核验 · 2026-10-04 北京时间
+
+- 实现 [PR184](https://github.com/narutojzm1-dot/youjia/pull/184)，独立 reviewer `CODEX-LEAD-ASSISTANT-REVIEW-PR-184` APPROVE 完整 head `38f47cdd336b9e2317926db3861fc46821f8ac6a`。正式源提交 `9af244cc327144fb916c108f2b7527c9af0fe866`，构建 `game-9af244c`。
+- [完整回归/导出/发布](https://github.com/narutojzm1-dot/youjia/actions/runs/37136304252)与[Pages部署](https://github.com/narutojzm1-dot/youjia/actions/runs/37136534388) success；已读取实际CI日志，Godot、交互/照片/鹅马、视口和加载壳门禁PASS。这是CI headless 回归，不是原生图形实玩。
+- [公开游戏](https://narutojzm1-dot.github.io/youjia/) manifest 实际 sourceCommit 为上述40位SHA，entry相符，publishedAt `2026-10-03T16:21:08Z`。实际根HTML356,606 bytes，其JPEG SHA256与候选相同；实际PCK19,183,584 bytes、SHA256 `ebca0b3671b5ad4e57b48ec1963312932dabcca7f68b53ae7160cb3f013297da`，与gh-pages同名包逐字节一致。基线 `game-eb8e342` PCK同大小，净增0；两版哈希不同，不推断字节完全一致。
+- 三个全新浏览器上下文直接访问公网、未加请求延迟：1280×720、844×390、390×844均正确build、新PCK HTTP200、pageerror=[]，等待真实首帧后壳隐藏；桌面点击进入院子。首次桌面 engineScriptReady157ms/downloadComplete1284ms/firstFrame3383ms；横屏91/459/2398ms；竖屏43/389/2203ms。仅为本轮机器/网络样本，不是性能保证或真实手机硬件测试。
+- 公网失败/重试：独立390×844上下文用Playwright临时abort本页新PCK请求（含引擎重试请求），出现“游戏加载失败，请重试。”，文字和按钮可读；解除此本地拦截、点击重试真实重载新包并到达首帧。没有改动站点服务。这是明确故障注入，不能称自然公网故障。
+
+以下为正式站点加载截图（不混同上文Engine桩截图）：
+
+![公网桌面冷加载](2026-10-04-QA-EXP003-loading/public-desktop.jpg)
+
+![公网横屏冷加载](2026-10-04-QA-EXP003-loading/public-landscape.jpg)
+
+![公网竖屏冷加载](2026-10-04-QA-EXP003-loading/public-portrait.jpg)
+
+![公网浏览器中受控PCK失败](2026-10-04-QA-EXP003-loading/public-controlled-failure.jpg)
+
+本单修复/集成/发布门禁已完成，GAME-QA可按新构建独立复测并在发现回归时重开。本轮没有宣称全游戏完整心流通过，其他需求Owner/日结不变。
