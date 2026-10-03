@@ -1278,10 +1278,14 @@ func _apply_weather_art() -> void:
 		_backdrop.modulate = Color(0.92, 0.90, 0.96).lerp(Color.WHITE, 1.0 - intensity)
 	else:
 		_backdrop.modulate = Color(1.0, 0.97, 0.90).lerp(Color.WHITE, 1.0 - intensity)
-	# 云带跟随院子滤色，避免晴阴切换时出现硬贴矩形。
+	# 阴天云带跟院子滤色；晴天云带单独提亮，避免暖滤色把薄云染成脏斑。
 	for band: Sprite2D in [_cloud_band_a, _cloud_band_b]:
-		if band != null:
+		if band == null:
+			continue
+		if weather == "overcast":
 			band.modulate = _backdrop.modulate
+		else:
+			band.modulate = Color(1.08, 1.05, 1.02).lerp(Color.WHITE, 1.0 - intensity * 0.4)
 	if _scene_feedback != null: _scene_feedback.modulate = _backdrop.modulate
 
 
