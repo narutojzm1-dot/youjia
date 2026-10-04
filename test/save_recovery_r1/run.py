@@ -10,7 +10,7 @@ from playwright.sync_api import sync_playwright
 parser = argparse.ArgumentParser()
 parser.add_argument('--chrome', default='/usr/bin/chromium')
 parser.add_argument('--out', required=True)
-parser.add_argument('--suite', choices=['suite.html', 'legacy_suite.html'], default='suite.html')
+parser.add_argument('--suite', choices=['suite.html', 'legacy_suite.html', 'migration_bridge_suite.html'], default='suite.html')
 args = parser.parse_args()
 root = Path(__file__).resolve().parent
 class Handler(http.server.SimpleHTTPRequestHandler):

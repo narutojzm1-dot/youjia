@@ -3,9 +3,15 @@
 (() => {
  const ready = import('./bridge.mjs');
  window.YoujiaRecoveryHostBridge = Object.fromEntries(
-  ['open','initialize','prepare','submit','resolve','acknowledge'].map(name => [name, (...args) => {
+  ['open','initialize','initializeLegacy','prepare','submit','resolve','acknowledge'].map(name => [name, (...args) => {
    const callback = args.pop();
-   ready.then(m => m.bridge[name](...args)).then(
+   ready.then(m => {
+    if (name === 'initializeLegacy') {
+     if (args.length !== 1 || typeof args[0] !== 'string' || args[0].length > 180000) throw Error('legacy snapshot JSON string required');
+     return m.bridge.initializeLegacy(JSON.parse(args[0]));
+    }
+    return m.bridge[name](...args);
+   }).then(
     value => {
      if (value && value.__duplicate_test_receipt) {
       const raw = JSON.stringify(value.__duplicate_test_receipt);

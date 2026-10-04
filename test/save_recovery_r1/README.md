@@ -65,3 +65,19 @@ readback; neither this reader nor the decoder establishes that ownership.
 No production SaveStore, shell or bridge entry point is switched here. Future
 integration must also handle Web user:// filesystem readiness, capacity policy,
 business-state conversion, acknowledgement, and restart/migration recovery.
+
+### Candidate Host migration entry
+bridge.initializeLegacy(snapshot) validates and freezes the byte snapshot before
+its first await, requires recovery=empty, uses the SAME store.initialize lock and
+transaction as other initialization, then returns trusted recover/readback.
+head.html exposes initializeLegacy(snapshot_json, callback) with bounded JSON
+input; parsing failures use the existing error callback. Neither a Promise nor
+a scheduled callback alone is confirmation. This is still a test namespace.
+
+migration_bridge_suite.html: 16 checks, including the real head callback path,
+bad JSON/encoding/version refusal, mutation, occupied target and exact readback.
+run_migration_race.py: 8 checks in TWO actual pages opened on the same empty store,
+one initialization winner, one refusal, and exact recovery in a third fresh page.
+No production Store/shell/writer ownership switch occurs here. Existing bridge
+methods are unchanged; new head and bridge SHA require their applicable consumer
+compatibility check before a formal freeze, not automatic reuse of old results.

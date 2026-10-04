@@ -1,5 +1,7 @@
 // Isolated Godot test adapter; never installed in the production game.
 import {openStore, envelope, newId} from './store.mjs';
+import {prepareLegacyV5} from './legacy_v5.mjs';
+import {decodeSourceSnapshot} from './source_decode.mjs';
 const page_id = newId(), log = [], candidates = new Map();
 const barriers = ['intent_prepared_complete', 'candidate_committed_before_receipt'];
 const injections = ['abort_intent','abort_commit','drop_receipt','wrong_receipt_identity','duplicate_receipt','delay_receipt'];
@@ -44,6 +46,15 @@ export const bridge = {
  },
  async initialize(payload) {
   if (!store) throw Error('store unavailable');
+  await store.initialize(payload);
+  return opened(await store.recover());
+ },
+ async initializeLegacy(snapshot) {
+  // Candidate bridge only: caller must quiesce legacy writers before capture.
+  // Validate/freeze both raw sources before the first await. R1's existing
+  // initialize lock+transaction refuses any occupied/corrupt/pending target.
+  if (!store || recovery?.verdict !== 'empty') throw Error('legacy import requires empty recovery');
+  const payload=prepareLegacyV5(decodeSourceSnapshot(snapshot));
   await store.initialize(payload);
   return opened(await store.recover());
  },

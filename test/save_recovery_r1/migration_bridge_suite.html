@@ -1,0 +1,52 @@
+<!doctype html><meta charset="utf-8"><title>Migration bridge candidate</title>
+<script type="module">
+import {bridge} from './bridge.mjs';
+import {openStore,newId} from './store.mjs';
+let checks=0;
+const ok=(v,s)=>{if(!v)throw Error(s);checks++;};
+const fail=async(f,s)=>{let rejected=false;try{await f();}catch(_){rejected=true;}ok(rejected,s);};
+const name='youjia-recovery-test-'+newId();
+const absent={status:'absent'};
+const encode=text=>({status:'present',base64:btoa(String.fromCharCode(...new TextEncoder().encode(text)))});
+const raw=' { "version":5, "unknown":9007199254740993, "album":["旧照"] }'+String.fromCharCode(10);
+const input={primary:encode(raw),backup:absent};
+const snapshot=async()=>{const s=await openStore(name);try{return await s.snapshot();}finally{s.close();}};
+try{
+ const head=await (await fetch('./head.html')).text();
+ const script=document.createElement('script');
+ script.textContent=head.slice(head.indexOf('>')+1,head.lastIndexOf('</scr'+'ipt>'));
+ document.head.appendChild(script);
+ const hostImport=text=>new Promise((resolve,reject)=>window.YoujiaRecoveryHostBridge.initializeLegacy(text,raw=>{
+  const response=JSON.parse(raw);if(response.error)reject(Error(response.error));else resolve(response);
+ }));
+ await fail(()=>hostImport('{invalid'),'Godot callback transport rejects malformed JSON');
+ ok((await bridge.open(name)).verdict==='empty','open confirms empty target');
+ const before=JSON.stringify(await snapshot());
+ for(const value of [
+  {primary:{status:'read_error',reason:'open_failed'},backup:absent},
+  {primary:{status:'present',base64:'/w=='},backup:absent},
+  {primary:encode('{"version":6}'),backup:absent}
+ ]){
+  await fail(()=>bridge.initializeLegacy(value),'unsafe source rejected through host');
+  ok(JSON.stringify(await snapshot())===before,'rejection leaves target empty');
+ }
+ const frozen=structuredClone(input), original=JSON.stringify(input);
+ const first=hostImport(JSON.stringify(frozen));
+ frozen.primary=encode('{"version":6}');
+ const second=bridge.initializeLegacy(input);
+ const results=await Promise.allSettled([first,second]);
+ ok(results.filter(r=>r.status==='fulfilled').length===1,'only one host initialization commits');
+ ok(results.filter(r=>r.status==='rejected').length===1,'second initialization rejected');
+ const result=results.find(r=>r.status==='fulfilled').value;
+ ok(result.verdict==='clean','trusted readback before returning');
+ const payload=JSON.parse(result.current_payload);
+ ok(payload.sources.primary.text===raw,'caller mutation cannot change imported raw');
+ ok(payload.sources.backup.status==='absent','backup absence preserved');
+ ok(JSON.stringify(input)===original,'source caller object unmodified');
+ const current=JSON.stringify(await snapshot());
+ await fail(()=>bridge.initializeLegacy(input),'repeat initialized host refused');
+ ok(JSON.stringify(await snapshot())===current,'existing target untouched');
+ window.r1={status:'PASS',checks,scope:'candidate initializeLegacy bridge; not production migration or legacy-writer ownership'};
+}catch(e){window.r1={status:'FAIL',checks,error:String(e),stack:e.stack};}
+finally{window.r1Done=true;document.body.textContent=JSON.stringify(window.r1);}
+</script>
