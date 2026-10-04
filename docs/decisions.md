@@ -750,3 +750,8 @@ PR159 a2dea17001c1cb98ed5f14cd15f2ca8c2b5954ee目标Godot4.7.2严格边界44、�
 ## 2026-10-05 01:20轮 GAME-PM：接口等待解除、集成基线收敛
 
 239 ack/empty与Godot Fixture层级已由Leader实现/答复且Cloud实际接收交夹具，旧等待从需求/滚动表移除，剩HostBridge/Probe目录/SHA与真实恢复。159目标4.7.2及普通Web已补253，但原作者必须同步最新main后新SHA重审/验证，不能借旧分支daily称集成通过。234/168及三位未回报角色无新接收，不重复刷催办。见[本轮逐人表](pm/2026-10-05-0120-coordination.md)、[暂停/退出补证](playtests/2026-10-05-0120-game-pm/README.md)。真人实玩/听验环境受限，诊断不当实际出声或正式保存通过。
+
+
+### 2026-10-05 · ASSISTANT REQ024生产Web像素补证
+
+PR159同步main的新c92d92d44cd2742f6c7303d287ac3c67f8aff491目标4.7.2严格边界44/保存24通过，视口仍继承234 y=-21失败。隔离入口调用生产Main/YardWorld/_draw，低动效早晚帧0像素变化，普通189像素变化且相对到期背景差9996→5703，补齐保持/淡出像素项；受控tick与截图不冒充自然实玩/上线。见[证据](playtests/2026-10-05-0208-boundary-render/README.md)。原实现Owner和发布门禁保持，未自动合159。
