@@ -11,9 +11,10 @@ prepare_exploration_workdir() {
   prefix=$3
   requested=${4:-}
   if [[ -z "$requested" ]]; then
-    work=$(mktemp -d "${TMPDIR:-/tmp}/$prefix.XXXXXX")
-    work=$(cd "$work" && pwd -P)
-    touch "$work/$marker"
+    work=$(mktemp -d "${TMPDIR:-/tmp}/$prefix.XXXXXX") && work=$(cd "$work" && pwd -P) && touch "$work/$marker" || {
+      echo "cannot create a temporary prototype directory" >&2
+      return 1
+    }
     printf '%s\n' "$work"
     return 0
   fi
@@ -21,8 +22,11 @@ prepare_exploration_workdir() {
     echo "PROTOTYPE_DIR must be an absolute path: $requested" >&2
     return 2
   fi
-  ## 不创建任何东西地解析真实路径（含符号链接），再和仓库真实路径比较
-  work=$(realpath -m -- "$requested")
+  ## 不创建任何东西地解析真实路径（含符号链接），再和仓库真实路径比较；需要 GNU coreutils 的 realpath -m
+  work=$(realpath -m -- "$requested") || {
+    echo "realpath -m (GNU coreutils) is required to check PROTOTYPE_DIR" >&2
+    return 2
+  }
   if [[ "$work" == "/" ]]; then
     echo "PROTOTYPE_DIR must not be the filesystem root" >&2
     return 2
@@ -41,8 +45,10 @@ prepare_exploration_workdir() {
     echo "PROTOTYPE_DIR is not empty and was not created by this script: $work" >&2
     return 2
   fi
-  mkdir -p "$work"
-  find "$work" -mindepth 1 -delete
-  touch "$work/$marker"
+  ## 在 $(...) 里调用时不继承 set -e，每一步都要显式传出失败
+  mkdir -p "$work" && find "$work" -mindepth 1 -delete && touch "$work/$marker" || {
+    echo "cannot prepare PROTOTYPE_DIR: $work" >&2
+    return 1
+  }
   printf '%s\n' "$work"
 }

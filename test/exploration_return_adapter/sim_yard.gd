@@ -8,6 +8,8 @@ const CJK_FONT := "res://assets/template/fonts/NotoSansSC-VF.subset.woff2"
 signal set_out_requested
 ## 假宿主控制键（测试 / 演示用）：把按键翻译成动作名交给适配器
 signal host_action_requested(action: String)
+## 小院相机与输入刚接管时发出；测试在这一刻核对旧画卷是否已拆干净
+signal activated
 
 const WIDTH := 1800.0
 const HEIGHT := 720.0
@@ -22,6 +24,7 @@ const INK := Color(0.29, 0.32, 0.30)
 const HOST_KEYS := {
 	KEY_1: "ok", KEY_2: "fail", KEY_3: "lost", KEY_4: "unknown",
 	KEY_5: "resolve", KEY_6: "next", KEY_7: "retry",
+	KEY_8: "unknown_lost", KEY_9: "terminate", KEY_0: "settle",
 }
 
 var input := ScrollInput.new()
@@ -117,6 +120,7 @@ func activate() -> void:
 	camera.enabled = true
 	camera.make_current()
 	_process(0.0)
+	activated.emit()
 
 
 func deactivate() -> void:
@@ -194,7 +198,7 @@ func _build_hud() -> void:
 	_style(_status, 18)
 	hud.add_child(_status)
 	var keys := Label.new()
-	keys.text = "← → 在院里走 · 假宿主控制（测试用）：1 成功 2 写入失败 3 落盘但回调丢失 4 结果未知 5 静止核验 6 重放队首 7 重试"
+	keys.text = "← → 在院里走 · 假宿主控制（测试用）：1 成功 2 写入失败 3 落盘但回调丢失 4 未知（已落盘）8 未知（未落盘）9 旧写入已终止 5 静止核验 6 重放队首 7 重试 0 空手收尾"
 	keys.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_WIDE)
 	keys.offset_top = -40
 	keys.grow_vertical = Control.GROW_DIRECTION_BEGIN

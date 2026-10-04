@@ -25,7 +25,7 @@ core_files=(
   test/fixtures/exploration_fixture_routes.gd
 )
 ## 隔离测试的最少检查数：防止检查被误删后门禁仍然通过
-min_checks=97
+min_checks=147
 source "$root/tools/lib/verified_godot.sh"
 source "$root/tools/lib/exploration_workdir.sh"
 
@@ -45,10 +45,18 @@ case "$mode" in
     ;;
 esac
 
-if ! git -C "$root" cat-file -e "$core_sha^{commit}" 2>/dev/null; then
-  git -C "$root" fetch --quiet origin "$core_branch" || git -C "$root" fetch --quiet origin "$core_sha"
+## 先找本地，再取分支，分支已不含该提交（例如被强推）时按 SHA 直接取；都取不到就明确报错
+has_core() { git -C "$root" cat-file -e "$core_sha^{commit}" 2>/dev/null; }
+if ! has_core; then
+  git -C "$root" fetch --quiet origin "$core_branch" 2>/dev/null || true
 fi
-git -C "$root" cat-file -e "$core_sha^{commit}"
+if ! has_core; then
+  git -C "$root" fetch --quiet origin "$core_sha" 2>/dev/null || true
+fi
+if ! has_core; then
+  echo "cannot find exploration core $core_sha (branch $core_branch); fetch it or update core_sha after review" >&2
+  exit 2
+fi
 
 work=$(prepare_exploration_workdir "$root" "$marker" youjia-return-adapter "${PROTOTYPE_DIR:-}")
 echo "prototype project: $work" >&2

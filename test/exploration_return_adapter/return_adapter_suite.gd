@@ -34,6 +34,10 @@ func _run() -> void:
 	await _held_unknown()
 	await _held_lost_callback()
 	await _held_failure()
+	await _held_unknown_not_landed()
+	await _content_rejected()
+	await _stale_generation_alive()
+	await _return_refused()
 	await _round_trips()
 	await _pause_and_cancel()
 	await _touch_bar()
@@ -66,11 +70,30 @@ func _return_order() -> void:
 	_check(a.core_state() == "active" and a.session().get_view()["carried"].size() == 1, "the core carries one find before returning")
 	var old = a.scroll
 	var mark: int = a.events.size()
+	## 小院接管那一刻的真实状态，不依赖适配器自己写的事件记录
+	var seen: Array[Dictionary] = []
+	var probe := func() -> void:
+		seen.append({
+			"scroll_dropped": a.scroll == null,
+			"old_out": is_instance_valid(old) and not old.is_inside_tree(),
+			"old_inert": is_instance_valid(old) and not old.active and not old.camera.enabled,
+			"old_unlinked": is_instance_valid(old) and old.return_requested.get_connections().is_empty() and old.observe_requested.get_connections().is_empty(),
+			"core": a.core_state(),
+		})
+	a.yard.activated.connect(probe)
 	Input.parse_input_event(_key(KEY_R, true))
 	Input.parse_input_event(_key(KEY_R, false))
 	await process_frame
 	var tail: Array = a.events.slice(mark, mark + RETURN_ORDER.size())
 	_check(tail == RETURN_ORDER, "return runs in the fixed order: %s" % [tail])
+	a.yard.activated.disconnect(probe)
+	_check(seen.size() == 1, "the yard opened exactly once")
+	if seen.size() == 1:
+		var at: Dictionary = seen[0]
+		_check(at["core"] == "pending_commit", "the core was already pending when the yard opened")
+		_check(at["scroll_dropped"] and at["old_out"], "the scroll had left the tree when the yard opened")
+		_check(at["old_inert"], "scroll input and camera were off when the yard opened")
+		_check(at["old_unlinked"], "scroll signals were disconnected when the yard opened")
 	_check(a.mode == "yard" and a.scroll == null, "the yard is open and the adapter dropped the scroll")
 	_check(not is_instance_valid(old) or (not old.active and not old.camera.enabled and not old.is_inside_tree()), "the old scroll is inert and out of the tree until it is freed")
 	_check(root.get_viewport().get_camera_2d() == a.yard.camera, "the yard camera now drives the view")
@@ -305,6 +328,99 @@ func _touch_bar() -> void:
 	await _despawn(a)
 
 
+## 6b. 结果未知且未落盘：静止核验仍未定；旧写入确定终止后才判为失败，重试成功才显示已收好
+func _held_unknown_not_landed() -> void:
+	var a = await _returned_with_find()
+	a.host_action("unknown_lost")
+	_check(a.status_text() == Adapter.TEXT_UNKNOWN and a.host.grants == 0, "an unlanded unknown result says still confirming")
+	var still: Dictionary = a.host_action("resolve")
+	_check(still.get("error", "") == "still_unknown" and a.status_text() == Adapter.TEXT_UNKNOWN, "without proof the old write ended, it stays unknown")
+	await _yard_walks(a, "unlanded unknown")
+	await _set_out_blocked(a, "unlanded unknown")
+	a.host_action("terminate")
+	a.host_action("resolve")
+	_check(a.core_state() == "recoverable_failure" and a.status_text() == Adapter.TEXT_FAILED, "once the old write ended at the parent it counts as a failure")
+	_check(not a.status_text().contains(SAVED_WORD), "the parent-on-disk outcome is not shown as saved")
+	a.host_action("retry")
+	a.host_action("ok")
+	_check(a.status_text() == Adapter.TEXT_SAVED and a.host.grants == 1, "a retry after the unlanded unknown saves once")
+	await _despawn(a)
+
+
+## 6c. 内容被拒：按物品拒绝时提案去掉该物后重排；整体不可重试时可以空手收尾，不会卡死
+func _content_rejected() -> void:
+	var a = await _spawn()
+	a.set_out()
+	a.scroll.model.x = 2200.0
+	a.scroll.observe_requested.emit("placeholder_b")
+	a.host.reject_ids = PackedStringArray(["formal.find.reed"])
+	a.scroll.return_requested.emit()
+	await process_frame
+	_check(a.core_state() == "pending_commit" and a.session().get_proposal()["items"].is_empty(), "a rejected find is dropped from the proposal")
+	_check(a.status_text() == Adapter.TEXT_SAVING, "the trimmed proposal is still saving, not saved")
+	a.host_action("next")
+	a.host_action("ok")
+	_check(a.status_text() == Adapter.TEXT_SAVED and a.host.grants == 0, "the trimmed trip closes without granting the rejected find")
+	await _despawn(a)
+	var b = await _spawn()
+	b.set_out()
+	var generation: int = b.scroll_generation
+	b.session().request_return("player")
+	b.session().commit_failed(b.session().trip_id(), false)
+	b._on_return_requested(generation)
+	await process_frame
+	_check(b.mode == "yard" and b.core_state() == "recoverable_failure", "a non-retryable failure still navigates home")
+	_check(b.status_text() == Adapter.TEXT_REJECTED and not b.status_text().contains(SAVED_WORD), "a non-retryable failure is explained without a saved claim")
+	await _set_out_blocked(b, "content rejection")
+	b.host_action("settle")
+	_check(b.core_state() == "pending_commit" and not b.host.in_flight.is_empty(), "settling empty starts an empty write")
+	b.host_action("ok")
+	_check(b.status_text() == Adapter.TEXT_SAVED and b.set_out().ok, "after settling empty the player can set out again")
+	await _despawn(b)
+
+
+## 6d. 代号守卫：上一代画卷的迟到请求在新画卷存活时到达，也不能回院或改核心
+func _stale_generation_alive() -> void:
+	var a = await _returned_with_find()
+	var old_generation: int = a.scroll_generation
+	a.host_action("ok")
+	_check(a.set_out().ok and a.mode == "scroll", "a second trip opens a new scroll")
+	a.scroll.model.x = 2200.0
+	var live = a.scroll
+	var record: int = a.session().record_revision()
+	a._on_return_requested(old_generation)
+	a._on_observe_requested("placeholder_b", old_generation)
+	await process_frame
+	_check(a.events.count("stale_return_ignored") == 1 and a.events.count("stale_observe_ignored") == 1, "requests from the previous scroll are ignored")
+	_check(a.mode == "scroll" and a.scroll == live and a.core_state() == "active", "the live scroll stays and the core stays active")
+	_check(a.session().record_revision() == record and a.host.return_calls == 1, "the previous scroll did not touch the new trip")
+	await _despawn(a)
+
+
+## 6e. 回院被拒：不在可回院的停留点时留在画卷并给出提示；走回可回院处后正常回院
+func _return_refused() -> void:
+	var a = (load(SCENE) as PackedScene).instantiate()
+	a.route_id = "fixture.gate_only"
+	a.catalog_kind = "fixture"
+	a.stop_map = {"placeholder_a": "gate", "placeholder_b": "field"}
+	root.add_child(a)
+	await process_frame
+	_check(a.set_out().ok, "the gate-only fixture route sets out")
+	a.scroll.observe_requested.emit("placeholder_b")
+	var record: int = a.session().record_revision()
+	a.scroll.return_requested.emit()
+	await process_frame
+	_check(a.events.has("return_rejected:not_return_stop"), "returning away from a return stop is refused by the core")
+	_check(a.mode == "scroll" and a.scroll != null and a.scroll.active and a.core_state() == "active", "a refused return stays on the scroll")
+	_check(a.scroll._note.text.contains("还不能回院"), "the refusal is shown to the player")
+	_check(a.session().record_revision() == record, "a refused return does not change the core record")
+	a.scroll.observe_requested.emit("placeholder_a")
+	a.scroll.return_requested.emit()
+	await process_frame
+	_check(a.mode == "yard" and a.core_state() != "active", "returning from the gate goes home")
+	await _despawn(a)
+
+
 func _returned_with_find():
 	var a = await _spawn()
 	a.set_out()
@@ -343,6 +459,8 @@ func _spawn():
 
 
 func _despawn(a: Node) -> void:
+	var unverified: Array = a.events.filter(func(event: String) -> bool: return event.ends_with(":unverified") or event == "yard_open_refused")
+	_check(unverified.is_empty(), "every logged step matched the real state: %s" % [unverified])
 	a.queue_free()
 	await process_frame
 	await process_frame
