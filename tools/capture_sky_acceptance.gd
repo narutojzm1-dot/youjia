@@ -1,6 +1,6 @@
 extends SceneTree
 
-# 制作人验收用：按晴天晨/午/晚与阴天正午各截一帧，再截安静抬头。
+# 制作人验收用：按晴天晨/午/晚/夜与阴天正午各截一帧，再截安静抬头。
 # tools/ 不进可玩导出。用法：
 # YOUJIA_SKY_CAPTURE_DIR=docs/playtests/2026-10-03-REQ-005-user-accept
 # godot --path . --script res://tools/capture_sky_acceptance.gd
@@ -28,10 +28,11 @@ func _capture() -> void:
 		await process_frame
 		await RenderingServer.frame_post_draw
 
-	# 四态云带：与 main._tod_phase_name / YardWorld 换帧窗口对齐。
+	# 云带时段：与 main._tod_phase_name / YardWorld 换帧与夜里 modulate 对齐。
 	await _shot_sky(main, folder, "sun-morning.png", "sun", 0.18)
 	await _shot_sky(main, folder, "sun-noon.png", "sun", 0.40)
 	await _shot_sky(main, folder, "sun-evening.png", "sun", 0.80)
+	await _shot_sky(main, folder, "sun-night.png", "sun", 0.92)
 	await _shot_sky(main, folder, "overcast-noon.png", "overcast", 0.40)
 
 	# 安静抬头：回到晴天早晨，站定超过 5.5 秒。
