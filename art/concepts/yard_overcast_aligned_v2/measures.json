@@ -1,0 +1,23 @@
+{
+  "issue": 168,
+  "baseline_commit": "a347079320a504c59ac6308575184ccae473204a",
+  "baseline_png_sha256": "535bee93428cb1167a867541c1cc883fbe6b5e1a083a928037d5a07168ad5b06",
+  "revision_png_sha256": "45fb4da365fe48bdb2148cb045f5b0b583f9c0b2c8884633e8682da6d30150ff",
+  "size": [
+    1920,
+    1080
+  ],
+  "bytes": 3389023,
+  "geometry": "pixel-locked to baseline candidate; no translate/scale",
+  "changed": [
+    "sky cloud gray blocks and bright rims",
+    "snow slope value layers",
+    "ground diffuse light",
+    "pond center reflection"
+  ],
+  "not_changed": [
+    "assets/holiday/environment/yard_overcast.png",
+    "runtime"
+  ],
+  "status": "candidate awaiting ART-DIRECTOR review"
+}
