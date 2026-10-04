@@ -1,0 +1,1406 @@
+{
+  "schema": "youjia.recovery-web-acceptance/v1",
+  "driver_sha": "6401500381e73f4d695961b6baaa74adf9bf2989",
+  "candidate_sha": "fixture=6401500381e73f4d695961b6baaa74adf9bf2989 gate=f096a4a927c164c4bf70acc403a826a2074d2362 host=working-tree",
+  "candidate_pck_sha256": "e82f16067371d1cfe3e9201e1f484caf934e17384f4f1791213c01e6b1d463f7",
+  "browser": "151.0.7922.173",
+  "playwright": "1.62.0",
+  "results": [
+    {
+      "scenario": "driver_selfcheck",
+      "status": "PASS",
+      "reason": "driver capability only; not R2/R3",
+      "checks": 10,
+      "failures": [],
+      "store": "youjia-recovery-test-86a353075bad40f0a9b4580c734ed2bc",
+      "seconds": 1.8,
+      "evidence": {}
+    },
+    {
+      "scenario": "R2-a_close_after_intent_prepared",
+      "status": "PASS",
+      "reason": null,
+      "checks": 8,
+      "failures": [],
+      "store": "youjia-recovery-test-f9b9afe2b8134632abdc0c808a649c6f",
+      "seconds": 3.79,
+      "evidence": {
+        "before": {
+          "present": {
+            "current": true,
+            "intent": false,
+            "archive": false
+          },
+          "current": {
+            "schema": "youjia.save-envelope/v1",
+            "store_id": "a7541f2bb2ad4c0d9a9ab0bb982d962d",
+            "commit_id": "e55fc06c554e4547a5f8fca30a5ca31d",
+            "request_id": "2c8fbf493d3849c1a0764e267e3450c6",
+            "parent_commit_id": "",
+            "generation": "1",
+            "payload_bytes": "{\"grants\":[],\"watermark\":0}",
+            "payload_sha256": "e5a6510ac9bdf697239407ea7d8fda7f3356cd33d4b8a209b9e351af37ac3009",
+            "envelope_sha256": "b401f70133c0c3858231acd81cf48592ebc03b3ba41313f7e0310b72f25a0ba0"
+          },
+          "intent": null,
+          "archive": null
+        },
+        "paused": {
+          "name": "intent_prepared_complete",
+          "request_id": "6bbb2b62f0a348e6a4f29e9225683183",
+          "page_id": "27f27a9e8c4a446b8f6cadac300b69fd"
+        },
+        "at_close": {
+          "present": {
+            "current": true,
+            "intent": true,
+            "archive": false
+          },
+          "current": {
+            "schema": "youjia.save-envelope/v1",
+            "store_id": "a7541f2bb2ad4c0d9a9ab0bb982d962d",
+            "commit_id": "e55fc06c554e4547a5f8fca30a5ca31d",
+            "request_id": "2c8fbf493d3849c1a0764e267e3450c6",
+            "parent_commit_id": "",
+            "generation": "1",
+            "payload_bytes": "{\"grants\":[],\"watermark\":0}",
+            "payload_sha256": "e5a6510ac9bdf697239407ea7d8fda7f3356cd33d4b8a209b9e351af37ac3009",
+            "envelope_sha256": "b401f70133c0c3858231acd81cf48592ebc03b3ba41313f7e0310b72f25a0ba0"
+          },
+          "intent": {
+            "state": "prepared",
+            "request_id": "6bbb2b62f0a348e6a4f29e9225683183",
+            "parent": {
+              "schema": "youjia.save-envelope/v1",
+              "store_id": "a7541f2bb2ad4c0d9a9ab0bb982d962d",
+              "commit_id": "e55fc06c554e4547a5f8fca30a5ca31d",
+              "request_id": "2c8fbf493d3849c1a0764e267e3450c6",
+              "parent_commit_id": "",
+              "generation": "1",
+              "payload_bytes": "{\"grants\":[],\"watermark\":0}",
+              "payload_sha256": "e5a6510ac9bdf697239407ea7d8fda7f3356cd33d4b8a209b9e351af37ac3009",
+              "envelope_sha256": "b401f70133c0c3858231acd81cf48592ebc03b3ba41313f7e0310b72f25a0ba0"
+            },
+            "candidate": {
+              "schema": "youjia.save-envelope/v1",
+              "store_id": "a7541f2bb2ad4c0d9a9ab0bb982d962d",
+              "commit_id": "aedb137f2fc748e1842588bb78986885",
+              "request_id": "6bbb2b62f0a348e6a4f29e9225683183",
+              "parent_commit_id": "e55fc06c554e4547a5f8fca30a5ca31d",
+              "generation": "2",
+              "payload_bytes": "{\"grants\":[1],\"watermark\":1}",
+              "payload_sha256": "6fba6f710307dd48651025ebbbc9064f0405251705605f0b46ebc7c1b8195567",
+              "envelope_sha256": "2ce894ea826d0bd73889c62ee9cd6842a3975a26d5e4c8394f1b5800f7b48ada"
+            }
+          },
+          "archive": null
+        },
+        "recovery": {
+          "verdict": "restored_parent_intent_rejected",
+          "present": {
+            "current": true,
+            "intent": false,
+            "archive": true
+          },
+          "current": {
+            "schema": "youjia.save-envelope/v1",
+            "store_id": "a7541f2bb2ad4c0d9a9ab0bb982d962d",
+            "commit_id": "e55fc06c554e4547a5f8fca30a5ca31d",
+            "request_id": "2c8fbf493d3849c1a0764e267e3450c6",
+            "parent_commit_id": "",
+            "generation": "1",
+            "payload_bytes": "{\"grants\":[],\"watermark\":0}",
+            "payload_sha256": "e5a6510ac9bdf697239407ea7d8fda7f3356cd33d4b8a209b9e351af37ac3009",
+            "envelope_sha256": "b401f70133c0c3858231acd81cf48592ebc03b3ba41313f7e0310b72f25a0ba0"
+          },
+          "intent": null,
+          "archive": [
+            {
+              "state": "rejected",
+              "request_id": "6bbb2b62f0a348e6a4f29e9225683183",
+              "parent": {
+                "schema": "youjia.save-envelope/v1",
+                "store_id": "a7541f2bb2ad4c0d9a9ab0bb982d962d",
+                "commit_id": "e55fc06c554e4547a5f8fca30a5ca31d",
+                "request_id": "2c8fbf493d3849c1a0764e267e3450c6",
+                "parent_commit_id": "",
+                "generation": "1",
+                "payload_bytes": "{\"grants\":[],\"watermark\":0}",
+                "payload_sha256": "e5a6510ac9bdf697239407ea7d8fda7f3356cd33d4b8a209b9e351af37ac3009",
+                "envelope_sha256": "b401f70133c0c3858231acd81cf48592ebc03b3ba41313f7e0310b72f25a0ba0"
+              },
+              "candidate": {
+                "schema": "youjia.save-envelope/v1",
+                "store_id": "a7541f2bb2ad4c0d9a9ab0bb982d962d",
+                "commit_id": "aedb137f2fc748e1842588bb78986885",
+                "request_id": "6bbb2b62f0a348e6a4f29e9225683183",
+                "parent_commit_id": "e55fc06c554e4547a5f8fca30a5ca31d",
+                "generation": "2",
+                "payload_bytes": "{\"grants\":[1],\"watermark\":1}",
+                "payload_sha256": "6fba6f710307dd48651025ebbbc9064f0405251705605f0b46ebc7c1b8195567",
+                "envelope_sha256": "2ce894ea826d0bd73889c62ee9cd6842a3975a26d5e4c8394f1b5800f7b48ada"
+              }
+            }
+          ]
+        },
+        "after_retry": {
+          "present": {
+            "current": true,
+            "intent": false,
+            "archive": true
+          },
+          "current": {
+            "schema": "youjia.save-envelope/v1",
+            "store_id": "a7541f2bb2ad4c0d9a9ab0bb982d962d",
+            "commit_id": "9ab5b0c1ac90401b8cd33d1b3f714585",
+            "request_id": "5c4c219c16a54194a8c8d7467f322276",
+            "parent_commit_id": "e55fc06c554e4547a5f8fca30a5ca31d",
+            "generation": "2",
+            "payload_bytes": "{\"grants\":[1],\"watermark\":1}",
+            "payload_sha256": "6fba6f710307dd48651025ebbbc9064f0405251705605f0b46ebc7c1b8195567",
+            "envelope_sha256": "91cfb7b91db823683f11ae702677cdeb54ffa97cf4ae47b060cdf585db8b7c4a"
+          },
+          "intent": null,
+          "archive": [
+            {
+              "state": "rejected",
+              "request_id": "6bbb2b62f0a348e6a4f29e9225683183",
+              "parent": {
+                "schema": "youjia.save-envelope/v1",
+                "store_id": "a7541f2bb2ad4c0d9a9ab0bb982d962d",
+                "commit_id": "e55fc06c554e4547a5f8fca30a5ca31d",
+                "request_id": "2c8fbf493d3849c1a0764e267e3450c6",
+                "parent_commit_id": "",
+                "generation": "1",
+                "payload_bytes": "{\"grants\":[],\"watermark\":0}",
+                "payload_sha256": "e5a6510ac9bdf697239407ea7d8fda7f3356cd33d4b8a209b9e351af37ac3009",
+                "envelope_sha256": "b401f70133c0c3858231acd81cf48592ebc03b3ba41313f7e0310b72f25a0ba0"
+              },
+              "candidate": {
+                "schema": "youjia.save-envelope/v1",
+                "store_id": "a7541f2bb2ad4c0d9a9ab0bb982d962d",
+                "commit_id": "aedb137f2fc748e1842588bb78986885",
+                "request_id": "6bbb2b62f0a348e6a4f29e9225683183",
+                "parent_commit_id": "e55fc06c554e4547a5f8fca30a5ca31d",
+                "generation": "2",
+                "payload_bytes": "{\"grants\":[1],\"watermark\":1}",
+                "payload_sha256": "6fba6f710307dd48651025ebbbc9064f0405251705605f0b46ebc7c1b8195567",
+                "envelope_sha256": "2ce894ea826d0bd73889c62ee9cd6842a3975a26d5e4c8394f1b5800f7b48ada"
+              }
+            }
+          ]
+        },
+        "events": [
+          {
+            "type": "lock_requested",
+            "sequence": 1,
+            "page_id": "073ee7b1879649dcb41cb786ce3f7835",
+            "request_id": null
+          },
+          {
+            "type": "lock_acquired",
+            "sequence": 2,
+            "page_id": "073ee7b1879649dcb41cb786ce3f7835",
+            "request_id": null
+          },
+          {
+            "type": "txn_complete",
+            "sequence": 3,
+            "stage": "",
+            "page_id": "073ee7b1879649dcb41cb786ce3f7835",
+            "request_id": null
+          },
+          {
+            "type": "txn_complete",
+            "sequence": 4,
+            "stage": "reject_intent",
+            "page_id": "073ee7b1879649dcb41cb786ce3f7835",
+            "request_id": null
+          },
+          {
+            "type": "txn_complete",
+            "sequence": 5,
+            "stage": "",
+            "page_id": "073ee7b1879649dcb41cb786ce3f7835",
+            "request_id": null
+          },
+          {
+            "type": "recovery_result",
+            "sequence": 6,
+            "verdict": "restored_parent_intent_rejected",
+            "page_id": "073ee7b1879649dcb41cb786ce3f7835",
+            "request_id": null
+          },
+          {
+            "type": "lock_released",
+            "sequence": 7,
+            "page_id": "073ee7b1879649dcb41cb786ce3f7835",
+            "request_id": null
+          },
+          {
+            "type": "txn_complete",
+            "sequence": 8,
+            "stage": "",
+            "page_id": "073ee7b1879649dcb41cb786ce3f7835",
+            "request_id": null
+          },
+          {
+            "type": "lock_requested",
+            "sequence": 9,
+            "page_id": "073ee7b1879649dcb41cb786ce3f7835",
+            "request_id": "5c4c219c16a54194a8c8d7467f322276"
+          },
+          {
+            "type": "lock_acquired",
+            "sequence": 10,
+            "page_id": "073ee7b1879649dcb41cb786ce3f7835",
+            "request_id": "5c4c219c16a54194a8c8d7467f322276"
+          },
+          {
+            "type": "txn_complete",
+            "sequence": 11,
+            "stage": "",
+            "page_id": "073ee7b1879649dcb41cb786ce3f7835",
+            "request_id": "5c4c219c16a54194a8c8d7467f322276"
+          },
+          {
+            "type": "txn_complete",
+            "sequence": 12,
+            "stage": "intent",
+            "page_id": "073ee7b1879649dcb41cb786ce3f7835",
+            "request_id": "5c4c219c16a54194a8c8d7467f322276"
+          },
+          {
+            "type": "txn_complete",
+            "sequence": 13,
+            "stage": "commit",
+            "page_id": "073ee7b1879649dcb41cb786ce3f7835",
+            "request_id": "5c4c219c16a54194a8c8d7467f322276"
+          },
+          {
+            "type": "txn_complete",
+            "sequence": 14,
+            "stage": "",
+            "page_id": "073ee7b1879649dcb41cb786ce3f7835",
+            "request_id": "5c4c219c16a54194a8c8d7467f322276"
+          },
+          {
+            "type": "lock_released",
+            "sequence": 15,
+            "page_id": "073ee7b1879649dcb41cb786ce3f7835",
+            "request_id": "5c4c219c16a54194a8c8d7467f322276"
+          },
+          {
+            "request_id": "5c4c219c16a54194a8c8d7467f322276",
+            "type": "receipt_delivered",
+            "page_id": "073ee7b1879649dcb41cb786ce3f7835",
+            "sequence": 16
+          },
+          {
+            "type": "lock_requested",
+            "sequence": 17,
+            "page_id": "073ee7b1879649dcb41cb786ce3f7835",
+            "request_id": "5c4c219c16a54194a8c8d7467f322276"
+          },
+          {
+            "type": "lock_acquired",
+            "sequence": 18,
+            "page_id": "073ee7b1879649dcb41cb786ce3f7835",
+            "request_id": "5c4c219c16a54194a8c8d7467f322276"
+          },
+          {
+            "type": "txn_complete",
+            "sequence": 19,
+            "stage": "",
+            "page_id": "073ee7b1879649dcb41cb786ce3f7835",
+            "request_id": "5c4c219c16a54194a8c8d7467f322276"
+          },
+          {
+            "type": "txn_complete",
+            "sequence": 20,
+            "stage": "acknowledge",
+            "page_id": "073ee7b1879649dcb41cb786ce3f7835",
+            "request_id": "5c4c219c16a54194a8c8d7467f322276"
+          },
+          {
+            "type": "txn_complete",
+            "sequence": 21,
+            "stage": "",
+            "page_id": "073ee7b1879649dcb41cb786ce3f7835",
+            "request_id": "5c4c219c16a54194a8c8d7467f322276"
+          },
+          {
+            "type": "lock_released",
+            "sequence": 22,
+            "page_id": "073ee7b1879649dcb41cb786ce3f7835",
+            "request_id": "5c4c219c16a54194a8c8d7467f322276"
+          },
+          {
+            "type": "txn_complete",
+            "sequence": 23,
+            "stage": "",
+            "page_id": "073ee7b1879649dcb41cb786ce3f7835",
+            "request_id": null
+          }
+        ]
+      }
+    },
+    {
+      "scenario": "R2-b_close_after_candidate_committed",
+      "status": "PASS",
+      "reason": null,
+      "checks": 7,
+      "failures": [],
+      "store": "youjia-recovery-test-cd9279f9fdc74f0bb50769f592872eaf",
+      "seconds": 3.32,
+      "evidence": {
+        "before": {
+          "present": {
+            "current": true,
+            "intent": false,
+            "archive": false
+          },
+          "current": {
+            "schema": "youjia.save-envelope/v1",
+            "store_id": "6b5d0053f0e64003a7fa28c0a4845a80",
+            "commit_id": "04c7752ad77c49ef8fd5af3ed29ebc39",
+            "request_id": "2e1f0034a78845f5b28f541f04143167",
+            "parent_commit_id": "",
+            "generation": "1",
+            "payload_bytes": "{\"grants\":[],\"watermark\":0}",
+            "payload_sha256": "e5a6510ac9bdf697239407ea7d8fda7f3356cd33d4b8a209b9e351af37ac3009",
+            "envelope_sha256": "6ec5c18b797858e18d52fe90a1be8a915f582d6f2db64e8e8919d64bf43393a1"
+          },
+          "intent": null,
+          "archive": null
+        },
+        "paused": {
+          "name": "candidate_committed_before_receipt",
+          "request_id": "765c7c16de944436bccb16634050e8a6",
+          "page_id": "b05f2b3a7bed477aa6602acbd67f736b"
+        },
+        "at_close": {
+          "present": {
+            "current": true,
+            "intent": true,
+            "archive": false
+          },
+          "current": {
+            "schema": "youjia.save-envelope/v1",
+            "store_id": "6b5d0053f0e64003a7fa28c0a4845a80",
+            "commit_id": "25f47a588096472998b235e8e5d3f607",
+            "request_id": "765c7c16de944436bccb16634050e8a6",
+            "parent_commit_id": "04c7752ad77c49ef8fd5af3ed29ebc39",
+            "generation": "2",
+            "payload_bytes": "{\"grants\":[1],\"watermark\":1}",
+            "payload_sha256": "6fba6f710307dd48651025ebbbc9064f0405251705605f0b46ebc7c1b8195567",
+            "envelope_sha256": "09192feec2d2d17d275b1cfb24228b5fc7b0ac4c3652ea015c771c7d3338a846"
+          },
+          "intent": {
+            "state": "committed",
+            "request_id": "765c7c16de944436bccb16634050e8a6",
+            "parent": {
+              "schema": "youjia.save-envelope/v1",
+              "store_id": "6b5d0053f0e64003a7fa28c0a4845a80",
+              "commit_id": "04c7752ad77c49ef8fd5af3ed29ebc39",
+              "request_id": "2e1f0034a78845f5b28f541f04143167",
+              "parent_commit_id": "",
+              "generation": "1",
+              "payload_bytes": "{\"grants\":[],\"watermark\":0}",
+              "payload_sha256": "e5a6510ac9bdf697239407ea7d8fda7f3356cd33d4b8a209b9e351af37ac3009",
+              "envelope_sha256": "6ec5c18b797858e18d52fe90a1be8a915f582d6f2db64e8e8919d64bf43393a1"
+            },
+            "candidate": {
+              "schema": "youjia.save-envelope/v1",
+              "store_id": "6b5d0053f0e64003a7fa28c0a4845a80",
+              "commit_id": "25f47a588096472998b235e8e5d3f607",
+              "request_id": "765c7c16de944436bccb16634050e8a6",
+              "parent_commit_id": "04c7752ad77c49ef8fd5af3ed29ebc39",
+              "generation": "2",
+              "payload_bytes": "{\"grants\":[1],\"watermark\":1}",
+              "payload_sha256": "6fba6f710307dd48651025ebbbc9064f0405251705605f0b46ebc7c1b8195567",
+              "envelope_sha256": "09192feec2d2d17d275b1cfb24228b5fc7b0ac4c3652ea015c771c7d3338a846"
+            }
+          },
+          "archive": null
+        },
+        "recovery": {
+          "verdict": "restored_candidate",
+          "present": {
+            "current": true,
+            "intent": false,
+            "archive": false
+          },
+          "current": {
+            "schema": "youjia.save-envelope/v1",
+            "store_id": "6b5d0053f0e64003a7fa28c0a4845a80",
+            "commit_id": "25f47a588096472998b235e8e5d3f607",
+            "request_id": "765c7c16de944436bccb16634050e8a6",
+            "parent_commit_id": "04c7752ad77c49ef8fd5af3ed29ebc39",
+            "generation": "2",
+            "payload_bytes": "{\"grants\":[1],\"watermark\":1}",
+            "payload_sha256": "6fba6f710307dd48651025ebbbc9064f0405251705605f0b46ebc7c1b8195567",
+            "envelope_sha256": "09192feec2d2d17d275b1cfb24228b5fc7b0ac4c3652ea015c771c7d3338a846"
+          },
+          "intent": null,
+          "archive": null
+        },
+        "after_repeat": {
+          "present": {
+            "current": true,
+            "intent": false,
+            "archive": false
+          },
+          "current": {
+            "schema": "youjia.save-envelope/v1",
+            "store_id": "6b5d0053f0e64003a7fa28c0a4845a80",
+            "commit_id": "25f47a588096472998b235e8e5d3f607",
+            "request_id": "765c7c16de944436bccb16634050e8a6",
+            "parent_commit_id": "04c7752ad77c49ef8fd5af3ed29ebc39",
+            "generation": "2",
+            "payload_bytes": "{\"grants\":[1],\"watermark\":1}",
+            "payload_sha256": "6fba6f710307dd48651025ebbbc9064f0405251705605f0b46ebc7c1b8195567",
+            "envelope_sha256": "09192feec2d2d17d275b1cfb24228b5fc7b0ac4c3652ea015c771c7d3338a846"
+          },
+          "intent": null,
+          "archive": null
+        },
+        "events": [
+          {
+            "type": "lock_requested",
+            "sequence": 1,
+            "page_id": "712850e976eb406c96d395bb2985b3e2",
+            "request_id": null
+          },
+          {
+            "type": "lock_acquired",
+            "sequence": 2,
+            "page_id": "712850e976eb406c96d395bb2985b3e2",
+            "request_id": null
+          },
+          {
+            "type": "txn_complete",
+            "sequence": 3,
+            "stage": "",
+            "page_id": "712850e976eb406c96d395bb2985b3e2",
+            "request_id": null
+          },
+          {
+            "type": "txn_complete",
+            "sequence": 4,
+            "stage": "cleanup",
+            "page_id": "712850e976eb406c96d395bb2985b3e2",
+            "request_id": null
+          },
+          {
+            "type": "txn_complete",
+            "sequence": 5,
+            "stage": "",
+            "page_id": "712850e976eb406c96d395bb2985b3e2",
+            "request_id": null
+          },
+          {
+            "type": "recovery_result",
+            "sequence": 6,
+            "verdict": "restored_candidate",
+            "page_id": "712850e976eb406c96d395bb2985b3e2",
+            "request_id": null
+          },
+          {
+            "type": "lock_released",
+            "sequence": 7,
+            "page_id": "712850e976eb406c96d395bb2985b3e2",
+            "request_id": null
+          },
+          {
+            "type": "txn_complete",
+            "sequence": 8,
+            "stage": "",
+            "page_id": "712850e976eb406c96d395bb2985b3e2",
+            "request_id": null
+          }
+        ]
+      }
+    },
+    {
+      "scenario": "R3-a_two_page_lock",
+      "status": "BLOCKED",
+      "reason": "probe=yes; fixture=not ready: godot fixture not started",
+      "checks": 0,
+      "failures": [],
+      "store": "youjia-recovery-test-d428854190a5488b99a45cb6d35e1d36",
+      "seconds": 9.62,
+      "evidence": {}
+    },
+    {
+      "scenario": "R3-b_no_web_locks",
+      "status": "BLOCKED",
+      "reason": "probe=yes; fixture=not ready: not writable: no_web_locks",
+      "checks": 0,
+      "failures": [],
+      "store": "youjia-recovery-test-1b1c8ce22cb448f28187aa78dc3a91ec",
+      "seconds": 9.96,
+      "evidence": {}
+    },
+    {
+      "scenario": "R3-c_drop_receipt",
+      "status": "PASS",
+      "reason": null,
+      "checks": 3,
+      "failures": [],
+      "store": "youjia-recovery-test-a3c40021309a4e7787c6e84c5bfa0a81",
+      "seconds": 6.56,
+      "evidence": {
+        "before": {
+          "present": {
+            "current": true,
+            "intent": false,
+            "archive": false
+          },
+          "current": {
+            "schema": "youjia.save-envelope/v1",
+            "store_id": "8f2c12aa5ce143dea51543a4a041e9c5",
+            "commit_id": "4638f8ef9a5d46358d6db6b1f4b61017",
+            "request_id": "9b62681c5bf24393a581b54e92b3f1db",
+            "parent_commit_id": "",
+            "generation": "1",
+            "payload_bytes": "{\"grants\":[],\"watermark\":0}",
+            "payload_sha256": "e5a6510ac9bdf697239407ea7d8fda7f3356cd33d4b8a209b9e351af37ac3009",
+            "envelope_sha256": "33fcf455ad3888eda4ca4c3c720e05a460f2b5bbe771a0ab3b310de5efa84eaa"
+          },
+          "intent": null,
+          "archive": null
+        },
+        "injected": {
+          "drop_receipt": true
+        },
+        "after_fault": {
+          "present": {
+            "current": true,
+            "intent": true,
+            "archive": false
+          },
+          "current": {
+            "schema": "youjia.save-envelope/v1",
+            "store_id": "8f2c12aa5ce143dea51543a4a041e9c5",
+            "commit_id": "a53c2968f407447383e4d126b6609dfa",
+            "request_id": "8fc3803877c34c3db6e04da089c6aa86",
+            "parent_commit_id": "4638f8ef9a5d46358d6db6b1f4b61017",
+            "generation": "2",
+            "payload_bytes": "{\"grants\":[1],\"watermark\":1}",
+            "payload_sha256": "6fba6f710307dd48651025ebbbc9064f0405251705605f0b46ebc7c1b8195567",
+            "envelope_sha256": "837fa0a1f6e1d0055e30c03628b0ea423b17e9bc62391ad85c014e90d9015dfb"
+          },
+          "intent": {
+            "state": "committed",
+            "request_id": "8fc3803877c34c3db6e04da089c6aa86",
+            "parent": {
+              "schema": "youjia.save-envelope/v1",
+              "store_id": "8f2c12aa5ce143dea51543a4a041e9c5",
+              "commit_id": "4638f8ef9a5d46358d6db6b1f4b61017",
+              "request_id": "9b62681c5bf24393a581b54e92b3f1db",
+              "parent_commit_id": "",
+              "generation": "1",
+              "payload_bytes": "{\"grants\":[],\"watermark\":0}",
+              "payload_sha256": "e5a6510ac9bdf697239407ea7d8fda7f3356cd33d4b8a209b9e351af37ac3009",
+              "envelope_sha256": "33fcf455ad3888eda4ca4c3c720e05a460f2b5bbe771a0ab3b310de5efa84eaa"
+            },
+            "candidate": {
+              "schema": "youjia.save-envelope/v1",
+              "store_id": "8f2c12aa5ce143dea51543a4a041e9c5",
+              "commit_id": "a53c2968f407447383e4d126b6609dfa",
+              "request_id": "8fc3803877c34c3db6e04da089c6aa86",
+              "parent_commit_id": "4638f8ef9a5d46358d6db6b1f4b61017",
+              "generation": "2",
+              "payload_bytes": "{\"grants\":[1],\"watermark\":1}",
+              "payload_sha256": "6fba6f710307dd48651025ebbbc9064f0405251705605f0b46ebc7c1b8195567",
+              "envelope_sha256": "837fa0a1f6e1d0055e30c03628b0ea423b17e9bc62391ad85c014e90d9015dfb"
+            }
+          },
+          "archive": null
+        },
+        "business_after_fault": {
+          "blocked_reason": "",
+          "confirmed_serials": [],
+          "grants": [],
+          "pending": true,
+          "pending_request": "8fc3803877c34c3db6e04da089c6aa86",
+          "ready": true,
+          "refused": [],
+          "verdict": "clean",
+          "watermark": 0
+        },
+        "recovery": {
+          "verdict": "restored_candidate",
+          "present": {
+            "current": true,
+            "intent": false,
+            "archive": false
+          },
+          "current": {
+            "schema": "youjia.save-envelope/v1",
+            "store_id": "8f2c12aa5ce143dea51543a4a041e9c5",
+            "commit_id": "a53c2968f407447383e4d126b6609dfa",
+            "request_id": "8fc3803877c34c3db6e04da089c6aa86",
+            "parent_commit_id": "4638f8ef9a5d46358d6db6b1f4b61017",
+            "generation": "2",
+            "payload_bytes": "{\"grants\":[1],\"watermark\":1}",
+            "payload_sha256": "6fba6f710307dd48651025ebbbc9064f0405251705605f0b46ebc7c1b8195567",
+            "envelope_sha256": "837fa0a1f6e1d0055e30c03628b0ea423b17e9bc62391ad85c014e90d9015dfb"
+          },
+          "intent": null,
+          "archive": null
+        },
+        "events": [
+          {
+            "type": "lock_requested",
+            "sequence": 1,
+            "page_id": "3778f117fe9b4886a54a9428b4defc88",
+            "request_id": null
+          },
+          {
+            "type": "lock_acquired",
+            "sequence": 2,
+            "page_id": "3778f117fe9b4886a54a9428b4defc88",
+            "request_id": null
+          },
+          {
+            "type": "txn_complete",
+            "sequence": 3,
+            "stage": "",
+            "page_id": "3778f117fe9b4886a54a9428b4defc88",
+            "request_id": null
+          },
+          {
+            "type": "txn_complete",
+            "sequence": 4,
+            "stage": "cleanup",
+            "page_id": "3778f117fe9b4886a54a9428b4defc88",
+            "request_id": null
+          },
+          {
+            "type": "txn_complete",
+            "sequence": 5,
+            "stage": "",
+            "page_id": "3778f117fe9b4886a54a9428b4defc88",
+            "request_id": null
+          },
+          {
+            "type": "recovery_result",
+            "sequence": 6,
+            "verdict": "restored_candidate",
+            "page_id": "3778f117fe9b4886a54a9428b4defc88",
+            "request_id": null
+          },
+          {
+            "type": "lock_released",
+            "sequence": 7,
+            "page_id": "3778f117fe9b4886a54a9428b4defc88",
+            "request_id": null
+          }
+        ]
+      }
+    },
+    {
+      "scenario": "R3-c_wrong_receipt_identity",
+      "status": "PASS",
+      "reason": null,
+      "checks": 3,
+      "failures": [],
+      "store": "youjia-recovery-test-524e144dcdad47a7b0e1e9c3a55242f4",
+      "seconds": 7.34,
+      "evidence": {
+        "before": {
+          "present": {
+            "current": true,
+            "intent": false,
+            "archive": false
+          },
+          "current": {
+            "schema": "youjia.save-envelope/v1",
+            "store_id": "da7396f0f7a245dab146ea3a09a5db98",
+            "commit_id": "b5e10906170b44c9912ec7a8c135b479",
+            "request_id": "3facb16e4f874259bcc51b16400dcb29",
+            "parent_commit_id": "",
+            "generation": "1",
+            "payload_bytes": "{\"grants\":[],\"watermark\":0}",
+            "payload_sha256": "e5a6510ac9bdf697239407ea7d8fda7f3356cd33d4b8a209b9e351af37ac3009",
+            "envelope_sha256": "792ebe9d06c8f1f1129ce7686587ec27d530e4ba9c9bef98ee5d9f94e67ac1bd"
+          },
+          "intent": null,
+          "archive": null
+        },
+        "injected": {
+          "receipt_identity": "wrong"
+        },
+        "after_fault": {
+          "present": {
+            "current": true,
+            "intent": true,
+            "archive": false
+          },
+          "current": {
+            "schema": "youjia.save-envelope/v1",
+            "store_id": "da7396f0f7a245dab146ea3a09a5db98",
+            "commit_id": "16917bbe1a7c4146b410205b17f141b8",
+            "request_id": "bee8c9410c964305865a78cc0f179e33",
+            "parent_commit_id": "b5e10906170b44c9912ec7a8c135b479",
+            "generation": "2",
+            "payload_bytes": "{\"grants\":[1],\"watermark\":1}",
+            "payload_sha256": "6fba6f710307dd48651025ebbbc9064f0405251705605f0b46ebc7c1b8195567",
+            "envelope_sha256": "d94d38aa43d6aadc2a24f44d8e3dd7c7772a1400ffce42505fca5b761f50704e"
+          },
+          "intent": {
+            "state": "committed",
+            "request_id": "bee8c9410c964305865a78cc0f179e33",
+            "parent": {
+              "schema": "youjia.save-envelope/v1",
+              "store_id": "da7396f0f7a245dab146ea3a09a5db98",
+              "commit_id": "b5e10906170b44c9912ec7a8c135b479",
+              "request_id": "3facb16e4f874259bcc51b16400dcb29",
+              "parent_commit_id": "",
+              "generation": "1",
+              "payload_bytes": "{\"grants\":[],\"watermark\":0}",
+              "payload_sha256": "e5a6510ac9bdf697239407ea7d8fda7f3356cd33d4b8a209b9e351af37ac3009",
+              "envelope_sha256": "792ebe9d06c8f1f1129ce7686587ec27d530e4ba9c9bef98ee5d9f94e67ac1bd"
+            },
+            "candidate": {
+              "schema": "youjia.save-envelope/v1",
+              "store_id": "da7396f0f7a245dab146ea3a09a5db98",
+              "commit_id": "16917bbe1a7c4146b410205b17f141b8",
+              "request_id": "bee8c9410c964305865a78cc0f179e33",
+              "parent_commit_id": "b5e10906170b44c9912ec7a8c135b479",
+              "generation": "2",
+              "payload_bytes": "{\"grants\":[1],\"watermark\":1}",
+              "payload_sha256": "6fba6f710307dd48651025ebbbc9064f0405251705605f0b46ebc7c1b8195567",
+              "envelope_sha256": "d94d38aa43d6aadc2a24f44d8e3dd7c7772a1400ffce42505fca5b761f50704e"
+            }
+          },
+          "archive": null
+        },
+        "business_after_fault": {
+          "blocked_reason": "",
+          "confirmed_serials": [],
+          "grants": [],
+          "pending": true,
+          "pending_request": "bee8c9410c964305865a78cc0f179e33",
+          "ready": true,
+          "refused": [],
+          "verdict": "clean",
+          "watermark": 0
+        },
+        "recovery": {
+          "verdict": "restored_candidate",
+          "present": {
+            "current": true,
+            "intent": false,
+            "archive": false
+          },
+          "current": {
+            "schema": "youjia.save-envelope/v1",
+            "store_id": "da7396f0f7a245dab146ea3a09a5db98",
+            "commit_id": "16917bbe1a7c4146b410205b17f141b8",
+            "request_id": "bee8c9410c964305865a78cc0f179e33",
+            "parent_commit_id": "b5e10906170b44c9912ec7a8c135b479",
+            "generation": "2",
+            "payload_bytes": "{\"grants\":[1],\"watermark\":1}",
+            "payload_sha256": "6fba6f710307dd48651025ebbbc9064f0405251705605f0b46ebc7c1b8195567",
+            "envelope_sha256": "d94d38aa43d6aadc2a24f44d8e3dd7c7772a1400ffce42505fca5b761f50704e"
+          },
+          "intent": null,
+          "archive": null
+        },
+        "events": [
+          {
+            "type": "lock_requested",
+            "sequence": 1,
+            "page_id": "cb529c5c2002497d989162dc73cfff49",
+            "request_id": null
+          },
+          {
+            "type": "lock_acquired",
+            "sequence": 2,
+            "page_id": "cb529c5c2002497d989162dc73cfff49",
+            "request_id": null
+          },
+          {
+            "type": "txn_complete",
+            "sequence": 3,
+            "stage": "",
+            "page_id": "cb529c5c2002497d989162dc73cfff49",
+            "request_id": null
+          },
+          {
+            "type": "txn_complete",
+            "sequence": 4,
+            "stage": "cleanup",
+            "page_id": "cb529c5c2002497d989162dc73cfff49",
+            "request_id": null
+          },
+          {
+            "type": "txn_complete",
+            "sequence": 5,
+            "stage": "",
+            "page_id": "cb529c5c2002497d989162dc73cfff49",
+            "request_id": null
+          },
+          {
+            "type": "recovery_result",
+            "sequence": 6,
+            "verdict": "restored_candidate",
+            "page_id": "cb529c5c2002497d989162dc73cfff49",
+            "request_id": null
+          },
+          {
+            "type": "lock_released",
+            "sequence": 7,
+            "page_id": "cb529c5c2002497d989162dc73cfff49",
+            "request_id": null
+          }
+        ]
+      }
+    },
+    {
+      "scenario": "R3-c_duplicate_receipt",
+      "status": "PASS",
+      "reason": null,
+      "checks": 3,
+      "failures": [],
+      "store": "youjia-recovery-test-47ed101ad281493ea064cc0bd74524be",
+      "seconds": 8.25,
+      "evidence": {
+        "before": {
+          "present": {
+            "current": true,
+            "intent": false,
+            "archive": false
+          },
+          "current": {
+            "schema": "youjia.save-envelope/v1",
+            "store_id": "2566c54aa74f44b2a2c210335e641d04",
+            "commit_id": "aba2ed2bd8014a2a87a8db180706b884",
+            "request_id": "2f315b8dc7b84ebebf8a0228355d5ce5",
+            "parent_commit_id": "",
+            "generation": "1",
+            "payload_bytes": "{\"grants\":[],\"watermark\":0}",
+            "payload_sha256": "e5a6510ac9bdf697239407ea7d8fda7f3356cd33d4b8a209b9e351af37ac3009",
+            "envelope_sha256": "b09d46e3edd8f79cf51ea6d3d8d220c481fdc1110d74a943894392360dd93c61"
+          },
+          "intent": null,
+          "archive": null
+        },
+        "injected": {
+          "duplicate_receipt": true
+        },
+        "after_fault": {
+          "present": {
+            "current": true,
+            "intent": false,
+            "archive": false
+          },
+          "current": {
+            "schema": "youjia.save-envelope/v1",
+            "store_id": "2566c54aa74f44b2a2c210335e641d04",
+            "commit_id": "3ed00333878344b6a74398f379a77b91",
+            "request_id": "47499ef4b2ee485da215cd7e98e21570",
+            "parent_commit_id": "aba2ed2bd8014a2a87a8db180706b884",
+            "generation": "2",
+            "payload_bytes": "{\"grants\":[1],\"watermark\":1}",
+            "payload_sha256": "6fba6f710307dd48651025ebbbc9064f0405251705605f0b46ebc7c1b8195567",
+            "envelope_sha256": "1ccd7ead6ba47f6cf8053f77f8cfb618b6ef3c407a1a6cbae5bc8a3c8dec4503"
+          },
+          "intent": null,
+          "archive": null
+        },
+        "business_after_fault": {
+          "blocked_reason": "",
+          "confirmed_serials": [
+            1
+          ],
+          "grants": [
+            1
+          ],
+          "pending": false,
+          "pending_request": "",
+          "ready": true,
+          "refused": [],
+          "verdict": "clean",
+          "watermark": 1
+        },
+        "recovery": {
+          "verdict": "clean",
+          "present": {
+            "current": true,
+            "intent": false,
+            "archive": false
+          },
+          "current": {
+            "schema": "youjia.save-envelope/v1",
+            "store_id": "2566c54aa74f44b2a2c210335e641d04",
+            "commit_id": "3ed00333878344b6a74398f379a77b91",
+            "request_id": "47499ef4b2ee485da215cd7e98e21570",
+            "parent_commit_id": "aba2ed2bd8014a2a87a8db180706b884",
+            "generation": "2",
+            "payload_bytes": "{\"grants\":[1],\"watermark\":1}",
+            "payload_sha256": "6fba6f710307dd48651025ebbbc9064f0405251705605f0b46ebc7c1b8195567",
+            "envelope_sha256": "1ccd7ead6ba47f6cf8053f77f8cfb618b6ef3c407a1a6cbae5bc8a3c8dec4503"
+          },
+          "intent": null,
+          "archive": null
+        },
+        "events": [
+          {
+            "type": "lock_requested",
+            "sequence": 1,
+            "page_id": "19f05c6901f14fd2b2b4cbcec5f9af40",
+            "request_id": null
+          },
+          {
+            "type": "lock_acquired",
+            "sequence": 2,
+            "page_id": "19f05c6901f14fd2b2b4cbcec5f9af40",
+            "request_id": null
+          },
+          {
+            "type": "txn_complete",
+            "sequence": 3,
+            "stage": "",
+            "page_id": "19f05c6901f14fd2b2b4cbcec5f9af40",
+            "request_id": null
+          },
+          {
+            "type": "recovery_result",
+            "sequence": 4,
+            "verdict": "clean",
+            "page_id": "19f05c6901f14fd2b2b4cbcec5f9af40",
+            "request_id": null
+          },
+          {
+            "type": "lock_released",
+            "sequence": 5,
+            "page_id": "19f05c6901f14fd2b2b4cbcec5f9af40",
+            "request_id": null
+          }
+        ]
+      }
+    },
+    {
+      "scenario": "R3-c_delay_receipt",
+      "status": "PASS",
+      "reason": null,
+      "checks": 3,
+      "failures": [],
+      "store": "youjia-recovery-test-04b02cd6b9254911a6561d8bd666a1ac",
+      "seconds": 6.52,
+      "evidence": {
+        "before": {
+          "present": {
+            "current": true,
+            "intent": false,
+            "archive": false
+          },
+          "current": {
+            "schema": "youjia.save-envelope/v1",
+            "store_id": "ee18c96f45bf42ffa62973a39eef3743",
+            "commit_id": "ec9bd50c36754b539952ce9cae530968",
+            "request_id": "8266be6a7226430b9cdf3ac9bdfc805e",
+            "parent_commit_id": "",
+            "generation": "1",
+            "payload_bytes": "{\"grants\":[],\"watermark\":0}",
+            "payload_sha256": "e5a6510ac9bdf697239407ea7d8fda7f3356cd33d4b8a209b9e351af37ac3009",
+            "envelope_sha256": "8e7cd8388a4ec444b50757b208568bde485fc5755a23acbcdc753428c3916124"
+          },
+          "intent": null,
+          "archive": null
+        },
+        "injected": {
+          "delay_receipt_ms": 1500
+        },
+        "after_fault": {
+          "present": {
+            "current": true,
+            "intent": false,
+            "archive": false
+          },
+          "current": {
+            "schema": "youjia.save-envelope/v1",
+            "store_id": "ee18c96f45bf42ffa62973a39eef3743",
+            "commit_id": "dff652fd229b4043b0dc263901133a9f",
+            "request_id": "23ab9c8672f2443a922f6a232726bc2f",
+            "parent_commit_id": "ec9bd50c36754b539952ce9cae530968",
+            "generation": "2",
+            "payload_bytes": "{\"grants\":[1],\"watermark\":1}",
+            "payload_sha256": "6fba6f710307dd48651025ebbbc9064f0405251705605f0b46ebc7c1b8195567",
+            "envelope_sha256": "31ef08a37423e7729419eca521cfb8fb83b029c866e7a2cf000d29feb907b5a5"
+          },
+          "intent": null,
+          "archive": null
+        },
+        "business_after_fault": {
+          "blocked_reason": "",
+          "confirmed_serials": [
+            1
+          ],
+          "grants": [
+            1
+          ],
+          "pending": false,
+          "pending_request": "",
+          "ready": true,
+          "refused": [],
+          "verdict": "clean",
+          "watermark": 1
+        },
+        "recovery": {
+          "verdict": "clean",
+          "present": {
+            "current": true,
+            "intent": false,
+            "archive": false
+          },
+          "current": {
+            "schema": "youjia.save-envelope/v1",
+            "store_id": "ee18c96f45bf42ffa62973a39eef3743",
+            "commit_id": "dff652fd229b4043b0dc263901133a9f",
+            "request_id": "23ab9c8672f2443a922f6a232726bc2f",
+            "parent_commit_id": "ec9bd50c36754b539952ce9cae530968",
+            "generation": "2",
+            "payload_bytes": "{\"grants\":[1],\"watermark\":1}",
+            "payload_sha256": "6fba6f710307dd48651025ebbbc9064f0405251705605f0b46ebc7c1b8195567",
+            "envelope_sha256": "31ef08a37423e7729419eca521cfb8fb83b029c866e7a2cf000d29feb907b5a5"
+          },
+          "intent": null,
+          "archive": null
+        },
+        "events": [
+          {
+            "type": "lock_requested",
+            "sequence": 1,
+            "page_id": "7fc7de988a034543a9b96819d2eb1391",
+            "request_id": null
+          },
+          {
+            "type": "lock_acquired",
+            "sequence": 2,
+            "page_id": "7fc7de988a034543a9b96819d2eb1391",
+            "request_id": null
+          },
+          {
+            "type": "txn_complete",
+            "sequence": 3,
+            "stage": "",
+            "page_id": "7fc7de988a034543a9b96819d2eb1391",
+            "request_id": null
+          },
+          {
+            "type": "recovery_result",
+            "sequence": 4,
+            "verdict": "clean",
+            "page_id": "7fc7de988a034543a9b96819d2eb1391",
+            "request_id": null
+          },
+          {
+            "type": "lock_released",
+            "sequence": 5,
+            "page_id": "7fc7de988a034543a9b96819d2eb1391",
+            "request_id": null
+          }
+        ]
+      }
+    },
+    {
+      "scenario": "R3-c_abort_intent_txn",
+      "status": "PASS",
+      "reason": null,
+      "checks": 4,
+      "failures": [],
+      "store": "youjia-recovery-test-e5de29127b8f41299af276222000d0c8",
+      "seconds": 6.68,
+      "evidence": {
+        "before": {
+          "present": {
+            "current": true,
+            "intent": false,
+            "archive": false
+          },
+          "current": {
+            "schema": "youjia.save-envelope/v1",
+            "store_id": "5143499faf9d4d61a842fe0e5fe50e0f",
+            "commit_id": "a8ff053c081c44aeb92d33598ce05868",
+            "request_id": "a70d2b509cea479ab38f8634c3d68a1d",
+            "parent_commit_id": "",
+            "generation": "1",
+            "payload_bytes": "{\"grants\":[],\"watermark\":0}",
+            "payload_sha256": "e5a6510ac9bdf697239407ea7d8fda7f3356cd33d4b8a209b9e351af37ac3009",
+            "envelope_sha256": "dec2a0ac0c284510a122f415db443ef6fbf071c9d440a8d501b9377221cefd5a"
+          },
+          "intent": null,
+          "archive": null
+        },
+        "injected": {
+          "abort_stage": "intent"
+        },
+        "after_fault": {
+          "present": {
+            "current": true,
+            "intent": false,
+            "archive": false
+          },
+          "current": {
+            "schema": "youjia.save-envelope/v1",
+            "store_id": "5143499faf9d4d61a842fe0e5fe50e0f",
+            "commit_id": "a8ff053c081c44aeb92d33598ce05868",
+            "request_id": "a70d2b509cea479ab38f8634c3d68a1d",
+            "parent_commit_id": "",
+            "generation": "1",
+            "payload_bytes": "{\"grants\":[],\"watermark\":0}",
+            "payload_sha256": "e5a6510ac9bdf697239407ea7d8fda7f3356cd33d4b8a209b9e351af37ac3009",
+            "envelope_sha256": "dec2a0ac0c284510a122f415db443ef6fbf071c9d440a8d501b9377221cefd5a"
+          },
+          "intent": null,
+          "archive": null
+        },
+        "business_after_fault": {
+          "blocked_reason": "",
+          "confirmed_serials": [],
+          "grants": [],
+          "pending": false,
+          "pending_request": "",
+          "ready": true,
+          "refused": [],
+          "verdict": "clean",
+          "watermark": 0
+        },
+        "recovery": {
+          "verdict": "clean",
+          "present": {
+            "current": true,
+            "intent": false,
+            "archive": false
+          },
+          "current": {
+            "schema": "youjia.save-envelope/v1",
+            "store_id": "5143499faf9d4d61a842fe0e5fe50e0f",
+            "commit_id": "a8ff053c081c44aeb92d33598ce05868",
+            "request_id": "a70d2b509cea479ab38f8634c3d68a1d",
+            "parent_commit_id": "",
+            "generation": "1",
+            "payload_bytes": "{\"grants\":[],\"watermark\":0}",
+            "payload_sha256": "e5a6510ac9bdf697239407ea7d8fda7f3356cd33d4b8a209b9e351af37ac3009",
+            "envelope_sha256": "dec2a0ac0c284510a122f415db443ef6fbf071c9d440a8d501b9377221cefd5a"
+          },
+          "intent": null,
+          "archive": null
+        },
+        "events": [
+          {
+            "type": "lock_requested",
+            "sequence": 1,
+            "page_id": "36663e56dd6a488086eccb923be3c2e0",
+            "request_id": null
+          },
+          {
+            "type": "lock_acquired",
+            "sequence": 2,
+            "page_id": "36663e56dd6a488086eccb923be3c2e0",
+            "request_id": null
+          },
+          {
+            "type": "txn_complete",
+            "sequence": 3,
+            "stage": "",
+            "page_id": "36663e56dd6a488086eccb923be3c2e0",
+            "request_id": null
+          },
+          {
+            "type": "recovery_result",
+            "sequence": 4,
+            "verdict": "clean",
+            "page_id": "36663e56dd6a488086eccb923be3c2e0",
+            "request_id": null
+          },
+          {
+            "type": "lock_released",
+            "sequence": 5,
+            "page_id": "36663e56dd6a488086eccb923be3c2e0",
+            "request_id": null
+          }
+        ]
+      }
+    },
+    {
+      "scenario": "R3-c_abort_commit_txn",
+      "status": "PASS",
+      "reason": null,
+      "checks": 4,
+      "failures": [],
+      "store": "youjia-recovery-test-d00939fb8eeb40ae96d9d0fb893171d5",
+      "seconds": 6.35,
+      "evidence": {
+        "before": {
+          "present": {
+            "current": true,
+            "intent": false,
+            "archive": false
+          },
+          "current": {
+            "schema": "youjia.save-envelope/v1",
+            "store_id": "37fac23318f2450facc592ae34baf64e",
+            "commit_id": "1780de596d54469eb29f9ecab4244e31",
+            "request_id": "abec9ba0a2ab44299c4325e9523e679d",
+            "parent_commit_id": "",
+            "generation": "1",
+            "payload_bytes": "{\"grants\":[],\"watermark\":0}",
+            "payload_sha256": "e5a6510ac9bdf697239407ea7d8fda7f3356cd33d4b8a209b9e351af37ac3009",
+            "envelope_sha256": "1f2c4a0654abe1faab647bfecf8d4c2cf1c91190611211961b3070455a133012"
+          },
+          "intent": null,
+          "archive": null
+        },
+        "injected": {
+          "abort_stage": "commit"
+        },
+        "after_fault": {
+          "present": {
+            "current": true,
+            "intent": false,
+            "archive": true
+          },
+          "current": {
+            "schema": "youjia.save-envelope/v1",
+            "store_id": "37fac23318f2450facc592ae34baf64e",
+            "commit_id": "1780de596d54469eb29f9ecab4244e31",
+            "request_id": "abec9ba0a2ab44299c4325e9523e679d",
+            "parent_commit_id": "",
+            "generation": "1",
+            "payload_bytes": "{\"grants\":[],\"watermark\":0}",
+            "payload_sha256": "e5a6510ac9bdf697239407ea7d8fda7f3356cd33d4b8a209b9e351af37ac3009",
+            "envelope_sha256": "1f2c4a0654abe1faab647bfecf8d4c2cf1c91190611211961b3070455a133012"
+          },
+          "intent": null,
+          "archive": [
+            {
+              "state": "rejected",
+              "request_id": "3d90443404fe4a2b9e12538c5a141382",
+              "parent": {
+                "schema": "youjia.save-envelope/v1",
+                "store_id": "37fac23318f2450facc592ae34baf64e",
+                "commit_id": "1780de596d54469eb29f9ecab4244e31",
+                "request_id": "abec9ba0a2ab44299c4325e9523e679d",
+                "parent_commit_id": "",
+                "generation": "1",
+                "payload_bytes": "{\"grants\":[],\"watermark\":0}",
+                "payload_sha256": "e5a6510ac9bdf697239407ea7d8fda7f3356cd33d4b8a209b9e351af37ac3009",
+                "envelope_sha256": "1f2c4a0654abe1faab647bfecf8d4c2cf1c91190611211961b3070455a133012"
+              },
+              "candidate": {
+                "schema": "youjia.save-envelope/v1",
+                "store_id": "37fac23318f2450facc592ae34baf64e",
+                "commit_id": "e450ec02d67b4d6bb7ba993d235eb011",
+                "request_id": "3d90443404fe4a2b9e12538c5a141382",
+                "parent_commit_id": "1780de596d54469eb29f9ecab4244e31",
+                "generation": "2",
+                "payload_bytes": "{\"grants\":[1],\"watermark\":1}",
+                "payload_sha256": "6fba6f710307dd48651025ebbbc9064f0405251705605f0b46ebc7c1b8195567",
+                "envelope_sha256": "901473607a671162fe28df8e11265a26bcec636df4feae74995f786732424505"
+              }
+            }
+          ]
+        },
+        "business_after_fault": {
+          "blocked_reason": "",
+          "confirmed_serials": [],
+          "grants": [],
+          "pending": false,
+          "pending_request": "",
+          "ready": true,
+          "refused": [],
+          "verdict": "clean",
+          "watermark": 0
+        },
+        "recovery": {
+          "verdict": "clean",
+          "present": {
+            "current": true,
+            "intent": false,
+            "archive": true
+          },
+          "current": {
+            "schema": "youjia.save-envelope/v1",
+            "store_id": "37fac23318f2450facc592ae34baf64e",
+            "commit_id": "1780de596d54469eb29f9ecab4244e31",
+            "request_id": "abec9ba0a2ab44299c4325e9523e679d",
+            "parent_commit_id": "",
+            "generation": "1",
+            "payload_bytes": "{\"grants\":[],\"watermark\":0}",
+            "payload_sha256": "e5a6510ac9bdf697239407ea7d8fda7f3356cd33d4b8a209b9e351af37ac3009",
+            "envelope_sha256": "1f2c4a0654abe1faab647bfecf8d4c2cf1c91190611211961b3070455a133012"
+          },
+          "intent": null,
+          "archive": [
+            {
+              "state": "rejected",
+              "request_id": "3d90443404fe4a2b9e12538c5a141382",
+              "parent": {
+                "schema": "youjia.save-envelope/v1",
+                "store_id": "37fac23318f2450facc592ae34baf64e",
+                "commit_id": "1780de596d54469eb29f9ecab4244e31",
+                "request_id": "abec9ba0a2ab44299c4325e9523e679d",
+                "parent_commit_id": "",
+                "generation": "1",
+                "payload_bytes": "{\"grants\":[],\"watermark\":0}",
+                "payload_sha256": "e5a6510ac9bdf697239407ea7d8fda7f3356cd33d4b8a209b9e351af37ac3009",
+                "envelope_sha256": "1f2c4a0654abe1faab647bfecf8d4c2cf1c91190611211961b3070455a133012"
+              },
+              "candidate": {
+                "schema": "youjia.save-envelope/v1",
+                "store_id": "37fac23318f2450facc592ae34baf64e",
+                "commit_id": "e450ec02d67b4d6bb7ba993d235eb011",
+                "request_id": "3d90443404fe4a2b9e12538c5a141382",
+                "parent_commit_id": "1780de596d54469eb29f9ecab4244e31",
+                "generation": "2",
+                "payload_bytes": "{\"grants\":[1],\"watermark\":1}",
+                "payload_sha256": "6fba6f710307dd48651025ebbbc9064f0405251705605f0b46ebc7c1b8195567",
+                "envelope_sha256": "901473607a671162fe28df8e11265a26bcec636df4feae74995f786732424505"
+              }
+            }
+          ]
+        },
+        "events": [
+          {
+            "type": "lock_requested",
+            "sequence": 1,
+            "page_id": "6f9c01dfb9e341988a5cfd4e88de0028",
+            "request_id": null
+          },
+          {
+            "type": "lock_acquired",
+            "sequence": 2,
+            "page_id": "6f9c01dfb9e341988a5cfd4e88de0028",
+            "request_id": null
+          },
+          {
+            "type": "txn_complete",
+            "sequence": 3,
+            "stage": "",
+            "page_id": "6f9c01dfb9e341988a5cfd4e88de0028",
+            "request_id": null
+          },
+          {
+            "type": "recovery_result",
+            "sequence": 4,
+            "verdict": "clean",
+            "page_id": "6f9c01dfb9e341988a5cfd4e88de0028",
+            "request_id": null
+          },
+          {
+            "type": "lock_released",
+            "sequence": 5,
+            "page_id": "6f9c01dfb9e341988a5cfd4e88de0028",
+            "request_id": null
+          }
+        ]
+      }
+    }
+  ]
+}

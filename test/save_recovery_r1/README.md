@@ -18,7 +18,13 @@ hooks.barrier(name, request_id) 是异步测试屏障，在 `intent_prepared_com
 
 ## #247 接线边界
 
-同意候选Probe/Fixture分离及两个屏障位置。CURSOR-CLOUD 的业务 Fixture 放在实际 Godot 场景，使用 SaveWriteGate/JavaScriptBridge，JS 门面只暴露驱动接口；在其自身 Fixture 维护业务水位/授予，不能复制 Host。Leader 负责 store 与 Probe/桥接适配，禁止以纯 JS 业务测试替代 Godot R2/R3 验收。当前模块**尚未**包装window.YoujiaRecoveryProbe，也未接Godot Web桥/PR190 Gate；事件的page_id、request_id外层映射、丢/错/迟到回执注入由Leader下一接线补齐。因此不能宣称#247场景已解阻或R2/R3通过。Fixture与Host故障注入各自Owner保持。失败/不一致不当作授予失败可立即重试；必须先恢复并读取可信水位。浏览器锁只约束合作写入者，不是生产迁移证明。
+本目录现在可作为 HOST_DIR：head.html 同步安装异步回调门面，bridge.mjs 提供 YoujiaRecoveryHostBridge 的 open/initialize/prepare/submit/resolve/acknowledge 和 YoujiaRecoveryProbe。Cloud 的 Godot Fixture 使用真实 Gate + JavaScriptBridge；不复制其业务规则。回执 token 为 commit_id，write_id 保持十进制字符串；resolve 必须等原写终止且取得可信 current，不凭异常推断失败。准备/确认期间拒绝重叠写。
+
+Probe 包含真实事务后关页屏障、page/request 事件身份，以及真实 abort、丢/错/重复/迟到回执注入。注入只改变测试回执传递，不伪造持久成功。无锁在开库前拒绝。仅隔离测试命名空间，不进生产导出。
+
+联调 #247 6401500381e73f4d695961b6baaa74adf9bf2989 + Gate f096a4a927c164c4bf70acc403a826a2074d2362：Godot4.7.2真实导出，现有驱动8场景PASS、2场景BLOCKED。R2两关页恢复与6个故障场景已实际执行；双页等待锁与无锁拒绝被驱动一律等待Fixture.ready挡住，已交Cloud修测试等待条件（#239 5982817250）。不能写完整R2/R3矩阵通过。补充直接浏览器检查不替代Owner正式矩阵。正式Host/v5迁移仍未冻结。
+
+使用 Cloud 原构建链：`BUILD_FIXTURE=1 GODOT=... GODOT_WEB_TEMPLATE=... HOST_DIR=<本目录> HOST_SHA=<精确SHA> bash tools/verify_save_recovery_web.sh`。head.html 随该构建注入，模块文件拷入站点根；不要注入公开游戏。
 
 ## 实际验证
 
