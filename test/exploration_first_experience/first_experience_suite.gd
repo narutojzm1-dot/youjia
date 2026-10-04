@@ -117,7 +117,7 @@ func _stop_to_look() -> void:
 	await process_frame
 	_check(a.scroll.model.x > x, "walking resumes after observing")
 	var follow: Dictionary = Framing.follow(a.scroll.model, Vector2(root.size))
-	_check(a.scroll.camera.position == follow["camera"] and is_equal_approx(a.scroll.camera.zoom.x, float(follow["zoom"])), "outside framing switches the camera follows exactly like #199, without walking easing")
+	_check(a.scroll.camera.position.is_equal_approx(follow["camera"]) and is_equal_approx(a.scroll.camera.zoom.x, float(follow["zoom"])), "outside framing switches the camera follows exactly like #199, without walking easing")
 	await _despawn(a)
 
 
@@ -263,8 +263,26 @@ func _camera_follows_framing() -> void:
 	var target: Dictionary = scroll.target_frame()
 	_check(float(target["zoom"]) < follow_zoom, "the fit target is wider than the follow view in portrait")
 	_check(scroll.camera.zoom.x < follow_zoom and scroll.camera.zoom.x >= float(target["zoom"]) - 0.0001, "the camera eases toward the fit framing")
+	## 过渡按固定时长结束，停着不动时到时就完全对齐
+	await create_timer(scroll.EASE_TIME + 0.1).timeout
+	await process_frame
+	_check(not scroll.is_easing() and is_equal_approx(scroll.camera.zoom.x, float(target["zoom"])) and scroll.camera.position.is_equal_approx(target["camera"]), "the framing switch settles exactly within its fixed duration")
+	## 观察态按方向键：退出观察并立刻走，相机这一路都直接跟随，不拖着缓动
+	Input.parse_input_event(_key(KEY_RIGHT, true))
+	await _frames(2)
+	var walking_ok := true
+	for i in 10:
+		await process_frame
+		var follow_now: Dictionary = Framing.follow(scroll.model, Vector2(PORTRAIT))
+		walking_ok = walking_ok and not scroll.is_easing() and scroll.camera.position.is_equal_approx(follow_now["camera"]) and is_equal_approx(scroll.camera.zoom.x, float(follow_now["zoom"]))
+	Input.parse_input_event(_key(KEY_RIGHT, false))
+	await process_frame
+	_check(not scroll.is_observing() and walking_ok, "walking on right after observing follows exactly, without a lingering ease (portrait)")
+	scroll.model.x = 2200.0
+	await _press(KEY_E)
 	scroll.low_motion = true
 	await process_frame
+	target = scroll.target_frame()
 	_check(is_equal_approx(scroll.camera.zoom.x, float(target["zoom"])), "low motion snaps to the fit framing")
 	var shown := {"zoom": scroll.camera.zoom.x, "camera": scroll.camera.position, "visible": Vector2(PORTRAIT) / scroll.camera.zoom.x}
 	_check(is_equal_approx(Framing.coverage(shown, Framing.scene_rect("placeholder_b")), 1.0), "the actual camera shows the whole scene")

@@ -11,8 +11,8 @@ signal observe_ended(stop_id: String)
 
 ## 观察态底部操作条高度（屏幕像素）：左半「带上 / 放回」，右半「继续走」
 const CHOICE_BAR := 120.0
-## 收景过渡速度；低动效下直接切到目标取景
-const FRAME_RATE := 6.0
+## 取景切换的固定过渡时长（秒）；低动效下直接切到目标取景
+const EASE_TIME := 0.4
 const MOUNT := Color(0.80, 0.76, 0.68)
 
 ## 当前正在看的停留点；空表示不在观察态
@@ -28,8 +28,11 @@ var _pick_tag: Label
 var _go_tag: Label
 var _cam_zoom := 1.0
 var _cam_pos := Vector2.ZERO
-## 只在取景切换（进出观察、切换方案）时过渡；平时与 #199 一样直接跟随，行走没有相机缓动
+## 只在取景切换（进出观察、切换方案）时过渡，到时或角色一开始走就对齐；平时与 #199 一样直接跟随
 var _easing := false
+var _ease_time := 0.0
+var _ease_zoom := 1.0
+var _ease_pos := Vector2.ZERO
 
 
 func _ready() -> void:
@@ -64,7 +67,7 @@ func enter_observe(stop_id: String, stop_offer: String, stop_carried: String) ->
 		return
 	release_all()
 	observing_stop = stop_id
-	_easing = true
+	_begin_ease()
 	update_choice(stop_offer, stop_carried)
 
 
@@ -82,7 +85,7 @@ func end_observe() -> void:
 	observing_stop = ""
 	offer = ""
 	carried_here = ""
-	_easing = true
+	_begin_ease()
 	release_all()
 	_refresh_bar()
 	show_note("")
@@ -97,9 +100,13 @@ func camera_zoom() -> float:
 	return _cam_zoom
 
 
+func is_easing() -> bool:
+	return _easing
+
+
 func set_framing_mode(value: String) -> void:
 	framing_mode = value
-	_easing = true
+	_begin_ease()
 	if low_motion:
 		_snap_camera()
 	_update_hint()
@@ -114,19 +121,24 @@ func _process(delta: float) -> void:
 	if not active:
 		return
 	super(delta)
-	var target := target_frame()
-	if low_motion or not _easing:
+	_ease_time += delta
+	if low_motion or not _easing or model.is_walking() or _ease_time >= EASE_TIME:
 		_easing = false
 		_snap_camera()
 		return
-	var weight := 1.0 - exp(-FRAME_RATE * delta)
-	_cam_zoom = lerpf(_cam_zoom, float(target["zoom"]), weight)
-	_cam_pos = _cam_pos.lerp(target["camera"], weight)
-	if absf(_cam_zoom - float(target["zoom"])) < 0.001 and _cam_pos.distance_to(target["camera"]) < 0.5:
-		_easing = false
-		_cam_zoom = float(target["zoom"])
-		_cam_pos = target["camera"]
+	var target := target_frame()
+	var weight := smoothstep(0.0, EASE_TIME, _ease_time)
+	_cam_zoom = lerpf(_ease_zoom, float(target["zoom"]), weight)
+	_cam_pos = _ease_pos.lerp(target["camera"], weight)
 	_apply_camera()
+
+
+## 从当前相机出发重新计时；行走中的跟随目标一直在动，所以过渡按时长而不是按距离结束
+func _begin_ease() -> void:
+	_easing = true
+	_ease_time = 0.0
+	_ease_zoom = _cam_zoom
+	_ease_pos = _cam_pos
 
 
 func layout_for(size: Vector2) -> void:
