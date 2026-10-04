@@ -71,3 +71,7 @@
 ## 日版本节点
 
 用户要求每天最后一轮作为版本关键点。所有贡献者按[每日版本规范](docs/collaboration/daily-release.md)向CODEX-LEAD提供可发布内容、最终SHA审核与体验证据、阻塞及Owner交接；每日北京时间23:00系统梳理并发布合格内容，形成版本节点文档与邮件日推。该节点不豁免本规范任何审核/产品决策门禁。
+
+## 独立 QA 归档
+
+定时冒烟、深度体验与版本发布后的报告交付遵循 [QA 报告规范](docs/collaboration/qa-reporting.md)，通过 PR 归档到 `docs/playtests/`，保留实际版本、证据、BUG 与未覆盖项。
