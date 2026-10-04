@@ -188,6 +188,19 @@ def grants_of(business, serial):
     return list((business or {}).get('grants', [])).count(serial)
 
 
+def business_of(record):
+    ## 业务水位与授予列表只以可信 current 封套的 payload 为准（R1 store.mjs 不解释业务）。
+    try:
+        return json.loads(((record or {}).get('current') or {}).get('payload_bytes') or 'null')
+    except ValueError:
+        return None
+
+
+def archived_rejected(record, request_id):
+    return any(a.get('request_id') == request_id and a.get('state') == 'rejected'
+               for a in ((record or {}).get('archive') or []))
+
+
 def r2_close_after_prepared(c):
     s = c.s
     page = c.open()
@@ -202,12 +215,12 @@ def r2_close_after_prepared(c):
     s.check(rec.get('verdict') == 'restored_parent_intent_rejected', 'new page restores trusted parent')
     s.check(rec.get('current', {}).get('commit_id') == before.get('current', {}).get('commit_id'), 'current is the parent commit')
     s.check(rec.get('intent') is None, 'active intent slot cleared')
-    s.check({'request_id': paused.get('request_id'), 'state': 'rejected'} in rec.get('archive', []), 'prepared intent archived as rejected')
-    s.check(rec.get('business', {}).get('watermark') == before.get('business', {}).get('watermark'), 'watermark unchanged')
+    s.check(archived_rejected(rec, paused.get('request_id')), 'prepared intent archived as rejected')
+    s.check((business_of(rec) or {}).get('watermark') == (business_of(before) or {}).get('watermark'), 'watermark unchanged')
     c.grant(page, 1)
-    after = c.settled(page, 1)
+    c.settled(page, 1)
     s.evidence['after_retry'] = c.snapshot(page)
-    s.check(grants_of(after, 1) == 1, 'retry of same serial grants exactly once')
+    s.check(grants_of(business_of(s.evidence['after_retry']), 1) == 1, 'retry of same serial grants exactly once')
     s.check(s.evidence['after_retry'].get('current', {}).get('request_id') != paused.get('request_id'), 'retry used a new request_id')
     s.evidence['events'] = c.call(page, 'window.YoujiaRecoveryProbe.events()')
     s.check(not page.errors, 'no page errors')
@@ -228,11 +241,13 @@ def r2_close_after_commit(c):
     s.evidence['recovery'] = rec
     s.check(rec.get('verdict') == 'restored_candidate', 'new page restores committed candidate')
     s.check(rec.get('current', {}).get('request_id') == paused.get('request_id'), 'current carries paused request_id')
-    s.check(rec.get('business', {}).get('watermark') == 1, 'watermark includes serial 1')
-    s.check(grants_of(rec.get('business'), 1) == 1, 'serial 1 granted once after reload')
+    s.check((business_of(rec) or {}).get('watermark') == 1, 'watermark includes serial 1')
+    s.check(grants_of(business_of(rec), 1) == 1, 'serial 1 granted once after reload')
     c.grant(page, 1)
-    after = c.settled(page, 1)
-    s.check(grants_of(after, 1) == 1, 'repeat of committed serial does not grant again')
+    c.settled(page, 1)
+    s.evidence['after_repeat'] = c.snapshot(page)
+    s.check(grants_of(business_of(s.evidence['after_repeat']), 1) == 1, 'repeat of committed serial does not grant again')
+    s.check(s.evidence['after_repeat'].get('current') == rec.get('current'), 'repeat of committed serial writes nothing')
     s.evidence['events'] = c.call(page, 'window.YoujiaRecoveryProbe.events()')
     s.check(not page.errors, 'no page errors')
     c.cleanup(page)
@@ -259,9 +274,13 @@ def r3_lock_contention(c):
 
 
 def r3_no_web_locks(c):
+    ## 无锁页不开库（store.mjs 在开库前拒绝），库前后记录由正常页读取。
     s = c.s
+    normal = c.open()
+    c.recovery(normal)
+    before = c.snapshot(normal)
+    normal.close()
     page = c.open(no_locks=True)
-    before = c.snapshot(page)
     rec = c.recovery(page)
     s.evidence.update(before=before, recovery=rec)
     s.check(rec.get('verdict') == 'no_web_locks', 'missing Web Locks is reported explicitly')
@@ -270,9 +289,14 @@ def r3_no_web_locks(c):
     events = c.call(page, 'window.YoujiaRecoveryProbe.events()')
     s.evidence['events'] = events
     s.check(not any(e.get('type') == 'txn_complete' for e in events), 'no write without Web Locks')
-    s.check(c.snapshot(page) == before, 'stored records unchanged')
-    c.cleanup(page)
+    s.check(not c.business(page).get('confirmed_serials'), 'nothing reported saved without Web Locks')
     page.close()
+    normal = c.open()
+    after = c.snapshot(normal)
+    s.evidence['after'] = after
+    s.check(after == before, 'stored records unchanged')
+    c.cleanup(normal)
+    normal.close()
 
 
 def receipt_fault(injection, options):
@@ -292,7 +316,7 @@ def receipt_fault(injection, options):
             s.check(grants_of(business, 1) == 0, 'abort grants nothing')
             s.check(not business.get('confirmed_serials'), 'abort is not reported as saved')
         else:
-            s.check(grants_of(mid.get('business'), 1) <= 1, 'stored grants never duplicated')
+            s.check(grants_of(business_of(mid), 1) <= 1, 'stored grants never duplicated')
             if injection in ('drop_receipt', 'wrong_receipt_identity'):
                 s.check(business.get('pending') is True, 'business stays pending without a valid receipt')
             if injection in ('duplicate_receipt', 'delay_receipt'):
@@ -302,7 +326,7 @@ def receipt_fault(injection, options):
         page = c.open()
         rec = c.recovery(page)
         s.evidence['recovery'] = rec
-        s.check(grants_of(rec.get('business'), 1) <= 1, 'reload never duplicates grant')
+        s.check(grants_of(business_of(rec), 1) <= 1, 'reload never duplicates grant')
         s.evidence['events'] = c.call(page, 'window.YoujiaRecoveryProbe.events()')
         c.cleanup(page)
         page.close()

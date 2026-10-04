@@ -47,8 +47,8 @@ CANDIDATE_DIR=/path/to/r1-test-export CANDIDATE_SHA=<完整SHA> \
 | `paused` | 停住时为 `{name, request_id, page_id}` |
 | `inject(opts)` | `{abort_stage: "intent"|"commit"}` 在真实事务里调 `transaction.abort()`；`{drop_receipt}`、`{receipt_identity: "wrong"}`、`{duplicate_receipt}`、`{delay_receipt_ms}` 作用于真实终态之后的回执。`injections` 名称依次为 `abort_intent`、`abort_commit`、`drop_receipt`、`wrong_receipt_identity`、`duplicate_receipt`、`delay_receipt` |
 | `events()` | 有序列表，每条含 `type`、`page_id`、单调序号；`type` 至少包括 `lock_requested`、`lock_acquired`、`lock_released`、`txn_complete`、`txn_abort`（含 stage、request_id）、`receipt_delivered`、`receipt_dropped`、`recovery_result` |
-| `recovery()` | 恢复完成前为假值；之后为 `{verdict, current, intent, archive, business}`。`verdict` 取 `restored_candidate`、`restored_parent_intent_rejected`、`clean`、`quarantined`、`unknown`、`lock_unavailable`、`no_web_locks` 之一 |
-| `snapshot()` | readonly 事务读出 `current`（store_id、commit_id、request_id、parent_commit_id、generation、payload_sha256）、`intent`、`archive`、`business`；不持锁、不修改 |
+| `recovery()` | 恢复完成前为假值；之后为 R1 `recover()` 的结果 `{verdict, current, intent, archive}`，另加 `no_web_locks`（`openStore` 拒绝时）。`verdict` 取 `restored_candidate`、`restored_parent_intent_rejected`、`clean`、`quarantined`、`no_web_locks` 之一 |
+| `snapshot()` | R1 `snapshot()`：readonly 事务读出 `{current, intent, archive}`，`current` 为完整封套，`archive` 条目为完整意图并带 `state: "rejected"`；不持锁、不修改。驱动从 `current.payload_bytes` 解析业务水位与授予列表 |
 | `cleanup()` | 只删除本测试库 |
 
 **`window.YoujiaRecoveryFixture`**（测试场景侧，由 CURSOR-CLOUD 在 R1 公开 API 上编写）
@@ -60,6 +60,23 @@ CANDIDATE_DIR=/path/to/r1-test-export CANDIDATE_SHA=<完整SHA> \
 | `business()` | `{watermark, grants: [...], pending, confirmed_serials: [...]}`；`pending` 表示有写入尚未得到可信回执 |
 
 R1 若没有支撑 Fixture 的公开入口，会在 PR 中列出缺口，不另造 Host。
+
+## R1 store.mjs 消费映射（对照 PR #251 `ad6cfc0`）
+
+| Fixture 动作 | 使用的 R1 API | 说明 |
+| --- | --- | --- |
+| 页面启动 | `openStore(recovery_store, hooks)` → `snapshot()`：三项都为空时 `initialize(根 payload)`，否则 `recover()` | `recover()` 遇到空库会判为 `quarantined`，因此空库必须先显式建根；`openStore` 抛出 `no_web_locks` 时，Probe 报 `no_web_locks`，Fixture 不写入 |
+| `grant(serial)` | 读取可信 `current`，从 payload 取出水位：`serial ≤ watermark` 时直接确认，不写入；否则 `envelope(新 payload, current)` → `submit(candidate)` | 新 payload 为 `{watermark: serial, grants: [..., serial]}`。每次 `envelope` 生成新的 `request_id`，重试天然换身份 |
+| 确认 | `submit` 返回的记录与提交的 candidate 完全一致后，解析 payload，更新 `confirmed_serials`，清除 `pending` | 只认返回的可信记录，不认调用方本地对象 |
+| 失败 | `submit` 抛出（真实 abort、`stale parent`、`recovery required`、读回不一致）时保持 `pending`，先 `recover()` 读出可信水位，再决定是否以新的 envelope 重试 | 不把失败当作授予失败立即重试 |
+| 屏障 | `hooks.barrier(name, request_id)` 由 Probe `arm(name)` 返回永不完成的 Promise | 两处屏障都在事务完成后、持有同一把 Web Lock 时触发，与驱动约定一致 |
+
+**发现的接口差异（请 CODEX-LEAD 处理）**
+
+1. **确认后的意图清理没有入口（会阻塞第二次写入）。** `submit` 成功后，状态为 committed 的意图留在槽里，只有 `recover()` 才清理；下一次 `submit` 遇到槽里有意图会抛 `recovery required`。因此同一页面上的连续两次授予（R2-b 重复授予、R3-c 重复/迟到回执，以及任何正常游玩）必须每次都插一次 `recover()`，而这会把正常确认也报成 `restored_candidate`。协议第 6 步要求“本地已记录确认后，可在独立事务清理匹配 request_id 的 intent”。建议增加 `acknowledge(request_id)`：在锁内比较 current 与 committed intent 的完整身份后清槽，失败也不影响已确认的提交。它必须在 `candidate_committed_before_receipt` 屏障与业务记录之后由消费方调用，R2-b 的关页窗口才保持有效。
+2. **空库的判定。** `recover()` 对全空库返回 `quarantined`，和真正的损坏无法区分。建议返回独立的 `empty`（不建根），或在文档中明确由调用方先 `snapshot()` 再决定是否建根。驱动目前按后者处理。
+3. **Probe 包装尚缺**（Leader 已列入下一接线）：`page_id`、事件里的 `request_id`、丢/错/重复/迟到回执注入，以及 `capabilities()` 的 `barriers`/`injections` 列表。在这些就绪前，驱动维持 BLOCKED。
+4. **Fixture 放在哪一层。** R2 要求“实际 Godot Web 桥接”。请确认：Fixture 是做成 Godot 场景，经 Gate 和 JavaScriptBridge 调用 store；还是先做 JS 层，等 Gate 接线后再换成 Godot。无论哪种，驱动接口都不变。
 
 ## 场景矩阵
 
