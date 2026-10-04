@@ -184,3 +184,10 @@
 | 编号 | 范围 | 状态 | Owner | 记录 |
 | --- | --- | --- | --- | --- |
 | PM-COORDINATION | 全仓协作疏导、接收闭环、状态同步与持续游戏体验 | 身份已合入；QA165/191集成已完成；小时巡检已启用，资源/平台真正阻塞仍跟踪 | `GAME-PM` | [#220](https://github.com/narutojzm1-dot/youjia/issues/220)、[规范](collaboration/pm-coordination.md)、[首轮](pm/2026-10-04-coordination.md) |
+
+
+## 用户试玩镜头收尾
+
+| 编号 | 优先级 | 范围与验收 | 状态 | Owner | 记录 |
+| --- | --- | --- | --- | --- | --- |
+| REQ-014-NO-ZOOM | P0 | 鹅马演出三个阶段保持普通倍率，保留观察/扑翼/成片和中断；生产Main各阶段倍率回归与实际Web画面 | 候选实现；完整回归及受控Web已通过，待独立最终SHA审核/发布 | `CODEX-LEAD` | #40；[候选Web证据](playtests/2026-10-04-goose-nozoom/README.md)，演员尺寸#180另验 |

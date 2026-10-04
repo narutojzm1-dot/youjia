@@ -40,7 +40,12 @@ func advance(w, seconds: float) -> void:
 func close_up(w) -> void:
 	var goose_scale: float = w.actor_named("goose")._base_scale
 	var horse_scale: float = w.actor_named("horse")._base_scale
-	advance(w, 6.3)
+	advance(w, 3.6)
+	check(main._cam_target_zoom == 1.0, "wide observation keeps normal camera scale")
+	advance(w, 1.3)
+	check(main._cam_target_zoom == 1.0, "first person observation keeps normal camera scale")
+	advance(w, 1.4)
+	check(main._cam_target_zoom == 1.0, "mounted encounter keeps normal camera scale")
 	check(w._goose_mount_phase == 2, "a genuine nearby observation reaches close-up")
 	check(not w.get_player().visible, "traveler is behind the camera at close-up")
 	check(is_equal_approx(w.actor_named("goose")._base_scale, goose_scale) and is_equal_approx(w.actor_named("horse")._base_scale, horse_scale), "close-up preserves measured painted sizes instead of inflating PNG canvases")
