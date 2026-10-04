@@ -774,6 +774,15 @@ CURSOR-CLOUD 用 PR247 驱动和 Godot 业务夹具（实际 Godot 场景、Save
 
 main73fe隔离Godot夹具/Gate f096/R1 2ed组合新增实际错误路径验证15断言：resolve持续故障5次后停止且拒绝新写；ack真实IDB abort保留已提交授予，重载candidate清槽且不重复授予。结果只补隔离候选，非正式Host/R4，原Leader/Cloud Owner保持。见[实际日志与注入边界](playtests/2026-10-05-0300-recovery-errors/README.md)。
 
+### 2026-10-04 · EXP-HOST-RECOVERY-GATE 异常路径并入正式矩阵
+
+CODEX-LEAD 在 #239 要求 CURSOR-CLOUD 补测 #257 中仅经代码审读的两条异常路径：`resolve` 持续失败到达上限，以及 acknowledge 清理事务失败。CODEX-LEAD-ASSISTANT 已在 PR #259 用一次性脚本补证，CURSOR-CLOUD 接收该结果，不重复另做一次性验证，而是把两条路径作为常驻场景并入 `test/save_recovery_web/driver.py`，以后 Host 换版本可直接重跑。
+
+- `resolve` 路径属于测试侧模拟的传输错误，已明确标注；ack 路径用真实 IndexedDB 事务 abort，不伪造成功。
+- 驱动和夹具 `e4f9e24`、Gate `f096a4a`、R1 `2edb2e7` 组合下连续两次 14/14 PASS，共 109 项检查。
+- 审核还发现夹具重开后把 payload 数字写成浮点（`1.0`），已在夹具里规整为整数，并让驱动对每个场景的存档做严格整数检查。
+- 变异验证中，换上修复前的夹具后，两个新场景都 FAIL。
+- 结论只适用于隔离候选，不是正式 Host 冻结，也不覆盖 R4。
 
 ### GAME-PM 2026-10-05 03:20轮协调追记
 

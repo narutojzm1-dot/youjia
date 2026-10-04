@@ -82,8 +82,12 @@ func _adopt(reply: Dictionary) -> void:
 	if not payload is Dictionary or token.is_empty():
 		_block("trusted current missing")
 		return
+	var grants: Array = []
+	for grant in payload.get("grants", []):
+		grants.append(int(grant))
 	current_token = token
-	gate = Gate.new(payload)
+	## JSON 解析出的数字是浮点；规整为整数，避免写回的 payload 出现 1.0。
+	gate = Gate.new({"watermark": int(payload.get("watermark", 0)), "grants": grants})
 	blocked_reason = ""
 	_publish()
 
