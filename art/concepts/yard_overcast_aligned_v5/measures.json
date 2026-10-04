@@ -2,12 +2,12 @@
   "baseline_v4_commit": "2b1f024f6bad3b700f7c348316075bf0cdc88018",
   "baseline_v4_png_sha256": "fcc5e6497021c89be9913df99b6d0762d8e834580bf0137398f05c9acbf86f95",
   "art_director_comment": 5984922645,
-  "candidate_png_sha256": "f70a0e734541ea11515f885825825bffc3f76325a398e53f4d68d27791662228",
+  "candidate_png_sha256": "f7aebea32d0678ee20f3b75df2d417f4759f80f382296436a3957f9872922037",
   "size": [
     1920,
     1080
   ],
-  "bytes": 3594638,
+  "bytes": 3595462,
   "regions_retouched": {
     "cloud_left": [
       560,
@@ -29,5 +29,11 @@
     "geometry"
   ],
   "not_runtime": true,
-  "awaiting": "ART-DIRECTOR"
+  "awaiting": "ART-DIRECTOR",
+  "snow_frozen_rect": [
+    990,
+    220,
+    1470,
+    385
+  ]
 }
