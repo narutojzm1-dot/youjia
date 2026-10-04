@@ -28,7 +28,7 @@ CANDIDATE_DIR=/path/to/r1-test-export CANDIDATE_SHA=<完整SHA> \
 - 证据写入 `$OUT/result.json`，字段包括驱动 SHA、候选 SHA、候选 PCK SHA256、浏览器版本、Playwright 版本，以及每个场景的状态、检查数、失败项、测试库名、耗时和证据（数据库前后快照、屏障停点、恢复结果、事件序列）。
 - `test/save_recovery_web/` 带 `.gdignore`；正式导出已排除 `test/*` 与 `tools/*`。
 
-浏览器 context 为 Playwright 持久化 context，profile 放在临时 user-data-dir 里，整次运行共用一个。“关页”指 `page.close()` 后在同一 context、同一 origin 开新页，不是 reload，不清库，也不换 context。运行结束后删除 profile 和临时站点；每个场景使用独立测试库 `youjia-recovery-test-<uuid>`，由候选的 `cleanup()` 删除。
+浏览器 context 为 Playwright 持久化 context，profile 放在临时 user-data-dir 里，整次运行共用一个。“关页”指 `page.close()` 后在同一 context、同一 origin 开新页，不是 reload，不清库，也不换 context。运行结束后删除 profile 和临时站点；每个场景使用独立测试库 `youjia-recovery-test-<uuid>`。场景结束时，驱动先关闭全部参与页，再由自检页按库名删除，删除结果计入检查。不调用候选的 `cleanup()`，因为参与页仍连着库时删除会被 `onblocked` 拦下。
 
 ## 驱动自检（不是 R2/R3）
 
@@ -58,15 +58,17 @@ CANDIDATE_DIR=/path/to/r1-test-export CANDIDATE_SHA=<完整SHA> \
 | `events()` | 有序列表，每条含 `type`、`page_id`、单调序号；`type` 至少包括 `lock_requested`、`lock_acquired`、`lock_released`、`txn_complete`、`txn_abort`（含 stage、request_id）、`receipt_delivered`、`receipt_dropped`、`recovery_result` |
 | `recovery()` | 恢复完成前为假值；之后为 R1 `recover()` 的结果 `{verdict, current, intent, archive}`，另加 `no_web_locks`（`openStore` 拒绝时）。`verdict` 取 `restored_candidate`、`restored_parent_intent_rejected`、`clean`、`quarantined`、`no_web_locks` 之一 |
 | `snapshot()` | R1 `snapshot()`：readonly 事务读出 `{current, intent, archive}`，`current` 为完整封套，`archive` 条目为完整意图并带 `state: "rejected"`；不持锁、不修改。驱动从 `current.payload_bytes` 解析业务水位与授予列表 |
-| `cleanup()` | 只删除本测试库 |
+| `cleanup()` | 只删除本测试库（驱动当前不调用，见上文清理方式） |
 
 **`window.YoujiaRecoveryFixture`**（测试场景侧，由 CURSOR-CLOUD 在 R1 公开 API 上编写）
 
 | 成员 | 约定 |
 | --- | --- |
-| `ready` | 场景就绪 |
-| `grant(serial)` | 发起一次业务授予写入；`serial ≤ watermark` 时直接确认、不再授予，与探索契约的 `last_committed_trip_serial` 语义一致 |
-| `business()` | `{watermark, grants: [...], pending, confirmed_serials: [...]}`；`pending` 表示有写入尚未得到可信回执 |
+| `started` | Godot 夹具已运行并发布过至少一次状态。等锁、无锁拒绝时为真 |
+| `ready` | 可写：已采纳可信 current，且没有 `blocked_reason` |
+| `blocked_reason` | 不可写原因，例如 `opening store`、`not writable: no_web_locks`、`host bridge missing …`、`resolve failed: …`、`acknowledge failed: …`；可写时为空 |
+| `grant(serial)` | 发起一次业务授予写入；`serial ≤ watermark` 时直接确认、不再授予，与探索契约的 `last_committed_trip_serial` 语义一致；业务在途时拒绝 |
+| `business()` | `{ready, blocked_reason, verdict, watermark, grants: [...], pending, pending_request, confirmed_serials: [...], refused: [...]}`；`pending` 从受理 grant 起到 acknowledge 完成为止都为真；`refused` 记录被拒的 serial |
 
 R1 若没有支撑 Fixture 的公开入口，会在 PR 中列出缺口，不另造 Host。
 
@@ -85,7 +87,9 @@ R1 若没有支撑 Fixture 的公开入口，会在 PR 中列出缺口，不另�
    - observed 等于 candidate 时，才确认业务、推进 token，然后 `acknowledge`；
    - 错身份、重复或迟到的回执由 Gate 拒绝，保持在途；
    - `submit` 报错时，不立即重试，先 `resolve`，由 Host 按可信 current 出回执来收尾。
-3. **清理失败**：`acknowledge` 失败不回滚已确认的提交。
+   - 同一次写入里 `resolve` 最多调用 5 次：第一次在 `submit` 报错后立即发起，之后每次因 `resolve` 自身报错而重试，都先间隔 0.2 秒。仍失败则保持在途、停止重试，并公开 `resolve failed`。
+   - 只要 `blocked_reason` 非空（如 `resolve failed`、`acknowledge failed`），`grant` 一律直接拒绝，不再去调 `prepare`。
+3. **收尾**：业务确认后先 `acknowledge`，完成后才解除在途。因此 `pending` 为假时意图已清理，紧接着的 grant 不会被 Host 以 `recovery required` 拒绝。`acknowledge` 失败不回滚已确认的提交，但公开为 `acknowledge failed`，不再显示可写。
 
 **需要 R1 桥接提供的 `window.YoujiaRecoveryHostBridge`**（CODEX-LEAD 实现；每个方法最后一个参数是 Godot 回调，回调参数为一个 JSON 字符串；token 即封套 `commit_id`）
 
@@ -98,7 +102,9 @@ R1 若没有支撑 Fixture 的公开入口，会在 PR 中列出缺口，不另�
 | `resolve(request_id, write_id, cb)` | 在锁内 `recover`，再按可信 current 为该在途写入出回执：`observed_token` 取 current 的 commit_id；只有活动意图已不存在时，`old_write_terminated` 才为 true |
 | `acknowledge(request_id, cb)` | 返回 `{status, request_id}`，或 `{error}` |
 
-## R1 store.mjs 消费映射（最初对照 PR #251 `ad6cfc0`；ack/empty 已在 `3ba15ed` 落实）
+## R1 store.mjs 消费映射（历史记录，已被上面的 HostBridge 流程取代）
+
+下表是对照 PR #251 `ad6cfc0` 时的最初设想，仅保留作为来历。现行流程以上面的 HostBridge 六方法为准：空库由 `recover` 直接判为 `empty`；失败后走 `resolve`，不再由夹具先 `recover()`。
 
 | Fixture 动作 | 使用的 R1 API | 说明 |
 | --- | --- | --- |
@@ -148,3 +154,9 @@ R1 若没有支撑 Fixture 的公开入口，会在 PR 中列出缺口，不另�
   - Godot Web 导出不是逐字节可复现的，两次构建的 PCK SHA256 不同（`75de4f3f…` 与 `b59e28a6…`），证据里记的是当次构建的哈希。
 - **变异验证**：把夹具换回修复前的 `6401500` 版本后，R2-c FAIL（第一次请求一直无法收尾），R3-a 因夹具不发布启动状态而 BLOCKED，其余场景照常 PASS。说明新场景能拦住这次的重入缺陷。
 - 中间一次运行里，R2-c 的业务断言全部通过，但清理步骤因参与页仍连着库被拦下，记为 FAIL。改成关页后再删库之后，连续两次都通过。
+- 2026-10-04，处理 PR #247 审核的 5 条 P3：
+  - 修了四处：`resolve` 加调用上限；acknowledge 完成前保持在途；夹具没启动时记 FAIL；文档对齐。
+  - 驱动和夹具在 `edcde8b` 上连续跑两次，均为 12/12 PASS、73 项检查（R2-c 新增一项“收尾后立即 grant 被接受”），退出码 0。组合同上：Gate `f096a4a`、Host `2edb2e7`、Godot 4.7.2、Chrome 148。
+  - 变异验证：新驱动配 `2d2054f` 合入版的夹具时，R2-c FAIL。业务显示已收尾时意图尚未清理，紧接着的 grant 被拒，场景随之超时。
+  - `resolve` 重试上限这条路径，现有场景还触发不到，只经过代码审读。
+- 复审又提出两条 P3：不可写时仍受理 grant，以及文档里 `resolve` 的调用次数多算了一次。两条都已在 `ae8172f` 修正，重跑仍为 12/12 PASS、73 项检查，退出码 0。

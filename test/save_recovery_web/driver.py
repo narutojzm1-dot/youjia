@@ -139,6 +139,9 @@ class Candidate:
         except Exception:
             state = page.evaluate(state_js)
             page.close()
+            if state['probe'] and state['fixture']:
+                ## 候选已就位而本仓库的夹具没启动：属于夹具自身失败，不归咎于缺依赖。
+                raise AssertionError('fixture loaded but Godot never started it')
             raise Blocked(f"probe={'yes' if state['probe'] else 'missing'}; fixture="
                           f"{'missing' if not state['fixture'] else 'not started'}")
         state = page.evaluate(state_js)
@@ -358,11 +361,8 @@ def r2_same_frame_double_grant(c):
     page = c.open()
     c.call(page, 'window.YoujiaRecoveryFixture.grant(1), window.YoujiaRecoveryFixture.grant(2)')
     business = c.settled(page, 1)
-    deadline = time.time() + WAIT_MS / 1000
+    ## 业务在 acknowledge 完成后才收尾，因此 pending 为假时意图必须已清理。
     stored = c.snapshot(page)
-    while time.time() < deadline and stored.get('present', {}).get('intent'):
-        time.sleep(0.1)
-        stored = c.snapshot(page)
     s.evidence.update(business=business, stored=stored)
     s.check(business.get('watermark') == 1 and business.get('grants') == [1], 'business shows watermark 1 / grants [1]')
     s.check(business.get('confirmed_serials') == [1], 'only serial 1 confirmed')
@@ -374,6 +374,7 @@ def r2_same_frame_double_grant(c):
     business = c.settled(page, 2)
     after = c.snapshot(page)
     s.evidence.update(business_after_second=business, stored_after_second=after)
+    s.check(business.get('refused') == [2] and business.get('confirmed_serials') == [1, 2], 'grant right after settle is accepted, not refused')
     s.check(business.get('grants') == [1, 2] and business_of(after) == {'watermark': 2, 'grants': [1, 2]}, 'later grant 2 commits once and matches storage')
     s.check(not page.errors, 'no page errors')
     c.cleanup(page)
