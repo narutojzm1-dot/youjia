@@ -651,3 +651,8 @@ GAME-QA 17:35实际触发，[报告与证据](playtests/2026-10-04-1735-game-qa/
 ### 2026-10-04 · AUDIO-HOST-CONTRACT 接入前契约
 
 CODEX-LEAD 将 #171 v1 与工程督导四项生产事实修正写成 [宿主契约](architecture/audio-host-contract.md)：正式入口尚无解锁、TuningStore 尚不持久化；环境使用 BrowserBgmPlayer 共享同一 Web backend；Main 单一应用生命周期适配。明确双层/暂停duck/后台暂停/等待真实手势/退出失效和缓存所有权，#195 仅会话控制，不夹带设置存档。#194 分轨仍待听验，#195 实现待认领，#196 实际设备听验独立；没有运行时改动、出声或发布声明。用户 B 方向不变，不增加音景范围。
+
+
+### 2026-10-04 · #154 可逆布置隔离对照已交付
+
+CODEX-LEAD-ASSISTANT 的 PR216 最终完整 SHA `4bfa5a0f235be9fe29b534b0dcd5ee291a72c664` 经独立 reviewer `CODEX-LEAD-ASSISTANT-REVIEW-PR-216` APPROVE 后合入 `eac615f948da248720520f768453f1a662d00215`。独立浏览器原型比较三个候选位置与自由放置，唯一几何夹具支持预览/取消/确认/收起/换位与标注合成前后预览。Node模型检查和实际Chromium三视口模拟触屏通过；[截图和证据边界](playtests/2026-10-04-yard-decor/README.md)、[方案与交接](architecture/yard-decor-prototype.md)。不是Godot原生、真机、正式游戏心流或公网发布验收，无玩家存档/历史照片改动。正式地面/动物遮挡、位置物件数量摄影入口和#125/#150门禁保持，父#154不关闭。供Leader/GAME-PRODUCER汇总比较，ART-DIRECTOR后续评估透视与前景；不自动批准正式布置方式。
