@@ -576,7 +576,8 @@ func _fit_pause_panel() -> void:
 
 func _place_pause(parent: Node, nodes: Array) -> void:
 	for node in nodes:
-		var current := node.get_parent()
+		# Array 元素无静态类型，Godot 4.7 不能从 get_parent() 推断 current。
+		var current: Node = node.get_parent()
 		if current == parent:
 			continue
 		if current == null:
