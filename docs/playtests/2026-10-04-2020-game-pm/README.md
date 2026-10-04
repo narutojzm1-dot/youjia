@@ -6,6 +6,6 @@ Linux桌面Chromium，Playwright headless、软件WebGL、1280×720、user-gestu
 
 步骤：载入12秒→真实鼠标点击进入→等2.5秒→D移动1.1秒→空格拿草→Esc暂停/恢复。截图显示从花箱目标移动到草泥马目标，拿草后出现“手里多了一束草”；暂停恢复后院景仍可操作。只覆盖这些可见状态，不推定喂食、相册、重载、天气或正式保存通过。
 
-首次进入与恢复后 `window.__manusBgm` 均不存在，控制台5次“No interface '__manusBgm' registered”及调用栈，共10条error；pageerror为0不能抵消音频失败。复现现有 #195 / #196 的冷启动缺陷，不新建重复BUG。无出声证据；运行时已合入/发布与听验未通过分别记录。根因及异步resume门禁由Leader #195评论5979755626说明，实现Owner保持GROK-BUILD。
+首次进入与恢复后 `window.__manusBgm` 均不存在，控制台5次“No interface '__manusBgm' registered”及调用栈，共10条error；pageerror为0不能抵消音频失败。复现现有 #195 / #196 的冷启动缺陷，不新建重复BUG。无出声证据；运行时已合入/发布与听验未通过分别记录。根因及异步resume门禁由Leader #195评论5979755626说明；PR224后置独立CODEX-LEAD-AUDIT224对8027f3f最终SHA为REQUEST CHANGES（review5405998967，包含离院PCM缓存回收P2），修复待新SHA重审，实现Owner保持GROK-BUILD。
 
 证据：[进入](01-enter.png)、[拿草](02-grass.png)、[恢复](03-resume.png)、[浏览器结果](browser-result.json)、[公开manifest](release-manifest.json)。修复后需新精确SHA独立审查、实际生产Web解锁矩阵，再由GAME-QA对同构建做10分钟真实听验；本轮截图不替代该门禁。
