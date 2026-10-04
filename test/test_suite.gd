@@ -189,7 +189,7 @@ func _test_audio_architecture() -> void:
 	_check(int(capacity.music) == 2, "music crossfade requires two voices")
 	_check(int(capacity.sfx) == 8, "SFX polyphony must be bounded at eight voices")
 	_check(int(capacity.ui) == 2, "UI polyphony must be bounded at two voices")
-	for bus_name: String in ["Master", "Music", "SFX", "UI"]:
+	for bus_name: String in ["Master", "Music", "SFX", "UI", "Ambience"]:
 		_check(AudioServer.get_bus_index(bus_name) >= 0, "missing audio bus: " + bus_name)
 	for cue: String in cue_ids:
 		_check(not bool(_audio.call("play_music" if cue.begins_with("music.") else "play_cue", cue)), "unassigned cue must be silent: " + cue)

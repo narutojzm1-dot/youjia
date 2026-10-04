@@ -141,6 +141,15 @@ static func release_cached_stream(audio_stream: AudioStream, cache_key: String =
 	return engine == null or bool(engine.releaseBuffer(_stream_key(audio_stream, cache_key)))
 
 
+static func resume_shared_backend() -> String:
+	if not OS.has_feature("web"):
+		return "native"
+	var engine := JavaScriptBridge.get_interface("__manusBgm")
+	if engine == null:
+		return "unavailable"
+	return str(engine.resumeContext())
+
+
 func play(from_position: float = 0.0) -> void:
 	if stream == null:
 		return
