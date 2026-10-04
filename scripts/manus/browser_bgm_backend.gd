@@ -17,13 +17,20 @@ const SOURCE = """
   let listening = false;
   let pageHidden = false;
   let useClock = 0;
+  let resumeToken = 0;
+  let resumeHook = null;
   const finite = (v, fallback = 0) => Number.isFinite(Number(v)) ? Number(v) : fallback;
   const now = () => context ? context.currentTime : 0;
   function resume() {
     if (!pageHidden && context && context.state !== 'closed' && context.state !== 'running') {
       const old = context;
+      const token = resumeToken;
       try { Promise.resolve(old.resume()).then(() => {
-        if (context === old && pageHidden) suspendForCache(old);
+        if (context !== old || token !== resumeToken) return;
+        if (pageHidden) { suspendForCache(old); return; }
+        if (typeof resumeHook === 'function') {
+          try { resumeHook(JSON.stringify({ state: old.state || 'unknown', token: token })); } catch (_) {}
+        }
       }).catch(() => {}); } catch (_) {}
     }
   }
@@ -314,8 +321,11 @@ const SOURCE = """
         players: players.size, playing: [...players.values()].filter(p => p.playing()).length,
         state: context?.state || 'uninitialized' });
     },
-    resumeContext() {
+    setResumeHook(fn) { resumeHook = typeof fn === 'function' ? fn : null; },
+    resumeContext(token) {
       if (!ensureContext()) return 'unavailable';
+      const next = Number(token);
+      if (Number.isFinite(next)) resumeToken = next;
       resume();
       return context.state || 'unknown';
     },

@@ -58,6 +58,8 @@ var _pause_title_button: Button
 var _music_toggle: Button
 var _ambience_toggle: Button
 var _mute_toggle: Button
+var _music_toggle_frame := -1
+var _ambience_toggle_frame := -1
 var _confirm_screen: Control
 var _confirm_title: Label
 var _confirm_message: Label
@@ -330,7 +332,7 @@ func _input(event: InputEvent) -> void:
 	if _confirm_screen.visible:
 		buttons = [_confirm_accept_button, _confirm_cancel_button]
 	elif _pause_screen.visible:
-		buttons = [_resume_button, _restart_button, _pause_title_button]
+		buttons = [_resume_button, _restart_button, _pause_title_button, _music_toggle, _ambience_toggle, _mute_toggle]
 	elif _album_screen.visible:
 		buttons = [_album_previous_button, _album_next_button, _album_back_button]
 	elif _screen == "title":
@@ -577,12 +579,20 @@ func _on_play_pressed() -> void:
 
 
 func _toggle_music_layer() -> void:
-	AudioDirector.set_music_enabled(not AudioDirector._music_enabled)
+	var frame := Engine.get_process_frames()
+	if frame == _music_toggle_frame:
+		return
+	_music_toggle_frame = frame
+	AudioDirector.set_music_enabled(not AudioDirector.music_enabled())
 	_refresh_texts()
 
 
 func _toggle_ambience_layer() -> void:
-	AudioDirector.set_ambience_enabled(not AudioDirector._ambience_enabled)
+	var frame := Engine.get_process_frames()
+	if frame == _ambience_toggle_frame:
+		return
+	_ambience_toggle_frame = frame
+	AudioDirector.set_ambience_enabled(not AudioDirector.ambience_enabled())
 	_refresh_texts()
 
 
@@ -1319,8 +1329,8 @@ func _refresh_texts() -> void:
 	_resume_button.text = I18n.t("pause.resume")
 	_restart_button.text = I18n.t("pause.restart")
 	_pause_title_button.text = I18n.t("pause.main_menu")
-	_music_toggle.text = I18n.t("pause.music_off" if AudioDirector._music_enabled else "pause.music_on")
-	_ambience_toggle.text = I18n.t("pause.ambience_off" if AudioDirector._ambience_enabled else "pause.ambience_on")
+	_music_toggle.text = I18n.t("pause.music_off" if AudioDirector.music_enabled() else "pause.music_on")
+	_ambience_toggle.text = I18n.t("pause.ambience_off" if AudioDirector.ambience_enabled() else "pause.ambience_on")
 	_mute_toggle.text = I18n.t("pause.mute_on" if bool(TuningStore.get_value("audio.master.muted", false)) else "pause.mute_off")
 	_confirm_title.text = I18n.t("confirm.heading")
 	_confirm_message.text = I18n.t("confirm.title" if _pending_destructive_action == "title" else "confirm.restart")

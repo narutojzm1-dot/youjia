@@ -81,6 +81,57 @@ func _run() -> void:
 		audio.set_yard_active(false)
 		audio.set_yard_active(true)
 	_check(audio.get_voice_capacity().music + audio.get_voice_capacity().ambience == players_before, "enter and leave do not allocate more players")
+	audio._forced_backend_state = "unavailable"
+	audio.set_yard_active(false)
+	audio._unlocked = false
+	audio._awaiting_gesture = false
+	audio.set_yard_active(true)
+	var missing_backend: bool = bool(audio.unlock_audio())
+	_check(not missing_backend and audio.awaiting_gesture() and _music_stream(audio) == null and _ambience_stream(audio) == null, "a missing backend does not start beds or claim the gesture finished")
+	audio._on_browser_resume_settled(['{"state":"running","token":%d}' % (audio._resume_token - 1)])
+	_check(audio.awaiting_gesture() and _music_stream(audio) == null, "a stale resume callback does not start beds")
+	audio._forced_backend_state = "suspended"
+	audio.note_gesture()
+	_check(not audio.awaiting_gesture() and _music_stream(audio) != null and _ambience_stream(audio) != null, "a suspended context starts both layers on that same gesture")
+	_check(not audio.unlock_audio(), "suspended is not reported as a running speaker")
+	audio.set_yard_active(false)
+	audio._on_browser_resume_settled(['{"state":"running","token":%d}' % audio._resume_token])
+	_check(not audio.yard_active() and _music_stream(audio) == null and _ambience_stream(audio) == null, "a resume that settles after leaving does not restart the yard")
+	audio._forced_backend_state = ""
+	audio._unlocked = true
+	audio._awaiting_gesture = false
+	audio.set_yard_active(true)
+	var stale_player: Node = audio._music_players[audio._music_index]
+	var stale_epoch: int = int(audio.lifecycle_epoch())
+	var stale_generation: int = int(audio._music_generation)
+	for _i: int in 10:
+		audio.set_music_enabled(false)
+		_check(_music_stream(audio) == null and _ambience_stream(audio) != null, "music can turn off ten times without taking the yard air")
+		audio.set_music_enabled(true)
+		_check(_music_stream(audio) != null and audio.music_enabled(), "music can turn back on ten times without leaving the yard")
+	audio._retire_faded_music(stale_player, stale_epoch, stale_generation)
+	_check(audio.music_enabled() and _music_stream(audio) != null, "a fade from before the toggles does not stop music that is on")
+	for _i: int in 10:
+		audio.set_ambience_enabled(false)
+		_check(_ambience_stream(audio) == null and _music_stream(audio) != null, "ambience can turn off ten times without stopping music")
+		audio.set_ambience_enabled(true)
+		_check(_ambience_stream(audio) != null and audio.ambience_enabled(), "ambience can turn back on ten times without leaving the yard")
+	audio.set_music_enabled(false)
+	audio.set_ambience_enabled(false)
+	audio.set_ambience_enabled(true)
+	audio.set_music_enabled(true)
+	_check(_music_stream(audio) != null and _ambience_stream(audio) != null, "crossing the two switches ends with both layers on")
+	audio.set_game_paused(true)
+	audio.set_music_enabled(false)
+	audio.set_music_enabled(true)
+	_check(audio.music_enabled() and _music_stream(audio) != null and _ambience_stream(audio) != null, "a paused yard can still turn music off and back on")
+	audio.set_game_paused(false)
+	audio.set_application_active(false)
+	audio.set_ambience_enabled(false)
+	audio.set_ambience_enabled(true)
+	_check(audio.ambience_enabled() and _ambience_stream(audio) == null, "turning ambience on in the background does not play there")
+	audio.set_application_active(true)
+	_check(_ambience_stream(audio) != null and _music_stream(audio) != null and not audio.awaiting_gesture(), "returning to the yard restarts the open layers without a trip home")
 	audio.release_streams()
 	if failures.is_empty():
 		print("YARD AUDIO PASS ", checks)
