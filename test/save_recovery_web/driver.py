@@ -355,6 +355,96 @@ def receipt_fault(injection, options):
     return run
 
 
+def r3_resolve_failure_cap(c):
+    ## 模拟错误：先用 Probe 让 commit 事务真实 abort、submit 失败，再在测试侧把公开的 bridge.resolve
+    ## 换成持续报错。这是人为传输故障，不是浏览器存储损坏；新开的页不带替换。
+    s = c.s
+    page = c.open()
+    c.require_injection(page, 'abort_commit')
+    before = c.snapshot(page)
+    c.call(page, '''(async () => {
+        const m = await import('./bridge.mjs');
+        window.__resolveCalls = 0;
+        m.bridge.resolve = async () => { window.__resolveCalls++; throw new Error('simulated persistent resolve failure'); };
+        window.YoujiaRecoveryProbe.inject({abort_stage: 'commit'});
+        window.YoujiaRecoveryFixture.grant(1);
+    })()''')
+    page.wait_for_function("window.YoujiaRecoveryFixture.business().blocked_reason.startsWith('resolve failed')", timeout=WAIT_MS)
+    calls = page.evaluate('window.__resolveCalls')
+    time.sleep(1.5)
+    calls_later = page.evaluate('window.__resolveCalls')
+    business = c.business(page)
+    mid = c.snapshot(page)
+    c.grant(page, 2)
+    time.sleep(0.5)
+    held = c.business(page)
+    s.evidence.update(before=before, resolve_calls=calls, resolve_calls_later=calls_later,
+                      business_after_fault=business, after_fault=mid, business_after_refused_grant=held)
+    s.check(calls == 5 and calls_later == 5, 'resolve called at most 5 times, then stops')
+    s.check(business.get('pending') is True and business.get('ready') is False, 'business stays unknown and not writable')
+    s.check(not business.get('confirmed_serials') and business.get('watermark') == 0, 'nothing confirmed or granted')
+    s.check(mid.get('current') == before.get('current'), 'aborted commit leaves current unchanged')
+    s.check(2 in held.get('refused', []) and page.evaluate('window.__resolveCalls') == 5, 'later grant refused without new resolve calls')
+    page.close()
+    page = c.open()
+    rec = c.recovery(page)
+    s.evidence['recovery'] = rec
+    s.check(rec.get('verdict') == 'restored_parent_intent_rejected', 'reopen restores parent and rejects the intent')
+    s.check(business_of(rec) == {'watermark': 0, 'grants': []}, 'reopened payload has no grant')
+    c.grant(page, 1)
+    business = c.settled(page, 1)
+    after = c.snapshot(page)
+    s.evidence.update(business_after_reopen=business, after_reopen=after)
+    s.check(business_of(after) == {'watermark': 1, 'grants': [1]}, 'writable again after reopen, grant commits once')
+    s.check(not page.errors, 'no page errors')
+    c.cleanup(page)
+
+
+def r3_ack_txn_abort(c):
+    ## 真实事务失败：拦截 IDBObjectStore.delete('intent') 并 abort 该事务，不伪造成功结果。
+    s = c.s
+    page = c.open()
+    before = c.snapshot(page)
+    c.call(page, '''(() => {
+        window.__intentDeletes = 0;
+        const original = IDBObjectStore.prototype.delete;
+        IDBObjectStore.prototype.delete = function (key) {
+            const request = original.call(this, key);
+            if (key === 'intent') { window.__intentDeletes++; this.transaction.abort(); }
+            return request;
+        };
+        window.YoujiaRecoveryFixture.grant(1);
+    })()''')
+    page.wait_for_function("window.YoujiaRecoveryFixture.business().blocked_reason.startsWith('acknowledge failed')", timeout=WAIT_MS)
+    business = c.business(page)
+    mid = c.snapshot(page)
+    c.grant(page, 2)
+    time.sleep(0.5)
+    held = c.business(page)
+    held_store = c.snapshot(page)
+    s.evidence.update(before=before, intent_deletes=page.evaluate('window.__intentDeletes'), business_after_fault=business,
+                      after_fault=mid, business_after_refused_grant=held, after_refused_grant=held_store)
+    s.check(page.evaluate('window.__intentDeletes') >= 1, 'acknowledge transaction was really aborted')
+    s.check(business.get('confirmed_serials') == [1] and business.get('watermark') == 1, 'confirmed grant is not rolled back')
+    s.check(business.get('pending') is False and business.get('ready') is False, 'business settled but not writable')
+    s.check(business_of(mid) == {'watermark': 1, 'grants': [1]} and mid.get('present', {}).get('intent'), 'current committed and intent still present')
+    s.check(held.get('refused') == [2] and held_store == mid, 'later grant refused and storage unchanged')
+    page.close()
+    page = c.open()
+    rec = c.recovery(page)
+    reopened = c.snapshot(page)
+    s.evidence.update(recovery=rec, after_reopen=reopened)
+    s.check(business_of(rec) == {'watermark': 1, 'grants': [1]}, 'reopen keeps grant 1 exactly once')
+    s.check(not reopened.get('present', {}).get('intent'), 'intent cleared after reopen')
+    c.grant(page, 2)
+    business = c.settled(page, 2)
+    after = c.snapshot(page)
+    s.evidence.update(business_after_reopen=business, after_second_grant=after)
+    s.check(business_of(after) == {'watermark': 2, 'grants': [1, 2]}, 'writable again after reopen, grant 2 commits once')
+    s.check(not page.errors, 'no page errors')
+    c.cleanup(page)
+
+
 def r2_same_frame_double_grant(c):
     ## 同一次 evaluate 内连续两次 grant：第二次在第一次收尾前必须被拒绝，且不得污染第一次的确认。
     s = c.s
@@ -392,6 +482,8 @@ SCENARIOS = [
     ('R3-c_delay_receipt', receipt_fault('delay_receipt', {'delay_receipt_ms': 1500})),
     ('R3-c_abort_intent_txn', receipt_fault('abort_intent', {'abort_stage': 'intent'})),
     ('R3-c_abort_commit_txn', receipt_fault('abort_commit', {'abort_stage': 'commit'})),
+    ('R3-d_resolve_failure_cap_simulated', r3_resolve_failure_cap),
+    ('R3-d_ack_txn_abort', r3_ack_txn_abort),
 ]
 
 
