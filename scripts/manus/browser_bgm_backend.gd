@@ -314,6 +314,11 @@ const SOURCE = """
         players: players.size, playing: [...players.values()].filter(p => p.playing()).length,
         state: context?.state || 'uninitialized' });
     },
+    resumeContext() {
+      if (!ensureContext()) return 'unavailable';
+      resume();
+      return context.state || 'unknown';
+    },
   };
 })();
 """

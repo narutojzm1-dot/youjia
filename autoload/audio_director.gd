@@ -16,7 +16,9 @@ const CUES := {
 	"score.reward": {"path": "", "bus": "SFX"},
 	"game.pause": {"path": "", "bus": "UI"},
 	"game.victory": {"path": "", "bus": "SFX"},
-	"game.defeat": {"path": "", "bus": "SFX"},
+	"game.defeat": {"path": "", "bus": "SFX", "kind": "sfx"},
+	"yard.ambience": {"path": "res://assets/holiday/audio/bed_yard_env.ogg", "kind": "ambience"},
+	"yard.music": {"path": "res://assets/holiday/audio/bed_yard_music.ogg", "kind": "music"},
 }
 
 var _streams: Dictionary = {}
@@ -29,6 +31,15 @@ var _unlocked := false
 var _headless := false
 var _paused := false
 var _music_tween: Tween
+var _ambience_player: BrowserBgmPlayer
+var _yard_active := false
+var _application_active := true
+var _music_enabled := true
+var _ambience_enabled := true
+var _ambience_volume_db := 0.0
+var _epoch := 0
+var _awaiting_gesture := false
+var _backend_state := "uninitialized"
 
 
 func _ready() -> void:
@@ -45,6 +56,14 @@ func _ready() -> void:
 		player.playback_type = AudioServer.PLAYBACK_TYPE_STREAM
 		player.finished.connect(_on_music_finished.bind(player))
 		_music_players.append(player)
+	_ambience_player = BrowserBgmPlayer.new()
+	_ambience_player.name = "Ambience"
+	_ambience_player.bus = "Ambience"
+	_ambience_player.process_mode = Node.PROCESS_MODE_ALWAYS
+	_ambience_player.force_loop = true
+	add_child(_ambience_player)
+	_ambience_player.playback_type = AudioServer.PLAYBACK_TYPE_STREAM
+	_ambience_player.finished.connect(_on_ambience_finished)
 	for index: int in MAX_SFX_VOICES:
 		_sfx_players.append(_make_player("Sfx%d" % index, "SFX"))
 	for index: int in MAX_UI_VOICES:
@@ -59,7 +78,10 @@ func _exit_tree() -> void:
 
 
 func release_streams() -> void:
+	_epoch += 1
+	_yard_active = false
 	stop_music(0.0)
+	_stop_ambience_immediate()
 	for player: AudioStreamPlayer in _sfx_players + _ui_players:
 		player.stop()
 		player.stream = null
@@ -99,13 +121,89 @@ func unregister_cue(cue_id: String) -> void:
 				if player.stream == old_stream:
 					player.stop()
 					player.stream = null
+		if _ambience_player != null and _ambience_player.stream == old_stream:
+			_stop_ambience_immediate()
 		BrowserBgmPlayer.release_cached_stream(old_stream)
 	_streams.erase(cue_id)
 
 
-func unlock_audio() -> void:
-	# Called from a real button/input gesture; no dummy cue is required.
+func unlock_audio() -> bool:
+	# Real button/input gesture only. The flag is not proof the browser is audible.
 	_unlocked = true
+	_awaiting_gesture = false
+	_backend_state = str(BrowserBgmPlayer.resume_shared_backend())
+	if not _headless and _backend_state != "native" and _backend_state != "running":
+		_awaiting_gesture = true
+	_reconcile()
+	return _headless or _backend_state == "native" or _backend_state == "running"
+
+
+func note_gesture() -> void:
+	if not _awaiting_gesture:
+		return
+	_backend_state = str(BrowserBgmPlayer.resume_shared_backend())
+	if _headless or _backend_state == "native" or _backend_state == "running":
+		_awaiting_gesture = false
+		_unlocked = true
+		_reconcile()
+
+
+func set_yard_active(active: bool) -> void:
+	if _yard_active == active:
+		_reconcile()
+		return
+	_yard_active = active
+	if not active:
+		_epoch += 1
+		_awaiting_gesture = false
+		stop_music(0.0)
+		_stop_ambience_immediate()
+		return
+	_reconcile()
+
+
+func set_application_active(active: bool) -> void:
+	if _application_active == active:
+		_reconcile()
+		return
+	_application_active = active
+	if not active:
+		_awaiting_gesture = false
+	elif _yard_active and _unlocked and not _headless:
+		_backend_state = str(BrowserBgmPlayer.resume_shared_backend())
+		_awaiting_gesture = _backend_state != "native" and _backend_state != "running"
+	_reconcile()
+
+
+func set_music_enabled(enabled: bool) -> void:
+	_music_enabled = enabled
+	_reconcile()
+
+
+func set_ambience_enabled(enabled: bool) -> void:
+	_ambience_enabled = enabled
+	_reconcile()
+
+
+func set_ambience_volume_db(volume_db: float) -> void:
+	_ambience_volume_db = clampf(volume_db, -40.0, 0.0)
+	_apply_bus_settings()
+
+
+func yard_active() -> bool:
+	return _yard_active
+
+
+func awaiting_gesture() -> bool:
+	return _awaiting_gesture
+
+
+func lifecycle_epoch() -> int:
+	return _epoch
+
+
+func backend_state() -> String:
+	return _backend_state
 
 
 func play_music(cue_id: String, crossfade_seconds: float = 0.35) -> bool:
@@ -131,12 +229,15 @@ func play_music(cue_id: String, crossfade_seconds: float = 0.35) -> bool:
 		old_player.stop()
 		old_player.stream = null
 		return true
+	var epoch := _epoch
 	next_player.play()
 	_music_tween = create_tween().set_parallel(true)
 	_music_tween.tween_property(next_player, "volume_db", 0.0, maxf(0.0, crossfade_seconds))
 	if old_player.playing:
 		_music_tween.tween_property(old_player, "volume_db", -40.0, maxf(0.0, crossfade_seconds))
 		_music_tween.chain().tween_callback(func() -> void:
+			if epoch != _epoch:
+				return
 			old_player.stop()
 			old_player.stream = null
 		)
@@ -151,13 +252,16 @@ func stop_music(fade_seconds: float = 0.25) -> void:
 			player.stop()
 			player.stream = null
 		return
+	var epoch := _epoch
 	_music_tween = create_tween().set_parallel(true)
 	for player: BrowserBgmPlayer in _music_players:
 		_music_tween.tween_property(player, "volume_db", -40.0, fade_seconds)
 	_music_tween.chain().tween_callback(func() -> void:
-		for player: BrowserBgmPlayer in _music_players:
-			player.stop()
-			player.stream = null
+		if epoch != _epoch:
+			return
+		for fading: BrowserBgmPlayer in _music_players:
+			fading.stop()
+			fading.stream = null
 	)
 
 
@@ -168,8 +272,9 @@ func _kill_music_tween() -> void:
 
 
 func play_cue(cue_id: String, pitch_scale: float = 1.0) -> bool:
+	var kind := str(CUES.get(cue_id, {}).get("kind", ""))
 	var stream: AudioStream = _streams.get(cue_id)
-	if stream == null or CUES.get(cue_id, {}).get("kind", "") == "music":
+	if stream == null or kind == "music" or kind == "ambience":
 		return false
 	if not _unlocked and not _headless:
 		return false
@@ -208,7 +313,12 @@ func get_cue_ids() -> Array:
 
 
 func get_voice_capacity() -> Dictionary:
-	return {"music": _music_players.size(), "sfx": _sfx_players.size(), "ui": _ui_players.size()}
+	return {
+		"music": _music_players.size(),
+		"ambience": 1 if _ambience_player != null else 0,
+		"sfx": _sfx_players.size(),
+		"ui": _ui_players.size(),
+	}
 
 
 func _make_player(player_name: String, bus_name: String) -> AudioStreamPlayer:
@@ -236,11 +346,13 @@ func _load_streams() -> void:
 
 
 func _ensure_buses() -> void:
-	for bus_name: String in ["Music", "SFX", "UI"]:
+	for bus_name: String in ["Music", "SFX", "UI", "Ambience"]:
 		if AudioServer.get_bus_index(bus_name) >= 0:
 			continue
+		var index := AudioServer.bus_count
 		AudioServer.add_bus()
-		AudioServer.set_bus_name(AudioServer.bus_count - 1, bus_name)
+		AudioServer.set_bus_name(index, bus_name)
+		AudioServer.set_bus_send(index, "Master")
 
 
 func _apply_bus_settings() -> void:
@@ -255,6 +367,10 @@ func _apply_bus_settings() -> void:
 		if index >= 0:
 			var duck := 8.0 if bus_name == "Music" and _paused else 0.0
 			AudioServer.set_bus_volume_db(index, float(TuningStore.get_value(mappings[bus_name], 0.0)) - duck)
+	var ambience := AudioServer.get_bus_index("Ambience")
+	if ambience >= 0:
+		var ambience_duck := 8.0 if _paused else 0.0
+		AudioServer.set_bus_volume_db(ambience, _ambience_volume_db - ambience_duck)
 	var master := AudioServer.get_bus_index("Master")
 	if master >= 0:
 		AudioServer.set_bus_mute(master, bool(TuningStore.get_value("audio.master.muted", false)))
@@ -266,5 +382,73 @@ func _on_tuning_changed(id: String, _requested: Variant, _active: Variant) -> vo
 
 
 func _on_music_finished(player: BrowserBgmPlayer) -> void:
-	if player == _music_players[_music_index] and not _music_cue.is_empty() and player.stream != null:
-		player.play()
+	if player != _music_players[_music_index] or not _music_continues():
+		return
+	if player.stream != null and not _headless:
+		player.play(player.get_playback_position())
+
+
+func _on_ambience_finished() -> void:
+	if not _ambience_continues() or _ambience_player.stream == null or _headless:
+		return
+	_ambience_player.play(0.0)
+
+
+func _music_continues() -> bool:
+	return _yard_active and _application_active and _music_enabled and _music_cue == "yard.music" and (_unlocked or _headless) and not _awaiting_gesture
+
+
+func _ambience_continues() -> bool:
+	return _yard_active and _application_active and _ambience_enabled and (_unlocked or _headless) and not _awaiting_gesture
+
+
+func _reconcile() -> void:
+	if not _yard_active:
+		return
+	if not _music_enabled:
+		stop_music(0.0)
+	if not _ambience_enabled:
+		_stop_ambience_immediate()
+	_apply_transport_pause(not _application_active)
+	if not _application_active:
+		return
+	if not _unlocked and not _headless:
+		return
+	if _awaiting_gesture and not _headless:
+		return
+	if _ambience_enabled:
+		_start_ambience()
+	if _music_enabled:
+		play_music("yard.music")
+
+
+func _apply_transport_pause(paused: bool) -> void:
+	if _ambience_player != null:
+		_ambience_player.stream_paused = paused
+	for player: BrowserBgmPlayer in _music_players:
+		player.stream_paused = paused
+
+
+func _start_ambience() -> void:
+	var stream: AudioStream = _streams.get("yard.ambience")
+	if stream == null or _ambience_player == null:
+		_stop_ambience_immediate()
+		return
+	if _ambience_player.stream == stream and (_ambience_player.playing or _headless):
+		return
+	var resume_from := 0.0
+	if _ambience_player.stream == stream:
+		resume_from = _ambience_player.get_playback_position()
+	_ambience_player.stream = stream
+	_ambience_player.volume_db = 0.0
+	if _headless:
+		return
+	_ambience_player.play(resume_from)
+
+
+func _stop_ambience_immediate() -> void:
+	if _ambience_player == null:
+		return
+	_ambience_player.stream_paused = false
+	_ambience_player.stop()
+	_ambience_player.stream = null
