@@ -1,0 +1,57 @@
+name: req024-pose-draw
+on:
+  push:
+    branches:
+      - work/grok-contributor/REQ-20261003-024-still-boundary-feedback-v2
+    paths:
+      - .github/workflows/req024-pose-draw.yml
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Boundary arc draw calls BoundaryFeedback.pose
+        run: |
+          python3 - << 'PY'
+          from pathlib import Path
+          p = Path("scripts/game/yard_world.gd")
+          text = p.read_text()
+          old = "func _draw() -> void:\n\tif _rejected_seconds > 0.0:\n\t\tvar alpha := minf(1.0, _rejected_seconds / 0.35) * 0.80\n\t\tvar ink := Color(0.52,0.31,0.20,alpha)\n"
+          new = "func _draw() -> void:\n\tif _rejected_seconds > 0.0:\n\t\tvar reduced_motion := bool(TuningStore.get_value(\"ui.reduced_motion\", false))\n\t\tvar alpha := float(BoundaryFeedback.pose(_rejected_seconds, reduced_motion).alpha)\n\t\tvar ink := Color(0.52,0.31,0.20,alpha)\n"
+          if old not in text:
+              if "BoundaryFeedback.pose(_rejected_seconds, reduced_motion)" not in text:
+                  raise SystemExit("pattern missing")
+              print("already patched")
+          else:
+              text = text.replace(old, new, 1)
+              if text.count("BoundaryFeedback.pose(_rejected_seconds, reduced_motion)") != 1:
+                  raise SystemExit("pose count")
+              if "_rejected_seconds / 0.35" in text:
+                  raise SystemExit("old fade remains")
+              p.write_text(text)
+              print("patched", p.stat().st_size)
+          wf = Path(".github/workflows/req024-pose-draw.yml")
+          if wf.exists():
+              wf.unlink()
+          PY
+          git config user.name "narutojzm1-dot"
+          git config user.email "narutojzm1@gmail.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "no changes"
+            exit 0
+          fi
+          git commit -m "$(cat <<'EOF'
+          REQ-20261003-024: boundary arc draw calls BoundaryFeedback.pose
+
+          Reduced motion controls boundary-arc alpha only. Remaining time stays owned by YardWorld.tick. Radius stays 12. Removes the one-shot patch workflow.
+
+          Agent-ID: GROK-CONTRIBUTOR
+          EOF
+          )"
+          git push origin HEAD:work/grok-contributor/REQ-20261003-024-still-boundary-feedback-v2
