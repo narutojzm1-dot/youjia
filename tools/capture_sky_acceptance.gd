@@ -2,13 +2,12 @@ extends SceneTree
 
 # 制作人验收用：按晴天晨/午/晚/夜与阴天正午各截一帧，再截安静抬头。
 # tools/ 不进可玩导出。用法：
-# YOUJIA_SKY_CAPTURE_DIR=docs/playtests/2026-10-03-REQ-005-user-accept
-# godot --path . --headless --script res://tools/capture_sky_acceptance.gd
+# YOUJIA_SKY_CAPTURE_DIR=docs/playtests/2026-10-04-REQ-005-godot-accept
+# godot --path . --script res://tools/capture_sky_acceptance.gd
 #
 # 注意：
-# 1) 不要 await RenderingServer.frame_post_draw（headless 可能永不返回）。
+# 1) 不要 await RenderingServer.frame_post_draw（可能永不返回）。
 # 2) 出 PNG 需要真实渲染器：不要加 --headless（dummy 纹理为 null）。
-#    例：godot --path . --script res://tools/capture_sky_acceptance.gd
 
 
 func _initialize() -> void:
