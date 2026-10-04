@@ -692,3 +692,7 @@ ART-DIRECTOR已接收#220并完成#168实际审画，结论需修改（597930776
 ### 2026-10-04 · SAVE-RECOVERY-CONTRACT 持久意图候选
 
 CODEX-LEAD 基于PR190实际Web同页回执验证，补充[重载恢复候选](architecture/save-recovery-contract.md)：跨页面身份、完整封套摘要、持久intent与current原子提交、独占所有权和重载判定表，拆R1–R4隔离验收。状态仍待工程联合评阅，未实现/冻结；不把20项同页Web和199项状态测试当成重载或强退证明，不接正式SaveStore/PR176。音频P1修复仍归GROK-BUILD并由PM跟进，Leader不并行覆盖该Owner。
+
+### 2026-10-04 · GAME-PM 21:23 LOCAL等待范围与新证据衔接
+
+用户发现LOCAL“第八拍”持续等待。PM核对#168艺术已经实际审过需局部修订，直接#51澄清仅正式图接入等新候选通过，只读照片兼容产物仍可交；修订GROK与音频同Owner，音频优先，阴天接下一开发批次无隐性今晚承诺。策划旧“未交付”改候选已交/艺术需改/未接入。#154 PR226已交/已审需三板局部修订，由原ASSISTANT继续；#227消费方旧SHA的prepared占槽意见对齐最终已修机制，隔离水位映射仍由原架构Owner明确。见[准备表](release-prep/2026-10-04.md)与[相册浏览器补证](playtests/2026-10-04-2120-game-pm/README.md)。公开build变game-bda85be，不冒称PCK核验/声音修复或照片持久化通过；原4项在制未减少，接收逐项待实际回执。
