@@ -52,10 +52,11 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventKey and not event.echo:
 		var key := (event as InputEventKey)
 		var code := key.physical_keycode if key.physical_keycode != 0 else key.keycode
+		## 每个物理键各算一个来源：按住 ← 时按下又松开 A，仍回到 ←
 		if code == KEY_LEFT or code == KEY_A:
-			_key("key_left", -1, key.pressed)
+			_key("key_%d" % code, -1, key.pressed)
 		elif code == KEY_RIGHT or code == KEY_D:
-			_key("key_right", 1, key.pressed)
+			_key("key_%d" % code, 1, key.pressed)
 		elif code == KEY_L and key.pressed:
 			low_motion = not low_motion
 			_update_hint()

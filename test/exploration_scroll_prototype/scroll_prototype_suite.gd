@@ -32,6 +32,7 @@ func _run() -> void:
 	await _scene_resize()
 	await _scene_low_motion()
 	await _scene_reload()
+	await _scene_pipeline()
 	for failure: String in failures:
 		push_error(failure)
 	print("EXPLORATION SCROLL PROTOTYPE %s %d" % ["PASS" if failures.is_empty() else "FAIL", checks])
@@ -119,6 +120,12 @@ func _scene_keyboard() -> void:
 	p._process(0.5)
 	_check(p.model.x < held and p.model.facing == -1, "A walks left and turns the walker")
 	p._unhandled_input(_key(KEY_A, false))
+	p._unhandled_input(_key(KEY_LEFT, true))
+	p._unhandled_input(_key(KEY_A, true))
+	p._unhandled_input(_key(KEY_A, false))
+	_check(p.input.direction() == -1, "tapping A while holding the left arrow keeps walking left")
+	p._unhandled_input(_key(KEY_LEFT, false))
+	_check(p.input.direction() == 0, "releasing the left arrow then stops")
 	await _despawn(p)
 
 
@@ -215,6 +222,31 @@ func _scene_reload() -> void:
 	_check(Performance.get_monitor(Performance.OBJECT_NODE_COUNT) == nodes, "repeated loads leave no extra nodes")
 	_check(Performance.get_monitor(Performance.OBJECT_ORPHAN_NODE_COUNT) == orphans, "repeated loads leave no orphan nodes")
 	_check(root.size_changed.get_connections().size() == links, "repeated loads leave no viewport connections")
+
+
+## 11. 真实管线：事件经 Input.parse_input_event 进入引擎输入流程，尺寸经根窗口 size_changed 生效
+func _scene_pipeline() -> void:
+	var p = await _spawn()
+	var start: float = p.model.x
+	Input.parse_input_event(_key(KEY_RIGHT, true))
+	await process_frame
+	await process_frame
+	_check(p.input.direction() == 1 and p.model.x > start, "a key event through the engine pipeline walks")
+	Input.parse_input_event(_key(KEY_RIGHT, false))
+	await process_frame
+	var spot: float = p.model.x
+	await process_frame
+	await process_frame
+	_check(p.input.direction() == 0 and p.model.x == spot, "a released key through the pipeline stops")
+	var original := root.size
+	root.size = Vector2i(390, 844)
+	await process_frame
+	_check(is_equal_approx(p.camera.zoom.x, 844.0 / ScrollWalkModel.SCROLL_HEIGHT), "a real window resize reframes through size_changed")
+	var half: float = 390.0 / p.camera.zoom.x * 0.5
+	_check(absf(p.model.x - p.camera.position.x) <= half + 0.01, "the walker stays on screen after a real resize")
+	root.size = original
+	await process_frame
+	await _despawn(p)
 
 
 func _spawn():
