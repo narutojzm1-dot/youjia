@@ -36,6 +36,11 @@ func _run() -> void:
 	_finish()
 
 
+func _tuning():
+	# Autoload is not a compile-time identifier under --script; resolve at runtime.
+	return root.get_node("/root/TuningStore")
+
+
 func _check_sources() -> void:
 	_check(not FileAccess.file_exists("res://autoload/still_boundary_hook.gd"), "still boundary hook script is gone")
 	_check(not FileAccess.file_exists("res://autoload/still_boundary_hook.gd.uid"), "still boundary hook uid is gone")
@@ -52,7 +57,7 @@ func _check_sources() -> void:
 
 
 func _check_motion_frames(world, reduced: bool) -> void:
-	TuningStore.set_value("ui.reduced_motion", reduced, false)
+	_tuning().set_value("ui.reduced_motion", reduced, false)
 	_reject(world)
 	world.queue_redraw()
 	var early := float(world._rejected_seconds)
@@ -72,7 +77,7 @@ func _check_motion_frames(world, reduced: bool) -> void:
 
 
 func _check_expiry_refresh_cancel(world) -> void:
-	TuningStore.set_value("ui.reduced_motion", false, false)
+	_tuning().set_value("ui.reduced_motion", false, false)
 	_reject(world)
 	var steps := 0
 	while world._rejected_seconds > 0.0 and steps < 90:
@@ -101,7 +106,6 @@ func _check_album_and_pause(main, world) -> void:
 	main.set_process(true)
 	for _i in 4:
 		await process_frame
-	main.set_process(false)
 	_check(Time.get_ticks_msec() > wall, "album wait actually advances the wall clock")
 	_check(is_equal_approx(world._rejected_seconds, held), "album does not spend the cue on the wall clock")
 	main._hide_album()
@@ -111,6 +115,8 @@ func _check_album_and_pause(main, world) -> void:
 	held = float(world._rejected_seconds)
 	wall = Time.get_ticks_msec()
 	main._toggle_pause()
+	# Keep Main processing through the pause wait/asserts so the real process loop is proven.
+	main.set_process(true)
 	for _i in 4:
 		await process_frame
 	_check(Time.get_ticks_msec() > wall, "pause wait actually advances the wall clock")
@@ -122,12 +128,12 @@ func _check_album_and_pause(main, world) -> void:
 
 
 func _check_reduced_toggle(world) -> void:
-	TuningStore.set_value("ui.reduced_motion", false, false)
+	_tuning().set_value("ui.reduced_motion", false, false)
 	_reject(world)
 	world.tick(1.0, Vector2.ZERO)
 	var remaining := float(world._rejected_seconds)
 	var ordinary := float(BoundaryFeedback.pose(remaining, false).alpha)
-	TuningStore.set_value("ui.reduced_motion", true, false)
+	_tuning().set_value("ui.reduced_motion", true, false)
 	_check(is_equal_approx(world._rejected_seconds, remaining), "toggling reduced motion does not rewrite remaining time")
 	var held := float(BoundaryFeedback.pose(world._rejected_seconds, true).alpha)
 	_check(is_equal_approx(held, 0.80) and held > ordinary, "the same remaining time holds alpha when reduced motion turns on")
