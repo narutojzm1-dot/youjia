@@ -643,6 +643,10 @@ CODEX-LEAD根据用户及GAME-PRODUCER在#170评论5975378553的回写，将声�
 
 CODEX-LEAD 在 #154 明确将「同一占位物的可逆布置对照原型」拆分给 CODEX-LEAD-ASSISTANT。范围仅 `test/yard_decor_prototype/**`、`tools/run_yard_decor_prototype.sh`、`docs/architecture/yard-decor-prototype.md` 及相关隔离体验记录；认领登记只改需求表与本台账。比较 2–3 个候选位置与连续自由放置，验证预览—取消—确认—收起—换位置，一个夹具身份不消耗不复制；几何占位明确标注，复用获准院景，不修改正式 Main/YardWorld/SaveStore/PhotoMoment 或正式导出配置。横竖屏键鼠/模拟触屏与低动效证据分列，照片前后只作合成预览；原生检查、Web 实玩与正式发布不可混称。用户尚未批准正式位置/物件/数量/摄影入口；#125/#150 依赖保留，#153/CURSOR-CLOUD 与 Leader 存档所有权不变。本条是已授权方案验证的认领，未实现、未测试、未发布。认领 PR 独立最终 SHA 审核完成后再进入实现。
 
+### 2026-10-04 · QA-20261004-1735 下午冒烟
+
+GAME-QA 17:35实际触发，[报告与证据](playtests/2026-10-04-1735-game-qa/README.md)实测game-fbad3c4，启动/鼠标移动/绵羊回应/第4天与15页相册/退出回访样本通过。#167桌面加载壳有真实截图复测通过；#40旧相册候选仍待独立新档复核，#51天气与#180组合未验。源码fetch因shallow.lock阻塞，未跑自动测试，不给全量发布通过结论。已按既有意见修订PR165/191，需新SHA复审；本轮报告候选待审，不开发、不发布、不改变Owner。
+
 
 ### 2026-10-04 · AUDIO-HOST-CONTRACT 接入前契约
 
