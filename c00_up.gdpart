@@ -1,0 +1,228 @@
+class_name YardWorld
+extends Node2D
+
+signal album_updated(collected: PackedStringArray, latest_id: String)
+signal weather_changed(weather: String)
+signal notice_requested(key: String)
+signal notice_dismiss_requested(key: String)
+signal camera_focus_requested(world_point: Vector2, zoom: float)
+signal camera_release_requested
+signal cinematic_view_changed(stage: String)
+signal day_advanced(day: int)
+## 钓到鱼时触发，带上鱼种类字符串，供 HUD 做更强的收杆反馈动画
+signal fish_caught(carry_type: String)
+
+const SUNNY := preload("res://assets/holiday/environment/yard_sunny.png")
+const OVERCAST := preload("res://assets/holiday/environment/yard_overcast.png")
+## 叠加云带：晴/阴各一帧半透明水彩带，不替换整张院子底图。
+const CLOUD_SUNNY := preload("res://assets/holiday/environment/cloud_band_sunny.png")
+const CLOUD_OVERCAST := preload("res://assets/holiday/environment/cloud_band_overcast.png")
+## 傍晚暖色云带：只在晴天且 TOD 为傍晚时替换晴天帧，阴天仍用阴云。
+const CLOUD_SUNSET := preload("res://assets/holiday/environment/cloud_band_sunset.png")
+## 早晨薄云：晴天 dawn/morning 窗口，比正午更淡、略偏上。
+const CLOUD_MORNING := preload("res://assets/holiday/environment/cloud_band_morning.png")
+const GrassPatchType := preload("res://scripts/entities/grass_patch.gd")
+const FeltActorType := preload("res://scripts/entities/felt_actor.gd")
+const VacationerType := preload("res://scripts/entities/vacationer.gd")
+## 世界特效层每帧位于角色脚底排序之上。
+const WorldEffectsOverlayType := preload("res://scripts/game/world_effects_overlay.gd")
+const YardSceneFeedbackType := preload("res://scripts/game/yard_scene_feedback.gd")
+const AnimalRelationshipsType := preload("res://scripts/game/animal_relationships.gd")
+const AnimalRelationshipEncounterType := preload("res://scripts/game/animal_relationship_encounter.gd")
+const WORLD_SIZE := Vector2(1280, 720)
+## 云带世界坐标 Y：压在天空带内，不盖住前景动物。
+const CLOUD_BAND_Y := 18.0
+## 云带缓慢平移速度（世界像素/秒）；低动效时为 0。
+const CLOUD_DRIFT_SPEED := 6.5
+## REQ-012 切片 C：安静停留后轻微抬头看天（秒）。长于栅栏草叶 2.5s 与鹅马等待 3.5s，避免抢镜头。
+const QUIET_SKY_STILL_SECONDS := 5.5
+## 抬头镜头保持时长；走动立即取消。
+const QUIET_SKY_HOLD_SECONDS := 4.0
+## 同一次停留结束后的冷却，避免镜头来回抢。
+const QUIET_SKY_COOLDOWN_SECONDS := 28.0
+## 轻微放大；不做成任务式取景 UI。
+const QUIET_SKY_ZOOM := 1.14
+# 人只站在画里已经对上地面的几个位置。圆点是可以走过去的下一处。
+const PICTURE_SPOTS := {
+	"door": {"position": Vector2(250, 508), "depth": 1.0, "facing": 1.0, "neighbors": ["grass"]},
+	"grass": {"position": Vector2(420, 548), "depth": 1.1, "facing": 1.0, "neighbors": ["door", "by_llama", "pond"]},
+	"by_llama": {"position": Vector2(578, 478), "depth": 0.88, "facing": 1.0, "neighbors": ["grass", "by_cow", "by_goose"]},
+	"by_cow": {"position": Vector2(545, 508), "depth": 1.02, "facing": -1.0, "neighbors": ["by_llama", "grass"]},
+	"pond": {"position": Vector2(620, 575), "depth": 1.16, "facing": -1.0, "neighbors": ["grass"]},
+	"by_goose": {"position": Vector2(760, 500), "depth": 0.96, "facing": -1.0, "neighbors": ["by_llama", "pen"]},
+	"pen": {"position": Vector2(980, 488), "depth": 0.9, "facing": -1.0, "neighbors": ["by_goose", "shed"]},
+	"shed": {"position": Vector2(1100, 536), "depth": 1.06, "facing": -1.0, "neighbors": ["pen"]},
+}
+
+var weather := "sun"
+var season := "late_summer"
+var collected: PackedStringArray = []
+var last_photo := ""
+var photo_moments: Dictionary = {}
+var simulation_active := true
+var input_enabled := true
+
+# ── 假期天数 / 昼夜 ───────────────────────────────────────────────────
+## 每 DAY_DURATION_SECONDS 真实游玩秒数 = 1个假期天
+const DAY_DURATION_SECONDS := 600.0
+var holiday_day := 1
+var _day_elapsed := 0.0       # 本天内已流逝的秒数
+var _save_interval := 60.0    # 每隔60秒自动存档一次
+
+# ── 植物床状态 ─────────────────────────────────────────────────────────
+## 0=空, 1=已种, 2=发芽, 3=开花
+const PLANT_EMPTY := 0
+const PLANT_PLANTED := 1
+const PLANT_SPROUTING := 2
+const PLANT_BLOOMED := 3
+var _plant_state := 0
+var _plant_day_planted := 0
+var _plant_watered_day := -1
+
+# ── 钓鱼状态 ───────────────────────────────────────────────────────────
+## 0=空闲, 1=已抛竿（等待）, 2=有反应！, 3=钓到了
+const FISH_IDLE := 0
+const FISH_CASTING := 1
+const FISH_BITE := 2
+const FISH_CAUGHT := 3
+var _fish_state := 0
+var _fish_timer := 0.0
+var _fish_caught_total := 0
+var _first_fish_polaroid_done := false
+## 钓到后的携带状态："small"/"medium"/"odd"，空=无
+var _fish_carry_type: String = ""
+## 携带倒计时（秒），归零后鱼自动溜走
+var _fish_carry_timer: float = 0.0
+## 咬钩提醒计时器：BITE 期间每隔一段时间重发通知，防止玩家错过
+var _fish_bite_nudge: float = 0.0
+## 钓到鱼后的视觉庆祝闪光计时（秒）；> 0 时绘制扩散环动画
+var _fish_catch_flash: float = 0.0
+## 上次钓到时记录的鱼种（用于绘制时区分颜色）
+var _fish_catch_type: String = ""
+## 收获花朵庆祝动画计时（秒）
+var _plant_harvest_flash: float = 0.0
+## 最近一次抚摸的动物物种名，防止跨物种拍立得误触发
+var _just_petted_species: String = ""
+
+var _plant_visual: YardPropVisual
+var _fishing_visual: YardPropVisual
+var _backdrop: Sprite2D
+## 两片首尾相接的云带 Sprite，用于无缝缓移。
+var _cloud_band_a: Sprite2D
+var _cloud_band_b: Sprite2D
+## 云带水平滚动偏移（世界像素，对带宽取模）。
+var _cloud_scroll := 0.0
+## 安静抬头：静止累计、冷却、是否占用当前镜头。
+var _quiet_sky_still := 0.0
+var _quiet_sky_cooldown := 0.0
+var _quiet_sky_active := false
+var _player: Vacationer
+var _actors: Dictionary = {}
+var _zones: Dictionary = {}
+var _pulse := 0.0
+var _weather_timer := 0.0
+var _cooldowns: Dictionary = {}
+var _held: Dictionary = {}
+var _focus_seconds := 0.0
+var _leading := false
+var _day_seconds := 0.0
+var _grass_patch: GrassPatch
+var _lead_rope: Line2D
+## 世界特效覆盖层节点（动态置于最高角色层之上）
+var _effects_overlay: Node2D
+var _scene_feedback: YardSceneFeedback
+var _spot := "door"
+var _move_held := false
+var _has_walk_goal := false
+var _walk_goal := Vector2.ZERO
+var _pending_interaction := ""
+var _selected_target := ""
+var _walk_path: Array[Vector2] = []
+var _body_repath := 0.0
+var _rejected_point := Vector2.ZERO
+var _rejected_seconds := 0.0
+var _relationship_memory: Dictionary = {}
+var _relationship_encounter: AnimalRelationshipEncounter
+var _goose_mount_phase := -1
+var _goose_mount_seconds := 0.0
+var _goose_mount_wait := 0.0
+var _goose_mount_flap_clock := 0.0
+var _goose_mount_flap_open := false
+var _goose_mount_origin := Vector2.ZERO
+
+
+func setup(
+	saved_photos: Array = [],
+	saved_moments: Dictionary = {},
+	saved_day: int = 1,
+	saved_day_elapsed: float = 0.0,
+	saved_plant: Dictionary = {},
+	saved_fish_caught: bool = false,
+	saved_relationship_memory: Dictionary = {}
+) -> void:
+	process_mode = Node.PROCESS_MODE_PAUSABLE
+	collected = PackedStringArray()
+	photo_moments.clear()
+	for item: Variant in saved_photos:
+		var photo_id := str(item)
+		if photo_id not in collected:
+			collected.append(photo_id)
+		var moment := PhotoMoment.sanitize(saved_moments.get(photo_id,{}))
+		if not moment.is_empty() and str(moment.get("rule_id","")) == photo_id:
+			photo_moments[photo_id] = moment
+	# 读取假期天数进度
+	holiday_day = maxi(1, saved_day)
+	_day_elapsed = maxf(0.0, saved_day_elapsed)
+	# 读取植物床进度
+	_plant_state = clampi(int(saved_plant.get("state", 0)), 0, 3)
+	_plant_day_planted = maxi(0, int(saved_plant.get("day_planted", 0)))
+	_plant_watered_day = int(saved_plant.get("watered_day", -1))
+	# 读取钓鱼记录
+	_first_fish_polaroid_done = saved_fish_caught
+	_relationship_memory = AnimalRelationshipsType.sanitize(saved_relationship_memory)
+	_relationship_encounter = AnimalRelationshipEncounterType.new()
+	_backdrop = Sprite2D.new()
+	_backdrop.centered = false
+	_backdrop.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
+	_backdrop.z_index = -1
+	add_child(_backdrop)
+	# 云带叠在底图之上、角色之下；z=-1 与底图同层，靠子节点顺序后绘。
+	_cloud_band_a = _make_cloud_sprite("CloudBandA")
+	_cloud_band_b = _make_cloud_sprite("CloudBandB")
+	add_child(_cloud_band_a)
+	add_child(_cloud_band_b)
+	_apply_weather_art()
+	_scene_feedback = YardSceneFeedbackType.new()
+	_scene_feedback.setup()
+	_scene_feedback.modulate = _backdrop.modulate
+	add_child(_scene_feedback)
+	_define_zones()
+	_spawn_grass()
+	_spawn_cast()
+	_bind_grounds()
+	_plant_visual = YardPropVisual.new()
+	_plant_visual.name = "PlantBed"
+	_plant_visual.position = _plant_point()
+	add_child(_plant_visual)
+	_fishing_visual = YardPropVisual.new()
+	_fishing_visual.name = "FishingSpot"
+	_fishing_visual.position = _fishing_point()
+	add_child(_fishing_visual)
+	_refresh_prop_visuals()
+	_lead_rope = Line2D.new()
+	_lead_rope.width = 2.2
+	_lead_rope.default_color = Color(0.38,0.25,0.13,0.90)
+	_lead_rope.begin_cap_mode = Line2D.LINE_CAP_ROUND
+	_lead_rope.end_cap_mode = Line2D.LINE_CAP_ROUND
+	_lead_rope.antialiased = true
+	add_child(_lead_rope)
+	_lead_rope.visible = false
+	# Actors use foot-Y depth; the effect layer follows their maximum depth.
+	_effects_overlay = WorldEffectsOverlayType.new()
+	_update_effects_overlay(0.0)
+	add_child(_effects_overlay)
+	_weather_timer = randf_range(42.0, 78.0)
+	queue_redraw()
+
+
+func get_player() -> Vacationer:
