@@ -13,7 +13,7 @@ bash tools/run_exploration_scroll_prototype.sh export                # 导出 We
 bash tools/run_exploration_scroll_prototype.sh movie OUT.avi 390x844 # 按演示脚本录像
 ```
 
-脚本每次新建一个临时目录（`PROTOTYPE_DIR` 可指定，但只接受仓库外的空目录或本脚本建过的目录），把 `test/exploration_scroll_prototype/` 按原相对路径复制进去，换上 `prototype_project.godot` 与 `prototype_export_presets.cfg` 组成独立最小项目，再借用主项目已有的思源黑体子集及其许可证显示中文占位标注（字体未从资源锁恢复时退回引擎默认字体）。门禁要求检查数不少于 154，防止测试被误删后仍然通过。仓库内不放 `project.godot`，主项目不会把原型当成子项目；主项目 Web 导出继续按 `test/*` 排除。
+脚本每次新建一个临时目录（运行后保留以便查看日志，清理用 `rm -rf "${TMPDIR:-/tmp}"/youjia-scroll-prototype.*`；`PROTOTYPE_DIR` 可指定，但只接受仓库外、不是 `/`、也不包含仓库的绝对路径，且必须为空、不存在或由本脚本建过，校验全部通过后才创建或清空），把 `test/exploration_scroll_prototype/` 按原相对路径复制进去，换上 `prototype_project.godot` 与 `prototype_export_presets.cfg` 组成独立最小项目，再借用主项目已有的思源黑体子集及其许可证显示中文占位标注（字体未从资源锁恢复时退回引擎默认字体）。门禁要求检查数不少于 154，防止测试被误删后仍然通过。仓库内不放 `project.godot`，主项目不会把原型当成子项目；主项目 Web 导出继续按 `test/*` 排除。
 
 ## 文件
 
