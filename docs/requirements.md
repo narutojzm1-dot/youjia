@@ -136,7 +136,7 @@
 | 编号 | 优先级 | 当前可做范围与验收 | 状态 | Owner | 依赖 / 记录 |
 | --- | --- | --- | --- | --- | --- |
 | STATE-SAVE-RECOVERY | P0 | 存档提交/恢复，真实失败注入与旧v5/照片/平台持久化不丢进展 | 文件恢复首片已发布（PR #175）；Web持久化确认/内存事务仍未完成 | `CODEX-LEAD` | [#149](https://github.com/narutojzm1-dot/youjia/issues/149)；依赖/正式内容门禁见工单。 |
-| STATE-YARD-GROWTH | P1 | 物品/布置/探索结果共享契约与迁移/去重提交矩阵，先设计 | PR251新a29f71d1454d1a9e4a09074ca8025c867073f3ac原文保全入口独立APPROVE，54+原139及6边界通过，store/bridge/head仍2ed逻辑；Cloud261最终98d518274c469c9dd2057c450b95634df4077911独立审合入3956afb，测试侧239已验收关闭/Owner接收，14矩阵含自检109检查仅隔离组合，正式Host/R4仍待，未正式接入/联合冻结 | `CODEX-LEAD` | [#150](https://github.com/narutojzm1-dot/youjia/issues/150)；依赖/正式内容门禁见工单。 |
+| STATE-YARD-GROWTH | P1 | 物品/布置/探索结果共享契约与迁移/去重提交矩阵，先设计 | PR251新f2d9b145ddf2d23a9b869ee6f68dbc6e461fbf73来源读取/严格base64 UTF8到原文保全入口已独审5408225237，原生15/浏览器65通过，读取非跨文件锁，store/bridge/head仍2ed逻辑；Cloud261最终98d518274c469c9dd2057c450b95634df4077911独立审合入3956afb，测试侧239已验收关闭/Owner接收，14矩阵含自检109检查仅隔离组合，正式Host/R4仍待，未正式接入/联合冻结 | `CODEX-LEAD` | [#150](https://github.com/narutojzm1-dot/youjia/issues/150)；依赖/正式内容门禁见工单。 |
 | EXP-CONTRACT | P1 | 独立探索边界/快照/宿主确认/失败恢复契约，与共享状态对齐 | 设计稿已按督导评阅修订并合入（PR160 → PR174，CODEX-LEAD 批准 56eeedc，未冻结）；待与#150共同冻结（含平台持久化结果未知的边界）并经工程督导复核 | `CURSOR-CLOUD` | [#151](https://github.com/narutojzm1-dot/youjia/issues/151)；[契约设计稿](architecture/exploration-module-contract.md)，与#150待共同冻结项列于其第10节；不含正式地点/物品/形式。 |
 | EXP-CORE | P1 | 形态无关核心状态机/恢复/返回，严格隔离测试；夹具不正式发布 | 已指定；依赖契约冻结；冻结前草案见 PR176（Draft，不合入） | `CURSOR-CLOUD` | [#152](https://github.com/narutojzm1-dot/youjia/issues/152)；依赖/正式内容门禁见工单。 |
 | EXP-FIRST-SLICE | P1 | 确认的一条近郊往返，空手/取消/重复提交/键鼠触屏低动效与正式发布闭环 | 已指定；首地/首物已定，正式构图/资源待 #155，持久化待 #150 | `CURSOR-CLOUD` | [#153](https://github.com/narutojzm1-dot/youjia/issues/153)；依赖/正式内容门禁见工单；形式已定：[画卷漫步](architecture/exploration-form-options.md)（用户 2026-10-03）；首地/首物已定：近郊小路＋圆石、松果、落羽都可遇见（用户 2026-10-04，见 EXP-UNBLOCK-20261004），具体构图与资源由 GROK-BUILD #155 交付。 |
@@ -153,7 +153,7 @@
 
 | 编号 | 优先级 | 范围与验收 | 状态 | Owner | 依赖 |
 | --- | --- | --- | --- | --- | --- |
-| ART-OVERCAST-ALIGNED | P1 | 以晴天母版重绘阴天，几何/交互锚点不动；完整画、叠图与实际尺度预览、来源哈希；美术审核后用新路径接入，保留旧照片资源 | 候选已审画，需局部修改（#168评论5979307760）；唯一当前候选PR256/8661350bcfca6cac4c66cae123cbb71b385503bc已交，旧688明确非当前候选；ART5983393849精确复审REQUEST CHANGES：云/雪/草/池四区返修与池体量测框修正，原Owner接收待；资源终审未批；LOCAL PR228兼容盘点已合入；50%混合照片表达/字段方案仍待明确，正式接图等待新图艺术批准，未接入/发布 | `GROK-BUILD` | [#168](https://github.com/narutojzm1-dot/youjia/issues/168)；新候选在 `art/concepts/yard_overcast_aligned_v3/`，旧v1保留。ART-DIRECTOR审画，CURSOR-CONTRIBUTOR-LOCAL在#51接自然转场，GAME-QA复测。 |
+| ART-OVERCAST-ALIGNED | P1 | 以晴天母版重绘阴天，几何/交互锚点不动；完整画、叠图与实际尺度预览、来源哈希；美术审核后用新路径接入，保留旧照片资源 | 候选已审画，需局部修改（#168评论5979307760）；v3/2568661350bcfca6cac4c66cae123cbb71b385503bc ART5983393849 REQUEST CHANGES后，原Owner已交v4/2662b1f024f6bad3b700f7c348316075bf0cdc88018，PNGfcc5e649/池框650,790,1560,1020与成对裁切已核；当前v4艺术复审/资源终审未批；LOCAL PR228兼容盘点已合入；50%混合照片表达/字段方案仍待明确，正式接图等待新图艺术批准，未接入/发布 | `GROK-BUILD` | [#168](https://github.com/narutojzm1-dot/youjia/issues/168)；新候选在 `art/concepts/yard_overcast_aligned_v3/`，旧v1保留。ART-DIRECTOR审画，CURSOR-CONTRIBUTOR-LOCAL在#51接自然转场，GAME-QA复测。 |
 
 
 ## 总体声音规划
@@ -206,7 +206,7 @@
 
 | 编号 | 范围 | 状态 | Owner | 证据与剩余 |
 | --- | --- | --- | --- | --- |
-| REQ-20261003-024 | 低动效不可达地点提示固定alpha，普通模式保持既有末段淡出，tick独占生命周期 | PR159当前c92d92d44cd2742f6c7303d287ac3c67f8aff491独立代码APPROVE；目标4.7.2边界44/保存24及受控Web像素通过，视口继承234失败，未合入/发布 | `GROK-CONTRIBUTOR` 实现；`CODEX-LEAD-ASSISTANT` 复验协助 | [本轮](playtests/2026-10-05-0107-assistant-boundary/README.md)；原作者已同步main c62，新head c92d92d44cd2742f6c7303d287ac3c67f8aff491已重新独立代码APPROVE5407334472，目标集成验证仍待，旧a2证据仅历史；c92目标4.7.2边界44/保存24及受控生产Web像素保持/淡出补证已完成；视口仍失败于继承#234，主线发布门禁未解除；[最新补证](playtests/2026-10-05-0208-boundary-render/README.md)。 |
+| REQ-20261003-024 | 低动效不可达地点提示固定alpha，普通模式保持既有末段淡出，tick独占生命周期 | PR159当前fe8a361ed5ce727a3880cbd0caf4ab6f73860f6a合并最新3ec主线，独立ASSISTANT子代理APPROVE；目标4.7.2 import/44新边界/11旧边界/24保存通过，viewport唯一844×390 resume y=-21继承234失败，未合入/发布 | `GROK-CONTRIBUTOR` 实现；`CODEX-LEAD-ASSISTANT` 复验协助 | 新SHA终审/实际目标验证见1595984354323，Leader已接收；c92受控像素是历史同业务逻辑补证，本轮不重复实验或扩写成fe8新实玩。公共234门禁保持；[原像素补证](playtests/2026-10-05-0208-boundary-render/README.md)。 |
 
 
 ### 隔离恢复夹具错误路径追加证据
