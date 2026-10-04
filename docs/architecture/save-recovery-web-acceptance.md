@@ -6,12 +6,12 @@ Owner：CURSOR-CLOUD（仅测试侧驱动）。父单 #150，工单 [#239](https
 
 已在真实 R1 隔离候选上端到端跑通，组合为：
 
-- 驱动和夹具：`5e47268309755545c215f4d886d0494fad63b5a0`（夹具与 main `73fe3d5` 相同）；
+- 驱动和夹具：`e4f9e24b862ec5a26fc737081a847c41043aa875`；
 - Gate：PR190 `f096a4a927c164c4bf70acc403a826a2074d2362`；
 - Host 桥接与 Probe：PR #251 `2edb2e72d64f8de97887e5840ccaf1967bef8598`；
 - 引擎与浏览器：Godot 4.7.2，Chrome 148。
 
-结果是 R2/R3 共 13 个场景加驱动自检全部 PASS，合计 93 项检查。
+结果是 R2/R3 共 13 个场景加驱动自检全部 PASS，合计 109 项检查。
 
 这 13 个场景包括 R3-d 的两条异常路径：`resolve` 持续失败到达上限，以及 acknowledge 事务失败。最初只有 11 个场景、72 项检查（驱动和夹具 `12fd135`），见下文验证记录。
 
@@ -166,6 +166,13 @@ R1 若没有支撑 Fixture 的公开入口，会在 PR 中列出缺口，不另�
 - 复审又提出两条 P3：不可写时仍受理 grant，以及文档里 `resolve` 的调用次数多算了一次。两条都已在 `ae8172f` 修正，重跑仍为 12/12 PASS、73 项检查，退出码 0。
 - 2026-10-04，按 CODEX-LEAD 在 #239 的要求，把 PR #257 里只经过代码审读的两条异常路径加入正式矩阵，场景名为 `R3-d_resolve_failure_cap_simulated` 和 `R3-d_ack_txn_abort`：
   - 注入方式沿用 CODEX-LEAD-ASSISTANT 在 PR #259 的一次性补证；本仓库版本改用关页后开新页、关页后由驱动删库，以后 Host 换版本可直接重跑。
-  - 驱动 `5e47268` 连续跑两次，均为 14/14 PASS、93 项检查（两个新场景各 10 项），退出码 0，日志里没有 ERROR，也没有编码告警。证据存为 [`test/save_recovery_web/evidence/2026-10-04-r2r3-errors-5e47268-host-2edb2e7.json`](../../test/save_recovery_web/evidence/2026-10-04-r2r3-errors-5e47268-host-2edb2e7.json)。
+  - 驱动 `5e47268` 连续跑两次，均为 14/14 PASS、93 项检查（两个新场景各 10 项），退出码 0。
   - 变异验证：换上 PR #257 修复前的 `2d2054f` 夹具后，两个新场景都 FAIL，R2-c 也照旧 FAIL。
   - `_on_grant` 里“`blocked_reason` 非空就拒绝”这道守卫属于冗余保护。即使去掉它，Host 也会拒绝 `prepare`，所以现有场景区分不出有没有这道守卫。
+- 2026-10-04，处理 PR #261 审核的 4 条 P3：
+  - 夹具采纳可信 current 时，把 `watermark` 与 `grants` 规整为整数。原来重开后再写入会出现 `{"grants":[1.0,2]}`，因为 JSON 解析出的是浮点数，Python 比较时 `1.0 == 1` 掩盖了这个问题。
+  - 驱动在每个场景清理前，对存档 payload 做严格整数检查。
+  - ack 场景新增两项断言：恢复结论为 `restored_candidate`；intent 删除恰好一次。两个 R3-d 场景在关闭出故障的那一页之前，先检查该页没有报错。
+  - 驱动和夹具 `e4f9e24` 连续跑两次，均为 14/14 PASS、109 项检查，退出码 0。证据存为 [`test/save_recovery_web/evidence/2026-10-04-r2r3-errors-e4f9e24-host-2edb2e7.json`](../../test/save_recovery_web/evidence/2026-10-04-r2r3-errors-e4f9e24-host-2edb2e7.json)。
+  - 变异验证：新驱动配 main `73fe3d5` 上未规整数字的夹具时，`R3-d_ack_txn_abort` 的整数检查 FAIL。
+  - R3-d ack 场景测的是“清理已失败、intent 仍在库里”时的 grant。acknowledge 调用进行中途插入 grant 的那段时间窗口，由夹具的 `busy` 在途标记保护，并由 R2-c 的“收尾后立即 grant 被接受”和同帧连点间接覆盖。本场景不直接测这段窗口。
