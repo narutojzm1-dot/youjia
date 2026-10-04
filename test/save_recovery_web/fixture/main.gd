@@ -11,6 +11,10 @@ var gate
 var host
 var facade
 var current_token := ""
+## 业务在途：从受理 grant 起到收尾为止，期间新的 grant 一律拒绝，不覆盖本次上下文。
+var busy := false
+## 每次受理的 grant 分配一个上下文序号；异步回调绑定序号，不匹配的迟到回调直接忽略。
+var context_id := 0
 var pending_request := ""
 var pending_write_id := 0
 var pending_serial := 0
@@ -31,6 +35,8 @@ func _ready() -> void:
 	if host == null:
 		_block("host bridge missing (YoujiaRecoveryHostBridge 未由 R1 接线提供)")
 		return
+	## 先公开“已启动、尚不可写”，等锁或无锁拒绝时驱动也能区分夹具已运行。
+	_block("opening store")
 	var store := str(JavaScriptBridge.eval("new URLSearchParams(location.search).get('recovery_store') || ''"))
 	host.open(store, _callback(_on_opened))
 
@@ -85,7 +91,7 @@ func _business() -> Dictionary:
 
 func _on_grant(args: Array) -> void:
 	var serial := int(args[0]) if args.size() > 0 else 0
-	if gate == null or serial <= 0 or gate.blocked():
+	if gate == null or serial <= 0 or busy or gate.blocked():
 		refused.append(serial)
 		_publish()
 		return
@@ -95,40 +101,45 @@ func _on_grant(args: Array) -> void:
 		confirmed_serials.append(serial)
 		_publish()
 		return
+	busy = true
+	context_id += 1
+	pending_serial = serial
 	var grants: Array = confirmed.get("grants", []).duplicate()
 	grants.append(serial)
 	gate.replace_working({"watermark": serial, "grants": grants})
-	pending_serial = serial
-	host.prepare(JSON.stringify(gate.working()), current_token, _callback(_on_prepared))
+	host.prepare(JSON.stringify(gate.working()), current_token, _callback(_on_prepared.bind(context_id)))
 	_publish()
 
 
-func _on_prepared(args: Array) -> void:
+func _on_prepared(args: Array, ctx: int) -> void:
+	if ctx != context_id or not busy:
+		return
 	var reply := _parse(args)
 	var flight: Dictionary = {}
 	if not reply.has("error"):
 		flight = gate.begin_write(str(reply.get("candidate_token", "")), current_token)
 	if flight.is_empty():
-		## 未开始写入：恢复 working 为已确认值，不留虚假在途。
+		## 未开始写入：只撤销本次上下文，working 回到已确认值，不留虚假在途。
 		gate.replace_working(_business())
 		refused.append(pending_serial)
-		pending_serial = 0
-		_publish()
+		_settle()
 		return
 	gate.mark_unknown(flight.write_id)
 	pending_write_id = int(flight.write_id)
 	pending_request = str(reply.get("request_id", ""))
-	host.submit(pending_request, str(pending_write_id), _callback(_on_receipt))
+	host.submit(pending_request, str(pending_write_id), _callback(_on_receipt.bind(ctx)))
 	_publish()
 
 
-func _on_receipt(args: Array) -> void:
+func _on_receipt(args: Array, ctx: int) -> void:
+	if ctx != context_id or not busy:
+		return
 	var raw := str(args[0]) if args.size() > 0 else ""
 	var receipt: Variant = JSON.parse_string(raw)
 	if receipt is Dictionary and receipt.has("error"):
 		## 提交失败或结果未知：不当作失败立即重试，先由 Host 按可信 current 出回执。
 		if gate.blocked():
-			host.resolve(pending_request, str(pending_write_id), _callback(_on_receipt))
+			host.resolve(pending_request, str(pending_write_id), _callback(_on_receipt.bind(ctx)))
 		return
 	var before := _business()
 	if not gate.resolve_verified_json(raw):
@@ -139,18 +150,20 @@ func _on_receipt(args: Array) -> void:
 	if receipt.get("observed_token") == receipt.get("candidate_token"):
 		current_token = str(receipt.candidate_token)
 		confirmed_serials.append(pending_serial)
-		pending_request = ""
-		pending_write_id = 0
-		pending_serial = 0
-		_publish()
+		_settle()
 		host.acknowledge(request, _callback(_on_acknowledged))
 	else:
 		## 可信 parent 且旧写已终止：未授予，working 回到已确认值。
 		gate.replace_working(before)
-		pending_request = ""
-		pending_write_id = 0
-		pending_serial = 0
-		_publish()
+		_settle()
+
+
+func _settle() -> void:
+	busy = false
+	pending_request = ""
+	pending_write_id = 0
+	pending_serial = 0
+	_publish()
 
 
 func _on_acknowledged(args: Array) -> void:
@@ -171,7 +184,7 @@ func _publish() -> void:
 		"verdict": verdict,
 		"watermark": int(confirmed.get("watermark", 0)),
 		"grants": confirmed.get("grants", []),
-		"pending": gate != null and (gate.blocked() or pending_serial != 0),
+		"pending": busy or (gate != null and gate.blocked()),
 		"pending_request": pending_request,
 		"confirmed_serials": confirmed_serials,
 		"refused": refused,

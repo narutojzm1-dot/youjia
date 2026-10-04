@@ -123,26 +123,41 @@ class Candidate:
     def __init__(self, context, base, scenario):
         self.context, self.base, self.s = context, base, scenario
 
-    def open(self, no_locks=False):
+    def open(self, no_locks=False, writable=True):
         page = self.context.new_page()
         if no_locks:
             page.add_init_script(NO_LOCKS_SCRIPT)
         errors = []
         page.on('pageerror', lambda e: errors.append(str(e)))
         page.goto(f'{self.base}/index.html?recovery_store={self.s.store}')
+        state_js = ('({probe: !!window.YoujiaRecoveryProbe, fixture: !!window.YoujiaRecoveryFixture, '
+                    'started: !!(window.YoujiaRecoveryFixture && window.YoujiaRecoveryFixture.started), '
+                    'reason: window.YoujiaRecoveryFixture && window.YoujiaRecoveryFixture.blocked_reason})')
+        ## 第一级：Probe 已挂载且 Godot 夹具已启动。等锁的 B 页、无锁页只需要这一级。
         try:
-            page.wait_for_function('window.YoujiaRecoveryProbe && window.YoujiaRecoveryFixture && window.YoujiaRecoveryFixture.ready', timeout=WAIT_MS)
+            page.wait_for_function('window.YoujiaRecoveryProbe && window.YoujiaRecoveryFixture && window.YoujiaRecoveryFixture.started', timeout=WAIT_MS)
         except Exception:
-            state = page.evaluate('({probe: !!window.YoujiaRecoveryProbe, fixture: !!window.YoujiaRecoveryFixture, '
-                                  'reason: window.YoujiaRecoveryFixture && window.YoujiaRecoveryFixture.blocked_reason})')
+            state = page.evaluate(state_js)
             page.close()
             raise Blocked(f"probe={'yes' if state['probe'] else 'missing'}; fixture="
-                          f"{'missing' if not state['fixture'] else 'not ready: ' + str(state['reason'])}")
+                          f"{'missing' if not state['fixture'] else 'not started'}")
+        state = page.evaluate(state_js)
+        if str(state['reason']).startswith('host bridge missing'):
+            page.close()
+            raise Blocked(f"probe={'yes' if state['probe'] else 'missing'}; fixture=not ready: {state['reason']}")
         schema = page.evaluate('window.YoujiaRecoveryProbe.schema')
         if schema != PROBE_SCHEMA:
             page.close()
             raise Blocked(f'probe schema {schema!r} != {PROBE_SCHEMA}')
         page.errors = errors
+        ## 第二级：可写。桥接已在时仍不可写属于被测行为问题，记 FAIL 而不是 BLOCKED。
+        if writable:
+            try:
+                page.wait_for_function('window.YoujiaRecoveryFixture.ready', timeout=WAIT_MS)
+            except Exception:
+                reason = page.evaluate('window.YoujiaRecoveryFixture.blocked_reason')
+                page.close()
+                raise AssertionError(f'fixture never became writable: {reason}')
         return page
 
     @staticmethod
@@ -261,7 +276,7 @@ def r3_lock_contention(c):
     s = c.s
     a = c.open()
     paused = c.pause_at(a, BARRIER_PREPARED, 1)
-    b = c.open()
+    b = c.open(writable=False)
     time.sleep(2)
     b_events = c.call(b, 'window.YoujiaRecoveryProbe.events()')
     s.check(not any(e.get('type') == 'lock_acquired' for e in b_events), 'page B does not acquire lock while A holds it')
@@ -283,7 +298,7 @@ def r3_no_web_locks(c):
     c.recovery(normal)
     before = c.snapshot(normal)
     normal.close()
-    page = c.open(no_locks=True)
+    page = c.open(no_locks=True, writable=False)
     rec = c.recovery(page)
     s.evidence.update(before=before, recovery=rec)
     s.check(rec.get('verdict') == 'no_web_locks', 'missing Web Locks is reported explicitly')
@@ -336,9 +351,38 @@ def receipt_fault(injection, options):
     return run
 
 
+def r2_same_frame_double_grant(c):
+    ## 同一次 evaluate 内连续两次 grant：第二次在第一次收尾前必须被拒绝，且不得污染第一次的确认。
+    s = c.s
+    page = c.open()
+    c.call(page, 'window.YoujiaRecoveryFixture.grant(1), window.YoujiaRecoveryFixture.grant(2)')
+    business = c.settled(page, 1)
+    deadline = time.time() + WAIT_MS / 1000
+    stored = c.snapshot(page)
+    while time.time() < deadline and stored.get('present', {}).get('intent'):
+        time.sleep(0.1)
+        stored = c.snapshot(page)
+    s.evidence.update(business=business, stored=stored)
+    s.check(business.get('watermark') == 1 and business.get('grants') == [1], 'business shows watermark 1 / grants [1]')
+    s.check(business.get('confirmed_serials') == [1], 'only serial 1 confirmed')
+    s.check(0 not in business.get('confirmed_serials', []), 'serial 0 never confirmed')
+    s.check(business.get('refused') == [2], 'serial 2 refused while serial 1 in flight')
+    s.check(business_of(stored) == {'watermark': 1, 'grants': [1]}, 'stored payload matches business')
+    s.check(not stored.get('present', {}).get('intent'), 'intent slot cleared after acknowledge')
+    c.grant(page, 2)
+    business = c.settled(page, 2)
+    after = c.snapshot(page)
+    s.evidence.update(business_after_second=business, stored_after_second=after)
+    s.check(business.get('grants') == [1, 2] and business_of(after) == {'watermark': 2, 'grants': [1, 2]}, 'later grant 2 commits once and matches storage')
+    s.check(not page.errors, 'no page errors')
+    c.cleanup(page)
+    page.close()
+
+
 SCENARIOS = [
     ('R2-a_close_after_intent_prepared', r2_close_after_prepared),
     ('R2-b_close_after_candidate_committed', r2_close_after_commit),
+    ('R2-c_same_frame_double_grant', r2_same_frame_double_grant),
     ('R3-a_two_page_lock', r3_lock_contention),
     ('R3-b_no_web_locks', r3_no_web_locks),
     ('R3-c_drop_receipt', receipt_fault('drop_receipt', {'drop_receipt': True})),

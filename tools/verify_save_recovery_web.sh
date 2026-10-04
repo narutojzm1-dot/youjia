@@ -29,7 +29,7 @@ host = pathlib.Path(sys.argv[4]) if sys.argv[4] else None
 head = '<script>' + (root / 'test/save_recovery_web/fixture/facade.js').read_text() + '</script>'
 if host and (host / 'head.html').exists():
     head += (host / 'head.html').read_text()
-(proj / 'export_presets.cfg').write_text('[preset.0]\nname="Web"\nplatform="Web"\nrunnable=true\nexport_filter="all_resources"\ninclude_filter=""\nexclude_filter="web/*,GATE_SOURCE.txt"\n[preset.0.options]\nvariant/thread_support=false\ncustom_template/release=' + json.dumps(str(template.resolve())) + '\nhtml/head_include=' + json.dumps(head) + '\n')
+(proj / 'export_presets.cfg').write_text('[preset.0]\nname="Web"\nplatform="Web"\nrunnable=true\nexport_filter="all_resources"\ninclude_filter=""\nexclude_filter="web/*,GATE_SOURCE.txt"\n[preset.0.options]\nvariant/thread_support=false\ncustom_template/release=' + json.dumps(str(template.resolve())) + '\nhtml/head_include=' + json.dumps(head, ensure_ascii=False) + '\n')
 PY
 	source "$ROOT/tools/lib/verified_godot.sh"
 	run_verified_godot "$OUT/import.log" --headless --path "$PROJ" --editor --import
