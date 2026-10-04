@@ -55,7 +55,9 @@ func _ready() -> void:
 	_rings.draw.connect(_draw_rings)
 	layer.add_child(_rings)
 	_caption = _label(layer, Control.PRESET_TOP_WIDE, 140, 20)
-	_trail = _label(layer, Control.PRESET_BOTTOM_WIDE, -150, 12)
+	_trail = _label(layer, Control.PRESET_BOTTOM_WIDE, -180, 12)
+	## 事件行放在观察态底部按钮之上，不遮住按钮
+	_trail.offset_bottom = -124
 
 
 func _process(delta: float) -> void:

@@ -110,7 +110,7 @@ func _stop_to_look() -> void:
 	_check(a.scroll.model.x == x, "the walker stays put while observing")
 	await _press(KEY_E)
 	_check(not a.scroll.is_observing() and a.events.has("observe_end:placeholder_c"), "E again ends observing")
-	_check(not a.scroll._pick_tag.visible and not a.scroll._go_tag.visible, "the choice bar hides after observing")
+	_check(not a.scroll._pick_tag.visible and not a.scroll._go_tag.visible and a.scroll._hint.visible, "the choice bar hides and the walking hint returns after observing")
 	Input.parse_input_event(_key(KEY_RIGHT, true))
 	await _frames(5)
 	Input.parse_input_event(_key(KEY_RIGHT, false))
@@ -171,6 +171,10 @@ func _touch_sequence_with_find() -> void:
 	await process_frame
 	_check(a.scroll.is_observing() and a.scroll.observing_stop == "placeholder_b", "tapping the top bar near B enters observing")
 	_check(a.scroll.input.held_count() == 0, "no walking source is held after the observe tap")
+	_check(not a.scroll._hint.visible, "the walking hint hides so it cannot cover the choice bar")
+	var title: Rect2 = a.scroll.title_tag.get_global_rect()
+	var back: Rect2 = a.scroll._return_tag.get_global_rect()
+	_check(title.size.x > 0.0 and title.end.x <= back.position.x, "the title tag does not overlap the return tag in portrait (%s vs %s)" % [title, back])
 	var x: float = a.scroll.model.x
 	## 观察中误触半屏（同侧、对侧各一次）：不走、只记一次拦截
 	Input.parse_input_event(_touch(2, size.x * 0.8, mid_y, true))

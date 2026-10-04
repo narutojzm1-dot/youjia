@@ -23,6 +23,7 @@ var carried_here := ""
 var framing_mode := FramingModel.MODE_FIT
 ## 观察态里被拦下、没有变成行走的触摸次数（研究记录用）
 var suppressed_touches := 0
+var title_tag: Label
 var _pick_tag: Label
 var _go_tag: Label
 var _cam_zoom := 1.0
@@ -33,6 +34,11 @@ func _ready() -> void:
 	_build_mount()
 	super()
 	var hud := get_node("Hud")
+	## 390 宽竖屏下原型标签与右上角「回院」重叠，研究画卷用短标签
+	for child: Node in hud.get_children():
+		if child is Label and (child as Label).text.begins_with("占位原型"):
+			(child as Label).text = "占位原型 · 不接存档"
+			title_tag = child
 	_pick_tag = _bar_tag(hud, 0)
 	_go_tag = _bar_tag(hud, 1)
 	_go_tag.text = "继续走（E）"
@@ -181,6 +187,8 @@ func _refresh_bar() -> void:
 		return
 	_pick_tag.visible = is_observing()
 	_go_tag.visible = is_observing()
+	## 观察态不提示行走；竖屏下两行的行走提示会盖住底部按钮
+	_hint.visible = not is_observing()
 	if not carried_here.is_empty():
 		_pick_tag.text = "放回（T）"
 	elif not offer.is_empty():
