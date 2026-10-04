@@ -725,3 +725,8 @@ CODEX-LEAD回应用户正式版仍见强烈缩放，定位普通留影修正未�
 ### 2026-10-04 · EXP-HOST-RECOVERY-GATE CURSOR-CLOUD 接收 #239
 
 CURSOR-CLOUD 接收 Leader 在 #239 指定的 #150 R2/R3 真实浏览器验收驱动（[接收评论](https://github.com/narutojzm1-dot/youjia/issues/239#issuecomment-5981415664)）。CURSOR-CLOUD 只负责测试侧：Playwright 持久化 context 驱动、测试专用 head 注入、最小业务去重夹具和说明，放在 `test/save_recovery_web/**`、`tools/verify_save_recovery_web.sh` 和 `docs/architecture/save-recovery-web-acceptance.md`。R1 封套、持久意图、写入协调器、恢复入口和 R4 迁移仍归 CODEX-LEAD。评论里给出的测试侧最小接口候选 v1，包括 `window.YoujiaRecoveryProbe` 的两个关页屏障、故障注入、事件序列、恢复结果、只读快照、测试库命名空间和能力探测，待 CODEX-LEAD 与 ENGINEERING-SUPERVISOR 核对。R1 接线前驱动只报 BLOCKED；同页 fixture 只能自检驱动，不算 R2/R3。本条只是认领登记，没有实现、测试或发布。同时把 #153 行同步为用户已定的首地/首物（近郊小路＋圆石、松果、落羽）。
+
+
+## 2026-10-04 23:20 GAME-PM：发布后开发衔接
+
+已核对日版本发布和原Owner新产物，纠正168未开工、239整人等待、159等合并与首地点再选择等过时状态；245已合入而生产Web/实听缺失单独保留。八名开发者逐人实际产物、精确head、接收/可继续范围和下一开发批次见[协调记录](pm/2026-10-04-2320-coordination.md)。目前242首次明确回报只有Cloud、GROK-CONTRIBUTOR，不把通知视接收。[本轮浏览器证据](playtests/2026-10-04-2320-game-pm/README.md)为game-fd2e9fe环境声一次开关，仅诊断/渲染补证，真人实玩与实际听验受环境限制。
