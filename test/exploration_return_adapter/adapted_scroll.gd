@@ -84,6 +84,11 @@ func deactivate() -> void:
 		viewport.size_changed.disconnect(layout)
 
 
+## 适配器连接、回院时逐个断开的请求信号；子类新增请求信号时在这里追加
+func request_signals() -> Array[Signal]:
+	return [return_requested, observe_requested]
+
+
 func show_note(text: String) -> void:
 	_note.text = text
 	if not text.is_empty():

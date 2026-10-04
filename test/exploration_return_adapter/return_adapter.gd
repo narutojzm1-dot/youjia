@@ -33,6 +33,8 @@ var route_id := "formal.test_walk"
 var catalog_kind := "formal"
 ## 画卷占位停留点 → 核心路线停留点；未映射的停留点只能看，不调用核心
 var stop_map := {"placeholder_a": "gate", "placeholder_b": "pond"}
+## 每次出门实例化的画卷脚本；研究切片可换成 AdaptedScroll 的子类
+var scroll_script: GDScript = AdaptedScroll
 var yard: SimYard
 var scroll: AdaptedScroll
 ## "yard" 或 "scroll"；只在完整切换后改变
@@ -89,14 +91,19 @@ func set_out() -> Dictionary:
 	yard.deactivate()
 	_log("yard_off")
 	scroll_generation += 1
-	scroll = AdaptedScroll.new()
+	scroll = scroll_script.new()
 	scroll.name = "Scroll"
 	add_child(scroll)
-	scroll.return_requested.connect(_on_return_requested.bind(scroll_generation))
-	scroll.observe_requested.connect(_on_observe_requested.bind(scroll_generation))
+	_connect_scroll(scroll, scroll_generation)
 	mode = "scroll"
 	_log("scroll_on")
 	return result
+
+
+## 新画卷的请求信号都绑定本次代号；子类追加信号时先调用父类
+func _connect_scroll(target: AdaptedScroll, generation: int) -> void:
+	target.return_requested.connect(_on_return_requested.bind(generation))
+	target.observe_requested.connect(_on_observe_requested.bind(generation))
 
 
 ## 回院：核心没进入待提交就留在画卷；进入后按固定顺序拆掉画卷再开放小院
@@ -161,11 +168,12 @@ func _leave_scroll() -> void:
 	_log_checked("scroll_input_off", not old.active and not old.is_processing() and not old.is_processing_unhandled_input() and old.input.held_count() == 0)
 	_log_checked("scroll_camera_off", not old.camera.enabled and not get_viewport().size_changed.is_connected(old.layout))
 	## 连接时绑定了代号，is_connected 认不出原方法，所以按连接表逐个断开
-	for sig: Signal in [old.return_requested, old.observe_requested]:
+	var signals := old.request_signals()
+	for sig: Signal in signals:
 		for link: Dictionary in sig.get_connections():
 			if (link["callable"] as Callable).get_object() == self:
 				sig.disconnect(link["callable"])
-	_log_checked("scroll_disconnected", old.return_requested.get_connections().is_empty() and old.observe_requested.get_connections().is_empty())
+	_log_checked("scroll_disconnected", signals.all(func(sig: Signal) -> bool: return sig.get_connections().is_empty()))
 	remove_child(old)
 	old.queue_free()
 	scroll = null
