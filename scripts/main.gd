@@ -51,6 +51,11 @@ var _pause_button: Button
 var _action_button: Button
 var _ui_layer: CanvasLayer
 var _pause_screen: Control
+var _pause_panel: PanelContainer
+var _pause_box: VBoxContainer
+var _pause_columns: HBoxContainer
+var _pause_session: VBoxContainer
+var _pause_audio: VBoxContainer
 var _pause_title: Label
 var _resume_button: Button
 var _restart_button: Button
@@ -495,38 +500,92 @@ func _build_hud() -> void:
 func _build_pause_screen() -> void:
 	_pause_screen = _overlay()
 	add_child(_pause_screen)
-	var box := _centered_column(Vector2(360, 620), _pause_screen)
+	_pause_box = _centered_column(Vector2(360, 620), _pause_screen)
+	_pause_panel = _pause_box.get_parent()
 	_pause_title = _label(26, INK)
 	_pause_title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	box.add_child(_pause_title)
+	_pause_box.add_child(_pause_title)
+	_pause_columns = HBoxContainer.new()
+	_pause_columns.add_theme_constant_override("separation", 12)
+	_pause_columns.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	_pause_box.add_child(_pause_columns)
+	_pause_session = VBoxContainer.new()
+	_pause_session.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	_pause_session.add_theme_constant_override("separation", 12)
+	_pause_columns.add_child(_pause_session)
+	_pause_audio = VBoxContainer.new()
+	_pause_audio.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	_pause_audio.add_theme_constant_override("separation", 12)
+	_pause_columns.add_child(_pause_audio)
 	_resume_button = _soft_button()
 	_resume_button.pressed.connect(_toggle_pause)
-	box.add_child(_resume_button)
 	_restart_button = _soft_button()
 	_restart_button.pressed.connect(func() -> void: _request_destructive_action("restart"))
-	box.add_child(_restart_button)
 	_pause_title_button = _soft_button()
 	_pause_title_button.pressed.connect(func() -> void: _request_destructive_action("title"))
-	box.add_child(_pause_title_button)
 	_music_toggle = _soft_button()
 	_music_toggle.pressed.connect(_toggle_music_layer)
-	box.add_child(_music_toggle)
 	_ambience_toggle = _soft_button()
 	_ambience_toggle.pressed.connect(_toggle_ambience_layer)
-	box.add_child(_ambience_toggle)
 	_music_volume_label = _label(15, INK)
-	box.add_child(_music_volume_label)
 	_music_slider = _volume_slider()
 	_music_slider.value_changed.connect(_on_music_gain_changed)
-	box.add_child(_music_slider)
 	_ambience_volume_label = _label(15, INK)
-	box.add_child(_ambience_volume_label)
 	_ambience_slider = _volume_slider()
 	_ambience_slider.value_changed.connect(_on_ambience_gain_changed)
-	box.add_child(_ambience_slider)
 	_mute_toggle = _soft_button()
 	_mute_toggle.pressed.connect(_toggle_master_mute)
-	box.add_child(_mute_toggle)
+	_place_pause(_pause_session, [_resume_button, _restart_button, _pause_title_button, _music_toggle, _music_volume_label, _music_slider, _ambience_toggle, _ambience_volume_label, _ambience_slider, _mute_toggle])
+	_fit_pause_panel()
+
+
+func _fit_pause_panel() -> void:
+	if _pause_panel == null or size.x < 64.0 or size.y < 64.0:
+		return
+	var short := size.y < 500.0
+	var margin := 12.0
+	var panel_w := minf(680.0 if short else 360.0, size.x - margin * 2.0)
+	var panel_h := minf(620.0, size.y - margin * 2.0)
+	_pause_panel.custom_minimum_size = Vector2(panel_w, panel_h)
+	_pause_panel.offset_left = -panel_w * 0.5
+	_pause_panel.offset_right = panel_w * 0.5
+	_pause_panel.offset_top = -panel_h * 0.5
+	_pause_panel.offset_bottom = panel_h * 0.5
+	var sep := 4 if short else 12
+	var button_h := 36.0 if short else 44.0
+	_pause_box.add_theme_constant_override("separation", sep)
+	_pause_session.add_theme_constant_override("separation", sep)
+	_pause_audio.add_theme_constant_override("separation", sep)
+	_pause_title.add_theme_font_size_override("font_size", 18 if short else 26)
+	for button in [_resume_button, _restart_button, _pause_title_button, _music_toggle, _ambience_toggle, _mute_toggle]:
+		button.custom_minimum_size = Vector2(120.0, button_h)
+		button.add_theme_font_size_override("font_size", 13 if short else 16)
+	for slider in [_music_slider, _ambience_slider]:
+		slider.custom_minimum_size = Vector2(120.0, 28.0 if short else 32.0)
+	for label in [_music_volume_label, _ambience_volume_label]:
+		label.add_theme_font_size_override("font_size", 12 if short else 15)
+	if short:
+		_pause_audio.visible = true
+		_place_pause(_pause_session, [_resume_button, _restart_button, _pause_title_button, _mute_toggle])
+		_place_pause(_pause_audio, [_music_toggle, _music_volume_label, _music_slider, _ambience_toggle, _ambience_volume_label, _ambience_slider])
+	else:
+		_pause_audio.visible = false
+		_place_pause(_pause_session, [_resume_button, _restart_button, _pause_title_button, _music_toggle, _music_volume_label, _music_slider, _ambience_toggle, _ambience_volume_label, _ambience_slider, _mute_toggle])
+		_place_pause(_pause_audio, [])
+
+
+func _place_pause(parent: Node, nodes: Array) -> void:
+	for node in nodes:
+		# Array 元素无静态类型，Godot 4.7 不能从 get_parent() 推断 current。
+		var current: Node = node.get_parent()
+		if current == parent:
+			continue
+		if current == null:
+			parent.add_child(node)
+		else:
+			node.reparent(parent)
+	for i in nodes.size():
+		parent.move_child(nodes[i], i)
 
 
 func _build_confirmation_screen() -> void:
@@ -1159,6 +1218,7 @@ func _layout() -> void:
 	_album_chip.position = Vector2(pad,row)
 	_weather_chip.position = Vector2(size.x-half-pad if compact else pad+210.0,row)
 	_action_button.position = Vector2(pad if compact else size.x-_action_button.size.x-pad,size.y-68.0)
+	_fit_pause_panel()
 
 
 func _refresh_hud() -> void:
