@@ -204,11 +204,25 @@ class Candidate:
     def cleanup(self, page):
         ## 参与页仍连着库时删除会被 onblocked 拦下；先关闭参与页，再用自检页按测试库名删除。
         if not page.is_closed():
+            final = self.snapshot(page)
+            raw = ((final or {}).get('current') or {}).get('payload_bytes')
+            if raw is not None:
+                self.s.check(not has_float(json.loads(raw)), 'stored payload numbers are integers')
             page.close()
         cleaner = self.context.new_page()
         cleaner.goto(f'{self.base}/selfcheck/index.html?recovery_store={self.s.store}&op=cleanup')
         self.s.check(wait_value(cleaner, 'window.selfcheck') == {'removed': True}, 'fixture store removed after pages closed')
         cleaner.close()
+
+
+def has_float(value):
+    if isinstance(value, float):
+        return True
+    if isinstance(value, dict):
+        return any(has_float(v) for v in value.values())
+    if isinstance(value, list):
+        return any(has_float(v) for v in value)
+    return False
 
 
 def grants_of(business, serial):
@@ -385,6 +399,7 @@ def r3_resolve_failure_cap(c):
     s.check(not business.get('confirmed_serials') and business.get('watermark') == 0, 'nothing confirmed or granted')
     s.check(mid.get('current') == before.get('current'), 'aborted commit leaves current unchanged')
     s.check(2 in held.get('refused', []) and page.evaluate('window.__resolveCalls') == 5, 'later grant refused without new resolve calls')
+    s.check(not page.errors, 'no page errors on the faulted page')
     page.close()
     page = c.open()
     rec = c.recovery(page)
@@ -424,16 +439,18 @@ def r3_ack_txn_abort(c):
     held_store = c.snapshot(page)
     s.evidence.update(before=before, intent_deletes=page.evaluate('window.__intentDeletes'), business_after_fault=business,
                       after_fault=mid, business_after_refused_grant=held, after_refused_grant=held_store)
-    s.check(page.evaluate('window.__intentDeletes') >= 1, 'acknowledge transaction was really aborted')
+    s.check(page.evaluate('window.__intentDeletes') == 1, 'acknowledge transaction was really aborted, once')
     s.check(business.get('confirmed_serials') == [1] and business.get('watermark') == 1, 'confirmed grant is not rolled back')
     s.check(business.get('pending') is False and business.get('ready') is False, 'business settled but not writable')
     s.check(business_of(mid) == {'watermark': 1, 'grants': [1]} and mid.get('present', {}).get('intent'), 'current committed and intent still present')
     s.check(held.get('refused') == [2] and held_store == mid, 'later grant refused and storage unchanged')
+    s.check(not page.errors, 'no page errors on the faulted page')
     page.close()
     page = c.open()
     rec = c.recovery(page)
     reopened = c.snapshot(page)
     s.evidence.update(recovery=rec, after_reopen=reopened)
+    s.check(rec.get('verdict') == 'restored_candidate', 'reopen restores the committed candidate')
     s.check(business_of(rec) == {'watermark': 1, 'grants': [1]}, 'reopen keeps grant 1 exactly once')
     s.check(not reopened.get('present', {}).get('intent'), 'intent cleared after reopen')
     c.grant(page, 2)
