@@ -40,6 +40,11 @@ var _ambience_volume_db := 0.0
 var _epoch := 0
 var _awaiting_gesture := false
 var _backend_state := "uninitialized"
+var _resume_token := 0
+var _resume_callback: JavaScriptObject
+var _resume_hook_ready := false
+var _forced_backend_state := ""
+var _music_generation := 0
 
 
 func _ready() -> void:
@@ -79,6 +84,7 @@ func _exit_tree() -> void:
 
 func release_streams() -> void:
 	_epoch += 1
+	_resume_token += 1
 	_yard_active = false
 	stop_music(0.0)
 	_stop_ambience_immediate()
@@ -131,8 +137,8 @@ func unlock_audio() -> bool:
 	# Real button/input gesture only. The flag is not proof the browser is audible.
 	_unlocked = true
 	_awaiting_gesture = false
-	_backend_state = str(BrowserBgmPlayer.resume_shared_backend())
-	if not _headless and _backend_state != "native" and _backend_state != "running":
+	_backend_state = _query_backend()
+	if not _backend_starts_now(_backend_state):
 		_awaiting_gesture = true
 	_reconcile()
 	return _headless or _backend_state == "native" or _backend_state == "running"
@@ -141,8 +147,8 @@ func unlock_audio() -> bool:
 func note_gesture() -> void:
 	if not _awaiting_gesture:
 		return
-	_backend_state = str(BrowserBgmPlayer.resume_shared_backend())
-	if _headless or _backend_state == "native" or _backend_state == "running":
+	_backend_state = _query_backend()
+	if _backend_starts_now(_backend_state):
 		_awaiting_gesture = false
 		_unlocked = true
 		_reconcile()
@@ -155,9 +161,11 @@ func set_yard_active(active: bool) -> void:
 	_yard_active = active
 	if not active:
 		_epoch += 1
+		_resume_token += 1
 		_awaiting_gesture = false
 		stop_music(0.0)
 		_stop_ambience_immediate()
+		_release_idle_yard_caches()
 		return
 	_reconcile()
 
@@ -170,7 +178,9 @@ func set_application_active(active: bool) -> void:
 	if not active:
 		_awaiting_gesture = false
 	elif _yard_active and _unlocked and not _headless:
-		_backend_state = str(BrowserBgmPlayer.resume_shared_backend())
+		_backend_state = _query_backend()
+		# Coming back is not a fresh click. A still-suspended context waits for
+		# the resume promise or the next real gesture, and must not look unlocked.
 		_awaiting_gesture = _backend_state != "native" and _backend_state != "running"
 	_reconcile()
 
@@ -183,6 +193,14 @@ func set_music_enabled(enabled: bool) -> void:
 func set_ambience_enabled(enabled: bool) -> void:
 	_ambience_enabled = enabled
 	_reconcile()
+
+
+func music_enabled() -> bool:
+	return _music_enabled
+
+
+func ambience_enabled() -> bool:
+	return _ambience_enabled
 
 
 func set_ambience_volume_db(volume_db: float) -> void:
@@ -230,22 +248,21 @@ func play_music(cue_id: String, crossfade_seconds: float = 0.35) -> bool:
 		old_player.stream = null
 		return true
 	var epoch := _epoch
+	var generation := _music_generation
 	next_player.play()
 	_music_tween = create_tween().set_parallel(true)
 	_music_tween.tween_property(next_player, "volume_db", 0.0, maxf(0.0, crossfade_seconds))
 	if old_player.playing:
 		_music_tween.tween_property(old_player, "volume_db", -40.0, maxf(0.0, crossfade_seconds))
 		_music_tween.chain().tween_callback(func() -> void:
-			if epoch != _epoch:
-				return
-			old_player.stop()
-			old_player.stream = null
+			_retire_faded_music(old_player, epoch, generation)
 		)
 	return true
 
 
 func stop_music(fade_seconds: float = 0.25) -> void:
 	_music_cue = ""
+	_music_generation += 1
 	_kill_music_tween()
 	if fade_seconds <= 0.0 or _headless:
 		for player: BrowserBgmPlayer in _music_players:
@@ -253,11 +270,12 @@ func stop_music(fade_seconds: float = 0.25) -> void:
 			player.stream = null
 		return
 	var epoch := _epoch
+	var generation := _music_generation
 	_music_tween = create_tween().set_parallel(true)
 	for player: BrowserBgmPlayer in _music_players:
 		_music_tween.tween_property(player, "volume_db", -40.0, fade_seconds)
 	_music_tween.chain().tween_callback(func() -> void:
-		if epoch != _epoch:
+		if epoch != _epoch or generation != _music_generation:
 			return
 		for fading: BrowserBgmPlayer in _music_players:
 			fading.stop()
@@ -392,6 +410,66 @@ func _on_ambience_finished() -> void:
 	if not _ambience_continues() or _ambience_player.stream == null or _headless:
 		return
 	_ambience_player.play(0.0)
+
+
+func _retire_faded_music(player: BrowserBgmPlayer, epoch: int, generation: int) -> void:
+	if epoch != _epoch or generation != _music_generation:
+		return
+	if player == _music_players[_music_index] and _music_enabled and not _music_cue.is_empty():
+		return
+	player.stop()
+	player.stream = null
+
+
+func _release_idle_yard_caches() -> void:
+	for cue_id: String in ["yard.music", "yard.ambience"]:
+		var stream: AudioStream = _streams.get(cue_id)
+		if stream != null:
+			BrowserBgmPlayer.release_cached_stream(stream)
+
+
+func _query_backend() -> String:
+	if not _forced_backend_state.is_empty():
+		return _forced_backend_state
+	_install_resume_hook()
+	_resume_token += 1
+	return str(BrowserBgmPlayer.resume_shared_backend(_resume_token))
+
+
+func _install_resume_hook() -> void:
+	if _resume_hook_ready or not OS.has_feature("web"):
+		return
+	if not BrowserBgmPlayer.ensure_shared_backend():
+		return
+	var engine := JavaScriptBridge.get_interface("__manusBgm")
+	if engine == null:
+		return
+	_resume_callback = JavaScriptBridge.create_callback(_on_browser_resume_settled)
+	engine.setResumeHook(_resume_callback)
+	_resume_hook_ready = true
+
+
+func _on_browser_resume_settled(args: Array) -> void:
+	if args.is_empty() or not args[0] is String:
+		return
+	var payload: Variant = JSON.parse_string(args[0])
+	if not payload is Dictionary:
+		return
+	var token := int(payload.get("token", -1))
+	if token != _resume_token:
+		return
+	_backend_state = str(payload.get("state", "unknown"))
+	if not _yard_active or not _unlocked:
+		return
+	if _backend_state == "running":
+		_awaiting_gesture = false
+		_reconcile()
+	elif _backend_state == "interrupted" or _backend_state == "closed":
+		_awaiting_gesture = true
+
+
+func _backend_starts_now(state: String) -> bool:
+	return _headless or state == "native" or state == "running" or state == "suspended"
 
 
 func _music_continues() -> bool:
