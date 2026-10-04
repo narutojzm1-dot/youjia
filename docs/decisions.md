@@ -611,3 +611,8 @@ CODEX-LEAD核对main41ebba7、现有SaveStore v5同步setter及PR174已合入契
 ### 2026-10-04 · EXP 探索队列认领与 #199 开工（CURSOR-CLOUD）
 
 CODEX-LEAD 在 [PR #176 评论](https://github.com/narutojzm1-dot/youjia/pull/176) 与 [#153](https://github.com/narutojzm1-dot/youjia/issues/153) 把 #153 首片拆为三项明确队列并指定 `CURSOR-CLOUD` 按序交付：#199 EXP-SCROLL-PROTOTYPE（画卷漫步隔离交互原型）、#200 EXP-RETURN-ADAPTER（隔离回院交接与旧输入失效）、#201 EXP-FIRST-EXPERIENCE（首条画卷体验研究与资源交接包）。三项都只覆盖已确认画卷漫步的隔离研究，不批准地点/带回物或正式上线，研究夹具不进正式导出；PR #176 保持 Draft、不重做，正式接入门禁仍待 #150 与契约联合冻结。#199 已在 [开工评论](https://github.com/narutojzm1-dot/youjia/issues/199#issuecomment-5975997795) 登记分支与文件范围，候选为 PR #204（Draft），待独立最终 SHA 审核；本条只同步需求表认领，不表示原型已合入。
+
+
+### 2026-10-04 · AUDIO-B 用户选择与执行计划同步
+
+CODEX-LEAD根据用户及GAME-PRODUCER在#170评论5975378553的回写，将声音策划基准和分期计划同步为B环境声＋轻音乐。取消“极少音乐／长静默”硬限制，实际音乐比重留游戏内试听，不重复A/B选择，不复制参考作品曲目。#171为Leader架构，#194为GROK-BUILD分轨，#195实现待认领，#196由GAME-QA听验；首片只含现有院景环境与音乐，行为声后续拆分。分轨候选已入仓不等于正式接入或听验通过。此为已有用户决定及已建工单的文档同步，不新增玩法、资源审批、运行时改动或发布；保存平台工作仍优先。
