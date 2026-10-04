@@ -1,4 +1,4 @@
-// Native byte snapshot -> existing raw v5 preservation input, BEFORE opening IDB.
+// Native byte snapshot -> existing raw v5 preservation input, before target initialization writes.
 // Production must establish legacy writer quiescence; this adapter grants no lock.
 function decodeSource(value) {
  if (!value || typeof value !== 'object' || Array.isArray(value)) throw Error('invalid source');
