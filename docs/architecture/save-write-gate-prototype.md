@@ -33,3 +33,20 @@ token是可信适配器提供的**不透明封套身份**，不是Gate产生的�
 `resolve_verified_json`在Gate内提供可测试的候选解码入口，schema固定`youjia.save-receipt/v1`，write_id为规范正十进制字符串，范围1..9223372036854775807；JSON数字不接受，以免JavaScript浮点精度改变写入身份。超长值必须在to_int之前拒绝，不能把引擎报错后的返回值当成功防御。三token与旧写终止语义继续走现有结构化回执验证。
 
 严格suite现199项，新增坏JSON、顶层类型、schema类型/版本、数值ID/前导零/符号/超界ID、token漂移与重复合法回执。首轮捕获超长数字to_int日志ERROR，已加转换前长度/上界检查；只有修复后严格runner exit0才算通过。此接口是候选wire格式，不是可信来源认证或平台终态证明；不接生产JS/SaveStore，unknown与迟到/跨进程路径仍待H2/H3/H4。
+
+## 2026-10-04 实际 Web 事务接入隔离门禁
+
+`test/save_gate_web/` 与 `tools/verify_save_gate_web.sh` 把当前 Gate 复制进临时最小 Godot 项目，通过公有 JavaScriptBridge 接收真实 IndexedDB 的版本化 JSON 回执；不修改正式项目/存档原点。命令：
+
+```sh
+GODOT=/path/to/Godot_v4.7.2-stable_linux.x86_64 \
+GODOT_WEB_TEMPLATE=/path/to/web_nothreads_release.zip \
+PYTHON=/path/to/python-with-playwright \
+bash tools/verify_save_gate_web.sh
+```
+
+环境需安装 Chromium `/usr/bin/chromium` 和 Python Playwright。runner 创建随机本地端口与随机数据库，保留临时导出/日志/result.json；成功时删除该数据库。导出包含同分支 Gate，避免手抄模型。严格导入/导出及 Chromium151 实跑通过，`SAVE GATE WEB PASS 20`，事务路径为 complete / abort，无 pageerror。实测 PCK SHA256 `c37a244133d1a1c9d607593a589e6035fc7f2df99d2d0985a991843df69fc70f`；仅该隔离产物标识，非线上游戏版本。
+
+20项断言覆盖：A未定时B被Gate拒绝；坏JSON结构和错误write_id不释放所有权；真实提交完成后读回完整token/bytes记录，再延迟回执；迟到成功只更新confirmed，不覆盖较新的working；重复回执无效；下一写入在request success后中止，等待transaction.onabort后完整读回父代，再释放unknown且保留脏进展。JS的busy只约束同页实验入口，不是跨页面锁。
+
+边界：固定fixture token与精确记录比较，不是生产封套摘要/认证；未测实际丢回执、reload、进程强退、多页面、配额/IO故障或自动user://同步竞争。测试异常只报告失败并保持unknown，不设计正式错误协议；删除数据库的实验不能证明重载恢复。仍须后续H2/H3/H4门禁，PR保持Draft，不接正式SaveStore/探索，不宣布API冻结。既有199项隔离状态机结果属于上一实现SHA，本片Gate源码未改。
