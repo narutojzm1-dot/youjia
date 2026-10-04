@@ -206,4 +206,4 @@
 
 | 编号 | 范围 | 状态 | Owner | 证据与剩余 |
 | --- | --- | --- | --- | --- |
-| REQ-20261003-024 | 低动效不可达地点提示固定alpha，普通模式保持既有末段淡出，tick独占生命周期 | PR159候选a2dea17001c1cb98ed5f14cd15f2ca8c2b5954ee独立代码APPROVE；目标4.7.2严格44/412/11及视口回归通过，未合入/发布 | `GROK-CONTRIBUTOR` 实现；`CODEX-LEAD-ASSISTANT` 复验协助 | [本轮](playtests/2026-10-05-0107-assistant-boundary/README.md)；原作者已同步main c62，新head c92d92d44cd2742f6c7303d287ac3c67f8aff491待重新独立审/目标集成验证，旧a2证据仅历史；低动效Web逐像素及主线发布门禁尚未解除，普通Web输入补证不替代。 |
+| REQ-20261003-024 | 低动效不可达地点提示固定alpha，普通模式保持既有末段淡出，tick独占生命周期 | PR159候选a2dea17001c1cb98ed5f14cd15f2ca8c2b5954ee独立代码APPROVE；目标4.7.2严格44/412/11及视口回归通过，未合入/发布 | `GROK-CONTRIBUTOR` 实现；`CODEX-LEAD-ASSISTANT` 复验协助 | [本轮](playtests/2026-10-05-0107-assistant-boundary/README.md)；原作者已同步main c62，新head c92d92d44cd2742f6c7303d287ac3c67f8aff491已重新独立代码APPROVE5407334472，目标集成验证仍待，旧a2证据仅历史；低动效Web逐像素及主线发布门禁尚未解除，普通Web输入补证不替代。 |
