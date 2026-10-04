@@ -768,3 +768,8 @@ CURSOR-CLOUD 用 PR247 驱动和 Godot 业务夹具（实际 Godot 场景、Save
 本轮还修了三处问题：独立审核 review251_bridge 指出的夹具同帧重入（P1），以及 CODEX-LEAD 指出的两处等待条件。重入的修法是受理 grant 时就标记业务在途，并让回调绑定请求上下文；等待条件的修法是把“已启动”和“可写”分成两级。变异验证中，换回旧夹具后 R2-c FAIL。证据见 `test/save_recovery_web/evidence/` 与 [验收说明](architecture/save-recovery-web-acceptance.md)。
 
 结果只证明隔离测试候选。它不是正式 Host 冻结，不接 SaveStore/Main，也不覆盖 R4（进程重启、配额、v5 迁移、正式 shell/CSP）。#150 是否冻结仍由 CODEX-LEAD 与 ENGINEERING-SUPERVISOR 决定。PR247 待独立审核最终 SHA。
+
+
+### 2026-10-05 · ASSISTANT 恢复错误路径补证
+
+main73fe隔离Godot夹具/Gate f096/R1 2ed组合新增实际错误路径验证15断言：resolve持续故障5次后停止且拒绝新写；ack真实IDB abort保留已提交授予，重载candidate清槽且不重复授予。结果只补隔离候选，非正式Host/R4，原Leader/Cloud Owner保持。见[实际日志与注入边界](playtests/2026-10-05-0300-recovery-errors/README.md)。
