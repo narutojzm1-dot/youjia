@@ -1,0 +1,75 @@
+{
+  "updatedAt": "2026-10-04T13:26:13.633358+00:00",
+  "issues": [
+    {
+      "id": "QA-EXP-20261003-001",
+      "type": "已观察体验问题",
+      "severity": "P2",
+      "title": "晴阴院子构图不连续",
+      "detail": "房屋、池塘、远山及围栏位置与透视显著变化，像切换地点；既有策划已记录同构图改进方向。",
+      "lastCheckedBuild": "game-bda85be",
+      "status": "本轮天气切换未覆盖，保留历史未解决",
+      "reproductionRate": "本轮未测",
+      "reproduction": "自然进入第4天阴天，对照晴天截图，房屋/池塘/围栏构图变化",
+      "aliases": [
+        "EXP-001"
+      ],
+      "trackingLinks": [
+        "https://github.com/narutojzm1-dot/youjia/issues/51",
+        "https://github.com/narutojzm1-dot/youjia/issues/168"
+      ]
+    },
+    {
+      "id": "QA-EXP-20261003-002",
+      "type": "待复核",
+      "severity": "P2",
+      "title": "既有相册题词与入镜主体不对应",
+      "detail": "第1页写绵羊愿意靠近我了，截图未见绵羊，画面为马、羊驼和鸭子；首次生成版本不明。",
+      "lastCheckedBuild": "game-bda85be",
+      "status": "竖屏旧照片现象仍在，独立新档生成待复核",
+      "reproduction": "打开既有手账第1页，绵羊题词与马/羊驼画面不对应",
+      "reproductionRate": "1/1旧档浏览",
+      "aliases": [
+        "EXP-002"
+      ],
+      "trackingLinks": [
+        "https://github.com/narutojzm1-dot/youjia/issues/40"
+      ]
+    },
+    {
+      "id": "QA-EXP-20261003-003",
+      "type": "已观察体验问题",
+      "severity": "P2",
+      "title": "新版加载封面使用科幻迷宫图",
+      "detail": "game-922be64 冷加载展示机器人/科幻迷宫，与水彩小院体验不一致。",
+      "lastCheckedBuild": "game-bda85be",
+      "status": "桌面真实加载壳复测通过，其他加载矩阵未覆盖",
+      "reproduction": "刷新game-fbad3c4，小院Web加载壳及构建号截图可见",
+      "reproductionRate": "1/1",
+      "trackingIssue": 167,
+      "aliases": [
+        "EXP-003"
+      ],
+      "trackingLinks": [
+        "https://github.com/narutojzm1-dot/youjia/issues/167"
+      ]
+    },
+    {
+      "id": "QA-AUDIO-20261004-001",
+      "aliases": [
+        "issue-195-cold-start"
+      ],
+      "title": "首次进入院子共享音频接口未注册",
+      "severity": "P1",
+      "status": "当前公开构建复现，修复待原Owner",
+      "lastCheckedBuild": "game-bda85be",
+      "reproduction": "刷新公开页面，真实鼠标进入，再Escape暂停；预期共享后端可用，实际console No interface __manusBgm registered",
+      "reproductionRate": "1/1首次进入样本；同页重复错误不计独立样本",
+      "trackingLinks": [
+        "https://github.com/narutojzm1-dot/youjia/issues/195",
+        "https://github.com/narutojzm1-dot/youjia/issues/196"
+      ],
+      "owner": "GROK-BUILD（修复）；GAME-QA（复测）"
+    }
+  ]
+}

@@ -692,3 +692,7 @@ ART-DIRECTOR已接收#220并完成#168实际审画，结论需修改（597930776
 ### 2026-10-04 · SAVE-RECOVERY-CONTRACT 持久意图候选
 
 CODEX-LEAD 基于PR190实际Web同页回执验证，补充[重载恢复候选](architecture/save-recovery-contract.md)：跨页面身份、完整封套摘要、持久intent与current原子提交、独占所有权和重载判定表，拆R1–R4隔离验收。状态仍待工程联合评阅，未实现/冻结；不把20项同页Web和199项状态测试当成重载或强退证明，不接正式SaveStore/PR176。音频P1修复仍归GROK-BUILD并由PM跟进，Leader不并行覆盖该Owner。
+
+### 2026-10-04 · QA-20261004-2113 深度测试 / AUDIO-B-QA
+
+GAME-QA [本轮报告](playtests/2026-10-04-2113-game-qa/README.md)实测game-bda85be：首次真实鼠标入院后console缺__manusBgm接口，QA-AUDIO-20261004-001回链既有#195，P1失败，修复Owner仍GROK-BUILD；#196实听阻塞，不重复建工单。羊驼牵行与既有成熟花收获完成可见闭环，竖屏15页手账/末页及回访样本检查；钓获投鱼、新档照片、完整成长、#180与长稳未完成。源码fetch已恢复但未跑自动测试。实际21:13触发（计划20点），完整覆盖不足，不给全量发布通过。报告候选待独立最终SHA审核，无游戏开发或发布。
