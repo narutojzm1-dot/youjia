@@ -31,7 +31,7 @@ def launch(p, profile, log):
     proc = subprocess.Popen([args.chrome, '--headless', '--no-sandbox', '--no-first-run',
         '--no-default-browser-check', '--use-gl=angle', '--use-angle=swiftshader',
         '--enable-unsafe-swiftshader', '--remote-debugging-address=127.0.0.1',
-        f'--remote-debugging-port={port}', f'--user-data-dir={profile}', 'about:blank'],
+        f'--remote-debugging-port={port}', f'--user-data-dir={profile}', '--no-startup-window'],
         stdout=log, stderr=log, start_new_session=True)
     try:
         deadline=time.monotonic()+30
@@ -51,7 +51,9 @@ def kill(proc):
         os.killpg(proc.pid,signal.SIGKILL);proc.wait(timeout=15)
 
 def opened(browser,url):
-    page=browser.contexts[0].new_page();page.goto(url)
+    context=browser.contexts[0]
+    if context.pages: raise RuntimeError('unexpected startup pages: recovery must have one owner')
+    page=context.new_page();page.goto(url)
     page.wait_for_function('window.YoujiaRecoveryFixture?.ready',timeout=30000)
     return page
 
@@ -65,15 +67,21 @@ try:
      proc,browser=launch(p,profile,log);report['browser']=browser.version
      url=f'http://127.0.0.1:{server.server_port}/index.html?recovery_store=youjia-recovery-test-{uuid.uuid4().hex}'
      page=opened(browser,url);before=page.evaluate('window.YoujiaRecoveryProbe.snapshot()')
+     case['initial_pages']=[v.url for v in browser.contexts[0].pages]
      if barrier!='acknowledged': page.evaluate('(b)=>window.YoujiaRecoveryProbe.arm(b)',barrier)
      page.evaluate('window.YoujiaRecoveryFixture.grant(1)')
      if barrier=='acknowledged':
       page.wait_for_function('window.YoujiaRecoveryFixture.business().watermark===1 && !window.YoujiaRecoveryFixture.business().pending')
      else: page.wait_for_function('window.YoujiaRecoveryProbe.paused')
      at_kill=page.evaluate('window.YoujiaRecoveryProbe.snapshot()');case['before']=before;case['at_kill']=at_kill
+     case['before_kill_events']=page.evaluate('window.YoujiaRecoveryProbe.events()')
+     if len(browser.contexts[0].pages)!=1: raise RuntimeError('unexpected concurrent recovery page')
      old_pid=proc.pid;kill(proc);check(case,proc.returncode==-signal.SIGKILL,'actual SIGKILL exit');proc=None
      proc,browser=launch(p,profile,log);check(case,proc.pid!=old_pid,'new browser process')
      page=opened(browser,url);rec=page.evaluate('window.YoujiaRecoveryProbe.recovery()');case['recovery']=rec
+     case['restart_pages']=[v.url for v in browser.contexts[0].pages]
+     case['restart_events']=page.evaluate('window.YoujiaRecoveryProbe.events()')
+     if len(browser.contexts[0].pages)!=1: raise RuntimeError('unexpected concurrent recovery page')
      expected={'intent_prepared_complete':'restored_parent_intent_rejected','candidate_committed_before_receipt':'restored_candidate','acknowledged':'clean'}[barrier]
      check(case,rec['verdict']==expected,'expected recovery verdict')
      payload=json.loads(rec['current']['payload_bytes']);watermark=0 if barrier=='intent_prepared_complete' else 1
