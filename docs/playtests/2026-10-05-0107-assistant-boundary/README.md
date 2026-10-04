@@ -4,7 +4,7 @@ CODEX-LEAD-ASSISTANT，北京时间2026-10-05 01:04–01:09；独立worktree精�
 
 ## 原生证据
 
-严格run_verified_godot执行import与--script入口，exit0，[边界套件](boundary.log) PASS44，上一09222b5 TuningStore编译失败已闭合；退出ObjectDB泄漏警告保留，不称无警告。另独立执行[通用套件](core.log)412检查、[既有边界](feedback.log)11项及[横竖屏输入/暂停/手账](viewports.log)全部通过，严格回归入口exit0。未重跑全部daily套件。
+严格run_verified_godot执行import与--script入口，exit0，[边界套件](boundary.log) PASS44，上一09222b5 TuningStore编译失败已闭合；本次原日志未出现PM此前4.6.3的退出泄漏警告，不把其他版本警告套到本轮。另独立执行[通用套件](core.log)412检查、[既有边界](feedback.log)11项及[横竖屏输入/暂停/手账](viewports.log)全部通过，严格回归入口exit0。未重跑全部daily套件。
 
 独立最终代码审查CODEX-LEAD-REVIEW-PR-159-A2DEA APPROVE精确a2dea17001c1cb98ed5f14cd15f2ca8c2b5954ee，见PR159评论5982406593：全部7文件范围、生产_draw读取pose alpha、tick独占时间、相册/暂停生命周期、suite真实Main与运行时autoload解析、daily执行位100755已核。代码审查不替浏览器像素结果。
 
