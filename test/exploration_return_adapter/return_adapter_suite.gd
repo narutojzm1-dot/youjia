@@ -377,6 +377,15 @@ func _content_rejected() -> void:
 	b.host_action("ok")
 	_check(b.status_text() == Adapter.TEXT_SAVED and b.set_out().ok, "after settling empty the player can set out again")
 	await _despawn(b)
+	## 关闭旅程失败：核心已 committed 但 close() 被拒时记 close_failed，不显示已收好
+	var c = await _returned_with_find()
+	c.host.finish(true, true)
+	c.session()._quarantined = true
+	c._settle_committed()
+	c.refresh()
+	_check(c.events.has("close_failed:quarantine_frozen"), "a refused close is logged as close_failed")
+	_check(not c.status_text().contains(SAVED_WORD), "a refused close is not shown as saved")
+	await _despawn(c)
 
 
 ## 6d. 代号守卫：上一代画卷的迟到请求在新画卷存活时到达，也不能回院或改核心
