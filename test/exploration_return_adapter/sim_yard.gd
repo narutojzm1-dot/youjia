@@ -152,8 +152,9 @@ func _touch(source: String, screen_x: float) -> void:
 
 
 func _build_ground() -> void:
-	_rect(Vector2.ZERO, Vector2(WIDTH, HEIGHT), Color(0.86, 0.90, 0.84))
-	_rect(Vector2(0, 470), Vector2(WIDTH, HEIGHT - 470), Color(0.78, 0.72, 0.58))
+	## 天和地都向外多铺一段：相机高度固定，窗口比 720 高时上下不露底色
+	_rect(Vector2(-WIDTH, -HEIGHT), Vector2(WIDTH * 3, HEIGHT * 2), Color(0.86, 0.90, 0.84))
+	_rect(Vector2(-WIDTH, 470), Vector2(WIDTH * 3, HEIGHT), Color(0.78, 0.72, 0.58))
 	## 院墙与院门：几何占位
 	_rect(Vector2(0, 380), Vector2(WIDTH, 24), Color(0.62, 0.55, 0.47))
 	_rect(Vector2(WIDTH * 0.5 - 70, 330), Vector2(140, 150), Color(0.50, 0.38, 0.28))
