@@ -10,9 +10,9 @@ PR190 的递增 write_id 在重新打开页面后会从头开始，不能独自�
 
 ## 封套与完整比较
 
-版本标记 `youjia.save-envelope/v1`，字段：store_id、commit_id、parent_commit_id、generation、payload_bytes、payload_sha256、envelope_sha256。store_id是存档命名空间身份，commit_id为随机128位身份（不能用墙钟时间）；generation为规范正int64十进制字符串，达到上界后拒绝新提交，不回绕。根提交无父，用固定空字符串；导入/创建根另行验证，不能在恢复失败时自动造根。
+版本标记 `youjia.save-envelope/v1`，字段：schema、store_id、commit_id、request_id、parent_commit_id、generation、payload_bytes、payload_sha256、envelope_sha256。schema固定为上述版本标记；request_id与intent.request_id必须逐字节一致，store_id/commit_id/request_id统一使用32位小写十六进制编码的128位随机身份。store_id是存档命名空间身份，commit_id为随机128位身份（不能用墙钟时间）；generation为规范正int64十进制字符串，达到上界后拒绝新提交，不回绕。根提交无父，用固定空字符串；导入/创建根另行验证，不能在恢复失败时自动造根。
 
-payload_bytes是一次冻结的UTF-8 JSON文本；写入、读回与校验使用同一文本，禁止读出后重排字段再算摘要。候选完整摘要算法：固定上述前七字段顺序（不含envelope_sha256），每字段转UTF-8字节后以前缀uint64大端字节长度编码，依次串接，再计算SHA256；payload_sha256也用固定小写64位十六进制。校验先限定格式、字段类型和长度上界，再算摘要。资源上界由后续实现按真实旧档样本定稿，未定前不得面向任意用户导入；测试夹具固定小尺寸。
+payload_bytes是一次冻结的UTF-8 JSON文本；写入、读回与校验使用同一文本，禁止读出后重排字段再算摘要。候选完整摘要算法：固定顺序 schema、store_id、commit_id、request_id、parent_commit_id、generation、payload_bytes、payload_sha256（不含envelope_sha256），每字段转UTF-8字节后以前缀uint64大端字节长度编码，依次串接，再计算SHA256；payload_sha256也用固定小写64位十六进制。校验先限定格式、字段类型和长度上界，再算摘要。资源上界由后续实现按真实旧档样本定稿，未定前不得面向任意用户导入；测试夹具固定小尺寸。
 
 摘要用于意外损坏和身份比较，不是签名，不防恶意篡改、回滚或账号冒用。相同payload、不同parent/代次/命名空间必须有不同完整身份。未知schema或未知字段先保留原文并隔离，不静默删除后重写；v5迁移另片，旧照片/关系/植物必须整份保留。
 
@@ -35,11 +35,13 @@ payload_bytes是一次冻结的UTF-8 JSON文本；写入、读回与校验使用
 
 | 完整持久状态 | 允许结果 |
 | --- | --- |
-| current为可信candidate，匹配intent.request_id/parent/candidate身份 | 认定同一提交已落存储，按current业务水位恢复；不再次授予；清理intent可重试 |
-| current为可信parent，intent为prepared，独占权及前序事务静止/顺序已验证 | 候选未提交；恢复parent，保留意图供诊断/显式后续处理；不自动重放授予 |
+| current为可信candidate且intent状态为committed，匹配intent.request_id/parent/candidate完整身份 | 认定同一提交已落存储，按current业务水位恢复；不再次授予；清理intent可重试 |
+| current为可信parent，intent为prepared，独占权及前序事务静止/顺序已验证 | 候选未提交；恢复parent，按下述原子归档流程终结意图；不自动重放授予 |
 | 无intent，current可信 | 仅恢复完整current；不能推断未持久化的working或某个丢失业务请求已完成 |
-| intent标committed但current仍parent；或current为第三份封套 | 不一致，隔离；不拼接、不选代次较大者就自动授予 |
+| intent标committed但current仍parent，或prepared但current已是candidate，或未知intent状态，或current为第三份封套 | 不一致，隔离；不拼接、不选代次较大者就自动授予 |
 | schema未知、摘要不匹配、记录缺失或读失败 | 保留原文与诊断，禁止自动重置或继续探索写入；不能宣称已恢复 |
+
+可信parent+prepared的终结步骤：保持独占锁，在readwrite事务中重新比较完整current、request_id和冻结意图，原子把该意图复制到诊断归档并标rejected，清除活动intent槽位。只有事务oncomplete并读回确认归档与活动槽一致后，才解除阻塞；归档失败/结果不明继续unknown，不自动重放授予。后续合法重试必须从当前状态重新校验并取得新request_id，不能把历史意图直接再发。诊断归档的容量/保留策略待实现定义，未明确前不得静默清理用户数据。
 
 进程重载只恢复持久记录，尚未保存的working不能承诺找回。新页面的Gate初始化需要明确恢复状态入口；不得用普通finish绕过unknown，现有PR190尚无该接口。平台oncomplete/readback不等同于物理断电保证；浏览器清理、配额、存储持久许可和进程崩溃各需独立证据。
 
