@@ -87,7 +87,8 @@ R1 若没有支撑 Fixture 的公开入口，会在 PR 中列出缺口，不另�
    - observed 等于 candidate 时，才确认业务、推进 token，然后 `acknowledge`；
    - 错身份、重复或迟到的回执由 Gate 拒绝，保持在途；
    - `submit` 报错时，不立即重试，先 `resolve`，由 Host 按可信 current 出回执来收尾。
-   - `resolve` 本身报错时，最多再重试 5 次，每次间隔 0.2 秒；仍失败则保持在途、停止重试，并公开 `resolve failed`。
+   - 同一次写入里 `resolve` 最多调用 5 次：第一次在 `submit` 报错后立即发起，之后每次因 `resolve` 自身报错而重试，都先间隔 0.2 秒。仍失败则保持在途、停止重试，并公开 `resolve failed`。
+   - 只要 `blocked_reason` 非空（如 `resolve failed`、`acknowledge failed`），`grant` 一律直接拒绝，不再去调 `prepare`。
 3. **收尾**：业务确认后先 `acknowledge`，完成后才解除在途。因此 `pending` 为假时意图已清理，紧接着的 grant 不会被 Host 以 `recovery required` 拒绝。`acknowledge` 失败不回滚已确认的提交，但公开为 `acknowledge failed`，不再显示可写。
 
 **需要 R1 桥接提供的 `window.YoujiaRecoveryHostBridge`**（CODEX-LEAD 实现；每个方法最后一个参数是 Godot 回调，回调参数为一个 JSON 字符串；token 即封套 `commit_id`）
@@ -154,7 +155,7 @@ R1 若没有支撑 Fixture 的公开入口，会在 PR 中列出缺口，不另�
 - **变异验证**：把夹具换回修复前的 `6401500` 版本后，R2-c FAIL（第一次请求一直无法收尾），R3-a 因夹具不发布启动状态而 BLOCKED，其余场景照常 PASS。说明新场景能拦住这次的重入缺陷。
 - 中间一次运行里，R2-c 的业务断言全部通过，但清理步骤因参与页仍连着库被拦下，记为 FAIL。改成关页后再删库之后，连续两次都通过。
 - 2026-10-04，处理 PR #247 审核的 5 条 P3：
-  - 修了四处：`resolve` 加重试上限；acknowledge 完成前保持在途；夹具没启动时记 FAIL；文档对齐。
+  - 修了四处：`resolve` 加调用上限；acknowledge 完成前保持在途；夹具没启动时记 FAIL；文档对齐。
   - 驱动和夹具在 `edcde8b` 上连续跑两次，均为 12/12 PASS、73 项检查（R2-c 新增一项“收尾后立即 grant 被接受”），退出码 0。组合同上：Gate `f096a4a`、Host `2edb2e7`、Godot 4.7.2、Chrome 148。
   - 变异验证：新驱动配 `2d2054f` 合入版的夹具时，R2-c FAIL。业务显示已收尾时意图尚未清理，紧接着的 grant 被拒，场景随之超时。
   - `resolve` 重试上限这条路径，现有场景还触发不到，只经过代码审读。

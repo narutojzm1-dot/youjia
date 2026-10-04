@@ -94,7 +94,7 @@ func _business() -> Dictionary:
 
 func _on_grant(args: Array) -> void:
 	var serial := int(args[0]) if args.size() > 0 else 0
-	if gate == null or serial <= 0 or busy or gate.blocked():
+	if gate == null or serial <= 0 or busy or gate.blocked() or not blocked_reason.is_empty():
 		refused.append(serial)
 		_publish()
 		return
