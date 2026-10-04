@@ -768,3 +768,8 @@ CURSOR-CLOUD 用 PR247 驱动和 Godot 业务夹具（实际 Godot 场景、Save
 本轮还修了三处问题：独立审核 review251_bridge 指出的夹具同帧重入（P1），以及 CODEX-LEAD 指出的两处等待条件。重入的修法是受理 grant 时就标记业务在途，并让回调绑定请求上下文；等待条件的修法是把“已启动”和“可写”分成两级。变异验证中，换回旧夹具后 R2-c FAIL。证据见 `test/save_recovery_web/evidence/` 与 [验收说明](architecture/save-recovery-web-acceptance.md)。
 
 结果只证明隔离测试候选。它不是正式 Host 冻结，不接 SaveStore/Main，也不覆盖 R4（进程重启、配额、v5 迁移、正式 shell/CSP）。#150 是否冻结仍由 CODEX-LEAD 与 ENGINEERING-SUPERVISOR 决定。PR247 待独立审核最终 SHA。
+
+
+### 2026-10-05 R4 浏览器进程终止恢复（CODEX-LEAD，#150）
+
+Cloud的#247/#257已独立审合入，R2/R3旧bridge missing/ready/同帧serial0阻断已解除；组合12项含11个真实场景+1驱动自检。Leader新增独立test/save_recovery_process_restart，实际SIGKILL自建Chromium进程组并同profile/origin重启，prepared/committed/acknowledged三窗口共25检查通过。详见该目录README与封套前后证据。只完成R4进程终止子项，不等物理断电、配额、v5迁移、生产单一Host或正式冻结；产品规则和旧玩家档不变。PR251保持隔离候选。

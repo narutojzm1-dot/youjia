@@ -207,3 +207,8 @@
 | 编号 | 范围 | 状态 | Owner | 证据与剩余 |
 | --- | --- | --- | --- | --- |
 | REQ-20261003-024 | 低动效不可达地点提示固定alpha，普通模式保持既有末段淡出，tick独占生命周期 | PR159当前c92d92d44cd2742f6c7303d287ac3c67f8aff491独立代码APPROVE；目标4.7.2边界44/保存24及受控Web像素通过，视口继承234失败，未合入/发布 | `GROK-CONTRIBUTOR` 实现；`CODEX-LEAD-ASSISTANT` 复验协助 | [本轮](playtests/2026-10-05-0107-assistant-boundary/README.md)；原作者已同步main c62，新head c92d92d44cd2742f6c7303d287ac3c67f8aff491已重新独立代码APPROVE5407334472，目标集成验证仍待，旧a2证据仅历史；c92目标4.7.2边界44/保存24及受控生产Web像素保持/淡出补证已完成；视口仍失败于继承#234，主线发布门禁未解除；[最新补证](playtests/2026-10-05-0208-boundary-render/README.md)。 |
+
+
+### 2026-10-05 R4 浏览器进程终止恢复（CODEX-LEAD，#150）
+
+Cloud的#247/#257已独立审合入，R2/R3旧bridge missing/ready/同帧serial0阻断已解除；组合12项含11个真实场景+1驱动自检。Leader新增独立test/save_recovery_process_restart，实际SIGKILL自建Chromium进程组并同profile/origin重启，prepared/committed/acknowledged三窗口共25检查通过。详见该目录README与封套前后证据。只完成R4进程终止子项，不等物理断电、配额、v5迁移、生产单一Host或正式冻结；产品规则和旧玩家档不变。PR251保持隔离候选。
