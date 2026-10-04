@@ -1,0 +1,21 @@
+{
+  "time": "2026-10-04T13:24:31.861Z",
+  "build": "game-bda85be",
+  "backend": {
+    "exists": false
+  },
+  "after": {
+    "exists": false
+  },
+  "errors": [
+    "ERROR: No interface '__manusBgm' registered.",
+    "   at: get_interface (platform/web/javascript_bridge_singleton.cpp:305)",
+    "ERROR: No interface '__manusBgm' registered.",
+    "   at: get_interface (platform/web/javascript_bridge_singleton.cpp:305)",
+    "ERROR: No interface '__manusBgm' registered.",
+    "   at: get_interface (platform/web/javascript_bridge_singleton.cpp:305)",
+    "ERROR: No interface '__manusBgm' registered.",
+    "   at: get_interface (platform/web/javascript_bridge_singleton.cpp:305)"
+  ],
+  "pageerrors": []
+}

@@ -1,0 +1,19 @@
+{
+  "master_path": "assets/holiday/environment/yard_sunny.png",
+  "master_sha256": "7f29181eac79c89b18eff65fe1a18c37230573b55f8c8993a0365dc480219d73",
+  "master_bytes": 4019432,
+  "candidate_path": "art/concepts/yard_overcast_aligned_v1/yard_overcast_aligned.png",
+  "candidate_sha256": "535bee93428cb1167a867541c1cc883fbe6b5e1a083a928037d5a07168ad5b06",
+  "candidate_bytes": 3615362,
+  "size": [
+    1920,
+    1080
+  ],
+  "old_overcast_path": "assets/holiday/environment/yard_overcast.png",
+  "old_overcast_sha256_unchanged": "3d1aa3589f3d4d1838987310130afbfbff3b3384999543cb2ed5b3c9655e66f8",
+  "old_overcast_bytes": 3427343,
+  "mean_abs_rgb_outside_sky": 29.626691818237305,
+  "mean_abs_rgb_sky": 31.322805404663086,
+  "display_scale": "YardWorld draws 1920x1080 with scale 1280/1920 by 720/1080. yard-1280.jpg is that scale.",
+  "geometry": "No resize, crop, or warp of the master. Sky pigment, diffuse light, and pond interior are per-pixel edits."
+}

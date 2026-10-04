@@ -1,0 +1,102 @@
+{
+  "sheep_clingy": {
+    "file": "assets/holiday/characters/cast_v2/sheep_clingy.png",
+    "width": 1254,
+    "height": 1254,
+    "alpha_bbox": [
+      149,
+      96,
+      1040,
+      1083
+    ],
+    "registered_ground_anchor": [
+      576.0,
+      1178
+    ],
+    "lowest_hoof_measured": [
+      813.6,
+      1178
+    ],
+    "native_facing": 1,
+    "bytes": 1356267,
+    "sha256": "cfc72bc0ac4b38899f4c3067ef76cc3ce9099fc660d86b595818a70dc6f4c9e3"
+  },
+  "sheep_clingy_attend": {
+    "file": "art/concepts/ack_sheep_v1/sheep_clingy_attend.png",
+    "width": 1254,
+    "height": 1254,
+    "alpha_bbox": [
+      148,
+      98,
+      1034,
+      1081
+    ],
+    "registered_ground_anchor": [
+      576.0,
+      1178
+    ],
+    "lowest_hoof_measured": [
+      813.9,
+      1178
+    ],
+    "native_facing": 1,
+    "border_pixels_alpha_gt16": 0,
+    "bytes": 1293256,
+    "sha256": "84461853a7a015670af0f5fea8c43fe5409c4a78e04ba9b16f4487da089512d4",
+    "fit_scale_vs_keyed": 0.89342,
+    "body_match_scale": 0.89342,
+    "silhouette_iou_vs_idle": 0.9777,
+    "canvas_margin_px": 72,
+    "note": "右向。头放平，眼睛和耳朵朝向右侧的人。羊毛没有蓬开，不是抖毛休息图。 候选未注册。锚点沿用站立图。"
+  },
+  "sheep_dull": {
+    "file": "assets/holiday/characters/cast_v2/sheep_dull.png",
+    "width": 1254,
+    "height": 1254,
+    "alpha_bbox": [
+      40,
+      209,
+      1210,
+      916
+    ],
+    "registered_ground_anchor": [
+      732.5,
+      1124
+    ],
+    "lowest_hoof_measured": [
+      558.8,
+      1124
+    ],
+    "native_facing": -1,
+    "bytes": 1504492,
+    "sha256": "8205508ce26a772e17876b7f9d74d8ece0bdd91d76e97cecfb2d1cd0aada3ad4"
+  },
+  "sheep_dull_glance": {
+    "file": "art/concepts/ack_sheep_v1/sheep_dull_glance.png",
+    "width": 1254,
+    "height": 1254,
+    "alpha_bbox": [
+      40,
+      209,
+      1205,
+      916
+    ],
+    "registered_ground_anchor": [
+      732.5,
+      1124
+    ],
+    "lowest_hoof_measured": [
+      558.6,
+      1124
+    ],
+    "native_facing": -1,
+    "border_pixels_alpha_gt16": 0,
+    "bytes": 1382148,
+    "sha256": "d8809b166da0bff725b048aaf77b8b0cfceab768c07eb110a0f61137a1097573",
+    "fit_scale_vs_keyed": 0.88739,
+    "body_match_scale": 0.88739,
+    "silhouette_iou_vs_idle": 0.9871,
+    "canvas_margin_px": 9,
+    "note": "左向，仍衔着草。头只抬一点，眼睛不像黏人羊那样亮。不是抖毛。 候选未注册。锚点沿用站立图。"
+  }
+}

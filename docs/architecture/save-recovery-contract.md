@@ -1,0 +1,57 @@
+# Web 重载恢复与持久写入意图候选（#150，H2/H3）
+
+Owner：CODEX-LEAD。源码基线 `5abd4a676d04ebbca2b04330175c46605a4e683e`；本文件是待工程联合评阅的技术候选，不是已实现、已冻结的正式 Host。PR190 的同页20项Web/199项状态测试不证明本方案。CURSOR-CLOUD保留探索核心，不要求其按未冻结接口接入。
+
+## 为什么需要独立身份
+
+PR190 的递增 write_id 在重新打开页面后会从头开始，不能独自识别历史写入；固定fixture token也不能代表真实封套。写入前需有持久意图，回执丢失后才知道要查哪份候选，不能把磁盘当前内容一概当成某次授予的成功。
+
+候选只适用于独立测试 IndexedDB。正式 user:// 的引擎同步、原生文件后端和迁移未纳入，不能把它并行接到玩家存档。没有唯一存储所有者之前不启用正式写入。
+
+## 封套与完整比较
+
+版本标记 `youjia.save-envelope/v1`，字段：schema、store_id、commit_id、request_id、parent_commit_id、generation、payload_bytes、payload_sha256、envelope_sha256。schema固定为上述版本标记；request_id与intent.request_id必须逐字节一致，store_id/commit_id/request_id统一使用32位小写十六进制编码的128位随机身份。store_id是存档命名空间身份，commit_id为随机128位身份（不能用墙钟时间）；generation为规范正int64十进制字符串，达到上界后拒绝新提交，不回绕。根提交无父，用固定空字符串；导入/创建根另行验证，不能在恢复失败时自动造根。
+
+payload_bytes是一次冻结的UTF-8 JSON文本；写入、读回与校验使用同一文本，禁止读出后重排字段再算摘要。候选完整摘要算法：固定顺序 schema、store_id、commit_id、request_id、parent_commit_id、generation、payload_bytes、payload_sha256（不含envelope_sha256），每字段转UTF-8字节后以前缀uint64大端字节长度编码，依次串接，再计算SHA256；payload_sha256也用固定小写64位十六进制。校验先限定格式、字段类型和长度上界，再算摘要。资源上界由后续实现按真实旧档样本定稿，未定前不得面向任意用户导入；测试夹具固定小尺寸。
+
+摘要用于意外损坏和身份比较，不是签名，不防恶意篡改、回滚或账号冒用。相同payload、不同parent/代次/命名空间必须有不同完整身份。未知schema或未知字段先保留原文并隔离，不静默删除后重写；v5迁移另片，旧照片/关系/植物必须整份保留。
+
+## 单一所有者及写入步骤
+
+隔离候选的所有读写经一个协调器；普通保存、探索检查点及授予排同一队列。多页使用同origin同store_id的 Web Locks exclusive 锁；不支持该能力时，候选写入功能保持不可用，不退回无锁多写者。锁是合作式约束，不能约束既有Godot自动user://写入；正式切换前必须证明后者不写同一数据集。
+
+1. 取得独占锁，读取并验证完整current和未决intent。存在未决意图先恢复，禁止直接重发/生成新旅程。
+2. 从当前合法working冻结候选；意图记录保存精确parent、candidate封套与request_id（随机独立身份）、捕获revision及必要业务提交身份。意图不存JSON解析后可任意重排的副本；保存冻结文本和摘要。逻辑write_id仅页面内关联，不能替代request_id。
+3. 第一笔readwrite事务在同一对象存储内比较current与预期parent，确认不存在另一intent，持久写入intent。只有oncomplete后才允许下一步；若通知丢失/事务结果不明，不发候选提交，保留unknown并继续占有锁直到读回或上下文真正销毁。
+4. 第二笔readwrite事务再比较current、intent的完整身份和request_id，原子写current=candidate，并把intent标为committed；不允许先写库存后写水位。onabort只能说明该笔事务终止，随后完整读回才决定业务结果。任何比较不符不改数据，进入隔离冲突。
+5. 事务终态后新readonly事务完整读回并验证，再向Gate/业务返回确认；迟到确认只发布该候选覆盖的系统凭证，不能覆写新working。锁保持到本地核验收尾，不能在request.onsuccess或任意超时释放。
+6. 本地已记录确认后，可在独立事务清理匹配request_id的intent；该清理失败不能把已确认提交变成失败。current保存完整业务去重水位，重载不能靠内存“已通知”标志再次授予。
+
+异步阶段间持有同一Web Lock；不得在一个IDB事务中await摘要计算而误用已失活事务，摘要须在事务外准备，事务内只做同步请求排队和回调比较。生命周期结束使锁释放不等于断电耐久承诺；新的锁持有者仍通过同store的事务序列化与读回核验，不凭超时推断旧请求已经失败。
+
+## 重载判定表
+
+重载先取得独占锁，使用同存储的事务顺序取得current/intent一致视图；校验封套和意图引用，不能先渲染获得新奖励再检查。锁无法取得时不创建竞争Host，明确该页未取得保存所有权；正式多页体验策略另议，不丢弃该页已有内存操作。
+
+| 完整持久状态 | 允许结果 |
+| --- | --- |
+| current为可信candidate且intent状态为committed，匹配intent.request_id/parent/candidate完整身份 | 认定同一提交已落存储，按current业务水位恢复；不再次授予；清理intent可重试 |
+| current为可信parent，intent为prepared，独占权及前序事务静止/顺序已验证 | 候选未提交；恢复parent，按下述原子归档流程终结意图；不自动重放授予 |
+| 无intent，current可信 | 仅恢复完整current；不能推断未持久化的working或某个丢失业务请求已完成 |
+| intent标committed但current仍parent，或prepared但current已是candidate，或未知intent状态，或current为第三份封套 | 不一致，隔离；不拼接、不选代次较大者就自动授予 |
+| schema未知、摘要不匹配、记录缺失或读失败 | 保留原文与诊断，禁止自动重置或继续探索写入；不能宣称已恢复 |
+
+可信parent+prepared的终结步骤：保持独占锁，在readwrite事务中重新比较完整current、request_id和冻结意图，原子把该意图复制到诊断归档并标rejected，清除活动intent槽位。只有事务oncomplete并读回确认归档与活动槽一致后，才解除阻塞；归档失败/结果不明继续unknown，不自动重放授予。后续合法重试必须从当前状态重新校验并取得新request_id，不能把历史意图直接再发。诊断归档的容量/保留策略待实现定义，未明确前不得静默清理用户数据。
+
+进程重载只恢复持久记录，尚未保存的working不能承诺找回。新页面的Gate初始化需要明确恢复状态入口；不得用普通finish绕过unknown，现有PR190尚无该接口。平台oncomplete/readback不等同于物理断电保证；浏览器清理、配额、存储持久许可和进程崩溃各需独立证据。
+
+## 下一实施批次与验收
+
+仍由CODEX-LEAD在隔离分支实现，不合入PR176或接正式SaveStore。ENGINEERING-SUPERVISOR核对协议，CURSOR-CLOUD核对业务确认/去重含义；生产接口只有联合矩阵通过后冻结。
+
+- R1：封套编码/完整身份与持久intent；同payload不同代次/parent/store、畸形ID、溢出、损坏/未来版本拒绝及原文保留。
+- R2：实际Godot Web桥接，在“意图已完成/提交前”和“提交完成/回执前”分别关闭页面；同浏览器context、同origin新页面重载。前者只恢复parent，后者只恢复candidate，业务凭证不重复；保留数据库直至复测结束。
+- R3：两个页面竞争同锁，A持锁时B不能写；A关闭后B获取锁并验证持久意图，不能把锁超时当失败；无Web Locks能力明确阻断。故意丢回执、迟到/不匹配回执和transaction.abort分别测试。
+- R4：浏览器进程重启、配额/损坏、旧v5迁移、正式shell/CSP及全部生产保存调用汇入单一Host。未通过前不发布探索持久化。
+
+每项记录精确SHA、实际页面/浏览器版本、故障注入位置、持久记录前后值、回执与玩家可见状态。页面reload、关闭页面、新context、浏览器进程重启、断电不是同一种证明，禁止合并称“恢复全通过”。本候选只细化已批准的进展保护，不增加云账号、玩法或缺席惩罚；腾讯云跨origin迁移仍在#198独立调查。

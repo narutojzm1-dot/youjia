@@ -1,0 +1,149 @@
+{
+  "issue": 194,
+  "agent": "GROK-BUILD",
+  "seed": 20261004,
+  "sample_rate": 48000,
+  "channels": 2,
+  "loop_seconds": 128.0,
+  "intended_playback": "loop",
+  "one_shots": [],
+  "seam": {
+    "method": "环境轨用整段环形滤波，接缝处没有事件。音乐的两端都停在同一个 Dmaj7 延音上，音符不落在首尾 6 秒。混响用环形延迟，尾音绕回开头，而不是切掉。",
+    "crossfade_baked": false,
+    "safe_event_margin_sec": 6.0,
+    "preview_seam_join_at_sec": 8.0
+  },
+  "suggested_mix": {
+    "music_gain_db_on_its_own_file": -5.0,
+    "extra_trim_linear": 1.0,
+    "locked": false,
+    "note": "这只是试听起点。游戏里应能分别拉环境和音乐。不是验收音量。"
+  },
+  "excluded": [
+    "脚步",
+    "动物叫",
+    "快门",
+    "互动成功声"
+  ],
+  "speakers_used": false,
+  "listening_passed": false,
+  "float_seam_env": {
+    "join_abs_l": 0.024545269093261393,
+    "join_abs_r": 0.036469694428647406,
+    "median_step_l": 0.015731519684683226,
+    "median_step_r": 0.015726227565749762,
+    "join_over_median_step_l": 1.560260520613247,
+    "join_over_median_step_r": 2.319036417104567,
+    "seam_window_rms_dbfs": -19.21598209719451,
+    "body_window_rms_dbfs": -18.657987302629962,
+    "seam_minus_body_db": -0.5579947945645465
+  },
+  "float_seam_music": {
+    "join_abs_l": 0.004966662234192287,
+    "join_abs_r": 0.001135122316262227,
+    "median_step_l": 0.002309197673974245,
+    "median_step_r": 0.00226822917869876,
+    "join_over_median_step_l": 2.15081726877215,
+    "join_over_median_step_r": 0.5004442791417687,
+    "seam_window_rms_dbfs": -20.613084418746098,
+    "body_window_rms_dbfs": -20.08789634060812,
+    "seam_minus_body_db": -0.5251880781379796
+  },
+  "float_seam_preview": {
+    "join_abs_l": 0.02175230967071283,
+    "join_abs_r": 0.03583136824106739,
+    "median_step_l": 0.015899217401504892,
+    "median_step_r": 0.015888882049547685,
+    "join_over_median_step_l": 1.3681371303630285,
+    "join_over_median_step_r": 2.25512204882202,
+    "seam_window_rms_dbfs": -18.20018530264353,
+    "body_window_rms_dbfs": -17.64306076551072,
+    "seam_minus_body_db": -0.5571245371328075
+  },
+  "env_energy_share": {
+    "20-80": 0.13257795915953133,
+    "80-250": 0.37376515213678785,
+    "250-1000": 0.22494001965267696,
+    "1000-4000": 0.22736821848751174,
+    "4000-12000": 0.036618178475916904
+  },
+  "files": {
+    "bed_yard_env.ogg": {
+      "bytes": 1865882,
+      "sha256": "239efcb8235acb56e12450c2e40e409336c1c139403a07ee8b4803f621bde241",
+      "decoded_samples": 6144000,
+      "decoded_seconds": 128.0,
+      "channels": 2,
+      "sample_rate": 48000,
+      "peak_dbfs": -3.0359175203088693,
+      "rms_dbfs": -18.927869431780753,
+      "clipped_samples": 0,
+      "decoded_seam": {
+        "join_abs_l": 0.007273197174072266,
+        "join_abs_r": 0.04307083040475845,
+        "median_step_l": 0.015251385048031807,
+        "median_step_r": 0.015252545475959778,
+        "join_over_median_step_l": 0.47688764995221683,
+        "join_over_median_step_r": 2.823845401585219,
+        "seam_window_rms_dbfs": -19.381722926484453,
+        "body_window_rms_dbfs": -18.895833183083358,
+        "seam_minus_body_db": -0.4858897434010956
+      }
+    },
+    "bed_yard_music.ogg": {
+      "bytes": 767834,
+      "sha256": "2a01d83a2c6dfb14181dfd6a53b9c249591e18ad03f57e8f70f6a9ba57afd86c",
+      "decoded_samples": 6144000,
+      "decoded_seconds": 128.0,
+      "channels": 2,
+      "sample_rate": 48000,
+      "peak_dbfs": -2.3930453953319293,
+      "rms_dbfs": -18.985443301165358,
+      "clipped_samples": 0,
+      "decoded_seam": {
+        "join_abs_l": 0.010378658771514893,
+        "join_abs_r": 0.007680535316467285,
+        "median_step_l": 0.002314819023013115,
+        "median_step_r": 0.002273114398121834,
+        "join_over_median_step_l": 4.4835724384212865,
+        "join_over_median_step_r": 3.3788600005408203,
+        "seam_window_rms_dbfs": -20.601848712287477,
+        "body_window_rms_dbfs": -20.06286634756538,
+        "seam_minus_body_db": -0.5389823647220986
+      }
+    },
+    "preview_mix.ogg": {
+      "bytes": 1856251,
+      "sha256": "f3c273e1808637d81cb11ce46669bf97bc1494d46cd22108b1f325073c762334",
+      "decoded_samples": 6144000,
+      "decoded_seconds": 128.0,
+      "channels": 2,
+      "sample_rate": 48000,
+      "peak_dbfs": -2.0383508536877453,
+      "rms_dbfs": -17.775443014237712,
+      "clipped_samples": 0,
+      "decoded_seam": {
+        "join_abs_l": 0.00042853131890296936,
+        "join_abs_r": 0.036374837160110474,
+        "median_step_l": 0.015404611825942993,
+        "median_step_r": 0.015414878726005554,
+        "join_over_median_step_l": 0.02781837827171194,
+        "join_over_median_step_r": 2.3597225645859012,
+        "seam_window_rms_dbfs": -18.39929287345463,
+        "body_window_rms_dbfs": -17.865928213772214,
+        "seam_minus_body_db": -0.533364659682416
+      }
+    },
+    "preview_seam.ogg": {
+      "bytes": 236006,
+      "sha256": "bcf7720b74dafc2d112eda243d9a59a8fcd1fb316b970e10aa2c7a2ef88770e7",
+      "decoded_samples": 768000,
+      "decoded_seconds": 16.0,
+      "channels": 2,
+      "sample_rate": 48000,
+      "peak_dbfs": -3.672741044106555,
+      "rms_dbfs": -18.35254344957027,
+      "clipped_samples": 0
+    }
+  }
+}

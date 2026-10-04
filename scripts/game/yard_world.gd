@@ -370,7 +370,7 @@ func tick(delta: float, move: Vector2) -> void:
 		_weather_timer = randf_range(48.0, 90.0)
 	# 云带缓移：低动效只保留静止可读帧，不改存档字段。
 	_tick_cloud_drift(delta)
-	# 傍晚进入/离开时换暖色云带，不改昼夜节奏长度。
+	# 晨/傍晚/夜里按 TOD 换云带或 modulate，不改昼夜节奏长度。
 	_sync_cloud_band_art()
 	if _player == null:
 		return
@@ -518,7 +518,7 @@ func _tick_goose_mount_encounter(delta: float, move: Vector2) -> void:
 		_focus_seconds = 0.0
 		_goose_mount_origin = scene_center
 		cinematic_view_changed.emit("wide")
-		camera_focus_requested.emit(scene_center, 1.08)
+		camera_focus_requested.emit(scene_center, 1.0)
 		return
 	if not move.is_zero_approx() or _has_walk_goal or _leading or not input_enabled:
 		_cancel_goose_mount_encounter()
@@ -532,21 +532,21 @@ func _tick_goose_mount_encounter(delta: float, move: Vector2) -> void:
 				var eyeline := _player.position.lerp(_goose_mount_origin, 0.68) + Vector2(0, -12)
 				_player.visible = false
 				cinematic_view_changed.emit("first_person")
-				camera_focus_requested.emit(eyeline, 1.24)
+				camera_focus_requested.emit(eyeline, 1.0)
 		1:
 			if _goose_mount_seconds >= 1.4:
 				_goose_mount_phase = 2
 				_goose_mount_seconds = 0.0
 				var back_point := horse.position + Vector2(10, -52)
 				# CastArt already measured each painting's visible height. The
-				# camera provides the close-up; do not inflate the full PNG canvas.
+				# encounter keeps the normal camera scale; do not inflate PNG canvases.
 				goose.set_encounter_pose(back_point, goose._base_scale, -1.0)
 				horse.set_encounter_pose(horse.position, horse._base_scale, horse.facing)
 				goose.z_index = horse.z_index + 1
-				goose.show_goose_encounter_cel("idle")
+				goose.show_goose_encounter_cel("riding_up")
 				var close_focus := (goose.position + horse.position) * 0.5 + Vector2(0, -24)
 				cinematic_view_changed.emit("close")
-				camera_focus_requested.emit(close_focus, 1.82)
+				camera_focus_requested.emit(close_focus, 1.0)
 		2:
 			# Its foot anchor is elevated onto the back, so normal ground-depth
 			# sorting would hide the goose behind the horse's body.
@@ -557,7 +557,7 @@ func _tick_goose_mount_encounter(delta: float, move: Vector2) -> void:
 				if _goose_mount_flap_clock <= 0.0:
 					_goose_mount_flap_clock = 0.28
 					_goose_mount_flap_open = not _goose_mount_flap_open
-					goose.show_goose_encounter_cel("idle" if _goose_mount_flap_open else "calm")
+					goose.show_goose_encounter_cel("riding_up" if _goose_mount_flap_open else "riding_down")
 			if _goose_mount_seconds >= (1.2 if reduced_motion else 3.2):
 				_complete_goose_mount_encounter(goose, horse)
 
@@ -565,7 +565,7 @@ func _tick_goose_mount_encounter(delta: float, move: Vector2) -> void:
 func _complete_goose_mount_encounter(goose: FeltActor, horse: FeltActor) -> void:
 	const EVENT_ID := "goose_horse_mount"
 	var rule := ExpressionCatalog.find_rule(EVENT_ID)
-	goose.show_goose_encounter_cel("idle")
+	goose.show_goose_encounter_cel("riding_up")
 	var moment := PhotoMoment.capture(self, rule)
 	if not moment.is_empty():
 		photo_moments[EVENT_ID] = moment
@@ -1298,6 +1298,13 @@ func _wants_morning_clouds() -> bool:
 	return tod_fraction() < 0.30
 
 
+## 与 main._tod_phase_name 的 night 对齐：t >= 0.87。
+func _wants_night_clouds() -> bool:
+	if weather != "sun":
+		return false
+	return tod_fraction() >= 0.87
+
+
 func _cloud_texture_for_now() -> Texture2D:
 	if weather == "overcast":
 		return CLOUD_OVERCAST
@@ -1308,13 +1315,12 @@ func _cloud_texture_for_now() -> Texture2D:
 	return CLOUD_SUNNY
 
 
-## tick 里只在需要换帧时重贴，避免每帧重置缩放。
+## tick 里贴图未变时仍刷新 modulate：正午与夜里共用晴天帧，但亮度不同。
 func _sync_cloud_band_art() -> void:
 	var tex := _cloud_texture_for_now()
-	if _cloud_band_a != null and _cloud_band_a.texture == tex:
-		return
-	_apply_cloud_band_art(tex)
-	_layout_cloud_bands()
+	if _cloud_band_a == null or _cloud_band_a.texture != tex:
+		_apply_cloud_band_art(tex)
+		_layout_cloud_bands()
 	var intensity := float(TuningStore.get_value("environment.filter.intensity", 0.12))
 	if bool(TuningStore.get_value("environment.filter.enabled", true)):
 		_apply_cloud_band_modulate(intensity)
@@ -1337,7 +1343,7 @@ func _apply_cloud_band_art(cloud_tex: Texture2D) -> void:
 
 
 func _apply_cloud_band_modulate(intensity: float) -> void:
-	# 阴天跟院子滤色；晴天/傍晚单独提亮，避免暖滤色把薄云染脏。
+	# 阴天跟院子滤色；晴天日间/傍晚单独提亮；夜里压暗偏冷，避免暖白日云在夜空发亮。
 	for band: Sprite2D in [_cloud_band_a, _cloud_band_b]:
 		if band == null:
 			continue
@@ -1347,6 +1353,8 @@ func _apply_cloud_band_modulate(intensity: float) -> void:
 			band.modulate = Color(1.04, 1.00, 0.98).lerp(Color.WHITE, 1.0 - intensity * 0.35)
 		elif _wants_morning_clouds():
 			band.modulate = Color(1.06, 1.04, 1.02).lerp(Color.WHITE, 1.0 - intensity * 0.4)
+		elif _wants_night_clouds():
+			band.modulate = Color(0.70, 0.74, 0.90).lerp(Color(0.82, 0.84, 0.94), 1.0 - intensity * 0.5)
 		else:
 			band.modulate = Color(1.08, 1.05, 1.02).lerp(Color.WHITE, 1.0 - intensity * 0.4)
 

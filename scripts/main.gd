@@ -55,6 +55,15 @@ var _pause_title: Label
 var _resume_button: Button
 var _restart_button: Button
 var _pause_title_button: Button
+var _music_toggle: Button
+var _ambience_toggle: Button
+var _mute_toggle: Button
+var _music_volume_label: Label
+var _ambience_volume_label: Label
+var _music_slider: HSlider
+var _ambience_slider: HSlider
+var _music_toggle_frame := -1
+var _ambience_toggle_frame := -1
 var _confirm_screen: Control
 var _confirm_title: Label
 var _confirm_message: Label
@@ -253,6 +262,13 @@ func _process(delta: float) -> void:
 
 
 func _input(event: InputEvent) -> void:
+	var gesture := false
+	if event is InputEventMouseButton or event is InputEventScreenTouch:
+		gesture = event.pressed
+	elif event is InputEventKey:
+		gesture = event.pressed and not event.is_echo()
+	if gesture:
+		AudioDirector.note_gesture()
 	# A captured print is never a modal: the next ordinary player input both
 	# dismisses its presentation and continues to its original destination.
 	if _photo_arrival != null and _photo_arrival.visible and (
@@ -297,6 +313,15 @@ func _input(event: InputEvent) -> void:
 			# Arrow keys move the person in the yard, never focus HUD buttons.
 			get_viewport().set_input_as_handled()
 			return
+	var slider_point := Vector2.INF
+	if event is InputEventScreenTouch:
+		slider_point = (event as InputEventScreenTouch).position
+	elif event is InputEventScreenDrag:
+		slider_point = (event as InputEventScreenDrag).position
+	if slider_point != Vector2.INF and _pause_screen != null and _pause_screen.visible and _drag_volume_slider(slider_point):
+		_last_touch_ms = Time.get_ticks_msec()
+		get_viewport().set_input_as_handled()
+		return
 	# 触屏/鼠标同源去重：触屏处理后，400ms 内合成鼠标左键直接吞掉，防止重复触发
 	if event is InputEventMouseButton:
 		var _mb := event as InputEventMouseButton
@@ -320,7 +345,7 @@ func _input(event: InputEvent) -> void:
 	if _confirm_screen.visible:
 		buttons = [_confirm_accept_button, _confirm_cancel_button]
 	elif _pause_screen.visible:
-		buttons = [_resume_button, _restart_button, _pause_title_button]
+		buttons = [_resume_button, _restart_button, _pause_title_button, _music_toggle, _ambience_toggle, _mute_toggle]
 	elif _album_screen.visible:
 		buttons = [_album_previous_button, _album_next_button, _album_back_button]
 	elif _screen == "title":
@@ -411,7 +436,7 @@ func _build_title_screen() -> void:
 	_tagline_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	column.add_child(_tagline_label)
 	_play_button = _soft_button()
-	_play_button.pressed.connect(_start_holiday)
+	_play_button.pressed.connect(_on_play_pressed)
 	column.add_child(_play_button)
 	_album_button = _soft_button()
 	_album_button.pressed.connect(_show_album)
@@ -470,7 +495,7 @@ func _build_hud() -> void:
 func _build_pause_screen() -> void:
 	_pause_screen = _overlay()
 	add_child(_pause_screen)
-	var box := _centered_column(Vector2(360, 280), _pause_screen)
+	var box := _centered_column(Vector2(360, 620), _pause_screen)
 	_pause_title = _label(26, INK)
 	_pause_title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	box.add_child(_pause_title)
@@ -483,6 +508,25 @@ func _build_pause_screen() -> void:
 	_pause_title_button = _soft_button()
 	_pause_title_button.pressed.connect(func() -> void: _request_destructive_action("title"))
 	box.add_child(_pause_title_button)
+	_music_toggle = _soft_button()
+	_music_toggle.pressed.connect(_toggle_music_layer)
+	box.add_child(_music_toggle)
+	_ambience_toggle = _soft_button()
+	_ambience_toggle.pressed.connect(_toggle_ambience_layer)
+	box.add_child(_ambience_toggle)
+	_music_volume_label = _label(15, INK)
+	box.add_child(_music_volume_label)
+	_music_slider = _volume_slider()
+	_music_slider.value_changed.connect(_on_music_gain_changed)
+	box.add_child(_music_slider)
+	_ambience_volume_label = _label(15, INK)
+	box.add_child(_ambience_volume_label)
+	_ambience_slider = _volume_slider()
+	_ambience_slider.value_changed.connect(_on_ambience_gain_changed)
+	box.add_child(_ambience_slider)
+	_mute_toggle = _soft_button()
+	_mute_toggle.pressed.connect(_toggle_master_mute)
+	box.add_child(_mute_toggle)
 
 
 func _build_confirmation_screen() -> void:
@@ -551,6 +595,93 @@ func _build_notice() -> void:
 	add_child(_notice)
 
 
+func _on_play_pressed() -> void:
+	_start_holiday()
+	# Same pressed stack as the real enter control. Not deferred.
+	AudioDirector.unlock_audio()
+
+
+func _toggle_music_layer() -> void:
+	var frame := Engine.get_process_frames()
+	if frame == _music_toggle_frame:
+		return
+	_music_toggle_frame = frame
+	AudioDirector.set_music_enabled(not AudioDirector.music_enabled())
+	_refresh_texts()
+
+
+func _toggle_ambience_layer() -> void:
+	var frame := Engine.get_process_frames()
+	if frame == _ambience_toggle_frame:
+		return
+	_ambience_toggle_frame = frame
+	AudioDirector.set_ambience_enabled(not AudioDirector.ambience_enabled())
+	_refresh_texts()
+
+
+func _toggle_master_mute() -> void:
+	var muted := bool(TuningStore.get_value("audio.master.muted", false))
+	TuningStore.set_value("audio.master.muted", not muted)
+	_refresh_texts()
+
+
+func _on_music_gain_changed(value: float) -> void:
+	AudioDirector.set_music_gain(value / 100.0)
+	_refresh_volume_labels()
+
+
+func _on_ambience_gain_changed(value: float) -> void:
+	AudioDirector.set_ambience_gain(value / 100.0)
+	_refresh_volume_labels()
+
+
+func _drag_volume_slider(point: Vector2) -> bool:
+	return _point_sets_slider(_music_slider, point) or _point_sets_slider(_ambience_slider, point)
+
+
+func _point_sets_slider(slider: HSlider, point: Vector2) -> bool:
+	if slider == null or not slider.is_visible_in_tree():
+		return false
+	var rect := slider.get_global_rect().grow_individual(8, 16, 8, 16)
+	if not rect.has_point(point):
+		return false
+	var span := maxf(rect.size.x, 1.0)
+	var ratio := clampf((point.x - rect.position.x) / span, 0.0, 1.0)
+	slider.value = round(ratio * 100.0)
+	return true
+
+
+func _volume_slider() -> HSlider:
+	var slider := HSlider.new()
+	slider.min_value = 0.0
+	slider.max_value = 100.0
+	slider.step = 1.0
+	slider.value = 100.0
+	slider.custom_minimum_size = Vector2(260, 32)
+	slider.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	slider.focus_mode = Control.FOCUS_ALL
+	slider.mouse_filter = Control.MOUSE_FILTER_STOP
+	return slider
+
+
+func _refresh_volume_labels() -> void:
+	if _music_volume_label != null:
+		_music_volume_label.text = "%s %d%%" % [I18n.t("pause.music_volume"), int(round(AudioDirector.music_gain() * 100.0))]
+	if _ambience_volume_label != null:
+		_ambience_volume_label.text = "%s %d%%" % [I18n.t("pause.ambience_volume"), int(round(AudioDirector.ambience_gain() * 100.0))]
+	if _music_slider != null:
+		_music_slider.set_value_no_signal(round(AudioDirector.music_gain() * 100.0))
+	if _ambience_slider != null:
+		_ambience_slider.set_value_no_signal(round(AudioDirector.ambience_gain() * 100.0))
+
+
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_APPLICATION_PAUSED:
+		AudioDirector.set_application_active(false)
+	elif what == NOTIFICATION_APPLICATION_RESUMED:
+		AudioDirector.set_application_active(true)
+
+
 func _start_holiday() -> void:
 	TuningStore.begin_run(false)
 	AudioDirector.set_game_paused(false)
@@ -598,7 +729,7 @@ func _start_holiday() -> void:
 	_last_tod_phase = ""
 	_show_notice_key("notice.arrive")
 	_refresh_hud()
-	# 首次进院（第1天且相册为空）时，延迟发送柔性引导提示
+	AudioDirector.set_yard_active(true)
 	if _world.holiday_day == 1 and SaveStore.get_album().is_empty():
 		_show_delayed_soft_hint()
 
@@ -617,6 +748,7 @@ func _show_title() -> void:
 	get_tree().paused = false
 	TuningStore.end_run()
 	AudioDirector.set_game_paused(false)
+	AudioDirector.set_yard_active(false)
 	_screen = "title"
 	_clear_world()
 	_camera.enabled = false
@@ -1270,6 +1402,10 @@ func _refresh_texts() -> void:
 	_resume_button.text = I18n.t("pause.resume")
 	_restart_button.text = I18n.t("pause.restart")
 	_pause_title_button.text = I18n.t("pause.main_menu")
+	_music_toggle.text = I18n.t("pause.music_off" if AudioDirector.music_enabled() else "pause.music_on")
+	_ambience_toggle.text = I18n.t("pause.ambience_off" if AudioDirector.ambience_enabled() else "pause.ambience_on")
+	_mute_toggle.text = I18n.t("pause.mute_on" if bool(TuningStore.get_value("audio.master.muted", false)) else "pause.mute_off")
+	_refresh_volume_labels()
 	_confirm_title.text = I18n.t("confirm.heading")
 	_confirm_message.text = I18n.t("confirm.title" if _pending_destructive_action == "title" else "confirm.restart")
 	_confirm_accept_button.text = I18n.t("confirm.accept")

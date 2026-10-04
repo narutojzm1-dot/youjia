@@ -1,0 +1,16 @@
+{
+  "time": "2026-10-04T15:20:18.006Z",
+  "build": "game-fd2e9fe",
+  "backend": {
+    "exists": true,
+    "diagnostics": "{\"buffers\":2,\"bytes\":90316800,\"decoded\":2,\"starts\":3,\"players\":2,\"playing\":2,\"state\":\"running\"}"
+  },
+  "after": {
+    "states": [
+      "{\"buffers\":2,\"bytes\":90316800,\"decoded\":2,\"starts\":2,\"players\":2,\"playing\":1,\"state\":\"running\"}",
+      "{\"buffers\":2,\"bytes\":90316800,\"decoded\":2,\"starts\":3,\"players\":2,\"playing\":2,\"state\":\"running\"}"
+    ]
+  },
+  "errors": [],
+  "pageerrors": []
+}

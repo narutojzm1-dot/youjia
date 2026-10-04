@@ -16,7 +16,7 @@
 | REQ-20261002-002 | P0 | 解释橙色目标提示并明确当前行动对象 | 指示准确指向目标；显示动物/地点名称与动作；键盘、HUD 和点选操作目标一致；新存档玩家无需猜它是弹窗还是菜单。 | 待验收 | `MANUS-CONTRIBUTOR` | 用户 2026-10-02 指定；[实现 PR #25](https://github.com/narutojzm1-dot/youjia/pull/25)、[候选体验记录](playtests/2026-10-02-REQ-002-target-clarity.md)、[正式构建 game-9fe0d39](https://narutojzm1-dot.github.io/youjia/)；线上版本与 PCK 哈希已核对，真实移动动物点选和手机触屏尚未实玩验收。 |
 | REQ-20261002-003 | P1 | 确定长期定位与停留/回访循环，评估轻放置 | 已确定轻陪伴为主、轻放置为辅；互动可以留下可感知的后续回响，缺席不造成惩罚。具体系统按 REQ-20261002-011 拆解。 | 方向已决策；系统设计进行中 | `CODEX-LEAD` | 用户 2026-10-02 确认；见[当前策划基准](game-design.md#一句话方向)与[台账](decisions.md)。 |
 | REQ-20261002-004 | P1 | 增加大鹅和其他动物的动作、表情与互动回应；先修正大鹅始终张翅的问题 | 所有新增姿态保持同一角色的精致绘画质感；鹅在闲逛时可保留张翅个性，但安静时应收翅站立、休息时自然卧下，画作不靠变形冒充；切换接地、朝向、碰撞与相册不跳脚。其余动物还需有闲置和互动回应；最新 Web 构建复核前本条不标已完成。 | 进行中（鹅首切片已上线；其它动物仍待补） | `MANUS-CONTRIBUTOR` | [issue #33](https://github.com/narutojzm1-dot/youjia/issues/33)、[PR #34](https://github.com/narutojzm1-dot/youjia/pull/34) 和正式 `game-3e23a10` 浏览器卧姿实玩已核实；[增补决策](decisions/REQ-20261002-004.md)。REQ-001 主角步态仍由 `CODEX-LEAD` 负责。 |
-| REQ-20261002-005 | P1 | 让时段、天空与天气可感知，并设计可辨认的季节变化 | 同一院子在早晨、正午、傍晚有可辨的光线变化；晴/阴与云层表现能被看出来，不只依赖全屏滤色；季节有环境或动物行为变化，首次变化时间可接受。新增云形、火烧云、雨雪或四季资源先列方案与成本，再制作。 | 进行中（B/C/早晨云已发布；待制作人看图；雨雪仍待） | CURSOR-CONTRIBUTOR-LOCAL | 阴天底图 game-165c7d4（PR #52）；季节节奏 game-70883ff（PR #55）。云带 B `game-32ff2d1`；傍晚 `game-3350c89`（PR #103）；早晨 PR #140 `game-693b311`。雨雪仍不做。见 [sky-cloud-plan.md](architecture/sky-cloud-plan.md)；[制作人样张](playtests/2026-10-03-REQ-005-user-accept/README.md)。台账「待制作人验收」由 `CODEX-LEAD` 汇总。 |
+| REQ-20261002-005 | P1 | 让时段、天空与天气可感知，并设计可辨认的季节变化 | 同一院子在早晨、正午、傍晚有可辨的光线变化；晴/阴与云层表现能被看出来，不只依赖全屏滤色；季节有环境或动物行为变化，首次变化时间可接受。新增云形、火烧云、雨雪或四季资源先列方案与成本，再制作。 | 进行中（B/C/早晨云已发布；夜里压暗已发布；待制作人看图；雨雪仍待） | CURSOR-CONTRIBUTOR-LOCAL | 阴天底图 game-165c7d4（PR #52）；季节节奏 game-70883ff（PR #55）。云带 B `game-32ff2d1`；傍晚 `game-3350c89`（PR #103）；早晨 PR #140 `game-693b311`。夜里压暗 PR #158 `game-922be64`，公网包已核对；晴天夜里偏冷 modulate，不新画。雨雪仍不做。见 [sky-cloud-plan.md](architecture/sky-cloud-plan.md)；[制作人样张](playtests/2026-10-03-REQ-005-user-accept/README.md)。 |
 | REQ-20261002-006 | P1 | 深入体验最新版本并提出大型玩法顺序 | 完成最新 Web 构建的现场复核，记录步骤、截图、构建号、发现和优先级。 | 已完成 | `CODEX-LEAD` | [game-1347743 体验记录](playtests/2026-10-02-game-1347743.md) |
 | REQ-20261002-007 | P1 | 验证携鱼过期时失效投喂追踪会取消且普通散步保留 | 线上实际完成钓鱼、选择鸭/鹅并等待鱼过期；确认角色停止追踪无效目标且普通散步不受影响；记录构建和证据。 | 待验收 | `CODEX-LEAD` | [PR #19](https://github.com/narutojzm1-dot/youjia/pull/19)、[发布核查](playtests/2026-10-02-game-b82a7f5.md) |
 | REQ-20261002-008 | P0 | 所有主动交互都有可感知的对象或场景正反馈；已分批补鸭鹅投鱼、抚摸与浇水 | 鸭鹅成功投鱼只对被喂鸟回应；牛/羊/马抚摸只对命中的动物回应；花圃当日首次有效浇水才显示水彩回应。距离不足、鱼过期、重复浇水均不得庆祝，低动效仍可读；羊驼喂/牵、种花/收获及其它交互继续盘点，不得提前标整条需求完成。 | 进行中（前两切片已上线） | `MANUS-CONTRIBUTOR` | [issue #30](https://github.com/narutojzm1-dot/youjia/issues/30)、[决策记录](decisions/REQ-20261002-008.md)、[投鱼 PR #32](https://github.com/narutojzm1-dot/youjia/pull/32)、[抚摸与浇水 PR #35](https://github.com/narutojzm1-dot/youjia/pull/35)；正式 `game-3e23a10` 已核对清单和 PCK。REQ-001 主角动作仍属并行工作。 |
@@ -27,8 +27,8 @@
 | REQ-20261002-012 | P1 | 让熟悉的小院随时段天空和玩家构图反复呈现新意 | 同一场景通过晨/午/晚光线、云形与天气、树水细节和偶发趣事支持反复观看；摄影探索玩家选择角度、前景和画面关系的可能性。可研究轻量场内摄影演出：主人静坐时，动物事件从远景进入、经主人视角跟随后聚焦近景并留下照片。先验证美术方案、操作可读性、资源成本与 Web 性能；汽水瓶仅为构图例子，不预设具体道具或 UI。保留安静停留和随机探索，不加入打卡/集齐目标。 | 进行中（切片 C 已发布；D 延后；待制作人看抬头） | CURSOR-CONTRIBUTOR-LOCAL | [issue #48](https://github.com/narutojzm1-dot/youjia/issues/48)；切片顺序见 [architecture/familiar-yard-observation.md](architecture/familiar-yard-observation.md)。A 云带 `game-31316aa`；B 树叶 `GROK-BUILD` PR #85；C 安静抬头微推已发布 `game-6a20cdc`（PR #88/#94，Actions [37100630995](https://github.com/narutojzm1-dot/youjia/actions/runs/37100630995)），见[体验记录](playtests/2026-10-03-REQ-012-quiet-sky-look.md)。D 仍延后。制作人验收入口见 [decisions.md 待制作人验收](decisions.md#待制作人验收)。 |
 | REQ-012-STAY | P1 | 站在栅栏边时，用已有草叶画让院子轻轻动一下 | 停住约 2.5 秒才播一次现成草叶，走路立刻停；不新增提示、相册或美术；不改云带速度，不改羽毛偶遇。 | 已合入（无界面测试通过；无网页实玩） | `GROK-BUILD` | 父需求 REQ-20261002-012 的 Owner 仍是 `CURSOR-CONTRIBUTOR-LOCAL`。[PR #85](https://github.com/narutojzm1-dot/youjia/pull/85) 合并 `36fa443`。记录见 [playtests/2026-10-03-REQ-012-STAY.md](playtests/2026-10-03-REQ-012-STAY.md)。 |
 | REQ-20261002-013 | P0 | 真实可拍动物偶遇、稳定的有限题词与可翻旅人手账 | 大鹅完整卧姿、两羊靠近、池边鸭鹅须实际可见并真实入镜；题词只在首次成片保存变体，旧照不改写、中英切换和重开稳定；宽屏双页、手机单页，按钮/左右键/触摸翻页可靠。只浏览已拍记忆，无锁定槽、红点或完成率。 | 已发布；用户正式版试玩待反馈 | `MANUS-CONTRIBUTOR` | [PR #53](https://github.com/narutojzm1-dot/youjia/pull/53) 合并提交 `b560dec94f08a1597e2b834e74c41841893ba36b`；[Actions 37025345857](https://github.com/narutojzm1-dot/youjia/actions/runs/37025345857) 成功；正式 `game-b560dec` Pages PCK 12,776,620 字节，SHA-256 `e5b9c3f931b957ac4dd288e1c6786f6b9fc1d9ace946eac711e3bed723ac3d58` 已从公网核验；[体验记录](playtests/2026-10-02-REQ-013-scrapbook.md)。与 REQ-011 世界回响及 REQ-012 天空/自由构图分离。 |
-| REQ-20261002-014 | P1 | 实现“大鹅骑上马背扑腾翅膀”场内摄影演出切片 | 玩家在院内停留观察时，满足温和空间与节奏条件后触发；演出包含远景、旅人第一视角感镜头、鹅马近景和扑翼；移动可立即打断；结束拍摄真实现场并保存稳定中英题词，可从相册回看；不重复刷取、不影响旧档、低动效可读。 | 已合入发布；自然触发实玩待补 | `CODEX-LEAD` | PR #65 最终 SHA `f7f2d0686753f798055809ef23c465d9fc237b0c` 经独立审查 APPROVE，合入 `521e6c2180284ab80aa914ec78e0ed513af960ed`；PR #72 验证补丁已并入 #65 后关闭。Actions [37092968010](https://github.com/narutojzm1-dot/youjia/actions/runs/37092968010) 成功；Pages `game-521e6c2` 对应源提交 `521e6c2180284ab80aa914ec78e0ed513af960ed`，公网 PCK 13,742,972 字节，SHA-256 `d46351fbac8d1bbe3d11de110cdbe8001a7cb805bbae07b40e16ffe97be54c1a`。公网 Chromium 1280×720 加载成功、无脚本错误或请求失败。自然等待未观察到完整演出；乘骑画仍是占位，见 [issue #64](https://github.com/narutojzm1-dot/youjia/issues/64) 和[验收记录](playtests/2026-10-03-REQ-014-verification.md)。 |
-| REQ-20261002-015 | P1 | 为大鹅骑马抓拍补一张完整的乘骑扑翼画 | 规格写清脚必须踩在马背上、不能用站立鹅冒充、画布/锚点/朝向/体积上限；画切片只交付成品 PNG 与运行时注册，不改演出脚本。 | 进行中（规格与成品画均已合入 main；仅剩导演接线） | `GROK-BUILD`（规格切片）／`WORKBUDDY-CONTRIBUTOR`（成品画切片） | 规格见 [architecture/goose-mount-pose-spec.md](architecture/goose-mount-pose-spec.md)。PR #65 已把临时换帧接到 `show_goose_encounter_cel`。产品已于 2026-10-03 确认「两张交替」而非一张：`WORKBUDDY-CONTRIBUTOR` 交付 `goose_riding_up`/`goose_riding_down` 两帧成品画（1254×1254、脚底锚点对齐后残余 ≤0.5px、`native_facing=1`、均小于 `goose.png` 的 1,212,584 字节上限），并在 `cast_art.gd` 暴露 `riding_up`/`riding_down`。导演接线仍属 REQ-014 / `CODEX-LEAD`，本切片不改 `yard_world.gd`／`FeltActor`。**PR #99 已于 2026-10-03 合并**（merge `5b695043`，head `f2d2fc21`，三轮独立评审终轮 APPROVE 无阻塞）：两帧已在 main，`cast_art.gd` 已注册 `riding_up`/`riding_down`，可被引擎直接取用；父需求关闭前仍需 REQ-014 把两帧接进 `show_goose_encounter_cel`。 |
+| REQ-20261002-014 | P1 | 实现“大鹅骑上马背扑腾翅膀”场内摄影演出切片 | 玩家在院内停留观察时，满足温和空间与节奏条件后触发；演出包含远景、旅人第一视角感镜头、鹅马近景和扑翼；移动可立即打断；结束拍摄真实现场并保存稳定中英题词，可从相册回看；不重复刷取、不影响旧档、低动效可读。 | 已合入发布；自然触发实玩待补 | `CODEX-LEAD` | PR #65 最终 SHA `f7f2d0686753f798055809ef23c465d9fc237b0c` 经独立审查 APPROVE，合入 `521e6c2180284ab80aa914ec78e0ed513af960ed`；PR #72 验证补丁已并入 #65 后关闭。Actions [37092968010](https://github.com/narutojzm1-dot/youjia/actions/runs/37092968010) 成功；Pages `game-521e6c2` 对应源提交 `521e6c2180284ab80aa914ec78e0ed513af960ed`，公网 PCK 13,742,972 字节，SHA-256 `d46351fbac8d1bbe3d11de110cdbe8001a7cb805bbae07b40e16ffe97be54c1a`。公网 Chromium 1280×720 加载成功、无脚本错误或请求失败。自然等待未观察到完整演出；此为历史占位证据；PR #173已接入两帧成品画，当前组合验收见[issue #180](https://github.com/narutojzm1-dot/youjia/issues/180)。历史资源见 [issue #64](https://github.com/narutojzm1-dot/youjia/issues/64) 和[验收记录](playtests/2026-10-03-REQ-014-verification.md)。 |
+| REQ-20261002-015 | P1 | 为大鹅骑马抓拍补一张完整的乘骑扑翼画 | 规格写清脚必须踩在马背上、不能用站立鹅冒充、画布/锚点/朝向/体积上限；画切片只交付成品 PNG 与运行时注册，不改演出脚本。 | 资源及导演接线已合入；最终SHA后置复审已通过；组合验收代码推导记录已产出（见 issue #180 评论与 docs/playtests/2026-10-05-REQ-015-acceptance.md），运行时Web证据仍待补，#180 保持开放 | `GROK-BUILD`（规格切片）／`WORKBUDDY-CONTRIBUTOR`（成品画切片） | 规格见 [architecture/goose-mount-pose-spec.md](architecture/goose-mount-pose-spec.md)。PR #65 已把临时换帧接到 `show_goose_encounter_cel`。产品已于 2026-10-03 确认「两张交替」而非一张：`WORKBUDDY-CONTRIBUTOR` 交付 `goose_riding_up`/`goose_riding_down` 两帧成品画（1254×1254、脚底锚点对齐后残余 ≤0.5px、`native_facing=1`、均小于 `goose.png` 的 1,212,584 字节上限），并在 `cast_art.gd` 暴露 `riding_up`/`riding_down`。导演接线仍属 REQ-014 / `CODEX-LEAD`，本切片不改 `yard_world.gd`／`FeltActor`。**PR #99 已于 2026-10-03 合并**（merge `5b695043`，head `f2d2fc21`，三轮独立评审终轮 APPROVE 无阻塞）：两帧已在 main，`cast_art.gd` 已注册 `riding_up`/`riding_down`，可被引擎直接取用；导演接线已由 `WORKBUDDY-CONTRIBUTOR` 于 2026-10-03 跨越切片边界实施（用户明确授权）：[PR #173](https://github.com/narutojzm1-dot/youjia/pull/173) 将 `yard_world.gd` 鹅马乘骑演出的 `show_goose_encounter_cel` 帧交替由占位 `idle`/`calm` 改为真正的 `riding_up`/`riding_down`，沿用既有 0.28s 扑翼时钟与低动效定帧，资源/接线历史单#64已关闭；最终完整SHA `0066cef9da621530d05d5ad8051be684512ce88c` 后置独立复审已通过（reviewer `CODEX-LEAD-ASSISTANT-REVIEW-PR-173-FINAL`，[证据](https://github.com/narutojzm1-dot/youjia/pull/173#issuecomment-5971467561)），不追认原始合入门禁；组合Web验收仍由[issue #180](https://github.com/narutojzm1-dot/youjia/issues/180)跟踪，Owner保持WORKBUDDY-CONTRIBUTOR。 |
 | REQ-20261002-016 | P0 | 为旅人递草喂羊驼设计第一组可读互动动作规格 | 盘点现有旅人图集；提交递草前、递出、羊驼接收、收回手臂的动作分镜和锚点/时长/打断/低动效/Web 体积规格；不改玩法逻辑、不制作最终帧，待产品确认后再另开实现任务。 | 待产品确认（规格已提交；动作候选已在 main） | `GROK-BUILD` | 原表写成 `GROK-CONTRIBUTOR`。用户让 Grok Build 做这项指定，故改为 `GROK-BUILD`，不代表接管 GROK BOT 的其他事项。规格见 [architecture/resident-grass-offer-spec.md](architecture/resident-grass-offer-spec.md)。帧已由 REQ-001-GRASS / PR #76 先合入，本需求不另做第二套画。[issue #70](https://github.com/narutojzm1-dot/youjia/issues/70)。 |
 
 | REQ-20261003-001-ACTION | P0 | 为招呼/抚摸成功反馈拆分旅人短动作切片提案 | 盘点现有旅人帧与成功/取消路径，提交短时、可打断、低动效/Web 可读的动作方案；不改距离判定和行为语义，不新增关系值/任务；资源方向先由产品确认。 | 待产品确认 | `未认领` | [issue #84](https://github.com/narutojzm1-dot/youjia/issues/84)。独立于已发布的拿草/递草 [REQ-001-GRASS](#req-001-grass) 与动物回应 REQ-008；确认后开放认领。 |
@@ -95,7 +95,7 @@
 | --- | --- | --- | --- | --- | --- | --- |
 | ART-ACK-COW | P0 | 牛：成功互动后的抬眼与温和回应 | 同角色完整画作、稳定接触锚点、透明边界、原尺寸/镜像预览、来源哈希与预算；样张核对后再扩帧，接入单独验收 | 样张已交；成功抚摸已接上抬眼，其它互动未接 | `GROK-BUILD` | [#119](https://github.com/narutojzm1-dot/youjia/issues/119)；#30 的行为接入原属 MANUS。制作人于 2026-10-03 让 `GROK-BUILD` 接手未完成部分。候选仍在 `art/concepts/ack_cow_v1/`。 |
 | ART-ACK-HORSE | P1 | 马：注意玩家与接受轻抚的回应 | 同角色完整画作、稳定接触锚点、透明边界、原尺寸/镜像预览、来源哈希与预算；样张核对后再扩帧，接入单独验收 | 样张已交；未接入 | `GROK-BUILD` | [#120](https://github.com/narutojzm1-dot/youjia/issues/120)；候选在 `art/concepts/ack_horse_v1/`。#30 的行为映射仍未改。 |
-| ART-ACK-SHEEP | P1 | 两只羊：保留个性的互动回应 | 同角色完整画作、稳定接触锚点、透明边界、原尺寸/镜像预览、来源哈希与预算；样张核对后再扩帧，接入单独验收 | 已指定；排队；先各一张关键姿态 | `GROK-BUILD` | [#121](https://github.com/narutojzm1-dot/youjia/issues/121)；#30 / MANUS反馈映射接入 |
+| ART-ACK-SHEEP | P1 | 两只羊：保留个性的互动回应 | 同角色完整画作、稳定接触锚点、透明边界、原尺寸/镜像预览、来源哈希与预算；样张核对后再扩帧，接入单独验收 | 样张已交；未接入 | `GROK-BUILD` | [#121](https://github.com/narutojzm1-dot/youjia/issues/121)；两张候选在 `art/concepts/ack_sheep_v1/`。#30 的行为映射仍未改。 |
 | ART-ACK-BIRDS | P1 | 鸭与鹅：自然关注和接食姿态资源 | 同角色完整画作、稳定接触锚点、透明边界、原尺寸/镜像预览、来源哈希与预算；样张核对后再扩帧，接入单独验收 | 已指定；排队；鹅先复用盘点再作画 | `GROK-BUILD` | [#122](https://github.com/narutojzm1-dot/youjia/issues/122)；#30 / MANUS反馈映射接入 |
 | ART-RESIDENT-PET | P1 | 旅人：自然轻抚动作的三姿态样张 | 同角色完整画作、稳定接触锚点、透明边界、原尺寸/镜像预览、来源哈希与预算；样张核对后再扩帧，接入单独验收 | 已指定；可先制作三姿态分镜样张；产品核对后烘最终帧 | `GROK-BUILD` | [#123](https://github.com/narutojzm1-dot/youjia/issues/123)；#84 / CODEX主角接入 |
 
@@ -135,11 +135,75 @@
 
 | 编号 | 优先级 | 当前可做范围与验收 | 状态 | Owner | 依赖 / 记录 |
 | --- | --- | --- | --- | --- | --- |
-| STATE-SAVE-RECOVERY | P0 | 存档提交/恢复，真实失败注入与旧v5/照片/平台持久化不丢进展 | 已指定；未实现 | `CODEX-LEAD` | [#149](https://github.com/narutojzm1-dot/youjia/issues/149)；依赖/正式内容门禁见工单。 |
-| STATE-YARD-GROWTH | P1 | 物品/布置/探索结果共享契约与迁移/去重提交矩阵，先设计 | 已指定；架构待做 | `CODEX-LEAD` | [#150](https://github.com/narutojzm1-dot/youjia/issues/150)；依赖/正式内容门禁见工单。 |
-| EXP-CONTRACT | P1 | 独立探索边界/快照/宿主确认/失败恢复契约，与共享状态对齐 | 已指定；可开始设计 | `CURSOR-CLOUD` | [#151](https://github.com/narutojzm1-dot/youjia/issues/151)；依赖/正式内容门禁见工单。 |
-| EXP-CORE | P1 | 形态无关核心状态机/恢复/返回，严格隔离测试；夹具不正式发布 | 已指定；依赖契约冻结 | `CURSOR-CLOUD` | [#152](https://github.com/narutojzm1-dot/youjia/issues/152)；依赖/正式内容门禁见工单。 |
-| EXP-FIRST-SLICE | P1 | 确认的一条近郊往返，空手/取消/重复提交/键鼠触屏低动效与正式发布闭环 | 已指定；正式内容待产品/资源选择与共享存档 | `CURSOR-CLOUD` | [#153](https://github.com/narutojzm1-dot/youjia/issues/153)；依赖/正式内容门禁见工单。 |
-| YARD-DECOR-PROPOSAL | P1 | 比较位置选择/自由摆放、收起/调整的方案与内部原型，保留真实地面与动线 | 待认领；只开放方案/内部原型 | 待认领 | [#154](https://github.com/narutojzm1-dot/youjia/issues/154)；依赖/正式内容门禁见工单。 |
-| ART-EXPLORATION-PROPOSAL | P1 | 先资源盘点/规格/构图提案与来源预算；最终画另批 | 已指定；先提案，不接入 | `GROK-BUILD` | [#155](https://github.com/narutojzm1-dot/youjia/issues/155)；依赖/正式内容门禁见工单。 |
-| QA-EXPLORATION-GATE | P1 | 独立失败矩阵/夹具与候选验收、发布和共同维护交接证据 | 待认领；先方案，候选验收随交付 | 待认领 | [#156](https://github.com/narutojzm1-dot/youjia/issues/156)；依赖/正式内容门禁见工单。 |
+| STATE-SAVE-RECOVERY | P0 | 存档提交/恢复，真实失败注入与旧v5/照片/平台持久化不丢进展 | 文件恢复首片已发布（PR #175）；Web持久化确认/内存事务仍未完成 | `CODEX-LEAD` | [#149](https://github.com/narutojzm1-dot/youjia/issues/149)；依赖/正式内容门禁见工单。 |
+| STATE-YARD-GROWTH | P1 | 物品/布置/探索结果共享契约与迁移/去重提交矩阵，先设计 | PR251真实R1候选ca1558953be1b9db90c7fcf82091645aaac46b3a已独立审/112同页检查；确认清槽/空库消费、Probe/Godot Gate与真实R2/R3待接线，未正式接入/联合冻结 | `CODEX-LEAD` | [#150](https://github.com/narutojzm1-dot/youjia/issues/150)；依赖/正式内容门禁见工单。 |
+| EXP-CONTRACT | P1 | 独立探索边界/快照/宿主确认/失败恢复契约，与共享状态对齐 | 设计稿已按督导评阅修订并合入（PR160 → PR174，CODEX-LEAD 批准 56eeedc，未冻结）；待与#150共同冻结（含平台持久化结果未知的边界）并经工程督导复核 | `CURSOR-CLOUD` | [#151](https://github.com/narutojzm1-dot/youjia/issues/151)；[契约设计稿](architecture/exploration-module-contract.md)，与#150待共同冻结项列于其第10节；不含正式地点/物品/形式。 |
+| EXP-CORE | P1 | 形态无关核心状态机/恢复/返回，严格隔离测试；夹具不正式发布 | 已指定；依赖契约冻结；冻结前草案见 PR176（Draft，不合入） | `CURSOR-CLOUD` | [#152](https://github.com/narutojzm1-dot/youjia/issues/152)；依赖/正式内容门禁见工单。 |
+| EXP-FIRST-SLICE | P1 | 确认的一条近郊往返，空手/取消/重复提交/键鼠触屏低动效与正式发布闭环 | 已指定；首地/首物已定，正式构图/资源待 #155，持久化待 #150 | `CURSOR-CLOUD` | [#153](https://github.com/narutojzm1-dot/youjia/issues/153)；依赖/正式内容门禁见工单；形式已定：[画卷漫步](architecture/exploration-form-options.md)（用户 2026-10-03）；首地/首物已定：近郊小路＋圆石、松果、落羽都可遇见（用户 2026-10-04，见 EXP-UNBLOCK-20261004），具体构图与资源由 GROK-BUILD #155 交付。 |
+| EXP-SCROLL-PROTOTYPE | P1 | #153 队列第 1 项：test/ 下独立最小项目的画卷漫步交互原型，键盘/触屏/停下观察/相机边界/视口变化；几何占位，不接 SaveStore/Main/AudioDirector，不进正式导出 | 隔离原型已交付：PR #204 最终 head `c086b76` 经独立复审（`CURSOR-CLOUD-REVIEW-PR-204`）APPROVE 后合入（`e07bf44`），隔离测试 154 项；高 DPR 真机复测交 GAME-QA #156，竖屏取景交 #201 | `CURSOR-CLOUD` | [#199](https://github.com/narutojzm1-dot/youjia/issues/199)；CODEX-LEAD 指定；[原型说明](architecture/exploration-scroll-prototype.md)；数值为实验参数，不冻结；只证明隔离交互，不是正式功能。 |
+| EXP-RETURN-ADAPTER | P1 | #153 队列第 2 项：模拟小院与假 Host 下 `request_return` 后先使院外输入/相机/连接失效再开放院内；unknown/迟到确认/明确失败都可在院内移动且不显示虚假已保存 | 隔离适配已交付：PR #207 最终 head `a2e0043` 经独立复审（`CURSOR-CLOUD-REVIEWER-200`）APPROVE 后合入（`2e33d50`），隔离测试 150 项、13 个变异均被门禁拦下；核心按 PR #176 固定 SHA `e2a6d70` 运行时取出，不复制入仓；真实宿主与 H2/H3/H4 仍归 CODEX-LEAD | `CURSOR-CLOUD` | [#200](https://github.com/narutojzm1-dot/youjia/issues/200)；[开工评论](https://github.com/narutojzm1-dot/youjia/issues/200#issuecomment-5976367738)；沿用 #156 Q10/Q16/Q17；引用 PR #176 核心须注明依赖分支，不证明耐久保存或强退恢复。 |
+| EXP-FIRST-EXPERIENCE | P1 | #153 队列第 3 项：停下看景、空手中途返回、带一个占位物中途返回三种体验研究，首片节奏/构图需求与资源接口交接包 | 隔离研究切片已交付：[PR #210](https://github.com/narutojzm1-dot/youjia/pull/210) 最终 head `be60a64` 经独立复审（`CURSOR-CLOUD-REVIEWER-201`）APPROVE 后合入（`f5ca6f3`），隔离测试 261 项；[研究说明](architecture/exploration-first-experience.md)含节奏/构图需求、资源接口表、地点/物件候选与 6 条待决项；首地/物件种类已由用户确认；正式构图/资源待 #155，持久化待 #150 联合冻结 | `CURSOR-CLOUD` | [#201](https://github.com/narutojzm1-dot/youjia/issues/201)；[开工评论](https://github.com/narutojzm1-dot/youjia/issues/201#issuecomment-5976771165)；含 GAME-PRODUCER 补充的横竖屏同一停留点取景比较与「走近—松手观察—选择／不选择—中途回院」连续操作检查；与 GROK-BUILD #155 交接，地点/物件种类已决，不再重复征求；画面/资源规格交专业审阅。 |
+| EXP-HOST-RECOVERY-GATE | P1 | #150 R2/R3 真实浏览器验收驱动：同一 context、同 origin 下，在“意图已完成/提交前”和“提交完成/回执前”关页后用新页恢复；双页锁竞争；无 Web Locks 阻断；丢回执、错身份、重复/迟到回执与真实 abort 分别出证据；业务授予不重复 | 已接收；PR247最新ce424d1509ad75befb983fdee46fca34e71dd3ed已对齐真实R1；确认清槽/空库消费与Fixture层级待答，真实场景在 R1 屏障接线前只报 BLOCKED，真实 R2/R3 通过依赖 CODEX-LEAD 的 R1 候选 | `CURSOR-CLOUD`（仅测试侧驱动） | [#239](https://github.com/narutojzm1-dot/youjia/issues/239)；[接收与接口候选 v1](https://github.com/narutojzm1-dot/youjia/issues/239#issuecomment-5981415664)。范围：`test/save_recovery_web/**`、`tools/verify_save_recovery_web.sh`、`docs/architecture/save-recovery-web-acceptance.md`。不复制或重写存储实现，不接正式 SaveStore/Main，不建第二套 Host；R1 封套/意图/协调器/恢复入口与 R4 迁移仍归 CODEX-LEAD，接口由 CODEX-LEAD 与 ENGINEERING-SUPERVISOR 核对。 |
+| YARD-DECOR-PROPOSAL | P1 | 仅同一占位物的可逆布置隔离对照：2–3 个候选位置与自由放置，预览/取消/确认/收起/换位置；键鼠/触屏横竖屏与低动效 | 隔离对照原型已交付（PR216）；PR232空间修订已合入70c170d，独立审及ART静态材料通过（5981854171）；正式布置/真机/持久化仍待 | `CODEX-LEAD-ASSISTANT`（仅此原型切片） | [#154](https://github.com/narutojzm1-dot/youjia/issues/154)；Leader 明确拆分见本单交接。仅 test/ 隔离项目与 docs，不改 Main/YardWorld/SaveStore/PhotoMoment；#125/#150 正式门禁保留，探索核心仍归 CURSOR-CLOUD。 |
+| ART-EXPLORATION-PROPOSAL | P1 | 先资源盘点/规格/构图提案与来源预算；最终画另批 | PR248构图/资源复用提案1d647c31ed0e76a912979940431aabab63ebce95已交，制作人5981844802候选方向通过/消费接口已核，仍待ART画面；不接入 | `GROK-BUILD` | [#155](https://github.com/narutojzm1-dot/youjia/issues/155)；依赖/正式内容门禁见工单。 |
+| QA-EXPLORATION-GATE | P1 | 独立失败矩阵/夹具与候选验收、发布和共同维护交接证据 | Q01–Q17矩阵已交；原型Web/真机补测已指定但待执行；正式平台联合验收待交付 | `CODEX-LEAD-ASSISTANT`矩阵 / `GAME-QA`原型补测 / `CODEX-LEAD`平台实现 | [#156](https://github.com/narutojzm1-dot/youjia/issues/156)；依赖/正式内容门禁见工单。 |
+
+
+## 同构图阴天原画修复
+
+| 编号 | 优先级 | 范围与验收 | 状态 | Owner | 依赖 |
+| --- | --- | --- | --- | --- | --- |
+| ART-OVERCAST-ALIGNED | P1 | 以晴天母版重绘阴天，几何/交互锚点不动；完整画、叠图与实际尺度预览、来源哈希；美术审核后用新路径接入，保留旧照片资源 | 候选已审画，需局部修改（#168评论5979307760）；688cdf74fce8bed6f1481f33e0084748c4918210文件可核，但作者新增回报称无候选；有效性待GROK澄清后再ART复审；LOCAL PR228兼容盘点已合入；50%混合照片表达/字段方案仍待明确，正式接图等待新图艺术批准，未接入/发布 | `GROK-BUILD` | [#168](https://github.com/narutojzm1-dot/youjia/issues/168)；新候选在 `art/concepts/yard_overcast_aligned_v2/`，旧v1保留。ART-DIRECTOR审画，CURSOR-CONTRIBUTOR-LOCAL在#51接自然转场，GAME-QA复测。 |
+
+
+## 总体声音规划
+
+| 编号 | 优先级 | 当前交付与验收 | 状态 | Owner | 记录 |
+| --- | --- | --- | --- | --- | --- |
+| AUDIO-TONE-PROPOSAL | P1 | 60–90秒等响度附近A/B小院试听、分层和来源授权，标清候选未接入 | 用户已选 B；78 秒混音不是循环成品；未接入 | `GROK-BUILD` | [#170](https://github.com/narutojzm1-dot/youjia/issues/170)；用户于 2026-10-03 直接交给 GROK-BUILD。文件在 `art/concepts/audio_tone_v1/`。 |
+| AUDIO-HOST-CONTRACT | P1 | 小院事件/混音/设置/Web生命周期与验收方案，复用现有音频设施 | 契约已独立审查合入PR215（06035d2）；#195已由GROK-BUILD实现并发布；冷启动修复/真实Web/听验仍待，不阻塞#149/#150 | `CODEX-LEAD` | [#171](https://github.com/narutojzm1-dot/youjia/issues/171)；[宿主契约](architecture/audio-host-contract.md) |
+| AUDIO-B-ASSETS | P1 | 现有院景的环境轨与轻音乐轨可分开调节；循环接缝有测量；不接运行时 | 分轨候选已交；#195 正在引用；未听验 | `GROK-BUILD` | [#194](https://github.com/narutojzm1-dot/youjia/issues/194)。文件在 `art/concepts/audio_b_stems_v1/`。不包含脚步、动物叫、快门。 |
+| AUDIO-B-INTEGRATION | P1 | 复用 AudioDirector 播放院景环境与轻音乐；手势解锁、暂停 duck、后台暂停、音乐/环境/总静音可分开；不改存档 | 冷启动与开关已合入 e8622b1；正式game-e8622b1已发布；PM后续game-fd2e9fe仅环境轨一次关/开补证，完整矩阵及实际听验未通过 | `GROK-BUILD` | [#195](https://github.com/narutojzm1-dot/youjia/issues/195)。用户要求优先接入。素材是 #194 候选。 |
+| AUDIO-CONTROLS | P1 | 暂停页两条独立音量；0% 真静音；关了再开回到原来的非零音量；只在本局 | PR245最终bc1c890ef6bac562bc7c9e2bff4c03fe26db07e7独立APPROVE并合入6802b3b；CI与同构建实际Web证实844×390暂停裁切，原Owner修布局接收待；公开仍fd2e9fe不含滑杆，生产增益全矩阵/实际听验未通过 | `GROK-BUILD` | [#234](https://github.com/narutojzm1-dot/youjia/issues/234)。不新增 tuning id，不改存档。 |
+
+来源#162；[分期计划](architecture/audio-delivery-plan.md)；[宿主契约](architecture/audio-host-contract.md)。用户已选 B。#196 听验仍归 GAME-QA。本表不把候选写成听感通过或已发布。
+
+
+## Web 加载画面修复
+
+| 编号 | 优先级 | 范围与验收 | 状态 | Owner | 记录 |
+| --- | --- | --- | --- | --- | --- |
+| QA-EXP-20261003-003 | P2 | 复用已有晴天小院资源恢复加载页风格；桌面/横屏/竖屏文字可读，进度/失败/重试/首帧与版本语义保持，正式发布后冷加载复核 | 已发布；公网三尺寸加载/重试核验通过，GAME-QA可复测 | `CODEX-LEAD-ASSISTANT` | [#167](https://github.com/narutojzm1-dot/youjia/issues/167)；GAME-QA复测，不改游戏或新资源方向。 |
+
+## 用户指定独立 QA
+
+| 编号 | 优先级 | 范围 / 验收 | 状态 | Owner |
+| --- | --- | --- | --- | --- |
+| QA-20261003-001 | P1 | 归档本轮体验报告与证据，补齐每天 08/12/16 冒烟、20 深测及报告 PR 规则；不开发修复 | 报告与规则经PM集成PR219独立审核合入；原PR165/191已merged；持续测试 | `GAME-QA`（身份 PR164 已合入） |
+
+## 用户指定 PM
+
+| 编号 | 范围 | 状态 | Owner | 记录 |
+| --- | --- | --- | --- | --- |
+| PM-COORDINATION | 全仓协作疏导、接收闭环、状态同步与持续游戏体验 | 身份已合入；QA165/191集成已完成；小时巡检已启用，资源/平台真正阻塞仍跟踪 | `GAME-PM` | [#220](https://github.com/narutojzm1-dot/youjia/issues/220)、[规范](collaboration/pm-coordination.md)、[首轮](pm/2026-10-04-coordination.md) |
+
+
+## 用户试玩镜头收尾
+
+| 编号 | 优先级 | 范围与验收 | 状态 | Owner | 记录 |
+| --- | --- | --- | --- | --- | --- |
+| REQ-014-NO-ZOOM | P0 | 鹅马演出三个阶段保持普通倍率，保留观察/扑翼/成片和中断；生产Main各阶段倍率回归与实际Web画面 | 候选实现；完整回归及受控Web已通过，待独立最终SHA审核/发布 | `CODEX-LEAD` | #40；[候选Web证据](playtests/2026-10-04-goose-nozoom/README.md)，演员尺寸#180另验 |
+
+
+### EXP-UNBLOCK-20261004 · 首片内容已决与存档验证协作
+
+- #153/#155/#201：用户已确认近郊小路＋圆石、松果、落羽均可遇见，解除首地/首物选择依赖。正式构图/资源由 GROK-BUILD #155 交付；探索核心仍归 CURSOR-CLOUD，#176 正式接入仍需 #150。
+- #239：Leader 指定 CURSOR-CLOUD 承担 #150 R2/R3 真实浏览器重载/双页验收驱动，CURSOR-CLOUD 已接收（[接收评论](https://github.com/narutojzm1-dot/youjia/issues/239#issuecomment-5981415664)，见 EXP-HOST-RECOVERY-GATE 行）；立即可开展驱动和最小故障屏障接口，真实最终验收依赖 Leader R1 实现，不能以假Host替代。详见工单的文件范围和证据矩阵。
+- CODEX-LEAD 保留 R1 封套/持久意图/写入协调/恢复入口及 R4 迁移责任，下一架构交付应为可运行实现；ENGINEERING-SUPERVISOR 评阅接口。GAME-PM 跟进接收、当前/下一交付和解除条件。此分工修正此前 R1–R4 均由 Leader 实现的安排；不重做已交付 #199/#200/#201。
+
+
+## REQ024边界反馈候选复验
+
+| 编号 | 范围 | 状态 | Owner | 证据与剩余 |
+| --- | --- | --- | --- | --- |
+| REQ-20261003-024 | 低动效不可达地点提示固定alpha，普通模式保持既有末段淡出，tick独占生命周期 | PR159候选a2dea17001c1cb98ed5f14cd15f2ca8c2b5954ee独立代码APPROVE；目标4.7.2严格44/412/11及视口回归通过，未合入/发布 | `GROK-CONTRIBUTOR` 实现；`CODEX-LEAD-ASSISTANT` 复验协助 | [本轮](playtests/2026-10-05-0107-assistant-boundary/README.md)；低动效Web逐像素及主线发布门禁尚未解除，普通Web输入补证不替代。 |
