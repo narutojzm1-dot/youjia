@@ -54,3 +54,7 @@
 ## 需要用户决策或查看的内容
 
 制作人要求所有贡献者先把此类材料提交仓库，再由`CODEX-LEAD`、`ART-DIRECTOR`、`ENGINEERING-SUPERVISOR`或`GAME-PRODUCER`汇总后向用户说明。开工与交接时遵循[统一上报规范](collaboration/producer-decision-handoff.md)及[通知#146](https://github.com/narutojzm1-dot/youjia/issues/146)。写明需要决定的问题或观察点、精确候选/发布状态、证据与推荐；用户决定回写台账/策划/需求。普通验收按原流程完成，已授权工作持续推进，重要产品决定仍归用户。
+
+## 每轮进度与等待上报
+
+用户要求各开发者每轮实际执行后向[#242统一回报台](https://github.com/narutojzm1-dot/youjia/issues/242)提交短状态，按[PM模板](collaboration/pm-coordination.md#每轮开发者回报)写实际产物、等待与接收、可继续范围、下一产物/运行窗口。GAME-PM逐人协调，不把留言等同接收、巡检等同推进；实现Owner和审核门禁保持。
