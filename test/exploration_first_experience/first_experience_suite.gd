@@ -227,6 +227,20 @@ func _keyboard_leaves_observe() -> void:
 	_check(a.scroll.model.facing == -1, "the walker faces the chosen direction")
 	await _press(KEY_E)
 	_check(a.scroll.is_observing(), "the walker can stop and look again")
+	await _press(KEY_E)
+	## 一根手指还按在右半屏时按 E 停下看：观察态清掉这根手指，角色不再走，抬手后也不会续走
+	var size := Vector2(root.size)
+	Input.parse_input_event(_touch(0, size.x * 0.8, size.y * 0.5, true))
+	await _frames(3)
+	await _press(KEY_E)
+	var held_x: float = a.scroll.model.x
+	await _frames(5)
+	_check(a.scroll.is_observing() and a.scroll.model.x == held_x, "observing while a finger is held stops the walker")
+	_check(a.scroll.input.held_count() == 0, "observing drops the held finger")
+	Input.parse_input_event(_drag(0, size.x * 0.9, size.y * 0.5))
+	Input.parse_input_event(_touch(0, size.x * 0.9, size.y * 0.5, false))
+	await _frames(3)
+	_check(a.scroll.model.x == held_x, "lifting the old finger does not resume walking")
 	await _despawn(a)
 
 
@@ -275,8 +289,15 @@ func _return_while_observing() -> void:
 	await _press(KEY_E)
 	var old = a.scroll
 	var generation: int = a.scroll_generation
+	## 小院接管那一刻核对研究画卷新增的信号也已断开，不依赖画卷自己列出的信号表
+	var seen: Array[bool] = []
+	var probe := func() -> void:
+		seen.append(is_instance_valid(old) and not old.is_observing() and old.pick_toggled.get_connections().is_empty() and old.observe_ended.get_connections().is_empty())
+	a.yard.activated.connect(probe)
 	await _press(KEY_R)
-	_check(a.mode == "yard" and not old.is_observing(), "returning while observing leaves cleanly")
+	a.yard.activated.disconnect(probe)
+	_check(seen == [true], "observing ended and pick / observe-end signals were disconnected when the yard opened")
+	_check(a.mode == "yard" and a.scroll == null, "returning while observing leaves cleanly")
 	_check(a.session().get_view()["proposal_items"] == 0, "returning while observing without taking stays empty-handed")
 	var record: int = a.session().record_revision()
 	a._on_pick_toggled("placeholder_b", generation)

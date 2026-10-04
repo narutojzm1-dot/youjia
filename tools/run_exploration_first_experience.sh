@@ -25,7 +25,7 @@ core_files=(
   test/fixtures/exploration_fixture_routes.gd
 )
 ## 隔离测试的最少检查数：防止检查被误删后门禁仍然通过
-min_checks=253
+min_checks=257
 source "$root/tools/lib/verified_godot.sh"
 source "$root/tools/lib/exploration_workdir.sh"
 
