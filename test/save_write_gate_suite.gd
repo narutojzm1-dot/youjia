@@ -84,6 +84,23 @@ func _initialize() -> void:
 	check(gate.resolve_verified(receipt(g, false)), "terminated matching parent resolves rejection")
 	check(gate.begin_write("", "parent").is_empty(), "empty identity rejected")
 	check(gate.begin_write("same", "same").is_empty(), "candidate must differ from parent")
+	# Every malformed token is rejected without changing the pending operation.
+	for key in ["candidate_token", "parent_token", "observed_token"]:
+		for bad in [null, [], {}, true, 7, 1.5, ""]:
+			var guarded = Gate.new({"value": 1})
+			guarded.replace_working({"value": 2})
+			var held: Dictionary = guarded.begin_write("candidate", "parent")
+			guarded.mark_unknown(held.write_id)
+			guarded.replace_working({"value": 3})
+			var malformed := receipt(held, true)
+			malformed[key] = bad
+			check(not guarded.resolve_verified(malformed), "malformed token rejected: " + key)
+			malformed.erase(key)
+			check(not guarded.resolve_verified(malformed), "missing token rejected: " + key)
+			check(guarded.uncertain() and guarded.blocked() and guarded.dirty(), "malformed preserves lifecycle")
+			check(guarded.working() == {"value": 3} and guarded.confirmed() == {"value": 1}, "malformed preserves snapshots")
+			check(guarded.begin_write("next", "candidate").is_empty(), "malformed cannot release writer")
+			check(guarded.resolve_verified(receipt(held, true)) and guarded.confirmed() == {"value": 2} and guarded.working() == {"value": 3} and guarded.dirty(), "original flight intact after malformed receipt")
 	if not failures.is_empty():
 		push_error(str(failures))
 		quit(1)

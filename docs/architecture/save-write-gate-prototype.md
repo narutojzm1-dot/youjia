@@ -21,3 +21,8 @@ CODEX-LEAD / #150；基线a5cc54a。候选原型，独立审核后仍保留Draft
 token是可信适配器提供的**不透明封套身份**，不是Gate产生的哈希证明。适配器必须绑定确定字节、generation/parent和提交身份，保证不同提交/上下文不能误复用；具体格式仍待H2/H3冻结。本类只验证回执与冻结身份一致，无法验证调用者关于持久化读取或终止的真实性。不得以人工设置token/terminated的模型测试声称平台P1已解除。当前只完成结构化身份比较，真实证明仍阻挡正式API/合入。
 
 上述早期说明中的二参resolve_verified及PASS25/33为历史，当前命令不变、预期PASS42；没有调用正式SaveStore或改变玩家档。
+
+
+## 2026-10-04 回执类型防御
+
+在任何字符串比较前要求三种token为String，畸形或缺失字段干净拒绝。严格隔离suite现为168项：数组/字典/null/bool/int/float/空串及缺字段均拒绝，unknown、flight、working、confirmed保持，后续写继续阻塞，原合法回执仍能收尾且保留较新working。此为PR190正式API晋级阻断修复，不解决H2/H3/H4，不接入玩家存档；Draft保留。

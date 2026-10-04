@@ -56,6 +56,9 @@ func resolve_verified(receipt: Dictionary) -> bool:
 		return false
 	if not _matches(receipt.write_id):
 		return false
+	for key in ["candidate_token", "parent_token", "observed_token"]:
+		if not receipt.get(key) is String:
+			return false
 	if receipt.get("candidate_token") != _flight.candidate_token or receipt.get("parent_token") != _flight.parent_token:
 		return false
 	var observed: Variant = receipt.get("observed_token")
