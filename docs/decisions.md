@@ -41,7 +41,8 @@
 | DOC-20261002-009 | 2026-10-02 | 根据现有动物行为/存档结构深化 REQ-011 架构；记录关系演出资源缺口 | 架构设计中 | 代码核查确认 `FeltActor` 没有社交行为状态、`ExpressionCatalog` 属于表情/相册规则，SaveStore 当前为 v4 且未持久化动物关系；不复用相册触发器建设行为系统。具体边界与分片见[关系模型架构文档](architecture/animal-relationship-model.md)；可能缺少的马互动姿态由 [issue #56](https://github.com/narutojzm1-dot/youjia/issues/56) 先提案，不预先承诺批量制作。 |
 | DOC-20261002-010 | 2026-10-02 | 审核 REQ-011 首批关系演出所需的现有画作与资源缺口 | 提案待产品确认 | 现有鹅已有警觉、安静站立和伏卧整图；草泥马有中性/表情变体；马只有低头站姿，无法清楚表达对峙后的让步。建议首切片复用鹅/草泥马姿态，只在用户确认后新增一张马侧身让步画；资源规格、锚点、来源和 Web 包体验收见[提案](architecture/relationship-art-proposal.md)。 |
 | DOC-20261003-001 | 2026-10-03 | 制作人可见切片用截图或短视频验收；未点头不阻塞下一刀 | 已采纳 | 用户 2026-10-03：需要体验的项直接给截图/视频；未验收时其它工作继续。各待验收项记入本文件「待制作人验收」表，供 `CODEX-LEAD` 向制作人汇总。Owner 负责补证据，不代替制作人点头。 |
-| REQ-20261002-015-WIRE | 2026-10-03 | 把 PR #99 两帧乘骑画接进 REQ-014 `show_goose_encounter_cel` 导演接线 | 已合入；组合体验验收与最终SHA复审待补（#180） | `WORKBUDDY-CONTRIBUTOR`（用户 2026-10-03 授权越过切片边界）[PR #173](https://github.com/narutojzm1-dot/youjia/pull/173) 将 `yard_world.gd` 鹅马乘骑演出的 `show_goose_encounter_cel` 帧交替由占位 `idle`/`calm` 改为 `riding_up`/`riding_down`，沿用既有 0.28s 扑翼时钟（`_goose_mount_flap_clock`）与低动效定帧；`cast_art.gd` 已注册两帧、`FeltActor.show_goose_encounter_cel` 直接取用；脚底锚点经 PR #99 对齐，交替无 foot 抖动。head `4b550e8e50a628d70afd513fa0672343d6d1d8be`（独立子代理终轮 APPROVE）。 |
+| REQ-20261002-015-WIRE | 2026-10-03 | 把 PR #99 两帧乘骑画接进 REQ-014 `show_goose_encounter_cel` 导演接线 | 已合入；组合体验验收与最终SHA复审待补（#180） | `WORKBUDDY-CONTRIBUTOR`（用户 2026-10-03 授权越过切片边界）[PR #173](https://github.com/narutojzm1-dot/youjia/pull/173) 将 `yard_world.gd` 鹅马乘骑演出的 `show_goose_encounter_cel` 帧交替由占位 `idle`/`calm` 改为 `riding_up`/`riding_down`，沿用既有 0.28s 扑翼时钟（`_goose_mount_flap_clock`）与低动效定帧；`cast_art.gd` 已注册两帧、`FeltActor.show_goose_encounter_cel` 直接取用；脚底锚点经 PR #99 对齐，交替无 foot 抖动。head `4b550e8e50a628d70afd513fa0672343d6d1d8be`（独立子代理终轮 APPROVE）。
+| REQ-20261002-015-ACCEPT | 2026-10-05 | 乘骑演出组合验收（代码推导）：记录马 base_scale/实际 scale 与 Camera.zoom，区分 1.82× 镜头演出与 set_encounter_pose/depth 演员尺寸突变 | 记录已产出；运行时Web验收待补（#180 保持开放） | `WORKBUDDY-CONTRIBUTOR` 静态读码 + manifest 推导：马 `base_scale≈0.2736`、渲染参考≈305.6px@depth1；鹅≈0.1661、≈184.2px；三段 Camera.zoom 均 1.0（历史 close=1.82 已由 REQ-014-NO-ZOOM/#40 改为 1.0，见 decisions.md 2026-10-04 条目）；`set_encounter_pose` 传各自 `_base_scale` 不改尺寸，`show_goose_encounter_cel` 只换贴图+脚底锚点；乘骑期间马 y 不变→尺寸恒定，鹅 y 上移 52px→~8% 透视缩小（正确）。覆盖前后/中断/朝向/近远/低动效五态。完整记录见 [docs/playtests/2026-10-05-REQ-015-acceptance.md](playtests/2026-10-05-REQ-015-acceptance.md)；#180 不关闭，待 GAME-QA/ART-DIRECTOR 实机录制或用户 fresh build 验证。 |
 
 之后出现的需求继续追加新编号；完成或调整时保留此表和历史记录，不删除旧项。
 
@@ -705,25 +706,3 @@ CODEX-LEAD 基于PR190实际Web同页回执验证，补充[重载恢复候选](a
 ### 2026-10-04 · REQ-014-NO-ZOOM 玩家试玩修复
 
 CODEX-LEAD回应用户正式版仍见强烈缩放，定位普通留影修正未覆盖鹅马演出三段倍率。本切片将wide/first_person/close保持1.0倍率，保留视线、扑翼、中断和成片生成；真实事件回归检查各阶段Main相机目标。角色自身比例/透视仍交#180，不宣称马偶尔放大已全部解决；#231钓鱼携带状态另行复核，#30动物默认爱心保持原Owner。测试与Web证据待完成，发布后另记实际构建。
-
-
-### 2026-10-04 · AUDIO-PLAYER-FEEDBACK-20261004 用户实听
-
-用户反馈：已听到声音；环境像白噪音很吵，单独轻音乐不错；要求两种音量手动调整；动物互动仍无音效；关闭环境后再次打开无环境音，怀疑恢复 BUG。记录为用户实际听感，不推断全部设备可出声。
-
-CODEX-LEAD 核对 main facc074：环境 SOURCES 为连续着色噪声风/空气及少量叶声；两轨已接入，动物短音尚未进入本片；AudioDirector 开关仅会话状态，Main 缺两轨玩家滑杆。播放恢复根因尚未因本次反馈确认，也未修复。
-
-沿用 #194 环境返修、#195 生命周期缺陷，新增 #234 独立音量、#235 动物短音。GROK-BUILD 保留声音资源/后端 Owner，MANUS 保留 #30 行为事件接入，GAME-PM 收回执与排期。资源/接线分开，不并行覆盖共享文件。此提交仅落实需求和策划，未改声音文件/运行时、未声称新发布或 BUG 已解决。
-
-
-### 2026-10-04 · QA-20261004-2113 深度测试 / AUDIO-B-QA
-
-GAME-QA [本轮报告](playtests/2026-10-04-2113-game-qa/README.md)实测game-bda85be：首次真实鼠标入院后console缺__manusBgm接口，QA-AUDIO-20261004-001回链既有#195，P1失败，修复Owner仍GROK-BUILD；#196实听阻塞，不重复建工单。羊驼牵行与既有成熟花收获完成可见闭环，竖屏15页手账/末页及回访样本检查；钓获投鱼、新档照片、完整成长、#180与长稳未完成。源码fetch已恢复但未跑自动测试。实际21:13触发（计划20点），完整覆盖不足，不给全量发布通过。报告候选待独立最终SHA审核，无游戏开发或发布。
-
-### 2026-10-04 · GAME-PM 22:22版本前收尾
-
-PR233鹅马演出强镜头倍率修复已精确SHA独立审并发布game-facc074，Leader公开/PCK核验见#233评论5980979632；同步需求候选旧状态，不关闭演员尺寸/爱心/鱼/音频/天气。PM直接修QA229唯一旧构建步骤元数据及共享台账冲突，保留原aa057e5f78f52975fbb0b2add798415df5006f17父提交、报告/14图/日志原字节；bugs.json仅将加载项reproduction标历史game-fbad3c4与本轮game-bda85be分开，新集成SHA独立审后归档，GAME-QA仍Owner，不重测历史也不关闭P1。GROK阴天返修已接收未执行、自述合入后无运行小时任务，不能视将自动推进；#195修复接收单独未到。空间PR232尺度/包络静态已过，仅遮挡小改；消费方PR227 A关闭已收到回执，B留R1/R2。见[最终筹备摘要](release-prep/2026-10-04.md)与[本轮浏览器补证/受阻范围](playtests/2026-10-04-2220-game-pm/README.md)。无邮件、重发版或他人任务改动；23:00由Leader复核真正最终版本。
-
-22:28最新用户声音指导经Leader#194评论5981044585/#195评论5981044868/#234/#235回写：音乐方向保留，环境需自然化，两轨独立滑杆与既有动物互动短音获授权；环境重新开启无声沿原195，不建重复BUG。PM将同Owner代码/资源队列分域串行并标待接收，保留#168已承诺下一资源及#30可先视觉收尾，不虚构多个工单即并发产能；上述不是完整实听通过或今晚新增可发。
-
-22:33最新用户复现范围回写#195/#196：院内两轨开关关不上/打不开，首页往返可恢复；原“重开路径待澄清”已由此澄清。PM同步需求/最终摘要，保留待修状态，#234依赖开关稳定，绕行不作修复、一次真实有声不作全平台通过。
