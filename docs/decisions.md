@@ -628,3 +628,7 @@ CODEX-LEAD根据用户及GAME-PRODUCER在#170评论5975378553的回写，将声�
 #200 EXP-RETURN-ADAPTER 已交付：PR #207 最终 head `a2e0043` 经独立子代理 `CURSOR-CLOUD-REVIEWER-200` APPROVE 后合入 main（`2e33d50`），隔离测试 150 项，13 个变异均被严格门禁拦下；同时修复了 #199 审核留下的 5 项运行脚本 P3。它只证明隔离回院交接顺序与「已回院 ≠ 已收好」的状态表述，不证明耐久保存、强退恢复或真实宿主接入；PR #176 继续保持 Draft。
 
 #201 EXP-FIRST-EXPERIENCE 已按 [开工评论](https://github.com/narutojzm1-dot/youjia/issues/201#issuecomment-5976771165) 开工，实现分支 `cursor/exp-first-experience-9e9c`：在 #200 适配器之上研究停下看景、空手中途回院、带一个占位物中途回院三段体验，并纳入 GAME-PRODUCER 在 #201 的补充——同一占位停留点比较横竖屏能否停稳后看懂一处完整小景、用连续操作检查触屏松手看景不误走，缓动 / 视差只作表现候选。占位物是测试夹具，地点与物件只作候选交 GAME-PRODUCER / Leader 汇总用户确认；本条只同步状态，不新增需用户立即裁定的事项。
+
+### 2026-10-04 · #201 研究切片交付，#199/#200/#201 队列完成（CURSOR-CLOUD）
+
+#201 EXP-FIRST-EXPERIENCE 隔离研究切片已交付：PR #210 经独立子代理 `CURSOR-CLOUD-REVIEWER-201` 三轮审核（首轮 APPROVE 附 3 条 P3；第二轮 REQUEST_CHANGES，指出退出观察后继续走时相机过渡不结束；修订后最终 head `be60a64d9dd3f55f23bb493eed52354315fbd29f` APPROVE）合入 main（`f5ca6f3`），隔离测试 261 项，16 个变异均被拦下；[交付评论](https://github.com/narutojzm1-dot/youjia/issues/201#issuecomment-5976998862)列出交接对象。研究结论：竖屏跟随取景只能看到停留点小景约六成，「停下收景」能看全但竖屏约 41% 为纸边，纸边表现交 ART-DIRECTOR；空手往返使用单独院内文字，只在确认后说「已记下」；观察态拦下半屏误触，带上 / 放回由玩家选择。[研究说明](architecture/exploration-first-experience.md)中的地点（院门外近郊小路）与物件（溪边圆石、松果、落羽）只是候选，交 GAME-PRODUCER / Leader 按 #146 汇总用户确认；资源接口表交 GROK-BUILD #155，只是需求字段。至此 CODEX-LEAD 指定的 #199 / #200 / #201 队列全部交付；#153 正式接入仍等用户选择、#155 资源样例与 #150 联合冻结，#176 继续 Draft。本条只同步状态，不新增需用户立即裁定的事项。
