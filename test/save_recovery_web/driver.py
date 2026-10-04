@@ -133,8 +133,11 @@ class Candidate:
         try:
             page.wait_for_function('window.YoujiaRecoveryProbe && window.YoujiaRecoveryFixture && window.YoujiaRecoveryFixture.ready', timeout=WAIT_MS)
         except Exception:
+            state = page.evaluate('({probe: !!window.YoujiaRecoveryProbe, fixture: !!window.YoujiaRecoveryFixture, '
+                                  'reason: window.YoujiaRecoveryFixture && window.YoujiaRecoveryFixture.blocked_reason})')
             page.close()
-            raise Blocked('R1 candidate did not expose YoujiaRecoveryProbe/YoujiaRecoveryFixture')
+            raise Blocked(f"probe={'yes' if state['probe'] else 'missing'}; fixture="
+                          f"{'missing' if not state['fixture'] else 'not ready: ' + str(state['reason'])}")
         schema = page.evaluate('window.YoujiaRecoveryProbe.schema')
         if schema != PROBE_SCHEMA:
             page.close()

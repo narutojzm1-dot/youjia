@@ -4,7 +4,7 @@ Owner：CURSOR-CLOUD（仅测试侧驱动）。父单 #150，工单 [#239](https
 
 ## 当前状态
 
-驱动骨架可运行。R1 候选尚未接线，因此 R2/R3 各场景全部报 `BLOCKED`。**这不是 R2/R3 通过，也不是恢复已实现。**
+驱动与 Godot 业务夹具都能运行。R1 的 Host 桥接与 Probe 尚未接线，因此 R2/R3 各场景全部报 `BLOCKED`。**这不是 R2/R3 通过，也不是恢复已实现。**
 
 ## 运行
 
@@ -61,7 +61,35 @@ CANDIDATE_DIR=/path/to/r1-test-export CANDIDATE_SHA=<完整SHA> \
 
 R1 若没有支撑 Fixture 的公开入口，会在 PR 中列出缺口，不另造 Host。
 
-## R1 store.mjs 消费映射（对照 PR #251 `ad6cfc0`）
+## Godot 业务夹具（层级按 CODEX-LEAD [#239 5982353530](https://github.com/narutojzm1-dot/youjia/issues/239#issuecomment-5982353530)）
+
+- `test/save_recovery_web/fixture/main.gd`：实际 Godot 场景，使用 SaveWriteGate，经 JavaScriptBridge 与 R1 交互。Gate 源码在构建时取自 `GATE_REF`（默认 PR190 `f096a4a927c164c4bf70acc403a826a2074d2362`），用 `git show` 取出，不复制进仓库；`GATE_SOURCE.txt` 记录来源。Gate 接口不改。
+- `test/save_recovery_web/fixture/facade.js`：`window.YoujiaRecoveryFixture` JS 门面，只转发 `grant` 并公开 Godot 发布的状态，不读写存储。
+- 构建：`BUILD_FIXTURE=1 GODOT=… GODOT_WEB_TEMPLATE=… [HOST_DIR=… HOST_SHA=…] bash tools/verify_save_recovery_web.sh`。脚本把夹具导出成隔离最小项目（严格 wrapper 导入与导出），把 `HOST_DIR/head.html` 注入页面，其余文件复制进站点根，再跑矩阵。
+
+夹具流程：
+1. **启动**：`open` 后按 verdict 处理。`empty` 时 `initialize` 根 payload `{watermark: 0, grants: []}`；`clean`、`restored_*` 时以可信 current 的 payload 和 token 作为 Gate 的 confirmed 初值；其他情况（`quarantined`、`no_web_locks`）不写入，只公开 `blocked_reason`。
+2. **授予**：`grant(serial)` 在 `serial ≤ watermark` 时直接确认，不写入。否则按以下顺序进行：
+   - `prepare` 取得 candidate token；
+   - `gate.begin_write(candidate, current)` 后立刻 `mark_unknown`；
+   - `submit` 后把回执交给 `gate.resolve_verified_json`；
+   - observed 等于 candidate 时，才确认业务、推进 token，然后 `acknowledge`；
+   - 错身份、重复或迟到的回执由 Gate 拒绝，保持在途；
+   - `submit` 报错时，不立即重试，先 `resolve`，由 Host 按可信 current 出回执来收尾。
+3. **清理失败**：`acknowledge` 失败不回滚已确认的提交。
+
+**需要 R1 桥接提供的 `window.YoujiaRecoveryHostBridge`**（CODEX-LEAD 实现；每个方法最后一个参数是 Godot 回调，回调参数为一个 JSON 字符串；token 即封套 `commit_id`）
+
+| 方法 | 回调内容 |
+| --- | --- |
+| `open(store, cb)` | `openStore` 后执行 `recover`：返回 `{verdict, current_payload, current_token}`；`openStore` 拒绝时返回 `{verdict: "no_web_locks"}`；出错返回 `{error}` |
+| `initialize(payload_text, cb)` | 显式建根，返回同上（`verdict: "clean"`） |
+| `prepare(payload_text, parent_token, cb)` | 以可信 current（commit_id 必须等于 `parent_token`）冻结 `envelope`，返回 `{candidate_token, request_id}`，或 `{error}` |
+| `submit(request_id, write_id, cb)` | 提交已冻结的 candidate，返回 `youjia.save-receipt/v1` 回执 `{schema, write_id, candidate_token, parent_token, observed_token, old_write_terminated}`，或 `{error}`。Probe 的四种回执注入作用在这里 |
+| `resolve(request_id, write_id, cb)` | 在锁内 `recover`，再按可信 current 为该在途写入出回执：`observed_token` 取 current 的 commit_id；只有活动意图已不存在时，`old_write_terminated` 才为 true |
+| `acknowledge(request_id, cb)` | 返回 `{status, request_id}`，或 `{error}` |
+
+## R1 store.mjs 消费映射（最初对照 PR #251 `ad6cfc0`；ack/empty 已在 `3ba15ed` 落实）
 
 | Fixture 动作 | 使用的 R1 API | 说明 |
 | --- | --- | --- |
@@ -71,7 +99,7 @@ R1 若没有支撑 Fixture 的公开入口，会在 PR 中列出缺口，不另�
 | 失败 | `submit` 抛出（真实 abort、`stale parent`、`recovery required`、读回不一致）时保持 `pending`，先 `recover()` 读出可信水位，再决定是否以新的 envelope 重试 | 不把失败当作授予失败立即重试 |
 | 屏障 | `hooks.barrier(name, request_id)` 由 Probe `arm(name)` 返回永不完成的 Promise | 两处屏障都在事务完成后、持有同一把 Web Lock 时触发，与驱动约定一致 |
 
-**发现的接口差异（请 CODEX-LEAD 处理）**
+**发现的接口差异（第 1、2 条已由 PR #251 `3ba15edc90f5fde969157ab3067d21d15f493556` 落实：`acknowledge(request_id)` 返回 `{status: cleared|already_clear}`，全空库判为 `empty`；第 4 条已确认放在 Godot 层）**
 
 1. **确认后的意图清理没有入口（会阻塞第二次写入）。** `submit` 成功后，状态为 committed 的意图留在槽里，只有 `recover()` 才清理；下一次 `submit` 遇到槽里有意图会抛 `recovery required`。因此同一页面上的连续两次授予（R2-b 重复授予、R3-c 重复/迟到回执，以及任何正常游玩）必须每次都插一次 `recover()`，而这会把正常确认也报成 `restored_candidate`。协议第 6 步要求“本地已记录确认后，可在独立事务清理匹配 request_id 的 intent”。建议增加 `acknowledge(request_id)`：在锁内比较 current 与 committed intent 的完整身份后清槽，失败也不影响已确认的提交。它必须在 `candidate_committed_before_receipt` 屏障与业务记录之后由消费方调用，R2-b 的关页窗口才保持有效。
 2. **空库的判定。** `recover()` 对全空库返回 `quarantined`，和真正的损坏无法区分。建议返回独立的 `empty`（不建根），或在文档中明确由调用方先 `snapshot()` 再决定是否建根。驱动目前按后者处理。
@@ -95,3 +123,7 @@ R1 若没有支撑 Fixture 的公开入口，会在 PR 中列出缺口，不另�
 - 2026-10-04，Chrome 148.0.7778.96，Playwright 1.63.0：
   - 不传候选：自检 PASS 10，R2/R3 共 10 个场景 BLOCKED，退出码 2；
   - 传入没有 Probe 的占位页面：同样 10 个场景 BLOCKED，自检 PASS，退出码 2。
+- 2026-10-04，`BUILD_FIXTURE=1`，Godot 4.7.2，严格 wrapper 导入/导出通过：
+  - Godot 夹具在 Chrome 中实际启动，接上 JS 门面，公开 `host bridge missing`；
+  - 10 个场景 BLOCKED，原因为 `probe=missing; fixture=not ready: host bridge missing`，自检 PASS 10，退出码 2；
+  - 夹具的写入路径还没有经过真实 Host 执行。
