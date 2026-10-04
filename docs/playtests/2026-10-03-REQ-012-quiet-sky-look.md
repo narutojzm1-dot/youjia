@@ -31,3 +31,7 @@
 - 正式 Web：`game-6a20cdc`（Pages 入口 `data-build="game-6a20cdc"`）
 - 公网 PCK：13,744,764 字节，SHA-256 `66846e6003c73a720c324e0e31158566f77bd99db8d3461dff5face863556a2a`
 - 建议实玩：站定约 6 秒看镜头是否轻抬入云；走动应立刻回落；无新提示、相册不新增条目
+
+## 制作人看图
+
+2026-10-04：补近似抬头帧 [quiet-sky-look/quiet-sky-look.png](2026-10-03-REQ-012-quiet-sky-look/quiet-sky-look.png)（早晨样张 + zoom 1.14 上裁，非实机窗口）。走动取消仍以 Pages 为准。
