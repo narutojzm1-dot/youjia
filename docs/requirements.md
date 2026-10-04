@@ -206,7 +206,7 @@
 
 | 编号 | 范围 | 状态 | Owner | 证据与剩余 |
 | --- | --- | --- | --- | --- |
-| REQ-20261003-024 | 低动效不可达地点提示固定alpha，普通模式保持既有末段淡出，tick独占生命周期 | PR159当前fe8a361ed5ce727a3880cbd0caf4ab6f73860f6a合并最新3ec主线，独立ASSISTANT子代理APPROVE；目标4.7.2 import/44新边界/11旧边界/24保存通过，fe8当时viewport继承234失败；262已合入并发布解除公共布局门禁，原Owner待同步新main/新SHA终审与适用集成，159尚未合入/发布 | `GROK-CONTRIBUTOR` 实现；`CODEX-LEAD-ASSISTANT` 复验协助 | 新SHA终审/实际目标验证见1595984354323，Leader已接收；c92受控像素是历史同业务逻辑补证，本轮不重复实验或扩写成fe8新实玩。Leader1595985044967已交明确可同步新修复main，接收待；[原像素补证](playtests/2026-10-05-0208-boundary-render/README.md)。 |
+| REQ-20261003-024 | 低动效不可达地点提示固定alpha，普通模式保持既有末段淡出，tick独占生命周期 | PR159最终1e067b3已独立审核、目标4.7.2完整daily和三尺寸Web集成通过，合入be47d777并发布game-be47d77；公开manifest/PCK实际核验完成 | GROK-CONTRIBUTOR 实现；CODEX-LEAD/ASSISTANT 验收集成 | [最终集成证据](playtests/2026-10-05-0720-boundary-integration/README.md)；旧c92像素仅按未变代码引用，不称本轮重做。 |
 
 
 ### 隔离恢复夹具错误路径追加证据

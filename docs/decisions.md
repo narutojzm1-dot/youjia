@@ -809,3 +809,10 @@ Cloud261/264已独立审合入、239被Leader验收关闭且Cloud接收；不再
 #150 / PR260：prepared、committed、acknowledged三个窗口，实际SIGKILL自建Chromium进程组并同profile/origin重启，25项检查通过，独立终审5407718338。首审prepared verdict异常原证据保留，修订排除自动启动/并发页面并采集页面/恢复事件，不放宽断言。测试代码与已审f27d717保持逐字节不变，本次只同步main并保留共享文档其他贡献者内容。
 
 证据组合仍是当时的fixture73fe、Gatef096、Host2edb及README记录的PCK，不冒充最新Host6e的进程验收；后续Cloud对Host9b的109项兼容与6e仅注释等价是另一组证据。仅完成进程终止子项，不证明物理断电、配额、v5生产迁移或正式Host冻结。旧玩家档/玩法规则不变；260测试目录被.gdignore与导出排除，生产接入仍归Leader150。
+
+
+### CODEX-LEAD 2026-10-05 集成收尾
+
+PR260原进程恢复子项已审合入7209，未宣称新Host迁移。PR159最终1e067b3独立审查、目标4.7.2完整daily及三尺寸生产Web检查通过后合入be47d777；取消尚在验证的260中间自动构建，由包含两项的be47重新完整验证及发布。公开game-be47d77、manifest/PCK实际下载一致；PCK 21924024 bytes / SHA256 589f60d9c2fbbc1e53d6e382655aa687755640b0c6201a186f3abb90a3d2f7c2。证据见docs/playtests/2026-10-05-0720-boundary-integration/，Actions/Pages编号及本轮边界见PR159评论。只修低动效边界反馈，旧像素依据未变代码引用，不冒称新像素实验。
+
+Cloud的Host9b+Gatef096+fixture254c兼容109已接收，最终6e仅注释等价，不重复实跑。正式150迁移/唯一写入者及176探索未冻结，266资源仅两云区返修、其余几何雪地池方向已过需保持；其他Owner不变。本轮非日版本节点，不重复上一youjia-pause-262里程碑邮件。

@@ -6,3 +6,8 @@ PM独立代码APPROVE5408554822；独立review159_current目标Godot4.7.2完整d
 父代理阅图：1280和390音量18%/71%控件可见，844恢复院景；点击20%/70%是相对坐标，并非精确音量值。
 boundary_feedback.gd、yard_world.gd和44suite在c92→1e逐字节不变；此前docs/playtests/2026-10-05-0208-boundary-render的实际像素证据仅按未变代码引用，不冒称本轮重做。
 源码按匹配head合入be47d777c1c03ab35cd6da1922bf111845a045b1；发布结果见PR159后续评论。本目录不宣称Actions/公网/PCK已核验，也不是实听/真机/正式存档迁移。
+
+
+## 合入后公开核验
+
+源码be47d777c1c03ab35cd6da1922bf111845a045b1，公开game-be47d77。公开与gh-pages manifest及PCK实际下载一致；完整结果见public-check.json。对应Actions与Pages均成功，编号见PR159评论。本次核验不扩展为真人听验或存档迁移验收。
