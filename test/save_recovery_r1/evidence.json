@@ -1,6 +1,6 @@
 {
   "status": "PASS",
-  "checks": 112,
+  "checks": 139,
   "events": [
     {
       "type": "lock_requested",
@@ -18,7 +18,7 @@
     {
       "type": "recovery_result",
       "sequence": 4,
-      "verdict": "quarantined"
+      "verdict": "empty"
     },
     {
       "type": "lock_released",

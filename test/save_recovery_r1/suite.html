@@ -18,7 +18,7 @@ try {
  await fails(()=>envelope('x'.repeat(65537)),'oversized');
  await fails(()=>openStore('production-save'),'namespace guard');
  const s=await open(unique(),{event:e=>events.push(e)});
- ok((await s.recover()).verdict==='quarantined','empty never auto reset');
+ ok((await s.recover()).verdict==='empty','empty never auto reset');
  const initial=await s.initialize(payload);
  await fails(()=>s.initialize(payload),'no overwrite seed');
  const c=await envelope('{"watermark":1,"grants":[1]}',initial);
@@ -38,6 +38,30 @@ try {
  recovered=await s.recover();ok(recovered.verdict==='restored_candidate','candidate recovery');
  ok((await s.recover()).verdict==='clean','repeat recover clean');
  await fails(()=>s.submit(c),'stale parent rejected');
+ // Normal same-page confirmations must not masquerade as crash recovery.
+ const ackStore=await open(unique());
+ ok(!(await ackStore.recover()).present.current,'empty recovery writes no root');
+ let ackParent=await ackStore.initialize(payload);
+ for(let serial=1;serial<=3;serial++){
+   const candidate=await envelope(JSON.stringify({watermark:serial,grants:[serial]}),ackParent);
+   const receipt=await ackStore.submit(candidate);
+   const before=JSON.stringify(await ackStore.snapshot());
+   await fails(()=>ackStore.acknowledge(newId()),'wrong request rejected');
+   await fails(()=>ackStore.acknowledge(ackParent.request_id),'old request rejected');
+   ok(JSON.stringify(await ackStore.snapshot())===before,'wrong ack preserves durable pair');
+   ok(receipt.request_id===candidate.request_id,'business receipt identity');
+   ok((await ackStore.acknowledge(receipt.request_id)).status==='cleared','normal acknowledgement');
+   ok((await ackStore.acknowledge(receipt.request_id)).status==='already_clear','same request idempotent');
+   ok((await ackStore.recover()).verdict==='clean','normal acknowledgement not recovery');
+   ackParent=receipt;
+ }
+ const rejected=await envelope('{"watermark":4}',ackParent);
+ await fails(()=>ackStore.submit(rejected,{abort_stage:'commit'}),'prepared ack setup');
+ const beforePrepared=JSON.stringify(await ackStore.snapshot());
+ await fails(()=>ackStore.acknowledge(rejected.request_id),'prepared candidate cannot acknowledge');
+ await fails(()=>ackStore.acknowledge(ackParent.request_id),'prepared parent cannot acknowledge');
+ ok(JSON.stringify(await ackStore.snapshot())===beforePrepared,'prepared records preserved');
+ await fails(()=>ackStore.acknowledge(null),'invalid ack identity');
  // Caller changes a candidate immediately after submit: stored record stays frozen.
  const c3=await envelope('{"watermark":2,"grants":[1,2]}',c2), expected=c3.commit_id;
  const pending=s.submit(c3);c3.payload_bytes='{}';c3.commit_id=newId();

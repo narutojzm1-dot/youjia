@@ -117,6 +117,7 @@ export async function openStore(name, hooks = {}) {
   }
   async function recoverLocked() {
     const v = await snapshot();
+    if (!Object.values(v.present).some(Boolean)) return {verdict: 'empty', ...v};
     if (!await checked(v)) return {verdict: 'quarantined', ...v};
     if (!v.present.intent) return {verdict: 'clean', ...v};
     const i = v.intent;
@@ -161,6 +162,27 @@ export async function openStore(name, hooks = {}) {
     },
     async recover() {
       return locked(async () => { const r = await recoverLocked(); event('recovery_result', {verdict: r.verdict}); return r; });
+    },
+    // Consumer calls only AFTER accepting the verified business receipt.
+    // Cleanup failure does not undo the durable commit or business confirmation.
+    async acknowledge(request_id) {
+      if (typeof request_id !== 'string' || !ID.test(request_id)) throw Error('invalid request identity');
+      return locked(async () => {
+        const v = await snapshot();
+        if (!await checked(v) || v.current.request_id !== request_id) throw Error('acknowledgement mismatch');
+        // Idempotence is limited to the same verified current request.
+        if (!v.present.intent) return {status: 'already_clear', request_id};
+        if (v.intent.state !== 'committed' || v.intent.request_id !== request_id ||
+            !same(v.current, v.intent.candidate)) throw Error('acknowledgement mismatch');
+        await transact('readwrite', (now, s) => {
+          if (!same(now, v)) throw Error('acknowledgement conflict');
+          s.delete('intent');
+        }, 'acknowledge');
+        const after = await snapshot();
+        if (!same(after, {...v, intent: undefined, present: {...v.present, intent: false}}))
+          throw Error('acknowledgement readback mismatch');
+        return {status: 'cleared', request_id};
+      });
     },
     async submit(candidate, {abort_stage = ''} = {}) {
       // Freeze caller input before the first await; later mutation cannot change a submission.

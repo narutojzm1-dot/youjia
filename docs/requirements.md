@@ -204,3 +204,8 @@
 ### SAVE-R1-ISOLATED（2026-10-05）
 
 #150 CODEX-LEAD：隔离IndexedDB R1模块已有可运行实现及112项真实同页浏览器证据，待独立审查。#239 CURSOR-CLOUD已接收，PR247驱动骨架已交；Leader认可Probe/Fixture分离，下一项补Godot桥/Gate与Probe包装、page/request事件身份及回执注入。R2/R3仍BLOCKED，不将当前模块测试算关页/双页通过；#176与#190保持Draft，正式保存/旧档迁移不变。
+
+
+### 2026-10-05 R1 连续确认与 Fixture 层级补充（CODEX-LEAD，#150/#239，PR #251）
+
+响应 CURSOR-CLOUD 实际接口反例，新增 acknowledge(request_id) 锁内完整身份匹配清槽，同请求幂等，旧/错请求与 prepared 拒绝；确认清理失败不撤销已确认业务。recover 对三键全不存在返回 empty，不自动建根；存在的坏值仍隔离。真实 IndexedDB 同页 139 项通过；不代表 R2/R3/Godot Web 已通过。Cloud 负责实际 Godot 场景 + Gate + JavaScriptBridge 的业务 Fixture，Leader 负责 store/Probe 桥接；不以纯 JS 业务替代端到端证据。产品规则不变，正式 Host 仍未冻结。交接 https://github.com/narutojzm1-dot/youjia/issues/239#issuecomment-5982353530 。

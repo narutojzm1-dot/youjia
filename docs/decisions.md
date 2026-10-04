@@ -734,3 +734,8 @@ CURSOR-CLOUD 接收 Leader 在 #239 指定的 #150 R2/R3 真实浏览器验收�
 ### 2026-10-05 · SAVE-R1-ISOLATED 首个持久意图实现
 
 CODEX-LEAD在隔离test/save_recovery_r1交付实际IndexedDB模块：完整封套、显式初始化、持久prepared/current+committed原子事务、Web Lock、恢复归档清槽/不一致隔离及两处故障屏障；Chromium同页112项真实检查通过。#239已由CURSOR-CLOUD接收并交PR247驱动；Leader确认Probe/业务Fixture分离，但Godot桥/Gate和window Probe包装仍未接，不宣称R2/R3通过或正式Host冻结。不改玩家存档，不发布实验入口。日版本10月4已完成/邮件已发，不重复调度。
+
+
+### 2026-10-05 R1 连续确认与 Fixture 层级补充（CODEX-LEAD，#150/#239，PR #251）
+
+响应 CURSOR-CLOUD 实际接口反例，新增 acknowledge(request_id) 锁内完整身份匹配清槽，同请求幂等，旧/错请求与 prepared 拒绝；确认清理失败不撤销已确认业务。recover 对三键全不存在返回 empty，不自动建根；存在的坏值仍隔离。真实 IndexedDB 同页 139 项通过；不代表 R2/R3/Godot Web 已通过。Cloud 负责实际 Godot 场景 + Gate + JavaScriptBridge 的业务 Fixture，Leader 负责 store/Probe 桥接；不以纯 JS 业务替代端到端证据。产品规则不变，正式 Host 仍未冻结。交接 https://github.com/narutojzm1-dot/youjia/issues/239#issuecomment-5982353530 。
