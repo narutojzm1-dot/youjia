@@ -31,3 +31,7 @@
 - 公网：[游戏入口](https://narutojzm1-dot.github.io/youjia/) 的 `game-release.json` 实际返回上述完整源提交，entry `game-922be64`，发布时间 `2026-10-03T14:10:14Z`；实际下载 `game-922be64.pck` 为 19,182,164 bytes，SHA-256 `44af8db71fe64e674ad6f60624de4ed09f50ad7f2105bfd9c5dcf6697c37866a`，与 gh-pages 同名包逐字节一致。公网正常浏览器实际请求该新包 HTTP 200，点击进入院子并键盘移动，pageerror 0。
 
 夜间自然等待、全游戏连续心流及制作人视觉认可仍未完成；本轮为小修专项回归与正式发布核验。REQ-005 父需求继续进行，雨雪及其他剩余范围保留，制作人状态仍为「待看图」。
+
+## 制作人并排样张
+
+2026-10-04：补合成 [sun-night.png](2026-10-03-REQ-005-user-accept/sun-night.png)（同日间晴云贴图 + 冷暗 modulate + 夜里 TOD 滤色；云带 modulate 约 `0.8128/0.834/0.9376`，与集成断言一致）。不是 Godot 窗口实机截图。
