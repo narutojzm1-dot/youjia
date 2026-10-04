@@ -1872,7 +1872,8 @@ func _refresh_prop_visuals() -> void:
 
 func _draw() -> void:
 	if _rejected_seconds > 0.0:
-		var alpha := minf(1.0, _rejected_seconds / 0.35) * 0.80
+		var reduced_motion := bool(TuningStore.get_value("ui.reduced_motion", false))
+		var alpha := float(BoundaryFeedback.pose(_rejected_seconds, reduced_motion).alpha)
 		var ink := Color(0.52,0.31,0.20,alpha)
 		# Two quiet broken arcs mark the actual tap without implying a new path.
 		draw_arc(_rejected_point, 12.0, 0.30, PI-0.30, 20, ink, 2.2, true)
