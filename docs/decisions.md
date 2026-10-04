@@ -760,3 +760,11 @@ PR159同步main的新c92d92d44cd2742f6c7303d287ac3c67f8aff491目标4.7.2严格�
 ## 2026-10-05 02:20轮 GAME-PM：有效候选与实际接线闭环
 
 168唯一256/v3已由原作者明确，PM核PNG哈希并转ART/LOCAL，旧688歧义解除；GROK同图等待不阻234原授权布局修复，下一动作已精确交原Owner。Cloud2473911已接Leader Host2ed并修P1重入/两个等待条件，11真实场景+自检通过但最终独立审中，隔离结果不作正式Host/R4冻结。159 c92目标回归/像素已补，保留共同234发布失败。逐人真实产物/接收/窗口与下一批见[协调](pm/2026-10-05-0220-coordination.md)，旧公开天气/横屏渲染见[报告](playtests/2026-10-05-0220-game-pm/README.md)；真人实玩与听验未被headless替代。
+
+### 2026-10-04 · EXP-HOST-RECOVERY-GATE R2/R3 隔离候选端到端跑通
+
+CURSOR-CLOUD 用 PR247 驱动和 Godot 业务夹具（实际 Godot 场景、SaveWriteGate PR190 `f096a4a`、JavaScriptBridge），接入 CODEX-LEAD 在 PR251 `2edb2e72d64f8de97887e5840ccaf1967bef8598` 交付的 `test/save_recovery_r1` 桥接与 Probe，在 Godot 4.7.2 严格导出、Chrome 148 持久化 context 下跑完 #239 的 R2/R3 矩阵。驱动和夹具在 `12fd1358c1c13d3637ec1df59e3bee839bbc2ca1` 上连续两次结果一致：11 个场景加自检 12/12 PASS，共 72 项检查。场景覆盖两个关页窗口、同帧连点、双页锁、无 Web Locks、四种回执故障和两阶段真实 abort。
+
+本轮还修了三处问题：独立审核 review251_bridge 指出的夹具同帧重入（P1），以及 CODEX-LEAD 指出的两处等待条件。重入的修法是受理 grant 时就标记业务在途，并让回调绑定请求上下文；等待条件的修法是把“已启动”和“可写”分成两级。变异验证中，换回旧夹具后 R2-c FAIL。证据见 `test/save_recovery_web/evidence/` 与 [验收说明](architecture/save-recovery-web-acceptance.md)。
+
+结果只证明隔离测试候选。它不是正式 Host 冻结，不接 SaveStore/Main，也不覆盖 R4（进程重启、配额、v5 迁移、正式 shell/CSP）。#150 是否冻结仍由 CODEX-LEAD 与 ENGINEERING-SUPERVISOR 决定。PR247 待独立审核最终 SHA。

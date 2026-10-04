@@ -1,0 +1,51 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>youjia recovery driver self-check</title>
+<script>
+// 驱动自检页：只验证浏览器 context 的持久化与锁释放能力，不是存储实现，也不是 R2/R3 验收。
+(async () => {
+  const q = new URLSearchParams(location.search);
+  const store = q.get('recovery_store') || '';
+  const op = q.get('op') || '';
+  const done = (value) => { window.selfcheck = value; };
+  if (!store.startsWith('youjia-recovery-test-')) { done({error: 'store prefix rejected'}); return; }
+  const open = () => new Promise((ok, no) => {
+    const r = indexedDB.open(store, 1);
+    r.onupgradeneeded = () => r.result.createObjectStore('records');
+    r.onsuccess = () => ok(r.result); r.onerror = () => no(r.error);
+  });
+  const txn = (db, mode, fn) => new Promise((ok, no) => {
+    let value; const t = db.transaction('records', mode);
+    fn(t.objectStore('records'), (v) => { value = v; });
+    t.oncomplete = () => ok(value); t.onabort = () => no(t.error || Error('abort'));
+  });
+  try {
+    if (op === 'write') {
+      const db = await open();
+      await txn(db, 'readwrite', (s) => s.put(q.get('token'), 'current'));
+      db.close(); done({written: q.get('token')});
+    } else if (op === 'read') {
+      const db = await open();
+      const token = await txn(db, 'readonly', (s, set) => { const r = s.get('current'); r.onsuccess = () => set(r.result); });
+      db.close(); done({token: token === undefined ? null : token});
+    } else if (op === 'cleanup') {
+      const r = indexedDB.deleteDatabase(store);
+      r.onsuccess = () => done({removed: true});
+      r.onerror = () => done({error: 'cleanup failed'}); r.onblocked = () => done({error: 'cleanup blocked'});
+    } else if (op === 'caps') {
+      done({web_locks: !!(navigator.locks && navigator.locks.request), indexeddb: !!window.indexedDB});
+    } else if (op === 'hold') {
+      // 持锁直到页面关闭；用于确认关页会真实释放锁。
+      navigator.locks.request(store, {mode: 'exclusive'}, () => {
+        done({held: true});
+        return new Promise(() => {});
+      });
+    } else if (op === 'try') {
+      window.tryLock = () => navigator.locks.request(store, {mode: 'exclusive', ifAvailable: true}, (lock) => !!lock);
+      done({ready: true});
+    } else {
+      done({error: 'unknown op'});
+    }
+  } catch (e) { done({error: String(e)}); }
+})();
+</script>
