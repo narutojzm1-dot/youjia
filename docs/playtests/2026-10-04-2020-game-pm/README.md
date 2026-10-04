@@ -1,6 +1,6 @@
 # GAME-PM 2026-10-04 20:23 线上短回归
 
-北京时间20:23；在线 https://narutojzm1-dot.github.io/youjia/ 。当前main、公开manifest sourceCommit均为 `01d009d511bbe6f633745dabfadb51150a72e539`，页面build `game-01d009d`；manifest来自公开release-manifest.json，发布时间11:43:53Z，原件见本目录。公开PCK一致性为Leader #195评论5979755626前后记录的核验，本轮未重新下载验证。
+北京时间20:23；在线 https://narutojzm1-dot.github.io/youjia/ 。当前main、公开manifest sourceCommit均为 `01d009d511bbe6f633745dabfadb51150a72e539`，页面build `game-01d009d`；manifest来自公开game-release.json（本目录归档名release-manifest.json），发布时间11:43:53Z，原件见本目录。公开PCK一致性为Leader #195评论5979755626前后记录的核验，本轮未重新下载验证。
 
 Linux桌面Chromium，Playwright headless、软件WebGL、1280×720、user-gesture-required；独立新浏览器context，无导入存档，无用户存档重置。实际渲染在线游戏并发送鼠标/键盘输入，但本环境没有人工可听输出，不能算10分钟实听、真人实玩或移动真机通过。浏览器自动交互补证；声音舒适度/真机体验本轮受阻。
 
