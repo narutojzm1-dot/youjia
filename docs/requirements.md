@@ -152,7 +152,7 @@
 
 | 编号 | 优先级 | 范围与验收 | 状态 | Owner | 依赖 |
 | --- | --- | --- | --- | --- | --- |
-| ART-OVERCAST-ALIGNED | P1 | 以晴天母版重绘阴天，几何/交互锚点不动；完整画、叠图与实际尺度预览、来源哈希；美术审核后用新路径接入，保留旧照片资源 | 候选已审画，需局部修改（#168评论5979307760）；GROK-BUILD修订待接收；LOCAL PR228兼容盘点已合入；50%混合照片表达/字段方案仍待明确，正式接图等待新图艺术批准，未接入/发布 | `GROK-BUILD` | [#168](https://github.com/narutojzm1-dot/youjia/issues/168)；文件在 `art/concepts/yard_overcast_aligned_v1/`。ART-DIRECTOR审画，CURSOR-CONTRIBUTOR-LOCAL在#51接自然转场，GAME-QA复测。 |
+| ART-OVERCAST-ALIGNED | P1 | 以晴天母版重绘阴天，几何/交互锚点不动；完整画、叠图与实际尺度预览、来源哈希；美术审核后用新路径接入，保留旧照片资源 | 候选已审画，需局部修改（#168评论5979307760）；GROK-BUILD已接收返修但未开工（5980941251）；LOCAL PR228兼容盘点已合入；50%混合照片表达/字段方案仍待明确，正式接图等待新图艺术批准，未接入/发布 | `GROK-BUILD` | [#168](https://github.com/narutojzm1-dot/youjia/issues/168)；文件在 `art/concepts/yard_overcast_aligned_v1/`。ART-DIRECTOR审画，CURSOR-CONTRIBUTOR-LOCAL在#51接自然转场，GAME-QA复测。 |
 
 
 ## 总体声音规划
@@ -190,7 +190,7 @@
 
 | 编号 | 优先级 | 范围与验收 | 状态 | Owner | 记录 |
 | --- | --- | --- | --- | --- | --- |
-| REQ-014-NO-ZOOM | P0 | 鹅马演出三个阶段保持普通倍率，保留观察/扑翼/成片和中断；生产Main各阶段倍率回归与实际Web画面 | 候选实现；完整回归及受控Web已通过，待独立最终SHA审核/发布 | `CODEX-LEAD` | #40；[候选Web证据](playtests/2026-10-04-goose-nozoom/README.md)，演员尺寸#180另验 |
+| REQ-014-NO-ZOOM | P0 | 鹅马演出三个阶段保持普通倍率，保留观察/扑翼/成片和中断；生产Main各阶段倍率回归与实际Web画面 | PR233最终11ce6eb163d8fc1d13a029f12cd4329ea0274db1独立APPROVE；已合入/发布game-facc074，仅镜头倍率修复，演员尺寸另验 | `CODEX-LEAD` | #40；[候选Web证据](playtests/2026-10-04-goose-nozoom/README.md)，演员尺寸#180另验 |
 
 
 ### AUDIO-PLAYER-FEEDBACK-20261004 · 用户实听返修与交互补齐
@@ -198,7 +198,7 @@
 | 子项 | Owner / 状态 | 范围与验收 |
 | --- | --- | --- |
 | #194 环境自然化 | GROK-BUILD；新增返修待接收排期 | 连续噪声感过强；保留轻音乐方向，交环境单轨/混合/循环预览，耳机及扬声器真实听验，无持续刺耳沙声或明显接缝；候选不等于上线 |
-| #195 开关恢复缺陷 | GROK-BUILD；待修复 | 用户报告关闭环境后再打开无声，开关重开/重进页面待澄清；覆盖同页、暂停、离院、刷新、前后台及真实手势，不以状态布尔量代替实际出声 |
+| #195 开关恢复缺陷 | GROK-BUILD；待修复 | 用户5981089526明确院内音乐/环境两轨开关失效，首页往返可恢复（仅绕行，未修）；覆盖同页、暂停、离院、刷新、前后台及真实手势，不以状态布尔量代替实际出声 |
 | #234 两路独立音量 | GROK-BUILD；Leader 已指定、待接收 | 环境/音乐独立滑杆，0 真静音，开关恢复各自音量，当前会话保持；共享 Main/AudioDirector 与 #195 串行，不改存档；Web 实际增益生效 |
 | #235 动物互动短音 | 资源 GROK-BUILD、既有行为接入 MANUS-CONTRIBUTOR；均待接收 | 资源与行为分 PR；只接已发生的成功事件、节流有限声部、不积压补播；资源听验及 cue 接口确认后接入，静音完整可玩 |
 
