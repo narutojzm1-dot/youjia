@@ -1,0 +1,18 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[legacy-source] PASS both absent explicit
+[legacy-source] PASS missing parent is not absent
+[legacy-source] PASS directory is not absent
+[legacy-source] PASS exact UTF8 whitespace large-integer bytes
+[legacy-source] PASS missing backup retained
+[legacy-source] PASS invalid UTF8 retained before decoding
+[legacy-source] PASS primary unchanged
+[legacy-source] PASS backup unchanged
+[legacy-source] PASS empty existing file is present
+[legacy-source] PASS future version preserved not defaulted
+[legacy-source] PASS exact byte limit preserved
+[legacy-source] PASS over limit explicit rejection
+[legacy-source] PASS oversized source unchanged
+[legacy-source] PASS one failure does not erase second source
+[legacy-source] PASS reader creates no source/temp/default file
+[legacy-source] checks=15 failures=[]

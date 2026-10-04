@@ -43,3 +43,25 @@ legacy_v5.mjs 提供 prepareLegacyV5({primary,backup}) 与 importLegacyV5(testNa
 保留R1 64KiB夹具限制，合并后的双原文容器超过限额则开目标库之前拒绝；此限制不是正式玩家容量方案。legacy_suite.html实际54检查通过（原文、backup回退、未知版本/读错误、坏目标、真实事务abort/重试、输入冻结和并发唯一胜者），原R1 139回归通过。命令：python test/save_recovery_r1/run.py --suite legacy_suite.html --out /tmp/legacy.json。证据legacy-evidence.json。
 
 补充最新协作状态：Cloud261/264已经独立审合入，旧640组合8PASS/2BLOCKED为历史；现有2edb Host与更新夹具14项109检查已交。新增导入模块不改store.mjs/bridge.mjs/head.html，不声称同一夹具已调用导入模块；新入口有单独实际浏览器证据。正式Host和R4整体仍未冻结。
+
+### Read-only native source capture (2026-10-05)
+source_snapshot.gd reads primary and backup independently BEFORE SaveStore cleaning.
+It returns explicit absent/present(base64 bytes)/read_error states. It never calls
+recover, parses JSON, writes or removes source files. Missing/unreadable parent,
+directory, oversized file and incomplete reads are errors, not a fresh save.
+source_decode.mjs uses fatal UTF-8 decoding and canonical base64 checks before
+feeding legacy_v5.mjs. BOMs are not stripped. Invalid byte sources stay untouched
+and require a later explicit recovery policy; this slice does not import them.
+
+Run source_snapshot_suite.gd with Godot 4.7.2 in an isolated minimal project,
+passing the absolute source-snapshot-fixture.json output path after "--".
+The 15 checks generate that fixture from real native file reads. Then run
+run.py --suite legacy_suite.html --out legacy-evidence.json: 65 browser checks,
+including native bytes -> decoder -> real IndexedDB -> exact raw readback.
+
+64KiB remains a test budget. The source snapshot is NOT atomic across files.
+The caller MUST stop all old writers and hold sole ownership until target durable
+readback; neither this reader nor the decoder establishes that ownership.
+No production SaveStore, shell or bridge entry point is switched here. Future
+integration must also handle Web user:// filesystem readiness, capacity policy,
+business-state conversion, acknowledgement, and restart/migration recovery.

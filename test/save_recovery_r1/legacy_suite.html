@@ -1,6 +1,7 @@
 <!doctype html><meta charset="utf-8"><title>Legacy v5 preservation</title>
 <script type="module">
 import {prepareLegacyV5,importLegacyV5} from './legacy_v5.mjs';
+import {decodeSourceSnapshot} from './source_decode.mjs';
 import {openStore,newId} from './store.mjs';
 let checks=0; const names=[];
 const ok=(v,s)=>{if(!v)throw Error(s);checks++;};
@@ -11,6 +12,18 @@ const pair=()=>({primary:{status:'present',text:raw},backup:{status:'absent'}});
 const snapshot=async n=>{const s=await openStore(n);try{return await s.snapshot();}finally{s.close();}};
 async function rawPut(n,key,value){const db=await new Promise((resolve,reject)=>{const r=indexedDB.open(n,1);r.onupgradeneeded=()=>r.result.createObjectStore('records');r.onsuccess=()=>resolve(r.result);r.onerror=()=>reject(r.error);});try{await new Promise((resolve,reject)=>{const t=db.transaction('records','readwrite');t.objectStore('records').put(value,key);t.oncomplete=resolve;t.onabort=()=>reject(t.error);});}finally{db.close();}}
 try{
+ const native=await (await fetch('./source-snapshot-fixture.json')).json();
+ const decoded=decodeSourceSnapshot(native);
+ ok(decoded.primary.text.includes('9007199254740993'),'native byte source preserves large integer literal');
+ ok(decoded.primary.text.includes('秋日'),'native UTF8 source decoded');
+ const nativeStored=await importLegacyV5(unique(),decoded);
+ ok(JSON.parse(nativeStored.current.payload_bytes).sources.primary.text===decoded.primary.text,'native file -> bridge -> IDB exact raw readback');
+ ok(decoded.backup.status==='absent','native missing backup explicit');
+ for(const bad of [{status:'read_error',reason:'open_failed'},{status:'present',base64:'/w=='},{status:'present',base64:'YQ'},{status:'present',base64:'YQ== '},{status:'present',base64:'YQ==',extra:true}]){
+  await fails(()=>decodeSourceSnapshot({primary:bad,backup:{status:'absent'}}),'unreadable or malformed native bytes reject');
+ }
+ ok(decodeSourceSnapshot({primary:{status:'present',base64:''},backup:{status:'absent'}}).primary.text==='','empty source remains present');
+ ok(decodeSourceSnapshot({primary:{status:'present',base64:'77u/e30='},backup:{status:'absent'}}).primary.text.charCodeAt(0)===0xfeff,'BOM not silently stripped');
  const n=unique(), input=pair(), before=JSON.stringify(input), imported=await importLegacyV5(n,input);
  ok(JSON.stringify(input)===before,'source input unchanged');
  let p=JSON.parse(imported.current.payload_bytes);ok(p.sources.primary.text===raw,'exact raw text retained');
