@@ -9,5 +9,5 @@ printf 'config_version=5\n[application]\nconfig/name="SaveWriteGateTest"\n' > "$
 cp scripts/persistence/save_write_gate.gd "$sandbox/scripts/persistence/"
 cp test/save_write_gate_suite.gd "$sandbox/test/"
 run_verified_godot "$sandbox/result.log" --headless --path "$sandbox" --script test/save_write_gate_suite.gd
-grep -qx 'SAVE WRITE GATE PASS 168' "$sandbox/result.log"
+grep -qx 'SAVE WRITE GATE PASS 199' "$sandbox/result.log"
 printf 'Isolated evidence: %s\n' "$sandbox"

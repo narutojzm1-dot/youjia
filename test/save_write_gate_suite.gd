@@ -101,6 +101,31 @@ func _initialize() -> void:
 			check(guarded.working() == {"value": 3} and guarded.confirmed() == {"value": 1}, "malformed preserves snapshots")
 			check(guarded.begin_write("next", "candidate").is_empty(), "malformed cannot release writer")
 			check(guarded.resolve_verified(receipt(held, true)) and guarded.confirmed() == {"value": 2} and guarded.working() == {"value": 3} and guarded.dirty(), "original flight intact after malformed receipt")
+	var wire_gate = Gate.new({"value": 1})
+	wire_gate.replace_working({"value": 2})
+	var wire_flight: Dictionary = wire_gate.begin_write("wire-candidate", "wire-parent")
+	wire_gate.mark_unknown(wire_flight.write_id)
+	var wire := receipt(wire_flight, true)
+	wire.schema = "youjia.save-receipt/v1"
+	wire.write_id = str(wire_flight.write_id)
+	for raw in ["{", "null", "[]", "true", "7", "{}"]:
+		check(not wire_gate.resolve_verified_json(raw) and wire_gate.uncertain(), "invalid wire JSON rejected")
+	for bad_id in [null, [], {}, 1, 1.0, true, "01", "+1", "-1", "0", "1.0", "9223372036854775808", "999999999999999999999999999"]:
+		var bad := wire.duplicate(true)
+		bad.write_id = bad_id
+		check(not wire_gate.resolve_verified_json(JSON.stringify(bad)) and wire_gate.blocked(), "invalid wire identity rejected")
+	for bad_schema in [null, [], {}, 1, "youjia.save-receipt/v2"]:
+		var bad := wire.duplicate(true)
+		bad.schema = bad_schema
+		check(not wire_gate.resolve_verified_json(JSON.stringify(bad)) and wire_gate.uncertain(), "invalid wire version rejected")
+	for key in ["candidate_token", "parent_token", "observed_token"]:
+		var bad := wire.duplicate(true)
+		bad[key] = []
+		check(not wire_gate.resolve_verified_json(JSON.stringify(bad)), "wire token type rejected")
+	check(wire_gate.confirmed() == {"value": 1} and wire_gate.working() == {"value": 2}, "wire rejects preserve snapshots")
+	check(wire_gate.resolve_verified_json(JSON.stringify(wire)), "valid wire candidate accepted")
+	check(wire_gate.confirmed() == {"value": 2} and not wire_gate.blocked(), "wire confirmation once")
+	check(not wire_gate.resolve_verified_json(JSON.stringify(wire)), "duplicate wire receipt ignored")
 	if not failures.is_empty():
 		push_error(str(failures))
 		quit(1)

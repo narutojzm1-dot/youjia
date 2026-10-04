@@ -49,6 +49,26 @@ func finish(write_id: int, succeeded: bool) -> bool:
 	_complete(succeeded)
 	return true
 
+func resolve_verified_json(raw: String) -> bool:
+	# Candidate wire adapter, not evidence that the sender verified storage.
+	# Decimal strings preserve int64 identity across JavaScript/JSON boundaries.
+	var parser := JSON.new()
+	if parser.parse(raw) != OK or not parser.data is Dictionary:
+		return false
+	var data: Dictionary = parser.data
+	if not data.get("schema") is String or data.schema != "youjia.save-receipt/v1":
+		return false
+	var id: Variant = data.get("write_id")
+	if not id is String or not id.is_valid_int():
+		return false
+	if id.length() > 19 or (id.length() == 19 and id > "9223372036854775807"):
+		return false
+	var parsed_id: int = id.to_int()
+	if parsed_id <= 0 or str(parsed_id) != id:
+		return false
+	data.write_id = parsed_id
+	return resolve_verified(data)
+
 func resolve_verified(receipt: Dictionary) -> bool:
 	# Tokens are stable envelope identities supplied by the trusted adapter.
 	# This comparison rejects mismatched receipts; it cannot prove I/O quiescence.

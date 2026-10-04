@@ -26,3 +26,10 @@ token是可信适配器提供的**不透明封套身份**，不是Gate产生的�
 ## 2026-10-04 回执类型防御
 
 在任何字符串比较前要求三种token为String，畸形或缺失字段干净拒绝。严格隔离suite现为168项：数组/字典/null/bool/int/float/空串及缺字段均拒绝，unknown、flight、working、confirmed保持，后续写继续阻塞，原合法回执仍能收尾且保留较新working。此为PR190正式API晋级阻断修复，不解决H2/H3/H4，不接入玩家存档；Draft保留。
+
+
+## JSON边界候选（2026-10-04）
+
+`resolve_verified_json`在Gate内提供可测试的候选解码入口，schema固定`youjia.save-receipt/v1`，write_id为规范正十进制字符串，范围1..9223372036854775807；JSON数字不接受，以免JavaScript浮点精度改变写入身份。超长值必须在to_int之前拒绝，不能把引擎报错后的返回值当成功防御。三token与旧写终止语义继续走现有结构化回执验证。
+
+严格suite现199项，新增坏JSON、顶层类型、schema类型/版本、数值ID/前导零/符号/超界ID、token漂移与重复合法回执。首轮捕获超长数字to_int日志ERROR，已加转换前长度/上界检查；只有修复后严格runner exit0才算通过。此接口是候选wire格式，不是可信来源认证或平台终态证明；不接生产JS/SaveStore，unknown与迟到/跨进程路径仍待H2/H3/H4。
