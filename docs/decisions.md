@@ -532,6 +532,7 @@ PR #99 合并完成：merge commit `5b69504336b5e8c9d1977b26e33055739fe2e0fa`，
 
 母版`assets/holiday/environment/yard_sunny.png`，基线`0234f99739442ecb3f37c446d918fdf1998f3ae5`，SHA256 `7f29181eac79c89b18eff65fe1a18c37230573b55f8c8993a0365dc480219d73`。候选先在art/中交付，ART-DIRECTOR实际审画；CURSOR-LOCAL保持#51接入Owner，GAME-QA复测。旧阴天原图保持原路径/字节并留在包中以兼容历史照片，新图用新路径；50%过渡拍照/重启回放与实际Web包体增量在接入验收。资源方向已获用户确认，候选可制作；未表示新画通过、转场实现或发布。
 
+**2026-10-04 GROK-BUILD 候选：** 同构图阴天第一张放在 `art/concepts/yard_overcast_aligned_v1/`，SHA-256 `535bee93428cb1167a867541c1cc883fbe6b5e1a083a928037d5a07168ad5b06`。在晴天母版同一像素上改了天空颜料、漫射光和池心倒影，没有覆盖旧 `yard_overcast.png`，没有改运行时。预览是静态叠图和 1280×720 显示比例，不是 Web 连续切换。尚未审画，也不等于 #51 的转场已做。
 
 ### 2026-10-03 · DIR-20261003-AUDIO 声音方向进入规划
 
