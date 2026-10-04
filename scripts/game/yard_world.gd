@@ -518,7 +518,7 @@ func _tick_goose_mount_encounter(delta: float, move: Vector2) -> void:
 		_focus_seconds = 0.0
 		_goose_mount_origin = scene_center
 		cinematic_view_changed.emit("wide")
-		camera_focus_requested.emit(scene_center, 1.08)
+		camera_focus_requested.emit(scene_center, 1.0)
 		return
 	if not move.is_zero_approx() or _has_walk_goal or _leading or not input_enabled:
 		_cancel_goose_mount_encounter()
@@ -532,21 +532,21 @@ func _tick_goose_mount_encounter(delta: float, move: Vector2) -> void:
 				var eyeline := _player.position.lerp(_goose_mount_origin, 0.68) + Vector2(0, -12)
 				_player.visible = false
 				cinematic_view_changed.emit("first_person")
-				camera_focus_requested.emit(eyeline, 1.24)
+				camera_focus_requested.emit(eyeline, 1.0)
 		1:
 			if _goose_mount_seconds >= 1.4:
 				_goose_mount_phase = 2
 				_goose_mount_seconds = 0.0
 				var back_point := horse.position + Vector2(10, -52)
 				# CastArt already measured each painting's visible height. The
-				# camera provides the close-up; do not inflate the full PNG canvas.
+				# encounter keeps the normal camera scale; do not inflate PNG canvases.
 				goose.set_encounter_pose(back_point, goose._base_scale, -1.0)
 				horse.set_encounter_pose(horse.position, horse._base_scale, horse.facing)
 				goose.z_index = horse.z_index + 1
 				goose.show_goose_encounter_cel("riding_up")
 				var close_focus := (goose.position + horse.position) * 0.5 + Vector2(0, -24)
 				cinematic_view_changed.emit("close")
-				camera_focus_requested.emit(close_focus, 1.82)
+				camera_focus_requested.emit(close_focus, 1.0)
 		2:
 			# Its foot anchor is elevated onto the back, so normal ground-depth
 			# sorting would hide the goose behind the horse's body.
