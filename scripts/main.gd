@@ -576,7 +576,12 @@ func _fit_pause_panel() -> void:
 
 func _place_pause(parent: Node, nodes: Array) -> void:
 	for node in nodes:
-		if node.get_parent() != parent:
+		var current := node.get_parent()
+		if current == parent:
+			continue
+		if current == null:
+			parent.add_child(node)
+		else:
 			node.reparent(parent)
 	for i in nodes.size():
 		parent.move_child(nodes[i], i)

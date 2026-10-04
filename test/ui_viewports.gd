@@ -19,7 +19,9 @@ func frames(count:int):
 		await process_frame
 func bounds(key:String):
 	var b:Control=main.get(key)
+	check(b != null and b.is_inside_tree() and b.is_visible_in_tree(), str(root.size)+" in tree "+key)
 	var r:=Rect2(b.get_global_transform_with_canvas().origin,b.size)
+	check(r.size.x > 1.0 and r.size.y > 1.0, str(root.size)+" positive "+key+" "+str(r))
 	check(Rect2(Vector2.ZERO,root.size).encloses(r),str(root.size)+" visible "+key+" "+str(r))
 func run():
 	seed(129)
