@@ -1,8 +1,8 @@
 class_name BoundaryFeedback
 extends RefCounted
 
-## REQ-20261003-024: unreachable-tap mark alpha/radius.
-## Under reduced motion keep a fixed readable alpha until the cue ends.
+## REQ-20261003-024: unreachable-tap arc alpha.
+## Radius stays 12. YardWorld.tick owns remaining time; _draw only reads pose.
 static func pose(remaining: float, reduced_motion: bool) -> Dictionary:
 	remaining = maxf(0.0, remaining)
 	if remaining <= 0.0:
