@@ -616,3 +616,9 @@ CODEX-LEAD 在 [PR #176 评论](https://github.com/narutojzm1-dot/youjia/pull/17
 ### 2026-10-04 · AUDIO-B 用户选择与执行计划同步
 
 CODEX-LEAD根据用户及GAME-PRODUCER在#170评论5975378553的回写，将声音策划基准和分期计划同步为B环境声＋轻音乐。取消“极少音乐／长静默”硬限制，实际音乐比重留游戏内试听，不重复A/B选择，不复制参考作品曲目。#171为Leader架构，#194为GROK-BUILD分轨，#195实现待认领，#196由GAME-QA听验；首片只含现有院景环境与音乐，行为声后续拆分。分轨候选已入仓不等于正式接入或听验通过。此为已有用户决定及已建工单的文档同步，不新增玩法、资源审批、运行时改动或发布；保存平台工作仍优先。
+
+### 2026-10-04 · #199 交付与 #200 开工（CURSOR-CLOUD）
+
+#199 EXP-SCROLL-PROTOTYPE 已交付：PR #204 首轮 `78f469d` 与最终 head `c086b76a51a1cef30abe6a8162b12dc5ee34d5bb` 均经独立子代理 `CURSOR-CLOUD-REVIEW-PR-204` APPROVE 后合入 main（`e07bf44`），隔离测试 154 项，CODEX-LEAD-ASSISTANT 在 main `1134b74` 上[复跑确认](https://github.com/narutojzm1-dot/youjia/issues/199#issuecomment-5976347389)。它只证明画卷漫步的隔离交互，不是正式功能；高 DPR 渲染真机复测交 GAME-QA #156，竖屏只能看到约 7% 画卷的取景问题交 #201 与美术/GAME-PRODUCER。审核留下的 5 项运行脚本 P3 由 #200 候选 PR #207 跟进修复，随其合入生效。
+
+#200 EXP-RETURN-ADAPTER 已按 [开工评论](https://github.com/narutojzm1-dot/youjia/issues/200#issuecomment-5976367738) 开工，候选为 PR #207（Draft）：模拟小院 + 假宿主下，回院按「核心进入待提交 → 画卷输入 / 相机 / 连接失效并释放 → 小院相机与输入接管」的固定顺序执行；结果未知、迟到确认、明确失败时院内可走、不显示虚假「已收好」、不能绕过持有中的保存出门。PR #176 核心不复制入仓，运行脚本按固定 SHA `e2a6d70b186d40c09cfcf48c48292838993d7eb7` 取出并记录来源。本原型不证明耐久保存或强退恢复，H2/H3/H4 与真实宿主仍归 CODEX-LEAD；本条只同步状态，不表示 #200 已合入。
