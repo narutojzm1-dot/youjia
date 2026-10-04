@@ -28,6 +28,8 @@ var _pick_tag: Label
 var _go_tag: Label
 var _cam_zoom := 1.0
 var _cam_pos := Vector2.ZERO
+## 只在取景切换（进出观察、切换方案）时过渡；平时与 #199 一样直接跟随，行走没有相机缓动
+var _easing := false
 
 
 func _ready() -> void:
@@ -62,6 +64,7 @@ func enter_observe(stop_id: String, stop_offer: String, stop_carried: String) ->
 		return
 	release_all()
 	observing_stop = stop_id
+	_easing = true
 	update_choice(stop_offer, stop_carried)
 
 
@@ -79,6 +82,7 @@ func end_observe() -> void:
 	observing_stop = ""
 	offer = ""
 	carried_here = ""
+	_easing = true
 	release_all()
 	_refresh_bar()
 	show_note("")
@@ -95,6 +99,7 @@ func camera_zoom() -> float:
 
 func set_framing_mode(value: String) -> void:
 	framing_mode = value
+	_easing = true
 	if low_motion:
 		_snap_camera()
 	_update_hint()
@@ -110,9 +115,17 @@ func _process(delta: float) -> void:
 		return
 	super(delta)
 	var target := target_frame()
-	var weight := 1.0 if low_motion else 1.0 - exp(-FRAME_RATE * delta)
+	if low_motion or not _easing:
+		_easing = false
+		_snap_camera()
+		return
+	var weight := 1.0 - exp(-FRAME_RATE * delta)
 	_cam_zoom = lerpf(_cam_zoom, float(target["zoom"]), weight)
 	_cam_pos = _cam_pos.lerp(target["camera"], weight)
+	if absf(_cam_zoom - float(target["zoom"])) < 0.001 and _cam_pos.distance_to(target["camera"]) < 0.5:
+		_easing = false
+		_cam_zoom = float(target["zoom"])
+		_cam_pos = target["camera"]
 	_apply_camera()
 
 

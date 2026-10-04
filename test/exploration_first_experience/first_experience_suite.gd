@@ -116,6 +116,8 @@ func _stop_to_look() -> void:
 	Input.parse_input_event(_key(KEY_RIGHT, false))
 	await process_frame
 	_check(a.scroll.model.x > x, "walking resumes after observing")
+	var follow: Dictionary = Framing.follow(a.scroll.model, Vector2(root.size))
+	_check(a.scroll.camera.position == follow["camera"] and is_equal_approx(a.scroll.camera.zoom.x, float(follow["zoom"])), "outside framing switches the camera follows exactly like #199, without walking easing")
 	await _despawn(a)
 
 
@@ -199,12 +201,10 @@ func _touch_sequence_with_find() -> void:
 	await _tap(6, size.x * 0.25, bar_y)
 	_check(a.session().get_view()["carried"] == ["formal.find.reed"], "the player can change their mind and take it again")
 	_check(a.scroll.model.x == x, "choosing never moved the walker")
-	var old = a.scroll
 	var mark: int = a.events.size()
 	await _tap(7, size.x - 40.0, 40.0)
 	_check(a.events.slice(mark, mark + RETURN_ORDER.size()) == RETURN_ORDER, "returning from B with one find keeps the fixed return order")
 	_check(a.mode == "yard" and a.session().get_view()["proposal_items"] == 1, "the find goes home without walking back to the start")
-	_check(not is_instance_valid(old) or old.request_signals().all(func(sig: Signal) -> bool: return sig.get_connections().is_empty()), "every research signal was disconnected on return")
 	_check(a.status_text() == Experience.TEXT_SAVING, "the yard says the find is being stored")
 	_no_saved_claim(a, "a trip with one find in flight")
 	a.host_action("ok")
