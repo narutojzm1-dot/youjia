@@ -44,7 +44,7 @@ Windows Chrome，1260×886 页面视口，用户既有第 3 天/14 页存档，�
 
 ## 证据
 
-![新版加载封面](evidence/01-loading.png)
+![游戏花纸标题页（非加载壳）](evidence/01-loading.png)
 ![升级后第3天](evidence/02-yard-restored.png)
 ![绵羊反馈](evidence/03-interaction.png)
 ![旧照片题词现象](evidence/04-album-first.png)
@@ -52,3 +52,7 @@ Windows Chrome，1260×886 页面视口，用户既有第 3 天/14 页存档，�
 ![保留假期退出确认](evidence/06-exit-confirm.png)
 
 ![第4天阴天构图（结束暂停）](evidence/07-overcast-day4.png)
+
+## 审核更正
+
+早晨保存的 `01-loading.png` 实际是游戏花纸标题页，不能证明加载壳或构建号；当时小院加载壳修复是人工观察，未保留该阶段截图。文件名保留以便追溯，图注已纠正。下午新截图只能证明下午版本，不补作早晨证据。BUG主ID统一并保留旧别名/跟踪链接。
