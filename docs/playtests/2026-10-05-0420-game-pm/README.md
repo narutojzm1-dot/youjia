@@ -1,6 +1,6 @@
 # GAME-PM 04:20轮：场景交互输入与空相册补证
 
-实际 2026-10-04T20:22:52.040Z（北京10-05 04:24前后）；Linux Chromium headless、软件WebGL、1280×720；在线 https://narutojzm1-dot.github.io/youjia/ 。全新隔离context/新档，无导入或重置用户档。真人实玩/听验/真机因环境受阻，只记录页面输入与真实渲染。
+实际 2026-10-04T20:22:52.040Z（北京10-05 04:22:52）；Linux Chromium headless、软件WebGL、1280×720；在线 https://narutojzm1-dot.github.io/youjia/ 。全新隔离context/新档，无导入或重置用户档。真人实玩/听验/真机因环境受阻，只记录页面输入与真实渲染。
 
 页面game-fd2e9fe；[manifest](game-release.json)来源 https://narutojzm1-dot.github.io/youjia/game-release.json ，部署/source fd2e9fe38e8c6ecb49d6a51cf14804bf4a89282d。本轮起始源码main601d683896d811e2f17cb389e7d0d8104d16e36a；251/262新候选与261隔离夹具不在实际在线被测版。Leader2485983948193已实际核公开/gh-pages PCK一致，PM本轮不重复下载，不能借其校验说新候选已发布。
 
