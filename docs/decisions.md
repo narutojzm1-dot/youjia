@@ -643,11 +643,7 @@ CODEX-LEAD根据用户及GAME-PRODUCER在#170评论5975378553的回写，将声�
 
 CODEX-LEAD 在 #154 明确将「同一占位物的可逆布置对照原型」拆分给 CODEX-LEAD-ASSISTANT。范围仅 `test/yard_decor_prototype/**`、`tools/run_yard_decor_prototype.sh`、`docs/architecture/yard-decor-prototype.md` 及相关隔离体验记录；认领登记只改需求表与本台账。比较 2–3 个候选位置与连续自由放置，验证预览—取消—确认—收起—换位置，一个夹具身份不消耗不复制；几何占位明确标注，复用获准院景，不修改正式 Main/YardWorld/SaveStore/PhotoMoment 或正式导出配置。横竖屏键鼠/模拟触屏与低动效证据分列，照片前后只作合成预览；原生检查、Web 实玩与正式发布不可混称。用户尚未批准正式位置/物件/数量/摄影入口；#125/#150 依赖保留，#153/CURSOR-CLOUD 与 Leader 存档所有权不变。本条是已授权方案验证的认领，未实现、未测试、未发布。认领 PR 独立最终 SHA 审核完成后再进入实现。
 
-### 2026-10-04 · QA-20261004-1735 下午冒烟
 
-GAME-QA 17:35实际触发，[报告与证据](playtests/2026-10-04-1735-game-qa/README.md)实测game-fbad3c4，启动/鼠标移动/绵羊回应/第4天与15页相册/退出回访样本通过。#167桌面加载壳有真实截图复测通过；#40旧相册候选仍待独立新档复核，#51天气与#180组合未验。源码fetch因shallow.lock阻塞，未跑自动测试，不给全量发布通过结论。已按既有意见修订PR165/191，需新SHA复审；本轮报告候选待审，不开发、不发布、不改变Owner。
+### 2026-10-04 · #154 可逆布置隔离对照已交付
 
-
-### 2026-10-04 · AUDIO-HOST-CONTRACT 接入前契约
-
-CODEX-LEAD 将 #171 v1 与工程督导四项生产事实修正写成 [宿主契约](architecture/audio-host-contract.md)：正式入口尚无解锁、TuningStore 尚不持久化；环境使用 BrowserBgmPlayer 共享同一 Web backend；Main 单一应用生命周期适配。明确双层/暂停duck/后台暂停/等待真实手势/退出失效和缓存所有权，#195 仅会话控制，不夹带设置存档。#194 分轨仍待听验，#195 实现待认领，#196 实际设备听验独立；没有运行时改动、出声或发布声明。用户 B 方向不变，不增加音景范围。
+CODEX-LEAD-ASSISTANT 的 PR216 最终完整 SHA `4bfa5a0f235be9fe29b534b0dcd5ee291a72c664` 经独立 reviewer `CODEX-LEAD-ASSISTANT-REVIEW-PR-216` APPROVE 后合入 `eac615f948da248720520f768453f1a662d00215`。独立浏览器原型比较三个候选位置与自由放置，唯一几何夹具支持预览/取消/确认/收起/换位与标注合成前后预览。Node模型检查和实际Chromium三视口模拟触屏通过；[截图和证据边界](playtests/2026-10-04-yard-decor/README.md)、[方案与交接](architecture/yard-decor-prototype.md)。不是Godot原生、真机、正式游戏心流或公网发布验收，无玩家存档/历史照片改动。正式地面/动物遮挡、位置物件数量摄影入口和#125/#150门禁保持，父#154不关闭。供Leader/GAME-PRODUCER汇总比较，ART-DIRECTOR后续评估透视与前景；不自动批准正式布置方式。
