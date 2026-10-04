@@ -199,7 +199,13 @@ class Candidate:
         return page.evaluate('window.YoujiaRecoveryProbe.paused')
 
     def cleanup(self, page):
-        self.call(page, 'window.YoujiaRecoveryProbe.cleanup()')
+        ## 参与页仍连着库时删除会被 onblocked 拦下；先关闭参与页，再用自检页按测试库名删除。
+        if not page.is_closed():
+            page.close()
+        cleaner = self.context.new_page()
+        cleaner.goto(f'{self.base}/selfcheck/index.html?recovery_store={self.s.store}&op=cleanup')
+        self.s.check(wait_value(cleaner, 'window.selfcheck') == {'removed': True}, 'fixture store removed after pages closed')
+        cleaner.close()
 
 
 def grants_of(business, serial):
@@ -243,7 +249,6 @@ def r2_close_after_prepared(c):
     s.evidence['events'] = c.call(page, 'window.YoujiaRecoveryProbe.events()')
     s.check(not page.errors, 'no page errors')
     c.cleanup(page)
-    page.close()
 
 
 def r2_close_after_commit(c):
@@ -269,7 +274,6 @@ def r2_close_after_commit(c):
     s.evidence['events'] = c.call(page, 'window.YoujiaRecoveryProbe.events()')
     s.check(not page.errors, 'no page errors')
     c.cleanup(page)
-    page.close()
 
 
 def r3_lock_contention(c):
@@ -288,7 +292,6 @@ def r3_lock_contention(c):
     s.check(rec.get('verdict') == 'restored_parent_intent_rejected', 'B recovers persisted intent after A closes')
     s.check(any(e.get('type') == 'lock_acquired' for e in c.call(b, 'window.YoujiaRecoveryProbe.events()')), 'B acquires lock after A closes')
     c.cleanup(b)
-    b.close()
 
 
 def r3_no_web_locks(c):
@@ -314,7 +317,6 @@ def r3_no_web_locks(c):
     s.evidence['after'] = after
     s.check(after == before, 'stored records unchanged')
     c.cleanup(normal)
-    normal.close()
 
 
 def receipt_fault(injection, options):
@@ -347,7 +349,6 @@ def receipt_fault(injection, options):
         s.check(grants_of(business_of(rec), 1) <= 1, 'reload never duplicates grant')
         s.evidence['events'] = c.call(page, 'window.YoujiaRecoveryProbe.events()')
         c.cleanup(page)
-        page.close()
     return run
 
 
@@ -376,7 +377,6 @@ def r2_same_frame_double_grant(c):
     s.check(business.get('grants') == [1, 2] and business_of(after) == {'watermark': 2, 'grants': [1, 2]}, 'later grant 2 commits once and matches storage')
     s.check(not page.errors, 'no page errors')
     c.cleanup(page)
-    page.close()
 
 
 SCENARIOS = [
