@@ -160,9 +160,9 @@
 | 编号 | 优先级 | 当前交付与验收 | 状态 | Owner | 记录 |
 | --- | --- | --- | --- | --- | --- |
 | AUDIO-TONE-PROPOSAL | P1 | 60–90秒等响度附近A/B小院试听、分层和来源授权，标清候选未接入 | 用户已选 B；78 秒混音不是循环成品；未接入 | `GROK-BUILD` | [#170](https://github.com/narutojzm1-dot/youjia/issues/170)；用户于 2026-10-03 直接交给 GROK-BUILD。文件在 `art/concepts/audio_tone_v1/`。 |
-| AUDIO-HOST-CONTRACT | P1 | 小院事件/混音/设置/Web生命周期与验收方案，复用现有音频设施 | 契约已独立审查合入PR215（06035d2）；#195可认领，资源听验/正式实现仍待做，不阻塞#149/#150 | `CODEX-LEAD` | [#171](https://github.com/narutojzm1-dot/youjia/issues/171)；[宿主契约](architecture/audio-host-contract.md) |
+| AUDIO-HOST-CONTRACT | P1 | 小院事件/混音/设置/Web生命周期与验收方案，复用现有音频设施 | 契约已独立审查合入PR215（06035d2）；#195已由GROK-BUILD实现并发布；冷启动修复/真实Web/听验仍待，不阻塞#149/#150 | `CODEX-LEAD` | [#171](https://github.com/narutojzm1-dot/youjia/issues/171)；[宿主契约](architecture/audio-host-contract.md) |
 | AUDIO-B-ASSETS | P1 | 现有院景的环境轨与轻音乐轨可分开调节；循环接缝有测量；不接运行时 | 分轨候选已交；#195 正在引用；未听验 | `GROK-BUILD` | [#194](https://github.com/narutojzm1-dot/youjia/issues/194)。文件在 `art/concepts/audio_b_stems_v1/`。不包含脚步、动物叫、快门。 |
-| AUDIO-B-INTEGRATION | P1 | 复用 AudioDirector 播放院景环境与轻音乐；手势解锁、暂停 duck、后台暂停、音乐/环境/总静音可分开；不改存档 | 逻辑检查已过；未听验、未发布 | `GROK-BUILD` | [#195](https://github.com/narutojzm1-dot/youjia/issues/195)。用户要求优先接入。素材是 #194 候选。 |
+| AUDIO-B-INTEGRATION | P1 | 复用 AudioDirector 播放院景环境与轻音乐；手势解锁、暂停 duck、后台暂停、音乐/环境/总静音可分开；不改存档 | PR224已合入/发布game-01d009d；冷启动后端缺失P1，待修复、真实Web及听验 | `GROK-BUILD` | [#195](https://github.com/narutojzm1-dot/youjia/issues/195)。用户要求优先接入。素材是 #194 候选。 |
 
 来源#162；[分期计划](architecture/audio-delivery-plan.md)；[宿主契约](architecture/audio-host-contract.md)。用户已选 B。#196 听验仍归 GAME-QA。本表不把候选写成听感通过或已发布。
 

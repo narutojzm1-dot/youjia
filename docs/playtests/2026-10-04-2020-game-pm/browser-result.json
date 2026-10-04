@@ -1,0 +1,23 @@
+{
+  "time": "2026-10-04T12:23:11.999Z",
+  "build": "game-01d009d",
+  "backend": {
+    "exists": false
+  },
+  "after": {
+    "exists": false
+  },
+  "errors": [
+    "ERROR: No interface '__manusBgm' registered.",
+    "   at: get_interface (platform/web/javascript_bridge_singleton.cpp:305)",
+    "ERROR: No interface '__manusBgm' registered.",
+    "   at: get_interface (platform/web/javascript_bridge_singleton.cpp:305)",
+    "ERROR: No interface '__manusBgm' registered.",
+    "   at: get_interface (platform/web/javascript_bridge_singleton.cpp:305)",
+    "ERROR: No interface '__manusBgm' registered.",
+    "   at: get_interface (platform/web/javascript_bridge_singleton.cpp:305)",
+    "ERROR: No interface '__manusBgm' registered.",
+    "   at: get_interface (platform/web/javascript_bridge_singleton.cpp:305)"
+  ],
+  "pageerrors": []
+}
