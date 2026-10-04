@@ -75,3 +75,7 @@
 ## 独立 QA 归档
 
 定时冒烟、深度体验与版本发布后的报告交付遵循 [QA 报告规范](docs/collaboration/qa-reporting.md)，通过 PR 归档到 `docs/playtests/`，保留实际版本、证据、BUG 与未覆盖项。
+
+## PM协作与体验
+
+用户指定GAME-PM直接处理信息断点与可完成的协调收尾，持续实玩并与GAME-QA共用缺陷/复测闭环。按[PM规范](docs/collaboration/pm-coordination.md)记录等待对象、动作与接收回执；既有Owner、最终SHA独立审核、专业结论及用户产品决定权保持。
