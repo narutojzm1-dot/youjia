@@ -136,7 +136,7 @@
 | 编号 | 优先级 | 当前可做范围与验收 | 状态 | Owner | 依赖 / 记录 |
 | --- | --- | --- | --- | --- | --- |
 | STATE-SAVE-RECOVERY | P0 | 存档提交/恢复，真实失败注入与旧v5/照片/平台持久化不丢进展 | 文件恢复首片已发布（PR #175）；Web持久化确认/内存事务仍未完成 | `CODEX-LEAD` | [#149](https://github.com/narutojzm1-dot/youjia/issues/149)；依赖/正式内容门禁见工单。 |
-| STATE-YARD-GROWTH | P1 | 物品/布置/探索结果共享契约与迁移/去重提交矩阵，先设计 | PR251新f2d9b145ddf2d23a9b869ee6f68dbc6e461fbf73来源读取/严格base64 UTF8到原文保全入口已独审5408225237，原生15/浏览器65通过，读取非跨文件锁，store/bridge/head仍2ed逻辑；Cloud261最终98d518274c469c9dd2057c450b95634df4077911独立审合入3956afb，测试侧239已验收关闭/Owner接收，14矩阵含自检109检查仅隔离组合，正式Host/R4仍待，未正式接入/联合冻结 | `CODEX-LEAD` | [#150](https://github.com/narutojzm1-dot/youjia/issues/150)；依赖/正式内容门禁见工单。 |
+| STATE-YARD-GROWTH | P1 | 物品/布置/探索结果共享契约与迁移/去重提交矩阵，先设计 | PR251新6e47c3acaea7ab7ecee0e09a1e3634dd8c4fb62e initializeLegacy接桥接/JSON回调，独审5408479637，16入口/8双页恢复/139通过；Cloud被测9b627完整109矩阵通过，9b→6e仅注释等价，最终版本接收待；正式迁移未完成；Cloud261最终98d518274c469c9dd2057c450b95634df4077911独立审合入3956afb，测试侧239已验收关闭/Owner接收，14矩阵含自检109检查仅隔离组合，正式Host/R4仍待，未正式接入/联合冻结 | `CODEX-LEAD` | [#150](https://github.com/narutojzm1-dot/youjia/issues/150)；依赖/正式内容门禁见工单。 |
 | EXP-CONTRACT | P1 | 独立探索边界/快照/宿主确认/失败恢复契约，与共享状态对齐 | 设计稿已按督导评阅修订并合入（PR160 → PR174，CODEX-LEAD 批准 56eeedc，未冻结）；待与#150共同冻结（含平台持久化结果未知的边界）并经工程督导复核 | `CURSOR-CLOUD` | [#151](https://github.com/narutojzm1-dot/youjia/issues/151)；[契约设计稿](architecture/exploration-module-contract.md)，与#150待共同冻结项列于其第10节；不含正式地点/物品/形式。 |
 | EXP-CORE | P1 | 形态无关核心状态机/恢复/返回，严格隔离测试；夹具不正式发布 | 已指定；依赖契约冻结；冻结前草案见 PR176（Draft，不合入） | `CURSOR-CLOUD` | [#152](https://github.com/narutojzm1-dot/youjia/issues/152)；依赖/正式内容门禁见工单。 |
 | EXP-FIRST-SLICE | P1 | 确认的一条近郊往返，空手/取消/重复提交/键鼠触屏低动效与正式发布闭环 | 已指定；首地/首物已定，正式构图/资源待 #155，持久化待 #150 | `CURSOR-CLOUD` | [#153](https://github.com/narutojzm1-dot/youjia/issues/153)；依赖/正式内容门禁见工单；形式已定：[画卷漫步](architecture/exploration-form-options.md)（用户 2026-10-03）；首地/首物已定：近郊小路＋圆石、松果、落羽都可遇见（用户 2026-10-04，见 EXP-UNBLOCK-20261004），具体构图与资源由 GROK-BUILD #155 交付。 |
@@ -153,7 +153,7 @@
 
 | 编号 | 优先级 | 范围与验收 | 状态 | Owner | 依赖 |
 | --- | --- | --- | --- | --- | --- |
-| ART-OVERCAST-ALIGNED | P1 | 以晴天母版重绘阴天，几何/交互锚点不动；完整画、叠图与实际尺度预览、来源哈希；美术审核后用新路径接入，保留旧照片资源 | 候选已审画，需局部修改（#168评论5979307760）；v3/2568661350bcfca6cac4c66cae123cbb71b385503bc ART5983393849 REQUEST CHANGES后，原Owner已交v4/2662b1f024f6bad3b700f7c348316075bf0cdc88018，PNGfcc5e649/池框650,790,1560,1020与成对裁切已核；当前v4艺术复审/资源终审未批；LOCAL PR228兼容盘点已合入；50%混合照片表达/字段方案仍待明确，正式接图等待新图艺术批准，未接入/发布 | `GROK-BUILD` | [#168](https://github.com/narutojzm1-dot/youjia/issues/168)；新候选在 `art/concepts/yard_overcast_aligned_v4/`，旧v1保留。ART-DIRECTOR审画，CURSOR-CONTRIBUTOR-LOCAL在#51接自然转场，GAME-QA复测。 |
+| ART-OVERCAST-ALIGNED | P1 | 以晴天母版重绘阴天，几何/交互锚点不动；完整画、叠图与实际尺度预览、来源哈希；美术审核后用新路径接入，保留旧照片资源 | 候选已审画，需局部修改（#168评论5979307760）；v3/2568661350bcfca6cac4c66cae123cbb71b385503bc ART5983393849 REQUEST CHANGES后，原Owner已交v4/2662b1f024f6bad3b700f7c348316075bf0cdc88018，PNGfcc5e649/池框650,790,1560,1020与成对裁切已核；ART5984922645已精确复审v4 REQUEST CHANGES：仅两云区待返修，几何及雪/地/池方向通过须冻结；资源终审未批；LOCAL PR228兼容盘点已合入；50%混合照片表达/字段方案仍待明确，正式接图等待新图艺术批准，未接入/发布 | `GROK-BUILD` | [#168](https://github.com/narutojzm1-dot/youjia/issues/168)；新候选在 `art/concepts/yard_overcast_aligned_v4/`，旧v1保留。ART-DIRECTOR审画，CURSOR-CONTRIBUTOR-LOCAL在#51接自然转场，GAME-QA复测。 |
 
 
 ## 总体声音规划
@@ -164,7 +164,7 @@
 | AUDIO-HOST-CONTRACT | P1 | 小院事件/混音/设置/Web生命周期与验收方案，复用现有音频设施 | 契约已独立审查合入PR215（06035d2）；#195已由GROK-BUILD实现并发布；冷启动修复/真实Web/听验仍待，不阻塞#149/#150 | `CODEX-LEAD` | [#171](https://github.com/narutojzm1-dot/youjia/issues/171)；[宿主契约](architecture/audio-host-contract.md) |
 | AUDIO-B-ASSETS | P1 | 现有院景的环境轨与轻音乐轨可分开调节；循环接缝有测量；不接运行时 | 分轨候选已交；#195 正在引用；未听验 | `GROK-BUILD` | [#194](https://github.com/narutojzm1-dot/youjia/issues/194)。文件在 `art/concepts/audio_b_stems_v1/`。不包含脚步、动物叫、快门。 |
 | AUDIO-B-INTEGRATION | P1 | 复用 AudioDirector 播放院景环境与轻音乐；手势解锁、暂停 duck、后台暂停、音乐/环境/总静音可分开；不改存档 | 冷启动与开关已合入 e8622b1；正式game-e8622b1已发布；PM后续game-fd2e9fe仅环境轨一次关/开补证，完整矩阵及实际听验未通过 | `GROK-BUILD` | [#195](https://github.com/narutojzm1-dot/youjia/issues/195)。用户要求优先接入。素材是 #194 候选。 |
-| AUDIO-CONTROLS | P1 | 暂停页两条独立音量；0% 真静音；关了再开回到原来的非零音量；只在本局 | PR245最终bc1c890ef6bac562bc7c9e2bff4c03fe26db07e7独立APPROVE并合入6802b3b；CI与同构建实际Web证实844×390暂停裁切，原Owner已接收并修订PR262/e9bfd3324b62d0d53dd9561db2180569a7bee085，挂树/零尺寸源码问题已改；独立review5407954248目标4.7.2 import因main.gd:579类型推断退出1，原Owner待新SHA类型修订/终审/三尺寸及Web验证；公开仍fd2e9fe不含滑杆，生产增益全矩阵/实际听验未通过 | `GROK-BUILD` | [#234](https://github.com/narutojzm1-dot/youjia/issues/234)。不新增 tuning id，不改存档。 |
+| AUDIO-CONTROLS | P1 | 暂停页两条独立音量；0% 真静音；关了再开回到原来的非零音量；只在本局 | 262最终3a008628defe00e2aa04cb005c786afe140243bc独审5408492143、目标4.7.2完整daily/三尺寸正式Web过并合入2686295；公开game-2686295已核Actions/Pages/manifest/PCK，旧类型/横屏布局阻断解除。实际听感/触屏真机/跨刷新持久化未通过，194/195/196/235分别保持 | `GROK-BUILD` | [#234](https://github.com/narutojzm1-dot/youjia/issues/234)；发布证据2625985093870、[三尺寸](playtests/2026-10-05-0620-pause/README.md)。不新增 tuning id，不改存档。 |
 
 来源#162；[分期计划](architecture/audio-delivery-plan.md)；[宿主契约](architecture/audio-host-contract.md)。用户已选 B。#196 听验仍归 GAME-QA。本表不把候选写成听感通过或已发布。
 
@@ -206,7 +206,7 @@
 
 | 编号 | 范围 | 状态 | Owner | 证据与剩余 |
 | --- | --- | --- | --- | --- |
-| REQ-20261003-024 | 低动效不可达地点提示固定alpha，普通模式保持既有末段淡出，tick独占生命周期 | PR159当前fe8a361ed5ce727a3880cbd0caf4ab6f73860f6a合并最新3ec主线，独立ASSISTANT子代理APPROVE；目标4.7.2 import/44新边界/11旧边界/24保存通过，viewport唯一844×390 resume y=-21继承234失败，未合入/发布 | `GROK-CONTRIBUTOR` 实现；`CODEX-LEAD-ASSISTANT` 复验协助 | 新SHA终审/实际目标验证见1595984354323，Leader已接收；c92受控像素是历史同业务逻辑补证，本轮不重复实验或扩写成fe8新实玩。公共234门禁保持；[原像素补证](playtests/2026-10-05-0208-boundary-render/README.md)。 |
+| REQ-20261003-024 | 低动效不可达地点提示固定alpha，普通模式保持既有末段淡出，tick独占生命周期 | PR159当前fe8a361ed5ce727a3880cbd0caf4ab6f73860f6a合并最新3ec主线，独立ASSISTANT子代理APPROVE；目标4.7.2 import/44新边界/11旧边界/24保存通过，fe8当时viewport继承234失败；262已合入并发布解除公共布局门禁，原Owner待同步新main/新SHA终审与适用集成，159尚未合入/发布 | `GROK-CONTRIBUTOR` 实现；`CODEX-LEAD-ASSISTANT` 复验协助 | 新SHA终审/实际目标验证见1595984354323，Leader已接收；c92受控像素是历史同业务逻辑补证，本轮不重复实验或扩写成fe8新实玩。Leader1595985044967已交明确可同步新修复main，接收待；[原像素补证](playtests/2026-10-05-0208-boundary-render/README.md)。 |
 
 
 ### 隔离恢复夹具错误路径追加证据
