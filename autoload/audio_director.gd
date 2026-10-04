@@ -37,6 +37,8 @@ var _application_active := true
 var _music_enabled := true
 var _ambience_enabled := true
 var _ambience_volume_db := 0.0
+var _music_gain := 1.0
+var _ambience_gain := 1.0
 var _epoch := 0
 var _awaiting_gesture := false
 var _backend_state := "uninitialized"
@@ -203,9 +205,28 @@ func ambience_enabled() -> bool:
 	return _ambience_enabled
 
 
-func set_ambience_volume_db(volume_db: float) -> void:
-	_ambience_volume_db = clampf(volume_db, -40.0, 0.0)
+func set_music_gain(linear: float) -> void:
+	_music_gain = clampf(linear, 0.0, 1.0)
 	_apply_bus_settings()
+
+
+func set_ambience_gain(linear: float) -> void:
+	_ambience_gain = clampf(linear, 0.0, 1.0)
+	_ambience_volume_db = -80.0 if _ambience_gain <= 0.0 else linear_to_db(_ambience_gain)
+	_apply_bus_settings()
+
+
+func music_gain() -> float:
+	return _music_gain
+
+
+func ambience_gain() -> float:
+	return _ambience_gain
+
+
+func set_ambience_volume_db(volume_db: float) -> void:
+	var db := clampf(volume_db, -40.0, 0.0)
+	set_ambience_gain(0.0 if db <= -40.0 else db_to_linear(db))
 
 
 func yard_active() -> bool:
@@ -374,24 +395,37 @@ func _ensure_buses() -> void:
 
 
 func _apply_bus_settings() -> void:
-	var mappings := {
-		"Master": "audio.master.volume_db",
-		"Music": "audio.music.volume_db",
-		"SFX": "audio.sfx.volume_db",
-		"UI": "audio.ui.volume_db",
-	}
-	for bus_name: String in mappings:
-		var index := AudioServer.get_bus_index(bus_name)
-		if index >= 0:
-			var duck := 8.0 if bus_name == "Music" and _paused else 0.0
-			AudioServer.set_bus_volume_db(index, float(TuningStore.get_value(mappings[bus_name], 0.0)) - duck)
-	var ambience := AudioServer.get_bus_index("Ambience")
-	if ambience >= 0:
-		var ambience_duck := 8.0 if _paused else 0.0
-		AudioServer.set_bus_volume_db(ambience, _ambience_volume_db - ambience_duck)
+	var master_db := float(TuningStore.get_value("audio.master.volume_db", 0.0))
+	var music_db := float(TuningStore.get_value("audio.music.volume_db", -8.0))
+	var sfx_db := float(TuningStore.get_value("audio.sfx.volume_db", 0.0))
+	var ui_db := float(TuningStore.get_value("audio.ui.volume_db", 0.0))
+	_set_plain_bus("Master", master_db)
+	_set_plain_bus("SFX", sfx_db)
+	_set_plain_bus("UI", ui_db)
+	_set_layer_bus("Music", music_db, _music_gain, _paused)
+	_set_layer_bus("Ambience", 0.0, _ambience_gain, _paused)
 	var master := AudioServer.get_bus_index("Master")
 	if master >= 0:
 		AudioServer.set_bus_mute(master, bool(TuningStore.get_value("audio.master.muted", false)))
+
+
+func _set_plain_bus(bus_name: String, volume_db: float) -> void:
+	var index := AudioServer.get_bus_index(bus_name)
+	if index >= 0:
+		AudioServer.set_bus_volume_db(index, volume_db)
+
+
+func _set_layer_bus(bus_name: String, authored_db: float, gain: float, ducked: bool) -> void:
+	var index := AudioServer.get_bus_index(bus_name)
+	if index < 0:
+		return
+	if gain <= 0.0:
+		AudioServer.set_bus_mute(index, true)
+		AudioServer.set_bus_volume_db(index, authored_db)
+		return
+	AudioServer.set_bus_mute(index, false)
+	var duck := 8.0 if ducked else 0.0
+	AudioServer.set_bus_volume_db(index, authored_db + linear_to_db(gain) - duck)
 
 
 func _on_tuning_changed(id: String, _requested: Variant, _active: Variant) -> void:

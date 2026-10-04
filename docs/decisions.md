@@ -720,3 +720,38 @@ CODEX-LEAD回应用户正式版仍见强烈缩放，定位普通留影修正未�
 用户指出：CURSOR-CLOUD 下午已有需要用户确认的内容，Leader 却未在用户询问时传达。核对 #201：作者已交首地/物件候选及待决项，Leader 已接收，缺口发生在汇总送达环节。CODEX-LEAD 承担责任，不归因用户未主动查仓库或贡献者没任务。
 
 现用户已确认近郊小路与圆石/松果/落羽，原产品选择已回写；恢复验证工作另拆 #239。同步[决策交接规则](collaboration/producer-decision-handoff.md)：待整理/待送达/已送达待答复/答复待回写分开，真正阻塞且材料齐备的选择须在当前对外汇报中提出，记录推荐、影响Owner和送达状态。规则落地不代表其他待决项已自动送达或所有贡献者已接收。
+
+
+### 2026-10-04 · EXP-HOST-RECOVERY-GATE CURSOR-CLOUD 接收 #239
+
+CURSOR-CLOUD 接收 Leader 在 #239 指定的 #150 R2/R3 真实浏览器验收驱动（[接收评论](https://github.com/narutojzm1-dot/youjia/issues/239#issuecomment-5981415664)）。CURSOR-CLOUD 只负责测试侧：Playwright 持久化 context 驱动、测试专用 head 注入、最小业务去重夹具和说明，放在 `test/save_recovery_web/**`、`tools/verify_save_recovery_web.sh` 和 `docs/architecture/save-recovery-web-acceptance.md`。R1 封套、持久意图、写入协调器、恢复入口和 R4 迁移仍归 CODEX-LEAD。评论里给出的测试侧最小接口候选 v1，包括 `window.YoujiaRecoveryProbe` 的两个关页屏障、故障注入、事件序列、恢复结果、只读快照、测试库命名空间和能力探测，待 CODEX-LEAD 与 ENGINEERING-SUPERVISOR 核对。R1 接线前驱动只报 BLOCKED；同页 fixture 只能自检驱动，不算 R2/R3。本条只是认领登记，没有实现、测试或发布。同时把 #153 行同步为用户已定的首地/首物（近郊小路＋圆石、松果、落羽）。
+
+
+## 2026-10-04 23:20 GAME-PM：发布后开发衔接
+
+已核对日版本发布和原Owner新产物，纠正168未开工、239整人等待、159等合并与首地点再选择等过时状态；245已合入而生产Web/实听缺失单独保留。八名开发者逐人实际产物、精确head、接收/可继续范围和下一开发批次见[协调记录](pm/2026-10-04-2320-coordination.md)。收尾新增GROK-BUILD实际回报，242已有Cloud、GROK-CONTRIBUTOR、GROK-BUILD三位；168候选状态发生矛盾，PM请作者澄清有效版本，不把通知视接收。[本轮浏览器证据](playtests/2026-10-04-2320-game-pm/README.md)为game-fd2e9fe环境声一次开关，仅诊断/渲染补证，真人实玩与实际听验受环境限制。
+
+
+### 2026-10-05 · ASSISTANT 空间材料集成与音量发布回归
+
+PR232最终8fa82b4901163fd62a492466dfae898e39251ae7通过独立子代理及ART静态方向材料审核后合入70c170dc06c1da66c5717309d6e54bc88b9bc4ca，正式布置/#125/#150范围保留。音量PR245已合入但公网仍fd2e9fe：CI及本轮严格原生回归均因844×390暂停继续按钮顶部-21px失败；实际本地生产Web截图确认上下裁切，原GROK-BUILD接修，未删除测试/抢占Main。桌面实际音乐0%、环境50%标签变化有证据，但未实听、未完整游戏心流。详见[本轮记录](playtests/2026-10-05-0004-assistant/README.md)，不将本地导出或backend运行计正式声音验收。
+
+
+## 2026-10-05 00:20轮 GAME-PM：真实阻断与开发衔接
+
+232静态材料已艺术批准/合入，不继续等待旧样张；制作人已审248候选方向，剩ART。234滑杆虽已合入但横屏布局阻断发布，正文与需求已同步；159新a2修订PM直接补4.6.3严格PASS44，目标4.7.2/Web/最终审核未代验；239新确认清槽、空库与Fixture层级等待已具体交原Leader，不凭112同页说正式保存通过。逐人产物/接收/窗口与下一批见[协调](pm/2026-10-05-0020-coordination.md)、[滚动筹备](release-prep/2026-10-05.md)，浏览器移动/空手账补证见[报告](playtests/2026-10-05-0020-game-pm/README.md)。headless不当真人实玩，既有Owner/用户产品决策不变。
+
+
+### 2026-10-05 · ASSISTANT REQ024目标引擎复验
+
+PR159 a2dea17001c1cb98ed5f14cd15f2ca8c2b5954ee目标Godot4.7.2严格边界44、通用412、既有边界11及视口输入/暂停/手账通过，独立最终代码APPROVE。普通本地生产Web实际不可达点击/暂停恢复无脚本错误；低动效逐像素、真机与完整游戏仍未验。主线234发布失败未解除，不将旧候选横屏通过计主线修复，不自动合入。原Owner保持，详见[复验报告](playtests/2026-10-05-0107-assistant-boundary/README.md)。
+
+
+## 2026-10-05 01:20轮 GAME-PM：接口等待解除、集成基线收敛
+
+239 ack/empty与Godot Fixture层级已由Leader实现/答复且Cloud实际接收交夹具，旧等待从需求/滚动表移除，剩HostBridge/Probe目录/SHA与真实恢复。159目标4.7.2及普通Web已补253，但原作者必须同步最新main后新SHA重审/验证，不能借旧分支daily称集成通过。234/168及三位未回报角色无新接收，不重复刷催办。见[本轮逐人表](pm/2026-10-05-0120-coordination.md)、[暂停/退出补证](playtests/2026-10-05-0120-game-pm/README.md)。真人实玩/听验环境受限，诊断不当实际出声或正式保存通过。
+
+
+### 2026-10-05 · ASSISTANT REQ024生产Web像素补证
+
+PR159同步main的新c92d92d44cd2742f6c7303d287ac3c67f8aff491目标4.7.2严格边界44/保存24通过，视口仍继承234 y=-21失败。隔离入口调用生产Main/YardWorld/_draw，低动效早晚帧0像素变化，普通189像素变化且相对到期背景差9996→5703，补齐保持/淡出像素项；受控tick与截图不冒充自然实玩/上线。见[证据](playtests/2026-10-05-0208-boundary-render/README.md)。原实现Owner和发布门禁保持，未自动合159。
