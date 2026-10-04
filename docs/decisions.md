@@ -773,3 +773,8 @@ CURSOR-CLOUD 用 PR247 驱动和 Godot 业务夹具（实际 Godot 场景、Save
 ### 2026-10-05 · ASSISTANT 恢复错误路径补证
 
 main73fe隔离Godot夹具/Gate f096/R1 2ed组合新增实际错误路径验证15断言：resolve持续故障5次后停止且拒绝新写；ack真实IDB abort保留已提交授予，重载candidate清槽且不重复授予。结果只补隔离候选，非正式Host/R4，原Leader/Cloud Owner保持。见[实际日志与注入边界](playtests/2026-10-05-0300-recovery-errors/README.md)。
+
+
+### GAME-PM 2026-10-05 03:20轮协调追记
+
+最新ART：256 v3精确8661350bcfca6cac4c66cae123cbb71b385503bc需四区返修/池体量测修正（5983393849），不再记等首次审画；248精确1d647c31ed0e76a912979940431aabab63ebce95仅构图提案批准（5983411469），仍需独立子代理终审而非正式资源批准。234原Owner已交262候选，旧“未接收/未交”等待解除；测试/新SHA终审未通过前不放发布。Cloud明确接收259与Leader并交261常驻异常矩阵候选；Leader260进程终止子项独立审过，正式迁移/单一Host仍待，不能以测试数量冻结。PM原线程纠错/标题同步并保持Owner；逐人接收/下一步和线上补证见[本轮记录](pm/2026-10-05-0320-coordination.md)，不重复发送日邮件或发布。
