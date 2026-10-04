@@ -1,0 +1,38 @@
+{
+  "updatedAt": "2026-10-04T01:07:01.973446+00:00",
+  "issues": [
+    {
+      "id": "EXP-001",
+      "type": "已观察体验问题",
+      "severity": "P2",
+      "title": "晴阴院子构图不连续",
+      "detail": "房屋、池塘、远山及围栏位置与透视显著变化，像切换地点；既有策划已记录同构图改进方向。",
+      "lastCheckedBuild": "game-9af244c",
+      "status": "本轮未覆盖晴阴切换，保留历史状态",
+      "reproductionRate": "本轮未测"
+    },
+    {
+      "id": "EXP-002",
+      "type": "待复核",
+      "severity": "P2",
+      "title": "既有相册题词与入镜主体不对应",
+      "detail": "第1页写绵羊愿意靠近我了，截图未见绵羊，画面为马、羊驼和鸭子；首次生成版本不明。",
+      "lastCheckedBuild": "game-9af244c",
+      "status": "旧照片现象仍在；生成逻辑待干净档复核",
+      "reproduction": "打开既有手账第1页，绵羊题词与马/羊驼画面不对应",
+      "reproductionRate": "1/1，旧照片创建版本未知"
+    },
+    {
+      "id": "EXP-003",
+      "type": "已观察体验问题",
+      "severity": "P2",
+      "title": "新版加载封面使用科幻迷宫图",
+      "detail": "game-922be64 冷加载展示机器人/科幻迷宫，与水彩小院体验不一致。",
+      "lastCheckedBuild": "game-9af244c",
+      "status": "桌面单样本修复复测通过；其他尺寸/错误重试未覆盖",
+      "reproduction": "刷新加载，预期小院封面，实际水彩小院",
+      "reproductionRate": "1/1",
+      "trackingIssue": 167
+    }
+  ]
+}

@@ -606,3 +606,7 @@ CODEX-LEAD核对main41ebba7、现有SaveStore v5同步setter及PR174已合入契
 #180只勾选最终完整SHA后置复审项并保持开放；WORKBUDDY-CONTRIBUTOR仍负责远近位置、马双朝向、鹅上下帧、低动效、打断/退出与照片保存→重启相册的同构建Web证据，受控/自然触发分列；ART-DIRECTOR组合审画，GAME-QA独立复测，CODEX-LEAD最终保底。不因未复现穿模猜改挂点/景深，不接管实现Owner。本次仅同步需求状态与台账，无运行时、资源、存档或发布配置改动，不新增发布或重复日版本邮件。
 
 **2026-10-04 EXP-CONTRACT 补充回院导航与结果未知边界（`CURSOR-CLOUD`）：** 按 CODEX-LEAD 在 [#150](https://github.com/narutojzm1-dot/youjia/issues/150#issuecomment-5972467568) 对 CURSOR-CLOUD 核对意见的裁定，修订[契约设计稿](architecture/exploration-module-contract.md)：§4 写明 `request_return` 成功后宿主立即回院、提交在后台等待，核心保持 `pending_commit`（不 `close`、不改提案、不释放所有权），重复回院只做幂等导航，“已回院”与“已保存”分开表述，`defer_to_yard` 兼容保留；§7.1 未知结果时兜底不穿过在途身份；§7.2 写入身份 `(write_id, trip_id, record_revision)` 与提交身份分开，结果未知时不发任何确认；§8 重启先做平台静止 / 同代核验再 `restore`，无法定论传 `-1`；§10 新增第 13 项；§12 新增第 16 项与宿主侧回院导航联合验收。独立 reviewer `CURSOR-CLOUD-REVIEW-PR-189` 审核 `87085a6` 为 APPROVE，随后按其 6 条 P3 澄清：提交在途身份与队列身份的关系、核验后用已有事件收尾、`defer_to_yard` 不再承担导航、第 16 项重启分两种断言及 `unsaved_changes` 前提、平台边界待督导复核。不新增核心状态或存档结构，不宣布冻结。
+
+### 2026-10-04 · QA-20261004-0800 定时冒烟延迟执行
+
+GAME-QA 独立实测 game-9af244c，08:00任务实际09:01触发。[报告与证据](playtests/2026-10-04-0901-game-qa/README.md)：启动/绵羊及花箱互动/14页手账/第3天恢复/退出回访样本通过；#167桌面加载封面复测通过，旧照片题词候选仍需新档复核，#51天气及#180新版鹅马组合未覆盖。源码fetch受阻，未运行自动测试；不能判定全量发布通过。供用户查看，报告PR待独立审核，不开发、不发布、不接管Owner。
