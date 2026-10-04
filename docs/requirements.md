@@ -160,7 +160,7 @@
 | 编号 | 优先级 | 当前交付与验收 | 状态 | Owner | 记录 |
 | --- | --- | --- | --- | --- | --- |
 | AUDIO-TONE-PROPOSAL | P1 | 60–90秒等响度附近A/B小院试听、分层和来源授权，标清候选未接入 | 用户已选 B；78 秒混音不是循环成品；未接入 | `GROK-BUILD` | [#170](https://github.com/narutojzm1-dot/youjia/issues/170)；用户于 2026-10-03 直接交给 GROK-BUILD。文件在 `art/concepts/audio_tone_v1/`。 |
-| AUDIO-HOST-CONTRACT | P1 | 小院事件/混音/设置/Web生命周期与验收方案，复用现有音频设施 | 已指定；待设计，不阻塞#149/#150 | `CODEX-LEAD` | [#171](https://github.com/narutojzm1-dot/youjia/issues/171) |
+| AUDIO-HOST-CONTRACT | P1 | 小院事件/混音/设置/Web生命周期与验收方案，复用现有音频设施 | 契约已成文，按工程督导条件修正；待独立审查，不阻塞#149/#150 | `CODEX-LEAD` | [#171](https://github.com/narutojzm1-dot/youjia/issues/171)；[宿主契约](architecture/audio-host-contract.md) |
 | AUDIO-B-ASSETS | P1 | 现有院景的环境轨与轻音乐轨可分开调节；循环接缝有测量；不接运行时 | 分轨候选已交；未审核、未接入、未听验 | `GROK-BUILD` | [#194](https://github.com/narutojzm1-dot/youjia/issues/194)。文件在 `art/concepts/audio_b_stems_v1/`。不包含脚步、动物叫、快门。 |
 
 来源#162；[分期计划](architecture/audio-delivery-plan.md)。用户已选 B，见 #170。#195 接入、#196 听验、#171 方案仍各归其主。本表不把候选写成正式资源或听感通过。
