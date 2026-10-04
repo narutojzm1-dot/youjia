@@ -733,4 +733,4 @@ CURSOR-CLOUD 接收 Leader 在 #239 指定的 #150 R2/R3 真实浏览器验收�
 
 ### 2026-10-05 · SAVE-R1-ISOLATED 首个持久意图实现
 
-CODEX-LEAD在隔离test/save_recovery_r1交付实际IndexedDB模块：完整封套、显式初始化、持久prepared/current+committed原子事务、Web Lock、恢复归档清槽/不一致隔离及两处故障屏障；Chromium同页35项真实检查通过。#239已由CURSOR-CLOUD接收并交PR247驱动；Leader确认Probe/业务Fixture分离，但Godot桥/Gate和window Probe包装仍未接，不宣称R2/R3通过或正式Host冻结。不改玩家存档，不发布实验入口。日版本10月4已完成/邮件已发，不重复调度。
+CODEX-LEAD在隔离test/save_recovery_r1交付实际IndexedDB模块：完整封套、显式初始化、持久prepared/current+committed原子事务、Web Lock、恢复归档清槽/不一致隔离及两处故障屏障；Chromium同页112项真实检查通过。#239已由CURSOR-CLOUD接收并交PR247驱动；Leader确认Probe/业务Fixture分离，但Godot桥/Gate和window Probe包装仍未接，不宣称R2/R3通过或正式Host冻结。不改玩家存档，不发布实验入口。日版本10月4已完成/邮件已发，不重复调度。

@@ -23,14 +23,14 @@ try {
  await fails(()=>s.initialize(payload),'no overwrite seed');
  const c=await envelope('{"watermark":1,"grants":[1]}',initial);
  await fails(()=>s.submit({...c,payload_bytes:'{}'}),'mutated digest');
- ok((await s.snapshot()).intent===null,'invalid candidate untouched');
+ ok(!(await s.snapshot()).present.intent,'invalid candidate untouched');
  await fails(()=>s.submit(c,{abort_stage:'intent'}),'real intent abort');
- let snap=await s.snapshot();ok(snap.current.commit_id===initial.commit_id && snap.intent===null,'intent abort atomic');
+ let snap=await s.snapshot();ok(snap.current.commit_id===initial.commit_id && !snap.present.intent,'intent abort atomic');
  await fails(()=>s.submit(c,{abort_stage:'commit'}),'real commit abort');
  snap=await s.snapshot();ok(snap.current.commit_id===initial.commit_id && snap.intent.state==='prepared','commit abort leaves intent');
  let recovered=await s.recover();
  ok(recovered.verdict==='restored_parent_intent_rejected','parent restored');
- ok(recovered.intent===null && recovered.archive[0].request_id===c.request_id,'archive and slot atomic');
+ ok(!recovered.present.intent && recovered.archive[0].request_id===c.request_id,'archive and slot atomic');
  const c2=await envelope(c.payload_bytes,initial);
  ok(c2.request_id!==c.request_id,'retry new identity');
  const result=await s.submit(c2);ok(result.commit_id===c2.commit_id,'verified receipt');
@@ -51,6 +51,25 @@ try {
    else ok(v.intent.state==='committed'&&v.current.request_id===id,'committed barrier');seen++;
  }});
  const br=await b.initialize(payload);await b.submit(await envelope('{"x":1}',br));ok(seen===2,'both barriers');
+ // Corruption injection uses actual stored keys, including undefined versus absence.
+ const corruptName=unique(), cs=await open(corruptName);
+ const cr=await cs.initialize(payload), cc=await envelope('{"next":1}',cr);
+ async function raw(key,value,remove=false){
+  const db=await new Promise((resolve,reject)=>{const r=indexedDB.open(corruptName);r.onsuccess=()=>resolve(r.result);r.onerror=()=>reject(r.error);});
+  await new Promise((resolve,reject)=>{const t=db.transaction('records','readwrite'),o=t.objectStore('records');if(remove)o.delete(key);else o.put(value,key);t.oncomplete=resolve;t.onabort=()=>reject(t.error);});db.close();
+ }
+ for(const key of ['intent','archive','current'])for(const value of [false,0,'',null,undefined]){
+   await raw(key,value);
+   ok((await cs.snapshot()).present[key],'stored key is present');
+   ok((await cs.recover()).verdict==='quarantined','corrupt '+key+' quarantined');
+   await fails(()=>cs.submit(cc),'corrupt blocks submit');
+   await fails(()=>cs.initialize(payload),'corrupt blocks init');
+   const after=await cs.snapshot();ok(after.present[key] && Object.is(after[key],value),'exact corrupt value retained');
+   if(key==='current')await raw(key,cr);else await raw(key,null,true);
+ }
+ await raw('archive',[{state:'rejected',candidate:cc}]);
+ ok((await cs.recover()).verdict==='quarantined','bad archive entry quarantined');
+ ok((await cs.snapshot()).archive[0].candidate.commit_id===cc.commit_id,'bad archive retained');
  window.r1={status:'PASS',checks,events,scope:'real IndexedDB same-page R1 only; no R2/R3 or production claim'};
 }catch(e){window.r1={status:'FAIL',checks,error:String(e),stack:e.stack};}
 finally{

@@ -23,4 +23,6 @@ hooks.barrier(name, request_id) 是异步测试屏障，在 `intent_prepared_com
 
 `python test/save_recovery_r1/run.py --out /tmp/r1.json`，依赖Python Playwright及Chromium，可用--chrome指定。
 
-Chromium151.0.7922.173实际 IndexedDB 同页检查35项通过，证据evidence.json：完整身份/损坏/未知字段/大小、空库不重置、显式建根防覆盖、真实intent与commit abort、prepared归档清槽、candidate恢复、重复恢复、旧parent拒绝、调用方改对象不改提交、两个真实持久屏障。没有关页/双页/进程重启、配额、v5迁移或自然玩家体验声明；R2/R3交#247真实驱动执行，R4仍待。
+Chromium151.0.7922.173实际 IndexedDB 同页检查112项通过，证据evidence.json：完整身份/损坏/未知字段/大小、空库不重置、显式建根防覆盖、真实intent与commit abort、prepared归档清槽、candidate恢复、重复恢复、旧parent拒绝、调用方改对象不改提交、两个真实持久屏障。没有关页/双页/进程重启、配额、v5迁移或自然玩家体验声明；R2/R3交#247真实驱动执行，R4仍待。
+
+独立首审发现falsy记录被当成空键的问题，已改为同事务get+count保留present标记，所有非法intent/current/archive均隔离且原值保留；补null/undefined/false/0/空串及坏archive条目真实反例。snapshot返回present，消费方不得用truthiness判断键不存在。112项为本次最终同页证据，替代初稿35项。

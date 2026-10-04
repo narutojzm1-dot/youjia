@@ -203,4 +203,4 @@
 
 ### SAVE-R1-ISOLATED（2026-10-05）
 
-#150 CODEX-LEAD：隔离IndexedDB R1模块已有可运行实现及35项真实同页浏览器证据，待独立审查。#239 CURSOR-CLOUD已接收，PR247驱动骨架已交；Leader认可Probe/Fixture分离，下一项补Godot桥/Gate与Probe包装、page/request事件身份及回执注入。R2/R3仍BLOCKED，不将当前模块测试算关页/双页通过；#176与#190保持Draft，正式保存/旧档迁移不变。
+#150 CODEX-LEAD：隔离IndexedDB R1模块已有可运行实现及112项真实同页浏览器证据，待独立审查。#239 CURSOR-CLOUD已接收，PR247驱动骨架已交；Leader认可Probe/Fixture分离，下一项补Godot桥/Gate与Probe包装、page/request事件身份及回执注入。R2/R3仍BLOCKED，不将当前模块测试算关页/双页通过；#176与#190保持Draft，正式保存/旧档迁移不变。

@@ -72,21 +72,20 @@ export async function openStore(name, hooks = {}) {
   function transact(mode, apply, stage = '') {
     return new Promise((resolve, reject) => {
       const tx = db.transaction('records', mode), s = tx.objectStore('records');
-      const values = {}; let result; let failure;
+      const values = {present: {}}; let result; let failure;
       tx.oncomplete = () => { event('txn_complete', {stage}); resolve(result); };
       tx.onabort = () => { event('txn_abort', {stage}); reject(failure || tx.error || Error('aborted')); };
       tx.onerror = () => {}; // Terminal abort is authoritative.
-      const keys = ['current', 'intent', 'archive']; let remaining = keys.length;
+      const keys = ['current', 'intent', 'archive']; let remaining = keys.length * 2;
+      const finish = () => {
+        if (--remaining) return;
+        try { result = apply(values, s, tx); }
+        catch (e) { failure = e; tx.abort(); }
+      };
       for (const key of keys) {
-        const r = s.get(key);
-        r.onsuccess = () => {
-          values[key] = r.result ?? null;
-          if (--remaining) return;
-          try {
-            // Synchronous enqueue only: never await a digest in an IDB transaction.
-            result = apply(values, s, tx);
-          } catch (e) { failure = e; tx.abort(); }
-        };
+        const r = s.get(key), exists = s.count(key);
+        r.onsuccess = () => { values[key] = r.result; finish(); };
+        exists.onsuccess = () => { values.present[key] = exists.result === 1; finish(); };
       }
     });
   }
@@ -98,22 +97,28 @@ export async function openStore(name, hooks = {}) {
       try { return await fn(); } finally { event('lock_released'); }
     });
   }
-  async function checked(v) {
-    if (!await validate(v.current)) return false;
-    if (v.archive !== null && (!Array.isArray(v.archive) || v.archive.length > 32)) return false;
-    if (!v.intent) return true;
-    const i = v.intent;
-    if (!i || Object.keys(i).sort().join(',') !== 'candidate,parent,request_id,state' ||
-      !['prepared', 'committed'].includes(i.state) || !await validate(i.parent) || !await validate(i.candidate)) return false;
+  async function validIntent(i, states) {
+    if (!i || typeof i !== 'object' || Array.isArray(i) ||
+      Object.keys(i).sort().join(',') !== 'candidate,parent,request_id,state' ||
+      !states.includes(i.state) || !await validate(i.parent) || !await validate(i.candidate)) return false;
     return i.request_id === i.candidate.request_id &&
       i.candidate.store_id === i.parent.store_id &&
       i.candidate.parent_commit_id === i.parent.commit_id &&
+      i.candidate.commit_id !== i.parent.commit_id && i.candidate.request_id !== i.parent.request_id &&
       BigInt(i.candidate.generation) === BigInt(i.parent.generation) + 1n;
+  }
+  async function checked(v) {
+    if (!v.present.current || !await validate(v.current)) return false;
+    if (v.present.archive) {
+      if (!Array.isArray(v.archive) || v.archive.length > 32) return false;
+      for (const item of v.archive) if (!await validIntent(item, ['rejected'])) return false;
+    }
+    return !v.present.intent || await validIntent(v.intent, ['prepared', 'committed']);
   }
   async function recoverLocked() {
     const v = await snapshot();
     if (!await checked(v)) return {verdict: 'quarantined', ...v};
-    if (!v.intent) return {verdict: 'clean', ...v};
+    if (!v.present.intent) return {verdict: 'clean', ...v};
     const i = v.intent;
     if (i.state === 'committed' && same(v.current, i.candidate)) {
       await transact('readwrite', (now, s) => {
@@ -121,7 +126,7 @@ export async function openStore(name, hooks = {}) {
         s.delete('intent');
       }, 'cleanup');
       const after = await snapshot();
-      if (!same(after.current, v.current) || after.intent !== null) throw Error('cleanup readback mismatch');
+      if (!same(after.current, v.current) || after.present.intent) throw Error('cleanup readback mismatch');
       return {verdict: 'restored_candidate', ...after};
     }
     if (i.state === 'prepared' && same(v.current, i.parent)) {
@@ -134,7 +139,7 @@ export async function openStore(name, hooks = {}) {
         s.put(next, 'archive'); s.delete('intent');
       }, 'reject_intent');
       const after = await snapshot();
-      if (!same(after.current, v.current) || after.intent !== null || !same(after.archive, next)) throw Error('reject readback mismatch');
+      if (!same(after.current, v.current) || after.present.intent || !same(after.archive, next)) throw Error('reject readback mismatch');
       return {verdict: 'restored_parent_intent_rejected', ...after};
     }
     return {verdict: 'quarantined', ...v};
@@ -146,7 +151,7 @@ export async function openStore(name, hooks = {}) {
       return locked(async () => {
         const root = await envelope(payload);
         await transact('readwrite', (v, s) => {
-          if (v.current || v.intent || v.archive) throw Error('store not empty');
+          if (Object.values(v.present).some(Boolean)) throw Error('store not empty');
           s.put(root, 'current');
         }, 'initialize');
         const v = await snapshot();
@@ -163,9 +168,10 @@ export async function openStore(name, hooks = {}) {
       if (!await validate(candidate)) throw Error('invalid candidate');
       return locked(async () => {
         const v = await snapshot();
-        if (!await checked(v) || v.intent) throw Error('recovery required');
+        if (!await checked(v) || v.present.intent) throw Error('recovery required');
         const parent = v.current;
         if (candidate.store_id !== parent.store_id || candidate.parent_commit_id !== parent.commit_id ||
+            candidate.commit_id === parent.commit_id || candidate.request_id === parent.request_id ||
             BigInt(candidate.generation) !== BigInt(parent.generation) + 1n) throw Error('stale parent');
         const intent = {state: 'prepared', request_id: candidate.request_id, parent, candidate};
         await transact('readwrite', (now, s, tx) => {
