@@ -1,0 +1,72 @@
+{
+  "date": "2026-10-03",
+  "timezone": "Asia/Shanghai",
+  "url": "https://narutojzm1-dot.github.io/youjia/",
+  "primaryBuild": "game-5e42fd9",
+  "reloadBuild": "game-922be64",
+  "startState": "既有存档，假期第2天；不是全新档",
+  "observed": [
+    "自然进入第3天",
+    "鼠标草地移动与键盘短按移动",
+    "花箱蝴蝶与文字反馈",
+    "绵羊招呼：靠近和爱心反馈",
+    "马招呼：马低下了头",
+    "拿草、前往羊驼；草束随后消失，未捕获完整喂食瞬时反馈",
+    "羊驼牵起、绳索连接、随玩家走动、松开",
+    "栅栏草叶与羽毛反馈",
+    "水塘岸石拨水反馈",
+    "花圃显示浇水选项，重复点击提示今天已经浇过了；未观察从种子到开花全过程",
+    "钓鱼多轮抛竿、等候、咬钩提示、错过重试、走开取消；未钓获，不归因为产品故障",
+    "相册14页，包含第3天事件；前后翻页与末页禁用正常",
+    "暂停、恢复、退出确认、回标题",
+    "刷新命中新构建，加载中",
+    "升级 game-922be64 后假期第3天与14页手账均恢复，末页题词和照片与刷新前一致",
+    "390×844模拟竖屏：单页手账、翻页、末页禁用、合上和HUD显示正常；未测试真机触摸",
+    "新版补测垂钓，仍未确认钓获；连续空格输入补测曾切换到羊驼牵行/松开，不能算自然钓鱼成功",
+    "两次读取warn/error日志均为空；不是全程性能监控"
+  ],
+  "issues": [
+    {
+      "id": "QA-EXP-20261003-001",
+      "type": "已观察体验问题",
+      "severity": "P2",
+      "title": "晴阴院子构图不连续",
+      "detail": "房屋、池塘、远山及围栏位置与透视显著变化，像切换地点；既有策划已记录同构图改进方向。",
+      "aliases": [
+        "EXP-001"
+      ],
+      "trackingLinks": [
+        "https://github.com/narutojzm1-dot/youjia/issues/51",
+        "https://github.com/narutojzm1-dot/youjia/issues/168"
+      ]
+    },
+    {
+      "id": "QA-EXP-20261003-002",
+      "type": "待复核",
+      "severity": "P2",
+      "title": "既有相册题词与入镜主体不对应",
+      "detail": "第1页写绵羊愿意靠近我了，截图未见绵羊，画面为马、羊驼和鸭子；首次生成版本不明。",
+      "aliases": [
+        "EXP-002"
+      ],
+      "trackingLinks": [
+        "https://github.com/narutojzm1-dot/youjia/issues/40"
+      ]
+    },
+    {
+      "id": "QA-EXP-20261003-003",
+      "type": "已观察体验问题",
+      "severity": "P2",
+      "title": "新版加载封面使用科幻迷宫图",
+      "detail": "game-922be64 冷加载展示机器人/科幻迷宫，与水彩小院体验不一致。",
+      "aliases": [
+        "EXP-003"
+      ],
+      "trackingLinks": [
+        "https://github.com/narutojzm1-dot/youjia/issues/167"
+      ]
+    }
+  ],
+  "finishedAt": "2026-10-03T14:17:49.784Z",
+  "verdict": "完成一轮主要玩法体验与回访；全内容闭环覆盖不足，不给出全量发布通过结论"
+}
