@@ -23,7 +23,7 @@ func bounds(key:String):
 	check(Rect2(Vector2.ZERO,root.size).encloses(r),str(root.size)+" visible "+key+" "+str(r))
 func run():
 	seed(129)
-	for dimensions in [Vector2i(390,844),Vector2i(844,390)]:
+	for dimensions in [Vector2i(1280,720),Vector2i(390,844),Vector2i(844,390)]:
 		root.size=dimensions
 		main=load("res://scenes/main.tscn").instantiate()
 		root.add_child(main)
@@ -46,8 +46,18 @@ func run():
 		bounds("_pause_button")
 		button("_pause_button");await frames(2)
 		check(main._pause_screen.visible,"touch pause works")
+		bounds("_pause_title")
 		bounds("_resume_button")
+		bounds("_music_slider")
+		bounds("_ambience_slider")
+		bounds("_mute_toggle")
+		main._music_slider.value = 0
+		main._ambience_slider.value = 40
+		await frames(1)
+		check(is_equal_approx(root.get_node("AudioDirector").call("music_gain"), 0.0), str(dimensions)+" music slider mute")
+		check(is_equal_approx(root.get_node("AudioDirector").call("ambience_gain"), 0.4), str(dimensions)+" ambience slider independent")
 		button("_resume_button");await frames(2)
+		check(not main._pause_screen.visible, "pause resumes "+str(dimensions))
 		button("_album_chip");await frames(3)
 		check(main._album_screen.visible,"touch album works")
 		bounds("_album_back_button")
