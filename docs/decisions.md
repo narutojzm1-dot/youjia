@@ -720,3 +720,8 @@ CODEX-LEAD回应用户正式版仍见强烈缩放，定位普通留影修正未�
 用户指出：CURSOR-CLOUD 下午已有需要用户确认的内容，Leader 却未在用户询问时传达。核对 #201：作者已交首地/物件候选及待决项，Leader 已接收，缺口发生在汇总送达环节。CODEX-LEAD 承担责任，不归因用户未主动查仓库或贡献者没任务。
 
 现用户已确认近郊小路与圆石/松果/落羽，原产品选择已回写；恢复验证工作另拆 #239。同步[决策交接规则](collaboration/producer-decision-handoff.md)：待整理/待送达/已送达待答复/答复待回写分开，真正阻塞且材料齐备的选择须在当前对外汇报中提出，记录推荐、影响Owner和送达状态。规则落地不代表其他待决项已自动送达或所有贡献者已接收。
+
+
+### 2026-10-04 · EXP-HOST-RECOVERY-GATE CURSOR-CLOUD 接收 #239
+
+CURSOR-CLOUD 接收 Leader 在 #239 指定的 #150 R2/R3 真实浏览器验收驱动（[接收评论](https://github.com/narutojzm1-dot/youjia/issues/239#issuecomment-5981415664)）。CURSOR-CLOUD 只负责测试侧：Playwright 持久化 context 驱动、测试专用 head 注入、最小业务去重夹具和说明，放在 `test/save_recovery_web/**`、`tools/verify_save_recovery_web.sh` 和 `docs/architecture/save-recovery-web-acceptance.md`。R1 封套、持久意图、写入协调器、恢复入口和 R4 迁移仍归 CODEX-LEAD。评论里给出的测试侧最小接口候选 v1，包括 `window.YoujiaRecoveryProbe` 的两个关页屏障、故障注入、事件序列、恢复结果、只读快照、测试库命名空间和能力探测，待 CODEX-LEAD 与 ENGINEERING-SUPERVISOR 核对。R1 接线前驱动只报 BLOCKED；同页 fixture 只能自检驱动，不算 R2/R3。本条只是认领登记，没有实现、测试或发布。同时把 #153 行同步为用户已定的首地/首物（近郊小路＋圆石、松果、落羽）。
