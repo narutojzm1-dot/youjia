@@ -27,25 +27,44 @@
   ],
   "issues": [
     {
-      "id": "EXP-001",
+      "id": "QA-EXP-20261003-001",
       "type": "已观察体验问题",
       "severity": "P2",
       "title": "晴阴院子构图不连续",
-      "detail": "房屋、池塘、远山及围栏位置与透视显著变化，像切换地点；既有策划已记录同构图改进方向。"
+      "detail": "房屋、池塘、远山及围栏位置与透视显著变化，像切换地点；既有策划已记录同构图改进方向。",
+      "aliases": [
+        "EXP-001"
+      ],
+      "trackingLinks": [
+        "https://github.com/narutojzm1-dot/youjia/issues/51",
+        "https://github.com/narutojzm1-dot/youjia/issues/168"
+      ]
     },
     {
-      "id": "EXP-002",
+      "id": "QA-EXP-20261003-002",
       "type": "待复核",
       "severity": "P2",
       "title": "既有相册题词与入镜主体不对应",
-      "detail": "第1页写绵羊愿意靠近我了，截图未见绵羊，画面为马、羊驼和鸭子；首次生成版本不明。"
+      "detail": "第1页写绵羊愿意靠近我了，截图未见绵羊，画面为马、羊驼和鸭子；首次生成版本不明。",
+      "aliases": [
+        "EXP-002"
+      ],
+      "trackingLinks": [
+        "https://github.com/narutojzm1-dot/youjia/issues/40"
+      ]
     },
     {
-      "id": "EXP-003",
+      "id": "QA-EXP-20261003-003",
       "type": "已观察体验问题",
       "severity": "P2",
       "title": "新版加载封面使用科幻迷宫图",
-      "detail": "game-922be64 冷加载展示机器人/科幻迷宫，与水彩小院体验不一致。"
+      "detail": "game-922be64 冷加载展示机器人/科幻迷宫，与水彩小院体验不一致。",
+      "aliases": [
+        "EXP-003"
+      ],
+      "trackingLinks": [
+        "https://github.com/narutojzm1-dot/youjia/issues/167"
+      ]
     }
   ],
   "finishedAt": "2026-10-03T14:17:49.784Z",
