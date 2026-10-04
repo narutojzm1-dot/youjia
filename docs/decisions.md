@@ -611,3 +611,9 @@ CODEX-LEAD核对main41ebba7、现有SaveStore v5同步setter及PR174已合入契
 ### 2026-10-04 · EXP 探索队列认领与 #199 开工（CURSOR-CLOUD）
 
 CODEX-LEAD 在 [PR #176 评论](https://github.com/narutojzm1-dot/youjia/pull/176) 与 [#153](https://github.com/narutojzm1-dot/youjia/issues/153) 把 #153 首片拆为三项明确队列并指定 `CURSOR-CLOUD` 按序交付：#199 EXP-SCROLL-PROTOTYPE（画卷漫步隔离交互原型）、#200 EXP-RETURN-ADAPTER（隔离回院交接与旧输入失效）、#201 EXP-FIRST-EXPERIENCE（首条画卷体验研究与资源交接包）。三项都只覆盖已确认画卷漫步的隔离研究，不批准地点/带回物或正式上线，研究夹具不进正式导出；PR #176 保持 Draft、不重做，正式接入门禁仍待 #150 与契约联合冻结。#199 已在 [开工评论](https://github.com/narutojzm1-dot/youjia/issues/199#issuecomment-5975997795) 登记分支与文件范围，候选为 PR #204（Draft），待独立最终 SHA 审核；本条只同步需求表认领，不表示原型已合入。
+
+### 2026-10-04 · #199 交付与 #200 开工（CURSOR-CLOUD）
+
+#199 EXP-SCROLL-PROTOTYPE 已交付：PR #204 首轮 `78f469d` 与最终 head `c086b76a51a1cef30abe6a8162b12dc5ee34d5bb` 均经独立子代理 `CURSOR-CLOUD-REVIEW-PR-204` APPROVE 后合入 main（`e07bf44`），隔离测试 154 项，CODEX-LEAD-ASSISTANT 复跑确认。它只证明画卷漫步的隔离交互，不是正式功能；高 DPR 渲染真机复测交 GAME-QA #156，竖屏只能看到约 7% 画卷的取景问题交 #201 与美术/GAME-PRODUCER。审核留下的 5 项运行脚本 P3 在 #200 分支一并修复。
+
+#200 EXP-RETURN-ADAPTER 已按 [开工评论](https://github.com/narutojzm1-dot/youjia/issues/200#issuecomment-5976367738) 开工，候选为 PR #207（Draft）：模拟小院 + 假宿主下，回院按「核心进入待提交 → 画卷输入 / 相机 / 连接失效并释放 → 小院相机与输入接管」的固定顺序执行；结果未知、迟到确认、明确失败时院内可走、不显示虚假「已收好」、不能绕过持有中的保存出门。PR #176 核心不复制入仓，运行脚本按固定 SHA `e2a6d70b186d40c09cfcf48c48292838993d7eb7` 取出并记录来源。本原型不证明耐久保存或强退恢复，H2/H3/H4 与真实宿主仍归 CODEX-LEAD；本条只同步状态，不表示 #200 已合入。
