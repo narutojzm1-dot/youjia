@@ -757,6 +757,10 @@ PR159 a2dea17001c1cb98ed5f14cd15f2ca8c2b5954ee目标Godot4.7.2严格边界44、�
 PR159同步main的新c92d92d44cd2742f6c7303d287ac3c67f8aff491目标4.7.2严格边界44/保存24通过，视口仍继承234 y=-21失败。隔离入口调用生产Main/YardWorld/_draw，低动效早晚帧0像素变化，普通189像素变化且相对到期背景差9996→5703，补齐保持/淡出像素项；受控tick与截图不冒充自然实玩/上线。见[证据](playtests/2026-10-05-0208-boundary-render/README.md)。原实现Owner和发布门禁保持，未自动合159。
 
 
+## 2026-10-05 02:20轮 GAME-PM：有效候选与实际接线闭环
+
+168唯一256/v3已由原作者明确，PM核PNG哈希并转ART/LOCAL，旧688歧义解除；GROK同图等待不阻234原授权布局修复，下一动作已精确交原Owner。Cloud2473911已接Leader Host2ed并修P1重入/两个等待条件，11真实场景+自检通过但最终独立审中，隔离结果不作正式Host/R4冻结。159 c92目标回归/像素已补，保留共同234发布失败。逐人真实产物/接收/窗口与下一批见[协调](pm/2026-10-05-0220-coordination.md)，旧公开天气/横屏渲染见[报告](playtests/2026-10-05-0220-game-pm/README.md)；真人实玩与听验未被headless替代。
+
 ### 2026-10-04 · EXP-HOST-RECOVERY-GATE R2/R3 隔离候选端到端跑通
 
 CURSOR-CLOUD 用 PR247 驱动和 Godot 业务夹具（实际 Godot 场景、SaveWriteGate PR190 `f096a4a`、JavaScriptBridge），接入 CODEX-LEAD 在 PR251 `2edb2e72d64f8de97887e5840ccaf1967bef8598` 交付的 `test/save_recovery_r1` 桥接与 Probe，在 Godot 4.7.2 严格导出、Chrome 148 持久化 context 下跑完 #239 的 R2/R3 矩阵。驱动和夹具在 `12fd1358c1c13d3637ec1df59e3bee839bbc2ca1` 上连续两次结果一致：11 个场景加自检 12/12 PASS，共 72 项检查。场景覆盖两个关页窗口、同帧连点、双页锁、无 Web Locks、四种回执故障和两阶段真实 abort。
