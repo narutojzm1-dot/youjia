@@ -33,3 +33,13 @@ Probe 包含真实事务后关页屏障、page/request 事件身份，以及真�
 Chromium151.0.7922.173实际 IndexedDB 同页检查139项通过，证据evidence.json：完整身份/损坏/未知字段/大小、空库不重置、显式建根防覆盖、真实intent与commit abort、prepared归档清槽、candidate恢复、重复恢复、旧parent拒绝、调用方改对象不改提交、两个真实持久屏障。没有关页/双页/进程重启、配额、v5迁移或自然玩家体验声明；R2/R3交#247真实驱动执行，R4仍待。
 
 独立首审发现falsy记录被当成空键的问题，已改为同事务get+count保留present标记，所有非法intent/current/archive均隔离且原值保留；补null/undefined/false/0/空串及坏archive条目真实反例。snapshot返回present，消费方不得用truthiness判断键不存在。139项为本次同页证据，增加三次连续保存/确认清理、同请求幂等、错/旧请求与 prepared 意图拒绝且保留、empty 不建根。替代初稿35项及上一轮112项；待新最终 SHA 独立复审。
+
+## v5 原文保护导入候选（2026-10-05）
+
+legacy_v5.mjs 提供 prepareLegacyV5({primary,backup}) 与 importLegacyV5(testName,input)。调用方显式提供每份源的 {status:"present",text:原始文本} 或 {status:"absent"}；读错误不能当作不存在。当前只认识 JSON 对象 version=5；任一源版本未知均拒绝，不静默回退旧备份。primary 损坏/缺失可选合法 backup，但两份原文仍完整封装在 youjia.legacy-v5-import/v1 中。选中原文不按字段重建、不运行 sanitize，不改变旧照片、关系、植物或未知大整数的字面文本。
+
+冻结后在R1独占锁内仅对三键全空目标 initialize；事务完成与读回后才返回。已有正常/损坏/在途记录都拒绝覆盖；没有删除或写入旧文件的能力。导入封套是原文保全容器，不是可直接交给正式游戏的业务状态：后续仍需明确转换、统一异步Host和生产读入切换，不能以这个接口宣称正式迁移已完成。
+
+保留R1 64KiB夹具限制，合并后的双原文容器超过限额则开目标库之前拒绝；此限制不是正式玩家容量方案。legacy_suite.html实际54检查通过（原文、backup回退、未知版本/读错误、坏目标、真实事务abort/重试、输入冻结和并发唯一胜者），原R1 139回归通过。命令：python test/save_recovery_r1/run.py --suite legacy_suite.html --out /tmp/legacy.json。证据legacy-evidence.json。
+
+补充最新协作状态：Cloud261/264已经独立审合入，旧640组合8PASS/2BLOCKED为历史；现有2edb Host与更新夹具14项109检查已交。新增导入模块不改store.mjs/bridge.mjs/head.html，不声称同一夹具已调用导入模块；新入口有单独实际浏览器证据。正式Host和R4整体仍未冻结。

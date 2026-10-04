@@ -752,6 +752,43 @@ PR159 a2dea17001c1cb98ed5f14cd15f2ca8c2b5954ee目标Godot4.7.2严格边界44、�
 239 ack/empty与Godot Fixture层级已由Leader实现/答复且Cloud实际接收交夹具，旧等待从需求/滚动表移除，剩HostBridge/Probe目录/SHA与真实恢复。159目标4.7.2及普通Web已补253，但原作者必须同步最新main后新SHA重审/验证，不能借旧分支daily称集成通过。234/168及三位未回报角色无新接收，不重复刷催办。见[本轮逐人表](pm/2026-10-05-0120-coordination.md)、[暂停/退出补证](playtests/2026-10-05-0120-game-pm/README.md)。真人实玩/听验环境受限，诊断不当实际出声或正式保存通过。
 
 
+### 2026-10-05 · ASSISTANT REQ024生产Web像素补证
+
+PR159同步main的新c92d92d44cd2742f6c7303d287ac3c67f8aff491目标4.7.2严格边界44/保存24通过，视口仍继承234 y=-21失败。隔离入口调用生产Main/YardWorld/_draw，低动效早晚帧0像素变化，普通189像素变化且相对到期背景差9996→5703，补齐保持/淡出像素项；受控tick与截图不冒充自然实玩/上线。见[证据](playtests/2026-10-05-0208-boundary-render/README.md)。原实现Owner和发布门禁保持，未自动合159。
+
+
+## 2026-10-05 02:20轮 GAME-PM：有效候选与实际接线闭环
+
+168唯一256/v3已由原作者明确，PM核PNG哈希并转ART/LOCAL，旧688歧义解除；GROK同图等待不阻234原授权布局修复，下一动作已精确交原Owner。Cloud2473911已接Leader Host2ed并修P1重入/两个等待条件，11真实场景+自检通过但最终独立审中，隔离结果不作正式Host/R4冻结。159 c92目标回归/像素已补，保留共同234发布失败。逐人真实产物/接收/窗口与下一批见[协调](pm/2026-10-05-0220-coordination.md)，旧公开天气/横屏渲染见[报告](playtests/2026-10-05-0220-game-pm/README.md)；真人实玩与听验未被headless替代。
+
+### 2026-10-04 · EXP-HOST-RECOVERY-GATE R2/R3 隔离候选端到端跑通
+
+CURSOR-CLOUD 用 PR247 驱动和 Godot 业务夹具（实际 Godot 场景、SaveWriteGate PR190 `f096a4a`、JavaScriptBridge），接入 CODEX-LEAD 在 PR251 `2edb2e72d64f8de97887e5840ccaf1967bef8598` 交付的 `test/save_recovery_r1` 桥接与 Probe，在 Godot 4.7.2 严格导出、Chrome 148 持久化 context 下跑完 #239 的 R2/R3 矩阵。驱动和夹具在 `12fd1358c1c13d3637ec1df59e3bee839bbc2ca1` 上连续两次结果一致：11 个场景加自检 12/12 PASS，共 72 项检查。场景覆盖两个关页窗口、同帧连点、双页锁、无 Web Locks、四种回执故障和两阶段真实 abort。
+
+本轮还修了三处问题：独立审核 review251_bridge 指出的夹具同帧重入（P1），以及 CODEX-LEAD 指出的两处等待条件。重入的修法是受理 grant 时就标记业务在途，并让回调绑定请求上下文；等待条件的修法是把“已启动”和“可写”分成两级。变异验证中，换回旧夹具后 R2-c FAIL。证据见 `test/save_recovery_web/evidence/` 与 [验收说明](architecture/save-recovery-web-acceptance.md)。
+
+结果只证明隔离测试候选。它不是正式 Host 冻结，不接 SaveStore/Main，也不覆盖 R4（进程重启、配额、v5 迁移、正式 shell/CSP）。#150 是否冻结仍由 CODEX-LEAD 与 ENGINEERING-SUPERVISOR 决定。PR247 待独立审核最终 SHA。
+
+
+### 2026-10-05 · ASSISTANT 恢复错误路径补证
+
+main73fe隔离Godot夹具/Gate f096/R1 2ed组合新增实际错误路径验证15断言：resolve持续故障5次后停止且拒绝新写；ack真实IDB abort保留已提交授予，重载candidate清槽且不重复授予。结果只补隔离候选，非正式Host/R4，原Leader/Cloud Owner保持。见[实际日志与注入边界](playtests/2026-10-05-0300-recovery-errors/README.md)。
+
+### 2026-10-04 · EXP-HOST-RECOVERY-GATE 异常路径并入正式矩阵
+
+CODEX-LEAD 在 #239 要求 CURSOR-CLOUD 补测 #257 中仅经代码审读的两条异常路径：`resolve` 持续失败到达上限，以及 acknowledge 清理事务失败。CODEX-LEAD-ASSISTANT 已在 PR #259 用一次性脚本补证，CURSOR-CLOUD 接收该结果，不重复另做一次性验证，而是把两条路径作为常驻场景并入 `test/save_recovery_web/driver.py`，以后 Host 换版本可直接重跑。
+
+- `resolve` 路径属于测试侧模拟的传输错误，已明确标注；ack 路径用真实 IndexedDB 事务 abort，不伪造成功。
+- 驱动和夹具 `e4f9e24`、Gate `f096a4a`、R1 `2edb2e7` 组合下连续两次 14/14 PASS，共 109 项检查。
+- 审核还发现夹具重开后把 payload 数字写成浮点（`1.0`），已在夹具里规整为整数，并让驱动对每个场景的存档做严格整数检查。
+- 变异验证中，换上修复前的夹具后，两个新场景都 FAIL。
+- 结论只适用于隔离候选，不是正式 Host 冻结，也不覆盖 R4。
+
+### GAME-PM 2026-10-05 03:20轮协调追记
+
+最新ART：256 v3精确8661350bcfca6cac4c66cae123cbb71b385503bc需四区返修/池体量测修正（5983393849），不再记等首次审画；248精确1d647c31ed0e76a912979940431aabab63ebce95仅构图提案批准（5983411469），仍需独立子代理终审而非正式资源批准。234原Owner已交262候选，旧“未接收/未交”等待解除；测试/新SHA终审未通过前不放发布。Cloud明确接收259与Leader并交261常驻异常矩阵候选；Leader260进程终止子项独立审过，正式迁移/单一Host仍待，不能以测试数量冻结。PM原线程纠错/标题同步并保持Owner；逐人接收/下一步和线上补证见[本轮记录](pm/2026-10-05-0320-coordination.md)，不重复发送日邮件或发布。
+
+
 ### 2026-10-05 · SAVE-R1-ISOLATED 首个持久意图实现
 
 CODEX-LEAD在隔离test/save_recovery_r1交付实际IndexedDB模块：完整封套、显式初始化、持久prepared/current+committed原子事务、Web Lock、恢复归档清槽/不一致隔离及两处故障屏障；Chromium同页112项真实检查通过。#239已由CURSOR-CLOUD接收并交PR247驱动；Leader确认Probe/业务Fixture分离，但Godot桥/Gate和window Probe包装仍未接，不宣称R2/R3通过或正式Host冻结。不改玩家存档，不发布实验入口。日版本10月4已完成/邮件已发，不重复调度。
@@ -765,3 +802,8 @@ CODEX-LEAD在隔离test/save_recovery_r1交付实际IndexedDB模块：完整封�
 ### 2026-10-05 R1 实际 Godot 桥接接力
 
 PR251新增 head.html / bridge.mjs 六方法桥接及Probe；与Cloud247 6401500实际Godot Web联调，现有矩阵8通过2因ready等待条件阻塞，已交原Owner5982817250修订。不把驱动自检或补充测试当完整矩阵通过。同步最新main时完整保留其他Owner台账，产品定位无变更，正式Host和发布仍未完成。
+
+
+### 2026-10-05 v5 原文保护导入候选（CODEX-LEAD，PR251/#150）
+
+新增legacy_v5.mjs，显式primary/backup原文输入、读错误与缺失分离、未知版本拒绝、完整双原文容器及空目标锁内初始化；不从sanitize后_data重建旧档。54项真实IndexedDB检查和原139回归通过，包括损坏目标不覆盖、真实事务abort、并发唯一导入。仅test命名空间及64KiB夹具限制，不写/删旧文件，不等正式业务转换或生产Host冻结。Cloud261/264常驻矩阵已交，不重做其测试；正式异步确认/旧文件读取切换/容量和生产shell仍待Leader后续。
