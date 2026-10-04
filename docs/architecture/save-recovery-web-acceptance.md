@@ -6,12 +6,14 @@ Owner：CURSOR-CLOUD（仅测试侧驱动）。父单 #150，工单 [#239](https
 
 已在真实 R1 隔离候选上端到端跑通，组合为：
 
-- 驱动和夹具：`12fd1358c1c13d3637ec1df59e3bee839bbc2ca1`；
+- 驱动和夹具：`5e47268309755545c215f4d886d0494fad63b5a0`（夹具与 main `73fe3d5` 相同）；
 - Gate：PR190 `f096a4a927c164c4bf70acc403a826a2074d2362`；
 - Host 桥接与 Probe：PR #251 `2edb2e72d64f8de97887e5840ccaf1967bef8598`；
 - 引擎与浏览器：Godot 4.7.2，Chrome 148。
 
-结果是 R2/R3 共 11 个场景加驱动自检全部 PASS，合计 72 项检查。
+结果是 R2/R3 共 13 个场景加驱动自检全部 PASS，合计 93 项检查。
+
+这 13 个场景包括 R3-d 的两条异常路径：`resolve` 持续失败到达上限，以及 acknowledge 事务失败。最初只有 11 个场景、72 项检查（驱动和夹具 `12fd135`），见下文验证记录。
 
 这只证明**隔离测试候选**在同一浏览器 context 下的关页恢复、双页锁、无锁阻断和回执故障行为。它不是正式 Host 冻结，不接正式 SaveStore/Main，也不覆盖 R4（真实进程重启、配额、旧 v5 迁移、正式 shell/CSP）。
 
@@ -131,6 +133,8 @@ R1 若没有支撑 Fixture 的公开入口，会在 PR 中列出缺口，不另�
 | R3-b | 删掉 `navigator.locks` 后打开 | `no_web_locks`；grant 不产生事务；库内容不变 |
 | R2-c | 同一次 evaluate 内连续 `grant(1)`、`grant(2)` | 第二次在第一次收尾前被拒绝；业务显示 watermark 1、grants [1]，只确认了 1，从不出现 0；存储 payload 与业务一致，意图已清理；之后 `grant(2)` 只提交一次，与存储一致 |
 | R3-c | 丢回执、错身份、重复回执、迟到回执，以及 intent/commit 两阶段的真实 abort | abort 时 current 不变、不授予、不报已保存；丢回执或错身份时业务保持 pending；重复或迟到回执只授予一次；关页重开后授予都不重复 |
+| R3-d resolve 上限 | **模拟错误**：Probe 让 commit 事务真实 abort、`submit` 失败后，测试侧把公开的 `bridge.resolve` 换成持续报错（人为传输故障，不是存储损坏） | `resolve` 恰好调用 5 次后停止；等待 1.5 秒后仍为 5 次；业务保持在途、不可写，什么也没确认；current 不变；之后的 grant 被拒，且不再触发 resolve。关页重开后（新页不带替换）结论为 `restored_parent_intent_rejected`，payload 没有授予，可再次写入且只提交一次 |
+| R3-d ack 事务失败 | 拦截真实 `IDBObjectStore.delete('intent')` 并 abort 该事务，不伪造成功结果 | 事务确实被 abort；已确认的授予 1 不回滚；业务已收尾但不可写；current 已提交、intent 仍在；之后的 grant 被拒，存储不变。关页重开后授予 1 恰好一次、intent 已清理，可再次写入，授予 2 只提交一次 |
 
 每个场景结束时先关闭全部参与页，再由自检页按测试库名删除，删除结果计入检查。参与页仍连着库时删除会被 `onblocked` 拦下。
 
@@ -160,3 +164,8 @@ R1 若没有支撑 Fixture 的公开入口，会在 PR 中列出缺口，不另�
   - 变异验证：新驱动配 `2d2054f` 合入版的夹具时，R2-c FAIL。业务显示已收尾时意图尚未清理，紧接着的 grant 被拒，场景随之超时。
   - `resolve` 重试上限这条路径，现有场景还触发不到，只经过代码审读。
 - 复审又提出两条 P3：不可写时仍受理 grant，以及文档里 `resolve` 的调用次数多算了一次。两条都已在 `ae8172f` 修正，重跑仍为 12/12 PASS、73 项检查，退出码 0。
+- 2026-10-04，按 CODEX-LEAD 在 #239 的要求，把 PR #257 里只经过代码审读的两条异常路径加入正式矩阵，场景名为 `R3-d_resolve_failure_cap_simulated` 和 `R3-d_ack_txn_abort`：
+  - 注入方式沿用 CODEX-LEAD-ASSISTANT 在 PR #259 的一次性补证；本仓库版本改用关页后开新页、关页后由驱动删库，以后 Host 换版本可直接重跑。
+  - 驱动 `5e47268` 连续跑两次，均为 14/14 PASS、93 项检查（两个新场景各 10 项），退出码 0，日志里没有 ERROR，也没有编码告警。证据存为 [`test/save_recovery_web/evidence/2026-10-04-r2r3-errors-5e47268-host-2edb2e7.json`](../../test/save_recovery_web/evidence/2026-10-04-r2r3-errors-5e47268-host-2edb2e7.json)。
+  - 变异验证：换上 PR #257 修复前的 `2d2054f` 夹具后，两个新场景都 FAIL，R2-c 也照旧 FAIL。
+  - `_on_grant` 里“`blocked_reason` 非空就拒绝”这道守卫属于冗余保护。即使去掉它，Host 也会拒绝 `prepare`，所以现有场景区分不出有没有这道守卫。
