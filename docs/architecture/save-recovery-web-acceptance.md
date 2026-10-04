@@ -4,7 +4,16 @@ Owner：CURSOR-CLOUD（仅测试侧驱动）。父单 #150，工单 [#239](https
 
 ## 当前状态
 
-驱动与 Godot 业务夹具都能运行。R1 的 Host 桥接与 Probe 尚未接线，因此 R2/R3 各场景全部报 `BLOCKED`。**这不是 R2/R3 通过，也不是恢复已实现。**
+已在真实 R1 隔离候选上端到端跑通，组合为：
+
+- 驱动和夹具：`12fd1358c1c13d3637ec1df59e3bee839bbc2ca1`；
+- Gate：PR190 `f096a4a927c164c4bf70acc403a826a2074d2362`；
+- Host 桥接与 Probe：PR #251 `2edb2e72d64f8de97887e5840ccaf1967bef8598`；
+- 引擎与浏览器：Godot 4.7.2，Chrome 148。
+
+结果是 R2/R3 共 11 个场景加驱动自检全部 PASS，合计 72 项检查。
+
+这只证明**隔离测试候选**在同一浏览器 context 下的关页恢复、双页锁、无锁阻断和回执故障行为。它不是正式 Host 冻结，不接正式 SaveStore/Main，也不覆盖 R4（真实进程重启、配额、旧 v5 迁移、正式 shell/CSP）。
 
 ## 运行
 
@@ -114,9 +123,14 @@ R1 若没有支撑 Fixture 的公开入口，会在 PR 中列出缺口，不另�
 | R2-b | 停在 `candidate_committed_before_receipt` 时关页，开新页 | `restored_candidate`；current 的 request_id 等于停点 request_id；水位包含该 serial，只授予一次；再次 grant 同一 serial 不重复授予 |
 | R3-a | A 停在屏障并持锁，B 打开 | A 持锁期间 B 没有 `lock_acquired` 和 `txn_complete`；A 关闭后 B 取得锁，读到持久意图并恢复。等锁期间不以超时判失败 |
 | R3-b | 删掉 `navigator.locks` 后打开 | `no_web_locks`；grant 不产生事务；库内容不变 |
+| R2-c | 同一次 evaluate 内连续 `grant(1)`、`grant(2)` | 第二次在第一次收尾前被拒绝；业务显示 watermark 1、grants [1]，只确认了 1，从不出现 0；存储 payload 与业务一致，意图已清理；之后 `grant(2)` 只提交一次，与存储一致 |
 | R3-c | 丢回执、错身份、重复回执、迟到回执，以及 intent/commit 两阶段的真实 abort | abort 时 current 不变、不授予、不报已保存；丢回执或错身份时业务保持 pending；重复或迟到回执只授予一次；关页重开后授予都不重复 |
 
-所有 R1 场景都还没有在真实候选上跑过，断言细节以 R1 接线后的联合矩阵为准。真实进程重启、配额、旧 v5 迁移和正式 shell/CSP 属于 R4，本驱动不覆盖，也不混称通过。
+每个场景结束时先关闭全部参与页，再由自检页按测试库名删除，删除结果计入检查。参与页仍连着库时删除会被 `onblocked` 拦下。
+
+**等待策略**：驱动分两级等待。第一级只要求 Probe 已挂载、Godot 夹具已启动（facade 的 `started`）；第二级才要求可写（`ready`）。R3-a 的 B 页在等 A 释放锁，R3-b 是无锁拒绝，这两种情况只等第一级，再读取 recovery 与事件，不改动夹具业务上的 `ready` 来掩盖不可写。桥接已在、夹具却始终不可写时，记 FAIL 而不是 BLOCKED。
+
+真实进程重启、配额、旧 v5 迁移和正式 shell/CSP 属于 R4，本驱动不覆盖，也不混称通过。
 
 ## 验证记录
 
@@ -127,3 +141,10 @@ R1 若没有支撑 Fixture 的公开入口，会在 PR 中列出缺口，不另�
   - Godot 夹具在 Chrome 中实际启动，接上 JS 门面，公开 `host bridge missing`；
   - 10 个场景 BLOCKED，原因为 `probe=missing; fixture=not ready: host bridge missing`，自检 PASS 10，退出码 2；
   - 夹具的写入路径还没有经过真实 Host 执行。
+- 2026-10-04，接入真实 R1 桥接 `2edb2e7`（Godot 4.7.2 严格导入/导出，Chrome 148.0.7778.96，Playwright 1.63.0）：
+  - 修复了独立审核 review251_bridge 指出的夹具同帧重入问题（P1），以及 CODEX-LEAD 指出的两处等待条件；
+  - 驱动和夹具在 `12fd135` 上连续跑两次，均为 12/12 PASS、72 项检查，退出码 0，日志里没有 ERROR，也没有编码告警；
+  - 第一次运行的完整证据存为 [`test/save_recovery_web/evidence/2026-10-04-r2r3-12fd135-host-2edb2e7.json`](../../test/save_recovery_web/evidence/2026-10-04-r2r3-12fd135-host-2edb2e7.json)，含每个场景的数据库前后快照、屏障停点、事件序列和恢复结果；
+  - Godot Web 导出不是逐字节可复现的，两次构建的 PCK SHA256 不同（`75de4f3f…` 与 `b59e28a6…`），证据里记的是当次构建的哈希。
+- **变异验证**：把夹具换回修复前的 `6401500` 版本后，R2-c FAIL（第一次请求一直无法收尾），R3-a 因夹具不发布启动状态而 BLOCKED，其余场景照常 PASS。说明新场景能拦住这次的重入缺陷。
+- 中间一次运行里，R2-c 的业务断言全部通过，但清理步骤因参与页仍连着库被拦下，记为 FAIL。改成关页后再删库之后，连续两次都通过。
