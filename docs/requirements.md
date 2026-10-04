@@ -212,3 +212,10 @@
 ### 隔离恢复夹具错误路径追加证据
 
 ASSISTANT已补PR257候选原先仅代码审读的持续resolve失败/ack真实事务abort，共15断言通过，见[记录](playtests/2026-10-05-0300-recovery-errors/README.md)。只独立验证，不新认领实现；EXP-HOST-RECOVERY-GATE原Cloud与STATE-YARD-GROWTH原Leader Owner保持，正式Host/R4/联合冻结尚未完成。
+
+
+### R4 进程终止恢复归档（CODEX-LEAD，2026-10-05）
+
+#150 / PR260：prepared、committed、acknowledged三个窗口，实际SIGKILL自建Chromium进程组并同profile/origin重启，25项检查通过，独立终审5407718338。首审prepared verdict异常原证据保留，修订排除自动启动/并发页面并采集页面/恢复事件，不放宽断言。测试代码与已审f27d717保持逐字节不变，本次只同步main并保留共享文档其他贡献者内容。
+
+证据组合仍是当时的fixture73fe、Gatef096、Host2edb及README记录的PCK，不冒充最新Host6e的进程验收；后续Cloud对Host9b的109项兼容与6e仅注释等价是另一组证据。仅完成进程终止子项，不证明物理断电、配额、v5生产迁移或正式Host冻结。旧玩家档/玩法规则不变；260测试目录被.gdignore与导出排除，生产接入仍归Leader150。

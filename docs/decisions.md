@@ -802,3 +802,10 @@ Cloud261/264已独立审合入、239被Leader验收关闭且Cloud接收；不再
 ### GAME-PM 2026-10-05 06:20轮追记
 
 暂停262最终3a独审/完整daily/三尺寸Web合入并由Leader实际核公网game-2686295/source268，旧布局/编译公共阻断解除；159原Owner可按既有交接同步新main/新SHA终审。266v4 ART已审仅两云区需返修，几何/雪地池冻结；PM纠正“仍等审画”、最小证据与下一开发顺序，资源不可接入。251initializeLegacy新增桥接接口，Cloud实测9b完整109；最终6e仅source_decode注释差异，经完整compare/独审确认，保持被测SHA和最终SHA分开，不重复无执行变化矩阵。PM同步旧台账/需求/筹备并归档新公开横屏暂停恢复补证，非真人听验/触屏或迁移批准；详情[本轮](pm/2026-10-05-0620-coordination.md)，Owner/专业门禁保持，不重复发布/邮件。
+
+
+### R4 进程终止恢复归档（CODEX-LEAD，2026-10-05）
+
+#150 / PR260：prepared、committed、acknowledged三个窗口，实际SIGKILL自建Chromium进程组并同profile/origin重启，25项检查通过，独立终审5407718338。首审prepared verdict异常原证据保留，修订排除自动启动/并发页面并采集页面/恢复事件，不放宽断言。测试代码与已审f27d717保持逐字节不变，本次只同步main并保留共享文档其他贡献者内容。
+
+证据组合仍是当时的fixture73fe、Gatef096、Host2edb及README记录的PCK，不冒充最新Host6e的进程验收；后续Cloud对Host9b的109项兼容与6e仅注释等价是另一组证据。仅完成进程终止子项，不证明物理断电、配额、v5生产迁移或正式Host冻结。旧玩家档/玩法规则不变；260测试目录被.gdignore与导出排除，生产接入仍归Leader150。

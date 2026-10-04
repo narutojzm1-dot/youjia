@@ -1,0 +1,1075 @@
+{
+  "host_sha": "2edb2e72d64f8de97887e5840ccaf1967bef8598",
+  "fixture_sha": "73fe3d5cbf8637b88e05e214a5549a93741c96e0",
+  "pck_sha256": "c7b1c9cde69faf02698f43bf890e084d07ff2c77777ca75d397a8b19c0b550ca",
+  "scope": "SIGKILL isolated browser process group; same disk profile/origin; not power loss or production host",
+  "cases": [
+    {
+      "barrier": "intent_prepared_complete",
+      "checks": [
+        "actual SIGKILL exit",
+        "new browser process",
+        "expected recovery verdict",
+        "trusted watermark after process restart",
+        "intent cleared",
+        "exact parent retained",
+        "rejected request archived",
+        "exactly one durable grant",
+        "business agrees with durable grant"
+      ],
+      "initial_pages": [
+        "http://127.0.0.1:37445/index.html?recovery_store=youjia-recovery-test-4ac9e75cd45b4bbf8e78051caa39e3f8"
+      ],
+      "before": {
+        "present": {
+          "current": true,
+          "intent": false,
+          "archive": false
+        },
+        "current": {
+          "schema": "youjia.save-envelope/v1",
+          "store_id": "3c8557df5de94da889d102aef9c6ee9e",
+          "commit_id": "89187ca0dc064f1cb4851fd0dbf6a54f",
+          "request_id": "c1f93e448ec84933822c41e36cf9ef92",
+          "parent_commit_id": "",
+          "generation": "1",
+          "payload_bytes": "{\"grants\":[],\"watermark\":0}",
+          "payload_sha256": "e5a6510ac9bdf697239407ea7d8fda7f3356cd33d4b8a209b9e351af37ac3009",
+          "envelope_sha256": "31231c76e0e05dfddfd2dce493db80440c28ddff044621182f1d304cc218ea42"
+        },
+        "intent": null,
+        "archive": null
+      },
+      "at_kill": {
+        "present": {
+          "current": true,
+          "intent": true,
+          "archive": false
+        },
+        "current": {
+          "schema": "youjia.save-envelope/v1",
+          "store_id": "3c8557df5de94da889d102aef9c6ee9e",
+          "commit_id": "89187ca0dc064f1cb4851fd0dbf6a54f",
+          "request_id": "c1f93e448ec84933822c41e36cf9ef92",
+          "parent_commit_id": "",
+          "generation": "1",
+          "payload_bytes": "{\"grants\":[],\"watermark\":0}",
+          "payload_sha256": "e5a6510ac9bdf697239407ea7d8fda7f3356cd33d4b8a209b9e351af37ac3009",
+          "envelope_sha256": "31231c76e0e05dfddfd2dce493db80440c28ddff044621182f1d304cc218ea42"
+        },
+        "intent": {
+          "state": "prepared",
+          "request_id": "d1ae40b5d1cb4cf8aed788957263e869",
+          "parent": {
+            "schema": "youjia.save-envelope/v1",
+            "store_id": "3c8557df5de94da889d102aef9c6ee9e",
+            "commit_id": "89187ca0dc064f1cb4851fd0dbf6a54f",
+            "request_id": "c1f93e448ec84933822c41e36cf9ef92",
+            "parent_commit_id": "",
+            "generation": "1",
+            "payload_bytes": "{\"grants\":[],\"watermark\":0}",
+            "payload_sha256": "e5a6510ac9bdf697239407ea7d8fda7f3356cd33d4b8a209b9e351af37ac3009",
+            "envelope_sha256": "31231c76e0e05dfddfd2dce493db80440c28ddff044621182f1d304cc218ea42"
+          },
+          "candidate": {
+            "schema": "youjia.save-envelope/v1",
+            "store_id": "3c8557df5de94da889d102aef9c6ee9e",
+            "commit_id": "a33dcc5536864d19ab0422968eb432bc",
+            "request_id": "d1ae40b5d1cb4cf8aed788957263e869",
+            "parent_commit_id": "89187ca0dc064f1cb4851fd0dbf6a54f",
+            "generation": "2",
+            "payload_bytes": "{\"grants\":[1],\"watermark\":1}",
+            "payload_sha256": "6fba6f710307dd48651025ebbbc9064f0405251705605f0b46ebc7c1b8195567",
+            "envelope_sha256": "95ae46c5e0260d0abfc3cf562a43755adff1bdb5cf99c35e18f37a845e0f2e2f"
+          }
+        },
+        "archive": null
+      },
+      "before_kill_events": [
+        {
+          "type": "lock_requested",
+          "sequence": 1,
+          "page_id": "8dd10c5244c34ea9860803bcf12332f6",
+          "request_id": null
+        },
+        {
+          "type": "lock_acquired",
+          "sequence": 2,
+          "page_id": "8dd10c5244c34ea9860803bcf12332f6",
+          "request_id": null
+        },
+        {
+          "type": "txn_complete",
+          "sequence": 3,
+          "stage": "",
+          "page_id": "8dd10c5244c34ea9860803bcf12332f6",
+          "request_id": null
+        },
+        {
+          "type": "recovery_result",
+          "sequence": 4,
+          "verdict": "empty",
+          "page_id": "8dd10c5244c34ea9860803bcf12332f6",
+          "request_id": null
+        },
+        {
+          "type": "lock_released",
+          "sequence": 5,
+          "page_id": "8dd10c5244c34ea9860803bcf12332f6",
+          "request_id": null
+        },
+        {
+          "type": "lock_requested",
+          "sequence": 6,
+          "page_id": "8dd10c5244c34ea9860803bcf12332f6",
+          "request_id": null
+        },
+        {
+          "type": "lock_acquired",
+          "sequence": 7,
+          "page_id": "8dd10c5244c34ea9860803bcf12332f6",
+          "request_id": null
+        },
+        {
+          "type": "txn_complete",
+          "sequence": 8,
+          "stage": "initialize",
+          "page_id": "8dd10c5244c34ea9860803bcf12332f6",
+          "request_id": null
+        },
+        {
+          "type": "txn_complete",
+          "sequence": 9,
+          "stage": "",
+          "page_id": "8dd10c5244c34ea9860803bcf12332f6",
+          "request_id": null
+        },
+        {
+          "type": "lock_released",
+          "sequence": 10,
+          "page_id": "8dd10c5244c34ea9860803bcf12332f6",
+          "request_id": null
+        },
+        {
+          "type": "lock_requested",
+          "sequence": 11,
+          "page_id": "8dd10c5244c34ea9860803bcf12332f6",
+          "request_id": null
+        },
+        {
+          "type": "lock_acquired",
+          "sequence": 12,
+          "page_id": "8dd10c5244c34ea9860803bcf12332f6",
+          "request_id": null
+        },
+        {
+          "type": "txn_complete",
+          "sequence": 13,
+          "stage": "",
+          "page_id": "8dd10c5244c34ea9860803bcf12332f6",
+          "request_id": null
+        },
+        {
+          "type": "recovery_result",
+          "sequence": 14,
+          "verdict": "clean",
+          "page_id": "8dd10c5244c34ea9860803bcf12332f6",
+          "request_id": null
+        },
+        {
+          "type": "lock_released",
+          "sequence": 15,
+          "page_id": "8dd10c5244c34ea9860803bcf12332f6",
+          "request_id": null
+        },
+        {
+          "type": "txn_complete",
+          "sequence": 16,
+          "stage": "",
+          "page_id": "8dd10c5244c34ea9860803bcf12332f6",
+          "request_id": null
+        },
+        {
+          "type": "txn_complete",
+          "sequence": 17,
+          "stage": "",
+          "page_id": "8dd10c5244c34ea9860803bcf12332f6",
+          "request_id": null
+        },
+        {
+          "type": "lock_requested",
+          "sequence": 18,
+          "page_id": "8dd10c5244c34ea9860803bcf12332f6",
+          "request_id": "d1ae40b5d1cb4cf8aed788957263e869"
+        },
+        {
+          "type": "lock_acquired",
+          "sequence": 19,
+          "page_id": "8dd10c5244c34ea9860803bcf12332f6",
+          "request_id": "d1ae40b5d1cb4cf8aed788957263e869"
+        },
+        {
+          "type": "txn_complete",
+          "sequence": 20,
+          "stage": "",
+          "page_id": "8dd10c5244c34ea9860803bcf12332f6",
+          "request_id": "d1ae40b5d1cb4cf8aed788957263e869"
+        },
+        {
+          "type": "txn_complete",
+          "sequence": 21,
+          "stage": "intent",
+          "page_id": "8dd10c5244c34ea9860803bcf12332f6",
+          "request_id": "d1ae40b5d1cb4cf8aed788957263e869"
+        },
+        {
+          "name": "intent_prepared_complete",
+          "request_id": "d1ae40b5d1cb4cf8aed788957263e869",
+          "page_id": "8dd10c5244c34ea9860803bcf12332f6",
+          "type": "barrier_paused",
+          "sequence": 22
+        },
+        {
+          "type": "txn_complete",
+          "sequence": 23,
+          "stage": "",
+          "page_id": "8dd10c5244c34ea9860803bcf12332f6",
+          "request_id": "d1ae40b5d1cb4cf8aed788957263e869"
+        }
+      ],
+      "recovery": {
+        "verdict": "restored_parent_intent_rejected",
+        "present": {
+          "current": true,
+          "intent": false,
+          "archive": true
+        },
+        "current": {
+          "schema": "youjia.save-envelope/v1",
+          "store_id": "3c8557df5de94da889d102aef9c6ee9e",
+          "commit_id": "89187ca0dc064f1cb4851fd0dbf6a54f",
+          "request_id": "c1f93e448ec84933822c41e36cf9ef92",
+          "parent_commit_id": "",
+          "generation": "1",
+          "payload_bytes": "{\"grants\":[],\"watermark\":0}",
+          "payload_sha256": "e5a6510ac9bdf697239407ea7d8fda7f3356cd33d4b8a209b9e351af37ac3009",
+          "envelope_sha256": "31231c76e0e05dfddfd2dce493db80440c28ddff044621182f1d304cc218ea42"
+        },
+        "intent": null,
+        "archive": [
+          {
+            "state": "rejected",
+            "request_id": "d1ae40b5d1cb4cf8aed788957263e869",
+            "parent": {
+              "schema": "youjia.save-envelope/v1",
+              "store_id": "3c8557df5de94da889d102aef9c6ee9e",
+              "commit_id": "89187ca0dc064f1cb4851fd0dbf6a54f",
+              "request_id": "c1f93e448ec84933822c41e36cf9ef92",
+              "parent_commit_id": "",
+              "generation": "1",
+              "payload_bytes": "{\"grants\":[],\"watermark\":0}",
+              "payload_sha256": "e5a6510ac9bdf697239407ea7d8fda7f3356cd33d4b8a209b9e351af37ac3009",
+              "envelope_sha256": "31231c76e0e05dfddfd2dce493db80440c28ddff044621182f1d304cc218ea42"
+            },
+            "candidate": {
+              "schema": "youjia.save-envelope/v1",
+              "store_id": "3c8557df5de94da889d102aef9c6ee9e",
+              "commit_id": "a33dcc5536864d19ab0422968eb432bc",
+              "request_id": "d1ae40b5d1cb4cf8aed788957263e869",
+              "parent_commit_id": "89187ca0dc064f1cb4851fd0dbf6a54f",
+              "generation": "2",
+              "payload_bytes": "{\"grants\":[1],\"watermark\":1}",
+              "payload_sha256": "6fba6f710307dd48651025ebbbc9064f0405251705605f0b46ebc7c1b8195567",
+              "envelope_sha256": "95ae46c5e0260d0abfc3cf562a43755adff1bdb5cf99c35e18f37a845e0f2e2f"
+            }
+          }
+        ]
+      },
+      "restart_pages": [
+        "http://127.0.0.1:37445/index.html?recovery_store=youjia-recovery-test-4ac9e75cd45b4bbf8e78051caa39e3f8"
+      ],
+      "restart_events": [
+        {
+          "type": "lock_requested",
+          "sequence": 1,
+          "page_id": "684b6263c3ae477080570fe0cf95e8e1",
+          "request_id": null
+        },
+        {
+          "type": "lock_acquired",
+          "sequence": 2,
+          "page_id": "684b6263c3ae477080570fe0cf95e8e1",
+          "request_id": null
+        },
+        {
+          "type": "txn_complete",
+          "sequence": 3,
+          "stage": "",
+          "page_id": "684b6263c3ae477080570fe0cf95e8e1",
+          "request_id": null
+        },
+        {
+          "type": "txn_complete",
+          "sequence": 4,
+          "stage": "reject_intent",
+          "page_id": "684b6263c3ae477080570fe0cf95e8e1",
+          "request_id": null
+        },
+        {
+          "type": "txn_complete",
+          "sequence": 5,
+          "stage": "",
+          "page_id": "684b6263c3ae477080570fe0cf95e8e1",
+          "request_id": null
+        },
+        {
+          "type": "recovery_result",
+          "sequence": 6,
+          "verdict": "restored_parent_intent_rejected",
+          "page_id": "684b6263c3ae477080570fe0cf95e8e1",
+          "request_id": null
+        },
+        {
+          "type": "lock_released",
+          "sequence": 7,
+          "page_id": "684b6263c3ae477080570fe0cf95e8e1",
+          "request_id": null
+        }
+      ],
+      "after_retry": {
+        "present": {
+          "current": true,
+          "intent": false,
+          "archive": true
+        },
+        "current": {
+          "schema": "youjia.save-envelope/v1",
+          "store_id": "3c8557df5de94da889d102aef9c6ee9e",
+          "commit_id": "22ef9e19b4804462abde34b52380fbee",
+          "request_id": "1ed4bb0cb5e04e6285e31893eb2c0a1a",
+          "parent_commit_id": "89187ca0dc064f1cb4851fd0dbf6a54f",
+          "generation": "2",
+          "payload_bytes": "{\"grants\":[1],\"watermark\":1}",
+          "payload_sha256": "6fba6f710307dd48651025ebbbc9064f0405251705605f0b46ebc7c1b8195567",
+          "envelope_sha256": "fa7875c11768931752790f25407595222a520f645c0808490eb961d659639a91"
+        },
+        "intent": null,
+        "archive": [
+          {
+            "state": "rejected",
+            "request_id": "d1ae40b5d1cb4cf8aed788957263e869",
+            "parent": {
+              "schema": "youjia.save-envelope/v1",
+              "store_id": "3c8557df5de94da889d102aef9c6ee9e",
+              "commit_id": "89187ca0dc064f1cb4851fd0dbf6a54f",
+              "request_id": "c1f93e448ec84933822c41e36cf9ef92",
+              "parent_commit_id": "",
+              "generation": "1",
+              "payload_bytes": "{\"grants\":[],\"watermark\":0}",
+              "payload_sha256": "e5a6510ac9bdf697239407ea7d8fda7f3356cd33d4b8a209b9e351af37ac3009",
+              "envelope_sha256": "31231c76e0e05dfddfd2dce493db80440c28ddff044621182f1d304cc218ea42"
+            },
+            "candidate": {
+              "schema": "youjia.save-envelope/v1",
+              "store_id": "3c8557df5de94da889d102aef9c6ee9e",
+              "commit_id": "a33dcc5536864d19ab0422968eb432bc",
+              "request_id": "d1ae40b5d1cb4cf8aed788957263e869",
+              "parent_commit_id": "89187ca0dc064f1cb4851fd0dbf6a54f",
+              "generation": "2",
+              "payload_bytes": "{\"grants\":[1],\"watermark\":1}",
+              "payload_sha256": "6fba6f710307dd48651025ebbbc9064f0405251705605f0b46ebc7c1b8195567",
+              "envelope_sha256": "95ae46c5e0260d0abfc3cf562a43755adff1bdb5cf99c35e18f37a845e0f2e2f"
+            }
+          }
+        ]
+      },
+      "status": "PASS"
+    },
+    {
+      "barrier": "candidate_committed_before_receipt",
+      "checks": [
+        "actual SIGKILL exit",
+        "new browser process",
+        "expected recovery verdict",
+        "trusted watermark after process restart",
+        "intent cleared",
+        "exact committed envelope retained",
+        "exactly one durable grant",
+        "business agrees with durable grant"
+      ],
+      "initial_pages": [
+        "http://127.0.0.1:37445/index.html?recovery_store=youjia-recovery-test-722272309f8a4a1dab744e81d9e15ce2"
+      ],
+      "before": {
+        "present": {
+          "current": true,
+          "intent": false,
+          "archive": false
+        },
+        "current": {
+          "schema": "youjia.save-envelope/v1",
+          "store_id": "5c819015d4ce4a398a10e6ed53ba4abd",
+          "commit_id": "42859d79ea274493a05e76eb0812bb07",
+          "request_id": "2f4a8f3aa10040198ba0ba07b451a1a1",
+          "parent_commit_id": "",
+          "generation": "1",
+          "payload_bytes": "{\"grants\":[],\"watermark\":0}",
+          "payload_sha256": "e5a6510ac9bdf697239407ea7d8fda7f3356cd33d4b8a209b9e351af37ac3009",
+          "envelope_sha256": "72f09af81c0109c16eb38cde0a2552dfa51a9cc1a54d7e56820cba6c8c7951aa"
+        },
+        "intent": null,
+        "archive": null
+      },
+      "at_kill": {
+        "present": {
+          "current": true,
+          "intent": true,
+          "archive": false
+        },
+        "current": {
+          "schema": "youjia.save-envelope/v1",
+          "store_id": "5c819015d4ce4a398a10e6ed53ba4abd",
+          "commit_id": "c61f7a1892144065b901406dd410565e",
+          "request_id": "def55252427c4df093561c83f20db91d",
+          "parent_commit_id": "42859d79ea274493a05e76eb0812bb07",
+          "generation": "2",
+          "payload_bytes": "{\"grants\":[1],\"watermark\":1}",
+          "payload_sha256": "6fba6f710307dd48651025ebbbc9064f0405251705605f0b46ebc7c1b8195567",
+          "envelope_sha256": "08d469df764b08b399453daf1f559dfa86d34f8f594286c28231f11a9963583c"
+        },
+        "intent": {
+          "state": "committed",
+          "request_id": "def55252427c4df093561c83f20db91d",
+          "parent": {
+            "schema": "youjia.save-envelope/v1",
+            "store_id": "5c819015d4ce4a398a10e6ed53ba4abd",
+            "commit_id": "42859d79ea274493a05e76eb0812bb07",
+            "request_id": "2f4a8f3aa10040198ba0ba07b451a1a1",
+            "parent_commit_id": "",
+            "generation": "1",
+            "payload_bytes": "{\"grants\":[],\"watermark\":0}",
+            "payload_sha256": "e5a6510ac9bdf697239407ea7d8fda7f3356cd33d4b8a209b9e351af37ac3009",
+            "envelope_sha256": "72f09af81c0109c16eb38cde0a2552dfa51a9cc1a54d7e56820cba6c8c7951aa"
+          },
+          "candidate": {
+            "schema": "youjia.save-envelope/v1",
+            "store_id": "5c819015d4ce4a398a10e6ed53ba4abd",
+            "commit_id": "c61f7a1892144065b901406dd410565e",
+            "request_id": "def55252427c4df093561c83f20db91d",
+            "parent_commit_id": "42859d79ea274493a05e76eb0812bb07",
+            "generation": "2",
+            "payload_bytes": "{\"grants\":[1],\"watermark\":1}",
+            "payload_sha256": "6fba6f710307dd48651025ebbbc9064f0405251705605f0b46ebc7c1b8195567",
+            "envelope_sha256": "08d469df764b08b399453daf1f559dfa86d34f8f594286c28231f11a9963583c"
+          }
+        },
+        "archive": null
+      },
+      "before_kill_events": [
+        {
+          "type": "lock_requested",
+          "sequence": 1,
+          "page_id": "25f55229cda448f6b424b0a9295dd46c",
+          "request_id": null
+        },
+        {
+          "type": "lock_acquired",
+          "sequence": 2,
+          "page_id": "25f55229cda448f6b424b0a9295dd46c",
+          "request_id": null
+        },
+        {
+          "type": "txn_complete",
+          "sequence": 3,
+          "stage": "",
+          "page_id": "25f55229cda448f6b424b0a9295dd46c",
+          "request_id": null
+        },
+        {
+          "type": "recovery_result",
+          "sequence": 4,
+          "verdict": "empty",
+          "page_id": "25f55229cda448f6b424b0a9295dd46c",
+          "request_id": null
+        },
+        {
+          "type": "lock_released",
+          "sequence": 5,
+          "page_id": "25f55229cda448f6b424b0a9295dd46c",
+          "request_id": null
+        },
+        {
+          "type": "lock_requested",
+          "sequence": 6,
+          "page_id": "25f55229cda448f6b424b0a9295dd46c",
+          "request_id": null
+        },
+        {
+          "type": "lock_acquired",
+          "sequence": 7,
+          "page_id": "25f55229cda448f6b424b0a9295dd46c",
+          "request_id": null
+        },
+        {
+          "type": "txn_complete",
+          "sequence": 8,
+          "stage": "initialize",
+          "page_id": "25f55229cda448f6b424b0a9295dd46c",
+          "request_id": null
+        },
+        {
+          "type": "txn_complete",
+          "sequence": 9,
+          "stage": "",
+          "page_id": "25f55229cda448f6b424b0a9295dd46c",
+          "request_id": null
+        },
+        {
+          "type": "lock_released",
+          "sequence": 10,
+          "page_id": "25f55229cda448f6b424b0a9295dd46c",
+          "request_id": null
+        },
+        {
+          "type": "lock_requested",
+          "sequence": 11,
+          "page_id": "25f55229cda448f6b424b0a9295dd46c",
+          "request_id": null
+        },
+        {
+          "type": "lock_acquired",
+          "sequence": 12,
+          "page_id": "25f55229cda448f6b424b0a9295dd46c",
+          "request_id": null
+        },
+        {
+          "type": "txn_complete",
+          "sequence": 13,
+          "stage": "",
+          "page_id": "25f55229cda448f6b424b0a9295dd46c",
+          "request_id": null
+        },
+        {
+          "type": "recovery_result",
+          "sequence": 14,
+          "verdict": "clean",
+          "page_id": "25f55229cda448f6b424b0a9295dd46c",
+          "request_id": null
+        },
+        {
+          "type": "lock_released",
+          "sequence": 15,
+          "page_id": "25f55229cda448f6b424b0a9295dd46c",
+          "request_id": null
+        },
+        {
+          "type": "txn_complete",
+          "sequence": 16,
+          "stage": "",
+          "page_id": "25f55229cda448f6b424b0a9295dd46c",
+          "request_id": null
+        },
+        {
+          "type": "txn_complete",
+          "sequence": 17,
+          "stage": "",
+          "page_id": "25f55229cda448f6b424b0a9295dd46c",
+          "request_id": null
+        },
+        {
+          "type": "lock_requested",
+          "sequence": 18,
+          "page_id": "25f55229cda448f6b424b0a9295dd46c",
+          "request_id": "def55252427c4df093561c83f20db91d"
+        },
+        {
+          "type": "lock_acquired",
+          "sequence": 19,
+          "page_id": "25f55229cda448f6b424b0a9295dd46c",
+          "request_id": "def55252427c4df093561c83f20db91d"
+        },
+        {
+          "type": "txn_complete",
+          "sequence": 20,
+          "stage": "",
+          "page_id": "25f55229cda448f6b424b0a9295dd46c",
+          "request_id": "def55252427c4df093561c83f20db91d"
+        },
+        {
+          "type": "txn_complete",
+          "sequence": 21,
+          "stage": "intent",
+          "page_id": "25f55229cda448f6b424b0a9295dd46c",
+          "request_id": "def55252427c4df093561c83f20db91d"
+        },
+        {
+          "type": "txn_complete",
+          "sequence": 22,
+          "stage": "commit",
+          "page_id": "25f55229cda448f6b424b0a9295dd46c",
+          "request_id": "def55252427c4df093561c83f20db91d"
+        },
+        {
+          "type": "txn_complete",
+          "sequence": 23,
+          "stage": "",
+          "page_id": "25f55229cda448f6b424b0a9295dd46c",
+          "request_id": "def55252427c4df093561c83f20db91d"
+        },
+        {
+          "name": "candidate_committed_before_receipt",
+          "request_id": "def55252427c4df093561c83f20db91d",
+          "page_id": "25f55229cda448f6b424b0a9295dd46c",
+          "type": "barrier_paused",
+          "sequence": 24
+        },
+        {
+          "type": "txn_complete",
+          "sequence": 25,
+          "stage": "",
+          "page_id": "25f55229cda448f6b424b0a9295dd46c",
+          "request_id": "def55252427c4df093561c83f20db91d"
+        }
+      ],
+      "recovery": {
+        "verdict": "restored_candidate",
+        "present": {
+          "current": true,
+          "intent": false,
+          "archive": false
+        },
+        "current": {
+          "schema": "youjia.save-envelope/v1",
+          "store_id": "5c819015d4ce4a398a10e6ed53ba4abd",
+          "commit_id": "c61f7a1892144065b901406dd410565e",
+          "request_id": "def55252427c4df093561c83f20db91d",
+          "parent_commit_id": "42859d79ea274493a05e76eb0812bb07",
+          "generation": "2",
+          "payload_bytes": "{\"grants\":[1],\"watermark\":1}",
+          "payload_sha256": "6fba6f710307dd48651025ebbbc9064f0405251705605f0b46ebc7c1b8195567",
+          "envelope_sha256": "08d469df764b08b399453daf1f559dfa86d34f8f594286c28231f11a9963583c"
+        },
+        "intent": null,
+        "archive": null
+      },
+      "restart_pages": [
+        "http://127.0.0.1:37445/index.html?recovery_store=youjia-recovery-test-722272309f8a4a1dab744e81d9e15ce2"
+      ],
+      "restart_events": [
+        {
+          "type": "lock_requested",
+          "sequence": 1,
+          "page_id": "2c6dad05e5c34ee19638c1f07dedc45b",
+          "request_id": null
+        },
+        {
+          "type": "lock_acquired",
+          "sequence": 2,
+          "page_id": "2c6dad05e5c34ee19638c1f07dedc45b",
+          "request_id": null
+        },
+        {
+          "type": "txn_complete",
+          "sequence": 3,
+          "stage": "",
+          "page_id": "2c6dad05e5c34ee19638c1f07dedc45b",
+          "request_id": null
+        },
+        {
+          "type": "txn_complete",
+          "sequence": 4,
+          "stage": "cleanup",
+          "page_id": "2c6dad05e5c34ee19638c1f07dedc45b",
+          "request_id": null
+        },
+        {
+          "type": "txn_complete",
+          "sequence": 5,
+          "stage": "",
+          "page_id": "2c6dad05e5c34ee19638c1f07dedc45b",
+          "request_id": null
+        },
+        {
+          "type": "recovery_result",
+          "sequence": 6,
+          "verdict": "restored_candidate",
+          "page_id": "2c6dad05e5c34ee19638c1f07dedc45b",
+          "request_id": null
+        },
+        {
+          "type": "lock_released",
+          "sequence": 7,
+          "page_id": "2c6dad05e5c34ee19638c1f07dedc45b",
+          "request_id": null
+        }
+      ],
+      "after_retry": {
+        "present": {
+          "current": true,
+          "intent": false,
+          "archive": false
+        },
+        "current": {
+          "schema": "youjia.save-envelope/v1",
+          "store_id": "5c819015d4ce4a398a10e6ed53ba4abd",
+          "commit_id": "c61f7a1892144065b901406dd410565e",
+          "request_id": "def55252427c4df093561c83f20db91d",
+          "parent_commit_id": "42859d79ea274493a05e76eb0812bb07",
+          "generation": "2",
+          "payload_bytes": "{\"grants\":[1],\"watermark\":1}",
+          "payload_sha256": "6fba6f710307dd48651025ebbbc9064f0405251705605f0b46ebc7c1b8195567",
+          "envelope_sha256": "08d469df764b08b399453daf1f559dfa86d34f8f594286c28231f11a9963583c"
+        },
+        "intent": null,
+        "archive": null
+      },
+      "status": "PASS"
+    },
+    {
+      "barrier": "acknowledged",
+      "checks": [
+        "actual SIGKILL exit",
+        "new browser process",
+        "expected recovery verdict",
+        "trusted watermark after process restart",
+        "intent cleared",
+        "exact committed envelope retained",
+        "exactly one durable grant",
+        "business agrees with durable grant"
+      ],
+      "initial_pages": [
+        "http://127.0.0.1:37445/index.html?recovery_store=youjia-recovery-test-bd1f845123bb4ab5a06967e8c5ab9c17"
+      ],
+      "before": {
+        "present": {
+          "current": true,
+          "intent": false,
+          "archive": false
+        },
+        "current": {
+          "schema": "youjia.save-envelope/v1",
+          "store_id": "4ba6aabf7c48445d9a89cd26e96063f0",
+          "commit_id": "49f7959f67924fab9ffc4982e1450805",
+          "request_id": "dcdc56b23316449dbe6f8a13ee9bb6cc",
+          "parent_commit_id": "",
+          "generation": "1",
+          "payload_bytes": "{\"grants\":[],\"watermark\":0}",
+          "payload_sha256": "e5a6510ac9bdf697239407ea7d8fda7f3356cd33d4b8a209b9e351af37ac3009",
+          "envelope_sha256": "1f570b9382734c8da1cbe359d138410898ab24416a4fffe575cd483296200d18"
+        },
+        "intent": null,
+        "archive": null
+      },
+      "at_kill": {
+        "present": {
+          "current": true,
+          "intent": false,
+          "archive": false
+        },
+        "current": {
+          "schema": "youjia.save-envelope/v1",
+          "store_id": "4ba6aabf7c48445d9a89cd26e96063f0",
+          "commit_id": "e9bf9104c6a144d8b86b60a1edcdf702",
+          "request_id": "bd99747aa4004fbe96e7b6538856d640",
+          "parent_commit_id": "49f7959f67924fab9ffc4982e1450805",
+          "generation": "2",
+          "payload_bytes": "{\"grants\":[1],\"watermark\":1}",
+          "payload_sha256": "6fba6f710307dd48651025ebbbc9064f0405251705605f0b46ebc7c1b8195567",
+          "envelope_sha256": "7a6d3b5eaee6d22eff946d7f77f10f9591d56b968eaeaa72dd13a8a7edc7eba0"
+        },
+        "intent": null,
+        "archive": null
+      },
+      "before_kill_events": [
+        {
+          "type": "lock_requested",
+          "sequence": 1,
+          "page_id": "22778d8792344fde8beaeffaf5a2f884",
+          "request_id": null
+        },
+        {
+          "type": "lock_acquired",
+          "sequence": 2,
+          "page_id": "22778d8792344fde8beaeffaf5a2f884",
+          "request_id": null
+        },
+        {
+          "type": "txn_complete",
+          "sequence": 3,
+          "stage": "",
+          "page_id": "22778d8792344fde8beaeffaf5a2f884",
+          "request_id": null
+        },
+        {
+          "type": "recovery_result",
+          "sequence": 4,
+          "verdict": "empty",
+          "page_id": "22778d8792344fde8beaeffaf5a2f884",
+          "request_id": null
+        },
+        {
+          "type": "lock_released",
+          "sequence": 5,
+          "page_id": "22778d8792344fde8beaeffaf5a2f884",
+          "request_id": null
+        },
+        {
+          "type": "lock_requested",
+          "sequence": 6,
+          "page_id": "22778d8792344fde8beaeffaf5a2f884",
+          "request_id": null
+        },
+        {
+          "type": "lock_acquired",
+          "sequence": 7,
+          "page_id": "22778d8792344fde8beaeffaf5a2f884",
+          "request_id": null
+        },
+        {
+          "type": "txn_complete",
+          "sequence": 8,
+          "stage": "initialize",
+          "page_id": "22778d8792344fde8beaeffaf5a2f884",
+          "request_id": null
+        },
+        {
+          "type": "txn_complete",
+          "sequence": 9,
+          "stage": "",
+          "page_id": "22778d8792344fde8beaeffaf5a2f884",
+          "request_id": null
+        },
+        {
+          "type": "lock_released",
+          "sequence": 10,
+          "page_id": "22778d8792344fde8beaeffaf5a2f884",
+          "request_id": null
+        },
+        {
+          "type": "lock_requested",
+          "sequence": 11,
+          "page_id": "22778d8792344fde8beaeffaf5a2f884",
+          "request_id": null
+        },
+        {
+          "type": "lock_acquired",
+          "sequence": 12,
+          "page_id": "22778d8792344fde8beaeffaf5a2f884",
+          "request_id": null
+        },
+        {
+          "type": "txn_complete",
+          "sequence": 13,
+          "stage": "",
+          "page_id": "22778d8792344fde8beaeffaf5a2f884",
+          "request_id": null
+        },
+        {
+          "type": "recovery_result",
+          "sequence": 14,
+          "verdict": "clean",
+          "page_id": "22778d8792344fde8beaeffaf5a2f884",
+          "request_id": null
+        },
+        {
+          "type": "lock_released",
+          "sequence": 15,
+          "page_id": "22778d8792344fde8beaeffaf5a2f884",
+          "request_id": null
+        },
+        {
+          "type": "txn_complete",
+          "sequence": 16,
+          "stage": "",
+          "page_id": "22778d8792344fde8beaeffaf5a2f884",
+          "request_id": null
+        },
+        {
+          "type": "txn_complete",
+          "sequence": 17,
+          "stage": "",
+          "page_id": "22778d8792344fde8beaeffaf5a2f884",
+          "request_id": null
+        },
+        {
+          "type": "lock_requested",
+          "sequence": 18,
+          "page_id": "22778d8792344fde8beaeffaf5a2f884",
+          "request_id": "bd99747aa4004fbe96e7b6538856d640"
+        },
+        {
+          "type": "lock_acquired",
+          "sequence": 19,
+          "page_id": "22778d8792344fde8beaeffaf5a2f884",
+          "request_id": "bd99747aa4004fbe96e7b6538856d640"
+        },
+        {
+          "type": "txn_complete",
+          "sequence": 20,
+          "stage": "",
+          "page_id": "22778d8792344fde8beaeffaf5a2f884",
+          "request_id": "bd99747aa4004fbe96e7b6538856d640"
+        },
+        {
+          "type": "txn_complete",
+          "sequence": 21,
+          "stage": "intent",
+          "page_id": "22778d8792344fde8beaeffaf5a2f884",
+          "request_id": "bd99747aa4004fbe96e7b6538856d640"
+        },
+        {
+          "type": "txn_complete",
+          "sequence": 22,
+          "stage": "commit",
+          "page_id": "22778d8792344fde8beaeffaf5a2f884",
+          "request_id": "bd99747aa4004fbe96e7b6538856d640"
+        },
+        {
+          "type": "txn_complete",
+          "sequence": 23,
+          "stage": "",
+          "page_id": "22778d8792344fde8beaeffaf5a2f884",
+          "request_id": "bd99747aa4004fbe96e7b6538856d640"
+        },
+        {
+          "type": "lock_released",
+          "sequence": 24,
+          "page_id": "22778d8792344fde8beaeffaf5a2f884",
+          "request_id": "bd99747aa4004fbe96e7b6538856d640"
+        },
+        {
+          "request_id": "bd99747aa4004fbe96e7b6538856d640",
+          "type": "receipt_delivered",
+          "page_id": "22778d8792344fde8beaeffaf5a2f884",
+          "sequence": 25
+        },
+        {
+          "type": "lock_requested",
+          "sequence": 26,
+          "page_id": "22778d8792344fde8beaeffaf5a2f884",
+          "request_id": "bd99747aa4004fbe96e7b6538856d640"
+        },
+        {
+          "type": "lock_acquired",
+          "sequence": 27,
+          "page_id": "22778d8792344fde8beaeffaf5a2f884",
+          "request_id": "bd99747aa4004fbe96e7b6538856d640"
+        },
+        {
+          "type": "txn_complete",
+          "sequence": 28,
+          "stage": "",
+          "page_id": "22778d8792344fde8beaeffaf5a2f884",
+          "request_id": "bd99747aa4004fbe96e7b6538856d640"
+        },
+        {
+          "type": "txn_complete",
+          "sequence": 29,
+          "stage": "acknowledge",
+          "page_id": "22778d8792344fde8beaeffaf5a2f884",
+          "request_id": "bd99747aa4004fbe96e7b6538856d640"
+        },
+        {
+          "type": "txn_complete",
+          "sequence": 30,
+          "stage": "",
+          "page_id": "22778d8792344fde8beaeffaf5a2f884",
+          "request_id": "bd99747aa4004fbe96e7b6538856d640"
+        },
+        {
+          "type": "lock_released",
+          "sequence": 31,
+          "page_id": "22778d8792344fde8beaeffaf5a2f884",
+          "request_id": "bd99747aa4004fbe96e7b6538856d640"
+        },
+        {
+          "type": "txn_complete",
+          "sequence": 32,
+          "stage": "",
+          "page_id": "22778d8792344fde8beaeffaf5a2f884",
+          "request_id": null
+        }
+      ],
+      "recovery": {
+        "verdict": "clean",
+        "present": {
+          "current": true,
+          "intent": false,
+          "archive": false
+        },
+        "current": {
+          "schema": "youjia.save-envelope/v1",
+          "store_id": "4ba6aabf7c48445d9a89cd26e96063f0",
+          "commit_id": "e9bf9104c6a144d8b86b60a1edcdf702",
+          "request_id": "bd99747aa4004fbe96e7b6538856d640",
+          "parent_commit_id": "49f7959f67924fab9ffc4982e1450805",
+          "generation": "2",
+          "payload_bytes": "{\"grants\":[1],\"watermark\":1}",
+          "payload_sha256": "6fba6f710307dd48651025ebbbc9064f0405251705605f0b46ebc7c1b8195567",
+          "envelope_sha256": "7a6d3b5eaee6d22eff946d7f77f10f9591d56b968eaeaa72dd13a8a7edc7eba0"
+        },
+        "intent": null,
+        "archive": null
+      },
+      "restart_pages": [
+        "http://127.0.0.1:37445/index.html?recovery_store=youjia-recovery-test-bd1f845123bb4ab5a06967e8c5ab9c17"
+      ],
+      "restart_events": [
+        {
+          "type": "lock_requested",
+          "sequence": 1,
+          "page_id": "be8218006a074d859888cefffbb2ec3f",
+          "request_id": null
+        },
+        {
+          "type": "lock_acquired",
+          "sequence": 2,
+          "page_id": "be8218006a074d859888cefffbb2ec3f",
+          "request_id": null
+        },
+        {
+          "type": "txn_complete",
+          "sequence": 3,
+          "stage": "",
+          "page_id": "be8218006a074d859888cefffbb2ec3f",
+          "request_id": null
+        },
+        {
+          "type": "recovery_result",
+          "sequence": 4,
+          "verdict": "clean",
+          "page_id": "be8218006a074d859888cefffbb2ec3f",
+          "request_id": null
+        },
+        {
+          "type": "lock_released",
+          "sequence": 5,
+          "page_id": "be8218006a074d859888cefffbb2ec3f",
+          "request_id": null
+        }
+      ],
+      "after_retry": {
+        "present": {
+          "current": true,
+          "intent": false,
+          "archive": false
+        },
+        "current": {
+          "schema": "youjia.save-envelope/v1",
+          "store_id": "4ba6aabf7c48445d9a89cd26e96063f0",
+          "commit_id": "e9bf9104c6a144d8b86b60a1edcdf702",
+          "request_id": "bd99747aa4004fbe96e7b6538856d640",
+          "parent_commit_id": "49f7959f67924fab9ffc4982e1450805",
+          "generation": "2",
+          "payload_bytes": "{\"grants\":[1],\"watermark\":1}",
+          "payload_sha256": "6fba6f710307dd48651025ebbbc9064f0405251705605f0b46ebc7c1b8195567",
+          "envelope_sha256": "7a6d3b5eaee6d22eff946d7f77f10f9591d56b968eaeaa72dd13a8a7edc7eba0"
+        },
+        "intent": null,
+        "archive": null
+      },
+      "status": "PASS"
+    }
+  ],
+  "browser": "151.0.7922.173"
+}
