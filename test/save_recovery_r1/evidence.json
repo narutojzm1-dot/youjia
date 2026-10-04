@@ -1,0 +1,337 @@
+{
+  "status": "PASS",
+  "checks": 35,
+  "events": [
+    {
+      "type": "lock_requested",
+      "sequence": 1
+    },
+    {
+      "type": "lock_acquired",
+      "sequence": 2
+    },
+    {
+      "type": "txn_complete",
+      "sequence": 3,
+      "stage": ""
+    },
+    {
+      "type": "recovery_result",
+      "sequence": 4,
+      "verdict": "quarantined"
+    },
+    {
+      "type": "lock_released",
+      "sequence": 5
+    },
+    {
+      "type": "lock_requested",
+      "sequence": 6
+    },
+    {
+      "type": "lock_acquired",
+      "sequence": 7
+    },
+    {
+      "type": "txn_complete",
+      "sequence": 8,
+      "stage": "initialize"
+    },
+    {
+      "type": "txn_complete",
+      "sequence": 9,
+      "stage": ""
+    },
+    {
+      "type": "lock_released",
+      "sequence": 10
+    },
+    {
+      "type": "lock_requested",
+      "sequence": 11
+    },
+    {
+      "type": "lock_acquired",
+      "sequence": 12
+    },
+    {
+      "type": "txn_abort",
+      "sequence": 13,
+      "stage": "initialize"
+    },
+    {
+      "type": "lock_released",
+      "sequence": 14
+    },
+    {
+      "type": "txn_complete",
+      "sequence": 15,
+      "stage": ""
+    },
+    {
+      "type": "lock_requested",
+      "sequence": 16
+    },
+    {
+      "type": "lock_acquired",
+      "sequence": 17
+    },
+    {
+      "type": "txn_complete",
+      "sequence": 18,
+      "stage": ""
+    },
+    {
+      "type": "txn_abort",
+      "sequence": 19,
+      "stage": "intent"
+    },
+    {
+      "type": "lock_released",
+      "sequence": 20
+    },
+    {
+      "type": "txn_complete",
+      "sequence": 21,
+      "stage": ""
+    },
+    {
+      "type": "lock_requested",
+      "sequence": 22
+    },
+    {
+      "type": "lock_acquired",
+      "sequence": 23
+    },
+    {
+      "type": "txn_complete",
+      "sequence": 24,
+      "stage": ""
+    },
+    {
+      "type": "txn_complete",
+      "sequence": 25,
+      "stage": "intent"
+    },
+    {
+      "type": "txn_abort",
+      "sequence": 26,
+      "stage": "commit"
+    },
+    {
+      "type": "lock_released",
+      "sequence": 27
+    },
+    {
+      "type": "txn_complete",
+      "sequence": 28,
+      "stage": ""
+    },
+    {
+      "type": "lock_requested",
+      "sequence": 29
+    },
+    {
+      "type": "lock_acquired",
+      "sequence": 30
+    },
+    {
+      "type": "txn_complete",
+      "sequence": 31,
+      "stage": ""
+    },
+    {
+      "type": "txn_complete",
+      "sequence": 32,
+      "stage": "reject_intent"
+    },
+    {
+      "type": "txn_complete",
+      "sequence": 33,
+      "stage": ""
+    },
+    {
+      "type": "recovery_result",
+      "sequence": 34,
+      "verdict": "restored_parent_intent_rejected"
+    },
+    {
+      "type": "lock_released",
+      "sequence": 35
+    },
+    {
+      "type": "lock_requested",
+      "sequence": 36
+    },
+    {
+      "type": "lock_acquired",
+      "sequence": 37
+    },
+    {
+      "type": "txn_complete",
+      "sequence": 38,
+      "stage": ""
+    },
+    {
+      "type": "txn_complete",
+      "sequence": 39,
+      "stage": "intent"
+    },
+    {
+      "type": "txn_complete",
+      "sequence": 40,
+      "stage": "commit"
+    },
+    {
+      "type": "txn_complete",
+      "sequence": 41,
+      "stage": ""
+    },
+    {
+      "type": "lock_released",
+      "sequence": 42
+    },
+    {
+      "type": "txn_complete",
+      "sequence": 43,
+      "stage": ""
+    },
+    {
+      "type": "lock_requested",
+      "sequence": 44
+    },
+    {
+      "type": "lock_acquired",
+      "sequence": 45
+    },
+    {
+      "type": "txn_complete",
+      "sequence": 46,
+      "stage": ""
+    },
+    {
+      "type": "txn_complete",
+      "sequence": 47,
+      "stage": "cleanup"
+    },
+    {
+      "type": "txn_complete",
+      "sequence": 48,
+      "stage": ""
+    },
+    {
+      "type": "recovery_result",
+      "sequence": 49,
+      "verdict": "restored_candidate"
+    },
+    {
+      "type": "lock_released",
+      "sequence": 50
+    },
+    {
+      "type": "lock_requested",
+      "sequence": 51
+    },
+    {
+      "type": "lock_acquired",
+      "sequence": 52
+    },
+    {
+      "type": "txn_complete",
+      "sequence": 53,
+      "stage": ""
+    },
+    {
+      "type": "recovery_result",
+      "sequence": 54,
+      "verdict": "clean"
+    },
+    {
+      "type": "lock_released",
+      "sequence": 55
+    },
+    {
+      "type": "lock_requested",
+      "sequence": 56
+    },
+    {
+      "type": "lock_acquired",
+      "sequence": 57
+    },
+    {
+      "type": "txn_complete",
+      "sequence": 58,
+      "stage": ""
+    },
+    {
+      "type": "lock_released",
+      "sequence": 59
+    },
+    {
+      "type": "lock_requested",
+      "sequence": 60
+    },
+    {
+      "type": "lock_acquired",
+      "sequence": 61
+    },
+    {
+      "type": "txn_complete",
+      "sequence": 62,
+      "stage": ""
+    },
+    {
+      "type": "txn_complete",
+      "sequence": 63,
+      "stage": "intent"
+    },
+    {
+      "type": "txn_complete",
+      "sequence": 64,
+      "stage": "commit"
+    },
+    {
+      "type": "txn_complete",
+      "sequence": 65,
+      "stage": ""
+    },
+    {
+      "type": "lock_released",
+      "sequence": 66
+    },
+    {
+      "type": "lock_requested",
+      "sequence": 67
+    },
+    {
+      "type": "lock_acquired",
+      "sequence": 68
+    },
+    {
+      "type": "txn_complete",
+      "sequence": 69,
+      "stage": ""
+    },
+    {
+      "type": "txn_complete",
+      "sequence": 70,
+      "stage": "cleanup"
+    },
+    {
+      "type": "txn_complete",
+      "sequence": 71,
+      "stage": ""
+    },
+    {
+      "type": "recovery_result",
+      "sequence": 72,
+      "verdict": "restored_candidate"
+    },
+    {
+      "type": "lock_released",
+      "sequence": 73
+    }
+  ],
+  "scope": "real IndexedDB same-page R1 only; no R2/R3 or production claim",
+  "browser": "151.0.7922.173"
+}

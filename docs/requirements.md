@@ -200,3 +200,7 @@
 - #153/#155/#201：用户已确认近郊小路＋圆石、松果、落羽均可遇见，解除首地/首物选择依赖。正式构图/资源由 GROK-BUILD #155 交付；探索核心仍归 CURSOR-CLOUD，#176 正式接入仍需 #150。
 - #239：Leader 指定 CURSOR-CLOUD 承担 #150 R2/R3 真实浏览器重载/双页验收驱动，CURSOR-CLOUD 已接收（[接收评论](https://github.com/narutojzm1-dot/youjia/issues/239#issuecomment-5981415664)，见 EXP-HOST-RECOVERY-GATE 行）；立即可开展驱动和最小故障屏障接口，真实最终验收依赖 Leader R1 实现，不能以假Host替代。详见工单的文件范围和证据矩阵。
 - CODEX-LEAD 保留 R1 封套/持久意图/写入协调/恢复入口及 R4 迁移责任，下一架构交付应为可运行实现；ENGINEERING-SUPERVISOR 评阅接口。GAME-PM 跟进接收、当前/下一交付和解除条件。此分工修正此前 R1–R4 均由 Leader 实现的安排；不重做已交付 #199/#200/#201。
+
+### SAVE-R1-ISOLATED（2026-10-05）
+
+#150 CODEX-LEAD：隔离IndexedDB R1模块已有可运行实现及35项真实同页浏览器证据，待独立审查。#239 CURSOR-CLOUD已接收，PR247驱动骨架已交；Leader认可Probe/Fixture分离，下一项补Godot桥/Gate与Probe包装、page/request事件身份及回执注入。R2/R3仍BLOCKED，不将当前模块测试算关页/双页通过；#176与#190保持Draft，正式保存/旧档迁移不变。

@@ -1,0 +1,61 @@
+<!doctype html><meta charset="utf-8"><title>Isolated R1 verification</title>
+<script type="module">
+import {openStore,envelope,validate,newId} from './store.mjs';
+let checks=0; const events=[], names=[], stores=[];
+function ok(b,label){if(!b)throw Error(label);checks++;}
+async function fails(fn,label){let bad=false;try{await fn();}catch(_){bad=true;}ok(bad,label);}
+const payload='{"watermark":0,"grants":[]}';
+const unique=()=>{const n='youjia-recovery-test-'+newId();names.push(n);return n;};
+const open=async(name,hooks={})=>{const s=await openStore(name,hooks);stores.push(s);return s;};
+try {
+ const root=await envelope(payload), next=await envelope('{"watermark":1,"grants":[1]}',root);
+ ok(await validate(root),'root valid');ok(await validate(next),'candidate valid');
+ ok(next.parent_commit_id===root.commit_id && next.generation==='2','ancestry');
+ for(const [k,v] of [['schema','future'],['store_id','bad'],['generation','02'],['generation','9223372036854775808'],['payload_bytes','{}'],['parent_commit_id',''],['extra','future']])
+   ok(!await validate({...next,[k]:v}),'reject '+k+' '+v);
+ const other=await envelope(payload);
+ ok(other.envelope_sha256!==root.envelope_sha256,'same payload different identity');
+ await fails(()=>envelope('x'.repeat(65537)),'oversized');
+ await fails(()=>openStore('production-save'),'namespace guard');
+ const s=await open(unique(),{event:e=>events.push(e)});
+ ok((await s.recover()).verdict==='quarantined','empty never auto reset');
+ const initial=await s.initialize(payload);
+ await fails(()=>s.initialize(payload),'no overwrite seed');
+ const c=await envelope('{"watermark":1,"grants":[1]}',initial);
+ await fails(()=>s.submit({...c,payload_bytes:'{}'}),'mutated digest');
+ ok((await s.snapshot()).intent===null,'invalid candidate untouched');
+ await fails(()=>s.submit(c,{abort_stage:'intent'}),'real intent abort');
+ let snap=await s.snapshot();ok(snap.current.commit_id===initial.commit_id && snap.intent===null,'intent abort atomic');
+ await fails(()=>s.submit(c,{abort_stage:'commit'}),'real commit abort');
+ snap=await s.snapshot();ok(snap.current.commit_id===initial.commit_id && snap.intent.state==='prepared','commit abort leaves intent');
+ let recovered=await s.recover();
+ ok(recovered.verdict==='restored_parent_intent_rejected','parent restored');
+ ok(recovered.intent===null && recovered.archive[0].request_id===c.request_id,'archive and slot atomic');
+ const c2=await envelope(c.payload_bytes,initial);
+ ok(c2.request_id!==c.request_id,'retry new identity');
+ const result=await s.submit(c2);ok(result.commit_id===c2.commit_id,'verified receipt');
+ snap=await s.snapshot();ok(snap.current.commit_id===c2.commit_id && snap.intent.state==='committed','durable pair');
+ recovered=await s.recover();ok(recovered.verdict==='restored_candidate','candidate recovery');
+ ok((await s.recover()).verdict==='clean','repeat recover clean');
+ await fails(()=>s.submit(c),'stale parent rejected');
+ // Caller changes a candidate immediately after submit: stored record stays frozen.
+ const c3=await envelope('{"watermark":2,"grants":[1,2]}',c2), expected=c3.commit_id;
+ const pending=s.submit(c3);c3.payload_bytes='{}';c3.commit_id=newId();
+ ok((await pending).commit_id===expected,'frozen submission');await s.recover();
+ ok(events.filter(e=>e.type==='txn_abort').some(e=>e.stage==='intent'),'actual intent abort event');
+ ok(events.filter(e=>e.type==='txn_abort').some(e=>e.stage==='commit'),'actual commit abort event');
+ // Verify each barrier is after durable completion, not request success.
+ let seen=0;const b=await open(unique(),{barrier:async(stage,id)=>{
+   const v=await b.snapshot();
+   if(stage==='intent_prepared_complete')ok(v.intent.state==='prepared'&&v.current.commit_id===v.intent.parent.commit_id,'prepared barrier');
+   else ok(v.intent.state==='committed'&&v.current.request_id===id,'committed barrier');seen++;
+ }});
+ const br=await b.initialize(payload);await b.submit(await envelope('{"x":1}',br));ok(seen===2,'both barriers');
+ window.r1={status:'PASS',checks,events,scope:'real IndexedDB same-page R1 only; no R2/R3 or production claim'};
+}catch(e){window.r1={status:'FAIL',checks,error:String(e),stack:e.stack};}
+finally{
+ for(const s of stores)s.close();
+ for(const n of names)await new Promise((resolve,reject)=>{const r=indexedDB.deleteDatabase(n);r.onsuccess=resolve;r.onerror=()=>reject(r.error);});
+ document.body.textContent=JSON.stringify(window.r1);window.r1Done=true;
+}
+</script>
