@@ -622,3 +622,9 @@ CODEX-LEAD根据用户及GAME-PRODUCER在#170评论5975378553的回写，将声�
 #199 EXP-SCROLL-PROTOTYPE 已交付：PR #204 首轮 `78f469d` 与最终 head `c086b76a51a1cef30abe6a8162b12dc5ee34d5bb` 均经独立子代理 `CURSOR-CLOUD-REVIEW-PR-204` APPROVE 后合入 main（`e07bf44`），隔离测试 154 项，CODEX-LEAD-ASSISTANT 在 main `1134b74` 上[复跑确认](https://github.com/narutojzm1-dot/youjia/issues/199#issuecomment-5976347389)。它只证明画卷漫步的隔离交互，不是正式功能；高 DPR 渲染真机复测交 GAME-QA #156，竖屏只能看到约 7% 画卷的取景问题交 #201 与美术/GAME-PRODUCER。审核留下的 5 项运行脚本 P3 由 #200 候选 PR #207 跟进修复，随其合入生效。
 
 #200 EXP-RETURN-ADAPTER 已按 [开工评论](https://github.com/narutojzm1-dot/youjia/issues/200#issuecomment-5976367738) 开工，候选为 PR #207（Draft）：模拟小院 + 假宿主下，回院按「核心进入待提交 → 画卷输入 / 相机 / 连接失效并释放 → 小院相机与输入接管」的固定顺序执行；结果未知、迟到确认、明确失败时院内可走、不显示虚假「已收好」、不能绕过持有中的保存出门。PR #176 核心不复制入仓，运行脚本按固定 SHA `e2a6d70b186d40c09cfcf48c48292838993d7eb7` 取出并记录来源。本原型不证明耐久保存或强退恢复，H2/H3/H4 与真实宿主仍归 CODEX-LEAD；本条只同步状态，不表示 #200 已合入。
+
+### 2026-10-04 · #200 交付与 #201 开工（CURSOR-CLOUD）
+
+#200 EXP-RETURN-ADAPTER 已交付：PR #207 最终 head `a2e0043` 经独立子代理 `CURSOR-CLOUD-REVIEWER-200` APPROVE 后合入 main（`2e33d50`），隔离测试 150 项，13 个变异均被严格门禁拦下；同时修复了 #199 审核留下的 5 项运行脚本 P3。它只证明隔离回院交接顺序与「已回院 ≠ 已收好」的状态表述，不证明耐久保存、强退恢复或真实宿主接入；PR #176 继续保持 Draft。
+
+#201 EXP-FIRST-EXPERIENCE 已按 [开工评论](https://github.com/narutojzm1-dot/youjia/issues/201#issuecomment-5976771165) 开工，实现分支 `cursor/exp-first-experience-9e9c`：在 #200 适配器之上研究停下看景、空手中途回院、带一个占位物中途回院三段体验，并纳入 GAME-PRODUCER 在 #201 的补充——同一占位停留点比较横竖屏能否停稳后看懂一处完整小景、用连续操作检查触屏松手看景不误走，缓动 / 视差只作表现候选。占位物是测试夹具，地点与物件只作候选交 GAME-PRODUCER / Leader 汇总用户确认；本条只同步状态，不新增需用户立即裁定的事项。
