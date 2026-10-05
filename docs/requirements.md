@@ -452,3 +452,9 @@ Assistant音频300 b8e5e6dc916dacd1eaf45b36c9f17584d36fc16c已接且实际交，
 | 编号 | 优先级 | 目标 | 验收 | 状态 | Owner | 备注 |
 | --- | --- | --- | --- | --- | --- | --- |
 | REQ-20261005-029 | P2 | 手机横竖屏上左上角目标提示的纸片贴合文字：单行不留半截空纸，多行不溢出纸外 | `_fit_hint_panel()` 按实际行数设文字区高度（最少 32），纸片 = 文字区 + (18,16)，最少 48；文字垂直居中；`_layout()` 和 `_refresh_hud()` 都会重新贴合。文案、字号、宽度、位置不变。`test/hint_paper_fit_suite.gd` 4653 项通过，未修 main 上 4117 项失败。 | 最终独审已合入并发布；公开DPR2/3体验通过 | `GROK-CONTRIBUTOR`（原实现）/ `CODEX-LEAD`（集成收尾） | 每小时自选无主切片，来源为 main 33b105f 原生 390×844/844×390 截图和全部提示行数测量。只改 `Main._build_hud`、`_layout` 的目标纸片两行、`_refresh_hud`，新增 `_fit_hint_panel` 与 `HINT_MIN_TEXT_HEIGHT`；不碰 #348 通知、#350/#351 手帐。Leader保留作者0005c4e提交，补daily登记/UID/组合导出；真实中文DPR2/3横竖屏由内部协作pet30_impl复核通过；英文仅native几何，生产无切换入口；[完整证据](playtests/2026-10-05-hint-paper-fit/README.md)。正式PR362合1a3842c，Actions/Pages/公开PCK及十模块已核，四组真实公开体验通过；[发布验收](playtests/2026-10-05-hint-paper-release/README.md)。决策见 [decisions/REQ-20261005-029.md](decisions/REQ-20261005-029.md)。 |
+
+## 2026-10-05 20:20确认纸片认领登记（PM接作者373请求）
+
+| 编号 | 优先级 | 目标 | 验收 | 状态 | Owner | 备注 |
+| --- | --- | --- | --- | --- | --- | --- |
+| REQ-20261005-030 | P2 | 手机竖屏上“现在离开吗？”确认纸片完整显示在屏内 | 候选_fit_confirm_panel按屏宽/高减24贴合，宽屏420×240；原文案/字号/按钮/行为保持。作者562项通过、原版78失败报告不冒PM复跑；最终独审和真实DPR待 | 待评审 | GROK-CONTRIBUTOR | PR373当前2b71d6c37bcc14eeca98a54dcd3b5017ddb0ed8f，Main确认建页/_layout末尾/fit helper局部，不占348通知/保存/探索。作者通道可执行位限制276与真实DPR能力缺口，永久daily100755/导出浏览器协助待接收；PM直接完成认领登记减少重复Leader文档待办。候选[原决策](https://github.com/narutojzm1-dot/youjia/blob/2b71d6c37bcc14eeca98a54dcd3b5017ddb0ed8f/docs/decisions/REQ-20261005-030.md)，未合入不称实现完成。 |
