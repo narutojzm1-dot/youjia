@@ -1,0 +1,91 @@
+{
+  "baseline_pck_sha256": "faa935055fb62250c137625da28e15d2ac28ef3880db1e8993e5991afec84df6",
+  "candidate_pck_sha256": "89b6593e8e05951fc24f139dc01092b3281bc59cd5dcf8616caef5dc198d00e8",
+  "baseline_entries": 398,
+  "candidate_entries": 398,
+  "all_member_md5_valid": true,
+  "only_baseline": [],
+  "only_candidate": [],
+  "uid_cache": {
+    "baseline_count": 176,
+    "candidate_count": 176,
+    "order_identical": false,
+    "changed_uids": []
+  },
+  "changed_entries": [
+    {
+      "path": ".godot/exported/133200997/export-0feab151c7f4c017e25503e3b93d2f1f-resident_walk_authored_v1.scn",
+      "baseline": {
+        "size": 919,
+        "sha256": "a19d7710c70085e01ac1e35e3e9b52312c8d2357ae902ee58cdb0ede0b230aa9"
+      },
+      "candidate": {
+        "size": 919,
+        "sha256": "c018ca88e4e3364dc4b0a81e865f549a20dbf0910d29276e4036952d7977d037"
+      },
+      "changed_byte_ranges": [
+        {
+          "offset": 743,
+          "length": 4,
+          "baseline_hex": "51147222",
+          "candidate_hex": "7f2d2d6e"
+        }
+      ],
+      "known_changed_uid_occurrences": [],
+      "identical_after_restoring_known_uid_bytes": false
+    },
+    {
+      "path": ".godot/exported/133200997/export-3ad5c15c4f3250da0cc7c1af1770d85f-main.scn",
+      "baseline": {
+        "size": 866,
+        "sha256": "bc4fa35a90a2e08b0e06f9d9d776360a02aaae4fbf442ec66272ae25c85897b2"
+      },
+      "candidate": {
+        "size": 866,
+        "sha256": "b2eb744511cc4ee41095322c6a4b637b0a39fac89c56670d702c9132a75c695f"
+      },
+      "changed_byte_ranges": [
+        {
+          "offset": 690,
+          "length": 4,
+          "baseline_hex": "5484e60a",
+          "candidate_hex": "ae97e16d"
+        }
+      ],
+      "known_changed_uid_occurrences": [],
+      "identical_after_restoring_known_uid_bytes": false
+    },
+    {
+      "path": ".godot/exported/133200997/export-dac07f426739c1ddd971057bcbce664d-native_walker.scn",
+      "baseline": {
+        "size": 703,
+        "sha256": "ced104596bc7d395d00eee27d8d16455fc11bacdc17119319fd7761608b965ac"
+      },
+      "candidate": {
+        "size": 703,
+        "sha256": "426bf85bb75986f24d8a5f011b44bf0f0c925bd5af4a1d6ec891bf1120753543"
+      },
+      "changed_byte_ranges": [
+        {
+          "offset": 527,
+          "length": 4,
+          "baseline_hex": "bf95291a",
+          "candidate_hex": "25645945"
+        }
+      ],
+      "known_changed_uid_occurrences": [],
+      "identical_after_restoring_known_uid_bytes": false
+    },
+    {
+      "path": ".godot/uid_cache.bin",
+      "baseline": {
+        "size": 10135,
+        "sha256": "61df5796477795f835fce648fcfc0bc5481364aae7ac1a480be1d577ab4194ac"
+      },
+      "candidate": {
+        "size": 10135,
+        "sha256": "dd66485f2a8e8bc563bc8a06d9e26311afe13d71c17ef747517e87efef1eedce"
+      }
+    }
+  ]
+}

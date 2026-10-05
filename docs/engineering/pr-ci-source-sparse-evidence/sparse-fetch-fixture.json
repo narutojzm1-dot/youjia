@@ -1,0 +1,34 @@
+{
+  "patterns": [
+    "/*",
+    "!/docs/"
+  ],
+  "cases": [
+    {
+      "mode": "sparse_partial",
+      "head_is_exact_proposed_merge": true,
+      "all_expected_paths_and_bytes_match": true,
+      "docs_worktree_present": false,
+      "unique_docs_blob_not_fetched": true,
+      "nested_test_docs_and_all_art_retained": true
+    },
+    {
+      "mode": "sparse_without_filter",
+      "head_is_exact_proposed_merge": true,
+      "all_expected_paths_and_bytes_match": true,
+      "docs_worktree_present": false,
+      "unique_docs_blob_not_fetched": false,
+      "nested_test_docs_and_all_art_retained": true
+    },
+    {
+      "mode": "partial_without_sparse",
+      "head_is_exact_proposed_merge": true,
+      "all_expected_paths_and_bytes_match": true,
+      "docs_worktree_present": true,
+      "unique_docs_blob_not_fetched": false,
+      "nested_test_docs_and_all_art_retained": true
+    }
+  ],
+  "production_runtime_tested": false,
+  "result": "PASS: 3 Git transport/worktree cases; no game engine executed"
+}

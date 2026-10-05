@@ -1,0 +1,78 @@
+{
+  "scope": "temporary file:// Git repositories only; immutable production helper copy",
+  "cases": [
+    {
+      "mode": "full_source",
+      "source_HEAD_and_latest_title_match": true,
+      "pages_history_commit_count": 3,
+      "pages_HEAD_matches_full_origin": true,
+      "repository_is_shallow": "false",
+      "existing_bundles": [
+        "game-0f",
+        "game-22",
+        "game-3e",
+        "game-ffff"
+      ],
+      "keep": 2,
+      "selected_for_pruning": [
+        "game-0f",
+        "game-ffff"
+      ],
+      "warning": ""
+    },
+    {
+      "mode": "full_source",
+      "current": "game-dead",
+      "keep": "2",
+      "exit": 1,
+      "safe_rejection": true
+    },
+    {
+      "mode": "full_source",
+      "current": "game-3e",
+      "keep": "-1",
+      "exit": 1,
+      "safe_rejection": true
+    },
+    {
+      "mode": "shallow_source",
+      "source_HEAD_and_latest_title_match": true,
+      "pages_history_commit_count": 3,
+      "pages_HEAD_matches_full_origin": true,
+      "repository_is_shallow": "true",
+      "existing_bundles": [
+        "game-0f",
+        "game-22",
+        "game-3e",
+        "game-ffff"
+      ],
+      "keep": 2,
+      "selected_for_pruning": [],
+      "warning": "[publish] WARNING: shallow bundle history; retaining all bundles"
+    },
+    {
+      "mode": "shallow_source",
+      "current": "game-dead",
+      "keep": "2",
+      "exit": 1,
+      "safe_rejection": true
+    },
+    {
+      "mode": "shallow_source",
+      "current": "game-3e",
+      "keep": "-1",
+      "exit": 1,
+      "safe_rejection": true
+    },
+    {
+      "mode": "isolated_full_pages_control",
+      "repository_is_shallow": false,
+      "selected_for_pruning": [
+        "game-0f",
+        "game-ffff"
+      ],
+      "main_history_absent": true
+    }
+  ],
+  "result": "PASS: 7 cases; naive source depth=1 changes retention despite complete Pages history"
+}
