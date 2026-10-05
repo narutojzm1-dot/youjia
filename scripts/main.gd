@@ -10,6 +10,8 @@ const MUTED := Color("8a7060")
 const APRICOT := Color("f3b27a")
 ## 标题页副标题用的深杏色：在 PAPER 上对比约 4.6:1（APRICOT 只有约 1.7:1），#REQ-20261005-028
 const TITLE_ACCENT := Color("a85d28")
+const TEXT_LINK := Color("6b5242")
+const TEXT_LINK_HOVER := Color("3d2d23")
 ## 目标纸片里文字区的最小高度：纸面最少 48px，与「歇一会儿」按钮同高（REQ-20261005-029）
 const HINT_MIN_TEXT_HEIGHT := 32.0
 ## 「现在离开吗？」确认纸片的设计尺寸；屏幕更窄/更矮时按 _fit_confirm_panel() 收进屏内（REQ-20261005-030）。
@@ -2076,10 +2078,24 @@ func _chip_button() -> Button:
 	return result
 
 
+## 标题页「开源软件声明」等纸卡上的文字链接。原来只设了 font_color（MUTED，在 PAPER 上约 4.3:1），
+## 悬停/键盘焦点/按下都落回 Godot 默认的近白字和近白焦点框，在浅色纸卡上几乎看不见（#413）。
+## 各态都改用深墨色：在纯 PAPER 和 84% 纸卡叠黑底两端都 ≥4.5:1；悬停更深；焦点画 2px TITLE_ACCENT 描边、不填底（REQ-20261006-035）。
 func _text_button() -> Button:
 	var result := Button.new()
 	result.flat = true
-	result.add_theme_color_override("font_color", MUTED)
+	result.focus_mode = Control.FOCUS_ALL
+	result.add_theme_color_override("font_color", TEXT_LINK)
+	result.add_theme_color_override("font_focus_color", INK)
+	result.add_theme_color_override("font_hover_color", TEXT_LINK_HOVER)
+	result.add_theme_color_override("font_pressed_color", INK)
+	result.add_theme_color_override("font_hover_pressed_color", TEXT_LINK_HOVER)
+	var ring := StyleBoxFlat.new()
+	ring.draw_center = false
+	ring.set_border_width_all(2)
+	ring.border_color = TITLE_ACCENT
+	ring.set_corner_radius_all(8)
+	result.add_theme_stylebox_override("focus", ring)
 	result.add_theme_font_size_override("font_size", 14)
 	return result
 
