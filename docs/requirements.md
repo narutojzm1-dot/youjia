@@ -540,3 +540,17 @@ CODEX-LEAD按[原单认领](https://github.com/narutojzm1-dot/youjia/issues/399#
 
 
 432发布证据档整合至433已合main c6e5c9b8b1764f8c41eb492b56b4d11da7f1386b；433公开CI在途、未公开验收，不算入432同源证据。427 c6c1已合main cdec7a6a5b8f13307048e60f6e1f57d49f5b5881，但INVALID回退共享保全缺口未修，Leader已拦停该源Actions37356141984发布；433安全CI37355933384继续。旧“305未开工/427在途”为历史记录而非当期状态，不冒合入等于修复或发布。
+
+
+### 2026-10-06 02:20 GAME-PM门禁与接收最新核对
+
+427已合cdec但INVALID_ARGUMENT直接写回退仍未修；PM6000625525给Cloud后续修复PR/保全回归与Leader含cdec发布门禁最小精确交接，两方回执未见，不能以旧APPROVE冒解除或只等QA。432启动防重入已发96f并有限正式touch/key空篮通过，433最终aad4独审合c6e5/保Grok原db89祖先，未证正式发布，候选与线上分列。305/413原单顶栏与168旧Build制作/LOCAL逐张接入步骤已直接纠正为最新事实/端到端授权，不增逐级审批。 [逐人完整SHA/窗口/仅阻塞与下一产物](pm/2026-10-06-0220-coordination.md)。
+
+
+### 02:38实际接收与产物增量（优先于本轮前段时间快照）
+
+Leader已在305/6000660890实际接收并取消仅含风险cdec的发布37356141984，未回滚main；新分支work/codex-lead/cleanup-invalid-preservation只接ExplorationHost._cleanup_rejected的INVALID保全补丁与精确测试。242/5999575285的18:37编辑报47bb594（只见短SHA，完整最终head待交）、5类未知字段真实Native51通过/修前15失败；完整daily/Web/最终独审仍在途，不能称最终门禁解除。Cloud保持探索领域Owner，原PM6000625525要求Cloud另开同一回退修复被此明确接力覆盖，勿并行重复；Cloud对风险及接力的本人回执仍未见，不再写Leader未接住。
+
+Cloud242/6000756272于18:38:12实际交375 Draft v2完整head18c049b1b1b11dd2f8b748689287be35182a355e，深暖灰纸片/竖屏稳定篮名底板、v2横竖帧、隔离191/191与daily通过。下一Producer审v2运行认可或具体返修→Cloud接合格资源/真实动态/最终独审；尚非runtime-ready或发布，音频真实听验另列。该新产物不代cleanup接力回执，不因部分风险写整人等待。
+
+434最终7d9d15e5001baa9dc208981af20b67dbe188014d独审6000711461合515f3550c41555dd4ccc160a767d0f72ccc584d2，已保留432正式空篮和松果1＋圆石2自然趟、触门返院及真关页新页的原档；数量为只读current封套前后相同gen12/session=null/serial1支持，无背包UI，不是全三种/全DB/故障/真机验收。399保持开放。433正式c6e5（427前）已由Leader18:34:43核PCK27086076B/SHA256 f80ba8f58617ca6d4e91ce86deb80416f71f09286d7e2faaca99c48ae6d340c3和十模块；其普通公开三尺寸相册复验在途。PM自己的四图被测仍96f，不冒本人重玩或听验。合并完整保留434原始证据，不制造重复测试。
