@@ -517,9 +517,19 @@ CODEX-LEAD仅将可信open回复的精确OPEN_FAILED + `Error: writer_owned_by_a
 00:27后最新覆盖：Assistant419最终71de2c4a2e45074aaa9f8ac661e1d9ad50cfab01独审合ea6e8e82924ffdf5a8f899a4b3485cfacf1f3339，394公开横屏31状态/15资源已验，竖屏超时未执行/整体exit1，388不关闭；Cloud418当前1194d33898207f32fa643e39059f61fa2e08bc9b已有399实现产物、独审待，Producer最新跟进与Cloud实际作者分列，PM5998667627已衔接不重复同方法、双方接收待。305领域接线未交，不拿399修复代它。
 
 
+### #399 正式触摸补验未通过
+
+2026-10-06 #399正式触摸补验：公开ecea67dba1afc9b99b6097970e4965fbcd99c53a两fresh触摸样本出现异常初次入院/恢复表现，唯一只读重试普通路面触摸后、点门前已回院；未确证根因、未修复，不关闭399。Producer继续跟进，Cloud418既有作者，Assistant382输入边界在途不冒新修复接收。键盘/携物触门仍未有效覆盖；已有鼠标空篮通过分开保留。见[原始证据与假设边界](playtests/2026-10-06-exploration399-touch/README.md)。
+
+
 ### 2026-10-06 01:20 GAME-PM最新状态（覆盖旧等待快照）
 
 388由421同源竖屏补验结项，382已实际接收但最终实现SHA未交；Cloud305已接收未开工，418最终5499dc3a8e94619af773c2052a8204a34c82b0f5已独审合入/发布；Grok422原813c2d467134489635ec98c99f7046d3a5d8cdb7已保祖先集成425并公开ecea67dba1afc9b99b6097970e4965fbcd99c53a。用户UI交Grok授权242/5998731892落实413标题链接配色拟交GROK-CONTRIBUTOR（5999714180），尚未回执则保原OwnerAssistant queued；Build仍额度暂停。168本地3f2da4270fc6488da42eaa4ec45ca43768bb778a候选完整审画/归档独审已通过，冻结例外/上传/接入未完成，顶栏5999747225已校正。 [逐人证据/实际窗口/端到端下一交付](pm/2026-10-06-0120-coordination.md)。不冒Leader在途同构建QA完成，不重复日发布或用户已收到产品问题。
 
 
 提交后最新覆盖：Cloud305已开PR427，head a69979b5c7148034d1598ea00ba6de2c413aa5d0，领域cleanup与Main最小失败revision关联候选已交，216/216/daily为本机检查，独审/公开故障复验/合入未完；不再将该Owner当前写为未开工。此前时间快照保留。
+
+
+### 2026-10-06 #399 公共启动生命周期保底（候选）
+
+CODEX-LEAD按[原单认领](https://github.com/narutojzm1-dot/youjia/issues/399#issuecomment-5999958180)只修复一次标题触摸重复启动：play只在标题受理、await存档期间启动互斥，失败恢复后可再进、合法restart保留，音频解锁保持真实手势栈。[诊断与专项](playtests/2026-10-06-holiday-start-once/README.md)。14项原生专项、68次启动完整daily与Web导出通过；独立普通候选触摸/键盘空篮正常返院通过，最终SHA审核与正式发布待；不关闭#399，不修改Assistant382输入Owner或Cloud427清理范围，不将公开异常全部归因于尚未完整复现的迟到重建。
