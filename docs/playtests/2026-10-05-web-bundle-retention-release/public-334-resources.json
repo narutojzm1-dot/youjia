@@ -1,0 +1,51 @@
+{
+  "manifest": {
+    "schema": "youjia.release/v1",
+    "sourceCommit": "ba6d6c256c17939c2db4fd0f863b8ab61bc3d5dc",
+    "engine": "4.7.2.stable.official.ed1daf0bf",
+    "entry": "game-ba6d6c2",
+    "publishedAt": "2026-10-05T09:06:04Z"
+  },
+  "manifest_status": 200,
+  "index_status": 200,
+  "config": {
+    "args": [],
+    "canvasResizePolicy": 2,
+    "emscriptenPoolSize": 8,
+    "ensureCrossOriginIsolationHeaders": true,
+    "executable": "game-ba6d6c2",
+    "experimentalVK": false,
+    "fileSizes": {
+      "game-ba6d6c2.pck": 21955748,
+      "game-ba6d6c2.wasm": 39514754
+    },
+    "focusCanvas": true,
+    "gdextensionLibs": [],
+    "godotPoolSize": 4
+  },
+  "files": {
+    "game-ba6d6c2.js": {
+      "status": 200,
+      "bytes": 279815,
+      "sha256": "33c94cb3175f3333b82e2a3be5e8e86f77986f0aa2042b1631f6367a4e5bb6ba",
+      "git_blob_sha1": "c84b7de50f26f0dd21bd4b2885de851a3ea6ff39"
+    },
+    "game-ba6d6c2.wasm": {
+      "status": 200,
+      "bytes": 39514754,
+      "sha256": "fc74679e3b97f76878947fcd4fbe1268cbfa6188182a2e33bbc3f5dc9bfa57d0",
+      "git_blob_sha1": "8f900d00d644a698bbce67439bf6daf73bdfa4b7"
+    },
+    "game-ba6d6c2.pck": {
+      "status": 200,
+      "bytes": 21955748,
+      "sha256": "9a8b0e999a19ea95a916eabe09970e9e56f8a7affe408e87f5bb2efb94483aac",
+      "git_blob_sha1": "179e8dc0d6be6559b754fc4a453965726579d702"
+    }
+  },
+  "verified_utc": "2026-10-05T09:07:52Z",
+  "gh_pages_commit": "6d4cea11f42a7de76baf143c21a846bee2549e13",
+  "all_files_match_exact_gh_pages_tree": true,
+  "build_actions": "https://github.com/narutojzm1-dot/youjia/actions/runs/37287225730",
+  "pages_actions": "https://github.com/narutojzm1-dot/youjia/actions/runs/37287842934"
+}

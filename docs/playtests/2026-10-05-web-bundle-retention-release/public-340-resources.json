@@ -1,0 +1,51 @@
+{
+  "manifest": {
+    "schema": "youjia.release/v1",
+    "sourceCommit": "9fd261d876a8777403a8697b4b9b7f8d17d4d1a8",
+    "engine": "4.7.2.stable.official.ed1daf0bf",
+    "entry": "game-9fd261d",
+    "publishedAt": "2026-10-05T09:23:53Z"
+  },
+  "manifest_status": 200,
+  "index_status": 200,
+  "config": {
+    "args": [],
+    "canvasResizePolicy": 2,
+    "emscriptenPoolSize": 8,
+    "ensureCrossOriginIsolationHeaders": true,
+    "executable": "game-9fd261d",
+    "experimentalVK": false,
+    "fileSizes": {
+      "game-9fd261d.pck": 21955748,
+      "game-9fd261d.wasm": 39514754
+    },
+    "focusCanvas": true,
+    "gdextensionLibs": [],
+    "godotPoolSize": 4
+  },
+  "files": {
+    "game-9fd261d.js": {
+      "status": 200,
+      "bytes": 279815,
+      "sha256": "33c94cb3175f3333b82e2a3be5e8e86f77986f0aa2042b1631f6367a4e5bb6ba",
+      "git_blob_sha1": "c84b7de50f26f0dd21bd4b2885de851a3ea6ff39"
+    },
+    "game-9fd261d.wasm": {
+      "status": 200,
+      "bytes": 39514754,
+      "sha256": "fc74679e3b97f76878947fcd4fbe1268cbfa6188182a2e33bbc3f5dc9bfa57d0",
+      "git_blob_sha1": "8f900d00d644a698bbce67439bf6daf73bdfa4b7"
+    },
+    "game-9fd261d.pck": {
+      "status": 200,
+      "bytes": 21955748,
+      "sha256": "cd1fc183d005dc54a2d3e2140de6d97968336a45f85f901ae5c631bf2939d730",
+      "git_blob_sha1": "cb73998fde851892f9d7a952916ea054c76a3315"
+    }
+  },
+  "verified_utc": "2026-10-05T09:25:15Z",
+  "precise_pages_sha": "97e70a5aa2b825fffb7c68227b72b554e7b33757",
+  "git_tree_match": true,
+  "build_run": 37289044064,
+  "pages_run": 37289768031
+}

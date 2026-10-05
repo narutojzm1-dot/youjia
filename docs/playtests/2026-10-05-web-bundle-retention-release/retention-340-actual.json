@@ -1,0 +1,267 @@
+{
+  "before_pages_sha": "6d4cea11f42a7de76baf143c21a846bee2549e13",
+  "after_pages_sha": "97e70a5aa2b825fffb7c68227b72b554e7b33757",
+  "source_commit": "9fd261d876a8777403a8697b4b9b7f8d17d4d1a8",
+  "build_run": 37289044064,
+  "pages_run": 37289768031,
+  "before_pck_count": 6,
+  "after_pck_count": 4,
+  "expected_retained_in_publication_order": [
+    "game-9fd261d",
+    "game-ba6d6c2",
+    "game-8cf4941",
+    "game-fd2e9fe"
+  ],
+  "actual_retained": [
+    "game-8cf4941",
+    "game-9fd261d",
+    "game-ba6d6c2",
+    "game-fd2e9fe"
+  ],
+  "policy_match": true,
+  "preserved_files": [
+    {
+      "path": "game-8cf4941.apple-touch-icon.png",
+      "sha": "92054dfbd7070fb4dfc8aa053a0f04c601a82fb6",
+      "bytes": 59343,
+      "unchanged": true
+    },
+    {
+      "path": "game-8cf4941.audio.position.worklet.js",
+      "sha": "4e512c1e3c99c63cc69b0345b7bb250679e0d313",
+      "bytes": 2973,
+      "unchanged": true
+    },
+    {
+      "path": "game-8cf4941.audio.worklet.js",
+      "sha": "3b94cab85cb937fa27056d17648cdbb73e44bdbd",
+      "bytes": 7298,
+      "unchanged": true
+    },
+    {
+      "path": "game-8cf4941.icon.png",
+      "sha": "b1a7ffaa37d30529f92e0d3d34585c5324f841fb",
+      "bytes": 389674,
+      "unchanged": true
+    },
+    {
+      "path": "game-8cf4941.js",
+      "sha": "c84b7de50f26f0dd21bd4b2885de851a3ea6ff39",
+      "bytes": 279815,
+      "unchanged": true
+    },
+    {
+      "path": "game-8cf4941.pck",
+      "sha": "ab70a853bcc1313233af74b494d74072443f418b",
+      "bytes": 21955748,
+      "unchanged": true
+    },
+    {
+      "path": "game-8cf4941.png",
+      "sha": "23567def86edeb5c96d203ec1ddef23032d08520",
+      "bytes": 1010767,
+      "unchanged": true
+    },
+    {
+      "path": "game-8cf4941.wasm",
+      "sha": "8f900d00d644a698bbce67439bf6daf73bdfa4b7",
+      "bytes": 39514754,
+      "unchanged": true
+    },
+    {
+      "path": "game-ba6d6c2.apple-touch-icon.png",
+      "sha": "92054dfbd7070fb4dfc8aa053a0f04c601a82fb6",
+      "bytes": 59343,
+      "unchanged": true
+    },
+    {
+      "path": "game-ba6d6c2.audio.position.worklet.js",
+      "sha": "4e512c1e3c99c63cc69b0345b7bb250679e0d313",
+      "bytes": 2973,
+      "unchanged": true
+    },
+    {
+      "path": "game-ba6d6c2.audio.worklet.js",
+      "sha": "3b94cab85cb937fa27056d17648cdbb73e44bdbd",
+      "bytes": 7298,
+      "unchanged": true
+    },
+    {
+      "path": "game-ba6d6c2.icon.png",
+      "sha": "b1a7ffaa37d30529f92e0d3d34585c5324f841fb",
+      "bytes": 389674,
+      "unchanged": true
+    },
+    {
+      "path": "game-ba6d6c2.js",
+      "sha": "c84b7de50f26f0dd21bd4b2885de851a3ea6ff39",
+      "bytes": 279815,
+      "unchanged": true
+    },
+    {
+      "path": "game-ba6d6c2.pck",
+      "sha": "179e8dc0d6be6559b754fc4a453965726579d702",
+      "bytes": 21955748,
+      "unchanged": true
+    },
+    {
+      "path": "game-ba6d6c2.png",
+      "sha": "23567def86edeb5c96d203ec1ddef23032d08520",
+      "bytes": 1010767,
+      "unchanged": true
+    },
+    {
+      "path": "game-ba6d6c2.wasm",
+      "sha": "8f900d00d644a698bbce67439bf6daf73bdfa4b7",
+      "bytes": 39514754,
+      "unchanged": true
+    },
+    {
+      "path": "game-fd2e9fe.apple-touch-icon.png",
+      "sha": "92054dfbd7070fb4dfc8aa053a0f04c601a82fb6",
+      "bytes": 59343,
+      "unchanged": true
+    },
+    {
+      "path": "game-fd2e9fe.audio.position.worklet.js",
+      "sha": "4e512c1e3c99c63cc69b0345b7bb250679e0d313",
+      "bytes": 2973,
+      "unchanged": true
+    },
+    {
+      "path": "game-fd2e9fe.audio.worklet.js",
+      "sha": "3b94cab85cb937fa27056d17648cdbb73e44bdbd",
+      "bytes": 7298,
+      "unchanged": true
+    },
+    {
+      "path": "game-fd2e9fe.icon.png",
+      "sha": "b1a7ffaa37d30529f92e0d3d34585c5324f841fb",
+      "bytes": 389674,
+      "unchanged": true
+    },
+    {
+      "path": "game-fd2e9fe.js",
+      "sha": "c84b7de50f26f0dd21bd4b2885de851a3ea6ff39",
+      "bytes": 279815,
+      "unchanged": true
+    },
+    {
+      "path": "game-fd2e9fe.pck",
+      "sha": "a160d9e2d01b8ca5818713f452d3f3e6480ce060",
+      "bytes": 21924076,
+      "unchanged": true
+    },
+    {
+      "path": "game-fd2e9fe.png",
+      "sha": "23567def86edeb5c96d203ec1ddef23032d08520",
+      "bytes": 1010767,
+      "unchanged": true
+    },
+    {
+      "path": "game-fd2e9fe.wasm",
+      "sha": "8f900d00d644a698bbce67439bf6daf73bdfa4b7",
+      "bytes": 39514754,
+      "unchanged": true
+    }
+  ],
+  "deleted_files": [
+    {
+      "path": "game-fbad3c4.apple-touch-icon.png",
+      "absent": true
+    },
+    {
+      "path": "game-fbad3c4.audio.position.worklet.js",
+      "absent": true
+    },
+    {
+      "path": "game-fbad3c4.audio.worklet.js",
+      "absent": true
+    },
+    {
+      "path": "game-fbad3c4.icon.png",
+      "absent": true
+    },
+    {
+      "path": "game-fbad3c4.js",
+      "absent": true
+    },
+    {
+      "path": "game-fbad3c4.pck",
+      "absent": true
+    },
+    {
+      "path": "game-fbad3c4.png",
+      "absent": true
+    },
+    {
+      "path": "game-fbad3c4.wasm",
+      "absent": true
+    },
+    {
+      "path": "game-fce84fe.apple-touch-icon.png",
+      "absent": true
+    },
+    {
+      "path": "game-fce84fe.audio.position.worklet.js",
+      "absent": true
+    },
+    {
+      "path": "game-fce84fe.audio.worklet.js",
+      "absent": true
+    },
+    {
+      "path": "game-fce84fe.icon.png",
+      "absent": true
+    },
+    {
+      "path": "game-fce84fe.js",
+      "absent": true
+    },
+    {
+      "path": "game-fce84fe.pck",
+      "absent": true
+    },
+    {
+      "path": "game-fce84fe.png",
+      "absent": true
+    },
+    {
+      "path": "game-fce84fe.wasm",
+      "absent": true
+    },
+    {
+      "path": "game-ffeb6fb.apple-touch-icon.png",
+      "absent": true
+    },
+    {
+      "path": "game-ffeb6fb.audio.position.worklet.js",
+      "absent": true
+    },
+    {
+      "path": "game-ffeb6fb.audio.worklet.js",
+      "absent": true
+    },
+    {
+      "path": "game-ffeb6fb.icon.png",
+      "absent": true
+    },
+    {
+      "path": "game-ffeb6fb.js",
+      "absent": true
+    },
+    {
+      "path": "game-ffeb6fb.pck",
+      "absent": true
+    },
+    {
+      "path": "game-ffeb6fb.png",
+      "absent": true
+    },
+    {
+      "path": "game-ffeb6fb.wasm",
+      "absent": true
+    }
+  ],
+  "previously_deleted_bundles_restored": false
+}
