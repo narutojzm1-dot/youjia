@@ -389,5 +389,22 @@
     ],
     "native_facing": -1,
     "border_pixels_alpha_gt16": 0
+  },
+  "duck_attend": {
+    "width": 1254,
+    "height": 1254,
+    "alpha_bbox": [
+      202,
+      44,
+      935,
+      1162
+    ],
+    "ground_anchor": [
+      670.0,
+      1205
+    ],
+    "native_facing": 1,
+    "source_commit": "45ef92b9e3afe94a4df0648caa90c37394d7870e",
+    "source_sha256": "45343cf93eeac5b25ecfa6fdc55cbdc4f792add98a8f8fb4ace8e37512137eae"
   }
 }
