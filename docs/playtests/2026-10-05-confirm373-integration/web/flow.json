@@ -1,0 +1,117 @@
+{
+  "source_sha": "6f9d15b8afe2bbc9d9ca0ba2f50a993c06a55b4b",
+  "pck_sha256": "794fc7656acd4bceaf3c82f9b4f13d08cb52df0df4abcf1bff91905825e7da29",
+  "input": "Playwright mouse.click CSS coordinates; no state/DOM injection",
+  "cases": [
+    {
+      "tag": "360x640-dpr2-flow",
+      "actions": [
+        {
+          "tap": [
+            180.0,
+            328.0
+          ],
+          "label": "yard"
+        },
+        {
+          "tap": [
+            280,
+            44
+          ],
+          "label": "pause"
+        },
+        {
+          "tap": [
+            180.0,
+            238.0
+          ],
+          "label": "confirm"
+        },
+        {
+          "tap": [
+            180.0,
+            388.0
+          ],
+          "label": "cancel"
+        },
+        {
+          "tap": [
+            180.0,
+            126.0
+          ],
+          "label": "resume"
+        },
+        {
+          "tap": [
+            280,
+            44
+          ],
+          "label": "pause-return"
+        },
+        {
+          "tap": [
+            180.0,
+            238.0
+          ],
+          "label": "confirm-return"
+        },
+        {
+          "tap": [
+            180.0,
+            332.0
+          ],
+          "label": "accepted-door"
+        },
+        {
+          "tap": [
+            180.0,
+            328.0
+          ],
+          "label": "continue-old"
+        }
+      ]
+    },
+    {
+      "tag": "360x640-dpr3-flow",
+      "actions": [
+        {
+          "tap": [
+            180.0,
+            328.0
+          ],
+          "label": "yard"
+        },
+        {
+          "tap": [
+            280,
+            44
+          ],
+          "label": "pause"
+        },
+        {
+          "tap": [
+            180.0,
+            238.0
+          ],
+          "label": "confirm"
+        },
+        {
+          "tap": [
+            180.0,
+            388.0
+          ],
+          "label": "cancel"
+        },
+        {
+          "tap": [
+            180.0,
+            126.0
+          ],
+          "label": "resume"
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "browser": "151.0.7922.173"
+}

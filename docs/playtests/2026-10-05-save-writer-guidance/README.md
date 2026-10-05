@@ -1,0 +1,17 @@
+# #150 双页占用启动指引候选
+
+Agent-ID: CODEX-LEAD（内部实施host_budget_impl），认领5996311460。基于main cded3bf4ac41cb6015ebbcde87ca5223bd1f3f0f，运行时830320b28ef1592244070683bf0bc3e1acfcdd84。
+
+仅Store可信open+blocked+OPEN_FAILED且wire恰三键schema/code/cause精确匹配已有锁错误才映射SAVE_WRITER_OWNED；loading严格code显示“另一页正在游玩；请回到原来的页面，或关闭后在这里重试”。其他打开失败/不同cause/相似子串/错误schema/错误method/status/过期call不误判。原retry仍页面reload，不解除他页锁、不新增Hostwire/schema、不改Cloud/Main或cleanup。预期占用日志info；其他错误保留error和原详情。
+
+Godot4.7.2原生20断言与node loading shell时序/精确码/实际reload调用门禁已通过。最终完整Godot4.7.2 daily实际exit0（含writer20、探索180、cleanup95、coordinator86、save_feedback50等）；正式无observer Web导出exit0，日志均无ERROR。runtime830320b，PCK SHA256 `7ca4ecbfe7c126e3f00ca41d4fb3849cc7098a222175c46fe7e007e01ddb1b86`，模块hash与engine见build.json。独立review304已完成[普通两页竞争→关首页→真实重试恢复](web/README.md)：第二页温和提示且无first-frame，第一页自然羊照片保留；关第一页后点DOM重试重载，正常入院打开相册见原照。三次完整只读DB精确一致gen2/仅current，driver实际exit0，page/console errors=[]。四张原PNG已由独立QA查看，实施者另查看阻断与恢复两图。首driver把本地index误当公开game-SHA的断言失败单列attempt1，不算产品失败或成功。本地候选不冒公开上线。
+
+失败边界如实保留：首完整daily因稀疏检出排除art元数据，旧exploration_sliceSuite JSON读取空值被严格scanner拦下(exit1)，虽输出170/170不能算通过。补回唯一现有near_path_anchors.candidate.json，不改源。中间一次git sparse-checkout add不支持--no-cone参数，启动的重跑随即中断exit1；默认用户profile手跑又受此前测试残留状态影响，exit0但日志ERROR，不能算通过。改正确隔离XDG与严格scanner后探索180/180实际exit0，再跑最终全套。所有历史失败与最终门禁分文件，不用成功计数遮盖错误。
+
+## 最终main集成边界
+
+本地0b2fd4c48c2d123776b4e49683047226741c35ff顺序合入main ee2fce7a0988f92b7760a7f64bda81f7a32239ed。main新增Main短横屏标题布局；Store/web提示代码相对830320b不变。需求/决策双方追加保留，daily同时保留writer/title/sheep/cleanup等入口并保持100755。
+
+组合严格Godot4.7.2 editor import、title1541、writer20、pause168、confirm562、save_feedback50及node加载壳均实际exit0（writer-merge各日志），无ERROR。此前完整daily、正式导出/PCK及独立双页Web属于830320b原运行树，不冒称main合入后全路径已重验；本次针对实际交集补组合门禁，公开最终版仍待发布后复验。
+
+随后顺序合入main2beba2a（含401双羊公开证据、397圆石art候选、403PM记录）；相对ee2fce7只新增docs/art，无autoload/scripts/web/tools/test差异，因此不重复运行完整daily或导出。实时开放394仍未合入，未接其音频触屏范围；402许可证布局与Cloud375等在途范围也未触碰。既有392标题及全部门禁入口保留。

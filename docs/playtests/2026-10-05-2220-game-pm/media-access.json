@@ -1,0 +1,110 @@
+[
+  {
+    "name": "find-reveal-demo-1280x720.mp4",
+    "url": "https://raw.githubusercontent.com/narutojzm1-dot/youjia/52ba99a0c51fd3c72c9eb6be26e7e971875eac63/docs/playtests/2026-10-05-exploration-find-reveal-demo/videos/find-reveal-demo-1280x720.mp4",
+    "curl_exit": 0,
+    "bytes": 1986157,
+    "sha256": "69116477978ec5d7d0b159c580322a10c182e273c2844f334a355f288e43fe53",
+    "file_head": "000000206674797069736f6d",
+    "ffprobe": {
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "codec_name": "h264",
+          "codec_type": "video",
+          "width": 1280,
+          "height": 720
+        },
+        {
+          "codec_name": "aac",
+          "codec_type": "audio"
+        }
+      ],
+      "format": {
+        "duration": "27.833333"
+      }
+    }
+  },
+  {
+    "name": "find-reveal-demo-390x844.mp4",
+    "url": "https://raw.githubusercontent.com/narutojzm1-dot/youjia/52ba99a0c51fd3c72c9eb6be26e7e971875eac63/docs/playtests/2026-10-05-exploration-find-reveal-demo/videos/find-reveal-demo-390x844.mp4",
+    "curl_exit": 0,
+    "bytes": 3666724,
+    "sha256": "8b1505333d4dc4fa168eb73bbe92c2e0b01e5ff43d489386a568e5c3fc87f39a",
+    "file_head": "000000206674797069736f6d",
+    "ffprobe": {
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "codec_name": "h264",
+          "codec_type": "video",
+          "width": 390,
+          "height": 844
+        },
+        {
+          "codec_name": "aac",
+          "codec_type": "audio"
+        }
+      ],
+      "format": {
+        "duration": "27.833333"
+      }
+    }
+  },
+  {
+    "name": "find-reveal-demo-1280x720-get-plus12db.mp4",
+    "url": "https://raw.githubusercontent.com/narutojzm1-dot/youjia/52ba99a0c51fd3c72c9eb6be26e7e971875eac63/docs/playtests/2026-10-05-exploration-find-reveal-demo/videos/find-reveal-demo-1280x720-get-plus12db.mp4",
+    "curl_exit": 0,
+    "bytes": 1986097,
+    "sha256": "9d55592bd456e125f46d59f1e10e14531953ce8df81c8c63ca20fbbf28a2c45a",
+    "file_head": "000000206674797069736f6d",
+    "ffprobe": {
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "codec_name": "h264",
+          "codec_type": "video",
+          "width": 1280,
+          "height": 720
+        },
+        {
+          "codec_name": "aac",
+          "codec_type": "audio"
+        }
+      ],
+      "format": {
+        "duration": "27.833333"
+      }
+    }
+  },
+  {
+    "name": "find-reveal-demo-390x844-get-plus12db.mp4",
+    "url": "https://raw.githubusercontent.com/narutojzm1-dot/youjia/52ba99a0c51fd3c72c9eb6be26e7e971875eac63/docs/playtests/2026-10-05-exploration-find-reveal-demo/videos/find-reveal-demo-390x844-get-plus12db.mp4",
+    "curl_exit": 0,
+    "bytes": 3666664,
+    "sha256": "7247633809e1083a9ba6e546ba540fc4b9195ea2076ebc63eed6fba697788889",
+    "file_head": "000000206674797069736f6d",
+    "ffprobe": {
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "codec_name": "h264",
+          "codec_type": "video",
+          "width": 390,
+          "height": 844
+        },
+        {
+          "codec_name": "aac",
+          "codec_type": "audio"
+        }
+      ],
+      "format": {
+        "duration": "27.833333"
+      }
+    }
+  }
+]

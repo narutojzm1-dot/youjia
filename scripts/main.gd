@@ -10,8 +10,15 @@ const MUTED := Color("8a7060")
 const APRICOT := Color("f3b27a")
 ## 标题页副标题用的深杏色：在 PAPER 上对比约 4.6:1（APRICOT 只有约 1.7:1），#REQ-20261005-028
 const TITLE_ACCENT := Color("a85d28")
+const TEXT_LINK := Color("6b5242")
+const TEXT_LINK_HOVER := Color("3d2d23")
 ## 目标纸片里文字区的最小高度：纸面最少 48px，与「歇一会儿」按钮同高（REQ-20261005-029）
 const HINT_MIN_TEXT_HEIGHT := 32.0
+## 「现在离开吗？」确认纸片的设计尺寸；屏幕更窄/更矮时按 _fit_confirm_panel() 收进屏内（REQ-20261005-030）。
+const CONFIRM_PANEL_SIZE := Vector2(420, 240)
+## 屏高不超过这个值时（手机横屏扣掉浏览器地址栏、568×320 等）标题页改用更紧的排版（REQ-20261005-031）。
+const TITLE_TIGHT_MAX_HEIGHT := 360.0
+const ALBUM_TIGHT_MAX_HEIGHT := 360.0
 const SAGE := Color("8fb389")
 const CREAM := Color("fffaf1")
 const LAVENDER := Color("cbb6d6")
@@ -76,6 +83,7 @@ var _ambience_slider: HSlider
 var _music_toggle_frame := -1
 var _ambience_toggle_frame := -1
 var _confirm_screen: Control
+var _confirm_panel: PanelContainer
 var _confirm_title: Label
 var _confirm_message: Label
 var _confirm_accept_button: Button
@@ -117,7 +125,11 @@ var _photo_arrival: PhotoArrival
 var _photo_arrival_queue: Array[Dictionary] = []
 var _pending_photo_saves: Dictionary = {}
 var _save_transition := false
+var _holiday_start_pending := false
 var _save_problems: Dictionary = {}
+var _save_exploration_scopes: Dictionary = {}
+var _save_exploration_coverage: Dictionary = {}
+var _save_exploration_sequence := 0
 var _save_durable_ops: Dictionary = {}
 var _save_problem_revision := 0
 var _save_untracked_problem := false
@@ -222,6 +234,7 @@ func _ready() -> void:
 			add_child(warning)
 		return
 	SaveStore.commit_confirmed.connect(_on_save_confirmed)
+	SaveStore.exploration_intent_accepted.connect(_on_exploration_save_accepted)
 	SaveStore.commit_rejected.connect(_on_save_rejected)
 	SaveStore.commit_unknown.connect(_on_save_problem)
 	SaveStore.persistence_state_changed.connect(_on_save_state_changed)
@@ -284,6 +297,7 @@ func _ready() -> void:
 	_exploration.returned.connect(_on_exploration_returned)
 	_exploration.notice.connect(func(key: String) -> void:
 		if _screen == "game": _show_notice_key(key, _exploration.last_params))
+	_exploration.cleanup_resubmitted.connect(_on_exploration_cleanup_resubmitted)
 	I18n.locale_changed.connect(_on_locale_changed)
 	TuningStore.value_changed.connect(_on_tuning_value_changed)
 	resized.connect(_layout)
@@ -303,11 +317,9 @@ func _report_web_first_frame() -> void:
 
 
 func _process(delta: float) -> void:
-	if _notice_time > 0.0:
-		_notice_time -= delta
-		if _notice_time <= 0.0:
-			_notice.visible = false
-	_notice.visible = _notice_time > 0.0 and _screen == "game" and not _pause_screen.visible and not _album_screen.visible and not _confirm_screen.visible
+	if _notice_time > 0.0 and _can_show_notice():
+		_notice_time = maxf(0.0, _notice_time - delta)
+	_sync_notice_visibility()
 	if _notice.visible:
 		_fit_notice()
 	if _screen == "game" and _world != null and not _pause_screen.visible and not _album_screen.visible and not _confirm_screen.visible:
@@ -466,7 +478,10 @@ func _input(event: InputEvent) -> void:
 	for button: Button in buttons:
 		if button.is_visible_in_tree() and not button.disabled and button.get_global_rect().has_point(event_pos):
 			_last_touch_ms = Time.get_ticks_msec()
-			button.pressed.emit()
+			# An emulated mouse press can already hold the native GUI button.
+			# Let its release toggle audio once, including holds across frames.
+			if not (is_touch_press and button in [_music_toggle, _ambience_toggle, _mute_toggle] and button.is_pressed()):
+				button.pressed.emit()
 			get_viewport().set_input_as_handled()
 			return
 	# 触屏点到空白处：更新时间戳，交给 _unhandled_input 处理世界点击
@@ -564,6 +579,31 @@ func _build_title_screen() -> void:
 	_title_hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_title_hint.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	column.add_child(_title_hint)
+
+
+## 标题列按屏高分三档排版。≥500 原样；短横屏缩字号与间距；屏高 ≤360（568×320、
+## 带地址栏的手机横屏）原来内容高 321px 超出可用高度，操作说明掉出屏幕和纸片，
+## 这一档再收紧上下边距、行距、标题/副标题/按钮字号和两个主按钮高度，让整列完整留在屏内（REQ-20261005-031）。
+func _fit_title_column() -> void:
+	if _title_label == null: return
+	var title_column: Control = _title_label.get_parent()
+	var short := size.y < 500.0
+	var tight := size.y <= TITLE_TIGHT_MAX_HEIGHT
+	var margin := 8.0 if tight else 20.0
+	var title_width := minf(480.0,size.x-40.0)
+	title_column.offset_left = -title_width*0.5
+	title_column.offset_right = title_width*0.5
+	title_column.offset_top = -(size.y-margin*2.0)*0.5
+	title_column.offset_bottom = (size.y-margin*2.0)*0.5
+	title_column.add_theme_constant_override("separation",4 if tight else (8 if short else 14))
+	_title_label.add_theme_font_size_override("font_size",24 if tight else (28 if short else 40))
+	_subtitle_label.add_theme_font_size_override("font_size",15 if tight else 18)
+	_tagline_label.add_theme_font_size_override("font_size",14 if short else 16)
+	_title_hint.add_theme_font_size_override("font_size",12 if short else 14)
+	for button: Button in [_play_button, _album_button]:
+		button.custom_minimum_size = Vector2(260.0, 40.0 if tight else 44.0)
+		button.add_theme_font_size_override("font_size",14 if tight else 16)
+	_licenses_button.add_theme_font_size_override("font_size",12 if tight else 14)
 
 
 ## 纸片贴合标题列里实际可见的内容（列本身是整屏高、内容居中），左右留 18、上下留 14，并夹在屏内。
@@ -734,7 +774,11 @@ func _place_pause(parent: Node, nodes: Array) -> void:
 func _build_confirmation_screen() -> void:
 	_confirm_screen = _overlay()
 	add_child(_confirm_screen)
-	var box := _centered_column(Vector2(420, 240), _confirm_screen)
+	var box := _centered_column(CONFIRM_PANEL_SIZE, _confirm_screen)
+	_confirm_panel = box.get_parent()
+	# 内容比纸片高时向上下两侧同时长，保持居中（REQ-20261005-030）。
+	_confirm_panel.grow_horizontal = Control.GROW_DIRECTION_BOTH
+	_confirm_panel.grow_vertical = Control.GROW_DIRECTION_BOTH
 	_confirm_title = _label(22, INK)
 	_confirm_title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	box.add_child(_confirm_title)
@@ -748,6 +792,23 @@ func _build_confirmation_screen() -> void:
 	_confirm_cancel_button = _soft_button()
 	_confirm_cancel_button.pressed.connect(_cancel_destructive_action)
 	box.add_child(_confirm_cancel_button)
+	_fit_confirm_panel()
+
+
+## REQ-20261005-030：确认纸片原来固定 420 宽，360/390 宽的竖屏手机上左右两边伸出屏外，
+## 圆角、边框和按钮两端都被裁掉。现在宽高都不超过屏幕减去两侧 12px，仍居中；
+## 宽屏保持 420×240 不变。文案、字号、按钮、颜色和行为都不变。
+func _fit_confirm_panel() -> void:
+	if _confirm_panel == null or size.x < 64.0 or size.y < 64.0:
+		return
+	var margin := 12.0
+	var panel_w := minf(CONFIRM_PANEL_SIZE.x, size.x - margin * 2.0)
+	var panel_h := minf(CONFIRM_PANEL_SIZE.y, size.y - margin * 2.0)
+	_confirm_panel.custom_minimum_size = Vector2(panel_w, panel_h)
+	_confirm_panel.offset_left = -panel_w * 0.5
+	_confirm_panel.offset_right = panel_w * 0.5
+	_confirm_panel.offset_top = -panel_h * 0.5
+	_confirm_panel.offset_bottom = panel_h * 0.5
 
 
 func _build_album_screen() -> void:
@@ -804,7 +865,10 @@ func _build_notice() -> void:
 
 
 func _on_play_pressed() -> void:
-	_start_holiday()
+	# A touch may also release the native GUI button after entering the yard.
+	# Only the title can request entry; keep audio unlock in this gesture stack.
+	if _screen == "title":
+		_start_holiday()
 	# Same pressed stack as the real enter control. Not deferred.
 	AudioDirector.unlock_audio()
 
@@ -891,10 +955,12 @@ func _notification(what: int) -> void:
 
 
 func _start_holiday(save_progress: bool = true) -> void:
-	if not SaveStore.can_play(): return
+	if _holiday_start_pending or not SaveStore.can_play(): return
+	_holiday_start_pending = true
 	_leave_exploration()
 	if save_progress and _world != null: _world._save_progress()
 	if not await SaveStore.flush_pending() or _save_problem_active:
+		_holiday_start_pending = false
 		_show_save_pending(false)
 		return
 	TuningStore.begin_run(false)
@@ -951,6 +1017,7 @@ func _start_holiday(save_progress: bool = true) -> void:
 	AudioDirector.set_yard_active(true)
 	if _world.holiday_day == 1 and SaveStore.get_album().is_empty():
 		_show_delayed_soft_hint()
+	_holiday_start_pending = false
 
 
 ## 标题 / 重开前先按宿主中断回院，让这趟的提交排在随后的 flush 之前
@@ -1050,6 +1117,7 @@ func _toggle_pause() -> void:
 		_world.input_enabled = not paused
 		if paused: _world.cancel_scene_feedback()
 	_refresh_texts()
+	_sync_notice_visibility()
 
 
 func _request_destructive_action(action: String) -> void:
@@ -1104,7 +1172,34 @@ func _on_album_updated(collected: PackedStringArray, latest_id: String) -> void:
 	if _album_screen.visible: _rebuild_album(collected)
 
 
+func _on_exploration_save_accepted(op_id: String, kind: String, scope: Dictionary) -> void:
+	_save_exploration_sequence += 1
+	var accepted := scope.duplicate(true)
+	accepted["order"] = _save_exploration_sequence
+	accepted["kind"] = kind
+	_save_exploration_scopes[op_id] = accepted
+	var coverage := {}
+	for failed_id in _save_problems:
+		var problem: Dictionary = _save_problems[failed_id]
+		if _exploration_save_covers(accepted, problem):
+			coverage[failed_id] = problem.duplicate(true)
+	_save_exploration_coverage[op_id] = {"kind": kind, "problems": coverage}
+
+
+func _exploration_save_covers(accepted: Dictionary, problem: Dictionary) -> bool:
+	var prior: Dictionary = problem.get("scope", {})
+	if prior.is_empty() or prior.trip_id != accepted.trip_id or prior.serial != accepted.serial: return false
+	if prior.order >= accepted.order or prior.revision > accepted.revision: return false
+	if problem.kind == "exploration_trip":
+		return accepted.kind == "exploration_trip" and prior.finds == accepted.finds
+	return problem.kind == "exploration"
+
+
 func _on_save_confirmed(op_id: String, kind: String) -> void:
+	if _save_exploration_coverage.has(op_id) and _save_exploration_coverage[op_id].kind == kind:
+		_clear_covered_save_problems(_save_exploration_coverage[op_id].problems)
+		_save_exploration_coverage.erase(op_id)
+	_save_exploration_scopes.erase(op_id)
 	_save_durable_ops[op_id] = true
 	if _save_problems.get(op_id, {}).get("kind", "") == kind:
 		_save_problems.erase(op_id)
@@ -1149,11 +1244,31 @@ func _on_save_rejected(op_id: String, kind: String, code: String) -> void:
 	_pending_photo_saves.erase(op_id)
 	_save_retry_coverage.erase(op_id)
 	_on_save_problem(op_id, kind, code)
+	# Cloud may queue its trip after the return record, before that record fails.
+	# Only terminal rejection binds this exact failure revision to later accepted ops.
+	for pending_id in _save_exploration_scopes:
+		if _exploration_save_covers(_save_exploration_scopes[pending_id], _save_problems[op_id]):
+			_save_exploration_coverage[pending_id].problems[op_id] = _save_problems[op_id].duplicate(true)
+	_save_exploration_scopes.erase(op_id)
+	_save_exploration_coverage.erase(op_id)
+
+
+## 探索收尾清理被拒后宿主重交了同一份冻结请求：只把这次清理此前的失败（原样快照）绑到新编号，
+## 新编号确认后按快照精确清掉，面板在队列空闲时照常收起；失败又变了就不清
+func _on_exploration_cleanup_resubmitted(failed_ops: Array, op_id: String) -> void:
+	var problems := {}
+	for failed_id in failed_ops:
+		if _save_problems.get(failed_id, {}).get("kind", "") == "exploration_cleanup":
+			problems[failed_id] = _save_problems[failed_id].duplicate(true)
+	if not problems.is_empty():
+		_save_retry_coverage[op_id] = {"problems": problems, "untracked_revision": -1}
 
 
 func _on_save_problem(op_id: String, kind: String, _code: String) -> void:
 	_save_problem_revision += 1
 	_save_problems[op_id] = {"kind": kind, "revision": _save_problem_revision, "durable": _save_durable_ops.has(op_id)}
+	if _save_exploration_scopes.has(op_id):
+		_save_problems[op_id]["scope"] = _save_exploration_scopes[op_id].duplicate(true)
 	_show_save_pending(false)
 
 
@@ -1528,14 +1643,22 @@ func _fit_notice() -> void:
 	_notice.offset_right = half
 
 
+func _can_show_notice() -> bool:
+	return _screen == "game" and not _pause_screen.visible and not _album_screen.visible and not _confirm_screen.visible
+
+
+func _sync_notice_visibility() -> void:
+	_notice.visible = _notice_time > 0.0 and _can_show_notice()
+
+
 func _show_notice_key(key: String, params: Dictionary = {}) -> void:
 	_notice_key = key
 	_notice.text = I18n.t(key, params)
-	_notice.visible = true
 	_notice_time = 3.2
 	# 每次普通通知都重置字体大小（钓到鱼/空闲提示会在后续覆盖为更大字号）
 	_notice.add_theme_font_size_override("font_size", 16)
 	_fit_notice()
+	_sync_notice_visibility()
 
 
 func _open_licenses() -> void:
@@ -1572,36 +1695,55 @@ func _flash_catch() -> void:
 	tween.tween_callback(func() -> void: _photo_flash.color = Color(CREAM, 0.0))
 
 
-func _layout() -> void:
-	var pad := 20.0
-	if _album_chip == null: return
-	var compact := size.x < 700.0
-	var title_column: Control = _title_label.get_parent()
-	var title_width := minf(480.0,size.x-40.0)
-	title_column.offset_left = -title_width*0.5
-	title_column.offset_right = title_width*0.5
-	title_column.offset_top = -(size.y-40.0)*0.5
-	title_column.offset_bottom = (size.y-40.0)*0.5
-	title_column.add_theme_constant_override("separation",8 if size.y<500 else 14)
-	_title_label.add_theme_font_size_override("font_size",28 if size.y<500 else 40)
-	_tagline_label.add_theme_font_size_override("font_size",14 if size.y<500 else 16)
-	_title_hint.add_theme_font_size_override("font_size",12 if size.y<500 else 14)
+## REQ-20261006-034: on short landscape screens (usable height 360 or less,
+## e.g. 568x320 or a 640x300 phone browser with its bars showing) the album's
+## fixed chrome left a one-page book only 146-166 px tall, so the page number
+## and longer notes ran off the paper and into the buttons. Screens in this
+## tight band now trim the outer margin, paper padding, title size, spacing and
+## button height so the page gets the room; taller screens keep the original
+## numbers.
+func _fit_album_frame() -> void:
+	var tight := size.y <= ALBUM_TIGHT_MAX_HEIGHT
 	var album_width := minf(860.0,size.x-32.0)
-	var album_height := minf(560.0,size.y-32.0)
+	var album_height := minf(560.0,size.y-(16.0 if tight else 32.0))
 	_album_panel.custom_minimum_size = Vector2(album_width,album_height)
 	_album_panel.offset_left = -album_width*0.5
 	_album_panel.offset_right = album_width*0.5
 	_album_panel.offset_top = -album_height*0.5
 	_album_panel.offset_bottom = album_height*0.5
+	var separation := 4 if tight else 8
+	var button_height := 40.0 if tight else 42.0
+	var title_size := 18 if tight else 24
+	var padding := 6.0 if tight else 10.0
+	var frame_style := _album_panel.get_theme_stylebox("panel") as StyleBoxFlat
+	if frame_style != null:
+		frame_style.content_margin_top = padding
+		frame_style.content_margin_bottom = padding
+	(_album_title.get_parent() as VBoxContainer).add_theme_constant_override("separation", separation)
+	_album_title.add_theme_font_size_override("font_size", title_size)
+	for button: Button in [_album_previous_button, _album_next_button, _album_back_button]:
+		button.custom_minimum_size.y = button_height
 	var was_two_pages := _album_two_pages
 	_album_two_pages = album_width >= 670.0 and size.y >= 460.0
 	var book_width := album_width - 32.0
 	var book_height := album_height - 122.0
+	if tight:
+		# Panel padding + title line + two gaps + buttons + 4 px slack.
+		var title_height := ceilf(_album_title.get_theme_font("font").get_height(title_size))
+		book_height = floorf(album_height - padding * 2.0 - title_height - separation * 2.0 - button_height - 4.0)
 	_album_spread.custom_minimum_size = Vector2(book_width, book_height)
-	_album_previous_button.get_parent().custom_minimum_size = Vector2(book_width, 42)
+	_album_previous_button.get_parent().custom_minimum_size = Vector2(book_width, button_height)
 	_album_page_size = Vector2((book_width - 10.0) * 0.5 if _album_two_pages else book_width, book_height)
 	if _album_screen.visible or was_two_pages != _album_two_pages:
 		_render_album_pages()
+
+
+func _layout() -> void:
+	var pad := 20.0
+	if _album_chip == null: return
+	var compact := size.x < 700.0
+	_fit_title_column()
+	_fit_album_frame()
 	_fit_notice()
 	_notice.offset_top = -170 if compact else -110
 	_notice.offset_bottom = -130 if compact else -70
@@ -1630,6 +1772,7 @@ func _layout() -> void:
 	_weather_chip.position = Vector2(size.x-half-pad if compact else pad+210.0,row)
 	_action_button.position = Vector2(pad if compact else size.x-_action_button.size.x-pad,size.y-68.0)
 	_fit_pause_panel()
+	_fit_confirm_panel()
 
 
 ## 目标纸片按目标文字的实际行数伸缩（REQ-20261005-029）：
@@ -1695,7 +1838,7 @@ func _on_fish_caught(carry_type: String) -> void:
 	# 钓到通知：无论是否减动效都拉长可读时间（拍立得可能抢通知，YardWorld 会重发）
 	_notice_time = maxf(_notice_time, 6.5)
 	_notice.add_theme_font_size_override("font_size", 22)
-	_notice.visible = true
+	_sync_notice_visibility()
 	if bool(TuningStore.get_value("ui.reduced_motion", false)):
 		return
 	# 独立蓝色屏幕闪光（提到 UI 层最前，峰值更高，桌面 Web 不可错过）
@@ -1935,10 +2078,24 @@ func _chip_button() -> Button:
 	return result
 
 
+## 标题页「开源软件声明」等纸卡上的文字链接。原来只设了 font_color（MUTED，在 PAPER 上约 4.3:1），
+## 悬停/键盘焦点/按下都落回 Godot 默认的近白字和近白焦点框，在浅色纸卡上几乎看不见（#413）。
+## 各态都改用深墨色：在纯 PAPER 和 84% 纸卡叠黑底两端都 ≥4.5:1；悬停更深；焦点画 2px TITLE_ACCENT 描边、不填底（REQ-20261006-035）。
 func _text_button() -> Button:
 	var result := Button.new()
 	result.flat = true
-	result.add_theme_color_override("font_color", MUTED)
+	result.focus_mode = Control.FOCUS_ALL
+	result.add_theme_color_override("font_color", TEXT_LINK)
+	result.add_theme_color_override("font_focus_color", INK)
+	result.add_theme_color_override("font_hover_color", TEXT_LINK_HOVER)
+	result.add_theme_color_override("font_pressed_color", INK)
+	result.add_theme_color_override("font_hover_pressed_color", TEXT_LINK_HOVER)
+	var ring := StyleBoxFlat.new()
+	ring.draw_center = false
+	ring.set_border_width_all(2)
+	ring.border_color = TITLE_ACCENT
+	ring.set_corner_radius_all(8)
+	result.add_theme_stylebox_override("focus", ring)
 	result.add_theme_font_size_override("font_size", 14)
 	return result
 
@@ -1987,4 +2144,3 @@ func _flat(bg: Color, border: Color, width: int = 2, radius: int = 16) -> StyleB
 	style.content_margin_top = 10
 	style.content_margin_bottom = 10
 	return style
-

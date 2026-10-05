@@ -1,0 +1,22 @@
+{
+  "youjia-save-host-v1": {
+    "records": {
+      "keys": [
+        "current"
+      ],
+      "values": [
+        {
+          "schema": "youjia.save-envelope/v1",
+          "store_id": "589db72fdf484408a570cb8d4b0484e0",
+          "commit_id": "96ffdcff12114750b76c36c4573a5780",
+          "request_id": "31225807ab7343e2894e45a2374b18f4",
+          "parent_commit_id": "cbe2125427d5457f82249d8496686d30",
+          "generation": "10",
+          "payload_bytes": "{\"album\":[],\"animal_relationship_memory\":{},\"exploration\":{\"contract_version\":1,\"next_trip_serial\":2,\"session\":{\"carried\":[\"formal.find.feather\",\"formal.find.brook_stone\",\"formal.find.pine_cone\"],\"catalog\":\"formal\",\"current_stop\":\"slope\",\"failure\":null,\"offers\":{\"brook\":\"formal.find.brook_stone\",\"gate\":\"formal.find.feather\",\"shade\":\"formal.find.feather\",\"slope\":\"formal.find.pine_cone\"},\"proposal\":null,\"record_revision\":9,\"rng_seed\":\"-3026290998792184691\",\"route_id\":\"formal.near_path\",\"started_clock\":{\"day\":1,\"elapsed\":7.53176666666666},\"state\":\"active\",\"taken\":{\"brook\":\"formal.find.brook_stone\",\"shade\":\"formal.find.feather\",\"slope\":\"formal.find.pine_cone\"},\"trip_id\":\"trip-1\",\"trip_serial\":1,\"visited\":[\"gate\",\"shade\",\"brook\",\"slope\"]}},\"exploration_committed_serial\":0,\"first_fish_caught\":false,\"holiday_day\":1,\"holiday_day_elapsed\":7.53176666666666,\"keepsakes\":{},\"locale\":\"zh-CN\",\"photo_moments\":{},\"plant_day_planted\":0,\"plant_state\":0,\"plant_watered_day\":-1,\"tutorial_version\":0,\"version\":5}",
+          "payload_sha256": "c49d296fcf9c5215ceec842b1ccdaf385120c6f667e5343f6868b54e19ee6a22",
+          "envelope_sha256": "a05ade1c1d93e0471b49cef8b8ff71b7b89edf736b31c00b4a2b45a3651cd194"
+        }
+      ]
+    }
+  }
+}

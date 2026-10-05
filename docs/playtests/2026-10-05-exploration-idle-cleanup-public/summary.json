@@ -1,0 +1,137 @@
+{
+  "02-taken": {
+    "generation": "4",
+    "keepsakes": {},
+    "serial": 0,
+    "session": {
+      "carried": [
+        "formal.find.feather"
+      ],
+      "catalog": "formal",
+      "current_stop": "gate",
+      "failure": null,
+      "offers": {
+        "gate": "formal.find.feather"
+      },
+      "proposal": null,
+      "record_revision": 2,
+      "rng_seed": "-8829672528757665569",
+      "route_id": "formal.near_path",
+      "started_clock": {
+        "day": 1,
+        "elapsed": 5.20706666666667
+      },
+      "state": "active",
+      "taken": {
+        "gate": "formal.find.feather"
+      },
+      "trip_id": "trip-1",
+      "trip_serial": 1,
+      "visited": [
+        "gate"
+      ]
+    },
+    "faults": 0
+  },
+  "03-failed": {
+    "generation": "6",
+    "keepsakes": {
+      "formal.find.feather": 1
+    },
+    "serial": 1,
+    "session": {
+      "carried": [
+        "formal.find.feather"
+      ],
+      "catalog": "formal",
+      "current_stop": "gate",
+      "failure": null,
+      "offers": {
+        "gate": "formal.find.feather"
+      },
+      "proposal": {
+        "items": [
+          {
+            "find_id": "formal.find.feather"
+          }
+        ],
+        "reason": "player",
+        "revision": 1,
+        "route_id": "formal.near_path",
+        "trip_id": "trip-1"
+      },
+      "record_revision": 3,
+      "rng_seed": "-8829672528757665569",
+      "route_id": "formal.near_path",
+      "started_clock": {
+        "day": 1,
+        "elapsed": 5.20706666666667
+      },
+      "state": "pending_commit",
+      "taken": {
+        "gate": "formal.find.feather"
+      },
+      "trip_id": "trip-1",
+      "trip_serial": 1,
+      "visited": [
+        "gate"
+      ]
+    },
+    "faults": 0
+  },
+  "04-retry": {
+    "generation": "6",
+    "keepsakes": {
+      "formal.find.feather": 1
+    },
+    "serial": 1,
+    "session": {
+      "carried": [
+        "formal.find.feather"
+      ],
+      "catalog": "formal",
+      "current_stop": "gate",
+      "failure": null,
+      "offers": {
+        "gate": "formal.find.feather"
+      },
+      "proposal": {
+        "items": [
+          {
+            "find_id": "formal.find.feather"
+          }
+        ],
+        "reason": "player",
+        "revision": 1,
+        "route_id": "formal.near_path",
+        "trip_id": "trip-1"
+      },
+      "record_revision": 3,
+      "rng_seed": "-8829672528757665569",
+      "route_id": "formal.near_path",
+      "started_clock": {
+        "day": 1,
+        "elapsed": 5.20706666666667
+      },
+      "state": "pending_commit",
+      "taken": {
+        "gate": "formal.find.feather"
+      },
+      "trip_id": "trip-1",
+      "trip_serial": 1,
+      "visited": [
+        "gate"
+      ]
+    },
+    "faults": 1
+  },
+  "05-reopen": {
+    "generation": "7",
+    "keepsakes": {
+      "formal.find.feather": 1
+    },
+    "serial": 1,
+    "session": null,
+    "faults": 0
+  }
+}

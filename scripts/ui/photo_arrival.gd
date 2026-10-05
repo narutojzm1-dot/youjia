@@ -5,6 +5,12 @@ signal tucked_away
 
 const POLAROID := preload("res://assets/holiday/ui/polaroid_frame.png")
 const CARD_SIZE := Vector2(240, 300)
+## The "shutter" caption sits this far above the card's top edge (34px label + 12px gap).
+const SHUTTER_GAP := 46.0
+const SHUTTER_HEIGHT := 34.0
+## Minimum clearance from every screen edge when the print has to be scaled down.
+const VIEW_MARGIN := 8.0
+const MIN_FIT_SCALE := 0.5
 
 var _card: Control
 var _frame: TextureRect
@@ -13,6 +19,8 @@ var _caption: Label
 var _shutter: Label
 var _tween: Tween
 var _snapshot: Dictionary = {}
+var _presentation_duration := 0.0
+var _motion_static := false
 
 
 func _ready() -> void:
@@ -60,6 +68,8 @@ func _ready() -> void:
 	_shutter.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(_shutter)
 	visible = false
+	get_node("/root/TuningStore").value_changed.connect(_on_motion_changed)
+	get_viewport().size_changed.connect(_on_viewport_resized)
 
 
 func play(snapshot: Dictionary, reduced_motion: bool) -> bool:
@@ -70,15 +80,12 @@ func play(snapshot: Dictionary, reduced_motion: bool) -> bool:
 	_snapshot = valid
 	_picture.setup(valid)
 	refresh_locale()
-	var viewport := get_viewport_rect().size
-	var center := viewport * 0.5
-	_card.position = center - CARD_SIZE * 0.5
-	_card.scale = Vector2.ONE
+	_layout(get_viewport_rect().size)
 	_card.modulate.a = 1.0
-	_shutter.position = Vector2(maxf(12.0, (viewport.x - 360.0) * 0.5), _card.position.y - 46.0)
-	_shutter.size = Vector2(minf(360.0, viewport.x - 24.0), 34)
 	_shutter.modulate.a = 1.0
 	visible = true
+	_motion_static = reduced_motion
+	_presentation_duration = 1.6 if reduced_motion else 1.58
 	if reduced_motion:
 		_tween = create_tween().set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
 		_tween.tween_interval(1.6)
@@ -92,6 +99,70 @@ func play(snapshot: Dictionary, reduced_motion: bool) -> bool:
 	_tween.parallel().tween_property(_shutter, "modulate:a", 0.0, 0.24)
 	_tween.tween_callback(_finish)
 	return true
+
+
+func _on_motion_changed(id: String, _requested: Variant, active: Variant) -> void:
+	if id != "ui.reduced_motion" or active != true or _motion_static or not visible or _tween == null:
+		return
+	var remaining := maxf(0.0, _presentation_duration - _tween.get_total_elapsed_time())
+	_tween.kill()
+	_tween = null
+	_motion_static = true
+	_card.modulate.a = 1.0
+	_shutter.modulate.a = 1.0
+	if remaining <= 0.0:
+		_finish()
+		return
+	_tween = create_tween().set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
+	_tween.tween_interval(remaining)
+	_tween.tween_callback(_finish)
+
+
+## REQ-20261005-033: on short landscape screens (e.g. 568×320, 640×300) the
+## centred 240×300 print touched the edges and its shutter caption sat above
+## the top of the screen. When the full-size stack (caption + card) fits with
+## VIEW_MARGIN, keep the original centred full-size layout; otherwise scale the
+## card around its centre and centre the caption+card stack on screen.
+static func fit_layout(viewport: Vector2) -> Dictionary:
+	var center := viewport * 0.5
+	var shutter_width := minf(360.0, viewport.x - 24.0)
+	var shutter_x := maxf(12.0, (viewport.x - 360.0) * 0.5)
+	var full_top := center.y - CARD_SIZE.y * 0.5
+	if full_top - SHUTTER_GAP >= VIEW_MARGIN and CARD_SIZE.x + VIEW_MARGIN * 2.0 <= viewport.x:
+		return {
+			"scale": 1.0,
+			"card_position": center - CARD_SIZE * 0.5,
+			"shutter_position": Vector2(shutter_x, full_top - SHUTTER_GAP),
+			"shutter_size": Vector2(shutter_width, SHUTTER_HEIGHT),
+		}
+	var fit := minf((viewport.y - VIEW_MARGIN * 2.0 - SHUTTER_GAP) / CARD_SIZE.y, (viewport.x - VIEW_MARGIN * 2.0) / CARD_SIZE.x)
+	fit = clampf(fit, MIN_FIT_SCALE, 1.0)
+	var visual := CARD_SIZE * fit
+	var stack_top := maxf(VIEW_MARGIN, (viewport.y - SHUTTER_GAP - visual.y) * 0.5)
+	var visual_top := stack_top + SHUTTER_GAP
+	# The card scales around pivot_offset (its centre): visual top-left = position + pivot * (1 - scale).
+	var pivot := CARD_SIZE * 0.5
+	return {
+		"scale": fit,
+		"card_position": Vector2(center.x - visual.x * 0.5, visual_top) - pivot * (1.0 - fit),
+		"shutter_position": Vector2(shutter_x, stack_top),
+		"shutter_size": Vector2(shutter_width, SHUTTER_HEIGHT),
+	}
+
+
+func _layout(viewport: Vector2) -> void:
+	var fit := fit_layout(viewport)
+	var factor := float(fit.scale)
+	_card.pivot_offset = CARD_SIZE * 0.5
+	_card.scale = Vector2(factor, factor)
+	_card.position = fit.card_position
+	_shutter.position = fit.shutter_position
+	_shutter.size = fit.shutter_size
+
+
+func _on_viewport_resized() -> void:
+	if visible and not _snapshot.is_empty():
+		_layout(get_viewport_rect().size)
 
 
 func refresh_locale() -> void:

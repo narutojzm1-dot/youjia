@@ -1,0 +1,34 @@
+import json,time
+from pathlib import Path
+from playwright.sync_api import sync_playwright
+out=Path('/tmp/input195-observe');out.mkdir(exist_ok=True)
+results=[]
+with sync_playwright() as p:
+ for w,h in [(844,390),(390,844)]:
+  b=p.chromium.launch(executable_path='/usr/bin/chromium',headless=True,args=['--no-sandbox','--use-gl=angle','--use-angle=swiftshader','--enable-webgl'])
+  pg=b.new_page(viewport={'width':w,'height':h},device_scale_factor=3);errors=[]
+  pg.on('pageerror',lambda e:errors.append(str(e)));pg.on('console',lambda m:errors.append(m.text) if m.type=='error' else None)
+  pg.add_init_script("""window.first=false;window.addEventListener('youjia:first-frame',()=>window.first=true); window.domInputTrace=[];
+  for (const k of ['pointerdown','pointerup','mousedown','mouseup']) document.addEventListener(k,e=>domInputTrace.push({kind:k,trusted:e.isTrusted,x:e.clientX,y:e.clientY,t:performance.now()}),true);
+  window.observedGainNodes=[];const proto=BaseAudioContext.prototype,original=proto.createGain;proto.createGain=function(...args){const node=Reflect.apply(original,this,args);window.observedGainNodes.push({node,creator:new Error().stack});return node;};
+  """)
+  pg.goto('http://127.0.0.1:8146/');pg.wait_for_function('window.first',timeout=120000)
+  pg.mouse.click(w/2,h/2);pg.wait_for_timeout(350);pg.keyboard.press('Escape');pg.wait_for_timeout(4000);pg.wait_for_function("window.nativeInputTrace?.at(-1)?.buttons?._mute_toggle?.visible",timeout=30000)
+  def record(stage):
+   r=pg.evaluate("({native:window.nativeInputTrace||[],dom:window.domInputTrace,gains:observedGainNodes.filter(o=>o.creator.includes('channel')).map(o=>o.node.gain.value),backend:JSON.parse(__manusBgm.diagnostics())})")
+   r.update({'stage':stage,'view':[w,h,3],'errors':errors.copy()});results.append(r)
+   (out/'events.json').write_text(json.dumps(results,ensure_ascii=False,indent=2));return r
+  initial=record('before')
+  rect=initial['native'][-1]['buttons']['_mute_toggle']['rect'];x,y,rw,rh=rect
+  legacy=(252,297) if w==844 else (190,666)
+  pg.mouse.click(*legacy,delay=500);pg.wait_for_timeout(1000);record('legacy-mute-point')
+  center=(x+rw/2,y+rh/2)
+  # Portrait legacy point actually mutes; restore once before center comparison.
+  if pg.evaluate('window.nativeInputTrace.at(-1).muted'):
+   pg.mouse.click(*center,delay=500);pg.wait_for_timeout(1000);record('legacy-restore')
+  pg.mouse.click(*center,delay=500);pg.wait_for_timeout(1000);record('native-center-mute')
+  pg.screenshot(path=str(out/f'{w}-{h}-center-muted.png'),scale='css')
+  pg.mouse.click(*center,delay=500);pg.wait_for_timeout(1000);record('native-center-unmute')
+  assert not errors,errors
+  b.close()
+print(json.dumps([{'stage':r['stage'],'view':r['view'],'gains':r['gains'],'last_native':r['native'][-1]} for r in results],ensure_ascii=False))

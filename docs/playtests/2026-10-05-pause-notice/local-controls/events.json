@@ -1,0 +1,602 @@
+[
+  {
+    "stage": "paused-before-controls",
+    "view": [
+      844,
+      390,
+      3
+    ],
+    "build": "index",
+    "backend": {
+      "buffers": 2,
+      "bytes": 90316800,
+      "decoded": 2,
+      "starts": 2,
+      "players": 2,
+      "playing": 2,
+      "state": "running"
+    },
+    "gains": [
+      0.3981071710586548,
+      0.15848931670188904
+    ],
+    "errors": [],
+    "screenshot": "844-390-dpr3-paused-before-controls.png"
+  },
+  {
+    "stage": "music-half",
+    "view": [
+      844,
+      390,
+      3
+    ],
+    "build": "index",
+    "backend": {
+      "buffers": 2,
+      "bytes": 90316800,
+      "decoded": 2,
+      "starts": 2,
+      "players": 2,
+      "playing": 2,
+      "state": "running"
+    },
+    "gains": [
+      0.3981071710586548,
+      0.08082955330610275
+    ],
+    "errors": [],
+    "screenshot": "844-390-dpr3-music-half.png"
+  },
+  {
+    "stage": "ambience-half",
+    "view": [
+      844,
+      390,
+      3
+    ],
+    "build": "index",
+    "backend": {
+      "buffers": 2,
+      "bytes": 90316800,
+      "decoded": 2,
+      "starts": 2,
+      "players": 2,
+      "playing": 2,
+      "state": "running"
+    },
+    "gains": [
+      0.2030346542596817,
+      0.08082955330610275
+    ],
+    "errors": [],
+    "screenshot": "844-390-dpr3-ambience-half.png"
+  },
+  {
+    "stage": "muted",
+    "view": [
+      844,
+      390,
+      3
+    ],
+    "build": "index",
+    "backend": {
+      "buffers": 2,
+      "bytes": 90316800,
+      "decoded": 2,
+      "starts": 2,
+      "players": 2,
+      "playing": 2,
+      "state": "running"
+    },
+    "gains": [
+      0.2030346542596817,
+      0.08082955330610275
+    ],
+    "errors": [],
+    "screenshot": "844-390-dpr3-muted.png",
+    "expected_effective": false
+  },
+  {
+    "stage": "unmuted",
+    "view": [
+      844,
+      390,
+      3
+    ],
+    "build": "index",
+    "backend": {
+      "buffers": 2,
+      "bytes": 90316800,
+      "decoded": 2,
+      "starts": 2,
+      "players": 2,
+      "playing": 2,
+      "state": "running"
+    },
+    "gains": [
+      0.2030346542596817,
+      0.08082955330610275
+    ],
+    "errors": [],
+    "screenshot": "844-390-dpr3-unmuted.png",
+    "expected_effective": true
+  },
+  {
+    "stage": "music-off",
+    "view": [
+      844,
+      390,
+      3
+    ],
+    "build": "index",
+    "backend": {
+      "buffers": 2,
+      "bytes": 90316800,
+      "decoded": 2,
+      "starts": 2,
+      "players": 2,
+      "playing": 1,
+      "state": "running"
+    },
+    "gains": [
+      0.2030346542596817,
+      0.08082955330610275
+    ],
+    "errors": [],
+    "screenshot": "844-390-dpr3-music-off.png",
+    "expected_effective": true
+  },
+  {
+    "stage": "music-on",
+    "view": [
+      844,
+      390,
+      3
+    ],
+    "build": "index",
+    "backend": {
+      "buffers": 2,
+      "bytes": 90316800,
+      "decoded": 2,
+      "starts": 3,
+      "players": 3,
+      "playing": 2,
+      "state": "running"
+    },
+    "gains": [
+      0.2030346542596817,
+      0.08082955330610275,
+      0.08082955330610275
+    ],
+    "errors": [],
+    "screenshot": "844-390-dpr3-music-on.png",
+    "expected_effective": true
+  },
+  {
+    "stage": "ambience-off",
+    "view": [
+      844,
+      390,
+      3
+    ],
+    "build": "index",
+    "backend": {
+      "buffers": 2,
+      "bytes": 90316800,
+      "decoded": 2,
+      "starts": 3,
+      "players": 3,
+      "playing": 1,
+      "state": "running"
+    },
+    "gains": [
+      0.2030346542596817,
+      0.08082955330610275,
+      0.08082955330610275
+    ],
+    "errors": [],
+    "screenshot": "844-390-dpr3-ambience-off.png",
+    "expected_effective": true
+  },
+  {
+    "stage": "ambience-on",
+    "view": [
+      844,
+      390,
+      3
+    ],
+    "build": "index",
+    "backend": {
+      "buffers": 2,
+      "bytes": 90316800,
+      "decoded": 2,
+      "starts": 4,
+      "players": 3,
+      "playing": 2,
+      "state": "running"
+    },
+    "gains": [
+      0.2030346542596817,
+      0.08082955330610275,
+      0.08082955330610275
+    ],
+    "errors": [],
+    "screenshot": "844-390-dpr3-ambience-on.png",
+    "expected_effective": true
+  },
+  {
+    "stage": "resume-first-hint",
+    "view": [
+      844,
+      390,
+      3
+    ],
+    "build": "index",
+    "backend": {
+      "buffers": 2,
+      "bytes": 90316800,
+      "decoded": 2,
+      "starts": 4,
+      "players": 3,
+      "playing": 2,
+      "state": "running"
+    },
+    "gains": [
+      0.5099999904632568,
+      0.08082955330610275,
+      0.2030346542596817
+    ],
+    "errors": [],
+    "screenshot": "844-390-dpr3-resume-first-hint.png"
+  },
+  {
+    "stage": "paused-visible-hint",
+    "view": [
+      844,
+      390,
+      3
+    ],
+    "build": "index",
+    "backend": {
+      "buffers": 2,
+      "bytes": 90316800,
+      "decoded": 2,
+      "starts": 4,
+      "players": 3,
+      "playing": 2,
+      "state": "running"
+    },
+    "gains": [
+      0.2030346542596817,
+      0.08082955330610275,
+      0.08082955330610275
+    ],
+    "errors": [],
+    "screenshot": "844-390-dpr3-paused-visible-hint.png"
+  },
+  {
+    "stage": "resume-preserved-hint",
+    "view": [
+      844,
+      390,
+      3
+    ],
+    "build": "index",
+    "backend": {
+      "buffers": 2,
+      "bytes": 90316800,
+      "decoded": 2,
+      "starts": 4,
+      "players": 3,
+      "playing": 2,
+      "state": "running"
+    },
+    "gains": [
+      0.5099999904632568,
+      0.08082955330610275,
+      0.2030346542596817
+    ],
+    "errors": [],
+    "screenshot": "844-390-dpr3-resume-preserved-hint.png"
+  },
+  {
+    "stage": "paused-before-controls",
+    "view": [
+      390,
+      844,
+      3
+    ],
+    "build": "index",
+    "backend": {
+      "buffers": 2,
+      "bytes": 90316800,
+      "decoded": 2,
+      "starts": 2,
+      "players": 2,
+      "playing": 2,
+      "state": "running"
+    },
+    "gains": [
+      0.3981071710586548,
+      0.15848931670188904
+    ],
+    "errors": [],
+    "screenshot": "390-844-dpr3-paused-before-controls.png"
+  },
+  {
+    "stage": "music-half",
+    "view": [
+      390,
+      844,
+      3
+    ],
+    "build": "index",
+    "backend": {
+      "buffers": 2,
+      "bytes": 90316800,
+      "decoded": 2,
+      "starts": 2,
+      "players": 2,
+      "playing": 2,
+      "state": "running"
+    },
+    "gains": [
+      0.3981071710586548,
+      0.07607486844062805
+    ],
+    "errors": [],
+    "screenshot": "390-844-dpr3-music-half.png"
+  },
+  {
+    "stage": "ambience-half",
+    "view": [
+      390,
+      844,
+      3
+    ],
+    "build": "index",
+    "backend": {
+      "buffers": 2,
+      "bytes": 90316800,
+      "decoded": 2,
+      "starts": 2,
+      "players": 2,
+      "playing": 2,
+      "state": "running"
+    },
+    "gains": [
+      0.19109143316745758,
+      0.07607486844062805
+    ],
+    "errors": [],
+    "screenshot": "390-844-dpr3-ambience-half.png"
+  },
+  {
+    "stage": "muted",
+    "view": [
+      390,
+      844,
+      3
+    ],
+    "build": "index",
+    "backend": {
+      "buffers": 2,
+      "bytes": 90316800,
+      "decoded": 2,
+      "starts": 2,
+      "players": 2,
+      "playing": 2,
+      "state": "running"
+    },
+    "gains": [
+      0,
+      0
+    ],
+    "errors": [],
+    "screenshot": "390-844-dpr3-muted.png",
+    "expected_effective": true
+  },
+  {
+    "stage": "unmuted",
+    "view": [
+      390,
+      844,
+      3
+    ],
+    "build": "index",
+    "backend": {
+      "buffers": 2,
+      "bytes": 90316800,
+      "decoded": 2,
+      "starts": 2,
+      "players": 2,
+      "playing": 2,
+      "state": "running"
+    },
+    "gains": [
+      0.19109143316745758,
+      0.07607486844062805
+    ],
+    "errors": [],
+    "screenshot": "390-844-dpr3-unmuted.png",
+    "expected_effective": true
+  },
+  {
+    "stage": "music-off",
+    "view": [
+      390,
+      844,
+      3
+    ],
+    "build": "index",
+    "backend": {
+      "buffers": 2,
+      "bytes": 90316800,
+      "decoded": 2,
+      "starts": 2,
+      "players": 2,
+      "playing": 1,
+      "state": "running"
+    },
+    "gains": [
+      0.19109143316745758,
+      0.07607486844062805
+    ],
+    "errors": [],
+    "screenshot": "390-844-dpr3-music-off.png",
+    "expected_effective": true
+  },
+  {
+    "stage": "music-on",
+    "view": [
+      390,
+      844,
+      3
+    ],
+    "build": "index",
+    "backend": {
+      "buffers": 2,
+      "bytes": 90316800,
+      "decoded": 2,
+      "starts": 3,
+      "players": 3,
+      "playing": 2,
+      "state": "running"
+    },
+    "gains": [
+      0.19109143316745758,
+      0.07607486844062805,
+      0.07607486844062805
+    ],
+    "errors": [],
+    "screenshot": "390-844-dpr3-music-on.png",
+    "expected_effective": true
+  },
+  {
+    "stage": "ambience-off",
+    "view": [
+      390,
+      844,
+      3
+    ],
+    "build": "index",
+    "backend": {
+      "buffers": 2,
+      "bytes": 90316800,
+      "decoded": 2,
+      "starts": 3,
+      "players": 3,
+      "playing": 1,
+      "state": "running"
+    },
+    "gains": [
+      0.19109143316745758,
+      0.07607486844062805,
+      0.07607486844062805
+    ],
+    "errors": [],
+    "screenshot": "390-844-dpr3-ambience-off.png",
+    "expected_effective": true
+  },
+  {
+    "stage": "ambience-on",
+    "view": [
+      390,
+      844,
+      3
+    ],
+    "build": "index",
+    "backend": {
+      "buffers": 2,
+      "bytes": 90316800,
+      "decoded": 2,
+      "starts": 4,
+      "players": 3,
+      "playing": 2,
+      "state": "running"
+    },
+    "gains": [
+      0.19109143316745758,
+      0.07607486844062805,
+      0.07607486844062805
+    ],
+    "errors": [],
+    "screenshot": "390-844-dpr3-ambience-on.png",
+    "expected_effective": true
+  },
+  {
+    "stage": "resume-first-hint",
+    "view": [
+      390,
+      844,
+      3
+    ],
+    "build": "index",
+    "backend": {
+      "buffers": 2,
+      "bytes": 90316800,
+      "decoded": 2,
+      "starts": 4,
+      "players": 3,
+      "playing": 2,
+      "state": "running"
+    },
+    "gains": [
+      0.47999998927116394,
+      0.07607486844062805,
+      0.19109143316745758
+    ],
+    "errors": [],
+    "screenshot": "390-844-dpr3-resume-first-hint.png"
+  },
+  {
+    "stage": "paused-visible-hint",
+    "view": [
+      390,
+      844,
+      3
+    ],
+    "build": "index",
+    "backend": {
+      "buffers": 2,
+      "bytes": 90316800,
+      "decoded": 2,
+      "starts": 4,
+      "players": 3,
+      "playing": 2,
+      "state": "running"
+    },
+    "gains": [
+      0.19109143316745758,
+      0.07607486844062805,
+      0.07607486844062805
+    ],
+    "errors": [],
+    "screenshot": "390-844-dpr3-paused-visible-hint.png"
+  },
+  {
+    "stage": "resume-preserved-hint",
+    "view": [
+      390,
+      844,
+      3
+    ],
+    "build": "index",
+    "backend": {
+      "buffers": 2,
+      "bytes": 90316800,
+      "decoded": 2,
+      "starts": 4,
+      "players": 3,
+      "playing": 2,
+      "state": "running"
+    },
+    "gains": [
+      0.47999998927116394,
+      0.07607486844062805,
+      0.19109143316745758
+    ],
+    "errors": [],
+    "screenshot": "390-844-dpr3-resume-preserved-hint.png"
+  }
+]

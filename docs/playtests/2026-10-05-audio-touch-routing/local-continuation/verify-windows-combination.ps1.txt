@@ -1,0 +1,62 @@
+param([string]$StartAt = '')
+$ErrorActionPreference = 'Stop'
+$repo = 'D:\games\youjia-test\assistant'
+$out = 'D:\games\youjia-test\assistant-recovery\windows-combination'
+$engine = 'D:\games\youjia-test\producer-recovery\godot472\Godot_v4.7.2-stable_win64_console.exe'
+New-Item -ItemType Directory -Force -Path $out | Out-Null
+$override = Join-Path $repo 'override.cfg'
+if (Test-Path -LiteralPath $override) { throw 'Existing override.cfg: refuse to replace it.' }
+$runId = 'youjia-assistant-combination-' + [guid]::NewGuid().ToString('N')
+$results = [System.Collections.Generic.List[object]]::new()
+if ($StartAt -and (Test-Path (Join-Path $out 'results.json'))) {
+    foreach ($old in (Get-Content (Join-Path $out 'results.json') -Raw | ConvertFrom-Json)) {
+        if ($old.status -ne 'FAIL') { $results.Add($old) }
+    }
+}
+$runner = Get-Content -LiteralPath (Join-Path $repo 'tools/verify_daily_life.sh') -Raw
+$suites = [regex]::Match($runner, 'for suite in (.*?); do').Groups[1].Value.Split(' ', [System.StringSplitOptions]::RemoveEmptyEntries)
+$linuxOnly = @('yard_snapshot', 'fishing_active_hud', 'save_candidate', 'fish_miss_feedback')
+$invocations = [System.Collections.Generic.List[object]]::new()
+$invocations.Add(@{name='import'; args=@('--editor','--import','--quit')})
+$invocations.Add(@{name='test_suite'; args=@('res://test/test_suite.tscn')})
+$invocations.Add(@{name='locomotion_suite'; args=@('res://test/locomotion_suite.tscn')})
+foreach ($suite in $suites) {
+    if ($linuxOnly -contains $suite) {
+        if (-not $StartAt) { $results.Add(@{name=$suite; status='NOT_RUN_LINUX_PATH_GUARD'; reason='Unmodified suite requires OS user dir under literal /tmp/youjia-daily-check.'}) }
+    } else {
+        $invocations.Add(@{name=$suite; args=@('--script', "test/${suite}_suite.gd")})
+    }
+}
+foreach ($suite in @('album_layout','pause_notice','audio_button_input','still_boundary_feedback','ui_viewports','web_save_bridge/decoder','web_save_bridge/legacy')) {
+    $script = if ($suite -eq 'ui_viewports') { 'test/ui_viewports.gd' } else { "test/${suite}_suite.gd" }
+    $invocations.Add(@{name=$suite.Replace('/','-'); args=@('--script', $script)})
+}
+git -C $repo rev-parse HEAD | Set-Content -LiteralPath (Join-Path $out 'source-sha.txt')
+& $engine --version | Set-Content -LiteralPath (Join-Path $out 'engine-version.txt')
+try {
+    $caseNumber = 0
+    $running = -not $StartAt
+    foreach ($inv in $invocations) {
+        if ($inv.name -eq $StartAt) { $running = $true }
+        if (-not $running) { continue }
+        $caseNumber++
+        $profile = "$runId/case-$caseNumber"
+        $config = "[application]`nconfig/use_custom_user_dir=true`nconfig/custom_user_dir_name=`"$profile`"`n"
+        [System.IO.File]::WriteAllText($override, $config, [System.Text.UTF8Encoding]::new($false))
+        $env:XDG_DATA_HOME = (Join-Path $env:APPDATA $runId).Replace('\','/')
+        $env:YOUJIA_TEST_ISOLATED_DATA = $env:XDG_DATA_HOME
+        $log = Join-Path $out ($inv.name + '.log')
+        $started = Get-Date
+        & $engine --headless --path $repo @($inv.args) *> $log
+        $code = $LASTEXITCODE
+        $hasErrors = Select-String -LiteralPath $log -Pattern '^(SCRIPT ERROR|ERROR:)|(^|\s)FAIL(\s|:|$)|REFUSED:' -Quiet
+        $status = if ($code -eq 0 -and -not $hasErrors) { 'PASS' } else { 'FAIL' }
+        $results.Add(@{name=$inv.name; status=$status; exit=$code; seconds=((Get-Date)-$started).TotalSeconds; log=[System.IO.Path]::GetFileName($log)})
+        $results | ConvertTo-Json -Depth 6 | Set-Content -LiteralPath (Join-Path $out 'results.json') -Encoding utf8
+        Write-Output "$($inv.name): $status (exit $code)"
+        if ($status -eq 'FAIL') { Get-Content -LiteralPath $log -Tail 20; throw "Verification blocked at $($inv.name)" }
+    }
+} finally {
+    Remove-Item -LiteralPath $override
+}
+Write-Output "Native Windows combination complete: $($invocations.Count) invocations. Four literal Linux-path guarded suites NOT RUN; this is not full strict daily."

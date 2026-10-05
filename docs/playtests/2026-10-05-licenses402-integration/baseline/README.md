@@ -1,0 +1,11 @@
+# PR402 read-only native review
+
+Exact author head: c496ec19054ea1cbd34661a4f7abf21bf2342acb. Exact author module and suite fetched into a minimal isolated project; no author branch or production edits. Godot 4.7.2 official ed1daf0bf, Xorg dummy display :93, software OpenGL. This is a rendered native Linux window, not physical phone or full-game startup evidence.
+
+Author suite: 120 checks / 0 failures, actual exit 0 (author-suite.log). Its resize path closes/reopens between sizes, so it does not cover resizing an already open dialog.
+
+Native run actual exit 0; all three screenshot stages captured. Native run: run_native.py + test/native_review.gd, native-final.log. At 390x844 first open, dialog 366x377 at (12,234), text minimum 350x320. Original final-portrait.png inspected: readable wrapped text and visible OK. Actual X11 XTest pointer click on OK closed/freed dialog; CONFIRM_CLOSED=true. Next open at 1280x720: dialog576x377, text minimum560x320. Without closing dialog, resize root390x844: dialog remains576x377 at(0,172). Original final-live-resize-portrait.png inspected: right text and close button clipped outside root, right scrollbar inaccessible. OK remains visible in this portrait case. Thus live-resize support is not complete; do not claim all controls inaccessible or cold-open failure.
+
+Implementation only computes fit in open(), with no viewport size_changed handler. Fix should recompute TextEdit minimum before clamping/recentering the same live dialog, and avoid stale callbacks after freed dialog. Add live-open resize regression rather than only reopen tests. Before integration still need permanent daily entry, REQ032 canonical registration, final-SHA independent review and appropriate integration gate. No reason to rush this into day release.
+
+Initial native.log/portrait.png/live-resize.png are exploratory excluded probes: ALSA missing device caused fallback, and synthetic Enter did not activate focused OK. They are not product failures or confirmation evidence. Final uses Dummy audio and real X11 click; only VSync unsupported environment warning. Web HTML opener unchanged/unexercised. Screenshots are original display captures; no business-state injection.

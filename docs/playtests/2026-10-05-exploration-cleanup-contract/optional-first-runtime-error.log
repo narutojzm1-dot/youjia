@@ -1,0 +1,22 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+SCRIPT ERROR: Invalid access to property or key 'proposal' on a base object of type 'Dictionary'.
+          at: ExplorationSession._load_session (res://scripts/exploration/exploration_session.gd:164)
+          GDScript backtrace (most recent call first):
+              [0] _load_session (res://scripts/exploration/exploration_session.gd:164)
+              [1] _restore_from (res://scripts/exploration/exploration_session.gd:102)
+              [2] restore (res://scripts/exploration/exploration_session.gd:52)
+              [3] _valid_exploration_cleanup (res://autoload/save_store.gd:310)
+              [4] request_exploration_cleanup (res://autoload/save_store.gd:280)
+              [5] run (res://test/exploration_cleanup_contract_suite.gd:81)
+              [6] flush_pending (res://autoload/save_store.gd:539)
+SCRIPT ERROR: Invalid access to property or key 'retryable' on a base object of type 'Nil'.
+          at: ExplorationSession._restore_from (res://scripts/exploration/exploration_session.gd:113)
+          GDScript backtrace (most recent call first):
+              [0] _restore_from (res://scripts/exploration/exploration_session.gd:113)
+              [1] restore (res://scripts/exploration/exploration_session.gd:52)
+              [2] _valid_exploration_cleanup (res://autoload/save_store.gd:310)
+              [3] request_exploration_cleanup (res://autoload/save_store.gd:280)
+              [4] run (res://test/exploration_cleanup_contract_suite.gd:81)
+              [5] flush_pending (res://autoload/save_store.gd:539)
+EXPLORATION CLEANUP 75 checks failures=[]

@@ -1,0 +1,33 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+AUDIT PASS title button dispatch starts game
+AUDIT PASS raw mouse moves initial player through GUI
+AUDIT PASS raw touch reaches grass and picks it up without teleport
+AUDIT PASS target is naturally moving before approach
+AUDIT PASS moving llama selection retains exact destination
+AUDIT PASS invalid newer tap cancels pending llama approach without interacting
+AUDIT PASS raw touch reaches llama and collects exact feeding photo
+AUDIT moving llama displacement=1.42977750301361 final reach=87.9507827758789
+AUDIT PASS start lead away from grass
+REPRO arrival p=(413.2305, 575.1405) llama=(484.0484, 552.9523) grass_dist=77.3349914550781 holding=true lead=true
+AUDIT PASS grass arrival picks grass without toggling nearby llama
+AUDIT PASS explicit grass tap with full hands cannot feed nearby llama
+AUDIT PASS empty hands after feeding by grass
+AUDIT PASS release using actual HUD button
+REPRO before llama tap p=(413.2305, 575.1405) llama=(482.0078, 553.5903) grass_dist=77.3349914550781
+REPRO result holding=false leading=true notice=草泥马跟着你，沿着草地走。 p=(413.2305, 575.1405) llama=(481.4511, 553.7643)
+AUDIT PASS explicit llama tap restarts lead instead of picking nearby grass
+AUDIT PASS second llama selection begins outside interaction range
+AUDIT PASS explicit llama route is not snapped to nearby grass or animals
+ARRIVAL grass distance=70.5074310302734
+AUDIT PASS arrival regression overlaps grass interaction range
+AUDIT PASS llama intent survives arrival inside grass range
+AUDIT PASS Space performs the same release displayed by HUD
+AUDIT PASS explicit grass tap picks grass after release
+AUDIT PASS HUD feed selects llama near grass
+AUDIT PASS HUD grass selects grass near llama
+AUDIT PASS natural scene provides lawn point near another animal
+AUDIT PASS background destination is not re-snapped to nearby actor
+AUDIT PASS invalid newer pointer cancels previous route and intent
+AUDIT PASS invalid pointer never consumes grass or toggles lead
+[explicit-target-tests] failures=[]

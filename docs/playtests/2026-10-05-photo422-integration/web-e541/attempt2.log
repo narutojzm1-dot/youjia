@@ -1,0 +1,2 @@
+/workspace/photo-fit-web/fit-refined.py:39: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+  factor=min(1,(h-24-46)/300);cw=240*factor;ch=300*factor;top=h/2-150 if factor==1 else 58;clip={'x':w/2-cw/2,'y':top,'width':cw,'height':ch};raw=pg.screenshot(clip=clip,scale='css');im=Image.open(io.BytesIO(raw)).convert('RGB');pixels=list(im.crop((5,25,14,min(180,im.height-20))).getdata());fraction=sum(min(z)>170 and max(z)-min(z)<85 for z in pixels)/len(pixels)

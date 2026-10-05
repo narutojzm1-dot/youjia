@@ -1,0 +1,347 @@
+{
+  "current_envelope_exact_equal_after_retry_reopen": true,
+  "after_retry": {
+    "schema": "youjia.save-envelope/v1",
+    "store_id": "8dc11b8474fa464c97531db4262febb2",
+    "commit_id": "f5ecd6013090435ab39030472eff1b7f",
+    "request_id": "edfd5122c71142f999033b49a52f1058",
+    "parent_commit_id": "6ad50d68815d402ea443223522ccaa2a",
+    "generation": "7",
+    "payload_bytes": "{\"album\":[],\"animal_relationship_memory\":{},\"exploration\":{\"contract_version\":1,\"next_trip_serial\":2,\"session\":null},\"exploration_committed_serial\":1,\"first_fish_caught\":false,\"holiday_day\":1,\"holiday_day_elapsed\":1.46666666666667,\"keepsakes\":{\"formal.find.feather\":1},\"locale\":\"zh-CN\",\"photo_moments\":{},\"plant_day_planted\":0,\"plant_state\":0,\"plant_watered_day\":-1,\"tutorial_version\":0,\"version\":5}",
+    "payload_sha256": "a4a8ab62d6c4c06e87a04aad02269c6b23c06ef1f06782085569ea5552fab116",
+    "envelope_sha256": "c006fb92b829edcfb0c532e019ce418595ec61267dec24878d9785bb7e7cc402"
+  },
+  "reopened": {
+    "schema": "youjia.save-envelope/v1",
+    "store_id": "8dc11b8474fa464c97531db4262febb2",
+    "commit_id": "f5ecd6013090435ab39030472eff1b7f",
+    "request_id": "edfd5122c71142f999033b49a52f1058",
+    "parent_commit_id": "6ad50d68815d402ea443223522ccaa2a",
+    "generation": "7",
+    "payload_bytes": "{\"album\":[],\"animal_relationship_memory\":{},\"exploration\":{\"contract_version\":1,\"next_trip_serial\":2,\"session\":null},\"exploration_committed_serial\":1,\"first_fish_caught\":false,\"holiday_day\":1,\"holiday_day_elapsed\":1.46666666666667,\"keepsakes\":{\"formal.find.feather\":1},\"locale\":\"zh-CN\",\"photo_moments\":{},\"plant_day_planted\":0,\"plant_state\":0,\"plant_watered_day\":-1,\"tutorial_version\":0,\"version\":5}",
+    "payload_sha256": "a4a8ab62d6c4c06e87a04aad02269c6b23c06ef1f06782085569ea5552fab116",
+    "envelope_sha256": "c006fb92b829edcfb0c532e019ce418595ec61267dec24878d9785bb7e7cc402"
+  },
+  "receipts": [
+    {
+      "method": "prepare",
+      "time": 1791225802514,
+      "wire": {
+        "schema": "youjia.save-prepared/v1",
+        "namespace": "youjia-save-host-v1",
+        "store_id": "8dc11b8474fa464c97531db4262febb2",
+        "write_id": "1",
+        "request_id": "99996c148d8445a58dd544ed6bcfd026",
+        "candidate_token": "5f60ba51a08c46ff9baeb1cab1b48664",
+        "parent_token": "4cc8b0151cc440d087aee3fc1061c85a",
+        "payload_sha256": "27f0b0b39521f598fe9c24c6d4cedeb4a19d483ccf87387607d0ba9f4c6aed54",
+        "generation": "2"
+      }
+    },
+    {
+      "method": "submit",
+      "time": 1791225810382,
+      "wire": {
+        "schema": "youjia.save-receipt/v2",
+        "namespace": "youjia-save-host-v1",
+        "write_id": "1",
+        "request_id": "99996c148d8445a58dd544ed6bcfd026",
+        "store_id": "8dc11b8474fa464c97531db4262febb2",
+        "candidate_token": "5f60ba51a08c46ff9baeb1cab1b48664",
+        "parent_token": "4cc8b0151cc440d087aee3fc1061c85a",
+        "observed_token": "5f60ba51a08c46ff9baeb1cab1b48664",
+        "payload_sha256": "27f0b0b39521f598fe9c24c6d4cedeb4a19d483ccf87387607d0ba9f4c6aed54",
+        "generation": "2",
+        "outcome": "confirmed",
+        "transaction_state": "complete",
+        "readback_verified": true,
+        "old_write_terminated": true
+      }
+    },
+    {
+      "method": "acknowledge",
+      "time": 1791225812800,
+      "wire": {
+        "schema": "youjia.save-ack/v1",
+        "namespace": "youjia-save-host-v1",
+        "request_id": "99996c148d8445a58dd544ed6bcfd026",
+        "write_id": "1",
+        "status": "cleared"
+      }
+    },
+    {
+      "method": "prepare",
+      "time": 1791225813479,
+      "wire": {
+        "schema": "youjia.save-prepared/v1",
+        "namespace": "youjia-save-host-v1",
+        "store_id": "8dc11b8474fa464c97531db4262febb2",
+        "write_id": "2",
+        "request_id": "8ae55f1e16d642a4b34935624d1d7aaa",
+        "candidate_token": "37d7b30004164d57bd62f0fb77f7dfe0",
+        "parent_token": "5f60ba51a08c46ff9baeb1cab1b48664",
+        "payload_sha256": "d6b1bae182112b857cad98a4e3018c5b3a6adb25bff9e2f37a535056a776e20c",
+        "generation": "3"
+      }
+    },
+    {
+      "method": "submit",
+      "time": 1791225818101,
+      "wire": {
+        "schema": "youjia.save-receipt/v2",
+        "namespace": "youjia-save-host-v1",
+        "write_id": "2",
+        "request_id": "8ae55f1e16d642a4b34935624d1d7aaa",
+        "store_id": "8dc11b8474fa464c97531db4262febb2",
+        "candidate_token": "37d7b30004164d57bd62f0fb77f7dfe0",
+        "parent_token": "5f60ba51a08c46ff9baeb1cab1b48664",
+        "observed_token": "37d7b30004164d57bd62f0fb77f7dfe0",
+        "payload_sha256": "d6b1bae182112b857cad98a4e3018c5b3a6adb25bff9e2f37a535056a776e20c",
+        "generation": "3",
+        "outcome": "confirmed",
+        "transaction_state": "complete",
+        "readback_verified": true,
+        "old_write_terminated": true
+      }
+    },
+    {
+      "method": "acknowledge",
+      "time": 1791225825584,
+      "wire": {
+        "schema": "youjia.save-ack/v1",
+        "namespace": "youjia-save-host-v1",
+        "request_id": "8ae55f1e16d642a4b34935624d1d7aaa",
+        "write_id": "2",
+        "status": "cleared"
+      }
+    },
+    {
+      "method": "prepare",
+      "time": 1791225826214,
+      "wire": {
+        "schema": "youjia.save-prepared/v1",
+        "namespace": "youjia-save-host-v1",
+        "store_id": "8dc11b8474fa464c97531db4262febb2",
+        "write_id": "3",
+        "request_id": "fd4d7cf373f34490a35228b2ec686521",
+        "candidate_token": "db33c1da51114caea3dc7d98e876df7b",
+        "parent_token": "37d7b30004164d57bd62f0fb77f7dfe0",
+        "payload_sha256": "01dceb0705b2f41bd61954de6bdf801abda04ef516a5e3ab08ede17bd3b0a912",
+        "generation": "4"
+      }
+    },
+    {
+      "method": "submit",
+      "time": 1791225832315,
+      "wire": {
+        "schema": "youjia.save-receipt/v2",
+        "namespace": "youjia-save-host-v1",
+        "write_id": "3",
+        "request_id": "fd4d7cf373f34490a35228b2ec686521",
+        "store_id": "8dc11b8474fa464c97531db4262febb2",
+        "candidate_token": "db33c1da51114caea3dc7d98e876df7b",
+        "parent_token": "37d7b30004164d57bd62f0fb77f7dfe0",
+        "observed_token": "db33c1da51114caea3dc7d98e876df7b",
+        "payload_sha256": "01dceb0705b2f41bd61954de6bdf801abda04ef516a5e3ab08ede17bd3b0a912",
+        "generation": "4",
+        "outcome": "confirmed",
+        "transaction_state": "complete",
+        "readback_verified": true,
+        "old_write_terminated": true
+      }
+    },
+    {
+      "method": "acknowledge",
+      "time": 1791225836450,
+      "wire": {
+        "schema": "youjia.save-ack/v1",
+        "namespace": "youjia-save-host-v1",
+        "request_id": "fd4d7cf373f34490a35228b2ec686521",
+        "write_id": "3",
+        "status": "cleared"
+      }
+    },
+    {
+      "method": "prepare",
+      "time": 1791225838380,
+      "wire": {
+        "schema": "youjia.save-prepared/v1",
+        "namespace": "youjia-save-host-v1",
+        "store_id": "8dc11b8474fa464c97531db4262febb2",
+        "write_id": "4",
+        "request_id": "0ff9b66806a94159901fb61ae91a4c38",
+        "candidate_token": "b4cc74b6e4e545cda678d1b2a40640cb",
+        "parent_token": "db33c1da51114caea3dc7d98e876df7b",
+        "payload_sha256": "508fc500eee77dd52b37a8c77008fef6e7f09c4c9a3d0b8048177197dd3fc40a",
+        "generation": "5"
+      }
+    },
+    {
+      "method": "submit",
+      "time": 1791225843483,
+      "wire": {
+        "schema": "youjia.save-receipt/v2",
+        "namespace": "youjia-save-host-v1",
+        "write_id": "4",
+        "request_id": "0ff9b66806a94159901fb61ae91a4c38",
+        "store_id": "8dc11b8474fa464c97531db4262febb2",
+        "candidate_token": "b4cc74b6e4e545cda678d1b2a40640cb",
+        "parent_token": "db33c1da51114caea3dc7d98e876df7b",
+        "observed_token": "b4cc74b6e4e545cda678d1b2a40640cb",
+        "payload_sha256": "508fc500eee77dd52b37a8c77008fef6e7f09c4c9a3d0b8048177197dd3fc40a",
+        "generation": "5",
+        "outcome": "confirmed",
+        "transaction_state": "complete",
+        "readback_verified": true,
+        "old_write_terminated": true
+      }
+    },
+    {
+      "method": "acknowledge",
+      "time": 1791225852480,
+      "wire": {
+        "schema": "youjia.save-ack/v1",
+        "namespace": "youjia-save-host-v1",
+        "request_id": "0ff9b66806a94159901fb61ae91a4c38",
+        "write_id": "4",
+        "status": "cleared"
+      }
+    },
+    {
+      "method": "prepare",
+      "time": 1791225853682,
+      "wire": {
+        "schema": "youjia.save-prepared/v1",
+        "namespace": "youjia-save-host-v1",
+        "store_id": "8dc11b8474fa464c97531db4262febb2",
+        "write_id": "5",
+        "request_id": "7be63c25bf664c91989f04f26aa965c2",
+        "candidate_token": "6ad50d68815d402ea443223522ccaa2a",
+        "parent_token": "b4cc74b6e4e545cda678d1b2a40640cb",
+        "payload_sha256": "a33e628c140a49077861f09aa2bf36a6a4147fe66ae5ac77bd27527ccb361ad2",
+        "generation": "6"
+      }
+    },
+    {
+      "method": "submit",
+      "time": 1791225862592,
+      "wire": {
+        "schema": "youjia.save-receipt/v2",
+        "namespace": "youjia-save-host-v1",
+        "write_id": "5",
+        "request_id": "7be63c25bf664c91989f04f26aa965c2",
+        "store_id": "8dc11b8474fa464c97531db4262febb2",
+        "candidate_token": "6ad50d68815d402ea443223522ccaa2a",
+        "parent_token": "b4cc74b6e4e545cda678d1b2a40640cb",
+        "observed_token": "6ad50d68815d402ea443223522ccaa2a",
+        "payload_sha256": "a33e628c140a49077861f09aa2bf36a6a4147fe66ae5ac77bd27527ccb361ad2",
+        "generation": "6",
+        "outcome": "confirmed",
+        "transaction_state": "complete",
+        "readback_verified": true,
+        "old_write_terminated": true
+      }
+    },
+    {
+      "method": "acknowledge",
+      "time": 1791225870221,
+      "wire": {
+        "schema": "youjia.save-ack/v1",
+        "namespace": "youjia-save-host-v1",
+        "request_id": "7be63c25bf664c91989f04f26aa965c2",
+        "write_id": "5",
+        "status": "cleared"
+      }
+    },
+    {
+      "method": "prepare",
+      "time": 1791225873705,
+      "wire": {
+        "schema": "youjia.save-prepared/v1",
+        "namespace": "youjia-save-host-v1",
+        "store_id": "8dc11b8474fa464c97531db4262febb2",
+        "write_id": "6",
+        "request_id": "25063a908f964c5bbf446eb797a70682",
+        "candidate_token": "999e539e47c14879800cd0ba9ca15e8f",
+        "parent_token": "6ad50d68815d402ea443223522ccaa2a",
+        "payload_sha256": "a4a8ab62d6c4c06e87a04aad02269c6b23c06ef1f06782085569ea5552fab116",
+        "generation": "7"
+      }
+    },
+    {
+      "method": "submit",
+      "time": 1791225878432,
+      "wire": {
+        "schema": "youjia.save-error/v1",
+        "code": "WRITE_UNKNOWN_RESOLVE_REQUIRED",
+        "cause": "UnknownError: controlled exact idle cleanup intent failure"
+      }
+    },
+    {
+      "method": "resolve",
+      "time": 1791225916309,
+      "wire": {
+        "schema": "youjia.save-receipt/v2",
+        "namespace": "youjia-save-host-v1",
+        "write_id": "6",
+        "request_id": "25063a908f964c5bbf446eb797a70682",
+        "store_id": "8dc11b8474fa464c97531db4262febb2",
+        "candidate_token": "999e539e47c14879800cd0ba9ca15e8f",
+        "parent_token": "6ad50d68815d402ea443223522ccaa2a",
+        "observed_token": "6ad50d68815d402ea443223522ccaa2a",
+        "payload_sha256": "a4a8ab62d6c4c06e87a04aad02269c6b23c06ef1f06782085569ea5552fab116",
+        "generation": "7",
+        "outcome": "rejected",
+        "transaction_state": "terminated",
+        "readback_verified": true,
+        "old_write_terminated": true
+      }
+    },
+    {
+      "method": "prepare",
+      "time": 1791225917701,
+      "wire": {
+        "schema": "youjia.save-prepared/v1",
+        "namespace": "youjia-save-host-v1",
+        "store_id": "8dc11b8474fa464c97531db4262febb2",
+        "write_id": "7",
+        "request_id": "edfd5122c71142f999033b49a52f1058",
+        "candidate_token": "f5ecd6013090435ab39030472eff1b7f",
+        "parent_token": "6ad50d68815d402ea443223522ccaa2a",
+        "payload_sha256": "a4a8ab62d6c4c06e87a04aad02269c6b23c06ef1f06782085569ea5552fab116",
+        "generation": "7"
+      }
+    },
+    {
+      "method": "submit",
+      "time": 1791225922189,
+      "wire": {
+        "schema": "youjia.save-receipt/v2",
+        "namespace": "youjia-save-host-v1",
+        "write_id": "7",
+        "request_id": "edfd5122c71142f999033b49a52f1058",
+        "store_id": "8dc11b8474fa464c97531db4262febb2",
+        "candidate_token": "f5ecd6013090435ab39030472eff1b7f",
+        "parent_token": "6ad50d68815d402ea443223522ccaa2a",
+        "observed_token": "f5ecd6013090435ab39030472eff1b7f",
+        "payload_sha256": "a4a8ab62d6c4c06e87a04aad02269c6b23c06ef1f06782085569ea5552fab116",
+        "generation": "7",
+        "outcome": "confirmed",
+        "transaction_state": "complete",
+        "readback_verified": true,
+        "old_write_terminated": true
+      }
+    },
+    {
+      "method": "acknowledge",
+      "time": 1791225925074,
+      "wire": {
+        "schema": "youjia.save-ack/v1",
+        "namespace": "youjia-save-host-v1",
+        "request_id": "edfd5122c71142f999033b49a52f1058",
+        "write_id": "7",
+        "status": "cleared"
+      }
+    }
+  ]
+}

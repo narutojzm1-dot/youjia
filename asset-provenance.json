@@ -877,17 +877,18 @@
       "origin": "generated",
       "generator": {
         "name": "ChatGPT image generation (GAME-PRODUCER, recovered)",
-        "brief": "02 院外近郊 scene candidate recovered byte-for-byte by GAME-PRODUCER into art/concepts/producer_world_20261005/02_near_path.png; runtime copy for the painted-path near walk."
+        "brief": "02 院外近郊 scene candidate recovered by GAME-PRODUCER, then locally cleaned (painted pine cone/feather removed, PR #393 c2f342d) into art/concepts/producer_near_path_clean_v1/near_path_clean_candidate.png; runtime copy for the painted-path near walk."
       },
       "inputs": [
+        "art/concepts/producer_near_path_clean_v1/near_path_clean_candidate.png",
         "art/concepts/producer_world_20261005/02_near_path.png"
       ],
       "license": {},
       "source": {
-        "note": "Source PNG sha256 8ab62a6d43053e7bf7994e797a2ec07d79d369d46cbdee005700509bc6e0f154 per producer manifest; candidate, not final art sign-off."
+        "note": "Cleaned PNG sha256 ade3ee4108fb0726961fc83ae04f01effb21df6023501332909c45eaa278487b (7725 pixels changed inside edit mask) from source PNG sha256 8ab62a6d43053e7bf7994e797a2ec07d79d369d46cbdee005700509bc6e0f154; candidate, not final art sign-off."
       },
-      "sha256": "sha256:aad5272f8faf3a8ae0fe8600455675dcd1d27a6938ffcc2e72de949dc609a1ab",
-      "size": 558468,
+      "sha256": "sha256:c55276d9d98735c15f625654fac7bd50f0710a2ba993ce440595cd735b4798c6",
+      "size": 559102,
       "status": "present",
       "shipped": true,
       "used": true,

@@ -1,0 +1,516 @@
+{
+  "runtime": "47bb594006b4236d88e145969c2f5d1ca4118405",
+  "expected_pck": "0833fcc888dcf15a74d1ca600fe9ce8c0fb44c01d9cd45723f8faad95e187543",
+  "inputs": [
+    {
+      "click": [
+        640,
+        368
+      ],
+      "time": 357077.236272096
+    },
+    {
+      "click": [
+        329,
+        563
+      ],
+      "time": 357083.976611472
+    },
+    {
+      "click": [
+        978,
+        466
+      ],
+      "time": 357093.304909806
+    },
+    {
+      "keyboard": "e",
+      "time": 357098.859949389
+    },
+    {
+      "screenshot": "01-offer",
+      "time": 357099.884578824
+    },
+    {
+      "keyboard": "t",
+      "time": 357104.481790503
+    },
+    {
+      "screenshot": "02-taken",
+      "time": 357107.500283066
+    },
+    {
+      "click": [
+        1190,
+        43
+      ],
+      "time": 357115.129569622
+    },
+    {
+      "screenshot": "03-after-fault",
+      "time": 357127.663165554
+    },
+    {
+      "command": {
+        "name": "04-settled-fault"
+      },
+      "time": 357162.535555113
+    },
+    {
+      "screenshot": "04-settled-fault",
+      "time": 357162.535578046
+    },
+    {
+      "command": {
+        "name": "05-pre-retry"
+      },
+      "time": 357180.519990961
+    },
+    {
+      "screenshot": "05-pre-retry",
+      "time": 357180.519994648
+    },
+    {
+      "command": {
+        "name": "06-after-one-retry",
+        "retry": true
+      },
+      "time": 357201.382584603
+    },
+    {
+      "click": [
+        640,
+        177
+      ],
+      "time": 357201.382587358
+    },
+    {
+      "screenshot": "06-after-one-retry",
+      "time": 357216.470606125
+    },
+    {
+      "command": {
+        "name": "07-real-reopen",
+        "reopen": true,
+        "exit": true
+      },
+      "time": 357232.727986764
+    },
+    {
+      "click": [
+        640,
+        368
+      ],
+      "time": 357242.292556557
+    },
+    {
+      "screenshot": "07-real-reopen",
+      "time": 357251.072270257
+    }
+  ],
+  "media": [],
+  "errors": [],
+  "builds": [
+    {
+      "page": "fault-main",
+      "entry": "game-47bb594"
+    },
+    {
+      "page": "fault-reopen",
+      "entry": "game-47bb594"
+    }
+  ],
+  "limits": [
+    "browser media emulation, not OS settings or physical phone",
+    "listener multiplicity is not proved by screenshots",
+    "photo detector needs visual confirmation"
+  ],
+  "source_checks": [
+    {
+      "page": "fault-main",
+      "stage": "before",
+      "runtime": "47bb594006b4236d88e145969c2f5d1ca4118405",
+      "actual_head": "47bb594006b4236d88e145969c2f5d1ca4118405",
+      "delta_files": []
+    },
+    {
+      "page": "fault-main",
+      "stage": "after",
+      "runtime": "47bb594006b4236d88e145969c2f5d1ca4118405",
+      "actual_head": "5ad0704962f2e106db8ced627e391b4b2facad24",
+      "delta_files": [
+        "docs/collaboration/goal-ownership.md",
+        "docs/decisions.md",
+        "docs/decisions/REQ-20261006-034.md",
+        "docs/playtests/2026-10-06-album433-public/.gdignore",
+        "docs/playtests/2026-10-06-album433-public/README.md",
+        "docs/playtests/2026-10-06-album433-public/archive-hashes.json",
+        "docs/playtests/2026-10-06-album433-public/browser/568x300-album.png",
+        "docs/playtests/2026-10-06-album433-public/browser/568x320-album.png",
+        "docs/playtests/2026-10-06-album433-public/browser/640x300-album.png",
+        "docs/playtests/2026-10-06-album433-public/browser/README.md",
+        "docs/playtests/2026-10-06-album433-public/browser/archive-manifest.json",
+        "docs/playtests/2026-10-06-album433-public/browser/closed-small.png",
+        "docs/playtests/2026-10-06-album433-public/browser/desktop-album.png",
+        "docs/playtests/2026-10-06-album433-public/browser/real-reopened-album.png",
+        "docs/playtests/2026-10-06-album433-public/browser/reopened-small.png",
+        "docs/playtests/2026-10-06-album433-public/browser/restored-desktop.png",
+        "docs/playtests/2026-10-06-album433-public/browser/result.json",
+        "docs/playtests/2026-10-06-album433-public/browser/run.exit",
+        "docs/playtests/2026-10-06-album433-public/browser/run.log",
+        "docs/playtests/2026-10-06-album433-public/browser/run.py",
+        "docs/playtests/2026-10-06-album433-public/pr433-ci-jobs.json",
+        "docs/playtests/2026-10-06-album433-public/pr433-independent-review.md",
+        "docs/playtests/2026-10-06-album433-public/pr433-merge.json",
+        "docs/playtests/2026-10-06-album433-public/pr433-pages-jobs.json",
+        "docs/playtests/2026-10-06-album433-public/pr433-public-release.json",
+        "docs/playtests/2026-10-06-album433-public/pr433-public-release.log",
+        "docs/playtests/2026-10-06-album433-public/verify-public-release-immutable-source.py",
+        "docs/playtests/2026-10-06-cleanup-invalid-preservation/.gdignore",
+        "docs/playtests/2026-10-06-cleanup-invalid-preservation/README.md",
+        "docs/playtests/2026-10-06-cleanup-invalid-preservation/cleanup-preserve-baseline.exit",
+        "docs/playtests/2026-10-06-cleanup-invalid-preservation/cleanup-preserve-baseline.log",
+        "docs/playtests/2026-10-06-cleanup-invalid-preservation/cleanup-preserve-candidate-release.json",
+        "docs/playtests/2026-10-06-cleanup-invalid-preservation/cleanup-preserve-daily.exit",
+        "docs/playtests/2026-10-06-cleanup-invalid-preservation/cleanup-preserve-daily.log",
+        "docs/playtests/2026-10-06-cleanup-invalid-preservation/cleanup-preserve-export.exit",
+        "docs/playtests/2026-10-06-cleanup-invalid-preservation/cleanup-preserve-export.log",
+        "docs/playtests/2026-10-06-cleanup-invalid-preservation/cleanup-preserve-fixed.exit",
+        "docs/playtests/2026-10-06-cleanup-invalid-preservation/cleanup-preserve-fixed.log",
+        "docs/playtests/2026-10-06-cleanup-invalid-preservation/cleanup-preserve-import.exit",
+        "docs/playtests/2026-10-06-cleanup-invalid-preservation/cleanup-preserve-import.log",
+        "docs/playtests/2026-10-06-cleanup-invalid-preservation/cleanup-preserve-setup-failure.log",
+        "docs/playtests/2026-10-06-cleanup-invalid-preservation/cleanup-unsafe-publication-cancelled.json",
+        "docs/playtests/2026-10-06-cleanup-invalid-preservation/export-files.json",
+        "docs/playtests/2026-10-06-cleanup-invalid-preservation/game-release.json",
+        "docs/playtests/2026-10-06-cleanup-invalid-preservation/stamp-cleanup-preserve-candidate.py",
+        "docs/playtests/2026-10-06-cleanup-invalid-preservation/stamped-provenance.json",
+        "docs/playtests/2026-10-06-holiday432-public/.gdignore",
+        "docs/playtests/2026-10-06-holiday432-public/README.md",
+        "docs/playtests/2026-10-06-holiday432-public/archive-hashes.json",
+        "docs/playtests/2026-10-06-holiday432-public/browser/README.md",
+        "docs/playtests/2026-10-06-holiday432-public/browser/archive-manifest.json",
+        "docs/playtests/2026-10-06-holiday432-public/browser/exit-code.txt",
+        "docs/playtests/2026-10-06-holiday432-public/browser/keyboard-no-bounce.png",
+        "docs/playtests/2026-10-06-holiday432-public/browser/keyboard-outside.png",
+        "docs/playtests/2026-10-06-holiday432-public/browser/keyboard-return.png",
+        "docs/playtests/2026-10-06-holiday432-public/browser/keyboard-walked.png",
+        "docs/playtests/2026-10-06-holiday432-public/browser/keyboard-yard.png",
+        "docs/playtests/2026-10-06-holiday432-public/browser/result.json",
+        "docs/playtests/2026-10-06-holiday432-public/browser/run.log",
+        "docs/playtests/2026-10-06-holiday432-public/browser/run.py",
+        "docs/playtests/2026-10-06-holiday432-public/browser/touch-no-bounce.png",
+        "docs/playtests/2026-10-06-holiday432-public/browser/touch-outside.png",
+        "docs/playtests/2026-10-06-holiday432-public/browser/touch-return-7s.png",
+        "docs/playtests/2026-10-06-holiday432-public/browser/touch-return.png",
+        "docs/playtests/2026-10-06-holiday432-public/browser/touch-still-outside.png",
+        "docs/playtests/2026-10-06-holiday432-public/browser/touch-walked.png",
+        "docs/playtests/2026-10-06-holiday432-public/browser/touch-yard.png",
+        "docs/playtests/2026-10-06-holiday432-public/carry/README.md",
+        "docs/playtests/2026-10-06-holiday432-public/carry/after-return-db.json",
+        "docs/playtests/2026-10-06-holiday432-public/carry/archive-manifest.json",
+        "docs/playtests/2026-10-06-holiday432-public/carry/before-return-db.json",
+        "docs/playtests/2026-10-06-holiday432-public/carry/brook-look.png",
+        "docs/playtests/2026-10-06-holiday432-public/carry/brook-take.png",
+        "docs/playtests/2026-10-06-holiday432-public/carry/comparison.json",
+        "docs/playtests/2026-10-06-holiday432-public/carry/outside.png",
+        "docs/playtests/2026-10-06-holiday432-public/carry/reopened-db.json",
+        "docs/playtests/2026-10-06-holiday432-public/carry/reopened-yard.png",
+        "docs/playtests/2026-10-06-holiday432-public/carry/result.json",
+        "docs/playtests/2026-10-06-holiday432-public/carry/run.exit",
+        "docs/playtests/2026-10-06-holiday432-public/carry/run.log",
+        "docs/playtests/2026-10-06-holiday432-public/carry/run.py",
+        "docs/playtests/2026-10-06-holiday432-public/carry/shade-look.png",
+        "docs/playtests/2026-10-06-holiday432-public/carry/shade-take.png",
+        "docs/playtests/2026-10-06-holiday432-public/carry/slope-look.png",
+        "docs/playtests/2026-10-06-holiday432-public/carry/slope-take.png",
+        "docs/playtests/2026-10-06-holiday432-public/carry/touch-return.png",
+        "docs/playtests/2026-10-06-holiday432-public/holiday432-mail-sent.json",
+        "docs/playtests/2026-10-06-holiday432-public/pr432-ci-jobs.json",
+        "docs/playtests/2026-10-06-holiday432-public/pr432-independent-review.md",
+        "docs/playtests/2026-10-06-holiday432-public/pr432-merge.json",
+        "docs/playtests/2026-10-06-holiday432-public/pr432-pages-jobs.json",
+        "docs/playtests/2026-10-06-holiday432-public/pr432-public-release.json",
+        "docs/playtests/2026-10-06-holiday432-public/pr432-public-release.log",
+        "docs/playtests/2026-10-06-holiday432-public/verify-public-release-immutable-source.py",
+        "docs/requirements.md"
+      ]
+    },
+    {
+      "page": "fault-reopen",
+      "stage": "before",
+      "runtime": "47bb594006b4236d88e145969c2f5d1ca4118405",
+      "actual_head": "5ad0704962f2e106db8ced627e391b4b2facad24",
+      "delta_files": [
+        "docs/collaboration/goal-ownership.md",
+        "docs/decisions.md",
+        "docs/decisions/REQ-20261006-034.md",
+        "docs/playtests/2026-10-06-album433-public/.gdignore",
+        "docs/playtests/2026-10-06-album433-public/README.md",
+        "docs/playtests/2026-10-06-album433-public/archive-hashes.json",
+        "docs/playtests/2026-10-06-album433-public/browser/568x300-album.png",
+        "docs/playtests/2026-10-06-album433-public/browser/568x320-album.png",
+        "docs/playtests/2026-10-06-album433-public/browser/640x300-album.png",
+        "docs/playtests/2026-10-06-album433-public/browser/README.md",
+        "docs/playtests/2026-10-06-album433-public/browser/archive-manifest.json",
+        "docs/playtests/2026-10-06-album433-public/browser/closed-small.png",
+        "docs/playtests/2026-10-06-album433-public/browser/desktop-album.png",
+        "docs/playtests/2026-10-06-album433-public/browser/real-reopened-album.png",
+        "docs/playtests/2026-10-06-album433-public/browser/reopened-small.png",
+        "docs/playtests/2026-10-06-album433-public/browser/restored-desktop.png",
+        "docs/playtests/2026-10-06-album433-public/browser/result.json",
+        "docs/playtests/2026-10-06-album433-public/browser/run.exit",
+        "docs/playtests/2026-10-06-album433-public/browser/run.log",
+        "docs/playtests/2026-10-06-album433-public/browser/run.py",
+        "docs/playtests/2026-10-06-album433-public/pr433-ci-jobs.json",
+        "docs/playtests/2026-10-06-album433-public/pr433-independent-review.md",
+        "docs/playtests/2026-10-06-album433-public/pr433-merge.json",
+        "docs/playtests/2026-10-06-album433-public/pr433-pages-jobs.json",
+        "docs/playtests/2026-10-06-album433-public/pr433-public-release.json",
+        "docs/playtests/2026-10-06-album433-public/pr433-public-release.log",
+        "docs/playtests/2026-10-06-album433-public/verify-public-release-immutable-source.py",
+        "docs/playtests/2026-10-06-cleanup-invalid-preservation/.gdignore",
+        "docs/playtests/2026-10-06-cleanup-invalid-preservation/README.md",
+        "docs/playtests/2026-10-06-cleanup-invalid-preservation/cleanup-preserve-baseline.exit",
+        "docs/playtests/2026-10-06-cleanup-invalid-preservation/cleanup-preserve-baseline.log",
+        "docs/playtests/2026-10-06-cleanup-invalid-preservation/cleanup-preserve-candidate-release.json",
+        "docs/playtests/2026-10-06-cleanup-invalid-preservation/cleanup-preserve-daily.exit",
+        "docs/playtests/2026-10-06-cleanup-invalid-preservation/cleanup-preserve-daily.log",
+        "docs/playtests/2026-10-06-cleanup-invalid-preservation/cleanup-preserve-export.exit",
+        "docs/playtests/2026-10-06-cleanup-invalid-preservation/cleanup-preserve-export.log",
+        "docs/playtests/2026-10-06-cleanup-invalid-preservation/cleanup-preserve-fixed.exit",
+        "docs/playtests/2026-10-06-cleanup-invalid-preservation/cleanup-preserve-fixed.log",
+        "docs/playtests/2026-10-06-cleanup-invalid-preservation/cleanup-preserve-import.exit",
+        "docs/playtests/2026-10-06-cleanup-invalid-preservation/cleanup-preserve-import.log",
+        "docs/playtests/2026-10-06-cleanup-invalid-preservation/cleanup-preserve-setup-failure.log",
+        "docs/playtests/2026-10-06-cleanup-invalid-preservation/cleanup-unsafe-publication-cancelled.json",
+        "docs/playtests/2026-10-06-cleanup-invalid-preservation/export-files.json",
+        "docs/playtests/2026-10-06-cleanup-invalid-preservation/game-release.json",
+        "docs/playtests/2026-10-06-cleanup-invalid-preservation/stamp-cleanup-preserve-candidate.py",
+        "docs/playtests/2026-10-06-cleanup-invalid-preservation/stamped-provenance.json",
+        "docs/playtests/2026-10-06-holiday432-public/.gdignore",
+        "docs/playtests/2026-10-06-holiday432-public/README.md",
+        "docs/playtests/2026-10-06-holiday432-public/archive-hashes.json",
+        "docs/playtests/2026-10-06-holiday432-public/browser/README.md",
+        "docs/playtests/2026-10-06-holiday432-public/browser/archive-manifest.json",
+        "docs/playtests/2026-10-06-holiday432-public/browser/exit-code.txt",
+        "docs/playtests/2026-10-06-holiday432-public/browser/keyboard-no-bounce.png",
+        "docs/playtests/2026-10-06-holiday432-public/browser/keyboard-outside.png",
+        "docs/playtests/2026-10-06-holiday432-public/browser/keyboard-return.png",
+        "docs/playtests/2026-10-06-holiday432-public/browser/keyboard-walked.png",
+        "docs/playtests/2026-10-06-holiday432-public/browser/keyboard-yard.png",
+        "docs/playtests/2026-10-06-holiday432-public/browser/result.json",
+        "docs/playtests/2026-10-06-holiday432-public/browser/run.log",
+        "docs/playtests/2026-10-06-holiday432-public/browser/run.py",
+        "docs/playtests/2026-10-06-holiday432-public/browser/touch-no-bounce.png",
+        "docs/playtests/2026-10-06-holiday432-public/browser/touch-outside.png",
+        "docs/playtests/2026-10-06-holiday432-public/browser/touch-return-7s.png",
+        "docs/playtests/2026-10-06-holiday432-public/browser/touch-return.png",
+        "docs/playtests/2026-10-06-holiday432-public/browser/touch-still-outside.png",
+        "docs/playtests/2026-10-06-holiday432-public/browser/touch-walked.png",
+        "docs/playtests/2026-10-06-holiday432-public/browser/touch-yard.png",
+        "docs/playtests/2026-10-06-holiday432-public/carry/README.md",
+        "docs/playtests/2026-10-06-holiday432-public/carry/after-return-db.json",
+        "docs/playtests/2026-10-06-holiday432-public/carry/archive-manifest.json",
+        "docs/playtests/2026-10-06-holiday432-public/carry/before-return-db.json",
+        "docs/playtests/2026-10-06-holiday432-public/carry/brook-look.png",
+        "docs/playtests/2026-10-06-holiday432-public/carry/brook-take.png",
+        "docs/playtests/2026-10-06-holiday432-public/carry/comparison.json",
+        "docs/playtests/2026-10-06-holiday432-public/carry/outside.png",
+        "docs/playtests/2026-10-06-holiday432-public/carry/reopened-db.json",
+        "docs/playtests/2026-10-06-holiday432-public/carry/reopened-yard.png",
+        "docs/playtests/2026-10-06-holiday432-public/carry/result.json",
+        "docs/playtests/2026-10-06-holiday432-public/carry/run.exit",
+        "docs/playtests/2026-10-06-holiday432-public/carry/run.log",
+        "docs/playtests/2026-10-06-holiday432-public/carry/run.py",
+        "docs/playtests/2026-10-06-holiday432-public/carry/shade-look.png",
+        "docs/playtests/2026-10-06-holiday432-public/carry/shade-take.png",
+        "docs/playtests/2026-10-06-holiday432-public/carry/slope-look.png",
+        "docs/playtests/2026-10-06-holiday432-public/carry/slope-take.png",
+        "docs/playtests/2026-10-06-holiday432-public/carry/touch-return.png",
+        "docs/playtests/2026-10-06-holiday432-public/holiday432-mail-sent.json",
+        "docs/playtests/2026-10-06-holiday432-public/pr432-ci-jobs.json",
+        "docs/playtests/2026-10-06-holiday432-public/pr432-independent-review.md",
+        "docs/playtests/2026-10-06-holiday432-public/pr432-merge.json",
+        "docs/playtests/2026-10-06-holiday432-public/pr432-pages-jobs.json",
+        "docs/playtests/2026-10-06-holiday432-public/pr432-public-release.json",
+        "docs/playtests/2026-10-06-holiday432-public/pr432-public-release.log",
+        "docs/playtests/2026-10-06-holiday432-public/verify-public-release-immutable-source.py",
+        "docs/requirements.md"
+      ]
+    },
+    {
+      "page": "fault-reopen",
+      "stage": "after",
+      "runtime": "47bb594006b4236d88e145969c2f5d1ca4118405",
+      "actual_head": "5ad0704962f2e106db8ced627e391b4b2facad24",
+      "delta_files": [
+        "docs/collaboration/goal-ownership.md",
+        "docs/decisions.md",
+        "docs/decisions/REQ-20261006-034.md",
+        "docs/playtests/2026-10-06-album433-public/.gdignore",
+        "docs/playtests/2026-10-06-album433-public/README.md",
+        "docs/playtests/2026-10-06-album433-public/archive-hashes.json",
+        "docs/playtests/2026-10-06-album433-public/browser/568x300-album.png",
+        "docs/playtests/2026-10-06-album433-public/browser/568x320-album.png",
+        "docs/playtests/2026-10-06-album433-public/browser/640x300-album.png",
+        "docs/playtests/2026-10-06-album433-public/browser/README.md",
+        "docs/playtests/2026-10-06-album433-public/browser/archive-manifest.json",
+        "docs/playtests/2026-10-06-album433-public/browser/closed-small.png",
+        "docs/playtests/2026-10-06-album433-public/browser/desktop-album.png",
+        "docs/playtests/2026-10-06-album433-public/browser/real-reopened-album.png",
+        "docs/playtests/2026-10-06-album433-public/browser/reopened-small.png",
+        "docs/playtests/2026-10-06-album433-public/browser/restored-desktop.png",
+        "docs/playtests/2026-10-06-album433-public/browser/result.json",
+        "docs/playtests/2026-10-06-album433-public/browser/run.exit",
+        "docs/playtests/2026-10-06-album433-public/browser/run.log",
+        "docs/playtests/2026-10-06-album433-public/browser/run.py",
+        "docs/playtests/2026-10-06-album433-public/pr433-ci-jobs.json",
+        "docs/playtests/2026-10-06-album433-public/pr433-independent-review.md",
+        "docs/playtests/2026-10-06-album433-public/pr433-merge.json",
+        "docs/playtests/2026-10-06-album433-public/pr433-pages-jobs.json",
+        "docs/playtests/2026-10-06-album433-public/pr433-public-release.json",
+        "docs/playtests/2026-10-06-album433-public/pr433-public-release.log",
+        "docs/playtests/2026-10-06-album433-public/verify-public-release-immutable-source.py",
+        "docs/playtests/2026-10-06-cleanup-invalid-preservation/.gdignore",
+        "docs/playtests/2026-10-06-cleanup-invalid-preservation/README.md",
+        "docs/playtests/2026-10-06-cleanup-invalid-preservation/cleanup-preserve-baseline.exit",
+        "docs/playtests/2026-10-06-cleanup-invalid-preservation/cleanup-preserve-baseline.log",
+        "docs/playtests/2026-10-06-cleanup-invalid-preservation/cleanup-preserve-candidate-release.json",
+        "docs/playtests/2026-10-06-cleanup-invalid-preservation/cleanup-preserve-daily.exit",
+        "docs/playtests/2026-10-06-cleanup-invalid-preservation/cleanup-preserve-daily.log",
+        "docs/playtests/2026-10-06-cleanup-invalid-preservation/cleanup-preserve-export.exit",
+        "docs/playtests/2026-10-06-cleanup-invalid-preservation/cleanup-preserve-export.log",
+        "docs/playtests/2026-10-06-cleanup-invalid-preservation/cleanup-preserve-fixed.exit",
+        "docs/playtests/2026-10-06-cleanup-invalid-preservation/cleanup-preserve-fixed.log",
+        "docs/playtests/2026-10-06-cleanup-invalid-preservation/cleanup-preserve-import.exit",
+        "docs/playtests/2026-10-06-cleanup-invalid-preservation/cleanup-preserve-import.log",
+        "docs/playtests/2026-10-06-cleanup-invalid-preservation/cleanup-preserve-setup-failure.log",
+        "docs/playtests/2026-10-06-cleanup-invalid-preservation/cleanup-unsafe-publication-cancelled.json",
+        "docs/playtests/2026-10-06-cleanup-invalid-preservation/export-files.json",
+        "docs/playtests/2026-10-06-cleanup-invalid-preservation/game-release.json",
+        "docs/playtests/2026-10-06-cleanup-invalid-preservation/stamp-cleanup-preserve-candidate.py",
+        "docs/playtests/2026-10-06-cleanup-invalid-preservation/stamped-provenance.json",
+        "docs/playtests/2026-10-06-holiday432-public/.gdignore",
+        "docs/playtests/2026-10-06-holiday432-public/README.md",
+        "docs/playtests/2026-10-06-holiday432-public/archive-hashes.json",
+        "docs/playtests/2026-10-06-holiday432-public/browser/README.md",
+        "docs/playtests/2026-10-06-holiday432-public/browser/archive-manifest.json",
+        "docs/playtests/2026-10-06-holiday432-public/browser/exit-code.txt",
+        "docs/playtests/2026-10-06-holiday432-public/browser/keyboard-no-bounce.png",
+        "docs/playtests/2026-10-06-holiday432-public/browser/keyboard-outside.png",
+        "docs/playtests/2026-10-06-holiday432-public/browser/keyboard-return.png",
+        "docs/playtests/2026-10-06-holiday432-public/browser/keyboard-walked.png",
+        "docs/playtests/2026-10-06-holiday432-public/browser/keyboard-yard.png",
+        "docs/playtests/2026-10-06-holiday432-public/browser/result.json",
+        "docs/playtests/2026-10-06-holiday432-public/browser/run.log",
+        "docs/playtests/2026-10-06-holiday432-public/browser/run.py",
+        "docs/playtests/2026-10-06-holiday432-public/browser/touch-no-bounce.png",
+        "docs/playtests/2026-10-06-holiday432-public/browser/touch-outside.png",
+        "docs/playtests/2026-10-06-holiday432-public/browser/touch-return-7s.png",
+        "docs/playtests/2026-10-06-holiday432-public/browser/touch-return.png",
+        "docs/playtests/2026-10-06-holiday432-public/browser/touch-still-outside.png",
+        "docs/playtests/2026-10-06-holiday432-public/browser/touch-walked.png",
+        "docs/playtests/2026-10-06-holiday432-public/browser/touch-yard.png",
+        "docs/playtests/2026-10-06-holiday432-public/carry/README.md",
+        "docs/playtests/2026-10-06-holiday432-public/carry/after-return-db.json",
+        "docs/playtests/2026-10-06-holiday432-public/carry/archive-manifest.json",
+        "docs/playtests/2026-10-06-holiday432-public/carry/before-return-db.json",
+        "docs/playtests/2026-10-06-holiday432-public/carry/brook-look.png",
+        "docs/playtests/2026-10-06-holiday432-public/carry/brook-take.png",
+        "docs/playtests/2026-10-06-holiday432-public/carry/comparison.json",
+        "docs/playtests/2026-10-06-holiday432-public/carry/outside.png",
+        "docs/playtests/2026-10-06-holiday432-public/carry/reopened-db.json",
+        "docs/playtests/2026-10-06-holiday432-public/carry/reopened-yard.png",
+        "docs/playtests/2026-10-06-holiday432-public/carry/result.json",
+        "docs/playtests/2026-10-06-holiday432-public/carry/run.exit",
+        "docs/playtests/2026-10-06-holiday432-public/carry/run.log",
+        "docs/playtests/2026-10-06-holiday432-public/carry/run.py",
+        "docs/playtests/2026-10-06-holiday432-public/carry/shade-look.png",
+        "docs/playtests/2026-10-06-holiday432-public/carry/shade-take.png",
+        "docs/playtests/2026-10-06-holiday432-public/carry/slope-look.png",
+        "docs/playtests/2026-10-06-holiday432-public/carry/slope-take.png",
+        "docs/playtests/2026-10-06-holiday432-public/carry/touch-return.png",
+        "docs/playtests/2026-10-06-holiday432-public/holiday432-mail-sent.json",
+        "docs/playtests/2026-10-06-holiday432-public/pr432-ci-jobs.json",
+        "docs/playtests/2026-10-06-holiday432-public/pr432-independent-review.md",
+        "docs/playtests/2026-10-06-holiday432-public/pr432-merge.json",
+        "docs/playtests/2026-10-06-holiday432-public/pr432-pages-jobs.json",
+        "docs/playtests/2026-10-06-holiday432-public/pr432-public-release.json",
+        "docs/playtests/2026-10-06-holiday432-public/pr432-public-release.log",
+        "docs/playtests/2026-10-06-holiday432-public/verify-public-release-immutable-source.py",
+        "docs/requirements.md"
+      ]
+    }
+  ],
+  "pck_checks": [
+    {
+      "page": "fault-main",
+      "sha256": "0833fcc888dcf15a74d1ca600fe9ce8c0fb44c01d9cd45723f8faad95e187543",
+      "bytes": 27088028
+    },
+    {
+      "page": "fault-reopen",
+      "sha256": "0833fcc888dcf15a74d1ca600fe9ce8c0fb44c01d9cd45723f8faad95e187543",
+      "bytes": 27088028
+    }
+  ],
+  "navigation": [
+    {
+      "time": 357068.816208719,
+      "url": "http://127.0.0.1:8202/",
+      "main": true
+    },
+    {
+      "time": 357237.446908252,
+      "url": "http://127.0.0.1:8202/",
+      "main": true
+    }
+  ],
+  "dom_ready": [
+    357068.869269138,
+    357237.476537088
+  ],
+  "all_console": [
+    {
+      "type": "log",
+      "text": "Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org",
+      "time": 357070.808121505
+    },
+    {
+      "type": "log",
+      "text": "OpenGL API OpenGL ES 3.0 (WebGL 2.0 (OpenGL ES 3.0 Chromium)) - Compatibility - Using Device: WebKit - WebKit WebGL",
+      "time": 357071.604532813
+    },
+    {
+      "type": "log",
+      "text": "Build configuration: Emscripten 4.0.20, single-threaded, no GDExtension support.",
+      "time": 357072.430211194
+    },
+    {
+      "type": "info",
+      "text": "[game-loading] timings_ms {\"engineScriptReady\":90,\"downloadComplete\":1774,\"engineReady\":5424,\"firstFrame\":7140}",
+      "time": 357076.019573862
+    },
+    {
+      "type": "log",
+      "text": "Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org",
+      "time": 357238.134104718
+    },
+    {
+      "type": "log",
+      "text": "OpenGL API OpenGL ES 3.0 (WebGL 2.0 (OpenGL ES 3.0 Chromium)) - Compatibility - Using Device: WebKit - WebKit WebGL",
+      "time": 357238.34952678
+    },
+    {
+      "type": "log",
+      "text": "Build configuration: Emscripten 4.0.20, single-threaded, no GDExtension support.",
+      "time": 357238.609167596
+    },
+    {
+      "type": "info",
+      "text": "[game-loading] timings_ms {\"engineScriptReady\":30,\"downloadComplete\":480,\"engineReady\":2730,\"firstFrame\":3612}",
+      "time": 357241.083892426
+    }
+  ]
+}

@@ -1,0 +1,72 @@
+--- /tmp/gate399-instrumented/main-original.gd	2026-10-05 17:45:16.730258599 +0000
++++ /dev/shm/gate399-trace/scripts/main.gd	2026-10-05 17:45:07.013089659 +0000
+@@ -379,6 +379,8 @@
+ 
+ 
+ func _input(event: InputEvent) -> void:
++	if event is InputEventScreenTouch or event is InputEventMouseButton:
++		print("TRACE399 INPUT ", Engine.get_process_frames(), " ", event.as_text(), " screen=", _screen)
+ 	var gesture := false
+ 	if event is InputEventMouseButton or event is InputEventScreenTouch:
+ 		gesture = event.pressed
+@@ -562,6 +564,8 @@
+ 	_tagline_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+ 	column.add_child(_tagline_label)
+ 	_play_button = _soft_button()
++	_play_button.button_down.connect(func(): print("TRACE399 PLAY_DOWN ", Engine.get_process_frames(), " screen=", _screen))
++	_play_button.button_up.connect(func(): print("TRACE399 PLAY_UP ", Engine.get_process_frames(), " screen=", _screen))
+ 	_play_button.pressed.connect(_on_play_pressed)
+ 	column.add_child(_play_button)
+ 	_album_button = _soft_button()
+@@ -860,6 +864,7 @@
+ 
+ 
+ func _on_play_pressed() -> void:
++	print("TRACE399 PLAY_PRESSED ", Engine.get_process_frames(), " screen=", _screen, " stack=", get_stack())
+ 	_start_holiday()
+ 	# Same pressed stack as the real enter control. Not deferred.
+ 	AudioDirector.unlock_audio()
+@@ -946,13 +951,19 @@
+ 		AudioDirector.set_application_active(true)
+ 
+ 
++var _trace399_id := 0
+ func _start_holiday(save_progress: bool = true) -> void:
++	_trace399_id += 1
++	var trace_id := _trace399_id
++	print("TRACE399 START ", trace_id, " frame=", Engine.get_process_frames(), " screen=", _screen, " stack=", get_stack())
+ 	if not SaveStore.can_play(): return
+ 	_leave_exploration()
+ 	if save_progress and _world != null: _world._save_progress()
++	print("TRACE399 FLUSH_BEFORE ", trace_id)
+ 	if not await SaveStore.flush_pending() or _save_problem_active:
+ 		_show_save_pending(false)
+ 		return
++	print("TRACE399 FLUSH_AFTER ", trace_id, " frame=", Engine.get_process_frames(), " screen=", _screen)
+ 	TuningStore.begin_run(false)
+ 	AudioDirector.set_game_paused(false)
+ 	_clear_world(false)
+@@ -1039,6 +1050,7 @@
+ 
+ ## 画卷有自己的相机与界面；小院在外出期间隐藏、不计时
+ func _on_exploration_entered() -> void:
++	print("TRACE399 EXP_ENTER ", Engine.get_process_frames())
+ 	_screen = "exploring"
+ 	_cancel_photo_arrivals()
+ 	_on_cinematic_view_changed("")
+@@ -1051,6 +1063,7 @@
+ 
+ 
+ func _on_exploration_returned(notice_key: String) -> void:
++	print("TRACE399 EXP_RETURN ", Engine.get_process_frames(), " ", notice_key)
+ 	if _screen != "exploring" or _world == null:
+ 		return
+ 	_screen = "game"
+@@ -1630,6 +1643,7 @@
+ 
+ 
+ func _show_notice_key(key: String, params: Dictionary = {}) -> void:
++	print("TRACE399 NOTICE ", Engine.get_process_frames(), " ", key)
+ 	_notice_key = key
+ 	_notice.text = I18n.t(key, params)
+ 	_notice_time = 3.2

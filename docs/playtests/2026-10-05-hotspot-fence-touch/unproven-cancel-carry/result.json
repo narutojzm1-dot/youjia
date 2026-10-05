@@ -1,0 +1,298 @@
+{
+  "manifest": {
+    "schema": "youjia.release/v1",
+    "sourceCommit": "4fa150819c304b03fb6a36a149e71d4bcd911000",
+    "engine": "4.7.2.stable.official.ed1daf0bf",
+    "entry": "game-4fa1508",
+    "publishedAt": "2026-10-05T13:57:19Z",
+    "storageModules": {
+      "entry": "save-4fa1508",
+      "sha256": {
+        "bridge.mjs": "ef18687554fdc0d745c1d18d4d091e959cc78559da0d61d6a093e562ff9bbc91",
+        "budgets.mjs": "52984153977dcafd1d2682e848f1999f091d0966e17d46e902de76f5735a7018",
+        "host.mjs": "9de8dc0ef4bfc037a8ad0bff575d40c3dd4341bcc723351a412b2061bb661904",
+        "idbfs_source.mjs": "16eb57d471537f13d3e50018b56c2d416d2847f0d0249ba44433dd9ebb65f4d8",
+        "legacy_inspection.mjs": "db3a23a0221aa5d34a58a6a49aeeff930295ffe20bfcf73a7c11f0d49cffd671",
+        "legacy_seal.mjs": "9642132f5d4e7523e5966e802069af7f4bae803fae8e2e7c28ae55ee97d85610",
+        "legacy_v5.mjs": "8e7f4ad2d87aab77ac05361e4f46060476e933aa079ae94301998d08d4599621",
+        "lifecycle.mjs": "1cfaebb9a8745e2dc3e4f694ef475f250640870938f04160be1a5c9acd62935d",
+        "source_decode.mjs": "411f3bc784cb32a07f32eed5fc7d88f71b59a667cc0d68a50fe13c55bfdba18a",
+        "store.mjs": "2193b4397b8662a8ebc754dc4468e4d62964d209b4e1d0f0924a2ec81b409cbe"
+      }
+    }
+  },
+  "html_build": "game-4fa1508",
+  "viewport": [
+    1280,
+    720
+  ],
+  "dpr": 1,
+  "mobile": false,
+  "has_touch": false,
+  "actions": [
+    {
+      "batch": [
+        {
+          "tap": [
+            922,
+            391
+          ],
+          "wait": 60
+        },
+        {
+          "tap": [
+            425,
+            485
+          ],
+          "wait": 80
+        }
+      ],
+      "name": "cancel-immediate",
+      "frames": 3,
+      "interval": 800
+    },
+    {
+      "actual_step": {
+        "tap": [
+          922,
+          391
+        ],
+        "wait": 60
+      },
+      "monotonic": 340378.135448537
+    },
+    {
+      "actual_step": {
+        "tap": [
+          425,
+          485
+        ],
+        "wait": 80
+      },
+      "monotonic": 340378.280583287
+    },
+    {
+      "batch": [
+        {
+          "tap": [
+            900,
+            390
+          ],
+          "wait": 60
+        },
+        {
+          "tap": [
+            470,
+            465
+          ],
+          "wait": 80
+        }
+      ],
+      "name": "cancel-gate-correct",
+      "frames": 4,
+      "interval": 700
+    },
+    {
+      "actual_step": {
+        "tap": [
+          900,
+          390
+        ],
+        "wait": 60
+      },
+      "monotonic": 340426.069817261
+    },
+    {
+      "actual_step": {
+        "tap": [
+          470,
+          465
+        ],
+        "wait": 80
+      },
+      "monotonic": 340426.233786597
+    },
+    {
+      "tap": [
+        700,
+        510
+      ],
+      "wait": 2000,
+      "name": "approach-pond",
+      "input_start": 340468.371555138,
+      "input_return": 340468.385862406
+    },
+    {
+      "tap": [
+        1160,
+        678
+      ],
+      "wait": 2000,
+      "frames": 2,
+      "interval": 100,
+      "name": "cast",
+      "input_start": 340488.315244628,
+      "input_return": 340488.402688478
+    },
+    {
+      "name": "fish-now",
+      "wait": 0
+    },
+    {
+      "batch": [
+        {
+          "tap": [
+            720,
+            513
+          ],
+          "wait": 9500
+        },
+        {
+          "tap": [
+            1160,
+            678
+          ],
+          "wait": 80
+        }
+      ],
+      "name": "natural-reel",
+      "frames": 3,
+      "interval": 200
+    },
+    {
+      "actual_step": {
+        "tap": [
+          720,
+          513
+        ],
+        "wait": 9500
+      },
+      "monotonic": 340545.674947746
+    },
+    {
+      "actual_step": {
+        "tap": [
+          1160,
+          678
+        ],
+        "wait": 80
+      },
+      "monotonic": 340555.24639493
+    },
+    {
+      "key": "Space",
+      "wait": 80,
+      "frames": 3,
+      "interval": 200,
+      "name": "reel-observed"
+    },
+    {
+      "batch": [
+        {
+          "tap": [
+            720,
+            512
+          ],
+          "wait": 10000
+        },
+        {
+          "tap": [
+            1160,
+            678
+          ],
+          "wait": 2000
+        },
+        {
+          "tap": [
+            1160,
+            678
+          ],
+          "wait": 100
+        }
+      ],
+      "name": "reel-sequence",
+      "frames": 2,
+      "interval": 100
+    },
+    {
+      "actual_step": {
+        "tap": [
+          720,
+          512
+        ],
+        "wait": 10000
+      },
+      "monotonic": 340615.566645372
+    },
+    {
+      "actual_step": {
+        "tap": [
+          1160,
+          678
+        ],
+        "wait": 2000
+      },
+      "monotonic": 340625.624608499
+    },
+    {
+      "actual_step": {
+        "tap": [
+          1160,
+          678
+        ],
+        "wait": 100
+      },
+      "monotonic": 340627.71497387
+    },
+    {
+      "batch": [
+        {
+          "tap": [
+            895,
+            400
+          ],
+          "wait": 40
+        },
+        {
+          "tap": [
+            680,
+            450
+          ],
+          "wait": 80
+        }
+      ],
+      "name": "cancel-from-bank",
+      "frames": 3,
+      "interval": 850
+    },
+    {
+      "actual_step": {
+        "tap": [
+          895,
+          400
+        ],
+        "wait": 40
+      },
+      "monotonic": 340661.589447208
+    },
+    {
+      "actual_step": {
+        "tap": [
+          680,
+          450
+        ],
+        "wait": 80
+      },
+      "monotonic": 340661.722715841
+    },
+    {
+      "key": "Space",
+      "wait": 50,
+      "name": "reel-after-cancel-probe"
+    },
+    {
+      "quit": true
+    }
+  ],
+  "errors": []
+}

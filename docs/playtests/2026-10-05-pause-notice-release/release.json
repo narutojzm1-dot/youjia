@@ -1,0 +1,55 @@
+{
+  "source": "046871fa803f3eebd8b9900092bb07ff70671d52",
+  "source_parents": [
+    "e0bb109d76c4f0b1713e173d2b223e8770858acc",
+    "52a2be7b720e26d306d4d9c90ea8dd8471dfb87a"
+  ],
+  "reviewed_head": "52a2be7b720e26d306d4d9c90ea8dd8471dfb87a",
+  "review_comment": 5995013227,
+  "ci_run": 37313949152,
+  "ci_job": 111775885274,
+  "ci_status": "completed",
+  "ci_conclusion": "success",
+  "godot_engine_starts": 58,
+  "verification_starts": 57,
+  "export_starts": 1,
+  "pages_run": 37314697585,
+  "pages_run_head": "15798ce0f984f7aae9e8d42ff1070b8f46539b58",
+  "pages_status": "completed",
+  "pages_conclusion": "success",
+  "pages_commit": {
+    "sha": "15798ce0f984f7aae9e8d42ff1070b8f46539b58",
+    "node_id": "C_kwDOU0hxntoAKDE1Nzk4Y2UwZjk4NGY3YWFlOWU4ZDQyZmYxMDcwYjhmNDY1MzliNTg",
+    "url": "https://api.github.com/repos/narutojzm1-dot/youjia/git/commits/15798ce0f984f7aae9e8d42ff1070b8f46539b58",
+    "html_url": "https://github.com/narutojzm1-dot/youjia/commit/15798ce0f984f7aae9e8d42ff1070b8f46539b58",
+    "author": {
+      "name": "Cursor Agent",
+      "email": "cursoragent@cursor.com",
+      "date": "2026-10-05T13:09:46Z"
+    },
+    "committer": {
+      "name": "github-actions[bot]",
+      "email": "41898282+github-actions[bot]@users.noreply.github.com",
+      "date": "2026-10-05T13:09:46Z"
+    },
+    "tree": {
+      "sha": "03d61298e7c0313cae9dcfd826e26a5417d3b068",
+      "url": "https://api.github.com/repos/narutojzm1-dot/youjia/git/trees/03d61298e7c0313cae9dcfd826e26a5417d3b068"
+    },
+    "message": "Publish Merge pull request #377 from narutojzm1-dot/work/codex-assistant/pause-notice-vi (046871f)",
+    "parents": [
+      {
+        "sha": "4b6ea6fef684f712c0929b39f87880f2d6d76a89",
+        "url": "https://api.github.com/repos/narutojzm1-dot/youjia/git/commits/4b6ea6fef684f712c0929b39f87880f2d6d76a89",
+        "html_url": "https://github.com/narutojzm1-dot/youjia/commit/4b6ea6fef684f712c0929b39f87880f2d6d76a89"
+      }
+    ],
+    "verification": {
+      "verified": false,
+      "reason": "unsigned",
+      "signature": null,
+      "payload": null,
+      "verified_at": null
+    }
+  }
+}

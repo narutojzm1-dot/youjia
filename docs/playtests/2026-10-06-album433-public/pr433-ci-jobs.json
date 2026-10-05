@@ -1,0 +1,74 @@
+{
+  "jobs": [
+    {
+      "id": 111918208285,
+      "name": "verify-export-publish",
+      "status": "completed",
+      "conclusion": "success",
+      "started_at": "2026-10-05T18:26:19Z",
+      "completed_at": "2026-10-05T18:33:02Z",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Check out source with Pages write access",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Install Godot 4.7.2 and Web export templates",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Verify web bundle retention",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Verify versioned persistence module publication",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run game verification",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Prepare Web export directory",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Export Web build",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Configure Pages commit identity",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Publish versioned build to GitHub Pages",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Check out source with Pages write access",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+PASS index.html 358101
+PASS game-release.json 1203
+PASS game-348029a.js 279815
+PASS game-348029a.wasm 39514754
+PASS game-348029a.pck 27080984
+PASS save-348029a/bridge.mjs 1856
+PASS save-348029a/budgets.mjs 340
+PASS save-348029a/host.mjs 7730
+PASS save-348029a/idbfs_source.mjs 5550
+PASS save-348029a/legacy_inspection.mjs 2886
+PASS save-348029a/legacy_seal.mjs 2510
+PASS save-348029a/legacy_v5.mjs 2245
+PASS save-348029a/lifecycle.mjs 1878
+PASS save-348029a/source_decode.mjs 1542
+PASS save-348029a/store.mjs 13890
+{"source": "348029a62a5952a7d7f5af5190147cf756934e14", "entry": "game-348029a", "files": 15, "pages_tree": "1340aabbb469cf2eea53f0ae6f55f65be9c167ae", "status": "PASS"}
