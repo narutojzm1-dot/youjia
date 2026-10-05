@@ -1,0 +1,211 @@
+{
+  "algorithm": "sha256",
+  "scope": "Every archive file except archive-manifest.json itself; original QA files copied byte-for-byte",
+  "files": [
+    {
+      "path": ".gdignore",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "00-initial-yard.png",
+      "bytes": 1451068,
+      "sha256": "2e5bfb8de8bdd9e94ae305a59f36e5ca24b8e6d7529848341b8fe66816d4f701"
+    },
+    {
+      "path": "00-restored-settings-initial-db.json",
+      "bytes": 997,
+      "sha256": "246a1f5fa2499545c4f2690b2e1f635687e481e6b07e347ddaf8813849ef58f1"
+    },
+    {
+      "path": "01-natural-sheep.png",
+      "bytes": 1465752,
+      "sha256": "203010b71aa39e61cbc4fbaeb252cdd2dc24a4cf5fe519deac6fdb9f52763f0d"
+    },
+    {
+      "path": "02-album-before.png",
+      "bytes": 1071890,
+      "sha256": "354ca55f1e5cf40b1514e85ac7e436166e3d0aa44091651f4d35f31fedd1a23c"
+    },
+    {
+      "path": "02-before-relationship-db.json",
+      "bytes": 10210,
+      "sha256": "bfc61fdbda627a21e7cd68db42d41dac921842f1420d1fa36527a13a69a74198"
+    },
+    {
+      "path": "03-before-lead.png",
+      "bytes": 1466125,
+      "sha256": "5648e780817dfd34942c452b6e38621f618f8e21c4d817a280f482a0ebb20128"
+    },
+    {
+      "path": "04-after90s-db.json",
+      "bytes": 30150,
+      "sha256": "54314ab26758f998660c746c930e6d5de752210c7288c03b5e15e417cb781244"
+    },
+    {
+      "path": "05-album-before-close.png",
+      "bytes": 1019407,
+      "sha256": "78e4bcaa74ac485b5e0872135577db70900fee8d70034385698bca19f4455988"
+    },
+    {
+      "path": "05-settled-before-close-db.json",
+      "bytes": 30150,
+      "sha256": "54314ab26758f998660c746c930e6d5de752210c7288c03b5e15e417cb781244"
+    },
+    {
+      "path": "06-reopened-title-db.json",
+      "bytes": 30150,
+      "sha256": "54314ab26758f998660c746c930e6d5de752210c7288c03b5e15e417cb781244"
+    },
+    {
+      "path": "07-reopened-yard.png",
+      "bytes": 1510742,
+      "sha256": "700a16991b6ea0a1d6bb1d88fb227d5fc140757fc4b777759a0b730a0e7eddc0"
+    },
+    {
+      "path": "08-reopened-album-db.json",
+      "bytes": 30150,
+      "sha256": "54314ab26758f998660c746c930e6d5de752210c7288c03b5e15e417cb781244"
+    },
+    {
+      "path": "08-reopened-album.png",
+      "bytes": 1100486,
+      "sha256": "e5a4287fb05f62efbce37626c9f264b6c249a97d5e7526e252c9b32a5790d8cc"
+    },
+    {
+      "path": "09-settled-reopened-db.json",
+      "bytes": 30150,
+      "sha256": "54314ab26758f998660c746c930e6d5de752210c7288c03b5e15e417cb781244"
+    },
+    {
+      "path": "444-baseline-music-off-after-click.png",
+      "bytes": 1008266,
+      "sha256": "e10c881be79341c81e2ee39d09a0956f72656895f189723e51f19dd0cb981513"
+    },
+    {
+      "path": "444-baseline-music-restored-after-click.png",
+      "bytes": 1008381,
+      "sha256": "2e456f6e296a1a65f588408e7dbbcf1bb2c137b3142fe8edd1708fa40edc35d2"
+    },
+    {
+      "path": "444-baseline-pause.png",
+      "bytes": 1008381,
+      "sha256": "2e456f6e296a1a65f588408e7dbbcf1bb2c137b3142fe8edd1708fa40edc35d2"
+    },
+    {
+      "path": "444-baseline-title-canvas-tab.png",
+      "bytes": 1391677,
+      "sha256": "0dba23c3f305f293379a4febd3b4fcd177b87d64c4bd73aaeec6982c5e635a70"
+    },
+    {
+      "path": "444-baseline-title-tab.png",
+      "bytes": 1391677,
+      "sha256": "0dba23c3f305f293379a4febd3b4fcd177b87d64c4bd73aaeec6982c5e635a70"
+    },
+    {
+      "path": "444-baseline-title-tab2.png",
+      "bytes": 1391677,
+      "sha256": "0dba23c3f305f293379a4febd3b4fcd177b87d64c4bd73aaeec6982c5e635a70"
+    },
+    {
+      "path": "README.md",
+      "bytes": 6978,
+      "sha256": "1ef2e4e6c3a2ba63542e5c9808094c3e8e94856b8cce918f00882b5f64f55305"
+    },
+    {
+      "path": "attempt1-after15s-db.json",
+      "bytes": 90397,
+      "sha256": "295b039dffaf6506643988a32e578801365e93ad2bd707a6c9ca7636452c5ca0"
+    },
+    {
+      "path": "attempt1-after15s.png",
+      "bytes": 1330198,
+      "sha256": "012e46fb2a19c02256b200a01ea8855f139e53caeb1ed34103352e5c530f3b63"
+    },
+    {
+      "path": "attempt1-away-db.json",
+      "bytes": 20846,
+      "sha256": "19ad258b0c21a99247a2a84108d3f3a87bba06ce3fe01b2e013a4d0b52f8059c"
+    },
+    {
+      "path": "attempt1-leading-away.png",
+      "bytes": 1303714,
+      "sha256": "4e3c59226f3b1fcbed1bb2aa401522d4e747bfa73d4318a969ce799d4341c68b"
+    },
+    {
+      "path": "attempt1-leading-near-start.png",
+      "bytes": 1478028,
+      "sha256": "66926dc1bdb751313af897a13de318b781987b93f036c44e35678afe4785db6c"
+    },
+    {
+      "path": "attempt1-leading-returned.png",
+      "bytes": 1311113,
+      "sha256": "735a098c1d0025d4c2838fad21af3cc486adaac8daaa44b7055ccb4d0bca9f23"
+    },
+    {
+      "path": "attempt1-released.png",
+      "bytes": 1312556,
+      "sha256": "8d649dbb5123b486e75dc90d2a720522a392b2e715f75d51d4ba3bb6d8c2a910"
+    },
+    {
+      "path": "comparison.json",
+      "bytes": 5998,
+      "sha256": "7606d74481621d1e12c8f5d1bfdf6d08d1653030d054a16e04a7d98e9eb8db2c"
+    },
+    {
+      "path": "driver.log",
+      "bytes": 1948,
+      "sha256": "ed57d83a29a4dd8f067f4fc47f5fd9a8e40e53044f6798b8b9f221289f00be2b"
+    },
+    {
+      "path": "linger-observation-15s.png",
+      "bytes": 1548261,
+      "sha256": "3b8e45593e5753baed1c12d105ad948630b4241fd4f44ac3ca6260414e1c2c0a"
+    },
+    {
+      "path": "linger-observation-30s.png",
+      "bytes": 1516609,
+      "sha256": "5f20c7cd2b023b4ba6bbe6f9700e5564a8601ec02342f4524856b8c36e42edab"
+    },
+    {
+      "path": "linger-observation-45s.png",
+      "bytes": 1339406,
+      "sha256": "b2dc20c1fd1f8e5adb9076e1b31601a1d3d553443028ddc7426267516cb74cad"
+    },
+    {
+      "path": "linger-observation-60s.png",
+      "bytes": 1324333,
+      "sha256": "6c7c57042d483a3947376b9f7251bd0be3943cd4407aafd5ee612818180267ad"
+    },
+    {
+      "path": "linger-observation-75s.png",
+      "bytes": 1346826,
+      "sha256": "f98146db46332206a05011ce78f0c6f192f89bb20e5a11ba727d8f0de745d837"
+    },
+    {
+      "path": "linger-observation-90s.png",
+      "bytes": 1327604,
+      "sha256": "ac04ff87e600951ab07ba0e02ff109de5b4b12890c50f2070365094cd9572142"
+    },
+    {
+      "path": "page1-title.png",
+      "bytes": 1391677,
+      "sha256": "0dba23c3f305f293379a4febd3b4fcd177b87d64c4bd73aaeec6982c5e635a70"
+    },
+    {
+      "path": "page2-title.png",
+      "bytes": 1391677,
+      "sha256": "0dba23c3f305f293379a4febd3b4fcd177b87d64c4bd73aaeec6982c5e635a70"
+    },
+    {
+      "path": "result.json",
+      "bytes": 24474,
+      "sha256": "d7bb090aa3e0fcc9fb750a650143218cdd1dc45fd52179ec6efe55515e32bfc0"
+    },
+    {
+      "path": "run.py",
+      "bytes": 5657,
+      "sha256": "45ac1fbe221dceae696328ba966d3b2dccdc47a02337b25e42e6ed11f449b5a4"
+    }
+  ]
+}
