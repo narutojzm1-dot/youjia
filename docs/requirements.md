@@ -570,3 +570,8 @@ Cloud242/6000756272于18:38:12实际交375 Draft v2完整head18c049b1b1b11dd2f8b
 ### GAME-PM 03:20最新接收覆盖
 
 438最终e43f1901ddf1c6f7847dea18b5df51aeaf7a6670独审合83b893035d76e9cdd1966b724fb748fab5e3ef59并发布，INVALID保全最小修订已交；Cloud6001369069明确接收/未重复同方法，旧接力未接收已解除。413由Grok436原b5423a67c9ca7aa0d9fd414a2d6ed1a5eadfbd31实际认领交付，439最终68084b6cffc52e5911c49f1004b4da5154281671独审合089d453dc7b4ac8a8b5dbe8fc250d032c6e80b21并发布；父单正式组合/各态验收仍在Leader实际持续轮次，不重复测试/不全关。375新753f1795831e1f3be8032796f6e50b754dd55413清底v2横竖视频/独立画面审核已交，Producer运行认可/耳听待。168远端原件/专业例外/接入、Assistant382最终实现head仍未交，不把别人的合入冒执行。详见[13身份最新产物/范围/窗口](pm/2026-10-06-0320-coordination.md)。
+
+
+### 2026-10-06 #400 Leader 镜头交接保底子范围
+
+按[原单协助认领6005299861](https://github.com/narutojzm1-dot/youjia/issues/400#issuecomment-6005299861)，CODEX-LEAD只修静观已持有镜头→鹅马仅预热→预热取消的共享框架空档：预热不提前清旧hold，原移动取消/自然到期释放，phase≥0实际接管才yield。只改World一个方法；Main输入、背景与探索不改。v2真实原代码FAIL202/34失败，最小修正PASS202；normal/reduced同tick接管前quiet仍active且hold≈0.4，无误release，之后实际相机平滑归零。组合33bd含464原作者，75套+import76启动、64mock（新增14）、2Node、retention11、本地publisher与严格Web均exit0；[完整证据及失败原件](playtests/2026-10-06-camera400-handoff/README.md)。候选390普通静观→ArrowRight→回稳有限通过，前后实取同源PCK/模块；静观顶部112/138px浅纸空带另属遗留构图缺陷，不通过总体验收。最终独审/真实PR CI和公开状态单列，不把原生夹具当用户截图复现。GAME-PRODUCER仍是#400总体验收Owner，原图来源/构图与resize/天气/探索返回未完，不关闭父单。

@@ -1,0 +1,79 @@
+[
+  {
+    "step": "gate-contract",
+    "args": [
+      "bash",
+      "test/godot_gate_test.sh"
+    ],
+    "started_at": "2026-10-05T23:32:20.197313+00:00",
+    "ended_at": "2026-10-05T23:32:20.790208+00:00",
+    "returncode": 0,
+    "log": "/tmp/camera400-evidence/green-specialized/gate-contract.log",
+    "sha256": "cedbaa6aaa45206e451359cd06cf9d8aa57e7b17077e9b114d21f118dd66f0ad"
+  },
+  {
+    "step": "camera400_handoff",
+    "args": [
+      "bash",
+      "-c",
+      "source tools/lib/verified_godot.sh; run_verified_godot_suite /tmp/camera400-evidence/green-specialized/camera400_handoff-engine.log test/camera400_handoff_suite.gd --headless --path ."
+    ],
+    "started_at": "2026-10-05T23:32:20.790810+00:00",
+    "ended_at": "2026-10-05T23:32:28.249290+00:00",
+    "returncode": 0,
+    "log": "/tmp/camera400-evidence/green-specialized/camera400_handoff.log",
+    "sha256": "e200b389fd24e43fe4b50574834546c0fb30fe41760435dc52e7f5e9ecdb7596"
+  },
+  {
+    "step": "quiet_sky_look",
+    "args": [
+      "bash",
+      "-c",
+      "source tools/lib/verified_godot.sh; run_verified_godot_suite /tmp/camera400-evidence/green-specialized/quiet_sky_look-engine.log test/quiet_sky_look_suite.gd --headless --path ."
+    ],
+    "started_at": "2026-10-05T23:32:28.251761+00:00",
+    "ended_at": "2026-10-05T23:32:30.305646+00:00",
+    "returncode": 0,
+    "log": "/tmp/camera400-evidence/green-specialized/quiet_sky_look.log",
+    "sha256": "4e08e4590b80a13471afa100ee1f8615fcda202fac6842234e636de9ce70ffa7"
+  },
+  {
+    "step": "goose_mount",
+    "args": [
+      "bash",
+      "-c",
+      "source tools/lib/verified_godot.sh; run_verified_godot_suite /tmp/camera400-evidence/green-specialized/goose_mount-engine.log test/goose_mount_suite.gd --headless --path ."
+    ],
+    "started_at": "2026-10-05T23:32:30.306116+00:00",
+    "ended_at": "2026-10-05T23:32:35.713275+00:00",
+    "returncode": 0,
+    "log": "/tmp/camera400-evidence/green-specialized/goose_mount.log",
+    "sha256": "3ef00683e9c30683f4a81a89aa2a173d571d9be3deb98268d5c967ce43aa4abc"
+  },
+  {
+    "step": "quiet_stay",
+    "args": [
+      "bash",
+      "-c",
+      "source tools/lib/verified_godot.sh; run_verified_godot_suite /tmp/camera400-evidence/green-specialized/quiet_stay-engine.log test/quiet_stay_suite.gd --headless --path ."
+    ],
+    "started_at": "2026-10-05T23:32:35.713798+00:00",
+    "ended_at": "2026-10-05T23:32:37.309055+00:00",
+    "returncode": 0,
+    "log": "/tmp/camera400-evidence/green-specialized/quiet_stay.log",
+    "sha256": "e78a44bd849277f47a4c96a8c6946e101ba8a2cc901365a4ad63e67d872e5437"
+  },
+  {
+    "step": "motion_preference",
+    "args": [
+      "bash",
+      "-c",
+      "source tools/lib/verified_godot.sh; run_verified_godot_suite /tmp/camera400-evidence/green-specialized/motion_preference-engine.log test/motion_preference_suite.gd --headless --path ."
+    ],
+    "started_at": "2026-10-05T23:32:37.309583+00:00",
+    "ended_at": "2026-10-05T23:32:40.200281+00:00",
+    "returncode": 0,
+    "log": "/tmp/camera400-evidence/green-specialized/motion_preference.log",
+    "sha256": "657f88253a8c65fb16978fcddd0991134e57ce0852b25f29698681b27050e6de"
+  }
+]

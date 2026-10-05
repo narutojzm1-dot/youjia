@@ -46,6 +46,7 @@ test/photo_species_frame_suite.gd	PHOTO_SPECIES_FRAME checks=[1-9][0-9]* failure
 test/physical_yard_suite.gd	\[physical-yard-tests\] PASS: [1-9][0-9]* checks
 test/portable_accept_suite.gd	\[portable-accept-tests\] [1-9][0-9]* checks \[\]
 test/quiet_sky_look_suite.gd	QUIET SKY LOOK PASS [1-9][0-9]*
+test/camera400_handoff_suite.gd	\[camera400-handoff\] PASS: [1-9][0-9]* checks \[\]
 test/quiet_stay_suite.gd	QUIET STAY PASS [1-9][0-9]*
 test/save_candidate_suite.gd	save candidate: [1-9][0-9]* checks, 0 failures
 test/save_coordinator_suite.gd	SAVE_COORDINATOR checks=[1-9][0-9]* failures=\[\]
