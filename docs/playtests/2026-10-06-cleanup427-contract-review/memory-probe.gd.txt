@@ -1,0 +1,24 @@
+extends SceneTree
+const Memory = preload("res://test/fixtures/exploration_memory_store.gd")
+func _initialize(): call_deferred("run")
+func run():
+ var s := ExplorationSession.new(ExplorationRoutes.catalog(), 0)
+ s.begin(ExplorationRoutes.NEAR_PATH, {"day":1,"elapsed":0.0}, 7)
+ s.request_return("player")
+ var expected: Dictionary = s.to_record()
+ expected.session.started_clock.future_payload={"keep":"raw"}
+ var store := Memory.new()
+ store._data.exploration=expected.duplicate(true)
+ store._data.exploration_committed_serial=1
+ var events=[]
+ store.commit_rejected.connect(func(op,kind,code):events.append([op,kind,code]))
+ store.commit_confirmed.connect(func(op,kind):events.append([op,kind,"confirmed"]))
+ var host:=ExplorationHost.new(store)
+ host.restore()
+ print("RESTORE ",host.restore_action," RAW_BEFORE ",JSON.stringify(store.get_exploration_record()))
+ store.pump()
+ print("EVENTS ",JSON.stringify(events))
+ print("RAW_AFTER ",JSON.stringify(store.get_exploration_record()))
+ print("PRESERVED ",store.get_exploration_record()==expected)
+ store.free()
+ quit()
