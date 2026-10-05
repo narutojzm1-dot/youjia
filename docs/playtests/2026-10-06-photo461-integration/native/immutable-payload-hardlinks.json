@@ -1,0 +1,881 @@
+{
+  "scope": "Immutable binary resource payloads only. No .import/script/config hardlinked. Current slice must never modify assets; break links before any future mutation.",
+  "source_repo": "/tmp/youjia-soft455",
+  "target_repo": "/tmp/youjia-photo461",
+  "count": 109,
+  "bytes_freed": 74176555,
+  "records": [
+    {
+      "path": "assets/holiday/audio/bed_yard_env.ogg",
+      "git_blob": "52060b3e2cd3a9c2554238a6bf060a557cafa40c",
+      "bytes": 1865882,
+      "sha256": "239efcb8235acb56e12450c2e40e409336c1c139403a07ee8b4803f621bde241",
+      "mode": "0o100600",
+      "source": "/tmp/youjia-soft455/assets/holiday/audio/bed_yard_env.ogg"
+    },
+    {
+      "path": "assets/holiday/audio/bed_yard_music.ogg",
+      "git_blob": "9a260de8e87c9bf3636092bb32170e35c39fd30f",
+      "bytes": 767834,
+      "sha256": "2a01d83a2c6dfb14181dfd6a53b9c249591e18ad03f57e8f70f6a9ba57afd86c",
+      "mode": "0o100600",
+      "source": "/tmp/youjia-soft455/assets/holiday/audio/bed_yard_music.ogg"
+    },
+    {
+      "path": "assets/holiday/characters/approved_resident_upper_v1.png",
+      "git_blob": "c977b35fe7e9847d987cb3f336d31af0e4bb4f3a",
+      "bytes": 1877011,
+      "sha256": "4fd91b466c653ceeadb9f19a18ed3b71e14b51d2653cb1c25a775c02f1909294",
+      "mode": "0o100600",
+      "source": "/tmp/youjia-soft455/assets/holiday/characters/approved_resident_upper_v1.png"
+    },
+    {
+      "path": "assets/holiday/characters/approved_traveler_pants_v1.png",
+      "git_blob": "bb1727a128cfa631ab8115772b71a66d17ea38ba",
+      "bytes": 1124591,
+      "sha256": "cb0c47b9aad3ba59490fca24463f60d069208ef2fa2b10b4a097d90a8ce01f8f",
+      "mode": "0o100600",
+      "source": "/tmp/youjia-soft455/assets/holiday/characters/approved_traveler_pants_v1.png"
+    },
+    {
+      "path": "assets/holiday/characters/approved_traveler_upper_v1.png",
+      "git_blob": "a352a7965ea5d9b3da423d35beac5e73093163e1",
+      "bytes": 1705983,
+      "sha256": "b738ae0bd57ad588fc9bbcc9b5dabef54e5eec9d2bb5c9a2b0f39e9a8996d64f",
+      "mode": "0o100600",
+      "source": "/tmp/youjia-soft455/assets/holiday/characters/approved_traveler_upper_v1.png"
+    },
+    {
+      "path": "assets/holiday/characters/cast_v2/cow.png",
+      "git_blob": "47ddb485ce2ee98a7d9400f6cb22fcc25795e110",
+      "bytes": 1151331,
+      "sha256": "4bb04822ef7ce7ee912092b0933ecf2ba3f25c20620fcce725c94c02638bcc2c",
+      "mode": "0o100600",
+      "source": "/tmp/youjia-soft455/assets/holiday/characters/cast_v2/cow.png"
+    },
+    {
+      "path": "assets/holiday/characters/cast_v2/cow_chew.png",
+      "git_blob": "e65ff139e02345f285976209b2f55be324f0ad8c",
+      "bytes": 1181117,
+      "sha256": "cdfdd69d76ecb03a180147d832774072bb9132490cf2bbcc757d3fb1efcb735b",
+      "mode": "0o100600",
+      "source": "/tmp/youjia-soft455/assets/holiday/characters/cast_v2/cow_chew.png"
+    },
+    {
+      "path": "assets/holiday/characters/cast_v2/cow_glance.png",
+      "git_blob": "1d656a713613c7b1e54cc29c4067a6ab8d2a334e",
+      "bytes": 1245470,
+      "sha256": "2653458d2804ec89df9a462746da81cd13c7c49628d9c9f7ecedd798a9ee93f4",
+      "mode": "0o100600",
+      "source": "/tmp/youjia-soft455/assets/holiday/characters/cast_v2/cow_glance.png"
+    },
+    {
+      "path": "assets/holiday/characters/cast_v2/duck.png",
+      "git_blob": "249f3fffeccf34fde16bb50b9e9e027bc76037b0",
+      "bytes": 1188640,
+      "sha256": "41aa35f53c5075451ef8e0666857aa6e1c39cf4813979c452bf86feafde7d081",
+      "mode": "0o100600",
+      "source": "/tmp/youjia-soft455/assets/holiday/characters/cast_v2/duck.png"
+    },
+    {
+      "path": "assets/holiday/characters/cast_v2/duck_attend.png",
+      "git_blob": "7b233f3e5b02c6eb47463a86b4641b5c05c16301",
+      "bytes": 1103990,
+      "sha256": "45343cf93eeac5b25ecfa6fdc55cbdc4f792add98a8f8fb4ace8e37512137eae",
+      "mode": "0o100600",
+      "source": "/tmp/youjia-soft455/assets/holiday/characters/cast_v2/duck_attend.png"
+    },
+    {
+      "path": "assets/holiday/characters/cast_v2/duck_preen.png",
+      "git_blob": "5e42ac58940df6469eeba379baf2d96f0cbd36b7",
+      "bytes": 940793,
+      "sha256": "1ef2098cbb594622d8d4f15832e03a5c3430f18b260319fd67d64591f267e724",
+      "mode": "0o100600",
+      "source": "/tmp/youjia-soft455/assets/holiday/characters/cast_v2/duck_preen.png"
+    },
+    {
+      "path": "assets/holiday/characters/cast_v2/goose.png",
+      "git_blob": "cdd93fc8f32f29d21353e7410d72bdbd4c9594e5",
+      "bytes": 1212584,
+      "sha256": "657f6b6445084a58962774c2f7fec08b2986da5b83ca6aaeb2348f3e12491453",
+      "mode": "0o100600",
+      "source": "/tmp/youjia-soft455/assets/holiday/characters/cast_v2/goose.png"
+    },
+    {
+      "path": "assets/holiday/characters/cast_v2/goose_calm.png",
+      "git_blob": "06dd5337e4b20d29c1392fa910c3865a41ec7109",
+      "bytes": 888242,
+      "sha256": "a967fda3e27fc974ae63728a8a055589f95e8dd26424ac9d17cef783a9e95203",
+      "mode": "0o100600",
+      "source": "/tmp/youjia-soft455/assets/holiday/characters/cast_v2/goose_calm.png"
+    },
+    {
+      "path": "assets/holiday/characters/cast_v2/goose_rest.png",
+      "git_blob": "f92983099250787741e11f5fbd6615ceea1202b0",
+      "bytes": 1016561,
+      "sha256": "5a158ddf1fd32fc5c85987f6774fe4a9a97c268424c6f455c154ab7503a03983",
+      "mode": "0o100600",
+      "source": "/tmp/youjia-soft455/assets/holiday/characters/cast_v2/goose_rest.png"
+    },
+    {
+      "path": "assets/holiday/characters/cast_v2/goose_riding_down.png",
+      "git_blob": "9e98c8b32c117f2210cbe4b0cd3fd08596684f04",
+      "bytes": 853295,
+      "sha256": "680724b7c4c5c9a1e04c29543b2f3bf0c85dbab4f299fcbe28fc2ddcfcc6d78b",
+      "mode": "0o100600",
+      "source": "/tmp/youjia-soft455/assets/holiday/characters/cast_v2/goose_riding_down.png"
+    },
+    {
+      "path": "assets/holiday/characters/cast_v2/goose_riding_up.png",
+      "git_blob": "f95f07a910ef7aa2eb5cc87a94e82833e76d94a2",
+      "bytes": 1029972,
+      "sha256": "f2b14374f2df972b11308ca89d58d5bafc6040ae960bf72cae3bf8502be7834a",
+      "mode": "0o100600",
+      "source": "/tmp/youjia-soft455/assets/holiday/characters/cast_v2/goose_riding_up.png"
+    },
+    {
+      "path": "assets/holiday/characters/cast_v2/horse.png",
+      "git_blob": "ca9cd1c1d6c99ef04463352da1897878db822780",
+      "bytes": 1508497,
+      "sha256": "3f22e2c9873122cdacf26b5d24684e6bfde720ed98be01dcaa787e2270843801",
+      "mode": "0o100600",
+      "source": "/tmp/youjia-soft455/assets/holiday/characters/cast_v2/horse.png"
+    },
+    {
+      "path": "assets/holiday/characters/cast_v2/horse_tail.png",
+      "git_blob": "7b9edabc44f0d7b9eae380fccc3b2883abf44450",
+      "bytes": 932078,
+      "sha256": "035a63907fd172f5692a3a7993e8a924acaa7e45570f54be79c02cc9437a0c25",
+      "mode": "0o100600",
+      "source": "/tmp/youjia-soft455/assets/holiday/characters/cast_v2/horse_tail.png"
+    },
+    {
+      "path": "assets/holiday/characters/cast_v2/llama_annoyed.png",
+      "git_blob": "c70aad9a12db05d228c15cd5392f3cff27d83453",
+      "bytes": 1265644,
+      "sha256": "e48895931c9fb042d24f645217699775880fdcc53467e4be28099dc840d0af70",
+      "mode": "0o100600",
+      "source": "/tmp/youjia-soft455/assets/holiday/characters/cast_v2/llama_annoyed.png"
+    },
+    {
+      "path": "assets/holiday/characters/cast_v2/llama_happy.png",
+      "git_blob": "00ee4c3198ee78a718dbb35b1dd8bd94c09b65c6",
+      "bytes": 1265273,
+      "sha256": "47acc972da4dbc8aaeb585a1fa992ef74c5f990872b75a7349d2402a09e31516",
+      "mode": "0o100600",
+      "source": "/tmp/youjia-soft455/assets/holiday/characters/cast_v2/llama_happy.png"
+    },
+    {
+      "path": "assets/holiday/characters/cast_v2/llama_idle.png",
+      "git_blob": "e4505932fc8c944fe53a9b5c9df072fb8ce8f0a2",
+      "bytes": 1264534,
+      "sha256": "b9b9d58567a9d6027796e26ef63a10565c18a3da0eb6863950762d4afb340f72",
+      "mode": "0o100600",
+      "source": "/tmp/youjia-soft455/assets/holiday/characters/cast_v2/llama_idle.png"
+    },
+    {
+      "path": "assets/holiday/characters/cast_v2/llama_smirk.png",
+      "git_blob": "b20859b314dd40a3cc6268f9b4a35857f5d73c31",
+      "bytes": 1323732,
+      "sha256": "9f66ec8c9dfde2f3a06cc66b0acb761914850ec73103d7c3fa1a14285affb1be",
+      "mode": "0o100600",
+      "source": "/tmp/youjia-soft455/assets/holiday/characters/cast_v2/llama_smirk.png"
+    },
+    {
+      "path": "assets/holiday/characters/cast_v2/sheep_clingy.png",
+      "git_blob": "bc35ef98df971ddd4c04ff40cb908ad60e33c492",
+      "bytes": 1356267,
+      "sha256": "cfc72bc0ac4b38899f4c3067ef76cc3ce9099fc660d86b595818a70dc6f4c9e3",
+      "mode": "0o100600",
+      "source": "/tmp/youjia-soft455/assets/holiday/characters/cast_v2/sheep_clingy.png"
+    },
+    {
+      "path": "assets/holiday/characters/cast_v2/sheep_clingy_attend_v2.png",
+      "git_blob": "31c3c29d5398790f3a00c61f82b70d4aedf83585",
+      "bytes": 1266293,
+      "sha256": "674f8a61a40df4486e0e52a7a55bf849c9ed312efe716ce6bddbb9e1f782b4c0",
+      "mode": "0o100600",
+      "source": "/tmp/youjia-soft455/assets/holiday/characters/cast_v2/sheep_clingy_attend_v2.png"
+    },
+    {
+      "path": "assets/holiday/characters/cast_v2/sheep_dull.png",
+      "git_blob": "09d3acc498a7c098d5cdd025dab7a9239e7b32d5",
+      "bytes": 1504492,
+      "sha256": "8205508ce26a772e17876b7f9d74d8ece0bdd91d76e97cecfb2d1cd0aada3ad4",
+      "mode": "0o100600",
+      "source": "/tmp/youjia-soft455/assets/holiday/characters/cast_v2/sheep_dull.png"
+    },
+    {
+      "path": "assets/holiday/characters/cast_v2/sheep_dull_glance_v3.png",
+      "git_blob": "48bad9527904c6b85ba469033208c2789da18832",
+      "bytes": 1364054,
+      "sha256": "7bf3e32e40d50a329d042a15232152fcee0ca29e949e50dc8bb54dfcfd890b0c",
+      "mode": "0o100600",
+      "source": "/tmp/youjia-soft455/assets/holiday/characters/cast_v2/sheep_dull_glance_v3.png"
+    },
+    {
+      "path": "assets/holiday/characters/cast_v2/sheep_shake.png",
+      "git_blob": "4342ea659b32aa3e455b6e26193757b245e6a999",
+      "bytes": 1189894,
+      "sha256": "2d80e16128be0ff7cce54be101c38a5fa66942aba1643f665e9c5ac83ef769eb",
+      "mode": "0o100600",
+      "source": "/tmp/youjia-soft455/assets/holiday/characters/cast_v2/sheep_shake.png"
+    },
+    {
+      "path": "assets/holiday/characters/cow.png",
+      "git_blob": "2d1bdeefb5fb5170420ffa2b662991c16ca26e9b",
+      "bytes": 105604,
+      "sha256": "96ccc8cf7a4a17f9b918cf08a0c2f2dd78d0a9a3093e6e891b9f5de8969cf204",
+      "mode": "0o100600",
+      "source": "/tmp/youjia-soft455/assets/holiday/characters/cow.png"
+    },
+    {
+      "path": "assets/holiday/characters/duck.png",
+      "git_blob": "70f6fd120d538c02ce8ff5be60ee8b82f74398c7",
+      "bytes": 17849,
+      "sha256": "d4068444b4fffd3e28052c668e35ac3483a8204260533613e701166b656f2235",
+      "mode": "0o100600",
+      "source": "/tmp/youjia-soft455/assets/holiday/characters/duck.png"
+    },
+    {
+      "path": "assets/holiday/characters/goose.png",
+      "git_blob": "69e8cc8db0ce0fdd22a992b5d6330c6f97d5628c",
+      "bytes": 34455,
+      "sha256": "ae59873263522c4b18da3d97958b79fe92a3ac7264ac2a2835dbaacc58809813",
+      "mode": "0o100600",
+      "source": "/tmp/youjia-soft455/assets/holiday/characters/goose.png"
+    },
+    {
+      "path": "assets/holiday/characters/llama.png",
+      "git_blob": "93168bd7509080763d14d0f20b3119f4926eb6da",
+      "bytes": 77375,
+      "sha256": "beb6c2827b94abb77596904a3096a151106d2b1435c12dd1d837486c60d3b652",
+      "mode": "0o100600",
+      "source": "/tmp/youjia-soft455/assets/holiday/characters/llama.png"
+    },
+    {
+      "path": "assets/holiday/characters/llama_annoyed.png",
+      "git_blob": "619f8f784eb75f958cbb85860c8875de8b5ed6c7",
+      "bytes": 101369,
+      "sha256": "a4a853a50b835746e245ffdad1b51deea642aeb3a71fa1a973f7b0c704473058",
+      "mode": "0o100600",
+      "source": "/tmp/youjia-soft455/assets/holiday/characters/llama_annoyed.png"
+    },
+    {
+      "path": "assets/holiday/characters/llama_happy.png",
+      "git_blob": "b81d95c2460b8409dc69e638c53d8cc7895a5600",
+      "bytes": 102999,
+      "sha256": "b3d915c4cb2cbea7516fcbd25c276fe7a239b001f5db536e846e700e61d0585f",
+      "mode": "0o100600",
+      "source": "/tmp/youjia-soft455/assets/holiday/characters/llama_happy.png"
+    },
+    {
+      "path": "assets/holiday/characters/llama_legs_atlas_v1.png",
+      "git_blob": "c716d92fb2bcbcec81f9cc584f732383d646d1f0",
+      "bytes": 858755,
+      "sha256": "8f66ec6b331be15fe9943d97b155a5cdb69617b43e3ab60bb0ad47b135f73ad5",
+      "mode": "0o100600",
+      "source": "/tmp/youjia-soft455/assets/holiday/characters/llama_legs_atlas_v1.png"
+    },
+    {
+      "path": "assets/holiday/characters/llama_smirk.png",
+      "git_blob": "355afb2375833c7c27fb25a14cc824cbec6ea1ae",
+      "bytes": 96500,
+      "sha256": "547dac11bb6178db07b6412cf5cd910b264c1f45a1808d80a9f7f81e8335abca",
+      "mode": "0o100600",
+      "source": "/tmp/youjia-soft455/assets/holiday/characters/llama_smirk.png"
+    },
+    {
+      "path": "assets/holiday/characters/player.png",
+      "git_blob": "7c91b1cae41345a6b6da29cdb63f9196c2d37b24",
+      "bytes": 37817,
+      "sha256": "20cc74011286a1b095d80aee7ee9dc1fb601235e2a386b803e0c7f213ae2e3b0",
+      "mode": "0o100600",
+      "source": "/tmp/youjia-soft455/assets/holiday/characters/player.png"
+    },
+    {
+      "path": "assets/holiday/characters/player_rig_atlas_v1.png",
+      "git_blob": "411ec1b568239cdd246a04dcba0ed5ca5cc71ecc",
+      "bytes": 1388628,
+      "sha256": "0936cf5f1f6555ab8191bf6a37baace53a6a595337b9e34dbb45e34818475f21",
+      "mode": "0o100600",
+      "source": "/tmp/youjia-soft455/assets/holiday/characters/player_rig_atlas_v1.png"
+    },
+    {
+      "path": "assets/holiday/characters/resident_grass_actions_v1/actions.png",
+      "git_blob": "c88a1a50965bb7336e46facec9cadae51cd57b32",
+      "bytes": 993432,
+      "sha256": "51cfd148643c36b0507ecb0f0dbcd674edfedc5e3cc5794028c49623bca544c3",
+      "mode": "0o100600",
+      "source": "/tmp/youjia-soft455/assets/holiday/characters/resident_grass_actions_v1/actions.png"
+    },
+    {
+      "path": "assets/holiday/characters/resident_walk_authored_v1/00.png",
+      "git_blob": "09bb9b67db252b81c21ce95da2cc42cb2f6edd80",
+      "bytes": 103673,
+      "sha256": "1b89e43dc78bd8812b20cd751bf5497814d4e08a67abd84cff491ca16853ae51",
+      "mode": "0o100600",
+      "source": "/tmp/youjia-soft455/assets/holiday/characters/resident_walk_authored_v1/00.png"
+    },
+    {
+      "path": "assets/holiday/characters/resident_walk_authored_v1/01.png",
+      "git_blob": "13cd073b65667a1da0ee461bdbbc533da6c26785",
+      "bytes": 103782,
+      "sha256": "23d7b892dfffbaf84ed0ca52640ddf110fad59831cd17dcd851232a606d84ea9",
+      "mode": "0o100600",
+      "source": "/tmp/youjia-soft455/assets/holiday/characters/resident_walk_authored_v1/01.png"
+    },
+    {
+      "path": "assets/holiday/characters/resident_walk_authored_v1/02.png",
+      "git_blob": "c0e9d991dde26bdf30248bf3c634c76d1e13758b",
+      "bytes": 103477,
+      "sha256": "baa40267a740c82bd2f855bf705d013aec340709fb79599b5f7e05ec1e3ab1cc",
+      "mode": "0o100600",
+      "source": "/tmp/youjia-soft455/assets/holiday/characters/resident_walk_authored_v1/02.png"
+    },
+    {
+      "path": "assets/holiday/characters/resident_walk_authored_v1/03.png",
+      "git_blob": "08e81569479643f2da0307aec01d2d20e4275112",
+      "bytes": 101427,
+      "sha256": "db54e352c7aec8d2998db786f78ebbc07eb21f448326f1e15fc0ef3646e59cf8",
+      "mode": "0o100600",
+      "source": "/tmp/youjia-soft455/assets/holiday/characters/resident_walk_authored_v1/03.png"
+    },
+    {
+      "path": "assets/holiday/characters/resident_walk_authored_v1/04.png",
+      "git_blob": "e34fa0de847636f14f6513daaef4b03c66f3b509",
+      "bytes": 94145,
+      "sha256": "fac6cfabf7367b1a80855d4c7dd23d8ec8bc9cb8cb36339135b0aebabe0e104f",
+      "mode": "0o100600",
+      "source": "/tmp/youjia-soft455/assets/holiday/characters/resident_walk_authored_v1/04.png"
+    },
+    {
+      "path": "assets/holiday/characters/resident_walk_authored_v1/05.png",
+      "git_blob": "4fd833e9b2e01f472e7f785b9868d2f4e712806d",
+      "bytes": 86505,
+      "sha256": "5c39647456d1da13dba692fb6f8d1391c6f88c53e0d08703187dfd689cbb7dfc",
+      "mode": "0o100600",
+      "source": "/tmp/youjia-soft455/assets/holiday/characters/resident_walk_authored_v1/05.png"
+    },
+    {
+      "path": "assets/holiday/characters/resident_walk_authored_v1/06.png",
+      "git_blob": "d23bbd5ae00f7c54095661ed8139c2f895cf40bd",
+      "bytes": 87056,
+      "sha256": "2485c72855b5836bc5904f641a8b9cccb605ff5acd5ce349b98544818b6c9c3a",
+      "mode": "0o100600",
+      "source": "/tmp/youjia-soft455/assets/holiday/characters/resident_walk_authored_v1/06.png"
+    },
+    {
+      "path": "assets/holiday/characters/resident_walk_authored_v1/07.png",
+      "git_blob": "dbd2ebd520c170c68d48af25bc526f03abbdd85a",
+      "bytes": 93282,
+      "sha256": "b27ff324998687068616d76b42f74c2d7b8e2b0c4353b69aef8f2c8a0681f3e4",
+      "mode": "0o100600",
+      "source": "/tmp/youjia-soft455/assets/holiday/characters/resident_walk_authored_v1/07.png"
+    },
+    {
+      "path": "assets/holiday/characters/resident_walk_authored_v1/08.png",
+      "git_blob": "8fb1cd9021e8b14d11aa84dfa06e6d8e6e6d0b78",
+      "bytes": 95709,
+      "sha256": "a95f5fb572cfe7f70d575eae0e4538652d825e9464547919ede9161cdbf39642",
+      "mode": "0o100600",
+      "source": "/tmp/youjia-soft455/assets/holiday/characters/resident_walk_authored_v1/08.png"
+    },
+    {
+      "path": "assets/holiday/characters/resident_walk_authored_v1/09.png",
+      "git_blob": "e04ae15d0a9b153577467631a4acfa294c1ff104",
+      "bytes": 94772,
+      "sha256": "6b28cf93d7701dc4c8c4336a110d22fcd09f92c1e2ca94d0dbe36b6734f7818e",
+      "mode": "0o100600",
+      "source": "/tmp/youjia-soft455/assets/holiday/characters/resident_walk_authored_v1/09.png"
+    },
+    {
+      "path": "assets/holiday/characters/resident_walk_authored_v1/10.png",
+      "git_blob": "181f10919f4862a7596e8d15bb6e36b342e07fa7",
+      "bytes": 92993,
+      "sha256": "7b3da6250051d64e9d3572bb123db94072eb1368d5748daae4792f5ed3f4cb5e",
+      "mode": "0o100600",
+      "source": "/tmp/youjia-soft455/assets/holiday/characters/resident_walk_authored_v1/10.png"
+    },
+    {
+      "path": "assets/holiday/characters/resident_walk_authored_v1/11.png",
+      "git_blob": "6bc39e6d0283b04cf1be4aaa1278ddafe16ab961",
+      "bytes": 87230,
+      "sha256": "f7fc7ad2cbba586dbe20118f9db827e21eb4e53dd447ab5d34f985ae1ebc202c",
+      "mode": "0o100600",
+      "source": "/tmp/youjia-soft455/assets/holiday/characters/resident_walk_authored_v1/11.png"
+    },
+    {
+      "path": "assets/holiday/characters/resident_walk_authored_v1/12.png",
+      "git_blob": "2a1d1165229ac36136e42e623ae0f1612276b2a8",
+      "bytes": 94003,
+      "sha256": "49a900ffbd18f2d781338022add9a0bc15fc8205088617fa289fb720a60cd6d5",
+      "mode": "0o100600",
+      "source": "/tmp/youjia-soft455/assets/holiday/characters/resident_walk_authored_v1/12.png"
+    },
+    {
+      "path": "assets/holiday/characters/resident_walk_authored_v1/13.png",
+      "git_blob": "7424bf301cc5b93108f74462cfaba1b990c2ede6",
+      "bytes": 101218,
+      "sha256": "fada1cbeb4e2a56d0e984a09e61bab86f9b56b3ecf21de90d961a35216824ced",
+      "mode": "0o100600",
+      "source": "/tmp/youjia-soft455/assets/holiday/characters/resident_walk_authored_v1/13.png"
+    },
+    {
+      "path": "assets/holiday/characters/resident_walk_authored_v1/14.png",
+      "git_blob": "7f23187dc9f4da380917024aa83e075c66fb6555",
+      "bytes": 103270,
+      "sha256": "9fac8b72fccdd9c05256da34fd00b00b2594aac0c408027e741feadd66484684",
+      "mode": "0o100600",
+      "source": "/tmp/youjia-soft455/assets/holiday/characters/resident_walk_authored_v1/14.png"
+    },
+    {
+      "path": "assets/holiday/characters/resident_walk_authored_v1/15.png",
+      "git_blob": "ccb181a9343655e708f382e13ef351addef03429",
+      "bytes": 103575,
+      "sha256": "6fafacb9a2696afbd67cf17ef68f1f39392b143a4008dd9fe9972110abecb43f",
+      "mode": "0o100600",
+      "source": "/tmp/youjia-soft455/assets/holiday/characters/resident_walk_authored_v1/15.png"
+    },
+    {
+      "path": "assets/holiday/characters/resident_walk_authored_v1/idle.png",
+      "git_blob": "c086fcc3f2c036219895832c30504f9fbd50b5af",
+      "bytes": 101569,
+      "sha256": "8bed85da92599145c415d7b8abca75002555af597f58feba83fccf5c856932f7",
+      "mode": "0o100600",
+      "source": "/tmp/youjia-soft455/assets/holiday/characters/resident_walk_authored_v1/idle.png"
+    },
+    {
+      "path": "assets/holiday/characters/sheep_clingy.png",
+      "git_blob": "5c85517acc6cfc016de813d3e27f2a68ea58a5f2",
+      "bytes": 61040,
+      "sha256": "2e1e82de637184c069951ba2da516398f1b07999e56a56fdaa0954a9dd434791",
+      "mode": "0o100600",
+      "source": "/tmp/youjia-soft455/assets/holiday/characters/sheep_clingy.png"
+    },
+    {
+      "path": "assets/holiday/characters/sheep_dull.png",
+      "git_blob": "e12319d13c34f162c48b857c3497cc657e1de758",
+      "bytes": 93925,
+      "sha256": "0142f3d419894b619100bb7e77f14c7ffb27305165d92007f2e98feabe293cfc",
+      "mode": "0o100600",
+      "source": "/tmp/youjia-soft455/assets/holiday/characters/sheep_dull.png"
+    },
+    {
+      "path": "assets/holiday/environment/cloud_band_morning.png",
+      "git_blob": "a46b2f062b8086d6e5a5011f3f2425f54fdf22b3",
+      "bytes": 92868,
+      "sha256": "04ecee7bd0b40fbaa1d98d2bcd1f6356101a02293224a714b9d77bbbe40c7d55",
+      "mode": "0o100600",
+      "source": "/tmp/youjia-soft455/assets/holiday/environment/cloud_band_morning.png"
+    },
+    {
+      "path": "assets/holiday/environment/cloud_band_overcast.png",
+      "git_blob": "2e029171f8a9f23bcbf07b7c1cd5cfa84b3ef572",
+      "bytes": 231984,
+      "sha256": "56696b35840387be56ac709759d106f56794a63f0f6e69e413be7150f929ed22",
+      "mode": "0o100600",
+      "source": "/tmp/youjia-soft455/assets/holiday/environment/cloud_band_overcast.png"
+    },
+    {
+      "path": "assets/holiday/environment/cloud_band_sunny.png",
+      "git_blob": "8018e6f1baee2ca88a425670915799caa453fabf",
+      "bytes": 188874,
+      "sha256": "f042a962280d4fd38e3d398efd4401733f0e19430416905613d8e2707cfd3d50",
+      "mode": "0o100600",
+      "source": "/tmp/youjia-soft455/assets/holiday/environment/cloud_band_sunny.png"
+    },
+    {
+      "path": "assets/holiday/environment/cloud_band_sunset.png",
+      "git_blob": "b87af1fc5590521de29d9d8eb6e89f7451d594a7",
+      "bytes": 180999,
+      "sha256": "419b0adb5360057be7ef642489a09918be69832c72d17f7e222e34e10b83d2dd",
+      "mode": "0o100600",
+      "source": "/tmp/youjia-soft455/assets/holiday/environment/cloud_band_sunset.png"
+    },
+    {
+      "path": "assets/holiday/environment/yard_overcast.png",
+      "git_blob": "966d9051bbb5808ee1ac7490426df30a13c62f4c",
+      "bytes": 3427343,
+      "sha256": "3d1aa3589f3d4d1838987310130afbfbff3b3384999543cb2ed5b3c9655e66f8",
+      "mode": "0o100600",
+      "source": "/tmp/youjia-soft455/assets/holiday/environment/yard_overcast.png"
+    },
+    {
+      "path": "assets/holiday/environment/yard_sunny.png",
+      "git_blob": "d081f675b783a22a706f73d71a4e2c0328c076a4",
+      "bytes": 4019432,
+      "sha256": "7f29181eac79c89b18eff65fe1a18c37230573b55f8c8993a0365dc480219d73",
+      "mode": "0o100600",
+      "source": "/tmp/youjia-soft455/assets/holiday/environment/yard_sunny.png"
+    },
+    {
+      "path": "assets/holiday/exploration/near_path_02.webp",
+      "git_blob": "67410cf5beb533ea475d4f023578b847cfe20e1e",
+      "bytes": 559102,
+      "sha256": "c55276d9d98735c15f625654fac7bd50f0710a2ba993ce440595cd735b4798c6",
+      "mode": "0o100600",
+      "source": "/tmp/youjia-soft455/assets/holiday/exploration/near_path_02.webp"
+    },
+    {
+      "path": "assets/holiday/fx/felt_spit.png",
+      "git_blob": "dacb39a999f9332e76dd66eaca1685201b381bc9",
+      "bytes": 5613,
+      "sha256": "f703d28197b78381b2f19906c191ee9fe28d928d5ad4b033e91ea387df3dc0c8",
+      "mode": "0o100600",
+      "source": "/tmp/youjia-soft455/assets/holiday/fx/felt_spit.png"
+    },
+    {
+      "path": "assets/holiday/fx/fence_grass_bent.png",
+      "git_blob": "a7803a87061baeac15a754e2b069d67a08e7bf2f",
+      "bytes": 64694,
+      "sha256": "42bc3384f273f57068dfad3de017b57995ee18bdc3f640caa4b5daadd89d203f",
+      "mode": "0o100600",
+      "source": "/tmp/youjia-soft455/assets/holiday/fx/fence_grass_bent.png"
+    },
+    {
+      "path": "assets/holiday/fx/fence_grass_still.png",
+      "git_blob": "2a6a4f44ac8e8886e0c7ba2422691199eb161534",
+      "bytes": 60489,
+      "sha256": "df074b0994bbee16151dea1244e0f1c4820371eaa1aea04b54b470e2066e764f",
+      "mode": "0o100600",
+      "source": "/tmp/youjia-soft455/assets/holiday/fx/fence_grass_still.png"
+    },
+    {
+      "path": "assets/holiday/fx/grass_bundle.png",
+      "git_blob": "b19888530667ee1e7d274d9a66458d6c280ae2d6",
+      "bytes": 11000,
+      "sha256": "0933c9ebd9d771f818b822a58e04b82119c7f5f7d9e5da36f4959be253cd66b1",
+      "mode": "0o100600",
+      "source": "/tmp/youjia-soft455/assets/holiday/fx/grass_bundle.png"
+    },
+    {
+      "path": "assets/holiday/fx/grass_states_v2.png",
+      "git_blob": "94ba68cd0565acb48aec2aba04ab211e3c7de082",
+      "bytes": 1555671,
+      "sha256": "d70dcd06d3b00d6c3c2d729240c8a5bcb171629c56a2b3f9714a57de3d782978",
+      "mode": "0o100600",
+      "source": "/tmp/youjia-soft455/assets/holiday/fx/grass_states_v2.png"
+    },
+    {
+      "path": "assets/holiday/fx/path_clover.png",
+      "git_blob": "a0f75dc9127541c3b65094725092c00673b3de22",
+      "bytes": 64962,
+      "sha256": "7c76877fd032096e89dc32795e83f92d34c59013d279b8890e7fd51767a5345c",
+      "mode": "0o100600",
+      "source": "/tmp/youjia-soft455/assets/holiday/fx/path_clover.png"
+    },
+    {
+      "path": "assets/holiday/fx/path_snail.png",
+      "git_blob": "e67c16951939c5defdbbab007787e1254189b4a0",
+      "bytes": 6557,
+      "sha256": "ae3129001f25434bb3eb4f31038400bb33bac59c474d96faefb42cf14234b332",
+      "mode": "0o100600",
+      "source": "/tmp/youjia-soft455/assets/holiday/fx/path_snail.png"
+    },
+    {
+      "path": "assets/holiday/fx/pet_heart_watercolor.png",
+      "git_blob": "bed078dcf0f828b54e5d5999eccc815b935bc3b6",
+      "bytes": 183985,
+      "sha256": "e09793c84c29070b9c3017c5f8a487a8d6ec4af70d6e8dfe7d69f3ce4aec19a4",
+      "mode": "0o100600",
+      "source": "/tmp/youjia-soft455/assets/holiday/fx/pet_heart_watercolor.png"
+    },
+    {
+      "path": "assets/holiday/fx/shed_feather.png",
+      "git_blob": "5233c3c250ffff2ef74123b79b860af50174e19c",
+      "bytes": 70049,
+      "sha256": "87559c09afc7de0e8b276e0b738b1f2f0e5e641ec8de92d1e897415451c07b1c",
+      "mode": "0o100600",
+      "source": "/tmp/youjia-soft455/assets/holiday/fx/shed_feather.png"
+    },
+    {
+      "path": "assets/holiday/fx/shore_dragonfly_flight.png",
+      "git_blob": "8a1b6320b9c17c3638a3ddca153bf8f1d773698b",
+      "bytes": 79280,
+      "sha256": "777eb41a2cbcb59b0f6422fca04bddee6e199bd956e2da0a9c800e1d5113293c",
+      "mode": "0o100600",
+      "source": "/tmp/youjia-soft455/assets/holiday/fx/shore_dragonfly_flight.png"
+    },
+    {
+      "path": "assets/holiday/fx/shore_dragonfly_rest.png",
+      "git_blob": "25f37d98746d66b2ef28f68092c8f803ac3e4808",
+      "bytes": 59964,
+      "sha256": "d88df236fc63eaf78f6206e478006a9e100c823e1f650baf79a6857754cb9bdc",
+      "mode": "0o100600",
+      "source": "/tmp/youjia-soft455/assets/holiday/fx/shore_dragonfly_rest.png"
+    },
+    {
+      "path": "assets/holiday/fx/shore_ripple_start.png",
+      "git_blob": "75528ba14ac63695de52a872bd39230eebde20b8",
+      "bytes": 70095,
+      "sha256": "b2d98efe0d859d6b982c235fb3d1a4941cf585d43cbdc6f5f493907b2a7fbfac",
+      "mode": "0o100600",
+      "source": "/tmp/youjia-soft455/assets/holiday/fx/shore_ripple_start.png"
+    },
+    {
+      "path": "assets/holiday/fx/shore_ripple_wide.png",
+      "git_blob": "d9270110c384b26f1127bb1230ea216362597d9c",
+      "bytes": 75025,
+      "sha256": "6ed4cdde78a3dd1141491bc79aaf31774aa8dbe43c5d303f6df7d2addbbba50c",
+      "mode": "0o100600",
+      "source": "/tmp/youjia-soft455/assets/holiday/fx/shore_ripple_wide.png"
+    },
+    {
+      "path": "assets/holiday/fx/water_splash_watercolor.png",
+      "git_blob": "e30f6d333f35b841d47efbd3becd9c6242b334da",
+      "bytes": 161374,
+      "sha256": "e0db086c7d7bb8486a3da7de7617aebc4b384f1094af43abb2c25453dc476482",
+      "mode": "0o100600",
+      "source": "/tmp/youjia-soft455/assets/holiday/fx/water_splash_watercolor.png"
+    },
+    {
+      "path": "assets/holiday/fx/windowbox_butterfly_open.png",
+      "git_blob": "8ffb729df107ee2ea4c8acc2c2bf131bfbb72a97",
+      "bytes": 41497,
+      "sha256": "7142135264509698b3bd00241863a9dfda9db002b4b565313c8386d29b40fab8",
+      "mode": "0o100600",
+      "source": "/tmp/youjia-soft455/assets/holiday/fx/windowbox_butterfly_open.png"
+    },
+    {
+      "path": "assets/holiday/fx/windowbox_butterfly_rest.png",
+      "git_blob": "7421e74b8198e2686a0fbe7725f9bc21074847ff",
+      "bytes": 38482,
+      "sha256": "62de6bc9e67703be75d4d9d5d096acbec1384d66907a0f326b0f451e627a6c2f",
+      "mode": "0o100600",
+      "source": "/tmp/youjia-soft455/assets/holiday/fx/windowbox_butterfly_rest.png"
+    },
+    {
+      "path": "assets/holiday/fx/windowbox_petals.png",
+      "git_blob": "baad522017a54d084f53c36cb5be7b8b5ed6d3ac",
+      "bytes": 21374,
+      "sha256": "f929179ea5494f7fdac26a20dd0998863cca8288496697d3e7376052fb1505cf",
+      "mode": "0o100600",
+      "source": "/tmp/youjia-soft455/assets/holiday/fx/windowbox_petals.png"
+    },
+    {
+      "path": "assets/holiday/sharing/favicon.png",
+      "git_blob": "843e9f11c1c3c97e324de082fa2febd2442a8164",
+      "bytes": 4819139,
+      "sha256": "7714a221eaffcf32fe6b18bfbba7372536b763efb7ebc869a59288464d25ab1e",
+      "mode": "0o100600",
+      "source": "/tmp/youjia-soft455/assets/holiday/sharing/favicon.png"
+    },
+    {
+      "path": "assets/holiday/sharing/favicon_fallback.png",
+      "git_blob": "f99b4528e284a62722a364da4ed3298fde591a6b",
+      "bytes": 44174,
+      "sha256": "22045f722b675a31de9243d6b0eee23e8a4e474890f643b739c36f58ba121cac",
+      "mode": "0o100600",
+      "source": "/tmp/youjia-soft455/assets/holiday/sharing/favicon_fallback.png"
+    },
+    {
+      "path": "assets/holiday/sharing/og.png",
+      "git_blob": "223976e9aa0c028369b0c1d658daf77e3569602c",
+      "bytes": 6364377,
+      "sha256": "9b0cc305844a3eea6e2c635cb66b3e3075d4d7f55191ec3e07e0eb437a74a086",
+      "mode": "0o100600",
+      "source": "/tmp/youjia-soft455/assets/holiday/sharing/og.png"
+    },
+    {
+      "path": "assets/holiday/ui/polaroid_frame.png",
+      "git_blob": "56ea7940188b78f0cc9ba9e80350ce028dfc2fdf",
+      "bytes": 110181,
+      "sha256": "9cf85844f275e90013d9e116fb33e04ef974fdcb5d084f30f1e126a5b29bd545",
+      "mode": "0o100600",
+      "source": "/tmp/youjia-soft455/assets/holiday/ui/polaroid_frame.png"
+    },
+    {
+      "path": "assets/holiday/ui/scrapbook_paper.png",
+      "git_blob": "2c4f9bd7f23d019158dcee072560ecdd7dad165a",
+      "bytes": 1604105,
+      "sha256": "6f104bd1eab5244f63de54c2c3228ed6b33315abd1477af090b88401b2465be3",
+      "mode": "0o100600",
+      "source": "/tmp/youjia-soft455/assets/holiday/ui/scrapbook_paper.png"
+    },
+    {
+      "path": "assets/share/favicon.png",
+      "git_blob": "40ff8dccd455181c9e832d3aa22420b5184417fb",
+      "bytes": 382395,
+      "sha256": "7e67d7987c0566aa7608d8069d8c49d1e195bf0ff0aa5c82d7808f2d470e45a3",
+      "mode": "0o100600",
+      "source": "/tmp/youjia-soft455/assets/share/favicon.png"
+    },
+    {
+      "path": "assets/share/og.png",
+      "git_blob": "07fc7c6ba067bebbdcc5d069bcb2379a77e18b16",
+      "bytes": 1365017,
+      "sha256": "744c4ef4ff02a5c20b4bf6b258cd91327cc6f16e40105c4b640c10bec936a509",
+      "mode": "0o100600",
+      "source": "/tmp/youjia-soft455/assets/share/og.png"
+    },
+    {
+      "path": "assets/template/characters/runner.png",
+      "git_blob": "e1c9530d53e41397636b78eae4729f592f8d70b4",
+      "bytes": 68885,
+      "sha256": "c88485773d6ff9361e036f37d8ac76fb77b8c3f7c041c3f52c8dd222adc8cc21",
+      "mode": "0o100600",
+      "source": "/tmp/youjia-soft455/assets/template/characters/runner.png"
+    },
+    {
+      "path": "assets/template/characters/sentinel.png",
+      "git_blob": "9859c205ceec3e3a63209e84aca728fdfc1c1396",
+      "bytes": 64998,
+      "sha256": "0d9fb751bca5507ba14f7090573e6605a94753390a9e7c53bf2f590f0a24918d",
+      "mode": "0o100600",
+      "source": "/tmp/youjia-soft455/assets/template/characters/sentinel.png"
+    },
+    {
+      "path": "assets/template/environment/backdrop.png",
+      "git_blob": "8f428637ee27e2267b128c4cc2b11b02c8aa9900",
+      "bytes": 971282,
+      "sha256": "ec4ab7867e60fb483dd438459f587b478aac4c1e71ec4fe509ce74a18de34216",
+      "mode": "0o100600",
+      "source": "/tmp/youjia-soft455/assets/template/environment/backdrop.png"
+    },
+    {
+      "path": "assets/template/environment/foreground.png",
+      "git_blob": "2ebdff8fcdfeb3020ca8289035ad5865f88272cd",
+      "bytes": 58603,
+      "sha256": "4b6916024c69961fbfa7cdc929c68f547fea4561e61ebdb3405b3aba0efbd94d",
+      "mode": "0o100600",
+      "source": "/tmp/youjia-soft455/assets/template/environment/foreground.png"
+    },
+    {
+      "path": "assets/template/fonts/Figtree-VF.subset.woff2",
+      "git_blob": "1b644325bd2a11d3253e7d66f79b583321049295",
+      "bytes": 23660,
+      "sha256": "b3976c5969c8b1afd81dc3e314b61d8ffe3f3f58cf40906443105d330e6e0bdf",
+      "mode": "0o100600",
+      "source": "/tmp/youjia-soft455/assets/template/fonts/Figtree-VF.subset.woff2"
+    },
+    {
+      "path": "assets/template/fonts/NotoSansSC-VF.subset.woff2",
+      "git_blob": "1a6f0fc209b2261f0777b2b830e62b407d19ac51",
+      "bytes": 1869368,
+      "sha256": "38f4c5f927f746b3dfa4c3a5d7edf0b7a3e828e27438418fa54f9e1565289412",
+      "mode": "0o100600",
+      "source": "/tmp/youjia-soft455/assets/template/fonts/NotoSansSC-VF.subset.woff2"
+    },
+    {
+      "path": "assets/template/fonts/display/Sora-VF.subset.woff2",
+      "git_blob": "6dfe4597abc46380034c02b69f4da72c87bc1804",
+      "bytes": 41696,
+      "sha256": "438fbf4582548e76b266a738f2c11bcbd5137978f2d2e2f3aaabd49df69186f2",
+      "mode": "0o100600",
+      "source": "/tmp/youjia-soft455/assets/template/fonts/display/Sora-VF.subset.woff2"
+    },
+    {
+      "path": "assets/template/powerups/energy.png",
+      "git_blob": "63781dd60777bcf98c9ba109d587142d2236d76f",
+      "bytes": 50950,
+      "sha256": "ffd7906f240f928e785d7c19a9e7a7b5dfab0d7483be5205dda3e4ba17ebe06a",
+      "mode": "0o100600",
+      "source": "/tmp/youjia-soft455/assets/template/powerups/energy.png"
+    },
+    {
+      "path": "assets/template/powerups/magnet.png",
+      "git_blob": "71a9cf99ae72ebd6a5c9d4fa3ca1003d922a65c1",
+      "bytes": 53724,
+      "sha256": "6e7354aa6510a462717218b09b9d784bb161b87878bff62ef4f2a9d03c053de7",
+      "mode": "0o100600",
+      "source": "/tmp/youjia-soft455/assets/template/powerups/magnet.png"
+    },
+    {
+      "path": "assets/template/powerups/overdrive.png",
+      "git_blob": "448edb7e307c06d785bf7f50f29a3602230e60e9",
+      "bytes": 37238,
+      "sha256": "6a48a85886c0551c1af0df576b0225f0ec3ae86b326fd84fc614083fbfe2908b",
+      "mode": "0o100600",
+      "source": "/tmp/youjia-soft455/assets/template/powerups/overdrive.png"
+    },
+    {
+      "path": "assets/template/powerups/shield.png",
+      "git_blob": "698fe41bada10e2f52bb50008f776ec52e8ae429",
+      "bytes": 39659,
+      "sha256": "8cebf0cf730ca35c8c8697192ef78121c926442328a0725e0bd3e31701d64f13",
+      "mode": "0o100600",
+      "source": "/tmp/youjia-soft455/assets/template/powerups/shield.png"
+    },
+    {
+      "path": "assets/template/powerups/slow_field.png",
+      "git_blob": "c6f2c9cc7208894e51a872cd20a7c81e6484b475",
+      "bytes": 49145,
+      "sha256": "96874c000866b2e7503b40da73888afb918ae36e462f51488415157da52a8637",
+      "mode": "0o100600",
+      "source": "/tmp/youjia-soft455/assets/template/powerups/slow_field.png"
+    },
+    {
+      "path": "assets/template/ui/loading-background.png",
+      "git_blob": "df9030d657e92b308d98cefdd134391fda24b4fd",
+      "bytes": 473356,
+      "sha256": "16dde3061f4e60802f8f0d1a6b875e72b6add05192237b03fef1fd313968a13a",
+      "mode": "0o100600",
+      "source": "/tmp/youjia-soft455/assets/template/ui/loading-background.png"
+    },
+    {
+      "path": "assets/template/ui/pause_glass.png",
+      "git_blob": "f96cc5ccf51db8b31ee8463a9a16bb4385e5161f",
+      "bytes": 115691,
+      "sha256": "c88a4725838df85e72c7270865848f275b62c525c5679a2a8b7ecefb1af82d4b",
+      "mode": "0o100600",
+      "source": "/tmp/youjia-soft455/assets/template/ui/pause_glass.png"
+    },
+    {
+      "path": "assets/template/ui/title_glass.png",
+      "git_blob": "79c5ac2f16e696a9fc62fe4dff1a3dc8064952a6",
+      "bytes": 155592,
+      "sha256": "8860db07768f093d4effea10b51431f76a1552d4bc7fd4e57757f189c51f0429",
+      "mode": "0o100600",
+      "source": "/tmp/youjia-soft455/assets/template/ui/title_glass.png"
+    },
+    {
+      "path": "site/index.apple-touch-icon.png",
+      "git_blob": "92054dfbd7070fb4dfc8aa053a0f04c601a82fb6",
+      "bytes": 59343,
+      "sha256": "80d91adb306354c6e4d1af546d062e1e9236699ad0fd53153ab3d2fc34cd11d4",
+      "mode": "0o100600",
+      "source": "/tmp/youjia-soft455/site/index.apple-touch-icon.png"
+    },
+    {
+      "path": "site/index.icon.png",
+      "git_blob": "b1a7ffaa37d30529f92e0d3d34585c5324f841fb",
+      "bytes": 389674,
+      "sha256": "1c591b9eb1b7af2a840a59a9feb637a0a7aeba2b0abde28042abf44f77d0acb3",
+      "mode": "0o100600",
+      "source": "/tmp/youjia-soft455/site/index.icon.png"
+    },
+    {
+      "path": "site/index.png",
+      "git_blob": "23567def86edeb5c96d203ec1ddef23032d08520",
+      "bytes": 1010767,
+      "sha256": "5743a648b82437e0e60db5e4aa08103cea96b01e110961082223c0e7fa819ebf",
+      "mode": "0o100600",
+      "source": "/tmp/youjia-soft455/site/index.png"
+    },
+    {
+      "path": "site/share/744c4ef4ff02a5c20b4bf6b258cd91327cc6f16e40105c4b640c10bec936a509.png",
+      "git_blob": "07fc7c6ba067bebbdcc5d069bcb2379a77e18b16",
+      "bytes": 1365017,
+      "sha256": "744c4ef4ff02a5c20b4bf6b258cd91327cc6f16e40105c4b640c10bec936a509",
+      "mode": "0o100600",
+      "source": "/tmp/youjia-soft455/site/share/744c4ef4ff02a5c20b4bf6b258cd91327cc6f16e40105c4b640c10bec936a509.png"
+    },
+    {
+      "path": "site/share/7e67d7987c0566aa7608d8069d8c49d1e195bf0ff0aa5c82d7808f2d470e45a3.png",
+      "git_blob": "40ff8dccd455181c9e832d3aa22420b5184417fb",
+      "bytes": 382395,
+      "sha256": "7e67d7987c0566aa7608d8069d8c49d1e195bf0ff0aa5c82d7808f2d470e45a3",
+      "mode": "0o100600",
+      "source": "/tmp/youjia-soft455/site/share/7e67d7987c0566aa7608d8069d8c49d1e195bf0ff0aa5c82d7808f2d470e45a3.png"
+    },
+    {
+      "path": "test/walk_calibration/overlay.png",
+      "git_blob": "295b299daf1e1146bd6bfaf9f49b6bb278e9901f",
+      "bytes": 1923923,
+      "sha256": "c908dc3249f8082e720c37af4573f838763f3bd5272664d601daf6c3dae78b77",
+      "mode": "0o100600",
+      "source": "/tmp/youjia-soft455/test/walk_calibration/overlay.png"
+    }
+  ]
+}

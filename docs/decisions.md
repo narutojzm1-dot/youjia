@@ -1431,3 +1431,14 @@ fresh9623核到915非docs路径（734文本逐SHA+181保留二进制），460新
 ### GAME-PM 07:20最新闭环/接收
 
 454正式普通首照/相册/按住确认取消/真关页同contextcurrentgen2不变6004433457有限范围已交，键盘焦点未通过另459Assistant待接收。458 final6862b4c65b6c037fa2319a38ed12f7f0238168b7独审6004586550/真实CI37382704512合870f4faebd6e28c7314e9db97cb39ae27819eded并实际发布6004738969。460 final8a401350fedc57e59db86649b57ffd747649144f独审6004787590/真实CI37383994819合9623ba22c8edc564e5c89dc6b0171324e9230764、来源及两模拟尺寸空页普通路径6005141719已交，455原c792祖先保留。Cloud4566004963943实际接分支cursor/exp-reveal-resize-a84c，未有修正PR/fullhead；375资源等待只局部。461原742b293cc3e252f1fd7b46aa07333350155108cc已Leader6004903387接，462a6fc9beb63fc793b46097cd3827e6b705ff1e324新工程范围已独审6005260117/真CI37387083818合b300da74bf157de3f152e63331096cb1eb28b3f7，正式来源核验待，旧458不重挂等待。Build新错等已PM6005251654纠正，未回执；Producer168新完整候选已审而远端/例外/接入待，不冒无人返修。 [逐人记录](pm/2026-10-06-0720-coordination.md)。
+
+
+### 2026-10-06 REQ039 / PR461 新照片快门行纸片授权接力
+
+CODEX-LEAD按作者[PR461](https://github.com/narutojzm1-dot/youjia/pull/461)明确请求接收，保留原 `742b293cc3e252f1fd7b46aa07333350155108cc` 真实祖先及五个作者文件。运行修改仅PhotoArrival的ShutterCaption子Panel暖纸底、文字垂直居中和语言/尺寸贴合，保留行框几何、文案、墨色、照片及动画时长；字基线会因居中移动，不称字像素位置完全不变。Main输入、存档、探索、相纸衬底未改。daily加唯一专项和精确方括号正计数完成行，保留100755、mat/disabled/强门禁及最新CI/发布流程。
+
+实际验证源 `fd887ff8691b41edba305ab946c43df082e793f7` / tree `382fc30536973f2809641a36fdc3a67fd20b145c`：Godot4.7.2 import、专项1290、完整74套件+1import=75启动（含相纸550/禁用4400）、两个Web发布工具测试与release导出均direct exit0。原50门禁和新增9个完成行正反例为fake executable受控案例，单列不冒真实引擎。完整日志/退出码在[集成证据](playtests/2026-10-06-photo461-integration/README.md)。作者旧基线65失败和未上传PNG不冒本轮重做或已见。
+
+独立助手在同一浏览器内串行关闭/新建两个fresh context（390×844、568×320），只用普通中文正常动效进院→轻抚羊产生首照→完整快门纸底/相纸→自然退场→相册→合上；源/PCK/十模块/许可页前后HTTP绑定，实际driver exit0。短横本样本纸条覆盖目标提示纸片右半区域，但短文案“窗台花箱/看看花箱”在左侧没有被盖；不能写成长目标文字已测或所有HUD均可见。英文/低动效仅原生夹具，真机/触摸/听验/全部DPR未覆盖。
+
+候选PCK 27,090,652B / SHA256 `6f84caeb3dc92d6d12a91f39f6cc766dcc521a26bdb70b2f8c99063384eb73a3`；候选不等于已发布。native的fixed seed/day/player/debug_force_rule照片、直接refresh_locale/root.size和Tween.custom_step只是格式/布局/属性夹具，7.2277—8.2869:1是静止RGBA sRGB公式，不冒真实逐帧或普通触发。最终独立SHA审查、远端CI、合入和公开manifest/PCK/普通后验仍按后续实际环节留痕。

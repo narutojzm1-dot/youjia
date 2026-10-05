@@ -1,0 +1,109 @@
+[
+  {
+    "step": "godot-version",
+    "args": [
+      "/tmp/youjia-h2-bridge-bin/Godot_v4.7.2-stable_linux.x86_64",
+      "--version"
+    ],
+    "started_at": "2026-10-05T23:11:27.252140+00:00",
+    "ended_at": "2026-10-05T23:11:27.612641+00:00",
+    "returncode": 0,
+    "log": "/tmp/photo461-evidence/godot-version.log",
+    "bytes": 32,
+    "sha256": "edff16c1721dd4ae989cadf29a01f574ae8d51b118221f664725bd6980bbba5d"
+  },
+  {
+    "step": "gate-contract",
+    "args": [
+      "bash",
+      "test/godot_gate_test.sh"
+    ],
+    "started_at": "2026-10-05T23:11:27.613079+00:00",
+    "ended_at": "2026-10-05T23:11:28.254412+00:00",
+    "returncode": 0,
+    "log": "/tmp/photo461-evidence/gate-contract.log",
+    "bytes": 2199,
+    "sha256": "cedbaa6aaa45206e451359cd06cf9d8aa57e7b17077e9b114d21f118dd66f0ad"
+  },
+  {
+    "step": "import",
+    "args": [
+      "bash",
+      "-c",
+      "source tools/lib/verified_godot.sh; run_verified_godot /tmp/photo461-evidence/import-engine.log --headless --path . --editor --import --quit"
+    ],
+    "started_at": "2026-10-05T23:11:28.254790+00:00",
+    "ended_at": "2026-10-05T23:11:52.222967+00:00",
+    "returncode": 0,
+    "log": "/tmp/photo461-evidence/import.log",
+    "bytes": 36158,
+    "sha256": "6aea4b77ad385696477b19b1316edf1d50e48133be0382fe8e3e602e96be50d8"
+  },
+  {
+    "step": "specialized",
+    "args": [
+      "bash",
+      "-c",
+      "source tools/lib/verified_godot.sh; run_verified_godot_suite /tmp/photo461-evidence/specialized-engine.log test/photo_arrival_shutter_paper_suite.gd --headless --path ."
+    ],
+    "started_at": "2026-10-05T23:11:52.223575+00:00",
+    "ended_at": "2026-10-05T23:11:56.021681+00:00",
+    "returncode": 0,
+    "log": "/tmp/photo461-evidence/specialized.log",
+    "bytes": 121,
+    "sha256": "e64e54491c3a0f728dad5fb3880bf521894f40af6946b474bb9c80710551e2af"
+  },
+  {
+    "step": "daily",
+    "args": [
+      "bash",
+      "tools/verify_daily_life.sh"
+    ],
+    "started_at": "2026-10-05T23:11:56.021999+00:00",
+    "ended_at": "2026-10-05T23:19:06.835956+00:00",
+    "returncode": 0,
+    "log": "/tmp/photo461-evidence/daily.log",
+    "bytes": 58476,
+    "sha256": "42ca8017eb1461fe33d9949828aceb661dfb2ae2444032bffe17f091a5b6253f"
+  },
+  {
+    "step": "web-retention",
+    "args": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+      "test/web_bundle_retention_test.py"
+    ],
+    "started_at": "2026-10-05T23:19:06.838093+00:00",
+    "ended_at": "2026-10-05T23:19:07.641953+00:00",
+    "returncode": 0,
+    "log": "/tmp/photo461-evidence/web-retention.log",
+    "bytes": 1301,
+    "sha256": "6f17143cf93a694d960bce856e9f9ce3ba689e39bf4531b536fa236edbfbf694"
+  },
+  {
+    "step": "storage-publish",
+    "args": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+      "test/publish_storage_modules_test.py"
+    ],
+    "started_at": "2026-10-05T23:19:07.642444+00:00",
+    "ended_at": "2026-10-05T23:19:08.126423+00:00",
+    "returncode": 0,
+    "log": "/tmp/photo461-evidence/storage-publish.log",
+    "bytes": 145,
+    "sha256": "69d2cfe36e55916187b1ce6b537c388a1bb633ee3f0ec77b42891590d5f8277d"
+  },
+  {
+    "step": "export",
+    "args": [
+      "bash",
+      "-c",
+      "source tools/lib/verified_godot.sh; run_verified_godot /tmp/photo461-evidence/export-engine.log --headless --path . --export-release Web /tmp/photo461-web/index.html"
+    ],
+    "started_at": "2026-10-05T23:19:08.126766+00:00",
+    "ended_at": "2026-10-05T23:19:13.149582+00:00",
+    "returncode": 0,
+    "log": "/tmp/photo461-evidence/export.log",
+    "bytes": 46170,
+    "sha256": "925298e03bf5195ae43de9a9840861ae592793f8b041e6759fe1172e19bff246"
+  }
+]

@@ -1,0 +1,778 @@
+[
+  {
+    "command": {
+      "op": "new",
+      "name": "portrait",
+      "width": 390,
+      "height": 844,
+      "motion": "no-preference"
+    },
+    "case": "",
+    "utc": "2026-10-05T23:20:19Z",
+    "monotonic": 373705.142348442
+  },
+  {
+    "case_open": "portrait",
+    "width": 390,
+    "height": 844,
+    "motion": "no-preference",
+    "actual_reduce": false,
+    "utc": "2026-10-05T23:20:30Z",
+    "monotonic": 373716.010312451
+  },
+  {
+    "screenshot_request": "portrait-title",
+    "case": "portrait",
+    "utc": "2026-10-05T23:20:30Z",
+    "monotonic": 373716.010767683
+  },
+  {
+    "screenshot_complete": "portrait-title",
+    "case": "portrait",
+    "utc": "2026-10-05T23:20:30Z",
+    "monotonic": 373716.424777594
+  },
+  {
+    "command": {
+      "op": "click",
+      "x": 195,
+      "y": 430
+    },
+    "case": "portrait",
+    "utc": "2026-10-05T23:20:40Z",
+    "monotonic": 373726.841843266
+  },
+  {
+    "command": {
+      "op": "wait",
+      "ms": 700
+    },
+    "case": "portrait",
+    "utc": "2026-10-05T23:20:44Z",
+    "monotonic": 373730.672275758
+  },
+  {
+    "command": {
+      "op": "shot",
+      "name": "portrait-01-yard-before"
+    },
+    "case": "portrait",
+    "utc": "2026-10-05T23:20:45Z",
+    "monotonic": 373731.376698762
+  },
+  {
+    "screenshot_request": "portrait-01-yard-before",
+    "case": "portrait",
+    "utc": "2026-10-05T23:20:45Z",
+    "monotonic": 373731.377175996
+  },
+  {
+    "screenshot_complete": "portrait-01-yard-before",
+    "case": "portrait",
+    "utc": "2026-10-05T23:20:45Z",
+    "monotonic": 373731.724068817
+  },
+  {
+    "command": {
+      "op": "click",
+      "x": 236,
+      "y": 474
+    },
+    "case": "portrait",
+    "utc": "2026-10-05T23:21:02Z",
+    "monotonic": 373748.371449232
+  },
+  {
+    "command": {
+      "op": "burst",
+      "name": "portrait-02-arrival",
+      "count": 12,
+      "interval_ms": 30
+    },
+    "case": "portrait",
+    "utc": "2026-10-05T23:21:02Z",
+    "monotonic": 373748.465966894
+  },
+  {
+    "screenshot_request": "portrait-02-arrival-00",
+    "case": "portrait",
+    "utc": "2026-10-05T23:21:02Z",
+    "monotonic": 373748.466467541
+  },
+  {
+    "screenshot_complete": "portrait-02-arrival-00",
+    "case": "portrait",
+    "utc": "2026-10-05T23:21:02Z",
+    "monotonic": 373748.794079242
+  },
+  {
+    "screenshot_request": "portrait-02-arrival-01",
+    "case": "portrait",
+    "utc": "2026-10-05T23:21:02Z",
+    "monotonic": 373748.824474222
+  },
+  {
+    "screenshot_complete": "portrait-02-arrival-01",
+    "case": "portrait",
+    "utc": "2026-10-05T23:21:03Z",
+    "monotonic": 373749.253472981
+  },
+  {
+    "screenshot_request": "portrait-02-arrival-02",
+    "case": "portrait",
+    "utc": "2026-10-05T23:21:03Z",
+    "monotonic": 373749.285601318
+  },
+  {
+    "screenshot_complete": "portrait-02-arrival-02",
+    "case": "portrait",
+    "utc": "2026-10-05T23:21:03Z",
+    "monotonic": 373749.683314628
+  },
+  {
+    "screenshot_request": "portrait-02-arrival-03",
+    "case": "portrait",
+    "utc": "2026-10-05T23:21:03Z",
+    "monotonic": 373749.718470484
+  },
+  {
+    "screenshot_complete": "portrait-02-arrival-03",
+    "case": "portrait",
+    "utc": "2026-10-05T23:21:04Z",
+    "monotonic": 373750.108302536
+  },
+  {
+    "screenshot_request": "portrait-02-arrival-04",
+    "case": "portrait",
+    "utc": "2026-10-05T23:21:04Z",
+    "monotonic": 373750.142911999
+  },
+  {
+    "screenshot_complete": "portrait-02-arrival-04",
+    "case": "portrait",
+    "utc": "2026-10-05T23:21:04Z",
+    "monotonic": 373750.601805796
+  },
+  {
+    "screenshot_request": "portrait-02-arrival-05",
+    "case": "portrait",
+    "utc": "2026-10-05T23:21:04Z",
+    "monotonic": 373750.634457633
+  },
+  {
+    "screenshot_complete": "portrait-02-arrival-05",
+    "case": "portrait",
+    "utc": "2026-10-05T23:21:05Z",
+    "monotonic": 373751.027826679
+  },
+  {
+    "screenshot_request": "portrait-02-arrival-06",
+    "case": "portrait",
+    "utc": "2026-10-05T23:21:05Z",
+    "monotonic": 373751.060058599
+  },
+  {
+    "screenshot_complete": "portrait-02-arrival-06",
+    "case": "portrait",
+    "utc": "2026-10-05T23:21:05Z",
+    "monotonic": 373751.429051606
+  },
+  {
+    "screenshot_request": "portrait-02-arrival-07",
+    "case": "portrait",
+    "utc": "2026-10-05T23:21:05Z",
+    "monotonic": 373751.461004995
+  },
+  {
+    "screenshot_complete": "portrait-02-arrival-07",
+    "case": "portrait",
+    "utc": "2026-10-05T23:21:05Z",
+    "monotonic": 373751.852181504
+  },
+  {
+    "screenshot_request": "portrait-02-arrival-08",
+    "case": "portrait",
+    "utc": "2026-10-05T23:21:05Z",
+    "monotonic": 373751.886211261
+  },
+  {
+    "screenshot_complete": "portrait-02-arrival-08",
+    "case": "portrait",
+    "utc": "2026-10-05T23:21:06Z",
+    "monotonic": 373752.290362348
+  },
+  {
+    "screenshot_request": "portrait-02-arrival-09",
+    "case": "portrait",
+    "utc": "2026-10-05T23:21:06Z",
+    "monotonic": 373752.322029541
+  },
+  {
+    "screenshot_complete": "portrait-02-arrival-09",
+    "case": "portrait",
+    "utc": "2026-10-05T23:21:06Z",
+    "monotonic": 373752.697383721
+  },
+  {
+    "screenshot_request": "portrait-02-arrival-10",
+    "case": "portrait",
+    "utc": "2026-10-05T23:21:06Z",
+    "monotonic": 373752.733045514
+  },
+  {
+    "screenshot_complete": "portrait-02-arrival-10",
+    "case": "portrait",
+    "utc": "2026-10-05T23:21:07Z",
+    "monotonic": 373753.090224627
+  },
+  {
+    "screenshot_request": "portrait-02-arrival-11",
+    "case": "portrait",
+    "utc": "2026-10-05T23:21:07Z",
+    "monotonic": 373753.121963354
+  },
+  {
+    "screenshot_complete": "portrait-02-arrival-11",
+    "case": "portrait",
+    "utc": "2026-10-05T23:21:07Z",
+    "monotonic": 373753.502861206
+  },
+  {
+    "command": {
+      "op": "wait",
+      "ms": 500
+    },
+    "case": "portrait",
+    "utc": "2026-10-05T23:21:07Z",
+    "monotonic": 373753.503448666
+  },
+  {
+    "command": {
+      "op": "shot",
+      "name": "portrait-03-after-natural-dismiss"
+    },
+    "case": "portrait",
+    "utc": "2026-10-05T23:21:08Z",
+    "monotonic": 373754.005564769
+  },
+  {
+    "screenshot_request": "portrait-03-after-natural-dismiss",
+    "case": "portrait",
+    "utc": "2026-10-05T23:21:08Z",
+    "monotonic": 373754.006238351
+  },
+  {
+    "screenshot_complete": "portrait-03-after-natural-dismiss",
+    "case": "portrait",
+    "utc": "2026-10-05T23:21:08Z",
+    "monotonic": 373754.391775612
+  },
+  {
+    "command": {
+      "op": "click",
+      "x": 100,
+      "y": 744
+    },
+    "case": "portrait",
+    "utc": "2026-10-05T23:21:27Z",
+    "monotonic": 373773.413923146
+  },
+  {
+    "command": {
+      "op": "wait",
+      "ms": 300
+    },
+    "case": "portrait",
+    "utc": "2026-10-05T23:21:27Z",
+    "monotonic": 373773.47705502
+  },
+  {
+    "command": {
+      "op": "shot",
+      "name": "portrait-04-album"
+    },
+    "case": "portrait",
+    "utc": "2026-10-05T23:21:27Z",
+    "monotonic": 373773.779047848
+  },
+  {
+    "screenshot_request": "portrait-04-album",
+    "case": "portrait",
+    "utc": "2026-10-05T23:21:27Z",
+    "monotonic": 373773.779765763
+  },
+  {
+    "screenshot_complete": "portrait-04-album",
+    "case": "portrait",
+    "utc": "2026-10-05T23:21:28Z",
+    "monotonic": 373774.243360772
+  },
+  {
+    "command": {
+      "op": "db",
+      "name": "portrait-04-album-db"
+    },
+    "case": "portrait",
+    "utc": "2026-10-05T23:21:28Z",
+    "monotonic": 373774.244079858
+  },
+  {
+    "command": {
+      "op": "click",
+      "x": 307,
+      "y": 667
+    },
+    "case": "portrait",
+    "utc": "2026-10-05T23:21:28Z",
+    "monotonic": 373774.528367047
+  },
+  {
+    "command": {
+      "op": "wait",
+      "ms": 250
+    },
+    "case": "portrait",
+    "utc": "2026-10-05T23:21:28Z",
+    "monotonic": 373774.57914792
+  },
+  {
+    "command": {
+      "op": "shot",
+      "name": "portrait-05-album-closed"
+    },
+    "case": "portrait",
+    "utc": "2026-10-05T23:21:28Z",
+    "monotonic": 373774.831967024
+  },
+  {
+    "screenshot_request": "portrait-05-album-closed",
+    "case": "portrait",
+    "utc": "2026-10-05T23:21:28Z",
+    "monotonic": 373774.833383367
+  },
+  {
+    "screenshot_complete": "portrait-05-album-closed",
+    "case": "portrait",
+    "utc": "2026-10-05T23:21:29Z",
+    "monotonic": 373775.263101228
+  },
+  {
+    "command": {
+      "op": "close"
+    },
+    "case": "portrait",
+    "utc": "2026-10-05T23:21:29Z",
+    "monotonic": 373775.263834973
+  },
+  {
+    "case_closed": "portrait",
+    "utc": "2026-10-05T23:21:33Z",
+    "monotonic": 373779.844713996
+  },
+  {
+    "command": {
+      "op": "new",
+      "name": "landscape",
+      "width": 568,
+      "height": 320,
+      "motion": "no-preference"
+    },
+    "case": "portrait",
+    "utc": "2026-10-05T23:22:04Z",
+    "monotonic": 373810.238460605
+  },
+  {
+    "case_open": "landscape",
+    "width": 568,
+    "height": 320,
+    "motion": "no-preference",
+    "actual_reduce": false,
+    "utc": "2026-10-05T23:22:11Z",
+    "monotonic": 373817.884479333
+  },
+  {
+    "screenshot_request": "landscape-title",
+    "case": "landscape",
+    "utc": "2026-10-05T23:22:11Z",
+    "monotonic": 373817.885656516
+  },
+  {
+    "screenshot_complete": "landscape-title",
+    "case": "landscape",
+    "utc": "2026-10-05T23:22:12Z",
+    "monotonic": 373818.136457547
+  },
+  {
+    "command": {
+      "op": "click",
+      "x": 284,
+      "y": 160
+    },
+    "case": "landscape",
+    "utc": "2026-10-05T23:22:35Z",
+    "monotonic": 373841.72113821
+  },
+  {
+    "command": {
+      "op": "wait",
+      "ms": 700
+    },
+    "case": "landscape",
+    "utc": "2026-10-05T23:22:39Z",
+    "monotonic": 373845.410327952
+  },
+  {
+    "command": {
+      "op": "shot",
+      "name": "landscape-01-yard-before"
+    },
+    "case": "landscape",
+    "utc": "2026-10-05T23:22:40Z",
+    "monotonic": 373846.113261506
+  },
+  {
+    "screenshot_request": "landscape-01-yard-before",
+    "case": "landscape",
+    "utc": "2026-10-05T23:22:40Z",
+    "monotonic": 373846.114447066
+  },
+  {
+    "screenshot_complete": "landscape-01-yard-before",
+    "case": "landscape",
+    "utc": "2026-10-05T23:22:40Z",
+    "monotonic": 373846.311128874
+  },
+  {
+    "command": {
+      "op": "click",
+      "x": 205,
+      "y": 113
+    },
+    "case": "landscape",
+    "utc": "2026-10-05T23:22:58Z",
+    "monotonic": 373863.995547543
+  },
+  {
+    "command": {
+      "op": "burst",
+      "name": "landscape-02-arrival",
+      "count": 15,
+      "interval_ms": 50
+    },
+    "case": "landscape",
+    "utc": "2026-10-05T23:22:58Z",
+    "monotonic": 373864.061068467
+  },
+  {
+    "screenshot_request": "landscape-02-arrival-00",
+    "case": "landscape",
+    "utc": "2026-10-05T23:22:58Z",
+    "monotonic": 373864.062160172
+  },
+  {
+    "screenshot_complete": "landscape-02-arrival-00",
+    "case": "landscape",
+    "utc": "2026-10-05T23:22:58Z",
+    "monotonic": 373864.202487961
+  },
+  {
+    "screenshot_request": "landscape-02-arrival-01",
+    "case": "landscape",
+    "utc": "2026-10-05T23:22:58Z",
+    "monotonic": 373864.259837242
+  },
+  {
+    "screenshot_complete": "landscape-02-arrival-01",
+    "case": "landscape",
+    "utc": "2026-10-05T23:22:58Z",
+    "monotonic": 373864.440673934
+  },
+  {
+    "screenshot_request": "landscape-02-arrival-02",
+    "case": "landscape",
+    "utc": "2026-10-05T23:22:58Z",
+    "monotonic": 373864.49343903
+  },
+  {
+    "screenshot_complete": "landscape-02-arrival-02",
+    "case": "landscape",
+    "utc": "2026-10-05T23:22:58Z",
+    "monotonic": 373864.677904528
+  },
+  {
+    "screenshot_request": "landscape-02-arrival-03",
+    "case": "landscape",
+    "utc": "2026-10-05T23:22:58Z",
+    "monotonic": 373864.730613919
+  },
+  {
+    "screenshot_complete": "landscape-02-arrival-03",
+    "case": "landscape",
+    "utc": "2026-10-05T23:22:58Z",
+    "monotonic": 373864.945338325
+  },
+  {
+    "screenshot_request": "landscape-02-arrival-04",
+    "case": "landscape",
+    "utc": "2026-10-05T23:22:59Z",
+    "monotonic": 373864.998762048
+  },
+  {
+    "screenshot_complete": "landscape-02-arrival-04",
+    "case": "landscape",
+    "utc": "2026-10-05T23:22:59Z",
+    "monotonic": 373865.183162023
+  },
+  {
+    "screenshot_request": "landscape-02-arrival-05",
+    "case": "landscape",
+    "utc": "2026-10-05T23:22:59Z",
+    "monotonic": 373865.235483309
+  },
+  {
+    "screenshot_complete": "landscape-02-arrival-05",
+    "case": "landscape",
+    "utc": "2026-10-05T23:22:59Z",
+    "monotonic": 373865.432123518
+  },
+  {
+    "screenshot_request": "landscape-02-arrival-06",
+    "case": "landscape",
+    "utc": "2026-10-05T23:22:59Z",
+    "monotonic": 373865.484350475
+  },
+  {
+    "screenshot_complete": "landscape-02-arrival-06",
+    "case": "landscape",
+    "utc": "2026-10-05T23:22:59Z",
+    "monotonic": 373865.673562642
+  },
+  {
+    "screenshot_request": "landscape-02-arrival-07",
+    "case": "landscape",
+    "utc": "2026-10-05T23:22:59Z",
+    "monotonic": 373865.726691068
+  },
+  {
+    "screenshot_complete": "landscape-02-arrival-07",
+    "case": "landscape",
+    "utc": "2026-10-05T23:22:59Z",
+    "monotonic": 373865.949847416
+  },
+  {
+    "screenshot_request": "landscape-02-arrival-08",
+    "case": "landscape",
+    "utc": "2026-10-05T23:23:00Z",
+    "monotonic": 373866.002668098
+  },
+  {
+    "screenshot_complete": "landscape-02-arrival-08",
+    "case": "landscape",
+    "utc": "2026-10-05T23:23:00Z",
+    "monotonic": 373866.169646571
+  },
+  {
+    "screenshot_request": "landscape-02-arrival-09",
+    "case": "landscape",
+    "utc": "2026-10-05T23:23:00Z",
+    "monotonic": 373866.221931194
+  },
+  {
+    "screenshot_complete": "landscape-02-arrival-09",
+    "case": "landscape",
+    "utc": "2026-10-05T23:23:00Z",
+    "monotonic": 373866.391587701
+  },
+  {
+    "screenshot_request": "landscape-02-arrival-10",
+    "case": "landscape",
+    "utc": "2026-10-05T23:23:00Z",
+    "monotonic": 373866.460742081
+  },
+  {
+    "screenshot_complete": "landscape-02-arrival-10",
+    "case": "landscape",
+    "utc": "2026-10-05T23:23:00Z",
+    "monotonic": 373866.599684012
+  },
+  {
+    "screenshot_request": "landscape-02-arrival-11",
+    "case": "landscape",
+    "utc": "2026-10-05T23:23:00Z",
+    "monotonic": 373866.651966011
+  },
+  {
+    "screenshot_complete": "landscape-02-arrival-11",
+    "case": "landscape",
+    "utc": "2026-10-05T23:23:00Z",
+    "monotonic": 373866.829090132
+  },
+  {
+    "screenshot_request": "landscape-02-arrival-12",
+    "case": "landscape",
+    "utc": "2026-10-05T23:23:00Z",
+    "monotonic": 373866.881343698
+  },
+  {
+    "screenshot_complete": "landscape-02-arrival-12",
+    "case": "landscape",
+    "utc": "2026-10-05T23:23:01Z",
+    "monotonic": 373867.077975827
+  },
+  {
+    "screenshot_request": "landscape-02-arrival-13",
+    "case": "landscape",
+    "utc": "2026-10-05T23:23:01Z",
+    "monotonic": 373867.131426282
+  },
+  {
+    "screenshot_complete": "landscape-02-arrival-13",
+    "case": "landscape",
+    "utc": "2026-10-05T23:23:01Z",
+    "monotonic": 373867.378742329
+  },
+  {
+    "screenshot_request": "landscape-02-arrival-14",
+    "case": "landscape",
+    "utc": "2026-10-05T23:23:01Z",
+    "monotonic": 373867.431289522
+  },
+  {
+    "screenshot_complete": "landscape-02-arrival-14",
+    "case": "landscape",
+    "utc": "2026-10-05T23:23:01Z",
+    "monotonic": 373867.610022519
+  },
+  {
+    "command": {
+      "op": "wait",
+      "ms": 500
+    },
+    "case": "landscape",
+    "utc": "2026-10-05T23:23:01Z",
+    "monotonic": 373867.611253324
+  },
+  {
+    "command": {
+      "op": "shot",
+      "name": "landscape-03-after-natural-dismiss"
+    },
+    "case": "landscape",
+    "utc": "2026-10-05T23:23:02Z",
+    "monotonic": 373868.114918486
+  },
+  {
+    "screenshot_request": "landscape-03-after-natural-dismiss",
+    "case": "landscape",
+    "utc": "2026-10-05T23:23:02Z",
+    "monotonic": 373868.11644289
+  },
+  {
+    "screenshot_complete": "landscape-03-after-natural-dismiss",
+    "case": "landscape",
+    "utc": "2026-10-05T23:23:02Z",
+    "monotonic": 373868.296270592
+  },
+  {
+    "command": {
+      "op": "click",
+      "x": 140,
+      "y": 220
+    },
+    "case": "landscape",
+    "utc": "2026-10-05T23:23:18Z",
+    "monotonic": 373884.062339633
+  },
+  {
+    "command": {
+      "op": "wait",
+      "ms": 300
+    },
+    "case": "landscape",
+    "utc": "2026-10-05T23:23:18Z",
+    "monotonic": 373884.092220844
+  },
+  {
+    "command": {
+      "op": "shot",
+      "name": "landscape-04-album"
+    },
+    "case": "landscape",
+    "utc": "2026-10-05T23:23:18Z",
+    "monotonic": 373884.396449594
+  },
+  {
+    "screenshot_request": "landscape-04-album",
+    "case": "landscape",
+    "utc": "2026-10-05T23:23:18Z",
+    "monotonic": 373884.397836572
+  },
+  {
+    "screenshot_complete": "landscape-04-album",
+    "case": "landscape",
+    "utc": "2026-10-05T23:23:18Z",
+    "monotonic": 373884.684948405
+  },
+  {
+    "command": {
+      "op": "db",
+      "name": "landscape-04-album-db"
+    },
+    "case": "landscape",
+    "utc": "2026-10-05T23:23:18Z",
+    "monotonic": 373884.686241877
+  },
+  {
+    "command": {
+      "op": "click",
+      "x": 454,
+      "y": 284
+    },
+    "case": "landscape",
+    "utc": "2026-10-05T23:23:44Z",
+    "monotonic": 373910.478475295
+  },
+  {
+    "command": {
+      "op": "wait",
+      "ms": 250
+    },
+    "case": "landscape",
+    "utc": "2026-10-05T23:23:44Z",
+    "monotonic": 373910.501941413
+  },
+  {
+    "command": {
+      "op": "shot",
+      "name": "landscape-05-album-closed"
+    },
+    "case": "landscape",
+    "utc": "2026-10-05T23:23:44Z",
+    "monotonic": 373910.760949164
+  },
+  {
+    "screenshot_request": "landscape-05-album-closed",
+    "case": "landscape",
+    "utc": "2026-10-05T23:23:44Z",
+    "monotonic": 373910.762238158
+  },
+  {
+    "screenshot_complete": "landscape-05-album-closed",
+    "case": "landscape",
+    "utc": "2026-10-05T23:23:44Z",
+    "monotonic": 373910.928893637
+  },
+  {
+    "command": {
+      "op": "end"
+    },
+    "case": "landscape",
+    "utc": "2026-10-05T23:23:44Z",
+    "monotonic": 373910.930175658
+  },
+  {
+    "case_closed": "landscape",
+    "utc": "2026-10-05T23:23:49Z",
+    "monotonic": 373915.838008451
+  }
+]

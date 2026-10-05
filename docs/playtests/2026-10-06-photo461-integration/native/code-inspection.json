@@ -1,0 +1,36 @@
+{
+  "stage": "implementation-side static inspection; not independent final approval",
+  "source_only_changes": [
+    "PhotoArrival constant colours/padding",
+    "ShutterCaption vertical alignment",
+    "ShutterPaper child Panel and fitting calls"
+  ],
+  "unchanged": [
+    "Main",
+    "input handling",
+    "snapshot/save",
+    "fit_layout",
+    "photo mat and print timings"
+  ],
+  "main_locale_wiring_present": true,
+  "contrast_type": "sRGB formula under full caption opacity; not rendered pixel proof",
+  "contrast_ratios": {
+    "black": 7.227697055324616,
+    "white": 8.28692678159509,
+    "darkwood": 7.407699753160592,
+    "lightwood": 7.611889834622736
+  },
+  "native_suite_limits": [
+    "forced seed/day/player/debug rule snapshot fixture",
+    "Tween.custom_step",
+    "direct refresh_locale/root.size",
+    "no proof of original unpublished PNG or browser visuals"
+  ],
+  "pending": [
+    "actual1290",
+    "full74suites75launches",
+    "Web export",
+    "ordinary candidate",
+    "final independent SHA review"
+  ]
+}

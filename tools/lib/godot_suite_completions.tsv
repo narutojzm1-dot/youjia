@@ -38,6 +38,7 @@ test/pause_notice_suite.gd	PAUSE_NOTICE checks=[1-9][0-9]* failures=0
 test/photo_arrival_combo_suite.gd	PHOTO ARRIVAL COMBO PASS [1-9][0-9]*
 test/photo_arrival_fit_suite.gd	\[photo-arrival-fit\] PASS: [1-9][0-9]* checks
 test/photo_arrival_mat_suite.gd	\[photo-arrival-mat\] PASS: [1-9][0-9]* checks
+test/photo_arrival_shutter_paper_suite.gd	\[photo-arrival-shutter-paper\] PASS: [1-9][0-9]* checks
 test/photo_home_suite.gd	\[photo-home-tests\] PASS: [1-9][0-9]* checks
 test/photo_moment_render_suite.gd	\[photo-moment-tests\] PASS: [1-9][0-9]* checks
 test/photo_moment_save_suite.gd	\[photo-moment-save-tests\] PASS: [1-9][0-9]* checks \[\]

@@ -1,0 +1,70 @@
+{
+  "type": "controlled fake executable wrapper test; no Godot engine",
+  "scope": "new exact bracketed shutter-paper completion registration",
+  "cases": [
+    {
+      "name": "actual-positive",
+      "output": "[photo-arrival-shutter-paper] PASS: 1290 checks",
+      "expected_returncode": 0,
+      "actual_returncode": 0,
+      "passed": true
+    },
+    {
+      "name": "positive-min",
+      "output": "[photo-arrival-shutter-paper] PASS: 1 checks",
+      "expected_returncode": 0,
+      "actual_returncode": 0,
+      "passed": true
+    },
+    {
+      "name": "zero",
+      "output": "[photo-arrival-shutter-paper] PASS: 0 checks",
+      "expected_returncode": 1,
+      "actual_returncode": 1,
+      "passed": true
+    },
+    {
+      "name": "negative",
+      "output": "[photo-arrival-shutter-paper] PASS: -1 checks",
+      "expected_returncode": 1,
+      "actual_returncode": 1,
+      "passed": true
+    },
+    {
+      "name": "wrong-suite",
+      "output": "[photo-arrival-mat] PASS: 1290 checks",
+      "expected_returncode": 1,
+      "actual_returncode": 1,
+      "passed": true
+    },
+    {
+      "name": "bracketless",
+      "output": "photo-arrival-shutter-paper PASS: 1290 checks",
+      "expected_returncode": 1,
+      "actual_returncode": 1,
+      "passed": true
+    },
+    {
+      "name": "suffix",
+      "output": "[photo-arrival-shutter-paper] PASS: 1290 checks pending",
+      "expected_returncode": 1,
+      "actual_returncode": 1,
+      "passed": true
+    },
+    {
+      "name": "empty",
+      "output": "",
+      "expected_returncode": 1,
+      "actual_returncode": 1,
+      "passed": true
+    },
+    {
+      "name": "late-error",
+      "output": "[photo-arrival-shutter-paper] PASS: 1290 checks\nERROR: late failure",
+      "expected_returncode": 1,
+      "actual_returncode": 1,
+      "passed": true
+    }
+  ],
+  "passed": true
+}

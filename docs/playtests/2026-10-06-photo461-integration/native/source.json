@@ -1,0 +1,37 @@
+{
+  "repository": "/tmp/youjia-photo461",
+  "branch": "work/codex-lead/photo461-shutter-paper",
+  "base": "9623ba22c8edc564e5c89dc6b0171324e9230764",
+  "original": "742b293cc3e252f1fd7b46aa07333350155108cc",
+  "runtime_source": "fd887ff8691b41edba305ab946c43df082e793f7",
+  "tree": "382fc30536973f2809641a36fdc3a67fd20b145c",
+  "parents": [
+    "742b293cc3e252f1fd7b46aa07333350155108cc",
+    "9623ba22c8edc564e5c89dc6b0171324e9230764"
+  ],
+  "author_files": [
+    "docs/decisions/REQ-20261006-039.md",
+    "docs/playtests/2026-10-06-REQ-039-photo-shutter-paper/README.md",
+    "scripts/ui/photo_arrival.gd",
+    "test/photo_arrival_shutter_paper_suite.gd",
+    "test/photo_arrival_shutter_paper_suite.gd.uid"
+  ],
+  "files": [
+    "docs/decisions.md",
+    "docs/decisions/REQ-20261006-039.md",
+    "docs/playtests/2026-10-06-REQ-039-photo-shutter-paper/README.md",
+    "docs/playtests/2026-10-06-photo461-integration/.gdignore",
+    "docs/playtests/2026-10-06-photo461-integration/README.md",
+    "docs/requirements.md",
+    "scripts/ui/photo_arrival.gd",
+    "test/photo_arrival_shutter_paper_suite.gd",
+    "test/photo_arrival_shutter_paper_suite.gd.uid",
+    "tools/lib/godot_suite_completions.tsv",
+    "tools/verify_daily_life.sh"
+  ],
+  "daily_mode": "100755",
+  "original_files_preserved": true,
+  "engine_started": false,
+  "browser_started": false,
+  "status": "prepared; awaiting exclusive engine window"
+}
