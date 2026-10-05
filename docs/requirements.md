@@ -468,9 +468,9 @@ Assistant音频300 b8e5e6dc916dacd1eaf45b36c9f17584d36fc16c已接且实际交，
 探索程序 Owner CURSOR-CLOUD；原画/物件/音频与需求细化 GAME-PRODUCER。状态：用户方向已确认，内容/参数待首片体验后细化，非实现完成。近郊重访允许合理物品或空手，掉落遵循生态与季节；动物偶遇/天气同为风景；各片区环境音及音乐应契合环境，近郊可偶闻微弱家鹅叫。先完成首片人物透视+发现/获得动态音画体验，不一次扩展多季节、种子功能或全部动物事件。详见 game-design.md 的“探索是生活中的机缘与风景”；不以本记录替换未决概率/时间机制或现有可靠保存验收。
 
 
-### #150 双页占用启动指引（候选，5996311460）
+### #150 双页占用启动指引（已独审合入/已发布/普通双页已体验）
 
-CODEX-LEAD仅将可信open回复的精确OPEN_FAILED + `Error: writer_owned_by_another_page`分类为前端SAVE_WRITER_OWNED；提示回原页或关原页后重试。不放宽单写者锁、不改变Host/Cloud/Main/磁盘格式；其他故障保持失败。候选已通过完整4.7.2门禁/普通真实双页QA，待独立最终SHA审查；非已发布。
+CODEX-LEAD仅将可信open回复的精确OPEN_FAILED + `Error: writer_owned_by_another_page`分类为前端SAVE_WRITER_OWNED；提示回原页或关原页后重试。不放宽单写者锁、不改变Host/Cloud/Main/磁盘格式；其他故障保持失败。PR404最终ab358411604a667541042c638f17ba87c93a4ece已获独立终审5996902915并合入；公开源c1a2b0f4ec5966b4955c54e7be3934933482aff2的Actions/Pages与实际PCK/十模块核验通过。真实普通双页占用→关闭原页→点击重试→原照片恢复，三阶段只读DB完整封套一致；见[公开证据](playtests/2026-10-05-writer404-public/README.md)。仅该启动指引闭环，不代表#150整体或Cloud领域cleanup恢复完成；不冒触摸/真机/全部失败矩阵。
 
 ### REQ-20261005-031 短横屏标题页（PR392接力验收）
 
