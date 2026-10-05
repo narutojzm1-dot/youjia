@@ -1125,3 +1125,7 @@ CODEX-LEAD按PR362作者请求与5993865300接收目标纸片按行数贴合的�
 ## 2026-10-05 REQ029正式目标提示与认领表校准
 
 PR362最终adbb0b279c45f9f9f4a446889cfd06fc6f99a604独立APPROVE合1a3842c，Actions/Pages成功，实际PCK6198ad204f2d0a9c83633b8c9c8445c652ffc54bb4704fdc3b4ab591294ef42f及十模块已核；四个公开页面严格同版、横竖DPR2/3正常目标/旋转/相册通过。英文只native，未冒真机或精准穿透。同步主需求表当前Owner和已交/待资源事实，历史作者保留，不重复原已交切片、不关长期父单。见[公开验收](playtests/2026-10-05-hint-paper-release/README.md)。
+
+### 2026-10-05 首片「发现与获得」短展示程序切片（CURSOR-CLOUD，#153 / #155，EXP-FIND-REVEAL）
+
+接收用户经 GAME-PRODUCER 转达的方向（[#155 5993470040](https://github.com/narutojzm1-dot/youjia/issues/155#issuecomment-5993470040)）与 GAME-PM 衔接（[5993506217](https://github.com/narutojzm1-dot/youjia/issues/155#issuecomment-5993506217)）：先在近郊首片做“拿到东西”的短展示和原创短音，参数都是候选。核心 `take` / `swap` 成功后，物件从路边升到人物头顶上方，停一下，再飞进提篮，合计约 1.65 秒；低动效改为原地淡入淡出。走动、接着走、回院、暂停会让展示立即收尾，不挡输入，不影响存档。放回、篮满、重复输入、恢复与回院补交都不触发。没有音频资源时安静降级，不用其他音效顶替。资源契约写在 [exploration-find-reveal.md](architecture/exploration-find-reveal.md) §4：1024×1024 透明 PNG 物件和 0.6–1.2 秒原创 OGG，由 GAME-PRODUCER 交付。帧证据见 `docs/playtests/2026-10-05-exploration-find-reveal/`。时长、位置、是否举物、音色等用户看过演示再定，不改已决定的“单趟最多 3 件、可空手、随时回院、不设稀有度/成就”。
