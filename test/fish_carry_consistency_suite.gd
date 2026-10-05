@@ -110,12 +110,13 @@ func _fresh(main):
 	#    writes the previous sequence's day/elapsed/plant into the store;
 	main._clear_world()
 	# 2) only then reset the store to codec defaults;
-	store._data = store._default_data()
+	await store.flush_pending()
+	_check(store._commit_candidate(store._default_data()), "fresh reset is durably accepted")
 	var want_day: int = store.get_holiday_day()
 	var want_elapsed: float = store.get_holiday_day_elapsed()
 	var want_plant: Dictionary = store.get_plant_state()
 	# 3) start the holiday from the clean store (its own _clear_world is a no-op now).
-	main._start_holiday()
+	await main._start_holiday()
 	var w = main._world
 	_check(store.get_holiday_day() == want_day and w.holiday_day == want_day, "fresh: holiday_day is the default (%d), not the previous sequence's" % want_day)
 	_check(is_equal_approx(store.get_holiday_day_elapsed(), want_elapsed) and is_equal_approx(float(w._day_elapsed), want_elapsed), "fresh: day elapsed is the default (%.1f), not written back (prev %.1f)" % [want_elapsed, prev_elapsed])
@@ -176,14 +177,14 @@ func _run() -> void:
 	await process_frame
 	await process_frame
 	main.set_process(false)
-	_seq_no_old_fish_miss(main)
-	_seq_old_fish_miss(main)
-	_seq_carry_expiry(main)
-	_seq_expiry_during_approach(main)
-	_seq_pause_resume(main)
-	_seq_repeated_clicks(main)
-	_seq_odd_fish_wording(main)
-	main._show_title()
+	await _seq_no_old_fish_miss(main)
+	await _seq_old_fish_miss(main)
+	await _seq_carry_expiry(main)
+	await _seq_expiry_during_approach(main)
+	await _seq_pause_resume(main)
+	await _seq_repeated_clicks(main)
+	await _seq_odd_fish_wording(main)
+	await main._show_title()
 	root.get_node("AudioDirector").call("release_streams")
 	print("[fish-carry] ", checks, " checks ", failures)
 	quit(0 if failures.is_empty() else 1)
@@ -192,7 +193,7 @@ func _run() -> void:
 # 1. Fresh save, no fish: a bite that is not reeled ("跑了") must not create a carry.
 func _seq_no_old_fish_miss(main) -> void:
 	seed(231001)
-	var w = _fresh(main)
+	var w = await _fresh(main)
 	_check(w._fish_carry_type.is_empty(), "S1 fresh save starts without carry")
 	var r := _cast_until_bite(main, w, false)
 	_check(r.ok, "S1 real cast reaches a bite")
@@ -215,7 +216,7 @@ func _seq_no_old_fish_miss(main) -> void:
 # 2. Holding a fish, cast again via pond tap and let it run: the OLD fish stays.
 func _seq_old_fish_miss(main) -> void:
 	seed(231002)
-	var w = _fresh(main)
+	var w = await _fresh(main)
 	_check(_catch(main, w), "S2 real catch gives a carry")
 	var kind := str(w._fish_carry_type)
 	var t0 := float(w._fish_carry_timer)
@@ -244,7 +245,7 @@ func _seq_old_fish_miss(main) -> void:
 # 3. Carry expiry at 20 s: release once, carry empty, no feed possible.
 func _seq_carry_expiry(main) -> void:
 	seed(231003)
-	var w = _fresh(main)
+	var w = await _fresh(main)
 	_check(_catch(main, w), "S3 real catch gives a carry")
 	_check(is_equal_approx(w._fish_carry_timer, 20.0) or w._fish_carry_timer > 19.0, "S3 carry window starts near 20 s")
 	_step_until(main, 21.0, func(): return w._fish_carry_type.is_empty())
@@ -264,7 +265,7 @@ func _seq_carry_expiry(main) -> void:
 # 4. Auto-approach to a bird that is still walking when the fish expires.
 func _seq_expiry_during_approach(main) -> void:
 	seed(231004)
-	var w = _fresh(main)
+	var w = await _fresh(main)
 	_check(_catch(main, w), "S4 real catch gives a carry")
 	var birds := _birds(w)
 	_check(not birds.is_empty(), "S4 yard has a duck or goose")
@@ -295,7 +296,7 @@ func _seq_expiry_during_approach(main) -> void:
 # 5. Pause freezes the carry window; input is ignored while paused.
 func _seq_pause_resume(main) -> void:
 	seed(231005)
-	var w = _fresh(main)
+	var w = await _fresh(main)
 	_check(_catch(main, w), "S5 real catch gives a carry")
 	var t0 := float(w._fish_carry_timer)
 	main._toggle_pause()
@@ -320,7 +321,7 @@ func paused_reset(main) -> void:
 # 6. Feed succeeds once; extra clicks do not double-consume or fake a second feed.
 func _seq_repeated_clicks(main) -> void:
 	seed(231006)
-	var w = _fresh(main)
+	var w = await _fresh(main)
 	_check(_catch(main, w), "S6 real catch gives a carry")
 	w.request_primary_action()
 	_step_until(main, 15.0, func(): return w._fish_carry_type.is_empty())
@@ -350,7 +351,7 @@ func _seq_odd_fish_wording(main) -> void:
 	var found := false
 	for i in 40:
 		seed(231700 + i)
-		w = _fresh(main)
+		w = await _fresh(main)
 		if _catch(main, w) and w._fish_carry_type == "odd":
 			found = true
 			break

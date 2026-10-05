@@ -22,14 +22,14 @@ func _run() -> void:
 	await process_frame
 	await process_frame
 	main.set_process(false)
-	main._start_holiday()
+	await main._start_holiday()
 	var world = main._world
 	_check_motion_frames(world, false)
 	_check_motion_frames(world, true)
 	_check_expiry_refresh_cancel(world)
 	await _check_album_and_pause(main, world)
 	_check_reduced_toggle(world)
-	world = _check_rebuild(main)
+	world = await _check_rebuild(main)
 	_check(world._rejected_seconds == 0.0, "rebuilt yard does not keep the previous cue")
 	_reject(world)
 	_check(is_equal_approx(world._rejected_seconds, 1.2), "rebuilt yard can show a new unreachable cue")
@@ -142,7 +142,7 @@ func _check_reduced_toggle(world) -> void:
 
 func _check_rebuild(main):
 	var previous = main._world.get_instance_id()
-	main._start_holiday()
+	await main._start_holiday()
 	var world = main._world
 	_check(world.get_instance_id() != previous, "holiday rebuild replaces the yard")
 	return world

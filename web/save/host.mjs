@@ -1,3 +1,4 @@
+import {inspectSnapshot} from './legacy_inspection.mjs';
 import {openStore,envelope,NAMESPACE} from './store.mjs';
 import {HostLifecycle} from './lifecycle.mjs';
 import {PRODUCTION_BUDGET} from './budgets.mjs';
@@ -99,6 +100,21 @@ export function createHost({runtimeReady,captureLegacy}={}){
    const e=owned(requestId,writeIdentity);if(!e.confirmed)throw new SaveHostError('NOT_CONFIRMED');
    const value=await store.acknowledge(e.request_id);e.done=true;
    return {schema:'youjia.save-ack/v1',namespace:NAMESPACE,request_id:e.request_id,write_id:e.write_id,status:value.status};
+  },
+  async inspectLegacy(paths){
+   ready();
+   const records=await store.snapshot();
+   let snapshot;try{snapshot=await captureLegacy({...clone(paths),budget:PRODUCTION_BUDGET});}
+   catch(e){snapshot={primary:{status:'read_error',reason:String(e)},backup:{status:'read_error',reason:String(e)}};}
+   return inspectSnapshot(records,snapshot);
+  },
+  async exportRecovery(paths){
+   ready();
+   const records=await store.snapshot();
+   let snapshot;try{snapshot=await captureLegacy({...clone(paths),budget:PRODUCTION_BUDGET});}
+   catch(e){snapshot={primary:{status:'read_error',reason:String(e)},backup:{status:'read_error',reason:String(e)}};}
+   const inspection=await inspectSnapshot(records,snapshot);
+   return {schema:'youjia.recovery-export/v1',namespace:NAMESPACE,inspection,current_envelope:records.current,legacy_sources:records.legacy_sources??null,legacy_snapshot:snapshot};
   },
   async close(){
    if(preparing||(pending&&!pending.done))throw new SaveHostError('WRITE_PENDING');

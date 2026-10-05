@@ -1,0 +1,24 @@
+{
+  "seed_primary": "{\"version\":999}",
+  "seed_backup": "\n {\"version\":5,\"holiday_day\":2,\"unknown_backup\":true} ",
+  "startup": {
+    "/userfs": {
+      "FILE_DATA": [
+        {
+          "timestamp": "2026-10-05 09:09:04.628000+00:00",
+          "mode": 33188,
+          "contents": "\n {\"version\":5,\"holiday_day\":2,\"unknown_backup\":true} "
+        },
+        {
+          "timestamp": "2026-10-05 09:09:04.628000+00:00",
+          "mode": 33188,
+          "contents": "{\"version\":999}"
+        }
+      ]
+    },
+    "youjia-save-host-v1": {
+      "records": []
+    }
+  },
+  "errors": []
+}

@@ -62,8 +62,14 @@ for ext in js wasm pck \
     fi
 done
 
+# Pin every module and its relative imports to the same source build.
+MODULE_ENTRY="save-${SHA}"
+mkdir -p "$WORK_DIR/$MODULE_ENTRY"
+cp "$REPO_ROOT"/web/save/*.mjs "$WORK_DIR/$MODULE_ENTRY/"
+
 # ---- 修补 index.html 中的三处关键配置 ----
 HTML="$WORK_DIR/index.html"
+sed -i "s|./web/save/|./${MODULE_ENTRY}/|g" "$HTML"
 
 # 0. 注入 Cache-Control meta，防止浏览器将 index.html 长期缓存（gh-pages 无自定义响应头）
 #    只在尚未注入时才添加，避免重复发布时重复插入。
@@ -162,6 +168,16 @@ cat > "$RELEASE_JSON" <<JSON
 }
 JSON
 
+# The manifest lists hashes of the actual published module bytes.
+python3 - "$RELEASE_JSON" "$WORK_DIR/$MODULE_ENTRY" "$MODULE_ENTRY" <<'PYMODULE'
+import hashlib, json, pathlib, sys
+manifest, directory, entry = sys.argv[1:]
+p = pathlib.Path(manifest)
+v = json.loads(p.read_text())
+v['storageModules'] = {'entry': entry, 'sha256': {f.name: hashlib.sha256(f.read_bytes()).hexdigest() for f in sorted(pathlib.Path(directory).glob('*.mjs'))}}
+p.write_text(json.dumps(v, ensure_ascii=False, indent=2) + '\n')
+PYMODULE
+
 # ---- 推送到 gh-pages ----
 echo "[publish] switching to gh-pages branch..."
 cd "$REPO_ROOT"
@@ -173,7 +189,7 @@ trap 'rm -rf "$WORK_DIR" "$GH_PAGES_DIR"' EXIT
 git worktree add "$GH_PAGES_DIR" origin/gh-pages
 
 # 复制新产物到 gh-pages 工作目录
-cp "$WORK_DIR"/* "$GH_PAGES_DIR/"
+cp -R "$WORK_DIR"/* "$GH_PAGES_DIR/"
 touch "$GH_PAGES_DIR/.nojekyll"
 
 # ---- 剪除旧 game-* 资源包（可选，由 KEEP_BUNDLES 控制）----

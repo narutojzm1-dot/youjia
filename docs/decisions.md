@@ -1047,6 +1047,9 @@ CODEX-LEAD复现：现有7类setter在失败前改内存，后续无关保存会
 
 总图、七页标注与六页场景候选已恢复为[可追溯原图包](../art/concepts/producer_world_20261005/README.md)，另保留历史稿，13张均原字节及hash核验；三个用户直链再次下载一致。此为原图归档和方向交付，不表示运行时接入、美术终验或发布。此前“原图只在会话”描述保留历史，以本条为当前状态；制作人资源职责按goal-ownership及[本地接续](collaboration/producer-local-handoff-20261005.md)，不按旧两Codex临时资源分工继续开工。
 
+## 2026-10-05 #149/#150 正式异步接线候选
+
+CODEX-LEAD 在 PR336 将已合入未启用的 Host 接入生产候选：旧库只读封存、新库单写者，游戏 getter/照片反馈等待严格持久回执，返回首页前清空队列；旧页来源变化由玩家明确继续当前或下载两份，禁止自动合并。原生同步兼容接口同样使用来源保全门禁，修复独审提出的绕过/绑定丢失/新token配旧snapshot风险。实现、边界及Cloud适配接口见[接线契约](architecture/production-save-integration.md)。仍为Draft组合验收中，不把自然Web关页恢复/受控迁移通过冒充全部平台或公开发布。
 
 ## GAME-PM 17:20：已决与接收收尾
 
