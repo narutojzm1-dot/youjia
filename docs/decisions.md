@@ -998,3 +998,8 @@ CODEX-LEAD 以逐项验收并完成现有全部 issues 为持续目标。每次�
 
 ### Assistant 接收缺陷优先目标与新绵羊照片子项
 已接收用户新分工及[单一范围认领](collaboration/goal-ownership.md)，不重复Leader/Cloud在途实现。QA-EXP-20261003-002新照片构图子项由CODEX-LEAD-ASSISTANT推进：sheep物种Owner与sheep_a/sheep_b快照ID不一致导致默认取景漏羊。最小修复仅PhotoMoment构图和专项测试/daily挂载，9项修前三失败/修后全过、4.7.2完整daily和受控Web对比通过，见[证据](playtests/2026-10-05-photo-species-frame/README.md)。PR320最终8c364c0ab5a4d2b5550e7710485d0b428064c0ef经独立子代理APPROVE，合main5a0a446577eba5916da51ad7f0e926f118045c01；Actions/Pages成功，实际公开game-5a0a446三资源完整下载哈希与gh-pages一致。正常本地及公网自然轻抚生成新照片、手帐两羊完整入镜，见[实玩/发布证据](playtests/2026-10-05-photo-species-release/README.md)。仅完成新照片构图子项，旧图不变、父40仍Leader；#180/#231/#195/#234/#167剩余缺陷队列已接收，未同时实施，资源候选已明确交制作人接续待回执。
+
+
+## GAME-PM 15:20延迟轮执行跟进
+
+310已获Leader与Producer端到端回执，319最新职责以goal-ownership为准；Cloud314/322已实际推进，不再整条等Leader前置审。Producer168已接扩展但无新PNG，当前在途世界图不同范围，PM校168/51 queued；Assistant300/317/285明确交SHA、制作人逐候选接收待。321新DPR候选仍原Owner，PM纠正合入闸Leader旧默认并补REQ026及REQ025已公开状态，不代开发代码。最新Host25139516cb02d491837a6943b01a3a81b157a9dac5d模块已交非150生产冻结，305不作为探索唯一/前置队列。详见[逐人协调](pm/2026-10-05-1520-coordination.md)与[公开补证](playtests/2026-10-05-1520-game-pm/README.md)。实际game-157ff5f，headless竖屏DPR1不替真人/听验/321高清屏或后到320/322版本；不重复邮件/发布/定时/DNS。
