@@ -27,7 +27,7 @@ def choose(current: str, keep: int) -> list[str]:
         return []
     history = subprocess.check_output(
         ['git', 'log', '--first-parent', '--format=', '--name-only',
-         '--diff-filter=AM', '--', 'game-*.pck'], text=True)
+         '--diff-filter=AM', '--no-renames', '--', 'game-*.pck'], text=True)
     newest = [current]
     for line in history.splitlines():
         name = line.removesuffix('.pck')
