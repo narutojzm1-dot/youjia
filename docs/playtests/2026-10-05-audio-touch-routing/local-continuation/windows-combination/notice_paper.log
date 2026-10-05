@@ -1,0 +1,52 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[notice_paper] PASS (1280, 720) notice has a flat paper backing
+[notice_paper] PASS (1280, 720) backing is mostly opaque paper (a=0.88)
+[notice_paper] PASS (1280, 720) backing uses the existing PAPER colour
+[notice_paper] PASS (1280, 720) backing has soft corners
+[notice_paper] PASS (1280, 720) ink colour unchanged
+[notice_paper] PASS (1280, 720) wrapped notice grows upward, not onto buttons
+[notice_paper] PASS (1280, 720) notice still ignores taps
+[notice_paper] PASS (1280, 720) ordinary notice still 16px
+[notice_paper] PASS (1280, 720) short notice centred
+[notice_paper] PASS (1280, 720) short notice paper hugs text (w=144)
+[notice_paper] PASS (1280, 720) short notice paper covers text plus padding (w=144 text=112)
+[notice_paper] PASS (1280, 720) short notice stays one line
+[notice_paper] PASS (1280, 720) backing does not move between frames
+[notice_paper] PASS (1280, 720) long notice keeps the original wrap width (220)
+[notice_paper] PASS (1280, 720) catch-size text refits on the next frame (144 -> 186)
+[notice_paper] PASS (1280, 720) backing disappears with the notice
+[notice_paper] PASS (390, 844) notice has a flat paper backing
+[notice_paper] PASS (390, 844) backing is mostly opaque paper (a=0.88)
+[notice_paper] PASS (390, 844) backing uses the existing PAPER colour
+[notice_paper] PASS (390, 844) backing has soft corners
+[notice_paper] PASS (390, 844) ink colour unchanged
+[notice_paper] PASS (390, 844) wrapped notice grows upward, not onto buttons
+[notice_paper] PASS (390, 844) notice still ignores taps
+[notice_paper] PASS (390, 844) ordinary notice still 16px
+[notice_paper] PASS (390, 844) short notice centred
+[notice_paper] PASS (390, 844) short notice paper hugs text (w=144)
+[notice_paper] PASS (390, 844) short notice paper covers text plus padding (w=144 text=112)
+[notice_paper] PASS (390, 844) short notice stays one line
+[notice_paper] PASS (390, 844) backing does not move between frames
+[notice_paper] PASS (390, 844) long notice keeps the original wrap width (175)
+[notice_paper] PASS (390, 844) catch-size text refits on the next frame (144 -> 186)
+[notice_paper] PASS (390, 844) backing disappears with the notice
+[notice_paper] PASS (844, 390) notice has a flat paper backing
+[notice_paper] PASS (844, 390) backing is mostly opaque paper (a=0.88)
+[notice_paper] PASS (844, 390) backing uses the existing PAPER colour
+[notice_paper] PASS (844, 390) backing has soft corners
+[notice_paper] PASS (844, 390) ink colour unchanged
+[notice_paper] PASS (844, 390) wrapped notice grows upward, not onto buttons
+[notice_paper] PASS (844, 390) notice still ignores taps
+[notice_paper] PASS (844, 390) ordinary notice still 16px
+[notice_paper] PASS (844, 390) short notice centred
+[notice_paper] PASS (844, 390) short notice paper hugs text (w=144)
+[notice_paper] PASS (844, 390) short notice paper covers text plus padding (w=144 text=112)
+[notice_paper] PASS (844, 390) short notice stays one line
+[notice_paper] PASS (844, 390) backing does not move between frames
+[notice_paper] PASS (844, 390) long notice keeps the original wrap width (220)
+[notice_paper] PASS (844, 390) catch-size text refits on the next frame (144 -> 186)
+[notice_paper] PASS (844, 390) backing disappears with the notice
+[notice_paper] PASS ink on paper over black still >= 4.5:1 (6.28)
+notice paper suite checks=49 failures=[]

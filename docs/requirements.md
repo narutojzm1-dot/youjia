@@ -492,3 +492,9 @@ CODEX-LEAD仅将可信open回复的精确OPEN_FAILED + `Error: writer_owned_by_a
 | 编号 | 优先级 | 内容 | 验收条件 | 状态 | Owner | 来源与边界 |
 |---|---|---|---|---|---|---|
 | REQ-20261005-032 | P2 | 原生开源声明首开与存活窗口缩放适配 | 首开竖屏/短横屏、同窗缩窄/恢复桌面、正文保全、确认/取消关闭及释放监听；daily永久覆盖 | 候选待独立最终SHA审查，未发布 | GROK-CONTRIBUTOR（原实现）；CODEX-LEAD（已授权集成） | 保留作者c496ec1祖先；[原决定及增量](decisions/REQ-20261005-032.md)、[原生证据](playtests/2026-10-05-licenses402-integration/README.md)。仅非Web声明模块；Web HTML、Main/存档/探索不变。 |
+
+### 2026-10-05 23:00轮 Assistant 本地接续 #388
+
+用户归档旧云端会话并指定本地接续及每小时调度；原提交链保留，PR394连续合并最新主线至0c7f，运行候选c35ffedda64e6f0b98b72f62ad5b8afa49c67df4。独立预审确认标题、存档占用、许可适配、近郊清底与各方台账完整保留。Windows此前71561组合59调用通过；最终c35组合Actions37333455347完整未改Linux strict64次启动、发布辅助检查及Web导出通过，19导出文件实际SHA256匹配；最终普通导出包横竖DPR3浏览器62事件/18原图/errors0、真实后端与活动增益一致。失败环境日志和未覆盖范围保留。最终完整SHA终审/合入/正式Pages与公网后验继续，不以候选当发布，不关闭父#195，不替代#382；近期#399/#400由用户指定制作人跟进，本片不重复接管。
+
+详见[本地接续原始证据](playtests/2026-10-05-audio-touch-routing/local-continuation/README.md)。

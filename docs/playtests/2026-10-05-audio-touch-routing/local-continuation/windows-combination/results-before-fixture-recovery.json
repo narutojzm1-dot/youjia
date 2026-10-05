@@ -1,0 +1,358 @@
+[
+  {
+    "reason": "Unmodified suite requires OS user dir under literal /tmp/youjia-daily-check.",
+    "name": "yard_snapshot",
+    "status": "NOT_RUN_LINUX_PATH_GUARD"
+  },
+  {
+    "reason": "Unmodified suite requires OS user dir under literal /tmp/youjia-daily-check.",
+    "name": "fishing_active_hud",
+    "status": "NOT_RUN_LINUX_PATH_GUARD"
+  },
+  {
+    "reason": "Unmodified suite requires OS user dir under literal /tmp/youjia-daily-check.",
+    "name": "save_candidate",
+    "status": "NOT_RUN_LINUX_PATH_GUARD"
+  },
+  {
+    "reason": "Unmodified suite requires OS user dir under literal /tmp/youjia-daily-check.",
+    "name": "fish_miss_feedback",
+    "status": "NOT_RUN_LINUX_PATH_GUARD"
+  },
+  {
+    "exit": 0,
+    "log": "import.log",
+    "seconds": 20.3439104,
+    "name": "import",
+    "status": "PASS"
+  },
+  {
+    "exit": 0,
+    "log": "test_suite.log",
+    "seconds": 2.113858,
+    "name": "test_suite",
+    "status": "PASS"
+  },
+  {
+    "exit": 0,
+    "log": "locomotion_suite.log",
+    "seconds": 6.368916,
+    "name": "locomotion_suite",
+    "status": "PASS"
+  },
+  {
+    "exit": 0,
+    "log": "animal_home.log",
+    "seconds": 35.5222671,
+    "name": "animal_home",
+    "status": "PASS"
+  },
+  {
+    "exit": 0,
+    "log": "photo_home.log",
+    "seconds": 14.0648908,
+    "name": "photo_home",
+    "status": "PASS"
+  },
+  {
+    "exit": 0,
+    "log": "grass_state.log",
+    "seconds": 0.8335148,
+    "name": "grass_state",
+    "status": "PASS"
+  },
+  {
+    "exit": 0,
+    "log": "grass_action.log",
+    "seconds": 0.7031731,
+    "name": "grass_action",
+    "status": "PASS"
+  },
+  {
+    "exit": 0,
+    "log": "explicit_target.log",
+    "seconds": 9.7168742,
+    "name": "explicit_target",
+    "status": "PASS"
+  },
+  {
+    "exit": 0,
+    "log": "ui_interaction.log",
+    "seconds": 9.5944059,
+    "name": "ui_interaction",
+    "status": "PASS"
+  },
+  {
+    "exit": 0,
+    "log": "physical_yard.log",
+    "seconds": 28.6933922,
+    "name": "physical_yard",
+    "status": "PASS"
+  },
+  {
+    "exit": 0,
+    "log": "keyboard_ground.log",
+    "seconds": 7.3186888,
+    "name": "keyboard_ground",
+    "status": "PASS"
+  },
+  {
+    "exit": 0,
+    "log": "scrapbook_encounter.log",
+    "seconds": 1.255149,
+    "name": "scrapbook_encounter",
+    "status": "PASS"
+  },
+  {
+    "exit": 0,
+    "log": "photo_moment_render.log",
+    "seconds": 2.2985074,
+    "name": "photo_moment_render",
+    "status": "PASS"
+  },
+  {
+    "exit": 0,
+    "log": "photo_moment_save.log",
+    "seconds": 4.3164188,
+    "name": "photo_moment_save",
+    "status": "PASS"
+  },
+  {
+    "exit": 0,
+    "log": "save_data_codec.log",
+    "seconds": 1.3743256,
+    "name": "save_data_codec",
+    "status": "PASS"
+  },
+  {
+    "exit": 0,
+    "log": "save_recovery.log",
+    "seconds": 0.7205955,
+    "name": "save_recovery",
+    "status": "PASS"
+  },
+  {
+    "exit": 0,
+    "log": "boundary_feedback.log",
+    "seconds": 1.5522956,
+    "name": "boundary_feedback",
+    "status": "PASS"
+  },
+  {
+    "exit": 0,
+    "log": "mixed_input_photo.log",
+    "seconds": 1.7393478,
+    "name": "mixed_input_photo",
+    "status": "PASS"
+  },
+  {
+    "exit": 0,
+    "log": "leading_clearance.log",
+    "seconds": 2.2786843,
+    "name": "leading_clearance",
+    "status": "PASS"
+  },
+  {
+    "exit": 0,
+    "log": "portable_accept.log",
+    "seconds": 1.7389326,
+    "name": "portable_accept",
+    "status": "PASS"
+  },
+  {
+    "exit": 0,
+    "log": "shipped_correctness.log",
+    "seconds": 2.0142576,
+    "name": "shipped_correctness",
+    "status": "PASS"
+  },
+  {
+    "exit": 0,
+    "log": "interaction_photo.log",
+    "seconds": 1.5369639,
+    "name": "interaction_photo",
+    "status": "PASS"
+  },
+  {
+    "exit": 0,
+    "log": "scene_hotspot.log",
+    "seconds": 2.1868524,
+    "name": "scene_hotspot",
+    "status": "PASS"
+  },
+  {
+    "exit": 0,
+    "log": "authored_sequence.log",
+    "seconds": 0.5147297,
+    "name": "authored_sequence",
+    "status": "PASS"
+  },
+  {
+    "exit": 0,
+    "log": "goose_mount.log",
+    "seconds": 4.5250343,
+    "name": "goose_mount",
+    "status": "PASS"
+  },
+  {
+    "exit": 0,
+    "log": "quiet_stay.log",
+    "seconds": 1.2588873,
+    "name": "quiet_stay",
+    "status": "PASS"
+  },
+  {
+    "exit": 0,
+    "log": "quiet_sky_look.log",
+    "seconds": 1.5438954,
+    "name": "quiet_sky_look",
+    "status": "PASS"
+  },
+  {
+    "exit": 0,
+    "log": "still_catch.log",
+    "seconds": 0.6272943,
+    "name": "still_catch",
+    "status": "PASS"
+  },
+  {
+    "exit": 0,
+    "log": "still_target_pulse.log",
+    "seconds": 0.6170998,
+    "name": "still_target_pulse",
+    "status": "PASS"
+  },
+  {
+    "exit": 0,
+    "log": "still_grass_glow.log",
+    "seconds": 1.283151,
+    "name": "still_grass_glow",
+    "status": "PASS"
+  },
+  {
+    "exit": 0,
+    "log": "still_object_feedback.log",
+    "seconds": 0.6133109,
+    "name": "still_object_feedback",
+    "status": "PASS"
+  },
+  {
+    "exit": 0,
+    "log": "interaction_pose.log",
+    "seconds": 1.3237981,
+    "name": "interaction_pose",
+    "status": "PASS"
+  },
+  {
+    "exit": 0,
+    "log": "cow_glance.log",
+    "seconds": 1.2613838,
+    "name": "cow_glance",
+    "status": "PASS"
+  },
+  {
+    "exit": 0,
+    "log": "sheep_attention.log",
+    "seconds": 1.4922675,
+    "name": "sheep_attention",
+    "status": "PASS"
+  },
+  {
+    "exit": 0,
+    "log": "duck_feed_attention.log",
+    "seconds": 1.2572443,
+    "name": "duck_feed_attention",
+    "status": "PASS"
+  },
+  {
+    "exit": 0,
+    "log": "goose_feed_attention.log",
+    "seconds": 1.3531792,
+    "name": "goose_feed_attention",
+    "status": "PASS"
+  },
+  {
+    "exit": 0,
+    "log": "fish_carry_consistency.log",
+    "seconds": 6.5529606,
+    "name": "fish_carry_consistency",
+    "status": "PASS"
+  },
+  {
+    "exit": 0,
+    "log": "notice_paper.log",
+    "seconds": 1.9194375,
+    "name": "notice_paper",
+    "status": "PASS"
+  },
+  {
+    "exit": 0,
+    "log": "photo_species_frame.log",
+    "seconds": 1.4584216,
+    "name": "photo_species_frame",
+    "status": "PASS"
+  },
+  {
+    "exit": 0,
+    "log": "web_hidpi.log",
+    "seconds": 3.2935229,
+    "name": "web_hidpi",
+    "status": "PASS"
+  },
+  {
+    "exit": 0,
+    "log": "exploration_core.log",
+    "seconds": 0.6200414,
+    "name": "exploration_core",
+    "status": "PASS"
+  },
+  {
+    "exit": 0,
+    "log": "save_coordinator.log",
+    "seconds": 0.6963142,
+    "name": "save_coordinator",
+    "status": "PASS"
+  },
+  {
+    "exit": 0,
+    "log": "native_save_host.log",
+    "seconds": 1.811051,
+    "name": "native_save_host",
+    "status": "PASS"
+  },
+  {
+    "exit": 0,
+    "log": "save_writer_guidance.log",
+    "seconds": 0.5121868,
+    "name": "save_writer_guidance",
+    "status": "PASS"
+  },
+  {
+    "exit": 0,
+    "log": "exploration_cleanup_contract.log",
+    "seconds": 0.7954494,
+    "name": "exploration_cleanup_contract",
+    "status": "PASS"
+  },
+  {
+    "exit": 0,
+    "log": "save_feedback.log",
+    "seconds": 1.5724745,
+    "name": "save_feedback",
+    "status": "PASS"
+  },
+  {
+    "exit": 0,
+    "log": "day_label_layout.log",
+    "seconds": 2.5589978,
+    "name": "day_label_layout",
+    "status": "PASS"
+  },
+  {
+    "exit": 0,
+    "log": "exploration_slice.log",
+    "seconds": 2.7900635,
+    "name": "exploration_slice",
+    "status": "FAIL"
+  }
+]
