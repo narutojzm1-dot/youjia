@@ -1,6 +1,6 @@
 {
  "host_sha": "6e47c3acaea7ab7ecee0e09a1e3634dd8c4fb62e",
- "repo_head": "1a3d4d384c85043f3a6b4be429a5e4e48d94d269",
+ "repo_head": "fbeb97864d5c471e0a01370748a39a0e22f11da8",
  "godot": "4.7.2-stable (official)",
  "candidates": {
   "S_per_source": 1572864,
@@ -472,6 +472,45 @@
     "S_each": true,
     "C_combined": false
    }
+  },
+  "big_quote_control": {
+   "classify": {
+    "primary": "v5",
+    "backup": "corrupt"
+   },
+   "base64_chars": {
+    "primary": 2097152,
+    "backup": 2097152
+   },
+   "snapshot_arg_chars": 4194390,
+   "wrapper": {
+    "selected": "primary",
+    "bytes": 12581238,
+    "chars": 12581238,
+    "ratio_to_raw_sum": 3.9995
+   },
+   "files": {
+    "primary": {
+     "bytes": 1572864,
+     "chars": 1572864,
+     "sha256": "4b97610e772f370f5741512f2b25ffc9071c53e8c84bb30eea677a5590122283",
+     "godot_json_parse_ok": true
+    },
+    "backup": {
+     "bytes": 1572864,
+     "chars": 1572864,
+     "sha256": "82aafac80af11abe9c58e733d4a54ffdce0c164830cb0083f7c62a9d93ab9cf3",
+     "godot_json_parse_ok": true
+    }
+   },
+   "raw_sum_bytes": 3145728,
+   "source": "SaveFiles.commit of defaults + x_stress_extension filled with quote/control to exactly 1572864 bytes per file",
+   "synthetic": true,
+   "method": "model (replica, offline)",
+   "within": {
+    "S_each": true,
+    "C_combined": false
+   }
   }
  },
  "replica_validation": {
@@ -643,6 +682,24 @@
     "bytes": 33646,
     "chars": 33646,
     "ratio_to_raw_sum": 3.3646
+   },
+   "godot_snapshot_chars": 13422,
+   "replica_snapshot_chars": 13422,
+   "classify": {
+    "primary": "v5",
+    "backup": "corrupt"
+   }
+  },
+  "quote_control": {
+   "real_host": {
+    "selected": "primary",
+    "bytes": 38326
+   },
+   "replica": {
+    "selected": "primary",
+    "bytes": 38326,
+    "chars": 38326,
+    "ratio_to_raw_sum": 3.8326
    },
    "godot_snapshot_chars": 13422,
    "replica_snapshot_chars": 13422,
@@ -901,7 +958,7 @@
   {
    "id": "sample_set_complete",
    "status": "PASS",
-   "detail": "22/22"
+   "detail": "24/24"
   },
   {
    "id": "replica_matches_host:ascii_ascii",
@@ -1004,6 +1061,16 @@
    "detail": "13422 vs 13422"
   },
   {
+   "id": "replica_matches_host:quote_control",
+   "status": "PASS",
+   "detail": "host {'selected': 'primary', 'bytes': 38326} replica {'selected': 'primary', 'bytes': 38326, 'chars': 38326, 'ratio_to_raw_sum': 3.8326}"
+  },
+  {
+   "id": "snapshot_arg_matches_godot:quote_control",
+   "status": "PASS",
+   "detail": "13422 vs 13422"
+  },
+  {
    "id": "dense_album_sanitize_legal",
    "status": "PASS",
    "detail": "15 photos, items [64]"
@@ -1055,6 +1122,7 @@
   "big_backslash_backslash",
   "big_newline_newline",
   "big_quote_ascii",
+  "big_quote_control",
   "big_quote_quote",
   "big_tab_tab"
  ],
@@ -1068,7 +1136,8 @@
   "big_u2028_u2028": 1.0001,
   "big_control_control": null,
   "big_quote_ascii": 1.5,
-  "big_ascii_control": 3.4996
+  "big_ascii_control": 3.4996,
+  "big_quote_control": 3.9995
  },
  "derived": {
   "H_head_arg_chars_for_S": 4194390,
@@ -1076,7 +1145,7 @@
   "max_observed_snapshot_arg_chars_at_S": 4194390
  },
  "summary": {
-  "checks": 31,
+  "checks": 33,
   "failed": 0,
   "failed_ids": []
  }

@@ -109,7 +109,7 @@ Host 导入 payload 里存的是原文：每个被接受的样本都断言内嵌
 
 ## #294 补充：转义二次封装、密集相册实测与 archive 放大
 
-基线 main `7649912`，证据 `test/save_payload_budget/bounds-evidence.json`（`repo_head` `1a3d4d3…`，31/31 PASS），复跑用 `bash test/save_payload_budget/run_bounds.sh`。上文的 #287 样本没有变化：抽出公共捕获代码后重跑，所有样本 SHA 和检查结论逐项相同。
+基线 main `7649912`，证据 `test/save_payload_budget/bounds-evidence.json`（`repo_head` `fbeb978…`，33/33 PASS），复跑用 `bash test/save_payload_budget/run_bounds.sh`。上文的 #287 样本没有变化：抽出公共捕获代码后重跑，所有样本 SHA 和检查结论逐项相同。
 
 **方法分三类，下文逐项注明。**
 - **真实执行**：在 64 KiB 内的小样本上，直接调用 Host 6e47c3a 的模块。
@@ -117,7 +117,7 @@ Host 导入 payload 里存的是原文：每个被接受的样本都断言内嵌
 - **外推**：由公式推出、没有直接测量的数字。
 
 模型可信度先在真实 Host 上逐字节核对：
-- 10 组小样本（每份 5000 B）的合并 payload 字节数、`selected` 字段和拒绝原因，与真实 `prepareLegacyV5` 完全一致；
+- 11 组小样本（每份 5000 B）的合并 payload 字节数、`selected` 字段和拒绝原因，与真实 `prepareLegacyV5` 完全一致；
 - 复刻的参数长度与 Godot 真实 `capture()` 的 JSON 长度完全一致；
 - 一次真实 `initializeLegacy`，加上真实的“屏障中止 + 重开”，在测试库里形成 current、prepared intent 和 1 条 archive，每条记录的 JSON 字节数、字符串字节数和键集合都与模型相同；
 - archive 条目确实同时含 `parent` 与 `candidate` 两份完整封套，其 `parent` 就是当时的 current。
@@ -148,10 +148,11 @@ Godot 对各类字符的写法：
 | quote/ascii | v5/v5 | 4,718,513 | 1.5 | **否** |
 | quote/quote、backslash/backslash | v5/v5 | 6,291,057 | 2.0 | **否** |
 | ascii/control（v5 主档 + 可解码但 corrupt 的备档） | v5/corrupt | 11,008,694 | 3.5 | **否** |
+| quote/control（引号 v5 主档 + 控制字符 corrupt 备档，最坏组合） | v5/corrupt | 12,581,238 | 4.0 | **否** |
 | control/control | corrupt/corrupt | 拒绝：no readable v5 source | — | — |
 
-- 6 组样本每份都 ≤ 1.5 MiB，合并却超过 3.5 MiB，且都是 Host 接受的合法输入，其中 5 组两份都是合法 v5。所以**单份上限不能保证合并通过**，合并上限必须作为独立的拒绝点。
-- 每个字符进入合并封装后的放大倍数：ASCII、CJK、U+2028 为 1×；换行、制表符为 1.5×（`\n` 由 2 字节变 3 字节）；引号、反斜杠为 2×（由 2 字节变 4 字节）；原样控制字符为 6×（`\u0001`）。因此两份合法 v5 的最坏合并约为 2·2S；v5 主档配控制字符备档约为 S + 6S = 7S。再加约 241 B 的固定包装（ASCII 对实测为 3,145,969 − 2S）。
+- 7 组样本每份都 ≤ 1.5 MiB，合并却超过 3.5 MiB；按 Host 规则（去掉夹具上限）它们都会被接受，其中 5 组两份都是合法 v5。在真实 Host 上实际执行过的，只有对应的 5000 B 小样本。所以**单份上限不能保证合并通过**，合并上限必须作为独立的拒绝点。
+- 每个字符进入合并封装后的放大倍数：ASCII、CJK、U+2028 为 1×；换行、制表符为 1.5×（`\n` 由 2 字节变 3 字节）；引号、反斜杠为 2×（由 2 字节变 4 字节）；原样控制字符为 6×（`\u0001`）。因此两份合法 v5 的最坏合并约为 2·2S。被选中的 v5 主档本身也可以按 2× 放大，所以“v5 主档 + 控制字符备档”的最坏值是 2S + 6S = 8S：实测 quote/control 为 12,581,238 B，不超过 8S + 241 = 12,583,153 B。任何 UTF-8 字节经 `JSON.stringify` 至多放大 6×，所以 8S 就是上界。再加约 241 B 的固定包装（ASCII 对实测为 3,145,969 − 2S）。
 - 新发现（兼容性）：Godot 能读、但 Host 判为 corrupt 的控制字符存档，如果主备都是这种情况，Host 会拒绝导入。现有生产字段没有自由文本，所以自然游玩到不了，但未来引入玩家输入文本时需要处理。
 - 所有候选尺寸样本的 head 参数都是 4,194,390 字符，与推导式 `8·ceil(S/3) + 86` 一致（检查 `head_arg_formula_matches_observed`）。
 
@@ -173,6 +174,8 @@ Godot 对各类字符的写法：
 | 1.5 MiB ASCII 对（3,145,969 / 1,572,864） | 3,146,318 / 4,719,633 / 4,719,633 | 7,865,951 | 12,585,584 | 45,623,015 | 158,894,207 |
 | 1.5 MiB CJK 对（同上） | 同上；V8 估算 2,098,839 / 3,148,294 / 3,148,294 | 7,865,951（V8 5,247,133） | 12,585,584 | 45,623,015 | 158,894,207（V8 105,992,541） |
 
+后两行的候选 payload 是 1.5 MiB，比 (c) 层外推所用的 P = 1 MiB 大，只用来展示 S 量级的总量。
+
 自然满档时，`JSON.stringify` 口径比字符串口径大约 11%（payload 里的引号被再转义一次），archive=32 时为 31,558,726 B；合成相册为 117,651,283 B。完整数字见证据文件。**payload 上限不等于总空间**：总量约为 (N+2)·root + (N+1)·candidate，其中 N 是 archive 条数。
 
 ### 4. 四层预算的独立拒绝点与推导式
@@ -181,10 +184,10 @@ Godot 对各类字符的写法：
 | --- | --- | --- | --- | --- |
 | (a) 单份原文 S | `source_snapshot.gd` 先比 `get_length() > S`；`source_decode` 比 base64 长度 > `4·ceil(S/3)`，解码后 > S；`legacy_v5 source()` 按字符或字节 > S | — | 1,572,864 B | 64 KiB 下真实执行（#287）；候选值属模型 |
 | (d) head 参数 H | `head.html` 参数长度 > H | `8·ceil(S/3) + 86` | 4,194,390 字符 | 64 KiB 下真实执行；公式与候选观察值一致 |
-| (b) 合并导入 C | `prepareLegacyV5` 合并字节 > C，`store.initialize` 的 `envelope` 再检查一次 | 要保证所有通过 (a) 的输入都能导入：两份合法 v5 时 C ≥ 4S + 241，含控制字符的 corrupt 副本时 C ≥ 7S + 241（S=1.5 MiB 时约 6.0 / 10.5 MiB）；否则必须把 C 当作独立拒绝点处理 | 3.5 MiB 下已有 6 个反例 | 小样本真实执行与模型逐字节核对；候选尺寸属模型 |
+| (b) 合并导入 C | `prepareLegacyV5` 合并字节 > C，`store.initialize` 的 `envelope` 再检查一次 | 要保证所有通过 (a) 的输入都能导入：两份合法 v5 时 C ≥ 4S + 241，含控制字符的 corrupt 副本时 C ≥ 8S + 241（S=1.5 MiB 时约 6.0 / 12.0 MiB）；否则必须把 C 当作独立拒绝点处理 | 3.5 MiB 下已有 7 个反例 | 小样本真实执行与模型逐字节核对；候选尺寸属模型 |
 | (c) 后续存档 P | `prepare`→`envelope` 的 payload > P | 存储总量 ≈ (N+2)·root + (N+1)·P，root ≤ C，N ≤ 32 | C=3.5 MiB、P=1 MiB、N=32 时约 152 MiB（外推） | 结构由真实记录核对；总量属模型或外推 |
 
 对 Leader 的补充建议（仍不冻结）：
-- 合并上限要么按 4S（只接受合法 v5 时）到 7S 来定，要么明确说明单份通过不代表合并通过，并单独给出可见的拒绝。
+- 合并上限要么按 4S（只接受合法 v5 时）到 8S 来定，要么明确说明单份通过不代表合并通过，并单独给出可见的拒绝。
 - archive 的保留条数与“parent 是否重复携带整份 root”，对总空间的影响远大于单份上限。建议与 32 条上限一起重新评估，例如 archive 只保留 candidate 和 parent 的引用。这属于 Host 设计，由 CODEX-LEAD 决定。
 - 低端机上的耗时与内存、真实配额异常、IDB 磁盘压缩（LevelDB 等）仍未覆盖。
