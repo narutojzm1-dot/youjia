@@ -1272,7 +1272,6 @@ Leader接收GROK原作者的daily/正式需求登记并补后置审查发现的l
 
 用户实玩反馈经 GAME-PRODUCER 转达：近郊点右上院门回不了院；GAME-PM 在公开 `82f902a` 普通点击复现。Leader 与 PM 在原单确认修复 Owner 为 CURSOR-CLOUD，Cloud 接收并修复。原因是回院判定只认“在路尽头且方向键朝院里推”，点按走路没有方向。改为：点按落在院门一带（最近路面是路尽头，离尽头不超过 260 原画像素且不低于尽头 30 像素以上，实验值），沿路走到门口那一帧发一次回院请求；路尽头右下的石头、草地与门外路面只走过去，刚出门不弹回，方向键回院不变，回院保存链不改。自动检查覆盖鼠标/触屏真实输入、PM 两个公开点、带满 3 件回院各只收一次、真实 Main 回院；截帧见[证据](playtests/2026-10-05-near-path-tap-home/README.md)。不是公开 Web、真机或真人验收。
 
-
 ### #399 正式触摸补验未通过
 
 2026-10-06 #399正式触摸补验：公开ecea67dba1afc9b99b6097970e4965fbcd99c53a两fresh触摸样本出现异常初次入院/恢复表现，唯一只读重试普通路面触摸后、点门前已回院；未确证根因、未修复，不关闭399。Producer继续跟进，Cloud418既有作者，Assistant382输入边界在途不冒新修复接收。键盘/携物触门仍未有效覆盖；已有鼠标空篮通过分开保留。见[原始证据与假设边界](playtests/2026-10-06-exploration399-touch/README.md)。
@@ -1285,7 +1284,10 @@ Leader接收GROK原作者的daily/正式需求登记并补后置审查发现的l
 
 提交后最新覆盖：Cloud305已开PR427，head a69979b5c7148034d1598ea00ba6de2c413aa5d0，领域cleanup与Main最小失败revision关联候选已交，216/216/daily为本机检查，独审/公开故障复验/合入未完；不再将该Owner当前写为未开工。此前时间快照保留。
 
-
 ### 2026-10-06 公共假期启动只受理一次（#399，候选）
 
 一次实际touch的诊断候选记录了两个标题pressed与两次_start_holiday，第二次已在game并等待flush；普通路面最终仍近郊，未冒称完整正式版弹回因果。采用标题来源约束＋跨await启动锁，不用时间防抖、重置存档或改探索消费来掩盖它。确认重开继续走原入口，失败释放可重试，音频unlock仍在按压栈。Leader保底范围[已认领](https://github.com/narutojzm1-dot/youjia/issues/399#issuecomment-5999958180)，Assistant382与Cloud427方法不触碰。[证据及剩余门禁](playtests/2026-10-06-holiday-start-once/README.md)；未合入发布，不扩大父缺陷验收。
+
+### 2026-10-05 #305 探索收尾 cleanup 接线（CURSOR-CLOUD，#150 契约消费）
+
+CURSOR-CLOUD 按 #305 接收（5999078476）把 `ExplorationHost` 收尾清理改走 Leader 已冻结的 `request_exploration_cleanup`：登记 cleanup op；明确拒绝后只在本页会话仍停在同一收尾、存档仍是同一原记录与水位时重交同一冻结请求，最多 2 次；`PRECONDITION_CHANGED`、新旅程已开始都不重交；未知等待原 op 结论；隔离与契约外记录保留原直接写。Main 新增一个处理函数，把同一 cleanup 此前失败的原样快照绑定到重交编号，确认后精确清除，面板仍按队列空闲收起；不改共享 Host/Gate/Coordinator 与磁盘 schema。验证见[记录](playtests/2026-10-05-exploration-cleanup-wiring/README.md)；headless 检查，不是公开 Web 受控故障复验或 #150/#176 验收。

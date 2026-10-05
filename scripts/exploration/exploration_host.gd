@@ -9,6 +9,13 @@ const C := preload("res://scripts/exploration/exploration_contract.gd")
 signal changed
 ## 回院、恢复或重试的那笔提交在受理之后才有结论时发出（committed / deferred）
 signal settled(outcome: Dictionary)
+## 收尾清理被明确拒绝后重交了同一份冻结请求：failed_ops 是这次清理此前被拒的全部编号，op_id 是新编号
+signal cleanup_resubmitted(failed_ops: Array, op_id: String)
+
+# 收尾清理（契约 docs/architecture/exploration-cleanup-commit-contract.md）被明确拒绝后最多再交几次
+const MAX_CLEANUP_RESUBMITS := 2
+const CLEANUP_INVALID := "EXPLORATION_CLEANUP_INVALID_ARGUMENT"
+const CLEANUP_CHANGED := "EXPLORATION_CLEANUP_PRECONDITION_CHANGED"
 
 var store: Object
 var catalog: ExplorationCatalog
@@ -18,6 +25,7 @@ var restore_action := ""
 var last_outcome: Dictionary = {}
 # 受理编号 → 这笔写入要回报给核心的内容；同一个存档可能挂着多个宿主，只认自己的编号
 var _ops: Dictionary = {}
+var _cleanup_count := 0
 
 
 func _init(save_store: Object, route_catalog: ExplorationCatalog = null) -> void:
@@ -53,7 +61,8 @@ func restore() -> Dictionary:
 			_apply(session.settle_empty())
 			_submit({"restored": true})
 		C.HOST_QUARANTINE_AND_RESET:
-			_persist_idle()
+			# 隔离记录不在清理契约范围内，直接写空闲
+			store.request_exploration_record(session.to_record())
 		_:
 			_persist_if(result.persist)
 	changed.emit()
@@ -214,6 +223,8 @@ func _on_rejected(op_id: String, _kind: String, code: String) -> void:
 	elif op.kind == "trip" and session.get_state() == C.STATE_PENDING and session.trip_id() == op.trip_id:
 		_defer(op.trip_id, op.items, op.tags)
 		settled.emit(last_outcome.duplicate(true))
+	elif op.kind == "cleanup":
+		_cleanup_rejected(op_id, op.request, code)
 	changed.emit()
 
 
@@ -253,5 +264,60 @@ func _persist() -> void:
 		_ops[op_id] = {"kind": "record", "trip_id": trip_id, "revision": revision}
 
 
+## 已收尾的旅程（核心已 close）把存档里的已提交记录清成空闲。正式已提交记录走清理契约：
+## 到队首才比对完整原记录与水位，变了就明确拒绝，不覆盖新旅程。其余记录（隔离、非正式）照旧直接写。
 func _persist_idle() -> void:
-	store.request_exploration_record(session.to_record())
+	var expected: Variant = store.get_exploration_record()
+	var target: Dictionary = session.to_record()
+	if not store.has_method("request_exploration_cleanup") or not expected is Dictionary or not expected.get("session") is Dictionary:
+		store.request_exploration_record(target)
+		return
+	_cleanup_count += 1
+	var request := {
+		"expected": expected,
+		"watermark": store.get_exploration_committed_serial(),
+		"target": target,
+		"cleanup_id": "cleanup-%s-%d" % [str(expected.session.get("trip_id", "")), _cleanup_count],
+		"failed_ops": [],
+	}
+	_submit_cleanup(request)
+
+
+func _submit_cleanup(request: Dictionary) -> void:
+	var op_id: String = store.request_exploration_cleanup(request.expected, request.watermark, request.target, request.cleanup_id)
+	# 队列不受理时不在本页硬重试；下次启动按恢复契约 close 会再清
+	if op_id.is_empty():
+		return
+	_ops[op_id] = {"kind": "cleanup", "request": request}
+	if not (request.failed_ops as Array).is_empty():
+		cleanup_resubmitted.emit((request.failed_ops as Array).duplicate(), op_id)
+
+
+## 明确拒绝之后：原记录已变（包括已被清掉、或新旅程已落盘）就停；
+## 只有本页会话仍停在这次收尾、存档也仍是那份原记录时，才重交同一份冻结请求，次数有限。
+func _cleanup_rejected(op_id: String, request: Dictionary, code: String) -> void:
+	if code == CLEANUP_CHANGED or not _cleanup_still_ours(request):
+		return
+	if code == CLEANUP_INVALID:
+		# 不在清理契约范围内的记录：保持接入前的直接写入
+		var fallback: String = store.request_exploration_record(request.target)
+		if not fallback.is_empty():
+			cleanup_resubmitted.emit((request.failed_ops as Array) + [op_id], fallback)
+		return
+	if (request.failed_ops as Array).size() > MAX_CLEANUP_RESUBMITS - 1:
+		return
+	(request.failed_ops as Array).append(op_id)
+	_submit_cleanup(request)
+
+
+func _cleanup_still_ours(request: Dictionary) -> bool:
+	return session.get_state() == C.STATE_IDLE and session.to_record() == request.target \
+		and store.get_exploration_record() == request.expected \
+		and store.get_exploration_committed_serial() == request.watermark
+
+
+func pending_cleanup() -> bool:
+	for op: Dictionary in _ops.values():
+		if op.kind == "cleanup":
+			return true
+	return false

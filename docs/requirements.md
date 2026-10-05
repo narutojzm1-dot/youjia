@@ -463,6 +463,8 @@ Assistant音频300 b8e5e6dc916dacd1eaf45b36c9f17584d36fc16c已接且实际交，
 
 #150 idle cleanup共享接口已冻结并发布（PR391，5995152650）：新增只针对已提交formal会话的冻结参数＋队首CAS清理提交，明确写前拒绝，不prepare、不覆盖新trip/无关字段，不增磁盘schema。Cloud领域重试与Main提示关联尚未接入，不能称同页恢复已修。[接口契约](architecture/exploration-cleanup-commit-contract.md)。最终9d2dcd88e447628f610b230b397661c9cf2469ae经独审5995798603合4fa150819c304b03fb6a36a149e71d4bcd911000；Actions/Pages及实际公开PCK/十模块已核，[发布归档](playtests/2026-10-05-cleanup391-release/README.md)。只冻结共享接口，不代表Cloud已消费、领域恢复或Main提示已完成。
 
+#305/#150 探索侧 cleanup 接线（CURSOR-CLOUD 接收 5999078476）：`ExplorationHost` 收尾（回院确认后与重启 close）改走 `request_exploration_cleanup`，登记 cleanup op；明确写失败/查明被拒时，仅本页会话仍停在同一收尾且存档仍是同一原记录才重交同一冻结请求（最多 2 次），`PRECONDITION_CHANGED`、新旅程已开始都不重交；未知保持等待；隔离记录与契约外记录保留原直接写。Main 只把同一 cleanup 此前失败的原样快照绑定到重交编号，确认后精确清除、队列空闲收起面板。见[验证记录](playtests/2026-10-05-exploration-cleanup-wiring/README.md)；内存队列与真实 SaveStore 的 headless 检查，不是公开 Web 受控故障复验。
+
 ### EXP-LIVING-WORLD 方向约束（用户2026-10-05补充，沿 #153 / #155 执行）
 
 探索程序 Owner CURSOR-CLOUD；原画/物件/音频与需求细化 GAME-PRODUCER。状态：用户方向已确认，内容/参数待首片体验后细化，非实现完成。近郊重访允许合理物品或空手，掉落遵循生态与季节；动物偶遇/天气同为风景；各片区环境音及音乐应契合环境，近郊可偶闻微弱家鹅叫。先完成首片人物透视+发现/获得动态音画体验，不一次扩展多季节、种子功能或全部动物事件。详见 game-design.md 的“探索是生活中的机缘与风景”；不以本记录替换未决概率/时间机制或现有可靠保存验收。
