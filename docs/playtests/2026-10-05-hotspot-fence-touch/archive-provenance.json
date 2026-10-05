@@ -1,0 +1,95 @@
+{
+  "source": "/workspace/hotspot36-remaining-public",
+  "runtime": "4fa150819c304b03fb6a36a149e71d4bcd911000",
+  "entry": "game-4fa1508",
+  "touch_driver_exit": 0,
+  "desktop_probe_driver_exit": 0,
+  "no_business_injection": true,
+  "scope": "fence touch passed; cancellation/carry-fish/reduced-motion unproven",
+  "files": {
+    ".gdignore": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "README.md": {
+      "bytes": 3356,
+      "sha256": "0d1b7b982b0264e35f9d7890e0aec58f97bce9a51770081ef35741edcc905182"
+    },
+    "fence-action-00.png": {
+      "bytes": 523754,
+      "sha256": "b88a5d07dc8ab9e8a667640a3c5c8752607944fc4ead812c06c0e2b0b0f5c2e8"
+    },
+    "fence-action-01.png": {
+      "bytes": 523444,
+      "sha256": "020dade8ddcd9ff1847fc83c494a42cb011f324e6bf88a22fe7c6f3fb215f431"
+    },
+    "fence-action-03.png": {
+      "bytes": 525485,
+      "sha256": "10496537d0616dab75e4088f3669f2637efe21b1b51e696f26450df520f13251"
+    },
+    "fence-hit-00.png": {
+      "bytes": 437232,
+      "sha256": "0982c6b8e62dea8cb47e57afc002fde8d4b37b2d2023760d30a0227b6c2c107a"
+    },
+    "initial.png": {
+      "bytes": 515616,
+      "sha256": "bc8276d4165212d53c4b941a1ff635ebfb9d826784ef968e5c97a04e922fddd4"
+    },
+    "manifest-after.json": {
+      "bytes": 1202,
+      "sha256": "14370841a3a5c14a127838d51d0061ac5328ae81cc0cf69cdea886621ea4abbe"
+    },
+    "manifest-before.json": {
+      "bytes": 1202,
+      "sha256": "14370841a3a5c14a127838d51d0061ac5328ae81cc0cf69cdea886621ea4abbe"
+    },
+    "original-capture-manifest.json": {
+      "bytes": 8233,
+      "sha256": "f7a1d94f914f439b994446892f93170c342da8679e84e07a33e5f3591d95a5df"
+    },
+    "result.json": {
+      "bytes": 4295,
+      "sha256": "665f2b345b24263015659b7d32eb12e431f375c3dfe49f8040d90bdc7cf5b79d"
+    },
+    "run.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "run.py": {
+      "bytes": 2369,
+      "sha256": "041bf68304c0a50266ac3a0c782fe4fa91168d801ac56897b0ca60dde9b5d368"
+    },
+    "unproven-cancel-carry/manifest-after.json": {
+      "bytes": 1202,
+      "sha256": "14370841a3a5c14a127838d51d0061ac5328ae81cc0cf69cdea886621ea4abbe"
+    },
+    "unproven-cancel-carry/manifest-before.json": {
+      "bytes": 1202,
+      "sha256": "14370841a3a5c14a127838d51d0061ac5328ae81cc0cf69cdea886621ea4abbe"
+    },
+    "unproven-cancel-carry/result.json": {
+      "bytes": 5627,
+      "sha256": "80a29e013276d1ffa8256a3ae262ec7f5a6d3f8fa7bde5e2f6165f7b9532379a"
+    },
+    "unproven-cancel-carry/run.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "unproven-cancel-carry/run.py": {
+      "bytes": 2376,
+      "sha256": "a6e1ee0382be2cb42d63609fb90d1400ab03dba44d81455a823bac5182a8d86c"
+    },
+    "walk-east-gate.png": {
+      "bytes": 439079,
+      "sha256": "c3e1900a031236ca362952461b23b2a9ee32ec0b8bc7c3eec0947d65ea7b61cd"
+    },
+    "html-source.json": {
+      "bytes": 357994,
+      "sha256": "1160d4a08eacc2d4e95b1c09b77f35f1f54282b7d2a6bdbdbde1eb4884b63025"
+    },
+    "unproven-cancel-carry/html-source.json": {
+      "bytes": 357994,
+      "sha256": "1160d4a08eacc2d4e95b1c09b77f35f1f54282b7d2a6bdbdbde1eb4884b63025"
+    }
+  }
+}
