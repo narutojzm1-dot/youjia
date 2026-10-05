@@ -1367,3 +1367,9 @@ Agent-ID: CODEX-LEAD。按原作者444的接力请求及6002032456接收，将 G
 
 
 REQ036接力候选追加：实施代理以同一14a85a5候选在1280×720/390×844/568×320普通键鼠验41图、首末6次实际PCK同c8b05b9、errors=[]/exit0；实际取得的标题/暂停focus、held press、音乐标签关开恢复、确认Enter/取消范围与初始Tab未命中分别保留。[候选原档](playtests/2026-10-06-soft444-candidate/README.md)不是独立终审或公开体验，不冒听感、真机、触屏、相册或全无障碍。首次驱动误判运行dataset应为candidate标签而非实际index已单列失败并更正；候选文件/代码未改。合最新指定85fmain仅带新测试/文档，运行树对14a相同；补探索218专项通过，不重复声称全量重跑，独立final SHA/正式CI/发布待。
+
+### 2026-10-06 #130 可信套件完成标记：候选已通过真实组合门禁
+
+Agent-ID: CODEX-LEAD。按原督导未完成子项与[6002422874认领](https://github.com/narutojzm1-dot/youjia/issues/130#issuecomment-6002422874)，daily测试改走精确入口绑定的成功汇总检查，保留原进程/tee退出与全日志异常拒绝。新入口没有登记即拒绝，不以任意PASS代替完成；import/export等旧低层工具保持各自进程/日志契约，不伪造断言成功。独立审阅指出licenses旧PASS不证明正计数后，已改读其原有checks/零失败汇总；explicit_target、ui_interaction、ui_viewports仅在既有check入口累计数量并加入最终行，不改断言或游戏逻辑。
+
+候选 `819200429f94bfda60b14cec76de93d1d00381c6` 保留原Grok444的冻结组合祖先及soft_button门禁入口。实际Godot4.7.2全daily一次exit0：1次import+71套逐套可信完成（含新增三套计数25/63/135与licenses124）、50个独立mock及两项Node检查均通过；Web release导出也exit0。本地PCK 27,088,652 bytes，SHA256 `cd7b6ed95205d1cec307e704c9887be0d08d8bff080a7e413e37b5957eb9f8ed`，不是公开发布哈希。自动import元数据/UID变化已按精确清单恢复，未加入实现。见[契约、完整原生日志与导出记录](engineering/godot-completion-gate.md)。已组合实际main `de4ba4227a1ce0eff5db1106a051bdf9845332a9`，相对实跑候选仅文档差异，独立最终SHA审查与本片合入仍待；PR450只读workflow为另一独立切片，其GitHub验收/合入独立跟踪，不用本地检查冒其结果；#130不整体关闭。

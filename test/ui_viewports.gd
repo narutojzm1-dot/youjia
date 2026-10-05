@@ -1,8 +1,10 @@
 extends SceneTree
+var checks := 0
 var main
 var failures:Array=[]
 func _initialize(): call_deferred("run")
 func check(ok,label):
+	checks += 1
 	print("[viewport] ","PASS " if ok else "FAIL ",label)
 	if not ok: failures.append(label)
 func tap(point:Vector2):
@@ -67,5 +69,5 @@ func run():
 		check(not main._album_screen.visible,"touch album closes")
 		main.queue_free();await process_frame
 	root.get_node("AudioDirector").call("release_streams")
-	print("[viewport] failures=",failures)
+	print("[viewport] checks=",checks," failures=",failures)
 	quit(0 if failures.is_empty() else 1)

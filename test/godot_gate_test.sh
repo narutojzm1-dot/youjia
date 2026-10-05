@@ -3,49 +3,108 @@ set -euo pipefail
 repo="$(cd "$(dirname "$0")/.." && pwd)"
 fixture="$(mktemp -d /tmp/youjia-gate-contract.XXXXXX)"
 trap 'rm -rf "$fixture"' EXIT
-mkdir "$fixture/bin"
-cat > "$fixture/bin/timeout" <<'MOCK'
+cat > "$fixture/godot" <<'MOCK'
 #!/usr/bin/env bash
-printf '%s\n' "${MOCK_OUTPUT:-}"
+printf '%s\n' "$@" > "$MOCK_ARGS"
+printf '%s' "${MOCK_OUTPUT:-}"
 exit "${MOCK_EXIT:-0}"
 MOCK
-chmod +x "$fixture/bin/timeout"
+chmod +x "$fixture/godot"
 checks=0
 run_case() {
-  local expected="$1" code="$2" output="$3" tee_fails="$4"
-  rm -f "$fixture/continued"
-  if PATH="$fixture/bin:$PATH" MOCK_EXIT="$code" MOCK_OUTPUT="$output" TEE_FAILS="$tee_fails" \
+  local name="$1" expected="$2" code="$3" output="$4" fault="$5" mode="$6" entry="$7"
+  rm -f "$fixture/continued" "$fixture/args" "$fixture/run.log"
+  if GODOT="$fixture/godot" MOCK_ARGS="$fixture/args" MOCK_EXIT="$code" MOCK_OUTPUT="$output" GATE_FAULT="$fault" \
     bash -euo pipefail -c '
       source "$1/tools/lib/verified_godot.sh"
-      if [[ "$TEE_FAILS" == yes ]]; then tee() { cat >/dev/null; return 74; }; fi
-      run_verified_godot "$2/run.log" --headless
+      case "$GATE_FAULT" in
+        tee) tee() { cat >/dev/null; return 74; } ;;
+        missing-log) tee() { cat >/dev/null; } ;;
+        completion-read) grep() { if [[ "$1" == -Ex ]]; then return 2; fi; command grep "$@"; } ;;
+      esac
+      if [[ "$3" == import ]]; then
+        run_verified_godot "$2/run.log" --headless --path . --editor --import --quit
+      else
+        run_verified_godot_suite "$2/run.log" "$4" --headless --path .
+      fi
+      # The wrapper must not disable the caller shell error options.
+      [[ "$-" == *e* && "$-" == *u* && "$(set -o | grep pipefail)" == *on ]]
       touch "$2/continued"
-    ' gate-test "$repo" "$fixture" >"$fixture/output.log" 2>&1; then
+    ' gate-test "$repo" "$fixture" "$mode" "$entry" >"$fixture/output.log" 2>&1; then
     actual=pass
   else
     actual=block
   fi
-  [[ "$actual" == "$expected" ]] || { cat "$fixture/output.log"; echo "gate mismatch: expected=$expected actual=$actual" >&2; exit 1; }
+  [[ "$actual" == "$expected" ]] || {
+    cat "$fixture/output.log"
+    echo "gate mismatch ($name): expected=$expected actual=$actual" >&2
+    exit 1
+  }
   if [[ "$expected" == block ]]; then
-    [[ ! -e "$fixture/continued" ]] || { echo 'failure continued to next step' >&2; exit 1; }
+    [[ ! -e "$fixture/continued" ]] || { echo "failure continued ($name)" >&2; exit 1; }
   else
     [[ -e "$fixture/continued" ]] || exit 1
   fi
   checks=$((checks+1))
+  printf 'gate contract: %s %s\n' "$name" "$actual"
 }
-run_case pass 0 'PASS: simulated suite' no
-run_case block 1 'PASS: simulated suite' no
-run_case block 124 '' no
-run_case block 127 'command not found' no
-run_case block 139 '' no
-run_case block 0 'SCRIPT ERROR: simulated exception' no
-run_case block 0 'ERROR: simulated import failure' no
-run_case block 0 'AUDIT FAIL simulated assertion' no
-run_case block 0 'FAIL: simulated assertion' no
-run_case block 0 'PASS: simulated suite' yes
-# Log scanning errors must block too, even when the pipeline itself succeeds.
-if bash -euo pipefail -c 'source "$1/tools/lib/verified_godot.sh"; timeout() { echo PASS; }; tee() { cat >/dev/null; }; run_verified_godot "$2/missing/log"' test "$repo" "$fixture" >"$fixture/scan.log" 2>&1; then
-  echo 'unreadable log was accepted' >&2; exit 1
-fi
-checks=$((checks+1))
+entry=test/still_catch_suite.gd
+complete='STILL CATCH PASS 14'
+run_case suite-complete pass 0 "$complete" none suite "$entry"
+# Actual command entry is appended by the wrapper, not supplied separately
+# from the completion identity. Both script and scene forms are exercised.
+printf '%s\n' --headless --path . --script "res://$entry" > "$fixture/expected-args"
+cmp "$fixture/expected-args" "$fixture/args"
+run_case scene-complete pass 0 '[locomotion-tests] PASS: 153 checks' none suite res://test/locomotion_suite.tscn
+printf '%s\n' --headless --path . res://test/locomotion_suite.tscn > "$fixture/expected-args"
+cmp "$fixture/expected-args" "$fixture/args"
+run_case empty-zero-exit block 0 '' none suite "$entry"
+run_case unrelated-pass block 0 'PASS: simulated suite' none suite "$entry"
+run_case different-suite block 0 'QUIET STAY PASS 14' none suite "$entry"
+run_case zero-checks block 0 'STILL CATCH PASS 0' none suite "$entry"
+run_case prefixed-marker block 0 'debug: STILL CATCH PASS 14' none suite "$entry"
+run_case suffixed-marker block 0 'STILL CATCH PASS 14 incomplete' none suite "$entry"
+run_case truncated-marker block 0 'STILL CATCH PASS' none suite "$entry"
+run_case individual-assertion-pass block 0 '[viewport] PASS first viewport' none suite test/ui_viewports.gd
+run_case empty-failure-summary pass 0 '[viewport] checks=128 failures=[]' none suite test/ui_viewports.gd
+run_case nonempty-failure-summary block 0 '[viewport] checks=128 failures=["missing viewport"]' none suite test/ui_viewports.gd
+# These suites previously only printed an empty failures array. Require a
+# positive count from their existing check() calls, not a standalone PASS.
+for counted in 'test/explicit_target_suite.gd|explicit-target-tests' 'test/ui_interaction_suite.gd|ui-interaction-tests' 'test/ui_viewports.gd|viewport'; do
+  counted_entry="${counted%%|*}"; counted_label="${counted#*|}"
+  run_case "$counted_label-zero-checks" block 0 "[$counted_label] checks=0 failures=[]" none suite "$counted_entry"
+  run_case "$counted_label-positive-checks" pass 0 "[$counted_label] checks=31 failures=[]" none suite "$counted_entry"
+  run_case "$counted_label-old-counterless-summary" block 0 "[$counted_label] failures=[]" none suite "$counted_entry"
+done
+run_case licenses-zero-checks-with-pass block 0 $'licenses_dialog_fit_suite checks=0 failures=0\nPASS licenses_dialog_fit_suite' none suite test/licenses_dialog_fit_suite.gd
+run_case licenses-nonzero-failures-with-pass block 0 $'licenses_dialog_fit_suite checks=16 failures=1\nPASS licenses_dialog_fit_suite' none suite test/licenses_dialog_fit_suite.gd
+run_case licenses-positive-completion pass 0 $'licenses_dialog_fit_suite checks=16 failures=0\nPASS licenses_dialog_fit_suite' none suite test/licenses_dialog_fit_suite.gd
+run_case zero-failure-count pass 0 'HOLIDAY_START_ONCE checks=34 failures=0' none suite test/holiday_start_once_suite.gd
+run_case nonzero-failure-count block 0 'HOLIDAY_START_ONCE checks=34 failures=1' none suite test/holiday_start_once_suite.gd
+run_case matching-completion-counts pass 0 'EXPLORATION SLICE PASS 206/206 failures=[]' none suite test/exploration_slice_suite.gd
+run_case incomplete-completion-counts block 0 'EXPLORATION SLICE PASS 205/206 failures=[]' none suite test/exploration_slice_suite.gd
+for status in 1 124 127 139; do
+  run_case "nonzero-$status-after-completion" block "$status" "$complete" none suite "$entry"
+done
+run_case silent-timeout block 124 '' none suite "$entry"
+run_case script-error block 0 'SCRIPT ERROR: simulated exception' none suite "$entry"
+run_case engine-error block 0 'ERROR: simulated import failure' none suite "$entry"
+run_case audit-fail block 0 'AUDIT FAIL simulated assertion' none suite "$entry"
+run_case assertion-fail block 0 'FAIL: simulated assertion' none suite "$entry"
+run_case completion-then-fail block 0 "$complete"$'\nFAIL: late assertion' none suite "$entry"
+run_case fail-then-completion block 0 $'FAIL: early assertion\n'"$complete" none suite "$entry"
+run_case completion-then-error block 0 "$complete"$'\nSCRIPT ERROR: late exception' none suite "$entry"
+run_case tee-failure block 0 "$complete" tee suite "$entry"
+run_case missing-log block 0 "$complete" missing-log suite "$entry"
+run_case completion-log-read-failure block 0 "$complete" completion-read suite "$entry"
+run_case unregistered-suite block 0 "$complete" none suite test/not_registered_suite.gd
+[[ ! -e "$fixture/args" ]] || { echo 'unregistered suite reached Godot' >&2; exit 1; }
+# Imports legitimately have no test summary. Their independent process/log
+# contract remains strict; the importer must not fabricate a suite PASS line.
+run_case import-empty pass 0 '' none import ''
+run_case import-with-no-suite pass 0 'Editor import finished' none import ''
+run_case import-nonzero block 1 '' none import ''
+run_case import-error block 0 'ERROR: import failure' none import ''
+run_case import-tee-failure block 0 '' tee import ''
+run_case import-missing-log block 0 '' missing-log import ''
 echo "GODOT GATE CONTRACT PASS $checks"
