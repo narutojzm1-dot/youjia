@@ -23,6 +23,8 @@ var _current_stop: String = ""
 var _visited: Array = []
 var _offers: Dictionary = {}
 var _carried: Array = []
+# 每处停留点的东西被带走后记在这里（停留点 → find_id）；同名东西可以分别来自不同停留点
+var _taken: Dictionary = {}
 var _rng_seed: String = ""
 var _proposal: Variant = null
 var _failure: Variant = null
@@ -124,8 +126,9 @@ func _restore_active() -> String:
 		else:
 			changed = true
 	_visited = kept_visited
+	# 篮子里东西的来处即使停留点已下架也留着，taken 与 carried 才对得上
 	for stop_id: String in _offers.keys():
-		if not _catalog.has_stop(_route_id, stop_id):
+		if not _catalog.has_stop(_route_id, stop_id) and not _taken.has(stop_id):
 			_offers.erase(stop_id)
 			changed = true
 	if not _catalog.has_stop(_route_id, _current_stop):
@@ -156,6 +159,7 @@ func _load_session(session: Dictionary) -> void:
 	_visited = session["visited"].duplicate()
 	_offers = session["offers"].duplicate()
 	_carried = session["carried"].duplicate()
+	_taken = session["taken"].duplicate() if session.has("taken") else _derive_taken(_carried, _offers)
 	_rng_seed = session["rng_seed"]
 	_proposal = _normalize_proposal(session["proposal"]) if session["proposal"] != null else null
 	_failure = _normalize_failure(session["failure"]) if session["failure"] != null else null
@@ -217,6 +221,7 @@ func begin(route_id: String, clock: Dictionary, seed: Variant = null) -> Diction
 	_offers = {}
 	_roll_offer(_current_stop)
 	_carried = []
+	_taken = {}
 	_proposal = null
 	_failure = null
 	_last_save_failure = ""
@@ -251,11 +256,12 @@ func take(find_id: String) -> Dictionary:
 		return _reject("quarantine_frozen")
 	if _state != C.STATE_ACTIVE:
 		return _reject("illegal_transition")
-	if _offers.get(_current_stop, "") != find_id or find_id == "" or _carried.has(find_id):
+	if _offers.get(_current_stop, "") != find_id or find_id == "" or _taken.has(_current_stop):
 		return _reject("not_offered")
 	if _carried.size() >= _catalog.carry_limit(_route_id):
 		return _reject("carry_limit")
 	_carried.append(find_id)
+	_taken[_current_stop] = find_id
 	_bump()
 	return _ok(true)
 
@@ -268,6 +274,14 @@ func release(find_id: String) -> Dictionary:
 	if not _carried.has(find_id):
 		return _reject("not_carried")
 	_carried.erase(find_id)
+	# 优先放回眼前这一处；在别处放下时，原停留点的东西重新出现
+	if _taken.get(_current_stop, "") == find_id:
+		_taken.erase(_current_stop)
+	else:
+		for stop_id: String in _taken.keys():
+			if _taken[stop_id] == find_id:
+				_taken.erase(stop_id)
+				break
 	_bump()
 	return _ok(true)
 
@@ -331,7 +345,11 @@ func commit_failed(trip_id: String, retryable: bool, rejected: PackedStringArray
 	_proposal["items"] = kept
 	_proposal["revision"] = int(_proposal["revision"]) + 1
 	for find_id: String in rejected:
-		_carried.erase(find_id)
+		while _carried.has(find_id):
+			_carried.erase(find_id)
+		for stop_id: String in _taken.keys():
+			if _taken[stop_id] == find_id:
+				_taken.erase(stop_id)
 	_bump()
 	return _ok(true)
 
@@ -355,6 +373,7 @@ func settle_empty() -> Dictionary:
 	_proposal["items"] = []
 	_proposal["revision"] = int(_proposal["revision"]) + 1
 	_carried = []
+	_taken = {}
 	_failure = null
 	_state = C.STATE_PENDING
 	_bump()
@@ -462,9 +481,10 @@ func get_view() -> Dictionary:
 		var route := _catalog.get_route(_route_id)
 		view["reachable"] = route["stops"][_current_stop].get("next", []).duplicate() if not route.is_empty() else []
 		var offer: String = _offers.get(_current_stop, "")
-		view["offer"] = offer if offer != "" and not _carried.has(offer) else ""
+		view["offer"] = offer if offer != "" and not _taken.has(_current_stop) else ""
 		view["can_return"] = _can_return_here()
 		view["carry_limit"] = _catalog.carry_limit(_route_id) if not route.is_empty() else 0
+		view["taken"] = _taken.duplicate()
 	else:
 		view["proposal_items"] = (_proposal["items"] as Array).size()
 		view["failure"] = _copy(_failure) if _failure != null else {}
@@ -496,6 +516,7 @@ func to_record() -> Variant:
 		"visited": _visited.duplicate(),
 		"offers": _offers.duplicate(),
 		"carried": _carried.duplicate(),
+		"taken": _taken.duplicate(),
 		"rng_seed": _rng_seed,
 		"proposal": _copy(_proposal),
 		"failure": _copy(_failure),
@@ -559,6 +580,7 @@ func _clear_session() -> void:
 	_visited = []
 	_offers = {}
 	_carried = []
+	_taken = {}
 	_rng_seed = ""
 	_proposal = null
 	_failure = null
@@ -584,6 +606,17 @@ static func _normalize_proposal(proposal: Dictionary) -> Dictionary:
 		"reason": proposal["reason"],
 		"revision": int(proposal["revision"]),
 	}
+
+
+## 旧记录没有 taken：每件带着的东西对应一处给出同名东西、还没被占用的停留点
+static func _derive_taken(carried: Array, offers: Dictionary) -> Dictionary:
+	var taken := {}
+	for find_id: String in carried:
+		for stop_id: String in offers:
+			if offers[stop_id] == find_id and not taken.has(stop_id):
+				taken[stop_id] = find_id
+				break
+	return taken
 
 
 static func _normalize_failure(failure: Dictionary) -> Dictionary:

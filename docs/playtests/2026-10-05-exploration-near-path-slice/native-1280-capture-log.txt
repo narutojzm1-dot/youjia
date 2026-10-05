@@ -1,0 +1,26 @@
+20 touch: start holiday
+shot 01-yard.png
+81 touch: walk to the end of the stone path
+115 arrived at (261.7711, 619.6968); action reads 出门走走
+shot 02-yard-go-out-action.png
+136 touch: action button
+shot 03-scroll-start.png
+187 touch hold: walk right
+310 release at the brook
+shot 04-brook-nearby.png
+321 touch: stop and look
+shot 05-brook-look.png
+brook offer: { "kind": "take", "find_id": "formal.find.brook_stone" }
+352 touch: take
+shot 06-basket.png
+383 touch: keep walking
+404 touch hold: walk right
+514 touch: look under the pine
+shot 07-shade-look.png
+shade choice: { "kind": "swap", "find_id": "formal.find.feather", "old": "formal.find.brook_stone" }
+545 touch: keep walking
+566 touch: go back
+shot 08-yard-back.png
+notice: 回到院里了。圆石收好了。
+keepsakes: { "formal.find.brook_stone": 1 }
+587 done

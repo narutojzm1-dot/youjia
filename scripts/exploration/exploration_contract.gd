@@ -232,6 +232,10 @@ static func validate_session_structure(session: Dictionary) -> String:
 	for find_id: Variant in carried:
 		if not is_valid_id(find_id, source):
 			return "bad_carried"
+	if session.has("taken"):
+		var taken_reason := _validate_taken(session.get("taken"), offers, carried, source)
+		if taken_reason != "":
+			return taken_reason
 	if not is_valid_seed_text(session.get("rng_seed")):
 		return "bad_rng_seed"
 	var proposal: Variant = session.get("proposal")
@@ -253,6 +257,21 @@ static func validate_session_structure(session: Dictionary) -> String:
 	if state == STATE_FAILURE and failure == null:
 		return "missing_failure"
 	return ""
+
+
+## taken 记的是“哪处停留点的东西在篮子里”：每处只能占一次、与该处给出的东西一致，合起来正好是 carried
+static func _validate_taken(taken: Variant, offers: Dictionary, carried: Array, source: String) -> String:
+	if typeof(taken) != TYPE_DICTIONARY or taken.size() > MAX_CARRY:
+		return "bad_taken"
+	var remaining: Array = carried.duplicate()
+	for stop_id: Variant in taken:
+		var find_id: Variant = taken[stop_id]
+		if not is_valid_stop_id(stop_id) or not is_valid_id(find_id, source) or offers.get(stop_id) != find_id:
+			return "bad_taken"
+		if not remaining.has(find_id):
+			return "bad_taken"
+		remaining.erase(find_id)
+	return "bad_taken" if not remaining.is_empty() else ""
 
 
 static func _validate_proposal(proposal: Dictionary, session: Dictionary, source: String) -> String:
