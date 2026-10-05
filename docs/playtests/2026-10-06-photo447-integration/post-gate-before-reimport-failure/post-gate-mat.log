@@ -1,0 +1,119 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ERROR: Unable to open file: res://.godot/imported/cloud_band_sunny.png-a1b2c3d4e5f60718293a4b5c6d7e8f90.ctex.
+   at: _load_data (scene/resources/compressed_texture.cpp:45)
+   GDScript backtrace (most recent call first):
+       [0] _capture_snapshot (res://test/photo_arrival_mat_suite.gd:78)
+       [1] _run (res://test/photo_arrival_mat_suite.gd:47)
+ERROR: Failed loading resource: res://.godot/imported/cloud_band_sunny.png-a1b2c3d4e5f60718293a4b5c6d7e8f90.ctex.
+   at: _load (core/io/resource_loader.cpp:317)
+   GDScript backtrace (most recent call first):
+       [0] _capture_snapshot (res://test/photo_arrival_mat_suite.gd:78)
+       [1] _run (res://test/photo_arrival_mat_suite.gd:47)
+ERROR: Failed loading resource: res://assets/holiday/environment/cloud_band_sunny.png.
+   at: _load (core/io/resource_loader.cpp:317)
+   GDScript backtrace (most recent call first):
+       [0] _capture_snapshot (res://test/photo_arrival_mat_suite.gd:78)
+       [1] _run (res://test/photo_arrival_mat_suite.gd:47)
+ERROR: Unable to open file: res://.godot/imported/cloud_band_overcast.png-b2c3d4e5f60718293a4b5c6d7e8f901a.ctex.
+   at: _load_data (scene/resources/compressed_texture.cpp:45)
+   GDScript backtrace (most recent call first):
+       [0] _capture_snapshot (res://test/photo_arrival_mat_suite.gd:78)
+       [1] _run (res://test/photo_arrival_mat_suite.gd:47)
+ERROR: Failed loading resource: res://.godot/imported/cloud_band_overcast.png-b2c3d4e5f60718293a4b5c6d7e8f901a.ctex.
+   at: _load (core/io/resource_loader.cpp:317)
+   GDScript backtrace (most recent call first):
+       [0] _capture_snapshot (res://test/photo_arrival_mat_suite.gd:78)
+       [1] _run (res://test/photo_arrival_mat_suite.gd:47)
+ERROR: Failed loading resource: res://assets/holiday/environment/cloud_band_overcast.png.
+   at: _load (core/io/resource_loader.cpp:317)
+   GDScript backtrace (most recent call first):
+       [0] _capture_snapshot (res://test/photo_arrival_mat_suite.gd:78)
+       [1] _run (res://test/photo_arrival_mat_suite.gd:47)
+ERROR: Unable to open file: res://.godot/imported/cloud_band_sunset.png-c3d4e5f60718293a4b5c6d7e8f901a2b.ctex.
+   at: _load_data (scene/resources/compressed_texture.cpp:45)
+   GDScript backtrace (most recent call first):
+       [0] _capture_snapshot (res://test/photo_arrival_mat_suite.gd:78)
+       [1] _run (res://test/photo_arrival_mat_suite.gd:47)
+ERROR: Failed loading resource: res://.godot/imported/cloud_band_sunset.png-c3d4e5f60718293a4b5c6d7e8f901a2b.ctex.
+   at: _load (core/io/resource_loader.cpp:317)
+   GDScript backtrace (most recent call first):
+       [0] _capture_snapshot (res://test/photo_arrival_mat_suite.gd:78)
+       [1] _run (res://test/photo_arrival_mat_suite.gd:47)
+ERROR: Failed loading resource: res://assets/holiday/environment/cloud_band_sunset.png.
+   at: _load (core/io/resource_loader.cpp:317)
+   GDScript backtrace (most recent call first):
+       [0] _capture_snapshot (res://test/photo_arrival_mat_suite.gd:78)
+       [1] _run (res://test/photo_arrival_mat_suite.gd:47)
+ERROR: Unable to open file: res://.godot/imported/cloud_band_morning.png-d4e5f60718293a4b5c6d7e8f901a2b3c.ctex.
+   at: _load_data (scene/resources/compressed_texture.cpp:45)
+   GDScript backtrace (most recent call first):
+       [0] _capture_snapshot (res://test/photo_arrival_mat_suite.gd:78)
+       [1] _run (res://test/photo_arrival_mat_suite.gd:47)
+ERROR: Failed loading resource: res://.godot/imported/cloud_band_morning.png-d4e5f60718293a4b5c6d7e8f901a2b3c.ctex.
+   at: _load (core/io/resource_loader.cpp:317)
+   GDScript backtrace (most recent call first):
+       [0] _capture_snapshot (res://test/photo_arrival_mat_suite.gd:78)
+       [1] _run (res://test/photo_arrival_mat_suite.gd:47)
+ERROR: Failed loading resource: res://assets/holiday/environment/cloud_band_morning.png.
+   at: _load (core/io/resource_loader.cpp:317)
+   GDScript backtrace (most recent call first):
+       [0] _capture_snapshot (res://test/photo_arrival_mat_suite.gd:78)
+       [1] _run (res://test/photo_arrival_mat_suite.gd:47)
+SCRIPT ERROR: Parse Error: Could not preload resource file "res://assets/holiday/environment/cloud_band_sunny.png".
+          at: GDScript::reload (res://scripts/game/yard_world.gd:20)
+          GDScript backtrace (most recent call first):
+              [0] _capture_snapshot (res://test/photo_arrival_mat_suite.gd:78)
+              [1] _run (res://test/photo_arrival_mat_suite.gd:47)
+SCRIPT ERROR: Parse Error: Cannot infer the type of "CLOUD_SUNNY" constant because the value doesn't have a set type.
+          at: GDScript::reload (res://scripts/game/yard_world.gd:20)
+          GDScript backtrace (most recent call first):
+              [0] _capture_snapshot (res://test/photo_arrival_mat_suite.gd:78)
+              [1] _run (res://test/photo_arrival_mat_suite.gd:47)
+SCRIPT ERROR: Parse Error: Could not preload resource file "res://assets/holiday/environment/cloud_band_overcast.png".
+          at: GDScript::reload (res://scripts/game/yard_world.gd:21)
+          GDScript backtrace (most recent call first):
+              [0] _capture_snapshot (res://test/photo_arrival_mat_suite.gd:78)
+              [1] _run (res://test/photo_arrival_mat_suite.gd:47)
+SCRIPT ERROR: Parse Error: Cannot infer the type of "CLOUD_OVERCAST" constant because the value doesn't have a set type.
+          at: GDScript::reload (res://scripts/game/yard_world.gd:21)
+          GDScript backtrace (most recent call first):
+              [0] _capture_snapshot (res://test/photo_arrival_mat_suite.gd:78)
+              [1] _run (res://test/photo_arrival_mat_suite.gd:47)
+SCRIPT ERROR: Parse Error: Could not preload resource file "res://assets/holiday/environment/cloud_band_sunset.png".
+          at: GDScript::reload (res://scripts/game/yard_world.gd:23)
+          GDScript backtrace (most recent call first):
+              [0] _capture_snapshot (res://test/photo_arrival_mat_suite.gd:78)
+              [1] _run (res://test/photo_arrival_mat_suite.gd:47)
+SCRIPT ERROR: Parse Error: Cannot infer the type of "CLOUD_SUNSET" constant because the value doesn't have a set type.
+          at: GDScript::reload (res://scripts/game/yard_world.gd:23)
+          GDScript backtrace (most recent call first):
+              [0] _capture_snapshot (res://test/photo_arrival_mat_suite.gd:78)
+              [1] _run (res://test/photo_arrival_mat_suite.gd:47)
+SCRIPT ERROR: Parse Error: Could not preload resource file "res://assets/holiday/environment/cloud_band_morning.png".
+          at: GDScript::reload (res://scripts/game/yard_world.gd:25)
+          GDScript backtrace (most recent call first):
+              [0] _capture_snapshot (res://test/photo_arrival_mat_suite.gd:78)
+              [1] _run (res://test/photo_arrival_mat_suite.gd:47)
+SCRIPT ERROR: Parse Error: Cannot infer the type of "CLOUD_MORNING" constant because the value doesn't have a set type.
+          at: GDScript::reload (res://scripts/game/yard_world.gd:25)
+          GDScript backtrace (most recent call first):
+              [0] _capture_snapshot (res://test/photo_arrival_mat_suite.gd:78)
+              [1] _run (res://test/photo_arrival_mat_suite.gd:47)
+ERROR: Failed to load script "res://scripts/game/yard_world.gd" with error "Parse error".
+   at: load (modules/gdscript/gdscript_resource_format.cpp:46)
+   GDScript backtrace (most recent call first):
+       [0] _capture_snapshot (res://test/photo_arrival_mat_suite.gd:78)
+       [1] _run (res://test/photo_arrival_mat_suite.gd:47)
+SCRIPT ERROR: Invalid call. Nonexistent function 'new' in base 'GDScript'.
+          at: _capture_snapshot (res://test/photo_arrival_mat_suite.gd:78)
+          GDScript backtrace (most recent call first):
+              [0] _capture_snapshot (res://test/photo_arrival_mat_suite.gd:78)
+              [1] _run (res://test/photo_arrival_mat_suite.gd:47)
+ERROR: fixture captured a genuine yard photo snapshot
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://test/photo_arrival_mat_suite.gd:36)
+       [1] _run (res://test/photo_arrival_mat_suite.gd:48)
+[photo-arrival-mat] fixture captured a genuine yard photo snapshot
+[photo-arrival-mat] FAIL: 1 failures across 2 checks

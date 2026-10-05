@@ -1,0 +1,38 @@
+{
+  "initial": "3970488afd79c0419ed0cc0ad7f2d6d4ab10d983",
+  "current": "85217509f369e2dc06495bb1fa4ff1649b181a47",
+  "changed_paths": [
+    "CONTRIBUTING.md",
+    "docs/decisions.md",
+    "docs/engineering/godot-completion-gate-evidence/.gdignore",
+    "docs/engineering/godot-completion-gate-evidence/daily-result.json",
+    "docs/engineering/godot-completion-gate-evidence/daily.log",
+    "docs/engineering/godot-completion-gate-evidence/export-result.json",
+    "docs/engineering/godot-completion-gate-evidence/export.log",
+    "docs/engineering/godot-completion-gate-evidence/full-run-start.json",
+    "docs/engineering/godot-completion-gate-evidence/generated-import-only.diff.json",
+    "docs/engineering/godot-completion-gate-evidence/generated-uids-cleaned.json",
+    "docs/engineering/godot-completion-gate-evidence/main-integration.json",
+    "docs/engineering/godot-completion-gate-evidence/mock-contract-final-pre-full.log",
+    "docs/engineering/godot-completion-gate.md",
+    "docs/requirements.md",
+    "test/explicit_target_suite.gd",
+    "test/godot_gate_test.sh",
+    "test/ui_interaction_suite.gd",
+    "test/ui_viewports.gd",
+    "tools/lib/godot_suite_completions.tsv",
+    "tools/lib/verified_godot.sh",
+    "tools/verify_daily_life.sh"
+  ],
+  "runtime_changed_paths": [],
+  "initial_pck": {
+    "bytes": 27076376,
+    "sha256": "812144231f60d96c5b565d0cf735982b356e2efece0eeb0d4ffde865b600e030"
+  },
+  "current_pck": {
+    "bytes": 27076376,
+    "sha256": "812144231f60d96c5b565d0cf735982b356e2efece0eeb0d4ffde865b600e030"
+  },
+  "pck_bytes_identical": true,
+  "first_packaging_check": "initial allowlist omitted CONTRIBUTING.md and stopped before copying/manifest; expanded only this documentation path after reading exact change; no browser started"
+}

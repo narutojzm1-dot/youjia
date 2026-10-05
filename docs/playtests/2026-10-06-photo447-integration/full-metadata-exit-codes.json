@@ -1,0 +1,23 @@
+{
+  "source": "d22f28f40d72d9860eb5bb267a7a45df84253fe1",
+  "steps": [
+    {
+      "step": "full-metadata-import",
+      "args": [
+        "bash",
+        "-c",
+        "source tools/lib/verified_godot.sh; run_verified_godot /dev/shm/photo447-evidence/full-metadata-import.log --headless --path . --editor --import --quit"
+      ],
+      "exit_code": 0
+    },
+    {
+      "step": "full-metadata-export",
+      "args": [
+        "bash",
+        "-c",
+        "source tools/lib/verified_godot.sh; XDG_DATA_HOME=/tmp/262-export-state/data run_verified_godot /dev/shm/photo447-evidence/full-metadata-export.log --headless --path . --export-release Web /dev/shm/photo447-full-export/index.html"
+      ],
+      "exit_code": 0
+    }
+  ]
+}
