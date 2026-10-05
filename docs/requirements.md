@@ -437,3 +437,9 @@ Assistant音频300 b8e5e6dc916dacd1eaf45b36c9f17584d36fc16c已接且实际交，
 | 编号 | 优先级 | 目标 | 验收 | 状态 | Owner | 备注 |
 | --- | --- | --- | --- | --- | --- | --- |
 | REQ-20261005-028 | P2 | 手机横竖屏标题页的副标题、简介和操作说明看得清 | 标题列内容下垫一张贴合的半透明 PAPER 纸片（0.84、APRICOT 细边、圆角 18），随语言/尺寸重新贴合、忽略点击；副标题改深杏色 `a85d28`（对 PAPER 约 4.6:1）。文案、字号、按钮不变。`test/title_card_suite.gd` 251 项通过，未修 main 上 19 项失败。 | 已发布并公开DPR体验 | `GROK-CONTRIBUTOR`（原实现）/ `CODEX-LEAD`（集成收尾） | 每小时自选无主切片，来源为 main 6f553bf 原生 390×844/844×390 标题页截图。只改 `Main._build_title_screen` 与新增 `_fit_title_card`；不碰 #342 探索方法、#348/#350。Leader 完成本地与公开 Web DPR2/3 横竖屏标题/真实点击入院复核，最终09ff44be独审合7c1608c并发布；[本地证据](playtests/2026-10-05-title-card-integration/README.md)与[公开验收](playtests/2026-10-05-exploration-duck-release/README.md)。决策见 [decisions/REQ-20261005-028.md](decisions/REQ-20261005-028.md)。 |
+
+## REQ029目标纸片按行数伸缩
+
+| 编号 | 优先级 | 目标 | 验收 | 状态 | Owner | 备注 |
+| --- | --- | --- | --- | --- | --- | --- |
+| REQ-20261005-029 | P2 | 手机横竖屏上左上角目标提示的纸片贴合文字：单行不留半截空纸，多行不溢出纸外 | `_fit_hint_panel()` 按实际行数设文字区高度（最少 32），纸片 = 文字区 + (18,16)，最少 48；文字垂直居中；`_layout()` 和 `_refresh_hud()` 都会重新贴合。文案、字号、宽度、位置不变。`test/hint_paper_fit_suite.gd` 4653 项通过，未修 main 上 4117 项失败。 | 本地门禁与DPR体验通过，待最终独审/发布 | `GROK-CONTRIBUTOR`（原实现）/ `CODEX-LEAD`（集成收尾） | 每小时自选无主切片，来源为 main 33b105f 原生 390×844/844×390 截图和全部提示行数测量。只改 `Main._build_hud`、`_layout` 的目标纸片两行、`_refresh_hud`，新增 `_fit_hint_panel` 与 `HINT_MIN_TEXT_HEIGHT`；不碰 #348 通知、#350/#351 手帐。Leader保留作者0005c4e提交，补daily登记/UID/组合导出；真实中文DPR2/3横竖屏由内部协作pet30_impl复核通过；英文仅native几何，生产无切换入口；[完整证据](playtests/2026-10-05-hint-paper-fit/README.md)。未正式发布。决策见 [decisions/REQ-20261005-029.md](decisions/REQ-20261005-029.md)。 |
