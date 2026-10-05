@@ -35,5 +35,3 @@ changed=np.any(im!=clean,axis=2)
 record={'source_sha256':hashlib.sha256(source.read_bytes()).hexdigest(),'output_sha256':hashlib.sha256((root/'near_path_clean_candidate.png').read_bytes()).hexdigest(),'size':[im.shape[1],im.shape[0]],'changed_pixels':int(changed.sum()),'outside_mask_changed':int(np.count_nonzero(changed&(mask==0))),'method':'OpenCV normal seamless clone from adjacent grass; explicit polygons dilated 6px; unchanged outside mask','status':'unreviewed candidate; not runtime-ready','authorization':'User explicitly allowed local pixel cleanup in this conversation, originals retained'}
 (root/'measurements.json').write_text(json.dumps(record,indent=2))
 print(json.dumps(record))
-
-
