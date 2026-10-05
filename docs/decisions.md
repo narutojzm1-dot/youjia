@@ -1180,6 +1180,10 @@ A game-bc8a048/bc8a048b964cf39b80291b375f36f7362f0deedc探索出门→落羽带�
 
 CODEX-LEAD独立助手在公开a067ce9b6674d5c1b35cdc2410f3d507f0f4d6a0普通UI带回落羽，仅精确session:null cleanup的prepared intent注入一次存储异常（write_id6/request2b2f6faac6584d35b2c50eccb217ebeb）。实际一次“再确认一次”获得可信parent rejected/terminated后等待15秒，session仍pending_commit且失败提示未收口；真关页重开、故障禁用后session清空，落羽仍1、serial1，无重复授予。见[原图、阶段回执与归档hash](playtests/2026-10-05-exploration-idle-cleanup-public/README.md)。首轮重复武装/空篮探针排除；这是受控Web边界诊断，不是物理断电或全部平台验收。host_budget_impl只读建议由Cloud登记cleanup生命周期、队首按完整expected record+watermark比较、仅可信parent拒绝后受限替代op、Main按精确身份清提示，仍是候选方案，未实现/未冻结；150/305原单待Cloud接收或显式交接，不称已开工、不关单、不称修复发布。
 
+### 2026-10-05 #150 已提交探索 cleanup 的共享写前契约（候选）
+
+CODEX-LEAD按原单5995152650补 `request_exploration_cleanup`：冻结原探索记录、水位与目标idle，到队首作完整CAS；失配明确写前拒绝，不用no-op冒充已保存。仅已提交formal/v1且现行恢复允许close的记录可用；嵌套未知字段及缺少restore必需nullable键均保留原档并拒绝，不规范化吞掉证据。Coordinator仅内存typed拒绝，不改变Host/schema。运行时2b79d6538dab1e35a8dff6161b0104bce434196f已通过95专项、完整4.7.2 daily与正式Web导出；本次未改Cloud Host/Main，后续领域调用及同页cleanup恢复仍未交付。见[契约](architecture/exploration-cleanup-commit-contract.md)和[验证记录](playtests/2026-10-05-exploration-cleanup-contract/README.md)。
+
 ### 2026-10-05 EXP-LIVING-WORLD：用户明确探索的生活逻辑
 
 来源为用户在 GAME-PRODUCER 本地会话连续两次直接指导：生活的局限、时间和随机性（机缘/幸运）构成探索的自然难度；近郊每趟可以有不同合理掉落，也可没有，生态/季节决定合理性；重复出行的价值还包括动物偶遇与天气风景。他人拥有尚未遇见的物品/种子能形成向往。各片区应有契合环境的声音和音乐，溪流声及近郊偶尔微弱的家鹅叫是明确举例。
