@@ -463,6 +463,8 @@ Assistant音频300 b8e5e6dc916dacd1eaf45b36c9f17584d36fc16c已接且实际交，
 
 #150 idle cleanup共享接口已冻结并发布（PR391，5995152650）：新增只针对已提交formal会话的冻结参数＋队首CAS清理提交，明确写前拒绝，不prepare、不覆盖新trip/无关字段，不增磁盘schema。Cloud领域重试与Main提示关联尚未接入，不能称同页恢复已修。[接口契约](architecture/exploration-cleanup-commit-contract.md)。最终9d2dcd88e447628f610b230b397661c9cf2469ae经独审5995798603合4fa150819c304b03fb6a36a149e71d4bcd911000；Actions/Pages及实际公开PCK/十模块已核，[发布归档](playtests/2026-10-05-cleanup391-release/README.md)。只冻结共享接口，不代表Cloud已消费、领域恢复或Main提示已完成。
 
+#305/#150 探索侧 cleanup 接线（CURSOR-CLOUD 接收 5999078476）：`ExplorationHost` 收尾（回院确认后与重启 close）改走 `request_exploration_cleanup`，登记 cleanup op；明确写失败/查明被拒时，仅本页会话仍停在同一收尾且存档仍是同一原记录才重交同一冻结请求（最多 2 次），`PRECONDITION_CHANGED`、新旅程已开始都不重交；未知保持等待；隔离记录与契约外记录保留原直接写。Main 只把同一 cleanup 此前失败的原样快照绑定到重交编号，确认后精确清除、队列空闲收起面板。见[验证记录](playtests/2026-10-05-exploration-cleanup-wiring/README.md)；内存队列与真实 SaveStore 的 headless 检查，不是公开 Web 受控故障复验。
+
 ### EXP-LIVING-WORLD 方向约束（用户2026-10-05补充，沿 #153 / #155 执行）
 
 探索程序 Owner CURSOR-CLOUD；原画/物件/音频与需求细化 GAME-PRODUCER。状态：用户方向已确认，内容/参数待首片体验后细化，非实现完成。近郊重访允许合理物品或空手，掉落遵循生态与季节；动物偶遇/天气同为风景；各片区环境音及音乐应契合环境，近郊可偶闻微弱家鹅叫。先完成首片人物透视+发现/获得动态音画体验，不一次扩展多季节、种子功能或全部动物事件。详见 game-design.md 的“探索是生活中的机缘与风景”；不以本记录替换未决概率/时间机制或现有可靠保存验收。
@@ -537,4 +539,4 @@ CODEX-LEAD按[原单认领](https://github.com/narutojzm1-dot/youjia/issues/399#
 432同源公开携物补验随后完成：一次自然趟松果1＋圆石2（3件2种），touch移动/门＋普通E/T收取，正常返院后真关页新页。无背包UI，数量保全另由只读records/current封套前后完全相同gen12/session=null/serial1支持；中间gen8保留、不作最终篮子。[原件与限制](playtests/2026-10-06-holiday432-public/carry/README.md)。未覆盖落羽/全DB/故障矩阵/实体设备，不关闭399；不重复432邮件。
 
 
-432发布证据档整合至433已合main c6e5c9b8b1764f8c41eb492b56b4d11da7f1386b；433公开CI在途、未公开验收，不算入432同源证据。427仍在兼容复查，INVALID回退缺口未修，旧“305未开工”为历史记录而非当期状态。
+432发布证据档整合至433已合main c6e5c9b8b1764f8c41eb492b56b4d11da7f1386b；433公开CI在途、未公开验收，不算入432同源证据。427 c6c1已合main cdec7a6a5b8f13307048e60f6e1f57d49f5b5881，但INVALID回退共享保全缺口未修，Leader已拦停该源Actions37356141984发布；433安全CI37355933384继续。旧“305未开工/427在途”为历史记录而非当期状态，不冒合入等于修复或发布。

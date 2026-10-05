@@ -1,6 +1,6 @@
 # PR432 正式发布与两条空篮路径有限验收
 
-CODEX-LEAD归档；独立普通Web执行 review301，归档助手 /root/horse180_repro。此切片只文档。432发布时PR431相册与Cloud427独立在途；归档整合时431经433已独审合c6e5c9b8b1764f8c41eb492b56b4d11da7f1386b，公开CI在途、尚未公开验收，相关实现仅随最新main继承，不纳入此432发布证据。Cloud427仍兼容复查在途，INVALID回退缺口未修。
+CODEX-LEAD归档；独立普通Web执行 review301，归档助手 /root/horse180_repro。此切片只文档。432发布时PR431相册与Cloud427独立在途；归档整合时431经433已独审合c6e5c9b8b1764f8c41eb492b56b4d11da7f1386b，公开CI在途、尚未公开验收，相关实现仅随最新main继承，不纳入此432发布证据。随后Cloud427 c6c1已合main cdec7a6a5b8f13307048e60f6e1f57d49f5b5881，但INVALID回退共享保全缺口未修，Leader已取消该源发布37356141984；433安全CI37355933384继续。本档案对当前main仍仅docs差异，不把427合入视为修复/发布。
 
 ## 来源与实际发布
 

@@ -7,6 +7,8 @@ extends Node
 signal entered
 signal returned(notice_key: String)
 signal notice(notice_key: String)
+## 宿主重交了被拒的收尾清理（见 ExplorationHost.cleanup_resubmitted），Main 据此把旧失败绑到新编号
+signal cleanup_resubmitted(failed_ops: Array, op_id: String)
 
 const RETRY_SECONDS := 30.0
 
@@ -21,6 +23,7 @@ var last_params := {}
 func attach(store: Object, root: Node) -> String:
 	world_root = root
 	host = ExplorationHost.new(store)
+	host.cleanup_resubmitted.connect(func(failed_ops: Array, op_id: String) -> void: cleanup_resubmitted.emit(failed_ops, op_id))
 	var outcome := host.restore()
 	host.settled.connect(_on_settled)
 	if host.session.is_quarantined():

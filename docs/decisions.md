@@ -1272,7 +1272,6 @@ Leader接收GROK原作者的daily/正式需求登记并补后置审查发现的l
 
 用户实玩反馈经 GAME-PRODUCER 转达：近郊点右上院门回不了院；GAME-PM 在公开 `82f902a` 普通点击复现。Leader 与 PM 在原单确认修复 Owner 为 CURSOR-CLOUD，Cloud 接收并修复。原因是回院判定只认“在路尽头且方向键朝院里推”，点按走路没有方向。改为：点按落在院门一带（最近路面是路尽头，离尽头不超过 260 原画像素且不低于尽头 30 像素以上，实验值），沿路走到门口那一帧发一次回院请求；路尽头右下的石头、草地与门外路面只走过去，刚出门不弹回，方向键回院不变，回院保存链不改。自动检查覆盖鼠标/触屏真实输入、PM 两个公开点、带满 3 件回院各只收一次、真实 Main 回院；截帧见[证据](playtests/2026-10-05-near-path-tap-home/README.md)。不是公开 Web、真机或真人验收。
 
-
 ### #399 正式触摸补验未通过
 
 2026-10-06 #399正式触摸补验：公开ecea67dba1afc9b99b6097970e4965fbcd99c53a两fresh触摸样本出现异常初次入院/恢复表现，唯一只读重试普通路面触摸后、点门前已回院；未确证根因、未修复，不关闭399。Producer继续跟进，Cloud418既有作者，Assistant382输入边界在途不冒新修复接收。键盘/携物触门仍未有效覆盖；已有鼠标空篮通过分开保留。见[原始证据与假设边界](playtests/2026-10-06-exploration399-touch/README.md)。
@@ -1284,7 +1283,6 @@ Leader接收GROK原作者的daily/正式需求登记并补后置审查发现的l
 
 
 提交后最新覆盖：Cloud305已开PR427，head a69979b5c7148034d1598ea00ba6de2c413aa5d0，领域cleanup与Main最小失败revision关联候选已交，216/216/daily为本机检查，独审/公开故障复验/合入未完；不再将该Owner当前写为未开工。此前时间快照保留。
-
 
 ### 2026-10-06 公共假期启动只受理一次（#399，候选）
 
@@ -1300,3 +1298,9 @@ Leader接收GROK原作者的daily/正式需求登记并补后置审查发现的l
 
 
 432正式档案最终整合main c6e5c9b8b1764f8c41eb492b56b4d11da7f1386b：431经433已独审合入，公开CI在途/公开体验未验，不以历史“431在途”描述冒当前，亦不替其正式发布档案。427 c6c1ba6675a59c17988cbf7d64af9d4363a51b35兼容复查在途，[5999935850](https://github.com/narutojzm1-dot/youjia/pull/427#issuecomment-5999935850)的INVALID回退缺口尚未修复；修正当期共享行旧“未开工”，历史时间快照保留。本档案对新main仅docs差异，432/carry原件字节保持。
+### 2026-10-05 #305 探索收尾 cleanup 接线（CURSOR-CLOUD，#150 契约消费）
+
+CURSOR-CLOUD 按 #305 接收（5999078476）把 `ExplorationHost` 收尾清理改走 Leader 已冻结的 `request_exploration_cleanup`：登记 cleanup op；明确拒绝后只在本页会话仍停在同一收尾、存档仍是同一原记录与水位时重交同一冻结请求，最多 2 次；`PRECONDITION_CHANGED`、新旅程已开始都不重交；未知等待原 op 结论；隔离与契约外记录保留原直接写。Main 新增一个处理函数，把同一 cleanup 此前失败的原样快照绑定到重交编号，确认后精确清除，面板仍按队列空闲收起；不改共享 Host/Gate/Coordinator 与磁盘 schema。验证见[记录](playtests/2026-10-05-exploration-cleanup-wiring/README.md)；headless 检查，不是公开 Web 受控故障复验或 #150/#176 验收。
+
+
+434文档再次整合当前main cdec7a6a5b8f13307048e60f6e1f57d49f5b5881：Cloud427 c6c1已合，但共享保全INVALID回退缺口仍未修，Leader已拦停该源发布Actions37356141984；不得把合入写成修复/已发布验收。433安全源CI37355933384继续。本段覆盖上文当时“427在途”时间快照；本PR只归档432的96f历史公开证据，不改变当前生产实现，不包含新的433公开档案。

@@ -31,6 +31,7 @@ func run() -> void:
 	_host_commit()
 	_host_failure_and_retry()
 	_host_restore()
+	_host_cleanup()
 	_host_basket_sizes()
 	_painted_path_layout()
 	await _painted_path_walk()
@@ -286,6 +287,95 @@ func _host_failure_and_retry() -> void:
 	store.pump()
 	store.resolve_unknown(false)
 	check(host.last_outcome.get("state", "") == "deferred" and store.get_keepsakes() == {find: 2} and host.state() == C.STATE_FAILURE, "an unknown commit that did not land is deferred")
+
+
+## 走一趟：在树荫带上一件就回院（不 pump），返回带上的东西
+func trip_home(host: ExplorationHost, store: MemoryStore, value: int) -> String:
+	host.begin(CLOCK, value)
+	host.visit("shade")
+	var find := offer(host)
+	host.take(find)
+	store.pump()
+	host.request_return("player")
+	return find
+
+
+## 收尾清理接共享契约（#305 / #150）：成功一次清空；写失败、未知后查明被拒都只重交同一份冻结请求；
+## 次数有限；新旅程开始、原记录已变都不重交；重启照常清
+func _host_cleanup() -> void:
+	var value := seed_where(false, true)
+	var store := make_store()
+	var results: Array = []
+	store.commit_confirmed.connect(func(_op: String, kind: String) -> void: results.append([kind, "ok"]))
+	store.commit_rejected.connect(func(_op: String, kind: String, code: String) -> void: results.append([kind, code]))
+	var host := ExplorationHost.new(store)
+	var resubmits: Array = []
+	host.cleanup_resubmitted.connect(func(failed: Array, op_id: String) -> void: resubmits.append([failed, op_id]))
+	host.restore()
+	var cone := trip_home(host, store, value)
+	store.pump()
+	check(store.get_exploration_record().session == null and results.count(["exploration_cleanup", "ok"]) == 1 and resubmits.is_empty() and not host.pending_cleanup(), "a finished trip is cleaned through the cleanup contract in one write")
+	# 一次写失败：重交同一份请求，清空，带回物只授予一次
+	results.clear()
+	store.fail_kind_once = "exploration_cleanup"
+	trip_home(host, store, value)
+	store.pump()
+	check(results.has(["exploration_cleanup", "MEMORY_FAIL"]) and results.count(["exploration_cleanup", "ok"]) == 1, "a cleanup that fails to write is resubmitted and lands")
+	check(resubmits.size() == 1 and (resubmits[0][0] as Array).size() == 1 and store.get_exploration_record().session == null and store.get_keepsakes() == {cone: 2}, "the resubmit names the failed op and the find is kept once")
+	# 公开复现的那种：清理结果未知，“再确认一次”查明被拒 → 重交 → 清空
+	resubmits.clear()
+	store.unknown_kind = "exploration_cleanup"
+	trip_home(host, store, value)
+	store.pump()
+	check(store.get_exploration_record().session != null and host.pending_cleanup(), "an unknown cleanup waits instead of guessing")
+	store.resolve_unknown(false)
+	check(resubmits.size() == 1 and store.get_exploration_record().session == null and not host.pending_cleanup(), "a cleanup resolved as rejected is resubmitted once and the record ends idle")
+	# 新一趟已经开始：旧清理被拒后不重交，不覆盖新旅程
+	resubmits.clear()
+	store.unknown_kind = "exploration_cleanup"
+	trip_home(host, store, value)
+	store.pump()
+	host.begin(CLOCK, value)
+	store.resolve_unknown(false)
+	var live: Variant = store.get_exploration_record().session
+	check(resubmits.is_empty() and live is Dictionary and live.state == C.STATE_ACTIVE and live.trip_id == host.session.trip_id(), "a rejected cleanup is not replayed over a walk that already began")
+	host.visit("shade")
+	host.take(offer(host))
+	host.request_return("player")
+	store.pump()
+	# 一直写不上：最多重交 MAX_CLEANUP_RESUBMITS 次，记录留在已提交待清，授予不重复
+	resubmits.clear()
+	results.clear()
+	var keep_before := store.get_keepsakes()
+	host.begin(CLOCK, value)
+	host.visit("shade")
+	var last := offer(host)
+	host.take(last)
+	store.pump()
+	store.fail_after = 2
+	host.request_return("player")
+	store.pump()
+	store.fail_after = -1
+	var cleanup_fails := results.filter(func(r: Array) -> bool: return r[0] == "exploration_cleanup").size()
+	check(cleanup_fails == 1 + ExplorationHost.MAX_CLEANUP_RESUBMITS and resubmits.size() == ExplorationHost.MAX_CLEANUP_RESUBMITS, "a cleanup that keeps failing is resubmitted a limited number of times")
+	check(resubmits.size() == 2 and (resubmits[1][0] as Array).size() == 2, "each resubmit carries every failed op of the same cleanup")
+	check(store.get_exploration_record().session is Dictionary and int(store.get_keepsakes().get(last, 0)) == int(keep_before.get(last, 0)) + 1, "the find stays granted once while the record waits to be cleaned")
+	# 原记录在队首前变了：明确拒绝，不重交、不覆盖
+	results.clear()
+	var restarted := ExplorationHost.new(store)
+	var restarted_resubmits: Array = []
+	restarted.cleanup_resubmitted.connect(func(failed: Array, op_id: String) -> void: restarted_resubmits.append([failed, op_id]))
+	restarted.restore()
+	var changed: Dictionary = store._data.exploration.duplicate(true)
+	changed.session.record_revision = int(changed.session.record_revision) + 1
+	store._data.exploration = changed
+	store.pump()
+	check(results.has(["exploration_cleanup", ExplorationHost.CLEANUP_CHANGED]) and restarted_resubmits.is_empty() and store.get_exploration_record() == changed, "a cleanup whose record changed first is refused and not replayed")
+	# 重启：按恢复契约 close，清理落盘
+	var again := ExplorationHost.new(store)
+	again.restore()
+	store.pump()
+	check(store.get_exploration_record().session == null and again.can_begin() and int(store.get_keepsakes().get(last, 0)) == int(keep_before.get(last, 0)) + 1, "a restart cleans the waiting record without a second grant")
 
 
 func _host_restore() -> void:
@@ -855,6 +945,8 @@ func _main_round_trip() -> void:
 	check(world.get_player().position.distance_to(exit.approach_points[0]) < 1.0, "the resident stands at the path end after returning")
 	check(main._camera.is_current(), "yard camera is current again")
 	check(main._notice_key == "notice.exploration.back_empty", "empty return notice in the yard")
+	var cleaned: Variant = save_store.get_exploration_record()
+	check(cleaned is Dictionary and cleaned.session == null and not main._exploration.host.pending_cleanup() and not main._save_problem_active, "the real save is cleaned to idle through the cleanup contract")
 	# 外出中回标题：按宿主中断回院，带上的东西照常收下
 	world._save_progress()
 	check(main._exploration.try_begin({"day": world.holiday_day, "elapsed": world._day_elapsed}, "sunny", value), "can go out again")
@@ -872,5 +964,22 @@ func _main_round_trip() -> void:
 	await main._start_holiday()
 	await drain(save_store)
 	check(main._screen == "game" and main._notice_key == "notice.arrive", "next holiday starts in the yard with nothing pending")
+	# 收尾清理被拒后宿主重交（#305）：面板只在新编号确认、队列空闲后收起；绑定后失败又变了就不收
+	await drain(save_store)
+	main._on_save_rejected("cleanup-a", "exploration_cleanup", "WRITE_FAILED")
+	check(main._save_status_panel.visible and main._save_problem_active, "a rejected cleanup shows the save panel")
+	main._exploration.cleanup_resubmitted.emit(["cleanup-a"], "cleanup-b")
+	main._on_save_confirmed("cleanup-other", "yard")
+	main._on_save_state_changed("ready")
+	check(main._save_status_panel.visible, "an unrelated confirmation does not close the cleanup's panel")
+	main._on_save_confirmed("cleanup-b", "exploration_cleanup")
+	main._on_save_state_changed("ready")
+	check(not main._save_status_panel.visible and not main._save_problem_active, "the resubmitted cleanup's confirmation closes the panel on the same page")
+	main._on_save_rejected("cleanup-c", "exploration_cleanup", "WRITE_FAILED")
+	main._exploration.cleanup_resubmitted.emit(["cleanup-c"], "cleanup-d")
+	main._on_save_problem("cleanup-c", "exploration_cleanup", "AGAIN")
+	main._on_save_confirmed("cleanup-d", "exploration_cleanup")
+	main._on_save_state_changed("ready")
+	check(main._save_status_panel.visible, "a failure that changed after binding is not cleared by the old resubmit")
 	main.queue_free()
 	await process_frame
