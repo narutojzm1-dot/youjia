@@ -2,6 +2,8 @@ extends Node
 
 signal initialized(status: String, code: String)
 signal commit_confirmed(op_id: String, kind: String)
+## Read-only accepted exploration identity; does not change host protocol or grants.
+signal exploration_intent_accepted(op_id: String, kind: String, scope: Dictionary)
 signal commit_rejected(op_id: String, kind: String, code: String)
 signal commit_unknown(op_id: String, kind: String, code: String)
 signal persistence_state_changed(state: String)
@@ -228,9 +230,11 @@ func get_keepsakes() -> Dictionary:
 
 func request_exploration_record(record: Variant) -> String:
 	var frozen: Variant = _copy_record(record)
-	return request_intent("exploration", func(current: Dictionary) -> Dictionary:
+	var op_id := request_intent("exploration", func(current: Dictionary) -> Dictionary:
 		current.exploration = _copy_record(frozen)
 		return current)
+	_emit_exploration_identity(op_id, "exploration", frozen)
+	return op_id
 
 
 ## 一次提交里同时写入带回的小物、旅程水位线与会话记录。队首求值时水位线已越过这趟就只写记录、
@@ -241,7 +245,7 @@ func request_exploration_trip(record: Variant, trip_serial: int, find_ids: Packe
 			return ""
 	var frozen: Variant = _copy_record(record)
 	var finds := find_ids.duplicate()
-	return request_intent("exploration_trip", func(current: Dictionary) -> Dictionary:
+	var op_id := request_intent("exploration_trip", func(current: Dictionary) -> Dictionary:
 		receipt.granted = trip_serial > int(current.get("exploration_committed_serial", 0))
 		if receipt.granted:
 			var keepsakes: Dictionary = (current.get("keepsakes", {}) as Dictionary).duplicate(true)
@@ -251,6 +255,21 @@ func request_exploration_trip(record: Variant, trip_serial: int, find_ids: Packe
 			current.exploration_committed_serial = trip_serial
 		current.exploration = _copy_record(frozen)
 		return current)
+	_emit_exploration_identity(op_id, "exploration_trip", frozen, trip_serial, finds)
+	return op_id
+
+
+func _emit_exploration_identity(op_id: String, kind: String, record: Variant, serial := 0, finds := PackedStringArray()) -> void:
+	if op_id.is_empty() or not record is Dictionary: return
+	var session: Variant = record.get("session")
+	if not session is Dictionary: return # idle/quarantined records prove no active trip retry
+	var trip_id: String = str(session.get("trip_id", ""))
+	var trip_serial := int(session.get("trip_serial", 0))
+	var revision := int(session.get("record_revision", -1))
+	if trip_serial <= 0 or trip_id != "trip-%d" % trip_serial or revision < 0: return
+	if kind == "exploration_trip" and serial != trip_serial: return
+	exploration_intent_accepted.emit(op_id, kind, {"trip_id": trip_id, "serial": trip_serial,
+		"revision": revision, "finds": Array(finds)})
 
 
 static func _copy_record(record: Variant) -> Variant:
