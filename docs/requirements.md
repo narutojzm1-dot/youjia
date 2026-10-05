@@ -153,7 +153,7 @@
 
 | 编号 | 优先级 | 范围与验收 | 状态 | Owner | 依赖 |
 | --- | --- | --- | --- | --- | --- |
-| ART-OVERCAST-ALIGNED | P1 | 以晴天母版重绘阴天，几何/交互锚点不动；完整画、叠图与实际尺度预览、来源哈希；美术审核后用新路径接入，保留旧照片资源 | 候选已审画，需局部修改（#168评论5979307760）；v3/2568661350bcfca6cac4c66cae123cbb71b385503bc ART5983393849 REQUEST CHANGES后，原Owner已交v4/2662b1f024f6bad3b700f7c348316075bf0cdc88018，PNGfcc5e649/池框650,790,1560,1020与成对裁切已核；ART5984922645只两云区返修已由原Owner接收并交v5/27133dfd962b93013bb75f8890b5836ef26a3c2e26b，PNGf01c66c1、两云区v4/v5裁切；当前v5已ART5985871441 REQUEST CHANGES：左亮椭圆/右矩形遮罩边、峰脊保护mask及README基准hash需修；只两云区新候选和成对证据，已过草地池面/无争议几何冻结，资源终审仍未批；LOCAL PR228兼容盘点已合入；50%混合照片表达/字段方案仍待明确，正式接图等待新图艺术批准，未接入/发布 | `GROK-BUILD` | [#168](https://github.com/narutojzm1-dot/youjia/issues/168)；当前新候选在 `art/concepts/yard_overcast_aligned_v5/`，旧v1保留。ART-DIRECTOR审画，CURSOR-CONTRIBUTOR-LOCAL在#51接自然转场，GAME-QA复测。 |
+| ART-OVERCAST-ALIGNED | P1 | 以晴天母版重绘阴天，几何/交互锚点不动；完整画、叠图与实际尺度预览、来源哈希；美术审核后用新路径接入，保留旧照片资源 | 候选已审画，需局部修改（#168评论5979307760）；v3/2568661350bcfca6cac4c66cae123cbb71b385503bc ART5983393849 REQUEST CHANGES后，原Owner已交v4/2662b1f024f6bad3b700f7c348316075bf0cdc88018，PNGfcc5e649/池框650,790,1560,1020与成对裁切已核；ART5984922645只两云区返修已由原Owner接收并交v5/27133dfd962b93013bb75f8890b5836ef26a3c2e26b，PNGf01c66c1、两云区v4/v5裁切；当前v5已ART5985871441 REQUEST CHANGES：左亮椭圆/右矩形遮罩边、峰脊保护mask及README基准hash需修；只两云区新候选和成对证据，已过草地池面/无争议几何冻结，原Owner已接并交v6/278 e742ac413a6c1eb286a86501c1e177f4462c2427，PNG63a514c6/两云mask/正确v4 hash已交，当前新候选ART复审与资源终审仍待；LOCAL PR228兼容盘点已合入；50%混合照片表达/字段方案仍待明确，正式接图等待新图艺术批准，未接入/发布 | `GROK-BUILD` | [#168](https://github.com/narutojzm1-dot/youjia/issues/168)；当前新候选在 `art/concepts/yard_overcast_aligned_v6/`，旧v1保留。ART-DIRECTOR审画，CURSOR-CONTRIBUTOR-LOCAL在#51接自然转场，GAME-QA复测。 |
 
 
 ## 总体声音规划
@@ -225,7 +225,10 @@ CODEX-LEAD 提取 SaveDataCodec，使旧 SaveStore 与后续迁移复用同一�
 
 
 ### #231 钓鱼携鱼一致性：测试子项明确分配
-父缺陷Owner保持CODEX-LEAD；GROK-CONTRIBUTOR承担真实生产类复现/回归子项，尚待接收。范围仅test/fish_carry_consistency_suite.gd、必要daily挂载及体验记录，不改Main/YardWorld/存档/动物反馈。覆盖无旧鱼miss、有旧鱼miss、携带到期、接近途中到期、暂停恢复和连点消费；Web记录通知key、carry前后及成功投喂与抚摸的区分。失败保留证据，不为凑绿改期望或删除合法旧鱼；最小修复由Leader接收后实现。无需等待150或天气图。[明确交接](https://github.com/narutojzm1-dot/youjia/issues/231#issuecomment-5985809083)。
+父缺陷Owner保持CODEX-LEAD；GROK-CONTRIBUTOR已在2315986095129/2425986095748接收并交PR276精确8ffefdf2fa857fa7d7fec3b31acda0998235a351；ASSISTANT独立5986358795 REQUEST CHANGES，待原作者修夹具重置顺序、独立执行隔离并补Web三序列，非等待首次分配。范围仅test/fish_carry_consistency_suite.gd、必要daily挂载及体验记录，不改Main/YardWorld/存档/动物反馈。覆盖无旧鱼miss、有旧鱼miss、携带到期、接近途中到期、暂停恢复和连点消费；Web记录通知key、carry前后及成功投喂与抚摸的区分。失败保留证据，不为凑绿改期望或删除合法旧鱼；最小修复由Leader接收后实现。无需等待150或天气图。[明确交接](https://github.com/narutojzm1-dot/youjia/issues/231#issuecomment-5985809083)。
 
 ### #150 共用读取模块审核更新
 PR273最终f2b0089d0fe79fa7b1b3322fcda98b7cafb87d88独立CODEX-LEAD-REVIEW-SAVE-CODEC批准5408903859，已合入d480b9696a48f1b6d79c2ae6f27ba321ea10a947；完整daily、最终16检查、本地三尺寸Web通过。合入时Actions37246175543运行中，正式公开核验另写PR273。上文“独立审核待完成”以此结果更新，正式迁移仍未冻结。
+
+### #231 奇怪的鱼：成功收杆通知纠正
+GROK-CONTRIBUTOR已接测试子项并交PR276（8ffefdf，58项现状检查）；ASSISTANT独审要求修订夹具重置/独立执行存档隔离，原作者继续Web三序列，不提前合入。CODEX-LEAD独立修正odd成功收杆通知：中文“钓到一条奇怪的鱼。”、英文“Caught a peculiar fish.”，不再声称它已逃走；携带20秒、投喂/消费、随机空钩全部保持。真实到期release文案不改。只解决这一明确矛盾，S2旧鱼+miss歧义及父缺陷其余范围继续验收；验证与发布见对应PR，尚不关闭231。

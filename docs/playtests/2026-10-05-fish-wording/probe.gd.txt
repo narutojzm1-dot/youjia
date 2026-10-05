@@ -1,0 +1,24 @@
+extends Node
+func _ready() -> void:
+	call_deferred("run")
+func run() -> void:
+	var main = load("res://scenes/main.tscn").instantiate()
+	add_child(main)
+	await get_tree().process_frame
+	main._start_holiday()
+	await get_tree().create_timer(1.0).timeout
+	main.set_process(false)
+	var locale := str(JavaScriptBridge.eval("window.testLocale || 'zh-CN'")) if OS.has_feature("web") else "zh-CN"
+	I18n.set_locale(locale)
+	var world = main._world
+	world.debug_place_player(world._fishing_point())
+	for frame in 120: main._process(1.0 / 60.0)
+	seed(231700)
+	for attempt in 40:
+		world._fish_state = world.FISH_BITE
+		world._reel_in_fish()
+		if world._fish_carry_type == "odd": break
+	# This fixture calls the real catch handler; it is NOT natural input proof.
+	await get_tree().create_timer(2.0).timeout
+	var result := {"locale":locale,"notice":str(main._notice.text),"key":str(main._notice_key),"carry":str(world._fish_carry_type),"timer":world._fish_carry_timer}
+	JavaScriptBridge.eval("window.fishProbe = " + JSON.stringify(result))
