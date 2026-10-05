@@ -9,7 +9,7 @@
 | `native-1280-08-shade-basket` | `native-390-08-shade-basket` | 带上第二件，提篮里两件并列（「圆石、落羽」/「落羽、松果」），可在原处放回 |
 | `native-1280-09-yard-back` | `native-390-09-yard-back` | 回院：「回到院里了。圆石、落羽都收好了。」存档 `keepsakes` 各 +1 |
 
-带满 3 件后遇到第 4 件、同名重复、换出的东西回到原停留点、一次落盘与重启恢复，由 `test/exploration_core_suite.gd`（`_formal_near_path`）与 `test/exploration_slice_suite.gd`（`_scroll_and_director`）在 strict daily 中覆盖；截图每趟按随机种子，未必遇到第 4 件。
+带满 3 件后遇到第 4 件、同名重复、换出的东西回到原停留点、一次落盘、2 件回院、3 件含重复的中途重启（含重启时写盘失败后补存只授予一次）、停留点下架后重载不隔离篮子，由 `test/exploration_core_suite.gd`（`_formal_near_path`、`_catalog_changes`）与 `test/exploration_slice_suite.gd`（`_host_basket_sizes`、`_scroll_and_director`）在 strict daily 中覆盖；截图每趟按随机种子，未必遇到第 4 件。
 
 ## 未覆盖
 

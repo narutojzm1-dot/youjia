@@ -126,10 +126,10 @@ func _restore_active() -> String:
 		else:
 			changed = true
 	_visited = kept_visited
+	# 篮子里东西的来处即使停留点已下架也留着，taken 与 carried 才对得上
 	for stop_id: String in _offers.keys():
-		if not _catalog.has_stop(_route_id, stop_id):
+		if not _catalog.has_stop(_route_id, stop_id) and not _taken.has(stop_id):
 			_offers.erase(stop_id)
-			_taken.erase(stop_id)
 			changed = true
 	if not _catalog.has_stop(_route_id, _current_stop):
 		_current_stop = _catalog.get_route(_route_id)["start_stop"]

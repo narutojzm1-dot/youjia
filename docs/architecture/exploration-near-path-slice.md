@@ -3,6 +3,7 @@
 - 编号：EXP-FIRST-SLICE · [issue #153](https://github.com/narutojzm1-dot/youjia/issues/153) · Owner `CURSOR-CLOUD`
 - 依据：[契约 v1](exploration-module-contract.md)、[画卷漫步形式](exploration-form-options.md)、[首条体验研究](exploration-first-experience.md)（取景、看景可进入、提篮常伴）、[回院适配研究](exploration-return-adapter.md)。用户 2026-10-05 授权独立推进。
 - 证据：[体验记录](../playtests/2026-10-05-exploration-near-path-slice/README.md)。
+- 表现口径：本文的横向画卷是过渡占位。用户已选“保留原画视角，沿路走动并自然换页”（[原画路径方向](exploration-painted-path-direction.md)），不再采用侧视横走；表现层由 EXP-PAINTED-PATH（PR #342）换成 02 原画沿路行走，下面的宿主、提交、恢复、提篮与容量逻辑原样复用。
 
 ## 玩家能做什么
 
