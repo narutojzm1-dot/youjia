@@ -34,6 +34,7 @@ func run() -> void:
 	_host_basket_sizes()
 	_painted_path_layout()
 	await _painted_path_walk()
+	await _tap_home()
 	await _find_reveal()
 	await _scroll_and_director()
 	await _main_round_trip()
@@ -442,6 +443,82 @@ func _painted_path_walk() -> void:
 	root.size = Vector2i(1280, 720)
 
 
+func tap_mouse(point: Vector2) -> void:
+	for pressed: bool in [true, false]:
+		var event := InputEventMouseButton.new()
+		event.button_index = MOUSE_BUTTON_LEFT
+		event.position = point
+		event.global_position = point
+		event.pressed = pressed
+		root.push_input(event)
+
+
+func tap_touch(point: Vector2) -> void:
+	for pressed: bool in [true, false]:
+		var event := InputEventScreenTouch.new()
+		event.position = point
+		event.pressed = pressed
+		root.push_input(event)
+
+
+## 点按回院（#399）：点院门或门里，走到门口才回院；刚出门、点在门外的路上不回；只回一次
+func _tap_home() -> void:
+	for view_size: Vector2i in [Vector2i(1280, 720), Vector2i(390, 844)]:
+		root.size = view_size
+		var tag := "%dx%d " % [view_size.x, view_size.y]
+		var store := make_store()
+		var host := ExplorationHost.new(store)
+		host.restore()
+		host.begin(CLOCK, seed_all_four())
+		var scroll: Node2D = load("res://scripts/exploration/near_path_scroll.gd").new()
+		root.add_child(scroll)
+		scroll.setup(host, "sunny")
+		var reasons: Array[String] = []
+		scroll.return_requested.connect(func(reason: String) -> void: reasons.append(reason))
+		await process_frame
+		for i in 90:
+			scroll.walk(Vector2.ZERO, 1.0 / 30.0)
+		check(reasons.is_empty() and not scroll.leaving, tag + "arriving from the yard does not bounce back home")
+		var short_of_gate: Dictionary = {"arm": L.HOME_ARM, "d": L.arm_length(L.HOME_ARM) - 12.0}
+		scroll.press_at(scroll.art_to_screen(L.point(short_of_gate.arm, short_of_gate.d)))
+		for i in 120:
+			scroll.walk(Vector2.ZERO, 1.0 / 30.0)
+		check(reasons.is_empty() and not L.at_home(scroll.spot), tag + "a tap on the lane just outside the gate only walks there")
+		var door: Vector2 = scroll.art_to_screen(L.point(L.HOME_ARM, L.arm_length(L.HOME_ARM)) + Vector2(10, -45))
+		# 横屏用鼠标点，竖屏用触屏点，都走真实输入
+		if view_size.x > view_size.y:
+			tap_mouse(door)
+		else:
+			tap_touch(door)
+		check(reasons.is_empty() and not scroll.walk_target.is_empty(), tag + "tapping the gate sets off without leaving before walking there")
+		for i in 120:
+			scroll.walk(Vector2.ZERO, 1.0 / 30.0)
+		check(reasons == ["player"] and scroll.leaving, tag + "walking to a tapped gate goes home once")
+		scroll.press_at(door)
+		for i in 30:
+			scroll.walk(Vector2.ZERO, 1.0 / 30.0)
+		check(reasons.size() == 1, tag + "tapping the gate again on the way out does not ask twice")
+		scroll.free()
+	# 公开复现里点过的屏幕位置（GAME-PM #399：1280×720 从出门处点 (1060,390) 与门里 (1100,320)）
+	root.size = Vector2i(1280, 720)
+	for point: Vector2 in [Vector2(1060, 390), Vector2(1100, 320)]:
+		var store := make_store()
+		var host := ExplorationHost.new(store)
+		host.restore()
+		host.begin(CLOCK, seed_all_four())
+		var scroll: Node2D = load("res://scripts/exploration/near_path_scroll.gd").new()
+		root.add_child(scroll)
+		scroll.setup(host, "sunny")
+		var reasons: Array[String] = []
+		scroll.return_requested.connect(func(reason: String) -> void: reasons.append(reason))
+		await process_frame
+		scroll.press_at(point)
+		for i in 120:
+			scroll.walk(Vector2.ZERO, 1.0 / 30.0)
+		check(reasons == ["player"], "the public repro tap at %s goes home" % point)
+		scroll.free()
+
+
 ## 拾起成功的短展示：只跟着核心接受的带上 / 换成走，打断即收尾，不碰篮子和存档
 func _find_reveal() -> void:
 	var tuning: Node = root.get_node("TuningStore")
@@ -641,6 +718,26 @@ func _scroll_and_director() -> void:
 	director.idle_tick(Director.RETRY_SECONDS + 1.0)
 	store.pump()
 	check(notices.size() == quiet + 1 and notices[-1].begins_with("notice.exploration.kept."), "an idle retry that lands says the find is kept")
+	# 点院门走回去：带着东西也走同一条回院与保存路
+	director.try_begin(CLOCK, "sunny", value)
+	scroll = director.scroll
+	scroll.place_at("brook")
+	scroll.observe()
+	var tapped: String = scroll.pick_choice().find_id
+	scroll.pick()
+	scroll.end_observe()
+	store.pump()
+	var keep_tapped := int(store.get_keepsakes().get(tapped, 0))
+	var returns := keys.size()
+	scroll.press_at(scroll.art_to_screen(L.point(L.HOME_ARM, L.arm_length(L.HOME_ARM)) + Vector2(0, -40)))
+	var steps := 0
+	while director.is_exploring() and steps < 600:
+		scroll.walk(Vector2.ZERO, 1.0 / 30.0)
+		steps += 1
+	await process_frame
+	store.pump()
+	check(keys.size() == returns + 1 and not director.is_exploring(), "tapping the gate walks there and goes home once")
+	check(notices[-1] == "notice.exploration.kept.%s" % tapped.get_slice(".", 2) and int(store.get_keepsakes().get(tapped, 0)) == keep_tapped + 1, "a find carried home by tapping the gate is kept once")
 	director.free()
 	world.free()
 
@@ -722,8 +819,12 @@ func _main_round_trip() -> void:
 	check(main._pause_screen.visible and paused, "tapping the scroll pause button opens the pause menu")
 	main._toggle_pause()
 	check(not main._pause_screen.visible and not paused, "resume returns to the walk")
-	scroll._request_return("player")
-	await process_frame
+	tap_mouse(scroll.art_to_screen(L.point(L.HOME_ARM, L.arm_length(L.HOME_ARM)) + Vector2(10, -45)))
+	var frames := 0
+	while main._screen == "exploring" and frames < 600:
+		await process_frame
+		frames += 1
+	check(main._screen != "exploring", "clicking the gate in Main walks the resident home (#399)")
 	check(main._notice_key == "notice.exploration.back" or main._notice_key == "notice.exploration.back_empty", "back in the yard says so at once")
 	await drain(save_store)
 	check(main._screen == "game" and world.visible and world.input_enabled and main._hud.visible, "return restores the yard")

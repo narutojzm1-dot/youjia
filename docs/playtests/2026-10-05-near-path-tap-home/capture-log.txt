@@ -1,0 +1,10 @@
+landscape view 1280x720 screen exploring spot { "arm": "lane", "d": 590.0 }
+landscape mouse tap at (1048,397) target { "arm": "lane", "d": 683.241188049316 }
+landscape walking spot d=668.8 of 683.2
+landscape after 1054 ms screen game notice notice.exploration.back_empty
+landscape final screen game world visible true notice notice.first_hint
+portrait view 390x844 screen exploring spot { "arm": "lane", "d": 590.0 }
+portrait touch tap at (280,453) target { "arm": "lane", "d": 683.241188049316 }
+portrait walking spot d=659.4 of 683.2
+portrait after 810 ms screen game notice notice.exploration.back_empty
+portrait final screen game world visible true notice notice.exploration.back_empty
