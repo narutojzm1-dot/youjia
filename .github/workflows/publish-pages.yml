@@ -40,6 +40,9 @@ jobs:
       - name: Verify web bundle retention
         run: python3 test/web_bundle_retention_test.py
 
+      - name: Verify versioned persistence module publication
+        run: python3 test/publish_storage_modules_test.py
+
       - name: Run game verification
         run: GODOT="$RUNNER_TEMP/godot/Godot_v4.7.2-stable_linux.x86_64" bash tools/verify_daily_life.sh
 

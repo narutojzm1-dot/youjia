@@ -56,11 +56,12 @@ func run() -> void:
 		var expected := before.duplicate(true)
 		for field: Variant in operation.expected:
 			expected[field] = operation.expected[field]
-		check(store._data == expected, name + ": successful candidate publishes complete state")
+		check(JSON.parse_string(JSON.stringify(store._data)) == JSON.parse_string(JSON.stringify(expected)), name + ": successful candidate publishes complete state")
 		check(JSON.parse_string(FileAccess.get_file_as_string(store.SAVE_PATH)) == JSON.parse_string(JSON.stringify(expected)), name + ": successful file matches confirmed memory")
 		check(JSON.parse_string(FileAccess.get_file_as_string(store.BACKUP_PATH)) == JSON.parse_string(JSON.stringify(before)), name + ": backup preserves complete prior state")
 		store._load()
 		var known_expected: Dictionary = store.SaveDataCodec.project(expected)
-		check(store._data == known_expected, name + ": accepted gameplay values survive real reload")
+		check(store.SaveDataCodec.project(store._data) == known_expected, name + ": accepted gameplay values survive real reload")
+		check(store._data.get("shared_owner_data") == before.shared_owner_data, name + ": unrelated owner fields survive authoritative reload")
 	print("save candidate: %d checks, %d failures" % [checks, failures.size()])
 	quit(0 if failures.is_empty() else 1)

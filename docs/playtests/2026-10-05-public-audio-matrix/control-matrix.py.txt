@@ -1,0 +1,57 @@
+import json,re,time,sys
+from pathlib import Path
+from playwright.sync_api import sync_playwright
+out=Path(sys.argv[2]);out.mkdir(parents=True,exist_ok=True)
+log=Path('/tmp/fish-release-base-daily.log').read_text()
+events=[];errors=[]
+with sync_playwright() as p:
+ b=p.chromium.launch(executable_path='/usr/bin/chromium',headless=True,args=['--no-sandbox','--use-gl=angle','--use-angle=swiftshader','--enable-webgl'])
+ page=b.new_page(viewport={'width':1280,'height':720},device_scale_factor=1)
+ page.on('pageerror',lambda e:errors.append(str(e)));page.on('console',lambda m:errors.append(m.text) if m.type=='error' else None)
+ page.add_init_script("window.first=false;window.addEventListener('youjia:first-frame',()=>window.first=true)")
+ page.goto(sys.argv[1]);page.wait_for_function('window.first',timeout=120000)
+ build=page.locator('html').get_attribute('data-build')
+ def rect(key):
+  m=re.search(r'\(1280, 720\) positive '+key+r' \[P: \(([-.0-9]+), ([-.0-9]+)\), S: \(([-.0-9]+), ([-.0-9]+)\)',log);assert m,key
+  return tuple(map(float,m.groups()))
+ def click(key,ratio=.5,delay=300):
+  x,y,w,h=rect(key);page.mouse.click(x+w*ratio,y+h/2,delay=80);page.wait_for_timeout(delay)
+ def snap(name,expected=None,png=False):
+  if expected is not None and name!='cold-title':
+   page.wait_for_function('(n)=>window.__manusBgm && JSON.parse(window.__manusBgm.diagnostics()).playing===n',arg=expected,timeout=5000)
+  d=page.evaluate('window.__manusBgm ? JSON.parse(window.__manusBgm.diagnostics()) : null');events.append({'stage':name,'backend':d,'expected_playing':expected});print(name,d,flush=True)
+  if png:page.screenshot(path=str(out/(name+'.png')))
+  if expected is not None and not(name=='cold-title' and d is None):assert d['playing']==expected,(name,d)
+ snap('cold-title',0)
+ click('_play_button',delay=2000);snap('cold-enter',2,png=True)
+ click('_pause_button');snap('pause-initial',2,png=True)
+ # These are actual visible pause controls; no engine calls change state.
+ for track,y in [('music',346),('ambience',481)]:
+  for i in range(10):
+   delay=600 if i<5 else 180
+   page.mouse.click(640,y,delay=80);page.wait_for_timeout(delay);snap(f'{track}-{i+1:02}-off',1)
+   page.mouse.click(640,y,delay=80);page.wait_for_timeout(delay);snap(f'{track}-{i+1:02}-on',2)
+ click('_mute_toggle');snap('master-muted',2,png=True)
+ click('_mute_toggle');snap('master-restored',2,png=True)
+ for key in ['_music_slider','_ambience_slider']:
+  x,y,w,h=rect(key);page.mouse.click(x+1,y+h/2);page.wait_for_timeout(300);snap(key+'-zero',2,png=True)
+  click(key,.5);snap(key+'-half',2,png=True)
+ page.mouse.click(640,346,delay=80);page.wait_for_timeout(300)
+ click('_mute_toggle');snap('music-off-master-muted',1,png=True)
+ click('_mute_toggle');snap('music-off-master-restored',1,png=True)
+ page.mouse.click(640,346,delay=80);page.wait_for_timeout(300);snap('both-restored',2)
+ click('_resume_button');snap('resumed',2,png=True)
+ click('_pause_button');page.mouse.click(640,278,delay=80);page.wait_for_timeout(350);snap('title-confirm',2,png=True)
+ page.screenshot(path=str(out/'confirm-inspect.png'))
+ # Confirmation coordinates are supplied only after observing this real screenshot.
+ (out/'pre-exit.json').write_text(json.dumps({'build':build,'events':events,'errors':errors},ensure_ascii=False,indent=2))
+ if len(sys.argv)>3:
+  coordfile=Path(sys.argv[3]);deadline=time.monotonic()+180
+  while not coordfile.exists() and time.monotonic()<deadline:time.sleep(.5)
+  x,y=json.loads(coordfile.read_text());page.mouse.click(x,y);page.wait_for_timeout(1400);snap('confirmed-title',0,png=True)
+  assert events[-1]['backend']['buffers']==0 and events[-1]['backend']['bytes']==0
+  click('_play_button',delay=2300);snap('reentered',2,png=True)
+  click('_pause_button');snap('reentered-pause',2,png=True)
+ r={'url':sys.argv[1],'build':build,'utc':time.strftime('%Y-%m-%dT%H:%M:%SZ',time.gmtime()),'viewport':[1280,720],'events':events,'errors':errors,'scope':'cold isolated public Chromium context; real canvas mouse only; backend diagnostics read-only; zero/half/mute screenshots require visual review; no human hearing, physical mobile, background/late-callback claims'}
+ (out/'result.json').write_text(json.dumps(r,ensure_ascii=False,indent=2)+'\n');b.close()
+ assert not errors,errors

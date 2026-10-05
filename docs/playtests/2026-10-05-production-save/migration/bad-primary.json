@@ -1,0 +1,44 @@
+{
+  "seed_primary": "{bad",
+  "seed_backup": "\n {\"version\":5,\"holiday_day\":2,\"unknown_backup\":true} ",
+  "startup": {
+    "/userfs": {
+      "FILE_DATA": [
+        {
+          "timestamp": "2026-10-05 09:08:43.080000+00:00",
+          "mode": 33188,
+          "contents": "\n {\"version\":5,\"holiday_day\":2,\"unknown_backup\":true} "
+        },
+        {
+          "timestamp": "2026-10-05 09:08:43.079000+00:00",
+          "mode": 33188,
+          "contents": "{bad"
+        }
+      ]
+    },
+    "youjia-save-host-v1": {
+      "records": [
+        {
+          "schema": "youjia.save-envelope/v2",
+          "store_id": "16077a806d394a1e9fe91d6ee7345ebd",
+          "commit_id": "be37451bcd5e4b2cab848f3e74a08b9d",
+          "request_id": "e13778ade3534a5db97e86bc1e40a41e",
+          "parent_commit_id": "",
+          "generation": "1",
+          "payload_bytes": "{\"schema\":\"youjia.legacy-v5-import/v1\",\"selected\":\"backup\",\"sources\":{\"primary\":{\"status\":\"present\",\"text\":\"{bad\"},\"backup\":{\"status\":\"present\",\"text\":\"\\n {\\\"version\\\":5,\\\"holiday_day\\\":2,\\\"unknown_backup\\\":true} \"}}}",
+          "payload_sha256": "353194edabd39c281cbb7b2f7dd87d6d1f59470583c10ef501ad093bad446754",
+          "envelope_sha256": "8f070d1015a5704c2bcc80b9aabf979256f7c71d9cde9d90743393e1f8050814",
+          "legacy_sources_sha256": "6faf2aa74fdcb061d8af0c1e7b2cead1bca930902f78ce24f454f7508a268feb"
+        },
+        {
+          "schema": "youjia.legacy-sources/v1",
+          "store_id": "16077a806d394a1e9fe91d6ee7345ebd",
+          "import_payload": "{\"schema\":\"youjia.legacy-v5-import/v1\",\"selected\":\"backup\",\"sources\":{\"primary\":{\"status\":\"present\",\"text\":\"{bad\"},\"backup\":{\"status\":\"present\",\"text\":\"\\n {\\\"version\\\":5,\\\"holiday_day\\\":2,\\\"unknown_backup\\\":true} \"}}}",
+          "payload_sha256": "353194edabd39c281cbb7b2f7dd87d6d1f59470583c10ef501ad093bad446754",
+          "seal_sha256": "6faf2aa74fdcb061d8af0c1e7b2cead1bca930902f78ce24f454f7508a268feb"
+        }
+      ]
+    }
+  },
+  "errors": []
+}

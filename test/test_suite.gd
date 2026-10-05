@@ -295,7 +295,7 @@ func _test_runtime_scene() -> void:
 	_check(not FileAccess.file_exists("res://scripts/ui/tuning_panel.gd"), "native tuning panel is absent")
 	_check((instance.get("_title_label") as Label).text == "悠长的假期", "title must use the holiday identity")
 	_check((instance.get("_play_button") as Button).text == "走进院子", "play button must enter the yard")
-	instance.call("_start_holiday")
+	await instance.call("_start_holiday")
 	await get_tree().process_frame
 	var world: YardWorld = instance.get("_world")
 	_check(world != null, "starting a holiday must create the yard")
@@ -397,7 +397,7 @@ func _test_runtime_scene() -> void:
 	instance.call("_show_album")
 	_check(bool((instance.get("_album_screen") as Control).visible), "album must open from the holiday")
 	instance.call("_hide_album")
-	instance.call("_show_title")
+	await instance.call("_show_title")
 	_check(bool((instance.get("_title_screen") as Control).visible), "returning to the door must restore the title")
 	instance.queue_free()
 	await get_tree().process_frame

@@ -1,0 +1,26 @@
+{
+  "local_code_commit": "13230b6a9233660dfda87513603fd40562c17d72",
+  "final_export": "production-save-export-final",
+  "godot": "4.7.2.stable",
+  "files": {
+    "autoload/save_store.gd": "d7b26b76ad958918c8d1f506041f2e8e0675fd63ce7165c2764a9e58c7276580",
+    "scripts/main.gd": "4e3503f9103d9a20f713f9b826be2f281fddfbb14c9b975b7edb6df7a617d516",
+    "scripts/game/yard_world.gd": "2a7faabbb412ef8867b51c888b11f98852f46ec7c9cad025ea56d4c828dabbee",
+    "scripts/persistence/native_save_host.gd": "4e02e265314f23c8759cb9b0cd347870e8baa62e9de128fe585e74a124a86e2b",
+    "scripts/persistence/save_coordinator.gd": "826e5863489d9d283212097dc92d86b58102bca0e1b580bc7abae3d0eb40c30f",
+    "scripts/persistence/web_save_host.gd": "a5a39381c216031f973531c779889ce737eb6dd4eb3bb81fcb13674e8064699e",
+    "scripts/persistence/web_save_reply.gd": "ba406ce9d7693325f55f02acaea84c657a73a3bdcff0f612da2fbc3434ca9f73",
+    "scripts/persistence/web_save_legacy_reply.gd": "87bbd5544adf2aed66a0181c3778acc0f1249fba30a2e724f12c7e979e592620",
+    "web/save/legacy_seal.mjs": "9642132f5d4e7523e5966e802069af7f4bae803fae8e2e7c28ae55ee97d85610",
+    "web/save/bridge.mjs": "ef18687554fdc0d745c1d18d4d091e959cc78559da0d61d6a093e562ff9bbc91",
+    "web/save/budgets.mjs": "52984153977dcafd1d2682e848f1999f091d0966e17d46e902de76f5735a7018",
+    "web/save/host.mjs": "9de8dc0ef4bfc037a8ad0bff575d40c3dd4341bcc723351a412b2061bb661904",
+    "web/save/legacy_v5.mjs": "8e7f4ad2d87aab77ac05361e4f46060476e933aa079ae94301998d08d4599621",
+    "web/save/legacy_inspection.mjs": "db3a23a0221aa5d34a58a6a49aeeff930295ffe20bfcf73a7c11f0d49cffd671",
+    "web/save/store.mjs": "2193b4397b8662a8ebc754dc4468e4d62964d209b4e1d0f0924a2ec81b409cbe",
+    "web/save/lifecycle.mjs": "1cfaebb9a8745e2dc3e4f694ef475f250640870938f04160be1a5c9acd62935d",
+    "web/save/source_decode.mjs": "411f3bc784cb32a07f32eed5fc7d88f71b59a667cc0d68a50fe13c55bfdba18a",
+    "web/save/idbfs_source.mjs": "16eb57d471537f13d3e50018b56c2d416d2847f0d0249ba44433dd9ebb65f4d8"
+  },
+  "pck_sha256": "6ec4450afc1a45a053c3d065279696a003d5f41ff862f0cb5905494c95d4667e"
+}
