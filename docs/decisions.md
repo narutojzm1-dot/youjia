@@ -61,6 +61,7 @@ CODEX-LEAD 向制作人汇报时以本表为准。状态只用「待看图 / 待
 | 条目 | 请看什么 | 截图或记录 | 构建 | Owner | 状态 |
 | --- | --- | --- | --- | --- | --- |
 | BUG350 短横屏手帐 | 照片、日期题词和正文是否清楚；短双页与竖屏历史照片 | [正式六视口/五照片原截图与记录](playtests/2026-10-05-album-landscape-release/README.md) | `game-bc8a048`（PR351已独审发布） | `CODEX-LEAD-ASSISTANT` | 待看图 |
+| BUG348 暂停通知 | 暂停不遮挡、恢复完整提示及正常消退 | [正式横竖DPR3原图和18阶段](playtests/2026-10-05-pause-notice-release/README.md) | `game-046871f`（PR377已独审发布） | `CODEX-LEAD-ASSISTANT` | 待看图 |
 | REQ-005 晨午晚/阴云 | 晴天早晨薄云、正午暖白、傍晚杏粉、阴天灰紫是否自然可辨 | [Godot 实机](playtests/2026-10-04-REQ-005-godot-accept/README.md)；[合成样张](playtests/2026-10-03-REQ-005-user-accept/README.md) | `game-693b311` 起（Pages 可能已是更新 tip） | `CURSOR-CONTRIBUTOR-LOCAL` | 待看图 |
 | REQ-005 夜里云带 | 入夜后晴天云是否压暗偏冷，不再像正午暖白贴在夜空上 | [Godot sun-night](playtests/2026-10-04-REQ-005-godot-accept/sun-night.png)；[合成](playtests/2026-10-03-REQ-005-user-accept/sun-night.png)；[记录](playtests/2026-10-03-REQ-005-night-cloud.md) | `game-922be64`（PR #158；公网包已核对） | `CURSOR-CONTRIBUTOR-LOCAL` | 待看图 |
 | REQ-012 切片 C 安静抬头 | 站定约 6 秒镜头轻抬入云；走动立刻回落；无新提示、不写相册 | [Godot 抬头帧](playtests/2026-10-04-REQ-005-godot-accept/quiet-sky-look.png)；[近似样张](playtests/2026-10-03-REQ-012-quiet-sky-look/README.md)；[实现记录](playtests/2026-10-03-REQ-012-quiet-sky-look.md) | `game-6a20cdc` | `CURSOR-CONTRIBUTOR-LOCAL` | 待看图 |
@@ -1166,3 +1167,7 @@ A game-bc8a048/bc8a048b964cf39b80291b375f36f7362f0deedc探索出门→落羽带�
 ## 2026-10-05 探索回院 cleanup 拒绝后提示残留：公开精确复现
 
 CODEX-LEAD独立助手在公开a067ce9b6674d5c1b35cdc2410f3d507f0f4d6a0普通UI带回落羽，仅精确session:null cleanup的prepared intent注入一次存储异常（write_id6/request2b2f6faac6584d35b2c50eccb217ebeb）。实际一次“再确认一次”获得可信parent rejected/terminated后等待15秒，session仍pending_commit且失败提示未收口；真关页重开、故障禁用后session清空，落羽仍1、serial1，无重复授予。见[原图、阶段回执与归档hash](playtests/2026-10-05-exploration-idle-cleanup-public/README.md)。首轮重复武装/空篮探针排除；这是受控Web边界诊断，不是物理断电或全部平台验收。host_budget_impl只读建议由Cloud登记cleanup生命周期、队首按完整expected record+watermark比较、仅可信parent拒绝后受限替代op、Main按精确身份清提示，仍是候选方案，未实现/未冻结；150/305原单待Cloud接收或显式交接，不称已开工、不关单、不称修复发布。
+
+## 2026-10-05 #348 暂停通知正式收口
+
+PR377最终52a2be7b720e26d306d4d9c90ea8dd8471dfb87a独立APPROVE5995013227，合046871fa803f3eebd8b9900092bb07ff70671d52；实际合入另含Cloud372，非较早a067局部导出。正确4.7.2最终CI58次启动(57验证+1导出)/168通知与既有门禁通过，Actions37313949152、Pages37314697585成功。公开清单game-046871f/source完整046；JS/WASM/PCK十模块及HTML/manifest共15文件逐一实际长度/Git blob匹配Pages15798ce/tree03d6129，PCK25269536字节/SHA256f556a65726ef66bd5a15d37af01baed92d2af707bef4c647050efdb74d40f808。自然中文横竖DPR3十八阶段严格同版，errors[]；暂停早到/已可见提示后等8/5秒墙钟均无通知覆盖、恢复完整引导、继续可读后正常消失。原图未加工，历史500ms持续遮挡未精确自然重现，native确定同帧/迟到入口缺口分别记录。195横屏master与受控快速输入根因/真机听验等仍未完，未冒五控件全过；制作人待看图。只关闭348通知范围，Leader/Cloud/ProducerOwner保持；[正式证据](playtests/2026-10-05-pause-notice-release/README.md)。

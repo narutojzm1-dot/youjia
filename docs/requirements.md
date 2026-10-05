@@ -425,11 +425,11 @@ Assistant音频300 b8e5e6dc916dacd1eaf45b36c9f17584d36fc16c已接且实际交，
 
 ## BUG-PAUSE-NOTICE-20261005（#348）
 
-- Owner：`CODEX-LEAD-ASSISTANT`；已按原单5994018758接收、5994245883登记方法范围。当前候选实现/原生门禁与最终组合本地自然Web已通过；独立终审与正式发布未完成。
+- Owner：`CODEX-LEAD-ASSISTANT`；已按原单5994018758接收、5994245883登记方法范围。PR377最终52a2be7b独立APPROVE5995013227合046871fa，正式发布与公网通知复验完成。
 - Goal：进入暂停当次隐藏提示，迟到提示不压音量控件；暂停/相册/确认框期间不耗阅读时间，恢复后正常可读与到时消失。保留单通知替换语义，不新增玩法或承诺。
 - 路径：Main._process仅顶部通知计时/显示、_toggle_pause末尾、_show_notice_key与_on_fish_caught显示入口、两私有显示守卫；test/pause_notice_suite.gd与daily独立入口、专用证据。Leader保存/REQ029目标纸片、Cloud探索、相册/标题及资源方法均保留。
 - 结果：真实Main受控UI双语四视口168项，原基线112失败→候选0；正确4.7.2最新a067组合完整57次启动门禁通过，含相册45914/目标纸片4653。自然中文横竖DPR3候选普通入院→暂停约8秒墙钟→恢复保留完整引导，旧公开game-1a3842c恢复已丢失；同帧漏洞由native定位，不冒精确复现旧500ms持续遮挡。
-- 分支：`work/codex-assistant/pause-notice-visibility`，实现/验证与限制见[专用证据](playtests/2026-10-05-pause-notice/README.md)。实际终审SHA/PR及正式Actions/Pages/public资源待原单更新；本地index非上线。#195短点击根因、真机/真人听验与完整心流保持未完。
+- 分支：`work/codex-assistant/pause-notice-visibility`；PR377完整52a2be7b720e26d306d4d9c90ea8dd8471dfb87a独审合046871fa803f3eebd8b9900092bb07ff70671d52。Actions37313949152/Pages37314697585成功，真正046 CI58次启动(57验证+1导出)；公开15文件与Pages15798ce/tree03d6129匹配，PCK25269536/SHA256f556a65726ef66bd5a15d37af01baed92d2af707bef4c647050efdb74d40f808。两组18条自然公网game-046871f/errors[]与原图已验，通知切片完成；[正式证据](playtests/2026-10-05-pause-notice-release/README.md)。
 
 ## BUG-ALBUM-LANDSCAPE-20261005（#350）
 
