@@ -56,7 +56,7 @@ sparse-checkout-cone-mode: false
 
 ## 导出成员对照与验收边界
 
-本地PCK 27,089,100B，SHA256 `89b6593e8e05951fc24f139dc01092b3281bc59cd5dc198d00e8`；454完整metadata基准包同大小，SHA256 `faa935055fb62250c137625da28e15d2ac28ef3880db1e8993e5991afec84df6`。九个导出文件仅PCK哈希不同，不能声称两包字节相同。
+本地PCK 27,089,100B，SHA256 `89b6593e8e05951fc24f139dc01092b3281bc59cd5dcf8616caef5dc198d00e8`；454完整metadata基准包同大小，SHA256 `faa935055fb62250c137625da28e15d2ac28ef3880db1e8993e5991afec84df6`。九个导出文件仅PCK哈希不同，不能声称两包字节相同。
 
 无需重启引擎的只读PCK解析检查全部成员MD5，两包同398个名字、无增删，394成员内容相同。UID cache的176条path→UID完全相同，仅记录顺序变化；另外三个导出场景每个只有4字节不同，偏移分别为resident_walk_authored_v1.scn的743、main.scn的690、native_walker.scn的527。这里未证明这些4字节的具体引擎字段，不能据此冒称三场景语义已另行验同。完整成员哈希、字节差异与可复现解析脚本见 [pck-member-comparison.json](pr-ci-source-sparse-evidence/pck-member-comparison.json)。源码无运行修改、全部套件与导出通过是本片功能不回退证据；不是用哈希差异推断新功能。
 
