@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/tmp/pause-notice-controls.py", line 33, in <module>
+    assert m['backend']['playing']==0 and m['gains']==[0,0],m
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'stage': 'muted', 'view': [844, 390, 3], 'build': 'index', 'backend': {'buffers': 2, 'bytes': 90316800, 'decoded': 2, 'starts': 2, 'players': 2, 'playing': 2, 'state': 'running'}, 'gains': [0.2030346542596817, 0.08082955330610275], 'errors': [], 'screenshot': '844-390-dpr3-muted.png'}

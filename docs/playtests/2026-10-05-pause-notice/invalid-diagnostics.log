@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/tmp/pause-notice-controls.py", line 23, in <module>
+    assert 0.40<m['music_volume']<0.60,m
+                ~^^^^^^^^^^^^^^^^
+KeyError: 'music_volume'
