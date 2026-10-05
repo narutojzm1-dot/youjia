@@ -47,6 +47,10 @@
 
 用户可见变更应更新 `docs/playtests/` 中相应版本的游玩记录；纯内部改动无需伪造玩家体验截图。玩家可见切片合入后，Owner 把截图或短视频链到 [`docs/decisions.md`](docs/decisions.md) 的「待制作人验收」表；制作人未点头不阻塞下一刀实现。`CODEX-LEAD` 向制作人汇总该表。
 
+### Godot daily 测试完成契约
+
+新增 daily 套件须在 `tools/lib/godot_suite_completions.tsv` 登记该入口准确的整行成功汇总；汇总应在断言结束后输出，报告检查数时须为正数且失败数为零。daily统一使用 `run_verified_godot_suite`，未知入口或缺完成标记不能放行。新增格式同步补受控包装器反例并执行真实回归；不能以通用PASS、零退出或mock代替实际完成。import/export和未迁移隔离工具使用的旧 `run_verified_godot` 仅检查进程与错误日志，不属于套件完成契约。详见[门禁说明](docs/engineering/godot-completion-gate.md)。
+
 ## 评审、冲突与合入
 
 1. PR 作者负责完成自己的实现、响应评审并维护 PR；Codex 在自己每次介入时复核整体状态与其他 PR 的依赖关系。

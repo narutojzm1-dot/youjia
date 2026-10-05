@@ -115,6 +115,7 @@
 | 编号 | 优先级 | 工作范围 | 验收条件 | 状态 | Owner | 依赖 / 记录 |
 | --- | --- | --- | --- | --- | --- | --- |
 | VERIFY-EXIT-GATE | P0 | 修复每日Godot回归忽略非零退出码的发布门禁漏洞 | Godot/timeout和tee任一非零、错误/FAIL日志或日志读取失败均阻断；11项故障注入与严格完整回归、独立最终SHA审查通过 | 已合入并核验发布；PR134独立审查批准、主线严格回归/导出/Pages与公开包一致性通过 | `CODEX-LEAD` | [工程督导#130](https://github.com/narutojzm1-dot/youjia/issues/130)；不包含存档协议、完成标记或PR验证workflow。[证据](playtests/2026-10-03-verify-exit-gate.md)。 |
+| VERIFY-SUITE-COMPLETION | P0 | 拒绝Godot测试零退出但断言未完成的假通过 | 每个daily测试登记准确整行完成格式、报告数量时必须为正数且零失败；未知入口、缺标记、日志读取失败或完成后异常均阻断；import/export不冒测试完成 | 已实现且候选组合真实全daily/Web导出通过；独立最终SHA审查、合入待完成 | `CODEX-LEAD` | [原单#130认领](https://github.com/narutojzm1-dot/youjia/issues/130#issuecomment-6002422874)；50受控包装器案例、71套完成行/72次Godot启动；[契约与原始证据](engineering/godot-completion-gate.md)。只收完成标记子范围，PR450只读验证workflow独立在途，#130长期单不整体关闭。 |
 
 
 ## 追加切片（低动效对象反馈）
