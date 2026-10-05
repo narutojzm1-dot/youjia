@@ -1,0 +1,973 @@
+{
+  "source": "089d453dc7b4ac8a8b5dbe8fc250d032c6e80b21",
+  "entry": "game-089d453",
+  "expected_pck_bytes": 27088396,
+  "expected_pck_sha256": "fb7b1473608a999f76eb46a8fd18b7f6fa2e8456f0508ee0db0693b2cddba1f8",
+  "inputs": [
+    {
+      "page_open": 1,
+      "utc": "2026-10-05T20:21:39Z",
+      "monotonic": 362985.808825786
+    },
+    {
+      "command": {
+        "op": "key",
+        "key": "Tab"
+      },
+      "page": 1,
+      "utc": "2026-10-05T20:21:48Z",
+      "monotonic": 362994.396238601
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 500
+      },
+      "page": 1,
+      "utc": "2026-10-05T20:21:48Z",
+      "monotonic": 362994.495420631
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "444-baseline-title-tab"
+      },
+      "page": 1,
+      "utc": "2026-10-05T20:21:49Z",
+      "monotonic": 362994.99735668
+    },
+    {
+      "command": {
+        "op": "key",
+        "key": "Tab"
+      },
+      "page": 1,
+      "utc": "2026-10-05T20:22:05Z",
+      "monotonic": 363011.086733165
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 300
+      },
+      "page": 1,
+      "utc": "2026-10-05T20:22:05Z",
+      "monotonic": 363011.205127686
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "444-baseline-title-tab2"
+      },
+      "page": 1,
+      "utc": "2026-10-05T20:22:05Z",
+      "monotonic": 363011.507458792
+    },
+    {
+      "command": {
+        "op": "click",
+        "x": 950,
+        "y": 600
+      },
+      "page": 1,
+      "utc": "2026-10-05T20:22:23Z",
+      "monotonic": 363029.760362655
+    },
+    {
+      "command": {
+        "op": "key",
+        "key": "Tab"
+      },
+      "page": 1,
+      "utc": "2026-10-05T20:22:23Z",
+      "monotonic": 363029.773144153
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 300
+      },
+      "page": 1,
+      "utc": "2026-10-05T20:22:23Z",
+      "monotonic": 363029.92376437
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "444-baseline-title-canvas-tab"
+      },
+      "page": 1,
+      "utc": "2026-10-05T20:22:24Z",
+      "monotonic": 363030.226317586
+    },
+    {
+      "command": {
+        "op": "click",
+        "x": 640,
+        "y": 368
+      },
+      "page": 1,
+      "utc": "2026-10-05T20:22:45Z",
+      "monotonic": 363051.265558682
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 2000
+      },
+      "page": 1,
+      "utc": "2026-10-05T20:22:48Z",
+      "monotonic": 363054.61557047
+    },
+    {
+      "command": {
+        "op": "key",
+        "key": "Escape"
+      },
+      "page": 1,
+      "utc": "2026-10-05T20:22:50Z",
+      "monotonic": 363056.618373507
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 500
+      },
+      "page": 1,
+      "utc": "2026-10-05T20:22:50Z",
+      "monotonic": 363056.718799444
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "444-baseline-pause"
+      },
+      "page": 1,
+      "utc": "2026-10-05T20:22:51Z",
+      "monotonic": 363057.224173442
+    },
+    {
+      "command": {
+        "op": "click",
+        "x": 641,
+        "y": 334
+      },
+      "page": 1,
+      "utc": "2026-10-05T20:23:03Z",
+      "monotonic": 363069.602701053
+    },
+    {
+      "command": {
+        "op": "move",
+        "x": 1000,
+        "y": 630
+      },
+      "page": 1,
+      "utc": "2026-10-05T20:23:03Z",
+      "monotonic": 363069.664301668
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 600
+      },
+      "page": 1,
+      "utc": "2026-10-05T20:23:03Z",
+      "monotonic": 363069.743366328
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "444-baseline-music-off-after-click"
+      },
+      "page": 1,
+      "utc": "2026-10-05T20:23:04Z",
+      "monotonic": 363070.360359177
+    },
+    {
+      "command": {
+        "op": "click",
+        "x": 641,
+        "y": 334
+      },
+      "page": 1,
+      "utc": "2026-10-05T20:23:05Z",
+      "monotonic": 363071.281428693
+    },
+    {
+      "command": {
+        "op": "move",
+        "x": 1000,
+        "y": 630
+      },
+      "page": 1,
+      "utc": "2026-10-05T20:23:05Z",
+      "monotonic": 363071.367089696
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 600
+      },
+      "page": 1,
+      "utc": "2026-10-05T20:23:05Z",
+      "monotonic": 363071.461772473
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "444-baseline-music-restored-after-click"
+      },
+      "page": 1,
+      "utc": "2026-10-05T20:23:06Z",
+      "monotonic": 363072.063898822
+    },
+    {
+      "command": {
+        "op": "click",
+        "x": 640,
+        "y": 165
+      },
+      "page": 1,
+      "utc": "2026-10-05T20:23:07Z",
+      "monotonic": 363073.06109145
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 1000
+      },
+      "page": 1,
+      "utc": "2026-10-05T20:23:07Z",
+      "monotonic": 363073.131295838
+    },
+    {
+      "command": {
+        "op": "db",
+        "name": "00-restored-settings-initial-db"
+      },
+      "page": 1,
+      "utc": "2026-10-05T20:23:08Z",
+      "monotonic": 363074.134861015
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "00-initial-yard"
+      },
+      "page": 1,
+      "utc": "2026-10-05T20:23:08Z",
+      "monotonic": 363074.380665724
+    },
+    {
+      "command": {
+        "op": "click",
+        "x": 363,
+        "y": 411
+      },
+      "page": 1,
+      "utc": "2026-10-05T20:23:24Z",
+      "monotonic": 363090.774810267
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 5000
+      },
+      "page": 1,
+      "utc": "2026-10-05T20:23:24Z",
+      "monotonic": 363090.913027717
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "01-natural-sheep"
+      },
+      "page": 1,
+      "utc": "2026-10-05T20:23:29Z",
+      "monotonic": 363095.916154773
+    },
+    {
+      "command": {
+        "op": "click",
+        "x": 113,
+        "y": 675
+      },
+      "page": 1,
+      "utc": "2026-10-05T20:23:30Z",
+      "monotonic": 363096.825575862
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 700
+      },
+      "page": 1,
+      "utc": "2026-10-05T20:23:30Z",
+      "monotonic": 363096.899389081
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "02-album-before"
+      },
+      "page": 1,
+      "utc": "2026-10-05T20:23:31Z",
+      "monotonic": 363097.602049608
+    },
+    {
+      "command": {
+        "op": "db",
+        "name": "02-before-relationship-db"
+      },
+      "page": 1,
+      "utc": "2026-10-05T20:23:32Z",
+      "monotonic": 363098.61800391
+    },
+    {
+      "command": {
+        "op": "click",
+        "x": 918,
+        "y": 605
+      },
+      "page": 1,
+      "utc": "2026-10-05T20:23:33Z",
+      "monotonic": 363099.22931753
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 700
+      },
+      "page": 1,
+      "utc": "2026-10-05T20:23:33Z",
+      "monotonic": 363099.333896877
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "03-before-lead"
+      },
+      "page": 1,
+      "utc": "2026-10-05T20:23:34Z",
+      "monotonic": 363100.040190252
+    },
+    {
+      "command": {
+        "op": "click",
+        "x": 724,
+        "y": 416
+      },
+      "page": 1,
+      "utc": "2026-10-05T20:23:44Z",
+      "monotonic": 363110.411081308
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 7000
+      },
+      "page": 1,
+      "utc": "2026-10-05T20:23:44Z",
+      "monotonic": 363110.431676587
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "attempt1-leading-near-start"
+      },
+      "page": 1,
+      "utc": "2026-10-05T20:23:51Z",
+      "monotonic": 363117.440811873
+    },
+    {
+      "command": {
+        "op": "click",
+        "x": 530,
+        "y": 458
+      },
+      "page": 1,
+      "utc": "2026-10-05T20:24:23Z",
+      "monotonic": 363149.464114236
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 6000
+      },
+      "page": 1,
+      "utc": "2026-10-05T20:24:23Z",
+      "monotonic": 363149.496754019
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "attempt1-leading-away"
+      },
+      "page": 1,
+      "utc": "2026-10-05T20:24:29Z",
+      "monotonic": 363155.501263032
+    },
+    {
+      "command": {
+        "op": "db",
+        "name": "attempt1-away-db"
+      },
+      "page": 1,
+      "utc": "2026-10-05T20:24:30Z",
+      "monotonic": 363156.400993441
+    },
+    {
+      "command": {
+        "op": "click",
+        "x": 821,
+        "y": 449
+      },
+      "page": 1,
+      "utc": "2026-10-05T20:24:44Z",
+      "monotonic": 363170.538957884
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 5500
+      },
+      "page": 1,
+      "utc": "2026-10-05T20:24:44Z",
+      "monotonic": 363170.618816622
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "attempt1-leading-returned"
+      },
+      "page": 1,
+      "utc": "2026-10-05T20:24:50Z",
+      "monotonic": 363176.124227876
+    },
+    {
+      "command": {
+        "op": "key",
+        "key": "Space"
+      },
+      "page": 1,
+      "utc": "2026-10-05T20:24:51Z",
+      "monotonic": 363177.105896847
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 500
+      },
+      "page": 1,
+      "utc": "2026-10-05T20:24:51Z",
+      "monotonic": 363177.264429684
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "attempt1-released"
+      },
+      "page": 1,
+      "utc": "2026-10-05T20:24:51Z",
+      "monotonic": 363177.767043609
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 15000
+      },
+      "page": 1,
+      "utc": "2026-10-05T20:24:52Z",
+      "monotonic": 363178.726961327
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "attempt1-after15s"
+      },
+      "page": 1,
+      "utc": "2026-10-05T20:25:07Z",
+      "monotonic": 363193.731453402
+    },
+    {
+      "command": {
+        "op": "db",
+        "name": "attempt1-after15s-db"
+      },
+      "page": 1,
+      "utc": "2026-10-05T20:25:08Z",
+      "monotonic": 363194.716569025
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 15000
+      },
+      "page": 1,
+      "utc": "2026-10-05T20:25:25Z",
+      "monotonic": 363211.915009304
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "linger-observation-15s"
+      },
+      "page": 1,
+      "utc": "2026-10-05T20:25:40Z",
+      "monotonic": 363226.924119423
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 15000
+      },
+      "page": 1,
+      "utc": "2026-10-05T20:25:41Z",
+      "monotonic": 363227.695788989
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "linger-observation-30s"
+      },
+      "page": 1,
+      "utc": "2026-10-05T20:25:56Z",
+      "monotonic": 363242.699851756
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 15000
+      },
+      "page": 1,
+      "utc": "2026-10-05T20:25:57Z",
+      "monotonic": 363243.568695048
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "linger-observation-45s"
+      },
+      "page": 1,
+      "utc": "2026-10-05T20:26:12Z",
+      "monotonic": 363258.572386257
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 15000
+      },
+      "page": 1,
+      "utc": "2026-10-05T20:26:13Z",
+      "monotonic": 363259.412563342
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "linger-observation-60s"
+      },
+      "page": 1,
+      "utc": "2026-10-05T20:26:28Z",
+      "monotonic": 363274.416105314
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 15000
+      },
+      "page": 1,
+      "utc": "2026-10-05T20:26:29Z",
+      "monotonic": 363275.28090551
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "linger-observation-75s"
+      },
+      "page": 1,
+      "utc": "2026-10-05T20:26:44Z",
+      "monotonic": 363290.284287461
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 15000
+      },
+      "page": 1,
+      "utc": "2026-10-05T20:26:45Z",
+      "monotonic": 363291.142765459
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "linger-observation-90s"
+      },
+      "page": 1,
+      "utc": "2026-10-05T20:27:00Z",
+      "monotonic": 363306.146090488
+    },
+    {
+      "command": {
+        "op": "db",
+        "name": "04-after90s-db"
+      },
+      "page": 1,
+      "utc": "2026-10-05T20:27:00Z",
+      "monotonic": 363306.938679963
+    },
+    {
+      "command": {
+        "op": "click",
+        "x": 112,
+        "y": 675
+      },
+      "page": 1,
+      "utc": "2026-10-05T20:27:01Z",
+      "monotonic": 363307.423854403
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 600
+      },
+      "page": 1,
+      "utc": "2026-10-05T20:27:01Z",
+      "monotonic": 363307.620136729
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "05-album-before-close"
+      },
+      "page": 1,
+      "utc": "2026-10-05T20:27:02Z",
+      "monotonic": 363308.224622137
+    },
+    {
+      "command": {
+        "op": "db",
+        "name": "05-settled-before-close-db"
+      },
+      "page": 1,
+      "utc": "2026-10-05T20:27:03Z",
+      "monotonic": 363309.309523507
+    },
+    {
+      "command": {
+        "op": "reopen"
+      },
+      "page": 1,
+      "utc": "2026-10-05T20:27:03Z",
+      "monotonic": 363309.930867595
+    },
+    {
+      "page_closed": 1,
+      "utc": "2026-10-05T20:27:17Z",
+      "monotonic": 363323.219047062
+    },
+    {
+      "page_open": 2,
+      "utc": "2026-10-05T20:27:45Z",
+      "monotonic": 363351.712328753
+    },
+    {
+      "command": {
+        "op": "db",
+        "name": "06-reopened-title-db"
+      },
+      "page": 2,
+      "utc": "2026-10-05T20:28:00Z",
+      "monotonic": 363366.361788821
+    },
+    {
+      "command": {
+        "op": "click",
+        "x": 640,
+        "y": 368
+      },
+      "page": 2,
+      "utc": "2026-10-05T20:28:00Z",
+      "monotonic": 363366.565535588
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 2500
+      },
+      "page": 2,
+      "utc": "2026-10-05T20:28:04Z",
+      "monotonic": 363370.478477785
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "07-reopened-yard"
+      },
+      "page": 2,
+      "utc": "2026-10-05T20:28:06Z",
+      "monotonic": 363372.984600403
+    },
+    {
+      "command": {
+        "op": "click",
+        "x": 113,
+        "y": 675
+      },
+      "page": 2,
+      "utc": "2026-10-05T20:28:07Z",
+      "monotonic": 363373.828452891
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 600
+      },
+      "page": 2,
+      "utc": "2026-10-05T20:28:08Z",
+      "monotonic": 363374.114300297
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "08-reopened-album"
+      },
+      "page": 2,
+      "utc": "2026-10-05T20:28:08Z",
+      "monotonic": 363374.72058663
+    },
+    {
+      "command": {
+        "op": "db",
+        "name": "08-reopened-album-db"
+      },
+      "page": 2,
+      "utc": "2026-10-05T20:28:09Z",
+      "monotonic": 363375.710786072
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 5000
+      },
+      "page": 2,
+      "utc": "2026-10-05T20:28:10Z",
+      "monotonic": 363376.232248772
+    },
+    {
+      "command": {
+        "op": "db",
+        "name": "09-settled-reopened-db"
+      },
+      "page": 2,
+      "utc": "2026-10-05T20:28:15Z",
+      "monotonic": 363381.240105942
+    },
+    {
+      "command": {
+        "op": "end"
+      },
+      "page": 2,
+      "utc": "2026-10-05T20:28:15Z",
+      "monotonic": 363381.84028744
+    },
+    {
+      "page_closed": 2,
+      "utc": "2026-10-05T20:28:28Z",
+      "monotonic": 363394.569320826
+    }
+  ],
+  "bindings": [
+    {
+      "page": 1,
+      "stage": "before",
+      "utc": "2026-10-05T20:21:13Z",
+      "manifest": {
+        "schema": "youjia.release/v1",
+        "sourceCommit": "089d453dc7b4ac8a8b5dbe8fc250d032c6e80b21",
+        "engine": "4.7.2.stable.official.ed1daf0bf",
+        "entry": "game-089d453",
+        "publishedAt": "2026-10-05T19:11:39Z",
+        "storageModules": {
+          "entry": "save-089d453",
+          "sha256": {
+            "bridge.mjs": "ef18687554fdc0d745c1d18d4d091e959cc78559da0d61d6a093e562ff9bbc91",
+            "budgets.mjs": "52984153977dcafd1d2682e848f1999f091d0966e17d46e902de76f5735a7018",
+            "host.mjs": "9de8dc0ef4bfc037a8ad0bff575d40c3dd4341bcc723351a412b2061bb661904",
+            "idbfs_source.mjs": "16eb57d471537f13d3e50018b56c2d416d2847f0d0249ba44433dd9ebb65f4d8",
+            "legacy_inspection.mjs": "db3a23a0221aa5d34a58a6a49aeeff930295ffe20bfcf73a7c11f0d49cffd671",
+            "legacy_seal.mjs": "9642132f5d4e7523e5966e802069af7f4bae803fae8e2e7c28ae55ee97d85610",
+            "legacy_v5.mjs": "8e7f4ad2d87aab77ac05361e4f46060476e933aa079ae94301998d08d4599621",
+            "lifecycle.mjs": "1cfaebb9a8745e2dc3e4f694ef475f250640870938f04160be1a5c9acd62935d",
+            "source_decode.mjs": "411f3bc784cb32a07f32eed5fc7d88f71b59a667cc0d68a50fe13c55bfdba18a",
+            "store.mjs": "2193b4397b8662a8ebc754dc4468e4d62964d209b4e1d0f0924a2ec81b409cbe"
+          }
+        }
+      },
+      "manifest_status": 200,
+      "html_status": 200,
+      "html_sha256": "97e90912f96da7eee448b43cd42d1a8a6dd9f420be3c158a25042af065027b29",
+      "pck": {
+        "status": 200,
+        "bytes": 27088396,
+        "sha256": "fb7b1473608a999f76eb46a8fd18b7f6fa2e8456f0508ee0db0693b2cddba1f8"
+      }
+    },
+    {
+      "page": 1,
+      "stage": "after",
+      "utc": "2026-10-05T20:27:05Z",
+      "manifest": {
+        "schema": "youjia.release/v1",
+        "sourceCommit": "089d453dc7b4ac8a8b5dbe8fc250d032c6e80b21",
+        "engine": "4.7.2.stable.official.ed1daf0bf",
+        "entry": "game-089d453",
+        "publishedAt": "2026-10-05T19:11:39Z",
+        "storageModules": {
+          "entry": "save-089d453",
+          "sha256": {
+            "bridge.mjs": "ef18687554fdc0d745c1d18d4d091e959cc78559da0d61d6a093e562ff9bbc91",
+            "budgets.mjs": "52984153977dcafd1d2682e848f1999f091d0966e17d46e902de76f5735a7018",
+            "host.mjs": "9de8dc0ef4bfc037a8ad0bff575d40c3dd4341bcc723351a412b2061bb661904",
+            "idbfs_source.mjs": "16eb57d471537f13d3e50018b56c2d416d2847f0d0249ba44433dd9ebb65f4d8",
+            "legacy_inspection.mjs": "db3a23a0221aa5d34a58a6a49aeeff930295ffe20bfcf73a7c11f0d49cffd671",
+            "legacy_seal.mjs": "9642132f5d4e7523e5966e802069af7f4bae803fae8e2e7c28ae55ee97d85610",
+            "legacy_v5.mjs": "8e7f4ad2d87aab77ac05361e4f46060476e933aa079ae94301998d08d4599621",
+            "lifecycle.mjs": "1cfaebb9a8745e2dc3e4f694ef475f250640870938f04160be1a5c9acd62935d",
+            "source_decode.mjs": "411f3bc784cb32a07f32eed5fc7d88f71b59a667cc0d68a50fe13c55bfdba18a",
+            "store.mjs": "2193b4397b8662a8ebc754dc4468e4d62964d209b4e1d0f0924a2ec81b409cbe"
+          }
+        }
+      },
+      "manifest_status": 200,
+      "html_status": 200,
+      "html_sha256": "97e90912f96da7eee448b43cd42d1a8a6dd9f420be3c158a25042af065027b29",
+      "pck": {
+        "status": 200,
+        "bytes": 27088396,
+        "sha256": "fb7b1473608a999f76eb46a8fd18b7f6fa2e8456f0508ee0db0693b2cddba1f8"
+      }
+    },
+    {
+      "page": 2,
+      "stage": "before",
+      "utc": "2026-10-05T20:27:18Z",
+      "manifest": {
+        "schema": "youjia.release/v1",
+        "sourceCommit": "089d453dc7b4ac8a8b5dbe8fc250d032c6e80b21",
+        "engine": "4.7.2.stable.official.ed1daf0bf",
+        "entry": "game-089d453",
+        "publishedAt": "2026-10-05T19:11:39Z",
+        "storageModules": {
+          "entry": "save-089d453",
+          "sha256": {
+            "bridge.mjs": "ef18687554fdc0d745c1d18d4d091e959cc78559da0d61d6a093e562ff9bbc91",
+            "budgets.mjs": "52984153977dcafd1d2682e848f1999f091d0966e17d46e902de76f5735a7018",
+            "host.mjs": "9de8dc0ef4bfc037a8ad0bff575d40c3dd4341bcc723351a412b2061bb661904",
+            "idbfs_source.mjs": "16eb57d471537f13d3e50018b56c2d416d2847f0d0249ba44433dd9ebb65f4d8",
+            "legacy_inspection.mjs": "db3a23a0221aa5d34a58a6a49aeeff930295ffe20bfcf73a7c11f0d49cffd671",
+            "legacy_seal.mjs": "9642132f5d4e7523e5966e802069af7f4bae803fae8e2e7c28ae55ee97d85610",
+            "legacy_v5.mjs": "8e7f4ad2d87aab77ac05361e4f46060476e933aa079ae94301998d08d4599621",
+            "lifecycle.mjs": "1cfaebb9a8745e2dc3e4f694ef475f250640870938f04160be1a5c9acd62935d",
+            "source_decode.mjs": "411f3bc784cb32a07f32eed5fc7d88f71b59a667cc0d68a50fe13c55bfdba18a",
+            "store.mjs": "2193b4397b8662a8ebc754dc4468e4d62964d209b4e1d0f0924a2ec81b409cbe"
+          }
+        }
+      },
+      "manifest_status": 200,
+      "html_status": 200,
+      "html_sha256": "97e90912f96da7eee448b43cd42d1a8a6dd9f420be3c158a25042af065027b29",
+      "pck": {
+        "status": 200,
+        "bytes": 27088396,
+        "sha256": "fb7b1473608a999f76eb46a8fd18b7f6fa2e8456f0508ee0db0693b2cddba1f8"
+      }
+    },
+    {
+      "page": 2,
+      "stage": "after",
+      "utc": "2026-10-05T20:28:17Z",
+      "manifest": {
+        "schema": "youjia.release/v1",
+        "sourceCommit": "089d453dc7b4ac8a8b5dbe8fc250d032c6e80b21",
+        "engine": "4.7.2.stable.official.ed1daf0bf",
+        "entry": "game-089d453",
+        "publishedAt": "2026-10-05T19:11:39Z",
+        "storageModules": {
+          "entry": "save-089d453",
+          "sha256": {
+            "bridge.mjs": "ef18687554fdc0d745c1d18d4d091e959cc78559da0d61d6a093e562ff9bbc91",
+            "budgets.mjs": "52984153977dcafd1d2682e848f1999f091d0966e17d46e902de76f5735a7018",
+            "host.mjs": "9de8dc0ef4bfc037a8ad0bff575d40c3dd4341bcc723351a412b2061bb661904",
+            "idbfs_source.mjs": "16eb57d471537f13d3e50018b56c2d416d2847f0d0249ba44433dd9ebb65f4d8",
+            "legacy_inspection.mjs": "db3a23a0221aa5d34a58a6a49aeeff930295ffe20bfcf73a7c11f0d49cffd671",
+            "legacy_seal.mjs": "9642132f5d4e7523e5966e802069af7f4bae803fae8e2e7c28ae55ee97d85610",
+            "legacy_v5.mjs": "8e7f4ad2d87aab77ac05361e4f46060476e933aa079ae94301998d08d4599621",
+            "lifecycle.mjs": "1cfaebb9a8745e2dc3e4f694ef475f250640870938f04160be1a5c9acd62935d",
+            "source_decode.mjs": "411f3bc784cb32a07f32eed5fc7d88f71b59a667cc0d68a50fe13c55bfdba18a",
+            "store.mjs": "2193b4397b8662a8ebc754dc4468e4d62964d209b4e1d0f0924a2ec81b409cbe"
+          }
+        }
+      },
+      "manifest_status": 200,
+      "html_status": 200,
+      "html_sha256": "97e90912f96da7eee448b43cd42d1a8a6dd9f420be3c158a25042af065027b29",
+      "pck": {
+        "status": 200,
+        "bytes": 27088396,
+        "sha256": "fb7b1473608a999f76eb46a8fd18b7f6fa2e8456f0508ee0db0693b2cddba1f8"
+      }
+    }
+  ],
+  "errors": [],
+  "console": [
+    {
+      "page": 1,
+      "type": "log",
+      "text": "Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org"
+    },
+    {
+      "page": 1,
+      "type": "log",
+      "text": "OpenGL API OpenGL ES 3.0 (WebGL 2.0 (OpenGL ES 3.0 Chromium)) - Compatibility - Using Device: WebKit - WebKit WebGL"
+    },
+    {
+      "page": 1,
+      "type": "log",
+      "text": "Build configuration: Emscripten 4.0.20, single-threaded, no GDExtension support."
+    },
+    {
+      "page": 1,
+      "type": "info",
+      "text": "[game-loading] timings_ms {\"engineScriptReady\":363,\"downloadComplete\":6509,\"engineReady\":8776,\"firstFrame\":9607}"
+    },
+    {
+      "page": 2,
+      "type": "log",
+      "text": "Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org"
+    },
+    {
+      "page": 2,
+      "type": "log",
+      "text": "OpenGL API OpenGL ES 3.0 (WebGL 2.0 (OpenGL ES 3.0 Chromium)) - Compatibility - Using Device: WebKit - WebKit WebGL"
+    },
+    {
+      "page": 2,
+      "type": "log",
+      "text": "Build configuration: Emscripten 4.0.20, single-threaded, no GDExtension support."
+    },
+    {
+      "page": 2,
+      "type": "info",
+      "text": "[game-loading] timings_ms {\"engineScriptReady\":30,\"downloadComplete\":11712,\"engineReady\":13861,\"firstFrame\":14460}"
+    }
+  ],
+  "started_utc": "2026-10-05T20:21:09Z",
+  "limits": [
+    "ordinary UI only, no seed/time/location/runtime/save injection",
+    "single fresh profile; at most 3 lead-away/return/release attempts then 90 seconds quiet observation",
+    "10 percent linger cannot be declared observed merely from saved memory or still frames",
+    "desktop Chromium; not physical device or audio comfort QA"
+  ],
+  "closed_utc": "2026-10-05T20:28:28Z"
+}
