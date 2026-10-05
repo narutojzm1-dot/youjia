@@ -1,0 +1,29 @@
+{
+  "source": "33b105f075a1b851450f647c623302070ffafe1f",
+  "reopened_source": "33b105f075a1b851450f647c623302070ffafe1f",
+  "first_html": "game-33b105f",
+  "reopened_html": "game-33b105f",
+  "complete_before_lost_receipt": true,
+  "one_resolve": true,
+  "resolve": {
+    "schema": "youjia.save-receipt/v2",
+    "namespace": "youjia-save-host-v1",
+    "write_id": "1",
+    "request_id": "e10fa82a69094f85825d6eae9ff38d8b",
+    "store_id": "04283f0c706647c8ae2e8ba8d97c50e2",
+    "candidate_token": "8fe6ae89bd5548ccafbfd1db9831cef7",
+    "parent_token": "abbc3ef2bcbd4efe9a6ec6a027b0c95e",
+    "observed_token": "8fe6ae89bd5548ccafbfd1db9831cef7",
+    "payload_sha256": "224c9584ec9ab6afb7a17d34d3873c5c67c5a898a6292fbdb98b51bf032dffca",
+    "generation": "2",
+    "outcome": "confirmed",
+    "transaction_state": "complete",
+    "readback_verified": true,
+    "old_write_terminated": true
+  },
+  "current_identical": true,
+  "generation": "2",
+  "intent_cleared": true,
+  "errors": [],
+  "driver_exit": 0
+}
