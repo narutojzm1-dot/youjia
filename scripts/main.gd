@@ -16,6 +16,7 @@ const HINT_MIN_TEXT_HEIGHT := 32.0
 const CONFIRM_PANEL_SIZE := Vector2(420, 240)
 ## 屏高不超过这个值时（手机横屏扣掉浏览器地址栏、568×320 等）标题页改用更紧的排版（REQ-20261005-031）。
 const TITLE_TIGHT_MAX_HEIGHT := 360.0
+const ALBUM_TIGHT_MAX_HEIGHT := 360.0
 const SAGE := Color("8fb389")
 const CREAM := Color("fffaf1")
 const LAVENDER := Color("cbb6d6")
@@ -1680,27 +1681,55 @@ func _flash_catch() -> void:
 	tween.tween_callback(func() -> void: _photo_flash.color = Color(CREAM, 0.0))
 
 
-func _layout() -> void:
-	var pad := 20.0
-	if _album_chip == null: return
-	var compact := size.x < 700.0
-	_fit_title_column()
+## REQ-20261006-034: on short landscape screens (usable height 360 or less,
+## e.g. 568x320 or a 640x300 phone browser with its bars showing) the album's
+## fixed chrome left a one-page book only 146-166 px tall, so the page number
+## and longer notes ran off the paper and into the buttons. Screens in this
+## tight band now trim the outer margin, paper padding, title size, spacing and
+## button height so the page gets the room; taller screens keep the original
+## numbers.
+func _fit_album_frame() -> void:
+	var tight := size.y <= ALBUM_TIGHT_MAX_HEIGHT
 	var album_width := minf(860.0,size.x-32.0)
-	var album_height := minf(560.0,size.y-32.0)
+	var album_height := minf(560.0,size.y-(16.0 if tight else 32.0))
 	_album_panel.custom_minimum_size = Vector2(album_width,album_height)
 	_album_panel.offset_left = -album_width*0.5
 	_album_panel.offset_right = album_width*0.5
 	_album_panel.offset_top = -album_height*0.5
 	_album_panel.offset_bottom = album_height*0.5
+	var separation := 4 if tight else 8
+	var button_height := 40.0 if tight else 42.0
+	var title_size := 18 if tight else 24
+	var padding := 6.0 if tight else 10.0
+	var frame_style := _album_panel.get_theme_stylebox("panel") as StyleBoxFlat
+	if frame_style != null:
+		frame_style.content_margin_top = padding
+		frame_style.content_margin_bottom = padding
+	(_album_title.get_parent() as VBoxContainer).add_theme_constant_override("separation", separation)
+	_album_title.add_theme_font_size_override("font_size", title_size)
+	for button: Button in [_album_previous_button, _album_next_button, _album_back_button]:
+		button.custom_minimum_size.y = button_height
 	var was_two_pages := _album_two_pages
 	_album_two_pages = album_width >= 670.0 and size.y >= 460.0
 	var book_width := album_width - 32.0
 	var book_height := album_height - 122.0
+	if tight:
+		# Panel padding + title line + two gaps + buttons + 4 px slack.
+		var title_height := ceilf(_album_title.get_theme_font("font").get_height(title_size))
+		book_height = floorf(album_height - padding * 2.0 - title_height - separation * 2.0 - button_height - 4.0)
 	_album_spread.custom_minimum_size = Vector2(book_width, book_height)
-	_album_previous_button.get_parent().custom_minimum_size = Vector2(book_width, 42)
+	_album_previous_button.get_parent().custom_minimum_size = Vector2(book_width, button_height)
 	_album_page_size = Vector2((book_width - 10.0) * 0.5 if _album_two_pages else book_width, book_height)
 	if _album_screen.visible or was_two_pages != _album_two_pages:
 		_render_album_pages()
+
+
+func _layout() -> void:
+	var pad := 20.0
+	if _album_chip == null: return
+	var compact := size.x < 700.0
+	_fit_title_column()
+	_fit_album_frame()
 	_fit_notice()
 	_notice.offset_top = -170 if compact else -110
 	_notice.offset_bottom = -130 if compact else -70
