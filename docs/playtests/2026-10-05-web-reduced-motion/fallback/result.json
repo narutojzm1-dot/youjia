@@ -1,0 +1,31 @@
+{
+  "scope": "candidate browser API-failure injection; not ordinary preference UX",
+  "runtime": "4886addaa9f091d55f8f5e5fd63908e4aa7b0f30",
+  "pck_sha256": "f965ac3846bd97436d972cd04ea3a8c03663e92eabec92098d1d714d94b93666",
+  "cases": [
+    {
+      "name": "missing",
+      "fault": "window.matchMedia = undefined;",
+      "errors": [],
+      "first_frame": true,
+      "normal_input": {
+        "mouse_click": [
+          640,
+          368
+        ]
+      }
+    },
+    {
+      "name": "throws",
+      "fault": "window.matchMedia = () => { throw new Error('TEST media API unavailable'); }; ",
+      "errors": [],
+      "first_frame": true,
+      "normal_input": {
+        "mouse_click": [
+          640,
+          368
+        ]
+      }
+    }
+  ]
+}
