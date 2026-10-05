@@ -1,0 +1,57 @@
+{
+  "runtime_sha": "098e611233e20f8a5eccb47afc43a6341f09dedb",
+  "pck_bytes": 27078024,
+  "pck_sha256": "c72c05a4bce738d92d4e23d6b6ce99a2e2a1b1f5442b2467f995da8e0540e821",
+  "modules": {
+    "bridge.mjs": {
+      "bytes": 1856,
+      "sha256": "ef18687554fdc0d745c1d18d4d091e959cc78559da0d61d6a093e562ff9bbc91",
+      "matches_source": true
+    },
+    "budgets.mjs": {
+      "bytes": 340,
+      "sha256": "52984153977dcafd1d2682e848f1999f091d0966e17d46e902de76f5735a7018",
+      "matches_source": true
+    },
+    "host.mjs": {
+      "bytes": 7730,
+      "sha256": "9de8dc0ef4bfc037a8ad0bff575d40c3dd4341bcc723351a412b2061bb661904",
+      "matches_source": true
+    },
+    "idbfs_source.mjs": {
+      "bytes": 5550,
+      "sha256": "16eb57d471537f13d3e50018b56c2d416d2847f0d0249ba44433dd9ebb65f4d8",
+      "matches_source": true
+    },
+    "legacy_inspection.mjs": {
+      "bytes": 2886,
+      "sha256": "db3a23a0221aa5d34a58a6a49aeeff930295ffe20bfcf73a7c11f0d49cffd671",
+      "matches_source": true
+    },
+    "legacy_seal.mjs": {
+      "bytes": 2510,
+      "sha256": "9642132f5d4e7523e5966e802069af7f4bae803fae8e2e7c28ae55ee97d85610",
+      "matches_source": true
+    },
+    "legacy_v5.mjs": {
+      "bytes": 2245,
+      "sha256": "8e7f4ad2d87aab77ac05361e4f46060476e933aa079ae94301998d08d4599621",
+      "matches_source": true
+    },
+    "lifecycle.mjs": {
+      "bytes": 1878,
+      "sha256": "1cfaebb9a8745e2dc3e4f694ef475f250640870938f04160be1a5c9acd62935d",
+      "matches_source": true
+    },
+    "source_decode.mjs": {
+      "bytes": 1542,
+      "sha256": "411f3bc784cb32a07f32eed5fc7d88f71b59a667cc0d68a50fe13c55bfdba18a",
+      "matches_source": true
+    },
+    "store.mjs": {
+      "bytes": 13890,
+      "sha256": "2193b4397b8662a8ebc754dc4468e4d62964d209b4e1d0f0924a2ec81b409cbe",
+      "matches_source": true
+    }
+  }
+}

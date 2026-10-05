@@ -1,0 +1,23 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ERROR: sheep_a observer facing without per-cel size change
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://test/sheep_attention_suite.gd:7)
+       [1] run (res://test/sheep_attention_suite.gd:27)
+ERROR: sheep_a observer facing without per-cel size change
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://test/sheep_attention_suite.gd:7)
+       [1] run (res://test/sheep_attention_suite.gd:27)
+ERROR: sheep_b observer facing without per-cel size change
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://test/sheep_attention_suite.gd:7)
+       [1] run (res://test/sheep_attention_suite.gd:27)
+ERROR: sheep_b observer facing without per-cel size change
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://test/sheep_attention_suite.gd:7)
+       [1] run (res://test/sheep_attention_suite.gd:27)
+SHEEP ATTENTION FAIL 56

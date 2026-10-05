@@ -1,0 +1,50 @@
+{
+  "sheep_clingy_attend_v2": {
+    "byte_identical_to_producer": true,
+    "sha256": "674f8a61a40df4486e0e52a7a55bf849c9ed312efe716ce6bddbb9e1f782b4c0",
+    "manifest": {
+      "width": 1254,
+      "height": 1254,
+      "alpha_bbox": [
+        148,
+        110,
+        1055,
+        1070
+      ],
+      "ground_anchor": [
+        576.0,
+        1178
+      ],
+      "native_facing": 1,
+      "source_commit": "bccf132251e845262eb2e374d5d645a02c80de62",
+      "source_path": "art/concepts/producer_sheep_response_v2/sheep_clingy_attend_v2.png",
+      "sha256": "674f8a61a40df4486e0e52a7a55bf849c9ed312efe716ce6bddbb9e1f782b4c0",
+      "calibration": "Preserve idle scale and ground anchor; no per-cel renormalization or pixel edits."
+    },
+    "border_alpha_gt16": 0
+  },
+  "sheep_dull_glance_v3": {
+    "byte_identical_to_producer": true,
+    "sha256": "7bf3e32e40d50a329d042a15232152fcee0ca29e949e50dc8bb54dfcfd890b0c",
+    "manifest": {
+      "width": 1254,
+      "height": 1254,
+      "alpha_bbox": [
+        30,
+        181,
+        1222,
+        946
+      ],
+      "ground_anchor": [
+        732.5,
+        1124
+      ],
+      "native_facing": -1,
+      "source_commit": "bccf132251e845262eb2e374d5d645a02c80de62",
+      "source_path": "art/concepts/producer_sheep_response_v2/sheep_dull_glance_v3.png",
+      "sha256": "7bf3e32e40d50a329d042a15232152fcee0ca29e949e50dc8bb54dfcfd890b0c",
+      "calibration": "Preserve idle scale and ground anchor; no per-cel renormalization or pixel edits."
+    },
+    "border_alpha_gt16": 0
+  }
+}
