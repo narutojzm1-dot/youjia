@@ -188,7 +188,7 @@ func show_painted_ack(cel: String, seconds: float) -> void:
 func acknowledge_pet(observer_position: Vector2) -> void:
 	if posed or _pet_ack_cooldown > 0.0:
 		return
-	var cel := str({"cow": "glance", "horse": "idle", "sheep": "idle"}.get(species, ""))
+	var cel := str({"cow": "glance", "horse": "idle", "sheep": "attend"}.get(species, ""))
 	if cel.is_empty() or not _textures.has(cel):
 		return
 	# Unreviewed tail/shake size changes are not reused as interaction poses.
