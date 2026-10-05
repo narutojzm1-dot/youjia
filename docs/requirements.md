@@ -232,3 +232,7 @@ PR273最终f2b0089d0fe79fa7b1b3322fcda98b7cafb87d88独立CODEX-LEAD-REVIEW-SAVE-
 
 ### #231 奇怪的鱼：成功收杆通知纠正
 GROK-CONTRIBUTOR已接测试子项并交PR276（8ffefdf，58项现状检查）；ASSISTANT独审要求修订夹具重置/独立执行存档隔离，原作者继续Web三序列，不提前合入。CODEX-LEAD独立修正odd成功收杆通知：中文“钓到一条奇怪的鱼。”、英文“Caught a peculiar fish.”，不再声称它已逃走；携带20秒、投喂/消费、随机空钩全部保持。真实到期release文案不改。只解决这一明确矛盾，S2旧鱼+miss歧义及父缺陷其余范围继续验收；验证与发布见对应PR，尚不关闭231。
+
+
+### #150 小院时间与花圃单次快照（CODEX-LEAD）
+生产 YardWorld._save_progress 改为一次 set_yard_progress：天数、日内时间与花圃三个字段一起写入，避免连续提交把“新时间＋旧花圃”旋转为备份。新方法先复制候选，文件提交成功才替换 SaveStore 内存；失败保持先前内存。现有字段/取值边界、独立 setter 和游戏节奏保持，不是 Web durable 回执或正式 Host 冻结。独立分支审核与实际验证见对应 PR 和 test/yard_snapshot_suite.gd；探索正式接入仍等待唯一 writer、文件系统就绪、统一业务确认和容量门禁。
