@@ -35,3 +35,11 @@ python test/save_lifecycle_web/run.py --web /absolute/disposable-build/web --out
 The lifecycle constructor immediately observes runtime rejection and stores a fulfilled outcome instead of leaving a rejected Promise unobserved until `open`. Failure before Godot calls `open` marks the session blocked; later `open` propagates the original failure. The browser test waits across task turns before `open` and verifies no `unhandledrejection`.
 
 Godot freezes the prepared candidate/request and write identity. It requires the exact six-field v1 receipt, expected schema/write ID, frozen candidate/parent/observed identities, and an actual boolean terminal flag before acknowledgement. The acknowledgement's request ID and status are also verified before reporting done. Four browser cases intercept **actual durable Host callbacks**, changing candidate+observed together, write ID, schema, or terminal flag type; each actual Godot consumer rejects without calling acknowledge, and actual IndexedDB committed intent/current remain available for recovery. These are adversarial callback tests, not fake successful storage.
+
+## Shell-before-module rejection observer
+
+The generated shell now observes the runtime Promise **at creation** using a side-branch catch; `head.html` also observes before starting the dynamic import. Neither replaces the original Promise, so Host still receives its rejection. `runtime_failure.py` delays the actual bridge module response until after actual `engine.startGame` fails to preload `index.pck` (controlled HTTP404), then waits another150ms before releasing the module. Four checks prove failure precedes module configuration, no unhandled rejection, later Host open propagates the exact same original error, and no Host database or source capture occurs. `/userfs` may be initialized by the engine; it is not a Host database. Evidence: `runtime-failure-evidence.json`.
+
+```sh
+python test/save_lifecycle_web/runtime_failure.py --web /absolute/disposable-build/web --out /absolute/runtime-failure-evidence.json
+```

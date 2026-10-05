@@ -42,7 +42,7 @@ python3 - "$ROOT" "$OUT" <<'PY'
 from pathlib import Path
 import sys
 root,out=map(Path,sys.argv[1:]);f=out/'web/index.html';s=f.read_text()
-head="<script>window.YoujiaSaveRuntimeReady=new Promise((resolve,reject)=>{window.resolveSaveRuntime=resolve;window.rejectSaveRuntime=reject;});</script>\n"+(root/'test/save_recovery_r1/head.html').read_text()
+head="<script>window.YoujiaSaveRuntimeReady=new Promise((resolve,reject)=>{window.resolveSaveRuntime=resolve;window.rejectSaveRuntime=reject;});window.YoujiaSaveRuntimeReady.catch(()=>{});</script>\n"+(root/'test/save_recovery_r1/head.html').read_text()
 s=s.replace('</head>',head+'\n</head>')
 needle='}).then(() => {\n\t\t\tsetStatusMode'
 assert needle in s

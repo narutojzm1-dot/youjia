@@ -1,0 +1,19 @@
+{
+  "status": "PASS",
+  "checks": 4,
+  "browser": "151.0.7922.173",
+  "result": {
+    "failedBeforeModule": true,
+    "engineRejected": "Error: Failed loading file 'index.pck'",
+    "error": "Error: Failed loading file 'index.pck'",
+    "unhandled": [],
+    "databases": [
+      {
+        "name": "/userfs",
+        "version": 21
+      }
+    ],
+    "captured": false
+  },
+  "scope": "real engine PCK load failure in generated shell before delayed bridge module; no Host database/capture"
+}
