@@ -1,0 +1,21 @@
+{
+  "time": "2026-10-05T11:26:40.310Z",
+  "browser": "151.0.7922.173",
+  "build": "game-33b105f",
+  "viewport": {
+    "width": 1280,
+    "height": 720
+  },
+  "dpr": 1,
+  "errors": [],
+  "steps": [
+    "normal title click",
+    "ArrowRight 900ms",
+    "Escape pause",
+    "Escape resume"
+  ],
+  "saveSource": "fresh own isolated context; no imports/reset/state injection",
+  "limits": "headless public browser input and viewed frames; not human play, listening or physical device; no exploration/album fault matrix",
+  "manifestCapture": "page.evaluate returned undefined; metadata console read failed after all four screenshots (driver exit1); separate curl retrieval after run archived manifest-after.json, not page-pinned manifest",
+  "driverExit": 1
+}
