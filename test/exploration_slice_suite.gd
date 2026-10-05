@@ -321,7 +321,7 @@ func _painted_path_layout() -> void:
 			var view := L.frame(foot, Vector2(390, 844))
 			phone_zoom = float(view.zoom) if phone_zoom < 0.0 else phone_zoom
 			phone_ok = phone_ok and is_equal_approx(float(view.zoom), phone_zoom) and L.visible_rect(view).grow(-30.0).has_point(foot) and L.visible_rect(view).grow(-30.0).has_point(foot + L.WALKER_BOX.position * L.depth(foot.y))
-	check(phone_ok and phone_zoom > float(L.frame(Vector2.ZERO, Vector2(390, 844)).zoom) - 0.001, "portrait phone keeps one zoom and the walker in view everywhere")
+	check(phone_ok and phone_zoom > minf(390.0 / L.SIZE.x, 844.0 / L.SIZE.y) * 2.0, "portrait phone keeps one zoom and the walker in view everywhere")
 	var wide := L.frame(L.point(L.HOME_ARM, 30.0), Vector2(844, 390))
 	check(float(wide.zoom) > minf(844.0 / L.SIZE.x, 390.0 / L.SIZE.y) and L.visible_rect(wide).has_point(L.point(L.HOME_ARM, 30.0)), "landscape phone zooms in past a tiny full view and keeps the walker")
 
@@ -361,6 +361,12 @@ func _painted_path_walk() -> void:
 	check(not scroll.walk_target.is_empty() and L.nearest(Vector2(40, 300)).arm == scroll.walk_target.arm, "a tap off the path walks to its nearest point instead of leaving it")
 	scroll.walk(Vector2.RIGHT, 0.1)
 	check(scroll.walk_target.is_empty(), "a key press cancels the tap walk")
+	scroll.press_at(scroll.art_to_screen(L.point(brook.arm, brook.d)))
+	scroll.notification(Node.NOTIFICATION_PAUSED)
+	check(scroll.walk_target.is_empty(), "pausing drops a pending tap walk so resume does not walk on its own")
+	scroll.press_at(scroll.art_to_screen(L.point(brook.arm, brook.d)))
+	scroll.notification(Node.NOTIFICATION_APPLICATION_FOCUS_OUT)
+	check(scroll.walk_target.is_empty(), "losing focus drops a pending tap walk")
 	scroll.free()
 	root.size = Vector2i(1280, 720)
 

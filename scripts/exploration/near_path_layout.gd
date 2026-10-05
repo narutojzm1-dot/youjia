@@ -29,7 +29,7 @@ const DEPTH_FAR_Y := 565.0
 const DEPTH_NEAR := 1.35
 const DEPTH_FAR := 0.75
 const WALKER_BOX := Rect2(-24, -108, 48, 108)
-# 桌面完整构图的最小视口边；更小（手机）时放大并随人物平移，缩放固定不变
+# 桌面完整构图的最小视口短边（实验值）；更小（手机或很小的桌面窗口）时放大并随人物平移，缩放固定不变
 const FULL_VIEW_MIN := 600.0
 const PHONE_VIEW_HEIGHT := 640.0
 const PHONE_VIEW_WIDTH := 420.0

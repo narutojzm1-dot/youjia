@@ -91,6 +91,12 @@ func release() -> void:
 		return_requested.disconnect(connection.callable)
 
 
+## 暂停或失焦时丢掉点按目标，恢复后不自己走起来
+func _notification(what: int) -> void:
+	if what in [NOTIFICATION_PAUSED, NOTIFICATION_APPLICATION_FOCUS_OUT, NOTIFICATION_WM_WINDOW_FOCUS_OUT]:
+		walk_target = {}
+
+
 func reduced_motion() -> bool:
 	return bool(TuningStore.get_value("ui.reduced_motion", false))
 
