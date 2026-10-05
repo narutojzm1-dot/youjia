@@ -81,6 +81,12 @@ static func configure(original: Dictionary) -> Dictionary:
 	elif species=="sheep" and ResourceLoader.exists(DIRECTORY+"sheep_shake.png"):
 		config.textures["shake"]=DIRECTORY+"sheep_shake.png"
 		config.posture_metadata={"shake": manifest().get("sheep_shake",{})}
+	if species=="sheep":
+		var response := "sheep_clingy_attend_v2" if str(config.id)=="sheep_a" else "sheep_dull_glance_v3"
+		if str(config.id) in ["sheep_a", "sheep_b"] and ResourceLoader.exists(DIRECTORY+response+".png"):
+			config.textures["attend"]=DIRECTORY+response+".png"
+			config.posture_metadata=config.get("posture_metadata",{})
+			config.posture_metadata["attend"]=manifest().get(response,{})
 	return config
 
 static func texture_path(species: String,expression: String="idle") -> String:

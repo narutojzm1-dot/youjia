@@ -1,0 +1,195 @@
+{
+  "manifest": {
+    "schema": "youjia.release/v1",
+    "sourceCommit": "4fa150819c304b03fb6a36a149e71d4bcd911000",
+    "engine": "4.7.2.stable.official.ed1daf0bf",
+    "entry": "game-4fa1508",
+    "publishedAt": "2026-10-05T13:57:19Z",
+    "storageModules": {
+      "entry": "save-4fa1508",
+      "sha256": {
+        "bridge.mjs": "ef18687554fdc0d745c1d18d4d091e959cc78559da0d61d6a093e562ff9bbc91",
+        "budgets.mjs": "52984153977dcafd1d2682e848f1999f091d0966e17d46e902de76f5735a7018",
+        "host.mjs": "9de8dc0ef4bfc037a8ad0bff575d40c3dd4341bcc723351a412b2061bb661904",
+        "idbfs_source.mjs": "16eb57d471537f13d3e50018b56c2d416d2847f0d0249ba44433dd9ebb65f4d8",
+        "legacy_inspection.mjs": "db3a23a0221aa5d34a58a6a49aeeff930295ffe20bfcf73a7c11f0d49cffd671",
+        "legacy_seal.mjs": "9642132f5d4e7523e5966e802069af7f4bae803fae8e2e7c28ae55ee97d85610",
+        "legacy_v5.mjs": "8e7f4ad2d87aab77ac05361e4f46060476e933aa079ae94301998d08d4599621",
+        "lifecycle.mjs": "1cfaebb9a8745e2dc3e4f694ef475f250640870938f04160be1a5c9acd62935d",
+        "source_decode.mjs": "411f3bc784cb32a07f32eed5fc7d88f71b59a667cc0d68a50fe13c55bfdba18a",
+        "store.mjs": "2193b4397b8662a8ebc754dc4468e4d62964d209b4e1d0f0924a2ec81b409cbe"
+      }
+    }
+  },
+  "html_build": "game-4fa1508",
+  "viewport": [
+    390,
+    844
+  ],
+  "dpr": 2,
+  "mobile": true,
+  "has_touch": true,
+  "actions": [
+    {
+      "tap": [
+        350,
+        530
+      ],
+      "wait": 2600,
+      "name": "walk-right-1",
+      "input_start": 340022.189417691,
+      "input_return": 340022.705427885
+    },
+    {
+      "tap": [
+        355,
+        495
+      ],
+      "wait": 2600,
+      "name": "walk-right-2",
+      "input_start": 340044.027225347,
+      "input_return": 340044.696158844
+    },
+    {
+      "tap": [
+        355,
+        497
+      ],
+      "wait": 2600,
+      "name": "walk-right-3",
+      "input_start": 340067.916856332,
+      "input_return": 340068.602330263
+    },
+    {
+      "tap": [
+        350,
+        638
+      ],
+      "wait": 2800,
+      "name": "walk-right-4",
+      "input_start": 340093.37098412,
+      "input_return": 340093.930324258
+    },
+    {
+      "tap": [
+        368,
+        417
+      ],
+      "wait": 1600,
+      "frames": 3,
+      "interval": 140,
+      "name": "touch-fence",
+      "input_start": 340124.600855464,
+      "input_return": 340124.960233997
+    },
+    {
+      "tap": [
+        195,
+        800
+      ],
+      "wait": 500,
+      "name": "release-llama",
+      "input_start": 340145.693220752,
+      "input_return": 340145.940803043
+    },
+    {
+      "tap": [
+        280,
+        415
+      ],
+      "wait": 150,
+      "frames": 4,
+      "interval": 150,
+      "name": "fence-correct",
+      "input_start": 340157.895392342,
+      "input_return": 340158.425728657
+    },
+    {
+      "tap": [
+        350,
+        520
+      ],
+      "wait": 1800,
+      "name": "walk-east-gate",
+      "input_start": 340180.628127234,
+      "input_return": 340181.211307814
+    },
+    {
+      "tap": [
+        178,
+        414
+      ],
+      "wait": 50,
+      "frames": 5,
+      "interval": 80,
+      "name": "fence-hit",
+      "input_start": 340201.492367022,
+      "input_return": 340201.808277688
+    },
+    {
+      "tap": [
+        195,
+        800
+      ],
+      "wait": 30,
+      "frames": 4,
+      "interval": 100,
+      "name": "fence-action",
+      "input_start": 340219.096610448,
+      "input_return": 340219.534046244
+    },
+    {
+      "tap": [
+        70,
+        490
+      ],
+      "wait": 2000,
+      "name": "leave-fence",
+      "input_start": 340250.800314975,
+      "input_return": 340251.104144838
+    },
+    {
+      "batch": [
+        {
+          "tap": [
+            195,
+            800
+          ],
+          "wait": 200
+        },
+        {
+          "tap": [
+            30,
+            495
+          ],
+          "wait": 2500
+        }
+      ],
+      "name": "away-clean"
+    },
+    {
+      "actual_step": {
+        "tap": [
+          195,
+          800
+        ],
+        "wait": 200
+      },
+      "monotonic": 340288.668696791
+    },
+    {
+      "actual_step": {
+        "tap": [
+          30,
+          495
+        ],
+        "wait": 2500
+      },
+      "monotonic": 340289.138335382
+    },
+    {
+      "quit": true
+    }
+  ],
+  "errors": []
+}

@@ -1,5 +1,10 @@
 # 悠长的假期 — 产品决策与需求变更台账
 
+
+### 2026-10-05 双羊候选实际接线（CODEX-LEAD，#121/#30）
+
+已接收Producer121#5995594318并在121#5995752353/30#5995753656认领；不重复原画制作。按PR378 `bccf132251e845262eb2e374d5d645a02c80de62`复制黏人v2/呆羊v3，CastArt个体映射与既有成功pet短反馈接线；无新玩法/存档字段。原生镜像脚锚/连续反馈/照片兼容、独立Web与最终SHA审核见[候选记录](playtests/2026-10-05-sheep-attention/README.md)。尚未发布，不代表121或30所有资源/体验已结项。
+
 本文件是跨维护者共享的产品决策与需求变更台账。游戏策划基准在 [docs/game-design.md](game-design.md)，本文件追踪每项新需求、方向变化、重要实现和游玩复核。
 
 记录规则：
@@ -1150,6 +1155,10 @@ PR379已合入并发布d707113f8dde1636d24dfcff821518cd0555b277，Actions3731462
 
 PR373已合入/发布e0d699b8cbaecfabc24a70d2144a7188b5808880，Actions37315224106/Pages37316204902成功；13:23:39 UTC公开/raw PCK25272016字节、4c367301d2962621ffba4da8b033ac221d89a3ad861e5773f42f1713c8b7a5f2及十模块三方哈希通过。四个全新context逐页HTML/manifest完整源绑定，390/360 DPR2/3鼠标打开/取消/恢复和390横转居中已体验，13原图、驱动与原结果见[公开归档](playtests/2026-10-05-confirm373-release/README.md)。仅mouse，不冒touch/真机/听验或确认“好”返回标题；#382触摸公开问题独立PR386在审，不把候选当已修复。本归档没有新native测试，不是日版本。
 
+## 2026-10-05 PR391共享cleanup API冻结发布，领域接入仍待
+
+PR391最终9d2dcd88e447628f610b230b397661c9cf2469ae独审5995798603合4fa150819c304b03fb6a36a149e71d4bcd911000，Actions37319685225/Pages37320835249成功；13:58:45 UTC公开/raw PCK25274848字节、0f44318330faa48e80097f1e701faa2294e7bfd98e07e50b842dbcfbbcf9d167及十模块三方一致。普通公开两页严格同源，自然羊照→实际回标题→续玩相册→真关页新页原照恢复已验；gen2到gen3仅正常时钟payload变化，album/photo_moments完整一致，不冒整个封套字节不变。见[正式发布原件与独立烟测](playtests/2026-10-05-cleanup391-release/README.md)。共享接口冻结不等于Cloud领域op/Main提示已接入；尚无实际接收回执，150/305不关。Leader双羊121/30实际在研，Assistant388音频触摸实修中、382具体接收仍待；Producer1555995778082确认局部像素修整已获准，168/51不再等方式选择但尚无合格阴天底板。不是日版本，不宣称未完成的功能或资源已发布。
+
 ## 2026-10-05 #36 首批热点公开限定验收
 
 CODEX-LEAD在公开1a3842c正常鼠标路径确认花箱/岸石/栅栏安全到达及蝴蝶、蜻蜓、落羽绘画回应；独立短步骤补真实钓鱼在途点栅栏不抢动作。第一次未开钓尝试不计通过，携鱼测试有照片覆盖层不计完整通过。即时打断、低动效真实UI、手机和完整携物仍缺；不将native或后续PR367混作本次Web。详见[关键原图与完整结果](playtests/2026-10-05-yard-hotspots-public/README.md)，REQ008/009与#36不宣称全闭环。
@@ -1180,6 +1189,10 @@ A game-bc8a048/bc8a048b964cf39b80291b375f36f7362f0deedc探索出门→落羽带�
 
 CODEX-LEAD独立助手在公开a067ce9b6674d5c1b35cdc2410f3d507f0f4d6a0普通UI带回落羽，仅精确session:null cleanup的prepared intent注入一次存储异常（write_id6/request2b2f6faac6584d35b2c50eccb217ebeb）。实际一次“再确认一次”获得可信parent rejected/terminated后等待15秒，session仍pending_commit且失败提示未收口；真关页重开、故障禁用后session清空，落羽仍1、serial1，无重复授予。见[原图、阶段回执与归档hash](playtests/2026-10-05-exploration-idle-cleanup-public/README.md)。首轮重复武装/空篮探针排除；这是受控Web边界诊断，不是物理断电或全部平台验收。host_budget_impl只读建议由Cloud登记cleanup生命周期、队首按完整expected record+watermark比较、仅可信parent拒绝后受限替代op、Main按精确身份清提示，仍是候选方案，未实现/未冻结；150/305原单待Cloud接收或显式交接，不称已开工、不关单、不称修复发布。
 
+### 2026-10-05 #150 已提交探索 cleanup 的共享写前契约（候选）
+
+CODEX-LEAD按原单5995152650补 `request_exploration_cleanup`：冻结原探索记录、水位与目标idle，到队首作完整CAS；失配明确写前拒绝，不用no-op冒充已保存。仅已提交formal/v1且现行恢复允许close的记录可用；嵌套未知字段及缺少restore必需nullable键均保留原档并拒绝，不规范化吞掉证据。Coordinator仅内存typed拒绝，不改变Host/schema。运行时2b79d6538dab1e35a8dff6161b0104bce434196f已通过95专项、完整4.7.2 daily与正式Web导出；本次未改Cloud Host/Main，后续领域调用及同页cleanup恢复仍未交付。见[契约](architecture/exploration-cleanup-commit-contract.md)和[验证记录](playtests/2026-10-05-exploration-cleanup-contract/README.md)。
+
 ### 2026-10-05 EXP-LIVING-WORLD：用户明确探索的生活逻辑
 
 来源为用户在 GAME-PRODUCER 本地会话连续两次直接指导：生活的局限、时间和随机性（机缘/幸运）构成探索的自然难度；近郊每趟可以有不同合理掉落，也可没有，生态/季节决定合理性；重复出行的价值还包括动物偶遇与天气风景。他人拥有尚未遇见的物品/种子能形成向往。各片区应有契合环境的声音和音乐，溪流声及近郊偶尔微弱的家鹅叫是明确举例。
@@ -1193,3 +1206,7 @@ CODEX-LEAD独立助手在公开a067ce9b6674d5c1b35cdc2410f3d507f0f4d6a0普通UI�
 ## 2026-10-05 #348 暂停通知正式收口
 
 PR377最终52a2be7b720e26d306d4d9c90ea8dd8471dfb87a独立APPROVE5995013227，合046871fa803f3eebd8b9900092bb07ff70671d52；实际合入另含Cloud372，非较早a067局部导出。正确4.7.2最终CI58次启动(57验证+1导出)/168通知与既有门禁通过，Actions37313949152、Pages37314697585成功。公开清单game-046871f/source完整046；JS/WASM/PCK十模块及HTML/manifest共15文件逐一实际长度/Git blob匹配Pages15798ce/tree03d6129，PCK25269536字节/SHA256f556a65726ef66bd5a15d37af01baed92d2af707bef4c647050efdb74d40f808。自然中文横竖DPR3十八阶段严格同版，errors[]；暂停早到/已可见提示后等8/5秒墙钟均无通知覆盖、恢复完整引导、继续可读后正常消失。原图未加工，历史500ms持续遮挡未精确自然重现，native确定同帧/迟到入口缺口分别记录。195横屏master与受控快速输入根因/真机听验等仍未完，未冒五控件全过；制作人待看图。只关闭348通知范围，Leader/Cloud/ProducerOwner保持；[正式证据](playtests/2026-10-05-pause-notice-release/README.md)。
+
+### 2026-10-05 #36 栅栏模拟触屏有限公开验收
+
+CODEX-LEAD在公开完整source4fa150819c304b03fb6a36a149e71d4bcd911000/game-4fa1508，390×844 DPR2独立触屏模拟profile正常走近并点击“看看栅栏边”，观察专属文案及草回应；六张原PNG和两页来源/动作/错误归档于[有限验收](playtests/2026-10-05-hotspot-fence-touch/README.md)。两个profile driver实际exit0且errors[]，模拟触屏不是真机。第二桌面profile取消/携鱼探针未形成可靠通过，原记录单列；低动效无普通入口未验。已有371桌面/374花箱岸石证据不重复，本条不关闭36长期需求、不增加热点或玩法。

@@ -272,6 +272,67 @@ func _emit_exploration_identity(op_id: String, kind: String, record: Variant, se
 		"revision": revision, "finds": Array(finds)})
 
 
+## Completed formal-trip cleanup only. Acceptance is not success; the CAS runs
+## at the FIFO head, against the newest confirmed state. No host/schema changes.
+func request_exploration_cleanup(expected_record: Variant, expected_watermark: Variant, target_idle: Variant, cleanup_id: String) -> String:
+	var expected: Variant = _copy_record(expected_record)
+	var target: Variant = _copy_record(target_idle)
+	var valid := _valid_exploration_cleanup(expected, expected_watermark, target, cleanup_id)
+	return request_intent("exploration_cleanup", func(current: Dictionary) -> Variant:
+		if not valid:
+			return CoordinatorType.IntentRejection.new("EXPLORATION_CLEANUP_INVALID_ARGUMENT")
+		if current.get("exploration") != expected or current.get("exploration_committed_serial") != expected_watermark:
+			return CoordinatorType.IntentRejection.new("EXPLORATION_CLEANUP_PRECONDITION_CHANGED")
+		current.exploration = _copy_record(target)
+		return current)
+
+
+func _valid_exploration_cleanup(expected: Variant, watermark: Variant, target: Variant, cleanup_id: String) -> bool:
+	var contract := ExplorationContract
+	var serial: Variant = contract.as_int(watermark, 1, contract.MAX_INT - 1)
+	if serial == null or cleanup_id.is_empty() or cleanup_id.length() > 128: return false
+	if not expected is Dictionary or not target is Dictionary: return false
+	var keys := ["contract_version", "next_trip_serial", "session"]
+	if expected.size() != keys.size() or target.size() != keys.size(): return false
+	for key in keys:
+		if not expected.has(key) or not target.has(key): return false
+	if contract.as_int(expected.contract_version, 1, 1) == null or contract.as_int(target.contract_version, 1, 1) == null: return false
+	if not expected.session is Dictionary or target.session != null: return false
+	# Restore requires explicit nullable children; never normalize missing fields.
+	if not expected.session.has("proposal") or not expected.session.has("failure"): return false
+	var allowed := ["trip_id", "trip_serial", "record_revision", "route_id", "catalog", "state", "started_clock", "current_stop", "visited", "offers", "carried", "taken", "rng_seed", "proposal", "failure"]
+	for key in expected.session:
+		if key not in allowed: return false # unsupported extensions are not discarded
+	if expected.session.get("catalog") != contract.SOURCE_FORMAL: return false
+	if contract.validate_session_structure(expected.session) != "": return false
+	if not _cleanup_known_nested_fields(expected.session): return false
+	if contract.as_int(expected.next_trip_serial, 1) == null or contract.as_int(target.next_trip_serial, 1) == null: return false
+	if contract.as_int(expected.next_trip_serial, int(expected.session.trip_serial) + 1, mini(contract.MAX_INT, int(serial) + contract.NEXT_SERIAL_SLACK)) == null: return false
+	if contract.record_size_bytes(expected) > contract.RECORD_BUDGET_BYTES: return false
+	var restored := ExplorationSession.restore(expected, ExplorationRoutes.catalog(), int(serial))
+	if restored.host_action != contract.HOST_CLOSE or restored.session.is_quarantined(): return false
+	restored.session.close()
+	return int(target.next_trip_serial) == int(restored.session.to_record().next_trip_serial)
+
+
+func _cleanup_known_nested_fields(session: Dictionary) -> bool:
+	# Shape validation already proved all scalar/map/array value types. Reject
+	# extension fields in every structured child before restore can discard them.
+	if not _cleanup_known_keys(session.started_clock, ["day", "elapsed"]): return false
+	if session.get("proposal") != null:
+		if not _cleanup_known_keys(session.proposal, ["trip_id", "route_id", "items", "reason", "revision"]): return false
+		for item in session.proposal.items:
+			if not _cleanup_known_keys(item, ["find_id"]): return false
+	if session.get("failure") != null and not _cleanup_known_keys(session.failure, ["code", "retryable", "attempts", "deferred"]): return false
+	return true
+
+
+func _cleanup_known_keys(value: Dictionary, allowed: Array) -> bool:
+	for key in value:
+		if key not in allowed: return false
+	return true
+
+
 static func _copy_record(record: Variant) -> Variant:
 	return record.duplicate(true) if record is Dictionary or record is Array else record
 
