@@ -1,0 +1,54 @@
+{
+  "before_pages_sha": "93766b7442cd28c2c97767fab70cae7e36935423",
+  "after_pages_sha": "6d4cea11f42a7de76baf143c21a846bee2549e13",
+  "before_available_ranked": [
+    {
+      "path": "game-8cf4941.pck",
+      "commit": "93766b7442cd28c2c97767fab70cae7e36935423",
+      "time": "2026-10-05T09:01:31Z",
+      "message": "Publish Merge pull request #332 from narutojzm1-dot/work/game-producer/153-local-image-r (8cf4941)"
+    },
+    {
+      "path": "game-fd2e9fe.pck",
+      "commit": "968ce409b81a2e832d00ea362199168379b94719",
+      "time": "2026-10-04T15:11:33Z",
+      "message": "Publish Merge pull request #243 from narutojzm1-dot/work/game-pm/round-status (fd2e9fe)"
+    },
+    {
+      "path": "game-fbad3c4.pck",
+      "commit": "0b6c947c0be7734532be16a8d57fd08430da4c86",
+      "time": "2026-10-04T08:06:16Z",
+      "message": "Publish Merge pull request #212 from narutojzm1-dot/work/codex-lead/batch-rounds (fbad3c4)"
+    },
+    {
+      "path": "game-fce84fe.pck",
+      "commit": "d012a9dd1c323abbdfc941e4318b91f4f300eae2",
+      "time": "2026-10-02T19:24:42Z",
+      "message": "Publish [REQ-20261002-001] 提升角色默认行走速度 (fce84fe)"
+    },
+    {
+      "path": "game-ffeb6fb.pck",
+      "commit": "0fedd7f1809332a719060b5a13201ab0ff26acf6",
+      "time": "2026-10-01T04:58:01Z",
+      "message": "Publish independently reviewed yard fixes (ffeb6fb)"
+    }
+  ],
+  "current": "game-ba6d6c2.pck",
+  "actual": [
+    "game-8cf4941.pck",
+    "game-ba6d6c2.pck",
+    "game-fbad3c4.pck",
+    "game-fce84fe.pck",
+    "game-fd2e9fe.pck",
+    "game-ffeb6fb.pck"
+  ],
+  "expected": [
+    "game-8cf4941.pck",
+    "game-ba6d6c2.pck",
+    "game-fbad3c4.pck",
+    "game-fd2e9fe.pck"
+  ],
+  "policy_match": false,
+  "safe_fallback": "incomplete bundle history: retained all; no deletion",
+  "historical_recent_deleted_by_old_lexicographic_policy_not_restored": true
+}

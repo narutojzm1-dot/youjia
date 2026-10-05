@@ -890,9 +890,13 @@ CODEX-LEAD指定CURSOR-CLOUD承担真实PhotoMoment/相册与旧档主备原文�
 
 当前仍开发展开，收285专业/真实摄影边界、120艺术缺口、287容量交接及276自然证据→精确SHA终审→必要验证/合入，再按晚间检查点取可发批次，不承诺150/探索/阴天已正式交付。详见[本轮逐人记录](pm/2026-10-05-1120-coordination.md)。
 
+### 2026-10-05 Assistant：同构建公开音频与加载技术复验
+
+已按#195/#234/#167登记，只读公开game-a75ae22真实鼠标：两轨各10次慢快开关、0/50/静音/恢复、继续、离院PCM清零/重入两轨及Web Audio真实gain独立变化通过，见[音频矩阵](playtests/2026-10-05-public-audio-matrix/README.md)。零按住时长80/180ms合成点击两次未切换记录保留，完整通过版本明确80ms按住与600/180ms等待，不冒极快输入根因或真机/真人耳听/后台全通过。三尺寸明确WASM延迟保留真实加载画面→首帧→标题→入院及受控一次engine-JS失败/真实按钮重试通过，见[加载矩阵](playtests/2026-10-05-public-loading-matrix/README.md)。未改代码/资源，父音频/加载QA余项仍开放。
+
 ### 2026-10-05 Assistant #231：旧鱼保留时第二竿未钓到的提示
 
-CODEX-LEAD-ASSISTANT按最新缺陷队列接收与原单5990509435认领，只修YardWorld._tick_fishing两条miss通知：carry有效时明确本次未钓到、手中之前那条鱼仍在；空手/到期提示和鱼状态/20秒/概率/计数/投喂不改。新专项16项修前2失败/修后全过、Godot4.7.2完整daily及双语横竖受控Web、正常标题入口自然两竿实玩通过，见[证据](playtests/2026-10-05-fish-miss-feedback/README.md)。原276仅同步S2通知断言，历史未审原帧不冒完成；Leader149150/Cloud322不覆盖。当前候选待独立最终SHA审核、合入与实际公开发布，父231其余验收保持开放。
+CODEX-LEAD-ASSISTANT按最新缺陷队列接收与原单5990509435认领，只修YardWorld._tick_fishing两条miss通知：carry有效时明确本次未钓到、手中之前那条鱼仍在；空手/到期提示和鱼状态/20秒/概率/计数/投喂不改。新专项16项修前2失败/修后全过、Godot4.7.2完整daily及双语横竖受控Web、正常标题入口自然两竿实玩通过，见[证据](playtests/2026-10-05-fish-miss-feedback/README.md)。原276仅同步S2通知断言，历史未审原帧不冒完成；Leader149150/Cloud322不覆盖。PR329最终f37b37292a7c52652ffadba42fa5d19c804c594e独立APPROVE后合main a75ae229430ef4f0329953af70e213ca7d59d622；Actions/Pages成功，实际公开game-a75ae22三资源完整下载字节/哈希与精确gh-pages一致，正常公网自然两竿新提示/可投旧鱼已看图且errors=[]，见[正式发布证据](playtests/2026-10-05-fish-miss-release/README.md)。仅提示子项完成，父231其余验收保持开放。
 
 ### 2026-10-05 #231 携鱼第二竿反馈修复
 

@@ -1,0 +1,705 @@
+{
+  "build": "game-a75ae22",
+  "url": "https://narutojzm1-dot.github.io/youjia/?audio329-gains",
+  "utc": "2026-10-05T08:58:25Z",
+  "events": [
+    {
+      "stage": "initial-paused",
+      "backend": {
+        "buffers": 2,
+        "bytes": 90316800,
+        "decoded": 2,
+        "starts": 2,
+        "players": 2,
+        "playing": 2,
+        "state": "running"
+      },
+      "gains": [
+        {
+          "id": 0,
+          "gain": 0.3981071710586548,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at new Bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:145153)\n    at Bus.create (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144859)\n    at Bus.setCount (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144199)\n    at Object.set_sample_bus_count (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:150895)\n    at _godot_audio_sample_bus_set_count (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:153627)\n    at wasm://wasm/096bca0a:wasm-function[26388]:0x13c0c89\n    at wasm://wasm/096bca0a:wasm-function[19421]:0xbfa00d\n    at wasm://wasm/096bca0a:wasm-function[46931]:0x1b5b6a4\n    at wasm://wasm/096bca0a:wasm-function[19276]:0xb9bfea"
+        },
+        {
+          "id": 1,
+          "gain": 1,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at new Bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:145196)\n    at Bus.create (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144859)\n    at Bus.setCount (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144199)\n    at Object.set_sample_bus_count (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:150895)\n    at _godot_audio_sample_bus_set_count (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:153627)\n    at wasm://wasm/096bca0a:wasm-function[26388]:0x13c0c89\n    at wasm://wasm/096bca0a:wasm-function[19421]:0xbfa00d\n    at wasm://wasm/096bca0a:wasm-function[46931]:0x1b5b6a4\n    at wasm://wasm/096bca0a:wasm-function[19276]:0xb9bfea"
+        },
+        {
+          "id": 2,
+          "gain": 1,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at new Bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:145239)\n    at Bus.create (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144859)\n    at Bus.setCount (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144199)\n    at Object.set_sample_bus_count (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:150895)\n    at _godot_audio_sample_bus_set_count (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:153627)\n    at wasm://wasm/096bca0a:wasm-function[26388]:0x13c0c89\n    at wasm://wasm/096bca0a:wasm-function[19421]:0xbfa00d\n    at wasm://wasm/096bca0a:wasm-function[46931]:0x1b5b6a4\n    at wasm://wasm/096bca0a:wasm-function[19276]:0xb9bfea"
+        },
+        {
+          "id": 3,
+          "gain": 0.5011872053146362,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at new Bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:145153)\n    at Bus.create (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144859)\n    at Bus.addAt (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144751)\n    at Object.add_sample_bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:151071)\n    at _godot_audio_sample_bus_add (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:153366)\n    at wasm://wasm/096bca0a:wasm-function[26245]:0x13ad0cc\n    at wasm://wasm/096bca0a:wasm-function[46962]:0x1b5d66c\n    at wasm://wasm/096bca0a:wasm-function[62828]:0x1eaf06a\n    at wasm://wasm/096bca0a:wasm-function[2238]:0x16e6c7"
+        },
+        {
+          "id": 4,
+          "gain": 1,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at new Bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:145196)\n    at Bus.create (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144859)\n    at Bus.addAt (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144751)\n    at Object.add_sample_bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:151071)\n    at _godot_audio_sample_bus_add (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:153366)\n    at wasm://wasm/096bca0a:wasm-function[26245]:0x13ad0cc\n    at wasm://wasm/096bca0a:wasm-function[46962]:0x1b5d66c\n    at wasm://wasm/096bca0a:wasm-function[62828]:0x1eaf06a\n    at wasm://wasm/096bca0a:wasm-function[2238]:0x16e6c7"
+        },
+        {
+          "id": 5,
+          "gain": 1,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at new Bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:145239)\n    at Bus.create (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144859)\n    at Bus.addAt (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144751)\n    at Object.add_sample_bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:151071)\n    at _godot_audio_sample_bus_add (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:153366)\n    at wasm://wasm/096bca0a:wasm-function[26245]:0x13ad0cc\n    at wasm://wasm/096bca0a:wasm-function[46962]:0x1b5d66c\n    at wasm://wasm/096bca0a:wasm-function[62828]:0x1eaf06a\n    at wasm://wasm/096bca0a:wasm-function[2238]:0x16e6c7"
+        },
+        {
+          "id": 6,
+          "gain": 1,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at new Bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:145153)\n    at Bus.create (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144859)\n    at Bus.addAt (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144751)\n    at Object.add_sample_bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:151071)\n    at _godot_audio_sample_bus_add (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:153366)\n    at wasm://wasm/096bca0a:wasm-function[26245]:0x13ad0cc\n    at wasm://wasm/096bca0a:wasm-function[46962]:0x1b5d66c\n    at wasm://wasm/096bca0a:wasm-function[62828]:0x1eaf06a\n    at wasm://wasm/096bca0a:wasm-function[2238]:0x16e6c7"
+        },
+        {
+          "id": 7,
+          "gain": 1,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at new Bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:145196)\n    at Bus.create (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144859)\n    at Bus.addAt (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144751)\n    at Object.add_sample_bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:151071)\n    at _godot_audio_sample_bus_add (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:153366)\n    at wasm://wasm/096bca0a:wasm-function[26245]:0x13ad0cc\n    at wasm://wasm/096bca0a:wasm-function[46962]:0x1b5d66c\n    at wasm://wasm/096bca0a:wasm-function[62828]:0x1eaf06a\n    at wasm://wasm/096bca0a:wasm-function[2238]:0x16e6c7"
+        },
+        {
+          "id": 8,
+          "gain": 1,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at new Bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:145239)\n    at Bus.create (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144859)\n    at Bus.addAt (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144751)\n    at Object.add_sample_bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:151071)\n    at _godot_audio_sample_bus_add (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:153366)\n    at wasm://wasm/096bca0a:wasm-function[26245]:0x13ad0cc\n    at wasm://wasm/096bca0a:wasm-function[46962]:0x1b5d66c\n    at wasm://wasm/096bca0a:wasm-function[62828]:0x1eaf06a\n    at wasm://wasm/096bca0a:wasm-function[2238]:0x16e6c7"
+        },
+        {
+          "id": 9,
+          "gain": 0.15848931670188904,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at new Bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:145153)\n    at Bus.create (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144859)\n    at Bus.addAt (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144751)\n    at Object.add_sample_bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:151071)\n    at _godot_audio_sample_bus_add (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:153366)\n    at wasm://wasm/096bca0a:wasm-function[26245]:0x13ad0cc\n    at wasm://wasm/096bca0a:wasm-function[46962]:0x1b5d66c\n    at wasm://wasm/096bca0a:wasm-function[62828]:0x1eaf06a\n    at wasm://wasm/096bca0a:wasm-function[2238]:0x16e6c7"
+        },
+        {
+          "id": 10,
+          "gain": 1,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at new Bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:145196)\n    at Bus.create (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144859)\n    at Bus.addAt (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144751)\n    at Object.add_sample_bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:151071)\n    at _godot_audio_sample_bus_add (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:153366)\n    at wasm://wasm/096bca0a:wasm-function[26245]:0x13ad0cc\n    at wasm://wasm/096bca0a:wasm-function[46962]:0x1b5d66c\n    at wasm://wasm/096bca0a:wasm-function[62828]:0x1eaf06a\n    at wasm://wasm/096bca0a:wasm-function[2238]:0x16e6c7"
+        },
+        {
+          "id": 11,
+          "gain": 1,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at new Bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:145239)\n    at Bus.create (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144859)\n    at Bus.addAt (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144751)\n    at Object.add_sample_bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:151071)\n    at _godot_audio_sample_bus_add (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:153366)\n    at wasm://wasm/096bca0a:wasm-function[26245]:0x13ad0cc\n    at wasm://wasm/096bca0a:wasm-function[46962]:0x1b5d66c\n    at wasm://wasm/096bca0a:wasm-function[62828]:0x1eaf06a\n    at wasm://wasm/096bca0a:wasm-function[2238]:0x16e6c7"
+        },
+        {
+          "id": 12,
+          "gain": 0.6309573650360107,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at new Bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:145153)\n    at Bus.create (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144859)\n    at Bus.addAt (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144751)\n    at Object.add_sample_bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:151071)\n    at _godot_audio_sample_bus_add (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:153366)\n    at wasm://wasm/096bca0a:wasm-function[26245]:0x13ad0cc\n    at wasm://wasm/096bca0a:wasm-function[46962]:0x1b5d66c\n    at wasm://wasm/096bca0a:wasm-function[62828]:0x1eaf06a\n    at wasm://wasm/096bca0a:wasm-function[2238]:0x16e6c7"
+        },
+        {
+          "id": 13,
+          "gain": 1,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at new Bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:145196)\n    at Bus.create (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144859)\n    at Bus.addAt (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144751)\n    at Object.add_sample_bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:151071)\n    at _godot_audio_sample_bus_add (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:153366)\n    at wasm://wasm/096bca0a:wasm-function[26245]:0x13ad0cc\n    at wasm://wasm/096bca0a:wasm-function[46962]:0x1b5d66c\n    at wasm://wasm/096bca0a:wasm-function[62828]:0x1eaf06a\n    at wasm://wasm/096bca0a:wasm-function[2238]:0x16e6c7"
+        },
+        {
+          "id": 14,
+          "gain": 1,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at new Bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:145239)\n    at Bus.create (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144859)\n    at Bus.addAt (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144751)\n    at Object.add_sample_bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:151071)\n    at _godot_audio_sample_bus_add (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:153366)\n    at wasm://wasm/096bca0a:wasm-function[26245]:0x13ad0cc\n    at wasm://wasm/096bca0a:wasm-function[46962]:0x1b5d66c\n    at wasm://wasm/096bca0a:wasm-function[62828]:0x1eaf06a\n    at wasm://wasm/096bca0a:wasm-function[2238]:0x16e6c7"
+        },
+        {
+          "id": 15,
+          "gain": 0.3981071710586548,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at Object.channel [as createPlayer] (eval at _godot_js_eval (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:185698), <anonymous>:110:26)\n    at _godot_js_wrapper_object_call (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:217434)\n    at wasm://wasm/096bca0a:wasm-function[56138]:0x1dba0b6\n    at wasm://wasm/096bca0a:wasm-function[8840]:0x4ffd22\n    at wasm://wasm/096bca0a:wasm-function[7258]:0x41ff33\n    at wasm://wasm/096bca0a:wasm-function[2238]:0x16e4ce\n    at wasm://wasm/096bca0a:wasm-function[43240]:0x1a7d6d4\n    at wasm://wasm/096bca0a:wasm-function[8840]:0x4ffc02\n    at wasm://wasm/096bca0a:wasm-function[7258]:0x41ff33"
+        },
+        {
+          "id": 16,
+          "gain": 0.15848931670188904,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at Object.channel [as createPlayer] (eval at _godot_js_eval (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:185698), <anonymous>:110:26)\n    at _godot_js_wrapper_object_call (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:217434)\n    at wasm://wasm/096bca0a:wasm-function[56138]:0x1dba0b6\n    at wasm://wasm/096bca0a:wasm-function[8840]:0x4ffd22\n    at wasm://wasm/096bca0a:wasm-function[7258]:0x41ff33\n    at wasm://wasm/096bca0a:wasm-function[2238]:0x16e4ce\n    at wasm://wasm/096bca0a:wasm-function[43240]:0x1a7d6d4\n    at wasm://wasm/096bca0a:wasm-function[8840]:0x4ffc02\n    at wasm://wasm/096bca0a:wasm-function[7258]:0x41ff33"
+        }
+      ]
+    },
+    {
+      "stage": "music-zero",
+      "backend": {
+        "buffers": 2,
+        "bytes": 90316800,
+        "decoded": 2,
+        "starts": 2,
+        "players": 2,
+        "playing": 2,
+        "state": "running"
+      },
+      "gains": [
+        {
+          "id": 0,
+          "gain": 0.3981071710586548,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at new Bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:145153)\n    at Bus.create (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144859)\n    at Bus.setCount (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144199)\n    at Object.set_sample_bus_count (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:150895)\n    at _godot_audio_sample_bus_set_count (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:153627)\n    at wasm://wasm/096bca0a:wasm-function[26388]:0x13c0c89\n    at wasm://wasm/096bca0a:wasm-function[19421]:0xbfa00d\n    at wasm://wasm/096bca0a:wasm-function[46931]:0x1b5b6a4\n    at wasm://wasm/096bca0a:wasm-function[19276]:0xb9bfea"
+        },
+        {
+          "id": 1,
+          "gain": 1,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at new Bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:145196)\n    at Bus.create (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144859)\n    at Bus.setCount (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144199)\n    at Object.set_sample_bus_count (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:150895)\n    at _godot_audio_sample_bus_set_count (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:153627)\n    at wasm://wasm/096bca0a:wasm-function[26388]:0x13c0c89\n    at wasm://wasm/096bca0a:wasm-function[19421]:0xbfa00d\n    at wasm://wasm/096bca0a:wasm-function[46931]:0x1b5b6a4\n    at wasm://wasm/096bca0a:wasm-function[19276]:0xb9bfea"
+        },
+        {
+          "id": 2,
+          "gain": 1,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at new Bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:145239)\n    at Bus.create (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144859)\n    at Bus.setCount (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144199)\n    at Object.set_sample_bus_count (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:150895)\n    at _godot_audio_sample_bus_set_count (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:153627)\n    at wasm://wasm/096bca0a:wasm-function[26388]:0x13c0c89\n    at wasm://wasm/096bca0a:wasm-function[19421]:0xbfa00d\n    at wasm://wasm/096bca0a:wasm-function[46931]:0x1b5b6a4\n    at wasm://wasm/096bca0a:wasm-function[19276]:0xb9bfea"
+        },
+        {
+          "id": 3,
+          "gain": 0.5011872053146362,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at new Bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:145153)\n    at Bus.create (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144859)\n    at Bus.addAt (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144751)\n    at Object.add_sample_bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:151071)\n    at _godot_audio_sample_bus_add (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:153366)\n    at wasm://wasm/096bca0a:wasm-function[26245]:0x13ad0cc\n    at wasm://wasm/096bca0a:wasm-function[46962]:0x1b5d66c\n    at wasm://wasm/096bca0a:wasm-function[62828]:0x1eaf06a\n    at wasm://wasm/096bca0a:wasm-function[2238]:0x16e6c7"
+        },
+        {
+          "id": 4,
+          "gain": 1,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at new Bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:145196)\n    at Bus.create (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144859)\n    at Bus.addAt (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144751)\n    at Object.add_sample_bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:151071)\n    at _godot_audio_sample_bus_add (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:153366)\n    at wasm://wasm/096bca0a:wasm-function[26245]:0x13ad0cc\n    at wasm://wasm/096bca0a:wasm-function[46962]:0x1b5d66c\n    at wasm://wasm/096bca0a:wasm-function[62828]:0x1eaf06a\n    at wasm://wasm/096bca0a:wasm-function[2238]:0x16e6c7"
+        },
+        {
+          "id": 5,
+          "gain": 1,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at new Bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:145239)\n    at Bus.create (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144859)\n    at Bus.addAt (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144751)\n    at Object.add_sample_bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:151071)\n    at _godot_audio_sample_bus_add (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:153366)\n    at wasm://wasm/096bca0a:wasm-function[26245]:0x13ad0cc\n    at wasm://wasm/096bca0a:wasm-function[46962]:0x1b5d66c\n    at wasm://wasm/096bca0a:wasm-function[62828]:0x1eaf06a\n    at wasm://wasm/096bca0a:wasm-function[2238]:0x16e6c7"
+        },
+        {
+          "id": 6,
+          "gain": 1,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at new Bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:145153)\n    at Bus.create (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144859)\n    at Bus.addAt (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144751)\n    at Object.add_sample_bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:151071)\n    at _godot_audio_sample_bus_add (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:153366)\n    at wasm://wasm/096bca0a:wasm-function[26245]:0x13ad0cc\n    at wasm://wasm/096bca0a:wasm-function[46962]:0x1b5d66c\n    at wasm://wasm/096bca0a:wasm-function[62828]:0x1eaf06a\n    at wasm://wasm/096bca0a:wasm-function[2238]:0x16e6c7"
+        },
+        {
+          "id": 7,
+          "gain": 1,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at new Bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:145196)\n    at Bus.create (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144859)\n    at Bus.addAt (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144751)\n    at Object.add_sample_bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:151071)\n    at _godot_audio_sample_bus_add (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:153366)\n    at wasm://wasm/096bca0a:wasm-function[26245]:0x13ad0cc\n    at wasm://wasm/096bca0a:wasm-function[46962]:0x1b5d66c\n    at wasm://wasm/096bca0a:wasm-function[62828]:0x1eaf06a\n    at wasm://wasm/096bca0a:wasm-function[2238]:0x16e6c7"
+        },
+        {
+          "id": 8,
+          "gain": 1,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at new Bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:145239)\n    at Bus.create (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144859)\n    at Bus.addAt (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144751)\n    at Object.add_sample_bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:151071)\n    at _godot_audio_sample_bus_add (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:153366)\n    at wasm://wasm/096bca0a:wasm-function[26245]:0x13ad0cc\n    at wasm://wasm/096bca0a:wasm-function[46962]:0x1b5d66c\n    at wasm://wasm/096bca0a:wasm-function[62828]:0x1eaf06a\n    at wasm://wasm/096bca0a:wasm-function[2238]:0x16e6c7"
+        },
+        {
+          "id": 9,
+          "gain": 0.3981071710586548,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at new Bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:145153)\n    at Bus.create (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144859)\n    at Bus.addAt (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144751)\n    at Object.add_sample_bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:151071)\n    at _godot_audio_sample_bus_add (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:153366)\n    at wasm://wasm/096bca0a:wasm-function[26245]:0x13ad0cc\n    at wasm://wasm/096bca0a:wasm-function[46962]:0x1b5d66c\n    at wasm://wasm/096bca0a:wasm-function[62828]:0x1eaf06a\n    at wasm://wasm/096bca0a:wasm-function[2238]:0x16e6c7"
+        },
+        {
+          "id": 10,
+          "gain": 1,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at new Bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:145196)\n    at Bus.create (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144859)\n    at Bus.addAt (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144751)\n    at Object.add_sample_bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:151071)\n    at _godot_audio_sample_bus_add (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:153366)\n    at wasm://wasm/096bca0a:wasm-function[26245]:0x13ad0cc\n    at wasm://wasm/096bca0a:wasm-function[46962]:0x1b5d66c\n    at wasm://wasm/096bca0a:wasm-function[62828]:0x1eaf06a\n    at wasm://wasm/096bca0a:wasm-function[2238]:0x16e6c7"
+        },
+        {
+          "id": 11,
+          "gain": 0,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at new Bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:145239)\n    at Bus.create (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144859)\n    at Bus.addAt (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144751)\n    at Object.add_sample_bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:151071)\n    at _godot_audio_sample_bus_add (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:153366)\n    at wasm://wasm/096bca0a:wasm-function[26245]:0x13ad0cc\n    at wasm://wasm/096bca0a:wasm-function[46962]:0x1b5d66c\n    at wasm://wasm/096bca0a:wasm-function[62828]:0x1eaf06a\n    at wasm://wasm/096bca0a:wasm-function[2238]:0x16e6c7"
+        },
+        {
+          "id": 12,
+          "gain": 0.6309573650360107,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at new Bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:145153)\n    at Bus.create (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144859)\n    at Bus.addAt (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144751)\n    at Object.add_sample_bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:151071)\n    at _godot_audio_sample_bus_add (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:153366)\n    at wasm://wasm/096bca0a:wasm-function[26245]:0x13ad0cc\n    at wasm://wasm/096bca0a:wasm-function[46962]:0x1b5d66c\n    at wasm://wasm/096bca0a:wasm-function[62828]:0x1eaf06a\n    at wasm://wasm/096bca0a:wasm-function[2238]:0x16e6c7"
+        },
+        {
+          "id": 13,
+          "gain": 1,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at new Bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:145196)\n    at Bus.create (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144859)\n    at Bus.addAt (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144751)\n    at Object.add_sample_bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:151071)\n    at _godot_audio_sample_bus_add (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:153366)\n    at wasm://wasm/096bca0a:wasm-function[26245]:0x13ad0cc\n    at wasm://wasm/096bca0a:wasm-function[46962]:0x1b5d66c\n    at wasm://wasm/096bca0a:wasm-function[62828]:0x1eaf06a\n    at wasm://wasm/096bca0a:wasm-function[2238]:0x16e6c7"
+        },
+        {
+          "id": 14,
+          "gain": 1,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at new Bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:145239)\n    at Bus.create (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144859)\n    at Bus.addAt (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144751)\n    at Object.add_sample_bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:151071)\n    at _godot_audio_sample_bus_add (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:153366)\n    at wasm://wasm/096bca0a:wasm-function[26245]:0x13ad0cc\n    at wasm://wasm/096bca0a:wasm-function[46962]:0x1b5d66c\n    at wasm://wasm/096bca0a:wasm-function[62828]:0x1eaf06a\n    at wasm://wasm/096bca0a:wasm-function[2238]:0x16e6c7"
+        },
+        {
+          "id": 15,
+          "gain": 0.3981071710586548,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at Object.channel [as createPlayer] (eval at _godot_js_eval (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:185698), <anonymous>:110:26)\n    at _godot_js_wrapper_object_call (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:217434)\n    at wasm://wasm/096bca0a:wasm-function[56138]:0x1dba0b6\n    at wasm://wasm/096bca0a:wasm-function[8840]:0x4ffd22\n    at wasm://wasm/096bca0a:wasm-function[7258]:0x41ff33\n    at wasm://wasm/096bca0a:wasm-function[2238]:0x16e4ce\n    at wasm://wasm/096bca0a:wasm-function[43240]:0x1a7d6d4\n    at wasm://wasm/096bca0a:wasm-function[8840]:0x4ffc02\n    at wasm://wasm/096bca0a:wasm-function[7258]:0x41ff33"
+        },
+        {
+          "id": 16,
+          "gain": 0,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at Object.channel [as createPlayer] (eval at _godot_js_eval (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:185698), <anonymous>:110:26)\n    at _godot_js_wrapper_object_call (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:217434)\n    at wasm://wasm/096bca0a:wasm-function[56138]:0x1dba0b6\n    at wasm://wasm/096bca0a:wasm-function[8840]:0x4ffd22\n    at wasm://wasm/096bca0a:wasm-function[7258]:0x41ff33\n    at wasm://wasm/096bca0a:wasm-function[2238]:0x16e4ce\n    at wasm://wasm/096bca0a:wasm-function[43240]:0x1a7d6d4\n    at wasm://wasm/096bca0a:wasm-function[8840]:0x4ffc02\n    at wasm://wasm/096bca0a:wasm-function[7258]:0x41ff33"
+        }
+      ]
+    },
+    {
+      "stage": "music-half",
+      "backend": {
+        "buffers": 2,
+        "bytes": 90316800,
+        "decoded": 2,
+        "starts": 2,
+        "players": 2,
+        "playing": 2,
+        "state": "running"
+      },
+      "gains": [
+        {
+          "id": 0,
+          "gain": 0.3981071710586548,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at new Bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:145153)\n    at Bus.create (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144859)\n    at Bus.setCount (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144199)\n    at Object.set_sample_bus_count (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:150895)\n    at _godot_audio_sample_bus_set_count (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:153627)\n    at wasm://wasm/096bca0a:wasm-function[26388]:0x13c0c89\n    at wasm://wasm/096bca0a:wasm-function[19421]:0xbfa00d\n    at wasm://wasm/096bca0a:wasm-function[46931]:0x1b5b6a4\n    at wasm://wasm/096bca0a:wasm-function[19276]:0xb9bfea"
+        },
+        {
+          "id": 1,
+          "gain": 1,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at new Bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:145196)\n    at Bus.create (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144859)\n    at Bus.setCount (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144199)\n    at Object.set_sample_bus_count (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:150895)\n    at _godot_audio_sample_bus_set_count (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:153627)\n    at wasm://wasm/096bca0a:wasm-function[26388]:0x13c0c89\n    at wasm://wasm/096bca0a:wasm-function[19421]:0xbfa00d\n    at wasm://wasm/096bca0a:wasm-function[46931]:0x1b5b6a4\n    at wasm://wasm/096bca0a:wasm-function[19276]:0xb9bfea"
+        },
+        {
+          "id": 2,
+          "gain": 1,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at new Bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:145239)\n    at Bus.create (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144859)\n    at Bus.setCount (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144199)\n    at Object.set_sample_bus_count (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:150895)\n    at _godot_audio_sample_bus_set_count (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:153627)\n    at wasm://wasm/096bca0a:wasm-function[26388]:0x13c0c89\n    at wasm://wasm/096bca0a:wasm-function[19421]:0xbfa00d\n    at wasm://wasm/096bca0a:wasm-function[46931]:0x1b5b6a4\n    at wasm://wasm/096bca0a:wasm-function[19276]:0xb9bfea"
+        },
+        {
+          "id": 3,
+          "gain": 0.5011872053146362,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at new Bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:145153)\n    at Bus.create (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144859)\n    at Bus.addAt (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144751)\n    at Object.add_sample_bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:151071)\n    at _godot_audio_sample_bus_add (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:153366)\n    at wasm://wasm/096bca0a:wasm-function[26245]:0x13ad0cc\n    at wasm://wasm/096bca0a:wasm-function[46962]:0x1b5d66c\n    at wasm://wasm/096bca0a:wasm-function[62828]:0x1eaf06a\n    at wasm://wasm/096bca0a:wasm-function[2238]:0x16e6c7"
+        },
+        {
+          "id": 4,
+          "gain": 1,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at new Bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:145196)\n    at Bus.create (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144859)\n    at Bus.addAt (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144751)\n    at Object.add_sample_bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:151071)\n    at _godot_audio_sample_bus_add (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:153366)\n    at wasm://wasm/096bca0a:wasm-function[26245]:0x13ad0cc\n    at wasm://wasm/096bca0a:wasm-function[46962]:0x1b5d66c\n    at wasm://wasm/096bca0a:wasm-function[62828]:0x1eaf06a\n    at wasm://wasm/096bca0a:wasm-function[2238]:0x16e6c7"
+        },
+        {
+          "id": 5,
+          "gain": 1,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at new Bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:145239)\n    at Bus.create (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144859)\n    at Bus.addAt (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144751)\n    at Object.add_sample_bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:151071)\n    at _godot_audio_sample_bus_add (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:153366)\n    at wasm://wasm/096bca0a:wasm-function[26245]:0x13ad0cc\n    at wasm://wasm/096bca0a:wasm-function[46962]:0x1b5d66c\n    at wasm://wasm/096bca0a:wasm-function[62828]:0x1eaf06a\n    at wasm://wasm/096bca0a:wasm-function[2238]:0x16e6c7"
+        },
+        {
+          "id": 6,
+          "gain": 1,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at new Bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:145153)\n    at Bus.create (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144859)\n    at Bus.addAt (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144751)\n    at Object.add_sample_bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:151071)\n    at _godot_audio_sample_bus_add (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:153366)\n    at wasm://wasm/096bca0a:wasm-function[26245]:0x13ad0cc\n    at wasm://wasm/096bca0a:wasm-function[46962]:0x1b5d66c\n    at wasm://wasm/096bca0a:wasm-function[62828]:0x1eaf06a\n    at wasm://wasm/096bca0a:wasm-function[2238]:0x16e6c7"
+        },
+        {
+          "id": 7,
+          "gain": 1,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at new Bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:145196)\n    at Bus.create (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144859)\n    at Bus.addAt (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144751)\n    at Object.add_sample_bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:151071)\n    at _godot_audio_sample_bus_add (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:153366)\n    at wasm://wasm/096bca0a:wasm-function[26245]:0x13ad0cc\n    at wasm://wasm/096bca0a:wasm-function[46962]:0x1b5d66c\n    at wasm://wasm/096bca0a:wasm-function[62828]:0x1eaf06a\n    at wasm://wasm/096bca0a:wasm-function[2238]:0x16e6c7"
+        },
+        {
+          "id": 8,
+          "gain": 1,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at new Bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:145239)\n    at Bus.create (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144859)\n    at Bus.addAt (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144751)\n    at Object.add_sample_bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:151071)\n    at _godot_audio_sample_bus_add (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:153366)\n    at wasm://wasm/096bca0a:wasm-function[26245]:0x13ad0cc\n    at wasm://wasm/096bca0a:wasm-function[46962]:0x1b5d66c\n    at wasm://wasm/096bca0a:wasm-function[62828]:0x1eaf06a\n    at wasm://wasm/096bca0a:wasm-function[2238]:0x16e6c7"
+        },
+        {
+          "id": 9,
+          "gain": 0.07924466580152512,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at new Bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:145153)\n    at Bus.create (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144859)\n    at Bus.addAt (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144751)\n    at Object.add_sample_bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:151071)\n    at _godot_audio_sample_bus_add (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:153366)\n    at wasm://wasm/096bca0a:wasm-function[26245]:0x13ad0cc\n    at wasm://wasm/096bca0a:wasm-function[46962]:0x1b5d66c\n    at wasm://wasm/096bca0a:wasm-function[62828]:0x1eaf06a\n    at wasm://wasm/096bca0a:wasm-function[2238]:0x16e6c7"
+        },
+        {
+          "id": 10,
+          "gain": 1,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at new Bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:145196)\n    at Bus.create (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144859)\n    at Bus.addAt (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144751)\n    at Object.add_sample_bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:151071)\n    at _godot_audio_sample_bus_add (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:153366)\n    at wasm://wasm/096bca0a:wasm-function[26245]:0x13ad0cc\n    at wasm://wasm/096bca0a:wasm-function[46962]:0x1b5d66c\n    at wasm://wasm/096bca0a:wasm-function[62828]:0x1eaf06a\n    at wasm://wasm/096bca0a:wasm-function[2238]:0x16e6c7"
+        },
+        {
+          "id": 11,
+          "gain": 1,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at new Bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:145239)\n    at Bus.create (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144859)\n    at Bus.addAt (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144751)\n    at Object.add_sample_bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:151071)\n    at _godot_audio_sample_bus_add (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:153366)\n    at wasm://wasm/096bca0a:wasm-function[26245]:0x13ad0cc\n    at wasm://wasm/096bca0a:wasm-function[46962]:0x1b5d66c\n    at wasm://wasm/096bca0a:wasm-function[62828]:0x1eaf06a\n    at wasm://wasm/096bca0a:wasm-function[2238]:0x16e6c7"
+        },
+        {
+          "id": 12,
+          "gain": 0.6309573650360107,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at new Bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:145153)\n    at Bus.create (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144859)\n    at Bus.addAt (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144751)\n    at Object.add_sample_bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:151071)\n    at _godot_audio_sample_bus_add (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:153366)\n    at wasm://wasm/096bca0a:wasm-function[26245]:0x13ad0cc\n    at wasm://wasm/096bca0a:wasm-function[46962]:0x1b5d66c\n    at wasm://wasm/096bca0a:wasm-function[62828]:0x1eaf06a\n    at wasm://wasm/096bca0a:wasm-function[2238]:0x16e6c7"
+        },
+        {
+          "id": 13,
+          "gain": 1,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at new Bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:145196)\n    at Bus.create (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144859)\n    at Bus.addAt (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144751)\n    at Object.add_sample_bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:151071)\n    at _godot_audio_sample_bus_add (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:153366)\n    at wasm://wasm/096bca0a:wasm-function[26245]:0x13ad0cc\n    at wasm://wasm/096bca0a:wasm-function[46962]:0x1b5d66c\n    at wasm://wasm/096bca0a:wasm-function[62828]:0x1eaf06a\n    at wasm://wasm/096bca0a:wasm-function[2238]:0x16e6c7"
+        },
+        {
+          "id": 14,
+          "gain": 1,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at new Bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:145239)\n    at Bus.create (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144859)\n    at Bus.addAt (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144751)\n    at Object.add_sample_bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:151071)\n    at _godot_audio_sample_bus_add (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:153366)\n    at wasm://wasm/096bca0a:wasm-function[26245]:0x13ad0cc\n    at wasm://wasm/096bca0a:wasm-function[46962]:0x1b5d66c\n    at wasm://wasm/096bca0a:wasm-function[62828]:0x1eaf06a\n    at wasm://wasm/096bca0a:wasm-function[2238]:0x16e6c7"
+        },
+        {
+          "id": 15,
+          "gain": 0.3981071710586548,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at Object.channel [as createPlayer] (eval at _godot_js_eval (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:185698), <anonymous>:110:26)\n    at _godot_js_wrapper_object_call (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:217434)\n    at wasm://wasm/096bca0a:wasm-function[56138]:0x1dba0b6\n    at wasm://wasm/096bca0a:wasm-function[8840]:0x4ffd22\n    at wasm://wasm/096bca0a:wasm-function[7258]:0x41ff33\n    at wasm://wasm/096bca0a:wasm-function[2238]:0x16e4ce\n    at wasm://wasm/096bca0a:wasm-function[43240]:0x1a7d6d4\n    at wasm://wasm/096bca0a:wasm-function[8840]:0x4ffc02\n    at wasm://wasm/096bca0a:wasm-function[7258]:0x41ff33"
+        },
+        {
+          "id": 16,
+          "gain": 0.07924466580152512,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at Object.channel [as createPlayer] (eval at _godot_js_eval (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:185698), <anonymous>:110:26)\n    at _godot_js_wrapper_object_call (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:217434)\n    at wasm://wasm/096bca0a:wasm-function[56138]:0x1dba0b6\n    at wasm://wasm/096bca0a:wasm-function[8840]:0x4ffd22\n    at wasm://wasm/096bca0a:wasm-function[7258]:0x41ff33\n    at wasm://wasm/096bca0a:wasm-function[2238]:0x16e4ce\n    at wasm://wasm/096bca0a:wasm-function[43240]:0x1a7d6d4\n    at wasm://wasm/096bca0a:wasm-function[8840]:0x4ffc02\n    at wasm://wasm/096bca0a:wasm-function[7258]:0x41ff33"
+        }
+      ]
+    },
+    {
+      "stage": "ambience-zero",
+      "backend": {
+        "buffers": 2,
+        "bytes": 90316800,
+        "decoded": 2,
+        "starts": 2,
+        "players": 2,
+        "playing": 2,
+        "state": "running"
+      },
+      "gains": [
+        {
+          "id": 0,
+          "gain": 1,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at new Bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:145153)\n    at Bus.create (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144859)\n    at Bus.setCount (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144199)\n    at Object.set_sample_bus_count (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:150895)\n    at _godot_audio_sample_bus_set_count (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:153627)\n    at wasm://wasm/096bca0a:wasm-function[26388]:0x13c0c89\n    at wasm://wasm/096bca0a:wasm-function[19421]:0xbfa00d\n    at wasm://wasm/096bca0a:wasm-function[46931]:0x1b5b6a4\n    at wasm://wasm/096bca0a:wasm-function[19276]:0xb9bfea"
+        },
+        {
+          "id": 1,
+          "gain": 1,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at new Bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:145196)\n    at Bus.create (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144859)\n    at Bus.setCount (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144199)\n    at Object.set_sample_bus_count (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:150895)\n    at _godot_audio_sample_bus_set_count (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:153627)\n    at wasm://wasm/096bca0a:wasm-function[26388]:0x13c0c89\n    at wasm://wasm/096bca0a:wasm-function[19421]:0xbfa00d\n    at wasm://wasm/096bca0a:wasm-function[46931]:0x1b5b6a4\n    at wasm://wasm/096bca0a:wasm-function[19276]:0xb9bfea"
+        },
+        {
+          "id": 2,
+          "gain": 0,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at new Bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:145239)\n    at Bus.create (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144859)\n    at Bus.setCount (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144199)\n    at Object.set_sample_bus_count (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:150895)\n    at _godot_audio_sample_bus_set_count (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:153627)\n    at wasm://wasm/096bca0a:wasm-function[26388]:0x13c0c89\n    at wasm://wasm/096bca0a:wasm-function[19421]:0xbfa00d\n    at wasm://wasm/096bca0a:wasm-function[46931]:0x1b5b6a4\n    at wasm://wasm/096bca0a:wasm-function[19276]:0xb9bfea"
+        },
+        {
+          "id": 3,
+          "gain": 0.5011872053146362,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at new Bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:145153)\n    at Bus.create (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144859)\n    at Bus.addAt (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144751)\n    at Object.add_sample_bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:151071)\n    at _godot_audio_sample_bus_add (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:153366)\n    at wasm://wasm/096bca0a:wasm-function[26245]:0x13ad0cc\n    at wasm://wasm/096bca0a:wasm-function[46962]:0x1b5d66c\n    at wasm://wasm/096bca0a:wasm-function[62828]:0x1eaf06a\n    at wasm://wasm/096bca0a:wasm-function[2238]:0x16e6c7"
+        },
+        {
+          "id": 4,
+          "gain": 1,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at new Bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:145196)\n    at Bus.create (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144859)\n    at Bus.addAt (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144751)\n    at Object.add_sample_bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:151071)\n    at _godot_audio_sample_bus_add (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:153366)\n    at wasm://wasm/096bca0a:wasm-function[26245]:0x13ad0cc\n    at wasm://wasm/096bca0a:wasm-function[46962]:0x1b5d66c\n    at wasm://wasm/096bca0a:wasm-function[62828]:0x1eaf06a\n    at wasm://wasm/096bca0a:wasm-function[2238]:0x16e6c7"
+        },
+        {
+          "id": 5,
+          "gain": 1,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at new Bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:145239)\n    at Bus.create (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144859)\n    at Bus.addAt (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144751)\n    at Object.add_sample_bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:151071)\n    at _godot_audio_sample_bus_add (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:153366)\n    at wasm://wasm/096bca0a:wasm-function[26245]:0x13ad0cc\n    at wasm://wasm/096bca0a:wasm-function[46962]:0x1b5d66c\n    at wasm://wasm/096bca0a:wasm-function[62828]:0x1eaf06a\n    at wasm://wasm/096bca0a:wasm-function[2238]:0x16e6c7"
+        },
+        {
+          "id": 6,
+          "gain": 1,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at new Bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:145153)\n    at Bus.create (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144859)\n    at Bus.addAt (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144751)\n    at Object.add_sample_bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:151071)\n    at _godot_audio_sample_bus_add (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:153366)\n    at wasm://wasm/096bca0a:wasm-function[26245]:0x13ad0cc\n    at wasm://wasm/096bca0a:wasm-function[46962]:0x1b5d66c\n    at wasm://wasm/096bca0a:wasm-function[62828]:0x1eaf06a\n    at wasm://wasm/096bca0a:wasm-function[2238]:0x16e6c7"
+        },
+        {
+          "id": 7,
+          "gain": 1,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at new Bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:145196)\n    at Bus.create (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144859)\n    at Bus.addAt (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144751)\n    at Object.add_sample_bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:151071)\n    at _godot_audio_sample_bus_add (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:153366)\n    at wasm://wasm/096bca0a:wasm-function[26245]:0x13ad0cc\n    at wasm://wasm/096bca0a:wasm-function[46962]:0x1b5d66c\n    at wasm://wasm/096bca0a:wasm-function[62828]:0x1eaf06a\n    at wasm://wasm/096bca0a:wasm-function[2238]:0x16e6c7"
+        },
+        {
+          "id": 8,
+          "gain": 1,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at new Bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:145239)\n    at Bus.create (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144859)\n    at Bus.addAt (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144751)\n    at Object.add_sample_bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:151071)\n    at _godot_audio_sample_bus_add (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:153366)\n    at wasm://wasm/096bca0a:wasm-function[26245]:0x13ad0cc\n    at wasm://wasm/096bca0a:wasm-function[46962]:0x1b5d66c\n    at wasm://wasm/096bca0a:wasm-function[62828]:0x1eaf06a\n    at wasm://wasm/096bca0a:wasm-function[2238]:0x16e6c7"
+        },
+        {
+          "id": 9,
+          "gain": 0.07924466580152512,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at new Bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:145153)\n    at Bus.create (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144859)\n    at Bus.addAt (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144751)\n    at Object.add_sample_bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:151071)\n    at _godot_audio_sample_bus_add (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:153366)\n    at wasm://wasm/096bca0a:wasm-function[26245]:0x13ad0cc\n    at wasm://wasm/096bca0a:wasm-function[46962]:0x1b5d66c\n    at wasm://wasm/096bca0a:wasm-function[62828]:0x1eaf06a\n    at wasm://wasm/096bca0a:wasm-function[2238]:0x16e6c7"
+        },
+        {
+          "id": 10,
+          "gain": 1,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at new Bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:145196)\n    at Bus.create (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144859)\n    at Bus.addAt (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144751)\n    at Object.add_sample_bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:151071)\n    at _godot_audio_sample_bus_add (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:153366)\n    at wasm://wasm/096bca0a:wasm-function[26245]:0x13ad0cc\n    at wasm://wasm/096bca0a:wasm-function[46962]:0x1b5d66c\n    at wasm://wasm/096bca0a:wasm-function[62828]:0x1eaf06a\n    at wasm://wasm/096bca0a:wasm-function[2238]:0x16e6c7"
+        },
+        {
+          "id": 11,
+          "gain": 1,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at new Bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:145239)\n    at Bus.create (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144859)\n    at Bus.addAt (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144751)\n    at Object.add_sample_bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:151071)\n    at _godot_audio_sample_bus_add (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:153366)\n    at wasm://wasm/096bca0a:wasm-function[26245]:0x13ad0cc\n    at wasm://wasm/096bca0a:wasm-function[46962]:0x1b5d66c\n    at wasm://wasm/096bca0a:wasm-function[62828]:0x1eaf06a\n    at wasm://wasm/096bca0a:wasm-function[2238]:0x16e6c7"
+        },
+        {
+          "id": 12,
+          "gain": 0.6309573650360107,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at new Bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:145153)\n    at Bus.create (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144859)\n    at Bus.addAt (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144751)\n    at Object.add_sample_bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:151071)\n    at _godot_audio_sample_bus_add (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:153366)\n    at wasm://wasm/096bca0a:wasm-function[26245]:0x13ad0cc\n    at wasm://wasm/096bca0a:wasm-function[46962]:0x1b5d66c\n    at wasm://wasm/096bca0a:wasm-function[62828]:0x1eaf06a\n    at wasm://wasm/096bca0a:wasm-function[2238]:0x16e6c7"
+        },
+        {
+          "id": 13,
+          "gain": 1,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at new Bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:145196)\n    at Bus.create (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144859)\n    at Bus.addAt (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144751)\n    at Object.add_sample_bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:151071)\n    at _godot_audio_sample_bus_add (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:153366)\n    at wasm://wasm/096bca0a:wasm-function[26245]:0x13ad0cc\n    at wasm://wasm/096bca0a:wasm-function[46962]:0x1b5d66c\n    at wasm://wasm/096bca0a:wasm-function[62828]:0x1eaf06a\n    at wasm://wasm/096bca0a:wasm-function[2238]:0x16e6c7"
+        },
+        {
+          "id": 14,
+          "gain": 1,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at new Bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:145239)\n    at Bus.create (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144859)\n    at Bus.addAt (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144751)\n    at Object.add_sample_bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:151071)\n    at _godot_audio_sample_bus_add (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:153366)\n    at wasm://wasm/096bca0a:wasm-function[26245]:0x13ad0cc\n    at wasm://wasm/096bca0a:wasm-function[46962]:0x1b5d66c\n    at wasm://wasm/096bca0a:wasm-function[62828]:0x1eaf06a\n    at wasm://wasm/096bca0a:wasm-function[2238]:0x16e6c7"
+        },
+        {
+          "id": 15,
+          "gain": 0,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at Object.channel [as createPlayer] (eval at _godot_js_eval (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:185698), <anonymous>:110:26)\n    at _godot_js_wrapper_object_call (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:217434)\n    at wasm://wasm/096bca0a:wasm-function[56138]:0x1dba0b6\n    at wasm://wasm/096bca0a:wasm-function[8840]:0x4ffd22\n    at wasm://wasm/096bca0a:wasm-function[7258]:0x41ff33\n    at wasm://wasm/096bca0a:wasm-function[2238]:0x16e4ce\n    at wasm://wasm/096bca0a:wasm-function[43240]:0x1a7d6d4\n    at wasm://wasm/096bca0a:wasm-function[8840]:0x4ffc02\n    at wasm://wasm/096bca0a:wasm-function[7258]:0x41ff33"
+        },
+        {
+          "id": 16,
+          "gain": 0.07924466580152512,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at Object.channel [as createPlayer] (eval at _godot_js_eval (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:185698), <anonymous>:110:26)\n    at _godot_js_wrapper_object_call (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:217434)\n    at wasm://wasm/096bca0a:wasm-function[56138]:0x1dba0b6\n    at wasm://wasm/096bca0a:wasm-function[8840]:0x4ffd22\n    at wasm://wasm/096bca0a:wasm-function[7258]:0x41ff33\n    at wasm://wasm/096bca0a:wasm-function[2238]:0x16e4ce\n    at wasm://wasm/096bca0a:wasm-function[43240]:0x1a7d6d4\n    at wasm://wasm/096bca0a:wasm-function[8840]:0x4ffc02\n    at wasm://wasm/096bca0a:wasm-function[7258]:0x41ff33"
+        }
+      ]
+    },
+    {
+      "stage": "ambience-half",
+      "backend": {
+        "buffers": 2,
+        "bytes": 90316800,
+        "decoded": 2,
+        "starts": 2,
+        "players": 2,
+        "playing": 2,
+        "state": "running"
+      },
+      "gains": [
+        {
+          "id": 0,
+          "gain": 0.1990535706281662,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at new Bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:145153)\n    at Bus.create (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144859)\n    at Bus.setCount (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144199)\n    at Object.set_sample_bus_count (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:150895)\n    at _godot_audio_sample_bus_set_count (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:153627)\n    at wasm://wasm/096bca0a:wasm-function[26388]:0x13c0c89\n    at wasm://wasm/096bca0a:wasm-function[19421]:0xbfa00d\n    at wasm://wasm/096bca0a:wasm-function[46931]:0x1b5b6a4\n    at wasm://wasm/096bca0a:wasm-function[19276]:0xb9bfea"
+        },
+        {
+          "id": 1,
+          "gain": 1,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at new Bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:145196)\n    at Bus.create (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144859)\n    at Bus.setCount (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144199)\n    at Object.set_sample_bus_count (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:150895)\n    at _godot_audio_sample_bus_set_count (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:153627)\n    at wasm://wasm/096bca0a:wasm-function[26388]:0x13c0c89\n    at wasm://wasm/096bca0a:wasm-function[19421]:0xbfa00d\n    at wasm://wasm/096bca0a:wasm-function[46931]:0x1b5b6a4\n    at wasm://wasm/096bca0a:wasm-function[19276]:0xb9bfea"
+        },
+        {
+          "id": 2,
+          "gain": 1,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at new Bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:145239)\n    at Bus.create (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144859)\n    at Bus.setCount (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144199)\n    at Object.set_sample_bus_count (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:150895)\n    at _godot_audio_sample_bus_set_count (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:153627)\n    at wasm://wasm/096bca0a:wasm-function[26388]:0x13c0c89\n    at wasm://wasm/096bca0a:wasm-function[19421]:0xbfa00d\n    at wasm://wasm/096bca0a:wasm-function[46931]:0x1b5b6a4\n    at wasm://wasm/096bca0a:wasm-function[19276]:0xb9bfea"
+        },
+        {
+          "id": 3,
+          "gain": 0.5011872053146362,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at new Bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:145153)\n    at Bus.create (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144859)\n    at Bus.addAt (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144751)\n    at Object.add_sample_bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:151071)\n    at _godot_audio_sample_bus_add (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:153366)\n    at wasm://wasm/096bca0a:wasm-function[26245]:0x13ad0cc\n    at wasm://wasm/096bca0a:wasm-function[46962]:0x1b5d66c\n    at wasm://wasm/096bca0a:wasm-function[62828]:0x1eaf06a\n    at wasm://wasm/096bca0a:wasm-function[2238]:0x16e6c7"
+        },
+        {
+          "id": 4,
+          "gain": 1,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at new Bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:145196)\n    at Bus.create (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144859)\n    at Bus.addAt (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144751)\n    at Object.add_sample_bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:151071)\n    at _godot_audio_sample_bus_add (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:153366)\n    at wasm://wasm/096bca0a:wasm-function[26245]:0x13ad0cc\n    at wasm://wasm/096bca0a:wasm-function[46962]:0x1b5d66c\n    at wasm://wasm/096bca0a:wasm-function[62828]:0x1eaf06a\n    at wasm://wasm/096bca0a:wasm-function[2238]:0x16e6c7"
+        },
+        {
+          "id": 5,
+          "gain": 1,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at new Bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:145239)\n    at Bus.create (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144859)\n    at Bus.addAt (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144751)\n    at Object.add_sample_bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:151071)\n    at _godot_audio_sample_bus_add (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:153366)\n    at wasm://wasm/096bca0a:wasm-function[26245]:0x13ad0cc\n    at wasm://wasm/096bca0a:wasm-function[46962]:0x1b5d66c\n    at wasm://wasm/096bca0a:wasm-function[62828]:0x1eaf06a\n    at wasm://wasm/096bca0a:wasm-function[2238]:0x16e6c7"
+        },
+        {
+          "id": 6,
+          "gain": 1,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at new Bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:145153)\n    at Bus.create (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144859)\n    at Bus.addAt (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144751)\n    at Object.add_sample_bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:151071)\n    at _godot_audio_sample_bus_add (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:153366)\n    at wasm://wasm/096bca0a:wasm-function[26245]:0x13ad0cc\n    at wasm://wasm/096bca0a:wasm-function[46962]:0x1b5d66c\n    at wasm://wasm/096bca0a:wasm-function[62828]:0x1eaf06a\n    at wasm://wasm/096bca0a:wasm-function[2238]:0x16e6c7"
+        },
+        {
+          "id": 7,
+          "gain": 1,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at new Bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:145196)\n    at Bus.create (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144859)\n    at Bus.addAt (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144751)\n    at Object.add_sample_bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:151071)\n    at _godot_audio_sample_bus_add (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:153366)\n    at wasm://wasm/096bca0a:wasm-function[26245]:0x13ad0cc\n    at wasm://wasm/096bca0a:wasm-function[46962]:0x1b5d66c\n    at wasm://wasm/096bca0a:wasm-function[62828]:0x1eaf06a\n    at wasm://wasm/096bca0a:wasm-function[2238]:0x16e6c7"
+        },
+        {
+          "id": 8,
+          "gain": 1,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at new Bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:145239)\n    at Bus.create (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144859)\n    at Bus.addAt (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144751)\n    at Object.add_sample_bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:151071)\n    at _godot_audio_sample_bus_add (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:153366)\n    at wasm://wasm/096bca0a:wasm-function[26245]:0x13ad0cc\n    at wasm://wasm/096bca0a:wasm-function[46962]:0x1b5d66c\n    at wasm://wasm/096bca0a:wasm-function[62828]:0x1eaf06a\n    at wasm://wasm/096bca0a:wasm-function[2238]:0x16e6c7"
+        },
+        {
+          "id": 9,
+          "gain": 0.07924466580152512,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at new Bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:145153)\n    at Bus.create (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144859)\n    at Bus.addAt (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144751)\n    at Object.add_sample_bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:151071)\n    at _godot_audio_sample_bus_add (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:153366)\n    at wasm://wasm/096bca0a:wasm-function[26245]:0x13ad0cc\n    at wasm://wasm/096bca0a:wasm-function[46962]:0x1b5d66c\n    at wasm://wasm/096bca0a:wasm-function[62828]:0x1eaf06a\n    at wasm://wasm/096bca0a:wasm-function[2238]:0x16e6c7"
+        },
+        {
+          "id": 10,
+          "gain": 1,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at new Bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:145196)\n    at Bus.create (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144859)\n    at Bus.addAt (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144751)\n    at Object.add_sample_bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:151071)\n    at _godot_audio_sample_bus_add (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:153366)\n    at wasm://wasm/096bca0a:wasm-function[26245]:0x13ad0cc\n    at wasm://wasm/096bca0a:wasm-function[46962]:0x1b5d66c\n    at wasm://wasm/096bca0a:wasm-function[62828]:0x1eaf06a\n    at wasm://wasm/096bca0a:wasm-function[2238]:0x16e6c7"
+        },
+        {
+          "id": 11,
+          "gain": 1,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at new Bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:145239)\n    at Bus.create (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144859)\n    at Bus.addAt (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144751)\n    at Object.add_sample_bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:151071)\n    at _godot_audio_sample_bus_add (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:153366)\n    at wasm://wasm/096bca0a:wasm-function[26245]:0x13ad0cc\n    at wasm://wasm/096bca0a:wasm-function[46962]:0x1b5d66c\n    at wasm://wasm/096bca0a:wasm-function[62828]:0x1eaf06a\n    at wasm://wasm/096bca0a:wasm-function[2238]:0x16e6c7"
+        },
+        {
+          "id": 12,
+          "gain": 0.6309573650360107,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at new Bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:145153)\n    at Bus.create (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144859)\n    at Bus.addAt (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144751)\n    at Object.add_sample_bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:151071)\n    at _godot_audio_sample_bus_add (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:153366)\n    at wasm://wasm/096bca0a:wasm-function[26245]:0x13ad0cc\n    at wasm://wasm/096bca0a:wasm-function[46962]:0x1b5d66c\n    at wasm://wasm/096bca0a:wasm-function[62828]:0x1eaf06a\n    at wasm://wasm/096bca0a:wasm-function[2238]:0x16e6c7"
+        },
+        {
+          "id": 13,
+          "gain": 1,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at new Bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:145196)\n    at Bus.create (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144859)\n    at Bus.addAt (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144751)\n    at Object.add_sample_bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:151071)\n    at _godot_audio_sample_bus_add (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:153366)\n    at wasm://wasm/096bca0a:wasm-function[26245]:0x13ad0cc\n    at wasm://wasm/096bca0a:wasm-function[46962]:0x1b5d66c\n    at wasm://wasm/096bca0a:wasm-function[62828]:0x1eaf06a\n    at wasm://wasm/096bca0a:wasm-function[2238]:0x16e6c7"
+        },
+        {
+          "id": 14,
+          "gain": 1,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at new Bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:145239)\n    at Bus.create (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144859)\n    at Bus.addAt (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144751)\n    at Object.add_sample_bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:151071)\n    at _godot_audio_sample_bus_add (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:153366)\n    at wasm://wasm/096bca0a:wasm-function[26245]:0x13ad0cc\n    at wasm://wasm/096bca0a:wasm-function[46962]:0x1b5d66c\n    at wasm://wasm/096bca0a:wasm-function[62828]:0x1eaf06a\n    at wasm://wasm/096bca0a:wasm-function[2238]:0x16e6c7"
+        },
+        {
+          "id": 15,
+          "gain": 0.1990535706281662,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at Object.channel [as createPlayer] (eval at _godot_js_eval (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:185698), <anonymous>:110:26)\n    at _godot_js_wrapper_object_call (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:217434)\n    at wasm://wasm/096bca0a:wasm-function[56138]:0x1dba0b6\n    at wasm://wasm/096bca0a:wasm-function[8840]:0x4ffd22\n    at wasm://wasm/096bca0a:wasm-function[7258]:0x41ff33\n    at wasm://wasm/096bca0a:wasm-function[2238]:0x16e4ce\n    at wasm://wasm/096bca0a:wasm-function[43240]:0x1a7d6d4\n    at wasm://wasm/096bca0a:wasm-function[8840]:0x4ffc02\n    at wasm://wasm/096bca0a:wasm-function[7258]:0x41ff33"
+        },
+        {
+          "id": 16,
+          "gain": 0.07924466580152512,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at Object.channel [as createPlayer] (eval at _godot_js_eval (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:185698), <anonymous>:110:26)\n    at _godot_js_wrapper_object_call (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:217434)\n    at wasm://wasm/096bca0a:wasm-function[56138]:0x1dba0b6\n    at wasm://wasm/096bca0a:wasm-function[8840]:0x4ffd22\n    at wasm://wasm/096bca0a:wasm-function[7258]:0x41ff33\n    at wasm://wasm/096bca0a:wasm-function[2238]:0x16e4ce\n    at wasm://wasm/096bca0a:wasm-function[43240]:0x1a7d6d4\n    at wasm://wasm/096bca0a:wasm-function[8840]:0x4ffc02\n    at wasm://wasm/096bca0a:wasm-function[7258]:0x41ff33"
+        }
+      ]
+    },
+    {
+      "stage": "master-muted",
+      "backend": {
+        "buffers": 2,
+        "bytes": 90316800,
+        "decoded": 2,
+        "starts": 2,
+        "players": 2,
+        "playing": 2,
+        "state": "running"
+      },
+      "gains": [
+        {
+          "id": 0,
+          "gain": 0.1990535706281662,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at new Bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:145153)\n    at Bus.create (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144859)\n    at Bus.setCount (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144199)\n    at Object.set_sample_bus_count (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:150895)\n    at _godot_audio_sample_bus_set_count (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:153627)\n    at wasm://wasm/096bca0a:wasm-function[26388]:0x13c0c89\n    at wasm://wasm/096bca0a:wasm-function[19421]:0xbfa00d\n    at wasm://wasm/096bca0a:wasm-function[46931]:0x1b5b6a4\n    at wasm://wasm/096bca0a:wasm-function[19276]:0xb9bfea"
+        },
+        {
+          "id": 1,
+          "gain": 1,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at new Bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:145196)\n    at Bus.create (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144859)\n    at Bus.setCount (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144199)\n    at Object.set_sample_bus_count (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:150895)\n    at _godot_audio_sample_bus_set_count (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:153627)\n    at wasm://wasm/096bca0a:wasm-function[26388]:0x13c0c89\n    at wasm://wasm/096bca0a:wasm-function[19421]:0xbfa00d\n    at wasm://wasm/096bca0a:wasm-function[46931]:0x1b5b6a4\n    at wasm://wasm/096bca0a:wasm-function[19276]:0xb9bfea"
+        },
+        {
+          "id": 2,
+          "gain": 1,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at new Bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:145239)\n    at Bus.create (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144859)\n    at Bus.setCount (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144199)\n    at Object.set_sample_bus_count (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:150895)\n    at _godot_audio_sample_bus_set_count (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:153627)\n    at wasm://wasm/096bca0a:wasm-function[26388]:0x13c0c89\n    at wasm://wasm/096bca0a:wasm-function[19421]:0xbfa00d\n    at wasm://wasm/096bca0a:wasm-function[46931]:0x1b5b6a4\n    at wasm://wasm/096bca0a:wasm-function[19276]:0xb9bfea"
+        },
+        {
+          "id": 3,
+          "gain": 0.5011872053146362,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at new Bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:145153)\n    at Bus.create (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144859)\n    at Bus.addAt (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144751)\n    at Object.add_sample_bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:151071)\n    at _godot_audio_sample_bus_add (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:153366)\n    at wasm://wasm/096bca0a:wasm-function[26245]:0x13ad0cc\n    at wasm://wasm/096bca0a:wasm-function[46962]:0x1b5d66c\n    at wasm://wasm/096bca0a:wasm-function[62828]:0x1eaf06a\n    at wasm://wasm/096bca0a:wasm-function[2238]:0x16e6c7"
+        },
+        {
+          "id": 4,
+          "gain": 1,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at new Bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:145196)\n    at Bus.create (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144859)\n    at Bus.addAt (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144751)\n    at Object.add_sample_bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:151071)\n    at _godot_audio_sample_bus_add (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:153366)\n    at wasm://wasm/096bca0a:wasm-function[26245]:0x13ad0cc\n    at wasm://wasm/096bca0a:wasm-function[46962]:0x1b5d66c\n    at wasm://wasm/096bca0a:wasm-function[62828]:0x1eaf06a\n    at wasm://wasm/096bca0a:wasm-function[2238]:0x16e6c7"
+        },
+        {
+          "id": 5,
+          "gain": 1,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at new Bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:145239)\n    at Bus.create (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144859)\n    at Bus.addAt (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144751)\n    at Object.add_sample_bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:151071)\n    at _godot_audio_sample_bus_add (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:153366)\n    at wasm://wasm/096bca0a:wasm-function[26245]:0x13ad0cc\n    at wasm://wasm/096bca0a:wasm-function[46962]:0x1b5d66c\n    at wasm://wasm/096bca0a:wasm-function[62828]:0x1eaf06a\n    at wasm://wasm/096bca0a:wasm-function[2238]:0x16e6c7"
+        },
+        {
+          "id": 6,
+          "gain": 1,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at new Bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:145153)\n    at Bus.create (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144859)\n    at Bus.addAt (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144751)\n    at Object.add_sample_bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:151071)\n    at _godot_audio_sample_bus_add (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:153366)\n    at wasm://wasm/096bca0a:wasm-function[26245]:0x13ad0cc\n    at wasm://wasm/096bca0a:wasm-function[46962]:0x1b5d66c\n    at wasm://wasm/096bca0a:wasm-function[62828]:0x1eaf06a\n    at wasm://wasm/096bca0a:wasm-function[2238]:0x16e6c7"
+        },
+        {
+          "id": 7,
+          "gain": 1,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at new Bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:145196)\n    at Bus.create (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144859)\n    at Bus.addAt (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144751)\n    at Object.add_sample_bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:151071)\n    at _godot_audio_sample_bus_add (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:153366)\n    at wasm://wasm/096bca0a:wasm-function[26245]:0x13ad0cc\n    at wasm://wasm/096bca0a:wasm-function[46962]:0x1b5d66c\n    at wasm://wasm/096bca0a:wasm-function[62828]:0x1eaf06a\n    at wasm://wasm/096bca0a:wasm-function[2238]:0x16e6c7"
+        },
+        {
+          "id": 8,
+          "gain": 0,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at new Bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:145239)\n    at Bus.create (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144859)\n    at Bus.addAt (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144751)\n    at Object.add_sample_bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:151071)\n    at _godot_audio_sample_bus_add (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:153366)\n    at wasm://wasm/096bca0a:wasm-function[26245]:0x13ad0cc\n    at wasm://wasm/096bca0a:wasm-function[46962]:0x1b5d66c\n    at wasm://wasm/096bca0a:wasm-function[62828]:0x1eaf06a\n    at wasm://wasm/096bca0a:wasm-function[2238]:0x16e6c7"
+        },
+        {
+          "id": 9,
+          "gain": 0.07924466580152512,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at new Bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:145153)\n    at Bus.create (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144859)\n    at Bus.addAt (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144751)\n    at Object.add_sample_bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:151071)\n    at _godot_audio_sample_bus_add (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:153366)\n    at wasm://wasm/096bca0a:wasm-function[26245]:0x13ad0cc\n    at wasm://wasm/096bca0a:wasm-function[46962]:0x1b5d66c\n    at wasm://wasm/096bca0a:wasm-function[62828]:0x1eaf06a\n    at wasm://wasm/096bca0a:wasm-function[2238]:0x16e6c7"
+        },
+        {
+          "id": 10,
+          "gain": 1,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at new Bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:145196)\n    at Bus.create (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144859)\n    at Bus.addAt (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144751)\n    at Object.add_sample_bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:151071)\n    at _godot_audio_sample_bus_add (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:153366)\n    at wasm://wasm/096bca0a:wasm-function[26245]:0x13ad0cc\n    at wasm://wasm/096bca0a:wasm-function[46962]:0x1b5d66c\n    at wasm://wasm/096bca0a:wasm-function[62828]:0x1eaf06a\n    at wasm://wasm/096bca0a:wasm-function[2238]:0x16e6c7"
+        },
+        {
+          "id": 11,
+          "gain": 1,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at new Bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:145239)\n    at Bus.create (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144859)\n    at Bus.addAt (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144751)\n    at Object.add_sample_bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:151071)\n    at _godot_audio_sample_bus_add (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:153366)\n    at wasm://wasm/096bca0a:wasm-function[26245]:0x13ad0cc\n    at wasm://wasm/096bca0a:wasm-function[46962]:0x1b5d66c\n    at wasm://wasm/096bca0a:wasm-function[62828]:0x1eaf06a\n    at wasm://wasm/096bca0a:wasm-function[2238]:0x16e6c7"
+        },
+        {
+          "id": 12,
+          "gain": 0.6309573650360107,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at new Bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:145153)\n    at Bus.create (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144859)\n    at Bus.addAt (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144751)\n    at Object.add_sample_bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:151071)\n    at _godot_audio_sample_bus_add (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:153366)\n    at wasm://wasm/096bca0a:wasm-function[26245]:0x13ad0cc\n    at wasm://wasm/096bca0a:wasm-function[46962]:0x1b5d66c\n    at wasm://wasm/096bca0a:wasm-function[62828]:0x1eaf06a\n    at wasm://wasm/096bca0a:wasm-function[2238]:0x16e6c7"
+        },
+        {
+          "id": 13,
+          "gain": 1,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at new Bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:145196)\n    at Bus.create (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144859)\n    at Bus.addAt (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144751)\n    at Object.add_sample_bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:151071)\n    at _godot_audio_sample_bus_add (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:153366)\n    at wasm://wasm/096bca0a:wasm-function[26245]:0x13ad0cc\n    at wasm://wasm/096bca0a:wasm-function[46962]:0x1b5d66c\n    at wasm://wasm/096bca0a:wasm-function[62828]:0x1eaf06a\n    at wasm://wasm/096bca0a:wasm-function[2238]:0x16e6c7"
+        },
+        {
+          "id": 14,
+          "gain": 1,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at new Bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:145239)\n    at Bus.create (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144859)\n    at Bus.addAt (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144751)\n    at Object.add_sample_bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:151071)\n    at _godot_audio_sample_bus_add (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:153366)\n    at wasm://wasm/096bca0a:wasm-function[26245]:0x13ad0cc\n    at wasm://wasm/096bca0a:wasm-function[46962]:0x1b5d66c\n    at wasm://wasm/096bca0a:wasm-function[62828]:0x1eaf06a\n    at wasm://wasm/096bca0a:wasm-function[2238]:0x16e6c7"
+        },
+        {
+          "id": 15,
+          "gain": 0,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at Object.channel [as createPlayer] (eval at _godot_js_eval (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:185698), <anonymous>:110:26)\n    at _godot_js_wrapper_object_call (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:217434)\n    at wasm://wasm/096bca0a:wasm-function[56138]:0x1dba0b6\n    at wasm://wasm/096bca0a:wasm-function[8840]:0x4ffd22\n    at wasm://wasm/096bca0a:wasm-function[7258]:0x41ff33\n    at wasm://wasm/096bca0a:wasm-function[2238]:0x16e4ce\n    at wasm://wasm/096bca0a:wasm-function[43240]:0x1a7d6d4\n    at wasm://wasm/096bca0a:wasm-function[8840]:0x4ffc02\n    at wasm://wasm/096bca0a:wasm-function[7258]:0x41ff33"
+        },
+        {
+          "id": 16,
+          "gain": 0,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at Object.channel [as createPlayer] (eval at _godot_js_eval (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:185698), <anonymous>:110:26)\n    at _godot_js_wrapper_object_call (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:217434)\n    at wasm://wasm/096bca0a:wasm-function[56138]:0x1dba0b6\n    at wasm://wasm/096bca0a:wasm-function[8840]:0x4ffd22\n    at wasm://wasm/096bca0a:wasm-function[7258]:0x41ff33\n    at wasm://wasm/096bca0a:wasm-function[2238]:0x16e4ce\n    at wasm://wasm/096bca0a:wasm-function[43240]:0x1a7d6d4\n    at wasm://wasm/096bca0a:wasm-function[8840]:0x4ffc02\n    at wasm://wasm/096bca0a:wasm-function[7258]:0x41ff33"
+        }
+      ]
+    },
+    {
+      "stage": "master-restored",
+      "backend": {
+        "buffers": 2,
+        "bytes": 90316800,
+        "decoded": 2,
+        "starts": 2,
+        "players": 2,
+        "playing": 2,
+        "state": "running"
+      },
+      "gains": [
+        {
+          "id": 0,
+          "gain": 0.1990535706281662,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at new Bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:145153)\n    at Bus.create (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144859)\n    at Bus.setCount (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144199)\n    at Object.set_sample_bus_count (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:150895)\n    at _godot_audio_sample_bus_set_count (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:153627)\n    at wasm://wasm/096bca0a:wasm-function[26388]:0x13c0c89\n    at wasm://wasm/096bca0a:wasm-function[19421]:0xbfa00d\n    at wasm://wasm/096bca0a:wasm-function[46931]:0x1b5b6a4\n    at wasm://wasm/096bca0a:wasm-function[19276]:0xb9bfea"
+        },
+        {
+          "id": 1,
+          "gain": 1,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at new Bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:145196)\n    at Bus.create (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144859)\n    at Bus.setCount (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144199)\n    at Object.set_sample_bus_count (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:150895)\n    at _godot_audio_sample_bus_set_count (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:153627)\n    at wasm://wasm/096bca0a:wasm-function[26388]:0x13c0c89\n    at wasm://wasm/096bca0a:wasm-function[19421]:0xbfa00d\n    at wasm://wasm/096bca0a:wasm-function[46931]:0x1b5b6a4\n    at wasm://wasm/096bca0a:wasm-function[19276]:0xb9bfea"
+        },
+        {
+          "id": 2,
+          "gain": 1,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at new Bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:145239)\n    at Bus.create (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144859)\n    at Bus.setCount (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144199)\n    at Object.set_sample_bus_count (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:150895)\n    at _godot_audio_sample_bus_set_count (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:153627)\n    at wasm://wasm/096bca0a:wasm-function[26388]:0x13c0c89\n    at wasm://wasm/096bca0a:wasm-function[19421]:0xbfa00d\n    at wasm://wasm/096bca0a:wasm-function[46931]:0x1b5b6a4\n    at wasm://wasm/096bca0a:wasm-function[19276]:0xb9bfea"
+        },
+        {
+          "id": 3,
+          "gain": 0.5011872053146362,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at new Bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:145153)\n    at Bus.create (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144859)\n    at Bus.addAt (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144751)\n    at Object.add_sample_bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:151071)\n    at _godot_audio_sample_bus_add (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:153366)\n    at wasm://wasm/096bca0a:wasm-function[26245]:0x13ad0cc\n    at wasm://wasm/096bca0a:wasm-function[46962]:0x1b5d66c\n    at wasm://wasm/096bca0a:wasm-function[62828]:0x1eaf06a\n    at wasm://wasm/096bca0a:wasm-function[2238]:0x16e6c7"
+        },
+        {
+          "id": 4,
+          "gain": 1,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at new Bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:145196)\n    at Bus.create (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144859)\n    at Bus.addAt (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144751)\n    at Object.add_sample_bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:151071)\n    at _godot_audio_sample_bus_add (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:153366)\n    at wasm://wasm/096bca0a:wasm-function[26245]:0x13ad0cc\n    at wasm://wasm/096bca0a:wasm-function[46962]:0x1b5d66c\n    at wasm://wasm/096bca0a:wasm-function[62828]:0x1eaf06a\n    at wasm://wasm/096bca0a:wasm-function[2238]:0x16e6c7"
+        },
+        {
+          "id": 5,
+          "gain": 1,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at new Bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:145239)\n    at Bus.create (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144859)\n    at Bus.addAt (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144751)\n    at Object.add_sample_bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:151071)\n    at _godot_audio_sample_bus_add (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:153366)\n    at wasm://wasm/096bca0a:wasm-function[26245]:0x13ad0cc\n    at wasm://wasm/096bca0a:wasm-function[46962]:0x1b5d66c\n    at wasm://wasm/096bca0a:wasm-function[62828]:0x1eaf06a\n    at wasm://wasm/096bca0a:wasm-function[2238]:0x16e6c7"
+        },
+        {
+          "id": 6,
+          "gain": 1,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at new Bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:145153)\n    at Bus.create (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144859)\n    at Bus.addAt (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144751)\n    at Object.add_sample_bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:151071)\n    at _godot_audio_sample_bus_add (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:153366)\n    at wasm://wasm/096bca0a:wasm-function[26245]:0x13ad0cc\n    at wasm://wasm/096bca0a:wasm-function[46962]:0x1b5d66c\n    at wasm://wasm/096bca0a:wasm-function[62828]:0x1eaf06a\n    at wasm://wasm/096bca0a:wasm-function[2238]:0x16e6c7"
+        },
+        {
+          "id": 7,
+          "gain": 1,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at new Bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:145196)\n    at Bus.create (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144859)\n    at Bus.addAt (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144751)\n    at Object.add_sample_bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:151071)\n    at _godot_audio_sample_bus_add (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:153366)\n    at wasm://wasm/096bca0a:wasm-function[26245]:0x13ad0cc\n    at wasm://wasm/096bca0a:wasm-function[46962]:0x1b5d66c\n    at wasm://wasm/096bca0a:wasm-function[62828]:0x1eaf06a\n    at wasm://wasm/096bca0a:wasm-function[2238]:0x16e6c7"
+        },
+        {
+          "id": 8,
+          "gain": 1,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at new Bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:145239)\n    at Bus.create (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144859)\n    at Bus.addAt (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144751)\n    at Object.add_sample_bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:151071)\n    at _godot_audio_sample_bus_add (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:153366)\n    at wasm://wasm/096bca0a:wasm-function[26245]:0x13ad0cc\n    at wasm://wasm/096bca0a:wasm-function[46962]:0x1b5d66c\n    at wasm://wasm/096bca0a:wasm-function[62828]:0x1eaf06a\n    at wasm://wasm/096bca0a:wasm-function[2238]:0x16e6c7"
+        },
+        {
+          "id": 9,
+          "gain": 0.07924466580152512,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at new Bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:145153)\n    at Bus.create (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144859)\n    at Bus.addAt (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144751)\n    at Object.add_sample_bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:151071)\n    at _godot_audio_sample_bus_add (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:153366)\n    at wasm://wasm/096bca0a:wasm-function[26245]:0x13ad0cc\n    at wasm://wasm/096bca0a:wasm-function[46962]:0x1b5d66c\n    at wasm://wasm/096bca0a:wasm-function[62828]:0x1eaf06a\n    at wasm://wasm/096bca0a:wasm-function[2238]:0x16e6c7"
+        },
+        {
+          "id": 10,
+          "gain": 1,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at new Bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:145196)\n    at Bus.create (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144859)\n    at Bus.addAt (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144751)\n    at Object.add_sample_bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:151071)\n    at _godot_audio_sample_bus_add (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:153366)\n    at wasm://wasm/096bca0a:wasm-function[26245]:0x13ad0cc\n    at wasm://wasm/096bca0a:wasm-function[46962]:0x1b5d66c\n    at wasm://wasm/096bca0a:wasm-function[62828]:0x1eaf06a\n    at wasm://wasm/096bca0a:wasm-function[2238]:0x16e6c7"
+        },
+        {
+          "id": 11,
+          "gain": 1,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at new Bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:145239)\n    at Bus.create (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144859)\n    at Bus.addAt (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144751)\n    at Object.add_sample_bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:151071)\n    at _godot_audio_sample_bus_add (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:153366)\n    at wasm://wasm/096bca0a:wasm-function[26245]:0x13ad0cc\n    at wasm://wasm/096bca0a:wasm-function[46962]:0x1b5d66c\n    at wasm://wasm/096bca0a:wasm-function[62828]:0x1eaf06a\n    at wasm://wasm/096bca0a:wasm-function[2238]:0x16e6c7"
+        },
+        {
+          "id": 12,
+          "gain": 0.6309573650360107,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at new Bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:145153)\n    at Bus.create (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144859)\n    at Bus.addAt (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144751)\n    at Object.add_sample_bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:151071)\n    at _godot_audio_sample_bus_add (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:153366)\n    at wasm://wasm/096bca0a:wasm-function[26245]:0x13ad0cc\n    at wasm://wasm/096bca0a:wasm-function[46962]:0x1b5d66c\n    at wasm://wasm/096bca0a:wasm-function[62828]:0x1eaf06a\n    at wasm://wasm/096bca0a:wasm-function[2238]:0x16e6c7"
+        },
+        {
+          "id": 13,
+          "gain": 1,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at new Bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:145196)\n    at Bus.create (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144859)\n    at Bus.addAt (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144751)\n    at Object.add_sample_bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:151071)\n    at _godot_audio_sample_bus_add (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:153366)\n    at wasm://wasm/096bca0a:wasm-function[26245]:0x13ad0cc\n    at wasm://wasm/096bca0a:wasm-function[46962]:0x1b5d66c\n    at wasm://wasm/096bca0a:wasm-function[62828]:0x1eaf06a\n    at wasm://wasm/096bca0a:wasm-function[2238]:0x16e6c7"
+        },
+        {
+          "id": 14,
+          "gain": 1,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at new Bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:145239)\n    at Bus.create (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144859)\n    at Bus.addAt (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:144751)\n    at Object.add_sample_bus (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:151071)\n    at _godot_audio_sample_bus_add (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:153366)\n    at wasm://wasm/096bca0a:wasm-function[26245]:0x13ad0cc\n    at wasm://wasm/096bca0a:wasm-function[46962]:0x1b5d66c\n    at wasm://wasm/096bca0a:wasm-function[62828]:0x1eaf06a\n    at wasm://wasm/096bca0a:wasm-function[2238]:0x16e6c7"
+        },
+        {
+          "id": 15,
+          "gain": 0.1990535706281662,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at Object.channel [as createPlayer] (eval at _godot_js_eval (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:185698), <anonymous>:110:26)\n    at _godot_js_wrapper_object_call (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:217434)\n    at wasm://wasm/096bca0a:wasm-function[56138]:0x1dba0b6\n    at wasm://wasm/096bca0a:wasm-function[8840]:0x4ffd22\n    at wasm://wasm/096bca0a:wasm-function[7258]:0x41ff33\n    at wasm://wasm/096bca0a:wasm-function[2238]:0x16e4ce\n    at wasm://wasm/096bca0a:wasm-function[43240]:0x1a7d6d4\n    at wasm://wasm/096bca0a:wasm-function[8840]:0x4ffc02\n    at wasm://wasm/096bca0a:wasm-function[7258]:0x41ff33"
+        },
+        {
+          "id": 16,
+          "gain": 0.07924466580152512,
+          "creator": "Error\n    at proto.createGain (<anonymous>:4:170)\n    at Object.channel [as createPlayer] (eval at _godot_js_eval (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:185698), <anonymous>:110:26)\n    at _godot_js_wrapper_object_call (https://narutojzm1-dot.github.io/youjia/game-a75ae22.js:1:217434)\n    at wasm://wasm/096bca0a:wasm-function[56138]:0x1dba0b6\n    at wasm://wasm/096bca0a:wasm-function[8840]:0x4ffd22\n    at wasm://wasm/096bca0a:wasm-function[7258]:0x41ff33\n    at wasm://wasm/096bca0a:wasm-function[2238]:0x16e4ce\n    at wasm://wasm/096bca0a:wasm-function[43240]:0x1a7d6d4\n    at wasm://wasm/096bca0a:wasm-function[8840]:0x4ffc02\n    at wasm://wasm/096bca0a:wasm-function[7258]:0x41ff33"
+        }
+      ]
+    }
+  ],
+  "music_node_id": 16,
+  "ambience_node_id": 15,
+  "errors": [],
+  "checks_passed": true,
+  "scope": "public real mouse actions; observation-only createGain wrapper returns original node without changing graph/control/PCM; reads actual AudioParam gain.value, not fake players or ear/hearing proof"
+}

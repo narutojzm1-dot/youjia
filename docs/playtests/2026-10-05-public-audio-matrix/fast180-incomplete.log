@@ -1,0 +1,39 @@
+cold-title None
+cold-enter {'buffers': 2, 'bytes': 90316800, 'decoded': 2, 'starts': 2, 'players': 2, 'playing': 2, 'state': 'running'}
+pause-initial {'buffers': 2, 'bytes': 90316800, 'decoded': 2, 'starts': 2, 'players': 2, 'playing': 2, 'state': 'running'}
+music-01-off {'buffers': 2, 'bytes': 90316800, 'decoded': 2, 'starts': 2, 'players': 2, 'playing': 1, 'state': 'running'}
+music-01-on {'buffers': 2, 'bytes': 90316800, 'decoded': 2, 'starts': 3, 'players': 3, 'playing': 2, 'state': 'running'}
+music-02-off {'buffers': 2, 'bytes': 90316800, 'decoded': 2, 'starts': 3, 'players': 3, 'playing': 1, 'state': 'running'}
+music-02-on {'buffers': 2, 'bytes': 90316800, 'decoded': 2, 'starts': 4, 'players': 3, 'playing': 2, 'state': 'running'}
+music-03-off {'buffers': 2, 'bytes': 90316800, 'decoded': 2, 'starts': 4, 'players': 3, 'playing': 1, 'state': 'running'}
+music-03-on {'buffers': 2, 'bytes': 90316800, 'decoded': 2, 'starts': 5, 'players': 3, 'playing': 2, 'state': 'running'}
+music-04-off {'buffers': 2, 'bytes': 90316800, 'decoded': 2, 'starts': 5, 'players': 3, 'playing': 1, 'state': 'running'}
+music-04-on {'buffers': 2, 'bytes': 90316800, 'decoded': 2, 'starts': 6, 'players': 3, 'playing': 2, 'state': 'running'}
+music-05-off {'buffers': 2, 'bytes': 90316800, 'decoded': 2, 'starts': 6, 'players': 3, 'playing': 1, 'state': 'running'}
+music-05-on {'buffers': 2, 'bytes': 90316800, 'decoded': 2, 'starts': 7, 'players': 3, 'playing': 2, 'state': 'running'}
+music-06-off {'buffers': 2, 'bytes': 90316800, 'decoded': 2, 'starts': 7, 'players': 3, 'playing': 1, 'state': 'running'}
+music-06-on {'buffers': 2, 'bytes': 90316800, 'decoded': 2, 'starts': 8, 'players': 3, 'playing': 2, 'state': 'running'}
+music-07-off {'buffers': 2, 'bytes': 90316800, 'decoded': 2, 'starts': 8, 'players': 3, 'playing': 1, 'state': 'running'}
+music-07-on {'buffers': 2, 'bytes': 90316800, 'decoded': 2, 'starts': 9, 'players': 3, 'playing': 2, 'state': 'running'}
+Traceback (most recent call last):
+  File "/tmp/audio-public-matrix.py", line 32, in <module>
+    page.mouse.click(640,y);page.wait_for_timeout(delay);snap(f'{track}-{i+1:02}-off',1)
+                                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/audio-public-matrix.py", line 21, in snap
+    page.wait_for_function('(n)=>window.__manusBgm && JSON.parse(window.__manusBgm.diagnostics()).playing===n',arg=expected,timeout=5000)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/playwright/sync_api/_generated.py", line 12761, in wait_for_function
+    self._sync(
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/playwright/_impl/_sync_base.py", line 115, in _sync
+    return task.result()
+           ^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/playwright/_impl/_page.py", line 1151, in wait_for_function
+    return await self._main_frame.wait_for_function(**locals_to_params(locals()))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/playwright/_impl/_frame.py", line 940, in wait_for_function
+    await self._channel.send("waitForFunction", self._timeout, params)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/playwright/_impl/_connection.py", line 76, in send
+    return await self._connection.wrap_api_call(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/playwright/_impl/_connection.py", line 632, in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+playwright._impl._errors.TimeoutError: Page.wait_for_function: Timeout 5000ms exceeded.

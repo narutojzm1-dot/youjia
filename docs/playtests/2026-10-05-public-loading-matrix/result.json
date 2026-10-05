@@ -1,0 +1,94 @@
+[
+  {
+    "viewport": [
+      1280,
+      720
+    ],
+    "build": "game-a75ae22",
+    "loading_text": "悠长的假期\n\n下载资源 35% · 20.9 / 58.6 MiB（解压后）\n\n已读取 20.9 MiB 资源数据（解压后）· 4 秒\n\ngame-a75ae22",
+    "first_frame": true,
+    "loading_hidden": true,
+    "responses": [
+      {
+        "url": "https://narutojzm1-dot.github.io/youjia/game-a75ae22.js",
+        "status": 200
+      },
+      {
+        "url": "https://narutojzm1-dot.github.io/youjia/game-a75ae22.pck",
+        "status": 200
+      },
+      {
+        "url": "https://narutojzm1-dot.github.io/youjia/game-a75ae22.wasm",
+        "status": 200
+      }
+    ],
+    "errors": [],
+    "scope": "public cold context with explicitly controlled 4-second WASM delay for loading screenshot; actual first frame/title/real enter click; no physical-mobile/performance claim"
+  },
+  {
+    "viewport": [
+      390,
+      844
+    ],
+    "build": "game-a75ae22",
+    "loading_text": "悠长的假期\n\n下载资源 35% · 20.9 / 58.6 MiB（解压后）\n\n已读取 20.9 MiB 资源数据（解压后）· 1 秒\n\ngame-a75ae22",
+    "first_frame": true,
+    "loading_hidden": true,
+    "responses": [
+      {
+        "url": "https://narutojzm1-dot.github.io/youjia/game-a75ae22.js",
+        "status": 200
+      },
+      {
+        "url": "https://narutojzm1-dot.github.io/youjia/game-a75ae22.pck",
+        "status": 200
+      },
+      {
+        "url": "https://narutojzm1-dot.github.io/youjia/game-a75ae22.wasm",
+        "status": 200
+      }
+    ],
+    "errors": [],
+    "scope": "public cold context with explicitly controlled 4-second WASM delay for loading screenshot; actual first frame/title/real enter click; no physical-mobile/performance claim"
+  },
+  {
+    "viewport": [
+      844,
+      390
+    ],
+    "build": "game-a75ae22",
+    "loading_text": "悠长的假期\n\n下载资源 35% · 20.9 / 58.6 MiB（解压后）\n\n已读取 20.9 MiB 资源数据（解压后）· 2 秒\n\ngame-a75ae22",
+    "first_frame": true,
+    "loading_hidden": true,
+    "responses": [
+      {
+        "url": "https://narutojzm1-dot.github.io/youjia/game-a75ae22.js",
+        "status": 200
+      },
+      {
+        "url": "https://narutojzm1-dot.github.io/youjia/game-a75ae22.pck",
+        "status": 200
+      },
+      {
+        "url": "https://narutojzm1-dot.github.io/youjia/game-a75ae22.wasm",
+        "status": 200
+      }
+    ],
+    "errors": [],
+    "scope": "public cold context with explicitly controlled 4-second WASM delay for loading screenshot; actual first frame/title/real enter click; no physical-mobile/performance claim"
+  },
+  {
+    "stage": "network-controlled-failure-retry",
+    "build": "game-a75ae22",
+    "injected_urls": [
+      "https://narutojzm1-dot.github.io/youjia/game-a75ae22.js"
+    ],
+    "failure_text": "悠长的假期\n\n游戏加载失败，请重试。\n\nEngine script could not be loaded\n\n重试\n\ngame-a75ae22",
+    "loading_hidden_after_retry": true,
+    "errors_including_expected_injected_failure": [
+      "Failed to load resource: net::ERR_FAILED",
+      "[game-loading] Startup failed Error: Engine script could not be loaded\n    at script.addEventListener.once (https://narutojzm1-dot.github.io/youjia/?loading329-matrix:215:51)"
+    ],
+    "scope": "one intentional engine-bootstrap JS request abort; real visible retry button reload; not a spontaneous production failure"
+  }
+]
