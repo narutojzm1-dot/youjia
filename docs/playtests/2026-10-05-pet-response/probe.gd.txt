@@ -22,8 +22,12 @@ func _process(_delta):
  var animal = world.actor_named(id)
  TuningStore.set_value("ui.reduced_motion", stage >= 4)
  animal._pet_ack_cooldown = 0.0
+ animal.state = "wander"
+ animal._turn_pause = 0.55
+ animal._target = animal.position + Vector2(-100,0)
  world.debug_place_player(animal.position + Vector2(30, 0))
  world._interact_with_target("pet:" + id)
+ animal.tick(0.1, Vector2(1280,720))
  main._refresh_hud()
- var result = {"stage":stage,"actor":id,"pose":animal._posture_id,"remaining":animal._ack_left,"heart":world._effects_overlay.pet_feedback_snapshot(),"reduced":stage>=4}
+ var result = {"stage":stage,"actor":id,"pose":animal._posture_id,"facing":animal.facing,"turn_pause":animal._turn_pause,"remaining":animal._ack_left,"heart":world._effects_overlay.pet_feedback_snapshot(),"reduced":stage>=4}
  JavaScriptBridge.eval("window.petResult=" + JSON.stringify(result))

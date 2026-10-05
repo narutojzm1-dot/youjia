@@ -497,7 +497,7 @@ func tick(delta: float, world_size: Vector2) -> void:
 				desired = motion.normalized() * minf(speed * depth, motion.length() * 1.8)
 	# A resident chooses its next direction while planted, then takes a few steps.
 	# No reversing in motion or repeated boundary bounces.
-	if daily_routine and _turn_pause > 0.0 and state == "wander":
+	if daily_routine and _turn_pause > 0.0 and state == "wander" and _ack_left <= 0.0:
 		_turn_pause -= delta
 		desired = Vector2.ZERO
 		if absf(motion.x) > 3.0:

@@ -15,7 +15,7 @@ with sync_playwright() as p:
   for stage in range(8):
    pg.evaluate('(s)=>window.petStage=s',stage);pg.wait_for_function('(s)=>window.petResult.stage===s',arg=stage);pg.wait_for_timeout(200)
    r=pg.evaluate('window.petResult');assert r['pose'] in ['glance','idle'],r
-   assert r['heart']=={} and r['remaining']>0,r
+   assert r['heart']=={} and r['remaining']>0 and r['facing']==1 and r['turn_pause']>0.5,r
    pg.screenshot(path=str(out/f'{w}-{h}-{stage}.png'));results.append(dict(r,viewport=[w,h],page_errors=list(errors)))
   (out/'result.json').write_text(json.dumps(results,ensure_ascii=False,indent=2))
   (out/f'{w}-{h}-errors.json').write_text(json.dumps(errors,indent=2))

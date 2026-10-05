@@ -196,6 +196,21 @@ func run():
   world.debug_place_player(animal.position + Vector2(30, 0))
   world._interact_with_target("pet:" + eligible)
   check(animal._ack_left > 0.0, "later pet can respond again: " + eligible)
+ # A scheduled wandering turn must not override an active acknowledgement.
+ var horse = world.actor_named("horse")
+ horse._pet_ack_cooldown = 0.0
+ horse.state = "wander"
+ horse.daily_routine = true
+ horse._turn_pause = 0.55
+ horse._target = horse.position + Vector2(100, 0)
+ world.debug_place_player(horse.position + Vector2(-30, 0))
+ world._interact_with_target("pet:horse")
+ horse.tick(0.1, Vector2(1280, 720))
+ check(horse.facing == -1.0 and horse._ack_left > 0.0, "scheduled turn cannot face away during pet response")
+ check(is_equal_approx(horse._turn_pause, 0.55), "pet response preserves scheduled turn time")
+ for _frame in 140:
+  horse.tick(1.0 / 60.0, Vector2(1280, 720))
+ check(horse.facing == 1.0 and horse._turn_pause < 0.55, "scheduled turn resumes after acknowledgement")
  # Watering is meaningful once per day. A repeated attempt must not counterfeit
  # a success effect or alter the recorded planted/watered day.
  world.debug_place_player(Vector2(700, 540))
