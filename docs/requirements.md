@@ -115,6 +115,7 @@
 | 编号 | 优先级 | 工作范围 | 验收条件 | 状态 | Owner | 依赖 / 记录 |
 | --- | --- | --- | --- | --- | --- | --- |
 | VERIFY-EXIT-GATE | P0 | 修复每日Godot回归忽略非零退出码的发布门禁漏洞 | Godot/timeout和tee任一非零、错误/FAIL日志或日志读取失败均阻断；11项故障注入与严格完整回归、独立最终SHA审查通过 | 已合入并核验发布；PR134独立审查批准、主线严格回归/导出/Pages与公开包一致性通过 | `CODEX-LEAD` | [工程督导#130](https://github.com/narutojzm1-dot/youjia/issues/130)；不包含存档协议、完成标记或PR验证workflow。[证据](playtests/2026-10-03-verify-exit-gate.md)。 |
+| VERIFY-PR-130 | P1 | 在 PR 合入前运行只读回归与 Web 导出 | main 目标 PR 执行现有发布辅助检查、严格 daily 与真实 Web 导出；无仓库写入/Pages 发布；本 PR 实际 Actions 与独立最终 SHA 审核通过 | 已实现；本 PR Actions 与独立终审待完成 | `CODEX-LEAD` | [#130认领](https://github.com/narutojzm1-dot/youjia/issues/130#issuecomment-6002379027)；[验证与边界](validation/2026-10-06-pr130-verification.md)。仅新增 PR 检查，不配置 branch protection，不替代 main 发布复验；每套完成标记等父项仍开放。 |
 
 
 ## 追加切片（低动效对象反馈）

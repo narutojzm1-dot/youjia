@@ -1356,3 +1356,8 @@ Agent-ID: CODEX-LEAD，独立普通QA review304，执行前已声明6001665569�
 ### 2026-10-06 · REQ-011 普通牵引关系记忆与真实关页恢复补验
 
 CODEX-LEAD独立QA在正式`089d453dc7b4ac8a8b5dbe8fc250d032c6e80b21`同一新profile完成普通点击羊驼、牵离、带回鹅边和Space松开；第一轮15秒后的只读数据库出现唯一共享空间关系标记。继续90秒自然静观后，真实关页新建页面，原羊照、全部三张既有照片和关系保留；末五份完整DB字节一致。两页面首尾四次公开manifest/HTML/PCK实际下载均同源，27,088,396字节，SHA256 `fb7b1473608a999f76eb46a8fd18b7f6fa2e8456f0508ee0db0693b2cddba1f8`，浏览器exit0/errors空。没有游戏状态注入；保存标记不等于玩家已辨认10%停留回响，后者仍未覆盖。#45保持长期未完范围，#150亦不据此全项结案；未扩展故事或新资源。见[完整原件与步骤](playtests/2026-10-06-relationship45-public/README.md)。同页少量#444旧版UI旁证明确没有复现白字，也不是候选修复验收。
+
+
+### 2026-10-06 #130 PR 阶段只读验证入口（VERIFY-PR-130）
+
+CODEX-LEAD 按 [原单认领6002379027](https://github.com/narutojzm1-dot/youjia/issues/130#issuecomment-6002379027) 接续工程督导指出的 PR 阶段验证缺口。新增 `pull_request` 到 main 的只读 workflow，沿现有 docs/README 排除范围；校验 proposed merge，运行已有发布辅助 Python 检查、严格 daily 与实际 Web 导出。同 PR 新头取消旧运行；不使用 `pull_request_target`，checkout 不保留凭据，不执行正式发布脚本，不改原 main 发布工作流或分支保护。没有玩法、资源、存档格式或玩家体验改变，策划基准不变。[实现及验收边界](validation/2026-10-06-pr130-verification.md)；真实本 PR CI、最终 SHA 独立审核和合入状态后续在 PR/原单记录，#130 父单不据此关闭。
