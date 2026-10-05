@@ -5,8 +5,9 @@ const TEMP_PATH := "user://youjia_save.tmp"
 const BACKUP_PATH := "user://youjia_save.bak"
 const SaveFilesType := preload("res://scripts/persistence/save_files.gd")
 const AnimalRelationshipsType := preload("res://scripts/game/animal_relationships.gd")
-const SAVE_VERSION := 5
-const TUTORIAL_VERSION := 1
+const SaveDataCodec := preload("res://scripts/persistence/save_data_codec.gd")
+const SAVE_VERSION := SaveDataCodec.SAVE_VERSION
+const TUTORIAL_VERSION := SaveDataCodec.TUTORIAL_VERSION
 
 var _data: Dictionary = {}
 
@@ -16,23 +17,7 @@ func _ready() -> void:
 
 
 func _default_data() -> Dictionary:
-	return {
-		"version": SAVE_VERSION,
-		"locale": "zh-CN",
-		"tutorial_version": 0,
-		"album": [],
-		"photo_moments": {},
-		# 假期天数系统（v4 兼容新增字段）
-		"holiday_day": 1,
-		"holiday_day_elapsed": 0.0,
-		# 植物床状态（0=空, 1=已种, 2=发芽, 3=开花）
-		"plant_state": 0,
-		"plant_day_planted": 0,
-		"plant_watered_day": -1,
-		# 钓鱼记录
-		"first_fish_caught": false,
-		"animal_relationship_memory": {},
-	}
+	return SaveDataCodec.defaults()
 
 
 func _load() -> void:
@@ -40,27 +25,7 @@ func _load() -> void:
 	var record: Dictionary = SaveFilesType.new().recover(SAVE_PATH, BACKUP_PATH)
 	if record.is_empty():
 		return
-	var candidate: Dictionary = record.data
-	var locale := str(candidate.get("locale", "zh-CN"))
-	_data.locale = locale if locale in ["en", "zh-CN"] else "zh-CN"
-	_data.tutorial_version = clampi(int(candidate.get("tutorial_version", 0)), 0, TUTORIAL_VERSION)
-	var album: Array = []
-	var raw: Variant = candidate.get("album", [])
-	if raw is Array:
-		for item: Variant in raw:
-			var photo_id := str(item)
-			if not photo_id.is_empty() and photo_id not in album:
-				album.append(photo_id)
-	_data.album = album
-	_data.photo_moments = _clean_moments(candidate.get("photo_moments",{}),album)
-	# 读取假期进度（旧存档没有这些字段时用默认值）
-	_data.holiday_day = maxi(1, int(candidate.get("holiday_day", 1)))
-	_data.holiday_day_elapsed = maxf(0.0, float(candidate.get("holiday_day_elapsed", 0.0)))
-	_data.plant_state = clampi(int(candidate.get("plant_state", 0)), 0, 3)
-	_data.plant_day_planted = maxi(0, int(candidate.get("plant_day_planted", 0)))
-	_data.plant_watered_day = int(candidate.get("plant_watered_day", -1))
-	_data.first_fish_caught = bool(candidate.get("first_fish_caught", false))
-	_data.animal_relationship_memory = AnimalRelationshipsType.sanitize(candidate.get("animal_relationship_memory", {}))
+	_data = SaveDataCodec.project(record.data)
 
 
 func save() -> bool:
@@ -165,11 +130,4 @@ func set_animal_relationship_memory(memory: Dictionary) -> bool:
 
 
 func _clean_moments(raw: Variant, album: Array) -> Dictionary:
-	var result: Dictionary = {}
-	if not raw is Dictionary: return result
-	for photo_id: Variant in raw:
-		if not photo_id is String or photo_id not in album or photo_id not in ExpressionCatalog.all_ids(): continue
-		var moment := PhotoMoment.sanitize(raw[photo_id])
-		if not moment.is_empty() and str(moment.get("rule_id","")) == photo_id:
-			result[photo_id] = moment
-	return result
+	return SaveDataCodec.clean_moments(raw, album)
