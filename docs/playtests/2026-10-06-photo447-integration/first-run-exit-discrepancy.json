@@ -1,0 +1,85 @@
+{
+  "tool_session_id": 29493,
+  "write_stdin_exit_code": 1,
+  "write_stdin_output": "",
+  "internal_run_exit": "0",
+  "internal_chain": "bash validate.sh uses set -euo pipefail; following Python and export steps only reached after prior success. Outer shell wrote run.exit then exit same variable.",
+  "cause": "Not explained by retained process output; tool transport/status boundary is not proven. Do not report outer first run as exit 0.",
+  "followup": "New 16ef wrapper specialty plus strict verified export with separately retained explicit exit codes; no blind full rerun.",
+  "files": {
+    "console.log": {
+      "bytes": 36152,
+      "mtime_ns": 1791234038408891434,
+      "sha256": "93894b3f380fc4abd8c9c1c6358e083f1937edf87a8481b8171fa27bc3787745"
+    },
+    "daily.log": {
+      "bytes": 56041,
+      "mtime_ns": 1791234456963686691,
+      "sha256": "47ac496f8fb8ae397fd47629076225f245d583866db5b85c86eea317fdb19d91"
+    },
+    "web-retention.log": {
+      "bytes": 1301,
+      "mtime_ns": 1791234457775692125,
+      "sha256": "152ebabda82020b1394ac339af42dd9a156a315003e5738ec30583dbdb45a488"
+    },
+    "storage-publish.log": {
+      "bytes": 145,
+      "mtime_ns": 1791234458291695578,
+      "sha256": "69d2cfe36e55916187b1ce6b537c388a1bb633ee3f0ec77b42891590d5f8277d"
+    },
+    "export.log": {
+      "bytes": 45838,
+      "mtime_ns": 1791234462401105450,
+      "sha256": "73741e0a1cdc432100c14ad1d332ce9328c5752c059d6993dc1ff8ac58edbc9f"
+    },
+    "run.exit": {
+      "bytes": 2,
+      "mtime_ns": 1791234463688784507,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    "validate.sh": {
+      "bytes": 1203,
+      "mtime_ns": 1791234011515081604,
+      "sha256": "4b6df2d3d6568498dd12ad21af8d4b063fe8166ba503f79d176ad6d8a168db4d"
+    }
+  },
+  "original_step_status_evidence": [
+    {
+      "step": "import",
+      "exit_status_inferred_from_set_e_chain": 0,
+      "proof": "standalone mat invoked afterward; run_verified_godot is a subshell retaining caller set -e",
+      "separate_numeric_capture": false
+    },
+    {
+      "step": "standalone mat",
+      "exit_status_inferred_from_set_e_chain": 0,
+      "proof": "full daily invoked afterward",
+      "separate_numeric_capture": false
+    },
+    {
+      "step": "full daily",
+      "exit_status_inferred_from_set_e_chain": 0,
+      "proof": "both JS completion lines, retention invoked afterward",
+      "separate_numeric_capture": false
+    },
+    {
+      "step": "retention Python",
+      "exit_status_inferred_from_set_e_chain": 0,
+      "proof": "all 11 tests OK, publisher fixture invoked afterward",
+      "separate_numeric_capture": false
+    },
+    {
+      "step": "publisher Python",
+      "exit_status_inferred_from_set_e_chain": 0,
+      "proof": "PASS for two local builds, exporter invoked afterward",
+      "separate_numeric_capture": false
+    },
+    {
+      "step": "export and nonempty artifact checks",
+      "exit_status_inferred_from_set_e_chain": 0,
+      "proof": "internal run.exit written as 0 after all four artifacts checked",
+      "separate_numeric_capture": false
+    }
+  ],
+  "not_proven": "The external tool exit_code 1 is not explained by process logs. No first-run external success claim. Exact runtime PCK was independently regenerated with directly measured exporter exit 0."
+}

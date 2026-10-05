@@ -11,8 +11,16 @@ const SHUTTER_HEIGHT := 34.0
 ## Minimum clearance from every screen edge when the print has to be scaled down.
 const VIEW_MARGIN := 8.0
 const MIN_FIT_SCALE := 0.5
+## REQ-20261006-037: the polaroid texture has a transparent window (texture px
+## 24..338 × 24..341 of 360×448) that is larger than the 184×184 picture. Over
+## the live yard the gap showed the scene (house, notices) as a ring around the
+## photo. A paper mat fills the window under the frame; it is inflated a few
+## texture px so its edges tuck under the opaque border.
+const FRAME_WINDOW_TEXELS := Rect2(20, 20, 322, 325)
+const MAT_COLOR := Color("f3e3cb")
 
 var _card: Control
+var _mat: ColorRect
 var _frame: TextureRect
 var _picture: PhotoMoment
 var _caption: Label
@@ -33,6 +41,14 @@ func _ready() -> void:
 	_card.pivot_offset = CARD_SIZE * 0.5
 	_card.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(_card)
+	_mat = ColorRect.new()
+	_mat.name = "PhotoMat"
+	_mat.color = MAT_COLOR
+	var mat_rect := mat_rect_in_card(CARD_SIZE)
+	_mat.position = mat_rect.position
+	_mat.size = mat_rect.size
+	_mat.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_card.add_child(_mat)
 	_frame = TextureRect.new()
 	_frame.name = "Frame"
 	_frame.texture = POLAROID
@@ -148,6 +164,15 @@ static func fit_layout(viewport: Vector2) -> Dictionary:
 		"shutter_position": Vector2(shutter_x, stack_top),
 		"shutter_size": Vector2(shutter_width, SHUTTER_HEIGHT),
 	}
+
+
+## Where FRAME_WINDOW_TEXELS lands inside a card of `card_size` when the frame
+## texture is drawn with STRETCH_KEEP_ASPECT_CENTERED (same rule as _frame).
+static func mat_rect_in_card(card_size: Vector2) -> Rect2:
+	var texture_size := Vector2(POLAROID.get_width(), POLAROID.get_height())
+	var factor := minf(card_size.x / texture_size.x, card_size.y / texture_size.y)
+	var offset := (card_size - texture_size * factor) * 0.5
+	return Rect2(offset + FRAME_WINDOW_TEXELS.position * factor, FRAME_WINDOW_TEXELS.size * factor)
 
 
 func _layout(viewport: Vector2) -> void:

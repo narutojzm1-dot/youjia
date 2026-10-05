@@ -1,0 +1,1541 @@
+{
+  "expected_color_hex": "#f3e3cb",
+  "expected_rgb": [
+    243,
+    227,
+    203
+  ],
+  "note": "Four interior points supplement visual inspection; not every edge pixel. Nonmatching early/fade frames are not full-hold failures.",
+  "frames": [
+    {
+      "case": "portrait-normal",
+      "file": "portrait-normal-photo-00.png",
+      "points_xy": [
+        [
+          96,
+          390
+        ],
+        [
+          295,
+          390
+        ],
+        [
+          195,
+          294
+        ],
+        [
+          195,
+          493
+        ]
+      ],
+      "side_order": [
+        "left",
+        "right",
+        "top",
+        "bottom"
+      ],
+      "pixels_rgb": [
+        [
+          230,
+          194,
+          145
+        ],
+        [
+          202,
+          166,
+          129
+        ],
+        [
+          234,
+          193,
+          139
+        ],
+        [
+          113,
+          99,
+          71
+        ]
+      ],
+      "four_points_equal_mat_color": false
+    },
+    {
+      "case": "portrait-normal",
+      "file": "portrait-normal-photo-01.png",
+      "points_xy": [
+        [
+          96,
+          390
+        ],
+        [
+          295,
+          390
+        ],
+        [
+          195,
+          294
+        ],
+        [
+          195,
+          493
+        ]
+      ],
+      "side_order": [
+        "left",
+        "right",
+        "top",
+        "bottom"
+      ],
+      "pixels_rgb": [
+        [
+          230,
+          194,
+          145
+        ],
+        [
+          202,
+          166,
+          129
+        ],
+        [
+          234,
+          193,
+          139
+        ],
+        [
+          113,
+          99,
+          71
+        ]
+      ],
+      "four_points_equal_mat_color": false
+    },
+    {
+      "case": "portrait-normal",
+      "file": "portrait-normal-photo-02.png",
+      "points_xy": [
+        [
+          96,
+          390
+        ],
+        [
+          295,
+          390
+        ],
+        [
+          195,
+          294
+        ],
+        [
+          195,
+          493
+        ]
+      ],
+      "side_order": [
+        "left",
+        "right",
+        "top",
+        "bottom"
+      ],
+      "pixels_rgb": [
+        [
+          243,
+          227,
+          203
+        ],
+        [
+          243,
+          227,
+          203
+        ],
+        [
+          243,
+          227,
+          203
+        ],
+        [
+          243,
+          227,
+          203
+        ]
+      ],
+      "four_points_equal_mat_color": true
+    },
+    {
+      "case": "portrait-normal",
+      "file": "portrait-normal-photo-03.png",
+      "points_xy": [
+        [
+          96,
+          390
+        ],
+        [
+          295,
+          390
+        ],
+        [
+          195,
+          294
+        ],
+        [
+          195,
+          493
+        ]
+      ],
+      "side_order": [
+        "left",
+        "right",
+        "top",
+        "bottom"
+      ],
+      "pixels_rgb": [
+        [
+          243,
+          227,
+          203
+        ],
+        [
+          243,
+          227,
+          203
+        ],
+        [
+          243,
+          227,
+          203
+        ],
+        [
+          243,
+          227,
+          203
+        ]
+      ],
+      "four_points_equal_mat_color": true
+    },
+    {
+      "case": "portrait-normal",
+      "file": "portrait-normal-photo-04.png",
+      "points_xy": [
+        [
+          96,
+          390
+        ],
+        [
+          295,
+          390
+        ],
+        [
+          195,
+          294
+        ],
+        [
+          195,
+          493
+        ]
+      ],
+      "side_order": [
+        "left",
+        "right",
+        "top",
+        "bottom"
+      ],
+      "pixels_rgb": [
+        [
+          243,
+          227,
+          203
+        ],
+        [
+          243,
+          227,
+          203
+        ],
+        [
+          243,
+          227,
+          203
+        ],
+        [
+          243,
+          227,
+          203
+        ]
+      ],
+      "four_points_equal_mat_color": true
+    },
+    {
+      "case": "portrait-normal",
+      "file": "portrait-normal-photo-05.png",
+      "points_xy": [
+        [
+          96,
+          390
+        ],
+        [
+          295,
+          390
+        ],
+        [
+          195,
+          294
+        ],
+        [
+          195,
+          493
+        ]
+      ],
+      "side_order": [
+        "left",
+        "right",
+        "top",
+        "bottom"
+      ],
+      "pixels_rgb": [
+        [
+          230,
+          194,
+          145
+        ],
+        [
+          202,
+          166,
+          129
+        ],
+        [
+          234,
+          193,
+          139
+        ],
+        [
+          113,
+          98,
+          71
+        ]
+      ],
+      "four_points_equal_mat_color": false
+    },
+    {
+      "case": "portrait-normal",
+      "file": "portrait-normal-photo-06.png",
+      "points_xy": [
+        [
+          96,
+          390
+        ],
+        [
+          295,
+          390
+        ],
+        [
+          195,
+          294
+        ],
+        [
+          195,
+          493
+        ]
+      ],
+      "side_order": [
+        "left",
+        "right",
+        "top",
+        "bottom"
+      ],
+      "pixels_rgb": [
+        [
+          230,
+          194,
+          145
+        ],
+        [
+          202,
+          166,
+          129
+        ],
+        [
+          234,
+          193,
+          139
+        ],
+        [
+          113,
+          98,
+          71
+        ]
+      ],
+      "four_points_equal_mat_color": false
+    },
+    {
+      "case": "portrait-reduce",
+      "file": "portrait-reduce-photo-00.png",
+      "points_xy": [
+        [
+          96,
+          390
+        ],
+        [
+          295,
+          390
+        ],
+        [
+          195,
+          294
+        ],
+        [
+          195,
+          493
+        ]
+      ],
+      "side_order": [
+        "left",
+        "right",
+        "top",
+        "bottom"
+      ],
+      "pixels_rgb": [
+        [
+          231,
+          195,
+          146
+        ],
+        [
+          203,
+          167,
+          130
+        ],
+        [
+          235,
+          194,
+          140
+        ],
+        [
+          116,
+          101,
+          73
+        ]
+      ],
+      "four_points_equal_mat_color": false
+    },
+    {
+      "case": "portrait-reduce",
+      "file": "portrait-reduce-photo-01.png",
+      "points_xy": [
+        [
+          96,
+          390
+        ],
+        [
+          295,
+          390
+        ],
+        [
+          195,
+          294
+        ],
+        [
+          195,
+          493
+        ]
+      ],
+      "side_order": [
+        "left",
+        "right",
+        "top",
+        "bottom"
+      ],
+      "pixels_rgb": [
+        [
+          231,
+          195,
+          146
+        ],
+        [
+          203,
+          167,
+          130
+        ],
+        [
+          235,
+          193,
+          140
+        ],
+        [
+          116,
+          101,
+          73
+        ]
+      ],
+      "four_points_equal_mat_color": false
+    },
+    {
+      "case": "portrait-reduce",
+      "file": "portrait-reduce-photo-02.png",
+      "points_xy": [
+        [
+          96,
+          390
+        ],
+        [
+          295,
+          390
+        ],
+        [
+          195,
+          294
+        ],
+        [
+          195,
+          493
+        ]
+      ],
+      "side_order": [
+        "left",
+        "right",
+        "top",
+        "bottom"
+      ],
+      "pixels_rgb": [
+        [
+          243,
+          227,
+          203
+        ],
+        [
+          243,
+          227,
+          203
+        ],
+        [
+          243,
+          227,
+          203
+        ],
+        [
+          243,
+          227,
+          203
+        ]
+      ],
+      "four_points_equal_mat_color": true
+    },
+    {
+      "case": "portrait-reduce",
+      "file": "portrait-reduce-photo-03.png",
+      "points_xy": [
+        [
+          96,
+          390
+        ],
+        [
+          295,
+          390
+        ],
+        [
+          195,
+          294
+        ],
+        [
+          195,
+          493
+        ]
+      ],
+      "side_order": [
+        "left",
+        "right",
+        "top",
+        "bottom"
+      ],
+      "pixels_rgb": [
+        [
+          243,
+          227,
+          203
+        ],
+        [
+          243,
+          227,
+          203
+        ],
+        [
+          243,
+          227,
+          203
+        ],
+        [
+          243,
+          227,
+          203
+        ]
+      ],
+      "four_points_equal_mat_color": true
+    },
+    {
+      "case": "portrait-reduce",
+      "file": "portrait-reduce-photo-04.png",
+      "points_xy": [
+        [
+          96,
+          390
+        ],
+        [
+          295,
+          390
+        ],
+        [
+          195,
+          294
+        ],
+        [
+          195,
+          493
+        ]
+      ],
+      "side_order": [
+        "left",
+        "right",
+        "top",
+        "bottom"
+      ],
+      "pixels_rgb": [
+        [
+          243,
+          227,
+          203
+        ],
+        [
+          243,
+          227,
+          203
+        ],
+        [
+          243,
+          227,
+          203
+        ],
+        [
+          243,
+          227,
+          203
+        ]
+      ],
+      "four_points_equal_mat_color": true
+    },
+    {
+      "case": "portrait-reduce",
+      "file": "portrait-reduce-photo-05.png",
+      "points_xy": [
+        [
+          96,
+          390
+        ],
+        [
+          295,
+          390
+        ],
+        [
+          195,
+          294
+        ],
+        [
+          195,
+          493
+        ]
+      ],
+      "side_order": [
+        "left",
+        "right",
+        "top",
+        "bottom"
+      ],
+      "pixels_rgb": [
+        [
+          243,
+          227,
+          203
+        ],
+        [
+          243,
+          227,
+          203
+        ],
+        [
+          243,
+          227,
+          203
+        ],
+        [
+          243,
+          227,
+          203
+        ]
+      ],
+      "four_points_equal_mat_color": true
+    },
+    {
+      "case": "portrait-reduce",
+      "file": "portrait-reduce-photo-06.png",
+      "points_xy": [
+        [
+          96,
+          390
+        ],
+        [
+          295,
+          390
+        ],
+        [
+          195,
+          294
+        ],
+        [
+          195,
+          493
+        ]
+      ],
+      "side_order": [
+        "left",
+        "right",
+        "top",
+        "bottom"
+      ],
+      "pixels_rgb": [
+        [
+          231,
+          195,
+          146
+        ],
+        [
+          203,
+          167,
+          130
+        ],
+        [
+          235,
+          193,
+          140
+        ],
+        [
+          115,
+          100,
+          73
+        ]
+      ],
+      "four_points_equal_mat_color": false
+    },
+    {
+      "case": "landscape-normal",
+      "file": "landscape-normal-photo-00.png",
+      "points_xy": [
+        [
+          198,
+          150
+        ],
+        [
+          369,
+          150
+        ],
+        [
+          284,
+          70
+        ],
+        [
+          284,
+          244
+        ]
+      ],
+      "side_order": [
+        "left",
+        "right",
+        "top",
+        "bottom"
+      ],
+      "pixels_rgb": [
+        [
+          231,
+          205,
+          158
+        ],
+        [
+          133,
+          162,
+          163
+        ],
+        [
+          244,
+          236,
+          220
+        ],
+        [
+          254,
+          245,
+          226
+        ]
+      ],
+      "four_points_equal_mat_color": false
+    },
+    {
+      "case": "landscape-normal",
+      "file": "landscape-normal-photo-01.png",
+      "points_xy": [
+        [
+          198,
+          150
+        ],
+        [
+          369,
+          150
+        ],
+        [
+          284,
+          70
+        ],
+        [
+          284,
+          244
+        ]
+      ],
+      "side_order": [
+        "left",
+        "right",
+        "top",
+        "bottom"
+      ],
+      "pixels_rgb": [
+        [
+          231,
+          205,
+          158
+        ],
+        [
+          133,
+          162,
+          163
+        ],
+        [
+          244,
+          236,
+          220
+        ],
+        [
+          254,
+          245,
+          226
+        ]
+      ],
+      "four_points_equal_mat_color": false
+    },
+    {
+      "case": "landscape-normal",
+      "file": "landscape-normal-photo-02.png",
+      "points_xy": [
+        [
+          198,
+          150
+        ],
+        [
+          369,
+          150
+        ],
+        [
+          284,
+          70
+        ],
+        [
+          284,
+          244
+        ]
+      ],
+      "side_order": [
+        "left",
+        "right",
+        "top",
+        "bottom"
+      ],
+      "pixels_rgb": [
+        [
+          242,
+          224,
+          197
+        ],
+        [
+          226,
+          218,
+          198
+        ],
+        [
+          243,
+          229,
+          206
+        ],
+        [
+          245,
+          230,
+          207
+        ]
+      ],
+      "four_points_equal_mat_color": false
+    },
+    {
+      "case": "landscape-normal",
+      "file": "landscape-normal-photo-03.png",
+      "points_xy": [
+        [
+          198,
+          150
+        ],
+        [
+          369,
+          150
+        ],
+        [
+          284,
+          70
+        ],
+        [
+          284,
+          244
+        ]
+      ],
+      "side_order": [
+        "left",
+        "right",
+        "top",
+        "bottom"
+      ],
+      "pixels_rgb": [
+        [
+          243,
+          227,
+          203
+        ],
+        [
+          243,
+          227,
+          203
+        ],
+        [
+          243,
+          227,
+          203
+        ],
+        [
+          243,
+          227,
+          203
+        ]
+      ],
+      "four_points_equal_mat_color": true
+    },
+    {
+      "case": "landscape-normal",
+      "file": "landscape-normal-photo-04.png",
+      "points_xy": [
+        [
+          198,
+          150
+        ],
+        [
+          369,
+          150
+        ],
+        [
+          284,
+          70
+        ],
+        [
+          284,
+          244
+        ]
+      ],
+      "side_order": [
+        "left",
+        "right",
+        "top",
+        "bottom"
+      ],
+      "pixels_rgb": [
+        [
+          243,
+          227,
+          203
+        ],
+        [
+          243,
+          227,
+          203
+        ],
+        [
+          243,
+          227,
+          203
+        ],
+        [
+          243,
+          227,
+          203
+        ]
+      ],
+      "four_points_equal_mat_color": true
+    },
+    {
+      "case": "landscape-normal",
+      "file": "landscape-normal-photo-05.png",
+      "points_xy": [
+        [
+          198,
+          150
+        ],
+        [
+          369,
+          150
+        ],
+        [
+          284,
+          70
+        ],
+        [
+          284,
+          244
+        ]
+      ],
+      "side_order": [
+        "left",
+        "right",
+        "top",
+        "bottom"
+      ],
+      "pixels_rgb": [
+        [
+          243,
+          227,
+          203
+        ],
+        [
+          243,
+          227,
+          203
+        ],
+        [
+          243,
+          227,
+          203
+        ],
+        [
+          243,
+          227,
+          203
+        ]
+      ],
+      "four_points_equal_mat_color": true
+    },
+    {
+      "case": "landscape-normal",
+      "file": "landscape-normal-photo-06.png",
+      "points_xy": [
+        [
+          198,
+          150
+        ],
+        [
+          369,
+          150
+        ],
+        [
+          284,
+          70
+        ],
+        [
+          284,
+          244
+        ]
+      ],
+      "side_order": [
+        "left",
+        "right",
+        "top",
+        "bottom"
+      ],
+      "pixels_rgb": [
+        [
+          243,
+          227,
+          203
+        ],
+        [
+          243,
+          227,
+          203
+        ],
+        [
+          243,
+          227,
+          203
+        ],
+        [
+          243,
+          227,
+          203
+        ]
+      ],
+      "four_points_equal_mat_color": true
+    },
+    {
+      "case": "landscape-normal",
+      "file": "landscape-normal-photo-07.png",
+      "points_xy": [
+        [
+          198,
+          150
+        ],
+        [
+          369,
+          150
+        ],
+        [
+          284,
+          70
+        ],
+        [
+          284,
+          244
+        ]
+      ],
+      "side_order": [
+        "left",
+        "right",
+        "top",
+        "bottom"
+      ],
+      "pixels_rgb": [
+        [
+          243,
+          227,
+          203
+        ],
+        [
+          243,
+          227,
+          203
+        ],
+        [
+          243,
+          227,
+          203
+        ],
+        [
+          243,
+          227,
+          203
+        ]
+      ],
+      "four_points_equal_mat_color": true
+    },
+    {
+      "case": "landscape-reduce",
+      "file": "landscape-reduce-photo-00.png",
+      "points_xy": [
+        [
+          198,
+          150
+        ],
+        [
+          369,
+          150
+        ],
+        [
+          284,
+          70
+        ],
+        [
+          284,
+          244
+        ]
+      ],
+      "side_order": [
+        "left",
+        "right",
+        "top",
+        "bottom"
+      ],
+      "pixels_rgb": [
+        [
+          232,
+          206,
+          158
+        ],
+        [
+          137,
+          164,
+          163
+        ],
+        [
+          244,
+          236,
+          220
+        ],
+        [
+          254,
+          245,
+          224
+        ]
+      ],
+      "four_points_equal_mat_color": false
+    },
+    {
+      "case": "landscape-reduce",
+      "file": "landscape-reduce-photo-01.png",
+      "points_xy": [
+        [
+          198,
+          150
+        ],
+        [
+          369,
+          150
+        ],
+        [
+          284,
+          70
+        ],
+        [
+          284,
+          244
+        ]
+      ],
+      "side_order": [
+        "left",
+        "right",
+        "top",
+        "bottom"
+      ],
+      "pixels_rgb": [
+        [
+          243,
+          227,
+          203
+        ],
+        [
+          243,
+          227,
+          203
+        ],
+        [
+          243,
+          227,
+          203
+        ],
+        [
+          243,
+          227,
+          203
+        ]
+      ],
+      "four_points_equal_mat_color": true
+    },
+    {
+      "case": "landscape-reduce",
+      "file": "landscape-reduce-photo-02.png",
+      "points_xy": [
+        [
+          198,
+          150
+        ],
+        [
+          369,
+          150
+        ],
+        [
+          284,
+          70
+        ],
+        [
+          284,
+          244
+        ]
+      ],
+      "side_order": [
+        "left",
+        "right",
+        "top",
+        "bottom"
+      ],
+      "pixels_rgb": [
+        [
+          243,
+          227,
+          203
+        ],
+        [
+          243,
+          227,
+          203
+        ],
+        [
+          243,
+          227,
+          203
+        ],
+        [
+          243,
+          227,
+          203
+        ]
+      ],
+      "four_points_equal_mat_color": true
+    },
+    {
+      "case": "landscape-reduce",
+      "file": "landscape-reduce-photo-03.png",
+      "points_xy": [
+        [
+          198,
+          150
+        ],
+        [
+          369,
+          150
+        ],
+        [
+          284,
+          70
+        ],
+        [
+          284,
+          244
+        ]
+      ],
+      "side_order": [
+        "left",
+        "right",
+        "top",
+        "bottom"
+      ],
+      "pixels_rgb": [
+        [
+          243,
+          227,
+          203
+        ],
+        [
+          243,
+          227,
+          203
+        ],
+        [
+          243,
+          227,
+          203
+        ],
+        [
+          243,
+          227,
+          203
+        ]
+      ],
+      "four_points_equal_mat_color": true
+    },
+    {
+      "case": "landscape-reduce",
+      "file": "landscape-reduce-photo-04.png",
+      "points_xy": [
+        [
+          198,
+          150
+        ],
+        [
+          369,
+          150
+        ],
+        [
+          284,
+          70
+        ],
+        [
+          284,
+          244
+        ]
+      ],
+      "side_order": [
+        "left",
+        "right",
+        "top",
+        "bottom"
+      ],
+      "pixels_rgb": [
+        [
+          243,
+          227,
+          203
+        ],
+        [
+          243,
+          227,
+          203
+        ],
+        [
+          243,
+          227,
+          203
+        ],
+        [
+          243,
+          227,
+          203
+        ]
+      ],
+      "four_points_equal_mat_color": true
+    },
+    {
+      "case": "landscape-reduce",
+      "file": "landscape-reduce-photo-05.png",
+      "points_xy": [
+        [
+          198,
+          150
+        ],
+        [
+          369,
+          150
+        ],
+        [
+          284,
+          70
+        ],
+        [
+          284,
+          244
+        ]
+      ],
+      "side_order": [
+        "left",
+        "right",
+        "top",
+        "bottom"
+      ],
+      "pixels_rgb": [
+        [
+          243,
+          227,
+          203
+        ],
+        [
+          243,
+          227,
+          203
+        ],
+        [
+          243,
+          227,
+          203
+        ],
+        [
+          243,
+          227,
+          203
+        ]
+      ],
+      "four_points_equal_mat_color": true
+    },
+    {
+      "case": "landscape-reduce",
+      "file": "landscape-reduce-photo-06.png",
+      "points_xy": [
+        [
+          198,
+          150
+        ],
+        [
+          369,
+          150
+        ],
+        [
+          284,
+          70
+        ],
+        [
+          284,
+          244
+        ]
+      ],
+      "side_order": [
+        "left",
+        "right",
+        "top",
+        "bottom"
+      ],
+      "pixels_rgb": [
+        [
+          243,
+          227,
+          203
+        ],
+        [
+          243,
+          227,
+          203
+        ],
+        [
+          243,
+          227,
+          203
+        ],
+        [
+          243,
+          227,
+          203
+        ]
+      ],
+      "four_points_equal_mat_color": true
+    },
+    {
+      "case": "landscape-reduce",
+      "file": "landscape-reduce-photo-07.png",
+      "points_xy": [
+        [
+          198,
+          150
+        ],
+        [
+          369,
+          150
+        ],
+        [
+          284,
+          70
+        ],
+        [
+          284,
+          244
+        ]
+      ],
+      "side_order": [
+        "left",
+        "right",
+        "top",
+        "bottom"
+      ],
+      "pixels_rgb": [
+        [
+          232,
+          206,
+          158
+        ],
+        [
+          137,
+          164,
+          163
+        ],
+        [
+          244,
+          236,
+          220
+        ],
+        [
+          254,
+          245,
+          224
+        ]
+      ],
+      "four_points_equal_mat_color": false
+    }
+  ]
+}
