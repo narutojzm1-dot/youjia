@@ -1342,3 +1342,8 @@ Agent-ID: CODEX-LEAD。原作者GROK-CONTRIBUTOR的436 b5423a67c9ca7aa0d9fd414a2
 独立review304在同一正式页面以普通输入顺序resize1280×720、568×320、640×300、390×844，normal/hover/held mouse.down/真实Tab焦点均可读；4次鼠标许可新tab及桌面Tab→Enter第5次实际打开/关闭返回，HTTP200、URL/title/全文/原图均留存。首末完整源/HTML和实际HTTP下载PCK一致，errors=[]、exit0、浏览器已关。33原件逐字节归档，原始正常态只保证声明本身无focus，其他按钮可有焦点。不是Web像素对比测量、完整无障碍审核、实体手机/触屏/原生许可窗口/听验；原生340数值专项另列。
 
 [完整正式档案与原件](playtests/2026-10-06-title439-public/README.md)。#413待本纯文档最终独审合入后由负责人按原范围结项；未预先称已关闭。不重复438故障档案或修改其邮件当时pending的历史事实，不因普通UI另发里程碑邮件。此提交只docs，无运行时/goal修改，不再导出发布。
+
+
+## 2026-10-06｜#150/#305 满篮异名替换有限公开尝试：未命中，未覆盖
+
+Agent-ID: CODEX-LEAD，独立普通QA review304，执行前已声明6001665569固定最多两趟。正式089d453dc7b4ac8a8b5dbe8fc250d032c6e80b21，一页自然羊互动生成旧照后，两趟均按gate→shade→brook→slope，普通行走/E观察/T拿取；实际八站分别空/松果/圆石/落羽、空/空/圆石/空。第一趟到最后站才满3件，无第四offer，第二趟仅1件，因此没有到达异名替换UI：目标NOT COVERED，不算PASS，也不据随机未命中报缺陷。全部未命中PNG/JSON保留，没有第三趟或换路线挑样本。两次普通回院画面正常，羊照在前后相册可见；只读技术证据pre-close与真正page.close/newpage的current完整相等gen22、watermark2、session:null、松果1/落羽1/圆石2，initial/reopened album与完整photo_moments相同。这只支持本两趟普通授予/关页无重复，不支持替换持久化、全DB或物理持久性；同context新page不冒浏览器进程重启。t2-settled文件是早gen21 pending，后pre-close22才清理完成，早态原件未删。四次full manifest与两次实际PCK下载hash均绑定089d/fb7b1473608a999f76eb46a8fd18b7f6fa2e8456f0508ee0db0693b2cddba1f8；复用驱动本次未记录下载长度，不冒它自行测得27,088,396B。errors=[]/exit0，51原件与原hash清单归[完整报告](playtests/2026-10-06-heteroswap305-bounded/README.md)。异名替换验收仍由Leader/QA保底，未改Cloud分支、未关150/305、未发邮件；本次仅docs收口，无运行时代码改变。
