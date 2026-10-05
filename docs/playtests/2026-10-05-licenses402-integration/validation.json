@@ -1,0 +1,33 @@
+{
+  "runtime_sha": "2541189b4b8e161fb9190a290cfbf23e6028ea9e",
+  "author_sha": "c496ec19054ea1cbd34661a4f7abf21bf2342acb",
+  "base_sha": "d323db17cdc02ff37274fe7934631a73c77aae77",
+  "engine": "4.7.2.stable.official.ed1daf0bf",
+  "headless_suite": {
+    "checks": 124,
+    "failures": 0,
+    "exit": 0
+  },
+  "native_driver_exit": 0,
+  "native_console_errors": [],
+  "environment_warning": "X11 dummy display/llvmpipe cannot set VSync",
+  "full_daily": {
+    "source": "fdc12c043352059ad91877c0472046fe7ce73410",
+    "actual_exit": 0,
+    "strict_error_scan": "pass",
+    "log": "full-daily.log"
+  },
+  "web_export": {
+    "source": "fdc12c043352059ad91877c0472046fe7ce73410",
+    "actual_exit": 0,
+    "error_scan": "no ERROR/SCRIPT ERROR",
+    "log": "export.log"
+  },
+  "source_hashes": {
+    "scripts/manus/open_source_licenses.gd": "6f60bfb7cacf1f31a02e1827cf8a963ee7e752a7ceed98d3c9d2c8f96088dcbe",
+    "test/licenses_dialog_fit_suite.gd": "b608f1badf8ad61eab2e96e8f775878772e40d91dc66571fbf9347cb69e03f73",
+    "tools/verify_daily_life.sh": "5d7be695268769ffa864c071f66cd352bc59da8838f24cb694fd3b9e6ea3e23b"
+  },
+  "latest_integrated_base": "d0af19bfa9dc5befdb6d0d78acea5d1bf1cac017",
+  "docs_only_after_full_source": true
+}
