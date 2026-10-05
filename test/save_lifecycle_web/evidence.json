@@ -1,0 +1,17 @@
+{
+  "status": "PASS",
+  "checks": [
+    "seed file actually present in IndexedDB before reload",
+    "Godot capture import and durable write completes",
+    "capture after engine.startGame completed",
+    "raw legacy numeric lexeme preserved",
+    "verified receipt consumed before acknowledge",
+    "second page denied before source import/write",
+    "page close releases writer; new page recovers durable payload",
+    "pending runtime close and engine failure remain nonwritable",
+    "no console or page errors"
+  ],
+  "browser": "151.0.7922.173",
+  "errors": [],
+  "scope": "actual Godot Web userfs reload -> capture -> real R1 IndexedDB -> durable receipt; no production SaveStore switch"
+}

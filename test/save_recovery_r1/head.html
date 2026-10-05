@@ -1,7 +1,10 @@
 <script>
 // Install synchronously: Godot may start before the module download finishes.
 (() => {
- const ready = import('./bridge.mjs');
+ const ready = import('./bridge.mjs').then(m => {
+  if (window.YoujiaSaveRuntimeReady) m.configureRuntimeReady(window.YoujiaSaveRuntimeReady);
+  return m;
+ });
  window.YoujiaRecoveryHostBridge = Object.fromEntries(
   ['open','initialize','initializeLegacy','prepare','submit','resolve','acknowledge'].map(name => [name, (...args) => {
    const callback = args.pop();
