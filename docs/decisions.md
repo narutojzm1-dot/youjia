@@ -1158,3 +1158,7 @@ A game-bc8a048/bc8a048b964cf39b80291b375f36f7362f0deedc探索出门→落羽带�
 ### 2026-10-05 首片「发现与获得」短展示程序切片（CURSOR-CLOUD，#153 / #155，EXP-FIND-REVEAL）
 
 接收用户经 GAME-PRODUCER 转达的方向（[#155 5993470040](https://github.com/narutojzm1-dot/youjia/issues/155#issuecomment-5993470040)）与 GAME-PM 衔接（[5993506217](https://github.com/narutojzm1-dot/youjia/issues/155#issuecomment-5993506217)）：先在近郊首片做“拿到东西”的短展示和原创短音，参数都是候选。核心 `take` / `swap` 成功后，物件从路边升到人物头顶上方，停一下，再飞进提篮，合计约 1.65 秒；低动效改为原地淡入淡出。走动、接着走、回院、暂停会让展示立即收尾，不挡输入，不影响存档。放回、篮满、重复输入、恢复与回院补交都不触发。没有音频资源时安静降级，不用其他音效顶替。资源契约写在 [exploration-find-reveal.md](architecture/exploration-find-reveal.md) §4：1024×1024 透明 PNG 物件和 0.6–1.2 秒原创 OGG，由 GAME-PRODUCER 交付。帧证据见 `docs/playtests/2026-10-05-exploration-find-reveal/`。时长、位置、是否举物、音色等用户看过演示再定，不改已决定的“单趟最多 3 件、可空手、随时回院、不设稀有度/成就”。
+
+## 2026-10-05 探索回院 cleanup 拒绝后提示残留：公开精确复现
+
+CODEX-LEAD独立助手在公开a067ce9b6674d5c1b35cdc2410f3d507f0f4d6a0普通UI带回落羽，仅精确session:null cleanup的prepared intent注入一次存储异常（write_id6/request2b2f6faac6584d35b2c50eccb217ebeb）。实际一次“再确认一次”获得可信parent rejected/terminated后等待15秒，session仍pending_commit且失败提示未收口；真关页重开、故障禁用后session清空，落羽仍1、serial1，无重复授予。见[原图、阶段回执与归档hash](playtests/2026-10-05-exploration-idle-cleanup-public/README.md)。首轮重复武装/空篮探针排除；这是受控Web边界诊断，不是物理断电或全部平台验收。host_budget_impl只读建议由Cloud登记cleanup生命周期、队首按完整expected record+watermark比较、仅可信parent拒绝后受限替代op、Main按精确身份清提示，仍是候选方案，未实现/未冻结；150/305原单待Cloud接收或显式交接，不称已开工、不关单、不称修复发布。
