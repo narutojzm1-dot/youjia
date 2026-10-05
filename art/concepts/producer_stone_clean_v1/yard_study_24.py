@@ -27,4 +27,3 @@ for index,(x,y) in enumerate([(490,450),(480,500),(440,545)]):
   canvas.convert('RGB').save(p/f'yard24-{index+1}-{state}.png')
  records.append({'site':[x,y],'stone_width_px':width,'anchor':[717,688],'depth':depth})
 (p/'yard24-study.json').write_text(json.dumps({'method':'Pillow static source composites; hypothetical depth order, not gameplay or photo evidence','records':records},indent=2))
-
