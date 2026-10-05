@@ -68,7 +68,7 @@ export const bridge = {
   if (lifecycle) lifecycle.assertReady();
   if (!store || recovery?.verdict !== 'empty') throw Error('legacy import requires empty recovery');
   const payload=prepareLegacyV5(decodeSourceSnapshot(snapshot, budget), budget);
-  await store.initialize(payload);
+  await store.initialize(payload, {preserveLegacy:true});
   return opened(await store.recover());
  },
  async prepare(payload, parent_token) {

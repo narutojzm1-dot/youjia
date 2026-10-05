@@ -1,0 +1,470 @@
+{
+  "sealed": {
+    "status": "PASS",
+    "checks": 39,
+    "labels": [
+      "import root requires sealed schema",
+      "seal preserves original source lexemes",
+      "normal commit ack preserves seal 1",
+      "normal commit ack preserves seal 2",
+      "normal commit ack preserves seal 3",
+      "actual initialize transaction abort",
+      "abort leaves neither root nor seal",
+      "initialize retry atomic pair",
+      "occupied initialization refuses overwrite",
+      "occupied initialization leaves sealed root unchanged",
+      "remove quarantine",
+      "remove refuses write",
+      "remove evidence untouched",
+      "seal_damage quarantine",
+      "seal_damage refuses write",
+      "seal_damage evidence untouched",
+      "binding_damage quarantine",
+      "binding_damage refuses write",
+      "binding_damage evidence untouched",
+      "both_damage quarantine",
+      "both_damage refuses write",
+      "both_damage evidence untouched",
+      "foreign_seal quarantine",
+      "foreign_seal refuses write",
+      "foreign_seal evidence untouched",
+      "archive recover 0",
+      "archive recover 1",
+      "archive recover 2",
+      "archive recover 3",
+      "archive recover 4",
+      "archive recover 5",
+      "archive recover 6",
+      "archive recover 7",
+      "budget refusal retains all records",
+      "sealed evidence included in cumulative budget",
+      "retained state within records budget",
+      "real page reload recovers latest normal payload",
+      "real page reload preserves full original text",
+      "real page reload binding intact"
+    ],
+    "browser": "151.0.7922.173"
+  },
+  "r1": {
+    "status": "PASS",
+    "checks": 139,
+    "events": [
+      {
+        "type": "lock_requested",
+        "sequence": 1
+      },
+      {
+        "type": "lock_acquired",
+        "sequence": 2
+      },
+      {
+        "type": "txn_complete",
+        "sequence": 3,
+        "stage": ""
+      },
+      {
+        "type": "recovery_result",
+        "sequence": 4,
+        "verdict": "empty"
+      },
+      {
+        "type": "lock_released",
+        "sequence": 5
+      },
+      {
+        "type": "lock_requested",
+        "sequence": 6
+      },
+      {
+        "type": "lock_acquired",
+        "sequence": 7
+      },
+      {
+        "type": "txn_complete",
+        "sequence": 8,
+        "stage": "initialize"
+      },
+      {
+        "type": "txn_complete",
+        "sequence": 9,
+        "stage": ""
+      },
+      {
+        "type": "lock_released",
+        "sequence": 10
+      },
+      {
+        "type": "lock_requested",
+        "sequence": 11
+      },
+      {
+        "type": "lock_acquired",
+        "sequence": 12
+      },
+      {
+        "type": "txn_abort",
+        "sequence": 13,
+        "stage": "initialize"
+      },
+      {
+        "type": "lock_released",
+        "sequence": 14
+      },
+      {
+        "type": "txn_complete",
+        "sequence": 15,
+        "stage": ""
+      },
+      {
+        "type": "lock_requested",
+        "sequence": 16
+      },
+      {
+        "type": "lock_acquired",
+        "sequence": 17
+      },
+      {
+        "type": "txn_complete",
+        "sequence": 18,
+        "stage": ""
+      },
+      {
+        "type": "txn_abort",
+        "sequence": 19,
+        "stage": "intent"
+      },
+      {
+        "type": "lock_released",
+        "sequence": 20
+      },
+      {
+        "type": "txn_complete",
+        "sequence": 21,
+        "stage": ""
+      },
+      {
+        "type": "lock_requested",
+        "sequence": 22
+      },
+      {
+        "type": "lock_acquired",
+        "sequence": 23
+      },
+      {
+        "type": "txn_complete",
+        "sequence": 24,
+        "stage": ""
+      },
+      {
+        "type": "txn_complete",
+        "sequence": 25,
+        "stage": "intent"
+      },
+      {
+        "type": "txn_abort",
+        "sequence": 26,
+        "stage": "commit"
+      },
+      {
+        "type": "lock_released",
+        "sequence": 27
+      },
+      {
+        "type": "txn_complete",
+        "sequence": 28,
+        "stage": ""
+      },
+      {
+        "type": "lock_requested",
+        "sequence": 29
+      },
+      {
+        "type": "lock_acquired",
+        "sequence": 30
+      },
+      {
+        "type": "txn_complete",
+        "sequence": 31,
+        "stage": ""
+      },
+      {
+        "type": "txn_complete",
+        "sequence": 32,
+        "stage": "reject_intent"
+      },
+      {
+        "type": "txn_complete",
+        "sequence": 33,
+        "stage": ""
+      },
+      {
+        "type": "recovery_result",
+        "sequence": 34,
+        "verdict": "restored_parent_intent_rejected"
+      },
+      {
+        "type": "lock_released",
+        "sequence": 35
+      },
+      {
+        "type": "lock_requested",
+        "sequence": 36
+      },
+      {
+        "type": "lock_acquired",
+        "sequence": 37
+      },
+      {
+        "type": "txn_complete",
+        "sequence": 38,
+        "stage": ""
+      },
+      {
+        "type": "txn_complete",
+        "sequence": 39,
+        "stage": "intent"
+      },
+      {
+        "type": "txn_complete",
+        "sequence": 40,
+        "stage": "commit"
+      },
+      {
+        "type": "txn_complete",
+        "sequence": 41,
+        "stage": ""
+      },
+      {
+        "type": "lock_released",
+        "sequence": 42
+      },
+      {
+        "type": "txn_complete",
+        "sequence": 43,
+        "stage": ""
+      },
+      {
+        "type": "lock_requested",
+        "sequence": 44
+      },
+      {
+        "type": "lock_acquired",
+        "sequence": 45
+      },
+      {
+        "type": "txn_complete",
+        "sequence": 46,
+        "stage": ""
+      },
+      {
+        "type": "txn_complete",
+        "sequence": 47,
+        "stage": "cleanup"
+      },
+      {
+        "type": "txn_complete",
+        "sequence": 48,
+        "stage": ""
+      },
+      {
+        "type": "recovery_result",
+        "sequence": 49,
+        "verdict": "restored_candidate"
+      },
+      {
+        "type": "lock_released",
+        "sequence": 50
+      },
+      {
+        "type": "lock_requested",
+        "sequence": 51
+      },
+      {
+        "type": "lock_acquired",
+        "sequence": 52
+      },
+      {
+        "type": "txn_complete",
+        "sequence": 53,
+        "stage": ""
+      },
+      {
+        "type": "recovery_result",
+        "sequence": 54,
+        "verdict": "clean"
+      },
+      {
+        "type": "lock_released",
+        "sequence": 55
+      },
+      {
+        "type": "lock_requested",
+        "sequence": 56
+      },
+      {
+        "type": "lock_acquired",
+        "sequence": 57
+      },
+      {
+        "type": "txn_complete",
+        "sequence": 58,
+        "stage": ""
+      },
+      {
+        "type": "lock_released",
+        "sequence": 59
+      },
+      {
+        "type": "lock_requested",
+        "sequence": 60
+      },
+      {
+        "type": "lock_acquired",
+        "sequence": 61
+      },
+      {
+        "type": "txn_complete",
+        "sequence": 62,
+        "stage": ""
+      },
+      {
+        "type": "txn_complete",
+        "sequence": 63,
+        "stage": "intent"
+      },
+      {
+        "type": "txn_complete",
+        "sequence": 64,
+        "stage": "commit"
+      },
+      {
+        "type": "txn_complete",
+        "sequence": 65,
+        "stage": ""
+      },
+      {
+        "type": "lock_released",
+        "sequence": 66
+      },
+      {
+        "type": "lock_requested",
+        "sequence": 67
+      },
+      {
+        "type": "lock_acquired",
+        "sequence": 68
+      },
+      {
+        "type": "txn_complete",
+        "sequence": 69,
+        "stage": ""
+      },
+      {
+        "type": "txn_complete",
+        "sequence": 70,
+        "stage": "cleanup"
+      },
+      {
+        "type": "txn_complete",
+        "sequence": 71,
+        "stage": ""
+      },
+      {
+        "type": "recovery_result",
+        "sequence": 72,
+        "verdict": "restored_candidate"
+      },
+      {
+        "type": "lock_released",
+        "sequence": 73
+      }
+    ],
+    "scope": "real IndexedDB same-page R1 only; no R2/R3 or production claim",
+    "browser": "151.0.7922.173"
+  },
+  "legacy": {
+    "status": "PASS",
+    "checks": 65,
+    "scope": "isolated raw v5 preservation/import only; no production migration or semantic conversion",
+    "browser": "151.0.7922.173"
+  },
+  "migration": {
+    "status": "PASS",
+    "checks": 16,
+    "scope": "candidate initializeLegacy bridge; not production migration or legacy-writer ownership",
+    "browser": "151.0.7922.173"
+  },
+  "candidate_budget": {
+    "status": "PASS",
+    "checks": 28,
+    "labels": [
+      "candidate bridge import",
+      "candidate bridge normal write",
+      "fixture refuses candidate namespace",
+      "candidate refuses fixture namespace",
+      "natural_full raw preserved",
+      "natural_full root recovered",
+      "natural_full normal write durable",
+      "dense_full raw preserved",
+      "dense_full root recovered",
+      "dense_full normal write durable",
+      "import root exceeds normal budget",
+      "normal over limit rejects",
+      "root cannot masquerade as descendant",
+      "rejected writes unchanged",
+      "head layer independent",
+      "base64 layer independent",
+      "source bytes independent",
+      "combined rejects legal single sources",
+      "import refusal retains records",
+      "archive recovery 0",
+      "archive recovery 1",
+      "archive recovery 2",
+      "archive recovery 3",
+      "archive recovery 4",
+      "archive recovery 5",
+      "archive budget refusal unchanged",
+      "cumulative budget stops before archive count32",
+      "budget refusal leaves trusted root"
+    ],
+    "browser": "151.0.7922.173"
+  },
+  "godot_web": {
+    "status": "PASS",
+    "checks": [
+      "seed file actually present in IndexedDB before reload",
+      "Godot capture import and durable write completes",
+      "capture after engine.startGame completed",
+      "raw legacy numeric lexeme preserved",
+      "verified receipt consumed before acknowledge",
+      "second page denied before source import/write",
+      "page close releases writer; new page recovers durable payload",
+      "runtime failure before open is observed, blocked and propagated without unhandled rejection",
+      "candidate_and_observed rejected without acknowledgement",
+      "candidate_and_observed real durable evidence retained",
+      "write_id rejected without acknowledgement",
+      "write_id real durable evidence retained",
+      "schema rejected without acknowledgement",
+      "schema real durable evidence retained",
+      "termination_type rejected without acknowledgement",
+      "termination_type real durable evidence retained",
+      "no console or page errors"
+    ],
+    "browser": "151.0.7922.173",
+    "errors": [],
+    "scope": "actual Godot Web userfs reload -> capture -> real R1 IndexedDB -> durable receipt; no production SaveStore switch"
+  },
+  "base": "39516cb02d491837a6943b01a3a81b157a9dac5d",
+  "scope": "Research Host only; no production SaveStore or Cloud changes",
+  "export": {
+    "engine": "Godot4.7.2",
+    "strict_import_export": "PASS",
+    "hashes": {
+      "web/index.pck": "b330d6acbb56749375694750ead2443957490368aba54f6251c68726fade77ca",
+      "web/store.mjs": "e04c36ed68331cc98a30c0d4984c36be95373b7edb767c1836a295e5af6dedc3",
+      "web/legacy_seal.mjs": "9642132f5d4e7523e5966e802069af7f4bae803fae8e2e7c28ae55ee97d85610",
+      "import.log": "1f6afb48483d4997cd847c536fbb5ab3c08008392a93a71193c35c4da347bca3",
+      "export.log": "9f4ac62292f96339b9b1e32d798609c15cea9d3252716fd2f22e54510ecdc466"
+    }
+  }
+}
