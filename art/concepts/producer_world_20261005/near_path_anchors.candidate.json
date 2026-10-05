@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "status": "producer_candidate_requires_runtime_calibration",
+  "owner": "GAME-PRODUCER",
+  "implementation_owner": "CURSOR-CLOUD",
+  "source": {
+    "file": "02_near_path.png",
+    "sha256": "8ab62a6d43053e7bf7994e797a2ec07d79d369d46cbdee005700509bc6e0f154",
+    "width": 1672,
+    "height": 941,
+    "coordinates": "original_image_pixels_top_left_origin"
+  },
+  "route": {
+    "id": "gate_to_foreground_candidate",
+    "points": [[1360,565],[1305,599],[1220,630],[1150,660],[1110,690],[1030,729],[945,769],[850,811],[740,845]],
+    "interpolation": "polyline_only_until_visual_validation",
+    "actor_anchor": "feet_center",
+    "bidirectional": true,
+    "endpoint_is_page_exit": false,
+    "perspective_scale": null,
+    "walkable_corridor": null,
+    "occlusion_masks": null
+  },
+  "landmarks": [
+    {"id":"yard_gate","point":[1370,535],"role":"return_direction_reference_not_hotspot"},
+    {"id":"stream_bridge","point":[305,531],"role":"geography_reference_no_walk_connection_delivered"}
+  ],
+  "painted_object_cleanup_regions": [
+    {"id":"painted_pinecone","rect_xywh":[1257,778,54,53],"status":"inspection_region_not_edit_mask"},
+    {"id":"painted_feather","rect_xywh":[1351,771,80,67],"status":"inspection_region_not_edit_mask"}
+  ],
+  "pickup_spawn_anchors": [],
+  "page_connections": [],
+  "runtime_ready": false
+}

@@ -31,6 +31,7 @@ func run() -> void:
 	_host_commit()
 	_host_failure_and_retry()
 	_host_restore()
+	_host_basket_sizes()
 	_painted_path_layout()
 	await _painted_path_walk()
 	await _scroll_and_director()
@@ -129,6 +130,74 @@ func _host_commit() -> void:
 	check(Director.outcome_notice(empty.outcome) == "notice.exploration.back_empty", "empty trip says back, not kept")
 	check(store.commit_exploration_trip(store.get_exploration_record(), 2, PackedStringArray([stone])) == false, "store refuses a serial at or below the watermark")
 	check(store.commit_exploration_trip(null, 9, PackedStringArray(["fixture.find.x"])) == false and store.get_exploration_committed_serial() == 2, "store refuses non-formal finds and keeps memory unchanged")
+
+
+## 四处都有东西、且有同名的种子 → 依次要带上的三处停留点（含重复）
+func full_repeat_trip() -> Dictionary:
+	for value in 6000:
+		var session := ExplorationSession.new(ExplorationRoutes.catalog(), 0)
+		session.begin(ExplorationRoutes.NEAR_PATH, CLOCK, value)
+		var offers := {"gate": str(session.get_view().get("offer", ""))}
+		for stop_id: String in ["brook", "shade", "slope"]:
+			session.visit(stop_id)
+			offers[stop_id] = str(session.get_view().get("offer", ""))
+		if offers.values().has(""):
+			continue
+		for triple: Array in [["gate", "brook", "shade"], ["gate", "brook", "slope"], ["gate", "shade", "slope"], ["brook", "shade", "slope"]]:
+			var finds: Array = triple.map(func(stop_id: String) -> String: return offers[stop_id])
+			if finds.count(finds[0]) > 1 or finds.count(finds[1]) > 1:
+				return {"seed": value, "stops": triple, "finds": finds}
+	return {}
+
+
+func _counts(finds: Array) -> Dictionary:
+	var counts := {}
+	for find_id: String in finds:
+		counts[find_id] = int(counts.get(find_id, 0)) + 1
+	return counts
+
+
+## 0/1 件在别处覆盖；这里补 2 件回院、3 件含重复的中途重启与重启时写盘失败
+func _host_basket_sizes() -> void:
+	var trip := full_repeat_trip()
+	check(not trip.is_empty(), "a seed with finds everywhere and a repeat exists")
+	var store := make_store()
+	var host := ExplorationHost.new(store)
+	host.restore()
+	host.begin(CLOCK, trip.seed)
+	for i in 2:
+		host.visit(trip.stops[i])
+		host.take(trip.finds[i])
+	var two := host.request_return("player")
+	check(two.outcome.state == "committed" and two.outcome.items.size() == 2 and store.get_keepsakes() == _counts(trip.finds.slice(0, 2)), "returning with two finds keeps exactly those two")
+	check(Director.outcome_notice(two.outcome) == "notice.exploration.kept_many", "two finds get the kept-many notice")
+	var before: Dictionary = store.get_keepsakes().duplicate()
+	host.begin(CLOCK, trip.seed)
+	for i in 3:
+		host.visit(trip.stops[i])
+		host.take(trip.finds[i])
+	var saved: Dictionary = store.get_exploration_record().session
+	check(saved.taken.size() == 3 and saved.carried.size() == 3 and saved.carried.count(trip.finds[0]) + saved.carried.count(trip.finds[1]) > 2, "a full basket with a repeat is saved with every source")
+	# 中途关掉游戏，重启时写盘先失败：回院但不说收好了，之后补存只授予一次
+	store.fail_commits = true
+	var reopened := ExplorationHost.new(store)
+	var deferred := reopened.restore()
+	check(deferred.get("restored", false) and deferred.state != "committed" and store.get_keepsakes() == before, "a restart whose save fails keeps nothing yet")
+	store.fail_commits = false
+	var retried := reopened.retry_deferred()
+	var expected := before.duplicate()
+	for find_id: String in trip.finds:
+		expected[find_id] = int(expected.get(find_id, 0)) + 1
+	check(retried.get("state", "") == "committed" and retried.items.size() == 3 and store.get_keepsakes() == expected, "the retry keeps all three finds, repeats counted")
+	check(ExplorationHost.new(store).restore().is_empty() and store.get_keepsakes() == expected, "another restart grants nothing more")
+	reopened.begin(CLOCK, trip.seed)
+	for i in 3:
+		reopened.visit(trip.stops[i])
+		reopened.take(trip.finds[i])
+	var clean := ExplorationHost.new(store).restore()
+	for find_id: String in trip.finds:
+		expected[find_id] = int(expected.get(find_id, 0)) + 1
+	check(clean.get("restored", false) and clean.state == "committed" and clean.items.size() == 3 and store.get_keepsakes() == expected, "a restart mid-walk with a full repeat basket keeps all three")
 
 
 func _host_failure_and_retry() -> void:
