@@ -1,0 +1,19 @@
+from playwright.sync_api import sync_playwright
+import json
+out='/workspace/youjia-pet-horse-release/docs/playtests/2026-10-05-pet-horse-release/public'
+with sync_playwright() as p:
+ b=p.chromium.launch(executable_path='/usr/bin/chromium',headless=True,args=['--no-sandbox','--use-gl=angle','--use-angle=swiftshader','--enable-webgl'])
+ page=b.new_page(viewport={'width':844,'height':390},device_scale_factor=1);errors=[]
+ page.on('pageerror',lambda e:errors.append(str(e)))
+ page.on('console',lambda m:errors.append(m.text) if m.type=='error' else None)
+ page.add_init_script("window.first=false;window.addEventListener('youjia:first-frame',()=>window.first=true)")
+ page.goto('https://narutojzm1-dot.github.io/youjia/?verify=pet-3ed47d7',wait_until='domcontentloaded');page.wait_for_function('window.first',timeout=120000)
+ assert page.locator('html').get_attribute('data-build')=='game-3ed47d7'
+ page.mouse.click(422,196);page.wait_for_timeout(1000)
+ page.mouse.click(430,175);page.wait_for_timeout(6000)
+ page.screenshot(path=out+'/pet-selected.png')
+ for i in range(8):
+  page.mouse.click(730,345);page.wait_for_timeout(250);page.screenshot(path=out+f'/pet-{i}.png')
+ assert not errors,errors
+ result={'build':'game-3ed47d7','viewport':[844,390],'page_errors':errors,'actions':'canvas enter, click horse vicinity (430,175), wait6s, 8 primary button clicks at250ms intervals','scope':'no state injection; acceptance target and visible response require screenshot inspection; no listening claim'}
+ open(out+'/pet-browser.json','w').write(json.dumps(result,indent=2));print(result);b.close()

@@ -1,0 +1,96 @@
+# GROK-CONTRIBUTOR #231 Web natural-input sequences against the live build (game-<sha>), headless Chromium.
+# Button-label templates were cropped from run1 frames (W3-expiry-016/023/045, not committed); see _label below. Run: python browser.py.txt <web_dir> <out_dir> W1-nofish-miss,W2-oldfish-miss,W3-expiry
+# Input is only mouse clicks on the canvas (pond / HUD primary button). No JS eval into the game, no state injection.
+import functools,http.server,threading,sys,time,os,json
+from playwright.sync_api import sync_playwright
+from PIL import Image
+WEB=sys.argv[1]; OUT=sys.argv[2]; os.makedirs(OUT,exist_ok=True)
+POND=(900,520); BTN=(1165,677); PLAY=(639,369)
+class H(http.server.SimpleHTTPRequestHandler):
+  def log_message(self,*a):pass
+srv=http.server.ThreadingHTTPServer(('127.0.0.1',0),functools.partial(H,directory=WEB))
+threading.Thread(target=srv.serve_forever,daemon=True).start()
+BOX=(1075,655,1255,700)
+def mask(im): return [1 if p<120 else 0 for p in im.convert('L').crop(BOX).getdata()]
+TPL={k:mask(Image.open(f'/tmp/yjweb231/{f}.jpg')) for k,f in [('reel','W3-expiry-023'),('wait','W3-expiry-016'),('fish','W3-expiry-045')]}
+def _label(im):
+  m=mask(im); d={}
+  for k,t in TPL.items():
+    inter=sum(a&b for a,b in zip(m,t)); uni=sum(a|b for a,b in zip(m,t)) or 1
+    d[k]=inter/uni
+  k=max(d,key=d.get); return (k if d[k]>0.6 else 'other'), round(d[k],2)
+def label(im): return _label(im)[0]
+def dark(im,box): return sum(1 for p in im.crop(box).convert('L').getdata() if p<110)
+results={}
+with sync_playwright() as p:
+  b=p.chromium.launch(headless=True,args=['--no-sandbox','--use-gl=angle','--use-angle=swiftshader','--enable-webgl','--enable-unsafe-swiftshader'])
+  def run(name, plan):
+    ctx=b.new_context(viewport={'width':1280,'height':720})  # fresh storage = fresh save
+    pg=ctx.new_page(); errs=[]
+    pg.on('pageerror',lambda e:errs.append(str(e)))
+    pg.add_init_script("window.first=false;window.addEventListener('youjia:first-frame',()=>window.first=true)")
+    pg.goto(f'http://127.0.0.1:{srv.server_port}/index.html'); pg.wait_for_function('window.first',timeout=180000)
+    pg.wait_for_timeout(1500); t0=time.time(); log=[]; n=[0]
+    def frame(tag=''):
+      path=f'{OUT}/{name}-{n[0]:03d}.jpg'; pg.screenshot(path=path,type='jpeg',quality=70); n[0]+=1
+      im=Image.open(path); rec={'t':round(time.time()-t0,1),'f':os.path.basename(path),'btn':dark(im,(1075,655,1255,700)),'notice':dark(im,(420,628,860,668)),'tag':tag,'label':label(im)}
+      log.append(rec); return rec
+    def click(xy,tag): pg.mouse.click(*xy); log.append({'t':round(time.time()-t0,1),'click':xy,'tag':tag})
+    click(PLAY,'enter yard'); pg.wait_for_timeout(8000); frame('settled')
+    plan(pg,frame,click)
+    results[name]={'log':log,'page_errors':errs}
+    ctx.close()
+  def cast(pg,frame,click):
+    click(POND,'tap pond (select + walk)')
+    r=None
+    for attempt in range(4):
+      labels=[]
+      for _ in range(14):
+        labels.append(frame('walk')['label'])
+        if labels[-1]=='fish' or (len(labels)>=3 and labels[-1]==labels[-2]==labels[-3] and labels[-1]!='other'): break
+      if labels[-1]=='wait': return frame('casting')
+      if labels[-1]=='fish': click(BTN,'tap primary 垂钓 = cast')
+      else: click(POND,'primary is not 垂钓 (nearest other target); tap pond again')
+      for _ in range(3):
+        r=frame('after cast tap')
+        if r['label']=='wait': return r
+    return r
+  def watch(frame,secs,tag,stop=None):
+    end=time.time()+secs; last=None
+    while time.time()<end:
+      r=frame(tag)
+      if stop and stop(r): return r
+    return None
+  def reel_until_catch(pg,frame,click):
+    for attempt in range(5):
+      if attempt:
+        r=frame('before recast')
+        if r['label']=='fish': click(BTN,'tap primary 垂钓 = recast'); frame('after recast')
+        else: cast(pg,frame,click)
+      else: cast(pg,frame,click)
+      r=watch(frame,20,'waiting bite',lambda r:r['label'] in ('reel','fish','other'))
+      if r is None: continue
+      if r['label']!='reel': frame('no bite / miss'); continue
+      click(BTN,'tap primary on 收杆！ = reel'); frame('after reel'); return True
+    return False
+  def W1(pg,frame,click):
+    w=cast(pg,frame,click)
+    watch(frame,24,'no reel (let it miss)')
+    frame('end'); click(BTN,'tap primary after miss (carry empty)'); watch(frame,4,'after tap')
+  def W2(pg,frame,click):
+    ok=reel_until_catch(pg,frame,click); watch(frame,3,'carrying (no primary tap: it would toss)')
+    click(POND,'tap pond while carrying'); watch(frame,18,'second cast, no reel')
+    click(BTN,'tap primary after second miss (record receiver)'); watch(frame,4,'after tap')
+  def W3(pg,frame,click):
+    ok=reel_until_catch(pg,frame,click)
+    watch(frame,23,'carrying, idle until expiry')
+    click(BTN,'tap primary after expiry (record receiver)'); watch(frame,4,'after tap')
+  def W2b(pg,frame,click):
+    ok=reel_until_catch(pg,frame,click); watch(frame,2,'carrying')
+    click((700,458),'tap shore fishing spot at player feet while carrying'); watch(frame,18,'second cast?, no reel')
+    click(BTN,'tap primary after (record receiver)'); watch(frame,4,'after tap')
+  for name,plan in [x for x in [('W2b-oldfish-shore',W2b),('W1-nofish-miss',W1),('W2-oldfish-miss',W2),('W3-expiry',W3)] if x[0] in sys.argv[3].split(',')]:
+    run(name,plan); print(name,'frames',len([x for x in results[name]['log'] if 'f' in x]),'errors',results[name]['page_errors'],flush=True)
+  b.close()
+json.dump(results,open(f'{OUT}/web-log.json','w'),ensure_ascii=False,indent=1)
+srv.shutdown()

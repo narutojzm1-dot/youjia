@@ -213,6 +213,8 @@ func _process(delta: float) -> void:
 		if _notice_time <= 0.0:
 			_notice.visible = false
 	_notice.visible = _notice_time > 0.0 and _screen == "game" and not _pause_screen.visible and not _album_screen.visible and not _confirm_screen.visible
+	if _notice.visible:
+		_fit_notice()
 	if _screen == "game" and _world != null and not _pause_screen.visible and not _album_screen.visible and not _confirm_screen.visible:
 		var move := Vector2.ZERO
 		if _world.input_enabled:
@@ -654,6 +656,12 @@ func _build_notice() -> void:
 	_notice = _label(16, INK)
 	_notice.visible = false
 	_notice.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_notice.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	# REQ-20261005-025：底部通知压在前景草石上时棕字看不清。垫一块贴合文字的半透明纸片，
+	# 字色、字号、位置、时长都不变；没有动画，低动效无需分支。
+	_notice.add_theme_stylebox_override("normal", _notice_paper())
+	# 换行变高时向上长，纸片底边留在原位，不压住下方按钮。
+	_notice.grow_vertical = Control.GROW_DIRECTION_BEGIN
 	_notice.set_anchors_preset(Control.PRESET_CENTER_BOTTOM)
 	_notice.offset_left = -220
 	_notice.offset_right = 220
@@ -1169,6 +1177,34 @@ func _dismiss_notice_key(key: String) -> void:
 		_notice.visible = false
 
 
+const NOTICE_PAD_X := 14.0
+const NOTICE_MIN_HALF := 60.0
+
+
+func _notice_paper() -> StyleBoxFlat:
+	var style := _flat(Color(PAPER, 0.88), Color(APRICOT, 0.55), 1, 14)
+	style.content_margin_left = NOTICE_PAD_X
+	style.content_margin_right = NOTICE_PAD_X
+	style.content_margin_top = 4
+	style.content_margin_bottom = 4
+	return style
+
+
+## 纸片宽度贴合当前文字（含后设的大字号），最宽仍是原来的 ±220 / 屏宽减 20，超出照旧换行。
+func _fit_notice() -> void:
+	if _notice == null:
+		return
+	var limit := minf(220.0, size.x * 0.5 - 20.0)
+	var font := _notice.get_theme_font("font")
+	var font_size := _notice.get_theme_font_size("font_size")
+	var text_width := 0.0
+	if font != null:
+		text_width = font.get_string_size(_notice.text, HORIZONTAL_ALIGNMENT_LEFT, -1, font_size).x
+	var half := clampf(ceilf(text_width * 0.5) + NOTICE_PAD_X + 2.0, minf(NOTICE_MIN_HALF, limit), limit)
+	_notice.offset_left = -half
+	_notice.offset_right = half
+
+
 func _show_notice_key(key: String) -> void:
 	_notice_key = key
 	_notice.text = I18n.t(key)
@@ -1176,6 +1212,7 @@ func _show_notice_key(key: String) -> void:
 	_notice_time = 3.2
 	# 每次普通通知都重置字体大小（钓到鱼/空闲提示会在后续覆盖为更大字号）
 	_notice.add_theme_font_size_override("font_size", 16)
+	_fit_notice()
 
 
 func _open_licenses() -> void:
@@ -1242,8 +1279,7 @@ func _layout() -> void:
 	_album_page_size = Vector2((book_width - 10.0) * 0.5 if _album_two_pages else book_width, book_height)
 	if _album_screen.visible or was_two_pages != _album_two_pages:
 		_render_album_pages()
-	_notice.offset_left = -minf(220,size.x*0.5-20)
-	_notice.offset_right = minf(220,size.x*0.5-20)
+	_fit_notice()
 	_notice.offset_top = -170 if compact else -110
 	_notice.offset_bottom = -130 if compact else -70
 	_notice.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
