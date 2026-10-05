@@ -212,7 +212,7 @@
 
 | 编号 | 优先级 | 目标 | 验收 | 状态 | Owner | 备注 |
 | --- | --- | --- | --- | --- | --- | --- |
-| REQ-20261005-025 | P2 | 底部通知压在前景草石上时也看得清 | 通知垫一块贴合文字的半透明 PAPER 纸片（alpha 0.88、APRICOT 细边、圆角）；最宽仍是原 ±220/屏宽−20，超出换行；钓到鱼 22px/提示 18px 下一帧重新贴合；换行时向上长，不压竖屏底部按钮；字色、字号、位置带、时长、点击穿透不变，无动画。`test/notice_paper_suite.gd` 三视口 49 项通过，当前 main 上 12 项失败。 | 待评审 | `GROK-CONTRIBUTOR` | 用户让 GROK-CONTRIBUTOR 每小时自选无主切片；来源是 #276 修订 3 复测旁注“底部通知在阴天背景上对比度低”，原生渲染确认晴天同样难认。只改 `scripts/main.gd` 的通知：构建时加纸片、新增贴合函数，布局与 `_process` 改为调用贴合，不改文案、HUD 其他控件、YardWorld、钓鱼、存档或资源；不改 `tools/verify_daily_life.sh`，挂入 daily 交合入方。决策见 [decisions/REQ-20261005-025.md](decisions/REQ-20261005-025.md)，渲染前后见 [体验记录](playtests/2026-10-05-REQ-025-notice-paper/README.md)。 |
+| REQ-20261005-025 | P2 | 底部通知压在前景草石上时也看得清 | 通知垫一块贴合文字的半透明 PAPER 纸片（alpha 0.88、APRICOT 细边、圆角）；最宽仍是原 ±220/屏宽−20，超出换行；钓到鱼 22px/提示 18px 下一帧重新贴合；换行时向上长，不压竖屏底部按钮；字色、字号、位置带、时长、点击穿透不变，无动画。`test/notice_paper_suite.gd` 三视口 49 项通过，修前12项失败；最终49项通过，公开横竖证据见PR318。 | 已合入并公开；适用缺陷仍跟踪 | `GROK-CONTRIBUTOR` | 用户让 GROK-CONTRIBUTOR 每小时自选无主切片；来源是 #276 修订 3 复测旁注“底部通知在阴天背景上对比度低”，原生渲染确认晴天同样难认。只改 `scripts/main.gd` 的通知：构建时加纸片、新增贴合函数，布局与 `_process` 改为调用贴合，不改文案、HUD 其他控件、YardWorld、钓鱼、存档或资源；不改 `tools/verify_daily_life.sh`，挂入 daily 交合入方。决策见 [decisions/REQ-20261005-025.md](decisions/REQ-20261005-025.md)，渲染前后见 [体验记录](playtests/2026-10-05-REQ-025-notice-paper/README.md)。 PR311最终15a8dc40c13d0f2f98f01e94153b4ac0fd260681已独审合入d08f838d24b58c1ede31c0511e2f0dcbe8b72273；公开game-d08f838及后续157ff5f由Leader核验，见PR318/319，不要求重复已交纸片修复。 |
 
 
 ### 隔离恢复夹具错误路径追加证据
@@ -368,3 +368,9 @@ Assistant音频300 b8e5e6dc916dacd1eaf45b36c9f17584d36fc16c已接且实际交，
 
 ### Assistant 接收缺陷优先目标与新绵羊照片子项
 已接收用户新分工及[单一范围认领](collaboration/goal-ownership.md)，不重复Leader/Cloud在途实现。QA-EXP-20261003-002新照片构图子项由CODEX-LEAD-ASSISTANT推进：sheep物种Owner与sheep_a/sheep_b快照ID不一致导致默认取景漏羊。最小修复仅PhotoMoment构图和专项测试/daily挂载，9项修前三失败/修后全过、4.7.2完整daily和受控Web对比通过，见[证据](playtests/2026-10-05-photo-species-frame/README.md)。当前候选PR320待最终独审/合入/自动发布；旧图不变，父40仍Leader，资源候选按新分工显式交制作人。
+
+## REQ026网页高清屏按CSS像素排版
+
+| 编号 | 优先级 | 目标 | 验收 | 状态 | Owner | 备注 |
+| --- | --- | --- | --- | --- | --- | --- |
+| REQ-20261005-026 | P1 | 高清屏Web字体/按钮保持可读，竖屏按CSS尺寸布局 | 精确最终SHA独立子代理审查；daily正式登记并保留脚本100755；生产Web同CSS视口DPR1/2/3比较与实际点击，无错误；原生布局保持。模拟DPR不当手机真机 | 候选待独审与生产Web验证 | GROK-CONTRIBUTOR | [PR321](https://github.com/narutojzm1-dot/youjia/pull/321) head84f61b218da98ba1ea3b6f482a84a3a7b4392214，新WebHiDpi/autoload候选，作者102模型检查不当Web正式验证；main目前未接入。PM同步原作者提出的登记，未接实现；最新端到端授权由作者主动启动独立代理与验证，能力缺口精确交协助者，不以Leader下一轮为默认前置。 |
