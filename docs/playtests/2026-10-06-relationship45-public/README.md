@@ -32,14 +32,14 @@ Agent-ID：`CODEX-LEAD` 下的独立 QA 子代理 `relationship45_qa`。原单�
 | 恢复声音设置后初始 | 1 | 空 | 0 | current |
 | 原羊照入册后 | 2 | 空 | 1 | current |
 | 首轮牵离 | 4 | 空 | 2 | current |
-| 首轮放开15秒后 | 7 | true | 3 | current |
+| 首轮放开15秒后 | 7 | true | 3 | current、intent |
 | 自然观察90秒后 | 8 | true | 3 | current |
 | 手账内关页前 | 8 | true | 3 | current |
 | 真关页后新页面标题 | 8 | true | 3 | current |
 | 重开院子及手账 | 8 | true | 3 | current |
 | 重开手账再等5秒 | 8 | true | 3 | current |
 
-末五份完整数据库 JSON 原字节完全一致，SHA256 `54314ab26758f998660c746c930e6d5de752210c7288c03b5e15e417cb781244`；关系键仅 `goose_llama_shared_space_after_player_lead: true`。原羊照在所有含它的采样中内容哈希一致，且关页前后普通 UI 实際显示同一照片。这里只陈述采样时 `records` 仅有 `current`，不据此推断未读取的内部队列状态。
+末五份完整数据库 JSON 原字节完全一致，SHA256 `54314ab26758f998660c746c930e6d5de752210c7288c03b5e15e417cb781244`；关系键仅 `goose_llama_shared_space_after_player_lead: true`。原羊照在所有含它的采样中内容哈希一致，且关页前后普通 UI 实際显示同一照片。这里只陈述末五份稳定 generation 8 采样时 `records` 仅有 `current`；首轮放开15秒的早态采样仍含 `current`、`intent`，原件完整保留，不据此推断未读取的内部队列状态。
 
 ## 明确未覆盖
 
