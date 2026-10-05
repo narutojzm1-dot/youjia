@@ -1,0 +1,155 @@
+{
+  "source_sha": "6f9d15b8afe2bbc9d9ca0ba2f50a993c06a55b4b",
+  "pck_sha256": "794fc7656acd4bceaf3c82f9b4f13d08cb52df0df4abcf1bff91905825e7da29",
+  "input": "Playwright mouse.click CSS coordinates; no state/DOM injection",
+  "cases": [
+    {
+      "tag": "390x844-dpr2",
+      "actions": [
+        {
+          "tap": [
+            195.0,
+            430.0
+          ],
+          "label": "yard"
+        },
+        {
+          "tap": [
+            310,
+            44
+          ],
+          "label": "pause"
+        },
+        {
+          "tap": [
+            195.0,
+            340.0
+          ],
+          "label": "confirm"
+        },
+        {
+          "tap": [
+            195.0,
+            490.0
+          ],
+          "label": "cancel"
+        },
+        {
+          "tap": [
+            195.0,
+            228.0
+          ],
+          "label": "resume"
+        },
+        {
+          "tap": [
+            310,
+            44
+          ],
+          "label": "pause-again"
+        },
+        {
+          "tap": [
+            195.0,
+            340.0
+          ],
+          "label": "confirm-again"
+        }
+      ]
+    },
+    {
+      "tag": "390x844-dpr3",
+      "actions": [
+        {
+          "tap": [
+            195.0,
+            430.0
+          ],
+          "label": "yard"
+        },
+        {
+          "tap": [
+            310,
+            44
+          ],
+          "label": "pause"
+        },
+        {
+          "tap": [
+            195.0,
+            340.0
+          ],
+          "label": "confirm"
+        },
+        {
+          "tap": [
+            195.0,
+            490.0
+          ],
+          "label": "cancel"
+        },
+        {
+          "tap": [
+            195.0,
+            228.0
+          ],
+          "label": "resume"
+        }
+      ]
+    },
+    {
+      "tag": "360x640-dpr2",
+      "actions": [
+        {
+          "tap": [
+            180.0,
+            328.0
+          ],
+          "label": "yard"
+        },
+        {
+          "tap": [
+            280,
+            44
+          ],
+          "label": "pause"
+        },
+        {
+          "tap": [
+            180.0,
+            238.0
+          ],
+          "label": "confirm"
+        }
+      ]
+    },
+    {
+      "tag": "360x640-dpr3",
+      "actions": [
+        {
+          "tap": [
+            180.0,
+            328.0
+          ],
+          "label": "yard"
+        },
+        {
+          "tap": [
+            280,
+            44
+          ],
+          "label": "pause"
+        },
+        {
+          "tap": [
+            180.0,
+            238.0
+          ],
+          "label": "confirm"
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "browser": "151.0.7922.173"
+}
