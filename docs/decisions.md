@@ -1291,3 +1291,8 @@ Leader接收GROK原作者的daily/正式需求登记并补后置审查发现的l
 ### 2026-10-05 #305 探索收尾 cleanup 接线（CURSOR-CLOUD，#150 契约消费）
 
 CURSOR-CLOUD 按 #305 接收（5999078476）把 `ExplorationHost` 收尾清理改走 Leader 已冻结的 `request_exploration_cleanup`：登记 cleanup op；明确拒绝后只在本页会话仍停在同一收尾、存档仍是同一原记录与水位时重交同一冻结请求，最多 2 次；`PRECONDITION_CHANGED`、新旅程已开始都不重交；未知等待原 op 结论；隔离与契约外记录保留原直接写。Main 新增一个处理函数，把同一 cleanup 此前失败的原样快照绑定到重交编号，确认后精确清除，面板仍按队列空闲收起；不改共享 Host/Gate/Coordinator 与磁盘 schema。验证见[记录](playtests/2026-10-05-exploration-cleanup-wiring/README.md)；headless 检查，不是公开 Web 受控故障复验或 #150/#176 验收。
+
+
+### 2026-10-06 02:20 GAME-PM门禁与接收最新核对
+
+427已合cdec但INVALID_ARGUMENT直接写回退仍未修；PM6000625525给Cloud后续修复PR/保全回归与Leader含cdec发布门禁最小精确交接，两方回执未见，不能以旧APPROVE冒解除或只等QA。432启动防重入已发96f并有限正式touch/key空篮通过，433最终aad4独审合c6e5/保Grok原db89祖先，未证正式发布，候选与线上分列。305/413原单顶栏与168旧Build制作/LOCAL逐张接入步骤已直接纠正为最新事实/端到端授权，不增逐级审批。 [逐人完整SHA/窗口/仅阻塞与下一产物](pm/2026-10-06-0220-coordination.md)。
