@@ -35,6 +35,8 @@
 | REQ-20261003-017 | P2 | 低动效下花圃、水面涟漪和咬钩浮标保持静止可读 | 开启低动效时嫩芽不左右倾、开花不摇不闪、收获花瓣停在原地、水面只留一圈静止涟漪、咬钩浮标保持红色稳圈而不是快速闪烁；关闭低动效时原有轻摇、三圈涟漪和咬钩明暗仍在。不改钓鱼规则、存档或新资源。 | 已合入发布；正式试玩待反馈 | `GROK-CONTRIBUTOR` | 用户 2026-10-03 让 GROK-CONTRIBUTOR 自选无主切片。不改 REQ-001 抚摸/招呼、REQ-005/012 云带、REQ-008/009 动物与热点、REQ-014/015 鹅马。原绘制提交随 [PR #104](https://github.com/narutojzm1-dot/youjia/pull/104) 集成，兼容验证归下方 REQ-017-VERIFY；首次正式版本 `game-1949dc4` 已核验。 |
 | REQ-001-GRASS | P0 | 主角拿草与递草身体动作 | 定稿居民完整帧、固定脚底；成功才演出，移动和低动效可打断；不延迟库存或喂食；实际 Web 复核。 | 已完成（独立切片已发布） | `CODEX-LEAD-ASSISTANT` | [issue #73](https://github.com/narutojzm1-dot/youjia/issues/73)；父 REQ-20261002-001 Owner 保留。仅 Vacationer / SequenceResident、动作帧、独立验证；YardWorld 既有喂草调用只传入对象位置。[PR #76](https://github.com/narutojzm1-dot/youjia/pull/76) 合入 `6c1d6f0`；独立审核和全量回归通过，正式 `game-6c1d6f0` 公网版本与 PCK 已核验；Web 正常拿草/喂草成片及受控完整动作复核。父需求的抚摸/招呼仍待做。[验收记录](playtests/2026-10-03-REQ-001-grass-actions.md)。 |
 
+#150 共享提示增量候选：探索 reject 后同趟新 op 重交，以只读业务身份关联旧故障；不因任意新保存或 ready 清面板，保留未保存照片与其他领域失败。详见[候选验证](playtests/2026-10-05-exploration-retry-feedback/README.md)，最终审查/发布另记。
+
 ## REQ-014 协作验证切片
 
 | 编号 | 优先级 | 工作范围 | 验收条件 | 状态 | Owner | 依赖 |
@@ -443,5 +445,3 @@ Assistant音频300 b8e5e6dc916dacd1eaf45b36c9f17584d36fc16c已接且实际交，
 | 编号 | 优先级 | 目标 | 验收 | 状态 | Owner | 备注 |
 | --- | --- | --- | --- | --- | --- | --- |
 | REQ-20261005-029 | P2 | 手机横竖屏上左上角目标提示的纸片贴合文字：单行不留半截空纸，多行不溢出纸外 | `_fit_hint_panel()` 按实际行数设文字区高度（最少 32），纸片 = 文字区 + (18,16)，最少 48；文字垂直居中；`_layout()` 和 `_refresh_hud()` 都会重新贴合。文案、字号、宽度、位置不变。`test/hint_paper_fit_suite.gd` 4653 项通过，未修 main 上 4117 项失败。 | 最终独审已合入并发布；公开DPR2/3体验通过 | `GROK-CONTRIBUTOR`（原实现）/ `CODEX-LEAD`（集成收尾） | 每小时自选无主切片，来源为 main 33b105f 原生 390×844/844×390 截图和全部提示行数测量。只改 `Main._build_hud`、`_layout` 的目标纸片两行、`_refresh_hud`，新增 `_fit_hint_panel` 与 `HINT_MIN_TEXT_HEIGHT`；不碰 #348 通知、#350/#351 手帐。Leader保留作者0005c4e提交，补daily登记/UID/组合导出；真实中文DPR2/3横竖屏由内部协作pet30_impl复核通过；英文仅native几何，生产无切换入口；[完整证据](playtests/2026-10-05-hint-paper-fit/README.md)。正式PR362合1a3842c，Actions/Pages/公开PCK及十模块已核，四组真实公开体验通过；[发布验收](playtests/2026-10-05-hint-paper-release/README.md)。决策见 [decisions/REQ-20261005-029.md](decisions/REQ-20261005-029.md)。 |
-
-#150 共享提示增量候选：探索 reject 后同趟新 op 重交，以只读业务身份关联旧故障；不因任意新保存或 ready 清面板，保留未保存照片与其他领域失败。详见[候选验证](playtests/2026-10-05-exploration-retry-feedback/README.md)，最终审查/发布另记。
