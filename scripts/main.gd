@@ -10,6 +10,8 @@ const MUTED := Color("8a7060")
 const APRICOT := Color("f3b27a")
 ## 标题页副标题用的深杏色：在 PAPER 上对比约 4.6:1（APRICOT 只有约 1.7:1），#REQ-20261005-028
 const TITLE_ACCENT := Color("a85d28")
+## 目标纸片里文字区的最小高度：纸面最少 48px，与「歇一会儿」按钮同高（REQ-20261005-029）
+const HINT_MIN_TEXT_HEIGHT := 32.0
 const SAGE := Color("8fb389")
 const CREAM := Color("fffaf1")
 const LAVENDER := Color("cbb6d6")
@@ -602,7 +604,8 @@ func _build_hud() -> void:
 	_hint_label = _label(15, INK)
 	_hint_label.position = Vector2(24, 18)
 	_hint_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	_hint_label.size = Vector2(520, 70)
+	_hint_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	_hint_label.size = Vector2(520, HINT_MIN_TEXT_HEIGHT)
 	_hud.add_child(_hint_label)
 	# 假期天数标签：挂在「歇一会儿」下方的小纸签，避开目标纸片并在树叶/天空上都可读（#338）
 	_day_label = _label(14, INK)
@@ -1569,9 +1572,9 @@ func _layout() -> void:
 	_pause_button.size = _pause_button.custom_minimum_size
 	_pause_button.position = Vector2(size.x-_pause_button.size.x-pad,pad)
 	_hint_label.position = Vector2(pad,16)
-	_hint_label.size = Vector2(minf(520.0,maxf(120.0,size.x-_pause_button.size.x-pad*3.0)), 64 if compact else 48)
+	_hint_label.size = Vector2(minf(520.0,maxf(120.0,size.x-_pause_button.size.x-pad*3.0)), HINT_MIN_TEXT_HEIGHT)
 	_hint_panel.position = Vector2(pad-9.0, 9.0)
-	_hint_panel.size = _hint_label.size + Vector2(18.0, 16.0)
+	_fit_hint_panel()
 	# 天数标签：与暂停按钮同宽，紧贴其下方；横竖屏都不进入目标纸片（#338）
 	if _day_label != null:
 		_day_label.size = Vector2(_pause_button.size.x, 28)
@@ -1581,6 +1584,19 @@ func _layout() -> void:
 	_weather_chip.position = Vector2(size.x-half-pad if compact else pad+210.0,row)
 	_action_button.position = Vector2(pad if compact else size.x-_action_button.size.x-pad,size.y-68.0)
 	_fit_pause_panel()
+
+
+## 目标纸片按目标文字的实际行数伸缩（REQ-20261005-029）：
+## 短横屏单行不再留半截空纸压住远山，窄屏英文三四行也不再溢出纸外压到院景。
+## 最少保留与按钮同高的 48px 纸面，文字在纸上垂直居中。
+func _fit_hint_panel() -> void:
+	if _hint_label == null or _hint_panel == null:
+		return
+	var lines := maxi(1, _hint_label.get_line_count())
+	var spacing := float(_hint_label.get_theme_constant("line_spacing"))
+	var text_height := lines * float(_hint_label.get_line_height()) + (lines - 1) * spacing
+	_hint_label.size = Vector2(_hint_label.size.x, maxf(HINT_MIN_TEXT_HEIGHT, ceilf(text_height)))
+	_hint_panel.size = _hint_label.size + Vector2(18.0, 16.0)
 
 
 func _refresh_hud() -> void:
@@ -1607,6 +1623,7 @@ func _refresh_hud() -> void:
 		_hint_label.text = I18n.t(_world.hint_context())
 		_hint_label.add_theme_color_override("font_color", INK)
 	_action_button.text = verb
+	_fit_hint_panel()
 	# 更新假期天数标签
 	if _day_label != null:
 		_day_label.text = I18n.t("hud.day", {"n": str(_world.holiday_day)})
