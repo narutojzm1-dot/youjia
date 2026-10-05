@@ -531,6 +531,12 @@ CODEX-LEAD仅将可信open回复的精确OPEN_FAILED + `Error: writer_owned_by_a
 提交后最新覆盖：Cloud305已开PR427，head a69979b5c7148034d1598ea00ba6de2c413aa5d0，领域cleanup与Main最小失败revision关联候选已交，216/216/daily为本机检查，独审/公开故障复验/合入未完；不再将该Owner当前写为未开工。此前时间快照保留。
 
 
-### 2026-10-06 #399 公共启动生命周期保底（候选）
+### 2026-10-06 #399 公共启动生命周期保底（432已发布，有限公开验收）
 
-CODEX-LEAD按[原单认领](https://github.com/narutojzm1-dot/youjia/issues/399#issuecomment-5999958180)只修复一次标题触摸重复启动：play只在标题受理、await存档期间启动互斥，失败恢复后可再进、合法restart保留，音频解锁保持真实手势栈。[诊断与专项](playtests/2026-10-06-holiday-start-once/README.md)。14项原生专项、68次启动完整daily与Web导出通过；独立普通候选触摸/键盘空篮正常返院通过，最终SHA审核与正式发布待；不关闭#399，不修改Assistant382输入Owner或Cloud427清理范围，不将公开异常全部归因于尚未完整复现的迟到重建。
+CODEX-LEAD按[原单认领](https://github.com/narutojzm1-dot/youjia/issues/399#issuecomment-5999958180)只修复一次标题触摸重复启动：play只在标题受理、await存档期间启动互斥，失败恢复后可再进、合法restart保留，音频解锁保持真实手势栈。[诊断与专项](playtests/2026-10-06-holiday-start-once/README.md)。14项原生专项、68次启动完整daily与Web导出通过；独立普通候选触摸/键盘空篮正常返院通过；432最终0c3b3e079ac98f082670e10f73b83b246f86e8b6独审合96f090a63e0997244924a7463bd0e52a025b57b1并发布，正式两fresh触摸/键盘空篮正常返院有限通过，[同源公开包及实际UI证据](playtests/2026-10-06-holiday432-public/README.md)；不关闭#399，不修改Assistant382输入Owner或Cloud427清理范围，不将公开异常全部归因于尚未完整复现的迟到重建。
+
+
+432同源公开携物补验随后完成：一次自然趟松果1＋圆石2（3件2种），touch移动/门＋普通E/T收取，正常返院后真关页新页。无背包UI，数量保全另由只读records/current封套前后完全相同gen12/session=null/serial1支持；中间gen8保留、不作最终篮子。[原件与限制](playtests/2026-10-06-holiday432-public/carry/README.md)。未覆盖落羽/全DB/故障矩阵/实体设备，不关闭399；不重复432邮件。
+
+
+432发布证据档整合至433已合main c6e5c9b8b1764f8c41eb492b56b4d11da7f1386b；433公开CI在途、未公开验收，不算入432同源证据。427 c6c1已合main cdec7a6a5b8f13307048e60f6e1f57d49f5b5881，但INVALID回退共享保全缺口未修，Leader已拦停该源Actions37356141984发布；433安全CI37355933384继续。旧“305未开工/427在途”为历史记录而非当期状态，不冒合入等于修复或发布。
