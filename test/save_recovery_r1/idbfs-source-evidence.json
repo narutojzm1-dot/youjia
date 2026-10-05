@@ -1,0 +1,302 @@
+{
+  "status": "PASS",
+  "checks": [
+    {
+      "ok": true,
+      "label": "old engine mounts persistent IDBFS"
+    },
+    {
+      "ok": true,
+      "label": "actual Godot FileAccess and IDBFS sync captured"
+    },
+    {
+      "ok": true,
+      "label": "new engine persistentPaths empty is not persistent"
+    },
+    {
+      "ok": true,
+      "label": "new engine memory writes do not overwrite legacy IDBFS"
+    },
+    {
+      "ok": true,
+      "label": "frozen first snapshot unchanged by old page later sync"
+    },
+    {
+      "ok": true,
+      "label": "legacy page can still independently write after read-only capture"
+    },
+    {
+      "ok": true,
+      "label": "new engine on fresh profile creates no legacy database"
+    },
+    {
+      "ok": true,
+      "label": "browser console and page errors zero"
+    }
+  ],
+  "errors": [],
+  "godotPaths": {
+    "backupPath": "/userfs/godot/app_userdata/悠长的假期/youjia_save.bak",
+    "persistent": true,
+    "primaryPath": "/userfs/godot/app_userdata/悠长的假期/youjia_save.json"
+  },
+  "first": {
+    "primary": {
+      "status": "present",
+      "base64": "b2xkLXByaW1hcnktMQ=="
+    },
+    "backup": {
+      "status": "present",
+      "base64": "b2xkLWJhY2t1cC0x"
+    }
+  },
+  "second": {
+    "primary": {
+      "status": "present",
+      "base64": "b2xkLXByaW1hcnktMg=="
+    },
+    "backup": {
+      "status": "present",
+      "base64": "b2xkLWJhY2t1cC0y"
+    }
+  },
+  "schema": {
+    "status": "PASS",
+    "checks": 58,
+    "results": [
+      {
+        "ok": true,
+        "label": "missing database explicit absent"
+      },
+      {
+        "ok": true,
+        "label": "missing read never creates database"
+      },
+      {
+        "ok": true,
+        "label": "missing capability blocked not new player"
+      },
+      {
+        "ok": true,
+        "label": "reject outside userfs"
+      },
+      {
+        "ok": true,
+        "label": "reject different parent"
+      },
+      {
+        "ok": true,
+        "label": "reject traversal"
+      },
+      {
+        "ok": true,
+        "label": "existing empty store explicit absent"
+      },
+      {
+        "ok": true,
+        "label": "capture uses exactly one readonly transaction"
+      },
+      {
+        "ok": true,
+        "label": "only the two exact file keys are read"
+      },
+      {
+        "ok": true,
+        "label": "one missing file preserves present backup"
+      },
+      {
+        "ok": true,
+        "label": "transaction abort never becomes absence"
+      },
+      {
+        "ok": true,
+        "label": "zero bytes present distinct from missing"
+      },
+      {
+        "ok": true,
+        "label": "frozen snapshot"
+      },
+      {
+        "ok": true,
+        "label": "malformed UTF8 preserved raw"
+      },
+      {
+        "ok": true,
+        "label": "existing decoder rejects malformed UTF8"
+      },
+      {
+        "ok": true,
+        "label": "fixture over budget rejected not truncated"
+      },
+      {
+        "ok": true,
+        "label": "candidate budget admits complete source"
+      },
+      {
+        "ok": true,
+        "label": "string contents rejected"
+      },
+      {
+        "ok": true,
+        "label": "directory rejected"
+      },
+      {
+        "ok": true,
+        "label": "invalid timestamp rejected"
+      },
+      {
+        "ok": true,
+        "label": "existing undefined key not mistaken absent"
+      },
+      {
+        "ok": true,
+        "label": "same readonly transaction pair 0"
+      },
+      {
+        "ok": true,
+        "label": "same readonly transaction pair 1"
+      },
+      {
+        "ok": true,
+        "label": "same readonly transaction pair 2"
+      },
+      {
+        "ok": true,
+        "label": "same readonly transaction pair 3"
+      },
+      {
+        "ok": true,
+        "label": "same readonly transaction pair 4"
+      },
+      {
+        "ok": true,
+        "label": "same readonly transaction pair 5"
+      },
+      {
+        "ok": true,
+        "label": "same readonly transaction pair 6"
+      },
+      {
+        "ok": true,
+        "label": "same readonly transaction pair 7"
+      },
+      {
+        "ok": true,
+        "label": "same readonly transaction pair 8"
+      },
+      {
+        "ok": true,
+        "label": "same readonly transaction pair 9"
+      },
+      {
+        "ok": true,
+        "label": "same readonly transaction pair 10"
+      },
+      {
+        "ok": true,
+        "label": "same readonly transaction pair 11"
+      },
+      {
+        "ok": true,
+        "label": "same readonly transaction pair 12"
+      },
+      {
+        "ok": true,
+        "label": "same readonly transaction pair 13"
+      },
+      {
+        "ok": true,
+        "label": "same readonly transaction pair 14"
+      },
+      {
+        "ok": true,
+        "label": "same readonly transaction pair 15"
+      },
+      {
+        "ok": true,
+        "label": "same readonly transaction pair 16"
+      },
+      {
+        "ok": true,
+        "label": "same readonly transaction pair 17"
+      },
+      {
+        "ok": true,
+        "label": "same readonly transaction pair 18"
+      },
+      {
+        "ok": true,
+        "label": "same readonly transaction pair 19"
+      },
+      {
+        "ok": true,
+        "label": "same readonly transaction pair 20"
+      },
+      {
+        "ok": true,
+        "label": "same readonly transaction pair 21"
+      },
+      {
+        "ok": true,
+        "label": "same readonly transaction pair 22"
+      },
+      {
+        "ok": true,
+        "label": "same readonly transaction pair 23"
+      },
+      {
+        "ok": true,
+        "label": "same readonly transaction pair 24"
+      },
+      {
+        "ok": true,
+        "label": "same readonly transaction pair 25"
+      },
+      {
+        "ok": true,
+        "label": "same readonly transaction pair 26"
+      },
+      {
+        "ok": true,
+        "label": "same readonly transaction pair 27"
+      },
+      {
+        "ok": true,
+        "label": "same readonly transaction pair 28"
+      },
+      {
+        "ok": true,
+        "label": "same readonly transaction pair 29"
+      },
+      {
+        "ok": true,
+        "label": "concurrent real IDB writer/capture complete"
+      },
+      {
+        "ok": true,
+        "label": "captures span multiple concurrently written generations"
+      },
+      {
+        "ok": true,
+        "label": "captured bytes remain frozen after later write"
+      },
+      {
+        "ok": true,
+        "label": "unknown version refused without upgrade"
+      },
+      {
+        "ok": true,
+        "label": "unknown schema refused"
+      },
+      {
+        "ok": true,
+        "label": "delete between enumerate/open aborts implicit creation"
+      },
+      {
+        "ok": true,
+        "label": "deletion race leaves no new empty database"
+      }
+    ]
+  },
+  "browser": "151.0.7922.173"
+}

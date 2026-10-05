@@ -1,0 +1,56 @@
+<!doctype html><meta charset="utf-8"><link rel="icon" href="data:,"><title>Isolated IDBFS source suite</title>
+<script type="module">
+import {captureIdbfsSource} from './idbfs_source.mjs';
+import {decodeSourceSnapshot} from './source_decode.mjs';
+import {CANDIDATE_BUDGET} from './budgets.mjs';
+window.capture=captureIdbfsSource;
+const paths={primaryPath:'/userfs/test/youjia_save.json',backupPath:'/userfs/test/youjia_save.bak'};
+const bytes=text=>new TextEncoder().encode(text);
+const record=text=>({mode:33206,timestamp:new Date(),contents:bytes(text)});
+const open=()=>new Promise((yes,no)=>{const r=indexedDB.open('/userfs');r.onsuccess=()=>yes(r.result);r.onerror=()=>no(r.error)});
+const remove=()=>new Promise((yes,no)=>{const r=indexedDB.deleteDatabase('/userfs');r.onsuccess=yes;r.onerror=()=>no(r.error);r.onblocked=()=>no(Error('test deletion blocked'))});
+const make=(version=21,wrong=false)=>new Promise((yes,no)=>{const r=indexedDB.open('/userfs',version);r.onupgradeneeded=()=>{const s=r.result.createObjectStore(wrong?'OTHER':'FILE_DATA');s.createIndex('timestamp','timestamp')};r.onsuccess=()=>{r.result.close();yes()};r.onerror=()=>no(r.error)});
+async function put(primary,backup) {const db=await open();await new Promise((yes,no)=>{const tx=db.transaction('FILE_DATA','readwrite'),s=tx.objectStore('FILE_DATA');s.put(primary,paths.primaryPath);s.put(backup,paths.backupPath);tx.oncomplete=yes;tx.onabort=()=>no(tx.error)});db.close()}
+const text=result=>decodeSourceSnapshot(result);
+window.runSchemaTests=async()=>{
+ const results=[];const check=(ok,label)=>{results.push({ok,label});if(!ok)throw Error(label)};
+ await remove();
+ let r=await captureIdbfsSource(paths);check(r.primary.status==='absent'&&r.backup.status==='absent','missing database explicit absent');check(!(await indexedDB.databases()).some(x=>x.name==='/userfs'),'missing read never creates database');
+ const original=indexedDB.databases;indexedDB.databases=undefined;r=await captureIdbfsSource(paths);indexedDB.databases=original;check(r.primary.reason==='database_enumeration_unavailable','missing capability blocked not new player');
+ r=await captureIdbfsSource({...paths,primaryPath:'/other/youjia_save.json'});check(r.primary.reason==='invalid_globalized_paths','reject outside userfs');
+ r=await captureIdbfsSource({...paths,backupPath:'/userfs/other/youjia_save.bak'});check(r.primary.reason==='invalid_globalized_paths','reject different parent');
+ r=await captureIdbfsSource({...paths,primaryPath:'/userfs/../youjia_save.json',backupPath:'/userfs/../youjia_save.bak'});check(r.primary.reason==='invalid_globalized_paths','reject traversal');
+ await make();r=await captureIdbfsSource(paths);check(r.primary.status==='absent'&&r.backup.status==='absent','existing empty store explicit absent');
+ const originalTx=IDBDatabase.prototype.transaction, txModes=[];
+ IDBDatabase.prototype.transaction=function(...args){txModes.push(args[1]);return originalTx.apply(this,args)};
+ r=await captureIdbfsSource(paths);IDBDatabase.prototype.transaction=originalTx;
+ check(txModes.length===1&&txModes[0]==='readonly','capture uses exactly one readonly transaction');
+ await put(record('p'),record('b'));
+ const originalGet=IDBObjectStore.prototype.get, originalKey=IDBObjectStore.prototype.getKey, seen=[];
+ IDBObjectStore.prototype.get=function(key){seen.push(key);return originalGet.call(this,key)};
+ IDBObjectStore.prototype.getKey=function(key){seen.push(key);return originalKey.call(this,key)};
+ r=await captureIdbfsSource(paths);IDBObjectStore.prototype.get=originalGet;IDBObjectStore.prototype.getKey=originalKey;
+ check(seen.length===4&&seen.every(key=>key===paths.primaryPath||key===paths.backupPath),'only the two exact file keys are read');
+ const missingDB=await open();await new Promise((yes,no)=>{const tx=missingDB.transaction('FILE_DATA','readwrite');tx.objectStore('FILE_DATA').delete(paths.primaryPath);tx.oncomplete=yes;tx.onabort=no});missingDB.close();
+ r=await captureIdbfsSource(paths);check(r.primary.status==='absent'&&text(r).backup.text==='b','one missing file preserves present backup');
+ IDBDatabase.prototype.transaction=function(...args){const tx=originalTx.apply(this,args);queueMicrotask(()=>tx.abort());return tx};
+ r=await captureIdbfsSource(paths);IDBDatabase.prototype.transaction=originalTx;
+ check(r.primary.status==='read_error'&&r.backup.status==='read_error','transaction abort never becomes absence');
+ await put(record(''),record('backup'));r=await captureIdbfsSource(paths);check(r.primary.status==='present'&&r.primary.base64===''&&text(r).backup.text==='backup','zero bytes present distinct from missing');check(Object.isFrozen(r)&&Object.isFrozen(r.primary),'frozen snapshot');
+ const invalid=record('');invalid.contents=new Uint8Array([255,0,128]);await put(invalid,record('backup'));r=await captureIdbfsSource(paths);check(r.primary.base64==='/wCA','malformed UTF8 preserved raw');let refused=false;try{text(r)}catch{refused=true}check(refused,'existing decoder rejects malformed UTF8');
+ await put(record('x'.repeat(65537)),record('backup'));r=await captureIdbfsSource(paths);check(r.primary.reason==='source_too_large','fixture over budget rejected not truncated');r=await captureIdbfsSource({...paths,budget:CANDIDATE_BUDGET});check(decodeSourceSnapshot(r,CANDIDATE_BUDGET).primary.text.length===65537,'candidate budget admits complete source');
+ await put({...record('x'),contents:'x'},record('backup'));r=await captureIdbfsSource(paths);check(r.primary.reason==='invalid_file_record','string contents rejected');
+ await put({...record('x'),mode:16877},record('backup'));r=await captureIdbfsSource(paths);check(r.primary.reason==='invalid_file_record','directory rejected');
+ await put({...record('x'),timestamp:'today'},record('backup'));r=await captureIdbfsSource(paths);check(r.primary.reason==='invalid_file_record','invalid timestamp rejected');
+ await put(undefined,record('backup'));r=await captureIdbfsSource(paths);check(r.primary.reason==='invalid_file_record','existing undefined key not mistaken absent');
+ await put(record('p0'),record('b0'));
+ let reads=0;const generations=new Set();const writer=(async()=>{for(let i=1;i<=30;i++)await put(record('p'+i),record('b'+i))})();
+ for(let i=0;i<30;i++){const pair=text(await captureIdbfsSource(paths));check(pair.primary.text.slice(1)===pair.backup.text.slice(1),'same readonly transaction pair '+i);generations.add(pair.primary.text);reads++}
+ await writer;check(reads===30,'concurrent real IDB writer/capture complete');check(generations.size>1,'captures span multiple concurrently written generations');
+ r=await captureIdbfsSource(paths);await put(record('p31'),record('b31'));check(text(r).primary.text!=='p31','captured bytes remain frozen after later write');
+ await remove();await make(22);r=await captureIdbfsSource(paths);check(r.primary.reason==='unknown_database_version','unknown version refused without upgrade');
+ await remove();await make(21,true);r=await captureIdbfsSource(paths);check(r.primary.reason==='unknown_database_schema','unknown schema refused');
+ await remove();await make();let first=true;indexedDB.databases=async()=>{const list=await original.call(indexedDB);if(first){first=false;await remove()}return list};r=await captureIdbfsSource(paths);indexedDB.databases=original;check(r.primary.reason==='database_disappeared_no_creation','delete between enumerate/open aborts implicit creation');check(!(await indexedDB.databases()).some(x=>x.name==='/userfs'),'deletion race leaves no new empty database');
+ window.schemaResults={status:'PASS',checks:results.length,results};return window.schemaResults;
+};
+</script>
