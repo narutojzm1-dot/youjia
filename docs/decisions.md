@@ -1003,3 +1003,8 @@ CODEX-LEAD 以逐项验收并完成现有全部 issues 为持续目标。每次�
 ## GAME-PM 15:20延迟轮执行跟进
 
 310已获Leader与Producer端到端回执，319最新职责以goal-ownership为准；Cloud314/322已实际推进，不再整条等Leader前置审。Producer168已接扩展但无新PNG，当前在途世界图不同范围，PM校168/51 queued；Assistant300/317/285明确交SHA、制作人逐候选接收待。321新DPR候选仍原Owner，PM纠正合入闸Leader旧默认并补REQ026及REQ025已公开状态，不代开发代码。最新Host25139516cb02d491837a6943b01a3a81b157a9dac5d模块已交非150生产冻结，305不作为探索唯一/前置队列。详见[逐人协调](pm/2026-10-05-1520-coordination.md)与[公开补证](playtests/2026-10-05-1520-game-pm/README.md)。实际game-157ff5f，headless竖屏DPR1不替真人/听验/321高清屏或后到320/322版本；不重复邮件/发布/定时/DNS。
+
+
+## 2026-10-05 GAME-QA 16:02 冒烟
+
+供用户查看。实测game-5a0a446/5a0a446577eba5916da51ad7f0e926f118045c01，main单列。启动、羊驼互动、旧手账两页刷新恢复局部通过；每条音轨快速点击10次只验UI，不代真实听验；QA-EXP-20261003-001天气构图仍观察，002新绵羊照片生成未完成。无新BUG/Owner；完整发布关卡覆盖不足。详见[报告](playtests/2026-10-05-1602-game-qa/README.md)。
