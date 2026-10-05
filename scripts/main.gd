@@ -473,9 +473,16 @@ func _build_hud() -> void:
 	_hint_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	_hint_label.size = Vector2(520, 70)
 	_hud.add_child(_hint_label)
-	# 假期天数标签：居中上方
-	_day_label = _label(14, MUTED)
+	# 假期天数标签：挂在「歇一会儿」下方的小纸签，避开目标纸片并在树叶/天空上都可读（#338）
+	_day_label = _label(14, INK)
 	_day_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_day_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	var day_paper := _flat(Color(PAPER, 0.90), Color(APRICOT, 0.65), 1, 10)
+	day_paper.content_margin_left = 8
+	day_paper.content_margin_right = 8
+	day_paper.content_margin_top = 2
+	day_paper.content_margin_bottom = 2
+	_day_label.add_theme_stylebox_override("normal", day_paper)
 	_day_label.size = Vector2(160, 28)
 	_day_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_hud.add_child(_day_label)
@@ -1246,10 +1253,10 @@ func _layout() -> void:
 	_hint_label.size = Vector2(minf(520.0,maxf(120.0,size.x-_pause_button.size.x-pad*3.0)), 64 if compact else 48)
 	_hint_panel.position = Vector2(pad-9.0, 9.0)
 	_hint_panel.size = _hint_label.size + Vector2(18.0, 16.0)
-	# 天数标签居中顶部
+	# 天数标签：与暂停按钮同宽，紧贴其下方；横竖屏都不进入目标纸片（#338）
 	if _day_label != null:
-		_day_label.size = Vector2(160, 28)
-		_day_label.position = Vector2(pad, pad + 80.0) if compact else Vector2(size.x * 0.5 - 80.0, pad)
+		_day_label.size = Vector2(_pause_button.size.x, 28)
+		_day_label.position = Vector2(_pause_button.position.x, _pause_button.position.y + _pause_button.size.y + 8.0)
 	var row := size.y-124.0 if compact else size.y-68.0
 	_album_chip.position = Vector2(pad,row)
 	_weather_chip.position = Vector2(size.x-half-pad if compact else pad+210.0,row)
