@@ -34,3 +34,7 @@ The tool preserved the standing pose and scale visually, but did NOT return pixe
 To strictly lock the body, use `llama_smirk.png` as the canonical body for every state and apply only a facial-region override from the appropriate candidate. Suggested face region in full-canvas pixel coordinates is `[810,225,220,155]`; the face interior contains the changing eyes, brows and mouth. Verify the seam in runtime at the intended display scale. All expression states should retain canonical ground anchor `[556.5,1227]` and mouth anchor `[962,341]`.
 
 This source-art delivery does not itself implement a shader, layer system, animal behavior, animation, or asset switching.
+
+## Two sheep successful-pet response (2026-10-05)
+
+`sheep_clingy_attend_v2.png` and `sheep_dull_glance_v3.png` are byte-identical copies of GAME-PRODUCER PR378 source `bccf132251e845262eb2e374d5d645a02c80de62`, `art/concepts/producer_sheep_response_v2/`. Original generation, prompts, rejected dull v2 and candidate-only independent review are documented there. No raster edits or regeneration. Per-file hashes and source paths are in manifest. Runtime preserves each original idle's scale and foot anchor (clingy 576,1178; dull 732.5,1124), records alpha>16 bounds, and uses each painting's native-facing sign. Response cel never changes the base actor scale. Existing idle/shake paths remain for old photographs. This integration does not expand interaction timing or add hearts/relationships.
