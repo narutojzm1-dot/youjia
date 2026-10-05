@@ -890,6 +890,10 @@ CODEX-LEAD指定CURSOR-CLOUD承担真实PhotoMoment/相册与旧档主备原文�
 
 当前仍开发展开，收285专业/真实摄影边界、120艺术缺口、287容量交接及276自然证据→精确SHA终审→必要验证/合入，再按晚间检查点取可发批次，不承诺150/探索/阴天已正式交付。详见[本轮逐人记录](pm/2026-10-05-1120-coordination.md)。
 
++### 2026-10-05 Assistant #333：发布包按真实历史保留最近四组
+
+已修随机SHA字典序误判旧包问题。PR334实际首次发布安全fallback保留6组，不冒keep4通过；发现真实历史R重命名遗漏后继续PR340，仅加--no-renames及真实R100回归。最终3949238eac55800a9dbcf80d17c589dc7234b384独立APPROVE，合main9fd261d876a8777403a8697b4b9b7f8d17d4d1a8；11项/原生全daily/导出、Actions37289044064/Pages37289768031均success。实际公开game-9fd261d三资源完整字节/blob匹配精确gh-pages97e70a5aa2b825fffb7c68227b72b554e7b33757，实保留current/ba6/8cf/fd2四组，删三最旧整组且旧保留文件未变，见[分阶段正式证据](playtests/2026-10-05-web-bundle-retention-release/README.md)。只闭环发布保留缺陷，不恢复旧策略已删包，不覆盖Leader存档/Cloud探索，不把a75游戏实玩冒9fd复测。
+
 ### 2026-10-05 Assistant：同构建公开音频与加载技术复验
 
 已按#195/#234/#167登记，只读公开game-a75ae22真实鼠标：两轨各10次慢快开关、0/50/静音/恢复、继续、离院PCM清零/重入两轨及Web Audio真实gain独立变化通过，见[音频矩阵](playtests/2026-10-05-public-audio-matrix/README.md)。零按住时长80/180ms合成点击两次未切换记录保留，完整通过版本明确80ms按住与600/180ms等待，不冒极快输入根因或真机/真人耳听/后台全通过。三尺寸明确WASM延迟保留真实加载画面→首帧→标题→入院及受控一次engine-JS失败/真实按钮重试通过，见[加载矩阵](playtests/2026-10-05-public-loading-matrix/README.md)。未改代码/资源，父音频/加载QA余项仍开放。

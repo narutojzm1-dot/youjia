@@ -106,6 +106,15 @@ class Retention(unittest.TestCase):
                        cwd=clone, env=env, check=True, capture_output=True)
         self.assertEqual(len(list(clone.glob('game-*.pck'))), 5)
 
+    def test_renamed_bundle_counts_as_a_new_publication(self):
+        self.git('mv', 'game-f.pck', 'game-d.pck')
+        self.git('commit', '-qm', 'Publish d, retire f')
+        self.assertIn('R100', self.git('show', '--format=', '--name-status', 'HEAD'))
+        r = self.select()
+        self.assertEqual(r.returncode, 0, r.stderr)
+        self.assertEqual(r.stdout.splitlines(), ['game-e'])
+        self.assertEqual(r.stderr, '')
+
     def test_missing_current_fails_before_deletion(self):
         r = self.select(current='game-dead')
         self.assertNotEqual(r.returncode, 0)
