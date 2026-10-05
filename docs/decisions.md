@@ -1284,3 +1284,8 @@ Leader接收GROK原作者的daily/正式需求登记并补后置审查发现的l
 
 
 提交后最新覆盖：Cloud305已开PR427，head a69979b5c7148034d1598ea00ba6de2c413aa5d0，领域cleanup与Main最小失败revision关联候选已交，216/216/daily为本机检查，独审/公开故障复验/合入未完；不再将该Owner当前写为未开工。此前时间快照保留。
+
+
+### 2026-10-06 公共假期启动只受理一次（#399，候选）
+
+一次实际touch的诊断候选记录了两个标题pressed与两次_start_holiday，第二次已在game并等待flush；普通路面最终仍近郊，未冒称完整正式版弹回因果。采用标题来源约束＋跨await启动锁，不用时间防抖、重置存档或改探索消费来掩盖它。确认重开继续走原入口，失败释放可重试，音频unlock仍在按压栈。Leader保底范围[已认领](https://github.com/narutojzm1-dot/youjia/issues/399#issuecomment-5999958180)，Assistant382与Cloud427方法不触碰。[证据及剩余门禁](playtests/2026-10-06-holiday-start-once/README.md)；未合入发布，不扩大父缺陷验收。
