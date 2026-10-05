@@ -1,0 +1,15 @@
+motion view 390x844 offer { "kind": "take", "find_id": "formal.find.brook_stone" }
+motion t=0.00 at=(155.0295, 668.5) size=1.71 alpha=1.00
+motion t=0.18 at=(188.4281, 536.1936) size=2.45 alpha=1.00
+motion t=0.36 at=(195.0, 510.1594) size=2.60 alpha=1.00
+motion t=0.80 at=(195.0, 510.1594) size=2.60 alpha=1.00
+motion t=1.30 at=(193.3815, 512.4463) size=2.58 alpha=1.00
+motion t=1.50 at=(139.1741, 589.0413) size=2.00 alpha=1.00
+motion t=1.62 at=(62.74519, 697.0351) size=1.17 alpha=1.00
+motion carried ["formal.find.brook_stone"], sound file present false
+calm view 390x844 offer { "kind": "take", "find_id": "formal.find.brook_stone" }
+calm t=0.15 at=(195.0, 510.1594) size=2.60 alpha=0.50
+calm t=0.40 at=(195.0, 510.1594) size=2.60 alpha=1.00
+calm t=0.80 at=(195.0, 510.1594) size=2.60 alpha=1.00
+calm t=1.05 at=(195.0, 510.1594) size=2.60 alpha=0.50
+calm carried ["formal.find.brook_stone"], sound file present false

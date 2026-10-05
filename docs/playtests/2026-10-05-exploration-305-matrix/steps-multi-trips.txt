@@ -1,0 +1,50 @@
+03-t1-gate-t: T; basket in save []
+05-t1-shade-t: T; basket in save ['formal.find.pine_cone']
+07-t1-brook-t: T; basket in save ['formal.find.pine_cone']
+09-t1-slope-t: T; basket in save ['formal.find.pine_cone', 'formal.find.pine_cone']
+10-t1-home: R, 8.0 s later
+save[after trip 1]: {"db": "youjia-save-host-v1", "generation": "10", "keepsakes": {"formal.find.pine_cone": 2}, "serial": 1, "next_trip_serial": 2, "session_open": false, "carried": null, "intent_present": true}
+13-t2-gate-t: T; basket in save ['formal.find.brook_stone']
+15-t2-shade-t: T; basket in save ['formal.find.brook_stone']
+17-t2-brook-t: T; basket in save ['formal.find.brook_stone', 'formal.find.brook_stone']
+19-t2-slope-t: T; basket in save ['formal.find.brook_stone', 'formal.find.brook_stone']
+20-t2-home: R, 8.0 s later
+save[after trip 2]: {"db": "youjia-save-host-v1", "generation": "18", "keepsakes": {"formal.find.brook_stone": 2, "formal.find.pine_cone": 2}, "serial": 2, "next_trip_serial": 3, "session_open": false, "carried": null, "intent_present": true}
+23-t3-gate-t: T; basket in save ['formal.find.feather']
+25-t3-shade-t: T; basket in save ['formal.find.feather']
+27-t3-brook-t: T; basket in save ['formal.find.feather', 'formal.find.feather']
+29-t3-slope-t: T; basket in save ['formal.find.feather', 'formal.find.feather']
+30-t3-home: R, 8.0 s later
+save[after trip 3]: {"db": "youjia-save-host-v1", "generation": "26", "keepsakes": {"formal.find.brook_stone": 2, "formal.find.feather": 2, "formal.find.pine_cone": 2}, "serial": 3, "next_trip_serial": 4, "session_open": false, "carried": null, "intent_present": true}
+33-t4-gate-t: T; basket in save ['formal.find.brook_stone']
+35-t4-shade-t: T; basket in save ['formal.find.brook_stone']
+37-t4-brook-t: T; basket in save ['formal.find.brook_stone', 'formal.find.brook_stone']
+39-t4-slope-t: T; basket in save ['formal.find.brook_stone', 'formal.find.brook_stone']
+40-t4-home: R, 8.0 s later
+save[after trip 4]: {"db": "youjia-save-host-v1", "generation": "34", "keepsakes": {"formal.find.brook_stone": 4, "formal.find.feather": 2, "formal.find.pine_cone": 2}, "serial": 4, "next_trip_serial": 5, "session_open": false, "carried": null, "intent_present": true}
+43-t5-gate-t: T; basket in save []
+45-t5-shade-t: T; basket in save ['formal.find.feather']
+47-t5-brook-t: T; basket in save ['formal.find.feather']
+49-t5-slope-t: T; basket in save ['formal.find.feather', 'formal.find.pine_cone']
+50-t5-home: R, 8.0 s later
+save[after trip 5]: {"db": "youjia-save-host-v1", "generation": "44", "keepsakes": {"formal.find.brook_stone": 4, "formal.find.feather": 3, "formal.find.pine_cone": 3}, "serial": 5, "next_trip_serial": 6, "session_open": false, "carried": null, "intent_present": true}
+53-t6-gate-t: T; basket in save ['formal.find.feather']
+55-t6-shade-t: T; basket in save ['formal.find.feather']
+57-t6-brook-t: T; basket in save ['formal.find.feather', 'formal.find.brook_stone']
+59-t6-slope-t: T; basket in save ['formal.find.feather', 'formal.find.brook_stone']
+60-t6-home: R, 8.0 s later
+save[after trip 6]: {"db": "youjia-save-host-v1", "generation": "52", "keepsakes": {"formal.find.brook_stone": 5, "formal.find.feather": 4, "formal.find.pine_cone": 3}, "serial": 6, "next_trip_serial": 7, "session_open": false, "carried": null, "intent_present": true}
+63-t7-gate-t: T; basket in save []
+65-t7-shade-t: T; basket in save ['formal.find.pine_cone']
+67-t7-brook-t: T; basket in save ['formal.find.pine_cone']
+69-t7-slope-t: T; basket in save ['formal.find.pine_cone', 'formal.find.pine_cone']
+70-t7-home: R, 8.0 s later
+save[after trip 7]: {"db": "youjia-save-host-v1", "generation": "61", "keepsakes": {"formal.find.brook_stone": 5, "formal.find.feather": 4, "formal.find.pine_cone": 5}, "serial": 7, "next_trip_serial": 8, "session_open": false, "carried": null, "intent_present": false}
+save[after reopen]: {"db": "youjia-save-host-v1", "generation": "61", "keepsakes": {"formal.find.brook_stone": 5, "formal.find.feather": 4, "formal.find.pine_cone": 5}, "serial": 7, "next_trip_serial": 8, "session_open": false, "carried": null, "intent_present": false}
+poll[reopen +2s]: serial=7 keepsakes={"formal.find.brook_stone": 5, "formal.find.feather": 4, "formal.find.pine_cone": 5} session_open=False gen=61
+71-reopen-poll0: 2s into polling
+poll[reopen +4s]: serial=7 keepsakes={"formal.find.brook_stone": 5, "formal.find.feather": 4, "formal.find.pine_cone": 5} session_open=False gen=61
+poll[reopen +6s]: serial=7 keepsakes={"formal.find.brook_stone": 5, "formal.find.feather": 4, "formal.find.pine_cone": 5} session_open=False gen=61
+poll[reopen +8s]: serial=7 keepsakes={"formal.find.brook_stone": 5, "formal.find.feather": 4, "formal.find.pine_cone": 5} session_open=False gen=61
+72-reopen-poll3: 8s into polling
+errors: []

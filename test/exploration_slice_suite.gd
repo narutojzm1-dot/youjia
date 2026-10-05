@@ -34,6 +34,7 @@ func run() -> void:
 	_host_basket_sizes()
 	_painted_path_layout()
 	await _painted_path_walk()
+	await _find_reveal()
 	await _scroll_and_director()
 	await _main_round_trip()
 	for store in stores:
@@ -439,6 +440,92 @@ func _painted_path_walk() -> void:
 	check(scroll.walk_target.is_empty(), "losing focus drops a pending tap walk")
 	scroll.free()
 	root.size = Vector2i(1280, 720)
+
+
+## 拾起成功的短展示：只跟着核心接受的带上 / 换成走，打断即收尾，不碰篮子和存档
+func _find_reveal() -> void:
+	var tuning: Node = root.get_node("TuningStore")
+	for view_size: Vector2i in [Vector2i(1280, 720), Vector2i(390, 844)]:
+		root.size = view_size
+		var tag := "[%dx%d] " % [view_size.x, view_size.y]
+		var store := make_store()
+		var host := ExplorationHost.new(store)
+		host.restore()
+		host.begin(CLOCK, seed_all_four())
+		var scroll: Node2D = load("res://scripts/exploration/near_path_scroll.gd").new()
+		root.add_child(scroll)
+		scroll.setup(host, "sunny")
+		await process_frame
+		var reveal: FindReveal = scroll.reveal
+		reveal.sound = AudioStreamWAV.new()
+		var shown := Rect2(Vector2.ZERO, Vector2(view_size))
+		check(scroll.observe("gate") and not reveal.is_active() and reveal.sound_plays == 0, tag + "stopping to look at a find is quiet")
+		var at_gate: String = scroll.pick_choice().find_id
+		check(scroll.pick() and reveal.is_active() and reveal.find_id == at_gate and reveal.sound_plays == 1, tag + "a take starts one reveal with one sound")
+		var foot_screen: Vector2 = scroll.art_to_screen(scroll.foot())
+		check(shown.grow(-FindReveal.HALO).has_point(reveal.top) and reveal.top.y < foot_screen.y, tag + "the find rises above the walker and stays on screen")
+		check(reveal.top.y + FindReveal.HALO + 30.0 < scroll._pick_button.position.y, tag + "the reveal does not cover the bottom buttons")
+		check(reveal.pose().at.is_equal_approx(reveal.from), tag + "it starts from where the find lay")
+		reveal._process(FindReveal.RISE + 0.01)
+		check(reveal.pose().at.is_equal_approx(reveal.top) and is_equal_approx(float(reveal.pose().size), FindReveal.SHOW_SIZE), tag + "it holds above the walker")
+		reveal._process(FindReveal.HOLD + FindReveal.FLY)
+		check(not reveal.is_active() and scroll.carried() == [at_gate], tag + "it ends in the basket by itself; the basket already had it")
+		check(scroll.pick_choice().kind == "release" and scroll.pick() and not reveal.is_active() and reveal.sound_plays == 1, tag + "putting a find back is not a get")
+		check(scroll.pick() and reveal.is_active() and reveal.sound_plays == 2, tag + "taking it again is a new get")
+		scroll.end_observe()
+		check(not reveal.is_active() and scroll.carried() == [at_gate], tag + "continue settles the reveal at once")
+		scroll.place_at("brook")
+		scroll.observe()
+		var at_brook: String = scroll.pick_choice().find_id
+		scroll.pick()
+		scroll.walk(Vector2.LEFT, 0.2)
+		check(not reveal.is_active() and scroll.carried() == [at_gate, at_brook], tag + "walking off settles it without touching the basket")
+		scroll.end_observe()
+		scroll.place_at("shade")
+		scroll.observe()
+		scroll.pick()
+		scroll._pause_button.pressed.emit()
+		check(not reveal.is_active(), tag + "opening pause settles it")
+		scroll.end_observe()
+		scroll.place_at("slope")
+		scroll.observe()
+		var at_slope: String = scroll.pick_choice().find_id
+		var plays := reveal.sound_plays
+		check(scroll.pick_choice().kind == "swap" and scroll.pick() and reveal.find_id == at_slope and reveal.sound_plays == plays + 1, tag + "a swap shows only the new find")
+		check(shown.has_point(reveal.basket) and scroll.carried().size() == 3, tag + "it flies to the on-screen basket, which stays at three")
+		scroll._request_return("player")
+		check(not reveal.is_active(), tag + "going home settles it")
+		store.pump()
+		check((store.get_exploration_record().session.carried as Array).size() == 3, tag + "the saved basket never depended on the reveal")
+		scroll.free()
+
+	root.size = Vector2i(1280, 720)
+	var store := make_store()
+	var host := ExplorationHost.new(store)
+	host.restore()
+	host.begin(CLOCK, seed_where(true, false))
+	var scroll: Node2D = load("res://scripts/exploration/near_path_scroll.gd").new()
+	root.add_child(scroll)
+	scroll.setup(host, "sunny")
+	await process_frame
+	var reveal: FindReveal = scroll.reveal
+	scroll.place_at("shade")
+	check(scroll.observe() and scroll.pick_choice().kind == "none" and not scroll.pick() and not reveal.is_active(), "an empty stop never shows a get")
+	scroll.end_observe()
+	scroll.place_at("brook")
+	scroll.observe()
+	tuning.set_value("ui.reduced_motion", true, false)
+	check(scroll.pick() and reveal.is_active() and reveal.calm, "reduced motion still shows the get")
+	check(reveal.sound == null or ResourceLoader.exists(FindReveal.SOUND_PATH), "without the sound file the reveal stays silent")
+	check(reveal.sound != null or reveal.sound_plays == 0, "a missing sound is never replaced by another cue")
+	var still := true
+	var start: Vector2 = reveal.pose().at
+	for step in 8:
+		reveal.elapsed = reveal.total() * step / 8.0
+		still = still and reveal.pose().at.is_equal_approx(start) and is_equal_approx(float(reveal.pose().size), FindReveal.SHOW_SIZE)
+	check(still and reveal.pose().alpha < 1.0, "reduced motion fades in place: no rise, fly or scale")
+	tuning.set_value("ui.reduced_motion", false, false)
+	scroll.free()
 
 
 func _scroll_and_director() -> void:

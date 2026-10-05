@@ -1,0 +1,115 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+FAIL zh-CN (844, 390) same-call pause hides existing notice
+FAIL zh-CN (844, 390) late hint cannot show during pause
+FAIL zh-CN (844, 390) pause preserves unread duration
+FAIL zh-CN (844, 390) resume immediately shows preserved hint
+FAIL zh-CN (844, 390) resumed time advances normally
+FAIL zh-CN (844, 390) late fish notification cannot show during pause
+FAIL zh-CN (844, 390) fish notification duration preserved
+FAIL zh-CN (844, 390) fish notification shown after resume
+FAIL zh-CN (844, 390) album rejects late hint
+FAIL zh-CN (844, 390) album preserves unread duration
+FAIL zh-CN (844, 390) album close can show hint
+FAIL zh-CN (844, 390) confirmation rejects late hint
+FAIL zh-CN (844, 390) confirmation preserves unread duration
+FAIL zh-CN (844, 390) confirmation cancel can show hint
+FAIL zh-CN (390, 844) same-call pause hides existing notice
+FAIL zh-CN (390, 844) late hint cannot show during pause
+FAIL zh-CN (390, 844) pause preserves unread duration
+FAIL zh-CN (390, 844) resume immediately shows preserved hint
+FAIL zh-CN (390, 844) resumed time advances normally
+FAIL zh-CN (390, 844) late fish notification cannot show during pause
+FAIL zh-CN (390, 844) fish notification duration preserved
+FAIL zh-CN (390, 844) fish notification shown after resume
+FAIL zh-CN (390, 844) album rejects late hint
+FAIL zh-CN (390, 844) album preserves unread duration
+FAIL zh-CN (390, 844) album close can show hint
+FAIL zh-CN (390, 844) confirmation rejects late hint
+FAIL zh-CN (390, 844) confirmation preserves unread duration
+FAIL zh-CN (390, 844) confirmation cancel can show hint
+FAIL zh-CN (1280, 720) same-call pause hides existing notice
+FAIL zh-CN (1280, 720) late hint cannot show during pause
+FAIL zh-CN (1280, 720) pause preserves unread duration
+FAIL zh-CN (1280, 720) resume immediately shows preserved hint
+FAIL zh-CN (1280, 720) resumed time advances normally
+FAIL zh-CN (1280, 720) late fish notification cannot show during pause
+FAIL zh-CN (1280, 720) fish notification duration preserved
+FAIL zh-CN (1280, 720) fish notification shown after resume
+FAIL zh-CN (1280, 720) album rejects late hint
+FAIL zh-CN (1280, 720) album preserves unread duration
+FAIL zh-CN (1280, 720) album close can show hint
+FAIL zh-CN (1280, 720) confirmation rejects late hint
+FAIL zh-CN (1280, 720) confirmation preserves unread duration
+FAIL zh-CN (1280, 720) confirmation cancel can show hint
+FAIL zh-CN (360, 640) same-call pause hides existing notice
+FAIL zh-CN (360, 640) late hint cannot show during pause
+FAIL zh-CN (360, 640) pause preserves unread duration
+FAIL zh-CN (360, 640) resume immediately shows preserved hint
+FAIL zh-CN (360, 640) resumed time advances normally
+FAIL zh-CN (360, 640) late fish notification cannot show during pause
+FAIL zh-CN (360, 640) fish notification duration preserved
+FAIL zh-CN (360, 640) fish notification shown after resume
+FAIL zh-CN (360, 640) album rejects late hint
+FAIL zh-CN (360, 640) album preserves unread duration
+FAIL zh-CN (360, 640) album close can show hint
+FAIL zh-CN (360, 640) confirmation rejects late hint
+FAIL zh-CN (360, 640) confirmation preserves unread duration
+FAIL en (844, 390) same-call pause hides existing notice
+FAIL en (844, 390) late hint cannot show during pause
+FAIL en (844, 390) pause preserves unread duration
+FAIL en (844, 390) resume immediately shows preserved hint
+FAIL en (844, 390) resumed time advances normally
+FAIL en (844, 390) late fish notification cannot show during pause
+FAIL en (844, 390) fish notification duration preserved
+FAIL en (844, 390) fish notification shown after resume
+FAIL en (844, 390) album rejects late hint
+FAIL en (844, 390) album preserves unread duration
+FAIL en (844, 390) album close can show hint
+FAIL en (844, 390) confirmation rejects late hint
+FAIL en (844, 390) confirmation preserves unread duration
+FAIL en (844, 390) confirmation cancel can show hint
+FAIL en (390, 844) same-call pause hides existing notice
+FAIL en (390, 844) late hint cannot show during pause
+FAIL en (390, 844) pause preserves unread duration
+FAIL en (390, 844) resume immediately shows preserved hint
+FAIL en (390, 844) resumed time advances normally
+FAIL en (390, 844) resumed notice eventually expires
+FAIL en (390, 844) late fish notification cannot show during pause
+FAIL en (390, 844) fish notification duration preserved
+FAIL en (390, 844) fish notification shown after resume
+FAIL en (390, 844) album rejects late hint
+FAIL en (390, 844) album preserves unread duration
+FAIL en (390, 844) album close can show hint
+FAIL en (390, 844) confirmation rejects late hint
+FAIL en (390, 844) confirmation preserves unread duration
+FAIL en (390, 844) confirmation cancel can show hint
+FAIL en (1280, 720) same-call pause hides existing notice
+FAIL en (1280, 720) late hint cannot show during pause
+FAIL en (1280, 720) pause preserves unread duration
+FAIL en (1280, 720) resume immediately shows preserved hint
+FAIL en (1280, 720) resumed time advances normally
+FAIL en (1280, 720) late fish notification cannot show during pause
+FAIL en (1280, 720) fish notification duration preserved
+FAIL en (1280, 720) fish notification shown after resume
+FAIL en (1280, 720) album rejects late hint
+FAIL en (1280, 720) album preserves unread duration
+FAIL en (1280, 720) album close can show hint
+FAIL en (1280, 720) confirmation rejects late hint
+FAIL en (1280, 720) confirmation preserves unread duration
+FAIL en (1280, 720) confirmation cancel can show hint
+FAIL en (360, 640) same-call pause hides existing notice
+FAIL en (360, 640) late hint cannot show during pause
+FAIL en (360, 640) pause preserves unread duration
+FAIL en (360, 640) resume immediately shows preserved hint
+FAIL en (360, 640) resumed time advances normally
+FAIL en (360, 640) late fish notification cannot show during pause
+FAIL en (360, 640) fish notification duration preserved
+FAIL en (360, 640) fish notification shown after resume
+FAIL en (360, 640) album rejects late hint
+FAIL en (360, 640) album preserves unread duration
+FAIL en (360, 640) album close can show hint
+FAIL en (360, 640) confirmation rejects late hint
+FAIL en (360, 640) confirmation preserves unread duration
+FAIL en (360, 640) confirmation cancel can show hint
+PAUSE_NOTICE checks=168 failures=112

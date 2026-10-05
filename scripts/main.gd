@@ -306,11 +306,9 @@ func _report_web_first_frame() -> void:
 
 
 func _process(delta: float) -> void:
-	if _notice_time > 0.0:
-		_notice_time -= delta
-		if _notice_time <= 0.0:
-			_notice.visible = false
-	_notice.visible = _notice_time > 0.0 and _screen == "game" and not _pause_screen.visible and not _album_screen.visible and not _confirm_screen.visible
+	if _notice_time > 0.0 and _can_show_notice():
+		_notice_time = maxf(0.0, _notice_time - delta)
+	_sync_notice_visibility()
 	if _notice.visible:
 		_fit_notice()
 	if _screen == "game" and _world != null and not _pause_screen.visible and not _album_screen.visible and not _confirm_screen.visible:
@@ -1074,6 +1072,7 @@ func _toggle_pause() -> void:
 		_world.input_enabled = not paused
 		if paused: _world.cancel_scene_feedback()
 	_refresh_texts()
+	_sync_notice_visibility()
 
 
 func _request_destructive_action(action: String) -> void:
@@ -1552,14 +1551,22 @@ func _fit_notice() -> void:
 	_notice.offset_right = half
 
 
+func _can_show_notice() -> bool:
+	return _screen == "game" and not _pause_screen.visible and not _album_screen.visible and not _confirm_screen.visible
+
+
+func _sync_notice_visibility() -> void:
+	_notice.visible = _notice_time > 0.0 and _can_show_notice()
+
+
 func _show_notice_key(key: String, params: Dictionary = {}) -> void:
 	_notice_key = key
 	_notice.text = I18n.t(key, params)
-	_notice.visible = true
 	_notice_time = 3.2
 	# 每次普通通知都重置字体大小（钓到鱼/空闲提示会在后续覆盖为更大字号）
 	_notice.add_theme_font_size_override("font_size", 16)
 	_fit_notice()
+	_sync_notice_visibility()
 
 
 func _open_licenses() -> void:
@@ -1720,7 +1727,7 @@ func _on_fish_caught(carry_type: String) -> void:
 	# 钓到通知：无论是否减动效都拉长可读时间（拍立得可能抢通知，YardWorld 会重发）
 	_notice_time = maxf(_notice_time, 6.5)
 	_notice.add_theme_font_size_override("font_size", 22)
-	_notice.visible = true
+	_sync_notice_visibility()
 	if bool(TuningStore.get_value("ui.reduced_motion", false)):
 		return
 	# 独立蓝色屏幕闪光（提到 UI 层最前，峰值更高，桌面 Web 不可错过）

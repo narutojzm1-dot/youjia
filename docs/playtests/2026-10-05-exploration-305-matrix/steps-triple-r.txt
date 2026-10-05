@@ -1,0 +1,8 @@
+03-t1-gate-t: T: take or swap if offered
+05-t1-shade-t: T: take or swap if offered
+07-t1-brook-t: T: take or swap if offered
+09-t1-slope-t: T: take or swap if offered
+10-t1-home: pressed R three times
+save[after triple R]: {"db": "youjia-save-host-v1", "generation": "8", "keepsakes": {"formal.find.brook_stone": 2}, "serial": 1, "next_trip_serial": 2, "session_open": true, "carried": ["formal.find.brook_stone", "formal.find.brook_stone"], "intent_present": true}
+save[after reopen]: {"db": "youjia-save-host-v1", "generation": "9", "keepsakes": {"formal.find.brook_stone": 2}, "serial": 1, "next_trip_serial": 2, "session_open": false, "carried": null, "intent_present": false}
+errors: []

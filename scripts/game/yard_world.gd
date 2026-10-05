@@ -691,9 +691,7 @@ func _interact_with_target(target: String) -> void:
 		_fish_carry_timer = 0.0
 		bird.hold_expression("idle", 3.5)
 		bird.acknowledge_feed(_player.position)
-		# Ducks acknowledge with their attention painting, without default hearts.
-		if bird.species != "duck":
-			_effects_overlay.play_fish_feed_feedback(bird)
+		# Ducks and geese acknowledge with their own painting, without default hearts.
 		notice_requested.emit("notice.toss_fish.%s" % bird.species)
 		queue_redraw()
 		return
