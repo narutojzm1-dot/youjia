@@ -1,0 +1,251 @@
+{
+  "runtime": "4886addaa9f091d55f8f5e5fd63908e4aa7b0f30",
+  "expected_pck": "f965ac3846bd97436d972cd04ea3a8c03663e92eabec92098d1d714d94b93666",
+  "inputs": [
+    {
+      "screenshot": "no-preference-title",
+      "time": 348892.994655859
+    },
+    {
+      "click": [
+        640,
+        368
+      ],
+      "time": 348893.936775854
+    },
+    {
+      "screenshot": "no-preference-sky-a",
+      "time": 348898.385346307
+    },
+    {
+      "screenshot": "no-preference-sky-b",
+      "time": 348901.229556751
+    },
+    {
+      "click": [
+        364,
+        412
+      ],
+      "time": 348902.086018947
+    },
+    {
+      "photo_detector": "no-preference",
+      "time": 348904.700368775
+    },
+    {
+      "emulate_media": "reduce",
+      "time": 348904.700372422
+    },
+    {
+      "card_clip": 0,
+      "time": 348904.703582874
+    },
+    {
+      "card_clip": 1,
+      "time": 348905.145109183
+    },
+    {
+      "card_clip": 2,
+      "time": 348905.860311546
+    },
+    {
+      "card_clip": 3,
+      "time": 348906.661010646
+    },
+    {
+      "screenshot": "no-preference-photo-after",
+      "time": 348907.377387458
+    },
+    {
+      "screenshot": "no-preference-photo-later",
+      "time": 348908.46011243
+    },
+    {
+      "emulate_media": "no-preference",
+      "time": 348911.516720332
+    },
+    {
+      "screenshot": "normal-restored",
+      "time": 348911.616915237
+    },
+    {
+      "screenshot": "normal-not-replayed",
+      "time": 348913.127343663
+    },
+    {
+      "click": [
+        114,
+        675
+      ],
+      "time": 348913.953859059
+    },
+    {
+      "screenshot": "no-preference-album",
+      "time": 348914.534818103
+    },
+    {
+      "click": [
+        918,
+        605
+      ],
+      "time": 348915.534901185
+    },
+    {
+      "click": [
+        1180,
+        45
+      ],
+      "time": 348916.426447855
+    },
+    {
+      "screenshot": "pause",
+      "time": 348916.96428926
+    },
+    {
+      "click": [
+        640,
+        278
+      ],
+      "time": 348917.907761967
+    },
+    {
+      "screenshot": "confirm",
+      "time": 348918.4948797
+    },
+    {
+      "click": [
+        640,
+        372
+      ],
+      "time": 348919.476466172
+    },
+    {
+      "screenshot": "returned-title",
+      "time": 348921.366685151
+    },
+    {
+      "click": [
+        640,
+        368
+      ],
+      "time": 348922.33701999
+    },
+    {
+      "emulate_media": "reduce",
+      "time": 348923.434913921
+    },
+    {
+      "screenshot": "reentered-reduce",
+      "time": 348923.54044786
+    },
+    {
+      "emulate_media": "no-preference",
+      "time": 348924.633169538
+    },
+    {
+      "screenshot": "reentered-normal",
+      "time": 348924.775078669
+    }
+  ],
+  "media": [
+    {
+      "time": 348904.701829701,
+      "requested": "reduce",
+      "actual": true
+    },
+    {
+      "time": 348911.532150646,
+      "requested": "no-preference",
+      "actual": false
+    },
+    {
+      "time": 348923.467584585,
+      "requested": "reduce",
+      "actual": true
+    },
+    {
+      "time": 348924.692115038,
+      "requested": "no-preference",
+      "actual": false
+    }
+  ],
+  "errors": [],
+  "builds": [
+    {
+      "page": "no-preference",
+      "entry": "game-4886add"
+    }
+  ],
+  "limits": [
+    "browser media emulation, not OS settings or physical phone",
+    "listener multiplicity is not proved by screenshots",
+    "photo detector needs visual confirmation"
+  ],
+  "manifests": [
+    {
+      "page": "no-preference",
+      "stage": "before",
+      "manifest": {
+        "schema": "youjia.release/v1",
+        "scope": "local candidate only; not a public Pages release",
+        "sourceCommit": "4886addaa9f091d55f8f5e5fd63908e4aa7b0f30",
+        "engine": "4.7.2.stable.official.ed1daf0bf",
+        "entry": "game-4886add",
+        "createdAt": "2026-10-05T16:22:51.795795+00:00",
+        "storageModules": {
+          "entry": "save-4886add",
+          "sha256": {
+            "bridge.mjs": "ef18687554fdc0d745c1d18d4d091e959cc78559da0d61d6a093e562ff9bbc91",
+            "budgets.mjs": "52984153977dcafd1d2682e848f1999f091d0966e17d46e902de76f5735a7018",
+            "host.mjs": "9de8dc0ef4bfc037a8ad0bff575d40c3dd4341bcc723351a412b2061bb661904",
+            "idbfs_source.mjs": "16eb57d471537f13d3e50018b56c2d416d2847f0d0249ba44433dd9ebb65f4d8",
+            "legacy_inspection.mjs": "db3a23a0221aa5d34a58a6a49aeeff930295ffe20bfcf73a7c11f0d49cffd671",
+            "legacy_seal.mjs": "9642132f5d4e7523e5966e802069af7f4bae803fae8e2e7c28ae55ee97d85610",
+            "legacy_v5.mjs": "8e7f4ad2d87aab77ac05361e4f46060476e933aa079ae94301998d08d4599621",
+            "lifecycle.mjs": "1cfaebb9a8745e2dc3e4f694ef475f250640870938f04160be1a5c9acd62935d",
+            "source_decode.mjs": "411f3bc784cb32a07f32eed5fc7d88f71b59a667cc0d68a50fe13c55bfdba18a",
+            "store.mjs": "2193b4397b8662a8ebc754dc4468e4d62964d209b4e1d0f0924a2ec81b409cbe"
+          }
+        }
+      },
+      "time": 348881.373882058
+    },
+    {
+      "page": "no-preference",
+      "stage": "after",
+      "manifest": {
+        "schema": "youjia.release/v1",
+        "scope": "local candidate only; not a public Pages release",
+        "sourceCommit": "4886addaa9f091d55f8f5e5fd63908e4aa7b0f30",
+        "engine": "4.7.2.stable.official.ed1daf0bf",
+        "entry": "game-4886add",
+        "createdAt": "2026-10-05T16:22:51.795795+00:00",
+        "storageModules": {
+          "entry": "save-4886add",
+          "sha256": {
+            "bridge.mjs": "ef18687554fdc0d745c1d18d4d091e959cc78559da0d61d6a093e562ff9bbc91",
+            "budgets.mjs": "52984153977dcafd1d2682e848f1999f091d0966e17d46e902de76f5735a7018",
+            "host.mjs": "9de8dc0ef4bfc037a8ad0bff575d40c3dd4341bcc723351a412b2061bb661904",
+            "idbfs_source.mjs": "16eb57d471537f13d3e50018b56c2d416d2847f0d0249ba44433dd9ebb65f4d8",
+            "legacy_inspection.mjs": "db3a23a0221aa5d34a58a6a49aeeff930295ffe20bfcf73a7c11f0d49cffd671",
+            "legacy_seal.mjs": "9642132f5d4e7523e5966e802069af7f4bae803fae8e2e7c28ae55ee97d85610",
+            "legacy_v5.mjs": "8e7f4ad2d87aab77ac05361e4f46060476e933aa079ae94301998d08d4599621",
+            "lifecycle.mjs": "1cfaebb9a8745e2dc3e4f694ef475f250640870938f04160be1a5c9acd62935d",
+            "source_decode.mjs": "411f3bc784cb32a07f32eed5fc7d88f71b59a667cc0d68a50fe13c55bfdba18a",
+            "store.mjs": "2193b4397b8662a8ebc754dc4468e4d62964d209b4e1d0f0924a2ec81b409cbe"
+          }
+        }
+      },
+      "time": 348925.78129065
+    }
+  ],
+  "pck_checks": [
+    {
+      "page": "no-preference",
+      "sha256": "f965ac3846bd97436d972cd04ea3a8c03663e92eabec92098d1d714d94b93666"
+    }
+  ],
+  "photo_detection": {
+    "no-preference": true
+  }
+}
