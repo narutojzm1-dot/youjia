@@ -12,6 +12,8 @@ const APRICOT := Color("f3b27a")
 const TITLE_ACCENT := Color("a85d28")
 ## 目标纸片里文字区的最小高度：纸面最少 48px，与「歇一会儿」按钮同高（REQ-20261005-029）
 const HINT_MIN_TEXT_HEIGHT := 32.0
+## 「现在离开吗？」确认纸片的设计尺寸；屏幕更窄/更矮时按 _fit_confirm_panel() 收进屏内（REQ-20261005-030）。
+const CONFIRM_PANEL_SIZE := Vector2(420, 240)
 const SAGE := Color("8fb389")
 const CREAM := Color("fffaf1")
 const LAVENDER := Color("cbb6d6")
@@ -76,6 +78,7 @@ var _ambience_slider: HSlider
 var _music_toggle_frame := -1
 var _ambience_toggle_frame := -1
 var _confirm_screen: Control
+var _confirm_panel: PanelContainer
 var _confirm_title: Label
 var _confirm_message: Label
 var _confirm_accept_button: Button
@@ -736,7 +739,11 @@ func _place_pause(parent: Node, nodes: Array) -> void:
 func _build_confirmation_screen() -> void:
 	_confirm_screen = _overlay()
 	add_child(_confirm_screen)
-	var box := _centered_column(Vector2(420, 240), _confirm_screen)
+	var box := _centered_column(CONFIRM_PANEL_SIZE, _confirm_screen)
+	_confirm_panel = box.get_parent()
+	# 内容比纸片高时向上下两侧同时长，保持居中（REQ-20261005-030）。
+	_confirm_panel.grow_horizontal = Control.GROW_DIRECTION_BOTH
+	_confirm_panel.grow_vertical = Control.GROW_DIRECTION_BOTH
 	_confirm_title = _label(22, INK)
 	_confirm_title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	box.add_child(_confirm_title)
@@ -750,6 +757,23 @@ func _build_confirmation_screen() -> void:
 	_confirm_cancel_button = _soft_button()
 	_confirm_cancel_button.pressed.connect(_cancel_destructive_action)
 	box.add_child(_confirm_cancel_button)
+	_fit_confirm_panel()
+
+
+## REQ-20261005-030：确认纸片原来固定 420 宽，360/390 宽的竖屏手机上左右两边伸出屏外，
+## 圆角、边框和按钮两端都被裁掉。现在宽高都不超过屏幕减去两侧 12px，仍居中；
+## 宽屏保持 420×240 不变。文案、字号、按钮、颜色和行为都不变。
+func _fit_confirm_panel() -> void:
+	if _confirm_panel == null or size.x < 64.0 or size.y < 64.0:
+		return
+	var margin := 12.0
+	var panel_w := minf(CONFIRM_PANEL_SIZE.x, size.x - margin * 2.0)
+	var panel_h := minf(CONFIRM_PANEL_SIZE.y, size.y - margin * 2.0)
+	_confirm_panel.custom_minimum_size = Vector2(panel_w, panel_h)
+	_confirm_panel.offset_left = -panel_w * 0.5
+	_confirm_panel.offset_right = panel_w * 0.5
+	_confirm_panel.offset_top = -panel_h * 0.5
+	_confirm_panel.offset_bottom = panel_h * 0.5
 
 
 func _build_album_screen() -> void:
@@ -1677,6 +1701,7 @@ func _layout() -> void:
 	_weather_chip.position = Vector2(size.x-half-pad if compact else pad+210.0,row)
 	_action_button.position = Vector2(pad if compact else size.x-_action_button.size.x-pad,size.y-68.0)
 	_fit_pause_panel()
+	_fit_confirm_panel()
 
 
 ## 目标纸片按目标文字的实际行数伸缩（REQ-20261005-029）：
@@ -2034,4 +2059,3 @@ func _flat(bg: Color, border: Color, width: int = 2, radius: int = 16) -> StyleB
 	style.content_margin_top = 10
 	style.content_margin_bottom = 10
 	return style
-
