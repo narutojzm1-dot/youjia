@@ -115,7 +115,7 @@ func _fresh(main):
 	var want_elapsed: float = store.get_holiday_day_elapsed()
 	var want_plant: Dictionary = store.get_plant_state()
 	# 3) start the holiday from the clean store (its own _clear_world is a no-op now).
-	main._start_holiday()
+	await main._start_holiday()
 	var w = main._world
 	_check(store.get_holiday_day() == want_day and w.holiday_day == want_day, "fresh: holiday_day is the default (%d), not the previous sequence's" % want_day)
 	_check(is_equal_approx(store.get_holiday_day_elapsed(), want_elapsed) and is_equal_approx(float(w._day_elapsed), want_elapsed), "fresh: day elapsed is the default (%.1f), not written back (prev %.1f)" % [want_elapsed, prev_elapsed])

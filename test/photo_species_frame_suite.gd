@@ -15,7 +15,7 @@ func run():
  await process_frame
  await process_frame
  main.set_process(false)
- main._start_holiday()
+ await main._start_holiday()
  var world = main._world
  world.set_process(false)
  world.actor_named("sheep_a").position = Vector2(230, 420)

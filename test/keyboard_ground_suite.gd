@@ -15,7 +15,7 @@ func frames(count:int):
 func run():
  root.size=Vector2i(1280,720);seed(817)
  main=load("res://scenes/main.tscn").instantiate();root.add_child(main);await process_frame;await process_frame
- main.set_process(false);main._start_holiday();await frames(3)
+ main.set_process(false);await main._start_holiday();await frames(3)
  var w=main._world;var p=w._player
  for code in [KEY_A,KEY_D,KEY_W,KEY_S,KEY_LEFT,KEY_RIGHT,KEY_UP,KEY_DOWN]:
   var start:Vector2=p.position

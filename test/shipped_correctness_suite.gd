@@ -11,7 +11,7 @@ func run():
  var main = load("res://scenes/main.tscn").instantiate()
  root.add_child(main)
  await process_frame;await process_frame
- main.set_process(false);main._start_holiday()
+ main.set_process(false);await main._start_holiday()
  var w = main._world
  for i in 600: w.tick(1.0/60, Vector2.ZERO)
  var elapsed: float = w._day_elapsed
@@ -20,11 +20,11 @@ func run():
  check(is_equal_approx(store.get_holiday_day_elapsed(), elapsed), "title flushes partial day")
  store._load()
  check(is_equal_approx(store.get_holiday_day_elapsed(), elapsed), "partial day survives disk reload")
- main._start_holiday()
+ await main._start_holiday()
  check(is_equal_approx(main._world._day_elapsed, elapsed), "resume restores partial day")
  main._world.tick(2.0, Vector2.ZERO)
  elapsed = main._world._day_elapsed
- main._start_holiday();await process_frame
+ await main._start_holiday();await process_frame
  check(is_equal_approx(main._world._day_elapsed, elapsed), "restart flushes before rebuilding world")
  check(main._world.holiday_day == 1, "flush does not advance holiday day")
  check(main._world._plant_visual.position == main._world._plant_point(), "plant node uses its actual world position")

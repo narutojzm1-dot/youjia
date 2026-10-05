@@ -22,7 +22,7 @@ func _run() -> void:
 	await process_frame
 	await process_frame
 	main.set_process(false)
-	main._start_holiday()
+	await main._start_holiday()
 	var world = main._world
 	_check_motion_frames(world, false)
 	_check_motion_frames(world, true)
@@ -142,7 +142,7 @@ func _check_reduced_toggle(world) -> void:
 
 func _check_rebuild(main):
 	var previous = main._world.get_instance_id()
-	main._start_holiday()
+	await main._start_holiday()
 	var world = main._world
 	_check(world.get_instance_id() != previous, "holiday rebuild replaces the yard")
 	return world

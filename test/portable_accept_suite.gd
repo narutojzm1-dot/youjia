@@ -15,7 +15,7 @@ func run():
  await process_frame;await process_frame
  main.set_process(false)
  for device in [0,16]:
-  main._start_holiday()
+  await main._start_holiday()
   var world=main._world
   world.debug_place_player(Vector2(600,540));world.debug_place_actor("llama",Vector2(680,540));world._player.pick_grass()
   world.request_pointer_action(Vector2(680,540))
