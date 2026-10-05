@@ -21,7 +21,7 @@ export XDG_DATA_HOME="$STATE/data" XDG_CONFIG_HOME="$STATE/config" XDG_CACHE_HOM
 mkdir -p "$XDG_DATA_HOME" "$XDG_CONFIG_HOME" "$XDG_CACHE_HOME"
 source "$ROOT/tools/lib/verified_godot.sh"
 cd "$ROOT"
-[[ -d .godot ]] || run_verified_godot "$STATE/import.log" --headless --path . --editor --import --quit
+run_verified_godot "$STATE/import.log" --headless --path . --editor --import --quit
 run_verified_godot "$STATE/generate.log" --headless --path . --script res://test/save_payload_budget/generate_samples.gd \
 	-- --out "$STATE/samples" --host-snapshot "$STATE/host/source_snapshot.gd"
 "${PYTHON:-python3}" "$ROOT/test/save_payload_budget/host_budget.py" --samples "$STATE/samples" --host "$STATE/host" \

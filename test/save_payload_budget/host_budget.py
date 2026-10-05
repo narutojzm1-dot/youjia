@@ -22,6 +22,9 @@ from playwright.sync_api import sync_playwright
 LIMIT = 65536
 HEAD_LIMIT = 180000
 TINY_PAYLOAD = '{"version":5}'
+STRESS_NAMES = ['stress_single_at_limit', 'stress_single_over_limit', 'stress_dual_each_under_combined_over',
+                'stress_dual_fits', 'stress_nonascii_single_chars_under_bytes_over', 'stress_nonascii_dual',
+                'stress_future_rules_growth', 'stress_photomoment_dense_single']
 
 PURE = """async (snap) => {
   const {decodeSourceSnapshot} = await import('./source_decode.mjs');
@@ -213,7 +216,7 @@ class Run:
     def preservation(self, ctx, base, by_name):
         """Existing current/archive/intent must survive oversized attempts."""
         small = (self.dir / by_name['natural_01_goose_horse_mount']['host_godot_capture']['file']).read_text()
-        legacy_ok = (self.dir / by_name['stress_dual_each_under_combined_over']['host_godot_capture']['file']).read_text()
+        importable_legacy = small
         big_game = (self.dir / by_name['natural_04_llama_sheep_cow_smirk']['primary']['file']).read_text()
         name = self.store_name('existing')
         out = {'store': name}
@@ -242,7 +245,7 @@ class Run:
           return {opened: opened.verdict, archive_len: (before.archive || []).length, present: before.present,
             legacy_attempt, prepare_attempt, big_bytes: new TextEncoder().encode(big).length,
             unchanged: JSON.stringify(before) === JSON.stringify(after)};
-        }""", {'name': name, 'legacy': legacy_ok, 'big': big_game})
+        }""", {'name': name, 'legacy': importable_legacy, 'big': big_game})
         b.close()
         c = ctx.new_page(); c.goto(base + 'budget.html'); c.evaluate(helpers)
         out['intent_seed'] = c.evaluate("""async ({name, tiny}) => {
@@ -324,6 +327,12 @@ class Run:
                     self.check(f"{s['name']}:source_file_untouched_{role}",
                                sha256((self.dir / s[role]['file']).read_bytes()) == s[role]['sha256'])
         self.check('generator_errors_empty', not self.meta['errors'], '; '.join(self.meta['errors']))
+        rules = self.meta['rules']
+        expected = (['natural_00_empty'] + [f'natural_{i + 1:02d}_{r}' for i, r in enumerate(rules)]
+                    + ['natural_full_steady'] + [f'natural_steady_{i:02d}' for i in (1, 2, 3)] + STRESS_NAMES)
+        got = [s['name'] for s in self.meta['samples']]
+        self.check('sample_set_complete', len(rules) >= 15 and got == expected,
+                   f'{len(rules)} rules, {len(got)}/{len(expected)} samples')
         failed = [c for c in self.checks if c['status'] == 'FAIL']
         self.results['summary'] = {'checks': len(self.checks), 'failed': len(failed),
                                    'failed_ids': [c['id'] for c in failed]}

@@ -157,6 +157,18 @@ func _natural_progression() -> void:
 	store.set_tutorial_completed(true)
 	_record("natural_full_steady", "natural", store.SAVE_PATH, store.BACKUP_PATH,
 		"full album, then set_yard_progress/relationship/fish/tutorial saves (primary and backup both full)", Array(collected))
+	# Any later yard save rotates the k-photo primary into the backup, so both
+	# copies carry k photos. Separate pass so the progression above is unchanged.
+	for path: String in [store.SAVE_PATH, store.BACKUP_PATH, store.TEMP_PATH]:
+		if FileAccess.file_exists(path): DirAccess.remove_absolute(ProjectSettings.globalize_path(path))
+	store._data = store._default_data()
+	collected = PackedStringArray()
+	for rule_id: String in _rule_ids.slice(0, 3):
+		collected.append(rule_id)
+		if not store.set_album(collected, {rule_id: _moments[rule_id]}): _fail("steady set_album failed at %s" % rule_id)
+		if not store.set_yard_progress(collected.size() + 1, 12.5, 0, 0, -1): _fail("steady set_yard_progress failed")
+		_record("natural_steady_%02d" % collected.size(), "natural", store.SAVE_PATH, store.BACKUP_PATH,
+			"set_album(first %d rules) then set_yard_progress: primary and backup both hold %d photos" % [collected.size(), collected.size()], Array(collected))
 
 
 func _stress_samples() -> void:
@@ -272,6 +284,8 @@ func _fail(message: String) -> void:
 
 
 func _finish() -> void:
+	if _rule_ids.is_empty() or _rule_ids != Array(ExpressionCatalog.all_ids()):
+		_fail("incomplete rule capture: %s" % [_rule_ids])
 	if not _out.is_empty() and DirAccess.dir_exists_absolute(_out):
 		var file := FileAccess.open(_out + "/samples.json", FileAccess.WRITE)
 		file.store_string(JSON.stringify({"godot": Engine.get_version_info().string, "rules": _rule_ids,
