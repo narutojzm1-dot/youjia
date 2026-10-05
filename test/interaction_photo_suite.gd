@@ -177,7 +177,7 @@ func run():
   world.debug_place_player(Vector2(520, 485))
   world._interact_with_target("pet:" + eligible)
   check(animal.facing == -1.0, "pet faces the nearby player: " + eligible)
-  check(animal._posture_id == ("glance" if eligible == "cow" else "idle"), "pet avoids mismatched tail/shake sizes: " + eligible)
+  check(animal._posture_id == {"cow":"glance", "sheep_b":"attend", "horse":"idle"}[eligible] and (eligible != "sheep_b" or str(animal._sprite.texture.resource_path).ends_with("/sheep_dull_glance_v3.png")), "pet uses approved cel instead of mismatched tail/shake: " + eligible)
   check(animal._ack_left > 0.0, "a successful pet acknowledges the selected " + eligible)
   check(overlay.pet_feedback_snapshot().is_empty(), "pet uses posture without a default heart: " + eligible)
   animal.tick(0.5, Vector2(1280, 720))

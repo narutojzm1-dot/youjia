@@ -1,0 +1,11 @@
+# Runtime tree: 098e611233e20f8a5eccb47afc43a6341f09dedb
+# All commands executed in /workspace/youjia-fish-wording
+XDG_DATA_HOME=/workspace/sheep-attention-evidence/state TMPDIR=/workspace /tmp/youjia-h2-bridge-bin/Godot_v4.7.2-stable_linux.x86_64 --headless --path . --editor --import --quit
+XDG_DATA_HOME=/workspace/sheep-attention-evidence/state TMPDIR=/workspace /tmp/youjia-h2-bridge-bin/Godot_v4.7.2-stable_linux.x86_64 --headless --path . --script test/sheep_attention_suite.gd
+GODOT=/tmp/youjia-h2-bridge-bin/Godot_v4.7.2-stable_linux.x86_64 TMPDIR=/workspace bash tools/verify_daily_life.sh
+XDG_DATA_HOME=/tmp/262-export-state/data TMPDIR=/workspace /tmp/youjia-h2-bridge-bin/Godot_v4.7.2-stable_linux.x86_64 --headless --path . --export-release Web /workspace/sheep-attention-export/index.html
+# Formal Godot export uses repository HTML shell; copy unchanged bridge modules alongside.
+mkdir -p /workspace/sheep-attention-export/web
+cp -r web/save /workspace/sheep-attention-export/web/
+sha256sum /workspace/sheep-attention-export/index.pck
+python -m http.server 8196 --bind 127.0.0.1 --directory /workspace/sheep-attention-export
