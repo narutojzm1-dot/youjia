@@ -25,6 +25,14 @@ Agent-ID: GAME-PRODUCER。2026-10-05 从用户指定的[原制作会话](https:/
 
 13 张 PNG 均逐字节复制网页提供的原图，未缩放、裁切、重绘或重新压缩。逐图尺寸、字节数、SHA256、原网页图片标题及状态见 [manifest.json](manifest.json)。总图为 1536×1024；场景为 1672×941。可以用任意 PNG 解码器打开、按清单核 hash。
 
+用户随后直接提供三个总图分享链接。本地分别重新下载，SHA256 与本包对应原件完全一致：
+
+| 独立来源 | 对应文件 | SHA256 |
+| --- | --- | --- |
+| [小院布局修订版](https://chatgpt.com/s/m_6ac35f8a671081918a862db4b8ea72c8) | archive/world_b_yard_revision.png | `d4f70f38e73595b942397251de6323b6b6623e3fab43d29fffa5235aeefc190a` |
+| [扩大留白总图](https://chatgpt.com/s/m_6ac35f979878819193f4ea5908fea358) | world_master_whitespace.png | `6ce53fd01a9d09d8cc9ada1d668e8c8d351b1d3d310efdd60ede4055cb00f08c` |
+| [七页标注图](https://chatgpt.com/s/m_6ac35fa209488191a482b62f86330e78) | world_seven_pages.png | `f23fb223b30d2414f4066f25223cdf8c53856003a337e8761511156e42ef5dee` |
+
 `archive/` 保存 A/B 初稿、小院布局修订版及两张旧远眺。`archive/07_outlook_wrong_orientation.png` 已被用户指出左右错误，不可用于接入；初始远眺也已被后稿替代。历史稿仅用于溯源，不能优先于空间母版与用户明确纠错。
 
 来源为此前制作人使用 ChatGPT 图像生成所得，本次只恢复并归档。原始生成提示词、工具版本与云端本地提交对象未取得，不编造这些资料，也不声称恢复了云端整个工作目录。云端曾报告的提交 `b59d1757f43bb55a8674ee1db7518504138bc96c` 在本次 GitHub API 查询中未找到；本包是新的恢复提交，不能冒充该旧提交。签名下载 URL 不写入仓库。
