@@ -1289,3 +1289,14 @@ Leader接收GROK原作者的daily/正式需求登记并补后置审查发现的l
 ### 2026-10-06 公共假期启动只受理一次（#399，候选）
 
 一次实际touch的诊断候选记录了两个标题pressed与两次_start_holiday，第二次已在game并等待flush；普通路面最终仍近郊，未冒称完整正式版弹回因果。采用标题来源约束＋跨await启动锁，不用时间防抖、重置存档或改探索消费来掩盖它。确认重开继续走原入口，失败释放可重试，音频unlock仍在按压栈。Leader保底范围[已认领](https://github.com/narutojzm1-dot/youjia/issues/399#issuecomment-5999958180)，Assistant382与Cloud427方法不触碰。[证据及剩余门禁](playtests/2026-10-06-holiday-start-once/README.md)；未合入发布，不扩大父缺陷验收。
+
+
+### 2026-10-06 PR432公共启动门禁已发布，空篮触摸/键盘有限验收
+
+432最终0c3b3e079ac98f082670e10f73b83b246f86e8b6独立终审后合96f090a63e0997244924a7463bd0e52a025b57b1；Actions37353041717/Pages37353907443成功，实际公开PCK27,085,436B/SHA256 8b5c85763a480a9f7a6e40196ccd0a5b04b645be2a79391c0c1b63eca04c6aa0及十模块同源。两fresh正式普通touch/近郊键盘空篮路径正常返回，路面等待不再出现原失败现象；[原图/输入/来源证据](playtests/2026-10-06-holiday432-public/README.md)。父#399保持开放，不冒携物/真机/全DB/听验；#400右偏仍可见。启动方法交付释放，Assistant382及Cloud427边界不变，PR431相册不在本片。重大稳定性邮件已由Leader去重后2026-10-05T18:18:12Z发送to:me，Gmail id1a10d49a3375f426，[146回执](https://github.com/narutojzm1-dot/youjia/issues/146#issuecomment-6000443044)；非日节点重复。
+
+
+432邮件之后追加同96f一次自然携物有限验收：松果1圆石2，3件2种；touch行走/门与E/T混合输入，不冒全touch采集。真实返院和关页新页原图保留；无库存UI，持物保全单列只读current封套完全相同（gen12/sessionnull/serial1）技术证据，中间gen8不是最终状态。见[原件](playtests/2026-10-06-holiday432-public/carry/README.md)。399未整体验收，427故障矩阵不覆盖，历史稳定性邮件当时携物仍在途，本次不重发。
+
+
+432正式档案最终整合main c6e5c9b8b1764f8c41eb492b56b4d11da7f1386b：431经433已独审合入，公开CI在途/公开体验未验，不以历史“431在途”描述冒当前，亦不替其正式发布档案。427 c6c1ba6675a59c17988cbf7d64af9d4363a51b35兼容复查在途，[5999935850](https://github.com/narutojzm1-dot/youjia/pull/427#issuecomment-5999935850)的INVALID回退缺口尚未修复；修正当期共享行旧“未开工”，历史时间快照保留。本档案对新main仅docs差异，432/carry原件字节保持。
