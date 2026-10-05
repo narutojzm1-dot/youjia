@@ -6,7 +6,7 @@ class Handler(http.server.SimpleHTTPRequestHandler):
  def log_message(self,*a):pass
 server=http.server.ThreadingHTTPServer(('127.0.0.1',0),functools.partial(Handler,directory='/tmp/codec-web'))
 threading.Thread(target=server.serve_forever,daemon=True).start()
-log=Path('/tmp/review262-3a-viewport.log').read_text()
+log=Path(__file__).with_name('viewport-coordinates.log').read_text()
 results=[]
 try:
  with sync_playwright() as p:
