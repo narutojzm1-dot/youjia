@@ -4,7 +4,7 @@ Owner CODEX-LEAD。2026-10-05 实际连续执行；候选PR336，尚未公开发
 
 ## 实际覆盖
 
-- Godot4.7.2完整daily最终退出0（`daily.log`）：原有验收保留，新增异步测试等待实际flush，各独立suite用独立profile。修复真实“返回首页/重新开始未保存半日进度”；原坏主好备恢复后可继续保存24检查保留。对应代码tree与PR336修订4a267129一致，main后续334/340资源保留实现也已整合；新增native故障修订另列结果。
+- Godot4.7.2完整daily最终退出0（`daily.log`）：原有验收保留，新增异步测试等待实际flush，各独立suite用独立profile。修复真实“返回首页/重新开始未保存半日进度”；原坏主好备恢复后可继续保存24检查保留。对应代码tree与PR336修订c2fe7bf9一致，main后续334/340资源保留实现也已整合；新增native故障修订另列结果。
 - 导出与Web：localhost8140 的export4，真实Chromium鼠标/触屏浏览器环境；不是实体手机。主流程未注入世界/相册状态。脚本里的绝对路径是当次执行环境，复跑需改成自己的URL/输出目录，依赖Playwright和Chromium。
 - `natural/`：真实走进院子、羊交互、生成照片、翻册、暂停→回门口→确认，回标题再进院，实际关闭页面并在同一browser context新建页面；照片和题词严格一致。只存在新Host库，没有新建旧/userfs写者。截图已由执行QA和Leader查看。
 - `migration/`：用真实旧IDBFS v21 FILE_DATA构造受控历史来源，包含特殊空白、未知字段与超安全整数的原文。正常提交/重载不改原始seal；独立旧页面实际transaction改变旧主档，新页面发现分歧，真实下载包含current/初始seal/当次旧源原bytes，继续不覆盖旧库。坏JSON主档+好备份启动；未来version999明确停止，不生成空current。这些是受控来源，不冒称真实用户旧档抽样。
