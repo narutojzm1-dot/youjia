@@ -1,0 +1,30 @@
+import functools,http.server,threading,json,time,io
+from pathlib import Path
+from PIL import Image
+from playwright.sync_api import sync_playwright
+out=Path('/workspace/round13-artifacts/natural');out.mkdir(exist_ok=True)
+BOX=(1080,660,1250,692)
+def mask(im):return [p<120 for p in im.convert('L').crop(BOX).getdata()]
+tpl={k:mask(Image.open('/tmp/fishing-hud-evidence/1280-720-'+str(i)+'.png')) for i,k in enumerate(['wait','reel','toss'])}
+def label(im):
+ m=mask(im); scores={k:sum(a and b for a,b in zip(m,t))/max(1,sum(a or b for a,b in zip(m,t))) for k,t in tpl.items()};k=max(scores,key=scores.get);return k if scores[k]>.65 else 'other'
+class H(http.server.SimpleHTTPRequestHandler):
+ def log_message(self,*a):pass
+srv=http.server.ThreadingHTTPServer(('127.0.0.1',0),functools.partial(H,directory='/tmp/fishing-hud-production-web'));threading.Thread(target=srv.serve_forever,daemon=True).start()
+log=[];errors=[]
+with sync_playwright() as p:
+ b=p.chromium.launch(executable_path='/usr/bin/chromium',headless=True,args=['--no-sandbox','--use-gl=angle','--use-angle=swiftshader','--enable-webgl'])
+ pg=b.new_page(viewport={'width':1280,'height':720});pg.on('console',lambda m:errors.append(m.text) if m.type=='error' else None);pg.on('pageerror',lambda e:errors.append(str(e)))
+ pg.add_init_script("window.first=false;window.addEventListener('youjia:first-frame',()=>window.first=true)")
+ pg.goto(f'http://127.0.0.1:{srv.server_port}/index.html');pg.wait_for_function('window.first',timeout=120000);pg.mouse.click(639,369);pg.wait_for_timeout(1500);pg.mouse.click(750,540)
+ start=time.time();caught=0;last='';recast=False
+ while time.time()-start<100 and caught<2:
+  pg.wait_for_timeout(500);im=Image.open(io.BytesIO(pg.screenshot()));l=label(im)
+  if l!=last:
+   im.save(out/f'{len(log):02}-{l}.png');log.append({'seconds':round(time.time()-start,1),'label':l});print(log[-1],flush=True);last=l
+  if l=='reel':pg.mouse.click(1165,677);caught+=1;pg.wait_for_timeout(600)
+  if caught==1 and not recast:
+   im=Image.open(io.BytesIO(pg.screenshot()));im.save(out/'first-catch.png');pg.mouse.click(750,540);recast=True;log.append({'second_cast':True})
+  elif l=='other' and time.time()-start>30 and caught==0:pg.mouse.click(750,540)
+ pg.wait_for_timeout(500);pg.screenshot(path=str(out/'final.png'));b.close()
+srv.shutdown();r={'caught_via_button':caught,'recast':recast,'events':log,'errors':errors,'scope':'natural canvas only, image-template labels guide clicks; no game state injection'};(out/'result.json').write_text(json.dumps(r,indent=2));print(r);assert caught==2 and not errors
