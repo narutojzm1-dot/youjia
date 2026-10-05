@@ -736,16 +736,19 @@ func _scroll_and_director() -> void:
 	director.idle_tick(Director.RETRY_SECONDS + 1.0)
 	store.pump()
 	check(notices.size() == quiet + 1 and notices[-1].begins_with("notice.exploration.kept."), "an idle retry that lands says the find is kept")
-	# 点院门走回去：带着东西也走同一条回院与保存路
+	# 点院门走回去：带满 3 件也走同一条回院与保存路
 	director.try_begin(CLOCK, "sunny", value)
 	scroll = director.scroll
-	scroll.place_at("brook")
-	scroll.observe()
-	var tapped: String = scroll.pick_choice().find_id
-	scroll.pick()
-	scroll.end_observe()
+	var tapped: Array[String] = []
+	for stop_id: String in ["brook", "shade", "slope"]:
+		scroll.place_at(stop_id)
+		scroll.observe()
+		tapped.append(scroll.pick_choice().find_id)
+		scroll.pick()
+		scroll.end_observe()
 	store.pump()
-	var keep_tapped := int(store.get_keepsakes().get(tapped, 0))
+	check(scroll.carried().size() == 3, "three finds are carried before tapping the gate")
+	var keep_before_tap: Dictionary = store.get_keepsakes().duplicate()
 	var returns := keys.size()
 	scroll.press_at(scroll.art_to_screen(L.point(L.HOME_ARM, L.arm_length(L.HOME_ARM)) + Vector2(0, -40)))
 	var steps := 0
@@ -755,7 +758,10 @@ func _scroll_and_director() -> void:
 	await process_frame
 	store.pump()
 	check(keys.size() == returns + 1 and not director.is_exploring(), "tapping the gate walks there and goes home once")
-	check(notices[-1] == "notice.exploration.kept.%s" % tapped.get_slice(".", 2) and int(store.get_keepsakes().get(tapped, 0)) == keep_tapped + 1, "a find carried home by tapping the gate is kept once")
+	var grown := true
+	for find_id: String in tapped:
+		grown = grown and int(store.get_keepsakes().get(find_id, 0)) == int(keep_before_tap.get(find_id, 0)) + tapped.count(find_id)
+	check(notices[-1] == "notice.exploration.kept_many" and grown, "three finds carried home by tapping the gate are each kept once")
 	director.free()
 	world.free()
 
