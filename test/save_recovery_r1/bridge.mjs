@@ -1,3 +1,4 @@
+import {HostLifecycle} from './lifecycle.mjs';
 import {budgetProfile, decodeHeadSnapshot} from './budgets.mjs';
 // Isolated Godot test adapter; never installed in the production game.
 import {openStore, envelope, newId} from './store.mjs';
@@ -6,6 +7,11 @@ import {decodeSourceSnapshot} from './source_decode.mjs';
 const page_id = newId(), log = [], candidates = new Map();
 const barriers = ['intent_prepared_complete', 'candidate_committed_before_receipt'];
 const injections = ['abort_intent','abort_commit','drop_receipt','wrong_receipt_identity','duplicate_receipt','delay_receipt'];
+let lifecycle = null;
+export function configureRuntimeReady(promise) {
+ if (name || lifecycle) throw Error('runtime lifecycle already configured');
+ lifecycle = new HostLifecycle(promise);
+}
 let budget = budgetProfile();
 let store, name, recovery = false, armed = '', paused = null, fault = {}, sequence = 0;
 let request = null, preparing = false;
@@ -35,6 +41,7 @@ export const bridge = {
   if (name) throw Error('already opened');
   if (!/^youjia-recovery-test-[a-zA-Z0-9-]{1,100}$/.test(testName)) throw Error('test namespace required');
   name = testName; budget = selectedBudget;
+  if (lifecycle) await lifecycle.open(name);
   if (!navigator.locks) return opened({verdict:'no_web_locks'});
   store = await openStore(name, {
    event:e => event(e.type,e),
@@ -48,6 +55,7 @@ export const bridge = {
   return opened(await store.recover());
  },
  async initialize(payload) {
+  if (lifecycle) lifecycle.assertReady();
   if (!store) throw Error('store unavailable');
   await store.initialize(payload);
   return opened(await store.recover());
@@ -57,12 +65,14 @@ export const bridge = {
   // Candidate bridge only: caller must quiesce legacy writers before capture.
   // Validate/freeze both raw sources before the first await. R1's existing
   // initialize lock+transaction refuses any occupied/corrupt/pending target.
+  if (lifecycle) lifecycle.assertReady();
   if (!store || recovery?.verdict !== 'empty') throw Error('legacy import requires empty recovery');
   const payload=prepareLegacyV5(decodeSourceSnapshot(snapshot, budget), budget);
   await store.initialize(payload);
   return opened(await store.recover());
  },
  async prepare(payload, parent_token) {
+  if (lifecycle) lifecycle.assertReady();
   if (!store || !trusted(recovery)) throw Error('no trusted current');
   // One Godot write at a time. An acknowledged request may be superseded.
   if (preparing || [...candidates.values()].some(e => !e.done)) throw Error('write pending');
@@ -77,6 +87,7 @@ export const bridge = {
   } finally { preparing = false; }
  },
  async submit(id, write_id) {
+  if (lifecycle) lifecycle.assertReady();
   writeIdentity(write_id);
   const e = entry(id);
   if (e.started) throw Error('request already submitted');
@@ -99,6 +110,7 @@ export const bridge = {
   return injection.duplicate_receipt ? {__duplicate_test_receipt:value} : value;
  },
  async resolve(id, write_id) {
+  if (lifecycle) lifecycle.assertReady();
   writeIdentity(write_id); const e = entry(id);
   if (!e.started || e.write_id !== write_id) throw Error('resolution identity mismatch');
   // Do not claim parent/termination while an earlier write might still complete.
@@ -114,6 +126,7 @@ export const bridge = {
   return receipt(e,write_id,r,!r.present.intent);
  },
  async acknowledge(id) {
+  if (lifecycle) lifecycle.assertReady();
   const e = entry(id);
   if (!e.started) throw Error('request not submitted');
   request = id;
@@ -139,6 +152,7 @@ window.YoujiaRecoveryProbe = {
  async cleanup() {
   if (!name || !store || paused) throw Error('cleanup unavailable');
   store.close(); store=null;
+  if (lifecycle) await lifecycle.close();
   await new Promise((resolve,reject)=>{const r=indexedDB.deleteDatabase(name);r.onsuccess=resolve;r.onerror=()=>reject(r.error);r.onblocked=()=>reject(Error('cleanup blocked: close participating pages'));});
  },
 };

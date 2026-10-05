@@ -1,0 +1,25 @@
+{
+  "status": "PASS",
+  "checks": [
+    "seed file actually present in IndexedDB before reload",
+    "Godot capture import and durable write completes",
+    "capture after engine.startGame completed",
+    "raw legacy numeric lexeme preserved",
+    "verified receipt consumed before acknowledge",
+    "second page denied before source import/write",
+    "page close releases writer; new page recovers durable payload",
+    "runtime failure before open is observed, blocked and propagated without unhandled rejection",
+    "candidate_and_observed rejected without acknowledgement",
+    "candidate_and_observed real durable evidence retained",
+    "write_id rejected without acknowledgement",
+    "write_id real durable evidence retained",
+    "schema rejected without acknowledgement",
+    "schema real durable evidence retained",
+    "termination_type rejected without acknowledgement",
+    "termination_type real durable evidence retained",
+    "no console or page errors"
+  ],
+  "browser": "151.0.7922.173",
+  "errors": [],
+  "scope": "actual Godot Web userfs reload -> capture -> real R1 IndexedDB -> durable receipt; no production SaveStore switch"
+}

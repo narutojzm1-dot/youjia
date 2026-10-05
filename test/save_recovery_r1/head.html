@@ -1,7 +1,13 @@
 <script>
 // Install synchronously: Godot may start before the module download finishes.
 (() => {
- const ready = import('./bridge.mjs');
+ // Observe now, before the module fetch. Keep the ORIGINAL rejecting promise
+ // so delayed configureRuntimeReady/open still receives the engine failure.
+ if (window.YoujiaSaveRuntimeReady) window.YoujiaSaveRuntimeReady.catch(() => {});
+ const ready = import('./bridge.mjs').then(m => {
+  if (window.YoujiaSaveRuntimeReady) m.configureRuntimeReady(window.YoujiaSaveRuntimeReady);
+  return m;
+ });
  window.YoujiaRecoveryHostBridge = Object.fromEntries(
   ['open','initialize','initializeLegacy','prepare','submit','resolve','acknowledge'].map(name => [name, (...args) => {
    const callback = args.pop();
