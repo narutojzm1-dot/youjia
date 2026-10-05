@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "/tmp/soft444-candidate-browser.py", line 77, in <module>
+    open_view(1280,720,'desktop')
+  File "/tmp/soft444-candidate-browser.py", line 70, in open_view
+    assert pg.locator('html').get_attribute('data-build')=='candidate-soft444-14a85a5'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

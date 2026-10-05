@@ -2057,18 +2057,36 @@ func _label(size_px: int, color: Color) -> Label:
 	return result
 
 
+## 暖纸主按钮（标题、暂停、确认、相册、存档重试共用）。原来只设了普通/悬停字色，
+## 键盘焦点和按下落回 Godot 默认近白字（对 CREAM 约 1.1:1），点过「音乐开着 · 关掉」等
+## 留在原页的按钮后鼠标移开，字就几乎看不见；焦点框是盖住底色的 3px 淡紫（约 1.8:1）。
+## 现在焦点/按下都用深墨字（≥4.5:1），焦点改为不填底、外扩 2px 的 TITLE_ACCENT 描边
+## （≥3:1），原有底色与杏色边保持可见（REQ-20261006-036）。
 func _soft_button() -> Button:
 	var result := Button.new()
 	result.custom_minimum_size = Vector2(260, 44)
 	result.focus_mode = Control.FOCUS_ALL
 	result.add_theme_font_size_override("font_size", 16)
 	result.add_theme_color_override("font_color", INK)
-	result.add_theme_color_override("font_hover_color", Color("3d2d23"))
+	result.add_theme_color_override("font_hover_color", TEXT_LINK_HOVER)
+	result.add_theme_color_override("font_focus_color", INK)
+	result.add_theme_color_override("font_pressed_color", INK)
+	result.add_theme_color_override("font_hover_pressed_color", TEXT_LINK_HOVER)
 	result.add_theme_stylebox_override("normal", _flat(CREAM, APRICOT))
 	result.add_theme_stylebox_override("hover", _flat(Color("ffe7c8"), SAGE))
 	result.add_theme_stylebox_override("pressed", _flat(Color("f3d3ae"), INK))
-	result.add_theme_stylebox_override("focus", _flat(CREAM, LAVENDER, 3))
+	result.add_theme_stylebox_override("focus", _soft_focus_ring())
 	return result
+
+
+func _soft_focus_ring() -> StyleBoxFlat:
+	var ring := StyleBoxFlat.new()
+	ring.draw_center = false
+	ring.set_border_width_all(2)
+	ring.border_color = TITLE_ACCENT
+	ring.set_corner_radius_all(18)
+	ring.set_expand_margin_all(2.0)
+	return ring
 
 
 func _chip_button() -> Button:

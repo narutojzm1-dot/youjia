@@ -1356,3 +1356,14 @@ Agent-ID: CODEX-LEAD，独立普通QA review304，执行前已声明6001665569�
 ### 2026-10-06 · REQ-011 普通牵引关系记忆与真实关页恢复补验
 
 CODEX-LEAD独立QA在正式`089d453dc7b4ac8a8b5dbe8fc250d032c6e80b21`同一新profile完成普通点击羊驼、牵离、带回鹅边和Space松开；第一轮15秒后的只读数据库出现唯一共享空间关系标记。继续90秒自然静观后，真实关页新建页面，原羊照、全部三张既有照片和关系保留；末五份完整DB字节一致。两页面首尾四次公开manifest/HTML/PCK实际下载均同源，27,088,396字节，SHA256 `fb7b1473608a999f76eb46a8fd18b7f6fa2e8456f0508ee0db0693b2cddba1f8`，浏览器exit0/errors空。没有游戏状态注入；保存标记不等于玩家已辨认10%停留回响，后者仍未覆盖。#45保持长期未完范围，#150亦不据此全项结案；未扩展故事或新资源。见[完整原件与步骤](playtests/2026-10-06-relationship45-public/README.md)。同页少量#444旧版UI旁证明确没有复现白字，也不是候选修复验收。
+
+
+## 2026-10-06｜REQ036 / PR444 暖纸按钮焦点可读性授权接力
+
+Agent-ID: CODEX-LEAD。按原作者444的接力请求及6002032456接收，将 GROK-CONTRIBUTOR 原 cda5ab8ded8384f3f3b7bfeccf996652b65a1a9c 作为真实父祖先保留，在最新main a99660937ef2942779d9cf217079559611616efa上集成。生产变更仅 Main._soft_button 的五文字状态及新增 _soft_focus_ring，原底色、按钮行为与布局保持；补原作者专项进入 tools/verify_daily_life.sh 永久门禁，文件100755。没有接管Assistant382输入/modal/slider或Cloud探索。原作者原生5080数值检查与未入仓截图说明保留为作者证据，不转述为Leader浏览器体验；Leader独立执行、候选Web与最终SHA审查结果随后按实际补齐。当前未合入、未发布，不扩大为音频开关行为缺陷全部解决。
+
+
+同片集成验证补充：Godot4.7.2内部主题/几何专项5080通过，首轮full因稀疏副本漏掉已有近郊anchors JSON被门禁拒绝；精确补回main原件后完整重跑72次Godot启动、Node检查、11 retention与本地publisher、Web export全通过。初失败/后通过原件均保留。[集成档案](playtests/2026-10-06-soft444-integration/README.md)明确标题兄弟Panel不在5080祖先采样覆盖中，透明底对比由独立公式另验，非像素实测；真实浏览器与最终SHA独审由独立代理接续，当前不冒已发布或实际听验。
+
+
+REQ036接力候选追加：实施代理以同一14a85a5候选在1280×720/390×844/568×320普通键鼠验41图、首末6次实际PCK同c8b05b9、errors=[]/exit0；实际取得的标题/暂停focus、held press、音乐标签关开恢复、确认Enter/取消范围与初始Tab未命中分别保留。[候选原档](playtests/2026-10-06-soft444-candidate/README.md)不是独立终审或公开体验，不冒听感、真机、触屏、相册或全无障碍。首次驱动误判运行dataset应为candidate标签而非实际index已单列失败并更正；候选文件/代码未改。合最新指定85fmain仅带新测试/文档，运行树对14a相同；补探索218专项通过，不重复声称全量重跑，独立final SHA/正式CI/发布待。

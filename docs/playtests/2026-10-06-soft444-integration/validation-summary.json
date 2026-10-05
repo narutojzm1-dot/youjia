@@ -1,0 +1,29 @@
+{
+  "sourceCommit": "14a85a532f9510306b7921b9daa23409d17799c6",
+  "sourceTree": "81b54953a004d615652c612fc1d5e4a97a4bb8cd",
+  "engine": "4.7.2.stable.official.ed1daf0bf",
+  "specialized": {
+    "exit": 0,
+    "checks": 5080
+  },
+  "daily": {
+    "exit": 0,
+    "godot_launches": 72,
+    "new_suite_checks": 5080,
+    "includes_import": true,
+    "node_shell_and_motion_tests": true
+  },
+  "retention_tests": 11,
+  "publisher_local_fixture": "PASS",
+  "web_export": {
+    "exit": 0,
+    "pck_bytes": 27088652,
+    "pck_sha256": "c8b05b9bbe0a5359d223b8686212366676c549538e3845279b4b84d4f8a92530"
+  },
+  "initial_failed_run": {
+    "exit": 1,
+    "cause": "missing tracked JSON in sparse worktree, restored exact base then full rerun"
+  },
+  "browser": "pending separate independent candidate QA",
+  "publication": "not merged / not published"
+}
