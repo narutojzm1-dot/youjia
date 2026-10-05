@@ -1,0 +1,42 @@
+[
+  {
+    "utc": "2026-10-05T14:22:34.924864+00:00",
+    "type": "log",
+    "text": "Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org"
+  },
+  {
+    "utc": "2026-10-05T14:22:35.410963+00:00",
+    "type": "log",
+    "text": "OpenGL API OpenGL ES 3.0 (WebGL 2.0 (OpenGL ES 3.0 Chromium)) - Compatibility - Using Device: WebKit - WebKit WebGL"
+  },
+  {
+    "utc": "2026-10-05T14:22:35.836380+00:00",
+    "type": "log",
+    "text": "Build configuration: Emscripten 4.0.20, single-threaded, no GDExtension support."
+  },
+  {
+    "utc": "2026-10-05T14:22:38.181206+00:00",
+    "type": "warning",
+    "text": "[.WebGL-0x84410b82e00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels"
+  },
+  {
+    "utc": "2026-10-05T14:22:38.216665+00:00",
+    "type": "warning",
+    "text": "[.WebGL-0x84410b82e00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels"
+  },
+  {
+    "utc": "2026-10-05T14:22:38.249440+00:00",
+    "type": "warning",
+    "text": "[.WebGL-0x84410b82e00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels"
+  },
+  {
+    "utc": "2026-10-05T14:22:38.300629+00:00",
+    "type": "warning",
+    "text": "[.WebGL-0x84410b82e00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels (this message will no longer repeat)"
+  },
+  {
+    "utc": "2026-10-05T14:22:39.749747+00:00",
+    "type": "info",
+    "text": "[game-loading] timings_ms {\"engineScriptReady\":351,\"downloadComplete\":7851,\"engineReady\":11290,\"firstFrame\":12970}"
+  }
+]
