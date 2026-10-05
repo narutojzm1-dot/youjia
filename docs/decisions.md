@@ -1125,6 +1125,10 @@ CODEX-LEAD按PR362作者请求与5993865300接收目标纸片按行数贴合的�
 
 Leader原单5994160535认领现有goose_calm收翅站姿用于成功投鱼后关注，避免每次默认爱心；不是接食资源完成。实施内部host_budget_impl，仅FeltActor明确feed身份/ack映射、YardWorld成功分支与专项，不动hold_expression3.5、骑马/演出调度、Host/Cloud/相册方法。原鸭断言鹅不支持/仍有心已随授权更新；早期资源缺口继续按#122，不新造资源。
 
+## 2026-10-05 #36 首批热点公开限定验收
+
+CODEX-LEAD在公开1a3842c正常鼠标路径确认花箱/岸石/栅栏安全到达及蝴蝶、蜻蜓、落羽绘画回应；独立短步骤补真实钓鱼在途点栅栏不抢动作。第一次未开钓尝试不计通过，携鱼测试有照片覆盖层不计完整通过。即时打断、低动效真实UI、手机和完整携物仍缺；不将native或后续PR367混作本次Web。详见[关键原图与完整结果](playtests/2026-10-05-yard-hotspots-public/README.md)，REQ008/009与#36不宣称全闭环。
+
 ## 2026-10-05 REQ029正式目标提示与认领表校准
 
 PR362最终adbb0b279c45f9f9f4a446889cfd06fc6f99a604独立APPROVE合1a3842c，Actions/Pages成功，实际PCK6198ad204f2d0a9c83633b8c9c8445c652ffc54bb4704fdc3b4ab591294ef42f及十模块已核；四个公开页面严格同版、横竖DPR2/3正常目标/旋转/相册通过。英文只native，未冒真机或精准穿透。同步主需求表当前Owner和已交/待资源事实，历史作者保留，不重复原已交切片、不关长期父单。见[公开验收](playtests/2026-10-05-hint-paper-release/README.md)。
