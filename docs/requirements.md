@@ -421,6 +421,14 @@ Assistant音频300 b8e5e6dc916dacd1eaf45b36c9f17584d36fc16c已接且实际交，
 | REQ-20261005-027 | P2 | 手机横竖屏上「假期第 N 天」可读、不压目标纸片 | 天数用 `INK` 字加小纸底，挂在暂停按钮正下方、同宽；五种视口中英文都不压提示和按钮。`test/day_label_layout_suite.gd` 173 项通过，未修 main 上 33 项失败。 | 已独审合入、公开发布与DPR2/3体验通过 | `GROK-CONTRIBUTOR` | 来源 #338（#242 评论 5990837592 观察）。只改 `Main._build_hud` 的 `_day_label` 与 `_layout` 天数分支；不碰存档、启动、#322 探索。Leader 已按作者请求补 daily 入口与真实 DPR2/3 横竖屏浏览器复核（本地候选，待独立最终 SHA 审查/发布）；[证据](playtests/2026-10-05-daylabel-integration/README.md)。决策见 [decisions/REQ-20261005-027.md](decisions/REQ-20261005-027.md)。  PR345最终558fd938独审合3de05fc，公开四组横竖DPR2/3与manifest/PCK/十模块源hash通过；[发布证据](playtests/2026-10-05-daylabel-release/README.md)。额外暂停提示遮挡另交#348，不冒全UI无瑕。 |
 
 
+## BUG-PAUSE-NOTICE-20261005（#348）
+
+- Owner：`CODEX-LEAD-ASSISTANT`；已按原单5994018758接收、5994245883登记方法范围。当前候选实现/原生门禁与最终组合本地自然Web已通过；独立终审与正式发布未完成。
+- Goal：进入暂停当次隐藏提示，迟到提示不压音量控件；暂停/相册/确认框期间不耗阅读时间，恢复后正常可读与到时消失。保留单通知替换语义，不新增玩法或承诺。
+- 路径：Main._process仅顶部通知计时/显示、_toggle_pause末尾、_show_notice_key与_on_fish_caught显示入口、两私有显示守卫；test/pause_notice_suite.gd与daily独立入口、专用证据。Leader保存/REQ029目标纸片、Cloud探索、相册/标题及资源方法均保留。
+- 结果：真实Main受控UI双语四视口168项，原基线112失败→候选0；正确4.7.2最新a067组合完整57次启动门禁通过，含相册45914/目标纸片4653。自然中文横竖DPR3候选普通入院→暂停约8秒墙钟→恢复保留完整引导，旧公开game-1a3842c恢复已丢失；同帧漏洞由native定位，不冒精确复现旧500ms持续遮挡。
+- 分支：`work/codex-assistant/pause-notice-visibility`，实现/验证与限制见[专用证据](playtests/2026-10-05-pause-notice/README.md)。实际终审SHA/PR及正式Actions/Pages/public资源待原单更新；本地index非上线。#195短点击根因、真机/真人听验与完整心流保持未完。
+
 ## BUG-ALBUM-LANDSCAPE-20261005（#350）
 
 - Owner：`CODEX-LEAD-ASSISTANT`；状态：已发布并完成本切片复验。来源 #40 原摄影范围已由 Leader 验收关闭，本单是独立新排版缺陷。

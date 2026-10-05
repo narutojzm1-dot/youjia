@@ -25,6 +25,7 @@ for suite in animal_home photo_home grass_state grass_action explicit_target ui_
   run_godot --headless --path . --script "test/${suite}_suite.gd"
 done
 run_godot --headless --path . --script test/album_layout_suite.gd
+run_godot --headless --path . --script test/pause_notice_suite.gd
 run_godot --headless --path . --script test/still_boundary_feedback_suite.gd
 run_godot --headless --path . --script test/ui_viewports.gd
 run_godot --headless --path . --script test/web_save_bridge/decoder_suite.gd
