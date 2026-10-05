@@ -1,0 +1,193 @@
+{
+  "runtime": "ecea67dba1afc9b99b6097970e4965fbcd99c53a",
+  "expected_pck": "2f3ef524dcd455bf2ffddc8aa064e1f6a707f3fef5fd08b8fb5254f7b33c8085",
+  "inputs": [
+    {
+      "touchscreen_tap": [
+        640,
+        368
+      ],
+      "time": 352787.462819447
+    },
+    {
+      "screenshot": "yard",
+      "time": 352793.764648544
+    },
+    {
+      "touchscreen_tap": [
+        329,
+        563
+      ],
+      "time": 352795.831418199
+    },
+    {
+      "screenshot": "touch-outside",
+      "time": 352803.628639658
+    },
+    {
+      "screenshot": "touch-no-bounce",
+      "time": 352807.240647984
+    },
+    {
+      "touchscreen_tap": [
+        706,
+        500
+      ],
+      "time": 352809.372851283
+    },
+    {
+      "screenshot": "touch-walked",
+      "time": 352813.438027767
+    },
+    {
+      "touchscreen_tap": [
+        1060,
+        390
+      ],
+      "time": 352815.974136346
+    },
+    {
+      "screenshot": "touch-return",
+      "time": 352823.021790583
+    },
+    {
+      "touchscreen_tap": [
+        329,
+        563
+      ],
+      "time": 352841.880776052
+    },
+    {
+      "hold": [
+        "ArrowLeft",
+        1700
+      ],
+      "time": 352848.728559486
+    },
+    {
+      "screenshot": "keyboard-away",
+      "time": 352851.240260855
+    },
+    {
+      "hold": [
+        "ArrowRight",
+        3300
+      ],
+      "time": 352870.56622888
+    },
+    {
+      "screenshot": "keyboard-return",
+      "time": 352875.671874032
+    },
+    {
+      "touchscreen_tap": [
+        210,
+        586
+      ],
+      "time": 352905.014093067
+    },
+    {
+      "screenshot": "second-exit",
+      "time": 352914.222055228
+    },
+    {
+      "hold": [
+        "ArrowDown",
+        700
+      ],
+      "time": 352940.120960749
+    },
+    {
+      "hold": [
+        "ArrowLeft",
+        400
+      ],
+      "time": 352940.992875498
+    },
+    {
+      "screenshot": "keyboard-exit-locate",
+      "time": 352941.80583421
+    },
+    {
+      "hold": [
+        "ArrowDown",
+        800
+      ],
+      "time": 352962.484749946
+    },
+    {
+      "hold": [
+        "ArrowLeft",
+        500
+      ],
+      "time": 352963.701526863
+    },
+    {
+      "screenshot": "keyboard-exit-ready",
+      "time": 352964.513106335
+    },
+    {
+      "hold": [
+        "ArrowDown",
+        1700
+      ],
+      "time": 353004.022942844
+    },
+    {
+      "screenshot": "keyboard-exit-choice",
+      "time": 353006.244869368
+    },
+    {
+      "screenshot": "final-observation",
+      "time": 353033.506800549
+    }
+  ],
+  "media": [],
+  "errors": [],
+  "builds": [
+    {
+      "page": "touch-keyboard",
+      "entry": "game-ecea67d"
+    }
+  ],
+  "limits": [
+    "browser media emulation, not OS settings or physical phone",
+    "listener multiplicity is not proved by screenshots",
+    "photo detector needs visual confirmation"
+  ],
+  "manifests": [
+    {
+      "page": "touch-keyboard",
+      "stage": "before",
+      "manifest": {
+        "schema": "youjia.release/v1",
+        "sourceCommit": "ecea67dba1afc9b99b6097970e4965fbcd99c53a",
+        "engine": "4.7.2.stable.official.ed1daf0bf",
+        "entry": "game-ecea67d",
+        "publishedAt": "2026-10-05T17:22:08Z",
+        "storageModules": {
+          "entry": "save-ecea67d",
+          "sha256": {
+            "bridge.mjs": "ef18687554fdc0d745c1d18d4d091e959cc78559da0d61d6a093e562ff9bbc91",
+            "budgets.mjs": "52984153977dcafd1d2682e848f1999f091d0966e17d46e902de76f5735a7018",
+            "host.mjs": "9de8dc0ef4bfc037a8ad0bff575d40c3dd4341bcc723351a412b2061bb661904",
+            "idbfs_source.mjs": "16eb57d471537f13d3e50018b56c2d416d2847f0d0249ba44433dd9ebb65f4d8",
+            "legacy_inspection.mjs": "db3a23a0221aa5d34a58a6a49aeeff930295ffe20bfcf73a7c11f0d49cffd671",
+            "legacy_seal.mjs": "9642132f5d4e7523e5966e802069af7f4bae803fae8e2e7c28ae55ee97d85610",
+            "legacy_v5.mjs": "8e7f4ad2d87aab77ac05361e4f46060476e933aa079ae94301998d08d4599621",
+            "lifecycle.mjs": "1cfaebb9a8745e2dc3e4f694ef475f250640870938f04160be1a5c9acd62935d",
+            "source_decode.mjs": "411f3bc784cb32a07f32eed5fc7d88f71b59a667cc0d68a50fe13c55bfdba18a",
+            "store.mjs": "2193b4397b8662a8ebc754dc4468e4d62964d209b4e1d0f0924a2ec81b409cbe"
+          }
+        }
+      },
+      "time": 352760.820137618
+    }
+  ],
+  "pck_checks": [
+    {
+      "page": "touch-keyboard",
+      "sha256": "2f3ef524dcd455bf2ffddc8aa064e1f6a707f3fef5fd08b8fb5254f7b33c8085"
+    }
+  ]
+}
