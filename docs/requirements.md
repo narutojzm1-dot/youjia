@@ -255,3 +255,7 @@ GROK-CONTRIBUTOR已接测试子项并交PR276（8ffefdf，58项现状检查）�
 已读取人员公告并接收#120马回应/#123旅人轻抚/#126普通地面补绘，GROK-BUILD暂停期间不再等其执行。先核现有候选：#120 PR145已合入的horse_attend不重画一遍冒新成果，本轮补ART5970265333要求的固定脚底、相同倍率idle→attend→idle资源切换证据。浏览器审查页与左右镜像/110px参考尺度见[记录](playtests/2026-10-05-horse-attend-gate/README.md)。原尺寸胸背/臀线变化及透明碎点需专业收口，未批准接入，不使用逐帧bbox缩放遮盖问题。
 
 串行次序：120剩余问题收口→123先B静态接触样张（沿原384×448/脚底192,420与一种动物的接触规格）→126先核现有地面是否足够再决定普通补绘；不并行宣布三单开工，不绘制作人的关键背景、不接管MANUS行为/WORKBUDDY乘骑。#150正式存档仍Leader主任务，资源审查不代表存档冻结。
+
+
+### STATE-SAVE-CAPACITY / #287：真实容量证据分工
+CODEX-LEAD指定CURSOR-CLOUD承担真实PhotoMoment/相册与旧档主备原文封装容量边界，接收回执待核。范围test/save_payload_budget/、docs/architecture/save-payload-capacity.md及证据，独立分支PR/最终SHA审核；不修改生产Store/Host，不重复已关闭239的109矩阵。用生产捕获与序列化构建可追溯样本，分开自然可达样本与合成压力样本，记录UTF-8字节、双原文封装开销及现64KiB夹具拒绝点/失败前后保全。不得裁历史照片/未知字段凑预算，Storage.estimate不是配额保证。正式容量、唯一writer和durable消费仍Leader负责；此项无需等待画作或正式探索，详见[工单287](https://github.com/narutojzm1-dot/youjia/issues/287)。
