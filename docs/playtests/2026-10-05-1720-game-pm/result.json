@@ -1,0 +1,42 @@
+{
+  "time": "2026-10-05T09:23:15.716Z",
+  "browser": "151.0.7922.173",
+  "source": "fresh isolated contexts, no imported/reset user storage or state injection",
+  "scope": "headless public mouse input/screenshots, not human play, audio or physical phone",
+  "runs": [
+    {
+      "name": "portrait",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "dpr": 1,
+      "build": "game-ba6d6c2",
+      "manifest": {
+        "schema": "youjia.release/v1",
+        "sourceCommit": "ba6d6c256c17939c2db4fd0f863b8ab61bc3d5dc",
+        "engine": "4.7.2.stable.official.ed1daf0bf",
+        "entry": "game-ba6d6c2",
+        "publishedAt": "2026-10-05T09:06:04Z"
+      },
+      "errors": []
+    },
+    {
+      "name": "landscape",
+      "viewport": {
+        "width": 844,
+        "height": 390
+      },
+      "dpr": 1,
+      "build": "game-ba6d6c2",
+      "manifest": {
+        "schema": "youjia.release/v1",
+        "sourceCommit": "ba6d6c256c17939c2db4fd0f863b8ab61bc3d5dc",
+        "engine": "4.7.2.stable.official.ed1daf0bf",
+        "entry": "game-ba6d6c2",
+        "publishedAt": "2026-10-05T09:06:04Z"
+      },
+      "errors": []
+    }
+  ]
+}
