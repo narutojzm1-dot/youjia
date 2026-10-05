@@ -1,0 +1,13 @@
+from PIL import Image
+from pathlib import Path
+import numpy as np,json,sys
+p=Path(sys.argv[1]);base=Image.open(p/'before-catch.png').convert('L');boxes={'house_roof':[265,90,400,200],'shed_roof':[990,270,1160,350]};r={}
+for f in sorted(p.glob('capture-*.png')):
+ im=Image.open(f).convert('L');r[f.name]={}
+ for name,(x,y,xx,yy) in boxes.items():
+  ref=np.asarray(base.crop((x,y,xx,yy)),dtype=float);scores=[]
+  for dx in range(-4,5):
+   for dy in range(-4,5):
+    a=np.asarray(im.crop((x+dx,y+dy,xx+dx,yy+dy)),dtype=float);scores.append((float(np.mean(abs(ref-a))),dx,dy))
+  e,dx,dy=min(scores);r[f.name][name]={'best_dx':dx,'best_dy':dy,'mean_abs_gray_error':round(e,3)}
+(p/'landmarks.json').write_text(json.dumps({'method':'translation-only search +/-4 px of unchanged-size background crops; no geometric resize or frame injection','boxes':boxes,'results':r},indent=2));print(r)
