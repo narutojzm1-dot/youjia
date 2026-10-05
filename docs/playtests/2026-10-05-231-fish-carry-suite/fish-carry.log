@@ -1,7 +1,7 @@
 [fish-carry] fresh reset: prev_elapsed=-1.0 -> day=1 elapsed=0.0 plant={ "state": 0, "day_planted": 0, "watered_day": -1 }
 [fish-carry] S1 no-old-fish miss: carry before= after= chance_misses=0 notices=["notice.fishing.cast", "notice.fishing.bite", "notice.fishing.bite", "notice.fishing.bite", "notice.fishing.miss", "notice.fishing.cast", "notice.fishing.wait", "notice.fishing.wait"]
 [fish-carry] fresh reset: prev_elapsed=22.5 -> day=1 elapsed=0.0 plant={ "state": 0, "day_planted": 0, "watered_day": -1 }
-[fish-carry] S2 pond tap while carrying casts=true primary_while_carrying=action.toss_fish
+[fish-carry] S2 pond tap while carrying casts=true primary_while_carrying=action.fish_waiting
 [fish-carry] S2 old-fish miss path=bite_timeout kind=small timer 20.00->13.38 (elapsed 6.62) notice=notice.fishing.miss hint=hud.hint.carrying_fish
 [fish-carry] S2 FINDING: miss notice key is identical with or without an old fish; text '跑了。没关系。' does not say the held fish remains. Semantic fix belongs to CODEX-LEAD.
 [fish-carry] fresh reset: prev_elapsed=12.9 -> day=1 elapsed=0.0 plant={ "state": 0, "day_planted": 0, "watered_day": -1 }
