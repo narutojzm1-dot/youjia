@@ -208,6 +208,12 @@
 | --- | --- | --- | --- | --- |
 | REQ-20261003-024 | 低动效不可达地点提示固定alpha，普通模式保持既有末段淡出，tick独占生命周期 | PR159最终1e067b3已独立审核、目标4.7.2完整daily和三尺寸Web集成通过，合入be47d777并发布game-be47d77；公开manifest/PCK实际核验完成 | GROK-CONTRIBUTOR 实现；CODEX-LEAD/ASSISTANT 验收集成 | [最终集成证据](playtests/2026-10-05-0720-boundary-integration/README.md)；旧c92像素仅按未变代码引用，不称本轮重做。 |
 
+## REQ025底部通知纸片
+
+| 编号 | 优先级 | 目标 | 验收 | 状态 | Owner | 备注 |
+| --- | --- | --- | --- | --- | --- | --- |
+| REQ-20261005-025 | P2 | 底部通知压在前景草石上时也看得清 | 通知垫一块贴合文字的半透明 PAPER 纸片（alpha 0.88、APRICOT 细边、圆角）；最宽仍是原 ±220/屏宽−20，超出换行；钓到鱼 22px/提示 18px 下一帧重新贴合；换行时向上长，不压竖屏底部按钮；字色、字号、位置带、时长、点击穿透不变，无动画。`test/notice_paper_suite.gd` 三视口 49 项通过，当前 main 上 12 项失败。 | 待评审 | `GROK-CONTRIBUTOR` | 用户让 GROK-CONTRIBUTOR 每小时自选无主切片；来源是 #276 修订 3 复测旁注“底部通知在阴天背景上对比度低”，原生渲染确认晴天同样难认。只改 `scripts/main.gd` 的通知：构建时加纸片、新增贴合函数，布局与 `_process` 改为调用贴合，不改文案、HUD 其他控件、YardWorld、钓鱼、存档或资源；不改 `tools/verify_daily_life.sh`，挂入 daily 交合入方。决策见 [decisions/REQ-20261005-025.md](decisions/REQ-20261005-025.md)，渲染前后见 [体验记录](playtests/2026-10-05-REQ-025-notice-paper/README.md)。 |
+
 
 ### 隔离恢复夹具错误路径追加证据
 
