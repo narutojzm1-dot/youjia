@@ -1,0 +1,189 @@
+{
+  "page_builds": [
+    {
+      "html": "game-bc213f9",
+      "source": "bc213f9bea231ac01149d9c818d3fa149de83944"
+    },
+    {
+      "html": "game-bc213f9",
+      "source": "bc213f9bea231ac01149d9c818d3fa149de83944"
+    },
+    {
+      "html": "game-bc213f9",
+      "source": "bc213f9bea231ac01149d9c818d3fa149de83944"
+    }
+  ],
+  "frames": [
+    {
+      "frame": "03-basket",
+      "generation": "5",
+      "keepsakes": {},
+      "watermark": 0,
+      "session": {
+        "carried": [
+          "formal.find.brook_stone"
+        ],
+        "catalog": "formal",
+        "current_stop": "brook",
+        "failure": null,
+        "offers": {
+          "brook": "formal.find.brook_stone",
+          "gate": "formal.find.feather"
+        },
+        "proposal": null,
+        "record_revision": 3,
+        "rng_seed": "-8602443628578710484",
+        "route_id": "formal.near_path",
+        "started_clock": {
+          "day": 1,
+          "elapsed": 32.4331666666667
+        },
+        "state": "active",
+        "taken": {
+          "brook": "formal.find.brook_stone"
+        },
+        "trip_id": "trip-1",
+        "trip_serial": 1,
+        "visited": [
+          "gate",
+          "brook"
+        ]
+      }
+    },
+    {
+      "frame": "05-return",
+      "generation": "8",
+      "keepsakes": {
+        "formal.find.brook_stone": 1
+      },
+      "watermark": 1,
+      "session": null
+    },
+    {
+      "frame": "06-reopen",
+      "generation": "8",
+      "keepsakes": {
+        "formal.find.brook_stone": 1
+      },
+      "watermark": 1,
+      "session": null
+    },
+    {
+      "frame": "09-narrow-carried",
+      "generation": "12",
+      "keepsakes": {
+        "formal.find.brook_stone": 1
+      },
+      "watermark": 1,
+      "session": {
+        "carried": [
+          "formal.find.feather"
+        ],
+        "catalog": "formal",
+        "current_stop": "brook",
+        "failure": null,
+        "offers": {
+          "brook": "formal.find.feather",
+          "gate": "formal.find.feather"
+        },
+        "proposal": null,
+        "record_revision": 3,
+        "rng_seed": "3584513817923028685",
+        "route_id": "formal.near_path",
+        "started_clock": {
+          "day": 1,
+          "elapsed": 60.8917333333337
+        },
+        "state": "active",
+        "taken": {
+          "brook": "formal.find.feather"
+        },
+        "trip_id": "trip-2",
+        "trip_serial": 2,
+        "visited": [
+          "gate",
+          "brook"
+        ]
+      }
+    },
+    {
+      "frame": "11-narrow-interrupt-before",
+      "generation": "12",
+      "keepsakes": {
+        "formal.find.brook_stone": 1
+      },
+      "watermark": 1,
+      "session": {
+        "carried": [
+          "formal.find.feather"
+        ],
+        "catalog": "formal",
+        "current_stop": "brook",
+        "failure": null,
+        "offers": {
+          "brook": "formal.find.feather",
+          "gate": "formal.find.feather"
+        },
+        "proposal": null,
+        "record_revision": 3,
+        "rng_seed": "3584513817923028685",
+        "route_id": "formal.near_path",
+        "started_clock": {
+          "day": 1,
+          "elapsed": 60.8917333333337
+        },
+        "state": "active",
+        "taken": {
+          "brook": "formal.find.feather"
+        },
+        "trip_id": "trip-2",
+        "trip_serial": 2,
+        "visited": [
+          "gate",
+          "brook"
+        ]
+      }
+    },
+    {
+      "frame": "12-narrow-interrupted-reopen",
+      "generation": "12",
+      "keepsakes": {
+        "formal.find.brook_stone": 1
+      },
+      "watermark": 1,
+      "session": {
+        "carried": [
+          "formal.find.feather"
+        ],
+        "catalog": "formal",
+        "current_stop": "brook",
+        "failure": null,
+        "offers": {
+          "brook": "formal.find.feather",
+          "gate": "formal.find.feather"
+        },
+        "proposal": null,
+        "record_revision": 3,
+        "rng_seed": "3584513817923028685",
+        "route_id": "formal.near_path",
+        "started_clock": {
+          "day": 1,
+          "elapsed": 60.8917333333337
+        },
+        "state": "active",
+        "taken": {
+          "brook": "formal.find.feather"
+        },
+        "trip_id": "trip-2",
+        "trip_serial": 2,
+        "visited": [
+          "gate",
+          "brook"
+        ]
+      }
+    }
+  ],
+  "pageerrors": [],
+  "driver_exit": 0,
+  "narrow_reopen_status": "invalid probe: default context viewport1280 caused click miss, remained title; not acceptance"
+}

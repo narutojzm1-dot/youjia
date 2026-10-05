@@ -1,0 +1,1 @@
+[{"name": "01-look", "actions": [["click", 195, 657], ["wait", 5000], ["hold", "ArrowLeft", 5500], ["key", "e"], ["wait", 1000]]}, {"name": "02-carried", "actions": [["click", 101, 806], ["wait", 5000]]}, {"name": "03-reopened", "actions": [["reopen"], ["click", 195, 422], ["wait", 12000]], "exit": true}]

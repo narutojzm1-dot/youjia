@@ -1,0 +1,54 @@
+[
+  {
+    "case": "844-390-dpr2",
+    "sourceCommit": "7c1608c7e826f458eaae979d48727b0e6e2bdf58",
+    "entry": "game-7c1608c",
+    "html_build": "game-7c1608c",
+    "canvas": {
+      "dpr": 2,
+      "width": 1688,
+      "height": 780
+    },
+    "errors": [],
+    "action": "real mouse click center title entry; no game state injection"
+  },
+  {
+    "case": "390-844-dpr2",
+    "sourceCommit": "7c1608c7e826f458eaae979d48727b0e6e2bdf58",
+    "entry": "game-7c1608c",
+    "html_build": "game-7c1608c",
+    "canvas": {
+      "dpr": 2,
+      "width": 780,
+      "height": 1688
+    },
+    "errors": [],
+    "action": "real mouse click center title entry; no game state injection"
+  },
+  {
+    "case": "844-390-dpr3",
+    "sourceCommit": "7c1608c7e826f458eaae979d48727b0e6e2bdf58",
+    "entry": "game-7c1608c",
+    "html_build": "game-7c1608c",
+    "canvas": {
+      "dpr": 3,
+      "width": 2532,
+      "height": 1170
+    },
+    "errors": [],
+    "action": "real mouse click center title entry; no game state injection"
+  },
+  {
+    "case": "390-844-dpr3",
+    "sourceCommit": "7c1608c7e826f458eaae979d48727b0e6e2bdf58",
+    "entry": "game-7c1608c",
+    "html_build": "game-7c1608c",
+    "canvas": {
+      "dpr": 3,
+      "width": 1170,
+      "height": 2532
+    },
+    "errors": [],
+    "action": "real mouse click center title entry; no game state injection"
+  }
+]

@@ -1,0 +1,165 @@
+{
+  "frames": [
+    {
+      "frame": "05-basket",
+      "generation": "5",
+      "keepsakes": {},
+      "watermark": 0,
+      "session": {
+        "carried": [
+          "formal.find.brook_stone"
+        ],
+        "catalog": "formal",
+        "current_stop": "brook",
+        "failure": null,
+        "offers": {
+          "brook": "formal.find.brook_stone",
+          "gate": ""
+        },
+        "proposal": null,
+        "record_revision": 3,
+        "rng_seed": "-4257003383237353313",
+        "route_id": "formal.near_path",
+        "started_clock": {
+          "day": 1,
+          "elapsed": 17.7332333333333
+        },
+        "state": "active",
+        "taken": {
+          "brook": "formal.find.brook_stone"
+        },
+        "trip_id": "trip-1",
+        "trip_serial": 1,
+        "visited": [
+          "gate",
+          "brook"
+        ]
+      }
+    },
+    {
+      "frame": "06-return",
+      "generation": "8",
+      "keepsakes": {
+        "formal.find.brook_stone": 1
+      },
+      "watermark": 1,
+      "session": null
+    },
+    {
+      "frame": "07-reopened",
+      "generation": "8",
+      "keepsakes": {
+        "formal.find.brook_stone": 1
+      },
+      "watermark": 1,
+      "session": null
+    },
+    {
+      "frame": "08-empty-return",
+      "generation": "11",
+      "keepsakes": {
+        "formal.find.brook_stone": 1
+      },
+      "watermark": 1,
+      "session": {
+        "carried": [],
+        "catalog": "formal",
+        "current_stop": "gate",
+        "failure": null,
+        "offers": {
+          "gate": "formal.find.feather"
+        },
+        "proposal": {
+          "items": [],
+          "reason": "player",
+          "revision": 1,
+          "route_id": "formal.near_path",
+          "trip_id": "trip-2"
+        },
+        "record_revision": 2,
+        "rng_seed": "2956019763135864022",
+        "route_id": "formal.near_path",
+        "started_clock": {
+          "day": 1,
+          "elapsed": 41.7147666666666
+        },
+        "state": "pending_commit",
+        "taken": {},
+        "trip_id": "trip-2",
+        "trip_serial": 2,
+        "visited": [
+          "gate"
+        ]
+      }
+    },
+    {
+      "frame": "13-mobile-carried",
+      "generation": "5",
+      "keepsakes": {},
+      "watermark": 0,
+      "session": {
+        "carried": [
+          "formal.find.brook_stone"
+        ],
+        "catalog": "formal",
+        "current_stop": "brook",
+        "failure": null,
+        "offers": {
+          "brook": "formal.find.brook_stone",
+          "gate": "formal.find.brook_stone"
+        },
+        "proposal": null,
+        "record_revision": 3,
+        "rng_seed": "2870607779319888663",
+        "route_id": "formal.near_path",
+        "started_clock": {
+          "day": 1,
+          "elapsed": 20.2759
+        },
+        "state": "active",
+        "taken": {
+          "brook": "formal.find.brook_stone"
+        },
+        "trip_id": "trip-1",
+        "trip_serial": 1,
+        "visited": [
+          "gate",
+          "brook"
+        ]
+      }
+    },
+    {
+      "frame": "14-mobile-interrupted-reopen",
+      "generation": "8",
+      "keepsakes": {
+        "formal.find.brook_stone": 1
+      },
+      "watermark": 1,
+      "session": null
+    },
+    {
+      "frame": "16-mobile-empty-back",
+      "generation": "13",
+      "keepsakes": {
+        "formal.find.brook_stone": 1
+      },
+      "watermark": 2,
+      "session": null
+    },
+    {
+      "frame": "17-mobile-final-reopen",
+      "generation": "14",
+      "keepsakes": {
+        "formal.find.brook_stone": 1
+      },
+      "watermark": 2,
+      "session": null
+    }
+  ],
+  "pageerrors": [],
+  "driver_exit": 0,
+  "first_page_build": "game-81d225c",
+  "first_page_source": "81d225c15962a32d7a48a066154859488a155aa4",
+  "reopen_build_verified": false,
+  "version_scope": "Only first page asserted. Reopened pages may cross deployment; data proves no duplicate in this observed run, not strict single-build attribution."
+}
