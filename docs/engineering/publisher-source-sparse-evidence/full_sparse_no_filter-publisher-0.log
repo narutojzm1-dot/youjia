@@ -1,0 +1,47 @@
+[publish] source commit: 2414c4146ceb
+[publish] bundle entry name: game-2414c4146ceb
+[publish] staging in /tmp/publisher130-partial-d4vld1a6/full_sparse_no_filter/tmp.EoxsNPCVzE
+[publish] injected cache-control meta into index.html
+[publish] cache-control meta tags injected; data-build=game-2414c4146ceb
+[publish] verifying HTML patches...
+[publish] HTML verification passed: executable=game-2414c4146ceb, fileSizes keys correct, script.src=game-2414c4146ceb.js
+[publish] engine version: fixture-version-only-no-engine
+[publish] switching to gh-pages branch...
+HEAD is now at 6fcb13d Pages changes after source checkout
+[publish] pruning 2 old bundle(s), retaining current and recent publications...
+[publish]   removing game-a.*
+[publish]   removing game-ff.*
+[detached HEAD 80ad6b4] Publish source history 2 (2414c4146ceb)
+ Author: Cursor Agent <cursoragent@cursor.com>
+ 25 files changed, 690 insertions(+), 7 deletions(-)
+ create mode 100644 .nojekyll
+ create mode 100644 game-2414c4146ceb.js
+ create mode 100644 game-2414c4146ceb.pck
+ create mode 100644 game-2414c4146ceb.wasm
+ delete mode 100644 game-a.js
+ delete mode 100644 game-a.pck
+ delete mode 100644 game-a.wasm
+ delete mode 100644 game-ff.js
+ delete mode 100644 game-ff.pck
+ delete mode 100644 game-ff.wasm
+ create mode 100644 game-release.json
+ create mode 100644 index.js
+ create mode 100644 index.pck
+ create mode 100644 index.wasm
+ create mode 100644 save-2414c4146ceb/bridge.mjs
+ create mode 100644 save-2414c4146ceb/budgets.mjs
+ create mode 100644 save-2414c4146ceb/host.mjs
+ create mode 100644 save-2414c4146ceb/idbfs_source.mjs
+ create mode 100644 save-2414c4146ceb/legacy_inspection.mjs
+ create mode 100644 save-2414c4146ceb/legacy_seal.mjs
+ create mode 100644 save-2414c4146ceb/legacy_v5.mjs
+ create mode 100644 save-2414c4146ceb/lifecycle.mjs
+ create mode 100644 save-2414c4146ceb/source_decode.mjs
+ create mode 100644 save-2414c4146ceb/store.mjs
+[publish] ✓ done.
+[publish]   entry:  game-2414c4146ceb
+[publish]   pages:  https://narutojzm1-dot.github.io/youjia/
+[publish]   verify: document.documentElement.dataset.build in browser console should equal 'game-2414c4146ceb'
+Preparing worktree (detached HEAD 6fcb13d)
+To file:///tmp/publisher130-partial-d4vld1a6/full_sparse_no_filter/remote.git
+   6fcb13d..80ad6b4  HEAD -> gh-pages

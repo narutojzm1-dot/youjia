@@ -1,0 +1,12 @@
+{
+  "initial_completed_modes": [
+    "full_baseline",
+    "full_partial_sparse",
+    "full_sparse_no_filter",
+    "full_partial_no_sparse"
+  ],
+  "failure": "fixture incorrectly required all historical document blob IDs to appear in rev-list --all --missing for a depth1 clone; unreachable older blobs are not enumerated",
+  "correction": "limit complete-history missing-blob assertions to full-history modes; keep depth1 as a retention/shallow negative control",
+  "production_failure": false,
+  "engine_executed": false
+}

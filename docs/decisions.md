@@ -1417,3 +1417,12 @@ CODEX-LEAD按作者[PR455](https://github.com/narutojzm1-dot/youjia/pull/455)明
 候选源 `910bdec3fe7bf07833d6b9ccb720f57a5332880c` 用实际Godot4.7.2完成专项4400、完整daily73套件+1import=74启动、50原有门禁受控案例及8个新登记受控边界、两项Web发布工具测试和Web release导出；进程退出码均0且逐项原始日志已归档。受控案例明确是fake executable，不冒原生Godot。实际Web由独立助手在390×844及568×320普通打开空手帐、分别点击禁用前翻/后翻仍留在空页、点击可用合上回标题；候选HTML、manifest、PCK和外部依赖在前后绑定，无page/consoleerror；真实截图/输入路径以[证据](playtests/2026-10-06-soft455-integration/README.md)为准。
 
 PCK为27,089,276B / SHA256 `ef5c5c9e13037e83fd76a5c6764c35faaf00c4c3b5f34e007459889c4276549b`，仅候选。原suite的_start_holiday/_show_album及writing/acknowledging/resolving是原生夹具；failed恢复只证允许重试，不能冒真实写入成功或确认完成。未覆盖的有照片页/备份恢复/真机触屏/听验单列；字体对比4.7795:1是sRGB公式，不是浏览器像素认证。最初僵尸进程误判的预检断言及未捕获初次untracked清单缺口保留，后续按STAT核真实独占，引擎日志没有因此伪报。最终提交独立审核、真实PR CI、合入与公开Pages验收由各环节另记，候选不等于已发布。
+
+
+### 2026-10-06 #130 完整历史下的发布取源排除（VERIFY-PUBLISH-SOURCE-130）
+
+CODEX-LEAD按[6004968169认领](https://github.com/narutojzm1-dot/youjia/issues/130#issuecomment-6004968169)从main9623独立实施。只给publish-pages原checkout增加非cone根docs排除四行，保留fetch-depth0、原ref/权限/凭据/并发、helper/worktree与全部测试/导出/发布步骤。与被7例证伪的depth1不同，full+partial+sparse实际保持main/Pages完整历史和shallow=false；后续原fetch沿用blob:none，linked工作树继承模式，但真实git add-A/commit/push保留隐藏Pages docs原blob。当前取源350秒已success，不把耗时推断为失败或根因；新配置性能仍待真实结果。
+
+fresh9623核到915非docs路径（734文本逐SHA+181保留二进制），460新增disabled专项无docs依赖，当前73套。运行源 `93d708d5fb20f8007b47b40bfc58f1845295aa4e` 的六配置/30保留检查、12次原publisher本地构建及6次缺当前PCK实际拒绝全部通过，origin未误推；全部只操作临时file://，版本查询为显式stub，未执行引擎或浏览器。首轮fixture把depth1不可达旧blob当应枚举的模型错误与后续更正/重跑保留。[可复现证据与边界](engineering/publisher-source-sparse.md)。这不是正式发布或加速已证，既有PR取源458与本发布片独立。
+
+最终head独立终审、真实PR CI全73套/导出与正式Pages核验均待；合入须先等460公开普通后验closed，避免验收中途切源。玩法/资源/存档协议不变，#130长期单不整体关闭。

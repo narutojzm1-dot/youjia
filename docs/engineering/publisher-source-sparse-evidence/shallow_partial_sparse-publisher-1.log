@@ -1,0 +1,35 @@
+[publish] source commit: 3067c1d9a27c
+[publish] bundle entry name: game-3067c1d9a27c
+[publish] staging in /tmp/publisher130-partial-d4vld1a6/shallow_partial_sparse/tmp.3dPodwenTb
+[publish] injected cache-control meta into index.html
+[publish] cache-control meta tags injected; data-build=game-3067c1d9a27c
+[publish] verifying HTML patches...
+[publish] HTML verification passed: executable=game-3067c1d9a27c, fileSizes keys correct, script.src=game-3067c1d9a27c.js
+[publish] engine version: fixture-version-only-no-engine
+[publish] switching to gh-pages branch...
+HEAD is now at 7b7d307 Publish source history 2 (36a20e33964e)
+[publish] no proven old bundles to prune.
+[detached HEAD 6f02459] Publish second source fixture (3067c1d9a27c)
+ Author: Cursor Agent <cursoragent@cursor.com>
+ 15 files changed, 665 insertions(+), 7 deletions(-)
+ create mode 100644 game-3067c1d9a27c.js
+ create mode 100644 game-3067c1d9a27c.pck
+ create mode 100644 game-3067c1d9a27c.wasm
+ create mode 100644 save-3067c1d9a27c/bridge.mjs
+ create mode 100644 save-3067c1d9a27c/budgets.mjs
+ create mode 100644 save-3067c1d9a27c/host.mjs
+ create mode 100644 save-3067c1d9a27c/idbfs_source.mjs
+ create mode 100644 save-3067c1d9a27c/legacy_inspection.mjs
+ create mode 100644 save-3067c1d9a27c/legacy_seal.mjs
+ create mode 100644 save-3067c1d9a27c/legacy_v5.mjs
+ create mode 100644 save-3067c1d9a27c/lifecycle.mjs
+ create mode 100644 save-3067c1d9a27c/source_decode.mjs
+ create mode 100644 save-3067c1d9a27c/store.mjs
+[publish] ✓ done.
+[publish]   entry:  game-3067c1d9a27c
+[publish]   pages:  https://narutojzm1-dot.github.io/youjia/
+[publish]   verify: document.documentElement.dataset.build in browser console should equal 'game-3067c1d9a27c'
+Preparing worktree (detached HEAD 7b7d307)
+[publish] WARNING: shallow bundle history; retaining all bundles
+To file:///tmp/publisher130-partial-d4vld1a6/shallow_partial_sparse/remote.git
+   7b7d307..6f02459  HEAD -> gh-pages
