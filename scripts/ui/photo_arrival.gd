@@ -13,6 +13,8 @@ var _caption: Label
 var _shutter: Label
 var _tween: Tween
 var _snapshot: Dictionary = {}
+var _presentation_duration := 0.0
+var _motion_static := false
 
 
 func _ready() -> void:
@@ -60,6 +62,7 @@ func _ready() -> void:
 	_shutter.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(_shutter)
 	visible = false
+	get_node("/root/TuningStore").value_changed.connect(_on_motion_changed)
 
 
 func play(snapshot: Dictionary, reduced_motion: bool) -> bool:
@@ -79,6 +82,8 @@ func play(snapshot: Dictionary, reduced_motion: bool) -> bool:
 	_shutter.size = Vector2(minf(360.0, viewport.x - 24.0), 34)
 	_shutter.modulate.a = 1.0
 	visible = true
+	_motion_static = reduced_motion
+	_presentation_duration = 1.6 if reduced_motion else 1.58
 	if reduced_motion:
 		_tween = create_tween().set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
 		_tween.tween_interval(1.6)
@@ -92,6 +97,23 @@ func play(snapshot: Dictionary, reduced_motion: bool) -> bool:
 	_tween.parallel().tween_property(_shutter, "modulate:a", 0.0, 0.24)
 	_tween.tween_callback(_finish)
 	return true
+
+
+func _on_motion_changed(id: String, _requested: Variant, active: Variant) -> void:
+	if id != "ui.reduced_motion" or active != true or _motion_static or not visible or _tween == null:
+		return
+	var remaining := maxf(0.0, _presentation_duration - _tween.get_total_elapsed_time())
+	_tween.kill()
+	_tween = null
+	_motion_static = true
+	_card.modulate.a = 1.0
+	_shutter.modulate.a = 1.0
+	if remaining <= 0.0:
+		_finish()
+		return
+	_tween = create_tween().set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
+	_tween.tween_interval(remaining)
+	_tween.tween_callback(_finish)
 
 
 func refresh_locale() -> void:

@@ -1,0 +1,24 @@
+{
+  "reduce": {
+    "box": [
+      550,
+      0,
+      1050,
+      180
+    ],
+    "max_channel_diff": 1,
+    "mean": 0.11928148148148149,
+    "changed_gt5": 0
+  },
+  "no-preference": {
+    "box": [
+      550,
+      0,
+      1050,
+      180
+    ],
+    "max_channel_diff": 10,
+    "mean": 0.24532962962962962,
+    "changed_gt5": 363
+  }
+}
