@@ -1,0 +1,3958 @@
+{
+  "fish_first_catch": {
+    "background": {
+      "centered": false,
+      "depth": -1,
+      "flip_h": false,
+      "flip_v": false,
+      "frames": [
+        1,
+        1,
+        0
+      ],
+      "kind": "sprite",
+      "modulate": [
+        0.990400016307831,
+        0.987999975681305,
+        0.995199978351593,
+        1
+      ],
+      "offset": [
+        0,
+        0
+      ],
+      "order": 0,
+      "subject": "background",
+      "texture": {
+        "path": "res://assets/holiday/environment/yard_overcast.png"
+      },
+      "transform": [
+        0.666666686534882,
+        0,
+        0,
+        0.666666686534882,
+        0,
+        0
+      ]
+    },
+    "caption_variant": 0,
+    "day": 1,
+    "focus": [
+      665.691345214844,
+      491.206665039062
+    ],
+    "items": [
+      {
+        "centered": false,
+        "depth": -1,
+        "flip_h": false,
+        "flip_v": false,
+        "frames": [
+          1,
+          1,
+          0
+        ],
+        "kind": "sprite",
+        "modulate": [
+          0.990400016307831,
+          0.987999975681305,
+          0.995199978351593,
+          1
+        ],
+        "offset": [
+          0,
+          0
+        ],
+        "order": 0,
+        "subject": "",
+        "texture": {
+          "path": "res://assets/holiday/environment/cloud_band_overcast.png"
+        },
+        "transform": [
+          0.666666686534882,
+          0,
+          0,
+          0.666666686534882,
+          -1026.46887207031,
+          18
+        ]
+      },
+      {
+        "centered": false,
+        "depth": -1,
+        "flip_h": false,
+        "flip_v": false,
+        "frames": [
+          1,
+          1,
+          0
+        ],
+        "kind": "sprite",
+        "modulate": [
+          0.990400016307831,
+          0.987999975681305,
+          0.995199978351593,
+          1
+        ],
+        "offset": [
+          0,
+          0
+        ],
+        "order": 1,
+        "subject": "",
+        "texture": {
+          "path": "res://assets/holiday/environment/cloud_band_overcast.png"
+        },
+        "transform": [
+          0.666666686534882,
+          0,
+          0,
+          0.666666686534882,
+          253.531188964844,
+          18
+        ]
+      },
+      {
+        "depth": 0,
+        "kind": "prop",
+        "modulate": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "order": 14,
+        "state": {
+          "harvest_flash": 0,
+          "nearby": false,
+          "phase": 40.6821013076816,
+          "plant_state": 1,
+          "reduced_motion": false,
+          "soil_reveal": 0
+        },
+        "subject": "plant",
+        "transform": [
+          1,
+          0,
+          0,
+          1,
+          205,
+          575
+        ]
+      },
+      {
+        "depth": 0,
+        "kind": "prop",
+        "modulate": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "order": 15,
+        "state": {
+          "fish_state": 3,
+          "fish_type": "small",
+          "nearby": true,
+          "phase": 40.6821013076816,
+          "reduced_motion": false
+        },
+        "subject": "fishing",
+        "transform": [
+          1,
+          0,
+          0,
+          1,
+          700,
+          535
+        ]
+      },
+      {
+        "centered": true,
+        "depth": 461,
+        "flip_h": false,
+        "flip_v": false,
+        "frames": [
+          1,
+          1,
+          0
+        ],
+        "gait": {
+          "amount": 0,
+          "face_override": false,
+          "foot_split": 0.5,
+          "grounded_stride": true,
+          "hip": 0.677751196172249,
+          "lift_uv": 0.0161954472959258,
+          "native_walk_face": -1,
+          "phase": 1.27013328748355,
+          "stride_uv": 0.30771349862259
+        },
+        "kind": "sprite",
+        "modulate": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "offset": [
+          -172.5,
+          -557
+        ],
+        "order": 10,
+        "subject": "horse",
+        "texture": {
+          "path": "res://assets/holiday/characters/cast_v2/horse.png"
+        },
+        "transform": [
+          0.0871150866150856,
+          0,
+          0,
+          0.0868590101599693,
+          588.519714355469,
+          461.281219482422
+        ]
+      },
+      {
+        "centered": true,
+        "depth": 473,
+        "flip_h": false,
+        "flip_v": false,
+        "frames": [
+          1,
+          1,
+          0
+        ],
+        "gait": {
+          "amount": 0,
+          "expression": {
+            "path": "res://assets/holiday/characters/cast_v2/llama_annoyed.png"
+          },
+          "face_override": true,
+          "face_region": [
+            0.641945779323578,
+            0.179425835609436,
+            0.179425835609436,
+            0.127591699361801
+          ],
+          "foot_split": 0.5,
+          "grounded_stride": true,
+          "hip": 0.748261562998405,
+          "lift_uv": 0.0192503987240829,
+          "native_walk_face": 1,
+          "phase": 4.07690693959628,
+          "stride_uv": 0.288755980861244
+        },
+        "kind": "sprite",
+        "modulate": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "offset": [
+          70.5,
+          -600
+        ],
+        "order": 5,
+        "subject": "llama",
+        "texture": {
+          "path": "res://assets/holiday/characters/cast_v2/llama_smirk.png"
+        },
+        "transform": [
+          0.0748704075813293,
+          0,
+          0,
+          0.0746462121605873,
+          745.645141601562,
+          473.465942382812
+        ]
+      },
+      {
+        "centered": true,
+        "depth": 489,
+        "flip_h": false,
+        "flip_v": false,
+        "frames": [
+          1,
+          1,
+          0
+        ],
+        "gait": {
+          "amount": 0,
+          "face_override": false,
+          "foot_split": 0.5,
+          "grounded_stride": true,
+          "hip": 0.721818181818182,
+          "lift_uv": 0.0220980258131961,
+          "native_walk_face": -1,
+          "phase": 5.72117321778774,
+          "stride_uv": 0.331470387197941
+        },
+        "kind": "sprite",
+        "modulate": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "offset": [
+          -105.5,
+          -497
+        ],
+        "order": 8,
+        "subject": "sheep_b",
+        "texture": {
+          "path": "res://assets/holiday/characters/cast_v2/sheep_dull.png"
+        },
+        "transform": [
+          0.0669703111052513,
+          0,
+          0,
+          0.0667779743671417,
+          369.564178466797,
+          488.939086914062
+        ]
+      },
+      {
+        "centered": true,
+        "depth": 501,
+        "flip_h": false,
+        "flip_v": false,
+        "frames": [
+          1,
+          1,
+          0
+        ],
+        "gait": {
+          "amount": 0,
+          "face_override": false,
+          "foot_split": 0.5,
+          "grounded_stride": true,
+          "hip": 0.667224880382775,
+          "lift_uv": 0.0153269537480064,
+          "native_walk_face": -1,
+          "phase": 5.40809910559627,
+          "stride_uv": 0.291212121212121
+        },
+        "kind": "sprite",
+        "modulate": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "offset": [
+          81.5999755859375,
+          -575
+        ],
+        "order": 9,
+        "subject": "cow",
+        "texture": {
+          "path": "res://assets/holiday/characters/cast_v2/cow_chew.png"
+        },
+        "transform": [
+          -0.0985827818512917,
+          0,
+          0,
+          0.0986096039414406,
+          484.849945068359,
+          501.382019042969
+        ]
+      },
+      {
+        "centered": true,
+        "depth": 503,
+        "flip_h": false,
+        "flip_v": false,
+        "frames": [
+          1,
+          1,
+          0
+        ],
+        "gait": {
+          "amount": 0,
+          "face_override": false,
+          "foot_split": 0.5,
+          "grounded_stride": true,
+          "hip": 0.76085326953748,
+          "lift_uv": 0.025267714741399,
+          "native_walk_face": 1,
+          "phase": 6.21519316024849,
+          "stride_uv": 0.277944862155388
+        },
+        "kind": "sprite",
+        "modulate": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "offset": [
+          -67.5,
+          -589
+        ],
+        "order": 6,
+        "subject": "goose",
+        "texture": {
+          "path": "res://assets/holiday/characters/cast_v2/goose_calm.png"
+        },
+        "transform": [
+          -0.0599785000085831,
+          0,
+          0,
+          0.0598077885806561,
+          753.172668457031,
+          503.203002929688
+        ]
+      },
+      {
+        "centered": true,
+        "depth": 505,
+        "flip_h": false,
+        "flip_v": false,
+        "frames": [
+          1,
+          1,
+          0
+        ],
+        "gait": {
+          "amount": 0,
+          "face_override": false,
+          "foot_split": 0.5,
+          "grounded_stride": true,
+          "hip": 0.732918660287081,
+          "lift_uv": 0.0246753246753247,
+          "native_walk_face": 1,
+          "phase": 2.32892422050803,
+          "stride_uv": 0.37012987012987
+        },
+        "kind": "sprite",
+        "modulate": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "offset": [
+          51,
+          -551
+        ],
+        "order": 7,
+        "subject": "sheep_a",
+        "texture": {
+          "path": "res://assets/holiday/characters/cast_v2/sheep_clingy.png"
+        },
+        "transform": [
+          -0.0615510754287243,
+          0,
+          0,
+          0.061366580426693,
+          326.780029296875,
+          504.514190673828
+        ]
+      },
+      {
+        "centered": false,
+        "depth": 522,
+        "flip_h": false,
+        "flip_v": false,
+        "frames": [
+          1,
+          1,
+          0
+        ],
+        "kind": "sprite",
+        "modulate": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "offset": [
+          -192,
+          -420
+        ],
+        "order": 4,
+        "subject": "player",
+        "texture": {
+          "path": "res://assets/holiday/characters/resident_walk_authored_v1/idle.png"
+        },
+        "transform": [
+          0.245042651891708,
+          0,
+          0,
+          0.245042651891708,
+          634.430908203125,
+          522.331237792969
+        ]
+      },
+      {
+        "centered": true,
+        "depth": 577,
+        "flip_h": false,
+        "flip_v": false,
+        "frames": [
+          1,
+          1,
+          0
+        ],
+        "gait": {
+          "amount": 0,
+          "face_override": false,
+          "foot_split": 0.5,
+          "grounded_stride": true,
+          "hip": 0.752631578947368,
+          "lift_uv": 0.053475935828877,
+          "native_walk_face": 1,
+          "phase": 1.36463231420025,
+          "stride_uv": 0.588235294117647
+        },
+        "kind": "sprite",
+        "modulate": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "offset": [
+          -43,
+          -578
+        ],
+        "order": 11,
+        "subject": "duck_a",
+        "texture": {
+          "path": "res://assets/holiday/characters/cast_v2/duck.png"
+        },
+        "transform": [
+          0.0318004190921783,
+          0,
+          0,
+          0.0317458026111126,
+          774.560180664062,
+          577.325988769531
+        ]
+      },
+      {
+        "centered": true,
+        "depth": 596,
+        "flip_h": false,
+        "flip_v": false,
+        "frames": [
+          1,
+          1,
+          0
+        ],
+        "gait": {
+          "amount": 0,
+          "face_override": false,
+          "foot_split": 0.5,
+          "grounded_stride": true,
+          "hip": 0.752631578947368,
+          "lift_uv": 0.0552009660169053,
+          "native_walk_face": 1,
+          "phase": 1.57932311911908,
+          "stride_uv": 0.607210626185958
+        },
+        "kind": "sprite",
+        "modulate": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "offset": [
+          -43,
+          -578
+        ],
+        "order": 13,
+        "subject": "duck_c",
+        "texture": {
+          "path": "res://assets/holiday/characters/cast_v2/duck.png"
+        },
+        "transform": [
+          0.0316657647490501,
+          0,
+          0,
+          0.0317374356091022,
+          741.697265625,
+          596.323120117188
+        ]
+      },
+      {
+        "centered": false,
+        "depth": 600,
+        "flip_h": false,
+        "flip_v": false,
+        "frames": [
+          1,
+          1,
+          0
+        ],
+        "kind": "sprite",
+        "modulate": [
+          0.973467826843262,
+          0.973467826843262,
+          0.973467826843262,
+          1
+        ],
+        "offset": [
+          -237,
+          -909
+        ],
+        "order": 2,
+        "subject": "grass",
+        "texture": {
+          "atlas": "res://assets/holiday/fx/grass_states_v2.png",
+          "filter_clip": true,
+          "margin": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "region": [
+            64,
+            40,
+            474,
+            918
+          ]
+        },
+        "transform": [
+          0.0379746817052364,
+          0,
+          0,
+          0.0379746817052364,
+          330,
+          600
+        ]
+      },
+      {
+        "centered": false,
+        "depth": 600,
+        "flip_h": false,
+        "flip_v": false,
+        "frames": [
+          1,
+          1,
+          0
+        ],
+        "kind": "sprite",
+        "modulate": [
+          0.973467826843262,
+          0.973467826843262,
+          0.973467826843262,
+          1
+        ],
+        "offset": [
+          -237,
+          -909
+        ],
+        "order": 3,
+        "subject": "grass",
+        "texture": {
+          "atlas": "res://assets/holiday/fx/grass_states_v2.png",
+          "filter_clip": true,
+          "margin": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "region": [
+            64,
+            40,
+            474,
+            918
+          ]
+        },
+        "transform": [
+          0.0337552726268768,
+          0,
+          0,
+          0.0337552726268768,
+          350,
+          597
+        ]
+      },
+      {
+        "centered": true,
+        "depth": 610,
+        "flip_h": false,
+        "flip_v": false,
+        "frames": [
+          1,
+          1,
+          0
+        ],
+        "gait": {
+          "amount": 0,
+          "face_override": false,
+          "foot_split": 0.5,
+          "grounded_stride": true,
+          "hip": 0.752631578947368,
+          "lift_uv": 0.0570409982174688,
+          "native_walk_face": 1,
+          "phase": 3.72420788717673,
+          "stride_uv": 0.627450980392157
+        },
+        "kind": "sprite",
+        "modulate": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "offset": [
+          -43,
+          -578
+        ],
+        "order": 12,
+        "subject": "duck_b",
+        "texture": {
+          "path": "res://assets/holiday/characters/cast_v2/duck.png"
+        },
+        "transform": [
+          0.031237781047821,
+          0,
+          0,
+          0.0313238054513931,
+          698.994445800781,
+          609.884216308594
+        ]
+      }
+    ],
+    "rule_id": "fish_first_catch",
+    "shadows": [
+      [
+        634.430908203125,
+        522.331237792969,
+        10.7818765640259,
+        3.92068243026733
+      ],
+      [
+        745.645141601562,
+        473.465942382812,
+        21.6884593963623,
+        4.1750283241272
+      ],
+      [
+        753.172668457031,
+        503.203002929688,
+        13.3032312393188,
+        3.1927752494812
+      ],
+      [
+        326.780029296875,
+        504.514190673828,
+        21.9025115966797,
+        3.99958872795105
+      ],
+      [
+        369.564178466797,
+        488.939086914062,
+        21.3418064117432,
+        3.89719939231873
+      ],
+      [
+        484.849945068359,
+        501.382019042969,
+        34.1056976318359,
+        5.17269802093506
+      ],
+      [
+        588.519714355469,
+        461.281219482422,
+        31.8461074829102,
+        4.82999324798584
+      ],
+      [
+        774.560180664062,
+        577.325988769531,
+        10.6624937057495,
+        2.23912358283997
+      ],
+      [
+        698.994445800781,
+        609.884216308594,
+        11.1721000671387,
+        2.34614086151123
+      ],
+      [
+        741.697265625,
+        596.323120117188,
+        10.9598398208618,
+        2.30156636238098
+      ]
+    ],
+    "span": 200,
+    "version": 1,
+    "weather": "overcast",
+    "world_size": [
+      1280,
+      720
+    ]
+  },
+  "llama_fed_gentle": {
+    "background": {
+      "centered": false,
+      "depth": -1,
+      "flip_h": false,
+      "flip_v": false,
+      "frames": [
+        1,
+        1,
+        0
+      ],
+      "kind": "sprite",
+      "modulate": [
+        1,
+        0.996399998664856,
+        0.987999975681305,
+        1
+      ],
+      "offset": [
+        0,
+        0
+      ],
+      "order": 0,
+      "subject": "background",
+      "texture": {
+        "path": "res://assets/holiday/environment/yard_sunny.png"
+      },
+      "transform": [
+        0.666666686534882,
+        0,
+        0,
+        0.666666686534882,
+        0,
+        0
+      ]
+    },
+    "caption_variant": 1,
+    "day": 1,
+    "focus": [
+      428.518981933594,
+      488.785064697266
+    ],
+    "items": [
+      {
+        "centered": false,
+        "depth": -1,
+        "flip_h": false,
+        "flip_v": false,
+        "frames": [
+          1,
+          1,
+          0
+        ],
+        "kind": "sprite",
+        "modulate": [
+          1.00287997722626,
+          1.0019199848175,
+          1.00095999240875,
+          1
+        ],
+        "offset": [
+          0,
+          0
+        ],
+        "order": 0,
+        "subject": "",
+        "texture": {
+          "path": "res://assets/holiday/environment/cloud_band_morning.png"
+        },
+        "transform": [
+          0.666666686534882,
+          0,
+          0,
+          0.666666686534882,
+          -911.338806152344,
+          18
+        ]
+      },
+      {
+        "centered": false,
+        "depth": -1,
+        "flip_h": false,
+        "flip_v": false,
+        "frames": [
+          1,
+          1,
+          0
+        ],
+        "kind": "sprite",
+        "modulate": [
+          1.00287997722626,
+          1.0019199848175,
+          1.00095999240875,
+          1
+        ],
+        "offset": [
+          0,
+          0
+        ],
+        "order": 1,
+        "subject": "",
+        "texture": {
+          "path": "res://assets/holiday/environment/cloud_band_morning.png"
+        },
+        "transform": [
+          0.666666686534882,
+          0,
+          0,
+          0.666666686534882,
+          368.661254882812,
+          18
+        ]
+      },
+      {
+        "depth": 0,
+        "kind": "prop",
+        "modulate": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "order": 15,
+        "state": {
+          "harvest_flash": 0,
+          "nearby": false,
+          "phase": 14.5422605230752,
+          "plant_state": 0,
+          "reduced_motion": false,
+          "soil_reveal": 0.000183973001565189
+        },
+        "subject": "plant",
+        "transform": [
+          1,
+          0,
+          0,
+          1,
+          205,
+          575
+        ]
+      },
+      {
+        "depth": 0,
+        "kind": "prop",
+        "modulate": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "order": 16,
+        "state": {
+          "fish_state": 0,
+          "fish_type": "",
+          "nearby": false,
+          "phase": 14.5422605230752,
+          "reduced_motion": false
+        },
+        "subject": "fishing",
+        "transform": [
+          1,
+          0,
+          0,
+          1,
+          700,
+          535
+        ]
+      },
+      {
+        "centered": true,
+        "depth": 465,
+        "flip_h": false,
+        "flip_v": false,
+        "frames": [
+          1,
+          1,
+          0
+        ],
+        "gait": {
+          "amount": 0,
+          "face_override": false,
+          "foot_split": 0.5,
+          "grounded_stride": true,
+          "hip": 0.677751196172249,
+          "lift_uv": 0.0161954472959258,
+          "native_walk_face": -1,
+          "phase": 1.83677773563837,
+          "stride_uv": 0.30771349862259
+        },
+        "kind": "sprite",
+        "modulate": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "offset": [
+          -172.5,
+          -557
+        ],
+        "order": 11,
+        "subject": "horse",
+        "texture": {
+          "path": "res://assets/holiday/characters/cast_v2/horse.png"
+        },
+        "transform": [
+          -0.0876583680510521,
+          0,
+          0,
+          0.087757520377636,
+          636.048217773438,
+          464.805847167969
+        ]
+      },
+      {
+        "centered": true,
+        "depth": 488,
+        "flip_h": false,
+        "flip_v": false,
+        "frames": [
+          1,
+          1,
+          0
+        ],
+        "gait": {
+          "amount": 0,
+          "face_override": false,
+          "foot_split": 0.5,
+          "grounded_stride": true,
+          "hip": 0.667224880382775,
+          "lift_uv": 0.0153269537480064,
+          "native_walk_face": -1,
+          "phase": 3.95663473430798,
+          "stride_uv": 0.291212121212121
+        },
+        "kind": "sprite",
+        "modulate": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "offset": [
+          81.5999755859375,
+          -575
+        ],
+        "order": 10,
+        "subject": "cow",
+        "texture": {
+          "path": "res://assets/holiday/characters/cast_v2/cow_chew.png"
+        },
+        "transform": [
+          -0.0964402854442596,
+          0,
+          0,
+          0.0961859598755836,
+          479.460327148438,
+          488.227661132812
+        ]
+      },
+      {
+        "centered": true,
+        "depth": 494,
+        "flip_h": false,
+        "flip_v": false,
+        "frames": [
+          1,
+          1,
+          0
+        ],
+        "gait": {
+          "amount": 0,
+          "face_override": false,
+          "foot_split": 0.5,
+          "grounded_stride": true,
+          "hip": 0.721818181818182,
+          "lift_uv": 0.0220980258131961,
+          "native_walk_face": -1,
+          "phase": 6.01157819725604,
+          "stride_uv": 0.331470387197941
+        },
+        "kind": "sprite",
+        "modulate": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "offset": [
+          -105.5,
+          -497
+        ],
+        "order": 9,
+        "subject": "sheep_b",
+        "texture": {
+          "path": "res://assets/holiday/characters/cast_v2/sheep_dull.png"
+        },
+        "transform": [
+          0.0675238072872162,
+          0,
+          0,
+          0.0675826296210289,
+          392.431213378906,
+          493.838684082031
+        ]
+      },
+      {
+        "centered": true,
+        "depth": 508,
+        "flip_h": false,
+        "flip_v": false,
+        "frames": [
+          1,
+          1,
+          0
+        ],
+        "gait": {
+          "amount": 0,
+          "face_override": false,
+          "foot_split": 0.5,
+          "grounded_stride": true,
+          "hip": 0.76085326953748,
+          "lift_uv": 0.025267714741399,
+          "native_walk_face": 1,
+          "phase": 0.610652774711566,
+          "stride_uv": 0.277944862155388
+        },
+        "kind": "sprite",
+        "modulate": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "offset": [
+          -69.5,
+          -451
+        ],
+        "order": 7,
+        "subject": "goose",
+        "texture": {
+          "path": "res://assets/holiday/characters/cast_v2/goose_rest.png"
+        },
+        "transform": [
+          0.0604577027261257,
+          0,
+          0,
+          0.0606008246541023,
+          777.694030761719,
+          508.053405761719
+        ]
+      },
+      {
+        "centered": true,
+        "depth": 511,
+        "flip_h": false,
+        "flip_v": false,
+        "frames": [
+          1,
+          1,
+          0
+        ],
+        "gait": {
+          "amount": 1,
+          "expression": {
+            "path": "res://assets/holiday/characters/cast_v2/llama_happy.png"
+          },
+          "face_override": true,
+          "face_region": [
+            0.641945779323578,
+            0.179425835609436,
+            0.179425835609436,
+            0.127591699361801
+          ],
+          "foot_split": 0.5,
+          "grounded_stride": true,
+          "hip": 0.748261562998405,
+          "lift_uv": 0.0192503987240829,
+          "native_walk_face": 1,
+          "phase": 4.57836139827696,
+          "stride_uv": 0.288755980861244
+        },
+        "kind": "sprite",
+        "modulate": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "offset": [
+          70.5,
+          -600
+        ],
+        "order": 6,
+        "subject": "llama",
+        "texture": {
+          "path": "res://assets/holiday/characters/cast_v2/llama_smirk.png"
+        },
+        "transform": [
+          -0.0796741917729378,
+          0,
+          0,
+          0.0796741917729378,
+          459.789825439453,
+          510.509796142578
+        ]
+      },
+      {
+        "centered": true,
+        "depth": 515,
+        "flip_h": false,
+        "flip_v": false,
+        "frames": [
+          1,
+          1,
+          0
+        ],
+        "gait": {
+          "amount": 0,
+          "face_override": false,
+          "foot_split": 0.5,
+          "grounded_stride": true,
+          "hip": 0.732918660287081,
+          "lift_uv": 0.0246753246753247,
+          "native_walk_face": 1,
+          "phase": 5.29228519163909,
+          "stride_uv": 0.37012987012987
+        },
+        "kind": "sprite",
+        "modulate": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "offset": [
+          51,
+          -551
+        ],
+        "order": 8,
+        "subject": "sheep_a",
+        "texture": {
+          "path": "res://assets/holiday/characters/cast_v2/sheep_clingy.png"
+        },
+        "transform": [
+          0.0626299828290939,
+          0,
+          0,
+          0.0627405121922493,
+          317.575744628906,
+          515.178649902344
+        ]
+      },
+      {
+        "centered": false,
+        "depth": 558,
+        "flip_h": false,
+        "flip_v": false,
+        "frames": [
+          1,
+          1,
+          0
+        ],
+        "kind": "sprite",
+        "modulate": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "offset": [
+          -192,
+          -420
+        ],
+        "order": 5,
+        "subject": "player",
+        "texture": {
+          "atlas": "res://assets/holiday/characters/resident_grass_actions_v1/actions.png",
+          "filter_clip": true,
+          "margin": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "region": [
+            0,
+            448,
+            384,
+            448
+          ]
+        },
+        "transform": [
+          0.258832991123199,
+          0,
+          0,
+          0.258832991123199,
+          402.605407714844,
+          557.573181152344
+        ]
+      },
+      {
+        "centered": false,
+        "depth": 600,
+        "flip_h": false,
+        "flip_v": false,
+        "frames": [
+          1,
+          1,
+          0
+        ],
+        "kind": "sprite",
+        "modulate": [
+          1.01494967937469,
+          1.01494967937469,
+          1.01494967937469,
+          0.777061283588409
+        ],
+        "offset": [
+          -164,
+          -289
+        ],
+        "order": 2,
+        "subject": "grass",
+        "texture": {
+          "atlas": "res://assets/holiday/fx/grass_states_v2.png",
+          "filter_clip": true,
+          "margin": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "region": [
+            562,
+            660,
+            328,
+            298
+          ]
+        },
+        "transform": [
+          0.0379746817052364,
+          0,
+          0,
+          0.0379746817052364,
+          330,
+          600
+        ]
+      },
+      {
+        "centered": false,
+        "depth": 600,
+        "flip_h": false,
+        "flip_v": false,
+        "frames": [
+          1,
+          1,
+          0
+        ],
+        "kind": "sprite",
+        "modulate": [
+          1.01494967937469,
+          1.01494967937469,
+          1.01494967937469,
+          0.222938686609268
+        ],
+        "offset": [
+          -237,
+          -909
+        ],
+        "order": 3,
+        "subject": "grass",
+        "texture": {
+          "atlas": "res://assets/holiday/fx/grass_states_v2.png",
+          "filter_clip": true,
+          "margin": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "region": [
+            64,
+            40,
+            474,
+            918
+          ]
+        },
+        "transform": [
+          0.0276466514915228,
+          0,
+          0,
+          0.0276466514915228,
+          330,
+          600
+        ]
+      },
+      {
+        "centered": false,
+        "depth": 600,
+        "flip_h": false,
+        "flip_v": false,
+        "frames": [
+          1,
+          1,
+          0
+        ],
+        "kind": "sprite",
+        "modulate": [
+          1.01494967937469,
+          1.01494967937469,
+          1.01494967937469,
+          1
+        ],
+        "offset": [
+          -237,
+          -909
+        ],
+        "order": 4,
+        "subject": "grass",
+        "texture": {
+          "atlas": "res://assets/holiday/fx/grass_states_v2.png",
+          "filter_clip": true,
+          "margin": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "region": [
+            64,
+            40,
+            474,
+            918
+          ]
+        },
+        "transform": [
+          0.0337552726268768,
+          0,
+          0,
+          0.0337552726268768,
+          350,
+          597
+        ]
+      },
+      {
+        "centered": true,
+        "depth": 614,
+        "flip_h": false,
+        "flip_v": false,
+        "frames": [
+          1,
+          1,
+          0
+        ],
+        "gait": {
+          "amount": 0,
+          "face_override": false,
+          "foot_split": 0.5,
+          "grounded_stride": true,
+          "hip": 0.752631578947368,
+          "lift_uv": 0.053475935828877,
+          "native_walk_face": 1,
+          "phase": 2.92258199971642,
+          "stride_uv": 0.588235294117647
+        },
+        "kind": "sprite",
+        "modulate": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "offset": [
+          -43,
+          -578
+        ],
+        "order": 12,
+        "subject": "duck_a",
+        "texture": {
+          "path": "res://assets/holiday/characters/cast_v2/duck.png"
+        },
+        "transform": [
+          0.0334937795996666,
+          0,
+          0,
+          0.0334571152925491,
+          681.980895996094,
+          613.600402832031
+        ]
+      },
+      {
+        "centered": true,
+        "depth": 617,
+        "flip_h": false,
+        "flip_v": false,
+        "frames": [
+          1,
+          1,
+          0
+        ],
+        "gait": {
+          "amount": 0,
+          "face_override": false,
+          "foot_split": 0.5,
+          "grounded_stride": true,
+          "hip": 0.752631578947368,
+          "lift_uv": 0.0552009660169053,
+          "native_walk_face": 1,
+          "phase": 4.15500912187894,
+          "stride_uv": 0.607210626185958
+        },
+        "kind": "sprite",
+        "modulate": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "offset": [
+          -43,
+          -578
+        ],
+        "order": 14,
+        "subject": "duck_c",
+        "texture": {
+          "path": "res://assets/holiday/characters/cast_v2/duck.png"
+        },
+        "transform": [
+          0.0325906872749329,
+          0,
+          0,
+          0.0326031930744648,
+          716.202697753906,
+          616.775512695312
+        ]
+      },
+      {
+        "centered": true,
+        "depth": 618,
+        "flip_h": false,
+        "flip_v": false,
+        "frames": [
+          1,
+          1,
+          0
+        ],
+        "gait": {
+          "amount": 0,
+          "face_override": false,
+          "foot_split": 0.5,
+          "grounded_stride": true,
+          "hip": 0.752631578947368,
+          "lift_uv": 0.0570409982174688,
+          "native_walk_face": 1,
+          "phase": 2.89271549121695,
+          "stride_uv": 0.627450980392157
+        },
+        "kind": "sprite",
+        "modulate": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "offset": [
+          -43,
+          -578
+        ],
+        "order": 13,
+        "subject": "duck_b",
+        "texture": {
+          "path": "res://assets/holiday/characters/cast_v2/duck.png"
+        },
+        "transform": [
+          -0.0315828137099743,
+          0,
+          0,
+          0.0315192267298698,
+          696.580749511719,
+          617.76806640625
+        ]
+      }
+    ],
+    "rule_id": "llama_fed_gentle",
+    "shadows": [
+      [
+        402.605407714844,
+        557.573181152344,
+        11.3886518478394,
+        4.14132785797119
+      ],
+      [
+        459.789825439453,
+        510.509796142578,
+        23.0800189971924,
+        4.44290351867676
+      ],
+      [
+        777.694030761719,
+        508.053405761719,
+        13.4095182418823,
+        3.21828436851501
+      ],
+      [
+        317.575744628906,
+        515.178649902344,
+        22.2864322662354,
+        4.06969594955444
+      ],
+      [
+        392.431213378906,
+        493.838684082031,
+        21.5181922912598,
+        3.92940878868103
+      ],
+      [
+        479.460327148438,
+        488.227661132812,
+        33.3644790649414,
+        5.06027984619141
+      ],
+      [
+        636.048217773438,
+        464.805847167969,
+        32.0447120666504,
+        4.86011457443237
+      ],
+      [
+        681.980895996094,
+        613.600402832031,
+        11.2302675247192,
+        2.35835599899292
+      ],
+      [
+        696.580749511719,
+        617.76806640625,
+        11.2954998016357,
+        2.37205481529236
+      ],
+      [
+        716.202697753906,
+        616.775512695312,
+        11.2799644470215,
+        2.36879253387451
+      ]
+    ],
+    "span": 190,
+    "version": 1,
+    "weather": "sun",
+    "world_size": [
+      1280,
+      720
+    ]
+  },
+  "llama_overcast_goose_annoyed": {
+    "background": {
+      "centered": false,
+      "depth": -1,
+      "flip_h": false,
+      "flip_v": false,
+      "frames": [
+        1,
+        1,
+        0
+      ],
+      "kind": "sprite",
+      "modulate": [
+        0.990400016307831,
+        0.987999975681305,
+        0.995199978351593,
+        1
+      ],
+      "offset": [
+        0,
+        0
+      ],
+      "order": 0,
+      "subject": "background",
+      "texture": {
+        "path": "res://assets/holiday/environment/yard_overcast.png"
+      },
+      "transform": [
+        0.666666686534882,
+        0,
+        0,
+        0.666666686534882,
+        0,
+        0
+      ]
+    },
+    "caption_variant": 0,
+    "day": 1,
+    "focus": [
+      750.923461914062,
+      443.645812988281
+    ],
+    "items": [
+      {
+        "centered": false,
+        "depth": -1,
+        "flip_h": false,
+        "flip_v": false,
+        "frames": [
+          1,
+          1,
+          0
+        ],
+        "kind": "sprite",
+        "modulate": [
+          0.990400016307831,
+          0.987999975681305,
+          0.995199978351593,
+          1
+        ],
+        "offset": [
+          0,
+          0
+        ],
+        "order": 0,
+        "subject": "",
+        "texture": {
+          "path": "res://assets/holiday/environment/cloud_band_overcast.png"
+        },
+        "transform": [
+          0.666666686534882,
+          0,
+          0,
+          0.666666686534882,
+          -1003.47790527344,
+          18
+        ]
+      },
+      {
+        "centered": false,
+        "depth": -1,
+        "flip_h": false,
+        "flip_v": false,
+        "frames": [
+          1,
+          1,
+          0
+        ],
+        "kind": "sprite",
+        "modulate": [
+          0.990400016307831,
+          0.987999975681305,
+          0.995199978351593,
+          1
+        ],
+        "offset": [
+          0,
+          0
+        ],
+        "order": 1,
+        "subject": "",
+        "texture": {
+          "path": "res://assets/holiday/environment/cloud_band_overcast.png"
+        },
+        "transform": [
+          0.666666686534882,
+          0,
+          0,
+          0.666666686534882,
+          276.522125244141,
+          18
+        ]
+      },
+      {
+        "depth": 0,
+        "kind": "prop",
+        "modulate": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "order": 14,
+        "state": {
+          "harvest_flash": 0,
+          "nearby": false,
+          "phase": 37.1450346410152,
+          "plant_state": 1,
+          "reduced_motion": false,
+          "soil_reveal": 0
+        },
+        "subject": "plant",
+        "transform": [
+          1,
+          0,
+          0,
+          1,
+          205,
+          575
+        ]
+      },
+      {
+        "depth": 0,
+        "kind": "prop",
+        "modulate": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "order": 15,
+        "state": {
+          "fish_state": 1,
+          "fish_type": "",
+          "nearby": true,
+          "phase": 37.1450346410152,
+          "reduced_motion": false
+        },
+        "subject": "fishing",
+        "transform": [
+          1,
+          0,
+          0,
+          1,
+          700,
+          535
+        ]
+      },
+      {
+        "centered": true,
+        "depth": 461,
+        "flip_h": false,
+        "flip_v": false,
+        "frames": [
+          1,
+          1,
+          0
+        ],
+        "gait": {
+          "amount": 0,
+          "face_override": false,
+          "foot_split": 0.5,
+          "grounded_stride": true,
+          "hip": 0.677751196172249,
+          "lift_uv": 0.0161954472959258,
+          "native_walk_face": -1,
+          "phase": 1.27013328748355,
+          "stride_uv": 0.30771349862259
+        },
+        "kind": "sprite",
+        "modulate": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "offset": [
+          -172.5,
+          -557
+        ],
+        "order": 10,
+        "subject": "horse",
+        "texture": {
+          "path": "res://assets/holiday/characters/cast_v2/horse.png"
+        },
+        "transform": [
+          0.0871150866150856,
+          0,
+          0,
+          0.08687674254179,
+          588.519714355469,
+          461.281219482422
+        ]
+      },
+      {
+        "centered": true,
+        "depth": 473,
+        "flip_h": false,
+        "flip_v": false,
+        "frames": [
+          1,
+          1,
+          0
+        ],
+        "gait": {
+          "amount": 0,
+          "expression": {
+            "path": "res://assets/holiday/characters/cast_v2/llama_annoyed.png"
+          },
+          "face_override": true,
+          "face_region": [
+            0.641945779323578,
+            0.179425835609436,
+            0.179425835609436,
+            0.127591699361801
+          ],
+          "foot_split": 0.5,
+          "grounded_stride": true,
+          "hip": 0.748261562998405,
+          "lift_uv": 0.0192503987240829,
+          "native_walk_face": 1,
+          "phase": 4.07690693959628,
+          "stride_uv": 0.288755980861244
+        },
+        "kind": "sprite",
+        "modulate": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "offset": [
+          70.5,
+          -600
+        ],
+        "order": 5,
+        "subject": "llama",
+        "texture": {
+          "path": "res://assets/holiday/characters/cast_v2/llama_smirk.png"
+        },
+        "transform": [
+          0.0748704075813293,
+          0,
+          0,
+          0.0746964290738106,
+          745.645141601562,
+          473.465942382812
+        ]
+      },
+      {
+        "centered": true,
+        "depth": 489,
+        "flip_h": false,
+        "flip_v": false,
+        "frames": [
+          1,
+          1,
+          0
+        ],
+        "gait": {
+          "amount": 0,
+          "face_override": false,
+          "foot_split": 0.5,
+          "grounded_stride": true,
+          "hip": 0.721818181818182,
+          "lift_uv": 0.0220980258131961,
+          "native_walk_face": -1,
+          "phase": 5.72117321778774,
+          "stride_uv": 0.331470387197941
+        },
+        "kind": "sprite",
+        "modulate": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "offset": [
+          -105.5,
+          -497
+        ],
+        "order": 8,
+        "subject": "sheep_b",
+        "texture": {
+          "path": "res://assets/holiday/characters/cast_v2/sheep_dull.png"
+        },
+        "transform": [
+          0.0669703111052513,
+          0,
+          0,
+          0.0667802914977074,
+          369.564178466797,
+          488.939086914062
+        ]
+      },
+      {
+        "centered": true,
+        "depth": 501,
+        "flip_h": false,
+        "flip_v": false,
+        "frames": [
+          1,
+          1,
+          0
+        ],
+        "gait": {
+          "amount": 0,
+          "face_override": false,
+          "foot_split": 0.5,
+          "grounded_stride": true,
+          "hip": 0.667224880382775,
+          "lift_uv": 0.0153269537480064,
+          "native_walk_face": -1,
+          "phase": 5.40809910559627,
+          "stride_uv": 0.291212121212121
+        },
+        "kind": "sprite",
+        "modulate": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "offset": [
+          81.5999755859375,
+          -575
+        ],
+        "order": 9,
+        "subject": "cow",
+        "texture": {
+          "path": "res://assets/holiday/characters/cast_v2/cow_chew.png"
+        },
+        "transform": [
+          -0.0985827818512917,
+          0,
+          0,
+          0.0984324887394905,
+          484.849945068359,
+          501.382019042969
+        ]
+      },
+      {
+        "centered": true,
+        "depth": 503,
+        "flip_h": false,
+        "flip_v": false,
+        "frames": [
+          1,
+          1,
+          0
+        ],
+        "gait": {
+          "amount": 0,
+          "face_override": false,
+          "foot_split": 0.5,
+          "grounded_stride": true,
+          "hip": 0.76085326953748,
+          "lift_uv": 0.025267714741399,
+          "native_walk_face": 1,
+          "phase": 6.21519316024849,
+          "stride_uv": 0.277944862155388
+        },
+        "kind": "sprite",
+        "modulate": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "offset": [
+          -67.5,
+          -589
+        ],
+        "order": 6,
+        "subject": "goose",
+        "texture": {
+          "path": "res://assets/holiday/characters/cast_v2/goose_calm.png"
+        },
+        "transform": [
+          -0.0599785000085831,
+          0,
+          0,
+          0.0598731711506844,
+          753.172668457031,
+          503.203002929688
+        ]
+      },
+      {
+        "centered": true,
+        "depth": 505,
+        "flip_h": false,
+        "flip_v": false,
+        "frames": [
+          1,
+          1,
+          0
+        ],
+        "gait": {
+          "amount": 0,
+          "face_override": false,
+          "foot_split": 0.5,
+          "grounded_stride": true,
+          "hip": 0.732918660287081,
+          "lift_uv": 0.0246753246753247,
+          "native_walk_face": 1,
+          "phase": 2.32892422050803,
+          "stride_uv": 0.37012987012987
+        },
+        "kind": "sprite",
+        "modulate": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "offset": [
+          51,
+          -551
+        ],
+        "order": 7,
+        "subject": "sheep_a",
+        "texture": {
+          "path": "res://assets/holiday/characters/cast_v2/sheep_clingy.png"
+        },
+        "transform": [
+          -0.0615510754287243,
+          0,
+          0,
+          0.0614057779312134,
+          326.780029296875,
+          504.514190673828
+        ]
+      },
+      {
+        "centered": true,
+        "depth": 579,
+        "flip_h": false,
+        "flip_v": false,
+        "frames": [
+          1,
+          1,
+          0
+        ],
+        "gait": {
+          "amount": 0,
+          "face_override": false,
+          "foot_split": 0.5,
+          "grounded_stride": true,
+          "hip": 0.752631578947368,
+          "lift_uv": 0.053475935828877,
+          "native_walk_face": 1,
+          "phase": 4.30643531298505,
+          "stride_uv": 0.588235294117647
+        },
+        "kind": "sprite",
+        "modulate": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "offset": [
+          -43,
+          -578
+        ],
+        "order": 11,
+        "subject": "duck_a",
+        "texture": {
+          "path": "res://assets/holiday/characters/cast_v2/duck.png"
+        },
+        "transform": [
+          0.0318982489407063,
+          0,
+          0,
+          0.0318581201136112,
+          762.241821289062,
+          579.421630859375
+        ]
+      },
+      {
+        "centered": true,
+        "depth": 596,
+        "flip_h": false,
+        "flip_v": false,
+        "frames": [
+          1,
+          1,
+          0
+        ],
+        "gait": {
+          "amount": 0,
+          "face_override": false,
+          "foot_split": 0.5,
+          "grounded_stride": true,
+          "hip": 0.752631578947368,
+          "lift_uv": 0.0552009660169053,
+          "native_walk_face": 1,
+          "phase": 1.57932311911908,
+          "stride_uv": 0.607210626185958
+        },
+        "kind": "sprite",
+        "modulate": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "offset": [
+          -43,
+          -578
+        ],
+        "order": 13,
+        "subject": "duck_c",
+        "texture": {
+          "path": "res://assets/holiday/characters/cast_v2/duck.png"
+        },
+        "transform": [
+          0.0316657647490501,
+          0,
+          0,
+          0.031760361045599,
+          741.697265625,
+          596.323120117188
+        ]
+      },
+      {
+        "centered": false,
+        "depth": 600,
+        "flip_h": false,
+        "flip_v": false,
+        "frames": [
+          1,
+          1,
+          0
+        ],
+        "kind": "sprite",
+        "modulate": [
+          1.02801501750946,
+          1.02801501750946,
+          1.02801501750946,
+          1
+        ],
+        "offset": [
+          -237,
+          -909
+        ],
+        "order": 2,
+        "subject": "grass",
+        "texture": {
+          "atlas": "res://assets/holiday/fx/grass_states_v2.png",
+          "filter_clip": true,
+          "margin": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "region": [
+            64,
+            40,
+            474,
+            918
+          ]
+        },
+        "transform": [
+          0.0379746817052364,
+          0,
+          0,
+          0.0379746817052364,
+          330,
+          600
+        ]
+      },
+      {
+        "centered": false,
+        "depth": 600,
+        "flip_h": false,
+        "flip_v": false,
+        "frames": [
+          1,
+          1,
+          0
+        ],
+        "kind": "sprite",
+        "modulate": [
+          1.02801501750946,
+          1.02801501750946,
+          1.02801501750946,
+          1
+        ],
+        "offset": [
+          -237,
+          -909
+        ],
+        "order": 3,
+        "subject": "grass",
+        "texture": {
+          "atlas": "res://assets/holiday/fx/grass_states_v2.png",
+          "filter_clip": true,
+          "margin": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "region": [
+            64,
+            40,
+            474,
+            918
+          ]
+        },
+        "transform": [
+          0.0337552726268768,
+          0,
+          0,
+          0.0337552726268768,
+          350,
+          597
+        ]
+      },
+      {
+        "centered": true,
+        "depth": 600,
+        "flip_h": false,
+        "flip_v": false,
+        "frames": [
+          1,
+          1,
+          0
+        ],
+        "gait": {
+          "amount": 0,
+          "face_override": false,
+          "foot_split": 0.5,
+          "grounded_stride": true,
+          "hip": 0.752631578947368,
+          "lift_uv": 0.0570409982174688,
+          "native_walk_face": 1,
+          "phase": 0.830838392583468,
+          "stride_uv": 0.627450980392157
+        },
+        "kind": "sprite",
+        "modulate": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "offset": [
+          -43,
+          -578
+        ],
+        "order": 12,
+        "subject": "duck_b",
+        "texture": {
+          "path": "res://assets/holiday/characters/cast_v2/duck.png"
+        },
+        "transform": [
+          -0.0308214407414198,
+          0,
+          0,
+          0.0308688972145319,
+          693.012329101562,
+          600.370971679688
+        ]
+      }
+    ],
+    "rule_id": "llama_overcast_goose_annoyed",
+    "shadows": [
+      [
+        745.645141601562,
+        473.465942382812,
+        21.6884593963623,
+        4.1750283241272
+      ],
+      [
+        753.172668457031,
+        503.203002929688,
+        13.3032312393188,
+        3.1927752494812
+      ],
+      [
+        326.780029296875,
+        504.514190673828,
+        21.9025115966797,
+        3.99958872795105
+      ],
+      [
+        369.564178466797,
+        488.939086914062,
+        21.3418064117432,
+        3.89719939231873
+      ],
+      [
+        484.849945068359,
+        501.382019042969,
+        34.1056976318359,
+        5.17269802093506
+      ],
+      [
+        588.519714355469,
+        461.281219482422,
+        31.8461074829102,
+        4.82999324798584
+      ],
+      [
+        762.241821289062,
+        579.421630859375,
+        10.6952953338623,
+        2.24601197242737
+      ],
+      [
+        693.012329101562,
+        600.370971679688,
+        11.0231981277466,
+        2.31487154960632
+      ],
+      [
+        741.697265625,
+        596.323120117188,
+        10.9598398208618,
+        2.30156636238098
+      ]
+    ],
+    "span": 200,
+    "version": 1,
+    "weather": "overcast",
+    "world_size": [
+      1280,
+      720
+    ]
+  },
+  "llama_sun_sheep_happy": {
+    "background": {
+      "centered": false,
+      "depth": -1,
+      "flip_h": false,
+      "flip_v": false,
+      "frames": [
+        1,
+        1,
+        0
+      ],
+      "kind": "sprite",
+      "modulate": [
+        1,
+        0.996399998664856,
+        0.987999975681305,
+        1
+      ],
+      "offset": [
+        0,
+        0
+      ],
+      "order": 0,
+      "subject": "background",
+      "texture": {
+        "path": "res://assets/holiday/environment/yard_sunny.png"
+      },
+      "transform": [
+        0.666666686534882,
+        0,
+        0,
+        0.666666686534882,
+        0,
+        0
+      ]
+    },
+    "caption_variant": 0,
+    "day": 1,
+    "focus": [
+      436.638580322266,
+      463.120574951172
+    ],
+    "items": [
+      {
+        "centered": false,
+        "depth": -1,
+        "flip_h": false,
+        "flip_v": false,
+        "frames": [
+          1,
+          1,
+          0
+        ],
+        "kind": "sprite",
+        "modulate": [
+          1.00287997722626,
+          1.0019199848175,
+          1.00095999240875,
+          1
+        ],
+        "offset": [
+          0,
+          0
+        ],
+        "order": 0,
+        "subject": "",
+        "texture": {
+          "path": "res://assets/holiday/environment/cloud_band_morning.png"
+        },
+        "transform": [
+          0.666666686534882,
+          0,
+          0,
+          0.666666686534882,
+          -907.841552734375,
+          18
+        ]
+      },
+      {
+        "centered": false,
+        "depth": -1,
+        "flip_h": false,
+        "flip_v": false,
+        "frames": [
+          1,
+          1,
+          0
+        ],
+        "kind": "sprite",
+        "modulate": [
+          1.00287997722626,
+          1.0019199848175,
+          1.00095999240875,
+          1
+        ],
+        "offset": [
+          0,
+          0
+        ],
+        "order": 1,
+        "subject": "",
+        "texture": {
+          "path": "res://assets/holiday/environment/cloud_band_morning.png"
+        },
+        "transform": [
+          0.666666686534882,
+          0,
+          0,
+          0.666666686534882,
+          372.158477783203,
+          18
+        ]
+      },
+      {
+        "depth": 0,
+        "kind": "prop",
+        "modulate": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "order": 16,
+        "state": {
+          "harvest_flash": 0,
+          "nearby": false,
+          "phase": 14.0042271897418,
+          "plant_state": 0,
+          "reduced_motion": false,
+          "soil_reveal": 0.000183973001565189
+        },
+        "subject": "plant",
+        "transform": [
+          1,
+          0,
+          0,
+          1,
+          205,
+          575
+        ]
+      },
+      {
+        "depth": 0,
+        "kind": "prop",
+        "modulate": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "order": 17,
+        "state": {
+          "fish_state": 0,
+          "fish_type": "",
+          "nearby": false,
+          "phase": 14.0042271897418,
+          "reduced_motion": false
+        },
+        "subject": "fishing",
+        "transform": [
+          1,
+          0,
+          0,
+          1,
+          700,
+          535
+        ]
+      },
+      {
+        "centered": true,
+        "depth": 465,
+        "flip_h": false,
+        "flip_v": false,
+        "frames": [
+          1,
+          1,
+          0
+        ],
+        "gait": {
+          "amount": 0,
+          "face_override": false,
+          "foot_split": 0.5,
+          "grounded_stride": true,
+          "hip": 0.677751196172249,
+          "lift_uv": 0.0161954472959258,
+          "native_walk_face": -1,
+          "phase": 1.83677773563837,
+          "stride_uv": 0.30771349862259
+        },
+        "kind": "sprite",
+        "modulate": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "offset": [
+          -172.5,
+          -557
+        ],
+        "order": 12,
+        "subject": "horse",
+        "texture": {
+          "path": "res://assets/holiday/characters/cast_v2/horse.png"
+        },
+        "transform": [
+          -0.0876583680510521,
+          0,
+          0,
+          0.0875382721424103,
+          636.048217773438,
+          464.805847167969
+        ]
+      },
+      {
+        "centered": true,
+        "depth": 488,
+        "flip_h": false,
+        "flip_v": false,
+        "frames": [
+          1,
+          1,
+          0
+        ],
+        "gait": {
+          "amount": 0,
+          "face_override": false,
+          "foot_split": 0.5,
+          "grounded_stride": true,
+          "hip": 0.667224880382775,
+          "lift_uv": 0.0153269537480064,
+          "native_walk_face": -1,
+          "phase": 3.95663473430798,
+          "stride_uv": 0.291212121212121
+        },
+        "kind": "sprite",
+        "modulate": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "offset": [
+          81.5999755859375,
+          -575
+        ],
+        "order": 11,
+        "subject": "cow",
+        "texture": {
+          "path": "res://assets/holiday/characters/cast_v2/cow_chew.png"
+        },
+        "transform": [
+          -0.0964402854442596,
+          0,
+          0,
+          0.0961699113249779,
+          479.460327148438,
+          488.227661132812
+        ]
+      },
+      {
+        "centered": true,
+        "depth": 494,
+        "flip_h": false,
+        "flip_v": false,
+        "frames": [
+          1,
+          1,
+          0
+        ],
+        "gait": {
+          "amount": 0,
+          "face_override": false,
+          "foot_split": 0.5,
+          "grounded_stride": true,
+          "hip": 0.721818181818182,
+          "lift_uv": 0.0220980258131961,
+          "native_walk_face": -1,
+          "phase": 6.01157819725604,
+          "stride_uv": 0.331470387197941
+        },
+        "kind": "sprite",
+        "modulate": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "offset": [
+          -105.5,
+          -497
+        ],
+        "order": 10,
+        "subject": "sheep_b",
+        "texture": {
+          "path": "res://assets/holiday/characters/cast_v2/sheep_dull.png"
+        },
+        "transform": [
+          -0.0675238072872162,
+          0,
+          0,
+          0.0674151331186295,
+          392.431213378906,
+          493.838684082031
+        ]
+      },
+      {
+        "centered": true,
+        "depth": 508,
+        "flip_h": false,
+        "flip_v": false,
+        "frames": [
+          1,
+          1,
+          0
+        ],
+        "gait": {
+          "amount": 0,
+          "face_override": false,
+          "foot_split": 0.5,
+          "grounded_stride": true,
+          "hip": 0.76085326953748,
+          "lift_uv": 0.025267714741399,
+          "native_walk_face": 1,
+          "phase": 0.610652774711566,
+          "stride_uv": 0.277944862155388
+        },
+        "kind": "sprite",
+        "modulate": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "offset": [
+          -69.5,
+          -451
+        ],
+        "order": 8,
+        "subject": "goose",
+        "texture": {
+          "path": "res://assets/holiday/characters/cast_v2/goose_rest.png"
+        },
+        "transform": [
+          0.0604577027261257,
+          0,
+          0,
+          0.0604664944112301,
+          777.694030761719,
+          508.053405761719
+        ]
+      },
+      {
+        "centered": true,
+        "depth": 511,
+        "flip_h": false,
+        "flip_v": false,
+        "frames": [
+          1,
+          1,
+          0
+        ],
+        "gait": {
+          "amount": 1,
+          "expression": {
+            "path": "res://assets/holiday/characters/cast_v2/llama_happy.png"
+          },
+          "face_override": true,
+          "face_region": [
+            0.641945779323578,
+            0.179425835609436,
+            0.179425835609436,
+            0.127591699361801
+          ],
+          "foot_split": 0.5,
+          "grounded_stride": true,
+          "hip": 0.748261562998405,
+          "lift_uv": 0.0192503987240829,
+          "native_walk_face": 1,
+          "phase": 1.9862399454452,
+          "stride_uv": 0.288755980861244
+        },
+        "kind": "sprite",
+        "modulate": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "offset": [
+          70.5,
+          -600
+        ],
+        "order": 7,
+        "subject": "llama",
+        "texture": {
+          "path": "res://assets/holiday/characters/cast_v2/llama_smirk.png"
+        },
+        "transform": [
+          -0.0797325968742371,
+          0,
+          0,
+          0.0797325968742371,
+          471.688446044922,
+          510.960144042969
+        ]
+      },
+      {
+        "centered": true,
+        "depth": 515,
+        "flip_h": false,
+        "flip_v": false,
+        "frames": [
+          1,
+          1,
+          0
+        ],
+        "gait": {
+          "amount": 0,
+          "face_override": false,
+          "foot_split": 0.5,
+          "grounded_stride": true,
+          "hip": 0.732918660287081,
+          "lift_uv": 0.0246753246753247,
+          "native_walk_face": 1,
+          "phase": 5.29228519163909,
+          "stride_uv": 0.37012987012987
+        },
+        "kind": "sprite",
+        "modulate": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "offset": [
+          51,
+          -551
+        ],
+        "order": 9,
+        "subject": "sheep_a",
+        "texture": {
+          "path": "res://assets/holiday/characters/cast_v2/sheep_clingy.png"
+        },
+        "transform": [
+          0.0626299828290939,
+          0,
+          0,
+          0.0625867918133736,
+          317.575744628906,
+          515.178649902344
+        ]
+      },
+      {
+        "centered": false,
+        "depth": 600,
+        "flip_h": false,
+        "flip_v": false,
+        "frames": [
+          1,
+          1,
+          0
+        ],
+        "kind": "sprite",
+        "modulate": [
+          0.999377191066742,
+          0.999377191066742,
+          0.999377191066742,
+          0.824145376682281
+        ],
+        "offset": [
+          -164,
+          -289
+        ],
+        "order": 2,
+        "subject": "grass",
+        "texture": {
+          "atlas": "res://assets/holiday/fx/grass_states_v2.png",
+          "filter_clip": true,
+          "margin": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "region": [
+            562,
+            660,
+            328,
+            298
+          ]
+        },
+        "transform": [
+          0.0379746817052364,
+          0,
+          0,
+          0.0379746817052364,
+          330,
+          600
+        ]
+      },
+      {
+        "centered": false,
+        "depth": 600,
+        "flip_h": false,
+        "flip_v": false,
+        "frames": [
+          1,
+          1,
+          0
+        ],
+        "kind": "sprite",
+        "modulate": [
+          0.999377191066742,
+          0.999377191066742,
+          0.999377191066742,
+          0.175854593515396
+        ],
+        "offset": [
+          -237,
+          -909
+        ],
+        "order": 3,
+        "subject": "grass",
+        "texture": {
+          "atlas": "res://assets/holiday/fx/grass_states_v2.png",
+          "filter_clip": true,
+          "margin": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "region": [
+            64,
+            40,
+            474,
+            918
+          ]
+        },
+        "transform": [
+          0.0270208511501551,
+          0,
+          0,
+          0.0270208511501551,
+          330,
+          600
+        ]
+      },
+      {
+        "centered": false,
+        "depth": 600,
+        "flip_h": false,
+        "flip_v": false,
+        "frames": [
+          1,
+          1,
+          0
+        ],
+        "kind": "sprite",
+        "modulate": [
+          0.999377191066742,
+          0.999377191066742,
+          0.999377191066742,
+          1
+        ],
+        "offset": [
+          -237,
+          -909
+        ],
+        "order": 4,
+        "subject": "grass",
+        "texture": {
+          "atlas": "res://assets/holiday/fx/grass_states_v2.png",
+          "filter_clip": true,
+          "margin": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "region": [
+            64,
+            40,
+            474,
+            918
+          ]
+        },
+        "transform": [
+          0.0337552726268768,
+          0,
+          0,
+          0.0337552726268768,
+          350,
+          597
+        ]
+      },
+      {
+        "centered": true,
+        "depth": 614,
+        "flip_h": false,
+        "flip_v": false,
+        "frames": [
+          1,
+          1,
+          0
+        ],
+        "gait": {
+          "amount": 0,
+          "face_override": false,
+          "foot_split": 0.5,
+          "grounded_stride": true,
+          "hip": 0.752631578947368,
+          "lift_uv": 0.053475935828877,
+          "native_walk_face": 1,
+          "phase": 2.92258199971642,
+          "stride_uv": 0.588235294117647
+        },
+        "kind": "sprite",
+        "modulate": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "offset": [
+          -43,
+          -578
+        ],
+        "order": 13,
+        "subject": "duck_a",
+        "texture": {
+          "path": "res://assets/holiday/characters/cast_v2/duck.png"
+        },
+        "transform": [
+          0.0334937795996666,
+          0,
+          0,
+          0.0333989299833775,
+          681.980895996094,
+          613.600402832031
+        ]
+      },
+      {
+        "centered": true,
+        "depth": 617,
+        "flip_h": false,
+        "flip_v": false,
+        "frames": [
+          1,
+          1,
+          0
+        ],
+        "gait": {
+          "amount": 0,
+          "face_override": false,
+          "foot_split": 0.5,
+          "grounded_stride": true,
+          "hip": 0.752631578947368,
+          "lift_uv": 0.0552009660169053,
+          "native_walk_face": 1,
+          "phase": 4.15500912187894,
+          "stride_uv": 0.607210626185958
+        },
+        "kind": "sprite",
+        "modulate": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "offset": [
+          -43,
+          -578
+        ],
+        "order": 15,
+        "subject": "duck_c",
+        "texture": {
+          "path": "res://assets/holiday/characters/cast_v2/duck.png"
+        },
+        "transform": [
+          0.0325906872749329,
+          0,
+          0,
+          0.0326723791658878,
+          716.202697753906,
+          616.775512695312
+        ]
+      },
+      {
+        "centered": true,
+        "depth": 618,
+        "flip_h": false,
+        "flip_v": false,
+        "frames": [
+          1,
+          1,
+          0
+        ],
+        "gait": {
+          "amount": 0,
+          "face_override": false,
+          "foot_split": 0.5,
+          "grounded_stride": true,
+          "hip": 0.752631578947368,
+          "lift_uv": 0.0570409982174688,
+          "native_walk_face": 1,
+          "phase": 2.80068223611139,
+          "stride_uv": 0.627450980392157
+        },
+        "kind": "sprite",
+        "modulate": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "offset": [
+          -43,
+          -578
+        ],
+        "order": 14,
+        "subject": "duck_b",
+        "texture": {
+          "path": "res://assets/holiday/characters/cast_v2/duck.png"
+        },
+        "transform": [
+          -0.0315914638340473,
+          0,
+          0,
+          0.0315787196159363,
+          696.886535644531,
+          617.965698242188
+        ]
+      }
+    ],
+    "rule_id": "llama_sun_sheep_happy",
+    "shadows": [
+      [
+        471.688446044922,
+        510.960144042969,
+        23.0969390869141,
+        4.44616031646729
+      ],
+      [
+        777.694030761719,
+        508.053405761719,
+        13.4095182418823,
+        3.21828436851501
+      ],
+      [
+        317.575744628906,
+        515.178649902344,
+        22.2864322662354,
+        4.06969594955444
+      ],
+      [
+        392.431213378906,
+        493.838684082031,
+        21.5181922912598,
+        3.92940878868103
+      ],
+      [
+        479.460327148438,
+        488.227661132812,
+        33.3644790649414,
+        5.06027984619141
+      ],
+      [
+        636.048217773438,
+        464.805847167969,
+        32.0447120666504,
+        4.86011457443237
+      ],
+      [
+        681.980895996094,
+        613.600402832031,
+        11.2302675247192,
+        2.35835599899292
+      ],
+      [
+        696.886535644531,
+        617.965698242188,
+        11.2985935211182,
+        2.37270450592041
+      ],
+      [
+        716.202697753906,
+        616.775512695312,
+        11.2799644470215,
+        2.36879253387451
+      ]
+    ],
+    "span": 220,
+    "version": 1,
+    "weather": "sun",
+    "world_size": [
+      1280,
+      720
+    ]
+  },
+  "sheep_pet_gentle": {
+    "background": {
+      "centered": false,
+      "depth": -1,
+      "flip_h": false,
+      "flip_v": false,
+      "frames": [
+        1,
+        1,
+        0
+      ],
+      "kind": "sprite",
+      "modulate": [
+        1,
+        0.996399998664856,
+        0.987999975681305,
+        1
+      ],
+      "offset": [
+        0,
+        0
+      ],
+      "order": 0,
+      "subject": "background",
+      "texture": {
+        "path": "res://assets/holiday/environment/yard_sunny.png"
+      },
+      "transform": [
+        0.666666686534882,
+        0,
+        0,
+        0.666666686534882,
+        0,
+        0
+      ]
+    },
+    "caption_variant": 0,
+    "day": 1,
+    "focus": [
+      341.924743652344,
+      465.880157470703
+    ],
+    "items": [
+      {
+        "centered": false,
+        "depth": -1,
+        "flip_h": false,
+        "flip_v": false,
+        "frames": [
+          1,
+          1,
+          0
+        ],
+        "kind": "sprite",
+        "modulate": [
+          1.00287997722626,
+          1.0019199848175,
+          1.00095999240875,
+          1
+        ],
+        "offset": [
+          0,
+          0
+        ],
+        "order": 0,
+        "subject": "",
+        "texture": {
+          "path": "res://assets/holiday/environment/cloud_band_morning.png"
+        },
+        "transform": [
+          0.666666686534882,
+          0,
+          0,
+          0.666666686534882,
+          -130.873382568359,
+          18
+        ]
+      },
+      {
+        "centered": false,
+        "depth": -1,
+        "flip_h": false,
+        "flip_v": false,
+        "frames": [
+          1,
+          1,
+          0
+        ],
+        "kind": "sprite",
+        "modulate": [
+          1.00287997722626,
+          1.0019199848175,
+          1.00095999240875,
+          1
+        ],
+        "offset": [
+          0,
+          0
+        ],
+        "order": 1,
+        "subject": "",
+        "texture": {
+          "path": "res://assets/holiday/environment/cloud_band_morning.png"
+        },
+        "transform": [
+          0.666666686534882,
+          0,
+          0,
+          0.666666686534882,
+          1149.12670898438,
+          18
+        ]
+      },
+      {
+        "depth": 0,
+        "kind": "prop",
+        "modulate": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "order": 14,
+        "state": {
+          "harvest_flash": 0,
+          "nearby": false,
+          "phase": 20.1343666666667,
+          "plant_state": 0,
+          "reduced_motion": false,
+          "soil_reveal": 0
+        },
+        "subject": "plant",
+        "transform": [
+          1,
+          0,
+          0,
+          1,
+          205,
+          575
+        ]
+      },
+      {
+        "depth": 0,
+        "kind": "prop",
+        "modulate": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "order": 15,
+        "state": {
+          "fish_state": 0,
+          "fish_type": "",
+          "nearby": false,
+          "phase": 20.1343666666667,
+          "reduced_motion": false
+        },
+        "subject": "fishing",
+        "transform": [
+          1,
+          0,
+          0,
+          1,
+          700,
+          535
+        ]
+      },
+      {
+        "centered": true,
+        "depth": 469,
+        "flip_h": false,
+        "flip_v": false,
+        "frames": [
+          1,
+          1,
+          0
+        ],
+        "gait": {
+          "amount": 0,
+          "expression": {
+            "path": "res://assets/holiday/characters/cast_v2/llama_idle.png"
+          },
+          "face_override": true,
+          "face_region": [
+            0.641945779323578,
+            0.179425835609436,
+            0.179425835609436,
+            0.127591699361801
+          ],
+          "foot_split": 0.5,
+          "grounded_stride": true,
+          "hip": 0.748261562998405,
+          "lift_uv": 0.0192503987240829,
+          "native_walk_face": 1,
+          "phase": 2.63317836910453,
+          "stride_uv": 0.288755980861244
+        },
+        "kind": "sprite",
+        "modulate": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "offset": [
+          70.5,
+          -600
+        ],
+        "order": 5,
+        "subject": "llama",
+        "texture": {
+          "path": "res://assets/holiday/characters/cast_v2/llama_smirk.png"
+        },
+        "transform": [
+          0.0743413493037224,
+          0,
+          0,
+          0.0743323937058449,
+          682.733764648438,
+          469.386169433594
+        ]
+      },
+      {
+        "centered": true,
+        "depth": 472,
+        "flip_h": false,
+        "flip_v": false,
+        "frames": [
+          1,
+          1,
+          0
+        ],
+        "gait": {
+          "amount": 0,
+          "face_override": false,
+          "foot_split": 0.5,
+          "grounded_stride": true,
+          "hip": 0.677751196172249,
+          "lift_uv": 0.0161954472959258,
+          "native_walk_face": -1,
+          "phase": 3.85833502341293,
+          "stride_uv": 0.30771349862259
+        },
+        "kind": "sprite",
+        "modulate": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "offset": [
+          -172.5,
+          -557
+        ],
+        "order": 10,
+        "subject": "horse",
+        "texture": {
+          "path": "res://assets/holiday/characters/cast_v2/horse.png"
+        },
+        "transform": [
+          0.0887565538287163,
+          0,
+          0,
+          0.0888151451945305,
+          603.685974121094,
+          471.930450439453
+        ]
+      },
+      {
+        "centered": true,
+        "depth": 485,
+        "flip_h": false,
+        "flip_v": false,
+        "frames": [
+          1,
+          1,
+          0
+        ],
+        "gait": {
+          "amount": 0,
+          "face_override": false,
+          "foot_split": 0.5,
+          "grounded_stride": true,
+          "hip": 0.667224880382775,
+          "lift_uv": 0.0153269537480064,
+          "native_walk_face": -1,
+          "phase": 3.61306759376228,
+          "stride_uv": 0.291212121212121
+        },
+        "kind": "sprite",
+        "modulate": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "offset": [
+          -92,
+          -497
+        ],
+        "order": 9,
+        "subject": "cow",
+        "texture": {
+          "path": "res://assets/holiday/characters/cast_v2/cow.png"
+        },
+        "transform": [
+          -0.0958422124385834,
+          0,
+          0,
+          0.096127949655056,
+          478.953430175781,
+          484.5556640625
+        ]
+      },
+      {
+        "centered": true,
+        "depth": 486,
+        "flip_h": false,
+        "flip_v": false,
+        "frames": [
+          1,
+          1,
+          0
+        ],
+        "gait": {
+          "amount": 0,
+          "face_override": false,
+          "foot_split": 0.5,
+          "grounded_stride": true,
+          "hip": 0.721818181818182,
+          "lift_uv": 0.0220980258131961,
+          "native_walk_face": -1,
+          "phase": 0.559962724502133,
+          "stride_uv": 0.331470387197941
+        },
+        "kind": "sprite",
+        "modulate": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "offset": [
+          -105.5,
+          -497
+        ],
+        "order": 8,
+        "subject": "sheep_b",
+        "texture": {
+          "path": "res://assets/holiday/characters/cast_v2/sheep_dull.png"
+        },
+        "transform": [
+          -0.0666661933064461,
+          0,
+          0,
+          0.0667279362678528,
+          360.789733886719,
+          486.247009277344
+        ]
+      },
+      {
+        "centered": true,
+        "depth": 506,
+        "flip_h": false,
+        "flip_v": false,
+        "frames": [
+          1,
+          1,
+          0
+        ],
+        "gait": {
+          "amount": 0,
+          "face_override": false,
+          "foot_split": 0.5,
+          "grounded_stride": true,
+          "hip": 0.76085326953748,
+          "lift_uv": 0.025267714741399,
+          "native_walk_face": 1,
+          "phase": 2.60379076829243,
+          "stride_uv": 0.277944862155388
+        },
+        "kind": "sprite",
+        "modulate": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "offset": [
+          -69.5,
+          -451
+        ],
+        "order": 6,
+        "subject": "goose",
+        "texture": {
+          "path": "res://assets/holiday/characters/cast_v2/goose_rest.png"
+        },
+        "transform": [
+          0.0603036135435104,
+          0,
+          0,
+          0.0602499917149544,
+          767.376159667969,
+          506.493743896484
+        ]
+      },
+      {
+        "centered": true,
+        "depth": 516,
+        "flip_h": false,
+        "flip_v": false,
+        "frames": [
+          1,
+          1,
+          0
+        ],
+        "gait": {
+          "amount": 0,
+          "face_override": false,
+          "foot_split": 0.5,
+          "grounded_stride": true,
+          "hip": 0.732918660287081,
+          "lift_uv": 0.0246753246753247,
+          "native_walk_face": 1,
+          "phase": 2.67381605554418,
+          "stride_uv": 0.37012987012987
+        },
+        "kind": "sprite",
+        "modulate": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "offset": [
+          51,
+          -551
+        ],
+        "order": 7,
+        "subject": "sheep_a",
+        "texture": {
+          "path": "res://assets/holiday/characters/cast_v2/sheep_clingy.png"
+        },
+        "transform": [
+          0.0626879408955574,
+          0,
+          0,
+          0.0626840889453888,
+          310.335021972656,
+          515.751525878906
+        ]
+      },
+      {
+        "centered": true,
+        "depth": 586,
+        "flip_h": false,
+        "flip_v": false,
+        "frames": [
+          1,
+          1,
+          0
+        ],
+        "gait": {
+          "amount": 0,
+          "face_override": false,
+          "foot_split": 0.5,
+          "grounded_stride": true,
+          "hip": 0.752631578947368,
+          "lift_uv": 0.053475935828877,
+          "native_walk_face": 1,
+          "phase": 1.84040239641067,
+          "stride_uv": 0.588235294117647
+        },
+        "kind": "sprite",
+        "modulate": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "offset": [
+          -43,
+          -578
+        ],
+        "order": 11,
+        "subject": "duck_a",
+        "texture": {
+          "path": "res://assets/holiday/characters/cast_v2/duck.png"
+        },
+        "transform": [
+          -0.0321886353194714,
+          0,
+          0,
+          0.032268937677145,
+          661.201232910156,
+          585.642150878906
+        ]
+      },
+      {
+        "centered": true,
+        "depth": 598,
+        "flip_h": false,
+        "flip_v": false,
+        "frames": [
+          1,
+          1,
+          0
+        ],
+        "gait": {
+          "amount": 0,
+          "face_override": false,
+          "foot_split": 0.5,
+          "grounded_stride": true,
+          "hip": 0.752631578947368,
+          "lift_uv": 0.0570409982174688,
+          "native_walk_face": 1,
+          "phase": 1.57065164523137,
+          "stride_uv": 0.627450980392157
+        },
+        "kind": "sprite",
+        "modulate": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "offset": [
+          74.7000122070312,
+          -575
+        ],
+        "order": 12,
+        "subject": "duck_b",
+        "texture": {
+          "path": "res://assets/holiday/characters/cast_v2/duck_preen.png"
+        },
+        "transform": [
+          0.0307164117693901,
+          0,
+          0,
+          0.0307512134313583,
+          768.097778320312,
+          597.971069335938
+        ]
+      },
+      {
+        "centered": true,
+        "depth": 599,
+        "flip_h": false,
+        "flip_v": false,
+        "frames": [
+          1,
+          1,
+          0
+        ],
+        "gait": {
+          "amount": 0,
+          "face_override": false,
+          "foot_split": 0.5,
+          "grounded_stride": true,
+          "hip": 0.752631578947368,
+          "lift_uv": 0.0552009660169053,
+          "native_walk_face": 1,
+          "phase": 1.96673019915426,
+          "stride_uv": 0.607210626185958
+        },
+        "kind": "sprite",
+        "modulate": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "offset": [
+          -43,
+          -578
+        ],
+        "order": 13,
+        "subject": "duck_c",
+        "texture": {
+          "path": "res://assets/holiday/characters/cast_v2/duck.png"
+        },
+        "transform": [
+          0.0318037047982216,
+          0,
+          0,
+          0.031739603728056,
+          664.987548828125,
+          599.373291015625
+        ]
+      },
+      {
+        "centered": false,
+        "depth": 600,
+        "flip_h": false,
+        "flip_v": false,
+        "frames": [
+          1,
+          1,
+          0
+        ],
+        "kind": "sprite",
+        "modulate": [
+          0.978430569171906,
+          0.978430569171906,
+          0.978430569171906,
+          1
+        ],
+        "offset": [
+          -237,
+          -909
+        ],
+        "order": 2,
+        "subject": "grass",
+        "texture": {
+          "atlas": "res://assets/holiday/fx/grass_states_v2.png",
+          "filter_clip": true,
+          "margin": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "region": [
+            64,
+            40,
+            474,
+            918
+          ]
+        },
+        "transform": [
+          0.0379746817052364,
+          0,
+          0,
+          0.0379746817052364,
+          330,
+          600
+        ]
+      },
+      {
+        "centered": false,
+        "depth": 600,
+        "flip_h": false,
+        "flip_v": false,
+        "frames": [
+          1,
+          1,
+          0
+        ],
+        "kind": "sprite",
+        "modulate": [
+          0.978430569171906,
+          0.978430569171906,
+          0.978430569171906,
+          1
+        ],
+        "offset": [
+          -237,
+          -909
+        ],
+        "order": 3,
+        "subject": "grass",
+        "texture": {
+          "atlas": "res://assets/holiday/fx/grass_states_v2.png",
+          "filter_clip": true,
+          "margin": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "region": [
+            64,
+            40,
+            474,
+            918
+          ]
+        },
+        "transform": [
+          0.0337552726268768,
+          0,
+          0,
+          0.0337552726268768,
+          350,
+          597
+        ]
+      }
+    ],
+    "rule_id": "sheep_pet_gentle",
+    "shadows": [
+      [
+        682.733764648438,
+        469.386169433594,
+        21.5352020263672,
+        4.14552640914917
+      ],
+      [
+        767.376159667969,
+        506.493743896484,
+        13.3753414154053,
+        3.2100818157196
+      ],
+      [
+        310.335021972656,
+        515.751525878906,
+        22.3070545196533,
+        4.07346200942993
+      ],
+      [
+        360.789733886719,
+        486.247009277344,
+        21.2448921203613,
+        3.8795018196106
+      ],
+      [
+        478.953430175781,
+        484.5556640625,
+        33.1575698852539,
+        5.02889823913574
+      ],
+      [
+        603.685974121094,
+        471.930450439453,
+        32.4461669921875,
+        4.92100191116333
+      ],
+      [
+        661.201232910156,
+        585.642150878906,
+        10.7926597595215,
+        2.26645851135254
+      ],
+      [
+        768.097778320312,
+        597.971069335938,
+        10.9856338500977,
+        2.30698299407959
+      ],
+      [
+        664.987548828125,
+        599.373291015625,
+        11.0075817108154,
+        2.31159210205078
+      ]
+    ],
+    "span": 220,
+    "version": 1,
+    "weather": "sun",
+    "world_size": [
+      1280,
+      720
+    ]
+  }
+}

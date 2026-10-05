@@ -1,0 +1,63 @@
+import json,time,hashlib
+from pathlib import Path
+from playwright.sync_api import sync_playwright
+out=Path('/tmp/post-save-public');out.mkdir(exist_ok=True)
+commands=out/'commands.jsonl';commands.write_text('')
+events=[];errors=[];responses=[]
+url='https://narutojzm1-dot.github.io/youjia/'
+init="""window.qaFirst=false;window.qaInput=[];window.qaFrames=[];
+addEventListener('youjia:first-frame',()=>window.qaFirst=true);
+for(const type of ['pointerdown','pointerup','mousedown','mouseup','keydown','keyup'])
+ document.addEventListener(type,e=>{window.qaInput.push({type,t:performance.now(),x:e.clientX,y:e.clientY,key:e.key,trusted:e.isTrusted});if(window.qaInput.length>400)window.qaInput.shift()},true);
+const tick=t=>{window.qaFrames.push(t);if(window.qaFrames.length>1000)window.qaFrames.shift();requestAnimationFrame(tick)};requestAnimationFrame(tick);"""
+readsave="""async()=>{const names=await indexedDB.databases();if(!names.some(x=>x.name==='youjia-save-host-v1'))return null;
+const db=await new Promise((ok,bad)=>{const r=indexedDB.open('youjia-save-host-v1');r.onsuccess=()=>ok(r.result);r.onerror=()=>bad(r.error)});
+return await new Promise((ok,bad)=>{const tx=db.transaction('records','readonly'),s=tx.objectStore('records');let c=null,intent=null;
+s.get('current').onsuccess=e=>c=e.target.result;s.get('intent').onsuccess=e=>intent=e.target.result;
+tx.oncomplete=()=>{db.close();ok(c?{generation:c.generation,payload_sha256:c.payload_sha256,envelope_sha256:c.envelope_sha256,payload:JSON.parse(c.payload_bytes),pending_intent:!!intent}:null)};tx.onabort=()=>{db.close();bad(tx.error)}})}"""
+with sync_playwright() as pw:
+ def launch():
+  ctx=pw.chromium.launch_persistent_context('/tmp/post-save-public-profile',executable_path='/usr/bin/chromium',headless=True,viewport={'width':1280,'height':720},device_scale_factor=1,args=['--no-sandbox','--use-gl=angle','--use-angle=swiftshader','--enable-webgl'])
+  ctx.add_init_script(init);pg=ctx.pages[0]
+  pg.on('pageerror',lambda e:errors.append(str(e)));pg.on('console',lambda m:errors.append(m.text) if m.type=='error' else None)
+  pg.on('response',lambda r:responses.append({'url':r.url,'status':r.status}) if any(x in r.url for x in ['.pck','.wasm','.js','.mjs']) else None)
+  pg.goto(url);pg.wait_for_function('window.qaFirst',timeout=120000);pg.wait_for_timeout(1000)
+  return ctx,pg
+ ctx,page=launch()
+ def snap(name,png=True):
+  d=page.evaluate('window.__manusBgm ? JSON.parse(window.__manusBgm.diagnostics()) : null')
+  saved=page.evaluate(readsave)
+  e={'stage':name,'utc':time.strftime('%Y-%m-%dT%H:%M:%SZ',time.gmtime()),'build':page.locator('html').get_attribute('data-build'),'viewport':page.viewport_size,'backend':d,'saved':saved,'errors':list(errors)}
+  if png:page.screenshot(path=str(out/(name+'.png')))
+  events.append(e);(out/'events.json').write_text(json.dumps(events,ensure_ascii=False,indent=2)+'\n')
+  print(json.dumps({'stage':name,'build':e['build'],'playing':d.get('playing') if d else None,'generation':saved.get('generation') if saved else None,'payload_keys':list(saved.get('payload',{})) if saved else None,'errors':errors},ensure_ascii=False),flush=True)
+  return e
+ snap('00-cold-title');seen=0
+ while True:
+  lines=commands.read_text().splitlines()
+  if seen>=len(lines):page.wait_for_timeout(200);continue
+  c=json.loads(lines[seen]);seen+=1;kind=c['kind'];name=c.get('name',f'{seen:02}-step')
+  try:
+   if kind=='click':page.mouse.click(c['x'],c['y'],delay=c.get('hold',80));page.wait_for_timeout(c.get('wait',800));snap(name)
+   elif kind=='key':page.keyboard.press(c['key']);page.wait_for_timeout(c.get('wait',800));snap(name)
+   elif kind=='walk':page.keyboard.down(c['key']);page.wait_for_timeout(c.get('ms',1000));page.keyboard.up(c['key']);page.wait_for_timeout(500);snap(name)
+   elif kind=='wait':page.wait_for_timeout(c.get('ms',1000));snap(name)
+   elif kind=='resize':page.set_viewport_size({'width':c['width'],'height':c['height']});page.wait_for_timeout(800);snap(name)
+   elif kind=='reopen':ctx.close();ctx,page=launch();snap(name)
+   elif kind=='fast':
+    trials=[]
+    for hold in c.get('holds',[0,80]):
+     for track,y in [('music',346),('ambience',481)]:
+      for i in range(20):
+       before=page.evaluate('JSON.parse(__manusBgm.diagnostics())');t=page.evaluate('performance.now()')
+       page.mouse.click(640,y,delay=hold);page.wait_for_timeout(c.get('wait',180))
+       after=page.evaluate('JSON.parse(__manusBgm.diagnostics())')
+       probe=page.evaluate('(t)=>({input:qaInput.filter(x=>x.t>=t),frames:qaFrames.filter(x=>x>=t)})',t)
+       trials.append({'hold_ms':hold,'track':track,'n':i+1,'wait_ms':c.get('wait',180),'before':before,'after':after,'changed':before['playing']!=after['playing'],'probe':probe})
+    (out/(name+'.json')).write_text(json.dumps(trials,ensure_ascii=False,indent=2)+'\n');print(json.dumps({'stage':name,'trials':len(trials),'unchanged':[{'hold':x['hold_ms'],'track':x['track'],'n':x['n']} for x in trials if not x['changed']]}),flush=True);snap(name)
+   elif kind=='finish':
+    snap(name);(out/'result.json').write_text(json.dumps({'url':url,'events':events,'errors':errors,'responses':responses,'scope':'actual public persistent Chromium profile; real mouse/keyboard; read-only audio and IndexedDB; no engine/state/seed/time injections; no physical device or hearing claim'},ensure_ascii=False,indent=2)+'\n');ctx.close();break
+   else:raise ValueError(kind)
+   (out/f'ack-{seen}.json').write_text(json.dumps({'ok':True,'command':c}))
+  except Exception as exc:
+   (out/f'ack-{seen}.json').write_text(json.dumps({'ok':False,'command':c,'error':str(exc)}));print('COMMAND ERROR '+str(exc),flush=True)
