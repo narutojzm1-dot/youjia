@@ -1,0 +1,22 @@
+{
+  "youjia-save-host-v1": {
+    "records": {
+      "keys": [
+        "current"
+      ],
+      "values": [
+        {
+          "schema": "youjia.save-envelope/v1",
+          "store_id": "ce4ce588ed3d4d16b330126dcfe55de9",
+          "commit_id": "aa8bddf966e540b19030644e56b06079",
+          "request_id": "def2b87ff87f4e2eba2ed898233cc3e5",
+          "parent_commit_id": "",
+          "generation": "1",
+          "payload_bytes": "{\"album\":[],\"animal_relationship_memory\":{},\"exploration\":null,\"exploration_committed_serial\":0,\"first_fish_caught\":false,\"holiday_day\":1,\"holiday_day_elapsed\":0.0,\"keepsakes\":{},\"locale\":\"zh-CN\",\"photo_moments\":{},\"plant_day_planted\":0,\"plant_state\":0,\"plant_watered_day\":-1,\"tutorial_version\":0,\"version\":5}",
+          "payload_sha256": "210b622956195286ba2f9c99c822b593aa7a599a8a9ec320ff434a8711dd2e6e",
+          "envelope_sha256": "1ed8773a24f41ec3b85dbd94817d15eb14de9b2b82d58f1fd11a62a1839f26a7"
+        }
+      ]
+    }
+  }
+}

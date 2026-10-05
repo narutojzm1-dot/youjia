@@ -1,0 +1,169 @@
+{
+  "samples": {
+    "00-restored-settings-initial-db.json": {
+      "record_keys": [
+        "current"
+      ],
+      "generation": "1",
+      "file_sha256": "246a1f5fa2499545c4f2690b2e1f635687e481e6b07e347ddaf8813849ef58f1",
+      "memory": {},
+      "album": [],
+      "photo_sha256": {}
+    },
+    "02-before-relationship-db.json": {
+      "record_keys": [
+        "current"
+      ],
+      "generation": "2",
+      "file_sha256": "bfc61fdbda627a21e7cd68db42d41dac921842f1420d1fa36527a13a69a74198",
+      "memory": {},
+      "album": [
+        "sheep_pet_gentle"
+      ],
+      "photo_sha256": {
+        "sheep_pet_gentle": "5861ef05a097a79a30a4d0019e94f77d32e729efe819db64b25745c68dafaaf3"
+      }
+    },
+    "04-after90s-db.json": {
+      "record_keys": [
+        "current"
+      ],
+      "generation": "8",
+      "file_sha256": "54314ab26758f998660c746c930e6d5de752210c7288c03b5e15e417cb781244",
+      "memory": {
+        "goose_llama_shared_space_after_player_lead": true
+      },
+      "album": [
+        "sheep_pet_gentle",
+        "llama_overcast_goose_annoyed",
+        "goose_horse_mount"
+      ],
+      "photo_sha256": {
+        "goose_horse_mount": "a02b37404d71cab2b6ca34905cf232add9277eb2d6556ab6c4436c4559a8d5b2",
+        "llama_overcast_goose_annoyed": "63446820b8fe561fe1b5d0c61f36151c0c23ad8e25207e1900fe29faa782fdd9",
+        "sheep_pet_gentle": "5861ef05a097a79a30a4d0019e94f77d32e729efe819db64b25745c68dafaaf3"
+      }
+    },
+    "05-settled-before-close-db.json": {
+      "record_keys": [
+        "current"
+      ],
+      "generation": "8",
+      "file_sha256": "54314ab26758f998660c746c930e6d5de752210c7288c03b5e15e417cb781244",
+      "memory": {
+        "goose_llama_shared_space_after_player_lead": true
+      },
+      "album": [
+        "sheep_pet_gentle",
+        "llama_overcast_goose_annoyed",
+        "goose_horse_mount"
+      ],
+      "photo_sha256": {
+        "goose_horse_mount": "a02b37404d71cab2b6ca34905cf232add9277eb2d6556ab6c4436c4559a8d5b2",
+        "llama_overcast_goose_annoyed": "63446820b8fe561fe1b5d0c61f36151c0c23ad8e25207e1900fe29faa782fdd9",
+        "sheep_pet_gentle": "5861ef05a097a79a30a4d0019e94f77d32e729efe819db64b25745c68dafaaf3"
+      }
+    },
+    "06-reopened-title-db.json": {
+      "record_keys": [
+        "current"
+      ],
+      "generation": "8",
+      "file_sha256": "54314ab26758f998660c746c930e6d5de752210c7288c03b5e15e417cb781244",
+      "memory": {
+        "goose_llama_shared_space_after_player_lead": true
+      },
+      "album": [
+        "sheep_pet_gentle",
+        "llama_overcast_goose_annoyed",
+        "goose_horse_mount"
+      ],
+      "photo_sha256": {
+        "goose_horse_mount": "a02b37404d71cab2b6ca34905cf232add9277eb2d6556ab6c4436c4559a8d5b2",
+        "llama_overcast_goose_annoyed": "63446820b8fe561fe1b5d0c61f36151c0c23ad8e25207e1900fe29faa782fdd9",
+        "sheep_pet_gentle": "5861ef05a097a79a30a4d0019e94f77d32e729efe819db64b25745c68dafaaf3"
+      }
+    },
+    "08-reopened-album-db.json": {
+      "record_keys": [
+        "current"
+      ],
+      "generation": "8",
+      "file_sha256": "54314ab26758f998660c746c930e6d5de752210c7288c03b5e15e417cb781244",
+      "memory": {
+        "goose_llama_shared_space_after_player_lead": true
+      },
+      "album": [
+        "sheep_pet_gentle",
+        "llama_overcast_goose_annoyed",
+        "goose_horse_mount"
+      ],
+      "photo_sha256": {
+        "goose_horse_mount": "a02b37404d71cab2b6ca34905cf232add9277eb2d6556ab6c4436c4559a8d5b2",
+        "llama_overcast_goose_annoyed": "63446820b8fe561fe1b5d0c61f36151c0c23ad8e25207e1900fe29faa782fdd9",
+        "sheep_pet_gentle": "5861ef05a097a79a30a4d0019e94f77d32e729efe819db64b25745c68dafaaf3"
+      }
+    },
+    "09-settled-reopened-db.json": {
+      "record_keys": [
+        "current"
+      ],
+      "generation": "8",
+      "file_sha256": "54314ab26758f998660c746c930e6d5de752210c7288c03b5e15e417cb781244",
+      "memory": {
+        "goose_llama_shared_space_after_player_lead": true
+      },
+      "album": [
+        "sheep_pet_gentle",
+        "llama_overcast_goose_annoyed",
+        "goose_horse_mount"
+      ],
+      "photo_sha256": {
+        "goose_horse_mount": "a02b37404d71cab2b6ca34905cf232add9277eb2d6556ab6c4436c4559a8d5b2",
+        "llama_overcast_goose_annoyed": "63446820b8fe561fe1b5d0c61f36151c0c23ad8e25207e1900fe29faa782fdd9",
+        "sheep_pet_gentle": "5861ef05a097a79a30a4d0019e94f77d32e729efe819db64b25745c68dafaaf3"
+      }
+    },
+    "attempt1-after15s-db.json": {
+      "record_keys": [
+        "current",
+        "intent"
+      ],
+      "generation": "7",
+      "file_sha256": "295b039dffaf6506643988a32e578801365e93ad2bd707a6c9ca7636452c5ca0",
+      "memory": {
+        "goose_llama_shared_space_after_player_lead": true
+      },
+      "album": [
+        "sheep_pet_gentle",
+        "llama_overcast_goose_annoyed",
+        "goose_horse_mount"
+      ],
+      "photo_sha256": {
+        "goose_horse_mount": "a02b37404d71cab2b6ca34905cf232add9277eb2d6556ab6c4436c4559a8d5b2",
+        "llama_overcast_goose_annoyed": "63446820b8fe561fe1b5d0c61f36151c0c23ad8e25207e1900fe29faa782fdd9",
+        "sheep_pet_gentle": "5861ef05a097a79a30a4d0019e94f77d32e729efe819db64b25745c68dafaaf3"
+      }
+    },
+    "attempt1-away-db.json": {
+      "record_keys": [
+        "current"
+      ],
+      "generation": "4",
+      "file_sha256": "19ad258b0c21a99247a2a84108d3f3a87bba06ce3fe01b2e013a4d0b52f8059c",
+      "memory": {},
+      "album": [
+        "sheep_pet_gentle",
+        "llama_overcast_goose_annoyed"
+      ],
+      "photo_sha256": {
+        "llama_overcast_goose_annoyed": "63446820b8fe561fe1b5d0c61f36151c0c23ad8e25207e1900fe29faa782fdd9",
+        "sheep_pet_gentle": "5861ef05a097a79a30a4d0019e94f77d32e729efe819db64b25745c68dafaaf3"
+      }
+    }
+  },
+  "settled_five_files_byte_identical": true,
+  "same_sheep_photo_before_and_after": true,
+  "first_attempt_memory_transition": true,
+  "scope": "Readonly IndexedDB observation, not on-screen relationship indicator or proof of 10% linger"
+}
