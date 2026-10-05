@@ -1146,6 +1146,10 @@ Leader原单5994160535认领现有goose_calm收翅站姿用于成功投鱼后关
 
 PR379已合入并发布d707113f8dde1636d24dfcff821518cd0555b277，Actions37314627037/Pages37315444581成功；公开/raw PCK25271456字节、098a4b70598a6bc261e26cf7ae9e38c5fb10ab5be07c8bdb7284c40f1fafe83a及十模块已核。独立公开两页严格绑定源，真实三物各1，trip一次intent故障后write10拒绝→write11提交→write12正常cleanup，同页最终撤提示且真关页完整DB一致。4秒暂态仍有禁用提示，不称立即恢复；见[原图/全DB/回执与发布原件](playtests/2026-10-05-exploration-retry-release/README.md)。另案cleanup失败API仍在研/Cloud idle未回执，不冒已修复或接口冻结；150/305继续，不是日版本、不因此发送日推。
 
+## 2026-10-05 PR373确认纸片公开鼠标几何验收
+
+PR373已合入/发布e0d699b8cbaecfabc24a70d2144a7188b5808880，Actions37315224106/Pages37316204902成功；13:23:39 UTC公开/raw PCK25272016字节、4c367301d2962621ffba4da8b033ac221d89a3ad861e5773f42f1713c8b7a5f2及十模块三方哈希通过。四个全新context逐页HTML/manifest完整源绑定，390/360 DPR2/3鼠标打开/取消/恢复和390横转居中已体验，13原图、驱动与原结果见[公开归档](playtests/2026-10-05-confirm373-release/README.md)。仅mouse，不冒touch/真机/听验或确认“好”返回标题；#382触摸公开问题独立PR386在审，不把候选当已修复。本归档没有新native测试，不是日版本。
+
 ## 2026-10-05 #36 首批热点公开限定验收
 
 CODEX-LEAD在公开1a3842c正常鼠标路径确认花箱/岸石/栅栏安全到达及蝴蝶、蜻蜓、落羽绘画回应；独立短步骤补真实钓鱼在途点栅栏不抢动作。第一次未开钓尝试不计通过，携鱼测试有照片覆盖层不计完整通过。即时打断、低动效真实UI、手机和完整携物仍缺；不将native或后续PR367混作本次Web。详见[关键原图与完整结果](playtests/2026-10-05-yard-hotspots-public/README.md)，REQ008/009与#36不宣称全闭环。
