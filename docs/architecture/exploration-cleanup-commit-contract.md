@@ -32,3 +32,7 @@ Cloud应登记cleanup op和其领域身份，保留unknown/resolve/ack原语义�
 ## 验证边界
 
 见[专项与门禁](../playtests/2026-10-05-exploration-cleanup-contract/README.md)。真实Native文件证据覆盖成功清理与失败原字节不变；受控backend证明失配不prepare、FIFO/未知/ack顺序。这里不是已接入的真实Web cleanup恢复体验。
+
+## 2026-10-06 领域调用者的无效参数终态
+
+PR427接入后曾在INVALID_ARGUMENT回退普通record写，绕过未知扩展保护。Leader保底修订仅令该码与PRECONDITION_CHANGED都终止本次自动重交，保留权威记录与失败；不得把INVALID解释为安全直写授权。支持范围内的普通写故障有限重试、unknown等待与Main精确失败快照不变。此项不会让不支持的记录自动恢复，也不新增重置/删除入口；后续需要能理解该记录的恢复方案。
