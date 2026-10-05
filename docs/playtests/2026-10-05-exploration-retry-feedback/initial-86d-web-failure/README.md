@@ -1,0 +1,1 @@
+86d1af6 旧候选 / PCK6d8b1faa0f6b2dc7b61252573c99a96e2ea0cac1c01330f721f2fa3df0c5309e 的真实失败，不是最终通过证据。普通UI自然三物品；record write10 intent put一次抛错→resolve rejected；已排队trip write11 confirmed，idle12 confirmed，三物各1/水位1，但面板仍留。实施者和review301均看过settle原图。旧Native仅在failure之后接受retry，遗漏先排队后失败的真实顺序。

@@ -1,0 +1,22 @@
+{
+  "youjia-save-host-v1": {
+    "records": {
+      "keys": [
+        "current"
+      ],
+      "values": [
+        {
+          "schema": "youjia.save-envelope/v1",
+          "store_id": "9231c8d734ef415c859c428745c25f12",
+          "commit_id": "0d735acb637443d1b5ec08766ec9b4da",
+          "request_id": "4b65c9affa9d48e6bce3499de25a55df",
+          "parent_commit_id": "220f7db86bda4351a44699cbce93fb7a",
+          "generation": "11",
+          "payload_bytes": "{\"album\":[],\"animal_relationship_memory\":{},\"exploration\":{\"contract_version\":1,\"next_trip_serial\":2,\"session\":{\"carried\":[\"formal.find.pine_cone\",\"formal.find.brook_stone\",\"formal.find.brook_stone\"],\"catalog\":\"formal\",\"current_stop\":\"slope\",\"failure\":null,\"offers\":{\"brook\":\"formal.find.brook_stone\",\"gate\":\"formal.find.feather\",\"shade\":\"formal.find.pine_cone\",\"slope\":\"formal.find.brook_stone\"},\"proposal\":{\"items\":[{\"find_id\":\"formal.find.pine_cone\"},{\"find_id\":\"formal.find.brook_stone\"},{\"find_id\":\"formal.find.brook_stone\"}],\"reason\":\"player\",\"revision\":1,\"route_id\":\"formal.near_path\",\"trip_id\":\"trip-1\"},\"record_revision\":10,\"rng_seed\":\"-6862519534105551274\",\"route_id\":\"formal.near_path\",\"started_clock\":{\"day\":1,\"elapsed\":5.9269},\"state\":\"pending_commit\",\"taken\":{\"brook\":\"formal.find.brook_stone\",\"shade\":\"formal.find.pine_cone\",\"slope\":\"formal.find.brook_stone\"},\"trip_id\":\"trip-1\",\"trip_serial\":1,\"visited\":[\"gate\",\"shade\",\"brook\",\"slope\"]}},\"exploration_committed_serial\":1,\"first_fish_caught\":false,\"holiday_day\":1,\"holiday_day_elapsed\":5.9269,\"keepsakes\":{\"formal.find.brook_stone\":2,\"formal.find.pine_cone\":1},\"locale\":\"zh-CN\",\"photo_moments\":{},\"plant_day_planted\":0,\"plant_state\":0,\"plant_watered_day\":-1,\"tutorial_version\":0,\"version\":5}",
+          "payload_sha256": "5c53b9a828e7ea0d43f4ae56d1359708b99c6ec73b60b433821657be4dee8fb0",
+          "envelope_sha256": "010c95e233dc6da74457bbea96afb9c9cbd7169c9078c25c413bd53283bdb2a7"
+        }
+      ]
+    }
+  }
+}

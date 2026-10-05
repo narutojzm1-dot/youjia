@@ -118,6 +118,9 @@ var _photo_arrival_queue: Array[Dictionary] = []
 var _pending_photo_saves: Dictionary = {}
 var _save_transition := false
 var _save_problems: Dictionary = {}
+var _save_exploration_scopes: Dictionary = {}
+var _save_exploration_coverage: Dictionary = {}
+var _save_exploration_sequence := 0
 var _save_durable_ops: Dictionary = {}
 var _save_problem_revision := 0
 var _save_untracked_problem := false
@@ -222,6 +225,7 @@ func _ready() -> void:
 			add_child(warning)
 		return
 	SaveStore.commit_confirmed.connect(_on_save_confirmed)
+	SaveStore.exploration_intent_accepted.connect(_on_exploration_save_accepted)
 	SaveStore.commit_rejected.connect(_on_save_rejected)
 	SaveStore.commit_unknown.connect(_on_save_problem)
 	SaveStore.persistence_state_changed.connect(_on_save_state_changed)
@@ -1103,7 +1107,34 @@ func _on_album_updated(collected: PackedStringArray, latest_id: String) -> void:
 	if _album_screen.visible: _rebuild_album(collected)
 
 
+func _on_exploration_save_accepted(op_id: String, kind: String, scope: Dictionary) -> void:
+	_save_exploration_sequence += 1
+	var accepted := scope.duplicate(true)
+	accepted["order"] = _save_exploration_sequence
+	accepted["kind"] = kind
+	_save_exploration_scopes[op_id] = accepted
+	var coverage := {}
+	for failed_id in _save_problems:
+		var problem: Dictionary = _save_problems[failed_id]
+		if _exploration_save_covers(accepted, problem):
+			coverage[failed_id] = problem.duplicate(true)
+	_save_exploration_coverage[op_id] = {"kind": kind, "problems": coverage}
+
+
+func _exploration_save_covers(accepted: Dictionary, problem: Dictionary) -> bool:
+	var prior: Dictionary = problem.get("scope", {})
+	if prior.is_empty() or prior.trip_id != accepted.trip_id or prior.serial != accepted.serial: return false
+	if prior.order >= accepted.order or prior.revision > accepted.revision: return false
+	if problem.kind == "exploration_trip":
+		return accepted.kind == "exploration_trip" and prior.finds == accepted.finds
+	return problem.kind == "exploration"
+
+
 func _on_save_confirmed(op_id: String, kind: String) -> void:
+	if _save_exploration_coverage.has(op_id) and _save_exploration_coverage[op_id].kind == kind:
+		_clear_covered_save_problems(_save_exploration_coverage[op_id].problems)
+		_save_exploration_coverage.erase(op_id)
+	_save_exploration_scopes.erase(op_id)
 	_save_durable_ops[op_id] = true
 	if _save_problems.get(op_id, {}).get("kind", "") == kind:
 		_save_problems.erase(op_id)
@@ -1148,11 +1179,20 @@ func _on_save_rejected(op_id: String, kind: String, code: String) -> void:
 	_pending_photo_saves.erase(op_id)
 	_save_retry_coverage.erase(op_id)
 	_on_save_problem(op_id, kind, code)
+	# Cloud may queue its trip after the return record, before that record fails.
+	# Only terminal rejection binds this exact failure revision to later accepted ops.
+	for pending_id in _save_exploration_scopes:
+		if _exploration_save_covers(_save_exploration_scopes[pending_id], _save_problems[op_id]):
+			_save_exploration_coverage[pending_id].problems[op_id] = _save_problems[op_id].duplicate(true)
+	_save_exploration_scopes.erase(op_id)
+	_save_exploration_coverage.erase(op_id)
 
 
 func _on_save_problem(op_id: String, kind: String, _code: String) -> void:
 	_save_problem_revision += 1
 	_save_problems[op_id] = {"kind": kind, "revision": _save_problem_revision, "durable": _save_durable_ops.has(op_id)}
+	if _save_exploration_scopes.has(op_id):
+		_save_problems[op_id]["scope"] = _save_exploration_scopes[op_id].duplicate(true)
 	_show_save_pending(false)
 
 

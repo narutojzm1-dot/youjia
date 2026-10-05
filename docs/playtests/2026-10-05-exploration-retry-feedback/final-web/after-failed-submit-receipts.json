@@ -1,0 +1,132 @@
+[
+  {
+    "type": "submit-call",
+    "args": [
+      "9479cad624234a61b23119c30a8b3e45",
+      "1"
+    ],
+    "time": 1791204705607
+  },
+  {
+    "type": "submit-reply",
+    "raw": "{\"schema\":\"youjia.save-receipt/v2\",\"namespace\":\"youjia-save-host-v1\",\"write_id\":\"1\",\"request_id\":\"9479cad624234a61b23119c30a8b3e45\",\"store_id\":\"9231c8d734ef415c859c428745c25f12\",\"candidate_token\":\"cb7bc9e0c8514ac6b6a72237ba45d28b\",\"parent_token\":\"6811748cf1404d03b17ac2349771e0cf\",\"observed_token\":\"cb7bc9e0c8514ac6b6a72237ba45d28b\",\"payload_sha256\":\"1eff1e4888368357b96f1ce16c5db2783d4b5dce78ae8fce74d056f78648613c\",\"generation\":\"2\",\"outcome\":\"confirmed\",\"transaction_state\":\"complete\",\"readback_verified\":true,\"old_write_terminated\":true}",
+    "time": 1791204708143
+  },
+  {
+    "type": "submit-call",
+    "args": [
+      "0dd0237352434b8a80221e8dcc46f406",
+      "2"
+    ],
+    "time": 1791204710540
+  },
+  {
+    "type": "submit-reply",
+    "raw": "{\"schema\":\"youjia.save-receipt/v2\",\"namespace\":\"youjia-save-host-v1\",\"write_id\":\"2\",\"request_id\":\"0dd0237352434b8a80221e8dcc46f406\",\"store_id\":\"9231c8d734ef415c859c428745c25f12\",\"candidate_token\":\"c5efb2b83d4c48e28bf98e08e64997fa\",\"parent_token\":\"cb7bc9e0c8514ac6b6a72237ba45d28b\",\"observed_token\":\"c5efb2b83d4c48e28bf98e08e64997fa\",\"payload_sha256\":\"ef42f4f172b7cf5577430c565faedf20314f825f82ff7be3bbe3f922d2ee7beb\",\"generation\":\"3\",\"outcome\":\"confirmed\",\"transaction_state\":\"complete\",\"readback_verified\":true,\"old_write_terminated\":true}",
+    "time": 1791204713294
+  },
+  {
+    "type": "submit-call",
+    "args": [
+      "a4e0980f21fe497ca3c1d1850ca6c2c1",
+      "3"
+    ],
+    "time": 1791204732343
+  },
+  {
+    "type": "submit-reply",
+    "raw": "{\"schema\":\"youjia.save-receipt/v2\",\"namespace\":\"youjia-save-host-v1\",\"write_id\":\"3\",\"request_id\":\"a4e0980f21fe497ca3c1d1850ca6c2c1\",\"store_id\":\"9231c8d734ef415c859c428745c25f12\",\"candidate_token\":\"536f83f45aac487f81b8206bdd866798\",\"parent_token\":\"c5efb2b83d4c48e28bf98e08e64997fa\",\"observed_token\":\"536f83f45aac487f81b8206bdd866798\",\"payload_sha256\":\"53162a8a8e2051f4a7737daaacf70a61ed95f979154b2b8fc841b9f911cd71d9\",\"generation\":\"4\",\"outcome\":\"confirmed\",\"transaction_state\":\"complete\",\"readback_verified\":true,\"old_write_terminated\":true}",
+    "time": 1791204734892
+  },
+  {
+    "type": "submit-call",
+    "args": [
+      "0b898063f4804a50bb4ddbe9bf0009e8",
+      "4"
+    ],
+    "time": 1791204749721
+  },
+  {
+    "type": "submit-reply",
+    "raw": "{\"schema\":\"youjia.save-receipt/v2\",\"namespace\":\"youjia-save-host-v1\",\"write_id\":\"4\",\"request_id\":\"0b898063f4804a50bb4ddbe9bf0009e8\",\"store_id\":\"9231c8d734ef415c859c428745c25f12\",\"candidate_token\":\"f7139650a5174b00ac499123bd58dc55\",\"parent_token\":\"536f83f45aac487f81b8206bdd866798\",\"observed_token\":\"f7139650a5174b00ac499123bd58dc55\",\"payload_sha256\":\"ca8f4b13dddb76a9a8e1928fc06362524a45f966f6fdabb059cd78aedc9e3133\",\"generation\":\"5\",\"outcome\":\"confirmed\",\"transaction_state\":\"complete\",\"readback_verified\":true,\"old_write_terminated\":true}",
+    "time": 1791204751889
+  },
+  {
+    "type": "submit-call",
+    "args": [
+      "36db555eebfb4f3288efb00241a32f71",
+      "5"
+    ],
+    "time": 1791204755322
+  },
+  {
+    "type": "submit-reply",
+    "raw": "{\"schema\":\"youjia.save-receipt/v2\",\"namespace\":\"youjia-save-host-v1\",\"write_id\":\"5\",\"request_id\":\"36db555eebfb4f3288efb00241a32f71\",\"store_id\":\"9231c8d734ef415c859c428745c25f12\",\"candidate_token\":\"3f8dd1c2873a484d99cdad1a9e3208cc\",\"parent_token\":\"f7139650a5174b00ac499123bd58dc55\",\"observed_token\":\"3f8dd1c2873a484d99cdad1a9e3208cc\",\"payload_sha256\":\"75a934e7cd0a5c19b6e0c15f4934c3105b8f8797f76f092662ef6b8187796c7e\",\"generation\":\"6\",\"outcome\":\"confirmed\",\"transaction_state\":\"complete\",\"readback_verified\":true,\"old_write_terminated\":true}",
+    "time": 1791204760783
+  },
+  {
+    "type": "submit-call",
+    "args": [
+      "0d67db36959842c288de79883f9a7eef",
+      "6"
+    ],
+    "time": 1791204772595
+  },
+  {
+    "type": "submit-reply",
+    "raw": "{\"schema\":\"youjia.save-receipt/v2\",\"namespace\":\"youjia-save-host-v1\",\"write_id\":\"6\",\"request_id\":\"0d67db36959842c288de79883f9a7eef\",\"store_id\":\"9231c8d734ef415c859c428745c25f12\",\"candidate_token\":\"66462436bf2c4734b21c2587294302d1\",\"parent_token\":\"3f8dd1c2873a484d99cdad1a9e3208cc\",\"observed_token\":\"66462436bf2c4734b21c2587294302d1\",\"payload_sha256\":\"c071752c9c48aa59b1a590382501c817d1825ca7aa1eea7d6b6b7ae74417dee3\",\"generation\":\"7\",\"outcome\":\"confirmed\",\"transaction_state\":\"complete\",\"readback_verified\":true,\"old_write_terminated\":true}",
+    "time": 1791204773177
+  },
+  {
+    "type": "submit-call",
+    "args": [
+      "621c47ac41c64a53a22d669bdd5e63c8",
+      "7"
+    ],
+    "time": 1791204775948
+  },
+  {
+    "type": "submit-reply",
+    "raw": "{\"schema\":\"youjia.save-receipt/v2\",\"namespace\":\"youjia-save-host-v1\",\"write_id\":\"7\",\"request_id\":\"621c47ac41c64a53a22d669bdd5e63c8\",\"store_id\":\"9231c8d734ef415c859c428745c25f12\",\"candidate_token\":\"3e0f9de2b90e46b0ba22c955c6152208\",\"parent_token\":\"66462436bf2c4734b21c2587294302d1\",\"observed_token\":\"3e0f9de2b90e46b0ba22c955c6152208\",\"payload_sha256\":\"95f359e5f5bb7c39e51e825133e094bd02231fd5961408cfaf6a4f8d7ec01bde\",\"generation\":\"8\",\"outcome\":\"confirmed\",\"transaction_state\":\"complete\",\"readback_verified\":true,\"old_write_terminated\":true}",
+    "time": 1791204776656
+  },
+  {
+    "type": "submit-call",
+    "args": [
+      "91303cd8bd964123b3208a2b055fbd38",
+      "8"
+    ],
+    "time": 1791204793432
+  },
+  {
+    "type": "submit-reply",
+    "raw": "{\"schema\":\"youjia.save-receipt/v2\",\"namespace\":\"youjia-save-host-v1\",\"write_id\":\"8\",\"request_id\":\"91303cd8bd964123b3208a2b055fbd38\",\"store_id\":\"9231c8d734ef415c859c428745c25f12\",\"candidate_token\":\"a51a10b0d87347fb846e9ea08616e0b1\",\"parent_token\":\"3e0f9de2b90e46b0ba22c955c6152208\",\"observed_token\":\"a51a10b0d87347fb846e9ea08616e0b1\",\"payload_sha256\":\"97b5d6114db4db78fb618070d20a147c19e51cf422cc72d63dac2adf6f7744ad\",\"generation\":\"9\",\"outcome\":\"confirmed\",\"transaction_state\":\"complete\",\"readback_verified\":true,\"old_write_terminated\":true}",
+    "time": 1791204794734
+  },
+  {
+    "type": "submit-call",
+    "args": [
+      "89c58e57913e4700ab4bf09a1de6cafd",
+      "9"
+    ],
+    "time": 1791204797309
+  },
+  {
+    "type": "submit-reply",
+    "raw": "{\"schema\":\"youjia.save-receipt/v2\",\"namespace\":\"youjia-save-host-v1\",\"write_id\":\"9\",\"request_id\":\"89c58e57913e4700ab4bf09a1de6cafd\",\"store_id\":\"9231c8d734ef415c859c428745c25f12\",\"candidate_token\":\"220f7db86bda4351a44699cbce93fb7a\",\"parent_token\":\"a51a10b0d87347fb846e9ea08616e0b1\",\"observed_token\":\"220f7db86bda4351a44699cbce93fb7a\",\"payload_sha256\":\"92c214d44ec9c5c9ec0809b89c055bec0f3d0e1327cd400a66338a31d59f68c9\",\"generation\":\"10\",\"outcome\":\"confirmed\",\"transaction_state\":\"complete\",\"readback_verified\":true,\"old_write_terminated\":true}",
+    "time": 1791204798843
+  },
+  {
+    "type": "submit-call",
+    "args": [
+      "aaecc3a673d1422fad1d89bb34045848",
+      "10"
+    ],
+    "time": 1791204803486
+  },
+  {
+    "type": "submit-reply",
+    "raw": "{\"schema\":\"youjia.save-error/v1\",\"code\":\"WRITE_UNKNOWN_RESOLVE_REQUIRED\",\"cause\":\"UnknownError: injected intent write failure\"}",
+    "time": 1791204804616
+  }
+]

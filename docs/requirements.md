@@ -35,6 +35,8 @@
 | REQ-20261003-017 | P2 | 低动效下花圃、水面涟漪和咬钩浮标保持静止可读 | 开启低动效时嫩芽不左右倾、开花不摇不闪、收获花瓣停在原地、水面只留一圈静止涟漪、咬钩浮标保持红色稳圈而不是快速闪烁；关闭低动效时原有轻摇、三圈涟漪和咬钩明暗仍在。不改钓鱼规则、存档或新资源。 | 已合入发布；正式试玩待反馈 | `GROK-CONTRIBUTOR` | 用户 2026-10-03 让 GROK-CONTRIBUTOR 自选无主切片。不改 REQ-001 抚摸/招呼、REQ-005/012 云带、REQ-008/009 动物与热点、REQ-014/015 鹅马。原绘制提交随 [PR #104](https://github.com/narutojzm1-dot/youjia/pull/104) 集成，兼容验证归下方 REQ-017-VERIFY；首次正式版本 `game-1949dc4` 已核验。 |
 | REQ-001-GRASS | P0 | 主角拿草与递草身体动作 | 定稿居民完整帧、固定脚底；成功才演出，移动和低动效可打断；不延迟库存或喂食；实际 Web 复核。 | 已完成（独立切片已发布） | `CODEX-LEAD-ASSISTANT` | [issue #73](https://github.com/narutojzm1-dot/youjia/issues/73)；父 REQ-20261002-001 Owner 保留。仅 Vacationer / SequenceResident、动作帧、独立验证；YardWorld 既有喂草调用只传入对象位置。[PR #76](https://github.com/narutojzm1-dot/youjia/pull/76) 合入 `6c1d6f0`；独立审核和全量回归通过，正式 `game-6c1d6f0` 公网版本与 PCK 已核验；Web 正常拿草/喂草成片及受控完整动作复核。父需求的抚摸/招呼仍待做。[验收记录](playtests/2026-10-03-REQ-001-grass-actions.md)。 |
 
+#150 共享提示增量候选：探索 reject 后同趟新 op 重交，以只读业务身份关联旧故障；不因任意新保存或 ready 清面板，保留未保存照片与其他领域失败。详见[候选验证](playtests/2026-10-05-exploration-retry-feedback/README.md)，最终审查/发布另记。
+
 ## REQ-014 协作验证切片
 
 | 编号 | 优先级 | 工作范围 | 验收条件 | 状态 | Owner | 依赖 |
