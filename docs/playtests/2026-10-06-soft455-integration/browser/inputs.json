@@ -1,0 +1,505 @@
+[
+  {
+    "command": {
+      "op": "new",
+      "name": "portrait",
+      "width": 390,
+      "height": 844,
+      "motion": "no-preference"
+    },
+    "case": "",
+    "utc": "2026-10-05T22:33:42Z",
+    "monotonic": 370908.452770821
+  },
+  {
+    "case_open": "portrait",
+    "width": 390,
+    "height": 844,
+    "motion": "no-preference",
+    "actual_reduce": false,
+    "utc": "2026-10-05T22:33:53Z",
+    "monotonic": 370919.368332465
+  },
+  {
+    "screenshot_request": "portrait-title",
+    "case": "portrait",
+    "utc": "2026-10-05T22:33:53Z",
+    "monotonic": 370919.368809278
+  },
+  {
+    "screenshot_complete": "portrait-title",
+    "case": "portrait",
+    "utc": "2026-10-05T22:33:53Z",
+    "monotonic": 370919.796185537
+  },
+  {
+    "command": {
+      "op": "click",
+      "x": 195,
+      "y": 486
+    },
+    "case": "portrait",
+    "utc": "2026-10-05T22:34:04Z",
+    "monotonic": 370930.768562274
+  },
+  {
+    "command": {
+      "op": "wait",
+      "ms": 350
+    },
+    "case": "portrait",
+    "utc": "2026-10-05T22:34:04Z",
+    "monotonic": 370930.799053898
+  },
+  {
+    "command": {
+      "op": "shot",
+      "name": "portrait-01-empty-album"
+    },
+    "case": "portrait",
+    "utc": "2026-10-05T22:34:05Z",
+    "monotonic": 370931.160364827
+  },
+  {
+    "screenshot_request": "portrait-01-empty-album",
+    "case": "portrait",
+    "utc": "2026-10-05T22:34:05Z",
+    "monotonic": 370931.160901582
+  },
+  {
+    "screenshot_complete": "portrait-01-empty-album",
+    "case": "portrait",
+    "utc": "2026-10-05T22:34:05Z",
+    "monotonic": 370931.67928365
+  },
+  {
+    "command": {
+      "op": "db",
+      "name": "portrait-01-before-disabled-db"
+    },
+    "case": "portrait",
+    "utc": "2026-10-05T22:34:05Z",
+    "monotonic": 370931.679861603
+  },
+  {
+    "command": {
+      "op": "click",
+      "x": 84,
+      "y": 666
+    },
+    "case": "portrait",
+    "utc": "2026-10-05T22:34:23Z",
+    "monotonic": 370949.060279809
+  },
+  {
+    "command": {
+      "op": "move",
+      "x": 382,
+      "y": 827
+    },
+    "case": "portrait",
+    "utc": "2026-10-05T22:34:23Z",
+    "monotonic": 370949.085732577
+  },
+  {
+    "command": {
+      "op": "wait",
+      "ms": 250
+    },
+    "case": "portrait",
+    "utc": "2026-10-05T22:34:23Z",
+    "monotonic": 370949.124723538
+  },
+  {
+    "command": {
+      "op": "shot",
+      "name": "portrait-02-after-previous"
+    },
+    "case": "portrait",
+    "utc": "2026-10-05T22:34:23Z",
+    "monotonic": 370949.37688228
+  },
+  {
+    "screenshot_request": "portrait-02-after-previous",
+    "case": "portrait",
+    "utc": "2026-10-05T22:34:23Z",
+    "monotonic": 370949.377632415
+  },
+  {
+    "screenshot_complete": "portrait-02-after-previous",
+    "case": "portrait",
+    "utc": "2026-10-05T22:34:23Z",
+    "monotonic": 370949.787086287
+  },
+  {
+    "command": {
+      "op": "click",
+      "x": 195,
+      "y": 666
+    },
+    "case": "portrait",
+    "utc": "2026-10-05T22:34:23Z",
+    "monotonic": 370949.787654712
+  },
+  {
+    "command": {
+      "op": "move",
+      "x": 382,
+      "y": 827
+    },
+    "case": "portrait",
+    "utc": "2026-10-05T22:34:23Z",
+    "monotonic": 370949.821254868
+  },
+  {
+    "command": {
+      "op": "wait",
+      "ms": 250
+    },
+    "case": "portrait",
+    "utc": "2026-10-05T22:34:23Z",
+    "monotonic": 370949.87115968
+  },
+  {
+    "command": {
+      "op": "shot",
+      "name": "portrait-03-after-next"
+    },
+    "case": "portrait",
+    "utc": "2026-10-05T22:34:24Z",
+    "monotonic": 370950.126999915
+  },
+  {
+    "screenshot_request": "portrait-03-after-next",
+    "case": "portrait",
+    "utc": "2026-10-05T22:34:24Z",
+    "monotonic": 370950.127653319
+  },
+  {
+    "screenshot_complete": "portrait-03-after-next",
+    "case": "portrait",
+    "utc": "2026-10-05T22:34:24Z",
+    "monotonic": 370950.580309992
+  },
+  {
+    "command": {
+      "op": "db",
+      "name": "portrait-03-after-disabled-db"
+    },
+    "case": "portrait",
+    "utc": "2026-10-05T22:34:24Z",
+    "monotonic": 370950.580895368
+  },
+  {
+    "command": {
+      "op": "click",
+      "x": 305,
+      "y": 666
+    },
+    "case": "portrait",
+    "utc": "2026-10-05T22:34:24Z",
+    "monotonic": 370950.790365272
+  },
+  {
+    "command": {
+      "op": "move",
+      "x": 382,
+      "y": 827
+    },
+    "case": "portrait",
+    "utc": "2026-10-05T22:34:24Z",
+    "monotonic": 370950.825998366
+  },
+  {
+    "command": {
+      "op": "wait",
+      "ms": 250
+    },
+    "case": "portrait",
+    "utc": "2026-10-05T22:34:24Z",
+    "monotonic": 370950.888736281
+  },
+  {
+    "command": {
+      "op": "shot",
+      "name": "portrait-04-closed"
+    },
+    "case": "portrait",
+    "utc": "2026-10-05T22:34:25Z",
+    "monotonic": 370951.140604488
+  },
+  {
+    "screenshot_request": "portrait-04-closed",
+    "case": "portrait",
+    "utc": "2026-10-05T22:34:25Z",
+    "monotonic": 370951.141201206
+  },
+  {
+    "screenshot_complete": "portrait-04-closed",
+    "case": "portrait",
+    "utc": "2026-10-05T22:34:25Z",
+    "monotonic": 370951.594946026
+  },
+  {
+    "command": {
+      "op": "resize",
+      "width": 568,
+      "height": 320
+    },
+    "case": "portrait",
+    "utc": "2026-10-05T22:34:25Z",
+    "monotonic": 370951.595564555
+  },
+  {
+    "command": {
+      "op": "shot",
+      "name": "landscape-00-title"
+    },
+    "case": "portrait",
+    "utc": "2026-10-05T22:34:26Z",
+    "monotonic": 370952.024620511
+  },
+  {
+    "screenshot_request": "landscape-00-title",
+    "case": "portrait",
+    "utc": "2026-10-05T22:34:26Z",
+    "monotonic": 370952.025244219
+  },
+  {
+    "screenshot_complete": "landscape-00-title",
+    "case": "portrait",
+    "utc": "2026-10-05T22:34:26Z",
+    "monotonic": 370952.26516403
+  },
+  {
+    "command": {
+      "op": "click",
+      "x": 284,
+      "y": 205
+    },
+    "case": "portrait",
+    "utc": "2026-10-05T22:34:40Z",
+    "monotonic": 370966.659790112
+  },
+  {
+    "command": {
+      "op": "move",
+      "x": 561,
+      "y": 315
+    },
+    "case": "portrait",
+    "utc": "2026-10-05T22:34:40Z",
+    "monotonic": 370966.672926175
+  },
+  {
+    "command": {
+      "op": "wait",
+      "ms": 350
+    },
+    "case": "portrait",
+    "utc": "2026-10-05T22:34:40Z",
+    "monotonic": 370966.688763286
+  },
+  {
+    "command": {
+      "op": "shot",
+      "name": "landscape-01-empty-album"
+    },
+    "case": "portrait",
+    "utc": "2026-10-05T22:34:41Z",
+    "monotonic": 370967.060390856
+  },
+  {
+    "screenshot_request": "landscape-01-empty-album",
+    "case": "portrait",
+    "utc": "2026-10-05T22:34:41Z",
+    "monotonic": 370967.061113409
+  },
+  {
+    "screenshot_complete": "landscape-01-empty-album",
+    "case": "portrait",
+    "utc": "2026-10-05T22:34:41Z",
+    "monotonic": 370967.309426925
+  },
+  {
+    "command": {
+      "op": "db",
+      "name": "landscape-01-before-disabled-db"
+    },
+    "case": "portrait",
+    "utc": "2026-10-05T22:34:41Z",
+    "monotonic": 370967.310157764
+  },
+  {
+    "command": {
+      "op": "click",
+      "x": 114,
+      "y": 284
+    },
+    "case": "portrait",
+    "utc": "2026-10-05T22:34:57Z",
+    "monotonic": 370983.976092115
+  },
+  {
+    "command": {
+      "op": "move",
+      "x": 561,
+      "y": 315
+    },
+    "case": "portrait",
+    "utc": "2026-10-05T22:34:58Z",
+    "monotonic": 370983.993129392
+  },
+  {
+    "command": {
+      "op": "wait",
+      "ms": 250
+    },
+    "case": "portrait",
+    "utc": "2026-10-05T22:34:58Z",
+    "monotonic": 370984.019185892
+  },
+  {
+    "command": {
+      "op": "shot",
+      "name": "landscape-02-after-previous"
+    },
+    "case": "portrait",
+    "utc": "2026-10-05T22:34:58Z",
+    "monotonic": 370984.271133113
+  },
+  {
+    "screenshot_request": "landscape-02-after-previous",
+    "case": "portrait",
+    "utc": "2026-10-05T22:34:58Z",
+    "monotonic": 370984.271850156
+  },
+  {
+    "screenshot_complete": "landscape-02-after-previous",
+    "case": "portrait",
+    "utc": "2026-10-05T22:34:58Z",
+    "monotonic": 370984.559834738
+  },
+  {
+    "command": {
+      "op": "click",
+      "x": 284,
+      "y": 284
+    },
+    "case": "portrait",
+    "utc": "2026-10-05T22:34:58Z",
+    "monotonic": 370984.560706361
+  },
+  {
+    "command": {
+      "op": "move",
+      "x": 561,
+      "y": 315
+    },
+    "case": "portrait",
+    "utc": "2026-10-05T22:34:58Z",
+    "monotonic": 370984.581794725
+  },
+  {
+    "command": {
+      "op": "wait",
+      "ms": 250
+    },
+    "case": "portrait",
+    "utc": "2026-10-05T22:34:58Z",
+    "monotonic": 370984.602223565
+  },
+  {
+    "command": {
+      "op": "shot",
+      "name": "landscape-03-after-next"
+    },
+    "case": "portrait",
+    "utc": "2026-10-05T22:34:58Z",
+    "monotonic": 370984.862590655
+  },
+  {
+    "screenshot_request": "landscape-03-after-next",
+    "case": "portrait",
+    "utc": "2026-10-05T22:34:58Z",
+    "monotonic": 370984.863372429
+  },
+  {
+    "screenshot_complete": "landscape-03-after-next",
+    "case": "portrait",
+    "utc": "2026-10-05T22:34:59Z",
+    "monotonic": 370985.126984954
+  },
+  {
+    "command": {
+      "op": "db",
+      "name": "landscape-03-after-disabled-db"
+    },
+    "case": "portrait",
+    "utc": "2026-10-05T22:34:59Z",
+    "monotonic": 370985.127734658
+  },
+  {
+    "command": {
+      "op": "click",
+      "x": 454,
+      "y": 284
+    },
+    "case": "portrait",
+    "utc": "2026-10-05T22:34:59Z",
+    "monotonic": 370985.304342102
+  },
+  {
+    "command": {
+      "op": "move",
+      "x": 561,
+      "y": 315
+    },
+    "case": "portrait",
+    "utc": "2026-10-05T22:34:59Z",
+    "monotonic": 370985.326785254
+  },
+  {
+    "command": {
+      "op": "wait",
+      "ms": 250
+    },
+    "case": "portrait",
+    "utc": "2026-10-05T22:34:59Z",
+    "monotonic": 370985.372541056
+  },
+  {
+    "command": {
+      "op": "shot",
+      "name": "landscape-04-closed"
+    },
+    "case": "portrait",
+    "utc": "2026-10-05T22:34:59Z",
+    "monotonic": 370985.623937636
+  },
+  {
+    "screenshot_request": "landscape-04-closed",
+    "case": "portrait",
+    "utc": "2026-10-05T22:34:59Z",
+    "monotonic": 370985.624717897
+  },
+  {
+    "screenshot_complete": "landscape-04-closed",
+    "case": "portrait",
+    "utc": "2026-10-05T22:34:59Z",
+    "monotonic": 370985.867491217
+  },
+  {
+    "command": {
+      "op": "end"
+    },
+    "case": "portrait",
+    "utc": "2026-10-05T22:34:59Z",
+    "monotonic": 370985.868344796
+  },
+  {
+    "case_closed": "portrait",
+    "utc": "2026-10-05T22:35:04Z",
+    "monotonic": 370990.73821418
+  }
+]

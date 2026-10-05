@@ -1,0 +1,996 @@
+{
+  "source": "910bdec3fe7bf07833d6b9ccb720f57a5332880c",
+  "entry": "index",
+  "expected_pck_sha256": "ef5c5c9e13037e83fd76a5c6764c35faaf00c4c3b5f34e007459889c4276549b",
+  "expected_pck_bytes": 27089276,
+  "inputs": [
+    {
+      "command": {
+        "op": "new",
+        "name": "portrait",
+        "width": 390,
+        "height": 844,
+        "motion": "no-preference"
+      },
+      "case": "",
+      "utc": "2026-10-05T22:33:42Z",
+      "monotonic": 370908.452770821
+    },
+    {
+      "case_open": "portrait",
+      "width": 390,
+      "height": 844,
+      "motion": "no-preference",
+      "actual_reduce": false,
+      "utc": "2026-10-05T22:33:53Z",
+      "monotonic": 370919.368332465
+    },
+    {
+      "screenshot_request": "portrait-title",
+      "case": "portrait",
+      "utc": "2026-10-05T22:33:53Z",
+      "monotonic": 370919.368809278
+    },
+    {
+      "screenshot_complete": "portrait-title",
+      "case": "portrait",
+      "utc": "2026-10-05T22:33:53Z",
+      "monotonic": 370919.796185537
+    },
+    {
+      "command": {
+        "op": "click",
+        "x": 195,
+        "y": 486
+      },
+      "case": "portrait",
+      "utc": "2026-10-05T22:34:04Z",
+      "monotonic": 370930.768562274
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 350
+      },
+      "case": "portrait",
+      "utc": "2026-10-05T22:34:04Z",
+      "monotonic": 370930.799053898
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "portrait-01-empty-album"
+      },
+      "case": "portrait",
+      "utc": "2026-10-05T22:34:05Z",
+      "monotonic": 370931.160364827
+    },
+    {
+      "screenshot_request": "portrait-01-empty-album",
+      "case": "portrait",
+      "utc": "2026-10-05T22:34:05Z",
+      "monotonic": 370931.160901582
+    },
+    {
+      "screenshot_complete": "portrait-01-empty-album",
+      "case": "portrait",
+      "utc": "2026-10-05T22:34:05Z",
+      "monotonic": 370931.67928365
+    },
+    {
+      "command": {
+        "op": "db",
+        "name": "portrait-01-before-disabled-db"
+      },
+      "case": "portrait",
+      "utc": "2026-10-05T22:34:05Z",
+      "monotonic": 370931.679861603
+    },
+    {
+      "command": {
+        "op": "click",
+        "x": 84,
+        "y": 666
+      },
+      "case": "portrait",
+      "utc": "2026-10-05T22:34:23Z",
+      "monotonic": 370949.060279809
+    },
+    {
+      "command": {
+        "op": "move",
+        "x": 382,
+        "y": 827
+      },
+      "case": "portrait",
+      "utc": "2026-10-05T22:34:23Z",
+      "monotonic": 370949.085732577
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 250
+      },
+      "case": "portrait",
+      "utc": "2026-10-05T22:34:23Z",
+      "monotonic": 370949.124723538
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "portrait-02-after-previous"
+      },
+      "case": "portrait",
+      "utc": "2026-10-05T22:34:23Z",
+      "monotonic": 370949.37688228
+    },
+    {
+      "screenshot_request": "portrait-02-after-previous",
+      "case": "portrait",
+      "utc": "2026-10-05T22:34:23Z",
+      "monotonic": 370949.377632415
+    },
+    {
+      "screenshot_complete": "portrait-02-after-previous",
+      "case": "portrait",
+      "utc": "2026-10-05T22:34:23Z",
+      "monotonic": 370949.787086287
+    },
+    {
+      "command": {
+        "op": "click",
+        "x": 195,
+        "y": 666
+      },
+      "case": "portrait",
+      "utc": "2026-10-05T22:34:23Z",
+      "monotonic": 370949.787654712
+    },
+    {
+      "command": {
+        "op": "move",
+        "x": 382,
+        "y": 827
+      },
+      "case": "portrait",
+      "utc": "2026-10-05T22:34:23Z",
+      "monotonic": 370949.821254868
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 250
+      },
+      "case": "portrait",
+      "utc": "2026-10-05T22:34:23Z",
+      "monotonic": 370949.87115968
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "portrait-03-after-next"
+      },
+      "case": "portrait",
+      "utc": "2026-10-05T22:34:24Z",
+      "monotonic": 370950.126999915
+    },
+    {
+      "screenshot_request": "portrait-03-after-next",
+      "case": "portrait",
+      "utc": "2026-10-05T22:34:24Z",
+      "monotonic": 370950.127653319
+    },
+    {
+      "screenshot_complete": "portrait-03-after-next",
+      "case": "portrait",
+      "utc": "2026-10-05T22:34:24Z",
+      "monotonic": 370950.580309992
+    },
+    {
+      "command": {
+        "op": "db",
+        "name": "portrait-03-after-disabled-db"
+      },
+      "case": "portrait",
+      "utc": "2026-10-05T22:34:24Z",
+      "monotonic": 370950.580895368
+    },
+    {
+      "command": {
+        "op": "click",
+        "x": 305,
+        "y": 666
+      },
+      "case": "portrait",
+      "utc": "2026-10-05T22:34:24Z",
+      "monotonic": 370950.790365272
+    },
+    {
+      "command": {
+        "op": "move",
+        "x": 382,
+        "y": 827
+      },
+      "case": "portrait",
+      "utc": "2026-10-05T22:34:24Z",
+      "monotonic": 370950.825998366
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 250
+      },
+      "case": "portrait",
+      "utc": "2026-10-05T22:34:24Z",
+      "monotonic": 370950.888736281
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "portrait-04-closed"
+      },
+      "case": "portrait",
+      "utc": "2026-10-05T22:34:25Z",
+      "monotonic": 370951.140604488
+    },
+    {
+      "screenshot_request": "portrait-04-closed",
+      "case": "portrait",
+      "utc": "2026-10-05T22:34:25Z",
+      "monotonic": 370951.141201206
+    },
+    {
+      "screenshot_complete": "portrait-04-closed",
+      "case": "portrait",
+      "utc": "2026-10-05T22:34:25Z",
+      "monotonic": 370951.594946026
+    },
+    {
+      "command": {
+        "op": "resize",
+        "width": 568,
+        "height": 320
+      },
+      "case": "portrait",
+      "utc": "2026-10-05T22:34:25Z",
+      "monotonic": 370951.595564555
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "landscape-00-title"
+      },
+      "case": "portrait",
+      "utc": "2026-10-05T22:34:26Z",
+      "monotonic": 370952.024620511
+    },
+    {
+      "screenshot_request": "landscape-00-title",
+      "case": "portrait",
+      "utc": "2026-10-05T22:34:26Z",
+      "monotonic": 370952.025244219
+    },
+    {
+      "screenshot_complete": "landscape-00-title",
+      "case": "portrait",
+      "utc": "2026-10-05T22:34:26Z",
+      "monotonic": 370952.26516403
+    },
+    {
+      "command": {
+        "op": "click",
+        "x": 284,
+        "y": 205
+      },
+      "case": "portrait",
+      "utc": "2026-10-05T22:34:40Z",
+      "monotonic": 370966.659790112
+    },
+    {
+      "command": {
+        "op": "move",
+        "x": 561,
+        "y": 315
+      },
+      "case": "portrait",
+      "utc": "2026-10-05T22:34:40Z",
+      "monotonic": 370966.672926175
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 350
+      },
+      "case": "portrait",
+      "utc": "2026-10-05T22:34:40Z",
+      "monotonic": 370966.688763286
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "landscape-01-empty-album"
+      },
+      "case": "portrait",
+      "utc": "2026-10-05T22:34:41Z",
+      "monotonic": 370967.060390856
+    },
+    {
+      "screenshot_request": "landscape-01-empty-album",
+      "case": "portrait",
+      "utc": "2026-10-05T22:34:41Z",
+      "monotonic": 370967.061113409
+    },
+    {
+      "screenshot_complete": "landscape-01-empty-album",
+      "case": "portrait",
+      "utc": "2026-10-05T22:34:41Z",
+      "monotonic": 370967.309426925
+    },
+    {
+      "command": {
+        "op": "db",
+        "name": "landscape-01-before-disabled-db"
+      },
+      "case": "portrait",
+      "utc": "2026-10-05T22:34:41Z",
+      "monotonic": 370967.310157764
+    },
+    {
+      "command": {
+        "op": "click",
+        "x": 114,
+        "y": 284
+      },
+      "case": "portrait",
+      "utc": "2026-10-05T22:34:57Z",
+      "monotonic": 370983.976092115
+    },
+    {
+      "command": {
+        "op": "move",
+        "x": 561,
+        "y": 315
+      },
+      "case": "portrait",
+      "utc": "2026-10-05T22:34:58Z",
+      "monotonic": 370983.993129392
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 250
+      },
+      "case": "portrait",
+      "utc": "2026-10-05T22:34:58Z",
+      "monotonic": 370984.019185892
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "landscape-02-after-previous"
+      },
+      "case": "portrait",
+      "utc": "2026-10-05T22:34:58Z",
+      "monotonic": 370984.271133113
+    },
+    {
+      "screenshot_request": "landscape-02-after-previous",
+      "case": "portrait",
+      "utc": "2026-10-05T22:34:58Z",
+      "monotonic": 370984.271850156
+    },
+    {
+      "screenshot_complete": "landscape-02-after-previous",
+      "case": "portrait",
+      "utc": "2026-10-05T22:34:58Z",
+      "monotonic": 370984.559834738
+    },
+    {
+      "command": {
+        "op": "click",
+        "x": 284,
+        "y": 284
+      },
+      "case": "portrait",
+      "utc": "2026-10-05T22:34:58Z",
+      "monotonic": 370984.560706361
+    },
+    {
+      "command": {
+        "op": "move",
+        "x": 561,
+        "y": 315
+      },
+      "case": "portrait",
+      "utc": "2026-10-05T22:34:58Z",
+      "monotonic": 370984.581794725
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 250
+      },
+      "case": "portrait",
+      "utc": "2026-10-05T22:34:58Z",
+      "monotonic": 370984.602223565
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "landscape-03-after-next"
+      },
+      "case": "portrait",
+      "utc": "2026-10-05T22:34:58Z",
+      "monotonic": 370984.862590655
+    },
+    {
+      "screenshot_request": "landscape-03-after-next",
+      "case": "portrait",
+      "utc": "2026-10-05T22:34:58Z",
+      "monotonic": 370984.863372429
+    },
+    {
+      "screenshot_complete": "landscape-03-after-next",
+      "case": "portrait",
+      "utc": "2026-10-05T22:34:59Z",
+      "monotonic": 370985.126984954
+    },
+    {
+      "command": {
+        "op": "db",
+        "name": "landscape-03-after-disabled-db"
+      },
+      "case": "portrait",
+      "utc": "2026-10-05T22:34:59Z",
+      "monotonic": 370985.127734658
+    },
+    {
+      "command": {
+        "op": "click",
+        "x": 454,
+        "y": 284
+      },
+      "case": "portrait",
+      "utc": "2026-10-05T22:34:59Z",
+      "monotonic": 370985.304342102
+    },
+    {
+      "command": {
+        "op": "move",
+        "x": 561,
+        "y": 315
+      },
+      "case": "portrait",
+      "utc": "2026-10-05T22:34:59Z",
+      "monotonic": 370985.326785254
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 250
+      },
+      "case": "portrait",
+      "utc": "2026-10-05T22:34:59Z",
+      "monotonic": 370985.372541056
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "landscape-04-closed"
+      },
+      "case": "portrait",
+      "utc": "2026-10-05T22:34:59Z",
+      "monotonic": 370985.623937636
+    },
+    {
+      "screenshot_request": "landscape-04-closed",
+      "case": "portrait",
+      "utc": "2026-10-05T22:34:59Z",
+      "monotonic": 370985.624717897
+    },
+    {
+      "screenshot_complete": "landscape-04-closed",
+      "case": "portrait",
+      "utc": "2026-10-05T22:34:59Z",
+      "monotonic": 370985.867491217
+    },
+    {
+      "command": {
+        "op": "end"
+      },
+      "case": "portrait",
+      "utc": "2026-10-05T22:34:59Z",
+      "monotonic": 370985.868344796
+    },
+    {
+      "case_closed": "portrait",
+      "utc": "2026-10-05T22:35:04Z",
+      "monotonic": 370990.73821418
+    }
+  ],
+  "bindings": [
+    {
+      "case": "portrait",
+      "stage": "before",
+      "manifest": {
+        "schema": "youjia.candidate/v1",
+        "sourceCommit": "910bdec3fe7bf07833d6b9ccb720f57a5332880c",
+        "source": "910bdec3fe7bf07833d6b9ccb720f57a5332880c",
+        "sourceTree": "9b47ef3a4a78a9ca2cab285e93772b5a9540e381",
+        "base": "a0bb75e38e59032a6df72a2122af4403c3c3e816",
+        "original": "c79237181d76ab0929952c94b29867dc468425c8",
+        "engine": "4.7.2.stable.official.ed1daf0bf",
+        "entry": "index",
+        "candidateOnly": true,
+        "files": {
+          "index.apple-touch-icon.png": {
+            "bytes": 59343,
+            "sha256": "80d91adb306354c6e4d1af546d062e1e9236699ad0fd53153ab3d2fc34cd11d4"
+          },
+          "index.audio.position.worklet.js": {
+            "bytes": 2973,
+            "sha256": "be33985bc7160d6bf9646f259cd86b259cd67b02ccb297ee5c44f8ac84327bc8"
+          },
+          "index.audio.worklet.js": {
+            "bytes": 7298,
+            "sha256": "5b476a9c9ce642c0ee4256436d1bc31d9c38f868aca0f9a8e2a57c18d2dec2a3"
+          },
+          "index.html": {
+            "bytes": 357722,
+            "sha256": "8908ce4e5947284fbfabe33010a8d9c1a7ce1cdad0369d55fe16c10d895c5861"
+          },
+          "index.icon.png": {
+            "bytes": 389674,
+            "sha256": "1c591b9eb1b7af2a840a59a9feb637a0a7aeba2b0abde28042abf44f77d0acb3"
+          },
+          "index.js": {
+            "bytes": 279815,
+            "sha256": "33c94cb3175f3333b82e2a3be5e8e86f77986f0aa2042b1631f6367a4e5bb6ba"
+          },
+          "index.pck": {
+            "bytes": 27089276,
+            "sha256": "ef5c5c9e13037e83fd76a5c6764c35faaf00c4c3b5f34e007459889c4276549b"
+          },
+          "index.png": {
+            "bytes": 1010767,
+            "sha256": "5743a648b82437e0e60db5e4aa08103cea96b01e110961082223c0e7fa819ebf"
+          },
+          "index.wasm": {
+            "bytes": 39514754,
+            "sha256": "fc74679e3b97f76878947fcd4fbe1268cbfa6188182a2e33bbc3f5dc9bfa57d0"
+          },
+          "open-source-licenses.html": {
+            "bytes": 147966,
+            "sha256": "9215f5fdd50039a9b6f3d8f0271cbc21bbdf64b917fb118dd29c8a16b9974e00"
+          },
+          "web/save/bridge.mjs": {
+            "bytes": 1856,
+            "sha256": "ef18687554fdc0d745c1d18d4d091e959cc78559da0d61d6a093e562ff9bbc91"
+          },
+          "web/save/budgets.mjs": {
+            "bytes": 340,
+            "sha256": "52984153977dcafd1d2682e848f1999f091d0966e17d46e902de76f5735a7018"
+          },
+          "web/save/host.mjs": {
+            "bytes": 7730,
+            "sha256": "9de8dc0ef4bfc037a8ad0bff575d40c3dd4341bcc723351a412b2061bb661904"
+          },
+          "web/save/idbfs_source.mjs": {
+            "bytes": 5550,
+            "sha256": "16eb57d471537f13d3e50018b56c2d416d2847f0d0249ba44433dd9ebb65f4d8"
+          },
+          "web/save/legacy_inspection.mjs": {
+            "bytes": 2886,
+            "sha256": "db3a23a0221aa5d34a58a6a49aeeff930295ffe20bfcf73a7c11f0d49cffd671"
+          },
+          "web/save/legacy_seal.mjs": {
+            "bytes": 2510,
+            "sha256": "9642132f5d4e7523e5966e802069af7f4bae803fae8e2e7c28ae55ee97d85610"
+          },
+          "web/save/legacy_v5.mjs": {
+            "bytes": 2245,
+            "sha256": "8e7f4ad2d87aab77ac05361e4f46060476e933aa079ae94301998d08d4599621"
+          },
+          "web/save/lifecycle.mjs": {
+            "bytes": 1878,
+            "sha256": "1cfaebb9a8745e2dc3e4f694ef475f250640870938f04160be1a5c9acd62935d"
+          },
+          "web/save/source_decode.mjs": {
+            "bytes": 1542,
+            "sha256": "411f3bc784cb32a07f32eed5fc7d88f71b59a667cc0d68a50fe13c55bfdba18a"
+          },
+          "web/save/store.mjs": {
+            "bytes": 13890,
+            "sha256": "2193b4397b8662a8ebc754dc4468e4d62964d209b4e1d0f0924a2ec81b409cbe"
+          }
+        },
+        "storageModules": {
+          "entry": "web/save",
+          "sha256": {
+            "bridge.mjs": "ef18687554fdc0d745c1d18d4d091e959cc78559da0d61d6a093e562ff9bbc91",
+            "budgets.mjs": "52984153977dcafd1d2682e848f1999f091d0966e17d46e902de76f5735a7018",
+            "host.mjs": "9de8dc0ef4bfc037a8ad0bff575d40c3dd4341bcc723351a412b2061bb661904",
+            "idbfs_source.mjs": "16eb57d471537f13d3e50018b56c2d416d2847f0d0249ba44433dd9ebb65f4d8",
+            "legacy_inspection.mjs": "db3a23a0221aa5d34a58a6a49aeeff930295ffe20bfcf73a7c11f0d49cffd671",
+            "legacy_seal.mjs": "9642132f5d4e7523e5966e802069af7f4bae803fae8e2e7c28ae55ee97d85610",
+            "legacy_v5.mjs": "8e7f4ad2d87aab77ac05361e4f46060476e933aa079ae94301998d08d4599621",
+            "lifecycle.mjs": "1cfaebb9a8745e2dc3e4f694ef475f250640870938f04160be1a5c9acd62935d",
+            "source_decode.mjs": "411f3bc784cb32a07f32eed5fc7d88f71b59a667cc0d68a50fe13c55bfdba18a",
+            "store.mjs": "2193b4397b8662a8ebc754dc4468e4d62964d209b4e1d0f0924a2ec81b409cbe"
+          }
+        }
+      },
+      "html_status": 200,
+      "html_sha256": "8908ce4e5947284fbfabe33010a8d9c1a7ce1cdad0369d55fe16c10d895c5861",
+      "pck": {
+        "status": 200,
+        "bytes": 27089276,
+        "sha256": "ef5c5c9e13037e83fd76a5c6764c35faaf00c4c3b5f34e007459889c4276549b"
+      },
+      "utc": "2026-10-05T22:33:49Z",
+      "dependency_checks": [
+        {
+          "path": "open-source-licenses.html",
+          "status": 200,
+          "bytes": 147966,
+          "sha256": "9215f5fdd50039a9b6f3d8f0271cbc21bbdf64b917fb118dd29c8a16b9974e00"
+        },
+        {
+          "path": "web/save/bridge.mjs",
+          "status": 200,
+          "bytes": 1856,
+          "sha256": "ef18687554fdc0d745c1d18d4d091e959cc78559da0d61d6a093e562ff9bbc91"
+        },
+        {
+          "path": "web/save/budgets.mjs",
+          "status": 200,
+          "bytes": 340,
+          "sha256": "52984153977dcafd1d2682e848f1999f091d0966e17d46e902de76f5735a7018"
+        },
+        {
+          "path": "web/save/host.mjs",
+          "status": 200,
+          "bytes": 7730,
+          "sha256": "9de8dc0ef4bfc037a8ad0bff575d40c3dd4341bcc723351a412b2061bb661904"
+        },
+        {
+          "path": "web/save/idbfs_source.mjs",
+          "status": 200,
+          "bytes": 5550,
+          "sha256": "16eb57d471537f13d3e50018b56c2d416d2847f0d0249ba44433dd9ebb65f4d8"
+        },
+        {
+          "path": "web/save/legacy_inspection.mjs",
+          "status": 200,
+          "bytes": 2886,
+          "sha256": "db3a23a0221aa5d34a58a6a49aeeff930295ffe20bfcf73a7c11f0d49cffd671"
+        },
+        {
+          "path": "web/save/legacy_seal.mjs",
+          "status": 200,
+          "bytes": 2510,
+          "sha256": "9642132f5d4e7523e5966e802069af7f4bae803fae8e2e7c28ae55ee97d85610"
+        },
+        {
+          "path": "web/save/legacy_v5.mjs",
+          "status": 200,
+          "bytes": 2245,
+          "sha256": "8e7f4ad2d87aab77ac05361e4f46060476e933aa079ae94301998d08d4599621"
+        },
+        {
+          "path": "web/save/lifecycle.mjs",
+          "status": 200,
+          "bytes": 1878,
+          "sha256": "1cfaebb9a8745e2dc3e4f694ef475f250640870938f04160be1a5c9acd62935d"
+        },
+        {
+          "path": "web/save/source_decode.mjs",
+          "status": 200,
+          "bytes": 1542,
+          "sha256": "411f3bc784cb32a07f32eed5fc7d88f71b59a667cc0d68a50fe13c55bfdba18a"
+        },
+        {
+          "path": "web/save/store.mjs",
+          "status": 200,
+          "bytes": 13890,
+          "sha256": "2193b4397b8662a8ebc754dc4468e4d62964d209b4e1d0f0924a2ec81b409cbe"
+        }
+      ],
+      "loaded_html_sha256": "8908ce4e5947284fbfabe33010a8d9c1a7ce1cdad0369d55fe16c10d895c5861"
+    },
+    {
+      "case": "portrait",
+      "stage": "after",
+      "manifest": {
+        "schema": "youjia.candidate/v1",
+        "sourceCommit": "910bdec3fe7bf07833d6b9ccb720f57a5332880c",
+        "source": "910bdec3fe7bf07833d6b9ccb720f57a5332880c",
+        "sourceTree": "9b47ef3a4a78a9ca2cab285e93772b5a9540e381",
+        "base": "a0bb75e38e59032a6df72a2122af4403c3c3e816",
+        "original": "c79237181d76ab0929952c94b29867dc468425c8",
+        "engine": "4.7.2.stable.official.ed1daf0bf",
+        "entry": "index",
+        "candidateOnly": true,
+        "files": {
+          "index.apple-touch-icon.png": {
+            "bytes": 59343,
+            "sha256": "80d91adb306354c6e4d1af546d062e1e9236699ad0fd53153ab3d2fc34cd11d4"
+          },
+          "index.audio.position.worklet.js": {
+            "bytes": 2973,
+            "sha256": "be33985bc7160d6bf9646f259cd86b259cd67b02ccb297ee5c44f8ac84327bc8"
+          },
+          "index.audio.worklet.js": {
+            "bytes": 7298,
+            "sha256": "5b476a9c9ce642c0ee4256436d1bc31d9c38f868aca0f9a8e2a57c18d2dec2a3"
+          },
+          "index.html": {
+            "bytes": 357722,
+            "sha256": "8908ce4e5947284fbfabe33010a8d9c1a7ce1cdad0369d55fe16c10d895c5861"
+          },
+          "index.icon.png": {
+            "bytes": 389674,
+            "sha256": "1c591b9eb1b7af2a840a59a9feb637a0a7aeba2b0abde28042abf44f77d0acb3"
+          },
+          "index.js": {
+            "bytes": 279815,
+            "sha256": "33c94cb3175f3333b82e2a3be5e8e86f77986f0aa2042b1631f6367a4e5bb6ba"
+          },
+          "index.pck": {
+            "bytes": 27089276,
+            "sha256": "ef5c5c9e13037e83fd76a5c6764c35faaf00c4c3b5f34e007459889c4276549b"
+          },
+          "index.png": {
+            "bytes": 1010767,
+            "sha256": "5743a648b82437e0e60db5e4aa08103cea96b01e110961082223c0e7fa819ebf"
+          },
+          "index.wasm": {
+            "bytes": 39514754,
+            "sha256": "fc74679e3b97f76878947fcd4fbe1268cbfa6188182a2e33bbc3f5dc9bfa57d0"
+          },
+          "open-source-licenses.html": {
+            "bytes": 147966,
+            "sha256": "9215f5fdd50039a9b6f3d8f0271cbc21bbdf64b917fb118dd29c8a16b9974e00"
+          },
+          "web/save/bridge.mjs": {
+            "bytes": 1856,
+            "sha256": "ef18687554fdc0d745c1d18d4d091e959cc78559da0d61d6a093e562ff9bbc91"
+          },
+          "web/save/budgets.mjs": {
+            "bytes": 340,
+            "sha256": "52984153977dcafd1d2682e848f1999f091d0966e17d46e902de76f5735a7018"
+          },
+          "web/save/host.mjs": {
+            "bytes": 7730,
+            "sha256": "9de8dc0ef4bfc037a8ad0bff575d40c3dd4341bcc723351a412b2061bb661904"
+          },
+          "web/save/idbfs_source.mjs": {
+            "bytes": 5550,
+            "sha256": "16eb57d471537f13d3e50018b56c2d416d2847f0d0249ba44433dd9ebb65f4d8"
+          },
+          "web/save/legacy_inspection.mjs": {
+            "bytes": 2886,
+            "sha256": "db3a23a0221aa5d34a58a6a49aeeff930295ffe20bfcf73a7c11f0d49cffd671"
+          },
+          "web/save/legacy_seal.mjs": {
+            "bytes": 2510,
+            "sha256": "9642132f5d4e7523e5966e802069af7f4bae803fae8e2e7c28ae55ee97d85610"
+          },
+          "web/save/legacy_v5.mjs": {
+            "bytes": 2245,
+            "sha256": "8e7f4ad2d87aab77ac05361e4f46060476e933aa079ae94301998d08d4599621"
+          },
+          "web/save/lifecycle.mjs": {
+            "bytes": 1878,
+            "sha256": "1cfaebb9a8745e2dc3e4f694ef475f250640870938f04160be1a5c9acd62935d"
+          },
+          "web/save/source_decode.mjs": {
+            "bytes": 1542,
+            "sha256": "411f3bc784cb32a07f32eed5fc7d88f71b59a667cc0d68a50fe13c55bfdba18a"
+          },
+          "web/save/store.mjs": {
+            "bytes": 13890,
+            "sha256": "2193b4397b8662a8ebc754dc4468e4d62964d209b4e1d0f0924a2ec81b409cbe"
+          }
+        },
+        "storageModules": {
+          "entry": "web/save",
+          "sha256": {
+            "bridge.mjs": "ef18687554fdc0d745c1d18d4d091e959cc78559da0d61d6a093e562ff9bbc91",
+            "budgets.mjs": "52984153977dcafd1d2682e848f1999f091d0966e17d46e902de76f5735a7018",
+            "host.mjs": "9de8dc0ef4bfc037a8ad0bff575d40c3dd4341bcc723351a412b2061bb661904",
+            "idbfs_source.mjs": "16eb57d471537f13d3e50018b56c2d416d2847f0d0249ba44433dd9ebb65f4d8",
+            "legacy_inspection.mjs": "db3a23a0221aa5d34a58a6a49aeeff930295ffe20bfcf73a7c11f0d49cffd671",
+            "legacy_seal.mjs": "9642132f5d4e7523e5966e802069af7f4bae803fae8e2e7c28ae55ee97d85610",
+            "legacy_v5.mjs": "8e7f4ad2d87aab77ac05361e4f46060476e933aa079ae94301998d08d4599621",
+            "lifecycle.mjs": "1cfaebb9a8745e2dc3e4f694ef475f250640870938f04160be1a5c9acd62935d",
+            "source_decode.mjs": "411f3bc784cb32a07f32eed5fc7d88f71b59a667cc0d68a50fe13c55bfdba18a",
+            "store.mjs": "2193b4397b8662a8ebc754dc4468e4d62964d209b4e1d0f0924a2ec81b409cbe"
+          }
+        }
+      },
+      "html_status": 200,
+      "html_sha256": "8908ce4e5947284fbfabe33010a8d9c1a7ce1cdad0369d55fe16c10d895c5861",
+      "pck": {
+        "status": 200,
+        "bytes": 27089276,
+        "sha256": "ef5c5c9e13037e83fd76a5c6764c35faaf00c4c3b5f34e007459889c4276549b"
+      },
+      "utc": "2026-10-05T22:35:04Z",
+      "dependency_checks": [
+        {
+          "path": "open-source-licenses.html",
+          "status": 200,
+          "bytes": 147966,
+          "sha256": "9215f5fdd50039a9b6f3d8f0271cbc21bbdf64b917fb118dd29c8a16b9974e00"
+        },
+        {
+          "path": "web/save/bridge.mjs",
+          "status": 200,
+          "bytes": 1856,
+          "sha256": "ef18687554fdc0d745c1d18d4d091e959cc78559da0d61d6a093e562ff9bbc91"
+        },
+        {
+          "path": "web/save/budgets.mjs",
+          "status": 200,
+          "bytes": 340,
+          "sha256": "52984153977dcafd1d2682e848f1999f091d0966e17d46e902de76f5735a7018"
+        },
+        {
+          "path": "web/save/host.mjs",
+          "status": 200,
+          "bytes": 7730,
+          "sha256": "9de8dc0ef4bfc037a8ad0bff575d40c3dd4341bcc723351a412b2061bb661904"
+        },
+        {
+          "path": "web/save/idbfs_source.mjs",
+          "status": 200,
+          "bytes": 5550,
+          "sha256": "16eb57d471537f13d3e50018b56c2d416d2847f0d0249ba44433dd9ebb65f4d8"
+        },
+        {
+          "path": "web/save/legacy_inspection.mjs",
+          "status": 200,
+          "bytes": 2886,
+          "sha256": "db3a23a0221aa5d34a58a6a49aeeff930295ffe20bfcf73a7c11f0d49cffd671"
+        },
+        {
+          "path": "web/save/legacy_seal.mjs",
+          "status": 200,
+          "bytes": 2510,
+          "sha256": "9642132f5d4e7523e5966e802069af7f4bae803fae8e2e7c28ae55ee97d85610"
+        },
+        {
+          "path": "web/save/legacy_v5.mjs",
+          "status": 200,
+          "bytes": 2245,
+          "sha256": "8e7f4ad2d87aab77ac05361e4f46060476e933aa079ae94301998d08d4599621"
+        },
+        {
+          "path": "web/save/lifecycle.mjs",
+          "status": 200,
+          "bytes": 1878,
+          "sha256": "1cfaebb9a8745e2dc3e4f694ef475f250640870938f04160be1a5c9acd62935d"
+        },
+        {
+          "path": "web/save/source_decode.mjs",
+          "status": 200,
+          "bytes": 1542,
+          "sha256": "411f3bc784cb32a07f32eed5fc7d88f71b59a667cc0d68a50fe13c55bfdba18a"
+        },
+        {
+          "path": "web/save/store.mjs",
+          "status": 200,
+          "bytes": 13890,
+          "sha256": "2193b4397b8662a8ebc754dc4468e4d62964d209b4e1d0f0924a2ec81b409cbe"
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "console": [
+    {
+      "case": "portrait",
+      "type": "log",
+      "text": "Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org"
+    },
+    {
+      "case": "portrait",
+      "type": "log",
+      "text": "OpenGL API OpenGL ES 3.0 (WebGL 2.0 (OpenGL ES 3.0 Chromium)) - Compatibility - Using Device: WebKit - WebKit WebGL"
+    },
+    {
+      "case": "portrait",
+      "type": "log",
+      "text": "Build configuration: Emscripten 4.0.20, single-threaded, no GDExtension support."
+    },
+    {
+      "case": "portrait",
+      "type": "info",
+      "text": "[game-loading] timings_ms {\"engineScriptReady\":63,\"engineReady\":2828,\"downloadComplete\":2829,\"firstFrame\":3249}"
+    }
+  ],
+  "asset_responses": [
+    {
+      "case": "portrait",
+      "url": "http://127.0.0.1:8455/web/save/bridge.mjs",
+      "status": 200
+    },
+    {
+      "case": "portrait",
+      "url": "http://127.0.0.1:8455/index.js",
+      "status": 200
+    },
+    {
+      "case": "portrait",
+      "url": "http://127.0.0.1:8455/web/save/host.mjs",
+      "status": 200
+    },
+    {
+      "case": "portrait",
+      "url": "http://127.0.0.1:8455/web/save/source_decode.mjs",
+      "status": 200
+    },
+    {
+      "case": "portrait",
+      "url": "http://127.0.0.1:8455/web/save/legacy_v5.mjs",
+      "status": 200
+    },
+    {
+      "case": "portrait",
+      "url": "http://127.0.0.1:8455/web/save/lifecycle.mjs",
+      "status": 200
+    },
+    {
+      "case": "portrait",
+      "url": "http://127.0.0.1:8455/web/save/legacy_inspection.mjs",
+      "status": 200
+    },
+    {
+      "case": "portrait",
+      "url": "http://127.0.0.1:8455/web/save/store.mjs",
+      "status": 200
+    },
+    {
+      "case": "portrait",
+      "url": "http://127.0.0.1:8455/web/save/budgets.mjs",
+      "status": 200
+    },
+    {
+      "case": "portrait",
+      "url": "http://127.0.0.1:8455/web/save/legacy_seal.mjs",
+      "status": 200
+    },
+    {
+      "case": "portrait",
+      "url": "http://127.0.0.1:8455/web/save/idbfs_source.mjs",
+      "status": 200
+    },
+    {
+      "case": "portrait",
+      "url": "http://127.0.0.1:8455/index.wasm",
+      "status": 200
+    },
+    {
+      "case": "portrait",
+      "url": "http://127.0.0.1:8455/index.pck",
+      "status": 200
+    }
+  ],
+  "browser_args": [
+    "--no-sandbox",
+    "--use-gl=angle",
+    "--use-angle=swiftshader",
+    "--enable-webgl",
+    "--enable-unsafe-swiftshader",
+    "--renderer-process-limit=1"
+  ],
+  "started_utc": "2026-10-05T22:33:37Z",
+  "limits": [
+    "ordinary mouse/keyboard only; no save/game state/seed/time setters",
+    "browser media emulation at context creation, not physical device/OS setting",
+    "only naturally reachable disabled album controls; no writing/recovery injection or keyboard459 diagnosis",
+    "no hearing or complete storage acceptance"
+  ],
+  "closed_utc": "2026-10-05T22:35:04Z"
+}

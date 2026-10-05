@@ -1,0 +1,63 @@
+{
+  "type": "controlled fake executable wrapper test; no Godot engine",
+  "scope": "new exact disabled completion registration",
+  "cases": [
+    {
+      "name": "actual-positive",
+      "output": "PASS: soft_button_disabled 4400 checks",
+      "expected_returncode": 0,
+      "actual_returncode": 0,
+      "passed": true
+    },
+    {
+      "name": "positive-min",
+      "output": "PASS: soft_button_disabled 1 checks",
+      "expected_returncode": 0,
+      "actual_returncode": 0,
+      "passed": true
+    },
+    {
+      "name": "zero",
+      "output": "PASS: soft_button_disabled 0 checks",
+      "expected_returncode": 1,
+      "actual_returncode": 1,
+      "passed": true
+    },
+    {
+      "name": "negative",
+      "output": "PASS: soft_button_disabled -1 checks",
+      "expected_returncode": 1,
+      "actual_returncode": 1,
+      "passed": true
+    },
+    {
+      "name": "wrong-suite",
+      "output": "PASS: soft_button_focus_contrast 4400 checks",
+      "expected_returncode": 1,
+      "actual_returncode": 1,
+      "passed": true
+    },
+    {
+      "name": "suffix",
+      "output": "PASS: soft_button_disabled 4400 checks pending",
+      "expected_returncode": 1,
+      "actual_returncode": 1,
+      "passed": true
+    },
+    {
+      "name": "empty",
+      "output": "",
+      "expected_returncode": 1,
+      "actual_returncode": 1,
+      "passed": true
+    },
+    {
+      "name": "late-error",
+      "output": "PASS: soft_button_disabled 4400 checks\nERROR: late failure",
+      "expected_returncode": 1,
+      "actual_returncode": 1,
+      "passed": true
+    }
+  ],
+  "passed": true
+}
