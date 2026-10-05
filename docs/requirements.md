@@ -417,3 +417,8 @@ Assistant音频300 b8e5e6dc916dacd1eaf45b36c9f17584d36fc16c已接且实际交，
 | 编号 | 优先级 | 目标 | 验收 | 状态 | Owner | 备注 |
 | --- | --- | --- | --- | --- | --- | --- |
 | REQ-20261005-027 | P2 | 手机横竖屏上「假期第 N 天」可读、不压目标纸片 | 天数用 `INK` 字加小纸底，挂在暂停按钮正下方、同宽；五种视口中英文都不压提示和按钮。`test/day_label_layout_suite.gd` 173 项通过，未修 main 上 33 项失败。 | 待评审 | `GROK-CONTRIBUTOR` | 来源 #338（#242 评论 5990837592 观察）。只改 `Main._build_hud` 的 `_day_label` 与 `_layout` 天数分支；不碰存档、启动、#322 探索。Leader 已按作者请求补 daily 入口与真实 DPR2/3 横竖屏浏览器复核（本地候选，待独立最终 SHA 审查/发布）；[证据](playtests/2026-10-05-daylabel-integration/README.md)。决策见 [decisions/REQ-20261005-027.md](decisions/REQ-20261005-027.md)。 |
+
+
+## GAME-PM 18:20：生产接口与探索接收已落地
+
+336已发布，149/40原范围347验收收口，322最终7e4b46b59014989b804f5b4cc273501a6eabb831异步队列适配独审合81d225c15962a32d7a48a066154859488a155aa4；305旧实验固定Host前置/queued已由PM更新生产组合范围，真实公开带回物验收仍待，不以模型代Web。345作者请求集成已由Leader独审合3de并公开DPR2/3验证，349归档待；350相册排版Assistant在途，348toast下一项待接收。Producer155实际三帧/比例遮挡已接，清底像素/阴天/圆石方式用户等待与339听验门禁保持。逐人SHAs/下一产物/实际窗口及game-3de05fc自然关页羊照片补证见[18:20报告](pm/2026-10-05-1820-coordination.md)。
