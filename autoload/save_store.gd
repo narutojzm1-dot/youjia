@@ -92,6 +92,21 @@ func set_holiday_progress(day: int, elapsed: float) -> void:
 	save()
 
 
+# Time and plant state belong to one yard snapshot. Publish the in-memory
+# snapshot only after the existing file commit succeeds (not a Web durable ack).
+func set_yard_progress(day: int, elapsed: float, state: int, day_planted: int, watered_day: int) -> bool:
+	var candidate: Dictionary = _data.duplicate(true)
+	candidate.holiday_day = maxi(1, day)
+	candidate.holiday_day_elapsed = maxf(0.0, elapsed)
+	candidate.plant_state = clampi(state, 0, 3)
+	candidate.plant_day_planted = maxi(0, day_planted)
+	candidate.plant_watered_day = watered_day
+	if not SaveFilesType.new().commit(candidate, SAVE_PATH, TEMP_PATH, BACKUP_PATH):
+		return false
+	_data = candidate
+	return true
+
+
 # ── 植物床 ────────────────────────────────────────────────────────────────────
 
 func get_plant_state() -> Dictionary:
