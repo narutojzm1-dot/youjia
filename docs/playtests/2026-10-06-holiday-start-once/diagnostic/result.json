@@ -1,0 +1,167 @@
+{
+  "console": [
+    {
+      "t": 353664.204771221,
+      "type": "log",
+      "text": "Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org"
+    },
+    {
+      "t": 353664.712416632,
+      "type": "log",
+      "text": "OpenGL API OpenGL ES 3.0 (WebGL 2.0 (OpenGL ES 3.0 Chromium)) - Compatibility - Using Device: WebKit - WebKit WebGL"
+    },
+    {
+      "t": 353665.20160182,
+      "type": "log",
+      "text": "Build configuration: Emscripten 4.0.20, single-threaded, no GDExtension support."
+    },
+    {
+      "t": 353668.626423993,
+      "type": "info",
+      "text": "[game-loading] timings_ms {\"engineScriptReady\":39,\"downloadComplete\":958,\"engineReady\":3825,\"firstFrame\":5596}"
+    },
+    {
+      "t": 353670.937673763,
+      "type": "log",
+      "text": "TRACE399 INPUT 39 Left Mouse Button screen=title"
+    },
+    {
+      "t": 353670.937886341,
+      "type": "log",
+      "text": "TRACE399 PLAY_DOWN 39 screen=title"
+    },
+    {
+      "t": 353670.938010794,
+      "type": "log",
+      "text": "TRACE399 INPUT 39 Screen touched at ((640.0, 368.0)) with 0 touch points screen=title"
+    },
+    {
+      "t": 353670.93811547,
+      "type": "log",
+      "text": "TRACE399 PLAY_PRESSED 39 screen=title stack=[]"
+    },
+    {
+      "t": 353670.938217611,
+      "type": "log",
+      "text": "TRACE399 START 1 frame=39 screen=title stack=[]"
+    },
+    {
+      "t": 353670.938317248,
+      "type": "log",
+      "text": "TRACE399 FLUSH_BEFORE 1"
+    },
+    {
+      "t": 353670.938416824,
+      "type": "log",
+      "text": "TRACE399 FLUSH_AFTER 1 frame=39 screen=title"
+    },
+    {
+      "t": 353671.742046604,
+      "type": "log",
+      "text": "TRACE399 PLAY_PRESSED 39 screen=game stack=[]"
+    },
+    {
+      "t": 353671.742219919,
+      "type": "log",
+      "text": "TRACE399 START 2 frame=39 screen=game stack=[]"
+    },
+    {
+      "t": 353671.742410516,
+      "type": "log",
+      "text": "TRACE399 FLUSH_BEFORE 2"
+    },
+    {
+      "t": 353671.747147426,
+      "type": "log",
+      "text": "TRACE399 PLAY_UP 39 screen=game"
+    },
+    {
+      "t": 353671.749138424,
+      "type": "log",
+      "text": "TRACE399 NOTICE 39 notice.arrive"
+    },
+    {
+      "t": 353675.041216426,
+      "type": "log",
+      "text": "TRACE399 INPUT 39 Left Mouse Button screen=game"
+    },
+    {
+      "t": 353675.041405411,
+      "type": "log",
+      "text": "TRACE399 INPUT 39 Screen released at ((640.0, 368.0)) with 0 touch points screen=game"
+    },
+    {
+      "t": 353679.673262534,
+      "type": "log",
+      "text": "TRACE399 INPUT 56 Left Mouse Button screen=game"
+    },
+    {
+      "t": 353679.678913207,
+      "type": "log",
+      "text": "TRACE399 INPUT 56 Screen touched at ((329.0, 563.0)) with 0 touch points screen=game"
+    },
+    {
+      "t": 353679.683178164,
+      "type": "log",
+      "text": "TRACE399 INPUT 56 Left Mouse Button screen=game"
+    },
+    {
+      "t": 353679.683305562,
+      "type": "log",
+      "text": "TRACE399 INPUT 56 Screen released at ((329.0, 563.0)) with 0 touch points screen=game"
+    },
+    {
+      "t": 353681.440096335,
+      "type": "log",
+      "text": "TRACE399 EXP_ENTER 62"
+    },
+    {
+      "t": 353691.477570767,
+      "type": "log",
+      "text": "TRACE399 INPUT 95 Left Mouse Button screen=exploring"
+    },
+    {
+      "t": 353691.480468214,
+      "type": "log",
+      "text": "TRACE399 INPUT 95 Screen touched at ((706.0, 500.0)) with 0 touch points screen=exploring"
+    },
+    {
+      "t": 353691.480672115,
+      "type": "log",
+      "text": "TRACE399 INPUT 95 Left Mouse Button screen=exploring"
+    },
+    {
+      "t": 353691.480808962,
+      "type": "log",
+      "text": "TRACE399 INPUT 95 Screen released at ((706.0, 500.0)) with 0 touch points screen=exploring"
+    }
+  ],
+  "events": [
+    {
+      "t": 353669.836252178,
+      "touchscreen.tap": [
+        640,
+        368
+      ]
+    },
+    {
+      "t": 353678.902731978,
+      "touchscreen.tap": [
+        329,
+        563
+      ]
+    },
+    {
+      "t": 353690.920719264,
+      "touchscreen.tap": [
+        706,
+        500
+      ]
+    }
+  ],
+  "errors": [],
+  "navigation": [
+    "http://127.0.0.1:8199/"
+  ],
+  "diagnostic": true
+}
