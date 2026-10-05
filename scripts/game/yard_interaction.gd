@@ -20,6 +20,9 @@ static func primary(world: Node2D) -> Dictionary:
 			var chosen := selected(world, target)
 			if not chosen.is_empty():
 				return chosen
+	# An active cast keeps its meaning until reeled in or walked away from.
+	if world._fish_state != world.FISH_IDLE and player.position.distance_to(world._fishing_point()) < 110.0:
+		return fishing(world)
 	if not world._fish_carry_type.is_empty():
 		var bird = nearest(world, ["duck", "goose"])
 		if bird != null:
@@ -27,9 +30,6 @@ static func primary(world: Node2D) -> Dictionary:
 	if player.carrying_grass:
 		var llama = world.actor_named("llama")
 		return action("llama", llama.position, "action.feed", 88.0)
-	# An active cast keeps its meaning until reeled in or walked away from.
-	if world._fish_state != world.FISH_IDLE and player.position.distance_to(world._fishing_point()) < 110.0:
-		return fishing(world)
 	if player.position.distance_to(world._grass_point()) < 78.0:
 		return action("grass", world._grass_point(), "action.grass", 78.0)
 	var candidates: Array[Dictionary] = [plant(world), fishing(world)]
