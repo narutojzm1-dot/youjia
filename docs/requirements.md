@@ -422,11 +422,11 @@ Assistant音频300 b8e5e6dc916dacd1eaf45b36c9f17584d36fc16c已接且实际交，
 
 ## BUG-ALBUM-LANDSCAPE-20261005（#350）
 
-- Owner：`CODEX-LEAD-ASSISTANT`；状态：待最终独审及正式发布；来源 #40 已由 Leader 完成原验收并关闭；本单为独立新缺陷，不重开 #40。
-- 目标：短横屏手帐的历史照片、日期题词及札记可读、不相互覆盖、不越过页面内容区；常规宽屏双页与竖屏单页保持可用。
-- 范围：`scripts/main.gd` 的 `_album_page` / `_photo_card` 局部排版、专用几何回归与 daily 入口、体验证据和本条记录。不改照片存档/SaveHost、探索入口、天数标签、资源或音频。
-- 实现/证据：PR #351。首候选 bec5 的独审 REQUEST_CHANGES（合法英文长文案/页码越界）已接收返修；同两方法按真实换行及完整字体行高预算图片空间。最终专用矩阵45914/0，原版同矩阵3190失败；完整严格 daily/真实候选Web历史重开与六视口通过。保留最新7c标题/6856正式台账及33b105保存提示方法。[证据](playtests/2026-10-05-post-save-public/README.md)。#195并发40中2次短点击未响应仍待归因，本修复不涉及音频；#40状态维持已完成。
-- 验收：原版失败与修复后五视口中英文几何检查、完整原生门禁、本地 Web 正常操作、正式 Actions/Pages 与公开资源包/历史照片回归分别记录；独立子代理审核最终完整 SHA 后通过 PR 合入。
+- Owner：`CODEX-LEAD-ASSISTANT`；状态：已发布并完成本切片复验。来源 #40 原摄影范围已由 Leader 验收关闭，本单是独立新排版缺陷。
+- 目标/范围：短横屏照片、日期题词和既有正文完整可读、不覆盖页脚/导航；仅 Main._album_page / _photo_card、专用布局 suite/五实际照片夹具与 daily。照片/存档/探索/标题/音频契约及其他 Owner 方法保留。
+- 交付：PR #351 最终 `e8ec19faab9faefec9a8ea8510556c29d325b8eb` 经独立 CODEX-LEAD-ASSISTANT-REVIEW-PR-351 APPROVE（5993710899）合 `bc8a048b964cf39b80291b375f36f7362f0deedc`。首 bec5 REQUEST_CHANGES 长英文/页码越界已返修；全部合法静态文案/八视口/双语/导航与数据检查45914项，原版3190失败→修订0；正确4.7.2完整strict gate与CI通过。4.6.3误用运行明确作废保留。
+- 正式验收：Actions37304525517、Pages37305137774 success；实际公开game-bc8a048的13资源及HTML/manifest共15文件完整bytes/Git blob/tree相符，十模块SHA256/相对导入一致。普通同旧profile真实关闭重开、六视口/五历史照片翻页12记录，全部8历史字段相同、gen16/pendingfalse/errors[]；英文由原生几何覆盖，Web为中文。见[正式原生/Web/公网证据](playtests/2026-10-05-album-landscape-release/README.md)。
+- 剩余：#195受控并发40中2次短点击未响应根因仍待；真机/真人听验、稀有全流程与整体心流不冒通过。#40不重开；制作人看图状态另表保留，不代产品认可。
 
 ## GAME-PM 18:20：生产接口与探索接收已落地
 
