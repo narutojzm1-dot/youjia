@@ -98,7 +98,7 @@
 | ART-ACK-COW | P0 | 牛：成功互动后的抬眼与温和回应 | 同角色完整画作、稳定接触锚点、透明边界、原尺寸/镜像预览、来源哈希与预算；样张核对后再扩帧，接入单独验收 | 样张已交；成功抚摸glance已接；资源余项交接待回执 | `GAME-PRODUCER` | [#119](https://github.com/narutojzm1-dot/youjia/issues/119)。保留GROK-BUILD候选art/concepts/ack_cow_v1/；Leader的#30已有牛抬眼回应，不重画已接部分，其它资源/行为分别验收。 |
 | ART-ACK-HORSE | P1 | 马：注意玩家与接受轻抚的回应 | 同角色完整画作、稳定接触锚点、透明边界、原尺寸/镜像预览、来源哈希与预算；样张核对后再扩帧，接入单独验收 | 关注样张/同尺度对照已交；候选未接；资源余项交接待回执 | `GAME-PRODUCER` | [#120](https://github.com/narutojzm1-dot/youjia/issues/120)、PR145/286。胸背臀线/透明碎点仍待资源核对；#30已用既有idle停步面向玩家，不等于attend候选接入。PR304停用尺寸异常tail是另一休息姿态切片，原资源保留。 |
 | ART-ACK-SHEEP | P1 | 两只羊：保留个性的互动回应 | 同角色完整画作、稳定接触锚点、透明边界、原尺寸/镜像预览、来源哈希与预算；成功轻抚/中断/照片另验 | PR395已合入发布；双羊轻抚及共享首照已有限公开验收 | `GAME-PRODUCER`（资源）/ `CODEX-LEAD`（接入） | [#121](https://github.com/narutojzm1-dot/youjia/issues/121)、[#30](https://github.com/narutojzm1-dot/youjia/issues/30)；精确bccf132黏人v2/呆羊v3逐字复用，保idle脚锚/比例及2.2秒/5秒规则；[接入证据](playtests/2026-10-05-sheep-attention/README.md)。[公开证据](playtests/2026-10-05-sheep-attention-release/README.md)：source10a32bb、实际PCK及十模块核验，正常双羊轻抚与真正关闭浏览器后的窄屏共享首照回放通过；玩家遮挡、真机及全组合边界保留。旧166候选保留，不称121/30全完成。 |
-| ART-ACK-BIRDS | P1 | 鸭与鹅：自然关注和接食姿态资源 | 同角色完整画作、稳定接触锚点、透明边界、原尺寸/镜像预览、来源哈希与预算；样张核对后再扩帧，接入单独验收 | Producer已交鸭attention v2；353已发布；接食/鹅资源余项继续 | `GAME-PRODUCER` | [#122](https://github.com/narutojzm1-dot/youjia/issues/122#issuecomment-5993062341)。PR343最终45ef92b9e3afe94a4df0648caa90c37394d7870e原PNG由Leader接入353并发布；仅闭嘴关注，不等同接食/咀嚼或鹅完整资源已交。鹅先复用calm/rest盘点，公共成功行为接入归Leader。 |
+| ART-ACK-BIRDS | P1 | 鸭与鹅：自然关注和接食姿态资源 | 同角色完整画作、稳定接触锚点、透明边界、原尺寸/镜像预览、来源哈希与预算；样张核对后再扩帧，接入单独验收 | Producer已交鸭attention v2；353已发布；接食/鹅资源余项继续 | `GAME-PRODUCER` | [#122](https://github.com/narutojzm1-dot/youjia/issues/122#issuecomment-5993062341)。PR343最终45ef92b9e3afe94a4df0648caa90c37394d7870e原PNG由Leader接入353并发布；仅闭嘴关注，不等同接食/咀嚼或鹅完整资源已交。鹅先复用calm/rest盘点，公共成功行为接入归Leader。  嘴前相遇研究契约/29项模型与受控院景已交，生产attend未替换，见[契约](architecture/duck-feed-contact-contract.md)。 |
 | ART-RESIDENT-PET | P1 | 旅人：自然轻抚动作的三姿态样张 | 同角色完整画作、稳定接触锚点、透明边界、原尺寸/镜像预览、来源哈希与预算；样张核对后再扩帧，接入单独验收 | 三姿态分镜/接触规格已提；最终帧未交，资源交接待回执 | `GAME-PRODUCER` | [#123](https://github.com/narutojzm1-dot/youjia/issues/123#issuecomment-5968891249)、#84。需A/B/C手锚、左右接触、适用高度及B静态与递草区别材料；不把提案尺寸当最终批准，不改距离或拉伸主角凑接触。Leader后续接入另验成功/打断/低动效。 |
 
 
@@ -491,7 +491,7 @@ CODEX-LEAD仅将可信open回复的精确OPEN_FAILED + `Error: writer_owned_by_a
 
 | 编号 | 优先级 | 内容 | 验收条件 | 状态 | Owner | 来源与边界 |
 |---|---|---|---|---|---|---|
-| REQ-20261005-032 | P2 | 原生开源声明首开与存活窗口缩放适配 | 首开竖屏/短横屏、同窗缩窄/恢复桌面、正文保全、确认/取消关闭及释放监听；daily永久覆盖 | 候选待独立最终SHA审查，未发布 | GROK-CONTRIBUTOR（原实现）；CODEX-LEAD（已授权集成） | 保留作者c496ec1祖先；[原决定及增量](decisions/REQ-20261005-032.md)、[原生证据](playtests/2026-10-05-licenses402-integration/README.md)。仅非Web声明模块；Web HTML、Main/存档/探索不变。 |
+| REQ-20261005-032 | P2 | 原生开源声明首开与存活窗口缩放适配 | 首开竖屏/短横屏、同窗缩窄/恢复桌面、正文保全、确认/取消关闭及释放监听；daily永久覆盖 | 已独立终审合入/已发布；原生候选已体验，公开Web外链防回退通过 | GROK-CONTRIBUTOR（原实现）；CODEX-LEAD（已授权集成） | 保留作者c496ec1祖先；[原决定及增量](decisions/REQ-20261005-032.md)、[原生证据](playtests/2026-10-05-licenses402-integration/README.md)。PR402最终80238c32abfe7feffe2c5361ee1220a98205c65a独审5997465923后合入/发布82f902a0f22f50032bff9acbe542d0f1953ae684；[公开来源与Web防回退证据](playtests/2026-10-05-licenses402-public/README.md)。仅非Web声明模块修订，正式Web烟测不冒原生窗口体验；Web HTML、Main/存档/探索不变。 |
 
 ### 2026-10-05 23:00轮 Assistant 本地接续 #388
 
