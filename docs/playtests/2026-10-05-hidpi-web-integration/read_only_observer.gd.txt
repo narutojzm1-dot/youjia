@@ -1,0 +1,25 @@
+extends Node
+var world
+var last_notice := ""
+var serial := 0
+var last_click := {}
+func _input(event):
+ if event is InputEventMouseButton and event.pressed and world != null:
+  var point = get_viewport().get_canvas_transform().affine_inverse() * event.position
+  last_click = {"screen":[event.position.x,event.position.y],"world":[point.x,point.y],"target":YardInteraction.pointer(world, point).target}
+func _process(_delta):
+ var main = get_tree().root.get_node_or_null("Main")
+ if main == null or main._world == null: return
+ if world != main._world:
+  world = main._world
+  world.notice_requested.connect(func(key): last_notice=key)
+ if not bool(JavaScriptBridge.eval("window.observeRequested===true")): return
+ var points = {}
+ for id in ["cow","sheep_a","sheep_b","horse"]:
+  var animal = world.actor_named(id)
+  var point = get_viewport().get_canvas_transform() * animal.visual_hit_rect().get_center()
+  points[id] = [point.x,point.y]
+ serial += 1
+ var t = get_viewport().get_canvas_transform()
+ var data = {"serial":serial,"points":points,"last_notice":last_notice,"last_click":last_click,"main_size":[main.size.x,main.size.y],"canvas_transform":[t.x.x,t.x.y,t.y.x,t.y.y,t.origin.x,t.origin.y]}
+ JavaScriptBridge.eval("window.observeRequested=false;window.observed="+JSON.stringify(data))

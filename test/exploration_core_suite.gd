@@ -857,7 +857,7 @@ func _formal_near_path() -> void:
 			s = ExplorationSession.new(catalog, 0)
 			s.begin(ExplorationRoutes.NEAR_PATH, CLOCK, seed_value)
 			break
-	_check(carried != "" and second != "", "some trip offers a find at both brook and shade")
+	_check(carried != "" and second != "" and second != carried, "some trip offers different finds at brook and shade")
 	s.visit("brook")
 	_check(s.take(carried).ok, "a formal find can be taken")
 	s.visit("shade")
