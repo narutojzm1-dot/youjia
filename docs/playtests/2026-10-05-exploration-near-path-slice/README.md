@@ -17,7 +17,7 @@
 
 运行结束时存档里分别是 `keepsakes: { formal.find.brook_stone: 1 }`（横屏，树荫下显示「换成落羽」但未换）与 `{ formal.find.feather: 1 }`（竖屏）：带回物经 SaveStore 文件提交写入。每趟的东西按种子随机，空手的停留点也会出现。
 
-截图于 PR #322 审核修订后（出门落点移出花圃范围、画卷内暂停按钮）重新拍摄。
+截图于 PR #322 审核修订后重新拍摄：出门落点移到花圃 60px 核心范围之外（人停在约 72px 处，属花圃外圈与路口重叠的一小片），画卷内新增暂停按钮。
 
 ## Web 导出（Godot 4.7.2 Web，无线程模板，Chrome headless + SwiftShader）
 

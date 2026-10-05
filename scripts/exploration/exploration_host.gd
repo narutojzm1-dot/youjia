@@ -107,7 +107,9 @@ func swap(old_id: String, new_id: String) -> Dictionary:
 	if not released.ok:
 		return released
 	var taken := session.take(new_id)
-	_persist()
+	# 前置校验已保证 take 成功；万一失败也不把空篮写盘
+	if taken.ok:
+		_persist()
 	return taken
 
 
