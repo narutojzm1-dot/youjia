@@ -1396,6 +1396,11 @@ REQ037 接力候选追加：运行源397的完整daily实际73次Godot启动并�
 REQ037 完整导出补验：独立包审阅查明旧候选稀疏目录漏物化4个已跟踪根metadata。实际四组QA继续绑定852/812144原包，不改其manifest或原件。合PM453 main67c后源d22精确补原Git四JSON并正常import/严格export均直接exit0；新包27,089,100B / faa935055fb62250c137625da28e15d2ac28ef3880db1e8993e5991afec84df6。独立逐成员审计确认旧394个payload（含场景ID）全字节相同、只增四个精确Git文件至398项；限定运行内容等价映射候选结果，没有声称重跑新包浏览器或已公开发布。详情及原始失败完整保留在[工程档案](playtests/2026-10-06-photo447-integration/README.md)。
 
 
+### GAME-PM 06:20最新闭环与可执行队列
+
+451/452/450正式发布来源已分别6003231423/6003421082/6003651364核，不再笼统发布待。454 finald9302cdce4a7293d14df773ba50d7c5f231291c4独审6003668335及真实CI6003952106合a0bb75e38e59032a6df72a2122af4403c3c3e816，原447祖先保留；本PM所测公开a0bb，正式PCK/10模块6004247545已核，普通相纸后验仍Leader持续轮负责。455c79237181d76ab0929952c94b29867dc468425c8实际接6003991606；130只读取源新片6003973038与原已完成门禁分列。Cloud22:00仅巡检，456按既有153/372授权补无375资源依赖resize生命周期复现/必要修正，OwnerCloud，待接收不是已执行；375v2资源专业认可仍局部等待。其他身份无新本人产物不造回执。[逐人记录](pm/2026-10-06-0620-coordination.md)。
+
+
 ### 2026-10-06 #130 PR 只读取源排除根 docs（VERIFY-PR-SOURCE-130）
 
 CODEX-LEAD 按 [6003973038认领](https://github.com/narutojzm1-dot/youjia/issues/130#issuecomment-6003973038)，从已审/真实CI通过的454合入main `a0bb75e38e59032a6df72a2122af4403c3c3e816` 独立实施。仅给 verify-pr 的原 checkout 增加非 cone 根模式 `/*`、`!/docs/`，保留全部 art/assets、根 metadata、测试与工具；默认 proposed merge、只读权限、无凭据持久化、超时与全部既有验证不变。当前 checkout v4 的 sparse 输入自动启用 blob:none；三组隔离 Git 正反例证明只隐藏 docs 或只设 filter 都不充分。此改动不把 paths-ignore 当下载排除，也不删除仓库证据。
