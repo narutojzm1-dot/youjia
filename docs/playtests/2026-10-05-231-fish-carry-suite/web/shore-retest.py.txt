@@ -1,0 +1,73 @@
+# GROK-CONTRIBUTOR #231 rev3 Web retest (CODEX-LEAD 5987473273): same shore stance, same water pixel W, no-fish vs carrying.
+# Live build served locally from a byte copy of Pages; input = canvas mouse clicks only. No JS eval, no seed, no timer change.
+# Usage: python shore-retest.py.txt <dir with index.html + game-<sha>.*> <out dir> 750,540
+# Button-label templates (TPL) are crops of earlier local screenshots of the HUD primary button; re-create them from your own frames.
+# They are only used to decide when to tap 收杆; notices/targets are read from the screenshots by hand.
+import functools,http.server,threading,sys,time,os,json
+from playwright.sync_api import sync_playwright
+from PIL import Image
+WEB=sys.argv[1]; OUT=sys.argv[2]; W=tuple(int(v) for v in sys.argv[3].split(',')); os.makedirs(OUT,exist_ok=True)
+BTN=(1165,677); PLAY=(639,369); BOX=(1075,655,1255,700)
+class H(http.server.SimpleHTTPRequestHandler):
+  def log_message(self,*a):pass
+srv=http.server.ThreadingHTTPServer(('127.0.0.1',0),functools.partial(H,directory=WEB))
+threading.Thread(target=srv.serve_forever,daemon=True).start()
+def mask(im): return [1 if p<120 else 0 for p in im.convert('L').crop(BOX).getdata()]
+TPL={k:mask(Image.open(f)) for k,f in [('reel','/tmp/yjweb231/W3-expiry-023.jpg'),('wait','/tmp/yjweb231/W3-expiry-016.jpg'),('fish','/tmp/yjweb231/W3-expiry-045.jpg'),('hello','/tmp/yjw4/probe2/032.jpg'),('toss','/tmp/yjweb231c/W3-expiry-021.jpg'),('flower','/tmp/yjw4/probe2/000.jpg')]}
+def label(im):
+  m=mask(im); best,bv='other',0
+  for k,t in TPL.items():
+    i=sum(a&b for a,b in zip(m,t)); u=sum(a|b for a,b in zip(m,t)) or 1
+    if i/u>bv: best,bv=k,i/u
+  return best if bv>0.6 else 'other'
+log=[]
+with sync_playwright() as p:
+  b=p.chromium.launch(headless=True,args=['--no-sandbox','--use-gl=angle','--use-angle=swiftshader','--enable-webgl','--enable-unsafe-swiftshader'])
+  ctx=b.new_context(viewport={'width':1280,'height':720}); pg=ctx.new_page(); errs=[]
+  pg.on('pageerror',lambda e:errs.append(str(e)))
+  pg.add_init_script("window.first=false;window.addEventListener('youjia:first-frame',()=>window.first=true)")
+  pg.goto(f'http://127.0.0.1:{srv.server_port}/index.html'); pg.wait_for_function('window.first',timeout=180000)
+  pg.wait_for_timeout(1500); t0=time.time(); n=[0]
+  def shot(tag):
+    f=f'{OUT}/{n[0]:03d}.jpg'; pg.screenshot(path=f,type='jpeg',quality=80); n[0]+=1
+    r={'t':round(time.time()-t0,1),'f':os.path.basename(f),'tag':tag,'label':label(Image.open(f))}; log.append(r); print(r,flush=True); return r
+  def click(xy,tag): pg.mouse.click(*xy); r={'t':round(time.time()-t0,1),'click':list(xy),'tag':tag}; log.append(r); print(r,flush=True)
+  def watch(secs,tag,stop=None,dt=600):
+    end=time.time()+secs
+    while time.time()<end:
+      pg.wait_for_timeout(dt); r=shot(tag)
+      if stop and stop(r): return r
+    return None
+  click(PLAY,'enter yard'); watch(16,'settle',dt=1000)
+  # 1) walk normally from the path: tap W once; game walks the player to the shore fishing spot
+  click(W,'P1 tap W from path (no fish): select pond + walk')
+  r=watch(35,'P1 walking',lambda r:r['label']=='wait')
+  # 2) let this first cast miss at the shore (no reel)
+  watch(25,'P2 first cast, not reeling',lambda r:r['label'] not in ('wait','reel'))
+  watch(2,'P2 after miss')
+  # 3) no fish, same stance: tap the same W pixel
+  for k in range(2):
+    click(W,f'P3 tap same W at shore, no fish (try {k+1})')
+    r=watch(4,f'P3 after tap {k+1}',lambda r:r['label']=='wait')
+    if r: break
+  # 4) catch a fish from the same stance; recast only via same W pixel
+  caught=False
+  for att in range(6):
+    if log[-1].get('label')!='wait':
+      click(W,f'P4 tap same W to cast (attempt {att+1})')
+      if not watch(4,'P4 after cast tap',lambda r:r['label']=='wait'): continue
+    r=watch(22,'P4 waiting bite',lambda r:r['label']!='wait')
+    if r and r['label']=='reel':
+      click(BTN,'P4 tap primary 收杆')
+      r=watch(2.5,'P4 after reel',lambda r:r['label']=='toss')
+      if r: caught=True; break
+    watch(1.5,'P4 no catch')
+  log.append({'caught':caught})
+  if caught:
+    watch(1.2,'P5 carrying')
+    click(W,'P5 tap same W while carrying')
+    watch(22,'P5 after tap while carrying (no reel)')
+    click(BTN,'P6 tap primary after window'); watch(4,'P6 after primary')
+  b.close()
+  log.append({'page_errors':errs})
+srv.shutdown(); json.dump(log,open(f'{OUT}/log.json','w'),ensure_ascii=False,indent=0)
