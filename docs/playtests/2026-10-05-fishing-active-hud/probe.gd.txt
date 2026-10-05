@@ -1,0 +1,31 @@
+extends Node
+var main
+var world
+var stage := -1
+func _ready():
+	main = load("res://scenes/main.tscn").instantiate()
+	add_child(main)
+	await get_tree().process_frame
+	main._on_play_pressed()
+	await get_tree().process_frame
+	main.set_process(false)
+	world = main._world
+	world.set_process(false)
+	world._player.position = world._fishing_point() + Vector2(0,-50)
+	world._player.set_process(false)
+	world._selected_target = "fishing"
+	world._pending_interaction = ""
+	world._fish_carry_type = "small"
+	world._fish_carry_timer = 12.0
+	world._fish_state = world.FISH_CASTING
+	JavaScriptBridge.eval("window.hudStage=0;window.hudReady=true")
+func _process(_delta):
+	if world == null: return
+	var next = int(JavaScriptBridge.eval("window.hudStage"))
+	if next == stage: return
+	stage = next
+	if stage == 1: world._fish_state = world.FISH_BITE
+	if stage == 2: world.request_primary_action()
+	main._refresh_hud()
+	var result = {"stage":stage,"label":world.primary_action_key(),"carry":world._fish_carry_type,"timer":world._fish_carry_timer,"caught":world._fish_caught_total}
+	JavaScriptBridge.eval("window.hudResult=" + JSON.stringify(result))

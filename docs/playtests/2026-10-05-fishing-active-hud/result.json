@@ -1,0 +1,139 @@
+[
+  {
+    "carry": "small",
+    "caught": 0,
+    "label": "action.fish_waiting",
+    "stage": 0,
+    "timer": 12,
+    "viewport": [
+      1280,
+      720
+    ],
+    "page_errors": []
+  },
+  {
+    "carry": "small",
+    "caught": 0,
+    "label": "action.reel",
+    "stage": 1,
+    "timer": 12,
+    "viewport": [
+      1280,
+      720
+    ],
+    "page_errors": []
+  },
+  {
+    "carry": "small",
+    "caught": 1,
+    "label": "action.toss_fish",
+    "stage": 2,
+    "timer": 20,
+    "viewport": [
+      1280,
+      720
+    ],
+    "page_errors": []
+  },
+  {
+    "carry": "small",
+    "caught": 0,
+    "label": "action.fish_waiting",
+    "stage": 0,
+    "timer": 12,
+    "viewport": [
+      390,
+      844
+    ],
+    "page_errors": [
+      "WARNING: Could not create texture atlas, status: 36061",
+      "   at: update_texture_atlas (drivers/gles3/storage/texture_storage.cpp:2473)",
+      "ERROR: CanvasShaderGLES3: Vertex shader compilation failed:",
+      "",
+      "   at: _display_error_with_code (drivers/gles3/shader_gles3.cpp:262)",
+      "ERROR: Method/function failed.",
+      "   at: _compile_specialization (drivers/gles3/shader_gles3.cpp:356)",
+      "WARNING: shader failed to compile, unable to bind shader.",
+      "   at: _version_bind_shader (./drivers/gles3/shader_gles3.h:215)",
+      "ERROR: CanvasShaderGLES3: Vertex shader compilation failed:",
+      "",
+      "   at: _display_error_with_code (drivers/gles3/shader_gles3.cpp:262)",
+      "ERROR: Method/function failed.",
+      "   at: _compile_specialization (drivers/gles3/shader_gles3.cpp:356)",
+      "ERROR: CanvasShaderGLES3: Vertex shader compilation failed:",
+      "",
+      "   at: _display_error_with_code (drivers/gles3/shader_gles3.cpp:262)",
+      "ERROR: Method/function failed.",
+      "   at: _compile_specialization (drivers/gles3/shader_gles3.cpp:356)"
+    ]
+  },
+  {
+    "carry": "small",
+    "caught": 0,
+    "label": "action.reel",
+    "stage": 1,
+    "timer": 12,
+    "viewport": [
+      390,
+      844
+    ],
+    "page_errors": [
+      "WARNING: Could not create texture atlas, status: 36061",
+      "   at: update_texture_atlas (drivers/gles3/storage/texture_storage.cpp:2473)",
+      "ERROR: CanvasShaderGLES3: Vertex shader compilation failed:",
+      "",
+      "   at: _display_error_with_code (drivers/gles3/shader_gles3.cpp:262)",
+      "ERROR: Method/function failed.",
+      "   at: _compile_specialization (drivers/gles3/shader_gles3.cpp:356)",
+      "WARNING: shader failed to compile, unable to bind shader.",
+      "   at: _version_bind_shader (./drivers/gles3/shader_gles3.h:215)",
+      "ERROR: CanvasShaderGLES3: Vertex shader compilation failed:",
+      "",
+      "   at: _display_error_with_code (drivers/gles3/shader_gles3.cpp:262)",
+      "ERROR: Method/function failed.",
+      "   at: _compile_specialization (drivers/gles3/shader_gles3.cpp:356)",
+      "ERROR: CanvasShaderGLES3: Vertex shader compilation failed:",
+      "",
+      "   at: _display_error_with_code (drivers/gles3/shader_gles3.cpp:262)",
+      "ERROR: Method/function failed.",
+      "   at: _compile_specialization (drivers/gles3/shader_gles3.cpp:356)"
+    ]
+  },
+  {
+    "carry": "small",
+    "caught": 1,
+    "label": "action.toss_fish",
+    "stage": 2,
+    "timer": 20,
+    "viewport": [
+      390,
+      844
+    ],
+    "page_errors": [
+      "WARNING: Could not create texture atlas, status: 36061",
+      "   at: update_texture_atlas (drivers/gles3/storage/texture_storage.cpp:2473)",
+      "ERROR: CanvasShaderGLES3: Vertex shader compilation failed:",
+      "",
+      "   at: _display_error_with_code (drivers/gles3/shader_gles3.cpp:262)",
+      "ERROR: Method/function failed.",
+      "   at: _compile_specialization (drivers/gles3/shader_gles3.cpp:356)",
+      "WARNING: shader failed to compile, unable to bind shader.",
+      "   at: _version_bind_shader (./drivers/gles3/shader_gles3.h:215)",
+      "ERROR: CanvasShaderGLES3: Vertex shader compilation failed:",
+      "",
+      "   at: _display_error_with_code (drivers/gles3/shader_gles3.cpp:262)",
+      "ERROR: Method/function failed.",
+      "   at: _compile_specialization (drivers/gles3/shader_gles3.cpp:356)",
+      "ERROR: CanvasShaderGLES3: Vertex shader compilation failed:",
+      "",
+      "   at: _display_error_with_code (drivers/gles3/shader_gles3.cpp:262)",
+      "ERROR: Method/function failed.",
+      "   at: _compile_specialization (drivers/gles3/shader_gles3.cpp:356)",
+      "ERROR: CanvasShaderGLES3: Vertex shader compilation failed:",
+      "(unknown error)",
+      "   at: _display_error_with_code (drivers/gles3/shader_gles3.cpp:262)",
+      "ERROR: Method/function failed.",
+      "   at: _compile_specialization (drivers/gles3/shader_gles3.cpp:356)"
+    ]
+  }
+]
