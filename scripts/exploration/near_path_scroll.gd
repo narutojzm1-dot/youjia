@@ -1,6 +1,6 @@
 class_name NearPathScroll
 extends Node2D
-# 画卷漫步的正式表现适配器（契约 §2、§9）：把输入翻译成核心事件，把核心视图画出来。
+# 院外近郊的正式表现适配器（契约 §2、§9）：在原画透视里沿画中道路走，把输入翻译成核心事件，把核心视图画出来。
 # 不直接改会话字段，只经 ExplorationHost 调核心；回院只发请求，由宿主导航。
 # 看景总能进入；只有带上 / 放回依赖核心（首片研究建议第 10 节第 6 项）。
 
@@ -10,8 +10,6 @@ const INK := Color("5b4637")
 const MUTED := Color("8a7060")
 const APRICOT := Color("f3b27a")
 const CREAM := Color("fffaf1")
-const MOUNT := Color(0.85, 0.80, 0.70)
-const EASE_TIME := 0.4
 const TOUCH_DEDUPE_MS := 400
 
 signal return_requested(reason: String)
@@ -20,25 +18,24 @@ signal pause_requested
 var host: ExplorationHost
 var walker: SequenceResident
 var camera: Camera2D
-var painter: NearPathPainter
+var painting: Sprite2D
 var items: Node2D
 var hud: CanvasLayer
-var x := L.START_X
-var facing := 1.0
+# 人物在路上的位置：哪条路、离岔口多远（原画像素）
+var spot: Dictionary = L.START.duplicate()
+var facing := -1.0
 var observing := ""
 var leaving := false
 var suppressed_touches := 0
 # 停下看过的停留点 → 核心给出的东西（可能为空）；被带走的从这里画不出来
 var revealed: Dictionary = {}
-var _hold_direction := 0
+# 点按路面后要走去的位置；方向键一按就取消
+var walk_target: Dictionary = {}
 var _home_hold := 0.0
 var _walked := false
 var _last_touch_ms := -10000
 var _cam_zoom := 1.0
 var _cam_pos := Vector2.ZERO
-var _ease := -1.0
-var _ease_from_zoom := 1.0
-var _ease_from_pos := Vector2.ZERO
 var _caption_time := 0.0
 
 var _place_label: Label
@@ -52,16 +49,20 @@ var _go_button: Button
 var _basket: Control
 
 
-func setup(trip_host: ExplorationHost, weather: String) -> void:
+## 原画只有一版晴秋，天气暂不改画面
+func setup(trip_host: ExplorationHost, _weather: String) -> void:
 	host = trip_host
 	process_mode = Node.PROCESS_MODE_PAUSABLE
-	var mount := Polygon2D.new()
-	mount.polygon = PackedVector2Array([Vector2(-3000, -3000), Vector2(L.SIZE.x + 3000, -3000), Vector2(L.SIZE.x + 3000, L.SIZE.y + 3000), Vector2(-3000, L.SIZE.y + 3000)])
-	mount.color = MOUNT
-	add_child(mount)
-	painter = NearPathPainter.new()
-	add_child(painter)
-	painter.setup(weather)
+	var paper := Polygon2D.new()
+	paper.polygon = PackedVector2Array([Vector2(-3000, -3000), Vector2(L.SIZE.x + 3000, -3000), Vector2(L.SIZE.x + 3000, L.SIZE.y + 3000), Vector2(-3000, L.SIZE.y + 3000)])
+	paper.color = PAPER
+	add_child(paper)
+	painting = Sprite2D.new()
+	painting.name = "Painting"
+	painting.texture = load(L.ART)
+	painting.centered = false
+	painting.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
+	add_child(painting)
 	items = Node2D.new()
 	items.name = "Finds"
 	add_child(items)
@@ -69,7 +70,8 @@ func setup(trip_host: ExplorationHost, weather: String) -> void:
 	walker = SequenceResident.new()
 	walker.z_index = 5
 	add_child(walker)
-	walker.position = Vector2(x, L.GROUND_Y)
+	walker.position = foot()
+	walker.advance(0.0, Vector2.ZERO, L.depth(foot().y), facing, true)
 	camera = Camera2D.new()
 	camera.anchor_mode = Camera2D.ANCHOR_MODE_DRAG_CENTER
 	add_child(camera)
@@ -93,29 +95,19 @@ func reduced_motion() -> bool:
 	return bool(TuningStore.get_value("ui.reduced_motion", false))
 
 
+func foot() -> Vector2:
+	return L.point(spot.arm, spot.d)
+
+
 func _process(delta: float) -> void:
 	if leaving:
 		return
-	var direction := 0
+	var direction := Vector2.ZERO
 	if observing.is_empty():
-		var axis := Input.get_axis("move_left", "move_right")
-		direction = int(signf(axis)) if absf(axis) > 0.2 else _hold_direction
-	var before := x
-	if direction != 0:
-		facing = float(direction)
-		x = clampf(x + direction * L.WALK_SPEED * delta, L.WALK_MIN, L.WALK_MAX)
-		if not _walked and absf(x - L.START_X) > 24.0:
-			_walked = true
-	if direction < 0 and x <= L.WALK_MIN + 0.5:
-		_home_hold += delta
-		if _home_hold >= L.HOME_HOLD:
-			_request_return("player")
-			return
-	else:
-		_home_hold = 0.0
-	walker.position = Vector2(x, L.GROUND_Y)
-	walker.advance(delta, Vector2(x - before, 0.0), 1.04, facing, reduced_motion())
-	_update_camera(delta, direction != 0)
+		direction = Input.get_vector("move_left", "move_right", "move_up", "move_down", 0.2)
+	walk(direction, delta)
+	if leaving:
+		return
 	if _caption_time > 0.0:
 		_caption_time -= delta
 		if _caption_time <= 0.0 and observing.is_empty():
@@ -123,10 +115,49 @@ func _process(delta: float) -> void:
 	_refresh()
 
 
+## 走一帧：方向键沿路投影；没有方向时朝点按的目标走；在院门口继续往院里走就回院
+func walk(direction: Vector2, delta: float) -> void:
+	var before := foot()
+	var step := L.WALK_SPEED * delta
+	if direction.length() > 0.01:
+		walk_target = {}
+		spot = L.step_input(spot, direction, step)
+	elif not walk_target.is_empty():
+		spot = L.step_toward(spot, walk_target, step)
+		if L.route_length(spot, walk_target) < 0.5:
+			walk_target = {}
+	var moved := foot() - before
+	if absf(moved.x) > 0.01:
+		facing = signf(moved.x)
+	if not _walked and L.route_length(spot, L.START) > 24.0:
+		_walked = true
+	if L.at_home(spot) and direction.normalized().dot(L.home_direction()) > L.MIN_ALIGN:
+		_home_hold += delta
+		if _home_hold >= L.HOME_HOLD:
+			_request_return("player")
+			return
+	else:
+		_home_hold = 0.0
+	walker.position = foot()
+	walker.advance(delta, moved, L.depth(foot().y), facing, reduced_motion())
+	_snap_camera()
+
+
 ## ───────────── 看景、带上、回院 ─────────────
 
 func nearby_stop() -> String:
-	return L.nearby(x)
+	return L.nearby(spot)
+
+
+func place_at(stop_id: String) -> void:
+	var entry := L.stop(stop_id)
+	if entry.is_empty():
+		return
+	spot = {"arm": entry.arm, "d": entry.d}
+	walk_target = {}
+	walker.position = foot()
+	_snap_camera()
+	_refresh()
 
 
 func observe(stop_id: String = "") -> bool:
@@ -135,13 +166,12 @@ func observe(stop_id: String = "") -> bool:
 	var target := stop_id if not stop_id.is_empty() else nearby_stop()
 	if target.is_empty():
 		return false
-	_hold_direction = 0
+	walk_target = {}
 	observing = target
 	host.visit(target)
 	var view := host.view()
 	if view.get("current_stop", "") == target:
 		revealed[target] = str(view.get("taken", {}).get(target, view.get("offer", "")))
-	_begin_ease()
 	_show_caption(_observe_caption(), 0.0)
 	items.queue_redraw()
 	_refresh()
@@ -152,10 +182,8 @@ func end_observe() -> void:
 	if observing.is_empty():
 		return
 	observing = ""
-	_hold_direction = 0
 	_caption.visible = false
 	items.queue_redraw()
-	_begin_ease()
 	_refresh()
 
 
@@ -205,7 +233,7 @@ func _request_return(reason: String) -> void:
 	if leaving:
 		return
 	leaving = true
-	_hold_direction = 0
+	walk_target = {}
 	return_requested.emit(reason)
 
 
@@ -226,7 +254,7 @@ func _unhandled_input(event: InputEvent) -> void:
 				end_observe()
 		elif code == KEY_T:
 			pick()
-		elif not observing.is_empty() and (event.is_action("move_left") or event.is_action("move_right")):
+		elif not observing.is_empty() and (event.is_action("move_left") or event.is_action("move_right") or event.is_action("move_up") or event.is_action("move_down")):
 			end_observe()
 		else:
 			return
@@ -247,13 +275,12 @@ func _unhandled_input(event: InputEvent) -> void:
 	else:
 		return
 	get_viewport().set_input_as_handled()
-	if not pressed:
-		_hold_direction = 0
-		return
-	press_at(point)
+	if pressed:
+		press_at(point)
 
 
-## 屏幕坐标的一次按下：先命中按钮；观察态里其余位置不走路（计数，免得误以为卡住时再提示）
+## 屏幕坐标的一次按下：先命中按钮；观察态里其余位置不走路（计数，免得误以为卡住时再提示）；
+## 其余点按沿路走到离按下处最近的路面
 func press_at(point: Vector2) -> void:
 	for button: Button in [_return_button, _pause_button, _look_button, _pick_button, _go_button]:
 		if button.is_visible_in_tree() and button.get_global_rect().has_point(point):
@@ -263,58 +290,37 @@ func press_at(point: Vector2) -> void:
 		suppressed_touches += 1
 		_show_caption(_observe_caption() + "\n" + I18n.t("exploration.caption.continue_hint"), 0.0)
 		return
+	var target := L.nearest(screen_to_art(point))
+	walk_target = {"arm": target.arm, "d": target.d}
+
+
+func screen_to_art(point: Vector2) -> Vector2:
 	var size := get_viewport().get_visible_rect().size
-	_hold_direction = -1 if point.x < size.x * 0.5 else 1
+	return _cam_pos + (point - size * 0.5) / maxf(_cam_zoom, 0.001)
+
+
+func art_to_screen(art: Vector2) -> Vector2:
+	var size := get_viewport().get_visible_rect().size
+	return (art - _cam_pos) * _cam_zoom + size * 0.5
 
 
 ## ───────────── 相机 ─────────────
 
 func target_frame() -> Dictionary:
-	var size := get_viewport().get_visible_rect().size
-	return L.fit(x, size, observing) if not observing.is_empty() else L.follow(x, size)
+	return L.frame(foot(), get_viewport().get_visible_rect().size)
 
 
 func camera_zoom() -> float:
 	return _cam_zoom
 
 
-func _begin_ease() -> void:
-	_ease = 0.0
-	_ease_from_zoom = _cam_zoom
-	_ease_from_pos = _cam_pos
-
-
-func _update_camera(delta: float, walking: bool) -> void:
-	if _ease < 0.0 or reduced_motion() or walking:
-		_ease = -1.0
-		_snap_camera()
-		return
-	_ease += delta
-	var target := target_frame()
-	if _ease >= EASE_TIME:
-		_ease = -1.0
-		_snap_camera()
-		return
-	var weight := smoothstep(0.0, EASE_TIME, _ease)
-	_cam_zoom = lerpf(_ease_from_zoom, float(target.zoom), weight)
-	_cam_pos = _ease_from_pos.lerp(target.camera, weight)
-	_apply_camera()
-
-
 func _snap_camera() -> void:
 	var target := target_frame()
 	_cam_zoom = float(target.zoom)
 	_cam_pos = target.camera
-	_apply_camera()
-
-
-func _apply_camera() -> void:
-	if camera == null:
-		return
-	camera.zoom = Vector2.ONE * _cam_zoom
-	camera.position = _cam_pos
-	var visible := get_viewport().get_visible_rect().size / maxf(_cam_zoom, 0.001)
-	painter.follow_camera(_cam_pos.x - visible.x * 0.5)
+	if camera != null:
+		camera.zoom = Vector2.ONE * _cam_zoom
+		camera.position = _cam_pos
 
 
 ## ───────────── 画面与界面 ─────────────
@@ -326,13 +332,14 @@ func _draw_items() -> void:
 		var anchor: Vector2 = L.stop(stop_id).get("item", Vector2.ZERO)
 		if find_id.is_empty() or taken.has(stop_id) or anchor == Vector2.ZERO:
 			continue
+		var depth := L.depth(anchor.y)
 		if stop_id == observing:
 			# 静止的柔光地影，只在停下看的这一处；不闪、不动
-			items.draw_set_transform(anchor + Vector2(0, 6), 0.0, Vector2(1.0, 0.4))
+			items.draw_set_transform(anchor + Vector2(0, 6) * depth, 0.0, Vector2(depth, 0.4 * depth))
 			items.draw_circle(Vector2.ZERO, 34.0, Color(1.0, 0.96, 0.82, 0.55))
 			items.draw_circle(Vector2.ZERO, 24.0, Color(1.0, 0.98, 0.90, 0.6))
 			items.draw_set_transform(Vector2.ZERO)
-		KeepsakeArt.draw(items, find_id, anchor, 1.9)
+		KeepsakeArt.draw(items, find_id, anchor, 1.6 * depth)
 
 
 func _observe_caption() -> String:

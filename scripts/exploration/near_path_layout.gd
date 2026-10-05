@@ -1,26 +1,42 @@
 class_name NearPathLayout
 extends RefCounted
-# 近郊小路画卷的几何与取景（纯数据 + 纯函数）。数值是首片实验参数，不是正式构图规格；
-# 正式画面交付后只需替换这里的停留点位置、小景框与物件锚点。
+# 院外近郊原画（02_near_path，1672×941）上的可走路与取景（纯数据 + 纯函数）。
+# 坐标就是原画像素；路是汇于岔口的三条折线，人物脚点只落在折线上，不横穿花丛、溪水或纸边。
+# 折线、停留点、物件锚点、透视比例都是首片按画面校准的实验参数，不是用户批准的规格。
 
-const SIZE := Vector2(3600, 720)
-const GROUND_Y := 560.0
-const WALK_MIN := 150.0
-const WALK_MAX := 3450.0
-const START_X := 230.0
-const WALK_SPEED := 110.0
+const ART := "res://assets/holiday/exploration/near_path_02.webp"
+const SIZE := Vector2(1672, 941)
+const JUNCTION := Vector2(1020, 615)
+# 每条路从岔口出发；gate 的尽头就是院门口
+const ARMS := {
+	"gate": [JUNCTION, Vector2(1130, 620), Vector2(1250, 584), Vector2(1365, 538)],
+	"pine": [JUNCTION, Vector2(945, 582), Vector2(865, 560), Vector2(795, 554)],
+	"road": [JUNCTION, Vector2(1020, 700), Vector2(985, 770), Vector2(930, 830), Vector2(870, 875)],
+}
+const START := {"arm": "gate", "d": 330.0}
+const WALK_SPEED := 85.0
 # 停留点“附近”：只用来提示可以停下看，经过不计任何东西
-const NEAR := 110.0
-# 回到画卷起点再往回走这么久，就当作走回院子
+const NEAR := 55.0
+# 走到院门口还往院里走这么久，就当作走回院子
 const HOME_HOLD := 0.45
-const FIT_MARGIN := 20.0
+# 方向与路的夹角太大时不走，免得按“上”在横路上乱滑
+const MIN_ALIGN := 0.3
+# 脚点 y → 人物比例：远（院门）小、近（画面下沿）大
+const DEPTH_NEAR_Y := 875.0
+const DEPTH_FAR_Y := 538.0
+const DEPTH_NEAR := 1.35
+const DEPTH_FAR := 0.75
 const WALKER_BOX := Rect2(-24, -108, 48, 108)
+# 桌面完整构图的最小视口边；更小（手机）时放大并随人物平移，缩放固定不变
+const FULL_VIEW_MIN := 600.0
+const PHONE_VIEW_HEIGHT := 640.0
+const PHONE_VIEW_WIDTH := 420.0
 
 const STOPS := [
-	{"id": "gate", "x": 470.0, "scene": Rect2(210, 250, 520, 360), "item": Vector2.ZERO},
-	{"id": "brook", "x": 1260.0, "scene": Rect2(1000, 270, 520, 340), "item": Vector2(1338, 562)},
-	{"id": "shade", "x": 2160.0, "scene": Rect2(1900, 200, 520, 410), "item": Vector2(2236, 562)},
-	{"id": "slope", "x": 3060.0, "scene": Rect2(2800, 230, 520, 380), "item": Vector2.ZERO},
+	{"id": "gate", "arm": "gate", "d": 270.0, "item": Vector2(1185, 655)},
+	{"id": "brook", "arm": "road", "d": 165.0, "item": Vector2(1048, 792)},
+	{"id": "shade", "arm": "pine", "d": 235.0, "item": Vector2(752, 592)},
+	{"id": "slope", "arm": "road", "d": 315.0, "item": Vector2(950, 884)},
 ]
 
 
@@ -31,51 +47,142 @@ static func stop(stop_id: String) -> Dictionary:
 	return {}
 
 
-static func nearby(x: float) -> String:
+static func arm_length(arm: String) -> float:
+	var points: Array = ARMS[arm]
+	var total := 0.0
+	for i in range(1, points.size()):
+		total += (points[i] as Vector2).distance_to(points[i - 1])
+	return total
+
+
+static func point(arm: String, d: float) -> Vector2:
+	var points: Array = ARMS[arm]
+	var left := clampf(d, 0.0, arm_length(arm))
+	for i in range(1, points.size()):
+		var a: Vector2 = points[i - 1]
+		var b: Vector2 = points[i]
+		var span := a.distance_to(b)
+		if left <= span or i == points.size() - 1:
+			return a.lerp(b, clampf(left / maxf(span, 0.001), 0.0, 1.0))
+		left -= span
+	return points[-1]
+
+
+## 沿路离开岔口的方向（单位向量）
+static func tangent(arm: String, d: float) -> Vector2:
+	var length := arm_length(arm)
+	var a := point(arm, clampf(d - 2.0, 0.0, length))
+	var b := point(arm, clampf(d + 2.0, 0.0, length))
+	return (b - a).normalized() if a.distance_to(b) > 0.01 else (point(arm, 4.0) - JUNCTION).normalized()
+
+
+## 整条路从岔口到尽头的大方向
+static func heading(arm: String) -> Vector2:
+	var points: Array = ARMS[arm]
+	return ((points[-1] as Vector2) - JUNCTION).normalized()
+
+
+static func depth(y: float) -> float:
+	return lerpf(DEPTH_FAR, DEPTH_NEAR, clampf((y - DEPTH_FAR_Y) / (DEPTH_NEAR_Y - DEPTH_FAR_Y), 0.0, 1.0))
+
+
+## 画面上任意一点最近的路上位置
+static func nearest(target: Vector2) -> Dictionary:
+	var best := {"arm": "gate", "d": 0.0, "gap": INF}
+	for arm: String in ARMS:
+		var points: Array = ARMS[arm]
+		var walked := 0.0
+		for i in range(1, points.size()):
+			var a: Vector2 = points[i - 1]
+			var b: Vector2 = points[i]
+			var span := a.distance_to(b)
+			var t := clampf((target - a).dot(b - a) / maxf(span * span, 0.001), 0.0, 1.0)
+			var gap := target.distance_to(a.lerp(b, t))
+			if gap < float(best.gap):
+				best = {"arm": arm, "d": walked + t * span, "gap": gap}
+			walked += span
+	return best
+
+
+## 沿路从 from 走向 to 的下一段：同一条路直接走，不同路先回岔口
+static func step_toward(from: Dictionary, to: Dictionary, distance: float) -> Dictionary:
+	var arm: String = from.arm
+	var d: float = from.d
+	if arm == to.arm or d <= 0.01:
+		if arm != to.arm:
+			arm = to.arm
+			d = 0.0
+		var goal: float = to.d
+		return {"arm": arm, "d": move_toward(d, goal, distance)}
+	return {"arm": arm, "d": maxf(d - distance, 0.0)}
+
+
+static func route_length(from: Dictionary, to: Dictionary) -> float:
+	if from.arm == to.arm:
+		return absf(float(from.d) - float(to.d))
+	return float(from.d) + float(to.d)
+
+
+## 方向键：沿当前路的投影走；在岔口选与方向最顺的那条路
+static func step_input(from: Dictionary, direction: Vector2, distance: float) -> Dictionary:
+	if direction.length() < 0.01:
+		return from
+	var dir := direction.normalized()
+	var arm: String = from.arm
+	var d: float = from.d
+	if d <= 0.5:
+		var best_arm := arm
+		var best_align := -INF
+		for candidate: String in ARMS:
+			var align := dir.dot((tangent(candidate, 0.0) + heading(candidate)).normalized())
+			if align > best_align:
+				best_align = align
+				best_arm = candidate
+		if best_align < MIN_ALIGN:
+			return from
+		return {"arm": best_arm, "d": minf(distance, arm_length(best_arm))}
+	var along := dir.dot(tangent(arm, d))
+	if absf(along) < MIN_ALIGN:
+		along = dir.dot(heading(arm))
+	if absf(along) < MIN_ALIGN:
+		return from
+	return {"arm": arm, "d": clampf(d + signf(along) * distance, 0.0, arm_length(arm))}
+
+
+static func at_home(spot: Dictionary) -> bool:
+	return spot.arm == "gate" and float(spot.d) >= arm_length("gate") - 0.5
+
+
+static func home_direction() -> Vector2:
+	return tangent("gate", arm_length("gate"))
+
+
+static func nearby(spot: Dictionary) -> String:
 	var best := ""
 	var gap := NEAR
 	for entry: Dictionary in STOPS:
-		var distance := absf(float(entry.x) - x)
+		var distance := route_length(spot, entry)
 		if distance <= gap:
 			gap = distance
 			best = entry.id
 	return best
 
 
-## 行走时跟随：按高度铺满，太宽时按长度铺满；相机窗口始终在画卷内
-static func follow(x: float, viewport: Vector2) -> Dictionary:
+## 取景：足够大的视口完整展示原画；手机按固定缩放放大并随人物平移，不因停下看而变焦
+static func frame(foot: Vector2, viewport: Vector2) -> Dictionary:
 	var size := Vector2(maxf(viewport.x, 1.0), maxf(viewport.y, 1.0))
-	var zoom := size.y / SIZE.y
-	if size.x / zoom > SIZE.x:
-		zoom = size.x / SIZE.x
+	var fit := minf(size.x / SIZE.x, size.y / SIZE.y)
+	var zoom := fit
+	if minf(size.x, size.y) < FULL_VIEW_MIN:
+		zoom = maxf(fit, minf(size.y / PHONE_VIEW_HEIGHT, size.x / PHONE_VIEW_WIDTH))
 	var visible := size / zoom
-	return {"zoom": zoom, "camera": Vector2(_axis(x, visible.x, SIZE.x), _axis(GROUND_Y - visible.y * 0.15, visible.y, SIZE.y)), "visible": visible}
-
-
-## 停下看时收景：整处小景一次入画，不比跟随更近；竖屏上下露出纸边
-static func fit(x: float, viewport: Vector2, stop_id: String) -> Dictionary:
-	var entry := stop(stop_id)
-	if entry.is_empty():
-		return follow(x, viewport)
-	var scene: Rect2 = entry.scene
-	var size := Vector2(maxf(viewport.x, 1.0), maxf(viewport.y, 1.0))
-	var base: float = follow(x, size).zoom
-	var padded := scene.size + Vector2.ONE * FIT_MARGIN * 2.0
-	var zoom := minf(base, minf(size.x / padded.x, size.y / padded.y))
-	var visible := size / zoom
-	var center := scene.get_center()
-	return {"zoom": zoom, "camera": Vector2(_axis(center.x, visible.x, SIZE.x), _axis(center.y, visible.y, SIZE.y)), "visible": visible}
+	var center := Vector2(_axis(foot.x, visible.x, SIZE.x), _axis(foot.y - visible.y * 0.1, visible.y, SIZE.y))
+	return {"zoom": zoom, "camera": center, "visible": visible}
 
 
 static func visible_rect(view: Dictionary) -> Rect2:
 	var visible: Vector2 = view.visible
 	return Rect2(Vector2(view.camera) - visible * 0.5, visible)
-
-
-static func coverage(view: Dictionary, rect: Rect2) -> float:
-	if rect.get_area() <= 0.0:
-		return 0.0
-	return visible_rect(view).intersection(rect).get_area() / rect.get_area()
 
 
 static func _axis(center: float, visible: float, length: float) -> float:
