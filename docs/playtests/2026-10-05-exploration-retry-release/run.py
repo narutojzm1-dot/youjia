@@ -1,0 +1,279 @@
+from playwright.sync_api import sync_playwright
+from pathlib import Path
+import json, sys, re
+
+URL = "https://narutojzm1-dot.github.io/youjia/"
+EXPECTED = __import__("os").environ["EXPECTED_SOURCE"]
+page_builds = []
+scenario = sys.argv[1]
+out = Path(sys.argv[2]); out.mkdir(parents=True, exist_ok=True)
+READ_DB = """async()=>{const all=await indexedDB.databases();let result={};for(const d of all){result[d.name]=await new Promise((resolve,reject)=>{let q=indexedDB.open(d.name);q.onerror=()=>reject(q.error.message);q.onsuccess=()=>{let db=q.result;let names=[...db.objectStoreNames];if(!names.length){db.close();resolve({});return;}let tx=db.transaction(names,'readonly'),r={};for(const n of names){let st=tx.objectStore(n),v=st.getAll(),k=st.getAllKeys();v.onsuccess=()=>{r[n]={values:v.result,...r[n]}};k.onsuccess=()=>{r[n]={keys:k.result,...r[n]}};}tx.oncomplete=()=>{db.close();resolve(r)};tx.onerror=()=>{db.close();reject(tx.error.message)};}});}return result;}"""
+# Platform-boundary fault only: the next N IndexedDB writes of the 'intent' key throw.
+# Game state is never touched.
+FAULT = """window.__failIntentPut=0;window.__faults=[];(()=>{const o=IDBObjectStore.prototype.put;IDBObjectStore.prototype.put=function(v,k){if(window.__failIntentPut>0&&k==='intent'){window.__failIntentPut--;window.__faults.push(Date.now());throw new DOMException('injected intent write failure','UnknownError');}return o.apply(this,arguments);};})();"""
+STOPS = [("gate", 978, 466), ("shade", 824, 540), ("brook", 707, 596), ("slope", 585, 641)]
+steps, logs, errors = [], [], []
+
+
+def summary(db):
+    """Current save payload exploration summary, from the 'current' envelope."""
+    def find(node):
+        if isinstance(node, str) and "exploration_committed_serial" in node:
+            try:
+                return find(json.loads(node))
+            except Exception:
+                return None
+        if isinstance(node, dict):
+            if "exploration_committed_serial" in node or "keepsakes" in node:
+                return node
+            for v in node.values():
+                r = find(v)
+                if r is not None:
+                    return r
+        if isinstance(node, list):
+            for v in node:
+                r = find(v)
+                if r is not None:
+                    return r
+        return None
+
+    res = {}
+    for name, stores in db.items():
+        for sname, st in stores.items():
+            keys = st.get("keys", [])
+            for key, val in zip(keys, st.get("values", [])):
+                if key != "current":
+                    continue
+                payload = find(val)
+                if payload is None:
+                    continue
+                exp = payload.get("exploration", {}) or {}
+                res = {"db": name, "generation": val.get("generation") if isinstance(val, dict) else None,
+                       "keepsakes": payload.get("keepsakes"),
+                       "serial": payload.get("exploration_committed_serial"),
+                       "next_trip_serial": exp.get("next_trip_serial"),
+                       "session_open": bool(exp.get("session")),
+                       "carried": (exp.get("session") or {}).get("carried") if isinstance(exp.get("session"), dict) else None,
+                       "intent_present": "intent" in keys}
+    return res
+
+
+with sync_playwright() as p:
+    b = p.chromium.launch(executable_path="/usr/bin/chromium", headless=True, proxy={"server":"http://proxy:8080"},
+                          args=["--no-sandbox", "--use-gl=angle", "--use-angle=swiftshader", "--enable-webgl", "--enable-unsafe-swiftshader"])
+    ctx = b.new_context(viewport={"width": 1280, "height": 720})
+    n = [0]
+
+    def open_page(tag="p", wait_first=True):
+        pg = ctx.new_page()
+        pg.on("console", lambda m, t=tag: logs.append([t, m.type, m.text]))
+        pg.on("pageerror", lambda e, t=tag: errors.append([t, str(e)]))
+        pg.add_init_script("window.first=false;window.addEventListener('youjia:first-frame',()=>window.first=true)")
+        pg.add_init_script(FAULT)
+        pg.add_init_script("(()=>{window.receipts=[];const d=Object.defineProperty;Object.defineProperty=function(o,k,v){if(o===window&&k==='YoujiaSaveHost'){const h=v.value;v={...v,value:Object.freeze({...h,submit:(...a)=>{let cb=a.pop();window.receipts.push({type:'submit-call',args:a,time:Date.now()});h.submit(...a,raw=>{window.receipts.push({type:'submit-reply',raw,time:Date.now()});cb(raw)})},resolve:(...a)=>{let cb=a.pop();window.receipts.push({type:'resolve-call',args:a,time:Date.now()});h.resolve(...a,raw=>{window.receipts.push({type:'resolve-reply',raw,time:Date.now()});cb(raw)})}})}}return d.call(this,o,k,v)}})();")
+        manifest = pg.request.get(URL+"game-release.json?check="+str(__import__("time").time())).json()
+        assert manifest["sourceCommit"] == EXPECTED, manifest
+        pg.goto(URL+"?retry-public="+EXPECTED[:7], wait_until="domcontentloaded")
+        build = pg.locator("html").get_attribute("data-build")
+        assert build == "game-"+EXPECTED[:7],build
+        page_builds.append({"tag":tag,"html":build,"manifest":manifest})
+        (out/"page-builds.json").write_text(json.dumps(page_builds,indent=2))
+        if not wait_first:
+            pg.wait_for_timeout(45000)
+            steps.append(f"{tag}: first frame seen = {pg.evaluate('window.first')}")
+            return pg
+        pg.wait_for_function("window.first", timeout=180000)
+        pg.wait_for_timeout(1500)
+        pg.mouse.click(640, 368)
+        pg.wait_for_timeout(6000)
+        return pg
+
+    def shot(pg, name, note):
+        n[0] += 1
+        fname = f"{n[0]:02d}-{name}"
+        pg.screenshot(path=str(out / f"{fname}.png"))
+        steps.append(f"{fname}: {note}")
+
+    def db(pg, label):
+        raw = pg.evaluate(READ_DB)
+        (out / (label.replace(" ", "-")+"-db.json")).write_text(json.dumps(raw,ensure_ascii=False,indent=2))
+        (out / (label.replace(" ", "-")+"-receipts.json")).write_text(json.dumps(pg.evaluate("window.receipts"),ensure_ascii=False,indent=2))
+        s = summary(raw)
+        steps.append(f"save[{label}]: " + json.dumps(s, ensure_ascii=False))
+        return s
+
+    def poll(pg, label, secs=20, every=2):
+        for k in range(secs // every):
+            s = summary(pg.evaluate(READ_DB))
+            steps.append(f"poll[{label} +{(k+1)*every}s]: serial={s.get('serial')} keepsakes={json.dumps(s.get('keepsakes'), ensure_ascii=False)} session_open={s.get('session_open')} gen={s.get('generation')}")
+            if k in (0, secs // every - 1):
+                shot(pg, f"{label}-poll{k}", f"{(k+1)*every}s into polling")
+            pg.wait_for_timeout(every * 1000)
+
+    def go_out(pg, tag):
+        pg.mouse.click(262, 630)
+        pg.wait_for_timeout(9000)
+        shot(pg, f"{tag}-out", "tapped the stone path")
+
+    def walk_take(pg, tag, stops=STOPS):
+        for name, x, y in stops:
+            pg.mouse.click(x, y)
+            pg.wait_for_timeout(12000)
+            pg.keyboard.press("e")
+            pg.wait_for_timeout(2000)
+            shot(pg, f"{tag}-{name}-look", f"walked to {name}, E")
+            pg.keyboard.press("t")
+            pg.wait_for_timeout(2000)
+            shot(pg, f"{tag}-{name}-t", "T: take or swap if offered")
+            pg.mouse.click(720, 676)
+            pg.wait_for_timeout(1500)
+
+    def go_home(pg, tag, wait=6000):
+        pg.keyboard.press("r")
+        pg.wait_for_timeout(wait)
+        shot(pg, f"{tag}-home", f"R, {wait/1000:.1f} s later")
+
+    if scenario == "multi":
+        pg = open_page()
+        for trip in range(1, 4):
+            go_out(pg, f"t{trip}")
+            walk_take(pg, f"t{trip}")
+            go_home(pg, f"t{trip}")
+            db(pg, f"after trip {trip}")
+        pg.close()
+        pg = open_page()
+        shot(pg, "reopened", "closed and reopened")
+        db(pg, "after reopen")
+
+    elif scenario == "abort":
+        pg = open_page()
+        db(pg, "start")
+        go_out(pg, "t1")
+        walk_take(pg, "t1")
+        shot(pg, "t1-before-r", "basket before R")
+        pg.keyboard.press("r")
+        pg.wait_for_timeout(150)
+        pg.close()
+        steps.append("closed the page 150 ms after R")
+        pg = open_page()
+        shot(pg, "reopened", "reopened after closing mid-return")
+        s1 = db(pg, "after reopen")
+        poll(pg, "reopen")
+        go_out(pg, "t2a")
+        go_out(pg, "t2b")
+        walk_take(pg, "t2", STOPS[:2])
+        go_home(pg, "t2")
+        db(pg, "after trip 2")
+        pg.close()
+        pg = open_page()
+        db(pg, "after second reopen")
+
+    elif scenario == "fault":
+        pg = open_page()
+        db(pg, "start")
+        go_out(pg, "t1")
+        walk_take(pg, "t1")
+        shot(pg, "t1-before-r", "basket before R")
+        pg.evaluate("window.__failIntentPut=1")
+        pg.keyboard.press("r")
+        for k in range(6):
+            pg.wait_for_timeout(1000)
+            shot(pg, f"t1-home-{k}", f"{k+1} s after R with one intent write failing")
+        steps.append("faults fired: " + json.dumps(pg.evaluate("window.__faults")))
+        db(pg, "after failed submit")
+        pg.mouse.click(646, 176)
+        pg.wait_for_timeout(4000)
+        shot(pg, "t1-after-retry", "tapped 再确认一次")
+        db(pg, "after first retry")
+        for k in range(3):
+            pg.wait_for_timeout(4000)
+            shot(pg, f"t1-settle-{k}", "waiting")
+        db(pg, "settled")
+        pg.close()
+        pg = open_page()
+        shot(pg, "reopened", "reopened")
+        db(pg, "after reopen")
+        poll(pg, "reopen")
+
+    elif scenario == "twotab":
+        a = open_page("A")
+        db(a, "start")
+        go_out(a, "A")
+        walk_take(a, "A")
+        bp = open_page("B", wait_first=False)
+        shot(bp, "B-opened", "second tab opened while A is out exploring")
+        bp.mouse.click(640, 368)
+        bp.wait_for_timeout(5000)
+        shot(bp, "B-after-click", "clicked where the start button would be")
+        a.bring_to_front()
+        go_home(a, "A")
+        db(a, "after A trip")
+        bp.bring_to_front()
+        bp.wait_for_timeout(3000)
+        shot(bp, "B-after-A-home", "tab B after A came home")
+        db(bp, "read from B")
+        bp.close()
+        a.bring_to_front()
+        a.wait_for_timeout(2000)
+        shot(a, "A-after-B-closed", "tab A after B closed")
+        a.close()
+        c = open_page("C")
+        shot(c, "reopened", "single fresh tab")
+        db(c, "after reopen")
+        poll(c, "reopen", 6)
+
+    elif scenario == "swap":
+        pg = open_page()
+        swapped = False
+        for trip in range(1, int(__import__("os").environ.get("TRIPS", "5"))):
+            pg.mouse.click(262, 630)
+            pg.wait_for_timeout(9000)
+            if trip > 1:
+                pg.mouse.click(1166, 676)
+                pg.wait_for_timeout(8000)
+            shot(pg, f"t{trip}-out", "went out")
+            for name, x, y in STOPS:
+                pg.mouse.click(x, y)
+                pg.wait_for_timeout(15000)
+                pg.keyboard.press("e")
+                pg.wait_for_timeout(2500)
+                before = summary(pg.evaluate(READ_DB)).get("carried")
+                shot(pg, f"t{trip}-{name}-look", f"walked to {name}, E; basket in save {before}")
+                pg.keyboard.press("t")
+                pg.wait_for_timeout(3000)
+                after = summary(pg.evaluate(READ_DB)).get("carried")
+                shot(pg, f"t{trip}-{name}-t", f"T; basket in save {after}")
+                if before and after and len(before) == 3 and len(after) == 3 and before != after:
+                    steps.append(f"SWAP at trip {trip} {name}: {before} -> {after}")
+                    swapped = True
+                pg.mouse.click(720, 676)
+                pg.wait_for_timeout(1500)
+            go_home(pg, f"t{trip}", 8000)
+            db(pg, f"after trip {trip}")
+            if swapped:
+                break
+        pg.close()
+        pg = open_page()
+        db(pg, "after reopen")
+        poll(pg, "reopen", 8)
+
+    elif scenario == "doubler":
+        pg = open_page()
+        go_out(pg, "t1")
+        walk_take(pg, "t1")
+        pg.keyboard.press("r")
+        pg.wait_for_timeout(80)
+        pg.keyboard.press("r")
+        pg.wait_for_timeout(80)
+        pg.keyboard.press("r")
+        pg.wait_for_timeout(6000)
+        shot(pg, "t1-home", "pressed R three times")
+        db(pg, "after triple R")
+        pg.close()
+        pg = open_page()
+        db(pg, "after reopen")
+
+    (out / "console.json").write_text(json.dumps({"logs": logs, "errors": errors}, ensure_ascii=False, indent=2))
+    (out / "steps.txt").write_text("\n".join(steps) + "\nerrors: " + json.dumps(errors, ensure_ascii=False) + "\n")
+    print(open(out / "steps.txt").read())
+    b.close()
