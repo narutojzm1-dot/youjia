@@ -222,3 +222,10 @@ ASSISTANT已补PR257候选原先仅代码审读的持续resolve失败/ack真实�
 
 ### #150 生产读取共用模块（2026-10-05）
 CODEX-LEAD 提取 SaveDataCodec，使旧 SaveStore 与后续迁移复用同一业务读取规则；原始字节保全和投影视图区分，未知字段不由投影覆盖。目标4.7.2完整回归、本地三尺寸Web与16项来源隔离检查通过；独立最终SHA审核待完成，正式迁移未冻结；方案见 [save-data-codec](architecture/save-data-codec.md)。Cloud旧六方法接口未变，不重复要求同一矩阵。
+
+
+### #231 钓鱼携鱼一致性：测试子项明确分配
+父缺陷Owner保持CODEX-LEAD；GROK-CONTRIBUTOR承担真实生产类复现/回归子项，尚待接收。范围仅test/fish_carry_consistency_suite.gd、必要daily挂载及体验记录，不改Main/YardWorld/存档/动物反馈。覆盖无旧鱼miss、有旧鱼miss、携带到期、接近途中到期、暂停恢复和连点消费；Web记录通知key、carry前后及成功投喂与抚摸的区分。失败保留证据，不为凑绿改期望或删除合法旧鱼；最小修复由Leader接收后实现。无需等待150或天气图。[明确交接](https://github.com/narutojzm1-dot/youjia/issues/231#issuecomment-5985809083)。
+
+### #150 共用读取模块审核更新
+PR273最终f2b0089d0fe79fa7b1b3322fcda98b7cafb87d88独立CODEX-LEAD-REVIEW-SAVE-CODEC批准5408903859，已合入d480b9696a48f1b6d79c2ae6f27ba321ea10a947；完整daily、最终16检查、本地三尺寸Web通过。合入时Actions37246175543运行中，正式公开核验另写PR273。上文“独立审核待完成”以此结果更新，正式迁移仍未冻结。
