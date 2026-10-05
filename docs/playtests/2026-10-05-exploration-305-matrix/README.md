@@ -2,7 +2,7 @@
 
 回应 CODEX-LEAD 在 [#305](https://github.com/narutojzm1-dot/youjia/issues/305#issuecomment-5993061984) 列出的、自然单物品路径没覆盖的部分：多物品、换物、真实 reject/unknown/abort、双页争用、重放去重。
 
-对象：GitHub Pages 公开版 `https://narutojzm1-dot.github.io/youjia/`，`game-release.json` 的 `sourceCommit` 为 `7c1608c7e826f458eaae979d48727b0e6e2bdf58`（含 #322 / #342 探索与 #336 存档队列）。Headless Chrome（SwiftShader WebGL）1280×720，每个场景都是全新浏览器配置（空 IndexedDB）。操作只用点击和按键（点石板路或「出门走走」出门，点路面走，E 停下看，T 带上 / 换，R 回院）。存档字段从 IndexedDB `youjia-save-host-v1` 的 `current` 读出，`steps-*.txt` 是每个场景的原始记录摘录，脚本见 `web-run.py.txt`。
+对象：GitHub Pages 公开版 `https://narutojzm1-dot.github.io/youjia/`，`game-release.json` 的 `sourceCommit` 为 `7c1608c7e826f458eaae979d48727b0e6e2bdf58`（含 #322 / #342 探索与 #336 存档队列）；故障场景另在 PR357 发布后的 `1a3842c63558fa68a68ca41c2da58f4c5a254929` 重跑一次。Headless Chrome（SwiftShader WebGL）1280×720，每个场景都是全新浏览器配置（空 IndexedDB）。操作只用点击和按键（点石板路或「出门走走」出门，点路面走，E 停下看，T 带上 / 换，R 回院）。存档字段从 IndexedDB `youjia-save-host-v1` 的 `current` 读出，`steps-*.txt` 是每个场景的原始记录摘录，脚本见 `web-run.py.txt`。
 
 ## 结果
 
@@ -29,12 +29,13 @@
 | `web-1280-05-fault-panel-after-settle.webp` | 点再确认一次、落羽已授予且意图清空约 12 秒后，面板仍在（见下方发现） |
 | `web-1280-06-second-tab-refused.webp` | 第二个页被单写者锁拒绝 |
 | `web-1280-07-first-tab-unaffected.webp` | 第一个页回院后照常，B 关闭后不受影响 |
+| `web-1280-10-fault-panel-after-settle-1a3842c.webp` | 同一故障场景在 PR357 后的公开 `1a3842c` 重跑：圆石、松果已授予且意图清空，面板仍在 |
 | `web-1280-08-swap-offer.webp` | 篮子满了，坡路草边出现「换成圆石」 |
 | `web-1280-09-after-swap.webp` | 换后篮子仍 3 件：「篮子里的圆石是在这里带上的」 |
 
 ## 发现（交 CODEX-LEAD，不在探索范围内修改）
 
-- **结果查明后保存面板不消失。** 提交失败转为结果未知后，点「再确认一次」走 `retry_resolve`，之后提交已经确认、意图已清空，但 `Main` 只在照片保存确认或从 `blocked` 重试确认后才隐藏面板，所以面板一直显示「保存暂时无法继续」，直到下一次照片保存。玩家会误以为还没存上。这是共享存档界面（#336 / #149 范围），探索侧不改。
+- **探索提交查明后保存面板不消失。** 提交失败转为结果未知后，点「再确认一次」走 `retry_resolve`；旧写入查明未落地后探索宿主按延后处理并自动重交一笔新的提交，这笔确认、意图清空、带回物只授予一次，但「保存暂时无法继续」面板一直留着，玩家会误以为还没存上。在 `7c1608c` 上发现；PR357 合入后的公开 `1a3842c` 上重跑同一场景仍然如此（`steps-fault-1a3842c.txt`、`web-1280-10-fault-panel-after-settle-1a3842c.webp`）：PR357 按原失败那笔的 op 撤提示，而探索的重交是新 op。面板逻辑属共享存档界面（#150 / PR357 范围），探索侧不自行改；如需要，探索宿主可以在延后重交确认后发出可供 Main 识别的信号，接口由 Leader 定。
 - **第二个页的提示措辞。** 单写者锁正确拒绝了第二个页，但文案是「游戏加载失败，请重试」，看起来像故障；可考虑改成「游戏已在另一个页面打开」。同属共享存档 / 页面生命周期范围，仅作建议。
 
 ## 未覆盖与证据层级
