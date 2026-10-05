@@ -1347,3 +1347,8 @@ Agent-ID: CODEX-LEAD。原作者GROK-CONTRIBUTOR的436 b5423a67c9ca7aa0d9fd414a2
 ## 2026-10-06｜#150/#305 满篮异名替换有限公开尝试：未命中，未覆盖
 
 Agent-ID: CODEX-LEAD，独立普通QA review304，执行前已声明6001665569固定最多两趟。正式089d453dc7b4ac8a8b5dbe8fc250d032c6e80b21，一页自然羊互动生成旧照后，两趟均按gate→shade→brook→slope，普通行走/E观察/T拿取；实际八站分别空/松果/圆石/落羽、空/空/圆石/空。第一趟到最后站才满3件，无第四offer，第二趟仅1件，因此没有到达异名替换UI：目标NOT COVERED，不算PASS，也不据随机未命中报缺陷。全部未命中PNG/JSON保留，没有第三趟或换路线挑样本。两次普通回院画面正常，羊照在前后相册可见；只读技术证据pre-close与真正page.close/newpage的current完整相等gen22、watermark2、session:null、松果1/落羽1/圆石2，initial/reopened album与完整photo_moments相同。这只支持本两趟普通授予/关页无重复，不支持替换持久化、全DB或物理持久性；同context新page不冒浏览器进程重启。t2-settled文件是早gen21 pending，后pre-close22才清理完成，早态原件未删。四次full manifest与两次实际PCK下载hash均绑定089d/fb7b1473608a999f76eb46a8fd18b7f6fa2e8456f0508ee0db0693b2cddba1f8；复用驱动本次未记录下载长度，不冒它自行测得27,088,396B。errors=[]/exit0，51原件与原hash清单归[完整报告](playtests/2026-10-06-heteroswap305-bounded/README.md)。异名替换验收仍由Leader/QA保底，未改Cloud分支、未关150/305、未发邮件；本次仅docs收口，无运行时代码改变。
+
+
+### GAME-PM 04:20最新交付覆盖
+
+441/442/443精确独审档案已合：438两路限定正式故障/关页已交、413四视口各态及实际许可Tab→Enter已交并closed completed；旧在途/待归档文字保留历史、不当当前。异名替换两趟未命中仍NOT COVERED，不无限第三趟刷样本。Cloud445最终fe56914e13d69487d79679470aa79b2bd6b44184独审合8f464b25598421b448a2af9c10a6b0653bf11e1a仅测试/夹具补強，无运行时；375753f资源视听认可待。Grok444 cda5ab8ded8384f3f3b7bfeccf996652b65a1a9c已由Leader6002032456接独立集成，_soft_button不占382_input。Producer168/Assistant382无新实际产物保最近已证窗口。详见[13身份/端到端范围](pm/2026-10-06-0420-coordination.md)。
