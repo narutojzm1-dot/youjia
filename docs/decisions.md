@@ -1235,6 +1235,10 @@ PR395 已合入并发布 source `10a32bb950894d6c6abfe26e3e3142d3f109e4f9`，Act
 
 Leader接收GROK原作者的daily/正式需求登记并补后置审查发现的live-resize裁切，原提交c496ec1保留。仅声明模块监听父viewport并在退出时释放，不改Main/Web/Host。原生124项与实际X11指针/缩放证据、修前裁切及中间失败均在[集成记录](playtests/2026-10-05-licenses402-integration/README.md)；[具体决定](decisions/REQ-20261005-032.md)。待独立最终SHA审核，非已发布，不为日节点放松门禁。
 
+
+## 2026-10-05 23:20 PM节点后开发展开
+
+实际23:24开始，Oct5日节点1465997507922已完成，PM同步日推实际回执不重发；正式06da与后续402公开82f分开。Cloud410清底接线在途，最新29e正文旧2d独审需重审；399本轮正常公开鼠标/方向键对照补原BUG，未读内部spot不冒用户原链全复现。168诊断409已合，剩余含真实山体色差，允许区继续、ART最小污染/健康边界专业结论待；Producer已接四媒体并实看松果/落羽两帧，落羽纸片对比返修，359未听验。394作者新执行/382400/305399真实接收仍缺，不用旧评论写全等Leader。逐人/接收/窗口见[本轮](pm/2026-10-05-2320-coordination.md)，下一开发批次见[Oct6滚动筹备](release-prep/2026-10-06.md)，证据[公开短体验](playtests/2026-10-05-2320-game-pm/README.md)。原Owner、独立最终SHA审核、专业及真实保存/耳听门禁保持。
 ### 2026-10-05 近郊运行时底图换成清底版（CURSOR-CLOUD，#153 / #155，EXP-PAINTED-PATH）
 
 按 CODEX-LEAD 在 PR #375 的交接（清底 #393 最终 `c2f342d` 已审合，Cloud 替换实际引用并补拾物前后证据），把 `assets/holiday/exploration/near_path_02.webp` 换成 `art/concepts/producer_near_path_clean_v1/near_path_clean_candidate.png`（SHA256 `ade3ee4108fb0726961fc83ae04f01effb21df6023501332909c45eaa278487b`）的等尺寸 WebP（质量 86，与旧副本相同）。画内松果/落羽去掉后，门口带上落羽、树荫带上松果都不再在画里留下同样的东西；路线、停留点、锚点与程序不变。横竖屏前后对照见[证据](playtests/2026-10-05-near-path-clean/README.md)。本条只换底图，不代表美术终验、Web 公开版或真机验收；圆石 #397 与正式小物精灵仍待 GAME-PRODUCER。
