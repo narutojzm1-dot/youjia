@@ -1,0 +1,16 @@
+import urllib.request,json,re,hashlib,pathlib,time
+base='https://narutojzm1-dot.github.io/youjia/'
+out=pathlib.Path('/tmp/fish-public-evidence');out.mkdir(exist_ok=True)
+def get(name):
+ req=urllib.request.Request(base+name,headers={'Cache-Control':'no-cache'})
+ with urllib.request.urlopen(req,timeout=90) as r:return r.read(),r.status
+manifest,status=get('game-release.json?fish329='+str(time.time_ns()));m=json.loads(manifest)
+assert m['sourceCommit']==__import__('sys').argv[1],m
+html,hs=get('index.html?fish329='+str(time.time_ns()));txt=html.decode();entry=m['entry'];cfg=json.loads(re.search(r'const config = (\{.*?\});',txt).group(1));assert cfg['executable']==entry;assert 'data-build="'+entry+'"' in txt
+results={'manifest':m,'manifest_status':status,'index_status':hs,'config':cfg,'files':{},'verified_utc':time.strftime('%Y-%m-%dT%H:%M:%SZ',time.gmtime())}
+(out/'game-release.json').write_bytes(manifest);(out/'index.html').write_bytes(html)
+for ext in ['js','wasm','pck']:
+ name=entry+'.'+ext;b,s=get(name);size=cfg['fileSizes'].get(name);assert size is None or len(b)==size,(name,len(b),size)
+ results['files'][name]={'status':s,'bytes':len(b),'sha256':hashlib.sha256(b).hexdigest(),'git_blob_sha1':hashlib.sha1(('blob '+str(len(b))+'\0').encode()+b).hexdigest()}
+ if ext=='pck':(out/name).write_bytes(b)
+(out/'public.json').write_text(json.dumps(results,ensure_ascii=False,indent=2)+'\n');print(json.dumps(results,ensure_ascii=False))

@@ -1,0 +1,33 @@
+import json,time,io,sys
+from pathlib import Path
+from PIL import Image
+from playwright.sync_api import sync_playwright
+out=Path(sys.argv[2]);out.mkdir(parents=True,exist_ok=True)
+root=Path('/workspace/youjia-fish-miss/docs/playtests/2026-10-05-fishing-active-hud/retest')
+box=(1080,660,1250,692)
+def mask(im):return [v<120 for v in im.convert('L').crop(box).getdata()]
+tpl={k:mask(Image.open(root/f'1280-720-{i}.png')) for i,k in enumerate(['wait','reel','toss'])}
+def label(im):
+ a=mask(im);scores={k:sum(x and y for x,y in zip(a,b))/max(1,sum(x or y for x,y in zip(a,b))) for k,b in tpl.items()};k=max(scores,key=scores.get);return k if scores[k]>.65 else 'other'
+events=[];errors=[];result=False
+with sync_playwright() as p:
+ b=p.chromium.launch(executable_path='/usr/bin/chromium',headless=True,args=['--no-sandbox','--use-gl=angle','--use-angle=swiftshader','--enable-webgl'])
+ pg=b.new_page(viewport={'width':1280,'height':720});pg.on('pageerror',lambda e:errors.append(str(e)));pg.on('console',lambda m:errors.append(m.text) if m.type=='error' else None)
+ pg.goto(sys.argv[1]);pg.wait_for_timeout(13000);build=pg.locator('html').get_attribute('data-build');pg.mouse.click(640,368);pg.wait_for_timeout(1500);pg.mouse.click(750,540)
+ start=time.monotonic();last='';stage='first';last_cast=start;seen_second=False
+ while time.monotonic()-start<100:
+  pg.wait_for_timeout(400);im=Image.open(io.BytesIO(pg.screenshot()));l=label(im);elapsed=round(time.monotonic()-start,2)
+  if l!=last:
+   im.save(out/f'{len(events):02}-{stage}-{l}.png');events.append({'seconds':elapsed,'stage':stage,'label':l});print(events[-1],flush=True);last=l
+  if stage=='first' and l=='reel':
+   pg.mouse.click(1165,677);pg.wait_for_timeout(500);pg.screenshot(path=str(out/'first-catch.png'));pg.mouse.click(750,540);events.append({'seconds':elapsed,'second_cast':True});stage='second';last_cast=time.monotonic()
+  elif stage=='first' and l=='other' and time.monotonic()-last_cast>12:
+   pg.mouse.click(750,540);last_cast=time.monotonic();events.append({'seconds':elapsed,'retry_first':True})
+  elif stage=='second':
+   if l in ['wait','reel']:seen_second=True
+   if seen_second and l=='toss':
+    pg.screenshot(path=str(out/'old-fish-miss.png'));result=True;break
+   if seen_second and l=='other' and time.monotonic()-last_cast>22:break
+ pg.screenshot(path=str(out/'final.png'));b.close()
+r={'url':sys.argv[1],'build':build,'utc':time.strftime('%Y-%m-%dT%H:%M:%SZ',time.gmtime()),'viewport':[1280,720],'events':events,'old_fish_after_second_miss_observed':result,'errors':errors,'scope':'normal production entry, natural canvas clicks guided by actual screenshot button labels; no state/seed/timer/position injection; final notice requires visual inspection'}
+(out/'result.json').write_text(json.dumps(r,ensure_ascii=False,indent=2)+'\n');print(json.dumps(r,ensure_ascii=False),flush=True)

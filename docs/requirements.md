@@ -277,9 +277,17 @@ CODEX-LEAD指定CURSOR-CLOUD承担真实PhotoMoment/相册与旧档主备原文�
 
 当前仍开发展开，收285专业/真实摄影边界、120艺术缺口、287容量交接及276自然证据→精确SHA终审→必要验证/合入，再按晚间检查点取可发批次，不承诺150/探索/阴天已正式交付。详见[本轮逐人记录](pm/2026-10-05-1120-coordination.md)。
 
+### 2026-10-05 Assistant #333：发布包按真实历史保留最近四组
+
+已修随机SHA字典序误判旧包问题。PR334实际首次发布安全fallback保留6组，不冒keep4通过；发现真实历史R重命名遗漏后继续PR340，仅加--no-renames及真实R100回归。最终3949238eac55800a9dbcf80d17c589dc7234b384独立APPROVE，合main9fd261d876a8777403a8697b4b9b7f8d17d4d1a8；11项/原生全daily/导出、Actions37289044064/Pages37289768031均success。实际公开game-9fd261d三资源完整字节/blob匹配精确gh-pages97e70a5aa2b825fffb7c68227b72b554e7b33757，实保留current/ba6/8cf/fd2四组，删三最旧整组且旧保留文件未变，见[分阶段正式证据](playtests/2026-10-05-web-bundle-retention-release/README.md)。只闭环发布保留缺陷，不恢复旧策略已删包，不覆盖Leader存档/Cloud探索，不把a75游戏实玩冒9fd复测。
+
+### 2026-10-05 Assistant：同构建公开音频与加载技术复验
+
+已按#195/#234/#167登记，只读公开game-a75ae22真实鼠标：两轨各10次慢快开关、0/50/静音/恢复、继续、离院PCM清零/重入两轨及Web Audio真实gain独立变化通过，见[音频矩阵](playtests/2026-10-05-public-audio-matrix/README.md)。零按住时长80/180ms合成点击两次未切换记录保留，完整通过版本明确80ms按住与600/180ms等待，不冒极快输入根因或真机/真人耳听/后台全通过。三尺寸明确WASM延迟保留真实加载画面→首帧→标题→入院及受控一次engine-JS失败/真实按钮重试通过，见[加载矩阵](playtests/2026-10-05-public-loading-matrix/README.md)。未改代码/资源，父音频/加载QA余项仍开放。
+
 ### 2026-10-05 Assistant #231：旧鱼保留时第二竿未钓到的提示
 
-CODEX-LEAD-ASSISTANT按最新缺陷队列接收与原单5990509435认领，只修YardWorld._tick_fishing两条miss通知：carry有效时明确本次未钓到、手中之前那条鱼仍在；空手/到期提示和鱼状态/20秒/概率/计数/投喂不改。新专项16项修前2失败/修后全过、Godot4.7.2完整daily及双语横竖受控Web、正常标题入口自然两竿实玩通过，见[证据](playtests/2026-10-05-fish-miss-feedback/README.md)。原276仅同步S2通知断言，历史未审原帧不冒完成；Leader149150/Cloud322不覆盖。当前候选待独立最终SHA审核、合入与实际公开发布，父231其余验收保持开放。
+CODEX-LEAD-ASSISTANT按最新缺陷队列接收与原单5990509435认领，只修YardWorld._tick_fishing两条miss通知：carry有效时明确本次未钓到、手中之前那条鱼仍在；空手/到期提示和鱼状态/20秒/概率/计数/投喂不改。新专项16项修前2失败/修后全过、Godot4.7.2完整daily及双语横竖受控Web、正常标题入口自然两竿实玩通过，见[证据](playtests/2026-10-05-fish-miss-feedback/README.md)。原276仅同步S2通知断言，历史未审原帧不冒完成；Leader149150/Cloud322不覆盖。PR329最终f37b37292a7c52652ffadba42fa5d19c804c594e独立APPROVE后合main a75ae229430ef4f0329953af70e213ca7d59d622；Actions/Pages成功，实际公开game-a75ae22三资源完整下载字节/哈希与精确gh-pages一致，正常公网自然两竿新提示/可投旧鱼已看图且errors=[]，见[正式发布证据](playtests/2026-10-05-fish-miss-release/README.md)。仅提示子项完成，父231其余验收保持开放。
 
 ### 2026-10-05 CODEX-LEAD：#231 携鱼第二竿主操作
 
@@ -399,3 +407,7 @@ Assistant音频300 b8e5e6dc916dacd1eaf45b36c9f17584d36fc16c已接且实际交，
 ### #149/#150 PR336 接线候选（CODEX-LEAD，实际进行中）
 
 已实现生产候选的可信启动、单队列意图、严格持久回执消费、原文来源保全和旧页分歧下载入口；自然Web羊照片实际关页重开及受控迁移/事务abort已取得证据。最终完整回归、修订后独审、探索组合适配与公开验收未齐前不可合入。原生回退兼容已依据独审及原回归返修，200真实文件检查与旧“坏主好备可继续保存”24项通过，仍待新最终SHA独审。接口/未覆盖见[PR336接线说明](architecture/production-save-integration.md)，父单保持开放。
+
+## GAME-PM 17:20：已决与接收收尾
+
+用户原画视角/沿路走动/自然换页由本地制作人332同步，Cloud1535991376468明确接收并交32290ea8562c896641f48da224f80da97ec69921280容量3候选，独审/合入待，不重复问地点/容量/画幅。155brief/337路径候选有真实产物，PM校awaiting-receipt为in-progress，runtime_ready=false不冒正式美术；Producer300/317精确接收及285本地交接成立。阴天/圆石局部像素方式待用户、339真实听验待，只阻对应资源；338局部Main范围已Leader授权且本轮公网竖屏低对比复现，Grok首次回执待。Leader336/Assistant340341仍在途不重新调度。逐人SHAs/时间/范围/版本目标与4图公开补证见[本轮报告](pm/2026-10-05-1720-coordination.md)。

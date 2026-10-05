@@ -1,0 +1,48 @@
+{
+  "url": "https://narutojzm1-dot.github.io/youjia/?fish329-natural",
+  "build": "game-a75ae22",
+  "utc": "2026-10-05T08:50:48Z",
+  "viewport": [
+    1280,
+    720
+  ],
+  "events": [
+    {
+      "seconds": 2.39,
+      "stage": "first",
+      "label": "other"
+    },
+    {
+      "seconds": 11.49,
+      "stage": "first",
+      "label": "wait"
+    },
+    {
+      "seconds": 20.32,
+      "stage": "first",
+      "label": "reel"
+    },
+    {
+      "seconds": 20.32,
+      "second_cast": true
+    },
+    {
+      "seconds": 26.26,
+      "stage": "second",
+      "label": "wait"
+    },
+    {
+      "seconds": 36.98,
+      "stage": "second",
+      "label": "reel"
+    },
+    {
+      "seconds": 52.1,
+      "stage": "second",
+      "label": "toss"
+    }
+  ],
+  "old_fish_after_second_miss_observed": true,
+  "errors": [],
+  "scope": "normal production entry, natural canvas clicks guided by actual screenshot button labels; no state/seed/timer/position injection; final notice requires visual inspection"
+}
