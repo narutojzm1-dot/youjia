@@ -8,6 +8,10 @@
 4. [`docs/requirements.md`](docs/requirements.md)：需求列表、负责人、状态和验收条件。
 5. [`docs/decisions.md`](docs/decisions.md)：需求来源、决定、变更和体验台账。
 
+## 当前人员可用性
+
+用户2026-10-05通知GROK-BUILD额度耗尽、预计10月9日恢复；原画由GPT制作人接力，音频/工程另待明确Owner。开工先看[人员公告](docs/collaboration/personnel-availability.md)与登记表，不按旧排期继续等待不可执行角色；恢复仍须实际确认。
+
 ## 每项工作的开始方式
 
 - 先确认自己在 `docs/agents.md` 中登记的 `Agent-ID`，再从 `docs/requirements.md` 查看负责人和状态。
