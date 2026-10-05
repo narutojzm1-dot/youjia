@@ -208,7 +208,10 @@ func _scroll_and_director() -> void:
 	scroll.x = L.stop("shade").x
 	scroll.observe()
 	var second: String = scroll.pick_choice().find_id
+	var commits_before: int = store.commits
 	check(scroll.pick_choice().kind == "swap" and scroll.pick() and scroll.carried() == [second], "a full basket swaps instead of piling up")
+	var saved_carried: Array = store.get_exploration_record().session.carried
+	check(store.commits == commits_before + 1 and saved_carried == [second], "a swap is saved in one write, never as an empty basket")
 	scroll.end_observe()
 	scroll.x = L.stop("brook").x
 	scroll.observe()
@@ -225,6 +228,22 @@ func _scroll_and_director() -> void:
 	check(store.get_keepsakes() == {second: 1}, "only the carried find is kept")
 	check(not is_instance_valid(scroll) or scroll.is_queued_for_deletion(), "scroll is released after return")
 	await process_frame
+	var notices: Array[String] = []
+	director.notice.connect(func(k: String) -> void: notices.append(k))
+	director.try_begin(CLOCK, "sunny", value)
+	director.scroll.x = L.stop("brook").x
+	director.scroll.observe()
+	var late: String = director.scroll.pick_choice().find_id
+	director.scroll.pick()
+	store.fail_commits = true
+	director.scroll._request_return("player")
+	await process_frame
+	check(keys[-1] == "notice.exploration.deferred_items", "a failed save returns home without claiming the find is kept")
+	store.fail_commits = false
+	check(not director.try_begin(CLOCK, "sunny", value) and notices[-1] == "notice.exploration.kept.%s" % late.get_slice(".", 2), "a late save on the way out stays in the yard so its kept notice is seen")
+	check(director.try_begin(CLOCK, "sunny", value), "the next tap goes out")
+	director.scroll._request_return("player")
+	await process_frame
 	director.try_begin(CLOCK, "overcast", value)
 	scroll = director.scroll
 	scroll.x = L.WALK_MIN
@@ -232,7 +251,7 @@ func _scroll_and_director() -> void:
 	for i in 40:
 		scroll._process(1.0 / 60.0)
 	await process_frame
-	check(keys.size() == 2 and keys[1] == "notice.exploration.back_empty", "holding left at the path start walks home empty-handed")
+	check(keys[-1] == "notice.exploration.back_empty", "holding left at the path start walks home empty-handed")
 	director.free()
 	world.free()
 
@@ -262,6 +281,22 @@ func _main_round_trip() -> void:
 	check(YardInteraction.pointer(world, world._plant_point()).target == "plant", "the plant bed keeps its own tap target")
 	world.debug_place_player(exit.approach_points[0])
 	check(world.primary_action().target == YardSceneHotspots.PATH_OUT and world.primary_action_key() == "action.go_out", "standing at the path end offers going out")
+	var stolen := 0
+	var core_stolen := 0
+	var sampled := 0
+	for x in range(130, 284, 3):
+		for y in range(500, 652, 3):
+			var spot := Vector2(x, y)
+			if spot.distance_to(world._plant_point()) >= 75.0 or not YardGround.allows(spot, YardGround.lawn(), true):
+				continue
+			sampled += 1
+			world.debug_place_player(spot)
+			if world.primary_action().target == YardSceneHotspots.PATH_OUT:
+				stolen += 1
+				core_stolen += 1 if spot.distance_to(world._plant_point()) < YardInteraction.PLANT_CORE else 0
+	check(sampled > 100 and core_stolen == 0 and stolen * 20 <= sampled, "going out only takes a sliver at the path end from the plant bed (%d/%d)" % [stolen, sampled])
+	world.debug_place_player(exit.approach_points[0] + Vector2(-8, -8))
+	check(world.primary_action().target == YardSceneHotspots.PATH_OUT, "stopping just short of the path end still offers going out")
 	world.debug_place_player(YardSceneHotspots.get_hotspot(YardSceneHotspots.FENCE_GATE).approach_points[0])
 	check(world.primary_action().target == YardSceneHotspots.FENCE_GATE, "fence gate observation is unchanged")
 	world.debug_place_player(exit.approach_points[0] + Vector2(3, 2))
@@ -281,6 +316,12 @@ func _main_round_trip() -> void:
 	main._input(esc)
 	check(not main._pause_screen.visible and not paused and scroll.can_process(), "Esc resumes the walk")
 	check(not world.input_enabled, "resuming the walk keeps the yard input off")
+	var pause_chip: Button = scroll._pause_button
+	check(pause_chip.is_visible_in_tree(), "the scroll has its own touch pause button")
+	scroll.press_at(pause_chip.get_global_rect().get_center())
+	check(main._pause_screen.visible and paused, "tapping the scroll pause button opens the pause menu")
+	main._toggle_pause()
+	check(not main._pause_screen.visible and not paused, "resume returns to the walk")
 	scroll._request_return("player")
 	await process_frame
 	check(main._screen == "game" and world.visible and world.input_enabled and main._hud.visible, "return restores the yard")

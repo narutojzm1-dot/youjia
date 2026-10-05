@@ -73,11 +73,11 @@ func record() -> void:
 			1:
 				if frame - since > 60:
 					shot("yard")
-					tap_world(Vector2(244, 598))
+					tap_world(Vector2(262, 630))
 					next("touch: walk to the end of the stone path", frame)
 			2:
 				if frame - since > 30 and not world._has_walk_goal:
-					next("arrived; action reads " + root.get_node("I18n").t(world.primary_action_key()), frame)
+					next("arrived at %s; action reads %s" % [world.get_player().position, root.get_node("I18n").t(world.primary_action_key())], frame)
 			3:
 				if frame - since > 20:
 					shot("yard-go-out-action")

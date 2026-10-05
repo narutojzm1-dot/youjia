@@ -55,13 +55,14 @@ static var CATALOG: Array[Dictionary] = [
 	},
 	{
 		# The painted stone path leaves the frame bottom-left; that edge is the
-		# way out to the near path (exploration). Feet stop on the lawn's path end.
+		# way out to the near path (exploration). Feet stop on the lawn's bottom edge
+		# near the path, outside the plant bed (75px) and grass (78px) reach so their key actions stay.
 		"id": PATH_OUT,
 		"hit_polygon": PackedVector2Array([
 			Vector2(40, 560), Vector2(170, 585), Vector2(300, 655),
 			Vector2(320, 720), Vector2(20, 720),
 		]),
-		"approach_points": [Vector2(232, 606), Vector2(250, 600)],
+		"approach_points": [Vector2(262, 630), Vector2(256, 626)],
 		"visual_anchor": Vector2(150, 660),
 		"reach": 48.0,
 		"label_key": "action.go_out",

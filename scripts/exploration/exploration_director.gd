@@ -36,7 +36,12 @@ func try_begin(clock: Dictionary, weather: String, seed: Variant = null) -> bool
 		if host.state() in [ExplorationContract.STATE_PENDING, ExplorationContract.STATE_FAILURE]:
 			var outcome := host.retry_deferred()
 			if host.can_begin():
-				notice.emit(outcome_notice(outcome))
+				var kept := outcome_notice(outcome)
+				# 上一趟的东西刚收好：先留在院里让玩家看到，再点一次出门
+				if kept.begins_with("notice.exploration.kept."):
+					notice.emit(kept)
+					return false
+				notice.emit(kept)
 			else:
 				notice.emit("notice.exploration.still_saving")
 				return false

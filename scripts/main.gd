@@ -846,6 +846,7 @@ func _on_exploration_entered() -> void:
 	_world.visible = false
 	_hud.visible = false
 	_notice_time = 0.0
+	_exploration.scroll.pause_requested.connect(_toggle_pause)
 
 
 func _on_exploration_returned(notice_key: String) -> void:

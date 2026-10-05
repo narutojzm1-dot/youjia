@@ -162,7 +162,7 @@ func get_keepsakes() -> Dictionary:
 
 func save_exploration_record(record: Variant) -> bool:
 	var candidate: Dictionary = _data.duplicate(true)
-	candidate.exploration = record.duplicate(true) if record is Dictionary else record
+	candidate.exploration = record.duplicate(true) if record is Dictionary or record is Array else record
 	return _commit_candidate(candidate)
 
 
@@ -178,7 +178,7 @@ func commit_exploration_trip(record: Variant, trip_serial: int, find_ids: Packed
 		keepsakes[find_id] = mini(int(keepsakes.get(find_id, 0)) + 1, SaveDataCodec.MAX_KEEPSAKE_COUNT)
 	candidate.keepsakes = keepsakes
 	candidate.exploration_committed_serial = trip_serial
-	candidate.exploration = record.duplicate(true) if record is Dictionary else record
+	candidate.exploration = record.duplicate(true) if record is Dictionary or record is Array else record
 	return _commit_candidate(candidate)
 
 

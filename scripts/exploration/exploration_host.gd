@@ -97,6 +97,20 @@ func release(find_id: String) -> Dictionary:
 	return result
 
 
+## 篮子满时“换成这个”：放下与带上合成一次落盘，中途断电不会恢复成空篮
+func swap(old_id: String, new_id: String) -> Dictionary:
+	var view := session.get_view()
+	if session.get_state() != C.STATE_ACTIVE or not (view.get("carried", []) as Array).has(old_id) \
+			or str(view.get("offer", "")) != new_id or new_id.is_empty() or new_id == old_id:
+		return {"ok": false, "error": "not_offered"}
+	var released := session.release(old_id)
+	if not released.ok:
+		return released
+	var taken := session.take(new_id)
+	_persist()
+	return taken
+
+
 ## 回院导航不等待持久化：冻结提案后立即可以切回小院，提交随后同步进行。
 ## 已在待提交时再次回院只做幂等导航，不再调用核心、不多交一笔。
 func request_return(reason: String = "player") -> Dictionary:

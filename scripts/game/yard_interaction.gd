@@ -4,6 +4,8 @@ extends RefCounted
 # The label, target and reach belong to one decision, shared by every input.
 const PET_REACH := 85.0
 const FEED_REACH := 110.0
+const PATH_OUT_STANDING := 20.0
+const PLANT_CORE := 60.0
 
 static func action(target: String, point: Vector2, label: String, reach: float) -> Dictionary:
 	return {"target": target, "point": point, "label": label, "reach": reach}
@@ -32,8 +34,16 @@ static func primary(world: Node2D) -> Dictionary:
 		return action("llama", llama.position, "action.feed", 88.0)
 	if player.position.distance_to(world._grass_point()) < 78.0:
 		return action("grass", world._grass_point(), "action.grass", 78.0)
-	var candidates: Array[Dictionary] = [plant(world), fishing(world)]
+	var plant_action := plant(world)
+	var candidates: Array[Dictionary] = [plant_action, fishing(world)]
 	var scene_action := YardSceneHotspots.near_player(world)
+	# Leaving the yard is a scene change: inside the plant bed's reach it only wins
+	# right at the path end, never in the plant's core reach.
+	if scene_action.get("target", "") == YardSceneHotspots.PATH_OUT \
+			and player.position.distance_to(plant_action.point) < plant_action.reach \
+			and (player.position.distance_to(scene_action.point) > PATH_OUT_STANDING \
+				or player.position.distance_to(plant_action.point) < PLANT_CORE):
+		scene_action = {}
 	if not scene_action.is_empty():
 		candidates.append(scene_action)
 	for id: String in world._actors:

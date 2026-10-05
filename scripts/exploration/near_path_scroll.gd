@@ -15,6 +15,7 @@ const EASE_TIME := 0.4
 const TOUCH_DEDUPE_MS := 400
 
 signal return_requested(reason: String)
+signal pause_requested
 
 var host: ExplorationHost
 var walker: SequenceResident
@@ -45,6 +46,7 @@ var _place_label: Label
 var _caption: Label
 var _hint: Label
 var _return_button: Button
+var _pause_button: Button
 var _look_button: Button
 var _pick_button: Button
 var _go_button: Button
@@ -171,11 +173,7 @@ func pick() -> bool:
 		"take":
 			ok = host.take(choice.find_id).ok
 		"swap":
-			var old: String = choice.old
-			if host.release(old).ok:
-				ok = host.take(choice.find_id).ok
-				if not ok:
-					host.take(old)
+			ok = host.swap(choice.old, choice.find_id).ok
 		"release":
 			ok = host.release(choice.find_id).ok
 	if ok:
@@ -262,7 +260,7 @@ func _unhandled_input(event: InputEvent) -> void:
 
 ## 屏幕坐标的一次按下：先命中按钮；观察态里其余位置不走路（计数，免得误以为卡住时再提示）
 func press_at(point: Vector2) -> void:
-	for button: Button in [_return_button, _look_button, _pick_button, _go_button]:
+	for button: Button in [_return_button, _pause_button, _look_button, _pick_button, _go_button]:
 		if button.is_visible_in_tree() and button.get_global_rect().has_point(point):
 			button.pressed.emit()
 			return
@@ -395,8 +393,10 @@ func _layout(size: Vector2, compact: bool) -> void:
 	var button_h := 46.0
 	_return_button.size = Vector2(118 if compact else 140, button_h)
 	_return_button.position = Vector2(size.x - _return_button.size.x - pad, pad)
+	_pause_button.size = Vector2(104 if compact else 128, button_h)
+	_pause_button.position = Vector2(_return_button.position.x - _pause_button.size.x - 10, pad)
 	_place_label.position = Vector2(pad, pad + 8)
-	_place_label.size = Vector2(maxf(120.0, size.x - _return_button.size.x - pad * 3), 30)
+	_place_label.size = Vector2(maxf(80.0, _pause_button.position.x - pad * 2), 30)
 	var look_w := minf(size.x - pad * 2, 320.0)
 	_look_button.size = Vector2(look_w, button_h)
 	_look_button.position = Vector2((size.x - look_w) * 0.5, pad + button_h + 12)
@@ -437,6 +437,8 @@ func _build_hud() -> void:
 	_hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_hint.text = I18n.t("exploration.caption.walk_hint")
 	_return_button = _button(I18n.t("exploration.action.return"), func() -> void: _request_return("player"))
+	# 触屏没有 Esc：暂停/音量入口在画卷里也要有
+	_pause_button = _button(I18n.t("hud.pause"), func() -> void: pause_requested.emit())
 	_look_button = _button("", func() -> void: observe())
 	_pick_button = _button("", func() -> void: pick())
 	_go_button = _button(I18n.t("exploration.action.continue"), end_observe)
