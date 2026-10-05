@@ -16,6 +16,8 @@ const HALO := 56.0
 const LABEL_ROOM := 32.0
 const INK := Color("5b4637")
 const GLOW := Color(1.0, 0.97, 0.86)
+# 展示圆片用稍深的低饱和暖灰并接近不透明：白羽毛不再贴着浅底，路面纹理也透不上来
+const DISC := Color(0.76, 0.72, 0.66)
 
 signal settled(find_id: String)
 
@@ -125,7 +127,7 @@ func _draw() -> void:
 	var halo: float = p.halo
 	if halo > 0.01:
 		draw_circle(p.at + Vector2(0, 3), HALO, Color(INK, 0.12 * halo))
-		draw_circle(p.at, HALO * 0.9, Color(GLOW, 0.82 * halo))
+		draw_circle(p.at, HALO * 0.9, Color(DISC, 0.94 * halo))
 		draw_arc(p.at, HALO * 0.9, 0.0, TAU, 48, Color(INK, 0.22 * halo), 1.5, true)
 	KeepsakeArt.draw(self, find_id, p.at, p.size)
 	if halo > 0.5 and not title.is_empty():

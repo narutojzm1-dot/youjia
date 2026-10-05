@@ -11,6 +11,8 @@ const MUTED := Color("8a7060")
 const APRICOT := Color("f3b27a")
 const CREAM := Color("fffaf1")
 const TOUCH_DEDUPE_MS := 400
+const BASKET_LABEL_AT := Vector2(84, 46)
+const BASKET_LABEL_WIDTH := 200.0
 
 signal return_requested(reason: String)
 signal pause_requested
@@ -509,8 +511,21 @@ func _draw_basket() -> void:
 	for i in held.size():
 		KeepsakeArt.draw(_basket, held[i], Vector2(24 + i * 16, 22), 0.9)
 	var font := _basket.get_theme_default_font()
-	var text := I18n.t("exploration.basket.empty") if held.is_empty() else ExplorationDirector.items_text(PackedStringArray(held))
-	_basket.draw_string(font, Vector2(84, 46), text, HORIZONTAL_ALIGNMENT_LEFT, 200, 15, INK)
+	var text := basket_text()
+	_basket.draw_rect(basket_label_rect(font, text), Color(1.0, 0.97, 0.88, 0.86))
+	_basket.draw_string(font, BASKET_LABEL_AT, text, HORIZONTAL_ALIGNMENT_LEFT, BASKET_LABEL_WIDTH, 15, INK)
+
+
+func basket_text() -> String:
+	var held: Array = carried() if host != null else []
+	return I18n.t("exploration.basket.empty") if held.is_empty() else ExplorationDirector.items_text(PackedStringArray(held))
+
+
+## 篮子名称的小底板：每帧都画、只随文字宽度变，背景再花也读得清
+static func basket_label_rect(font: Font, text: String) -> Rect2:
+	var text_size := font.get_string_size(text, HORIZONTAL_ALIGNMENT_LEFT, BASKET_LABEL_WIDTH, 15)
+	var ascent := font.get_ascent(15)
+	return Rect2(BASKET_LABEL_AT + Vector2(-6, -ascent - 3), Vector2(minf(text_size.x, BASKET_LABEL_WIDTH) + 12, text_size.y + 6))
 
 
 func _label(font_size: int, color: Color) -> Label:
