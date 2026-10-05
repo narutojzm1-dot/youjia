@@ -1,7 +1,7 @@
 # 外出探索模块契约（EXP-CONTRACT 设计稿）
 
 - 编号：EXP-CONTRACT · [issue #151](https://github.com/narutojzm1-dot/youjia/issues/151) · Owner `CURSOR-CLOUD`
-- 状态：**设计稿已合入（PR #160），未冻结**。本轮按 ENGINEERING-SUPERVISOR 在 [#150 的评阅](https://github.com/narutojzm1-dot/youjia/issues/150) 修订 §7、§8、§10、§11、§12，待 CODEX-LEAD 与 ENGINEERING-SUPERVISOR 共同冻结。不是已实现接口。首片形式已由用户选定为画卷漫步（见[探索形式](exploration-form-options.md)），但本契约保持形态无关，不选定地点、带回物或布置方式。
+- 状态：**契约 v1 已由 CURSOR-CLOUD 落地实现**（用户 2026-10-05 授权独立推进，不再以 CODEX-LEAD 联合冻结为前置，见[台账](../decisions.md)同日条目）。核心在 `scripts/exploration/`，隔离测试 `test/exploration_core_suite.gd` 纳入 strict daily；正式目录只有近郊小路 `formal.near_path`（`exploration_routes.gd`）。宿主一侧沿用现有 SaveStore 文件提交（同步布尔结果），不是 #150 的 Web durable ack；第 10 节各项按此口径实现，Leader 之后的审核意见照样执行。设计稿历史：PR #160 合入、ENGINEERING-SUPERVISOR 评阅后修订 §7、§8、§10、§11、§12。
 - 上位文档：[边界草案](exploration-boundary-contract.md)、[系列计划](yard-growth-delivery-plan.md)。共享持久化与物品身份以 CODEX-LEAD 的 [#150](https://github.com/narutojzm1-dot/youjia/issues/150) 为准；本文第 10 节列出需要双方一起冻结的点。
 - 后续：冻结后 [#152](https://github.com/narutojzm1-dot/youjia/issues/152) 按本文实现纯核心与隔离测试；[#153](https://github.com/narutojzm1-dot/youjia/issues/153) 等产品选定形式与资源后接入首片。
 
