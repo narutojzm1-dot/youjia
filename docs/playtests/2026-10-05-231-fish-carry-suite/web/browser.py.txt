@@ -63,7 +63,7 @@ with sync_playwright() as p:
     return None
   def reel_until_catch(pg,frame,click):
     for attempt in range(5):
-      if attempt: 
+      if attempt:
         r=frame('before recast')
         if r['label']=='fish': click(BTN,'tap primary 垂钓 = recast'); frame('after recast')
         else: cast(pg,frame,click)
