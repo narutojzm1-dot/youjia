@@ -1,0 +1,318 @@
+{
+  "runtime": "089d453dc7b4ac8a8b5dbe8fc250d032c6e80b21",
+  "expected_pck": "fb7b1473608a999f76eb46a8fd18b7f6fa2e8456f0508ee0db0693b2cddba1f8",
+  "inputs": [
+    {
+      "touchscreen_tap": [
+        640,
+        368
+      ],
+      "time": 359261.620925186
+    },
+    {
+      "touchscreen_tap": [
+        364,
+        412
+      ],
+      "time": 359267.992428071
+    },
+    {
+      "screenshot": "natural-sheep",
+      "time": 359272.384701489
+    },
+    {
+      "touchscreen_tap": [
+        114,
+        675
+      ],
+      "time": 359274.682205639
+    },
+    {
+      "screenshot": "album-before",
+      "time": 359275.816035088
+    },
+    {
+      "touchscreen_tap": [
+        918,
+        605
+      ],
+      "time": 359281.114330819
+    },
+    {
+      "touchscreen_tap": [
+        329,
+        563
+      ],
+      "time": 359283.380655296
+    },
+    {
+      "screenshot": "outside",
+      "time": 359292.908576848
+    },
+    {
+      "touchscreen_tap": [
+        824,
+        540
+      ],
+      "time": 359295.639960112
+    },
+    {
+      "keyboard": "e",
+      "time": 359308.532643287
+    },
+    {
+      "screenshot": "shade-look",
+      "time": 359310.680745991
+    },
+    {
+      "keyboard": "t",
+      "time": 359312.340690748
+    },
+    {
+      "screenshot": "shade-take",
+      "time": 359314.397817142
+    },
+    {
+      "touchscreen_tap": [
+        720,
+        676
+      ],
+      "time": 359316.931214094
+    },
+    {
+      "touchscreen_tap": [
+        1060,
+        390
+      ],
+      "time": 359321.667945888
+    },
+    {
+      "screenshot": "touch-return",
+      "time": 359350.574468447
+    },
+    {
+      "screenshot": "settled-return",
+      "time": 359360.345327724
+    },
+    {
+      "touchscreen_tap": [
+        640,
+        368
+      ],
+      "time": 359387.996352089
+    },
+    {
+      "screenshot": "reopened-yard",
+      "time": 359396.741242973
+    },
+    {
+      "touchscreen_tap": [
+        114,
+        675
+      ],
+      "time": 359400.085808416
+    },
+    {
+      "screenshot": "reopened-album",
+      "time": 359401.31807947
+    }
+  ],
+  "media": [],
+  "errors": [],
+  "builds": [
+    {
+      "page": "carry-trip",
+      "entry": "game-089d453"
+    },
+    {
+      "page": "carry-reopen",
+      "entry": "game-089d453"
+    }
+  ],
+  "limits": [
+    "browser media emulation, not OS settings or physical phone",
+    "one ordinary public trip; current and intent only as actually sampled; controlled failure evidence separate"
+  ],
+  "manifests": [
+    {
+      "page": "carry-trip",
+      "stage": "before",
+      "manifest": {
+        "schema": "youjia.release/v1",
+        "sourceCommit": "089d453dc7b4ac8a8b5dbe8fc250d032c6e80b21",
+        "engine": "4.7.2.stable.official.ed1daf0bf",
+        "entry": "game-089d453",
+        "publishedAt": "2026-10-05T19:11:39Z",
+        "storageModules": {
+          "entry": "save-089d453",
+          "sha256": {
+            "bridge.mjs": "ef18687554fdc0d745c1d18d4d091e959cc78559da0d61d6a093e562ff9bbc91",
+            "budgets.mjs": "52984153977dcafd1d2682e848f1999f091d0966e17d46e902de76f5735a7018",
+            "host.mjs": "9de8dc0ef4bfc037a8ad0bff575d40c3dd4341bcc723351a412b2061bb661904",
+            "idbfs_source.mjs": "16eb57d471537f13d3e50018b56c2d416d2847f0d0249ba44433dd9ebb65f4d8",
+            "legacy_inspection.mjs": "db3a23a0221aa5d34a58a6a49aeeff930295ffe20bfcf73a7c11f0d49cffd671",
+            "legacy_seal.mjs": "9642132f5d4e7523e5966e802069af7f4bae803fae8e2e7c28ae55ee97d85610",
+            "legacy_v5.mjs": "8e7f4ad2d87aab77ac05361e4f46060476e933aa079ae94301998d08d4599621",
+            "lifecycle.mjs": "1cfaebb9a8745e2dc3e4f694ef475f250640870938f04160be1a5c9acd62935d",
+            "source_decode.mjs": "411f3bc784cb32a07f32eed5fc7d88f71b59a667cc0d68a50fe13c55bfdba18a",
+            "store.mjs": "2193b4397b8662a8ebc754dc4468e4d62964d209b4e1d0f0924a2ec81b409cbe"
+          }
+        }
+      },
+      "time": 359232.339376551
+    },
+    {
+      "page": "carry-trip",
+      "stage": "after",
+      "manifest": {
+        "schema": "youjia.release/v1",
+        "sourceCommit": "089d453dc7b4ac8a8b5dbe8fc250d032c6e80b21",
+        "engine": "4.7.2.stable.official.ed1daf0bf",
+        "entry": "game-089d453",
+        "publishedAt": "2026-10-05T19:11:39Z",
+        "storageModules": {
+          "entry": "save-089d453",
+          "sha256": {
+            "bridge.mjs": "ef18687554fdc0d745c1d18d4d091e959cc78559da0d61d6a093e562ff9bbc91",
+            "budgets.mjs": "52984153977dcafd1d2682e848f1999f091d0966e17d46e902de76f5735a7018",
+            "host.mjs": "9de8dc0ef4bfc037a8ad0bff575d40c3dd4341bcc723351a412b2061bb661904",
+            "idbfs_source.mjs": "16eb57d471537f13d3e50018b56c2d416d2847f0d0249ba44433dd9ebb65f4d8",
+            "legacy_inspection.mjs": "db3a23a0221aa5d34a58a6a49aeeff930295ffe20bfcf73a7c11f0d49cffd671",
+            "legacy_seal.mjs": "9642132f5d4e7523e5966e802069af7f4bae803fae8e2e7c28ae55ee97d85610",
+            "legacy_v5.mjs": "8e7f4ad2d87aab77ac05361e4f46060476e933aa079ae94301998d08d4599621",
+            "lifecycle.mjs": "1cfaebb9a8745e2dc3e4f694ef475f250640870938f04160be1a5c9acd62935d",
+            "source_decode.mjs": "411f3bc784cb32a07f32eed5fc7d88f71b59a667cc0d68a50fe13c55bfdba18a",
+            "store.mjs": "2193b4397b8662a8ebc754dc4468e4d62964d209b4e1d0f0924a2ec81b409cbe"
+          }
+        }
+      },
+      "time": 359362.596172678
+    },
+    {
+      "page": "carry-reopen",
+      "stage": "before",
+      "manifest": {
+        "schema": "youjia.release/v1",
+        "sourceCommit": "089d453dc7b4ac8a8b5dbe8fc250d032c6e80b21",
+        "engine": "4.7.2.stable.official.ed1daf0bf",
+        "entry": "game-089d453",
+        "publishedAt": "2026-10-05T19:11:39Z",
+        "storageModules": {
+          "entry": "save-089d453",
+          "sha256": {
+            "bridge.mjs": "ef18687554fdc0d745c1d18d4d091e959cc78559da0d61d6a093e562ff9bbc91",
+            "budgets.mjs": "52984153977dcafd1d2682e848f1999f091d0966e17d46e902de76f5735a7018",
+            "host.mjs": "9de8dc0ef4bfc037a8ad0bff575d40c3dd4341bcc723351a412b2061bb661904",
+            "idbfs_source.mjs": "16eb57d471537f13d3e50018b56c2d416d2847f0d0249ba44433dd9ebb65f4d8",
+            "legacy_inspection.mjs": "db3a23a0221aa5d34a58a6a49aeeff930295ffe20bfcf73a7c11f0d49cffd671",
+            "legacy_seal.mjs": "9642132f5d4e7523e5966e802069af7f4bae803fae8e2e7c28ae55ee97d85610",
+            "legacy_v5.mjs": "8e7f4ad2d87aab77ac05361e4f46060476e933aa079ae94301998d08d4599621",
+            "lifecycle.mjs": "1cfaebb9a8745e2dc3e4f694ef475f250640870938f04160be1a5c9acd62935d",
+            "source_decode.mjs": "411f3bc784cb32a07f32eed5fc7d88f71b59a667cc0d68a50fe13c55bfdba18a",
+            "store.mjs": "2193b4397b8662a8ebc754dc4468e4d62964d209b4e1d0f0924a2ec81b409cbe"
+          }
+        }
+      },
+      "time": 359363.802048334
+    },
+    {
+      "page": "carry-reopen",
+      "stage": "after",
+      "manifest": {
+        "schema": "youjia.release/v1",
+        "sourceCommit": "089d453dc7b4ac8a8b5dbe8fc250d032c6e80b21",
+        "engine": "4.7.2.stable.official.ed1daf0bf",
+        "entry": "game-089d453",
+        "publishedAt": "2026-10-05T19:11:39Z",
+        "storageModules": {
+          "entry": "save-089d453",
+          "sha256": {
+            "bridge.mjs": "ef18687554fdc0d745c1d18d4d091e959cc78559da0d61d6a093e562ff9bbc91",
+            "budgets.mjs": "52984153977dcafd1d2682e848f1999f091d0966e17d46e902de76f5735a7018",
+            "host.mjs": "9de8dc0ef4bfc037a8ad0bff575d40c3dd4341bcc723351a412b2061bb661904",
+            "idbfs_source.mjs": "16eb57d471537f13d3e50018b56c2d416d2847f0d0249ba44433dd9ebb65f4d8",
+            "legacy_inspection.mjs": "db3a23a0221aa5d34a58a6a49aeeff930295ffe20bfcf73a7c11f0d49cffd671",
+            "legacy_seal.mjs": "9642132f5d4e7523e5966e802069af7f4bae803fae8e2e7c28ae55ee97d85610",
+            "legacy_v5.mjs": "8e7f4ad2d87aab77ac05361e4f46060476e933aa079ae94301998d08d4599621",
+            "lifecycle.mjs": "1cfaebb9a8745e2dc3e4f694ef475f250640870938f04160be1a5c9acd62935d",
+            "source_decode.mjs": "411f3bc784cb32a07f32eed5fc7d88f71b59a667cc0d68a50fe13c55bfdba18a",
+            "store.mjs": "2193b4397b8662a8ebc754dc4468e4d62964d209b4e1d0f0924a2ec81b409cbe"
+          }
+        }
+      },
+      "time": 359411.668661233
+    }
+  ],
+  "pck_checks": [
+    {
+      "page": "carry-trip",
+      "sha256": "fb7b1473608a999f76eb46a8fd18b7f6fa2e8456f0508ee0db0693b2cddba1f8",
+      "bytes": 27088396,
+      "status": 200
+    },
+    {
+      "page": "carry-reopen",
+      "sha256": "fb7b1473608a999f76eb46a8fd18b7f6fa2e8456f0508ee0db0693b2cddba1f8",
+      "bytes": 27088396,
+      "status": 200
+    }
+  ],
+  "navigation": [
+    {
+      "time": 359247.896649876,
+      "url": "https://narutojzm1-dot.github.io/youjia/?qa=1791227961.404459",
+      "main": true
+    },
+    {
+      "time": 359373.985079991,
+      "url": "https://narutojzm1-dot.github.io/youjia/?qa=1791228086.9247756",
+      "main": true
+    }
+  ],
+  "dom_ready": [
+    359248.104455945,
+    359374.710622257
+  ],
+  "all_console": [
+    {
+      "type": "log",
+      "text": "Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org",
+      "time": 359256.292864926
+    },
+    {
+      "type": "log",
+      "text": "OpenGL API OpenGL ES 3.0 (WebGL 2.0 (OpenGL ES 3.0 Chromium)) - Compatibility - Using Device: WebKit - WebKit WebGL",
+      "time": 359256.632599423
+    },
+    {
+      "type": "log",
+      "text": "Build configuration: Emscripten 4.0.20, single-threaded, no GDExtension support.",
+      "time": 359256.965366161
+    },
+    {
+      "type": "info",
+      "text": "[game-loading] timings_ms {\"engineScriptReady\":225,\"downloadComplete\":8113,\"engineReady\":10502,\"firstFrame\":12374}",
+      "time": 359260.416550029
+    },
+    {
+      "type": "log",
+      "text": "Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org",
+      "time": 359383.822957065
+    },
+    {
+      "type": "log",
+      "text": "OpenGL API OpenGL ES 3.0 (WebGL 2.0 (OpenGL ES 3.0 Chromium)) - Compatibility - Using Device: WebKit - WebKit WebGL",
+      "time": 359384.052111032
+    },
+    {
+      "type": "log",
+      "text": "Build configuration: Emscripten 4.0.20, single-threaded, no GDExtension support.",
+      "time": 359384.335311967
+    },
+    {
+      "type": "info",
+      "text": "[game-loading] timings_ms {\"engineScriptReady\":25,\"downloadComplete\":8997,\"engineReady\":11211,\"firstFrame\":12094}",
+      "time": 359386.785156219
+    }
+  ]
+}

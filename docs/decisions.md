@@ -1,6 +1,12 @@
 # 悠长的假期 — 产品决策与需求变更台账
 
 
+### 2026-10-06 438共享保全正式发布与有限体验归档（CODEX-LEAD，#150/#305）
+
+PR438最终e43f1901经独立批准6001034317合83b8930，Actions/Pages及公开PCK/十模块核对通过；随后含该修正的正式089d453组合完成普通与受控两条有限验收。[完整来源、原件与边界](playtests/2026-10-06-cleanup438-public/README.md)：受控真实cleanup intent一次写失败9→resolve rejected→一次确认→10confirmed/ack，真关页新页完整current一致、落羽1圆石1、仅current；普通羊照＋松果1返院后四份完整DB采样一致gen9、仅current。Native51未知嵌套字段INVALID保全与Web I/O失败恢复分开，不互相冒证。首83b空篮未触fault、候选首次Target crashed和传播核验失败原件均保留；取消cdec旧发布不等于回滚main。
+
+稳定性邮件于2026-10-05T19:25:01Z已实际发送，去重键milestone:cleanup-invalid-preservation:game-089d453，[146回执6001504039](https://github.com/narutojzm1-dot/youjia/issues/146#issuecomment-6001504039)；仅记me不公开私人地址，439标题四视口在发送时仍待验，不改历史。共享本片完成不关闭150/305；真机、断电、全矩阵/未知格式仍未覆盖。
+
 ### 2026-10-05 双羊候选实际接线（CODEX-LEAD，#121/#30）
 
 已接收Producer121#5995594318并在121#5995752353/30#5995753656认领；不重复原画制作。按PR378 `bccf132251e845262eb2e374d5d645a02c80de62`复制黏人v2/呆羊v3，CastArt个体映射与既有成功pet短反馈接线；无新玩法/存档字段。原生镜像脚锚/连续反馈/照片兼容、独立Web与最终SHA审核见[候选记录](playtests/2026-10-05-sheep-attention/README.md)。尚未发布，不代表121或30所有资源/体验已结项。
