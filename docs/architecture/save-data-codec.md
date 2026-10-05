@@ -19,3 +19,9 @@ Owner CODEX-LEAD；#150，基线 main55030f3。本切片不改产品规则，不
 4. 所有生产提交统一通过 Host durable 回执及恢复消费，不让 SaveFiles 和新 Host 并行写；完成容量/配额与正式浏览器重载检查后才冻结 #150。
 
 本切片仅消除第3步中重复转换逻辑；不把已有隔离139/109/16/8检查替代正式迁移验收，不要求 Cloud 为未改桥接接口重跑旧矩阵。
+
+
+## 时间与花圃的写入单位
+YardWorld 定时/离院的 `_save_progress` 使用 `SaveStore.set_yard_progress`，一次提交同一快照内的时间与花圃字段。提交失败不会把候选发布到 SaveStore 内存；活跃 YardWorld 仍保留自己的状态，沿既有保存时机重试。该修正不回滚玩家场景、不新增失败弹窗，也不保证关闭页面后重试。独立 setter 的历史语义未改变；所有业务消费统一到异步 durable 仍属于后续迁移工作。
+
+`test/yard_snapshot_suite.gd` 通过真实生产 World→Store→SaveFiles 验证完整备份，并用临时目标被目录占用造成真实写入失败。仅允许 daily runner 的临时 XDG 环境，裸跑拒绝；以 `GODOT=<4.7.2> bash tools/verify_daily_life.sh` 执行。浏览器正常启动/重载检查不等于强退、掉电或双页所有权验证。

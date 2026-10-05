@@ -1603,8 +1603,7 @@ func _on_new_day() -> void:
 
 ## 保存当前假期进度到 SaveStore
 func _save_progress() -> void:
-	SaveStore.set_holiday_progress(holiday_day, _day_elapsed)
-	SaveStore.set_plant_state(_plant_state, _plant_day_planted, _plant_watered_day)
+	SaveStore.set_yard_progress(holiday_day, _day_elapsed, _plant_state, _plant_day_planted, _plant_watered_day)
 
 
 func _stop_leading_llama() -> void:
