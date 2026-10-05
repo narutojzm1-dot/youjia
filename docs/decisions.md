@@ -1426,3 +1426,14 @@ CODEX-LEAD按[6004968169认领](https://github.com/narutojzm1-dot/youjia/issues/
 fresh9623核到915非docs路径（734文本逐SHA+181保留二进制），460新增disabled专项无docs依赖，当前73套。运行源 `93d708d5fb20f8007b47b40bfc58f1845295aa4e` 的六配置/30保留检查、12次原publisher本地构建及6次缺当前PCK实际拒绝全部通过，origin未误推；全部只操作临时file://，版本查询为显式stub，未执行引擎或浏览器。首轮fixture把depth1不可达旧blob当应枚举的模型错误与后续更正/重跑保留。[可复现证据与边界](engineering/publisher-source-sparse.md)。这不是正式发布或加速已证，既有PR取源458与本发布片独立。
 
 最终head独立终审、真实PR CI全73套/导出与正式Pages核验均待；合入须先等460公开普通后验closed，避免验收中途切源。玩法/资源/存档协议不变，#130长期单不整体关闭。
+
+
+### 2026-10-06 REQ039 / PR461 新照片快门行纸片授权接力
+
+CODEX-LEAD按作者[PR461](https://github.com/narutojzm1-dot/youjia/pull/461)明确请求接收，保留原 `742b293cc3e252f1fd7b46aa07333350155108cc` 真实祖先及五个作者文件。运行修改仅PhotoArrival的ShutterCaption子Panel暖纸底、文字垂直居中和语言/尺寸贴合，保留行框几何、文案、墨色、照片及动画时长；字基线会因居中移动，不称字像素位置完全不变。Main输入、存档、探索、相纸衬底未改。daily加唯一专项和精确方括号正计数完成行，保留100755、mat/disabled/强门禁及最新CI/发布流程。
+
+实际验证源 `fd887ff8691b41edba305ab946c43df082e793f7` / tree `382fc30536973f2809641a36fdc3a67fd20b145c`：Godot4.7.2 import、专项1290、完整74套件+1import=75启动（含相纸550/禁用4400）、两个Web发布工具测试与release导出均direct exit0。原50门禁和新增9个完成行正反例为fake executable受控案例，单列不冒真实引擎。完整日志/退出码在[集成证据](playtests/2026-10-06-photo461-integration/README.md)。作者旧基线65失败和未上传PNG不冒本轮重做或已见。
+
+独立助手在同一浏览器内串行关闭/新建两个fresh context（390×844、568×320），只用普通中文正常动效进院→轻抚羊产生首照→完整快门纸底/相纸→自然退场→相册→合上；源/PCK/十模块/许可页前后HTTP绑定，实际driver exit0。短横本样本纸条覆盖目标提示纸片右半区域，但短文案“窗台花箱/看看花箱”在左侧没有被盖；不能写成长目标文字已测或所有HUD均可见。英文/低动效仅原生夹具，真机/触摸/听验/全部DPR未覆盖。
+
+候选PCK 27,090,652B / SHA256 `6f84caeb3dc92d6d12a91f39f6cc766dcc521a26bdb70b2f8c99063384eb73a3`；候选不等于已发布。native的fixed seed/day/player/debug_force_rule照片、直接refresh_locale/root.size和Tween.custom_step只是格式/布局/属性夹具，7.2277—8.2869:1是静止RGBA sRGB公式，不冒真实逐帧或普通触发。最终独立SHA审查、远端CI、合入和公开manifest/PCK/普通后验仍按后续实际环节留痕。
