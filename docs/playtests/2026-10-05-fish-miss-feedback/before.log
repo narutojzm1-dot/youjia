@@ -1,0 +1,13 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ERROR: miss notice matches real carry: timeout=false kind=small time=12.0
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://test/fish_miss_feedback_suite.gd:13)
+       [1] run (res://test/fish_miss_feedback_suite.gd:49)
+ERROR: miss notice matches real carry: timeout=true kind=small time=12.0
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://test/fish_miss_feedback_suite.gd:13)
+       [1] run (res://test/fish_miss_feedback_suite.gd:49)
+[fish-miss-feedback] 16 checks, 2 failures: ["miss notice matches real carry: timeout=false kind=small time=12.0", "miss notice matches real carry: timeout=true kind=small time=12.0"]

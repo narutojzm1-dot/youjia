@@ -1,0 +1,12 @@
+import json
+from pathlib import Path
+from playwright.sync_api import sync_playwright
+out=Path('/workspace/youjia-fish-miss/docs/playtests/2026-10-05-fish-miss-feedback');results=[]
+with sync_playwright() as p:
+ b=p.chromium.launch(executable_path='/usr/bin/chromium',headless=True,args=['--no-sandbox','--use-gl=angle','--use-angle=swiftshader','--enable-webgl'])
+ for width,height,locale in [(1280,720,'zh-CN'),(390,844,'zh-CN'),(844,390,'en'),(390,844,'en')]:
+  c=b.new_context(viewport={'width':width,'height':height});pg=c.new_page();errors=[];pg.on('pageerror',lambda e:errors.append(str(e)));pg.on('console',lambda m:errors.append(m.text) if m.type=='error' else None)
+  pg.goto('http://127.0.0.1:8788/?locale='+locale);pg.wait_for_function('window.fishMissFixture',timeout=60000);pg.wait_for_timeout(300);data=pg.evaluate('window.fishMissFixture');assert data['notice']=='notice.fishing.miss_with_carry',data;assert data['carry']=='small' and data['timer']==12, data
+  path=f'controlled-{width}-{height}-{locale}.png';pg.screenshot(path=str(out/path));results.append({'viewport':[width,height],'data':data,'errors':errors,'screenshot':path});print(results[-1],flush=True);c.close()
+ b.close()
+(out/'controlled-web.json').write_text(json.dumps({'scope':'explicit production Main/YardWorld fixture, carry/timer/bite injected; not natural gameplay or release','results':results},ensure_ascii=False,indent=2)+'\n')
