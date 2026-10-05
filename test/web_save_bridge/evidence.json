@@ -1,0 +1,356 @@
+{
+  "status": "PASS",
+  "cases": [
+    {
+      "legacy": false,
+      "reload": false,
+      "checks": [
+        {
+          "label": "open callback correlates",
+          "ok": true
+        },
+        {
+          "label": "open usable",
+          "ok": true
+        },
+        {
+          "label": "initialize callback correlates",
+          "ok": true
+        },
+        {
+          "label": "initialize validated envelope",
+          "ok": true
+        },
+        {
+          "label": "prepare callback correlates",
+          "ok": true
+        },
+        {
+          "label": "production prepare identity and hash accepted",
+          "ok": true
+        },
+        {
+          "label": "submit callback correlates",
+          "ok": true
+        },
+        {
+          "label": "production submit durable receipt accepted",
+          "ok": true
+        },
+        {
+          "label": "resolve callback correlates",
+          "ok": true
+        },
+        {
+          "label": "production resolve same identity accepted",
+          "ok": true
+        },
+        {
+          "label": "acknowledge callback correlates",
+          "ok": true
+        },
+        {
+          "label": "production ack accepted",
+          "ok": true
+        },
+        {
+          "label": "inspectLegacy callback correlates",
+          "ok": true
+        },
+        {
+          "label": "inspection validates actual Host fingerprints",
+          "ok": true
+        },
+        {
+          "label": "exportRecovery callback correlates",
+          "ok": true
+        },
+        {
+          "label": "recovery validates raw bytes seal and envelope",
+          "ok": true
+        },
+        {
+          "label": "invalid base64 rejected",
+          "ok": true
+        },
+        {
+          "label": "tampered current digest rejected",
+          "ok": true
+        },
+        {
+          "label": "foreign inspection token rejected",
+          "ok": true
+        },
+        {
+          "label": "exportRecovery callback correlates",
+          "ok": true
+        },
+        {
+          "label": "unavailable export explicitly incomplete",
+          "ok": true
+        },
+        {
+          "label": "close callback correlates",
+          "ok": true
+        },
+        {
+          "label": "production close accepted",
+          "ok": true
+        },
+        {
+          "label": "late JS callback after node free safely ignored",
+          "ok": true
+        }
+      ],
+      "status": "PASS"
+    },
+    {
+      "legacy": false,
+      "reload": true,
+      "checks": [
+        {
+          "label": "open callback correlates",
+          "ok": true
+        },
+        {
+          "label": "open usable",
+          "ok": true
+        },
+        {
+          "label": "reload confirms exact saved payload",
+          "ok": true
+        },
+        {
+          "label": "inspectLegacy callback correlates",
+          "ok": true
+        },
+        {
+          "label": "inspection validates actual Host fingerprints",
+          "ok": true
+        },
+        {
+          "label": "exportRecovery callback correlates",
+          "ok": true
+        },
+        {
+          "label": "recovery validates raw bytes seal and envelope",
+          "ok": true
+        },
+        {
+          "label": "invalid base64 rejected",
+          "ok": true
+        },
+        {
+          "label": "tampered current digest rejected",
+          "ok": true
+        },
+        {
+          "label": "foreign inspection token rejected",
+          "ok": true
+        },
+        {
+          "label": "exportRecovery callback correlates",
+          "ok": true
+        },
+        {
+          "label": "unavailable export explicitly incomplete",
+          "ok": true
+        },
+        {
+          "label": "close callback correlates",
+          "ok": true
+        },
+        {
+          "label": "production close accepted",
+          "ok": true
+        },
+        {
+          "label": "late JS callback after node free safely ignored",
+          "ok": true
+        }
+      ],
+      "status": "PASS"
+    },
+    {
+      "legacy": true,
+      "reload": false,
+      "checks": [
+        {
+          "label": "open callback correlates",
+          "ok": true
+        },
+        {
+          "label": "open usable",
+          "ok": true
+        },
+        {
+          "label": "initialize callback correlates",
+          "ok": true
+        },
+        {
+          "label": "initialize validated envelope",
+          "ok": true
+        },
+        {
+          "label": "prepare callback correlates",
+          "ok": true
+        },
+        {
+          "label": "production prepare identity and hash accepted",
+          "ok": true
+        },
+        {
+          "label": "submit callback correlates",
+          "ok": true
+        },
+        {
+          "label": "production submit durable receipt accepted",
+          "ok": true
+        },
+        {
+          "label": "resolve callback correlates",
+          "ok": true
+        },
+        {
+          "label": "production resolve same identity accepted",
+          "ok": true
+        },
+        {
+          "label": "acknowledge callback correlates",
+          "ok": true
+        },
+        {
+          "label": "production ack accepted",
+          "ok": true
+        },
+        {
+          "label": "inspectLegacy callback correlates",
+          "ok": true
+        },
+        {
+          "label": "inspection validates actual Host fingerprints",
+          "ok": true
+        },
+        {
+          "label": "exportRecovery callback correlates",
+          "ok": true
+        },
+        {
+          "label": "recovery validates raw bytes seal and envelope",
+          "ok": true
+        },
+        {
+          "label": "invalid base64 rejected",
+          "ok": true
+        },
+        {
+          "label": "tampered current digest rejected",
+          "ok": true
+        },
+        {
+          "label": "foreign inspection token rejected",
+          "ok": true
+        },
+        {
+          "label": "tampered seal rejected",
+          "ok": true
+        },
+        {
+          "label": "exportRecovery callback correlates",
+          "ok": true
+        },
+        {
+          "label": "unavailable export explicitly incomplete",
+          "ok": true
+        },
+        {
+          "label": "close callback correlates",
+          "ok": true
+        },
+        {
+          "label": "production close accepted",
+          "ok": true
+        },
+        {
+          "label": "late JS callback after node free safely ignored",
+          "ok": true
+        }
+      ],
+      "status": "PASS"
+    },
+    {
+      "legacy": true,
+      "reload": true,
+      "checks": [
+        {
+          "label": "open callback correlates",
+          "ok": true
+        },
+        {
+          "label": "open usable",
+          "ok": true
+        },
+        {
+          "label": "reload confirms exact saved payload",
+          "ok": true
+        },
+        {
+          "label": "inspectLegacy callback correlates",
+          "ok": true
+        },
+        {
+          "label": "inspection validates actual Host fingerprints",
+          "ok": true
+        },
+        {
+          "label": "exportRecovery callback correlates",
+          "ok": true
+        },
+        {
+          "label": "recovery validates raw bytes seal and envelope",
+          "ok": true
+        },
+        {
+          "label": "invalid base64 rejected",
+          "ok": true
+        },
+        {
+          "label": "tampered current digest rejected",
+          "ok": true
+        },
+        {
+          "label": "foreign inspection token rejected",
+          "ok": true
+        },
+        {
+          "label": "tampered seal rejected",
+          "ok": true
+        },
+        {
+          "label": "exportRecovery callback correlates",
+          "ok": true
+        },
+        {
+          "label": "unavailable export explicitly incomplete",
+          "ok": true
+        },
+        {
+          "label": "close callback correlates",
+          "ok": true
+        },
+        {
+          "label": "production close accepted",
+          "ok": true
+        },
+        {
+          "label": "late JS callback after node free safely ignored",
+          "ok": true
+        }
+      ],
+      "status": "PASS"
+    }
+  ],
+  "errors": [],
+  "host_sha": "1319bffb7ef69619d03a25ff9d8695e8928b032b",
+  "browser": "151.0.7922.173"
+}

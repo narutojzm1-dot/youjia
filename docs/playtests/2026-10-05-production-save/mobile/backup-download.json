@@ -1,0 +1,62 @@
+{
+  "current_envelope": {
+    "commit_id": "a4cf2bf9049d45a5bc388ba9941e371c",
+    "envelope_sha256": "58972c27b6672111408c1bddc6e92524dcc28333e427a8f8690a6c294eee9a53",
+    "generation": "1",
+    "legacy_sources_sha256": "15ef815f57b41eca87823f95495f7c2abd84d92a1cea3066a242639a02ca6c6c",
+    "parent_commit_id": "",
+    "payload_bytes": "{\"schema\":\"youjia.legacy-v5-import/v1\",\"selected\":\"primary\",\"sources\":{\"primary\":{\"status\":\"present\",\"text\":\" { \\\"version\\\":5, \\\"locale\\\":\\\"zh-CN\\\", \\\"holiday_day\\\":3, \\\"unknown_big\\\":900719925474099312345, \\\"unknown_note\\\":\\\" preserve spacing \\\" }\\n\"},\"backup\":{\"status\":\"present\",\"text\":\"\\n {\\\"version\\\":5,\\\"holiday_day\\\":2,\\\"unknown_backup\\\":true} \"}}}",
+    "payload_sha256": "44ec54dbf4266cdf0061b960cfa3748f2f51940144be6bba218d283a86c2a3a4",
+    "request_id": "eb06660683e3468985028971df914257",
+    "schema": "youjia.save-envelope/v2",
+    "store_id": "d7925e0e53cb48699585237f71758d24"
+  },
+  "inspection": {
+    "baseline": "sealed",
+    "current_token": "a4cf2bf9049d45a5bc388ba9941e371c",
+    "namespace": "youjia-save-host-v1",
+    "schema": "youjia.legacy-inspection/v1",
+    "sources": {
+      "backup": {
+        "baseline_bytes": 54.0,
+        "baseline_sha256": "487ab684934083b6f5abd0645bf1acdc3281f959d0a9b58d5a6a1a1e2f7cd3ca",
+        "baseline_status": "present",
+        "bytes": 54.0,
+        "reason": "",
+        "sha256": "487ab684934083b6f5abd0645bf1acdc3281f959d0a9b58d5a6a1a1e2f7cd3ca",
+        "snapshot_status": "present",
+        "status": "same"
+      },
+      "primary": {
+        "baseline_bytes": 126.0,
+        "baseline_sha256": "a7db7db034ca19b8c0cbe293e6546985ec0d8d111d446c928584427610738ec0",
+        "baseline_status": "present",
+        "bytes": 128.0,
+        "reason": "",
+        "sha256": "104d44041e6f3a8187d8007d69cc3b23f153de09f72e6035cbd66337c91c4d56",
+        "snapshot_status": "present",
+        "status": "changed"
+      }
+    },
+    "status": "changed"
+  },
+  "legacy_snapshot": {
+    "backup": {
+      "base64": "CiB7InZlcnNpb24iOjUsImhvbGlkYXlfZGF5IjoyLCJ1bmtub3duX2JhY2t1cCI6dHJ1ZX0g",
+      "status": "present"
+    },
+    "primary": {
+      "base64": "IHsgInZlcnNpb24iOjUsICJsb2NhbGUiOiJ6aC1DTiIsICJob2xpZGF5X2RheSI6MywgInVua25vd25fYmlnIjo5MDA3MTk5MjU0NzQwOTkzMTIzNDUsICJ1bmtub3duX25vdGUiOiIgcHJlc2VydmUgc3BhY2luZyAiIH0KICA=",
+      "status": "present"
+    }
+  },
+  "legacy_sources": {
+    "import_payload": "{\"schema\":\"youjia.legacy-v5-import/v1\",\"selected\":\"primary\",\"sources\":{\"primary\":{\"status\":\"present\",\"text\":\" { \\\"version\\\":5, \\\"locale\\\":\\\"zh-CN\\\", \\\"holiday_day\\\":3, \\\"unknown_big\\\":900719925474099312345, \\\"unknown_note\\\":\\\" preserve spacing \\\" }\\n\"},\"backup\":{\"status\":\"present\",\"text\":\"\\n {\\\"version\\\":5,\\\"holiday_day\\\":2,\\\"unknown_backup\\\":true} \"}}}",
+    "payload_sha256": "44ec54dbf4266cdf0061b960cfa3748f2f51940144be6bba218d283a86c2a3a4",
+    "schema": "youjia.legacy-sources/v1",
+    "seal_sha256": "15ef815f57b41eca87823f95495f7c2abd84d92a1cea3066a242639a02ca6c6c",
+    "store_id": "d7925e0e53cb48699585237f71758d24"
+  },
+  "namespace": "youjia-save-host-v1",
+  "schema": "youjia.recovery-export/v1"
+}

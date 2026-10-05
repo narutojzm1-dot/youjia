@@ -58,7 +58,7 @@ func _spawn(physical: Vector2i, scale: float) -> Node:
 	await process_frame
 	await process_frame
 	main.set_process(false)
-	main._start_holiday()
+	await main._start_holiday()
 	main._layout()
 	main._refresh_hud()
 	return main

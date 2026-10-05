@@ -1,0 +1,29 @@
+<script type="module">
+import {createHost} from './web/save/host.mjs';
+import {captureIdbfsSource} from './reader.mjs';
+const labels=[],ok=(v,s)=>{if(!v)throw Error(s);labels.push(s);};
+const paths={primaryPath:'/userfs/godot/app_userdata/悠长的假期/youjia_save.json',backupPath:'/userfs/godot/app_userdata/悠长的假期/youjia_save.bak'};
+const db=await new Promise((res,rej)=>{const q=indexedDB.open('/userfs',21);q.onupgradeneeded=()=>q.result.createObjectStore('FILE_DATA').createIndex('timestamp','timestamp',{unique:false});q.onsuccess=()=>res(q.result);q.onerror=rej;});
+const oldPage=window.open('about:blank');
+const write=async bytes=>{
+ oldPage.pendingBytes=Array.from(bytes);oldPage.primaryPath=paths.primaryPath;
+ return oldPage.eval(`new Promise((resolve,reject)=>{const q=indexedDB.open('/userfs',21);q.onerror=reject;q.onsuccess=()=>{const d=q.result,tx=d.transaction('FILE_DATA','readwrite');tx.objectStore('FILE_DATA').put({contents:new Uint8Array(pendingBytes),mode:33206,timestamp:new Date()},primaryPath);tx.oncomplete=()=>{d.close();resolve();};tx.onabort=reject;};})`);
+};
+const enc=s=>new TextEncoder().encode(s);
+try{
+ const host=createHost({runtimeReady:Promise.resolve(),captureLegacy:captureIdbfsSource});await host.open();
+ const noSeal=new URL(location.href).searchParams.has('empty');
+ if(!noSeal)await write(enc('{"version":5,"n":9007199254740993}'));
+ await host.initialize('{"version":5}',paths);
+ let r=await host.inspectLegacy(paths);ok(r.status===(noSeal?'absent':'same'),'initial comparison');ok(r.baseline===(noSeal?'none':'sealed'),'explicit baseline provenance');
+ const before=await host.exportRecovery(paths);
+ await write(enc('{"version":5,"n":9007199254740995}'));
+ r=await host.inspectLegacy(paths);ok(r.status==='changed','live old writer subsequent transaction detected');
+ let out=await host.exportRecovery(paths);ok(out.current_envelope.commit_id===before.current_envelope.commit_id,'inspection never replaces current');ok(out.legacy_snapshot.primary.base64===btoa('{"version":5,"n":9007199254740995}'),'exact current old source export');
+ await write(new Uint8Array([255,0,128]));out=await host.exportRecovery(paths);ok(out.inspection.status==='changed'&&out.legacy_snapshot.primary.base64==='/wCA','damaged UTF8 preserved as raw bytes');ok(out.inspection.sources.primary.bytes===3&&out.inspection.sources.primary.sha256.length===64,'byte fingerprint independent of decoding');
+ await write(new Uint8Array(1572865));r=await host.inspectLegacy(paths);ok(r.status==='unavailable'&&r.sources.primary.reason==='source_too_large','capacity failure never same');
+ out=await host.exportRecovery(paths);ok(out.legacy_snapshot.primary.status==='read_error','unavailable export explicitly incomplete');
+ ok(JSON.stringify(before.legacy_sources)===JSON.stringify(out.legacy_sources),'original permanent seal unchanged');
+ window.result={status:'PASS',labels};
+}catch(e){window.result={status:'FAIL',error:String(e),labels};}
+</script>

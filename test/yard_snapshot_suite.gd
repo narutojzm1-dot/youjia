@@ -32,6 +32,7 @@ func run() -> void:
 	world._plant_day_planted = 5
 	world._plant_watered_day = 6
 	world._save_progress()
+	await store.flush_pending()
 	var saved: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(store.SAVE_PATH))
 	check(saved.holiday_day == 7 and saved.holiday_day_elapsed == 45.5 and saved.plant_state == 2 and saved.plant_day_planted == 5 and saved.plant_watered_day == 6, "production world writes matching clock and plant")
 	check(FileAccess.get_file_as_bytes(store.BACKUP_PATH) == old_bytes, "backup is complete prior snapshot, never new clock with old plant")
@@ -48,6 +49,7 @@ func run() -> void:
 	DirAccess.remove_absolute(ProjectSettings.globalize_path(store.TEMP_PATH + "/block"))
 	DirAccess.remove_absolute(ProjectSettings.globalize_path(store.TEMP_PATH))
 	world._save_progress()
+	await store.flush_pending()
 	check(store._data == good_memory, "retry retains complete live world snapshot")
 	check(store.set_yard_progress(-1, -2, 99, -3, -1), "bounded snapshot can commit")
 	check(store.get_holiday_day() == 1 and store.get_holiday_day_elapsed() == 0.0 and store.get_plant_state() == {"state":3,"day_planted":0,"watered_day":-1}, "legacy bounds and unwatered sentinel remain")

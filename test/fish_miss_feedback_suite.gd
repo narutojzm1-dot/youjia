@@ -55,7 +55,7 @@ func run() -> void:
 	main._process(0.2)
 	check(world._fish_carry_type.is_empty() and world._fish_carry_timer <= 0.0 and main._notice_key == "notice.fishing.release", "expiry clears carry and says release")
 	check(world.primary_action_key() != "action.toss_fish", "expired fish cannot be offered")
-	main._show_title()
+	await main._show_title()
 	root.get_node("AudioDirector").call("release_streams")
 	print("[fish-miss-feedback] %d checks, %d failures: %s" % [checks, failures.size(), failures])
 	quit(0 if failures.is_empty() else 1)

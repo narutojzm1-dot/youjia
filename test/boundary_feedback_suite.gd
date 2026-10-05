@@ -9,7 +9,7 @@ func check(ok:bool,label:String):
 func run():
  var main=load("res://scenes/main.tscn").instantiate();root.add_child(main)
  await process_frame;await process_frame
- main.set_process(false);main._start_holiday()
+ main.set_process(false);await main._start_holiday()
  var w=main._world
  w.notice_requested.connect(func(key):notices.append(key))
  w.request_pointer_action(Vector2(865,478))

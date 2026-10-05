@@ -1616,7 +1616,7 @@ func _on_new_day() -> void:
 
 ## 保存当前假期进度到 SaveStore
 func _save_progress() -> void:
-	SaveStore.set_yard_progress(holiday_day, _day_elapsed, _plant_state, _plant_day_planted, _plant_watered_day)
+	SaveStore.request_yard_progress(holiday_day, _day_elapsed, _plant_state, _plant_day_planted, _plant_watered_day)
 
 
 func _stop_leading_llama() -> void:
@@ -1640,7 +1640,7 @@ func _tick_relationships(delta: float) -> void:
 	var outcome: Dictionary = _relationship_encounter.tick(delta, _leading, goose, llama, _relationship_memory)
 	if bool(outcome.get("remembered", false)):
 		_relationship_memory = {AnimalRelationshipsType.GOOSE_LLAMA_SHARED_SPACE: true}
-		SaveStore.set_animal_relationship_memory(_relationship_memory)
+		SaveStore.request_animal_relationship_memory(_relationship_memory)
 	if bool(outcome.get("extend_linger", false)):
 		# The remembered pair occasionally shares a few more quiet seconds;
 		# this only adjusts llama's existing graze pause and is never guaranteed.
@@ -1753,7 +1753,7 @@ func _reel_in_fish() -> void:
 	# 首次钓到 → 触发拍立得（在 FISH_CAUGHT 状态下拍摄）
 	if not _first_fish_polaroid_done or not PhotoMoment.has_event_subject(photo_moments.get("fish_first_catch", {}), "fish_first_catch"):
 		_first_fish_polaroid_done = true
-		SaveStore.set_first_fish_caught()
+		SaveStore.request_first_fish_caught()
 		var fish_rule := ExpressionCatalog.find_rule("fish_first_catch")
 		if not fish_rule.is_empty():
 			_apply_rule(fish_rule, true)
@@ -1788,13 +1788,13 @@ func _interact_plant() -> void:
 			_plant_day_planted = holiday_day
 			_plant_watered_day = -1
 			notice_requested.emit("notice.plant.planted")
-			SaveStore.set_plant_state(_plant_state, _plant_day_planted, _plant_watered_day)
+			SaveStore.request_plant_state(_plant_state, _plant_day_planted, _plant_watered_day)
 		PLANT_PLANTED:
 			if _plant_watered_day < holiday_day:
 				_plant_watered_day = holiday_day
 				_effects_overlay.play_plant_water_feedback(_plant_point())
 				notice_requested.emit("notice.plant.watered")
-				SaveStore.set_plant_state(_plant_state, _plant_day_planted, _plant_watered_day)
+				SaveStore.request_plant_state(_plant_state, _plant_day_planted, _plant_watered_day)
 			else:
 				notice_requested.emit("notice.plant.already_watered")
 		PLANT_SPROUTING:
@@ -1802,7 +1802,7 @@ func _interact_plant() -> void:
 				_plant_watered_day = holiday_day
 				_effects_overlay.play_plant_water_feedback(_plant_point())
 				notice_requested.emit("notice.plant.watered")
-				SaveStore.set_plant_state(_plant_state, _plant_day_planted, _plant_watered_day)
+				SaveStore.request_plant_state(_plant_state, _plant_day_planted, _plant_watered_day)
 			else:
 				notice_requested.emit("notice.plant.already_watered")
 		PLANT_BLOOMED:
@@ -1811,7 +1811,7 @@ func _interact_plant() -> void:
 			_plant_day_planted = 0
 			_plant_watered_day = -1
 			notice_requested.emit("notice.plant.harvested")
-			SaveStore.set_plant_state(_plant_state, _plant_day_planted, _plant_watered_day)
+			SaveStore.request_plant_state(_plant_state, _plant_day_planted, _plant_watered_day)
 			# 收获庆祝：短暂的花瓣粒子爆发（用 _plant_harvest_flash 计时器驱动）
 			_plant_harvest_flash = 1.8
 	queue_redraw()

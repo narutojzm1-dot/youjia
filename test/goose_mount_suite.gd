@@ -18,7 +18,7 @@ func check(ok: bool, label: String) -> void:
 
 func fresh():
 	store._data = store._default_data()
-	main._start_holiday()
+	await main._start_holiday()
 	var w = main._world
 	w._day_elapsed = 46.0
 	w._weather_timer = 10000.0
@@ -89,12 +89,12 @@ func run() -> void:
 	root.add_child(main)
 	await process_frame
 	main.set_process(false)
-	var w = fresh()
+	var w = await fresh()
 	w._day_elapsed = 0.0
 	w._evaluate_expressions()
 	check(EVENT not in w.collected and EVENT not in store.get_album(), "ordinary expression scanning never fabricates the mounted event")
 
-	w = fresh()
+	w = await fresh()
 	w._day_elapsed = 0.0
 	advance(w, 4.0)
 	check(w._goose_mount_phase == -1, "arrival grace period does not trigger a cinematic")
@@ -103,53 +103,54 @@ func run() -> void:
 	w._fish_timer = 10000.0
 	advance(w, 4.0)
 	check(w._goose_mount_phase == -1, "fishing is never interrupted by observation")
-	w = fresh()
+	w = await fresh()
 	w.get_player().pick_grass()
 	advance(w, 4.0)
 	check(w._goose_mount_phase == -1, "carrying grass reserves the player's interaction")
-	w = fresh()
+	w = await fresh()
 	w._fish_carry_type = "small"
 	w._fish_carry_timer = 20.0
 	advance(w, 4.0)
 	check(w._goose_mount_phase == -1, "carrying fish reserves the feeding interaction")
 
-	w = fresh()
+	w = await fresh()
 	close_up(w)
 	w.tick(1.0 / 60.0, Vector2.LEFT)
 	restored(w, "keyboard interruption")
-	w = fresh()
+	w = await fresh()
 	close_up(w)
 	w.request_pointer_action(w.get_player().position)
 	restored(w, "tap at own feet")
-	w = fresh()
+	w = await fresh()
 	advance(w, 3.7)
 	check(w._goose_mount_phase == 0, "observation first enters the wide shot")
 	w.tick(1.0 / 60.0, Vector2.LEFT)
 	restored(w, "wide-shot interruption")
-	w = fresh()
+	w = await fresh()
 	close_up(w)
 	w.request_primary_action()
 	restored(w, "keyboard/HUD primary command")
-	w = fresh()
+	w = await fresh()
 	close_up(w)
 	w.debug_place_player(w.actor_named("horse").position + Vector2(-45, 15))
 	w.request_pointer_action(w.actor_named("horse").visual_hit_rect().get_center())
 	restored(w, "nearby pet command")
-	w = fresh()
+	w = await fresh()
 	close_up(w)
 	main._show_album()
 	restored(w, "opening album")
 	main._hide_album()
-	w = fresh()
+	w = await fresh()
 	close_up(w)
 	main._toggle_pause()
 	restored(w, "pause")
 	main._toggle_pause()
 
-	w = fresh()
+	w = await fresh()
 	var goose_scale: float = w.actor_named("goose")._base_scale
 	var horse_scale: float = w.actor_named("horse")._base_scale
 	advance(w, 10.0)
+	await store.flush_pending()
 	var moment: Dictionary = store.get_photo_moment(EVENT)
 	check(EVENT in store.get_album() and not moment.is_empty(), "completed encounter persists a genuine scene")
 	check(has_subject(moment, "goose") and has_subject(moment, "horse"), "saved photograph contains both actual painted subjects")
@@ -160,7 +161,7 @@ func run() -> void:
 	var caption := PhotoDiary.caption(moment)
 	store._load()
 	check(same_saved_value(store.get_photo_moment(EVENT), moment) and PhotoDiary.caption(store.get_photo_moment(EVENT)) == caption, "real disk reload preserves pose, date and stable caption")
-	main._start_holiday()
+	await main._start_holiday()
 	w = main._world
 	w._day_elapsed = 46.0
 	w.debug_place_actor("horse", Vector2(620, 480))
@@ -169,11 +170,12 @@ func run() -> void:
 	advance(w, 4.0)
 	check(w._goose_mount_phase == -1, "reloaded recorded event does not replay")
 
-	w = fresh()
+	w = await fresh()
 	root.size = Vector2i(390, 844)
 	main._layout()
 	root.get_node("TuningStore").call("set_value", "ui.reduced_motion", true)
 	advance(w, 8.0)
+	await store.flush_pending()
 	check(EVENT in store.get_album() and w._goose_mount_phase == -1, "reduced motion completes with a real still photograph")
 	root.get_node("AudioDirector").call("release_streams")
 	print("[goose-mount] ", "PASS" if failures.is_empty() else "FAIL", ": ", checks, " checks ", failures)
