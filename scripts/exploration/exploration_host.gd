@@ -296,13 +296,10 @@ func _submit_cleanup(request: Dictionary) -> void:
 ## 明确拒绝之后：原记录已变（包括已被清掉、或新旅程已落盘）就停；
 ## 只有本页会话仍停在这次收尾、存档也仍是那份原记录时，才重交同一份冻结请求，次数有限。
 func _cleanup_rejected(op_id: String, request: Dictionary, code: String) -> void:
-	if code == CLEANUP_CHANGED or not _cleanup_still_ours(request):
-		return
-	if code == CLEANUP_INVALID:
-		# 不在清理契约范围内的记录：保持接入前的直接写入
-		var fallback: String = store.request_exploration_record(request.target)
-		if not fallback.is_empty():
-			cleanup_resubmitted.emit((request.failed_ops as Array) + [op_id], fallback)
+	# INVALID also means unknown/future extensions: never bypass the shared
+	# fail-closed check with an ordinary write. Keep the original rejection
+	# and authoritative record; only supported write failures may retry.
+	if code in [CLEANUP_CHANGED, CLEANUP_INVALID] or not _cleanup_still_ours(request):
 		return
 	if (request.failed_ops as Array).size() > MAX_CLEANUP_RESUBMITS - 1:
 		return

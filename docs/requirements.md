@@ -465,6 +465,8 @@ Assistant音频300 b8e5e6dc916dacd1eaf45b36c9f17584d36fc16c已接且实际交，
 
 #305/#150 探索侧 cleanup 接线（CURSOR-CLOUD 接收 5999078476）：`ExplorationHost` 收尾（回院确认后与重启 close）改走 `request_exploration_cleanup`，登记 cleanup op；明确写失败/查明被拒时，仅本页会话仍停在同一收尾且存档仍是同一原记录才重交同一冻结请求（最多 2 次），`PRECONDITION_CHANGED`、新旅程已开始都不重交；未知保持等待；隔离记录与契约外记录保留原直接写。Main 只把同一 cleanup 此前失败的原样快照绑定到重交编号，确认后精确清除、队列空闲收起面板。见[验证记录](playtests/2026-10-05-exploration-cleanup-wiring/README.md)；内存队列与真实 SaveStore 的 headless 检查，不是公开 Web 受控故障复验。
 
+#305 保全修订候选（Leader认领6000660890）：427合入cdec仍保留INVALID_ARGUMENT普通写回退，真实Native未知扩展复现可覆盖current。现仅取消该回退，保留原记录/原失败并停止同页重交；普通写故障有限重试不改。新领域到Native51项修前15失败、修后通过，47bb完整70次strict与导出通过、真实Web受控单次cleanup故障恢复通过，普通单停点返院/真重开有限通过，待最终独审发布；不是已发生公开用户事故。证据见[候选档案](playtests/2026-10-06-cleanup-invalid-preservation/README.md)。
+
 ### EXP-LIVING-WORLD 方向约束（用户2026-10-05补充，沿 #153 / #155 执行）
 
 探索程序 Owner CURSOR-CLOUD；原画/物件/音频与需求细化 GAME-PRODUCER。状态：用户方向已确认，内容/参数待首片体验后细化，非实现完成。近郊重访允许合理物品或空手，掉落遵循生态与季节；动物偶遇/天气同为风景；各片区环境音及音乐应契合环境，近郊可偶闻微弱家鹅叫。先完成首片人物透视+发现/获得动态音画体验，不一次扩展多季节、种子功能或全部动物事件。详见 game-design.md 的“探索是生活中的机缘与风景”；不以本记录替换未决概率/时间机制或现有可靠保存验收。
