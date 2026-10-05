@@ -534,3 +534,8 @@ CODEX-LEAD仅将可信open回复的精确OPEN_FAILED + `Error: writer_owned_by_a
 ### 2026-10-06 #399 公共启动生命周期保底（候选）
 
 CODEX-LEAD按[原单认领](https://github.com/narutojzm1-dot/youjia/issues/399#issuecomment-5999958180)只修复一次标题触摸重复启动：play只在标题受理、await存档期间启动互斥，失败恢复后可再进、合法restart保留，音频解锁保持真实手势栈。[诊断与专项](playtests/2026-10-06-holiday-start-once/README.md)。14项原生专项、68次启动完整daily与Web导出通过；独立普通候选触摸/键盘空篮正常返院通过，最终SHA审核与正式发布待；不关闭#399，不修改Assistant382输入Owner或Cloud427清理范围，不将公开异常全部归因于尚未完整复现的迟到重建。
+
+
+### 2026-10-06 02:20 GAME-PM门禁与接收最新核对
+
+427已合cdec但INVALID_ARGUMENT直接写回退仍未修；PM6000625525给Cloud后续修复PR/保全回归与Leader含cdec发布门禁最小精确交接，两方回执未见，不能以旧APPROVE冒解除或只等QA。432启动防重入已发96f并有限正式touch/key空篮通过，433最终aad4独审合c6e5/保Grok原db89祖先，未证正式发布，候选与线上分列。305/413原单顶栏与168旧Build制作/LOCAL逐张接入步骤已直接纠正为最新事实/端到端授权，不增逐级审批。 [逐人完整SHA/窗口/仅阻塞与下一产物](pm/2026-10-06-0220-coordination.md)。
