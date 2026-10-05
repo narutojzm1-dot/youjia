@@ -191,7 +191,7 @@ func _ready() -> void:
 	add_child(_exploration)
 	_exploration.entered.connect(_on_exploration_entered)
 	_exploration.returned.connect(_on_exploration_returned)
-	_exploration.notice.connect(_show_notice_key)
+	_exploration.notice.connect(func(key: String) -> void: _show_notice_key(key, _exploration.last_params))
 	I18n.locale_changed.connect(_on_locale_changed)
 	TuningStore.value_changed.connect(_on_tuning_value_changed)
 	resized.connect(_layout)
@@ -807,7 +807,7 @@ func _start_holiday() -> void:
 	# 上次外出途中被打断：安全回到院里，已带上的东西照常收下
 	var restored := _exploration.attach(SaveStore, _world_root)
 	if not restored.is_empty():
-		_show_notice_key(restored)
+		_show_notice_key(restored, _exploration.last_params)
 	_refresh_hud()
 	AudioDirector.set_yard_active(true)
 	if _world.holiday_day == 1 and SaveStore.get_album().is_empty():
@@ -861,7 +861,7 @@ func _on_exploration_returned(notice_key: String) -> void:
 	_hud.visible = true
 	_layout()
 	_refresh_hud()
-	_show_notice_key(notice_key if not notice_key.is_empty() else "notice.exploration.back")
+	_show_notice_key(notice_key if not notice_key.is_empty() else "notice.exploration.back", _exploration.last_params)
 
 
 func _show_title() -> void:
@@ -1206,9 +1206,9 @@ func _fit_notice() -> void:
 	_notice.offset_right = half
 
 
-func _show_notice_key(key: String) -> void:
+func _show_notice_key(key: String, params: Dictionary = {}) -> void:
 	_notice_key = key
-	_notice.text = I18n.t(key)
+	_notice.text = I18n.t(key, params)
 	_notice.visible = true
 	_notice_time = 3.2
 	# 每次普通通知都重置字体大小（钓到鱼/空闲提示会在后续覆盖为更大字号）

@@ -30,7 +30,6 @@ var leaving := false
 var suppressed_touches := 0
 # 停下看过的停留点 → 核心给出的东西（可能为空）；被带走的从这里画不出来
 var revealed: Dictionary = {}
-var origins: Dictionary = {}
 var _hold_direction := 0
 var _home_hold := 0.0
 var _walked := false
@@ -141,10 +140,7 @@ func observe(stop_id: String = "") -> bool:
 	host.visit(target)
 	var view := host.view()
 	if view.get("current_stop", "") == target:
-		revealed[target] = str(view.get("offer", ""))
-		for find_id: String in view.get("carried", []):
-			if origins.get(find_id, "") == target:
-				revealed[target] = find_id
+		revealed[target] = str(view.get("taken", {}).get(target, view.get("offer", "")))
 	_begin_ease()
 	_show_caption(_observe_caption(), 0.0)
 	items.queue_redraw()
@@ -178,7 +174,6 @@ func pick() -> bool:
 			ok = host.release(choice.find_id).ok
 	if ok:
 		if choice.kind in ["take", "swap"]:
-			origins[choice.find_id] = observing
 			walker.begin_action(&"pickup", reduced_motion())
 		_show_caption(_observe_caption(), 0.0)
 		items.queue_redraw()
@@ -196,9 +191,9 @@ func pick_choice() -> Dictionary:
 		if carried.size() >= int(view.get("carry_limit", 1)) and not carried.is_empty():
 			return {"kind": "swap", "find_id": offer, "old": carried[0]}
 		return {"kind": "take", "find_id": offer}
-	for find_id: String in carried:
-		if origins.get(find_id, "") == observing:
-			return {"kind": "release", "find_id": find_id}
+	var here := str(view.get("taken", {}).get(observing, "")) if view.get("current_stop", "") == observing else ""
+	if not here.is_empty():
+		return {"kind": "release", "find_id": here}
 	return {"kind": "none"}
 
 
@@ -325,11 +320,11 @@ func _apply_camera() -> void:
 ## ───────────── 画面与界面 ─────────────
 
 func _draw_items() -> void:
-	var held: Array = carried() if host != null else []
+	var taken: Dictionary = host.view().get("taken", {}) if host != null else {}
 	for stop_id: String in revealed:
 		var find_id: String = revealed[stop_id]
 		var anchor: Vector2 = L.stop(stop_id).get("item", Vector2.ZERO)
-		if find_id.is_empty() or held.has(find_id) or anchor == Vector2.ZERO:
+		if find_id.is_empty() or taken.has(stop_id) or anchor == Vector2.ZERO:
 			continue
 		if stop_id == observing:
 			# 静止的柔光地影，只在停下看的这一处；不闪、不动
@@ -344,8 +339,10 @@ func _observe_caption() -> String:
 	var text := I18n.t("exploration.stop.%s" % observing)
 	var choice := pick_choice()
 	match choice.kind:
-		"take", "swap":
+		"take":
 			text += "\n" + I18n.t("exploration.caption.found", {"item": _find_name(choice.find_id)})
+		"swap":
+			text += "\n" + I18n.t("exploration.caption.basket_full", {"item": _find_name(choice.find_id), "old": _find_name(choice.old)})
 		"release":
 			text += "\n" + I18n.t("exploration.caption.in_basket", {"item": _find_name(choice.find_id)})
 		_:
@@ -444,7 +441,7 @@ func _build_hud() -> void:
 	_go_button = _button(I18n.t("exploration.action.continue"), end_observe)
 	_basket = Control.new()
 	_basket.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	_basket.size = Vector2(200, 60)
+	_basket.size = Vector2(290, 60)
 	_basket.draw.connect(_draw_basket)
 	hud.add_child(_basket)
 
@@ -458,10 +455,10 @@ func _draw_basket() -> void:
 		_basket.draw_line(Vector2(10 + i * 2, 32 + i * 6), Vector2(70 - i * 2, 32 + i * 6), Color(0.58, 0.42, 0.26, 0.8), 1.5)
 	_basket.draw_arc(Vector2(40, 26), 26, PI, TAU, 18, Color(0.58, 0.42, 0.26), 3.0)
 	for i in held.size():
-		KeepsakeArt.draw(_basket, held[i], Vector2(40 + i * 16, 22), 0.9)
+		KeepsakeArt.draw(_basket, held[i], Vector2(24 + i * 16, 22), 0.9)
 	var font := _basket.get_theme_default_font()
-	var text := I18n.t("exploration.basket.empty") if held.is_empty() else _find_name(held[0])
-	_basket.draw_string(font, Vector2(84, 46), text, HORIZONTAL_ALIGNMENT_LEFT, 120, 15, INK)
+	var text := I18n.t("exploration.basket.empty") if held.is_empty() else ExplorationDirector.items_text(PackedStringArray(held))
+	_basket.draw_string(font, Vector2(84, 46), text, HORIZONTAL_ALIGNMENT_LEFT, 200, 15, INK)
 
 
 func _label(font_size: int, color: Color) -> Label:

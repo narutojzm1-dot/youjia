@@ -101,7 +101,7 @@ func release(find_id: String) -> Dictionary:
 func swap(old_id: String, new_id: String) -> Dictionary:
 	var view := session.get_view()
 	if session.get_state() != C.STATE_ACTIVE or not (view.get("carried", []) as Array).has(old_id) \
-			or str(view.get("offer", "")) != new_id or new_id.is_empty() or new_id == old_id:
+			or str(view.get("offer", "")) != new_id or new_id.is_empty():
 		return {"ok": false, "error": "not_offered"}
 	var released := session.release(old_id)
 	if not released.ok:

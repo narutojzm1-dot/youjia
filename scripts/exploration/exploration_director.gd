@@ -13,6 +13,8 @@ var host: ExplorationHost
 var scroll: NearPathScroll
 var world_root: Node
 var _retry_timer := RETRY_SECONDS
+# 最近一条外出提示要填的物品名，Main 显示提示时一起用
+var last_params := {}
 
 
 func attach(store: Object, root: Node) -> String:
@@ -21,7 +23,7 @@ func attach(store: Object, root: Node) -> String:
 	var outcome := host.restore()
 	if host.session.is_quarantined():
 		return "notice.exploration.unavailable"
-	return outcome_notice(outcome)
+	return _notice_for(outcome)
 
 
 func is_exploring() -> bool:
@@ -36,7 +38,7 @@ func try_begin(clock: Dictionary, weather: String, seed: Variant = null) -> bool
 		if host.state() in [ExplorationContract.STATE_PENDING, ExplorationContract.STATE_FAILURE]:
 			var outcome := host.retry_deferred()
 			if host.can_begin():
-				var kept := outcome_notice(outcome)
+				var kept := _notice_for(outcome)
 				notice.emit(kept)
 				# 上一趟的东西刚收好：先留在院里让玩家看到，再点一次出门
 				if kept.begins_with("notice.exploration.kept."):
@@ -77,7 +79,7 @@ func idle_tick(delta: float) -> void:
 		_retry_timer = RETRY_SECONDS
 		var outcome := host.retry_deferred()
 		if outcome.get("state", "") == "committed":
-			notice.emit(outcome_notice(outcome))
+			notice.emit(_notice_for(outcome))
 
 
 func _on_return_requested(reason: String) -> void:
@@ -94,7 +96,32 @@ func _finish(reason: String) -> void:
 	scroll = null
 	old.release()
 	old.queue_free()
-	returned.emit(outcome_notice(result.get("outcome", {})))
+	returned.emit(_notice_for(result.get("outcome", {})))
+
+
+func _notice_for(outcome: Dictionary) -> String:
+	last_params = notice_params(outcome)
+	return outcome_notice(outcome)
+
+
+## 提示里要填的物品名（多件时用）；Main 显示提示时一并传给 I18n
+static func notice_params(outcome: Dictionary) -> Dictionary:
+	return {"items": items_text(outcome.get("items", PackedStringArray()))}
+
+
+## 同名合并计数：圆石×2、松果
+static func items_text(find_ids: PackedStringArray) -> String:
+	var counts := {}
+	var order: Array[String] = []
+	for find_id: String in find_ids:
+		if not counts.has(find_id):
+			order.append(find_id)
+		counts[find_id] = int(counts.get(find_id, 0)) + 1
+	var parts: PackedStringArray = []
+	for find_id: String in order:
+		var name := I18n.t(ExplorationRoutes.find_name_key(find_id))
+		parts.append(name if counts[find_id] == 1 else I18n.t("exploration.find.count", {"item": name, "count": counts[find_id]}))
+	return I18n.t("exploration.find.separator").join(parts)
 
 
 ## “已回院”与“收好了”分开：只有提交成功才说收进篮子
@@ -105,7 +132,9 @@ static func outcome_notice(outcome: Dictionary) -> String:
 	if outcome.get("state", "") == "committed":
 		if granted.is_empty():
 			return "notice.exploration.restored_empty" if outcome.get("restored", false) else "notice.exploration.back_empty"
-		return "notice.exploration.kept.%s" % granted[0].get_slice(".", 2)
+		if granted.size() == 1:
+			return "notice.exploration.kept.%s" % granted[0].get_slice(".", 2)
+		return "notice.exploration.kept_many"
 	if outcome.get("state", "") == "deferred":
 		return "notice.exploration.deferred_items" if not granted.is_empty() else "notice.exploration.deferred_empty"
 	return ""

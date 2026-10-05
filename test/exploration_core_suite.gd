@@ -815,7 +815,7 @@ func _formal_near_path() -> void:
 	_check(catalog.route_ids() == PackedStringArray([ExplorationRoutes.NEAR_PATH]), "the formal catalog only registers the confirmed near path")
 	var route := catalog.get_route(ExplorationRoutes.NEAR_PATH)
 	_check(not JSON.stringify(route).contains("fixture."), "formal catalog contains no fixture ids")
-	_check(route["return_stops"] == "any" and route["carry_limit"] == 1, "return anywhere; one carried find by default")
+	_check(route["return_stops"] == "any" and route["carry_limit"] == 3, "return anywhere; up to three finds per trip (user decision)")
 	var pooled := {}
 	for stop_id: String in ExplorationRoutes.NEAR_PATH_STOPS:
 		var stop: Dictionary = route["stops"][stop_id]
@@ -823,7 +823,8 @@ func _formal_near_path() -> void:
 		_check(int(stop["empty_weight"]) > 0, "stop %s can be empty" % stop_id)
 		for entry: Dictionary in stop["find_pool"]:
 			pooled[entry["find_id"]] = true
-	_check(route["stops"]["gate"]["find_pool"].is_empty() and route["stops"]["slope"]["find_pool"].is_empty(), "gate and slope are look-only")
+	for stop_id: String in ExplorationRoutes.NEAR_PATH_STOPS:
+		_check(not route["stops"][stop_id]["find_pool"].is_empty(), "stop %s may offer something, so a fourth find can turn up" % stop_id)
 	for find_id: String in ExplorationRoutes.FINDS:
 		_check(pooled.has(find_id), "%s can be met on the near path" % find_id)
 	var seen := {}
@@ -844,27 +845,56 @@ func _formal_near_path() -> void:
 	s.begin(ExplorationRoutes.NEAR_PATH, CLOCK, 11)
 	_check(s.visit("slope").ok and s.visit("gate").ok, "the scroll can stop anywhere in any order")
 	_check(s.request_return("player").ok, "return works from any stop")
-	var carried := ""
-	var second := ""
-	for seed_value in 400:
+	# 四处都有东西、且有同名东西的一趟：带满三件、第四件被拒、同名可重复
+	var offers := {}
+	for seed_value in 2000:
 		var trip := ExplorationSession.new(catalog, 0)
 		trip.begin(ExplorationRoutes.NEAR_PATH, CLOCK, seed_value)
-		trip.visit("brook")
-		carried = trip.get_view()["offer"]
-		trip.visit("shade")
-		second = trip.get_view()["offer"]
-		if carried != "" and second != "" and second != carried:
+		var found := {}
+		for stop_id: String in ExplorationRoutes.NEAR_PATH_STOPS:
+			if stop_id != "gate":
+				trip.visit(stop_id)
+			found[stop_id] = trip.get_view()["offer"]
+		var first_three: Array = [found["gate"], found["brook"], found["shade"]]
+		var unique := {}
+		for f: String in first_three:
+			unique[f] = true
+		if not found.values().has("") and unique.size() < 3:
+			offers = found
 			s = ExplorationSession.new(catalog, 0)
 			s.begin(ExplorationRoutes.NEAR_PATH, CLOCK, seed_value)
 			break
-	_check(carried != "" and second != "" and second != carried, "some trip offers different finds at brook and shade")
+	_check(not offers.is_empty(), "some trip offers at all four stops with a repeated find among the first three")
+	_check(s.take(offers["gate"]).ok, "the gate find is taken")
+	_check(not s.take(offers["gate"]).ok, "the same stop cannot be taken twice")
 	s.visit("brook")
-	_check(s.take(carried).ok, "a formal find can be taken")
+	_check(s.take(offers["brook"]).ok, "the brook find is taken")
 	s.visit("shade")
-	_check(s.take(second).get("error", "") == "carry_limit", "the one-find basket refuses a second find")
+	_check(s.take(offers["shade"]).ok and s.get_view()["carried"].size() == 3, "three finds fit, repeats included")
+	_check(s.get_view()["offer"] == "", "a taken stop no longer shows its find")
+	s.visit("slope")
+	_check(s.get_view()["offer"] == offers["slope"] and s.take(offers["slope"]).get("error", "") == "carry_limit", "the fourth find is refused while the basket is full")
+	var record: Dictionary = s.to_record()
+	_check(record["session"]["taken"].size() == 3, "the record remembers which stop each carried find came from")
+	var legacy: Dictionary = record.duplicate(true)
+	legacy["session"].erase("taken")
+	_check(C.validate_session_structure(legacy["session"]) == "", "records without taken still validate")
+	var tampered: Dictionary = record.duplicate(true)
+	tampered["session"]["taken"]["slope"] = offers["slope"]
+	_check(C.validate_session_structure(tampered["session"]) == "bad_taken", "taken must match carried exactly")
+	s.visit("shade")
+	_check(s.release(offers["shade"]).ok and s.get_view()["offer"] == offers["shade"], "putting a find back shows it at its stop again")
+	s.visit("slope")
+	_check(s.take(offers["slope"]).ok, "with room again the fourth find can be taken")
 	s.request_return("player")
 	var proposal := s.get_proposal()
-	_check(proposal["items"].size() == 1 and proposal["items"][0]["find_id"] == carried, "the frozen proposal carries exactly the taken find")
+	var items: Array = []
+	for item: Dictionary in proposal["items"]:
+		items.append(item["find_id"])
+	var expected: Array = [offers["gate"], offers["brook"], offers["slope"]]
+	items.sort()
+	expected.sort()
+	_check(items == expected, "the frozen proposal carries exactly the three finds, repeats included")
 	_check(s.commit_succeeded(s.trip_id()).ok and s.get_state() == C.STATE_COMMITTED, "the formal trip commits once")
 	_check(not s.commit_succeeded(s.trip_id()).ok, "a repeated commit is refused")
 	_check(ExplorationRoutes.find_name_key(ExplorationRoutes.FIND_PINE_CONE) == "exploration.find.pine_cone", "find names map to i18n keys")

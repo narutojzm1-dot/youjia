@@ -125,23 +125,30 @@ func record() -> void:
 				if frame - since > 30:
 					shot("shade-look")
 					note("shade choice: " + str(scroll.pick_choice()))
+					if scroll.pick_choice().kind == "take":
+						tap_control(scroll._pick_button)
+					next("touch: take if there is room", frame)
+			12:
+				if frame - since > 30:
+					shot("shade-basket")
+					note("carried: " + str(scroll.carried()))
 					tap_control(scroll._go_button)
 					next("touch: keep walking", frame)
-			12:
+			13:
 				if frame - since > 20:
 					tap_control(scroll._return_button)
 					next("touch: go back", frame)
-			13:
+			14:
 				if main._screen == "game" and frame - since > 20:
 					shot("yard-back")
 					note("notice: " + main._notice.text)
 					note("keepsakes: " + str(root.get_node("SaveStore").get_keepsakes()))
 					next("done", frame)
-			14:
+			15:
 				break
 	var file := FileAccess.open(folder + "/capture-log.txt", FileAccess.WRITE)
 	file.store_string("\n".join(log_lines) + "\n")
 	file.close()
 	main.queue_free()
 	await process_frame
-	quit(0 if stage >= 14 else 1)
+	quit(0 if stage >= 15 else 1)

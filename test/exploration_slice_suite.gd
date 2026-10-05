@@ -55,6 +55,24 @@ func seed_where(brook: bool, shade: bool, distinct := false) -> int:
 	return -1
 
 
+## 四处停留点都有东西的种子：能走到“篮子满了还遇到第四件”
+func seed_all_four() -> int:
+	for value in 4000:
+		var session := ExplorationSession.new(ExplorationRoutes.catalog(), 0)
+		session.begin(ExplorationRoutes.NEAR_PATH, CLOCK, value)
+		var full := str(session.get_view().get("offer", "")) != ""
+		for stop_id: String in ["brook", "shade", "slope"]:
+			session.visit(stop_id)
+			full = full and str(session.get_view().get("offer", "")) != ""
+		if full:
+			return value
+	return -1
+
+
+func I18n_t(key: String) -> String:
+	return root.get_node("I18n").t(key)
+
+
 func make_store() -> MemoryStore:
 	var store := MemoryStore.new()
 	stores.append(store)
@@ -179,7 +197,7 @@ func _host_restore() -> void:
 
 func _scroll_and_director() -> void:
 	root.size = Vector2i(1280, 720)
-	var value := seed_where(true, true, true)
+	var value := seed_all_four()
 	var store := make_store()
 	var world := Node2D.new()
 	root.add_child(world)
@@ -194,28 +212,37 @@ func _scroll_and_director() -> void:
 	await process_frame
 	check(scroll.camera.is_current(), "scroll camera takes over")
 	check(scroll.hud.layer < 10, "scroll HUD sits under the pause overlay")
-	check(scroll.observe("gate") and scroll.pick_choice().kind == "none", "gate is just for looking")
+	check(scroll.observe("gate") and scroll.pick_choice().kind == "take", "the gate may have something too")
+	var at_gate: String = scroll.pick_choice().find_id
+	scroll.pick()
 	scroll.end_observe()
 	scroll.x = L.stop("brook").x
 	check(scroll.nearby_stop() == "brook", "walking to the brook makes it nearby")
 	check(scroll.observe() and scroll.observing == "brook", "observe always enters at a nearby stop")
-	var first: String = scroll.pick_choice().find_id
-	check(scroll.pick_choice().kind == "take" and scroll.pick() and scroll.carried() == [first], "take puts the find in the basket")
-	check(scroll.pick_choice().kind == "release", "the find can be put back where it was found")
+	var at_brook: String = scroll.pick_choice().find_id
+	check(scroll.pick_choice().kind == "take" and scroll.pick() and scroll.carried() == [at_gate, at_brook], "take adds to the basket")
+	check(scroll.pick_choice().kind == "release" and scroll.pick_choice().find_id == at_brook, "the find can be put back where it was found")
 	scroll.press_at(Vector2(200, 300))
 	check(scroll.suppressed_touches == 1 and scroll.observing == "brook", "tapping the scene while looking does not walk away")
 	scroll.end_observe()
 	scroll.x = L.stop("shade").x
 	scroll.observe()
-	var second: String = scroll.pick_choice().find_id
-	var commits_before: int = store.commits
-	check(scroll.pick_choice().kind == "swap" and scroll.pick() and scroll.carried() == [second], "a full basket swaps instead of piling up")
-	var saved_carried: Array = store.get_exploration_record().session.carried
-	check(store.commits == commits_before + 1 and saved_carried == [second], "a swap is saved in one write, never as an empty basket")
+	var at_shade: String = scroll.pick_choice().find_id
+	check(scroll.pick_choice().kind == "take" and scroll.pick() and scroll.carried().size() == 3, "three finds fit in the basket")
 	scroll.end_observe()
-	scroll.x = L.stop("brook").x
+	scroll.x = L.stop("slope").x
 	scroll.observe()
-	check(scroll.pick_choice().kind == "swap" and scroll.pick_choice().find_id == first, "the swapped-out find is still at its own stop")
+	var at_slope: String = scroll.pick_choice().find_id
+	check(scroll.pick_choice().kind == "swap" and scroll.pick_choice().old == at_gate, "a fourth find offers to swap out the earliest one")
+	check(scroll._caption.text.contains(I18n_t("exploration.find.%s" % at_gate.get_slice(".", 2))), "the caption says which find goes back")
+	var commits_before: int = store.commits
+	check(scroll.pick() and scroll.carried().size() == 3 and scroll.carried().count(at_slope) >= 1, "swapping keeps the basket at three")
+	var saved: Dictionary = store.get_exploration_record().session
+	check(store.commits == commits_before + 1 and saved.carried.size() == 3 and saved.taken.has("slope") and not saved.taken.has("gate"), "a swap is saved in one write, never with a gap")
+	scroll.end_observe()
+	scroll.x = L.stop("gate").x
+	scroll.observe()
+	check(scroll.pick_choice().kind == "swap" and scroll.pick_choice().find_id == at_gate, "the swapped-out find is back at its own stop")
 	scroll.end_observe()
 	var key := InputEventKey.new()
 	key.physical_keycode = KEY_R
@@ -224,8 +251,11 @@ func _scroll_and_director() -> void:
 	scroll._request_return("player")
 	await process_frame
 	check(keys.size() == 1 and not director.is_exploring(), "R / return button leaves exactly once")
-	check(keys[0] == "notice.exploration.kept.%s" % second.get_slice(".", 2), "return notice names the committed find")
-	check(store.get_keepsakes() == {second: 1}, "only the carried find is kept")
+	check(keys[0] == "notice.exploration.kept_many" and director.last_params.items != "", "return notice lists the committed finds")
+	var expected := {}
+	for find_id: String in [at_brook, at_shade, at_slope]:
+		expected[find_id] = int(expected.get(find_id, 0)) + 1
+	check(store.get_keepsakes() == expected, "exactly the three carried finds are kept, repeats counted")
 	check(not is_instance_valid(scroll) or scroll.is_queued_for_deletion(), "scroll is released after return")
 	await process_frame
 	var notices: Array[String] = []
