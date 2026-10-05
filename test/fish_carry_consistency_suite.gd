@@ -11,6 +11,21 @@ extends SceneTree
 ##   - the player and birds are never teleported; the player only moves through
 ##     real request_pointer_action/request_primary_action.
 ## No fake Host, no mocked notices, no mocked carry results.
+##
+## Save isolation: this suite drives the real Main/SaveStore, which writes
+## user://youjia_save.json (+ .bak/.tmp). It refuses to run unless the Godot user
+## dir sits inside an explicitly isolated XDG_DATA_HOME
+## (YOUJIA_TEST_ISOLATED_DATA must equal XDG_DATA_HOME). Use either
+##   bash tools/verify_daily_life.sh            (whole daily check, temp XDG)
+##   bash tools/run_fish_carry_suite.sh         (this suite only, temp XDG)
+## Never run it with a bare `godot --script` against a real profile.
+##
+## Fixture reset (per sequence): the previous world is cleared FIRST (Main's
+## _clear_world writes that world's day/elapsed/plant back into SaveStore), THEN
+## SaveStore data is reset to codec defaults, THEN the holiday starts. Each
+## sequence asserts the new world and store still hold the default
+## day/elapsed/plant, so no state leaks from the previous sequence. This is a
+## test-only reset of in-memory store data; nothing in production code changes.
 
 const DT := 1.0 / 60.0
 var checks := 0
@@ -20,7 +35,27 @@ var log_lines: Array[String] = []
 
 
 func _initialize() -> void:
+	var refusal := _isolation_refusal()
+	if not refusal.is_empty():
+		printerr("[fish-carry] REFUSED: ", refusal)
+		printerr("[fish-carry] run via: bash tools/run_fish_carry_suite.sh (or tools/verify_daily_life.sh)")
+		quit(2)
+		return
 	call_deferred("_run")
+
+
+## Returns "" when the save location is provably inside an isolated temp profile.
+func _isolation_refusal() -> String:
+	var xdg := OS.get_environment("XDG_DATA_HOME")
+	var marker := OS.get_environment("YOUJIA_TEST_ISOLATED_DATA")
+	if xdg.is_empty() or marker.is_empty():
+		return "XDG_DATA_HOME / YOUJIA_TEST_ISOLATED_DATA not set; would write the real user:// save"
+	if marker != xdg:
+		return "YOUJIA_TEST_ISOLATED_DATA (%s) != XDG_DATA_HOME (%s)" % [marker, xdg]
+	var user_dir := OS.get_user_data_dir()
+	if not user_dir.begins_with(xdg.rstrip("/") + "/"):
+		return "user data dir %s is not inside XDG_DATA_HOME %s" % [user_dir, xdg]
+	return ""
 
 
 func _check(ok: bool, label: String) -> void:
@@ -68,9 +103,24 @@ func _step_until(main, seconds: float, cond: Callable) -> bool:
 
 func _fresh(main):
 	var store = root.get_node("SaveStore")
+	var prev_elapsed := -1.0
+	if main._world != null:
+		prev_elapsed = float(main._world._day_elapsed)
+	# 1) clear the old world first: Main._clear_world -> YardWorld._save_progress
+	#    writes the previous sequence's day/elapsed/plant into the store;
+	main._clear_world()
+	# 2) only then reset the store to codec defaults;
 	store._data = store._default_data()
+	var want_day: int = store.get_holiday_day()
+	var want_elapsed: float = store.get_holiday_day_elapsed()
+	var want_plant: Dictionary = store.get_plant_state()
+	# 3) start the holiday from the clean store (its own _clear_world is a no-op now).
 	main._start_holiday()
 	var w = main._world
+	_check(store.get_holiday_day() == want_day and w.holiday_day == want_day, "fresh: holiday_day is the default (%d), not the previous sequence's" % want_day)
+	_check(is_equal_approx(store.get_holiday_day_elapsed(), want_elapsed) and is_equal_approx(float(w._day_elapsed), want_elapsed), "fresh: day elapsed is the default (%.1f), not written back (prev %.1f)" % [want_elapsed, prev_elapsed])
+	_check(store.get_plant_state() == want_plant and int(w._plant_state) == int(want_plant.state) and int(w._plant_day_planted) == int(want_plant.day_planted) and int(w._plant_watered_day) == int(want_plant.watered_day), "fresh: plant state is the default, not written back")
+	_log("fresh reset: prev_elapsed=%.1f -> day=%d elapsed=%.1f plant=%s" % [prev_elapsed, w.holiday_day, w._day_elapsed, want_plant])
 	if not w.notice_requested.is_connected(_on_notice):
 		w.notice_requested.connect(_on_notice)
 	notices.clear()
@@ -309,6 +359,7 @@ func _seq_odd_fish_wording(main) -> void:
 		return
 	var i18n = root.get_node("I18n")
 	var text: String = i18n.t("notice.fishing.caught.odd")
+	var en_text := str(i18n._load_catalog("res://localization/en.json").get("notice.fishing.caught.odd", ""))
 	_check(_count("notice.fishing.caught.odd") >= 1, "S7 odd catch emits notice.fishing.caught.odd")
 	_check(main._notice_key == "notice.fishing.caught.odd", "S7 HUD shows the odd-catch notice")
 	_check(w._fish_carry_type == "odd" and w._fish_carry_timer > 19.0, "S7 odd fish is carried for the full window")
@@ -316,5 +367,9 @@ func _seq_odd_fish_wording(main) -> void:
 	w.request_primary_action()
 	_step_until(main, 15.0, func(): return w._fish_carry_type.is_empty())
 	_check(_count_prefix("notice.toss_fish.") == 1, "S7 odd fish feeds a bird once")
-	_log("S7 odd catch text='%s' carry=odd fed=%s" % [text, notices.filter(func(k): return k.begins_with("notice.toss_fish."))])
-	_log("S7 FINDING: zh text says the fish slipped away ('溜走了') while it is carried and feedable; matches the report '鱼溜走后仍可喂鹅'.")
+	_log("S7 odd catch current text zh='%s' en='%s' carry=odd fed=%s" % [text, en_text, notices.filter(func(k): return k.begins_with("notice.toss_fish."))])
+	var says_gone := text.contains("溜走") or en_text.to_lower().contains("slipped away")
+	if says_gone:
+		_log("S7 FINDING (current text): the odd-catch notice says the fish got away while it is carried and feedable; matches the report '鱼溜走后仍可喂鹅'.")
+	else:
+		_log("S7 NOTE: baseline 6e7435c wording said '…溜走了。'/'…slipped away.' (original finding); current wording above no longer says the fish left. Carry/feed behaviour itself is unchanged and still asserted here.")
