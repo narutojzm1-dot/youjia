@@ -696,9 +696,7 @@ func _interact_with_target(target: String) -> void:
 			_just_petted_species = pet.species
 			_player.just_petted_seconds = 6.0
 			_player.player_state = "just_petted"
-			_effects_overlay.play_pet_feedback(pet)
-			if pet.species == "cow":
-				pet.show_painted_ack("glance", 2.2)
+			pet.acknowledge_pet(_player.position)
 			notice_requested.emit("notice.pet.%s" % pet.species)
 			_evaluate_expressions()
 		return

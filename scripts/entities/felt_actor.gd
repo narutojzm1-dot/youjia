@@ -59,6 +59,8 @@ var _face_region:=Rect2()
 var _expression_texture: Texture2D
 var _ack_cel := ""
 var _ack_left := 0.0
+# Transient, per-animal response spacing; repeated petting never extends a pose.
+var _pet_ack_cooldown := 0.0
 var _posture_metadata: Dictionary = {}
 var _posture_id := "idle"
 var _idle_ground_anchor := Vector2(-1,-1)
@@ -177,6 +179,26 @@ func show_painted_ack(cel: String, seconds: float) -> void:
 	_velocity = Vector2.ZERO
 	_gait.weight = 0.0
 	_refresh_painted_posture()
+
+
+func acknowledge_pet(observer_position: Vector2) -> void:
+	if posed or _pet_ack_cooldown > 0.0:
+		return
+	var cel := str({"cow": "glance", "horse": "idle", "sheep": "idle"}.get(species, ""))
+	if cel.is_empty() or not _textures.has(cel):
+		return
+	# Unreviewed tail/shake size changes are not reused as interaction poses.
+	if absf(observer_position.x - position.x) > 2.0:
+		facing = signf(observer_position.x - position.x)
+		_gait.face = facing
+		_gait._turning = false
+		_gait._next_face = facing
+		_gait.turn_width = 1.0
+		scale.x = absf(scale.x) * facing
+	_glance_timer = -5.0
+	show_painted_ack(cel, 2.2)
+	# Leave a real interval for normal wandering even under continuous input.
+	_pet_ack_cooldown = 5.0
 
 
 func _painted_posture() -> String:
@@ -384,6 +406,7 @@ func tick_glance(delta: float, player_pos: Vector2) -> void:
 
 
 func tick(delta: float, world_size: Vector2) -> void:
+	_pet_ack_cooldown = maxf(0.0, _pet_ack_cooldown - delta)
 	_breath += delta
 	_lead_repath = maxf(0.0, _lead_repath-delta)
 	var reduced := bool(TuningStore.get_value("ui.reduced_motion", false))
