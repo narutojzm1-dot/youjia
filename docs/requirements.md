@@ -277,6 +277,10 @@ CODEX-LEAD指定CURSOR-CLOUD承担真实PhotoMoment/相册与旧档主备原文�
 
 当前仍开发展开，收285专业/真实摄影边界、120艺术缺口、287容量交接及276自然证据→精确SHA终审→必要验证/合入，再按晚间检查点取可发批次，不承诺150/探索/阴天已正式交付。详见[本轮逐人记录](pm/2026-10-05-1120-coordination.md)。
 
+### 2026-10-05 Assistant #231：旧鱼保留时第二竿未钓到的提示
+
+CODEX-LEAD-ASSISTANT按最新缺陷队列接收与原单5990509435认领，只修YardWorld._tick_fishing两条miss通知：carry有效时明确本次未钓到、手中之前那条鱼仍在；空手/到期提示和鱼状态/20秒/概率/计数/投喂不改。新专项16项修前2失败/修后全过、Godot4.7.2完整daily及双语横竖受控Web、正常标题入口自然两竿实玩通过，见[证据](playtests/2026-10-05-fish-miss-feedback/README.md)。原276仅同步S2通知断言，历史未审原帧不冒完成；Leader149150/Cloud322不覆盖。当前候选待独立最终SHA审核、合入与实际公开发布，父231其余验收保持开放。
+
 ### 2026-10-05 CODEX-LEAD：#231 携鱼第二竿主操作
 
 由CODEX-LEAD修复#276修订3发现7，仅调整活动钓竿优先于默认携物操作；保留显式动物选择、既有携鱼再抛竿与旧鱼到期规则。新独立回归纳入daily，不接管GROK-CONTRIBUTOR的fish_carry套件。验收：携鱼等待/咬钩显示等待/收竿，主操作确实收竿，失败不清旧鱼或重置计时，三视口受控Web及完整回归；合入、发布仍待门禁。
@@ -374,8 +378,9 @@ Assistant音频300 b8e5e6dc916dacd1eaf45b36c9f17584d36fc16c已接且实际交，
 
 | 编号 | 优先级 | 目标 | 验收 | 状态 | Owner | 备注 |
 | --- | --- | --- | --- | --- | --- | --- |
-| REQ-20261005-026 | P1 | 手机、Retina 和 Windows 125%～175% 缩放的浏览器里，字和按钮保持设计大小，竖屏手机走竖屏布局 | Web 上把根窗口 `content_scale_factor` 设为浏览器 devicePixelRatio（<1/NaN/无穷按 1，上限 4），尺寸变化时重读；`Main.size` 回到 CSS 像素，HUD 位置/尺寸/字号/镜头缩放与同 CSS 尺寸 DPR 1 一致，画面仍按物理分辨率渲染；原生桌面不变。`test/web_hidpi_suite.gd` 102 项通过，去掉自动加载后 39 项失败。 | 候选已补生产Web验证；合并更新待最终独审 | `GROK-CONTRIBUTOR` | 用户让 GROK-CONTRIBUTOR 每小时自选无主切片；来源是 GAME-QA 14:34 冒烟截图（1260×886 CSS 视口里提示纸片约 308px，设计 538px，约 1.75 倍缩小）。根因：Web 导出 hidpi 开 + `stretch=disabled`，DPR 3 手机的 390×844 被当成 1170×2532 桌面横排。只新增 `scripts/ui/web_hidpi.gd`（规则）与 `autoload/web_hidpi_boot.gd`（主场景首次布局前定倍率、根窗口尺寸变化时重读），`project.godot` 只加这一行自动加载；不改 `scripts/main.gd`、stretch 设置、导出预设、加载页、字号、文案、YardWorld、存档或资源；CODEX-LEAD集成补充daily入口与真实Web DPR验证；结果见本PR集成记录。决策见 [decisions/REQ-20261005-026.md](decisions/REQ-20261005-026.md)，记录见 [体验记录](playtests/2026-10-05-REQ-026-web-hidpi/README.md)。  PM已登记原作者候选84f61b218da98ba1ea3b6f482a84a3a7b4392214及端到端责任：作者主动独审/验证，能力缺口明确交协助者，不等Leader下一轮；模型DPR不当手机真机，原生布局保持。按作者明确请求Leader已接最小集成：daily保100755、生产Web同CSS视口DPR1/2/3与真实输入验证，见[集成证据](playtests/2026-10-05-hidpi-web-integration/README.md)。前一候选6d9fb765be168115fb820341958720e75da62d3b已独审APPROVE，因main文档冲突本次合并后须对新最终SHA重审；main尚未接入。 |
+| REQ-20261005-026 | P1 | 手机、Retina 和 Windows 125%～175% 缩放的浏览器里，字和按钮保持设计大小，竖屏手机走竖屏布局 | Web 上把根窗口 `content_scale_factor` 设为浏览器 devicePixelRatio（<1/NaN/无穷按 1，上限 4），尺寸变化时重读；`Main.size` 回到 CSS 像素，HUD 位置/尺寸/字号/镜头缩放与同 CSS 尺寸 DPR 1 一致，画面仍按物理分辨率渲染；原生桌面不变。`test/web_hidpi_suite.gd` 102 项通过，去掉自动加载后 39 项失败。 | 已独审合入；公开发布验收进行中 | `GROK-CONTRIBUTOR` | 用户让 GROK-CONTRIBUTOR 每小时自选无主切片；来源是 GAME-QA 14:34 冒烟截图（1260×886 CSS 视口里提示纸片约 308px，设计 538px，约 1.75 倍缩小）。根因：Web 导出 hidpi 开 + `stretch=disabled`，DPR 3 手机的 390×844 被当成 1170×2532 桌面横排。只新增 `scripts/ui/web_hidpi.gd`（规则）与 `autoload/web_hidpi_boot.gd`（主场景首次布局前定倍率、根窗口尺寸变化时重读），`project.godot` 只加这一行自动加载；不改 `scripts/main.gd`、stretch 设置、导出预设、加载页、字号、文案、YardWorld、存档或资源；CODEX-LEAD集成补充daily入口与真实Web DPR验证；结果见本PR集成记录。决策见 [decisions/REQ-20261005-026.md](decisions/REQ-20261005-026.md)，记录见 [体验记录](playtests/2026-10-05-REQ-026-web-hidpi/README.md)。  PM已登记原作者候选84f61b218da98ba1ea3b6f482a84a3a7b4392214及端到端责任：作者主动独审/验证，能力缺口明确交协助者，不等Leader下一轮；模型DPR不当手机真机，原生布局保持。按作者明确请求Leader已接最小集成：daily保100755、生产Web同CSS视口DPR1/2/3与真实输入验证，见[集成证据](playtests/2026-10-05-hidpi-web-integration/README.md)。前一候选6d9fb765be168115fb820341958720e75da62d3b已独审APPROVE，文档冲突解决后最终517b164d6f7e7d74987111ce84cabb097e5e5a2f已重新独审APPROVE并合入main 5f74afb1eaf521f0f2df9401138b248b560b04a4；公开发布验收继续。 |
 
-### 2026-10-05 Assistant #231：旧鱼保留时第二竿未钓到的提示
 
-CODEX-LEAD-ASSISTANT按最新缺陷队列接收与原单5990509435认领，只修YardWorld._tick_fishing两条miss通知：carry有效时明确本次未钓到、手中之前那条鱼仍在；空手/到期提示和鱼状态/20秒/概率/计数/投喂不改。新专项16项修前2失败/修后全过、Godot4.7.2完整daily及双语横竖受控Web、正常标题入口自然两竿实玩通过，见[证据](playtests/2026-10-05-fish-miss-feedback/README.md)。原276仅同步S2通知断言，历史未审原帧不冒完成；Leader149150/Cloud322不覆盖。当前候选待独立最终SHA审核、合入与实际公开发布，父231其余验收保持开放。
+### #149 现有文件提交的内存一致性（2026-10-05，CODEX-LEAD）
+
+进行中候选：SaveStore所有旧setter使用共同候选提交边界，文件失败不发布内存，稍后保存不混入失败字段。72项实际文件故障回归由21失败变0，完整daily及正常Web抚摸羊→照片→关页重开通过；[证据](playtests/2026-10-05-save-candidate/README.md)。只修同步文件路径，不宣称Web durable；#150生产后端与异步协调器继续，Cloud探索同名helper保留一个相同实现、其新方法与字段不覆盖。最终独审/合入/公开验证以关联PR为准。
