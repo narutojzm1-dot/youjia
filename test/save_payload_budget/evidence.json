@@ -1,0 +1,3976 @@
+{
+ "host_sha": "6e47c3acaea7ab7ecee0e09a1e3634dd8c4fb62e",
+ "repo_head": "e94d5f3cf9785e5d71cc8f366df69532a8ba59e2",
+ "godot": "4.7.2-stable (official)",
+ "rules": [
+  "goose_horse_mount",
+  "llama_overcast_goose_annoyed",
+  "llama_sun_sheep_happy",
+  "llama_sheep_cow_smirk",
+  "llama_fed_gentle",
+  "duck_pond_chorus",
+  "goose_pond_rest",
+  "goose_duck_shore",
+  "cow_rare_calm",
+  "sheep_pet_gentle",
+  "sheep_pair_near",
+  "cow_pet_gentle",
+  "horse_pet_sunny",
+  "plant_first_bloom",
+  "fish_first_catch"
+ ],
+ "generator_errors": [],
+ "samples": [
+  {
+   "name": "natural_00_empty",
+   "kind": "natural",
+   "source": "SaveStore.save() on SaveDataCodec.defaults()",
+   "album": [],
+   "photo_count": 0,
+   "primary": {
+    "bytes": 291,
+    "chars": 291,
+    "file": "natural_00_empty.primary.json",
+    "projection_compact_bytes": 242,
+    "projection_moment_count": 0,
+    "projection_photo_count": 0,
+    "projection_pretty_bytes": 291,
+    "raw_compact_bytes": 254,
+    "sha256": "b087843db9011b5690a9487f3a086df16206f9afa845c4481388fb2231c802b3",
+    "status": "present"
+   },
+   "backup": {
+    "status": "absent"
+   },
+   "host_godot_capture": {
+    "backup": "absent",
+    "file": "natural_00_empty.snapshot.json",
+    "primary": "present"
+   },
+   "raw_sum_bytes": 291,
+   "uncapped_combined": {
+    "bytes": 472,
+    "chars": 472
+   },
+   "host_pure": {
+    "ok": true,
+    "selected": "primary",
+    "payload_bytes": 472,
+    "payload_chars": 472,
+    "payload_sha256": "f7317565031e53c6863abc34cd9e15c3ecd5173a50aa88e48bd6e243bfca035d",
+    "raw_text_sha256": {
+     "primary": "b087843db9011b5690a9487f3a086df16206f9afa845c4481388fb2231c802b3",
+     "backup": "absent"
+    }
+   },
+   "head_arg_chars": 461,
+   "host_real": {
+    "opened": "empty",
+    "result": {
+     "verdict": "clean"
+    },
+    "raw_text_sha256": {
+     "primary": "b087843db9011b5690a9487f3a086df16206f9afa845c4481388fb2231c802b3",
+     "backup": "absent"
+    },
+    "unchanged": false,
+    "before": {
+     "present": {
+      "current": false,
+      "intent": false,
+      "archive": false
+     },
+     "payload_bytes": null,
+     "payload_sha256": null
+    },
+    "after": {
+     "present": {
+      "current": true,
+      "intent": false,
+      "archive": false
+     },
+     "payload_bytes": 472,
+     "payload_sha256": "f7317565031e53c6863abc34cd9e15c3ecd5173a50aa88e48bd6e243bfca035d"
+    },
+    "storage_estimate": {
+     "before": {
+      "usage": 1440,
+      "quota": 10737419680
+     },
+     "after": {
+      "usage": 2713,
+      "quota": 10737420953
+     }
+    },
+    "store": "youjia-recovery-test-budget-1-natural-00-empty"
+   }
+  },
+  {
+   "name": "natural_01_goose_horse_mount",
+   "kind": "natural",
+   "source": "SaveStore.set_album(first 1 catalog rules, real capture of goose_horse_mount)",
+   "album": [
+    "goose_horse_mount"
+   ],
+   "photo_count": 1,
+   "primary": {
+    "bytes": 17577,
+    "chars": 17577,
+    "file": "natural_01_goose_horse_mount.primary.json",
+    "projection_compact_bytes": 8462,
+    "projection_moment_count": 1,
+    "projection_photo_count": 1,
+    "projection_pretty_bytes": 17661,
+    "raw_compact_bytes": 8548,
+    "sha256": "a637a6a17f92195b0d725089ae7c7ea0ebc1cb02f3619d53fe11536c87d4a038",
+    "status": "present"
+   },
+   "backup": {
+    "bytes": 291,
+    "chars": 291,
+    "file": "natural_01_goose_horse_mount.backup.json",
+    "projection_compact_bytes": 242,
+    "projection_moment_count": 0,
+    "projection_photo_count": 0,
+    "projection_pretty_bytes": 291,
+    "raw_compact_bytes": 254,
+    "sha256": "b087843db9011b5690a9487f3a086df16206f9afa845c4481388fb2231c802b3",
+    "status": "present"
+   },
+   "host_godot_capture": {
+    "backup": "present",
+    "file": "natural_01_goose_horse_mount.snapshot.json",
+    "primary": "present"
+   },
+   "raw_sum_bytes": 17868,
+   "uncapped_combined": {
+    "bytes": 19593,
+    "chars": 19593
+   },
+   "host_pure": {
+    "ok": true,
+    "selected": "primary",
+    "payload_bytes": 19593,
+    "payload_chars": 19593,
+    "payload_sha256": "61b61ea47c274d1adad295c1a5eab9e9c1fdf4e40309ced85220642eab3d61b5",
+    "raw_text_sha256": {
+     "primary": "a637a6a17f92195b0d725089ae7c7ea0ebc1cb02f3619d53fe11536c87d4a038",
+     "backup": "b087843db9011b5690a9487f3a086df16206f9afa845c4481388fb2231c802b3"
+    }
+   },
+   "head_arg_chars": 23910,
+   "host_real": {
+    "opened": "empty",
+    "result": {
+     "verdict": "clean"
+    },
+    "raw_text_sha256": {
+     "primary": "a637a6a17f92195b0d725089ae7c7ea0ebc1cb02f3619d53fe11536c87d4a038",
+     "backup": "b087843db9011b5690a9487f3a086df16206f9afa845c4481388fb2231c802b3"
+    },
+    "unchanged": false,
+    "before": {
+     "present": {
+      "current": false,
+      "intent": false,
+      "archive": false
+     },
+     "payload_bytes": null,
+     "payload_sha256": null
+    },
+    "after": {
+     "present": {
+      "current": true,
+      "intent": false,
+      "archive": false
+     },
+     "payload_bytes": 19593,
+     "payload_sha256": "61b61ea47c274d1adad295c1a5eab9e9c1fdf4e40309ced85220642eab3d61b5"
+    },
+    "storage_estimate": {
+     "before": {
+      "usage": 3909,
+      "quota": 10737422149
+     },
+     "after": {
+      "usage": 24317,
+      "quota": 10737442557
+     }
+    },
+    "store": "youjia-recovery-test-budget-2-natural-01-goose-horse-mount"
+   }
+  },
+  {
+   "name": "natural_02_llama_overcast_goose_annoyed",
+   "kind": "natural",
+   "source": "SaveStore.set_album(first 2 catalog rules, real capture of llama_overcast_goose_annoyed)",
+   "album": [
+    "goose_horse_mount",
+    "llama_overcast_goose_annoyed"
+   ],
+   "photo_count": 2,
+   "primary": {
+    "bytes": 37998,
+    "chars": 37998,
+    "file": "natural_02_llama_overcast_goose_annoyed.primary.json",
+    "projection_compact_bytes": 17980,
+    "projection_moment_count": 2,
+    "projection_photo_count": 2,
+    "projection_pretty_bytes": 38176,
+    "raw_compact_bytes": 18150,
+    "sha256": "7b2f846e738bc5063a95354a862b09a37053b3189437349f8282018834d30730",
+    "status": "present"
+   },
+   "backup": {
+    "bytes": 17577,
+    "chars": 17577,
+    "file": "natural_02_llama_overcast_goose_annoyed.backup.json",
+    "projection_compact_bytes": 8462,
+    "projection_moment_count": 1,
+    "projection_photo_count": 1,
+    "projection_pretty_bytes": 17661,
+    "raw_compact_bytes": 8548,
+    "sha256": "a637a6a17f92195b0d725089ae7c7ea0ebc1cb02f3619d53fe11536c87d4a038",
+    "status": "present"
+   },
+   "host_godot_capture": {
+    "backup": "present",
+    "file": "natural_02_llama_overcast_goose_annoyed.snapshot.json",
+    "primary": "present"
+   },
+   "raw_sum_bytes": 55575,
+   "uncapped_combined": {
+    "bytes": 60487,
+    "chars": 60487
+   },
+   "host_pure": {
+    "ok": true,
+    "selected": "primary",
+    "payload_bytes": 60487,
+    "payload_chars": 60487,
+    "payload_sha256": "9b9314314ef4268f50628e26e2ac2d09fbc490cb14273ef59df9e330854e0fea",
+    "raw_text_sha256": {
+     "primary": "7b2f846e738bc5063a95354a862b09a37053b3189437349f8282018834d30730",
+     "backup": "a637a6a17f92195b0d725089ae7c7ea0ebc1cb02f3619d53fe11536c87d4a038"
+    }
+   },
+   "head_arg_chars": 74186,
+   "host_real": {
+    "opened": "empty",
+    "result": {
+     "verdict": "clean"
+    },
+    "raw_text_sha256": {
+     "primary": "7b2f846e738bc5063a95354a862b09a37053b3189437349f8282018834d30730",
+     "backup": "a637a6a17f92195b0d725089ae7c7ea0ebc1cb02f3619d53fe11536c87d4a038"
+    },
+    "unchanged": false,
+    "before": {
+     "present": {
+      "current": false,
+      "intent": false,
+      "archive": false
+     },
+     "payload_bytes": null,
+     "payload_sha256": null
+    },
+    "after": {
+     "present": {
+      "current": true,
+      "intent": false,
+      "archive": false
+     },
+     "payload_bytes": 60487,
+     "payload_sha256": "9b9314314ef4268f50628e26e2ac2d09fbc490cb14273ef59df9e330854e0fea"
+    },
+    "storage_estimate": {
+     "before": {
+      "usage": 10724,
+      "quota": 10737428964
+     },
+     "after": {
+      "usage": 72044,
+      "quota": 10737490284
+     }
+    },
+    "store": "youjia-recovery-test-budget-3-natural-02-llama-overcast-goose-annoyed"
+   }
+  },
+  {
+   "name": "natural_03_llama_sun_sheep_happy",
+   "kind": "natural",
+   "source": "SaveStore.set_album(first 3 catalog rules, real capture of llama_sun_sheep_happy)",
+   "album": [
+    "goose_horse_mount",
+    "llama_overcast_goose_annoyed",
+    "llama_sun_sheep_happy"
+   ],
+   "photo_count": 3,
+   "primary": {
+    "bytes": 55300,
+    "chars": 55300,
+    "file": "natural_03_llama_sun_sheep_happy.primary.json",
+    "projection_compact_bytes": 26222,
+    "projection_moment_count": 3,
+    "projection_photo_count": 3,
+    "projection_pretty_bytes": 55562,
+    "raw_compact_bytes": 26466,
+    "sha256": "8f65e5e2068f42fc7f41c405628b0977e0dde0317b8351517f23624e8f36d248",
+    "status": "present"
+   },
+   "backup": {
+    "bytes": 37998,
+    "chars": 37998,
+    "file": "natural_03_llama_sun_sheep_happy.backup.json",
+    "projection_compact_bytes": 17980,
+    "projection_moment_count": 2,
+    "projection_photo_count": 2,
+    "projection_pretty_bytes": 38176,
+    "raw_compact_bytes": 18150,
+    "sha256": "7b2f846e738bc5063a95354a862b09a37053b3189437349f8282018834d30730",
+    "status": "present"
+   },
+   "host_godot_capture": {
+    "backup": "present",
+    "file": "natural_03_llama_sun_sheep_happy.snapshot.json",
+    "primary": "present"
+   },
+   "raw_sum_bytes": 93298,
+   "uncapped_combined": {
+    "bytes": 101395,
+    "chars": 101395
+   },
+   "host_pure": {
+    "ok": false,
+    "stage": "prepareLegacyV5",
+    "error": "Error: combined legacy fixture too large"
+   },
+   "head_arg_chars": 124486,
+   "host_real": {
+    "opened": "empty",
+    "result": {
+     "error": "Error: combined legacy fixture too large"
+    },
+    "raw_text_sha256": null,
+    "unchanged": true,
+    "before": {
+     "present": {
+      "current": false,
+      "intent": false,
+      "archive": false
+     },
+     "payload_bytes": null,
+     "payload_sha256": null
+    },
+    "after": {
+     "present": {
+      "current": false,
+      "intent": false,
+      "archive": false
+     },
+     "payload_bytes": null,
+     "payload_sha256": null
+    },
+    "storage_estimate": {
+     "before": {
+      "usage": 12972,
+      "quota": 10737431212
+     },
+     "after": {
+      "usage": 12972,
+      "quota": 10737431212
+     }
+    },
+    "store": "youjia-recovery-test-budget-4-natural-03-llama-sun-sheep-happy"
+   }
+  },
+  {
+   "name": "natural_04_llama_sheep_cow_smirk",
+   "kind": "natural",
+   "source": "SaveStore.set_album(first 4 catalog rules, real capture of llama_sheep_cow_smirk)",
+   "album": [
+    "goose_horse_mount",
+    "llama_overcast_goose_annoyed",
+    "llama_sun_sheep_happy",
+    "llama_sheep_cow_smirk"
+   ],
+   "photo_count": 4,
+   "primary": {
+    "bytes": 73363,
+    "chars": 73363,
+    "file": "natural_04_llama_sheep_cow_smirk.primary.json",
+    "projection_compact_bytes": 34805,
+    "projection_moment_count": 4,
+    "projection_photo_count": 4,
+    "projection_pretty_bytes": 73715,
+    "raw_compact_bytes": 35127,
+    "sha256": "79cc7bade17f36d25bccd2ebaa331fa1173fdb8e1df3e0c65a9876fb4d494da3",
+    "status": "present"
+   },
+   "backup": {
+    "bytes": 55300,
+    "chars": 55300,
+    "file": "natural_04_llama_sheep_cow_smirk.backup.json",
+    "projection_compact_bytes": 26222,
+    "projection_moment_count": 3,
+    "projection_photo_count": 3,
+    "projection_pretty_bytes": 55562,
+    "raw_compact_bytes": 26466,
+    "sha256": "8f65e5e2068f42fc7f41c405628b0977e0dde0317b8351517f23624e8f36d248",
+    "status": "present"
+   },
+   "host_godot_capture": {
+    "backup": "present",
+    "file": "natural_04_llama_sheep_cow_smirk.snapshot.json",
+    "primary": "read_error:too_large"
+   },
+   "raw_sum_bytes": 128663,
+   "uncapped_combined": {
+    "bytes": 139811,
+    "chars": 139811
+   },
+   "host_pure": {
+    "ok": false,
+    "stage": "decodeSourceSnapshot",
+    "error": "Error: unreadable or oversized source"
+   },
+   "head_arg_chars": 73834,
+   "host_real": {
+    "opened": "empty",
+    "result": {
+     "error": "Error: unreadable or oversized source"
+    },
+    "raw_text_sha256": null,
+    "unchanged": true,
+    "before": {
+     "present": {
+      "current": false,
+      "intent": false,
+      "archive": false
+     },
+     "payload_bytes": null,
+     "payload_sha256": null
+    },
+    "after": {
+     "present": {
+      "current": false,
+      "intent": false,
+      "archive": false
+     },
+     "payload_bytes": null,
+     "payload_sha256": null
+    },
+    "storage_estimate": {
+     "before": {
+      "usage": 9071,
+      "quota": 10737427311
+     },
+     "after": {
+      "usage": 9071,
+      "quota": 10737427311
+     }
+    },
+    "store": "youjia-recovery-test-budget-5-natural-04-llama-sheep-cow-smirk"
+   },
+   "bypass_godot_cap": {
+    "head_arg_chars": 171642,
+    "host_pure": {
+     "ok": false,
+     "stage": "decodeSourceSnapshot",
+     "error": "Error: unreadable or oversized source"
+    },
+    "host_real": {
+     "opened": "empty",
+     "result": {
+      "error": "Error: unreadable or oversized source"
+     },
+     "raw_text_sha256": null,
+     "unchanged": true,
+     "before": {
+      "present": {
+       "current": false,
+       "intent": false,
+       "archive": false
+      },
+      "payload_bytes": null,
+      "payload_sha256": null
+     },
+     "after": {
+      "present": {
+       "current": false,
+       "intent": false,
+       "archive": false
+      },
+      "payload_bytes": null,
+      "payload_sha256": null
+     },
+     "storage_estimate": {
+      "before": {
+       "usage": 10717,
+       "quota": 10737428957
+      },
+      "after": {
+       "usage": 10717,
+       "quota": 10737428957
+      }
+     },
+     "store": "youjia-recovery-test-budget-6-natural-04-llama-sheep-cow-smirk-bypass"
+    }
+   }
+  },
+  {
+   "name": "natural_05_llama_fed_gentle",
+   "kind": "natural",
+   "source": "SaveStore.set_album(first 5 catalog rules, real capture of llama_fed_gentle)",
+   "album": [
+    "goose_horse_mount",
+    "llama_overcast_goose_annoyed",
+    "llama_sun_sheep_happy",
+    "llama_sheep_cow_smirk",
+    "llama_fed_gentle"
+   ],
+   "photo_count": 5,
+   "primary": {
+    "bytes": 91797,
+    "chars": 91797,
+    "file": "natural_05_llama_fed_gentle.primary.json",
+    "projection_compact_bytes": 43509,
+    "projection_moment_count": 5,
+    "projection_photo_count": 5,
+    "projection_pretty_bytes": 92239,
+    "raw_compact_bytes": 43909,
+    "sha256": "f908870425c2304e9d10e755f4a0f1e6e22b0ab2d87be2687295ec560ef2ae2b",
+    "status": "present"
+   },
+   "backup": {
+    "bytes": 73363,
+    "chars": 73363,
+    "file": "natural_05_llama_fed_gentle.backup.json",
+    "projection_compact_bytes": 34805,
+    "projection_moment_count": 4,
+    "projection_photo_count": 4,
+    "projection_pretty_bytes": 73715,
+    "raw_compact_bytes": 35127,
+    "sha256": "79cc7bade17f36d25bccd2ebaa331fa1173fdb8e1df3e0c65a9876fb4d494da3",
+    "status": "present"
+   },
+   "host_godot_capture": {
+    "backup": "read_error:too_large",
+    "file": "natural_05_llama_fed_gentle.snapshot.json",
+    "primary": "read_error:too_large"
+   },
+   "raw_sum_bytes": 165160,
+   "uncapped_combined": {
+    "bytes": 179451,
+    "chars": 179451
+   },
+   "host_pure": {
+    "ok": false,
+    "stage": "decodeSourceSnapshot",
+    "error": "Error: unreadable or oversized source"
+   },
+   "head_arg_chars": 110,
+   "host_real": {
+    "opened": "empty",
+    "result": {
+     "error": "Error: unreadable or oversized source"
+    },
+    "raw_text_sha256": null,
+    "unchanged": true,
+    "before": {
+     "present": {
+      "current": false,
+      "intent": false,
+      "archive": false
+     },
+     "payload_bytes": null,
+     "payload_sha256": null
+    },
+    "after": {
+     "present": {
+      "current": false,
+      "intent": false,
+      "archive": false
+     },
+     "payload_bytes": null,
+     "payload_sha256": null
+    },
+    "storage_estimate": {
+     "before": {
+      "usage": 12314,
+      "quota": 10737430554
+     },
+     "after": {
+      "usage": 12314,
+      "quota": 10737430554
+     }
+    },
+    "store": "youjia-recovery-test-budget-7-natural-05-llama-fed-gentle"
+   },
+   "bypass_godot_cap": {
+    "head_arg_chars": 220302,
+    "host_pure": {
+     "ok": false,
+     "stage": "decodeSourceSnapshot",
+     "error": "Error: unreadable or oversized source"
+    },
+    "host_real": {
+     "opened": "empty",
+     "result": {
+      "error": "Error: legacy snapshot JSON string required"
+     },
+     "raw_text_sha256": null,
+     "unchanged": true,
+     "before": {
+      "present": {
+       "current": false,
+       "intent": false,
+       "archive": false
+      },
+      "payload_bytes": null,
+      "payload_sha256": null
+     },
+     "after": {
+      "present": {
+       "current": false,
+       "intent": false,
+       "archive": false
+      },
+      "payload_bytes": null,
+      "payload_sha256": null
+     },
+     "storage_estimate": {
+      "before": {
+       "usage": 13930,
+       "quota": 10737432170
+      },
+      "after": {
+       "usage": 13930,
+       "quota": 10737432170
+      }
+     },
+     "store": "youjia-recovery-test-budget-8-natural-05-llama-fed-gentle-bypass"
+    }
+   }
+  },
+  {
+   "name": "natural_06_duck_pond_chorus",
+   "kind": "natural",
+   "source": "SaveStore.set_album(first 6 catalog rules, real capture of duck_pond_chorus)",
+   "album": [
+    "goose_horse_mount",
+    "llama_overcast_goose_annoyed",
+    "llama_sun_sheep_happy",
+    "llama_sheep_cow_smirk",
+    "llama_fed_gentle",
+    "duck_pond_chorus"
+   ],
+   "photo_count": 6,
+   "primary": {
+    "bytes": 109818,
+    "chars": 109818,
+    "file": "natural_06_duck_pond_chorus.primary.json",
+    "projection_compact_bytes": 52050,
+    "projection_moment_count": 6,
+    "projection_photo_count": 6,
+    "projection_pretty_bytes": 110350,
+    "raw_compact_bytes": 52528,
+    "sha256": "d8d7b284f38eae923f52286d385d5b0bf58d2070cfaac77a6c6d0056b8d28e7e",
+    "status": "present"
+   },
+   "backup": {
+    "bytes": 91797,
+    "chars": 91797,
+    "file": "natural_06_duck_pond_chorus.backup.json",
+    "projection_compact_bytes": 43509,
+    "projection_moment_count": 5,
+    "projection_photo_count": 5,
+    "projection_pretty_bytes": 92239,
+    "raw_compact_bytes": 43909,
+    "sha256": "f908870425c2304e9d10e755f4a0f1e6e22b0ab2d87be2687295ec560ef2ae2b",
+    "status": "present"
+   },
+   "host_godot_capture": {
+    "backup": "read_error:too_large",
+    "file": "natural_06_duck_pond_chorus.snapshot.json",
+    "primary": "read_error:too_large"
+   },
+   "raw_sum_bytes": 201615,
+   "uncapped_combined": {
+    "bytes": 219049,
+    "chars": 219049
+   },
+   "host_pure": {
+    "ok": false,
+    "stage": "decodeSourceSnapshot",
+    "error": "Error: unreadable or oversized source"
+   },
+   "head_arg_chars": 110,
+   "host_real": {
+    "opened": "empty",
+    "result": {
+     "error": "Error: unreadable or oversized source"
+    },
+    "raw_text_sha256": null,
+    "unchanged": true,
+    "before": {
+     "present": {
+      "current": false,
+      "intent": false,
+      "archive": false
+     },
+     "payload_bytes": null,
+     "payload_sha256": null
+    },
+    "after": {
+     "present": {
+      "current": false,
+      "intent": false,
+      "archive": false
+     },
+     "payload_bytes": null,
+     "payload_sha256": null
+    },
+    "storage_estimate": {
+     "before": {
+      "usage": 15525,
+      "quota": 10737433765
+     },
+     "after": {
+      "usage": 15525,
+      "quota": 10737433765
+     }
+    },
+    "store": "youjia-recovery-test-budget-9-natural-06-duck-pond-chorus"
+   },
+   "bypass_godot_cap": {
+    "head_arg_chars": 268906,
+    "host_pure": {
+     "ok": false,
+     "stage": "decodeSourceSnapshot",
+     "error": "Error: unreadable or oversized source"
+    },
+    "host_real": {
+     "opened": "empty",
+     "result": {
+      "error": "Error: legacy snapshot JSON string required"
+     },
+     "raw_text_sha256": null,
+     "unchanged": true,
+     "before": {
+      "present": {
+       "current": false,
+       "intent": false,
+       "archive": false
+      },
+      "payload_bytes": null,
+      "payload_sha256": null
+     },
+     "after": {
+      "present": {
+       "current": false,
+       "intent": false,
+       "archive": false
+      },
+      "payload_bytes": null,
+      "payload_sha256": null
+     },
+     "storage_estimate": {
+      "before": {
+       "usage": 17164,
+       "quota": 10737435404
+      },
+      "after": {
+       "usage": 17164,
+       "quota": 10737435404
+      }
+     },
+     "store": "youjia-recovery-test-budget-10-natural-06-duck-pond-chorus-bypass"
+    }
+   }
+  },
+  {
+   "name": "natural_07_goose_pond_rest",
+   "kind": "natural",
+   "source": "SaveStore.set_album(first 7 catalog rules, real capture of goose_pond_rest)",
+   "album": [
+    "goose_horse_mount",
+    "llama_overcast_goose_annoyed",
+    "llama_sun_sheep_happy",
+    "llama_sheep_cow_smirk",
+    "llama_fed_gentle",
+    "duck_pond_chorus",
+    "goose_pond_rest"
+   ],
+   "photo_count": 7,
+   "primary": {
+    "bytes": 127084,
+    "chars": 127084,
+    "file": "natural_07_goose_pond_rest.primary.json",
+    "projection_compact_bytes": 60256,
+    "projection_moment_count": 7,
+    "projection_photo_count": 7,
+    "projection_pretty_bytes": 127700,
+    "raw_compact_bytes": 60808,
+    "sha256": "875d250ce0dacb2f4dc27d5423ec09dd897d3deb653daa5b76ef7e7688672631",
+    "status": "present"
+   },
+   "backup": {
+    "bytes": 109818,
+    "chars": 109818,
+    "file": "natural_07_goose_pond_rest.backup.json",
+    "projection_compact_bytes": 52050,
+    "projection_moment_count": 6,
+    "projection_photo_count": 6,
+    "projection_pretty_bytes": 110350,
+    "raw_compact_bytes": 52528,
+    "sha256": "d8d7b284f38eae923f52286d385d5b0bf58d2070cfaac77a6c6d0056b8d28e7e",
+    "status": "present"
+   },
+   "host_godot_capture": {
+    "backup": "read_error:too_large",
+    "file": "natural_07_goose_pond_rest.snapshot.json",
+    "primary": "read_error:too_large"
+   },
+   "raw_sum_bytes": 236902,
+   "uncapped_combined": {
+    "bytes": 257387,
+    "chars": 257387
+   },
+   "host_pure": {
+    "ok": false,
+    "stage": "decodeSourceSnapshot",
+    "error": "Error: unreadable or oversized source"
+   },
+   "head_arg_chars": 110,
+   "host_real": {
+    "opened": "empty",
+    "result": {
+     "error": "Error: unreadable or oversized source"
+    },
+    "raw_text_sha256": null,
+    "unchanged": true,
+    "before": {
+     "present": {
+      "current": false,
+      "intent": false,
+      "archive": false
+     },
+     "payload_bytes": null,
+     "payload_sha256": null
+    },
+    "after": {
+     "present": {
+      "current": false,
+      "intent": false,
+      "archive": false
+     },
+     "payload_bytes": null,
+     "payload_sha256": null
+    },
+    "storage_estimate": {
+     "before": {
+      "usage": 18756,
+      "quota": 10737436996
+     },
+     "after": {
+      "usage": 18756,
+      "quota": 10737436996
+     }
+    },
+    "store": "youjia-recovery-test-budget-11-natural-07-goose-pond-rest"
+   },
+   "bypass_godot_cap": {
+    "head_arg_chars": 315958,
+    "host_pure": {
+     "ok": false,
+     "stage": "decodeSourceSnapshot",
+     "error": "Error: unreadable or oversized source"
+    },
+    "host_real": {
+     "opened": "empty",
+     "result": {
+      "error": "Error: legacy snapshot JSON string required"
+     },
+     "raw_text_sha256": null,
+     "unchanged": true,
+     "before": {
+      "present": {
+       "current": false,
+       "intent": false,
+       "archive": false
+      },
+      "payload_bytes": null,
+      "payload_sha256": null
+     },
+     "after": {
+      "present": {
+       "current": false,
+       "intent": false,
+       "archive": false
+      },
+      "payload_bytes": null,
+      "payload_sha256": null
+     },
+     "storage_estimate": {
+      "before": {
+       "usage": 20386,
+       "quota": 10737438626
+      },
+      "after": {
+       "usage": 20386,
+       "quota": 10737438626
+      }
+     },
+     "store": "youjia-recovery-test-budget-12-natural-07-goose-pond-rest-bypass"
+    }
+   }
+  },
+  {
+   "name": "natural_08_goose_duck_shore",
+   "kind": "natural",
+   "source": "SaveStore.set_album(first 8 catalog rules, real capture of goose_duck_shore)",
+   "album": [
+    "goose_horse_mount",
+    "llama_overcast_goose_annoyed",
+    "llama_sun_sheep_happy",
+    "llama_sheep_cow_smirk",
+    "llama_fed_gentle",
+    "duck_pond_chorus",
+    "goose_pond_rest",
+    "goose_duck_shore"
+   ],
+   "photo_count": 8,
+   "primary": {
+    "bytes": 144351,
+    "chars": 144351,
+    "file": "natural_08_goose_duck_shore.primary.json",
+    "projection_compact_bytes": 68463,
+    "projection_moment_count": 8,
+    "projection_photo_count": 8,
+    "projection_pretty_bytes": 145051,
+    "raw_compact_bytes": 69089,
+    "sha256": "fd008b61a780990db0b81c17d36481dba86088167a38b7dfea624a61dda68301",
+    "status": "present"
+   },
+   "backup": {
+    "bytes": 127084,
+    "chars": 127084,
+    "file": "natural_08_goose_duck_shore.backup.json",
+    "projection_compact_bytes": 60256,
+    "projection_moment_count": 7,
+    "projection_photo_count": 7,
+    "projection_pretty_bytes": 127700,
+    "raw_compact_bytes": 60808,
+    "sha256": "875d250ce0dacb2f4dc27d5423ec09dd897d3deb653daa5b76ef7e7688672631",
+    "status": "present"
+   },
+   "host_godot_capture": {
+    "backup": "read_error:too_large",
+    "file": "natural_08_goose_duck_shore.snapshot.json",
+    "primary": "read_error:too_large"
+   },
+   "raw_sum_bytes": 271435,
+   "uncapped_combined": {
+    "bytes": 294904,
+    "chars": 294904
+   },
+   "host_pure": {
+    "ok": false,
+    "stage": "decodeSourceSnapshot",
+    "error": "Error: unreadable or oversized source"
+   },
+   "head_arg_chars": 110,
+   "host_real": {
+    "opened": "empty",
+    "result": {
+     "error": "Error: unreadable or oversized source"
+    },
+    "raw_text_sha256": null,
+    "unchanged": true,
+    "before": {
+     "present": {
+      "current": false,
+      "intent": false,
+      "archive": false
+     },
+     "payload_bytes": null,
+     "payload_sha256": null
+    },
+    "after": {
+     "present": {
+      "current": false,
+      "intent": false,
+      "archive": false
+     },
+     "payload_bytes": null,
+     "payload_sha256": null
+    },
+    "storage_estimate": {
+     "before": {
+      "usage": 22214,
+      "quota": 10737440454
+     },
+     "after": {
+      "usage": 22214,
+      "quota": 10737440454
+     }
+    },
+    "store": "youjia-recovery-test-budget-13-natural-08-goose-duck-shore"
+   },
+   "bypass_godot_cap": {
+    "head_arg_chars": 362002,
+    "host_pure": {
+     "ok": false,
+     "stage": "decodeSourceSnapshot",
+     "error": "Error: unreadable or oversized source"
+    },
+    "host_real": {
+     "opened": "empty",
+     "result": {
+      "error": "Error: legacy snapshot JSON string required"
+     },
+     "raw_text_sha256": null,
+     "unchanged": true,
+     "before": {
+      "present": {
+       "current": false,
+       "intent": false,
+       "archive": false
+      },
+      "payload_bytes": null,
+      "payload_sha256": null
+     },
+     "after": {
+      "present": {
+       "current": false,
+       "intent": false,
+       "archive": false
+      },
+      "payload_bytes": null,
+      "payload_sha256": null
+     },
+     "storage_estimate": {
+      "before": {
+       "usage": 24147,
+       "quota": 10737442387
+      },
+      "after": {
+       "usage": 24147,
+       "quota": 10737442387
+      }
+     },
+     "store": "youjia-recovery-test-budget-14-natural-08-goose-duck-shore-bypass"
+    }
+   }
+  },
+  {
+   "name": "natural_09_cow_rare_calm",
+   "kind": "natural",
+   "source": "SaveStore.set_album(first 9 catalog rules, real capture of cow_rare_calm)",
+   "album": [
+    "goose_horse_mount",
+    "llama_overcast_goose_annoyed",
+    "llama_sun_sheep_happy",
+    "llama_sheep_cow_smirk",
+    "llama_fed_gentle",
+    "duck_pond_chorus",
+    "goose_pond_rest",
+    "goose_duck_shore",
+    "cow_rare_calm"
+   ],
+   "photo_count": 9,
+   "primary": {
+    "bytes": 161614,
+    "chars": 161614,
+    "file": "natural_09_cow_rare_calm.primary.json",
+    "projection_compact_bytes": 76666,
+    "projection_moment_count": 9,
+    "projection_photo_count": 9,
+    "projection_pretty_bytes": 162398,
+    "raw_compact_bytes": 77366,
+    "sha256": "104e9ee96e468e078c4e070dc0b1dc53c21b0c3d0bf71c812fdcff79b7fabe17",
+    "status": "present"
+   },
+   "backup": {
+    "bytes": 144351,
+    "chars": 144351,
+    "file": "natural_09_cow_rare_calm.backup.json",
+    "projection_compact_bytes": 68463,
+    "projection_moment_count": 8,
+    "projection_photo_count": 8,
+    "projection_pretty_bytes": 145051,
+    "raw_compact_bytes": 69089,
+    "sha256": "fd008b61a780990db0b81c17d36481dba86088167a38b7dfea624a61dda68301",
+    "status": "present"
+   },
+   "host_godot_capture": {
+    "backup": "read_error:too_large",
+    "file": "natural_09_cow_rare_calm.snapshot.json",
+    "primary": "read_error:too_large"
+   },
+   "raw_sum_bytes": 305965,
+   "uncapped_combined": {
+    "bytes": 332418,
+    "chars": 332418
+   },
+   "host_pure": {
+    "ok": false,
+    "stage": "decodeSourceSnapshot",
+    "error": "Error: unreadable or oversized source"
+   },
+   "head_arg_chars": 110,
+   "host_real": {
+    "opened": "empty",
+    "result": {
+     "error": "Error: unreadable or oversized source"
+    },
+    "raw_text_sha256": null,
+    "unchanged": true,
+    "before": {
+     "present": {
+      "current": false,
+      "intent": false,
+      "archive": false
+     },
+     "payload_bytes": null,
+     "payload_sha256": null
+    },
+    "after": {
+     "present": {
+      "current": false,
+      "intent": false,
+      "archive": false
+     },
+     "payload_bytes": null,
+     "payload_sha256": null
+    },
+    "storage_estimate": {
+     "before": {
+      "usage": 25707,
+      "quota": 10737443947
+     },
+     "after": {
+      "usage": 25707,
+      "quota": 10737443947
+     }
+    },
+    "store": "youjia-recovery-test-budget-15-natural-09-cow-rare-calm"
+   },
+   "bypass_godot_cap": {
+    "head_arg_chars": 408042,
+    "host_pure": {
+     "ok": false,
+     "stage": "decodeSourceSnapshot",
+     "error": "Error: unreadable or oversized source"
+    },
+    "host_real": {
+     "opened": "empty",
+     "result": {
+      "error": "Error: legacy snapshot JSON string required"
+     },
+     "raw_text_sha256": null,
+     "unchanged": true,
+     "before": {
+      "present": {
+       "current": false,
+       "intent": false,
+       "archive": false
+      },
+      "payload_bytes": null,
+      "payload_sha256": null
+     },
+     "after": {
+      "present": {
+       "current": false,
+       "intent": false,
+       "archive": false
+      },
+      "payload_bytes": null,
+      "payload_sha256": null
+     },
+     "storage_estimate": {
+      "before": {
+       "usage": 27259,
+       "quota": 10737445499
+      },
+      "after": {
+       "usage": 27259,
+       "quota": 10737445499
+      }
+     },
+     "store": "youjia-recovery-test-budget-16-natural-09-cow-rare-calm-bypass"
+    }
+   }
+  },
+  {
+   "name": "natural_10_sheep_pet_gentle",
+   "kind": "natural",
+   "source": "SaveStore.set_album(first 10 catalog rules, real capture of sheep_pet_gentle)",
+   "album": [
+    "goose_horse_mount",
+    "llama_overcast_goose_annoyed",
+    "llama_sun_sheep_happy",
+    "llama_sheep_cow_smirk",
+    "llama_fed_gentle",
+    "duck_pond_chorus",
+    "goose_pond_rest",
+    "goose_duck_shore",
+    "cow_rare_calm",
+    "sheep_pet_gentle"
+   ],
+   "photo_count": 10,
+   "primary": {
+    "bytes": 178862,
+    "chars": 178862,
+    "file": "natural_10_sheep_pet_gentle.primary.json",
+    "projection_compact_bytes": 84854,
+    "projection_moment_count": 10,
+    "projection_photo_count": 10,
+    "projection_pretty_bytes": 179730,
+    "raw_compact_bytes": 85628,
+    "sha256": "c7c4b8d87696b2e9d8b87c4780a84e40ae6c9e3dafb7a5c1320240c9139a7d85",
+    "status": "present"
+   },
+   "backup": {
+    "bytes": 161614,
+    "chars": 161614,
+    "file": "natural_10_sheep_pet_gentle.backup.json",
+    "projection_compact_bytes": 76666,
+    "projection_moment_count": 9,
+    "projection_photo_count": 9,
+    "projection_pretty_bytes": 162398,
+    "raw_compact_bytes": 77366,
+    "sha256": "104e9ee96e468e078c4e070dc0b1dc53c21b0c3d0bf71c812fdcff79b7fabe17",
+    "status": "present"
+   },
+   "host_godot_capture": {
+    "backup": "read_error:too_large",
+    "file": "natural_10_sheep_pet_gentle.snapshot.json",
+    "primary": "read_error:too_large"
+   },
+   "raw_sum_bytes": 340476,
+   "uncapped_combined": {
+    "bytes": 369913,
+    "chars": 369913
+   },
+   "host_pure": {
+    "ok": false,
+    "stage": "decodeSourceSnapshot",
+    "error": "Error: unreadable or oversized source"
+   },
+   "head_arg_chars": 110,
+   "host_real": {
+    "opened": "empty",
+    "result": {
+     "error": "Error: unreadable or oversized source"
+    },
+    "raw_text_sha256": null,
+    "unchanged": true,
+    "before": {
+     "present": {
+      "current": false,
+      "intent": false,
+      "archive": false
+     },
+     "payload_bytes": null,
+     "payload_sha256": null
+    },
+    "after": {
+     "present": {
+      "current": false,
+      "intent": false,
+      "archive": false
+     },
+     "payload_bytes": null,
+     "payload_sha256": null
+    },
+    "storage_estimate": {
+     "before": {
+      "usage": 28855,
+      "quota": 10737447095
+     },
+     "after": {
+      "usage": 28855,
+      "quota": 10737447095
+     }
+    },
+    "store": "youjia-recovery-test-budget-17-natural-10-sheep-pet-gentle"
+   },
+   "bypass_godot_cap": {
+    "head_arg_chars": 454058,
+    "host_pure": {
+     "ok": false,
+     "stage": "decodeSourceSnapshot",
+     "error": "Error: unreadable or oversized source"
+    },
+    "host_real": {
+     "opened": "empty",
+     "result": {
+      "error": "Error: legacy snapshot JSON string required"
+     },
+     "raw_text_sha256": null,
+     "unchanged": true,
+     "before": {
+      "present": {
+       "current": false,
+       "intent": false,
+       "archive": false
+      },
+      "payload_bytes": null,
+      "payload_sha256": null
+     },
+     "after": {
+      "present": {
+       "current": false,
+       "intent": false,
+       "archive": false
+      },
+      "payload_bytes": null,
+      "payload_sha256": null
+     },
+     "storage_estimate": {
+      "before": {
+       "usage": 30429,
+       "quota": 10737448669
+      },
+      "after": {
+       "usage": 30429,
+       "quota": 10737448669
+      }
+     },
+     "store": "youjia-recovery-test-budget-18-natural-10-sheep-pet-gentle-bypass"
+    }
+   }
+  },
+  {
+   "name": "natural_11_sheep_pair_near",
+   "kind": "natural",
+   "source": "SaveStore.set_album(first 11 catalog rules, real capture of sheep_pair_near)",
+   "album": [
+    "goose_horse_mount",
+    "llama_overcast_goose_annoyed",
+    "llama_sun_sheep_happy",
+    "llama_sheep_cow_smirk",
+    "llama_fed_gentle",
+    "duck_pond_chorus",
+    "goose_pond_rest",
+    "goose_duck_shore",
+    "cow_rare_calm",
+    "sheep_pet_gentle",
+    "sheep_pair_near"
+   ],
+   "photo_count": 11,
+   "primary": {
+    "bytes": 196144,
+    "chars": 196144,
+    "file": "natural_11_sheep_pair_near.primary.json",
+    "projection_compact_bytes": 93076,
+    "projection_moment_count": 11,
+    "projection_photo_count": 11,
+    "projection_pretty_bytes": 197096,
+    "raw_compact_bytes": 93924,
+    "sha256": "310b40a63519346150123a5aa2619c72c5891e9aa1f8371bc098a6e8d03a3ad0",
+    "status": "present"
+   },
+   "backup": {
+    "bytes": 178862,
+    "chars": 178862,
+    "file": "natural_11_sheep_pair_near.backup.json",
+    "projection_compact_bytes": 84854,
+    "projection_moment_count": 10,
+    "projection_photo_count": 10,
+    "projection_pretty_bytes": 179730,
+    "raw_compact_bytes": 85628,
+    "sha256": "c7c4b8d87696b2e9d8b87c4780a84e40ae6c9e3dafb7a5c1320240c9139a7d85",
+    "status": "present"
+   },
+   "host_godot_capture": {
+    "backup": "read_error:too_large",
+    "file": "natural_11_sheep_pair_near.snapshot.json",
+    "primary": "read_error:too_large"
+   },
+   "raw_sum_bytes": 375006,
+   "uncapped_combined": {
+    "bytes": 407427,
+    "chars": 407427
+   },
+   "host_pure": {
+    "ok": false,
+    "stage": "decodeSourceSnapshot",
+    "error": "Error: unreadable or oversized source"
+   },
+   "head_arg_chars": 110,
+   "host_real": {
+    "opened": "empty",
+    "result": {
+     "error": "Error: unreadable or oversized source"
+    },
+    "raw_text_sha256": null,
+    "unchanged": true,
+    "before": {
+     "present": {
+      "current": false,
+      "intent": false,
+      "archive": false
+     },
+     "payload_bytes": null,
+     "payload_sha256": null
+    },
+    "after": {
+     "present": {
+      "current": false,
+      "intent": false,
+      "archive": false
+     },
+     "payload_bytes": null,
+     "payload_sha256": null
+    },
+    "storage_estimate": {
+     "before": {
+      "usage": 31801,
+      "quota": 10737450041
+     },
+     "after": {
+      "usage": 31801,
+      "quota": 10737450041
+     }
+    },
+    "store": "youjia-recovery-test-budget-19-natural-11-sheep-pair-near"
+   },
+   "bypass_godot_cap": {
+    "head_arg_chars": 500098,
+    "host_pure": {
+     "ok": false,
+     "stage": "decodeSourceSnapshot",
+     "error": "Error: unreadable or oversized source"
+    },
+    "host_real": {
+     "opened": "empty",
+     "result": {
+      "error": "Error: legacy snapshot JSON string required"
+     },
+     "raw_text_sha256": null,
+     "unchanged": true,
+     "before": {
+      "present": {
+       "current": false,
+       "intent": false,
+       "archive": false
+      },
+      "payload_bytes": null,
+      "payload_sha256": null
+     },
+     "after": {
+      "present": {
+       "current": false,
+       "intent": false,
+       "archive": false
+      },
+      "payload_bytes": null,
+      "payload_sha256": null
+     },
+     "storage_estimate": {
+      "before": {
+       "usage": 33302,
+       "quota": 10737451542
+      },
+      "after": {
+       "usage": 33302,
+       "quota": 10737451542
+      }
+     },
+     "store": "youjia-recovery-test-budget-20-natural-11-sheep-pair-near-bypass"
+    }
+   }
+  },
+  {
+   "name": "natural_12_cow_pet_gentle",
+   "kind": "natural",
+   "source": "SaveStore.set_album(first 12 catalog rules, real capture of cow_pet_gentle)",
+   "album": [
+    "goose_horse_mount",
+    "llama_overcast_goose_annoyed",
+    "llama_sun_sheep_happy",
+    "llama_sheep_cow_smirk",
+    "llama_fed_gentle",
+    "duck_pond_chorus",
+    "goose_pond_rest",
+    "goose_duck_shore",
+    "cow_rare_calm",
+    "sheep_pet_gentle",
+    "sheep_pair_near",
+    "cow_pet_gentle"
+   ],
+   "photo_count": 12,
+   "primary": {
+    "bytes": 213407,
+    "chars": 213407,
+    "file": "natural_12_cow_pet_gentle.primary.json",
+    "projection_compact_bytes": 101279,
+    "projection_moment_count": 12,
+    "projection_photo_count": 12,
+    "projection_pretty_bytes": 214443,
+    "raw_compact_bytes": 102201,
+    "sha256": "6b143b9f4b275beac4d2a21a7b22a10525d0db5ded7b5ffa1e585d04dd45452d",
+    "status": "present"
+   },
+   "backup": {
+    "bytes": 196144,
+    "chars": 196144,
+    "file": "natural_12_cow_pet_gentle.backup.json",
+    "projection_compact_bytes": 93076,
+    "projection_moment_count": 11,
+    "projection_photo_count": 11,
+    "projection_pretty_bytes": 197096,
+    "raw_compact_bytes": 93924,
+    "sha256": "310b40a63519346150123a5aa2619c72c5891e9aa1f8371bc098a6e8d03a3ad0",
+    "status": "present"
+   },
+   "host_godot_capture": {
+    "backup": "read_error:too_large",
+    "file": "natural_12_cow_pet_gentle.snapshot.json",
+    "primary": "read_error:too_large"
+   },
+   "raw_sum_bytes": 409551,
+   "uncapped_combined": {
+    "bytes": 444956,
+    "chars": 444956
+   },
+   "host_pure": {
+    "ok": false,
+    "stage": "decodeSourceSnapshot",
+    "error": "Error: unreadable or oversized source"
+   },
+   "head_arg_chars": 110,
+   "host_real": {
+    "opened": "empty",
+    "result": {
+     "error": "Error: unreadable or oversized source"
+    },
+    "raw_text_sha256": null,
+    "unchanged": true,
+    "before": {
+     "present": {
+      "current": false,
+      "intent": false,
+      "archive": false
+     },
+     "payload_bytes": null,
+     "payload_sha256": null
+    },
+    "after": {
+     "present": {
+      "current": false,
+      "intent": false,
+      "archive": false
+     },
+     "payload_bytes": null,
+     "payload_sha256": null
+    },
+    "storage_estimate": {
+     "before": {
+      "usage": 34869,
+      "quota": 10737453109
+     },
+     "after": {
+      "usage": 34869,
+      "quota": 10737453109
+     }
+    },
+    "store": "youjia-recovery-test-budget-21-natural-12-cow-pet-gentle"
+   },
+   "bypass_godot_cap": {
+    "head_arg_chars": 546158,
+    "host_pure": {
+     "ok": false,
+     "stage": "decodeSourceSnapshot",
+     "error": "Error: unreadable or oversized source"
+    },
+    "host_real": {
+     "opened": "empty",
+     "result": {
+      "error": "Error: legacy snapshot JSON string required"
+     },
+     "raw_text_sha256": null,
+     "unchanged": true,
+     "before": {
+      "present": {
+       "current": false,
+       "intent": false,
+       "archive": false
+      },
+      "payload_bytes": null,
+      "payload_sha256": null
+     },
+     "after": {
+      "present": {
+       "current": false,
+       "intent": false,
+       "archive": false
+      },
+      "payload_bytes": null,
+      "payload_sha256": null
+     },
+     "storage_estimate": {
+      "before": {
+       "usage": 36499,
+       "quota": 10737454739
+      },
+      "after": {
+       "usage": 36499,
+       "quota": 10737454739
+      }
+     },
+     "store": "youjia-recovery-test-budget-22-natural-12-cow-pet-gentle-bypass"
+    }
+   }
+  },
+  {
+   "name": "natural_13_horse_pet_sunny",
+   "kind": "natural",
+   "source": "SaveStore.set_album(first 13 catalog rules, real capture of horse_pet_sunny)",
+   "album": [
+    "goose_horse_mount",
+    "llama_overcast_goose_annoyed",
+    "llama_sun_sheep_happy",
+    "llama_sheep_cow_smirk",
+    "llama_fed_gentle",
+    "duck_pond_chorus",
+    "goose_pond_rest",
+    "goose_duck_shore",
+    "cow_rare_calm",
+    "sheep_pet_gentle",
+    "sheep_pair_near",
+    "cow_pet_gentle",
+    "horse_pet_sunny"
+   ],
+   "photo_count": 13,
+   "primary": {
+    "bytes": 230668,
+    "chars": 230668,
+    "file": "natural_13_horse_pet_sunny.primary.json",
+    "projection_compact_bytes": 109480,
+    "projection_moment_count": 13,
+    "projection_photo_count": 13,
+    "projection_pretty_bytes": 231788,
+    "raw_compact_bytes": 110476,
+    "sha256": "eefa9da3afeae8d7d10719e7c9d4554c48eae65cd4016b4e6025ab5f22b55809",
+    "status": "present"
+   },
+   "backup": {
+    "bytes": 213407,
+    "chars": 213407,
+    "file": "natural_13_horse_pet_sunny.backup.json",
+    "projection_compact_bytes": 101279,
+    "projection_moment_count": 12,
+    "projection_photo_count": 12,
+    "projection_pretty_bytes": 214443,
+    "raw_compact_bytes": 102201,
+    "sha256": "6b143b9f4b275beac4d2a21a7b22a10525d0db5ded7b5ffa1e585d04dd45452d",
+    "status": "present"
+   },
+   "host_godot_capture": {
+    "backup": "read_error:too_large",
+    "file": "natural_13_horse_pet_sunny.snapshot.json",
+    "primary": "read_error:too_large"
+   },
+   "raw_sum_bytes": 444075,
+   "uncapped_combined": {
+    "bytes": 482464,
+    "chars": 482464
+   },
+   "host_pure": {
+    "ok": false,
+    "stage": "decodeSourceSnapshot",
+    "error": "Error: unreadable or oversized source"
+   },
+   "head_arg_chars": 110,
+   "host_real": {
+    "opened": "empty",
+    "result": {
+     "error": "Error: unreadable or oversized source"
+    },
+    "raw_text_sha256": null,
+    "unchanged": true,
+    "before": {
+     "present": {
+      "current": false,
+      "intent": false,
+      "archive": false
+     },
+     "payload_bytes": null,
+     "payload_sha256": null
+    },
+    "after": {
+     "present": {
+      "current": false,
+      "intent": false,
+      "archive": false
+     },
+     "payload_bytes": null,
+     "payload_sha256": null
+    },
+    "storage_estimate": {
+     "before": {
+      "usage": 38061,
+      "quota": 10737456301
+     },
+     "after": {
+      "usage": 38061,
+      "quota": 10737456301
+     }
+    },
+    "store": "youjia-recovery-test-budget-23-natural-13-horse-pet-sunny"
+   },
+   "bypass_godot_cap": {
+    "head_arg_chars": 592190,
+    "host_pure": {
+     "ok": false,
+     "stage": "decodeSourceSnapshot",
+     "error": "Error: unreadable or oversized source"
+    },
+    "host_real": {
+     "opened": "empty",
+     "result": {
+      "error": "Error: legacy snapshot JSON string required"
+     },
+     "raw_text_sha256": null,
+     "unchanged": true,
+     "before": {
+      "present": {
+       "current": false,
+       "intent": false,
+       "archive": false
+      },
+      "payload_bytes": null,
+      "payload_sha256": null
+     },
+     "after": {
+      "present": {
+       "current": false,
+       "intent": false,
+       "archive": false
+      },
+      "payload_bytes": null,
+      "payload_sha256": null
+     },
+     "storage_estimate": {
+      "before": {
+       "usage": 39897,
+       "quota": 10737458137
+      },
+      "after": {
+       "usage": 39897,
+       "quota": 10737458137
+      }
+     },
+     "store": "youjia-recovery-test-budget-24-natural-13-horse-pet-sunny-bypass"
+    }
+   }
+  },
+  {
+   "name": "natural_14_plant_first_bloom",
+   "kind": "natural",
+   "source": "SaveStore.set_album(first 14 catalog rules, real capture of plant_first_bloom)",
+   "album": [
+    "goose_horse_mount",
+    "llama_overcast_goose_annoyed",
+    "llama_sun_sheep_happy",
+    "llama_sheep_cow_smirk",
+    "llama_fed_gentle",
+    "duck_pond_chorus",
+    "goose_pond_rest",
+    "goose_duck_shore",
+    "cow_rare_calm",
+    "sheep_pet_gentle",
+    "sheep_pair_near",
+    "cow_pet_gentle",
+    "horse_pet_sunny",
+    "plant_first_bloom"
+   ],
+   "photo_count": 14,
+   "primary": {
+    "bytes": 247918,
+    "chars": 247918,
+    "file": "natural_14_plant_first_bloom.primary.json",
+    "projection_compact_bytes": 117670,
+    "projection_moment_count": 14,
+    "projection_photo_count": 14,
+    "projection_pretty_bytes": 249122,
+    "raw_compact_bytes": 118740,
+    "sha256": "b994a41153f4a64ff39ba691833e7518a628233886a0758227de752ab7b170e3",
+    "status": "present"
+   },
+   "backup": {
+    "bytes": 230668,
+    "chars": 230668,
+    "file": "natural_14_plant_first_bloom.backup.json",
+    "projection_compact_bytes": 109480,
+    "projection_moment_count": 13,
+    "projection_photo_count": 13,
+    "projection_pretty_bytes": 231788,
+    "raw_compact_bytes": 110476,
+    "sha256": "eefa9da3afeae8d7d10719e7c9d4554c48eae65cd4016b4e6025ab5f22b55809",
+    "status": "present"
+   },
+   "host_godot_capture": {
+    "backup": "read_error:too_large",
+    "file": "natural_14_plant_first_bloom.snapshot.json",
+    "primary": "read_error:too_large"
+   },
+   "raw_sum_bytes": 478586,
+   "uncapped_combined": {
+    "bytes": 519959,
+    "chars": 519959
+   },
+   "host_pure": {
+    "ok": false,
+    "stage": "decodeSourceSnapshot",
+    "error": "Error: unreadable or oversized source"
+   },
+   "head_arg_chars": 110,
+   "host_real": {
+    "opened": "empty",
+    "result": {
+     "error": "Error: unreadable or oversized source"
+    },
+    "raw_text_sha256": null,
+    "unchanged": true,
+    "before": {
+     "present": {
+      "current": false,
+      "intent": false,
+      "archive": false
+     },
+     "payload_bytes": null,
+     "payload_sha256": null
+    },
+    "after": {
+     "present": {
+      "current": false,
+      "intent": false,
+      "archive": false
+     },
+     "payload_bytes": null,
+     "payload_sha256": null
+    },
+    "storage_estimate": {
+     "before": {
+      "usage": 41817,
+      "quota": 10737460057
+     },
+     "after": {
+      "usage": 41817,
+      "quota": 10737460057
+     }
+    },
+    "store": "youjia-recovery-test-budget-25-natural-14-plant-first-bloom"
+   },
+   "bypass_godot_cap": {
+    "head_arg_chars": 638206,
+    "host_pure": {
+     "ok": false,
+     "stage": "decodeSourceSnapshot",
+     "error": "Error: unreadable or oversized source"
+    },
+    "host_real": {
+     "opened": "empty",
+     "result": {
+      "error": "Error: legacy snapshot JSON string required"
+     },
+     "raw_text_sha256": null,
+     "unchanged": true,
+     "before": {
+      "present": {
+       "current": false,
+       "intent": false,
+       "archive": false
+      },
+      "payload_bytes": null,
+      "payload_sha256": null
+     },
+     "after": {
+      "present": {
+       "current": false,
+       "intent": false,
+       "archive": false
+      },
+      "payload_bytes": null,
+      "payload_sha256": null
+     },
+     "storage_estimate": {
+      "before": {
+       "usage": 43558,
+       "quota": 10737461798
+      },
+      "after": {
+       "usage": 43558,
+       "quota": 10737461798
+      }
+     },
+     "store": "youjia-recovery-test-budget-26-natural-14-plant-first-bloom-bypass"
+    }
+   }
+  },
+  {
+   "name": "natural_15_fish_first_catch",
+   "kind": "natural",
+   "source": "SaveStore.set_album(first 15 catalog rules, real capture of fish_first_catch)",
+   "album": [
+    "goose_horse_mount",
+    "llama_overcast_goose_annoyed",
+    "llama_sun_sheep_happy",
+    "llama_sheep_cow_smirk",
+    "llama_fed_gentle",
+    "duck_pond_chorus",
+    "goose_pond_rest",
+    "goose_duck_shore",
+    "cow_rare_calm",
+    "sheep_pet_gentle",
+    "sheep_pair_near",
+    "cow_pet_gentle",
+    "horse_pet_sunny",
+    "plant_first_bloom",
+    "fish_first_catch"
+   ],
+   "photo_count": 15,
+   "primary": {
+    "bytes": 266072,
+    "chars": 266072,
+    "file": "natural_15_fish_first_catch.primary.json",
+    "projection_compact_bytes": 126282,
+    "projection_moment_count": 15,
+    "projection_photo_count": 15,
+    "projection_pretty_bytes": 267366,
+    "raw_compact_bytes": 127430,
+    "sha256": "db0dcedcaa4839a8f8942a61d19620f316f8dfde70f3cb6a3a371c75da1566fa",
+    "status": "present"
+   },
+   "backup": {
+    "bytes": 247918,
+    "chars": 247918,
+    "file": "natural_15_fish_first_catch.backup.json",
+    "projection_compact_bytes": 117670,
+    "projection_moment_count": 14,
+    "projection_photo_count": 14,
+    "projection_pretty_bytes": 249122,
+    "raw_compact_bytes": 118740,
+    "sha256": "b994a41153f4a64ff39ba691833e7518a628233886a0758227de752ab7b170e3",
+    "status": "present"
+   },
+   "host_godot_capture": {
+    "backup": "read_error:too_large",
+    "file": "natural_15_fish_first_catch.snapshot.json",
+    "primary": "read_error:too_large"
+   },
+   "raw_sum_bytes": 513990,
+   "uncapped_combined": {
+    "bytes": 558420,
+    "chars": 558420
+   },
+   "host_pure": {
+    "ok": false,
+    "stage": "decodeSourceSnapshot",
+    "error": "Error: unreadable or oversized source"
+   },
+   "head_arg_chars": 110,
+   "host_real": {
+    "opened": "empty",
+    "result": {
+     "error": "Error: unreadable or oversized source"
+    },
+    "raw_text_sha256": null,
+    "unchanged": true,
+    "before": {
+     "present": {
+      "current": false,
+      "intent": false,
+      "archive": false
+     },
+     "payload_bytes": null,
+     "payload_sha256": null
+    },
+    "after": {
+     "present": {
+      "current": false,
+      "intent": false,
+      "archive": false
+     },
+     "payload_bytes": null,
+     "payload_sha256": null
+    },
+    "storage_estimate": {
+     "before": {
+      "usage": 45113,
+      "quota": 10737463353
+     },
+     "after": {
+      "usage": 45113,
+      "quota": 10737463353
+     }
+    },
+    "store": "youjia-recovery-test-budget-27-natural-15-fish-first-catch"
+   },
+   "bypass_godot_cap": {
+    "head_arg_chars": 685410,
+    "host_pure": {
+     "ok": false,
+     "stage": "decodeSourceSnapshot",
+     "error": "Error: unreadable or oversized source"
+    },
+    "host_real": {
+     "opened": "empty",
+     "result": {
+      "error": "Error: legacy snapshot JSON string required"
+     },
+     "raw_text_sha256": null,
+     "unchanged": true,
+     "before": {
+      "present": {
+       "current": false,
+       "intent": false,
+       "archive": false
+      },
+      "payload_bytes": null,
+      "payload_sha256": null
+     },
+     "after": {
+      "present": {
+       "current": false,
+       "intent": false,
+       "archive": false
+      },
+      "payload_bytes": null,
+      "payload_sha256": null
+     },
+     "storage_estimate": {
+      "before": {
+       "usage": 46774,
+       "quota": 10737465014
+      },
+      "after": {
+       "usage": 46774,
+       "quota": 10737465014
+      }
+     },
+     "store": "youjia-recovery-test-budget-28-natural-15-fish-first-catch-bypass"
+    }
+   }
+  },
+  {
+   "name": "natural_full_steady",
+   "kind": "natural",
+   "source": "full album, then set_yard_progress/relationship/fish/tutorial saves (primary and backup both full)",
+   "album": [
+    "goose_horse_mount",
+    "llama_overcast_goose_annoyed",
+    "llama_sun_sheep_happy",
+    "llama_sheep_cow_smirk",
+    "llama_fed_gentle",
+    "duck_pond_chorus",
+    "goose_pond_rest",
+    "goose_duck_shore",
+    "cow_rare_calm",
+    "sheep_pet_gentle",
+    "sheep_pair_near",
+    "cow_pet_gentle",
+    "horse_pet_sunny",
+    "plant_first_bloom",
+    "fish_first_catch"
+   ],
+   "photo_count": 15,
+   "primary": {
+    "bytes": 266132,
+    "chars": 266132,
+    "file": "natural_full_steady.primary.json",
+    "projection_compact_bytes": 126333,
+    "projection_moment_count": 15,
+    "projection_photo_count": 15,
+    "projection_pretty_bytes": 267426,
+    "raw_compact_bytes": 127481,
+    "sha256": "2128eef1fb0d159a3abe0590d8fe4d7544c62d1b0fd15e51c558261eea65bc10",
+    "status": "present"
+   },
+   "backup": {
+    "bytes": 266132,
+    "chars": 266132,
+    "file": "natural_full_steady.backup.json",
+    "projection_compact_bytes": 126333,
+    "projection_moment_count": 15,
+    "projection_photo_count": 15,
+    "projection_pretty_bytes": 267426,
+    "raw_compact_bytes": 127481,
+    "sha256": "5757bcb23cbc82ff82ecec375ff434f4b6c28b38bca93ca147243615d7482b2d",
+    "status": "present"
+   },
+   "host_godot_capture": {
+    "backup": "read_error:too_large",
+    "file": "natural_full_steady.snapshot.json",
+    "primary": "read_error:too_large"
+   },
+   "raw_sum_bytes": 532264,
+   "uncapped_combined": {
+    "bytes": 578267,
+    "chars": 578267
+   },
+   "host_pure": {
+    "ok": false,
+    "stage": "decodeSourceSnapshot",
+    "error": "Error: unreadable or oversized source"
+   },
+   "head_arg_chars": 110,
+   "host_real": {
+    "opened": "empty",
+    "result": {
+     "error": "Error: unreadable or oversized source"
+    },
+    "raw_text_sha256": null,
+    "unchanged": true,
+    "before": {
+     "present": {
+      "current": false,
+      "intent": false,
+      "archive": false
+     },
+     "payload_bytes": null,
+     "payload_sha256": null
+    },
+    "after": {
+     "present": {
+      "current": false,
+      "intent": false,
+      "archive": false
+     },
+     "payload_bytes": null,
+     "payload_sha256": null
+    },
+    "storage_estimate": {
+     "before": {
+      "usage": 48311,
+      "quota": 10737466551
+     },
+     "after": {
+      "usage": 48311,
+      "quota": 10737466551
+     }
+    },
+    "store": "youjia-recovery-test-budget-29-natural-full-steady"
+   },
+   "bypass_godot_cap": {
+    "head_arg_chars": 709774,
+    "host_pure": {
+     "ok": false,
+     "stage": "decodeSourceSnapshot",
+     "error": "Error: unreadable or oversized source"
+    },
+    "host_real": {
+     "opened": "empty",
+     "result": {
+      "error": "Error: legacy snapshot JSON string required"
+     },
+     "raw_text_sha256": null,
+     "unchanged": true,
+     "before": {
+      "present": {
+       "current": false,
+       "intent": false,
+       "archive": false
+      },
+      "payload_bytes": null,
+      "payload_sha256": null
+     },
+     "after": {
+      "present": {
+       "current": false,
+       "intent": false,
+       "archive": false
+      },
+      "payload_bytes": null,
+      "payload_sha256": null
+     },
+     "storage_estimate": {
+      "before": {
+       "usage": 49924,
+       "quota": 10737468164
+      },
+      "after": {
+       "usage": 49924,
+       "quota": 10737468164
+      }
+     },
+     "store": "youjia-recovery-test-budget-30-natural-full-steady-bypass"
+    }
+   }
+  },
+  {
+   "name": "stress_single_at_limit",
+   "kind": "stress",
+   "source": "ASCII extension so the primary file is exactly 65536 bytes; no backup",
+   "album": [],
+   "photo_count": 0,
+   "primary": {
+    "bytes": 65536,
+    "chars": 65536,
+    "file": "stress_single_at_limit.primary.json",
+    "projection_compact_bytes": 242,
+    "projection_moment_count": 0,
+    "projection_photo_count": 0,
+    "projection_pretty_bytes": 291,
+    "raw_compact_bytes": 65495,
+    "sha256": "d4240522e71ac5219d98f86b6b1f684114be1313b339df2ee79e41a1f9962691",
+    "status": "present"
+   },
+   "backup": {
+    "status": "absent"
+   },
+   "host_godot_capture": {
+    "backup": "absent",
+    "file": "stress_single_at_limit.snapshot.json",
+    "primary": "present"
+   },
+   "raw_sum_bytes": 65536,
+   "uncapped_combined": {
+    "bytes": 65722,
+    "chars": 65722
+   },
+   "host_pure": {
+    "ok": false,
+    "stage": "prepareLegacyV5",
+    "error": "Error: combined legacy fixture too large"
+   },
+   "head_arg_chars": 87457,
+   "host_real": {
+    "opened": "empty",
+    "result": {
+     "error": "Error: combined legacy fixture too large"
+    },
+    "raw_text_sha256": null,
+    "unchanged": true,
+    "before": {
+     "present": {
+      "current": false,
+      "intent": false,
+      "archive": false
+     },
+     "payload_bytes": null,
+     "payload_sha256": null
+    },
+    "after": {
+     "present": {
+      "current": false,
+      "intent": false,
+      "archive": false
+     },
+     "payload_bytes": null,
+     "payload_sha256": null
+    },
+    "storage_estimate": {
+     "before": {
+      "usage": 51535,
+      "quota": 10737469775
+     },
+     "after": {
+      "usage": 51535,
+      "quota": 10737469775
+     }
+    },
+    "store": "youjia-recovery-test-budget-31-stress-single-at-limit"
+   }
+  },
+  {
+   "name": "stress_single_over_limit",
+   "kind": "stress",
+   "source": "ASCII extension so the primary file is 65537 bytes; no backup",
+   "album": [],
+   "photo_count": 0,
+   "primary": {
+    "bytes": 65537,
+    "chars": 65537,
+    "file": "stress_single_over_limit.primary.json",
+    "projection_compact_bytes": 242,
+    "projection_moment_count": 0,
+    "projection_photo_count": 0,
+    "projection_pretty_bytes": 291,
+    "raw_compact_bytes": 65496,
+    "sha256": "06b0198c4bf38ebf380f822d142d230f3ab0a24c5de90b0e00658fc5270e5d91",
+    "status": "present"
+   },
+   "backup": {
+    "status": "absent"
+   },
+   "host_godot_capture": {
+    "backup": "absent",
+    "file": "stress_single_over_limit.snapshot.json",
+    "primary": "read_error:too_large"
+   },
+   "raw_sum_bytes": 65537,
+   "uncapped_combined": {
+    "bytes": 65723,
+    "chars": 65723
+   },
+   "host_pure": {
+    "ok": false,
+    "stage": "decodeSourceSnapshot",
+    "error": "Error: unreadable or oversized source"
+   },
+   "head_arg_chars": 85,
+   "host_real": {
+    "opened": "empty",
+    "result": {
+     "error": "Error: unreadable or oversized source"
+    },
+    "raw_text_sha256": null,
+    "unchanged": true,
+    "before": {
+     "present": {
+      "current": false,
+      "intent": false,
+      "archive": false
+     },
+     "payload_bytes": null,
+     "payload_sha256": null
+    },
+    "after": {
+     "present": {
+      "current": false,
+      "intent": false,
+      "archive": false
+     },
+     "payload_bytes": null,
+     "payload_sha256": null
+    },
+    "storage_estimate": {
+     "before": {
+      "usage": 53138,
+      "quota": 10737471378
+     },
+     "after": {
+      "usage": 53138,
+      "quota": 10737471378
+     }
+    },
+    "store": "youjia-recovery-test-budget-32-stress-single-over-limit"
+   },
+   "bypass_godot_cap": {
+    "head_arg_chars": 87457,
+    "host_pure": {
+     "ok": false,
+     "stage": "decodeSourceSnapshot",
+     "error": "Error: noncanonical or oversized source"
+    },
+    "host_real": {
+     "opened": "empty",
+     "result": {
+      "error": "Error: noncanonical or oversized source"
+     },
+     "raw_text_sha256": null,
+     "unchanged": true,
+     "before": {
+      "present": {
+       "current": false,
+       "intent": false,
+       "archive": false
+      },
+      "payload_bytes": null,
+      "payload_sha256": null
+     },
+     "after": {
+      "present": {
+       "current": false,
+       "intent": false,
+       "archive": false
+      },
+      "payload_bytes": null,
+      "payload_sha256": null
+     },
+     "storage_estimate": {
+      "before": {
+       "usage": 54714,
+       "quota": 10737472954
+      },
+      "after": {
+       "usage": 54714,
+       "quota": 10737472954
+      }
+     },
+     "store": "youjia-recovery-test-budget-33-stress-single-over-limit-bypass"
+    }
+   }
+  },
+  {
+   "name": "stress_dual_each_under_combined_over",
+   "kind": "stress",
+   "source": "two 40000-byte files: each under 64KiB, raw sum and combined envelope over",
+   "album": [],
+   "photo_count": 0,
+   "primary": {
+    "bytes": 40000,
+    "chars": 40000,
+    "file": "stress_dual_each_under_combined_over.primary.json",
+    "projection_compact_bytes": 242,
+    "projection_moment_count": 0,
+    "projection_photo_count": 0,
+    "projection_pretty_bytes": 291,
+    "raw_compact_bytes": 39959,
+    "sha256": "8defb4f2ccd3c1068ac6982229b71215144aae51201fb06a0a9e6b6add690946",
+    "status": "present"
+   },
+   "backup": {
+    "bytes": 40000,
+    "chars": 40000,
+    "file": "stress_dual_each_under_combined_over.backup.json",
+    "projection_compact_bytes": 242,
+    "projection_moment_count": 0,
+    "projection_photo_count": 0,
+    "projection_pretty_bytes": 291,
+    "raw_compact_bytes": 39959,
+    "sha256": "8defb4f2ccd3c1068ac6982229b71215144aae51201fb06a0a9e6b6add690946",
+    "status": "present"
+   },
+   "host_godot_capture": {
+    "backup": "present",
+    "file": "stress_dual_each_under_combined_over.snapshot.json",
+    "primary": "present"
+   },
+   "raw_sum_bytes": 80000,
+   "uncapped_combined": {
+    "bytes": 80241,
+    "chars": 80241
+   },
+   "host_pure": {
+    "ok": false,
+    "stage": "prepareLegacyV5",
+    "error": "Error: combined legacy fixture too large"
+   },
+   "head_arg_chars": 106758,
+   "host_real": {
+    "opened": "empty",
+    "result": {
+     "error": "Error: combined legacy fixture too large"
+    },
+    "raw_text_sha256": null,
+    "unchanged": true,
+    "before": {
+     "present": {
+      "current": false,
+      "intent": false,
+      "archive": false
+     },
+     "payload_bytes": null,
+     "payload_sha256": null
+    },
+    "after": {
+     "present": {
+      "current": false,
+      "intent": false,
+      "archive": false
+     },
+     "payload_bytes": null,
+     "payload_sha256": null
+    },
+    "storage_estimate": {
+     "before": {
+      "usage": 56279,
+      "quota": 10737474519
+     },
+     "after": {
+      "usage": 56279,
+      "quota": 10737474519
+     }
+    },
+    "store": "youjia-recovery-test-budget-34-stress-dual-each-under-combined-over"
+   }
+  },
+  {
+   "name": "stress_dual_fits",
+   "kind": "stress",
+   "source": "two 30000-byte ASCII files: combined envelope expected under 64KiB",
+   "album": [],
+   "photo_count": 0,
+   "primary": {
+    "bytes": 30000,
+    "chars": 30000,
+    "file": "stress_dual_fits.primary.json",
+    "projection_compact_bytes": 242,
+    "projection_moment_count": 0,
+    "projection_photo_count": 0,
+    "projection_pretty_bytes": 291,
+    "raw_compact_bytes": 29959,
+    "sha256": "9e371fddde808a38736abeb7afb079dce51da50fb751d3051d3411cb6ced7922",
+    "status": "present"
+   },
+   "backup": {
+    "bytes": 30000,
+    "chars": 30000,
+    "file": "stress_dual_fits.backup.json",
+    "projection_compact_bytes": 242,
+    "projection_moment_count": 0,
+    "projection_photo_count": 0,
+    "projection_pretty_bytes": 291,
+    "raw_compact_bytes": 29959,
+    "sha256": "9e371fddde808a38736abeb7afb079dce51da50fb751d3051d3411cb6ced7922",
+    "status": "present"
+   },
+   "host_godot_capture": {
+    "backup": "present",
+    "file": "stress_dual_fits.snapshot.json",
+    "primary": "present"
+   },
+   "raw_sum_bytes": 60000,
+   "uncapped_combined": {
+    "bytes": 60241,
+    "chars": 60241
+   },
+   "host_pure": {
+    "ok": true,
+    "selected": "primary",
+    "payload_bytes": 60241,
+    "payload_chars": 60241,
+    "payload_sha256": "41add6a533462cd57f802cedb2cabafc69c5bdd7f448ecaeb147963c1229b661",
+    "raw_text_sha256": {
+     "primary": "9e371fddde808a38736abeb7afb079dce51da50fb751d3051d3411cb6ced7922",
+     "backup": "9e371fddde808a38736abeb7afb079dce51da50fb751d3051d3411cb6ced7922"
+    }
+   },
+   "head_arg_chars": 80086,
+   "host_real": {
+    "opened": "empty",
+    "result": {
+     "verdict": "clean"
+    },
+    "raw_text_sha256": {
+     "primary": "9e371fddde808a38736abeb7afb079dce51da50fb751d3051d3411cb6ced7922",
+     "backup": "9e371fddde808a38736abeb7afb079dce51da50fb751d3051d3411cb6ced7922"
+    },
+    "unchanged": false,
+    "before": {
+     "present": {
+      "current": false,
+      "intent": false,
+      "archive": false
+     },
+     "payload_bytes": null,
+     "payload_sha256": null
+    },
+    "after": {
+     "present": {
+      "current": true,
+      "intent": false,
+      "archive": false
+     },
+     "payload_bytes": 60241,
+     "payload_sha256": "41add6a533462cd57f802cedb2cabafc69c5bdd7f448ecaeb147963c1229b661"
+    },
+    "storage_estimate": {
+     "before": {
+      "usage": 58020,
+      "quota": 10737476260
+     },
+     "after": {
+      "usage": 119081,
+      "quota": 10737537321
+     }
+    },
+    "store": "youjia-recovery-test-budget-35-stress-dual-fits"
+   }
+  },
+  {
+   "name": "stress_nonascii_single_chars_under_bytes_over",
+   "kind": "stress",
+   "source": "CJK extension: under 65536 characters but over 65536 UTF-8 bytes",
+   "album": [],
+   "photo_count": 0,
+   "primary": {
+    "bytes": 65538,
+    "chars": 22060,
+    "file": "stress_nonascii_single_chars_under_bytes_over.primary.json",
+    "projection_compact_bytes": 242,
+    "projection_moment_count": 0,
+    "projection_photo_count": 0,
+    "projection_pretty_bytes": 291,
+    "raw_compact_bytes": 65497,
+    "sha256": "d50feb83f621c456d089d4aee0932ba04b7878f9841dbeb77133488886ab144c",
+    "status": "present"
+   },
+   "backup": {
+    "status": "absent"
+   },
+   "host_godot_capture": {
+    "backup": "absent",
+    "file": "stress_nonascii_single_chars_under_bytes_over.snapshot.json",
+    "primary": "read_error:too_large"
+   },
+   "raw_sum_bytes": 65538,
+   "uncapped_combined": {
+    "bytes": 65724,
+    "chars": 22246
+   },
+   "host_pure": {
+    "ok": false,
+    "stage": "decodeSourceSnapshot",
+    "error": "Error: unreadable or oversized source"
+   },
+   "head_arg_chars": 85,
+   "host_real": {
+    "opened": "empty",
+    "result": {
+     "error": "Error: unreadable or oversized source"
+    },
+    "raw_text_sha256": null,
+    "unchanged": true,
+    "before": {
+     "present": {
+      "current": false,
+      "intent": false,
+      "archive": false
+     },
+     "payload_bytes": null,
+     "payload_sha256": null
+    },
+    "after": {
+     "present": {
+      "current": false,
+      "intent": false,
+      "archive": false
+     },
+     "payload_bytes": null,
+     "payload_sha256": null
+    },
+    "storage_estimate": {
+     "before": {
+      "usage": 59883,
+      "quota": 10737478123
+     },
+     "after": {
+      "usage": 59883,
+      "quota": 10737478123
+     }
+    },
+    "store": "youjia-recovery-test-budget-36-stress-nonascii-single-chars-under-bytes-over"
+   },
+   "bypass_godot_cap": {
+    "head_arg_chars": 87457,
+    "host_pure": {
+     "ok": false,
+     "stage": "decodeSourceSnapshot",
+     "error": "Error: noncanonical or oversized source"
+    },
+    "host_real": {
+     "opened": "empty",
+     "result": {
+      "error": "Error: noncanonical or oversized source"
+     },
+     "raw_text_sha256": null,
+     "unchanged": true,
+     "before": {
+      "present": {
+       "current": false,
+       "intent": false,
+       "archive": false
+      },
+      "payload_bytes": null,
+      "payload_sha256": null
+     },
+     "after": {
+      "present": {
+       "current": false,
+       "intent": false,
+       "archive": false
+      },
+      "payload_bytes": null,
+      "payload_sha256": null
+     },
+     "storage_estimate": {
+      "before": {
+       "usage": 61504,
+       "quota": 10737479744
+      },
+      "after": {
+       "usage": 61504,
+       "quota": 10737479744
+      }
+     },
+     "store": "youjia-recovery-test-budget-37-stress-nonascii-single-chars-under-bytes-over-bypass"
+    }
+   }
+  },
+  {
+   "name": "stress_nonascii_dual",
+   "kind": "stress",
+   "source": "two 34000-byte CJK files: character sum under, UTF-8 byte sum over 65536",
+   "album": [],
+   "photo_count": 0,
+   "primary": {
+    "bytes": 34000,
+    "chars": 11546,
+    "file": "stress_nonascii_dual.primary.json",
+    "projection_compact_bytes": 242,
+    "projection_moment_count": 0,
+    "projection_photo_count": 0,
+    "projection_pretty_bytes": 291,
+    "raw_compact_bytes": 33959,
+    "sha256": "e76f30b0e4212bd64c41b0e5944d703d6dcdd9f24b1c41f61ab6332107ec83c1",
+    "status": "present"
+   },
+   "backup": {
+    "bytes": 34000,
+    "chars": 11546,
+    "file": "stress_nonascii_dual.backup.json",
+    "projection_compact_bytes": 242,
+    "projection_moment_count": 0,
+    "projection_photo_count": 0,
+    "projection_pretty_bytes": 291,
+    "raw_compact_bytes": 33959,
+    "sha256": "e76f30b0e4212bd64c41b0e5944d703d6dcdd9f24b1c41f61ab6332107ec83c1",
+    "status": "present"
+   },
+   "host_godot_capture": {
+    "backup": "present",
+    "file": "stress_nonascii_dual.snapshot.json",
+    "primary": "present"
+   },
+   "raw_sum_bytes": 68000,
+   "uncapped_combined": {
+    "bytes": 68241,
+    "chars": 23333
+   },
+   "host_pure": {
+    "ok": false,
+    "stage": "prepareLegacyV5",
+    "error": "Error: combined legacy fixture too large"
+   },
+   "head_arg_chars": 90758,
+   "host_real": {
+    "opened": "empty",
+    "result": {
+     "error": "Error: combined legacy fixture too large"
+    },
+    "raw_text_sha256": null,
+    "unchanged": true,
+    "before": {
+     "present": {
+      "current": false,
+      "intent": false,
+      "archive": false
+     },
+     "payload_bytes": null,
+     "payload_sha256": null
+    },
+    "after": {
+     "present": {
+      "current": false,
+      "intent": false,
+      "archive": false
+     },
+     "payload_bytes": null,
+     "payload_sha256": null
+    },
+    "storage_estimate": {
+     "before": {
+      "usage": 63048,
+      "quota": 10737481288
+     },
+     "after": {
+      "usage": 63048,
+      "quota": 10737481288
+     }
+    },
+    "store": "youjia-recovery-test-budget-38-stress-nonascii-dual"
+   }
+  },
+  {
+   "name": "stress_future_rules_growth",
+   "kind": "stress",
+   "source": "two unknown future-rule photos (copies of a real capture, renamed); projection discards them",
+   "album": [
+    "future_rule_00",
+    "future_rule_01"
+   ],
+   "photo_count": 2,
+   "primary": {
+    "bytes": 34841,
+    "chars": 34841,
+    "file": "stress_future_rules_growth.primary.json",
+    "projection_compact_bytes": 275,
+    "projection_moment_count": 0,
+    "projection_photo_count": 2,
+    "projection_pretty_bytes": 337,
+    "raw_compact_bytes": 16826,
+    "sha256": "5fe78c6b3df4eac0e50c4c4dba9d387dc9775daa0df7533923d62e2419ec250c",
+    "status": "present"
+   },
+   "backup": {
+    "bytes": 34841,
+    "chars": 34841,
+    "file": "stress_future_rules_growth.backup.json",
+    "projection_compact_bytes": 275,
+    "projection_moment_count": 0,
+    "projection_photo_count": 2,
+    "projection_pretty_bytes": 337,
+    "raw_compact_bytes": 16826,
+    "sha256": "5fe78c6b3df4eac0e50c4c4dba9d387dc9775daa0df7533923d62e2419ec250c",
+    "status": "present"
+   },
+   "host_godot_capture": {
+    "backup": "present",
+    "file": "stress_future_rules_growth.snapshot.json",
+    "primary": "present"
+   },
+   "raw_sum_bytes": 69682,
+   "uncapped_combined": {
+    "bytes": 75885,
+    "chars": 75885
+   },
+   "host_pure": {
+    "ok": false,
+    "stage": "prepareLegacyV5",
+    "error": "Error: combined legacy fixture too large"
+   },
+   "head_arg_chars": 92998,
+   "host_real": {
+    "opened": "empty",
+    "result": {
+     "error": "Error: combined legacy fixture too large"
+    },
+    "raw_text_sha256": null,
+    "unchanged": true,
+    "before": {
+     "present": {
+      "current": false,
+      "intent": false,
+      "archive": false
+     },
+     "payload_bytes": null,
+     "payload_sha256": null
+    },
+    "after": {
+     "present": {
+      "current": false,
+      "intent": false,
+      "archive": false
+     },
+     "payload_bytes": null,
+     "payload_sha256": null
+    },
+    "storage_estimate": {
+     "before": {
+      "usage": 64668,
+      "quota": 10737482908
+     },
+     "after": {
+      "usage": 64668,
+      "quota": 10737482908
+     }
+    },
+    "store": "youjia-recovery-test-budget-39-stress-future-rules-growth"
+   }
+  },
+  {
+   "name": "stress_photomoment_dense_single",
+   "kind": "stress",
+   "source": "one sanitize-legal llama_overcast_goose_annoyed photo padded to MAX_ITEMS=64 by repeating its own items; not game-produced",
+   "album": [
+    "llama_overcast_goose_annoyed"
+   ],
+   "photo_count": 1,
+   "primary": {
+    "bytes": 70889,
+    "chars": 70889,
+    "file": "stress_photomoment_dense_single.primary.json",
+    "projection_compact_bytes": 32969,
+    "projection_moment_count": 1,
+    "projection_photo_count": 1,
+    "projection_pretty_bytes": 71223,
+    "raw_compact_bytes": 33271,
+    "sha256": "ad9cd0a912ae742ef978bed7d7ea53f35abf26e45d78a7ab08ac086438ce31c6",
+    "status": "present"
+   },
+   "backup": {
+    "bytes": 70889,
+    "chars": 70889,
+    "file": "stress_photomoment_dense_single.backup.json",
+    "projection_compact_bytes": 32969,
+    "projection_moment_count": 1,
+    "projection_photo_count": 1,
+    "projection_pretty_bytes": 71223,
+    "raw_compact_bytes": 33271,
+    "sha256": "ad9cd0a912ae742ef978bed7d7ea53f35abf26e45d78a7ab08ac086438ce31c6",
+    "status": "present"
+   },
+   "host_godot_capture": {
+    "backup": "read_error:too_large",
+    "file": "stress_photomoment_dense_single.snapshot.json",
+    "primary": "read_error:too_large"
+   },
+   "raw_sum_bytes": 141778,
+   "uncapped_combined": {
+    "bytes": 153753,
+    "chars": 153753
+   },
+   "host_pure": {
+    "ok": false,
+    "stage": "decodeSourceSnapshot",
+    "error": "Error: unreadable or oversized source"
+   },
+   "head_arg_chars": 110,
+   "host_real": {
+    "opened": "empty",
+    "result": {
+     "error": "Error: unreadable or oversized source"
+    },
+    "raw_text_sha256": null,
+    "unchanged": true,
+    "before": {
+     "present": {
+      "current": false,
+      "intent": false,
+      "archive": false
+     },
+     "payload_bytes": null,
+     "payload_sha256": null
+    },
+    "after": {
+     "present": {
+      "current": false,
+      "intent": false,
+      "archive": false
+     },
+     "payload_bytes": null,
+     "payload_sha256": null
+    },
+    "storage_estimate": {
+     "before": {
+      "usage": 66265,
+      "quota": 10737484505
+     },
+     "after": {
+      "usage": 66265,
+      "quota": 10737484505
+     }
+    },
+    "store": "youjia-recovery-test-budget-40-stress-photomoment-dense-single"
+   },
+   "bypass_godot_cap": {
+    "head_arg_chars": 189126,
+    "host_pure": {
+     "ok": false,
+     "stage": "decodeSourceSnapshot",
+     "error": "Error: unreadable or oversized source"
+    },
+    "host_real": {
+     "opened": "empty",
+     "result": {
+      "error": "Error: legacy snapshot JSON string required"
+     },
+     "raw_text_sha256": null,
+     "unchanged": true,
+     "before": {
+      "present": {
+       "current": false,
+       "intent": false,
+       "archive": false
+      },
+      "payload_bytes": null,
+      "payload_sha256": null
+     },
+     "after": {
+      "present": {
+       "current": false,
+       "intent": false,
+       "archive": false
+      },
+      "payload_bytes": null,
+      "payload_sha256": null
+     },
+     "storage_estimate": {
+      "before": {
+       "usage": 67941,
+       "quota": 10737486181
+      },
+      "after": {
+       "usage": 67941,
+       "quota": 10737486181
+      }
+     },
+     "store": "youjia-recovery-test-budget-41-stress-photomoment-dense-single-bypass"
+    }
+   }
+  }
+ ],
+ "state_preservation": {
+  "store": "youjia-recovery-test-budget-42-existing",
+  "seed": {
+   "init": "clean",
+   "paused": "intent_prepared_complete"
+  },
+  "current_and_archive": {
+   "opened": "restored_parent_intent_rejected",
+   "archive_len": 1,
+   "present": {
+    "current": true,
+    "intent": false,
+    "archive": true
+   },
+   "legacy_attempt": {
+    "error": "Error: legacy import requires empty recovery"
+   },
+   "prepare_attempt": {
+    "error": "Error: bounded frozen JSON text required"
+   },
+   "big_bytes": 73363,
+   "unchanged": true
+  },
+  "intent_seed": {
+   "opened": "clean",
+   "paused": "intent_prepared_complete"
+  },
+  "intent_present": {
+   "intent_state": "prepared",
+   "present": {
+    "current": true,
+    "intent": true,
+    "archive": true
+   },
+   "env_error": "Error: bounded frozen JSON text required",
+   "submit_error": "Error: invalid candidate",
+   "submit_ms": 0,
+   "unchanged": true
+  },
+  "cleanup": "restored_parent_intent_rejected"
+ },
+ "checks": [
+  {
+   "id": "natural_00_empty:godot_sha_matches",
+   "status": "PASS",
+   "detail": "primary"
+  },
+  {
+   "id": "natural_00_empty:accepted_raw_preserved",
+   "status": "PASS",
+   "detail": "payload 472 bytes"
+  },
+  {
+   "id": "natural_00_empty:natural_save_importable_by_current_host",
+   "status": "PASS",
+   "detail": "primary 291 B + backup 0 B; uncapped combined 472 B; accepted"
+  },
+  {
+   "id": "natural_01_goose_horse_mount:godot_sha_matches",
+   "status": "PASS",
+   "detail": "primary"
+  },
+  {
+   "id": "natural_01_goose_horse_mount:godot_sha_matches",
+   "status": "PASS",
+   "detail": "backup"
+  },
+  {
+   "id": "natural_01_goose_horse_mount:accepted_raw_preserved",
+   "status": "PASS",
+   "detail": "payload 19593 bytes"
+  },
+  {
+   "id": "natural_01_goose_horse_mount:natural_save_importable_by_current_host",
+   "status": "PASS",
+   "detail": "primary 17577 B + backup 291 B; uncapped combined 19593 B; accepted"
+  },
+  {
+   "id": "natural_02_llama_overcast_goose_annoyed:godot_sha_matches",
+   "status": "PASS",
+   "detail": "primary"
+  },
+  {
+   "id": "natural_02_llama_overcast_goose_annoyed:godot_sha_matches",
+   "status": "PASS",
+   "detail": "backup"
+  },
+  {
+   "id": "natural_02_llama_overcast_goose_annoyed:accepted_raw_preserved",
+   "status": "PASS",
+   "detail": "payload 60487 bytes"
+  },
+  {
+   "id": "natural_02_llama_overcast_goose_annoyed:natural_save_importable_by_current_host",
+   "status": "PASS",
+   "detail": "primary 37998 B + backup 17577 B; uncapped combined 60487 B; accepted"
+  },
+  {
+   "id": "natural_03_llama_sun_sheep_happy:godot_sha_matches",
+   "status": "PASS",
+   "detail": "primary"
+  },
+  {
+   "id": "natural_03_llama_sun_sheep_happy:godot_sha_matches",
+   "status": "PASS",
+   "detail": "backup"
+  },
+  {
+   "id": "natural_03_llama_sun_sheep_happy:rejected_before_write",
+   "status": "PASS",
+   "detail": "Error: combined legacy fixture too large"
+  },
+  {
+   "id": "natural_03_llama_sun_sheep_happy:natural_save_importable_by_current_host",
+   "status": "FAIL",
+   "detail": "primary 55300 B + backup 37998 B; uncapped combined 101395 B; Error: combined legacy fixture too large",
+   "sample_sha256": {
+    "primary": "8f65e5e2068f42fc7f41c405628b0977e0dde0317b8351517f23624e8f36d248",
+    "backup": "7b2f846e738bc5063a95354a862b09a37053b3189437349f8282018834d30730"
+   }
+  },
+  {
+   "id": "natural_04_llama_sheep_cow_smirk:godot_sha_matches",
+   "status": "PASS",
+   "detail": "primary"
+  },
+  {
+   "id": "natural_04_llama_sheep_cow_smirk:godot_sha_matches",
+   "status": "PASS",
+   "detail": "backup"
+  },
+  {
+   "id": "natural_04_llama_sheep_cow_smirk:rejected_before_write",
+   "status": "PASS",
+   "detail": "Error: unreadable or oversized source"
+  },
+  {
+   "id": "natural_04_llama_sheep_cow_smirk:bypass_rejected_before_write",
+   "status": "PASS",
+   "detail": "Error: unreadable or oversized source"
+  },
+  {
+   "id": "natural_04_llama_sheep_cow_smirk:natural_save_importable_by_current_host",
+   "status": "FAIL",
+   "detail": "primary 73363 B + backup 55300 B; uncapped combined 139811 B; Error: unreadable or oversized source",
+   "sample_sha256": {
+    "primary": "79cc7bade17f36d25bccd2ebaa331fa1173fdb8e1df3e0c65a9876fb4d494da3",
+    "backup": "8f65e5e2068f42fc7f41c405628b0977e0dde0317b8351517f23624e8f36d248"
+   }
+  },
+  {
+   "id": "natural_05_llama_fed_gentle:godot_sha_matches",
+   "status": "PASS",
+   "detail": "primary"
+  },
+  {
+   "id": "natural_05_llama_fed_gentle:godot_sha_matches",
+   "status": "PASS",
+   "detail": "backup"
+  },
+  {
+   "id": "natural_05_llama_fed_gentle:rejected_before_write",
+   "status": "PASS",
+   "detail": "Error: unreadable or oversized source"
+  },
+  {
+   "id": "natural_05_llama_fed_gentle:bypass_rejected_before_write",
+   "status": "PASS",
+   "detail": "Error: legacy snapshot JSON string required"
+  },
+  {
+   "id": "natural_05_llama_fed_gentle:natural_save_importable_by_current_host",
+   "status": "FAIL",
+   "detail": "primary 91797 B + backup 73363 B; uncapped combined 179451 B; Error: unreadable or oversized source",
+   "sample_sha256": {
+    "primary": "f908870425c2304e9d10e755f4a0f1e6e22b0ab2d87be2687295ec560ef2ae2b",
+    "backup": "79cc7bade17f36d25bccd2ebaa331fa1173fdb8e1df3e0c65a9876fb4d494da3"
+   }
+  },
+  {
+   "id": "natural_06_duck_pond_chorus:godot_sha_matches",
+   "status": "PASS",
+   "detail": "primary"
+  },
+  {
+   "id": "natural_06_duck_pond_chorus:godot_sha_matches",
+   "status": "PASS",
+   "detail": "backup"
+  },
+  {
+   "id": "natural_06_duck_pond_chorus:rejected_before_write",
+   "status": "PASS",
+   "detail": "Error: unreadable or oversized source"
+  },
+  {
+   "id": "natural_06_duck_pond_chorus:bypass_rejected_before_write",
+   "status": "PASS",
+   "detail": "Error: legacy snapshot JSON string required"
+  },
+  {
+   "id": "natural_06_duck_pond_chorus:natural_save_importable_by_current_host",
+   "status": "FAIL",
+   "detail": "primary 109818 B + backup 91797 B; uncapped combined 219049 B; Error: unreadable or oversized source",
+   "sample_sha256": {
+    "primary": "d8d7b284f38eae923f52286d385d5b0bf58d2070cfaac77a6c6d0056b8d28e7e",
+    "backup": "f908870425c2304e9d10e755f4a0f1e6e22b0ab2d87be2687295ec560ef2ae2b"
+   }
+  },
+  {
+   "id": "natural_07_goose_pond_rest:godot_sha_matches",
+   "status": "PASS",
+   "detail": "primary"
+  },
+  {
+   "id": "natural_07_goose_pond_rest:godot_sha_matches",
+   "status": "PASS",
+   "detail": "backup"
+  },
+  {
+   "id": "natural_07_goose_pond_rest:rejected_before_write",
+   "status": "PASS",
+   "detail": "Error: unreadable or oversized source"
+  },
+  {
+   "id": "natural_07_goose_pond_rest:bypass_rejected_before_write",
+   "status": "PASS",
+   "detail": "Error: legacy snapshot JSON string required"
+  },
+  {
+   "id": "natural_07_goose_pond_rest:natural_save_importable_by_current_host",
+   "status": "FAIL",
+   "detail": "primary 127084 B + backup 109818 B; uncapped combined 257387 B; Error: unreadable or oversized source",
+   "sample_sha256": {
+    "primary": "875d250ce0dacb2f4dc27d5423ec09dd897d3deb653daa5b76ef7e7688672631",
+    "backup": "d8d7b284f38eae923f52286d385d5b0bf58d2070cfaac77a6c6d0056b8d28e7e"
+   }
+  },
+  {
+   "id": "natural_08_goose_duck_shore:godot_sha_matches",
+   "status": "PASS",
+   "detail": "primary"
+  },
+  {
+   "id": "natural_08_goose_duck_shore:godot_sha_matches",
+   "status": "PASS",
+   "detail": "backup"
+  },
+  {
+   "id": "natural_08_goose_duck_shore:rejected_before_write",
+   "status": "PASS",
+   "detail": "Error: unreadable or oversized source"
+  },
+  {
+   "id": "natural_08_goose_duck_shore:bypass_rejected_before_write",
+   "status": "PASS",
+   "detail": "Error: legacy snapshot JSON string required"
+  },
+  {
+   "id": "natural_08_goose_duck_shore:natural_save_importable_by_current_host",
+   "status": "FAIL",
+   "detail": "primary 144351 B + backup 127084 B; uncapped combined 294904 B; Error: unreadable or oversized source",
+   "sample_sha256": {
+    "primary": "fd008b61a780990db0b81c17d36481dba86088167a38b7dfea624a61dda68301",
+    "backup": "875d250ce0dacb2f4dc27d5423ec09dd897d3deb653daa5b76ef7e7688672631"
+   }
+  },
+  {
+   "id": "natural_09_cow_rare_calm:godot_sha_matches",
+   "status": "PASS",
+   "detail": "primary"
+  },
+  {
+   "id": "natural_09_cow_rare_calm:godot_sha_matches",
+   "status": "PASS",
+   "detail": "backup"
+  },
+  {
+   "id": "natural_09_cow_rare_calm:rejected_before_write",
+   "status": "PASS",
+   "detail": "Error: unreadable or oversized source"
+  },
+  {
+   "id": "natural_09_cow_rare_calm:bypass_rejected_before_write",
+   "status": "PASS",
+   "detail": "Error: legacy snapshot JSON string required"
+  },
+  {
+   "id": "natural_09_cow_rare_calm:natural_save_importable_by_current_host",
+   "status": "FAIL",
+   "detail": "primary 161614 B + backup 144351 B; uncapped combined 332418 B; Error: unreadable or oversized source",
+   "sample_sha256": {
+    "primary": "104e9ee96e468e078c4e070dc0b1dc53c21b0c3d0bf71c812fdcff79b7fabe17",
+    "backup": "fd008b61a780990db0b81c17d36481dba86088167a38b7dfea624a61dda68301"
+   }
+  },
+  {
+   "id": "natural_10_sheep_pet_gentle:godot_sha_matches",
+   "status": "PASS",
+   "detail": "primary"
+  },
+  {
+   "id": "natural_10_sheep_pet_gentle:godot_sha_matches",
+   "status": "PASS",
+   "detail": "backup"
+  },
+  {
+   "id": "natural_10_sheep_pet_gentle:rejected_before_write",
+   "status": "PASS",
+   "detail": "Error: unreadable or oversized source"
+  },
+  {
+   "id": "natural_10_sheep_pet_gentle:bypass_rejected_before_write",
+   "status": "PASS",
+   "detail": "Error: legacy snapshot JSON string required"
+  },
+  {
+   "id": "natural_10_sheep_pet_gentle:natural_save_importable_by_current_host",
+   "status": "FAIL",
+   "detail": "primary 178862 B + backup 161614 B; uncapped combined 369913 B; Error: unreadable or oversized source",
+   "sample_sha256": {
+    "primary": "c7c4b8d87696b2e9d8b87c4780a84e40ae6c9e3dafb7a5c1320240c9139a7d85",
+    "backup": "104e9ee96e468e078c4e070dc0b1dc53c21b0c3d0bf71c812fdcff79b7fabe17"
+   }
+  },
+  {
+   "id": "natural_11_sheep_pair_near:godot_sha_matches",
+   "status": "PASS",
+   "detail": "primary"
+  },
+  {
+   "id": "natural_11_sheep_pair_near:godot_sha_matches",
+   "status": "PASS",
+   "detail": "backup"
+  },
+  {
+   "id": "natural_11_sheep_pair_near:rejected_before_write",
+   "status": "PASS",
+   "detail": "Error: unreadable or oversized source"
+  },
+  {
+   "id": "natural_11_sheep_pair_near:bypass_rejected_before_write",
+   "status": "PASS",
+   "detail": "Error: legacy snapshot JSON string required"
+  },
+  {
+   "id": "natural_11_sheep_pair_near:natural_save_importable_by_current_host",
+   "status": "FAIL",
+   "detail": "primary 196144 B + backup 178862 B; uncapped combined 407427 B; Error: unreadable or oversized source",
+   "sample_sha256": {
+    "primary": "310b40a63519346150123a5aa2619c72c5891e9aa1f8371bc098a6e8d03a3ad0",
+    "backup": "c7c4b8d87696b2e9d8b87c4780a84e40ae6c9e3dafb7a5c1320240c9139a7d85"
+   }
+  },
+  {
+   "id": "natural_12_cow_pet_gentle:godot_sha_matches",
+   "status": "PASS",
+   "detail": "primary"
+  },
+  {
+   "id": "natural_12_cow_pet_gentle:godot_sha_matches",
+   "status": "PASS",
+   "detail": "backup"
+  },
+  {
+   "id": "natural_12_cow_pet_gentle:rejected_before_write",
+   "status": "PASS",
+   "detail": "Error: unreadable or oversized source"
+  },
+  {
+   "id": "natural_12_cow_pet_gentle:bypass_rejected_before_write",
+   "status": "PASS",
+   "detail": "Error: legacy snapshot JSON string required"
+  },
+  {
+   "id": "natural_12_cow_pet_gentle:natural_save_importable_by_current_host",
+   "status": "FAIL",
+   "detail": "primary 213407 B + backup 196144 B; uncapped combined 444956 B; Error: unreadable or oversized source",
+   "sample_sha256": {
+    "primary": "6b143b9f4b275beac4d2a21a7b22a10525d0db5ded7b5ffa1e585d04dd45452d",
+    "backup": "310b40a63519346150123a5aa2619c72c5891e9aa1f8371bc098a6e8d03a3ad0"
+   }
+  },
+  {
+   "id": "natural_13_horse_pet_sunny:godot_sha_matches",
+   "status": "PASS",
+   "detail": "primary"
+  },
+  {
+   "id": "natural_13_horse_pet_sunny:godot_sha_matches",
+   "status": "PASS",
+   "detail": "backup"
+  },
+  {
+   "id": "natural_13_horse_pet_sunny:rejected_before_write",
+   "status": "PASS",
+   "detail": "Error: unreadable or oversized source"
+  },
+  {
+   "id": "natural_13_horse_pet_sunny:bypass_rejected_before_write",
+   "status": "PASS",
+   "detail": "Error: legacy snapshot JSON string required"
+  },
+  {
+   "id": "natural_13_horse_pet_sunny:natural_save_importable_by_current_host",
+   "status": "FAIL",
+   "detail": "primary 230668 B + backup 213407 B; uncapped combined 482464 B; Error: unreadable or oversized source",
+   "sample_sha256": {
+    "primary": "eefa9da3afeae8d7d10719e7c9d4554c48eae65cd4016b4e6025ab5f22b55809",
+    "backup": "6b143b9f4b275beac4d2a21a7b22a10525d0db5ded7b5ffa1e585d04dd45452d"
+   }
+  },
+  {
+   "id": "natural_14_plant_first_bloom:godot_sha_matches",
+   "status": "PASS",
+   "detail": "primary"
+  },
+  {
+   "id": "natural_14_plant_first_bloom:godot_sha_matches",
+   "status": "PASS",
+   "detail": "backup"
+  },
+  {
+   "id": "natural_14_plant_first_bloom:rejected_before_write",
+   "status": "PASS",
+   "detail": "Error: unreadable or oversized source"
+  },
+  {
+   "id": "natural_14_plant_first_bloom:bypass_rejected_before_write",
+   "status": "PASS",
+   "detail": "Error: legacy snapshot JSON string required"
+  },
+  {
+   "id": "natural_14_plant_first_bloom:natural_save_importable_by_current_host",
+   "status": "FAIL",
+   "detail": "primary 247918 B + backup 230668 B; uncapped combined 519959 B; Error: unreadable or oversized source",
+   "sample_sha256": {
+    "primary": "b994a41153f4a64ff39ba691833e7518a628233886a0758227de752ab7b170e3",
+    "backup": "eefa9da3afeae8d7d10719e7c9d4554c48eae65cd4016b4e6025ab5f22b55809"
+   }
+  },
+  {
+   "id": "natural_15_fish_first_catch:godot_sha_matches",
+   "status": "PASS",
+   "detail": "primary"
+  },
+  {
+   "id": "natural_15_fish_first_catch:godot_sha_matches",
+   "status": "PASS",
+   "detail": "backup"
+  },
+  {
+   "id": "natural_15_fish_first_catch:rejected_before_write",
+   "status": "PASS",
+   "detail": "Error: unreadable or oversized source"
+  },
+  {
+   "id": "natural_15_fish_first_catch:bypass_rejected_before_write",
+   "status": "PASS",
+   "detail": "Error: legacy snapshot JSON string required"
+  },
+  {
+   "id": "natural_15_fish_first_catch:natural_save_importable_by_current_host",
+   "status": "FAIL",
+   "detail": "primary 266072 B + backup 247918 B; uncapped combined 558420 B; Error: unreadable or oversized source",
+   "sample_sha256": {
+    "primary": "db0dcedcaa4839a8f8942a61d19620f316f8dfde70f3cb6a3a371c75da1566fa",
+    "backup": "b994a41153f4a64ff39ba691833e7518a628233886a0758227de752ab7b170e3"
+   }
+  },
+  {
+   "id": "natural_full_steady:godot_sha_matches",
+   "status": "PASS",
+   "detail": "primary"
+  },
+  {
+   "id": "natural_full_steady:godot_sha_matches",
+   "status": "PASS",
+   "detail": "backup"
+  },
+  {
+   "id": "natural_full_steady:rejected_before_write",
+   "status": "PASS",
+   "detail": "Error: unreadable or oversized source"
+  },
+  {
+   "id": "natural_full_steady:bypass_rejected_before_write",
+   "status": "PASS",
+   "detail": "Error: legacy snapshot JSON string required"
+  },
+  {
+   "id": "natural_full_steady:natural_save_importable_by_current_host",
+   "status": "FAIL",
+   "detail": "primary 266132 B + backup 266132 B; uncapped combined 578267 B; Error: unreadable or oversized source",
+   "sample_sha256": {
+    "primary": "2128eef1fb0d159a3abe0590d8fe4d7544c62d1b0fd15e51c558261eea65bc10",
+    "backup": "5757bcb23cbc82ff82ecec375ff434f4b6c28b38bca93ca147243615d7482b2d"
+   }
+  },
+  {
+   "id": "stress_single_at_limit:godot_sha_matches",
+   "status": "PASS",
+   "detail": "primary"
+  },
+  {
+   "id": "stress_single_at_limit:rejected_before_write",
+   "status": "PASS",
+   "detail": "Error: combined legacy fixture too large"
+  },
+  {
+   "id": "stress_single_at_limit:host_limit_behaviour",
+   "status": "PASS",
+   "detail": "expected reject combined legacy fixture too large"
+  },
+  {
+   "id": "stress_single_at_limit:projection_differs_from_raw",
+   "status": "PASS",
+   "detail": "raw 65536 B vs projection 291 B (compact 242 B)"
+  },
+  {
+   "id": "stress_single_over_limit:godot_sha_matches",
+   "status": "PASS",
+   "detail": "primary"
+  },
+  {
+   "id": "stress_single_over_limit:rejected_before_write",
+   "status": "PASS",
+   "detail": "Error: unreadable or oversized source"
+  },
+  {
+   "id": "stress_single_over_limit:bypass_rejected_before_write",
+   "status": "PASS",
+   "detail": "Error: noncanonical or oversized source"
+  },
+  {
+   "id": "stress_single_over_limit:host_limit_behaviour",
+   "status": "PASS",
+   "detail": "expected reject unreadable or oversized source"
+  },
+  {
+   "id": "stress_single_over_limit:projection_differs_from_raw",
+   "status": "PASS",
+   "detail": "raw 65537 B vs projection 291 B (compact 242 B)"
+  },
+  {
+   "id": "stress_dual_each_under_combined_over:godot_sha_matches",
+   "status": "PASS",
+   "detail": "primary"
+  },
+  {
+   "id": "stress_dual_each_under_combined_over:godot_sha_matches",
+   "status": "PASS",
+   "detail": "backup"
+  },
+  {
+   "id": "stress_dual_each_under_combined_over:rejected_before_write",
+   "status": "PASS",
+   "detail": "Error: combined legacy fixture too large"
+  },
+  {
+   "id": "stress_dual_each_under_combined_over:host_limit_behaviour",
+   "status": "PASS",
+   "detail": "expected reject combined legacy fixture too large"
+  },
+  {
+   "id": "stress_dual_each_under_combined_over:projection_differs_from_raw",
+   "status": "PASS",
+   "detail": "raw 40000 B vs projection 291 B (compact 242 B)"
+  },
+  {
+   "id": "stress_dual_fits:godot_sha_matches",
+   "status": "PASS",
+   "detail": "primary"
+  },
+  {
+   "id": "stress_dual_fits:godot_sha_matches",
+   "status": "PASS",
+   "detail": "backup"
+  },
+  {
+   "id": "stress_dual_fits:accepted_raw_preserved",
+   "status": "PASS",
+   "detail": "payload 60241 bytes"
+  },
+  {
+   "id": "stress_dual_fits:host_limit_behaviour",
+   "status": "PASS",
+   "detail": "expected accept"
+  },
+  {
+   "id": "stress_dual_fits:projection_differs_from_raw",
+   "status": "PASS",
+   "detail": "raw 30000 B vs projection 291 B (compact 242 B)"
+  },
+  {
+   "id": "stress_nonascii_single_chars_under_bytes_over:godot_sha_matches",
+   "status": "PASS",
+   "detail": "primary"
+  },
+  {
+   "id": "stress_nonascii_single_chars_under_bytes_over:rejected_before_write",
+   "status": "PASS",
+   "detail": "Error: unreadable or oversized source"
+  },
+  {
+   "id": "stress_nonascii_single_chars_under_bytes_over:bypass_rejected_before_write",
+   "status": "PASS",
+   "detail": "Error: noncanonical or oversized source"
+  },
+  {
+   "id": "stress_nonascii_single_chars_under_bytes_over:host_limit_behaviour",
+   "status": "PASS",
+   "detail": "expected reject unreadable or oversized source"
+  },
+  {
+   "id": "stress_nonascii_single_chars_under_bytes_over:projection_differs_from_raw",
+   "status": "PASS",
+   "detail": "raw 65538 B vs projection 291 B (compact 242 B)"
+  },
+  {
+   "id": "stress_nonascii_dual:godot_sha_matches",
+   "status": "PASS",
+   "detail": "primary"
+  },
+  {
+   "id": "stress_nonascii_dual:godot_sha_matches",
+   "status": "PASS",
+   "detail": "backup"
+  },
+  {
+   "id": "stress_nonascii_dual:rejected_before_write",
+   "status": "PASS",
+   "detail": "Error: combined legacy fixture too large"
+  },
+  {
+   "id": "stress_nonascii_dual:host_limit_behaviour",
+   "status": "PASS",
+   "detail": "expected reject combined legacy fixture too large"
+  },
+  {
+   "id": "stress_nonascii_dual:projection_differs_from_raw",
+   "status": "PASS",
+   "detail": "raw 34000 B vs projection 291 B (compact 242 B)"
+  },
+  {
+   "id": "stress_future_rules_growth:godot_sha_matches",
+   "status": "PASS",
+   "detail": "primary"
+  },
+  {
+   "id": "stress_future_rules_growth:godot_sha_matches",
+   "status": "PASS",
+   "detail": "backup"
+  },
+  {
+   "id": "stress_future_rules_growth:rejected_before_write",
+   "status": "PASS",
+   "detail": "Error: combined legacy fixture too large"
+  },
+  {
+   "id": "stress_future_rules_growth:host_limit_behaviour",
+   "status": "PASS",
+   "detail": "expected reject combined legacy fixture too large"
+  },
+  {
+   "id": "stress_future_rules_growth:projection_differs_from_raw",
+   "status": "PASS",
+   "detail": "raw 34841 B vs projection 337 B (compact 275 B)"
+  },
+  {
+   "id": "stress_photomoment_dense_single:godot_sha_matches",
+   "status": "PASS",
+   "detail": "primary"
+  },
+  {
+   "id": "stress_photomoment_dense_single:godot_sha_matches",
+   "status": "PASS",
+   "detail": "backup"
+  },
+  {
+   "id": "stress_photomoment_dense_single:rejected_before_write",
+   "status": "PASS",
+   "detail": "Error: unreadable or oversized source"
+  },
+  {
+   "id": "stress_photomoment_dense_single:bypass_rejected_before_write",
+   "status": "PASS",
+   "detail": "Error: legacy snapshot JSON string required"
+  },
+  {
+   "id": "stress_photomoment_dense_single:host_limit_behaviour",
+   "status": "PASS",
+   "detail": "expected reject unreadable or oversized source"
+  },
+  {
+   "id": "stress_photomoment_dense_single:projection_differs_from_raw",
+   "status": "PASS",
+   "detail": "raw 70889 B vs projection 71223 B (compact 32969 B)"
+  },
+  {
+   "id": "existing:seed_archive",
+   "status": "PASS",
+   "detail": "{\"init\": \"clean\", \"paused\": \"intent_prepared_complete\"}"
+  },
+  {
+   "id": "existing:legacy_import_refused_unchanged",
+   "status": "PASS",
+   "detail": "Error: legacy import requires empty recovery"
+  },
+  {
+   "id": "existing:oversized_game_prepare_refused_unchanged",
+   "status": "PASS",
+   "detail": "natural_04 primary 73363 B: Error: bounded frozen JSON text required"
+  },
+  {
+   "id": "existing:intent_preserved_oversized_rejected_without_lock",
+   "status": "PASS",
+   "detail": "submit Error: invalid candidate in 0 ms"
+  },
+  {
+   "id": "natural_00_empty:source_file_untouched_primary",
+   "status": "PASS",
+   "detail": ""
+  },
+  {
+   "id": "natural_01_goose_horse_mount:source_file_untouched_primary",
+   "status": "PASS",
+   "detail": ""
+  },
+  {
+   "id": "natural_01_goose_horse_mount:source_file_untouched_backup",
+   "status": "PASS",
+   "detail": ""
+  },
+  {
+   "id": "natural_02_llama_overcast_goose_annoyed:source_file_untouched_primary",
+   "status": "PASS",
+   "detail": ""
+  },
+  {
+   "id": "natural_02_llama_overcast_goose_annoyed:source_file_untouched_backup",
+   "status": "PASS",
+   "detail": ""
+  },
+  {
+   "id": "natural_03_llama_sun_sheep_happy:source_file_untouched_primary",
+   "status": "PASS",
+   "detail": ""
+  },
+  {
+   "id": "natural_03_llama_sun_sheep_happy:source_file_untouched_backup",
+   "status": "PASS",
+   "detail": ""
+  },
+  {
+   "id": "natural_04_llama_sheep_cow_smirk:source_file_untouched_primary",
+   "status": "PASS",
+   "detail": ""
+  },
+  {
+   "id": "natural_04_llama_sheep_cow_smirk:source_file_untouched_backup",
+   "status": "PASS",
+   "detail": ""
+  },
+  {
+   "id": "natural_05_llama_fed_gentle:source_file_untouched_primary",
+   "status": "PASS",
+   "detail": ""
+  },
+  {
+   "id": "natural_05_llama_fed_gentle:source_file_untouched_backup",
+   "status": "PASS",
+   "detail": ""
+  },
+  {
+   "id": "natural_06_duck_pond_chorus:source_file_untouched_primary",
+   "status": "PASS",
+   "detail": ""
+  },
+  {
+   "id": "natural_06_duck_pond_chorus:source_file_untouched_backup",
+   "status": "PASS",
+   "detail": ""
+  },
+  {
+   "id": "natural_07_goose_pond_rest:source_file_untouched_primary",
+   "status": "PASS",
+   "detail": ""
+  },
+  {
+   "id": "natural_07_goose_pond_rest:source_file_untouched_backup",
+   "status": "PASS",
+   "detail": ""
+  },
+  {
+   "id": "natural_08_goose_duck_shore:source_file_untouched_primary",
+   "status": "PASS",
+   "detail": ""
+  },
+  {
+   "id": "natural_08_goose_duck_shore:source_file_untouched_backup",
+   "status": "PASS",
+   "detail": ""
+  },
+  {
+   "id": "natural_09_cow_rare_calm:source_file_untouched_primary",
+   "status": "PASS",
+   "detail": ""
+  },
+  {
+   "id": "natural_09_cow_rare_calm:source_file_untouched_backup",
+   "status": "PASS",
+   "detail": ""
+  },
+  {
+   "id": "natural_10_sheep_pet_gentle:source_file_untouched_primary",
+   "status": "PASS",
+   "detail": ""
+  },
+  {
+   "id": "natural_10_sheep_pet_gentle:source_file_untouched_backup",
+   "status": "PASS",
+   "detail": ""
+  },
+  {
+   "id": "natural_11_sheep_pair_near:source_file_untouched_primary",
+   "status": "PASS",
+   "detail": ""
+  },
+  {
+   "id": "natural_11_sheep_pair_near:source_file_untouched_backup",
+   "status": "PASS",
+   "detail": ""
+  },
+  {
+   "id": "natural_12_cow_pet_gentle:source_file_untouched_primary",
+   "status": "PASS",
+   "detail": ""
+  },
+  {
+   "id": "natural_12_cow_pet_gentle:source_file_untouched_backup",
+   "status": "PASS",
+   "detail": ""
+  },
+  {
+   "id": "natural_13_horse_pet_sunny:source_file_untouched_primary",
+   "status": "PASS",
+   "detail": ""
+  },
+  {
+   "id": "natural_13_horse_pet_sunny:source_file_untouched_backup",
+   "status": "PASS",
+   "detail": ""
+  },
+  {
+   "id": "natural_14_plant_first_bloom:source_file_untouched_primary",
+   "status": "PASS",
+   "detail": ""
+  },
+  {
+   "id": "natural_14_plant_first_bloom:source_file_untouched_backup",
+   "status": "PASS",
+   "detail": ""
+  },
+  {
+   "id": "natural_15_fish_first_catch:source_file_untouched_primary",
+   "status": "PASS",
+   "detail": ""
+  },
+  {
+   "id": "natural_15_fish_first_catch:source_file_untouched_backup",
+   "status": "PASS",
+   "detail": ""
+  },
+  {
+   "id": "natural_full_steady:source_file_untouched_primary",
+   "status": "PASS",
+   "detail": ""
+  },
+  {
+   "id": "natural_full_steady:source_file_untouched_backup",
+   "status": "PASS",
+   "detail": ""
+  },
+  {
+   "id": "stress_single_at_limit:source_file_untouched_primary",
+   "status": "PASS",
+   "detail": ""
+  },
+  {
+   "id": "stress_single_over_limit:source_file_untouched_primary",
+   "status": "PASS",
+   "detail": ""
+  },
+  {
+   "id": "stress_dual_each_under_combined_over:source_file_untouched_primary",
+   "status": "PASS",
+   "detail": ""
+  },
+  {
+   "id": "stress_dual_each_under_combined_over:source_file_untouched_backup",
+   "status": "PASS",
+   "detail": ""
+  },
+  {
+   "id": "stress_dual_fits:source_file_untouched_primary",
+   "status": "PASS",
+   "detail": ""
+  },
+  {
+   "id": "stress_dual_fits:source_file_untouched_backup",
+   "status": "PASS",
+   "detail": ""
+  },
+  {
+   "id": "stress_nonascii_single_chars_under_bytes_over:source_file_untouched_primary",
+   "status": "PASS",
+   "detail": ""
+  },
+  {
+   "id": "stress_nonascii_dual:source_file_untouched_primary",
+   "status": "PASS",
+   "detail": ""
+  },
+  {
+   "id": "stress_nonascii_dual:source_file_untouched_backup",
+   "status": "PASS",
+   "detail": ""
+  },
+  {
+   "id": "stress_future_rules_growth:source_file_untouched_primary",
+   "status": "PASS",
+   "detail": ""
+  },
+  {
+   "id": "stress_future_rules_growth:source_file_untouched_backup",
+   "status": "PASS",
+   "detail": ""
+  },
+  {
+   "id": "stress_photomoment_dense_single:source_file_untouched_primary",
+   "status": "PASS",
+   "detail": ""
+  },
+  {
+   "id": "stress_photomoment_dense_single:source_file_untouched_backup",
+   "status": "PASS",
+   "detail": ""
+  },
+  {
+   "id": "generator_errors_empty",
+   "status": "PASS",
+   "detail": ""
+  }
+ ],
+ "browser": "148.0.7778.96",
+ "summary": {
+  "checks": 171,
+  "failed": 14,
+  "failed_ids": [
+   "natural_03_llama_sun_sheep_happy:natural_save_importable_by_current_host",
+   "natural_04_llama_sheep_cow_smirk:natural_save_importable_by_current_host",
+   "natural_05_llama_fed_gentle:natural_save_importable_by_current_host",
+   "natural_06_duck_pond_chorus:natural_save_importable_by_current_host",
+   "natural_07_goose_pond_rest:natural_save_importable_by_current_host",
+   "natural_08_goose_duck_shore:natural_save_importable_by_current_host",
+   "natural_09_cow_rare_calm:natural_save_importable_by_current_host",
+   "natural_10_sheep_pet_gentle:natural_save_importable_by_current_host",
+   "natural_11_sheep_pair_near:natural_save_importable_by_current_host",
+   "natural_12_cow_pet_gentle:natural_save_importable_by_current_host",
+   "natural_13_horse_pet_sunny:natural_save_importable_by_current_host",
+   "natural_14_plant_first_bloom:natural_save_importable_by_current_host",
+   "natural_15_fish_first_catch:natural_save_importable_by_current_host",
+   "natural_full_steady:natural_save_importable_by_current_host"
+  ]
+ }
+}
