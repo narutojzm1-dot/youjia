@@ -12,6 +12,7 @@
 [photo-moment-tests] PASS: 1332 checks
 [photo-moment-save-tests] PASS: 46 checks []
 SAVE_DATA_CODEC 16 checks; failures=[]
+yard snapshot: 10 checks, 0 failures
 [boundary-feedback-tests] 11 checks []
 [mixed-input-photo-tests] 6 checks []
 [leading-clearance-tests] 18 checks []
@@ -19,6 +20,7 @@ SAVE_DATA_CODEC 16 checks; failures=[]
 [shipped-correctness] 9 checks []
 [interaction-photo-tests] 90 checks, failures=[]
 [scene-hotspot-tests] 91 checks, failures=[]
+[authored-sequence-tests] PASS: 16 distinct complete frames, uniform canvas and anchor, loop metadata
 [goose-mount] PASS: 92 checks []
 [fish-carry] 85 checks []
 [viewport] failures=[]
