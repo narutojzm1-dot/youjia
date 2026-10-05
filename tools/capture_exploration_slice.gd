@@ -1,6 +1,6 @@
 extends SceneTree
 # 首片体验证据：真实 main.tscn，全程用触屏事件驱动（开始 → 走到门前小路 → 出门走走 →
-# 按住右半边走 → 停下看看 → 带上 → 接着走 → 回院）。逐阶段截图到 YOUJIA_CAPTURE_DIR。
+# 点按画中路面沿路走过去 → 停下看看 → 带上 → 接着走 → 回院）。逐阶段截图到 YOUJIA_CAPTURE_DIR。
 # 需要真实渲染器（非 --headless）；可配合 --write-movie 录像。
 
 var main: Control
@@ -32,6 +32,11 @@ func tap_world(point: Vector2) -> void:
 	tap(root.get_canvas_transform() * point)
 
 
+func stop_on_screen(scroll: Node2D, stop_id: String) -> Vector2:
+	var entry: Dictionary = NearPathLayout.stop(stop_id)
+	return scroll.art_to_screen(NearPathLayout.point(entry.arm, entry.d))
+
+
 func tap_control(control: Control) -> void:
 	tap(control.get_global_rect().get_center())
 
@@ -59,7 +64,6 @@ func record() -> void:
 	DirAccess.make_dir_recursive_absolute(folder)
 	main = load("res://scenes/main.tscn").instantiate()
 	root.add_child(main)
-	var size := root.get_visible_rect().size
 	var scroll: Node2D = null
 	for frame in 5400:
 		await process_frame
@@ -86,12 +90,13 @@ func record() -> void:
 			4:
 				if main._screen == "exploring" and frame - since > 50:
 					shot("scroll-start")
-					touch(Vector2(size.x * 0.8, size.y * 0.55), true)
-					next("touch hold: walk right", frame)
+					tap(stop_on_screen(scroll, "brook"))
+					next("touch: tap the lane by the brook", frame)
 			5:
-				if scroll != null and scroll.nearby_stop() == "brook" and absf(scroll.x - 1260.0) < 30.0:
-					touch(Vector2(size.x * 0.8, size.y * 0.55), false)
-					next("release at the brook", frame)
+				if frame - since == 70:
+					shot("walking")
+				if scroll != null and scroll.walk_target.is_empty() and scroll.nearby_stop() == "brook":
+					next("arrived by the brook at %s" % scroll.foot(), frame)
 			6:
 				if frame - since > 10:
 					shot("brook-nearby")
@@ -114,13 +119,12 @@ func record() -> void:
 					next("touch: keep walking", frame)
 			9:
 				if frame - since > 20:
-					touch(Vector2(size.x * 0.8, size.y * 0.55), true)
-					next("touch hold: walk right", frame)
+					tap(stop_on_screen(scroll, "shade"))
+					next("touch: tap the lane by the grassy verge", frame)
 			10:
-				if scroll.nearby_stop() == "shade" and absf(scroll.x - 2160.0) < 30.0:
-					touch(Vector2(size.x * 0.8, size.y * 0.55), false)
+				if scroll.walk_target.is_empty() and scroll.nearby_stop() == "shade":
 					tap_control(scroll._look_button)
-					next("touch: look under the pine", frame)
+					next("touch: look by the grassy verge", frame)
 			11:
 				if frame - since > 30:
 					shot("shade-look")
