@@ -1,0 +1,8 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ERROR: resize and media change do not extend deadline
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://test/photo_arrival_combo_suite.gd:6)
+       [1] run (res://test/photo_arrival_combo_suite.gd:39)
+PHOTO ARRIVAL COMBO FAIL 654
