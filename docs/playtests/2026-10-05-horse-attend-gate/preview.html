@@ -1,0 +1,15 @@
+<!doctype html><meta charset="utf-8"><title>Horse candidate alignment review</title>
+<style>body{font:16px sans-serif;background:#f4eddf;color:#30281e}canvas{background:#d4d0c4;border:1px solid #777}button{padding:8px}p{max-width:1100px}</style>
+<h1>马回应候选：固定脚底切换</h1><p>资源审查台，不是游戏截图。两图共享脚底(799.5,1184)，不按各帧包围盒缩放。下方原图1源像素=1 CSS像素；缩小对照固定110/1117倍率，仅为深度1、初始配置倍率1的参考，不模拟相机、呼吸或作息。</p>
+<button onclick="selectFrame(0)">idle</button><button onclick="selectFrame(1)">attend</button><button onclick="playing=!playing">自动切换/暂停</button><button onclick="mirrored=!mirrored;draw()">镜像</button><strong id="state"></strong>
+<p>参考尺度（左右两马共享相同比率与落脚线，不参与自动切换）</p><canvas id="small" width="420" height="160"></canvas>
+<p>固定画布原尺寸切换（红线为共同最低蹄参考，非四蹄均在此线）</p><canvas id="full" width="1254" height="1254"></canvas>
+<script>
+const sources=['../../../assets/holiday/characters/cast_v2/horse.png','../../../art/concepts/ack_horse_v1/horse_attend.png'];
+let images=[],frame=0,playing=false,mirrored=false,ready=false;const sequence=[0,1,0];let step=0;
+function paint(ctx,img,x,y,scale,mirror){ctx.save();ctx.translate(x,y);ctx.scale(mirror?-scale:scale,scale);ctx.drawImage(img,-799.5,-1184);ctx.restore()}
+function draw(){if(!ready)return;const full=document.querySelector('#full'),ctx=full.getContext('2d');ctx.clearRect(0,0,1254,1254);paint(ctx,images[frame],mirrored?454.5:799.5,1184,1,mirrored);ctx.strokeStyle='#b42318';ctx.beginPath();ctx.moveTo(0,1184.5);ctx.lineTo(1254,1184.5);ctx.stroke();document.querySelector('#state').textContent=(frame?'attend':'idle')+(mirrored?' / mirrored':' / native');window.current={frame,mirrored,sourceScale:1,referenceScale:110/1117};const s=document.querySelector('#small').getContext('2d');s.clearRect(0,0,420,160);[0,1].forEach((i)=>{paint(s,images[i],115+i*200,135,110/1117,mirrored);s.fillText(i?'attend':'idle',80+i*200,153)});}
+function selectFrame(i){playing=false;frame=i;draw()}
+Promise.all(sources.map(src=>new Promise((resolve,reject)=>{let im=new Image();im.onload=()=>resolve(im);im.onerror=reject;im.src=src}))).then(loaded=>{images=loaded;ready=true;draw()});
+setInterval(()=>{if(playing){step=(step+1)%sequence.length;frame=sequence[step];draw()}},800);
+</script>

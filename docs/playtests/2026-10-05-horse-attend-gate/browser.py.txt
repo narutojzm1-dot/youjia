@@ -1,0 +1,23 @@
+import functools,http.server,threading,json
+from pathlib import Path
+from playwright.sync_api import sync_playwright
+root='/workspace/youjia-horse-attend-gate';out=Path(root+'/docs/playtests/2026-10-05-horse-attend-gate')
+class Handler(http.server.SimpleHTTPRequestHandler):
+ def log_message(self,*a):pass
+server=http.server.ThreadingHTTPServer(('127.0.0.1',0),functools.partial(Handler,directory=root));threading.Thread(target=server.serve_forever,daemon=True).start()
+with sync_playwright() as p:
+ b=p.chromium.launch(executable_path='/usr/bin/chromium',headless=True,args=['--no-sandbox'])
+ page=b.new_page(viewport={'width':1300,'height':1800},device_scale_factor=1);errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
+ page.goto(f'http://127.0.0.1:{server.server_port}/docs/playtests/2026-10-05-horse-attend-gate/preview.html');page.wait_for_function('ready')
+ samples=[]
+ for mirror in [False,True]:
+  page.evaluate('(v)=>{mirrored=v;draw()}',mirror)
+  for i in [0,1,0]:
+   page.evaluate('(i)=>selectFrame(i)',i);samples.append(page.evaluate('window.current'))
+  for i in [0,1]:
+   page.evaluate('(i)=>selectFrame(i)',i);page.locator('#full').screenshot(path=str(out/f'{"mirror" if mirror else "native"}-{i}.png'))
+ page.locator('#small').screenshot(path=str(out/'reference-scale.png'))
+ assert not errors,errors
+ (out/'browser-result.json').write_text(json.dumps({'samples':samples,'page_errors':errors,'kind':'HTML Canvas resource review, not Godot/runtime'},indent=2))
+ b.close()
+server.shutdown()
