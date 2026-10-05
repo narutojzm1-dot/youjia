@@ -1,0 +1,23 @@
+READY page 1
+DONE
+DONE
+DONE
+DONE
+DB 00-restored-settings-initial-db [{"key": "current", "generation": "1", "memory": {}, "album": [], "elapsed": 0.0}]
+DONE
+DB 02-before-relationship-db [{"key": "current", "generation": "2", "memory": {}, "album": ["sheep_pet_gentle"], "elapsed": 0.0}]
+DONE
+DONE
+DB attempt1-away-db [{"key": "current", "generation": "4", "memory": {}, "album": ["sheep_pet_gentle", "llama_overcast_goose_annoyed"], "elapsed": 60.0684555555556}]
+DONE
+DB attempt1-after15s-db [{"key": "current", "generation": "7", "memory": {"goose_llama_shared_space_after_player_lead": true}, "album": ["sheep_pet_gentle", "llama_overcast_goose_annoyed", "goose_horse_mount"], "elapsed": 120.092203030302}]
+DONE
+DB 04-after90s-db [{"key": "current", "generation": "8", "memory": {"goose_llama_shared_space_after_player_lead": true}, "album": ["sheep_pet_gentle", "llama_overcast_goose_annoyed", "goose_horse_mount"], "elapsed": 180.094259259261}]
+DONE
+DB 05-settled-before-close-db [{"key": "current", "generation": "8", "memory": {"goose_llama_shared_space_after_player_lead": true}, "album": ["sheep_pet_gentle", "llama_overcast_goose_annoyed", "goose_horse_mount"], "elapsed": 180.094259259261}]
+READY page 2
+DONE
+DB 06-reopened-title-db [{"key": "current", "generation": "8", "memory": {"goose_llama_shared_space_after_player_lead": true}, "album": ["sheep_pet_gentle", "llama_overcast_goose_annoyed", "goose_horse_mount"], "elapsed": 180.094259259261}]
+DB 08-reopened-album-db [{"key": "current", "generation": "8", "memory": {"goose_llama_shared_space_after_player_lead": true}, "album": ["sheep_pet_gentle", "llama_overcast_goose_annoyed", "goose_horse_mount"], "elapsed": 180.094259259261}]
+DB 09-settled-reopened-db [{"key": "current", "generation": "8", "memory": {"goose_llama_shared_space_after_player_lead": true}, "album": ["sheep_pet_gentle", "llama_overcast_goose_annoyed", "goose_horse_mount"], "elapsed": 180.094259259261}]
+DONE
