@@ -517,6 +517,24 @@ func _tap_home() -> void:
 			scroll.walk(Vector2.ZERO, 1.0 / 30.0)
 		check(reasons == ["player"], "the public repro tap at %s goes home" % point)
 		scroll.free()
+	# 路尽头右下的石头与草地：最近处也是路尽头，但只走过去，不回院
+	for point: Vector2 in [Vector2(1200, 600), Vector2(1220, 500)]:
+		var store := make_store()
+		var host := ExplorationHost.new(store)
+		host.restore()
+		host.begin(CLOCK, seed_all_four())
+		var scroll: Node2D = load("res://scripts/exploration/near_path_scroll.gd").new()
+		root.add_child(scroll)
+		scroll.setup(host, "sunny")
+		var reasons: Array[String] = []
+		scroll.return_requested.connect(func(reason: String) -> void: reasons.append(reason))
+		await process_frame
+		check(L.at_home(L.nearest(scroll.screen_to_art(point))), "the rocks at %s are nearest the road end" % point)
+		scroll.press_at(point)
+		for i in 120:
+			scroll.walk(Vector2.ZERO, 1.0 / 30.0)
+		check(reasons.is_empty() and L.at_home(scroll.spot) and not scroll.leaving, "a tap on the rocks at %s walks to the gate without going home" % point)
+		scroll.free()
 
 
 ## 拾起成功的短展示：只跟着核心接受的带上 / 换成走，打断即收尾，不碰篮子和存档
