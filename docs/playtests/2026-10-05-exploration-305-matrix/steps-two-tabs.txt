@@ -1,0 +1,21 @@
+save[start]: {"db": "youjia-save-host-v1", "generation": "1", "keepsakes": {}, "serial": 0, "next_trip_serial": null, "session_open": false, "intent_present": false}
+03-A-gate-t: T: take or swap if offered
+05-A-shade-t: T: take or swap if offered
+07-A-brook-t: T: take or swap if offered
+09-A-slope-t: T: take or swap if offered
+B: first frame seen = False
+10-B-opened: second tab opened while A is out exploring
+11-B-after-click: clicked where the start button would be
+12-A-home: R, 6.0 s later
+save[after A trip]: {"db": "youjia-save-host-v1", "generation": "7", "keepsakes": {}, "serial": 0, "next_trip_serial": 2, "session_open": true, "intent_present": false}
+13-B-after-A-home: tab B after A came home
+save[read from B]: {"db": "youjia-save-host-v1", "generation": "9", "keepsakes": {"formal.find.pine_cone": 1}, "serial": 1, "next_trip_serial": 2, "session_open": false, "intent_present": false}
+14-A-after-B-closed: tab A after B closed
+15-reopened: single fresh tab
+save[after reopen]: {"db": "youjia-save-host-v1", "generation": "9", "keepsakes": {"formal.find.pine_cone": 1}, "serial": 1, "next_trip_serial": 2, "session_open": false, "intent_present": false}
+poll[reopen +2s]: serial=1 keepsakes={"formal.find.pine_cone": 1} session_open=False gen=9
+16-reopen-poll0: 2s into polling
+poll[reopen +4s]: serial=1 keepsakes={"formal.find.pine_cone": 1} session_open=False gen=9
+poll[reopen +6s]: serial=1 keepsakes={"formal.find.pine_cone": 1} session_open=False gen=9
+17-reopen-poll2: 6s into polling
+errors: []
