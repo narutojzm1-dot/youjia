@@ -1,0 +1,69 @@
+<!doctype html><meta charset="utf-8"><script type="module">
+import {openStore,envelope,newId,validate} from './store.mjs';
+import {importLegacyV5,prepareLegacyV5} from './legacy_v5.mjs';
+import {CANDIDATE_BUDGET as B} from './budgets.mjs';
+let checks=0,labels=[],names=[],stores=[];
+const p=' {"version":5,"future":{"integer":9007199254740993,"unknown":"原文"},"album":["future-rule"]}\n';
+const b='{"version":5,"other":18446744073709551615}';
+const input={primary:{status:'present',text:p},backup:{status:'present',text:b}};
+const payload=prepareLegacyV5(input,B);
+const name=()=>{const n='youjia-recovery-test-candidate-v1-'+newId();names.push(n);return n;};
+const ok=(v,l)=>{if(!v)throw Error(l);checks++;labels.push(l);};
+async function fails(fn,l){let f=false;try{await fn();}catch(_){f=true;}ok(f,l);}
+const opened=async n=>{const s=await openStore(n,{},B);stores.push(s);return s;};
+async function mutate(n,fn){const db=await new Promise((r,j)=>{const q=indexedDB.open(n);q.onsuccess=()=>r(q.result);q.onerror=j;});await new Promise((r,j)=>{const tx=db.transaction('records','readwrite');fn(tx.objectStore('records'));tx.oncomplete=r;tx.onabort=j;});db.close();}
+try{
+ const saved=sessionStorage.getItem('sealed-reload');
+ if(saved){
+  const state=JSON.parse(saved);checks=state.checks;labels=state.labels;names=state.names;
+  const s=await opened(state.name);const r=await s.recover();
+  ok(r.verdict==='clean'&&JSON.parse(r.current.payload_bytes).turn===3,'real page reload recovers latest normal payload');
+  ok(r.legacy_sources.import_payload===payload,'real page reload preserves full original text');
+  ok(r.current.legacy_sources_sha256===r.legacy_sources.seal_sha256,'real page reload binding intact');
+  sessionStorage.removeItem('sealed-reload');
+ }else{
+  const n=name();await importLegacyV5(n,input,B);const s=await opened(n);let r=await s.recover();
+  ok(r.current.schema==='youjia.save-envelope/v2','import root requires sealed schema');
+  ok(r.legacy_sources.import_payload===payload,'seal preserves original source lexemes');
+  const seal=JSON.stringify(r.legacy_sources);
+  for(let turn=1;turn<=3;turn++){
+   const c=await envelope(JSON.stringify({version:5,turn}),r.current,B);await s.submit(c);await s.acknowledge(c.request_id);r=await s.recover();
+   ok(r.verdict==='clean'&&JSON.stringify(r.legacy_sources)===seal,'normal commit ack preserves seal '+turn);
+  }
+  const abortName=name(),a=await opened(abortName);
+  await fails(()=>a.initialize(payload,{preserveLegacy:true,abort_initialize:true}),'actual initialize transaction abort');
+  ok(!Object.values((await a.snapshot()).present).some(Boolean),'abort leaves neither root nor seal');
+  await a.initialize(payload,{preserveLegacy:true});ok((await a.recover()).verdict==='clean','initialize retry atomic pair');
+  const initialized=JSON.stringify(await a.snapshot());await fails(()=>a.initialize(payload,{preserveLegacy:true}),'occupied initialization refuses overwrite');ok(initialized===JSON.stringify(await a.snapshot()),'occupied initialization leaves sealed root unchanged');
+  for(const fault of ['remove','seal_damage','binding_damage','both_damage','foreign_seal']){
+   const d=name();await importLegacyV5(d,input,B);const t=await opened(d);let prior=(await t.recover()).current;const next=await envelope('{"version":5,"normal":true}',prior,B);await t.submit(next);await t.acknowledge(next.request_id);const original=await t.snapshot();
+   await mutate(d,store=>{
+    if(fault==='remove')store.delete('legacy_sources');
+    if(['seal_damage','both_damage'].includes(fault))store.put({...original.legacy_sources,import_payload:payload+' '},'legacy_sources');
+    if(['binding_damage','both_damage'].includes(fault))store.put({...original.current,legacy_sources_sha256:'0'.repeat(64)},'current');
+    if(fault==='foreign_seal')store.put(r.legacy_sources,'legacy_sources');
+   });
+   const before=JSON.stringify(await t.snapshot());ok((await t.recover()).verdict==='quarantined',fault+' quarantine');
+   await fails(async()=>t.submit(await envelope('{}',original.current,B)),fault+' refuses write');
+   ok(before===JSON.stringify(await t.snapshot()),fault+' evidence untouched');
+  }
+  const denseP=await(await fetch('./budget_samples/dense_full.primary.json')).text();
+  const denseB=await(await fetch('./budget_samples/dense_full.backup.json')).text();
+  const denseName=name();await importLegacyV5(denseName,{primary:{status:'present',text:denseP},backup:{status:'present',text:denseB}},B);
+  const d=await opened(denseName);let root=(await d.recover()).current,stopped=false;
+  for(let i=0;i<32;i++){
+   const before=JSON.stringify(await d.snapshot());const c=await envelope(denseP,root,B);
+   try{await d.submit(c,{abort_stage:'commit'});}catch(e){if(String(e).includes('record byte budget')){ok(before===JSON.stringify(await d.snapshot()),'budget refusal retains all records');stopped=true;break;}}
+   ok((await d.recover()).verdict==='restored_parent_intent_rejected','archive recover '+i);
+  }
+  ok(stopped,'sealed evidence included in cumulative budget');
+  const v=await d.snapshot();const bytes=x=>new TextEncoder().encode(JSON.stringify(x)).length;
+  ok(bytes({current:v.current,archive:v.archive,legacy_sources:v.legacy_sources})<=B.recordsBytes,'retained state within records budget');
+  for(const st of stores)st.close();stores=[];
+  sessionStorage.setItem('sealed-reload',JSON.stringify({name:n,names,checks,labels}));location.reload();
+  await new Promise(()=>{});
+ }
+ window.r1={status:'PASS',checks,labels};
+}catch(e){window.r1={status:'FAIL',checks,labels,error:String(e),stack:e.stack};}
+finally{for(const st of stores)st.close();for(const n of names)await new Promise(r=>{const q=indexedDB.deleteDatabase(n);q.onsuccess=r;q.onerror=r;});window.r1Done=true;}
+</script>

@@ -1,7 +1,12 @@
+import {makeLegacySeal, validLegacySeal} from './legacy_seal.mjs';
 // Isolated R1 candidate. Never open the production user:// database.
 const SCHEMA = 'youjia.save-envelope/v1';
+const SEALED_SCHEMA = 'youjia.save-envelope/v2';
 const FIELDS = ['schema', 'store_id', 'commit_id', 'request_id', 'parent_commit_id',
   'generation', 'payload_bytes', 'payload_sha256', 'envelope_sha256'];
+const sealedFields = [...FIELDS.slice(0,-1), 'legacy_sources_sha256', 'envelope_sha256'];
+const fieldsFor = e => e?.schema === SEALED_SCHEMA ? sealedFields : FIELDS;
+const sameOrigin = (a,b) => a.schema === b.schema && a.legacy_sources_sha256 === b.legacy_sources_sha256;
 const ID = /^[0-9a-f]{32}$/;
 const HASH = /^[0-9a-f]{64}$/;
 const MAX_GENERATION = 9223372036854775807n;
@@ -15,7 +20,7 @@ async function sha(bytes) {
     .map(v => v.toString(16).padStart(2, '0')).join('');
 }
 async function digest(e) {
-  const parts = FIELDS.slice(0, -1).map(k => encoder.encode(e[k]));
+  const parts = fieldsFor(e).slice(0, -1).map(k => encoder.encode(e[k]));
   const out = new Uint8Array(parts.reduce((n, p) => n + 8 + p.length, 0));
   const view = new DataView(out.buffer);
   let offset = 0;
@@ -28,12 +33,13 @@ async function digest(e) {
 export async function validate(e, budget = FIXTURE_BUDGET) {
   checkBudget(budget);
   if (!e || typeof e !== 'object' || Array.isArray(e) ||
-      Object.keys(e).length !== FIELDS.length ||
-      !FIELDS.every(k => Object.hasOwn(e, k) && typeof e[k] === 'string')) return false;
-  if (e.schema !== SCHEMA || !ID.test(e.store_id) || !ID.test(e.commit_id) ||
+      Object.keys(e).length !== fieldsFor(e).length ||
+      !fieldsFor(e).every(k => Object.hasOwn(e, k) && typeof e[k] === 'string')) return false;
+  if (![SCHEMA, SEALED_SCHEMA].includes(e.schema) || !ID.test(e.store_id) || !ID.test(e.commit_id) ||
       !ID.test(e.request_id) || !(e.parent_commit_id === '' || ID.test(e.parent_commit_id)) ||
       !/^[1-9][0-9]{0,18}$/.test(e.generation) || BigInt(e.generation) > MAX_GENERATION ||
       !HASH.test(e.payload_sha256) || !HASH.test(e.envelope_sha256)) return false;
+  if (e.schema === SEALED_SCHEMA && !HASH.test(e.legacy_sources_sha256)) return false;
   if ((e.generation === '1') !== (e.parent_commit_id === '')) return false;
   const limit = e.generation === '1' ? budget.importBytes : budget.writeBytes;
   if (e.payload_bytes.length > limit || encoder.encode(e.payload_bytes).length > limit) return false;
@@ -41,17 +47,19 @@ export async function validate(e, budget = FIXTURE_BUDGET) {
   return await sha(encoder.encode(e.payload_bytes)) === e.payload_sha256 &&
     await digest(e) === e.envelope_sha256;
 }
-export async function envelope(payload, parent = null, budget = FIXTURE_BUDGET) {
+export async function envelope(payload, parent = null, budget = FIXTURE_BUDGET, legacy = null) {
   checkBudget(budget);
   const limit = parent === null ? budget.importBytes : budget.writeBytes;
   if (typeof payload !== 'string' || payload.length > limit || encoder.encode(payload).length > limit) throw Error('bounded frozen JSON text required');
-  parent = copy(parent);
+  parent = copy(parent); legacy = copy(legacy);
   if (parent !== null && !await validate(parent, budget)) throw Error('invalid parent');
   const generation = parent ? BigInt(parent.generation) + 1n : 1n;
   if (generation > MAX_GENERATION) throw Error('generation exhausted');
-  const e = {schema: SCHEMA, store_id: parent?.store_id || newId(), commit_id: newId(),
+  if (legacy !== null && (parent !== null || !await validLegacySeal(legacy,budget) || legacy.import_payload !== payload)) throw Error('invalid root legacy binding');
+  const e = {schema: parent?.schema || (legacy ? SEALED_SCHEMA : SCHEMA), store_id: parent?.store_id || legacy?.store_id || newId(), commit_id: newId(),
     request_id: newId(), parent_commit_id: parent?.commit_id || '', generation: String(generation),
     payload_bytes: payload, payload_sha256: await sha(encoder.encode(payload)), envelope_sha256: ''};
+  if (e.schema === SEALED_SCHEMA) e.legacy_sources_sha256 = parent?.legacy_sources_sha256 || legacy.seal_sha256;
   e.envelope_sha256 = await digest(e);
   if (!await validate(e, budget)) throw Error('invalid envelope');
   return e;
@@ -84,7 +92,7 @@ export async function openStore(name, hooks = {}, budget = FIXTURE_BUDGET) {
       tx.oncomplete = () => { event('txn_complete', {stage}); resolve(result); };
       tx.onabort = () => { event('txn_abort', {stage}); reject(failure || tx.error || Error('aborted')); };
       tx.onerror = () => {}; // Terminal abort is authoritative.
-      const keys = ['current', 'intent', 'archive']; let remaining = keys.length * 2;
+      const keys = ['current', 'intent', 'archive', 'legacy_sources']; let remaining = keys.length * 2;
       const finish = () => {
         if (--remaining) return;
         try { result = apply(values, s, tx); }
@@ -109,7 +117,7 @@ export async function openStore(name, hooks = {}, budget = FIXTURE_BUDGET) {
     if (!i || typeof i !== 'object' || Array.isArray(i) ||
       Object.keys(i).sort().join(',') !== 'candidate,parent,request_id,state' ||
       !states.includes(i.state) || !await validate(i.parent, budget) || !await validate(i.candidate, budget)) return false;
-    return i.request_id === i.candidate.request_id &&
+    return sameOrigin(i.parent,i.candidate) && i.request_id === i.candidate.request_id &&
       i.candidate.store_id === i.parent.store_id &&
       i.candidate.parent_commit_id === i.parent.commit_id &&
       i.candidate.commit_id !== i.parent.commit_id && i.candidate.request_id !== i.parent.request_id &&
@@ -117,17 +125,20 @@ export async function openStore(name, hooks = {}, budget = FIXTURE_BUDGET) {
   }
   function withinRecords(v) {
     if (budget.recordsBytes === Infinity) return true; // Preserve fixture behavior.
-    try { return encoder.encode(JSON.stringify({current:v.current, intent:v.intent, archive:v.archive})).length <= budget.recordsBytes; }
+    try { return encoder.encode(JSON.stringify({current:v.current, intent:v.intent, archive:v.archive, legacy_sources:v.legacy_sources})).length <= budget.recordsBytes; }
     catch (_) { return false; }
   }
   async function checked(v) {
     if (!withinRecords(v)) return false;
     if (!v.present.current || !await validate(v.current, budget)) return false;
+    if (v.current.schema === SEALED_SCHEMA) {
+      if (!v.present.legacy_sources || !await validLegacySeal(v.legacy_sources,budget) || v.legacy_sources.store_id !== v.current.store_id || v.legacy_sources.seal_sha256 !== v.current.legacy_sources_sha256) return false;
+    } else if (v.present.legacy_sources) return false;
     if (v.present.archive) {
       if (!Array.isArray(v.archive) || v.archive.length > 32) return false;
-      for (const item of v.archive) if (!await validIntent(item, ['rejected'])) return false;
+      for (const item of v.archive) if (!await validIntent(item, ['rejected']) || !sameOrigin(item.parent,v.current) || item.parent.store_id !== v.current.store_id) return false;
     }
-    return !v.present.intent || await validIntent(v.intent, ['prepared', 'committed']);
+    return !v.present.intent || (await validIntent(v.intent, ['prepared', 'committed']) && sameOrigin(v.intent.parent,v.current) && v.intent.parent.store_id === v.current.store_id);
   }
   async function recoverLocked() {
     const v = await snapshot();
@@ -163,16 +174,19 @@ export async function openStore(name, hooks = {}, budget = FIXTURE_BUDGET) {
   return {
     snapshot,
     // Explicit fixture initialization only; recovery never auto-creates a root.
-    async initialize(payload) {
+    async initialize(payload, {preserveLegacy = false, abort_initialize = false} = {}) {
       return locked(async () => {
-        const root = await envelope(payload, null, budget);
-        await transact('readwrite', (v, s) => {
+        const legacy = preserveLegacy ? await makeLegacySeal(payload,newId(),budget) : null;
+        const root = await envelope(payload, null, budget, legacy);
+        await transact('readwrite', (v, s, tx) => {
           if (Object.values(v.present).some(Boolean)) throw Error('store not empty');
-          if (!withinRecords({current:root})) throw Error('record byte budget exceeded');
+          if (!withinRecords({current:root, ...(legacy ? {legacy_sources:legacy} : {})})) throw Error('record byte budget exceeded');
           s.put(root, 'current');
+          if (legacy) s.put(legacy, 'legacy_sources');
+          if (abort_initialize) tx.abort();
         }, 'initialize');
         const v = await snapshot();
-        if (!same(v.current, root)) throw Error('initial readback mismatch');
+        if (!same(v.current, root) || (legacy && !same(v.legacy_sources,legacy)) || !await checked(v)) throw Error('initial readback mismatch');
         return v.current;
       });
     },
@@ -208,7 +222,7 @@ export async function openStore(name, hooks = {}, budget = FIXTURE_BUDGET) {
         const v = await snapshot();
         if (!await checked(v) || v.present.intent) throw Error('recovery required');
         const parent = v.current;
-        if (candidate.store_id !== parent.store_id || candidate.parent_commit_id !== parent.commit_id ||
+        if (!sameOrigin(candidate,parent) || candidate.store_id !== parent.store_id || candidate.parent_commit_id !== parent.commit_id ||
             candidate.commit_id === parent.commit_id || candidate.request_id === parent.request_id ||
             BigInt(candidate.generation) !== BigInt(parent.generation) + 1n) throw Error('stale parent');
         const intent = {state: 'prepared', request_id: candidate.request_id, parent, candidate};

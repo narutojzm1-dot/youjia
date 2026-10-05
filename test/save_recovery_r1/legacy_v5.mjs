@@ -41,7 +41,7 @@ export async function importLegacyV5(testName,input, budget = FIXTURE_BUDGET) {
  try {
   // R1 atomically requires all target record keys absent, under its Web Lock.
   // Existing good, corrupt or pending target records are never overwritten.
-  const current=await store.initialize(payload);
+  const current=await store.initialize(payload, {preserveLegacy:true});
   return {current,selected:JSON.parse(payload).selected};
  } finally { store.close(); }
 }

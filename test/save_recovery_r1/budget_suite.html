@@ -28,7 +28,7 @@ try {
   const b=await (await fetch('./budget_samples/'+kind+'.backup.json')).text();
   const raw=JSON.stringify(snapshot(p,b));
   const payload=prepareLegacyV5(decodeSourceSnapshot(decodeHeadSnapshot(raw,B),B),B);
-  const t=await openStore(name(),{},B);stores.push(t);const root=await t.initialize(payload);
+  const t=await openStore(name(),{},B);stores.push(t);const root=await t.initialize(payload,{preserveLegacy:true});
   ok(JSON.parse(root.payload_bytes).sources.primary.text===p && JSON.parse(root.payload_bytes).sources.backup.text===b,kind+' raw preserved');
   ok((await t.recover()).verdict==='clean',kind+' root recovered');
   const next=await envelope(p,root,B);await t.submit(next);await t.acknowledge(next.request_id);
@@ -36,7 +36,7 @@ try {
   if(kind==='dense_full')ok(bytes(payload)>B.writeBytes,'import root exceeds normal budget');
  }
  const p=JSON.stringify({version:5,padding:'a'.repeat(1500000)});
- const root=await s.initialize(prepareLegacyV5({primary:{status:'present',text:p},backup:{status:'present',text:p}},B));
+ const root=await s.initialize(prepareLegacyV5({primary:{status:'present',text:p},backup:{status:'present',text:p}},B),{preserveLegacy:true});
  const before=JSON.stringify(await s.snapshot());
  await fails(()=>envelope('"'+'a'.repeat(B.writeBytes)+'"',root,B),'normal over limit rejects');
  await fails(()=>s.submit(root),'root cannot masquerade as descendant');
