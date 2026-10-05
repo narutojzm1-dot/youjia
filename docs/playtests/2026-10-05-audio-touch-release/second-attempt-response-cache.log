@@ -1,0 +1,20 @@
+Traceback (most recent call last):
+  File "D:\games\youjia-test\assistant-recovery\browser-public.py", line 38, in <module>
+    loaded_packages=[{'url':r.url,'bytes':len(r.body()),'sha256':hashlib.sha256(r.body()).hexdigest()} for r in pck_responses]
+                                              ^^^^^^^^
+  File "C:\Users\Zengm\AppData\Local\Programs\Python\Python312\Lib\site-packages\playwright\sync_api\_generated.py", line 660, in body
+    return mapping.from_maybe_impl(self._sync(self._impl_obj.body()))
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Zengm\AppData\Local\Programs\Python\Python312\Lib\site-packages\playwright\_impl\_sync_base.py", line 115, in _sync
+    return task.result()
+           ^^^^^^^^^^^^^
+  File "C:\Users\Zengm\AppData\Local\Programs\Python\Python312\Lib\site-packages\playwright\_impl\_network.py", line 882, in body
+    binary = await self._channel.send(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Zengm\AppData\Local\Programs\Python\Python312\Lib\site-packages\playwright\_impl\_connection.py", line 76, in send
+    return await self._connection.wrap_api_call(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Zengm\AppData\Local\Programs\Python\Python312\Lib\site-packages\playwright\_impl\_connection.py", line 632, in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+playwright._impl._errors.Error: Response.body: Protocol error (Network.getResponseBody): Request content was evicted from inspector cache
+Response body is not available for a response that was navigated away from. Read response.body() before triggering any navigation.
