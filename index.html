@@ -1,5 +1,5 @@
 <!doctype html>
-<html data-build="game-bc213f9" lang="zh-CN">
+<html data-build="game-a936bea" lang="zh-CN">
 <head>
   <meta http-equiv="Cache-Control" content="no-cache, must-revalidate, max-age=0">
   <meta http-equiv="Pragma" content="no-cache">
@@ -10,8 +10,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="manus-game-loading-screen" content="1">
   <title>悠长的假期</title>
-  <link id="-gd-engine-icon" rel="icon" type="image/png" href="game-bc213f9.icon.png" />
-<link rel="apple-touch-icon" href="game-bc213f9.apple-touch-icon.png"/>
+  <link id="-gd-engine-icon" rel="icon" type="image/png" href="game-a936bea.icon.png" />
+<link rel="apple-touch-icon" href="game-a936bea.apple-touch-icon.png"/>
 
   <!-- Project-owned starting point, not the platform default. Customize the presentation below. -->
   <!-- Embedded Noto Sans SC loader subset: SIL Open Font License 1.1; license text: assets/template/fonts/NotoSansSC-OFL.txt. -->
@@ -72,12 +72,12 @@ Source SHA-256: 38f4c5f927f746b3dfa4c3a5d7edf0b7a3e828e27438418fa54f9e1565289412
   </section>
   <script>
     (() => {
-      const config = {"args":[],"canvasResizePolicy":2,"emscriptenPoolSize":8,"ensureCrossOriginIsolationHeaders":true,"executable":"game-bc213f9","experimentalVK":false,"fileSizes":{"game-bc213f9.pck":24490020,"game-bc213f9.wasm":39514754},"focusCanvas":true,"gdextensionLibs":[],"godotPoolSize":4};
+      const config = {"args":[],"canvasResizePolicy":2,"emscriptenPoolSize":8,"ensureCrossOriginIsolationHeaders":true,"executable":"game-a936bea","experimentalVK":false,"fileSizes":{"game-a936bea.pck":25260420,"game-a936bea.wasm":39514754},"focusCanvas":true,"gdextensionLibs":[],"godotPoolSize":4};
       let resolveSaveRuntime, rejectSaveRuntime;
       const saveRuntimeReady = new Promise((resolve, reject) => { resolveSaveRuntime = resolve; rejectSaveRuntime = reject; });
       saveRuntimeReady.catch(() => {}); // Observe immediately; preserve original rejection.
-      const saveBridgeReady = import('./save-bc213f9/bridge.mjs').then(async ({installSaveHost}) => {
-        const {captureIdbfsSource} = await import('./save-bc213f9/idbfs_source.mjs');
+      const saveBridgeReady = import('./save-a936bea/bridge.mjs').then(async ({installSaveHost}) => {
+        const {captureIdbfsSource} = await import('./save-a936bea/idbfs_source.mjs');
         installSaveHost({runtimeReady: saveRuntimeReady, captureLegacy: captureIdbfsSource});
       });
       saveBridgeReady.catch(() => {});
@@ -222,7 +222,7 @@ Source SHA-256: 38f4c5f927f746b3dfa4c3a5d7edf0b7a3e828e27438418fa54f9e1565289412
         }
       };
       const script = document.createElement('script');
-      script.src = 'game-bc213f9.js';
+      script.src = 'game-a936bea.js';
       script.addEventListener('load', start, { once: true });
       script.addEventListener('error', () => fail(new Error('Engine script could not be loaded')), { once: true });
       document.head.appendChild(script);
