@@ -10,6 +10,8 @@ const MUTED := Color("8a7060")
 const APRICOT := Color("f3b27a")
 ## 标题页副标题用的深杏色：在 PAPER 上对比约 4.6:1（APRICOT 只有约 1.7:1），#REQ-20261005-028
 const TITLE_ACCENT := Color("a85d28")
+## 目标纸片里文字区的最小高度：纸面最少 48px，与「歇一会儿」按钮同高（REQ-20261005-029）
+const HINT_MIN_TEXT_HEIGHT := 32.0
 const SAGE := Color("8fb389")
 const CREAM := Color("fffaf1")
 const LAVENDER := Color("cbb6d6")
@@ -115,7 +117,13 @@ var _photo_arrival: PhotoArrival
 var _photo_arrival_queue: Array[Dictionary] = []
 var _pending_photo_saves: Dictionary = {}
 var _save_transition := false
-var _retrying_ack := false
+var _save_problems: Dictionary = {}
+var _save_durable_ops: Dictionary = {}
+var _save_problem_revision := 0
+var _save_untracked_problem := false
+var _save_untracked_revision := 0
+var _save_retry_coverage: Dictionary = {}
+var _save_ack_coverage: Dictionary = {}
 var _save_problem_active := false
 var _save_status_panel: PanelContainer
 var _save_retry_button: Button
@@ -596,7 +604,8 @@ func _build_hud() -> void:
 	_hint_label = _label(15, INK)
 	_hint_label.position = Vector2(24, 18)
 	_hint_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	_hint_label.size = Vector2(520, 70)
+	_hint_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	_hint_label.size = Vector2(520, HINT_MIN_TEXT_HEIGHT)
 	_hud.add_child(_hint_label)
 	# 假期天数标签：挂在「歇一会儿」下方的小纸签，避开目标纸片并在树叶/天空上都可读（#338）
 	_day_label = _label(14, INK)
@@ -886,7 +895,7 @@ func _start_holiday(save_progress: bool = true) -> void:
 	_leave_exploration()
 	if save_progress and _world != null: _world._save_progress()
 	if not await SaveStore.flush_pending() or _save_problem_active:
-		_show_save_pending()
+		_show_save_pending(false)
 		return
 	TuningStore.begin_run(false)
 	AudioDirector.set_game_paused(false)
@@ -1005,7 +1014,7 @@ func _show_title(save_progress: bool = true) -> void:
 	if save_progress and _world != null:
 		_world._save_progress()
 		if not await SaveStore.flush_pending() or _save_problem_active:
-			_show_save_pending()
+			_show_save_pending(false)
 			return
 	get_tree().paused = false
 	TuningStore.end_run()
@@ -1057,7 +1066,7 @@ func _confirm_destructive_action() -> void:
 	if not await SaveStore.flush_pending() or _save_problem_active:
 		_save_transition = false
 		_confirm_screen.visible = false
-		_show_save_pending()
+		_show_save_pending(false)
 		return
 	_save_transition = false
 	var action := _pending_destructive_action
@@ -1095,12 +1104,18 @@ func _on_album_updated(collected: PackedStringArray, latest_id: String) -> void:
 	if _album_screen.visible: _rebuild_album(collected)
 
 
-func _on_save_confirmed(op_id: String, _kind: String) -> void:
+func _on_save_confirmed(op_id: String, kind: String) -> void:
+	_save_durable_ops[op_id] = true
+	if _save_problems.get(op_id, {}).get("kind", "") == kind:
+		_save_problems.erase(op_id)
+	if _save_retry_coverage.has(op_id):
+		_clear_covered_save_problems(_save_retry_coverage[op_id].problems)
+		if _save_untracked_revision == _save_retry_coverage[op_id].untracked_revision:
+			_save_untracked_problem = false
+		_save_retry_coverage.erase(op_id)
 	if not _pending_photo_saves.has(op_id): return
 	var pending: Dictionary = _pending_photo_saves[op_id]
 	_pending_photo_saves.erase(op_id)
-	_save_problem_active = false
-	if _save_status_panel != null: _save_status_panel.hide()
 	if pending.fresh:
 		_latest_photo = pending.latest_id
 		var snapshot := SaveStore.get_photo_moment(pending.latest_id)
@@ -1115,21 +1130,31 @@ func _on_save_confirmed(op_id: String, _kind: String) -> void:
 func _on_save_state_changed(state: String) -> void:
 	if _save_retry_button != null:
 		_save_retry_button.disabled = state in ["writing", "acknowledging", "resolving"]
-	if state == "ready" and SaveStore.is_save_idle() and _retrying_ack:
-		_retrying_ack = false
-		_save_problem_active = false
-		if _save_status_panel != null: _save_status_panel.hide()
+	if state == "ready" and SaveStore.is_save_idle():
+		_clear_covered_save_problems(_save_ack_coverage)
+		_save_ack_coverage.clear()
+		_save_durable_ops.clear()
+		if _save_problems.is_empty() and _pending_photo_saves.is_empty() and not _save_untracked_problem:
+			_save_problem_active = false
+			if _save_status_panel != null: _save_status_panel.hide()
+
+
+func _clear_covered_save_problems(coverage: Dictionary) -> void:
+	for op_id in coverage:
+		if _save_problems.get(op_id) == coverage[op_id]:
+			_save_problems.erase(op_id)
 
 
 func _on_save_rejected(op_id: String, kind: String, code: String) -> void:
 	_pending_photo_saves.erase(op_id)
+	_save_retry_coverage.erase(op_id)
 	_on_save_problem(op_id, kind, code)
 
 
-func _on_save_problem(_op_id: String, _kind: String, _code: String) -> void:
-	# The world still owns the current session's unsaved photos. Do not discard
-	# them or play a saved animation after a rejected/unknown write.
-	_show_save_pending()
+func _on_save_problem(op_id: String, kind: String, _code: String) -> void:
+	_save_problem_revision += 1
+	_save_problems[op_id] = {"kind": kind, "revision": _save_problem_revision, "durable": _save_durable_ops.has(op_id)}
+	_show_save_pending(false)
 
 
 func _build_save_status() -> void:
@@ -1157,21 +1182,43 @@ func _build_save_status() -> void:
 	_save_status_panel.hide()
 
 
-func _show_save_pending() -> void:
+func _show_save_pending(untracked := true) -> void:
+	if untracked:
+		_save_untracked_problem = true
+		_save_untracked_revision += 1
 	_save_problem_active = true
 	if _save_status_panel != null: _save_status_panel.show()
 
 
+func _retryable_save_problems(include_fish: bool) -> Dictionary:
+	var coverage := {}
+	for op_id in _save_problems:
+		var kind: String = _save_problems[op_id].kind
+		if kind in ["yard", "plant", "relationship", "album"] or (include_fish and kind == "fish"):
+			coverage[op_id] = _save_problems[op_id].duplicate()
+	return coverage
+
+
 func _retry_save() -> void:
 	var before := SaveStore.persistence_state()
-	if SaveStore.retry_pending():
-		_retrying_ack = before == "blocked"
-		return
+	# Capture before retry: a native backend may complete synchronously.
+	_save_ack_coverage = {}
+	if before == "blocked":
+		for op_id in _save_problems:
+			if _save_problems[op_id].durable:
+				_save_ack_coverage[op_id] = _save_problems[op_id].duplicate()
+	if SaveStore.retry_pending(): return
+	_save_ack_coverage.clear()
 	if SaveStore.is_save_idle() and _world != null:
+		var coverage := {"problems": _retryable_save_problems(_world._first_fish_polaroid_done), "untracked_revision": _save_untracked_revision}
+		var prior_photos := _pending_photo_saves.keys()
 		_world._save_progress()
 		SaveStore.request_animal_relationship_memory(_world._relationship_memory)
 		if _world._first_fish_polaroid_done: SaveStore.request_first_fish_caught()
 		_on_album_updated(_world.collected, "")
+		for op_id in _pending_photo_saves:
+			if op_id not in prior_photos and _pending_photo_saves[op_id].latest_id == "":
+				_save_retry_coverage[op_id] = coverage
 
 
 func _play_next_photo_arrival() -> void:
@@ -1300,17 +1347,57 @@ func _album_page(index: int) -> Control:
 	content.add_child(heading)
 	var rule_id := _album_entries[index]
 	var rule := ExpressionCatalog.find_rule(rule_id)
+	var moment := SaveStore.get_photo_moment(rule_id)
+	var caption_text := PhotoDiary.caption(moment, rule_id) if not moment.is_empty() else I18n.t(str(rule.get("title_key", "")))
+	var note_text := I18n.t(str(rule.get("note_key", "")))
+	# Measure with the same inherited font and line spacing as the final labels.
+	# Fixed allowances for two lines fail on the existing longer English notes.
+	var text_height := func(text: String, width: float, font_size: int) -> float:
+		var paragraph := TextParagraph.new()
+		var font := get_theme_font("font", "Label")
+		paragraph.width = maxf(1.0, width)
+		paragraph.break_flags = TextServer.BREAK_MANDATORY | TextServer.BREAK_WORD_BOUND | TextServer.BREAK_ADAPTIVE
+		paragraph.add_string(text, font, font_size)
+		# Label uses the composite font's line height even on Latin-only lines.
+		var lines := paragraph.get_line_count()
+		return ceilf(font.get_height(font_size) * lines + get_theme_constant("line_spacing", "Label") * maxi(0, lines - 1))
+	var text_width := _album_page_size.x - 44.0
+	var note_height := maxf(36.0, text_height.call(note_text, text_width, 14))
+	var body_height: float = _album_page_size.y - 25.0 - text_height.call(heading.text, text_width, 14) - text_height.call(I18n.t("album.page", {"page": str(index + 1)}), text_width, 12) - 10.0
+	var compact_page := _album_page_size.y < 370.0 or body_height - note_height - 5.0 < 300.0
+	var wide_page := compact_page and _album_page_size.x > _album_page_size.y * 1.6
+	var body: BoxContainer = HBoxContainer.new() if wide_page else VBoxContainer.new()
+	body.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	body.add_theme_constant_override("separation", 12 if wide_page else 5)
+	content.add_child(body)
 	var center := CenterContainer.new()
-	center.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	content.add_child(center)
+	if not compact_page: center.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	body.add_child(center)
 	var card_width := minf(280.0, minf(_album_page_size.x - 52.0, (_album_page_size.y - 138.0) * 0.8))
-	center.add_child(_photo_card(rule, true, card_width))
+	if compact_page:
+		var photo_height: float = body_height if wide_page else body_height - note_height - text_height.call(caption_text, text_width, 14) - 10.0
+		card_width = maxf(1.0, minf(180.0 if wide_page else 140.0, (photo_height - 2.0) * 0.8))
+	center.add_child(_photo_card(rule, true, card_width, not compact_page))
+	var writing := VBoxContainer.new()
+	writing.add_theme_constant_override("separation", 5)
+	if wide_page:
+		writing.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		writing.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	body.add_child(writing)
+	if compact_page:
+		# A tiny frame cannot hold readable text. Keep the original date/caption
+		# at normal size beside a landscape photo or below a short narrow page.
+		var caption := _label(14, INK)
+		caption.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		caption.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		caption.text = caption_text
+		writing.add_child(caption)
 	var note := _label(14, INK)
 	note.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	note.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	note.custom_minimum_size.y = 36.0
-	note.text = I18n.t(str(rule.get("note_key", "")))
-	content.add_child(note)
+	note.text = note_text
+	writing.add_child(note)
 	var footer := _label(12, MUTED)
 	footer.text = I18n.t("album.page", {"page": str(index + 1)})
 	footer.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
@@ -1318,7 +1405,7 @@ func _album_page(index: int) -> Control:
 	return page
 
 
-func _photo_card(rule: Dictionary, owned: bool, width: float = 240.0) -> Control:
+func _photo_card(rule: Dictionary, owned: bool, width: float = 240.0, caption_on_frame: bool = true) -> Control:
 	var card_scale := width / 240.0
 	var holder := Control.new()
 	holder.custom_minimum_size = Vector2(240, 300) * card_scale
@@ -1336,8 +1423,12 @@ func _photo_card(rule: Dictionary, owned: bool, width: float = 240.0) -> Control
 	var moment := SaveStore.get_photo_moment(str(rule.get("id",""))) if owned else {}
 	if owned and not moment.is_empty():
 		var photograph := PhotoMoment.new()
+		# PhotoMoment defaults to 184 px. This album instance must follow the
+		# card scale; do not change the shared arrival/capture component.
+		photograph.custom_minimum_size = portrait.size
 		photograph.position = portrait.position
-		photograph.size = portrait.size
+		# Its constructor's minimum-size cache clears on entering the tree.
+		photograph.set_deferred("size", portrait.size)
 		photograph.setup(moment)
 		holder.add_child(photograph)
 		portrait.visible = false
@@ -1358,6 +1449,8 @@ func _photo_card(rule: Dictionary, owned: bool, width: float = 240.0) -> Control
 	else:
 		portrait.modulate = Color(1, 1, 1, 0.08)
 	holder.add_child(portrait)
+	if not caption_on_frame:
+		return holder
 	var caption := _label(maxi(12, roundi(13.0 * card_scale)), INK if owned else MUTED)
 	caption.position = Vector2(24, 232) * card_scale
 	caption.size = Vector2(192, 52) * card_scale
@@ -1525,9 +1618,9 @@ func _layout() -> void:
 	_pause_button.size = _pause_button.custom_minimum_size
 	_pause_button.position = Vector2(size.x-_pause_button.size.x-pad,pad)
 	_hint_label.position = Vector2(pad,16)
-	_hint_label.size = Vector2(minf(520.0,maxf(120.0,size.x-_pause_button.size.x-pad*3.0)), 64 if compact else 48)
+	_hint_label.size = Vector2(minf(520.0,maxf(120.0,size.x-_pause_button.size.x-pad*3.0)), HINT_MIN_TEXT_HEIGHT)
 	_hint_panel.position = Vector2(pad-9.0, 9.0)
-	_hint_panel.size = _hint_label.size + Vector2(18.0, 16.0)
+	_fit_hint_panel()
 	# 天数标签：与暂停按钮同宽，紧贴其下方；横竖屏都不进入目标纸片（#338）
 	if _day_label != null:
 		_day_label.size = Vector2(_pause_button.size.x, 28)
@@ -1537,6 +1630,19 @@ func _layout() -> void:
 	_weather_chip.position = Vector2(size.x-half-pad if compact else pad+210.0,row)
 	_action_button.position = Vector2(pad if compact else size.x-_action_button.size.x-pad,size.y-68.0)
 	_fit_pause_panel()
+
+
+## 目标纸片按目标文字的实际行数伸缩（REQ-20261005-029）：
+## 短横屏单行不再留半截空纸压住远山，窄屏英文三四行也不再溢出纸外压到院景。
+## 最少保留与按钮同高的 48px 纸面，文字在纸上垂直居中。
+func _fit_hint_panel() -> void:
+	if _hint_label == null or _hint_panel == null:
+		return
+	var lines := maxi(1, _hint_label.get_line_count())
+	var spacing := float(_hint_label.get_theme_constant("line_spacing"))
+	var text_height := lines * float(_hint_label.get_line_height()) + (lines - 1) * spacing
+	_hint_label.size = Vector2(_hint_label.size.x, maxf(HINT_MIN_TEXT_HEIGHT, ceilf(text_height)))
+	_hint_panel.size = _hint_label.size + Vector2(18.0, 16.0)
 
 
 func _refresh_hud() -> void:
@@ -1563,6 +1669,7 @@ func _refresh_hud() -> void:
 		_hint_label.text = I18n.t(_world.hint_context())
 		_hint_label.add_theme_color_override("font_color", INK)
 	_action_button.text = verb
+	_fit_hint_panel()
 	# 更新假期天数标签
 	if _day_label != null:
 		_day_label.text = I18n.t("hud.day", {"n": str(_world.holiday_day)})
@@ -1880,3 +1987,4 @@ func _flat(bg: Color, border: Color, width: int = 2, radius: int = 16) -> StyleB
 	style.content_margin_top = 10
 	style.content_margin_bottom = 10
 	return style
+

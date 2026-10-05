@@ -1,0 +1,26 @@
+import json,time
+from pathlib import Path
+from playwright.sync_api import sync_playwright
+out=Path('/tmp/post-save-concurrent-input');out.mkdir(exist_ok=True)
+errors=[];trials=[]
+with sync_playwright() as p:
+ b=p.chromium.launch(executable_path='/usr/bin/chromium',headless=True,args=['--no-sandbox','--use-gl=angle','--use-angle=swiftshader','--enable-webgl'])
+ pg=b.new_page(viewport={'width':1280,'height':720})
+ pg.add_init_script("window.qaFirst=false;window.qaInput=[];window.qaFrames=[];addEventListener('youjia:first-frame',()=>qaFirst=true);for(const type of ['mousedown','mouseup'])document.addEventListener(type,e=>qaInput.push({type,t:performance.now(),x:e.clientX,y:e.clientY,trusted:e.isTrusted}),true);const tick=t=>{qaFrames.push(t);requestAnimationFrame(tick)};requestAnimationFrame(tick)")
+ pg.on('pageerror',lambda e:errors.append(str(e)));pg.on('console',lambda m:errors.append(m.text) if m.type=='error' else None)
+ pg.goto('https://narutojzm1-dot.github.io/youjia/');pg.wait_for_function('qaFirst',timeout=120000);pg.wait_for_timeout(1000)
+ build=pg.locator('html').get_attribute('data-build');pg.mouse.click(640,368,delay=80);pg.wait_for_timeout(2500);pg.mouse.click(1160,43,delay=80);pg.wait_for_timeout(500)
+ pg.screenshot(path=str(out/'pause.png'))
+ for track,y in [('music',346),('ambience',481)]:
+  for i in range(20):
+   before=pg.evaluate('JSON.parse(__manusBgm.diagnostics())');t=pg.evaluate('performance.now()')
+   pg.mouse.click(640,y);pg.wait_for_timeout(80)
+   after=pg.evaluate('JSON.parse(__manusBgm.diagnostics())');probe=pg.evaluate('(t)=>({input:qaInput.filter(e=>e.t>=t),frames:qaFrames.filter(e=>e>=t)})',t)
+   changed=before['playing']!=after['playing'];settled=None
+   if not changed:pg.wait_for_timeout(2000);settled=pg.evaluate('JSON.parse(__manusBgm.diagnostics())')
+   trials.append({'track':track,'n':i+1,'before':before,'after80':after,'changed80':changed,'settled2000':settled,'probe':probe})
+   print(track,i+1,changed,flush=True)
+ pg.screenshot(path=str(out/'final.png'));b.close()
+ r={'build':build,'trials':trials,'errors':errors,'utc':time.strftime('%Y-%m-%dT%H:%M:%SZ',time.gmtime()),'scope':'second independent isolated Chromium software WebGL game concurrently with original persistent game; real zero-hold mouse clicks,80ms waits and readonly diagnostics/events; nonresponse gets2s settling; controlled concurrency stress, no physical-device or cause claim'}
+ (out/'result.json').write_text(json.dumps(r,ensure_ascii=False,indent=2)+'\n')
+ print(json.dumps({'build':build,'trials':len(trials),'unchanged80':sum(not t['changed80'] for t in trials),'errors':errors}),flush=True)

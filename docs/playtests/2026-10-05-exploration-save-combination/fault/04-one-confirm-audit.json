@@ -1,0 +1,185 @@
+{
+  "armed": true,
+  "puts": [
+    {
+      "generation": "6",
+      "payload": {
+        "album": [],
+        "animal_relationship_memory": {},
+        "exploration": {
+          "contract_version": 1,
+          "next_trip_serial": 2,
+          "session": {
+            "carried": [
+              "formal.find.brook_stone"
+            ],
+            "catalog": "formal",
+            "current_stop": "brook",
+            "failure": null,
+            "offers": {
+              "brook": "formal.find.brook_stone",
+              "gate": ""
+            },
+            "proposal": {
+              "items": [
+                {
+                  "find_id": "formal.find.brook_stone"
+                }
+              ],
+              "reason": "player",
+              "revision": 1,
+              "route_id": "formal.near_path",
+              "trip_id": "trip-1"
+            },
+            "record_revision": 4,
+            "rng_seed": "-7797374582839305082",
+            "route_id": "formal.near_path",
+            "started_clock": {
+              "day": 1,
+              "elapsed": 27.164
+            },
+            "state": "pending_commit",
+            "taken": {
+              "brook": "formal.find.brook_stone"
+            },
+            "trip_id": "trip-1",
+            "trip_serial": 1,
+            "visited": [
+              "gate",
+              "brook"
+            ]
+          }
+        },
+        "exploration_committed_serial": 0,
+        "first_fish_caught": false,
+        "holiday_day": 1,
+        "holiday_day_elapsed": 27.164,
+        "keepsakes": {},
+        "locale": "zh-CN",
+        "photo_moments": {},
+        "plant_day_planted": 0,
+        "plant_state": 0,
+        "plant_watered_day": -1,
+        "tutorial_version": 0,
+        "version": 5
+      },
+      "success": true,
+      "complete": true,
+      "aborted": false,
+      "time": 1791200311975
+    },
+    {
+      "generation": "7",
+      "payload": {
+        "album": [],
+        "animal_relationship_memory": {},
+        "exploration": {
+          "contract_version": 1,
+          "next_trip_serial": 2,
+          "session": {
+            "carried": [
+              "formal.find.brook_stone"
+            ],
+            "catalog": "formal",
+            "current_stop": "brook",
+            "failure": null,
+            "offers": {
+              "brook": "formal.find.brook_stone",
+              "gate": ""
+            },
+            "proposal": {
+              "items": [
+                {
+                  "find_id": "formal.find.brook_stone"
+                }
+              ],
+              "reason": "player",
+              "revision": 1,
+              "route_id": "formal.near_path",
+              "trip_id": "trip-1"
+            },
+            "record_revision": 4,
+            "rng_seed": "-7797374582839305082",
+            "route_id": "formal.near_path",
+            "started_clock": {
+              "day": 1,
+              "elapsed": 27.164
+            },
+            "state": "pending_commit",
+            "taken": {
+              "brook": "formal.find.brook_stone"
+            },
+            "trip_id": "trip-1",
+            "trip_serial": 1,
+            "visited": [
+              "gate",
+              "brook"
+            ]
+          }
+        },
+        "exploration_committed_serial": 1,
+        "first_fish_caught": false,
+        "holiday_day": 1,
+        "holiday_day_elapsed": 27.164,
+        "keepsakes": {
+          "formal.find.brook_stone": 1
+        },
+        "locale": "zh-CN",
+        "photo_moments": {},
+        "plant_day_planted": 0,
+        "plant_state": 0,
+        "plant_watered_day": -1,
+        "tutorial_version": 0,
+        "version": 5
+      },
+      "success": true,
+      "complete": true,
+      "aborted": false,
+      "time": 1791200315293
+    },
+    {
+      "generation": "8",
+      "payload": {
+        "album": [],
+        "animal_relationship_memory": {},
+        "exploration": {
+          "contract_version": 1,
+          "next_trip_serial": 2,
+          "session": null
+        },
+        "exploration_committed_serial": 1,
+        "first_fish_caught": false,
+        "holiday_day": 1,
+        "holiday_day_elapsed": 27.164,
+        "keepsakes": {
+          "formal.find.brook_stone": 1
+        },
+        "locale": "zh-CN",
+        "photo_moments": {},
+        "plant_day_planted": 0,
+        "plant_state": 0,
+        "plant_watered_day": -1,
+        "tutorial_version": 0,
+        "version": 5
+      },
+      "success": true,
+      "complete": true,
+      "aborted": false,
+      "time": 1791200346736
+    }
+  ],
+  "lost": [
+    {
+      "raw": "{\"schema\":\"youjia.save-receipt/v2\",\"namespace\":\"youjia-save-host-v1\",\"write_id\":\"6\",\"request_id\":\"e313d34d8d724e188abe0e0b6444078a\",\"store_id\":\"3948f74abe434af78f05673541bee0ca\",\"candidate_token\":\"6025715b0c3b421a92de70798a2d6bde\",\"parent_token\":\"9a853456e7464b81bb36b64c7c88a394\",\"observed_token\":\"6025715b0c3b421a92de70798a2d6bde\",\"payload_sha256\":\"bb84340027498e93b8c5d89407f742f4a2887f539d0f896adcf66c9c07f0098b\",\"generation\":\"7\",\"outcome\":\"confirmed\",\"transaction_state\":\"complete\",\"readback_verified\":true,\"old_write_terminated\":true}",
+      "time": 1791200315634
+    }
+  ],
+  "resolves": [
+    {
+      "raw": "{\"schema\":\"youjia.save-receipt/v2\",\"namespace\":\"youjia-save-host-v1\",\"write_id\":\"6\",\"request_id\":\"e313d34d8d724e188abe0e0b6444078a\",\"store_id\":\"3948f74abe434af78f05673541bee0ca\",\"candidate_token\":\"6025715b0c3b421a92de70798a2d6bde\",\"parent_token\":\"9a853456e7464b81bb36b64c7c88a394\",\"observed_token\":\"6025715b0c3b421a92de70798a2d6bde\",\"payload_sha256\":\"bb84340027498e93b8c5d89407f742f4a2887f539d0f896adcf66c9c07f0098b\",\"generation\":\"7\",\"outcome\":\"confirmed\",\"transaction_state\":\"complete\",\"readback_verified\":true,\"old_write_terminated\":true}",
+      "time": 1791200345090
+    }
+  ],
+  "target_generation": "7",
+  "dropped": true
+}
