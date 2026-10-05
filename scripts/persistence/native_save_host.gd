@@ -50,26 +50,67 @@ func request(method: String, args: Dictionary, expected: Dictionary = {}) -> Str
 func _error(code: String) -> Dictionary:
 	return {"status":"unknown", "code":code, "wire":{}}
 func _read() -> Dictionary:
+	var pair := _source_pair()
+	if pair.is_empty(): return {"trusted":false,"writable":false}
 	var unsafe := false
-	for path: String in [_primary, _backup]:
-		var record: Dictionary = _files.read_record(path)
-		if FileAccess.file_exists(path) and (record.is_empty() or not _supported(record.data.get("version")) or str(record.text).to_utf8_buffer() != FileAccess.get_file_as_bytes(path)):
+	var recovered := {}
+	var damaged: Array[String] = []
+	for label: String in ["primary", "backup"]:
+		if pair[label].status == "absent": continue
+		var bytes := Marshalls.base64_to_raw(pair[label].base64)
+		if not _valid_utf8(bytes):
+			damaged.append(label)
+			continue
+		var text := bytes.get_string_from_utf8()
+		var parser := JSON.new()
+		if parser.parse(text) != OK:
+			damaged.append(label)
+			continue
+		if not parser.data is Dictionary or not _supported(parser.data.get("version")):
 			unsafe = true
-	var recovered: Dictionary = _files.recover(_primary, _backup)
-	if not recovered.is_empty() and _supported(recovered.data.get("version")):
+			continue
+		if recovered.is_empty(): recovered = {"data":parser.data,"text":text}
+	var seal := _load_seal()
+	for label in damaged:
+		# Existing evidence cannot be overwritten to hide a new corruption.
+		if not seal.is_empty() and seal.sources[label] != pair[label]: unsafe = true
+	if not recovered.is_empty():
 		var projected: Dictionary = recovered.data.duplicate(true)
 		projected.merge(Codec.project(recovered.data), true)
-		var seal := _load_seal()
 		if recovered.data.has(SOURCE_KEY):
 			unsafe = unsafe or seal.is_empty() or recovered.data[SOURCE_KEY] != seal.get("sha256")
 		elif not seal.is_empty():
-			unsafe = unsafe or seal.sources != _source_pair()
-		if FileAccess.file_exists(_primary + ".legacy-sources.json") and seal.is_empty():
-			unsafe = true
+			unsafe = unsafe or seal.sources != pair
+		if FileAccess.file_exists(_primary + ".legacy-sources.json") and seal.is_empty(): unsafe = true
 		return {"trusted":true,"writable":not unsafe,"token":str(recovered.text).sha256_text(),"data":projected,"raw":str(recovered.text)}
-	if not FileAccess.file_exists(_primary) and not FileAccess.file_exists(_backup):
+	if pair.primary.status == "absent" and pair.backup.status == "absent":
+		var seal_path := _primary + ".legacy-sources.json"
+		if FileAccess.file_exists(seal_path) or DirAccess.dir_exists_absolute(ProjectSettings.globalize_path(seal_path)) or FileAccess.file_exists(seal_path + ".tmp") or DirAccess.dir_exists_absolute(ProjectSettings.globalize_path(seal_path + ".tmp")):
+			return {"trusted":false,"writable":false}
 		return {"trusted":true,"writable":true,"token":"youjia-native-file-v1:both-sources-absent".sha256_text(),"data":Codec.defaults(),"raw":JSON.stringify(Codec.defaults())}
 	return {"trusted":false,"writable":false}
+
+func _valid_utf8(bytes: PackedByteArray) -> bool:
+	var i := 0
+	while i < bytes.size():
+		var first := int(bytes[i]); var count := 0; var lower := 0x80; var upper := 0xbf
+		if first <= 0x7f: i += 1; continue
+		if first >= 0xc2 and first <= 0xdf: count = 1
+		elif first >= 0xe0 and first <= 0xef:
+			count = 2
+			if first == 0xe0: lower = 0xa0
+			if first == 0xed: upper = 0x9f
+		elif first >= 0xf0 and first <= 0xf4:
+			count = 3
+			if first == 0xf0: lower = 0x90
+			if first == 0xf4: upper = 0x8f
+		else: return false
+		if i + count >= bytes.size() or bytes[i+1] < lower or bytes[i+1] > upper: return false
+		for offset: int in range(2,count+1):
+			if bytes[i+offset] < 0x80 or bytes[i+offset] > 0xbf: return false
+		i += count + 1
+	return true
+
 func _dispatch(id: String, method: String, args: Dictionary, expected: Dictionary) -> void:
 	var reply := _error("INVALID_REQUEST")
 	if method == "open":
@@ -108,6 +149,7 @@ func _submit() -> Dictionary:
 	_state = "unknown"
 	var before := _read()
 	if not before.get("trusted",false) or not before.get("writable",false) or before.token != _active.wire.parent_token: return _error("PARENT_CHANGED")
+	if not _clear_preserved_corruption(): return _error("CORRUPT_SOURCE_CLEANUP_FAILED")
 	var committed: bool = _files.commit(_active.data, _primary, _temporary, _backup)
 	var after := _read()
 	if not committed or not after.get("trusted",false) or not after.get("writable",false) or after.token != _active.wire.candidate_token: return _error("COMMIT_UNCERTAIN")
@@ -155,15 +197,17 @@ func _source_pair() -> Dictionary:
 	var pair := {}
 	for label: String in ["primary", "backup"]:
 		var path := _primary if label == "primary" else _backup
+		if DirAccess.dir_exists_absolute(ProjectSettings.globalize_path(path)): return {}
 		if not FileAccess.file_exists(path):
 			pair[label] = {"status":"absent"}
 			continue
 		var f := FileAccess.open(path, FileAccess.READ)
 		if f == null: return {}
-		var bytes := f.get_buffer(f.get_length())
+		var length := f.get_length()
+		var bytes := f.get_buffer(length)
 		var err := f.get_error()
 		f.close()
-		if err not in [OK, ERR_FILE_EOF]: return {}
+		if err not in [OK, ERR_FILE_EOF] or bytes.size() != length: return {}
 		pair[label] = {"status":"present", "base64":Marshalls.raw_to_base64(bytes)}
 	return pair
 
@@ -190,10 +234,14 @@ func _ensure_sources() -> bool:
 		_seal_hash = existing.sha256
 		return true
 	# A linked file without its evidence must never manufacture replacement evidence.
-	for source_path: String in [_primary, _backup]:
-		var source: Dictionary = _files.read_record(source_path)
-		if not source.is_empty() and source.data.has(SOURCE_KEY): return false
 	var pair := _source_pair()
+	for source in pair.values():
+		if source.status != "present": continue
+		var raw_bytes := Marshalls.base64_to_raw(source.base64)
+		if not _valid_utf8(raw_bytes): continue
+		var parser := JSON.new()
+		if parser.parse(raw_bytes.get_string_from_utf8()) != OK: continue
+		if parser.data is Dictionary and parser.data.has(SOURCE_KEY): return false
 	if pair.is_empty(): return false
 	var seal := {"schema":"youjia.native-legacy-sources/v1", "sources":pair, "sha256":JSON.stringify(pair).sha256_text()}
 	var text := JSON.stringify(seal)
@@ -210,4 +258,45 @@ func _ensure_sources() -> bool:
 	var saved := _load_seal()
 	if saved.is_empty() or saved.sources != pair: return false
 	_seal_hash = saved.sha256
+	return true
+
+## Legacy synchronous API, only while the coordinator is idle/detached. Uses
+## exactly the same guarded transaction path; never retries a submitted write.
+func commit_compat(candidate: Dictionary) -> Dictionary:
+	if _state != "ready" or not _active.is_empty():
+		return _compat_reply("unknown", "NOT_READY")
+	_calls += 1
+	var prepared := _prepare({"payload":JSON.stringify(candidate), "parent_token":_token, "write_id":str(_calls)})
+	if prepared.status != "prepared":
+		return _compat_reply("unknown", prepared.code)
+	var result := _submit()
+	if result.status == "unknown":
+		# submit is synchronous and terminated; recovery, never a retry, decides.
+		result = _resolve()
+	if result.status == "confirmed":
+		var acknowledged := _ack()
+		return _compat_reply("confirmed", acknowledged.code)
+	return _compat_reply(result.status, result.code)
+
+func _compat_reply(status: String, code: String) -> Dictionary:
+	return {"status":status, "code":code, "snapshot":_snapshot.duplicate(true), "token":_token, "ready":_state == "ready"}
+
+
+func _clear_preserved_corruption() -> bool:
+	var pair := _source_pair()
+	if pair.is_empty(): return false
+	var seal := _load_seal()
+	for label: String in ["primary", "backup"]:
+		if pair[label].status != "present": continue
+		var bytes := Marshalls.base64_to_raw(pair[label].base64)
+		var corrupted := not _valid_utf8(bytes)
+		if not corrupted:
+			var parser := JSON.new()
+			corrupted = parser.parse(bytes.get_string_from_utf8()) != OK
+		if not corrupted: continue
+		# Remove only this exact unusable copy after its complete bytes are sealed.
+		# The independently valid other source remains untouched for recovery.
+		if seal.is_empty() or seal.sources[label] != pair[label]: return false
+		var path := _primary if label == "primary" else _backup
+		if DirAccess.remove_absolute(ProjectSettings.globalize_path(path)) != OK: return false
 	return true

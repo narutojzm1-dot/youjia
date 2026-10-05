@@ -111,6 +111,96 @@ func run():
 		check(legacy.get_state()=="blocked" and not FileAccess.file_exists(seal_path),"deleted evidence blocks no replacement")
 		for path in [lp,lb,lp+".tmp"]:
 			if FileAccess.file_exists(path): DirAccess.remove_absolute(ProjectSettings.globalize_path(path))
+	var cp=dir+"/compat";var cb=cp+".bak"
+	var craw=' {"version":3,"custom":"keep","album":[]} '
+	put(cp,craw)
+	var compat=Host.new(cp,cp+".tmp",cb)
+	var evidence=FileAccess.get_file_as_string(cp+".legacy-sources.json")
+	var working=compat.get_initial_snapshot();working["turn"]=1
+	r=await ask(compat,"prepare",{"payload":JSON.stringify(working),"parent_token":compat.get_initial_token(),"write_id":"1"})
+	w=r.wire;args={"request_id":w.request_id,"write_id":"1"}
+	check(compat.commit_compat(working).status=="unknown","sync cannot interleave prepared async")
+	r=await ask(compat,"submit",args,w)
+	r=await ask(compat,"acknowledge",args,w)
+	working=compat.get_initial_snapshot();working["turn"]=2
+	var sync_result=compat.commit_compat(working)
+	check(sync_result.status=="confirmed" and sync_result.ready and sync_result.snapshot.has(Host.SOURCE_KEY) and sync_result.snapshot.custom=="keep","sync returns full linked confirmed snapshot")
+	check(sync_result.token==FileAccess.get_file_as_string(cp).sha256_text(),"sync token actual bytes")
+	working=sync_result.snapshot;working["turn"]=3
+	r=await ask(compat,"prepare",{"payload":JSON.stringify(working),"parent_token":sync_result.token,"write_id":"3"})
+	w=r.wire;args={"request_id":w.request_id,"write_id":"3"}
+	r=await ask(compat,"submit",args,w)
+	r=await ask(compat,"acknowledge",args,w)
+	compat=Host.new(cp,cp+".tmp",cb)
+	check(compat.get_state()=="ready" and compat.get_initial_snapshot().turn==3 and FileAccess.get_file_as_string(cp+".legacy-sources.json")==evidence,"legacy async sync async reopen preserves evidence")
+	var committed_text=FileAccess.get_file_as_string(cp)
+	DirAccess.remove_absolute(ProjectSettings.globalize_path(cp+".legacy-sources.json"))
+	sync_result=compat.commit_compat(working)
+	check(sync_result.status=="unknown" and not sync_result.ready and FileAccess.get_file_as_string(cp)==committed_text,"compat cannot bypass deleted source evidence")
+	compat=Host.new(cp,cp+".tmp",cb)
+	check(compat.commit_compat(working).status=="unknown","restarted unlinked compat blocked")
+	for path in [cp,cb,cp+".tmp"]:
+		if FileAccess.file_exists(path): DirAccess.remove_absolute(ProjectSettings.globalize_path(path))
+	put(cp,craw)
+	compat=Host.new(cp,dir+"/missing-compat/tmp",cb)
+	sync_result=compat.commit_compat(compat.get_initial_snapshot())
+	check(sync_result.status=="rejected" and sync_result.ready and FileAccess.get_file_as_string(cp)==craw,"real sync failure resolves proven parent not guessed failure")
+	put(cp,"corrupt")
+	var corrupt_text=FileAccess.get_file_as_string(cp)
+	sync_result=compat.commit_compat(working)
+	check(sync_result.status=="unknown" and FileAccess.get_file_as_string(cp)==corrupt_text,"corrupt source cannot bypass via compat")
+	for path in [cp,cb,cp+".tmp",cp+".legacy-sources.json",cp+".legacy-sources.json.tmp"]:
+		if FileAccess.file_exists(path): DirAccess.remove_absolute(ProjectSettings.globalize_path(path))
+	for residue: String in ["valid1", "valid2", "valid3", "valid4", "valid5", "corrupt", "directory", "temporary"]:
+		var rp=dir+"/residue-"+residue
+		var residue_version := residue.right(1).to_int() if residue.begins_with("valid") else 2
+		put(rp,'{"version":%d,"retained":true}' % residue_version)
+		var rh=Host.new(rp,rp+".tmp",rp+".bak")
+		check(rh.get_state()=="ready","residue fixture sealed")
+		var source_path=rp+".legacy-sources.json"
+		if residue=="corrupt": put(source_path,"broken")
+		if residue in ["directory", "temporary"]:
+			DirAccess.remove_absolute(ProjectSettings.globalize_path(source_path))
+			if residue=="directory": DirAccess.make_dir_absolute(ProjectSettings.globalize_path(source_path))
+			else: put(source_path+".tmp","retained incomplete evidence")
+		DirAccess.remove_absolute(ProjectSettings.globalize_path(rp))
+		rh=Host.new(rp,rp+".tmp",rp+".bak")
+		check(rh.get_state()=="blocked" and rh.get_initial_snapshot().is_empty() and rh.get_initial_token().is_empty(),"orphan source evidence never fresh defaults "+residue)
+		check(rh.commit_compat({"version":5}).status=="unknown" and not FileAccess.file_exists(rp),"orphan evidence cannot be overwritten "+residue)
+		for path in [source_path,source_path+".tmp"]:
+			if FileAccess.file_exists(path) or DirAccess.dir_exists_absolute(ProjectSettings.globalize_path(path)): DirAccess.remove_absolute(ProjectSettings.globalize_path(path))
+	var bp=dir+"/backup-binding"
+	put(bp,'{"version":1,"unknown":"retained"}')
+	var bh=Host.new(bp,bp+".tmp",bp+".bak")
+	check(bh.commit_compat(bh.get_initial_snapshot()).status=="confirmed","bound current created")
+	var bound_bytes=FileAccess.get_file_as_bytes(bp)
+	DirAccess.remove_absolute(ProjectSettings.globalize_path(bp+".bak"))
+	DirAccess.rename_absolute(ProjectSettings.globalize_path(bp),ProjectSettings.globalize_path(bp+".bak"))
+	bh=Host.new(bp,bp+".tmp",bp+".bak")
+	check(bh.get_state()=="ready" and bh.get_initial_snapshot().has(Host.SOURCE_KEY),"bound backup alone remains trusted")
+	check(bh.get_initial_token()==bound_bytes.get_string_from_utf8().sha256_text(),"backup binding raw identity")
+	check(bh.commit_compat(bh.get_initial_snapshot()).status=="confirmed","bound backup permits guarded recovery commit")
+	for path in [bp,bp+".bak",bp+".tmp",bp+".legacy-sources.json"]:
+		if FileAccess.file_exists(path): DirAccess.remove_absolute(ProjectSettings.globalize_path(path))
+	for damage: String in ["json-primary", "utf8-primary", "json-backup", "utf8-backup"]:
+		var dp=dir+"/damage-"+damage; var db=dp+".bak"
+		var good=' {"version":5,"holiday_day":9,"first_fish_caught":true,"album":["llama_fed_gentle"]} '
+		var bad_bytes=PackedByteArray([255, 0, 128]) if damage.begins_with("utf8") else "bad json".to_utf8_buffer()
+		put(dp,good);put(db,good)
+		var bad_path=dp if damage.ends_with("primary") else db
+		var bad_file=FileAccess.open(bad_path,FileAccess.WRITE);bad_file.store_buffer(bad_bytes);bad_file.close()
+		var recovery=Host.new(dp,dp+".tmp",db)
+		check(recovery.get_state()=="ready" and recovery.get_initial_snapshot().holiday_day==9,"good copy recoverable after full damaged source seal "+damage)
+		var sealed=JSON.parse_string(FileAccess.get_file_as_string(dp+".legacy-sources.json"))
+		var bad_label="primary" if damage.ends_with("primary") else "backup"
+		check(Marshalls.base64_to_raw(sealed.sources[bad_label].base64)==bad_bytes,"exact corrupt bytes sealed "+damage)
+		var repaired=recovery.commit_compat(recovery.get_initial_snapshot())
+		check(repaired.status=="confirmed","can save after preserved recovery "+damage)
+		recovery=Host.new(dp,dp+".tmp",db)
+		check(recovery.get_state()=="ready" and recovery.get_initial_snapshot().first_fish_caught,"repaired progress reopens "+damage)
+		check(JSON.parse_string(FileAccess.get_file_as_string(dp+".legacy-sources.json"))==sealed,"repair never rewrites evidence "+damage)
+		for path in [dp,db,dp+".tmp",dp+".legacy-sources.json"]:
+			if FileAccess.file_exists(path): DirAccess.remove_absolute(ProjectSettings.globalize_path(path))
 	var cannot_seal=dir+"/cannot-seal"
 	put(cannot_seal,'{"version":3,"unknown":true}')
 	DirAccess.make_dir_absolute(ProjectSettings.globalize_path(cannot_seal+".legacy-sources.json"))

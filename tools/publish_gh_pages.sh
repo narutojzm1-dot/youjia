@@ -193,27 +193,21 @@ cp -R "$WORK_DIR"/* "$GH_PAGES_DIR/"
 touch "$GH_PAGES_DIR/.nojekyll"
 
 # ---- 剪除旧 game-* 资源包（可选，由 KEEP_BUNDLES 控制）----
-# 识别所有已存在的 game-* 组（以 .pck 为锚点），按名称排序后剪除超出数量的旧组
+# 以 .pck 为锚点，按 gh-pages 实际发布历史保留当前与最近版本。
 cd "$GH_PAGES_DIR"
 if [[ "${KEEP_BUNDLES}" -gt 0 ]]; then
-    # 收集所有 game-*.pck 对应的基名（如 game-abc1234），按字典序升序排列（旧在前）
-    mapfile -t ALL_BUNDLES < <(ls game-*.pck 2>/dev/null | sed 's/\.pck$//' | sort)
-    TOTAL="${#ALL_BUNDLES[@]}"
-    if [[ "$TOTAL" -gt "$KEEP_BUNDLES" ]]; then
-        DELETE_COUNT=$(( TOTAL - KEEP_BUNDLES ))
-        echo "[publish] pruning ${DELETE_COUNT} old bundle(s) (keeping ${KEEP_BUNDLES} of ${TOTAL})..."
-        for (( i=0; i<DELETE_COUNT; i++ )); do
-            OLD="${ALL_BUNDLES[$i]}"
-            # 不删除当前正在发布的包（以防 SHA 冲突导致误删）
-            if [[ "$OLD" == "$ENTRY" ]]; then
-                echo "[publish]   skip ${OLD} (current entry)"
-                continue
-            fi
+    # Git commit spelling carries no timestamp. Select from actual Pages
+    # publication history, protecting this staged bundle before any deletion.
+    PRUNE_LIST="$(python3 "$REPO_ROOT/tools/select_web_bundle_pruning.py" "$ENTRY" "$KEEP_BUNDLES")"
+    if [[ -n "$PRUNE_LIST" ]]; then
+        mapfile -t DELETE_BUNDLES <<< "$PRUNE_LIST"
+        echo "[publish] pruning ${#DELETE_BUNDLES[@]} old bundle(s), retaining current and recent publications..."
+        for OLD in "${DELETE_BUNDLES[@]}"; do
             echo "[publish]   removing ${OLD}.*"
-            rm -f "${OLD}".* || true
+            rm -f "${OLD}".*
         done
     else
-        echo "[publish] bundle count ${TOTAL} ≤ KEEP_BUNDLES ${KEEP_BUNDLES}, no pruning needed."
+        echo "[publish] no proven old bundles to prune."
     fi
 else
     echo "[publish] KEEP_BUNDLES=0, skipping pruning."

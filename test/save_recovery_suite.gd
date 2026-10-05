@@ -108,7 +108,7 @@ func run() -> void:
 	# SaveStore v5 integration using its actual paths; preserve all original files.
 	var store := root.get_node("SaveStore")
 	var originals := {}
-	for path: String in [store.SAVE_PATH, store.TEMP_PATH, store.BACKUP_PATH]:
+	for path: String in [store.SAVE_PATH, store.TEMP_PATH, store.BACKUP_PATH, store.SAVE_PATH + ".legacy-sources.json", store.SAVE_PATH + ".legacy-sources.json.tmp"]:
 		if FileAccess.file_exists(path):
 			originals[path] = FileAccess.get_file_as_bytes(path)
 		remove_tree(path)
@@ -127,7 +127,7 @@ func run() -> void:
 	check(store.save(), "SaveStore can save again after recovery")
 	store._load()
 	check(store.get_holiday_day() == 9 and store.get_first_fish_caught(), "recovered progress survives another load")
-	for path: String in [store.SAVE_PATH, store.TEMP_PATH, store.BACKUP_PATH]:
+	for path: String in [store.SAVE_PATH, store.TEMP_PATH, store.BACKUP_PATH, store.SAVE_PATH + ".legacy-sources.json", store.SAVE_PATH + ".legacy-sources.json.tmp"]:
 		remove_tree(path)
 		if originals.has(path):
 			var file := FileAccess.open(path, FileAccess.WRITE)

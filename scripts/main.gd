@@ -111,6 +111,8 @@ var _photo_arrival: PhotoArrival
 var _photo_arrival_queue: Array[Dictionary] = []
 var _pending_photo_saves: Dictionary = {}
 var _save_transition := false
+var _retrying_ack := false
+var _save_problem_active := false
 var _save_status_panel: PanelContainer
 var _save_retry_button: Button
 ## 钓到鱼时的蓝色庆祝闪光（独立于拍立得闪光，更冷更蓝）
@@ -139,6 +141,7 @@ var _last_tod_phase := ""
 func _build_legacy_review() -> void:
 	var panel := PanelContainer.new()
 	panel.name = "LegacySaveReview"
+	panel.add_theme_stylebox_override("panel", _flat(PAPER, PAPER, 0, 0))
 	panel.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	add_child(panel)
 	var center := CenterContainer.new()
@@ -146,15 +149,15 @@ func _build_legacy_review() -> void:
 	var box := VBoxContainer.new()
 	box.custom_minimum_size.x = 300
 	center.add_child(box)
-	var message := Label.new()
-	message.text = "发现另一份游玩进度，或暂时无法读取它。\n两份内容都已保留；继续时使用这里的当前进度。"
+	var message := _label(16, INK)
+	message.text = "另一份游玩进度有变化\n或暂时无法读取\n\n两份内容都保留着\n继续时使用这里的当前进度"
 	message.custom_minimum_size = Vector2(300, 90)
 	message.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	box.add_child(message)
-	var export_button := Button.new()
+	var export_button := _soft_button()
 	export_button.text = "下载两份备份"
 	box.add_child(export_button)
-	var continue_button := Button.new()
+	var continue_button := _soft_button()
 	continue_button.text = "继续当前进度"
 	box.add_child(continue_button)
 	export_button.pressed.connect(func():
@@ -209,6 +212,7 @@ func _ready() -> void:
 	SaveStore.commit_confirmed.connect(_on_save_confirmed)
 	SaveStore.commit_rejected.connect(_on_save_rejected)
 	SaveStore.commit_unknown.connect(_on_save_problem)
+	SaveStore.persistence_state_changed.connect(_on_save_state_changed)
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	I18n.set_locale("zh-CN")
@@ -828,9 +832,10 @@ func _notification(what: int) -> void:
 		AudioDirector.set_application_active(true)
 
 
-func _start_holiday() -> void:
+func _start_holiday(save_progress: bool = true) -> void:
 	if not SaveStore.can_play(): return
-	if not await SaveStore.flush_pending():
+	if save_progress and _world != null: _world._save_progress()
+	if not await SaveStore.flush_pending() or _save_problem_active:
 		_show_save_pending()
 		return
 	TuningStore.begin_run(false)
@@ -895,12 +900,17 @@ func _clear_world(save_progress: bool = true) -> void:
 
 
 func _show_title(save_progress: bool = true) -> void:
+	if save_progress and _world != null:
+		_world._save_progress()
+		if not await SaveStore.flush_pending() or _save_problem_active:
+			_show_save_pending()
+			return
 	get_tree().paused = false
 	TuningStore.end_run()
 	AudioDirector.set_game_paused(false)
 	AudioDirector.set_yard_active(false)
 	_screen = "title"
-	_clear_world(save_progress)
+	_clear_world(false)
 	_camera.enabled = false
 	_paper.visible = true
 	_title_screen.visible = true
@@ -941,7 +951,7 @@ func _confirm_destructive_action() -> void:
 	if _save_transition: return
 	_save_transition = true
 	if _world != null: _world._save_progress()
-	if not await SaveStore.flush_pending():
+	if not await SaveStore.flush_pending() or _save_problem_active:
 		_save_transition = false
 		_confirm_screen.visible = false
 		_show_save_pending()
@@ -951,7 +961,7 @@ func _confirm_destructive_action() -> void:
 	_pending_destructive_action = ""
 	_confirm_screen.visible = false
 	if action == "restart":
-		_start_holiday()
+		_start_holiday(false)
 	elif action == "title":
 		_show_title(false)
 
@@ -983,10 +993,10 @@ func _on_album_updated(collected: PackedStringArray, latest_id: String) -> void:
 
 
 func _on_save_confirmed(op_id: String, _kind: String) -> void:
-	if _save_status_panel != null: _save_status_panel.hide()
 	if not _pending_photo_saves.has(op_id): return
 	var pending: Dictionary = _pending_photo_saves[op_id]
 	_pending_photo_saves.erase(op_id)
+	_save_problem_active = false
 	if _save_status_panel != null: _save_status_panel.hide()
 	if pending.fresh:
 		_latest_photo = pending.latest_id
@@ -997,6 +1007,15 @@ func _on_save_confirmed(op_id: String, _kind: String) -> void:
 		else:
 			_show_notice_key("notice.photo.saved")
 	_refresh_hud()
+
+
+func _on_save_state_changed(state: String) -> void:
+	if _save_retry_button != null:
+		_save_retry_button.disabled = state in ["writing", "acknowledging", "resolving"]
+	if state == "ready" and SaveStore.is_save_idle() and _retrying_ack:
+		_retrying_ack = false
+		_save_problem_active = false
+		if _save_status_panel != null: _save_status_panel.hide()
 
 
 func _on_save_rejected(op_id: String, kind: String, code: String) -> void:
@@ -1015,6 +1034,7 @@ func _build_save_status() -> void:
 	layer.layer = 30
 	add_child(layer)
 	_save_status_panel = PanelContainer.new()
+	_save_status_panel.add_theme_stylebox_override("panel", _flat(PAPER, APRICOT))
 	_save_status_panel.set_anchors_and_offsets_preset(Control.PRESET_CENTER_TOP)
 	_save_status_panel.offset_left = -170
 	_save_status_panel.offset_right = 170
@@ -1022,7 +1042,7 @@ func _build_save_status() -> void:
 	layer.add_child(_save_status_panel)
 	var box := VBoxContainer.new()
 	_save_status_panel.add_child(box)
-	var message := Label.new()
+	var message := _label(16, INK)
 	message.text = I18n.t("notice.save.pending")
 	message.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	message.custom_minimum_size.x = 320
@@ -1035,12 +1055,16 @@ func _build_save_status() -> void:
 
 
 func _show_save_pending() -> void:
+	_save_problem_active = true
 	if _save_status_panel != null: _save_status_panel.show()
 
 
 func _retry_save() -> void:
-	if SaveStore.retry_pending(): return
-	if SaveStore.persistence_state() == "ready" and _world != null:
+	var before := SaveStore.persistence_state()
+	if SaveStore.retry_pending():
+		_retrying_ack = before == "blocked"
+		return
+	if SaveStore.is_save_idle() and _world != null:
 		_world._save_progress()
 		SaveStore.request_animal_relationship_memory(_world._relationship_memory)
 		if _world._first_fish_polaroid_done: SaveStore.request_first_fish_caught()

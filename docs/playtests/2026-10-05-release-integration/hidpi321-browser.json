@@ -1,0 +1,42 @@
+[
+  {
+    "case": "844-390-dpr2",
+    "canvas": {
+      "dpr": 2,
+      "width": 1688,
+      "height": 780,
+      "css": {
+        "x": 0,
+        "y": 0,
+        "width": 844,
+        "height": 390,
+        "top": 0,
+        "right": 844,
+        "bottom": 390,
+        "left": 0
+      }
+    },
+    "errors": [],
+    "scope": "natural title/play, pause/Escape, viewport rotation; animal hit not part of this smoke; screenshots need visual verification; no game state injection"
+  },
+  {
+    "case": "390-844-dpr3",
+    "canvas": {
+      "dpr": 3,
+      "width": 1170,
+      "height": 2532,
+      "css": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 844,
+        "top": 0,
+        "right": 390,
+        "bottom": 844,
+        "left": 0
+      }
+    },
+    "errors": [],
+    "scope": "natural title/play, pause/Escape, viewport rotation; animal hit not part of this smoke; screenshots need visual verification; no game state injection"
+  }
+]

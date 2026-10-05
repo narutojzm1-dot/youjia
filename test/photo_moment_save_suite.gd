@@ -133,6 +133,10 @@ func run():
  # Existing version3 progress remains earned; missing images are captured only
  # when those events actually occur again, silently, without a new camera jump.
  var old_ids:Array=Array(ExpressionCatalog.all_ids())
+ await store.flush_pending()
+ # Independent old-version profile: discard only this disposable test profile.
+ for path in [store.SAVE_PATH,store.BACKUP_PATH,store.TEMP_PATH,store.SAVE_PATH+".legacy-sources.json"]:
+  DirAccess.remove_absolute(ProjectSettings.globalize_path(path))
  var file:=FileAccess.open(store.SAVE_PATH,FileAccess.WRITE)
  file.store_string(JSON.stringify({"version":3,"locale":"zh-CN","album":old_ids}));file.close()
  await store.flush_pending()
@@ -148,6 +152,9 @@ func run():
  check(not store.get_photo_moment(fed_id).is_empty(),"legacy feeding portrait gains a real scene on the next feeding")
  check(focus_calls.is_empty(),"legacy scene upgrades do not replay unlock camera jumps")
  # Corrupt scene data cannot wipe the earned album.
+ await store.flush_pending()
+ for path in [store.SAVE_PATH,store.BACKUP_PATH,store.TEMP_PATH,store.SAVE_PATH+".legacy-sources.json"]:
+  DirAccess.remove_absolute(ProjectSettings.globalize_path(path))
  file=FileAccess.open(store.SAVE_PATH,FileAccess.WRITE)
  file.store_string(JSON.stringify({"version":4,"locale":"zh-CN","album":old_ids,"photo_moments":{fed_id:{"version":1,"rule_id":fed_id,"items":[]}}}));file.close()
  await store.flush_pending()

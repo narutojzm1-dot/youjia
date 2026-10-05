@@ -8,7 +8,14 @@ export YOUJIA_TEST_ISOLATED_DATA="$XDG_DATA_HOME"
 mkdir -p "$XDG_DATA_HOME" "$XDG_CONFIG_HOME" "$XDG_CACHE_HOME"
 source tools/lib/verified_godot.sh
 bash test/godot_gate_test.sh
+case_number=0
 run_godot() {
+  # Each standalone suite starts a separate player profile, including migration
+  # sidecars. A prior suite's fault fixture is not a real next-player save.
+  case_number=$((case_number + 1))
+  export XDG_DATA_HOME="$state/case-$case_number/data" XDG_CONFIG_HOME="$state/case-$case_number/config" XDG_CACHE_HOME="$state/case-$case_number/cache"
+  export YOUJIA_TEST_ISOLATED_DATA="$XDG_DATA_HOME"
+  mkdir -p "$XDG_DATA_HOME" "$XDG_CONFIG_HOME" "$XDG_CACHE_HOME"
   run_verified_godot "$state/run.log" "$@"
 }
 run_godot --headless --path . --editor --import --quit

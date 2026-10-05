@@ -397,7 +397,7 @@ func _test_runtime_scene() -> void:
 	instance.call("_show_album")
 	_check(bool((instance.get("_album_screen") as Control).visible), "album must open from the holiday")
 	instance.call("_hide_album")
-	instance.call("_show_title")
+	await instance.call("_show_title")
 	_check(bool((instance.get("_title_screen") as Control).visible), "returning to the door must restore the title")
 	instance.queue_free()
 	await get_tree().process_frame

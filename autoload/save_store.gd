@@ -42,9 +42,6 @@ func _ready() -> void:
 		if _boot_call_id.is_empty(): call_deferred("_block_boot", "HOST_UNAVAILABLE")
 	else:
 		_load()
-		# Keep the existing synchronous file API for native compatibility/tests.
-		# New gameplay requests lazily initialize the same FIFO protocol.
-		_boot_state = "ready"
 
 
 
@@ -53,19 +50,22 @@ func _default_data() -> Dictionary:
 
 
 func _load() -> void:
-	# Native reload is a new read boundary only after every request has ended.
-	# Never detach a writer with an unknown outcome.
+	if OS.has_feature("web"): return
+	# A new read boundary requires all earlier requests to have ended.
 	if _coordinator != null:
-		if OS.has_feature("web") or not _coordinator.close_when_idle():
-			return
+		if not _coordinator.close_when_idle(): return
 		_coordinator = null
-		_backend = null
-	_data = _default_data()
-	var record: Dictionary = SaveFilesType.new().recover(SAVE_PATH, BACKUP_PATH)
-	if record.is_empty():
+	_backend = NativeHostType.new(SAVE_PATH, TEMP_PATH, BACKUP_PATH)
+	var trusted: Dictionary = _backend.get_initial_snapshot()
+	if not trusted.is_empty(): _data = trusted
+	if _backend.get_state() != "ready":
+		_block_boot("NATIVE_SOURCE_BLOCKED")
 		return
-	_data = record.data.duplicate(true)
-	_data.merge(SaveDataCodec.project(record.data), true)
+	# Snapshot and token MUST come from the same authoritative read.
+	if not _connect_coordinator(_data, _backend.get_initial_token(), "youjia-native-file-v1"):
+		_block_boot("COORDINATOR_INIT_FAILED")
+		return
+	_boot_state = "ready"
 
 
 func save() -> bool:
@@ -76,16 +76,21 @@ func save() -> bool:
 # candidate into getters or a later unrelated save. These compatibility setters
 # are native-only; Web callers use the asynchronous receipt API below.
 func _commit_candidate(candidate: Dictionary) -> bool:
-	# Web callers must use request_* and wait for an authoritative receipt.
-	if OS.has_feature("web") or (_coordinator != null and not _coordinator.is_idle()):
+	if OS.has_feature("web") or _boot_state != "ready" or _coordinator == null or not _coordinator.is_idle():
 		return false
-	if not SaveFilesType.new().commit(candidate, SAVE_PATH, TEMP_PATH, BACKUP_PATH):
+	# Compatibility writes use the same native source guard and receipt logic.
+	# Leave an unresolved writer attached; never create a replacement over it.
+	var reply: Dictionary = _backend.commit_compat(candidate)
+	if reply.get("status") != "confirmed":
+		if reply.get("status") != "rejected": _block_boot("NATIVE_COMMIT_UNCERTAIN")
 		return false
-	if _coordinator != null:
-		_coordinator.close_when_idle()
-		_coordinator = null
-		_backend = null
-	_data = candidate
+	if not _coordinator.close_when_idle():
+		_block_boot("COORDINATOR_NOT_IDLE")
+		return false
+	_coordinator = null
+	_data = _backend.get_initial_snapshot()
+	if _backend.get_state() != "ready" or not _connect_coordinator(_data, _backend.get_initial_token(), "youjia-native-file-v1"):
+		_block_boot("NATIVE_ACK_PENDING")
 	return true
 
 
@@ -217,6 +222,10 @@ func can_play() -> bool:
 	return _boot_state == "ready" and not _legacy_review_required
 
 
+func is_save_idle() -> bool:
+	return _coordinator != null and _coordinator.is_idle()
+
+
 func persistence_state() -> String:
 	return _coordinator.get_state() if _coordinator != null else _boot_state
 
@@ -321,15 +330,7 @@ func _connect_coordinator(snapshot: Dictionary, token: String, expected_namespac
 
 
 func _ensure_native_coordinator() -> bool:
-	if _coordinator != null:
-		return true
-	if OS.has_feature("web"):
-		return false
-	_backend = NativeHostType.new(SAVE_PATH, TEMP_PATH, BACKUP_PATH)
-	if _backend.get_state() != "ready":
-		_block_boot("NATIVE_SOURCE_BLOCKED")
-		return false
-	return _connect_coordinator(_data, _backend.get_initial_token(), "youjia-native-file-v1")
+	return _coordinator != null and _boot_state == "ready"
 
 
 ## Returns acceptance identity only. Consumers must wait for commit_confirmed.

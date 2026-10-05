@@ -16,7 +16,7 @@ func run():
  for i in 600: w.tick(1.0/60, Vector2.ZERO)
  var elapsed: float = w._day_elapsed
  check(elapsed > 9.9, "fixture advances partial holiday day")
- main._show_title();await process_frame
+ await main._show_title();await process_frame
  check(is_equal_approx(store.get_holiday_day_elapsed(), elapsed), "title flushes partial day")
  store._load()
  check(is_equal_approx(store.get_holiday_day_elapsed(), elapsed), "partial day survives disk reload")
@@ -30,6 +30,6 @@ func run():
  check(main._world._plant_visual.position == main._world._plant_point(), "plant node uses its actual world position")
  check(main._world._fishing_visual.position == main._world._fishing_point(), "fishing node uses its actual world position")
  check(main._world._plant_visual.get_parent() == main._world and main._world._fishing_visual.get_parent() == main._world, "world props own independent draw transforms")
- main._show_title();root.get_node("AudioDirector").call("release_streams")
+ await main._show_title();root.get_node("AudioDirector").call("release_streams")
  print("[shipped-correctness] ", checks, " checks ", failures)
  quit(0 if failures.is_empty() else 1)
