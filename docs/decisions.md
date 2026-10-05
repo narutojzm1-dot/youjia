@@ -995,3 +995,6 @@ CODEX-LEAD 以逐项验收并完成现有全部 issues 为持续目标。每次�
 ## 2026-10-05 用户最新三位开发者分工
 
 用户将Leader工作重心定为功能增加/迭代与共享架构，Assistant倾向缺陷修复，Cloud独立负责大世界探索；制作人持续输出原画、音频资源与游戏需求。以 [最新分工/在途/交接表](collaboration/goal-ownership.md) 为准。旧资源临时Owner保留历史，不继续作为新开工依据；#300/#317/#285保留已交候选后显式交Producer，新Owner回执待核。#149/#150真实Host框架由Leader连续收尾，316经两轮退回修正、最终c893be6f617e75552f3adcc0358546263aa8c903独审合入251研发分支39516cb02d491837a6943b01a3a81b157a9dac5d，不代表生产冻结；Cloud314已有纯核心产物但无玩家入口。原单直接标Owner/状态/文件方法范围/PR和SHA，未开始不标进行中。#198用户主动延期至核心玩法基本完成，停止资源追问。
+
+### Assistant 接收缺陷优先目标与新绵羊照片子项
+已接收用户新分工及[单一范围认领](collaboration/goal-ownership.md)，不重复Leader/Cloud在途实现。QA-EXP-20261003-002新照片构图子项由CODEX-LEAD-ASSISTANT推进：sheep物种Owner与sheep_a/sheep_b快照ID不一致导致默认取景漏羊。最小修复仅PhotoMoment构图和专项测试/daily挂载，9项修前三失败/修后全过、4.7.2完整daily和受控Web对比通过，见[证据](playtests/2026-10-05-photo-species-frame/README.md)。当前候选PR320待最终独审/合入/自动发布；旧图不变，父40仍Leader，资源候选按新分工显式交制作人。
