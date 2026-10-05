@@ -1,0 +1,62 @@
+[
+  {
+    "label": "flower",
+    "a": "02-flower-reduce-00.png",
+    "b": "02-flower-reduce-01.png",
+    "roi_xyxy": [
+      308,
+      181,
+      389,
+      236
+    ],
+    "pixels": 4455,
+    "changed_pixels": 1010,
+    "max_channel_delta": 1,
+    "exact_equal": false
+  },
+  {
+    "label": "flower-later",
+    "a": "02-flower-reduce-00.png",
+    "b": "02-flower-reduce-02.png",
+    "roi_xyxy": [
+      308,
+      181,
+      389,
+      236
+    ],
+    "pixels": 4455,
+    "changed_pixels": 1725,
+    "max_channel_delta": 1,
+    "exact_equal": false
+  },
+  {
+    "label": "shore",
+    "a": "07-shore-reduce-00.png",
+    "b": "07-shore-reduce-01.png",
+    "roi_xyxy": [
+      542,
+      490,
+      623,
+      525
+    ],
+    "pixels": 2835,
+    "changed_pixels": 508,
+    "max_channel_delta": 1,
+    "exact_equal": false
+  },
+  {
+    "label": "fence",
+    "a": "11-fence-reduce-00.png",
+    "b": "11-fence-reduce-01.png",
+    "roi_xyxy": [
+      870,
+      408,
+      909,
+      451
+    ],
+    "pixels": 1677,
+    "changed_pixels": 260,
+    "max_channel_delta": 1,
+    "exact_equal": false
+  }
+]

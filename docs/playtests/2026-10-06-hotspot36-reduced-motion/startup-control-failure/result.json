@@ -1,0 +1,151 @@
+{
+  "source": "089d453dc7b4ac8a8b5dbe8fc250d032c6e80b21",
+  "entry": "game-089d453",
+  "expected_pck_bytes": 27088396,
+  "expected_pck_sha256": "fb7b1473608a999f76eb46a8fd18b7f6fa2e8456f0508ee0db0693b2cddba1f8",
+  "inputs": [
+    {
+      "page_open": 1,
+      "media_reduce": true,
+      "utc": "2026-10-05T20:29:36Z",
+      "monotonic": 363462.414182965
+    }
+  ],
+  "bindings": [
+    {
+      "page": 1,
+      "stage": "before",
+      "utc": "2026-10-05T20:29:08Z",
+      "manifest": {
+        "schema": "youjia.release/v1",
+        "sourceCommit": "089d453dc7b4ac8a8b5dbe8fc250d032c6e80b21",
+        "engine": "4.7.2.stable.official.ed1daf0bf",
+        "entry": "game-089d453",
+        "publishedAt": "2026-10-05T19:11:39Z",
+        "storageModules": {
+          "entry": "save-089d453",
+          "sha256": {
+            "bridge.mjs": "ef18687554fdc0d745c1d18d4d091e959cc78559da0d61d6a093e562ff9bbc91",
+            "budgets.mjs": "52984153977dcafd1d2682e848f1999f091d0966e17d46e902de76f5735a7018",
+            "host.mjs": "9de8dc0ef4bfc037a8ad0bff575d40c3dd4341bcc723351a412b2061bb661904",
+            "idbfs_source.mjs": "16eb57d471537f13d3e50018b56c2d416d2847f0d0249ba44433dd9ebb65f4d8",
+            "legacy_inspection.mjs": "db3a23a0221aa5d34a58a6a49aeeff930295ffe20bfcf73a7c11f0d49cffd671",
+            "legacy_seal.mjs": "9642132f5d4e7523e5966e802069af7f4bae803fae8e2e7c28ae55ee97d85610",
+            "legacy_v5.mjs": "8e7f4ad2d87aab77ac05361e4f46060476e933aa079ae94301998d08d4599621",
+            "lifecycle.mjs": "1cfaebb9a8745e2dc3e4f694ef475f250640870938f04160be1a5c9acd62935d",
+            "source_decode.mjs": "411f3bc784cb32a07f32eed5fc7d88f71b59a667cc0d68a50fe13c55bfdba18a",
+            "store.mjs": "2193b4397b8662a8ebc754dc4468e4d62964d209b4e1d0f0924a2ec81b409cbe"
+          }
+        }
+      },
+      "manifest_status": 200,
+      "html_status": 200,
+      "html_sha256": "97e90912f96da7eee448b43cd42d1a8a6dd9f420be3c158a25042af065027b29",
+      "pck": {
+        "status": 200,
+        "bytes": 27088396,
+        "sha256": "fb7b1473608a999f76eb46a8fd18b7f6fa2e8456f0508ee0db0693b2cddba1f8"
+      },
+      "background_source_changed": false
+    }
+  ],
+  "errors": [],
+  "console": [
+    {
+      "page": 1,
+      "type": "log",
+      "text": "Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org"
+    },
+    {
+      "page": 1,
+      "type": "log",
+      "text": "OpenGL API OpenGL ES 3.0 (WebGL 2.0 (OpenGL ES 3.0 Chromium)) - Compatibility - Using Device: WebKit - WebKit WebGL"
+    },
+    {
+      "page": 1,
+      "type": "log",
+      "text": "Build configuration: Emscripten 4.0.20, single-threaded, no GDExtension support."
+    },
+    {
+      "page": 1,
+      "type": "info",
+      "text": "[game-loading] timings_ms {\"engineScriptReady\":593,\"downloadComplete\":6585,\"engineReady\":8953,\"firstFrame\":9640}"
+    }
+  ],
+  "started_utc": "2026-10-05T20:29:06Z",
+  "limits": [
+    "ordinary UI only, no seed/time/location/runtime/save injection",
+    "single fresh profile, initially browser-emulated reduced_motion=reduce; three already published hotspots only",
+    "only captured visible frames prove static feedback; natural ambient background activity is separate; no hearing claim",
+    "desktop Chromium; not physical device or audio comfort QA"
+  ],
+  "asset_responses": [
+    {
+      "page": 1,
+      "url": "https://narutojzm1-dot.github.io/youjia/save-089d453/bridge.mjs",
+      "status": 200
+    },
+    {
+      "page": 1,
+      "url": "https://narutojzm1-dot.github.io/youjia/game-089d453.js",
+      "status": 200
+    },
+    {
+      "page": 1,
+      "url": "https://narutojzm1-dot.github.io/youjia/save-089d453/host.mjs",
+      "status": 200
+    },
+    {
+      "page": 1,
+      "url": "https://narutojzm1-dot.github.io/youjia/save-089d453/budgets.mjs",
+      "status": 200
+    },
+    {
+      "page": 1,
+      "url": "https://narutojzm1-dot.github.io/youjia/save-089d453/store.mjs",
+      "status": 200
+    },
+    {
+      "page": 1,
+      "url": "https://narutojzm1-dot.github.io/youjia/save-089d453/lifecycle.mjs",
+      "status": 200
+    },
+    {
+      "page": 1,
+      "url": "https://narutojzm1-dot.github.io/youjia/save-089d453/source_decode.mjs",
+      "status": 200
+    },
+    {
+      "page": 1,
+      "url": "https://narutojzm1-dot.github.io/youjia/save-089d453/legacy_inspection.mjs",
+      "status": 200
+    },
+    {
+      "page": 1,
+      "url": "https://narutojzm1-dot.github.io/youjia/save-089d453/legacy_seal.mjs",
+      "status": 200
+    },
+    {
+      "page": 1,
+      "url": "https://narutojzm1-dot.github.io/youjia/save-089d453/legacy_v5.mjs",
+      "status": 200
+    },
+    {
+      "page": 1,
+      "url": "https://narutojzm1-dot.github.io/youjia/save-089d453/idbfs_source.mjs",
+      "status": 200
+    },
+    {
+      "page": 1,
+      "url": "https://narutojzm1-dot.github.io/youjia/game-089d453.pck",
+      "status": 200
+    },
+    {
+      "page": 1,
+      "url": "https://narutojzm1-dot.github.io/youjia/game-089d453.wasm",
+      "status": 200
+    }
+  ],
+  "driver_error": "Traceback (most recent call last):\n  File \"/tmp/hotspot36-driver.py\", line 33, in <module>\n    for line in sys.stdin:\n                ^^^^^^^^^\nKeyboardInterrupt\n",
+  "closed_utc": "2026-10-05T20:29:37Z"
+}
