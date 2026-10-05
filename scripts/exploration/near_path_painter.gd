@@ -10,8 +10,23 @@ const OVERCAST := preload("res://assets/holiday/environment/yard_overcast.png")
 # 小院原画中央的远山与天空（避开左侧屋顶和右侧树冠）
 const FAR_REGION := Rect2(691, 0, 845, 475)
 const FAR_HEIGHT := 470.0
-const FAR_FACTOR := 0.22
+const FAR_FACTOR := 0.18
 const MID_FACTOR := 0.55
+# 相邻两幅远景不翻转，只在接缝处互相淡入；隔一幅略小一点，读起来像更远的一列山
+const FAR_SEAM := 0.2
+const FAR_ALT_SCALE := 0.9
+const FAR_FADE_SHADER := """
+shader_type canvas_item;
+uniform float u_min;
+uniform float u_max;
+uniform float seam;
+void fragment() {
+	float t = (UV.x - u_min) / (u_max - u_min);
+	float edge = smoothstep(0.0, seam, t) * smoothstep(0.0, seam, 1.0 - t);
+	vec4 c = texture(TEXTURE, UV);
+	COLOR = vec4(c.rgb, c.a * edge);
+}
+"""
 
 var weather := "sunny"
 var far: Node2D
@@ -57,23 +72,32 @@ func _build_far() -> void:
 	sky.polygon = PackedVector2Array([Vector2(-200, -400), Vector2(L.SIZE.x + 200, -400), Vector2(L.SIZE.x + 200, 460), Vector2(-200, 460)])
 	sky.color = Color(0.56, 0.71, 0.86) if weather != "overcast" else Color(0.70, 0.74, 0.78)
 	far.add_child(sky)
-	var picture := AtlasTexture.new()
-	picture.atlas = OVERCAST if weather == "overcast" else SUNNY
-	picture.region = FAR_REGION
-	var scale_factor := FAR_HEIGHT / FAR_REGION.size.y
-	var tile_width := FAR_REGION.size.x * scale_factor
-	var x := -tile_width * 0.5
+	var picture: Texture2D = OVERCAST if weather == "overcast" else SUNNY
+	var shader := Shader.new()
+	shader.code = FAR_FADE_SHADER
+	var material := ShaderMaterial.new()
+	material.shader = shader
+	material.set_shader_parameter("u_min", FAR_REGION.position.x / picture.get_width())
+	material.set_shader_parameter("u_max", FAR_REGION.end.x / picture.get_width())
+	material.set_shader_parameter("seam", FAR_SEAM)
+	var base_scale := FAR_HEIGHT / FAR_REGION.size.y
+	var x := -FAR_REGION.size.x * base_scale * 0.5
 	var index := 0
-	while x < L.SIZE.x + tile_width:
+	while x < L.SIZE.x + 200.0:
+		var tile_scale := base_scale * (FAR_ALT_SCALE if index % 2 == 1 else 1.0)
+		var width := FAR_REGION.size.x * tile_scale
 		var sprite := Sprite2D.new()
 		sprite.texture = picture
+		sprite.region_enabled = true
+		sprite.region_rect = FAR_REGION
+		sprite.material = material
 		sprite.centered = false
 		sprite.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
-		sprite.flip_h = index % 2 == 1
-		sprite.scale = Vector2.ONE * scale_factor
+		sprite.scale = Vector2.ONE * tile_scale
+		# 顶边对齐，天空不露出纯色带；较小一幅的山脚仍落在中景山坡后面
 		sprite.position = Vector2(x, 0)
 		far.add_child(sprite)
-		x += tile_width
+		x += width * (1.0 - FAR_SEAM)
 		index += 1
 
 

@@ -156,6 +156,7 @@ func end_observe() -> void:
 	observing = ""
 	_hold_direction = 0
 	_caption.visible = false
+	items.queue_redraw()
 	_begin_ease()
 	_refresh()
 
@@ -332,7 +333,13 @@ func _draw_items() -> void:
 		var anchor: Vector2 = L.stop(stop_id).get("item", Vector2.ZERO)
 		if find_id.is_empty() or held.has(find_id) or anchor == Vector2.ZERO:
 			continue
-		KeepsakeArt.draw(items, find_id, anchor, 1.15)
+		if stop_id == observing:
+			# 静止的柔光地影，只在停下看的这一处；不闪、不动
+			items.draw_set_transform(anchor + Vector2(0, 6), 0.0, Vector2(1.0, 0.4))
+			items.draw_circle(Vector2.ZERO, 34.0, Color(1.0, 0.96, 0.82, 0.55))
+			items.draw_circle(Vector2.ZERO, 24.0, Color(1.0, 0.98, 0.90, 0.6))
+			items.draw_set_transform(Vector2.ZERO)
+		KeepsakeArt.draw(items, find_id, anchor, 1.9)
 
 
 func _observe_caption() -> String:
@@ -403,7 +410,9 @@ func _layout(size: Vector2, compact: bool) -> void:
 		_go_button.position.x = (size.x - _go_button.size.x) * 0.5
 	var caption_w := minf(size.x - pad * 2, 560.0)
 	_caption.size = Vector2(caption_w, 0)
-	_caption.position = Vector2((size.x - caption_w) * 0.5, bar_y - 86 if not observing.is_empty() else size.y - 150)
+	# 字幕放在上方天空里，路面和路边的东西不被挡住；走路时让出“停下看看”按钮的位置
+	var caption_top := pad + button_h + 12.0
+	_caption.position = Vector2((size.x - caption_w) * 0.5, caption_top if not observing.is_empty() else caption_top + button_h + 12.0)
 	_hint.size = Vector2(size.x - pad * 2, 24)
 	_hint.position = Vector2(pad, size.y - pad - 30)
 	_basket.position = Vector2(pad, size.y - pad - 64 - (button_h + 10 if not observing.is_empty() else 0) - (34 if _hint.visible else 0))

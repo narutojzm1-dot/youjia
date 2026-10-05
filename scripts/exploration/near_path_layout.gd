@@ -18,8 +18,8 @@ const WALKER_BOX := Rect2(-24, -108, 48, 108)
 
 const STOPS := [
 	{"id": "gate", "x": 470.0, "scene": Rect2(210, 250, 520, 360), "item": Vector2.ZERO},
-	{"id": "brook", "x": 1260.0, "scene": Rect2(1000, 270, 520, 340), "item": Vector2(1338, 574)},
-	{"id": "shade", "x": 2160.0, "scene": Rect2(1900, 200, 520, 410), "item": Vector2(2236, 576)},
+	{"id": "brook", "x": 1260.0, "scene": Rect2(1000, 270, 520, 340), "item": Vector2(1338, 562)},
+	{"id": "shade", "x": 2160.0, "scene": Rect2(1900, 200, 520, 410), "item": Vector2(2236, 562)},
 	{"id": "slope", "x": 3060.0, "scene": Rect2(2800, 230, 520, 380), "item": Vector2.ZERO},
 ]
 
