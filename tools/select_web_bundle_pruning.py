@@ -19,6 +19,12 @@ def choose(current: str, keep: int) -> list[str]:
         raise ValueError("current staged PCK is missing")
     if keep == 0 or len(existing) <= keep:
         return []
+    shallow = subprocess.check_output(
+        ['git', 'rev-parse', '--is-shallow-repository'], text=True).strip()
+    if shallow == 'true':
+        print('[publish] WARNING: shallow bundle history; retaining all bundles',
+              file=sys.stderr)
+        return []
     history = subprocess.check_output(
         ['git', 'log', '--first-parent', '--format=', '--name-only',
          '--diff-filter=AM', '--', 'game-*.pck'], text=True)

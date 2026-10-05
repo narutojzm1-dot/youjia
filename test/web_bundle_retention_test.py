@@ -86,6 +86,26 @@ class Retention(unittest.TestCase):
         self.assertEqual((self.root / 'game-a.js').read_text(), 'a')
         self.assertEqual((self.root / 'index.pck').read_text(), 'alias')
 
+    def test_real_shallow_clone_preserves_all_bundles(self):
+        clone = self.root / 'shallow-clone'
+        subprocess.run(['git', 'clone', '-q', '--depth=1', self.root.as_uri(), str(clone)],
+                       check=True, capture_output=True)
+        (clone / 'game-c.pck').write_text('current staged build')
+        r = subprocess.run(['python3', str(HELPER), 'game-c', '4'], cwd=clone,
+                           text=True, capture_output=True)
+        self.assertEqual(r.returncode, 0, r.stderr)
+        self.assertEqual(r.stdout, '')
+        self.assertIn('shallow bundle history', r.stderr)
+        source = (HELPER.parent / 'publish_gh_pages.sh').read_text()
+        start = source.index('if [[ "${KEEP_BUNDLES}" -gt 0 ]]; then')
+        end = source.index('\ncd "$GH_PAGES_DIR"\ngit add -A', start)
+        import os
+        env = dict(os.environ, REPO_ROOT=str(HELPER.parent.parent),
+                   ENTRY='game-c', KEEP_BUNDLES='4')
+        subprocess.run(['bash', '-euo', 'pipefail', '-c', source[start:end]],
+                       cwd=clone, env=env, check=True, capture_output=True)
+        self.assertEqual(len(list(clone.glob('game-*.pck'))), 5)
+
     def test_missing_current_fails_before_deletion(self):
         r = self.select(current='game-dead')
         self.assertNotEqual(r.returncode, 0)

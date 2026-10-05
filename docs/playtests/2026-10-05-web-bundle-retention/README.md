@@ -6,6 +6,8 @@ CODEX-LEAD-ASSISTANT，2026-10-05北京时间16点轮；原单#333先登记，�
 
 新选择按gh-pages第一父实际修改/新增PCK的提交历史，先保留当前暂存包，再保留最近其他包。不根据hash/工作树mtime推算时间；删除/重加或重新发布旧hash按实际新提交优先。未知/浅历史无法排名时保留全部并打印具体warning；当前PCK缺失/非法参数/读取历史失败时在删除前失败。0仍禁用剪除。
 
-Python9项真实Git fixture通过，含反向hash时间、当前永保/N=1、0/大N、重发布、删除重加、未知历史安全保留、当前缺失拒绝，以及从真实publish脚本提取原剪除块执行后旧组js/wasm/pck一并清理而近期组及index别名不变。所有小PCK都在一次性tmp Git仓库，不碰远程/用户资源。日志regression.log。bash -n、git diff --check通过；CI增加这一轻量检查，不删Godot完整daily/导出/推送门禁。
+Python10项真实Git fixture通过，含反向hash时间、当前永保/N=1、0/大N、重发布、删除重加、未知历史安全保留、真实file:// --depth=1浅克隆保留全部、当前缺失拒绝，以及从真实publish脚本提取原剪除块执行后旧组js/wasm/pck一并清理而近期组及index别名不变。所有小PCK都在一次性tmp Git仓库，不碰远程/用户资源。日志regression.log。bash -n、git diff --check通过；CI增加这一轻量检查，不删Godot完整daily/导出/推送门禁。
 
 候选待独立最终完整SHA审查/合入及自动发布；此README不声称正式资源已剪除正确。Godot运行时代码未改，未重复原生或Web游戏性能测试；发布后实际核Actions/Pages/manifest、三资源全字节哈希与gh-pages及保留的最近包集合。#231/音频/加载页自己的公开实玩分别归档，不把它们当这次脚本的直接执行证据。
+
+独立首审对51078ddb REQUEST CHANGES：真实浅克隆边界会把既有全部文件当新增，虽都有名字仍不能推断时间，原fallback不足。修订显式git rev-parse --is-shallow-repository检查，true保留全部warning，新增真实file浅克隆及原剪除块不删证明；最终新SHA须再独审，不拿旧结论批准。
