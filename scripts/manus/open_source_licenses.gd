@@ -15,7 +15,8 @@ static func open(parent: Node) -> void:
 		JavaScriptBridge.eval("window.open(new URL('open-source-licenses.html', window.location.href).href, '_blank', 'noopener');", true)
 		parent.get_viewport().set_input_as_handled()
 		return
-	var viewport_size: Vector2 = parent.get_viewport().get_visible_rect().size
+	var viewport := parent.get_viewport()
+	var viewport_size: Vector2 = viewport.get_visible_rect().size
 	var dialog := AcceptDialog.new()
 	dialog.name = "OpenSourceLicensesDialog"
 	dialog.title = "Open Source Licenses"
@@ -31,9 +32,39 @@ static func open(parent: Node) -> void:
 	parent.add_child(dialog)
 	dialog.confirmed.connect(dialog.queue_free)
 	dialog.canceled.connect(dialog.queue_free)
+	# Observe the parent viewport, not the dialog's own size_changed signal.
+	# Reset the content minimum before fitting, so shrink and desktop restore work.
+	var refit := _fit_open_dialog.bind(dialog, text, viewport)
+	viewport.size_changed.connect(refit, CONNECT_DEFERRED)
+	dialog.tree_exiting.connect(func() -> void:
+		if is_instance_valid(viewport) and viewport.size_changed.is_connected(refit):
+			viewport.size_changed.disconnect(refit)
+	, CONNECT_ONE_SHOT)
 	dialog.popup_centered()
-	_clamp_dialog(dialog, viewport_size)
+	refit.call()
 	parent.get_viewport().set_input_as_handled()
+
+
+static func _fit_open_dialog(dialog: AcceptDialog, text: TextEdit, viewport: Viewport) -> void:
+	if not is_instance_valid(dialog) or dialog.is_queued_for_deletion():
+		return
+	var viewport_size := viewport.get_visible_rect().size
+	var decoration := _decoration(dialog)
+	var content_view := viewport_size - Vector2(decoration.x + decoration.z, decoration.y + decoration.w)
+	text.custom_minimum_size = _fit_text_size(content_view)
+	# AcceptDialog recomputes its minimum from content plus actual theme chrome.
+	dialog.size = Vector2i.ZERO
+	_clamp_dialog(dialog, content_view)
+	dialog.position += Vector2i(int(decoration.x), int(decoration.y))
+
+
+static func _decoration(dialog: Window) -> Vector4:
+	if not dialog.is_embedded():
+		return Vector4.ZERO
+	var border := dialog.get_theme_stylebox("embedded_border")
+	return Vector4(border.get_content_margin(SIDE_LEFT),
+		maxf(border.get_content_margin(SIDE_TOP), dialog.get_theme_constant("title_height")),
+		border.get_content_margin(SIDE_RIGHT), border.get_content_margin(SIDE_BOTTOM))
 
 
 static func _fit_text_size(viewport_size: Vector2) -> Vector2:
