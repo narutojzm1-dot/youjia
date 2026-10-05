@@ -1,0 +1,45 @@
+extends Node
+var main
+var requests: Array = []
+func _ready() -> void:
+	call_deferred('start')
+func start() -> void:
+	main = load('res://scenes/main.tscn').instantiate()
+	add_child(main)
+	await get_tree().process_frame
+	main._on_play_pressed()
+	main.set_process(false)
+	main._world.camera_focus_requested.connect(func(point: Vector2, zoom: float): requests.append({'x':point.x,'y':point.y,'zoom':zoom}))
+	var callback := JavaScriptBridge.create_callback(stage)
+	set_meta('callback',callback)
+	JavaScriptBridge.get_interface('window').skyStage = callback
+	stage([0])
+func stage(args: Array) -> void:
+	var index := int(args[0])
+	var world = main._world
+	TuningStore.set_value('ui.reduced_motion',index >= 2)
+	world._quiet_sky_active = false
+	world._quiet_sky_still = 0.0
+	world._quiet_sky_cooldown = 0.0
+	world._focus_seconds = 0.0
+	world._goose_mount_wait = 0.0
+	world._goose_mount_phase = -1
+	world._weather_timer = 10000
+	world.debug_place_player(Vector2(420,548))
+	world._has_walk_goal = false
+	world._pending_interaction = ''
+	world._selected_target = ''
+	main._cam_zoom = 1.0
+	main._cam_offset = Vector2.ZERO
+	main._on_release_focus()
+	requests.clear()
+	for actor_id: String in world._actors:
+		world.debug_place_actor(actor_id,Vector2(1050,490))
+		world._actors[actor_id].set_pose(Vector2(1050,490),world._actors[actor_id]._base_scale,1.0)
+	world._actors['goose'].set_pose(Vector2(800,490),world._actors['goose']._base_scale,1.0)
+	var ticks := 390 if index % 2 == 1 else 300
+	for i: int in ticks:
+		main._process(1.0/60.0)
+	var horse = world._actors['horse']
+	var report := {'index':index,'ticks':ticks,'reduced':index>=2,'requests':requests.duplicate(true),'active':world._quiet_sky_active,'camera_zoom':[main._camera.zoom.x,main._camera.zoom.y],'focus_factor':main._cam_zoom,'target_factor':main._cam_target_zoom,'horse_scale':[horse.scale.x,horse.scale.y]}
+	JavaScriptBridge.eval('window.skyReport = '+JSON.stringify(report))
