@@ -1,0 +1,32 @@
+<!doctype html><meta charset="utf-8"><script type="module">
+import {createHost} from './web/save/host.mjs';
+import {captureIdbfsSource} from './reader.mjs';
+const host=createHost({runtimeReady:Promise.resolve(),captureLegacy:captureIdbfsSource});
+let checks=0,labels=[];
+const ok=(v,l)=>{if(!v)throw Error(l);checks++;labels.push(l);};
+async function fails(fn,code){let e;try{await fn();}catch(error){e=error;}ok(e?.code===code,code);}
+try{
+ const start=await host.open();ok(start.status==='empty','empty production database');
+ const initial=await host.initialize('{"version":5,"serial":0}',{primaryPath:'/userfs/godot/app_userdata/Production Host verification/youjia_save.json',backupPath:'/userfs/godot/app_userdata/Production Host verification/youjia_save.bak'});
+ ok(initial.status==='ready','absent legacy explicit defaults');let parent=initial.current_token;
+ const c=await host.prepare('{"version":5,"serial":1}',parent,'1');
+ await fails(()=>host.prepare('{"version":5}',parent,'2'),'WRITE_PENDING');
+ await fails(()=>host.submit(c.request_id,'2'),'STALE_REQUEST');
+ const r=await host.submit(c.request_id,'1');ok(r.outcome==='confirmed'&&r.observed_token===c.candidate_token&&r.request_id===c.request_id&&r.payload_sha256===c.payload_sha256,'complete/readback confirms frozen candidate');
+ const resolved=await host.resolve(c.request_id,'1');ok(resolved.outcome==='confirmed','lost delivery resolution recovers same committed candidate');
+ await host.acknowledge(c.request_id,'1');await host.acknowledge(c.request_id,'1');parent=c.candidate_token;
+ for(const stage of ['intent','commit']){
+  const candidate=await host.prepare('{"version":5,"serial":2}',parent,stage==='intent'?'2':'3');const id=stage==='intent'?'2':'3';
+  const original=IDBObjectStore.prototype.put;let fired=false;
+  IDBObjectStore.prototype.put=function(value,key){const result=original.apply(this,arguments);if(!fired&&((stage==='intent'&&key==='intent'&&value.state==='prepared')||(stage==='commit'&&key==='current'))){fired=true;this.transaction.abort();}return result;};
+  try{await fails(()=>host.submit(candidate.request_id,id),'WRITE_UNKNOWN_RESOLVE_REQUIRED');}finally{IDBObjectStore.prototype.put=original;}
+  ok(fired,'actual IndexedDB '+stage+' abort injected by test only');
+  const rejected=await host.resolve(candidate.request_id,id);ok(rejected.outcome==='rejected'&&rejected.observed_token===parent&&rejected.old_write_terminated&&rejected.readback_verified,'terminated parent verified '+stage);
+  await fails(()=>host.acknowledge(candidate.request_id,id),'NOT_CONFIRMED');
+ }
+ const next=await host.prepare('{"version":5,"serial":3}',parent,'4');await host.submit(next.request_id,'4');await host.acknowledge(next.request_id,'4');
+ ok(true,'write after verified rejection succeeds');await host.close();
+ ok((await indexedDB.databases()).some(d=>d.name==='youjia-save-host-v1'),'close does not delete durable database');
+ window.result={status:'PASS',checks,labels};
+}catch(e){window.result={status:'FAIL',checks,labels,error:String(e),stack:e.stack};}
+</script>
