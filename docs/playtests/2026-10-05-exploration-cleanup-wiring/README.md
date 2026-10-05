@@ -37,6 +37,15 @@
 
 另跑 `tools/verify_daily_life.sh` 全量（一次性 `XDG_DATA_HOME`）。
 
+## 测试补强（PR #427 审核的非阻塞项）
+
+- **夹具：** `unknown_kind` 只挂起真正进到写入的请求。按 typed 码在写前被拒的请求（例如 `PRECONDITION_CHANGED`）直接拒绝，与真实协调器一致。新增检查：`unknown_kind` 设着时 typed 拒绝照样是最终结论，cleanup 不挂起，队列空闲。
+- **真实 Main 回院：** 原来只看存档最后清成了空闲，分不出走的是 cleanup 契约，还是 `INVALID_ARGUMENT` 之后的直接写入。现在另外记下 SaveStore 的确认与拒绝信号，要求确实确认了一笔 `exploration_cleanup`，且没有一笔被拒。
+- **反证：**
+  - 撤掉夹具改动：3 项失败，含新检查。
+  - 让 Host 一律走直接写入：原有的“清成空闲”检查仍通过，新的 Main 检查失败，说明补上的是原来测不到的那一种。
+- 隔离测试 218/218。
+
 ## 范围
 
 内存队列与真实 SaveStore 的 headless 检查。不是公开 Web 版受控故障复验，也不是 #150/#176 Web 持久化或真机验收；公开复验需在发布后按原受控注入路径重跑。

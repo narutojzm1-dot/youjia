@@ -37,7 +37,8 @@ func pump() -> void:
 	while _unknown.is_empty() and not queue.is_empty():
 		var op: Dictionary = queue.pop_front()
 		var candidate: Variant = op.intent.call(_data.duplicate(true))
-		if op.kind == unknown_kind:
+		# 真实协调器在 prepare 之前就按 typed 码拒绝，这样的请求不会挂成未知
+		if op.kind == unknown_kind and candidate is Dictionary:
 			unknown_kind = ""
 			_unknown = {"op_id": op.op_id, "candidate": candidate}
 			_on_commit_unknown(op.op_id, "MEMORY_UNKNOWN")
