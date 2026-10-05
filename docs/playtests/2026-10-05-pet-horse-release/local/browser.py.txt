@@ -1,0 +1,34 @@
+import functools,http.server,threading
+class H(http.server.SimpleHTTPRequestHandler):
+ def log_message(self,*a): pass
+srv=http.server.ThreadingHTTPServer(('127.0.0.1',0),functools.partial(H,directory='/workspace/pet30-integrated-web'))
+threading.Thread(target=srv.serve_forever,daemon=True).start()
+from playwright.sync_api import sync_playwright
+import json
+with sync_playwright() as p:
+ b=p.chromium.launch(executable_path='/usr/bin/chromium',headless=True,args=['--no-sandbox','--use-gl=angle','--use-angle=swiftshader','--enable-webgl'])
+ page=b.new_page(viewport={'width':844,'height':390},device_scale_factor=1)
+ errors=[]
+ page.on('pageerror',lambda e:errors.append(str(e)))
+ page.on('console',lambda m:errors.append(m.text) if m.type=='error' else None)
+ page.add_init_script("window.first=false;window.addEventListener('youjia:first-frame',()=>window.first=true)")
+ page.goto(f'http://127.0.0.1:{srv.server_port}/index.html',wait_until='domcontentloaded')
+ page.wait_for_function('window.first',timeout=120000)
+ build=page.locator('html').get_attribute('data-build')
+ # Local production export; no public-release claim.
+ page.mouse.click(422,196)
+ page.wait_for_timeout(1000)
+ page.mouse.click(730,44)
+ page.wait_for_timeout(500)
+ page.mouse.click(491,194)
+ page.mouse.click(650,292)
+ page.wait_for_timeout(300)
+ page.screenshot(path='/workspace/pet30-integrated-evidence/pause.png')
+ page.mouse.click(257,134)
+ page.wait_for_timeout(500)
+ page.screenshot(path='/workspace/pet30-integrated-evidence/resumed.png')
+ assert not errors,errors
+ result={'source_sha':'6ec1c8fb6e4109a87394fc943b028bd1b868a786','build':build,'viewport':[844,390],'page_errors':errors,'scope':'local production canvas startup, pause, two sliders, resume; screenshots reviewed separately, no listening claim'}
+ open('/workspace/pet30-integrated-evidence/browser.json','w').write(json.dumps(result))
+ print(result)
+ b.close()

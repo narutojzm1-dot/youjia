@@ -18,7 +18,7 @@ func _run() -> void:
 	for actor_id: String in world._actors:
 		world.debug_place_actor(actor_id, Vector2(1100, 400))
 	_expect_rest(world, "duck_a", "preen", "duck_preen.png")
-	_expect_rest(world, "horse", "tail", "horse_tail.png")
+	_expect_rest(world, "horse", "idle", "horse.png")
 	_expect_rest(world, "cow", "chew", "cow_chew.png")
 	_expect_rest(world, "sheep_a", "shake", "sheep_shake.png")
 	var dull = world._actors["sheep_b"]
@@ -40,7 +40,8 @@ func _run() -> void:
 	horse.posed = false
 	horse.set_expression("idle")
 	horse.set_pose(horse.position, horse._base_scale, horse.facing)
-	_check(horse._posture_id == "idle" and str(horse._sprite.texture.resource_path).ends_with("horse.png"), "a posed horse drops the tail painting")
+	_check(horse._posture_id == "idle" and str(horse._sprite.texture.resource_path).ends_with("horse.png"), "a posed horse retains its standing painting")
+	_check_horse_size(world, tuning)
 	world.debug_place_player(world._scene_feedback.PATH_POINT)
 	world._has_walk_goal = false
 	world._pending_interaction = ""
@@ -79,3 +80,28 @@ func _check(ok: bool, message: String) -> void:
 	checks += 1
 	if not ok:
 		failures.append(message)
+
+
+func _check_horse_size(world, tuning) -> void:
+	var horse = world._actors["horse"]
+	horse.posed = false
+	var expected_size := Vector2.ZERO
+	for reduced: bool in [false, true]:
+		tuning.set_value("ui.reduced_motion", reduced)
+		for face: float in [-1.0, 1.0]:
+			for posture: String in ["graze", "rest", "graze"]:
+				horse.position = Vector2(640,470)
+				horse.state = posture
+				horse._idle_time = 100.0
+				horse._velocity = Vector2.ZERO
+				horse._gait.weight = 0.0
+				horse._gait.face = face
+				horse.facing = face
+				horse._breath = 0.0
+				horse.tick(0.0, Vector2(1280,720))
+				var actual: Vector2 = horse._art_bounds.size * horse.scale.abs()
+				if expected_size == Vector2.ZERO:
+					expected_size = actual
+				_check(actual.is_equal_approx(expected_size), "horse rest transition preserves visible size, reduced=%s face=%s posture=%s" % [reduced,face,posture])
+				_check(horse.position.is_equal_approx(Vector2(640,470)), "horse rest transition preserves feet position")
+	tuning.reset_defaults()

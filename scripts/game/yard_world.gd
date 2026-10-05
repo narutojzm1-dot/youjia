@@ -40,8 +40,8 @@ const QUIET_SKY_STILL_SECONDS := 5.5
 const QUIET_SKY_HOLD_SECONDS := 4.0
 ## 同一次停留结束后的冷却，避免镜头来回抢。
 const QUIET_SKY_COOLDOWN_SECONDS := 28.0
-## 轻微放大；不做成任务式取景 UI。
-const QUIET_SKY_ZOOM := 1.14
+## 静观抬头保持画面比例；不做成任务式取景 UI。
+const QUIET_SKY_ZOOM := 1.0
 # 人只站在画里已经对上地面的几个位置。圆点是可以走过去的下一处。
 const PICTURE_SPOTS := {
 	"door": {"position": Vector2(250, 508), "depth": 1.0, "facing": 1.0, "neighbors": ["grass"]},
@@ -696,9 +696,7 @@ func _interact_with_target(target: String) -> void:
 			_just_petted_species = pet.species
 			_player.just_petted_seconds = 6.0
 			_player.player_state = "just_petted"
-			_effects_overlay.play_pet_feedback(pet)
-			if pet.species == "cow":
-				pet.show_painted_ack("glance", 2.2)
+			pet.acknowledge_pet(_player.position)
 			notice_requested.emit("notice.pet.%s" % pet.species)
 			_evaluate_expressions()
 		return
