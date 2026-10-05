@@ -844,6 +844,29 @@ func _formal_near_path() -> void:
 	s.begin(ExplorationRoutes.NEAR_PATH, CLOCK, 11)
 	_check(s.visit("slope").ok and s.visit("gate").ok, "the scroll can stop anywhere in any order")
 	_check(s.request_return("player").ok, "return works from any stop")
+	var carried := ""
+	var second := ""
+	for seed_value in 400:
+		var trip := ExplorationSession.new(catalog, 0)
+		trip.begin(ExplorationRoutes.NEAR_PATH, CLOCK, seed_value)
+		trip.visit("brook")
+		carried = trip.get_view()["offer"]
+		trip.visit("shade")
+		second = trip.get_view()["offer"]
+		if carried != "" and second != "" and second != carried:
+			s = ExplorationSession.new(catalog, 0)
+			s.begin(ExplorationRoutes.NEAR_PATH, CLOCK, seed_value)
+			break
+	_check(carried != "" and second != "", "some trip offers a find at both brook and shade")
+	s.visit("brook")
+	_check(s.take(carried).ok, "a formal find can be taken")
+	s.visit("shade")
+	_check(s.take(second).get("error", "") == "carry_limit", "the one-find basket refuses a second find")
+	s.request_return("player")
+	var proposal := s.get_proposal()
+	_check(proposal["items"].size() == 1 and proposal["items"][0]["find_id"] == carried, "the frozen proposal carries exactly the taken find")
+	_check(s.commit_succeeded(s.trip_id()).ok and s.get_state() == C.STATE_COMMITTED, "the formal trip commits once")
+	_check(not s.commit_succeeded(s.trip_id()).ok, "a repeated commit is refused")
 	_check(ExplorationRoutes.find_name_key(ExplorationRoutes.FIND_PINE_CONE) == "exploration.find.pine_cone", "find names map to i18n keys")
 
 
