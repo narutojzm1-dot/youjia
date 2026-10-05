@@ -1,0 +1,38 @@
+import hashlib, json, pathlib, subprocess, sys, urllib.request
+
+expected, folder = sys.argv[1:3]
+out = pathlib.Path(folder)
+out.mkdir(parents=True, exist_ok=True)
+base = 'https://narutojzm1-dot.github.io/youjia/'
+
+def get(path):
+    req = urllib.request.Request(base + path, headers={'Cache-Control': 'no-cache', 'User-Agent': 'youjia-assistant-verification'})
+    with urllib.request.urlopen(req, timeout=120) as response:
+        return response.read()
+
+manifest_raw = get('game-release.json')
+manifest = json.loads(manifest_raw)
+(out / 'public-release.json').write_bytes(manifest_raw)
+assert manifest['sourceCommit'] == expected, (manifest['sourceCommit'], expected)
+pages = json.loads(subprocess.check_output(['gh','api','repos/narutojzm1-dot/youjia/git/trees/gh-pages?recursive=1']))
+(out / 'pages-tree.json').write_text(json.dumps(pages, indent=2), encoding='utf-8')
+blobs = {item['path']: item for item in pages['tree'] if item['type'] == 'blob'}
+entry = manifest['entry']
+storage = manifest['storageModules']
+paths = ['index.html','game-release.json'] + [entry + suffix for suffix in ['.js','.wasm','.pck']] + [storage['entry'] + '/' + name for name in storage['sha256']]
+records = []
+for path in paths:
+    data = manifest_raw if path == 'game-release.json' else get(path)
+    sha256 = hashlib.sha256(data).hexdigest()
+    blob = hashlib.sha1(b'blob ' + str(len(data)).encode() + b'\0' + data).hexdigest()
+    expected_blob = blobs[path]
+    assert blob == expected_blob['sha'] and len(data) == expected_blob['size'], path
+    if path.endswith('.mjs'):
+        assert sha256 == storage['sha256'][path.rsplit('/',1)[1]], path
+    if path == 'index.html':
+        assert entry.encode() in data and storage['entry'].encode() in data
+    records.append({'path':path,'bytes':len(data),'sha256':sha256,'git_blob':blob,'matched_pages_blob':True})
+    (out / 'public-files.json').write_text(json.dumps(records,indent=2), encoding='utf-8')
+    print('PASS', path, len(data), flush=True)
+assert json.loads(get('game-release.json')) == manifest, 'Deployment changed during verification'
+print(json.dumps({'source':expected,'entry':entry,'files':len(records),'pages_tree':pages['sha'],'status':'PASS'}))
