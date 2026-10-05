@@ -369,8 +369,11 @@ func _host_cleanup() -> void:
 	var changed: Dictionary = store._data.exploration.duplicate(true)
 	changed.session.record_revision = int(changed.session.record_revision) + 1
 	store._data.exploration = changed
+	store.unknown_kind = "exploration_cleanup"
 	store.pump()
 	check(results.has(["exploration_cleanup", ExplorationHost.CLEANUP_CHANGED]) and restarted_resubmits.is_empty() and store.get_exploration_record() == changed, "a cleanup whose record changed first is refused and not replayed")
+	check(not restarted.pending_cleanup() and store.is_save_idle(), "a typed refusal is final even when the queue would park that kind as unknown")
+	store.unknown_kind = ""
 	# 重启：按恢复契约 close，清理落盘
 	var again := ExplorationHost.new(store)
 	again.restore()
@@ -933,6 +936,11 @@ func _main_round_trip() -> void:
 	check(main._pause_screen.visible and paused, "tapping the scroll pause button opens the pause menu")
 	main._toggle_pause()
 	check(not main._pause_screen.visible and not paused, "resume returns to the walk")
+	var settled_kinds: Array[String] = []
+	var on_confirmed := func(_op_id: String, kind: String) -> void: settled_kinds.append("confirmed:" + kind)
+	var on_rejected := func(_op_id: String, kind: String, _code: String) -> void: settled_kinds.append("rejected:" + kind)
+	save_store.commit_confirmed.connect(on_confirmed)
+	save_store.commit_rejected.connect(on_rejected)
 	tap_mouse(scroll.art_to_screen(L.point(L.HOME_ARM, L.arm_length(L.HOME_ARM)) + Vector2(10, -45)))
 	var frames := 0
 	while main._screen == "exploring" and frames < 600:
@@ -947,6 +955,9 @@ func _main_round_trip() -> void:
 	check(main._notice_key == "notice.exploration.back_empty", "empty return notice in the yard")
 	var cleaned: Variant = save_store.get_exploration_record()
 	check(cleaned is Dictionary and cleaned.session == null and not main._exploration.host.pending_cleanup() and not main._save_problem_active, "the real save is cleaned to idle through the cleanup contract")
+	save_store.commit_confirmed.disconnect(on_confirmed)
+	save_store.commit_rejected.disconnect(on_rejected)
+	check(settled_kinds.has("confirmed:exploration_cleanup") and not settled_kinds.has("rejected:exploration_cleanup"), "the real return confirms an exploration_cleanup op, not the fallback write")
 	# 外出中回标题：按宿主中断回院，带上的东西照常收下
 	world._save_progress()
 	check(main._exploration.try_begin({"day": world.holiday_day, "elapsed": world._day_elapsed}, "sunny", value), "can go out again")
