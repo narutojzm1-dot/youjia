@@ -134,7 +134,11 @@ Source SHA-256: 38f4c5f927f746b3dfa4c3a5d7edf0b7a3e828e27438418fa54f9e1565289412
           : (zh ? '仍在加载。可以继续等待，或重试。' : 'Still loading. You can keep waiting or retry.');
         if (notice.textContent !== message) notice.textContent = message;
       };
-      window.addEventListener('youjia:save-blocked', event => fail(new Error('存档暂时无法确认，原有内容已保留：' + event.detail)));
+      window.addEventListener('youjia:save-blocked', event => {
+        const error = new Error('存档暂时无法确认，原有内容已保留：' + event.detail);
+        if (event.detail === 'SAVE_WRITER_OWNED') error.saveBlockedCode = 'SAVE_WRITER_OWNED';
+        fail(error);
+      });
       const onWindowError = (event) => fail(event.error || new Error('Engine startup error'));
       const onUnhandledRejection = (event) => fail(event.reason || new Error('Engine startup rejected'));
       // Time alone cannot prove failure: downloads and WASM compilation may be slow.
@@ -150,18 +154,24 @@ Source SHA-256: 38f4c5f927f746b3dfa4c3a5d7edf0b7a3e828e27438418fa54f9e1565289412
         failed = true;
         rejectSaveRuntime(error);
         stopObserving();
-        console.error('[game-loading] Startup failed', error);
+        const writerOwned = error.saveBlockedCode === 'SAVE_WRITER_OWNED';
+        if (writerOwned) console.info('[game-loading] Another page owns this save');
+        else console.error('[game-loading] Startup failed', error);
         loading.hidden = false;
         const errMsg = String(error.message || error);
         // 分类错误信息：WebGL2 缺失 / 其他缺失浏览器特性 / 一般失败
-        if (errMsg.includes('WebGL2')) {
+        if (writerOwned) {
+          status.textContent = zh ? '另一页正在游玩' : 'Another page is already playing';
+        } else if (errMsg.includes('WebGL2')) {
           status.textContent = '此浏览器不支持 WebGL2，无法启动游戏。';
         } else if (errMsg.includes('Missing browser features')) {
           status.textContent = '浏览器缺少必要特性，无法启动游戏。';
         } else {
           status.textContent = '游戏加载失败，请重试。';
         }
-        detail.textContent = errMsg.slice(0, 240);
+        detail.textContent = writerOwned
+          ? (zh ? '请回到原来的页面，或关闭后在这里重试。' : 'Return to the original page, or close it and retry here.')
+          : errMsg.slice(0, 240);
         stamp('failed');
         progress.hidden = true;
         notice.hidden = true;

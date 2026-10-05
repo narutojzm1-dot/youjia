@@ -14,6 +14,8 @@ const TITLE_ACCENT := Color("a85d28")
 const HINT_MIN_TEXT_HEIGHT := 32.0
 ## 「现在离开吗？」确认纸片的设计尺寸；屏幕更窄/更矮时按 _fit_confirm_panel() 收进屏内（REQ-20261005-030）。
 const CONFIRM_PANEL_SIZE := Vector2(420, 240)
+## 屏高不超过这个值时（手机横屏扣掉浏览器地址栏、568×320 等）标题页改用更紧的排版（REQ-20261005-031）。
+const TITLE_TIGHT_MAX_HEIGHT := 360.0
 const SAGE := Color("8fb389")
 const CREAM := Color("fffaf1")
 const LAVENDER := Color("cbb6d6")
@@ -572,6 +574,31 @@ func _build_title_screen() -> void:
 	_title_hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_title_hint.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	column.add_child(_title_hint)
+
+
+## 标题列按屏高分三档排版。≥500 原样；短横屏缩字号与间距；屏高 ≤360（568×320、
+## 带地址栏的手机横屏）原来内容高 321px 超出可用高度，操作说明掉出屏幕和纸片，
+## 这一档再收紧上下边距、行距、标题/副标题/按钮字号和两个主按钮高度，让整列完整留在屏内（REQ-20261005-031）。
+func _fit_title_column() -> void:
+	if _title_label == null: return
+	var title_column: Control = _title_label.get_parent()
+	var short := size.y < 500.0
+	var tight := size.y <= TITLE_TIGHT_MAX_HEIGHT
+	var margin := 8.0 if tight else 20.0
+	var title_width := minf(480.0,size.x-40.0)
+	title_column.offset_left = -title_width*0.5
+	title_column.offset_right = title_width*0.5
+	title_column.offset_top = -(size.y-margin*2.0)*0.5
+	title_column.offset_bottom = (size.y-margin*2.0)*0.5
+	title_column.add_theme_constant_override("separation",4 if tight else (8 if short else 14))
+	_title_label.add_theme_font_size_override("font_size",24 if tight else (28 if short else 40))
+	_subtitle_label.add_theme_font_size_override("font_size",15 if tight else 18)
+	_tagline_label.add_theme_font_size_override("font_size",14 if short else 16)
+	_title_hint.add_theme_font_size_override("font_size",12 if short else 14)
+	for button: Button in [_play_button, _album_button]:
+		button.custom_minimum_size = Vector2(260.0, 40.0 if tight else 44.0)
+		button.add_theme_font_size_override("font_size",14 if tight else 16)
+	_licenses_button.add_theme_font_size_override("font_size",12 if tight else 14)
 
 
 ## 纸片贴合标题列里实际可见的内容（列本身是整屏高、内容居中），左右留 18、上下留 14，并夹在屏内。
@@ -1650,16 +1677,7 @@ func _layout() -> void:
 	var pad := 20.0
 	if _album_chip == null: return
 	var compact := size.x < 700.0
-	var title_column: Control = _title_label.get_parent()
-	var title_width := minf(480.0,size.x-40.0)
-	title_column.offset_left = -title_width*0.5
-	title_column.offset_right = title_width*0.5
-	title_column.offset_top = -(size.y-40.0)*0.5
-	title_column.offset_bottom = (size.y-40.0)*0.5
-	title_column.add_theme_constant_override("separation",8 if size.y<500 else 14)
-	_title_label.add_theme_font_size_override("font_size",28 if size.y<500 else 40)
-	_tagline_label.add_theme_font_size_override("font_size",14 if size.y<500 else 16)
-	_title_hint.add_theme_font_size_override("font_size",12 if size.y<500 else 14)
+	_fit_title_column()
 	var album_width := minf(860.0,size.x-32.0)
 	var album_height := minf(560.0,size.y-32.0)
 	_album_panel.custom_minimum_size = Vector2(album_width,album_height)

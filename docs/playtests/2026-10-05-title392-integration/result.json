@@ -1,0 +1,283 @@
+{
+  "runtime": "95925950d795b39a5444e9cad911644171442627",
+  "input": "mouse; CSS viewport simulation, not hardware URL bar",
+  "actions": [
+    {
+      "new": [
+        568,
+        320,
+        2
+      ],
+      "shot": "568x320-dpr2-title"
+    },
+    {
+      "click": [
+        284,
+        244
+      ],
+      "shot": "568x320-dpr2-licenses"
+    },
+    {
+      "click": [
+        284,
+        205
+      ],
+      "shot": "568x320-dpr2-album"
+    },
+    {
+      "click": [
+        454,
+        268
+      ]
+    },
+    {
+      "resize": [
+        320,
+        568
+      ],
+      "shot": "568x320-dpr2-portrait-title"
+    },
+    {
+      "resize": [
+        568,
+        320
+      ],
+      "shot": "568x320-dpr2-landscape-return"
+    },
+    {
+      "click": [
+        284,
+        160
+      ],
+      "shot": "568x320-dpr2-yard"
+    },
+    {
+      "new": [
+        568,
+        320,
+        3
+      ],
+      "shot": "568x320-dpr3-title"
+    },
+    {
+      "click": [
+        284.0,
+        244.0
+      ],
+      "shot": "568x320-dpr3-licenses"
+    },
+    {
+      "click": [
+        284.0,
+        205.0
+      ],
+      "shot": "568x320-dpr3-album"
+    },
+    {
+      "click": [
+        454.40000000000003,
+        268
+      ]
+    },
+    {
+      "click": [
+        284.0,
+        160.0
+      ],
+      "shot": "568x320-dpr3-yard"
+    },
+    {
+      "new": [
+        640,
+        300,
+        2
+      ],
+      "shot": "640x300-dpr2-title"
+    },
+    {
+      "click": [
+        320.0,
+        234.0
+      ],
+      "shot": "640x300-dpr2-licenses"
+    },
+    {
+      "click": [
+        320.0,
+        195.0
+      ],
+      "shot": "640x300-dpr2-album"
+    },
+    {
+      "click": [
+        512.0,
+        248
+      ]
+    },
+    {
+      "click": [
+        320.0,
+        150.0
+      ],
+      "shot": "640x300-dpr2-yard"
+    },
+    {
+      "new": [
+        640,
+        300,
+        3
+      ],
+      "shot": "640x300-dpr3-title"
+    },
+    {
+      "click": [
+        320.0,
+        234.0
+      ],
+      "shot": "640x300-dpr3-licenses"
+    },
+    {
+      "click": [
+        320.0,
+        195.0
+      ],
+      "shot": "640x300-dpr3-album"
+    },
+    {
+      "click": [
+        512.0,
+        248
+      ]
+    },
+    {
+      "click": [
+        320.0,
+        150.0
+      ],
+      "shot": "640x300-dpr3-yard"
+    },
+    {
+      "new": [
+        844,
+        340,
+        2
+      ],
+      "shot": "844x340-dpr2-title"
+    },
+    {
+      "click": [
+        422.0,
+        254.0
+      ],
+      "shot": "844x340-dpr2-licenses"
+    },
+    {
+      "click": [
+        422.0,
+        215.0
+      ],
+      "shot": "844x340-dpr2-album"
+    },
+    {
+      "click": [
+        675.2,
+        288
+      ]
+    },
+    {
+      "click": [
+        422.0,
+        170.0
+      ],
+      "shot": "844x340-dpr2-yard"
+    },
+    {
+      "new": [
+        844,
+        340,
+        3
+      ],
+      "shot": "844x340-dpr3-title"
+    },
+    {
+      "click": [
+        422.0,
+        254.0
+      ],
+      "shot": "844x340-dpr3-licenses"
+    },
+    {
+      "click": [
+        422.0,
+        215.0
+      ],
+      "shot": "844x340-dpr3-album"
+    },
+    {
+      "click": [
+        675.2,
+        288
+      ]
+    },
+    {
+      "click": [
+        422.0,
+        170.0
+      ],
+      "shot": "844x340-dpr3-yard"
+    },
+    {
+      "new": [
+        568,
+        320,
+        2
+      ],
+      "shot": "license-recheck-title"
+    },
+    {
+      "click": [
+        284,
+        244
+      ],
+      "shot": "license-recheck"
+    }
+  ],
+  "errors": [],
+  "popups": [
+    {
+      "url": "http://127.0.0.1:8195/open-source-licenses.html",
+      "title": "Error response",
+      "text": "Error response\n\nError code: 404\n\nMessage: File not found.\n\nError code explanation: 404 - Nothing matches the given URI."
+    },
+    {
+      "url": "http://127.0.0.1:8195/open-source-licenses.html",
+      "title": "Error response",
+      "text": "Error response\n\nError code: 404\n\nMessage: File not found.\n\nError code explanation: 404 - Nothing matches the given URI."
+    },
+    {
+      "url": "http://127.0.0.1:8195/open-source-licenses.html",
+      "title": "Error response",
+      "text": "Error response\n\nError code: 404\n\nMessage: File not found.\n\nError code explanation: 404 - Nothing matches the given URI."
+    },
+    {
+      "url": "http://127.0.0.1:8195/open-source-licenses.html",
+      "title": "Error response",
+      "text": "Error response\n\nError code: 404\n\nMessage: File not found.\n\nError code explanation: 404 - Nothing matches the given URI."
+    },
+    {
+      "url": "http://127.0.0.1:8195/open-source-licenses.html",
+      "title": "Error response",
+      "text": "Error response\n\nError code: 404\n\nMessage: File not found.\n\nError code explanation: 404 - Nothing matches the given URI."
+    },
+    {
+      "url": "http://127.0.0.1:8195/open-source-licenses.html",
+      "title": "Error response",
+      "text": "Error response\n\nError code: 404\n\nMessage: File not found.\n\nError code explanation: 404 - Nothing matches the given URI."
+    },
+    {
+      "url": "http://127.0.0.1:8195/open-source-licenses.html",
+      "title": "Open Source Licenses",
+      "text": "Open Source Licenses\n\nDownload THIRD_PARTY_NOTICES.txt\n\nTHIRD-PARTY NOTICES / 开源软件声明\n\nThis experience includes third-party open source software.\n本体验包含"
+    }
+  ]
+}

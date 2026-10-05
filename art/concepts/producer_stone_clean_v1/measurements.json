@@ -1,0 +1,22 @@
+{
+  "source_sha256": "71217576eca5d0d79267811a0abe1ecb05aec8af00be9665a9db6045c7a504a1",
+  "output_sha256": "f11f145ce00344e880945efd6aadff20e25408fabaa3c1f404064a1785a6684c",
+  "crop_xyxy": [
+    63,
+    172,
+    1495,
+    867
+  ],
+  "size": [
+    1432,
+    695
+  ],
+  "anchor_candidate": [
+    717,
+    688
+  ],
+  "opaque_rgb_changed": 0,
+  "removed_nonzero_alpha_pixels": 4759,
+  "method": "largest alpha>=128 component, retain original 3px edge band; zero transparent RGB; crop +2px padding",
+  "status": "candidate awaiting independent art review and runtime overlap validation"
+}
