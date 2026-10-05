@@ -1,0 +1,156 @@
+{
+  "status": "passed",
+  "engine": "4.7.2.stable.official.ed1daf0bf",
+  "godot_daily_startups": 74,
+  "godot_daily_suites": 73,
+  "specialized_checks": 4400,
+  "source": {
+    "repository": "/tmp/youjia-soft455",
+    "branch": "work/codex-lead/soft455-disabled",
+    "base": "a0bb75e38e59032a6df72a2122af4403c3c3e816",
+    "original": "c79237181d76ab0929952c94b29867dc468425c8",
+    "runtime_source": "910bdec3fe7bf07833d6b9ccb720f57a5332880c",
+    "tree": "9b47ef3a4a78a9ca2cab285e93772b5a9540e381",
+    "parents": [
+      "c79237181d76ab0929952c94b29867dc468425c8",
+      "a0bb75e38e59032a6df72a2122af4403c3c3e816"
+    ],
+    "author_files": [
+      "docs/decisions/REQ-20261006-038.md",
+      "docs/playtests/2026-10-06-REQ-038-soft-button-disabled/README.md",
+      "scripts/main.gd",
+      "test/soft_button_disabled_suite.gd",
+      "test/soft_button_disabled_suite.gd.uid"
+    ],
+    "files": [
+      "docs/decisions.md",
+      "docs/decisions/REQ-20261006-038.md",
+      "docs/playtests/2026-10-06-REQ-038-soft-button-disabled/README.md",
+      "docs/playtests/2026-10-06-soft455-integration/.gdignore",
+      "docs/playtests/2026-10-06-soft455-integration/README.md",
+      "docs/requirements.md",
+      "scripts/main.gd",
+      "test/soft_button_disabled_suite.gd",
+      "test/soft_button_disabled_suite.gd.uid",
+      "tools/lib/godot_suite_completions.tsv",
+      "tools/verify_daily_life.sh"
+    ],
+    "daily_mode": "100755",
+    "original_files_preserved": true,
+    "engine_started": false,
+    "browser_started": false,
+    "status": "prepared; awaiting exclusive engine window"
+  },
+  "process_results": [
+    {
+      "step": "godot-version",
+      "args": [
+        "/tmp/youjia-h2-bridge-bin/Godot_v4.7.2-stable_linux.x86_64",
+        "--version"
+      ],
+      "started_at": "2026-10-05T22:23:27.484473+00:00",
+      "ended_at": "2026-10-05T22:23:27.824542+00:00",
+      "returncode": 0,
+      "log": "/tmp/soft455-evidence/godot-version.log",
+      "bytes": 32,
+      "sha256": "edff16c1721dd4ae989cadf29a01f574ae8d51b118221f664725bd6980bbba5d"
+    },
+    {
+      "step": "gate-contract",
+      "args": [
+        "bash",
+        "test/godot_gate_test.sh"
+      ],
+      "started_at": "2026-10-05T22:23:27.824908+00:00",
+      "ended_at": "2026-10-05T22:23:28.506376+00:00",
+      "returncode": 0,
+      "log": "/tmp/soft455-evidence/gate-contract.log",
+      "bytes": 2199,
+      "sha256": "cedbaa6aaa45206e451359cd06cf9d8aa57e7b17077e9b114d21f118dd66f0ad"
+    },
+    {
+      "step": "import",
+      "args": [
+        "bash",
+        "-c",
+        "source tools/lib/verified_godot.sh; run_verified_godot /tmp/soft455-evidence/import-engine.log --headless --path . --editor --import --quit"
+      ],
+      "started_at": "2026-10-05T22:23:28.506689+00:00",
+      "ended_at": "2026-10-05T22:23:52.757884+00:00",
+      "returncode": 0,
+      "log": "/tmp/soft455-evidence/import.log",
+      "bytes": 36100,
+      "sha256": "9d3786dcce26d1054edbdb8948e25d2ce9b10f9a336db81ea977b6076af00084"
+    },
+    {
+      "step": "specialized",
+      "args": [
+        "bash",
+        "-c",
+        "source tools/lib/verified_godot.sh; run_verified_godot_suite /tmp/soft455-evidence/specialized-engine.log test/soft_button_disabled_suite.gd --headless --path ."
+      ],
+      "started_at": "2026-10-05T22:23:52.758217+00:00",
+      "ended_at": "2026-10-05T22:24:00.093419+00:00",
+      "returncode": 0,
+      "log": "/tmp/soft455-evidence/specialized.log",
+      "bytes": 112,
+      "sha256": "f94e2c3fa3653275f8aa60abd1c419f5d92148ec3fffab348c642c6b1de50211"
+    },
+    {
+      "step": "daily",
+      "args": [
+        "bash",
+        "tools/verify_daily_life.sh"
+      ],
+      "started_at": "2026-10-05T22:24:00.093739+00:00",
+      "ended_at": "2026-10-05T22:31:08.011759+00:00",
+      "returncode": 0,
+      "log": "/tmp/soft455-evidence/daily.log",
+      "bytes": 58355,
+      "sha256": "6cbcb8e73583a0e26b451406a2f0f09b4fa272c446986bee4d56cf9d0ed74be9"
+    },
+    {
+      "step": "web-retention",
+      "args": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "test/web_bundle_retention_test.py"
+      ],
+      "started_at": "2026-10-05T22:31:08.012926+00:00",
+      "ended_at": "2026-10-05T22:31:08.813589+00:00",
+      "returncode": 0,
+      "log": "/tmp/soft455-evidence/web-retention.log",
+      "bytes": 1301,
+      "sha256": "152ebabda82020b1394ac339af42dd9a156a315003e5738ec30583dbdb45a488"
+    },
+    {
+      "step": "storage-publish",
+      "args": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "test/publish_storage_modules_test.py"
+      ],
+      "started_at": "2026-10-05T22:31:08.813866+00:00",
+      "ended_at": "2026-10-05T22:31:09.323805+00:00",
+      "returncode": 0,
+      "log": "/tmp/soft455-evidence/storage-publish.log",
+      "bytes": 145,
+      "sha256": "69d2cfe36e55916187b1ce6b537c388a1bb633ee3f0ec77b42891590d5f8277d"
+    },
+    {
+      "step": "export",
+      "args": [
+        "bash",
+        "-c",
+        "source tools/lib/verified_godot.sh; run_verified_godot /tmp/soft455-evidence/export-engine.log --headless --path . --export-release Web /tmp/soft455-web/index.html"
+      ],
+      "started_at": "2026-10-05T22:31:09.324294+00:00",
+      "ended_at": "2026-10-05T22:31:14.438418+00:00",
+      "returncode": 0,
+      "log": "/tmp/soft455-evidence/export.log",
+      "bytes": 46170,
+      "sha256": "d62993ffd6ebf769acbf176c9eade4d7481c7043cb19faa1441205b0f3fe0c4f"
+    }
+  ],
+  "candidate_only": true,
+  "browser_started": false,
+  "final_independent_review": "pending"
+}

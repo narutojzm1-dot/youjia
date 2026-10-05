@@ -1,0 +1,37 @@
+{
+  "repository": "/tmp/youjia-soft455",
+  "branch": "work/codex-lead/soft455-disabled",
+  "base": "a0bb75e38e59032a6df72a2122af4403c3c3e816",
+  "original": "c79237181d76ab0929952c94b29867dc468425c8",
+  "runtime_source": "910bdec3fe7bf07833d6b9ccb720f57a5332880c",
+  "tree": "9b47ef3a4a78a9ca2cab285e93772b5a9540e381",
+  "parents": [
+    "c79237181d76ab0929952c94b29867dc468425c8",
+    "a0bb75e38e59032a6df72a2122af4403c3c3e816"
+  ],
+  "author_files": [
+    "docs/decisions/REQ-20261006-038.md",
+    "docs/playtests/2026-10-06-REQ-038-soft-button-disabled/README.md",
+    "scripts/main.gd",
+    "test/soft_button_disabled_suite.gd",
+    "test/soft_button_disabled_suite.gd.uid"
+  ],
+  "files": [
+    "docs/decisions.md",
+    "docs/decisions/REQ-20261006-038.md",
+    "docs/playtests/2026-10-06-REQ-038-soft-button-disabled/README.md",
+    "docs/playtests/2026-10-06-soft455-integration/.gdignore",
+    "docs/playtests/2026-10-06-soft455-integration/README.md",
+    "docs/requirements.md",
+    "scripts/main.gd",
+    "test/soft_button_disabled_suite.gd",
+    "test/soft_button_disabled_suite.gd.uid",
+    "tools/lib/godot_suite_completions.tsv",
+    "tools/verify_daily_life.sh"
+  ],
+  "daily_mode": "100755",
+  "original_files_preserved": true,
+  "engine_started": false,
+  "browser_started": false,
+  "status": "prepared; awaiting exclusive engine window"
+}
