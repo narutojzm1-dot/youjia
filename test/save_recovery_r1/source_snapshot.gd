@@ -5,7 +5,10 @@ extends RefCounted
 
 const MAX_BYTES := 65536 # Isolated fixture budget, not the production save limit.
 
-func read_source(path: String) -> Dictionary:
+func read_source(path: String, profile: String = "fixture") -> Dictionary:
+	var limit := MAX_BYTES if profile == "fixture" else 1572864
+	if profile != "fixture" and profile != "candidate-v1":
+		return {"status": "read_error", "reason": "unknown_budget_profile"}
 	var parent := DirAccess.open(path.get_base_dir())
 	if parent == null:
 		return {"status": "read_error", "reason": "parent_unreadable"}
@@ -18,7 +21,7 @@ func read_source(path: String) -> Dictionary:
 	if file == null:
 		return {"status": "read_error", "reason": "open_failed"}
 	var length := file.get_length()
-	if length > MAX_BYTES:
+	if length > limit:
 		file.close()
 		return {"status": "read_error", "reason": "too_large"}
 	var raw := file.get_buffer(length)
@@ -31,6 +34,6 @@ func read_source(path: String) -> Dictionary:
 	# Base64 is transport encoding; it is not evidence that the file is valid v5.
 	return {"status": "present", "base64": ("" if raw.is_empty() else Marshalls.raw_to_base64(raw))}
 
-func capture(primary: String, backup: String) -> Dictionary:
+func capture(primary: String, backup: String, profile: String = "fixture") -> Dictionary:
 	# Never call recover(): it discards the failed source and collapses read errors.
-	return {"primary": read_source(primary), "backup": read_source(backup)}
+	return {"primary": read_source(primary, profile), "backup": read_source(backup, profile)}

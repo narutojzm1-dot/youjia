@@ -1,0 +1,63 @@
+<!doctype html><meta charset="utf-8"><script type="module">
+import {bridge} from './bridge.mjs';
+import {openStore,envelope,newId,validate} from './store.mjs';
+import {CANDIDATE_BUDGET as B,decodeHeadSnapshot} from './budgets.mjs';
+import {prepareLegacyV5} from './legacy_v5.mjs';
+import {decodeSourceSnapshot} from './source_decode.mjs';
+let checks=0;const labels=[],stores=[],names=[];
+function ok(b,label){if(!b)throw Error(label);checks++;labels.push(label);}
+async function fails(fn,label){let bad=false;try{await fn();}catch(_){bad=true;}ok(bad,label);}
+const name=()=>{const n='youjia-recovery-test-candidate-v1-'+newId();names.push(n);return n;};
+const bytes=s=>new TextEncoder().encode(s).length;
+const base64=s=>{let binary='';for(const byte of new TextEncoder().encode(s))binary+=String.fromCharCode(byte);return btoa(binary);};
+const snapshot=(p,b)=>({primary:{status:'present',base64:base64(p)},backup:{status:'present',base64:base64(b)}});
+try {
+ const bridgeName=name();await bridge.open(bridgeName,'candidate-v1');
+ const bp=await (await fetch('./budget_samples/dense_full.primary.json')).text();
+ const bb=await (await fetch('./budget_samples/dense_full.backup.json')).text();
+ const br=await bridge.initializeLegacy(bridge.decodeLegacyArgument(JSON.stringify(snapshot(bp,bb))));
+ ok(br.verdict==='clean','candidate bridge import');
+ const bc=await bridge.prepare(bp,br.current_token);await bridge.submit(bc.request_id,'1');await bridge.acknowledge(bc.request_id);
+ ok((await window.YoujiaRecoveryProbe.snapshot()).current.payload_bytes===bp,'candidate bridge normal write');
+ await window.YoujiaRecoveryProbe.cleanup();
+ const n=name();await fails(()=>openStore(n),'fixture refuses candidate namespace');
+ await fails(()=>openStore('youjia-recovery-test-ordinary',{},B),'candidate refuses fixture namespace');
+ const s=await openStore(n,{},B);stores.push(s);
+ for(const kind of ['natural_full','dense_full']){
+  const p=await (await fetch('./budget_samples/'+kind+'.primary.json')).text();
+  const b=await (await fetch('./budget_samples/'+kind+'.backup.json')).text();
+  const raw=JSON.stringify(snapshot(p,b));
+  const payload=prepareLegacyV5(decodeSourceSnapshot(decodeHeadSnapshot(raw,B),B),B);
+  const t=await openStore(name(),{},B);stores.push(t);const root=await t.initialize(payload);
+  ok(JSON.parse(root.payload_bytes).sources.primary.text===p && JSON.parse(root.payload_bytes).sources.backup.text===b,kind+' raw preserved');
+  ok((await t.recover()).verdict==='clean',kind+' root recovered');
+  const next=await envelope(p,root,B);await t.submit(next);await t.acknowledge(next.request_id);
+  ok((await t.recover()).current.payload_bytes===p,kind+' normal write durable');
+  if(kind==='dense_full')ok(bytes(payload)>B.writeBytes,'import root exceeds normal budget');
+ }
+ const p=JSON.stringify({version:5,padding:'a'.repeat(1500000)});
+ const root=await s.initialize(prepareLegacyV5({primary:{status:'present',text:p},backup:{status:'present',text:p}},B));
+ const before=JSON.stringify(await s.snapshot());
+ await fails(()=>envelope('"'+'a'.repeat(B.writeBytes)+'"',root,B),'normal over limit rejects');
+ await fails(()=>s.submit(root),'root cannot masquerade as descendant');
+ ok(before===JSON.stringify(await s.snapshot()),'rejected writes unchanged');
+ await fails(()=>decodeHeadSnapshot(' '.repeat(B.headChars+1),B),'head layer independent');
+ await fails(()=>decodeSourceSnapshot({primary:{status:'present',base64:'A'.repeat(B.base64Chars+4)},backup:{status:'absent'}},B),'base64 layer independent');
+ await fails(()=>prepareLegacyV5({primary:{status:'present',text:p+' '.repeat(100000)},backup:{status:'absent'}},B),'source bytes independent');
+ const escaped=JSON.stringify({version:5,padding:'"'.repeat(750000)});
+ await fails(()=>prepareLegacyV5({primary:{status:'present',text:escaped},backup:{status:'present',text:escaped}},B),'combined rejects legal single sources');
+ ok(before===JSON.stringify(await s.snapshot()),'import refusal retains records');
+ let stopped=false;
+ for(let i=0;i<32;i++){
+  const old=JSON.stringify(await s.snapshot());const c=await envelope(p,root,B);
+  try{await s.submit(c,{abort_stage:'commit'});}catch(e){
+   if(String(e).includes('record byte budget')){ok(old===JSON.stringify(await s.snapshot()),'archive budget refusal unchanged');stopped=true;break;}
+  }
+  ok((await s.recover()).verdict==='restored_parent_intent_rejected','archive recovery '+i);
+ }
+ ok(stopped,'cumulative budget stops before archive count32');
+ ok((await s.recover()).verdict==='clean','budget refusal leaves trusted root');
+ window.r1={status:'PASS',checks,labels};
+}catch(e){window.r1={status:'FAIL',checks,labels,error:String(e),stack:e.stack};}
+finally{for(const s of stores)s.close();for(const n of names)await new Promise(r=>{const q=indexedDB.deleteDatabase(n);q.onsuccess=r;q.onerror=r;});window.r1Done=true;}
+</script>

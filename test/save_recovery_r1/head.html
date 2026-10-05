@@ -7,8 +7,8 @@
    const callback = args.pop();
    ready.then(m => {
     if (name === 'initializeLegacy') {
-     if (args.length !== 1 || typeof args[0] !== 'string' || args[0].length > 180000) throw Error('legacy snapshot JSON string required');
-     return m.bridge.initializeLegacy(JSON.parse(args[0]));
+     if (args.length !== 1) throw Error('legacy snapshot JSON string required');
+     return m.bridge.initializeLegacy(m.bridge.decodeLegacyArgument(args[0]));
     }
     return m.bridge[name](...args);
    }).then(
