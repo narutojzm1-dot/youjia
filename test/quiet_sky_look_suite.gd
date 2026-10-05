@@ -34,7 +34,7 @@ func _run() -> void:
 	for _i: int in 90:
 		world.tick(1.0 / 60.0, Vector2.ZERO)
 	_check(world._quiet_sky_active and focuses.size() == 1, "quiet stay lifts the camera toward the sky")
-	_check(is_equal_approx(float(focuses[0]["zoom"]), world.QUIET_SKY_ZOOM), "sky look uses the soft prototype zoom")
+	_check(is_equal_approx(float(focuses[0]["zoom"]), 1.0), "sky look preserves the landscape scale")
 	_check(focuses[0]["point"].y < world._player.position.y - 80.0, "sky focus sits above the traveler")
 	_check(world.collected == album, "sky look does not write the album")
 	release_count[0] = 0
@@ -54,6 +54,24 @@ func _run() -> void:
 	world._focus_seconds = world.QUIET_SKY_HOLD_SECONDS
 	world._yield_quiet_sky_look_to_encounter()
 	_check(not world._quiet_sky_active and int(release_count[0]) == 0 and is_equal_approx(world._focus_seconds, 0.0), "goose-mount yield clears sky look without camera release")
+	for reduced: bool in [false,true]:
+		tuning.set_value("ui.reduced_motion",reduced)
+		world._quiet_sky_active = false
+		world._quiet_sky_still = 0.0
+		world._quiet_sky_cooldown = 0.0
+		world._focus_seconds = 0.0
+		world._goose_mount_wait = 0.0
+		world._goose_mount_phase = -1
+		world._has_walk_goal = false
+		world._pending_interaction = ""
+		focuses.clear()
+		for _i: int in 390:
+			world.tick(1.0/60.0,Vector2.ZERO)
+		_check(focuses.size()==1 and world._quiet_sky_active,"real quiet tick still enters sky look, reduced=%s" % reduced)
+		_check(focuses.size()==1 and is_equal_approx(float(focuses[0]["zoom"]),1.0),"real camera request does not magnify, reduced=%s" % reduced)
+		world.tick(1.0/60.0,Vector2(1,0))
+		_check(not world._quiet_sky_active and world._quiet_sky_cooldown>0.0,"walk still interrupts into cooldown, reduced=%s" % reduced)
+	tuning.reset_defaults()
 	world.free()
 	if failures.is_empty():
 		print("QUIET SKY LOOK PASS ", checks)

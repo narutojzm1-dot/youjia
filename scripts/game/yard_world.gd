@@ -41,7 +41,7 @@ const QUIET_SKY_HOLD_SECONDS := 4.0
 ## 同一次停留结束后的冷却，避免镜头来回抢。
 const QUIET_SKY_COOLDOWN_SECONDS := 28.0
 ## 轻微放大；不做成任务式取景 UI。
-const QUIET_SKY_ZOOM := 1.14
+const QUIET_SKY_ZOOM := 1.0
 # 人只站在画里已经对上地面的几个位置。圆点是可以走过去的下一处。
 const PICTURE_SPOTS := {
 	"door": {"position": Vector2(250, 508), "depth": 1.0, "facing": 1.0, "neighbors": ["grass"]},
