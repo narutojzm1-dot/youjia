@@ -1,0 +1,22 @@
+{
+  "youjia-save-host-v1": {
+    "records": {
+      "keys": [
+        "current"
+      ],
+      "values": [
+        {
+          "schema": "youjia.save-envelope/v1",
+          "store_id": "de3bba69b6c240439f7fb4d0e7743e3f",
+          "commit_id": "ae80fe0c6ba241ac95d7549be9c86c1c",
+          "request_id": "b751c29215de42f596e2ee2ff4faf528",
+          "parent_commit_id": "ed4df3bb69e04963b5da6f57f4af416f",
+          "generation": "11",
+          "payload_bytes": "{\"album\":[],\"animal_relationship_memory\":{},\"exploration\":{\"contract_version\":1,\"next_trip_serial\":2,\"session\":{\"carried\":[\"formal.find.feather\",\"formal.find.brook_stone\",\"formal.find.pine_cone\"],\"catalog\":\"formal\",\"current_stop\":\"slope\",\"failure\":null,\"offers\":{\"brook\":\"formal.find.brook_stone\",\"gate\":\"formal.find.feather\",\"shade\":\"formal.find.feather\",\"slope\":\"formal.find.pine_cone\"},\"proposal\":{\"items\":[{\"find_id\":\"formal.find.feather\"},{\"find_id\":\"formal.find.brook_stone\"},{\"find_id\":\"formal.find.pine_cone\"}],\"reason\":\"player\",\"revision\":1,\"route_id\":\"formal.near_path\",\"trip_id\":\"trip-1\"},\"record_revision\":10,\"rng_seed\":\"-2540870284955575247\",\"route_id\":\"formal.near_path\",\"started_clock\":{\"day\":1,\"elapsed\":6.52396666666667},\"state\":\"pending_commit\",\"taken\":{\"brook\":\"formal.find.brook_stone\",\"shade\":\"formal.find.feather\",\"slope\":\"formal.find.pine_cone\"},\"trip_id\":\"trip-1\",\"trip_serial\":1,\"visited\":[\"gate\",\"shade\",\"brook\",\"slope\"]}},\"exploration_committed_serial\":1,\"first_fish_caught\":false,\"holiday_day\":1,\"holiday_day_elapsed\":6.52396666666667,\"keepsakes\":{\"formal.find.brook_stone\":1,\"formal.find.feather\":1,\"formal.find.pine_cone\":1},\"locale\":\"zh-CN\",\"photo_moments\":{},\"plant_day_planted\":0,\"plant_state\":0,\"plant_watered_day\":-1,\"tutorial_version\":0,\"version\":5}",
+          "payload_sha256": "4431463879d516a0582959cf1a8df8f4d4876a6312154b3a7c68f8489079c512",
+          "envelope_sha256": "f9f4fe84e1b63733a821853d3de3337f4bb7c6e0653308febb3a98aed24dd9b1"
+        }
+      ]
+    }
+  }
+}
