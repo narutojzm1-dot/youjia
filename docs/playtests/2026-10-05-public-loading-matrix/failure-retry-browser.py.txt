@@ -1,0 +1,25 @@
+import asyncio,json,time,sys
+from pathlib import Path
+from playwright.async_api import async_playwright
+out=Path(sys.argv[2]);out.mkdir(parents=True,exist_ok=True)
+async def run():
+ results=[]
+ async with async_playwright() as p:
+  b=await p.chromium.launch(executable_path='/usr/bin/chromium',headless=True,args=['--no-sandbox','--use-gl=angle','--use-angle=swiftshader','--enable-webgl'])
+  results=json.loads((out/'cold-results.json').read_text())
+  # Failure/retry: explicitly injected one-time engine JS network failure, independent context.
+  ctx=await b.new_context(viewport={'width':1280,'height':720});pg=await ctx.new_page();errs=[];injected=[]
+  pg.on('pageerror',lambda e:errs.append(str(e)));pg.on('console',lambda m:errs.append(m.text) if m.type=='error' else None)
+  async def fail_once(route):
+   if not injected:injected.append(route.request.url);await route.abort('failed')
+   else:await route.continue_()
+  await pg.route('**/game-*.js',fail_once);await pg.add_init_script("window.first=false;window.addEventListener('youjia:first-frame',()=>window.first=true)")
+  await pg.goto(sys.argv[1],wait_until='domcontentloaded');await pg.locator('#loading-retry').wait_for(state='visible',timeout=120000)
+  await pg.screenshot(path=str(out/'1280-injected-failure.png'));failtext=await pg.locator('#loading').inner_text()
+  await pg.locator('#loading-retry').click();await pg.wait_for_function('window.first',timeout=120000)
+  await pg.screenshot(path=str(out/'1280-retry-title.png'))
+  hidden=await pg.locator('#loading').evaluate('(e)=>e.hidden');assert hidden
+  results.append({'stage':'network-controlled-failure-retry','build':await pg.locator('html').get_attribute('data-build'),'injected_urls':injected,'failure_text':failtext,'loading_hidden_after_retry':hidden,'errors_including_expected_injected_failure':errs,'scope':'one intentional engine-bootstrap JS request abort; real visible retry button reload; not a spontaneous production failure'})
+  await b.close()
+ (out/'result.json').write_text(json.dumps(results,ensure_ascii=False,indent=2)+'\n')
+asyncio.run(run())

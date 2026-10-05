@@ -10,7 +10,7 @@
 
 ## 当前人员可用性
 
-用户2026-10-05通知GROK-BUILD额度耗尽、预计10月9日恢复；关键背景/世界图由GPT制作人，普通物件/动物旅人资源由CODEX-LEAD与CODEX-LEAD-ASSISTANT按公告分表接力，音频/工程另待明确Owner。开工先看[人员公告](docs/collaboration/personnel-availability.md)与登记表，不按旧排期继续等待不可执行角色；恢复仍须实际确认。
+用户2026-10-05通知GROK-BUILD额度耗尽、预计10月9日恢复；按最新319持续分工，关键背景/世界图/普通物件/动物/音频资源由GAME-PRODUCER接续，Leader功能/共享框架，Assistant缺陷；旧候选保留并精确交接。开工先看[人员公告](docs/collaboration/personnel-availability.md)与登记表，不按旧排期继续等待不可执行角色；恢复仍须实际确认。
 
 ## 每项工作的开始方式
 
