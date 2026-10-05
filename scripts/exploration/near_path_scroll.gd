@@ -85,7 +85,7 @@ func setup(trip_host: ExplorationHost, _weather: String) -> void:
 
 func release() -> void:
 	if reveal != null:
-		reveal.settle()
+		reveal.settle(true)
 	set_process(false)
 	set_process_unhandled_input(false)
 	if camera != null:
@@ -99,7 +99,7 @@ func _notification(what: int) -> void:
 	if what in [NOTIFICATION_PAUSED, NOTIFICATION_APPLICATION_FOCUS_OUT, NOTIFICATION_WM_WINDOW_FOCUS_OUT]:
 		walk_target = {}
 		if reveal != null:
-			reveal.settle()
+			reveal.settle(true)
 
 
 func reduced_motion() -> bool:
@@ -273,7 +273,7 @@ func _request_return(reason: String) -> void:
 	leaving = true
 	walk_target = {}
 	if reveal != null:
-		reveal.settle()
+		reveal.settle(true)
 	return_requested.emit(reason)
 
 
@@ -483,7 +483,7 @@ func _build_hud() -> void:
 	_return_button = _button(I18n.t("exploration.action.return"), func() -> void: _request_return("player"))
 	# 触屏没有 Esc：暂停/音量入口在画卷里也要有
 	_pause_button = _button(I18n.t("hud.pause"), func() -> void:
-		reveal.settle()
+		reveal.settle(true)
 		pause_requested.emit())
 	_look_button = _button("", func() -> void: observe())
 	_pick_button = _button("", func() -> void: pick())

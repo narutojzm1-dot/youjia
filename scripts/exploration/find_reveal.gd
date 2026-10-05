@@ -4,7 +4,7 @@ extends Node2D
 # 再飞进提篮，同时一声原创短音。只是表现：核心状态在调用前已经改变，打断时立即收尾，不影响提交。
 # 时长与尺寸都是等用户看过再调的候选值。
 
-const SOUND_PATH := "res://assets/audio/sfx/exploration_find_get.ogg"
+const SOUND_PATH := "res://assets/holiday/audio/exploration_find_get.ogg"
 const RISE := 0.35
 const HOLD := 0.9
 const FLY := 0.4
@@ -13,7 +13,7 @@ const CALM_HOLD := 0.6
 const CALM_OUT := 0.3
 const SHOW_SIZE := 2.6
 const HALO := 56.0
-const LABEL_ROOM := 24.0
+const LABEL_ROOM := 32.0
 const INK := Color("5b4637")
 const GLOW := Color(1.0, 0.97, 0.86)
 
@@ -71,8 +71,15 @@ func play(id: String, from_screen: Vector2, top_screen: Vector2, basket_screen: 
 	queue_redraw()
 
 
-## 走动、接着走、回院、暂停时调用：物件直接算进篮子，声音让它自然放完
-func settle() -> void:
+func is_sounding() -> bool:
+	return _player != null and _player.playing
+
+
+## 走动、接着走时调用：物件直接算进篮子，声音让它自然放完。
+## silence 用于暂停、失焦、回院和离开画卷：短音也停掉，恢复后不补播
+func settle(silence: bool = false) -> void:
+	if silence and _player != null:
+		_player.stop()
 	if find_id.is_empty():
 		return
 	var id := find_id
@@ -117,11 +124,14 @@ func _draw() -> void:
 	var p := pose()
 	var halo: float = p.halo
 	if halo > 0.01:
-		draw_circle(p.at, HALO, Color(GLOW, 0.28 * halo))
-		draw_circle(p.at, HALO * 0.72, Color(GLOW, 0.42 * halo))
-		draw_circle(p.at, HALO * 0.45, Color(1.0, 1.0, 0.96, 0.5 * halo))
+		draw_circle(p.at + Vector2(0, 3), HALO, Color(INK, 0.12 * halo))
+		draw_circle(p.at, HALO * 0.9, Color(GLOW, 0.82 * halo))
+		draw_arc(p.at, HALO * 0.9, 0.0, TAU, 48, Color(INK, 0.22 * halo), 1.5, true)
 	KeepsakeArt.draw(self, find_id, p.at, p.size)
 	if halo > 0.5 and not title.is_empty():
 		var font := ThemeDB.fallback_font
-		var width := 200.0
-		draw_string(font, p.at + Vector2(-width * 0.5, -HALO - 6.0), title, HORIZONTAL_ALIGNMENT_CENTER, width, 17, Color(INK, halo))
+		var text_size := font.get_string_size(title, HORIZONTAL_ALIGNMENT_LEFT, -1, 17)
+		var base: Vector2 = p.at + Vector2(-text_size.x * 0.5, -HALO - 8.0)
+		var pill := Rect2(base + Vector2(-8, -text_size.y + 2), text_size + Vector2(16, 6))
+		draw_rect(pill, Color(GLOW, 0.85 * halo))
+		draw_string(font, base, title, HORIZONTAL_ALIGNMENT_LEFT, -1, 17, Color(INK, halo))

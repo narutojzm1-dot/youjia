@@ -518,6 +518,15 @@ func _find_reveal() -> void:
 	check(scroll.pick() and reveal.is_active() and reveal.calm, "reduced motion still shows the get")
 	check(reveal.sound == null or ResourceLoader.exists(FindReveal.SOUND_PATH), "without the sound file the reveal stays silent")
 	check(reveal.sound != null or reveal.sound_plays == 0, "a missing sound is never replaced by another cue")
+	check(not ResourceLoader.exists(FindReveal.SOUND_PATH) or (reveal.sound != null and reveal.sound_plays == 1), "the delivered get sound loads and plays once")
+	check(KeepsakeArt.texture("formal.find.pine_cone") != null and KeepsakeArt.texture("formal.find.feather") != null, "the producer's pine cone and feather candidates are drawn as textures")
+	check(KeepsakeArt.texture("formal.find.brook_stone") == null, "the stone keeps its placeholder until a clean candidate exists")
+	var sounding_before := reveal.is_sounding()
+	scroll.walk(Vector2.LEFT, 0.2)
+	check(reveal.is_sounding() == sounding_before, "walking off lets the get sound finish")
+	scroll._notification(Node.NOTIFICATION_PAUSED)
+	check(not reveal.is_sounding(), "pausing stops the get sound; it is not replayed later")
+	print("[find-reveal] sound audible in this run: ", sounding_before)
 	var still := true
 	var start: Vector2 = reveal.pose().at
 	for step in 8:

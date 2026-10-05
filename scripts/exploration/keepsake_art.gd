@@ -1,12 +1,31 @@
 class_name KeepsakeArt
 extends RefCounted
 # 圆石、松果、落羽的占位画法：静止时就认得出来，不靠飘、转或闪光。
-# 画卷路边与提篮共用；正式小物原画交付后替换为贴图。
+# 画卷路边、提篮与拾起展示共用；finds/ 下有制作人小物贴图时用贴图，没有就用占位画法。
 
 const INK := Color(0.29, 0.22, 0.16)
+const TEXTURE_DIR := "res://assets/holiday/exploration/finds/"
+## 贴图在 size 1 时的长边，与占位画法大致同一占地
+const TEXTURE_SPAN := 30.0
+
+static var _textures := {}
+
+
+static func texture(find_id: String) -> Texture2D:
+	var slug := find_id.get_slice(".", 2)
+	if not _textures.has(slug):
+		var path := TEXTURE_DIR + slug + ".webp"
+		_textures[slug] = load(path) if ResourceLoader.exists(path) else null
+	return _textures[slug]
 
 
 static func draw(canvas: CanvasItem, find_id: String, at: Vector2, size: float = 1.0) -> void:
+	var tex := texture(find_id)
+	if tex != null:
+		var span := TEXTURE_SPAN * size / maxf(tex.get_width(), tex.get_height())
+		var extent := Vector2(tex.get_width(), tex.get_height()) * span
+		canvas.draw_texture_rect(tex, Rect2(at - extent * 0.5, extent), false)
+		return
 	match find_id.get_slice(".", 2):
 		"brook_stone":
 			_stone(canvas, at, size)
