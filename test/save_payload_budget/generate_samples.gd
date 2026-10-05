@@ -5,6 +5,7 @@ extends SceneTree
 # godot --headless --path . --script res://test/save_payload_budget/generate_samples.gd -- --out DIR --host-snapshot FILE
 const Codec := preload("res://scripts/persistence/save_data_codec.gd")
 const SaveFilesType := preload("res://scripts/persistence/save_files.gd")
+const Captures := preload("res://test/save_payload_budget/rule_captures.gd")
 const LIMIT := 65536
 const STRESS_KEY := "x_stress_extension"
 
@@ -64,72 +65,11 @@ func _disposable_user_dir() -> bool:
 	return true
 
 
-# Placements mirror test/photo_moment_render_suite.gd so every capture comes
-# from a live YardWorld through the production rule/PhotoMoment path.
 func _capture_all_rules() -> void:
-	var index := 0
-	for rule: Dictionary in ExpressionCatalog.RULES:
-		if not bool(rule.get("polaroid", false)): continue
-		seed(5500 + index)
-		index += 1
-		var world = load("res://scripts/game/yard_world.gd").new()
-		root.add_child(world)
-		world.setup()
-		world.holiday_day = 3
-		world._weather_timer = 10000.0
-		var player = world.get_player()
-		var rule_id: String = rule.id
-		match rule_id:
-			"llama_fed_gentle":
-				world.debug_place_actor("llama", Vector2(365, 560))
-				world.debug_place_player(Vector2(300, 562))
-				player.pick_grass()
-			"llama_overcast_goose_annoyed":
-				world.set_weather("overcast")
-				world.debug_place_actor("llama", Vector2(705, 505))
-				world.debug_place_player(Vector2(660, 520))
-			"llama_sun_sheep_happy":
-				world.debug_place_actor("llama", Vector2(358, 525))
-				world.debug_place_player(Vector2(290, 535))
-			"llama_sheep_cow_smirk":
-				world.debug_place_actor("llama", Vector2(528, 514))
-				world.debug_place_player(Vector2(560, 532))
-			"duck_pond_chorus":
-				world.debug_place_player(Vector2(830, 530))
-			"goose_pond_rest":
-				world.debug_place_player(Vector2(755, 522))
-				world.actor_named("goose").state = "rest"
-				world.actor_named("goose")._idle_time = 8.0
-			"goose_duck_shore":
-				world.debug_place_actor("duck_a", Vector2(769, 534))
-				world.debug_place_player(Vector2(739, 512))
-			"sheep_pair_near":
-				world.debug_place_actor("sheep_b", world.actor_named("sheep_a").position + Vector2(48, 8))
-				world.debug_place_player(Vector2(343, 515))
-			"cow_rare_calm":
-				world.debug_place_player(Vector2(416, 535))
-		if rule_id == "plant_first_bloom": world._plant_state = world.PLANT_BLOOMED
-		if rule_id == "fish_first_catch":
-			world._fish_state = world.FISH_CAUGHT
-			world._fish_catch_type = "small"
-		world.tick(1.0 / 60.0, Vector2.ZERO)
-		if rule_id == "llama_fed_gentle":
-			world.try_interact()
-		else:
-			if rule_id == "llama_overcast_goose_annoyed":
-				world._leading = true
-				world._update_lead_rope()
-			world.debug_force_rule(rule_id)
-		var moment: Dictionary = world.photo_moments.get(rule_id, {})
-		var clean := PhotoMoment.sanitize(JSON.parse_string(JSON.stringify(moment)))
-		if moment.is_empty() or clean.is_empty() or str(clean.rule_id) != rule_id:
-			_fail("%s produced no legal PhotoMoment" % rule_id)
-		else:
-			_moments[rule_id] = moment
-			_rule_ids.append(rule_id)
-		world.free()
-	if _rule_ids != Array(ExpressionCatalog.all_ids()):
-		_fail("captured rules %s differ from ExpressionCatalog.all_ids() %s" % [_rule_ids, ExpressionCatalog.all_ids()])
+	var captured := Captures.capture_all(root)
+	_rule_ids = captured.ids
+	_moments = captured.moments
+	for message: String in captured.errors: _fail(message)
 
 
 # Real SaveStore calls in the order the game makes them: each new photo commits
@@ -197,10 +137,7 @@ func _stress_samples() -> void:
 	var biggest := first
 	for id: String in _rule_ids:
 		if JSON.stringify(_moments[id]).length() > JSON.stringify(_moments[biggest]).length(): biggest = id
-	var moment: Dictionary = _moments[biggest].duplicate(true)
-	var source_items: Array = moment.items.duplicate(true)
-	while moment.items.size() < PhotoMoment.MAX_ITEMS:
-		moment.items.append(source_items[moment.items.size() % source_items.size()].duplicate(true))
+	var moment := Captures.dense(_moments[biggest])
 	if PhotoMoment.sanitize(JSON.parse_string(JSON.stringify(moment))).is_empty():
 		_fail("dense PhotoMoment is not sanitize-legal")
 	dense.album = [biggest]
