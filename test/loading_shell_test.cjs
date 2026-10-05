@@ -14,7 +14,7 @@ function setup(missing=[]){
  return {nodes,window,get starts(){return starts},get constructed(){return constructed},get runtime(){return runtime},
   async modules(){imports.get('./web/save/bridge.mjs').resolve(bridge);await flush();assert.equal(starts,0,'reader must load before engine starts');imports.get('./web/save/idbfs_source.mjs').resolve({captureIdbfsSource:captureLegacy});await flush()},
   async moduleFailure(){imports.get('./web/save/bridge.mjs').reject(Error('module fetch failed'));await flush()},
-  progress:(a,b)=>onProgress(a,b),resolve:()=>resolve(),reject:()=>reject(Error('engine start failed')),frame:()=>listeners['youjia:first-frame']?.(),blocked:()=>listeners['youjia:save-blocked']?.({detail:'quarantined'}),tick(t){clock=t;interval()}};
+  progress:(a,b)=>onProgress(a,b),resolve:()=>resolve(),reject:()=>reject(Error('engine start failed')),frame:()=>listeners['youjia:first-frame']?.(),blocked:(detail='quarantined')=>listeners['youjia:save-blocked']?.({detail}),tick(t){clock=t;interval()}};
 }
 (async()=>{
  let t=setup();await flush();assert.equal(t.constructed,0,'bridge must finish before Engine is constructed');assert.equal(t.starts,0);await t.modules();assert.equal(t.starts,1);assert.equal(t.runtime,'pending','installing bridge does not resolve Host runtime');
@@ -28,5 +28,12 @@ function setup(missing=[]){
  t=setup();await t.modules();t.reject();await flush();assert.equal(t.runtime,'rejected');assert.match(t.nodes['loading-detail'].textContent,/engine start failed/);t.frame();assert.equal(t.nodes.loading.hidden,false);
  t=setup();await t.modules();t.resolve();await flush();t.blocked();t.frame();assert.equal(t.nodes.loading.hidden,false,'save blocked must survive first-frame event');assert.match(t.nodes['loading-detail'].textContent,/quarantined/);assert.equal(t.nodes.canvas.focused,undefined);
  t=setup();await t.modules();t.blocked();t.resolve();await flush();t.frame();assert.equal(t.runtime,'rejected','blocked startup cannot unlock Host');assert.equal(t.nodes.loading.hidden,false);
+ for (const code of ['SAVE_WRITER_OWNED','OPEN_FAILED','quarantined','xSAVE_WRITER_OWNED','SAVE_WRITER_OWNED extra']) {
+  t=setup();await t.modules();t.resolve();await flush();t.blocked(code);t.frame();
+  assert.equal(t.nodes.loading.hidden,false);assert.equal(t.nodes['loading-retry'].hidden,false);
+  if(code==='SAVE_WRITER_OWNED') {assert.equal(t.nodes['loading-status'].textContent,'另一页正在游玩');assert.match(t.nodes['loading-detail'].textContent,/关闭后在这里重试/)}
+  else {assert.equal(t.nodes['loading-status'].textContent,'游戏加载失败，请重试。');assert.match(t.nodes['loading-detail'].textContent,new RegExp(code))}
+  let retries=0;t.window.location.reload=()=>retries++;t.nodes['loading-retry'].click();assert.equal(retries,1,'retry reloads; it does not bypass the writer lock');
+ }
  console.log('Loading shell PASS: module ordering, runtime readiness/rejection, persistentPaths isolation, save-blocked gate, bytes, unknown totals, stall and both first-frame orders');
 })().catch(e=>{console.error(e);process.exitCode=1});

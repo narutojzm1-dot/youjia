@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/workspace/writer-guidance-web/run.py", line 22, in <module>
+    p1.goto(url);bind(p1,'first');p1.wait_for_function('window.first',timeout=180000);p1.wait_for_timeout(1500)
+                 ^^^^^^^^^^^^^^^^
+  File "/workspace/writer-guidance-web/run.py", line 16, in bind
+    build=p.locator('html').get_attribute('data-build');assert build=='game-830320b',build
+                                                               ^^^^^^^^^^^^^^^^^^^^^
+AssertionError: index
