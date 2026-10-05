@@ -65,9 +65,9 @@ static func configure(original: Dictionary) -> Dictionary:
 	if species=="duck" and ResourceLoader.exists(DIRECTORY+"duck_preen.png"):
 		config.textures["preen"]=DIRECTORY+"duck_preen.png"
 		config.posture_metadata={"preen": manifest().get("duck_preen",{})}
-	elif species=="horse" and ResourceLoader.exists(DIRECTORY+"horse_tail.png"):
-		config.textures["tail"]=DIRECTORY+"horse_tail.png"
-		config.posture_metadata={"tail": manifest().get("horse_tail",{})}
+	# #180: keep the horse on its standing cel while resting until a same-size
+	# tail painting is approved. The current tail body visibly shrinks; do not
+	# compensate by distorting actor scale or changing encounter camera framing.
 	elif species=="cow" and ResourceLoader.exists(DIRECTORY+"cow_chew.png"):
 		config.textures["chew"]=DIRECTORY+"cow_chew.png"
 		config.posture_metadata={"chew": manifest().get("cow_chew",{})}

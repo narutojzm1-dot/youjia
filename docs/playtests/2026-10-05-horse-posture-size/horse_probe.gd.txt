@@ -1,0 +1,40 @@
+extends Node2D
+var horse: FeltActor
+var cam: Camera2D
+var frame := 0
+func _ready() -> void:
+	RenderingServer.set_default_clear_color(Color('#ece6d9'))
+	horse_placeholder()
+func horse_placeholder() -> void:
+	cam = Camera2D.new()
+	cam.position = Vector2(640,360)
+	add_child(cam)
+	horse = FeltActor.new()
+	add_child(horse)
+	horse.setup(CastArt.configure({'id':'horse','species':'horse','position':Vector2(640,470),'scale':0.36,'textures':{}}))
+	var callback := JavaScriptBridge.create_callback(stage)
+	set_meta('callback',callback)
+	JavaScriptBridge.get_interface('window').horseStage = callback
+	stage([0])
+func stage(args: Array) -> void:
+	var index := int(args[0])
+	var reduced := index >= 6
+	var face := -1.0 if index % 6 >= 3 else 1.0
+	var posture := 'rest' if index % 3 == 1 else 'graze'
+	TuningStore.set_value('ui.reduced_motion',reduced)
+	horse.position = Vector2(640,470)
+	horse.state = posture
+	horse._idle_time = 100
+	horse._velocity = Vector2.ZERO
+	horse._gait.weight = 0
+	horse._gait.face = face
+	horse.facing = face
+	horse._breath = 0
+	horse.tick(0,Vector2(1280,720))
+	var rect := horse.visual_hit_rect()
+	var report := {'index':index,'reduced':reduced,'state':horse.state,'posture':horse._posture_id,'position':[horse.position.x,horse.position.y],'scale':[horse.scale.x,horse.scale.y],'camera_zoom':[cam.zoom.x,cam.zoom.y],'art_bounds':[horse._art_bounds.position.x,horse._art_bounds.position.y,horse._art_bounds.size.x,horse._art_bounds.size.y],'screen_visible_size':[horse._art_bounds.size.x*abs(horse.scale.x),horse._art_bounds.size.y*abs(horse.scale.y)],'anchor':[horse._ground_anchor.x,horse._ground_anchor.y],'texture':horse._sprite.texture.resource_path}
+	JavaScriptBridge.eval('window.horseReport = '+JSON.stringify(report))
+	queue_redraw()
+func _draw() -> void:
+	draw_line(Vector2(430,470),Vector2(850,470),Color.RED,1)
+	draw_line(Vector2(640,250),Vector2(640,520),Color.BLUE,1)

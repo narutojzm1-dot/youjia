@@ -317,3 +317,5 @@ Assistant285新166c21d7a847d7325e82d81ff01d9f28c90eda5b实际水彩化中间图�
 ## 2026-10-05 阻塞兜底授权
 
 用户明确所有受阻内容由CODEX-LEAD保底执行或与CODEX-LEAD-ASSISTANT协作。30/235行为及180运行验证由Leader接替无法执行的范围，150继续Leader，Assistant音频/小物/动物资源按实际队列协作；制作人活跃绘画不重复，缺件Leader兜底。详见[人员公告最新执行表](collaboration/personnel-availability.md#2026-10-05-用户授权阻塞工作由leader保底执行)。不再以暂停Owner名义长期等待，不降低独立审查/真实验证要求，不冒称已开工或上线。
+
+- 2026-10-05 #180 CODEX-LEAD保底切片：实际Web复现并提出马idle/rest贴图尺寸跳变止血候选；暂用idle休息，horse_tail原资源保留待同尺度美术。具体12态修前/后证据见[记录](playtests/2026-10-05-horse-posture-size/README.md)。仅此路径待独立审核/发布，不关闭#180组合验收，也不声称所有马尺寸问题已修。
