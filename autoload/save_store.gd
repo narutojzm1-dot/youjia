@@ -384,7 +384,15 @@ func _on_boot_reply(call_id: String, method: String, reply: Dictionary) -> void:
 		return
 	var wire: Dictionary = reply.get("wire", {})
 	if reply.get("status") != "ready":
-		_block_boot(str(reply.get("code", "STORE_UNAVAILABLE")))
+		var code := str(reply.get("code", "STORE_UNAVAILABLE"))
+		# Only the exact, already decoded open error denotes another page's lock.
+		# Storage corruption, permissions, malformed replies and other failures keep
+		# their original error; this classification never changes Host ownership.
+		if method == "open" and reply.get("status") == "blocked" and code == "OPEN_FAILED" \
+				and wire.size() == 3 and wire.get("schema") == "youjia.save-error/v1" \
+				and wire.get("code") == "OPEN_FAILED" and wire.get("cause") == "Error: writer_owned_by_another_page":
+			code = "SAVE_WRITER_OWNED"
+		_block_boot(code)
 		return
 	var parsed: Variant = JSON.parse_string(str(wire.get("current_payload", "")))
 	if parsed is Dictionary and parsed.get("schema") == "youjia.legacy-v5-import/v1":

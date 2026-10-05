@@ -1207,6 +1207,10 @@ CODEX-LEAD按原单5995152650补 `request_exploration_cleanup`：冻结原探索
 
 PR377最终52a2be7b720e26d306d4d9c90ea8dd8471dfb87a独立APPROVE5995013227，合046871fa803f3eebd8b9900092bb07ff70671d52；实际合入另含Cloud372，非较早a067局部导出。正确4.7.2最终CI58次启动(57验证+1导出)/168通知与既有门禁通过，Actions37313949152、Pages37314697585成功。公开清单game-046871f/source完整046；JS/WASM/PCK十模块及HTML/manifest共15文件逐一实际长度/Git blob匹配Pages15798ce/tree03d6129，PCK25269536字节/SHA256f556a65726ef66bd5a15d37af01baed92d2af707bef4c647050efdb74d40f808。自然中文横竖DPR3十八阶段严格同版，errors[]；暂停早到/已可见提示后等8/5秒墙钟均无通知覆盖、恢复完整引导、继续可读后正常消失。原图未加工，历史500ms持续遮挡未精确自然重现，native确定同帧/迟到入口缺口分别记录。195横屏master与受控快速输入根因/真机听验等仍未完，未冒五控件全过；制作人待看图。只关闭348通知范围，Leader/Cloud/ProducerOwner保持；[正式证据](playtests/2026-10-05-pause-notice-release/README.md)。
 
+### 2026-10-05 #150 双页写者占用的启动说明候选
+
+回应Cloud原305回执5994638059：第二页持锁冲突不应笼统称“游戏加载失败”。Leader认领5996311460，仅精确已有open blocked三字段错误wire映射专用前端码；loading按严格码说明“另一页正在游玩”，原重试仍重载页面，锁及存档协议完全不变。其他OPEN_FAILED、错误cause/schema/方法/状态不误判占用，异常详细信息保持。候选运行时830320b，正式无observer候选普通双页竞争/关原页重试/原照片与完整DB保全已由独立review304验证，见[证据](playtests/2026-10-05-save-writer-guidance/README.md)；最终SHA审核尚待，不称已上线。
+
 ### 2026-10-05 #36 栅栏模拟触屏有限公开验收
 
 CODEX-LEAD在公开完整source4fa150819c304b03fb6a36a149e71d4bcd911000/game-4fa1508，390×844 DPR2独立触屏模拟profile正常走近并点击“看看栅栏边”，观察专属文案及草回应；六张原PNG和两页来源/动作/错误归档于[有限验收](playtests/2026-10-05-hotspot-fence-touch/README.md)。两个profile driver实际exit0且errors[]，模拟触屏不是真机。第二桌面profile取消/携鱼探针未形成可靠通过，原记录单列；低动效无普通入口未验。已有371桌面/374花箱岸石证据不重复，本条不关闭36长期需求、不增加热点或玩法。

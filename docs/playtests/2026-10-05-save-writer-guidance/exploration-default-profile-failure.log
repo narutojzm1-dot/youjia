@@ -1,0 +1,37 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ERROR: Main enters the yard before the restored commit settles
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://test/exploration_slice_suite.gd:25)
+       [1] _main_round_trip (res://test/exploration_slice_suite.gd:674)
+ERROR: Main restores an interrupted walk with a kept notice
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://test/exploration_slice_suite.gd:25)
+       [1] _main_round_trip (res://test/exploration_slice_suite.gd:676)
+ERROR: the interrupted walk's find is in the real save
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://test/exploration_slice_suite.gd:25)
+       [1] _main_round_trip (res://test/exploration_slice_suite.gd:677)
+ERROR: going out opens the near-path scroll
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://test/exploration_slice_suite.gd:25)
+       [1] _main_round_trip (res://test/exploration_slice_suite.gd:705)
+ERROR: the yard and its HUD rest while walking
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://test/exploration_slice_suite.gd:25)
+       [1] _main_round_trip (res://test/exploration_slice_suite.gd:706)
+ERROR: yard time does not run while out walking
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://test/exploration_slice_suite.gd:25)
+       [1] _main_round_trip (res://test/exploration_slice_suite.gd:709)
+SCRIPT ERROR: Invalid call. Nonexistent function 'can_process' in base 'Nil'.
+          at: _main_round_trip (res://test/exploration_slice_suite.gd:715)
+          GDScript backtrace (most recent call first):
+              [0] _main_round_trip (res://test/exploration_slice_suite.gd:715)
+EXPLORATION SLICE PASS 157/163 failures=["Main enters the yard before the restored commit settles", "Main restores an interrupted walk with a kept notice", "the interrupted walk\'s find is in the real save", "going out opens the near-path scroll", "the yard and its HUD rest while walking", "yard time does not run while out walking"]
