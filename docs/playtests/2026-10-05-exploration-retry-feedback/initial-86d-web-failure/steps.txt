@@ -1,0 +1,40 @@
+save[start]: {"db": "youjia-save-host-v1", "generation": "1", "keepsakes": {}, "serial": 0, "next_trip_serial": null, "session_open": false, "carried": null, "intent_present": false}
+01-t1-out: tapped the stone path
+02-t1-gate-look: walked to gate, E
+03-t1-gate-t: T: take or swap if offered
+04-t1-shade-look: walked to shade, E
+05-t1-shade-t: T: take or swap if offered
+06-t1-brook-look: walked to brook, E
+07-t1-brook-t: T: take or swap if offered
+08-t1-slope-look: walked to slope, E
+09-t1-slope-t: T: take or swap if offered
+10-t1-before-r: basket before R
+11-t1-home-0: 1 s after R with one intent write failing
+12-t1-home-1: 2 s after R with one intent write failing
+13-t1-home-2: 3 s after R with one intent write failing
+14-t1-home-3: 4 s after R with one intent write failing
+15-t1-home-4: 5 s after R with one intent write failing
+16-t1-home-5: 6 s after R with one intent write failing
+faults fired: [1791204277524]
+save[after failed submit]: {"db": "youjia-save-host-v1", "generation": "10", "keepsakes": {}, "serial": 0, "next_trip_serial": 2, "session_open": true, "carried": ["formal.find.feather", "formal.find.brook_stone", "formal.find.pine_cone"], "intent_present": false}
+17-t1-after-retry: tapped 再确认一次
+save[after first retry]: {"db": "youjia-save-host-v1", "generation": "12", "keepsakes": {"formal.find.brook_stone": 1, "formal.find.feather": 1, "formal.find.pine_cone": 1}, "serial": 1, "next_trip_serial": 2, "session_open": false, "carried": null, "intent_present": false}
+18-t1-settle-0: waiting
+19-t1-settle-1: waiting
+20-t1-settle-2: waiting
+save[settled]: {"db": "youjia-save-host-v1", "generation": "12", "keepsakes": {"formal.find.brook_stone": 1, "formal.find.feather": 1, "formal.find.pine_cone": 1}, "serial": 1, "next_trip_serial": 2, "session_open": false, "carried": null, "intent_present": false}
+21-reopened: reopened
+save[after reopen]: {"db": "youjia-save-host-v1", "generation": "12", "keepsakes": {"formal.find.brook_stone": 1, "formal.find.feather": 1, "formal.find.pine_cone": 1}, "serial": 1, "next_trip_serial": 2, "session_open": false, "carried": null, "intent_present": false}
+poll[reopen +2s]: serial=1 keepsakes={"formal.find.brook_stone": 1, "formal.find.feather": 1, "formal.find.pine_cone": 1} session_open=False gen=12
+22-reopen-poll0: 2s into polling
+poll[reopen +4s]: serial=1 keepsakes={"formal.find.brook_stone": 1, "formal.find.feather": 1, "formal.find.pine_cone": 1} session_open=False gen=12
+poll[reopen +6s]: serial=1 keepsakes={"formal.find.brook_stone": 1, "formal.find.feather": 1, "formal.find.pine_cone": 1} session_open=False gen=12
+poll[reopen +8s]: serial=1 keepsakes={"formal.find.brook_stone": 1, "formal.find.feather": 1, "formal.find.pine_cone": 1} session_open=False gen=12
+poll[reopen +10s]: serial=1 keepsakes={"formal.find.brook_stone": 1, "formal.find.feather": 1, "formal.find.pine_cone": 1} session_open=False gen=12
+poll[reopen +12s]: serial=1 keepsakes={"formal.find.brook_stone": 1, "formal.find.feather": 1, "formal.find.pine_cone": 1} session_open=False gen=12
+poll[reopen +14s]: serial=1 keepsakes={"formal.find.brook_stone": 1, "formal.find.feather": 1, "formal.find.pine_cone": 1} session_open=False gen=12
+poll[reopen +16s]: serial=1 keepsakes={"formal.find.brook_stone": 1, "formal.find.feather": 1, "formal.find.pine_cone": 1} session_open=False gen=12
+poll[reopen +18s]: serial=1 keepsakes={"formal.find.brook_stone": 1, "formal.find.feather": 1, "formal.find.pine_cone": 1} session_open=False gen=12
+poll[reopen +20s]: serial=1 keepsakes={"formal.find.brook_stone": 1, "formal.find.feather": 1, "formal.find.pine_cone": 1} session_open=False gen=12
+23-reopen-poll9: 20s into polling
+errors: []
