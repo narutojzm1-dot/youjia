@@ -6,11 +6,11 @@ Owner：CURSOR-CLOUD；父项 #150；生产容量决策与 Host 实现归 CODEX-
 
 | 项 | 值 |
 | --- | --- |
-| main | `ed62f0b880973d1d92f1210413d9d5ae21776f4f`（证据里的 `repo_head` 是在其上只加本目录脚本的 `e94d5f3…`） |
+| main | `ed62f0b880973d1d92f1210413d9d5ae21776f4f`（证据里的 `repo_head` 是在其上只加本目录脚本的 `3598255…`） |
 | Host | PR251 head `6e47c3acaea7ab7ecee0e09a1e3634dd8c4fb62e`，`test/save_recovery_r1/` 下 `store.mjs`/`legacy_v5.mjs`/`source_decode.mjs`/`bridge.mjs`/`head.html`/`source_snapshot.gd` 由 `git show` 原样取出，未改 |
 | 引擎/浏览器 | Godot 4.7.2.stable.official.ed1daf0bf；Chrome 148.0.7778.96 headless |
-| 隔离 | 一次性 `/tmp` XDG（生成脚本检测 `user://` 不在 `/tmp` XDG 下即拒绝运行，且起始时主/备/临时档必须不存在）；一次性 Chromium profile；IndexedDB 只用 `youjia-recovery-test-*` 命名空间并逐个删除 |
-| 结果 | `test/save_payload_budget/evidence.json`：171 项检查，157 PASS、14 FAIL（全部是“自然可达存档能被现 Host 导入”，见下） |
+| 隔离 | 一次性 `/tmp` XDG，由 `run.sh` 每次新建，这是不读真实存档的保证。生成脚本另有兜底：检测到 `user://` 不在 `/tmp` XDG 下，或起始时主/备/临时档已存在，就拒绝继续，因此不会写入；但 autoload 启动时已读过一次 `user://`，所以不要绕过 `run.sh` 直接运行。另用一次性 Chromium profile；IndexedDB 只用 `youjia-recovery-test-*` 命名空间并逐个删除 |
+| 结果 | `test/save_payload_budget/evidence.json`：190 项检查，174 PASS、16 FAIL（全部是“自然可达存档能被现 Host 导入”，见下） |
 
 复跑：`bash test/save_payload_budget/run.sh`（`HOST_SHA=` 可换 Host，`OUT=` 改输出，`KEEP=1` 保留样本文件）。有任一检查失败即退出 1；失败保留，不放宽。样本生成是确定性的：两次独立运行的全部样本文件逐字节相同。
 
@@ -34,11 +34,18 @@ Owner：CURSOR-CLOUD；父项 #150；生产容量决策与 Host 实现归 CODEX-
 | `natural_05` … `natural_14` | 5–14 | 91797→247918 | 73363→230668 | 165160→478586 | 179451→519959 | 43509→117670 | too_large/too_large | **拒绝**（同上） | 见 evidence |
 | `natural_15_fish_first_catch` | 15 | 266072 | 247918 | 513990 | 558420 | 126282 | too_large/too_large | **拒绝**（同上） | `db0dcedcaa4839a8` / `b994a41153f4a64f` |
 | `natural_full_steady` | 15 | 266132 | 266132 | 532264 | 578267 | 126333 | too_large/too_large | **拒绝**（同上） | `2128eef1fb0d159a` / `5757bcb23cbc82ff` |
+| `natural_steady_01` | 1 | 17578 | 17577 | 35155 | 38374 | — | present/present | 接受 | `88412f70f4077d36` / `a637a6a17f92195b` |
+| `natural_steady_02` | 2 | 37999 | 37999 | 75998 | 82603 | — | present/present | **拒绝**：combined legacy fixture too large | `a5e0cfe29ce5eeb2` / `fc596a78a0ad66a6` |
+| `natural_steady_03` | 3 | 55301 | 55301 | 110602 | 120191 | — | present/present | **拒绝**：combined legacy fixture too large | `cd44f75268c90b18` / `60cbe2cb1c4972bd` |
+
+`natural_steady_*` 是独立的第二轮：每次 `set_album` 后立刻再 `set_yard_progress`。游戏里任何后续的庭院、植物或语言存档都会触发这种轮转，结果是主档和备档都含 k 张照片。
 
 结论：
 
 - 每多一张真实照片，存档文件增加 17.2–20.4 KB（紧凑投影增加 8.2–9.5 KB）。现有 15 条规则拍满后，单份存档 266,132 B，主+备原文 532,264 B，保留原文的合并导入封装 578,267 B（JSON 转义带来约 8.6% 额外体积）。
-- **现 Host 夹具预算最多只能导入有 2 张照片的自然存档。**第 3 张就出现议题要求检查的情形：主档 55,300 B、备档 37,998 B，单份都低于 64 KiB，但合并封装 101,395 B 超限。从第 4 张起，单份文件已超过 64 KiB，Godot 读取阶段就报 `too_large`。这 14 条 FAIL 保留在证据里（含完整主/备 SHA），等 Leader 定生产预算，不放宽断言。
+- **现 Host 夹具预算只在刚拍完第 2 张、备档仍是 1 张时，才能导入 2 张照片的存档。**只要之后再发生一次任何存档，主备都变成 2 张，合并封装 82,603 B 就被拒。所以常见稳态下，只有不超过 1 张照片的存档能导入。
+- 第 3 张时出现议题要求检查的情形：主档 55,300 B、备档 37,998 B，单份都低于 64 KiB，但合并封装 101,395 B 超限；`natural_steady_03` 两份各 55,301 B，同样如此。从第 4 张起，单份文件已超过 64 KiB，Godot 读取阶段就报 `too_large`。
+- 这 16 条 FAIL 保留在证据里（含完整主/备 SHA），等 Leader 定生产预算，不放宽断言。
 - 即使导入成功，后续正常存档走的 `prepare` 仍受 `MAX_PAYLOAD=65536` 限制。实测把 4 张照片的真实主档（73,363 B）提交给 `prepare`，被 `bounded frozen JSON text required` 拒绝。如果改用紧凑投影，8 张照片（68,463 B）同样超限。
 
 ## 压力样本（非自然可达）
@@ -89,7 +96,7 @@ Host 导入 payload 里存的是原文：每个被接受的样本都断言内嵌
 2. 起点建议：(a) 1.5 MiB（1,572,864 B），(b) 3.5 MiB（3,670,016 B），(c) 至少 1 MiB（紧凑）或与 (a) 相同（若沿用两空格缩进），(d) 约 4.2M 字符。依据：
    - 当前自然满档单份 266 KB、合并 578 KB，余量分别约 5.9× 与 6.3×；
    - 按密集样本线性外推，15 张都塞满 64 条目的单份约 1.06 MB、合并约 2.30 MB。这是外推值，没有实测。1 MiB 单份上限会差约 1%，因此不建议用 1 MiB；
-   - 每新增一条拍立得规则，合并封装约增加 37–44 KB。
+   - 每新增一条拍立得规则，合并封装增加约 37.5–40.9 KB，这是自然序列逐张实测的值。
 3. 超限必须显式阻止，并让玩家可见，绝不删照片或截断未知字段来凑预算。冻结前应在目标低端移动浏览器上，按所选上限实测 IndexedDB 写入/回读耗时与内存。`store.mjs` 每次事务都会对完整 current/intent/archive 做 `JSON.stringify` 比较，MB 级下的开销本次没有测量。
 
 ## 剩余不确定项
