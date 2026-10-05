@@ -10,6 +10,14 @@ signal ack_failed(op_id: String, reason: String)
 signal state_changed(state: String)
 signal ignored_receipt(reason: String)
 
+## Typed local refusal. Never serialized, prepared, or sent to the backend.
+class IntentRejection extends RefCounted:
+	const CODES := ["EXPLORATION_CLEANUP_INVALID_ARGUMENT", "EXPLORATION_CLEANUP_PRECONDITION_CHANGED"]
+	var code: String
+	func _init(reason: String) -> void:
+		code = reason if reason in CODES else "INVALID_LOCAL_INTENT"
+
+
 const WEB_NAMESPACE := "youjia-save-host-v1"
 var _namespace := WEB_NAMESPACE
 var _store_id := ""
@@ -123,6 +131,9 @@ func _pump() -> void:
 		_finish_rejected("INVALID_LOCAL_INTENT")
 		return
 	var candidate: Variant = _active.intent.call(_confirmed.duplicate(true))
+	if candidate is IntentRejection:
+		_finish_rejected(candidate.code if candidate.code in IntentRejection.CODES else "INVALID_LOCAL_INTENT")
+		return
 	if not candidate is Dictionary or candidate.get("version") != 5:
 		_finish_rejected("INVALID_LOCAL_CANDIDATE")
 		return
