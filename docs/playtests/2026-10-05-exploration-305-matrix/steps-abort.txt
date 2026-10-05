@@ -1,0 +1,27 @@
+save[start]: {"db": "youjia-save-host-v1", "generation": "1", "keepsakes": {}, "serial": 0, "next_trip_serial": null, "session_open": false, "intent_present": false}
+03-t1-gate-t: T: take or swap if offered
+05-t1-shade-t: T: take or swap if offered
+07-t1-brook-t: T: take or swap if offered
+09-t1-slope-t: T: take or swap if offered
+10-t1-before-r: basket before R
+closed the page 150 ms after R
+11-reopened: reopened after closing mid-return
+save[after reopen]: {"db": "youjia-save-host-v1", "generation": "7", "keepsakes": {}, "serial": 0, "next_trip_serial": 2, "session_open": true, "intent_present": false}
+poll[reopen +2s]: serial=0 keepsakes={} session_open=True gen=7
+12-reopen-poll0: 2s into polling
+poll[reopen +4s]: serial=1 keepsakes={"formal.find.brook_stone": 1} session_open=True gen=8
+poll[reopen +6s]: serial=1 keepsakes={"formal.find.brook_stone": 1} session_open=False gen=9
+poll[reopen +8s]: serial=1 keepsakes={"formal.find.brook_stone": 1} session_open=False gen=9
+poll[reopen +10s]: serial=1 keepsakes={"formal.find.brook_stone": 1} session_open=False gen=9
+poll[reopen +12s]: serial=1 keepsakes={"formal.find.brook_stone": 1} session_open=False gen=9
+poll[reopen +14s]: serial=1 keepsakes={"formal.find.brook_stone": 1} session_open=False gen=9
+poll[reopen +16s]: serial=1 keepsakes={"formal.find.brook_stone": 1} session_open=False gen=9
+poll[reopen +18s]: serial=1 keepsakes={"formal.find.brook_stone": 1} session_open=False gen=9
+poll[reopen +20s]: serial=1 keepsakes={"formal.find.brook_stone": 1} session_open=False gen=9
+13-reopen-poll9: 20s into polling
+17-t2-gate-t: T: take or swap if offered
+19-t2-shade-t: T: take or swap if offered
+20-t2-home: R, 6.0 s later
+save[after trip 2]: {"db": "youjia-save-host-v1", "generation": "15", "keepsakes": {"formal.find.brook_stone": 1, "formal.find.feather": 1}, "serial": 2, "next_trip_serial": 3, "session_open": true, "intent_present": false}
+save[after second reopen]: {"db": "youjia-save-host-v1", "generation": "16", "keepsakes": {"formal.find.brook_stone": 1, "formal.find.feather": 1}, "serial": 2, "next_trip_serial": 3, "session_open": false, "intent_present": false}
+errors: []
