@@ -1,0 +1,2092 @@
+{
+  "source": "14a85a532f9510306b7921b9daa23409d17799c6",
+  "candidateOnly": true,
+  "role": "CODEX-LEAD implementation-agent candidate QA; not independent final review",
+  "actions": [
+    {
+      "view": "desktop",
+      "time": 363792.415361392,
+      "command": {
+        "name": "desktop-title-tab1",
+        "actions": [
+          [
+            "click",
+            40,
+            40
+          ],
+          [
+            "key",
+            "Tab"
+          ],
+          [
+            "wait",
+            300
+          ]
+        ]
+      }
+    },
+    {
+      "view": "desktop",
+      "time": 363799.671905098,
+      "command": {
+        "name": "desktop-title-tab2",
+        "actions": [
+          [
+            "key",
+            "Tab"
+          ],
+          [
+            "wait",
+            300
+          ]
+        ]
+      }
+    },
+    {
+      "view": "desktop",
+      "time": 363817.336687965,
+      "command": {
+        "name": "desktop-title-held",
+        "actions": [
+          [
+            "move",
+            640,
+            369
+          ],
+          [
+            "down"
+          ],
+          [
+            "wait",
+            300
+          ]
+        ]
+      }
+    },
+    {
+      "view": "desktop",
+      "time": 363824.762731528,
+      "command": {
+        "name": "desktop-pause-initial",
+        "actions": [
+          [
+            "up"
+          ],
+          [
+            "wait",
+            700
+          ],
+          [
+            "key",
+            "Escape"
+          ],
+          [
+            "wait",
+            500
+          ]
+        ]
+      }
+    },
+    {
+      "view": "desktop",
+      "time": 363842.26467235,
+      "command": {
+        "name": "desktop-music-off-moved",
+        "actions": [
+          [
+            "click",
+            640,
+            320
+          ],
+          [
+            "move",
+            40,
+            40
+          ],
+          [
+            "wait",
+            400
+          ]
+        ]
+      }
+    },
+    {
+      "view": "desktop",
+      "time": 363849.885928949,
+      "command": {
+        "name": "desktop-music-on-moved",
+        "actions": [
+          [
+            "click",
+            640,
+            334
+          ],
+          [
+            "move",
+            40,
+            40
+          ],
+          [
+            "wait",
+            300
+          ]
+        ]
+      }
+    },
+    {
+      "view": "desktop",
+      "time": 363856.92223868,
+      "command": {
+        "name": "desktop-shifttab2-after-music",
+        "actions": [
+          [
+            "key",
+            "Shift+Tab"
+          ],
+          [
+            "key",
+            "Shift+Tab"
+          ],
+          [
+            "wait",
+            300
+          ]
+        ]
+      }
+    },
+    {
+      "view": "desktop",
+      "time": 363879.327673871,
+      "command": {
+        "name": "desktop-confirm-initial",
+        "actions": [
+          [
+            "click",
+            640,
+            222
+          ],
+          [
+            "move",
+            40,
+            40
+          ],
+          [
+            "wait",
+            200
+          ]
+        ]
+      }
+    },
+    {
+      "view": "desktop",
+      "time": 363899.846882706,
+      "command": {
+        "name": "desktop-confirm-cancel-held",
+        "actions": [
+          [
+            "move",
+            640,
+            424
+          ],
+          [
+            "down"
+          ],
+          [
+            "wait",
+            200
+          ]
+        ]
+      }
+    },
+    {
+      "view": "desktop",
+      "time": 363911.260626264,
+      "command": {
+        "name": "desktop-confirm-cancelled",
+        "actions": [
+          [
+            "up"
+          ],
+          [
+            "move",
+            40,
+            40
+          ],
+          [
+            "wait",
+            200
+          ]
+        ]
+      }
+    },
+    {
+      "view": "desktop",
+      "time": 363935.729683,
+      "command": {
+        "name": "desktop-confirm-via-enter",
+        "actions": [
+          [
+            "click",
+            640,
+            334
+          ],
+          [
+            "click",
+            640,
+            334
+          ],
+          [
+            "move",
+            40,
+            40
+          ],
+          [
+            "key",
+            "Shift+Tab"
+          ],
+          [
+            "key",
+            "Shift+Tab"
+          ],
+          [
+            "key",
+            "Enter"
+          ],
+          [
+            "wait",
+            300
+          ]
+        ]
+      }
+    },
+    {
+      "view": "desktop",
+      "time": 363947.826778968,
+      "command": {
+        "name": "desktop-enter-cancelled",
+        "actions": [
+          [
+            "click",
+            640,
+            428
+          ],
+          [
+            "move",
+            40,
+            40
+          ],
+          [
+            "wait",
+            300
+          ]
+        ]
+      }
+    },
+    {
+      "view": "desktop",
+      "time": 363956.062081912,
+      "command": {
+        "name": "portrait-opened",
+        "new_view": [
+          390,
+          844,
+          "portrait"
+        ],
+        "actions": []
+      }
+    },
+    {
+      "view": "portrait",
+      "time": 363980.284376779,
+      "command": {
+        "name": "portrait-title-tab",
+        "actions": [
+          [
+            "click",
+            8,
+            12
+          ],
+          [
+            "key",
+            "Tab"
+          ],
+          [
+            "key",
+            "Tab"
+          ],
+          [
+            "wait",
+            200
+          ]
+        ]
+      }
+    },
+    {
+      "view": "portrait",
+      "time": 363988.963749887,
+      "command": {
+        "name": "portrait-title-held",
+        "actions": [
+          [
+            "move",
+            195,
+            430
+          ],
+          [
+            "down"
+          ],
+          [
+            "wait",
+            200
+          ]
+        ]
+      }
+    },
+    {
+      "view": "portrait",
+      "time": 363995.623456481,
+      "command": {
+        "name": "portrait-title-tab-after-cancel",
+        "actions": [
+          [
+            "move",
+            8,
+            12
+          ],
+          [
+            "up"
+          ],
+          [
+            "key",
+            "Tab"
+          ],
+          [
+            "key",
+            "Shift+Tab"
+          ],
+          [
+            "wait",
+            200
+          ]
+        ]
+      }
+    },
+    {
+      "view": "portrait",
+      "time": 364002.821354829,
+      "command": {
+        "name": "portrait-pause",
+        "actions": [
+          [
+            "key",
+            "Enter"
+          ],
+          [
+            "wait",
+            600
+          ],
+          [
+            "key",
+            "Escape"
+          ],
+          [
+            "wait",
+            200
+          ]
+        ]
+      }
+    },
+    {
+      "view": "portrait",
+      "time": 364019.513290502,
+      "command": {
+        "name": "portrait-music-off",
+        "actions": [
+          [
+            "click",
+            195,
+            396
+          ],
+          [
+            "move",
+            5,
+            5
+          ],
+          [
+            "wait",
+            200
+          ]
+        ]
+      }
+    },
+    {
+      "view": "portrait",
+      "time": 364026.383798662,
+      "command": {
+        "name": "portrait-music-restored",
+        "actions": [
+          [
+            "click",
+            195,
+            396
+          ],
+          [
+            "move",
+            5,
+            5
+          ],
+          [
+            "wait",
+            200
+          ]
+        ]
+      }
+    },
+    {
+      "view": "portrait",
+      "time": 364032.87572016,
+      "command": {
+        "name": "portrait-restart-focus",
+        "actions": [
+          [
+            "key",
+            "Shift+Tab"
+          ],
+          [
+            "key",
+            "Shift+Tab"
+          ],
+          [
+            "wait",
+            200
+          ]
+        ]
+      }
+    },
+    {
+      "view": "portrait",
+      "time": 364046.938723874,
+      "command": {
+        "name": "portrait-music-keyboard-off-focus",
+        "actions": [
+          [
+            "key",
+            "Tab"
+          ],
+          [
+            "key",
+            "Tab"
+          ],
+          [
+            "key",
+            "Enter"
+          ],
+          [
+            "wait",
+            200
+          ]
+        ]
+      }
+    },
+    {
+      "view": "portrait",
+      "time": 364056.269641457,
+      "command": {
+        "name": "portrait-music-keyboard-on-focus",
+        "actions": [
+          [
+            "key",
+            "Enter"
+          ],
+          [
+            "wait",
+            200
+          ]
+        ]
+      }
+    },
+    {
+      "view": "portrait",
+      "time": 364064.363895617,
+      "command": {
+        "name": "portrait-confirm-keyboard",
+        "actions": [
+          [
+            "key",
+            "Shift+Tab"
+          ],
+          [
+            "key",
+            "Shift+Tab"
+          ],
+          [
+            "key",
+            "Enter"
+          ],
+          [
+            "wait",
+            200
+          ]
+        ]
+      }
+    },
+    {
+      "view": "portrait",
+      "time": 364072.172375482,
+      "command": {
+        "name": "portrait-cancel-held",
+        "actions": [
+          [
+            "move",
+            195,
+            490
+          ],
+          [
+            "down"
+          ],
+          [
+            "wait",
+            200
+          ]
+        ]
+      }
+    },
+    {
+      "view": "portrait",
+      "time": 364079.767151747,
+      "command": {
+        "name": "portrait-cancelled",
+        "actions": [
+          [
+            "up"
+          ],
+          [
+            "move",
+            5,
+            5
+          ],
+          [
+            "wait",
+            200
+          ]
+        ]
+      }
+    },
+    {
+      "view": "portrait",
+      "time": 364087.463935783,
+      "command": {
+        "name": "short-opened",
+        "new_view": [
+          568,
+          320,
+          "short"
+        ],
+        "actions": []
+      }
+    },
+    {
+      "view": "short",
+      "time": 364115.288132423,
+      "command": {
+        "name": "short-title-tab",
+        "actions": [
+          [
+            "click",
+            8,
+            8
+          ],
+          [
+            "key",
+            "Tab"
+          ],
+          [
+            "key",
+            "Tab"
+          ],
+          [
+            "wait",
+            200
+          ]
+        ]
+      }
+    },
+    {
+      "view": "short",
+      "time": 364125.460413902,
+      "command": {
+        "name": "short-title-held",
+        "actions": [
+          [
+            "move",
+            284,
+            159
+          ],
+          [
+            "down"
+          ],
+          [
+            "wait",
+            200
+          ]
+        ]
+      }
+    },
+    {
+      "view": "short",
+      "time": 364134.843345449,
+      "command": {
+        "name": "short-title-keyboard-focus",
+        "actions": [
+          [
+            "move",
+            8,
+            8
+          ],
+          [
+            "up"
+          ],
+          [
+            "key",
+            "Tab"
+          ],
+          [
+            "key",
+            "Shift+Tab"
+          ],
+          [
+            "wait",
+            200
+          ]
+        ]
+      }
+    },
+    {
+      "view": "short",
+      "time": 364141.500425663,
+      "command": {
+        "name": "short-pause",
+        "actions": [
+          [
+            "key",
+            "Enter"
+          ],
+          [
+            "wait",
+            600
+          ],
+          [
+            "key",
+            "Escape"
+          ],
+          [
+            "wait",
+            200
+          ]
+        ]
+      }
+    },
+    {
+      "view": "short",
+      "time": 364155.466774341,
+      "command": {
+        "name": "short-music-off",
+        "actions": [
+          [
+            "click",
+            414,
+            91
+          ],
+          [
+            "move",
+            8,
+            8
+          ],
+          [
+            "wait",
+            200
+          ]
+        ]
+      }
+    },
+    {
+      "view": "short",
+      "time": 364161.970803803,
+      "command": {
+        "name": "short-music-restored",
+        "actions": [
+          [
+            "click",
+            414,
+            99
+          ],
+          [
+            "move",
+            8,
+            8
+          ],
+          [
+            "wait",
+            200
+          ]
+        ]
+      }
+    },
+    {
+      "view": "short",
+      "time": 364172.768573314,
+      "command": {
+        "name": "short-music-keyboard-off",
+        "actions": [
+          [
+            "key",
+            "Shift+Tab"
+          ],
+          [
+            "key",
+            "Tab"
+          ],
+          [
+            "key",
+            "Enter"
+          ],
+          [
+            "wait",
+            200
+          ]
+        ]
+      }
+    },
+    {
+      "view": "short",
+      "time": 364181.577016303,
+      "command": {
+        "name": "short-music-keyboard-restored",
+        "actions": [
+          [
+            "key",
+            "Enter"
+          ],
+          [
+            "wait",
+            200
+          ]
+        ]
+      }
+    },
+    {
+      "view": "short",
+      "time": 364187.861034763,
+      "command": {
+        "name": "short-restart-keyboard-focus",
+        "actions": [
+          [
+            "key",
+            "Shift+Tab"
+          ],
+          [
+            "key",
+            "Shift+Tab"
+          ],
+          [
+            "key",
+            "Shift+Tab"
+          ],
+          [
+            "wait",
+            200
+          ]
+        ]
+      }
+    },
+    {
+      "view": "short",
+      "time": 364194.839585245,
+      "command": {
+        "name": "short-confirm-via-enter",
+        "actions": [
+          [
+            "key",
+            "Enter"
+          ],
+          [
+            "wait",
+            200
+          ]
+        ]
+      }
+    },
+    {
+      "view": "short",
+      "time": 364200.932320179,
+      "command": {
+        "name": "short-cancel-held",
+        "actions": [
+          [
+            "move",
+            284,
+            228
+          ],
+          [
+            "down"
+          ],
+          [
+            "wait",
+            200
+          ]
+        ]
+      }
+    },
+    {
+      "view": "short",
+      "time": 364208.378387977,
+      "command": {
+        "name": "short-cancelled-final",
+        "actions": [
+          [
+            "up"
+          ],
+          [
+            "move",
+            8,
+            8
+          ],
+          [
+            "wait",
+            200
+          ]
+        ],
+        "exit": true
+      }
+    }
+  ],
+  "source_checks": [
+    {
+      "stage": "before-open",
+      "view": "desktop",
+      "manifest": {
+        "schema": "youjia.candidate/v1",
+        "sourceCommit": "14a85a532f9510306b7921b9daa23409d17799c6",
+        "sourceTree": "81b54953a004d615652c612fc1d5e4a97a4bb8cd",
+        "base": "a99660937ef2942779d9cf217079559611616efa",
+        "original": "cda5ab8ded8384f3f3b7bfeccf996652b65a1a9c",
+        "engine": "4.7.2.stable.official.ed1daf0bf",
+        "entry": "index",
+        "build": "candidate-soft444-14a85a5",
+        "candidateOnly": true,
+        "files": {
+          "index.apple-touch-icon.png": {
+            "bytes": 59343,
+            "sha256": "80d91adb306354c6e4d1af546d062e1e9236699ad0fd53153ab3d2fc34cd11d4"
+          },
+          "index.audio.position.worklet.js": {
+            "bytes": 2973,
+            "sha256": "be33985bc7160d6bf9646f259cd86b259cd67b02ccb297ee5c44f8ac84327bc8"
+          },
+          "index.audio.worklet.js": {
+            "bytes": 7298,
+            "sha256": "5b476a9c9ce642c0ee4256436d1bc31d9c38f868aca0f9a8e2a57c18d2dec2a3"
+          },
+          "index.html": {
+            "bytes": 357761,
+            "sha256": "87aae29dce9350557028c94721864af92ae28ba66063da3fd465b9abc02f9f5c"
+          },
+          "index.icon.png": {
+            "bytes": 389674,
+            "sha256": "1c591b9eb1b7af2a840a59a9feb637a0a7aeba2b0abde28042abf44f77d0acb3"
+          },
+          "index.js": {
+            "bytes": 279815,
+            "sha256": "33c94cb3175f3333b82e2a3be5e8e86f77986f0aa2042b1631f6367a4e5bb6ba"
+          },
+          "index.pck": {
+            "bytes": 27088652,
+            "sha256": "c8b05b9bbe0a5359d223b8686212366676c549538e3845279b4b84d4f8a92530"
+          },
+          "index.png": {
+            "bytes": 1010767,
+            "sha256": "5743a648b82437e0e60db5e4aa08103cea96b01e110961082223c0e7fa819ebf"
+          },
+          "index.wasm": {
+            "bytes": 39514754,
+            "sha256": "fc74679e3b97f76878947fcd4fbe1268cbfa6188182a2e33bbc3f5dc9bfa57d0"
+          },
+          "open-source-licenses.html": {
+            "bytes": 147966,
+            "sha256": "9215f5fdd50039a9b6f3d8f0271cbc21bbdf64b917fb118dd29c8a16b9974e00"
+          },
+          "web/save/bridge.mjs": {
+            "bytes": 1856,
+            "sha256": "ef18687554fdc0d745c1d18d4d091e959cc78559da0d61d6a093e562ff9bbc91"
+          },
+          "web/save/budgets.mjs": {
+            "bytes": 340,
+            "sha256": "52984153977dcafd1d2682e848f1999f091d0966e17d46e902de76f5735a7018"
+          },
+          "web/save/host.mjs": {
+            "bytes": 7730,
+            "sha256": "9de8dc0ef4bfc037a8ad0bff575d40c3dd4341bcc723351a412b2061bb661904"
+          },
+          "web/save/idbfs_source.mjs": {
+            "bytes": 5550,
+            "sha256": "16eb57d471537f13d3e50018b56c2d416d2847f0d0249ba44433dd9ebb65f4d8"
+          },
+          "web/save/legacy_inspection.mjs": {
+            "bytes": 2886,
+            "sha256": "db3a23a0221aa5d34a58a6a49aeeff930295ffe20bfcf73a7c11f0d49cffd671"
+          },
+          "web/save/legacy_seal.mjs": {
+            "bytes": 2510,
+            "sha256": "9642132f5d4e7523e5966e802069af7f4bae803fae8e2e7c28ae55ee97d85610"
+          },
+          "web/save/legacy_v5.mjs": {
+            "bytes": 2245,
+            "sha256": "8e7f4ad2d87aab77ac05361e4f46060476e933aa079ae94301998d08d4599621"
+          },
+          "web/save/lifecycle.mjs": {
+            "bytes": 1878,
+            "sha256": "1cfaebb9a8745e2dc3e4f694ef475f250640870938f04160be1a5c9acd62935d"
+          },
+          "web/save/source_decode.mjs": {
+            "bytes": 1542,
+            "sha256": "411f3bc784cb32a07f32eed5fc7d88f71b59a667cc0d68a50fe13c55bfdba18a"
+          },
+          "web/save/store.mjs": {
+            "bytes": 13890,
+            "sha256": "2193b4397b8662a8ebc754dc4468e4d62964d209b4e1d0f0924a2ec81b409cbe"
+          }
+        }
+      },
+      "actual_pck": {
+        "bytes": 27088652,
+        "sha256": "c8b05b9bbe0a5359d223b8686212366676c549538e3845279b4b84d4f8a92530"
+      }
+    },
+    {
+      "stage": "before-context-close",
+      "view": "desktop",
+      "manifest": {
+        "schema": "youjia.candidate/v1",
+        "sourceCommit": "14a85a532f9510306b7921b9daa23409d17799c6",
+        "sourceTree": "81b54953a004d615652c612fc1d5e4a97a4bb8cd",
+        "base": "a99660937ef2942779d9cf217079559611616efa",
+        "original": "cda5ab8ded8384f3f3b7bfeccf996652b65a1a9c",
+        "engine": "4.7.2.stable.official.ed1daf0bf",
+        "entry": "index",
+        "build": "candidate-soft444-14a85a5",
+        "candidateOnly": true,
+        "files": {
+          "index.apple-touch-icon.png": {
+            "bytes": 59343,
+            "sha256": "80d91adb306354c6e4d1af546d062e1e9236699ad0fd53153ab3d2fc34cd11d4"
+          },
+          "index.audio.position.worklet.js": {
+            "bytes": 2973,
+            "sha256": "be33985bc7160d6bf9646f259cd86b259cd67b02ccb297ee5c44f8ac84327bc8"
+          },
+          "index.audio.worklet.js": {
+            "bytes": 7298,
+            "sha256": "5b476a9c9ce642c0ee4256436d1bc31d9c38f868aca0f9a8e2a57c18d2dec2a3"
+          },
+          "index.html": {
+            "bytes": 357761,
+            "sha256": "87aae29dce9350557028c94721864af92ae28ba66063da3fd465b9abc02f9f5c"
+          },
+          "index.icon.png": {
+            "bytes": 389674,
+            "sha256": "1c591b9eb1b7af2a840a59a9feb637a0a7aeba2b0abde28042abf44f77d0acb3"
+          },
+          "index.js": {
+            "bytes": 279815,
+            "sha256": "33c94cb3175f3333b82e2a3be5e8e86f77986f0aa2042b1631f6367a4e5bb6ba"
+          },
+          "index.pck": {
+            "bytes": 27088652,
+            "sha256": "c8b05b9bbe0a5359d223b8686212366676c549538e3845279b4b84d4f8a92530"
+          },
+          "index.png": {
+            "bytes": 1010767,
+            "sha256": "5743a648b82437e0e60db5e4aa08103cea96b01e110961082223c0e7fa819ebf"
+          },
+          "index.wasm": {
+            "bytes": 39514754,
+            "sha256": "fc74679e3b97f76878947fcd4fbe1268cbfa6188182a2e33bbc3f5dc9bfa57d0"
+          },
+          "open-source-licenses.html": {
+            "bytes": 147966,
+            "sha256": "9215f5fdd50039a9b6f3d8f0271cbc21bbdf64b917fb118dd29c8a16b9974e00"
+          },
+          "web/save/bridge.mjs": {
+            "bytes": 1856,
+            "sha256": "ef18687554fdc0d745c1d18d4d091e959cc78559da0d61d6a093e562ff9bbc91"
+          },
+          "web/save/budgets.mjs": {
+            "bytes": 340,
+            "sha256": "52984153977dcafd1d2682e848f1999f091d0966e17d46e902de76f5735a7018"
+          },
+          "web/save/host.mjs": {
+            "bytes": 7730,
+            "sha256": "9de8dc0ef4bfc037a8ad0bff575d40c3dd4341bcc723351a412b2061bb661904"
+          },
+          "web/save/idbfs_source.mjs": {
+            "bytes": 5550,
+            "sha256": "16eb57d471537f13d3e50018b56c2d416d2847f0d0249ba44433dd9ebb65f4d8"
+          },
+          "web/save/legacy_inspection.mjs": {
+            "bytes": 2886,
+            "sha256": "db3a23a0221aa5d34a58a6a49aeeff930295ffe20bfcf73a7c11f0d49cffd671"
+          },
+          "web/save/legacy_seal.mjs": {
+            "bytes": 2510,
+            "sha256": "9642132f5d4e7523e5966e802069af7f4bae803fae8e2e7c28ae55ee97d85610"
+          },
+          "web/save/legacy_v5.mjs": {
+            "bytes": 2245,
+            "sha256": "8e7f4ad2d87aab77ac05361e4f46060476e933aa079ae94301998d08d4599621"
+          },
+          "web/save/lifecycle.mjs": {
+            "bytes": 1878,
+            "sha256": "1cfaebb9a8745e2dc3e4f694ef475f250640870938f04160be1a5c9acd62935d"
+          },
+          "web/save/source_decode.mjs": {
+            "bytes": 1542,
+            "sha256": "411f3bc784cb32a07f32eed5fc7d88f71b59a667cc0d68a50fe13c55bfdba18a"
+          },
+          "web/save/store.mjs": {
+            "bytes": 13890,
+            "sha256": "2193b4397b8662a8ebc754dc4468e4d62964d209b4e1d0f0924a2ec81b409cbe"
+          }
+        }
+      },
+      "actual_pck": {
+        "bytes": 27088652,
+        "sha256": "c8b05b9bbe0a5359d223b8686212366676c549538e3845279b4b84d4f8a92530"
+      }
+    },
+    {
+      "stage": "before-open",
+      "view": "portrait",
+      "manifest": {
+        "schema": "youjia.candidate/v1",
+        "sourceCommit": "14a85a532f9510306b7921b9daa23409d17799c6",
+        "sourceTree": "81b54953a004d615652c612fc1d5e4a97a4bb8cd",
+        "base": "a99660937ef2942779d9cf217079559611616efa",
+        "original": "cda5ab8ded8384f3f3b7bfeccf996652b65a1a9c",
+        "engine": "4.7.2.stable.official.ed1daf0bf",
+        "entry": "index",
+        "build": "candidate-soft444-14a85a5",
+        "candidateOnly": true,
+        "files": {
+          "index.apple-touch-icon.png": {
+            "bytes": 59343,
+            "sha256": "80d91adb306354c6e4d1af546d062e1e9236699ad0fd53153ab3d2fc34cd11d4"
+          },
+          "index.audio.position.worklet.js": {
+            "bytes": 2973,
+            "sha256": "be33985bc7160d6bf9646f259cd86b259cd67b02ccb297ee5c44f8ac84327bc8"
+          },
+          "index.audio.worklet.js": {
+            "bytes": 7298,
+            "sha256": "5b476a9c9ce642c0ee4256436d1bc31d9c38f868aca0f9a8e2a57c18d2dec2a3"
+          },
+          "index.html": {
+            "bytes": 357761,
+            "sha256": "87aae29dce9350557028c94721864af92ae28ba66063da3fd465b9abc02f9f5c"
+          },
+          "index.icon.png": {
+            "bytes": 389674,
+            "sha256": "1c591b9eb1b7af2a840a59a9feb637a0a7aeba2b0abde28042abf44f77d0acb3"
+          },
+          "index.js": {
+            "bytes": 279815,
+            "sha256": "33c94cb3175f3333b82e2a3be5e8e86f77986f0aa2042b1631f6367a4e5bb6ba"
+          },
+          "index.pck": {
+            "bytes": 27088652,
+            "sha256": "c8b05b9bbe0a5359d223b8686212366676c549538e3845279b4b84d4f8a92530"
+          },
+          "index.png": {
+            "bytes": 1010767,
+            "sha256": "5743a648b82437e0e60db5e4aa08103cea96b01e110961082223c0e7fa819ebf"
+          },
+          "index.wasm": {
+            "bytes": 39514754,
+            "sha256": "fc74679e3b97f76878947fcd4fbe1268cbfa6188182a2e33bbc3f5dc9bfa57d0"
+          },
+          "open-source-licenses.html": {
+            "bytes": 147966,
+            "sha256": "9215f5fdd50039a9b6f3d8f0271cbc21bbdf64b917fb118dd29c8a16b9974e00"
+          },
+          "web/save/bridge.mjs": {
+            "bytes": 1856,
+            "sha256": "ef18687554fdc0d745c1d18d4d091e959cc78559da0d61d6a093e562ff9bbc91"
+          },
+          "web/save/budgets.mjs": {
+            "bytes": 340,
+            "sha256": "52984153977dcafd1d2682e848f1999f091d0966e17d46e902de76f5735a7018"
+          },
+          "web/save/host.mjs": {
+            "bytes": 7730,
+            "sha256": "9de8dc0ef4bfc037a8ad0bff575d40c3dd4341bcc723351a412b2061bb661904"
+          },
+          "web/save/idbfs_source.mjs": {
+            "bytes": 5550,
+            "sha256": "16eb57d471537f13d3e50018b56c2d416d2847f0d0249ba44433dd9ebb65f4d8"
+          },
+          "web/save/legacy_inspection.mjs": {
+            "bytes": 2886,
+            "sha256": "db3a23a0221aa5d34a58a6a49aeeff930295ffe20bfcf73a7c11f0d49cffd671"
+          },
+          "web/save/legacy_seal.mjs": {
+            "bytes": 2510,
+            "sha256": "9642132f5d4e7523e5966e802069af7f4bae803fae8e2e7c28ae55ee97d85610"
+          },
+          "web/save/legacy_v5.mjs": {
+            "bytes": 2245,
+            "sha256": "8e7f4ad2d87aab77ac05361e4f46060476e933aa079ae94301998d08d4599621"
+          },
+          "web/save/lifecycle.mjs": {
+            "bytes": 1878,
+            "sha256": "1cfaebb9a8745e2dc3e4f694ef475f250640870938f04160be1a5c9acd62935d"
+          },
+          "web/save/source_decode.mjs": {
+            "bytes": 1542,
+            "sha256": "411f3bc784cb32a07f32eed5fc7d88f71b59a667cc0d68a50fe13c55bfdba18a"
+          },
+          "web/save/store.mjs": {
+            "bytes": 13890,
+            "sha256": "2193b4397b8662a8ebc754dc4468e4d62964d209b4e1d0f0924a2ec81b409cbe"
+          }
+        }
+      },
+      "actual_pck": {
+        "bytes": 27088652,
+        "sha256": "c8b05b9bbe0a5359d223b8686212366676c549538e3845279b4b84d4f8a92530"
+      }
+    },
+    {
+      "stage": "before-context-close",
+      "view": "portrait",
+      "manifest": {
+        "schema": "youjia.candidate/v1",
+        "sourceCommit": "14a85a532f9510306b7921b9daa23409d17799c6",
+        "sourceTree": "81b54953a004d615652c612fc1d5e4a97a4bb8cd",
+        "base": "a99660937ef2942779d9cf217079559611616efa",
+        "original": "cda5ab8ded8384f3f3b7bfeccf996652b65a1a9c",
+        "engine": "4.7.2.stable.official.ed1daf0bf",
+        "entry": "index",
+        "build": "candidate-soft444-14a85a5",
+        "candidateOnly": true,
+        "files": {
+          "index.apple-touch-icon.png": {
+            "bytes": 59343,
+            "sha256": "80d91adb306354c6e4d1af546d062e1e9236699ad0fd53153ab3d2fc34cd11d4"
+          },
+          "index.audio.position.worklet.js": {
+            "bytes": 2973,
+            "sha256": "be33985bc7160d6bf9646f259cd86b259cd67b02ccb297ee5c44f8ac84327bc8"
+          },
+          "index.audio.worklet.js": {
+            "bytes": 7298,
+            "sha256": "5b476a9c9ce642c0ee4256436d1bc31d9c38f868aca0f9a8e2a57c18d2dec2a3"
+          },
+          "index.html": {
+            "bytes": 357761,
+            "sha256": "87aae29dce9350557028c94721864af92ae28ba66063da3fd465b9abc02f9f5c"
+          },
+          "index.icon.png": {
+            "bytes": 389674,
+            "sha256": "1c591b9eb1b7af2a840a59a9feb637a0a7aeba2b0abde28042abf44f77d0acb3"
+          },
+          "index.js": {
+            "bytes": 279815,
+            "sha256": "33c94cb3175f3333b82e2a3be5e8e86f77986f0aa2042b1631f6367a4e5bb6ba"
+          },
+          "index.pck": {
+            "bytes": 27088652,
+            "sha256": "c8b05b9bbe0a5359d223b8686212366676c549538e3845279b4b84d4f8a92530"
+          },
+          "index.png": {
+            "bytes": 1010767,
+            "sha256": "5743a648b82437e0e60db5e4aa08103cea96b01e110961082223c0e7fa819ebf"
+          },
+          "index.wasm": {
+            "bytes": 39514754,
+            "sha256": "fc74679e3b97f76878947fcd4fbe1268cbfa6188182a2e33bbc3f5dc9bfa57d0"
+          },
+          "open-source-licenses.html": {
+            "bytes": 147966,
+            "sha256": "9215f5fdd50039a9b6f3d8f0271cbc21bbdf64b917fb118dd29c8a16b9974e00"
+          },
+          "web/save/bridge.mjs": {
+            "bytes": 1856,
+            "sha256": "ef18687554fdc0d745c1d18d4d091e959cc78559da0d61d6a093e562ff9bbc91"
+          },
+          "web/save/budgets.mjs": {
+            "bytes": 340,
+            "sha256": "52984153977dcafd1d2682e848f1999f091d0966e17d46e902de76f5735a7018"
+          },
+          "web/save/host.mjs": {
+            "bytes": 7730,
+            "sha256": "9de8dc0ef4bfc037a8ad0bff575d40c3dd4341bcc723351a412b2061bb661904"
+          },
+          "web/save/idbfs_source.mjs": {
+            "bytes": 5550,
+            "sha256": "16eb57d471537f13d3e50018b56c2d416d2847f0d0249ba44433dd9ebb65f4d8"
+          },
+          "web/save/legacy_inspection.mjs": {
+            "bytes": 2886,
+            "sha256": "db3a23a0221aa5d34a58a6a49aeeff930295ffe20bfcf73a7c11f0d49cffd671"
+          },
+          "web/save/legacy_seal.mjs": {
+            "bytes": 2510,
+            "sha256": "9642132f5d4e7523e5966e802069af7f4bae803fae8e2e7c28ae55ee97d85610"
+          },
+          "web/save/legacy_v5.mjs": {
+            "bytes": 2245,
+            "sha256": "8e7f4ad2d87aab77ac05361e4f46060476e933aa079ae94301998d08d4599621"
+          },
+          "web/save/lifecycle.mjs": {
+            "bytes": 1878,
+            "sha256": "1cfaebb9a8745e2dc3e4f694ef475f250640870938f04160be1a5c9acd62935d"
+          },
+          "web/save/source_decode.mjs": {
+            "bytes": 1542,
+            "sha256": "411f3bc784cb32a07f32eed5fc7d88f71b59a667cc0d68a50fe13c55bfdba18a"
+          },
+          "web/save/store.mjs": {
+            "bytes": 13890,
+            "sha256": "2193b4397b8662a8ebc754dc4468e4d62964d209b4e1d0f0924a2ec81b409cbe"
+          }
+        }
+      },
+      "actual_pck": {
+        "bytes": 27088652,
+        "sha256": "c8b05b9bbe0a5359d223b8686212366676c549538e3845279b4b84d4f8a92530"
+      }
+    },
+    {
+      "stage": "before-open",
+      "view": "short",
+      "manifest": {
+        "schema": "youjia.candidate/v1",
+        "sourceCommit": "14a85a532f9510306b7921b9daa23409d17799c6",
+        "sourceTree": "81b54953a004d615652c612fc1d5e4a97a4bb8cd",
+        "base": "a99660937ef2942779d9cf217079559611616efa",
+        "original": "cda5ab8ded8384f3f3b7bfeccf996652b65a1a9c",
+        "engine": "4.7.2.stable.official.ed1daf0bf",
+        "entry": "index",
+        "build": "candidate-soft444-14a85a5",
+        "candidateOnly": true,
+        "files": {
+          "index.apple-touch-icon.png": {
+            "bytes": 59343,
+            "sha256": "80d91adb306354c6e4d1af546d062e1e9236699ad0fd53153ab3d2fc34cd11d4"
+          },
+          "index.audio.position.worklet.js": {
+            "bytes": 2973,
+            "sha256": "be33985bc7160d6bf9646f259cd86b259cd67b02ccb297ee5c44f8ac84327bc8"
+          },
+          "index.audio.worklet.js": {
+            "bytes": 7298,
+            "sha256": "5b476a9c9ce642c0ee4256436d1bc31d9c38f868aca0f9a8e2a57c18d2dec2a3"
+          },
+          "index.html": {
+            "bytes": 357761,
+            "sha256": "87aae29dce9350557028c94721864af92ae28ba66063da3fd465b9abc02f9f5c"
+          },
+          "index.icon.png": {
+            "bytes": 389674,
+            "sha256": "1c591b9eb1b7af2a840a59a9feb637a0a7aeba2b0abde28042abf44f77d0acb3"
+          },
+          "index.js": {
+            "bytes": 279815,
+            "sha256": "33c94cb3175f3333b82e2a3be5e8e86f77986f0aa2042b1631f6367a4e5bb6ba"
+          },
+          "index.pck": {
+            "bytes": 27088652,
+            "sha256": "c8b05b9bbe0a5359d223b8686212366676c549538e3845279b4b84d4f8a92530"
+          },
+          "index.png": {
+            "bytes": 1010767,
+            "sha256": "5743a648b82437e0e60db5e4aa08103cea96b01e110961082223c0e7fa819ebf"
+          },
+          "index.wasm": {
+            "bytes": 39514754,
+            "sha256": "fc74679e3b97f76878947fcd4fbe1268cbfa6188182a2e33bbc3f5dc9bfa57d0"
+          },
+          "open-source-licenses.html": {
+            "bytes": 147966,
+            "sha256": "9215f5fdd50039a9b6f3d8f0271cbc21bbdf64b917fb118dd29c8a16b9974e00"
+          },
+          "web/save/bridge.mjs": {
+            "bytes": 1856,
+            "sha256": "ef18687554fdc0d745c1d18d4d091e959cc78559da0d61d6a093e562ff9bbc91"
+          },
+          "web/save/budgets.mjs": {
+            "bytes": 340,
+            "sha256": "52984153977dcafd1d2682e848f1999f091d0966e17d46e902de76f5735a7018"
+          },
+          "web/save/host.mjs": {
+            "bytes": 7730,
+            "sha256": "9de8dc0ef4bfc037a8ad0bff575d40c3dd4341bcc723351a412b2061bb661904"
+          },
+          "web/save/idbfs_source.mjs": {
+            "bytes": 5550,
+            "sha256": "16eb57d471537f13d3e50018b56c2d416d2847f0d0249ba44433dd9ebb65f4d8"
+          },
+          "web/save/legacy_inspection.mjs": {
+            "bytes": 2886,
+            "sha256": "db3a23a0221aa5d34a58a6a49aeeff930295ffe20bfcf73a7c11f0d49cffd671"
+          },
+          "web/save/legacy_seal.mjs": {
+            "bytes": 2510,
+            "sha256": "9642132f5d4e7523e5966e802069af7f4bae803fae8e2e7c28ae55ee97d85610"
+          },
+          "web/save/legacy_v5.mjs": {
+            "bytes": 2245,
+            "sha256": "8e7f4ad2d87aab77ac05361e4f46060476e933aa079ae94301998d08d4599621"
+          },
+          "web/save/lifecycle.mjs": {
+            "bytes": 1878,
+            "sha256": "1cfaebb9a8745e2dc3e4f694ef475f250640870938f04160be1a5c9acd62935d"
+          },
+          "web/save/source_decode.mjs": {
+            "bytes": 1542,
+            "sha256": "411f3bc784cb32a07f32eed5fc7d88f71b59a667cc0d68a50fe13c55bfdba18a"
+          },
+          "web/save/store.mjs": {
+            "bytes": 13890,
+            "sha256": "2193b4397b8662a8ebc754dc4468e4d62964d209b4e1d0f0924a2ec81b409cbe"
+          }
+        }
+      },
+      "actual_pck": {
+        "bytes": 27088652,
+        "sha256": "c8b05b9bbe0a5359d223b8686212366676c549538e3845279b4b84d4f8a92530"
+      }
+    },
+    {
+      "stage": "final",
+      "view": "short",
+      "manifest": {
+        "schema": "youjia.candidate/v1",
+        "sourceCommit": "14a85a532f9510306b7921b9daa23409d17799c6",
+        "sourceTree": "81b54953a004d615652c612fc1d5e4a97a4bb8cd",
+        "base": "a99660937ef2942779d9cf217079559611616efa",
+        "original": "cda5ab8ded8384f3f3b7bfeccf996652b65a1a9c",
+        "engine": "4.7.2.stable.official.ed1daf0bf",
+        "entry": "index",
+        "build": "candidate-soft444-14a85a5",
+        "candidateOnly": true,
+        "files": {
+          "index.apple-touch-icon.png": {
+            "bytes": 59343,
+            "sha256": "80d91adb306354c6e4d1af546d062e1e9236699ad0fd53153ab3d2fc34cd11d4"
+          },
+          "index.audio.position.worklet.js": {
+            "bytes": 2973,
+            "sha256": "be33985bc7160d6bf9646f259cd86b259cd67b02ccb297ee5c44f8ac84327bc8"
+          },
+          "index.audio.worklet.js": {
+            "bytes": 7298,
+            "sha256": "5b476a9c9ce642c0ee4256436d1bc31d9c38f868aca0f9a8e2a57c18d2dec2a3"
+          },
+          "index.html": {
+            "bytes": 357761,
+            "sha256": "87aae29dce9350557028c94721864af92ae28ba66063da3fd465b9abc02f9f5c"
+          },
+          "index.icon.png": {
+            "bytes": 389674,
+            "sha256": "1c591b9eb1b7af2a840a59a9feb637a0a7aeba2b0abde28042abf44f77d0acb3"
+          },
+          "index.js": {
+            "bytes": 279815,
+            "sha256": "33c94cb3175f3333b82e2a3be5e8e86f77986f0aa2042b1631f6367a4e5bb6ba"
+          },
+          "index.pck": {
+            "bytes": 27088652,
+            "sha256": "c8b05b9bbe0a5359d223b8686212366676c549538e3845279b4b84d4f8a92530"
+          },
+          "index.png": {
+            "bytes": 1010767,
+            "sha256": "5743a648b82437e0e60db5e4aa08103cea96b01e110961082223c0e7fa819ebf"
+          },
+          "index.wasm": {
+            "bytes": 39514754,
+            "sha256": "fc74679e3b97f76878947fcd4fbe1268cbfa6188182a2e33bbc3f5dc9bfa57d0"
+          },
+          "open-source-licenses.html": {
+            "bytes": 147966,
+            "sha256": "9215f5fdd50039a9b6f3d8f0271cbc21bbdf64b917fb118dd29c8a16b9974e00"
+          },
+          "web/save/bridge.mjs": {
+            "bytes": 1856,
+            "sha256": "ef18687554fdc0d745c1d18d4d091e959cc78559da0d61d6a093e562ff9bbc91"
+          },
+          "web/save/budgets.mjs": {
+            "bytes": 340,
+            "sha256": "52984153977dcafd1d2682e848f1999f091d0966e17d46e902de76f5735a7018"
+          },
+          "web/save/host.mjs": {
+            "bytes": 7730,
+            "sha256": "9de8dc0ef4bfc037a8ad0bff575d40c3dd4341bcc723351a412b2061bb661904"
+          },
+          "web/save/idbfs_source.mjs": {
+            "bytes": 5550,
+            "sha256": "16eb57d471537f13d3e50018b56c2d416d2847f0d0249ba44433dd9ebb65f4d8"
+          },
+          "web/save/legacy_inspection.mjs": {
+            "bytes": 2886,
+            "sha256": "db3a23a0221aa5d34a58a6a49aeeff930295ffe20bfcf73a7c11f0d49cffd671"
+          },
+          "web/save/legacy_seal.mjs": {
+            "bytes": 2510,
+            "sha256": "9642132f5d4e7523e5966e802069af7f4bae803fae8e2e7c28ae55ee97d85610"
+          },
+          "web/save/legacy_v5.mjs": {
+            "bytes": 2245,
+            "sha256": "8e7f4ad2d87aab77ac05361e4f46060476e933aa079ae94301998d08d4599621"
+          },
+          "web/save/lifecycle.mjs": {
+            "bytes": 1878,
+            "sha256": "1cfaebb9a8745e2dc3e4f694ef475f250640870938f04160be1a5c9acd62935d"
+          },
+          "web/save/source_decode.mjs": {
+            "bytes": 1542,
+            "sha256": "411f3bc784cb32a07f32eed5fc7d88f71b59a667cc0d68a50fe13c55bfdba18a"
+          },
+          "web/save/store.mjs": {
+            "bytes": 13890,
+            "sha256": "2193b4397b8662a8ebc754dc4468e4d62964d209b4e1d0f0924a2ec81b409cbe"
+          }
+        }
+      },
+      "actual_pck": {
+        "bytes": 27088652,
+        "sha256": "c8b05b9bbe0a5359d223b8686212366676c549538e3845279b4b84d4f8a92530"
+      }
+    }
+  ],
+  "screenshots": [
+    {
+      "name": "desktop-initial",
+      "view": "desktop",
+      "url": "http://127.0.0.1:8444/?qa=soft444-1791232484.8507214",
+      "build": "index",
+      "canvas": {
+        "x": 0,
+        "y": 0,
+        "width": 1280,
+        "height": 720
+      },
+      "time": 363781.784970948
+    },
+    {
+      "name": "desktop-title-tab1",
+      "view": "desktop",
+      "url": "http://127.0.0.1:8444/?qa=soft444-1791232484.8507214",
+      "build": "index",
+      "canvas": {
+        "x": 0,
+        "y": 0,
+        "width": 1280,
+        "height": 720
+      },
+      "time": 363797.906876003
+    },
+    {
+      "name": "desktop-title-tab2",
+      "view": "desktop",
+      "url": "http://127.0.0.1:8444/?qa=soft444-1791232484.8507214",
+      "build": "index",
+      "canvas": {
+        "x": 0,
+        "y": 0,
+        "width": 1280,
+        "height": 720
+      },
+      "time": 363804.920417575
+    },
+    {
+      "name": "desktop-title-held",
+      "view": "desktop",
+      "url": "http://127.0.0.1:8444/?qa=soft444-1791232484.8507214",
+      "build": "index",
+      "canvas": {
+        "x": 0,
+        "y": 0,
+        "width": 1280,
+        "height": 720
+      },
+      "time": 363822.478203834
+    },
+    {
+      "name": "desktop-pause-initial",
+      "view": "desktop",
+      "url": "http://127.0.0.1:8444/?qa=soft444-1791232484.8507214",
+      "build": "index",
+      "canvas": {
+        "x": 0,
+        "y": 0,
+        "width": 1280,
+        "height": 720
+      },
+      "time": 363834.924926647
+    },
+    {
+      "name": "desktop-music-off-moved",
+      "view": "desktop",
+      "url": "http://127.0.0.1:8444/?qa=soft444-1791232484.8507214",
+      "build": "index",
+      "canvas": {
+        "x": 0,
+        "y": 0,
+        "width": 1280,
+        "height": 720
+      },
+      "time": 363848.119089006
+    },
+    {
+      "name": "desktop-music-on-moved",
+      "view": "desktop",
+      "url": "http://127.0.0.1:8444/?qa=soft444-1791232484.8507214",
+      "build": "index",
+      "canvas": {
+        "x": 0,
+        "y": 0,
+        "width": 1280,
+        "height": 720
+      },
+      "time": 363855.396310397
+    },
+    {
+      "name": "desktop-shifttab2-after-music",
+      "view": "desktop",
+      "url": "http://127.0.0.1:8444/?qa=soft444-1791232484.8507214",
+      "build": "index",
+      "canvas": {
+        "x": 0,
+        "y": 0,
+        "width": 1280,
+        "height": 720
+      },
+      "time": 363864.373558961
+    },
+    {
+      "name": "desktop-confirm-initial",
+      "view": "desktop",
+      "url": "http://127.0.0.1:8444/?qa=soft444-1791232484.8507214",
+      "build": "index",
+      "canvas": {
+        "x": 0,
+        "y": 0,
+        "width": 1280,
+        "height": 720
+      },
+      "time": 363883.410015445
+    },
+    {
+      "name": "desktop-confirm-cancel-held",
+      "view": "desktop",
+      "url": "http://127.0.0.1:8444/?qa=soft444-1791232484.8507214",
+      "build": "index",
+      "canvas": {
+        "x": 0,
+        "y": 0,
+        "width": 1280,
+        "height": 720
+      },
+      "time": 363904.426966135
+    },
+    {
+      "name": "desktop-confirm-cancelled",
+      "view": "desktop",
+      "url": "http://127.0.0.1:8444/?qa=soft444-1791232484.8507214",
+      "build": "index",
+      "canvas": {
+        "x": 0,
+        "y": 0,
+        "width": 1280,
+        "height": 720
+      },
+      "time": 363917.512057759
+    },
+    {
+      "name": "desktop-confirm-via-enter",
+      "view": "desktop",
+      "url": "http://127.0.0.1:8444/?qa=soft444-1791232484.8507214",
+      "build": "index",
+      "canvas": {
+        "x": 0,
+        "y": 0,
+        "width": 1280,
+        "height": 720
+      },
+      "time": 363944.778444943
+    },
+    {
+      "name": "desktop-enter-cancelled",
+      "view": "desktop",
+      "url": "http://127.0.0.1:8444/?qa=soft444-1791232484.8507214",
+      "build": "index",
+      "canvas": {
+        "x": 0,
+        "y": 0,
+        "width": 1280,
+        "height": 720
+      },
+      "time": 363953.528147972
+    },
+    {
+      "name": "portrait-initial",
+      "view": "portrait",
+      "url": "http://127.0.0.1:8444/?qa=soft444-1791232679.5960171",
+      "build": "index",
+      "canvas": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 844
+      },
+      "time": 363971.284662943
+    },
+    {
+      "name": "portrait-opened",
+      "view": "portrait",
+      "url": "http://127.0.0.1:8444/?qa=soft444-1791232679.5960171",
+      "build": "index",
+      "canvas": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 844
+      },
+      "time": 363973.202441782
+    },
+    {
+      "name": "portrait-title-tab",
+      "view": "portrait",
+      "url": "http://127.0.0.1:8444/?qa=soft444-1791232679.5960171",
+      "build": "index",
+      "canvas": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 844
+      },
+      "time": 363982.912157046
+    },
+    {
+      "name": "portrait-title-held",
+      "view": "portrait",
+      "url": "http://127.0.0.1:8444/?qa=soft444-1791232679.5960171",
+      "build": "index",
+      "canvas": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 844
+      },
+      "time": 363991.063598905
+    },
+    {
+      "name": "portrait-title-tab-after-cancel",
+      "view": "portrait",
+      "url": "http://127.0.0.1:8444/?qa=soft444-1791232679.5960171",
+      "build": "index",
+      "canvas": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 844
+      },
+      "time": 363998.776821463
+    },
+    {
+      "name": "portrait-pause",
+      "view": "portrait",
+      "url": "http://127.0.0.1:8444/?qa=soft444-1791232679.5960171",
+      "build": "index",
+      "canvas": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 844
+      },
+      "time": 364008.871089184
+    },
+    {
+      "name": "portrait-music-off",
+      "view": "portrait",
+      "url": "http://127.0.0.1:8444/?qa=soft444-1791232679.5960171",
+      "build": "index",
+      "canvas": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 844
+      },
+      "time": 364022.083653162
+    },
+    {
+      "name": "portrait-music-restored",
+      "view": "portrait",
+      "url": "http://127.0.0.1:8444/?qa=soft444-1791232679.5960171",
+      "build": "index",
+      "canvas": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 844
+      },
+      "time": 364029.082237992
+    },
+    {
+      "name": "portrait-restart-focus",
+      "view": "portrait",
+      "url": "http://127.0.0.1:8444/?qa=soft444-1791232679.5960171",
+      "build": "index",
+      "canvas": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 844
+      },
+      "time": 364035.54093568
+    },
+    {
+      "name": "portrait-music-keyboard-off-focus",
+      "view": "portrait",
+      "url": "http://127.0.0.1:8444/?qa=soft444-1791232679.5960171",
+      "build": "index",
+      "canvas": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 844
+      },
+      "time": 364049.178912143
+    },
+    {
+      "name": "portrait-music-keyboard-on-focus",
+      "view": "portrait",
+      "url": "http://127.0.0.1:8444/?qa=soft444-1791232679.5960171",
+      "build": "index",
+      "canvas": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 844
+      },
+      "time": 364059.047822532
+    },
+    {
+      "name": "portrait-confirm-keyboard",
+      "view": "portrait",
+      "url": "http://127.0.0.1:8444/?qa=soft444-1791232679.5960171",
+      "build": "index",
+      "canvas": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 844
+      },
+      "time": 364067.874836131
+    },
+    {
+      "name": "portrait-cancel-held",
+      "view": "portrait",
+      "url": "http://127.0.0.1:8444/?qa=soft444-1791232679.5960171",
+      "build": "index",
+      "canvas": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 844
+      },
+      "time": 364075.221750283
+    },
+    {
+      "name": "portrait-cancelled",
+      "view": "portrait",
+      "url": "http://127.0.0.1:8444/?qa=soft444-1791232679.5960171",
+      "build": "index",
+      "canvas": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 844
+      },
+      "time": 364081.39309279
+    },
+    {
+      "name": "short-initial",
+      "view": "short",
+      "url": "http://127.0.0.1:8444/?qa=soft444-1791232810.464682",
+      "build": "index",
+      "canvas": {
+        "x": 0,
+        "y": 0,
+        "width": 568,
+        "height": 320
+      },
+      "time": 364101.56789799
+    },
+    {
+      "name": "short-opened",
+      "view": "short",
+      "url": "http://127.0.0.1:8444/?qa=soft444-1791232810.464682",
+      "build": "index",
+      "canvas": {
+        "x": 0,
+        "y": 0,
+        "width": 568,
+        "height": 320
+      },
+      "time": 364102.88010749
+    },
+    {
+      "name": "short-title-tab",
+      "view": "short",
+      "url": "http://127.0.0.1:8444/?qa=soft444-1791232810.464682",
+      "build": "index",
+      "canvas": {
+        "x": 0,
+        "y": 0,
+        "width": 568,
+        "height": 320
+      },
+      "time": 364117.095028591
+    },
+    {
+      "name": "short-title-held",
+      "view": "short",
+      "url": "http://127.0.0.1:8444/?qa=soft444-1791232810.464682",
+      "build": "index",
+      "canvas": {
+        "x": 0,
+        "y": 0,
+        "width": 568,
+        "height": 320
+      },
+      "time": 364126.988699732
+    },
+    {
+      "name": "short-title-keyboard-focus",
+      "view": "short",
+      "url": "http://127.0.0.1:8444/?qa=soft444-1791232810.464682",
+      "build": "index",
+      "canvas": {
+        "x": 0,
+        "y": 0,
+        "width": 568,
+        "height": 320
+      },
+      "time": 364136.946097792
+    },
+    {
+      "name": "short-pause",
+      "view": "short",
+      "url": "http://127.0.0.1:8444/?qa=soft444-1791232810.464682",
+      "build": "index",
+      "canvas": {
+        "x": 0,
+        "y": 0,
+        "width": 568,
+        "height": 320
+      },
+      "time": 364146.367551122
+    },
+    {
+      "name": "short-music-off",
+      "view": "short",
+      "url": "http://127.0.0.1:8444/?qa=soft444-1791232810.464682",
+      "build": "index",
+      "canvas": {
+        "x": 0,
+        "y": 0,
+        "width": 568,
+        "height": 320
+      },
+      "time": 364157.163383661
+    },
+    {
+      "name": "short-music-restored",
+      "view": "short",
+      "url": "http://127.0.0.1:8444/?qa=soft444-1791232810.464682",
+      "build": "index",
+      "canvas": {
+        "x": 0,
+        "y": 0,
+        "width": 568,
+        "height": 320
+      },
+      "time": 364163.674285791
+    },
+    {
+      "name": "short-music-keyboard-off",
+      "view": "short",
+      "url": "http://127.0.0.1:8444/?qa=soft444-1791232810.464682",
+      "build": "index",
+      "canvas": {
+        "x": 0,
+        "y": 0,
+        "width": 568,
+        "height": 320
+      },
+      "time": 364174.999335868
+    },
+    {
+      "name": "short-music-keyboard-restored",
+      "view": "short",
+      "url": "http://127.0.0.1:8444/?qa=soft444-1791232810.464682",
+      "build": "index",
+      "canvas": {
+        "x": 0,
+        "y": 0,
+        "width": 568,
+        "height": 320
+      },
+      "time": 364183.290167138
+    },
+    {
+      "name": "short-restart-keyboard-focus",
+      "view": "short",
+      "url": "http://127.0.0.1:8444/?qa=soft444-1791232810.464682",
+      "build": "index",
+      "canvas": {
+        "x": 0,
+        "y": 0,
+        "width": 568,
+        "height": 320
+      },
+      "time": 364190.274329824
+    },
+    {
+      "name": "short-confirm-via-enter",
+      "view": "short",
+      "url": "http://127.0.0.1:8444/?qa=soft444-1791232810.464682",
+      "build": "index",
+      "canvas": {
+        "x": 0,
+        "y": 0,
+        "width": 568,
+        "height": 320
+      },
+      "time": 364196.875258018
+    },
+    {
+      "name": "short-cancel-held",
+      "view": "short",
+      "url": "http://127.0.0.1:8444/?qa=soft444-1791232810.464682",
+      "build": "index",
+      "canvas": {
+        "x": 0,
+        "y": 0,
+        "width": 568,
+        "height": 320
+      },
+      "time": 364203.306182801
+    },
+    {
+      "name": "short-cancelled-final",
+      "view": "short",
+      "url": "http://127.0.0.1:8444/?qa=soft444-1791232810.464682",
+      "build": "index",
+      "canvas": {
+        "x": 0,
+        "y": 0,
+        "width": 568,
+        "height": 320
+      },
+      "time": 364210.176456727
+    }
+  ],
+  "console": [
+    {
+      "view": "desktop",
+      "type": "log",
+      "text": "Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org"
+    },
+    {
+      "view": "desktop",
+      "type": "log",
+      "text": "OpenGL API OpenGL ES 3.0 (WebGL 2.0 (OpenGL ES 3.0 Chromium)) - Compatibility - Using Device: WebKit - WebKit WebGL"
+    },
+    {
+      "view": "desktop",
+      "type": "log",
+      "text": "Build configuration: Emscripten 4.0.20, single-threaded, no GDExtension support."
+    },
+    {
+      "view": "desktop",
+      "type": "info",
+      "text": "[game-loading] timings_ms {\"engineScriptReady\":74,\"engineReady\":3010,\"downloadComplete\":3011,\"firstFrame\":4715}"
+    },
+    {
+      "view": "portrait",
+      "type": "log",
+      "text": "Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org"
+    },
+    {
+      "view": "portrait",
+      "type": "log",
+      "text": "OpenGL API OpenGL ES 3.0 (WebGL 2.0 (OpenGL ES 3.0 Chromium)) - Compatibility - Using Device: WebKit - WebKit WebGL"
+    },
+    {
+      "view": "portrait",
+      "type": "log",
+      "text": "Build configuration: Emscripten 4.0.20, single-threaded, no GDExtension support."
+    },
+    {
+      "view": "portrait",
+      "type": "info",
+      "text": "[game-loading] timings_ms {\"engineScriptReady\":39,\"downloadComplete\":350,\"engineReady\":2533,\"firstFrame\":3423}"
+    },
+    {
+      "view": "short",
+      "type": "log",
+      "text": "Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org"
+    },
+    {
+      "view": "short",
+      "type": "log",
+      "text": "OpenGL API OpenGL ES 3.0 (WebGL 2.0 (OpenGL ES 3.0 Chromium)) - Compatibility - Using Device: WebKit - WebKit WebGL"
+    },
+    {
+      "view": "short",
+      "type": "log",
+      "text": "Build configuration: Emscripten 4.0.20, single-threaded, no GDExtension support."
+    },
+    {
+      "view": "short",
+      "type": "info",
+      "text": "[game-loading] timings_ms {\"engineScriptReady\":32,\"engineReady\":2640,\"downloadComplete\":2641,\"firstFrame\":3113}"
+    }
+  ],
+  "errors": [],
+  "matrix": [
+    [
+      1280,
+      720
+    ],
+    [
+      390,
+      844
+    ],
+    [
+      568,
+      320
+    ]
+  ],
+  "limits": [
+    "No game-state injection, grab_focus or signal emission",
+    "No ear/hearing judgement",
+    "No physical phone or touch claim",
+    "Screenshot geometry is visual; canvas bounds do not measure Godot hit rectangles",
+    "English, disabled/save-error buttons and complete album paging are not covered"
+  ],
+  "completed": true,
+  "browserClosed": true
+}

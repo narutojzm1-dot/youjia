@@ -1,0 +1,133 @@
+[
+  {
+    "target": "flower",
+    "trigger": {
+      "command": {
+        "op": "click",
+        "x": 350,
+        "y": 240
+      },
+      "page": 1,
+      "utc": "2026-10-05T20:31:48Z",
+      "monotonic": 363594.582910889
+    },
+    "active_screenshot_request": {
+      "command": {
+        "op": "shot",
+        "name": "04-flower-repeat-active"
+      },
+      "page": 1,
+      "utc": "2026-10-05T20:31:48Z",
+      "monotonic": 363594.62289235
+    },
+    "movement_request": {
+      "command": {
+        "op": "hold",
+        "key": "ArrowRight",
+        "ms": 350
+      },
+      "page": 1,
+      "utc": "2026-10-05T20:31:49Z",
+      "monotonic": 363595.472800234
+    },
+    "after_screenshot_request": {
+      "command": {
+        "op": "shot",
+        "name": "05-flower-cancelled"
+      },
+      "page": 1,
+      "utc": "2026-10-05T20:31:49Z",
+      "monotonic": 363595.933467117
+    },
+    "trigger_to_movement_request_seconds": 0.8898893449804746,
+    "nominal_feedback_seconds": 1.8,
+    "caveat": "Input invocation and screenshot request/completion are not renderer frame timestamps; disappearance can overlap natural expiry."
+  },
+  {
+    "target": "shore",
+    "trigger": {
+      "command": {
+        "op": "key",
+        "key": "Space"
+      },
+      "page": 1,
+      "utc": "2026-10-05T20:32:27Z",
+      "monotonic": 363633.223823339
+    },
+    "active_screenshot_request": {
+      "command": {
+        "op": "shot",
+        "name": "08-shore-repeat-active"
+      },
+      "page": 1,
+      "utc": "2026-10-05T20:32:27Z",
+      "monotonic": 363633.313930437
+    },
+    "movement_request": {
+      "command": {
+        "op": "hold",
+        "key": "ArrowLeft",
+        "ms": 250
+      },
+      "page": 1,
+      "utc": "2026-10-05T20:32:28Z",
+      "monotonic": 363634.220170462
+    },
+    "after_screenshot_request": {
+      "command": {
+        "op": "shot",
+        "name": "09-shore-cancelled"
+      },
+      "page": 1,
+      "utc": "2026-10-05T20:32:28Z",
+      "monotonic": 363634.535528015
+    },
+    "trigger_to_movement_request_seconds": 0.9963471230003051,
+    "nominal_feedback_seconds": 1.65,
+    "caveat": "Input invocation and screenshot request/completion are not renderer frame timestamps; disappearance can overlap natural expiry."
+  },
+  {
+    "target": "fence",
+    "trigger": {
+      "command": {
+        "op": "click",
+        "x": 886,
+        "y": 404
+      },
+      "page": 1,
+      "utc": "2026-10-05T20:33:02Z",
+      "monotonic": 363668.559981882
+    },
+    "active_screenshot_request": {
+      "command": {
+        "op": "shot",
+        "name": "12-fence-repeat-active"
+      },
+      "page": 1,
+      "utc": "2026-10-05T20:33:02Z",
+      "monotonic": 363668.61722982
+    },
+    "movement_request": {
+      "command": {
+        "op": "hold",
+        "key": "ArrowLeft",
+        "ms": 250
+      },
+      "page": 1,
+      "utc": "2026-10-05T20:33:03Z",
+      "monotonic": 363669.534320194
+    },
+    "after_screenshot_request": {
+      "command": {
+        "op": "shot",
+        "name": "13-fence-cancelled"
+      },
+      "page": 1,
+      "utc": "2026-10-05T20:33:03Z",
+      "monotonic": 363669.92320132
+    },
+    "trigger_to_movement_request_seconds": 0.9743383119930513,
+    "nominal_feedback_seconds": 2.0,
+    "caveat": "Input invocation and screenshot request/completion are not renderer frame timestamps; disappearance can overlap natural expiry."
+  }
+]

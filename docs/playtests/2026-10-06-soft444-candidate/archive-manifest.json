@@ -1,0 +1,269 @@
+{
+  "files": [
+    {
+      "path": ".gdignore",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "README.md",
+      "bytes": 3242,
+      "sha256": "ca79a80a4f3481143f00648e5662164eda33e5a157b87117c7daff9869fe7a15"
+    },
+    {
+      "path": "desktop-confirm-cancel-held.png",
+      "bytes": 858719,
+      "sha256": "63cb64a1a83b7efcc9eff37e48ed16e54a1ce0fe80cbc2e90e2858b5a3717fc0"
+    },
+    {
+      "path": "desktop-confirm-cancelled.png",
+      "bytes": 964952,
+      "sha256": "5d4a11d5a70705212d4728bbe0db5e28268c2d473b437c6f18e090a8aff8866b"
+    },
+    {
+      "path": "desktop-confirm-initial.png",
+      "bytes": 858429,
+      "sha256": "9a47c59db9d7975d6a8b4b71f15c523db797ff719cdaef94b1722f9e8c53697c"
+    },
+    {
+      "path": "desktop-confirm-via-enter.png",
+      "bytes": 858981,
+      "sha256": "c5e39afd24284f46f9b920c7f766acf10caab2c64e4042dae37a5a92dde15cc0"
+    },
+    {
+      "path": "desktop-enter-cancelled.png",
+      "bytes": 964952,
+      "sha256": "5d4a11d5a70705212d4728bbe0db5e28268c2d473b437c6f18e090a8aff8866b"
+    },
+    {
+      "path": "desktop-initial.png",
+      "bytes": 1248936,
+      "sha256": "f71d5a3cf83b8ac8c5e8ad75e1201371e00f250881f213fd410e0fae644eba45"
+    },
+    {
+      "path": "desktop-music-off-moved.png",
+      "bytes": 964775,
+      "sha256": "4964bf99d296f9de90e60c28b8592f56ab5c1a718915d81fd33a9951b5ae1170"
+    },
+    {
+      "path": "desktop-music-on-moved.png",
+      "bytes": 964952,
+      "sha256": "5d4a11d5a70705212d4728bbe0db5e28268c2d473b437c6f18e090a8aff8866b"
+    },
+    {
+      "path": "desktop-pause-initial.png",
+      "bytes": 964952,
+      "sha256": "5d4a11d5a70705212d4728bbe0db5e28268c2d473b437c6f18e090a8aff8866b"
+    },
+    {
+      "path": "desktop-shifttab2-after-music.png",
+      "bytes": 965762,
+      "sha256": "0bae22b54716609e90d2c73945273e1cd7630f09da347c2568e27de6926295e8"
+    },
+    {
+      "path": "desktop-title-held.png",
+      "bytes": 1249136,
+      "sha256": "9ba53072cef0a349e3286b11296c555e1d74e126f88851db5948686c6ae0532e"
+    },
+    {
+      "path": "desktop-title-tab1.png",
+      "bytes": 1248936,
+      "sha256": "f71d5a3cf83b8ac8c5e8ad75e1201371e00f250881f213fd410e0fae644eba45"
+    },
+    {
+      "path": "desktop-title-tab2.png",
+      "bytes": 1248936,
+      "sha256": "f71d5a3cf83b8ac8c5e8ad75e1201371e00f250881f213fd410e0fae644eba45"
+    },
+    {
+      "path": "initial-binding-failure/result.json",
+      "bytes": 5495,
+      "sha256": "e341d2bad9328181556a4dcb8698a01478b5f404e317b8d81db994ceb66a5980"
+    },
+    {
+      "path": "initial-binding-failure/run.exit",
+      "bytes": 2,
+      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+    },
+    {
+      "path": "initial-binding-failure/run.log",
+      "bytes": 389,
+      "sha256": "35dc1a5b66aca6e3e94def08e110a3a8563290db017018a74b807ab55bbd799b"
+    },
+    {
+      "path": "initial-binding-failure/run.py",
+      "bytes": 5360,
+      "sha256": "acc8c0079646ec51e244b507b357b97affd0061441179b8fd5ae35b0600a2e8a"
+    },
+    {
+      "path": "portrait-cancel-held.png",
+      "bytes": 125715,
+      "sha256": "187dceb94c8c5f47d2cf5e53c028287c24c583c449239d1e822ee3450d686b36"
+    },
+    {
+      "path": "portrait-cancelled.png",
+      "bytes": 136527,
+      "sha256": "8c106e90a7c717006f10e3e9dbff19f7283ee55296c4cdae007cafa4de26c2ca"
+    },
+    {
+      "path": "portrait-confirm-keyboard.png",
+      "bytes": 126027,
+      "sha256": "04249d3f8349241ca02b15b7d098e70a579892c18ada2647b7c019f9ad94b792"
+    },
+    {
+      "path": "portrait-initial.png",
+      "bytes": 396942,
+      "sha256": "97a45ab8da7639c19b276e1feda1010822b61deb25d30eb2033b8c4979f83c97"
+    },
+    {
+      "path": "portrait-music-keyboard-off-focus.png",
+      "bytes": 137172,
+      "sha256": "0e6583c2e1ffa6bde9c66fce406259b873233b84d193446a7f0dbdca279a4417"
+    },
+    {
+      "path": "portrait-music-keyboard-on-focus.png",
+      "bytes": 137265,
+      "sha256": "2b134826dbb0736c3d850ec7e78e1a87d2850fac25270ba1510f82f1ad32ef65"
+    },
+    {
+      "path": "portrait-music-off.png",
+      "bytes": 136399,
+      "sha256": "dfa39cc5339632a09d7bafab6cb2eb8bd828bf7a0084ccc7850629420fb3a7ff"
+    },
+    {
+      "path": "portrait-music-restored.png",
+      "bytes": 136527,
+      "sha256": "8c106e90a7c717006f10e3e9dbff19f7283ee55296c4cdae007cafa4de26c2ca"
+    },
+    {
+      "path": "portrait-opened.png",
+      "bytes": 396942,
+      "sha256": "97a45ab8da7639c19b276e1feda1010822b61deb25d30eb2033b8c4979f83c97"
+    },
+    {
+      "path": "portrait-pause.png",
+      "bytes": 136527,
+      "sha256": "8c106e90a7c717006f10e3e9dbff19f7283ee55296c4cdae007cafa4de26c2ca"
+    },
+    {
+      "path": "portrait-restart-focus.png",
+      "bytes": 137305,
+      "sha256": "7521ce1bc9aafa2305a89131716c7db07f49fc9d58e002e0b6da48b1b28b5e17"
+    },
+    {
+      "path": "portrait-title-held.png",
+      "bytes": 397057,
+      "sha256": "e1526566cb1663cfb004d06779e21a38f257a5cfba8d3ed90ca9f858c04d2c3a"
+    },
+    {
+      "path": "portrait-title-tab-after-cancel.png",
+      "bytes": 396659,
+      "sha256": "ec2d0f7d05890af689bc41552e27f1f3c124390463a84508b2a2fbc5faad79d6"
+    },
+    {
+      "path": "portrait-title-tab.png",
+      "bytes": 396942,
+      "sha256": "97a45ab8da7639c19b276e1feda1010822b61deb25d30eb2033b8c4979f83c97"
+    },
+    {
+      "path": "predeclared-plan.md",
+      "bytes": 2021,
+      "sha256": "cfdb3b846b5e6d2fcfd6782635ac70ddb3ced66b2307471cdd24c4c6bc2f9d43"
+    },
+    {
+      "path": "result.json",
+      "bytes": 53851,
+      "sha256": "9d050d550ebafd4871c37e17ada5380dfc64a9a33337dddc89980f66f4fac7ad"
+    },
+    {
+      "path": "run.exit",
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "path": "run.log",
+      "bytes": 1059,
+      "sha256": "726a7e14d7a626268c5899e812017efc0dcd8d52ddf82727feab446c66ef4ea0"
+    },
+    {
+      "path": "run.py",
+      "bytes": 5387,
+      "sha256": "578c168a4a1892561322c4124279f04daa4cbb681714b2bc9c06af4327e01316"
+    },
+    {
+      "path": "short-cancel-held.png",
+      "bytes": 27847,
+      "sha256": "793e731a3f517df454c330137a3b11ad43582f0865eb51f95a55edb57bc0602f"
+    },
+    {
+      "path": "short-cancelled-final.png",
+      "bytes": 31649,
+      "sha256": "a54bd5df6cb601934ff14f64bf258f4e16eea9ad720986ad86c2d9702ce782b1"
+    },
+    {
+      "path": "short-confirm-via-enter.png",
+      "bytes": 27940,
+      "sha256": "8a70c1b84ee50a04222587cce2c84313ff94a38b390eecb817ecd4683ef0f619"
+    },
+    {
+      "path": "short-initial.png",
+      "bytes": 161989,
+      "sha256": "e200cab7dc62101c661473d7589aece1cb84e6c0a2bd52e906e84710ff991251"
+    },
+    {
+      "path": "short-music-keyboard-off.png",
+      "bytes": 32652,
+      "sha256": "ad5aaf4804ac3676b1ed4b8b02e36abc80c295e84df07243fa62dcd721957b43"
+    },
+    {
+      "path": "short-music-keyboard-restored.png",
+      "bytes": 32731,
+      "sha256": "474551bc7a178d003440df6e01b0390977c7fafcd8cbd3527b50fa917019ef7b"
+    },
+    {
+      "path": "short-music-off.png",
+      "bytes": 31576,
+      "sha256": "f7f8d048a4894e1c241c299b42452649bf878f1e1b32beb5adacf571b295ccae"
+    },
+    {
+      "path": "short-music-restored.png",
+      "bytes": 31649,
+      "sha256": "a54bd5df6cb601934ff14f64bf258f4e16eea9ad720986ad86c2d9702ce782b1"
+    },
+    {
+      "path": "short-opened.png",
+      "bytes": 161989,
+      "sha256": "e200cab7dc62101c661473d7589aece1cb84e6c0a2bd52e906e84710ff991251"
+    },
+    {
+      "path": "short-pause.png",
+      "bytes": 31649,
+      "sha256": "a54bd5df6cb601934ff14f64bf258f4e16eea9ad720986ad86c2d9702ce782b1"
+    },
+    {
+      "path": "short-restart-keyboard-focus.png",
+      "bytes": 32398,
+      "sha256": "031dfb1979593e256fcd32e51ab0a10a7578b7d463e3bcedb50dcdab14c9f562"
+    },
+    {
+      "path": "short-title-held.png",
+      "bytes": 162095,
+      "sha256": "68cebba2b247b5b8188b60d8a8d307b6f1b6d1ba01595ce8e3c68a2ef17e7b6f"
+    },
+    {
+      "path": "short-title-keyboard-focus.png",
+      "bytes": 161142,
+      "sha256": "9a8e02561bb99cf65d2372977da012d46554a7e6edb68c921cc26814c05fa5e3"
+    },
+    {
+      "path": "short-title-tab.png",
+      "bytes": 161989,
+      "sha256": "e200cab7dc62101c661473d7589aece1cb84e6c0a2bd52e906e84710ff991251"
+    },
+    {
+      "path": "source-archive-manifest.json",
+      "bytes": 7525,
+      "sha256": "699f61c66c847131b6abd72c453b5f9ec40002a73b20bd3d156648bd986c9a84"
+    }
+  ]
+}

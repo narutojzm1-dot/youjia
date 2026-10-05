@@ -17,3 +17,7 @@ Agent-ID: CODEX-LEAD。实现基线 `8f464b25598421b448a2af9c10a6b0653bf11e1a`�
 本地 `actionlint 1.7.7` 检查通过（退出 0，无诊断），YAML 解析与 12 项只读边界/主线命令一致性检查通过，`git diff --check` 通过。这些只证明静态配置；避免与同会话的游戏/browser 验收争用资源，未在本地运行 Godot、导出或浏览器。本 PR 在 GitHub 上的实际 Actions 通过及精确最终 SHA 独立审查是合入前置；未完成前不宣称此门禁已正式生效。具体检查结果附于本 PR。
 
 没有玩家可见变化，无伪造截图或试听验收。#130 中每套可信完成标记、后续工程风险及其他模块完整验收继续按各原单处理，本文不作为关闭父单的依据。
+
+## PR450 主线集成补充
+
+在远端原 head `ac8d8dda82034e52176c049deeb953933f063bdd` 上接续已含 PR451 按钮样式与 PR452 可信完成标记的 main `16ef89a2bcd7245485ad5f116b251cd2978d25d7`，保留两者真实祖先；requirements 的 VERIFY-PR-130、VERIFY-SUITE-COMPLETION、REQ036 行及 decisions 各方追加记录均保留。只读 PR workflow 字节与原 head 完全相同，`publish-pages.yml` 与新 main 完全相同。重新执行 actionlint 1.7.7、原 12 项 YAML/只读边界检查及 diff 空白检查；本轮没有启动 Godot 或浏览器。原 head 的在途 CI 不作为新 head 通过证据；更新后的最终 SHA 仍须独立审查，并等待对应 GitHub proposed-merge 工作流完整成功后方可合入。

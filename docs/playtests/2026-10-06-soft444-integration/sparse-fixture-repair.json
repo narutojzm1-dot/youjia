@@ -1,0 +1,11 @@
+{
+  "base": "a99660937ef2942779d9cf217079559611616efa",
+  "path": "art/concepts/producer_world_20261005/near_path_anchors.candidate.json",
+  "bytes": 1357,
+  "sha256": "0446801a893adf467b9764ce11890e80af355702aa11a4e8162f84e96f94b5a5",
+  "matches_base_bytes": true,
+  "cause": "The initial sparse worktree omitted this already-tracked JSON fixture. Exploration suite produced JSON parse/Nil errors, and the wrapper correctly failed despite its partial PASS output.",
+  "scope_audit": "rg res://(art|docs)/ across test/tools/scripts found this single runtime fixture reference. No production code or test assertions changed.",
+  "initial_exit": 1,
+  "initial_log": "daily-first-sparse-missing-fixture.log"
+}
