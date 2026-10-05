@@ -1,0 +1,24 @@
+{
+  "status": "PASS",
+  "checks": 16,
+  "labels": [
+    "empty production database",
+    "absent legacy explicit defaults",
+    "WRITE_PENDING",
+    "STALE_REQUEST",
+    "complete/readback confirms frozen candidate",
+    "lost delivery resolution recovers same committed candidate",
+    "WRITE_UNKNOWN_RESOLVE_REQUIRED",
+    "actual IndexedDB intent abort injected by test only",
+    "terminated parent verified intent",
+    "NOT_CONFIRMED",
+    "WRITE_UNKNOWN_RESOLVE_REQUIRED",
+    "actual IndexedDB commit abort injected by test only",
+    "terminated parent verified commit",
+    "NOT_CONFIRMED",
+    "write after verified rejection succeeds",
+    "close does not delete durable database"
+  ],
+  "browser": "151.0.7922.173",
+  "pageerrors": []
+}
