@@ -411,3 +411,9 @@ Assistant音频300 b8e5e6dc916dacd1eaf45b36c9f17584d36fc16c已接且实际交，
 ## GAME-PM 17:20：已决与接收收尾
 
 用户原画视角/沿路走动/自然换页由本地制作人332同步，Cloud1535991376468明确接收并交32290ea8562c896641f48da224f80da97ec69921280容量3候选，独审/合入待，不重复问地点/容量/画幅。155brief/337路径候选有真实产物，PM校awaiting-receipt为in-progress，runtime_ready=false不冒正式美术；Producer300/317精确接收及285本地交接成立。阴天/圆石局部像素方式待用户、339真实听验待，只阻对应资源；338局部Main范围已Leader授权且本轮公网竖屏低对比复现，Grok首次回执待。Leader336/Assistant340341仍在途不重新调度。逐人SHAs/时间/范围/版本目标与4图公开补证见[本轮报告](pm/2026-10-05-1720-coordination.md)。
+
+## REQ027假期天数小纸签
+
+| 编号 | 优先级 | 目标 | 验收 | 状态 | Owner | 备注 |
+| --- | --- | --- | --- | --- | --- | --- |
+| REQ-20261005-027 | P2 | 手机横竖屏上「假期第 N 天」可读、不压目标纸片 | 天数用 `INK` 字加小纸底，挂在暂停按钮正下方、同宽；五种视口中英文都不压提示和按钮。`test/day_label_layout_suite.gd` 173 项通过，未修 main 上 33 项失败。 | 待评审 | `GROK-CONTRIBUTOR` | 来源 #338（#242 评论 5990837592 观察）。只改 `Main._build_hud` 的 `_day_label` 与 `_layout` 天数分支；不碰存档、启动、#322 探索。Leader 已按作者请求补 daily 入口与真实 DPR2/3 横竖屏浏览器复核（本地候选，待独立最终 SHA 审查/发布）；[证据](playtests/2026-10-05-daylabel-integration/README.md)。决策见 [decisions/REQ-20261005-027.md](decisions/REQ-20261005-027.md)。 |
