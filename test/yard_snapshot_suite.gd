@@ -1,6 +1,5 @@
 extends SceneTree
 
-const World = preload("res://scripts/game/yard_world.gd")
 var checks := 0
 var failures: Array[String] = []
 
@@ -26,7 +25,7 @@ func run() -> void:
 	store._data.album = ["legacy-snapshot-photo"]
 	check(store.set_yard_progress(3, 12.5, 1, 2, 3), "seed complete old snapshot")
 	var old_bytes := FileAccess.get_file_as_bytes(store.SAVE_PATH)
-	var world = World.new()
+	var world = load("res://scripts/game/yard_world.gd").new()
 	world.holiday_day = 7
 	world._day_elapsed = 45.5
 	world._plant_state = 2
