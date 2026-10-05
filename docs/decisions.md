@@ -1097,3 +1097,7 @@ Cloud322/342自主最终独审合入并发布，Leader补公开包/十模块源h
 #322、#342 合入后 Pages 发布 `bc213f9`。在公开地址用 headless Chrome 跑了三轮全新存档：石板路出门 → 原画近郊点路面走、停下看、带上 → R 回院 → 关页重开。三轮都先显示「回到院里了。」，存档队列确认后才显示「…收好了」或空手提示；重开后水位线为 1、会话已关闭，带回的圆石 / 松果仍在，页面无错误。证据：`docs/playtests/2026-10-05-exploration-web-public/`。这只证明公开版上探索经异步存档队列正确结算，供 #305 真实公开带回物验收参考，不构成 #150 / #176 的 Web 持久化或手机真机验收，验收结论由 PM / Codex 记录。
 
 2026-10-05标题PR354按GROK作者5992797204明确请求由Leader补daily/REQ028/DPR组合；独立最终09ff44be批准合7c1608c，Actions/Pages/public PCK/十模块一致，公开四组横竖DPR标题→点击入院通过。见同份[公开归档](playtests/2026-10-05-exploration-duck-release/README.md)。Assistant351相册最新bec5bbf在途终审，当前main造成集成冲突已回原作者5993044122协调，保留各自方法/测试，未替作者合未审代码。
+
+## 2026-10-05 共享保存提示确认闭环（#150）
+
+接续PR336已登记保守UX，Leader仅修改Main保存状态回调/重试和过场提示守卫，不改Host协议、schema、Cloud探索方法或Assistant相册排版。独立旧公开game-7c1608c基线实际复现：非照片真实事务complete后丢回执，一次确认取得真实confirmed仍留提示；候选按对应op/kind/revision、ack与队列idle撤提示。同样照片真实abort时，普通重送gen2/3不隐藏，gen4照片confirm后才撤，关页仍在。未入队照片、新失败、没有实际重送的探索/未知域继续保留；不是所有故障提示最终闭环，也未称新候选已发布。完整daily/21专项与受控Web已完成，最后运行代码b29a4d9762af80e447d648802cee72fa9132e06e；最终PR独审与公开证据另记。[证据及边界](playtests/2026-10-05-save-feedback/README.md)。
