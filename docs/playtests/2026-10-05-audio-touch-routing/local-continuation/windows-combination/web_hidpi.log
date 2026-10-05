@@ -1,0 +1,105 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PASS WebHiDpiBoot autoload is registered
+PASS DPR 1 keeps factor 1
+PASS DPR below 1 never shrinks the UI
+PASS NaN scale falls back to 1
+PASS infinite scale falls back to 1
+PASS DPR 2 gives factor 2
+PASS fractional DPR kept as-is
+PASS absurd DPR clamped to MAX_FACTOR
+PASS native/headless reads scale 1 (no web feature)
+PASS apply reports a change
+PASS apply is a no-op when already at that factor
+PASS apply tolerates a null window
+PASS (1170, 2532)@3.00 window factor follows browser scale
+PASS (1170, 2532)@3.00 main lays out in CSS pixels (390, 844) (got (390.0, 844.0))
+PASS (1170, 2532)@3.00 still renders at physical resolution
+PASS (1170, 2532)@3.00 翻开手帐 stays on screen
+PASS (1170, 2532)@3.00 大太阳 stays on screen
+PASS (1170, 2532)@3.00 歇一会儿 stays on screen
+PASS (1170, 2532)@3.00 看看花箱 stays on screen
+PASS (1170, 2532)@3.00 size matches DPR-1 (390, 844) ((390.0, 844.0) vs (390.0, 844.0))
+PASS (1170, 2532)@3.00 hint_pos matches DPR-1 (390, 844) ((20.0, 16.0) vs (20.0, 16.0))
+PASS (1170, 2532)@3.00 hint_size matches DPR-1 (390, 844) ((210.0, 49.0) vs (210.0, 49.0))
+PASS (1170, 2532)@3.00 day_pos matches DPR-1 (390, 844) ((250.0, 76.0) vs (250.0, 76.0))
+PASS (1170, 2532)@3.00 album_pos matches DPR-1 (390, 844) ((20.0, 720.0) vs (20.0, 720.0))
+PASS (1170, 2532)@3.00 album_size matches DPR-1 (390, 844) ((165.0, 48.0) vs (165.0, 48.0))
+PASS (1170, 2532)@3.00 weather_pos matches DPR-1 (390, 844) ((205.0, 720.0) vs (205.0, 720.0))
+PASS (1170, 2532)@3.00 action_pos matches DPR-1 (390, 844) ((20.0, 776.0) vs (20.0, 776.0))
+PASS (1170, 2532)@3.00 action_size matches DPR-1 (390, 844) ((350.0, 48.0) vs (350.0, 48.0))
+PASS (1170, 2532)@3.00 pause_pos matches DPR-1 (390, 844) ((250.0, 20.0) vs (250.0, 20.0))
+PASS (1170, 2532)@3.00 notice_top matches DPR-1 (390, 844) (-170.0 vs -170.0)
+PASS (1170, 2532)@3.00 zoom matches DPR-1 (390, 844) ((0.977778, 0.977778) vs (0.977778, 0.977778))
+PASS (1170, 2532)@3.00 hint_font matches DPR-1 (390, 844) (15 vs 15)
+PASS (1170, 2532)@3.00 day_font matches DPR-1 (390, 844) (14 vs 14)
+PASS (1688, 780)@2.00 window factor follows browser scale
+PASS (1688, 780)@2.00 main lays out in CSS pixels (844, 390) (got (844.0, 390.0))
+PASS (1688, 780)@2.00 still renders at physical resolution
+PASS (1688, 780)@2.00 翻开手帐 stays on screen
+PASS (1688, 780)@2.00 大太阳 stays on screen
+PASS (1688, 780)@2.00 歇一会儿 stays on screen
+PASS (1688, 780)@2.00 看看花箱 stays on screen
+PASS (1688, 780)@2.00 size matches DPR-1 (844, 390) ((844.0, 390.0) vs (844.0, 390.0))
+PASS (1688, 780)@2.00 hint_pos matches DPR-1 (844, 390) ((20.0, 16.0) vs (20.0, 16.0))
+PASS (1688, 780)@2.00 hint_size matches DPR-1 (844, 390) ((520.0, 32.0) vs (520.0, 32.0))
+PASS (1688, 780)@2.00 day_pos matches DPR-1 (844, 390) ((636.0, 76.0) vs (636.0, 76.0))
+PASS (1688, 780)@2.00 album_pos matches DPR-1 (844, 390) ((20.0, 322.0) vs (20.0, 322.0))
+PASS (1688, 780)@2.00 album_size matches DPR-1 (844, 390) ((188.0, 48.0) vs (188.0, 48.0))
+PASS (1688, 780)@2.00 weather_pos matches DPR-1 (844, 390) ((230.0, 322.0) vs (230.0, 322.0))
+PASS (1688, 780)@2.00 action_pos matches DPR-1 (844, 390) ((636.0, 322.0) vs (636.0, 322.0))
+PASS (1688, 780)@2.00 action_size matches DPR-1 (844, 390) ((188.0, 48.0) vs (188.0, 48.0))
+PASS (1688, 780)@2.00 pause_pos matches DPR-1 (844, 390) ((636.0, 20.0) vs (636.0, 20.0))
+PASS (1688, 780)@2.00 notice_top matches DPR-1 (844, 390) (-110.0 vs -110.0)
+PASS (1688, 780)@2.00 zoom matches DPR-1 (844, 390) ((0.436111, 0.436111) vs (0.436111, 0.436111))
+PASS (1688, 780)@2.00 hint_font matches DPR-1 (844, 390) (15 vs 15)
+PASS (1688, 780)@2.00 day_font matches DPR-1 (844, 390) (14 vs 14)
+PASS (1920, 1080)@1.50 window factor follows browser scale
+PASS (1920, 1080)@1.50 main lays out in CSS pixels (1280, 720) (got (1280.0, 720.0))
+PASS (1920, 1080)@1.50 still renders at physical resolution
+PASS (1920, 1080)@1.50 翻开手帐 stays on screen
+PASS (1920, 1080)@1.50 大太阳 stays on screen
+PASS (1920, 1080)@1.50 歇一会儿 stays on screen
+PASS (1920, 1080)@1.50 看看花箱 stays on screen
+PASS (1920, 1080)@1.50 size matches DPR-1 (1280, 720) ((1280.0, 720.0) vs (1280.0, 720.0))
+PASS (1920, 1080)@1.50 hint_pos matches DPR-1 (1280, 720) ((20.0, 16.0) vs (20.0, 16.0))
+PASS (1920, 1080)@1.50 hint_size matches DPR-1 (1280, 720) ((520.0, 32.0) vs (520.0, 32.0))
+PASS (1920, 1080)@1.50 day_pos matches DPR-1 (1280, 720) ((1072.0, 76.0) vs (1072.0, 76.0))
+PASS (1920, 1080)@1.50 album_pos matches DPR-1 (1280, 720) ((20.0, 652.0) vs (20.0, 652.0))
+PASS (1920, 1080)@1.50 album_size matches DPR-1 (1280, 720) ((188.0, 48.0) vs (188.0, 48.0))
+PASS (1920, 1080)@1.50 weather_pos matches DPR-1 (1280, 720) ((230.0, 652.0) vs (230.0, 652.0))
+PASS (1920, 1080)@1.50 action_pos matches DPR-1 (1280, 720) ((1072.0, 652.0) vs (1072.0, 652.0))
+PASS (1920, 1080)@1.50 action_size matches DPR-1 (1280, 720) ((188.0, 48.0) vs (188.0, 48.0))
+PASS (1920, 1080)@1.50 pause_pos matches DPR-1 (1280, 720) ((1072.0, 20.0) vs (1072.0, 20.0))
+PASS (1920, 1080)@1.50 notice_top matches DPR-1 (1280, 720) (-110.0 vs -110.0)
+PASS (1920, 1080)@1.50 zoom matches DPR-1 (1280, 720) ((0.894444, 0.894444) vs (0.894444, 0.894444))
+PASS (1920, 1080)@1.50 hint_font matches DPR-1 (1280, 720) (15 vs 15)
+PASS (1920, 1080)@1.50 day_font matches DPR-1 (1280, 720) (14 vs 14)
+PASS (1280, 720)@1.00 window factor follows browser scale
+PASS (1280, 720)@1.00 main lays out in CSS pixels (1280, 720) (got (1280.0, 720.0))
+PASS (1280, 720)@1.00 still renders at physical resolution
+PASS (1280, 720)@1.00 翻开手帐 stays on screen
+PASS (1280, 720)@1.00 大太阳 stays on screen
+PASS (1280, 720)@1.00 歇一会儿 stays on screen
+PASS (1280, 720)@1.00 看看花箱 stays on screen
+PASS (1280, 720)@1.00 size matches DPR-1 (1280, 720) ((1280.0, 720.0) vs (1280.0, 720.0))
+PASS (1280, 720)@1.00 hint_pos matches DPR-1 (1280, 720) ((20.0, 16.0) vs (20.0, 16.0))
+PASS (1280, 720)@1.00 hint_size matches DPR-1 (1280, 720) ((520.0, 32.0) vs (520.0, 32.0))
+PASS (1280, 720)@1.00 day_pos matches DPR-1 (1280, 720) ((1072.0, 76.0) vs (1072.0, 76.0))
+PASS (1280, 720)@1.00 album_pos matches DPR-1 (1280, 720) ((20.0, 652.0) vs (20.0, 652.0))
+PASS (1280, 720)@1.00 album_size matches DPR-1 (1280, 720) ((188.0, 48.0) vs (188.0, 48.0))
+PASS (1280, 720)@1.00 weather_pos matches DPR-1 (1280, 720) ((230.0, 652.0) vs (230.0, 652.0))
+PASS (1280, 720)@1.00 action_pos matches DPR-1 (1280, 720) ((1072.0, 652.0) vs (1072.0, 652.0))
+PASS (1280, 720)@1.00 action_size matches DPR-1 (1280, 720) ((188.0, 48.0) vs (188.0, 48.0))
+PASS (1280, 720)@1.00 pause_pos matches DPR-1 (1280, 720) ((1072.0, 20.0) vs (1072.0, 20.0))
+PASS (1280, 720)@1.00 notice_top matches DPR-1 (1280, 720) (-110.0 vs -110.0)
+PASS (1280, 720)@1.00 zoom matches DPR-1 (1280, 720) ((0.894444, 0.894444) vs (0.894444, 0.894444))
+PASS (1280, 720)@1.00 hint_font matches DPR-1 (1280, 720) (15 vs 15)
+PASS (1280, 720)@1.00 day_font matches DPR-1 (1280, 720) (14 vs 14)
+PASS DPR 2.625 width back to ~412 CSS px (got 412.2)
+PASS DPR 2.625 portrait phone gets the compact layout
+PASS DPR 2.625 full-width action button fits
+PASS factor re-read after the canvas resizes
+PASS layout stays 390×844 CSS after DPR change (got (390.0, 844.0))
+PASS still compact portrait after DPR change
+web_hidpi: 102 checks, 0 failures

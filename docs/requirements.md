@@ -467,6 +467,14 @@ Assistant音频300 b8e5e6dc916dacd1eaf45b36c9f17584d36fc16c已接且实际交，
 
 探索程序 Owner CURSOR-CLOUD；原画/物件/音频与需求细化 GAME-PRODUCER。状态：用户方向已确认，内容/参数待首片体验后细化，非实现完成。近郊重访允许合理物品或空手，掉落遵循生态与季节；动物偶遇/天气同为风景；各片区环境音及音乐应契合环境，近郊可偶闻微弱家鹅叫。先完成首片人物透视+发现/获得动态音画体验，不一次扩展多季节、种子功能或全部动物事件。详见 game-design.md 的“探索是生活中的机缘与风景”；不以本记录替换未决概率/时间机制或现有可靠保存验收。
 
+## BUG-AUDIO-TOUCH-20261005（#388，父#195）
+
+- Owner `CODEX-LEAD-ASSISTANT`，实际在研；原单接收/范围5995550836→5995599284已收窄。旧横屏master点297实际在按钮外，推断已撤回；新的正确中心公开game-e0d699b横竖DPR3单tap未静音，原生两回pressed/TuningStore true→false。
+- Goal：三音频按钮一回触屏手势只切一次，长按释放/拖取消、鼠标/键盘、纯touch fallback保持；仅Main._input音频按钮已有GUI按住时不重复手动emit，其他400ms过滤/frame guard/存档/后端/资源/探索完全不动。
+- 分支 `work/codex-assistant/audio-touch-routing`；648真实GUI原生项旧Main168失败→候选0，最新5c2运行组合完整4.7.2 strict59启动exit0、普通本地Web横竖DPR3共62条index/errors[]通过，基线到efda仅docs变化。最终完整SHA独审/PR/合入与正式公开仍待，index不冒上线。[完整证据/失败/边界](playtests/2026-10-05-audio-touch-routing/README.md)。
+- #195原并发两次短输入根因、物理设备/真人听验/BFCache/全心流保留；只交388音频路由切片，不关父单。
+
+2026-10-05合入前保留Leader4fa最新cleanup两运行文件及daily新入口，完整4.7.2再跑60次启动exit0、普通最新组合index62记录/errors[]；Main仍5b8e6c1，仅一处音频触屏命中判断。[最终组合证据](playtests/2026-10-05-audio-touch-routing/INTEGRATION.md)。完整SHA独审/正式公开仍待，不用旧59组合日志冒新包。
 
 ### #150 双页占用启动指引（已独审合入/已发布/普通双页已体验）
 
@@ -484,3 +492,9 @@ CODEX-LEAD仅将可信open回复的精确OPEN_FAILED + `Error: writer_owned_by_a
 | 编号 | 优先级 | 内容 | 验收条件 | 状态 | Owner | 来源与边界 |
 |---|---|---|---|---|---|---|
 | REQ-20261005-032 | P2 | 原生开源声明首开与存活窗口缩放适配 | 首开竖屏/短横屏、同窗缩窄/恢复桌面、正文保全、确认/取消关闭及释放监听；daily永久覆盖 | 已独立终审合入/已发布；原生候选已体验，公开Web外链防回退通过 | GROK-CONTRIBUTOR（原实现）；CODEX-LEAD（已授权集成） | 保留作者c496ec1祖先；[原决定及增量](decisions/REQ-20261005-032.md)、[原生证据](playtests/2026-10-05-licenses402-integration/README.md)。PR402最终80238c32abfe7feffe2c5361ee1220a98205c65a独审5997465923后合入/发布82f902a0f22f50032bff9acbe542d0f1953ae684；[公开来源与Web防回退证据](playtests/2026-10-05-licenses402-public/README.md)。仅非Web声明模块修订，正式Web烟测不冒原生窗口体验；Web HTML、Main/存档/探索不变。 |
+
+### 2026-10-05 23:00轮 Assistant 本地接续 #388
+
+用户归档旧云端会话并指定本地接续及每小时调度；原提交链保留，PR394连续合并最新主线至0c7f，运行候选c35ffedda64e6f0b98b72f62ad5b8afa49c67df4。独立预审确认标题、存档占用、许可适配、近郊清底与各方台账完整保留。Windows此前71561组合59调用通过；最终c35组合Actions37333455347完整未改Linux strict64次启动、发布辅助检查及Web导出通过，19导出文件实际SHA256匹配；最终普通导出包横竖DPR3浏览器62事件/18原图/errors0、真实后端与活动增益一致。失败环境日志和未覆盖范围保留。最终完整SHA终审/合入/正式Pages与公网后验继续，不以候选当发布，不关闭父#195，不替代#382；近期#399/#400由用户指定制作人跟进，本片不重复接管。
+
+详见[本地接续原始证据](playtests/2026-10-05-audio-touch-routing/local-continuation/README.md)。

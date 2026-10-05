@@ -1,0 +1,13 @@
+Traceback (most recent call last):
+  File "D:\games\youjia-test\assistant\test\publish_storage_modules_test.py", line 57, in <module>
+    run('bash', 'tools/publish_gh_pages.sh', short, cwd=source, env=env)
+  File "D:\games\youjia-test\assistant\test\publish_storage_modules_test.py", line 16, in run
+    return subprocess.run(args, cwd=cwd, env=env, text=True, stdout=subprocess.PIPE,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Zengm\AppData\Local\Programs\Python\Python312\Lib\subprocess.py", line 550, in run
+    stdout, stderr = process.communicate(input, timeout=timeout)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Zengm\AppData\Local\Programs\Python\Python312\Lib\subprocess.py", line 1196, in communicate
+    stdout = self.stdout.read()
+             ^^^^^^^^^^^^^^^^^^
+UnicodeDecodeError: 'gbk' codec can't decode byte 0x93 in position 1860: illegal multibyte sequence

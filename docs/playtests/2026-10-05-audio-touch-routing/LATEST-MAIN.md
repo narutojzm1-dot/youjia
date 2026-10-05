@@ -1,0 +1,7 @@
+# 最终主分支增量集成
+
+原a527候选独立APPROVE不沿用新SHA。现非强推保留main10a32bb950894d6c6abfe26e3e3142d3f109e4f9双羊运行/资源/专项/daily及cded3bf4ac41cb6015ebbcde87ca5223bd1f3f0f的Leader391接口发布档。Main音频仍blob5b8e6c1c181519580fdef9f9c0e742397959f446，daily在最新原件只追加audio专项；共享req/dec保留新内容再追加自己的记录，goal保留Leader391已发布、接口冻结、待Cloud接收，仅更新Assistant自身行。
+
+当前冻结运行组合正确Godot4.7.2完整strict实跑61次启动，exit0、0 ERROR；audio648/0、pause168/0、album45914/0、双羊与全部既有门禁通过。原始/tmp/audio195-daily-latest-frozen.log将与正式后验一起归档。独立review同运行组合再次648/0；完整最终SHA独审结论另记PR394，审核后若改SHA仍重审。
+
+较早4fa组合60启动/62本地index事件仅历史限定，不能冒最新组合或正式上线。正式Actions/Pages、公开manifest/JS/WASM/PCK/十保存模块/HTML共15实际文件，普通公网62输入事件合入后验证并另归档；此处尚不宣称已发布。#195原并发两次短输入根因、真人听验/设备/后台BFCache/长时/全心流继续开放，#382确认触摸另案。

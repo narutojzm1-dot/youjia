@@ -1,0 +1,53 @@
+extends Node
+
+var main: Node
+var attached := false
+
+func _ready() -> void:
+	process_mode = Node.PROCESS_MODE_ALWAYS
+	TuningStore.value_changed.connect(_changed)
+	call_deferred("_attach")
+
+func _attach() -> void:
+	main = get_tree().current_scene
+	if main == null or main.get("_mute_toggle") == null:
+		get_tree().process_frame.connect(_attach, CONNECT_ONE_SHOT)
+		return
+	for key: String in ["_mute_toggle", "_music_toggle", "_ambience_toggle"]:
+		var button: Button = main.get(key)
+		button.gui_input.connect(_gui.bind(key))
+		button.pressed.connect(_pressed.bind(key))
+	attached = true
+	_emit("attached", {})
+
+func _changed(id: String, requested: Variant, active: Variant) -> void:
+	if id.begins_with("audio."):
+		_emit("tuning", {"id": id, "requested": requested, "active": active})
+
+func _input(event: InputEvent) -> void:
+	if attached and event is InputEventMouseButton:
+		_emit("input", {"pressed": event.pressed, "position": [event.position.x, event.position.y], "button": event.button_index})
+
+func _gui(event: InputEvent, key: String) -> void:
+	if event is InputEventMouseButton:
+		_emit("gui_input", {"key": key, "pressed": event.pressed, "local_position": [event.position.x,event.position.y]})
+
+func _pressed(key: String) -> void:
+	_emit("pressed", {"key": key})
+
+func _process(_delta: float) -> void:
+	if attached:
+		_emit("heartbeat", {})
+
+func _emit(kind: String, detail: Dictionary) -> void:
+	var row := {"kind":kind, "frame":Engine.get_process_frames(), "ticks_ms":Time.get_ticks_msec(), "detail":detail, "muted":TuningStore.get_value("audio.master.muted",false)}
+	if attached:
+		row["buttons"] = {}
+		for key: String in ["_mute_toggle", "_music_toggle", "_ambience_toggle"]:
+			var b: Button = main.get(key)
+			var r := b.get_global_rect()
+			row["buttons"][key] = {"rect":[r.position.x,r.position.y,r.size.x,r.size.y], "visible":b.is_visible_in_tree(), "text":b.text}
+	if OS.has_feature("web"):
+		JavaScriptBridge.eval("(window.nativeInputTrace ||= []).push("+JSON.stringify(row)+")")
+	else:
+		print("INPUT_OBSERVER ",JSON.stringify(row))

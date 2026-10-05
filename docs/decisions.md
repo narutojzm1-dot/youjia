@@ -1219,6 +1219,11 @@ PR377最终52a2be7b720e26d306d4d9c90ea8dd8471dfb87a独立APPROVE5995013227，合
 
 CODEX-LEAD在公开完整source4fa150819c304b03fb6a36a149e71d4bcd911000/game-4fa1508，390×844 DPR2独立触屏模拟profile正常走近并点击“看看栅栏边”，观察专属文案及草回应；六张原PNG和两页来源/动作/错误归档于[有限验收](playtests/2026-10-05-hotspot-fence-touch/README.md)。两个profile driver实际exit0且errors[]，模拟触屏不是真机。第二桌面profile取消/携鱼探针未形成可靠通过，原记录单列；低动效无普通入口未验。已有371桌面/374花箱岸石证据不重复，本条不关闭36长期需求、不增加热点或玩法。
 
+## 2026-10-05 #195输入归因与#388音频触屏切片
+
+Assistant已区分测试错误与真正缺陷：旧横屏master(252,297)在实际Rect(98,246,318,40)外，5995407812撤回产品未响应推断且保留失败；正确中心公开game-e0d699b鼠标静音/恢复正常，但横竖模拟触屏单tap未静音。只读原生链两回pressed/master true→false，分#388，5995599284实施前缩小到Main._input三音频按钮已有GUI按住时不重复手动emit，不改400ms过滤或后端/PCM/世界/存档。真实Viewport648检查旧Main168失败→候选0；完整4.7.2 native59启动exit0，普通同代码本地Web两视口62条index/errors[]，鼠标/轻点/跨帧长按/拖出取消/Enter及真正活动AudioParam通过。隔离工程首次漏既有探索JSON的strict失败、陈旧rect探针等原错误日志保留作废。当前为候选待最终完整SHA独审/合入及正式公开，不以observer/index冒上线；195旧并发漏响/听验/设备/长时/全心流仍开放，其他Owner保持。[证据](playtests/2026-10-05-audio-touch-routing/README.md)。
+
+2026-10-05合入前保留Leader4fa最新cleanup两运行文件及daily新入口，完整4.7.2再跑60次启动exit0、普通最新组合index62记录/errors[]；Main仍5b8e6c1，仅一处音频触屏命中判断。[最终组合证据](playtests/2026-10-05-audio-touch-routing/INTEGRATION.md)。完整SHA独审/正式公开仍待，不用旧59组合日志冒新包。
 
 ## 2026-10-05 22:20 PM实际收敛
 
@@ -1242,3 +1247,9 @@ Leader接收GROK原作者的daily/正式需求登记并补后置审查发现的l
 ### 2026-10-05 近郊运行时底图换成清底版（CURSOR-CLOUD，#153 / #155，EXP-PAINTED-PATH）
 
 按 CODEX-LEAD 在 PR #375 的交接（清底 #393 最终 `c2f342d` 已审合，Cloud 替换实际引用并补拾物前后证据），把 `assets/holiday/exploration/near_path_02.webp` 换成 `art/concepts/producer_near_path_clean_v1/near_path_clean_candidate.png`（SHA256 `ade3ee4108fb0726961fc83ae04f01effb21df6023501332909c45eaa278487b`）的等尺寸 WebP（质量 86，与旧副本相同）。画内松果/落羽去掉后，门口带上落羽、树荫带上松果都不再在画里留下同样的东西；路线、停留点、锚点与程序不变。横竖屏前后对照见[证据](playtests/2026-10-05-near-path-clean/README.md)。本条只换底图，不代表美术终验、Web 公开版或真机验收；圆石 #397 与正式小物精灵仍待 GAME-PRODUCER。
+
+### 2026-10-05 23:00轮 Assistant 本地接续 #388
+
+用户归档旧云端会话并指定本地接续及每小时调度；原提交链保留，PR394连续合并最新主线至0c7f，运行候选c35ffedda64e6f0b98b72f62ad5b8afa49c67df4。独立预审确认标题、存档占用、许可适配、近郊清底与各方台账完整保留。Windows此前71561组合59调用通过；最终c35组合Actions37333455347完整未改Linux strict64次启动、发布辅助检查及Web导出通过，19导出文件实际SHA256匹配；最终普通导出包横竖DPR3浏览器62事件/18原图/errors0、真实后端与活动增益一致。失败环境日志和未覆盖范围保留。最终完整SHA终审/合入/正式Pages与公网后验继续，不以候选当发布，不关闭父#195，不替代#382；近期#399/#400由用户指定制作人跟进，本片不重复接管。
+
+详见[本地接续原始证据](playtests/2026-10-05-audio-touch-routing/local-continuation/README.md)。
