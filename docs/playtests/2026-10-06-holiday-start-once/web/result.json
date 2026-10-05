@@ -1,0 +1,225 @@
+{
+  "runtime": "fe4f4dd080c2f02a943687e0e1df2a2d2266f8a7",
+  "expected_pck": "ff17bbbed214843b4cc6738aafb0f285cb4d48322e8d02d0a3c98f3dbf6f1a18",
+  "inputs": [
+    {
+      "mode": "touch",
+      "touchscreen_tap": [
+        640,
+        368
+      ],
+      "time": 354135.772568414
+    },
+    {
+      "screenshot": "touch-yard",
+      "time": 354142.413420197
+    },
+    {
+      "mode": "touch",
+      "touchscreen_tap": [
+        329,
+        563
+      ],
+      "time": 354144.924960681
+    },
+    {
+      "screenshot": "touch-outside",
+      "time": 354152.990489089
+    },
+    {
+      "screenshot": "touch-no-bounce",
+      "time": 354158.132245178
+    },
+    {
+      "mode": "touch",
+      "touchscreen_tap": [
+        706,
+        500
+      ],
+      "time": 354160.945835808
+    },
+    {
+      "screenshot": "touch-walked",
+      "time": 354166.071042522
+    },
+    {
+      "screenshot": "touch-still-outside",
+      "time": 354170.579370325
+    },
+    {
+      "mode": "touch",
+      "touchscreen_tap": [
+        1060,
+        390
+      ],
+      "time": 354172.916645012
+    },
+    {
+      "screenshot": "touch-return",
+      "time": 354180.967961263
+    },
+    {
+      "mode": "keyboard",
+      "touchscreen_tap": [
+        640,
+        368
+      ],
+      "time": 354194.819266877
+    },
+    {
+      "screenshot": "keyboard-yard",
+      "time": 354201.188381441
+    },
+    {
+      "mode": "keyboard",
+      "touchscreen_tap": [
+        329,
+        563
+      ],
+      "time": 354203.705000902
+    },
+    {
+      "screenshot": "keyboard-outside",
+      "time": 354211.384272132
+    },
+    {
+      "screenshot": "keyboard-no-bounce",
+      "time": 354216.108568602
+    },
+    {
+      "mode": "keyboard",
+      "hold": [
+        "ArrowLeft",
+        1800
+      ],
+      "time": 354219.695724591
+    },
+    {
+      "screenshot": "keyboard-walked",
+      "time": 354221.933806409
+    },
+    {
+      "mode": "keyboard",
+      "hold": [
+        "ArrowRight",
+        5000
+      ],
+      "time": 354224.841086938
+    },
+    {
+      "screenshot": "keyboard-return",
+      "time": 354232.871928933
+    }
+  ],
+  "media": [],
+  "errors": [],
+  "builds": [
+    {
+      "page": "touch",
+      "entry": "index"
+    },
+    {
+      "page": "keyboard",
+      "entry": "index"
+    }
+  ],
+  "limits": [
+    "browser media emulation, not OS settings or physical phone",
+    "listener multiplicity is not proved by screenshots",
+    "photo detector needs visual confirmation"
+  ],
+  "source_checks": [
+    {
+      "page": "touch",
+      "stage": "before",
+      "git_sha": "fe4f4dd080c2f02a943687e0e1df2a2d2266f8a7",
+      "time": 354121.166572127
+    },
+    {
+      "page": "touch",
+      "stage": "after",
+      "git_sha": "fe4f4dd080c2f02a943687e0e1df2a2d2266f8a7",
+      "time": 354184.359737199
+    },
+    {
+      "page": "keyboard",
+      "stage": "before",
+      "git_sha": "fe4f4dd080c2f02a943687e0e1df2a2d2266f8a7",
+      "time": 354185.291825284
+    },
+    {
+      "page": "keyboard",
+      "stage": "after",
+      "git_sha": "fe4f4dd080c2f02a943687e0e1df2a2d2266f8a7",
+      "time": 354235.608528507
+    }
+  ],
+  "pck_checks": [
+    {
+      "page": "touch",
+      "sha256": "ff17bbbed214843b4cc6738aafb0f285cb4d48322e8d02d0a3c98f3dbf6f1a18"
+    },
+    {
+      "page": "keyboard",
+      "sha256": "ff17bbbed214843b4cc6738aafb0f285cb4d48322e8d02d0a3c98f3dbf6f1a18"
+    }
+  ],
+  "navigation": [
+    {
+      "time": 354128.812889336,
+      "url": "http://127.0.0.1:8200/",
+      "main": true
+    },
+    {
+      "time": 354189.457273785,
+      "url": "http://127.0.0.1:8200/",
+      "main": true
+    }
+  ],
+  "dom_ready": [
+    354128.834274246,
+    354189.478387277
+  ],
+  "all_console": [
+    {
+      "type": "log",
+      "text": "Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org",
+      "time": 354130.757606075
+    },
+    {
+      "type": "log",
+      "text": "OpenGL API OpenGL ES 3.0 (WebGL 2.0 (OpenGL ES 3.0 Chromium)) - Compatibility - Using Device: WebKit - WebKit WebGL",
+      "time": 354131.099014178
+    },
+    {
+      "type": "log",
+      "text": "Build configuration: Emscripten 4.0.20, single-threaded, no GDExtension support.",
+      "time": 354131.463205472
+    },
+    {
+      "type": "info",
+      "text": "[game-loading] timings_ms {\"engineScriptReady\":29,\"downloadComplete\":1738,\"engineReady\":4207,\"firstFrame\":5726}",
+      "time": 354134.560688718
+    },
+    {
+      "type": "log",
+      "text": "Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org",
+      "time": 354190.104803485
+    },
+    {
+      "type": "log",
+      "text": "OpenGL API OpenGL ES 3.0 (WebGL 2.0 (OpenGL ES 3.0 Chromium)) - Compatibility - Using Device: WebKit - WebKit WebGL",
+      "time": 354190.316843571
+    },
+    {
+      "type": "log",
+      "text": "Build configuration: Emscripten 4.0.20, single-threaded, no GDExtension support.",
+      "time": 354190.572142163
+    },
+    {
+      "type": "info",
+      "text": "[game-loading] timings_ms {\"engineScriptReady\":47,\"engineReady\":2635,\"downloadComplete\":2636,\"firstFrame\":4141}",
+      "time": 354193.614022127
+    }
+  ]
+}

@@ -1,0 +1,131 @@
+{
+  "runtime": "fe4f4dd080c2f02a943687e0e1df2a2d2266f8a7",
+  "expected_pck": "ff17bbbed214843b4cc6738aafb0f285cb4d48322e8d02d0a3c98f3dbf6f1a18",
+  "inputs": [
+    {
+      "mode": "touch",
+      "touchscreen_tap": [
+        640,
+        368
+      ],
+      "time": 354302.700949714
+    },
+    {
+      "screenshot": "touch-yard",
+      "time": 354309.511853857
+    },
+    {
+      "mode": "touch",
+      "touchscreen_tap": [
+        329,
+        563
+      ],
+      "time": 354311.71454468
+    },
+    {
+      "screenshot": "touch-outside",
+      "time": 354319.60711859
+    },
+    {
+      "screenshot": "touch-no-bounce",
+      "time": 354324.007544355
+    },
+    {
+      "mode": "touch",
+      "touchscreen_tap": [
+        706,
+        500
+      ],
+      "time": 354327.022799539
+    },
+    {
+      "screenshot": "touch-walked",
+      "time": 354332.128584416
+    },
+    {
+      "screenshot": "touch-still-outside",
+      "time": 354335.730867348
+    },
+    {
+      "mode": "touch",
+      "touchscreen_tap": [
+        1060,
+        390
+      ],
+      "time": 354338.705447331
+    },
+    {
+      "screenshot": "touch-return-7s",
+      "time": 354346.794764886
+    },
+    {
+      "screenshot": "touch-return",
+      "time": 354364.100595504
+    }
+  ],
+  "media": [],
+  "errors": [],
+  "builds": [
+    {
+      "page": "touch",
+      "entry": "index"
+    }
+  ],
+  "limits": [
+    "browser media emulation, not OS settings or physical phone",
+    "listener multiplicity is not proved by screenshots",
+    "photo detector needs visual confirmation"
+  ],
+  "source_checks": [
+    {
+      "page": "touch",
+      "stage": "before",
+      "git_sha": "fe4f4dd080c2f02a943687e0e1df2a2d2266f8a7",
+      "time": 354289.060731689
+    },
+    {
+      "page": "touch",
+      "stage": "after",
+      "git_sha": "fe4f4dd080c2f02a943687e0e1df2a2d2266f8a7",
+      "time": 354366.241868662
+    }
+  ],
+  "pck_checks": [
+    {
+      "page": "touch",
+      "sha256": "ff17bbbed214843b4cc6738aafb0f285cb4d48322e8d02d0a3c98f3dbf6f1a18"
+    }
+  ],
+  "navigation": [
+    {
+      "time": 354297.009932936,
+      "url": "http://127.0.0.1:8200/",
+      "main": true
+    }
+  ],
+  "dom_ready": [
+    354297.04042507
+  ],
+  "all_console": [
+    {
+      "type": "log",
+      "text": "Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org",
+      "time": 354297.551343421
+    },
+    {
+      "type": "log",
+      "text": "OpenGL API OpenGL ES 3.0 (WebGL 2.0 (OpenGL ES 3.0 Chromium)) - Compatibility - Using Device: WebKit - WebKit WebGL",
+      "time": 354297.90584369
+    },
+    {
+      "type": "log",
+      "text": "Build configuration: Emscripten 4.0.20, single-threaded, no GDExtension support.",
+      "time": 354298.228938364
+    },
+    {
+      "type": "info",
+      "text": "[game-loading] timings_ms {\"engineScriptReady\":27,\"engineReady\":2768,\"downloadComplete\":2768,\"firstFrame\":4458}",
+      "time": 354301.495762454
+    }
+  ]
+}
