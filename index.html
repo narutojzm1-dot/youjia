@@ -1,5 +1,5 @@
 <!doctype html>
-<html data-build="game-2611aff" lang="zh-CN">
+<html data-build="game-d242509" lang="zh-CN">
 <head>
   <meta http-equiv="Cache-Control" content="no-cache, must-revalidate, max-age=0">
   <meta http-equiv="Pragma" content="no-cache">
@@ -10,8 +10,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="manus-game-loading-screen" content="1">
   <title>悠长的假期</title>
-  <link id="-gd-engine-icon" rel="icon" type="image/png" href="game-2611aff.icon.png" />
-<link rel="apple-touch-icon" href="game-2611aff.apple-touch-icon.png"/>
+  <link id="-gd-engine-icon" rel="icon" type="image/png" href="game-d242509.icon.png" />
+<link rel="apple-touch-icon" href="game-d242509.apple-touch-icon.png"/>
 
   <!-- Project-owned starting point, not the platform default. Customize the presentation below. -->
   <!-- Embedded Noto Sans SC loader subset: SIL Open Font License 1.1; license text: assets/template/fonts/NotoSansSC-OFL.txt. -->
@@ -72,7 +72,15 @@ Source SHA-256: 38f4c5f927f746b3dfa4c3a5d7edf0b7a3e828e27438418fa54f9e1565289412
   </section>
   <script>
     (() => {
-      const config = {"args":[],"canvasResizePolicy":2,"emscriptenPoolSize":8,"ensureCrossOriginIsolationHeaders":true,"executable":"game-2611aff","experimentalVK":false,"fileSizes":{"game-2611aff.pck":21955748,"game-2611aff.wasm":39514754},"focusCanvas":true,"gdextensionLibs":[],"godotPoolSize":4};
+      const config = {"args":[],"canvasResizePolicy":2,"emscriptenPoolSize":8,"ensureCrossOriginIsolationHeaders":true,"executable":"game-d242509","experimentalVK":false,"fileSizes":{"game-d242509.pck":22003712,"game-d242509.wasm":39514754},"focusCanvas":true,"gdextensionLibs":[],"godotPoolSize":4};
+      let resolveSaveRuntime, rejectSaveRuntime;
+      const saveRuntimeReady = new Promise((resolve, reject) => { resolveSaveRuntime = resolve; rejectSaveRuntime = reject; });
+      saveRuntimeReady.catch(() => {}); // Observe immediately; preserve original rejection.
+      const saveBridgeReady = import('./save-d242509/bridge.mjs').then(async ({installSaveHost}) => {
+        const {captureIdbfsSource} = await import('./save-d242509/idbfs_source.mjs');
+        installSaveHost({runtimeReady: saveRuntimeReady, captureLegacy: captureIdbfsSource});
+      });
+      saveBridgeReady.catch(() => {});
       const threads = false;
       const canvas = document.getElementById('canvas');
       const loading = document.getElementById('loading');
@@ -133,6 +141,7 @@ Source SHA-256: 38f4c5f927f746b3dfa4c3a5d7edf0b7a3e828e27438418fa54f9e1565289412
           : (zh ? '仍在加载。可以继续等待，或重试。' : 'Still loading. You can keep waiting or retry.');
         if (notice.textContent !== message) notice.textContent = message;
       };
+      window.addEventListener('youjia:save-blocked', event => fail(new Error('存档暂时无法确认，原有内容已保留：' + event.detail)));
       const onWindowError = (event) => fail(event.error || new Error('Engine startup error'));
       const onUnhandledRejection = (event) => fail(event.reason || new Error('Engine startup rejected'));
       // Time alone cannot prove failure: downloads and WASM compilation may be slow.
@@ -146,6 +155,7 @@ Source SHA-256: 38f4c5f927f746b3dfa4c3a5d7edf0b7a3e828e27438418fa54f9e1565289412
       const fail = (error) => {
         if (failed || ready) return;
         failed = true;
+        rejectSaveRuntime(error);
         stopObserving();
         console.error('[game-loading] Startup failed', error);
         loading.hidden = false;
@@ -198,8 +208,10 @@ Source SHA-256: 38f4c5f927f746b3dfa4c3a5d7edf0b7a3e828e27438418fa54f9e1565289412
           stamp('engineScriptReady');
           const missing = Engine.getMissingFeatures({ threads });
           if (missing.length) throw new Error(`Missing browser features: ${missing.join(', ')}`);
-          const engine = new Engine({ ...config, canvas });
-          await engine.startGame({ onProgress });
+          await saveBridgeReady;
+          const engine = new Engine({ ...config, canvas, persistentPaths: [] });
+          await engine.startGame({ onProgress, persistentPaths: [] });
+          resolveSaveRuntime();
           if (failed) return;
           engineReady = true;
           stamp('engineReady');
@@ -210,7 +222,7 @@ Source SHA-256: 38f4c5f927f746b3dfa4c3a5d7edf0b7a3e828e27438418fa54f9e1565289412
         }
       };
       const script = document.createElement('script');
-      script.src = 'game-2611aff.js';
+      script.src = 'game-d242509.js';
       script.addEventListener('load', start, { once: true });
       script.addEventListener('error', () => fail(new Error('Engine script could not be loaded')), { once: true });
       document.head.appendChild(script);
