@@ -4,6 +4,7 @@ cd "$(dirname "$0")/.."
 state="$(mktemp -d /tmp/youjia-daily-check.XXXXXX)"
 trap 'rm -rf "$state"' EXIT
 export XDG_DATA_HOME="$state/data" XDG_CONFIG_HOME="$state/config" XDG_CACHE_HOME="$state/cache"
+export YOUJIA_TEST_ISOLATED_DATA="$XDG_DATA_HOME"
 mkdir -p "$XDG_DATA_HOME" "$XDG_CONFIG_HOME" "$XDG_CACHE_HOME"
 source tools/lib/verified_godot.sh
 bash test/godot_gate_test.sh
