@@ -26,7 +26,7 @@
 
 ## 动态音画录制
 
-制作人要求先动态同看（[#155 5994990147](https://github.com/narutojzm1-dot/youjia/issues/155#issuecomment-5994990147)），所以用 `tools/record_find_reveal_demo.gd` 加 Godot Movie Maker 录了画面和混音。场景是真实画卷与宿主（内存存档替身），院景音乐和环境声照常播放，与正式游戏外出时一致。路线：从出门处沿路走到坡路草边（slope），停下看，带上松果（11.83 s）；再走到树荫（shade），带上落羽（21.47 s），往回走。全长约 28 秒，1280×720 与 390×844 各一条；视频作为 PR #375 的附件，不进仓库。
+制作人要求先动态同看（[#155 5994990147](https://github.com/narutojzm1-dot/youjia/issues/155#issuecomment-5994990147)），所以用 `tools/record_find_reveal_demo.gd` 加 Godot Movie Maker 录了画面和混音。场景是真实画卷与宿主（内存存档替身），院景音乐和环境声照常播放，与正式游戏外出时一致。路线：从出门处沿路走到坡路草边（slope），停下看，带上松果（11.83 s）；再走到树荫（shade），带上落羽（21.47 s），往回走。全长约 28 秒，1280×720 与 390×844 各一条，放在本目录 `videos/` 下：`find-reveal-demo-1280x720.mp4`、`find-reveal-demo-390x844.mp4`，以及短音 +12 dB 的对照 `*-get-plus12db.mp4`。
 
 ```
 godot --path . --resolution 1280x720 --fixed-fps 30 --write-movie out.avi --script tools/record_find_reveal_demo.gd
