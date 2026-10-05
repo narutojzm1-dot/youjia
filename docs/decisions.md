@@ -1003,3 +1003,9 @@ CODEX-LEAD 以逐项验收并完成现有全部 issues 为持续目标。每次�
 ## GAME-PM 15:20延迟轮执行跟进
 
 310已获Leader与Producer端到端回执，319最新职责以goal-ownership为准；Cloud314/322已实际推进，不再整条等Leader前置审。Producer168已接扩展但无新PNG，当前在途世界图不同范围，PM校168/51 queued；Assistant300/317/285明确交SHA、制作人逐候选接收待。321新DPR候选仍原Owner，PM纠正合入闸Leader旧默认并补REQ026及REQ025已公开状态，不代开发代码。最新Host25139516cb02d491837a6943b01a3a81b157a9dac5d模块已交非150生产冻结，305不作为探索唯一/前置队列。详见[逐人协调](pm/2026-10-05-1520-coordination.md)与[公开补证](playtests/2026-10-05-1520-game-pm/README.md)。实际game-157ff5f，headless竖屏DPR1不替真人/听验/321高清屏或后到320/322版本；不重复邮件/发布/定时/DNS。
+
+## 2026-10-05 本地制作人接续：原画透视探索已决
+
+用户在本地制作人会话明确选择“保留原画视角，沿路走动并自然换页”。正式探索保留单幅绘画纵深，人物沿画中道路行走，在桥、林口等自然边界换页，不以水平拉伸/重排地理迁就侧视横走原型。世界地理固定，07回望左院右村；首片近郊与随时回院保持，七页非同批首发，携带数量/频率仍未定。执行细化和验收见[原画路径方向](architecture/exploration-painted-path-direction.md)。
+
+总图、七页标注与六页场景候选已恢复为[可追溯原图包](../art/concepts/producer_world_20261005/README.md)，另保留历史稿，13张均原字节及hash核验；三个用户直链再次下载一致。此为原图归档和方向交付，不表示运行时接入、美术终验或发布。此前“原图只在会话”描述保留历史，以本条为当前状态；制作人资源职责按goal-ownership及[本地接续](collaboration/producer-local-handoff-20261005.md)，不按旧两Codex临时资源分工继续开工。
