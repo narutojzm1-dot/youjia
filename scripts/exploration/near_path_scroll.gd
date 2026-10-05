@@ -264,6 +264,7 @@ func _start_reveal(find_id: String) -> void:
 	top.x = clampf(top.x, margin, size.x - margin)
 	top.y = clampf(top.y, minf(ceiling, size.y * 0.5), size.y - margin)
 	var slot := maxi(carried().size() - 1, 0)
+	reveal.label_font = _basket.get_theme_default_font()
 	reveal.play(find_id, art_to_screen(anchor), top, _basket.position + Vector2(24 + slot * 16, 22),
 		1.6 * L.depth(anchor.y) * _cam_zoom, _find_name(find_id), reduced_motion())
 

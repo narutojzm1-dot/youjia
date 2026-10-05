@@ -651,6 +651,11 @@ func _find_reveal() -> void:
 		check(scroll.observe("gate") and not reveal.is_active() and reveal.sound_plays == 0, tag + "stopping to look at a find is quiet")
 		var at_gate: String = scroll.pick_choice().find_id
 		check(scroll.pick() and reveal.is_active() and reveal.find_id == at_gate and reveal.sound_plays == 1, tag + "a take starts one reveal with one sound")
+		var glyphs_ok: bool = reveal.label_font != null and reveal.label_font == scroll._basket.get_theme_default_font()
+		for find_id: String in ExplorationRoutes.FINDS:
+			for ch in scroll._find_name(find_id):
+				glyphs_ok = glyphs_ok and reveal.label_font.has_char(ch.unicode_at(0))
+		check(glyphs_ok and not reveal.title.is_empty(), tag + "the reveal names the find in the bundled UI font, which has its glyphs on Web")
 		var foot_screen: Vector2 = scroll.art_to_screen(scroll.foot())
 		check(shown.grow(-FindReveal.HALO).has_point(reveal.top) and reveal.top.y < foot_screen.y, tag + "the find rises above the walker and stays on screen")
 		check(reveal.top.y + FindReveal.HALO + 30.0 < scroll._pick_button.position.y, tag + "the reveal does not cover the bottom buttons")
