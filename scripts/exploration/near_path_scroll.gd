@@ -47,6 +47,7 @@ var _look_button: Button
 var _pick_button: Button
 var _go_button: Button
 var _basket: Control
+var _view_size := Vector2.ZERO
 var reveal: FindReveal
 
 
@@ -80,6 +81,8 @@ func setup(trip_host: ExplorationHost, _weather: String) -> void:
 	_build_hud()
 	_snap_camera()
 	_show_caption(I18n.t("exploration.caption.arrive"), 5.0)
+	_view_size = get_viewport().get_visible_rect().size
+	get_viewport().size_changed.connect(_on_view_resized)
 	_refresh()
 
 
@@ -90,6 +93,8 @@ func release() -> void:
 	set_process_unhandled_input(false)
 	if camera != null:
 		camera.enabled = false
+	if get_viewport() != null and get_viewport().size_changed.is_connected(_on_view_resized):
+		get_viewport().size_changed.disconnect(_on_view_resized)
 	for connection: Dictionary in return_requested.get_connections():
 		return_requested.disconnect(connection.callable)
 
@@ -100,6 +105,17 @@ func _notification(what: int) -> void:
 		walk_target = {}
 		if reveal != null:
 			reveal.settle()
+
+
+## 拾起短展示的起点、停留点和篮位都是开始时的屏幕坐标：视口一变（转屏、拖窗）就按可打断规则收进篮子，
+## 不在旧位置画完，也不按新尺寸重播
+func _on_view_resized() -> void:
+	var size := get_viewport().get_visible_rect().size
+	if size == _view_size:
+		return
+	_view_size = size
+	if reveal != null:
+		reveal.settle()
 
 
 func reduced_motion() -> bool:
