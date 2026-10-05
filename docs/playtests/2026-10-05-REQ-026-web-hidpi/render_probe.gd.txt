@@ -1,0 +1,23 @@
+extends SceneTree
+# Throwaway render probe: what a DPR-3 phone (390×844 CSS → 1170×2532 canvas) shows.
+# Run: YJ_OUT=/tmp/out YJ_MODE=before|after xvfb-run -a -s "-screen 0 1400x2700x24" \
+#   godot --path . --rendering-driver opengl3 -s res://test/_render_hidpi.gd
+func _initialize(): call_deferred("run")
+func run():
+	var out := OS.get_environment("YJ_OUT")
+	var mode := OS.get_environment("YJ_MODE")
+	WebHiDpi.override_scale = 3.0 if mode == "after" else 1.0
+	var dims := Vector2i(1170, 2532)
+	DisplayServer.window_set_size(dims)
+	root.size = dims
+	var main = load("res://scenes/main.tscn").instantiate()
+	root.add_child(main)
+	await process_frame; await process_frame
+	main._start_holiday()
+	for i in 90: await process_frame
+	main._show_notice_key("notice.fishing.miss")
+	for i in 6: await process_frame
+	var img := root.get_texture().get_image()
+	img.save_png("%s/phone-dpr3-%s.png" % [out, mode])
+	print("saved ", mode, " img=", img.get_size(), " main.size=", main.size, " factor=", root.content_scale_factor)
+	quit(0)
