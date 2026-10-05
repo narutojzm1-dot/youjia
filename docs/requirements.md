@@ -153,7 +153,7 @@
 
 | 编号 | 优先级 | 范围与验收 | 状态 | Owner | 依赖 |
 | --- | --- | --- | --- | --- | --- |
-| ART-OVERCAST-ALIGNED | P1 | 以晴天母版重绘阴天，几何/交互锚点不动；完整画、叠图与实际尺度预览、来源哈希；美术审核后用新路径接入，保留旧照片资源 | 候选已审画，需局部修改（#168评论5979307760）；v3/2568661350bcfca6cac4c66cae123cbb71b385503bc ART5983393849 REQUEST CHANGES后，原Owner已交v4/2662b1f024f6bad3b700f7c348316075bf0cdc88018，PNGfcc5e649/池框650,790,1560,1020与成对裁切已核；ART5984922645只两云区返修已由原Owner接收并交v5/27133dfd962b93013bb75f8890b5836ef26a3c2e26b，PNGf01c66c1、两云区v4/v5裁切；当前v5已ART5985871441 REQUEST CHANGES：左亮椭圆/右矩形遮罩边、峰脊保护mask及README基准hash需修；只两云区新候选和成对证据，已过草地池面/无争议几何冻结，原Owner已接并交v6/278 e742ac413a6c1eb286a86501c1e177f4462c2427，PNG63a514c6/两云mask/正确v4 hash已交，当前新候选ART复审与资源终审仍待；LOCAL PR228兼容盘点已合入；50%混合照片表达/字段方案仍待明确，正式接图等待新图艺术批准，未接入/发布 | `GROK-BUILD` | [#168](https://github.com/narutojzm1-dot/youjia/issues/168)；当前新候选在 `art/concepts/yard_overcast_aligned_v6/`，旧v1保留。ART-DIRECTOR审画，CURSOR-CONTRIBUTOR-LOCAL在#51接自然转场，GAME-QA复测。 |
+| ART-OVERCAST-ALIGNED | P1 | 以晴天母版重绘阴天，几何/交互锚点不动；完整画、叠图与实际尺度预览、来源哈希；美术审核后用新路径接入，保留旧照片资源 | 候选已审画，需局部修改（#168评论5979307760）；v3/2568661350bcfca6cac4c66cae123cbb71b385503bc ART5983393849 REQUEST CHANGES后，原Owner已交v4/2662b1f024f6bad3b700f7c348316075bf0cdc88018，PNGfcc5e649/池框650,790,1560,1020与成对裁切已核；ART5984922645只两云区返修已由原Owner接收并交v5/27133dfd962b93013bb75f8890b5836ef26a3c2e26b，PNGf01c66c1、两云区v4/v5裁切；当前v5已ART5985871441 REQUEST CHANGES：左亮椭圆/右矩形遮罩边、峰脊保护mask及README基准hash需修；只两云区新候选和成对证据，已过草地池面/无争议几何冻结，原Owner已接并交v6/278 e742ac413a6c1eb286a86501c1e177f4462c2427，PNG63a514c6/两云mask/正确v4 hash已交，v6 ART5986839320雪框/池保护通过，云体/矩形天空底板仍需改；原Owner已接并交v7/28165ec28a2685a17087f17baff0db7a3365e9f3312，PNGdff973df/干净右底板/两对照/mask已交，当前v7专业及资源终审待，已过雪地池冻结；LOCAL PR228兼容盘点已合入；50%混合照片表达/字段方案仍待明确，正式接图等待新图艺术批准，未接入/发布 | `GROK-BUILD` | [#168](https://github.com/narutojzm1-dot/youjia/issues/168)；当前新候选在 `art/concepts/yard_overcast_aligned_v7/`，旧v1保留。ART-DIRECTOR审画，CURSOR-CONTRIBUTOR-LOCAL在#51接自然转场，GAME-QA复测。 |
 
 
 ## 总体声音规划
@@ -225,14 +225,21 @@ CODEX-LEAD 提取 SaveDataCodec，使旧 SaveStore 与后续迁移复用同一�
 
 
 ### #231 钓鱼携鱼一致性：测试子项明确分配
-父缺陷Owner保持CODEX-LEAD；GROK-CONTRIBUTOR已在2315986095129/2425986095748接收并交PR276精确8ffefdf2fa857fa7d7fec3b31acda0998235a351；ASSISTANT独立5986358795 REQUEST CHANGES，待原作者修夹具重置顺序、独立执行隔离并补Web三序列，非等待首次分配。范围仅test/fish_carry_consistency_suite.gd、必要daily挂载及体验记录，不改Main/YardWorld/存档/动物反馈。覆盖无旧鱼miss、有旧鱼miss、携带到期、接近途中到期、暂停恢复和连点消费；Web记录通知key、carry前后及成功投喂与抚摸的区分。失败保留证据，不为凑绿改期望或删除合法旧鱼；最小修复由Leader接收后实现。无需等待150或天气图。[明确交接](https://github.com/narutojzm1-dot/youjia/issues/231#issuecomment-5985809083)。
+父缺陷Owner保持CODEX-LEAD；GROK-CONTRIBUTOR已在2315986095129/2425986095748接收并交PR276精确8ffefdf2fa857fa7d7fec3b31acda0998235a351；原作者已修夹具/隔离并交45e839eec3627efad85851bbe715962399b803f8，ASSISTANT5986885702代码范围APPROVE、Leader5986917049接收；旧两项退回解除，剩真实Web三序列及新最终SHA重审，不把85检查当父缺陷已修复。范围仅test/fish_carry_consistency_suite.gd、必要daily挂载及体验记录，不改Main/YardWorld/存档/动物反馈。覆盖无旧鱼miss、有旧鱼miss、携带到期、接近途中到期、暂停恢复和连点消费；Web记录通知key、carry前后及成功投喂与抚摸的区分。失败保留证据，不为凑绿改期望或删除合法旧鱼；最小修复由Leader接收后实现。无需等待150或天气图。[明确交接](https://github.com/narutojzm1-dot/youjia/issues/231#issuecomment-5985809083)。
 
 ### #150 共用读取模块审核更新
 PR273最终f2b0089d0fe79fa7b1b3322fcda98b7cafb87d88独立CODEX-LEAD-REVIEW-SAVE-CODEC批准5408903859，已合入d480b9696a48f1b6d79c2ae6f27ba321ea10a947；完整daily、最终16检查、本地三尺寸Web通过。合入时Actions37246175543运行中，正式公开核验另写PR273。上文“独立审核待完成”以此结果更新，正式迁移仍未冻结。
 
 ### #231 奇怪的鱼：成功收杆通知纠正
-GROK-CONTRIBUTOR已接测试子项并交PR276（8ffefdf，58项现状检查）；ASSISTANT独审要求修订夹具重置/独立执行存档隔离，原作者继续Web三序列，不提前合入。CODEX-LEAD独立修正odd成功收杆通知：中文“钓到一条奇怪的鱼。”、英文“Caught a peculiar fish.”，不再声称它已逃走；携带20秒、投喂/消费、随机空钩全部保持。真实到期release文案不改。只解决这一明确矛盾，S2旧鱼+miss歧义及父缺陷其余范围继续验收；验证与发布见对应PR，尚不关闭231。
+GROK-CONTRIBUTOR已接测试子项并交PR276（8ffefdf，58项现状检查）；夹具/隔离已由45e839e修订并获5986885702代码范围APPROVE，原作者继续真实Web三序列；新head须重新终审，当前不合入。CODEX-LEAD独立修正odd成功收杆通知：中文“钓到一条奇怪的鱼。”、英文“Caught a peculiar fish.”，不再声称它已逃走；携带20秒、投喂/消费、随机空钩全部保持。真实到期release文案不改。只解决这一明确矛盾，S2旧鱼+miss歧义及父缺陷其余范围继续验收；验证与发布见对应PR，尚不关闭231。
 
 
 ### #150 小院时间与花圃单次快照（CODEX-LEAD）
 生产 YardWorld._save_progress 改为一次 set_yard_progress：天数、日内时间与花圃三个字段一起写入，避免连续提交把“新时间＋旧花圃”旋转为备份。新方法先复制候选，文件提交成功才替换 SaveStore 内存；失败保持先前内存。现有字段/取值边界、独立 setter 和游戏节奏保持，不是 Web durable 回执或正式 Host 冻结。独立分支审核与实际验证见对应 PR 和 test/yard_snapshot_suite.gd；探索正式接入仍等待唯一 writer、文件系统就绪、统一业务确认和容量门禁。
+
+
+### 探索/布置方向材料接力（PM 2026-10-05）
+
+制作人1545986931224已接232/248并给区域内轻量调整推荐，尚非用户最终自由度批准；唯一实物缺件为一个首批物件（建议圆石）的实际尺度，2–3安全语义位置、摆前/后/收起及正常拍照视角。用户新增提篮贯通与院外/家双核心方向见[策划同步](game-design.md#2026-10-05-用户探索与提篮方向制作人记录同步)；具体形态/容量/采集频率/自由度未定，不新增交易或第二套物品状态。PM155已将短画面序列与实物样张并入既有资源交接，不新开重复研究；执行顺序/窗口待GROK-BUILD接收，既有Owner/150门禁保持。
+
+后到用户资源分工由制作人1535987057979同步：新世界地图/重要背景由GAME-PRODUCER亲绘并交用户选择，小物件可保留GROK-BUILD；原其他认领不自动转移，旧B点材料如涉及新重要背景需按此边界协调，不默认GROK制作大图。A/B预览仅制作人会话未入仓，PM未见实际图、不代选择；工程规格/保存/专业门禁保持。
