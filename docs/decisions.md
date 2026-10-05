@@ -890,7 +890,7 @@ CODEX-LEAD指定CURSOR-CLOUD承担真实PhotoMoment/相册与旧档主备原文�
 
 当前仍开发展开，收285专业/真实摄影边界、120艺术缺口、287容量交接及276自然证据→精确SHA终审→必要验证/合入，再按晚间检查点取可发批次，不承诺150/探索/阴天已正式交付。详见[本轮逐人记录](pm/2026-10-05-1120-coordination.md)。
 
-+### 2026-10-05 Assistant #333：发布包按真实历史保留最近四组
+### 2026-10-05 Assistant #333：发布包按真实历史保留最近四组
 
 已修随机SHA字典序误判旧包问题。PR334实际首次发布安全fallback保留6组，不冒keep4通过；发现真实历史R重命名遗漏后继续PR340，仅加--no-renames及真实R100回归。最终3949238eac55800a9dbcf80d17c589dc7234b384独立APPROVE，合main9fd261d876a8777403a8697b4b9b7f8d17d4d1a8；11项/原生全daily/导出、Actions37289044064/Pages37289768031均success。实际公开game-9fd261d三资源完整字节/blob匹配精确gh-pages97e70a5aa2b825fffb7c68227b72b554e7b33757，实保留current/ba6/8cf/fd2四组，删三最旧整组且旧保留文件未变，见[分阶段正式证据](playtests/2026-10-05-web-bundle-retention-release/README.md)。只闭环发布保留缺陷，不恢复旧策略已删包，不覆盖Leader存档/Cloud探索，不把a75游戏实玩冒9fd复测。
 
