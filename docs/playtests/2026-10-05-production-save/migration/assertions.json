@@ -1,0 +1,19 @@
+{
+  "raw_primary_exact": true,
+  "raw_backup_exact": true,
+  "seal_unchanged_all": true,
+  "download_current_exact": true,
+  "download_seal_exact": true,
+  "download_raw": {
+    "backup": {
+      "base64": "CiB7InZlcnNpb24iOjUsImhvbGlkYXlfZGF5IjoyLCJ1bmtub3duX2JhY2t1cCI6dHJ1ZX0g",
+      "status": "present"
+    },
+    "primary": {
+      "base64": "IHsgInZlcnNpb24iOjUsICJsb2NhbGUiOiJ6aC1DTiIsICJob2xpZGF5X2RheSI6MywgInVua25vd25fYmlnIjo5MDA3MTk5MjU0NzQwOTkzMTIzNDUsICJ1bmtub3duX25vdGUiOiIgcHJlc2VydmUgc3BhY2luZyAiIH0KICA=",
+      "status": "present"
+    }
+  },
+  "old_store_unchanged_after_continue": true,
+  "errors": []
+}

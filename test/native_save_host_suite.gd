@@ -11,6 +11,10 @@ class Broken extends RefCounted:
 	func commit(_d,_p,_t,_b):
 		writes += 1
 		return false
+class PromotionFailure extends Files:
+	func _rename(from: String, to: String) -> Error:
+		if from.ends_with(".tmp"): return ERR_CANT_CREATE
+		return super._rename(from,to)
 func _initialize(): call_deferred("run")
 func check(value, label):
 	assert(value,label)
@@ -201,6 +205,46 @@ func run():
 		check(JSON.parse_string(FileAccess.get_file_as_string(dp+".legacy-sources.json"))==sealed,"repair never rewrites evidence "+damage)
 		for path in [dp,db,dp+".tmp",dp+".legacy-sources.json"]:
 			if FileAccess.file_exists(path): DirAccess.remove_absolute(ProjectSettings.globalize_path(path))
+	for damaged_side: String in ["primary", "backup"]:
+		var fp=dir+"/failed-cleanup-"+damaged_side;var fb=fp+".bak"
+		var parent_raw=' {"version":4,"holiday_day":9,"custom":"untouched"} '
+		put(fp,parent_raw);put(fb,parent_raw)
+		put(fp if damaged_side=="primary" else fb,"bad json")
+		var failed=Host.new(fp,dir+"/missing-cleanup/temp",fb)
+		var permanent=FileAccess.get_file_as_string(fp+".legacy-sources.json")
+		check(failed.get_state()=="ready","sealed cleanup failure starts ready "+damaged_side)
+		var outcome=failed.commit_compat(failed.get_initial_snapshot())
+		check(outcome.status=="rejected" and outcome.ready and outcome.token==parent_raw.sha256_text(),"cleaned failed commit resolves exact parent "+damaged_side)
+		failed=Host.new(fp,fp+".tmp",fb)
+		check(failed.get_state()=="ready" and failed.get_initial_snapshot().holiday_day==9,"restart after cleanup failure remains recoverable "+damaged_side)
+		check(failed.commit_compat(failed.get_initial_snapshot()).status=="confirmed","retry new write after obstruction removed "+damaged_side)
+		check(FileAccess.get_file_as_string(fp+".legacy-sources.json")==permanent,"failure recovery preserves immutable evidence "+damaged_side)
+		for path in [fp,fb,fp+".tmp",fp+".legacy-sources.json"]:
+			if FileAccess.file_exists(path): DirAccess.remove_absolute(ProjectSettings.globalize_path(path))
+	for damaged_side: String in ["primary", "backup"]:
+		var rp=dir+"/rename-failure-"+damaged_side;var rb=rp+".bak"
+		var parent_raw=' {"version":3,"holiday_day":12} '
+		put(rp,parent_raw);put(rb,parent_raw)
+		put(rp if damaged_side=="primary" else rb,"bad json")
+		var rename_host=Host.new(rp,rp+".tmp",rb,PromotionFailure.new())
+		var evidence_before=FileAccess.get_file_as_string(rp+".legacy-sources.json")
+		var result=rename_host.commit_compat(rename_host.get_initial_snapshot())
+		check(result.status=="rejected" and result.ready and result.token==parent_raw.sha256_text(),"actual rotation then promotion failure resolves original parent "+damaged_side)
+		rename_host=Host.new(rp,rp+".tmp",rb)
+		check(rename_host.get_state()=="ready" and rename_host.get_initial_snapshot().holiday_day==12,"rotated parent recoverable across restart "+damaged_side)
+		check(rename_host.commit_compat(rename_host.get_initial_snapshot()).status=="confirmed","new retry after promotion obstruction removed "+damaged_side)
+		check(FileAccess.get_file_as_string(rp+".legacy-sources.json")==evidence_before,"rotation failure does not rewrite permanent evidence "+damaged_side)
+		for path in [rp,rb,rp+".tmp",rp+".legacy-sources.json"]:
+			if FileAccess.file_exists(path): DirAccess.remove_absolute(ProjectSettings.globalize_path(path))
+	var np=dir+"/no-substitution";var nb=np+".bak"
+	put(np,"bad json");put(nb,'{"version":4,"known":true}')
+	var guard=Host.new(np,np+".tmp",nb)
+	DirAccess.remove_absolute(ProjectSettings.globalize_path(np))
+	put(nb,'{"version":4,"substituted":true}')
+	guard=Host.new(np,np+".tmp",nb)
+	check(guard.get_state()=="blocked","missing corrupt copy does not permit good-source substitution")
+	for path in [np,nb,np+".legacy-sources.json"]:
+		if FileAccess.file_exists(path): DirAccess.remove_absolute(ProjectSettings.globalize_path(path))
 	var cannot_seal=dir+"/cannot-seal"
 	put(cannot_seal,'{"version":3,"unknown":true}')
 	DirAccess.make_dir_absolute(ProjectSettings.globalize_path(cannot_seal+".legacy-sources.json"))

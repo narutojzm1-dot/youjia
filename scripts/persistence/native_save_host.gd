@@ -80,7 +80,7 @@ func _read() -> Dictionary:
 		if recovered.data.has(SOURCE_KEY):
 			unsafe = unsafe or seal.is_empty() or recovered.data[SOURCE_KEY] != seal.get("sha256")
 		elif not seal.is_empty():
-			unsafe = unsafe or seal.sources != pair
+			unsafe = unsafe or not _matches_preserved_pair(pair, seal.sources)
 		if FileAccess.file_exists(_primary + ".legacy-sources.json") and seal.is_empty(): unsafe = true
 		return {"trusted":true,"writable":not unsafe,"token":str(recovered.text).sha256_text(),"data":projected,"raw":str(recovered.text)}
 	if pair.primary.status == "absent" and pair.backup.status == "absent":
@@ -300,3 +300,33 @@ func _clear_preserved_corruption() -> bool:
 		var path := _primary if label == "primary" else _backup
 		if DirAccess.remove_absolute(ProjectSettings.globalize_path(path)) != OK: return false
 	return true
+
+
+## A failed commit after removing an already-sealed unusable copy still has the
+## exact original good parent. Permit its rotation to backup, but never accept
+## replacement bytes or disappearance of the sole valid original source.
+func _matches_preserved_pair(current: Dictionary, original: Dictionary) -> bool:
+	if current == original: return true
+	var good_base64 := ""
+	var damaged := 0
+	var valid := 0
+	for label: String in ["primary", "backup"]:
+		if original[label].get("status") != "present": return false
+		var bytes := Marshalls.base64_to_raw(original[label].base64)
+		var corrupt := not _valid_utf8(bytes)
+		if not corrupt:
+			var parser := JSON.new()
+			corrupt = parser.parse(bytes.get_string_from_utf8()) != OK
+		if corrupt: damaged += 1
+		else:
+			valid += 1
+			good_base64 = original[label].base64
+	if damaged != 1 or valid != 1: return false
+	var absent := 0
+	var kept := 0
+	for label: String in ["primary", "backup"]:
+		if current[label].status == "absent": absent += 1
+		elif current[label].status == "present" and current[label].base64 == good_base64: kept += 1
+		else: return false
+	# SaveFiles may rotate the exact remaining parent to backup before promotion.
+	return absent == 1 and kept == 1
