@@ -1,0 +1,16 @@
+{
+  "scope": "real unmodified production Web input; no carry/player/timer/random mutation",
+  "browser": "Chromium 151.0.7922.173",
+  "page_errors": [],
+  "natural_input": "title click(640,368), pond click(651,503), wait3s then Space every700ms, screenshot; frame06 catch,07 successful duck toss without heart; album opened normally",
+  "pck_sha256": "562997ce77dac0f1a38c926ffbd2d7db50d76ab63580a65ac6d412c4171e7755",
+  "special_checks": 20,
+  "caveat": "attention texture preservation/rebuild verified in controlled production PhotoMoment test; natural album shows existing earned photos, not a new duck reward",
+  "daily": {
+    "tested_code_sha": "ec135774a5211047334f7ba26d9d4fd7c598520a",
+    "command": "GODOT=/tmp/youjia-h2-bridge-bin/Godot_v4.7.2-stable_linux.x86_64 bash tools/verify_daily_life.sh",
+    "exit_code": 0,
+    "scope": "complete final suite after old duck-heart expectations were corrected",
+    "previous_failures_retained_in_report": true
+  }
+}

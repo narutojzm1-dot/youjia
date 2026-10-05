@@ -1,0 +1,122 @@
+{
+  "width": 1280,
+  "height": 720,
+  "recipient": "duck_c",
+  "first": {
+    "carry": "",
+    "ducks": [
+      {
+        "ack_left": 0,
+        "click": [
+          665.335510253906,
+          484.191223144531
+        ],
+        "cooldown": 0,
+        "facing": -1,
+        "foot_error": 0,
+        "id": "duck_a",
+        "posed": false,
+        "posture": "idle",
+        "texture": "res://assets/holiday/characters/cast_v2/duck.png"
+      },
+      {
+        "ack_left": 0,
+        "click": [
+          753.637390136719,
+          508.901184082031
+        ],
+        "cooldown": 0,
+        "facing": -1,
+        "foot_error": 0,
+        "id": "duck_b",
+        "posed": false,
+        "posture": "idle",
+        "texture": "res://assets/holiday/characters/cast_v2/duck.png"
+      },
+      {
+        "ack_left": 2.01666666666667,
+        "click": [
+          639.673950195312,
+          498.808166503906
+        ],
+        "cooldown": 4.81666666666667,
+        "facing": -1,
+        "foot_error": 0,
+        "id": "duck_c",
+        "posed": false,
+        "posture": "attend",
+        "texture": "res://assets/holiday/characters/cast_v2/duck_attend.png"
+      }
+    ],
+    "fish_state": 0,
+    "heart": {},
+    "pond": [
+      695.144653320312,
+      465.93994140625
+    ],
+    "viewport": [
+      1280,
+      720
+    ]
+  },
+  "after_120ms": {
+    "carry": "",
+    "ducks": [
+      {
+        "ack_left": 0,
+        "click": [
+          664.114807128906,
+          484.579040527344
+        ],
+        "cooldown": 0,
+        "facing": -1,
+        "foot_error": 0,
+        "id": "duck_a",
+        "posed": false,
+        "posture": "idle",
+        "texture": "res://assets/holiday/characters/cast_v2/duck.png"
+      },
+      {
+        "ack_left": 0,
+        "click": [
+          753.637390136719,
+          508.911560058594
+        ],
+        "cooldown": 0,
+        "facing": -1,
+        "foot_error": 0,
+        "id": "duck_b",
+        "posed": false,
+        "posture": "idle",
+        "texture": "res://assets/holiday/characters/cast_v2/duck.png"
+      },
+      {
+        "ack_left": 1.8346,
+        "click": [
+          639.673950195312,
+          498.815795898438
+        ],
+        "cooldown": 4.6346,
+        "facing": -1,
+        "foot_error": 0,
+        "id": "duck_c",
+        "posed": false,
+        "posture": "attend",
+        "texture": "res://assets/holiday/characters/cast_v2/duck_attend.png"
+      }
+    ],
+    "fish_state": 0,
+    "heart": {},
+    "pond": [
+      695.144653320312,
+      465.93994140625
+    ],
+    "viewport": [
+      1280,
+      720
+    ]
+  },
+  "errors": [],
+  "browser": "151.0.7922.173",
+  "scope": "test-only readonly observation; production Main/YardWorld with natural pointer+keyboard; no timer/carry/random/position mutations"
+}

@@ -61,6 +61,8 @@ var _ack_cel := ""
 var _ack_left := 0.0
 # Transient, per-animal response spacing; repeated petting never extends a pose.
 var _pet_ack_cooldown := 0.0
+var _feed_ack_cooldown := 0.0
+var _feed_ack_origin := Vector2.ZERO
 var _posture_metadata: Dictionary = {}
 var _posture_id := "idle"
 var _idle_ground_anchor := Vector2(-1,-1)
@@ -199,6 +201,30 @@ func acknowledge_pet(observer_position: Vector2) -> void:
 	show_painted_ack(cel, 2.2)
 	# Leave a real interval for normal wandering even under continuous input.
 	_pet_ack_cooldown = 5.0
+
+
+# Acknowledges a successful toss by noticing the player, not a feeding mouth pose.
+func acknowledge_feed(observer_position: Vector2) -> bool:
+	if species != "duck" or posed or _feed_ack_cooldown > 0.0 or not _textures.has("attend"):
+		return false
+	if absf(observer_position.x - position.x) > 2.0:
+		facing = signf(observer_position.x - position.x)
+		_gait.face = facing
+		_gait._turning = false
+		_gait._next_face = facing
+		_gait.turn_width = 1.0
+		scale.x = absf(scale.x) * facing
+	_glance_timer = -5.0
+	_feed_ack_origin = position
+	show_painted_ack("attend", 2.2)
+	_feed_ack_cooldown = 5.0
+	return true
+
+
+func _exit_tree() -> void:
+	_ack_cel = ""
+	_ack_left = 0.0
+	_feed_ack_cooldown = 0.0
 
 
 func _painted_posture() -> String:
@@ -406,6 +432,11 @@ func tick_glance(delta: float, player_pos: Vector2) -> void:
 
 
 func tick(delta: float, world_size: Vector2) -> void:
+	_feed_ack_cooldown = maxf(0.0, _feed_ack_cooldown - delta)
+	if _ack_cel == "attend" and (posed or state == "lead" or _velocity.length() > 0.3 or not position.is_equal_approx(_feed_ack_origin)):
+		_ack_cel = ""
+		_ack_left = 0.0
+		_refresh_painted_posture()
 	_pet_ack_cooldown = maxf(0.0, _pet_ack_cooldown - delta)
 	_breath += delta
 	_lead_repath = maxf(0.0, _lead_repath-delta)
