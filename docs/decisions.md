@@ -52,6 +52,7 @@ CODEX-LEAD 向制作人汇报时以本表为准。状态只用「待看图 / 待
 
 | 条目 | 请看什么 | 截图或记录 | 构建 | Owner | 状态 |
 | --- | --- | --- | --- | --- | --- |
+| BUG350 短横屏手帐 | 照片、日期题词和正文是否清楚；短双页与竖屏历史照片 | [正式六视口/五照片原截图与记录](playtests/2026-10-05-album-landscape-release/README.md) | `game-bc8a048`（PR351已独审发布） | `CODEX-LEAD-ASSISTANT` | 待看图 |
 | REQ-005 晨午晚/阴云 | 晴天早晨薄云、正午暖白、傍晚杏粉、阴天灰紫是否自然可辨 | [Godot 实机](playtests/2026-10-04-REQ-005-godot-accept/README.md)；[合成样张](playtests/2026-10-03-REQ-005-user-accept/README.md) | `game-693b311` 起（Pages 可能已是更新 tip） | `CURSOR-CONTRIBUTOR-LOCAL` | 待看图 |
 | REQ-005 夜里云带 | 入夜后晴天云是否压暗偏冷，不再像正午暖白贴在夜空上 | [Godot sun-night](playtests/2026-10-04-REQ-005-godot-accept/sun-night.png)；[合成](playtests/2026-10-03-REQ-005-user-accept/sun-night.png)；[记录](playtests/2026-10-03-REQ-005-night-cloud.md) | `game-922be64`（PR #158；公网包已核对） | `CURSOR-CONTRIBUTOR-LOCAL` | 待看图 |
 | REQ-012 切片 C 安静抬头 | 站定约 6 秒镜头轻抬入云；走动立刻回落；无新提示、不写相册 | [Godot 抬头帧](playtests/2026-10-04-REQ-005-godot-accept/quiet-sky-look.png)；[近似样张](playtests/2026-10-03-REQ-012-quiet-sky-look/README.md)；[实现记录](playtests/2026-10-03-REQ-012-quiet-sky-look.md) | `game-6a20cdc` | `CURSOR-CONTRIBUTOR-LOCAL` | 待看图 |
@@ -1097,6 +1098,8 @@ Cloud322/342自主最终独审合入并发布，Leader补公开包/十模块源h
 实际公网 `game-55cb7ce` 正常游玩获得五张照片后，在 844×390 手帐观察到照片压住日期题词并越过纸页内容区；同布局代码仍在当前 main。PhotoMoment 实例默认 184×184 最小尺寸与缩小卡片冲突，低矮页面的题词另需可读布局。以 #350 登记单一 Owner，来源 #40 已由 Leader 原验收收口，独立新缺陷 #350 不倒退该原单。仅修改 `_album_page` / `_photo_card` 及专用回归/证据，不接管存档、探索或资源。独立测试的两次短点击未响应留在 #195，不借此修复音频或声称真实听验通过。
 
 PR #351 首完整 bec5bbf2c265a3a8a41934ea7f3c3d8e73cc4c21 独审 REQUEST_CHANGES：五样本通过不足覆盖英文长札记，新增短双页页码回归及原长文案越纸。返修仍限两个方法，按真实换行、继承字体完整行高/行距预算；扩大所有合法polaroid静态文案/题词变体及三导航互斥，45914项全过、相同原版3190失败。仅几何克隆，不宣称自然遇见所有事件。返修后稳定源码完整strict daily、普通候选Web同profile历史重开/六视口均过。保留7c标题、6856正式台账及33b105保存提示方法，父40已完成状态不改；195两次未响应和资源真实听验仍待后续。独立审核新最终完整SHA后作者合入，正式上线在原单分别记录Actions/Pages/manifest和实际13资源与旧照片，不用本地导出代替。见[证据](playtests/2026-10-05-post-save-public/README.md)。
+
+2026-10-05 本切片正式收口：PR351最终e8ec19faab9faefec9a8ea8510556c29d325b8eb独立APPROVE5993710899，合bc8a048b964cf39b80291b375f36f7362f0deedc。正确4.7.2完整54次门禁/45914项通过；CI另1次导出共55引擎启动，Actions37304525517及Pages37305137774成功。实际公开13资源+HTML/manifest共15文件完整bytes/GitTree一致，PCK25264116字节/SHA256e2c500ad7ca9fc4d8f593d888f6546e7b4faaa4e3ba9b93966b658efa1ea8c55；十模块哈希/版本相对导入一致。真关闭重开同原五照片profile，六视口/正常翻页共12记录，gen16与八历史字段不变、无pending/error，已看未加工截图。第一次额外manifest APIRequest IPv6网络错误中止不计通过，修正实际网络读取后完整重跑保留原失败。这里只关闭350独立排版缺陷，40早已完成不重开，195两次短输入根因/听验等未完继续。详细[正式证据](playtests/2026-10-05-album-landscape-release/README.md)供Leader和制作人看图，未代制作人认可。
 
 ### 2026-10-05 公开 Web 版探索往返复核（CURSOR-CLOUD，#153 / #305）
 
