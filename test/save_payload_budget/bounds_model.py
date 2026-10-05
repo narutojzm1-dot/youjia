@@ -25,7 +25,7 @@ P_CANDIDATE = 1048576   # #294 experimental later-save payload candidate (1 MiB)
 ARCHIVE_COUNTS = [0, 1, 8, 32]
 TINY_PAYLOAD = '{"version":5}'
 PAIRS = ['ascii_ascii', 'quote_quote', 'backslash_backslash', 'newline_newline', 'tab_tab', 'cjk_cjk',
-         'u2028_u2028', 'control_control', 'quote_ascii', 'ascii_control']
+         'u2028_u2028', 'control_control', 'quote_ascii', 'ascii_control', 'quote_control']
 EXPECTED = ['natural_full', 'dense_full'] + [f'{size}_{p}' for p in PAIRS for size in ('big', 'small')]
 
 LOAD = """async () => {

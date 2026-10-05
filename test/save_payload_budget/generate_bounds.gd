@@ -14,7 +14,7 @@ const UNITS := {"ascii": "a", "quote": "\"", "backslash": "\\", "newline": "\n",
 	"control": "\u0001", "cjk": "假", "u2028": "\u2028"}
 const PAIRS := [["ascii", "ascii"], ["quote", "quote"], ["backslash", "backslash"], ["newline", "newline"],
 	["tab", "tab"], ["cjk", "cjk"], ["u2028", "u2028"], ["control", "control"], ["quote", "ascii"],
-	["ascii", "control"]]
+	["ascii", "control"], ["quote", "control"]]
 
 var _out := ""
 var _host_snapshot: Object
