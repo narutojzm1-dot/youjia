@@ -1,0 +1,29 @@
+{
+  "url": "https://narutojzm1-dot.github.io/youjia/",
+  "build": "game-d242509",
+  "utc": "2026-10-05T09:51:15Z",
+  "viewport": [
+    1280,
+    720
+  ],
+  "events": [
+    {
+      "seconds": 1.43,
+      "stage": "first",
+      "label": "other"
+    },
+    {
+      "seconds": 6.69,
+      "stage": "first",
+      "label": "wait"
+    },
+    {
+      "seconds": 15.92,
+      "stage": "first",
+      "label": "reel"
+    }
+  ],
+  "first_reel_clicked_and_reopened": true,
+  "errors": [],
+  "scope": "normal production entry, natural canvas clicks guided by actual screenshot button labels; no state/seed/timer/position injection; final notice requires visual inspection"
+}
