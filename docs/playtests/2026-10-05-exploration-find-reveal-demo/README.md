@@ -66,17 +66,24 @@ Movie Maker 会按项目的窗口尺寸覆盖（1280×720）录制，不认 `--r
 | 圆石（占位）0.80 s | `v2-land-motion-04-t0.80.webp` | `v2-port-motion-04-t0.80.webp` |
 | 低动效 0.80 s | `v2-land-calm-03-t0.80.webp` | `v2-port-calm-03-t0.80.webp` |
 
-上面的旧帧和 `videos/` 下的视频都是改前版本，保留作对照，这次没有重录视频。
+上面的旧帧和 `videos/` 下不带 v2 的视频都是改前版本，保留作对照。
+
+v2 合入 main `089d453` 后重录了动态演示，背景已换成制作人清底的近郊图（PR #393 / #410）：
+
+- `videos/find-reveal-demo-v2-1280x720.mp4`（SHA256 `a3802e5bf034071094c5dcc3ad4ee3e679646901f17a9f51dee5b1bb98334b2e`）
+- `videos/find-reveal-demo-v2-390x844.mp4`（SHA256 `17dbfc42d40256938795d1a98986eb8dfe807c63a47467d3ab337eca6beaba0b`）
+
+路线、种子和时刻与 v1 相同：11.83 s 带上松果，21.47 s 带上落羽，全长 27.83 s。两条都是 H.264 + AAC 128k，短音电平未改，这次没有另录 +12 dB 对照。
 
 隔离测试新增 6 项（横竖屏各 3 项）：篮子名称的底板包住文字；底板不出屏；展示纸片的颜色是低饱和、偏暖、比原来深。
 
 ## 测试与回归
 
-`EXPLORATION SLICE PASS 191/191`（v2；改前 185/185）；`bash tools/verify_daily_life.sh` 全量通过（每次都用全新的 `XDG_DATA_HOME`）。
+`EXPLORATION SLICE PASS 227/227`（v2 合入 main 后；合入前 191/191，改前 185/185）；`bash tools/verify_daily_life.sh` 全量通过（每次都用全新的 `XDG_DATA_HOME`）。
 
 ## 边界
 
 - 在 GAME-PRODUCER 标记候选可进运行时、或用户看过后决定之前，Draft 不合入。
 - 圆石候选 PR #285 仍带宽柔影、未通过审查，没有接入。
-- 原画里画着的松果和落羽还没清底，路边会出现“画里一个、程序一个”的情况。
+- v1 帧和视频里，原画画着的松果和落羽还没清底，路边会出现“画里一个、程序一个”的情况。v2 视频用的是 main 上的清底图，这个问题已经没有了。
 - 不是 Web 实玩、手机真机或 #150 / #176 验收。
