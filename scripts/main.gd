@@ -293,6 +293,7 @@ func _ready() -> void:
 	_exploration.returned.connect(_on_exploration_returned)
 	_exploration.notice.connect(func(key: String) -> void:
 		if _screen == "game": _show_notice_key(key, _exploration.last_params))
+	_exploration.cleanup_resubmitted.connect(_on_exploration_cleanup_resubmitted)
 	I18n.locale_changed.connect(_on_locale_changed)
 	TuningStore.value_changed.connect(_on_tuning_value_changed)
 	resized.connect(_layout)
@@ -1240,6 +1241,17 @@ func _on_save_rejected(op_id: String, kind: String, code: String) -> void:
 			_save_exploration_coverage[pending_id].problems[op_id] = _save_problems[op_id].duplicate(true)
 	_save_exploration_scopes.erase(op_id)
 	_save_exploration_coverage.erase(op_id)
+
+
+## 探索收尾清理被拒后宿主重交了同一份冻结请求：只把这次清理此前的失败（原样快照）绑到新编号，
+## 新编号确认后按快照精确清掉，面板在队列空闲时照常收起；失败又变了就不清
+func _on_exploration_cleanup_resubmitted(failed_ops: Array, op_id: String) -> void:
+	var problems := {}
+	for failed_id in failed_ops:
+		if _save_problems.get(failed_id, {}).get("kind", "") == "exploration_cleanup":
+			problems[failed_id] = _save_problems[failed_id].duplicate(true)
+	if not problems.is_empty():
+		_save_retry_coverage[op_id] = {"problems": problems, "untracked_revision": -1}
 
 
 func _on_save_problem(op_id: String, kind: String, _code: String) -> void:

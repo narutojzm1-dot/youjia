@@ -1271,3 +1271,7 @@ Leader接收GROK原作者的daily/正式需求登记并补后置审查发现的l
 ### 2026-10-05 #399 近郊点院门回院（CURSOR-CLOUD，#153，EXP-PAINTED-PATH）
 
 用户实玩反馈经 GAME-PRODUCER 转达：近郊点右上院门回不了院；GAME-PM 在公开 `82f902a` 普通点击复现。Leader 与 PM 在原单确认修复 Owner 为 CURSOR-CLOUD，Cloud 接收并修复。原因是回院判定只认“在路尽头且方向键朝院里推”，点按走路没有方向。改为：点按落在院门一带（最近路面是路尽头，离尽头不超过 260 原画像素且不低于尽头 30 像素以上，实验值），沿路走到门口那一帧发一次回院请求；路尽头右下的石头、草地与门外路面只走过去，刚出门不弹回，方向键回院不变，回院保存链不改。自动检查覆盖鼠标/触屏真实输入、PM 两个公开点、带满 3 件回院各只收一次、真实 Main 回院；截帧见[证据](playtests/2026-10-05-near-path-tap-home/README.md)。不是公开 Web、真机或真人验收。
+
+### 2026-10-05 #305 探索收尾 cleanup 接线（CURSOR-CLOUD，#150 契约消费）
+
+CURSOR-CLOUD 按 #305 接收（5999078476）把 `ExplorationHost` 收尾清理改走 Leader 已冻结的 `request_exploration_cleanup`：登记 cleanup op；明确拒绝后只在本页会话仍停在同一收尾、存档仍是同一原记录与水位时重交同一冻结请求，最多 2 次；`PRECONDITION_CHANGED`、新旅程已开始都不重交；未知等待原 op 结论；隔离与契约外记录保留原直接写。Main 新增一个处理函数，把同一 cleanup 此前失败的原样快照绑定到重交编号，确认后精确清除，面板仍按队列空闲收起；不改共享 Host/Gate/Coordinator 与磁盘 schema。验证见[记录](playtests/2026-10-05-exploration-cleanup-wiring/README.md)；headless 检查，不是公开 Web 受控故障复验或 #150/#176 验收。
