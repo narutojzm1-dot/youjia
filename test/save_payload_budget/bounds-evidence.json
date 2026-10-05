@@ -1,0 +1,1083 @@
+{
+ "host_sha": "6e47c3acaea7ab7ecee0e09a1e3634dd8c4fb62e",
+ "repo_head": "1a3d4d384c85043f3a6b4be429a5e4e48d94d269",
+ "godot": "4.7.2-stable (official)",
+ "candidates": {
+  "S_per_source": 1572864,
+  "C_combined": 3670016,
+  "P_later_payload": 1048576
+ },
+ "samples": {
+  "natural_full": {
+   "classify": {
+    "primary": "v5",
+    "backup": "v5"
+   },
+   "base64_chars": {
+    "primary": 354844,
+    "backup": 354844
+   },
+   "snapshot_arg_chars": 709774,
+   "wrapper": {
+    "selected": "primary",
+    "bytes": 578267,
+    "chars": 578267,
+    "ratio_to_raw_sum": 1.0864
+   },
+   "files": {
+    "primary": {
+     "bytes": 266132,
+     "chars": 266132,
+     "sha256": "2128eef1fb0d159a3abe0590d8fe4d7544c62d1b0fd15e51c558261eea65bc10",
+     "godot_json_parse_ok": true
+    },
+    "backup": {
+     "bytes": 266132,
+     "chars": 266132,
+     "sha256": "5757bcb23cbc82ff82ecec375ff434f4b6c28b38bca93ca147243615d7482b2d",
+     "godot_json_parse_ok": true
+    }
+   },
+   "raw_sum_bytes": 532264,
+   "source": "15 real captures through SaveStore.set_album, then set_yard_progress",
+   "synthetic": false,
+   "method": "model (replica, offline)",
+   "within": {
+    "S_each": true,
+    "C_combined": true
+   }
+  },
+  "dense_full": {
+   "classify": {
+    "primary": "v5",
+    "backup": "v5"
+   },
+   "base64_chars": {
+    "primary": 1322120,
+    "backup": 1322120
+   },
+   "snapshot_arg_chars": 2644326,
+   "wrapper": {
+    "selected": "primary",
+    "bytes": 2155117,
+    "chars": 2155117,
+    "ratio_to_raw_sum": 1.0867
+   },
+   "files": {
+    "primary": {
+     "bytes": 991589,
+     "chars": 991589,
+     "sha256": "b66290fb77f60146dbeb23fc085e0b80c0800d277d38b8f565aa2f7de7af26b4",
+     "godot_json_parse_ok": true
+    },
+    "backup": {
+     "bytes": 991589,
+     "chars": 991589,
+     "sha256": "5c13673f393ff948d7a2c28c80af45aad2d5034f7e7f9f873939733366f406dc",
+     "godot_json_parse_ok": true
+    }
+   },
+   "raw_sum_bytes": 1983178,
+   "source": "15 sanitize-legal photos, each a real capture padded to MAX_ITEMS=64 with its own items; not game-produced",
+   "synthetic": true,
+   "method": "model (replica, offline)",
+   "within": {
+    "S_each": true,
+    "C_combined": true
+   }
+  },
+  "big_ascii_ascii": {
+   "classify": {
+    "primary": "v5",
+    "backup": "v5"
+   },
+   "base64_chars": {
+    "primary": 2097152,
+    "backup": 2097152
+   },
+   "snapshot_arg_chars": 4194390,
+   "wrapper": {
+    "selected": "primary",
+    "bytes": 3145969,
+    "chars": 3145969,
+    "ratio_to_raw_sum": 1.0001
+   },
+   "files": {
+    "primary": {
+     "bytes": 1572864,
+     "chars": 1572864,
+     "sha256": "fef886c1d13536fecdd64c6da852016ec876ed73354f0e69517503a11934ddac",
+     "godot_json_parse_ok": true
+    },
+    "backup": {
+     "bytes": 1572864,
+     "chars": 1572864,
+     "sha256": "fef886c1d13536fecdd64c6da852016ec876ed73354f0e69517503a11934ddac",
+     "godot_json_parse_ok": true
+    }
+   },
+   "raw_sum_bytes": 3145728,
+   "source": "SaveFiles.commit of defaults + x_stress_extension filled with ascii/ascii to exactly 1572864 bytes per file",
+   "synthetic": true,
+   "method": "model (replica, offline)",
+   "within": {
+    "S_each": true,
+    "C_combined": true
+   }
+  },
+  "big_quote_quote": {
+   "classify": {
+    "primary": "v5",
+    "backup": "v5"
+   },
+   "base64_chars": {
+    "primary": 2097152,
+    "backup": 2097152
+   },
+   "snapshot_arg_chars": 4194390,
+   "wrapper": {
+    "selected": "primary",
+    "bytes": 6291057,
+    "chars": 6291057,
+    "ratio_to_raw_sum": 1.9999
+   },
+   "files": {
+    "primary": {
+     "bytes": 1572864,
+     "chars": 1572864,
+     "sha256": "4b97610e772f370f5741512f2b25ffc9071c53e8c84bb30eea677a5590122283",
+     "godot_json_parse_ok": true
+    },
+    "backup": {
+     "bytes": 1572864,
+     "chars": 1572864,
+     "sha256": "4b97610e772f370f5741512f2b25ffc9071c53e8c84bb30eea677a5590122283",
+     "godot_json_parse_ok": true
+    }
+   },
+   "raw_sum_bytes": 3145728,
+   "source": "SaveFiles.commit of defaults + x_stress_extension filled with quote/quote to exactly 1572864 bytes per file",
+   "synthetic": true,
+   "method": "model (replica, offline)",
+   "within": {
+    "S_each": true,
+    "C_combined": false
+   }
+  },
+  "big_backslash_backslash": {
+   "classify": {
+    "primary": "v5",
+    "backup": "v5"
+   },
+   "base64_chars": {
+    "primary": 2097152,
+    "backup": 2097152
+   },
+   "snapshot_arg_chars": 4194390,
+   "wrapper": {
+    "selected": "primary",
+    "bytes": 6291057,
+    "chars": 6291057,
+    "ratio_to_raw_sum": 1.9999
+   },
+   "files": {
+    "primary": {
+     "bytes": 1572864,
+     "chars": 1572864,
+     "sha256": "6cc917ff70592c3d8ea15cd3fcb5bc9bd834a8dd16aec3ee9ba8aa06c4a81b0a",
+     "godot_json_parse_ok": true
+    },
+    "backup": {
+     "bytes": 1572864,
+     "chars": 1572864,
+     "sha256": "6cc917ff70592c3d8ea15cd3fcb5bc9bd834a8dd16aec3ee9ba8aa06c4a81b0a",
+     "godot_json_parse_ok": true
+    }
+   },
+   "raw_sum_bytes": 3145728,
+   "source": "SaveFiles.commit of defaults + x_stress_extension filled with backslash/backslash to exactly 1572864 bytes per file",
+   "synthetic": true,
+   "method": "model (replica, offline)",
+   "within": {
+    "S_each": true,
+    "C_combined": false
+   }
+  },
+  "big_newline_newline": {
+   "classify": {
+    "primary": "v5",
+    "backup": "v5"
+   },
+   "base64_chars": {
+    "primary": 2097152,
+    "backup": 2097152
+   },
+   "snapshot_arg_chars": 4194390,
+   "wrapper": {
+    "selected": "primary",
+    "bytes": 4718513,
+    "chars": 4718513,
+    "ratio_to_raw_sum": 1.5
+   },
+   "files": {
+    "primary": {
+     "bytes": 1572864,
+     "chars": 1572864,
+     "sha256": "f82224429dd73af699211be39d9d47341e522b1cc01065f59ce7c746d22b4954",
+     "godot_json_parse_ok": true
+    },
+    "backup": {
+     "bytes": 1572864,
+     "chars": 1572864,
+     "sha256": "f82224429dd73af699211be39d9d47341e522b1cc01065f59ce7c746d22b4954",
+     "godot_json_parse_ok": true
+    }
+   },
+   "raw_sum_bytes": 3145728,
+   "source": "SaveFiles.commit of defaults + x_stress_extension filled with newline/newline to exactly 1572864 bytes per file",
+   "synthetic": true,
+   "method": "model (replica, offline)",
+   "within": {
+    "S_each": true,
+    "C_combined": false
+   }
+  },
+  "big_tab_tab": {
+   "classify": {
+    "primary": "v5",
+    "backup": "v5"
+   },
+   "base64_chars": {
+    "primary": 2097152,
+    "backup": 2097152
+   },
+   "snapshot_arg_chars": 4194390,
+   "wrapper": {
+    "selected": "primary",
+    "bytes": 4718513,
+    "chars": 4718513,
+    "ratio_to_raw_sum": 1.5
+   },
+   "files": {
+    "primary": {
+     "bytes": 1572864,
+     "chars": 1572864,
+     "sha256": "f7292a4f94cf44e7da9e3968e48bcba21bcbd08c0770754a46d84e41cf1c3ffe",
+     "godot_json_parse_ok": true
+    },
+    "backup": {
+     "bytes": 1572864,
+     "chars": 1572864,
+     "sha256": "f7292a4f94cf44e7da9e3968e48bcba21bcbd08c0770754a46d84e41cf1c3ffe",
+     "godot_json_parse_ok": true
+    }
+   },
+   "raw_sum_bytes": 3145728,
+   "source": "SaveFiles.commit of defaults + x_stress_extension filled with tab/tab to exactly 1572864 bytes per file",
+   "synthetic": true,
+   "method": "model (replica, offline)",
+   "within": {
+    "S_each": true,
+    "C_combined": false
+   }
+  },
+  "big_cjk_cjk": {
+   "classify": {
+    "primary": "v5",
+    "backup": "v5"
+   },
+   "base64_chars": {
+    "primary": 2097152,
+    "backup": 2097152
+   },
+   "snapshot_arg_chars": 4194390,
+   "wrapper": {
+    "selected": "primary",
+    "bytes": 3145969,
+    "chars": 1049245,
+    "ratio_to_raw_sum": 1.0001
+   },
+   "files": {
+    "primary": {
+     "bytes": 1572864,
+     "chars": 524502,
+     "sha256": "60492be4e450b7678f097e229e6a4956032e74d81d18df13a5146d4081187495",
+     "godot_json_parse_ok": true
+    },
+    "backup": {
+     "bytes": 1572864,
+     "chars": 524502,
+     "sha256": "60492be4e450b7678f097e229e6a4956032e74d81d18df13a5146d4081187495",
+     "godot_json_parse_ok": true
+    }
+   },
+   "raw_sum_bytes": 3145728,
+   "source": "SaveFiles.commit of defaults + x_stress_extension filled with cjk/cjk to exactly 1572864 bytes per file",
+   "synthetic": true,
+   "method": "model (replica, offline)",
+   "within": {
+    "S_each": true,
+    "C_combined": true
+   }
+  },
+  "big_u2028_u2028": {
+   "classify": {
+    "primary": "v5",
+    "backup": "v5"
+   },
+   "base64_chars": {
+    "primary": 2097152,
+    "backup": 2097152
+   },
+   "snapshot_arg_chars": 4194390,
+   "wrapper": {
+    "selected": "primary",
+    "bytes": 3145969,
+    "chars": 1049245,
+    "ratio_to_raw_sum": 1.0001
+   },
+   "files": {
+    "primary": {
+     "bytes": 1572864,
+     "chars": 524502,
+     "sha256": "5cba2816517bc8361c08825b9981b01be1e71cc9a3b54320522ae037c88656c1",
+     "godot_json_parse_ok": true
+    },
+    "backup": {
+     "bytes": 1572864,
+     "chars": 524502,
+     "sha256": "5cba2816517bc8361c08825b9981b01be1e71cc9a3b54320522ae037c88656c1",
+     "godot_json_parse_ok": true
+    }
+   },
+   "raw_sum_bytes": 3145728,
+   "source": "SaveFiles.commit of defaults + x_stress_extension filled with u2028/u2028 to exactly 1572864 bytes per file",
+   "synthetic": true,
+   "method": "model (replica, offline)",
+   "within": {
+    "S_each": true,
+    "C_combined": true
+   }
+  },
+  "big_control_control": {
+   "classify": {
+    "primary": "corrupt",
+    "backup": "corrupt"
+   },
+   "base64_chars": {
+    "primary": 2097152,
+    "backup": 2097152
+   },
+   "snapshot_arg_chars": 4194390,
+   "wrapper": {
+    "error": "no readable v5 source"
+   },
+   "files": {
+    "primary": {
+     "bytes": 1572864,
+     "chars": 1572864,
+     "sha256": "82aafac80af11abe9c58e733d4a54ffdce0c164830cb0083f7c62a9d93ab9cf3",
+     "godot_json_parse_ok": true
+    },
+    "backup": {
+     "bytes": 1572864,
+     "chars": 1572864,
+     "sha256": "82aafac80af11abe9c58e733d4a54ffdce0c164830cb0083f7c62a9d93ab9cf3",
+     "godot_json_parse_ok": true
+    }
+   },
+   "raw_sum_bytes": 3145728,
+   "source": "SaveFiles.commit of defaults + x_stress_extension filled with control/control to exactly 1572864 bytes per file",
+   "synthetic": true,
+   "method": "model (replica, offline)",
+   "within": {
+    "S_each": true,
+    "C_combined": false
+   }
+  },
+  "big_quote_ascii": {
+   "classify": {
+    "primary": "v5",
+    "backup": "v5"
+   },
+   "base64_chars": {
+    "primary": 2097152,
+    "backup": 2097152
+   },
+   "snapshot_arg_chars": 4194390,
+   "wrapper": {
+    "selected": "primary",
+    "bytes": 4718513,
+    "chars": 4718513,
+    "ratio_to_raw_sum": 1.5
+   },
+   "files": {
+    "primary": {
+     "bytes": 1572864,
+     "chars": 1572864,
+     "sha256": "4b97610e772f370f5741512f2b25ffc9071c53e8c84bb30eea677a5590122283",
+     "godot_json_parse_ok": true
+    },
+    "backup": {
+     "bytes": 1572864,
+     "chars": 1572864,
+     "sha256": "fef886c1d13536fecdd64c6da852016ec876ed73354f0e69517503a11934ddac",
+     "godot_json_parse_ok": true
+    }
+   },
+   "raw_sum_bytes": 3145728,
+   "source": "SaveFiles.commit of defaults + x_stress_extension filled with quote/ascii to exactly 1572864 bytes per file",
+   "synthetic": true,
+   "method": "model (replica, offline)",
+   "within": {
+    "S_each": true,
+    "C_combined": false
+   }
+  },
+  "big_ascii_control": {
+   "classify": {
+    "primary": "v5",
+    "backup": "corrupt"
+   },
+   "base64_chars": {
+    "primary": 2097152,
+    "backup": 2097152
+   },
+   "snapshot_arg_chars": 4194390,
+   "wrapper": {
+    "selected": "primary",
+    "bytes": 11008694,
+    "chars": 11008694,
+    "ratio_to_raw_sum": 3.4996
+   },
+   "files": {
+    "primary": {
+     "bytes": 1572864,
+     "chars": 1572864,
+     "sha256": "fef886c1d13536fecdd64c6da852016ec876ed73354f0e69517503a11934ddac",
+     "godot_json_parse_ok": true
+    },
+    "backup": {
+     "bytes": 1572864,
+     "chars": 1572864,
+     "sha256": "82aafac80af11abe9c58e733d4a54ffdce0c164830cb0083f7c62a9d93ab9cf3",
+     "godot_json_parse_ok": true
+    }
+   },
+   "raw_sum_bytes": 3145728,
+   "source": "SaveFiles.commit of defaults + x_stress_extension filled with ascii/control to exactly 1572864 bytes per file",
+   "synthetic": true,
+   "method": "model (replica, offline)",
+   "within": {
+    "S_each": true,
+    "C_combined": false
+   }
+  }
+ },
+ "replica_validation": {
+  "ascii_ascii": {
+   "real_host": {
+    "selected": "primary",
+    "bytes": 10241
+   },
+   "replica": {
+    "selected": "primary",
+    "bytes": 10241,
+    "chars": 10241,
+    "ratio_to_raw_sum": 1.0241
+   },
+   "godot_snapshot_chars": 13422,
+   "replica_snapshot_chars": 13422,
+   "classify": {
+    "primary": "v5",
+    "backup": "v5"
+   }
+  },
+  "quote_quote": {
+   "real_host": {
+    "selected": "primary",
+    "bytes": 19601
+   },
+   "replica": {
+    "selected": "primary",
+    "bytes": 19601,
+    "chars": 19601,
+    "ratio_to_raw_sum": 1.9601
+   },
+   "godot_snapshot_chars": 13422,
+   "replica_snapshot_chars": 13422,
+   "classify": {
+    "primary": "v5",
+    "backup": "v5"
+   }
+  },
+  "backslash_backslash": {
+   "real_host": {
+    "selected": "primary",
+    "bytes": 19601
+   },
+   "replica": {
+    "selected": "primary",
+    "bytes": 19601,
+    "chars": 19601,
+    "ratio_to_raw_sum": 1.9601
+   },
+   "godot_snapshot_chars": 13422,
+   "replica_snapshot_chars": 13422,
+   "classify": {
+    "primary": "v5",
+    "backup": "v5"
+   }
+  },
+  "newline_newline": {
+   "real_host": {
+    "selected": "primary",
+    "bytes": 14921
+   },
+   "replica": {
+    "selected": "primary",
+    "bytes": 14921,
+    "chars": 14921,
+    "ratio_to_raw_sum": 1.4921
+   },
+   "godot_snapshot_chars": 13422,
+   "replica_snapshot_chars": 13422,
+   "classify": {
+    "primary": "v5",
+    "backup": "v5"
+   }
+  },
+  "tab_tab": {
+   "real_host": {
+    "selected": "primary",
+    "bytes": 14921
+   },
+   "replica": {
+    "selected": "primary",
+    "bytes": 14921,
+    "chars": 14921,
+    "ratio_to_raw_sum": 1.4921
+   },
+   "godot_snapshot_chars": 13422,
+   "replica_snapshot_chars": 13422,
+   "classify": {
+    "primary": "v5",
+    "backup": "v5"
+   }
+  },
+  "cjk_cjk": {
+   "real_host": {
+    "selected": "primary",
+    "bytes": 10241
+   },
+   "replica": {
+    "selected": "primary",
+    "bytes": 10241,
+    "chars": 4001,
+    "ratio_to_raw_sum": 1.0241
+   },
+   "godot_snapshot_chars": 13422,
+   "replica_snapshot_chars": 13422,
+   "classify": {
+    "primary": "v5",
+    "backup": "v5"
+   }
+  },
+  "u2028_u2028": {
+   "real_host": {
+    "selected": "primary",
+    "bytes": 10241
+   },
+   "replica": {
+    "selected": "primary",
+    "bytes": 10241,
+    "chars": 4001,
+    "ratio_to_raw_sum": 1.0241
+   },
+   "godot_snapshot_chars": 13422,
+   "replica_snapshot_chars": 13422,
+   "classify": {
+    "primary": "v5",
+    "backup": "v5"
+   }
+  },
+  "control_control": {
+   "real_host": {
+    "error": "Error: no readable v5 source"
+   },
+   "replica": {
+    "error": "no readable v5 source"
+   },
+   "godot_snapshot_chars": 13422,
+   "replica_snapshot_chars": 13422,
+   "classify": {
+    "primary": "corrupt",
+    "backup": "corrupt"
+   }
+  },
+  "quote_ascii": {
+   "real_host": {
+    "selected": "primary",
+    "bytes": 14921
+   },
+   "replica": {
+    "selected": "primary",
+    "bytes": 14921,
+    "chars": 14921,
+    "ratio_to_raw_sum": 1.4921
+   },
+   "godot_snapshot_chars": 13422,
+   "replica_snapshot_chars": 13422,
+   "classify": {
+    "primary": "v5",
+    "backup": "v5"
+   }
+  },
+  "ascii_control": {
+   "real_host": {
+    "selected": "primary",
+    "bytes": 33646
+   },
+   "replica": {
+    "selected": "primary",
+    "bytes": 33646,
+    "chars": 33646,
+    "ratio_to_raw_sum": 3.3646
+   },
+   "godot_snapshot_chars": 13422,
+   "replica_snapshot_chars": 13422,
+   "classify": {
+    "primary": "v5",
+    "backup": "corrupt"
+   }
+  }
+ },
+ "archive_model_check": {
+  "seed": {
+   "init": "clean",
+   "payload_bytes": 19601,
+   "paused": "intent_prepared_complete"
+  },
+  "reopened": {
+   "opened": "restored_parent_intent_rejected",
+   "paused": "intent_prepared_complete"
+  },
+  "present": {
+   "current": true,
+   "intent": true,
+   "archive": true
+  },
+  "archive_len": 1,
+  "records": {
+   "current": {
+    "real": {
+     "json": 38903,
+     "strings": 19950,
+     "v8": 19950
+    },
+    "model": {
+     "json": 38903,
+     "strings": 19950,
+     "v8": 19950
+    },
+    "real_keys": "commit_id,envelope_sha256,generation,parent_commit_id,payload_bytes,payload_sha256,request_id,schema,store_id",
+    "model_keys": "commit_id,envelope_sha256,generation,parent_commit_id,payload_bytes,payload_sha256,request_id,schema,store_id"
+   },
+   "intent": {
+    "real": {
+     "json": 39446,
+     "strings": 20415,
+     "v8": 20415
+    },
+    "model": {
+     "json": 39446,
+     "strings": 20415,
+     "v8": 20415
+    },
+    "real_keys": "candidate,parent,request_id,state",
+    "model_keys": "candidate,parent,request_id,state"
+   },
+   "archive0": {
+    "real": {
+     "json": 39445,
+     "strings": 20414,
+     "v8": 20414
+    },
+    "model": {
+     "json": 39445,
+     "strings": 20414,
+     "v8": 20414
+    },
+    "real_keys": "candidate,parent,request_id,state",
+    "model_keys": "candidate,parent,request_id,state"
+   },
+   "archive_has_parent_and_candidate": true
+  }
+ },
+ "archive_scenarios": {
+  "natural_full": {
+   "root_payload_bytes": 578267,
+   "candidate_payload_bytes": 266132,
+   "record": {
+    "current": {
+     "json": 647131,
+     "strings": 578616,
+     "v8": 578616
+    },
+    "intent": {
+     "json": 936715,
+     "strings": 845199,
+     "v8": 845199
+    },
+    "archive_entry": {
+     "json": 936715,
+     "strings": 845199,
+     "v8": 845199
+    }
+   },
+   "totals": {
+    "0": {
+     "json": 1583846,
+     "strings": 1423815,
+     "v8": 1423815
+    },
+    "1": {
+     "json": 2520561,
+     "strings": 2269014,
+     "v8": 2269014
+    },
+    "8": {
+     "json": 9077566,
+     "strings": 8185407,
+     "v8": 8185407
+    },
+    "32": {
+     "json": 31558726,
+     "strings": 28470183,
+     "v8": 28470183
+    }
+   },
+   "method": "model (replica, offline; never written to IndexedDB)"
+  },
+  "dense_full": {
+   "root_payload_bytes": 2155117,
+   "candidate_payload_bytes": 991589,
+   "record": {
+    "current": {
+     "json": 2414029,
+     "strings": 2155466,
+     "v8": 2155466
+    },
+    "intent": {
+     "json": 3492038,
+     "strings": 3147506,
+     "v8": 3147506
+    },
+    "archive_entry": {
+     "json": 3492038,
+     "strings": 3147506,
+     "v8": 3147506
+    }
+   },
+   "totals": {
+    "0": {
+     "json": 5906067,
+     "strings": 5302972,
+     "v8": 5302972
+    },
+    "1": {
+     "json": 9398105,
+     "strings": 8450478,
+     "v8": 8450478
+    },
+    "8": {
+     "json": 33842371,
+     "strings": 30483020,
+     "v8": 30483020
+    },
+    "32": {
+     "json": 117651283,
+     "strings": 106023164,
+     "v8": 106023164
+    }
+   },
+   "method": "model (replica, offline; never written to IndexedDB)"
+  },
+  "candidate_ascii_1_5MiB": {
+   "root_payload_bytes": 3145969,
+   "candidate_payload_bytes": 1572864,
+   "record": {
+    "current": {
+     "json": 3146551,
+     "strings": 3146318,
+     "v8": 3146318
+    },
+    "intent": {
+     "json": 4719986,
+     "strings": 4719633,
+     "v8": 4719633
+    },
+    "archive_entry": {
+     "json": 4719986,
+     "strings": 4719633,
+     "v8": 4719633
+    }
+   },
+   "totals": {
+    "0": {
+     "json": 7866537,
+     "strings": 7865951,
+     "v8": 7865951
+    },
+    "1": {
+     "json": 12586523,
+     "strings": 12585584,
+     "v8": 12585584
+    },
+    "8": {
+     "json": 45626425,
+     "strings": 45623015,
+     "v8": 45623015
+    },
+    "32": {
+     "json": 158906089,
+     "strings": 158894207,
+     "v8": 158894207
+    }
+   },
+   "method": "model (replica, offline; never written to IndexedDB)"
+  },
+  "candidate_cjk_1_5MiB": {
+   "root_payload_bytes": 3145969,
+   "candidate_payload_bytes": 1572864,
+   "record": {
+    "current": {
+     "json": 3146551,
+     "strings": 3146318,
+     "v8": 2098839
+    },
+    "intent": {
+     "json": 4719986,
+     "strings": 4719633,
+     "v8": 3148294
+    },
+    "archive_entry": {
+     "json": 4719986,
+     "strings": 4719633,
+     "v8": 3148294
+    }
+   },
+   "totals": {
+    "0": {
+     "json": 7866537,
+     "strings": 7865951,
+     "v8": 5247133
+    },
+    "1": {
+     "json": 12586523,
+     "strings": 12585584,
+     "v8": 8395427
+    },
+    "8": {
+     "json": 45626425,
+     "strings": 45623015,
+     "v8": 30433485
+    },
+    "32": {
+     "json": 158906089,
+     "strings": 158894207,
+     "v8": 105992541
+    }
+   },
+   "method": "model (replica, offline; never written to IndexedDB)"
+  }
+ },
+ "checks": [
+  {
+   "id": "generator_errors_empty",
+   "status": "PASS",
+   "detail": ""
+  },
+  {
+   "id": "sample_set_complete",
+   "status": "PASS",
+   "detail": "22/22"
+  },
+  {
+   "id": "replica_matches_host:ascii_ascii",
+   "status": "PASS",
+   "detail": "host {'selected': 'primary', 'bytes': 10241} replica {'selected': 'primary', 'bytes': 10241, 'chars': 10241, 'ratio_to_raw_sum': 1.0241}"
+  },
+  {
+   "id": "snapshot_arg_matches_godot:ascii_ascii",
+   "status": "PASS",
+   "detail": "13422 vs 13422"
+  },
+  {
+   "id": "replica_matches_host:quote_quote",
+   "status": "PASS",
+   "detail": "host {'selected': 'primary', 'bytes': 19601} replica {'selected': 'primary', 'bytes': 19601, 'chars': 19601, 'ratio_to_raw_sum': 1.9601}"
+  },
+  {
+   "id": "snapshot_arg_matches_godot:quote_quote",
+   "status": "PASS",
+   "detail": "13422 vs 13422"
+  },
+  {
+   "id": "replica_matches_host:backslash_backslash",
+   "status": "PASS",
+   "detail": "host {'selected': 'primary', 'bytes': 19601} replica {'selected': 'primary', 'bytes': 19601, 'chars': 19601, 'ratio_to_raw_sum': 1.9601}"
+  },
+  {
+   "id": "snapshot_arg_matches_godot:backslash_backslash",
+   "status": "PASS",
+   "detail": "13422 vs 13422"
+  },
+  {
+   "id": "replica_matches_host:newline_newline",
+   "status": "PASS",
+   "detail": "host {'selected': 'primary', 'bytes': 14921} replica {'selected': 'primary', 'bytes': 14921, 'chars': 14921, 'ratio_to_raw_sum': 1.4921}"
+  },
+  {
+   "id": "snapshot_arg_matches_godot:newline_newline",
+   "status": "PASS",
+   "detail": "13422 vs 13422"
+  },
+  {
+   "id": "replica_matches_host:tab_tab",
+   "status": "PASS",
+   "detail": "host {'selected': 'primary', 'bytes': 14921} replica {'selected': 'primary', 'bytes': 14921, 'chars': 14921, 'ratio_to_raw_sum': 1.4921}"
+  },
+  {
+   "id": "snapshot_arg_matches_godot:tab_tab",
+   "status": "PASS",
+   "detail": "13422 vs 13422"
+  },
+  {
+   "id": "replica_matches_host:cjk_cjk",
+   "status": "PASS",
+   "detail": "host {'selected': 'primary', 'bytes': 10241} replica {'selected': 'primary', 'bytes': 10241, 'chars': 4001, 'ratio_to_raw_sum': 1.0241}"
+  },
+  {
+   "id": "snapshot_arg_matches_godot:cjk_cjk",
+   "status": "PASS",
+   "detail": "13422 vs 13422"
+  },
+  {
+   "id": "replica_matches_host:u2028_u2028",
+   "status": "PASS",
+   "detail": "host {'selected': 'primary', 'bytes': 10241} replica {'selected': 'primary', 'bytes': 10241, 'chars': 4001, 'ratio_to_raw_sum': 1.0241}"
+  },
+  {
+   "id": "snapshot_arg_matches_godot:u2028_u2028",
+   "status": "PASS",
+   "detail": "13422 vs 13422"
+  },
+  {
+   "id": "replica_matches_host:control_control",
+   "status": "PASS",
+   "detail": "host {'error': 'Error: no readable v5 source'} replica {'error': 'no readable v5 source'}"
+  },
+  {
+   "id": "snapshot_arg_matches_godot:control_control",
+   "status": "PASS",
+   "detail": "13422 vs 13422"
+  },
+  {
+   "id": "replica_matches_host:quote_ascii",
+   "status": "PASS",
+   "detail": "host {'selected': 'primary', 'bytes': 14921} replica {'selected': 'primary', 'bytes': 14921, 'chars': 14921, 'ratio_to_raw_sum': 1.4921}"
+  },
+  {
+   "id": "snapshot_arg_matches_godot:quote_ascii",
+   "status": "PASS",
+   "detail": "13422 vs 13422"
+  },
+  {
+   "id": "replica_matches_host:ascii_control",
+   "status": "PASS",
+   "detail": "host {'selected': 'primary', 'bytes': 33646} replica {'selected': 'primary', 'bytes': 33646, 'chars': 33646, 'ratio_to_raw_sum': 3.3646}"
+  },
+  {
+   "id": "snapshot_arg_matches_godot:ascii_control",
+   "status": "PASS",
+   "detail": "13422 vs 13422"
+  },
+  {
+   "id": "dense_album_sanitize_legal",
+   "status": "PASS",
+   "detail": "15 photos, items [64]"
+  },
+  {
+   "id": "natural_full_matches_287",
+   "status": "PASS",
+   "detail": "266132/266132"
+  },
+  {
+   "id": "real_import_matches_replica",
+   "status": "PASS",
+   "detail": "real current payload 19601 B, replica 19601 B"
+  },
+  {
+   "id": "real_store_has_current_intent_archive",
+   "status": "PASS",
+   "detail": "{\"current\": true, \"intent\": true, \"archive\": true}"
+  },
+  {
+   "id": "archive_entry_carries_parent_and_candidate",
+   "status": "PASS",
+   "detail": ""
+  },
+  {
+   "id": "archive_model_matches_real:current",
+   "status": "PASS",
+   "detail": "real {'json': 38903, 'strings': 19950, 'v8': 19950} model {'json': 38903, 'strings': 19950, 'v8': 19950}"
+  },
+  {
+   "id": "archive_model_matches_real:intent",
+   "status": "PASS",
+   "detail": "real {'json': 39446, 'strings': 20415, 'v8': 20415} model {'json': 39446, 'strings': 20415, 'v8': 20415}"
+  },
+  {
+   "id": "archive_model_matches_real:archive0",
+   "status": "PASS",
+   "detail": "real {'json': 39445, 'strings': 20414, 'v8': 20414} model {'json': 39445, 'strings': 20414, 'v8': 20414}"
+  },
+  {
+   "id": "head_arg_formula_matches_observed",
+   "status": "PASS",
+   "detail": "4194390 vs 4194390"
+  }
+ ],
+ "browser": "148.0.7778.96",
+ "counterexamples_S_ok_C_exceeded": [
+  "big_ascii_control",
+  "big_backslash_backslash",
+  "big_newline_newline",
+  "big_quote_ascii",
+  "big_quote_quote",
+  "big_tab_tab"
+ ],
+ "wrapper_ratio_by_pair": {
+  "big_ascii_ascii": 1.0001,
+  "big_quote_quote": 1.9999,
+  "big_backslash_backslash": 1.9999,
+  "big_newline_newline": 1.5,
+  "big_tab_tab": 1.5,
+  "big_cjk_cjk": 1.0001,
+  "big_u2028_u2028": 1.0001,
+  "big_control_control": null,
+  "big_quote_ascii": 1.5,
+  "big_ascii_control": 3.4996
+ },
+ "derived": {
+  "H_head_arg_chars_for_S": 4194390,
+  "snapshot_json_overhead_chars": 86,
+  "max_observed_snapshot_arg_chars_at_S": 4194390
+ },
+ "summary": {
+  "checks": 31,
+  "failed": 0,
+  "failed_ids": []
+ }
+}

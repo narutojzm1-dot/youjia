@@ -95,14 +95,96 @@ Host 导入 payload 里存的是原文：每个被接受的样本都断言内嵌
 1. 拆成四个独立的字节上限，并相互推导：(a) 旧档单份原文读取上限，Godot `source_snapshot.gd` 与 `source_decode` 共用；(b) 合并导入封装上限，即 `legacy_v5` 与导入时的 `envelope`；(c) 后续正常存档 payload 上限，即 `prepare`/`envelope`，取决于 Godot 提交的格式；(d) head 适配器参数上限，按 (a) 推导为 `2 × ceil(a/3) × 4 + 余量`。现在四者都写死 65536 或由其推导，生产不可直接沿用。
 2. 起点建议：(a) 1.5 MiB（1,572,864 B），(b) 3.5 MiB（3,670,016 B），(c) 至少 1 MiB（紧凑）或与 (a) 相同（若沿用两空格缩进），(d) 约 4.2M 字符。依据：
    - 当前自然满档单份 266 KB、合并 578 KB，余量分别约 5.9× 与 6.3×；
-   - 按密集样本线性外推，15 张都塞满 64 条目的单份约 1.06 MB、合并约 2.30 MB。这是外推值，没有实测。1 MiB 单份上限会差约 1%，因此不建议用 1 MiB；
+   - 按密集样本线性外推，15 张都塞满 64 条目的单份约 1.06 MB、合并约 2.30 MB。这是外推值；#294 已改为实测：单份 991,589 B、合并 2,155,117 B，见下文。在这组合成相册上 1 MiB 单份上限不会被超出，但余量只有约 5.7%；
    - 每新增一条拍立得规则，合并封装增加约 37.5–40.9 KB，这是自然序列逐张实测的值。
 3. 超限必须显式阻止，并让玩家可见，绝不删照片或截断未知字段来凑预算。冻结前应在目标低端移动浏览器上，按所选上限实测 IndexedDB 写入/回读耗时与内存。`store.mjs` 每次事务都会对完整 current/intent/archive 做 `JSON.stringify` 比较，MB 级下的开销本次没有测量。
 
 ## 剩余不确定项
 
 - 照片体积依赖画面：本次用固定摆位，每张 15–17 个条目，上限是 64。真实游玩中同框动物更多时，单张会变大；`stress_photomoment_dense_single` 只是 sanitize 合法的上界之一，并非严格证明的最大值。
-- 将来的规则、字段、`archive`（最多 32 条，每条含 parent+candidate 两份完整封套）都会放大 IndexedDB 中的实际占用。本次只量了 payload，没有量 archive 满载后的总量。
+- 将来的规则、字段、`archive`（最多 32 条，每条含 parent+candidate 两份完整封套）都会放大 IndexedDB 中的实际占用。#287 只量了 payload；archive 放大的模型与实测核对见下文 #294 一节。
 - 两空格缩进格式与浮点写法取决于 Godot 4.7.2 的 `JSON.stringify`，换引擎版本需要复测。
 - 原生读取只在 Linux headless 下验证。Web 导出中 `user://`（IDBFS）上 `source_snapshot.gd` 的表现本次未测。
 - `navigator.storage.estimate()` 在本 headless profile 中 quota 约 10 GiB，且每次读数都有抖动，只是观察值，不是配额保证。真实 `QuotaExceededError`、物理断电和正式迁移均**未验证**，本文也不作此声明。
+
+## #294 补充：转义二次封装、密集相册实测与 archive 放大
+
+基线 main `7649912`，证据 `test/save_payload_budget/bounds-evidence.json`（`repo_head` `1a3d4d3…`，31/31 PASS），复跑用 `bash test/save_payload_budget/run_bounds.sh`。上文的 #287 样本没有变化：抽出公共捕获代码后重跑，所有样本 SHA 和检查结论逐项相同。
+
+**方法分三类，下文逐项注明。**
+- **真实执行**：在 64 KiB 内的小样本上，直接调用 Host 6e47c3a 的模块。
+- **模型**：`host_replica.mjs` 复刻 Host 的 `classify`、`prepareLegacyV5` 合并公式、`source_snapshot` 参数格式，以及 `envelope`/`intent`/archive 结构，并去掉夹具上限。候选体积的样本只在浏览器内存里离线计算，从未交给真实 Host，也从未写入 IndexedDB，所以**不代表通过了当前 Host**。
+- **外推**：由公式推出、没有直接测量的数字。
+
+模型可信度先在真实 Host 上逐字节核对：
+- 10 组小样本（每份 5000 B）的合并 payload 字节数、`selected` 字段和拒绝原因，与真实 `prepareLegacyV5` 完全一致；
+- 复刻的参数长度与 Godot 真实 `capture()` 的 JSON 长度完全一致；
+- 一次真实 `initializeLegacy`，加上真实的“屏障中止 + 重开”，在测试库里形成 current、prepared intent 和 1 条 archive，每条记录的 JSON 字节数、字符串字节数和键集合都与模型相同；
+- archive 条目确实同时含 `parent` 与 `candidate` 两份完整封套，其 `parent` 就是当时的 current。
+
+### 1. 15×64 合法合成相册（实测）
+
+真实 `SaveStore.set_album` 逐张写入 15 张照片。每张都是真实捕获，再用自身条目补到 `MAX_ITEMS=64`；之后执行与 #287 稳态相同的后续存档。这是合成样本，非自然游玩产物。`SaveDataCodec.project` 保留了全部 15 张、每张 64 个条目，即 sanitize 合法。
+
+| 样本 | 主/备字节 | base64（单份） | head 参数字符 | 合并封装 | 合并/原文和 | 主/备 SHA-256 前缀 |
+| --- | --- | --- | --- | --- | --- | --- |
+| `natural_full`（自然，对照 #287） | 266,132 / 266,132 | 354,844 | 709,774 | 578,267 | 1.0864 | `2128eef1fb0d159a` / `5757bcb23cbc82ff` |
+| `dense_full`（合成） | 991,589 / 991,589 | 1,322,120 | 2,644,326 | 2,155,117 | 1.0867 | `b66290fb77f60146` / `5c13673f393ff948` |
+
+### 2. 转义类别与“单份内、合并外”的合法反例（模型）
+
+每份旧档都由生产 `SaveFiles.commit` 写成恰好 S = 1,572,864 B（1.5 MiB）：以 `defaults()` 为底，加一个未知扩展字段，字段内容只用某一类字符填满。
+
+Godot 对各类字符的写法：
+- `"`、`\`、换行、制表符写成 2 字节转义；
+- CJK 和 U+2028 按原样写成 3 字节 UTF-8；
+- **U+0001 这类控制字符按原样写成 1 字节，不转义。**这样的文件 Godot 自己能读回（`godot_json_parse_ok=true`），但不是严格 JSON：浏览器 `JSON.parse` 会拒绝，所以 Host 把它归为 `corrupt`。
+
+| 样本（主/备填充） | Host 分类 | 合并封装 | 合并/原文和 | ≤ 3.5 MiB |
+| --- | --- | --- | --- | --- |
+| ascii/ascii | v5/v5 | 3,145,969 | 1.0001 | 是 |
+| cjk/cjk、u2028/u2028 | v5/v5 | 3,145,969 | 1.0001 | 是 |
+| newline/newline、tab/tab | v5/v5 | 4,718,513 | 1.5 | **否** |
+| quote/ascii | v5/v5 | 4,718,513 | 1.5 | **否** |
+| quote/quote、backslash/backslash | v5/v5 | 6,291,057 | 2.0 | **否** |
+| ascii/control（v5 主档 + 可解码但 corrupt 的备档） | v5/corrupt | 11,008,694 | 3.5 | **否** |
+| control/control | corrupt/corrupt | 拒绝：no readable v5 source | — | — |
+
+- 6 组样本每份都 ≤ 1.5 MiB，合并却超过 3.5 MiB，且都是 Host 接受的合法输入，其中 5 组两份都是合法 v5。所以**单份上限不能保证合并通过**，合并上限必须作为独立的拒绝点。
+- 每个字符进入合并封装后的放大倍数：ASCII、CJK、U+2028 为 1×；换行、制表符为 1.5×（`\n` 由 2 字节变 3 字节）；引号、反斜杠为 2×（由 2 字节变 4 字节）；原样控制字符为 6×（`\u0001`）。因此两份合法 v5 的最坏合并约为 2·2S；v5 主档配控制字符备档约为 S + 6S = 7S。再加约 241 B 的固定包装（ASCII 对实测为 3,145,969 − 2S）。
+- 新发现（兼容性）：Godot 能读、但 Host 判为 corrupt 的控制字符存档，如果主备都是这种情况，Host 会拒绝导入。现有生产字段没有自由文本，所以自然游玩到不了，但未来引入玩家输入文本时需要处理。
+- 所有候选尺寸样本的 head 参数都是 4,194,390 字符，与推导式 `8·ceil(S/3) + 86` 一致（检查 `head_arg_formula_matches_observed`）。
+
+### 3. current + intent + archive 的实际序列化字节（模型，已与真实记录核对）
+
+每条记录给三个口径：字符串 UTF-8 字节、`JSON.stringify` 字节（`store.mjs` 的 `same()` 比较时会生成这个大小的临时字符串），以及 V8 结构化克隆的字符串估算（全部字符 ≤ U+00FF 时每字符 1 字节，否则每字符 2 字节）。三者都**不是** IndexedDB 磁盘占用、RAM 峰值或配额保证。
+
+模型按 Host 结构计算：
+- current = 根封套（root）；
+- intent = {parent: root, candidate}；
+- 每条 archive 都是一份 `rejected` intent。
+
+最坏情况是所有被拒的 intent 都发生在 current 仍是导入根的时候，此时每条 archive 都再带一整份 root。
+
+| 场景（根 payload / 候选 payload） | 单条记录：current / intent / archive（字符串字节） | 总计，archive=0 | archive=1 | archive=8 | archive=32 |
+| --- | --- | --- | --- | --- | --- |
+| 自然满档导入（578,267 / 266,132） | 578,616 / 845,199 / 845,199 | 1,423,815 | 2,269,014 | 8,185,407 | 28,470,183 |
+| 15×64 合成相册（2,155,117 / 991,589） | 2,155,466 / 3,147,506 / 3,147,506 | 5,302,972 | 8,450,478 | 30,483,020 | 106,023,164 |
+| 1.5 MiB ASCII 对（3,145,969 / 1,572,864） | 3,146,318 / 4,719,633 / 4,719,633 | 7,865,951 | 12,585,584 | 45,623,015 | 158,894,207 |
+| 1.5 MiB CJK 对（同上） | 同上；V8 估算 2,098,839 / 3,148,294 / 3,148,294 | 7,865,951（V8 5,247,133） | 12,585,584 | 45,623,015 | 158,894,207（V8 105,992,541） |
+
+自然满档时，`JSON.stringify` 口径比字符串口径大约 11%（payload 里的引号被再转义一次），archive=32 时为 31,558,726 B；合成相册为 117,651,283 B。完整数字见证据文件。**payload 上限不等于总空间**：总量约为 (N+2)·root + (N+1)·candidate，其中 N 是 archive 条数。
+
+### 4. 四层预算的独立拒绝点与推导式
+
+| 层 | 拒绝点（Host 6e47c3a） | 推导式 | 1.5 MiB 候选下的值 | 依据 |
+| --- | --- | --- | --- | --- |
+| (a) 单份原文 S | `source_snapshot.gd` 先比 `get_length() > S`；`source_decode` 比 base64 长度 > `4·ceil(S/3)`，解码后 > S；`legacy_v5 source()` 按字符或字节 > S | — | 1,572,864 B | 64 KiB 下真实执行（#287）；候选值属模型 |
+| (d) head 参数 H | `head.html` 参数长度 > H | `8·ceil(S/3) + 86` | 4,194,390 字符 | 64 KiB 下真实执行；公式与候选观察值一致 |
+| (b) 合并导入 C | `prepareLegacyV5` 合并字节 > C，`store.initialize` 的 `envelope` 再检查一次 | 要保证所有通过 (a) 的输入都能导入：两份合法 v5 时 C ≥ 4S + 241，含控制字符的 corrupt 副本时 C ≥ 7S + 241（S=1.5 MiB 时约 6.0 / 10.5 MiB）；否则必须把 C 当作独立拒绝点处理 | 3.5 MiB 下已有 6 个反例 | 小样本真实执行与模型逐字节核对；候选尺寸属模型 |
+| (c) 后续存档 P | `prepare`→`envelope` 的 payload > P | 存储总量 ≈ (N+2)·root + (N+1)·P，root ≤ C，N ≤ 32 | C=3.5 MiB、P=1 MiB、N=32 时约 152 MiB（外推） | 结构由真实记录核对；总量属模型或外推 |
+
+对 Leader 的补充建议（仍不冻结）：
+- 合并上限要么按 4S（只接受合法 v5 时）到 7S 来定，要么明确说明单份通过不代表合并通过，并单独给出可见的拒绝。
+- archive 的保留条数与“parent 是否重复携带整份 root”，对总空间的影响远大于单份上限。建议与 32 条上限一起重新评估，例如 archive 只保留 candidate 和 parent 的引用。这属于 Host 设计，由 CODEX-LEAD 决定。
+- 低端机上的耗时与内存、真实配额异常、IDB 磁盘压缩（LevelDB 等）仍未覆盖。
