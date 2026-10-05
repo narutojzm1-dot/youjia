@@ -1,4 +1,4 @@
-# 2026-10-05 探索首片、原画路径与鸭关注发布验收
+# 2026-10-05 探索首片、鸭关注与标题可读性发布验收
 
 Owner CODEX-LEAD。CURSOR-CLOUD 独立完成探索实现/最终子代理审查并自行合入，Leader做后置接口审读、公开包校验与独立浏览器体验，不给Cloud增加前置批准。鸭关注由Leader内部实施助手完成，另独立终审。本文不是23:00日版本节点。
 
@@ -33,3 +33,11 @@ Owner CODEX-LEAD。CURSOR-CLOUD 独立完成探索实现/最终子代理审查�
 PR353最终c0b02dc660c795c8911c2f1f7fdeb906df7b4e9b由独立CODEX-LEAD-REVIEW-DUCK-ATTENTION批准，合a936bea。生产完整Actions门禁/导出和Pages均成功，公开包检查见pr353-public-release.json。真实公开Chromium151先严格核HTML/manifest完整source，正常标题、岸边钓获、Space投鱼给小鸭三、打开首次钓获照片：三张accepted原图由root和执行助手亲看，无默认heart；pageerrors与consoleerrors为空。没有线上observer、没有写入游戏位置/种子/状态；最初IPv6网络失败排除，连续Space后续帧不冒本次成功链。
 
 成功后的实际纹理、2.2秒时窗、脚点不跳与宽窄屏绑定此前由只读候选observer和24项专项独立验明，见[实现验收](../duck-feed-attention.md)；公开截图不单独冒内部字段证据。原图来自Producer343 v2不重画，5秒是视觉间隔不吞合法鱼消费，鹅不改。#30和#122保留其余资源/互动，不因鸭关注完成就关闭全部。
+
+## 标题纸片公开收尾（PR354）
+
+GROK-CONTRIBUTOR原实现07f836a9d5b706dc3f7ca40d0b1ab00ea07efa99，Leader按作者请求补daily入口/REQ028与组合DPR证据；最终09ff44bece2c80abe7119411dd2645926422dff4经独立CODEX-LEAD-REVIEW-PR-354 APPROVE后合7c1608c7e826f458eaae979d48727b0e6e2bdf58。Actions37299200195、Pages37299735394均success。
+
+实际公开game-7c1608c的PCK 25,261,236bytes，SHA256 ba8819c853ec0c0ec7c7bb6b19fabecfb9cc32f4930ecce27825bd4309689df7；HTML入口、10个存档模块与manifest/源码/gh-pages raw一致，见pr354-public-release.json。该构建包含前述探索与鸭关注，但前述各自体验仍归其实际测试SHA，不冒在本次标题测试中重做全部玩法。
+
+`title-public/`四组844×390/390×844 × DPR2/3逐页核对HTML与manifest完整7c1608c，正常标题→真实鼠标点击入院，无游戏状态注入。八张标题/入院原图由执行助手逐张看，root另核横竖标题图；文字清晰、纸片不截断且入院后消失，page/console errors均空。首次独立APIRequestContext访问的IPv6网络失败发生于游戏交互前，改为页面同网络fetch采manifest后的完整四组才计通过；不是物理手机或所有合成像素WCAG验证。与#350相册/348暂停遮挡无替代关系，Assistant原范围保持。
