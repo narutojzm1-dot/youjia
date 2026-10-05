@@ -1,0 +1,1 @@
+公开 game-a936bea 普通 UI 体验通过。严格断言 HTML data-build 与 manifest 完整 sourceCommit 后进入；正常点击首页、水塘、Space 钓鱼及投鸭、打开手帐。accepted-catch 为真实钓获并显示小鸭三投鱼提示；accepted-duck-fed 为下一帧成功投鸭、无默认爱心；accepted-album 为首次钓获照片。三帧均人工查看，pageerrors/consoleerrors 均 0。仅使用鼠标键盘，无内部状态读取/写入、位置/随机注入或线上 observer。最初 IPv6 网络失败发生在游戏加载前，排除。完整自然序列保留，后续 Space 帧不替代选定成功链。PCK/modules 哈希由 root 单独核对。
