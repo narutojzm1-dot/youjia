@@ -1,0 +1,49 @@
+{"kind": "click", "x": 640, "y": 368, "wait": 2500, "name": "01-enter-yard"}
+{"kind": "click", "x": 600, "y": 452, "wait": 3500, "name": "02-pet-sheep-natural"}
+{"kind": "click", "x": 1154, "y": 65, "wait": 800, "name": "03-album-natural"}
+{"kind": "click", "x": 402, "y": 412, "wait": 5000, "name": "04-approach-sheep"}
+{"kind": "click", "x": 1160, "y": 676, "wait": 2500, "name": "05-primary-interaction"}
+{"kind": "click", "x": 114, "y": 676, "wait": 900, "name": "06-open-handbook"}
+{"kind": "click", "x": 640, "y": 166, "wait": 600, "name": "07-resume-after-coordinate-probe"}
+{"kind": "click", "x": 394, "y": 405, "wait": 6000, "name": "08-animal-click-natural"}
+{"kind": "click", "x": 114, "y": 676, "wait": 1200, "name": "09-handbook"}
+{"kind": "key", "key": "Escape", "wait": 700, "name": "10-back-to-yard"}
+{"kind": "click", "x": 512, "y": 396, "wait": 4500, "name": "11-cow-response"}
+{"kind": "click", "x": 1160, "y": 676, "wait": 1200, "name": "12-visible-primary"}
+{"kind": "click", "x": 444, "y": 492, "wait": 4500, "name": "13-grass-area"}
+{"kind": "click", "x": 1160, "y": 676, "wait": 1200, "name": "14-primary-grass-attempt"}
+{"kind": "click", "x": 1160, "y": 43, "wait": 800, "name": "15-pause-input-matrix"}
+{"kind": "fast", "name": "16-input-probe-180", "wait": 180, "holds": [0, 80]}
+{"kind": "fast", "name": "17-input-probe-80", "wait": 80, "holds": [0, 80]}
+{"kind": "click", "x": 640, "y": 166, "wait": 600, "name": "18-resume-before-walk"}
+{"kind": "walk", "key": "d", "ms": 900, "name": "19-walk-right"}
+{"kind": "walk", "key": "a", "ms": 900, "name": "20-walk-left"}
+{"kind": "click", "x": 388, "y": 536, "wait": 4000, "name": "21-visible-grass-patch"}
+{"kind": "click", "x": 1160, "y": 676, "wait": 1000, "name": "22-grass-primary"}
+{"kind": "click", "x": 280, "y": 515, "wait": 4000, "name": "23-visible-plant-bed"}
+{"kind": "click", "x": 1160, "y": 676, "wait": 900, "name": "24-plant-primary"}
+{"kind": "wait", "ms": 4500, "name": "25-plant-after-approach"}
+{"kind": "click", "x": 612, "y": 421, "wait": 7000, "name": "26-feed-llama-area"}
+{"kind": "click", "x": 1160, "y": 676, "wait": 6500, "name": "27-feed-primary-after-approach"}
+{"kind": "click", "x": 278, "y": 499, "wait": 6500, "name": "28-return-plant-bed"}
+{"kind": "click", "x": 1160, "y": 676, "wait": 4500, "name": "29-water-primary"}
+{"kind": "click", "x": 714, "y": 479, "wait": 11000, "name": "30-pond-approach"}
+{"kind": "key", "key": "Space", "wait": 1000, "name": "31-cast-primary"}
+{"kind": "key", "key": "Space", "wait": 1100, "name": "32-reel-observation-1"}
+{"kind": "key", "key": "Space", "wait": 1100, "name": "32-reel-observation-2"}
+{"kind": "key", "key": "Space", "wait": 1100, "name": "32-reel-observation-3"}
+{"kind": "key", "key": "Space", "wait": 1100, "name": "32-reel-observation-4"}
+{"kind": "key", "key": "Space", "wait": 1100, "name": "32-reel-observation-5"}
+{"kind": "key", "key": "Space", "wait": 1100, "name": "32-reel-observation-6"}
+{"kind": "key", "key": "Space", "wait": 1100, "name": "32-reel-observation-7"}
+{"kind": "key", "key": "Space", "wait": 1100, "name": "32-reel-observation-8"}
+{"kind": "click", "x": 114, "y": 676, "wait": 1000, "name": "33-handbook-after-fishing"}
+{"kind": "resize", "width": 390, "height": 844, "name": "34-portrait-handbook"}
+{"kind": "resize", "width": 844, "height": 390, "name": "35-landscape-handbook"}
+{"kind": "resize", "width": 1280, "height": 720, "name": "36-desktop-handbook"}
+{"kind": "key", "key": "Escape", "wait": 600, "name": "37-return-yard"}
+{"kind": "key", "key": "Escape", "wait": 800, "name": "38-pause-before-exit"}
+{"kind": "click", "x": 640, "y": 278, "wait": 700, "name": "39-exit-confirm"}
+{"kind": "click", "x": 640, "y": 372, "wait": 3500, "name": "40-confirmed-title"}
+{"kind": "reopen", "name": "41-real-browser-reopen"}
+{"kind": "click", "x": 640, "y": 425, "wait": 1000, "name": "42-reopened-handbook"}

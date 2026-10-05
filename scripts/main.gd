@@ -1344,17 +1344,57 @@ func _album_page(index: int) -> Control:
 	content.add_child(heading)
 	var rule_id := _album_entries[index]
 	var rule := ExpressionCatalog.find_rule(rule_id)
+	var moment := SaveStore.get_photo_moment(rule_id)
+	var caption_text := PhotoDiary.caption(moment, rule_id) if not moment.is_empty() else I18n.t(str(rule.get("title_key", "")))
+	var note_text := I18n.t(str(rule.get("note_key", "")))
+	# Measure with the same inherited font and line spacing as the final labels.
+	# Fixed allowances for two lines fail on the existing longer English notes.
+	var text_height := func(text: String, width: float, font_size: int) -> float:
+		var paragraph := TextParagraph.new()
+		var font := get_theme_font("font", "Label")
+		paragraph.width = maxf(1.0, width)
+		paragraph.break_flags = TextServer.BREAK_MANDATORY | TextServer.BREAK_WORD_BOUND | TextServer.BREAK_ADAPTIVE
+		paragraph.add_string(text, font, font_size)
+		# Label uses the composite font's line height even on Latin-only lines.
+		var lines := paragraph.get_line_count()
+		return ceilf(font.get_height(font_size) * lines + get_theme_constant("line_spacing", "Label") * maxi(0, lines - 1))
+	var text_width := _album_page_size.x - 44.0
+	var note_height := maxf(36.0, text_height.call(note_text, text_width, 14))
+	var body_height: float = _album_page_size.y - 25.0 - text_height.call(heading.text, text_width, 14) - text_height.call(I18n.t("album.page", {"page": str(index + 1)}), text_width, 12) - 10.0
+	var compact_page := _album_page_size.y < 370.0 or body_height - note_height - 5.0 < 300.0
+	var wide_page := compact_page and _album_page_size.x > _album_page_size.y * 1.6
+	var body: BoxContainer = HBoxContainer.new() if wide_page else VBoxContainer.new()
+	body.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	body.add_theme_constant_override("separation", 12 if wide_page else 5)
+	content.add_child(body)
 	var center := CenterContainer.new()
-	center.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	content.add_child(center)
+	if not compact_page: center.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	body.add_child(center)
 	var card_width := minf(280.0, minf(_album_page_size.x - 52.0, (_album_page_size.y - 138.0) * 0.8))
-	center.add_child(_photo_card(rule, true, card_width))
+	if compact_page:
+		var photo_height: float = body_height if wide_page else body_height - note_height - text_height.call(caption_text, text_width, 14) - 10.0
+		card_width = maxf(1.0, minf(180.0 if wide_page else 140.0, (photo_height - 2.0) * 0.8))
+	center.add_child(_photo_card(rule, true, card_width, not compact_page))
+	var writing := VBoxContainer.new()
+	writing.add_theme_constant_override("separation", 5)
+	if wide_page:
+		writing.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		writing.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	body.add_child(writing)
+	if compact_page:
+		# A tiny frame cannot hold readable text. Keep the original date/caption
+		# at normal size beside a landscape photo or below a short narrow page.
+		var caption := _label(14, INK)
+		caption.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		caption.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		caption.text = caption_text
+		writing.add_child(caption)
 	var note := _label(14, INK)
 	note.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	note.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	note.custom_minimum_size.y = 36.0
-	note.text = I18n.t(str(rule.get("note_key", "")))
-	content.add_child(note)
+	note.text = note_text
+	writing.add_child(note)
 	var footer := _label(12, MUTED)
 	footer.text = I18n.t("album.page", {"page": str(index + 1)})
 	footer.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
@@ -1362,7 +1402,7 @@ func _album_page(index: int) -> Control:
 	return page
 
 
-func _photo_card(rule: Dictionary, owned: bool, width: float = 240.0) -> Control:
+func _photo_card(rule: Dictionary, owned: bool, width: float = 240.0, caption_on_frame: bool = true) -> Control:
 	var card_scale := width / 240.0
 	var holder := Control.new()
 	holder.custom_minimum_size = Vector2(240, 300) * card_scale
@@ -1380,8 +1420,12 @@ func _photo_card(rule: Dictionary, owned: bool, width: float = 240.0) -> Control
 	var moment := SaveStore.get_photo_moment(str(rule.get("id",""))) if owned else {}
 	if owned and not moment.is_empty():
 		var photograph := PhotoMoment.new()
+		# PhotoMoment defaults to 184 px. This album instance must follow the
+		# card scale; do not change the shared arrival/capture component.
+		photograph.custom_minimum_size = portrait.size
 		photograph.position = portrait.position
-		photograph.size = portrait.size
+		# Its constructor's minimum-size cache clears on entering the tree.
+		photograph.set_deferred("size", portrait.size)
 		photograph.setup(moment)
 		holder.add_child(photograph)
 		portrait.visible = false
@@ -1402,6 +1446,8 @@ func _photo_card(rule: Dictionary, owned: bool, width: float = 240.0) -> Control
 	else:
 		portrait.modulate = Color(1, 1, 1, 0.08)
 	holder.add_child(portrait)
+	if not caption_on_frame:
+		return holder
 	var caption := _label(maxi(12, roundi(13.0 * card_scale)), INK if owned else MUTED)
 	caption.position = Vector2(24, 232) * card_scale
 	caption.size = Vector2(192, 52) * card_scale
@@ -1924,3 +1970,4 @@ func _flat(bg: Color, border: Color, width: int = 2, radius: int = 16) -> StyleB
 	style.content_margin_top = 10
 	style.content_margin_bottom = 10
 	return style
+

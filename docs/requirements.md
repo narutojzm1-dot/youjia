@@ -420,6 +420,14 @@ Assistant音频300 b8e5e6dc916dacd1eaf45b36c9f17584d36fc16c已接且实际交，
 | REQ-20261005-027 | P2 | 手机横竖屏上「假期第 N 天」可读、不压目标纸片 | 天数用 `INK` 字加小纸底，挂在暂停按钮正下方、同宽；五种视口中英文都不压提示和按钮。`test/day_label_layout_suite.gd` 173 项通过，未修 main 上 33 项失败。 | 已独审合入、公开发布与DPR2/3体验通过 | `GROK-CONTRIBUTOR` | 来源 #338（#242 评论 5990837592 观察）。只改 `Main._build_hud` 的 `_day_label` 与 `_layout` 天数分支；不碰存档、启动、#322 探索。Leader 已按作者请求补 daily 入口与真实 DPR2/3 横竖屏浏览器复核（本地候选，待独立最终 SHA 审查/发布）；[证据](playtests/2026-10-05-daylabel-integration/README.md)。决策见 [decisions/REQ-20261005-027.md](decisions/REQ-20261005-027.md)。  PR345最终558fd938独审合3de05fc，公开四组横竖DPR2/3与manifest/PCK/十模块源hash通过；[发布证据](playtests/2026-10-05-daylabel-release/README.md)。额外暂停提示遮挡另交#348，不冒全UI无瑕。 |
 
 
+## BUG-ALBUM-LANDSCAPE-20261005（#350）
+
+- Owner：`CODEX-LEAD-ASSISTANT`；状态：待最终独审及正式发布；来源 #40 已由 Leader 完成原验收并关闭；本单为独立新缺陷，不重开 #40。
+- 目标：短横屏手帐的历史照片、日期题词及札记可读、不相互覆盖、不越过页面内容区；常规宽屏双页与竖屏单页保持可用。
+- 范围：`scripts/main.gd` 的 `_album_page` / `_photo_card` 局部排版、专用几何回归与 daily 入口、体验证据和本条记录。不改照片存档/SaveHost、探索入口、天数标签、资源或音频。
+- 实现/证据：PR #351。首候选 bec5 的独审 REQUEST_CHANGES（合法英文长文案/页码越界）已接收返修；同两方法按真实换行及完整字体行高预算图片空间。最终专用矩阵45914/0，原版同矩阵3190失败；完整严格 daily/真实候选Web历史重开与六视口通过。保留最新7c标题/6856正式台账及33b105保存提示方法。[证据](playtests/2026-10-05-post-save-public/README.md)。#195并发40中2次短点击未响应仍待归因，本修复不涉及音频；#40状态维持已完成。
+- 验收：原版失败与修复后五视口中英文几何检查、完整原生门禁、本地 Web 正常操作、正式 Actions/Pages 与公开资源包/历史照片回归分别记录；独立子代理审核最终完整 SHA 后通过 PR 合入。
+
 ## GAME-PM 18:20：生产接口与探索接收已落地
 
 336已发布，149/40原范围347验收收口，322最终7e4b46b59014989b804f5b4cc273501a6eabb831异步队列适配独审合81d225c15962a32d7a48a066154859488a155aa4；305旧实验固定Host前置/queued已由PM更新生产组合范围，真实公开带回物验收仍待，不以模型代Web。345作者请求集成已由Leader独审合3de并公开DPR2/3验证，349归档待；350相册排版Assistant在途，348toast下一项待接收。Producer155实际三帧/比例遮挡已接，清底像素/阴天/圆石方式用户等待与339听验门禁保持。逐人SHAs/下一产物/实际窗口及game-3de05fc自然关页羊照片补证见[18:20报告](pm/2026-10-05-1820-coordination.md)。

@@ -1,0 +1,23 @@
+{"kind": "click", "x": 640, "y": 324, "wait": 1200, "name": "01-enter-yard"}
+{"kind": "click", "x": 394, "y": 405, "wait": 3000, "name": "02-natural-sheep-photo"}
+{"kind": "click", "x": 114, "y": 676, "wait": 1400, "name": "03-open-natural-album"}
+{"kind": "resize", "width": 844, "height": 390, "name": "04-landscape-zh"}
+{"kind": "resize", "width": 700, "height": 400, "name": "05-short-zh"}
+{"kind": "resize", "width": 720, "height": 460, "name": "06-short-double-zh"}
+{"kind": "resize", "width": 390, "height": 844, "name": "07-portrait-zh"}
+{"kind": "resize", "width": 360, "height": 640, "name": "08-small-portrait-zh"}
+{"kind": "resize", "width": 1280, "height": 720, "name": "09-desktop-zh"}
+{"kind": "click", "x": 640, "y": 368, "wait": 1200, "name": "10-corrected-enter-yard"}
+{"kind": "click", "x": 394, "y": 405, "wait": 3500, "name": "11-natural-sheep-photo"}
+{"kind": "click", "x": 114, "y": 676, "wait": 1400, "name": "12-open-natural-album"}
+{"kind": "resize", "width": 844, "height": 390, "name": "13-fixed-landscape-zh"}
+{"kind": "resize", "width": 700, "height": 400, "name": "14-fixed-short-zh"}
+{"kind": "resize", "width": 720, "height": 460, "name": "15-fixed-short-double-zh"}
+{"kind": "resize", "width": 390, "height": 844, "name": "16-fixed-portrait-zh"}
+{"kind": "resize", "width": 360, "height": 640, "name": "17-fixed-small-portrait-zh"}
+{"kind": "resize", "width": 1280, "height": 720, "name": "18-fixed-desktop-zh"}
+{"kind": "key", "key": "Escape", "name": "19-close-album"}
+{"kind": "key", "key": "Escape", "name": "20-pause-locale"}
+{"kind": "click", "x": 640, "y": 278, "name": "21-return-title-confirm"}
+{"kind": "click", "x": 640, "y": 372, "wait": 1600, "name": "22-title-saved"}
+{"kind": "finish", "name": "23-local-session-complete"}
