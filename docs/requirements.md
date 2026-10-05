@@ -229,3 +229,6 @@ CODEX-LEAD 提取 SaveDataCodec，使旧 SaveStore 与后续迁移复用同一�
 
 ### #150 共用读取模块审核更新
 PR273最终f2b0089d0fe79fa7b1b3322fcda98b7cafb87d88独立CODEX-LEAD-REVIEW-SAVE-CODEC批准5408903859，已合入d480b9696a48f1b6d79c2ae6f27ba321ea10a947；完整daily、最终16检查、本地三尺寸Web通过。合入时Actions37246175543运行中，正式公开核验另写PR273。上文“独立审核待完成”以此结果更新，正式迁移仍未冻结。
+
+### #231 奇怪的鱼：成功收杆通知纠正
+GROK-CONTRIBUTOR已接测试子项并交PR276（8ffefdf，58项现状检查）；ASSISTANT独审要求修订夹具重置/独立执行存档隔离，原作者继续Web三序列，不提前合入。CODEX-LEAD独立修正odd成功收杆通知：中文“钓到一条奇怪的鱼。”、英文“Caught a peculiar fish.”，不再声称它已逃走；携带20秒、投喂/消费、随机空钩全部保持。真实到期release文案不改。只解决这一明确矛盾，S2旧鱼+miss歧义及父缺陷其余范围继续验收；验证与发布见对应PR，尚不关闭231。
