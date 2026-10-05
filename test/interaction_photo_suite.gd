@@ -170,26 +170,47 @@ func run():
  world.debug_place_actor("sheep_b", Vector2(360, 500))
  world.debug_place_player(Vector2(300, 535))
  world._interact_with_target("pet:cow")
- check(overlay.has_method("pet_feedback_snapshot"), "pet response is attached to an actual animal")
- if overlay.has_method("pet_feedback_snapshot"):
-  check(overlay.pet_feedback_snapshot().is_empty(), "distant pet cannot create a success heart")
-  world.debug_place_player(Vector2(490, 505))
-  world._interact_with_target("pet:cow")
-  var pet_cue: Dictionary = overlay.pet_feedback_snapshot()
-  check(pet_cue.get("actor_id", "") == "cow" and float(pet_cue.get("remaining", 0.0)) > 0.0, "only the petted cow reacts when reached")
-  world.debug_place_actor("cow", Vector2(535, 490))
-  check(overlay.pet_feedback_snapshot().get("position", Vector2.INF) == world.actor_named("cow").position, "painted pet reaction follows its living cow")
+ check(overlay.pet_feedback_snapshot().is_empty(), "distant pet cannot create a success heart")
+ for eligible: String in ["cow", "sheep_b", "horse"]:
+  var animal = world.actor_named(eligible)
+  world.debug_place_actor(eligible, Vector2(570, 470))
+  world.debug_place_player(Vector2(520, 485))
+  world._interact_with_target("pet:" + eligible)
+  check(animal.facing == -1.0, "pet faces the nearby player: " + eligible)
+  check(animal._posture_id == ("glance" if eligible == "cow" else "idle"), "pet avoids mismatched tail/shake sizes: " + eligible)
+  check(animal._ack_left > 0.0, "a successful pet acknowledges the selected " + eligible)
+  check(overlay.pet_feedback_snapshot().is_empty(), "pet uses posture without a default heart: " + eligible)
+  animal.tick(0.5, Vector2(1280, 720))
+  var remaining: float = animal._ack_left
+  world._interact_with_target("pet:" + eligible)
+  check(is_equal_approx(animal._ack_left, remaining), "repeat input does not extend the pose: " + eligible)
   root.get_node("TuningStore").set_value("ui.reduced_motion", true)
-  check(bool(overlay.pet_feedback_snapshot().get("reduced_motion", false)), "reduced motion keeps a still readable pet response")
+  check(animal._ack_cel != "", "low motion retains a readable posture: " + eligible)
   root.get_node("TuningStore").set_value("ui.reduced_motion", false)
-  world.tick(2.0, Vector2.ZERO)
-  check(overlay.pet_feedback_snapshot().is_empty(), "pet reaction expires and does not persist in the album")
-  for eligible: String in ["sheep_b", "horse"]:
-   world.debug_place_actor(eligible, Vector2(570, 470))
-   world.debug_place_player(Vector2(520, 485))
+  for _frame in 150:
+   animal.tick(1.0 / 60.0, Vector2(1280, 720))
    world._interact_with_target("pet:" + eligible)
-   check(overlay.pet_feedback_snapshot().get("actor_id", "") == eligible, "a successful pet acknowledges the selected " + eligible)
-   world.tick(2.0, Vector2.ZERO)
+  check(animal._ack_left == 0.0, "continuous petting releases the animal: " + eligible)
+  for _frame in 150:
+   animal.tick(1.0 / 60.0, Vector2(1280, 720))
+  world.debug_place_player(animal.position + Vector2(30, 0))
+  world._interact_with_target("pet:" + eligible)
+  check(animal._ack_left > 0.0, "later pet can respond again: " + eligible)
+ # A scheduled wandering turn must not override an active acknowledgement.
+ var horse = world.actor_named("horse")
+ horse._pet_ack_cooldown = 0.0
+ horse.state = "wander"
+ horse.daily_routine = true
+ horse._turn_pause = 0.55
+ horse._target = horse.position + Vector2(100, 0)
+ world.debug_place_player(horse.position + Vector2(-30, 0))
+ world._interact_with_target("pet:horse")
+ horse.tick(0.1, Vector2(1280, 720))
+ check(horse.facing == -1.0 and horse._ack_left > 0.0, "scheduled turn cannot face away during pet response")
+ check(is_equal_approx(horse._turn_pause, 0.55), "pet response preserves scheduled turn time")
+ for _frame in 140:
+  horse.tick(1.0 / 60.0, Vector2(1280, 720))
+ check(horse.facing == 1.0 and horse._turn_pause < 0.55, "scheduled turn resumes after acknowledgement")
  # Watering is meaningful once per day. A repeated attempt must not counterfeit
  # a success effect or alter the recorded planted/watered day.
  world.debug_place_player(Vector2(700, 540))
