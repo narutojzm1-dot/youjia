@@ -1,0 +1,17 @@
+{
+  "status": "PASS",
+  "checks": [
+    "actual Godot legacy file reaches IDBFS",
+    "{'done': True, 'receipt': {'namespace': 'youjia-save-host-v1', 'request_id': 'ab494bffc7af410a866a84cd9cc8f880', 'schema': 'youjia.save-ack/v1', 'status': 'cleared', 'write_id': '1'}}",
+    "new Godot runtime has no persistent IDBFS mount",
+    "engine ready then readonly legacy import preserves raw",
+    "production bridge has no test controls",
+    "permanent raw survives production write and acknowledgement",
+    "second page production writer refused",
+    "new page recovers committed production payload",
+    "no browser console or page errors"
+  ],
+  "errors": [],
+  "browser": "151.0.7922.173",
+  "scope": "real Godot Web legacy IDBFS seed; new runtime persistentPaths empty; real production Host import/write/ack and page ownership"
+}
