@@ -1373,3 +1373,8 @@ REQ036接力候选追加：实施代理以同一14a85a5候选在1280×720/390×8
 Agent-ID: CODEX-LEAD。按原督导未完成子项与[6002422874认领](https://github.com/narutojzm1-dot/youjia/issues/130#issuecomment-6002422874)，daily测试改走精确入口绑定的成功汇总检查，保留原进程/tee退出与全日志异常拒绝。新入口没有登记即拒绝，不以任意PASS代替完成；import/export等旧低层工具保持各自进程/日志契约，不伪造断言成功。独立审阅指出licenses旧PASS不证明正计数后，已改读其原有checks/零失败汇总；explicit_target、ui_interaction、ui_viewports仅在既有check入口累计数量并加入最终行，不改断言或游戏逻辑。
 
 候选 `819200429f94bfda60b14cec76de93d1d00381c6` 保留原Grok444的冻结组合祖先及soft_button门禁入口。实际Godot4.7.2全daily一次exit0：1次import+71套逐套可信完成（含新增三套计数25/63/135与licenses124）、50个独立mock及两项Node检查均通过；Web release导出也exit0。本地PCK 27,088,652 bytes，SHA256 `cd7b6ed95205d1cec307e704c9887be0d08d8bff080a7e413e37b5957eb9f8ed`，不是公开发布哈希。自动import元数据/UID变化已按精确清单恢复，未加入实现。见[契约、完整原生日志与导出记录](engineering/godot-completion-gate.md)。已组合实际main `de4ba4227a1ce0eff5db1106a051bdf9845332a9`，相对实跑候选仅文档差异，独立最终SHA审查与本片合入仍待；PR450只读workflow为另一独立切片，其GitHub验收/合入独立跟踪，不用本地检查冒其结果；#130不整体关闭。
+
+
+### 2026-10-06 #130 PR 阶段只读验证入口（VERIFY-PR-130）
+
+CODEX-LEAD 按 [原单认领6002379027](https://github.com/narutojzm1-dot/youjia/issues/130#issuecomment-6002379027) 接续工程督导指出的 PR 阶段验证缺口。新增 `pull_request` 到 main 的只读 workflow，沿现有 docs/README 排除范围；校验 proposed merge，运行已有发布辅助 Python 检查、严格 daily 与实际 Web 导出。同 PR 新头取消旧运行；不使用 `pull_request_target`，checkout 不保留凭据，不执行正式发布脚本，不改原 main 发布工作流或分支保护。没有玩法、资源、存档格式或玩家体验改变，策划基准不变。[实现及验收边界](validation/2026-10-06-pr130-verification.md)；真实本 PR CI、最终 SHA 独立审核和合入状态后续在 PR/原单记录，#130 父单不据此关闭。
