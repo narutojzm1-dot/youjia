@@ -1,0 +1,17 @@
+{
+  "sourceCommit": "a936bea68bfb37eea47b00c09e3767af74c72b61",
+  "data_build": "game-a936bea",
+  "pageerrors": [],
+  "consoleerrors": [],
+  "browser": "151.0.7922.173",
+  "scope": "ordinary pointer and Space only; screenshots require visual verification",
+  "visually_verified": true,
+  "verified_at_utc": "2026-10-05T10:47:36.125822+00:00",
+  "accepted_frames": {
+    "accepted-catch.png": "056d18da365698df3fc94ef96ffac1ed686ebdd6fac055674c2cf538386cbd6e",
+    "accepted-duck-fed.png": "561de77b0d3c615e8cea7e0ce7bc4d84b1a8be679e5f1cbb134dc9587509708f",
+    "accepted-album.png": "cf5b03603c678a52e035940e8577de745314ec202b171503a790ce99aa64667a"
+  },
+  "excluded_probe": "Initial Playwright direct IPv6 ENETUNREACH before any game loaded; rerun used configured proxy.",
+  "limits": "No online observer or internal state injection. Public screenshot demonstrates successful duck feed without default heart; exact posture/anchor already proven in reviewed local wide/narrow readonly fixture. Later repeated Space frames are not the selected successful chain."
+}

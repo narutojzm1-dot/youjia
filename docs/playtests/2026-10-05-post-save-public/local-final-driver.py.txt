@@ -1,7 +1,7 @@
 import json,time,hashlib
 from pathlib import Path
 from playwright.sync_api import sync_playwright
-out=Path('/tmp/album-a936-web');out.mkdir(exist_ok=True)
+out=Path('/tmp/album-revised-web');out.mkdir(exist_ok=True)
 commands=out/'commands.jsonl'
 events=[];errors=[];responses=[]
 url='http://127.0.0.1:8135/'

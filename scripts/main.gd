@@ -8,6 +8,8 @@ const PAPER := Color("fff6e8")
 const INK := Color("5b4637")
 const MUTED := Color("8a7060")
 const APRICOT := Color("f3b27a")
+## 标题页副标题用的深杏色：在 PAPER 上对比约 4.6:1（APRICOT 只有约 1.7:1），#REQ-20261005-028
+const TITLE_ACCENT := Color("a85d28")
 const SAGE := Color("8fb389")
 const CREAM := Color("fffaf1")
 const LAVENDER := Color("cbb6d6")
@@ -36,6 +38,7 @@ var _world: YardWorld
 var _exploration: ExplorationDirector
 var _camera: Camera2D
 var _title_screen: Control
+var _title_card: Panel
 var _title_label: Label
 var _subtitle_label: Label
 var _tagline_label: Label
@@ -515,6 +518,11 @@ func _build_title_screen() -> void:
 	_title_screen = Control.new()
 	_title_screen.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	add_child(_title_screen)
+	# 标题文字下垫一张半透明纸片，避免副标题/简介/操作说明压在花草底图上看不清（REQ-20261005-028）
+	_title_card = Panel.new()
+	_title_card.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_title_card.add_theme_stylebox_override("panel", _flat(Color(PAPER, 0.84), Color(APRICOT, 0.6), 1, 18))
+	_title_screen.add_child(_title_card)
 	var column := VBoxContainer.new()
 	column.alignment = BoxContainer.ALIGNMENT_CENTER
 	column.add_theme_constant_override("separation", 14)
@@ -524,10 +532,11 @@ func _build_title_screen() -> void:
 	column.offset_top = -220
 	column.offset_bottom = 260
 	_title_screen.add_child(column)
+	column.sort_children.connect(_fit_title_card)
 	_title_label = _label(40, INK)
 	_title_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	column.add_child(_title_label)
-	_subtitle_label = _label(18, APRICOT)
+	_subtitle_label = _label(18, TITLE_ACCENT)
 	_subtitle_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	column.add_child(_subtitle_label)
 	_tagline_label = _label(16, MUTED)
@@ -547,6 +556,30 @@ func _build_title_screen() -> void:
 	_title_hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_title_hint.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	column.add_child(_title_hint)
+
+
+## 纸片贴合标题列里实际可见的内容（列本身是整屏高、内容居中），左右留 18、上下留 14，并夹在屏内。
+func _fit_title_card() -> void:
+	if _title_card == null or _title_label == null: return
+	var column: Control = _title_label.get_parent()
+	var content := Rect2()
+	var first := true
+	for child in column.get_children():
+		var c := child as Control
+		if c == null or not c.visible: continue
+		var r := Rect2(column.position + c.position, c.size)
+		content = r if first else content.merge(r)
+		first = false
+	if first:
+		_title_card.visible = false
+		return
+	_title_card.visible = true
+	var card := content.grow_individual(18.0, 14.0, 18.0, 14.0)
+	var screen := Rect2(Vector2(4.0, 4.0), _title_screen.size - Vector2(8.0, 8.0))
+	if screen.size.x > 0.0 and screen.size.y > 0.0:
+		card = card.intersection(screen)
+	_title_card.position = card.position
+	_title_card.size = card.size
 
 
 func _build_hud() -> void:
@@ -1267,7 +1300,24 @@ func _album_page(index: int) -> Control:
 	content.add_child(heading)
 	var rule_id := _album_entries[index]
 	var rule := ExpressionCatalog.find_rule(rule_id)
-	var compact_page := _album_page_size.y < 370.0
+	var moment := SaveStore.get_photo_moment(rule_id)
+	var caption_text := PhotoDiary.caption(moment, rule_id) if not moment.is_empty() else I18n.t(str(rule.get("title_key", "")))
+	var note_text := I18n.t(str(rule.get("note_key", "")))
+	# Measure with the same inherited font and line spacing as the final labels.
+	# Fixed allowances for two lines fail on the existing longer English notes.
+	var text_height := func(text: String, width: float, font_size: int) -> float:
+		var paragraph := TextParagraph.new()
+		var font := get_theme_font("font", "Label")
+		paragraph.width = maxf(1.0, width)
+		paragraph.break_flags = TextServer.BREAK_MANDATORY | TextServer.BREAK_WORD_BOUND | TextServer.BREAK_ADAPTIVE
+		paragraph.add_string(text, font, font_size)
+		# Label uses the composite font's line height even on Latin-only lines.
+		var lines := paragraph.get_line_count()
+		return ceilf(font.get_height(font_size) * lines + get_theme_constant("line_spacing", "Label") * maxi(0, lines - 1))
+	var text_width := _album_page_size.x - 44.0
+	var note_height := maxf(36.0, text_height.call(note_text, text_width, 14))
+	var body_height: float = _album_page_size.y - 25.0 - text_height.call(heading.text, text_width, 14) - text_height.call(I18n.t("album.page", {"page": str(index + 1)}), text_width, 12) - 10.0
+	var compact_page := _album_page_size.y < 370.0 or body_height - note_height - 5.0 < 300.0
 	var wide_page := compact_page and _album_page_size.x > _album_page_size.y * 1.6
 	var body: BoxContainer = HBoxContainer.new() if wide_page else VBoxContainer.new()
 	body.size_flags_vertical = Control.SIZE_EXPAND_FILL
@@ -1278,7 +1328,8 @@ func _album_page(index: int) -> Control:
 	body.add_child(center)
 	var card_width := minf(280.0, minf(_album_page_size.x - 52.0, (_album_page_size.y - 138.0) * 0.8))
 	if compact_page:
-		card_width = minf(180.0, (_album_page_size.y - 80.0) * 0.8) if wide_page else minf(140.0, _album_page_size.y * 0.32)
+		var photo_height: float = body_height if wide_page else body_height - note_height - text_height.call(caption_text, text_width, 14) - 10.0
+		card_width = maxf(1.0, minf(180.0 if wide_page else 140.0, (photo_height - 2.0) * 0.8))
 	center.add_child(_photo_card(rule, true, card_width, not compact_page))
 	var writing := VBoxContainer.new()
 	writing.add_theme_constant_override("separation", 5)
@@ -1289,17 +1340,16 @@ func _album_page(index: int) -> Control:
 	if compact_page:
 		# A tiny frame cannot hold readable text. Keep the original date/caption
 		# at normal size beside a landscape photo or below a short narrow page.
-		var moment := SaveStore.get_photo_moment(rule_id)
 		var caption := _label(14, INK)
 		caption.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		caption.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-		caption.text = PhotoDiary.caption(moment, rule_id) if not moment.is_empty() else I18n.t(str(rule.get("title_key", "")))
+		caption.text = caption_text
 		writing.add_child(caption)
 	var note := _label(14, INK)
 	note.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	note.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	note.custom_minimum_size.y = 36.0
-	note.text = I18n.t(str(rule.get("note_key", "")))
+	note.text = note_text
 	writing.add_child(note)
 	var footer := _label(12, MUTED)
 	footer.text = I18n.t("album.page", {"page": str(index + 1)})

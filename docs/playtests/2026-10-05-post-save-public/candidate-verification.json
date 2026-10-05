@@ -1,10 +1,11 @@
 {
-  "base": "a936bea68bfb37eea47b00c09e3767af74c72b61",
-  "main_file_sha256": "6cea2015ace5f3031da5ad515bf8d37af1f52e69253a78ac32a806af95734ca4",
+  "base": "6856f07b7fcffb42c869d2bb053c0f6419300f2f",
+  "runtime_base": "7c1608c7e826f458eaae979d48727b0e6e2bdf58",
+  "main_file_sha256": "a1064d8b073c36129090ef6116bb0e43b1af1657cb7b8a04fdda324045d52dd6",
   "files": {
     "pck": {
-      "bytes": 25261060,
-      "sha256": "40be7f6a8789444b7fe5c5f64f05a94c661e794c01d43797db946833d4141614"
+      "bytes": 25262724,
+      "sha256": "584d6ac325ced3f6943de69a87d9638ec8d914c31f3444b54c117ae0ffb8d951"
     },
     "wasm": {
       "bytes": 39514754,
@@ -15,14 +16,16 @@
       "sha256": "33c94cb3175f3333b82e2a3be5e8e86f77986f0aa2042b1631f6367a4e5bb6ba"
     }
   },
+  "native_album_checks": 45914,
+  "native_before_failures": 3190,
+  "native_after_failures": 0,
   "native_daily_exit": 0,
-  "album_checks": 3078,
-  "before_failures": 271,
-  "after_failures": 0,
   "bundle_retention_tests": 11,
-  "storage_publisher": "passed",
+  "storage_publication": "passed",
   "local_reopen_photo_moments_unchanged": true,
-  "local_reopen_generation": "3",
+  "local_generation": "3",
   "browser_errors": [],
-  "local_web_scope": "production a936 source plus album methods only; ordinary new sheep capture on81 before same-profile reopen onbc and thena936; six viewports incl short double; Chinese Web, zh-CN/en native; no world/save injection or fabricated public build."
+  "first_candidate_sha": "bec5bbf2c265a3a8a41934ea7f3c3d8e73cc4c21",
+  "first_candidate_review": "REQUEST_CHANGES P2: legal English note/caption overflow; fixed with actual font line height and complete caption matrix",
+  "scope": "Chinese ordinary Web six views; zh-CN/en native all legal captions/variants; no world/save injection in ordinary Web. Local is candidate, not public release."
 }

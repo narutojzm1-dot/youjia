@@ -1,0 +1,75 @@
+from playwright.sync_api import sync_playwright
+from pathlib import Path
+import json, sys
+
+URL = "https://narutojzm1-dot.github.io/youjia/"
+out = Path(sys.argv[1]); out.mkdir(parents=True, exist_ok=True)
+READ_DB = """async()=>{const all=await indexedDB.databases();let result={};for(const d of all){result[d.name]=await new Promise((resolve,reject)=>{let q=indexedDB.open(d.name);q.onerror=()=>reject(q.error.message);q.onsuccess=()=>{let db=q.result;let names=[...db.objectStoreNames];if(!names.length){db.close();resolve({});return;}let tx=db.transaction(names,'readonly'),r={};for(const n of names){let st=tx.objectStore(n),v=st.getAll(),k=st.getAllKeys();v.onsuccess=()=>{r[n]={values:v.result,...r[n]}};k.onsuccess=()=>{r[n]={keys:k.result,...r[n]}};}tx.oncomplete=()=>{db.close();resolve(r)};tx.onerror=()=>{db.close();reject(tx.error.message)};}});}return result;}"""
+steps = []
+
+
+def keepsakes(db):
+    text = json.dumps(db, ensure_ascii=False)
+    found = []
+    for chunk in text.split('\\"keepsakes\\":')[1:]:
+        found.append(chunk[:160])
+    return found
+
+
+with sync_playwright() as p:
+    b = p.chromium.launch(executable_path="/usr/local/bin/google-chrome", headless=True,
+                          args=["--no-sandbox", "--use-gl=angle", "--use-angle=swiftshader", "--enable-webgl", "--enable-unsafe-swiftshader"])
+    ctx = b.new_context(viewport={"width": 1280, "height": 720})
+    logs, errors = [], []
+
+    def open_page():
+        pg = ctx.new_page()
+        pg.on("console", lambda m: logs.append([m.type, m.text]))
+        pg.on("pageerror", lambda e: errors.append(str(e)))
+        pg.add_init_script("window.first=false;window.addEventListener('youjia:first-frame',()=>window.first=true)")
+        pg.goto(URL, wait_until="domcontentloaded")
+        pg.wait_for_function("window.first", timeout=180000)
+        return pg
+
+    def shot(pg, name, note):
+        pg.screenshot(path=str(out / f"{name}.png"))
+        steps.append(f"{name}: {note}")
+
+    pg = open_page()
+    release = pg.evaluate("fetch('game-release.json').then(r=>r.json())")
+    steps.append("release " + release["sourceCommit"])
+    pg.wait_for_timeout(1500)
+    pg.mouse.click(640, 368)
+    pg.wait_for_timeout(6000)
+    shot(pg, "01-yard", "started the holiday")
+    pg.mouse.click(262, 630)
+    pg.wait_for_timeout(9000)
+    shot(pg, "02-painted-path", "tapped the bottom-left stone path: walks there and goes out")
+    for i, (name, x, y) in enumerate([("gate", 978, 466), ("shade", 824, 540), ("brook", 707, 596), ("slope", 585, 641)]):
+        pg.mouse.click(x, y)
+        pg.wait_for_timeout(12000)
+        pg.keyboard.press("e")
+        pg.wait_for_timeout(2000)
+        shot(pg, f"{3 + 2 * i:02d}-{name}-look", f"tapped the lane at {name}, E: stop and look")
+        pg.keyboard.press("t")
+        pg.wait_for_timeout(2000)
+        shot(pg, f"{4 + 2 * i:02d}-{name}-after-t", "T: take if offered")
+        pg.mouse.click(640, 676)
+        pg.wait_for_timeout(1500)
+    pg.keyboard.press("r")
+    for k in range(12):
+        pg.wait_for_timeout(500)
+        shot(pg, f"11-yard-back-{k:02d}", f"{(k + 1) * 0.5:.1f} s after R")
+    before = pg.evaluate(READ_DB)
+    pg.close()
+    pg = open_page()
+    pg.wait_for_timeout(1500)
+    pg.mouse.click(640, 368)
+    pg.wait_for_timeout(6000)
+    shot(pg, "13-reopened", "reloaded and continued")
+    after = pg.evaluate(READ_DB)
+    (out / "records.json").write_text(json.dumps({"before": before, "after": after}, ensure_ascii=False, indent=2))
+    (out / "console.json").write_text(json.dumps({"logs": logs, "errors": errors}, ensure_ascii=False, indent=2))
+    (out / "steps.txt").write_text("\n".join(steps) + "\n" + "keepsakes before reload: " + json.dumps(keepsakes(before), ensure_ascii=False) + "\nkeepsakes after reload: " + json.dumps(keepsakes(after), ensure_ascii=False) + "\nerrors: " + json.dumps(errors) + "\n")
+    print(open(out / "steps.txt").read())
+    b.close()
