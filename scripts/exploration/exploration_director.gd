@@ -2,6 +2,7 @@ class_name ExplorationDirector
 extends Node
 # 宿主侧的外出导航（契约 §4“回院导航”、§9 生命周期）：院门前出发 → 画卷 → 回院。
 # Main 只负责隐藏 / 恢复小院与界面；本节点负责核心宿主、画卷的创建与释放、回院后的文案。
+# 回院时提交通常还没确认：returned 带空文案（Main 显示“回到院里了”），确认后再经 notice 说收好了。
 
 signal entered
 signal returned(notice_key: String)
@@ -21,6 +22,7 @@ func attach(store: Object, root: Node) -> String:
 	world_root = root
 	host = ExplorationHost.new(store)
 	var outcome := host.restore()
+	host.settled.connect(_on_settled)
 	if host.session.is_quarantined():
 		return "notice.exploration.unavailable"
 	return _notice_for(outcome)
@@ -80,6 +82,13 @@ func idle_tick(delta: float) -> void:
 		var outcome := host.retry_deferred()
 		if outcome.get("state", "") == "committed":
 			notice.emit(_notice_for(outcome))
+
+
+## 提交受理后才有结论：确认了就说收好了；重试又没写上就不再打扰（院内会再试）
+func _on_settled(outcome: Dictionary) -> void:
+	if outcome.get("state", "") == "deferred" and outcome.get("retry", false):
+		return
+	notice.emit(_notice_for(outcome))
 
 
 func _on_return_requested(reason: String) -> void:

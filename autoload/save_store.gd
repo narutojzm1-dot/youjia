@@ -211,7 +211,7 @@ func set_animal_relationship_memory(memory: Dictionary) -> bool:
 
 
 # ── 探索 ──────────────────────────────────────────────────────────────────────
-# 同 set_yard_progress：候选提交成功后才发布到内存，失败时内存保持写入前原样。
+# 只走异步队列：返回受理编号，commit_confirmed 之后才发布到内存，被拒或未知时内存保持确认前原样。
 
 func get_exploration_record() -> Variant:
 	var record: Variant = _data.get("exploration", null)
@@ -226,26 +226,35 @@ func get_keepsakes() -> Dictionary:
 	return (_data.get("keepsakes", {}) as Dictionary).duplicate(true)
 
 
-func save_exploration_record(record: Variant) -> bool:
-	var candidate: Dictionary = _data.duplicate(true)
-	candidate.exploration = record.duplicate(true) if record is Dictionary or record is Array else record
-	return _commit_candidate(candidate)
+func request_exploration_record(record: Variant) -> String:
+	var frozen: Variant = _copy_record(record)
+	return request_intent("exploration", func(current: Dictionary) -> Dictionary:
+		current.exploration = _copy_record(frozen)
+		return current)
 
 
-## 一次文件提交里同时写入带回的小物、旅程水位线与会话记录，避免重复授予。
-func commit_exploration_trip(record: Variant, trip_serial: int, find_ids: PackedStringArray) -> bool:
-	if trip_serial <= get_exploration_committed_serial():
-		return false
-	var candidate: Dictionary = _data.duplicate(true)
-	var keepsakes: Dictionary = (candidate.get("keepsakes", {}) as Dictionary).duplicate(true)
+## 一次提交里同时写入带回的小物、旅程水位线与会话记录。队首求值时水位线已越过这趟就只写记录、
+## 不再授予；是否授予写进 receipt.granted，确认信号到达前就已填好。
+func request_exploration_trip(record: Variant, trip_serial: int, find_ids: PackedStringArray, receipt: Dictionary) -> String:
 	for find_id: String in find_ids:
 		if not ExplorationRoutes.is_formal_find(find_id):
-			return false
-		keepsakes[find_id] = mini(int(keepsakes.get(find_id, 0)) + 1, SaveDataCodec.MAX_KEEPSAKE_COUNT)
-	candidate.keepsakes = keepsakes
-	candidate.exploration_committed_serial = trip_serial
-	candidate.exploration = record.duplicate(true) if record is Dictionary or record is Array else record
-	return _commit_candidate(candidate)
+			return ""
+	var frozen: Variant = _copy_record(record)
+	var finds := find_ids.duplicate()
+	return request_intent("exploration_trip", func(current: Dictionary) -> Dictionary:
+		receipt.granted = trip_serial > int(current.get("exploration_committed_serial", 0))
+		if receipt.granted:
+			var keepsakes: Dictionary = (current.get("keepsakes", {}) as Dictionary).duplicate(true)
+			for find_id: String in finds:
+				keepsakes[find_id] = mini(int(keepsakes.get(find_id, 0)) + 1, SaveDataCodec.MAX_KEEPSAKE_COUNT)
+			current.keepsakes = keepsakes
+			current.exploration_committed_serial = trip_serial
+		current.exploration = _copy_record(frozen)
+		return current)
+
+
+static func _copy_record(record: Variant) -> Variant:
+	return record.duplicate(true) if record is Dictionary or record is Array else record
 
 
 func _clean_moments(raw: Variant, album: Array) -> Dictionary:
