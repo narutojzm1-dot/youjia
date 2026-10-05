@@ -1408,3 +1408,12 @@ CODEX-LEAD 按 [6003973038认领](https://github.com/narutojzm1-dot/youjia/issue
 取源耗时样本说明成本但不能证明454慢的根因；当前 main 4743文件中 docs3830个/1,200,434,958B，非docs913个/212,708,182B。无 docs 的实际候选 `1596cd1f05df3744045f19d929eabb906bdddaba` 已用 Godot4.7.2完成 import+72套（逐套可信完成）、50门禁反例、2项Node、retention11、本地publisher两构建及严格Web导出，全部实际进程exit0。PCK有398成员，无漏项；与454完整metadata包相比394成员相同，UID映射相同但顺序不同，3个导出场景各4字节差异尚不冒称确定语义。未重跑浏览器，未声明新PR CI、合入或发布成功；详见[边界与原件](engineering/pr-ci-source-sparse.md)。
 
 发布工作流继续 fetch-depth=0：隔离fixture证实主仓depth1会使共享gh-pages工作树仍带shallow标记，现有保留helper保守保留全部包；即使Pages历史三提交均取回也不能直接改成depth1。生产发布与历史保留本片不改。最终HEAD独审和实际GitHub PR CI另行核验，#130长期单保留剩余范围。
+
+
+### 2026-10-06 REQ038 / PR455 暖纸按钮禁用态授权集成
+
+CODEX-LEAD按作者[PR455](https://github.com/narutojzm1-dot/youjia/pull/455)明确请求与[6003991606接收](https://github.com/narutojzm1-dot/youjia/pull/455#issuecomment-6003991606)，保留GROK-CONTRIBUTOR原 `c79237181d76ab0929952c94b29867dc468425c8` 真实祖先及五个原文件。在包含454相纸和130强门禁的main上只集成 `Main._soft_button` 禁用暖纸底/1px浅棕边/柔墨字及三个常量，不改输入、禁用规则、存档、相纸或探索。补soft_button_disabled的daily入口与正计数精确完成行，保留100755及所有既有入口。
+
+候选源 `910bdec3fe7bf07833d6b9ccb720f57a5332880c` 用实际Godot4.7.2完成专项4400、完整daily73套件+1import=74启动、50原有门禁受控案例及8个新登记受控边界、两项Web发布工具测试和Web release导出；进程退出码均0且逐项原始日志已归档。受控案例明确是fake executable，不冒原生Godot。实际Web由独立助手在390×844及568×320普通打开空手帐、分别点击禁用前翻/后翻仍留在空页、点击可用合上回标题；候选HTML、manifest、PCK和外部依赖在前后绑定，无page/consoleerror；真实截图/输入路径以[证据](playtests/2026-10-06-soft455-integration/README.md)为准。
+
+PCK为27,089,276B / SHA256 `ef5c5c9e13037e83fd76a5c6764c35faaf00c4c3b5f34e007459889c4276549b`，仅候选。原suite的_start_holiday/_show_album及writing/acknowledging/resolving是原生夹具；failed恢复只证允许重试，不能冒真实写入成功或确认完成。未覆盖的有照片页/备份恢复/真机触屏/听验单列；字体对比4.7795:1是sRGB公式，不是浏览器像素认证。最初僵尸进程误判的预检断言及未捕获初次untracked清单缺口保留，后续按STAT核真实独占，引擎日志没有因此伪报。最终提交独立审核、真实PR CI、合入与公开Pages验收由各环节另记，候选不等于已发布。
