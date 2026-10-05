@@ -47,6 +47,7 @@ var _look_button: Button
 var _pick_button: Button
 var _go_button: Button
 var _basket: Control
+var reveal: FindReveal
 
 
 ## 原画只有一版晴秋，天气暂不改画面
@@ -83,6 +84,8 @@ func setup(trip_host: ExplorationHost, _weather: String) -> void:
 
 
 func release() -> void:
+	if reveal != null:
+		reveal.settle()
 	set_process(false)
 	set_process_unhandled_input(false)
 	if camera != null:
@@ -95,6 +98,8 @@ func release() -> void:
 func _notification(what: int) -> void:
 	if what in [NOTIFICATION_PAUSED, NOTIFICATION_APPLICATION_FOCUS_OUT, NOTIFICATION_WM_WINDOW_FOCUS_OUT]:
 		walk_target = {}
+		if reveal != null:
+			reveal.settle()
 
 
 func reduced_motion() -> bool:
@@ -133,6 +138,8 @@ func walk(direction: Vector2, delta: float) -> void:
 		if L.route_length(spot, walk_target) < 0.5:
 			walk_target = {}
 	var moved := foot() - before
+	if moved.length() > 0.01 and reveal != null:
+		reveal.settle()
 	if absf(moved.x) > 0.01:
 		facing = signf(moved.x)
 	if not _walked and L.route_length(spot, L.START) > 24.0:
@@ -185,6 +192,8 @@ func observe(stop_id: String = "") -> bool:
 
 
 func end_observe() -> void:
+	if reveal != null:
+		reveal.settle()
 	if observing.is_empty():
 		return
 	observing = ""
@@ -199,6 +208,8 @@ func pick() -> bool:
 		return false
 	var choice := pick_choice()
 	var ok := false
+	if reveal != null:
+		reveal.settle()
 	match choice.kind:
 		"take":
 			ok = host.take(choice.find_id).ok
@@ -212,7 +223,28 @@ func pick() -> bool:
 		_show_caption(_observe_caption(), 0.0)
 		items.queue_redraw()
 		_refresh()
+		if choice.kind in ["take", "swap"]:
+			_start_reveal(choice.find_id)
 	return ok
+
+
+## 只在核心已接受带上 / 换成之后调用；起点是路边那件东西，停在人物头顶上方，终点是篮子里它的位置
+func _start_reveal(find_id: String) -> void:
+	if reveal == null:
+		return
+	var anchor: Vector2 = L.stop(observing).get("item", foot())
+	var depth := L.depth(foot().y)
+	var size := get_viewport().get_visible_rect().size
+	var top := art_to_screen(foot() + Vector2(0, -L.WALKER_BOX.size.y * depth)) - Vector2(0, FindReveal.HALO + 6.0)
+	var margin := FindReveal.HALO + 8.0
+	var ceiling := margin + FindReveal.LABEL_ROOM
+	if _caption.visible:
+		ceiling = _caption.position.y + _caption.size.y + margin + FindReveal.LABEL_ROOM
+	top.x = clampf(top.x, margin, size.x - margin)
+	top.y = clampf(top.y, minf(ceiling, size.y * 0.5), size.y - margin)
+	var slot := maxi(carried().size() - 1, 0)
+	reveal.play(find_id, art_to_screen(anchor), top, _basket.position + Vector2(24 + slot * 16, 22),
+		1.6 * L.depth(anchor.y) * _cam_zoom, _find_name(find_id), reduced_motion())
 
 
 func pick_choice() -> Dictionary:
@@ -240,6 +272,8 @@ func _request_return(reason: String) -> void:
 		return
 	leaving = true
 	walk_target = {}
+	if reveal != null:
+		reveal.settle()
 	return_requested.emit(reason)
 
 
@@ -448,7 +482,9 @@ func _build_hud() -> void:
 	_hint.text = I18n.t("exploration.caption.walk_hint")
 	_return_button = _button(I18n.t("exploration.action.return"), func() -> void: _request_return("player"))
 	# 触屏没有 Esc：暂停/音量入口在画卷里也要有
-	_pause_button = _button(I18n.t("hud.pause"), func() -> void: pause_requested.emit())
+	_pause_button = _button(I18n.t("hud.pause"), func() -> void:
+		reveal.settle()
+		pause_requested.emit())
 	_look_button = _button("", func() -> void: observe())
 	_pick_button = _button("", func() -> void: pick())
 	_go_button = _button(I18n.t("exploration.action.continue"), end_observe)
@@ -457,6 +493,9 @@ func _build_hud() -> void:
 	_basket.size = Vector2(290, 60)
 	_basket.draw.connect(_draw_basket)
 	hud.add_child(_basket)
+	reveal = FindReveal.new()
+	reveal.name = "FindReveal"
+	hud.add_child(reveal)
 
 
 ## 提篮常伴：带上的东西在篮子里看得见；只画，不计数、不排格子

@@ -1,0 +1,98 @@
+[
+  {
+    "stage": "paused-before-controls",
+    "view": [
+      844,
+      390,
+      3
+    ],
+    "build": "game-a067ce9",
+    "backend": {
+      "buffers": 2,
+      "bytes": 90316800,
+      "decoded": 2,
+      "starts": 2,
+      "players": 2,
+      "playing": 2,
+      "state": "running"
+    },
+    "gains": [
+      0.3981071710586548,
+      0.15848931670188904
+    ],
+    "errors": [],
+    "screenshot": "844-390-dpr3-paused-before-controls.png"
+  },
+  {
+    "stage": "music-half",
+    "view": [
+      844,
+      390,
+      3
+    ],
+    "build": "game-a067ce9",
+    "backend": {
+      "buffers": 2,
+      "bytes": 90316800,
+      "decoded": 2,
+      "starts": 2,
+      "players": 2,
+      "playing": 2,
+      "state": "running"
+    },
+    "gains": [
+      0.3981071710586548,
+      0.08082955330610275
+    ],
+    "errors": [],
+    "screenshot": "844-390-dpr3-music-half.png"
+  },
+  {
+    "stage": "ambience-half",
+    "view": [
+      844,
+      390,
+      3
+    ],
+    "build": "game-a067ce9",
+    "backend": {
+      "buffers": 2,
+      "bytes": 90316800,
+      "decoded": 2,
+      "starts": 2,
+      "players": 2,
+      "playing": 2,
+      "state": "running"
+    },
+    "gains": [
+      0.2030346542596817,
+      0.08082955330610275
+    ],
+    "errors": [],
+    "screenshot": "844-390-dpr3-ambience-half.png"
+  },
+  {
+    "stage": "muted",
+    "view": [
+      844,
+      390,
+      3
+    ],
+    "build": "game-a067ce9",
+    "backend": {
+      "buffers": 2,
+      "bytes": 90316800,
+      "decoded": 2,
+      "starts": 2,
+      "players": 2,
+      "playing": 2,
+      "state": "running"
+    },
+    "gains": [
+      0.2030346542596817,
+      0.08082955330610275
+    ],
+    "errors": [],
+    "screenshot": "844-390-dpr3-muted.png"
+  }
+]
