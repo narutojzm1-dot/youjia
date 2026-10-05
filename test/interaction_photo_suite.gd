@@ -160,9 +160,9 @@ func run():
   world.debug_place_player(goose.position + Vector2(-45, 30))
   world._fish_carry_type = "medium"; world._fish_carry_timer = 8.0
   world.request_pointer_action(goose.visual_hit_rect().get_center())
-  check(overlay.bird_feedback_snapshot().get("actor_id", "") == "goose", "goose feeding reacts on the goose, not an earlier duck")
+  check(overlay.bird_feedback_snapshot().is_empty() and goose._feed_ack_active and goose._ack_cel == "calm", "goose feeding uses its own calm acknowledgement without heart")
   root.get_node("TuningStore").set_value("ui.reduced_motion", true)
-  check(bool(overlay.bird_feedback_snapshot().get("reduced_motion", false)), "reduced-motion feed keeps a readable still reaction")
+  check(goose._ack_cel == "calm" and overlay.bird_feedback_snapshot().is_empty(), "reduced-motion feed keeps a readable painting without heart")
   root.get_node("TuningStore").set_value("ui.reduced_motion", false)
  # Petting must be acknowledged by the actual touched animal, not a generic
  # toast or a different sheep that the player happened to walk past.

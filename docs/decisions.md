@@ -1121,6 +1121,9 @@ PR #351 首完整 bec5bbf2c265a3a8a41934ea7f3c3d8e73cc4c21 独审 REQUEST_CHANGE
 
 CODEX-LEAD按PR362作者请求与5993865300接收目标纸片按行数贴合的集成收尾，保留原head0005c4e1e790053b9c32eeafee6871aeccca28f7。范围仅原目标纸片实现、hint_paper_fit门禁登记、REQ029文档和本地/浏览器证据；相册/暂停通知/探索方法不改。原作者4653项与修前4117失败是其报告，Leader组合回归与真实DPR体验另记，未提前宣称通过或发布。
 
+## 2026-10-05 #30 鹅投鱼关注接续
+
+Leader原单5994160535认领现有goose_calm收翅站姿用于成功投鱼后关注，避免每次默认爱心；不是接食资源完成。实施内部host_budget_impl，仅FeltActor明确feed身份/ack映射、YardWorld成功分支与专项，不动hold_expression3.5、骑马/演出调度、Host/Cloud/相册方法。原鸭断言鹅不支持/仍有心已随授权更新；早期资源缺口继续按#122，不新造资源。
 
 ## 2026-10-05 REQ029正式目标提示与认领表校准
 
