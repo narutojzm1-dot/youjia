@@ -1383,3 +1383,14 @@ CODEX-LEAD 按 [原单认领6002379027](https://github.com/narutojzm1-dot/youjia
 ### GAME-PM 05:20最新范围覆盖
 
 451 finalf72独审合de4保Grok444祖先，候选已交正式发布待，公开实际仍089d；447faf507已Leader6002478671实际接独立候选3970488/final审验合发待。452 final6ce独审合16ef、450 final87bd独审并真实PR CI37373896187成功合d788，只两工程门禁已交，130父不全关/不冒公开发布。448/449有界关系记忆及低动效静帧档已交，概率回响/精准取消等未覆盖保留。Cloud21:00仅巡检/375认可待，Build05:07仅巡检，不假称实现或额度恢复。13身份及Owner下一动作见[本轮](pm/2026-10-06-0520-coordination.md)。
+
+
+### 2026-10-06 REQ037 新照片相紙襯底集成（CODEX-LEAD）
+
+按 [447作者請求與接收6002478671](https://github.com/narutojzm1-dot/youjia/pull/447#issuecomment-6002478671) 保留原作者 faf507ae47a1bd999a32b3720b22cf3391ea5b1e 的 PhotoArrival 襯底與專項，整合 main de4ba4227a1ce0eff5db1106a051bdf9845332a9，補 daily / 需求索引與[原始驗證證據](playtests/2026-10-06-photo447-integration/README.md)。只在相框下加紙色底，照片構圖、題詞、計時、低動效與存檔原路徑不變；普通顯影淡入淡出仍保留，不把過渡時整張相紙透明當成修復範圍。作者原生 550 / 修前19屬其報告，Leader 實際組合回歸、正常玩家留影與最後 SHA 獨審另記，不冒上線完成。
+
+
+REQ037 接力候选追加：运行源397的完整daily实际73次Godot启动并至两项JS完成行，后续retention11、本地publisher两构建及导出均到达；首次工具外层1与内部run.exit=0原因未解释，完整日志原样保留，不宣称外层首次成功。852整合可信完成标记后，正常import、50项门禁、实际550专项和严格Web导出由Python逐进程直接记录exit0；两真实PCK字节相同。独立QA在390×844、568×320各normal/reduce共四个新profile，以普通点羊自然首照和相册验到完整实纸衬；44原PNG和10轮完整HTTP源/包核验归[候选档案](playtests/2026-10-06-photo447-candidate/README.md)，driver exit0/errors空。正常短横02为预期淡入，不代完整hold，该样本未单独拍到自然到期收起；真实关页复开仅同context，不冒进程重启或旧档全矩阵。随后合main d788只带只读workflow/docs，生产/tools/test对实测852为空diff；原作者六文件原样保留。最终PR CI、独立final SHA审查、合入及公开发布仍后续核定。
+
+
+REQ037 完整导出补验：独立包审阅查明旧候选稀疏目录漏物化4个已跟踪根metadata。实际四组QA继续绑定852/812144原包，不改其manifest或原件。合PM453 main67c后源d22精确补原Git四JSON并正常import/严格export均直接exit0；新包27,089,100B / faa935055fb62250c137625da28e15d2ac28ef3880db1e8993e5991afec84df6。独立逐成员审计确认旧394个payload（含场景ID）全字节相同、只增四个精确Git文件至398项；限定运行内容等价映射候选结果，没有声称重跑新包浏览器或已公开发布。详情及原始失败完整保留在[工程档案](playtests/2026-10-06-photo447-integration/README.md)。
