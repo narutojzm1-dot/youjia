@@ -383,7 +383,14 @@ static func _event_frame(rule: Dictionary, actors: Dictionary, items: Array) -> 
 			selected = ["player", "fishing"]
 			minimum = 200.0
 		_:
-			selected = [str(rule.get("owner", "llama"))]
+			var owner := str(rule.get("owner", "llama"))
+			selected = [owner]
+			# Rules name a species; multi-actor species have distinct snapshot IDs.
+			# Keep their recorded bodies in frame instead of the no-subject fallback.
+			if not actors.has(owner):
+				for id: Variant in actors:
+					if _property(actors[id], "species", "") == owner:
+						selected.append(str(id))
 	var bounds := Rect2()
 	var found := false
 	for item: Dictionary in items:

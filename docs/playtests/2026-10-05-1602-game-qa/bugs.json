@@ -1,0 +1,79 @@
+{
+  "updatedAt": "2026-10-05T08:08:30.093312+00:00",
+  "issues": [
+    {
+      "id": "QA-EXP-20261003-001",
+      "type": "已观察体验问题",
+      "severity": "P2",
+      "title": "晴阴院子构图不连续",
+      "detail": "房屋、池塘、远山及围栏位置与透视显著变化，像切换地点；既有策划已记录同构图改进方向。",
+      "lastCheckedBuild": "game-5a0a446",
+      "status": "本轮自然晴转阴布局跳变仍在",
+      "reproductionRate": "1/1本轮自然切换",
+      "reproduction": "进入第4天既有存档，等待晴转阴，对照02-yard与04-lead-cloudy",
+      "aliases": [
+        "EXP-001"
+      ],
+      "trackingLinks": [
+        "https://github.com/narutojzm1-dot/youjia/issues/51",
+        "https://github.com/narutojzm1-dot/youjia/issues/168"
+      ],
+      "expected": "同一院子的房屋、池塘、围栏与远山构图保持连续",
+      "actual": "房屋透视、远山和池塘布局发生明显切换"
+    },
+    {
+      "id": "QA-EXP-20261003-002",
+      "type": "待复核",
+      "severity": "P2",
+      "title": "既有相册题词与入镜主体不对应",
+      "detail": "第1页写绵羊愿意靠近我了，截图未见绵羊，画面为马、羊驼和鸭子；首次生成版本不明。",
+      "lastCheckedBuild": "game-5a0a446",
+      "status": "仓库320已修新照片构图；本轮旧图仍保留，新绵羊照片生成未完成，独立验收待补",
+      "reproduction": "打开既有手账第1页，绵羊题词与马/羊驼画面不对应",
+      "reproductionRate": "旧图1/1浏览；新照片未测",
+      "aliases": [
+        "EXP-002"
+      ],
+      "trackingLinks": [
+        "https://github.com/narutojzm1-dot/youjia/issues/40"
+      ]
+    },
+    {
+      "id": "QA-EXP-20261003-003",
+      "type": "已观察体验问题",
+      "severity": "P2",
+      "title": "新版加载封面使用科幻迷宫图",
+      "detail": "game-922be64 冷加载展示机器人/科幻迷宫，与水彩小院体验不一致。",
+      "lastCheckedBuild": "game-bda85be",
+      "status": "桌面真实加载壳复测通过，其他加载矩阵未覆盖",
+      "reproduction": "历史版本加载时观察科幻封面；game-bda85be桌面加载已验证修复，本轮game-3ed47d7仅保存花纸标题页，未截取加载壳",
+      "reproductionRate": "1/1",
+      "trackingIssue": 167,
+      "aliases": [
+        "EXP-003"
+      ],
+      "trackingLinks": [
+        "https://github.com/narutojzm1-dot/youjia/issues/167"
+      ]
+    },
+    {
+      "id": "QA-AUDIO-20261004-001",
+      "aliases": [
+        "issue-195-cold-start"
+      ],
+      "title": "首次进入院子共享音频接口未注册",
+      "severity": "P1",
+      "status": "本轮旧接口错误0/1；每轨10次快速点击仅UI回归，真实听验/慢切/后台未覆盖，不关闭",
+      "lastCheckedBuild": "game-5a0a446",
+      "reproduction": "刷新公开页面，真实鼠标进入，再Escape暂停；预期共享后端可用，实际console No interface __manusBgm registered",
+      "reproductionRate": "本轮冷进入错误0/1；UI开关每轨10次点击",
+      "trackingLinks": [
+        "https://github.com/narutojzm1-dot/youjia/issues/195",
+        "https://github.com/narutojzm1-dot/youjia/issues/196"
+      ],
+      "owner": "修复Owner以仓库最新职责及原issue接收为准；GAME-QA独立复测",
+      "expected": "首次进入正常播放且音乐、环境声开关可靠",
+      "actual": "开关中间截图可见打开/关掉标签，最终恢复关掉（启用）；warn/error日志为空，不能证明实际播放"
+    }
+  ]
+}
