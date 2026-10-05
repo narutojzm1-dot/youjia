@@ -1,0 +1,12 @@
+import urllib.request,json,hashlib,sys,datetime
+expected,out=sys.argv[1:]
+bases=['https://narutojzm1-dot.github.io/youjia/','https://raw.githubusercontent.com/narutojzm1-dot/youjia/gh-pages/']
+def get(u):
+ with urllib.request.urlopen(u,timeout=60) as r:return r.read()
+ms=[json.loads(get(b+'game-release.json')) for b in bases]
+assert ms[0]==ms[1],ms
+m=ms[0];assert m['sourceCommit']==expected,m
+bs=[get(b+m['entry']+'.pck') for b in bases]
+assert bs[0]==bs[1]
+r={'checked_at':datetime.datetime.now(datetime.timezone.utc).isoformat(),'manifest':m,'bytes':len(bs[0]),'sha256':hashlib.sha256(bs[0]).hexdigest(),'public_raw_equal':True}
+open(out,'w').write(json.dumps(r,indent=2));print(json.dumps(r))
