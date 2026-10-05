@@ -1,0 +1,22 @@
+{
+  "code_sha": "de98add31d5dac72dbaeb27a66c1c6b871b84a70",
+  "base_main": "0731cc8",
+  "engine": "4.7.2.stable",
+  "pck_sha256": "2a121f43b5bff60b3490f90f9c9b72de56ad2811705977ea37d7803c184fd99a",
+  "goose_calm_existing_sha256": "a967fda3e27fc974ae63728a8a055589f95e8dd26424ac9d17cef783a9e95203",
+  "resource_changes": false,
+  "ground_anchor": [
+    694.5,
+    1216
+  ],
+  "runtime_files": {
+    "scripts/entities/felt_actor.gd": "d2354e4a156d3b88ebdace42c9f4424ea7146eadca5d98a7eceeb1cf946f6502",
+    "scripts/game/yard_world.gd": "b18a0f0ebfea341609f0b66f62d07f16c22a3c0e8a0240a76b23a0903d71576a"
+  },
+  "daily": {
+    "engine": "4.7.2",
+    "runtime_source": "de98add31d5dac72dbaeb27a66c1c6b871b84a70",
+    "exit_code": 0,
+    "log": "daily.log"
+  }
+}

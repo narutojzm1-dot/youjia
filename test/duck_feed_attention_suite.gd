@@ -64,7 +64,7 @@ func run():
  duck.position += Vector2(3,0)
  duck.tick(0.016,Vector2(1280,720))
  check(duck._ack_cel == "", "external displacement cancels attention")
- check(not world.actor_named("goose").acknowledge_feed(Vector2.ZERO), "goose does not reuse duck resource")
+ check(world.actor_named("goose").acknowledge_feed(Vector2.ZERO), "goose has its own calm resource")
  duck._feed_ack_cooldown = 0
  duck.acknowledge_feed(Vector2.ZERO)
  world.remove_child(duck)
@@ -74,7 +74,7 @@ func run():
  world.debug_place_player(goose.position + Vector2(25,0))
  world._fish_carry_type = "small"
  world._interact_with_target("toss_fish:goose")
- check(world._fish_carry_type == "" and not world._effects_overlay.bird_feedback_snapshot().is_empty(), "existing goose success feedback remains intact")
+ check(world._fish_carry_type == "" and world._effects_overlay.bird_feedback_snapshot().is_empty(), "goose success consumes fish without default heart")
  world.free()
  print("DUCK ATTENTION ", "PASS" if failures.is_empty() else "FAIL", " ", checks)
  quit(0 if failures.is_empty() else 1)

@@ -32,7 +32,7 @@ YOUJIA_CAPTURE_DIR=<dir> godot --path . --resolution 390x844  --script tools/cap
 
 ## 隔离测试
 
-`test/exploration_slice_suite.gd` 的 `_find_reveal()` 在 1280×720 与 390×844 下覆盖：带上和换物各触发一次；放回、停下看、篮满、重复输入不触发；展示期间走动、暂停、接着走、回院都会立即收尾，篮子与存档不变；低动效没有位移；缺少音频资源时安静降级、不顶替其他声音。全量 `EXPLORATION SLICE PASS 180/180`（每次运行都用全新的 `XDG_DATA_HOME`）。
+`test/exploration_slice_suite.gd` 的 `_find_reveal()` 在 1280×720 与 390×844 下覆盖：带上和换物各触发一次；放回、停下看、空停留点不触发；展示期间走动、暂停按钮、接着走、回院都会立即收尾，篮子与存档不变；低动效没有位移；缺少音频资源时安静降级、不顶替其他声音。核心拒绝（`carry_limit` / `not_offered`）、恢复旧旅程、回院补交和 Esc 暂停没有单独测试：展示只在 `pick()` 里 take/swap 返回成功后发起，Esc 暂停与失焦走同一个 `_notification` 收尾，由代码结构保证。全量 `EXPLORATION SLICE PASS 180/180`（每次运行都用全新的 `XDG_DATA_HOME`）。
 
 ## 还没有的
 

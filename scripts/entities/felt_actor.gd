@@ -63,6 +63,7 @@ var _ack_left := 0.0
 var _pet_ack_cooldown := 0.0
 var _feed_ack_cooldown := 0.0
 var _feed_ack_origin := Vector2.ZERO
+var _feed_ack_active := false
 var _posture_metadata: Dictionary = {}
 var _posture_id := "idle"
 var _idle_ground_anchor := Vector2(-1,-1)
@@ -176,6 +177,7 @@ func _paint_facing() -> float:
 func show_painted_ack(cel: String, seconds: float) -> void:
 	if posed or seconds <= 0.0 or not _textures.has(cel):
 		return
+	_feed_ack_active = false
 	_ack_cel = cel
 	_ack_left = seconds
 	_velocity = Vector2.ZERO
@@ -205,7 +207,8 @@ func acknowledge_pet(observer_position: Vector2) -> void:
 
 # Acknowledges a successful toss by noticing the player, not a feeding mouth pose.
 func acknowledge_feed(observer_position: Vector2) -> bool:
-	if species != "duck" or posed or _feed_ack_cooldown > 0.0 or not _textures.has("attend"):
+	var cel := str({"duck": "attend", "goose": "calm"}.get(species, ""))
+	if cel.is_empty() or posed or _feed_ack_cooldown > 0.0 or not _textures.has(cel):
 		return false
 	if absf(observer_position.x - position.x) > 2.0:
 		facing = signf(observer_position.x - position.x)
@@ -216,13 +219,15 @@ func acknowledge_feed(observer_position: Vector2) -> bool:
 		scale.x = absf(scale.x) * facing
 	_glance_timer = -5.0
 	_feed_ack_origin = position
-	show_painted_ack("attend", 2.2)
+	show_painted_ack(cel, 2.2)
+	_feed_ack_active = true
 	_feed_ack_cooldown = 5.0
 	return true
 
 
 func _exit_tree() -> void:
 	_ack_cel = ""
+	_feed_ack_active = false
 	_ack_left = 0.0
 	_feed_ack_cooldown = 0.0
 
@@ -302,6 +307,7 @@ func spit(target: Vector2 = Vector2.INF) -> void:
 func set_pose(point: Vector2, next_scale: float, face: float) -> void:
 	posed = true
 	_ack_cel = ""
+	_feed_ack_active = false
 	_ack_left = 0.0
 	pose_point = point
 	_base_scale = next_scale
@@ -433,8 +439,9 @@ func tick_glance(delta: float, player_pos: Vector2) -> void:
 
 func tick(delta: float, world_size: Vector2) -> void:
 	_feed_ack_cooldown = maxf(0.0, _feed_ack_cooldown - delta)
-	if _ack_cel == "attend" and (posed or state == "lead" or _velocity.length() > 0.3 or not position.is_equal_approx(_feed_ack_origin)):
+	if _feed_ack_active and (posed or state == "lead" or _velocity.length() > 0.3 or not position.is_equal_approx(_feed_ack_origin)):
 		_ack_cel = ""
+		_feed_ack_active = false
 		_ack_left = 0.0
 		_refresh_painted_posture()
 	_pet_ack_cooldown = maxf(0.0, _pet_ack_cooldown - delta)
@@ -569,6 +576,7 @@ func tick(delta: float, world_size: Vector2) -> void:
 		_ack_left = maxf(0.0, _ack_left - delta)
 	if _ack_cel != "" and (posed or _velocity.length() > 0.3 or _gait.weight > 0.08 or _ack_left <= 0.0):
 		_ack_cel = ""
+		_feed_ack_active = false
 		_ack_left = 0.0
 	_refresh_painted_posture()
 	var stride := 30.0
