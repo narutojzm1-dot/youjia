@@ -120,11 +120,11 @@ func record() -> void:
 			9:
 				if frame - since > 20:
 					tap(stop_on_screen(scroll, "shade"))
-					next("touch: tap the path under the pine", frame)
+					next("touch: tap the lane by the grassy verge", frame)
 			10:
 				if scroll.walk_target.is_empty() and scroll.nearby_stop() == "shade":
 					tap_control(scroll._look_button)
-					next("touch: look under the pine", frame)
+					next("touch: look by the grassy verge", frame)
 			11:
 				if frame - since > 30:
 					shot("shade-look")

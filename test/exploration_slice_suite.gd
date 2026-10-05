@@ -285,23 +285,33 @@ func _painted_path_layout() -> void:
 			stops_ok = stops_ok and Vector2(entry.item).distance_to(drawn) > 80.0
 	check(stops_ok and L.STOPS.map(func(e: Dictionary) -> String: return e.id) == ExplorationRoutes.NEAR_PATH_STOPS, "each catalog stop sits on a path, away from the painted cone and feather")
 	check(L.nearby(L.START).is_empty() and not L.at_home(L.START), "the walk starts just outside the gate, not at a stop")
-	check(L.depth(L.point("road", L.arm_length("road")).y) > L.depth(L.point("gate", 0.0).y) * 1.3, "the walker grows toward the foreground")
-	var at_junction := {"arm": "gate", "d": 0.0}
-	check(L.step_input(at_junction, Vector2.LEFT, 5.0).arm == "pine", "left at the fork takes the upper path toward the pine")
-	check(L.step_input(at_junction, Vector2.DOWN, 5.0).arm == "road", "down at the fork takes the lane toward the foreground")
-	check(L.step_input(at_junction, Vector2.RIGHT, 5.0).arm == "gate", "right at the fork heads back to the gate")
-	var lane := {"arm": "road", "d": 40.0}
-	check(float(L.step_input(lane, Vector2.LEFT, 5.0).d) > 40.0, "left on the lane still walks along it, never sideways off it")
-	var route := {"arm": "gate", "d": 300.0}
-	var goal := {"arm": "road", "d": 165.0}
+	var producer: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://art/concepts/producer_world_20261005/near_path_anchors.candidate.json"))
+	var route_points: Array = L.ARMS[L.HOME_ARM].duplicate()
+	route_points.reverse()
+	var matches: bool = producer.route.points.size() == route_points.size()
+	for i in mini(producer.route.points.size(), route_points.size()):
+		matches = matches and Vector2(producer.route.points[i][0], producer.route.points[i][1]) == route_points[i]
+	check(matches and L.ARMS.size() == 1, "the walkable lane is exactly the producer's candidate route, nothing more")
+	var painted_ok := true
+	for region: Dictionary in producer.painted_object_cleanup_regions:
+		var rect := Rect2(region.rect_xywh[0], region.rect_xywh[1], region.rect_xywh[2], region.rect_xywh[3]).grow(30.0)
+		for entry: Dictionary in L.STOPS:
+			painted_ok = painted_ok and not rect.has_point(entry.item)
+	check(painted_ok, "no find is drawn over the producer's painted-object cleanup regions")
+	check(L.depth(L.point(L.HOME_ARM, 0.0).y) > L.depth(L.point(L.HOME_ARM, L.arm_length(L.HOME_ARM)).y) * 1.3, "the walker grows toward the foreground")
+	var middle := {"arm": L.HOME_ARM, "d": 300.0}
+	check(float(L.step_input(middle, Vector2.LEFT, 5.0).d) < 300.0 and float(L.step_input(middle, Vector2.DOWN, 5.0).d) < 300.0, "left or down walks toward the foreground")
+	check(float(L.step_input(middle, Vector2.RIGHT, 5.0).d) > 300.0 and float(L.step_input(middle, Vector2.UP, 5.0).d) > 300.0, "right or up walks back toward the gate")
+	var tip := {"arm": L.HOME_ARM, "d": 0.0}
+	check(L.step_input(tip, Vector2.LEFT, 5.0) == tip and not L.at_home(tip), "the foreground end is not an exit; pushing on stays put")
+	var route := {"arm": L.HOME_ARM, "d": 600.0}
+	var goal := {"arm": L.HOME_ARM, "d": 195.0}
 	var guard := 0
-	var via_junction := false
 	while L.route_length(route, goal) > 0.5 and guard < 400:
 		route = L.step_toward(route, goal, 5.0)
-		via_junction = via_junction or float(route.d) <= 0.01
 		guard += 1
-	check(route.arm == "road" and via_junction, "walking to another path goes through the fork")
-	var desk := L.frame(L.point("gate", 300.0), Vector2(1280, 720))
+	check(is_equal_approx(float(route.d), 195.0) and guard == 81, "walking toward a spot arrives without overshooting")
+	var desk := L.frame(L.point(L.HOME_ARM, 300.0), Vector2(1280, 720))
 	check(L.visible_rect(desk).encloses(Rect2(Vector2.ZERO, L.SIZE).grow(-1.0)), "desktop shows the whole painting")
 	var phone_zoom := -1.0
 	var phone_ok := true
@@ -312,8 +322,8 @@ func _painted_path_layout() -> void:
 			phone_zoom = float(view.zoom) if phone_zoom < 0.0 else phone_zoom
 			phone_ok = phone_ok and is_equal_approx(float(view.zoom), phone_zoom) and L.visible_rect(view).grow(-30.0).has_point(foot) and L.visible_rect(view).grow(-30.0).has_point(foot + L.WALKER_BOX.position * L.depth(foot.y))
 	check(phone_ok and phone_zoom > float(L.frame(Vector2.ZERO, Vector2(390, 844)).zoom) - 0.001, "portrait phone keeps one zoom and the walker in view everywhere")
-	var wide := L.frame(L.point("road", 300.0), Vector2(844, 390))
-	check(float(wide.zoom) > minf(844.0 / L.SIZE.x, 390.0 / L.SIZE.y) and L.visible_rect(wide).has_point(L.point("road", 300.0)), "landscape phone zooms in past a tiny full view and keeps the walker")
+	var wide := L.frame(L.point(L.HOME_ARM, 30.0), Vector2(844, 390))
+	check(float(wide.zoom) > minf(844.0 / L.SIZE.x, 390.0 / L.SIZE.y) and L.visible_rect(wide).has_point(L.point(L.HOME_ARM, 30.0)), "landscape phone zooms in past a tiny full view and keeps the walker")
 
 
 ## 实际的适配器：点按路面沿路走过去、方向键沿路走、停下看不变焦、原画不变形
@@ -336,7 +346,7 @@ func _painted_path_walk() -> void:
 	while not scroll.walk_target.is_empty() and guard < 1200:
 		scroll.walk(Vector2.ZERO, 1.0 / 30.0)
 		guard += 1
-	check(scroll.nearby_stop() == "brook" and scroll.spot.arm == "road", "a tap walks along the path through the fork to the lane")
+	check(scroll.nearby_stop() == "brook" and is_equal_approx(float(scroll.spot.d), float(brook.d)), "a tap walks along the lane to the spot")
 	check(is_equal_approx(scroll.camera_zoom(), zoom), "walking pans without zooming")
 	var shown := Rect2(Vector2.ZERO, Vector2(390, 844))
 	check(shown.has_point(scroll.art_to_screen(scroll.foot())), "the walker stays on screen on a portrait phone")
@@ -346,7 +356,7 @@ func _painted_path_walk() -> void:
 	scroll.end_observe()
 	var before: float = scroll.spot.d
 	scroll.walk(Vector2.LEFT, 0.2)
-	check(scroll.spot.arm == "road" and float(scroll.spot.d) > before and scroll.facing < 0.0, "left walks on down the lane and faces left")
+	check(float(scroll.spot.d) < before and scroll.facing < 0.0, "left walks on down the lane and faces left")
 	scroll.press_at(scroll.art_to_screen(Vector2(40, 300)))
 	check(not scroll.walk_target.is_empty() and L.nearest(Vector2(40, 300)).arm == scroll.walk_target.arm, "a tap off the path walks to its nearest point instead of leaving it")
 	scroll.walk(Vector2.RIGHT, 0.1)
@@ -436,7 +446,7 @@ func _scroll_and_director() -> void:
 	await process_frame
 	director.try_begin(CLOCK, "overcast", value)
 	scroll = director.scroll
-	scroll.spot = {"arm": "gate", "d": L.arm_length("gate")}
+	scroll.spot = {"arm": L.HOME_ARM, "d": L.arm_length(L.HOME_ARM)}
 	for i in 40:
 		scroll.walk(L.home_direction(), 1.0 / 60.0)
 	await process_frame

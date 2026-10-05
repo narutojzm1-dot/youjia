@@ -1,30 +1,30 @@
 20 touch: start holiday
 shot 01-yard.png
 81 touch: walk to the end of the stone path
-146 arrived at (261.7523, 618.8527); action reads 出门走走
+132 arrived at (261.7539, 618.9238); action reads 出门走走
 shot 02-yard-go-out-action.png
-167 touch: action button
+153 touch: action button
 shot 03-scroll-start.png
-218 touch: tap the lane by the brook
+204 touch: tap the lane by the brook
 shot 04-walking.png
-475 arrived by the brook at (983.8259, 771.2809)
+419 arrived by the brook at (923.0451, 778.7064)
 shot 05-brook-nearby.png
-486 touch: stop and look
+430 touch: stop and look
 shot 06-brook-look.png
-brook offer: { "kind": "take", "find_id": "formal.find.feather" }
-517 touch: take
+brook offer: { "kind": "take", "find_id": "formal.find.brook_stone" }
+461 touch: take
 shot 07-basket.png
-548 touch: keep walking
-569 touch: tap the path under the pine
-788 touch: look under the pine
+492 touch: keep walking
+513 touch: tap the lane by the grassy verge
+595 touch: look by the grassy verge
 shot 08-shade-look.png
-shade choice: { "kind": "none" }
-819 touch: take if there is room
+shade choice: { "kind": "take", "find_id": "formal.find.pine_cone" }
+626 touch: take if there is room
 shot 09-shade-basket.png
-carried: ["formal.find.feather"]
-850 touch: keep walking
-871 touch: go back
+carried: ["formal.find.brook_stone", "formal.find.pine_cone"]
+657 touch: keep walking
+678 touch: go back
 shot 10-yard-back.png
-notice: 回到院里了。落羽收好了。
-keepsakes: { "formal.find.feather": 1 }
-892 done
+notice: 回到院里了。圆石、松果都收好了。
+keepsakes: { "formal.find.brook_stone": 1, "formal.find.pine_cone": 1 }
+699 done
