@@ -1,0 +1,31 @@
+{
+  "caught_via_button": 2,
+  "recast": true,
+  "events": [
+    {
+      "seconds": 1.8,
+      "label": "other"
+    },
+    {
+      "seconds": 7.6,
+      "label": "wait"
+    },
+    {
+      "seconds": 17.8,
+      "label": "reel"
+    },
+    {
+      "second_cast": true
+    },
+    {
+      "seconds": 21.4,
+      "label": "wait"
+    },
+    {
+      "seconds": 27.3,
+      "label": "reel"
+    }
+  ],
+  "errors": [],
+  "scope": "natural canvas only, image-template labels guide clicks; no game state injection"
+}

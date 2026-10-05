@@ -145,7 +145,7 @@
 | EXP-FIRST-EXPERIENCE | P1 | #153 队列第 3 项：停下看景、空手中途返回、带一个占位物中途返回三种体验研究，首片节奏/构图需求与资源接口交接包 | 隔离研究切片已交付：[PR #210](https://github.com/narutojzm1-dot/youjia/pull/210) 最终 head `be60a64` 经独立复审（`CURSOR-CLOUD-REVIEWER-201`）APPROVE 后合入（`f5ca6f3`），隔离测试 261 项；[研究说明](architecture/exploration-first-experience.md)含节奏/构图需求、资源接口表、地点/物件候选与 6 条待决项；首地/物件种类已由用户确认；正式构图/资源待 #155，持久化待 #150 联合冻结 | `CURSOR-CLOUD` | [#201](https://github.com/narutojzm1-dot/youjia/issues/201)；[开工评论](https://github.com/narutojzm1-dot/youjia/issues/201#issuecomment-5976771165)；含 GAME-PRODUCER 补充的横竖屏同一停留点取景比较与「走近—松手观察—选择／不选择—中途回院」连续操作检查；与 GROK-BUILD #155 交接，地点/物件种类已决，不再重复征求；画面/资源规格交专业审阅。 |
 | EXP-HOST-RECOVERY-GATE | P1 | #150 R2/R3 真实浏览器验收驱动：同一 context、同 origin 下，在“意图已完成/提交前”和“提交完成/回执前”关页后用新页恢复；双页锁竞争；无 Web Locks 阻断；丢回执、错身份、重复/迟到回执与真实 abort 分别出证据；业务授予不重复 | R2/R3 测试侧已交付并合入：#247（`2d2054f`）、#257（`73fe3d5`）；本轮把 #257 中仅经代码审读的 resolve 持续失败上限（模拟错误）与 ack 真实事务 abort 加入正式矩阵，并修正夹具重开后 payload 写成浮点数的问题。驱动/夹具 `e4f9e24` + Gate `f096a4a` + R1 PR251 `2edb2e7`，Godot 4.7.2/Chrome 148 连续两次 14/14 PASS（109 项），变异验证能拦住修复前夹具；PR261 最终 `98d5182` 经独立复审 APPROVE 后合入 `3956afb`。#257 最终 head `47838bf`；CODEX-LEAD-ASSISTANT 的两条异常路径一次性补证 PR259 已合入 `b3f77cc`，已由本矩阵常驻覆盖。只证明隔离候选，不是正式 Host 冻结或 R4 | `CURSOR-CLOUD`（仅测试侧驱动） | [#239](https://github.com/narutojzm1-dot/youjia/issues/239)；[接收与接口候选 v1](https://github.com/narutojzm1-dot/youjia/issues/239#issuecomment-5981415664)。范围：`test/save_recovery_web/**`、`tools/verify_save_recovery_web.sh`、`docs/architecture/save-recovery-web-acceptance.md`。不复制或重写存储实现，不接正式 SaveStore/Main，不建第二套 Host；R1 封套/意图/协调器/恢复入口与 R4 迁移仍归 CODEX-LEAD，接口由 CODEX-LEAD 与 ENGINEERING-SUPERVISOR 核对。 |
 | YARD-DECOR-PROPOSAL | P1 | 仅同一占位物的可逆布置隔离对照：2–3 个候选位置与自由放置，预览/取消/确认/收起/换位置；键鼠/触屏横竖屏与低动效 | 隔离对照原型已交付（PR216）；PR232空间修订已合入70c170d，独立审及ART静态材料通过（5981854171）；正式布置/真机/持久化仍待 | `CODEX-LEAD-ASSISTANT`（仅此原型切片） | [#154](https://github.com/narutojzm1-dot/youjia/issues/154)；Leader 明确拆分见本单交接。仅 test/ 隔离项目与 docs，不改 Main/YardWorld/SaveStore/PhotoMoment；#125/#150 正式门禁保留，探索核心仍归 CURSOR-CLOUD。 |
-| ART-EXPLORATION-PROPOSAL | P1 | 先资源盘点/规格/构图提案与来源预算；最终画另批 | PR248构图/资源复用提案1d647c31ed0e76a912979940431aabab63ebce95已交，制作人5981844802候选方向通过/消费接口已核，ART5983411469已对同SHA批准仅构图提案，独立review5407926310已APPROVE并合入601d683896d811e2f17cb389e7d0d8104d16e36a；仅提案，不接入 | `GAME-PRODUCER`（GPT绘画接力，待回执） | [#155](https://github.com/narutojzm1-dot/youjia/issues/155)；依赖/正式内容门禁见工单。 |
+| ART-EXPLORATION-PROPOSAL | P1 | 先资源盘点/规格/构图提案与来源预算；最终画另批 | PR248构图/资源复用提案1d647c31ed0e76a912979940431aabab63ebce95已交，制作人5981844802候选方向通过/消费接口已核，ART5983411469已对同SHA批准仅构图提案，独立review5407926310已APPROVE并合入601d683896d811e2f17cb389e7d0d8104d16e36a；仅提案，不接入 | `CODEX-LEAD-ASSISTANT`（小物样张；关键背景GAME-PRODUCER） | [#155](https://github.com/narutojzm1-dot/youjia/issues/155)；依赖/正式内容门禁见工单。 |
 | QA-EXPLORATION-GATE | P1 | 独立失败矩阵/夹具与候选验收、发布和共同维护交接证据 | Q01–Q17矩阵已交；原型Web/真机补测已指定但待执行；正式平台联合验收待交付 | `CODEX-LEAD-ASSISTANT`矩阵 / `GAME-QA`原型补测 / `CODEX-LEAD`平台实现 | [#156](https://github.com/narutojzm1-dot/youjia/issues/156)；依赖/正式内容门禁见工单。 |
 
 
@@ -246,4 +246,47 @@ GROK-CONTRIBUTOR已接测试子项并交PR276（8ffefdf，58项现状检查）�
 
 ### GROK-BUILD额度耗尽与绘画Owner接力（2026-10-05用户通知）
 
-当前人员状态与新旧职责以[人员公告](collaboration/personnel-availability.md)为准：GROK-BUILD不可执行，预计10月9日恢复需实际核实。未完原画（168、155小物、119–123、126）交GPT制作人GAME-PRODUCER接力，回执/首交未到，不把移交写开工；重要地图背景原已归制作人。音频194/235与工程195/234不随绘画自动转交，替代实现Owner待按真实能力明确，已发布功能和MANUS/LOCAL/Cloud/QA范围保持。历史GROK“可继续”等行此时不代表可执行，不等待其主动回报来推进新排期。
+当前人员状态与新旧职责以[人员公告](collaboration/personnel-availability.md)为准：GROK-BUILD不可执行，预计10月9日恢复需实际核实。本次最初一揽子绘画移交已被用户最新分工细化：168关键背景归GAME-PRODUCER；155小物/119/121/122归CODEX-LEAD-ASSISTANT，120/123/126普通补绘归CODEX-LEAD，回执/首交未到，不把移交写开工；重要地图背景原已归制作人。音频194/235与工程195/234不随绘画自动转交，替代实现Owner待按真实能力明确，已发布功能和MANUS/LOCAL/Cloud/QA范围保持。历史GROK“可继续”等行此时不代表可执行，不等待其主动回报来推进新排期。
+
+用户最新明确制作人低频巡检，优先重要决策/关键背景/大世界绘制，不承担普通物件队列。各任务实现Owner见[人员公告分表](collaboration/personnel-availability.md)；维护者先核已有资源只补缺件，Assistant下一首项为155实物尺度与提篮材料，Leader按现有主任务/真实缺口串行排资源，不能把队列分配视全部已开工。行为/核心/接入既有Owner与专业审核保持。
+
+
+### 2026-10-05 CODEX-LEAD普通资源接力回执
+已读取人员公告并接收#120马回应/#123旅人轻抚/#126普通地面补绘，GROK-BUILD暂停期间不再等其执行。先核现有候选：#120 PR145已合入的horse_attend不重画一遍冒新成果，本轮补ART5970265333要求的固定脚底、相同倍率idle→attend→idle资源切换证据。浏览器审查页与左右镜像/110px参考尺度见[记录](playtests/2026-10-05-horse-attend-gate/README.md)。原尺寸胸背/臀线变化及透明碎点需专业收口，未批准接入，不使用逐帧bbox缩放遮盖问题。
+
+串行次序：120剩余问题收口→123先B静态接触样张（沿原384×448/脚底192,420与一种动物的接触规格）→126先核现有地面是否足够再决定普通补绘；不并行宣布三单开工，不绘制作人的关键背景、不接管MANUS行为/WORKBUDDY乘骑。#150正式存档仍Leader主任务，资源审查不代表存档冻结。
+
+
+### STATE-SAVE-CAPACITY / #287：真实容量证据分工
+CODEX-LEAD指定CURSOR-CLOUD承担真实PhotoMoment/相册与旧档主备原文封装容量边界，接收回执待核。范围test/save_payload_budget/、docs/architecture/save-payload-capacity.md及证据，独立分支PR/最终SHA审核；不修改生产Store/Host，不重复已关闭239的109矩阵。用生产捕获与序列化构建可追溯样本，分开自然可达样本与合成压力样本，记录UTF-8字节、双原文封装开销及现64KiB夹具拒绝点/失败前后保全。不得裁历史照片/未知字段凑预算，Storage.estimate不是配额保证。正式容量、唯一writer和durable消费仍Leader负责；此项无需等待画作或正式探索，详见[工单287](https://github.com/narutojzm1-dot/youjia/issues/287)。
+
+
+## 11:20轮当前接收与候选（实际03:17Z后）
+
+两维护者已接普通资源：Assistant1555987355414/2425987385196实际交Draft285 e6c780967c1d3c087d839099feb32655c689ae5a圆石9静态位置图/提篮文本；Leader1205987453733交并合入286 final3d32328aa3902f008f6f6837b7019067440282b3脚底固定倍率材料。均不代表ART/正式摄影/运行时通过，先收当前再串行119/121/122或123/126。Producer关键背景168接收仍待。
+
+阴天v7已ART5987342220退回仅天空合成；晚到原Grok289/v8 3893d472594ec73624cc5e4c3b4fcbc9af78dec0实际PNG ec11fa32f498fa48a37ba43dc35235176f539102bc3ffc5946d4ffe4064f01c9/3586561bytes，专业/资源终审待。原产物保留，不撤用户额度暂停/不认其下轮可执行、不把关键背景Owner交回。LOCAL正式接图待最新批准；字段只读兼容提案可继续。
+
+用户世界图已选B纵深、庭院靠A现有识别，本轮不扩幅，远处线稿纸白；私聊B修订预览本身未确认/未入仓，PM未看图。携带3只是候选实验，数量/掉率未冻结。Cloud新287容量证据获明确拆分，可先交真实capture/default样本与raw双份UTF8/独立压力边界，不等150正式接入；首次接收/实物未到。276当前5e01c1f06a5a20fb2c4f981159660b78b29cbde7保留yard_snapshot/隔离marker及fish挂载，旧45e审核仅历史，新终审待；Web旧鱼miss仍未覆盖，Leader5987473273已澄清自然同岸同像素证据，不等新产品决定，不能以不可走到水面当携带禁钓。
+
+当前仍开发展开，收285专业/真实摄影边界、120艺术缺口、287容量交接及276自然证据→精确SHA终审→必要验证/合入，再按晚间检查点取可发批次，不承诺150/探索/阴天已正式交付。详见[本轮逐人记录](pm/2026-10-05-1120-coordination.md)。
+
+### 2026-10-05 CODEX-LEAD：#231 携鱼第二竿主操作
+
+由CODEX-LEAD修复#276修订3发现7，仅调整活动钓竿优先于默认携物操作；保留显式动物选择、既有携鱼再抛竿与旧鱼到期规则。新独立回归纳入daily，不接管GROK-CONTRIBUTOR的fish_carry套件。验收：携鱼等待/咬钩显示等待/收竿，主操作确实收竿，失败不清旧鱼或重置计时，三视口受控Web及完整回归；合入、发布仍待门禁。
+
+## 12:20轮有效更新（实际04:17Z后）
+
+Cloud已2875987971922/2425987986625接收容量子项，分支cursor/save-payload-budget-9e9c，报告连续执行；未交最终SHA/PR，不等150正式接入。回报正文05:2xZ/13:2x与本轮服务器04:17Z时间不一致，只记作者窗口声明和实际API接收，不伪称该未来时段已完成。
+
+阴天289/v8精确3893d472594ec73624cc5e4c3b4fcbc9af78dec0已ART5987861221 REQUEST CHANGES，仅右侧无云底板轴对齐拼贴；左区/雪山/y>=250通过冻结，先底板全图+跨边界1:1裁切，后云层。Leader已接专业结论，Producer实际绘画接收待；用户额度暂停保持，不再写v8等首次艺术审。PM1685988019012交最小产物，LOCAL兼容只读范围可继续。
+
+285当前1b53f4a241cc972aae323d28253ed2b9d4a1237c只README/三尺寸CSS证据，原PNG未变。ART5987884621已要求水彩概括/短淡影/紧透明包络/实体影bbox锚点/近物前后遮挡实际文件，不再等首次专业意见；PM2855988018792交原Owner下一最小返修与接收。手机11–14CSSpx不当真机摄影通过。
+
+276当前f3cef337db18d0953cab0887b6f68c7927bb41b4作者已自然复测旧鱼miss两次，旧鱼保留/计时不重置；撤回不可落脚等旧推断。原PNG仍只hash，新终审待。Leader已接HUD发现7、保留携鱼再钓并独立291（索引head ca6c736adc89fc44f6325faae4e3c5928be12269，活动中可能变化）；受控探针390×844纹理/着色错误与正常冷启动无错均不足以定生产原因，Draft不合入。PM2765988018451提出仅关键原帧下载URL/base64文本→PM解码核hash/Git blob归档的具体接力，等原字节/回执，不重复106图、不改S2禁止携鱼/不把hash当看图。
+
+用户七页B修订概念已确认，制作人1535987978019；原图未入仓/PM未见，概念不当七页首发或可接资源。详见[策划](game-design.md)与[本轮逐人记录](pm/2026-10-05-1220-coordination.md)。仍开发展开，先收上述真实依赖/资源修订/容量/证据终审，晚间按通过批次收敛。
+
+## 2026-10-05 13点轮：容量测量接收与下一项
+
+CODEX-LEAD接收#287/#293最终f0fece7测量交付，合入f39e4abb2cd441ca4e02b2c75e77ca7962a36628。自然稳态两张照片82,603B、满档合并578,267B，证明64KiB夹具不能用于正式接入；不是生产存档丢失或正式Host验收通过。后续#294指定CURSOR-CLOUD测合法密集照片、转义封装及0/1/8/32恢复归档容量，只限原测试/容量文档，待回执；CODEX-LEAD保留四层预算实现与生产写入/持久回执责任。1.5MiB/3.5MiB/≥1MiB仅候选，待真实边界与平台成本证据，不冻结。
