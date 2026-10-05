@@ -1120,3 +1120,8 @@ PR #351 首完整 bec5bbf2c265a3a8a41934ea7f3c3d8e73cc4c21 独审 REQUEST_CHANGE
 ## 2026-10-05 REQ029集成接收
 
 CODEX-LEAD按PR362作者请求与5993865300接收目标纸片按行数贴合的集成收尾，保留原head0005c4e1e790053b9c32eeafee6871aeccca28f7。范围仅原目标纸片实现、hint_paper_fit门禁登记、REQ029文档和本地/浏览器证据；相册/暂停通知/探索方法不改。原作者4653项与修前4117失败是其报告，Leader组合回归与真实DPR体验另记，未提前宣称通过或发布。
+
+
+## 2026-10-05 REQ029正式目标提示与认领表校准
+
+PR362最终adbb0b279c45f9f9f4a446889cfd06fc6f99a604独立APPROVE合1a3842c，Actions/Pages成功，实际PCK6198ad204f2d0a9c83633b8c9c8445c652ffc54bb4704fdc3b4ab591294ef42f及十模块已核；四个公开页面严格同版、横竖DPR2/3正常目标/旋转/相册通过。英文只native，未冒真机或精准穿透。同步主需求表当前Owner和已交/待资源事实，历史作者保留，不重复原已交切片、不关长期父单。见[公开验收](playtests/2026-10-05-hint-paper-release/README.md)。
