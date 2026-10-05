@@ -33,6 +33,7 @@ const SEASON_COLORS := {
 var _paper: TextureRect
 var _world_root: Node2D
 var _world: YardWorld
+var _exploration: ExplorationDirector
 var _camera: Camera2D
 var _title_screen: Control
 var _title_label: Label
@@ -185,6 +186,12 @@ func _ready() -> void:
 	_photo_arrival.name = "PhotoArrival"
 	_ui_layer.add_child(_photo_arrival)
 	_photo_arrival.tucked_away.connect(_on_photo_tucked)
+	_exploration = ExplorationDirector.new()
+	_exploration.name = "Exploration"
+	add_child(_exploration)
+	_exploration.entered.connect(_on_exploration_entered)
+	_exploration.returned.connect(_on_exploration_returned)
+	_exploration.notice.connect(_show_notice_key)
 	I18n.locale_changed.connect(_on_locale_changed)
 	TuningStore.value_changed.connect(_on_tuning_value_changed)
 	resized.connect(_layout)
@@ -211,6 +218,7 @@ func _process(delta: float) -> void:
 		if _world.input_enabled:
 			move = Input.get_vector("move_left", "move_right", "move_up", "move_down")
 		_world.tick(delta, move)
+		_exploration.idle_tick(delta)
 	var reduced := bool(TuningStore.get_value("ui.reduced_motion", false))
 	var lerp_rate := 12.0 if reduced else 3.2
 	_cam_zoom = lerpf(_cam_zoom, _cam_target_zoom, 1.0 - exp(-delta * lerp_rate))
@@ -287,7 +295,7 @@ func _input(event: InputEvent) -> void:
 			_cancel_destructive_action()
 		elif _album_screen.visible:
 			_hide_album()
-		elif _screen == "game":
+		elif _screen in ["game", "exploring"]:
 			_toggle_pause()
 		get_viewport().set_input_as_handled()
 		return
@@ -765,6 +773,7 @@ func _start_holiday() -> void:
 	_world.cinematic_view_changed.connect(_on_cinematic_view_changed)
 	_world.day_advanced.connect(_on_day_advanced)
 	_world.fish_caught.connect(_on_fish_caught)
+	_world.exploration_requested.connect(_on_exploration_requested)
 	_camera.enabled = true
 	_portrait_camera_x = _world.get_player().position.x
 	_cam_zoom = 1.0
@@ -787,6 +796,10 @@ func _start_holiday() -> void:
 	_first_hint_shown = false
 	_last_tod_phase = ""
 	_show_notice_key("notice.arrive")
+	# 上次外出途中被打断：安全回到院里，已带上的东西照常收下
+	var restored := _exploration.attach(SaveStore, _world_root)
+	if not restored.is_empty():
+		_show_notice_key(restored)
 	_refresh_hud()
 	AudioDirector.set_yard_active(true)
 	if _world.holiday_day == 1 and SaveStore.get_album().is_empty():
@@ -794,6 +807,10 @@ func _start_holiday() -> void:
 
 
 func _clear_world() -> void:
+	if _exploration != null and _exploration.is_exploring():
+		if _screen == "exploring":
+			_screen = "leaving"
+		_exploration.interrupt()
 	_cancel_photo_arrivals()
 	_on_cinematic_view_changed("")
 	if _world != null:
@@ -801,6 +818,41 @@ func _clear_world() -> void:
 		_world._save_progress()
 		_world.queue_free()
 		_world = null
+
+
+func _on_exploration_requested() -> void:
+	if _screen != "game" or _world == null or _exploration.is_exploring():
+		return
+	_world._save_progress()
+	var weather := "overcast" if _world.weather == "overcast" else "sunny"
+	_exploration.try_begin({"day": _world.holiday_day, "elapsed": _world._day_elapsed}, weather)
+
+
+## 画卷有自己的相机与界面；小院在外出期间隐藏、不计时
+func _on_exploration_entered() -> void:
+	_screen = "exploring"
+	_cancel_photo_arrivals()
+	_on_cinematic_view_changed("")
+	_world.cancel_scene_feedback()
+	_world.input_enabled = false
+	_world.visible = false
+	_hud.visible = false
+	_notice_time = 0.0
+
+
+func _on_exploration_returned(notice_key: String) -> void:
+	if _screen != "exploring" or _world == null:
+		return
+	_screen = "game"
+	_world.visible = true
+	_world.input_enabled = true
+	_world.return_from_path()
+	_portrait_camera_x = _world.get_player().position.x
+	_camera.make_current()
+	_hud.visible = true
+	_layout()
+	_refresh_hud()
+	_show_notice_key(notice_key if not notice_key.is_empty() else "notice.exploration.back")
 
 
 func _show_title() -> void:
@@ -826,7 +878,7 @@ func _show_title() -> void:
 
 
 func _toggle_pause() -> void:
-	if _screen != "game":
+	if _screen not in ["game", "exploring"]:
 		return
 	var paused := not _pause_screen.visible
 	if paused:
@@ -834,7 +886,7 @@ func _toggle_pause() -> void:
 	_pause_screen.visible = paused
 	get_tree().paused = paused
 	AudioDirector.set_game_paused(paused)
-	if _world != null:
+	if _world != null and _screen == "game":
 		_world.input_enabled = not paused
 		if paused: _world.cancel_scene_feedback()
 	_refresh_texts()

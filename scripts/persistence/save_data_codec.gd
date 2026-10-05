@@ -6,6 +6,8 @@ extends RefCounted
 const AnimalRelationshipsType := preload("res://scripts/game/animal_relationships.gd")
 const SAVE_VERSION := 5
 const TUTORIAL_VERSION := 1
+const ExplorationContractType := preload("res://scripts/exploration/exploration_contract.gd")
+const MAX_KEEPSAKE_COUNT := 9999
 
 static func defaults() -> Dictionary:
 	return {
@@ -24,6 +26,10 @@ static func defaults() -> Dictionary:
 		# 钓鱼记录
 		"first_fish_caught": false,
 		"animal_relationship_memory": {},
+		# 探索：原样保存的会话记录（由 ExplorationSession.restore 校验）、已提交旅程水位线、带回的小物计数
+		"exploration": null,
+		"exploration_committed_serial": 0,
+		"keepsakes": {},
 	}
 
 
@@ -49,8 +55,31 @@ static func project(candidate: Dictionary) -> Dictionary:
 	data.plant_watered_day = int(candidate.get("plant_watered_day", -1))
 	data.first_fish_caught = bool(candidate.get("first_fish_caught", false))
 	data.animal_relationship_memory = AnimalRelationshipsType.sanitize(candidate.get("animal_relationship_memory", {}))
+	var exploration: Variant = candidate.get("exploration", null)
+	data.exploration = exploration.duplicate(true) if exploration is Dictionary or exploration is Array else exploration
+	data.exploration_committed_serial = committed_serial(candidate)
+	data.keepsakes = clean_keepsakes(candidate.get("keepsakes", {}))
 
 	return data
+
+
+## 缺字段视为从未提交（0）；字段存在但损坏时返回 -1，让探索核心把水位线当作不可信。
+static func committed_serial(candidate: Dictionary) -> int:
+	if not candidate.has("exploration_committed_serial"):
+		return 0
+	var serial: Variant = ExplorationContractType.as_int(candidate.exploration_committed_serial)
+	return -1 if serial == null else int(serial)
+
+
+static func clean_keepsakes(raw: Variant) -> Dictionary:
+	var result: Dictionary = {}
+	if not raw is Dictionary: return result
+	for find_id: Variant in raw:
+		if not find_id is String or not ExplorationRoutes.is_formal_find(find_id): continue
+		var count: Variant = ExplorationContractType.as_int(raw[find_id], 1, MAX_KEEPSAKE_COUNT)
+		if count != null:
+			result[find_id] = int(count)
+	return result
 
 
 static func clean_moments(raw: Variant, album: Array) -> Dictionary:

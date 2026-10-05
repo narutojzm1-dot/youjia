@@ -144,5 +144,50 @@ func set_animal_relationship_memory(memory: Dictionary) -> bool:
 	return save()
 
 
+# ── 探索 ──────────────────────────────────────────────────────────────────────
+# 同 set_yard_progress：候选提交成功后才发布到内存，失败时内存保持写入前原样。
+
+func get_exploration_record() -> Variant:
+	var record: Variant = _data.get("exploration", null)
+	return record.duplicate(true) if record is Dictionary or record is Array else record
+
+
+func get_exploration_committed_serial() -> int:
+	return int(_data.get("exploration_committed_serial", 0))
+
+
+func get_keepsakes() -> Dictionary:
+	return (_data.get("keepsakes", {}) as Dictionary).duplicate(true)
+
+
+func save_exploration_record(record: Variant) -> bool:
+	var candidate: Dictionary = _data.duplicate(true)
+	candidate.exploration = record.duplicate(true) if record is Dictionary else record
+	return _commit_candidate(candidate)
+
+
+## 一次文件提交里同时写入带回的小物、旅程水位线与会话记录，避免重复授予。
+func commit_exploration_trip(record: Variant, trip_serial: int, find_ids: PackedStringArray) -> bool:
+	if trip_serial <= get_exploration_committed_serial():
+		return false
+	var candidate: Dictionary = _data.duplicate(true)
+	var keepsakes: Dictionary = (candidate.get("keepsakes", {}) as Dictionary).duplicate(true)
+	for find_id: String in find_ids:
+		if not ExplorationRoutes.is_formal_find(find_id):
+			return false
+		keepsakes[find_id] = mini(int(keepsakes.get(find_id, 0)) + 1, SaveDataCodec.MAX_KEEPSAKE_COUNT)
+	candidate.keepsakes = keepsakes
+	candidate.exploration_committed_serial = trip_serial
+	candidate.exploration = record.duplicate(true) if record is Dictionary else record
+	return _commit_candidate(candidate)
+
+
+func _commit_candidate(candidate: Dictionary) -> bool:
+	if not SaveFilesType.new().commit(candidate, SAVE_PATH, TEMP_PATH, BACKUP_PATH):
+		return false
+	_data = candidate
+	return true
+
+
 func _clean_moments(raw: Variant, album: Array) -> Dictionary:
 	return SaveDataCodec.clean_moments(raw, album)

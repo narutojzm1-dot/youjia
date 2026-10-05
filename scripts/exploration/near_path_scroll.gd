@@ -411,7 +411,8 @@ func _layout(size: Vector2, compact: bool) -> void:
 
 func _build_hud() -> void:
 	hud = CanvasLayer.new()
-	hud.layer = 11
+	# 在暂停/确认层（10）之下，暂停时被盖住
+	hud.layer = 8
 	add_child(hud)
 	_place_label = _label(20, INK)
 	_caption = _label(17, INK)

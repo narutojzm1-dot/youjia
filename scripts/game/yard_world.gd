@@ -11,6 +11,8 @@ signal cinematic_view_changed(stage: String)
 signal day_advanced(day: int)
 ## 钓到鱼时触发，带上鱼种类字符串，供 HUD 做更强的收杆反馈动画
 signal fish_caught(carry_type: String)
+## 走到门前小路尽头选“出门走走”：Main 接管，切到画卷近郊小路
+signal exploration_requested
 
 const SUNNY := preload("res://assets/holiday/environment/yard_sunny.png")
 const OVERCAST := preload("res://assets/holiday/environment/yard_overcast.png")
@@ -330,6 +332,12 @@ func debug_place_player(point: Vector2) -> void:
 	_player.reset_locomotion()
 
 
+## 从近郊小路回来：人站回门前小路尽头，之前的走路目标作废
+func return_from_path() -> void:
+	_consume_pending_action()
+	debug_place_player(YardSceneHotspots.get_hotspot(YardSceneHotspots.PATH_OUT).approach_points[0])
+
+
 func tick(delta: float, move: Vector2) -> void:
 	if not simulation_active:
 		return
@@ -640,6 +648,13 @@ func _interact_with_target(target: String) -> void:
 		_consume_pending_action()
 		_scene_feedback.play_fence_grass(YardSceneHotspots.get_hotspot(target).visual_anchor)
 		notice_requested.emit("notice.fence_gate")
+		return
+	if target == YardSceneHotspots.PATH_OUT:
+		var path_action := YardSceneHotspots.resolve(self, target)
+		if path_action.is_empty() or _player.position.distance_to(path_action.point) >= path_action.reach:
+			return
+		_consume_pending_action()
+		exploration_requested.emit()
 		return
 	if target == "grass":
 		if _player.position.distance_to(_grass_point()) < 78.0 and not _player.carrying_grass:

@@ -29,7 +29,7 @@ func is_exploring() -> bool:
 
 
 ## 小院里在门前小路选“出门走走”时调用；不能出门时只给温和说明，不困住玩家
-func try_begin(clock: Dictionary, weather: String) -> bool:
+func try_begin(clock: Dictionary, weather: String, seed: Variant = null) -> bool:
 	if host == null or scroll != null:
 		return false
 	if not host.can_begin():
@@ -43,7 +43,7 @@ func try_begin(clock: Dictionary, weather: String) -> bool:
 		else:
 			notice.emit("notice.exploration.unavailable")
 			return false
-	if not host.begin(clock).ok:
+	if not host.begin(clock, seed).ok:
 		notice.emit("notice.exploration.unavailable")
 		return false
 	scroll = NearPathScroll.new()

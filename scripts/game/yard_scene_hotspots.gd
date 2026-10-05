@@ -6,6 +6,7 @@ extends RefCounted
 const WINDOWBOX := "windowbox"
 const SHORE_STONES := "shore_stones"
 const FENCE_GATE := "fence_gate"
+const PATH_OUT := "path_out"
 static var CATALOG: Array[Dictionary] = [
 	{
 		"id": WINDOWBOX,
@@ -51,6 +52,20 @@ static var CATALOG: Array[Dictionary] = [
 		"reach": 64.0,
 		"label_key": "action.observe_fence",
 		"target_key": "target.fence_gate",
+	},
+	{
+		# The painted stone path leaves the frame bottom-left; that edge is the
+		# way out to the near path (exploration). Feet stop on the lawn's path end.
+		"id": PATH_OUT,
+		"hit_polygon": PackedVector2Array([
+			Vector2(40, 560), Vector2(170, 585), Vector2(300, 655),
+			Vector2(320, 720), Vector2(20, 720),
+		]),
+		"approach_points": [Vector2(232, 606), Vector2(250, 600)],
+		"visual_anchor": Vector2(150, 660),
+		"reach": 48.0,
+		"label_key": "action.go_out",
+		"target_key": "target.path_out",
 	}
 ]
 
