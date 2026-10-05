@@ -115,7 +115,13 @@ var _photo_arrival: PhotoArrival
 var _photo_arrival_queue: Array[Dictionary] = []
 var _pending_photo_saves: Dictionary = {}
 var _save_transition := false
-var _retrying_ack := false
+var _save_problems: Dictionary = {}
+var _save_durable_ops: Dictionary = {}
+var _save_problem_revision := 0
+var _save_untracked_problem := false
+var _save_untracked_revision := 0
+var _save_retry_coverage: Dictionary = {}
+var _save_ack_coverage: Dictionary = {}
 var _save_problem_active := false
 var _save_status_panel: PanelContainer
 var _save_retry_button: Button
@@ -886,7 +892,7 @@ func _start_holiday(save_progress: bool = true) -> void:
 	_leave_exploration()
 	if save_progress and _world != null: _world._save_progress()
 	if not await SaveStore.flush_pending() or _save_problem_active:
-		_show_save_pending()
+		_show_save_pending(false)
 		return
 	TuningStore.begin_run(false)
 	AudioDirector.set_game_paused(false)
@@ -1005,7 +1011,7 @@ func _show_title(save_progress: bool = true) -> void:
 	if save_progress and _world != null:
 		_world._save_progress()
 		if not await SaveStore.flush_pending() or _save_problem_active:
-			_show_save_pending()
+			_show_save_pending(false)
 			return
 	get_tree().paused = false
 	TuningStore.end_run()
@@ -1057,7 +1063,7 @@ func _confirm_destructive_action() -> void:
 	if not await SaveStore.flush_pending() or _save_problem_active:
 		_save_transition = false
 		_confirm_screen.visible = false
-		_show_save_pending()
+		_show_save_pending(false)
 		return
 	_save_transition = false
 	var action := _pending_destructive_action
@@ -1095,12 +1101,18 @@ func _on_album_updated(collected: PackedStringArray, latest_id: String) -> void:
 	if _album_screen.visible: _rebuild_album(collected)
 
 
-func _on_save_confirmed(op_id: String, _kind: String) -> void:
+func _on_save_confirmed(op_id: String, kind: String) -> void:
+	_save_durable_ops[op_id] = true
+	if _save_problems.get(op_id, {}).get("kind", "") == kind:
+		_save_problems.erase(op_id)
+	if _save_retry_coverage.has(op_id):
+		_clear_covered_save_problems(_save_retry_coverage[op_id].problems)
+		if _save_untracked_revision == _save_retry_coverage[op_id].untracked_revision:
+			_save_untracked_problem = false
+		_save_retry_coverage.erase(op_id)
 	if not _pending_photo_saves.has(op_id): return
 	var pending: Dictionary = _pending_photo_saves[op_id]
 	_pending_photo_saves.erase(op_id)
-	_save_problem_active = false
-	if _save_status_panel != null: _save_status_panel.hide()
 	if pending.fresh:
 		_latest_photo = pending.latest_id
 		var snapshot := SaveStore.get_photo_moment(pending.latest_id)
@@ -1115,21 +1127,31 @@ func _on_save_confirmed(op_id: String, _kind: String) -> void:
 func _on_save_state_changed(state: String) -> void:
 	if _save_retry_button != null:
 		_save_retry_button.disabled = state in ["writing", "acknowledging", "resolving"]
-	if state == "ready" and SaveStore.is_save_idle() and _retrying_ack:
-		_retrying_ack = false
-		_save_problem_active = false
-		if _save_status_panel != null: _save_status_panel.hide()
+	if state == "ready" and SaveStore.is_save_idle():
+		_clear_covered_save_problems(_save_ack_coverage)
+		_save_ack_coverage.clear()
+		_save_durable_ops.clear()
+		if _save_problems.is_empty() and _pending_photo_saves.is_empty() and not _save_untracked_problem:
+			_save_problem_active = false
+			if _save_status_panel != null: _save_status_panel.hide()
+
+
+func _clear_covered_save_problems(coverage: Dictionary) -> void:
+	for op_id in coverage:
+		if _save_problems.get(op_id) == coverage[op_id]:
+			_save_problems.erase(op_id)
 
 
 func _on_save_rejected(op_id: String, kind: String, code: String) -> void:
 	_pending_photo_saves.erase(op_id)
+	_save_retry_coverage.erase(op_id)
 	_on_save_problem(op_id, kind, code)
 
 
-func _on_save_problem(_op_id: String, _kind: String, _code: String) -> void:
-	# The world still owns the current session's unsaved photos. Do not discard
-	# them or play a saved animation after a rejected/unknown write.
-	_show_save_pending()
+func _on_save_problem(op_id: String, kind: String, _code: String) -> void:
+	_save_problem_revision += 1
+	_save_problems[op_id] = {"kind": kind, "revision": _save_problem_revision, "durable": _save_durable_ops.has(op_id)}
+	_show_save_pending(false)
 
 
 func _build_save_status() -> void:
@@ -1157,21 +1179,43 @@ func _build_save_status() -> void:
 	_save_status_panel.hide()
 
 
-func _show_save_pending() -> void:
+func _show_save_pending(untracked := true) -> void:
+	if untracked:
+		_save_untracked_problem = true
+		_save_untracked_revision += 1
 	_save_problem_active = true
 	if _save_status_panel != null: _save_status_panel.show()
 
 
+func _retryable_save_problems(include_fish: bool) -> Dictionary:
+	var coverage := {}
+	for op_id in _save_problems:
+		var kind: String = _save_problems[op_id].kind
+		if kind in ["yard", "plant", "relationship", "album"] or (include_fish and kind == "fish"):
+			coverage[op_id] = _save_problems[op_id].duplicate()
+	return coverage
+
+
 func _retry_save() -> void:
 	var before := SaveStore.persistence_state()
-	if SaveStore.retry_pending():
-		_retrying_ack = before == "blocked"
-		return
+	# Capture before retry: a native backend may complete synchronously.
+	_save_ack_coverage = {}
+	if before == "blocked":
+		for op_id in _save_problems:
+			if _save_problems[op_id].durable:
+				_save_ack_coverage[op_id] = _save_problems[op_id].duplicate()
+	if SaveStore.retry_pending(): return
+	_save_ack_coverage.clear()
 	if SaveStore.is_save_idle() and _world != null:
+		var coverage := {"problems": _retryable_save_problems(_world._first_fish_polaroid_done), "untracked_revision": _save_untracked_revision}
+		var prior_photos := _pending_photo_saves.keys()
 		_world._save_progress()
 		SaveStore.request_animal_relationship_memory(_world._relationship_memory)
 		if _world._first_fish_polaroid_done: SaveStore.request_first_fish_caught()
 		_on_album_updated(_world.collected, "")
+		for op_id in _pending_photo_saves:
+			if op_id not in prior_photos and _pending_photo_saves[op_id].latest_id == "":
+				_save_retry_coverage[op_id] = coverage
 
 
 func _play_next_photo_arrival() -> void:
@@ -1926,3 +1970,4 @@ func _flat(bg: Color, border: Color, width: int = 2, radius: int = 16) -> StyleB
 	style.content_margin_top = 10
 	style.content_margin_bottom = 10
 	return style
+

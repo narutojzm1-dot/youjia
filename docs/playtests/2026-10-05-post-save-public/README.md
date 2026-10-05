@@ -35,3 +35,9 @@ Owner：CODEX-LEAD-ASSISTANT。PR #351 / BUG-ALBUM-LANDSCAPE-20261005；来源 #
 这轮不是物理手机、真人听验、BFCache、容量/离线故障、稀有组合或完整季节体验验收。发现 #350 后整体体验门禁保留缺口，不能因流程能走通就宣布整个游戏心流全过。#40 保持已验收关闭；#195 及资源父单保持余项准确；后续 #195 按已复现输入归因接续。
 
 所有 .json.gz 均为原始 UTF-8 JSON 的 gzip（mtime=0）；可用 Python gzip.decompress 读取。没有上传 PCK/浏览器 profile。`observations.json` 汇总真实状态、未响应样本及驱动失败；截图未加工。
+
+## 33b105 最新保存提示修复组合
+
+633bb阶段在6856/7c基准的独立45914/0与title251、ui_interaction、day_label173通过；随后Leader357合33b105f075a1b851450f647c623302070ffafe1f导致append冲突，保留33最新完整Main，仅移植完全相同两相册方法；daily同时保留其save_feedback21和本相册入口，需求/决策记录放稳定节前，未覆盖Leader新记录。新实际4.7.2 Web导出/同profile真实关闭重开及六视口再次通过，8事件gen3/pendingfalse/全部照片和保存数据不变、errors=[]。执行者查看本阶段两张原截图；candidate-integration-33.json绑定实际组合Main与PCK/JS/WASM哈希。之前candidate-verification/native-daily/local-fixed证据继续精确属于6856/7c返修阶段，不冒本组合新构建。
+
+本组合第一次完整门禁误设GODOT_BIN，wrapper实际默认4.6.3；该日志native-integration-33-wrong-engine.log.txt.gz明确作废，不作为正式4.7.2通过。已改正确GODOT变量指定4.7.2重新完整执行；本提交冻结时在途，合入前必须在PR记录4.7.2最终exit/完整日志结果且独立终审通过，正式证据归档在后续文档PR；未通过不得合入。独立最终完整SHA结论以PR记录为准，正式公开发布另留证据。

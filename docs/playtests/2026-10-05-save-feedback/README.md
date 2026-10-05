@@ -1,0 +1,21 @@
+# #150 已确认的非照片保存故障提示收尾
+
+Owner CODEX-LEAD，内部实施 host_budget_impl；原认领5993158857。无Host/存档schema变化，无相册排版、标题或探索方法修改。
+
+保存提示按op_id/kind与故障revision跟踪。只在对应confirmed后、ack完成且整个队列idle、没有未确认照片及未入队意图时解除。过场被既有保存阻挡只显示提示，不制造新的dirty。实际照片入队被拒仍记独立revision，后来的普通院子确认不能覆盖；明确补交只覆盖本次真实重送的yard/plant/relationship/album与适用fish，不清exploration或未知Owner失败。新失败/同op新revision不被早先批次抹去。ack的空kind通过已确认的精确op追踪，不当无身份通配符。
+
+## 独立旧版基线与候选
+
+baseline为review301在公开game-7c1608c采集的原始文件，未改写。真实current事务complete后仅transport将一次真实submit回执替成错误；普通暂停→回门口→确认触发非照片保存，点一次“再确认一次”，resolve实际confirmed且current不变，但6秒后提示仍留。没有修改存档值/世界位置/内存状态。
+
+candidate为本地生产导出，代码b29a4d9762af80e447d648802cee72fa9132e06e。复用同驱动/同自然UI顺序，真实gen2 complete早于丢回执410ms；一次UI确认后current整封套不变、intent已清，resolve确认字段有效，提示消失，pageerror空。执行者已看unknown/after-one-confirm两图。此为受控传输失败，不是真实断电，也非公开发布。
+
+native为真实Main节点专项21检查，覆盖错op/错kind、confirmed与ack间、ready先于rejected、同op更晚ack失败、空kind、未入队照片、新untracked revision、未重送探索/未知域，以及真实Native Host两意图中间ready但队列未清的顺序；模型信号注入与真实持久化证据严格分开。已注册daily。
+
+初次复用工作树未重import导致历史cloud_band缓存错误，该次即使打印检查数也作废。重新import后干净专项通过。较早daily为落实评审边界主动中止；完整最终daily与照片abort反例结果见后文，作废/中止运行不计通过。
+
+照片反例复跑：同运行代码b29a4d9/同导出，自然羊交互产生照片，仅含album候选的一次真实current事务abort。实际UI先resolve旧parent、再明确补交。sample03为gen3/album空，纸面仍显示且按钮禁用；sample05为gen4/sheep_pet_gentle，提示已消失；真关页重开照片仍在。执行者已看retry03、retry05及reopened，恰好1次abort，pageerrors为空。原始records包含全部10个有序只读采样，不声称连续逐帧或物理断电。
+
+范围限制：本切片不让普通全量补交掩盖exploration/未知kind的失败。探索域后续如何按其实际重试操作解除关联提示仍由#305/#150领域组合确认；保守提示不等于已保存，未称所有故障UI闭环。最终若只增加文档，运行代码/导出/浏览器证据仍绑定b29a4d9762af80e447d648802cee72fa9132e06e。
+
+最终完整tools/verify_daily_life.sh已exit0，含新增save_feedback21、interaction_photo110、探索143、bridge45/legacy22及loading shell全部门禁；daily-final.log无SCRIPT ERROR/ERROR/FAIL。运行代码b29a4d9762af80e447d648802cee72fa9132e06e；后续提交仅UID/文档证据，无运行代码变化。

@@ -136,7 +136,7 @@
 | 编号 | 优先级 | 当前可做范围与验收 | 状态 | Owner | 依赖 / 记录 |
 | --- | --- | --- | --- | --- | --- |
 | STATE-SAVE-RECOVERY | P0 | 存档提交/恢复，真实失败注入与旧v5/照片/平台持久化不丢进展 | 原 #149 验收范围完成：生产 PR336 最终720db375独审合d242509并发布；公开羊/首次鱼照片关页恢复、55cb7ce真实提交中关页恢复旧完整封套均通过，PR347归档，#149已结项。物品/探索领域组合继续归#150，不以旧实验Host等待阻塞正式开发 | `CODEX-LEAD` | [#149](https://github.com/narutojzm1-dot/youjia/issues/149)；[正式发布与覆盖限制](playtests/2026-10-05-production-save-release/README.md)。 |
-| STATE-YARD-GROWTH | P1 | 物品/布置/探索结果共享契约与迁移/去重提交矩阵 | 生产Host已接入并发布：PR336共享持久化、PR322探索异步队列已由Cloud实际消费；bc213f9公开原画拾物回院/关页、390携物中断恢复完成，带回物单次授予。#150保持开放：多物品/换物、领域故障与跨页面组合须分别验收，正式布置规则仍待；原PR190/251由生产实现替代，旧239/261隔离矩阵保留为历史证据，不继续写未接入Host | `CODEX-LEAD`（共享领域契约），`CURSOR-CLOUD`（探索侧305矩阵） | [#150](https://github.com/narutojzm1-dot/youjia/issues/150)；[实际公开证据与未覆盖](playtests/2026-10-05-exploration-duck-release/README.md)。 |
+| STATE-YARD-GROWTH | P1 | 物品/布置/探索结果共享契约与迁移/去重提交矩阵 | 生产Host已接入并发布：PR336共享持久化、PR322探索异步队列已由Cloud实际消费；bc213f9公开原画拾物回院/关页、390携物中断恢复完成，带回物单次授予。#150保持开放：多物品/换物、领域故障与跨页面组合须分别验收，正式布置规则仍待；Leader非照片unknown恢复提示候选已完成实现/完整daily/真实Web，待最终独审发布（[证据](playtests/2026-10-05-save-feedback/README.md)）；原PR190/251由生产实现替代，旧239/261隔离矩阵保留为历史证据，不继续写未接入Host | `CODEX-LEAD`（共享领域契约），`CURSOR-CLOUD`（探索侧305矩阵） | [#150](https://github.com/narutojzm1-dot/youjia/issues/150)；[实际公开证据与未覆盖](playtests/2026-10-05-exploration-duck-release/README.md)。 |
 | EXP-CONTRACT | P1 | 独立探索边界/快照/宿主确认/失败恢复契约，与共享状态对齐 | 纯核心已按设计稿实现（2026-10-05 授权独立推进，不再以联合冻结为前置）；依赖 #150 的项（平台持久化结果未知、物品身份/共享区）仍未冻结，归 CODEX-LEAD | `CURSOR-CLOUD` | [#151](https://github.com/narutojzm1-dot/youjia/issues/151)；[契约设计稿](architecture/exploration-module-contract.md)，与#150待共同冻结项列于其第10节；不含正式地点/物品/形式。 |
 | EXP-CORE | P1 | 形态无关核心状态机/恢复/返回，严格隔离测试；夹具不正式发布 | 进行中：用户 2026-10-05 授权 CURSOR-CLOUD 独立推进、不再以契约冻结为前置；核心与正式近郊目录随 `scripts/exploration/` 合入 main，隔离 suite 纳入 strict daily；PR176 草案由此取代 | `CURSOR-CLOUD` | [#152](https://github.com/narutojzm1-dot/youjia/issues/152)；依赖/正式内容门禁见工单。 |
 | EXP-FIRST-SLICE | P1 | 确认的一条近郊往返，空手/取消/重复提交/键鼠触屏低动效与正式发布闭环 | 进行中（用户 2026-10-05 授权独立推进）：正式游戏内往返已接入（小院左下石板路「出门走走」→ 画卷近郊小路看景/带上/放回/换 → 随时回院；SaveStore 异步存档队列记录探索与带回物，确认后才授予（不等于 #150/Web 持久化验收），重启安全回院；见[接入说明](architecture/exploration-near-path-slice.md)与[体验证据](playtests/2026-10-05-exploration-near-path-slice/README.md)）；横向画卷只是过渡占位：用户已选“保留原画视角，沿路走动并自然换页”（[原画路径方向](architecture/exploration-painted-path-direction.md)），表现层已由 EXP-PAINTED-PATH 换成 02 原画沿路行走，本行交付的是外出/回院逻辑、持久化与容量；正式资源归 GAME-PRODUCER；#150 正式 Host 回执仍归 CODEX-LEAD；单趟合计最多 3 件（用户 2026-10-05 决定，同名可重复，第 4 件为「换成」）已实现，见[容量证据](playtests/2026-10-05-exploration-carry-three/README.md)；出现权重为实验参数待制作人决定 | `CURSOR-CLOUD` | [#153](https://github.com/narutojzm1-dot/youjia/issues/153)；依赖/正式内容门禁见工单；形式已定：[画卷漫步](architecture/exploration-form-options.md)（用户 2026-10-03）；首地/首物已定：近郊小路＋圆石、松果、落羽都可遇见（用户 2026-10-04，见 EXP-UNBLOCK-20261004），具体构图与资源由 GROK-BUILD #155 交付。 |
@@ -420,6 +420,14 @@ Assistant音频300 b8e5e6dc916dacd1eaf45b36c9f17584d36fc16c已接且实际交，
 | REQ-20261005-027 | P2 | 手机横竖屏上「假期第 N 天」可读、不压目标纸片 | 天数用 `INK` 字加小纸底，挂在暂停按钮正下方、同宽；五种视口中英文都不压提示和按钮。`test/day_label_layout_suite.gd` 173 项通过，未修 main 上 33 项失败。 | 已独审合入、公开发布与DPR2/3体验通过 | `GROK-CONTRIBUTOR` | 来源 #338（#242 评论 5990837592 观察）。只改 `Main._build_hud` 的 `_day_label` 与 `_layout` 天数分支；不碰存档、启动、#322 探索。Leader 已按作者请求补 daily 入口与真实 DPR2/3 横竖屏浏览器复核（本地候选，待独立最终 SHA 审查/发布）；[证据](playtests/2026-10-05-daylabel-integration/README.md)。决策见 [decisions/REQ-20261005-027.md](decisions/REQ-20261005-027.md)。  PR345最终558fd938独审合3de05fc，公开四组横竖DPR2/3与manifest/PCK/十模块源hash通过；[发布证据](playtests/2026-10-05-daylabel-release/README.md)。额外暂停提示遮挡另交#348，不冒全UI无瑕。 |
 
 
+## BUG-ALBUM-LANDSCAPE-20261005（#350）
+
+- Owner：`CODEX-LEAD-ASSISTANT`；状态：待最终独审及正式发布；来源 #40 已由 Leader 完成原验收并关闭；本单为独立新缺陷，不重开 #40。
+- 目标：短横屏手帐的历史照片、日期题词及札记可读、不相互覆盖、不越过页面内容区；常规宽屏双页与竖屏单页保持可用。
+- 范围：`scripts/main.gd` 的 `_album_page` / `_photo_card` 局部排版、专用几何回归与 daily 入口、体验证据和本条记录。不改照片存档/SaveHost、探索入口、天数标签、资源或音频。
+- 实现/证据：PR #351。首候选 bec5 的独审 REQUEST_CHANGES（合法英文长文案/页码越界）已接收返修；同两方法按真实换行及完整字体行高预算图片空间。最终专用矩阵45914/0，原版同矩阵3190失败；完整严格 daily/真实候选Web历史重开与六视口通过。保留最新7c标题/6856正式台账及33b105保存提示方法。[证据](playtests/2026-10-05-post-save-public/README.md)。#195并发40中2次短点击未响应仍待归因，本修复不涉及音频；#40状态维持已完成。
+- 验收：原版失败与修复后五视口中英文几何检查、完整原生门禁、本地 Web 正常操作、正式 Actions/Pages 与公开资源包/历史照片回归分别记录；独立子代理审核最终完整 SHA 后通过 PR 合入。
+
 ## GAME-PM 18:20：生产接口与探索接收已落地
 
 336已发布，149/40原范围347验收收口，322最终7e4b46b59014989b804f5b4cc273501a6eabb831异步队列适配独审合81d225c15962a32d7a48a066154859488a155aa4；305旧实验固定Host前置/queued已由PM更新生产组合范围，真实公开带回物验收仍待，不以模型代Web。345作者请求集成已由Leader独审合3de并公开DPR2/3验证，349归档待；350相册排版Assistant在途，348toast下一项待接收。Producer155实际三帧/比例遮挡已接，清底像素/阴天/圆石方式用户等待与339听验门禁保持。逐人SHAs/下一产物/实际窗口及game-3de05fc自然关页羊照片补证见[18:20报告](pm/2026-10-05-1820-coordination.md)。
@@ -430,10 +438,3 @@ Assistant音频300 b8e5e6dc916dacd1eaf45b36c9f17584d36fc16c已接且实际交，
 | --- | --- | --- | --- | --- | --- | --- |
 | REQ-20261005-028 | P2 | 手机横竖屏标题页的副标题、简介和操作说明看得清 | 标题列内容下垫一张贴合的半透明 PAPER 纸片（0.84、APRICOT 细边、圆角 18），随语言/尺寸重新贴合、忽略点击；副标题改深杏色 `a85d28`（对 PAPER 约 4.6:1）。文案、字号、按钮不变。`test/title_card_suite.gd` 251 项通过，未修 main 上 19 项失败。 | 已发布并公开DPR体验 | `GROK-CONTRIBUTOR`（原实现）/ `CODEX-LEAD`（集成收尾） | 每小时自选无主切片，来源为 main 6f553bf 原生 390×844/844×390 标题页截图。只改 `Main._build_title_screen` 与新增 `_fit_title_card`；不碰 #342 探索方法、#348/#350。Leader 完成本地与公开 Web DPR2/3 横竖屏标题/真实点击入院复核，最终09ff44be独审合7c1608c并发布；[本地证据](playtests/2026-10-05-title-card-integration/README.md)与[公开验收](playtests/2026-10-05-exploration-duck-release/README.md)。决策见 [decisions/REQ-20261005-028.md](decisions/REQ-20261005-028.md)。 |
 
-## BUG-ALBUM-LANDSCAPE-20261005（#350）
-
-- Owner：`CODEX-LEAD-ASSISTANT`；状态：待最终独审及正式发布；来源 #40 已由 Leader 完成原验收并关闭；本单为独立新缺陷，不重开 #40。
-- 目标：短横屏手帐的历史照片、日期题词及札记可读、不相互覆盖、不越过页面内容区；常规宽屏双页与竖屏单页保持可用。
-- 范围：`scripts/main.gd` 的 `_album_page` / `_photo_card` 局部排版、专用几何回归与 daily 入口、体验证据和本条记录。不改照片存档/SaveHost、探索入口、天数标签、资源或音频。
-- 实现/证据：PR #351。首候选 bec5 的独审 REQUEST_CHANGES（合法英文长文案/页码越界）已接收返修；同两方法按真实换行及完整字体行高预算图片空间。最终专用矩阵45914/0，原版同矩阵3190失败；完整严格 daily/真实候选Web历史重开与六视口通过。保留最新7c标题/6856正式台账。[证据](playtests/2026-10-05-post-save-public/README.md)。#195并发40中2次短点击未响应仍待归因，本修复不涉及音频；#40状态维持已完成。
-- 验收：原版失败与修复后五视口中英文几何检查、完整原生门禁、本地 Web 正常操作、正式 Actions/Pages 与公开资源包/历史照片回归分别记录；独立子代理审核最终完整 SHA 后通过 PR 合入。
