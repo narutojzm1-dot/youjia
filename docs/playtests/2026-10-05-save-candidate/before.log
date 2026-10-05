@@ -1,0 +1,108 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ERROR: set_locale: rejected candidate is not visible in memory
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://test/save_candidate_suite.gd:13)
+       [1] run (res://test/save_candidate_suite.gd:47)
+ERROR: set_locale: later save does not commit rejected fields
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://test/save_candidate_suite.gd:13)
+       [1] run (res://test/save_candidate_suite.gd:54)
+ERROR: set_locale: backup preserves complete prior state
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://test/save_candidate_suite.gd:13)
+       [1] run (res://test/save_candidate_suite.gd:61)
+ERROR: set_tutorial_completed: rejected candidate is not visible in memory
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://test/save_candidate_suite.gd:13)
+       [1] run (res://test/save_candidate_suite.gd:47)
+ERROR: set_tutorial_completed: later save does not commit rejected fields
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://test/save_candidate_suite.gd:13)
+       [1] run (res://test/save_candidate_suite.gd:54)
+ERROR: set_tutorial_completed: backup preserves complete prior state
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://test/save_candidate_suite.gd:13)
+       [1] run (res://test/save_candidate_suite.gd:61)
+ERROR: set_album: rejected candidate is not visible in memory
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://test/save_candidate_suite.gd:13)
+       [1] run (res://test/save_candidate_suite.gd:47)
+ERROR: set_album: later save does not commit rejected fields
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://test/save_candidate_suite.gd:13)
+       [1] run (res://test/save_candidate_suite.gd:54)
+ERROR: set_album: backup preserves complete prior state
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://test/save_candidate_suite.gd:13)
+       [1] run (res://test/save_candidate_suite.gd:61)
+ERROR: set_holiday_progress: rejected candidate is not visible in memory
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://test/save_candidate_suite.gd:13)
+       [1] run (res://test/save_candidate_suite.gd:47)
+ERROR: set_holiday_progress: later save does not commit rejected fields
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://test/save_candidate_suite.gd:13)
+       [1] run (res://test/save_candidate_suite.gd:54)
+ERROR: set_holiday_progress: backup preserves complete prior state
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://test/save_candidate_suite.gd:13)
+       [1] run (res://test/save_candidate_suite.gd:61)
+ERROR: set_plant_state: rejected candidate is not visible in memory
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://test/save_candidate_suite.gd:13)
+       [1] run (res://test/save_candidate_suite.gd:47)
+ERROR: set_plant_state: later save does not commit rejected fields
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://test/save_candidate_suite.gd:13)
+       [1] run (res://test/save_candidate_suite.gd:54)
+ERROR: set_plant_state: backup preserves complete prior state
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://test/save_candidate_suite.gd:13)
+       [1] run (res://test/save_candidate_suite.gd:61)
+ERROR: set_first_fish_caught: rejected candidate is not visible in memory
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://test/save_candidate_suite.gd:13)
+       [1] run (res://test/save_candidate_suite.gd:47)
+ERROR: set_first_fish_caught: later save does not commit rejected fields
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://test/save_candidate_suite.gd:13)
+       [1] run (res://test/save_candidate_suite.gd:54)
+ERROR: set_first_fish_caught: backup preserves complete prior state
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://test/save_candidate_suite.gd:13)
+       [1] run (res://test/save_candidate_suite.gd:61)
+ERROR: set_animal_relationship_memory: rejected candidate is not visible in memory
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://test/save_candidate_suite.gd:13)
+       [1] run (res://test/save_candidate_suite.gd:47)
+ERROR: set_animal_relationship_memory: later save does not commit rejected fields
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://test/save_candidate_suite.gd:13)
+       [1] run (res://test/save_candidate_suite.gd:54)
+ERROR: set_animal_relationship_memory: backup preserves complete prior state
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://test/save_candidate_suite.gd:13)
+       [1] run (res://test/save_candidate_suite.gd:61)
+save candidate: 72 checks, 21 failures

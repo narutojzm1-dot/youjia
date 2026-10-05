@@ -29,7 +29,17 @@ func _load() -> void:
 
 
 func save() -> bool:
-	return SaveFilesType.new().commit(_data, SAVE_PATH, TEMP_PATH, BACKUP_PATH)
+	return _commit_candidate(_data.duplicate(true))
+
+
+# One commit boundary for every setter. A failed file write must not leak a
+# candidate into getters or a later unrelated save. On Web this confirms only
+# Godot's user:// file commit; it is not an IndexedDB durable receipt.
+func _commit_candidate(candidate: Dictionary) -> bool:
+	if not SaveFilesType.new().commit(candidate, SAVE_PATH, TEMP_PATH, BACKUP_PATH):
+		return false
+	_data = candidate
+	return true
 
 
 func get_locale() -> String:
@@ -39,8 +49,9 @@ func get_locale() -> String:
 func set_locale(locale: String) -> void:
 	if locale not in ["en", "zh-CN"]:
 		return
-	_data.locale = locale
-	save()
+	var candidate := _data.duplicate(true)
+	candidate.locale = locale
+	_commit_candidate(candidate)
 
 
 func is_tutorial_completed(version: int = TUTORIAL_VERSION) -> bool:
@@ -48,8 +59,9 @@ func is_tutorial_completed(version: int = TUTORIAL_VERSION) -> bool:
 
 
 func set_tutorial_completed(completed: bool, version: int = TUTORIAL_VERSION) -> void:
-	_data.tutorial_version = clampi(version, 0, TUTORIAL_VERSION) if completed else 0
-	save()
+	var candidate := _data.duplicate(true)
+	candidate.tutorial_version = clampi(version, 0, TUTORIAL_VERSION) if completed else 0
+	_commit_candidate(candidate)
 
 
 func get_album() -> Array:
@@ -61,11 +73,12 @@ func set_album(photos: PackedStringArray, moments: Dictionary = {}) -> bool:
 	for photo_id: String in photos:
 		if photo_id not in album:
 			album.append(photo_id)
-	_data.album = album
+	var candidate := _data.duplicate(true)
+	candidate.album = album
 	var combined: Dictionary = _data.get("photo_moments",{}).duplicate(true)
 	for photo_id: Variant in moments: combined[photo_id] = moments[photo_id]
-	_data.photo_moments = _clean_moments(combined,album)
-	return save()
+	candidate.photo_moments = _clean_moments(combined,album)
+	return _commit_candidate(candidate)
 
 
 func get_photo_moments() -> Dictionary:
@@ -87,9 +100,10 @@ func get_holiday_day_elapsed() -> float:
 
 
 func set_holiday_progress(day: int, elapsed: float) -> void:
-	_data.holiday_day = maxi(1, day)
-	_data.holiday_day_elapsed = maxf(0.0, elapsed)
-	save()
+	var candidate := _data.duplicate(true)
+	candidate.holiday_day = maxi(1, day)
+	candidate.holiday_day_elapsed = maxf(0.0, elapsed)
+	_commit_candidate(candidate)
 
 
 # Time and plant state belong to one yard snapshot. Publish the in-memory
@@ -101,10 +115,7 @@ func set_yard_progress(day: int, elapsed: float, state: int, day_planted: int, w
 	candidate.plant_state = clampi(state, 0, 3)
 	candidate.plant_day_planted = maxi(0, day_planted)
 	candidate.plant_watered_day = watered_day
-	if not SaveFilesType.new().commit(candidate, SAVE_PATH, TEMP_PATH, BACKUP_PATH):
-		return false
-	_data = candidate
-	return true
+	return _commit_candidate(candidate)
 
 
 # ── 植物床 ────────────────────────────────────────────────────────────────────
@@ -118,10 +129,11 @@ func get_plant_state() -> Dictionary:
 
 
 func set_plant_state(state: int, day_planted: int, watered_day: int) -> void:
-	_data.plant_state = clampi(state, 0, 3)
-	_data.plant_day_planted = maxi(0, day_planted)
-	_data.plant_watered_day = watered_day
-	save()
+	var candidate := _data.duplicate(true)
+	candidate.plant_state = clampi(state, 0, 3)
+	candidate.plant_day_planted = maxi(0, day_planted)
+	candidate.plant_watered_day = watered_day
+	_commit_candidate(candidate)
 
 
 # ── 钓鱼记录 ──────────────────────────────────────────────────────────────────
@@ -131,8 +143,9 @@ func get_first_fish_caught() -> bool:
 
 
 func set_first_fish_caught() -> void:
-	_data.first_fish_caught = true
-	save()
+	var candidate := _data.duplicate(true)
+	candidate.first_fish_caught = true
+	_commit_candidate(candidate)
 
 
 func get_animal_relationship_memory() -> Dictionary:
@@ -140,8 +153,9 @@ func get_animal_relationship_memory() -> Dictionary:
 
 
 func set_animal_relationship_memory(memory: Dictionary) -> bool:
-	_data.animal_relationship_memory = AnimalRelationshipsType.sanitize(memory)
-	return save()
+	var candidate := _data.duplicate(true)
+	candidate.animal_relationship_memory = AnimalRelationshipsType.sanitize(memory)
+	return _commit_candidate(candidate)
 
 
 func _clean_moments(raw: Variant, album: Array) -> Dictionary:
