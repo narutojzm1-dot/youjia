@@ -14,7 +14,7 @@ Owner CODEX-LEAD; based on PR251 `0dbff93ae2a78ceb3aa5d54c86a3a38da6475b89`. Thi
 4. Runs real `prepare → submit → verified receipt → acknowledge`, with Godot consuming parent/candidate/observed identity and termination before ack.
 5. Opens a second actual Godot page; lifetime ownership refuses it. Closing the original page releases the browser lock; reloading the second recovers the written payload.
 
-Results: `evidence.json`, nine checks. Existing migration bridge regression:16 checks. These are local actual Chromium/Godot/IndexedDB results, not Pages, physical power loss, production origin, low-end performance, or continuous old-client exclusion.
+Results: `evidence.json`, 17 checks. Existing migration bridge regression:16 checks. These are local actual Chromium/Godot/IndexedDB results, not Pages, physical power loss, production origin, low-end performance, or continuous old-client exclusion.
 
 ```sh
 OUT=/absolute/disposable-build GODOT=/absolute/godot XDG_DATA_HOME=/matching/templates/data bash test/save_lifecycle_web/build.sh
@@ -29,3 +29,9 @@ python test/save_lifecycle_web/run.py --web /absolute/disposable-build/web --out
 - `scripts/main.gd` album acceptance and other bool/void setter consumers need pending/confirmed semantics before switching storage ownership. #190 Gate remains separately reviewed; this slice does not modify it or Cloud exploration/#305 tests.
 - Page lock protects **participating new Host clients only**. Old tabs use legacy IDBFS and do not request this lock. Production rollout must prevent concurrent legacy writers; this slice cannot claim old-client quiescence just because new pages exclude each other. The seed page deliberately demonstrates legacy input, and is closed/reloaded before migration.
 - Absent/read_error/unsupported source and storage failures stay blocked through existing R1 semantics. No production initialization/reset, no old-source deletion, no recovery evidence eviction.
+
+## PR316 review corrections
+
+The lifecycle constructor immediately observes runtime rejection and stores a fulfilled outcome instead of leaving a rejected Promise unobserved until `open`. Failure before Godot calls `open` marks the session blocked; later `open` propagates the original failure. The browser test waits across task turns before `open` and verifies no `unhandledrejection`.
+
+Godot freezes the prepared candidate/request and write identity. It requires the exact six-field v1 receipt, expected schema/write ID, frozen candidate/parent/observed identities, and an actual boolean terminal flag before acknowledgement. The acknowledgement's request ID and status are also verified before reporting done. Four browser cases intercept **actual durable Host callbacks**, changing candidate+observed together, write ID, schema, or terminal flag type; each actual Godot consumer rejects without calling acknowledge, and actual IndexedDB committed intent/current remain available for recovery. These are adversarial callback tests, not fake successful storage.
