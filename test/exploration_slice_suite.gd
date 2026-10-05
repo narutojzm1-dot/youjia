@@ -288,14 +288,20 @@ func _main_round_trip() -> void:
 	check(main._camera.is_current(), "yard camera is current again")
 	check(main._notice_key == "notice.exploration.back_empty", "empty return notice in the yard")
 	# 外出中回标题：按宿主中断回院，带上的东西照常收下
-	world.debug_place_player(exit.approach_points[0])
-	world._interact_with_target(YardSceneHotspots.PATH_OUT)
+	world._save_progress()
+	check(main._exploration.try_begin({"day": world.holiday_day, "elapsed": world._day_elapsed}, "sunny", value), "can go out again")
 	await process_frame
-	check(main._screen == "exploring", "can go out again")
+	check(main._screen == "exploring", "director entry switches Main to the walk")
+	scroll = main._exploration.scroll
+	scroll.observe("brook")
+	var carried_find: String = scroll.pick_choice().find_id
+	scroll.pick()
+	var before_title: Dictionary = save_store.get_keepsakes()
 	main._show_title()
 	await process_frame
 	check(main._screen == "title" and not main._exploration.is_exploring(), "title interrupts the walk safely")
 	check(main._exploration.host.state() == C.STATE_IDLE, "interrupted walk is closed in the save")
+	check(int(save_store.get_keepsakes().get(carried_find, 0)) == int(before_title.get(carried_find, 0)) + 1, "the find carried when leaving to the title is kept")
 	main._start_holiday()
 	await process_frame
 	check(main._screen == "game" and main._notice_key == "notice.arrive", "next holiday starts in the yard with nothing pending")
