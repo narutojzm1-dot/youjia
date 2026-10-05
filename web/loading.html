@@ -66,6 +66,14 @@ Source SHA-256: 38f4c5f927f746b3dfa4c3a5d7edf0b7a3e828e27438418fa54f9e1565289412
   <script>
     (() => {
       const config = $GODOT_CONFIG;
+      let resolveSaveRuntime, rejectSaveRuntime;
+      const saveRuntimeReady = new Promise((resolve, reject) => { resolveSaveRuntime = resolve; rejectSaveRuntime = reject; });
+      saveRuntimeReady.catch(() => {}); // Observe immediately; preserve original rejection.
+      const saveBridgeReady = import('./web/save/bridge.mjs').then(async ({installSaveHost}) => {
+        const {captureIdbfsSource} = await import('./web/save/idbfs_source.mjs');
+        installSaveHost({runtimeReady: saveRuntimeReady, captureLegacy: captureIdbfsSource});
+      });
+      saveBridgeReady.catch(() => {});
       const threads = $GODOT_THREADS_ENABLED;
       const canvas = document.getElementById('canvas');
       const loading = document.getElementById('loading');
@@ -126,6 +134,7 @@ Source SHA-256: 38f4c5f927f746b3dfa4c3a5d7edf0b7a3e828e27438418fa54f9e1565289412
           : (zh ? '仍在加载。可以继续等待，或重试。' : 'Still loading. You can keep waiting or retry.');
         if (notice.textContent !== message) notice.textContent = message;
       };
+      window.addEventListener('youjia:save-blocked', event => fail(new Error('存档暂时无法确认，原有内容已保留：' + event.detail)));
       const onWindowError = (event) => fail(event.error || new Error('Engine startup error'));
       const onUnhandledRejection = (event) => fail(event.reason || new Error('Engine startup rejected'));
       // Time alone cannot prove failure: downloads and WASM compilation may be slow.
@@ -139,6 +148,7 @@ Source SHA-256: 38f4c5f927f746b3dfa4c3a5d7edf0b7a3e828e27438418fa54f9e1565289412
       const fail = (error) => {
         if (failed || ready) return;
         failed = true;
+        rejectSaveRuntime(error);
         stopObserving();
         console.error('[game-loading] Startup failed', error);
         loading.hidden = false;
@@ -191,8 +201,10 @@ Source SHA-256: 38f4c5f927f746b3dfa4c3a5d7edf0b7a3e828e27438418fa54f9e1565289412
           stamp('engineScriptReady');
           const missing = Engine.getMissingFeatures({ threads });
           if (missing.length) throw new Error(`Missing browser features: ${missing.join(', ')}`);
-          const engine = new Engine({ ...config, canvas });
-          await engine.startGame({ onProgress });
+          await saveBridgeReady;
+          const engine = new Engine({ ...config, canvas, persistentPaths: [] });
+          await engine.startGame({ onProgress, persistentPaths: [] });
+          resolveSaveRuntime();
           if (failed) return;
           engineReady = true;
           stamp('engineReady');

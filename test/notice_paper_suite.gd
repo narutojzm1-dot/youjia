@@ -24,7 +24,7 @@ func _run() -> void:
 		await process_frame
 		await process_frame
 		main.set_process(false)
-		main._start_holiday()
+		await main._start_holiday()
 		main._layout()
 		_check_style(dims)
 		_check_short(dims)

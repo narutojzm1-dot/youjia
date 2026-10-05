@@ -110,26 +110,45 @@ func _host_commit() -> void:
 	host.restore()
 	check(host.can_begin(), "fresh store can start a walk")
 	check(host.begin(CLOCK, value).ok and host.state() == C.STATE_ACTIVE, "begin starts an active walk")
-	check(store.get_exploration_record() is Dictionary, "begin persists the session record")
+	check(store.get_exploration_record() == null and host.view().unsaved_changes, "the record is only accepted, not yet published, before confirmation")
+	store.pump()
+	check(store.get_exploration_record() is Dictionary and not host.view().unsaved_changes, "begin persists the session record once confirmed")
 	host.visit("brook")
 	var stone := offer(host)
 	check(not stone.is_empty() and host.take(stone).ok, "brook find can be taken")
 	host.visit("brook")
 	check(host.view().get("carried", []) == [stone], "revisiting the current stop is a no-op")
 	var result := host.request_return("player")
-	check(result.navigate and result.outcome.state == "committed" and result.outcome.items == PackedStringArray([stone]), "return commits the carried find")
+	check(result.navigate and result.outcome.is_empty() and host.is_settling(), "return navigates at once while the commit waits in the queue")
+	check(store.get_keepsakes().is_empty() and not host.can_begin(), "nothing is granted and no new walk starts before confirmation")
+	var settled: Array[Dictionary] = []
+	host.settled.connect(func(outcome: Dictionary) -> void: settled.append(outcome))
+	store.pump()
+	check(settled.size() == 1 and settled[0].state == "committed" and settled[0].items == PackedStringArray([stone]), "confirmation settles the return with the carried find")
 	check(store.get_keepsakes() == {stone: 1} and store.get_exploration_committed_serial() == 1, "keepsake and watermark land in one commit")
 	check(host.state() == C.STATE_IDLE and host.can_begin(), "after commit the walk is closed and a new one can start")
 	var again := host.request_return("player")
-	check(again.navigate and store.get_keepsakes() == {stone: 1}, "duplicate return navigates without granting twice")
-	check(Director.outcome_notice(result.outcome) == "notice.exploration.kept.%s" % stone.get_slice(".", 2), "kept notice names the find only after commit")
+	store.pump()
+	check(again.navigate and store.get_keepsakes() == {stone: 1} and settled.size() == 1, "duplicate return navigates without granting twice")
+	check(Director.outcome_notice(settled[0]) == "notice.exploration.kept.%s" % stone.get_slice(".", 2), "kept notice names the find only after commit")
 	host.begin(CLOCK, value)
-	var empty := host.request_return("player")
-	check(empty.outcome.state == "committed" and empty.outcome.items.is_empty(), "empty-handed return is allowed")
+	host.request_return("player")
+	store.pump()
+	check(settled[-1].state == "committed" and settled[-1].items.is_empty(), "empty-handed return is allowed")
 	check(store.get_keepsakes() == {stone: 1} and store.get_exploration_committed_serial() == 2, "empty trip advances the watermark only")
-	check(Director.outcome_notice(empty.outcome) == "notice.exploration.back_empty", "empty trip says back, not kept")
-	check(store.commit_exploration_trip(store.get_exploration_record(), 2, PackedStringArray([stone])) == false, "store refuses a serial at or below the watermark")
-	check(store.commit_exploration_trip(null, 9, PackedStringArray(["fixture.find.x"])) == false and store.get_exploration_committed_serial() == 2, "store refuses non-formal finds and keeps memory unchanged")
+	check(Director.outcome_notice(settled[-1]) == "notice.exploration.back_empty", "empty trip says back, not kept")
+	var receipt := {}
+	check(not store.request_exploration_trip(store.get_exploration_record(), 2, PackedStringArray([stone]), receipt).is_empty(), "a stale trip is still accepted into the queue")
+	store.pump()
+	check(receipt.granted == false and store.get_keepsakes() == {stone: 1} and store.get_exploration_committed_serial() == 2, "a serial at or below the watermark grants nothing when it reaches the head")
+	check(store.request_exploration_trip(null, 9, PackedStringArray(["fixture.find.x"]), {}).is_empty() and store.queue.is_empty(), "store refuses non-formal finds before queueing")
+	# 两笔同一趟的提交先后到达队首：第二笔看到已前进的水位线，只写记录
+	var first := {}
+	var second := {}
+	store.request_exploration_trip(null, 3, PackedStringArray([stone]), first)
+	store.request_exploration_trip(null, 3, PackedStringArray([stone]), second)
+	store.pump()
+	check(first.granted and not second.granted and store.get_keepsakes() == {stone: 2}, "two queued commits of one trip grant once")
 
 
 ## 四处都有东西、且有同名的种子 → 依次要带上的三处停留点（含重复）
@@ -168,33 +187,47 @@ func _host_basket_sizes() -> void:
 	for i in 2:
 		host.visit(trip.stops[i])
 		host.take(trip.finds[i])
-	var two := host.request_return("player")
-	check(two.outcome.state == "committed" and two.outcome.items.size() == 2 and store.get_keepsakes() == _counts(trip.finds.slice(0, 2)), "returning with two finds keeps exactly those two")
-	check(Director.outcome_notice(two.outcome) == "notice.exploration.kept_many", "two finds get the kept-many notice")
+	host.request_return("player")
+	store.pump()
+	var two := host.last_outcome
+	check(two.state == "committed" and two.items.size() == 2 and store.get_keepsakes() == _counts(trip.finds.slice(0, 2)), "returning with two finds keeps exactly those two")
+	check(Director.outcome_notice(two) == "notice.exploration.kept_many", "two finds get the kept-many notice")
 	var before: Dictionary = store.get_keepsakes().duplicate()
 	host.begin(CLOCK, trip.seed)
 	for i in 3:
 		host.visit(trip.stops[i])
 		host.take(trip.finds[i])
+	store.pump()
 	var saved: Dictionary = store.get_exploration_record().session
 	check(saved.taken.size() == 3 and saved.carried.size() == 3 and saved.carried.count(trip.finds[0]) + saved.carried.count(trip.finds[1]) > 2, "a full basket with a repeat is saved with every source")
-	# 中途关掉游戏，重启时写盘先失败：回院但不说收好了，之后补存只授予一次
+	# 中途关掉游戏，重启时写盘先被拒：回院但不说收好了，之后补存只授予一次
 	store.fail_commits = true
 	var reopened := ExplorationHost.new(store)
-	var deferred := reopened.restore()
-	check(deferred.get("restored", false) and deferred.state != "committed" and store.get_keepsakes() == before, "a restart whose save fails keeps nothing yet")
+	check(reopened.restore().is_empty(), "a restart's commit waits in the queue")
+	store.pump()
+	var deferred := reopened.last_outcome
+	check(deferred.get("restored", false) and deferred.state == "deferred" and store.get_keepsakes() == before, "a restart whose save is rejected keeps nothing yet")
 	store.fail_commits = false
-	var retried := reopened.retry_deferred()
+	reopened.retry_deferred()
+	store.pump()
+	var retried := reopened.last_outcome
 	var expected := before.duplicate()
 	for find_id: String in trip.finds:
 		expected[find_id] = int(expected.get(find_id, 0)) + 1
 	check(retried.get("state", "") == "committed" and retried.items.size() == 3 and store.get_keepsakes() == expected, "the retry keeps all three finds, repeats counted")
-	check(ExplorationHost.new(store).restore().is_empty() and store.get_keepsakes() == expected, "another restart grants nothing more")
+	var third := ExplorationHost.new(store)
+	third.restore()
+	store.pump()
+	check(third.last_outcome.is_empty() and store.get_keepsakes() == expected, "another restart grants nothing more")
 	reopened.begin(CLOCK, trip.seed)
 	for i in 3:
 		reopened.visit(trip.stops[i])
 		reopened.take(trip.finds[i])
-	var clean := ExplorationHost.new(store).restore()
+	store.pump()
+	var clean_host := ExplorationHost.new(store)
+	clean_host.restore()
+	store.pump()
+	var clean := clean_host.last_outcome
 	for find_id: String in trip.finds:
 		expected[find_id] = int(expected.get(find_id, 0)) + 1
 	check(clean.get("restored", false) and clean.state == "committed" and clean.items.size() == 3 and store.get_keepsakes() == expected, "a restart mid-walk with a full repeat basket keeps all three")
@@ -209,20 +242,48 @@ func _host_failure_and_retry() -> void:
 	host.visit("brook")
 	var find := offer(host)
 	host.take(find)
+	store.pump()
 	var before := store._data.duplicate(true)
 	store.fail_commits = true
 	var result := host.request_return("player")
 	check(result.navigate, "return navigation does not wait for a failed save")
-	check(result.outcome.state == "deferred" and result.outcome.items == PackedStringArray([find]), "failed commit is reported as deferred, not kept")
-	check(store._data == before, "failed commit leaves the published save untouched")
+	store.pump()
+	var outcome := host.last_outcome
+	check(outcome.state == "deferred" and outcome.items == PackedStringArray([find]), "rejected commit is reported as deferred, not kept")
+	check(store._data == before, "rejected commit leaves the published save untouched")
 	check(host.state() == C.STATE_FAILURE and not host.can_begin(), "a deferred trip blocks a new walk until saved")
-	check(Director.outcome_notice(result.outcome) == "notice.exploration.deferred_items", "deferred notice does not claim the find is put away")
-	check(host.retry_deferred().get("state", "") == "deferred", "retry while the disk still fails stays deferred")
+	check(Director.outcome_notice(outcome) == "notice.exploration.deferred_items", "deferred notice does not claim the find is put away")
+	host.retry_deferred()
+	check(host.retry_deferred().is_empty() and store.queue.filter(func(op: Dictionary) -> bool: return op.kind == "exploration_trip").size() == 1, "a retry already in the queue is not queued twice")
+	store.pump()
+	check(host.last_outcome.get("state", "") == "deferred" and host.last_outcome.get("retry", false), "retry while the save is still rejected stays deferred")
 	store.fail_commits = false
-	var retried := host.retry_deferred()
-	check(retried.get("state", "") == "committed" and store.get_keepsakes() == {find: 1}, "idle retry commits once the save works")
+	host.retry_deferred()
+	store.pump()
+	check(host.last_outcome.get("state", "") == "committed" and store.get_keepsakes() == {find: 1}, "idle retry commits once the save works")
 	check(host.retry_deferred().is_empty() and store.get_keepsakes() == {find: 1}, "extra retries never grant twice")
 	check(host.can_begin(), "after the retry a new walk can start")
+	# 结果未知：原地等待，不说收好也不说没收好；之后查明写上了就只授予一次
+	host.begin(CLOCK, value)
+	host.visit("brook")
+	host.take(find)
+	store.pump()
+	store.unknown_kind = "exploration_trip"
+	host.request_return("player")
+	store.pump()
+	check(host.state() == C.STATE_PENDING and host.is_settling() and host.last_outcome.is_empty() and store.get_keepsakes() == {find: 1}, "an unknown commit stays pending without any notice")
+	check(host.retry_deferred().is_empty() and not host.can_begin(), "no retry or new walk while the outcome is unknown")
+	store.resolve_unknown(true)
+	check(host.last_outcome.get("state", "") == "committed" and store.get_keepsakes() == {find: 2} and host.can_begin(), "an unknown commit that landed settles once")
+	host.begin(CLOCK, value)
+	host.visit("brook")
+	host.take(find)
+	store.pump()
+	store.unknown_kind = "exploration_trip"
+	host.request_return("player")
+	store.pump()
+	store.resolve_unknown(false)
+	check(host.last_outcome.get("state", "") == "deferred" and store.get_keepsakes() == {find: 2} and host.state() == C.STATE_FAILURE, "an unknown commit that did not land is deferred")
 
 
 func _host_restore() -> void:
@@ -234,23 +295,32 @@ func _host_restore() -> void:
 	host.visit("shade")
 	var cone := offer(host)
 	host.take(cone)
+	store.pump()
 	# 进程在画卷中被关掉：新宿主从同一份存档恢复
 	var reopened := ExplorationHost.new(store)
-	var outcome := reopened.restore()
+	reopened.restore()
+	store.pump()
+	var outcome := reopened.last_outcome
 	check(outcome.get("restored", false) and outcome.state == "committed" and outcome.items == PackedStringArray([cone]), "restart mid-walk returns home and keeps the carried find")
 	check(store.get_keepsakes() == {cone: 1} and reopened.can_begin(), "restored find is granted once and walks can resume")
-	check(ExplorationHost.new(store).restore().is_empty() and store.get_keepsakes() == {cone: 1}, "a second restart grants nothing more")
+	var second := ExplorationHost.new(store)
+	second.restore()
+	store.pump()
+	check(second.last_outcome.is_empty() and store.get_keepsakes() == {cone: 1}, "a second restart grants nothing more")
 	# 提交成功、紧接着的空闲记录没写上就断电：水位线挡住重复授予
 	reopened.begin(CLOCK, value)
 	reopened.visit("shade")
 	reopened.take(offer(reopened))
+	store.pump()
 	store.fail_after = 2
 	reopened.request_return("player")
+	store.pump()
 	check(store.get_keepsakes() == {cone: 2} and str(store.get_exploration_record().session.state) == C.STATE_PENDING, "crash window leaves a pending record behind an advanced watermark")
 	store.fail_after = -1
 	var after_crash := ExplorationHost.new(store)
-	after_crash.restore()
-	check(store.get_keepsakes() == {cone: 2} and after_crash.can_begin(), "pending trip at the watermark settles without a second grant")
+	var settled_now := after_crash.restore()
+	store.pump()
+	check(settled_now.get("items", PackedStringArray()).is_empty() and after_crash.last_outcome.get("items", PackedStringArray()).is_empty() and store.get_keepsakes() == {cone: 2} and after_crash.can_begin(), "pending trip at the watermark settles without a second grant")
 	# 存档损坏：不崩溃、不授予，给温和说明
 	var broken := make_store()
 	broken._data.exploration = {"schema": "nonsense", "state": 42}
@@ -382,6 +452,8 @@ func _scroll_and_director() -> void:
 	director.attach(store, world)
 	var keys: Array[String] = []
 	director.returned.connect(func(key: String) -> void: keys.append(key))
+	var notices: Array[String] = []
+	director.notice.connect(func(k: String) -> void: notices.append(k))
 	check(director.try_begin(CLOCK, "sunny", value) and director.is_exploring(), "director opens the scroll")
 	check(not director.try_begin(CLOCK, "sunny", value), "a second begin while walking is ignored")
 	var scroll: Node2D = director.scroll
@@ -411,8 +483,10 @@ func _scroll_and_director() -> void:
 	var at_slope: String = scroll.pick_choice().find_id
 	check(scroll.pick_choice().kind == "swap" and scroll.pick_choice().old == at_gate, "a fourth find offers to swap out the earliest one")
 	check(scroll._caption.text.contains(I18n_t("exploration.find.%s" % at_gate.get_slice(".", 2))), "the caption says which find goes back")
+	store.pump()
 	var commits_before: int = store.commits
 	check(scroll.pick() and scroll.carried().size() == 3 and scroll.carried().count(at_slope) >= 1, "swapping keeps the basket at three")
+	store.pump()
 	var saved: Dictionary = store.get_exploration_record().session
 	check(store.commits == commits_before + 1 and saved.carried.size() == 3 and saved.taken.has("slope") and not saved.taken.has("gate"), "a swap is saved in one write, never with a gap")
 	scroll.end_observe()
@@ -427,15 +501,15 @@ func _scroll_and_director() -> void:
 	scroll._request_return("player")
 	await process_frame
 	check(keys.size() == 1 and not director.is_exploring(), "R / return button leaves exactly once")
-	check(keys[0] == "notice.exploration.kept_many" and director.last_params.items != "", "return notice lists the committed finds")
+	check(keys[0] == "" and store.get_keepsakes().is_empty(), "the yard is back before the commit is confirmed, without claiming anything is kept")
+	store.pump()
+	check(notices[-1] == "notice.exploration.kept_many" and director.last_params.items != "", "the confirmed commit's notice lists the kept finds")
 	var expected := {}
 	for find_id: String in [at_brook, at_shade, at_slope]:
 		expected[find_id] = int(expected.get(find_id, 0)) + 1
 	check(store.get_keepsakes() == expected, "exactly the three carried finds are kept, repeats counted")
 	check(not is_instance_valid(scroll) or scroll.is_queued_for_deletion(), "scroll is released after return")
 	await process_frame
-	var notices: Array[String] = []
-	director.notice.connect(func(k: String) -> void: notices.append(k))
 	director.try_begin(CLOCK, "sunny", value)
 	director.scroll.place_at("brook")
 	director.scroll.observe()
@@ -444,21 +518,53 @@ func _scroll_and_director() -> void:
 	store.fail_commits = true
 	director.scroll._request_return("player")
 	await process_frame
-	check(keys[-1] == "notice.exploration.deferred_items", "a failed save returns home without claiming the find is kept")
+	store.pump()
+	check(notices[-1] == "notice.exploration.deferred_items", "a rejected save returns home without claiming the find is kept")
 	store.fail_commits = false
-	check(not director.try_begin(CLOCK, "sunny", value) and notices[-1] == "notice.exploration.kept.%s" % late.get_slice(".", 2), "a late save on the way out stays in the yard so its kept notice is seen")
+	check(not director.try_begin(CLOCK, "sunny", value) and notices[-1] == "notice.exploration.still_saving", "going out while the last trip is unsaved queues it again and stays in the yard")
+	store.pump()
+	check(notices[-1] == "notice.exploration.kept.%s" % late.get_slice(".", 2), "the late save's kept notice is seen in the yard")
 	check(director.try_begin(CLOCK, "sunny", value), "the next tap goes out")
 	director.scroll._request_return("player")
 	await process_frame
+	store.pump()
 	director.try_begin(CLOCK, "overcast", value)
 	scroll = director.scroll
 	scroll.spot = {"arm": L.HOME_ARM, "d": L.arm_length(L.HOME_ARM)}
 	for i in 40:
 		scroll.walk(L.home_direction(), 1.0 / 60.0)
 	await process_frame
-	check(keys[-1] == "notice.exploration.back_empty", "walking on into the gate goes home empty-handed")
+	store.pump()
+	check(notices[-1] == "notice.exploration.back_empty", "walking on into the gate goes home empty-handed")
+	# 院内空闲重试又被拒：不再弹提示，之后写上了才说收好了
+	director.try_begin(CLOCK, "sunny", value)
+	director.scroll.place_at("brook")
+	director.scroll.observe()
+	director.scroll.pick()
+	store.pump()
+	store.fail_commits = true
+	director.scroll._request_return("player")
+	await process_frame
+	store.pump()
+	var quiet := notices.size()
+	director.idle_tick(Director.RETRY_SECONDS + 1.0)
+	store.pump()
+	check(notices.size() == quiet, "an idle retry that is rejected again stays quiet")
+	store.fail_commits = false
+	director.idle_tick(Director.RETRY_SECONDS + 1.0)
+	store.pump()
+	check(notices.size() == quiet + 1 and notices[-1].begins_with("notice.exploration.kept."), "an idle retry that lands says the find is kept")
 	director.free()
 	world.free()
+
+
+## 真实 SaveStore 的队列在帧末推进：等到空闲（或超时）再看结果
+func drain(save_store: Node) -> bool:
+	for i in 120:
+		if save_store.is_save_idle():
+			return true
+		await process_frame
+	return save_store.is_save_idle()
 
 
 func _main_round_trip() -> void:
@@ -472,12 +578,14 @@ func _main_round_trip() -> void:
 	pre.visit("brook")
 	var find := offer(pre)
 	pre.take(find)
+	check(await drain(save_store) and save_store.get_exploration_record() is Dictionary, "the half-walked record reaches the real save")
 	var main: Control = load("res://scenes/main.tscn").instantiate()
 	root.add_child(main)
 	await process_frame
 	main.set_process(false)
-	main._start_holiday()
-	await process_frame
+	await main._start_holiday()
+	check(main._notice_key == "notice.arrive" or main._notice_key.begins_with("notice.exploration.kept."), "Main enters the yard before the restored commit settles")
+	await drain(save_store)
 	check(main._notice_key == "notice.exploration.kept.%s" % find.get_slice(".", 2), "Main restores an interrupted walk with a kept notice")
 	check(int(save_store.get_keepsakes().get(find, 0)) == int(keep_before.get(find, 0)) + 1, "the interrupted walk's find is in the real save")
 	var world = main._world
@@ -529,6 +637,8 @@ func _main_round_trip() -> void:
 	check(not main._pause_screen.visible and not paused, "resume returns to the walk")
 	scroll._request_return("player")
 	await process_frame
+	check(main._notice_key == "notice.exploration.back" or main._notice_key == "notice.exploration.back_empty", "back in the yard says so at once")
+	await drain(save_store)
 	check(main._screen == "game" and world.visible and world.input_enabled and main._hud.visible, "return restores the yard")
 	check(world.get_player().position.distance_to(exit.approach_points[0]) < 1.0, "the resident stands at the path end after returning")
 	check(main._camera.is_current(), "yard camera is current again")
@@ -543,13 +653,12 @@ func _main_round_trip() -> void:
 	var carried_find: String = scroll.pick_choice().find_id
 	scroll.pick()
 	var before_title: Dictionary = save_store.get_keepsakes()
-	main._show_title()
-	await process_frame
+	await main._show_title()
 	check(main._screen == "title" and not main._exploration.is_exploring(), "title interrupts the walk safely")
 	check(main._exploration.host.state() == C.STATE_IDLE, "interrupted walk is closed in the save")
 	check(int(save_store.get_keepsakes().get(carried_find, 0)) == int(before_title.get(carried_find, 0)) + 1, "the find carried when leaving to the title is kept")
-	main._start_holiday()
-	await process_frame
+	await main._start_holiday()
+	await drain(save_store)
 	check(main._screen == "game" and main._notice_key == "notice.arrive", "next holiday starts in the yard with nothing pending")
 	main.queue_free()
 	await process_frame

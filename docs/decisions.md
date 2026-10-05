@@ -1051,6 +1051,9 @@ CODEX-LEAD复现：现有7类setter在失败前改内存，后续无关保存会
 
 总图、七页标注与六页场景候选已恢复为[可追溯原图包](../art/concepts/producer_world_20261005/README.md)，另保留历史稿，13张均原字节及hash核验；三个用户直链再次下载一致。此为原图归档和方向交付，不表示运行时接入、美术终验或发布。此前“原图只在会话”描述保留历史，以本条为当前状态；制作人资源职责按goal-ownership及[本地接续](collaboration/producer-local-handoff-20261005.md)，不按旧两Codex临时资源分工继续开工。
 
+## 2026-10-05 #149/#150 正式异步接线候选
+
+CODEX-LEAD 在 PR336 将已合入未启用的 Host 接入生产候选：旧库只读封存、新库单写者，游戏 getter/照片反馈等待严格持久回执，返回首页前清空队列；旧页来源变化由玩家明确继续当前或下载两份，禁止自动合并。原生同步兼容接口同样使用来源保全门禁，修复独审提出的绕过/绑定丢失/新token配旧snapshot风险。实现、边界及Cloud适配接口见[接线契约](architecture/production-save-integration.md)。仍为Draft组合验收中，不把自然Web关页恢复/受控迁移通过冒充全部平台或公开发布。
 
 ## GAME-PM 17:20：已决与接收收尾
 
@@ -1063,3 +1066,7 @@ CODEX-LEAD复现：现有7类setter在失败前改内存，后续无关保存会
 ### 2026-10-05 首片近郊换成原画沿路行走（CURSOR-CLOUD，#153 / #155，EXP-PAINTED-PATH）
 
 按用户“保留原画视角，沿路走动并自然换页”及制作人[执行方向](architecture/exploration-painted-path-direction.md)实现首版：表现层改用 `02_near_path.png` 候选原画（运行时副本 `assets/holiday/exploration/near_path_02.webp`，1:1 不拉伸不拼接），人物脚点只在制作人候选路线（`art/concepts/producer_world_20261005/near_path_anchors.candidate.json` 的 `gate_to_foreground_candidate`，从院门台阶下沿土路弯到前景、在纸面留白前停住）上，远小近大；左上小路与木桥之间制作人未交付连接，不走；方向键沿路投影、触屏/鼠标点哪里就沿路走到最近的路面；桌面完整构图，手机一档固定缩放随人物平移，停下看不变焦；在院门口继续往院里走即回院。四处停留点 id 不变（核心目录与存档不动），地名按画面改为院门外/坡路草边/溪声近处/小路坡下；前景终点不是出口。木桥只是地标：03 未交付前不摆出口。路线用制作人候选原样折线；停留点、人物比例、物件位置为 Cloud 校准的实验参数（制作人包中为 null/留空），待制作人核对；画内已有松果/落羽未清底（可拿小物不放在其上，带走不留副本），正式小物精灵、相邻页换页、天气变化与前景遮挡待后续。证据见[原画沿路证据](playtests/2026-10-05-exploration-painted-path/README.md)。
+
+### 2026-10-05 首片接入异步存档队列（CURSOR-CLOUD，#305 / #153）
+
+#336 合入后 SaveStore 的同步 setter 在 Web 上一律拒绝，桌面上也只在队列空闲时可用；小院自己的保存先排进队列，紧接着的探索同步写入就会失败，所以首片在合入前改用异步接口：`request_exploration_record` / `request_exploration_trip` 返回受理编号，宿主只认自己的编号。确认后才授予并说「收好了」；被拒按延后处理；结果未知时原地等待、不能再出门，查明后再结算。带回物的授予在队首按当时已确认的水位线判断，同一趟排了两笔也只授予一次，不会为了去重而产生被拒（Main 会把任何被拒当作存档问题提示）。回院导航仍不等待，先显示「回到院里了」，确认后换成「…收好了」；回标题、重开前先中断回院再 flush。证据：`docs/playtests/2026-10-05-exploration-queued-save/`。这不是 #150 / #176 的 Web 持久化验收。

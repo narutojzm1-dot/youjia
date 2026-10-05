@@ -41,9 +41,10 @@ func run():
  store._data=store._default_data()
  main=load("res://scenes/main.tscn").instantiate();root.add_child(main)
  await process_frame;await process_frame
- main.set_process(false);main._start_holiday()
+ main.set_process(false);await main._start_holiday()
  var world=main._world
  feed_naturally(world)
+ await store.flush_pending()
  var fed_id:="llama_fed_gentle"
  var moment:Dictionary=store.get_photo_moment(fed_id)
  check(fed_id in store.get_album(),"new photo ID is saved")
@@ -96,6 +97,7 @@ func run():
  check(pose.size()==6,"photo includes the accepted hero frame and pose")
  for i in 180:world.tick(1.0/60,Vector2.LEFT)
  check(same_numbers(pose,player_pose(store.get_photo_moment(fed_id))),"saved moment does not follow later player movement")
+ await store.flush_pending()
  store._load()
  check(fed_id in store.get_album() and same_numbers(pose,player_pose(store.get_photo_moment(fed_id))),"photo pose and progress survive reload")
  check(store.get_photo_moment(fed_id).get("caption_variant",-1)==moment.caption_variant and PhotoDiary.caption(store.get_photo_moment(fed_id))==original_caption,"saved variant and Chinese sentence survive real disk reload")
@@ -114,6 +116,7 @@ func run():
  world.debug_place_actor("horse",Vector2(880,480))
  world.debug_place_player(Vector2(837,492))
  world._interact_with_target("pet:horse")
+ await store.flush_pending()
  var horse_id:="horse_pet_sunny"
  var horse_photo:Dictionary=store.get_photo_moment(horse_id)
  check(horse_id in store.get_album() and horse_photo.get("day",0)==3,"a real third-day sunny horse pet produces a saved dated photograph")
@@ -130,21 +133,31 @@ func run():
  # Existing version3 progress remains earned; missing images are captured only
  # when those events actually occur again, silently, without a new camera jump.
  var old_ids:Array=Array(ExpressionCatalog.all_ids())
+ await store.flush_pending()
+ # Independent old-version profile: discard only this disposable test profile.
+ for path in [store.SAVE_PATH,store.BACKUP_PATH,store.TEMP_PATH,store.SAVE_PATH+".legacy-sources.json"]:
+  DirAccess.remove_absolute(ProjectSettings.globalize_path(path))
  var file:=FileAccess.open(store.SAVE_PATH,FileAccess.WRITE)
  file.store_string(JSON.stringify({"version":3,"locale":"zh-CN","album":old_ids}));file.close()
+ await store.flush_pending()
  store._load()
  check(store.get_album()==old_ids and store.get_photo_moments().is_empty(),"version3 album survives migration without invented scenes")
- main._start_holiday();world=main._world
+ await main._start_holiday();world=main._world
  check(world.collected.size()==old_ids.size() and world.photo_moments.is_empty(),"old earned IDs remain on new yard start")
  var focus_calls:Array=[]
  world.camera_focus_requested.connect(func(point:Vector2,_zoom:float):focus_calls.append(point))
  feed_naturally(world)
+ await store.flush_pending()
  check(store.get_album()==old_ids,"capturing a legacy scene never resets or duplicates progress")
  check(not store.get_photo_moment(fed_id).is_empty(),"legacy feeding portrait gains a real scene on the next feeding")
  check(focus_calls.is_empty(),"legacy scene upgrades do not replay unlock camera jumps")
  # Corrupt scene data cannot wipe the earned album.
+ await store.flush_pending()
+ for path in [store.SAVE_PATH,store.BACKUP_PATH,store.TEMP_PATH,store.SAVE_PATH+".legacy-sources.json"]:
+  DirAccess.remove_absolute(ProjectSettings.globalize_path(path))
  file=FileAccess.open(store.SAVE_PATH,FileAccess.WRITE)
  file.store_string(JSON.stringify({"version":4,"locale":"zh-CN","album":old_ids,"photo_moments":{fed_id:{"version":1,"rule_id":fed_id,"items":[]}}}));file.close()
+ await store.flush_pending()
  store._load()
  check(store.get_album()==old_ids and store.get_photo_moments().is_empty(),"bad scene metadata is discarded without losing collected IDs")
  if original==null:DirAccess.remove_absolute(ProjectSettings.globalize_path(store.SAVE_PATH))
