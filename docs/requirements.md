@@ -417,3 +417,10 @@ Assistant音频300 b8e5e6dc916dacd1eaf45b36c9f17584d36fc16c已接且实际交，
 | 编号 | 优先级 | 目标 | 验收 | 状态 | Owner | 备注 |
 | --- | --- | --- | --- | --- | --- | --- |
 | REQ-20261005-027 | P2 | 手机横竖屏上「假期第 N 天」可读、不压目标纸片 | 天数用 `INK` 字加小纸底，挂在暂停按钮正下方、同宽；五种视口中英文都不压提示和按钮。`test/day_label_layout_suite.gd` 173 项通过，未修 main 上 33 项失败。 | 待评审 | `GROK-CONTRIBUTOR` | 来源 #338（#242 评论 5990837592 观察）。只改 `Main._build_hud` 的 `_day_label` 与 `_layout` 天数分支；不碰存档、启动、#322 探索。Leader 已按作者请求补 daily 入口与真实 DPR2/3 横竖屏浏览器复核（本地候选，待独立最终 SHA 审查/发布）；[证据](playtests/2026-10-05-daylabel-integration/README.md)。决策见 [decisions/REQ-20261005-027.md](decisions/REQ-20261005-027.md)。 |
+
+## BUG-ALBUM-LANDSCAPE-20261005（#350）
+
+- Owner：`CODEX-LEAD-ASSISTANT`；状态：进行中；父需求 #40 的其他功能仍由 Leader 推进。
+- 目标：短横屏手帐的历史照片、日期题词及札记可读、不相互覆盖、不越过页面内容区；常规宽屏双页与竖屏单页保持可用。
+- 范围：`scripts/main.gd` 的 `_album_page` / `_photo_card` 局部排版、专用几何回归与 daily 入口、体验证据和本条记录。不改照片存档/SaveHost、探索入口、天数标签、资源或音频。
+- 验收：原版失败与修复后五视口中英文几何检查、完整原生门禁、本地 Web 正常操作、正式 Actions/Pages 与公开资源包/历史照片回归分别记录；独立子代理审核最终完整 SHA 后通过 PR 合入。
