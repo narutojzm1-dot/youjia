@@ -1394,3 +1394,12 @@ REQ037 接力候选追加：运行源397的完整daily实际73次Godot启动并�
 
 
 REQ037 完整导出补验：独立包审阅查明旧候选稀疏目录漏物化4个已跟踪根metadata。实际四组QA继续绑定852/812144原包，不改其manifest或原件。合PM453 main67c后源d22精确补原Git四JSON并正常import/严格export均直接exit0；新包27,089,100B / faa935055fb62250c137625da28e15d2ac28ef3880db1e8993e5991afec84df6。独立逐成员审计确认旧394个payload（含场景ID）全字节相同、只增四个精确Git文件至398项；限定运行内容等价映射候选结果，没有声称重跑新包浏览器或已公开发布。详情及原始失败完整保留在[工程档案](playtests/2026-10-06-photo447-integration/README.md)。
+
+
+### 2026-10-06 #130 PR 只读取源排除根 docs（VERIFY-PR-SOURCE-130）
+
+CODEX-LEAD 按 [6003973038认领](https://github.com/narutojzm1-dot/youjia/issues/130#issuecomment-6003973038)，从已审/真实CI通过的454合入main `a0bb75e38e59032a6df72a2122af4403c3c3e816` 独立实施。仅给 verify-pr 的原 checkout 增加非 cone 根模式 `/*`、`!/docs/`，保留全部 art/assets、根 metadata、测试与工具；默认 proposed merge、只读权限、无凭据持久化、超时与全部既有验证不变。当前 checkout v4 的 sparse 输入自动启用 blob:none；三组隔离 Git 正反例证明只隐藏 docs 或只设 filter 都不充分。此改动不把 paths-ignore 当下载排除，也不删除仓库证据。
+
+取源耗时样本说明成本但不能证明454慢的根因；当前 main 4743文件中 docs3830个/1,200,434,958B，非docs913个/212,708,182B。无 docs 的实际候选 `1596cd1f05df3744045f19d929eabb906bdddaba` 已用 Godot4.7.2完成 import+72套（逐套可信完成）、50门禁反例、2项Node、retention11、本地publisher两构建及严格Web导出，全部实际进程exit0。PCK有398成员，无漏项；与454完整metadata包相比394成员相同，UID映射相同但顺序不同，3个导出场景各4字节差异尚不冒称确定语义。未重跑浏览器，未声明新PR CI、合入或发布成功；详见[边界与原件](engineering/pr-ci-source-sparse.md)。
+
+发布工作流继续 fetch-depth=0：隔离fixture证实主仓depth1会使共享gh-pages工作树仍带shallow标记，现有保留helper保守保留全部包；即使Pages历史三提交均取回也不能直接改成depth1。生产发布与历史保留本片不改。最终HEAD独审和实际GitHub PR CI另行核验，#130长期单保留剩余范围。

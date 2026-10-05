@@ -1,0 +1,11 @@
+{
+  "scope": "Local isolated working-copy preparation, before any game validation",
+  "initial_shared_clone": "failed because the reused partial object store lacked an existing docs blob; no repository source edit or Godot run",
+  "recovery": "Initialized a new independent repository with read-only shared object alternates and non-cone root-docs exclusion. Preserved authoritative base tree identities.",
+  "normal_commit_attempt": "failed on a second existing unmaterialized documentation blob",
+  "candidate_commit_method": "git write-tree --missing-ok plus commit-tree with exact base parent; only declared workflow staged",
+  "preserved_source_base": "a0bb75e38e59032a6df72a2122af4403c3c3e816",
+  "runtime_integrity_check": "All 913 non-docs tracked paths present and byte/blob-identical to base except four declared workflow lines; see source-shape.json.",
+  "production_remote_corruption_claimed": false,
+  "runtime_validation_failure": false
+}
