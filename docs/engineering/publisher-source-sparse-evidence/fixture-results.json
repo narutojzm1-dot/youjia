@@ -1,0 +1,431 @@
+{
+  "source_commit": "93d708d5fb20f8007b47b40bfc58f1845295aa4e",
+  "audit_base_commit": "9623ba22c8edc564e5c89dc6b0171324e9230764",
+  "action_commit": "11d5960a326750d5838078e36cf38b85af677262",
+  "git_version": "git version 2.52.0",
+  "engine_processes": 0,
+  "production_mutations": false,
+  "modes": [
+    {
+      "name": "full_baseline",
+      "full_source_history": true,
+      "requested_partial_filter": false,
+      "filter_supported": true,
+      "sparse_docs_excluded": false,
+      "fetch_filter_ignored_warning": false,
+      "main_head_exact": true,
+      "source_non_docs_paths_and_blobs_match": true,
+      "root_metadata_all_art_assets_nested_test_docs_retained": true,
+      "main_history_count": 3,
+      "all_source_docs_blobs_missing_after_checkout": false,
+      "all_source_docs_blobs_still_missing_after_publisher": false,
+      "follow_fetch_promisor": null,
+      "follow_fetch_filter": null,
+      "new_pages_doc_missing_after_follow_fetch": false,
+      "worktree": {
+        "core_sparseCheckout": null,
+        "extensions_worktreeConfig": null,
+        "sparse_patterns": null,
+        "docs_materialized": true,
+        "shallow": "false",
+        "full_pages_tip_matches": true,
+        "pages_first_parent_count": 4
+      },
+      "retention": {
+        "known_returncode": 0,
+        "known_pruned": [
+          "game-a",
+          "game-ff"
+        ],
+        "known_stderr": "",
+        "unknown_returncode": 0,
+        "unknown_preserves_all": true,
+        "unknown_stderr": "[publish] WARNING: incomplete bundle history; retaining all bundles",
+        "missing_current_returncode": 1,
+        "missing_current_rejected": true,
+        "keep_zero_no_deletion": true,
+        "negative_keep_rejected": true
+      },
+      "actual_publisher_builds": [
+        {
+          "returncode": 0,
+          "source_commit_matches": true,
+          "versioned_entry_and_four_build_files_valid": true,
+          "module_count": 10,
+          "module_bytes_hashes_relative_imports_valid": true,
+          "previous_module_directory_retained": null,
+          "historical_pages_docs_preserved_in_pushed_tree": true,
+          "bundle_count": 2
+        },
+        {
+          "returncode": 0,
+          "source_commit_matches": true,
+          "versioned_entry_and_four_build_files_valid": true,
+          "module_count": 10,
+          "module_bytes_hashes_relative_imports_valid": true,
+          "previous_module_directory_retained": true,
+          "historical_pages_docs_preserved_in_pushed_tree": true,
+          "bundle_count": 2
+        }
+      ],
+      "actual_publisher_missing_current": {
+        "returncode": 1,
+        "remote_pages_head_unchanged": true,
+        "current_staged_pck_missing_error": true
+      }
+    },
+    {
+      "name": "full_partial_sparse",
+      "full_source_history": true,
+      "requested_partial_filter": true,
+      "filter_supported": true,
+      "sparse_docs_excluded": true,
+      "fetch_filter_ignored_warning": false,
+      "main_head_exact": true,
+      "source_non_docs_paths_and_blobs_match": true,
+      "root_metadata_all_art_assets_nested_test_docs_retained": true,
+      "main_history_count": 3,
+      "all_source_docs_blobs_missing_after_checkout": true,
+      "all_source_docs_blobs_still_missing_after_publisher": true,
+      "follow_fetch_promisor": "true",
+      "follow_fetch_filter": "blob:none",
+      "new_pages_doc_missing_after_follow_fetch": true,
+      "worktree": {
+        "core_sparseCheckout": "true",
+        "extensions_worktreeConfig": null,
+        "sparse_patterns": "\n/*\n!/docs/\n",
+        "docs_materialized": false,
+        "shallow": "false",
+        "full_pages_tip_matches": true,
+        "pages_first_parent_count": 4
+      },
+      "retention": {
+        "known_returncode": 0,
+        "known_pruned": [
+          "game-a",
+          "game-ff"
+        ],
+        "known_stderr": "",
+        "unknown_returncode": 0,
+        "unknown_preserves_all": true,
+        "unknown_stderr": "[publish] WARNING: incomplete bundle history; retaining all bundles",
+        "missing_current_returncode": 1,
+        "missing_current_rejected": true,
+        "keep_zero_no_deletion": true,
+        "negative_keep_rejected": true
+      },
+      "actual_publisher_builds": [
+        {
+          "returncode": 0,
+          "source_commit_matches": true,
+          "versioned_entry_and_four_build_files_valid": true,
+          "module_count": 10,
+          "module_bytes_hashes_relative_imports_valid": true,
+          "previous_module_directory_retained": null,
+          "historical_pages_docs_preserved_in_pushed_tree": true,
+          "bundle_count": 2
+        },
+        {
+          "returncode": 0,
+          "source_commit_matches": true,
+          "versioned_entry_and_four_build_files_valid": true,
+          "module_count": 10,
+          "module_bytes_hashes_relative_imports_valid": true,
+          "previous_module_directory_retained": true,
+          "historical_pages_docs_preserved_in_pushed_tree": true,
+          "bundle_count": 2
+        }
+      ],
+      "actual_publisher_missing_current": {
+        "returncode": 1,
+        "remote_pages_head_unchanged": true,
+        "current_staged_pck_missing_error": true
+      }
+    },
+    {
+      "name": "full_sparse_no_filter",
+      "full_source_history": true,
+      "requested_partial_filter": false,
+      "filter_supported": true,
+      "sparse_docs_excluded": true,
+      "fetch_filter_ignored_warning": false,
+      "main_head_exact": true,
+      "source_non_docs_paths_and_blobs_match": true,
+      "root_metadata_all_art_assets_nested_test_docs_retained": true,
+      "main_history_count": 3,
+      "all_source_docs_blobs_missing_after_checkout": false,
+      "all_source_docs_blobs_still_missing_after_publisher": false,
+      "follow_fetch_promisor": null,
+      "follow_fetch_filter": null,
+      "new_pages_doc_missing_after_follow_fetch": false,
+      "worktree": {
+        "core_sparseCheckout": "true",
+        "extensions_worktreeConfig": null,
+        "sparse_patterns": "\n/*\n!/docs/\n",
+        "docs_materialized": false,
+        "shallow": "false",
+        "full_pages_tip_matches": true,
+        "pages_first_parent_count": 4
+      },
+      "retention": {
+        "known_returncode": 0,
+        "known_pruned": [
+          "game-a",
+          "game-ff"
+        ],
+        "known_stderr": "",
+        "unknown_returncode": 0,
+        "unknown_preserves_all": true,
+        "unknown_stderr": "[publish] WARNING: incomplete bundle history; retaining all bundles",
+        "missing_current_returncode": 1,
+        "missing_current_rejected": true,
+        "keep_zero_no_deletion": true,
+        "negative_keep_rejected": true
+      },
+      "actual_publisher_builds": [
+        {
+          "returncode": 0,
+          "source_commit_matches": true,
+          "versioned_entry_and_four_build_files_valid": true,
+          "module_count": 10,
+          "module_bytes_hashes_relative_imports_valid": true,
+          "previous_module_directory_retained": null,
+          "historical_pages_docs_preserved_in_pushed_tree": true,
+          "bundle_count": 2
+        },
+        {
+          "returncode": 0,
+          "source_commit_matches": true,
+          "versioned_entry_and_four_build_files_valid": true,
+          "module_count": 10,
+          "module_bytes_hashes_relative_imports_valid": true,
+          "previous_module_directory_retained": true,
+          "historical_pages_docs_preserved_in_pushed_tree": true,
+          "bundle_count": 2
+        }
+      ],
+      "actual_publisher_missing_current": {
+        "returncode": 1,
+        "remote_pages_head_unchanged": true,
+        "current_staged_pck_missing_error": true
+      }
+    },
+    {
+      "name": "full_partial_no_sparse",
+      "full_source_history": true,
+      "requested_partial_filter": true,
+      "filter_supported": true,
+      "sparse_docs_excluded": false,
+      "fetch_filter_ignored_warning": false,
+      "main_head_exact": true,
+      "source_non_docs_paths_and_blobs_match": true,
+      "root_metadata_all_art_assets_nested_test_docs_retained": true,
+      "main_history_count": 3,
+      "all_source_docs_blobs_missing_after_checkout": false,
+      "all_source_docs_blobs_still_missing_after_publisher": false,
+      "follow_fetch_promisor": "true",
+      "follow_fetch_filter": "blob:none",
+      "new_pages_doc_missing_after_follow_fetch": true,
+      "worktree": {
+        "core_sparseCheckout": null,
+        "extensions_worktreeConfig": null,
+        "sparse_patterns": null,
+        "docs_materialized": true,
+        "shallow": "false",
+        "full_pages_tip_matches": true,
+        "pages_first_parent_count": 4
+      },
+      "retention": {
+        "known_returncode": 0,
+        "known_pruned": [
+          "game-a",
+          "game-ff"
+        ],
+        "known_stderr": "",
+        "unknown_returncode": 0,
+        "unknown_preserves_all": true,
+        "unknown_stderr": "[publish] WARNING: incomplete bundle history; retaining all bundles",
+        "missing_current_returncode": 1,
+        "missing_current_rejected": true,
+        "keep_zero_no_deletion": true,
+        "negative_keep_rejected": true
+      },
+      "actual_publisher_builds": [
+        {
+          "returncode": 0,
+          "source_commit_matches": true,
+          "versioned_entry_and_four_build_files_valid": true,
+          "module_count": 10,
+          "module_bytes_hashes_relative_imports_valid": true,
+          "previous_module_directory_retained": null,
+          "historical_pages_docs_preserved_in_pushed_tree": true,
+          "bundle_count": 2
+        },
+        {
+          "returncode": 0,
+          "source_commit_matches": true,
+          "versioned_entry_and_four_build_files_valid": true,
+          "module_count": 10,
+          "module_bytes_hashes_relative_imports_valid": true,
+          "previous_module_directory_retained": true,
+          "historical_pages_docs_preserved_in_pushed_tree": true,
+          "bundle_count": 2
+        }
+      ],
+      "actual_publisher_missing_current": {
+        "returncode": 1,
+        "remote_pages_head_unchanged": true,
+        "current_staged_pck_missing_error": true
+      }
+    },
+    {
+      "name": "shallow_partial_sparse",
+      "full_source_history": false,
+      "requested_partial_filter": true,
+      "filter_supported": true,
+      "sparse_docs_excluded": true,
+      "fetch_filter_ignored_warning": false,
+      "main_head_exact": true,
+      "source_non_docs_paths_and_blobs_match": true,
+      "root_metadata_all_art_assets_nested_test_docs_retained": true,
+      "main_history_count": 1,
+      "all_source_docs_blobs_missing_after_checkout": false,
+      "all_source_docs_blobs_still_missing_after_publisher": false,
+      "follow_fetch_promisor": "true",
+      "follow_fetch_filter": "blob:none",
+      "new_pages_doc_missing_after_follow_fetch": true,
+      "worktree": {
+        "core_sparseCheckout": "true",
+        "extensions_worktreeConfig": null,
+        "sparse_patterns": "\n/*\n!/docs/\n",
+        "docs_materialized": false,
+        "shallow": "true",
+        "full_pages_tip_matches": true,
+        "pages_first_parent_count": 2
+      },
+      "retention": {
+        "known_returncode": 0,
+        "known_pruned": [],
+        "known_stderr": "[publish] WARNING: shallow bundle history; retaining all bundles",
+        "unknown_returncode": 0,
+        "unknown_preserves_all": true,
+        "unknown_stderr": "[publish] WARNING: shallow bundle history; retaining all bundles",
+        "missing_current_returncode": 1,
+        "missing_current_rejected": true,
+        "keep_zero_no_deletion": true,
+        "negative_keep_rejected": true
+      },
+      "actual_publisher_builds": [
+        {
+          "returncode": 0,
+          "source_commit_matches": true,
+          "versioned_entry_and_four_build_files_valid": true,
+          "module_count": 10,
+          "module_bytes_hashes_relative_imports_valid": true,
+          "previous_module_directory_retained": null,
+          "historical_pages_docs_preserved_in_pushed_tree": true,
+          "bundle_count": 4
+        },
+        {
+          "returncode": 0,
+          "source_commit_matches": true,
+          "versioned_entry_and_four_build_files_valid": true,
+          "module_count": 10,
+          "module_bytes_hashes_relative_imports_valid": true,
+          "previous_module_directory_retained": true,
+          "historical_pages_docs_preserved_in_pushed_tree": true,
+          "bundle_count": 5
+        }
+      ],
+      "actual_publisher_missing_current": {
+        "returncode": 1,
+        "remote_pages_head_unchanged": true,
+        "current_staged_pck_missing_error": true
+      }
+    },
+    {
+      "name": "full_partial_sparse_filter_unsupported",
+      "full_source_history": true,
+      "requested_partial_filter": true,
+      "filter_supported": false,
+      "sparse_docs_excluded": true,
+      "fetch_filter_ignored_warning": true,
+      "main_head_exact": true,
+      "source_non_docs_paths_and_blobs_match": true,
+      "root_metadata_all_art_assets_nested_test_docs_retained": true,
+      "main_history_count": 3,
+      "all_source_docs_blobs_missing_after_checkout": false,
+      "all_source_docs_blobs_still_missing_after_publisher": false,
+      "follow_fetch_promisor": "true",
+      "follow_fetch_filter": "blob:none",
+      "new_pages_doc_missing_after_follow_fetch": false,
+      "worktree": {
+        "core_sparseCheckout": "true",
+        "extensions_worktreeConfig": null,
+        "sparse_patterns": "\n/*\n!/docs/\n",
+        "docs_materialized": false,
+        "shallow": "false",
+        "full_pages_tip_matches": true,
+        "pages_first_parent_count": 4
+      },
+      "retention": {
+        "known_returncode": 0,
+        "known_pruned": [
+          "game-a",
+          "game-ff"
+        ],
+        "known_stderr": "",
+        "unknown_returncode": 0,
+        "unknown_preserves_all": true,
+        "unknown_stderr": "[publish] WARNING: incomplete bundle history; retaining all bundles",
+        "missing_current_returncode": 1,
+        "missing_current_rejected": true,
+        "keep_zero_no_deletion": true,
+        "negative_keep_rejected": true
+      },
+      "actual_publisher_builds": [
+        {
+          "returncode": 0,
+          "source_commit_matches": true,
+          "versioned_entry_and_four_build_files_valid": true,
+          "module_count": 10,
+          "module_bytes_hashes_relative_imports_valid": true,
+          "previous_module_directory_retained": null,
+          "historical_pages_docs_preserved_in_pushed_tree": true,
+          "bundle_count": 2
+        },
+        {
+          "returncode": 0,
+          "source_commit_matches": true,
+          "versioned_entry_and_four_build_files_valid": true,
+          "module_count": 10,
+          "module_bytes_hashes_relative_imports_valid": true,
+          "previous_module_directory_retained": true,
+          "historical_pages_docs_preserved_in_pushed_tree": true,
+          "bundle_count": 2
+        }
+      ],
+      "actual_publisher_missing_current": {
+        "returncode": 1,
+        "remote_pages_head_unchanged": true,
+        "current_staged_pck_missing_error": true
+      }
+    }
+  ],
+  "input_file_sha256": {
+    "tools/publish_gh_pages.sh": "5c21b408167735ebf6eb583fbca98677b6c048fb8fd2004bff3bae636fc73191",
+    "tools/select_web_bundle_pruning.py": "e44af2c16f688183296fa319cd26030751a30891e52e0cbcf2714fc3d59b894b",
+    ".github/workflows/publish-pages.yml": "fed9c3c7fc3f493c1f41faeb9d3f0e9867ce79c81264cb26a81260d63d89c0ac",
+    "web/save/bridge.mjs": "ef18687554fdc0d745c1d18d4d091e959cc78559da0d61d6a093e562ff9bbc91",
+    "web/save/budgets.mjs": "52984153977dcafd1d2682e848f1999f091d0966e17d46e902de76f5735a7018",
+    "web/save/host.mjs": "9de8dc0ef4bfc037a8ad0bff575d40c3dd4341bcc723351a412b2061bb661904",
+    "web/save/idbfs_source.mjs": "16eb57d471537f13d3e50018b56c2d416d2847f0d0249ba44433dd9ebb65f4d8",
+    "web/save/legacy_inspection.mjs": "db3a23a0221aa5d34a58a6a49aeeff930295ffe20bfcf73a7c11f0d49cffd671",
+    "web/save/legacy_seal.mjs": "9642132f5d4e7523e5966e802069af7f4bae803fae8e2e7c28ae55ee97d85610",
+    "web/save/legacy_v5.mjs": "8e7f4ad2d87aab77ac05361e4f46060476e933aa079ae94301998d08d4599621",
+    "web/save/lifecycle.mjs": "1cfaebb9a8745e2dc3e4f694ef475f250640870938f04160be1a5c9acd62935d",
+    "web/save/source_decode.mjs": "411f3bc784cb32a07f32eed5fc7d88f71b59a667cc0d68a50fe13c55bfdba18a",
+    "web/save/store.mjs": "2193b4397b8662a8ebc754dc4468e4d62964d209b4e1d0f0924a2ec81b409cbe"
+  },
+  "result": "PASS: 6 fetch modes, 30 retention checks, 12 exact-script local publisher builds + 6 missing-PCK rejections; no engine or browser"
+}

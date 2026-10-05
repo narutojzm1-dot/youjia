@@ -1,0 +1,40 @@
+[publish] source commit: 36a20e33964e
+[publish] bundle entry name: game-36a20e33964e
+[publish] staging in /tmp/publisher130-partial-d4vld1a6/shallow_partial_sparse/tmp.vVr264XXgi
+[publish] injected cache-control meta into index.html
+[publish] cache-control meta tags injected; data-build=game-36a20e33964e
+[publish] verifying HTML patches...
+[publish] HTML verification passed: executable=game-36a20e33964e, fileSizes keys correct, script.src=game-36a20e33964e.js
+[publish] engine version: fixture-version-only-no-engine
+[publish] switching to gh-pages branch...
+HEAD is now at 3676779 Pages changes after source checkout
+[publish] no proven old bundles to prune.
+[detached HEAD 7b7d307] Publish source history 2 (36a20e33964e)
+ Author: Cursor Agent <cursoragent@cursor.com>
+ 19 files changed, 690 insertions(+), 1 deletion(-)
+ create mode 100644 .nojekyll
+ create mode 100644 game-36a20e33964e.js
+ create mode 100644 game-36a20e33964e.pck
+ create mode 100644 game-36a20e33964e.wasm
+ create mode 100644 game-release.json
+ create mode 100644 index.js
+ create mode 100644 index.pck
+ create mode 100644 index.wasm
+ create mode 100644 save-36a20e33964e/bridge.mjs
+ create mode 100644 save-36a20e33964e/budgets.mjs
+ create mode 100644 save-36a20e33964e/host.mjs
+ create mode 100644 save-36a20e33964e/idbfs_source.mjs
+ create mode 100644 save-36a20e33964e/legacy_inspection.mjs
+ create mode 100644 save-36a20e33964e/legacy_seal.mjs
+ create mode 100644 save-36a20e33964e/legacy_v5.mjs
+ create mode 100644 save-36a20e33964e/lifecycle.mjs
+ create mode 100644 save-36a20e33964e/source_decode.mjs
+ create mode 100644 save-36a20e33964e/store.mjs
+[publish] ✓ done.
+[publish]   entry:  game-36a20e33964e
+[publish]   pages:  https://narutojzm1-dot.github.io/youjia/
+[publish]   verify: document.documentElement.dataset.build in browser console should equal 'game-36a20e33964e'
+Preparing worktree (detached HEAD 3676779)
+[publish] WARNING: shallow bundle history; retaining all bundles
+To file:///tmp/publisher130-partial-d4vld1a6/shallow_partial_sparse/remote.git
+   3676779..7b7d307  HEAD -> gh-pages
