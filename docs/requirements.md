@@ -526,3 +526,8 @@ CODEX-LEAD仅将可信open回复的精确OPEN_FAILED + `Error: writer_owned_by_a
 
 
 提交后最新覆盖：Cloud305已开PR427，head a69979b5c7148034d1598ea00ba6de2c413aa5d0，领域cleanup与Main最小失败revision关联候选已交，216/216/daily为本机检查，独审/公开故障复验/合入未完；不再将该Owner当前写为未开工。此前时间快照保留。
+
+
+### 2026-10-06 #399 公共启动生命周期保底（候选）
+
+CODEX-LEAD按[原单认领](https://github.com/narutojzm1-dot/youjia/issues/399#issuecomment-5999958180)只修复一次标题触摸重复启动：play只在标题受理、await存档期间启动互斥，失败恢复后可再进、合法restart保留，音频解锁保持真实手势栈。[诊断与专项](playtests/2026-10-06-holiday-start-once/README.md)。14项原生专项、68次启动完整daily与Web导出通过；独立普通候选触摸/键盘空篮正常返院通过，最终SHA审核与正式发布待；不关闭#399，不修改Assistant382输入Owner或Cloud427清理范围，不将公开异常全部归因于尚未完整复现的迟到重建。

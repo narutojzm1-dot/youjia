@@ -122,6 +122,7 @@ var _photo_arrival: PhotoArrival
 var _photo_arrival_queue: Array[Dictionary] = []
 var _pending_photo_saves: Dictionary = {}
 var _save_transition := false
+var _holiday_start_pending := false
 var _save_problems: Dictionary = {}
 var _save_exploration_scopes: Dictionary = {}
 var _save_exploration_coverage: Dictionary = {}
@@ -860,7 +861,10 @@ func _build_notice() -> void:
 
 
 func _on_play_pressed() -> void:
-	_start_holiday()
+	# A touch may also release the native GUI button after entering the yard.
+	# Only the title can request entry; keep audio unlock in this gesture stack.
+	if _screen == "title":
+		_start_holiday()
 	# Same pressed stack as the real enter control. Not deferred.
 	AudioDirector.unlock_audio()
 
@@ -947,10 +951,12 @@ func _notification(what: int) -> void:
 
 
 func _start_holiday(save_progress: bool = true) -> void:
-	if not SaveStore.can_play(): return
+	if _holiday_start_pending or not SaveStore.can_play(): return
+	_holiday_start_pending = true
 	_leave_exploration()
 	if save_progress and _world != null: _world._save_progress()
 	if not await SaveStore.flush_pending() or _save_problem_active:
+		_holiday_start_pending = false
 		_show_save_pending(false)
 		return
 	TuningStore.begin_run(false)
@@ -1007,6 +1013,7 @@ func _start_holiday(save_progress: bool = true) -> void:
 	AudioDirector.set_yard_active(true)
 	if _world.holiday_day == 1 and SaveStore.get_album().is_empty():
 		_show_delayed_soft_hint()
+	_holiday_start_pending = false
 
 
 ## 标题 / 重开前先按宿主中断回院，让这趟的提交排在随后的 flush 之前
