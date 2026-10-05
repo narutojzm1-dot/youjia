@@ -41,7 +41,7 @@ route = {
     "brook":  { next: ["gate", "ridge"], find_pool: [{find_id, weight}], empty_weight }
     "ridge":  { next: ["brook"],  find_pool: [...] , empty_weight }
   }
-  carry_limit: 1                        # 每趟最多带回几样，由产品选定；默认 1
+  carry_limit: 3                        # 每趟最多带回几样（合计，同名可重复），由产品选定；近郊小路为 3（用户 2026-10-05）
   return_stops: ["gate"] 或 "any"       # 哪里可以回院；"any" 表示随时可回
 }
 ```
@@ -76,7 +76,7 @@ route = {
 | --- | --- | --- | --- |
 | `idle` | `begin(route_id, clock)` | `active` | 路线必须在已注入目录中；分配新的 `trip_serial`。`can_begin == false` 时拒绝，拒绝码按优先级取第一个命中的：`watermark_untrusted`（宿主序号不可信）> `quarantine_frozen`（`quarantine_and_freeze` 冻结）> `exploration_unavailable`（未来版本 `quarantine` 等其他不可出门结果）> `pending_exists`（有未收口旅程）（§8） |
 | `active` | `visit(stop_id)` | `active` | 只能去 `next` 可达点；首次到达时确定该点的发现（§5） |
-| `active` | `take(find_id)` | `active` | 必须是当前点已出现、未被带走的；超过 `carry_limit` 拒绝 |
+| `active` | `take(find_id)` | `active` | 必须是当前点已出现、本点尚未被带走的（记入 `taken[当前点]`）；同名东西可来自不同停留点；超过 `carry_limit` 拒绝 |
 | `active` | `release(find_id)` | `active` | 放回原处，可再拿 |
 | `active` | `request_return(reason)` | `pending_commit` | 冻结提案：`items` = 当前携带，可为空；`reason ∈ {player, cancel, host_interrupt, restored}` |
 | `pending_commit` | `commit_succeeded(trip_id)` | `committed` | `trip_id` 必须与提案一致 |
@@ -133,6 +133,7 @@ exploration = {
     visited: ["gate", "brook"],
     offers: { "brook": "formal.find.xxx" | "" },
     carried: ["formal.find.xxx"],
+    taken: {"brook": "formal.find.xxx"}  # 2026-10-05 起：哪处停留点的东西在篮子里；旧记录缺省时按 offers 推导
     rng_seed: "-1234567890123",
     proposal: null | {
       trip_id: "trip-3",

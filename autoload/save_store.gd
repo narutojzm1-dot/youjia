@@ -210,6 +210,53 @@ func set_animal_relationship_memory(memory: Dictionary) -> bool:
 	return _commit_candidate(candidate)
 
 
+# ── 探索 ──────────────────────────────────────────────────────────────────────
+# 只走异步队列：返回受理编号，commit_confirmed 之后才发布到内存，被拒或未知时内存保持确认前原样。
+
+func get_exploration_record() -> Variant:
+	var record: Variant = _data.get("exploration", null)
+	return record.duplicate(true) if record is Dictionary or record is Array else record
+
+
+func get_exploration_committed_serial() -> int:
+	return int(_data.get("exploration_committed_serial", 0))
+
+
+func get_keepsakes() -> Dictionary:
+	return (_data.get("keepsakes", {}) as Dictionary).duplicate(true)
+
+
+func request_exploration_record(record: Variant) -> String:
+	var frozen: Variant = _copy_record(record)
+	return request_intent("exploration", func(current: Dictionary) -> Dictionary:
+		current.exploration = _copy_record(frozen)
+		return current)
+
+
+## 一次提交里同时写入带回的小物、旅程水位线与会话记录。队首求值时水位线已越过这趟就只写记录、
+## 不再授予；是否授予写进 receipt.granted，确认信号到达前就已填好。
+func request_exploration_trip(record: Variant, trip_serial: int, find_ids: PackedStringArray, receipt: Dictionary) -> String:
+	for find_id: String in find_ids:
+		if not ExplorationRoutes.is_formal_find(find_id):
+			return ""
+	var frozen: Variant = _copy_record(record)
+	var finds := find_ids.duplicate()
+	return request_intent("exploration_trip", func(current: Dictionary) -> Dictionary:
+		receipt.granted = trip_serial > int(current.get("exploration_committed_serial", 0))
+		if receipt.granted:
+			var keepsakes: Dictionary = (current.get("keepsakes", {}) as Dictionary).duplicate(true)
+			for find_id: String in finds:
+				keepsakes[find_id] = mini(int(keepsakes.get(find_id, 0)) + 1, SaveDataCodec.MAX_KEEPSAKE_COUNT)
+			current.keepsakes = keepsakes
+			current.exploration_committed_serial = trip_serial
+		current.exploration = _copy_record(frozen)
+		return current)
+
+
+static func _copy_record(record: Variant) -> Variant:
+	return record.duplicate(true) if record is Dictionary or record is Array else record
+
+
 func _clean_moments(raw: Variant, album: Array) -> Dictionary:
 	return SaveDataCodec.clean_moments(raw, album)
 

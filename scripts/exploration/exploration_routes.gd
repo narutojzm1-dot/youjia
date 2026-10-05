@@ -1,7 +1,8 @@
 class_name ExplorationRoutes
 extends RefCounted
 # 正式路线目录（纯数据）。首片只有用户 2026-10-04 选定的院门外近郊小路，
-# 圆石、松果、落羽都可遇见。停留点数量、权重与携带上限都是实验参数，不是冻结数值。
+# 圆石、松果、落羽都可遇见。单趟合计最多带 3 件是用户 2026-10-05 的决定（同名可重复）；
+# 停留点数量与出现权重仍是实验参数，不是冻结数值。
 
 const NEAR_PATH := "formal.near_path"
 const FIND_STONE := "formal.find.brook_stone"
@@ -19,6 +20,12 @@ static func routes() -> Dictionary:
 		var next: Array = NEAR_PATH_STOPS.duplicate()
 		next.erase(stop_id)
 		stops[stop_id] = {"next": next, "find_pool": [], "empty_weight": 1}
+	# 四处都可能有东西，空手的权重让一趟常见 1–2 件；凑满 3 件之后还会遇到第 4 件（换不换由玩家）
+	stops["gate"]["find_pool"] = [
+		{"find_id": FIND_FEATHER, "weight": 1},
+		{"find_id": FIND_STONE, "weight": 1},
+	]
+	stops["gate"]["empty_weight"] = 2
 	stops["brook"]["find_pool"] = [
 		{"find_id": FIND_STONE, "weight": 3},
 		{"find_id": FIND_FEATHER, "weight": 1},
@@ -27,10 +34,15 @@ static func routes() -> Dictionary:
 		{"find_id": FIND_PINE_CONE, "weight": 3},
 		{"find_id": FIND_FEATHER, "weight": 1},
 	]
+	stops["slope"]["find_pool"] = [
+		{"find_id": FIND_PINE_CONE, "weight": 2},
+		{"find_id": FIND_STONE, "weight": 1},
+		{"find_id": FIND_FEATHER, "weight": 1},
+	]
 	return {
 		NEAR_PATH: {
 			"start_stop": "gate",
-			"carry_limit": 1,
+			"carry_limit": 3,
 			"return_stops": "any",
 			"stops": stops,
 		},
