@@ -1669,7 +1669,7 @@ func _tick_fishing(delta: float) -> void:
 				notice_requested.emit("notice.fishing.bite")
 			else:
 				_fish_state = FISH_IDLE
-				notice_requested.emit("notice.fishing.miss")
+				notice_requested.emit(_fishing_miss_notice_key())
 	elif _fish_state == FISH_BITE:
 		_fish_timer -= delta
 		# 每隔 2 秒重发咬钩提示，帮助玩家不错过收杆时机
@@ -1680,8 +1680,14 @@ func _tick_fishing(delta: float) -> void:
 		if _fish_timer <= 0.0:
 			# 没有收杆，鱼跑了
 			_fish_state = FISH_IDLE
-			notice_requested.emit("notice.fishing.miss")
+			notice_requested.emit(_fishing_miss_notice_key())
 	queue_redraw()
+
+
+func _fishing_miss_notice_key() -> String:
+	if not _fish_carry_type.is_empty() and _fish_carry_timer > 0.0:
+		return "notice.fishing.miss_with_carry"
+	return "notice.fishing.miss"
 
 
 ## 开始钓鱼

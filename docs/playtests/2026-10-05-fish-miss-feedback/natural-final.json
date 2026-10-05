@@ -1,0 +1,48 @@
+{
+  "url": "http://127.0.0.1:8789",
+  "build": "index",
+  "utc": "2026-10-05T08:25:34Z",
+  "viewport": [
+    1280,
+    720
+  ],
+  "events": [
+    {
+      "seconds": 2.27,
+      "stage": "first",
+      "label": "other"
+    },
+    {
+      "seconds": 8.74,
+      "stage": "first",
+      "label": "wait"
+    },
+    {
+      "seconds": 20.61,
+      "stage": "first",
+      "label": "reel"
+    },
+    {
+      "seconds": 20.61,
+      "second_cast": true
+    },
+    {
+      "seconds": 24.89,
+      "stage": "second",
+      "label": "wait"
+    },
+    {
+      "seconds": 30.51,
+      "stage": "second",
+      "label": "reel"
+    },
+    {
+      "seconds": 38.5,
+      "stage": "second",
+      "label": "toss"
+    }
+  ],
+  "old_fish_after_second_miss_observed": true,
+  "errors": [],
+  "scope": "normal production entry, natural canvas clicks guided by actual screenshot button labels; no state/seed/timer/position injection; final notice requires visual inspection"
+}

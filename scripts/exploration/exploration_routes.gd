@@ -1,0 +1,49 @@
+class_name ExplorationRoutes
+extends RefCounted
+# 正式路线目录（纯数据）。首片只有用户 2026-10-04 选定的院门外近郊小路，
+# 圆石、松果、落羽都可遇见。停留点数量、权重与携带上限都是实验参数，不是冻结数值。
+
+const NEAR_PATH := "formal.near_path"
+const FIND_STONE := "formal.find.brook_stone"
+const FIND_PINE_CONE := "formal.find.pine_cone"
+const FIND_FEATHER := "formal.find.feather"
+const FINDS := [FIND_STONE, FIND_PINE_CONE, FIND_FEATHER]
+
+# 停留点按画卷从院门往外的顺序排列；彼此都可直接到达，经过但不停下看不算到过。
+const NEAR_PATH_STOPS := ["gate", "brook", "shade", "slope"]
+
+
+static func routes() -> Dictionary:
+	var stops := {}
+	for stop_id: String in NEAR_PATH_STOPS:
+		var next: Array = NEAR_PATH_STOPS.duplicate()
+		next.erase(stop_id)
+		stops[stop_id] = {"next": next, "find_pool": [], "empty_weight": 1}
+	stops["brook"]["find_pool"] = [
+		{"find_id": FIND_STONE, "weight": 3},
+		{"find_id": FIND_FEATHER, "weight": 1},
+	]
+	stops["shade"]["find_pool"] = [
+		{"find_id": FIND_PINE_CONE, "weight": 3},
+		{"find_id": FIND_FEATHER, "weight": 1},
+	]
+	return {
+		NEAR_PATH: {
+			"start_stop": "gate",
+			"carry_limit": 1,
+			"return_stops": "any",
+			"stops": stops,
+		},
+	}
+
+
+static func catalog() -> ExplorationCatalog:
+	return ExplorationCatalog.new(ExplorationContract.SOURCE_FORMAL, routes())
+
+
+static func is_formal_find(find_id: String) -> bool:
+	return FINDS.has(find_id)
+
+
+static func find_name_key(find_id: String) -> String:
+	return "exploration.find.%s" % find_id.get_slice(".", 2)

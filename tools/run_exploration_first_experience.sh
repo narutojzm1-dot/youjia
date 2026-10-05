@@ -6,7 +6,7 @@
 #   bash tools/run_exploration_first_experience.sh run                  # 本机窗口试玩
 #   bash tools/run_exploration_first_experience.sh export               # 导出 Web 到临时目录 web/
 #   bash tools/run_exploration_first_experience.sh movie OUT.avi WxH    # 按脚本演示录制视频
-# 核心不复制进仓库：每次从 CORE_SHA 用 git show 取出，并把来源写进临时项目的 CORE_SOURCE.txt。
+# 历史原型固定使用 CORE_SHA 的核心（与仓库 scripts/exploration/ 可能不同）：每次用 git show 取出，并把来源写进临时项目的 CORE_SOURCE.txt。
 # 默认每次新建独立临时目录，运行后保留以便查看日志；清理：rm -rf "${TMPDIR:-/tmp}"/youjia-first-experience.*
 # PROTOTYPE_DIR 可指定绝对路径，但只接受空目录、不存在的目录或本脚本建过的目录。
 set -euo pipefail

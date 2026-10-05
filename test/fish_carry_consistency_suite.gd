@@ -231,14 +231,14 @@ func _seq_old_fish_miss(main) -> void:
 	if w._fish_state == w.FISH_BITE:
 		_step(main, 6.2)
 	var elapsed := t0 - float(w._fish_carry_timer)
-	_check(_count("notice.fishing.miss") >= 1, "S2 miss notice emitted with old fish")
+	_check(_count("notice.fishing.miss_with_carry") >= 1, "S2 miss notice distinguishes the held old fish")
 	_check(w._fish_carry_type == kind, "S2 miss keeps the legal old fish (not deleted, not replaced)")
 	_check(w._fish_carry_timer > 0.0 and w._fish_carry_timer < t0, "S2 old fish timer keeps counting down (not reset by miss)")
 	_check(w.primary_action_key() == "action.toss_fish", "S2 after miss the old fish can still be tossed")
 	_check(w.hint_context() == "hud.hint.carrying_fish", "S2 HUD hint says a fish is still in hand")
-	_check(main._notice_key == "notice.fishing.miss", "S2 last visible notice is the miss (ambiguity source)")
+	_check(main._notice_key == "notice.fishing.miss_with_carry", "S2 last visible notice says the old fish remains")
 	_log("S2 old-fish miss path=%s kind=%s timer %.2f->%.2f (elapsed %.2f) notice=%s hint=%s" % [path, kind, t0, w._fish_carry_timer, elapsed, main._notice_key, w.hint_context()])
-	_log("S2 FINDING: miss notice key is identical with or without an old fish; text '跑了。没关系。' does not say the held fish remains. Semantic fix belongs to CODEX-LEAD.")
+	_log("S2 historical FINDING fixed by #231 Assistant feedback slice: distinct miss_with_carry says the held old fish remains; original reports retain their baseline.")
 
 
 # 3. Carry expiry at 20 s: release once, carry empty, no feed possible.
