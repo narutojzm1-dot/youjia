@@ -1146,6 +1146,10 @@ Leader原单5994160535认领现有goose_calm收翅站姿用于成功投鱼后关
 
 PR379已合入并发布d707113f8dde1636d24dfcff821518cd0555b277，Actions37314627037/Pages37315444581成功；公开/raw PCK25271456字节、098a4b70598a6bc261e26cf7ae9e38c5fb10ab5be07c8bdb7284c40f1fafe83a及十模块已核。独立公开两页严格绑定源，真实三物各1，trip一次intent故障后write10拒绝→write11提交→write12正常cleanup，同页最终撤提示且真关页完整DB一致。4秒暂态仍有禁用提示，不称立即恢复；见[原图/全DB/回执与发布原件](playtests/2026-10-05-exploration-retry-release/README.md)。另案cleanup失败API仍在研/Cloud idle未回执，不冒已修复或接口冻结；150/305继续，不是日版本、不因此发送日推。
 
+## 2026-10-05 PR373确认纸片公开鼠标几何验收
+
+PR373已合入/发布e0d699b8cbaecfabc24a70d2144a7188b5808880，Actions37315224106/Pages37316204902成功；13:23:39 UTC公开/raw PCK25272016字节、4c367301d2962621ffba4da8b033ac221d89a3ad861e5773f42f1713c8b7a5f2及十模块三方哈希通过。四个全新context逐页HTML/manifest完整源绑定，390/360 DPR2/3鼠标打开/取消/恢复和390横转居中已体验，13原图、驱动与原结果见[公开归档](playtests/2026-10-05-confirm373-release/README.md)。仅mouse，不冒touch/真机/听验或确认“好”返回标题；#382触摸公开问题独立PR386在审，不把候选当已修复。本归档没有新native测试，不是日版本。
+
 ## 2026-10-05 #36 首批热点公开限定验收
 
 CODEX-LEAD在公开1a3842c正常鼠标路径确认花箱/岸石/栅栏安全到达及蝴蝶、蜻蜓、落羽绘画回应；独立短步骤补真实钓鱼在途点栅栏不抢动作。第一次未开钓尝试不计通过，携鱼测试有照片覆盖层不计完整通过。即时打断、低动效真实UI、手机和完整携物仍缺；不将native或后续PR367混作本次Web。详见[关键原图与完整结果](playtests/2026-10-05-yard-hotspots-public/README.md)，REQ008/009与#36不宣称全闭环。
@@ -1176,12 +1180,26 @@ A game-bc8a048/bc8a048b964cf39b80291b375f36f7362f0deedc探索出门→落羽带�
 
 CODEX-LEAD独立助手在公开a067ce9b6674d5c1b35cdc2410f3d507f0f4d6a0普通UI带回落羽，仅精确session:null cleanup的prepared intent注入一次存储异常（write_id6/request2b2f6faac6584d35b2c50eccb217ebeb）。实际一次“再确认一次”获得可信parent rejected/terminated后等待15秒，session仍pending_commit且失败提示未收口；真关页重开、故障禁用后session清空，落羽仍1、serial1，无重复授予。见[原图、阶段回执与归档hash](playtests/2026-10-05-exploration-idle-cleanup-public/README.md)。首轮重复武装/空篮探针排除；这是受控Web边界诊断，不是物理断电或全部平台验收。host_budget_impl只读建议由Cloud登记cleanup生命周期、队首按完整expected record+watermark比较、仅可信parent拒绝后受限替代op、Main按精确身份清提示，仍是候选方案，未实现/未冻结；150/305原单待Cloud接收或显式交接，不称已开工、不关单、不称修复发布。
 
+### 2026-10-05 #150 已提交探索 cleanup 的共享写前契约（候选）
+
+CODEX-LEAD按原单5995152650补 `request_exploration_cleanup`：冻结原探索记录、水位与目标idle，到队首作完整CAS；失配明确写前拒绝，不用no-op冒充已保存。仅已提交formal/v1且现行恢复允许close的记录可用；嵌套未知字段及缺少restore必需nullable键均保留原档并拒绝，不规范化吞掉证据。Coordinator仅内存typed拒绝，不改变Host/schema。运行时2b79d6538dab1e35a8dff6161b0104bce434196f已通过95专项、完整4.7.2 daily与正式Web导出；本次未改Cloud Host/Main，后续领域调用及同页cleanup恢复仍未交付。见[契约](architecture/exploration-cleanup-commit-contract.md)和[验证记录](playtests/2026-10-05-exploration-cleanup-contract/README.md)。
+
 ### 2026-10-05 EXP-LIVING-WORLD：用户明确探索的生活逻辑
 
 来源为用户在 GAME-PRODUCER 本地会话连续两次直接指导：生活的局限、时间和随机性（机缘/幸运）构成探索的自然难度；近郊每趟可以有不同合理掉落，也可没有，生态/季节决定合理性；重复出行的价值还包括动物偶遇与天气风景。他人拥有尚未遇见的物品/种子能形成向往。各片区应有契合环境的声音和音乐，溪流声及近郊偶尔微弱的家鹅叫是明确举例。
 
 已同步策划基准“探索是生活中的机缘与风景”。概率/时钟/季节周期/种子功能/具体动物事件尚未冻结，不能把生活局限直接换成体力或定时任务。首片先体验，保留无物可拾的合法结果与随时回院。Cloud 保持探索程序 Owner，Producer 负责资源与体验细化；不改其在途 PR375 实现，不新增重复工单。本文是方向记录，无运行时或数值变更。
 
+
+## 2026-10-05 21:20 PM收敛协调
+
+377通知已正式发布，379同趟后继成功提示闭环已公开通过，373布局已审合但382真实touch副作用旧版也在；PM当前e0d699b复现并回原BUG，不归因新373。195横屏master错误点击点已由Assistant5995407812撤回产品失败推断。153305168348顶栏按接收/已交更新，375逐资源回执已成立，视频正文链接直接衔接但HTML不冒播放/听验；cleanup领域回执待，168右底板未交/具体用户前置未明确。逐人产物/窗口/22点收尾与延期见[记录](pm/2026-10-05-2120-coordination.md)，短体验证据见[报告](playtests/2026-10-05-2120-game-pm/README.md)。原Owner、独立审核与真实专业门禁保持。
 ## 2026-10-05 #348 暂停通知正式收口
 
 PR377最终52a2be7b720e26d306d4d9c90ea8dd8471dfb87a独立APPROVE5995013227，合046871fa803f3eebd8b9900092bb07ff70671d52；实际合入另含Cloud372，非较早a067局部导出。正确4.7.2最终CI58次启动(57验证+1导出)/168通知与既有门禁通过，Actions37313949152、Pages37314697585成功。公开清单game-046871f/source完整046；JS/WASM/PCK十模块及HTML/manifest共15文件逐一实际长度/Git blob匹配Pages15798ce/tree03d6129，PCK25269536字节/SHA256f556a65726ef66bd5a15d37af01baed92d2af707bef4c647050efdb74d40f808。自然中文横竖DPR3十八阶段严格同版，errors[]；暂停早到/已可见提示后等8/5秒墙钟均无通知覆盖、恢复完整引导、继续可读后正常消失。原图未加工，历史500ms持续遮挡未精确自然重现，native确定同帧/迟到入口缺口分别记录。195横屏master与受控快速输入根因/真机听验等仍未完，未冒五控件全过；制作人待看图。只关闭348通知范围，Leader/Cloud/ProducerOwner保持；[正式证据](playtests/2026-10-05-pause-notice-release/README.md)。
+
+## 2026-10-05 #195输入归因与#388音频触屏切片
+
+Assistant已区分测试错误与真正缺陷：旧横屏master(252,297)在实际Rect(98,246,318,40)外，5995407812撤回产品未响应推断且保留失败；正确中心公开game-e0d699b鼠标静音/恢复正常，但横竖模拟触屏单tap未静音。只读原生链两回pressed/master true→false，分#388，5995599284实施前缩小到Main._input三音频按钮已有GUI按住时不重复手动emit，不改400ms过滤或后端/PCM/世界/存档。真实Viewport648检查旧Main168失败→候选0；完整4.7.2 native59启动exit0，普通同代码本地Web两视口62条index/errors[]，鼠标/轻点/跨帧长按/拖出取消/Enter及真正活动AudioParam通过。隔离工程首次漏既有探索JSON的strict失败、陈旧rect探针等原错误日志保留作废。当前为候选待最终完整SHA独审/合入及正式公开，不以observer/index冒上线；195旧并发漏响/听验/设备/长时/全心流仍开放，其他Owner保持。[证据](playtests/2026-10-05-audio-touch-routing/README.md)。
+
+2026-10-05合入前保留Leader4fa最新cleanup两运行文件及daily新入口，完整4.7.2再跑60次启动exit0、普通最新组合index62记录/errors[]；Main仍5b8e6c1，仅一处音频触屏命中判断。[最终组合证据](playtests/2026-10-05-audio-touch-routing/INTEGRATION.md)。完整SHA独审/正式公开仍待，不用旧59组合日志冒新包。

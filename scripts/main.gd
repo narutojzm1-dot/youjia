@@ -471,7 +471,10 @@ func _input(event: InputEvent) -> void:
 	for button: Button in buttons:
 		if button.is_visible_in_tree() and not button.disabled and button.get_global_rect().has_point(event_pos):
 			_last_touch_ms = Time.get_ticks_msec()
-			button.pressed.emit()
+			# An emulated mouse press can already hold the native GUI button.
+			# Let its release toggle audio once, including holds across frames.
+			if not (is_touch_press and button in [_music_toggle, _ambience_toggle, _mute_toggle] and button.is_pressed()):
+				button.pressed.emit()
 			get_viewport().set_input_as_handled()
 			return
 	# 触屏点到空白处：更新时间戳，交给 _unhandled_input 处理世界点击

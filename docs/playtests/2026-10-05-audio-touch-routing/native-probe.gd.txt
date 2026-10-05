@@ -1,0 +1,28 @@
+extends SceneTree
+func _initialize() -> void:
+	call_deferred("run")
+func run() -> void:
+	root.size=Vector2i(844,390)
+	var main=load("res://scenes/main.tscn").instantiate()
+	root.add_child(main)
+	await process_frame
+	await process_frame
+	main._start_holiday(false)
+	await process_frame
+	main._toggle_pause()
+	await process_frame
+	await process_frame
+	main._last_touch_ms=-10000
+	var button: Button=main._mute_toggle
+	var point=button.get_global_rect().get_center()
+	print("BEFORE ",button.is_pressed()," ",root.get_node("TuningStore").get_value("audio.master.muted",false))
+	mouse(point,true)
+	print("MOUSE_DOWN ",button.is_pressed()," ",root.get_node("TuningStore").get_value("audio.master.muted",false))
+	var touch=InputEventScreenTouch.new();touch.position=point;touch.index=0;touch.pressed=true;root.push_input(touch,true)
+	print("TOUCH_DOWN ",button.is_pressed()," ",root.get_node("TuningStore").get_value("audio.master.muted",false))
+	await process_frame
+	mouse(point,false)
+	print("MOUSE_UP ",button.is_pressed()," ",root.get_node("TuningStore").get_value("audio.master.muted",false))
+	quit()
+func mouse(point:Vector2,down:bool)->void:
+	var e=InputEventMouseButton.new();e.position=point;e.global_position=point;e.button_index=MOUSE_BUTTON_LEFT;e.pressed=down;root.push_input(e,true)

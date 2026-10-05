@@ -1,0 +1,1240 @@
+[
+  {
+    "gains": [
+      0.3981071710586548,
+      0.15848931670188904
+    ],
+    "backend": {
+      "buffers": 2,
+      "bytes": 90316800,
+      "decoded": 2,
+      "starts": 2,
+      "players": 2,
+      "playing": 2,
+      "state": "running"
+    },
+    "dom": [
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 422,
+        "y": 195,
+        "t": 6256
+      },
+      {
+        "kind": "mousedown",
+        "trusted": true,
+        "x": 422,
+        "y": 195,
+        "t": 6256
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 422,
+        "y": 195,
+        "t": 6258.9000000059605
+      },
+      {
+        "kind": "mouseup",
+        "trusted": true,
+        "x": 422,
+        "y": 195,
+        "t": 6258.9000000059605
+      }
+    ],
+    "stage": "before",
+    "view": [
+      844,
+      390,
+      3
+    ],
+    "build": "game-e0d699b",
+    "manifest": {
+      "schema": "youjia.release/v1",
+      "sourceCommit": "e0d699b8cbaecfabc24a70d2144a7188b5808880",
+      "engine": "4.7.2.stable.official.ed1daf0bf",
+      "entry": "game-e0d699b",
+      "publishedAt": "2026-10-05T13:21:41Z",
+      "storageModules": {
+        "entry": "save-e0d699b",
+        "sha256": {
+          "bridge.mjs": "ef18687554fdc0d745c1d18d4d091e959cc78559da0d61d6a093e562ff9bbc91",
+          "budgets.mjs": "52984153977dcafd1d2682e848f1999f091d0966e17d46e902de76f5735a7018",
+          "host.mjs": "9de8dc0ef4bfc037a8ad0bff575d40c3dd4341bcc723351a412b2061bb661904",
+          "idbfs_source.mjs": "16eb57d471537f13d3e50018b56c2d416d2847f0d0249ba44433dd9ebb65f4d8",
+          "legacy_inspection.mjs": "db3a23a0221aa5d34a58a6a49aeeff930295ffe20bfcf73a7c11f0d49cffd671",
+          "legacy_seal.mjs": "9642132f5d4e7523e5966e802069af7f4bae803fae8e2e7c28ae55ee97d85610",
+          "legacy_v5.mjs": "8e7f4ad2d87aab77ac05361e4f46060476e933aa079ae94301998d08d4599621",
+          "lifecycle.mjs": "1cfaebb9a8745e2dc3e4f694ef475f250640870938f04160be1a5c9acd62935d",
+          "source_decode.mjs": "411f3bc784cb32a07f32eed5fc7d88f71b59a667cc0d68a50fe13c55bfdba18a",
+          "store.mjs": "2193b4397b8662a8ebc754dc4468e4d62964d209b4e1d0f0924a2ec81b409cbe"
+        }
+      }
+    },
+    "errors": [],
+    "utc": "2026-10-05T13:29:58Z"
+  },
+  {
+    "gains": [
+      0,
+      0
+    ],
+    "backend": {
+      "buffers": 2,
+      "bytes": 90316800,
+      "decoded": 2,
+      "starts": 2,
+      "players": 2,
+      "playing": 2,
+      "state": "running"
+    },
+    "dom": [
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 422,
+        "y": 195,
+        "t": 6256
+      },
+      {
+        "kind": "mousedown",
+        "trusted": true,
+        "x": 422,
+        "y": 195,
+        "t": 6256
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 422,
+        "y": 195,
+        "t": 6258.9000000059605
+      },
+      {
+        "kind": "mouseup",
+        "trusted": true,
+        "x": 422,
+        "y": 195,
+        "t": 6258.9000000059605
+      },
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 257,
+        "y": 266,
+        "t": 22253.09999999404
+      },
+      {
+        "kind": "mousedown",
+        "trusted": true,
+        "x": 257,
+        "y": 266,
+        "t": 22253.09999999404
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 257,
+        "y": 266,
+        "t": 22848.30000001192
+      },
+      {
+        "kind": "mouseup",
+        "trusted": true,
+        "x": 257,
+        "y": 266,
+        "t": 22848.30000001192
+      }
+    ],
+    "stage": "muted",
+    "view": [
+      844,
+      390,
+      3
+    ],
+    "build": "game-e0d699b",
+    "manifest": {
+      "schema": "youjia.release/v1",
+      "sourceCommit": "e0d699b8cbaecfabc24a70d2144a7188b5808880",
+      "engine": "4.7.2.stable.official.ed1daf0bf",
+      "entry": "game-e0d699b",
+      "publishedAt": "2026-10-05T13:21:41Z",
+      "storageModules": {
+        "entry": "save-e0d699b",
+        "sha256": {
+          "bridge.mjs": "ef18687554fdc0d745c1d18d4d091e959cc78559da0d61d6a093e562ff9bbc91",
+          "budgets.mjs": "52984153977dcafd1d2682e848f1999f091d0966e17d46e902de76f5735a7018",
+          "host.mjs": "9de8dc0ef4bfc037a8ad0bff575d40c3dd4341bcc723351a412b2061bb661904",
+          "idbfs_source.mjs": "16eb57d471537f13d3e50018b56c2d416d2847f0d0249ba44433dd9ebb65f4d8",
+          "legacy_inspection.mjs": "db3a23a0221aa5d34a58a6a49aeeff930295ffe20bfcf73a7c11f0d49cffd671",
+          "legacy_seal.mjs": "9642132f5d4e7523e5966e802069af7f4bae803fae8e2e7c28ae55ee97d85610",
+          "legacy_v5.mjs": "8e7f4ad2d87aab77ac05361e4f46060476e933aa079ae94301998d08d4599621",
+          "lifecycle.mjs": "1cfaebb9a8745e2dc3e4f694ef475f250640870938f04160be1a5c9acd62935d",
+          "source_decode.mjs": "411f3bc784cb32a07f32eed5fc7d88f71b59a667cc0d68a50fe13c55bfdba18a",
+          "store.mjs": "2193b4397b8662a8ebc754dc4468e4d62964d209b4e1d0f0924a2ec81b409cbe"
+        }
+      }
+    },
+    "errors": [],
+    "utc": "2026-10-05T13:30:03Z"
+  },
+  {
+    "gains": [
+      0.3981071710586548,
+      0.15848931670188904
+    ],
+    "backend": {
+      "buffers": 2,
+      "bytes": 90316800,
+      "decoded": 2,
+      "starts": 2,
+      "players": 2,
+      "playing": 2,
+      "state": "running"
+    },
+    "dom": [
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 422,
+        "y": 195,
+        "t": 6256
+      },
+      {
+        "kind": "mousedown",
+        "trusted": true,
+        "x": 422,
+        "y": 195,
+        "t": 6256
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 422,
+        "y": 195,
+        "t": 6258.9000000059605
+      },
+      {
+        "kind": "mouseup",
+        "trusted": true,
+        "x": 422,
+        "y": 195,
+        "t": 6258.9000000059605
+      },
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 257,
+        "y": 266,
+        "t": 22253.09999999404
+      },
+      {
+        "kind": "mousedown",
+        "trusted": true,
+        "x": 257,
+        "y": 266,
+        "t": 22253.09999999404
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 257,
+        "y": 266,
+        "t": 22848.30000001192
+      },
+      {
+        "kind": "mouseup",
+        "trusted": true,
+        "x": 257,
+        "y": 266,
+        "t": 22848.30000001192
+      },
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 257,
+        "y": 266,
+        "t": 27077.80000001192
+      },
+      {
+        "kind": "mousedown",
+        "trusted": true,
+        "x": 257,
+        "y": 266,
+        "t": 27077.90000000596
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 257,
+        "y": 266,
+        "t": 27721.69999998808
+      },
+      {
+        "kind": "mouseup",
+        "trusted": true,
+        "x": 257,
+        "y": 266,
+        "t": 27721.69999998808
+      }
+    ],
+    "stage": "restored",
+    "view": [
+      844,
+      390,
+      3
+    ],
+    "build": "game-e0d699b",
+    "manifest": {
+      "schema": "youjia.release/v1",
+      "sourceCommit": "e0d699b8cbaecfabc24a70d2144a7188b5808880",
+      "engine": "4.7.2.stable.official.ed1daf0bf",
+      "entry": "game-e0d699b",
+      "publishedAt": "2026-10-05T13:21:41Z",
+      "storageModules": {
+        "entry": "save-e0d699b",
+        "sha256": {
+          "bridge.mjs": "ef18687554fdc0d745c1d18d4d091e959cc78559da0d61d6a093e562ff9bbc91",
+          "budgets.mjs": "52984153977dcafd1d2682e848f1999f091d0966e17d46e902de76f5735a7018",
+          "host.mjs": "9de8dc0ef4bfc037a8ad0bff575d40c3dd4341bcc723351a412b2061bb661904",
+          "idbfs_source.mjs": "16eb57d471537f13d3e50018b56c2d416d2847f0d0249ba44433dd9ebb65f4d8",
+          "legacy_inspection.mjs": "db3a23a0221aa5d34a58a6a49aeeff930295ffe20bfcf73a7c11f0d49cffd671",
+          "legacy_seal.mjs": "9642132f5d4e7523e5966e802069af7f4bae803fae8e2e7c28ae55ee97d85610",
+          "legacy_v5.mjs": "8e7f4ad2d87aab77ac05361e4f46060476e933aa079ae94301998d08d4599621",
+          "lifecycle.mjs": "1cfaebb9a8745e2dc3e4f694ef475f250640870938f04160be1a5c9acd62935d",
+          "source_decode.mjs": "411f3bc784cb32a07f32eed5fc7d88f71b59a667cc0d68a50fe13c55bfdba18a",
+          "store.mjs": "2193b4397b8662a8ebc754dc4468e4d62964d209b4e1d0f0924a2ec81b409cbe"
+        }
+      }
+    },
+    "errors": [],
+    "utc": "2026-10-05T13:30:08Z"
+  },
+  {
+    "gains": [
+      0.3981071710586548,
+      0.15848931670188904
+    ],
+    "backend": {
+      "buffers": 2,
+      "bytes": 90316800,
+      "decoded": 2,
+      "starts": 2,
+      "players": 2,
+      "playing": 2,
+      "state": "running"
+    },
+    "dom": [
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 422,
+        "y": 195,
+        "t": 6256
+      },
+      {
+        "kind": "mousedown",
+        "trusted": true,
+        "x": 422,
+        "y": 195,
+        "t": 6256
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 422,
+        "y": 195,
+        "t": 6258.9000000059605
+      },
+      {
+        "kind": "mouseup",
+        "trusted": true,
+        "x": 422,
+        "y": 195,
+        "t": 6258.9000000059605
+      },
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 257,
+        "y": 266,
+        "t": 22253.09999999404
+      },
+      {
+        "kind": "mousedown",
+        "trusted": true,
+        "x": 257,
+        "y": 266,
+        "t": 22253.09999999404
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 257,
+        "y": 266,
+        "t": 22848.30000001192
+      },
+      {
+        "kind": "mouseup",
+        "trusted": true,
+        "x": 257,
+        "y": 266,
+        "t": 22848.30000001192
+      },
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 257,
+        "y": 266,
+        "t": 27077.80000001192
+      },
+      {
+        "kind": "mousedown",
+        "trusted": true,
+        "x": 257,
+        "y": 266,
+        "t": 27077.90000000596
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 257,
+        "y": 266,
+        "t": 27721.69999998808
+      },
+      {
+        "kind": "mouseup",
+        "trusted": true,
+        "x": 257,
+        "y": 266,
+        "t": 27721.69999998808
+      },
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 257,
+        "y": 266,
+        "t": 33360.19999998808
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 257,
+        "y": 266,
+        "t": 33377.59999999404
+      }
+    ],
+    "stage": "one-touch",
+    "view": [
+      844,
+      390,
+      3
+    ],
+    "build": "game-e0d699b",
+    "manifest": {
+      "schema": "youjia.release/v1",
+      "sourceCommit": "e0d699b8cbaecfabc24a70d2144a7188b5808880",
+      "engine": "4.7.2.stable.official.ed1daf0bf",
+      "entry": "game-e0d699b",
+      "publishedAt": "2026-10-05T13:21:41Z",
+      "storageModules": {
+        "entry": "save-e0d699b",
+        "sha256": {
+          "bridge.mjs": "ef18687554fdc0d745c1d18d4d091e959cc78559da0d61d6a093e562ff9bbc91",
+          "budgets.mjs": "52984153977dcafd1d2682e848f1999f091d0966e17d46e902de76f5735a7018",
+          "host.mjs": "9de8dc0ef4bfc037a8ad0bff575d40c3dd4341bcc723351a412b2061bb661904",
+          "idbfs_source.mjs": "16eb57d471537f13d3e50018b56c2d416d2847f0d0249ba44433dd9ebb65f4d8",
+          "legacy_inspection.mjs": "db3a23a0221aa5d34a58a6a49aeeff930295ffe20bfcf73a7c11f0d49cffd671",
+          "legacy_seal.mjs": "9642132f5d4e7523e5966e802069af7f4bae803fae8e2e7c28ae55ee97d85610",
+          "legacy_v5.mjs": "8e7f4ad2d87aab77ac05361e4f46060476e933aa079ae94301998d08d4599621",
+          "lifecycle.mjs": "1cfaebb9a8745e2dc3e4f694ef475f250640870938f04160be1a5c9acd62935d",
+          "source_decode.mjs": "411f3bc784cb32a07f32eed5fc7d88f71b59a667cc0d68a50fe13c55bfdba18a",
+          "store.mjs": "2193b4397b8662a8ebc754dc4468e4d62964d209b4e1d0f0924a2ec81b409cbe"
+        }
+      }
+    },
+    "errors": [],
+    "utc": "2026-10-05T13:30:14Z",
+    "expected_effective": false
+  },
+  {
+    "gains": [
+      0.3981071710586548,
+      0.15848931670188904
+    ],
+    "backend": {
+      "buffers": 2,
+      "bytes": 90316800,
+      "decoded": 2,
+      "starts": 2,
+      "players": 2,
+      "playing": 2,
+      "state": "running"
+    },
+    "dom": [
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 422,
+        "y": 195,
+        "t": 6256
+      },
+      {
+        "kind": "mousedown",
+        "trusted": true,
+        "x": 422,
+        "y": 195,
+        "t": 6256
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 422,
+        "y": 195,
+        "t": 6258.9000000059605
+      },
+      {
+        "kind": "mouseup",
+        "trusted": true,
+        "x": 422,
+        "y": 195,
+        "t": 6258.9000000059605
+      },
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 257,
+        "y": 266,
+        "t": 22253.09999999404
+      },
+      {
+        "kind": "mousedown",
+        "trusted": true,
+        "x": 257,
+        "y": 266,
+        "t": 22253.09999999404
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 257,
+        "y": 266,
+        "t": 22848.30000001192
+      },
+      {
+        "kind": "mouseup",
+        "trusted": true,
+        "x": 257,
+        "y": 266,
+        "t": 22848.30000001192
+      },
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 257,
+        "y": 266,
+        "t": 27077.80000001192
+      },
+      {
+        "kind": "mousedown",
+        "trusted": true,
+        "x": 257,
+        "y": 266,
+        "t": 27077.90000000596
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 257,
+        "y": 266,
+        "t": 27721.69999998808
+      },
+      {
+        "kind": "mouseup",
+        "trusted": true,
+        "x": 257,
+        "y": 266,
+        "t": 27721.69999998808
+      },
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 257,
+        "y": 266,
+        "t": 33360.19999998808
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 257,
+        "y": 266,
+        "t": 33377.59999999404
+      },
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 257,
+        "y": 266,
+        "t": 37645.19999998808
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 257,
+        "y": 266,
+        "t": 37651.09999999404
+      }
+    ],
+    "stage": "second-touch",
+    "view": [
+      844,
+      390,
+      3
+    ],
+    "build": "game-e0d699b",
+    "manifest": {
+      "schema": "youjia.release/v1",
+      "sourceCommit": "e0d699b8cbaecfabc24a70d2144a7188b5808880",
+      "engine": "4.7.2.stable.official.ed1daf0bf",
+      "entry": "game-e0d699b",
+      "publishedAt": "2026-10-05T13:21:41Z",
+      "storageModules": {
+        "entry": "save-e0d699b",
+        "sha256": {
+          "bridge.mjs": "ef18687554fdc0d745c1d18d4d091e959cc78559da0d61d6a093e562ff9bbc91",
+          "budgets.mjs": "52984153977dcafd1d2682e848f1999f091d0966e17d46e902de76f5735a7018",
+          "host.mjs": "9de8dc0ef4bfc037a8ad0bff575d40c3dd4341bcc723351a412b2061bb661904",
+          "idbfs_source.mjs": "16eb57d471537f13d3e50018b56c2d416d2847f0d0249ba44433dd9ebb65f4d8",
+          "legacy_inspection.mjs": "db3a23a0221aa5d34a58a6a49aeeff930295ffe20bfcf73a7c11f0d49cffd671",
+          "legacy_seal.mjs": "9642132f5d4e7523e5966e802069af7f4bae803fae8e2e7c28ae55ee97d85610",
+          "legacy_v5.mjs": "8e7f4ad2d87aab77ac05361e4f46060476e933aa079ae94301998d08d4599621",
+          "lifecycle.mjs": "1cfaebb9a8745e2dc3e4f694ef475f250640870938f04160be1a5c9acd62935d",
+          "source_decode.mjs": "411f3bc784cb32a07f32eed5fc7d88f71b59a667cc0d68a50fe13c55bfdba18a",
+          "store.mjs": "2193b4397b8662a8ebc754dc4468e4d62964d209b4e1d0f0924a2ec81b409cbe"
+        }
+      }
+    },
+    "errors": [],
+    "utc": "2026-10-05T13:30:18Z"
+  },
+  {
+    "gains": [
+      0.3981071710586548,
+      0.15848931670188904
+    ],
+    "backend": {
+      "buffers": 2,
+      "bytes": 90316800,
+      "decoded": 2,
+      "starts": 2,
+      "players": 2,
+      "playing": 2,
+      "state": "running"
+    },
+    "dom": [
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 195,
+        "y": 422,
+        "t": 5964.899999976158
+      },
+      {
+        "kind": "mousedown",
+        "trusted": true,
+        "x": 195,
+        "y": 422,
+        "t": 5964.899999976158
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 195,
+        "y": 422,
+        "t": 5967.5999999940395
+      },
+      {
+        "kind": "mouseup",
+        "trusted": true,
+        "x": 195,
+        "y": 422,
+        "t": 5967.899999976158
+      }
+    ],
+    "stage": "before",
+    "view": [
+      390,
+      844,
+      3
+    ],
+    "build": "game-e0d699b",
+    "manifest": {
+      "schema": "youjia.release/v1",
+      "sourceCommit": "e0d699b8cbaecfabc24a70d2144a7188b5808880",
+      "engine": "4.7.2.stable.official.ed1daf0bf",
+      "entry": "game-e0d699b",
+      "publishedAt": "2026-10-05T13:21:41Z",
+      "storageModules": {
+        "entry": "save-e0d699b",
+        "sha256": {
+          "bridge.mjs": "ef18687554fdc0d745c1d18d4d091e959cc78559da0d61d6a093e562ff9bbc91",
+          "budgets.mjs": "52984153977dcafd1d2682e848f1999f091d0966e17d46e902de76f5735a7018",
+          "host.mjs": "9de8dc0ef4bfc037a8ad0bff575d40c3dd4341bcc723351a412b2061bb661904",
+          "idbfs_source.mjs": "16eb57d471537f13d3e50018b56c2d416d2847f0d0249ba44433dd9ebb65f4d8",
+          "legacy_inspection.mjs": "db3a23a0221aa5d34a58a6a49aeeff930295ffe20bfcf73a7c11f0d49cffd671",
+          "legacy_seal.mjs": "9642132f5d4e7523e5966e802069af7f4bae803fae8e2e7c28ae55ee97d85610",
+          "legacy_v5.mjs": "8e7f4ad2d87aab77ac05361e4f46060476e933aa079ae94301998d08d4599621",
+          "lifecycle.mjs": "1cfaebb9a8745e2dc3e4f694ef475f250640870938f04160be1a5c9acd62935d",
+          "source_decode.mjs": "411f3bc784cb32a07f32eed5fc7d88f71b59a667cc0d68a50fe13c55bfdba18a",
+          "store.mjs": "2193b4397b8662a8ebc754dc4468e4d62964d209b4e1d0f0924a2ec81b409cbe"
+        }
+      }
+    },
+    "errors": [],
+    "utc": "2026-10-05T13:30:39Z"
+  },
+  {
+    "gains": [
+      0,
+      0
+    ],
+    "backend": {
+      "buffers": 2,
+      "bytes": 90316800,
+      "decoded": 2,
+      "starts": 2,
+      "players": 2,
+      "playing": 2,
+      "state": "running"
+    },
+    "dom": [
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 195,
+        "y": 422,
+        "t": 5964.899999976158
+      },
+      {
+        "kind": "mousedown",
+        "trusted": true,
+        "x": 195,
+        "y": 422,
+        "t": 5964.899999976158
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 195,
+        "y": 422,
+        "t": 5967.5999999940395
+      },
+      {
+        "kind": "mouseup",
+        "trusted": true,
+        "x": 195,
+        "y": 422,
+        "t": 5967.899999976158
+      },
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 195,
+        "y": 666,
+        "t": 21282.09999999404
+      },
+      {
+        "kind": "mousedown",
+        "trusted": true,
+        "x": 195,
+        "y": 666,
+        "t": 21282.09999999404
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 195,
+        "y": 666,
+        "t": 21905
+      },
+      {
+        "kind": "mouseup",
+        "trusted": true,
+        "x": 195,
+        "y": 666,
+        "t": 21905
+      }
+    ],
+    "stage": "muted",
+    "view": [
+      390,
+      844,
+      3
+    ],
+    "build": "game-e0d699b",
+    "manifest": {
+      "schema": "youjia.release/v1",
+      "sourceCommit": "e0d699b8cbaecfabc24a70d2144a7188b5808880",
+      "engine": "4.7.2.stable.official.ed1daf0bf",
+      "entry": "game-e0d699b",
+      "publishedAt": "2026-10-05T13:21:41Z",
+      "storageModules": {
+        "entry": "save-e0d699b",
+        "sha256": {
+          "bridge.mjs": "ef18687554fdc0d745c1d18d4d091e959cc78559da0d61d6a093e562ff9bbc91",
+          "budgets.mjs": "52984153977dcafd1d2682e848f1999f091d0966e17d46e902de76f5735a7018",
+          "host.mjs": "9de8dc0ef4bfc037a8ad0bff575d40c3dd4341bcc723351a412b2061bb661904",
+          "idbfs_source.mjs": "16eb57d471537f13d3e50018b56c2d416d2847f0d0249ba44433dd9ebb65f4d8",
+          "legacy_inspection.mjs": "db3a23a0221aa5d34a58a6a49aeeff930295ffe20bfcf73a7c11f0d49cffd671",
+          "legacy_seal.mjs": "9642132f5d4e7523e5966e802069af7f4bae803fae8e2e7c28ae55ee97d85610",
+          "legacy_v5.mjs": "8e7f4ad2d87aab77ac05361e4f46060476e933aa079ae94301998d08d4599621",
+          "lifecycle.mjs": "1cfaebb9a8745e2dc3e4f694ef475f250640870938f04160be1a5c9acd62935d",
+          "source_decode.mjs": "411f3bc784cb32a07f32eed5fc7d88f71b59a667cc0d68a50fe13c55bfdba18a",
+          "store.mjs": "2193b4397b8662a8ebc754dc4468e4d62964d209b4e1d0f0924a2ec81b409cbe"
+        }
+      }
+    },
+    "errors": [],
+    "utc": "2026-10-05T13:30:43Z"
+  },
+  {
+    "gains": [
+      0.3981071710586548,
+      0.15848931670188904
+    ],
+    "backend": {
+      "buffers": 2,
+      "bytes": 90316800,
+      "decoded": 2,
+      "starts": 2,
+      "players": 2,
+      "playing": 2,
+      "state": "running"
+    },
+    "dom": [
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 195,
+        "y": 422,
+        "t": 5964.899999976158
+      },
+      {
+        "kind": "mousedown",
+        "trusted": true,
+        "x": 195,
+        "y": 422,
+        "t": 5964.899999976158
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 195,
+        "y": 422,
+        "t": 5967.5999999940395
+      },
+      {
+        "kind": "mouseup",
+        "trusted": true,
+        "x": 195,
+        "y": 422,
+        "t": 5967.899999976158
+      },
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 195,
+        "y": 666,
+        "t": 21282.09999999404
+      },
+      {
+        "kind": "mousedown",
+        "trusted": true,
+        "x": 195,
+        "y": 666,
+        "t": 21282.09999999404
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 195,
+        "y": 666,
+        "t": 21905
+      },
+      {
+        "kind": "mouseup",
+        "trusted": true,
+        "x": 195,
+        "y": 666,
+        "t": 21905
+      },
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 195,
+        "y": 666,
+        "t": 25911.29999998212
+      },
+      {
+        "kind": "mousedown",
+        "trusted": true,
+        "x": 195,
+        "y": 666,
+        "t": 25911.29999998212
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 195,
+        "y": 666,
+        "t": 26510.399999976158
+      },
+      {
+        "kind": "mouseup",
+        "trusted": true,
+        "x": 195,
+        "y": 666,
+        "t": 26510.5
+      }
+    ],
+    "stage": "restored",
+    "view": [
+      390,
+      844,
+      3
+    ],
+    "build": "game-e0d699b",
+    "manifest": {
+      "schema": "youjia.release/v1",
+      "sourceCommit": "e0d699b8cbaecfabc24a70d2144a7188b5808880",
+      "engine": "4.7.2.stable.official.ed1daf0bf",
+      "entry": "game-e0d699b",
+      "publishedAt": "2026-10-05T13:21:41Z",
+      "storageModules": {
+        "entry": "save-e0d699b",
+        "sha256": {
+          "bridge.mjs": "ef18687554fdc0d745c1d18d4d091e959cc78559da0d61d6a093e562ff9bbc91",
+          "budgets.mjs": "52984153977dcafd1d2682e848f1999f091d0966e17d46e902de76f5735a7018",
+          "host.mjs": "9de8dc0ef4bfc037a8ad0bff575d40c3dd4341bcc723351a412b2061bb661904",
+          "idbfs_source.mjs": "16eb57d471537f13d3e50018b56c2d416d2847f0d0249ba44433dd9ebb65f4d8",
+          "legacy_inspection.mjs": "db3a23a0221aa5d34a58a6a49aeeff930295ffe20bfcf73a7c11f0d49cffd671",
+          "legacy_seal.mjs": "9642132f5d4e7523e5966e802069af7f4bae803fae8e2e7c28ae55ee97d85610",
+          "legacy_v5.mjs": "8e7f4ad2d87aab77ac05361e4f46060476e933aa079ae94301998d08d4599621",
+          "lifecycle.mjs": "1cfaebb9a8745e2dc3e4f694ef475f250640870938f04160be1a5c9acd62935d",
+          "source_decode.mjs": "411f3bc784cb32a07f32eed5fc7d88f71b59a667cc0d68a50fe13c55bfdba18a",
+          "store.mjs": "2193b4397b8662a8ebc754dc4468e4d62964d209b4e1d0f0924a2ec81b409cbe"
+        }
+      }
+    },
+    "errors": [],
+    "utc": "2026-10-05T13:30:48Z"
+  },
+  {
+    "gains": [
+      0.3981071710586548,
+      0.15848931670188904
+    ],
+    "backend": {
+      "buffers": 2,
+      "bytes": 90316800,
+      "decoded": 2,
+      "starts": 2,
+      "players": 2,
+      "playing": 2,
+      "state": "running"
+    },
+    "dom": [
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 195,
+        "y": 422,
+        "t": 5964.899999976158
+      },
+      {
+        "kind": "mousedown",
+        "trusted": true,
+        "x": 195,
+        "y": 422,
+        "t": 5964.899999976158
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 195,
+        "y": 422,
+        "t": 5967.5999999940395
+      },
+      {
+        "kind": "mouseup",
+        "trusted": true,
+        "x": 195,
+        "y": 422,
+        "t": 5967.899999976158
+      },
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 195,
+        "y": 666,
+        "t": 21282.09999999404
+      },
+      {
+        "kind": "mousedown",
+        "trusted": true,
+        "x": 195,
+        "y": 666,
+        "t": 21282.09999999404
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 195,
+        "y": 666,
+        "t": 21905
+      },
+      {
+        "kind": "mouseup",
+        "trusted": true,
+        "x": 195,
+        "y": 666,
+        "t": 21905
+      },
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 195,
+        "y": 666,
+        "t": 25911.29999998212
+      },
+      {
+        "kind": "mousedown",
+        "trusted": true,
+        "x": 195,
+        "y": 666,
+        "t": 25911.29999998212
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 195,
+        "y": 666,
+        "t": 26510.399999976158
+      },
+      {
+        "kind": "mouseup",
+        "trusted": true,
+        "x": 195,
+        "y": 666,
+        "t": 26510.5
+      },
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 195,
+        "y": 666,
+        "t": 31081.899999976158
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 195,
+        "y": 666,
+        "t": 31086.399999976158
+      }
+    ],
+    "stage": "one-touch",
+    "view": [
+      390,
+      844,
+      3
+    ],
+    "build": "game-e0d699b",
+    "manifest": {
+      "schema": "youjia.release/v1",
+      "sourceCommit": "e0d699b8cbaecfabc24a70d2144a7188b5808880",
+      "engine": "4.7.2.stable.official.ed1daf0bf",
+      "entry": "game-e0d699b",
+      "publishedAt": "2026-10-05T13:21:41Z",
+      "storageModules": {
+        "entry": "save-e0d699b",
+        "sha256": {
+          "bridge.mjs": "ef18687554fdc0d745c1d18d4d091e959cc78559da0d61d6a093e562ff9bbc91",
+          "budgets.mjs": "52984153977dcafd1d2682e848f1999f091d0966e17d46e902de76f5735a7018",
+          "host.mjs": "9de8dc0ef4bfc037a8ad0bff575d40c3dd4341bcc723351a412b2061bb661904",
+          "idbfs_source.mjs": "16eb57d471537f13d3e50018b56c2d416d2847f0d0249ba44433dd9ebb65f4d8",
+          "legacy_inspection.mjs": "db3a23a0221aa5d34a58a6a49aeeff930295ffe20bfcf73a7c11f0d49cffd671",
+          "legacy_seal.mjs": "9642132f5d4e7523e5966e802069af7f4bae803fae8e2e7c28ae55ee97d85610",
+          "legacy_v5.mjs": "8e7f4ad2d87aab77ac05361e4f46060476e933aa079ae94301998d08d4599621",
+          "lifecycle.mjs": "1cfaebb9a8745e2dc3e4f694ef475f250640870938f04160be1a5c9acd62935d",
+          "source_decode.mjs": "411f3bc784cb32a07f32eed5fc7d88f71b59a667cc0d68a50fe13c55bfdba18a",
+          "store.mjs": "2193b4397b8662a8ebc754dc4468e4d62964d209b4e1d0f0924a2ec81b409cbe"
+        }
+      }
+    },
+    "errors": [],
+    "utc": "2026-10-05T13:30:52Z",
+    "expected_effective": false
+  },
+  {
+    "gains": [
+      0.3981071710586548,
+      0.15848931670188904
+    ],
+    "backend": {
+      "buffers": 2,
+      "bytes": 90316800,
+      "decoded": 2,
+      "starts": 2,
+      "players": 2,
+      "playing": 2,
+      "state": "running"
+    },
+    "dom": [
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 195,
+        "y": 422,
+        "t": 5964.899999976158
+      },
+      {
+        "kind": "mousedown",
+        "trusted": true,
+        "x": 195,
+        "y": 422,
+        "t": 5964.899999976158
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 195,
+        "y": 422,
+        "t": 5967.5999999940395
+      },
+      {
+        "kind": "mouseup",
+        "trusted": true,
+        "x": 195,
+        "y": 422,
+        "t": 5967.899999976158
+      },
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 195,
+        "y": 666,
+        "t": 21282.09999999404
+      },
+      {
+        "kind": "mousedown",
+        "trusted": true,
+        "x": 195,
+        "y": 666,
+        "t": 21282.09999999404
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 195,
+        "y": 666,
+        "t": 21905
+      },
+      {
+        "kind": "mouseup",
+        "trusted": true,
+        "x": 195,
+        "y": 666,
+        "t": 21905
+      },
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 195,
+        "y": 666,
+        "t": 25911.29999998212
+      },
+      {
+        "kind": "mousedown",
+        "trusted": true,
+        "x": 195,
+        "y": 666,
+        "t": 25911.29999998212
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 195,
+        "y": 666,
+        "t": 26510.399999976158
+      },
+      {
+        "kind": "mouseup",
+        "trusted": true,
+        "x": 195,
+        "y": 666,
+        "t": 26510.5
+      },
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 195,
+        "y": 666,
+        "t": 31081.899999976158
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 195,
+        "y": 666,
+        "t": 31086.399999976158
+      },
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 195,
+        "y": 666,
+        "t": 35448.79999998212
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 195,
+        "y": 666,
+        "t": 35450.39999997616
+      }
+    ],
+    "stage": "second-touch",
+    "view": [
+      390,
+      844,
+      3
+    ],
+    "build": "game-e0d699b",
+    "manifest": {
+      "schema": "youjia.release/v1",
+      "sourceCommit": "e0d699b8cbaecfabc24a70d2144a7188b5808880",
+      "engine": "4.7.2.stable.official.ed1daf0bf",
+      "entry": "game-e0d699b",
+      "publishedAt": "2026-10-05T13:21:41Z",
+      "storageModules": {
+        "entry": "save-e0d699b",
+        "sha256": {
+          "bridge.mjs": "ef18687554fdc0d745c1d18d4d091e959cc78559da0d61d6a093e562ff9bbc91",
+          "budgets.mjs": "52984153977dcafd1d2682e848f1999f091d0966e17d46e902de76f5735a7018",
+          "host.mjs": "9de8dc0ef4bfc037a8ad0bff575d40c3dd4341bcc723351a412b2061bb661904",
+          "idbfs_source.mjs": "16eb57d471537f13d3e50018b56c2d416d2847f0d0249ba44433dd9ebb65f4d8",
+          "legacy_inspection.mjs": "db3a23a0221aa5d34a58a6a49aeeff930295ffe20bfcf73a7c11f0d49cffd671",
+          "legacy_seal.mjs": "9642132f5d4e7523e5966e802069af7f4bae803fae8e2e7c28ae55ee97d85610",
+          "legacy_v5.mjs": "8e7f4ad2d87aab77ac05361e4f46060476e933aa079ae94301998d08d4599621",
+          "lifecycle.mjs": "1cfaebb9a8745e2dc3e4f694ef475f250640870938f04160be1a5c9acd62935d",
+          "source_decode.mjs": "411f3bc784cb32a07f32eed5fc7d88f71b59a667cc0d68a50fe13c55bfdba18a",
+          "store.mjs": "2193b4397b8662a8ebc754dc4468e4d62964d209b4e1d0f0924a2ec81b409cbe"
+        }
+      }
+    },
+    "errors": [],
+    "utc": "2026-10-05T13:30:57Z"
+  }
+]

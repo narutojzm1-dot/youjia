@@ -459,8 +459,19 @@ Assistant音频300 b8e5e6dc916dacd1eaf45b36c9f17584d36fc16c已接且实际交，
 
 | 编号 | 优先级 | 目标 | 验收 | 状态 | Owner | 备注 |
 | --- | --- | --- | --- | --- | --- | --- |
-| REQ-20261005-030 | P2 | 手机竖屏上「现在离开吗？」确认纸片完整显示在屏内 | `_fit_confirm_panel()`：宽 = min(420, 屏宽−24)，高 = min(240, 屏高−24)，居中；建页和 `_layout()` 都会重新贴合；宽屏仍 420×240。文案、字号、按钮、行为不变。`test/confirm_panel_fit_suite.gd` 562 项通过，未修 main 上 78 项失败。 | 集成及候选验证完成，最终独审/发布待 | `GROK-CONTRIBUTOR`（原实现）/ `CODEX-LEAD`（集成协助） | 每小时自选无主切片，来源为 main 5bb2102 原生 360×640/390×844 截图（纸片左右各出屏 30/15px）。只改 `Main._build_confirmation_screen`、`_layout` 末尾一行，新增 `_fit_confirm_panel`、`_confirm_panel`、`CONFIRM_PANEL_SIZE`；不碰暂停页、#348 通知、#350/#351 手帐。PM20:20已登记作者认领，Leader保留作者2b71d6c并补永久daily100755。runtime6f9d15b原生562及完整严格daily通过；候选Web390/360 DPR2/3鼠标打开/取消/恢复与旋转通过，touch一次未定位、续玩/重置/英文Web/真机未验；[完整集成证据](playtests/2026-10-05-confirm373-integration/README.md)。决策见 [decisions/REQ-20261005-030.md](decisions/REQ-20261005-030.md)。 |
+| REQ-20261005-030 | P2 | 手机竖屏上「现在离开吗？」确认纸片完整显示在屏内 | `_fit_confirm_panel()`：宽 = min(420, 屏宽−24)，高 = min(240, 屏高−24)，居中；建页和 `_layout()` 都会重新贴合；宽屏仍 420×240。文案、字号、按钮、行为不变。`test/confirm_panel_fit_suite.gd` 562 项通过，未修 main 上 78 项失败。 | 已合入并发布；公开四视口鼠标几何已验，触摸#382独立待修 | `GROK-CONTRIBUTOR`（原实现）/ `CODEX-LEAD`（集成协助） | 每小时自选无主切片，来源为 main 5bb2102 原生 360×640/390×844 截图（纸片左右各出屏 30/15px）。只改 `Main._build_confirmation_screen`、`_layout` 末尾一行，新增 `_fit_confirm_panel`、`_confirm_panel`、`CONFIRM_PANEL_SIZE`；不碰暂停页、#348 通知、#350/#351 手帐。PM20:20已登记作者认领，Leader保留作者2b71d6c并补永久daily100755。runtime6f9d15b原生562及完整严格daily通过；候选Web390/360 DPR2/3鼠标打开/取消/恢复与旋转通过，touch一次未定位、续玩/重置/英文Web/真机未验；[完整集成证据](playtests/2026-10-05-confirm373-integration/README.md)。 PR373已发布e0d699b，Actions/Pages与公开PCK/十模块核验通过；四页完整源绑定，mouse打开/取消/恢复、旋转共13原图已验，见[公开验收](playtests/2026-10-05-confirm373-release/README.md)。不称touch通过；#382公开复现独立PR386在审，不将候选当已修复。决策见 [decisions/REQ-20261005-030.md](decisions/REQ-20261005-030.md)。 |
+
+#150 后续idle cleanup共享接口候选（5995152650）：新增只针对已提交formal会话的冻结参数＋队首CAS清理提交，明确写前拒绝，不prepare、不覆盖新trip/无关字段，不增磁盘schema。Cloud领域重试与Main提示关联尚未接入，不能称同页恢复已修。[接口契约](architecture/exploration-cleanup-commit-contract.md)。
 
 ### EXP-LIVING-WORLD 方向约束（用户2026-10-05补充，沿 #153 / #155 执行）
 
 探索程序 Owner CURSOR-CLOUD；原画/物件/音频与需求细化 GAME-PRODUCER。状态：用户方向已确认，内容/参数待首片体验后细化，非实现完成。近郊重访允许合理物品或空手，掉落遵循生态与季节；动物偶遇/天气同为风景；各片区环境音及音乐应契合环境，近郊可偶闻微弱家鹅叫。先完成首片人物透视+发现/获得动态音画体验，不一次扩展多季节、种子功能或全部动物事件。详见 game-design.md 的“探索是生活中的机缘与风景”；不以本记录替换未决概率/时间机制或现有可靠保存验收。
+
+## BUG-AUDIO-TOUCH-20261005（#388，父#195）
+
+- Owner `CODEX-LEAD-ASSISTANT`，实际在研；原单接收/范围5995550836→5995599284已收窄。旧横屏master点297实际在按钮外，推断已撤回；新的正确中心公开game-e0d699b横竖DPR3单tap未静音，原生两回pressed/TuningStore true→false。
+- Goal：三音频按钮一回触屏手势只切一次，长按释放/拖取消、鼠标/键盘、纯touch fallback保持；仅Main._input音频按钮已有GUI按住时不重复手动emit，其他400ms过滤/frame guard/存档/后端/资源/探索完全不动。
+- 分支 `work/codex-assistant/audio-touch-routing`；648真实GUI原生项旧Main168失败→候选0，最新5c2运行组合完整4.7.2 strict59启动exit0、普通本地Web横竖DPR3共62条index/errors[]通过，基线到efda仅docs变化。最终完整SHA独审/PR/合入与正式公开仍待，index不冒上线。[完整证据/失败/边界](playtests/2026-10-05-audio-touch-routing/README.md)。
+- #195原并发两次短输入根因、物理设备/真人听验/BFCache/全心流保留；只交388音频路由切片，不关父单。
+
+2026-10-05合入前保留Leader4fa最新cleanup两运行文件及daily新入口，完整4.7.2再跑60次启动exit0、普通最新组合index62记录/errors[]；Main仍5b8e6c1，仅一处音频触屏命中判断。[最终组合证据](playtests/2026-10-05-audio-touch-routing/INTEGRATION.md)。完整SHA独审/正式公开仍待，不用旧59组合日志冒新包。

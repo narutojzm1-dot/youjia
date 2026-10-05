@@ -1,0 +1,30 @@
+import json,time,urllib.request
+from pathlib import Path
+from playwright.sync_api import sync_playwright
+out=Path('/tmp/input195-public-master');out.mkdir(exist_ok=True)
+records=[]
+with sync_playwright() as p:
+ for w,h in [(844,390),(390,844)]:
+  with urllib.request.urlopen('https://narutojzm1-dot.github.io/youjia/game-release.json?input195='+str(time.time_ns()),timeout=30) as response:manifest=json.load(response)
+  b=p.chromium.launch(executable_path='/usr/bin/chromium',headless=True,args=['--no-sandbox','--use-gl=angle','--use-angle=swiftshader','--enable-webgl'])
+  pg=b.new_page(viewport={'width':w,'height':h},device_scale_factor=3,has_touch=True);errors=[]
+  pg.on('pageerror',lambda e:errors.append(str(e)));pg.on('console',lambda m:errors.append(m.text) if m.type=='error' else None)
+  pg.add_init_script("""window.first=false;window.addEventListener('youjia:first-frame',()=>window.first=true);window.domInputTrace=[];
+  for(const k of ['pointerdown','pointerup','mousedown','mouseup'])document.addEventListener(k,e=>domInputTrace.push({kind:k,trusted:e.isTrusted,x:e.clientX,y:e.clientY,t:performance.now()}),true);
+  window.observedGainNodes=[];const proto=BaseAudioContext.prototype,original=proto.createGain;proto.createGain=function(...args){const node=Reflect.apply(original,this,args);window.observedGainNodes.push({node,creator:new Error().stack});return node;};
+  """)
+  pg.goto('https://narutojzm1-dot.github.io/youjia/');pg.wait_for_function('window.first',timeout=120000);build=pg.locator('html').get_attribute('data-build');assert build==manifest['entry'],(build,manifest)
+  pg.mouse.click(w/2,h/2);pg.wait_for_timeout(350);pg.keyboard.press('Escape');pg.wait_for_timeout(8500)
+  def record(stage):
+   row=pg.evaluate("({gains:observedGainNodes.filter(o=>o.creator.includes('channel')).map(o=>o.node.gain.value),backend:JSON.parse(__manusBgm.diagnostics()),dom:window.domInputTrace})")
+   row.update({'stage':stage,'view':[w,h,3],'build':build,'manifest':manifest,'errors':errors.copy(),'utc':time.strftime('%Y-%m-%dT%H:%M:%SZ',time.gmtime())});records.append(row)
+   (out/'events.json').write_text(json.dumps(records,ensure_ascii=False,indent=2));pg.screenshot(path=str(out/f'{w}-{h}-{stage}.png'),scale='css');return row
+  initial=record('before');assert len(initial['gains'])==2 and initial['backend']['playing']==2,initial
+  xy=(257,266) if w==844 else (195,666)
+  pg.mouse.click(*xy,delay=500);pg.wait_for_timeout(1000);muted=record('muted');assert muted['gains']==[0,0] and muted['backend']['playing']==2,muted
+  pg.mouse.click(*xy,delay=500);pg.wait_for_timeout(1000);restored=record('restored');assert restored['gains']==initial['gains'] and restored['backend']['playing']==2,restored
+  pg.touchscreen.tap(*xy);pg.wait_for_timeout(1000);touch=record('one-touch');records[-1]['expected_effective']=touch['gains']==[0,0]
+  pg.touchscreen.tap(*xy);pg.wait_for_timeout(1000);record('second-touch')
+  (out/'events.json').write_text(json.dumps(records,ensure_ascii=False,indent=2))
+  assert not errors,errors;b.close()
+print(json.dumps([{'stage':x['stage'],'view':x['view'],'build':x['build'],'gains':x['gains']} for x in records]))

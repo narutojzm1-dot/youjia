@@ -1,0 +1,47 @@
+{
+  "baseline": "5c2f2bb47c675a5cd974ea37c7a1d779b4f964a8",
+  "checked": 676,
+  "missing": [],
+  "changed": [
+    {
+      "path": "assets/holiday/characters/cast_v2/goose_riding_up.png.import",
+      "expected": "7a912ad7014a04adf9d77cfa0ea5ff18bd2d7d12",
+      "actual": "65b425a3a7e31574d57fed60a465257839c6d28f"
+    },
+    {
+      "path": "assets/holiday/environment/cloud_band_morning.png.import",
+      "expected": "ca3cc9a8f6063cd82b8e6844b2a72ae94fd42eec",
+      "actual": "6511e63bfc40c631d76f4d43b8f833484ec6da0a"
+    },
+    {
+      "path": "assets/holiday/environment/cloud_band_overcast.png.import",
+      "expected": "3fb31ab7e05461377e1ce6e87ec4d28a82826560",
+      "actual": "65485794cac75c6949d795a545187d56dde0d61d"
+    },
+    {
+      "path": "assets/holiday/environment/cloud_band_sunny.png.import",
+      "expected": "1dd82e315ccd8c09d2467f4bea736e13251dce6c",
+      "actual": "457a128c8587884085e4a3cd8f712aa8b9a0cc6c"
+    },
+    {
+      "path": "assets/holiday/environment/cloud_band_sunset.png.import",
+      "expected": "118d7e46ad868e0c39a1d97074865ff84fed9359",
+      "actual": "4dbbddd996b7887dbc6886b200ae540944befbd1"
+    },
+    {
+      "path": "scripts/main.gd",
+      "expected": "46d4008a1e5aba311f23b2c1abb9bec8d4c8600f",
+      "actual": "5b8e6c1c181519580fdef9f9c0e742397959f446"
+    },
+    {
+      "path": "test/save_feedback_suite.gd.uid",
+      "expected": "6bf50338e08974091972388fdda7bf0fb7b1e592",
+      "actual": "a106431589d2260dab76d05e343cdaae339c36c1"
+    },
+    {
+      "path": "tools/verify_daily_life.sh",
+      "expected": "1463d87abc35ff74e33ff2b7ff63323769da5762",
+      "actual": "8b0b018bf30152a76b1bb371fb38e6083da98a40"
+    }
+  ]
+}
