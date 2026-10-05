@@ -38,4 +38,3 @@ func _ready() -> void:
 	await RenderingServer.frame_post_draw
 	assert(get_viewport().get_texture().get_image().save_png("res://presentation.png") == OK)
 	get_tree().quit()
-
