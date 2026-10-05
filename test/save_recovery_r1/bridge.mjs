@@ -1,3 +1,4 @@
+import {budgetProfile, decodeHeadSnapshot} from './budgets.mjs';
 // Isolated Godot test adapter; never installed in the production game.
 import {openStore, envelope, newId} from './store.mjs';
 import {prepareLegacyV5} from './legacy_v5.mjs';
@@ -5,6 +6,7 @@ import {decodeSourceSnapshot} from './source_decode.mjs';
 const page_id = newId(), log = [], candidates = new Map();
 const barriers = ['intent_prepared_complete', 'candidate_committed_before_receipt'];
 const injections = ['abort_intent','abort_commit','drop_receipt','wrong_receipt_identity','duplicate_receipt','delay_receipt'];
+let budget = budgetProfile();
 let store, name, recovery = false, armed = '', paused = null, fault = {}, sequence = 0;
 let request = null, preparing = false;
 const clone = value => structuredClone(value);
@@ -28,10 +30,11 @@ function receipt(e, write_id, r, terminated) {
  observed_token:r.current.commit_id, old_write_terminated:terminated};
 }
 export const bridge = {
- async open(testName) {
+ async open(testName, profile = 'fixture') {
+  const selectedBudget = budgetProfile(profile);
   if (name) throw Error('already opened');
   if (!/^youjia-recovery-test-[a-zA-Z0-9-]{1,100}$/.test(testName)) throw Error('test namespace required');
-  name = testName;
+  name = testName; budget = selectedBudget;
   if (!navigator.locks) return opened({verdict:'no_web_locks'});
   store = await openStore(name, {
    event:e => event(e.type,e),
@@ -41,7 +44,7 @@ export const bridge = {
     // Only closing this page releases the crash-test barrier and Web Lock.
     await new Promise(() => {});
    },
-  });
+  }, budget);
   return opened(await store.recover());
  },
  async initialize(payload) {
@@ -49,12 +52,13 @@ export const bridge = {
   await store.initialize(payload);
   return opened(await store.recover());
  },
+ decodeLegacyArgument(raw) { return decodeHeadSnapshot(raw, budget); },
  async initializeLegacy(snapshot) {
   // Candidate bridge only: caller must quiesce legacy writers before capture.
   // Validate/freeze both raw sources before the first await. R1's existing
   // initialize lock+transaction refuses any occupied/corrupt/pending target.
   if (!store || recovery?.verdict !== 'empty') throw Error('legacy import requires empty recovery');
-  const payload=prepareLegacyV5(decodeSourceSnapshot(snapshot));
+  const payload=prepareLegacyV5(decodeSourceSnapshot(snapshot, budget), budget);
   await store.initialize(payload);
   return opened(await store.recover());
  },
@@ -66,7 +70,7 @@ export const bridge = {
   try {
   const s = await store.snapshot();
   if (s.present.intent || s.current?.commit_id !== parent_token) throw Error('recovery required or stale parent');
-  const candidate = await envelope(payload, s.current);
+  const candidate = await envelope(payload, s.current, budget);
   candidates.clear();
   candidates.set(candidate.request_id,{candidate, started:false, done:false, operation:null, write_id:null});
   return {candidate_token:candidate.commit_id, request_id:candidate.request_id};

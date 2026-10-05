@@ -5,7 +5,7 @@ const FIELDS = ['schema', 'store_id', 'commit_id', 'request_id', 'parent_commit_
 const ID = /^[0-9a-f]{32}$/;
 const HASH = /^[0-9a-f]{64}$/;
 const MAX_GENERATION = 9223372036854775807n;
-const MAX_PAYLOAD = 65536; // Small fixtures only; not a production import limit.
+import {FIXTURE_BUDGET, CANDIDATE_BUDGET, checkBudget} from './budgets.mjs';
 const encoder = new TextEncoder();
 const same = (a, b) => JSON.stringify(a) === JSON.stringify(b);
 const copy = v => structuredClone(v);
@@ -25,7 +25,8 @@ async function digest(e) {
   }
   return sha(out);
 }
-export async function validate(e) {
+export async function validate(e, budget = FIXTURE_BUDGET) {
+  checkBudget(budget);
   if (!e || typeof e !== 'object' || Array.isArray(e) ||
       Object.keys(e).length !== FIELDS.length ||
       !FIELDS.every(k => Object.hasOwn(e, k) && typeof e[k] === 'string')) return false;
@@ -34,26 +35,33 @@ export async function validate(e) {
       !/^[1-9][0-9]{0,18}$/.test(e.generation) || BigInt(e.generation) > MAX_GENERATION ||
       !HASH.test(e.payload_sha256) || !HASH.test(e.envelope_sha256)) return false;
   if ((e.generation === '1') !== (e.parent_commit_id === '')) return false;
-  if (e.payload_bytes.length > MAX_PAYLOAD || encoder.encode(e.payload_bytes).length > MAX_PAYLOAD) return false;
+  const limit = e.generation === '1' ? budget.importBytes : budget.writeBytes;
+  if (e.payload_bytes.length > limit || encoder.encode(e.payload_bytes).length > limit) return false;
   try { JSON.parse(e.payload_bytes); } catch (_) { return false; }
   return await sha(encoder.encode(e.payload_bytes)) === e.payload_sha256 &&
     await digest(e) === e.envelope_sha256;
 }
-export async function envelope(payload, parent = null) {
-  if (typeof payload !== 'string' || payload.length > MAX_PAYLOAD || encoder.encode(payload).length > MAX_PAYLOAD) throw Error('bounded frozen JSON text required');
+export async function envelope(payload, parent = null, budget = FIXTURE_BUDGET) {
+  checkBudget(budget);
+  const limit = parent === null ? budget.importBytes : budget.writeBytes;
+  if (typeof payload !== 'string' || payload.length > limit || encoder.encode(payload).length > limit) throw Error('bounded frozen JSON text required');
   parent = copy(parent);
-  if (parent !== null && !await validate(parent)) throw Error('invalid parent');
+  if (parent !== null && !await validate(parent, budget)) throw Error('invalid parent');
   const generation = parent ? BigInt(parent.generation) + 1n : 1n;
   if (generation > MAX_GENERATION) throw Error('generation exhausted');
   const e = {schema: SCHEMA, store_id: parent?.store_id || newId(), commit_id: newId(),
     request_id: newId(), parent_commit_id: parent?.commit_id || '', generation: String(generation),
     payload_bytes: payload, payload_sha256: await sha(encoder.encode(payload)), envelope_sha256: ''};
   e.envelope_sha256 = await digest(e);
-  if (!await validate(e)) throw Error('invalid envelope');
+  if (!await validate(e, budget)) throw Error('invalid envelope');
   return e;
 }
-export async function openStore(name, hooks = {}) {
+export async function openStore(name, hooks = {}, budget = FIXTURE_BUDGET) {
+  checkBudget(budget);
   if (!/^youjia-recovery-test-[a-zA-Z0-9-]{1,100}$/.test(name)) throw Error('test namespace required');
+  // Disjoint persistent namespaces bind profile selection across clients.
+  if (name.startsWith('youjia-recovery-test-candidate-v1-') !== (budget === CANDIDATE_BUDGET))
+    throw Error('database budget profile mismatch');
   // A missing lock service must not create even an empty database.
   if (!navigator.locks) throw Error('no_web_locks');
   const db = await new Promise((resolve, reject) => {
@@ -100,15 +108,21 @@ export async function openStore(name, hooks = {}) {
   async function validIntent(i, states) {
     if (!i || typeof i !== 'object' || Array.isArray(i) ||
       Object.keys(i).sort().join(',') !== 'candidate,parent,request_id,state' ||
-      !states.includes(i.state) || !await validate(i.parent) || !await validate(i.candidate)) return false;
+      !states.includes(i.state) || !await validate(i.parent, budget) || !await validate(i.candidate, budget)) return false;
     return i.request_id === i.candidate.request_id &&
       i.candidate.store_id === i.parent.store_id &&
       i.candidate.parent_commit_id === i.parent.commit_id &&
       i.candidate.commit_id !== i.parent.commit_id && i.candidate.request_id !== i.parent.request_id &&
       BigInt(i.candidate.generation) === BigInt(i.parent.generation) + 1n;
   }
+  function withinRecords(v) {
+    if (budget.recordsBytes === Infinity) return true; // Preserve fixture behavior.
+    try { return encoder.encode(JSON.stringify({current:v.current, intent:v.intent, archive:v.archive})).length <= budget.recordsBytes; }
+    catch (_) { return false; }
+  }
   async function checked(v) {
-    if (!v.present.current || !await validate(v.current)) return false;
+    if (!withinRecords(v)) return false;
+    if (!v.present.current || !await validate(v.current, budget)) return false;
     if (v.present.archive) {
       if (!Array.isArray(v.archive) || v.archive.length > 32) return false;
       for (const item of v.archive) if (!await validIntent(item, ['rejected'])) return false;
@@ -135,6 +149,7 @@ export async function openStore(name, hooks = {}) {
       // Preserve diagnostics; full archive blocks rather than silently evicts.
       if (archive.length >= 32) return {verdict: 'quarantined', ...v};
       const next = [...archive, {...i, state: 'rejected'}];
+      if (!withinRecords({...v, archive:next, intent:undefined})) return {verdict:'quarantined', ...v};
       await transact('readwrite', (now, s) => {
         if (!same(now, v)) throw Error('recovery conflict');
         s.put(next, 'archive'); s.delete('intent');
@@ -150,9 +165,10 @@ export async function openStore(name, hooks = {}) {
     // Explicit fixture initialization only; recovery never auto-creates a root.
     async initialize(payload) {
       return locked(async () => {
-        const root = await envelope(payload);
+        const root = await envelope(payload, null, budget);
         await transact('readwrite', (v, s) => {
           if (Object.values(v.present).some(Boolean)) throw Error('store not empty');
+          if (!withinRecords({current:root})) throw Error('record byte budget exceeded');
           s.put(root, 'current');
         }, 'initialize');
         const v = await snapshot();
@@ -187,7 +203,7 @@ export async function openStore(name, hooks = {}) {
     async submit(candidate, {abort_stage = ''} = {}) {
       // Freeze caller input before the first await; later mutation cannot change a submission.
       candidate = copy(candidate);
-      if (!await validate(candidate)) throw Error('invalid candidate');
+      if (!await validate(candidate, budget)) throw Error('invalid candidate');
       return locked(async () => {
         const v = await snapshot();
         if (!await checked(v) || v.present.intent) throw Error('recovery required');
@@ -196,6 +212,9 @@ export async function openStore(name, hooks = {}) {
             candidate.commit_id === parent.commit_id || candidate.request_id === parent.request_id ||
             BigInt(candidate.generation) !== BigInt(parent.generation) + 1n) throw Error('stale parent');
         const intent = {state: 'prepared', request_id: candidate.request_id, parent, candidate};
+        // Reserve both prepared and committed shapes before any target write.
+        if (!withinRecords({...v, intent}) || !withinRecords({...v, current:candidate, intent:{...intent,state:'committed'}}))
+          throw Error('record byte budget exceeded');
         await transact('readwrite', (now, s, tx) => {
           if (!same(now, v)) throw Error('prepare conflict');
           s.put(intent, 'intent'); if (abort_stage === 'intent') tx.abort();
