@@ -659,6 +659,11 @@ func _find_reveal() -> void:
 		var foot_screen: Vector2 = scroll.art_to_screen(scroll.foot())
 		check(shown.grow(-FindReveal.HALO).has_point(reveal.top) and reveal.top.y < foot_screen.y, tag + "the find rises above the walker and stays on screen")
 		check(reveal.top.y + FindReveal.HALO + 30.0 < scroll._pick_button.position.y, tag + "the reveal does not cover the bottom buttons")
+		var caption_bottom: float = scroll._caption.position.y + scroll._caption.size.y
+		var caption_room := caption_bottom + FindReveal.HALO + FindReveal.LABEL_ROOM
+		var cramped: bool = caption_room > scroll._pick_button.position.y - FindReveal.HALO - 30.0
+		check(scroll._caption.visible and scroll._caption.size.y >= scroll._caption.get_line_height() + 16.0, tag + "the look paper is at least as tall as its text")
+		check(cramped or reveal.top.y + 0.5 >= caption_room, tag + "the find name stays below the look paper when there is room")
 		check(reveal.pose().at.is_equal_approx(reveal.from), tag + "it starts from where the find lay")
 		reveal._process(FindReveal.RISE + 0.01)
 		check(reveal.pose().at.is_equal_approx(reveal.top) and is_equal_approx(float(reveal.pose().size), FindReveal.SHOW_SIZE), tag + "it holds above the walker")
@@ -692,6 +697,20 @@ func _find_reveal() -> void:
 		store.pump()
 		check((store.get_exploration_record().session.carried as Array).size() == 3, tag + "the saved basket never depended on the reveal")
 		scroll.free()
+
+	root.size = Vector2i(568, 320)
+	var short_store := make_store()
+	var short_host := ExplorationHost.new(short_store)
+	short_host.restore()
+	short_host.begin(CLOCK, seed_all_four())
+	var short_scroll: Node2D = load("res://scripts/exploration/near_path_scroll.gd").new()
+	root.add_child(short_scroll)
+	short_scroll.setup(short_host, "sunny")
+	await process_frame
+	check(short_scroll.observe("gate") and short_scroll.pick() and short_scroll.reveal.is_active(), "[568x320] a take still starts a reveal")
+	check(short_scroll._caption.visible and short_scroll._caption.size.y >= short_scroll._caption.get_line_height() + 16.0, "[568x320] the look paper is at least as tall as its text")
+	check(short_scroll.reveal.top.y + FindReveal.HALO + 30.0 < short_scroll._pick_button.position.y, "[568x320] the reveal does not cover the bottom buttons")
+	short_scroll.free()
 
 	root.size = Vector2i(1280, 720)
 	var store := make_store()
