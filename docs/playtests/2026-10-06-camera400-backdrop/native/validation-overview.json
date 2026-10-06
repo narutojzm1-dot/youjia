@@ -1,0 +1,36 @@
+{
+  "recorded_at": "2026-10-06T01:03:37.331369+00:00",
+  "runtime_source": "58437ae8977f2f0ac1fd51dbdd61e2274ac12132",
+  "runtime_tree": "35ce69244b51a4d4c382ccde3517a429d55b0460",
+  "native_base": "b9f68c3c5c4e70e16cefde9b4400bb1d553ff915",
+  "enhanced_green": 44734,
+  "old_coverage_red": {
+    "checks": 41894,
+    "failed": 2026,
+    "exit": 1
+  },
+  "guard_continuity_red": {
+    "source": "6554353d98d96bf99dfcbd4a4b583dafe83c9324",
+    "checks": 41912,
+    "failed": 4,
+    "exit": 1
+  },
+  "full_daily": {
+    "suites": 76,
+    "launches": 77,
+    "exit": 0,
+    "mock_total": 68,
+    "existing_handoff_contract_cases": 14,
+    "new_backdrop_registration_cases": 4,
+    "node_programs": 2
+  },
+  "auxiliary": {
+    "retention_unittests": 11,
+    "retention_exit": 0,
+    "publisher_fixture_exit": 0,
+    "strict_export_exit": 0
+  },
+  "browser": "not yet run",
+  "published": false,
+  "snapshot_note": "prepared-source*.json and nested source.native/source.browser are immutable preparation snapshots; actual results are in per-step logs/results and this overview. full-v2/result.json mock_new_camera_format=14 names the existing handoff contract; this slice adds four bounds registration cases within 68 total."
+}

@@ -1,0 +1,27 @@
+{
+  "source": "6554353d98d96bf99dfcbd4a4b583dafe83c9324",
+  "scope": [
+    {
+      "path": "scripts/main.gd",
+      "changed_existing_functions": [
+        "_process",
+        "_on_focus"
+      ],
+      "added_functions": [
+        "_bound_quiet_camera"
+      ]
+    },
+    {
+      "path": "scripts/game/yard_world.gd",
+      "changed_existing_functions": [],
+      "added_functions": [
+        "is_quiet_camera_focus",
+        "get_backdrop_bounds"
+      ]
+    }
+  ],
+  "daily_unique": true,
+  "daily_git_mode": "100755",
+  "engine_run": false,
+  "check": "static scope only"
+}

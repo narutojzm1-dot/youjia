@@ -1,0 +1,166 @@
+docs/playtests/2026-10-06-camera400-backdrop/browser-candidate/normal-after-index.html:238: new blank line at EOF.
+docs/playtests/2026-10-06-camera400-backdrop/browser-candidate/normal-before-index.html:238: new blank line at EOF.
+docs/playtests/2026-10-06-camera400-backdrop/native/continuity-revision.diff:14: space before tab in indent.
++ 	if _cam_quiet_bounds and _world != null:
+docs/playtests/2026-10-06-camera400-backdrop/native/continuity-revision.diff:15: space before tab in indent.
++ 		camera_position = _bound_quiet_camera(camera_position, camera_home, _world.get_backdrop_bounds(), size, zoom, hud_space)
+docs/playtests/2026-10-06-camera400-backdrop/native/continuity-revision.diff:16: space before tab in indent.
++ 	_camera.position = camera_position
+docs/playtests/2026-10-06-camera400-backdrop/native/continuity-revision.diff:18: space before tab in indent.
++ 	if _screen == "game":
+docs/playtests/2026-10-06-camera400-backdrop/native/continuity-revision.diff:19: space before tab in indent.
++ 		_refresh_hud()
+docs/playtests/2026-10-06-camera400-backdrop/native/continuity-revision.diff:20: space before tab in indent.
++ 		# 更新昼夜色调覆盖层与季节底色
+docs/playtests/2026-10-06-camera400-backdrop/native/continuity-revision.diff:22: space before tab in indent.
++ 	_cam_target_zoom = 1.0
+docs/playtests/2026-10-06-camera400-backdrop/native/continuity-revision.diff:23: space before tab in indent.
++ 	_cam_offset = Vector2.ZERO
+docs/playtests/2026-10-06-camera400-backdrop/native/continuity-revision.diff:24: space before tab in indent.
++ 	_cam_target_offset = Vector2.ZERO
+docs/playtests/2026-10-06-camera400-backdrop/native/continuity-revision.diff:27: space before tab in indent.
++ 	_camera.make_current()
+docs/playtests/2026-10-06-camera400-backdrop/native/continuity-revision.diff:28: space before tab in indent.
++ 	_screen = "game"
+docs/playtests/2026-10-06-camera400-backdrop/native/continuity-revision.diff:29: space before tab in indent.
++ 	_title_screen.visible = false
+docs/playtests/2026-10-06-camera400-backdrop/native/continuity-revision.diff:32: space before tab in indent.
++ 	# The world sets the encounter phase before emitting its focus, even when
+docs/playtests/2026-10-06-camera400-backdrop/native/continuity-revision.diff:33: space before tab in indent.
++ 	# quiet's same-tick yield has not run yet. Never infer the source from zoom.
+docs/playtests/2026-10-06-camera400-backdrop/native/continuity-revision.diff:38: space before tab in indent.
++ 	_cam_quiet_bounds = _world != null and _world.is_quiet_camera_focus()
+docs/playtests/2026-10-06-camera400-backdrop/native/continuity-revision.diff:39: space before tab in indent.
++ 	_cam_target_zoom = zoom
+docs/playtests/2026-10-06-camera400-backdrop/native/continuity-revision.diff:40: space before tab in indent.
++ 	var home := YardWorld.WORLD_SIZE * 0.5
+docs/playtests/2026-10-06-camera400-backdrop/native/continuity-revision.diff:46: space before tab in indent.
++ 		check(not w._quiet_sky_active and main._cam_target_offset.is_zero_approx() and main._cam_offset.length() < 0.01, "natural hold and return finish before cooldown can restart quiet")
+docs/playtests/2026-10-06-camera400-backdrop/native/continuity-revision.diff:47: space before tab in indent.
++ 		trace("natural_expiry")
+docs/playtests/2026-10-06-camera400-backdrop/native/continuity-revision.diff:48: space before tab in indent.
++ 		accessor_and_projection_edges(w)
+docs/playtests/2026-10-06-camera400-backdrop/native/continuity-revision.diff:72: space before tab in indent.
++ 			tick()
+docs/playtests/2026-10-06-camera400-backdrop/native/continuity-revision.diff:91: space before tab in indent.
++ 			tick()
+docs/playtests/2026-10-06-camera400-backdrop/native/continuity-revision.diff:108: space before tab in indent.
++ 			tick(true)
+docs/playtests/2026-10-06-camera400-backdrop/native/continuity-revision.diff:115: space before tab in indent.
++ 	Input.action_release("move_right")
+docs/playtests/2026-10-06-camera400-backdrop/native/continuity-revision.diff:116: space before tab in indent.
++ 	tuning.reset_defaults()
+docs/playtests/2026-10-06-camera400-backdrop/native/continuity-revision.diff:117: space before tab in indent.
++ 	root.get_node("AudioDirector").release_streams()
+docs/playtests/2026-10-06-camera400-backdrop/native/generated-metadata/import.diff:6: trailing whitespace.
++ 
+docs/playtests/2026-10-06-camera400-backdrop/native/generated-metadata/import.diff:19: trailing whitespace.
++ 
+docs/playtests/2026-10-06-camera400-backdrop/native/generated-metadata/import.diff:31: trailing whitespace.
++ 
+docs/playtests/2026-10-06-camera400-backdrop/native/generated-metadata/import.diff:35: trailing whitespace.
++ 
+docs/playtests/2026-10-06-camera400-backdrop/native/generated-metadata/import.diff:37: trailing whitespace.
++ 
+docs/playtests/2026-10-06-camera400-backdrop/native/generated-metadata/import.diff:43: trailing whitespace.
++ 
+docs/playtests/2026-10-06-camera400-backdrop/native/generated-metadata/import.diff:55: trailing whitespace.
++ 
+docs/playtests/2026-10-06-camera400-backdrop/native/generated-metadata/import.diff:59: trailing whitespace.
++ 
+docs/playtests/2026-10-06-camera400-backdrop/native/generated-metadata/import.diff:61: trailing whitespace.
++ 
+docs/playtests/2026-10-06-camera400-backdrop/native/generated-metadata/import.diff:67: trailing whitespace.
++ 
+docs/playtests/2026-10-06-camera400-backdrop/native/generated-metadata/import.diff:79: trailing whitespace.
++ 
+docs/playtests/2026-10-06-camera400-backdrop/native/generated-metadata/import.diff:83: trailing whitespace.
++ 
+docs/playtests/2026-10-06-camera400-backdrop/native/generated-metadata/import.diff:85: trailing whitespace.
++ 
+docs/playtests/2026-10-06-camera400-backdrop/native/generated-metadata/import.diff:91: trailing whitespace.
++ 
+docs/playtests/2026-10-06-camera400-backdrop/native/generated-metadata/import.diff:103: trailing whitespace.
++ 
+docs/playtests/2026-10-06-camera400-backdrop/native/generated-metadata/import.diff:107: trailing whitespace.
++ 
+docs/playtests/2026-10-06-camera400-backdrop/native/generated-metadata/import.diff:109: trailing whitespace.
++ 
+docs/playtests/2026-10-06-camera400-backdrop/native/generated-metadata/import.diff:109: new blank line at EOF.
+docs/playtests/2026-10-06-camera400-backdrop/native/initial-production.diff:6: space before tab in indent.
++ 	return WORLD_SIZE
+docs/playtests/2026-10-06-camera400-backdrop/native/initial-production.diff:7: trailing whitespace.
++ 
+docs/playtests/2026-10-06-camera400-backdrop/native/initial-production.diff:8: trailing whitespace.
++ 
+docs/playtests/2026-10-06-camera400-backdrop/native/initial-production.diff:23: space before tab in indent.
++ 	return _day_elapsed / DAY_DURATION_SECONDS
+docs/playtests/2026-10-06-camera400-backdrop/native/initial-production.diff:38: space before tab in indent.
++ 			_portrait_camera_x = lerpf(_portrait_camera_x, target_x, 1.0 - exp(-delta * 5.0))
+docs/playtests/2026-10-06-camera400-backdrop/native/initial-production.diff:39: space before tab in indent.
++ 		home.x = _portrait_camera_x
+docs/playtests/2026-10-06-camera400-backdrop/native/initial-production.diff:40: space before tab in indent.
++ 		player_follow = Vector2.ZERO
+docs/playtests/2026-10-06-camera400-backdrop/native/initial-production.diff:50: space before tab in indent.
++ 	if _screen == "game":
+docs/playtests/2026-10-06-camera400-backdrop/native/initial-production.diff:51: space before tab in indent.
++ 		_refresh_hud()
+docs/playtests/2026-10-06-camera400-backdrop/native/initial-production.diff:52: space before tab in indent.
++ 		# 更新昼夜色调覆盖层与季节底色
+docs/playtests/2026-10-06-camera400-backdrop/native/initial-production.diff:54: space before tab in indent.
++ 	return holder
+docs/playtests/2026-10-06-camera400-backdrop/native/initial-production.diff:55: trailing whitespace.
++ 
+docs/playtests/2026-10-06-camera400-backdrop/native/initial-production.diff:56: trailing whitespace.
++ 
+docs/playtests/2026-10-06-camera400-backdrop/native/initial-production.diff:79: space before tab in indent.
++ 	_cam_target_zoom = zoom
+docs/playtests/2026-10-06-camera400-backdrop/native/initial-production.diff:80: space before tab in indent.
++ 	var home := YardWorld.WORLD_SIZE * 0.5
+docs/playtests/2026-10-06-camera400-backdrop/native/initial-production.diff:81: space before tab in indent.
++ 	var portrait := size.x < 700.0 and size.y > size.x
+docs/playtests/2026-10-06-camera400-backdrop/native/initial-production.diff:83: trailing whitespace.
++ 
+docs/playtests/2026-10-06-camera400-backdrop/native/initial-production.diff:84: trailing whitespace.
++ 
+docs/playtests/2026-10-06-camera400-backdrop/native/initial-production.diff:87: space before tab in indent.
++ 	_cam_target_zoom = 1.0
+docs/playtests/2026-10-06-camera400-backdrop/native/initial-production.diff:88: space before tab in indent.
++ 	_cam_target_offset = Vector2.ZERO
+docs/playtests/2026-10-06-camera400-backdrop/native/initial-production.diff:89: trailing whitespace.
++ 
+docs/playtests/2026-10-06-camera400-backdrop/native/short-v2/generated-import.diff:6: trailing whitespace.
++ 
+docs/playtests/2026-10-06-camera400-backdrop/native/short-v2/generated-import.diff:19: trailing whitespace.
++ 
+docs/playtests/2026-10-06-camera400-backdrop/native/short-v2/generated-import.diff:31: trailing whitespace.
++ 
+docs/playtests/2026-10-06-camera400-backdrop/native/short-v2/generated-import.diff:35: trailing whitespace.
++ 
+docs/playtests/2026-10-06-camera400-backdrop/native/short-v2/generated-import.diff:37: trailing whitespace.
++ 
+docs/playtests/2026-10-06-camera400-backdrop/native/short-v2/generated-import.diff:43: trailing whitespace.
++ 
+docs/playtests/2026-10-06-camera400-backdrop/native/short-v2/generated-import.diff:55: trailing whitespace.
++ 
+docs/playtests/2026-10-06-camera400-backdrop/native/short-v2/generated-import.diff:59: trailing whitespace.
++ 
+docs/playtests/2026-10-06-camera400-backdrop/native/short-v2/generated-import.diff:61: trailing whitespace.
++ 
+docs/playtests/2026-10-06-camera400-backdrop/native/short-v2/generated-import.diff:67: trailing whitespace.
++ 
+docs/playtests/2026-10-06-camera400-backdrop/native/short-v2/generated-import.diff:79: trailing whitespace.
++ 
+docs/playtests/2026-10-06-camera400-backdrop/native/short-v2/generated-import.diff:83: trailing whitespace.
++ 
+docs/playtests/2026-10-06-camera400-backdrop/native/short-v2/generated-import.diff:85: trailing whitespace.
++ 
+docs/playtests/2026-10-06-camera400-backdrop/native/short-v2/generated-import.diff:91: trailing whitespace.
++ 
+docs/playtests/2026-10-06-camera400-backdrop/native/short-v2/generated-import.diff:103: trailing whitespace.
++ 
+docs/playtests/2026-10-06-camera400-backdrop/native/short-v2/generated-import.diff:107: trailing whitespace.
++ 
+docs/playtests/2026-10-06-camera400-backdrop/native/short-v2/generated-import.diff:109: trailing whitespace.
++ 
+docs/playtests/2026-10-06-camera400-backdrop/native/short-v2/generated-import.diff:109: new blank line at EOF.

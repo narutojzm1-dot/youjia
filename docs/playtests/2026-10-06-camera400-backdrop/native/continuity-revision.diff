@@ -1,0 +1,117 @@
+diff --git a/scripts/main.gd b/scripts/main.gd
+index 57f88ca56..f33cd52f4 100644
+--- a/scripts/main.gd
++++ b/scripts/main.gd
+@@ -112,6 +112,7 @@ var _cam_offset := Vector2.ZERO
+ var _cam_target_offset := Vector2.ZERO
+ # Quiet framing owns this guard through its release tween, until another focus.
+ var _cam_quiet_bounds := false
++var _cam_effective_offset := Vector2.ZERO
+ var _latest_photo := ""
+ var _last_touch_ms := -1000
+ # 假期天数标签
+@@ -364,6 +365,7 @@ func _process(delta: float) -> void:
+ 	if _cam_quiet_bounds and _world != null:
+ 		camera_position = _bound_quiet_camera(camera_position, camera_home, _world.get_backdrop_bounds(), size, zoom, hud_space)
+ 	_camera.position = camera_position
++	_cam_effective_offset = camera_position - camera_home
+ 	if _screen == "game":
+ 		_refresh_hud()
+ 		# 更新昼夜色调覆盖层与季节底色
+@@ -1002,6 +1004,8 @@ func _start_holiday(save_progress: bool = true) -> void:
+ 	_cam_target_zoom = 1.0
+ 	_cam_offset = Vector2.ZERO
+ 	_cam_target_offset = Vector2.ZERO
++	_cam_quiet_bounds = false
++	_cam_effective_offset = Vector2.ZERO
+ 	_camera.make_current()
+ 	_screen = "game"
+ 	_title_screen.visible = false
+@@ -1608,6 +1612,10 @@ static func _bound_quiet_camera(requested: Vector2, baseline: Vector2, art: Rect
+ func _on_focus(world_point: Vector2, zoom: float) -> void:
+ 	# The world sets the encounter phase before emitting its focus, even when
+ 	# quiet's same-tick yield has not run yet. Never infer the source from zoom.
++	if _cam_quiet_bounds:
++		# The clipped intention was never visible. A new owner must interpolate
++		# from the last effective displacement, not reveal that latent offset.
++		_cam_offset = _cam_effective_offset
+ 	_cam_quiet_bounds = _world != null and _world.is_quiet_camera_focus()
+ 	_cam_target_zoom = zoom
+ 	var home := YardWorld.WORLD_SIZE * 0.5
+diff --git a/test/camera400_backdrop_suite.gd b/test/camera400_backdrop_suite.gd
+index 1fab75802..39fa2da58 100644
+--- a/test/camera400_backdrop_suite.gd
++++ b/test/camera400_backdrop_suite.gd
+@@ -214,29 +214,52 @@ func run() -> void:
+ 		check(not w._quiet_sky_active and main._cam_target_offset.is_zero_approx() and main._cam_offset.length() < 0.01, "natural hold and return finish before cooldown can restart quiet")
+ 		trace("natural_expiry")
+ 		accessor_and_projection_edges(w)
+-		case_name = "real_goose_takeover/reduced=%s" % reduced
+-		w = await fresh(Vector2i(390, 844), reduced)
+-		begin_quiet(w, 336)
+-		w._day_elapsed = 46.0 # Explicit eligibility fixture, not ordinary play.
+-		tick()
+-		for _i in 240:
+-			if w._goose_mount_wait + STEP >= 3.5 or w._goose_mount_phase >= 0:
+-				break
++		if main.get_property_list().any(func(property: Dictionary) -> bool: return property["name"] == "_cam_effective_offset"):
++			case_name = "new_holiday_resets_camera_source/reduced=%s" % reduced
++			w = await fresh(Vector2i(1280, 720), reduced)
++			begin_quiet(w)
++			check(main._cam_quiet_bounds and main._cam_effective_offset.length() > 1.0, "previous world actually has quiet ownership and visible displacement")
++			await main._start_holiday(false)
++			check(not main._cam_quiet_bounds and main._cam_effective_offset.is_zero_approx(), "new holiday synchronously clears both new camera fields")
++			check(main._cam_offset.is_zero_approx() and main._cam_target_offset.is_zero_approx(), "new holiday retains the original camera reset")
++			tick()
++			assert_frame_coverage()
++		for resize_at_takeover: bool in [false, true]:
++			case_name = "real_goose_takeover/reduced=%s/resize=%s" % [reduced, resize_at_takeover]
++			w = await fresh(Vector2i(390, 844), reduced)
++			begin_quiet(w, 336)
++			w._day_elapsed = 46.0 # Explicit eligibility fixture, not ordinary play.
+ 			tick()
+-		check(w._goose_mount_phase == -1 and w._quiet_sky_active and w._focus_seconds > 0.0, "quiet truly still owns the hold one tick before real takeover")
+-		tick()
+-		check(w._goose_mount_phase == 0 and not w._quiet_sky_active, "real World emits encounter focus before same-tick quiet yield")
+-		check(focus_events.back()["phase"] == 0 and focus_events.back()["quiet"], "source is distinguished during emission, before quiet flag clears")
+-		check(main._camera.position.is_equal_approx(baseline_position() + main._cam_offset), "new encounter focus immediately keeps its original unconstrained projection")
+-		for _i in 170:
++			for _i in 240:
++				if w._goose_mount_wait + STEP >= 3.5 or w._goose_mount_phase >= 0:
++					break
++				tick()
++			check(w._goose_mount_phase == -1 and w._quiet_sky_active and w._focus_seconds > 0.0, "quiet truly still owns the hold one tick before real takeover")
++			var effective_before: Vector2 = main._camera.position - baseline_position()
++			var camera_before: Vector2 = main._camera.position
++			var canvas_before: Transform2D = root.get_canvas_transform()
++			trace("last_quiet_frame")
++			if resize_at_takeover:
++				root.size = Vector2i(568, 320)
++				await settle_layout()
+ 			tick()
+-			check(main._camera.position.is_equal_approx(baseline_position() + main._cam_offset), "all encounter frames retain the previous projection")
+-		check(w._goose_mount_phase == 2, "real first-person then close focus reach phase two")
+-		tick(true)
+-		for _i in 240:
++			var follow_rate := 12.0 if reduced else 3.0
++			var expected_first: Vector2 = baseline_position() + effective_before.lerp(main._cam_target_offset, 1.0 - exp(-STEP * follow_rate))
++			check(main._camera.position.distance_to(expected_first) < EPS, "new focus starts from last visible displacement without revealing hidden quiet offset")
++			print("CAMERA400_TAKEOVER_CONTINUITY ", JSON.stringify({"case": case_name, "before_camera": str(camera_before), "before_canvas": str(canvas_before), "effective_before": str(effective_before), "after_camera": str(main._camera.position), "after_canvas": str(root.get_canvas_transform()), "expected_first": str(expected_first), "new_target": str(main._cam_target_offset)}))
++			trace("first_encounter_frame")
++			check(w._goose_mount_phase == 0 and not w._quiet_sky_active, "real World emits encounter focus before same-tick quiet yield")
++			check(focus_events.back()["phase"] == 0 and focus_events.back()["quiet"], "source is distinguished during emission, before quiet flag clears")
++			check(main._camera.position.is_equal_approx(baseline_position() + main._cam_offset), "new encounter focus immediately keeps its original unconstrained projection")
++			for _i in 170:
++				tick()
++				check(main._camera.position.is_equal_approx(baseline_position() + main._cam_offset), "all encounter frames retain the previous projection")
++			check(w._goose_mount_phase == 2, "real first-person then close focus reach phase two")
+ 			tick(true)
+-		check(main._cam_offset.length() < 0.01 and main._cam_target_offset.is_zero_approx(), "encounter cancellation still returns")
+-		trace("encounter_return")
++			for _i in 240:
++				tick(true)
++			check(main._cam_offset.length() < 0.01 and main._cam_target_offset.is_zero_approx(), "encounter cancellation still returns")
++			trace("encounter_return")
+ 	Input.action_release("move_right")
+ 	tuning.reset_defaults()
+ 	root.get_node("AudioDirector").release_streams()

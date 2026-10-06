@@ -1,0 +1,1203 @@
+{
+  "source": "58437ae8977f2f0ac1fd51dbdd61e2274ac12132",
+  "entry": "index",
+  "expected_pck_sha256": "3e571c5bd0cec3ec5404ce73e6a1157a79169134b229a2b0d219f4bf7ca75b02",
+  "expected_pck_bytes": 27091948,
+  "inputs": [
+    {
+      "command": {
+        "op": "new",
+        "name": "normal",
+        "width": 390,
+        "height": 844,
+        "motion": "no-preference"
+      },
+      "case": "",
+      "utc": "2026-10-06T01:05:19Z",
+      "monotonic": 380005.988282957
+    },
+    {
+      "case_open": "normal",
+      "width": 390,
+      "height": 844,
+      "motion": "no-preference",
+      "actual_dpr": 1,
+      "actual_reduce": false,
+      "utc": "2026-10-06T01:05:31Z",
+      "monotonic": 380017.627347281
+    },
+    {
+      "screenshot_request": "normal-title",
+      "case": "normal",
+      "utc": "2026-10-06T01:05:31Z",
+      "monotonic": 380017.628106984
+    },
+    {
+      "screenshot_complete": "normal-title",
+      "case": "normal",
+      "utc": "2026-10-06T01:05:32Z",
+      "monotonic": 380018.183883572
+    },
+    {
+      "command": {
+        "op": "click",
+        "x": 195,
+        "y": 430,
+        "anchor": "entered"
+      },
+      "case": "normal",
+      "utc": "2026-10-06T01:06:01Z",
+      "monotonic": 380047.741217155
+    },
+    {
+      "timing_anchor": "entered",
+      "case": "normal",
+      "cause": "actual mouse click returned",
+      "anchor_monotonic": 380051.449273005,
+      "utc": "2026-10-06T01:06:05Z",
+      "monotonic": 380051.449285989
+    },
+    {
+      "command": {
+        "op": "wait_anchor",
+        "anchor": "entered",
+        "elapsed_ms": 700
+      },
+      "case": "normal",
+      "utc": "2026-10-06T01:06:05Z",
+      "monotonic": 380051.449768322
+    },
+    {
+      "wait_anchor_complete": "entered",
+      "case": "normal",
+      "target_elapsed_ms": 700,
+      "elapsed_before_ms": 0.8083829889073968,
+      "requested_wait_ms": 699.1916170110926,
+      "actual_elapsed_ms": 713.0612600012682,
+      "utc": "2026-10-06T01:06:06Z",
+      "monotonic": 380052.162350876
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "portrait-01-entered"
+      },
+      "case": "normal",
+      "utc": "2026-10-06T01:06:06Z",
+      "monotonic": 380052.162886559
+    },
+    {
+      "screenshot_request": "portrait-01-entered",
+      "case": "normal",
+      "utc": "2026-10-06T01:06:06Z",
+      "monotonic": 380052.163229692
+    },
+    {
+      "screenshot_complete": "portrait-01-entered",
+      "case": "normal",
+      "utc": "2026-10-06T01:06:06Z",
+      "monotonic": 380052.504060625
+    },
+    {
+      "command": {
+        "op": "wait_anchor",
+        "anchor": "entered",
+        "elapsed_ms": 5500
+      },
+      "case": "normal",
+      "utc": "2026-10-06T01:06:06Z",
+      "monotonic": 380052.504600215
+    },
+    {
+      "wait_anchor_complete": "entered",
+      "case": "normal",
+      "target_elapsed_ms": 5500,
+      "elapsed_before_ms": 1055.7010300108232,
+      "requested_wait_ms": 4444.298969989177,
+      "actual_elapsed_ms": 5514.9937639944255,
+      "utc": "2026-10-06T01:06:10Z",
+      "monotonic": 380056.964281376
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "portrait-02-stillness-5500"
+      },
+      "case": "normal",
+      "utc": "2026-10-06T01:06:10Z",
+      "monotonic": 380056.964821478
+    },
+    {
+      "screenshot_request": "portrait-02-stillness-5500",
+      "case": "normal",
+      "utc": "2026-10-06T01:06:10Z",
+      "monotonic": 380056.965252525
+    },
+    {
+      "screenshot_complete": "portrait-02-stillness-5500",
+      "case": "normal",
+      "utc": "2026-10-06T01:06:11Z",
+      "monotonic": 380057.385573224
+    },
+    {
+      "command": {
+        "op": "wait_anchor",
+        "anchor": "entered",
+        "elapsed_ms": 6500
+      },
+      "case": "normal",
+      "utc": "2026-10-06T01:06:11Z",
+      "monotonic": 380057.386090663
+    },
+    {
+      "wait_anchor_complete": "entered",
+      "case": "normal",
+      "target_elapsed_ms": 6500,
+      "elapsed_before_ms": 5937.179917003959,
+      "requested_wait_ms": 562.8200829960406,
+      "actual_elapsed_ms": 6511.410342995077,
+      "utc": "2026-10-06T01:06:11Z",
+      "monotonic": 380057.960699689
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "portrait-03-stillness-6500"
+      },
+      "case": "normal",
+      "utc": "2026-10-06T01:06:11Z",
+      "monotonic": 380057.961273974
+    },
+    {
+      "screenshot_request": "portrait-03-stillness-6500",
+      "case": "normal",
+      "utc": "2026-10-06T01:06:11Z",
+      "monotonic": 380057.961684864
+    },
+    {
+      "screenshot_complete": "portrait-03-stillness-6500",
+      "case": "normal",
+      "utc": "2026-10-06T01:06:12Z",
+      "monotonic": 380058.328165399
+    },
+    {
+      "command": {
+        "op": "wait_anchor",
+        "anchor": "entered",
+        "elapsed_ms": 8000
+      },
+      "case": "normal",
+      "utc": "2026-10-06T01:06:12Z",
+      "monotonic": 380058.328778097
+    },
+    {
+      "wait_anchor_complete": "entered",
+      "case": "normal",
+      "target_elapsed_ms": 8000,
+      "elapsed_before_ms": 6879.920849984046,
+      "requested_wait_ms": 1120.079150015954,
+      "actual_elapsed_ms": 8002.400906989351,
+      "utc": "2026-10-06T01:06:13Z",
+      "monotonic": 380059.451689692
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "portrait-04-stillness-8000"
+      },
+      "case": "normal",
+      "utc": "2026-10-06T01:06:13Z",
+      "monotonic": 380059.452642887
+    },
+    {
+      "screenshot_request": "portrait-04-stillness-8000",
+      "case": "normal",
+      "utc": "2026-10-06T01:06:13Z",
+      "monotonic": 380059.453091617
+    },
+    {
+      "screenshot_complete": "portrait-04-stillness-8000",
+      "case": "normal",
+      "utc": "2026-10-06T01:06:13Z",
+      "monotonic": 380059.868572177
+    },
+    {
+      "command": {
+        "op": "hold",
+        "key": "ArrowRight",
+        "ms": 450,
+        "anchor": "first_cancel_release"
+      },
+      "case": "normal",
+      "utc": "2026-10-06T01:06:13Z",
+      "monotonic": 380059.869167632
+    },
+    {
+      "key_down": "ArrowRight",
+      "case": "normal",
+      "utc": "2026-10-06T01:06:13Z",
+      "monotonic": 380059.895351529
+    },
+    {
+      "key_up": "ArrowRight",
+      "case": "normal",
+      "release_monotonic": 380060.392640337,
+      "utc": "2026-10-06T01:06:14Z",
+      "monotonic": 380060.392654794
+    },
+    {
+      "timing_anchor": "first_cancel_release",
+      "case": "normal",
+      "cause": "actual key up returned",
+      "anchor_monotonic": 380060.392640337,
+      "utc": "2026-10-06T01:06:14Z",
+      "monotonic": 380060.393289372
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 300
+      },
+      "case": "normal",
+      "utc": "2026-10-06T01:06:14Z",
+      "monotonic": 380060.393757659
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "portrait-05-after-movement"
+      },
+      "case": "normal",
+      "utc": "2026-10-06T01:06:14Z",
+      "monotonic": 380060.695688682
+    },
+    {
+      "screenshot_request": "portrait-05-after-movement",
+      "case": "normal",
+      "utc": "2026-10-06T01:06:14Z",
+      "monotonic": 380060.697260777
+    },
+    {
+      "screenshot_complete": "portrait-05-after-movement",
+      "case": "normal",
+      "utc": "2026-10-06T01:06:15Z",
+      "monotonic": 380061.132790783
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 1500
+      },
+      "case": "normal",
+      "utc": "2026-10-06T01:06:15Z",
+      "monotonic": 380061.133473502
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "portrait-06-settled"
+      },
+      "case": "normal",
+      "utc": "2026-10-06T01:06:16Z",
+      "monotonic": 380062.640581146
+    },
+    {
+      "screenshot_request": "portrait-06-settled",
+      "case": "normal",
+      "utc": "2026-10-06T01:06:16Z",
+      "monotonic": 380062.64129301
+    },
+    {
+      "screenshot_complete": "portrait-06-settled",
+      "case": "normal",
+      "utc": "2026-10-06T01:06:17Z",
+      "monotonic": 380063.074085675
+    },
+    {
+      "command": {
+        "op": "resize",
+        "width": 568,
+        "height": 320
+      },
+      "case": "normal",
+      "utc": "2026-10-06T01:06:17Z",
+      "monotonic": 380063.074839236
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "landscape-01-reflow-baseline"
+      },
+      "case": "normal",
+      "utc": "2026-10-06T01:06:17Z",
+      "monotonic": 380063.517981774
+    },
+    {
+      "screenshot_request": "landscape-01-reflow-baseline",
+      "case": "normal",
+      "utc": "2026-10-06T01:06:17Z",
+      "monotonic": 380063.518733011
+    },
+    {
+      "screenshot_complete": "landscape-01-reflow-baseline",
+      "case": "normal",
+      "utc": "2026-10-06T01:06:17Z",
+      "monotonic": 380063.768801382
+    },
+    {
+      "command": {
+        "op": "wait_anchor",
+        "anchor": "first_cancel_release",
+        "elapsed_ms": 28000
+      },
+      "case": "normal",
+      "utc": "2026-10-06T01:06:17Z",
+      "monotonic": 380063.769617611
+    },
+    {
+      "wait_anchor_complete": "first_cancel_release",
+      "case": "normal",
+      "target_elapsed_ms": 28000,
+      "elapsed_before_ms": 3377.4907059851103,
+      "requested_wait_ms": 24622.50929401489,
+      "actual_elapsed_ms": 28004.662604012992,
+      "utc": "2026-10-06T01:06:42Z",
+      "monotonic": 380088.397319271
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "landscape-02-after-release-28000"
+      },
+      "case": "normal",
+      "utc": "2026-10-06T01:06:42Z",
+      "monotonic": 380088.398127996
+    },
+    {
+      "screenshot_request": "landscape-02-after-release-28000",
+      "case": "normal",
+      "utc": "2026-10-06T01:06:42Z",
+      "monotonic": 380088.398695169
+    },
+    {
+      "screenshot_complete": "landscape-02-after-release-28000",
+      "case": "normal",
+      "utc": "2026-10-06T01:06:42Z",
+      "monotonic": 380088.57786773
+    },
+    {
+      "command": {
+        "op": "wait_anchor",
+        "anchor": "first_cancel_release",
+        "elapsed_ms": 30000
+      },
+      "case": "normal",
+      "utc": "2026-10-06T01:06:42Z",
+      "monotonic": 380088.578668671
+    },
+    {
+      "wait_anchor_complete": "first_cancel_release",
+      "case": "normal",
+      "target_elapsed_ms": 30000,
+      "elapsed_before_ms": 28186.562874994706,
+      "requested_wait_ms": 1813.4371250052936,
+      "actual_elapsed_ms": 30003.212508978322,
+      "utc": "2026-10-06T01:06:44Z",
+      "monotonic": 380090.395868505
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "landscape-03-after-release-30000"
+      },
+      "case": "normal",
+      "utc": "2026-10-06T01:06:44Z",
+      "monotonic": 380090.39670892
+    },
+    {
+      "screenshot_request": "landscape-03-after-release-30000",
+      "case": "normal",
+      "utc": "2026-10-06T01:06:44Z",
+      "monotonic": 380090.397252818
+    },
+    {
+      "screenshot_complete": "landscape-03-after-release-30000",
+      "case": "normal",
+      "utc": "2026-10-06T01:06:44Z",
+      "monotonic": 380090.592057665
+    },
+    {
+      "command": {
+        "op": "wait_anchor",
+        "anchor": "first_cancel_release",
+        "elapsed_ms": 32000
+      },
+      "case": "normal",
+      "utc": "2026-10-06T01:06:44Z",
+      "monotonic": 380090.592838969
+    },
+    {
+      "wait_anchor_complete": "first_cancel_release",
+      "case": "normal",
+      "target_elapsed_ms": 32000,
+      "elapsed_before_ms": 30201.458833005745,
+      "requested_wait_ms": 1798.541166994255,
+      "actual_elapsed_ms": 32003.177108010277,
+      "utc": "2026-10-06T01:06:46Z",
+      "monotonic": 380092.395832543
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "landscape-04-after-release-32000"
+      },
+      "case": "normal",
+      "utc": "2026-10-06T01:06:46Z",
+      "monotonic": 380092.396739442
+    },
+    {
+      "screenshot_request": "landscape-04-after-release-32000",
+      "case": "normal",
+      "utc": "2026-10-06T01:06:46Z",
+      "monotonic": 380092.397315781
+    },
+    {
+      "screenshot_complete": "landscape-04-after-release-32000",
+      "case": "normal",
+      "utc": "2026-10-06T01:06:46Z",
+      "monotonic": 380092.593381919
+    },
+    {
+      "command": {
+        "op": "wait_anchor",
+        "anchor": "first_cancel_release",
+        "elapsed_ms": 34000
+      },
+      "case": "normal",
+      "utc": "2026-10-06T01:06:46Z",
+      "monotonic": 380092.594394576
+    },
+    {
+      "wait_anchor_complete": "first_cancel_release",
+      "case": "normal",
+      "target_elapsed_ms": 34000,
+      "elapsed_before_ms": 32202.38694397267,
+      "requested_wait_ms": 1797.6130560273305,
+      "actual_elapsed_ms": 34002.57635302842,
+      "utc": "2026-10-06T01:06:48Z",
+      "monotonic": 380094.395234033
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "landscape-05-after-release-34000"
+      },
+      "case": "normal",
+      "utc": "2026-10-06T01:06:48Z",
+      "monotonic": 380094.396147273
+    },
+    {
+      "screenshot_request": "landscape-05-after-release-34000",
+      "case": "normal",
+      "utc": "2026-10-06T01:06:48Z",
+      "monotonic": 380094.396787682
+    },
+    {
+      "screenshot_complete": "landscape-05-after-release-34000",
+      "case": "normal",
+      "utc": "2026-10-06T01:06:48Z",
+      "monotonic": 380094.573912619
+    },
+    {
+      "command": {
+        "op": "hold",
+        "key": "ArrowLeft",
+        "ms": 450
+      },
+      "case": "normal",
+      "utc": "2026-10-06T01:06:48Z",
+      "monotonic": 380094.574800902
+    },
+    {
+      "key_down": "ArrowLeft",
+      "case": "normal",
+      "utc": "2026-10-06T01:06:48Z",
+      "monotonic": 380094.579127957
+    },
+    {
+      "key_up": "ArrowLeft",
+      "case": "normal",
+      "release_monotonic": 380095.035950501,
+      "utc": "2026-10-06T01:06:49Z",
+      "monotonic": 380095.035964718
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 300
+      },
+      "case": "normal",
+      "utc": "2026-10-06T01:06:49Z",
+      "monotonic": 380095.036856718
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "landscape-06-after-movement"
+      },
+      "case": "normal",
+      "utc": "2026-10-06T01:06:49Z",
+      "monotonic": 380095.340491445
+    },
+    {
+      "screenshot_request": "landscape-06-after-movement",
+      "case": "normal",
+      "utc": "2026-10-06T01:06:49Z",
+      "monotonic": 380095.341430134
+    },
+    {
+      "screenshot_complete": "landscape-06-after-movement",
+      "case": "normal",
+      "utc": "2026-10-06T01:06:49Z",
+      "monotonic": 380095.511985709
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 1500
+      },
+      "case": "normal",
+      "utc": "2026-10-06T01:06:49Z",
+      "monotonic": 380095.512886636
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "landscape-07-settled"
+      },
+      "case": "normal",
+      "utc": "2026-10-06T01:06:51Z",
+      "monotonic": 380097.014977028
+    },
+    {
+      "screenshot_request": "landscape-07-settled",
+      "case": "normal",
+      "utc": "2026-10-06T01:06:51Z",
+      "monotonic": 380097.016088721
+    },
+    {
+      "screenshot_complete": "landscape-07-settled",
+      "case": "normal",
+      "utc": "2026-10-06T01:06:51Z",
+      "monotonic": 380097.200219853
+    },
+    {
+      "command": {
+        "op": "resize",
+        "width": 390,
+        "height": 844
+      },
+      "case": "normal",
+      "utc": "2026-10-06T01:06:51Z",
+      "monotonic": 380097.201111072
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 300
+      },
+      "case": "normal",
+      "utc": "2026-10-06T01:06:51Z",
+      "monotonic": 380097.62939069
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "portrait-07-reflow-back"
+      },
+      "case": "normal",
+      "utc": "2026-10-06T01:06:51Z",
+      "monotonic": 380097.932674087
+    },
+    {
+      "screenshot_request": "portrait-07-reflow-back",
+      "case": "normal",
+      "utc": "2026-10-06T01:06:51Z",
+      "monotonic": 380097.933645697
+    },
+    {
+      "screenshot_complete": "portrait-07-reflow-back",
+      "case": "normal",
+      "utc": "2026-10-06T01:06:52Z",
+      "monotonic": 380098.26919564
+    },
+    {
+      "command": {
+        "op": "click",
+        "x": 195,
+        "y": 800
+      },
+      "case": "normal",
+      "utc": "2026-10-06T01:07:25Z",
+      "monotonic": 380131.729197238
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 150
+      },
+      "case": "normal",
+      "utc": "2026-10-06T01:07:25Z",
+      "monotonic": 380131.778022526
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "portrait-08-target-feedback"
+      },
+      "case": "normal",
+      "utc": "2026-10-06T01:07:25Z",
+      "monotonic": 380131.930121854
+    },
+    {
+      "screenshot_request": "portrait-08-target-feedback",
+      "case": "normal",
+      "utc": "2026-10-06T01:07:25Z",
+      "monotonic": 380131.931093624
+    },
+    {
+      "screenshot_complete": "portrait-08-target-feedback",
+      "case": "normal",
+      "utc": "2026-10-06T01:07:26Z",
+      "monotonic": 380132.296938307
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 1200
+      },
+      "case": "normal",
+      "utc": "2026-10-06T01:07:26Z",
+      "monotonic": 380132.297904657
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "portrait-09-target-settled"
+      },
+      "case": "normal",
+      "utc": "2026-10-06T01:07:27Z",
+      "monotonic": 380133.500628193
+    },
+    {
+      "screenshot_request": "portrait-09-target-settled",
+      "case": "normal",
+      "utc": "2026-10-06T01:07:27Z",
+      "monotonic": 380133.5016891
+    },
+    {
+      "screenshot_complete": "portrait-09-target-settled",
+      "case": "normal",
+      "utc": "2026-10-06T01:07:27Z",
+      "monotonic": 380133.903480242
+    },
+    {
+      "command": {
+        "op": "end"
+      },
+      "case": "normal",
+      "utc": "2026-10-06T01:07:27Z",
+      "monotonic": 380133.904543784
+    },
+    {
+      "case_closed": "normal",
+      "utc": "2026-10-06T01:07:32Z",
+      "monotonic": 380138.895113369
+    }
+  ],
+  "bindings": [
+    {
+      "case": "normal",
+      "stage": "before",
+      "manifest": {
+        "schema": "youjia.candidate/v1",
+        "sourceCommit": "58437ae8977f2f0ac1fd51dbdd61e2274ac12132",
+        "source": "58437ae8977f2f0ac1fd51dbdd61e2274ac12132",
+        "sourceTree": "35ce69244b51a4d4c382ccde3517a429d55b0460",
+        "base": "b9f68c3c5c4e70e16cefde9b4400bb1d553ff915",
+        "engine": "4.7.2.stable.official.ed1daf0bf",
+        "entry": "index",
+        "candidateOnly": true,
+        "createdAt": "2026-10-06T01:02:14.765445+00:00",
+        "files": {
+          "index.apple-touch-icon.png": {
+            "bytes": 59343,
+            "sha256": "80d91adb306354c6e4d1af546d062e1e9236699ad0fd53153ab3d2fc34cd11d4"
+          },
+          "index.audio.position.worklet.js": {
+            "bytes": 2973,
+            "sha256": "be33985bc7160d6bf9646f259cd86b259cd67b02ccb297ee5c44f8ac84327bc8"
+          },
+          "index.audio.worklet.js": {
+            "bytes": 7298,
+            "sha256": "5b476a9c9ce642c0ee4256436d1bc31d9c38f868aca0f9a8e2a57c18d2dec2a3"
+          },
+          "index.html": {
+            "bytes": 357722,
+            "sha256": "ad76cf6e8ea5fc4d7d0345851333313b33d68c53ed93df76dac0c127508689fc"
+          },
+          "index.icon.png": {
+            "bytes": 389674,
+            "sha256": "1c591b9eb1b7af2a840a59a9feb637a0a7aeba2b0abde28042abf44f77d0acb3"
+          },
+          "index.js": {
+            "bytes": 279815,
+            "sha256": "33c94cb3175f3333b82e2a3be5e8e86f77986f0aa2042b1631f6367a4e5bb6ba"
+          },
+          "index.pck": {
+            "bytes": 27091948,
+            "sha256": "3e571c5bd0cec3ec5404ce73e6a1157a79169134b229a2b0d219f4bf7ca75b02"
+          },
+          "index.png": {
+            "bytes": 1010767,
+            "sha256": "5743a648b82437e0e60db5e4aa08103cea96b01e110961082223c0e7fa819ebf"
+          },
+          "index.wasm": {
+            "bytes": 39514754,
+            "sha256": "fc74679e3b97f76878947fcd4fbe1268cbfa6188182a2e33bbc3f5dc9bfa57d0"
+          },
+          "open-source-licenses.html": {
+            "bytes": 147966,
+            "sha256": "9215f5fdd50039a9b6f3d8f0271cbc21bbdf64b917fb118dd29c8a16b9974e00"
+          },
+          "web/save/bridge.mjs": {
+            "bytes": 1856,
+            "sha256": "ef18687554fdc0d745c1d18d4d091e959cc78559da0d61d6a093e562ff9bbc91"
+          },
+          "web/save/budgets.mjs": {
+            "bytes": 340,
+            "sha256": "52984153977dcafd1d2682e848f1999f091d0966e17d46e902de76f5735a7018"
+          },
+          "web/save/host.mjs": {
+            "bytes": 7730,
+            "sha256": "9de8dc0ef4bfc037a8ad0bff575d40c3dd4341bcc723351a412b2061bb661904"
+          },
+          "web/save/idbfs_source.mjs": {
+            "bytes": 5550,
+            "sha256": "16eb57d471537f13d3e50018b56c2d416d2847f0d0249ba44433dd9ebb65f4d8"
+          },
+          "web/save/legacy_inspection.mjs": {
+            "bytes": 2886,
+            "sha256": "db3a23a0221aa5d34a58a6a49aeeff930295ffe20bfcf73a7c11f0d49cffd671"
+          },
+          "web/save/legacy_seal.mjs": {
+            "bytes": 2510,
+            "sha256": "9642132f5d4e7523e5966e802069af7f4bae803fae8e2e7c28ae55ee97d85610"
+          },
+          "web/save/legacy_v5.mjs": {
+            "bytes": 2245,
+            "sha256": "8e7f4ad2d87aab77ac05361e4f46060476e933aa079ae94301998d08d4599621"
+          },
+          "web/save/lifecycle.mjs": {
+            "bytes": 1878,
+            "sha256": "1cfaebb9a8745e2dc3e4f694ef475f250640870938f04160be1a5c9acd62935d"
+          },
+          "web/save/source_decode.mjs": {
+            "bytes": 1542,
+            "sha256": "411f3bc784cb32a07f32eed5fc7d88f71b59a667cc0d68a50fe13c55bfdba18a"
+          },
+          "web/save/store.mjs": {
+            "bytes": 13890,
+            "sha256": "2193b4397b8662a8ebc754dc4468e4d62964d209b4e1d0f0924a2ec81b409cbe"
+          }
+        },
+        "storageModules": {
+          "entry": "web/save",
+          "sha256": {
+            "bridge.mjs": "ef18687554fdc0d745c1d18d4d091e959cc78559da0d61d6a093e562ff9bbc91",
+            "budgets.mjs": "52984153977dcafd1d2682e848f1999f091d0966e17d46e902de76f5735a7018",
+            "host.mjs": "9de8dc0ef4bfc037a8ad0bff575d40c3dd4341bcc723351a412b2061bb661904",
+            "idbfs_source.mjs": "16eb57d471537f13d3e50018b56c2d416d2847f0d0249ba44433dd9ebb65f4d8",
+            "legacy_inspection.mjs": "db3a23a0221aa5d34a58a6a49aeeff930295ffe20bfcf73a7c11f0d49cffd671",
+            "legacy_seal.mjs": "9642132f5d4e7523e5966e802069af7f4bae803fae8e2e7c28ae55ee97d85610",
+            "legacy_v5.mjs": "8e7f4ad2d87aab77ac05361e4f46060476e933aa079ae94301998d08d4599621",
+            "lifecycle.mjs": "1cfaebb9a8745e2dc3e4f694ef475f250640870938f04160be1a5c9acd62935d",
+            "source_decode.mjs": "411f3bc784cb32a07f32eed5fc7d88f71b59a667cc0d68a50fe13c55bfdba18a",
+            "store.mjs": "2193b4397b8662a8ebc754dc4468e4d62964d209b4e1d0f0924a2ec81b409cbe"
+          }
+        }
+      },
+      "html_status": 200,
+      "html_sha256": "ad76cf6e8ea5fc4d7d0345851333313b33d68c53ed93df76dac0c127508689fc",
+      "pck": {
+        "status": 200,
+        "bytes": 27091948,
+        "sha256": "3e571c5bd0cec3ec5404ce73e6a1157a79169134b229a2b0d219f4bf7ca75b02"
+      },
+      "utc": "2026-10-06T01:05:27Z",
+      "dependency_checks": [
+        {
+          "path": "open-source-licenses.html",
+          "status": 200,
+          "bytes": 147966,
+          "sha256": "9215f5fdd50039a9b6f3d8f0271cbc21bbdf64b917fb118dd29c8a16b9974e00"
+        },
+        {
+          "path": "web/save/bridge.mjs",
+          "status": 200,
+          "bytes": 1856,
+          "sha256": "ef18687554fdc0d745c1d18d4d091e959cc78559da0d61d6a093e562ff9bbc91"
+        },
+        {
+          "path": "web/save/budgets.mjs",
+          "status": 200,
+          "bytes": 340,
+          "sha256": "52984153977dcafd1d2682e848f1999f091d0966e17d46e902de76f5735a7018"
+        },
+        {
+          "path": "web/save/host.mjs",
+          "status": 200,
+          "bytes": 7730,
+          "sha256": "9de8dc0ef4bfc037a8ad0bff575d40c3dd4341bcc723351a412b2061bb661904"
+        },
+        {
+          "path": "web/save/idbfs_source.mjs",
+          "status": 200,
+          "bytes": 5550,
+          "sha256": "16eb57d471537f13d3e50018b56c2d416d2847f0d0249ba44433dd9ebb65f4d8"
+        },
+        {
+          "path": "web/save/legacy_inspection.mjs",
+          "status": 200,
+          "bytes": 2886,
+          "sha256": "db3a23a0221aa5d34a58a6a49aeeff930295ffe20bfcf73a7c11f0d49cffd671"
+        },
+        {
+          "path": "web/save/legacy_seal.mjs",
+          "status": 200,
+          "bytes": 2510,
+          "sha256": "9642132f5d4e7523e5966e802069af7f4bae803fae8e2e7c28ae55ee97d85610"
+        },
+        {
+          "path": "web/save/legacy_v5.mjs",
+          "status": 200,
+          "bytes": 2245,
+          "sha256": "8e7f4ad2d87aab77ac05361e4f46060476e933aa079ae94301998d08d4599621"
+        },
+        {
+          "path": "web/save/lifecycle.mjs",
+          "status": 200,
+          "bytes": 1878,
+          "sha256": "1cfaebb9a8745e2dc3e4f694ef475f250640870938f04160be1a5c9acd62935d"
+        },
+        {
+          "path": "web/save/source_decode.mjs",
+          "status": 200,
+          "bytes": 1542,
+          "sha256": "411f3bc784cb32a07f32eed5fc7d88f71b59a667cc0d68a50fe13c55bfdba18a"
+        },
+        {
+          "path": "web/save/store.mjs",
+          "status": 200,
+          "bytes": 13890,
+          "sha256": "2193b4397b8662a8ebc754dc4468e4d62964d209b4e1d0f0924a2ec81b409cbe"
+        }
+      ],
+      "loaded_html_sha256": "ad76cf6e8ea5fc4d7d0345851333313b33d68c53ed93df76dac0c127508689fc"
+    },
+    {
+      "case": "normal",
+      "stage": "after",
+      "manifest": {
+        "schema": "youjia.candidate/v1",
+        "sourceCommit": "58437ae8977f2f0ac1fd51dbdd61e2274ac12132",
+        "source": "58437ae8977f2f0ac1fd51dbdd61e2274ac12132",
+        "sourceTree": "35ce69244b51a4d4c382ccde3517a429d55b0460",
+        "base": "b9f68c3c5c4e70e16cefde9b4400bb1d553ff915",
+        "engine": "4.7.2.stable.official.ed1daf0bf",
+        "entry": "index",
+        "candidateOnly": true,
+        "createdAt": "2026-10-06T01:02:14.765445+00:00",
+        "files": {
+          "index.apple-touch-icon.png": {
+            "bytes": 59343,
+            "sha256": "80d91adb306354c6e4d1af546d062e1e9236699ad0fd53153ab3d2fc34cd11d4"
+          },
+          "index.audio.position.worklet.js": {
+            "bytes": 2973,
+            "sha256": "be33985bc7160d6bf9646f259cd86b259cd67b02ccb297ee5c44f8ac84327bc8"
+          },
+          "index.audio.worklet.js": {
+            "bytes": 7298,
+            "sha256": "5b476a9c9ce642c0ee4256436d1bc31d9c38f868aca0f9a8e2a57c18d2dec2a3"
+          },
+          "index.html": {
+            "bytes": 357722,
+            "sha256": "ad76cf6e8ea5fc4d7d0345851333313b33d68c53ed93df76dac0c127508689fc"
+          },
+          "index.icon.png": {
+            "bytes": 389674,
+            "sha256": "1c591b9eb1b7af2a840a59a9feb637a0a7aeba2b0abde28042abf44f77d0acb3"
+          },
+          "index.js": {
+            "bytes": 279815,
+            "sha256": "33c94cb3175f3333b82e2a3be5e8e86f77986f0aa2042b1631f6367a4e5bb6ba"
+          },
+          "index.pck": {
+            "bytes": 27091948,
+            "sha256": "3e571c5bd0cec3ec5404ce73e6a1157a79169134b229a2b0d219f4bf7ca75b02"
+          },
+          "index.png": {
+            "bytes": 1010767,
+            "sha256": "5743a648b82437e0e60db5e4aa08103cea96b01e110961082223c0e7fa819ebf"
+          },
+          "index.wasm": {
+            "bytes": 39514754,
+            "sha256": "fc74679e3b97f76878947fcd4fbe1268cbfa6188182a2e33bbc3f5dc9bfa57d0"
+          },
+          "open-source-licenses.html": {
+            "bytes": 147966,
+            "sha256": "9215f5fdd50039a9b6f3d8f0271cbc21bbdf64b917fb118dd29c8a16b9974e00"
+          },
+          "web/save/bridge.mjs": {
+            "bytes": 1856,
+            "sha256": "ef18687554fdc0d745c1d18d4d091e959cc78559da0d61d6a093e562ff9bbc91"
+          },
+          "web/save/budgets.mjs": {
+            "bytes": 340,
+            "sha256": "52984153977dcafd1d2682e848f1999f091d0966e17d46e902de76f5735a7018"
+          },
+          "web/save/host.mjs": {
+            "bytes": 7730,
+            "sha256": "9de8dc0ef4bfc037a8ad0bff575d40c3dd4341bcc723351a412b2061bb661904"
+          },
+          "web/save/idbfs_source.mjs": {
+            "bytes": 5550,
+            "sha256": "16eb57d471537f13d3e50018b56c2d416d2847f0d0249ba44433dd9ebb65f4d8"
+          },
+          "web/save/legacy_inspection.mjs": {
+            "bytes": 2886,
+            "sha256": "db3a23a0221aa5d34a58a6a49aeeff930295ffe20bfcf73a7c11f0d49cffd671"
+          },
+          "web/save/legacy_seal.mjs": {
+            "bytes": 2510,
+            "sha256": "9642132f5d4e7523e5966e802069af7f4bae803fae8e2e7c28ae55ee97d85610"
+          },
+          "web/save/legacy_v5.mjs": {
+            "bytes": 2245,
+            "sha256": "8e7f4ad2d87aab77ac05361e4f46060476e933aa079ae94301998d08d4599621"
+          },
+          "web/save/lifecycle.mjs": {
+            "bytes": 1878,
+            "sha256": "1cfaebb9a8745e2dc3e4f694ef475f250640870938f04160be1a5c9acd62935d"
+          },
+          "web/save/source_decode.mjs": {
+            "bytes": 1542,
+            "sha256": "411f3bc784cb32a07f32eed5fc7d88f71b59a667cc0d68a50fe13c55bfdba18a"
+          },
+          "web/save/store.mjs": {
+            "bytes": 13890,
+            "sha256": "2193b4397b8662a8ebc754dc4468e4d62964d209b4e1d0f0924a2ec81b409cbe"
+          }
+        },
+        "storageModules": {
+          "entry": "web/save",
+          "sha256": {
+            "bridge.mjs": "ef18687554fdc0d745c1d18d4d091e959cc78559da0d61d6a093e562ff9bbc91",
+            "budgets.mjs": "52984153977dcafd1d2682e848f1999f091d0966e17d46e902de76f5735a7018",
+            "host.mjs": "9de8dc0ef4bfc037a8ad0bff575d40c3dd4341bcc723351a412b2061bb661904",
+            "idbfs_source.mjs": "16eb57d471537f13d3e50018b56c2d416d2847f0d0249ba44433dd9ebb65f4d8",
+            "legacy_inspection.mjs": "db3a23a0221aa5d34a58a6a49aeeff930295ffe20bfcf73a7c11f0d49cffd671",
+            "legacy_seal.mjs": "9642132f5d4e7523e5966e802069af7f4bae803fae8e2e7c28ae55ee97d85610",
+            "legacy_v5.mjs": "8e7f4ad2d87aab77ac05361e4f46060476e933aa079ae94301998d08d4599621",
+            "lifecycle.mjs": "1cfaebb9a8745e2dc3e4f694ef475f250640870938f04160be1a5c9acd62935d",
+            "source_decode.mjs": "411f3bc784cb32a07f32eed5fc7d88f71b59a667cc0d68a50fe13c55bfdba18a",
+            "store.mjs": "2193b4397b8662a8ebc754dc4468e4d62964d209b4e1d0f0924a2ec81b409cbe"
+          }
+        }
+      },
+      "html_status": 200,
+      "html_sha256": "ad76cf6e8ea5fc4d7d0345851333313b33d68c53ed93df76dac0c127508689fc",
+      "pck": {
+        "status": 200,
+        "bytes": 27091948,
+        "sha256": "3e571c5bd0cec3ec5404ce73e6a1157a79169134b229a2b0d219f4bf7ca75b02"
+      },
+      "utc": "2026-10-06T01:07:32Z",
+      "dependency_checks": [
+        {
+          "path": "open-source-licenses.html",
+          "status": 200,
+          "bytes": 147966,
+          "sha256": "9215f5fdd50039a9b6f3d8f0271cbc21bbdf64b917fb118dd29c8a16b9974e00"
+        },
+        {
+          "path": "web/save/bridge.mjs",
+          "status": 200,
+          "bytes": 1856,
+          "sha256": "ef18687554fdc0d745c1d18d4d091e959cc78559da0d61d6a093e562ff9bbc91"
+        },
+        {
+          "path": "web/save/budgets.mjs",
+          "status": 200,
+          "bytes": 340,
+          "sha256": "52984153977dcafd1d2682e848f1999f091d0966e17d46e902de76f5735a7018"
+        },
+        {
+          "path": "web/save/host.mjs",
+          "status": 200,
+          "bytes": 7730,
+          "sha256": "9de8dc0ef4bfc037a8ad0bff575d40c3dd4341bcc723351a412b2061bb661904"
+        },
+        {
+          "path": "web/save/idbfs_source.mjs",
+          "status": 200,
+          "bytes": 5550,
+          "sha256": "16eb57d471537f13d3e50018b56c2d416d2847f0d0249ba44433dd9ebb65f4d8"
+        },
+        {
+          "path": "web/save/legacy_inspection.mjs",
+          "status": 200,
+          "bytes": 2886,
+          "sha256": "db3a23a0221aa5d34a58a6a49aeeff930295ffe20bfcf73a7c11f0d49cffd671"
+        },
+        {
+          "path": "web/save/legacy_seal.mjs",
+          "status": 200,
+          "bytes": 2510,
+          "sha256": "9642132f5d4e7523e5966e802069af7f4bae803fae8e2e7c28ae55ee97d85610"
+        },
+        {
+          "path": "web/save/legacy_v5.mjs",
+          "status": 200,
+          "bytes": 2245,
+          "sha256": "8e7f4ad2d87aab77ac05361e4f46060476e933aa079ae94301998d08d4599621"
+        },
+        {
+          "path": "web/save/lifecycle.mjs",
+          "status": 200,
+          "bytes": 1878,
+          "sha256": "1cfaebb9a8745e2dc3e4f694ef475f250640870938f04160be1a5c9acd62935d"
+        },
+        {
+          "path": "web/save/source_decode.mjs",
+          "status": 200,
+          "bytes": 1542,
+          "sha256": "411f3bc784cb32a07f32eed5fc7d88f71b59a667cc0d68a50fe13c55bfdba18a"
+        },
+        {
+          "path": "web/save/store.mjs",
+          "status": 200,
+          "bytes": 13890,
+          "sha256": "2193b4397b8662a8ebc754dc4468e4d62964d209b4e1d0f0924a2ec81b409cbe"
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "console": [
+    {
+      "case": "normal",
+      "type": "log",
+      "text": "Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org"
+    },
+    {
+      "case": "normal",
+      "type": "log",
+      "text": "OpenGL API OpenGL ES 3.0 (WebGL 2.0 (OpenGL ES 3.0 Chromium)) - Compatibility - Using Device: WebKit - WebKit WebGL"
+    },
+    {
+      "case": "normal",
+      "type": "log",
+      "text": "Build configuration: Emscripten 4.0.20, single-threaded, no GDExtension support."
+    },
+    {
+      "case": "normal",
+      "type": "info",
+      "text": "[game-loading] timings_ms {\"engineScriptReady\":32,\"downloadComplete\":639,\"engineReady\":2961,\"firstFrame\":3435}"
+    }
+  ],
+  "asset_responses": [
+    {
+      "case": "normal",
+      "url": "http://127.0.0.1:8480/web/save/bridge.mjs",
+      "status": 200
+    },
+    {
+      "case": "normal",
+      "url": "http://127.0.0.1:8480/index.js",
+      "status": 200
+    },
+    {
+      "case": "normal",
+      "url": "http://127.0.0.1:8480/web/save/host.mjs",
+      "status": 200
+    },
+    {
+      "case": "normal",
+      "url": "http://127.0.0.1:8480/web/save/store.mjs",
+      "status": 200
+    },
+    {
+      "case": "normal",
+      "url": "http://127.0.0.1:8480/web/save/lifecycle.mjs",
+      "status": 200
+    },
+    {
+      "case": "normal",
+      "url": "http://127.0.0.1:8480/web/save/budgets.mjs",
+      "status": 200
+    },
+    {
+      "case": "normal",
+      "url": "http://127.0.0.1:8480/web/save/legacy_inspection.mjs",
+      "status": 200
+    },
+    {
+      "case": "normal",
+      "url": "http://127.0.0.1:8480/web/save/legacy_v5.mjs",
+      "status": 200
+    },
+    {
+      "case": "normal",
+      "url": "http://127.0.0.1:8480/web/save/source_decode.mjs",
+      "status": 200
+    },
+    {
+      "case": "normal",
+      "url": "http://127.0.0.1:8480/web/save/legacy_seal.mjs",
+      "status": 200
+    },
+    {
+      "case": "normal",
+      "url": "http://127.0.0.1:8480/web/save/idbfs_source.mjs",
+      "status": 200
+    },
+    {
+      "case": "normal",
+      "url": "http://127.0.0.1:8480/index.wasm",
+      "status": 200
+    },
+    {
+      "case": "normal",
+      "url": "http://127.0.0.1:8480/index.pck",
+      "status": 200
+    }
+  ],
+  "browser_args": [
+    "--no-sandbox",
+    "--use-gl=angle",
+    "--use-angle=swiftshader",
+    "--enable-webgl",
+    "--enable-unsafe-swiftshader",
+    "--renderer-process-limit=1"
+  ],
+  "started_utc": "2026-10-06T01:05:13Z",
+  "limits": [
+    "ordinary mouse/keyboard only; no save/game state/seed/time setters",
+    "browser media emulation at context creation, not physical device/OS setting",
+    "ordinary baseline/stillness/movement/resize only; absence of movement does not assert quiet not triggered; controlled goose handoff not ordinaryE2E",
+    "no hearing or complete storage acceptance"
+  ],
+  "closed_utc": "2026-10-06T01:07:33Z"
+}
