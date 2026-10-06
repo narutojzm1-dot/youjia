@@ -1,6 +1,7 @@
 extends Node
 ## Bind the imported UI composites (Latin body face + Noto Sans SC) at runtime, after the editor's first import pass.
 const GameFonts = preload("res://scripts/manus/game_fonts.gd")
+const PaperTooltipStyle = preload("res://scripts/ui/paper_tooltip_style.gd")
 var _regular: Font
 var _theme: Theme
 
@@ -8,6 +9,8 @@ func _enter_tree() -> void:
 	_regular = load("res://assets/template/fonts/ui_regular.tres") as Font
 	assert(_regular != null, "Bundled UI font failed to import")
 	_theme = GameFonts.create_theme(_regular, load("res://assets/template/fonts/ui_medium.tres") as Font, load("res://assets/template/fonts/ui_bold.tres") as Font)
+	# REQ-20261006-041: warm paper mouse tooltips instead of the default black box.
+	PaperTooltipStyle.apply(_theme)
 	get_tree().node_added.connect(_bind_node)
 	_bind_tree(get_tree().root)
 
