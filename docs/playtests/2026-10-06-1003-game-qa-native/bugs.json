@@ -1,0 +1,112 @@
+{
+  "updatedAt": "2026-10-06T01:56:23.196163+00:00",
+  "issues": [
+    {
+      "id": "QA-EXP-20261003-001",
+      "type": "已观察体验问题",
+      "severity": "P2",
+      "title": "晴阴院子构图不连续",
+      "detail": "房屋、池塘、远山及围栏位置与透视显著变化，像切换地点；既有策划已记录同构图改进方向。",
+      "lastCheckedBuild": "game-b9f68c3",
+      "status": "B晴/阴房屋池塘构图仍不连续；C未等待天气切换，不能转记C复现",
+      "reproductionRate": "1组同构建晴/阴场景对照，非连续天气录制",
+      "reproduction": "同B补测前晴天场景与24-b-return阴天场景对照；房屋和池塘透视不同",
+      "aliases": [
+        "EXP-001"
+      ],
+      "trackingLinks": [
+        "https://github.com/narutojzm1-dot/youjia/issues/51",
+        "https://github.com/narutojzm1-dot/youjia/issues/168"
+      ],
+      "expected": "同一院子的房屋、池塘、围栏与远山构图保持连续",
+      "actual": "房屋透视、池塘及远山布局显著切换",
+      "thisRound": "B补测前晴天、回院为阴天；相同构建两帧构图不同，未捕获连续天气过渡视频"
+    },
+    {
+      "id": "QA-EXP-20261003-002",
+      "type": "待复核",
+      "severity": "P2",
+      "title": "既有相册题词与入镜主体不对应",
+      "detail": "第1页写绵羊愿意靠近我了，截图未见绵羊，画面为马、羊驼和鸭子；首次生成版本不明。",
+      "lastCheckedBuild": "game-49596fa / game-b9f68c3",
+      "status": "旧第1页题词/主体仍不对应；新照片未生成，不否定新图修复",
+      "reproduction": "打开既有手账第1页，绵羊题词与马/羊驼画面不对应",
+      "reproductionRate": "旧图各构建1/1读取；新图未覆盖",
+      "aliases": [
+        "EXP-002"
+      ],
+      "trackingLinks": [
+        "https://github.com/narutojzm1-dot/youjia/issues/40"
+      ],
+      "expected": "绵羊题词对应绵羊入镜",
+      "actual": "旧第1页绵羊题词与马/羊驼画面继续存在；真实轻抚反馈不等于产生新照片"
+    },
+    {
+      "id": "QA-EXP-20261003-003",
+      "type": "已观察体验问题",
+      "severity": "P2",
+      "title": "新版加载封面使用科幻迷宫图",
+      "detail": "game-922be64 冷加载展示机器人/科幻迷宫，与水彩小院体验不一致。",
+      "lastCheckedBuild": "game-bc8a048",
+      "status": "本轮实际加载壳为水彩院子，未见科幻迷宫；53秒0MiB停滞可重试恢复，网络归因未明",
+      "reproduction": "本轮新标签打开公开地址，观察真实加载壳01/02；此步骤验证修复，不重造历史BUG",
+      "reproductionRate": "本轮旧科幻图0/1",
+      "trackingIssue": 167,
+      "aliases": [
+        "EXP-003"
+      ],
+      "trackingLinks": [
+        "https://github.com/narutojzm1-dot/youjia/issues/167"
+      ],
+      "expected": "水彩院子加载壳",
+      "actual": "水彩院子加载壳与游戏风格一致",
+      "thisRound": "实际保存的是花纸标题页，未截取加载壳，不补作本轮加载壳通过"
+    },
+    {
+      "id": "QA-AUDIO-20261004-001",
+      "aliases": [
+        "issue-195-cold-start"
+      ],
+      "title": "首次进入院子共享音频接口未注册",
+      "severity": "P1",
+      "status": "旧接口错误各构建0/1；A单轨及总静音UI各一关闭恢复循环通过，实际听验未完成，不关闭",
+      "lastCheckedBuild": "game-49596fa / game-b9f68c3",
+      "reproduction": "新标签入院读取warn/error；A分别关闭恢复音乐/环境声/总静音，每项1循环",
+      "reproductionRate": "两个普通新标签各1次入院，旧错误0/1；不是清缓存冷启动",
+      "trackingLinks": [
+        "https://github.com/narutojzm1-dot/youjia/issues/195",
+        "https://github.com/narutojzm1-dot/youjia/issues/196"
+      ],
+      "owner": "修复Owner以仓库最新职责及原issue接收为准；GAME-QA独立复测",
+      "expected": "首次进入正常播放且音乐、环境声开关可靠",
+      "actual": "两份warn/error日志为空；A音乐、环境声、总静音标签响应并恢复原设置；不能证明可听播放"
+    },
+    {
+      "id": "QA-EXP-20261006-004",
+      "type": "已确认历史BUG；限定样本修复通过",
+      "severity": "P2",
+      "title": "探索拾物短展示的物品小标签疑似缺字方框",
+      "lastCheckedBuild": "game-b9f68c3 → game-d21030d",
+      "status": "b9普通放回后再拾圆石方框复现；d210普通圆石短展示清晰中文，限定桌面样本通过；其他物品/分辨率未验证",
+      "reproduction": "1646×894中文普通探索：门前小路→溪声近处→停看→带上圆石；观察拾物短展示上方小标签",
+      "reproductionRate": "旧A/B各1个可辨短展示均复现；C一次明确可辨短展示修复通过，另一组早期帧过淡不作可读性证据",
+      "expected": "圆石短展示的物品名与其他中文提示一样清楚可读",
+      "actual": "23-b-reveal-next为方框；29-c-reveal-sequence-6显示圆石，32-c-return-stable含圆石收好了；本轮没有修改游戏",
+      "evidence": "evidence/23-b-reveal-next.png / evidence/29-c-reveal-sequence-6.png",
+      "trackingLinks": [
+        "https://github.com/narutojzm1-dot/youjia/pull/467",
+        "https://github.com/narutojzm1-dot/youjia/issues/456"
+      ],
+      "relatedScope": "既有探索拾物短展示#372；#456是尺寸变更适配，不将两者当同一根因",
+      "owner": "CURSOR-CLOUD（既有467修复）；GAME-QA独立验证，不接开发",
+      "fixCommit": "392b330effb8dc345bbde4a140d0ba7dbf9821f7"
+    }
+  ],
+  "nativeSupplement": {
+    "sourceSha": "267b0cb3df5842170877bf55e438917ad4253ce8",
+    "suiteCount": 5,
+    "checks": 45956,
+    "result": "5项专项通过，非全daily/非线上听验",
+    "report": "docs/playtests/2026-10-06-1003-game-qa-native/README.md"
+  }
+}

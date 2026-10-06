@@ -1,0 +1,26 @@
+{
+  "timeBeijing": "2026-10-06 09:49续测（09:49:43首次时钟核对）",
+  "endedUtc": "2026-10-06T01:56:23.196163+00:00",
+  "trigger": "用户继续工作；不是12:00定时执行",
+  "B": {
+    "build": "game-b9f68c3",
+    "sha": "b9f68c3c5c4e70e16cefde9b4400bb1d553ff915",
+    "tab": "250390128"
+  },
+  "C": {
+    "build": "game-d21030d",
+    "sha": "d21030dfc243926b7e6a1849151ada1eadab75ef",
+    "tab": "250390132"
+  },
+  "sourceFix": "392b330effb8dc345bbde4a140d0ba7dbf9821f7",
+  "mainAtFetch": "267b0cb3df5842170877bf55e438917ad4253ce8",
+  "archiveBase": "267b0cb3df5842170877bf55e438917ad4253ce8",
+  "viewport": [
+    1646,
+    838
+  ],
+  "environment": "Windows / 同一指定Chrome实例",
+  "save": "既有假期第7天；B关页后C恢复第7天/花朵；未清缓存或重置",
+  "automationTestsExecuted": 0,
+  "limitations": "PCK独立HTTP下载而非浏览器内存逐字节；未本轮核完整manifest；音频听验未做；未用源码/控制台写游戏状态"
+}

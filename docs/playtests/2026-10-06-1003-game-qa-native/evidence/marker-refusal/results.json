@@ -1,0 +1,26 @@
+{
+  "sourceSha": "267b0cb3df5842170877bf55e438917ad4253ce8",
+  "startedUtc": "2026-10-06T02:05:44.208929+00:00",
+  "profileProbe": "D:/games/youjia-test/qa/native/2026-10-06-1008-retry/roaming/Godot/app_userdata/youjia-qa-profile-probe",
+  "engine": "D:/games/youjia-tmp-godot/Godot_v4.7.2-stable_win64_console.exe",
+  "tests": [
+    {
+      "entry": "import",
+      "exit": 0,
+      "summary": []
+    },
+    {
+      "entry": "exploration_slice",
+      "exit": 0,
+      "summary": [
+        "EXPLORATION SLICE PASS 278/278 failures=[]"
+      ]
+    },
+    {
+      "entry": "fish_carry_consistency",
+      "exit": 1,
+      "summary": []
+    }
+  ],
+  "endedUtc": "2026-10-06T02:05:53.013127+00:00"
+}
