@@ -6,6 +6,29 @@ var choice: Dictionary = {}
 var actor: FeltActor
 var spot: Dictionary = {}
 var rope: Line2D
+var search_cel: Sprite2D
+var search_spot: Dictionary = {}
+var search_elapsed := 0.0
+var return_to_side := false
+const SEARCH_SECONDS := 2.4
+const SEARCH_ANCHOR := Vector2(475, 1063)
+const SEARCH_SCALE := 0.91 # Match back-to-hoof height and hoof span, not lowered head height.
+
+func start_search(stop: Dictionary) -> void:
+	if choice.get("actor_id", "") != "llama": return
+	return_to_side = false
+	search_spot = {"arm": stop.arm, "d": stop.d}
+	search_elapsed = 0.0
+
+func cancel_search() -> void:
+	if not search_spot.is_empty(): return_to_side = true
+	search_spot = {}
+	search_elapsed = 0.0
+	actor.visible = true
+	if search_cel != null: search_cel.visible = false
+
+func search_complete() -> bool:
+	return not search_spot.is_empty() and search_elapsed >= SEARCH_SECONDS
 
 func setup(value: Dictionary, leader_spot: Dictionary) -> void:
 	choice = value.duplicate(true)
@@ -25,6 +48,14 @@ func setup(value: Dictionary, leader_spot: Dictionary) -> void:
 	rope.end_cap_mode = Line2D.LINE_CAP_ROUND
 	add_child(rope)
 	rope.visible = choice.mode == "rope"
+	if choice.actor_id == "llama":
+		search_cel = Sprite2D.new()
+		search_cel.texture = load("res://assets/holiday/characters/cast_v2/llama_search.png")
+		search_cel.centered = false
+		search_cel.offset = -SEARCH_ANCHOR
+		search_cel.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
+		search_cel.visible = false
+		add_child(search_cel)
 
 func feet() -> Vector2:
 	var point := L.point(spot.arm, spot.d)
@@ -33,17 +64,31 @@ func feet() -> Vector2:
 
 func advance(delta: float, leader_spot: Dictionary, walker: SequenceResident, reduced: bool) -> void:
 	var before := actor.position
-	var gap := L.route_length(spot, leader_spot)
-	var spacing := 60.0 * L.depth(walker.position.y)
+	var target := leader_spot if search_spot.is_empty() else search_spot
+	if return_to_side and search_spot.is_empty():
+		target = {"arm": leader_spot.arm, "d": minf(float(leader_spot.d) + 80.0, L.arm_length(leader_spot.arm))}
+	var gap := L.route_length(spot, target)
+	var spacing := 60.0 * L.depth(walker.position.y) if search_spot.is_empty() else 0.0
+	if return_to_side: spacing = 0.0
 	if gap > spacing:
-		spot = L.step_toward(spot, leader_spot, minf(gap - spacing, L.WALK_SPEED * 1.25 * delta))
+		spot = L.step_toward(spot, target, minf(gap - spacing, L.WALK_SPEED * 1.25 * delta))
 	actor.position = feet()
 	actor.advance_path(delta, actor.position - before, L.depth(actor.position.y), reduced)
+	if return_to_side and L.route_length(spot, target) < 1.0: return_to_side = false
+	if not search_spot.is_empty() and L.route_length(spot, target) < 1.0:
+		search_elapsed += delta
+		actor.visible = false
+		search_cel.visible = true
+		search_cel.position = actor.position
+		search_cel.scale = Vector2.ONE * actor._base_scale * L.depth(actor.position.y) * SEARCH_SCALE
+		search_cel.z_index = actor.z_index
 	if rope.visible:
 		var palm := Vector2(242, 253)
 		if walker.animation == &"walk": palm = Vacationer.GRASS_SEQUENCE_HAND[walker.frame % Vacationer.GRASS_SEQUENCE_HAND.size()]
 		var hand := to_local(walker.to_global(walker.offset + palm))
 		var collar := to_local(actor.to_global(Vector2(875, 665) - actor._ground_anchor))
+		if search_cel != null and search_cel.visible:
+			collar = search_cel.position + (Vector2(837, 737) - SEARCH_ANCHOR) * search_cel.scale
 		var middle := (hand + collar) * 0.5 + Vector2(0, 8)
 		var points := PackedVector2Array()
 		for i in 17:

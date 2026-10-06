@@ -256,6 +256,22 @@ func visit(stop_id: String) -> Dictionary:
 	return _ok(true)
 
 
+## The adapter calls this after the resident's visible search. The frozen
+## identity and current catalog own the reward; callers cannot supply one.
+func uncover() -> Dictionary:
+	if _quarantined: return _reject("quarantine_frozen")
+	if _state != C.STATE_ACTIVE: return _reject("illegal_transition")
+	var route := _catalog.get_route(_route_id)
+	var hidden: Dictionary = route.get("stops", {}).get(_current_stop, {}).get("hidden", {})
+	if hidden.is_empty() or _companion == null or _companion.get("actor_id", "") != hidden.actor_id:
+		return _reject("companion_required")
+	if _offers.get(_current_stop, "") == hidden.find_id:
+		return _ok(false)
+	_offers[_current_stop] = hidden.find_id
+	_bump()
+	return _ok(true)
+
+
 func take(find_id: String) -> Dictionary:
 	if _quarantined:
 		return _reject("quarantine_frozen")
@@ -491,6 +507,8 @@ func get_view() -> Dictionary:
 		view["can_return"] = _can_return_here()
 		view["carry_limit"] = _catalog.carry_limit(_route_id) if not route.is_empty() else 0
 		view["taken"] = _taken.duplicate()
+		var hidden: Dictionary = route.get("stops", {}).get(_current_stop, {}).get("hidden", {})
+		view["hidden_search"] = not hidden.is_empty() and offer.is_empty() and _companion != null and _companion.get("actor_id", "") == hidden.actor_id
 	else:
 		view["proposal_items"] = (_proposal["items"] as Array).size()
 		view["failure"] = _copy(_failure) if _failure != null else {}
