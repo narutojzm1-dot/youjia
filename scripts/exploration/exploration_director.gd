@@ -12,6 +12,7 @@ signal cleanup_resubmitted(failed_ops: Array, op_id: String)
 
 const RETRY_SECONDS := 30.0
 
+var residents: RefCounted
 var host: ExplorationHost
 var scroll: NearPathScroll
 var world_root: Node
@@ -63,7 +64,7 @@ func try_begin(clock: Dictionary, weather: String, seed: Variant = null, compani
 	scroll = NearPathScroll.new()
 	scroll.name = "NearPathScroll"
 	world_root.add_child(scroll)
-	scroll.setup(host, weather)
+	scroll.setup(host, weather, residents)
 	scroll.return_requested.connect(_on_return_requested)
 	entered.emit()
 	return true

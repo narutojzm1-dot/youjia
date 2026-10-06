@@ -58,7 +58,7 @@ static func primary(world: Node2D) -> Dictionary:
 		var actor = world.actor_named(id)
 		if actor.species == "llama":
 			candidates.append(action("llama", actor.position, "action.lead", 88.0))
-		elif actor.species in ["cow", "sheep", "horse"]:
+		elif actor.species in ["cow", "sheep", "horse", "dog"]:
 			candidates.append(action("pet:" + id, actor.position, "action.pet", PET_REACH))
 	var selected: Dictionary = {}
 	var distance := INF
@@ -81,7 +81,7 @@ static func selected(world: Node2D, target: String) -> Dictionary:
 		var actor = world.actor_named(target.get_slice(":", 1))
 		if actor == null:
 			return {}
-		if target.begins_with("pet:") and actor.species in ["cow", "sheep", "horse"]:
+		if target.begins_with("pet:") and actor.species in ["cow", "sheep", "horse", "dog"]:
 			return action(target, actor.position, "action.pet", PET_REACH)
 		if target.begins_with("toss_fish:") and actor.species in ["duck", "goose"] and not world._fish_carry_type.is_empty():
 			return action(target, actor.position, "action.toss_fish", FEED_REACH)
@@ -122,7 +122,7 @@ static func pointer(world: Node2D, point: Vector2) -> Dictionary:
 	for id: String in world._actors:
 		var actor = world.actor_named(id)
 		var can_feed: bool = not world._fish_carry_type.is_empty() and actor.species in ["duck", "goose"]
-		if not can_feed and actor.species not in ["llama", "cow", "sheep", "horse"]:
+		if not can_feed and actor.species not in ["llama", "cow", "sheep", "horse", "dog"]:
 			continue
 		var bounds: Rect2 = actor.visual_hit_rect().grow(5.0)
 		if not bounds.has_point(point):

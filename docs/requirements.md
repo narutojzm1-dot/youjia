@@ -10,7 +10,7 @@ Owner CODEX-LEAD（兼制作人）。[完整策划](design/connected-world-2026-
 | WORLD-GROUND-FOOD | P1 | 草/鱼投地可见；牛羊羊驼竞争取草、一次消费，院门附近多堆草可引来牛；保存与数量守恒 | 已发布 PR508，source d16736c；完整CI、原生/浏览器体验及公开PCK核验通过 / CODEX-LEAD |
 | WORLD-COMPANIONS | P1 | 院门旁动物概率同行、羊驼可绳牵出；在外跟随且所有返院/恢复路径保留身份 | PR510已合入，149项及全套CI通过；game-4f6d18f公开PCK/十模块已核验，公开实玩记录见同行体验目录 / CODEX-LEAD |
 | WORLD-ANIMAL-FINDS | P1 | 同行动物先翻找揭示隐藏物，玩家之后可见可拾；单次授予与回院持久化 | PR512已合入并公开发布game-f3ddfcb；92项/完整CI、公开包核验、正式Web返院重开已通过，详见体验记录 / CODEX-LEAD |
-| WORLD-BEIBEI | P1 | 村边白色流浪幼犬beibei带回、养大、随行发现；成长缺席不受罚 | 已批准；品种/最终参考未锁定 / CODEX-LEAD |
+| WORLD-BEIBEI | P1 | 村边白色流浪幼犬beibei带回、养大、随行发现；成长缺席不受罚 | E候选已实现村边收养、回院常住、游戏时间成长与成年同行；本地43+46项/实玩通过，待PR与公开核验；乌龟发现接F / CODEX-LEAD |
 | WORLD-POND-STORIES | P1 | beibei发现乌龟→带回池塘→与长大的鸡亲近/驮鸡→拒绝鹅骑背/鹅想啄；鸡吃小米 | 已批准；角色资源与世界状态依赖 / CODEX-LEAD |
 
 资源需求单[#504](https://github.com/narutojzm1-dot/youjia/issues/504)保留完整画作、接触锚点、Web预算与来源门禁；地面小鱼完整透明画已接入，草复用既有原画，伙伴/成长/故事动作资源仍未完成。小米调查支持瑞士山脚村落栽培谷物的设定，不当作高山野生物。#150生产存档、#152/#153探索继续复用；#154自由布置仍待细化，不阻塞本主线。
