@@ -1,0 +1,49 @@
+{
+  "owner": "CODEX-LEAD",
+  "roles": [
+    "Leader",
+    "Producer"
+  ],
+  "checkedAt": "2026-10-06T11:25:48.977590+08:00",
+  "weather": {
+    "source": "709a3b70766c2c69804a295070d99dc50e76194b",
+    "entry": "game-709a3b7",
+    "pckBytes": 27553000,
+    "pckSha256": "e5289173e96a6b02219de2152cf4e2f7161821e6f38f2cf5fc006ff2a27e156d",
+    "gitBlob": "b2a8549926a25ca88818ec77ae70441087e650a4",
+    "moduleCount": 10,
+    "htmlEntryMatches": true,
+    "pullRequest": 486,
+    "prCI": 37405849302,
+    "publishCI": 37406982791,
+    "pagesCI": 37407648585,
+    "windowsChecks": 2021,
+    "browser": "Local new photo reload and legacy version photos reopened in new version; public 1280x720 title/yard/sun-to-overcast and zero captured warn/error logs."
+  },
+  "tooltip": {
+    "source": "3e0680210b69665a5a46ad295ed3fe71e10d512a",
+    "entry": "game-3e06802",
+    "pckBytes": 27554756,
+    "pckSha256": "f74721adbd43c97d16045d1179b8e83e4de16583c75f8f2c944c9c79df0d9df7",
+    "gitBlob": "7c80a443d54825787a92a3a032f3ee3d144cfeff",
+    "moduleCount": 10,
+    "htmlEntryMatches": true,
+    "pullRequest": 488,
+    "prCI": 37407249231,
+    "publishCI": 37408055655,
+    "pagesCI": 37408754626,
+    "windowsChecks": 424,
+    "browser": "Local combined build title/yard/album open-close and old photos. Original PR480 ordinary hover evidence preserved; new local ordinary hover not reproduced, not counted as new hover coverage."
+  },
+  "dailyReleaseNode": false,
+  "dailyMailSent": false,
+  "policy": "PR485: no mandatory per-PR external/subagent approval; daily aggregate review before release; necessary tests retained.",
+  "nextFeature": {
+    "issue": 152,
+    "candidatePR": 375,
+    "owner": "CODEX-LEAD",
+    "scope": "pine cone / feather discovery, reveal and basket runtime art; preserve roadside feather visibility and audio hearing/level gaps",
+    "state": "received, not coding yet"
+  },
+  "evidence": "../2026-10-06-weather168-local/README.md"
+}
