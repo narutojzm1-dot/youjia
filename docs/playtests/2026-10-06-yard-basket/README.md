@@ -25,10 +25,12 @@ Godot 4.7.2，Windows 独立临时 APPDATA/LOCALAPPDATA，未清理真实玩家�
 | exploration_cleanup_preservation | 51 | 探索清理不覆盖账本 |
 | fish_carry_consistency | 86 | 实际路径/钓鱼/取鱼、miss/暂停、持续保留、喂食与连按 |
 | fishing_active_hud | 11 | 生产账本取出旧鱼后再钓鱼，等待/收杆优先，旧手持保留、新鱼只入篓 |
+| fish_miss_feedback | 16 | 空手/小鱼/奇怪的鱼遇到随机miss与咬钩超时；通知与整个库存保持一致 |
+| goose_mount | 92 | 携物保留动作优先权与既有骑马偶遇回归 |
 | modal_touch_input | 270 | 既有弹窗输入回归 |
 | ui_interaction | 63 | 原有场景与 HUD 动作回归 |
 
-合计886项。新增两套件挂入 daily 和严格完成标记；BASKET gate六例验证正数成功、零检查及非零失败的区分。Web release 导出通过。原生截图为 `tools/capture_yard_basket.gd` 受控捕获，不能冒充普通操作。
+合计994项。新增两套件挂入 daily 和严格完成标记；BASKET gate六例验证正数成功、零检查及非零失败的区分。Web release 导出通过。原生截图为 `tools/capture_yard_basket.gd` 受控捕获，不能冒充普通操作。
 
 首次CI 37493746067 的 fishing_active_hud 仍直接注入临时手持鱼并断言20秒倒计时，在库存同步时失败。夹具改为实际入篓/取出构造合法旧鱼，并验证新钓获不替换旧手持；`active-hud-final.log` 11项通过。此为用户新玩法要求下的测试契约更新，不删除等待/收杆优先级、miss、显式动物目标与离岸行为检查。
 
