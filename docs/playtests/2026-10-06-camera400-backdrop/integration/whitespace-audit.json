@@ -1,0 +1,27 @@
+{
+  "full_cached_diff_check_exit": 2,
+  "raw_archive_warning_paths": [
+    "docs/playtests/2026-10-06-camera400-backdrop/browser-candidate/normal-after-index.html",
+    "docs/playtests/2026-10-06-camera400-backdrop/browser-candidate/normal-before-index.html",
+    "docs/playtests/2026-10-06-camera400-backdrop/integration/raw-diff-check.log",
+    "docs/playtests/2026-10-06-camera400-backdrop/native/continuity-revision.diff",
+    "docs/playtests/2026-10-06-camera400-backdrop/native/generated-metadata/import.diff",
+    "docs/playtests/2026-10-06-camera400-backdrop/native/initial-production.diff",
+    "docs/playtests/2026-10-06-camera400-backdrop/native/short-v2/generated-import.diff"
+  ],
+  "reason": "Exact captured HTML/log/diff bytes retained, including pre-existing blank lines and diff context prefixes. No source/curated doc whitespace warnings.",
+  "source_and_curated_docs_check_exit": 0,
+  "log_sha256": "e7b3e98edfd8ebd8e8f837980ea28236b7088173343c87411f8630633bb36694",
+  "captured_prelog_warning_paths": [
+    "docs/playtests/2026-10-06-camera400-backdrop/browser-candidate/normal-after-index.html",
+    "docs/playtests/2026-10-06-camera400-backdrop/browser-candidate/normal-before-index.html",
+    "docs/playtests/2026-10-06-camera400-backdrop/native/continuity-revision.diff",
+    "docs/playtests/2026-10-06-camera400-backdrop/native/generated-metadata/import.diff",
+    "docs/playtests/2026-10-06-camera400-backdrop/native/initial-production.diff",
+    "docs/playtests/2026-10-06-camera400-backdrop/native/short-v2/generated-import.diff"
+  ],
+  "snapshot_note": "The saved raw-diff-check.log was captured before that log itself was staged; its original output lists six paths. The final committed archive also includes the verbatim audit log, whose 41 original diagnostic/context lines produce whitespace warnings. All seven paths are explicitly retained as raw evidence.",
+  "post_archive_checked_source": "bfebf0025399fe9cc544c82b75556536d2cb2c1f",
+  "post_archive_diff_check_exit": 2,
+  "audit_log_self_warning_count": 41
+}

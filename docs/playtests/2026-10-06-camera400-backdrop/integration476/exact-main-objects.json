@@ -1,0 +1,80 @@
+{
+  "main": "d21030dfc243926b7e6a1849151ada1eadab75ef",
+  "tree": "09dec34245b0eb40566b6e3be47f2983c9d71a61",
+  "commits_materialized_exact": {
+    "d21030dfc243926b7e6a1849151ada1eadab75ef": {
+      "tree": "09dec34245b0eb40566b6e3be47f2983c9d71a61",
+      "parents": [
+        "c9f41319c1653d855791ee185031a8bc3b510f0b",
+        "a9d22017ad7d68ef6b5a007c9956196e73272d1b"
+      ],
+      "exact_hash": true
+    },
+    "c9f41319c1653d855791ee185031a8bc3b510f0b": {
+      "tree": "4ef7595ddc6dc4939fc2e8c944e45871995a8c81",
+      "parents": [
+        "8ae57959ff95117047c4362704c298b583d651a7",
+        "fddac31f5456eff1405218d6695ac773891e5d9d"
+      ],
+      "exact_hash": true
+    },
+    "fddac31f5456eff1405218d6695ac773891e5d9d": {
+      "tree": "4ef7595ddc6dc4939fc2e8c944e45871995a8c81",
+      "parents": [
+        "b3bf90914afab367d69403e3b9691e638e9b299d"
+      ],
+      "exact_hash": true
+    },
+    "b3bf90914afab367d69403e3b9691e638e9b299d": {
+      "tree": "774e11b09258b71a0427a333d988a2745b29f96d",
+      "parents": [
+        "8ae57959ff95117047c4362704c298b583d651a7"
+      ],
+      "exact_hash": true
+    },
+    "a9d22017ad7d68ef6b5a007c9956196e73272d1b": {
+      "tree": "9c68e186e8cfcea55f676c088ff5815a93856066",
+      "parents": [
+        "584f6e4f5313053d042c2b0131dc2255c8471b4c",
+        "1759c69cede5ba69a01bd219748796a7c50fc0d7"
+      ],
+      "exact_hash": true
+    },
+    "584f6e4f5313053d042c2b0131dc2255c8471b4c": {
+      "tree": "9c68e186e8cfcea55f676c088ff5815a93856066",
+      "parents": [
+        "6ba9c9e0eb50f79307131f15adec1f42ac6cdb6b"
+      ],
+      "exact_hash": true
+    },
+    "6ba9c9e0eb50f79307131f15adec1f42ac6cdb6b": {
+      "tree": "3c18929efe762aa9827f78a924772575526072b9",
+      "parents": [
+        "520eff1f78c546c04a920b3aa8d29a378d30dffd"
+      ],
+      "exact_hash": true
+    },
+    "520eff1f78c546c04a920b3aa8d29a378d30dffd": {
+      "tree": "6c3885a5f6efe6f96c9ab98c5e15d3fd0fe05b68",
+      "parents": [
+        "1d0cbb4f88a0a11b984c3100acaef69ed9e8ffe0"
+      ],
+      "exact_hash": true
+    },
+    "1d0cbb4f88a0a11b984c3100acaef69ed9e8ffe0": {
+      "tree": "8c51753a0894c02f2921a3298b6847f39b6742ed",
+      "parents": [
+        "4ee987f3aeb43bd4170cbae380eddd93bc30c45c"
+      ],
+      "exact_hash": true
+    },
+    "4ee987f3aeb43bd4170cbae380eddd93bc30c45c": {
+      "tree": "9208595df32cdcf787ccbfd302f64b08dfaeb365",
+      "parents": [
+        "8ae57959ff95117047c4362704c298b583d651a7"
+      ],
+      "exact_hash": true
+    }
+  },
+  "all_tree_entries_retained_without_blob_downloads": true
+}

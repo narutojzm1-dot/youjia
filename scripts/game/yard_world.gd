@@ -258,6 +258,18 @@ func get_world_size() -> Vector2:
 	return WORLD_SIZE
 
 
+## Painted bounds in our parent (the camera's) coordinates, not collisions.
+func get_backdrop_bounds() -> Rect2:
+	if _backdrop == null or _backdrop.texture == null:
+		return Rect2()
+	return transform * (_backdrop.transform * _backdrop.get_rect())
+
+
+## Read at focus emission; an encounter has already set its phase before emit.
+func is_quiet_camera_focus() -> bool:
+	return _quiet_sky_active and _goose_mount_phase < 0
+
+
 ## 当天已流逝比例（0.0=天刚亮, 1.0=接近夜末），用于昼夜渐变
 func tod_fraction() -> float:
 	return _day_elapsed / DAY_DURATION_SECONDS

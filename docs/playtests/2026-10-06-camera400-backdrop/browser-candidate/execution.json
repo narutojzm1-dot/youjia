@@ -1,0 +1,49 @@
+{
+  "qa_agent": "CODEX-LEAD delegated /root/hotspot36_qa",
+  "candidate_only": true,
+  "driver_session": 60501,
+  "observed_direct_exit_code": 0,
+  "exit_evidence": "tools.write_stdin returned exit_code 0 for actual session 60501 after ordinary end command; result.json records closed_utc",
+  "started_utc": "2026-10-06T01:05:13Z",
+  "closed_utc": "2026-10-06T01:07:33Z",
+  "contexts_opened": 1,
+  "pages_opened": 1,
+  "browser_window_released": true,
+  "viewport_sequence_css_pixels": [
+    [
+      390,
+      844
+    ],
+    [
+      568,
+      320
+    ],
+    [
+      390,
+      844
+    ]
+  ],
+  "dpr": 1,
+  "reduced_motion": "no-preference",
+  "original_png_count": 17,
+  "no_retries": true,
+  "memory_current_samples_bytes": {
+    "before_browser": 15843971072,
+    "title_ready": 16853712896,
+    "portrait_8000_request": 17013534720,
+    "landscape_wait_cooldown": 17067315200,
+    "portrait_reflow_back": 16942260224,
+    "browser_closed": 15791927296
+  },
+  "memory_sampling_limit": "Discrete cgroup current samples, not continuously monitored peak",
+  "page_errors": [],
+  "limits": [
+    "No reduced-motion second context",
+    "No internal quiet state or phase read/write",
+    "No seed/time/save/camera injection",
+    "No ordinary goose same-tick handoff claim",
+    "No 2444x1502 original issue400 causal claim",
+    "No hearing/storage/touch382/focus459 acceptance",
+    "No public Pages release claim"
+  ]
+}

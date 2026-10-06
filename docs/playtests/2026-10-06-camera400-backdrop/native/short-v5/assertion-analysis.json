@@ -1,0 +1,191 @@
+{
+  "red-old-production": {
+    "bytes": 26592,
+    "sha256": "9c6a30f0c1465c0b733730617c14bd9bbe12497ae47f38d396ead81ca3eae1d7",
+    "completion": [
+      "[camera400-backdrop] FAIL: 41894 checks [\"idle_move/(390, 844)/reduced=false: real camera introduces no paper outside baseline coverage\",\"idle_move/(360, 640)/reduced=false: real camera introduces no paper outside baseline coverage\",\"idle_move/(568, 320)/reduced=false: real camera introduces no paper outside baseline coverage\",\"idle_move/(1280, 720)/reduced=false: real camera introduces no paper outside baseline coverage\",\"world_edge/90.0/reduced=false: real camera introduces no paper outside baseline coverage\",\"world_edge/1190.0/reduced=false: real camera introduces no paper outside baseline coverage\",\"natural_expiry_and_resize/reduced=false: real camera introduces no paper outside baseline coverage\",\"real_goose_takeover/reduced=false/resize=false: real camera introduces no paper outside baseline coverage\",\"real_goose_takeover/reduced=false/resize=true: real camera introduces no paper outside baseline coverage\",\"idle_move/(390, 844)/reduced=true: real camera introduces no paper outside baseline coverage\",\"idle_move/(360, 640)/reduced=true: real camera introduces no paper outside baseline coverage\",\"idle_move/(568, 320)/reduced=true: real camera introduces no paper outside baseline coverage\",\"idle_move/(1280, 720)/reduced=true: real camera introduces no paper outside baseline coverage\",\"world_edge/90.0/reduced=true: real camera introduces no paper outside baseline coverage\",\"world_edge/1190.0/reduced=true: real camera introduces no paper outside baseline coverage\",\"natural_expiry_and_resize/reduced=true: real camera introduces no paper outside baseline coverage\",\"real_goose_takeover/reduced=true/resize=false: real camera introduces no paper outside baseline coverage\",\"real_goose_takeover/reduced=true/resize=true: real camera introduces no paper outside baseline coverage\"]"
+    ],
+    "failure_count": [
+      "CAMERA400_BOUNDS_FAILED_CHECKS 2026"
+    ],
+    "script_errors": [],
+    "continuity": [
+      {
+        "after_camera": "(694.3904, 295.3715)",
+        "after_canvas": "[X: (0.977778, 0.0), Y: (0.0, 0.977778), O: (-483.9595, 133.1923)]",
+        "before_camera": "(695.0, 281.594)",
+        "before_canvas": "[X: (0.977778, 0.0), Y: (0.0, 0.977778), O: (-484.5556, 146.6637)]",
+        "case": "real_goose_takeover/reduced=false/resize=false",
+        "effective_before": "(0.0, -149.9969)",
+        "expected_first": "(694.3904, 295.3715)",
+        "new_target": "(-12.5, 132.5)"
+      },
+      {
+        "after_camera": "(645.1255, 511.5802)",
+        "after_canvas": "[X: (0.25, 0.0), Y: (0.0, 0.25), O: (122.7186, 32.10494)]",
+        "before_camera": "(695.0, 281.594)",
+        "before_canvas": "[X: (0.977778, 0.0), Y: (0.0, 0.977778), O: (-484.5556, 146.6637)]",
+        "case": "real_goose_takeover/reduced=false/resize=true",
+        "effective_before": "(0.0, -149.9969)",
+        "expected_first": "(645.1255, 511.5802)",
+        "new_target": "(14.875, 46.375)"
+      },
+      {
+        "after_camera": "(692.7341, 332.7995)",
+        "after_canvas": "[X: (0.977778, 0.0), Y: (0.0, 0.977778), O: (-482.3401, 96.59605)]",
+        "before_camera": "(695.0, 281.5909)",
+        "before_canvas": "[X: (0.977778, 0.0), Y: (0.0, 0.977778), O: (-484.5556, 146.6666)]",
+        "case": "real_goose_takeover/reduced=true/resize=false",
+        "effective_before": "(0.0, -150.0)",
+        "expected_first": "(692.7341, 332.7995)",
+        "new_target": "(-12.5, 132.5)"
+      },
+      {
+        "after_camera": "(647.0964, 537.5968)",
+        "after_canvas": "[X: (0.25, 0.0), Y: (0.0, 0.25), O: (122.2259, 25.6008)]",
+        "before_camera": "(695.0, 281.5909)",
+        "before_canvas": "[X: (0.977778, 0.0), Y: (0.0, 0.977778), O: (-484.5556, 146.6666)]",
+        "case": "real_goose_takeover/reduced=true/resize=true",
+        "effective_before": "(0.0, -150.0)",
+        "expected_first": "(647.0964, 537.5968)",
+        "new_target": "(14.875, 46.375)"
+      }
+    ],
+    "expected_assertion_error_messages": [
+      "idle_move/(390, 844)/reduced=false: real camera introduces no paper outside baseline coverage",
+      "idle_move/(360, 640)/reduced=false: real camera introduces no paper outside baseline coverage",
+      "idle_move/(568, 320)/reduced=false: real camera introduces no paper outside baseline coverage",
+      "idle_move/(1280, 720)/reduced=false: real camera introduces no paper outside baseline coverage",
+      "world_edge/90.0/reduced=false: real camera introduces no paper outside baseline coverage",
+      "world_edge/1190.0/reduced=false: real camera introduces no paper outside baseline coverage",
+      "natural_expiry_and_resize/reduced=false: real camera introduces no paper outside baseline coverage",
+      "real_goose_takeover/reduced=false/resize=false: real camera introduces no paper outside baseline coverage",
+      "real_goose_takeover/reduced=false/resize=true: real camera introduces no paper outside baseline coverage",
+      "idle_move/(390, 844)/reduced=true: real camera introduces no paper outside baseline coverage",
+      "idle_move/(360, 640)/reduced=true: real camera introduces no paper outside baseline coverage",
+      "idle_move/(568, 320)/reduced=true: real camera introduces no paper outside baseline coverage",
+      "idle_move/(1280, 720)/reduced=true: real camera introduces no paper outside baseline coverage",
+      "world_edge/90.0/reduced=true: real camera introduces no paper outside baseline coverage",
+      "world_edge/1190.0/reduced=true: real camera introduces no paper outside baseline coverage",
+      "natural_expiry_and_resize/reduced=true: real camera introduces no paper outside baseline coverage",
+      "real_goose_takeover/reduced=true/resize=false: real camera introduces no paper outside baseline coverage",
+      "real_goose_takeover/reduced=true/resize=true: real camera introduces no paper outside baseline coverage"
+    ],
+    "other_error_messages": []
+  },
+  "red-guard-before-rebase": {
+    "bytes": 14741,
+    "sha256": "9b511a66cfc8ea4c83222bc1c2c4b199efd58b949c43275b076d39c3b8721866",
+    "completion": [
+      "[camera400-backdrop] FAIL: 41912 checks [\"real_goose_takeover/reduced=false/resize=false: new focus starts from last visible displacement without revealing hidden quiet offset\",\"real_goose_takeover/reduced=false/resize=true: new focus starts from last visible displacement without revealing hidden quiet offset\",\"real_goose_takeover/reduced=true/resize=false: new focus starts from last visible displacement without revealing hidden quiet offset\",\"real_goose_takeover/reduced=true/resize=true: new focus starts from last visible displacement without revealing hidden quiet offset\"]"
+    ],
+    "failure_count": [
+      "CAMERA400_BOUNDS_FAILED_CHECKS 4"
+    ],
+    "script_errors": [],
+    "continuity": [
+      {
+        "after_camera": "(694.3904, 295.3715)",
+        "after_canvas": "[X: (0.977778, 0.0), Y: (0.0, 0.977778), O: (-483.9595, 133.1923)]",
+        "before_camera": "(695.0, 431.5909)",
+        "before_canvas": "[X: (0.977778, 0.0), Y: (0.0, 0.977778), O: (-484.5556, 0.0)]",
+        "case": "real_goose_takeover/reduced=false/resize=false",
+        "effective_before": "(0.0, 0.0)",
+        "expected_first": "(694.3904, 438.053)",
+        "new_target": "(-12.5, 132.5)"
+      },
+      {
+        "after_camera": "(645.1255, 511.5802)",
+        "after_canvas": "[X: (0.25, 0.0), Y: (0.0, 0.25), O: (122.7186, 32.10494)]",
+        "before_camera": "(695.0, 431.5909)",
+        "before_canvas": "[X: (0.977778, 0.0), Y: (0.0, 0.977778), O: (-484.5556, 0.0)]",
+        "case": "real_goose_takeover/reduced=false/resize=true",
+        "effective_before": "(0.0, 0.0)",
+        "expected_first": "(645.1255, 654.2617)",
+        "new_target": "(14.875, 46.375)"
+      },
+      {
+        "after_camera": "(692.7341, 332.7995)",
+        "after_canvas": "[X: (0.977778, 0.0), Y: (0.0, 0.977778), O: (-482.3401, 96.59605)]",
+        "before_camera": "(695.0, 431.5909)",
+        "before_canvas": "[X: (0.977778, 0.0), Y: (0.0, 0.977778), O: (-484.5556, 0.0)]",
+        "case": "real_goose_takeover/reduced=true/resize=false",
+        "effective_before": "(0.0, 0.0)",
+        "expected_first": "(692.7341, 455.6091)",
+        "new_target": "(-12.5, 132.5)"
+      },
+      {
+        "after_camera": "(647.0964, 537.5968)",
+        "after_canvas": "[X: (0.25, 0.0), Y: (0.0, 0.25), O: (122.2259, 25.6008)]",
+        "before_camera": "(695.0, 431.5909)",
+        "before_canvas": "[X: (0.977778, 0.0), Y: (0.0, 0.977778), O: (-484.5556, 0.0)]",
+        "case": "real_goose_takeover/reduced=true/resize=true",
+        "effective_before": "(0.0, 0.0)",
+        "expected_first": "(647.0964, 660.4064)",
+        "new_target": "(14.875, 46.375)"
+      }
+    ],
+    "expected_assertion_error_messages": [
+      "real_goose_takeover/reduced=false/resize=false: new focus starts from last visible displacement without revealing hidden quiet offset",
+      "real_goose_takeover/reduced=false/resize=true: new focus starts from last visible displacement without revealing hidden quiet offset",
+      "real_goose_takeover/reduced=true/resize=false: new focus starts from last visible displacement without revealing hidden quiet offset",
+      "real_goose_takeover/reduced=true/resize=true: new focus starts from last visible displacement without revealing hidden quiet offset"
+    ],
+    "other_error_messages": []
+  },
+  "green-candidate": {
+    "bytes": 12895,
+    "sha256": "94de8b3312cb9c8f75c9ecb5b3e591c57f9077aa747f91ea52c12dbd1720c97f",
+    "completion": [
+      "[camera400-backdrop] PASS: 44734 checks []"
+    ],
+    "failure_count": [
+      "CAMERA400_BOUNDS_FAILED_CHECKS 0"
+    ],
+    "script_errors": [],
+    "continuity": [
+      {
+        "after_camera": "(694.3904, 438.053)",
+        "after_canvas": "[X: (0.977778, 0.0), Y: (0.0, 0.977778), O: (-483.9595, -6.318495)]",
+        "before_camera": "(695.0, 431.5909)",
+        "before_canvas": "[X: (0.977778, 0.0), Y: (0.0, 0.977778), O: (-484.5556, 0.0)]",
+        "case": "real_goose_takeover/reduced=false/resize=false",
+        "effective_before": "(0.0, 0.0)",
+        "expected_first": "(694.3904, 438.053)",
+        "new_target": "(-12.5, 132.5)"
+      },
+      {
+        "after_camera": "(645.1255, 654.2617)",
+        "after_canvas": "[X: (0.25, 0.0), Y: (0.0, 0.25), O: (122.7186, -3.56543)]",
+        "before_camera": "(695.0, 431.5909)",
+        "before_canvas": "[X: (0.977778, 0.0), Y: (0.0, 0.977778), O: (-484.5556, 0.0)]",
+        "case": "real_goose_takeover/reduced=false/resize=true",
+        "effective_before": "(0.0, 0.0)",
+        "expected_first": "(645.1255, 654.2617)",
+        "new_target": "(14.875, 46.375)"
+      },
+      {
+        "after_camera": "(692.7341, 455.6091)",
+        "after_canvas": "[X: (0.977778, 0.0), Y: (0.0, 0.977778), O: (-482.3401, -23.48445)]",
+        "before_camera": "(695.0, 431.5909)",
+        "before_canvas": "[X: (0.977778, 0.0), Y: (0.0, 0.977778), O: (-484.5556, 0.0)]",
+        "case": "real_goose_takeover/reduced=true/resize=false",
+        "effective_before": "(0.0, 0.0)",
+        "expected_first": "(692.7341, 455.6091)",
+        "new_target": "(-12.5, 132.5)"
+      },
+      {
+        "after_camera": "(647.0964, 660.4064)",
+        "after_canvas": "[X: (0.25, 0.0), Y: (0.0, 0.25), O: (122.2259, -5.101593)]",
+        "before_camera": "(695.0, 431.5909)",
+        "before_canvas": "[X: (0.977778, 0.0), Y: (0.0, 0.977778), O: (-484.5556, 0.0)]",
+        "case": "real_goose_takeover/reduced=true/resize=true",
+        "effective_before": "(0.0, 0.0)",
+        "expected_first": "(647.0964, 660.4064)",
+        "new_target": "(14.875, 46.375)"
+      }
+    ],
+    "expected_assertion_error_messages": [],
+    "other_error_messages": []
+  }
+}

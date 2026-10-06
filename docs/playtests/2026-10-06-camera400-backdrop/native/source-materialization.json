@@ -1,0 +1,5494 @@
+{
+  "source": "b9f68c3c5c4e70e16cefde9b4400bb1d553ff915",
+  "entries": [
+    {
+      "path": ".github/PULL_REQUEST_TEMPLATE.md",
+      "blob": "d07862a280495c740967c6f3f73129d0c7806c4f",
+      "bytes": 1111,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": ".github/workflows/publish-pages.yml",
+      "blob": "36da2008d5bd3e1c525ee1024710fab1c253a2a6",
+      "bytes": 2516,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": ".github/workflows/verify-pr.yml",
+      "blob": "c65532cd6ddb73a4760dfeb7afb472f6bb87379b",
+      "bytes": 2451,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": ".gitignore",
+      "blob": "e68529eef25d61792d1df06689b3c588993ecc72",
+      "bytes": 530,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": ".manus-game-template.json",
+      "blob": "05ac4bbd1ca2b1ddbc2f431478cacb275e7c024d",
+      "bytes": 125,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": ".manus-starter-init.json",
+      "blob": "f25941aefdaae45b3cccdbf2b18fbd92b4d385d6",
+      "bytes": 91,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "AGENTS.md",
+      "blob": "3dc16e15f91c77781a4dd9e4f6605d94c6dcdeec",
+      "bytes": 13313,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "CONTRIBUTING.md",
+      "blob": "8cd2aee0734001f78f4f5e8349805331b1390f22",
+      "bytes": 13830,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "README.md",
+      "blob": "a6cba97e9d8effecd74d48c087cbf51e17354333",
+      "bytes": 3194,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "art/concepts/producer_world_20261005/near_path_anchors.candidate.json",
+      "blob": "f72b38d3a471dae421ee5d8949b1ab6c7f0c8ed3",
+      "bytes": 1357,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "asset-provenance.json",
+      "blob": "41e2f1ea42ea9722e5f566898bb430c5ae21c9a8",
+      "bytes": 34673,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets.lock.json",
+      "blob": "b80c907ed9dbd246dbbb194810159bc1ea74d05c",
+      "bytes": 15026,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/holiday/audio/README.md",
+      "blob": "01e8f7b372192cecf21dd754f1004801ac663f69",
+      "bytes": 619,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/holiday/audio/bed_yard_env.ogg",
+      "blob": "52060b3e2cd3a9c2554238a6bf060a557cafa40c",
+      "bytes": 1865882,
+      "mode": "100644",
+      "materialization": "immutable-binary-hardlink",
+      "source_posix_mode": "0o600"
+    },
+    {
+      "path": "assets/holiday/audio/bed_yard_env.ogg.import",
+      "blob": "12bed2bca6943c9a75806f27bdd141c5fcc37100",
+      "bytes": 413,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/holiday/audio/bed_yard_music.ogg",
+      "blob": "9a260de8e87c9bf3636092bb32170e35c39fd30f",
+      "bytes": 767834,
+      "mode": "100644",
+      "materialization": "immutable-binary-hardlink",
+      "source_posix_mode": "0o600"
+    },
+    {
+      "path": "assets/holiday/audio/bed_yard_music.ogg.import",
+      "blob": "f02af93a11a683986373739c1e1af5222ab2e316",
+      "bytes": 419,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/holiday/characters/approved_resident_upper_v1.png",
+      "blob": "c977b35fe7e9847d987cb3f336d31af0e4bb4f3a",
+      "bytes": 1877011,
+      "mode": "100644",
+      "materialization": "immutable-binary-hardlink",
+      "source_posix_mode": "0o600"
+    },
+    {
+      "path": "assets/holiday/characters/approved_resident_upper_v1.png.import",
+      "blob": "bf2617f0018d276f77fcabff6441f3c7e0316925",
+      "bytes": 1009,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/holiday/characters/approved_traveler_pants_v1.png",
+      "blob": "bb1727a128cfa631ab8115772b71a66d17ea38ba",
+      "bytes": 1124591,
+      "mode": "100644",
+      "materialization": "immutable-binary-hardlink",
+      "source_posix_mode": "0o600"
+    },
+    {
+      "path": "assets/holiday/characters/approved_traveler_pants_v1.png.import",
+      "blob": "24dec148af1016f998672f4a186c048519d3c033",
+      "bytes": 1008,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/holiday/characters/approved_traveler_upper_v1.png",
+      "blob": "a352a7965ea5d9b3da423d35beac5e73093163e1",
+      "bytes": 1705983,
+      "mode": "100644",
+      "materialization": "immutable-binary-hardlink",
+      "source_posix_mode": "0o600"
+    },
+    {
+      "path": "assets/holiday/characters/approved_traveler_upper_v1.png.import",
+      "blob": "88bdb9aa783dea9d6441c7b9e2609b03f3a3d9eb",
+      "bytes": 1008,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/holiday/characters/cast_v2/README.md",
+      "blob": "3c23cb59f2e8d32bf762e323ec1879d5c18a1ec4",
+      "bytes": 4678,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/holiday/characters/cast_v2/cow.png",
+      "blob": "47ddb485ce2ee98a7d9400f6cb22fcc25795e110",
+      "bytes": 1151331,
+      "mode": "100644",
+      "materialization": "immutable-binary-hardlink",
+      "source_posix_mode": "0o600"
+    },
+    {
+      "path": "assets/holiday/characters/cast_v2/cow.png.import",
+      "blob": "117c5ac9519a583e3bf33a2ba726a70dfea6a9f0",
+      "bytes": 948,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/holiday/characters/cast_v2/cow_chew.png",
+      "blob": "e65ff139e02345f285976209b2f55be324f0ad8c",
+      "bytes": 1181117,
+      "mode": "100644",
+      "materialization": "immutable-binary-hardlink",
+      "source_posix_mode": "0o600"
+    },
+    {
+      "path": "assets/holiday/characters/cast_v2/cow_chew.png.import",
+      "blob": "bfc3c7375966b333ebe0febea0af7b74243de8ed",
+      "bytes": 962,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/holiday/characters/cast_v2/cow_glance.png",
+      "blob": "1d656a713613c7b1e54cc29c4067a6ab8d2a334e",
+      "bytes": 1245470,
+      "mode": "100644",
+      "materialization": "immutable-binary-hardlink",
+      "source_posix_mode": "0o600"
+    },
+    {
+      "path": "assets/holiday/characters/cast_v2/cow_glance.png.import",
+      "blob": "72a2ac4d354dbeccca9959033c119112c1ba3037",
+      "bytes": 968,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/holiday/characters/cast_v2/duck.png",
+      "blob": "249f3fffeccf34fde16bb50b9e9e027bc76037b0",
+      "bytes": 1188640,
+      "mode": "100644",
+      "materialization": "immutable-binary-hardlink",
+      "source_posix_mode": "0o600"
+    },
+    {
+      "path": "assets/holiday/characters/cast_v2/duck.png.import",
+      "blob": "cd4884a38c5b92b75a80dc9d0acaba139c6d62a0",
+      "bytes": 951,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/holiday/characters/cast_v2/duck_attend.png",
+      "blob": "7b233f3e5b02c6eb47463a86b4641b5c05c16301",
+      "bytes": 1103990,
+      "mode": "100644",
+      "materialization": "immutable-binary-hardlink",
+      "source_posix_mode": "0o600"
+    },
+    {
+      "path": "assets/holiday/characters/cast_v2/duck_attend.png.import",
+      "blob": "0193bb94c1c62051c9eb71c242a6c682a48bff54",
+      "bytes": 971,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/holiday/characters/cast_v2/duck_preen.png",
+      "blob": "5e42ac58940df6469eeba379baf2d96f0cbd36b7",
+      "bytes": 940793,
+      "mode": "100644",
+      "materialization": "immutable-binary-hardlink",
+      "source_posix_mode": "0o600"
+    },
+    {
+      "path": "assets/holiday/characters/cast_v2/duck_preen.png.import",
+      "blob": "f6fdbaa68fd595d36d59c31fbfbb4441cbc17739",
+      "bytes": 968,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/holiday/characters/cast_v2/goose.png",
+      "blob": "cdd93fc8f32f29d21353e7410d72bdbd4c9594e5",
+      "bytes": 1212584,
+      "mode": "100644",
+      "materialization": "immutable-binary-hardlink",
+      "source_posix_mode": "0o600"
+    },
+    {
+      "path": "assets/holiday/characters/cast_v2/goose.png.import",
+      "blob": "9a2fafe35a846fc3d33d90e4dd6b65a7691939b8",
+      "bytes": 954,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/holiday/characters/cast_v2/goose_calm.png",
+      "blob": "06dd5337e4b20d29c1392fa910c3865a41ec7109",
+      "bytes": 888242,
+      "mode": "100644",
+      "materialization": "immutable-binary-hardlink",
+      "source_posix_mode": "0o600"
+    },
+    {
+      "path": "assets/holiday/characters/cast_v2/goose_calm.png.import",
+      "blob": "b6b7895f112b7bdc60f41153f5243d6cbd5a1a4f",
+      "bytes": 968,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/holiday/characters/cast_v2/goose_rest.png",
+      "blob": "f92983099250787741e11f5fbd6615ceea1202b0",
+      "bytes": 1016561,
+      "mode": "100644",
+      "materialization": "immutable-binary-hardlink",
+      "source_posix_mode": "0o600"
+    },
+    {
+      "path": "assets/holiday/characters/cast_v2/goose_rest.png.import",
+      "blob": "645cbe32ae04bcb857ce77075844d8b2af82c464",
+      "bytes": 968,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/holiday/characters/cast_v2/goose_riding_down.png",
+      "blob": "9e98c8b32c117f2210cbe4b0cd3fd08596684f04",
+      "bytes": 853295,
+      "mode": "100644",
+      "materialization": "immutable-binary-hardlink",
+      "source_posix_mode": "0o600"
+    },
+    {
+      "path": "assets/holiday/characters/cast_v2/goose_riding_down.png.import",
+      "blob": "19e9a535e70f79a3c0af8fa49b82c4b81aebc5a5",
+      "bytes": 989,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/holiday/characters/cast_v2/goose_riding_up.png",
+      "blob": "f95f07a910ef7aa2eb5cc87a94e82833e76d94a2",
+      "bytes": 1029972,
+      "mode": "100644",
+      "materialization": "immutable-binary-hardlink",
+      "source_posix_mode": "0o600"
+    },
+    {
+      "path": "assets/holiday/characters/cast_v2/goose_riding_up.png.import",
+      "blob": "7a912ad7014a04adf9d77cfa0ea5ff18bd2d7d12",
+      "bytes": 983,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/holiday/characters/cast_v2/horse.png",
+      "blob": "ca9cd1c1d6c99ef04463352da1897878db822780",
+      "bytes": 1508497,
+      "mode": "100644",
+      "materialization": "immutable-binary-hardlink",
+      "source_posix_mode": "0o600"
+    },
+    {
+      "path": "assets/holiday/characters/cast_v2/horse.png.import",
+      "blob": "52174aa90a08071cfea6b26640b532f35cdfc1b0",
+      "bytes": 953,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/holiday/characters/cast_v2/horse_tail.png",
+      "blob": "7b9edabc44f0d7b9eae380fccc3b2883abf44450",
+      "bytes": 932078,
+      "mode": "100644",
+      "materialization": "immutable-binary-hardlink",
+      "source_posix_mode": "0o600"
+    },
+    {
+      "path": "assets/holiday/characters/cast_v2/horse_tail.png.import",
+      "blob": "b625062428c91cde67fa35c9219cb00841ddab42",
+      "bytes": 967,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/holiday/characters/cast_v2/llama_annoyed.png",
+      "blob": "c70aad9a12db05d228c15cd5392f3cff27d83453",
+      "bytes": 1265644,
+      "mode": "100644",
+      "materialization": "immutable-binary-hardlink",
+      "source_posix_mode": "0o600"
+    },
+    {
+      "path": "assets/holiday/characters/cast_v2/llama_annoyed.png.import",
+      "blob": "e8435bd936a8ab396659f67bc3c25fedd104134b",
+      "bytes": 978,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/holiday/characters/cast_v2/llama_happy.png",
+      "blob": "00ee4c3198ee78a718dbb35b1dd8bd94c09b65c6",
+      "bytes": 1265273,
+      "mode": "100644",
+      "materialization": "immutable-binary-hardlink",
+      "source_posix_mode": "0o600"
+    },
+    {
+      "path": "assets/holiday/characters/cast_v2/llama_happy.png.import",
+      "blob": "c15341ba827d08535f68900bc159517b524874f1",
+      "bytes": 972,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/holiday/characters/cast_v2/llama_idle.png",
+      "blob": "e4505932fc8c944fe53a9b5c9df072fb8ce8f0a2",
+      "bytes": 1264534,
+      "mode": "100644",
+      "materialization": "immutable-binary-hardlink",
+      "source_posix_mode": "0o600"
+    },
+    {
+      "path": "assets/holiday/characters/cast_v2/llama_idle.png.import",
+      "blob": "e7b5fc56617101750c10580b3819e07cdb7ac969",
+      "bytes": 969,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/holiday/characters/cast_v2/llama_smirk.png",
+      "blob": "b20859b314dd40a3cc6268f9b4a35857f5d73c31",
+      "bytes": 1323732,
+      "mode": "100644",
+      "materialization": "immutable-binary-hardlink",
+      "source_posix_mode": "0o600"
+    },
+    {
+      "path": "assets/holiday/characters/cast_v2/llama_smirk.png.import",
+      "blob": "802cc0eff1980734a0989ae1274bdcfc03097e59",
+      "bytes": 971,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/holiday/characters/cast_v2/manifest.json",
+      "blob": "4b984179f27e0ffdb6e510125cbbf8f630c73f63",
+      "bytes": 7997,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/holiday/characters/cast_v2/sheep_clingy.png",
+      "blob": "bc35ef98df971ddd4c04ff40cb908ad60e33c492",
+      "bytes": 1356267,
+      "mode": "100644",
+      "materialization": "immutable-binary-hardlink",
+      "source_posix_mode": "0o600"
+    },
+    {
+      "path": "assets/holiday/characters/cast_v2/sheep_clingy.png.import",
+      "blob": "c87b26293a4f63e183cfbfec59fce9cb9dbe74d3",
+      "bytes": 975,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/holiday/characters/cast_v2/sheep_clingy_attend_v2.png",
+      "blob": "31c3c29d5398790f3a00c61f82b70d4aedf83585",
+      "bytes": 1266293,
+      "mode": "100644",
+      "materialization": "immutable-binary-hardlink",
+      "source_posix_mode": "0o600"
+    },
+    {
+      "path": "assets/holiday/characters/cast_v2/sheep_clingy_attend_v2.png.import",
+      "blob": "edbbde4e2c9dd6aeaa3c8b39368544faa3170815",
+      "bytes": 1004,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/holiday/characters/cast_v2/sheep_dull.png",
+      "blob": "09d3acc498a7c098d5cdd025dab7a9239e7b32d5",
+      "bytes": 1504492,
+      "mode": "100644",
+      "materialization": "immutable-binary-hardlink",
+      "source_posix_mode": "0o600"
+    },
+    {
+      "path": "assets/holiday/characters/cast_v2/sheep_dull.png.import",
+      "blob": "4679f3eefd75c1498a6098b9851915abd246c0a3",
+      "bytes": 969,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/holiday/characters/cast_v2/sheep_dull_glance_v3.png",
+      "blob": "48bad9527904c6b85ba469033208c2789da18832",
+      "bytes": 1364054,
+      "mode": "100644",
+      "materialization": "immutable-binary-hardlink",
+      "source_posix_mode": "0o600"
+    },
+    {
+      "path": "assets/holiday/characters/cast_v2/sheep_dull_glance_v3.png.import",
+      "blob": "971d3a0863eb9cdffd696eec55f11ab0fa0506a0",
+      "bytes": 998,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/holiday/characters/cast_v2/sheep_shake.png",
+      "blob": "4342ea659b32aa3e455b6e26193757b245e6a999",
+      "bytes": 1189894,
+      "mode": "100644",
+      "materialization": "immutable-binary-hardlink",
+      "source_posix_mode": "0o600"
+    },
+    {
+      "path": "assets/holiday/characters/cast_v2/sheep_shake.png.import",
+      "blob": "587775574f9f566df8970c1f3566145404f9090a",
+      "bytes": 971,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/holiday/characters/cow.png",
+      "blob": "2d1bdeefb5fb5170420ffa2b662991c16ca26e9b",
+      "bytes": 105604,
+      "mode": "100644",
+      "materialization": "immutable-binary-hardlink",
+      "source_posix_mode": "0o600"
+    },
+    {
+      "path": "assets/holiday/characters/cow.png.import",
+      "blob": "4c50c51fab99ff49cc9219651c5a33c1352b34cd",
+      "bytes": 940,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/holiday/characters/duck.png",
+      "blob": "70f6fd120d538c02ce8ff5be60ee8b82f74398c7",
+      "bytes": 17849,
+      "mode": "100644",
+      "materialization": "immutable-binary-hardlink",
+      "source_posix_mode": "0o600"
+    },
+    {
+      "path": "assets/holiday/characters/duck.png.import",
+      "blob": "b83e20f038b6a1f246f4688eb12e220e179a7283",
+      "bytes": 943,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/holiday/characters/goose.png",
+      "blob": "69e8cc8db0ce0fdd22a992b5d6330c6f97d5628c",
+      "bytes": 34455,
+      "mode": "100644",
+      "materialization": "immutable-binary-hardlink",
+      "source_posix_mode": "0o600"
+    },
+    {
+      "path": "assets/holiday/characters/goose.png.import",
+      "blob": "61814bc64c76a7a66f64ec113253b1e1ec0bd974",
+      "bytes": 946,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/holiday/characters/llama.png",
+      "blob": "93168bd7509080763d14d0f20b3119f4926eb6da",
+      "bytes": 77375,
+      "mode": "100644",
+      "materialization": "immutable-binary-hardlink",
+      "source_posix_mode": "0o600"
+    },
+    {
+      "path": "assets/holiday/characters/llama.png.import",
+      "blob": "1c4e5cebb2ac2ac8ba5947db3c0f684e76dd03b2",
+      "bytes": 945,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/holiday/characters/llama_annoyed.png",
+      "blob": "619f8f784eb75f958cbb85860c8875de8b5ed6c7",
+      "bytes": 101369,
+      "mode": "100644",
+      "materialization": "immutable-binary-hardlink",
+      "source_posix_mode": "0o600"
+    },
+    {
+      "path": "assets/holiday/characters/llama_annoyed.png.import",
+      "blob": "c4092212af1f66870fac3f302adf78e870591b9c",
+      "bytes": 970,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/holiday/characters/llama_happy.png",
+      "blob": "b81d95c2460b8409dc69e638c53d8cc7895a5600",
+      "bytes": 102999,
+      "mode": "100644",
+      "materialization": "immutable-binary-hardlink",
+      "source_posix_mode": "0o600"
+    },
+    {
+      "path": "assets/holiday/characters/llama_happy.png.import",
+      "blob": "a4e76f7357d33a1d59737f031f1bfc4b4967bda2",
+      "bytes": 964,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/holiday/characters/llama_legs_atlas_v1.png",
+      "blob": "c716d92fb2bcbcec81f9cc584f732383d646d1f0",
+      "bytes": 858755,
+      "mode": "100644",
+      "materialization": "immutable-binary-hardlink",
+      "source_posix_mode": "0o600"
+    },
+    {
+      "path": "assets/holiday/characters/llama_legs_atlas_v1.png.import",
+      "blob": "a36900ec6f640d97549719ae8354f58006a809d5",
+      "bytes": 988,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/holiday/characters/llama_smirk.png",
+      "blob": "355afb2375833c7c27fb25a14cc824cbec6ea1ae",
+      "bytes": 96500,
+      "mode": "100644",
+      "materialization": "immutable-binary-hardlink",
+      "source_posix_mode": "0o600"
+    },
+    {
+      "path": "assets/holiday/characters/llama_smirk.png.import",
+      "blob": "a4de074f557d55699bbccb380d5d0237d756d872",
+      "bytes": 964,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/holiday/characters/player.png",
+      "blob": "7c91b1cae41345a6b6da29cdb63f9196c2d37b24",
+      "bytes": 37817,
+      "mode": "100644",
+      "materialization": "immutable-binary-hardlink",
+      "source_posix_mode": "0o600"
+    },
+    {
+      "path": "assets/holiday/characters/player.png.import",
+      "blob": "62147027e0f0c8adc854cf7bea8912d8e801e76b",
+      "bytes": 949,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/holiday/characters/player_rig_atlas_v1.png",
+      "blob": "411ec1b568239cdd246a04dcba0ed5ca5cc71ecc",
+      "bytes": 1388628,
+      "mode": "100644",
+      "materialization": "immutable-binary-hardlink",
+      "source_posix_mode": "0o600"
+    },
+    {
+      "path": "assets/holiday/characters/player_rig_atlas_v1.png.import",
+      "blob": "7de9189a5a68f6748562a1e510e19032c8a5751e",
+      "bytes": 988,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/holiday/characters/resident_grass_actions_v1/actions.png",
+      "blob": "c88a1a50965bb7336e46facec9cadae51cd57b32",
+      "bytes": 993432,
+      "mode": "100644",
+      "materialization": "immutable-binary-hardlink",
+      "source_posix_mode": "0o600"
+    },
+    {
+      "path": "assets/holiday/characters/resident_grass_actions_v1/actions.png.import",
+      "blob": "396caa74923c8dad92387633222658b922e24613",
+      "bytes": 977,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/holiday/characters/resident_grass_actions_v1/manifest.json",
+      "blob": "fd312a792bf5c4d190a83c75d18a2b8f89441fbf",
+      "bytes": 999,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/holiday/characters/resident_walk_authored_v1/00.png",
+      "blob": "09bb9b67db252b81c21ce95da2cc42cb2f6edd80",
+      "bytes": 103673,
+      "mode": "100644",
+      "materialization": "immutable-binary-hardlink",
+      "source_posix_mode": "0o600"
+    },
+    {
+      "path": "assets/holiday/characters/resident_walk_authored_v1/00.png.import",
+      "blob": "47c498fdf289911205df313daf36c978422b62c9",
+      "bytes": 963,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/holiday/characters/resident_walk_authored_v1/01.png",
+      "blob": "13cd073b65667a1da0ee461bdbbc533da6c26785",
+      "bytes": 103782,
+      "mode": "100644",
+      "materialization": "immutable-binary-hardlink",
+      "source_posix_mode": "0o600"
+    },
+    {
+      "path": "assets/holiday/characters/resident_walk_authored_v1/01.png.import",
+      "blob": "5c845947521f641116f4c738a6971a2486175e8e",
+      "bytes": 961,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/holiday/characters/resident_walk_authored_v1/02.png",
+      "blob": "c0e9d991dde26bdf30248bf3c634c76d1e13758b",
+      "bytes": 103477,
+      "mode": "100644",
+      "materialization": "immutable-binary-hardlink",
+      "source_posix_mode": "0o600"
+    },
+    {
+      "path": "assets/holiday/characters/resident_walk_authored_v1/02.png.import",
+      "blob": "bc8b382037546f8b3e95369b4c3e9f6d63ab377f",
+      "bytes": 963,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/holiday/characters/resident_walk_authored_v1/03.png",
+      "blob": "08e81569479643f2da0307aec01d2d20e4275112",
+      "bytes": 101427,
+      "mode": "100644",
+      "materialization": "immutable-binary-hardlink",
+      "source_posix_mode": "0o600"
+    },
+    {
+      "path": "assets/holiday/characters/resident_walk_authored_v1/03.png.import",
+      "blob": "a0a2ede578551ba6273dd0ab0d393a911a371ca4",
+      "bytes": 962,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/holiday/characters/resident_walk_authored_v1/04.png",
+      "blob": "e34fa0de847636f14f6513daaef4b03c66f3b509",
+      "bytes": 94145,
+      "mode": "100644",
+      "materialization": "immutable-binary-hardlink",
+      "source_posix_mode": "0o600"
+    },
+    {
+      "path": "assets/holiday/characters/resident_walk_authored_v1/04.png.import",
+      "blob": "54286016f205f1d7f08d9082f2df29a47c1a8f05",
+      "bytes": 963,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/holiday/characters/resident_walk_authored_v1/05.png",
+      "blob": "4fd833e9b2e01f472e7f785b9868d2f4e712806d",
+      "bytes": 86505,
+      "mode": "100644",
+      "materialization": "immutable-binary-hardlink",
+      "source_posix_mode": "0o600"
+    },
+    {
+      "path": "assets/holiday/characters/resident_walk_authored_v1/05.png.import",
+      "blob": "742edb40ca21f7b0bd71770b47087af17152992a",
+      "bytes": 963,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/holiday/characters/resident_walk_authored_v1/06.png",
+      "blob": "d23bbd5ae00f7c54095661ed8139c2f895cf40bd",
+      "bytes": 87056,
+      "mode": "100644",
+      "materialization": "immutable-binary-hardlink",
+      "source_posix_mode": "0o600"
+    },
+    {
+      "path": "assets/holiday/characters/resident_walk_authored_v1/06.png.import",
+      "blob": "96bee338d262871eeb9e295cc140c52a190b95c2",
+      "bytes": 963,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/holiday/characters/resident_walk_authored_v1/07.png",
+      "blob": "dbd2ebd520c170c68d48af25bc526f03abbdd85a",
+      "bytes": 93282,
+      "mode": "100644",
+      "materialization": "immutable-binary-hardlink",
+      "source_posix_mode": "0o600"
+    },
+    {
+      "path": "assets/holiday/characters/resident_walk_authored_v1/07.png.import",
+      "blob": "1fa01da1b6bd2068fb402fe037c7c642052eb005",
+      "bytes": 963,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/holiday/characters/resident_walk_authored_v1/08.png",
+      "blob": "8fb1cd9021e8b14d11aa84dfa06e6d8e6e6d0b78",
+      "bytes": 95709,
+      "mode": "100644",
+      "materialization": "immutable-binary-hardlink",
+      "source_posix_mode": "0o600"
+    },
+    {
+      "path": "assets/holiday/characters/resident_walk_authored_v1/08.png.import",
+      "blob": "0994db89afc3b6494266a157f4a891912ce0e8fb",
+      "bytes": 963,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/holiday/characters/resident_walk_authored_v1/09.png",
+      "blob": "e04ae15d0a9b153577467631a4acfa294c1ff104",
+      "bytes": 94772,
+      "mode": "100644",
+      "materialization": "immutable-binary-hardlink",
+      "source_posix_mode": "0o600"
+    },
+    {
+      "path": "assets/holiday/characters/resident_walk_authored_v1/09.png.import",
+      "blob": "48c66d9901a788ea3affa18e667aebd00548f2ed",
+      "bytes": 962,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/holiday/characters/resident_walk_authored_v1/10.png",
+      "blob": "181f10919f4862a7596e8d15bb6e36b342e07fa7",
+      "bytes": 92993,
+      "mode": "100644",
+      "materialization": "immutable-binary-hardlink",
+      "source_posix_mode": "0o600"
+    },
+    {
+      "path": "assets/holiday/characters/resident_walk_authored_v1/10.png.import",
+      "blob": "939bf54de1e61885b3d3cccda577b8ba2d79f7d4",
+      "bytes": 963,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/holiday/characters/resident_walk_authored_v1/11.png",
+      "blob": "6bc39e6d0283b04cf1be4aaa1278ddafe16ab961",
+      "bytes": 87230,
+      "mode": "100644",
+      "materialization": "immutable-binary-hardlink",
+      "source_posix_mode": "0o600"
+    },
+    {
+      "path": "assets/holiday/characters/resident_walk_authored_v1/11.png.import",
+      "blob": "4d7c8af4dbcbc14995bd581e0bf72435e444db9d",
+      "bytes": 962,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/holiday/characters/resident_walk_authored_v1/12.png",
+      "blob": "2a1d1165229ac36136e42e623ae0f1612276b2a8",
+      "bytes": 94003,
+      "mode": "100644",
+      "materialization": "immutable-binary-hardlink",
+      "source_posix_mode": "0o600"
+    },
+    {
+      "path": "assets/holiday/characters/resident_walk_authored_v1/12.png.import",
+      "blob": "390278aa5b49bac44ee7f633b764118e5a0bde18",
+      "bytes": 963,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/holiday/characters/resident_walk_authored_v1/13.png",
+      "blob": "7424bf301cc5b93108f74462cfaba1b990c2ede6",
+      "bytes": 101218,
+      "mode": "100644",
+      "materialization": "immutable-binary-hardlink",
+      "source_posix_mode": "0o600"
+    },
+    {
+      "path": "assets/holiday/characters/resident_walk_authored_v1/13.png.import",
+      "blob": "da0ee50dbfffa9425be0eaec1d4abe77d4ad62e4",
+      "bytes": 963,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/holiday/characters/resident_walk_authored_v1/14.png",
+      "blob": "7f23187dc9f4da380917024aa83e075c66fb6555",
+      "bytes": 103270,
+      "mode": "100644",
+      "materialization": "immutable-binary-hardlink",
+      "source_posix_mode": "0o600"
+    },
+    {
+      "path": "assets/holiday/characters/resident_walk_authored_v1/14.png.import",
+      "blob": "760ccb34c556477f514c53a9da00be4a7a70dbfd",
+      "bytes": 963,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/holiday/characters/resident_walk_authored_v1/15.png",
+      "blob": "ccb181a9343655e708f382e13ef351addef03429",
+      "bytes": 103575,
+      "mode": "100644",
+      "materialization": "immutable-binary-hardlink",
+      "source_posix_mode": "0o600"
+    },
+    {
+      "path": "assets/holiday/characters/resident_walk_authored_v1/15.png.import",
+      "blob": "930605b7a93ef68f2623c00c885af56cb31571b5",
+      "bytes": 963,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/holiday/characters/resident_walk_authored_v1/idle.png",
+      "blob": "c086fcc3f2c036219895832c30504f9fbd50b5af",
+      "bytes": 101569,
+      "mode": "100644",
+      "materialization": "immutable-binary-hardlink",
+      "source_posix_mode": "0o600"
+    },
+    {
+      "path": "assets/holiday/characters/resident_walk_authored_v1/idle.png.import",
+      "blob": "9bceeef32beaaa835f0ab79ef3f29d1efa472c79",
+      "bytes": 969,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/holiday/characters/resident_walk_authored_v1/manifest.json",
+      "blob": "21489fa2f074aaec7c29daa30266f471a08d9b8c",
+      "bytes": 2902,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/holiday/characters/sheep_clingy.png",
+      "blob": "5c85517acc6cfc016de813d3e27f2a68ea58a5f2",
+      "bytes": 61040,
+      "mode": "100644",
+      "materialization": "immutable-binary-hardlink",
+      "source_posix_mode": "0o600"
+    },
+    {
+      "path": "assets/holiday/characters/sheep_clingy.png.import",
+      "blob": "5f1f8ac34b74673e1b2b6ca7f1b93b074eb5538d",
+      "bytes": 967,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/holiday/characters/sheep_dull.png",
+      "blob": "e12319d13c34f162c48b857c3497cc657e1de758",
+      "bytes": 93925,
+      "mode": "100644",
+      "materialization": "immutable-binary-hardlink",
+      "source_posix_mode": "0o600"
+    },
+    {
+      "path": "assets/holiday/characters/sheep_dull.png.import",
+      "blob": "590dd3d4ec57f9def8486cb400c7385174fb76b4",
+      "bytes": 960,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/holiday/environment/cloud_band_morning.png",
+      "blob": "a46b2f062b8086d6e5a5011f3f2425f54fdf22b3",
+      "bytes": 92868,
+      "mode": "100644",
+      "materialization": "immutable-binary-hardlink",
+      "source_posix_mode": "0o600"
+    },
+    {
+      "path": "assets/holiday/environment/cloud_band_morning.png.import",
+      "blob": "ca3cc9a8f6063cd82b8e6844b2a72ae94fd42eec",
+      "bytes": 989,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/holiday/environment/cloud_band_overcast.png",
+      "blob": "2e029171f8a9f23bcbf07b7c1cd5cfa84b3ef572",
+      "bytes": 231984,
+      "mode": "100644",
+      "materialization": "immutable-binary-hardlink",
+      "source_posix_mode": "0o600"
+    },
+    {
+      "path": "assets/holiday/environment/cloud_band_overcast.png.import",
+      "blob": "3fb31ab7e05461377e1ce6e87ec4d28a82826560",
+      "bytes": 992,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/holiday/environment/cloud_band_sunny.png",
+      "blob": "8018e6f1baee2ca88a425670915799caa453fabf",
+      "bytes": 188874,
+      "mode": "100644",
+      "materialization": "immutable-binary-hardlink",
+      "source_posix_mode": "0o600"
+    },
+    {
+      "path": "assets/holiday/environment/cloud_band_sunny.png.import",
+      "blob": "1dd82e315ccd8c09d2467f4bea736e13251dce6c",
+      "bytes": 983,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/holiday/environment/cloud_band_sunset.png",
+      "blob": "b87af1fc5590521de29d9d8eb6e89f7451d594a7",
+      "bytes": 180999,
+      "mode": "100644",
+      "materialization": "immutable-binary-hardlink",
+      "source_posix_mode": "0o600"
+    },
+    {
+      "path": "assets/holiday/environment/cloud_band_sunset.png.import",
+      "blob": "118d7e46ad868e0c39a1d97074865ff84fed9359",
+      "bytes": 987,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/holiday/environment/yard_overcast.png",
+      "blob": "966d9051bbb5808ee1ac7490426df30a13c62f4c",
+      "bytes": 3427343,
+      "mode": "100644",
+      "materialization": "immutable-binary-hardlink",
+      "source_posix_mode": "0o600"
+    },
+    {
+      "path": "assets/holiday/environment/yard_overcast.png.import",
+      "blob": "25a0d58e70c1c5b310916e6841ff8a137620686a",
+      "bytes": 971,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/holiday/environment/yard_sunny.png",
+      "blob": "d081f675b783a22a706f73d71a4e2c0328c076a4",
+      "bytes": 4019432,
+      "mode": "100644",
+      "materialization": "immutable-binary-hardlink",
+      "source_posix_mode": "0o600"
+    },
+    {
+      "path": "assets/holiday/environment/yard_sunny.png.import",
+      "blob": "9ed4021ac9b3cbbcda9bfc51044fce2a631bfa06",
+      "bytes": 961,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/holiday/exploration/README.md",
+      "blob": "4ff9d20ef218cde461aa66c94a0881977c287071",
+      "bytes": 1083,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/holiday/exploration/near_path_02.webp",
+      "blob": "67410cf5beb533ea475d4f023578b847cfe20e1e",
+      "bytes": 559102,
+      "mode": "100644",
+      "materialization": "immutable-binary-hardlink",
+      "source_posix_mode": "0o600"
+    },
+    {
+      "path": "assets/holiday/exploration/near_path_02.webp.import",
+      "blob": "aa39812ca7747123bdd8f3ad63d485ee1972c29f",
+      "bytes": 970,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/holiday/fx/felt_spit.png",
+      "blob": "dacb39a999f9332e76dd66eaca1685201b381bc9",
+      "bytes": 5613,
+      "mode": "100644",
+      "materialization": "immutable-binary-hardlink",
+      "source_posix_mode": "0o600"
+    },
+    {
+      "path": "assets/holiday/fx/felt_spit.png.import",
+      "blob": "cca59bf41c6fa3c4cd931f35278d228fc96ba39c",
+      "bytes": 950,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/holiday/fx/fence_grass_bent.png",
+      "blob": "a7803a87061baeac15a754e2b069d67a08e7bf2f",
+      "bytes": 64694,
+      "mode": "100644",
+      "materialization": "immutable-binary-hardlink",
+      "source_posix_mode": "0o600"
+    },
+    {
+      "path": "assets/holiday/fx/fence_grass_bent.png.import",
+      "blob": "8a48c033e57b3e6a75505d666f8b883f04a261b9",
+      "bytes": 970,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/holiday/fx/fence_grass_still.png",
+      "blob": "2a6a4f44ac8e8886e0c7ba2422691199eb161534",
+      "bytes": 60489,
+      "mode": "100644",
+      "materialization": "immutable-binary-hardlink",
+      "source_posix_mode": "0o600"
+    },
+    {
+      "path": "assets/holiday/fx/fence_grass_still.png.import",
+      "blob": "93bdc494bc45b2dce562d6936366f3729beadfb4",
+      "bytes": 973,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/holiday/fx/grass_bundle.png",
+      "blob": "b19888530667ee1e7d274d9a66458d6c280ae2d6",
+      "bytes": 11000,
+      "mode": "100644",
+      "materialization": "immutable-binary-hardlink",
+      "source_posix_mode": "0o600"
+    },
+    {
+      "path": "assets/holiday/fx/grass_bundle.png.import",
+      "blob": "399d27b5a90efbe2770b279bb09793e0444d803e",
+      "bytes": 959,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/holiday/fx/grass_states_v2.png",
+      "blob": "94ba68cd0565acb48aec2aba04ab211e3c7de082",
+      "bytes": 1555671,
+      "mode": "100644",
+      "materialization": "immutable-binary-hardlink",
+      "source_posix_mode": "0o600"
+    },
+    {
+      "path": "assets/holiday/fx/grass_states_v2.png.import",
+      "blob": "4bc038e4ed28345d09818ceb540cf93caf25f94a",
+      "bytes": 968,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/holiday/fx/path_clover.png",
+      "blob": "a0f75dc9127541c3b65094725092c00673b3de22",
+      "bytes": 64962,
+      "mode": "100644",
+      "materialization": "immutable-binary-hardlink",
+      "source_posix_mode": "0o600"
+    },
+    {
+      "path": "assets/holiday/fx/path_clover.png.import",
+      "blob": "cbb9068099cdeaf6c284878321c50e56c2cf83bf",
+      "bytes": 955,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/holiday/fx/path_snail.png",
+      "blob": "e67c16951939c5defdbbab007787e1254189b4a0",
+      "bytes": 6557,
+      "mode": "100644",
+      "materialization": "immutable-binary-hardlink",
+      "source_posix_mode": "0o600"
+    },
+    {
+      "path": "assets/holiday/fx/path_snail.png.import",
+      "blob": "ce39449cd12583c0d02ac2f02955f59f43d98923",
+      "bytes": 952,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/holiday/fx/pet_heart_watercolor.png",
+      "blob": "bed078dcf0f828b54e5d5999eccc815b935bc3b6",
+      "bytes": 183985,
+      "mode": "100644",
+      "materialization": "immutable-binary-hardlink",
+      "source_posix_mode": "0o600"
+    },
+    {
+      "path": "assets/holiday/fx/pet_heart_watercolor.png.import",
+      "blob": "9ef490c44a53ff4b9ddf7668b69c0fa32c3e93ea",
+      "bytes": 981,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/holiday/fx/shed_feather.png",
+      "blob": "5233c3c250ffff2ef74123b79b860af50174e19c",
+      "bytes": 70049,
+      "mode": "100644",
+      "materialization": "immutable-binary-hardlink",
+      "source_posix_mode": "0o600"
+    },
+    {
+      "path": "assets/holiday/fx/shed_feather.png.import",
+      "blob": "970fa448ac27634439713623217e533c4f95919c",
+      "bytes": 958,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/holiday/fx/shore_dragonfly_flight.png",
+      "blob": "8a1b6320b9c17c3638a3ddca153bf8f1d773698b",
+      "bytes": 79280,
+      "mode": "100644",
+      "materialization": "immutable-binary-hardlink",
+      "source_posix_mode": "0o600"
+    },
+    {
+      "path": "assets/holiday/fx/shore_dragonfly_flight.png.import",
+      "blob": "828ebc14ab3c7cea33c174ef3d4f60ab053f8908",
+      "bytes": 988,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/holiday/fx/shore_dragonfly_rest.png",
+      "blob": "25f37d98746d66b2ef28f68092c8f803ac3e4808",
+      "bytes": 59964,
+      "mode": "100644",
+      "materialization": "immutable-binary-hardlink",
+      "source_posix_mode": "0o600"
+    },
+    {
+      "path": "assets/holiday/fx/shore_dragonfly_rest.png.import",
+      "blob": "77592aad32a109f442eec79100800b0fe82e2921",
+      "bytes": 982,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/holiday/fx/shore_ripple_start.png",
+      "blob": "75528ba14ac63695de52a872bd39230eebde20b8",
+      "bytes": 70095,
+      "mode": "100644",
+      "materialization": "immutable-binary-hardlink",
+      "source_posix_mode": "0o600"
+    },
+    {
+      "path": "assets/holiday/fx/shore_ripple_start.png.import",
+      "blob": "2f408175d48535d11f5ea4025ac0077212f2631b",
+      "bytes": 976,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/holiday/fx/shore_ripple_wide.png",
+      "blob": "d9270110c384b26f1127bb1230ea216362597d9c",
+      "bytes": 75025,
+      "mode": "100644",
+      "materialization": "immutable-binary-hardlink",
+      "source_posix_mode": "0o600"
+    },
+    {
+      "path": "assets/holiday/fx/shore_ripple_wide.png.import",
+      "blob": "770096eed03e621c465c85a74b2e531985e455a4",
+      "bytes": 972,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/holiday/fx/water_splash_watercolor.png",
+      "blob": "e30f6d333f35b841d47efbd3becd9c6242b334da",
+      "bytes": 161374,
+      "mode": "100644",
+      "materialization": "immutable-binary-hardlink",
+      "source_posix_mode": "0o600"
+    },
+    {
+      "path": "assets/holiday/fx/water_splash_watercolor.png.import",
+      "blob": "da407f222d5f18440119e95a727725e2ba6e6832",
+      "bytes": 991,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/holiday/fx/windowbox_butterfly_open.png",
+      "blob": "8ffb729df107ee2ea4c8acc2c2bf131bfbb72a97",
+      "bytes": 41497,
+      "mode": "100644",
+      "materialization": "immutable-binary-hardlink",
+      "source_posix_mode": "0o600"
+    },
+    {
+      "path": "assets/holiday/fx/windowbox_butterfly_open.png.import",
+      "blob": "31109bff43017f50d31b8fdda17ec34cbd812498",
+      "bytes": 994,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/holiday/fx/windowbox_butterfly_rest.png",
+      "blob": "7421e74b8198e2686a0fbe7725f9bc21074847ff",
+      "bytes": 38482,
+      "mode": "100644",
+      "materialization": "immutable-binary-hardlink",
+      "source_posix_mode": "0o600"
+    },
+    {
+      "path": "assets/holiday/fx/windowbox_butterfly_rest.png.import",
+      "blob": "5beef9997b4f1b090f018875aef8b86021f8ed55",
+      "bytes": 993,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/holiday/fx/windowbox_petals.png",
+      "blob": "baad522017a54d084f53c36cb5be7b8b5ed6d3ac",
+      "bytes": 21374,
+      "mode": "100644",
+      "materialization": "immutable-binary-hardlink",
+      "source_posix_mode": "0o600"
+    },
+    {
+      "path": "assets/holiday/fx/windowbox_petals.png.import",
+      "blob": "532157cd5a6a4d895c0326cd8b203d1366b9395d",
+      "bytes": 970,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/holiday/sharing/favicon.png",
+      "blob": "843e9f11c1c3c97e324de082fa2febd2442a8164",
+      "bytes": 4819139,
+      "mode": "100644",
+      "materialization": "immutable-binary-hardlink",
+      "source_posix_mode": "0o600"
+    },
+    {
+      "path": "assets/holiday/sharing/favicon.png.import",
+      "blob": "33c602212a9a9741e2616603fd1392dd52da1ba5",
+      "bytes": 948,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/holiday/sharing/favicon_fallback.png",
+      "blob": "f99b4528e284a62722a364da4ed3298fde591a6b",
+      "bytes": 44174,
+      "mode": "100644",
+      "materialization": "immutable-binary-hardlink",
+      "source_posix_mode": "0o600"
+    },
+    {
+      "path": "assets/holiday/sharing/favicon_fallback.png.import",
+      "blob": "7b8ebe9fc9cd6fb9d227d29ca1943e526d60740c",
+      "bytes": 975,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/holiday/sharing/og.png",
+      "blob": "223976e9aa0c028369b0c1d658daf77e3569602c",
+      "bytes": 6364377,
+      "mode": "100644",
+      "materialization": "immutable-binary-hardlink",
+      "source_posix_mode": "0o600"
+    },
+    {
+      "path": "assets/holiday/sharing/og.png.import",
+      "blob": "750354682509fa9c6e99e812636e63ef7dce8b2b",
+      "bytes": 933,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/holiday/ui/polaroid_frame.png",
+      "blob": "56ea7940188b78f0cc9ba9e80350ce028dfc2fdf",
+      "bytes": 110181,
+      "mode": "100644",
+      "materialization": "immutable-binary-hardlink",
+      "source_posix_mode": "0o600"
+    },
+    {
+      "path": "assets/holiday/ui/polaroid_frame.png.import",
+      "blob": "f3227a5e260fffb950c5225fe992c53a7897d016",
+      "bytes": 965,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/holiday/ui/scrapbook_paper.png",
+      "blob": "2c4f9bd7f23d019158dcee072560ecdd7dad165a",
+      "bytes": 1604105,
+      "mode": "100644",
+      "materialization": "immutable-binary-hardlink",
+      "source_posix_mode": "0o600"
+    },
+    {
+      "path": "assets/holiday/ui/scrapbook_paper.png.import",
+      "blob": "fb9f89128b87b8ecb8ea9fa343636c48e93c1238",
+      "bytes": 968,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/share/favicon.png",
+      "blob": "40ff8dccd455181c9e832d3aa22420b5184417fb",
+      "bytes": 382395,
+      "mode": "100644",
+      "materialization": "immutable-binary-hardlink",
+      "source_posix_mode": "0o600"
+    },
+    {
+      "path": "assets/share/favicon.png.import",
+      "blob": "b95755b7ea7b028289b35d819e671092ba58ac2d",
+      "bytes": 938,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/share/og.png",
+      "blob": "07fc7c6ba067bebbdcc5d069bcb2379a77e18b16",
+      "bytes": 1365017,
+      "mode": "100644",
+      "materialization": "immutable-binary-hardlink",
+      "source_posix_mode": "0o600"
+    },
+    {
+      "path": "assets/share/og.png.import",
+      "blob": "a9a0b8cf6f7c8e8fbd75967b98d9a7d424ee6f0e",
+      "bytes": 922,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/template/characters/runner.png",
+      "blob": "e1c9530d53e41397636b78eae4729f592f8d70b4",
+      "bytes": 68885,
+      "mode": "100644",
+      "materialization": "immutable-binary-hardlink",
+      "source_posix_mode": "0o600"
+    },
+    {
+      "path": "assets/template/characters/runner.png.import",
+      "blob": "4e94c3d559a1d31037bd287608ab667acb50946c",
+      "bytes": 947,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/template/characters/sentinel.png",
+      "blob": "9859c205ceec3e3a63209e84aca728fdfc1c1396",
+      "bytes": 64998,
+      "mode": "100644",
+      "materialization": "immutable-binary-hardlink",
+      "source_posix_mode": "0o600"
+    },
+    {
+      "path": "assets/template/characters/sentinel.png.import",
+      "blob": "9a08ff25a9f1e23c69e0f29072af114af3f3be78",
+      "bytes": 955,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/template/environment/backdrop.png",
+      "blob": "8f428637ee27e2267b128c4cc2b11b02c8aa9900",
+      "bytes": 971282,
+      "mode": "100644",
+      "materialization": "immutable-binary-hardlink",
+      "source_posix_mode": "0o600"
+    },
+    {
+      "path": "assets/template/environment/backdrop.png.import",
+      "blob": "9f2efe5e36aed09dcb69b6b56e82f66663560ce4",
+      "bytes": 955,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/template/environment/foreground.png",
+      "blob": "2ebdff8fcdfeb3020ca8289035ad5865f88272cd",
+      "bytes": 58603,
+      "mode": "100644",
+      "materialization": "immutable-binary-hardlink",
+      "source_posix_mode": "0o600"
+    },
+    {
+      "path": "assets/template/environment/foreground.png.import",
+      "blob": "3a302f8ab79e7709bafbc263bdbf91fde6312d34",
+      "bytes": 962,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/template/fonts/Figtree-OFL.txt",
+      "blob": "80b12bb3d0c0942676657ef6d125daf4a1e1346d",
+      "bytes": 4388,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/template/fonts/Figtree-VF.subset.woff2",
+      "blob": "1b644325bd2a11d3253e7d66f79b583321049295",
+      "bytes": 23660,
+      "mode": "100644",
+      "materialization": "immutable-binary-hardlink",
+      "source_posix_mode": "0o600"
+    },
+    {
+      "path": "assets/template/fonts/Figtree-VF.subset.woff2.import",
+      "blob": "fcdf1ce38d13e1586e88154b40418e5a1dfbfdd1",
+      "bytes": 805,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/template/fonts/NotoSansCJKsc-Generic2D.corpus.txt",
+      "blob": "7014d88b1eaa7f4f89993bac7537b469ad8837f3",
+      "bytes": 1137,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/template/fonts/NotoSansSC-OFL.txt",
+      "blob": "1c9f43281b8f216c5461fe9ac729afbade7724e4",
+      "bytes": 4388,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/template/fonts/NotoSansSC-VF.subset.woff2",
+      "blob": "1a6f0fc209b2261f0777b2b830e62b407d19ac51",
+      "bytes": 1869368,
+      "mode": "100644",
+      "materialization": "immutable-binary-hardlink",
+      "source_posix_mode": "0o600"
+    },
+    {
+      "path": "assets/template/fonts/NotoSansSC-VF.subset.woff2.import",
+      "blob": "163df35923e9a2f3b056ccc733ce8eb7d2f3925d",
+      "bytes": 814,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/template/fonts/SOURCES.md",
+      "blob": "c02b0df39526bc17f46dbb5a0d76086239221441",
+      "bytes": 927,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/template/fonts/display/Sora-OFL.txt",
+      "blob": "f1d9d6af7ba46af6c2da765fa123d93239c913f5",
+      "bytes": 4385,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/template/fonts/display/Sora-VF.subset.woff2",
+      "blob": "6dfe4597abc46380034c02b69f4da72c87bc1804",
+      "bytes": 41696,
+      "mode": "100644",
+      "materialization": "immutable-binary-hardlink",
+      "source_posix_mode": "0o600"
+    },
+    {
+      "path": "assets/template/fonts/display/Sora-VF.subset.woff2.import",
+      "blob": "088007e44bf3bf2f418e10f7a49c5205b0f9eeb1",
+      "bytes": 804,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/template/fonts/display/generic_eyebrow.tres",
+      "blob": "3f69fc3c0d3d8443a77eebafbadddba876b578eb",
+      "bytes": 520,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/template/fonts/display/generic_heading.tres",
+      "blob": "132471a747225dc8167b54c4f1bfbde1b39cb3d4",
+      "bytes": 499,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/template/fonts/display/generic_menu.tres",
+      "blob": "06e12922faed8af62f9e176035574bb1239b6735",
+      "bytes": 522,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/template/fonts/display/generic_title.tres",
+      "blob": "d0d5a003756a7bc65ea3427b0ecdaa3fe8f6f853",
+      "bytes": 484,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/template/fonts/noto_sans_sc_bold.tres",
+      "blob": "db38c06205f00ba3243a9b81e862126737f8488f",
+      "bytes": 316,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/template/fonts/noto_sans_sc_medium.tres",
+      "blob": "b65d0536025f84a1d7fe41d3f80b4addb362bad0",
+      "bytes": 316,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/template/fonts/noto_sans_sc_regular.tres",
+      "blob": "676729b9ea8a1e86d29e1132bc997560adf1c1c6",
+      "bytes": 316,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/template/fonts/runtime-cjk.json",
+      "blob": "2abefff57b45b0b85445c2f3c4887c036a5fd2e6",
+      "bytes": 1269,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/template/fonts/ui_bold.tres",
+      "blob": "90ab312d6939988a69481d206c7f70e3464cf838",
+      "bytes": 466,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/template/fonts/ui_medium.tres",
+      "blob": "a8fc18f64f3c8f9b55889d7aa30907ea29019d87",
+      "bytes": 470,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/template/fonts/ui_regular.tres",
+      "blob": "d4032bf6f6e61e242110b31caf8e758e4f9b71bf",
+      "bytes": 472,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/template/powerups/energy.png",
+      "blob": "63781dd60777bcf98c9ba109d587142d2236d76f",
+      "bytes": 50950,
+      "mode": "100644",
+      "materialization": "immutable-binary-hardlink",
+      "source_posix_mode": "0o600"
+    },
+    {
+      "path": "assets/template/powerups/energy.png.import",
+      "blob": "cae88b73206cff5315b8e7a74493bfbf5ed97a13",
+      "bytes": 947,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/template/powerups/magnet.png",
+      "blob": "71a9cf99ae72ebd6a5c9d4fa3ca1003d922a65c1",
+      "bytes": 53724,
+      "mode": "100644",
+      "materialization": "immutable-binary-hardlink",
+      "source_posix_mode": "0o600"
+    },
+    {
+      "path": "assets/template/powerups/magnet.png.import",
+      "blob": "c4ebef638a89658d6a4f357661c8e5b5e6b33699",
+      "bytes": 946,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/template/powerups/overdrive.png",
+      "blob": "448edb7e307c06d785bf7f50f29a3602230e60e9",
+      "bytes": 37238,
+      "mode": "100644",
+      "materialization": "immutable-binary-hardlink",
+      "source_posix_mode": "0o600"
+    },
+    {
+      "path": "assets/template/powerups/overdrive.png.import",
+      "blob": "22aba1b7606c235565a98e533181b8455a8e6c14",
+      "bytes": 956,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/template/powerups/shield.png",
+      "blob": "698fe41bada10e2f52bb50008f776ec52e8ae429",
+      "bytes": 39659,
+      "mode": "100644",
+      "materialization": "immutable-binary-hardlink",
+      "source_posix_mode": "0o600"
+    },
+    {
+      "path": "assets/template/powerups/shield.png.import",
+      "blob": "35fbc1a94451624732133a4b11279ce3b187165b",
+      "bytes": 946,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/template/powerups/slow_field.png",
+      "blob": "c6f2c9cc7208894e51a872cd20a7c81e6484b475",
+      "bytes": 49145,
+      "mode": "100644",
+      "materialization": "immutable-binary-hardlink",
+      "source_posix_mode": "0o600"
+    },
+    {
+      "path": "assets/template/powerups/slow_field.png.import",
+      "blob": "77c586c082f8688361603c095e0b3db15758b68c",
+      "bytes": 959,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/template/provenance/AUDIO.md",
+      "blob": "d3426b27dde36e92b6667fefb49eb34eed1f39d1",
+      "bytes": 1389,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/template/provenance/IMAGEGEN.md",
+      "blob": "6291eaf4d894d5eca8bb130f70c490fef3381d2d",
+      "bytes": 10963,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/template/ui/loading-background.png",
+      "blob": "df9030d657e92b308d98cefdd134391fda24b4fd",
+      "bytes": 473356,
+      "mode": "100644",
+      "materialization": "immutable-binary-hardlink",
+      "source_posix_mode": "0o600"
+    },
+    {
+      "path": "assets/template/ui/loading-background.png.import",
+      "blob": "086bdac079394a25e613819ea0b98b25eb5c86aa",
+      "bytes": 977,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/template/ui/pause_glass.png",
+      "blob": "f96cc5ccf51db8b31ee8463a9a16bb4385e5161f",
+      "bytes": 115691,
+      "mode": "100644",
+      "materialization": "immutable-binary-hardlink",
+      "source_posix_mode": "0o600"
+    },
+    {
+      "path": "assets/template/ui/pause_glass.png.import",
+      "blob": "e88931788d118e015768f93a3cedf1f5af34c662",
+      "bytes": 956,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "assets/template/ui/title_glass.png",
+      "blob": "79c5ac2f16e696a9fc62fe4dff1a3dc8064952a6",
+      "bytes": 155592,
+      "mode": "100644",
+      "materialization": "immutable-binary-hardlink",
+      "source_posix_mode": "0o600"
+    },
+    {
+      "path": "assets/template/ui/title_glass.png.import",
+      "blob": "674fd8f2d827f90b76f74f7b881e31dbf12a36ad",
+      "bytes": 956,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "autoload/audio_director.gd",
+      "blob": "14510933b76e15f61c87b3a4cf5df90e6941e8db",
+      "bytes": 16538,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "autoload/audio_director.gd.uid",
+      "blob": "daccd7d2a5cc119de47801236a27dc762ebde740",
+      "bytes": 19,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "autoload/i18n.gd",
+      "blob": "cbfb2de55968934553cc2f0397ed2fb719966866",
+      "bytes": 2090,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "autoload/i18n.gd.uid",
+      "blob": "1a984257c54215a45189d20c6bae22fdd6525953",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "autoload/manus_font_theme.gd",
+      "blob": "8bfdcd66babd1257b0aa97f689ec0ff81fc15fb2",
+      "bytes": 1096,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "autoload/manus_font_theme.gd.uid",
+      "blob": "d8e37c4f067d7e4b5a0c9900e33cb2a6d5f8d3e5",
+      "bytes": 19,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "autoload/save_store.gd",
+      "blob": "d9c4281431bc08516bcf8b45f7a5d09231fabb5e",
+      "bytes": 24235,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "autoload/save_store.gd.uid",
+      "blob": "39f469779e8ce0f89f72b7cfd62922d4fd459437",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "autoload/tuning_store.gd",
+      "blob": "fd84c7cf584345aed04ee8f98148962cc9640cdb",
+      "bytes": 8584,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "autoload/tuning_store.gd.uid",
+      "blob": "4c8a1ce57d226726c7e179ceca63aa66b18e0aa3",
+      "bytes": 19,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "autoload/web_hidpi_boot.gd",
+      "blob": "163b621e7bdc8fb997ff00cf0aeaa67644866516",
+      "bytes": 576,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "autoload/web_hidpi_boot.gd.uid",
+      "blob": "f5454fc654df1d88e1805df73b69bbb59ce7df5f",
+      "bytes": 19,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "build/.gdignore",
+      "blob": "8b137891791fe96927ad78e64b0aad7bded08bdc",
+      "bytes": 1,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "config/tuning.json",
+      "blob": "2575621b68bb3a1f42a80a223338fd8c9e8a04a9",
+      "bytes": 8646,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "docs/agents.md",
+      "blob": "59a989b0b07f1ed5712109fda91b86e39f9c86dd",
+      "bytes": 12699,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "docs/collaboration/goal-ownership.md",
+      "blob": "c44dc3c3b870dbadbfc22c9479c34e6292fec82e",
+      "bytes": 25145,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "docs/collaboration/personnel-availability.md",
+      "blob": "7d455074e16b964085032902845e1a0cad055822",
+      "bytes": 14482,
+      "mode": "100644",
+      "materialization": "precise-blob"
+    },
+    {
+      "path": "docs/decisions.md",
+      "blob": "bf2108d26d18d876260d69fdfc14cb771dc82ba4",
+      "bytes": 243698,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "docs/game-design.md",
+      "blob": "d49356904f660b454d78890194067aaeaace09ca",
+      "bytes": 47183,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "docs/requirements.md",
+      "blob": "f2e716bbec9314484f746699925a448fdc504e17",
+      "bytes": 133294,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "export_presets.cfg",
+      "blob": "0de4f0bd02ff99376e106ed0d306215c4ad1e40f",
+      "bytes": 1334,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "game-sharing.json",
+      "blob": "4a9e1eee798a58608f594010bb42cb9112330895",
+      "bytes": 775,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "game-verification.json",
+      "blob": "2ce004c3f39d1501e2fd23f1a18bcb4c3bb8d820",
+      "bytes": 344,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "localization/en.json",
+      "blob": "713f16c95bbd8d1f74e147443bc15527c3fbd04f",
+      "bytes": 18642,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "localization/zh-CN.json",
+      "blob": "dfbc8843126012f248de6c749fb74265aa4e474c",
+      "bytes": 18453,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "package.json",
+      "blob": "93f7af4a35103b9b437e66b481176940ee68a5d6",
+      "bytes": 1046,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "project.godot",
+      "blob": "863d890c353f781a758b698e5386315a6323df9a",
+      "bytes": 5543,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scenes/experimental/resident_walk_authored_v1.tres",
+      "blob": "64a295302b2e3163a6d9f46824405fa52fcce2b9",
+      "bytes": 2706,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scenes/experimental/resident_walk_authored_v1.tscn",
+      "blob": "036cb15db018f7fe0d029397f8b2614e75eb45d6",
+      "bytes": 352,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scenes/main.tscn",
+      "blob": "b38d830360e230443976bda00eada736b88769c2",
+      "bytes": 283,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scenes/native_walker.tscn",
+      "blob": "a435f49405ef3cf9793c664088581ff5e5506482",
+      "bytes": 185,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/effects/effects_director.gd",
+      "blob": "979fac9b6d3fb060cad40c069e35486782023932",
+      "bytes": 3434,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/effects/effects_director.gd.uid",
+      "blob": "1c87e4ce5f41eb1fa2ff166126357d4c0e7070ef",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/entities/felt_actor.gd",
+      "blob": "273100d74393f28a9fad6199d28a1b7ce97ce075",
+      "bytes": 28440,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/entities/felt_actor.gd.uid",
+      "blob": "c4924b6b50bc33fcb80b8c711a11ff05cb05d1e2",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/entities/grass_art.gd",
+      "blob": "0357753164051fd65892b17dc7001f2e33508a6a",
+      "bytes": 1298,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/entities/grass_art.gd.uid",
+      "blob": "93754b575cfe01fb41c99969368a7ed1ff598dd0",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/entities/grass_patch.gd",
+      "blob": "fba2937a5f92f1119ab747943a13d944353665d0",
+      "bytes": 3826,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/entities/grass_patch.gd.uid",
+      "blob": "cc8b35b2970e7ddb7784aa1a4a24f1942b7cfd30",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/entities/grounded_gait.gd",
+      "blob": "8b8a79e23a3cd856bdc2a4c7f599142b810c304e",
+      "bytes": 2078,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/entities/grounded_gait.gd.uid",
+      "blob": "e1af9c8f133ab0c4a75456a7e54c9684ee9ff0d1",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/entities/layered_hero.gd",
+      "blob": "ff4b19da72ce2376911978220793e74737cdd5c0",
+      "bytes": 2536,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/entities/layered_hero.gd.uid",
+      "blob": "33a004e2beab7ce49f709690a3c17ad6afa8e591",
+      "bytes": 19,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/entities/layered_llama.gd",
+      "blob": "219c9757bb40065d0878b657aff6379da89bf1cb",
+      "bytes": 3186,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/entities/layered_llama.gd.uid",
+      "blob": "cab2bf25b414b4bc9cbfe887ed7e4c237b1fd865",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/entities/native_walker.gd",
+      "blob": "e47d60ed68ec1586d2515a898c1fea0e3920ec25",
+      "bytes": 6668,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/entities/native_walker.gd.uid",
+      "blob": "8ef942da12846050cd81fb149faea888a750e050",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/entities/painted_walker.gd",
+      "blob": "700b27a5aef1979b887536ba1da6a34cfb7f08ae",
+      "bytes": 7078,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/entities/painted_walker.gd.uid",
+      "blob": "d95b9efdcb2bd76d45ecd8e62791e8e76e2a0f03",
+      "bytes": 19,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/entities/planted_gait.gd",
+      "blob": "9e82d51722925253fabd9b867fa8348046fcb91c",
+      "bytes": 11743,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/entities/planted_gait.gd.uid",
+      "blob": "1bc0672f1ccdcbf7e79283504d4721fd521fc628",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/entities/resident_walker.gd",
+      "blob": "6840ded9a34654afac65416bcfccb266d28ef6ea",
+      "bytes": 3302,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/entities/resident_walker.gd.uid",
+      "blob": "a05ef2cf639e9b086fc33925d510a3d92730b20d",
+      "bytes": 19,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/entities/runner.gd",
+      "blob": "c4afe75f6922203b9e2133e6e8232ba7f56f7815",
+      "bytes": 2966,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/entities/runner.gd.uid",
+      "blob": "44a5bf6df760cfb52a855fb9ba5e419d86a4c207",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/entities/sentinel.gd",
+      "blob": "1b0d405275759e35a706b9385cd5b562c84d877e",
+      "bytes": 2644,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/entities/sentinel.gd.uid",
+      "blob": "fc3251bb57720255b19c4c20385a3c183f653ca8",
+      "bytes": 19,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/entities/sequence_resident.gd",
+      "blob": "9ee732291d9bc9e1c76f96db6c63439a371736f9",
+      "bytes": 2827,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/entities/sequence_resident.gd.uid",
+      "blob": "6d1f7850542163c04bc3da72624e73238f7586b9",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/entities/vacationer.gd",
+      "blob": "3af098545d78a8ca94080853a1faf643d53f6a18",
+      "bytes": 10544,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/entities/vacationer.gd.uid",
+      "blob": "894c96146a71140ffb5cf2873364826a38217355",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/exploration/exploration_catalog.gd",
+      "blob": "7be9cb63e74549b1dd746050ff286fa2a73cc9ed",
+      "bytes": 1262,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/exploration/exploration_catalog.gd.uid",
+      "blob": "91385bb80b1ce70975ac81953c4189812ad4bcee",
+      "bytes": 19,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/exploration/exploration_contract.gd",
+      "blob": "4ba56db0feb2b513dd0a97b13796c4833055e99b",
+      "bytes": 10525,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/exploration/exploration_contract.gd.uid",
+      "blob": "6c442e95d099a62c0fb3e85e9e69200b3645b7b8",
+      "bytes": 19,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/exploration/exploration_director.gd",
+      "blob": "f02bddd08cf2872e8815d3cf1d18f9720a02de22",
+      "bytes": 5491,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/exploration/exploration_director.gd.uid",
+      "blob": "8e60b437b806a6ad06179e8eaf53267a728b7328",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/exploration/exploration_host.gd",
+      "blob": "d6e3531f8cd98ba1eb8df4050414fa1fb1e90091",
+      "bytes": 11785,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/exploration/exploration_host.gd.uid",
+      "blob": "3c280a61f88d4b72ca780c37ed10f02ece8e6d68",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/exploration/exploration_routes.gd",
+      "blob": "e1edd7f1a6a5c28510ef5c7dc5f07b0d6192d6cd",
+      "bytes": 2132,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/exploration/exploration_routes.gd.uid",
+      "blob": "66d62cc3e029cb452b052093c143c037e011cccc",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/exploration/exploration_session.gd",
+      "blob": "90d4da916d4290b466378da53c653f7e57385466",
+      "bytes": 20957,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/exploration/exploration_session.gd.uid",
+      "blob": "829eea5bf57b6761b66fc7ffbcaaa742c8371aba",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/exploration/find_reveal.gd",
+      "blob": "14ce4945a80ebdf4aa5c7918350b81fcfcd2c088",
+      "bytes": 3759,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/exploration/find_reveal.gd.uid",
+      "blob": "6136ae4ec6eae86d36ed72b12a74bb6759cfc1e2",
+      "bytes": 19,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/exploration/keepsake_art.gd",
+      "blob": "6f0fa1de66aad018f02f8d149e3ff672af98c2bc",
+      "bytes": 2606,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/exploration/keepsake_art.gd.uid",
+      "blob": "72e096c6e34b28916b00951ae246182ba10efef8",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/exploration/near_path_layout.gd",
+      "blob": "e7f7d288680f6acb9b70e880c30e07df9950d1d1",
+      "bytes": 7777,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/exploration/near_path_layout.gd.uid",
+      "blob": "2ced4e7d6d26955039722de80e6fba35016cdb2e",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/exploration/near_path_scroll.gd",
+      "blob": "c5375ca93d96abc12f229c83bc74e7af2374f368",
+      "bytes": 19512,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/exploration/near_path_scroll.gd.uid",
+      "blob": "f0165155e4b311c7d124c0867b62d9b0da71c0e5",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/game/animal_relationship_encounter.gd",
+      "blob": "c24e8a9e443b846257006567759d6d01783bf8ae",
+      "bytes": 3941,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/game/animal_relationship_encounter.gd.uid",
+      "blob": "feab1703a4a163c29c49c83ffa757c6a7744d131",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/game/animal_relationships.gd",
+      "blob": "e333f354e5197eb2c142015b9110caa85386efd4",
+      "bytes": 1382,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/game/animal_relationships.gd.uid",
+      "blob": "638d81f9d36ea917d7e644d4b52d3b63c58ef583",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/game/boundary_feedback.gd",
+      "blob": "dc61fa16f0c5bcd127f1ccc8e7f70bb30d3a6f55",
+      "bytes": 482,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/game/cast_art.gd",
+      "blob": "2578e7023fc02ec911bf1e83317d9d3b6090f349",
+      "bytes": 5110,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/game/cast_art.gd.uid",
+      "blob": "863c73e995b19e5c0ec2d3ce97ef248059d1deed",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/game/expression_catalog.gd",
+      "blob": "b005319b2f4cbbc0841c07f17c6ac50d89e49f3f",
+      "bytes": 6913,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/game/expression_catalog.gd.uid",
+      "blob": "d8ce1e8ce4240e8ed0ea8a8442c84ea0f2756c77",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/game/maze_world.gd",
+      "blob": "5963b8af714649175efc9c4c3d57a0124857bb41",
+      "bytes": 19400,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/game/maze_world.gd.uid",
+      "blob": "30d2edb43391ff4a6a6a46938d4f544043016de2",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/game/stage_catalog.gd",
+      "blob": "e5e2f4d96d8f63825cf35146aedc2c698096d2b7",
+      "bytes": 3939,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/game/stage_catalog.gd.uid",
+      "blob": "3947c71def4a25f0acde9517fdaa9c33c2ebf2ba",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/game/world_effects_overlay.gd",
+      "blob": "395fecec828ab6b65231282ea987317f2061c0a4",
+      "bytes": 12646,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/game/world_effects_overlay.gd.uid",
+      "blob": "cbfbc6ba36da6ec501cf5ffb1f99ec9ec1ac29ec",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/game/yard_bodies.gd",
+      "blob": "5076ee105432b4633399b48d8cdbc7697b88498a",
+      "bytes": 4936,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/game/yard_bodies.gd.uid",
+      "blob": "4ba0fe066c8713444dee4bdbb5407b50d1c18391",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/game/yard_ground.gd",
+      "blob": "307b09426e88ea75435c50487a20e0969ca57401",
+      "bytes": 4092,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/game/yard_ground.gd.uid",
+      "blob": "b97ac3bfa7e4bfdd77e1ae4c63fa5c3c4fe50f12",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/game/yard_interaction.gd",
+      "blob": "3dd47542a5d9b3942c4644e69c43394b05730d44",
+      "bytes": 6803,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/game/yard_interaction.gd.uid",
+      "blob": "ea6ba23be2be28a66948c6d904f497f1b9b31fca",
+      "bytes": 19,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/game/yard_prop_visual.gd",
+      "blob": "7a8209dfaa67ad65cc1b2e4997c0236cba4abe51",
+      "bytes": 10664,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/game/yard_prop_visual.gd.uid",
+      "blob": "39ed4c6ceb8eec180673a1d50abc19a4d2f05f6d",
+      "bytes": 19,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/game/yard_scene_feedback.gd",
+      "blob": "9a03f280049cad8b1b18956f5c5a74fae0c5719d",
+      "bytes": 14696,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/game/yard_scene_feedback.gd.uid",
+      "blob": "173cedabd3a4b0f36295715fa7612a9de1edd3f9",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/game/yard_scene_hotspots.gd",
+      "blob": "56394ec6412e444b00328c7cc40cf6647bce70b0",
+      "bytes": 4432,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/game/yard_scene_hotspots.gd.uid",
+      "blob": "20ba78edfd407e33a5512bb0a8f1d70e6ccc6950",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/game/yard_world.gd",
+      "blob": "aebc755a4c828bc2a97b217ea432fdb658e37c60",
+      "bytes": 72938,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/game/yard_world.gd.uid",
+      "blob": "f46b8167013c07694d94d2168381efaab6bdd3d6",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/main.gd",
+      "blob": "73b1201b454127facd343b066da935a21346c22c",
+      "bytes": 92185,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/main.gd.uid",
+      "blob": "61efe980059fde8c40bbb653bfd26d98ee4ee59b",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/manus/browser_bgm_backend.gd",
+      "blob": "9cc911886362c34b0bebbe2a8668cc6752103231",
+      "bytes": 12259,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/manus/browser_bgm_backend.gd.uid",
+      "blob": "cdf488deb01f0f3b3b93f80f2ad0270c8786b1f1",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/manus/browser_bgm_player.gd",
+      "blob": "f83a05c56d5a529ab238cc265956778a17f583e2",
+      "bytes": 13249,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/manus/browser_bgm_player.gd.uid",
+      "blob": "1e4e7bb074eb4852ee9755f9d4f7a27b7fef1e06",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/manus/game_fonts.gd",
+      "blob": "cff16db79268ab9ca9abe67686317cebfc607a09",
+      "bytes": 5776,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/manus/game_fonts.gd.uid",
+      "blob": "4bc92a9922637dd4765041f2f96ab88a0d92c809",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/manus/open_source_licenses.gd",
+      "blob": "e4abf3b746918cb5d204338b4bed3666b4f5acf4",
+      "bytes": 3962,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/manus/open_source_licenses.gd.uid",
+      "blob": "ef59d34eca88b308b481ca8332dda80c2929e4cf",
+      "bytes": 18,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/manus/preview/tuning_adapter.gd",
+      "blob": "f30406ac3363211a3d2eb20dc7fb07bcff3539a3",
+      "bytes": 684,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/manus/preview/tuning_adapter.gd.uid",
+      "blob": "d5ec6dcb94640811bd659d3f33229b52cad050a1",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/manus/preview/tuning_transport.gd",
+      "blob": "845eedb5cfe41711f0f4b14f093159b45c825ecc",
+      "bytes": 6667,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/manus/preview/tuning_transport.gd.uid",
+      "blob": "0311e9b44d931f8e683c65150b165ef088571bb5",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/manus/procedural_sfx.gd",
+      "blob": "5bac89f3f21e5b2fe574b0896ad0f90f1792247a",
+      "bytes": 1665,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/manus/procedural_sfx.gd.uid",
+      "blob": "f3ab3b703686d25bccedc0e73d0204dee3e0bcab",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/manus/runtime-command.cjs",
+      "blob": "39fd46daecc470eaf3731632a1969e0f382144ad",
+      "bytes": 1480,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/persistence/native_save_host.gd",
+      "blob": "80e943b153e67b8febfdb5367151f3bea3a8889e",
+      "bytes": 15723,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/persistence/save_coordinator.gd",
+      "blob": "a511ed900bb0e11f74e106986ee068f10ab100d1",
+      "bytes": 9799,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/persistence/save_data_codec.gd",
+      "blob": "9135353dc223794bbebc4ca9114d4da64a80b3db",
+      "bytes": 4037,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/persistence/save_data_codec.gd.uid",
+      "blob": "9b9fb756caca5463bdb6bf48ba90556a8d2f47b2",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/persistence/save_files.gd",
+      "blob": "8d13fc8ef3f1d5b5d74886e17cf877378398a118",
+      "bytes": 2412,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/persistence/save_files.gd.uid",
+      "blob": "68b2801218e5c44d24319b4b379da0754d4dfda1",
+      "bytes": 19,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/persistence/web_save_host.gd",
+      "blob": "b1bc8ec27e51185b45a5f1d32bfa3981114af9d4",
+      "bytes": 8104,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/persistence/web_save_host.gd.uid",
+      "blob": "d3650c152d58c52d7bd9e206d67b47a5cb460931",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/persistence/web_save_legacy_reply.gd",
+      "blob": "8e453677c2908c7f03e14c45c606f11e11f97c88",
+      "bytes": 6347,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/persistence/web_save_reply.gd",
+      "blob": "1a5541a70b3fd9a1ad7d9e2d0d297e092a9e0041",
+      "bytes": 6459,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/persistence/web_save_reply.gd.uid",
+      "blob": "7121cda3fce2174ebbdacae20a65e779ba09b56d",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/platform/motion_preference.gd",
+      "blob": "1038b94a03891f03a3ad13ae3d90b7b372859d79",
+      "bytes": 2308,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/platform/motion_preference.gd.uid",
+      "blob": "47819145ea92de5e98422f761b9147a8796bdd3b",
+      "bytes": 19,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/score/run_score_service.gd",
+      "blob": "016ddbd0ea65e4d1694462cc7656495791b543c2",
+      "bytes": 1832,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/score/run_score_service.gd.uid",
+      "blob": "d4226f135b061b87e39a2e3d16f035c8a3defdb8",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/ui/arena_frame.gd",
+      "blob": "e90fd24d099c83c04e267b1842c9d312f29c7f40",
+      "bytes": 2080,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/ui/arena_frame.gd.uid",
+      "blob": "c243b78b8bb600d94d01e26321a71946a2518ec1",
+      "bytes": 19,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/ui/menu_list.gd",
+      "blob": "fe829e7c9bfa93581d2952f0e8844432bf6f784f",
+      "bytes": 4544,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/ui/menu_list.gd.uid",
+      "blob": "395526aa5d93b770147d54ef75bac1fd834419d0",
+      "bytes": 19,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/ui/photo_arrival.gd",
+      "blob": "efcb706436a4595e7b174e1d5427e7b3a9d5a1a7",
+      "bytes": 10165,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/ui/photo_arrival.gd.uid",
+      "blob": "706769f9e5c22967eb9b0b53caa072307a84c4b3",
+      "bytes": 19,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/ui/photo_diary.gd",
+      "blob": "3026fb05fa603dd0a35681c4c9683ad7b262a0a3",
+      "bytes": 1278,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/ui/photo_diary.gd.uid",
+      "blob": "a317a35299d5df8727e2a8e5c9d9464858b16134",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/ui/photo_moment.gd",
+      "blob": "74d896d3267b5b0298f5a3e5b5ec83a8b17460b4",
+      "bytes": 25875,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/ui/photo_moment.gd.uid",
+      "blob": "1b027d5e7909b0516cbe661689b36b44c0d61ffe",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/ui/screen_factory.gd",
+      "blob": "8630f6b47ca6e88b5be52a1396a9e92efbcef4bd",
+      "bytes": 15703,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/ui/screen_factory.gd.uid",
+      "blob": "27a7e8b92cd7bb7e2ca0f90b9430ff798a9cb8c5",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/ui/title_art.gd",
+      "blob": "013f4285927d89810762028763c99e3581e370ba",
+      "bytes": 7221,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/ui/title_art.gd.uid",
+      "blob": "9136847041433d454d6b1107425e4f5f7d1cf37a",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/ui/tutorial_callout.gd",
+      "blob": "21ba58433205b6bb60869c0aa10909de5e742fe0",
+      "bytes": 4599,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/ui/tutorial_callout.gd.uid",
+      "blob": "d1c0191a2950f75818df9e3b42844bf91e7c4f5d",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/ui/web_hidpi.gd",
+      "blob": "397e093048f46b94d3a20e2644c385331c38b0a6",
+      "bytes": 1626,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "scripts/ui/web_hidpi.gd.uid",
+      "blob": "267ea4ca493b699367ec1c3d4de60069eeb3ffab",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "shaders/arcade_filter.gdshader",
+      "blob": "e4760cab6cac6d31a763e2c3fc5f672245ad8ee9",
+      "bytes": 524,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "shaders/arcade_filter.gdshader.uid",
+      "blob": "2a1483a77c5d14ff9bbef71ee3e977fad6c98a99",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "shaders/felt_walk.gdshader",
+      "blob": "f8a104f67945f2c11f236ec061d4018d21ec893f",
+      "bytes": 2038,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "shaders/felt_walk.gdshader.uid",
+      "blob": "4c8465d263add74023aa75ebede951cdabf2b7d8",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "shaders/holo_panel.gdshader",
+      "blob": "f7cdd32b4bdef94767ea2b444a14c4b9f82ea897",
+      "bytes": 771,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "shaders/holo_panel.gdshader.uid",
+      "blob": "4089b65c4e64143bf43a3d2bf490613fd5c007ae",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "shaders/logo_chrome.gdshader",
+      "blob": "5f644954f04124048fc65cd74f709927d1306f41",
+      "bytes": 1190,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "shaders/logo_chrome.gdshader.uid",
+      "blob": "3043bffbca66bdc0aaa2b52c1204b9efde9ff963",
+      "bytes": 19,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "shaders/modal_backdrop.gdshader",
+      "blob": "f331ce5901a77174a809e2b0830ac7b364b5eb14",
+      "bytes": 840,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "shaders/modal_backdrop.gdshader.uid",
+      "blob": "a2b115e2082012c1cbc0118216f6c1e696cf753f",
+      "bytes": 19,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "site/THIRD_PARTY_NOTICES.txt",
+      "blob": "490778a9ef5ee2f51f4079e4ef7e49293e469162",
+      "bytes": 146012,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "site/game-release.json",
+      "blob": "82fc64d8108a342e04eab695c5b16543c5e6b8e2",
+      "bytes": 39655,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "site/game-sharing.json",
+      "blob": "fb33413a9dfe6b297fe3da5c644dc069d5c5333a",
+      "bytes": 1450,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "site/index.apple-touch-icon.png",
+      "blob": "92054dfbd7070fb4dfc8aa053a0f04c601a82fb6",
+      "bytes": 59343,
+      "mode": "100644",
+      "materialization": "immutable-binary-hardlink"
+    },
+    {
+      "path": "site/index.apple-touch-icon.png.import",
+      "blob": "494d76c05656d2fba1c7da96457963c689d456a7",
+      "bytes": 975,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "site/index.audio.position.worklet.js",
+      "blob": "4e512c1e3c99c63cc69b0345b7bb250679e0d313",
+      "bytes": 2973,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "site/index.audio.worklet.js",
+      "blob": "3b94cab85cb937fa27056d17648cdbb73e44bdbd",
+      "bytes": 7298,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "site/index.html",
+      "blob": "8ba6dc638387892e8a67897ad792984ef3220dd9",
+      "bytes": 143307,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "site/index.icon.png",
+      "blob": "b1a7ffaa37d30529f92e0d3d34585c5324f841fb",
+      "bytes": 389674,
+      "mode": "100644",
+      "materialization": "immutable-binary-hardlink"
+    },
+    {
+      "path": "site/index.icon.png.import",
+      "blob": "c808264908a0fc94c8fbb264c57462d6ba91c0f0",
+      "bytes": 939,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "site/index.js",
+      "blob": "93f3f94ef262034ce6ae4a76071679e7bd24afda",
+      "bytes": 279934,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "site/index.png",
+      "blob": "23567def86edeb5c96d203ec1ddef23032d08520",
+      "bytes": 1010767,
+      "mode": "100644",
+      "materialization": "immutable-binary-hardlink"
+    },
+    {
+      "path": "site/index.png.import",
+      "blob": "777de074a2d05c2f54fd59c8701082f4b31ee97e",
+      "bytes": 923,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "site/open-source-licenses.html",
+      "blob": "ad9ed8e77c0c50dd7dd3b1f24ba2b7417a66f601",
+      "bytes": 147966,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "site/share/744c4ef4ff02a5c20b4bf6b258cd91327cc6f16e40105c4b640c10bec936a509.png",
+      "blob": "07fc7c6ba067bebbdcc5d069bcb2379a77e18b16",
+      "bytes": 1365017,
+      "mode": "100644",
+      "materialization": "immutable-binary-hardlink"
+    },
+    {
+      "path": "site/share/744c4ef4ff02a5c20b4bf6b258cd91327cc6f16e40105c4b640c10bec936a509.png.import",
+      "blob": "ec41ebf998fb51cceba9e0f84481b87bb522667c",
+      "bytes": 1106,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "site/share/7e67d7987c0566aa7608d8069d8c49d1e195bf0ff0aa5c82d7808f2d470e45a3.png",
+      "blob": "40ff8dccd455181c9e832d3aa22420b5184417fb",
+      "bytes": 382395,
+      "mode": "100644",
+      "materialization": "immutable-binary-hardlink"
+    },
+    {
+      "path": "site/share/7e67d7987c0566aa7608d8069d8c49d1e195bf0ff0aa5c82d7808f2d470e45a3.png.import",
+      "blob": "c4a5eaf6b92f6a59a2cc04a4d43ed0750eefda6d",
+      "bytes": 1106,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "template-provenance.json",
+      "blob": "2d400af975b9ac2ecb8f2f9fd99fd860926cd545",
+      "bytes": 10886,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "template.json",
+      "blob": "4fad95346f5c75e70357defb5a1522a8e41f5806",
+      "bytes": 433,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/album_layout_suite.gd",
+      "blob": "d8d989f093308ffbc8db537a4f1b1cd670d85ea7",
+      "bytes": 5938,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/album_short_landscape_suite.gd",
+      "blob": "2858e9119fa3ad26b8e5a7a04203828f315a9d5a",
+      "bytes": 9057,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/album_short_landscape_suite.gd.uid",
+      "blob": "f2240f086022911e9405703e4440fb56cf8bde22",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/animal_home_suite.gd",
+      "blob": "0e4fa3a53be607bdeb76ec0aa7da88375e0fd32e",
+      "bytes": 8936,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/animal_home_suite.gd.uid",
+      "blob": "017952922d055905e06230572f37c6d9dda5e084",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/audio_button_input_suite.gd",
+      "blob": "70b79621a6602dfaf6d06694e80e416180668ad4",
+      "bytes": 3943,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/audio_button_input_suite.gd.uid",
+      "blob": "3438a86331af5370c95f52b4dba36a5bec7cf9b7",
+      "bytes": 19,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/authored_sequence_suite.gd",
+      "blob": "6eaabdef14da3ec8850262d4e1d2e3c2bd6feaeb",
+      "bytes": 1252,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/authored_sequence_suite.gd.uid",
+      "blob": "9771f7e5cc5dc951020961d5ebaa6c7cdb858672",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/boundary_feedback_suite.gd",
+      "blob": "da509f9ef5a6ef9fc79f7c3b74e8bad885ea56f0",
+      "bytes": 2155,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/boundary_feedback_suite.gd.uid",
+      "blob": "c596ee168be00e48df022d00f2af7d07dd166681",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/camera400_handoff_suite.gd",
+      "blob": "2a4da8d81264db1e5e902e5502ef27cfd49d35da",
+      "bytes": 10196,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/camera400_handoff_suite.gd.uid",
+      "blob": "3fc33998261ad57fa0d9827aab27de8eeb16066d",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/confirm_panel_fit_suite.gd",
+      "blob": "625e9d522b0e7df1f5ca221e419ce5ae28e987fe",
+      "bytes": 5215,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/confirm_panel_fit_suite.gd.uid",
+      "blob": "f7b6850b984b913e4023e75c91543f1f909de366",
+      "bytes": 19,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/cow_glance_suite.gd",
+      "blob": "a2486ffa882a4c102ccbf5c77b9a7d223f4c9fd1",
+      "bytes": 2290,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/cow_glance_suite.gd.uid",
+      "blob": "94f170823313ab2490780ff3092d64d5a13c3022",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/day_label_layout_suite.gd",
+      "blob": "003d1d577e369d272dd0ec7872e5554b3c60e2ab",
+      "bytes": 3983,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/duck_attention_web/build.sh",
+      "blob": "47cc0bbd46981ff05b7d1e87218141a1c8f2d82c",
+      "bytes": 862,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/duck_attention_web/observer.gd",
+      "blob": "c8b9acc09173e294f2e8b5033b95bab689705b7e",
+      "bytes": 1525,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/duck_attention_web/observer.gd.uid",
+      "blob": "39b9c91e8fb71cbbfd0562675e96a9cd56e4da40",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/duck_attention_web/run.py",
+      "blob": "95ced880a829e2ca298b13b1dc7854ea2e9f437f",
+      "bytes": 3445,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/duck_feed_attention_suite.gd",
+      "blob": "209ed34ba5003fd4b9b1945122392897672cbce0",
+      "bytes": 4672,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/duck_feed_attention_suite.gd.uid",
+      "blob": "66855c36bc33387b3badab6a4db24ebc6aa7d3eb",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/explicit_target_suite.gd",
+      "blob": "fefaf7a95e1e9131c92395ee1c8dd430ffe0df8f",
+      "bytes": 7786,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/explicit_target_suite.gd.uid",
+      "blob": "abfc9412e35180b7a2e914ecb5e0e180b46e03b3",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/exploration_cleanup_contract_suite.gd",
+      "blob": "89849b803499a2e42adb5afe21e079d9c5d6b43e",
+      "bytes": 12555,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/exploration_cleanup_contract_suite.gd.uid",
+      "blob": "5e7a37b0a6d6dde6c387700f859c423d88a0d87e",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/exploration_cleanup_preservation_suite.gd",
+      "blob": "75f6730b70d26ede0796b77058a465421f407e5a",
+      "bytes": 3810,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/exploration_cleanup_preservation_suite.gd.uid",
+      "blob": "ac1f40b8c20df04cbb6060fc59bdb9e2b6d294b0",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/exploration_core_suite.gd",
+      "blob": "bc6eaccad41d25c8034a9dde5e6865bd41117651",
+      "bytes": 47807,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/exploration_core_suite.gd.uid",
+      "blob": "8ca5e0c0cc5abe730568ccb4d1f7764b3aaa54d6",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/exploration_first_experience/experience_demo.gd",
+      "blob": "0a0bee25539f82237e6321da8872ee6fdcecafdd",
+      "bytes": 5712,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/exploration_first_experience/experience_demo.tscn",
+      "blob": "f1d27488c7c14113b3ccb643149f853051213f5e",
+      "bytes": 214,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/exploration_first_experience/experience_export_presets.cfg",
+      "blob": "cb731ac02c91c954dc80961b81fcf3dd93bdf20f",
+      "bytes": 1513,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/exploration_first_experience/experience_project.godot",
+      "blob": "258b1b796dbbdee2b3b755d92a0e3e2dc3613e83",
+      "bytes": 828,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/exploration_first_experience/experience_scroll.gd",
+      "blob": "97435264c19f8c169f2f8196bf06cff7dc59867a",
+      "bytes": 8286,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/exploration_first_experience/first_experience.gd",
+      "blob": "2a89a0817eaa9a9429812a98453de2d1b11ca090",
+      "bytes": 5414,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/exploration_first_experience/first_experience.tscn",
+      "blob": "fbe430a9243a6b295ce6328eef1260bcfd069d61",
+      "bytes": 228,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/exploration_first_experience/first_experience_suite.gd",
+      "blob": "7c99178c5f1cdaec53c6269a9327ea7902786878",
+      "bytes": 23073,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/exploration_first_experience/framing_model.gd",
+      "blob": "01d6c0364032d88743215e0d5d901164627d18c6",
+      "bytes": 3780,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/exploration_return_adapter/adapted_scroll.gd",
+      "blob": "041c5afe0a4bf9362d0419c3b4d5c3e14c17b326",
+      "bytes": 3444,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/exploration_return_adapter/adapter_demo.gd",
+      "blob": "76ffdb7fef9b26629ce3cfeac57b5e6d560b1bf9",
+      "bytes": 4069,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/exploration_return_adapter/adapter_demo.tscn",
+      "blob": "6e7047682ad79223cb1fbb74b794d78746db24b8",
+      "bytes": 206,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/exploration_return_adapter/adapter_export_presets.cfg",
+      "blob": "fb0d2d875acd9658c2acc91c86814b17daf4d1fd",
+      "bytes": 1345,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/exploration_return_adapter/adapter_project.godot",
+      "blob": "950def96e7b2dd3f9c793cc61af772ff70e357f3",
+      "bytes": 822,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/exploration_return_adapter/return_adapter.gd",
+      "blob": "2cd028353133c6aa9f82570cac28c8356a4f58af",
+      "bytes": 10940,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/exploration_return_adapter/return_adapter.tscn",
+      "blob": "e4659d53c154bb734866e2cb9dac1b8cbfae5721",
+      "bytes": 216,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/exploration_return_adapter/return_adapter_suite.gd",
+      "blob": "f484d0110bd6ca55b1be51052a3ecfbbb68cb6a9",
+      "bytes": 25117,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/exploration_return_adapter/sim_yard.gd",
+      "blob": "9ae414df14b221fee244eb1a5e1ca8a526dd9138",
+      "bytes": 7797,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/exploration_scroll_prototype/prototype_export_presets.cfg",
+      "blob": "680d4ab1ff7a42d6165ae103b222b8dfc32078ad",
+      "bytes": 1191,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/exploration_scroll_prototype/prototype_project.godot",
+      "blob": "90a8eb11d513a5c3290878f11d4eb3115e0775f8",
+      "bytes": 822,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/exploration_scroll_prototype/scroll_demo.gd",
+      "blob": "c7d9acb493963de133d975d4b85825739afcd3d6",
+      "bytes": 3303,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/exploration_scroll_prototype/scroll_demo.tscn",
+      "blob": "462ea1d52d66919154bce77b91b8ad8d270e8985",
+      "bytes": 206,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/exploration_scroll_prototype/scroll_input.gd",
+      "blob": "e9a17f8c2420d5357e5fee334daf63e74aa952fc",
+      "bytes": 770,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/exploration_scroll_prototype/scroll_prototype.gd",
+      "blob": "3e8513bc8bfbfab63ab2560de4bee9c99648fe71",
+      "bytes": 9617,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/exploration_scroll_prototype/scroll_prototype.tscn",
+      "blob": "d24aa728e437da5bd24d225090ec0cb2896ab97c",
+      "bytes": 220,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/exploration_scroll_prototype/scroll_prototype_suite.gd",
+      "blob": "f9c16a0e4e8dead1d9af2d29423edf9eb08df164",
+      "bytes": 11539,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/exploration_scroll_prototype/scroll_walk_model.gd",
+      "blob": "ff45a12fc4bc74a7ad2e3e03af7d430708cb47de",
+      "bytes": 2485,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/exploration_slice_suite.gd",
+      "blob": "da5f5e6280237fad03c649e7d7c7da28b202f7b3",
+      "bytes": 54564,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/exploration_slice_suite.gd.uid",
+      "blob": "c5f4dc57f648dd26ad264cce83b87a5ce4e21b46",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/fish_carry_consistency_suite.gd",
+      "blob": "f708386642562058986d83154f54825d5b77f66a",
+      "bytes": 17523,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/fish_miss_feedback_suite.gd",
+      "blob": "56f79e47bb80fb2f4717a9082a34cd18f379f2e2",
+      "bytes": 2623,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/fish_miss_feedback_suite.gd.uid",
+      "blob": "5dc91b85b8efb2de348074ca822f5d9b678ceec1",
+      "bytes": 19,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/fish_miss_feedback_web/main.gd",
+      "blob": "1028f657b53479de39f9de6708aebb6fb7222df3",
+      "bytes": 960,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/fish_miss_feedback_web/main.gd.uid",
+      "blob": "ed312c248c46b0821f051d5d8ae98ec40ec61352",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/fish_miss_feedback_web/main.tscn",
+      "blob": "9ae5001ca3149310e9688c24059c6f0b698941e8",
+      "bytes": 196,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/fishing_active_hud_suite.gd",
+      "blob": "b08fdac6207d4426c0a682b79f242985ed366717",
+      "bytes": 2919,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/fixtures/album_landscape_photo.json",
+      "blob": "1b99335858aa884dbfb36be76be602aa646fbb51",
+      "bytes": 82769,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/fixtures/exploration_fake_host.gd",
+      "blob": "81e91fbd7941d3cf401a9fd3cf82c932bacabd5a",
+      "bytes": 15329,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/fixtures/exploration_fake_host.gd.uid",
+      "blob": "4d26ca47b3e3766d400eb3564aebdd7b2fa3c811",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/fixtures/exploration_fixture_routes.gd",
+      "blob": "904efa5e804760f6cce7241b96444dade0d762e8",
+      "bytes": 1696,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/fixtures/exploration_fixture_routes.gd.uid",
+      "blob": "a197a6ccc82477285bdc9ee1b9048c535007a3ce",
+      "bytes": 19,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/fixtures/exploration_memory_store.gd",
+      "blob": "d3323daef3558f88507c5e4d71372cba49249400",
+      "bytes": 2516,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/fixtures/exploration_memory_store.gd.uid",
+      "blob": "eb3a1211c0d00527baf9b6a60ec2926e52a12845",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/godot_gate_test.sh",
+      "blob": "00e49a6a6232ec39d15d45c663e357db87236ec7",
+      "bytes": 8732,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/goose_feed_attention_suite.gd",
+      "blob": "633b43a57afdd9389bc09cc624de6c05eaa8b11f",
+      "bytes": 5229,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/goose_feed_attention_suite.gd.uid",
+      "blob": "0eddd2c6fde39e412f7b5669747e6c0f62161085",
+      "bytes": 19,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/goose_mount_suite.gd",
+      "blob": "541b3bb324d4398aafecddd62fff9a0279863c2a",
+      "bytes": 7607,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/goose_mount_suite.gd.uid",
+      "blob": "61c1c3dc87f730870ed4f2a9442ede3558e58cdb",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/grass_action_suite.gd",
+      "blob": "703ebc5d56f3f3b3eaa3c7d41b685b908a99f673",
+      "bytes": 3898,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/grass_action_suite.gd.uid",
+      "blob": "f5c4e94afbc2e1ef786c8b6b8ace64973719cdd4",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/grass_state_suite.gd",
+      "blob": "74289d0bb440faecd312081689118ad17f41a819",
+      "bytes": 7942,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/grass_state_suite.gd.uid",
+      "blob": "3550336f6a3bc395184d02ceb755708945b754a7",
+      "bytes": 19,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/hint_paper_fit_suite.gd",
+      "blob": "4904902400ffed07403ee1eefa62d4d1af2c0c97",
+      "bytes": 7946,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/hint_paper_fit_suite.gd.uid",
+      "blob": "6d7bdf65b1bdb675ea868bde652817bf3ceeb76a",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/holiday_start_once_suite.gd",
+      "blob": "3a1bf825b7cd32487581cac208434f90b9066940",
+      "bytes": 3893,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/interaction_photo_suite.gd",
+      "blob": "fa79adcade0018224be39e5234b5005032b108a6",
+      "bytes": 19279,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/interaction_photo_suite.gd.uid",
+      "blob": "b13dfe59e8017585ac037c1f429d4db58e9f01ee",
+      "bytes": 19,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/interaction_pose_suite.gd",
+      "blob": "e343b9616ec56e892b38d17bc4cc17525142efee",
+      "bytes": 4009,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/interaction_pose_suite.gd.uid",
+      "blob": "1b967cecf18cf85a510bbf50ac8d042511265a02",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/keyboard_ground_suite.gd",
+      "blob": "ddb2a84de9ed37eeca3396e82c260227231866d4",
+      "bytes": 4030,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/keyboard_ground_suite.gd.uid",
+      "blob": "83a5c831cf81ad4f791015c1cf9b5d3a052a1810",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/leading_clearance_suite.gd",
+      "blob": "cd9723737b2b35f6d96799fb1f44d8a01572d293",
+      "bytes": 1817,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/leading_clearance_suite.gd.uid",
+      "blob": "26f87dc0f7a924f3881516e5c788dc16b8f860b4",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/legacy_inspection/README.md",
+      "blob": "ced713279651d1b0aff7e2a8afc39f8c804bb1d9",
+      "bytes": 3059,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/legacy_inspection/no-seal-evidence.json",
+      "blob": "28852a8a7d60a6b504f5d6f7f86bd456195fafd7",
+      "bytes": 504,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/legacy_inspection/run.py",
+      "blob": "a86b8a403c74641e1dd6cf414b15ebfcf40a7426",
+      "bytes": 1200,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/legacy_inspection/sealed-evidence.json",
+      "blob": "28852a8a7d60a6b504f5d6f7f86bd456195fafd7",
+      "bytes": 504,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/legacy_inspection/suite.html",
+      "blob": "7983a8c3e4faaceb3b925444f38b4a49c84f83d5",
+      "bytes": 2982,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/licenses_dialog_fit_suite.gd",
+      "blob": "c0ca0e6d0648d97853d7b7c8d994072366d9e5d2",
+      "bytes": 6752,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/licenses_dialog_fit_suite.gd.uid",
+      "blob": "c0c61a144ccfa221c392d695550909f6ccf8bece",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/loading_shell_test.cjs",
+      "blob": "20fafaec77199a7c357896ffbbae6e162b22890f",
+      "bytes": 5907,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/locomotion_suite.gd",
+      "blob": "0b26fe4b21154fd7439214c50c322ee833e04857",
+      "bytes": 42054,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/locomotion_suite.gd.uid",
+      "blob": "4ae771e7b813eaa5622f3b54d184459eed9589eb",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/locomotion_suite.tscn",
+      "blob": "5996aa9e5e3f67362bfe82234ec5cf19722c2570",
+      "bytes": 203,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/mixed_input_photo_suite.gd",
+      "blob": "6a7d360273dc1daaa4cfee1d4fe27d0a5cd45836",
+      "bytes": 2434,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/mixed_input_photo_suite.gd.uid",
+      "blob": "ae6863906cd0d295f535126a6ec1e40a74ed29d8",
+      "bytes": 19,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/motion_preference_suite.gd",
+      "blob": "5ec331f4989bec270f3fc07b42ef97fd1ea27991",
+      "bytes": 2920,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/motion_preference_suite.gd.uid",
+      "blob": "193eccc8989cc19b69daaa6915715c46833c62e6",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/motion_preference_test.cjs",
+      "blob": "e11d1ebec21043ae1d490bab079f9c62f031848a",
+      "bytes": 2584,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/native_save_host_suite.gd",
+      "blob": "5e61afb95d2d54c4d2132421bf9029fb89842bed",
+      "bytes": 17727,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/notice_paper_suite.gd",
+      "blob": "298f4f55b31b22653c6185a06392bf3663144ea3",
+      "bytes": 4934,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/notice_paper_suite.gd.uid",
+      "blob": "822e4bd79b77e61fec764ed52818bac3679f3f8f",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/pause_notice_suite.gd",
+      "blob": "180fd2b91f72bdfdb859becb0fdd9b8b49f9d7b2",
+      "bytes": 3935,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/pause_notice_suite.gd.uid",
+      "blob": "01778b80905cd70b6ca70264eb841960e2cae55b",
+      "bytes": 19,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/photo_arrival_combo_suite.gd",
+      "blob": "0af8e2a1644bdfdcd8453d229242cb802d4c426e",
+      "bytes": 3615,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/photo_arrival_combo_suite.gd.uid",
+      "blob": "bf123ee7a10523c77a4d4c52f600f577a0a945e4",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/photo_arrival_fit_suite.gd",
+      "blob": "27f70875f3a3009a4eb35f7e8898bf1c044edc10",
+      "bytes": 6399,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/photo_arrival_fit_suite.gd.uid",
+      "blob": "b1722134e9862386f0deaa823a0150490626939b",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/photo_arrival_mat_suite.gd",
+      "blob": "abd2c22c2baafc1804fa05275f93a7c150ad553d",
+      "bytes": 8851,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/photo_arrival_mat_suite.gd.uid",
+      "blob": "a36e8b427f20edb5c216875bbacfe7540025c646",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/photo_arrival_shutter_paper_suite.gd",
+      "blob": "36469bcffea7722df999a82e786a4f385968d786",
+      "bytes": 9670,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/photo_arrival_shutter_paper_suite.gd.uid",
+      "blob": "30af1e6360a9cab98c8113261c080df5f21a224a",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/photo_home_suite.gd",
+      "blob": "3d7cea82218097ca060920fd5cd52b703c548597",
+      "bytes": 7350,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/photo_home_suite.gd.uid",
+      "blob": "a37d1aeeb27de736af97b935b5f11bf59528f9cf",
+      "bytes": 19,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/photo_moment_render_suite.gd",
+      "blob": "69eecc72120e01821f0860a4189757f1ff79f45f",
+      "bytes": 13631,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/photo_moment_render_suite.gd.uid",
+      "blob": "cc85d8e8c8037d296efc79ceddcf4a2f0a2abfd1",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/photo_moment_save_suite.gd",
+      "blob": "ef4559d16af821e6045777d442b23bb63a2d752e",
+      "bytes": 11555,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/photo_moment_save_suite.gd.uid",
+      "blob": "aba96b38b514b1f4a856625a77e6ded8f3ee2916",
+      "bytes": 19,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/photo_species_frame_suite.gd",
+      "blob": "7656c19da7344ec8c50a923f0cb24e132bb3fe68",
+      "bytes": 2521,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/photo_species_frame_suite.gd.uid",
+      "blob": "4b76112ebb8329f083833699ed1c544ce450e10b",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/photo_species_web/main.gd",
+      "blob": "49e37ad1a3519955c7753bf1bd3ca5e362e0833d",
+      "bytes": 1286,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/photo_species_web/main.gd.uid",
+      "blob": "2dffbc98c43694a7fd8a74d6f0c82b25aa0213b4",
+      "bytes": 19,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/photo_species_web/main.tscn",
+      "blob": "cc4a2f4bb29428b645718c1951513c5fc992e4df",
+      "bytes": 181,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/physical_yard_suite.gd",
+      "blob": "a5251baca8538a6a55b6e29cedc7f98b70f81f3b",
+      "bytes": 13795,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/physical_yard_suite.gd.uid",
+      "blob": "9029790d4c9770b6aeebd00eec971ca5dfb614df",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/portable_accept_suite.gd",
+      "blob": "76518afc0c4aefd499eccb22492c271a2f297473",
+      "bytes": 1467,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/portable_accept_suite.gd.uid",
+      "blob": "c4b537d4987d97288afd02e0b234fd179dccc001",
+      "bytes": 19,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/production_save_host/README.md",
+      "blob": "70508a188121b4e388c97dea4939e0756e365bc2",
+      "bytes": 5224,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/production_save_host/build.sh",
+      "blob": "fb95e69c65f51f3045f6031499a5a27ab6c3beec",
+      "bytes": 2688,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/production_save_host/godot-evidence.json",
+      "blob": "8e148d59c050ac365b2ca4994ddde9875aa1eea4",
+      "bytes": 835,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/production_save_host/main.gd",
+      "blob": "d3ef69882fb2b9f13c26bb12f3250ed73ec7a849",
+      "bytes": 3938,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/production_save_host/run.py",
+      "blob": "c6a2d6aef0a3439be41ca6ccb8a25b9d7f6b0f08",
+      "bytes": 3793,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/production_save_host/suite.html",
+      "blob": "eb2ea82f968a8390aee9403367da3790ece6f18c",
+      "bytes": 3059,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/production_save_host/suite.py",
+      "blob": "e82fa4466c94ad67255e8025c68556a41cdd070c",
+      "bytes": 1120,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/production_save_host/transaction-evidence.json",
+      "blob": "160d733d931d29e8f309a05cc98720cdc161c3d2",
+      "bytes": 750,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/publish_storage_modules_test.py",
+      "blob": "70a8c49e4e430fd2f10da5e5fca4d2c8614f4de7",
+      "bytes": 4685,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/quiet_sky_look_suite.gd",
+      "blob": "7955165d270cd9962bf15f7c492e9468077bdeaa",
+      "bytes": 3710,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/quiet_sky_look_suite.gd.uid",
+      "blob": "6d6eeae221dafc36db0bb8c9a60afaaf2528b1c8",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/quiet_stay_suite.gd",
+      "blob": "f29182f32591e0a519b7bbeb80cb0d419b272a70",
+      "bytes": 1790,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/quiet_stay_suite.gd.uid",
+      "blob": "a8f3f0799ad0f89ded073c21eab0677a55f9bb82",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/save_candidate_suite.gd",
+      "blob": "d578e69002472c99aa7f4863a5793b1d6696fdde",
+      "bytes": 4266,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/save_candidate_suite.gd.uid",
+      "blob": "1a9554308884e2a1c3c6bab48e398c4185b98a10",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/save_coordinator_suite.gd",
+      "blob": "84974f74a94f791f45f16d9d44f088258bcc00a1",
+      "bytes": 12377,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/save_data_codec_suite.gd",
+      "blob": "db8c3a1ad94dfc35d0d16661989a0200c10478b5",
+      "bytes": 3640,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/save_data_codec_suite.gd.uid",
+      "blob": "4d813722550a496104d20146d363a1441f446249",
+      "bytes": 19,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/save_feedback_suite.gd",
+      "blob": "fcccda1df26ac25f0c3deb7aaedb6dcdd5f8c1f2",
+      "bytes": 11797,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/save_feedback_suite.gd.uid",
+      "blob": "6bf50338e08974091972388fdda7bf0fb7b1e592",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/save_payload_budget/.gitignore",
+      "blob": "c18dd8d83ceed1806b50b0aaa46beb7e335fff13",
+      "bytes": 13,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/save_payload_budget/bounds-evidence.json",
+      "blob": "32d4dd8ddeace33649dd00c6f26aadaa779580c4",
+      "bytes": 27599,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/save_payload_budget/bounds_model.py",
+      "blob": "75a3317fc0d8b8f7a4dabf471d1abd06142bc29d",
+      "bytes": 16875,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/save_payload_budget/evidence.json",
+      "blob": "35b5fcd1aacf99b4206c37ee72aa47f0d5f0078a",
+      "bytes": 114000,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/save_payload_budget/generate_bounds.gd",
+      "blob": "fa4fde1bb83fb346bdb963c02d622345f3c38029",
+      "bytes": 7838,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/save_payload_budget/generate_bounds.gd.uid",
+      "blob": "45971a7ebe8b5491d8a1db06f5566e7e736b3f68",
+      "bytes": 19,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/save_payload_budget/generate_samples.gd",
+      "blob": "59b071da1c4e1dc2be2f0f62bf72ed50e948c4bc",
+      "bytes": 11396,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/save_payload_budget/generate_samples.gd.uid",
+      "blob": "c98e93c106d1c91e4b5c2b6a150dfe9086346874",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/save_payload_budget/host_budget.py",
+      "blob": "f2112cecf9696a4d7d87e13a34cb0ecdb7f8e108",
+      "bytes": 20069,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/save_payload_budget/host_replica.mjs",
+      "blob": "77384c7ed08f3d78073ca9a0071eb04c7fb474c8",
+      "bytes": 3999,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/save_payload_budget/rule_captures.gd",
+      "blob": "2a20352c8827086373311e2ef79c6ae0875399cd",
+      "bytes": 3515,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/save_payload_budget/rule_captures.gd.uid",
+      "blob": "5ea3bffdec7b9087c7e51776aab339f351fba8dc",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/save_payload_budget/run.sh",
+      "blob": "a7e3bdfd0654d5b96cdd5b77237d8d5b7a7e6e1a",
+      "bytes": 1922,
+      "mode": "100755",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/save_payload_budget/run_bounds.sh",
+      "blob": "e9bd43264e9365bcf81123ed93d74ea78a6cb091",
+      "bytes": 1875,
+      "mode": "100755",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/save_recovery_process_restart/.gdignore",
+      "blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "bytes": 0,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/save_recovery_process_restart/README.md",
+      "blob": "bb7fb454ed28605cd63abf046b1e8478d36e60e9",
+      "bytes": 2371,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/save_recovery_process_restart/evidence-repeat.json",
+      "blob": "388f769f75806b9db2b1c55b9fc7c7fd6c84d15e",
+      "bytes": 36526,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/save_recovery_process_restart/evidence.json",
+      "blob": "d3be358db34b71c5ff7e683150819124c3b6a7dc",
+      "bytes": 36526,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/save_recovery_process_restart/initial-review-failure.json",
+      "blob": "c0154d7f1c01450b6d75dcb3ee04f5e3df8221d5",
+      "bytes": 14136,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/save_recovery_process_restart/run.py",
+      "blob": "f32bc0f2597dc328a6f0f55de2da9469e9c0691e",
+      "bytes": 6654,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/save_recovery_suite.gd",
+      "blob": "6ea16c609e4c24e5f9e652dc88fd262ded02de92",
+      "bytes": 6498,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/save_recovery_suite.gd.uid",
+      "blob": "8146335e65095b840b495343777339ae53146be4",
+      "bytes": 19,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/save_recovery_web/.gdignore",
+      "blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "bytes": 0,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/save_recovery_web/.gitignore",
+      "blob": "c18dd8d83ceed1806b50b0aaa46beb7e335fff13",
+      "bytes": 13,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/save_recovery_web/driver.py",
+      "blob": "d7de91fc6bc54b1a63e9a263ed3c439e68fb6d57",
+      "bytes": 28295,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/save_recovery_web/evidence/2026-10-04-r2r3-12fd135-host-2edb2e7.json",
+      "blob": "adb634976166ab10bd20878f42e9736364f7ac00",
+      "bytes": 61625,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/save_recovery_web/evidence/2026-10-04-r2r3-errors-e4f9e24-host-2edb2e7.json",
+      "blob": "9929f14e29af1322d4a83eafa304d3ca69ab5785",
+      "bytes": 77892,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/save_recovery_web/fixture/facade.js",
+      "blob": "422078a674ab54572a1c471840b592385863a2ae",
+      "bytes": 778,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/save_recovery_web/fixture/main.gd",
+      "blob": "4b33cc3c2dedf2a71cf9c5a6670713810cce761f",
+      "bytes": 7477,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/save_recovery_web/selfcheck/index.html",
+      "blob": "ee193634d38286ad8f0c2c54ea828bee708b7f67",
+      "bytes": 2394,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/save_writer_guidance_suite.gd",
+      "blob": "5acbf2ca1b34c962ab2647fbf5b0b55d4c49162d",
+      "bytes": 1986,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/save_writer_guidance_suite.gd.uid",
+      "blob": "2acdcaf65258976a7b348a6d43486fcde4fa85c7",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/scene_hotspot_suite.gd",
+      "blob": "9dec7edc68d689811929ec5ab557d2a608bf4d77",
+      "bytes": 21665,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/scene_hotspot_suite.gd.uid",
+      "blob": "22a76b322eb733136a01993a7b45ec5e8ba0dbf6",
+      "bytes": 19,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/scrapbook_encounter_suite.gd",
+      "blob": "0e382ace0e25c232b2aca95a86dbe20307f8788a",
+      "bytes": 6194,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/scrapbook_encounter_suite.gd.uid",
+      "blob": "8005512d049310d6ffef965e237978633bfc38a7",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/scrapbook_visual_preview.gd",
+      "blob": "967311dde3097536cb7e41600a6fb4c3b169fd5b",
+      "bytes": 2505,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/scrapbook_visual_preview.gd.uid",
+      "blob": "cc514260ff36548bebbc43f2a1662921b083a7ae",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/sheep_attention_suite.gd",
+      "blob": "ab1546b167a458d45e2e35cbc47ada274e07b0ab",
+      "bytes": 3746,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/sheep_attention_suite.gd.uid",
+      "blob": "4e8d9ad0c7da9de96548e1b0fd75c638cb5107df",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/shipped_correctness_suite.gd",
+      "blob": "ea9a7541523fde9d0d4668db64f1d3ecbe9b6786",
+      "bytes": 1907,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/shipped_correctness_suite.gd.uid",
+      "blob": "864a79e82f4ec7078e917db4a037efb6daebdf38",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/soft_button_disabled_suite.gd",
+      "blob": "202b822e96fe5d43bfe677923faf71c2176019f0",
+      "bytes": 8034,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/soft_button_disabled_suite.gd.uid",
+      "blob": "fda7bc4206b64dc703fd7f7ed2a17a7d3d106221",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/soft_button_focus_contrast_suite.gd",
+      "blob": "aca9994b3c6b223d221d9870fb9bff87663769d0",
+      "bytes": 8817,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/soft_button_focus_contrast_suite.gd.uid",
+      "blob": "ba31c7aa4c6665571d23e9cfee5921cace31a5de",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/still_boundary_feedback_suite.gd",
+      "blob": "ec5abb00aa42c2bf359a2a020491f61eb7bf28dc",
+      "bytes": 7516,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/still_catch_suite.gd",
+      "blob": "4907a0bf07878c13829b7cfa2204681a64719343",
+      "bytes": 1874,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/still_grass_glow_suite.gd",
+      "blob": "dd1b2e454c2feea99bfb45581be415685f7275cf",
+      "bytes": 1894,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/still_grass_glow_suite.gd.uid",
+      "blob": "17b8e8ea531db0ab89cc2a3f46c2fe5eb2abbb56",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/still_object_feedback_suite.gd",
+      "blob": "557da04841336f84104d932590b10cd06dd1d14d",
+      "bytes": 3524,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/still_target_pulse_suite.gd",
+      "blob": "700dcb7746155cf0ad8a3f1a78f6b40c3659a5c6",
+      "bytes": 1500,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/test_suite.gd",
+      "blob": "74dcd65720c5c39570511d59382a4e6b83f72bdf",
+      "bytes": 24524,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/test_suite.gd.uid",
+      "blob": "4a6c82a3246f38fa6cc8b6d0af94710baa8dec1b",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/test_suite.tscn",
+      "blob": "69af80d2709e6628bd401ad377be5a4f54b067b5",
+      "bytes": 184,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/title_card_suite.gd",
+      "blob": "705edae054cfa935751ff7f4f6d92c208e4876e4",
+      "bytes": 5662,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/title_licenses_link_contrast_suite.gd",
+      "blob": "c16ad194abb9b3ef06d985a89070191798ff9db5",
+      "bytes": 6382,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/title_licenses_link_contrast_suite.gd.uid",
+      "blob": "9976563d28d3e585789dbb126f7cfdc096797918",
+      "bytes": 19,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/title_short_landscape_suite.gd",
+      "blob": "727ac016cdc797009224ef32bdce87f3dde44707",
+      "bytes": 6511,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/title_short_landscape_suite.gd.uid",
+      "blob": "b0ae534d1b26b4735698bdd8ce52f0fd1614f480",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/tuning_bridge_contract.gd",
+      "blob": "99eb8514be3fbc88129c701a6ba0e32d76c85d73",
+      "bytes": 6122,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/tuning_bridge_contract.gd.uid",
+      "blob": "02afe3a5fec9c04579377e66f900f5fff1da32e6",
+      "bytes": 19,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/ui_interaction_suite.gd",
+      "blob": "bd57d5de07d3d43bdbd7bb5c9fb6a1cbc03a5e64",
+      "bytes": 16551,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/ui_interaction_suite.gd.uid",
+      "blob": "1f6745917e8c9483f9b5b42c636bbd4ffd2ca511",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/ui_viewports.gd",
+      "blob": "019f99c7032e5544bd83186a96c5e45ba303a9ea",
+      "bytes": 3020,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/ui_viewports.gd.uid",
+      "blob": "b014eb721f96b9e98071d8f0798304bd6d29bdee",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/walk_calibration/.gdignore",
+      "blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "bytes": 0,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/walk_calibration/browser-evidence.json",
+      "blob": "cd6b28e1ecedf50bd181880e2046ac69fca6c3e5",
+      "bytes": 271,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/walk_calibration/check_browser.py",
+      "blob": "770f5de169ec0dd5ade50fd9d0b38462a3585fa6",
+      "bytes": 1685,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/walk_calibration/data.json",
+      "blob": "b70d64d59fe5b660eba7223f68d5788188140a5a",
+      "bytes": 188776,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/walk_calibration/generate.py",
+      "blob": "d168eda910f8c3ffa9e7102d877c9dbff529bb26",
+      "bytes": 3783,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/walk_calibration/index.html",
+      "blob": "49cf66c7890d1f807a70f666a84facdc1fa007d6",
+      "bytes": 2596,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/walk_calibration/overlay.png",
+      "blob": "295b299daf1e1146bd6bfaf9f49b6bb278e9901f",
+      "bytes": 1923923,
+      "mode": "100644",
+      "materialization": "immutable-binary-hardlink"
+    },
+    {
+      "path": "test/web_bundle_retention_test.py",
+      "blob": "b579ce622eb822277848206a1844e25c21925f50",
+      "bytes": 5904,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/web_hidpi_suite.gd",
+      "blob": "c832b5430ecb97855691545e942f5a059fd298fd",
+      "bytes": 5628,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/web_hidpi_suite.gd.uid",
+      "blob": "8e2a582985872bf4948a9981e41e184ddebce545",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/web_save_bridge/README.md",
+      "blob": "a0b82eb40039e7b8fbf79ef79944bd06a3c9db7f",
+      "bytes": 8080,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/web_save_bridge/build.sh",
+      "blob": "cfddcff7115ec1fd1df9e2566d800ead59e2d0e0",
+      "bytes": 2974,
+      "mode": "100755",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/web_save_bridge/decoder_suite.gd",
+      "blob": "0f26b9b3d15ea9aacf296d0c53f4470543c22180",
+      "bytes": 5452,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/web_save_bridge/evidence.json",
+      "blob": "43cd60430a873feb9a7ddc300818ace93656021b",
+      "bytes": 8336,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/web_save_bridge/legacy_suite.gd",
+      "blob": "8c53c3f5686f7885f408dd083bb20b52b45dee4e",
+      "bytes": 2039,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/web_save_bridge/main.gd",
+      "blob": "7b6e5ac8d0081e05ebcc3a34efc50d26a830e3c7",
+      "bytes": 4353,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/web_save_bridge/run.py",
+      "blob": "388f1e75d34638038267786fab34f8407c518198",
+      "bytes": 1941,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/yard_audio_suite.gd",
+      "blob": "65f56beb265bf6dc6e0ca921377cf1cb1d79c614",
+      "bytes": 11696,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/yard_audio_suite.gd.uid",
+      "blob": "6b00ac552717d2fd1f24792c58b7153e839a8c5d",
+      "bytes": 19,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/yard_decor_prototype/app.mjs",
+      "blob": "22433c402b5e021bf951a260e3675b687eba8cf7",
+      "bytes": 2640,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/yard_decor_prototype/index.html",
+      "blob": "ff9883bfe52180e05bc244b74923e75fc9a5cfb2",
+      "bytes": 2347,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/yard_decor_prototype/model.mjs",
+      "blob": "6ff0a7e7a2f028833a4bc1b047bde1b71ae61477",
+      "bytes": 736,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/yard_decor_prototype/space.html",
+      "blob": "517dcfd10ced5d268dbb3d6e3407a447c0d0625b",
+      "bytes": 978,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/yard_decor_prototype/space.mjs",
+      "blob": "88f6356b75ebd7b244d5727b824137e8162682f0",
+      "bytes": 3221,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/yard_decor_prototype/suite.mjs",
+      "blob": "090c6cf37906d2c9afb9da0e73ae41bc4e03d384",
+      "bytes": 908,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/yard_snapshot_suite.gd",
+      "blob": "48d0270260d7a8ba5e2b24725fe4f513809cf748",
+      "bytes": 3093,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "test/yard_snapshot_suite.gd.uid",
+      "blob": "4fcb66a7f5669c57090fbf76d0d46db9577d0a18",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "tools/bake_resident_grass_actions.gd",
+      "blob": "c436e83e07d3d967db3c10eec89338c68b54c4e0",
+      "bytes": 3348,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "tools/bake_resident_grass_actions.gd.uid",
+      "blob": "2516ec769442d5bc0a326602f680ddd71230c00f",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "tools/bake_resident_idle.gd",
+      "blob": "3f411a35f08f0efa5e13f9c17dcbb075289985da",
+      "bytes": 653,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "tools/bake_resident_idle.gd.uid",
+      "blob": "a1bf3fc10f29e504c0e7e592dc264b4520d80170",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "tools/bake_resident_walk.gd",
+      "blob": "b5a0abede57d53b50508b9f55a22fa9e5a4e600a",
+      "bytes": 3933,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "tools/bake_resident_walk.gd.uid",
+      "blob": "cc901cf6f30567327422e9c195840425217d6dba",
+      "bytes": 19,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "tools/build_cjk_font.py",
+      "blob": "dd2a5a944c7de770b7efde8bc2e0010068dc9eda",
+      "bytes": 3921,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "tools/build_cjk_font_subset.py",
+      "blob": "1a224c7194816d30087ffe5af030cef96f2e61f7",
+      "bytes": 283,
+      "mode": "100755",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "tools/capture_authored_poses.gd",
+      "blob": "f38a16517c5e5f7311f246c0c6f13bc2e55c5f5d",
+      "bytes": 2768,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "tools/capture_authored_poses.gd.uid",
+      "blob": "61486299f58498b6181d2bcfc4d32ee091d98f0f",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "tools/capture_cast_v2.gd",
+      "blob": "dee1cc02170ae301c12e8f6dee29da6a63d53a9e",
+      "bytes": 2207,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "tools/capture_cast_v2.gd.uid",
+      "blob": "4d8009ab9df9dcea150f99c547fd94dfe7b1f058",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "tools/capture_daily_life.gd",
+      "blob": "009682dfd0a711089e5d89b214a5215e7324f71c",
+      "bytes": 3405,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "tools/capture_daily_life.gd.uid",
+      "blob": "3e049fa88e248c95cf1d5b72f49391c8d820561d",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "tools/capture_exploration_slice.gd",
+      "blob": "34191739edd2e1cf2a549ea5abbae4fd7112d9c4",
+      "bytes": 4773,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "tools/capture_exploration_slice.gd.uid",
+      "blob": "bb5c70ed7909726f660911edefc20277a06b3e5a",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "tools/capture_find_reveal.gd",
+      "blob": "a2f02dbdfb10b6d8ffadeedf7ce24d17733d4fa7",
+      "bytes": 2871,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "tools/capture_find_reveal.gd.uid",
+      "blob": "38f455e2c788659971ca06cd7fe24aaabd62cc6f",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "tools/capture_gameplay_input.gd",
+      "blob": "fbf2b5d2608b3efb22b6c0df7a2862dec12eec93",
+      "bytes": 3330,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "tools/capture_gameplay_input.gd.uid",
+      "blob": "468aca6d34e6b0d370cc4f0032a7004d01891e51",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "tools/capture_llama_faces.gd",
+      "blob": "deedac0ca7560f3e0d3328bd2c14b15625b9c9f4",
+      "bytes": 1325,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "tools/capture_llama_faces.gd.uid",
+      "blob": "91c7d2093c9f27f1e8d61fac79779e0901ff26ad",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "tools/capture_locomotion.gd",
+      "blob": "6017b82c06e5a0af819c6f2614228c88b7fdb3e9",
+      "bytes": 2609,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "tools/capture_locomotion.gd.uid",
+      "blob": "2588c636d3ab601819287db338a520d74fbc3406",
+      "bytes": 19,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "tools/capture_mobile_controls.gd",
+      "blob": "043b314c5092b8c62292f965161e8a22da758b72",
+      "bytes": 1403,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "tools/capture_mobile_controls.gd.uid",
+      "blob": "0e5812bea55d85810d32eb3baceaee3ac93adcac",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "tools/capture_native.gd",
+      "blob": "bdedcecbac1eceadb23ba0abce2c28818c4e1758",
+      "bytes": 1491,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "tools/capture_native.gd.uid",
+      "blob": "68d74a30443d1ea9763ac0f3eab4c9b41cd0fc24",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "tools/capture_near_path_clean.gd",
+      "blob": "12554d82e07a767bb2d264e8974d2894586bdc54",
+      "bytes": 3172,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "tools/capture_near_path_clean.gd.uid",
+      "blob": "4ee49ccc7d0f90cee061ef8fb2c10827f1fda199",
+      "bytes": 19,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "tools/capture_physical_routes.gd",
+      "blob": "7cdbc7a1994ff89c7d14a995953cc38b1e9fbd93",
+      "bytes": 3261,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "tools/capture_physical_routes.gd.uid",
+      "blob": "9046f61a72e0f92119c17f1ed30e6390e3a8f758",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "tools/capture_planted_gait.gd",
+      "blob": "f618e7d0c0c5c35216e9156c2e33f984f81266fd",
+      "bytes": 3721,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "tools/capture_planted_gait.gd.uid",
+      "blob": "2195d85e5c6cc2e966322a0d634b2e34b9202379",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "tools/capture_resident_sequence.gd",
+      "blob": "ec880a980baafca934b96b1047d1c093f000cec7",
+      "bytes": 3083,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "tools/capture_resident_sequence.gd.uid",
+      "blob": "978d0e6280ed979f180ad46ce0277f08df373be0",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "tools/capture_sky_acceptance.gd",
+      "blob": "f33720adfb145b9a3944a85282816a5a0fd44003",
+      "bytes": 3169,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "tools/capture_sky_acceptance.gd.uid",
+      "blob": "c9f78eb187bbe0cbdd17bff6718293d7bb27b6ff",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "tools/capture_tap_home.gd",
+      "blob": "fabe83c9569ad38e8292452af154fa121b581fed",
+      "bytes": 3416,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "tools/capture_tap_home.gd.uid",
+      "blob": "19e2b2f218f90463b252be106530b8be2763fe8e",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "tools/capture_traveler_rest.gd",
+      "blob": "00028ae1dbb797a1457952393059dc6b7d7c7dd2",
+      "bytes": 1268,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "tools/capture_traveler_rest.gd.uid",
+      "blob": "ec28d955a6a92e984a8c2c135a8a3d259fc44e7c",
+      "bytes": 19,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "tools/duck_feed_contact/.gdignore",
+      "blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "bytes": 0,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "tools/duck_feed_contact/capture.gd",
+      "blob": "b87da67a2bd9089ddd9ed8d0b25325bdabfc939a",
+      "bytes": 4610,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "tools/duck_feed_contact/contact_model.gd",
+      "blob": "7cd7c2c567d5dd93bb93eb6740d7a1f5b35b2f19",
+      "bytes": 2131,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "tools/duck_feed_contact/suite.gd",
+      "blob": "e1d9cbd47dcfd0a06646f775f56cae4925822c82",
+      "bytes": 3444,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "tools/game-runtime-font-codepoints.json",
+      "blob": "d58015f2c8148087b62a53d7893da2591ffa5cac",
+      "bytes": 39269,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "tools/game-runtime-font.json",
+      "blob": "b592ef10ae9fc7cfc2e5a8b3836dbb1f580515ce",
+      "bytes": 2159,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "tools/game-runtime-font.requirements.txt",
+      "blob": "0810aab0e2ee9e8c03cc20d7e738a2b180ffa1ca",
+      "bytes": 32,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "tools/install_cjk_font.py",
+      "blob": "28de478c5dd3ba4e09d7f3241957772cf4c3f1a3",
+      "bytes": 2862,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "tools/lib/exploration_workdir.sh",
+      "blob": "355b5a18d1405731d2068e7c4c1aa36778aa37d7",
+      "bytes": 2187,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "tools/lib/godot_suite_completions.tsv",
+      "blob": "3c658ce6542ce32b658aedc546f65a2afb065442",
+      "bytes": 6089,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "tools/lib/verified_godot.sh",
+      "blob": "b56686b1ce55cdc339ff5d071d39b86d7aedad0b",
+      "bytes": 2546,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "tools/publish_gh_pages.sh",
+      "blob": "971cc1e7d740830db235ad045f501e7835fe48ab",
+      "bytes": 9083,
+      "mode": "100755",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "tools/rebuild_loader_cjk.py",
+      "blob": "ed0ec4d0fc89cea0489fe43f472b7bbfa68703dc",
+      "bytes": 4084,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "tools/run_exploration_first_experience.sh",
+      "blob": "3e7d72be2419ad91a9f9706b1b4aa1f2a1f7dd27",
+      "bytes": 5188,
+      "mode": "100755",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "tools/run_exploration_return_adapter.sh",
+      "blob": "7a4e47ee74ee42b583608766ec546b17c355da3b",
+      "bytes": 5076,
+      "mode": "100755",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "tools/run_exploration_scroll_prototype.sh",
+      "blob": "6dbca2c792ec26f1f460cc017382a438d425e8fb",
+      "bytes": 3946,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "tools/run_fish_carry_suite.sh",
+      "blob": "9f7b38a37d6856e3ed77b07d61eab4ef0f9bea94",
+      "bytes": 950,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "tools/run_yard_decor_prototype.sh",
+      "blob": "4e42c890f3868b6d040b151b640810becb770850",
+      "bytes": 302,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "tools/select_web_bundle_pruning.py",
+      "blob": "98d8c2d3d9fe795966f10b8042e4104b5f43372c",
+      "bytes": 2153,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "tools/verify.sh",
+      "blob": "06ee2f37c0294fb9e8ff6457c88ac0200124188b",
+      "bytes": 667,
+      "mode": "100755",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "tools/verify_clean_scaffold.sh",
+      "blob": "3b029a6240080d83229cbded84bab38f280b465e",
+      "bytes": 519,
+      "mode": "100755",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "tools/verify_daily_life.sh",
+      "blob": "4e3f36901159a28620551f687f3d58ee0a75da77",
+      "bytes": 2941,
+      "mode": "100755",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "tools/verify_exported_pack.gd",
+      "blob": "501d621d3d19fd49c5e59ef475ca5e8d69fa1d6a",
+      "bytes": 4330,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "tools/verify_exported_pack.gd.uid",
+      "blob": "da1eb24aff4da704f73c864031593b0d247e6f96",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "tools/verify_locomotion.sh",
+      "blob": "0f71fa4aed5473532e02b87ceb667078612111fb",
+      "bytes": 1269,
+      "mode": "100755",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "tools/verify_save_recovery_web.sh",
+      "blob": "608042e259694c5f151eb75a3f6e3f826d058418",
+      "bytes": 3249,
+      "mode": "100755",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "tools/verify_still_props_render.gd",
+      "blob": "4d2770ad4be9a3395f774e26e9777c691234f4e3",
+      "bytes": 4598,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "tools/verify_still_props_render.gd.uid",
+      "blob": "835c73d31629fe764950c7d2e85ea44225776e8b",
+      "bytes": 20,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "tools/verify_still_props_render.tscn",
+      "blob": "3164c1bd694de697fb6e003a969a40180e226881",
+      "bytes": 193,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "tools/verify_target_pulse_render.gd",
+      "blob": "49a08bc12bc3d21cbca45ad455c3fff02a2473e2",
+      "bytes": 3272,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "tools/verify_target_pulse_render.tscn",
+      "blob": "7227051a6565a259fa4e56f9342daa62b8fff2cc",
+      "bytes": 176,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "web/loader-cjk.json",
+      "blob": "aee946dd02e2509373364b7224aa29d19fbed5eb",
+      "bytes": 2551,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "web/loading.html",
+      "blob": "ffef910fda91911564a86809d58c19371148caa9",
+      "bytes": 357374,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "web/save/bridge.mjs",
+      "blob": "b28e79f06de1d727e3fe454b0442082ba77c33c5",
+      "bytes": 1856,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "web/save/budgets.mjs",
+      "blob": "2a2abebdd318a04d63c9eeee3fb275f59e1d58ae",
+      "bytes": 340,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "web/save/host.mjs",
+      "blob": "ffba045c0a3d0f2fe736f715bedb34da1c3c3e47",
+      "bytes": 7730,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "web/save/idbfs_source.mjs",
+      "blob": "bc1bf875e6726864b93299c469eb53c36956d18f",
+      "bytes": 5550,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "web/save/legacy_inspection.mjs",
+      "blob": "908794da407c525d1b68cac46737e6de61872784",
+      "bytes": 2886,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "web/save/legacy_seal.mjs",
+      "blob": "ae76de7400979664b23df34ac4300bf086f96fd7",
+      "bytes": 2510,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "web/save/legacy_v5.mjs",
+      "blob": "d5074e50774eb985e5d9c6e95fa6dcfdc0c4c12c",
+      "bytes": 2245,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "web/save/lifecycle.mjs",
+      "blob": "d30f5af087694e6dbf30d19e021b5509a8f74801",
+      "bytes": 1878,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "web/save/source_decode.mjs",
+      "blob": "3fb4b38fd00d399c6258ad4f7b5d08aa89ffbc26",
+      "bytes": 1542,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    },
+    {
+      "path": "web/save/store.mjs",
+      "blob": "4a05c51fd980f64ebb5033d8915ea6f4b044a3b6",
+      "bytes": 13890,
+      "mode": "100644",
+      "materialization": "copy-verified"
+    }
+  ],
+  "unmodified_payload_hardlinks_only": true,
+  "engine_started": false,
+  "browser_started": false
+}

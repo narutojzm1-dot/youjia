@@ -1,0 +1,247 @@
+{
+  "method": "Subtract actual input-acknowledgement Python monotonic timestamps from actual screenshot request/completion timestamps; not game clock or exact rendered frame timestamp. Negative title times precede actual ordinary entry.",
+  "anchors": {
+    "entered": 380051.449273005,
+    "first_cancel_release": 380060.392640337
+  },
+  "screenshots": [
+    {
+      "image": "normal-title.png",
+      "event": "request",
+      "utc": "2026-10-06T01:05:31Z",
+      "relative_to": "entered",
+      "elapsed_ms": -33821.166
+    },
+    {
+      "image": "normal-title.png",
+      "event": "complete",
+      "utc": "2026-10-06T01:05:32Z",
+      "relative_to": "entered",
+      "elapsed_ms": -33265.389
+    },
+    {
+      "image": "portrait-01-entered.png",
+      "event": "request",
+      "utc": "2026-10-06T01:06:06Z",
+      "relative_to": "entered",
+      "elapsed_ms": 713.957
+    },
+    {
+      "image": "portrait-01-entered.png",
+      "event": "complete",
+      "utc": "2026-10-06T01:06:06Z",
+      "relative_to": "entered",
+      "elapsed_ms": 1054.788
+    },
+    {
+      "image": "portrait-02-stillness-5500.png",
+      "event": "request",
+      "utc": "2026-10-06T01:06:10Z",
+      "relative_to": "entered",
+      "elapsed_ms": 5515.98
+    },
+    {
+      "image": "portrait-02-stillness-5500.png",
+      "event": "complete",
+      "utc": "2026-10-06T01:06:11Z",
+      "relative_to": "entered",
+      "elapsed_ms": 5936.3
+    },
+    {
+      "image": "portrait-03-stillness-6500.png",
+      "event": "request",
+      "utc": "2026-10-06T01:06:11Z",
+      "relative_to": "entered",
+      "elapsed_ms": 6512.412
+    },
+    {
+      "image": "portrait-03-stillness-6500.png",
+      "event": "complete",
+      "utc": "2026-10-06T01:06:12Z",
+      "relative_to": "entered",
+      "elapsed_ms": 6878.892
+    },
+    {
+      "image": "portrait-04-stillness-8000.png",
+      "event": "request",
+      "utc": "2026-10-06T01:06:13Z",
+      "relative_to": "entered",
+      "elapsed_ms": 8003.819
+    },
+    {
+      "image": "portrait-04-stillness-8000.png",
+      "event": "complete",
+      "utc": "2026-10-06T01:06:13Z",
+      "relative_to": "entered",
+      "elapsed_ms": 8419.299
+    },
+    {
+      "image": "portrait-05-after-movement.png",
+      "event": "request",
+      "utc": "2026-10-06T01:06:14Z",
+      "relative_to": "entered",
+      "elapsed_ms": 9247.988
+    },
+    {
+      "image": "portrait-05-after-movement.png",
+      "event": "complete",
+      "utc": "2026-10-06T01:06:15Z",
+      "relative_to": "entered",
+      "elapsed_ms": 9683.518
+    },
+    {
+      "image": "portrait-06-settled.png",
+      "event": "request",
+      "utc": "2026-10-06T01:06:16Z",
+      "relative_to": "entered",
+      "elapsed_ms": 11192.02
+    },
+    {
+      "image": "portrait-06-settled.png",
+      "event": "complete",
+      "utc": "2026-10-06T01:06:17Z",
+      "relative_to": "entered",
+      "elapsed_ms": 11624.813
+    },
+    {
+      "image": "landscape-01-reflow-baseline.png",
+      "event": "request",
+      "utc": "2026-10-06T01:06:17Z",
+      "relative_to": "first_cancel_release",
+      "elapsed_ms": 3126.093
+    },
+    {
+      "image": "landscape-01-reflow-baseline.png",
+      "event": "complete",
+      "utc": "2026-10-06T01:06:17Z",
+      "relative_to": "first_cancel_release",
+      "elapsed_ms": 3376.161
+    },
+    {
+      "image": "landscape-02-after-release-28000.png",
+      "event": "request",
+      "utc": "2026-10-06T01:06:42Z",
+      "relative_to": "first_cancel_release",
+      "elapsed_ms": 28006.055
+    },
+    {
+      "image": "landscape-02-after-release-28000.png",
+      "event": "complete",
+      "utc": "2026-10-06T01:06:42Z",
+      "relative_to": "first_cancel_release",
+      "elapsed_ms": 28185.227
+    },
+    {
+      "image": "landscape-03-after-release-30000.png",
+      "event": "request",
+      "utc": "2026-10-06T01:06:44Z",
+      "relative_to": "first_cancel_release",
+      "elapsed_ms": 30004.612
+    },
+    {
+      "image": "landscape-03-after-release-30000.png",
+      "event": "complete",
+      "utc": "2026-10-06T01:06:44Z",
+      "relative_to": "first_cancel_release",
+      "elapsed_ms": 30199.417
+    },
+    {
+      "image": "landscape-04-after-release-32000.png",
+      "event": "request",
+      "utc": "2026-10-06T01:06:46Z",
+      "relative_to": "first_cancel_release",
+      "elapsed_ms": 32004.675
+    },
+    {
+      "image": "landscape-04-after-release-32000.png",
+      "event": "complete",
+      "utc": "2026-10-06T01:06:46Z",
+      "relative_to": "first_cancel_release",
+      "elapsed_ms": 32200.742
+    },
+    {
+      "image": "landscape-05-after-release-34000.png",
+      "event": "request",
+      "utc": "2026-10-06T01:06:48Z",
+      "relative_to": "first_cancel_release",
+      "elapsed_ms": 34004.147
+    },
+    {
+      "image": "landscape-05-after-release-34000.png",
+      "event": "complete",
+      "utc": "2026-10-06T01:06:48Z",
+      "relative_to": "first_cancel_release",
+      "elapsed_ms": 34181.272
+    },
+    {
+      "image": "landscape-06-after-movement.png",
+      "event": "request",
+      "utc": "2026-10-06T01:06:49Z",
+      "relative_to": "first_cancel_release",
+      "elapsed_ms": 34948.79
+    },
+    {
+      "image": "landscape-06-after-movement.png",
+      "event": "complete",
+      "utc": "2026-10-06T01:06:49Z",
+      "relative_to": "first_cancel_release",
+      "elapsed_ms": 35119.345
+    },
+    {
+      "image": "landscape-07-settled.png",
+      "event": "request",
+      "utc": "2026-10-06T01:06:51Z",
+      "relative_to": "first_cancel_release",
+      "elapsed_ms": 36623.448
+    },
+    {
+      "image": "landscape-07-settled.png",
+      "event": "complete",
+      "utc": "2026-10-06T01:06:51Z",
+      "relative_to": "first_cancel_release",
+      "elapsed_ms": 36807.58
+    },
+    {
+      "image": "portrait-07-reflow-back.png",
+      "event": "request",
+      "utc": "2026-10-06T01:06:51Z",
+      "relative_to": "entered",
+      "elapsed_ms": 46484.373
+    },
+    {
+      "image": "portrait-07-reflow-back.png",
+      "event": "complete",
+      "utc": "2026-10-06T01:06:52Z",
+      "relative_to": "entered",
+      "elapsed_ms": 46819.923
+    },
+    {
+      "image": "portrait-08-target-feedback.png",
+      "event": "request",
+      "utc": "2026-10-06T01:07:25Z",
+      "relative_to": "entered",
+      "elapsed_ms": 80481.821
+    },
+    {
+      "image": "portrait-08-target-feedback.png",
+      "event": "complete",
+      "utc": "2026-10-06T01:07:26Z",
+      "relative_to": "entered",
+      "elapsed_ms": 80847.665
+    },
+    {
+      "image": "portrait-09-target-settled.png",
+      "event": "request",
+      "utc": "2026-10-06T01:07:27Z",
+      "relative_to": "entered",
+      "elapsed_ms": 82052.416
+    },
+    {
+      "image": "portrait-09-target-settled.png",
+      "event": "complete",
+      "utc": "2026-10-06T01:07:27Z",
+      "relative_to": "entered",
+      "elapsed_ms": 82454.207
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "source": {
+    "source": "cf8b7f45536cf658d9540b9a4e692f986cce0bb4",
+    "tree": "73761291d9de15f814a217a8d1501874a270f12d",
+    "base": "b9f68c3c5c4e70e16cefde9b4400bb1d553ff915",
+    "files": [
+      "scripts/main.gd",
+      "scripts/game/yard_world.gd",
+      "test/camera400_backdrop_suite.gd",
+      "test/camera400_backdrop_suite.gd.uid",
+      "test/godot_gate_test.sh",
+      "tools/lib/godot_suite_completions.tsv",
+      "tools/verify_daily_life.sh",
+      "docs/requirements.md",
+      "docs/decisions.md",
+      "docs/playtests/2026-10-06-camera400-backdrop/.gdignore",
+      "docs/playtests/2026-10-06-camera400-backdrop/README.md"
+    ],
+    "native": "not yet run",
+    "browser": "not run"
+  },
+  "results": [
+    {
+      "name": "import-old",
+      "direct_exit": 0,
+      "started": "2026-10-06T00:24:13.590901+00:00",
+      "closed": "2026-10-06T00:24:42.016722+00:00",
+      "seconds": 28.425830530992243
+    },
+    {
+      "name": "red-old-production",
+      "direct_exit": 1,
+      "started": "2026-10-06T00:24:42.017059+00:00",
+      "closed": "2026-10-06T00:24:52.410419+00:00",
+      "seconds": 10.393373744969722
+    },
+    {
+      "name": "green-candidate",
+      "direct_exit": 1,
+      "started": "2026-10-06T00:24:52.410955+00:00",
+      "closed": "2026-10-06T00:25:02.806535+00:00",
+      "seconds": 10.395593209017534
+    }
+  ]
+}

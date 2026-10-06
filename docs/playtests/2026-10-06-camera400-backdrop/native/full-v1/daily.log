@@ -1,0 +1,181 @@
+gate contract: suite-complete pass
+gate contract: scene-complete pass
+gate contract: empty-zero-exit block
+gate contract: unrelated-pass block
+gate contract: different-suite block
+gate contract: zero-checks block
+gate contract: prefixed-marker block
+gate contract: suffixed-marker block
+gate contract: truncated-marker block
+gate contract: individual-assertion-pass block
+gate contract: empty-failure-summary pass
+gate contract: nonempty-failure-summary block
+gate contract: explicit-target-tests-zero-checks block
+gate contract: explicit-target-tests-positive-checks pass
+gate contract: explicit-target-tests-old-counterless-summary block
+gate contract: ui-interaction-tests-zero-checks block
+gate contract: ui-interaction-tests-positive-checks pass
+gate contract: ui-interaction-tests-old-counterless-summary block
+gate contract: viewport-zero-checks block
+gate contract: viewport-positive-checks pass
+gate contract: viewport-old-counterless-summary block
+gate contract: licenses-zero-checks-with-pass block
+gate contract: licenses-nonzero-failures-with-pass block
+gate contract: licenses-positive-completion pass
+gate contract: zero-failure-count pass
+gate contract: nonzero-failure-count block
+gate contract: matching-completion-counts pass
+gate contract: incomplete-completion-counts block
+gate contract: nonzero-1-after-completion block
+gate contract: nonzero-124-after-completion block
+gate contract: nonzero-127-after-completion block
+gate contract: nonzero-139-after-completion block
+gate contract: silent-timeout block
+gate contract: script-error block
+gate contract: engine-error block
+gate contract: audit-fail block
+gate contract: assertion-fail block
+gate contract: completion-then-fail block
+gate contract: fail-then-completion block
+gate contract: completion-then-error block
+gate contract: tee-failure block
+gate contract: missing-log block
+gate contract: completion-log-read-failure block
+gate contract: unregistered-suite block
+gate contract: camera-positive-minimum pass
+gate contract: camera-positive-count pass
+gate contract: camera-zero-count block
+gate contract: camera-nonempty-failures block
+gate contract: camera-missing-marker block
+gate contract: camera-wrong-suite block
+gate contract: camera-prefix block
+gate contract: camera-suffix block
+gate contract: camera-concatenated-markers block
+gate contract: camera-two-separate-valid-lines pass
+gate contract: camera-nonzero-exit block
+gate contract: camera-late-error block
+gate contract: camera-late-fail block
+gate contract: camera-truncated-summary block
+CAMERA400 COMPLETION CONTRACT PASS 14
+gate contract: bounds-complete pass
+gate contract: bounds-zero block
+gate contract: bounds-failure-list block
+gate contract: bounds-wrong-suite block
+gate contract: import-empty pass
+gate contract: import-with-no-suite pass
+gate contract: import-nonzero block
+gate contract: import-error block
+gate contract: import-tee-failure block
+gate contract: import-missing-log block
+GODOT GATE CONTRACT PASS 68
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[   0% ] [90m[1mfirst_scan_filesystem[22m | Started Project initialization (5 steps)[39m[0m
+[   0% ] [90m[1mfirst_scan_filesystem[22m | Scanning file structure...[39m[0m
+[  16% ] [90m[1mfirst_scan_filesystem[22m | Loading global class names...[39m[0m
+[  33% ] [90m[1mfirst_scan_filesystem[22m | Verifying GDExtensions...[39m[0m
+[  50% ] [90m[1mfirst_scan_filesystem[22m | Creating autoload scripts...[39m[0m
+[  66% ] [90m[1mfirst_scan_filesystem[22m | Initializing plugins...[39m[0m
+[  83% ] [90m[1mfirst_scan_filesystem[22m | Starting file scan...[39m[0m
+[92m[ DONE ][39m [1mfirst_scan_filesystem[22m
+[0m
+[   0% ] [90m[1mupdate_scripts_classes[22m | Started Registering global classes... (2 steps)[39m[0m
+[   0% ] [90m[1mupdate_scripts_classes[22m | YardWorld[39m[0m
+[  33% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[92m[ DONE ][39m [1mupdate_scripts_classes[22m
+[0m
+[   0% ] [90m[1mloading_editor_layout[22m | Started Loading editor (5 steps)[39m[0m
+[   0% ] [90m[1mloading_editor_layout[22m | Loading editor layout...[39m[0m
+[  16% ] [90m[1mloading_editor_layout[22m | Loading docks...[39m[0m
+[92m[ DONE ][39m [1mloading_editor_layout[22m
+[0m
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[game-generic-tests] PASS: 414 checks
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[locomotion-tests] player distance at 30/60/120 Hz: [262.325500488281, 261.619201660156, 261.25244140625]; phases: [0.20888563545284, 0.10682017042633, 0.05382056972253]
+[locomotion-tests] animal distance at 30/60/120 Hz: [76.0414428710938, 75.8335876464844, 75.7266845703125]
+[locomotion-tests] player 30Hz planted slip=0.000000 mesh-foot error=0.000068 samples=94 unsupported_frames=0
+[locomotion-tests] llama 30Hz planted slip=0.000000 mesh-foot error=0.000043 samples=138 unsupported_frames=0
+[locomotion-tests] player 60Hz planted slip=0.000000 mesh-foot error=0.000068 samples=251 unsupported_frames=0
+[locomotion-tests] llama 60Hz planted slip=0.000000 mesh-foot error=0.000043 samples=284 unsupported_frames=0
+[locomotion-tests] player 120Hz planted slip=0.000000 mesh-foot error=0.000068 samples=507 unsupported_frames=0
+[locomotion-tests] llama 120Hz planted slip=0.000000 mesh-foot error=0.000043 samples=578 unsupported_frames=0
+[locomotion-tests] PASS: 410 checks
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+HOLIDAY_START_ONCE checks=14 failures=0
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[animal-home-tests] goose sun 30Hz quiet=90.8% travel=128.5px longest_leg=2.13s/19.9px legs=11 max_step=0.413 outside=0 states={ "graze": 2742, "wander": 526, "rest": 2132 }
+[animal-home-tests] sheep_a sun 30Hz quiet=90.7% travel=124.4px longest_leg=2.60s/22.3px legs=10 max_step=0.360 outside=0 states={ "rest": 1862, "wander": 522, "graze": 3016 }
+[animal-home-tests] sheep_b sun 30Hz quiet=91.1% travel=111.9px longest_leg=2.37s/19.0px legs=10 max_step=0.340 outside=0 states={ "graze": 3420, "wander": 504, "rest": 1476 }
+[animal-home-tests] cow sun 30Hz quiet=90.4% travel=132.2px longest_leg=3.00s/24.2px legs=7 max_step=0.320 outside=0 states={ "rest": 1817, "wander": 559, "graze": 3024 }
+[animal-home-tests] horse sun 30Hz quiet=91.8% travel=116.1px longest_leg=2.37s/19.9px legs=8 max_step=0.368 outside=0 states={ "rest": 1391, "wander": 459, "graze": 3550 }
+[animal-home-tests] duck_a sun 30Hz quiet=81.5% travel=265.1px longest_leg=3.30s/28.8px legs=13 max_step=0.373 outside=0 states={ "graze": 3303, "wander": 946, "rest": 1151 }
+[animal-home-tests] duck_b sun 30Hz quiet=83.4% travel=224.3px longest_leg=3.63s/31.6px legs=13 max_step=0.365 outside=0 states={ "graze": 2890, "wander": 849, "rest": 1661 }
+[animal-home-tests] duck_c sun 30Hz quiet=80.9% travel=277.5px longest_leg=3.77s/33.7px legs=13 max_step=0.373 outside=0 states={ "rest": 1463, "wander": 989, "graze": 2948 }
+[animal-home-tests] llama sun 30Hz quiet=75.9% travel=690.4px longest_leg=3.90s/68.4px legs=15 max_step=0.712 outside=0 states={ "graze": 2770, "wander": 1320, "rest": 1310 }
+[animal-home-tests] goose overcast 30Hz quiet=91.0% travel=116.9px longest_leg=2.13s/19.8px legs=13 max_step=0.413 outside=0 states={ "graze": 2489, "wander": 516, "rest": 2395 }
+[animal-home-tests] sheep_a overcast 30Hz quiet=91.9% travel=108.1px longest_leg=2.70s/23.5px legs=9 max_step=0.359 outside=0 states={ "graze": 3340, "wander": 459, "rest": 1601 }
+[animal-home-tests] sheep_b overcast 30Hz quiet=91.9% travel=104.2px longest_leg=2.10s/16.5px legs=9 max_step=0.345 outside=0 states={ "graze": 3354, "wander": 458, "rest": 1588 }
+[animal-home-tests] cow overcast 30Hz quiet=92.5% travel=91.7px longest_leg=2.93s/22.8px legs=8 max_step=0.320 outside=0 states={ "wander": 410, "graze": 3287, "rest": 1703 }
+[animal-home-tests] horse overcast 30Hz quiet=92.9% travel=94.7px longest_leg=2.67s/23.5px legs=8 max_step=0.370 outside=0 states={ "graze": 3231, "wander": 398, "rest": 1771 }
+[animal-home-tests] duck_a overcast 30Hz quiet=81.2% travel=254.4px longest_leg=3.70s/31.6px legs=14 max_step=0.362 outside=0 states={ "graze": 3009, "wander": 960, "rest": 1431 }
+[animal-home-tests] duck_b overcast 30Hz quiet=82.1% travel=245.5px longest_leg=3.40s/28.5px legs=13 max_step=0.366 outside=0 states={ "rest": 1582, "wander": 932, "graze": 2886 }
+[animal-home-tests] duck_c overcast 30Hz quiet=82.7% travel=227.9px longest_leg=3.57s/30.4px legs=14 max_step=0.368 outside=0 states={ "wander": 869, "graze": 2911, "rest": 1620 }
+[animal-home-tests] llama overcast 30Hz quiet=74.8% travel=730.3px longest_leg=4.43s/76.9px legs=15 max_step=0.718 outside=0 states={ "graze": 2838, "wander": 1377, "rest": 1185 }
+[animal-home-tests] goose sun 60Hz quiet=90.9% travel=125.8px longest_leg=2.17s/20.5px legs=12 max_step=0.208 outside=0 states={ "graze": 4652, "wander": 1036, "rest": 5112 }
+[animal-home-tests] sheep_a sun 60Hz quiet=92.0% travel=104.1px longest_leg=2.33s/19.2px legs=9 max_step=0.180 outside=0 states={ "rest": 3978, "wander": 898, "graze": 5924 }
+[animal-home-tests] sheep_b sun 60Hz quiet=91.3% travel=113.3px longest_leg=2.28s/18.1px legs=9 max_step=0.169 outside=0 states={ "graze": 6629, "wander": 984, "rest": 3187 }
+[animal-home-tests] cow sun 60Hz quiet=93.7% travel=76.0px longest_leg=2.22s/16.6px legs=7 max_step=0.160 outside=0 states={ "rest": 3155, "wander": 744, "graze": 6901 }
+[animal-home-tests] horse sun 60Hz quiet=92.7% travel=95.6px longest_leg=2.72s/22.9px legs=8 max_step=0.177 outside=0 states={ "rest": 2690, "wander": 825, "graze": 7285 }
+[animal-home-tests] duck_a sun 60Hz quiet=81.3% travel=257.7px longest_leg=3.45s/29.3px legs=13 max_step=0.179 outside=0 states={ "graze": 6319, "wander": 1950, "rest": 2531 }
+[animal-home-tests] duck_b sun 60Hz quiet=82.7% travel=230.4px longest_leg=3.22s/27.4px legs=14 max_step=0.185 outside=0 states={ "graze": 6077, "wander": 1761, "rest": 2962 }
+[animal-home-tests] duck_c sun 60Hz quiet=83.7% travel=215.8px longest_leg=3.45s/29.9px legs=13 max_step=0.182 outside=0 states={ "rest": 3248, "wander": 1654, "graze": 5898 }
+[animal-home-tests] llama sun 60Hz quiet=75.1% travel=745.1px longest_leg=4.05s/71.7px legs=15 max_step=0.372 outside=0 states={ "graze": 5540, "wander": 2716, "rest": 2544 }
+[animal-home-tests] goose overcast 60Hz quiet=90.8% travel=134.1px longest_leg=2.02s/18.5px legs=11 max_step=0.207 outside=0 states={ "graze": 5023, "wander": 1043, "rest": 4734 }
+[animal-home-tests] sheep_a overcast 60Hz quiet=90.9% travel=120.5px longest_leg=2.80s/24.7px legs=10 max_step=0.180 outside=0 states={ "rest": 3220, "wander": 1021, "graze": 6559 }
+[animal-home-tests] sheep_b overcast 60Hz quiet=90.6% travel=121.6px longest_leg=2.60s/21.4px legs=10 max_step=0.170 outside=0 states={ "graze": 6845, "wander": 1065, "rest": 2890 }
+[animal-home-tests] cow overcast 60Hz quiet=92.6% travel=88.5px longest_leg=2.45s/18.3px legs=8 max_step=0.159 outside=0 states={ "wander": 815, "graze": 6480, "rest": 3505 }
+[animal-home-tests] horse overcast 60Hz quiet=91.6% travel=110.7px longest_leg=2.78s/23.6px legs=9 max_step=0.174 outside=0 states={ "graze": 6514, "wander": 949, "rest": 3337 }
+[animal-home-tests] duck_a overcast 60Hz quiet=81.7% travel=246.6px longest_leg=3.48s/29.3px legs=14 max_step=0.180 outside=0 states={ "wander": 1830, "rest": 3578, "graze": 5392 }
+[animal-home-tests] duck_b overcast 60Hz quiet=80.6% travel=275.3px longest_leg=3.83s/32.9px legs=13 max_step=0.181 outside=0 states={ "graze": 5865, "wander": 1996, "rest": 2939 }
+[animal-home-tests] duck_c overcast 60Hz quiet=82.8% travel=229.8px longest_leg=3.12s/26.4px legs=14 max_step=0.185 outside=0 states={ "graze": 5888, "wander": 1743, "rest": 3169 }
+[animal-home-tests] llama overcast 60Hz quiet=73.5% travel=824.8px longest_leg=4.03s/77.2px legs=16 max_step=0.389 outside=0 states={ "graze": 5687, "wander": 2905, "rest": 2208 }
+[animal-home-tests] goose sun 120Hz quiet=91.6% travel=114.8px longest_leg=1.98s/17.6px legs=11 max_step=0.103 outside=0 states={ "graze": 10102, "wander": 1922, "rest": 9576 }
+[animal-home-tests] sheep_a sun 120Hz quiet=89.2% travel=149.4px longest_leg=2.52s/20.9px legs=10 max_step=0.088 outside=0 states={ "rest": 7447, "wander": 2386, "graze": 11767 }
+[animal-home-tests] sheep_b sun 120Hz quiet=92.0% travel=99.5px longest_leg=2.21s/17.2px legs=9 max_step=0.085 outside=0 states={ "graze": 13934, "wander": 1787, "rest": 5879 }
+[animal-home-tests] cow sun 120Hz quiet=93.3% travel=76.6px longest_leg=2.24s/16.4px legs=8 max_step=0.078 outside=0 states={ "rest": 6247, "wander": 1521, "graze": 13832 }
+[animal-home-tests] horse sun 120Hz quiet=92.6% travel=98.8px longest_leg=2.62s/22.6px legs=8 max_step=0.090 outside=0 states={ "rest": 7496, "wander": 1646, "graze": 12458 }
+[animal-home-tests] duck_a sun 120Hz quiet=83.9% travel=211.6px longest_leg=3.65s/31.6px legs=12 max_step=0.090 outside=0 states={ "graze": 12352, "wander": 3249, "rest": 5999 }
+[animal-home-tests] duck_b sun 120Hz quiet=81.4% travel=258.6px longest_leg=3.61s/30.6px legs=13 max_step=0.093 outside=0 states={ "graze": 11943, "wander": 3768, "rest": 5889 }
+[animal-home-tests] duck_c sun 120Hz quiet=83.1% travel=220.4px longest_leg=3.09s/25.9px legs=14 max_step=0.093 outside=0 states={ "rest": 5789, "wander": 3460, "graze": 12351 }
+[animal-home-tests] llama sun 120Hz quiet=78.8% travel=582.2px longest_leg=4.17s/70.4px legs=15 max_step=0.178 outside=0 states={ "graze": 11971, "wander": 4615, "rest": 5014 }
+[animal-home-tests] goose overcast 120Hz quiet=89.4% travel=156.5px longest_leg=2.33s/22.2px legs=12 max_step=0.103 outside=0 states={ "wander": 2318, "graze": 9895, "rest": 9387 }
+[animal-home-tests] sheep_a overcast 120Hz quiet=91.3% travel=115.2px longest_leg=2.52s/20.8px legs=9 max_step=0.087 outside=0 states={ "graze": 13106, "wander": 1996, "rest": 6498 }
+[animal-home-tests] sheep_b overcast 120Hz quiet=91.9% travel=98.3px longest_leg=2.34s/19.1px legs=10 max_step=0.088 outside=0 states={ "graze": 13626, "wander": 1811, "rest": 6163 }
+[animal-home-tests] cow overcast 120Hz quiet=93.4% travel=78.2px longest_leg=2.37s/17.8px legs=7 max_step=0.079 outside=0 states={ "graze": 12326, "wander": 1549, "rest": 7725 }
+[animal-home-tests] horse overcast 120Hz quiet=93.7% travel=77.3px longest_leg=2.36s/19.4px legs=8 max_step=0.091 outside=0 states={ "graze": 12988, "wander": 1409, "rest": 7203 }
+[animal-home-tests] duck_a overcast 120Hz quiet=80.7% travel=268.5px longest_leg=3.92s/33.6px legs=13 max_step=0.090 outside=0 states={ "graze": 11570, "wander": 3989, "rest": 6041 }
+[animal-home-tests] duck_b overcast 120Hz quiet=81.5% travel=253.7px longest_leg=3.23s/27.5px legs=14 max_step=0.092 outside=0 states={ "rest": 6496, "wander": 3723, "graze": 11381 }
+[animal-home-tests] duck_c overcast 120Hz quiet=81.3% travel=264.9px longest_leg=3.82s/34.5px legs=14 max_step=0.094 outside=0 states={ "wander": 3718, "rest": 6586, "graze": 11296 }
+[animal-home-tests] llama overcast 120Hz quiet=77.4% travel=644.5px longest_leg=4.07s/71.4px legs=16 max_step=0.186 outside=0 states={ "graze": 11432, "wander": 4922, "rest": 5246 }
+[animal-home-tests] PASS: 1005 checks
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[photo-home-tests] 30Hz photos=["llama_sun_sheep_happy", "llama_overcast_goose_annoyed"] release=(308.0765, 528.9205) free_travel=353.8px quiet=77.3%
+[photo-home-tests] 60Hz photos=["llama_sun_sheep_happy", "llama_overcast_goose_annoyed"] release=(307.6435, 542.7255) free_travel=342.4px quiet=78.6%
+[photo-home-tests] 120Hz photos=["llama_sun_sheep_happy", "llama_overcast_goose_annoyed"] release=(308.3254, 531.3578) free_travel=369.2px quiet=76.6%
+[photo-home-tests] PASS: 75 checks
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[grass-state-tests] PASS: 368 checks, 0 failures
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[grass-action-tests] PASS: 61 checks, 0 failures
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+Terminated
+[daily-check] Godot/timeout exit=143; tee exit=0

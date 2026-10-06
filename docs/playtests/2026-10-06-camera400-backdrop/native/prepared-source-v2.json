@@ -1,0 +1,21 @@
+{
+  "source": "6554353d98d96bf99dfcbd4a4b583dafe83c9324",
+  "tree": "155cbc65da27a79464a86f293ad8f6936f4b9914",
+  "base": "b9f68c3c5c4e70e16cefde9b4400bb1d553ff915",
+  "files": [
+    "scripts/main.gd",
+    "scripts/game/yard_world.gd",
+    "test/camera400_backdrop_suite.gd",
+    "test/camera400_backdrop_suite.gd.uid",
+    "test/godot_gate_test.sh",
+    "tools/lib/godot_suite_completions.tsv",
+    "tools/verify_daily_life.sh",
+    "docs/requirements.md",
+    "docs/decisions.md",
+    "docs/playtests/2026-10-06-camera400-backdrop/.gdignore",
+    "docs/playtests/2026-10-06-camera400-backdrop/README.md"
+  ],
+  "native": "first run failed due incorrect landscape assertion; revised fixture unrun",
+  "browser": "not run",
+  "production_unchanged_from": "cf8b7f45536cf658d9540b9a4e692f986cce0bb4"
+}

@@ -1,0 +1,91 @@
+{
+  "status": "passed",
+  "source": {
+    "source": "58437ae8977f2f0ac1fd51dbdd61e2274ac12132",
+    "tree": "35ce69244b51a4d4c382ccde3517a429d55b0460",
+    "base": "b9f68c3c5c4e70e16cefde9b4400bb1d553ff915",
+    "files": [
+      "docs/decisions.md",
+      "docs/game-design.md",
+      "docs/playtests/2026-10-06-camera400-backdrop/.gdignore",
+      "docs/playtests/2026-10-06-camera400-backdrop/README.md",
+      "docs/requirements.md",
+      "scripts/game/yard_world.gd",
+      "scripts/main.gd",
+      "test/camera400_backdrop_suite.gd",
+      "test/camera400_backdrop_suite.gd.uid",
+      "test/godot_gate_test.sh",
+      "tools/lib/godot_suite_completions.tsv",
+      "tools/verify_daily_life.sh"
+    ],
+    "native": "enhanced continuity/lifecycle fixture not yet run",
+    "browser": "not run",
+    "production_unchanged_from": null,
+    "counterfactual_guard_source": "6554353d98d96bf99dfcbd4a4b583dafe83c9324"
+  },
+  "daily_suites": 76,
+  "daily_engine_launches": 77,
+  "native_camera_checks": 202,
+  "native_bounds_checks": 44734,
+  "mock_total": 68,
+  "mock_new_camera_format": 14,
+  "node_programs": 2,
+  "processes": [
+    {
+      "step": "daily",
+      "args": [
+        "bash",
+        "tools/verify_daily_life.sh"
+      ],
+      "started_at": "2026-10-06T00:54:26.673575+00:00",
+      "ended_at": "2026-10-06T01:02:03.427739+00:00",
+      "actual_exit": 0,
+      "log": "/tmp/camera400-bounds-evidence/full-v2/daily.log",
+      "bytes": 97446,
+      "sha256": "e9b8836eb093be0767afb0dbc9aa1e47eba8742bffcd4c045186c4f144a50049"
+    },
+    {
+      "step": "retention",
+      "args": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "test/web_bundle_retention_test.py"
+      ],
+      "started_at": "2026-10-06T01:02:03.430844+00:00",
+      "ended_at": "2026-10-06T01:02:04.281080+00:00",
+      "actual_exit": 0,
+      "log": "/tmp/camera400-bounds-evidence/full-v2/retention.log",
+      "bytes": 1301,
+      "sha256": "75c192db0e61737b5127dfa4e74b2292ffb7934c66b15c868d1da81d9ce701e3"
+    },
+    {
+      "step": "publisher-fixture",
+      "args": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "test/publish_storage_modules_test.py"
+      ],
+      "started_at": "2026-10-06T01:02:04.281385+00:00",
+      "ended_at": "2026-10-06T01:02:05.102371+00:00",
+      "actual_exit": 0,
+      "log": "/tmp/camera400-bounds-evidence/full-v2/publisher-fixture.log",
+      "bytes": 145,
+      "sha256": "69d2cfe36e55916187b1ce6b537c388a1bb633ee3f0ec77b42891590d5f8277d"
+    },
+    {
+      "step": "export",
+      "args": [
+        "bash",
+        "-c",
+        "source tools/lib/verified_godot.sh; run_verified_godot /tmp/camera400-bounds-evidence/full-v2/export-engine.log --headless --path . --export-release Web /dev/shm/camera400-bounds-web-v2/index.html"
+      ],
+      "started_at": "2026-10-06T01:02:05.102728+00:00",
+      "ended_at": "2026-10-06T01:02:11.069075+00:00",
+      "actual_exit": 0,
+      "log": "/tmp/camera400-bounds-evidence/full-v2/export.log",
+      "bytes": 46170,
+      "sha256": "55be625b02fd0aa6219d9cc851279a38b90ff3d7dfe0a18adda07296ccc08704"
+    }
+  ],
+  "candidate_only": true,
+  "browser_started": false,
+  "independent_review": "pending"
+}
