@@ -260,9 +260,18 @@ func _start_reveal(find_id: String) -> void:
 	var margin := FindReveal.HALO + 8.0
 	var ceiling := margin + FindReveal.LABEL_ROOM
 	if _caption.visible:
+		# 名字画在物件上方 HALO+6；纸片下沿以下再留光晕和名字行，避免竖屏压到看景字幕
 		ceiling = _caption.position.y + _caption.size.y + margin + FindReveal.LABEL_ROOM
+	var floor_y := size.y - margin
+	if _pick_button.visible:
+		floor_y = minf(floor_y, _pick_button.position.y - FindReveal.HALO - 30.0)
+	elif _go_button.visible:
+		floor_y = minf(floor_y, _go_button.position.y - FindReveal.HALO - 30.0)
+	var min_y := ceiling
+	if min_y > floor_y:
+		min_y = floor_y
 	top.x = clampf(top.x, margin, size.x - margin)
-	top.y = clampf(top.y, minf(ceiling, size.y * 0.5), size.y - margin)
+	top.y = clampf(top.y, min_y, maxf(min_y, floor_y))
 	var slot := maxi(carried().size() - 1, 0)
 	reveal.label_font = _basket.get_theme_default_font()
 	reveal.play(find_id, art_to_screen(anchor), top, _basket.position + Vector2(24 + slot * 16, 22),
@@ -476,13 +485,27 @@ func _layout(size: Vector2, compact: bool) -> void:
 	if not _pick_button.visible:
 		_go_button.position.x = (size.x - _go_button.size.x) * 0.5
 	var caption_w := minf(size.x - pad * 2, 560.0)
-	_caption.size = Vector2(caption_w, 0)
+	# 先定宽度再按实际行数长高：StyleBox 的纸片要包住字，展示安全区也按纸片下沿算
+	_fit_caption(caption_w)
 	# 字幕放在上方天空里，路面和路边的东西不被挡住；走路时让出“停下看看”按钮的位置
 	var caption_top := pad + button_h + 12.0
 	_caption.position = Vector2((size.x - caption_w) * 0.5, caption_top if not observing.is_empty() else caption_top + button_h + 12.0)
 	_hint.size = Vector2(size.x - pad * 2, 24)
 	_hint.position = Vector2(pad, size.y - pad - 30)
 	_basket.position = Vector2(pad, size.y - pad - 64 - (button_h + 10 if not observing.is_empty() else 0) - (34 if _hint.visible else 0))
+
+
+## 看景纸片按当前宽度的实际行数长高，不再把高度写成 0（字会溢出纸外，展示安全区也会按空高度算）
+func _fit_caption(width: float) -> void:
+	_caption.size = Vector2(width, 0.0)
+	var lines := maxi(1, _caption.get_line_count())
+	var spacing := float(_caption.get_theme_constant("line_spacing"))
+	var text_height := lines * float(_caption.get_line_height()) + (lines - 1) * spacing
+	var paper := _caption.get_theme_stylebox("normal")
+	var pad_y := 0.0
+	if paper != null:
+		pad_y = paper.get_margin(SIDE_TOP) + paper.get_margin(SIDE_BOTTOM)
+	_caption.size = Vector2(width, text_height + pad_y)
 
 
 func _build_hud() -> void:
