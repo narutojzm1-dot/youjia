@@ -730,7 +730,15 @@ func _build_pause_screen() -> void:
 	_mute_toggle = _soft_button()
 	_mute_toggle.pressed.connect(_toggle_master_mute)
 	_place_pause(_pause_session, [_resume_button, _restart_button, _pause_title_button, _music_toggle, _music_volume_label, _music_slider, _ambience_toggle, _ambience_volume_label, _ambience_slider, _mute_toggle])
+	_pause_box.minimum_size_changed.connect(_on_pause_content_resized)
 	_fit_pause_panel()
+
+
+## 矮屏（高 < 500）暂停纸片原来固定撑到「屏高 − 24」，844×390 上标题和两列按钮只占中间约 220px，
+## 上下各留约 75px 空纸，像一张没排完的大白卡。现在矮屏按实际内容高度贴合（内容 + 纸边距 +
+## 上下各 PAUSE_SHORT_BREATH 留白），仍不超过「屏高 − 24」并保持居中；宽度、字号、按钮、两列
+## 分组与竖屏/大屏排版都不变（REQ-20261006-043）。
+const PAUSE_SHORT_BREATH := 14.0
 
 
 func _fit_pause_panel() -> void:
@@ -740,11 +748,6 @@ func _fit_pause_panel() -> void:
 	var margin := 12.0
 	var panel_w := minf(680.0 if short else 360.0, size.x - margin * 2.0)
 	var panel_h := minf(620.0, size.y - margin * 2.0)
-	_pause_panel.custom_minimum_size = Vector2(panel_w, panel_h)
-	_pause_panel.offset_left = -panel_w * 0.5
-	_pause_panel.offset_right = panel_w * 0.5
-	_pause_panel.offset_top = -panel_h * 0.5
-	_pause_panel.offset_bottom = panel_h * 0.5
 	var sep := 4 if short else 12
 	var button_h := 36.0 if short else 44.0
 	_pause_box.add_theme_constant_override("separation", sep)
@@ -766,6 +769,33 @@ func _fit_pause_panel() -> void:
 		_pause_audio.visible = false
 		_place_pause(_pause_session, [_resume_button, _restart_button, _pause_title_button, _music_toggle, _music_volume_label, _music_slider, _ambience_toggle, _ambience_volume_label, _ambience_slider, _mute_toggle])
 		_place_pause(_pause_audio, [])
+	_apply_pause_panel_size(panel_w, panel_h)
+
+
+## 矮屏改两列/切语言后子节点最小尺寸是延迟更新的，等内容最小高度真正变化时再贴合一次。
+func _on_pause_content_resized() -> void:
+	if _pause_panel == null or size.x < 64.0 or size.y < 64.0 or size.y >= 500.0:
+		return
+	_apply_pause_panel_size(minf(680.0, size.x - 24.0), minf(620.0, size.y - 24.0))
+
+
+func _apply_pause_panel_size(panel_w: float, panel_h: float) -> void:
+	if size.y < 500.0:
+		panel_h = minf(panel_h, _pause_content_height() + PAUSE_SHORT_BREATH * 2.0)
+	_pause_panel.custom_minimum_size = Vector2(panel_w, panel_h)
+	_pause_panel.offset_left = -panel_w * 0.5
+	_pause_panel.offset_right = panel_w * 0.5
+	_pause_panel.offset_top = -panel_h * 0.5
+	_pause_panel.offset_bottom = panel_h * 0.5
+
+
+## 暂停纸片装下当前内容所需的最小高度（含纸面上下内边距），只用于矮屏贴合。
+func _pause_content_height() -> float:
+	var height := _pause_box.get_combined_minimum_size().y
+	var style := _pause_panel.get_theme_stylebox("panel")
+	if style != null:
+		height += style.get_margin(SIDE_TOP) + style.get_margin(SIDE_BOTTOM)
+	return ceilf(height)
 
 
 func _place_pause(parent: Node, nodes: Array) -> void:
