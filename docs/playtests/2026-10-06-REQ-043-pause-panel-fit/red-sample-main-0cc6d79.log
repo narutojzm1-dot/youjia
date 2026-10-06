@@ -1,0 +1,11 @@
+# test/pause_panel_fit_suite.gd on unchanged main 0cc6d79 (Godot 4.7.2 native headless, isolated XDG). Excerpt: first 844x390 failures + summary; all 44 failures are the short-screen fit / empty-paper checks.
+FAIL: (844, 390) zh-CN: short paper height 366.0 hugs content (271.0)
+FAIL: (844, 390) zh-CN: empty paper above the title 71.0 <= 26.0 (was ~75px at 844x390)
+FAIL: (844, 390) zh-CN: empty paper below the last control 72.0 stays small
+FAIL: (844, 390) en: short paper height 366.0 hugs content (271.0)
+FAIL: (844, 390) en: empty paper above the title 71.0 <= 26.0 (was ~75px at 844x390)
+FAIL: (844, 390) en: empty paper below the last control 72.0 stays small
+...
+FAIL: (640, 300) zh-CN: short paper height 276.0 hugs content (271.0)
+FAIL: (640, 300) en: short paper height 276.0 hugs content (271.0)
+pause_panel_fit: 44 of 1228 checks FAILED

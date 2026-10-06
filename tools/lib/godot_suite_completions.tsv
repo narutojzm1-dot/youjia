@@ -37,6 +37,7 @@ test/notice_paper_suite.gd	notice paper suite checks=[1-9][0-9]* failures=\[\]
 test/paper_tooltip_interaction_suite.gd	PASS: paper_tooltip_interaction [1-9][0-9]* checks
 test/paper_tooltip_style_suite.gd	PASS: paper_tooltip_style [1-9][0-9]* checks
 test/pause_notice_suite.gd	PAUSE_NOTICE checks=[1-9][0-9]* failures=0
+test/pause_panel_fit_suite.gd	PASS: pause_panel_fit [1-9][0-9]* checks
 test/photo_arrival_combo_suite.gd	PHOTO ARRIVAL COMBO PASS [1-9][0-9]*
 test/photo_arrival_fit_suite.gd	\[photo-arrival-fit\] PASS: [1-9][0-9]* checks
 test/photo_arrival_mat_suite.gd	\[photo-arrival-mat\] PASS: [1-9][0-9]* checks
