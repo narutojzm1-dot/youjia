@@ -61,7 +61,7 @@ func run() -> void:
 	# WORLD-BASKET keeps confirmed hand items instead of expiring after twenty seconds.
 	main._process(21.0)
 	check(world._fish_carry_type == "odd" and world._fish_carry_timer == 0.0 and main._notice_key != "notice.fishing.release", "durable fish remains without a false release notice")
-	check(world.primary_action_key() == "action.toss_fish", "stored fish remains available for feeding")
+	check(world.primary_action_key() == "action.drop_food", "stored fish remains available for feeding")
 	await main._show_title()
 	root.get_node("AudioDirector").call("release_streams")
 	print("[fish-miss-feedback] %d checks, %d failures: %s" % [checks, failures.size(), failures])

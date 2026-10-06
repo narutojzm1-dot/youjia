@@ -233,9 +233,10 @@ func get_yard_inventory() -> Dictionary:
 	return YardInventory.read(_data)
 
 
-func request_inventory_action(revision: int, action: String, fish: String) -> String:
+func request_inventory_action(revision: int, action: String, fish: String, details: Dictionary = {}) -> String:
+	var frozen := details.duplicate(true)
 	return request_intent("inventory", func(current: Dictionary) -> Variant:
-		var result := YardInventory.transition(current, revision, action, fish)
+		var result := YardInventory.transition(current, revision, action, fish, frozen)
 		if result.has("error"):
 			return CoordinatorType.IntentRejection.new(result.error)
 		return result.candidate)

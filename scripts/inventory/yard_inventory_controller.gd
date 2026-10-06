@@ -27,7 +27,7 @@ func busy() -> bool:
 	return not pending.is_empty()
 
 
-func request(action: String, fish: String) -> bool:
+func request(action: String, fish: String, details: Dictionary = {}) -> bool:
 	if busy(): return false
 	var inventory := view()
 	if inventory.is_empty():
@@ -35,7 +35,7 @@ func request(action: String, fish: String) -> bool:
 		error = "BASKET_INVALID"
 		changed.emit()
 		return false
-	pending = {"revision": int(inventory.revision), "action": action, "fish": fish}
+	pending = {"revision": int(inventory.revision), "action": action, "fish": fish, "details": details.duplicate(true)}
 	_failed.clear()
 	return _submit()
 
@@ -43,7 +43,7 @@ func request(action: String, fish: String) -> bool:
 func _submit() -> bool:
 	state = "saving"
 	error = ""
-	_op_id = store.request_inventory_action(pending.revision, pending.action, pending.fish)
+	_op_id = store.request_inventory_action(pending.revision, pending.action, pending.fish, pending.details)
 	if _op_id.is_empty():
 		state = "failed"
 		error = "SAVE_UNAVAILABLE"
