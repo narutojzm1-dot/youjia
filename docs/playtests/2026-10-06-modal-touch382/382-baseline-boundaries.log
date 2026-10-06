@@ -1,0 +1,111 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+CASE zh-CN (390, 844) cancel=(195.0, 490.0) music=[P: (31.0, 465.0), S: (328.0, 32.0)] pause=true screen=game
+FAIL zh-CN (390, 844) cancel down music unchanged
+FAIL zh-CN (390, 844) cancel release music unchanged
+FAIL zh-CN (390, 844) resume fully restores yard
+FAIL zh-CN (390, 844) no partial pause controls
+FRESH zh-CN (390, 844) point=(195.0, 481.0) value=0.83 visible=true confirm=false sliderVisible=false sliderParent=@VBoxContainer@31:<VBoxContainer#84875937550> mainInput=true
+FAIL zh-CN (390, 844) fresh music touch works
+FAIL zh-CN (390, 844) closed and reopened pause rejects old gesture music unchanged
+FAIL zh-CN (390, 844) rotation cannot switch owned slider
+FAIL zh-CN (390, 844) touch-only cancel works
+FAIL zh-CN (390, 844) touch-only cancellation music unchanged
+FAIL zh-CN (390, 844) keyboard cancellation music unchanged
+FAIL zh-CN (390, 844) Escape during held touch music unchanged
+FAIL zh-CN (390, 844) GUI accept waits; touch-only fallback fires once
+FAIL zh-CN (390, 844) accept hold music unchanged
+FAIL zh-CN (390, 844) GUI accept waits; touch-only fallback fires once
+FAIL zh-CN (390, 844) accept hold music unchanged
+CASE zh-CN (360, 640) cancel=(180.0, 388.0) music=[P: (28.0, 363.0), S: (304.0, 32.0)] pause=true screen=game
+FAIL zh-CN (360, 640) cancel down music unchanged
+FAIL zh-CN (360, 640) cancel release music unchanged
+FAIL zh-CN (360, 640) resume fully restores yard
+FAIL zh-CN (360, 640) no partial pause controls
+FRESH zh-CN (360, 640) point=(180.0, 379.0) value=0.83 visible=true confirm=false sliderVisible=false sliderParent=@VBoxContainer@31:<VBoxContainer#84875937550> mainInput=true
+FAIL zh-CN (360, 640) fresh music touch works
+FAIL zh-CN (360, 640) closed and reopened pause rejects old gesture music unchanged
+FAIL zh-CN (360, 640) rotation cannot switch owned slider
+FAIL zh-CN (360, 640) touch-only cancel works
+FAIL zh-CN (360, 640) touch-only cancellation music unchanged
+FAIL zh-CN (360, 640) keyboard cancellation music unchanged
+FAIL zh-CN (360, 640) Escape during held touch music unchanged
+FAIL zh-CN (360, 640) GUI accept waits; touch-only fallback fires once
+FAIL zh-CN (360, 640) accept hold music unchanged
+FAIL zh-CN (360, 640) accept signal once
+FAIL zh-CN (360, 640) GUI accept waits; touch-only fallback fires once
+FAIL zh-CN (360, 640) accept hold music unchanged
+CASE zh-CN (844, 390) cancel=(422.0, 263.0) music=[P: (428.0, 180.0), S: (318.0, 28.0)] pause=true screen=game
+FAIL zh-CN (844, 390) cancel down ambience unchanged
+FAIL zh-CN (844, 390) cancel release ambience unchanged
+FAIL zh-CN (844, 390) resume fully restores yard
+FAIL zh-CN (844, 390) no partial pause controls
+FRESH zh-CN (844, 390) point=(587.0, 194.0) value=0.83 visible=true confirm=false sliderVisible=false sliderParent=@VBoxContainer@32:<VBoxContainer#84909491984> mainInput=true
+FAIL zh-CN (844, 390) fresh music touch works
+FAIL zh-CN (844, 390) closed and reopened pause rejects old gesture music unchanged
+FAIL zh-CN (844, 390) rotation cannot switch owned slider
+FAIL zh-CN (844, 390) touch-only cancel works
+FAIL zh-CN (844, 390) touch-only cancellation ambience unchanged
+FAIL zh-CN (844, 390) keyboard cancellation ambience unchanged
+FAIL zh-CN (844, 390) Escape during held touch ambience unchanged
+FAIL zh-CN (844, 390) GUI accept waits; touch-only fallback fires once
+FAIL zh-CN (844, 390) accept hold music unchanged
+FAIL zh-CN (844, 390) accept hold ambience unchanged
+FAIL zh-CN (844, 390) accept signal once
+FAIL zh-CN (844, 390) accept hold music unchanged
+FAIL zh-CN (844, 390) accept hold ambience unchanged
+CASE en (390, 844) cancel=(195.0, 490.0) music=[P: (31.0, 465.0), S: (328.0, 32.0)] pause=true screen=game
+FAIL en (390, 844) cancel down music unchanged
+FAIL en (390, 844) cancel release music unchanged
+FAIL en (390, 844) resume fully restores yard
+FAIL en (390, 844) no partial pause controls
+FRESH en (390, 844) point=(195.0, 481.0) value=0.83 visible=true confirm=false sliderVisible=false sliderParent=@VBoxContainer@31:<VBoxContainer#84875937550> mainInput=true
+FAIL en (390, 844) fresh music touch works
+FAIL en (390, 844) closed and reopened pause rejects old gesture music unchanged
+FAIL en (390, 844) rotation cannot switch owned slider
+FAIL en (390, 844) touch-only cancel works
+FAIL en (390, 844) touch-only cancellation music unchanged
+FAIL en (390, 844) keyboard cancellation music unchanged
+FAIL en (390, 844) Escape during held touch music unchanged
+FAIL en (390, 844) GUI accept waits; touch-only fallback fires once
+FAIL en (390, 844) accept hold music unchanged
+FAIL en (390, 844) GUI accept waits; touch-only fallback fires once
+FAIL en (390, 844) accept hold music unchanged
+CASE en (360, 640) cancel=(180.0, 388.0) music=[P: (28.0, 363.0), S: (304.0, 32.0)] pause=true screen=game
+FAIL en (360, 640) cancel down music unchanged
+FAIL en (360, 640) cancel release music unchanged
+FAIL en (360, 640) resume fully restores yard
+FAIL en (360, 640) no partial pause controls
+FRESH en (360, 640) point=(180.0, 379.0) value=0.83 visible=true confirm=false sliderVisible=false sliderParent=@VBoxContainer@31:<VBoxContainer#84875937550> mainInput=true
+FAIL en (360, 640) fresh music touch works
+FAIL en (360, 640) closed and reopened pause rejects old gesture music unchanged
+FAIL en (360, 640) rotation cannot switch owned slider
+FAIL en (360, 640) touch-only cancel works
+FAIL en (360, 640) touch-only cancellation music unchanged
+FAIL en (360, 640) keyboard cancellation music unchanged
+FAIL en (360, 640) Escape during held touch music unchanged
+FAIL en (360, 640) GUI accept waits; touch-only fallback fires once
+FAIL en (360, 640) accept hold music unchanged
+FAIL en (360, 640) accept signal once
+FAIL en (360, 640) GUI accept waits; touch-only fallback fires once
+FAIL en (360, 640) accept hold music unchanged
+CASE en (844, 390) cancel=(422.0, 263.0) music=[P: (428.0, 180.0), S: (318.0, 28.0)] pause=true screen=game
+FAIL en (844, 390) cancel down ambience unchanged
+FAIL en (844, 390) cancel release ambience unchanged
+FAIL en (844, 390) resume fully restores yard
+FAIL en (844, 390) no partial pause controls
+FRESH en (844, 390) point=(587.0, 194.0) value=0.83 visible=true confirm=false sliderVisible=false sliderParent=@VBoxContainer@32:<VBoxContainer#84909491984> mainInput=true
+FAIL en (844, 390) fresh music touch works
+FAIL en (844, 390) closed and reopened pause rejects old gesture music unchanged
+FAIL en (844, 390) rotation cannot switch owned slider
+FAIL en (844, 390) touch-only cancel works
+FAIL en (844, 390) touch-only cancellation ambience unchanged
+FAIL en (844, 390) keyboard cancellation ambience unchanged
+FAIL en (844, 390) Escape during held touch ambience unchanged
+FAIL en (844, 390) GUI accept waits; touch-only fallback fires once
+FAIL en (844, 390) accept hold music unchanged
+FAIL en (844, 390) accept hold ambience unchanged
+FAIL en (844, 390) accept signal once
+FAIL en (844, 390) accept hold music unchanged
+FAIL en (844, 390) accept hold ambience unchanged
+MODAL_TOUCH_INPUT checks=264 failures=96

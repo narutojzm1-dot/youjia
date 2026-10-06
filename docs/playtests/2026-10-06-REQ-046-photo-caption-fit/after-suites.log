@@ -1,0 +1,11 @@
+# 本分支 photo_caption_fit_suite + 既有照片相关专项（原生 Godot 4.7.2 headless，隔离 XDG）
+caption stats { "zh-CN fs13 lines2": 77, "zh-CN fs12 lines3": 3, "zh-CN fs12 lines2": 3, "en fs12 lines3": 44, "en fs13 lines2": 30, "en fs12 lines2": 12 }
+PASS photo_caption_fit_suite: 1884 checks
+[photo-arrival-fit] PASS: 418 checks
+[photo-arrival-mat] PASS: 550 checks
+[photo-arrival-shutter-paper] PASS: 1290 checks
+PHOTO ARRIVAL COMBO PASS 656
+[photo-home-tests] PASS: 75 checks
+[interaction-photo-tests] 110 checks, failures=[]
+[photo-moment-tests] PASS: 1395 checks
+[mixed-input-photo-tests] 6 checks []

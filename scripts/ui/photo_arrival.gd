@@ -27,6 +27,21 @@ const SHUTTER_PAPER := Color(1.0, 0.965, 0.91, 0.94) # PAPER fff6e8, nearly opaq
 const SHUTTER_EDGE := Color(0.953, 0.698, 0.478, 0.6) # APRICOT f3b27a
 const SHUTTER_PAD_X := 14.0
 const SHUTTER_PAD_Y := 3.0
+## REQ-20261006-046: the print's caption ("Holiday day N" + the moment line) is a
+## 192×56 box on the paper strip under the photo. 51 of 81 English captions
+## (27 lines × day 1/12/365) and 6 Chinese ones wrap to three lines: at 13px that
+## is 66px, so the text spilt 5px past both box edges, sat low against the bottom
+## of the print and often left one word ("pond.") alone on the last line.
+## When the caption does not fit, tighten its line spacing and, if still needed,
+## drop to 12px; when it wraps, narrow and centre the box to the narrowest width
+## that keeps the same line count so the lines balance. Captions that already
+## fit unwrapped keep the original box, size and spacing.
+const CAPTION_RECT := Rect2(24, 227, 192, 56)
+const CAPTION_FONT_SIZE := 13
+const CAPTION_SMALL_FONT_SIZE := 12
+const CAPTION_TIGHT_LINE_SPACING := 0
+const CAPTION_BALANCE_MIN_WIDTH := 96.0
+const CAPTION_BALANCE_SLACK := 2.0
 
 var _card: Control
 var _mat: ColorRect
@@ -75,10 +90,10 @@ func _ready() -> void:
 	_card.add_child(_picture)
 	_caption = Label.new()
 	_caption.name = "Caption"
-	_caption.position = Vector2(24, 227)
-	_caption.size = Vector2(192, 56)
+	_caption.position = CAPTION_RECT.position
+	_caption.size = CAPTION_RECT.size
 	_caption.add_theme_color_override("font_color", Color("5b4637"))
-	_caption.add_theme_font_size_override("font_size", 13)
+	_caption.add_theme_font_size_override("font_size", CAPTION_FONT_SIZE)
 	_caption.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	_caption.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_caption.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
@@ -245,8 +260,88 @@ func refresh_locale() -> void:
 	if _snapshot.is_empty():
 		return
 	_caption.text = PhotoDiary.caption(_snapshot)
+	_fit_caption()
 	_shutter.text = I18n.t("photo.arrival.shutter")
 	_fit_shutter_paper()
+
+
+## REQ-20261006-046: keep the caption inside its 192×56 slot and avoid a lone
+## last word. See CAPTION_RECT. Line counts come from the TextServer (same
+## breaking rule as AUTOWRAP_WORD_SMART), not from the Label's cached size.
+func _fit_caption() -> void:
+	_caption.add_theme_font_size_override("font_size", CAPTION_FONT_SIZE)
+	_caption.remove_theme_constant_override("line_spacing")
+	var font := _caption.get_theme_font("font")
+	var spacing := _caption.get_theme_constant("line_spacing")
+	var fit := caption_fit(_caption.text, font, spacing)
+	if int(fit.font_size) != CAPTION_FONT_SIZE:
+		_caption.add_theme_font_size_override("font_size", int(fit.font_size))
+	if int(fit.line_spacing) != spacing:
+		_caption.add_theme_constant_override("line_spacing", int(fit.line_spacing))
+	var width := float(fit.width)
+	_caption.position = Vector2(CAPTION_RECT.position.x + (CAPTION_RECT.size.x - width) * 0.5, CAPTION_RECT.position.y)
+	# The autowrap minimum height depends on the width, and the cached minimum is
+	# from the previous text/width; apply the width, refresh, then the height.
+	_caption.size = Vector2(width, CAPTION_RECT.size.y)
+	_caption.update_minimum_size()
+	_caption.size = Vector2(width, CAPTION_RECT.size.y)
+
+
+## {font_size, line_spacing, width} for a caption in the CAPTION_RECT slot.
+static func caption_fit(text: String, font: Font, default_spacing: int) -> Dictionary:
+	var result := {"font_size": CAPTION_FONT_SIZE, "line_spacing": default_spacing, "width": CAPTION_RECT.size.x}
+	if text.is_empty() or font == null:
+		return result
+	var slot := CAPTION_RECT.size
+	var paragraphs := text.split("\n").size()
+	var lines := caption_line_count(text, font, CAPTION_FONT_SIZE, slot.x)
+	if caption_height(font, CAPTION_FONT_SIZE, default_spacing, lines) <= slot.y:
+		if lines <= paragraphs:
+			return result # Fits unwrapped: original box, size and spacing.
+	else:
+		result.line_spacing = CAPTION_TIGHT_LINE_SPACING
+		if caption_height(font, CAPTION_FONT_SIZE, CAPTION_TIGHT_LINE_SPACING, lines) > slot.y:
+			result.font_size = CAPTION_SMALL_FONT_SIZE
+			lines = caption_line_count(text, font, CAPTION_SMALL_FONT_SIZE, slot.x)
+			if caption_height(font, CAPTION_SMALL_FONT_SIZE, default_spacing, lines) <= slot.y:
+				result.line_spacing = default_spacing
+	var font_size := int(result.font_size)
+	if lines <= paragraphs:
+		return result
+	# Balance: the narrowest width that keeps the same number of lines.
+	var lo := CAPTION_BALANCE_MIN_WIDTH
+	var hi := slot.x
+	if caption_line_count(text, font, font_size, lo) <= lines:
+		hi = lo
+	while hi - lo > 1.0:
+		var mid := (lo + hi) * 0.5
+		if caption_line_count(text, font, font_size, mid) <= lines:
+			hi = mid
+		else:
+			lo = mid
+	result.width = minf(slot.x, ceilf(hi) + CAPTION_BALANCE_SLACK)
+	return result
+
+
+static func caption_height(font: Font, font_size: int, spacing: int, lines: int) -> float:
+	if lines <= 0:
+		return 0.0
+	return (font.get_height(font_size) + spacing) * lines - spacing
+
+
+## Line count under the AUTOWRAP_WORD_SMART rule, counting manual \n breaks.
+static func caption_line_count(text: String, font: Font, font_size: int, width: float) -> int:
+	if text.is_empty() or font == null:
+		return 0
+	var ts := TextServerManager.get_primary_interface()
+	var total := 0
+	for para: String in text.split("\n"):
+		var shaped := ts.create_shaped_text()
+		ts.shaped_text_add_string(shaped, para, font.get_rids(), font_size)
+		var breaks := ts.shaped_text_get_line_breaks(shaped, width, 0, TextServer.BREAK_WORD_BOUND | TextServer.BREAK_ADAPTIVE)
+		ts.free_rid(shaped)
+		total += maxi(1, breaks.size() / 2)
+	return total
 
 
 func dismiss() -> void:

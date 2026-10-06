@@ -1,0 +1,14 @@
+# tools/verify_daily_life.sh on REQ-045 change (base main 0cc6d79), Godot 4.7.2 native headless, isolated XDG, 2026-10-06 CST
+# Excerpt of the full log (1070 lines); every suite ran through run_verified_godot_suite.
+PASS: hint_paper_width 9264 checks
+[ui-interaction-tests] checks=63 failures=[]
+notice paper suite checks=49 failures=[]
+web_hidpi: 102 checks, 0 failures
+SAVE FEEDBACK 50 checks, failures 0
+day_label_layout suite: 173 checks passed
+title_card suite: 251 checks passed
+hint_paper_fit suite: 4653 checks passed
+LEGACY_BRIDGE_PASS 22
+Loading shell PASS: module ordering, runtime readiness/rejection, persistentPaths isolation, save-blocked gate, bytes, unknown totals, stall and both first-frame orders
+MOTION PREFERENCE JS PASS 21
+DAILY EXIT 0

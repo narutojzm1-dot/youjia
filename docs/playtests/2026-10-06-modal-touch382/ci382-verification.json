@@ -1,0 +1,103 @@
+{
+  "run": 37401565744,
+  "validation_sha": "1971b6cf892c0d6170d37dc72df7ebf96429790c",
+  "source": "7c7d9d58d0c013f3f17c9902efe368d67f5642dd",
+  "engine_starts": 79,
+  "files": [
+    {
+      "path": "dist/index.apple-touch-icon.png",
+      "bytes": 59343,
+      "sha256": "80d91adb306354c6e4d1af546d062e1e9236699ad0fd53153ab3d2fc34cd11d4"
+    },
+    {
+      "path": "dist/index.audio.position.worklet.js",
+      "bytes": 2973,
+      "sha256": "be33985bc7160d6bf9646f259cd86b259cd67b02ccb297ee5c44f8ac84327bc8"
+    },
+    {
+      "path": "dist/index.audio.worklet.js",
+      "bytes": 7298,
+      "sha256": "5b476a9c9ce642c0ee4256436d1bc31d9c38f868aca0f9a8e2a57c18d2dec2a3"
+    },
+    {
+      "path": "dist/index.html",
+      "bytes": 357722,
+      "sha256": "ccf6abc440efd4a718da7d7ecaf21f890ef491a3346a0ba9e4babdaaefda5cd1"
+    },
+    {
+      "path": "dist/index.icon.png",
+      "bytes": 389674,
+      "sha256": "1c591b9eb1b7af2a840a59a9feb637a0a7aeba2b0abde28042abf44f77d0acb3"
+    },
+    {
+      "path": "dist/index.js",
+      "bytes": 279815,
+      "sha256": "33c94cb3175f3333b82e2a3be5e8e86f77986f0aa2042b1631f6367a4e5bb6ba"
+    },
+    {
+      "path": "dist/index.pck",
+      "bytes": 27094556,
+      "sha256": "f6cb2e56eee13c647b476978d9e632a4cf21e0c1c45551317657a238ca7d6489"
+    },
+    {
+      "path": "dist/index.png",
+      "bytes": 1010767,
+      "sha256": "5743a648b82437e0e60db5e4aa08103cea96b01e110961082223c0e7fa819ebf"
+    },
+    {
+      "path": "dist/index.wasm",
+      "bytes": 39514754,
+      "sha256": "fc74679e3b97f76878947fcd4fbe1268cbfa6188182a2e33bbc3f5dc9bfa57d0"
+    },
+    {
+      "path": "dist/web/save/bridge.mjs",
+      "bytes": 1856,
+      "sha256": "ef18687554fdc0d745c1d18d4d091e959cc78559da0d61d6a093e562ff9bbc91"
+    },
+    {
+      "path": "dist/web/save/budgets.mjs",
+      "bytes": 340,
+      "sha256": "52984153977dcafd1d2682e848f1999f091d0966e17d46e902de76f5735a7018"
+    },
+    {
+      "path": "dist/web/save/host.mjs",
+      "bytes": 7730,
+      "sha256": "9de8dc0ef4bfc037a8ad0bff575d40c3dd4341bcc723351a412b2061bb661904"
+    },
+    {
+      "path": "dist/web/save/idbfs_source.mjs",
+      "bytes": 5550,
+      "sha256": "16eb57d471537f13d3e50018b56c2d416d2847f0d0249ba44433dd9ebb65f4d8"
+    },
+    {
+      "path": "dist/web/save/legacy_inspection.mjs",
+      "bytes": 2886,
+      "sha256": "db3a23a0221aa5d34a58a6a49aeeff930295ffe20bfcf73a7c11f0d49cffd671"
+    },
+    {
+      "path": "dist/web/save/legacy_seal.mjs",
+      "bytes": 2510,
+      "sha256": "9642132f5d4e7523e5966e802069af7f4bae803fae8e2e7c28ae55ee97d85610"
+    },
+    {
+      "path": "dist/web/save/legacy_v5.mjs",
+      "bytes": 2245,
+      "sha256": "8e7f4ad2d87aab77ac05361e4f46060476e933aa079ae94301998d08d4599621"
+    },
+    {
+      "path": "dist/web/save/lifecycle.mjs",
+      "bytes": 1878,
+      "sha256": "1cfaebb9a8745e2dc3e4f694ef475f250640870938f04160be1a5c9acd62935d"
+    },
+    {
+      "path": "dist/web/save/source_decode.mjs",
+      "bytes": 1542,
+      "sha256": "411f3bc784cb32a07f32eed5fc7d88f71b59a667cc0d68a50fe13c55bfdba18a"
+    },
+    {
+      "path": "dist/web/save/store.mjs",
+      "bytes": 13890,
+      "sha256": "2193b4397b8662a8ebc754dc4468e4d62964d209b4e1d0f0924a2ec81b409cbe"
+    }
+  ]
+}

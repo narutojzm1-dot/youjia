@@ -1,0 +1,882 @@
+[
+  {
+    "backend": {
+      "buffers": 2,
+      "bytes": 98304000,
+      "decoded": 2,
+      "starts": 2,
+      "players": 2,
+      "playing": 2,
+      "state": "running"
+    },
+    "gains": [
+      0.3981071710586548,
+      0.15848931670188904
+    ],
+    "inputs": [
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 195,
+        "y": 422,
+        "key": null,
+        "t": 9968.199999988079
+      },
+      {
+        "kind": "mousedown",
+        "trusted": true,
+        "x": 195,
+        "y": 422,
+        "key": null,
+        "t": 9968.199999988079
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 195,
+        "y": 422,
+        "key": null,
+        "t": 9971
+      },
+      {
+        "kind": "mouseup",
+        "trusted": true,
+        "x": 195,
+        "y": 422,
+        "key": null,
+        "t": 9971.099999964237
+      },
+      {
+        "kind": "keydown",
+        "trusted": true,
+        "x": null,
+        "y": null,
+        "key": "Escape",
+        "t": 12436.799999952316
+      },
+      {
+        "kind": "keyup",
+        "trusted": true,
+        "x": null,
+        "y": null,
+        "key": "Escape",
+        "t": 12515.899999976158
+      }
+    ],
+    "view": [
+      390,
+      844,
+      3
+    ],
+    "actual_viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "stage": "pause-initial",
+    "screenshot": "390-844-pause-initial.png",
+    "build": "index",
+    "source": "84a310bc3c2df4b09146197f76ad8e4cbf9cf29a",
+    "utc": "2026-10-06T01:51:10Z",
+    "errors": []
+  },
+  {
+    "backend": {
+      "buffers": 2,
+      "bytes": 98304000,
+      "decoded": 2,
+      "starts": 2,
+      "players": 2,
+      "playing": 2,
+      "state": "running"
+    },
+    "gains": [
+      0.3981071710586548,
+      0.15848931670188904
+    ],
+    "inputs": [
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 195,
+        "y": 340,
+        "key": null,
+        "t": 22237.19999998808
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 195,
+        "y": 340,
+        "key": null,
+        "t": 22238.599999964237
+      }
+    ],
+    "view": [
+      390,
+      844,
+      3
+    ],
+    "actual_viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "stage": "confirm-open",
+    "screenshot": "390-844-confirm-open.png",
+    "build": "index",
+    "source": "84a310bc3c2df4b09146197f76ad8e4cbf9cf29a",
+    "utc": "2026-10-06T01:51:12Z",
+    "errors": []
+  },
+  {
+    "backend": {
+      "buffers": 2,
+      "bytes": 98304000,
+      "decoded": 2,
+      "starts": 2,
+      "players": 2,
+      "playing": 2,
+      "state": "running"
+    },
+    "gains": [
+      0.3981071710586548,
+      0.15848931670188904
+    ],
+    "inputs": [
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 195,
+        "y": 490,
+        "key": null,
+        "t": 24290.599999964237
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 195,
+        "y": 490,
+        "key": null,
+        "t": 24291.299999952316
+      }
+    ],
+    "view": [
+      390,
+      844,
+      3
+    ],
+    "actual_viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "stage": "cancel-tap",
+    "screenshot": "390-844-cancel-tap.png",
+    "build": "index",
+    "source": "84a310bc3c2df4b09146197f76ad8e4cbf9cf29a",
+    "utc": "2026-10-06T01:51:14Z",
+    "errors": []
+  },
+  {
+    "backend": {
+      "buffers": 2,
+      "bytes": 98304000,
+      "decoded": 2,
+      "starts": 2,
+      "players": 2,
+      "playing": 2,
+      "state": "running"
+    },
+    "gains": [
+      0.3981071710586548,
+      0.15848931670188904
+    ],
+    "inputs": [
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 195,
+        "y": 340,
+        "key": null,
+        "t": 26053.299999952316
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 195,
+        "y": 340,
+        "key": null,
+        "t": 26053.69999998808
+      },
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 195,
+        "y": 490,
+        "key": null,
+        "t": 26996.399999976158
+      }
+    ],
+    "view": [
+      390,
+      844,
+      3
+    ],
+    "actual_viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "stage": "cancel-held-before-release",
+    "screenshot": "390-844-cancel-held-before-release.png",
+    "build": "index",
+    "source": "84a310bc3c2df4b09146197f76ad8e4cbf9cf29a",
+    "utc": "2026-10-06T01:51:17Z",
+    "errors": []
+  },
+  {
+    "backend": {
+      "buffers": 2,
+      "bytes": 98304000,
+      "decoded": 2,
+      "starts": 2,
+      "players": 2,
+      "playing": 2,
+      "state": "running"
+    },
+    "gains": [
+      0.3981071710586548,
+      0.15848931670188904
+    ],
+    "inputs": [
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 195,
+        "y": 490,
+        "key": null,
+        "t": 28940.399999976158
+      }
+    ],
+    "view": [
+      390,
+      844,
+      3
+    ],
+    "actual_viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "stage": "cancel-held-after-release",
+    "screenshot": "390-844-cancel-held-after-release.png",
+    "build": "index",
+    "source": "84a310bc3c2df4b09146197f76ad8e4cbf9cf29a",
+    "utc": "2026-10-06T01:51:19Z",
+    "errors": []
+  },
+  {
+    "backend": {
+      "buffers": 2,
+      "bytes": 98304000,
+      "decoded": 2,
+      "starts": 2,
+      "players": 2,
+      "playing": 2,
+      "state": "running"
+    },
+    "gains": [
+      0.3981071710586548,
+      0.15848931670188904
+    ],
+    "inputs": [
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 195,
+        "y": 340,
+        "key": null,
+        "t": 30938.19999998808
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 195,
+        "y": 340,
+        "key": null,
+        "t": 30938.799999952316
+      },
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 2,
+        "y": 2,
+        "key": null,
+        "t": 31860.5
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 195,
+        "y": 481,
+        "key": null,
+        "t": 32569
+      }
+    ],
+    "view": [
+      390,
+      844,
+      3
+    ],
+    "actual_viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "stage": "modal-drag-over-slider",
+    "screenshot": "390-844-modal-drag-over-slider.png",
+    "build": "index",
+    "source": "84a310bc3c2df4b09146197f76ad8e4cbf9cf29a",
+    "utc": "2026-10-06T01:51:23Z",
+    "errors": []
+  },
+  {
+    "backend": {
+      "buffers": 2,
+      "bytes": 98304000,
+      "decoded": 2,
+      "starts": 2,
+      "players": 2,
+      "playing": 2,
+      "state": "running"
+    },
+    "gains": [
+      0.3981071710586548,
+      0.15848931670188904
+    ],
+    "inputs": [
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 195,
+        "y": 490,
+        "key": null,
+        "t": 34719.69999998808
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 195,
+        "y": 490,
+        "key": null,
+        "t": 34720.39999997616
+      }
+    ],
+    "view": [
+      390,
+      844,
+      3
+    ],
+    "actual_viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "stage": "cancel-after-modal-drag",
+    "screenshot": "390-844-cancel-after-modal-drag.png",
+    "build": "index",
+    "source": "84a310bc3c2df4b09146197f76ad8e4cbf9cf29a",
+    "utc": "2026-10-06T01:51:25Z",
+    "errors": []
+  },
+  {
+    "backend": {
+      "buffers": 2,
+      "bytes": 98304000,
+      "decoded": 2,
+      "starts": 2,
+      "players": 2,
+      "playing": 2,
+      "state": "running"
+    },
+    "gains": [
+      0.3981071710586548,
+      0.15848931670188904
+    ],
+    "inputs": [
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 195,
+        "y": 340,
+        "key": null,
+        "t": 36683.89999997616
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 195,
+        "y": 340,
+        "key": null,
+        "t": 36684.59999996424
+      },
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 195,
+        "y": 490,
+        "key": null,
+        "t": 37631.799999952316
+      },
+      {
+        "kind": "keydown",
+        "trusted": true,
+        "x": null,
+        "y": null,
+        "key": "Escape",
+        "t": 37967.69999998808
+      },
+      {
+        "kind": "keyup",
+        "trusted": true,
+        "x": null,
+        "y": null,
+        "key": "Escape",
+        "t": 38077.69999998808
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 195,
+        "y": 490,
+        "key": null,
+        "t": 38380
+      }
+    ],
+    "view": [
+      390,
+      844,
+      3
+    ],
+    "actual_viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "stage": "escape-during-held-cancel",
+    "screenshot": "390-844-escape-during-held-cancel.png",
+    "build": "index",
+    "source": "84a310bc3c2df4b09146197f76ad8e4cbf9cf29a",
+    "utc": "2026-10-06T01:51:29Z",
+    "errors": []
+  },
+  {
+    "backend": {
+      "buffers": 2,
+      "bytes": 98304000,
+      "decoded": 2,
+      "starts": 2,
+      "players": 2,
+      "playing": 2,
+      "state": "running"
+    },
+    "gains": [
+      1,
+      0.3981071710586548
+    ],
+    "inputs": [
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 195,
+        "y": 228,
+        "key": null,
+        "t": 40522.19999998808
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 195,
+        "y": 228,
+        "key": null,
+        "t": 40522.799999952316
+      }
+    ],
+    "view": [
+      390,
+      844,
+      3
+    ],
+    "actual_viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "stage": "resume-yard",
+    "screenshot": "390-844-resume-yard.png",
+    "build": "index",
+    "source": "84a310bc3c2df4b09146197f76ad8e4cbf9cf29a",
+    "utc": "2026-10-06T01:51:31Z",
+    "errors": []
+  },
+  {
+    "backend": {
+      "buffers": 2,
+      "bytes": 98304000,
+      "decoded": 2,
+      "starts": 2,
+      "players": 2,
+      "playing": 2,
+      "state": "running"
+    },
+    "gains": [
+      1,
+      0.3981071710586548
+    ],
+    "inputs": [
+      {
+        "kind": "keydown",
+        "trusted": true,
+        "x": null,
+        "y": null,
+        "key": "ArrowRight",
+        "t": 42841.69999998808
+      },
+      {
+        "kind": "keyup",
+        "trusted": true,
+        "x": null,
+        "y": null,
+        "key": "ArrowRight",
+        "t": 44132.69999998808
+      }
+    ],
+    "view": [
+      390,
+      844,
+      3
+    ],
+    "actual_viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "stage": "yard-after-walk",
+    "screenshot": "390-844-yard-after-walk.png",
+    "build": "index",
+    "source": "84a310bc3c2df4b09146197f76ad8e4cbf9cf29a",
+    "utc": "2026-10-06T01:51:34Z",
+    "errors": []
+  },
+  {
+    "backend": {
+      "buffers": 2,
+      "bytes": 98304000,
+      "decoded": 2,
+      "starts": 2,
+      "players": 2,
+      "playing": 2,
+      "state": "running"
+    },
+    "gains": [
+      0.3981071710586548,
+      0.15848931670188904
+    ],
+    "inputs": [
+      {
+        "kind": "keydown",
+        "trusted": true,
+        "x": null,
+        "y": null,
+        "key": "Escape",
+        "t": 45311.09999996424
+      },
+      {
+        "kind": "keyup",
+        "trusted": true,
+        "x": null,
+        "y": null,
+        "key": "Escape",
+        "t": 45390.89999997616
+      },
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 195,
+        "y": 340,
+        "key": null,
+        "t": 46656
+      },
+      {
+        "kind": "mousedown",
+        "trusted": true,
+        "x": 195,
+        "y": 340,
+        "key": null,
+        "t": 46656
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 195,
+        "y": 340,
+        "key": null,
+        "t": 46656.5
+      },
+      {
+        "kind": "mouseup",
+        "trusted": true,
+        "x": 195,
+        "y": 340,
+        "key": null,
+        "t": 46656.5
+      },
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 195,
+        "y": 490,
+        "key": null,
+        "t": 47089.09999996424
+      },
+      {
+        "kind": "mousedown",
+        "trusted": true,
+        "x": 195,
+        "y": 490,
+        "key": null,
+        "t": 47089.09999996424
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 195,
+        "y": 490,
+        "key": null,
+        "t": 47089.59999996424
+      },
+      {
+        "kind": "mouseup",
+        "trusted": true,
+        "x": 195,
+        "y": 490,
+        "key": null,
+        "t": 47089.69999998808
+      }
+    ],
+    "view": [
+      390,
+      844,
+      3
+    ],
+    "actual_viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "stage": "mouse-cancel",
+    "screenshot": "390-844-mouse-cancel.png",
+    "build": "index",
+    "source": "84a310bc3c2df4b09146197f76ad8e4cbf9cf29a",
+    "utc": "2026-10-06T01:51:37Z",
+    "errors": []
+  },
+  {
+    "backend": {
+      "buffers": 2,
+      "bytes": 98304000,
+      "decoded": 2,
+      "starts": 2,
+      "players": 2,
+      "playing": 2,
+      "state": "running"
+    },
+    "gains": [
+      0.3981071710586548,
+      0.15848931670188904
+    ],
+    "inputs": [
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 195,
+        "y": 340,
+        "key": null,
+        "t": 48816.09999996424
+      },
+      {
+        "kind": "mousedown",
+        "trusted": true,
+        "x": 195,
+        "y": 340,
+        "key": null,
+        "t": 48816.19999998808
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 195,
+        "y": 340,
+        "key": null,
+        "t": 48816.69999998808
+      },
+      {
+        "kind": "mouseup",
+        "trusted": true,
+        "x": 195,
+        "y": 340,
+        "key": null,
+        "t": 48816.69999998808
+      },
+      {
+        "kind": "keydown",
+        "trusted": true,
+        "x": null,
+        "y": null,
+        "key": "Escape",
+        "t": 49278.299999952316
+      },
+      {
+        "kind": "keyup",
+        "trusted": true,
+        "x": null,
+        "y": null,
+        "key": "Escape",
+        "t": 49429.19999998808
+      }
+    ],
+    "view": [
+      390,
+      844,
+      3
+    ],
+    "actual_viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "stage": "keyboard-cancel",
+    "screenshot": "390-844-keyboard-cancel.png",
+    "build": "index",
+    "source": "84a310bc3c2df4b09146197f76ad8e4cbf9cf29a",
+    "utc": "2026-10-06T01:51:39Z",
+    "errors": []
+  },
+  {
+    "backend": {
+      "buffers": 2,
+      "bytes": 98304000,
+      "decoded": 2,
+      "starts": 2,
+      "players": 2,
+      "playing": 2,
+      "state": "running"
+    },
+    "gains": [
+      0.3981071710586548,
+      0.09826337546110153
+    ],
+    "inputs": [
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 195,
+        "y": 481,
+        "key": null,
+        "t": 51410.799999952316
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 235,
+        "y": 481,
+        "key": null,
+        "t": 51974.39999997616
+      }
+    ],
+    "view": [
+      390,
+      844,
+      3
+    ],
+    "actual_viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "stage": "ordinary-slider-drag",
+    "screenshot": "390-844-ordinary-slider-drag.png",
+    "build": "index",
+    "source": "84a310bc3c2df4b09146197f76ad8e4cbf9cf29a",
+    "utc": "2026-10-06T01:51:42Z",
+    "errors": []
+  },
+  {
+    "backend": {
+      "buffers": 2,
+      "bytes": 98304000,
+      "decoded": 2,
+      "starts": 2,
+      "players": 2,
+      "playing": 2,
+      "state": "running"
+    },
+    "gains": [
+      0.3981071710586548,
+      0.07924466580152512
+    ],
+    "inputs": [
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 195,
+        "y": 481,
+        "key": null,
+        "t": 53748.59999996424
+      }
+    ],
+    "view": [
+      390,
+      844,
+      3
+    ],
+    "actual_viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "stage": "multitouch-first-slider",
+    "screenshot": "390-844-multitouch-first-slider.png",
+    "build": "index",
+    "source": "84a310bc3c2df4b09146197f76ad8e4cbf9cf29a",
+    "utc": "2026-10-06T01:51:44Z",
+    "errors": []
+  },
+  {
+    "backend": {
+      "buffers": 2,
+      "bytes": 98304000,
+      "decoded": 2,
+      "starts": 2,
+      "players": 2,
+      "playing": 2,
+      "state": "running"
+    },
+    "gains": [
+      0.3981071710586548,
+      0.09984827041625977
+    ],
+    "inputs": [
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 195,
+        "y": 616,
+        "key": null,
+        "t": 55489.5
+      }
+    ],
+    "view": [
+      390,
+      844,
+      3
+    ],
+    "actual_viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "stage": "multitouch-second-slider",
+    "screenshot": "390-844-multitouch-second-slider.png",
+    "build": "index",
+    "source": "84a310bc3c2df4b09146197f76ad8e4cbf9cf29a",
+    "utc": "2026-10-06T01:51:46Z",
+    "errors": []
+  }
+]

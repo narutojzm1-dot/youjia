@@ -1,0 +1,13 @@
+# main 06d0349c 上未改的 scripts/ui/photo_arrival.gd 跑 test/photo_caption_fit_suite.gd（原生 Godot 4.7.2 headless，隔离 XDG）
+# 只保留汇总行；完整 push_error 噪声未入库
+caption stats { "zh-CN fs13 lines2": 77, "zh-CN fs13 lines3": 6, "en fs13 lines3": 56, "en fs13 lines2": 30 }
+FAIL photo_caption_fit_suite: 153/1899 checks failed
+  - zh-CN goose_horse_mount v1 day1: caption text 66px tall fits the 56px slot
+  - zh-CN goose_horse_mount v1 day1: caption box keeps the slot's top and height [P: (24.0, 227.0), S: (192.0, 66.0)]
+  - zh-CN goose_horse_mount v1 day12: caption text 66px tall fits the 56px slot
+  - zh-CN goose_horse_mount v1 day12: caption box keeps the slot's top and height [P: (24.0, 227.0), S: (192.0, 66.0)]
+  - zh-CN goose_horse_mount v1 day365: caption text 66px tall fits the 56px slot
+  - zh-CN goose_horse_mount v1 day365: caption box keeps the slot's top and height [P: (24.0, 227.0), S: (192.0, 66.0)]
+  - zh-CN goose_horse_mount v2 day1: caption text 66px tall fits the 56px slot
+  - zh-CN goose_horse_mount v2 day1: caption box keeps the slot's top and height [P: (24.0, 227.0), S: (192.0, 66.0)]
+  …（其余失败同类：3 行题词 66px 超出 56px 框、框高被撑到 66、最后一行孤字/孤词；完整列表可用同一 suite 在 main 上复现）

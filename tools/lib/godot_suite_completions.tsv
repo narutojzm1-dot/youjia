@@ -23,6 +23,7 @@ test/goose_mount_suite.gd	\[goose-mount\] PASS: [1-9][0-9]* checks \[\]
 test/grass_action_suite.gd	\[grass-action-tests\] PASS: [1-9][0-9]* checks, 0 failures
 test/grass_state_suite.gd	\[grass-state-tests\] PASS: [1-9][0-9]* checks, 0 failures
 test/hint_paper_fit_suite.gd	hint_paper_fit suite: [1-9][0-9]* checks passed
+test/hint_paper_width_suite.gd	PASS: hint_paper_width [1-9][0-9]* checks
 test/holiday_start_once_suite.gd	HOLIDAY_START_ONCE checks=[1-9][0-9]* failures=0
 test/interaction_photo_suite.gd	\[interaction-photo-tests\] [1-9][0-9]* checks, failures=\[\]
 test/interaction_pose_suite.gd	INTERACTION POSE PASS [1-9][0-9]*
@@ -37,10 +38,12 @@ test/notice_paper_suite.gd	notice paper suite checks=[1-9][0-9]* failures=\[\]
 test/paper_tooltip_interaction_suite.gd	PASS: paper_tooltip_interaction [1-9][0-9]* checks
 test/paper_tooltip_style_suite.gd	PASS: paper_tooltip_style [1-9][0-9]* checks
 test/pause_notice_suite.gd	PAUSE_NOTICE checks=[1-9][0-9]* failures=0
+test/pause_panel_fit_suite.gd	PASS: pause_panel_fit [1-9][0-9]* checks
 test/photo_arrival_combo_suite.gd	PHOTO ARRIVAL COMBO PASS [1-9][0-9]*
 test/photo_arrival_fit_suite.gd	\[photo-arrival-fit\] PASS: [1-9][0-9]* checks
 test/photo_arrival_mat_suite.gd	\[photo-arrival-mat\] PASS: [1-9][0-9]* checks
 test/photo_arrival_shutter_paper_suite.gd	\[photo-arrival-shutter-paper\] PASS: [1-9][0-9]* checks
+test/photo_caption_fit_suite.gd	PASS photo_caption_fit_suite: [1-9][0-9]* checks
 test/photo_home_suite.gd	\[photo-home-tests\] PASS: [1-9][0-9]* checks
 test/photo_moment_render_suite.gd	\[photo-moment-tests\] PASS: [1-9][0-9]* checks
 test/photo_moment_save_suite.gd	\[photo-moment-save-tests\] PASS: [1-9][0-9]* checks \[\]
@@ -56,6 +59,7 @@ test/save_coordinator_suite.gd	SAVE_COORDINATOR checks=[1-9][0-9]* failures=\[\]
 test/save_data_codec_suite.gd	SAVE_DATA_CODEC [1-9][0-9]* checks; failures=\[\]
 test/save_feedback_suite.gd	SAVE FEEDBACK [1-9][0-9]* checks, failures 0
 test/save_recovery_suite.gd	SAVE RECOVERY PASS [1-9][0-9]*
+test/save_status_paper_suite.gd	PASS: save_status_paper [1-9][0-9]* checks
 test/save_writer_guidance_suite.gd	SAVE WRITER GUIDANCE [1-9][0-9]* checks failures=\[\]
 test/scene_hotspot_suite.gd	\[scene-hotspot-tests\] [1-9][0-9]* checks, failures=\[\]
 test/scrapbook_encounter_suite.gd	\[scrapbook-encounters\] PASS: [1-9][0-9]* checks \[\]
@@ -70,6 +74,7 @@ test/still_object_feedback_suite.gd	STILL OBJECT FEEDBACK PASS [1-9][0-9]*
 test/still_target_pulse_suite.gd	STILL TARGET PULSE PASS [1-9][0-9]*
 test/test_suite.tscn	\[game-generic-tests\] PASS: [1-9][0-9]* checks
 test/title_card_suite.gd	title_card suite: [1-9][0-9]* checks passed
+test/title_copy_balance_suite.gd	PASS: title_copy_balance [1-9][0-9]* checks
 test/title_licenses_link_contrast_suite.gd	PASS: title_licenses_link_contrast [1-9][0-9]* checks
 test/title_short_landscape_suite.gd	title_short_landscape suite: [1-9][0-9]* checks passed
 test/ui_interaction_suite.gd	\[ui-interaction-tests\] checks=[1-9][0-9]* failures=\[\]
@@ -81,3 +86,4 @@ test/yard_snapshot_suite.gd	yard snapshot: [1-9][0-9]* checks, 0 failures
 test/volume_slider_style_suite.gd	\[volume-slider-style\] PASS: [1-9][0-9]* checks
 test/volume_slider_input_suite.gd	\[volume-slider-input\] checks=[1-9][0-9]* failures=\[\]
 test/weather_transition_suite.gd	Weather transition suite passed: [1-9][0-9]* checks
+test/modal_touch_input_suite.gd	MODAL_TOUCH_INPUT checks=[1-9][0-9]* failures=0
