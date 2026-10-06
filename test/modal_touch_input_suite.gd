@@ -103,6 +103,9 @@ func exercise(label: String):
 	touch(music, true)
 	print("FRESH ", label, " point=", music, " value=", audio.music_gain(), " visible=", main._pause_screen.visible, " confirm=", main._confirm_screen.visible, " sliderVisible=", main._music_slider.is_visible_in_tree(), " sliderParent=", main._music_slider.get_parent(), " mainInput=", main.is_processing_input())
 	check(is_equal_approx(audio.music_gain(), 0.5), label + " fresh music touch works")
+	touch(ambience, true, 1)
+	drag(ambience, 1)
+	check(is_equal_approx(audio.ambience_gain(), 0.67), label + " second finger cannot acquire another slider")
 	drag(ambience)
 	check(is_equal_approx(audio.ambience_gain(), 0.67), label + " drag cannot switch sliders")
 	touch(ambience, false, 1)
@@ -113,6 +116,30 @@ func exercise(label: String):
 	main._refresh_volume_labels()
 	drag(music)
 	unchanged(label + " released ownership")
+	# Layer changes invalidate ownership, even if the pause is reopened.
+	touch(music, true)
+	main._toggle_pause()
+	main._toggle_pause()
+	audio.set_music_gain(0.83)
+	main._refresh_volume_labels()
+	drag(music)
+	touch(music, false)
+	unchanged(label + " closed and reopened pause rejects old gesture")
+	# Rotation preserves the owned slider identity, never retargeting another.
+	touch(music, true)
+	var old_size: Vector2i = root.size
+	root.size = Vector2i(old_size.y, old_size.x)
+	main.size = root.size
+	main._layout()
+	await process_frame
+	await process_frame
+	drag(main._ambience_slider.get_global_rect().get_center())
+	touch(main._ambience_slider.get_global_rect().get_center(), false)
+	check(is_equal_approx(audio.ambience_gain(), 0.67), label + " rotation cannot switch owned slider")
+	root.size = old_size
+	main.size = old_size
+	main._layout()
+	await prepare()
 	# Pure touch fallback still cancels without leaking its release.
 	main._request_destructive_action("title")
 	touch(cancel, true)
@@ -130,6 +157,19 @@ func exercise(label: String):
 	root.push_input(key, true)
 	check(not main._confirm_screen.visible and main._pause_screen.visible, label + " Escape cancels only modal")
 	unchanged(label + " keyboard cancellation")
+	main._request_destructive_action("title")
+	await process_frame
+	main._last_touch_ms = -10000
+	mouse(cancel, true)
+	touch(cancel, true)
+	key.pressed = true
+	root.push_input(key, true)
+	key.pressed = false
+	root.push_input(key, true)
+	mouse(cancel, false)
+	touch(cancel, false)
+	check(not main._confirm_screen.visible and main._pause_screen.visible, label + " Escape during GUI hold cancels old release")
+	unchanged(label + " Escape during held touch")
 	# Confirm executes once on release; existing unsaved-state protection wins.
 	for blocked in [true, false]:
 		if blocked:
@@ -177,8 +217,8 @@ func touch(point: Vector2, down: bool, finger: int = 0):
 	e.pressed = down
 	root.push_input(e, true)
 
-func drag(point: Vector2):
+func drag(point: Vector2, finger: int = 0):
 	var e := InputEventScreenDrag.new()
 	e.position = point
-	e.index = 0
+	e.index = finger
 	root.push_input(e, true)
