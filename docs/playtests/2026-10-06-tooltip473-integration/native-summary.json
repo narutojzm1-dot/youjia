@@ -1,0 +1,42 @@
+{
+  "tested_source": "a3cae472d7774445ae8add3ea23528e0af7c9399",
+  "native_processes_total": 5,
+  "v1": {
+    "import_exit": 0,
+    "style_checks": 104,
+    "style_exit": 0,
+    "interaction_checks": 46,
+    "interaction_failures": 29,
+    "interaction_exit": 1,
+    "interpretation": "Expected-to-pass first fixture actually failed; full shadow Window mistaken for paper containment, overly rapid 4-frame close hit existing 400ms dedup, later cases cascaded. Kept as FAIL."
+  },
+  "v2": {
+    "interaction_checks": 210,
+    "interaction_exit": 0,
+    "interpretation": "Actual checks passed but English-labelled raw cases still Chinese because Main._ready explicitly pins zh-CN, overriding the pre-start case locale; NOT accepted as bilingual coverage."
+  },
+  "v3": {
+    "interaction_checks": 230,
+    "interaction_exit": 0,
+    "strict_wrapper_exit": 0,
+    "case_count": 10,
+    "actual_locale_counts": {
+      "zh-CN": 5,
+      "en": 5
+    },
+    "shadow_window_exceeds_root_cases": [
+      "(1280, 720) zh-CN",
+      "(1280, 720) en",
+      "(844, 390) zh-CN",
+      "(844, 390) en"
+    ],
+    "paper_and_full_label_contained": true,
+    "literal_english_trace_seen": true,
+    "scope": "Controlled native embedded input fixture, not exported Web ordinary inputs; real mouse close waits 0.45s, no rapid duplicate-input claim."
+  },
+  "engine_or_browser_currently_running": false,
+  "full_daily": "not run on this candidate; pending combined base",
+  "web_export": "not run",
+  "ordinary_browser": "not run",
+  "snapshot_scope": "Specialized v1-v3 history ending 2026-10-06T01:20:24.227648Z; later combined daily/export are recorded separately in combined-native-web/."
+}

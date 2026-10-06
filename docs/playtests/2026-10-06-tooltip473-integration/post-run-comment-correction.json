@@ -1,0 +1,10 @@
+{
+  "tested_source": "a0a856f64e7764fbab5270412025e62b8e34cafd",
+  "tested_fixture_sha256": "6976815fc469c8ffae4c959f9e88820b6f646ec107dfcd39d48b8a87361f890a",
+  "current_fixture_sha256": "d6f8cdb45372c79f1bf87b79315c794ac39db942c37cbef5c3a19050d3ace51c",
+  "only_comment_changed": true,
+  "non_comment_lines_identical": true,
+  "correction": "Main._ready explicitly pins zh-CN; not save restoration.",
+  "original_tested_fixture_preserved": "combined-native-web/tested-interaction-fixture.gd.txt",
+  "ordinary_language_switch_available": false
+}

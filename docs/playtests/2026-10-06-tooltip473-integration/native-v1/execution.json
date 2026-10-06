@@ -1,0 +1,43 @@
+{
+  "source": "309b87c59f98455def267245c7a31601765b31ff",
+  "tree": "4d8e7a8bf329a23006e390ae760bd1711402415e",
+  "started_at": "2026-10-06T01:15:26.172285+00:00",
+  "cases": [
+    {
+      "name": "import",
+      "entry": null,
+      "start": "2026-10-06T01:15:26.402812+00:00",
+      "end": "2026-10-06T01:15:53.671583+00:00",
+      "direct_godot_exit": 0,
+      "strict_wrapper_exit": 0,
+      "isolated_data": "/dev/shm/tooltip473-native-v1-state/import/data",
+      "log": "import.log"
+    },
+    {
+      "name": "style",
+      "entry": "test/paper_tooltip_style_suite.gd",
+      "start": "2026-10-06T01:15:53.672113+00:00",
+      "end": "2026-10-06T01:16:06.994331+00:00",
+      "direct_godot_exit": 0,
+      "strict_wrapper_exit": 0,
+      "isolated_data": "/dev/shm/tooltip473-native-v1-state/style/data",
+      "log": "style.log"
+    },
+    {
+      "name": "interaction",
+      "entry": "test/paper_tooltip_interaction_suite.gd",
+      "start": "2026-10-06T01:16:06.994809+00:00",
+      "end": "2026-10-06T01:16:21.524141+00:00",
+      "direct_godot_exit": 1,
+      "strict_wrapper_exit": 1,
+      "isolated_data": "/dev/shm/tooltip473-native-v1-state/interaction/data",
+      "log": "interaction.log"
+    }
+  ],
+  "native_only": true,
+  "engine_binary_sha256": "8d106cbe6144c2dc7e881d61d2429c1a8a76e6b22ef48bd5e48dcf934953f71e",
+  "source_materialization": "/dev/shm/tooltip473-materialization.json",
+  "window_authorized_by": "CODEX-LEAD root; specialized only, full/export pending merged base",
+  "active_process_precheck": "No non-zombie Godot/chrome/chromium before launch",
+  "closed_at": "2026-10-06T01:16:21.524945+00:00"
+}

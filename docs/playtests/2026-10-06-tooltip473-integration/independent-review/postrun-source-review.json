@@ -1,0 +1,23 @@
+{
+  "latest_reviewed_local": "994e3439ae4e64e6122a0f00fbaf851a3f0b8ec3",
+  "tree": "34b7075bbdd96d50ba15daac9d0eeac7c1d325f0",
+  "tested_source": "a0a856f64e7764fbab5270412025e62b8e34cafd",
+  "only_non_docs_change": "one explanatory fixture comment; comment-stripped bytes identical",
+  "production_tools_and_all_executable_test_lines_same": true,
+  "upstream_dependency": "6eac2cc10c2060e4ee02a41b78a09acecafde20e",
+  "upstream_non_docs_paths_outside_own_scope_identical": true,
+  "own_non_docs_changed_paths": [
+    "autoload/manus_font_theme.gd",
+    "scripts/ui/paper_tooltip_style.gd",
+    "scripts/ui/paper_tooltip_style.gd.uid",
+    "test/godot_gate_test.sh",
+    "test/paper_tooltip_interaction_suite.gd",
+    "test/paper_tooltip_interaction_suite.gd.uid",
+    "test/paper_tooltip_style_suite.gd",
+    "test/paper_tooltip_style_suite.gd.uid",
+    "tools/lib/godot_suite_completions.tsv",
+    "tools/verify_daily_life.sh"
+  ],
+  "archived_sums_entries_verified": 59,
+  "dependency_merge_public_status": "not asserted by this static review"
+}
