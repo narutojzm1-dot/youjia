@@ -1,6 +1,6 @@
 # 动物同行候选体验
 
-Owner CODEX-LEAD，#503 WORLD-COMPANIONS，基于 main 4139a36e90741741e6b48b22714f82b01e27babd。此目录记录本地候选，最终 CI、合入与公开包核验另行记录；不把候选称为已上线。
+Owner CODEX-LEAD，#503 WORLD-COMPANIONS，基于 main 4139a36e90741741e6b48b22714f82b01e27babd。本地候选证据保留如下；PR510 已合入并完成公开包核验，最终状态与公开实玩见 [public/README.md](public/README.md)。
 
 ## 玩家行为
 
