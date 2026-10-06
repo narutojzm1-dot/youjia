@@ -142,6 +142,8 @@ var _save_ack_coverage: Dictionary = {}
 var _save_problem_active := false
 var _save_status_panel: PanelContainer
 var _save_retry_button: Button
+var _save_status_box: BoxContainer
+var _save_status_message: Label
 ## 钓到鱼时的蓝色庆祝闪光（独立于拍立得闪光，更冷更蓝）
 var _fish_flash: ColorRect
 var _cinematic_layer: CanvasLayer
@@ -1294,20 +1296,84 @@ func _build_save_status() -> void:
 	_save_status_panel.set_anchors_and_offsets_preset(Control.PRESET_CENTER_TOP)
 	_save_status_panel.offset_left = -170
 	_save_status_panel.offset_right = 170
-	_save_status_panel.offset_top = 90
+	_save_status_panel.offset_top = SAVE_STATUS_TOP
 	layer.add_child(_save_status_panel)
-	var box := VBoxContainer.new()
-	_save_status_panel.add_child(box)
-	var message := _label(16, INK)
-	message.text = I18n.t("notice.save.pending")
-	message.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	message.custom_minimum_size.x = 320
-	box.add_child(message)
+	_save_status_box = BoxContainer.new()
+	_save_status_box.vertical = true
+	_save_status_box.alignment = BoxContainer.ALIGNMENT_CENTER
+	_save_status_panel.add_child(_save_status_box)
+	_save_status_message = _label(16, INK)
+	_save_status_message.text = I18n.t("notice.save.pending")
+	_save_status_message.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_save_status_message.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_save_status_message.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	_save_status_message.custom_minimum_size.x = 320
+	_save_status_box.add_child(_save_status_message)
 	_save_retry_button = _soft_button()
-	_save_retry_button.text = "再确认一次"
+	_save_retry_button.text = I18n.t("save.retry")
 	_save_retry_button.pressed.connect(_retry_save)
-	box.add_child(_save_retry_button)
+	_save_status_box.add_child(_save_retry_button)
 	_save_status_panel.hide()
+	_fit_save_status()
+
+
+## REQ-20261006-042：「保存暂时无法继续」纸片原来固定 352px 宽、顶边 y=90、居中，
+## 竖屏 360/390 会压住右上「假期第 N 天」，360 英文还压住两行半的目标纸片，360 宽时右边
+## 出屏 2px；568×320 短横屏也压住天数。文字左对齐而按钮居中，按钮写死「再确认一次」，
+## 切英文后消息和按钮都不跟着换。现在：宽度不超过屏宽减 20；顶边落在与它横向重叠的
+## 目标纸片/天数标签下方 8px；短横屏（高 ≤ 360 且横屏）改成文字在左、按钮在右的一行，
+## 留白收窄，免得往下压到「翻开手帐/天气」那排按钮；文字居中（横排时左对齐）；按钮与消息走 I18n，
+## 切语言即刷新。只改展示，不碰保存状态、重试逻辑和成功条件。
+const SAVE_STATUS_TOP := 90.0
+const SAVE_STATUS_MAX_WIDTH := 352.0
+const SAVE_STATUS_ROW_MAX_WIDTH := 548.0
+const SAVE_STATUS_GAP := 8.0
+const SAVE_STATUS_ROW_BUTTON := 168.0
+
+
+func _save_status_row_layout() -> bool:
+	return size.y <= 360.0 and size.x > size.y
+
+
+func _fit_save_status() -> void:
+	if _save_status_panel == null or _save_status_box == null:
+		return
+	var row := _save_status_row_layout()
+	var margin_x := 32.0
+	var width := minf(SAVE_STATUS_ROW_MAX_WIDTH if row else SAVE_STATUS_MAX_WIDTH, maxf(160.0, size.x - 20.0))
+	var inner := width - margin_x
+	_save_status_box.vertical = not row
+	_save_status_box.add_theme_constant_override("separation", 12 if row else 4)
+	# 横排时纸面上下留白收到 4px、文字 15px：640×300 这类更矮的横屏上，夹在天数标签和
+	# 底部按钮排之间只有约 56px，原 10px 留白 + 16px 两行会压到「翻开手帐」顶边。
+	var paper := _save_status_panel.get_theme_stylebox("panel") as StyleBoxFlat
+	if paper != null:
+		paper.content_margin_top = 4.0 if row else 10.0
+		paper.content_margin_bottom = 4.0 if row else 10.0
+	_save_status_message.add_theme_font_size_override("font_size", 15 if row else 16)
+	if row:
+		_save_retry_button.custom_minimum_size = Vector2(SAVE_STATUS_ROW_BUTTON, 44)
+		_save_status_message.custom_minimum_size.x = inner - SAVE_STATUS_ROW_BUTTON - 12.0
+		_save_status_message.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
+		_save_status_message.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	else:
+		_save_retry_button.custom_minimum_size = Vector2(minf(260.0, inner), 44)
+		_save_status_message.custom_minimum_size.x = inner
+		_save_status_message.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		_save_status_message.size_flags_horizontal = Control.SIZE_FILL
+	var left := size.x * 0.5 - width * 0.5
+	var top := SAVE_STATUS_TOP
+	for obstacle: Control in [_hint_panel, _day_label]:
+		if obstacle == null or not obstacle.is_visible_in_tree():
+			continue
+		var rect := obstacle.get_global_rect()
+		if rect.position.x < left + width and rect.end.x > left:
+			top = maxf(top, ceilf(rect.end.y) + SAVE_STATUS_GAP)
+	_save_status_panel.offset_left = -width * 0.5
+	_save_status_panel.offset_right = width * 0.5
+	_save_status_panel.offset_top = top
+	_save_status_panel.offset_bottom = top
+	_save_status_panel.reset_size()
 
 
 func _show_save_pending(untracked := true) -> void:
@@ -1315,7 +1381,9 @@ func _show_save_pending(untracked := true) -> void:
 		_save_untracked_problem = true
 		_save_untracked_revision += 1
 	_save_problem_active = true
-	if _save_status_panel != null: _save_status_panel.show()
+	if _save_status_panel != null:
+		_fit_save_status()
+		_save_status_panel.show()
 
 
 func _retryable_save_problems(include_fish: bool) -> Dictionary:
@@ -1806,6 +1874,7 @@ func _layout() -> void:
 	if _day_label != null:
 		_day_label.size = Vector2(_pause_button.size.x, 28)
 		_day_label.position = Vector2(_pause_button.position.x, _pause_button.position.y + _pause_button.size.y + 8.0)
+	_fit_save_status()
 	var row := size.y-124.0 if compact else size.y-68.0
 	_album_chip.position = Vector2(pad,row)
 	_weather_chip.position = Vector2(size.x-half-pad if compact else pad+210.0,row)
@@ -1852,6 +1921,8 @@ func _refresh_hud() -> void:
 		_hint_label.add_theme_color_override("font_color", INK)
 	_action_button.text = verb
 	_fit_hint_panel()
+	if _save_status_panel != null and _save_status_panel.visible:
+		_fit_save_status()
 	# 更新假期天数标签
 	if _day_label != null:
 		_day_label.text = I18n.t("hud.day", {"n": str(_world.holiday_day)})
@@ -2084,8 +2155,12 @@ func _refresh_texts() -> void:
 	# P0.2: locale 切换时同步更新相册 tooltip。
 	if _album_chip != null:
 		_album_chip.tooltip_text = I18n.t("hud.album.tooltip")
+	if _save_status_message != null:
+		_save_status_message.text = I18n.t("notice.save.pending")
+		_save_retry_button.text = I18n.t("save.retry")
 	if _world != null:
 		_refresh_hud()
+	_fit_save_status()
 
 
 func _label(size_px: int, color: Color) -> Label:
