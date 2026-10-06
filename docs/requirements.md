@@ -2,7 +2,7 @@
 
 ## 2026-10-06 用户新增：世界关联主线（#503）
 
-Owner CODEX-LEAD（兼制作人）。[完整策划](design/connected-world-2026-10-06.md)；方向已批准；大背篓首片PR506、地面投食PR508均已发布并核验，同行/伙伴故事未上线。下一切片接续[同行实施边界](design/animal-companions-implementation-2026-10-07.md)；不等待停止的PM/Producer角色。
+Owner CODEX-LEAD（兼制作人）。[完整策划](design/connected-world-2026-10-06.md)；A大背篓、B地面投食、C同行、D动物隐藏发现及E的beibei收养/成长/成年同行均已发布并核验。下一切片为F水塘故事，先接成年beibei找龟、带回水塘和持久化；不等待停止的PM/Producer角色。
 
 | 编号 | 优先级 | 内容与验收 | 状态 / Owner |
 | --- | --- | --- | --- |
@@ -10,10 +10,10 @@ Owner CODEX-LEAD（兼制作人）。[完整策划](design/connected-world-2026-
 | WORLD-GROUND-FOOD | P1 | 草/鱼投地可见；牛羊羊驼竞争取草、一次消费，院门附近多堆草可引来牛；保存与数量守恒 | 已发布 PR508，source d16736c；完整CI、原生/浏览器体验及公开PCK核验通过 / CODEX-LEAD |
 | WORLD-COMPANIONS | P1 | 院门旁动物概率同行、羊驼可绳牵出；在外跟随且所有返院/恢复路径保留身份 | PR510已合入，149项及全套CI通过；game-4f6d18f公开PCK/十模块已核验，公开实玩记录见同行体验目录 / CODEX-LEAD |
 | WORLD-ANIMAL-FINDS | P1 | 同行动物先翻找揭示隐藏物，玩家之后可见可拾；单次授予与回院持久化 | PR512已合入并公开发布game-f3ddfcb；92项/完整CI、公开包核验、正式Web返院重开已通过，详见体验记录 / CODEX-LEAD |
-| WORLD-BEIBEI | P1 | 村边白色流浪幼犬beibei带回、养大、随行发现；成长缺席不受罚 | E候选已实现村边收养、回院常住、游戏时间成长与成年同行；本地43+46项/实玩通过，待PR与公开核验；乌龟发现接F / CODEX-LEAD |
-| WORLD-POND-STORIES | P1 | beibei发现乌龟→带回池塘→与长大的鸡亲近/驮鸡→拒绝鹅骑背/鹅想啄；鸡吃小米 | 已批准；角色资源与世界状态依赖 / CODEX-LEAD |
+| WORLD-BEIBEI | P1 | 村边白色流浪幼犬beibei带回、养大、随行发现；成长缺席不受罚 | E收养/成长/成年同行由PR515发布game-53ec80c；43+46项和完整CI、公开包及正式Web收养/返院/重开已核验；本地普通存档自然成长/重开也通过。beibei找乌龟继续接F，整条故事未关单 / CODEX-LEAD |
+| WORLD-POND-STORIES | P1 | beibei发现乌龟→带回池塘→与长大的鸡亲近/驮鸡→拒绝鹅骑背/鹅想啄；鸡吃小米 | 已批准；F龟/雏鸡/成年鸡/成年beibei探查原画及原生比例检查保存在本地独立分支codex/lead-pond-stories、ea71c5720c1fdc0b66f8818b800bb6581c14f385，尚未接入或发布 / CODEX-LEAD |
 
-资源需求单[#504](https://github.com/narutojzm1-dot/youjia/issues/504)保留完整画作、接触锚点、Web预算与来源门禁；地面小鱼完整透明画已接入，草复用既有原画，伙伴/成长/故事动作资源仍未完成。小米调查支持瑞士山脚村落栽培谷物的设定，不当作高山野生物。#150生产存档、#152/#153探索继续复用；#154自由布置仍待细化，不阻塞本主线。
+资源需求单[#504](https://github.com/narutojzm1-dot/youjia/issues/504)保留完整画作、接触锚点、Web预算与来源门禁；地面小鱼、动物首处翻找及beibei幼年/成年画已接入，草复用既有原画；F故事资源处于制作接入阶段。小米调查支持瑞士山脚村落栽培谷物的设定，不当作高山野生物。#150生产存档、#152/#153探索继续复用；#154自由布置仍待细化，不阻塞本主线。
 
 > **2026-10-06 生效：** [用户最新团队与审核规则](collaboration/team-focus-2026-10-06.md)覆盖本文冲突的旧规则。本地 Leader 兼制作人，集中推进新功能/探索/资源；Assistant、Cursor Cloud 辅助修 bug，QA 独立测试，PM/制作人停止独立运转。取消逐 PR 强制独立子代理/他人审核，改为每日23:00发版前由Leader集中审查当天全部工作；必要测试、PR与发布核验保持。以下旧快照和审核记录仅保留历史，不作为新的等待条件。
 

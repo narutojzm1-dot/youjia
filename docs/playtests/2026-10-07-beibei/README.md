@@ -1,6 +1,6 @@
 # WORLD-BEIBEI 村边相遇、常住与成长候选
 
-Owner CODEX-LEAD；#503/#504；分支 `codex/lead-beibei`。这是 E 切片，发布状态待 PR/CI/公开核验补录；不将后续乌龟、鸡、鹅故事算作已实现。
+Owner CODEX-LEAD；#503/#504；分支 `codex/lead-beibei`。E 切片已由PR515合入并发布，最新证据见末尾“公开包核验”；上方候选制作过程保留历史时态，不将后续乌龟、鸡、鹅故事算作已实现。
 
 ## 玩法与存档
 
@@ -28,3 +28,19 @@ Owner CODEX-LEAD；#503/#504；分支 `codex/lead-beibei`。这是 E 切片，�
 普通触屏实玩额外发现并修复了动物点击白名单漏 dog：原先按钮/键盘可选中但点击轮廓只走路。已在46项集成中加入真实轮廓中心经 YardInteraction.pointer 命中检查；最终原生通过目录 `youjia-basket-check-4a32143a-790c-4486-bb32-dfaa4c6c95ff`。此前45项原生截图仍是相同画作/布局，不作为本次点击修复的唯一证明。
 
 点击修复后的最终 Web 导出：35,461,140 bytes，SHA256 `ef06c6d7ea744c39a6c6c4ea66b36b6953818dee6d8ff4e9c4146cdd239e70f7`。
+
+## 合入与普通游戏成长补验
+
+PR [515](https://github.com/narutojzm1-dot/youjia/pull/515) 最终 head `fc99e0504afb35b578d1231e0ba7cc9fa84a90be`，与本地 `4b5e6b809f398e6e0f87653b65a27f9b1d5cb8d1` 同树 `61c29a90eda868d56ea28361a6723b06be91b8a0`。CI [37539343562](https://github.com/narutojzm1-dot/youjia/actions/runs/37539343562) 成功，日志确认 WORLD_RESIDENTS 43 / BEIBEI_INTEGRATION 46 均零失败；合入提交 `53ec80ca7367efbd2db1cbc69558e10808f5e719`。
+
+随后同一个普通本地 Web 存档继续正常运行到第22天，beibei 已由幼犬换成成年画作；刷新页面、重新进入小院后仍为成年，并可打招呼。此补验未注入存储或调快浏览器时钟，因此补齐先前“普通浏览器尚未等到成长”的限制；精确1800秒边界仍以受控测试断言为准。浏览器进入院子的控制接口两次报告鼠标发送超时，但随后截图证明点击已执行，游戏页面正常；未将控制工具超时当成游戏失败，也未盲目重复点击。
+
+普通浏览器证据在 `web/`：`web-grown-day22.jpeg` / `web-grown-reopened-day22.jpeg`；此前幼犬重开和390抚摸分别见 `reopened-puppy.jpeg` / `pet-390.jpeg`。这些是桌面浏览器视口验证，不是物理手机测试。公开版本验证见后续章节。
+
+## 公开包核验
+
+发布 [37540602480](https://github.com/narutojzm1-dot/youjia/actions/runs/37540602480) 与 Pages [37541709630](https://github.com/narutojzm1-dot/youjia/actions/runs/37541709630) 均成功；发布日志再确认43/46项零失败。Pages提交 `91379fe48384a7f590e72971a27f7c3f5ef59c0e`。
+
+实际从公开站点下载 `game-release.json`、HTML、PCK和10个存储模块：源提交 `53ec80ca7367efbd2db1cbc69558e10808f5e719`，入口 `game-53ec80c`，PCK **35,460,784 bytes**，SHA256 `73348fdb6eea03ac154493365db6df27a1ac8d8e45ff6fd66a1f887377105381`，Git blob `f46678e1e53f06ab4f3db6f5982d5b9f99fd32f1` 与 gh-pages 树一致；HTML入口和全部存储模块哈希一致。详见 `public/verification.json`，此为Linux公开构建，不与上面的本地Windows包混用。
+
+正式站点普通旧档（第5天、背篓已有松果1）：重载看见 `game-53ec80c` →出院时附近羊实际概率同行→前景路端进入村边→看见路旁幼犬→确认收养→沿石路行走同时保留羊和幼犬→回院→刷新页面重新入院后仍有同一幼犬→打开背篓旧松果仍为1。全程未写浏览器存储或注入游戏状态，控制台 warn/error 为空。截图依次为 `public/meeting.jpeg`、`following-with-sheep.jpeg`、`returned.jpeg`、`reopened.jpeg`、`old-basket-preserved.jpeg`。公开站点此次验证收养与兼容，不冒称在公开档又完整等待30分钟成长；普通成长另见上面的本地同代码导出验证。
