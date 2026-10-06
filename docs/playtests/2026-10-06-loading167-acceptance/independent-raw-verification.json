@@ -1,0 +1,214 @@
+{
+  "checked_at": "2026-10-06T00:17:46.123175+00:00",
+  "source": "49596fa93bff3c29edfe441898017158c6e469a3",
+  "cases": [
+    {
+      "name": "desktop-normal",
+      "viewport": [
+        1280,
+        720
+      ],
+      "os_reduce": false,
+      "hold_seconds": 4.004550115962047,
+      "expected_network_errors": 1,
+      "expected_console_errors": 2,
+      "unexpected_errors": 0,
+      "before_after_bindings": 2,
+      "recovery_module_body_hashes": 10,
+      "pck_actual_browser_status": 200,
+      "pck_cdp_encoded_data_length": 26676403,
+      "pck_body_hash_source": "separate before/after HTTP; not DevTools response.body",
+      "seven_png_sizes_correct": true,
+      "held_frames_pixel_difference_bbox": [
+        480,
+        573,
+        767,
+        646
+      ],
+      "static_background_roi": [
+        0,
+        0,
+        1280,
+        200
+      ],
+      "static_background_difference": null,
+      "css_transform_animation_transition_all_none": true,
+      "closed_at": "2026-10-06T00:08:26Z"
+    },
+    {
+      "name": "portrait-normal",
+      "viewport": [
+        390,
+        844
+      ],
+      "os_reduce": false,
+      "hold_seconds": 4.0085373960318975,
+      "expected_network_errors": 1,
+      "expected_console_errors": 2,
+      "unexpected_errors": 0,
+      "before_after_bindings": 2,
+      "recovery_module_body_hashes": 10,
+      "pck_actual_browser_status": 200,
+      "pck_cdp_encoded_data_length": 26676570,
+      "pck_body_hash_source": "separate before/after HTTP; not DevTools response.body",
+      "seven_png_sizes_correct": true,
+      "held_frames_pixel_difference_bbox": [
+        49,
+        510,
+        322,
+        582
+      ],
+      "static_background_roi": [
+        0,
+        0,
+        390,
+        200
+      ],
+      "static_background_difference": null,
+      "css_transform_animation_transition_all_none": true,
+      "closed_at": "2026-10-06T00:09:30Z"
+    },
+    {
+      "name": "landscape-normal",
+      "viewport": [
+        844,
+        390
+      ],
+      "os_reduce": false,
+      "hold_seconds": 4.00990136701148,
+      "expected_network_errors": 1,
+      "expected_console_errors": 2,
+      "unexpected_errors": 0,
+      "before_after_bindings": 2,
+      "recovery_module_body_hashes": 10,
+      "pck_actual_browser_status": 200,
+      "pck_cdp_encoded_data_length": 26676522,
+      "pck_body_hash_source": "separate before/after HTTP; not DevTools response.body",
+      "seven_png_sizes_correct": true,
+      "held_frames_pixel_difference_bbox": [
+        542,
+        168,
+        799,
+        240
+      ],
+      "static_background_roi": [
+        0,
+        0,
+        400,
+        390
+      ],
+      "static_background_difference": null,
+      "css_transform_animation_transition_all_none": true,
+      "closed_at": "2026-10-06T00:10:33Z"
+    },
+    {
+      "name": "desktop-reduce",
+      "viewport": [
+        1280,
+        720
+      ],
+      "os_reduce": true,
+      "hold_seconds": 4.020566582039464,
+      "expected_network_errors": 1,
+      "expected_console_errors": 2,
+      "unexpected_errors": 0,
+      "before_after_bindings": 2,
+      "recovery_module_body_hashes": 10,
+      "pck_actual_browser_status": 200,
+      "pck_cdp_encoded_data_length": 26675964,
+      "pck_body_hash_source": "separate before/after HTTP; not DevTools response.body",
+      "seven_png_sizes_correct": true,
+      "held_frames_pixel_difference_bbox": [
+        480,
+        573,
+        767,
+        646
+      ],
+      "static_background_roi": [
+        0,
+        0,
+        1280,
+        200
+      ],
+      "static_background_difference": null,
+      "css_transform_animation_transition_all_none": true,
+      "closed_at": "2026-10-06T00:11:41Z"
+    },
+    {
+      "name": "portrait-reduce",
+      "viewport": [
+        390,
+        844
+      ],
+      "os_reduce": true,
+      "hold_seconds": 4.01171075203456,
+      "expected_network_errors": 1,
+      "expected_console_errors": 2,
+      "unexpected_errors": 0,
+      "before_after_bindings": 2,
+      "recovery_module_body_hashes": 10,
+      "pck_actual_browser_status": 200,
+      "pck_cdp_encoded_data_length": 26676439,
+      "pck_body_hash_source": "separate before/after HTTP; not DevTools response.body",
+      "seven_png_sizes_correct": true,
+      "held_frames_pixel_difference_bbox": [
+        49,
+        510,
+        322,
+        582
+      ],
+      "static_background_roi": [
+        0,
+        0,
+        390,
+        200
+      ],
+      "static_background_difference": null,
+      "css_transform_animation_transition_all_none": true,
+      "closed_at": "2026-10-06T00:12:59Z"
+    },
+    {
+      "name": "landscape-reduce",
+      "viewport": [
+        844,
+        390
+      ],
+      "os_reduce": true,
+      "hold_seconds": 4.016849859035574,
+      "expected_network_errors": 1,
+      "expected_console_errors": 2,
+      "unexpected_errors": 0,
+      "before_after_bindings": 2,
+      "recovery_module_body_hashes": 10,
+      "pck_actual_browser_status": 200,
+      "pck_cdp_encoded_data_length": 26676671,
+      "pck_body_hash_source": "separate before/after HTTP; not DevTools response.body",
+      "seven_png_sizes_correct": true,
+      "held_frames_pixel_difference_bbox": [
+        542,
+        168,
+        799,
+        240
+      ],
+      "static_background_roi": [
+        0,
+        0,
+        400,
+        390
+      ],
+      "static_background_difference": null,
+      "css_transform_animation_transition_all_none": true,
+      "closed_at": "2026-10-06T00:14:06Z"
+    }
+  ],
+  "runtime_executed_by_reviewer": false,
+  "v1_failure_preserved": {
+    "closed": "2026-10-06T00:05:58Z",
+    "png": 7,
+    "before_only_binding": true,
+    "reason": "response.body stale old navigation / cache eviction; no fabricated end binding"
+  },
+  "v2_png_count": 42,
+  "v2_browser_closed": "2026-10-06T00:14:06Z",
+  "status": "PASS bounded loading acceptance facts"
+}
