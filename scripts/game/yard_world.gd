@@ -1304,9 +1304,22 @@ func _layout_cloud_bands() -> void:
 	var width := _cloud_band_width()
 	if width <= 0.001:
 		return
-	for pair: Array in _weather_cloud_pairs:
-		pair[0].position = Vector2(-_cloud_scroll, CLOUD_BAND_Y)
-		pair[1].position = Vector2(-_cloud_scroll + width, CLOUD_BAND_Y)
+	for i in _weather_cloud_pairs.size():
+		var texture_width: int = _weather_cloud_pairs[i][0].texture.get_width()
+		# Sprite2D rounds region sizes to source pixels. Use a shared pixel cut
+		# so the two pieces cannot leave a fractional-pixel seam at the wrap.
+		var cut := clampi(roundi(_cloud_scroll / width * texture_width), 0, texture_width)
+		for tile in 2:
+			var band: Sprite2D = _weather_cloud_pairs[i][tile]
+			var source_left := cut if tile == 0 else 0
+			var source_width := texture_width - cut if tile == 0 else cut
+			# Crop the drifting source, not the world/camera. Sprite regions also
+			# survive PhotoMoment's existing version-one capture/replay contract.
+			band.region_enabled = true
+			band.region_filter_clip_enabled = true
+			band.region_rect = Rect2(source_left, 0, source_width, band.texture.get_height())
+			band.position = Vector2(0.0 if tile == 0 else (texture_width - cut) * band.scale.x, CLOUD_BAND_Y)
+			band.visible = source_width > 0 and float(_weather_cloud_weights[i]) > 0.0
 
 
 func _weather_cloud_index() -> int:
