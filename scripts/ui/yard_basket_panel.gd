@@ -19,6 +19,16 @@ var _touch_index := -1
 var _touch_start := Vector2.ZERO
 var _touch_scrolled := false
 const FISH := ["small", "medium", "odd", "grass"]
+## 背篓里的按钮原来悬停、按下、禁用三态共用同一块 #eadcc8 底和同一条 #b88a61 边，
+## 禁用只把字调浅到 #7a6152（约 4.25:1）。空背篓、手里已拿着东西或正在确认保存时，
+## 一排「拿一条 / 拿一束 / 收回背篓」看上去像全被按着，又比可点的字更难读。
+## 禁用态改用与 Main._soft_button 相同的淡暖纸底 + 1px 浅棕边（REQ-20261006-038），
+## 字对底约 4.78:1；可点、悬停、按下、焦点样式和尺寸、文案、何时禁用都不变（REQ-20261007-049）。
+const BUTTON_ACTIVE_FILL := Color("eadcc8")
+const BUTTON_EDGE := Color("b88a61")
+const BUTTON_DISABLED_FILL := Color("f3e9db")
+const BUTTON_DISABLED_EDGE := Color("bfa588")
+const BUTTON_DISABLED_TEXT := Color("7a6152")
 
 func _ready() -> void:
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -99,7 +109,7 @@ func _button() -> Button:
 	button.add_theme_color_override("font_hover_color", Color("3d2d23"))
 	button.add_theme_color_override("font_pressed_color", Color("3d2d23"))
 	button.add_theme_color_override("font_focus_color", Color("5b4637"))
-	button.add_theme_color_override("font_disabled_color", Color("7a6152"))
+	button.add_theme_color_override("font_disabled_color", BUTTON_DISABLED_TEXT)
 	var focus := StyleBoxFlat.new()
 	focus.draw_center = false
 	focus.border_color = Color("916d49")
@@ -108,8 +118,11 @@ func _button() -> Button:
 	button.add_theme_stylebox_override("focus", focus)
 	for mode: String in ["normal", "hover", "pressed", "disabled"]:
 		var style := StyleBoxFlat.new()
-		style.bg_color = Color("fffaf1") if mode == "normal" else Color("eadcc8")
-		style.border_color = Color("b88a61")
+		style.bg_color = Color("fffaf1") if mode == "normal" else BUTTON_ACTIVE_FILL
+		style.border_color = BUTTON_EDGE
+		if mode == "disabled":
+			style.bg_color = BUTTON_DISABLED_FILL
+			style.border_color = BUTTON_DISABLED_EDGE
 		style.set_border_width_all(1)
 		style.set_corner_radius_all(12)
 		button.add_theme_stylebox_override(mode, style)
