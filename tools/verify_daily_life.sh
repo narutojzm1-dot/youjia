@@ -37,6 +37,7 @@ run_godot suite test/still_boundary_feedback_suite.gd
 run_godot suite test/ui_viewports.gd
 run_godot suite test/web_save_bridge/decoder_suite.gd
 run_godot suite test/web_save_bridge/legacy_suite.gd
+run_godot suite test/title_copy_balance_suite.gd
 node test/loading_shell_test.cjs
 
 node test/motion_preference_test.cjs
