@@ -50,6 +50,8 @@ func _test_weather_layer() -> void:
 	var world = world_script.new()
 	root.add_child(world)
 	world.setup()
+	world._cloud_scroll = 320.0
+	world._layout_cloud_bands()
 	var layer := world.get_node_or_null("WeatherBackdropBlend") as Sprite2D
 	if layer == null:
 		layer = Sprite2D.new()
@@ -83,6 +85,8 @@ func _test_weather_layer() -> void:
 			_check(is_equal_approx(visual.modulate.a, 0.375), "replayed weather alpha is frozen despite live layer changing")
 		elif visual.get_meta("subject", "") == "weather_cloud":
 			_check(visual.get_index() > card._ground.get_index() and visual.get_index() < card._shadows.get_index(), "captured weather clouds stay below contact shadows")
+			var bounds: Rect2 = visual.transform * visual.get_rect()
+			_check(bounds.position.x >= -0.001 and bounds.end.x <= world.WORLD_SIZE.x + 0.001, "JSON photo replay retains cropped cloud world bounds")
 		elif visual.has_meta("subject"):
 			_check(visual.get_index() > card._shadows.get_index(), "ordinary and legacy negative-depth items retain their placement after shadows")
 	_check(found, "weather layer survives JSON restoration and card creation")

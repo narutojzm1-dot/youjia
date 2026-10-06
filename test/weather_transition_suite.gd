@@ -67,6 +67,17 @@ func run() -> void:
 	check(world._weather_cloud_weights == weights, "TOD change does not snap cloud weights")
 	world.tick(1.5, Vector2.ZERO)
 	check(world._weather_cloud_weights[2] > 0.0 and world._weather_cloud_weights[2] < 1.0, "sunset cloud crossfade advances")
+	# All looping cloud art must remain on the painted world, including the wrap.
+	for scroll_at: float in [0.0, 0.25, 320.0, 1279.75]:
+		world._cloud_scroll = scroll_at
+		world._layout_cloud_bands()
+		for pair: Array in world._weather_cloud_pairs:
+			var covered := 0.0
+			for band: Sprite2D in pair:
+				var bounds: Rect2 = band.transform * band.get_rect()
+				check(bounds.position.x >= -0.001 and bounds.end.x <= world.WORLD_SIZE.x + 0.001, "visible cloud stays inside painted horizontal bounds at %s" % scroll_at)
+				covered += bounds.size.x
+			check(is_equal_approx(covered, world.WORLD_SIZE.x), "cloud pair covers full sky without gap or double width at %s" % scroll_at)
 	world.free()
 	tuning.reset_defaults()
 	if failures.is_empty(): print("Weather transition suite passed: %d checks" % checks)
