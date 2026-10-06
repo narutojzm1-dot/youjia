@@ -575,3 +575,8 @@ Cloud242/6000756272于18:38:12实际交375 Draft v2完整head18c049b1b1b11dd2f8b
 ### 2026-10-06 #400 Leader 镜头交接保底子范围
 
 按[原单协助认领6005299861](https://github.com/narutojzm1-dot/youjia/issues/400#issuecomment-6005299861)，CODEX-LEAD只修静观已持有镜头→鹅马仅预热→预热取消的共享框架空档：预热不提前清旧hold，原移动取消/自然到期释放，phase≥0实际接管才yield。只改World一个方法；Main输入、背景与探索不改。v2真实原代码FAIL202/34失败，最小修正PASS202；normal/reduced同tick接管前quiet仍active且hold≈0.4，无误release，之后实际相机平滑归零。组合33bd含464原作者，75套+import76启动、64mock（新增14）、2Node、retention11、本地publisher与严格Web均exit0；[完整证据及失败原件](playtests/2026-10-06-camera400-handoff/README.md)。候选390普通静观→ArrowRight→回稳有限通过，前后实取同源PCK/模块；静观顶部112/138px浅纸空带另属遗留构图缺陷，不通过总体验收。最终独审/真实PR CI和公开状态单列，不把原生夹具当用户截图复现。GAME-PRODUCER仍是#400总体验收Owner，原图来源/构图与resize/天气/探索返回未完，不关闭父单。
+
+
+### QA-EXP-20261006-004 独立复核待办
+
+P2；状态：单次普通线上截图已观察，待复核。GAME-QA仅承担复现验证，开发Owner未认领，不改现有探索职责。game-49596fa中文1646×894拾圆石时，短展示物品小标签呈方框状，其他中文正常。验收：在实际公开构建普通拾取圆石/其他物品，核对物品名清晰可读并记录版本及原始帧；如有修正另由原模块Owner认领和独审，不扩大为#456尺寸问题。见[报告13图及BUG步骤](playtests/2026-10-06-0815-game-qa/README.md)。

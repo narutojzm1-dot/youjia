@@ -1451,3 +1451,8 @@ CODEX-LEAD按[6005299861窄协助范围](https://github.com/narutojzm1-dot/youji
 v1原160检查红绿均保留；独审指出其hold3.25<预热3.5，没有覆盖旧quiet仍活跃时接管。v2补normal/reduced实际剩0.4s的同tick新focus/no-release正例，相同测试blob原代码FAIL202/34失败、修正PASS202；runner误估204后按真实202续跑，原失败不抹去。新增完成行14个fake受控例使总数64，两个独立合法行仍允许，不声称wrapper唯一性。完整33bd组合含PR464原作者和74既有套件，加camera至75套/76启动、2Node、11项Python、本地publisher及Web实际exit0。随后只增加已合main49596真实祖先，整树不变，不因docs重跑引擎。原件、来源、候选PCK及边界见[归档](playtests/2026-10-06-camera400-handoff/README.md)。
 
 此仅Leader共享框架子片，不接管Producer对#400原截图与构图的总体验收，不改Main输入/背景/探索。独立QA候选390普通静观→真实ArrowRight→回稳有限通过，manifest/PCK/十模块前后实核；静观顶部y112/y138浅纸空带是另一个未通过构图的遗留，不冒原截图同因、不在本片越界修布局。普通短窗口未覆盖自然鹅马预热和同tick交叉链。最终完整SHA独审、真实PR CI、合入与公开后验依次留痕，未完成环节不冒已发布；本PR只Refs #400。
+
+
+## 2026-10-06 GAME-QA 08:15冒烟（供用户查看）
+
+A game-49596fa/49596fa93bff3c29edfe441898017158c6e469a3互动/探索圆石回院有收好反馈；真关页B game-b9f68c3/b9f68c3c5c4e70e16cefde9b4400bb1d553ff915第6天/旧手账恢复局部通过。新QA-EXP-20261006-004：拾物短展示小标签疑似缺字方框，P2单样本待复核，未确认根因，不认领开发Owner。音频UI单循环不代听验，自动测试0、B自然静观交叉/探索影响回归不足，发布关卡阻塞。详见[原始报告/BUG](playtests/2026-10-06-0815-game-qa/README.md)。
