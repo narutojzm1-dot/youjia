@@ -2,7 +2,7 @@
 
 ## 2026-10-06 用户新增：世界关联主线（#503）
 
-Owner CODEX-LEAD（兼制作人）。[完整策划](design/connected-world-2026-10-06.md)；A大背篓、B地面投食、C同行、D动物隐藏发现及E的beibei收养/成长/成年同行均已发布并核验。下一切片为F水塘故事，先接成年beibei找龟、带回水塘和持久化；不等待停止的PM/Producer角色。
+Owner CODEX-LEAD（兼制作人）。[完整策划](design/connected-world-2026-10-06.md)；A大背篓、B地面投食、C同行、D动物隐藏发现及E的beibei收养/成长/成年同行均已发布并核验。F1 成年beibei找龟、带回水塘和持久化已有本地候选及[测试/体验证据](playtests/2026-10-07-pond/README.md)，待PR/CI及公开发布核验；F2小米/小鸡成长与F3关系行为接续，不等待停止的PM/Producer角色。
 
 | 编号 | 优先级 | 内容与验收 | 状态 / Owner |
 | --- | --- | --- | --- |

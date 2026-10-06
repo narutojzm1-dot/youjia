@@ -12,6 +12,8 @@ var stray: PathCompanion
 var _rescue_requested := false
 var _rescued_here := false
 var _resident_caption := ""
+var turtle: Sprite2D
+var _turtle_caption := ""
 const PAPER := Color("fff6e8")
 const INK := Color("5b4637")
 const MUTED := Color("8a7060")
@@ -163,6 +165,7 @@ func _process(delta: float) -> void:
 		return
 	_update_search()
 	_update_resident()
+	_update_turtle()
 	if _caption_time > 0.0:
 		_caption_time -= delta
 		if _caption_time <= 0.0 and observing.is_empty():
@@ -261,6 +264,14 @@ func end_observe() -> void:
 
 ## 有东西时：带上 / 换成这个 / 放回；全由核心判定，界面只按结果刷新
 func pick() -> bool:
+	if observing == "village_lake" and residents != null:
+		if residents.busy():
+			if residents.pending.get("action", "") not in ["find_turtle", "adopt_turtle"]: return false
+			return residents.retry() if residents.state in ["failed", "unknown"] else false
+		if not _turtle_found(): return false
+		var accepted: bool = residents.request("adopt_turtle")
+		if accepted: walker.begin_action(&"pickup", reduced_motion())
+		return accepted
 	if observing == "village_stray" and residents != null:
 		if residents.state == "failed": return residents.retry()
 		if residents.busy() or residents.view().is_empty() or residents.view().beibei.stage != "unmet": return false
@@ -321,6 +332,10 @@ func _start_reveal(find_id: String) -> void:
 
 
 func pick_choice() -> Dictionary:
+	if observing == "village_lake":
+		if residents != null and residents.busy() and residents.pending.get("action", "") in ["find_turtle", "adopt_turtle"] and residents.state in ["failed", "unknown"]:
+			return {"kind": "turtle_retry"}
+		return {"kind": "turtle_adopt" if _turtle_found() else "none"}
 	if observing == "village_stray" and residents != null and not residents.view().is_empty():
 		if residents.view().beibei.stage == "unmet": return {"kind": "adopt"}
 	if observing.is_empty():
@@ -469,6 +484,7 @@ func _draw_items() -> void:
 
 
 func _observe_caption() -> String:
+	if observing == "village_lake": return _pond_caption()
 	if observing == "village_stray": return _stray_caption()
 	var text := I18n.t("exploration.stop.%s" % observing)
 	if observing == "leaf_pile":
@@ -558,6 +574,54 @@ func _stray_caption() -> String:
 	if residents.busy(): return I18n.t("beibei.retry_caption" if residents.state == "failed" else "beibei.saving")
 	return I18n.t("beibei.meet")
 
+func _turtle_eligible() -> bool:
+	if residents == null or companion == null or residents.view().is_empty(): return false
+	return village and residents.view().beibei.stage == "grown" and companion.choice.actor_id == "beibei"
+
+func _turtle_found() -> bool:
+	if not _turtle_eligible(): return false
+	var value: Dictionary = residents.view().turtle
+	return value.stage == "found" and value.found_trip == host.view().get("trip_id", "")
+
+func _pond_caption() -> String:
+	if residents == null or residents.view().is_empty(): return I18n.t("exploration.stop.village_lake")
+	if residents.view().turtle.stage == "pond": return I18n.t("turtle.home")
+	if not _turtle_eligible(): return I18n.t("exploration.stop.village_lake")
+	if residents.busy(): return I18n.t("turtle.retry_caption" if residents.state in ["failed", "unknown"] else "turtle.saving")
+	return I18n.t("turtle.found" if _turtle_found() else "turtle.searching")
+
+func _update_turtle() -> void:
+	if not village or residents == null or residents.view().is_empty():
+		if turtle != null: turtle.visible = false
+		return
+	if observing == "village_lake" and _turtle_eligible() and residents.view().turtle.stage != "pond":
+		if _turtle_found():
+			if _search_started: _cancel_search()
+		elif not residents.busy() and not host.view().get("unsaved_changes", false) and host.view().get("current_stop", "") == observing:
+			if not _search_started:
+				companion.start_search(layout.stop(observing))
+				_search_started = true
+			if companion.search_complete(): residents.request("find_turtle")
+	if _turtle_found() and turtle == null:
+		turtle = Sprite2D.new()
+		turtle.texture = load(TurtleArt.TEXTURE)
+		turtle.centered = false
+		turtle.offset = -TurtleArt.ANCHOR
+		turtle.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
+		add_child(turtle)
+	if turtle != null:
+		turtle.visible = _turtle_found()
+		var stop := layout.stop("village_lake")
+		var bank := layout.point(stop.arm, stop.d)
+		turtle.position = bank + Vector2(110, 25) * layout.depth(bank.y)
+		turtle.scale = Vector2.ONE * TurtleArt.SCALE * layout.depth(turtle.position.y)
+		turtle.z_index = roundi(turtle.position.y)
+	if observing == "village_lake":
+		var text := _pond_caption()
+		if text != _turtle_caption:
+			_turtle_caption = text
+			_show_caption(text, 0.0)
+
 func _update_resident() -> void:
 	if residents == null or residents.view().is_empty(): return
 	var stage: String = residents.view().beibei.stage
@@ -610,7 +674,12 @@ func _refresh() -> void:
 		_look_button.text = I18n.t("exploration.action.near_path" if village else "exploration.action.village")
 	_pick_button.visible = not observing.is_empty() and choice.kind != "none"
 	_pick_button.disabled = choice.kind == "adopt" and (residents.busy() and residents.state != "failed" or host.view().get("unsaved_changes", false))
+	if choice.kind == "turtle_adopt": _pick_button.disabled = residents.busy() or host.view().get("unsaved_changes", false)
 	match choice.kind:
+		"turtle_adopt":
+			_pick_button.text = I18n.t("turtle.adopt")
+		"turtle_retry":
+			_pick_button.text = I18n.t("beibei.retry")
 		"adopt":
 			_pick_button.text = I18n.t("beibei.retry" if residents.state == "failed" else "beibei.adopt")
 		"take":

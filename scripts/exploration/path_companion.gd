@@ -16,7 +16,7 @@ const SEARCH_ANCHOR := Vector2(475, 1063)
 const SEARCH_SCALE := 0.91 # Match back-to-hoof height and hoof span, not lowered head height.
 
 func start_search(stop: Dictionary) -> void:
-	if choice.get("actor_id", "") != "llama": return
+	if choice.get("actor_id", "") not in ["llama", "beibei"]: return
 	return_to_side = false
 	search_spot = {"arm": stop.arm, "d": stop.d}
 	search_elapsed = 0.0
@@ -53,17 +53,19 @@ func setup(value: Dictionary, leader_spot: Dictionary, page: PaintedPath = null,
 	rope.end_cap_mode = Line2D.LINE_CAP_ROUND
 	add_child(rope)
 	rope.visible = choice.mode == "rope"
-	if choice.actor_id == "llama":
+	if choice.actor_id in ["llama", "beibei"]:
 		search_cel = Sprite2D.new()
-		search_cel.texture = load("res://assets/holiday/characters/cast_v2/llama_search.png")
+		search_cel.texture = load("res://assets/holiday/characters/beibei/search.png" if choice.actor_id == "beibei" else "res://assets/holiday/characters/cast_v2/llama_search.png")
 		search_cel.centered = false
-		search_cel.offset = -SEARCH_ANCHOR
+		search_cel.offset = -Vector2(700, 1090) if choice.actor_id == "beibei" else -SEARCH_ANCHOR
 		search_cel.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
 		search_cel.visible = false
 		add_child(search_cel)
 
 func feet() -> Vector2:
 	var point := layout.point(spot.arm, spot.d)
+	if choice.get("actor_id", "") == "beibei" and not search_spot.is_empty():
+		return point + Vector2(45, 10) * layout.depth(point.y)
 	# A small shoulder-to-shoulder clearance stays inside the painted lane.
 	var side := 30.0 if choice.get("actor_id", "") == "beibei" else -14.0
 	return point + layout.tangent(spot.arm, spot.d).orthogonal() * side * layout.depth(point.y)
@@ -86,7 +88,7 @@ func advance(delta: float, leader_spot: Dictionary, walker: SequenceResident, re
 		actor.visible = false
 		search_cel.visible = true
 		search_cel.position = actor.position
-		search_cel.scale = Vector2.ONE * actor._base_scale * layout.depth(actor.position.y) * SEARCH_SCALE
+		search_cel.scale = Vector2.ONE * actor._base_scale * layout.depth(actor.position.y) * (1.0 if choice.actor_id == "beibei" else SEARCH_SCALE)
 		search_cel.z_index = actor.z_index
 	if rope.visible:
 		var palm := Vector2(242, 253)
