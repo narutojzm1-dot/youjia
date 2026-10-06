@@ -128,4 +128,39 @@ run_case import-nonzero block 1 '' none import ''
 run_case import-error block 0 'ERROR: import failure' none import ''
 run_case import-tee-failure block 0 '' tee import ''
 run_case import-missing-log block 0 '' missing-log import ''
+# REQ-20261006-040: real wrapper + fake executables for both new formats.
+volume466_before=$checks
+for pair in 'test/volume_slider_style_suite.gd|style' 'test/volume_slider_input_suite.gd|input'; do
+  volume466_entry="${pair%%|*}"
+  volume466_label="${pair#*|}"
+  if [[ "$volume466_label" == style ]]; then
+    volume466_good='[volume-slider-style] PASS: 708 checks'
+    volume466_min='[volume-slider-style] PASS: 1 checks'
+    volume466_zero='[volume-slider-style] PASS: 0 checks'
+    volume466_failed='[volume-slider-style] FAIL: 1 failures across 708 checks'
+  else
+    volume466_good='[volume-slider-input] checks=73 failures=[]'
+    volume466_min='[volume-slider-input] checks=1 failures=[]'
+    volume466_zero='[volume-slider-input] checks=0 failures=[]'
+    volume466_failed='[volume-slider-input] checks=73 failures=["wrong gain"]'
+  fi
+  run_case "volume466-$volume466_label-min-positive" pass 0 "$volume466_min" none suite "$volume466_entry"
+  run_case "volume466-$volume466_label-positive" pass 0 "$volume466_good" none suite "$volume466_entry"
+  run_case "volume466-$volume466_label-zero" block 0 "$volume466_zero" none suite "$volume466_entry"
+  run_case "volume466-$volume466_label-missing" block 0 '' none suite "$volume466_entry"
+  run_case "volume466-$volume466_label-failed" block 0 "$volume466_failed" none suite "$volume466_entry"
+  run_case "volume466-$volume466_label-wrong-suite" block 0 '[photo-arrival-mat] PASS: 550 checks' none suite "$volume466_entry"
+  run_case "volume466-$volume466_label-prefix" block 0 "debug: $volume466_good" none suite "$volume466_entry"
+  run_case "volume466-$volume466_label-suffix" block 0 "$volume466_good incomplete" none suite "$volume466_entry"
+  run_case "volume466-$volume466_label-concatenated" block 0 "$volume466_good $volume466_good" none suite "$volume466_entry"
+  # Existing helper promises at least one full valid line, not uniqueness.
+  run_case "volume466-$volume466_label-two-valid-lines" pass 0 "$volume466_good"$'\n'"$volume466_good" none suite "$volume466_entry"
+  run_case "volume466-$volume466_label-nonzero-exit" block 1 "$volume466_good" none suite "$volume466_entry"
+  run_case "volume466-$volume466_label-later-error" block 0 "$volume466_good"$'\nERROR: simulated late error' none suite "$volume466_entry"
+  run_case "volume466-$volume466_label-later-fail" block 0 "$volume466_good"$'\nAUDIT FAIL simulated late assertion' none suite "$volume466_entry"
+  run_case "volume466-$volume466_label-truncated" block 0 '[volume-slider-' none suite "$volume466_entry"
+done
+[[ $((checks-volume466_before)) == 28 ]]
+echo 'VOLUME466 COMPLETION CONTRACT PASS 28'
+
 echo "GODOT GATE CONTRACT PASS $checks"
