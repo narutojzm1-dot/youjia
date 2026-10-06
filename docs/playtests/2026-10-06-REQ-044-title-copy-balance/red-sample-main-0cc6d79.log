@@ -1,0 +1,23 @@
+# test/title_copy_balance_suite.gd on unchanged main 0cc6d79 (Godot 4.7.2 native headless, fresh isolated XDG). Full FAIL list + summary; every failure is a lone-orphan or mid-word-break check.
+FAIL: (360, 640) zh-CN: hint last line '互动。' is not a lone 1-3 character orphan
+FAIL: (412, 915) zh-CN: tagline every automatic break lands after punctuation
+FAIL: (844, 390) zh-CN: tagline last line '出现。' is not a lone 1-3 character orphan
+FAIL: (844, 390) zh-CN: tagline every automatic break lands after punctuation
+FAIL: (915, 412) zh-CN: tagline last line '出现。' is not a lone 1-3 character orphan
+FAIL: (915, 412) zh-CN: tagline every automatic break lands after punctuation
+FAIL: (640, 360) zh-CN: tagline last line '出现。' is not a lone 1-3 character orphan
+FAIL: (640, 360) zh-CN: tagline every automatic break lands after punctuation
+FAIL: (568, 320) zh-CN: tagline last line '出现。' is not a lone 1-3 character orphan
+FAIL: (568, 320) zh-CN: tagline every automatic break lands after punctuation
+FAIL: (667, 375) zh-CN: tagline last line '出现。' is not a lone 1-3 character orphan
+FAIL: (667, 375) zh-CN: tagline every automatic break lands after punctuation
+FAIL: resize->(844, 390): tagline last line '出现。' is not a lone 1-3 character orphan
+FAIL: resize->(844, 390): tagline every automatic break lands after punctuation
+FAIL: resize->(360, 640): hint last line '互动。' is not a lone 1-3 character orphan
+FAIL: resize->(568, 320): tagline last line '出现。' is not a lone 1-3 character orphan
+FAIL: resize->(568, 320): tagline every automatic break lands after punctuation
+FAIL: resize->(844, 390): tagline last line '出现。' is not a lone 1-3 character orphan
+FAIL: resize->(844, 390): tagline every automatic break lands after punctuation
+FAIL: locale switch back at 844x390: tagline last line '出现。' is not a lone 1-3 character orphan
+FAIL: locale switch back at 844x390: tagline every automatic break lands after punctuation
+title_copy_balance: 21 of 580 checks FAILED

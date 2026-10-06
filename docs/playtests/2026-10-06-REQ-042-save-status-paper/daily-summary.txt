@@ -1,0 +1,83 @@
+ALBUM_LAYOUT checks=45914 failures=0
+ALBUM_SHORT_LANDSCAPE checks=52319 failures=0
+[animal-home-tests] PASS: 1005 checks
+AUDIO_BUTTON_INPUT checks=648 failures=0
+[authored-sequence-tests] PASS: 16 distinct complete frames, uniform canvas and anchor, loop metadata
+[boundary-feedback-tests] 11 checks []
+confirm_panel_fit suite: 562 checks passed
+COW GLANCE PASS 8
+day_label_layout suite: 173 checks passed
+DUCK ATTENTION PASS 24
+[explicit-target-tests] checks=25 failures=[]
+EXPLORATION CLEANUP 95 checks failures=[]
+EXPLORATION CLEANUP PRESERVATION checks=51 failures=0
+EXPLORATION CORE PASS 357
+EXPLORATION SLICE PASS 278/278 failures=[]
+[fish-carry] 94 checks []
+[fish-miss-feedback] 16 checks, 0 failures: []
+fishing active HUD: 10 checks, 0 failures
+GOOSE ATTENTION PASS 25
+[goose-mount] PASS: 92 checks []
+[grass-action-tests] PASS: 61 checks, 0 failures
+[grass-state-tests] PASS: 368 checks, 0 failures
+hint_paper_fit suite: 4653 checks passed
+HOLIDAY_START_ONCE checks=14 failures=0
+[interaction-photo-tests] 110 checks, failures=[]
+INTERACTION POSE PASS 35
+[keyboard-ground-tests] PASS: 45 checks []
+[leading-clearance-tests] 18 checks []
+licenses_dialog_fit_suite checks=124 failures=0
+[locomotion-tests] PASS: 410 checks
+[mixed-input-photo-tests] 6 checks []
+MOTION PREFERENCE NATIVE PASS 18
+NATIVE SAVE HOST PASS 200
+notice paper suite checks=49 failures=[]
+PAUSE_NOTICE checks=168 failures=0
+PHOTO ARRIVAL COMBO PASS 656
+[photo-arrival-fit] PASS: 418 checks
+[photo-arrival-mat] PASS: 550 checks
+[photo-arrival-shutter-paper] PASS: 1290 checks
+[photo-home-tests] PASS: 75 checks
+[photo-moment-tests] PASS: 1332 checks
+[photo-moment-save-tests] PASS: 46 checks []
+PHOTO_SPECIES_FRAME checks=9 failures=0
+[physical-yard-tests] PASS: 658 checks
+[portable-accept-tests] 16 checks []
+QUIET SKY LOOK PASS 15
+[camera400-handoff] PASS: 202 checks []
+[camera400-backdrop] PASS: 44734 checks []
+QUIET STAY PASS 4
+save candidate: 80 checks, 0 failures
+SAVE_COORDINATOR checks=86 failures=[]
+SAVE_DATA_CODEC 16 checks; failures=[]
+SAVE FEEDBACK 50 checks, failures 0
+SAVE RECOVERY PASS 24
+PASS: save_status_paper 573 checks
+SAVE WRITER GUIDANCE 20 checks failures=[]
+[scene-hotspot-tests] 91 checks, failures=[]
+[scrapbook-encounters] PASS: 20 checks []
+SHEEP ATTENTION PASS 56
+[shipped-correctness] 9 checks []
+PASS: soft_button_focus_contrast 5080 checks
+PASS: soft_button_disabled 4400 checks
+STILL BOUNDARY FEEDBACK PASS 44
+STILL CATCH PASS 6
+STILL GRASS GLOW PASS 4
+STILL OBJECT FEEDBACK PASS 14
+STILL TARGET PULSE PASS 5
+[game-generic-tests] PASS: 414 checks
+title_card suite: 251 checks passed
+PASS: title_licenses_link_contrast 340 checks
+title_short_landscape suite: 1541 checks passed
+[ui-interaction-tests] checks=63 failures=[]
+[viewport] checks=135 failures=[]
+web_hidpi: 102 checks, 0 failures
+WEB SAVE BRIDGE DECODER 45 failures=[]
+LEGACY_BRIDGE_PASS 22
+yard snapshot: 10 checks, 0 failures
+[volume-slider-style] PASS: 708 checks
+[volume-slider-input] checks=267 failures=[]
+LEGACY_BRIDGE_PASS 22
+Loading shell PASS: module ordering, runtime readiness/rejection, persistentPaths isolation, save-blocked gate, bytes, unknown totals, stall and both first-frame orders
+MOTION PREFERENCE JS PASS 21
+DAILY_EXIT=0

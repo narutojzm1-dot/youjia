@@ -5,7 +5,8 @@ extends SceneTree
 ## carry a half-empty paper over the mountains, and narrow portrait phones no
 ## longer let three- or four-line English hints spill off the paper onto the
 ## yard. The paper is never shorter than the 48px HUD buttons, and the text is
-## vertically centred on it. Copy, font size, width and position are unchanged.
+## vertically centred on it. Copy, font size, maximum width and position are
+## unchanged (the paper width hugs the text since REQ-20261006-045).
 
 const VIEWPORTS := [Vector2i(390, 844), Vector2i(844, 390), Vector2i(1280, 720), Vector2i(360, 640), Vector2i(700, 400)]
 const TARGETS := ["llama", "cow", "horse", "sheep_a", "sheep_b", "goose", "duck_a", "grass", "plant", "fishing", "windowbox", "shore_stones", "fence_gate", "path_out"]
@@ -107,7 +108,7 @@ func _measure(tag: String) -> Dictionary:
 func _check_matrix(dims: Vector2i, locale: String) -> void:
 	var compact: bool = main.size.x < 700.0
 	var label: Label = main._hint_label
-	var width_before: float = label.size.x
+	var width_before: float = main._hint_max_width()
 	var pos_before: Vector2 = label.position
 	var font_before: int = label.get_theme_font_size("font_size")
 	var seen := {}
@@ -121,7 +122,8 @@ func _check_matrix(dims: Vector2i, locale: String) -> void:
 		var m := _measure("%s %s" % [dims, locale])
 		max_lines = maxi(max_lines, m.lines)
 		_check(m.ok, "%s %s「%s」: %s" % [dims, locale, text.replace("\n", "/"), m.why])
-	_check(is_equal_approx(label.size.x, width_before) and label.position.is_equal_approx(pos_before), "%s %s width/position unchanged" % [dims, locale])
+	# REQ-20261006-045: the width now hugs the text, so only the maximum width and the position are fixed.
+	_check(label.size.x <= width_before + 0.5 and label.size.x <= main._hint_max_width() + 0.5 and label.position.is_equal_approx(pos_before), "%s %s width within the original maximum, position unchanged" % [dims, locale])
 	_check(label.get_theme_font_size("font_size") == font_before, "%s %s font size unchanged" % [dims, locale])
 	_check(label.autowrap_mode == TextServer.AUTOWRAP_WORD_SMART, "%s %s still wraps words" % [dims, locale])
 	print("%s %s: %d strings, up to %d lines" % [dims, locale, seen.size(), max_lines])

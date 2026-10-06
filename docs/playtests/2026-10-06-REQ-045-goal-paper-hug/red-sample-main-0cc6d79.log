@@ -1,0 +1,10 @@
+# test/hint_paper_width_suite.gd on unchanged main 0cc6d79 (Godot 4.7.2 native headless, isolated XDG); exit 1. First 8 FAIL lines and the summary; every failure is a paper-wider-than-text check.
+FAIL: (844, 390) zh-CN「橙色标记：草泥马 · 垂钓（空格/按钮）」: text box 520, widest line needs 260, right paper margin 271.0 (left is 9)
+FAIL: (844, 390) zh-CN「目标：草泥马 · 垂钓（空格/按钮）」: text box 520, widest line needs 230, right paper margin 301.0 (left is 9)
+FAIL: (844, 390) zh-CN「橙色标记：草泥马 · 等着……（空格/按钮）」: text box 520, widest line needs 278, right paper margin 253.0 (left is 9)
+FAIL: (844, 390) zh-CN「目标：草泥马 · 等着……（空格/按钮）」: text box 520, widest line needs 248, right paper margin 283.0 (left is 9)
+FAIL: (844, 390) zh-CN「橙色标记：草泥马 · 收杆！（空格/按钮）」: text box 520, widest line needs 275, right paper margin 256.0 (left is 9)
+FAIL: (844, 390) zh-CN「目标：草泥马 · 收杆！（空格/按钮）」: text box 520, widest line needs 245, right paper margin 286.0 (left is 9)
+FAIL: (844, 390) zh-CN「橙色标记：草泥马 · 打个招呼（空格/按钮）」: text box 520, widest line needs 290, right paper margin 241.0 (left is 9)
+FAIL: (844, 390) zh-CN「目标：草泥马 · 打个招呼（空格/按钮）」: text box 520, widest line needs 260, right paper margin 271.0 (left is 9)
+FAIL: hint_paper_width 8648 of 9264 checks failed
