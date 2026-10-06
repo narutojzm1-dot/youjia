@@ -1,0 +1,2022 @@
+{
+  "source": "49596fa93bff3c29edfe441898017158c6e469a3",
+  "entry": "game-49596fa",
+  "browser_version": "151.0.7922.173",
+  "browser_opened_utc": "2026-10-06T00:07:17Z",
+  "browser_closed_utc": "2026-10-06T00:14:06Z",
+  "executor_session": 81590,
+  "actual_outer_exit": 0,
+  "cases": [
+    {
+      "case": "desktop-normal",
+      "viewport": {
+        "width": 1280,
+        "height": 720
+      },
+      "motion": "no-preference",
+      "first_binding_utc": "2026-10-06T00:07:43Z",
+      "last_binding_utc": "2026-10-06T00:08:26Z",
+      "context_closed_utc": "2026-10-06T00:08:26Z",
+      "wasm_controlled_hold_seconds": 4.004550115962047,
+      "png_count": 7,
+      "public_full_pck_downloads": 2,
+      "recovery_browser_module_body_hashes": 10,
+      "expected_network_failures": 1,
+      "expected_console_errors": 2,
+      "page_errors": 0,
+      "unexpected_errors": 0,
+      "cache_hits_observed": 0,
+      "browser_pck_body_hash_claimed": false
+    },
+    {
+      "case": "portrait-normal",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "motion": "no-preference",
+      "first_binding_utc": "2026-10-06T00:08:40Z",
+      "last_binding_utc": "2026-10-06T00:09:30Z",
+      "context_closed_utc": "2026-10-06T00:09:30Z",
+      "wasm_controlled_hold_seconds": 4.0085373960318975,
+      "png_count": 7,
+      "public_full_pck_downloads": 2,
+      "recovery_browser_module_body_hashes": 10,
+      "expected_network_failures": 1,
+      "expected_console_errors": 2,
+      "page_errors": 0,
+      "unexpected_errors": 0,
+      "cache_hits_observed": 0,
+      "browser_pck_body_hash_claimed": false
+    },
+    {
+      "case": "landscape-normal",
+      "viewport": {
+        "width": 844,
+        "height": 390
+      },
+      "motion": "no-preference",
+      "first_binding_utc": "2026-10-06T00:09:43Z",
+      "last_binding_utc": "2026-10-06T00:10:33Z",
+      "context_closed_utc": "2026-10-06T00:10:33Z",
+      "wasm_controlled_hold_seconds": 4.00990136701148,
+      "png_count": 7,
+      "public_full_pck_downloads": 2,
+      "recovery_browser_module_body_hashes": 10,
+      "expected_network_failures": 1,
+      "expected_console_errors": 2,
+      "page_errors": 0,
+      "unexpected_errors": 0,
+      "cache_hits_observed": 0,
+      "browser_pck_body_hash_claimed": false
+    },
+    {
+      "case": "desktop-reduce",
+      "viewport": {
+        "width": 1280,
+        "height": 720
+      },
+      "motion": "reduce",
+      "first_binding_utc": "2026-10-06T00:10:46Z",
+      "last_binding_utc": "2026-10-06T00:11:41Z",
+      "context_closed_utc": "2026-10-06T00:11:41Z",
+      "wasm_controlled_hold_seconds": 4.020566582039464,
+      "png_count": 7,
+      "public_full_pck_downloads": 2,
+      "recovery_browser_module_body_hashes": 10,
+      "expected_network_failures": 1,
+      "expected_console_errors": 2,
+      "page_errors": 0,
+      "unexpected_errors": 0,
+      "cache_hits_observed": 0,
+      "browser_pck_body_hash_claimed": false
+    },
+    {
+      "case": "portrait-reduce",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "motion": "reduce",
+      "first_binding_utc": "2026-10-06T00:11:55Z",
+      "last_binding_utc": "2026-10-06T00:12:59Z",
+      "context_closed_utc": "2026-10-06T00:12:59Z",
+      "wasm_controlled_hold_seconds": 4.01171075203456,
+      "png_count": 7,
+      "public_full_pck_downloads": 2,
+      "recovery_browser_module_body_hashes": 10,
+      "expected_network_failures": 1,
+      "expected_console_errors": 2,
+      "page_errors": 0,
+      "unexpected_errors": 0,
+      "cache_hits_observed": 0,
+      "browser_pck_body_hash_claimed": false
+    },
+    {
+      "case": "landscape-reduce",
+      "viewport": {
+        "width": 844,
+        "height": 390
+      },
+      "motion": "reduce",
+      "first_binding_utc": "2026-10-06T00:13:16Z",
+      "last_binding_utc": "2026-10-06T00:14:06Z",
+      "context_closed_utc": "2026-10-06T00:14:06Z",
+      "wasm_controlled_hold_seconds": 4.016849859035574,
+      "png_count": 7,
+      "public_full_pck_downloads": 2,
+      "recovery_browser_module_body_hashes": 10,
+      "expected_network_failures": 1,
+      "expected_console_errors": 2,
+      "page_errors": 0,
+      "unexpected_errors": 0,
+      "cache_hits_observed": 0,
+      "browser_pck_body_hash_claimed": false
+    }
+  ],
+  "rendered_samples": "PNG originals, no modification",
+  "dom_layout_findings": [],
+  "visible_author_css_transform_animation_transition_samples": [
+    {
+      "case": "desktop-normal",
+      "stage": "01-loading-initial",
+      "element": "loading",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "desktop-normal",
+      "stage": "01-loading-initial",
+      "element": "game-title",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "desktop-normal",
+      "stage": "01-loading-initial",
+      "element": "loading-status",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "desktop-normal",
+      "stage": "01-loading-initial",
+      "element": "loading-detail",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "desktop-normal",
+      "stage": "01-loading-initial",
+      "element": "loading-progress",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "desktop-normal",
+      "stage": "01-loading-initial",
+      "element": "loading-build",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "desktop-normal",
+      "stage": "01-loading-initial",
+      "element": "::before",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s",
+      "backgroundSize": "cover",
+      "backgroundPosition": "50% 0%",
+      "hasBackground": true
+    },
+    {
+      "case": "desktop-normal",
+      "stage": "01-loading-initial",
+      "element": "::after",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s",
+      "backgroundSize": "auto",
+      "backgroundPosition": "0% 0%",
+      "hasBackground": true
+    },
+    {
+      "case": "desktop-normal",
+      "stage": "02-network-failure",
+      "element": "loading",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "desktop-normal",
+      "stage": "02-network-failure",
+      "element": "game-title",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "desktop-normal",
+      "stage": "02-network-failure",
+      "element": "loading-status",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "desktop-normal",
+      "stage": "02-network-failure",
+      "element": "loading-detail",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "desktop-normal",
+      "stage": "02-network-failure",
+      "element": "loading-retry",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "desktop-normal",
+      "stage": "02-network-failure",
+      "element": "loading-build",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "desktop-normal",
+      "stage": "02-network-failure",
+      "element": "::before",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s",
+      "backgroundSize": "cover",
+      "backgroundPosition": "50% 0%",
+      "hasBackground": true
+    },
+    {
+      "case": "desktop-normal",
+      "stage": "02-network-failure",
+      "element": "::after",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s",
+      "backgroundSize": "auto",
+      "backgroundPosition": "0% 0%",
+      "hasBackground": true
+    },
+    {
+      "case": "desktop-normal",
+      "stage": "03-retry-loading-a",
+      "element": "loading",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "desktop-normal",
+      "stage": "03-retry-loading-a",
+      "element": "game-title",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "desktop-normal",
+      "stage": "03-retry-loading-a",
+      "element": "loading-status",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "desktop-normal",
+      "stage": "03-retry-loading-a",
+      "element": "loading-detail",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "desktop-normal",
+      "stage": "03-retry-loading-a",
+      "element": "loading-progress",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "desktop-normal",
+      "stage": "03-retry-loading-a",
+      "element": "loading-build",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "desktop-normal",
+      "stage": "03-retry-loading-a",
+      "element": "::before",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s",
+      "backgroundSize": "cover",
+      "backgroundPosition": "50% 0%",
+      "hasBackground": true
+    },
+    {
+      "case": "desktop-normal",
+      "stage": "03-retry-loading-a",
+      "element": "::after",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s",
+      "backgroundSize": "auto",
+      "backgroundPosition": "0% 0%",
+      "hasBackground": true
+    },
+    {
+      "case": "desktop-normal",
+      "stage": "04-retry-loading-b",
+      "element": "loading",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "desktop-normal",
+      "stage": "04-retry-loading-b",
+      "element": "game-title",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "desktop-normal",
+      "stage": "04-retry-loading-b",
+      "element": "loading-status",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "desktop-normal",
+      "stage": "04-retry-loading-b",
+      "element": "loading-detail",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "desktop-normal",
+      "stage": "04-retry-loading-b",
+      "element": "loading-progress",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "desktop-normal",
+      "stage": "04-retry-loading-b",
+      "element": "loading-build",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "desktop-normal",
+      "stage": "04-retry-loading-b",
+      "element": "::before",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s",
+      "backgroundSize": "cover",
+      "backgroundPosition": "50% 0%",
+      "hasBackground": true
+    },
+    {
+      "case": "desktop-normal",
+      "stage": "04-retry-loading-b",
+      "element": "::after",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s",
+      "backgroundSize": "auto",
+      "backgroundPosition": "0% 0%",
+      "hasBackground": true
+    },
+    {
+      "case": "portrait-normal",
+      "stage": "01-loading-initial",
+      "element": "loading",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "portrait-normal",
+      "stage": "01-loading-initial",
+      "element": "game-title",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "portrait-normal",
+      "stage": "01-loading-initial",
+      "element": "loading-status",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "portrait-normal",
+      "stage": "01-loading-initial",
+      "element": "loading-detail",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "portrait-normal",
+      "stage": "01-loading-initial",
+      "element": "loading-progress",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "portrait-normal",
+      "stage": "01-loading-initial",
+      "element": "loading-build",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "portrait-normal",
+      "stage": "01-loading-initial",
+      "element": "::before",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s",
+      "backgroundSize": "100%",
+      "backgroundPosition": "50% 0%",
+      "hasBackground": true
+    },
+    {
+      "case": "portrait-normal",
+      "stage": "01-loading-initial",
+      "element": "::after",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s",
+      "backgroundSize": "100% 260px",
+      "backgroundPosition": "50% 0%",
+      "hasBackground": true
+    },
+    {
+      "case": "portrait-normal",
+      "stage": "02-network-failure",
+      "element": "loading",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "portrait-normal",
+      "stage": "02-network-failure",
+      "element": "game-title",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "portrait-normal",
+      "stage": "02-network-failure",
+      "element": "loading-status",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "portrait-normal",
+      "stage": "02-network-failure",
+      "element": "loading-detail",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "portrait-normal",
+      "stage": "02-network-failure",
+      "element": "loading-retry",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "portrait-normal",
+      "stage": "02-network-failure",
+      "element": "loading-build",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "portrait-normal",
+      "stage": "02-network-failure",
+      "element": "::before",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s",
+      "backgroundSize": "100%",
+      "backgroundPosition": "50% 0%",
+      "hasBackground": true
+    },
+    {
+      "case": "portrait-normal",
+      "stage": "02-network-failure",
+      "element": "::after",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s",
+      "backgroundSize": "100% 260px",
+      "backgroundPosition": "50% 0%",
+      "hasBackground": true
+    },
+    {
+      "case": "portrait-normal",
+      "stage": "03-retry-loading-a",
+      "element": "loading",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "portrait-normal",
+      "stage": "03-retry-loading-a",
+      "element": "game-title",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "portrait-normal",
+      "stage": "03-retry-loading-a",
+      "element": "loading-status",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "portrait-normal",
+      "stage": "03-retry-loading-a",
+      "element": "loading-detail",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "portrait-normal",
+      "stage": "03-retry-loading-a",
+      "element": "loading-progress",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "portrait-normal",
+      "stage": "03-retry-loading-a",
+      "element": "loading-build",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "portrait-normal",
+      "stage": "03-retry-loading-a",
+      "element": "::before",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s",
+      "backgroundSize": "100%",
+      "backgroundPosition": "50% 0%",
+      "hasBackground": true
+    },
+    {
+      "case": "portrait-normal",
+      "stage": "03-retry-loading-a",
+      "element": "::after",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s",
+      "backgroundSize": "100% 260px",
+      "backgroundPosition": "50% 0%",
+      "hasBackground": true
+    },
+    {
+      "case": "portrait-normal",
+      "stage": "04-retry-loading-b",
+      "element": "loading",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "portrait-normal",
+      "stage": "04-retry-loading-b",
+      "element": "game-title",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "portrait-normal",
+      "stage": "04-retry-loading-b",
+      "element": "loading-status",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "portrait-normal",
+      "stage": "04-retry-loading-b",
+      "element": "loading-detail",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "portrait-normal",
+      "stage": "04-retry-loading-b",
+      "element": "loading-progress",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "portrait-normal",
+      "stage": "04-retry-loading-b",
+      "element": "loading-build",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "portrait-normal",
+      "stage": "04-retry-loading-b",
+      "element": "::before",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s",
+      "backgroundSize": "100%",
+      "backgroundPosition": "50% 0%",
+      "hasBackground": true
+    },
+    {
+      "case": "portrait-normal",
+      "stage": "04-retry-loading-b",
+      "element": "::after",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s",
+      "backgroundSize": "100% 260px",
+      "backgroundPosition": "50% 0%",
+      "hasBackground": true
+    },
+    {
+      "case": "landscape-normal",
+      "stage": "01-loading-initial",
+      "element": "loading",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "landscape-normal",
+      "stage": "01-loading-initial",
+      "element": "game-title",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "landscape-normal",
+      "stage": "01-loading-initial",
+      "element": "loading-status",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "landscape-normal",
+      "stage": "01-loading-initial",
+      "element": "loading-detail",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "landscape-normal",
+      "stage": "01-loading-initial",
+      "element": "loading-progress",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "landscape-normal",
+      "stage": "01-loading-initial",
+      "element": "loading-build",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "landscape-normal",
+      "stage": "01-loading-initial",
+      "element": "::before",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s",
+      "backgroundSize": "auto 100%",
+      "backgroundPosition": "0% 50%",
+      "hasBackground": true
+    },
+    {
+      "case": "landscape-normal",
+      "stage": "01-loading-initial",
+      "element": "::after",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s",
+      "backgroundSize": "auto",
+      "backgroundPosition": "0% 0%",
+      "hasBackground": true
+    },
+    {
+      "case": "landscape-normal",
+      "stage": "02-network-failure",
+      "element": "loading",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "landscape-normal",
+      "stage": "02-network-failure",
+      "element": "game-title",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "landscape-normal",
+      "stage": "02-network-failure",
+      "element": "loading-status",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "landscape-normal",
+      "stage": "02-network-failure",
+      "element": "loading-detail",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "landscape-normal",
+      "stage": "02-network-failure",
+      "element": "loading-retry",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "landscape-normal",
+      "stage": "02-network-failure",
+      "element": "loading-build",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "landscape-normal",
+      "stage": "02-network-failure",
+      "element": "::before",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s",
+      "backgroundSize": "auto 100%",
+      "backgroundPosition": "0% 50%",
+      "hasBackground": true
+    },
+    {
+      "case": "landscape-normal",
+      "stage": "02-network-failure",
+      "element": "::after",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s",
+      "backgroundSize": "auto",
+      "backgroundPosition": "0% 0%",
+      "hasBackground": true
+    },
+    {
+      "case": "landscape-normal",
+      "stage": "03-retry-loading-a",
+      "element": "loading",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "landscape-normal",
+      "stage": "03-retry-loading-a",
+      "element": "game-title",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "landscape-normal",
+      "stage": "03-retry-loading-a",
+      "element": "loading-status",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "landscape-normal",
+      "stage": "03-retry-loading-a",
+      "element": "loading-detail",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "landscape-normal",
+      "stage": "03-retry-loading-a",
+      "element": "loading-progress",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "landscape-normal",
+      "stage": "03-retry-loading-a",
+      "element": "loading-build",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "landscape-normal",
+      "stage": "03-retry-loading-a",
+      "element": "::before",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s",
+      "backgroundSize": "auto 100%",
+      "backgroundPosition": "0% 50%",
+      "hasBackground": true
+    },
+    {
+      "case": "landscape-normal",
+      "stage": "03-retry-loading-a",
+      "element": "::after",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s",
+      "backgroundSize": "auto",
+      "backgroundPosition": "0% 0%",
+      "hasBackground": true
+    },
+    {
+      "case": "landscape-normal",
+      "stage": "04-retry-loading-b",
+      "element": "loading",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "landscape-normal",
+      "stage": "04-retry-loading-b",
+      "element": "game-title",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "landscape-normal",
+      "stage": "04-retry-loading-b",
+      "element": "loading-status",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "landscape-normal",
+      "stage": "04-retry-loading-b",
+      "element": "loading-detail",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "landscape-normal",
+      "stage": "04-retry-loading-b",
+      "element": "loading-progress",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "landscape-normal",
+      "stage": "04-retry-loading-b",
+      "element": "loading-build",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "landscape-normal",
+      "stage": "04-retry-loading-b",
+      "element": "::before",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s",
+      "backgroundSize": "auto 100%",
+      "backgroundPosition": "0% 50%",
+      "hasBackground": true
+    },
+    {
+      "case": "landscape-normal",
+      "stage": "04-retry-loading-b",
+      "element": "::after",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s",
+      "backgroundSize": "auto",
+      "backgroundPosition": "0% 0%",
+      "hasBackground": true
+    },
+    {
+      "case": "desktop-reduce",
+      "stage": "01-loading-initial",
+      "element": "loading",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "desktop-reduce",
+      "stage": "01-loading-initial",
+      "element": "game-title",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "desktop-reduce",
+      "stage": "01-loading-initial",
+      "element": "loading-status",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "desktop-reduce",
+      "stage": "01-loading-initial",
+      "element": "loading-detail",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "desktop-reduce",
+      "stage": "01-loading-initial",
+      "element": "loading-progress",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "desktop-reduce",
+      "stage": "01-loading-initial",
+      "element": "loading-build",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "desktop-reduce",
+      "stage": "01-loading-initial",
+      "element": "::before",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s",
+      "backgroundSize": "cover",
+      "backgroundPosition": "50% 0%",
+      "hasBackground": true
+    },
+    {
+      "case": "desktop-reduce",
+      "stage": "01-loading-initial",
+      "element": "::after",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s",
+      "backgroundSize": "auto",
+      "backgroundPosition": "0% 0%",
+      "hasBackground": true
+    },
+    {
+      "case": "desktop-reduce",
+      "stage": "02-network-failure",
+      "element": "loading",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "desktop-reduce",
+      "stage": "02-network-failure",
+      "element": "game-title",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "desktop-reduce",
+      "stage": "02-network-failure",
+      "element": "loading-status",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "desktop-reduce",
+      "stage": "02-network-failure",
+      "element": "loading-detail",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "desktop-reduce",
+      "stage": "02-network-failure",
+      "element": "loading-retry",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "desktop-reduce",
+      "stage": "02-network-failure",
+      "element": "loading-build",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "desktop-reduce",
+      "stage": "02-network-failure",
+      "element": "::before",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s",
+      "backgroundSize": "cover",
+      "backgroundPosition": "50% 0%",
+      "hasBackground": true
+    },
+    {
+      "case": "desktop-reduce",
+      "stage": "02-network-failure",
+      "element": "::after",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s",
+      "backgroundSize": "auto",
+      "backgroundPosition": "0% 0%",
+      "hasBackground": true
+    },
+    {
+      "case": "desktop-reduce",
+      "stage": "03-retry-loading-a",
+      "element": "loading",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "desktop-reduce",
+      "stage": "03-retry-loading-a",
+      "element": "game-title",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "desktop-reduce",
+      "stage": "03-retry-loading-a",
+      "element": "loading-status",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "desktop-reduce",
+      "stage": "03-retry-loading-a",
+      "element": "loading-detail",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "desktop-reduce",
+      "stage": "03-retry-loading-a",
+      "element": "loading-progress",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "desktop-reduce",
+      "stage": "03-retry-loading-a",
+      "element": "loading-build",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "desktop-reduce",
+      "stage": "03-retry-loading-a",
+      "element": "::before",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s",
+      "backgroundSize": "cover",
+      "backgroundPosition": "50% 0%",
+      "hasBackground": true
+    },
+    {
+      "case": "desktop-reduce",
+      "stage": "03-retry-loading-a",
+      "element": "::after",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s",
+      "backgroundSize": "auto",
+      "backgroundPosition": "0% 0%",
+      "hasBackground": true
+    },
+    {
+      "case": "desktop-reduce",
+      "stage": "04-retry-loading-b",
+      "element": "loading",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "desktop-reduce",
+      "stage": "04-retry-loading-b",
+      "element": "game-title",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "desktop-reduce",
+      "stage": "04-retry-loading-b",
+      "element": "loading-status",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "desktop-reduce",
+      "stage": "04-retry-loading-b",
+      "element": "loading-detail",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "desktop-reduce",
+      "stage": "04-retry-loading-b",
+      "element": "loading-progress",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "desktop-reduce",
+      "stage": "04-retry-loading-b",
+      "element": "loading-build",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "desktop-reduce",
+      "stage": "04-retry-loading-b",
+      "element": "::before",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s",
+      "backgroundSize": "cover",
+      "backgroundPosition": "50% 0%",
+      "hasBackground": true
+    },
+    {
+      "case": "desktop-reduce",
+      "stage": "04-retry-loading-b",
+      "element": "::after",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s",
+      "backgroundSize": "auto",
+      "backgroundPosition": "0% 0%",
+      "hasBackground": true
+    },
+    {
+      "case": "portrait-reduce",
+      "stage": "01-loading-initial",
+      "element": "loading",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "portrait-reduce",
+      "stage": "01-loading-initial",
+      "element": "game-title",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "portrait-reduce",
+      "stage": "01-loading-initial",
+      "element": "loading-status",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "portrait-reduce",
+      "stage": "01-loading-initial",
+      "element": "loading-detail",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "portrait-reduce",
+      "stage": "01-loading-initial",
+      "element": "loading-progress",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "portrait-reduce",
+      "stage": "01-loading-initial",
+      "element": "loading-build",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "portrait-reduce",
+      "stage": "01-loading-initial",
+      "element": "::before",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s",
+      "backgroundSize": "100%",
+      "backgroundPosition": "50% 0%",
+      "hasBackground": true
+    },
+    {
+      "case": "portrait-reduce",
+      "stage": "01-loading-initial",
+      "element": "::after",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s",
+      "backgroundSize": "100% 260px",
+      "backgroundPosition": "50% 0%",
+      "hasBackground": true
+    },
+    {
+      "case": "portrait-reduce",
+      "stage": "02-network-failure",
+      "element": "loading",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "portrait-reduce",
+      "stage": "02-network-failure",
+      "element": "game-title",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "portrait-reduce",
+      "stage": "02-network-failure",
+      "element": "loading-status",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "portrait-reduce",
+      "stage": "02-network-failure",
+      "element": "loading-detail",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "portrait-reduce",
+      "stage": "02-network-failure",
+      "element": "loading-retry",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "portrait-reduce",
+      "stage": "02-network-failure",
+      "element": "loading-build",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "portrait-reduce",
+      "stage": "02-network-failure",
+      "element": "::before",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s",
+      "backgroundSize": "100%",
+      "backgroundPosition": "50% 0%",
+      "hasBackground": true
+    },
+    {
+      "case": "portrait-reduce",
+      "stage": "02-network-failure",
+      "element": "::after",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s",
+      "backgroundSize": "100% 260px",
+      "backgroundPosition": "50% 0%",
+      "hasBackground": true
+    },
+    {
+      "case": "portrait-reduce",
+      "stage": "03-retry-loading-a",
+      "element": "loading",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "portrait-reduce",
+      "stage": "03-retry-loading-a",
+      "element": "game-title",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "portrait-reduce",
+      "stage": "03-retry-loading-a",
+      "element": "loading-status",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "portrait-reduce",
+      "stage": "03-retry-loading-a",
+      "element": "loading-detail",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "portrait-reduce",
+      "stage": "03-retry-loading-a",
+      "element": "loading-progress",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "portrait-reduce",
+      "stage": "03-retry-loading-a",
+      "element": "loading-build",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "portrait-reduce",
+      "stage": "03-retry-loading-a",
+      "element": "::before",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s",
+      "backgroundSize": "100%",
+      "backgroundPosition": "50% 0%",
+      "hasBackground": true
+    },
+    {
+      "case": "portrait-reduce",
+      "stage": "03-retry-loading-a",
+      "element": "::after",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s",
+      "backgroundSize": "100% 260px",
+      "backgroundPosition": "50% 0%",
+      "hasBackground": true
+    },
+    {
+      "case": "portrait-reduce",
+      "stage": "04-retry-loading-b",
+      "element": "loading",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "portrait-reduce",
+      "stage": "04-retry-loading-b",
+      "element": "game-title",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "portrait-reduce",
+      "stage": "04-retry-loading-b",
+      "element": "loading-status",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "portrait-reduce",
+      "stage": "04-retry-loading-b",
+      "element": "loading-detail",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "portrait-reduce",
+      "stage": "04-retry-loading-b",
+      "element": "loading-progress",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "portrait-reduce",
+      "stage": "04-retry-loading-b",
+      "element": "loading-build",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "portrait-reduce",
+      "stage": "04-retry-loading-b",
+      "element": "::before",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s",
+      "backgroundSize": "100%",
+      "backgroundPosition": "50% 0%",
+      "hasBackground": true
+    },
+    {
+      "case": "portrait-reduce",
+      "stage": "04-retry-loading-b",
+      "element": "::after",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s",
+      "backgroundSize": "100% 260px",
+      "backgroundPosition": "50% 0%",
+      "hasBackground": true
+    },
+    {
+      "case": "landscape-reduce",
+      "stage": "01-loading-initial",
+      "element": "loading",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "landscape-reduce",
+      "stage": "01-loading-initial",
+      "element": "game-title",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "landscape-reduce",
+      "stage": "01-loading-initial",
+      "element": "loading-status",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "landscape-reduce",
+      "stage": "01-loading-initial",
+      "element": "loading-detail",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "landscape-reduce",
+      "stage": "01-loading-initial",
+      "element": "loading-progress",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "landscape-reduce",
+      "stage": "01-loading-initial",
+      "element": "loading-build",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "landscape-reduce",
+      "stage": "01-loading-initial",
+      "element": "::before",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s",
+      "backgroundSize": "auto 100%",
+      "backgroundPosition": "0% 50%",
+      "hasBackground": true
+    },
+    {
+      "case": "landscape-reduce",
+      "stage": "01-loading-initial",
+      "element": "::after",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s",
+      "backgroundSize": "auto",
+      "backgroundPosition": "0% 0%",
+      "hasBackground": true
+    },
+    {
+      "case": "landscape-reduce",
+      "stage": "02-network-failure",
+      "element": "loading",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "landscape-reduce",
+      "stage": "02-network-failure",
+      "element": "game-title",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "landscape-reduce",
+      "stage": "02-network-failure",
+      "element": "loading-status",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "landscape-reduce",
+      "stage": "02-network-failure",
+      "element": "loading-detail",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "landscape-reduce",
+      "stage": "02-network-failure",
+      "element": "loading-retry",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "landscape-reduce",
+      "stage": "02-network-failure",
+      "element": "loading-build",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "landscape-reduce",
+      "stage": "02-network-failure",
+      "element": "::before",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s",
+      "backgroundSize": "auto 100%",
+      "backgroundPosition": "0% 50%",
+      "hasBackground": true
+    },
+    {
+      "case": "landscape-reduce",
+      "stage": "02-network-failure",
+      "element": "::after",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s",
+      "backgroundSize": "auto",
+      "backgroundPosition": "0% 0%",
+      "hasBackground": true
+    },
+    {
+      "case": "landscape-reduce",
+      "stage": "03-retry-loading-a",
+      "element": "loading",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "landscape-reduce",
+      "stage": "03-retry-loading-a",
+      "element": "game-title",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "landscape-reduce",
+      "stage": "03-retry-loading-a",
+      "element": "loading-status",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "landscape-reduce",
+      "stage": "03-retry-loading-a",
+      "element": "loading-detail",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "landscape-reduce",
+      "stage": "03-retry-loading-a",
+      "element": "loading-progress",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "landscape-reduce",
+      "stage": "03-retry-loading-a",
+      "element": "loading-build",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "landscape-reduce",
+      "stage": "03-retry-loading-a",
+      "element": "::before",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s",
+      "backgroundSize": "auto 100%",
+      "backgroundPosition": "0% 50%",
+      "hasBackground": true
+    },
+    {
+      "case": "landscape-reduce",
+      "stage": "03-retry-loading-a",
+      "element": "::after",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s",
+      "backgroundSize": "auto",
+      "backgroundPosition": "0% 0%",
+      "hasBackground": true
+    },
+    {
+      "case": "landscape-reduce",
+      "stage": "04-retry-loading-b",
+      "element": "loading",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "landscape-reduce",
+      "stage": "04-retry-loading-b",
+      "element": "game-title",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "landscape-reduce",
+      "stage": "04-retry-loading-b",
+      "element": "loading-status",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "landscape-reduce",
+      "stage": "04-retry-loading-b",
+      "element": "loading-detail",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "landscape-reduce",
+      "stage": "04-retry-loading-b",
+      "element": "loading-progress",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "landscape-reduce",
+      "stage": "04-retry-loading-b",
+      "element": "loading-build",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s"
+    },
+    {
+      "case": "landscape-reduce",
+      "stage": "04-retry-loading-b",
+      "element": "::before",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s",
+      "backgroundSize": "auto 100%",
+      "backgroundPosition": "0% 50%",
+      "hasBackground": true
+    },
+    {
+      "case": "landscape-reduce",
+      "stage": "04-retry-loading-b",
+      "element": "::after",
+      "transform": "none",
+      "animationName": "none",
+      "animationDuration": "0s",
+      "transitionDuration": "0s",
+      "backgroundSize": "auto",
+      "backgroundPosition": "0% 0%",
+      "hasBackground": true
+    }
+  ],
+  "style_limit": "Computed author CSS snapshots and viewed frames; no every-frame/UA intrinsic progress animation guarantee",
+  "role": "CODEX-LEAD delegated QA support; not GAME-QA impersonation",
+  "limits": [
+    "Desktop browser viewport/media emulation; not physical device/OS change",
+    "Exactly one injected engine-JS abort per context; expected errors retained",
+    "First WASM request held at least4 seconds through capture; not natural performance",
+    "No internal game/Tuning/save/seed/time setters; no synthetic failure DOM",
+    "Screenshots/CSS sampling cannot prove every animation frame; ordinary yard entry only"
+  ]
+}
