@@ -89,7 +89,11 @@ func _check_catalogs() -> void:
 			for placeholder: String in ["{target}", "{action}"]:
 				_check(touch_text.contains(placeholder) == text.contains(placeholder), "%s %s touch copy keeps %s" % [locale, key, placeholder])
 			_check(touch_text.length() <= text.length() + 6, "%s %s touch copy is about as long (%d vs %d)" % [locale, key, touch_text.length(), text.length()])
-		_check(with_key >= 11, "%s found every Space hint (%d)" % [locale, with_key])
+		_check(with_key >= 14, "%s found every Space hint (%d)" % [locale, with_key])
+		# #508 put-down / release hints: keyboard copy names Space, touch copy keeps the tap wording.
+		for key: String in ["hud.hint.carrying", "hud.hint.carrying_fish", "hud.hint.leading"]:
+			_check(_mentions_key(i18n.t(key)), "%s %s keyboard copy names Space" % [locale, key])
+			_check(keys.has(key + ".touch"), "%s %s keeps a tap version" % [locale, key])
 		for key: String in keys:
 			if key.ends_with(".touch"):
 				_check(keys.has(key.trim_suffix(".touch")), "%s %s has a base key" % [locale, key])
