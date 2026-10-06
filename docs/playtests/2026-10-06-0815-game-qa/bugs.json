@@ -1,0 +1,104 @@
+{
+  "updatedAt": "2026-10-06T00:30:14.043132+00:00",
+  "issues": [
+    {
+      "id": "QA-EXP-20261003-001",
+      "type": "已观察体验问题",
+      "severity": "P2",
+      "title": "晴阴院子构图不连续",
+      "detail": "房屋、池塘、远山及围栏位置与透视显著变化，像切换地点；既有策划已记录同构图改进方向。",
+      "lastCheckedBuild": "game-bc8a048",
+      "status": "本轮晴阴构图再次观察；后半1a3842c天气未独立对照",
+      "reproductionRate": "1/1自然晴转阴",
+      "reproduction": "进入第4天院子，自然晴转阴对照04-yard与06-cloudy",
+      "aliases": [
+        "EXP-001"
+      ],
+      "trackingLinks": [
+        "https://github.com/narutojzm1-dot/youjia/issues/51",
+        "https://github.com/narutojzm1-dot/youjia/issues/168"
+      ],
+      "expected": "同一院子的房屋、池塘、围栏与远山构图保持连续",
+      "actual": "房屋透视、池塘及远山布局显著切换",
+      "thisRound": "未等待到晴阴切换，沿用上轮观察，不将本轮晴天当修复通过"
+    },
+    {
+      "id": "QA-EXP-20261003-002",
+      "type": "待复核",
+      "severity": "P2",
+      "title": "既有相册题词与入镜主体不对应",
+      "detail": "第1页写绵羊愿意靠近我了，截图未见绵羊，画面为马、羊驼和鸭子；首次生成版本不明。",
+      "lastCheckedBuild": "game-49596fa / game-b9f68c3",
+      "status": "旧第1页题词/主体仍不对应；新照片未生成，不否定新图修复",
+      "reproduction": "打开既有手账第1页，绵羊题词与马/羊驼画面不对应",
+      "reproductionRate": "旧图各构建1/1读取；新图未覆盖",
+      "aliases": [
+        "EXP-002"
+      ],
+      "trackingLinks": [
+        "https://github.com/narutojzm1-dot/youjia/issues/40"
+      ],
+      "expected": "绵羊题词对应绵羊入镜",
+      "actual": "旧第1页绵羊题词与马/羊驼画面继续存在；真实轻抚反馈不等于产生新照片"
+    },
+    {
+      "id": "QA-EXP-20261003-003",
+      "type": "已观察体验问题",
+      "severity": "P2",
+      "title": "新版加载封面使用科幻迷宫图",
+      "detail": "game-922be64 冷加载展示机器人/科幻迷宫，与水彩小院体验不一致。",
+      "lastCheckedBuild": "game-bc8a048",
+      "status": "本轮实际加载壳为水彩院子，未见科幻迷宫；53秒0MiB停滞可重试恢复，网络归因未明",
+      "reproduction": "本轮新标签打开公开地址，观察真实加载壳01/02；此步骤验证修复，不重造历史BUG",
+      "reproductionRate": "本轮旧科幻图0/1",
+      "trackingIssue": 167,
+      "aliases": [
+        "EXP-003"
+      ],
+      "trackingLinks": [
+        "https://github.com/narutojzm1-dot/youjia/issues/167"
+      ],
+      "expected": "水彩院子加载壳",
+      "actual": "水彩院子加载壳与游戏风格一致",
+      "thisRound": "实际保存的是花纸标题页，未截取加载壳，不补作本轮加载壳通过"
+    },
+    {
+      "id": "QA-AUDIO-20261004-001",
+      "aliases": [
+        "issue-195-cold-start"
+      ],
+      "title": "首次进入院子共享音频接口未注册",
+      "severity": "P1",
+      "status": "旧接口错误各构建0/1；A单轨及总静音UI各一关闭恢复循环通过，实际听验未完成，不关闭",
+      "lastCheckedBuild": "game-49596fa / game-b9f68c3",
+      "reproduction": "新标签入院读取warn/error；A分别关闭恢复音乐/环境声/总静音，每项1循环",
+      "reproductionRate": "两个普通新标签各1次入院，旧错误0/1；不是清缓存冷启动",
+      "trackingLinks": [
+        "https://github.com/narutojzm1-dot/youjia/issues/195",
+        "https://github.com/narutojzm1-dot/youjia/issues/196"
+      ],
+      "owner": "修复Owner以仓库最新职责及原issue接收为准；GAME-QA独立复测",
+      "expected": "首次进入正常播放且音乐、环境声开关可靠",
+      "actual": "两份warn/error日志为空；A音乐、环境声、总静音标签响应并恢复原设置；不能证明可听播放"
+    },
+    {
+      "id": "QA-EXP-20261006-004",
+      "type": "待复核的产品显示问题",
+      "severity": "P2",
+      "title": "探索拾物短展示的物品小标签疑似缺字方框",
+      "lastCheckedBuild": "game-49596fa",
+      "status": "A49596旧版单样本保留；467已修复/已发布175bf，修复后普通复测待",
+      "reproduction": "1646×894中文普通探索：门前小路→溪声近处→停看→带上圆石；观察拾物短展示上方小标签",
+      "reproductionRate": "1/1拾圆石样本；未进行第二次复现",
+      "expected": "圆石短展示的物品名与其他中文提示一样清楚可读",
+      "actual": "13-basket-stone.png中悬起圆石上方呈两个方框状小字；顶部说明、篮内圆石及按钮中文字正常",
+      "evidence": "evidence/13-basket-stone.png",
+      "trackingLinks": [
+        "https://github.com/narutojzm1-dot/youjia/pull/467",
+        "https://github.com/narutojzm1-dot/youjia/issues/456#issuecomment-6007335951"
+      ],
+      "relatedScope": "既有探索拾物短展示#372；#456是尺寸变更适配，不将两者当同一根因",
+      "owner": "CURSOR-CLOUD（既有467实现Owner）；GAME-QA独立复测"
+    }
+  ]
+}
