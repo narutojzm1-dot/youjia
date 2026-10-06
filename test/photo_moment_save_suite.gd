@@ -23,17 +23,8 @@ func descendants(node:Node)->Array:
   result.append(child)
   result.append_array(descendants(child))
  return result
-func feed_naturally(world):
- world.request_pointer_action(world._grass_point())
- for i in 2400:
-  world.tick(1.0/60,Vector2.ZERO)
-  if world._player.carrying_grass:break
- check(world._player.carrying_grass,"normal grass command harvests before recording a feeding photo")
- world.request_primary_action()
- for i in 3000:
-  world.tick(1.0/60,Vector2.ZERO)
-  if not world._player.carrying_grass:break
- check(not world._player.carrying_grass and world._player.just_fed_seconds>0,"normal approach really feeds")
+func feed_naturally(_world):
+ check(await preload("res://test/fixtures/ground_llama_photo.gd").feed(main,store),"production ground grass is consumed by the llama before recording the photo")
 func run():
  root.size=Vector2i(1280,720);seed(831)
  store=root.get_node("SaveStore")
@@ -43,7 +34,7 @@ func run():
  await process_frame;await process_frame
  main.set_process(false);await main._start_holiday()
  var world=main._world
- feed_naturally(world)
+ await feed_naturally(world)
  await store.flush_pending()
  var fed_id:="llama_fed_gentle"
  var moment:Dictionary=store.get_photo_moment(fed_id)
@@ -165,7 +156,7 @@ func run():
  check(world.collected.size()==old_ids.size() and world.photo_moments.is_empty(),"old earned IDs remain on new yard start")
  var focus_calls:Array=[]
  world.camera_focus_requested.connect(func(point:Vector2,_zoom:float):focus_calls.append(point))
- feed_naturally(world)
+ await feed_naturally(world)
  await store.flush_pending()
  check(store.get_album()==old_ids,"capturing a legacy scene never resets or duplicates progress")
  check(not store.get_photo_moment(fed_id).is_empty(),"legacy feeding portrait gains a real scene on the next feeding")

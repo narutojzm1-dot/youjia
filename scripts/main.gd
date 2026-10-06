@@ -60,6 +60,10 @@ var _hint_panel: Panel
 var _hint_label: Label
 var _album_chip: Button
 var _weather_chip: Button
+var _basket_chip: Button
+var _basket_panel: Control
+var _inventory: RefCounted
+var _inventory_food_consumer := ""
 var _pause_button: Button
 var _action_button: Button
 var _ui_layer: CanvasLayer
@@ -305,6 +309,17 @@ func _ready() -> void:
 	_exploration.notice.connect(func(key: String) -> void:
 		if _screen == "game": _show_notice_key(key, _exploration.last_params))
 	_exploration.cleanup_resubmitted.connect(_on_exploration_cleanup_resubmitted)
+	_inventory = load("res://scripts/inventory/yard_inventory_controller.gd").new(SaveStore)
+	_inventory.changed.connect(_on_inventory_changed)
+	_inventory.settled.connect(_on_inventory_settled)
+	_inventory.resubmitted.connect(_on_inventory_resubmitted)
+	_basket_panel = load("res://scripts/ui/yard_basket_panel.gd").new()
+	_basket_panel.name = "YardBasket"
+	_ui_layer.add_child(_basket_panel)
+	_basket_panel.visible = false
+	_basket_panel.close_requested.connect(_hide_basket)
+	_basket_panel.action_requested.connect(func(action: String, fish: String) -> void: _inventory.request(action, fish))
+	_basket_panel.retry_requested.connect(func() -> void: _inventory.retry())
 	I18n.locale_changed.connect(_on_locale_changed)
 	TuningStore.value_changed.connect(_on_tuning_value_changed)
 	resized.connect(_layout)
@@ -329,7 +344,7 @@ func _process(delta: float) -> void:
 	_sync_notice_visibility()
 	if _notice.visible:
 		_fit_notice()
-	if _screen == "game" and _world != null and not _pause_screen.visible and not _album_screen.visible and not _confirm_screen.visible:
+	if _screen == "game" and _world != null and not _pause_screen.visible and not _album_screen.visible and not _confirm_screen.visible and not _basket_panel.visible:
 		var move := Vector2.ZERO
 		if _world.input_enabled:
 			move = Input.get_vector("move_left", "move_right", "move_up", "move_down")
@@ -399,6 +414,17 @@ func _process(delta: float) -> void:
 
 
 func _input(event: InputEvent) -> void:
+	if _basket_panel != null and _basket_panel.visible:
+		if event.is_action_pressed("pause") and not event.is_echo():
+			_hide_basket()
+			get_viewport().set_input_as_handled()
+		elif event is InputEventScreenTouch or event is InputEventScreenDrag:
+			_last_touch_ms = Time.get_ticks_msec()
+			_basket_panel.handle_touch_event(event)
+			get_viewport().set_input_as_handled()
+		elif event is InputEventMouseButton and Time.get_ticks_msec() - _last_touch_ms < 400:
+			get_viewport().set_input_as_handled()
+		return
 	var gesture := false
 	if event is InputEventMouseButton or event is InputEventScreenTouch:
 		gesture = event.pressed
@@ -483,7 +509,7 @@ func _input(event: InputEvent) -> void:
 	elif _screen == "title":
 		buttons = [_play_button, _album_button, _licenses_button]
 	else:
-		buttons = [_action_button, _album_chip, _weather_chip, _pause_button]
+		buttons = [_action_button, _album_chip, _weather_chip, _basket_chip, _pause_button]
 	# get_global_rect() 在 web 导出的 CanvasLayer 中比 get_global_transform_with_canvas() 更可靠
 	for button: Button in buttons:
 		if button.is_visible_in_tree() and not button.disabled and button.get_global_rect().has_point(event_pos):
@@ -764,6 +790,9 @@ func _build_hud() -> void:
 	_weather_chip = _chip_button()
 	_weather_chip.pressed.connect(_on_weather_pressed)
 	_hud.add_child(_weather_chip)
+	_basket_chip = _chip_button()
+	_basket_chip.pressed.connect(_show_basket)
+	_hud.add_child(_basket_chip)
 	_pause_button = _chip_button()
 	_pause_button.pressed.connect(_toggle_pause)
 	_hud.add_child(_pause_button)
@@ -771,7 +800,7 @@ func _build_hud() -> void:
 	# 按下时先触发视觉脉冲，再执行动作，让触控/鼠标点击有明确反馈
 	_action_button.pressed.connect(func(): _pulse_button(_action_button); _world.request_primary_action())
 	_hud.add_child(_action_button)
-	for button: Button in [_album_chip,_weather_chip,_pause_button,_action_button]:
+	for button: Button in [_album_chip,_weather_chip,_basket_chip,_pause_button,_action_button]:
 		button.focus_mode = Control.FOCUS_NONE
 
 
@@ -1137,6 +1166,8 @@ func _start_holiday(save_progress: bool = true) -> void:
 	_world.cinematic_view_changed.connect(_on_cinematic_view_changed)
 	_world.day_advanced.connect(_on_day_advanced)
 	_world.fish_caught.connect(_on_fish_caught)
+	_world.ground_food_requested.connect(_on_ground_food_action)
+	_on_inventory_changed()
 	_world.exploration_requested.connect(_on_exploration_requested)
 	_camera.enabled = true
 	_portrait_camera_x = _world.get_player().position.x
@@ -1164,6 +1195,8 @@ func _start_holiday(save_progress: bool = true) -> void:
 	_show_notice_key("notice.arrive")
 	# 上次外出途中被打断：安全回到院里，已带上的东西照常收下
 	var restored := _exploration.attach(SaveStore, _world_root)
+	if not _exploration.last_companion.is_empty():
+		_world.return_from_path(_exploration.last_companion)
 	if not restored.is_empty():
 		_show_notice_key(restored, _exploration.last_params)
 	_refresh_hud()
@@ -1196,9 +1229,10 @@ func _clear_world(save_progress: bool = true) -> void:
 func _on_exploration_requested() -> void:
 	if _screen != "game" or _world == null or _exploration.is_exploring():
 		return
+	if _inventory != null and _inventory.busy(): return
 	_world._save_progress()
 	var weather := "overcast" if _world.weather == "overcast" else "sunny"
-	_exploration.try_begin({"day": _world.holiday_day, "elapsed": _world._day_elapsed}, weather)
+	_exploration.try_begin({"day": _world.holiday_day, "elapsed": _world._day_elapsed}, weather, null, _world.companion_context())
 
 
 ## 画卷有自己的相机与界面；小院在外出期间隐藏、不计时
@@ -1220,7 +1254,7 @@ func _on_exploration_returned(notice_key: String) -> void:
 	_screen = "game"
 	_world.visible = true
 	_world.input_enabled = true
-	_world.return_from_path()
+	_world.return_from_path(_exploration.last_companion)
 	_portrait_camera_x = _world.get_player().position.x
 	_camera.make_current()
 	_hud.visible = true
@@ -1257,6 +1291,58 @@ func _show_title(save_progress: bool = true) -> void:
 	_refresh_texts()
 
 
+func _show_basket() -> void:
+	if _screen != "game" or _world == null or _pause_screen.visible or _album_screen.visible:
+		return
+	_cancel_photo_arrivals()
+	_world.cancel_scene_feedback()
+	_world.input_enabled = false
+	_basket_panel.visible = true
+	_ui_layer.move_child(_basket_panel, _ui_layer.get_child_count() - 1)
+	_on_inventory_changed()
+	get_tree().paused = true
+	AudioDirector.set_game_paused(true)
+	_basket_panel.close_button.grab_focus()
+
+
+func _hide_basket() -> void:
+	_basket_panel.visible = false
+	get_tree().paused = false
+	AudioDirector.set_game_paused(false)
+	if _world != null: _world.input_enabled = true
+	get_viewport().gui_release_focus()
+
+
+func _on_inventory_changed() -> void:
+	if _inventory == null: return
+	var inventory: Dictionary = _inventory.view()
+	if _world != null:
+		_world.sync_inventory(str(inventory.get("held", "")), _inventory.busy() or inventory.is_empty(), inventory.get("ground", []))
+	if _basket_panel != null:
+		_basket_panel.update_view(inventory, SaveStore.get_keepsakes(), _inventory.state, _inventory.busy())
+
+
+func _on_ground_food_action(action: String, kind: String, details: Dictionary, actor_id: String) -> void:
+	if _inventory == null or _inventory.busy(): return
+	_inventory_food_consumer = actor_id
+	_inventory.request(action, kind, details)
+
+
+func _on_inventory_settled(action: String, _fish: String) -> void:
+	if _world != null and _world.ground_food != null:
+		_world.ground_food.settled(action, _inventory_food_consumer)
+	_inventory_food_consumer = ""
+
+
+func _on_inventory_resubmitted(failed_ops: Array, op_id: String) -> void:
+	var problems := {}
+	for failed_id in failed_ops:
+		if _save_problems.get(failed_id, {}).get("kind", "") == "inventory":
+			problems[failed_id] = _save_problems[failed_id].duplicate(true)
+	if not problems.is_empty():
+		_save_retry_coverage[op_id] = {"problems": problems, "untracked_revision": -1}
+
+
 func _toggle_pause() -> void:
 	if _screen not in ["game", "exploring"]:
 		return
@@ -1284,6 +1370,9 @@ func _request_destructive_action(action: String) -> void:
 
 
 func _confirm_destructive_action() -> void:
+	if _inventory != null and _inventory.busy():
+		_cancel_destructive_action()
+		return
 	if _save_transition: return
 	_save_transition = true
 	_leave_exploration()
@@ -1538,6 +1627,9 @@ func _retryable_save_problems(include_fish: bool) -> Dictionary:
 
 
 func _retry_save() -> void:
+	if _inventory != null and _inventory.busy():
+		_inventory.retry()
+		return
 	var before := SaveStore.persistence_state()
 	# Capture before retry: a native backend may complete synchronously.
 	_save_ack_coverage = {}
@@ -1893,7 +1985,7 @@ func _fit_notice() -> void:
 
 
 func _can_show_notice() -> bool:
-	return _screen == "game" and not _pause_screen.visible and not _album_screen.visible and not _confirm_screen.visible
+	return _screen == "game" and not _pause_screen.visible and not _album_screen.visible and not _confirm_screen.visible and not _basket_panel.visible
 
 
 func _sync_notice_visibility() -> void:
@@ -1998,12 +2090,12 @@ func _layout() -> void:
 	_notice.offset_bottom = -130 if compact else -70
 	_notice.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 
-	var half := maxf(100.0,(size.x-pad*3.0)*0.5)
-	var chip_width := half if compact else 188.0
-	for button in [_album_chip,_weather_chip]:
+	var chip_width := (size.x - pad * 4.0) / 3.0 if compact else minf(188.0, (size.x - pad * 5.0) / 4.0)
+	_refresh_yard_chip_labels()
+	for button in [_album_chip,_weather_chip,_basket_chip]:
 		button.custom_minimum_size = Vector2(chip_width,48)
 		button.size = Vector2(chip_width,48)
-	_action_button.custom_minimum_size = Vector2(size.x-pad*2.0 if compact else 188.0,48)
+	_action_button.custom_minimum_size = Vector2(size.x-pad*2.0 if compact else chip_width,48)
 	_action_button.size = _action_button.custom_minimum_size
 	_pause_button.custom_minimum_size = Vector2(120.0 if compact else 188.0,48)
 	_pause_button.size = _pause_button.custom_minimum_size
@@ -2019,7 +2111,8 @@ func _layout() -> void:
 	_fit_save_status()
 	var row := size.y-124.0 if compact else size.y-68.0
 	_album_chip.position = Vector2(pad,row)
-	_weather_chip.position = Vector2(size.x-half-pad if compact else pad+210.0,row)
+	_weather_chip.position = Vector2(pad * 2.0 + chip_width,row)
+	_basket_chip.position = Vector2(pad * 3.0 + chip_width * 2.0,row)
 	_action_button.position = Vector2(pad if compact else size.x-_action_button.size.x-pad,size.y-68.0)
 	_fit_pause_panel()
 	_fit_confirm_panel()
@@ -2081,8 +2174,9 @@ func _refresh_hud() -> void:
 	if _world == null:
 		return
 	_hud.modulate.a = float(TuningStore.get_value("ui.hud.opacity", 0.94))
-	_album_chip.text = I18n.t("hud.album")
+	_refresh_yard_chip_labels()
 	_weather_chip.text = I18n.t("hud.weather.%s" % _world.weather)
+	_basket_chip.text = "Basket" if I18n.get_locale() == "en" else "大背篓"
 	_pause_button.text = I18n.t("hud.pause")
 	# 显示与空格/行动按钮完全相同的实时目标和动作；橙色说明对应脚边标记。
 	var action := _world.primary_action()
@@ -2109,6 +2203,10 @@ func _refresh_hud() -> void:
 		_day_label.text = I18n.t("hud.day", {"n": str(_world.holiday_day)})
 
 
+func _refresh_yard_chip_labels() -> void:
+	_album_chip.text = "Journal" if I18n.get_locale() == "en" and size.x < 400.0 else I18n.t("hud.album")
+
+
 func _on_day_advanced(day: int) -> void:
 	# 翻天时刷新 HUD，并显示带天数的氛围通知
 	_refresh_hud()
@@ -2126,6 +2224,8 @@ func _on_day_advanced(day: int) -> void:
 ## 收杆成功：独立蓝色闪光层 + 行动按钮双弹脉冲 + 大字通知
 ## playtest #4：通知优先于 reduced_motion；闪光峰值抬高并提到 UI 层最前。
 func _on_fish_caught(carry_type: String) -> void:
+	if _inventory != null:
+		_inventory.request("catch", carry_type)
 	# 钓到通知：无论是否减动效都拉长可读时间（拍立得可能抢通知，YardWorld 会重发）
 	_notice_time = maxf(_notice_time, 6.5)
 	_notice.add_theme_font_size_override("font_size", 22)
@@ -2297,6 +2397,7 @@ func _update_tod_tint(t: float) -> void:
 
 func _on_locale_changed(_locale: String) -> void:
 	_refresh_texts()
+	_on_inventory_changed()
 	if _photo_arrival != null:
 		_photo_arrival.refresh_locale()
 	if _album_screen != null and _album_screen.visible:

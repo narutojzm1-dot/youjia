@@ -37,8 +37,8 @@ func setup(point: Vector2) -> void:
 	add_child(_loose)
 	_update_roots()
 
-func harvest(player: Node2D) -> bool:
-	if not is_instance_valid(player) or player.carrying_grass:
+func harvest(player: Node2D, committed: bool = false) -> bool:
+	if not is_instance_valid(player) or (player.carrying_grass and not committed):
 		return false
 	var index := _harvest_count % 2
 	if growth[1 - index] > growth[index]:

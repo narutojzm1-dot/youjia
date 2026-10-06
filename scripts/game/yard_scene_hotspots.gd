@@ -88,7 +88,11 @@ static func get_hotspot(target: String) -> Dictionary:
 
 static func resolve(world: Node2D, target: String) -> Dictionary:
 	var hotspot := get_hotspot(target)
-	if hotspot.is_empty() or not available(world):
+	# Durable carried food can travel with the player. Keep ordinary ambient
+	# observations suppressed while carrying; only an explicit exit is exempt.
+	var carrying_exit: bool = target == PATH_OUT and world.inventory_enabled \
+		and world.get_player() != null and world._fish_state == world.FISH_IDLE
+	if hotspot.is_empty() or (not available(world) and not carrying_exit):
 		return {}
 	var point := Vector2.INF
 	for candidate: Vector2 in hotspot.approach_points:

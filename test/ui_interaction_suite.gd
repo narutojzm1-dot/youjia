@@ -105,13 +105,15 @@ func review():
  check(w.actor_named("llama")._velocity.length()>10,"target is naturally moving before approach")
  tap(w.actor_named("llama").position)
  var llama_start=w.actor_named("llama").position
- for i in 1500:
-  await frames(1)
-  if "llama_fed_gentle" in w.collected and not p.carrying_grass:break
- check("llama_fed_gentle" in w.collected and not p.carrying_grass,"raw touch reaches llama and collects exact feeding photo")
- print("AUDIT moving llama displacement=",llama_start.distance_to(w.actor_named("llama").position)," final reach=",p.position.distance_to(w.actor_named("llama").position))
+ await frames(300)
+ check(p.carrying_grass,"walking toward an animal does not hand-feed it")
+ touch_button("_action_button")
+ await root.get_node("SaveStore").flush_pending()
+ await frames(3)
+ check(not p.carrying_grass and w.ground_food.items.size()==1,"raw action button creates one durable ground grass bundle")
+ print("AUDIT ground food position=",w.ground_food.items)
  var pause_origin=main._pause_button.get_global_transform_with_canvas().origin
- check(pause_origin.x>=0 and pause_origin.y>=0 and pause_origin.x+main._pause_button.size.x<=1280,"pause inside viewport during photo zoom")
+ check(pause_origin.x>=0 and pause_origin.y>=0 and pause_origin.x+main._pause_button.size.x<=1280,"pause remains inside viewport after dropping food")
  var screen=root.get_canvas_transform()*Vector2(350,520)
  check(main._screen_to_world(screen).distance_to(Vector2(350,520))<0.01,"zoom screen-to-world roundtrip")
  tap(w.actor_named("llama").position)
