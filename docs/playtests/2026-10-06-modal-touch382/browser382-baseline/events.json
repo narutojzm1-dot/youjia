@@ -1,0 +1,166 @@
+[
+  {
+    "backend": {
+      "buffers": 2,
+      "bytes": 98304000,
+      "decoded": 2,
+      "starts": 2,
+      "players": 2,
+      "playing": 2,
+      "state": "running"
+    },
+    "gains": [
+      0.3981071710586548,
+      0.15848931670188904
+    ],
+    "inputs": [
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 195,
+        "y": 422,
+        "key": null,
+        "t": 19665.5
+      },
+      {
+        "kind": "mousedown",
+        "trusted": true,
+        "x": 195,
+        "y": 422,
+        "key": null,
+        "t": 19665.600000023842
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 195,
+        "y": 422,
+        "key": null,
+        "t": 19672.80000001192
+      },
+      {
+        "kind": "mouseup",
+        "trusted": true,
+        "x": 195,
+        "y": 422,
+        "key": null,
+        "t": 19672.80000001192
+      },
+      {
+        "kind": "keydown",
+        "trusted": true,
+        "x": null,
+        "y": null,
+        "key": "Escape",
+        "t": 24505.700000047684
+      },
+      {
+        "kind": "keyup",
+        "trusted": true,
+        "x": null,
+        "y": null,
+        "key": "Escape",
+        "t": 24705.80000001192
+      }
+    ],
+    "view": [
+      390,
+      844,
+      3
+    ],
+    "stage": "pause-initial",
+    "screenshot": "390-844-pause-initial.png",
+    "build": "index",
+    "source": "c35ffedda64e6f0b98b72f62ad5b8afa49c67df4",
+    "utc": "2026-10-06T00:31:20Z",
+    "errors": []
+  },
+  {
+    "backend": {
+      "buffers": 2,
+      "bytes": 98304000,
+      "decoded": 2,
+      "starts": 2,
+      "players": 2,
+      "playing": 2,
+      "state": "running"
+    },
+    "gains": [
+      0.3981071710586548,
+      0.15848931670188904
+    ],
+    "inputs": [
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 195,
+        "y": 340,
+        "key": null,
+        "t": 36413.30000001192
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 195,
+        "y": 340,
+        "key": null,
+        "t": 36421.60000002384
+      }
+    ],
+    "view": [
+      390,
+      844,
+      3
+    ],
+    "stage": "confirm-open",
+    "screenshot": "390-844-confirm-open.png",
+    "build": "index",
+    "source": "c35ffedda64e6f0b98b72f62ad5b8afa49c67df4",
+    "utc": "2026-10-06T00:31:25Z",
+    "errors": []
+  },
+  {
+    "backend": {
+      "buffers": 2,
+      "bytes": 98304000,
+      "decoded": 2,
+      "starts": 2,
+      "players": 2,
+      "playing": 2,
+      "state": "running"
+    },
+    "gains": [
+      0.3981071710586548,
+      0.07924466580152512
+    ],
+    "inputs": [
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 195,
+        "y": 490,
+        "key": null,
+        "t": 40102.700000047684
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 195,
+        "y": 490,
+        "key": null,
+        "t": 40357.80000001192
+      }
+    ],
+    "view": [
+      390,
+      844,
+      3
+    ],
+    "stage": "cancel-tap",
+    "screenshot": "390-844-cancel-tap.png",
+    "build": "index",
+    "source": "c35ffedda64e6f0b98b72f62ad5b8afa49c67df4",
+    "utc": "2026-10-06T00:31:28Z",
+    "errors": []
+  }
+]

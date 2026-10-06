@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "D:\games\youjia-test\assistant-recovery\browser-modal382.py", line 54, in <module>
+    tap(cancel);unchanged('cancel-tap')
+                ^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\games\youjia-test\assistant-recovery\browser-modal382.py", line 49, in unchanged
+    assert len(actual)==len(initial) and all(abs(a-e)<0.000001 for a,e in zip(actual,initial)),(stage,actual,initial)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ('cancel-tap', [0.3981071710586548, 0.07924466580152512], [0.3981071710586548, 0.15848931670188904])

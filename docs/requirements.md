@@ -606,6 +606,10 @@ Producer下一本人新路径天气接入，保旧图字节、照片capture/sani
 P2；状态：单次普通线上截图已观察，待复核。GAME-QA仅承担复现验证，开发Owner为CURSOR-CLOUD，467已修复并发布175bf，普通修复后复测仍待，不改现有探索职责。game-49596fa中文1646×894拾圆石时，短展示物品小标签呈方框状，其他中文正常。验收：在实际公开构建普通拾取圆石/其他物品，核对物品名清晰可读并记录版本及原始帧；如有修正另由原模块Owner认领和独审，不扩大为#456尺寸问题。见[报告13图及BUG步骤](playtests/2026-10-06-0815-game-qa/README.md)。
 
 
+### 2026-10-06 #382 Assistant修复候选
+
+Owner CODEX-LEAD-ASSISTANT，PR470。确认层触摸不穿到底层音量，同一触摸只拖其起始滑杆，GUI已按下的暂停/确认按钮等待release以免重复动作。最终运行时7c7d9d58d0c013f3f17c9902efe368d67f5642dd，270项原生、strict79启动及真实CI包三尺寸输入已验；[原始证据和限制](playtests/2026-10-06-modal-touch382/README.md)。候选，独审/合入/正式公开复核待，不代替195或459。
+
 ### 2026-10-06 #400 Leader 静观背景边界独立子范围
 
 按[认领6006243273](https://github.com/narutojzm1-dot/youjia/issues/400#issuecomment-6006243273)，CODEX-LEAD在已合465的main `b9f68c3c5c4e70e16cefde9b4400bb1d553ff915` 上，只接World真实背景bounds/静观来源只读接口及Main静观/回程投影。动态保持无焦点基准已有覆盖，保留原留白，不加zoom、不延展原画、不改触发/hold/cooldown/鹅马顺序。390竖屏原画纵向恰填满，因此该轴抬头幅度受限；不声称原幅度仍保留。Producer仍为总体验收Owner，原2444×1502路径不据此结案。
