@@ -1,0 +1,58 @@
+{
+  "qa_agent": "CODEX-LEAD delegated /root/hotspot36_qa",
+  "candidate_only": true,
+  "driver_session": 41544,
+  "observed_direct_exit_code": 0,
+  "exit_evidence": "tools.write_stdin completed session 41544 with exit_code 0 after end command; result.json records context closure 00:51:54Z and browser closure 00:51:55Z",
+  "started_utc": "2026-10-06T00:48:00Z",
+  "closed_utc": "2026-10-06T00:51:55Z",
+  "contexts_opened": 1,
+  "pages_opened": 1,
+  "viewport_sequence_css_pixels": [
+    [
+      390,
+      844
+    ],
+    [
+      568,
+      320
+    ],
+    [
+      390,
+      844
+    ]
+  ],
+  "dpr": 2,
+  "actual_reduce": false,
+  "original_png_count": 44,
+  "memory_current_samples_bytes": {
+    "before_browser": 15868706816,
+    "ready": 16928583680,
+    "portrait_drag": 16761790464,
+    "landscape": 16781074432,
+    "after_binding": 16978108416,
+    "browser_closed": 15634366464
+  },
+  "memory_sampling_limit": "Discrete cgroup samples, not continuously monitored peak",
+  "browser_window_released": true,
+  "db_read_operation_invoked": false,
+  "retries": 0,
+  "page_errors": [],
+  "ordinary_scope": [
+    "title to yard and Escape pause",
+    "two independent volume sliders ordinary click and held drag at 0/40/100",
+    "release then pointer movement to other slider retains observed labels",
+    "same context/page 390 to 568 to 390 with music40/ambience0 retained",
+    "return portrait endpoints remain clickable",
+    "Escape closes pause and returns visible yard"
+  ],
+  "not_covered": [
+    "actual hardware/device or touchscreen #382",
+    "DPR3",
+    "keyboard focus #459",
+    "subjective hearing/audio comfort or actual gain measurement",
+    "reload/cross-session settings persistence",
+    "full storage acceptance",
+    "formal public Pages deployment"
+  ]
+}

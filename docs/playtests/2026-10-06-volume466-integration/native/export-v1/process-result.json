@@ -1,0 +1,42 @@
+{
+  "source": "146c3711537e4fa6657f1fd54e7472747cd0b10d",
+  "tree": "2e622f91345fc1a223982480339d86fa9ff94117",
+  "command": [
+    "/tmp/youjia-godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+    "--headless",
+    "--path",
+    "/dev/shm/youjia-volume466",
+    "--export-release",
+    "Web",
+    "/dev/shm/volume466-web-v1/index.html"
+  ],
+  "started": "2026-10-06T00:45:13.862235+00:00",
+  "runner_sha256": "d02a34e78631294fc45ccdd31677db002d5b94002a4f5aa8cfa7da06de492394",
+  "template_directory": "/home/agent/.local/share/godot/export_templates",
+  "no_previous_frozen_export_mutated": true,
+  "ended": "2026-10-06T00:45:21.295346+00:00",
+  "direct_exit": 0,
+  "log_bytes": 46562,
+  "log_sha256": "c9b83ebc557e5141a48e10ee34754a816426b43a9170c09dc1dcadaeece5f6ee",
+  "strict_error_scan_exit": 1,
+  "strict_error_lines": [],
+  "required_files": {
+    "index.html": {
+      "exists": true,
+      "bytes": 357722
+    },
+    "index.js": {
+      "exists": true,
+      "bytes": 279815
+    },
+    "index.pck": {
+      "exists": true,
+      "bytes": 27093724
+    },
+    "index.wasm": {
+      "exists": true,
+      "bytes": 39514754
+    }
+  },
+  "strict_export_verified": true
+}

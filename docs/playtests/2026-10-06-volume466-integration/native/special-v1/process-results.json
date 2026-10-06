@@ -1,0 +1,48 @@
+[
+  {
+    "name": "import",
+    "command": [
+      "/tmp/youjia-godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+      "--headless",
+      "--path",
+      "/dev/shm/youjia-volume466",
+      "--editor",
+      "--import",
+      "--quit"
+    ],
+    "started": "2026-10-06T00:32:48.664787+00:00",
+    "source": "89223fdc830eb3698cf3575856cbd74bb0e5e4ad",
+    "ended": "2026-10-06T00:33:13.043965+00:00",
+    "direct_exit": 0,
+    "log": "import.log",
+    "log_bytes": 36464,
+    "log_sha256": "a39ad628b01f29c3b9701f88dd2d16a32d6b3c8969da2bd94357c66281abd060",
+    "strict_error_scan_exit": 1,
+    "strict_error_lines": [],
+    "verified": true
+  },
+  {
+    "name": "volume-input",
+    "command": [
+      "/tmp/youjia-godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+      "--headless",
+      "--path",
+      "/dev/shm/youjia-volume466",
+      "--script",
+      "res://test/volume_slider_input_suite.gd"
+    ],
+    "started": "2026-10-06T00:33:13.046585+00:00",
+    "source": "89223fdc830eb3698cf3575856cbd74bb0e5e4ad",
+    "ended": "2026-10-06T00:33:16.970431+00:00",
+    "direct_exit": 1,
+    "log": "volume-input.log",
+    "log_bytes": 1582,
+    "log_sha256": "e4487fbeac49f74df9af918ff9f1dfcec3888073771657bf49031cd94edd72a7",
+    "strict_error_scan_exit": 1,
+    "strict_error_lines": [],
+    "completion_pattern": "\\[volume-slider-input\\] checks=[1-9][0-9]* failures=\\[\\]",
+    "completion_exit": 1,
+    "completion_lines": [],
+    "verified": false
+  }
+]

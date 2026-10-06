@@ -1,0 +1,879 @@
+{
+  "method": "Offline exact RGB comparison of label-only regions in untouched full PNGs against each viewport/track clicked0,40,100 reference frames; selected reference/held/release/reflow frames also visually inspected; not a claim that every frame received separate manual inspection. Verifies observed labels remain same during drag/release, not internal gain or subjective loudness. No generated cropped images.",
+  "dpr": 2,
+  "label_regions_physical_pixels_xyxy": {
+    "portrait": {
+      "music": [
+        60,
+        866,
+        550,
+        910
+      ],
+      "ambience": [
+        60,
+        1136,
+        550,
+        1180
+      ]
+    },
+    "landscape": {
+      "music": [
+        580,
+        245,
+        1030,
+        282
+      ],
+      "ambience": [
+        580,
+        441,
+        1030,
+        478
+      ]
+    }
+  },
+  "cases": [
+    {
+      "file": "landscape-01-reflow.png",
+      "dimensions": [
+        1136,
+        640
+      ],
+      "matched_visible_label_templates": {
+        "music": [
+          100
+        ],
+        "ambience": [
+          100
+        ]
+      },
+      "expected_percent": {
+        "music": 100,
+        "ambience": 100
+      },
+      "both_labels_exact_match": true
+    },
+    {
+      "file": "landscape-02-ambience-click-0.png",
+      "dimensions": [
+        1136,
+        640
+      ],
+      "matched_visible_label_templates": {
+        "music": [
+          100
+        ],
+        "ambience": [
+          0
+        ]
+      },
+      "expected_percent": {
+        "ambience": 0,
+        "music": 100
+      },
+      "both_labels_exact_match": true
+    },
+    {
+      "file": "landscape-02-ambience-click-100.png",
+      "dimensions": [
+        1136,
+        640
+      ],
+      "matched_visible_label_templates": {
+        "music": [
+          100
+        ],
+        "ambience": [
+          100
+        ]
+      },
+      "expected_percent": {
+        "ambience": 100,
+        "music": 100
+      },
+      "both_labels_exact_match": true
+    },
+    {
+      "file": "landscape-02-ambience-click-40.png",
+      "dimensions": [
+        1136,
+        640
+      ],
+      "matched_visible_label_templates": {
+        "music": [
+          100
+        ],
+        "ambience": [
+          40
+        ]
+      },
+      "expected_percent": {
+        "ambience": 40,
+        "music": 100
+      },
+      "both_labels_exact_match": true
+    },
+    {
+      "file": "landscape-02-music-click-0.png",
+      "dimensions": [
+        1136,
+        640
+      ],
+      "matched_visible_label_templates": {
+        "music": [
+          0
+        ],
+        "ambience": [
+          100
+        ]
+      },
+      "expected_percent": {
+        "music": 0,
+        "ambience": 100
+      },
+      "both_labels_exact_match": true
+    },
+    {
+      "file": "landscape-02-music-click-100.png",
+      "dimensions": [
+        1136,
+        640
+      ],
+      "matched_visible_label_templates": {
+        "music": [
+          100
+        ],
+        "ambience": [
+          100
+        ]
+      },
+      "expected_percent": {
+        "music": 100,
+        "ambience": 100
+      },
+      "both_labels_exact_match": true
+    },
+    {
+      "file": "landscape-02-music-click-40.png",
+      "dimensions": [
+        1136,
+        640
+      ],
+      "matched_visible_label_templates": {
+        "music": [
+          40
+        ],
+        "ambience": [
+          100
+        ]
+      },
+      "expected_percent": {
+        "music": 40,
+        "ambience": 100
+      },
+      "both_labels_exact_match": true
+    },
+    {
+      "file": "landscape-03-ambience-drag-0-held.png",
+      "dimensions": [
+        1136,
+        640
+      ],
+      "matched_visible_label_templates": {
+        "music": [
+          100
+        ],
+        "ambience": [
+          0
+        ]
+      },
+      "expected_percent": {
+        "ambience": 0,
+        "music": 100
+      },
+      "both_labels_exact_match": true
+    },
+    {
+      "file": "landscape-03-ambience-drag-0-released.png",
+      "dimensions": [
+        1136,
+        640
+      ],
+      "matched_visible_label_templates": {
+        "music": [
+          100
+        ],
+        "ambience": [
+          0
+        ]
+      },
+      "expected_percent": {
+        "ambience": 0,
+        "music": 100
+      },
+      "both_labels_exact_match": true
+    },
+    {
+      "file": "landscape-03-ambience-drag-100-held.png",
+      "dimensions": [
+        1136,
+        640
+      ],
+      "matched_visible_label_templates": {
+        "music": [
+          100
+        ],
+        "ambience": [
+          100
+        ]
+      },
+      "expected_percent": {
+        "ambience": 100,
+        "music": 100
+      },
+      "both_labels_exact_match": true
+    },
+    {
+      "file": "landscape-03-ambience-drag-100-released.png",
+      "dimensions": [
+        1136,
+        640
+      ],
+      "matched_visible_label_templates": {
+        "music": [
+          100
+        ],
+        "ambience": [
+          100
+        ]
+      },
+      "expected_percent": {
+        "ambience": 100,
+        "music": 100
+      },
+      "both_labels_exact_match": true
+    },
+    {
+      "file": "landscape-03-ambience-drag-40-held.png",
+      "dimensions": [
+        1136,
+        640
+      ],
+      "matched_visible_label_templates": {
+        "music": [
+          100
+        ],
+        "ambience": [
+          40
+        ]
+      },
+      "expected_percent": {
+        "ambience": 40,
+        "music": 100
+      },
+      "both_labels_exact_match": true
+    },
+    {
+      "file": "landscape-03-ambience-drag-40-released.png",
+      "dimensions": [
+        1136,
+        640
+      ],
+      "matched_visible_label_templates": {
+        "music": [
+          100
+        ],
+        "ambience": [
+          40
+        ]
+      },
+      "expected_percent": {
+        "ambience": 40,
+        "music": 100
+      },
+      "both_labels_exact_match": true
+    },
+    {
+      "file": "landscape-03-music-drag-0-held.png",
+      "dimensions": [
+        1136,
+        640
+      ],
+      "matched_visible_label_templates": {
+        "music": [
+          0
+        ],
+        "ambience": [
+          100
+        ]
+      },
+      "expected_percent": {
+        "music": 0,
+        "ambience": 100
+      },
+      "both_labels_exact_match": true
+    },
+    {
+      "file": "landscape-03-music-drag-0-released.png",
+      "dimensions": [
+        1136,
+        640
+      ],
+      "matched_visible_label_templates": {
+        "music": [
+          0
+        ],
+        "ambience": [
+          100
+        ]
+      },
+      "expected_percent": {
+        "music": 0,
+        "ambience": 100
+      },
+      "both_labels_exact_match": true
+    },
+    {
+      "file": "landscape-03-music-drag-100-held.png",
+      "dimensions": [
+        1136,
+        640
+      ],
+      "matched_visible_label_templates": {
+        "music": [
+          100
+        ],
+        "ambience": [
+          100
+        ]
+      },
+      "expected_percent": {
+        "music": 100,
+        "ambience": 100
+      },
+      "both_labels_exact_match": true
+    },
+    {
+      "file": "landscape-03-music-drag-100-released.png",
+      "dimensions": [
+        1136,
+        640
+      ],
+      "matched_visible_label_templates": {
+        "music": [
+          100
+        ],
+        "ambience": [
+          100
+        ]
+      },
+      "expected_percent": {
+        "music": 100,
+        "ambience": 100
+      },
+      "both_labels_exact_match": true
+    },
+    {
+      "file": "landscape-03-music-drag-40-held.png",
+      "dimensions": [
+        1136,
+        640
+      ],
+      "matched_visible_label_templates": {
+        "music": [
+          40
+        ],
+        "ambience": [
+          100
+        ]
+      },
+      "expected_percent": {
+        "music": 40,
+        "ambience": 100
+      },
+      "both_labels_exact_match": true
+    },
+    {
+      "file": "landscape-03-music-drag-40-released.png",
+      "dimensions": [
+        1136,
+        640
+      ],
+      "matched_visible_label_templates": {
+        "music": [
+          40
+        ],
+        "ambience": [
+          100
+        ]
+      },
+      "expected_percent": {
+        "music": 40,
+        "ambience": 100
+      },
+      "both_labels_exact_match": true
+    },
+    {
+      "file": "landscape-04-distinct-values-before-return.png",
+      "dimensions": [
+        1136,
+        640
+      ],
+      "matched_visible_label_templates": {
+        "music": [
+          40
+        ],
+        "ambience": [
+          0
+        ]
+      },
+      "expected_percent": {
+        "music": 40,
+        "ambience": 0
+      },
+      "both_labels_exact_match": true
+    },
+    {
+      "file": "portrait-01-pause-initial.png",
+      "dimensions": [
+        780,
+        1688
+      ],
+      "matched_visible_label_templates": {
+        "music": [
+          100
+        ],
+        "ambience": [
+          100
+        ]
+      },
+      "expected_percent": {
+        "music": 100,
+        "ambience": 100
+      },
+      "both_labels_exact_match": true
+    },
+    {
+      "file": "portrait-02-ambience-click-0.png",
+      "dimensions": [
+        780,
+        1688
+      ],
+      "matched_visible_label_templates": {
+        "music": [
+          100
+        ],
+        "ambience": [
+          0
+        ]
+      },
+      "expected_percent": {
+        "ambience": 0,
+        "music": 100
+      },
+      "both_labels_exact_match": true
+    },
+    {
+      "file": "portrait-02-ambience-click-100.png",
+      "dimensions": [
+        780,
+        1688
+      ],
+      "matched_visible_label_templates": {
+        "music": [
+          100
+        ],
+        "ambience": [
+          100
+        ]
+      },
+      "expected_percent": {
+        "ambience": 100,
+        "music": 100
+      },
+      "both_labels_exact_match": true
+    },
+    {
+      "file": "portrait-02-ambience-click-40.png",
+      "dimensions": [
+        780,
+        1688
+      ],
+      "matched_visible_label_templates": {
+        "music": [
+          100
+        ],
+        "ambience": [
+          40
+        ]
+      },
+      "expected_percent": {
+        "ambience": 40,
+        "music": 100
+      },
+      "both_labels_exact_match": true
+    },
+    {
+      "file": "portrait-02-music-click-0.png",
+      "dimensions": [
+        780,
+        1688
+      ],
+      "matched_visible_label_templates": {
+        "music": [
+          0
+        ],
+        "ambience": [
+          100
+        ]
+      },
+      "expected_percent": {
+        "music": 0,
+        "ambience": 100
+      },
+      "both_labels_exact_match": true
+    },
+    {
+      "file": "portrait-02-music-click-100.png",
+      "dimensions": [
+        780,
+        1688
+      ],
+      "matched_visible_label_templates": {
+        "music": [
+          100
+        ],
+        "ambience": [
+          100
+        ]
+      },
+      "expected_percent": {
+        "music": 100,
+        "ambience": 100
+      },
+      "both_labels_exact_match": true
+    },
+    {
+      "file": "portrait-02-music-click-40.png",
+      "dimensions": [
+        780,
+        1688
+      ],
+      "matched_visible_label_templates": {
+        "music": [
+          40
+        ],
+        "ambience": [
+          100
+        ]
+      },
+      "expected_percent": {
+        "music": 40,
+        "ambience": 100
+      },
+      "both_labels_exact_match": true
+    },
+    {
+      "file": "portrait-03-ambience-drag-0-held.png",
+      "dimensions": [
+        780,
+        1688
+      ],
+      "matched_visible_label_templates": {
+        "music": [
+          100
+        ],
+        "ambience": [
+          0
+        ]
+      },
+      "expected_percent": {
+        "ambience": 0,
+        "music": 100
+      },
+      "both_labels_exact_match": true
+    },
+    {
+      "file": "portrait-03-ambience-drag-0-released.png",
+      "dimensions": [
+        780,
+        1688
+      ],
+      "matched_visible_label_templates": {
+        "music": [
+          100
+        ],
+        "ambience": [
+          0
+        ]
+      },
+      "expected_percent": {
+        "ambience": 0,
+        "music": 100
+      },
+      "both_labels_exact_match": true
+    },
+    {
+      "file": "portrait-03-ambience-drag-100-held.png",
+      "dimensions": [
+        780,
+        1688
+      ],
+      "matched_visible_label_templates": {
+        "music": [
+          100
+        ],
+        "ambience": [
+          100
+        ]
+      },
+      "expected_percent": {
+        "ambience": 100,
+        "music": 100
+      },
+      "both_labels_exact_match": true
+    },
+    {
+      "file": "portrait-03-ambience-drag-100-released.png",
+      "dimensions": [
+        780,
+        1688
+      ],
+      "matched_visible_label_templates": {
+        "music": [
+          100
+        ],
+        "ambience": [
+          100
+        ]
+      },
+      "expected_percent": {
+        "ambience": 100,
+        "music": 100
+      },
+      "both_labels_exact_match": true
+    },
+    {
+      "file": "portrait-03-ambience-drag-40-held.png",
+      "dimensions": [
+        780,
+        1688
+      ],
+      "matched_visible_label_templates": {
+        "music": [
+          100
+        ],
+        "ambience": [
+          40
+        ]
+      },
+      "expected_percent": {
+        "ambience": 40,
+        "music": 100
+      },
+      "both_labels_exact_match": true
+    },
+    {
+      "file": "portrait-03-ambience-drag-40-released.png",
+      "dimensions": [
+        780,
+        1688
+      ],
+      "matched_visible_label_templates": {
+        "music": [
+          100
+        ],
+        "ambience": [
+          40
+        ]
+      },
+      "expected_percent": {
+        "ambience": 40,
+        "music": 100
+      },
+      "both_labels_exact_match": true
+    },
+    {
+      "file": "portrait-03-music-drag-0-held.png",
+      "dimensions": [
+        780,
+        1688
+      ],
+      "matched_visible_label_templates": {
+        "music": [
+          0
+        ],
+        "ambience": [
+          100
+        ]
+      },
+      "expected_percent": {
+        "music": 0,
+        "ambience": 100
+      },
+      "both_labels_exact_match": true
+    },
+    {
+      "file": "portrait-03-music-drag-0-released.png",
+      "dimensions": [
+        780,
+        1688
+      ],
+      "matched_visible_label_templates": {
+        "music": [
+          0
+        ],
+        "ambience": [
+          100
+        ]
+      },
+      "expected_percent": {
+        "music": 0,
+        "ambience": 100
+      },
+      "both_labels_exact_match": true
+    },
+    {
+      "file": "portrait-03-music-drag-100-held.png",
+      "dimensions": [
+        780,
+        1688
+      ],
+      "matched_visible_label_templates": {
+        "music": [
+          100
+        ],
+        "ambience": [
+          100
+        ]
+      },
+      "expected_percent": {
+        "music": 100,
+        "ambience": 100
+      },
+      "both_labels_exact_match": true
+    },
+    {
+      "file": "portrait-03-music-drag-100-released.png",
+      "dimensions": [
+        780,
+        1688
+      ],
+      "matched_visible_label_templates": {
+        "music": [
+          100
+        ],
+        "ambience": [
+          100
+        ]
+      },
+      "expected_percent": {
+        "music": 100,
+        "ambience": 100
+      },
+      "both_labels_exact_match": true
+    },
+    {
+      "file": "portrait-03-music-drag-40-held.png",
+      "dimensions": [
+        780,
+        1688
+      ],
+      "matched_visible_label_templates": {
+        "music": [
+          40
+        ],
+        "ambience": [
+          100
+        ]
+      },
+      "expected_percent": {
+        "music": 40,
+        "ambience": 100
+      },
+      "both_labels_exact_match": true
+    },
+    {
+      "file": "portrait-03-music-drag-40-released.png",
+      "dimensions": [
+        780,
+        1688
+      ],
+      "matched_visible_label_templates": {
+        "music": [
+          40
+        ],
+        "ambience": [
+          100
+        ]
+      },
+      "expected_percent": {
+        "music": 40,
+        "ambience": 100
+      },
+      "both_labels_exact_match": true
+    },
+    {
+      "file": "portrait-04-reflow-back-retained.png",
+      "dimensions": [
+        780,
+        1688
+      ],
+      "matched_visible_label_templates": {
+        "music": [
+          40
+        ],
+        "ambience": [
+          0
+        ]
+      },
+      "expected_percent": {
+        "music": 40,
+        "ambience": 0
+      },
+      "both_labels_exact_match": true
+    },
+    {
+      "file": "portrait-05-return-music-zero.png",
+      "dimensions": [
+        780,
+        1688
+      ],
+      "matched_visible_label_templates": {
+        "music": [
+          0
+        ],
+        "ambience": [
+          0
+        ]
+      },
+      "expected_percent": {
+        "music": 0,
+        "ambience": 0
+      },
+      "both_labels_exact_match": true
+    },
+    {
+      "file": "portrait-06-return-ambience-hundred.png",
+      "dimensions": [
+        780,
+        1688
+      ],
+      "matched_visible_label_templates": {
+        "music": [
+          0
+        ],
+        "ambience": [
+          100
+        ]
+      },
+      "expected_percent": {
+        "music": 0,
+        "ambience": 100
+      },
+      "both_labels_exact_match": true
+    }
+  ],
+  "total_checked": 42,
+  "all_matched": true,
+  "mismatches": []
+}

@@ -1,0 +1,16 @@
+{
+  "prepared_at": "2026-10-06T00:28:02.572855+00:00",
+  "base": "b9f68c3c5c4e70e16cefde9b4400bb1d553ff915",
+  "original_author": "1759c69cede5ba69a01bd219748796a7c50fc0d7",
+  "stage": "code/test preparation; native and browser not run",
+  "format_mock_command": "bash test/godot_gate_test.sh",
+  "actual_format_mock_exit_code": 0,
+  "new_fake_cases": 28,
+  "total_fake_cases": 92,
+  "format_mock_log_sha256": "222aa19e84a20a325c35f4cf610e2e4e792f86e303efa8302255caabbdb682f7",
+  "actual_engine_runs": false,
+  "actual_web_exports": false,
+  "actual_browser_runs": false,
+  "original9blobs_preserved": true,
+  "sparse_object_boundary": "Historical documentation blobs remain outside source materialization; index preserves exact main trees. No missing docs deletion staged. No previous frozen export/cache modified."
+}

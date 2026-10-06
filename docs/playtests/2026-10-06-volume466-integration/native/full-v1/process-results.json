@@ -1,0 +1,41 @@
+[
+  {
+    "name": "daily",
+    "command": [
+      "bash",
+      "tools/verify_daily_life.sh"
+    ],
+    "started": "2026-10-06T00:37:32.776982+00:00",
+    "ended": "2026-10-06T00:45:07.347284+00:00",
+    "direct_exit": 0,
+    "log": "daily.log",
+    "log_bytes": 87224,
+    "log_sha256": "4d3b78160f639f6fb6619f4ac7073ae59123042c3adf00092be90b6d9de18ffe"
+  },
+  {
+    "name": "retention",
+    "command": [
+      "python3",
+      "test/web_bundle_retention_test.py"
+    ],
+    "started": "2026-10-06T00:45:07.347804+00:00",
+    "ended": "2026-10-06T00:45:08.174290+00:00",
+    "direct_exit": 0,
+    "log": "retention.log",
+    "log_bytes": 1301,
+    "log_sha256": "07fd5fa36c783440943ff92551b6d4bff1440179030da63f84ab26868590fffe"
+  },
+  {
+    "name": "publish-helper",
+    "command": [
+      "python3",
+      "test/publish_storage_modules_test.py"
+    ],
+    "started": "2026-10-06T00:45:08.174589+00:00",
+    "ended": "2026-10-06T00:45:08.746414+00:00",
+    "direct_exit": 0,
+    "log": "publish-helper.log",
+    "log_bytes": 145,
+    "log_sha256": "69d2cfe36e55916187b1ce6b537c388a1bb633ee3f0ec77b42891590d5f8277d"
+  }
+]

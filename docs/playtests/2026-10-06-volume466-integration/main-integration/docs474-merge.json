@@ -1,0 +1,22 @@
+{
+  "verified_at": "2026-10-06T01:10:56.392340+00:00",
+  "base": "c50188a417920e3f400c833ebcf44fe9f28c89b4",
+  "ours_checkpoint": "caab5e98a5a11caa792e297f7efd2d7115a7f189",
+  "main": "8ae57959ff95117047c4362704c298b583d651a7",
+  "main_tree": "f31ea8b88cd1b6529a7a93adf430d0d18dd49f10",
+  "main_changed_paths": 208,
+  "main_docs_only": true,
+  "resolved": [
+    "docs/decisions.md",
+    "docs/requirements.md"
+  ],
+  "resolution": "preserve complete latest main decisions then append only our466 suffix; retain all latest requirements rows and insert own040 row",
+  "upstream_outside_own466_paths_exact": true,
+  "non_docs_root_tree_exact_to_tested_source": "49cf808ae6854406851592301e843bb557639500",
+  "large_new_docs_not_materialized": true,
+  "preliminary_verification_attempt": {
+    "actual_exit": 1,
+    "reason": "overbroad comparison included own intentional production delta against main; no conflict remained and no source was modified after merge. Correct comparison excludes known own466 delta and confirms every other upstream blob exactly."
+  },
+  "runtime_rerun_needed_for_this_docs_merge": false
+}
