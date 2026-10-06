@@ -15,6 +15,10 @@ static func primary(world: Node2D) -> Dictionary:
 	if player == null:
 		return {}
 	if world.is_leading():
+		if world.inventory_enabled:
+			var exit_action := YardSceneHotspots.resolve(world, YardSceneHotspots.PATH_OUT)
+			if not exit_action.is_empty() and (world._pending_interaction == YardSceneHotspots.PATH_OUT or player.position.distance_to(exit_action.point) <= PATH_OUT_STANDING):
+				return exit_action
 		return action("release", player.position, "action.release", INF)
 	if world._fish_state != world.FISH_IDLE and player.position.distance_to(world._fishing_point()) < 110.0:
 		return fishing(world)
@@ -98,6 +102,9 @@ static func selected(world: Node2D, target: String) -> Dictionary:
 	return {}
 
 static func pointer(world: Node2D, point: Vector2) -> Dictionary:
+	if world.inventory_enabled and world.is_leading():
+		var exit_action := YardSceneHotspots.at_point(world, point)
+		if exit_action.get("target", "") == YardSceneHotspots.PATH_OUT: return exit_action
 	if world.inventory_enabled and world.ground_food != null:
 		var item: Dictionary = world.ground_food.near_item(point, 22.0)
 		if not item.is_empty() and world.ground_food.held().is_empty():

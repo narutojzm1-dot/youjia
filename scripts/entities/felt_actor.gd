@@ -628,6 +628,27 @@ func tick(delta: float, world_size: Vector2) -> void:
 	z_index = roundi(position.y)
 
 
+## Road adapters own movement and depth; reuse the same anchored painted gait.
+func advance_path(delta: float, moved: Vector2, depth: float, reduced: bool) -> void:
+	state = "path"
+	grazing = false
+	if absf(moved.x) > 0.01: facing = signf(moved.x)
+	_velocity = moved / maxf(delta, 0.0001)
+	var stride := 38.0 if species in ["cow", "horse"] else (22.0 if species == "goose" else 30.0)
+	_gait.advance(delta, moved, depth, stride)
+	_gait.apply(_sprite, delta, facing, reduced)
+	_sprite.position = Vector2.ZERO
+	_sprite.rotation = 0.0
+	_gait._material.set_shader_parameter("grounded_stride", true)
+	_gait._material.set_shader_parameter("stride_uv", stride / maxf(_sprite.texture.get_width() * _base_scale, 1.0))
+	_gait._material.set_shader_parameter("lift_uv", 2.0 / maxf(_sprite.texture.get_height() * _base_scale, 1.0))
+	_gait._material.set_shader_parameter("native_walk_face", _native_facing)
+	_gait._material.set_shader_parameter("amount", 0.0 if reduced else minf(_gait.weight * 3.0, 1.0))
+	scale = Vector2(_gait.face, 1.0) * _base_scale * depth
+	_sprite.scale.x = _paint_facing()
+	z_index = roundi(position.y)
+
+
 func visual_hit_rect() -> Rect2:
 	var bounds := _art_bounds if _art_bounds.has_area() else Rect2(Vector2.ZERO, _sprite.texture.get_size())
 	var origin := _sprite.offset - _sprite.texture.get_size() * 0.5

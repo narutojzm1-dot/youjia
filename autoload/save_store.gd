@@ -314,7 +314,7 @@ func _valid_exploration_cleanup(expected: Variant, watermark: Variant, target: V
 	if not expected.session is Dictionary or target.session != null: return false
 	# Restore requires explicit nullable children; never normalize missing fields.
 	if not expected.session.has("proposal") or not expected.session.has("failure"): return false
-	var allowed := ["trip_id", "trip_serial", "record_revision", "route_id", "catalog", "state", "started_clock", "current_stop", "visited", "offers", "carried", "taken", "rng_seed", "proposal", "failure"]
+	var allowed := ["trip_id", "trip_serial", "record_revision", "route_id", "catalog", "state", "started_clock", "current_stop", "visited", "offers", "carried", "taken", "rng_seed", "proposal", "failure", "companion"]
 	for key in expected.session:
 		if key not in allowed: return false # unsupported extensions are not discarded
 	if expected.session.get("catalog") != contract.SOURCE_FORMAL: return false

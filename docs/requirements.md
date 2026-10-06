@@ -8,7 +8,7 @@ Owner CODEX-LEAD（兼制作人）。[完整策划](design/connected-world-2026-
 | --- | --- | --- | --- |
 | WORLD-BASKET | P1 | 院内大背篓UI查看既有探索所得，鱼可存取；共享账本迁移不丢不重、失败重试/重开、横竖屏 | 首片已发布 PR506，source 8777bf9；CODEX-LEAD；查看旧探索所得、鱼存取/重开已验证 |
 | WORLD-GROUND-FOOD | P1 | 草/鱼投地可见；牛羊羊驼竞争取草、一次消费，院门附近多堆草可引来牛；保存与数量守恒 | 已发布 PR508，source d16736c；完整CI、原生/浏览器体验及公开PCK核验通过 / CODEX-LEAD |
-| WORLD-COMPANIONS | P1 | 院门旁动物概率同行、羊驼可绳牵出；在外跟随且所有返院/恢复路径保留身份 | 已批准，依赖投食与探索接线 / CODEX-LEAD |
+| WORLD-COMPANIONS | P1 | 院门旁动物概率同行、羊驼可绳牵出；在外跟随且所有返院/恢复路径保留身份 | 运行时已接入，原生149项与普通Web往返/重开验证通过；待PR最终CI与发布核验 / CODEX-LEAD |
 | WORLD-ANIMAL-FINDS | P1 | 同行动物先翻找揭示隐藏物，玩家之后可见可拾；单次授予与回院持久化 | 已批准，依赖同行 / CODEX-LEAD |
 | WORLD-BEIBEI | P1 | 村边白色流浪幼犬beibei带回、养大、随行发现；成长缺席不受罚 | 已批准；品种/最终参考未锁定 / CODEX-LEAD |
 | WORLD-POND-STORIES | P1 | beibei发现乌龟→带回池塘→与长大的鸡亲近/驮鸡→拒绝鹅骑背/鹅想啄；鸡吃小米 | 已批准；角色资源与世界状态依赖 / CODEX-LEAD |
