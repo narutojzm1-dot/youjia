@@ -1,0 +1,305 @@
+{
+  "archive_status": "final local candidate: nine actual public-release byte records and four bounded public browser sets; new400/466 ongoing, successorPRs separately bounded; independent final archive SHA review pending",
+  "base": "c50188a417920e3f400c833ebcf44fe9f28c89b4",
+  "base_tree": "216720af5e74f8c7a9241ab4de38f19a9211ad91",
+  "pr454": {
+    "head": "d9302cdce4a7293d14df773ba50d7c5f231291c4",
+    "merge": "a0bb75e38e59032a6df72a2122af4403c3c3e816",
+    "ci_run": 37376177070,
+    "ci": "success with independent review",
+    "source_review": "https://github.com/narutojzm1-dot/youjia/pull/454#issuecomment-6003668335",
+    "ci_review": "https://github.com/narutojzm1-dot/youjia/pull/454#issuecomment-6003952106",
+    "public_bytes": {
+      "status": "verified",
+      "source": "a0bb75e38e59032a6df72a2122af4403c3c3e816",
+      "pck_bytes": 27089100,
+      "pck_sha256": "111de88653ff4c327a98009062b7b6ba1bea35c51946107041481f45f4b4770e",
+      "evidence": "releases/pr454-public-release.json",
+      "receipt": "https://github.com/narutojzm1-dot/youjia/pull/454#issuecomment-6004247545"
+    },
+    "ordinary_public_input_qa": {
+      "status": "limited pass with explicit NOT VERIFIED keyboard focus",
+      "source": "a0bb75e38e59032a6df72a2122af4403c3c3e816",
+      "scope": "one 390x844 no-preference context; natural sheep photo, mat, album, actual held press, confirm cancel, same-context real page close/new page",
+      "png_files": 25,
+      "source_bindings": 4,
+      "keyboard_visible_focus": "NOT VERIFIED; pause screenshots unchanged, confirm 09 to 10 only behind-dialog restart outline changed; no causal attribution",
+      "driver_exit_code": 0,
+      "browser_closed_at": "2026-10-05T22:22:48Z",
+      "evidence": "ordinary-inputs-a0bb/README.md",
+      "receipt": "https://github.com/narutojzm1-dot/youjia/pull/454#issuecomment-6004433457"
+    }
+  },
+  "other_independent_slices": {
+    "pr130_source_checkout_optimization": {
+      "pr": 458,
+      "head": "6862b4c65b6c037fa2319a38ed12f7f0238168b7",
+      "tree": "895be87dd881f1662d6b2b78c7c4b41e7883ebfa",
+      "merge": "870f4faebd6e28c7314e9db97cb39ae27819eded",
+      "ci_run": 37382704512,
+      "ci_status": "success with independent approval",
+      "review": "https://github.com/narutojzm1-dot/youjia/pull/458#issuecomment-6004586550",
+      "main_run": 37383583243,
+      "public_release": {
+        "status": "verified",
+        "source": "870f4faebd6e28c7314e9db97cb39ae27819eded",
+        "pck_bytes": 27089100,
+        "pck_sha256": "86543b55fc80084c8cb7c2667b1cd8e84658957209fc173fbbb8a3d09d8bc581",
+        "evidence": "releases/pr458-public-release.json",
+        "new_browser_experience": false
+      },
+      "pages_run": 37384319663
+    },
+    "pr455_disabled_button_feedback": {
+      "integration_pr": 460,
+      "head": "8a401350fedc57e59db86649b57ffd747649144f",
+      "tree": "df0321b4c3762cfe83b9262739016a782c6e0237",
+      "base": "870f4faebd6e28c7314e9db97cb39ae27819eded",
+      "candidate": "local native/Web and two-viewport ordinary QA completed; source evidence retained in PR460",
+      "merge": "9623ba22c8edc564e5c89dc6b0171324e9230764",
+      "ci_run": 37383994819,
+      "ci_status": "success; exact final-head independently approved",
+      "review": "https://github.com/narutojzm1-dot/youjia/pull/460#issuecomment-6004787590",
+      "main_run": 37384961406,
+      "pages_run": 37386309986,
+      "main_pages": "success; independently matched exact source and Pages commit",
+      "public_release": {
+        "source": "9623ba22c8edc564e5c89dc6b0171324e9230764",
+        "status": "verified",
+        "pck_bytes": 27089276,
+        "pck_sha256": "9de040c80027b41cccc6a331218b39ddd2c765ec108d94197a7fd01febcc0ae4",
+        "evidence": "releases/pr460-public-release.json",
+        "receipt": "https://github.com/narutojzm1-dot/youjia/pull/460#issuecomment-6005141719"
+      },
+      "ordinary_public_qa": {
+        "status": "bounded empty-album disabled controls passed",
+        "evidence": "soft460-public/ordinary-inputs-9623ba/README.md",
+        "png_files": 10,
+        "driver_exit_code": 0,
+        "browser_closed_at": "2026-10-05T23:08:35Z",
+        "scope": "one fresh context; same page390x844 then568x320; ordinary title/empty album/disabled prev-next clicks/enabled close; readonly gen1 current envelopes equal",
+        "not_covered": [
+          "save busy/acknowledging/failed/recovery",
+          "all photo page boundaries",
+          "all disabled controls",
+          "459 focus",
+          "physical touchscreen",
+          "reduced-motion retest",
+          "audio/hearing"
+        ]
+      }
+    },
+    "pr461_shutter_paper": {
+      "status": "final exact-head independent approval, real PR CI, CAS merge, main/Pages, actual public bytes and bounded two-viewport ordinary QA complete",
+      "claim": "https://github.com/narutojzm1-dot/youjia/pull/461#issuecomment-6004903387",
+      "integration_pr": 464,
+      "head": "0f4226dc6710ef3a11099baf45f707bbfd4fd30e",
+      "tree": "63ff0706a9c60dd31a69cb412b9629398a67848d",
+      "base": "cd836bf9e823b4e6276731b69e57f167c84547b8",
+      "review": "https://github.com/narutojzm1-dot/youjia/pull/464#issuecomment-6005708356",
+      "ci_run": 37389414385,
+      "ci_actual_checkout": "5dff8817b03ed39467c466922af058e0408a8ae9",
+      "ci_later_preview_not_execution": "68e674d1030046d90c88a1e29c5d35e282edd44e",
+      "merge": "49596fa93bff3c29edfe441898017158c6e469a3",
+      "main_run": 37390377329,
+      "public_bytes": {
+        "status": "verified",
+        "source": "49596fa93bff3c29edfe441898017158c6e469a3",
+        "pck_bytes": 27090652,
+        "pck_sha256": "c851ac2b66ef6bba5211b7ba8488173c6b6a336ee7508d6150a5f5ccd488f930",
+        "evidence": "releases/pr464-public-release.json",
+        "license_evidence": "releases/pr464-public-license.json"
+      },
+      "ordinary_public_qa": {
+        "status": "bounded Chinese/no-preference first photo/caption/natural retirement/album/close passed",
+        "evidence": "shutter464-public/ordinary-inputs-49596fa/README.md",
+        "source_bindings": 4,
+        "png_files": 37,
+        "fresh_contexts": 2,
+        "viewports": [
+          "390x844",
+          "568x320"
+        ],
+        "driver_exit_code": 0,
+        "browser_closed_at": "2026-10-05T23:58:54Z",
+        "short_landscape_limit": "Caption overlaps right of target background; current short text at left remains visible; longer text not covered.",
+        "not_covered": [
+          "English",
+          "reduced-motion ordinary UI",
+          "physical touchscreen",
+          "hearing",
+          "full storage recovery",
+          "459 visible keyboard focus",
+          "all photo types/all HUD/long target text"
+        ]
+      },
+      "evidence": "ci464/review-summary.json",
+      "pages_run": 37390958733,
+      "pages_status": "success with independent exact-source chain archived",
+      "main_status": "success;75starts/74actualsuites/Web/publisher verified independently",
+      "public_receipt": "https://github.com/narutojzm1-dot/youjia/pull/464#issuecomment-6006021492",
+      "original461_status": "merged/closed with original742b author preserved; original acceptance6004903387 completed"
+    },
+    "publisher130_full_history": {
+      "status": "merged; final independent review/actual CI/main/Pages/public byte verification complete",
+      "claim": "https://github.com/narutojzm1-dot/youjia/issues/130#issuecomment-6004968169",
+      "pr": 462,
+      "head": "a6fc9beb63fc793b46097cd3827e6b705ff1e324",
+      "base": "9623ba22c8edc564e5c89dc6b0171324e9230764",
+      "tree": "81e6ba37a366d4ca63c249fbf92354dcf0252858",
+      "merge": "b300da74bf157de3f152e63331096cb1eb28b3f7",
+      "ci_run": 37387083818,
+      "main_run": 37387842699,
+      "pages_run": 37388592826,
+      "review": "https://github.com/narutojzm1-dot/youjia/pull/462#issuecomment-6005260117",
+      "public_receipt": "https://github.com/narutojzm1-dot/youjia/pull/462#issuecomment-6005477012",
+      "public_evidence": "releases/pr462-public-release.json",
+      "pck_bytes": 27089276,
+      "pck_sha256": "fc7ae645e01c8981627d8f4f7a6dddb7bf67756cd3526766d9370842966639d3",
+      "new_browser_or_gameplay_claim": false
+    },
+    "camera400_shared_handoff": {
+      "status": "PR465 final independent approval/real CI merged; main/Pages/public byte verification and bounded public ordinary movement-return QA complete; composition still FAIL, issue400 open",
+      "claim": "https://github.com/narutojzm1-dot/youjia/issues/400#issuecomment-6005299861",
+      "method": "YardWorld._tick_quiet_sky_look actual takeover versus prewarm handoff",
+      "overall_issue_owner": "GAME-PRODUCER",
+      "original_user_screenshot_cause_proven": false,
+      "evidence": "coordination/camera400-v2-progress.json",
+      "combined_candidate": "33bd42534d87ebd6e0cb0087d7ee0eaf258f548e",
+      "implementation_pr": 465,
+      "remote_head": "5b070d13bc2190325d16ef4219a2b4c1cefedde3",
+      "ci_run": 37391469666,
+      "merge": "b9f68c3c5c4e70e16cefde9b4400bb1d553ff915",
+      "tree": "2a4d0436d8ccf96c81e0427c54a09172ec25e856",
+      "main_run": 37392967346,
+      "pages_run": 37393667313,
+      "public_evidence": "releases/pr465-public-release.json",
+      "public_pck_bytes": 27090748,
+      "public_pck_sha256": "2b719ae25bb58d91f4742e998faff212a3410a5ac1ecf47ed50c3fc7dbf0ca1f",
+      "followup_claim": "https://github.com/narutojzm1-dot/youjia/issues/400#issuecomment-6006243273",
+      "ordinary_public_qa": {
+        "status": "bounded ordinary movement-return PASS; top-band composition FAIL remains",
+        "evidence": "camera465-public/ordinary-inputs-b9f68c3/README.md",
+        "source": "b9f68c3c5c4e70e16cefde9b4400bb1d553ff915",
+        "source_bindings": 2,
+        "fresh_contexts": 1,
+        "viewport": "390x844",
+        "motion": "no-preference",
+        "png_files": 6,
+        "driver_exit_code": 0,
+        "browser_closed_at": "2026-10-06T00:27:03Z",
+        "top_band_pixels_approx": [
+          123,
+          142
+        ],
+        "ordinary_goose_prewarm_same_tick_not_covered": true,
+        "original_user_screenshot_cause_proven": false
+      }
+    }
+  },
+  "prepared_at": "2026-10-05T22:10:51.214259+00:00",
+  "cloud456": {
+    "pr": 467,
+    "head": "392b330effb8dc345bbde4a140d0ba7dbf9821f7",
+    "state": "closed",
+    "draft": false,
+    "url": "https://github.com/narutojzm1-dot/youjia/pull/467",
+    "evidence_level": "author-reported PR body, not a new Leader runtime rerun",
+    "owner": "CURSOR-CLOUD",
+    "issue": 456,
+    "candidate": "resize during reveal settles once using existing interrupt contract; themed packed Chinese font avoids Web fallback tofu",
+    "author_report": "red21/green278, full daily exit0 and PR CI success; sourcebound candidate ordinary pinecone resize and font evidence",
+    "not_merged_or_published_in_snapshot": false,
+    "merge": "dbf6f5aa902ecefeb168657e81a3bb12d97dbcbd",
+    "status": "467 merged; final author subagent APPROVE and full regression reported; Leader posterior code PASS6006823011, original return/close/recover acceptance still Owner followup",
+    "independent_review": "CURSOR-CLOUD-REVIEW-PR-467 exact392b330 APPROVE in latest PR body; no fabricated GitHub platform review event",
+    "posterior": "https://github.com/narutojzm1-dot/youjia/pull/467#issuecomment-6006823011",
+    "next": "https://github.com/narutojzm1-dot/youjia/issues/456#issuecomment-6006832218",
+    "remaining": "exact existing evidence pointer or complete original resize->normal return onecommit->actual close/recovery chain; no Leader preapproval",
+    "public_release_evidence_level": "author receipt6006636045 reports Actions37394128373/public hash; not added as independently downloaded tenth release in this archive"
+  },
+  "assistant459": "New public keyboard-focus evidence issue; awaiting Assistant acknowledgement; no root cause claim, no Main input takeover",
+  "updated_at": "2026-10-06T00:49:32.337424+00:00",
+  "latest_read_main": "c50188a417920e3f400c833ebcf44fe9f28c89b4",
+  "pm463": {
+    "head": "cdd4c4a154809a67ecf440a20fa4ea57f5d7d94a",
+    "merge": "cd836bf9e823b4e6276731b69e57f167c84547b8",
+    "postreview": "no blocking finding within reviewed documentation/evidence",
+    "summary": "coordination/pm463-review-summary.json"
+  },
+  "latest_reported_main": "c50188a417920e3f400c833ebcf44fe9f28c89b4",
+  "ownership_reconciliation": "coordination/ownership-status-reconcile.json",
+  "independent_loading167_qa": {
+    "claim": "https://github.com/narutojzm1-dot/youjia/issues/167#issuecomment-6005985387",
+    "owner": "CODEX-LEAD for bounded independent QA assistance; original runtime implementation ownership unchanged",
+    "branch": "loading167-acceptance",
+    "actual_state": "sixfresh actual public49596 complete; final evidence review6006848968 passed; PR469 merged at00:48:45Z; issue167 still open at cutoff, root authorized original-scope closure",
+    "boundary": "Only link469;93 archive and42+7PNG not duplicated here; tested runtime49596 differs from document base.",
+    "original_issue_status": "implementation/QA original scope accepted; actual issue closure not yet observed at frozen cutoff; no fullgame claim",
+    "pr": 469,
+    "head": "1714f0c36c6f72eb8ff76dfa9805ac20c1d9a992",
+    "original_reviewed_head": "749c36d343df09aaf0d9919e6cc2c6a618dcb752",
+    "merge": "c50188a417920e3f400c833ebcf44fe9f28c89b4",
+    "review": "https://github.com/narutojzm1-dot/youjia/pull/469#issuecomment-6006848968"
+  },
+  "open_acceptance_audit": "coordination/open-acceptance-six-summary.json",
+  "selected_current_followups": "coordination/later465-469-state.json",
+  "producer168": {
+    "pr": 468,
+    "head": "3f2da4270fc6488da42eaa4ec45ca43768bb778a",
+    "state": "closed",
+    "draft": false,
+    "url": "https://github.com/narutojzm1-dot/youjia/pull/468",
+    "evidence_level": "author-reported PR body, not a new Leader runtime rerun",
+    "owner": "GAME-PRODUCER",
+    "issue": 168,
+    "candidate_sha256": "dca81c2d54bb8e9e04f296e80f262ef168d6d0c540bfa4cd2e53452b4e098723",
+    "remote_upload": "same3f2 candidate uploaded and candidate archive merged, upload blocker removed",
+    "remaining": "Producer new-path runtime adoption/old-image byte preservation/weather reverse transition/photo capture/replay/Web/final runtime SHA review/release; no ART personal-signature prerequisite",
+    "not_merged_or_published_in_snapshot": false,
+    "merge": "175bfce8f9ef02991022188172de4cf3fec007d0",
+    "professional_review": "specific finalhead/image/frozen-mask exception APPROVE6006526392; not only old archive approval",
+    "posterior": "https://github.com/narutojzm1-dot/youjia/pull/468#issuecomment-6006822666",
+    "next": "https://github.com/narutojzm1-dot/youjia/issues/168#issuecomment-6006831759",
+    "runtime_weather_published": false
+  },
+  "slider466": {
+    "claim": "https://github.com/narutojzm1-dot/youjia/pull/466#issuecomment-6006302562",
+    "original_head": "1759c69cede5ba69a01bd219748796a7c50fc0d7",
+    "branch": "work/codex-lead/volume466-slider-paper",
+    "status": "146c candidate native full77suites/export reported PASS by assigned author; ordinary DPR2 currently executing in sole browser window at cutoff; not final review/merge/release",
+    "boundary": "PaperSliderStyle/PaperSliderBoot/project autoload line plus test/gate/docs; no Main input/drag handler/382 or459",
+    "risk": "handle16 to24 changes native effective travel; direct assignment assertions are not real mouse input proof",
+    "required_delivery": "two sliders actual click/drag0/40/100 with label/gain, ordinary Web/DPR/narrow reflow and source-bound final review"
+  },
+  "camera400_projection": {
+    "claim": "https://github.com/narutojzm1-dot/youjia/issues/400#issuecomment-6006243273",
+    "branch": "work/codex-lead/camera400-backdrop-bounds",
+    "status": "584 candidate received independent continuity feedback and correction; waiting assigned QA window at cutoff; not final validated/merged/released",
+    "overall_owner": "GAME-PRODUCER",
+    "method_scope": "YardWorld read-only background bounds/quiet source; Main camera process/focus/release/source and pure projection helper; not Main inputs/modal/slider or background art",
+    "reason": "observed portrait top paper band under quiet-camera offset; not original2444x1502 screenshot cause",
+    "tradeoff": "zero vertical margin portrait suppresses this-axis look-up amount; no extra zoom or art extension",
+    "required_delivery": "controlled red/green, actual Main frame regression, bounded ordinary Web, full regression/export, independent final SHA review, release verification"
+  },
+  "cutoff_utc": "2026-10-06T00:49:32.337424+00:00",
+  "assistant470": {
+    "head": "84a310bc3c2df4b09146197f76ad8e4cbf9cf29a",
+    "status": "actual two CI checks success per root followup; ordinary browser and independent final review still original Assistant Owner; open/unmerged",
+    "previous_author_head": "279994052541f289c8fc205274552e2e9afe84b0",
+    "no_old_head_verification_transfer": true,
+    "issue459": "still not implicitly accepted or fixed"
+  },
+  "qa472": {
+    "head": "2a9ab2da186ec0003a1c79037211e9c2327c07fb",
+    "status": "GAME-QA new documentation PR, open awaiting review; not assumed merged"
+  },
+  "tooltip473": {
+    "head": "4ab54d7ab0dbbb902baebd123eaa4b18459a52d6",
+    "status": "GROK tooltip submitted; Leader integration queued, not accepted implementation in progress"
+  },
+  "cloud375": {
+    "head": "96c3215a09022a567a082818f593b81e1f0e6c96",
+    "status": "new Draft candidate; not merged; resource approval/integration separate from467"
+  }
+}
