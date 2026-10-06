@@ -126,6 +126,29 @@ run_case bounds-complete pass 0 '[camera400-backdrop] PASS: 1 checks []' none su
 run_case bounds-zero block 0 '[camera400-backdrop] PASS: 0 checks []' none suite "$bounds_entry"
 run_case bounds-failure-list block 0 '[camera400-backdrop] PASS: 1 checks ["exposed art"]' none suite "$bounds_entry"
 run_case bounds-wrong-suite block 0 '[camera400-handoff] PASS: 1 checks []' none suite "$bounds_entry"
+# Both tooltip suite formats use exact positive whole-line summaries. These
+# fake processes cover wrapper behavior, not actual hover or native rendering.
+tooltip_start=$checks
+for tooltip_suite in paper_tooltip_style paper_tooltip_interaction; do
+  tooltip_entry="test/${tooltip_suite}_suite.gd"
+  tooltip_complete="PASS: $tooltip_suite 37 checks"
+  run_case "$tooltip_suite-positive-minimum" pass 0 "PASS: $tooltip_suite 1 checks" none suite "$tooltip_entry"
+  run_case "$tooltip_suite-positive-count" pass 0 "$tooltip_complete" none suite "$tooltip_entry"
+  run_case "$tooltip_suite-zero-count" block 0 "PASS: $tooltip_suite 0 checks" none suite "$tooltip_entry"
+  run_case "$tooltip_suite-missing" block 0 '' none suite "$tooltip_entry"
+  run_case "$tooltip_suite-wrong-suite" block 0 'PASS: title_licenses_link_contrast 37 checks' none suite "$tooltip_entry"
+  run_case "$tooltip_suite-prefix" block 0 "debug: $tooltip_complete" none suite "$tooltip_entry"
+  run_case "$tooltip_suite-suffix" block 0 "$tooltip_complete pending" none suite "$tooltip_entry"
+  run_case "$tooltip_suite-failure-count" block 0 "$tooltip_complete failures=1" none suite "$tooltip_entry"
+  run_case "$tooltip_suite-nonzero-exit" block 7 "$tooltip_complete" none suite "$tooltip_entry"
+  run_case "$tooltip_suite-late-error" block 0 "$tooltip_complete"$'\nERROR: simulated late error' none suite "$tooltip_entry"
+  run_case "$tooltip_suite-late-fail" block 0 "$tooltip_complete"$'\nFAIL: simulated late assertion' none suite "$tooltip_entry"
+  run_case "$tooltip_suite-log-read-failure" block 0 "$tooltip_complete" completion-read suite "$tooltip_entry"
+  run_case "$tooltip_suite-concatenated-markers" block 0 "$tooltip_complete$tooltip_complete" none suite "$tooltip_entry"
+  # Existing shared wrapper requires at least one valid line, not uniqueness.
+  run_case "$tooltip_suite-two-valid-lines" pass 0 "$tooltip_complete"$'\n'"$tooltip_complete" none suite "$tooltip_entry"
+done
+echo "TOOLTIP473 COMPLETION CONTRACT PASS $((checks-tooltip_start))"
 # Imports legitimately have no test summary. Their independent process/log
 # contract remains strict; the importer must not fabricate a suite PASS line.
 run_case import-empty pass 0 '' none import ''

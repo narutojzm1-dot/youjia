@@ -1,0 +1,1319 @@
+{
+  "source": "a0a856f64e7764fbab5270412025e62b8e34cafd",
+  "entry": "index",
+  "expected_pck_sha256": "91028b52ee7c2d4441ce2e368b600a3fb2a70dfeaf8a309229611709bccd1207",
+  "expected_pck_bytes": 27097128,
+  "inputs": [
+    {
+      "command": {
+        "op": "new",
+        "name": "ordinary-zh-dpr2",
+        "width": 1280,
+        "height": 720,
+        "motion": "no-preference"
+      },
+      "case": "",
+      "utc": "2026-10-06T01:47:52Z",
+      "monotonic": 382558.272204302
+    },
+    {
+      "case_open": "ordinary-zh-dpr2",
+      "width": 1280,
+      "height": 720,
+      "motion": "no-preference",
+      "actual_dpr": 2,
+      "actual_reduce": false,
+      "utc": "2026-10-06T01:48:07Z",
+      "monotonic": 382573.384401998
+    },
+    {
+      "screenshot_request": "ordinary-zh-dpr2-title",
+      "case": "ordinary-zh-dpr2",
+      "utc": "2026-10-06T01:48:07Z",
+      "monotonic": 382573.384891375
+    },
+    {
+      "screenshot_complete": "ordinary-zh-dpr2-title",
+      "case": "ordinary-zh-dpr2",
+      "utc": "2026-10-06T01:48:11Z",
+      "monotonic": 382577.986858747
+    },
+    {
+      "command": {
+        "op": "click",
+        "x": 640,
+        "y": 368
+      },
+      "case": "ordinary-zh-dpr2",
+      "utc": "2026-10-06T01:48:33Z",
+      "monotonic": 382599.383901539
+    },
+    {
+      "actual_click": {
+        "x": 640,
+        "y": 368
+      },
+      "minimum_independent_action_spacing_ms": 550,
+      "utc": "2026-10-06T01:48:37Z",
+      "monotonic": 382603.595912624
+    },
+    {
+      "command": {
+        "op": "move",
+        "x": 640,
+        "y": 180
+      },
+      "case": "ordinary-zh-dpr2",
+      "utc": "2026-10-06T01:48:37Z",
+      "monotonic": 382603.596436685
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 1400
+      },
+      "case": "ordinary-zh-dpr2",
+      "utc": "2026-10-06T01:48:37Z",
+      "monotonic": 382603.680903352
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "desktop-01-entered"
+      },
+      "case": "ordinary-zh-dpr2",
+      "utc": "2026-10-06T01:48:39Z",
+      "monotonic": 382605.082778516
+    },
+    {
+      "screenshot_request": "desktop-01-entered",
+      "case": "ordinary-zh-dpr2",
+      "utc": "2026-10-06T01:48:39Z",
+      "monotonic": 382605.083371046
+    },
+    {
+      "screenshot_complete": "desktop-01-entered",
+      "case": "ordinary-zh-dpr2",
+      "utc": "2026-10-06T01:48:42Z",
+      "monotonic": 382608.425738208
+    },
+    {
+      "command": {
+        "op": "move",
+        "x": 114,
+        "y": 676
+      },
+      "case": "ordinary-zh-dpr2",
+      "utc": "2026-10-06T01:48:42Z",
+      "monotonic": 382608.426279922
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 1100
+      },
+      "case": "ordinary-zh-dpr2",
+      "utc": "2026-10-06T01:48:42Z",
+      "monotonic": 382608.576846881
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "desktop-02-hover"
+      },
+      "case": "ordinary-zh-dpr2",
+      "utc": "2026-10-06T01:48:43Z",
+      "monotonic": 382609.680461737
+    },
+    {
+      "screenshot_request": "desktop-02-hover",
+      "case": "ordinary-zh-dpr2",
+      "utc": "2026-10-06T01:48:43Z",
+      "monotonic": 382609.68103963
+    },
+    {
+      "screenshot_complete": "desktop-02-hover",
+      "case": "ordinary-zh-dpr2",
+      "utc": "2026-10-06T01:48:47Z",
+      "monotonic": 382613.082974853
+    },
+    {
+      "command": {
+        "op": "move",
+        "x": 640,
+        "y": 180
+      },
+      "case": "ordinary-zh-dpr2",
+      "utc": "2026-10-06T01:48:47Z",
+      "monotonic": 382613.083555
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 650
+      },
+      "case": "ordinary-zh-dpr2",
+      "utc": "2026-10-06T01:48:47Z",
+      "monotonic": 382613.361134973
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "desktop-03-left"
+      },
+      "case": "ordinary-zh-dpr2",
+      "utc": "2026-10-06T01:48:48Z",
+      "monotonic": 382614.016275442
+    },
+    {
+      "screenshot_request": "desktop-03-left",
+      "case": "ordinary-zh-dpr2",
+      "utc": "2026-10-06T01:48:48Z",
+      "monotonic": 382614.01713415
+    },
+    {
+      "screenshot_complete": "desktop-03-left",
+      "case": "ordinary-zh-dpr2",
+      "utc": "2026-10-06T01:48:50Z",
+      "monotonic": 382616.717393491
+    },
+    {
+      "command": {
+        "op": "move",
+        "x": 114,
+        "y": 676
+      },
+      "case": "ordinary-zh-dpr2",
+      "utc": "2026-10-06T01:48:50Z",
+      "monotonic": 382616.717994096
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 1100
+      },
+      "case": "ordinary-zh-dpr2",
+      "utc": "2026-10-06T01:48:51Z",
+      "monotonic": 382617.836856531
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "desktop-04-rehover"
+      },
+      "case": "ordinary-zh-dpr2",
+      "utc": "2026-10-06T01:48:52Z",
+      "monotonic": 382618.944270003
+    },
+    {
+      "screenshot_request": "desktop-04-rehover",
+      "case": "ordinary-zh-dpr2",
+      "utc": "2026-10-06T01:48:52Z",
+      "monotonic": 382618.944918117
+    },
+    {
+      "screenshot_complete": "desktop-04-rehover",
+      "case": "ordinary-zh-dpr2",
+      "utc": "2026-10-06T01:48:56Z",
+      "monotonic": 382622.903687543
+    },
+    {
+      "command": {
+        "op": "click",
+        "x": 114,
+        "y": 676
+      },
+      "case": "ordinary-zh-dpr2",
+      "utc": "2026-10-06T01:48:56Z",
+      "monotonic": 382622.904327942
+    },
+    {
+      "actual_click": {
+        "x": 114,
+        "y": 676
+      },
+      "minimum_independent_action_spacing_ms": 550,
+      "utc": "2026-10-06T01:48:57Z",
+      "monotonic": 382623.809433635
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 650
+      },
+      "case": "ordinary-zh-dpr2",
+      "utc": "2026-10-06T01:48:57Z",
+      "monotonic": 382623.810100634
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "desktop-05-opened"
+      },
+      "case": "ordinary-zh-dpr2",
+      "utc": "2026-10-06T01:48:58Z",
+      "monotonic": 382624.465796835
+    },
+    {
+      "screenshot_request": "desktop-05-opened",
+      "case": "ordinary-zh-dpr2",
+      "utc": "2026-10-06T01:48:58Z",
+      "monotonic": 382624.466832324
+    },
+    {
+      "screenshot_complete": "desktop-05-opened",
+      "case": "ordinary-zh-dpr2",
+      "utc": "2026-10-06T01:49:02Z",
+      "monotonic": 382628.913140492
+    },
+    {
+      "command": {
+        "op": "click",
+        "x": 918,
+        "y": 604
+      },
+      "case": "ordinary-zh-dpr2",
+      "utc": "2026-10-06T01:49:27Z",
+      "monotonic": 382653.275968834
+    },
+    {
+      "actual_click": {
+        "x": 918,
+        "y": 604
+      },
+      "minimum_independent_action_spacing_ms": 550,
+      "utc": "2026-10-06T01:49:27Z",
+      "monotonic": 382653.280695316
+    },
+    {
+      "command": {
+        "op": "move",
+        "x": 640,
+        "y": 180
+      },
+      "case": "ordinary-zh-dpr2",
+      "utc": "2026-10-06T01:49:27Z",
+      "monotonic": 382653.281363297
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 650
+      },
+      "case": "ordinary-zh-dpr2",
+      "utc": "2026-10-06T01:49:27Z",
+      "monotonic": 382653.636969838
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "desktop-06-returned"
+      },
+      "case": "ordinary-zh-dpr2",
+      "utc": "2026-10-06T01:49:28Z",
+      "monotonic": 382654.296305558
+    },
+    {
+      "screenshot_request": "desktop-06-returned",
+      "case": "ordinary-zh-dpr2",
+      "utc": "2026-10-06T01:49:28Z",
+      "monotonic": 382654.297066213
+    },
+    {
+      "screenshot_complete": "desktop-06-returned",
+      "case": "ordinary-zh-dpr2",
+      "utc": "2026-10-06T01:49:32Z",
+      "monotonic": 382658.241559771
+    },
+    {
+      "command": {
+        "op": "resize",
+        "width": 390,
+        "height": 844
+      },
+      "case": "ordinary-zh-dpr2",
+      "utc": "2026-10-06T01:49:32Z",
+      "monotonic": 382658.242272075
+    },
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "actual_dpr": 2,
+      "utc": "2026-10-06T01:49:33Z",
+      "monotonic": 382659.765713274
+    },
+    {
+      "command": {
+        "op": "move",
+        "x": 102,
+        "y": 744
+      },
+      "case": "ordinary-zh-dpr2",
+      "utc": "2026-10-06T01:49:33Z",
+      "monotonic": 382659.766753582
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 1100
+      },
+      "case": "ordinary-zh-dpr2",
+      "utc": "2026-10-06T01:49:33Z",
+      "monotonic": 382659.902189297
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "portrait-01-hover"
+      },
+      "case": "ordinary-zh-dpr2",
+      "utc": "2026-10-06T01:49:35Z",
+      "monotonic": 382661.004587788
+    },
+    {
+      "screenshot_request": "portrait-01-hover",
+      "case": "ordinary-zh-dpr2",
+      "utc": "2026-10-06T01:49:35Z",
+      "monotonic": 382661.005321552
+    },
+    {
+      "screenshot_complete": "portrait-01-hover",
+      "case": "ordinary-zh-dpr2",
+      "utc": "2026-10-06T01:49:36Z",
+      "monotonic": 382662.587865652
+    },
+    {
+      "command": {
+        "op": "move",
+        "x": 195,
+        "y": 240
+      },
+      "case": "ordinary-zh-dpr2",
+      "utc": "2026-10-06T01:49:36Z",
+      "monotonic": 382662.58866547
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 650
+      },
+      "case": "ordinary-zh-dpr2",
+      "utc": "2026-10-06T01:49:36Z",
+      "monotonic": 382662.908360649
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "portrait-02-left"
+      },
+      "case": "ordinary-zh-dpr2",
+      "utc": "2026-10-06T01:49:37Z",
+      "monotonic": 382663.568324859
+    },
+    {
+      "screenshot_request": "portrait-02-left",
+      "case": "ordinary-zh-dpr2",
+      "utc": "2026-10-06T01:49:37Z",
+      "monotonic": 382663.569483328
+    },
+    {
+      "screenshot_complete": "portrait-02-left",
+      "case": "ordinary-zh-dpr2",
+      "utc": "2026-10-06T01:49:39Z",
+      "monotonic": 382665.091723622
+    },
+    {
+      "command": {
+        "op": "move",
+        "x": 102,
+        "y": 744
+      },
+      "case": "ordinary-zh-dpr2",
+      "utc": "2026-10-06T01:49:39Z",
+      "monotonic": 382665.096342662
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 1100
+      },
+      "case": "ordinary-zh-dpr2",
+      "utc": "2026-10-06T01:49:39Z",
+      "monotonic": 382665.378554705
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "portrait-03-rehover"
+      },
+      "case": "ordinary-zh-dpr2",
+      "utc": "2026-10-06T01:49:40Z",
+      "monotonic": 382666.480791335
+    },
+    {
+      "screenshot_request": "portrait-03-rehover",
+      "case": "ordinary-zh-dpr2",
+      "utc": "2026-10-06T01:49:40Z",
+      "monotonic": 382666.481696931
+    },
+    {
+      "screenshot_complete": "portrait-03-rehover",
+      "case": "ordinary-zh-dpr2",
+      "utc": "2026-10-06T01:49:42Z",
+      "monotonic": 382668.316335889
+    },
+    {
+      "command": {
+        "op": "click",
+        "x": 102,
+        "y": 744
+      },
+      "case": "ordinary-zh-dpr2",
+      "utc": "2026-10-06T01:49:42Z",
+      "monotonic": 382668.317178637
+    },
+    {
+      "actual_click": {
+        "x": 102,
+        "y": 744
+      },
+      "minimum_independent_action_spacing_ms": 550,
+      "utc": "2026-10-06T01:49:42Z",
+      "monotonic": 382668.489128355
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 650
+      },
+      "case": "ordinary-zh-dpr2",
+      "utc": "2026-10-06T01:49:42Z",
+      "monotonic": 382668.489966544
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "portrait-04-opened"
+      },
+      "case": "ordinary-zh-dpr2",
+      "utc": "2026-10-06T01:49:43Z",
+      "monotonic": 382669.165825369
+    },
+    {
+      "screenshot_request": "portrait-04-opened",
+      "case": "ordinary-zh-dpr2",
+      "utc": "2026-10-06T01:49:43Z",
+      "monotonic": 382669.167137646
+    },
+    {
+      "screenshot_complete": "portrait-04-opened",
+      "case": "ordinary-zh-dpr2",
+      "utc": "2026-10-06T01:49:44Z",
+      "monotonic": 382670.934438833
+    },
+    {
+      "command": {
+        "op": "click",
+        "x": 306,
+        "y": 666
+      },
+      "case": "ordinary-zh-dpr2",
+      "utc": "2026-10-06T01:51:07Z",
+      "monotonic": 382753.925440571
+    },
+    {
+      "actual_click": {
+        "x": 306,
+        "y": 666
+      },
+      "minimum_independent_action_spacing_ms": 550,
+      "utc": "2026-10-06T01:51:07Z",
+      "monotonic": 382753.975141513
+    },
+    {
+      "command": {
+        "op": "move",
+        "x": 195,
+        "y": 240
+      },
+      "case": "ordinary-zh-dpr2",
+      "utc": "2026-10-06T01:51:07Z",
+      "monotonic": 382753.975919089
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 650
+      },
+      "case": "ordinary-zh-dpr2",
+      "utc": "2026-10-06T01:51:08Z",
+      "monotonic": 382754.107109896
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "portrait-05-returned"
+      },
+      "case": "ordinary-zh-dpr2",
+      "utc": "2026-10-06T01:51:08Z",
+      "monotonic": 382754.760579039
+    },
+    {
+      "screenshot_request": "portrait-05-returned",
+      "case": "ordinary-zh-dpr2",
+      "utc": "2026-10-06T01:51:08Z",
+      "monotonic": 382754.761577258
+    },
+    {
+      "screenshot_complete": "portrait-05-returned",
+      "case": "ordinary-zh-dpr2",
+      "utc": "2026-10-06T01:51:10Z",
+      "monotonic": 382756.167642416
+    },
+    {
+      "command": {
+        "op": "resize",
+        "width": 568,
+        "height": 320
+      },
+      "case": "ordinary-zh-dpr2",
+      "utc": "2026-10-06T01:51:10Z",
+      "monotonic": 382756.172187634
+    },
+    {
+      "viewport": {
+        "width": 568,
+        "height": 320
+      },
+      "actual_dpr": 2,
+      "utc": "2026-10-06T01:51:11Z",
+      "monotonic": 382757.04232746
+    },
+    {
+      "command": {
+        "op": "move",
+        "x": 147,
+        "y": 220
+      },
+      "case": "ordinary-zh-dpr2",
+      "utc": "2026-10-06T01:51:11Z",
+      "monotonic": 382757.043372717
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 1100
+      },
+      "case": "ordinary-zh-dpr2",
+      "utc": "2026-10-06T01:51:11Z",
+      "monotonic": 382757.09427996
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "landscape-01-hover"
+      },
+      "case": "ordinary-zh-dpr2",
+      "utc": "2026-10-06T01:51:12Z",
+      "monotonic": 382758.196033552
+    },
+    {
+      "screenshot_request": "landscape-01-hover",
+      "case": "ordinary-zh-dpr2",
+      "utc": "2026-10-06T01:51:12Z",
+      "monotonic": 382758.196997527
+    },
+    {
+      "screenshot_complete": "landscape-01-hover",
+      "case": "ordinary-zh-dpr2",
+      "utc": "2026-10-06T01:51:12Z",
+      "monotonic": 382758.893925863
+    },
+    {
+      "command": {
+        "op": "move",
+        "x": 284,
+        "y": 140
+      },
+      "case": "ordinary-zh-dpr2",
+      "utc": "2026-10-06T01:51:12Z",
+      "monotonic": 382758.894887533
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 650
+      },
+      "case": "ordinary-zh-dpr2",
+      "utc": "2026-10-06T01:51:12Z",
+      "monotonic": 382758.935993197
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "landscape-02-left"
+      },
+      "case": "ordinary-zh-dpr2",
+      "utc": "2026-10-06T01:51:13Z",
+      "monotonic": 382759.588576688
+    },
+    {
+      "screenshot_request": "landscape-02-left",
+      "case": "ordinary-zh-dpr2",
+      "utc": "2026-10-06T01:51:13Z",
+      "monotonic": 382759.589555069
+    },
+    {
+      "screenshot_complete": "landscape-02-left",
+      "case": "ordinary-zh-dpr2",
+      "utc": "2026-10-06T01:51:14Z",
+      "monotonic": 382760.305967694
+    },
+    {
+      "command": {
+        "op": "move",
+        "x": 147,
+        "y": 220
+      },
+      "case": "ordinary-zh-dpr2",
+      "utc": "2026-10-06T01:51:14Z",
+      "monotonic": 382760.307479124
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 1100
+      },
+      "case": "ordinary-zh-dpr2",
+      "utc": "2026-10-06T01:51:14Z",
+      "monotonic": 382760.375218019
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "landscape-03-rehover"
+      },
+      "case": "ordinary-zh-dpr2",
+      "utc": "2026-10-06T01:51:15Z",
+      "monotonic": 382761.477908389
+    },
+    {
+      "screenshot_request": "landscape-03-rehover",
+      "case": "ordinary-zh-dpr2",
+      "utc": "2026-10-06T01:51:15Z",
+      "monotonic": 382761.478899925
+    },
+    {
+      "screenshot_complete": "landscape-03-rehover",
+      "case": "ordinary-zh-dpr2",
+      "utc": "2026-10-06T01:51:16Z",
+      "monotonic": 382762.196953031
+    },
+    {
+      "command": {
+        "op": "click",
+        "x": 147,
+        "y": 220
+      },
+      "case": "ordinary-zh-dpr2",
+      "utc": "2026-10-06T01:51:16Z",
+      "monotonic": 382762.197935911
+    },
+    {
+      "actual_click": {
+        "x": 147,
+        "y": 220
+      },
+      "minimum_independent_action_spacing_ms": 550,
+      "utc": "2026-10-06T01:51:16Z",
+      "monotonic": 382762.247564579
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 650
+      },
+      "case": "ordinary-zh-dpr2",
+      "utc": "2026-10-06T01:51:16Z",
+      "monotonic": 382762.248485283
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "landscape-04-opened"
+      },
+      "case": "ordinary-zh-dpr2",
+      "utc": "2026-10-06T01:51:16Z",
+      "monotonic": 382762.900705623
+    },
+    {
+      "screenshot_request": "landscape-04-opened",
+      "case": "ordinary-zh-dpr2",
+      "utc": "2026-10-06T01:51:16Z",
+      "monotonic": 382762.902224857
+    },
+    {
+      "screenshot_complete": "landscape-04-opened",
+      "case": "ordinary-zh-dpr2",
+      "utc": "2026-10-06T01:51:17Z",
+      "monotonic": 382763.905635253
+    },
+    {
+      "command": {
+        "op": "click",
+        "x": 454,
+        "y": 284
+      },
+      "case": "ordinary-zh-dpr2",
+      "utc": "2026-10-06T01:55:26Z",
+      "monotonic": 383012.611227164
+    },
+    {
+      "actual_click": {
+        "x": 454,
+        "y": 284
+      },
+      "minimum_independent_action_spacing_ms": 550,
+      "utc": "2026-10-06T01:55:26Z",
+      "monotonic": 383012.667915191
+    },
+    {
+      "command": {
+        "op": "move",
+        "x": 284,
+        "y": 140
+      },
+      "case": "ordinary-zh-dpr2",
+      "utc": "2026-10-06T01:55:26Z",
+      "monotonic": 383012.669022164
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 650
+      },
+      "case": "ordinary-zh-dpr2",
+      "utc": "2026-10-06T01:55:26Z",
+      "monotonic": 383012.764293004
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "landscape-05-returned"
+      },
+      "case": "ordinary-zh-dpr2",
+      "utc": "2026-10-06T01:55:27Z",
+      "monotonic": 383013.418867571
+    },
+    {
+      "screenshot_request": "landscape-05-returned",
+      "case": "ordinary-zh-dpr2",
+      "utc": "2026-10-06T01:55:27Z",
+      "monotonic": 383013.421289666
+    },
+    {
+      "screenshot_complete": "landscape-05-returned",
+      "case": "ordinary-zh-dpr2",
+      "utc": "2026-10-06T01:55:28Z",
+      "monotonic": 383014.096253989
+    },
+    {
+      "command": {
+        "op": "end"
+      },
+      "case": "ordinary-zh-dpr2",
+      "utc": "2026-10-06T01:55:28Z",
+      "monotonic": 383014.097597605
+    },
+    {
+      "case_closed": "ordinary-zh-dpr2",
+      "utc": "2026-10-06T01:55:33Z",
+      "monotonic": 383018.995347276
+    }
+  ],
+  "bindings": [
+    {
+      "case": "ordinary-zh-dpr2",
+      "stage": "before",
+      "manifest": {
+        "schema": "youjia.candidate/v1",
+        "source": "a0a856f64e7764fbab5270412025e62b8e34cafd",
+        "sourceCommit": "a0a856f64e7764fbab5270412025e62b8e34cafd",
+        "sourceTree": "0945747d4680e899bbfe5253a60ca5c0f8cf92e1",
+        "entry": "index",
+        "candidateOnly": true,
+        "createdAt": "2026-10-06T01:39:42.756307+00:00",
+        "engine": "4.7.2.stable.official.ed1daf0bf",
+        "files": {
+          "index.apple-touch-icon.png": {
+            "bytes": 59343,
+            "sha256": "80d91adb306354c6e4d1af546d062e1e9236699ad0fd53153ab3d2fc34cd11d4"
+          },
+          "index.audio.position.worklet.js": {
+            "bytes": 2973,
+            "sha256": "be33985bc7160d6bf9646f259cd86b259cd67b02ccb297ee5c44f8ac84327bc8"
+          },
+          "index.audio.worklet.js": {
+            "bytes": 7298,
+            "sha256": "5b476a9c9ce642c0ee4256436d1bc31d9c38f868aca0f9a8e2a57c18d2dec2a3"
+          },
+          "index.html": {
+            "bytes": 357722,
+            "sha256": "ef5e17634b0900b9aa763888926bf4b1e4da405223dc71b4521ae039aa189c20"
+          },
+          "index.icon.png": {
+            "bytes": 389674,
+            "sha256": "1c591b9eb1b7af2a840a59a9feb637a0a7aeba2b0abde28042abf44f77d0acb3"
+          },
+          "index.js": {
+            "bytes": 279815,
+            "sha256": "33c94cb3175f3333b82e2a3be5e8e86f77986f0aa2042b1631f6367a4e5bb6ba"
+          },
+          "index.pck": {
+            "bytes": 27097128,
+            "sha256": "91028b52ee7c2d4441ce2e368b600a3fb2a70dfeaf8a309229611709bccd1207"
+          },
+          "index.png": {
+            "bytes": 1010767,
+            "sha256": "5743a648b82437e0e60db5e4aa08103cea96b01e110961082223c0e7fa819ebf"
+          },
+          "index.wasm": {
+            "bytes": 39514754,
+            "sha256": "fc74679e3b97f76878947fcd4fbe1268cbfa6188182a2e33bbc3f5dc9bfa57d0"
+          },
+          "open-source-licenses.html": {
+            "bytes": 147966,
+            "sha256": "9215f5fdd50039a9b6f3d8f0271cbc21bbdf64b917fb118dd29c8a16b9974e00"
+          },
+          "web/save/bridge.mjs": {
+            "bytes": 1856,
+            "sha256": "ef18687554fdc0d745c1d18d4d091e959cc78559da0d61d6a093e562ff9bbc91"
+          },
+          "web/save/budgets.mjs": {
+            "bytes": 340,
+            "sha256": "52984153977dcafd1d2682e848f1999f091d0966e17d46e902de76f5735a7018"
+          },
+          "web/save/host.mjs": {
+            "bytes": 7730,
+            "sha256": "9de8dc0ef4bfc037a8ad0bff575d40c3dd4341bcc723351a412b2061bb661904"
+          },
+          "web/save/idbfs_source.mjs": {
+            "bytes": 5550,
+            "sha256": "16eb57d471537f13d3e50018b56c2d416d2847f0d0249ba44433dd9ebb65f4d8"
+          },
+          "web/save/legacy_inspection.mjs": {
+            "bytes": 2886,
+            "sha256": "db3a23a0221aa5d34a58a6a49aeeff930295ffe20bfcf73a7c11f0d49cffd671"
+          },
+          "web/save/legacy_seal.mjs": {
+            "bytes": 2510,
+            "sha256": "9642132f5d4e7523e5966e802069af7f4bae803fae8e2e7c28ae55ee97d85610"
+          },
+          "web/save/legacy_v5.mjs": {
+            "bytes": 2245,
+            "sha256": "8e7f4ad2d87aab77ac05361e4f46060476e933aa079ae94301998d08d4599621"
+          },
+          "web/save/lifecycle.mjs": {
+            "bytes": 1878,
+            "sha256": "1cfaebb9a8745e2dc3e4f694ef475f250640870938f04160be1a5c9acd62935d"
+          },
+          "web/save/source_decode.mjs": {
+            "bytes": 1542,
+            "sha256": "411f3bc784cb32a07f32eed5fc7d88f71b59a667cc0d68a50fe13c55bfdba18a"
+          },
+          "web/save/store.mjs": {
+            "bytes": 13890,
+            "sha256": "2193b4397b8662a8ebc754dc4468e4d62964d209b4e1d0f0924a2ec81b409cbe"
+          }
+        },
+        "storageModules": {
+          "entry": "web/save",
+          "sha256": {
+            "bridge.mjs": "ef18687554fdc0d745c1d18d4d091e959cc78559da0d61d6a093e562ff9bbc91",
+            "budgets.mjs": "52984153977dcafd1d2682e848f1999f091d0966e17d46e902de76f5735a7018",
+            "host.mjs": "9de8dc0ef4bfc037a8ad0bff575d40c3dd4341bcc723351a412b2061bb661904",
+            "idbfs_source.mjs": "16eb57d471537f13d3e50018b56c2d416d2847f0d0249ba44433dd9ebb65f4d8",
+            "legacy_inspection.mjs": "db3a23a0221aa5d34a58a6a49aeeff930295ffe20bfcf73a7c11f0d49cffd671",
+            "legacy_seal.mjs": "9642132f5d4e7523e5966e802069af7f4bae803fae8e2e7c28ae55ee97d85610",
+            "legacy_v5.mjs": "8e7f4ad2d87aab77ac05361e4f46060476e933aa079ae94301998d08d4599621",
+            "lifecycle.mjs": "1cfaebb9a8745e2dc3e4f694ef475f250640870938f04160be1a5c9acd62935d",
+            "source_decode.mjs": "411f3bc784cb32a07f32eed5fc7d88f71b59a667cc0d68a50fe13c55bfdba18a",
+            "store.mjs": "2193b4397b8662a8ebc754dc4468e4d62964d209b4e1d0f0924a2ec81b409cbe"
+          }
+        }
+      },
+      "html_status": 200,
+      "html_sha256": "ef5e17634b0900b9aa763888926bf4b1e4da405223dc71b4521ae039aa189c20",
+      "pck": {
+        "status": 200,
+        "bytes": 27097128,
+        "sha256": "91028b52ee7c2d4441ce2e368b600a3fb2a70dfeaf8a309229611709bccd1207"
+      },
+      "utc": "2026-10-06T01:47:59Z",
+      "dependency_checks": [
+        {
+          "path": "open-source-licenses.html",
+          "status": 200,
+          "bytes": 147966,
+          "sha256": "9215f5fdd50039a9b6f3d8f0271cbc21bbdf64b917fb118dd29c8a16b9974e00"
+        },
+        {
+          "path": "web/save/bridge.mjs",
+          "status": 200,
+          "bytes": 1856,
+          "sha256": "ef18687554fdc0d745c1d18d4d091e959cc78559da0d61d6a093e562ff9bbc91"
+        },
+        {
+          "path": "web/save/budgets.mjs",
+          "status": 200,
+          "bytes": 340,
+          "sha256": "52984153977dcafd1d2682e848f1999f091d0966e17d46e902de76f5735a7018"
+        },
+        {
+          "path": "web/save/host.mjs",
+          "status": 200,
+          "bytes": 7730,
+          "sha256": "9de8dc0ef4bfc037a8ad0bff575d40c3dd4341bcc723351a412b2061bb661904"
+        },
+        {
+          "path": "web/save/idbfs_source.mjs",
+          "status": 200,
+          "bytes": 5550,
+          "sha256": "16eb57d471537f13d3e50018b56c2d416d2847f0d0249ba44433dd9ebb65f4d8"
+        },
+        {
+          "path": "web/save/legacy_inspection.mjs",
+          "status": 200,
+          "bytes": 2886,
+          "sha256": "db3a23a0221aa5d34a58a6a49aeeff930295ffe20bfcf73a7c11f0d49cffd671"
+        },
+        {
+          "path": "web/save/legacy_seal.mjs",
+          "status": 200,
+          "bytes": 2510,
+          "sha256": "9642132f5d4e7523e5966e802069af7f4bae803fae8e2e7c28ae55ee97d85610"
+        },
+        {
+          "path": "web/save/legacy_v5.mjs",
+          "status": 200,
+          "bytes": 2245,
+          "sha256": "8e7f4ad2d87aab77ac05361e4f46060476e933aa079ae94301998d08d4599621"
+        },
+        {
+          "path": "web/save/lifecycle.mjs",
+          "status": 200,
+          "bytes": 1878,
+          "sha256": "1cfaebb9a8745e2dc3e4f694ef475f250640870938f04160be1a5c9acd62935d"
+        },
+        {
+          "path": "web/save/source_decode.mjs",
+          "status": 200,
+          "bytes": 1542,
+          "sha256": "411f3bc784cb32a07f32eed5fc7d88f71b59a667cc0d68a50fe13c55bfdba18a"
+        },
+        {
+          "path": "web/save/store.mjs",
+          "status": 200,
+          "bytes": 13890,
+          "sha256": "2193b4397b8662a8ebc754dc4468e4d62964d209b4e1d0f0924a2ec81b409cbe"
+        }
+      ],
+      "loaded_html_sha256": "ef5e17634b0900b9aa763888926bf4b1e4da405223dc71b4521ae039aa189c20"
+    },
+    {
+      "case": "ordinary-zh-dpr2",
+      "stage": "after",
+      "manifest": {
+        "schema": "youjia.candidate/v1",
+        "source": "a0a856f64e7764fbab5270412025e62b8e34cafd",
+        "sourceCommit": "a0a856f64e7764fbab5270412025e62b8e34cafd",
+        "sourceTree": "0945747d4680e899bbfe5253a60ca5c0f8cf92e1",
+        "entry": "index",
+        "candidateOnly": true,
+        "createdAt": "2026-10-06T01:39:42.756307+00:00",
+        "engine": "4.7.2.stable.official.ed1daf0bf",
+        "files": {
+          "index.apple-touch-icon.png": {
+            "bytes": 59343,
+            "sha256": "80d91adb306354c6e4d1af546d062e1e9236699ad0fd53153ab3d2fc34cd11d4"
+          },
+          "index.audio.position.worklet.js": {
+            "bytes": 2973,
+            "sha256": "be33985bc7160d6bf9646f259cd86b259cd67b02ccb297ee5c44f8ac84327bc8"
+          },
+          "index.audio.worklet.js": {
+            "bytes": 7298,
+            "sha256": "5b476a9c9ce642c0ee4256436d1bc31d9c38f868aca0f9a8e2a57c18d2dec2a3"
+          },
+          "index.html": {
+            "bytes": 357722,
+            "sha256": "ef5e17634b0900b9aa763888926bf4b1e4da405223dc71b4521ae039aa189c20"
+          },
+          "index.icon.png": {
+            "bytes": 389674,
+            "sha256": "1c591b9eb1b7af2a840a59a9feb637a0a7aeba2b0abde28042abf44f77d0acb3"
+          },
+          "index.js": {
+            "bytes": 279815,
+            "sha256": "33c94cb3175f3333b82e2a3be5e8e86f77986f0aa2042b1631f6367a4e5bb6ba"
+          },
+          "index.pck": {
+            "bytes": 27097128,
+            "sha256": "91028b52ee7c2d4441ce2e368b600a3fb2a70dfeaf8a309229611709bccd1207"
+          },
+          "index.png": {
+            "bytes": 1010767,
+            "sha256": "5743a648b82437e0e60db5e4aa08103cea96b01e110961082223c0e7fa819ebf"
+          },
+          "index.wasm": {
+            "bytes": 39514754,
+            "sha256": "fc74679e3b97f76878947fcd4fbe1268cbfa6188182a2e33bbc3f5dc9bfa57d0"
+          },
+          "open-source-licenses.html": {
+            "bytes": 147966,
+            "sha256": "9215f5fdd50039a9b6f3d8f0271cbc21bbdf64b917fb118dd29c8a16b9974e00"
+          },
+          "web/save/bridge.mjs": {
+            "bytes": 1856,
+            "sha256": "ef18687554fdc0d745c1d18d4d091e959cc78559da0d61d6a093e562ff9bbc91"
+          },
+          "web/save/budgets.mjs": {
+            "bytes": 340,
+            "sha256": "52984153977dcafd1d2682e848f1999f091d0966e17d46e902de76f5735a7018"
+          },
+          "web/save/host.mjs": {
+            "bytes": 7730,
+            "sha256": "9de8dc0ef4bfc037a8ad0bff575d40c3dd4341bcc723351a412b2061bb661904"
+          },
+          "web/save/idbfs_source.mjs": {
+            "bytes": 5550,
+            "sha256": "16eb57d471537f13d3e50018b56c2d416d2847f0d0249ba44433dd9ebb65f4d8"
+          },
+          "web/save/legacy_inspection.mjs": {
+            "bytes": 2886,
+            "sha256": "db3a23a0221aa5d34a58a6a49aeeff930295ffe20bfcf73a7c11f0d49cffd671"
+          },
+          "web/save/legacy_seal.mjs": {
+            "bytes": 2510,
+            "sha256": "9642132f5d4e7523e5966e802069af7f4bae803fae8e2e7c28ae55ee97d85610"
+          },
+          "web/save/legacy_v5.mjs": {
+            "bytes": 2245,
+            "sha256": "8e7f4ad2d87aab77ac05361e4f46060476e933aa079ae94301998d08d4599621"
+          },
+          "web/save/lifecycle.mjs": {
+            "bytes": 1878,
+            "sha256": "1cfaebb9a8745e2dc3e4f694ef475f250640870938f04160be1a5c9acd62935d"
+          },
+          "web/save/source_decode.mjs": {
+            "bytes": 1542,
+            "sha256": "411f3bc784cb32a07f32eed5fc7d88f71b59a667cc0d68a50fe13c55bfdba18a"
+          },
+          "web/save/store.mjs": {
+            "bytes": 13890,
+            "sha256": "2193b4397b8662a8ebc754dc4468e4d62964d209b4e1d0f0924a2ec81b409cbe"
+          }
+        },
+        "storageModules": {
+          "entry": "web/save",
+          "sha256": {
+            "bridge.mjs": "ef18687554fdc0d745c1d18d4d091e959cc78559da0d61d6a093e562ff9bbc91",
+            "budgets.mjs": "52984153977dcafd1d2682e848f1999f091d0966e17d46e902de76f5735a7018",
+            "host.mjs": "9de8dc0ef4bfc037a8ad0bff575d40c3dd4341bcc723351a412b2061bb661904",
+            "idbfs_source.mjs": "16eb57d471537f13d3e50018b56c2d416d2847f0d0249ba44433dd9ebb65f4d8",
+            "legacy_inspection.mjs": "db3a23a0221aa5d34a58a6a49aeeff930295ffe20bfcf73a7c11f0d49cffd671",
+            "legacy_seal.mjs": "9642132f5d4e7523e5966e802069af7f4bae803fae8e2e7c28ae55ee97d85610",
+            "legacy_v5.mjs": "8e7f4ad2d87aab77ac05361e4f46060476e933aa079ae94301998d08d4599621",
+            "lifecycle.mjs": "1cfaebb9a8745e2dc3e4f694ef475f250640870938f04160be1a5c9acd62935d",
+            "source_decode.mjs": "411f3bc784cb32a07f32eed5fc7d88f71b59a667cc0d68a50fe13c55bfdba18a",
+            "store.mjs": "2193b4397b8662a8ebc754dc4468e4d62964d209b4e1d0f0924a2ec81b409cbe"
+          }
+        }
+      },
+      "html_status": 200,
+      "html_sha256": "ef5e17634b0900b9aa763888926bf4b1e4da405223dc71b4521ae039aa189c20",
+      "pck": {
+        "status": 200,
+        "bytes": 27097128,
+        "sha256": "91028b52ee7c2d4441ce2e368b600a3fb2a70dfeaf8a309229611709bccd1207"
+      },
+      "utc": "2026-10-06T01:55:32Z",
+      "dependency_checks": [
+        {
+          "path": "open-source-licenses.html",
+          "status": 200,
+          "bytes": 147966,
+          "sha256": "9215f5fdd50039a9b6f3d8f0271cbc21bbdf64b917fb118dd29c8a16b9974e00"
+        },
+        {
+          "path": "web/save/bridge.mjs",
+          "status": 200,
+          "bytes": 1856,
+          "sha256": "ef18687554fdc0d745c1d18d4d091e959cc78559da0d61d6a093e562ff9bbc91"
+        },
+        {
+          "path": "web/save/budgets.mjs",
+          "status": 200,
+          "bytes": 340,
+          "sha256": "52984153977dcafd1d2682e848f1999f091d0966e17d46e902de76f5735a7018"
+        },
+        {
+          "path": "web/save/host.mjs",
+          "status": 200,
+          "bytes": 7730,
+          "sha256": "9de8dc0ef4bfc037a8ad0bff575d40c3dd4341bcc723351a412b2061bb661904"
+        },
+        {
+          "path": "web/save/idbfs_source.mjs",
+          "status": 200,
+          "bytes": 5550,
+          "sha256": "16eb57d471537f13d3e50018b56c2d416d2847f0d0249ba44433dd9ebb65f4d8"
+        },
+        {
+          "path": "web/save/legacy_inspection.mjs",
+          "status": 200,
+          "bytes": 2886,
+          "sha256": "db3a23a0221aa5d34a58a6a49aeeff930295ffe20bfcf73a7c11f0d49cffd671"
+        },
+        {
+          "path": "web/save/legacy_seal.mjs",
+          "status": 200,
+          "bytes": 2510,
+          "sha256": "9642132f5d4e7523e5966e802069af7f4bae803fae8e2e7c28ae55ee97d85610"
+        },
+        {
+          "path": "web/save/legacy_v5.mjs",
+          "status": 200,
+          "bytes": 2245,
+          "sha256": "8e7f4ad2d87aab77ac05361e4f46060476e933aa079ae94301998d08d4599621"
+        },
+        {
+          "path": "web/save/lifecycle.mjs",
+          "status": 200,
+          "bytes": 1878,
+          "sha256": "1cfaebb9a8745e2dc3e4f694ef475f250640870938f04160be1a5c9acd62935d"
+        },
+        {
+          "path": "web/save/source_decode.mjs",
+          "status": 200,
+          "bytes": 1542,
+          "sha256": "411f3bc784cb32a07f32eed5fc7d88f71b59a667cc0d68a50fe13c55bfdba18a"
+        },
+        {
+          "path": "web/save/store.mjs",
+          "status": 200,
+          "bytes": 13890,
+          "sha256": "2193b4397b8662a8ebc754dc4468e4d62964d209b4e1d0f0924a2ec81b409cbe"
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "console": [
+    {
+      "case": "ordinary-zh-dpr2",
+      "type": "log",
+      "text": "Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org"
+    },
+    {
+      "case": "ordinary-zh-dpr2",
+      "type": "log",
+      "text": "OpenGL API OpenGL ES 3.0 (WebGL 2.0 (OpenGL ES 3.0 Chromium)) - Compatibility - Using Device: WebKit - WebKit WebGL"
+    },
+    {
+      "case": "ordinary-zh-dpr2",
+      "type": "log",
+      "text": "Build configuration: Emscripten 4.0.20, single-threaded, no GDExtension support."
+    },
+    {
+      "case": "ordinary-zh-dpr2",
+      "type": "info",
+      "text": "[game-loading] timings_ms {\"engineScriptReady\":86,\"engineReady\":3896,\"downloadComplete\":3897,\"firstFrame\":5418}"
+    }
+  ],
+  "asset_responses": [
+    {
+      "case": "ordinary-zh-dpr2",
+      "url": "http://127.0.0.1:8483/web/save/bridge.mjs",
+      "status": 200
+    },
+    {
+      "case": "ordinary-zh-dpr2",
+      "url": "http://127.0.0.1:8483/index.js",
+      "status": 200
+    },
+    {
+      "case": "ordinary-zh-dpr2",
+      "url": "http://127.0.0.1:8483/web/save/host.mjs",
+      "status": 200
+    },
+    {
+      "case": "ordinary-zh-dpr2",
+      "url": "http://127.0.0.1:8483/web/save/budgets.mjs",
+      "status": 200
+    },
+    {
+      "case": "ordinary-zh-dpr2",
+      "url": "http://127.0.0.1:8483/web/save/legacy_inspection.mjs",
+      "status": 200
+    },
+    {
+      "case": "ordinary-zh-dpr2",
+      "url": "http://127.0.0.1:8483/web/save/store.mjs",
+      "status": 200
+    },
+    {
+      "case": "ordinary-zh-dpr2",
+      "url": "http://127.0.0.1:8483/web/save/source_decode.mjs",
+      "status": 200
+    },
+    {
+      "case": "ordinary-zh-dpr2",
+      "url": "http://127.0.0.1:8483/web/save/legacy_v5.mjs",
+      "status": 200
+    },
+    {
+      "case": "ordinary-zh-dpr2",
+      "url": "http://127.0.0.1:8483/web/save/lifecycle.mjs",
+      "status": 200
+    },
+    {
+      "case": "ordinary-zh-dpr2",
+      "url": "http://127.0.0.1:8483/web/save/legacy_seal.mjs",
+      "status": 200
+    },
+    {
+      "case": "ordinary-zh-dpr2",
+      "url": "http://127.0.0.1:8483/web/save/idbfs_source.mjs",
+      "status": 200
+    },
+    {
+      "case": "ordinary-zh-dpr2",
+      "url": "http://127.0.0.1:8483/index.wasm",
+      "status": 200
+    },
+    {
+      "case": "ordinary-zh-dpr2",
+      "url": "http://127.0.0.1:8483/index.pck",
+      "status": 200
+    }
+  ],
+  "browser_args": [
+    "--no-sandbox",
+    "--use-gl=angle",
+    "--use-angle=swiftshader",
+    "--enable-webgl",
+    "--enable-unsafe-swiftshader",
+    "--renderer-process-limit=1"
+  ],
+  "started_utc": "2026-10-06T01:47:48Z",
+  "limits": [
+    "ordinary mouse/keyboard only; no save/game state/seed/time setters",
+    "browser media emulation at context creation, not physical device/OS setting",
+    "ordinary Chinese tooltip only; Main startup forces zh-CN and UI has no language selector; English only native controlled coverage; no touch382/focus459/input-race/audio/storage claims",
+    "no hearing or complete storage acceptance"
+  ],
+  "closed_utc": "2026-10-06T01:55:33Z"
+}
