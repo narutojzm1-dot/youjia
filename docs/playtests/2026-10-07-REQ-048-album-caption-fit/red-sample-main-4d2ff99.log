@@ -1,0 +1,10 @@
+album caption stats { "zh-CN fs13 lines2 orig": 519, "en fs13 lines3 strip": 243, "en fs13 lines2 orig": 255, "zh-CN fs13 lines3 strip": 24, "en fs13 lines1 orig": 19, "zh-CN fs13 lines1 orig": 21 }
+FAIL album_caption_fit_suite: 923/13197 checks failed
+  - v0 day1 en (1280, 720) #0: fitted caption box [P: (24.0, 232.0), S: (192.0, 66.0)] is exactly the paper strip
+  - v0 day1 en (1280, 720) #0: fitted caption centred vertically
+  - v0 day1 en (1280, 720) #0: caption text ends on the paper strip, 2.0px above the card edge
+  - v0 day1 en (1280, 720) #6: fitted caption box [P: (24.0, 232.0), S: (192.0, 66.0)] is exactly the paper strip
+  - v0 day1 en (1280, 720) #6: fitted caption centred vertically
+  - v0 day1 en (1280, 720) #6: last wrapped line has at least two words (pond.)
+  - v0 day1 en (1280, 720) #6: caption text ends on the paper strip, 2.0px above the card edge
+  - v0 day1 en (1280, 720) #10: fitted caption box [P: (24.0, 232.0), S: (192.0, 66.0)] is exactly the paper strip

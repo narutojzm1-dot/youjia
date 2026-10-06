@@ -1,0 +1,14 @@
+# REQ-20261007-048 after: Godot 4.7.2 headless, each suite in its own isolated XDG data/config/cache dir
+# base main 4d2ff999f4686b7992065ce5d51d4ee7697a67ff + this change
+album_caption_fit_suite: PASS album_caption_fit_suite: 13113 checks
+album_layout_suite: ALBUM_LAYOUT checks=45914 failures=0
+album_short_landscape_suite: ALBUM_SHORT_LANDSCAPE checks=52319 failures=0
+photo_caption_fit_suite: PASS photo_caption_fit_suite: 1884 checks
+photo_home_suite: [photo-home-tests] PASS: 75 checks
+interaction_photo_suite: [interaction-photo-tests] 110 checks, failures=[]
+photo_moment_render_suite: [photo-moment-tests] PASS: 1349 checks
+photo_arrival_fit_suite: [photo-arrival-fit] PASS: 418 checks
+test_suite: [game-generic-tests] PASS: 414 checks
+hint_paper_width_suite: PASS: hint_paper_width 9264 checks
+soft_button_disabled_suite: PASS: soft_button_disabled 4400 checks
+album caption stats { "zh-CN fs13 lines2 orig": 519, "en fs12 lines3 strip": 171, "en fs13 lines2 orig": 255, "en fs12 lines2 strip": 72, "zh-CN fs12 lines3 strip": 12, "zh-CN fs12 lines2 strip": 12, "en fs13 lines1 orig": 19, "zh-CN fs13 lines1 orig": 21 }
