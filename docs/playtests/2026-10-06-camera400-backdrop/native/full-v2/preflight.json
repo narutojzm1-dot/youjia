@@ -1,0 +1,28 @@
+{
+  "utc": "2026-10-06T00:54:26.673128+00:00",
+  "source": {
+    "source": "58437ae8977f2f0ac1fd51dbdd61e2274ac12132",
+    "tree": "35ce69244b51a4d4c382ccde3517a429d55b0460",
+    "base": "b9f68c3c5c4e70e16cefde9b4400bb1d553ff915",
+    "files": [
+      "docs/decisions.md",
+      "docs/game-design.md",
+      "docs/playtests/2026-10-06-camera400-backdrop/.gdignore",
+      "docs/playtests/2026-10-06-camera400-backdrop/README.md",
+      "docs/requirements.md",
+      "scripts/game/yard_world.gd",
+      "scripts/main.gd",
+      "test/camera400_backdrop_suite.gd",
+      "test/camera400_backdrop_suite.gd.uid",
+      "test/godot_gate_test.sh",
+      "tools/lib/godot_suite_completions.tsv",
+      "tools/verify_daily_life.sh"
+    ],
+    "native": "enhanced continuity/lifecycle fixture not yet run",
+    "browser": "not run",
+    "production_unchanged_from": null,
+    "counterfactual_guard_source": "6554353d98d96bf99dfcbd4a4b583dafe83c9324"
+  },
+  "live_engine_browser": [],
+  "memory_bytes": 15760879616
+}

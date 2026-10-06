@@ -1,0 +1,37 @@
+{
+  "source": "4598df52591db795f1441f4dd22a53df1df4a61c",
+  "rows": [
+    {
+      "name": "bash-syntax",
+      "command": [
+        "bash",
+        "-n",
+        "tools/verify_daily_life.sh",
+        "test/godot_gate_test.sh"
+      ],
+      "started": "2026-10-06T01:26:53.046157+00:00",
+      "closed": "2026-10-06T01:26:53.048593+00:00",
+      "direct_exit": 0,
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "mock-contract",
+      "command": [
+        "bash",
+        "test/godot_gate_test.sh"
+      ],
+      "started": "2026-10-06T01:26:53.048615+00:00",
+      "closed": "2026-10-06T01:26:54.322955+00:00",
+      "direct_exit": 0,
+      "bytes": 4330,
+      "sha256": "fc781c4fa05bec1095c57b654feb61bbe7e9a8e2ac82f455e8ca76d7f14180e2"
+    }
+  ],
+  "daily_registration_entries": 78,
+  "expected_full_launches_with_import": 79,
+  "actual_mock_cases": 96,
+  "actual_engine_started": false,
+  "actual_browser_started": false,
+  "combined_native_and_web": "not run locally; pending final PR full CI and export"
+}

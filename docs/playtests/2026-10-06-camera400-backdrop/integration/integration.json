@@ -1,0 +1,38 @@
+{
+  "head": "ea9d7431f0a5fd6258308e7f0defd7bb3a50bb46",
+  "tree": "5595b8e8e5915d3949a42418c23293811cf95fea",
+  "parents": [
+    "58437ae8977f2f0ac1fd51dbdd61e2274ac12132",
+    "8ae57959ff95117047c4362704c298b583d651a7"
+  ],
+  "runtime_tested_source": "58437ae8977f2f0ac1fd51dbdd61e2274ac12132",
+  "native_base": "b9f68c3c5c4e70e16cefde9b4400bb1d553ff915",
+  "integration_main": "8ae57959ff95117047c4362704c298b583d651a7",
+  "own_paths": [
+    "docs/decisions.md",
+    "docs/game-design.md",
+    "docs/playtests/2026-10-06-camera400-backdrop/.gdignore",
+    "docs/playtests/2026-10-06-camera400-backdrop/README.md",
+    "docs/requirements.md",
+    "scripts/game/yard_world.gd",
+    "scripts/main.gd",
+    "test/camera400_backdrop_suite.gd",
+    "test/camera400_backdrop_suite.gd.uid",
+    "test/godot_gate_test.sh",
+    "tools/lib/godot_suite_completions.tsv",
+    "tools/verify_daily_life.sh"
+  ],
+  "upstream_cloud_blobs_preserved": {
+    "scripts/exploration/find_reveal.gd": "3e9564826d89d7c798ce6e5881578fa73ed2461c",
+    "scripts/exploration/near_path_scroll.gd": "2849504290dc07723646121a3a269bfe5fe7de21",
+    "test/exploration_slice_suite.gd": "3bf28f79c810a335a67ec400c3d0b9dc7c6cb137"
+  },
+  "runtime_difference_from_tested": [
+    "scripts/exploration/find_reveal.gd",
+    "scripts/exploration/near_path_scroll.gd",
+    "test/exploration_slice_suite.gd"
+  ],
+  "combined_validation": "pending final PR full CI and export; old native remains 584 source",
+  "engine_started": false,
+  "browser_started": false
+}

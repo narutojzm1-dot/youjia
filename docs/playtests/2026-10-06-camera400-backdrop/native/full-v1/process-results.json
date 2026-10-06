@@ -1,0 +1,15 @@
+[
+  {
+    "step": "daily",
+    "args": [
+      "bash",
+      "tools/verify_daily_life.sh"
+    ],
+    "started_at": "2026-10-06T00:30:05.289250+00:00",
+    "ended_at": "2026-10-06T00:31:34.096045+00:00",
+    "actual_exit": -15,
+    "log": "/tmp/camera400-bounds-evidence/full-v1/daily.log",
+    "bytes": 16139,
+    "sha256": "562ca6a49724d8f28f0ad16bf70d9f2f42e297e9110ab69493645701c6967a1c"
+  }
+]
