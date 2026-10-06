@@ -34,6 +34,7 @@ run_godot suite test/album_layout_suite.gd
 run_godot suite test/pause_notice_suite.gd
 run_godot suite test/audio_button_input_suite.gd
 run_godot suite test/still_boundary_feedback_suite.gd
+run_godot suite test/pause_panel_fit_suite.gd
 run_godot suite test/ui_viewports.gd
 run_godot suite test/web_save_bridge/decoder_suite.gd
 run_godot suite test/web_save_bridge/legacy_suite.gd

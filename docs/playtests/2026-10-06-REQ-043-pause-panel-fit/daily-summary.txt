@@ -1,0 +1,12 @@
+# tools/verify_daily_life.sh on work/grok-contributor/pause-panel-fit (base main 0cc6d79), Godot 4.7.2 native headless, isolated XDG, 2026-10-06 CST
+# Excerpt of the full log (1050 lines); every suite ran through run_verified_godot_suite.
+title_card suite: 251 checks passed
+confirm_panel_fit suite: 562 checks passed
+PASS: soft_button_focus_contrast 5080 checks
+PASS: soft_button_disabled 4400 checks
+PASS: pause_panel_fit 1228 checks
+...
+LEGACY_BRIDGE_PASS 22
+Loading shell PASS: module ordering, runtime readiness/rejection, persistentPaths isolation, save-blocked gate, bytes, unknown totals, stall and both first-frame orders
+MOTION PREFERENCE JS PASS 21
+DAILY EXIT 0
