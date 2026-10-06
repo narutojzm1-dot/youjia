@@ -1,0 +1,137 @@
+{
+  "method": "Offline read-only RGB patch nearest match in untouched full PNGs; exhaustive small translation search and mean absolute RGB difference. Approximate visual landmark displacement only, not camera offset or proof of engine quiet phase. Excludes last two portraits because weather changed. No image edits/crops saved.",
+  "portrait": {
+    "baseline": "portrait-01-entered.png",
+    "baseline_box_xyxy": [
+      204,
+      122,
+      231,
+      153
+    ],
+    "search_dx": [
+      -40,
+      10
+    ],
+    "search_dy": [
+      -5,
+      160
+    ],
+    "results": [
+      {
+        "image": "portrait-02-stillness-5500.png",
+        "delta_pixels_from_baseline": [
+          0,
+          0
+        ],
+        "mean_absolute_channel_difference": 0.4042214257268021
+      },
+      {
+        "image": "portrait-03-stillness-6500.png",
+        "delta_pixels_from_baseline": [
+          0,
+          0
+        ],
+        "mean_absolute_channel_difference": 0.48068498606133014
+      },
+      {
+        "image": "portrait-04-stillness-8000.png",
+        "delta_pixels_from_baseline": [
+          0,
+          0
+        ],
+        "mean_absolute_channel_difference": 0.6176821983273596
+      },
+      {
+        "image": "portrait-05-after-movement.png",
+        "delta_pixels_from_baseline": [
+          -27,
+          0
+        ],
+        "mean_absolute_channel_difference": 3.2982875348466747
+      },
+      {
+        "image": "portrait-06-settled.png",
+        "delta_pixels_from_baseline": [
+          -28,
+          0
+        ],
+        "mean_absolute_channel_difference": 4.296694544006372
+      },
+      {
+        "image": "portrait-07-reflow-back.png",
+        "delta_pixels_from_baseline": [
+          -3,
+          0
+        ],
+        "mean_absolute_channel_difference": 5.301871764237355
+      }
+    ]
+  },
+  "landscape": {
+    "baseline": "landscape-01-reflow-baseline.png",
+    "baseline_box_xyxy": [
+      379,
+      115,
+      405,
+      132
+    ],
+    "search_dx": [
+      -8,
+      8
+    ],
+    "search_dy": [
+      -10,
+      30
+    ],
+    "results": [
+      {
+        "image": "landscape-02-after-release-28000.png",
+        "delta_pixels_from_baseline": [
+          0,
+          4
+        ],
+        "mean_absolute_channel_difference": 14.035444947209653
+      },
+      {
+        "image": "landscape-03-after-release-30000.png",
+        "delta_pixels_from_baseline": [
+          0,
+          4
+        ],
+        "mean_absolute_channel_difference": 14.063348416289593
+      },
+      {
+        "image": "landscape-04-after-release-32000.png",
+        "delta_pixels_from_baseline": [
+          0,
+          2
+        ],
+        "mean_absolute_channel_difference": 9.071644042232277
+      },
+      {
+        "image": "landscape-05-after-release-34000.png",
+        "delta_pixels_from_baseline": [
+          0,
+          0
+        ],
+        "mean_absolute_channel_difference": 2.457767722473605
+      },
+      {
+        "image": "landscape-06-after-movement.png",
+        "delta_pixels_from_baseline": [
+          1,
+          0
+        ],
+        "mean_absolute_channel_difference": 12.58446455505279
+      },
+      {
+        "image": "landscape-07-settled.png",
+        "delta_pixels_from_baseline": [
+          1,
+          0
+        ],
+        "mean_absolute_channel_difference": 12.635746606334841
+      }
+    ]
+  }
+}
