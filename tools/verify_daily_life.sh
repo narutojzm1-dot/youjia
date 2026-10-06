@@ -31,6 +31,7 @@ for suite in holiday_start_once animal_home photo_home grass_state grass_action 
   run_godot suite "test/${suite}_suite.gd"
 done
 run_godot suite test/album_layout_suite.gd
+run_godot suite test/save_status_paper_suite.gd
 run_godot suite test/pause_notice_suite.gd
 run_godot suite test/audio_button_input_suite.gd
 run_godot suite test/still_boundary_feedback_suite.gd
