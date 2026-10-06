@@ -1,0 +1,26 @@
+{
+  "runtime_source": "58437ae8977f2f0ac1fd51dbdd61e2274ac12132",
+  "tree": "35ce69244b51a4d4c382ccde3517a429d55b0460",
+  "base": "b9f68c3c5c4e70e16cefde9b4400bb1d553ff915",
+  "main_methods": {
+    "added": [
+      "_bound_quiet_camera"
+    ],
+    "removed": [],
+    "changed": [
+      "_on_focus",
+      "_on_release_focus",
+      "_process",
+      "_start_holiday"
+    ]
+  },
+  "world_methods": {
+    "added": [
+      "get_backdrop_bounds",
+      "is_quiet_camera_focus"
+    ],
+    "removed": [],
+    "changed": []
+  },
+  "note": "Compares each full method, ignoring unindented doc comments belonging to the next method."
+}

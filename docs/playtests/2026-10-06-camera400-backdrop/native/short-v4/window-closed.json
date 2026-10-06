@@ -1,0 +1,30 @@
+{
+  "closed": "2026-10-06T00:29:59.553436+00:00",
+  "results": [
+    {
+      "name": "import-old",
+      "direct_exit": 0,
+      "started": "2026-10-06T00:29:32.399670+00:00",
+      "closed": "2026-10-06T00:29:38.669565+00:00",
+      "seconds": 6.26990208303323
+    },
+    {
+      "name": "red-old-production",
+      "direct_exit": 1,
+      "started": "2026-10-06T00:29:38.669874+00:00",
+      "closed": "2026-10-06T00:29:49.157843+00:00",
+      "seconds": 10.487982193008065
+    },
+    {
+      "name": "green-candidate",
+      "direct_exit": 0,
+      "started": "2026-10-06T00:29:49.158374+00:00",
+      "closed": "2026-10-06T00:29:59.552623+00:00",
+      "seconds": 10.394263315014541
+    }
+  ],
+  "production_restored_to_candidate": true,
+  "browser_started": false,
+  "full_gate_run": false,
+  "export_run": false
+}

@@ -1,0 +1,16 @@
+test_actual_publisher_pruning_block_keeps_recent_resources (__main__.Retention.test_actual_publisher_pruning_block_keeps_recent_resources) ... ok
+test_current_always_retained_and_count_exact (__main__.Retention.test_current_always_retained_and_count_exact) ... ok
+test_deleted_and_readded_publication (__main__.Retention.test_deleted_and_readded_publication) ... ok
+test_inverse_hash_order_removes_oldest (__main__.Retention.test_inverse_hash_order_removes_oldest) ... ok
+test_large_count_does_not_prune (__main__.Retention.test_large_count_does_not_prune) ... ok
+test_missing_current_fails_before_deletion (__main__.Retention.test_missing_current_fails_before_deletion) ... ok
+test_real_shallow_clone_preserves_all_bundles (__main__.Retention.test_real_shallow_clone_preserves_all_bundles) ... ok
+test_renamed_bundle_counts_as_a_new_publication (__main__.Retention.test_renamed_bundle_counts_as_a_new_publication) ... ok
+test_republished_old_hash_is_recent (__main__.Retention.test_republished_old_hash_is_recent) ... ok
+test_unknown_history_preserves_all (__main__.Retention.test_unknown_history_preserves_all) ... ok
+test_zero_disables_pruning (__main__.Retention.test_zero_disables_pruning) ... ok
+
+----------------------------------------------------------------------
+Ran 11 tests in 0.774s
+
+OK

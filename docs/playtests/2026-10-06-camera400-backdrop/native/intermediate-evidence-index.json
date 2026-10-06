@@ -1,0 +1,90 @@
+{
+  "short-v2": {
+    "green-candidate.log": {
+      "bytes": 9801,
+      "sha256": "37d3057c59909bec1fdc390ed00f29ecf2afb09ddef021d7f5b071ed3439a767",
+      "complete_lines": [
+        "[camera400-backdrop] FAIL: 38860 checks [\"idle_move/(568, 320)/reduced=false: original upward intention and interpolation remain present\",\"idle_move/(1280, 720)/reduced=false: original upward intention and interpolation remain present\",\"idle_move/(568, 320)/reduced=true: original upward intention and interpolation remain present\",\"idle_move/(1280, 720)/reduced=true: original upward intention and interpolation remain present\"]"
+      ],
+      "failed_check_lines": [
+        "CAMERA400_BOUNDS_FAILED_CHECKS 4"
+      ],
+      "engine_banners": 1,
+      "has_script_error": false
+    },
+    "red-old-production.log": {
+      "bytes": 22385,
+      "sha256": "1a3b4eed23e34bfe6437fc99829734e1b2777b7914554fa774eebad0cdbed95c",
+      "complete_lines": [
+        "[camera400-backdrop] FAIL: 38842 checks [\"idle_move/(390, 844)/reduced=false: real camera introduces no paper outside baseline coverage\",\"idle_move/(360, 640)/reduced=false: real camera introduces no paper outside baseline coverage\",\"idle_move/(568, 320)/reduced=false: real camera introduces no paper outside baseline coverage\",\"idle_move/(568, 320)/reduced=false: original upward intention and interpolation remain present\",\"idle_move/(1280, 720)/reduced=false: real camera introduces no paper outside baseline coverage\",\"idle_move/(1280, 720)/reduced=false: original upward intention and interpolation remain present\",\"world_edge/90.0/reduced=false: real camera introduces no paper outside baseline coverage\",\"world_edge/1190.0/reduced=false: real camera introduces no paper outside baseline coverage\",\"natural_expiry_and_resize/reduced=false: real camera introduces no paper outside baseline coverage\",\"real_goose_takeover/reduced=false: real camera introduces no paper outside baseline coverage\",\"idle_move/(390, 844)/reduced=true: real camera introduces no paper outside baseline coverage\",\"idle_move/(360, 640)/reduced=true: real camera introduces no paper outside baseline coverage\",\"idle_move/(568, 320)/reduced=true: real camera introduces no paper outside baseline coverage\",\"idle_move/(568, 320)/reduced=true: original upward intention and interpolation remain present\",\"idle_move/(1280, 720)/reduced=true: real camera introduces no paper outside baseline coverage\",\"idle_move/(1280, 720)/reduced=true: original upward intention and interpolation remain present\",\"world_edge/90.0/reduced=true: real camera introduces no paper outside baseline coverage\",\"world_edge/1190.0/reduced=true: real camera introduces no paper outside baseline coverage\",\"natural_expiry_and_resize/reduced=true: real camera introduces no paper outside baseline coverage\",\"real_goose_takeover/reduced=true: real camera introduces no paper outside baseline coverage\"]"
+      ],
+      "failed_check_lines": [
+        "CAMERA400_BOUNDS_FAILED_CHECKS 2018"
+      ],
+      "engine_banners": 1,
+      "has_script_error": false
+    },
+    "import-old.log": {
+      "bytes": 36274,
+      "sha256": "b89a6c95a64234a8a9c402108726de5942a13afe37d59aec7cf4d7acae53d2e3",
+      "complete_lines": [],
+      "failed_check_lines": [],
+      "engine_banners": 1,
+      "has_script_error": false
+    }
+  },
+  "short-v3": {
+    "red-old-production.log": {
+      "bytes": 760452,
+      "sha256": "a44ebc14fed7a892717f68c90a43d25093c8125d59e6b2043174b5ce32d13340",
+      "complete_lines": [],
+      "failed_check_lines": [],
+      "engine_banners": 1,
+      "has_script_error": true
+    }
+  },
+  "short-v4": {
+    "green-candidate.log": {
+      "bytes": 7306,
+      "sha256": "aebc9c6f0c38a5e388733c21ab50ef8ef2398d84681d08bc772d6a22b856ffc1",
+      "complete_lines": [
+        "[camera400-backdrop] PASS: 38860 checks []"
+      ],
+      "failed_check_lines": [
+        "CAMERA400_BOUNDS_FAILED_CHECKS 0"
+      ],
+      "engine_banners": 1,
+      "has_script_error": false
+    },
+    "red-old-production.log": {
+      "bytes": 19889,
+      "sha256": "7fc4dd162871af677d918d4ba645d1278683f93a0a4db47e7db786cfa7d917b5",
+      "complete_lines": [
+        "[camera400-backdrop] FAIL: 38842 checks [\"idle_move/(390, 844)/reduced=false: real camera introduces no paper outside baseline coverage\",\"idle_move/(360, 640)/reduced=false: real camera introduces no paper outside baseline coverage\",\"idle_move/(568, 320)/reduced=false: real camera introduces no paper outside baseline coverage\",\"idle_move/(1280, 720)/reduced=false: real camera introduces no paper outside baseline coverage\",\"world_edge/90.0/reduced=false: real camera introduces no paper outside baseline coverage\",\"world_edge/1190.0/reduced=false: real camera introduces no paper outside baseline coverage\",\"natural_expiry_and_resize/reduced=false: real camera introduces no paper outside baseline coverage\",\"real_goose_takeover/reduced=false: real camera introduces no paper outside baseline coverage\",\"idle_move/(390, 844)/reduced=true: real camera introduces no paper outside baseline coverage\",\"idle_move/(360, 640)/reduced=true: real camera introduces no paper outside baseline coverage\",\"idle_move/(568, 320)/reduced=true: real camera introduces no paper outside baseline coverage\",\"idle_move/(1280, 720)/reduced=true: real camera introduces no paper outside baseline coverage\",\"world_edge/90.0/reduced=true: real camera introduces no paper outside baseline coverage\",\"world_edge/1190.0/reduced=true: real camera introduces no paper outside baseline coverage\",\"natural_expiry_and_resize/reduced=true: real camera introduces no paper outside baseline coverage\",\"real_goose_takeover/reduced=true: real camera introduces no paper outside baseline coverage\"]"
+      ],
+      "failed_check_lines": [
+        "CAMERA400_BOUNDS_FAILED_CHECKS 2014"
+      ],
+      "engine_banners": 1,
+      "has_script_error": false
+    },
+    "import-old.log": {
+      "bytes": 10330,
+      "sha256": "c61b057ef9faa62f216f17287d911d5e5ff91632cda4e56d2b1e16ebc596e0aa",
+      "complete_lines": [],
+      "failed_check_lines": [],
+      "engine_banners": 1,
+      "has_script_error": false
+    }
+  },
+  "full-v1": {
+    "daily.log": {
+      "bytes": 16199,
+      "sha256": "3f148277b1c924f2683b7de94665209721754e44e02ddb342f32ea5e616e5734",
+      "complete_lines": [],
+      "failed_check_lines": [],
+      "engine_banners": 9,
+      "has_script_error": false
+    }
+  }
+}

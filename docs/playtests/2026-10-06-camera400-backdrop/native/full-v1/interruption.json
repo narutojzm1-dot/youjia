@@ -1,0 +1,15 @@
+{
+  "utc": "2026-10-06T00:31:34.092576+00:00",
+  "reason": "Independent pre-review found latent quiet offset jump; daily blocked from further launches then terminated only its own current child",
+  "prior_pid_469474": "already completed before signal; no signal delivered",
+  "signals": [
+    {
+      "pid": 469876,
+      "args": "/tmp/youjia-h2-bridge-bin/Godot_v4.7.2-stable_linux.x86_64 --headless --path . --script res://test/explicit_target_suite.gd",
+      "signal": "SIGTERM"
+    }
+  ],
+  "daily_parent": 468450,
+  "export_run": false,
+  "browser_run": false
+}

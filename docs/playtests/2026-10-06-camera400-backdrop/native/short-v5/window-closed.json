@@ -1,0 +1,37 @@
+{
+  "closed": "2026-10-06T00:53:14.774050+00:00",
+  "results": [
+    {
+      "name": "import-old",
+      "direct_exit": 0,
+      "started": "2026-10-06T00:52:31.263347+00:00",
+      "closed": "2026-10-06T00:52:36.580061+00:00",
+      "seconds": 5.316724905977026
+    },
+    {
+      "name": "red-old-production",
+      "direct_exit": 1,
+      "started": "2026-10-06T00:52:36.580647+00:00",
+      "closed": "2026-10-06T00:52:49.115687+00:00",
+      "seconds": 12.535053512023296
+    },
+    {
+      "name": "red-guard-before-rebase",
+      "direct_exit": 1,
+      "started": "2026-10-06T00:52:49.133681+00:00",
+      "closed": "2026-10-06T00:53:01.588305+00:00",
+      "seconds": 12.45464304095367
+    },
+    {
+      "name": "green-candidate",
+      "direct_exit": 0,
+      "started": "2026-10-06T00:53:01.588912+00:00",
+      "closed": "2026-10-06T00:53:14.772905+00:00",
+      "seconds": 13.184006570023485
+    }
+  ],
+  "production_restored_to_candidate": true,
+  "browser_started": false,
+  "full_gate_run": false,
+  "export_run": false
+}

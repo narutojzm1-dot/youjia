@@ -1,0 +1,213 @@
+{
+  "method": "Read-only full PNG diagnostic: for each viewport use a narrow vertical strip outside top HUD, compare initial rows to that image existing lower/side flat paper RGB with max channel tolerance2. Records only leading flat-paper strip rows, not a semantic full-screen segmentation or absence-of-defect proof. All full images were visually reviewed. Existing landscape left/right blank areas are intentionally outside this interior-image strip.",
+  "results": [
+    {
+      "image": "landscape-01-reflow-baseline.png",
+      "sample_x_half_open": [
+        419,
+        427
+      ],
+      "reference_paper_rgb": [
+        254,
+        245,
+        225
+      ],
+      "leading_contiguous_paper_rows_tolerance2": 0
+    },
+    {
+      "image": "landscape-02-after-release-28000.png",
+      "sample_x_half_open": [
+        419,
+        427
+      ],
+      "reference_paper_rgb": [
+        254,
+        245,
+        226
+      ],
+      "leading_contiguous_paper_rows_tolerance2": 0
+    },
+    {
+      "image": "landscape-03-after-release-30000.png",
+      "sample_x_half_open": [
+        419,
+        427
+      ],
+      "reference_paper_rgb": [
+        254,
+        245,
+        226
+      ],
+      "leading_contiguous_paper_rows_tolerance2": 0
+    },
+    {
+      "image": "landscape-04-after-release-32000.png",
+      "sample_x_half_open": [
+        419,
+        427
+      ],
+      "reference_paper_rgb": [
+        254,
+        245,
+        226
+      ],
+      "leading_contiguous_paper_rows_tolerance2": 0
+    },
+    {
+      "image": "landscape-05-after-release-34000.png",
+      "sample_x_half_open": [
+        419,
+        427
+      ],
+      "reference_paper_rgb": [
+        254,
+        245,
+        226
+      ],
+      "leading_contiguous_paper_rows_tolerance2": 0
+    },
+    {
+      "image": "landscape-06-after-movement.png",
+      "sample_x_half_open": [
+        419,
+        427
+      ],
+      "reference_paper_rgb": [
+        254,
+        245,
+        226
+      ],
+      "leading_contiguous_paper_rows_tolerance2": 0
+    },
+    {
+      "image": "landscape-07-settled.png",
+      "sample_x_half_open": [
+        419,
+        427
+      ],
+      "reference_paper_rgb": [
+        254,
+        245,
+        227
+      ],
+      "leading_contiguous_paper_rows_tolerance2": 0
+    },
+    {
+      "image": "portrait-01-entered.png",
+      "sample_x_half_open": [
+        0,
+        8
+      ],
+      "reference_paper_rgb": [
+        254,
+        245,
+        224
+      ],
+      "leading_contiguous_paper_rows_tolerance2": 0
+    },
+    {
+      "image": "portrait-02-stillness-5500.png",
+      "sample_x_half_open": [
+        0,
+        8
+      ],
+      "reference_paper_rgb": [
+        254,
+        245,
+        224
+      ],
+      "leading_contiguous_paper_rows_tolerance2": 0
+    },
+    {
+      "image": "portrait-03-stillness-6500.png",
+      "sample_x_half_open": [
+        0,
+        8
+      ],
+      "reference_paper_rgb": [
+        254,
+        245,
+        224
+      ],
+      "leading_contiguous_paper_rows_tolerance2": 0
+    },
+    {
+      "image": "portrait-04-stillness-8000.png",
+      "sample_x_half_open": [
+        0,
+        8
+      ],
+      "reference_paper_rgb": [
+        254,
+        245,
+        224
+      ],
+      "leading_contiguous_paper_rows_tolerance2": 0
+    },
+    {
+      "image": "portrait-05-after-movement.png",
+      "sample_x_half_open": [
+        0,
+        8
+      ],
+      "reference_paper_rgb": [
+        254,
+        245,
+        224
+      ],
+      "leading_contiguous_paper_rows_tolerance2": 0
+    },
+    {
+      "image": "portrait-06-settled.png",
+      "sample_x_half_open": [
+        0,
+        8
+      ],
+      "reference_paper_rgb": [
+        254,
+        245,
+        225
+      ],
+      "leading_contiguous_paper_rows_tolerance2": 0
+    },
+    {
+      "image": "portrait-07-reflow-back.png",
+      "sample_x_half_open": [
+        0,
+        8
+      ],
+      "reference_paper_rgb": [
+        254,
+        245,
+        227
+      ],
+      "leading_contiguous_paper_rows_tolerance2": 0
+    },
+    {
+      "image": "portrait-08-target-feedback.png",
+      "sample_x_half_open": [
+        0,
+        8
+      ],
+      "reference_paper_rgb": [
+        254,
+        246,
+        231
+      ],
+      "leading_contiguous_paper_rows_tolerance2": 0
+    },
+    {
+      "image": "portrait-09-target-settled.png",
+      "sample_x_half_open": [
+        0,
+        8
+      ],
+      "reference_paper_rgb": [
+        254,
+        246,
+        231
+      ],
+      "leading_contiguous_paper_rows_tolerance2": 0
+    }
+  ]
+}

@@ -120,6 +120,12 @@ run_case camera-late-error block 0 "$camera_complete"$'\nERROR: simulated late e
 run_case camera-late-fail block 0 "$camera_complete"$'\nFAIL: simulated late assertion' none suite "$camera_entry"
 run_case camera-truncated-summary block 0 '[camera400-handoff] PASS: 204 checks' none suite "$camera_entry"
 echo "CAMERA400 COMPLETION CONTRACT PASS $((checks-camera_start))"
+# The new entry must retain the shared positive-count/empty-failures contract.
+bounds_entry=test/camera400_backdrop_suite.gd
+run_case bounds-complete pass 0 '[camera400-backdrop] PASS: 1 checks []' none suite "$bounds_entry"
+run_case bounds-zero block 0 '[camera400-backdrop] PASS: 0 checks []' none suite "$bounds_entry"
+run_case bounds-failure-list block 0 '[camera400-backdrop] PASS: 1 checks ["exposed art"]' none suite "$bounds_entry"
+run_case bounds-wrong-suite block 0 '[camera400-handoff] PASS: 1 checks []' none suite "$bounds_entry"
 # Imports legitimately have no test summary. Their independent process/log
 # contract remains strict; the importer must not fabricate a suite PASS line.
 run_case import-empty pass 0 '' none import ''
