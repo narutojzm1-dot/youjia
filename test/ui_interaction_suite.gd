@@ -175,56 +175,57 @@ func review():
  touch_button("_album_back_button");await frames(1)
  check(not main._album_screen.visible and w.input_enabled and main._hud.visible,"actual album close restores yard HUD and walking")
  root.size=Vector2i(1280,720);await frames(2);main._layout()
+ root.get_node("TuningStore").set_value("ui.reduced_motion", true)
  var before=w._backdrop.texture
  var before_scale=w._backdrop.scale
  var walk=w._player.walk_ground.duplicate()
  w.toggle_weather()
- check(w.weather=="overcast" and w._backdrop.texture==w.OVERCAST and w._backdrop.texture!=before,"overcast uses the painted overcast yard")
+ check(w.weather=="overcast" and w._weather_backdrop_blend.texture==w.OVERCAST and is_equal_approx(w._weather_mix,1.0) and w._backdrop.texture==before,"overcast uses the painted overcast yard")
  check(before_scale==w._backdrop.scale and walk==w._player.walk_ground,"weather preserves backdrop scale and collision")
  # 云带 B：阴天换阴云帧，且不改碰撞。
- check(w._cloud_band_a!=null and w._cloud_band_a.texture==w.CLOUD_OVERCAST,"overcast swaps the overcast cloud band")
+ check(w._weather_cloud_pair()[0]!=null and w._weather_cloud_pair()[0].texture==w.CLOUD_OVERCAST,"overcast swaps the overcast cloud band")
  w.toggle_weather()
  w._day_elapsed = w.DAY_DURATION_SECONDS * 0.40
  w._apply_weather_art()
  check(w.weather=="sun" and w._backdrop.texture==w.SUNNY,"sun restores the painted sunny yard")
- check(w._cloud_band_a.texture==w.CLOUD_SUNNY,"sun restores the sunny cloud band")
+ check(w._weather_cloud_pair()[0].texture==w.CLOUD_SUNNY,"sun restores the sunny cloud band")
  # 早晨薄云：晴天 TOD dawn/morning；阴天不抢。
  w._day_elapsed = w.DAY_DURATION_SECONDS * 0.18
  w._apply_weather_art()
- check(w._cloud_band_a.texture==w.CLOUD_MORNING,"sunny morning uses the thinner morning cloud band")
+ check(w._weather_cloud_pair()[0].texture==w.CLOUD_MORNING,"sunny morning uses the thinner morning cloud band")
  w._day_elapsed = 0.0
  w._apply_weather_art()
- check(w._cloud_band_a.texture==w.CLOUD_MORNING,"sunny dawn uses the morning cloud band")
+ check(w._weather_cloud_pair()[0].texture==w.CLOUD_MORNING,"sunny dawn uses the morning cloud band")
  w.toggle_weather()
- check(w.weather=="overcast" and w._cloud_band_a.texture==w.CLOUD_OVERCAST,"overcast morning keeps the overcast cloud band")
+ check(w.weather=="overcast" and w._weather_cloud_pair()[0].texture==w.CLOUD_OVERCAST,"overcast morning keeps the overcast cloud band")
  w.toggle_weather()
  w._day_elapsed = w.DAY_DURATION_SECONDS * 0.40
  w._apply_weather_art()
- check(w.weather=="sun" and w._cloud_band_a.texture==w.CLOUD_SUNNY,"sunny noon restores the bright cloud band after morning")
+ check(w.weather=="sun" and w._weather_cloud_pair()[0].texture==w.CLOUD_SUNNY,"sunny noon restores the bright cloud band after morning")
  # 晴天云带 modulate 应偏亮，不跟院子暖滤色一起变脏。
- check(w._cloud_band_a.modulate.r >= 1.0 and w._cloud_band_a.modulate.g >= 1.0,"sunny cloud band stays bright instead of dirty warm tint")
+ check(w._weather_cloud_pair()[0].modulate.r >= 1.0 and w._weather_cloud_pair()[0].modulate.g >= 1.0,"sunny cloud band stays bright instead of dirty warm tint")
  # 傍晚暖云：只在晴天 TOD evening 窗口换帧；阴天不抢。
  w._day_elapsed = w.DAY_DURATION_SECONDS * 0.80
  w._apply_weather_art()
- check(w._cloud_band_a.texture==w.CLOUD_SUNSET,"sunny evening uses the warm sunset cloud band")
+ check(w._weather_cloud_pair()[0].texture==w.CLOUD_SUNSET,"sunny evening uses the warm sunset cloud band")
  w.toggle_weather()
- check(w.weather=="overcast" and w._cloud_band_a.texture==w.CLOUD_OVERCAST,"overcast evening keeps the overcast cloud band")
+ check(w.weather=="overcast" and w._weather_cloud_pair()[0].texture==w.CLOUD_OVERCAST,"overcast evening keeps the overcast cloud band")
  w.toggle_weather()
  w._day_elapsed = w.DAY_DURATION_SECONDS * 0.40
  w._apply_weather_art()
- check(w.weather=="sun" and w._cloud_band_a.texture==w.CLOUD_SUNNY,"sunny noon restores the bright cloud band")
+ check(w.weather=="sun" and w._weather_cloud_pair()[0].texture==w.CLOUD_SUNNY,"sunny noon restores the bright cloud band")
  # 夜里仍用晴天云形，但 modulate 压暗偏冷，不把正午暖白带到夜空。
  w._day_elapsed = w.DAY_DURATION_SECONDS * 0.92
  w._apply_weather_art()
- check(w._cloud_band_a.texture==w.CLOUD_SUNNY,"sunny night keeps the daytime cloud shape")
- var night_mod: Color = w._cloud_band_a.modulate
+ check(w._weather_cloud_pair()[0].texture==w.CLOUD_SUNNY,"sunny night keeps the daytime cloud shape")
+ var night_mod: Color = w._weather_cloud_pair()[0].modulate
  check(night_mod.r < 1.0 and night_mod.b > night_mod.r,"sunny night clouds are cooler and dimmer than noon")
  w.toggle_weather()
- check(w.weather=="overcast" and w._cloud_band_a.texture==w.CLOUD_OVERCAST,"overcast night keeps the overcast cloud band")
+ check(w.weather=="overcast" and w._weather_cloud_pair()[0].texture==w.CLOUD_OVERCAST,"overcast night keeps the overcast cloud band")
  w.toggle_weather()
  w._day_elapsed = w.DAY_DURATION_SECONDS * 0.40
  w._apply_weather_art()
- check(w._cloud_band_a.modulate.r >= 1.0,"sunny noon after night restores the bright cloud band")
+ check(w._weather_cloud_pair()[0].modulate.r >= 1.0,"sunny noon after night restores the bright cloud band")
  # 低动效：云带保持可读静止帧（滚动偏移不再增加）。
  # 本套件以 SceneTree 运行，须经 root 取 TuningStore 节点。
  var scroll_before=w._cloud_scroll

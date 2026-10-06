@@ -10,7 +10,7 @@ func _initialize() -> void:
 func _verify() -> void:
 	_check(ProjectSettings.get_setting("application/config/name") == "悠长的假期", "exported identity")
 	for path: String in [
-		"environment/yard_sunny.png", "environment/yard_overcast.png",
+		"environment/yard_sunny.png", "environment/yard_overcast.png", "environment/yard_overcast_aligned.png",
 		"characters/llama.png", "characters/llama_annoyed.png", "characters/llama_happy.png",
 		"characters/llama_smirk.png", "characters/goose.png", "characters/cow.png",
 		"characters/duck.png", "characters/player.png", "fx/felt_spit.png", "ui/polaroid_frame.png",

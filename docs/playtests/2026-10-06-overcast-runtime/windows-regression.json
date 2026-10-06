@@ -1,0 +1,38 @@
+[
+  {
+    "suite": "weather_transition",
+    "exit": 0,
+    "errors": 0,
+    "completion": "Weather transition suite passed: 24 checks"
+  },
+  {
+    "suite": "ui_interaction",
+    "exit": 0,
+    "errors": 0,
+    "completion": "[ui-interaction-tests] checks=63 failures=[]"
+  },
+  {
+    "suite": "photo_moment_render",
+    "exit": 0,
+    "errors": 0,
+    "completion": "[photo-moment-tests] PASS: 1395 checks"
+  },
+  {
+    "suite": "photo_moment_save",
+    "exit": 0,
+    "errors": 0,
+    "completion": "[photo-moment-save-tests] PASS: 49 checks []"
+  },
+  {
+    "suite": "yard_snapshot",
+    "exit": 2,
+    "errors": 0,
+    "completion": ""
+  },
+  {
+    "suite": "camera400_handoff",
+    "exit": 2,
+    "errors": 1,
+    "completion": ""
+  }
+]

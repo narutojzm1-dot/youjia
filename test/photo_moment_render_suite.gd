@@ -24,6 +24,7 @@ func _run() -> void:
 	_gallery.size = Vector2(1280, 720)
 	root.add_child(_gallery)
 	_test_invalid()
+	_test_weather_layer()
 	var index := 0
 	for rule: Dictionary in ExpressionCatalog.RULES:
 		if not bool(rule.get("polaroid", false)): continue
@@ -40,6 +41,56 @@ func _run() -> void:
 			push_error("[photo-moment-tests] " + failure)
 		print("[photo-moment-tests] FAIL: %d failures across %d checks" % [_failures.size(), _checks])
 	if not _preview: quit(0 if _failures.is_empty() else 1)
+
+
+func _test_weather_layer() -> void:
+	var world_script: Script = load("res://scripts/game/yard_world.gd")
+	_check(world_script != null and world_script.can_instantiate(), "weather fixture yard compiles")
+	if world_script == null or not world_script.can_instantiate(): return
+	var world = world_script.new()
+	root.add_child(world)
+	world.setup()
+	var layer := world.get_node_or_null("WeatherBackdropBlend") as Sprite2D
+	if layer == null:
+		layer = Sprite2D.new()
+		layer.name = "WeatherBackdropBlend"
+		world.add_child(layer)
+	layer.texture = load("res://assets/holiday/environment/yard_overcast.png")
+	layer.centered = false
+	layer.scale = world._backdrop.scale
+	layer.modulate = Color(0.96, 0.95, 0.98, 0.375)
+	layer.visible = true
+	layer.z_index = -1
+	var snapshot := Moment.capture(world, ExpressionCatalog.find_rule("llama_fed_gentle"))
+	_check(not snapshot.is_empty(), "weather transition captures using version-one fields")
+	var recorded: Dictionary = {}
+	for item: Dictionary in snapshot.get("items", []):
+		if item.subject == "weather_background": recorded = item
+	_check(not recorded.is_empty(), "named live weather layer is captured separately")
+	if recorded.is_empty():
+		world.free()
+		return
+	_check(is_equal_approx(float(recorded.modulate[3]), 0.375), "capture retains exact transition alpha")
+	layer.modulate.a = 0.9
+	var restored := Moment.sanitize(JSON.parse_string(JSON.stringify(snapshot)))
+	var card := Moment.new()
+	card.setup(restored)
+	var found := false
+	for visual: Node in card._stage.get_children():
+		if visual.get_meta("subject", "") == "weather_background":
+			found = true
+			_check(visual.get_index() > card._ground.get_index() and visual.get_index() < card._shadows.get_index(), "weather paint replays after base but before contact shadows")
+			_check(is_equal_approx(visual.modulate.a, 0.375), "replayed weather alpha is frozen despite live layer changing")
+		elif visual.get_meta("subject", "") == "weather_cloud":
+			_check(visual.get_index() > card._ground.get_index() and visual.get_index() < card._shadows.get_index(), "captured weather clouds stay below contact shadows")
+		elif visual.has_meta("subject"):
+			_check(visual.get_index() > card._shadows.get_index(), "ordinary and legacy negative-depth items retain their placement after shadows")
+	_check(found, "weather layer survives JSON restoration and card creation")
+	card.free()
+	layer.hide()
+	var legacy := Moment.capture(world, ExpressionCatalog.find_rule("llama_fed_gentle"))
+	_check(not legacy.is_empty() and not _has_subject(legacy, "weather_background"), "hidden weather layer preserves ordinary legacy capture")
+	world.free()
 
 
 func _test_event(rule: Dictionary, index: int) -> void:
@@ -167,7 +218,7 @@ func _test_event(rule: Dictionary, index: int) -> void:
 	_gallery.add_child(card)
 	_check(card.clip_contents, "card clips contents")
 	_check(card._stage.process_mode == Node.PROCESS_MODE_DISABLED, "card has no active simulation")
-	_check(card._stage.get_child_count() == snapshot.items.size() + 1, "one static primitive per recorded item")
+	_check(card._stage.get_child_count() == snapshot.items.size() + 2, "one static primitive per recorded item plus background and shadows")
 	for child: CanvasItem in card._stage.get_children():
 		_check(child.z_index == 0 and child.z_as_relative, "yard z ordering cannot escape the card")
 		_check(not child is AnimatedSprite2D, "hero is a static selected frame")
