@@ -1,0 +1,47 @@
+{
+  "checked_at_utc": "2026-10-06T00:23:14.111907+00:00",
+  "scope": "offline documentation/raw-evidence validation only; no browser, engine, export or release rerun",
+  "base_main": "b9f68c3c5c4e70e16cefde9b4400bb1d553ff915",
+  "tested_public_runtime": "49596fa93bff3c29edfe441898017158c6e469a3",
+  "all_staged_paths_under_docs": true,
+  "full_git_diff_cached_check": {
+    "exit_code": 2,
+    "warnings": [
+      "docs/playtests/2026-10-06-loading167-acceptance/first-attempt/desktop-normal-before-index.html:243: new blank line at EOF.",
+      "docs/playtests/2026-10-06-loading167-acceptance/six-case-matrix/desktop-normal-after-index.html:243: new blank line at EOF.",
+      "docs/playtests/2026-10-06-loading167-acceptance/six-case-matrix/desktop-normal-before-index.html:243: new blank line at EOF.",
+      "docs/playtests/2026-10-06-loading167-acceptance/six-case-matrix/desktop-reduce-after-index.html:243: new blank line at EOF.",
+      "docs/playtests/2026-10-06-loading167-acceptance/six-case-matrix/desktop-reduce-before-index.html:243: new blank line at EOF.",
+      "docs/playtests/2026-10-06-loading167-acceptance/six-case-matrix/landscape-normal-after-index.html:243: new blank line at EOF.",
+      "docs/playtests/2026-10-06-loading167-acceptance/six-case-matrix/landscape-normal-before-index.html:243: new blank line at EOF.",
+      "docs/playtests/2026-10-06-loading167-acceptance/six-case-matrix/landscape-reduce-after-index.html:243: new blank line at EOF.",
+      "docs/playtests/2026-10-06-loading167-acceptance/six-case-matrix/landscape-reduce-before-index.html:243: new blank line at EOF.",
+      "docs/playtests/2026-10-06-loading167-acceptance/six-case-matrix/portrait-normal-after-index.html:243: new blank line at EOF.",
+      "docs/playtests/2026-10-06-loading167-acceptance/six-case-matrix/portrait-normal-before-index.html:243: new blank line at EOF.",
+      "docs/playtests/2026-10-06-loading167-acceptance/six-case-matrix/portrait-reduce-after-index.html:243: new blank line at EOF.",
+      "docs/playtests/2026-10-06-loading167-acceptance/six-case-matrix/portrait-reduce-before-index.html:243: new blank line at EOF."
+    ],
+    "interpretation": "13 downloaded raw HTML EOF blank-line warnings; original evidence bytes intentionally preserved, not authored whitespace defects"
+  },
+  "non_html_git_diff_cached_check": {
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "raw_copies": {
+    "first_attempt_exact_files": 13,
+    "six_case_matrix_exact_files": 71,
+    "all_compared_byte_for_byte_to_frozen_originals": true
+  },
+  "png_counts": {
+    "failed_first_attempt": 7,
+    "successful_six_case_matrix": 42
+  },
+  "original_three_checksums_verified": true,
+  "json_parse_count_before_this_record": 22,
+  "readme_plan_relative_links_resolve": true,
+  "credential_patterns_found": 0,
+  "v1_outer_exit": 1,
+  "v2_outer_exit": 0,
+  "final_sha_independent_review": "pending; not claimed here"
+}

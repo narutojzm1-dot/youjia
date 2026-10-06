@@ -1451,3 +1451,14 @@ CODEX-LEAD按[6005299861窄协助范围](https://github.com/narutojzm1-dot/youji
 v1原160检查红绿均保留；独审指出其hold3.25<预热3.5，没有覆盖旧quiet仍活跃时接管。v2补normal/reduced实际剩0.4s的同tick新focus/no-release正例，相同测试blob原代码FAIL202/34失败、修正PASS202；runner误估204后按真实202续跑，原失败不抹去。新增完成行14个fake受控例使总数64，两个独立合法行仍允许，不声称wrapper唯一性。完整33bd组合含PR464原作者和74既有套件，加camera至75套/76启动、2Node、11项Python、本地publisher及Web实际exit0。随后只增加已合main49596真实祖先，整树不变，不因docs重跑引擎。原件、来源、候选PCK及边界见[归档](playtests/2026-10-06-camera400-handoff/README.md)。
 
 此仅Leader共享框架子片，不接管Producer对#400原截图与构图的总体验收，不改Main输入/背景/探索。独立QA候选390普通静观→真实ArrowRight→回稳有限通过，manifest/PCK/十模块前后实核；静观顶部y112/y138浅纸空带是另一个未通过构图的遗留，不冒原截图同因、不在本片越界修布局。普通短窗口未覆盖自然鹅马预热和同tick交叉链。最终完整SHA独审、真实PR CI、合入与公开后验依次留痕，未完成环节不冒已发布；本PR只Refs #400。
+
+
+### 2026-10-06 #167 同构建加载专项的独立QA协助收尾
+
+按[6005985387](https://github.com/narutojzm1-dot/youjia/issues/167#issuecomment-6005985387)，CODEX-LEAD委派gate130_completion补原加载余项，原实现Assistant与GAME-QA专业角色保留，不冒GAME-QA本人。184/185实现/发布和ART旧认可、341技术矩阵、370本人桌面003通过均保留，不继续说“QA完全未复测”；185已过的受控PCK路径不被341单次未得失败按钮的试验否定。
+
+固定公开source49596fa93bff3c29edfe441898017158c6e469a3/game-49596fa，在一个Chromium151.0.7922.173串行六fresh：1280×720、390×844、844×390×浏览器no-preference/reduce。每例真实JS请求一次abort→页面错误→实际DOM重试reload，恢复WASM真实请求hold至少4秒拍加载帧，再真实first-frame/壳隐藏→普通标题鼠标入院；没有DOM假错误或Tuning/游戏状态注入。六case42原PNG、12次前后公开PCK完整下载均27,090,652B/c851ac2b66ef6bba5211b7ba8488173c6b6a336ee7508d6150a5f5ccd488f930，十模块/许可及HTML一致；每case唯一预期网络错误与对应两console error逐条留痕，pageerror空/非预期错误不忽略。恢复十模块浏览器body实际hash，PCK浏览器仅loaded URL/200/cache/传输量、hash来自独立HTTP，不能混称。
+
+首次desktop采集器在UI已入院后因旧导航模块body失效/PCK inspector cache逐出退出1，00:05:58Z已关，原七图和失败全部保留；仅一次有界取证修正后新六fresh完成，实际outer0、00:14:06Z全部关闭。DOM在截图后读取，实时进度差不冒同帧像素值；reduce静态CSS/双帧/独立ROI说明采样无新增缩放闪烁，不作每帧保证。[完整证据、原范围映射与边界](playtests/2026-10-06-loading167-acceptance/README.md)。本docs基线b9f包含后续camera465，不能把本次49596体验转记它已验。
+
+本次未改runtime/素材/玩法，不重复Godot/Web导出或发布。三尺寸与reduce加载专项原范围实测满足，待最终证据SHA独立审核后由Leader核定收口，当前不提前关闭#167；真机/其他浏览器/DPR、自然慢网性能、听验、全部存档/所有关卡未覆盖准确保留，不新增为原视觉缺陷永久门槛。
