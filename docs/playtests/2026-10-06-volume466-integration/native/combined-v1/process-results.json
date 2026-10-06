@@ -1,0 +1,50 @@
+[
+  {
+    "name": "import",
+    "command": [
+      "/tmp/youjia-godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+      "--headless",
+      "--path",
+      "/dev/shm/youjia-volume466",
+      "--editor",
+      "--import",
+      "--quit"
+    ],
+    "started": "2026-10-06T01:03:05.585985+00:00",
+    "source": "49cf808ae6854406851592301e843bb557639500",
+    "ended": "2026-10-06T01:03:11.916247+00:00",
+    "direct_exit": 0,
+    "log": "import.log",
+    "log_bytes": 3082,
+    "log_sha256": "86fef07b28e62aa182a65a2bd1bbe3dbf02a25f94748f090ae35bc107cfd8afc",
+    "strict_error_scan_exit": 1,
+    "strict_error_lines": [],
+    "verified": true
+  },
+  {
+    "name": "exploration-slice",
+    "command": [
+      "/tmp/youjia-godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+      "--headless",
+      "--path",
+      "/dev/shm/youjia-volume466",
+      "--script",
+      "res://test/exploration_slice_suite.gd"
+    ],
+    "started": "2026-10-06T01:03:11.918616+00:00",
+    "source": "49cf808ae6854406851592301e843bb557639500",
+    "ended": "2026-10-06T01:03:15.891923+00:00",
+    "direct_exit": 0,
+    "log": "exploration-slice.log",
+    "log_bytes": 116,
+    "log_sha256": "b30af38eca8451b1ab1d96d109f4f5316ad102a949a4e32610e08923bcf46412",
+    "strict_error_scan_exit": 1,
+    "strict_error_lines": [],
+    "completion_pattern": "EXPLORATION SLICE PASS ([1-9][0-9]*)/\\1 failures=\\[\\]",
+    "completion_exit": 0,
+    "completion_lines": [
+      "EXPLORATION SLICE PASS 278/278 failures=[]"
+    ],
+    "verified": true
+  }
+]

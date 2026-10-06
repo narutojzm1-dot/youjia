@@ -1,0 +1,368 @@
+{
+  "scope": "Single ordinary public 390x844 DPR1 no-preference smoke for PR454 photo mat and released PR451 pressed/confirmation, not PR455 disabled styles",
+  "runtime_source": "a0bb75e38e59032a6df72a2122af4403c3c3e816",
+  "entry": "game-a0bb75e",
+  "pck": {
+    "bytes": 27089100,
+    "sha256": "111de88653ff4c327a98009062b7b6ba1bea35c51946107041481f45f4b4770e"
+  },
+  "binding_count": 4,
+  "module_count_per_binding": [
+    10,
+    10,
+    10,
+    10
+  ],
+  "photo": {
+    "visually_verified_full_hold_files": [
+      "02-natural-photo-02.png",
+      "02-natural-photo-03.png"
+    ],
+    "sample_points_css_pixels": {
+      "left": [
+        96,
+        390
+      ],
+      "right": [
+        295,
+        390
+      ],
+      "top": [
+        195,
+        294
+      ],
+      "bottom": [
+        195,
+        493
+      ]
+    },
+    "expected_rgb": [
+      243,
+      227,
+      203
+    ],
+    "frames": [
+      {
+        "file": "02-natural-photo-00.png",
+        "paper_rgbs": {
+          "left": [
+            231,
+            195,
+            146
+          ],
+          "right": [
+            203,
+            167,
+            130
+          ],
+          "top": [
+            235,
+            193,
+            140
+          ],
+          "bottom": [
+            116,
+            101,
+            73
+          ]
+        }
+      },
+      {
+        "file": "02-natural-photo-01.png",
+        "paper_rgbs": {
+          "left": [
+            231,
+            195,
+            146
+          ],
+          "right": [
+            203,
+            167,
+            130
+          ],
+          "top": [
+            235,
+            193,
+            140
+          ],
+          "bottom": [
+            116,
+            101,
+            73
+          ]
+        }
+      },
+      {
+        "file": "02-natural-photo-02.png",
+        "paper_rgbs": {
+          "left": [
+            243,
+            227,
+            203
+          ],
+          "right": [
+            243,
+            227,
+            203
+          ],
+          "top": [
+            243,
+            227,
+            203
+          ],
+          "bottom": [
+            243,
+            227,
+            203
+          ]
+        }
+      },
+      {
+        "file": "02-natural-photo-03.png",
+        "paper_rgbs": {
+          "left": [
+            243,
+            227,
+            203
+          ],
+          "right": [
+            243,
+            227,
+            203
+          ],
+          "top": [
+            243,
+            227,
+            203
+          ],
+          "bottom": [
+            243,
+            227,
+            203
+          ]
+        }
+      },
+      {
+        "file": "02-natural-photo-04.png",
+        "paper_rgbs": {
+          "left": [
+            242,
+            223,
+            196
+          ],
+          "right": [
+            238,
+            219,
+            194
+          ],
+          "top": [
+            242,
+            223,
+            195
+          ],
+          "bottom": [
+            227,
+            211,
+            186
+          ]
+        }
+      },
+      {
+        "file": "02-natural-photo-05.png",
+        "paper_rgbs": {
+          "left": [
+            231,
+            195,
+            146
+          ],
+          "right": [
+            203,
+            167,
+            130
+          ],
+          "top": [
+            235,
+            193,
+            140
+          ],
+          "bottom": [
+            115,
+            100,
+            73
+          ]
+        }
+      },
+      {
+        "file": "02-natural-photo-06.png",
+        "paper_rgbs": {
+          "left": [
+            230,
+            195,
+            146
+          ],
+          "right": [
+            203,
+            167,
+            130
+          ],
+          "top": [
+            235,
+            193,
+            140
+          ],
+          "bottom": [
+            115,
+            100,
+            73
+          ]
+        }
+      }
+    ],
+    "not_full_hold": {
+      "02-natural-photo-00.png": "before card visible",
+      "02-natural-photo-01.png": "before card visible",
+      "02-natural-photo-04.png": "fade-out, not opacity failure",
+      "02-natural-photo-05.png": "card gone",
+      "02-natural-photo-06.png": "card gone"
+    },
+    "timing_limit": "Screenshot request/completion timestamps are not exact renderer frame timestamps; no exact hold duration claim"
+  },
+  "pressed": {
+    "file": "07-restart-held.png",
+    "visual_result": "PASS: dark text visible against tan pressed fill during actual mouse-down",
+    "label_crop_top_colors": [
+      {
+        "rgb": [
+          243,
+          211,
+          174
+        ],
+        "pixel_count": 1616
+      },
+      {
+        "rgb": [
+          91,
+          70,
+          55
+        ],
+        "pixel_count": 165
+      },
+      {
+        "rgb": [
+          97,
+          76,
+          60
+        ],
+        "pixel_count": 48
+      },
+      {
+        "rgb": [
+          160,
+          134,
+          109
+        ],
+        "pixel_count": 22
+      },
+      {
+        "rgb": [
+          155,
+          129,
+          105
+        ],
+        "pixel_count": 19
+      },
+      {
+        "rgb": [
+          102,
+          81,
+          64
+        ],
+        "pixel_count": 17
+      }
+    ],
+    "scope_limit": "Sampled restart button only, not full WCAG or all controls"
+  },
+  "focus": {
+    "result": "NOT VERIFIED",
+    "ordinary_inputs_recorded_in": "result.json",
+    "comparisons": [
+      {
+        "before": "04-pause-initial.png",
+        "after": "05-pause-tab.png",
+        "difference_bbox": null
+      },
+      {
+        "before": "05-pause-tab.png",
+        "after": "06-pause-shifttab.png",
+        "difference_bbox": null
+      },
+      {
+        "before": "09-confirm-tab.png",
+        "after": "10-confirm-shifttab.png",
+        "difference_bbox": [
+          29,
+          260,
+          361,
+          303
+        ]
+      },
+      {
+        "before": "11-confirm-cancelled.png",
+        "after": "12-pause-tab-after-cancel.png",
+        "difference_bbox": null
+      },
+      {
+        "before": "12-pause-tab-after-cancel.png",
+        "after": "13-pause-shifttab-after-cancel.png",
+        "difference_bbox": null
+      },
+      {
+        "before": "14-pause-tab-settled.png",
+        "after": "15-pause-shifttab-settled.png",
+        "difference_bbox": null
+      }
+    ],
+    "observation": "Five pause Tab/Shift+Tab screenshot pairs were pixel-identical, including the final pair with 250ms waits. Confirmation pair 09->10 differs only in bbox [29,260,361,303], around the restart button behind the confirmation dialog; frame 10 shows an extra outline there. No corresponding visible focus was verified on the confirmation dialog buttons. No activeElement or Godot key-consumption observation was collected; cannot infer cause or implementation failure. Expected keyboard focus path remains NOT VERIFIED."
+  },
+  "confirmation": {
+    "opened_by_actual_mouse_up": "08-restart-confirm.png",
+    "cancelled_by_ordinary_click": "11-confirm-cancelled.png",
+    "resumed": "16-resumed-after-cancel.png",
+    "accept_reset_never_clicked": true
+  },
+  "restore": {
+    "real_page_closed_context_retained_utc": "2026-10-05T22:21:23Z",
+    "same_photo_visible": "18-reopened-album.png",
+    "readonly_dumps": [
+      "03-album-db.json",
+      "16-after-cancel-db.json",
+      "18-reopened-db.json"
+    ],
+    "whole_current_envelope_equal": true,
+    "generation": [
+      "2",
+      "2",
+      "2"
+    ],
+    "album_equal": true,
+    "album": [
+      "sheep_pet_gentle"
+    ],
+    "photo_moments_equal": true,
+    "scope_limit": "same browser context page-close/newpage, not browser-process restart"
+  },
+  "page_errors": [],
+  "console_errors": [],
+  "driver_exit_code_observed": 0,
+  "all_contexts_browser_closed_utc": "2026-10-05T22:22:48Z",
+  "memory_current_bytes_after_close": 15731372032,
+  "not_covered": [
+    "PR455 disabled UI state",
+    "audio fix382/hearing/comfort",
+    "real phone/touch",
+    "reduced motion public rerun",
+    "all pause buttons/states and accessibility",
+    "browser-process restart",
+    "complete storage acceptance"
+  ]
+}

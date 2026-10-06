@@ -1,0 +1,34 @@
+{
+  "checked_at": "2026-10-05T22:45:32.738667+00:00",
+  "pages_run": 37384319663,
+  "head_sha": "ea98067e715285a253824d8d0133cf2c196531db",
+  "conclusion": "success",
+  "log_zip_bytes": 30242,
+  "log_zip_sha256": "6e8c00ce761e307ac30144234071ed66acee7e1304848dc05e7bea9201ef79bb",
+  "jobs": [
+    {
+      "id": 112013731402,
+      "name": "build",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 112013926146,
+      "name": "deploy",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 112013926210,
+      "name": "report-build-status",
+      "status": "completed",
+      "conclusion": "success"
+    }
+  ],
+  "deployment_id": 6871086805,
+  "success_status_id": 19311291266,
+  "public_url": "https://narutojzm1-dot.github.io/youjia/",
+  "signed_url_lines_found": 0,
+  "extracted_logs_strip_auth_headers": true,
+  "public_download_validation": "root separate task"
+}

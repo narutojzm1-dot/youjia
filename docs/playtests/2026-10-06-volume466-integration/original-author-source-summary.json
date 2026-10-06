@@ -1,0 +1,94 @@
+{
+  "reviewed_at": "2026-10-06T00:20:33.198794+00:00",
+  "stage": "frozen read-only pre-review, before delegated integration authorship; not final approval",
+  "head": "1759c69cede5ba69a01bd219748796a7c50fc0d7",
+  "tree": "b3ef0b4f5f03820eab7487bd8eaa5d56a5f5852c",
+  "base": "49596fa93bff3c29edfe441898017158c6e469a3",
+  "pr_url": "https://github.com/narutojzm1-dot/youjia/pull/466",
+  "author_agent": "GROK-CONTRIBUTOR",
+  "source_files": [
+    {
+      "path": "autoload/paper_slider_boot.gd",
+      "git_blob": "54419b60cab6419bbccfa0a6957793bcaad1a2d1",
+      "sha256": "23fdcffaa05edc5384e2a6ab7ca222acfdd9b8a39d694b4398818e7a987fd57e",
+      "bytes": 521
+    },
+    {
+      "path": "autoload/paper_slider_boot.gd.uid",
+      "git_blob": "92f71c117109f1b156991cd2e61f8618f4a0c141",
+      "sha256": "07cb45cd5b09027afb87a2aa8b1455cd6945b5032e6c82653df0c8f9dd6bb278",
+      "bytes": 20
+    },
+    {
+      "path": "docs/decisions/REQ-20261006-040.md",
+      "git_blob": "413cd64e54da925ea97c68fb0d89ca49b0c22719",
+      "sha256": "662c65519e236f1ac7658d559218831332b864089ecd8c18a919d0975dd95f18",
+      "bytes": 5187
+    },
+    {
+      "path": "docs/playtests/2026-10-06-REQ-040-volume-slider-paper/README.md",
+      "git_blob": "aa46a9145ca58160333513da3a79e26ec8205962",
+      "sha256": "fcaf2ce83115800c479c5d081780f9d79b66322da376f08c5c72963032eabdff",
+      "bytes": 1905
+    },
+    {
+      "path": "project.godot",
+      "git_blob": "8b7cf203a0d45366d4b3f29368855ad362171f01",
+      "sha256": "f7b24d1f46fc02b2745edc9dff869c4bafbb8669d079946442d6a4755cc81c40",
+      "bytes": 5598
+    },
+    {
+      "path": "scripts/ui/paper_slider_style.gd",
+      "git_blob": "f8852ec45858b7115e36f1fdeb60995d06a11a84",
+      "sha256": "3e2ab80d55f3f24597e961dae4364188efdcb5980d571353b568ffd8f4d051ac",
+      "bytes": 3133
+    },
+    {
+      "path": "scripts/ui/paper_slider_style.gd.uid",
+      "git_blob": "e22d4d07b75728e5dae8177a4a6ee84aeed9218b",
+      "sha256": "5ffa777be20b3b4ec6b0277607292038f0fd6329296a5ea8a755f0b61bf1352e",
+      "bytes": 19
+    },
+    {
+      "path": "test/volume_slider_style_suite.gd",
+      "git_blob": "41bea55300ca30de258b83f8e5b4affcf54f1385",
+      "sha256": "58c38d3ed4564607d2449673722e181834e1f6824baf7d600aaca2a3783716f7",
+      "bytes": 6942
+    },
+    {
+      "path": "test/volume_slider_style_suite.gd.uid",
+      "git_blob": "d649d206598e0a7bd5d76daa988f690ee431e1ad",
+      "sha256": "7545de0297c3b059c717b492a2ced51ddfd26b2366bc5545f22b27b82cc49a21",
+      "bytes": 19
+    }
+  ],
+  "engine_references": [
+    {
+      "name": "scene_gui_slider.cpp",
+      "sha256": "dc98840f68e6659274f3dcbb4325398301a1e5d26486c67d0a4d18b098b3199e",
+      "bytes": 18469
+    },
+    {
+      "name": "scene_resources_dpi_texture.cpp",
+      "sha256": "6c17158dd210c59cd9b6ede25b8f3480b3193ea814dea5c31c533b7211ddb11f",
+      "bytes": 13438
+    },
+    {
+      "name": "scene_theme_default_theme.cpp",
+      "sha256": "90598a9d16d849f1887abcc3c2f5f35d537fe76b435eb96b16e5f342dd73a9b0",
+      "bytes": 81454
+    },
+    {
+      "name": "slider_grabber.svg",
+      "sha256": "94a836836969d6b1a82985b74305c2286c242f8dbda5d1632d5a13ffec7e7649",
+      "bytes": 133
+    }
+  ],
+  "actual_engine_or_browser_runs": false,
+  "github_writes": false,
+  "author_raw_evidence_independently_available": false,
+  "new_suite_in_daily": false,
+  "disposition": "Proceed with independent integration; direct merge gates incomplete. No confirmed fatal current-runtime error. Mandatory actual slider pointer/gain/reparent/DPR evidence and completion registry/mock before final independent review.",
+  "specific_risk": "16→24 grabber changes native Slider mouse coordinate/drag range despite unchangedMain hit rect fields;708 directvalue and648toggle tests do not cover this.",
+  "review_sha256": "b8f511570fd672ea1926fb58114b85b2f9a80f4397d7cafc3e66c164af39d50a"
+}

@@ -1,0 +1,39 @@
+{
+ "generation": "5",
+ "keepsakes": {},
+ "exploration": {
+  "contract_version": 1,
+  "next_trip_serial": 2,
+  "session": {
+   "carried": [
+    "formal.find.pine_cone"
+   ],
+   "catalog": "formal",
+   "current_stop": "shade",
+   "failure": null,
+   "offers": {
+    "gate": "formal.find.brook_stone",
+    "shade": "formal.find.pine_cone"
+   },
+   "proposal": null,
+   "record_revision": 3,
+   "rng_seed": "-5637891911775139318",
+   "route_id": "formal.near_path",
+   "started_clock": {
+    "day": 1,
+    "elapsed": 6.5462
+   },
+   "state": "active",
+   "taken": {
+    "shade": "formal.find.pine_cone"
+   },
+   "trip_id": "trip-1",
+   "trip_serial": 1,
+   "visited": [
+    "gate",
+    "shade"
+   ]
+  }
+ },
+ "serial": 0
+}

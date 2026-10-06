@@ -1,0 +1,2574 @@
+{
+  "source": "146c3711537e4fa6657f1fd54e7472747cd0b10d",
+  "entry": "index",
+  "expected_pck_sha256": "df8b4807079717a3a51c273f09c617173aa6b50ce29b812e82d595cad62cd92a",
+  "expected_pck_bytes": 27093724,
+  "inputs": [
+    {
+      "command": {
+        "op": "new",
+        "name": "volume",
+        "width": 390,
+        "height": 844,
+        "motion": "no-preference"
+      },
+      "case": "",
+      "utc": "2026-10-06T00:48:07Z",
+      "monotonic": 378973.78882162
+    },
+    {
+      "case_open": "volume",
+      "width": 390,
+      "height": 844,
+      "motion": "no-preference",
+      "actual_dpr": 2,
+      "actual_reduce": false,
+      "utc": "2026-10-06T00:48:19Z",
+      "monotonic": 378985.736993057
+    },
+    {
+      "screenshot_request": "volume-title",
+      "case": "volume",
+      "utc": "2026-10-06T00:48:19Z",
+      "monotonic": 378985.737436267
+    },
+    {
+      "screenshot_complete": "volume-title",
+      "case": "volume",
+      "utc": "2026-10-06T00:48:21Z",
+      "monotonic": 378987.7142791
+    },
+    {
+      "command": {
+        "op": "click",
+        "x": 195,
+        "y": 430
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:48:33Z",
+      "monotonic": 378999.613415789
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 700
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:48:37Z",
+      "monotonic": 379003.380538599
+    },
+    {
+      "command": {
+        "op": "key",
+        "key": "Escape"
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:48:38Z",
+      "monotonic": 379004.082056055
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 250
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:48:38Z",
+      "monotonic": 379004.286824391
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "portrait-01-pause-initial"
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:48:38Z",
+      "monotonic": 379004.538452254
+    },
+    {
+      "screenshot_request": "portrait-01-pause-initial",
+      "case": "volume",
+      "utc": "2026-10-06T00:48:38Z",
+      "monotonic": 379004.540285507
+    },
+    {
+      "screenshot_complete": "portrait-01-pause-initial",
+      "case": "volume",
+      "utc": "2026-10-06T00:48:39Z",
+      "monotonic": 379005.868156722
+    },
+    {
+      "command": {
+        "op": "click",
+        "x": 43,
+        "y": 481
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:49:09Z",
+      "monotonic": 379035.809716736
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 100
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:49:09Z",
+      "monotonic": 379035.908599648
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "portrait-02-music-click-0"
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:49:10Z",
+      "monotonic": 379036.013180532
+    },
+    {
+      "screenshot_request": "portrait-02-music-click-0",
+      "case": "volume",
+      "utc": "2026-10-06T00:49:10Z",
+      "monotonic": 379036.013775927
+    },
+    {
+      "screenshot_complete": "portrait-02-music-click-0",
+      "case": "volume",
+      "utc": "2026-10-06T00:49:11Z",
+      "monotonic": 379037.51345273
+    },
+    {
+      "command": {
+        "op": "click",
+        "x": 164.6,
+        "y": 481
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:49:11Z",
+      "monotonic": 379037.514043206
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 100
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:49:11Z",
+      "monotonic": 379037.639712083
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "portrait-02-music-click-40"
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:49:11Z",
+      "monotonic": 379037.74296644
+    },
+    {
+      "screenshot_request": "portrait-02-music-click-40",
+      "case": "volume",
+      "utc": "2026-10-06T00:49:11Z",
+      "monotonic": 379037.743574178
+    },
+    {
+      "screenshot_complete": "portrait-02-music-click-40",
+      "case": "volume",
+      "utc": "2026-10-06T00:49:13Z",
+      "monotonic": 379039.226591633
+    },
+    {
+      "command": {
+        "op": "click",
+        "x": 347,
+        "y": 481
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:49:13Z",
+      "monotonic": 379039.227180616
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 100
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:49:13Z",
+      "monotonic": 379039.371566957
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "portrait-02-music-click-100"
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:49:13Z",
+      "monotonic": 379039.475874188
+    },
+    {
+      "screenshot_request": "portrait-02-music-click-100",
+      "case": "volume",
+      "utc": "2026-10-06T00:49:13Z",
+      "monotonic": 379039.476552208
+    },
+    {
+      "screenshot_complete": "portrait-02-music-click-100",
+      "case": "volume",
+      "utc": "2026-10-06T00:49:14Z",
+      "monotonic": 379040.960897941
+    },
+    {
+      "command": {
+        "op": "click",
+        "x": 43,
+        "y": 616
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:49:14Z",
+      "monotonic": 379040.961540314
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 100
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:49:15Z",
+      "monotonic": 379041.116783627
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "portrait-02-ambience-click-0"
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:49:15Z",
+      "monotonic": 379041.224132926
+    },
+    {
+      "screenshot_request": "portrait-02-ambience-click-0",
+      "case": "volume",
+      "utc": "2026-10-06T00:49:15Z",
+      "monotonic": 379041.224783504
+    },
+    {
+      "screenshot_complete": "portrait-02-ambience-click-0",
+      "case": "volume",
+      "utc": "2026-10-06T00:49:16Z",
+      "monotonic": 379042.580315276
+    },
+    {
+      "command": {
+        "op": "click",
+        "x": 164.6,
+        "y": 616
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:49:16Z",
+      "monotonic": 379042.581152754
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 100
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:49:16Z",
+      "monotonic": 379042.711849332
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "portrait-02-ambience-click-40"
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:49:16Z",
+      "monotonic": 379042.813244831
+    },
+    {
+      "screenshot_request": "portrait-02-ambience-click-40",
+      "case": "volume",
+      "utc": "2026-10-06T00:49:16Z",
+      "monotonic": 379042.813913624
+    },
+    {
+      "screenshot_complete": "portrait-02-ambience-click-40",
+      "case": "volume",
+      "utc": "2026-10-06T00:49:18Z",
+      "monotonic": 379044.180140865
+    },
+    {
+      "command": {
+        "op": "click",
+        "x": 347,
+        "y": 616
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:49:18Z",
+      "monotonic": 379044.180879739
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 100
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:49:18Z",
+      "monotonic": 379044.306273203
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "portrait-02-ambience-click-100"
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:49:18Z",
+      "monotonic": 379044.411607452
+    },
+    {
+      "screenshot_request": "portrait-02-ambience-click-100",
+      "case": "volume",
+      "utc": "2026-10-06T00:49:18Z",
+      "monotonic": 379044.412651758
+    },
+    {
+      "screenshot_complete": "portrait-02-ambience-click-100",
+      "case": "volume",
+      "utc": "2026-10-06T00:49:19Z",
+      "monotonic": 379045.740838528
+    },
+    {
+      "command": {
+        "op": "move",
+        "x": 347,
+        "y": 481
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:49:42Z",
+      "monotonic": 379068.860487674
+    },
+    {
+      "command": {
+        "op": "down"
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:49:42Z",
+      "monotonic": 379068.941752304
+    },
+    {
+      "command": {
+        "op": "move",
+        "x": 43,
+        "y": 481,
+        "steps": 10
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:49:43Z",
+      "monotonic": 379069.086120784
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 100
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:49:47Z",
+      "monotonic": 379073.033666589
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "portrait-03-music-drag-0-held"
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:49:47Z",
+      "monotonic": 379073.135647508
+    },
+    {
+      "screenshot_request": "portrait-03-music-drag-0-held",
+      "case": "volume",
+      "utc": "2026-10-06T00:49:47Z",
+      "monotonic": 379073.136405197
+    },
+    {
+      "screenshot_complete": "portrait-03-music-drag-0-held",
+      "case": "volume",
+      "utc": "2026-10-06T00:49:48Z",
+      "monotonic": 379074.613959068
+    },
+    {
+      "command": {
+        "op": "up"
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:49:48Z",
+      "monotonic": 379074.614682252
+    },
+    {
+      "command": {
+        "op": "move",
+        "x": 260,
+        "y": 616,
+        "steps": 6
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:49:48Z",
+      "monotonic": 379074.761721273
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 100
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:49:49Z",
+      "monotonic": 379075.499285328
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "portrait-03-music-drag-0-released"
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:49:49Z",
+      "monotonic": 379075.60827983
+    },
+    {
+      "screenshot_request": "portrait-03-music-drag-0-released",
+      "case": "volume",
+      "utc": "2026-10-06T00:49:49Z",
+      "monotonic": 379075.609115535
+    },
+    {
+      "screenshot_complete": "portrait-03-music-drag-0-released",
+      "case": "volume",
+      "utc": "2026-10-06T00:49:51Z",
+      "monotonic": 379077.090012814
+    },
+    {
+      "command": {
+        "op": "move",
+        "x": 43,
+        "y": 481
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:49:51Z",
+      "monotonic": 379077.090857596
+    },
+    {
+      "command": {
+        "op": "down"
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:49:51Z",
+      "monotonic": 379077.272640278
+    },
+    {
+      "command": {
+        "op": "move",
+        "x": 164.6,
+        "y": 481,
+        "steps": 10
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:49:51Z",
+      "monotonic": 379077.413306848
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 100
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:49:55Z",
+      "monotonic": 379081.378470896
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "portrait-03-music-drag-40-held"
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:49:55Z",
+      "monotonic": 379081.484288088
+    },
+    {
+      "screenshot_request": "portrait-03-music-drag-40-held",
+      "case": "volume",
+      "utc": "2026-10-06T00:49:55Z",
+      "monotonic": 379081.485161753
+    },
+    {
+      "screenshot_complete": "portrait-03-music-drag-40-held",
+      "case": "volume",
+      "utc": "2026-10-06T00:49:56Z",
+      "monotonic": 379082.813706198
+    },
+    {
+      "command": {
+        "op": "up"
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:49:56Z",
+      "monotonic": 379082.814468545
+    },
+    {
+      "command": {
+        "op": "move",
+        "x": 260,
+        "y": 616,
+        "steps": 6
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:49:56Z",
+      "monotonic": 379082.936608425
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 100
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:49:57Z",
+      "monotonic": 379083.781535391
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "portrait-03-music-drag-40-released"
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:49:57Z",
+      "monotonic": 379083.883631313
+    },
+    {
+      "screenshot_request": "portrait-03-music-drag-40-released",
+      "case": "volume",
+      "utc": "2026-10-06T00:49:57Z",
+      "monotonic": 379083.884586932
+    },
+    {
+      "screenshot_complete": "portrait-03-music-drag-40-released",
+      "case": "volume",
+      "utc": "2026-10-06T00:49:59Z",
+      "monotonic": 379085.328188667
+    },
+    {
+      "command": {
+        "op": "move",
+        "x": 164.6,
+        "y": 481
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:49:59Z",
+      "monotonic": 379085.329252109
+    },
+    {
+      "command": {
+        "op": "down"
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:49:59Z",
+      "monotonic": 379085.472943969
+    },
+    {
+      "command": {
+        "op": "move",
+        "x": 347,
+        "y": 481,
+        "steps": 10
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:49:59Z",
+      "monotonic": 379085.602009278
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 100
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:50:03Z",
+      "monotonic": 379089.888186835
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "portrait-03-music-drag-100-held"
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:50:03Z",
+      "monotonic": 379089.991979454
+    },
+    {
+      "screenshot_request": "portrait-03-music-drag-100-held",
+      "case": "volume",
+      "utc": "2026-10-06T00:50:04Z",
+      "monotonic": 379089.993013801
+    },
+    {
+      "screenshot_complete": "portrait-03-music-drag-100-held",
+      "case": "volume",
+      "utc": "2026-10-06T00:50:05Z",
+      "monotonic": 379091.318398168
+    },
+    {
+      "command": {
+        "op": "up"
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:50:05Z",
+      "monotonic": 379091.319340082
+    },
+    {
+      "command": {
+        "op": "move",
+        "x": 260,
+        "y": 616,
+        "steps": 6
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:50:05Z",
+      "monotonic": 379091.462315889
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 100
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:50:06Z",
+      "monotonic": 379092.305934355
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "portrait-03-music-drag-100-released"
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:50:06Z",
+      "monotonic": 379092.409990247
+    },
+    {
+      "screenshot_request": "portrait-03-music-drag-100-released",
+      "case": "volume",
+      "utc": "2026-10-06T00:50:06Z",
+      "monotonic": 379092.410944984
+    },
+    {
+      "screenshot_complete": "portrait-03-music-drag-100-released",
+      "case": "volume",
+      "utc": "2026-10-06T00:50:07Z",
+      "monotonic": 379093.806941491
+    },
+    {
+      "command": {
+        "op": "move",
+        "x": 347,
+        "y": 616
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:50:07Z",
+      "monotonic": 379093.807878746
+    },
+    {
+      "command": {
+        "op": "down"
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:50:07Z",
+      "monotonic": 379093.964453312
+    },
+    {
+      "command": {
+        "op": "move",
+        "x": 43,
+        "y": 616,
+        "steps": 10
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:50:08Z",
+      "monotonic": 379094.093904112
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 100
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:50:12Z",
+      "monotonic": 379098.299651951
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "portrait-03-ambience-drag-0-held"
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:50:12Z",
+      "monotonic": 379098.401765043
+    },
+    {
+      "screenshot_request": "portrait-03-ambience-drag-0-held",
+      "case": "volume",
+      "utc": "2026-10-06T00:50:12Z",
+      "monotonic": 379098.406076247
+    },
+    {
+      "screenshot_complete": "portrait-03-ambience-drag-0-held",
+      "case": "volume",
+      "utc": "2026-10-06T00:50:13Z",
+      "monotonic": 379099.774182441
+    },
+    {
+      "command": {
+        "op": "up"
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:50:13Z",
+      "monotonic": 379099.778255399
+    },
+    {
+      "command": {
+        "op": "move",
+        "x": 260,
+        "y": 481,
+        "steps": 6
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:50:13Z",
+      "monotonic": 379099.907805306
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 100
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:50:14Z",
+      "monotonic": 379100.764924723
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "portrait-03-ambience-drag-0-released"
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:50:14Z",
+      "monotonic": 379100.872287998
+    },
+    {
+      "screenshot_request": "portrait-03-ambience-drag-0-released",
+      "case": "volume",
+      "utc": "2026-10-06T00:50:14Z",
+      "monotonic": 379100.873331111
+    },
+    {
+      "screenshot_complete": "portrait-03-ambience-drag-0-released",
+      "case": "volume",
+      "utc": "2026-10-06T00:50:16Z",
+      "monotonic": 379102.364530777
+    },
+    {
+      "command": {
+        "op": "move",
+        "x": 43,
+        "y": 616
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:50:16Z",
+      "monotonic": 379102.365488661
+    },
+    {
+      "command": {
+        "op": "down"
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:50:16Z",
+      "monotonic": 379102.498195107
+    },
+    {
+      "command": {
+        "op": "move",
+        "x": 164.6,
+        "y": 616,
+        "steps": 10
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:50:16Z",
+      "monotonic": 379102.631417019
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 100
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:50:20Z",
+      "monotonic": 379106.730053651
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "portrait-03-ambience-drag-40-held"
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:50:20Z",
+      "monotonic": 379106.832252474
+    },
+    {
+      "screenshot_request": "portrait-03-ambience-drag-40-held",
+      "case": "volume",
+      "utc": "2026-10-06T00:50:20Z",
+      "monotonic": 379106.833253458
+    },
+    {
+      "screenshot_complete": "portrait-03-ambience-drag-40-held",
+      "case": "volume",
+      "utc": "2026-10-06T00:50:22Z",
+      "monotonic": 379108.332435902
+    },
+    {
+      "command": {
+        "op": "up"
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:50:22Z",
+      "monotonic": 379108.333455732
+    },
+    {
+      "command": {
+        "op": "move",
+        "x": 260,
+        "y": 481,
+        "steps": 6
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:50:22Z",
+      "monotonic": 379108.495837851
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 100
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:50:23Z",
+      "monotonic": 379109.368849924
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "portrait-03-ambience-drag-40-released"
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:50:23Z",
+      "monotonic": 379109.47109387
+    },
+    {
+      "screenshot_request": "portrait-03-ambience-drag-40-released",
+      "case": "volume",
+      "utc": "2026-10-06T00:50:23Z",
+      "monotonic": 379109.47211422
+    },
+    {
+      "screenshot_complete": "portrait-03-ambience-drag-40-released",
+      "case": "volume",
+      "utc": "2026-10-06T00:50:24Z",
+      "monotonic": 379110.931211157
+    },
+    {
+      "command": {
+        "op": "move",
+        "x": 164.6,
+        "y": 616
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:50:24Z",
+      "monotonic": 379110.932287623
+    },
+    {
+      "command": {
+        "op": "down"
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:50:25Z",
+      "monotonic": 379111.082168995
+    },
+    {
+      "command": {
+        "op": "move",
+        "x": 347,
+        "y": 616,
+        "steps": 10
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:50:25Z",
+      "monotonic": 379111.216044392
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 100
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:50:29Z",
+      "monotonic": 379115.512785502
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "portrait-03-ambience-drag-100-held"
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:50:29Z",
+      "monotonic": 379115.615081628
+    },
+    {
+      "screenshot_request": "portrait-03-ambience-drag-100-held",
+      "case": "volume",
+      "utc": "2026-10-06T00:50:29Z",
+      "monotonic": 379115.616193099
+    },
+    {
+      "screenshot_complete": "portrait-03-ambience-drag-100-held",
+      "case": "volume",
+      "utc": "2026-10-06T00:50:30Z",
+      "monotonic": 379116.829477611
+    },
+    {
+      "command": {
+        "op": "up"
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:50:30Z",
+      "monotonic": 379116.830629117
+    },
+    {
+      "command": {
+        "op": "move",
+        "x": 260,
+        "y": 481,
+        "steps": 6
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:50:30Z",
+      "monotonic": 379116.989270911
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 100
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:50:31Z",
+      "monotonic": 379117.879143142
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "portrait-03-ambience-drag-100-released"
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:50:31Z",
+      "monotonic": 379117.982369457
+    },
+    {
+      "screenshot_request": "portrait-03-ambience-drag-100-released",
+      "case": "volume",
+      "utc": "2026-10-06T00:50:31Z",
+      "monotonic": 379117.983546712
+    },
+    {
+      "screenshot_complete": "portrait-03-ambience-drag-100-released",
+      "case": "volume",
+      "utc": "2026-10-06T00:50:33Z",
+      "monotonic": 379119.680337005
+    },
+    {
+      "command": {
+        "op": "resize",
+        "width": 568,
+        "height": 320
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:50:33Z",
+      "monotonic": 379119.681539267
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "landscape-01-reflow"
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:50:34Z",
+      "monotonic": 379120.212455292
+    },
+    {
+      "screenshot_request": "landscape-01-reflow",
+      "case": "volume",
+      "utc": "2026-10-06T00:50:34Z",
+      "monotonic": 379120.213703218
+    },
+    {
+      "screenshot_complete": "landscape-01-reflow",
+      "case": "volume",
+      "utc": "2026-10-06T00:50:35Z",
+      "monotonic": 379121.021788798
+    },
+    {
+      "command": {
+        "op": "click",
+        "x": 302,
+        "y": 159
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:51:13Z",
+      "monotonic": 379159.307939039
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 100
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:51:13Z",
+      "monotonic": 379159.339256461
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "landscape-02-music-click-0"
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:51:13Z",
+      "monotonic": 379159.4420153
+    },
+    {
+      "screenshot_request": "landscape-02-music-click-0",
+      "case": "volume",
+      "utc": "2026-10-06T00:51:13Z",
+      "monotonic": 379159.443113737
+    },
+    {
+      "screenshot_complete": "landscape-02-music-click-0",
+      "case": "volume",
+      "utc": "2026-10-06T00:51:14Z",
+      "monotonic": 379160.270781762
+    },
+    {
+      "command": {
+        "op": "click",
+        "x": 392.4,
+        "y": 159
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:51:14Z",
+      "monotonic": 379160.27197115
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 100
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:51:14Z",
+      "monotonic": 379160.362825574
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "landscape-02-music-click-40"
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:51:14Z",
+      "monotonic": 379160.465165276
+    },
+    {
+      "screenshot_request": "landscape-02-music-click-40",
+      "case": "volume",
+      "utc": "2026-10-06T00:51:14Z",
+      "monotonic": 379160.466338293
+    },
+    {
+      "screenshot_complete": "landscape-02-music-click-40",
+      "case": "volume",
+      "utc": "2026-10-06T00:51:15Z",
+      "monotonic": 379161.286597679
+    },
+    {
+      "command": {
+        "op": "click",
+        "x": 528,
+        "y": 159
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:51:15Z",
+      "monotonic": 379161.287821331
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 100
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:51:15Z",
+      "monotonic": 379161.371304096
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "landscape-02-music-click-100"
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:51:15Z",
+      "monotonic": 379161.477688957
+    },
+    {
+      "screenshot_request": "landscape-02-music-click-100",
+      "case": "volume",
+      "utc": "2026-10-06T00:51:15Z",
+      "monotonic": 379161.479632176
+    },
+    {
+      "screenshot_complete": "landscape-02-music-click-100",
+      "case": "volume",
+      "utc": "2026-10-06T00:51:16Z",
+      "monotonic": 379162.310177626
+    },
+    {
+      "command": {
+        "op": "click",
+        "x": 302,
+        "y": 257
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:51:16Z",
+      "monotonic": 379162.311515902
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 100
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:51:16Z",
+      "monotonic": 379162.390330305
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "landscape-02-ambience-click-0"
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:51:16Z",
+      "monotonic": 379162.491746715
+    },
+    {
+      "screenshot_request": "landscape-02-ambience-click-0",
+      "case": "volume",
+      "utc": "2026-10-06T00:51:16Z",
+      "monotonic": 379162.493039797
+    },
+    {
+      "screenshot_complete": "landscape-02-ambience-click-0",
+      "case": "volume",
+      "utc": "2026-10-06T00:51:17Z",
+      "monotonic": 379163.320585419
+    },
+    {
+      "command": {
+        "op": "click",
+        "x": 392.4,
+        "y": 257
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:51:17Z",
+      "monotonic": 379163.321859405
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 100
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:51:17Z",
+      "monotonic": 379163.400777502
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "landscape-02-ambience-click-40"
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:51:17Z",
+      "monotonic": 379163.503178646
+    },
+    {
+      "screenshot_request": "landscape-02-ambience-click-40",
+      "case": "volume",
+      "utc": "2026-10-06T00:51:17Z",
+      "monotonic": 379163.504556086
+    },
+    {
+      "screenshot_complete": "landscape-02-ambience-click-40",
+      "case": "volume",
+      "utc": "2026-10-06T00:51:18Z",
+      "monotonic": 379164.336964635
+    },
+    {
+      "command": {
+        "op": "click",
+        "x": 528,
+        "y": 257
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:51:18Z",
+      "monotonic": 379164.338300727
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 100
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:51:18Z",
+      "monotonic": 379164.432673898
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "landscape-02-ambience-click-100"
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:51:18Z",
+      "monotonic": 379164.536143474
+    },
+    {
+      "screenshot_request": "landscape-02-ambience-click-100",
+      "case": "volume",
+      "utc": "2026-10-06T00:51:18Z",
+      "monotonic": 379164.537453978
+    },
+    {
+      "screenshot_complete": "landscape-02-ambience-click-100",
+      "case": "volume",
+      "utc": "2026-10-06T00:51:19Z",
+      "monotonic": 379165.390544301
+    },
+    {
+      "command": {
+        "op": "move",
+        "x": 528,
+        "y": 159
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:51:19Z",
+      "monotonic": 379165.3919058
+    },
+    {
+      "command": {
+        "op": "down"
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:51:19Z",
+      "monotonic": 379165.47937938
+    },
+    {
+      "command": {
+        "op": "move",
+        "x": 302,
+        "y": 159,
+        "steps": 5
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:51:19Z",
+      "monotonic": 379165.564100002
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 100
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:51:20Z",
+      "monotonic": 379166.885844663
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "landscape-03-music-drag-0-held"
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:51:21Z",
+      "monotonic": 379166.995796389
+    },
+    {
+      "screenshot_request": "landscape-03-music-drag-0-held",
+      "case": "volume",
+      "utc": "2026-10-06T00:51:21Z",
+      "monotonic": 379166.997259719
+    },
+    {
+      "screenshot_complete": "landscape-03-music-drag-0-held",
+      "case": "volume",
+      "utc": "2026-10-06T00:51:21Z",
+      "monotonic": 379167.910108792
+    },
+    {
+      "command": {
+        "op": "up"
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:51:21Z",
+      "monotonic": 379167.911660738
+    },
+    {
+      "command": {
+        "op": "move",
+        "x": 450,
+        "y": 257,
+        "steps": 3
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:51:22Z",
+      "monotonic": 379167.995324552
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 100
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:51:22Z",
+      "monotonic": 379168.238924682
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "landscape-03-music-drag-0-released"
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:51:22Z",
+      "monotonic": 379168.360275325
+    },
+    {
+      "screenshot_request": "landscape-03-music-drag-0-released",
+      "case": "volume",
+      "utc": "2026-10-06T00:51:22Z",
+      "monotonic": 379168.361819307
+    },
+    {
+      "screenshot_complete": "landscape-03-music-drag-0-released",
+      "case": "volume",
+      "utc": "2026-10-06T00:51:23Z",
+      "monotonic": 379169.135666254
+    },
+    {
+      "command": {
+        "op": "move",
+        "x": 302,
+        "y": 159
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:51:23Z",
+      "monotonic": 379169.137296878
+    },
+    {
+      "command": {
+        "op": "down"
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:51:23Z",
+      "monotonic": 379169.222103342
+    },
+    {
+      "command": {
+        "op": "move",
+        "x": 392.4,
+        "y": 159,
+        "steps": 5
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:51:23Z",
+      "monotonic": 379169.306026785
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 100
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:51:24Z",
+      "monotonic": 379170.539094453
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "landscape-03-music-drag-40-held"
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:51:24Z",
+      "monotonic": 379170.640555388
+    },
+    {
+      "screenshot_request": "landscape-03-music-drag-40-held",
+      "case": "volume",
+      "utc": "2026-10-06T00:51:24Z",
+      "monotonic": 379170.660346386
+    },
+    {
+      "screenshot_complete": "landscape-03-music-drag-40-held",
+      "case": "volume",
+      "utc": "2026-10-06T00:51:25Z",
+      "monotonic": 379171.462762543
+    },
+    {
+      "command": {
+        "op": "up"
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:51:25Z",
+      "monotonic": 379171.464443681
+    },
+    {
+      "command": {
+        "op": "move",
+        "x": 450,
+        "y": 257,
+        "steps": 3
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:51:25Z",
+      "monotonic": 379171.532900686
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 100
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:51:25Z",
+      "monotonic": 379171.79036982
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "landscape-03-music-drag-40-released"
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:51:25Z",
+      "monotonic": 379171.900273956
+    },
+    {
+      "screenshot_request": "landscape-03-music-drag-40-released",
+      "case": "volume",
+      "utc": "2026-10-06T00:51:25Z",
+      "monotonic": 379171.901748668
+    },
+    {
+      "screenshot_complete": "landscape-03-music-drag-40-released",
+      "case": "volume",
+      "utc": "2026-10-06T00:51:26Z",
+      "monotonic": 379172.7265559
+    },
+    {
+      "command": {
+        "op": "move",
+        "x": 392.4,
+        "y": 159
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:51:26Z",
+      "monotonic": 379172.727989966
+    },
+    {
+      "command": {
+        "op": "down"
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:51:26Z",
+      "monotonic": 379172.811591652
+    },
+    {
+      "command": {
+        "op": "move",
+        "x": 528,
+        "y": 159,
+        "steps": 5
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:51:26Z",
+      "monotonic": 379172.906411076
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 100
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:51:28Z",
+      "monotonic": 379174.137638603
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "landscape-03-music-drag-100-held"
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:51:28Z",
+      "monotonic": 379174.259956805
+    },
+    {
+      "screenshot_request": "landscape-03-music-drag-100-held",
+      "case": "volume",
+      "utc": "2026-10-06T00:51:28Z",
+      "monotonic": 379174.261672618
+    },
+    {
+      "screenshot_complete": "landscape-03-music-drag-100-held",
+      "case": "volume",
+      "utc": "2026-10-06T00:51:29Z",
+      "monotonic": 379175.092293151
+    },
+    {
+      "command": {
+        "op": "up"
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:51:29Z",
+      "monotonic": 379175.093874863
+    },
+    {
+      "command": {
+        "op": "move",
+        "x": 450,
+        "y": 257,
+        "steps": 3
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:51:29Z",
+      "monotonic": 379175.175157707
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 100
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:51:29Z",
+      "monotonic": 379175.413784295
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "landscape-03-music-drag-100-released"
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:51:29Z",
+      "monotonic": 379175.516399138
+    },
+    {
+      "screenshot_request": "landscape-03-music-drag-100-released",
+      "case": "volume",
+      "utc": "2026-10-06T00:51:29Z",
+      "monotonic": 379175.518022268
+    },
+    {
+      "screenshot_complete": "landscape-03-music-drag-100-released",
+      "case": "volume",
+      "utc": "2026-10-06T00:51:30Z",
+      "monotonic": 379176.370810796
+    },
+    {
+      "command": {
+        "op": "move",
+        "x": 528,
+        "y": 257
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:51:30Z",
+      "monotonic": 379176.372597031
+    },
+    {
+      "command": {
+        "op": "down"
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:51:30Z",
+      "monotonic": 379176.441311106
+    },
+    {
+      "command": {
+        "op": "move",
+        "x": 302,
+        "y": 257,
+        "steps": 5
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:51:30Z",
+      "monotonic": 379176.523550511
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 100
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:51:31Z",
+      "monotonic": 379177.794460441
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "landscape-03-ambience-drag-0-held"
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:51:31Z",
+      "monotonic": 379177.89886691
+    },
+    {
+      "screenshot_request": "landscape-03-ambience-drag-0-held",
+      "case": "volume",
+      "utc": "2026-10-06T00:51:31Z",
+      "monotonic": 379177.900605496
+    },
+    {
+      "screenshot_complete": "landscape-03-ambience-drag-0-held",
+      "case": "volume",
+      "utc": "2026-10-06T00:51:32Z",
+      "monotonic": 379178.710032044
+    },
+    {
+      "command": {
+        "op": "up"
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:51:32Z",
+      "monotonic": 379178.711686082
+    },
+    {
+      "command": {
+        "op": "move",
+        "x": 450,
+        "y": 159,
+        "steps": 3
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:51:32Z",
+      "monotonic": 379178.788389489
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 100
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:51:33Z",
+      "monotonic": 379179.074390088
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "landscape-03-ambience-drag-0-released"
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:51:33Z",
+      "monotonic": 379179.179304778
+    },
+    {
+      "screenshot_request": "landscape-03-ambience-drag-0-released",
+      "case": "volume",
+      "utc": "2026-10-06T00:51:33Z",
+      "monotonic": 379179.180977962
+    },
+    {
+      "screenshot_complete": "landscape-03-ambience-drag-0-released",
+      "case": "volume",
+      "utc": "2026-10-06T00:51:34Z",
+      "monotonic": 379179.992715401
+    },
+    {
+      "command": {
+        "op": "move",
+        "x": 302,
+        "y": 257
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:51:34Z",
+      "monotonic": 379179.996061908
+    },
+    {
+      "command": {
+        "op": "down"
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:51:34Z",
+      "monotonic": 379180.073598066
+    },
+    {
+      "command": {
+        "op": "move",
+        "x": 392.4,
+        "y": 257,
+        "steps": 5
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:51:34Z",
+      "monotonic": 379180.139472515
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 100
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:51:35Z",
+      "monotonic": 379181.391032643
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "landscape-03-ambience-drag-40-held"
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:51:35Z",
+      "monotonic": 379181.498738768
+    },
+    {
+      "screenshot_request": "landscape-03-ambience-drag-40-held",
+      "case": "volume",
+      "utc": "2026-10-06T00:51:35Z",
+      "monotonic": 379181.50042179
+    },
+    {
+      "screenshot_complete": "landscape-03-ambience-drag-40-held",
+      "case": "volume",
+      "utc": "2026-10-06T00:51:36Z",
+      "monotonic": 379182.306283324
+    },
+    {
+      "command": {
+        "op": "up"
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:51:36Z",
+      "monotonic": 379182.308060772
+    },
+    {
+      "command": {
+        "op": "move",
+        "x": 450,
+        "y": 159,
+        "steps": 3
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:51:36Z",
+      "monotonic": 379182.391326387
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 100
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:51:36Z",
+      "monotonic": 379182.633467893
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "landscape-03-ambience-drag-40-released"
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:51:36Z",
+      "monotonic": 379182.738290669
+    },
+    {
+      "screenshot_request": "landscape-03-ambience-drag-40-released",
+      "case": "volume",
+      "utc": "2026-10-06T00:51:36Z",
+      "monotonic": 379182.740044263
+    },
+    {
+      "screenshot_complete": "landscape-03-ambience-drag-40-released",
+      "case": "volume",
+      "utc": "2026-10-06T00:51:37Z",
+      "monotonic": 379183.586422583
+    },
+    {
+      "command": {
+        "op": "move",
+        "x": 392.4,
+        "y": 257
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:51:37Z",
+      "monotonic": 379183.590677522
+    },
+    {
+      "command": {
+        "op": "down"
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:51:37Z",
+      "monotonic": 379183.670839859
+    },
+    {
+      "command": {
+        "op": "move",
+        "x": 528,
+        "y": 257,
+        "steps": 5
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:51:37Z",
+      "monotonic": 379183.767220465
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 100
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:51:39Z",
+      "monotonic": 379185.037029708
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "landscape-03-ambience-drag-100-held"
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:51:39Z",
+      "monotonic": 379185.140684035
+    },
+    {
+      "screenshot_request": "landscape-03-ambience-drag-100-held",
+      "case": "volume",
+      "utc": "2026-10-06T00:51:39Z",
+      "monotonic": 379185.142821308
+    },
+    {
+      "screenshot_complete": "landscape-03-ambience-drag-100-held",
+      "case": "volume",
+      "utc": "2026-10-06T00:51:39Z",
+      "monotonic": 379185.974954994
+    },
+    {
+      "command": {
+        "op": "up"
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:51:39Z",
+      "monotonic": 379185.978955165
+    },
+    {
+      "command": {
+        "op": "move",
+        "x": 450,
+        "y": 159,
+        "steps": 3
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:51:40Z",
+      "monotonic": 379186.06303087
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 100
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:51:40Z",
+      "monotonic": 379186.296725287
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "landscape-03-ambience-drag-100-released"
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:51:40Z",
+      "monotonic": 379186.39986259
+    },
+    {
+      "screenshot_request": "landscape-03-ambience-drag-100-released",
+      "case": "volume",
+      "utc": "2026-10-06T00:51:40Z",
+      "monotonic": 379186.401840564
+    },
+    {
+      "screenshot_complete": "landscape-03-ambience-drag-100-released",
+      "case": "volume",
+      "utc": "2026-10-06T00:51:41Z",
+      "monotonic": 379187.213594958
+    },
+    {
+      "command": {
+        "op": "click",
+        "x": 392.4,
+        "y": 159
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:51:41Z",
+      "monotonic": 379187.215388627
+    },
+    {
+      "command": {
+        "op": "click",
+        "x": 302,
+        "y": 257
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:51:41Z",
+      "monotonic": 379187.294659073
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "landscape-04-distinct-values-before-return"
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:51:41Z",
+      "monotonic": 379187.385335369
+    },
+    {
+      "screenshot_request": "landscape-04-distinct-values-before-return",
+      "case": "volume",
+      "utc": "2026-10-06T00:51:41Z",
+      "monotonic": 379187.387305439
+    },
+    {
+      "screenshot_complete": "landscape-04-distinct-values-before-return",
+      "case": "volume",
+      "utc": "2026-10-06T00:51:42Z",
+      "monotonic": 379188.221571922
+    },
+    {
+      "command": {
+        "op": "resize",
+        "width": 390,
+        "height": 844
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:51:42Z",
+      "monotonic": 379188.223415335
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "portrait-04-reflow-back-retained"
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:51:42Z",
+      "monotonic": 379188.714939063
+    },
+    {
+      "screenshot_request": "portrait-04-reflow-back-retained",
+      "case": "volume",
+      "utc": "2026-10-06T00:51:42Z",
+      "monotonic": 379188.720971941
+    },
+    {
+      "screenshot_complete": "portrait-04-reflow-back-retained",
+      "case": "volume",
+      "utc": "2026-10-06T00:51:44Z",
+      "monotonic": 379190.339311133
+    },
+    {
+      "command": {
+        "op": "click",
+        "x": 43,
+        "y": 481
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:51:44Z",
+      "monotonic": 379190.341202755
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "portrait-05-return-music-zero"
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:51:44Z",
+      "monotonic": 379190.485453174
+    },
+    {
+      "screenshot_request": "portrait-05-return-music-zero",
+      "case": "volume",
+      "utc": "2026-10-06T00:51:44Z",
+      "monotonic": 379190.488288833
+    },
+    {
+      "screenshot_complete": "portrait-05-return-music-zero",
+      "case": "volume",
+      "utc": "2026-10-06T00:51:45Z",
+      "monotonic": 379191.966065068
+    },
+    {
+      "command": {
+        "op": "click",
+        "x": 347,
+        "y": 616
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:51:45Z",
+      "monotonic": 379191.97275157
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "portrait-06-return-ambience-hundred"
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:51:46Z",
+      "monotonic": 379192.110091406
+    },
+    {
+      "screenshot_request": "portrait-06-return-ambience-hundred",
+      "case": "volume",
+      "utc": "2026-10-06T00:51:46Z",
+      "monotonic": 379192.112081674
+    },
+    {
+      "screenshot_complete": "portrait-06-return-ambience-hundred",
+      "case": "volume",
+      "utc": "2026-10-06T00:51:47Z",
+      "monotonic": 379193.44687742
+    },
+    {
+      "command": {
+        "op": "key",
+        "key": "Escape"
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:51:47Z",
+      "monotonic": 379193.44890107
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 250
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:51:47Z",
+      "monotonic": 379193.730978485
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "portrait-07-resumed-yard"
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:51:47Z",
+      "monotonic": 379193.987459444
+    },
+    {
+      "screenshot_request": "portrait-07-resumed-yard",
+      "case": "volume",
+      "utc": "2026-10-06T00:51:47Z",
+      "monotonic": 379193.989735827
+    },
+    {
+      "screenshot_complete": "portrait-07-resumed-yard",
+      "case": "volume",
+      "utc": "2026-10-06T00:51:49Z",
+      "monotonic": 379195.902099578
+    },
+    {
+      "command": {
+        "op": "end"
+      },
+      "case": "volume",
+      "utc": "2026-10-06T00:51:49Z",
+      "monotonic": 379195.903941898
+    },
+    {
+      "case_closed": "volume",
+      "utc": "2026-10-06T00:51:54Z",
+      "monotonic": 379200.950962702
+    }
+  ],
+  "bindings": [
+    {
+      "case": "volume",
+      "stage": "before",
+      "manifest": {
+        "schema": "youjia.candidate/v1",
+        "source": "146c3711537e4fa6657f1fd54e7472747cd0b10d",
+        "sourceCommit": "146c3711537e4fa6657f1fd54e7472747cd0b10d",
+        "sourceTree": "2e622f91345fc1a223982480339d86fa9ff94117",
+        "entry": "index",
+        "candidateOnly": true,
+        "engine": "4.7.2.stable.official.ed1daf0bf",
+        "files": {
+          "index.apple-touch-icon.png": {
+            "bytes": 59343,
+            "sha256": "80d91adb306354c6e4d1af546d062e1e9236699ad0fd53153ab3d2fc34cd11d4"
+          },
+          "index.audio.position.worklet.js": {
+            "bytes": 2973,
+            "sha256": "be33985bc7160d6bf9646f259cd86b259cd67b02ccb297ee5c44f8ac84327bc8"
+          },
+          "index.audio.worklet.js": {
+            "bytes": 7298,
+            "sha256": "5b476a9c9ce642c0ee4256436d1bc31d9c38f868aca0f9a8e2a57c18d2dec2a3"
+          },
+          "index.html": {
+            "bytes": 357722,
+            "sha256": "ccd7ab5bb40cdb85dca4b4caec1ac3888ff7e7c3bd6ba121feee199c8bd5e0a6"
+          },
+          "index.icon.png": {
+            "bytes": 389674,
+            "sha256": "1c591b9eb1b7af2a840a59a9feb637a0a7aeba2b0abde28042abf44f77d0acb3"
+          },
+          "index.js": {
+            "bytes": 279815,
+            "sha256": "33c94cb3175f3333b82e2a3be5e8e86f77986f0aa2042b1631f6367a4e5bb6ba"
+          },
+          "index.pck": {
+            "bytes": 27093724,
+            "sha256": "df8b4807079717a3a51c273f09c617173aa6b50ce29b812e82d595cad62cd92a"
+          },
+          "index.png": {
+            "bytes": 1010767,
+            "sha256": "5743a648b82437e0e60db5e4aa08103cea96b01e110961082223c0e7fa819ebf"
+          },
+          "index.wasm": {
+            "bytes": 39514754,
+            "sha256": "fc74679e3b97f76878947fcd4fbe1268cbfa6188182a2e33bbc3f5dc9bfa57d0"
+          },
+          "open-source-licenses.html": {
+            "bytes": 147966,
+            "sha256": "9215f5fdd50039a9b6f3d8f0271cbc21bbdf64b917fb118dd29c8a16b9974e00"
+          },
+          "web/save/bridge.mjs": {
+            "bytes": 1856,
+            "sha256": "ef18687554fdc0d745c1d18d4d091e959cc78559da0d61d6a093e562ff9bbc91"
+          },
+          "web/save/budgets.mjs": {
+            "bytes": 340,
+            "sha256": "52984153977dcafd1d2682e848f1999f091d0966e17d46e902de76f5735a7018"
+          },
+          "web/save/host.mjs": {
+            "bytes": 7730,
+            "sha256": "9de8dc0ef4bfc037a8ad0bff575d40c3dd4341bcc723351a412b2061bb661904"
+          },
+          "web/save/idbfs_source.mjs": {
+            "bytes": 5550,
+            "sha256": "16eb57d471537f13d3e50018b56c2d416d2847f0d0249ba44433dd9ebb65f4d8"
+          },
+          "web/save/legacy_inspection.mjs": {
+            "bytes": 2886,
+            "sha256": "db3a23a0221aa5d34a58a6a49aeeff930295ffe20bfcf73a7c11f0d49cffd671"
+          },
+          "web/save/legacy_seal.mjs": {
+            "bytes": 2510,
+            "sha256": "9642132f5d4e7523e5966e802069af7f4bae803fae8e2e7c28ae55ee97d85610"
+          },
+          "web/save/legacy_v5.mjs": {
+            "bytes": 2245,
+            "sha256": "8e7f4ad2d87aab77ac05361e4f46060476e933aa079ae94301998d08d4599621"
+          },
+          "web/save/lifecycle.mjs": {
+            "bytes": 1878,
+            "sha256": "1cfaebb9a8745e2dc3e4f694ef475f250640870938f04160be1a5c9acd62935d"
+          },
+          "web/save/source_decode.mjs": {
+            "bytes": 1542,
+            "sha256": "411f3bc784cb32a07f32eed5fc7d88f71b59a667cc0d68a50fe13c55bfdba18a"
+          },
+          "web/save/store.mjs": {
+            "bytes": 13890,
+            "sha256": "2193b4397b8662a8ebc754dc4468e4d62964d209b4e1d0f0924a2ec81b409cbe"
+          }
+        },
+        "storageModules": {
+          "entry": "web/save",
+          "sha256": {
+            "bridge.mjs": "ef18687554fdc0d745c1d18d4d091e959cc78559da0d61d6a093e562ff9bbc91",
+            "budgets.mjs": "52984153977dcafd1d2682e848f1999f091d0966e17d46e902de76f5735a7018",
+            "host.mjs": "9de8dc0ef4bfc037a8ad0bff575d40c3dd4341bcc723351a412b2061bb661904",
+            "idbfs_source.mjs": "16eb57d471537f13d3e50018b56c2d416d2847f0d0249ba44433dd9ebb65f4d8",
+            "legacy_inspection.mjs": "db3a23a0221aa5d34a58a6a49aeeff930295ffe20bfcf73a7c11f0d49cffd671",
+            "legacy_seal.mjs": "9642132f5d4e7523e5966e802069af7f4bae803fae8e2e7c28ae55ee97d85610",
+            "legacy_v5.mjs": "8e7f4ad2d87aab77ac05361e4f46060476e933aa079ae94301998d08d4599621",
+            "lifecycle.mjs": "1cfaebb9a8745e2dc3e4f694ef475f250640870938f04160be1a5c9acd62935d",
+            "source_decode.mjs": "411f3bc784cb32a07f32eed5fc7d88f71b59a667cc0d68a50fe13c55bfdba18a",
+            "store.mjs": "2193b4397b8662a8ebc754dc4468e4d62964d209b4e1d0f0924a2ec81b409cbe"
+          }
+        }
+      },
+      "html_status": 200,
+      "html_sha256": "ccd7ab5bb40cdb85dca4b4caec1ac3888ff7e7c3bd6ba121feee199c8bd5e0a6",
+      "pck": {
+        "status": 200,
+        "bytes": 27093724,
+        "sha256": "df8b4807079717a3a51c273f09c617173aa6b50ce29b812e82d595cad62cd92a"
+      },
+      "utc": "2026-10-06T00:48:14Z",
+      "dependency_checks": [
+        {
+          "path": "open-source-licenses.html",
+          "status": 200,
+          "bytes": 147966,
+          "sha256": "9215f5fdd50039a9b6f3d8f0271cbc21bbdf64b917fb118dd29c8a16b9974e00"
+        },
+        {
+          "path": "web/save/bridge.mjs",
+          "status": 200,
+          "bytes": 1856,
+          "sha256": "ef18687554fdc0d745c1d18d4d091e959cc78559da0d61d6a093e562ff9bbc91"
+        },
+        {
+          "path": "web/save/budgets.mjs",
+          "status": 200,
+          "bytes": 340,
+          "sha256": "52984153977dcafd1d2682e848f1999f091d0966e17d46e902de76f5735a7018"
+        },
+        {
+          "path": "web/save/host.mjs",
+          "status": 200,
+          "bytes": 7730,
+          "sha256": "9de8dc0ef4bfc037a8ad0bff575d40c3dd4341bcc723351a412b2061bb661904"
+        },
+        {
+          "path": "web/save/idbfs_source.mjs",
+          "status": 200,
+          "bytes": 5550,
+          "sha256": "16eb57d471537f13d3e50018b56c2d416d2847f0d0249ba44433dd9ebb65f4d8"
+        },
+        {
+          "path": "web/save/legacy_inspection.mjs",
+          "status": 200,
+          "bytes": 2886,
+          "sha256": "db3a23a0221aa5d34a58a6a49aeeff930295ffe20bfcf73a7c11f0d49cffd671"
+        },
+        {
+          "path": "web/save/legacy_seal.mjs",
+          "status": 200,
+          "bytes": 2510,
+          "sha256": "9642132f5d4e7523e5966e802069af7f4bae803fae8e2e7c28ae55ee97d85610"
+        },
+        {
+          "path": "web/save/legacy_v5.mjs",
+          "status": 200,
+          "bytes": 2245,
+          "sha256": "8e7f4ad2d87aab77ac05361e4f46060476e933aa079ae94301998d08d4599621"
+        },
+        {
+          "path": "web/save/lifecycle.mjs",
+          "status": 200,
+          "bytes": 1878,
+          "sha256": "1cfaebb9a8745e2dc3e4f694ef475f250640870938f04160be1a5c9acd62935d"
+        },
+        {
+          "path": "web/save/source_decode.mjs",
+          "status": 200,
+          "bytes": 1542,
+          "sha256": "411f3bc784cb32a07f32eed5fc7d88f71b59a667cc0d68a50fe13c55bfdba18a"
+        },
+        {
+          "path": "web/save/store.mjs",
+          "status": 200,
+          "bytes": 13890,
+          "sha256": "2193b4397b8662a8ebc754dc4468e4d62964d209b4e1d0f0924a2ec81b409cbe"
+        }
+      ],
+      "loaded_html_sha256": "ccd7ab5bb40cdb85dca4b4caec1ac3888ff7e7c3bd6ba121feee199c8bd5e0a6"
+    },
+    {
+      "case": "volume",
+      "stage": "after",
+      "manifest": {
+        "schema": "youjia.candidate/v1",
+        "source": "146c3711537e4fa6657f1fd54e7472747cd0b10d",
+        "sourceCommit": "146c3711537e4fa6657f1fd54e7472747cd0b10d",
+        "sourceTree": "2e622f91345fc1a223982480339d86fa9ff94117",
+        "entry": "index",
+        "candidateOnly": true,
+        "engine": "4.7.2.stable.official.ed1daf0bf",
+        "files": {
+          "index.apple-touch-icon.png": {
+            "bytes": 59343,
+            "sha256": "80d91adb306354c6e4d1af546d062e1e9236699ad0fd53153ab3d2fc34cd11d4"
+          },
+          "index.audio.position.worklet.js": {
+            "bytes": 2973,
+            "sha256": "be33985bc7160d6bf9646f259cd86b259cd67b02ccb297ee5c44f8ac84327bc8"
+          },
+          "index.audio.worklet.js": {
+            "bytes": 7298,
+            "sha256": "5b476a9c9ce642c0ee4256436d1bc31d9c38f868aca0f9a8e2a57c18d2dec2a3"
+          },
+          "index.html": {
+            "bytes": 357722,
+            "sha256": "ccd7ab5bb40cdb85dca4b4caec1ac3888ff7e7c3bd6ba121feee199c8bd5e0a6"
+          },
+          "index.icon.png": {
+            "bytes": 389674,
+            "sha256": "1c591b9eb1b7af2a840a59a9feb637a0a7aeba2b0abde28042abf44f77d0acb3"
+          },
+          "index.js": {
+            "bytes": 279815,
+            "sha256": "33c94cb3175f3333b82e2a3be5e8e86f77986f0aa2042b1631f6367a4e5bb6ba"
+          },
+          "index.pck": {
+            "bytes": 27093724,
+            "sha256": "df8b4807079717a3a51c273f09c617173aa6b50ce29b812e82d595cad62cd92a"
+          },
+          "index.png": {
+            "bytes": 1010767,
+            "sha256": "5743a648b82437e0e60db5e4aa08103cea96b01e110961082223c0e7fa819ebf"
+          },
+          "index.wasm": {
+            "bytes": 39514754,
+            "sha256": "fc74679e3b97f76878947fcd4fbe1268cbfa6188182a2e33bbc3f5dc9bfa57d0"
+          },
+          "open-source-licenses.html": {
+            "bytes": 147966,
+            "sha256": "9215f5fdd50039a9b6f3d8f0271cbc21bbdf64b917fb118dd29c8a16b9974e00"
+          },
+          "web/save/bridge.mjs": {
+            "bytes": 1856,
+            "sha256": "ef18687554fdc0d745c1d18d4d091e959cc78559da0d61d6a093e562ff9bbc91"
+          },
+          "web/save/budgets.mjs": {
+            "bytes": 340,
+            "sha256": "52984153977dcafd1d2682e848f1999f091d0966e17d46e902de76f5735a7018"
+          },
+          "web/save/host.mjs": {
+            "bytes": 7730,
+            "sha256": "9de8dc0ef4bfc037a8ad0bff575d40c3dd4341bcc723351a412b2061bb661904"
+          },
+          "web/save/idbfs_source.mjs": {
+            "bytes": 5550,
+            "sha256": "16eb57d471537f13d3e50018b56c2d416d2847f0d0249ba44433dd9ebb65f4d8"
+          },
+          "web/save/legacy_inspection.mjs": {
+            "bytes": 2886,
+            "sha256": "db3a23a0221aa5d34a58a6a49aeeff930295ffe20bfcf73a7c11f0d49cffd671"
+          },
+          "web/save/legacy_seal.mjs": {
+            "bytes": 2510,
+            "sha256": "9642132f5d4e7523e5966e802069af7f4bae803fae8e2e7c28ae55ee97d85610"
+          },
+          "web/save/legacy_v5.mjs": {
+            "bytes": 2245,
+            "sha256": "8e7f4ad2d87aab77ac05361e4f46060476e933aa079ae94301998d08d4599621"
+          },
+          "web/save/lifecycle.mjs": {
+            "bytes": 1878,
+            "sha256": "1cfaebb9a8745e2dc3e4f694ef475f250640870938f04160be1a5c9acd62935d"
+          },
+          "web/save/source_decode.mjs": {
+            "bytes": 1542,
+            "sha256": "411f3bc784cb32a07f32eed5fc7d88f71b59a667cc0d68a50fe13c55bfdba18a"
+          },
+          "web/save/store.mjs": {
+            "bytes": 13890,
+            "sha256": "2193b4397b8662a8ebc754dc4468e4d62964d209b4e1d0f0924a2ec81b409cbe"
+          }
+        },
+        "storageModules": {
+          "entry": "web/save",
+          "sha256": {
+            "bridge.mjs": "ef18687554fdc0d745c1d18d4d091e959cc78559da0d61d6a093e562ff9bbc91",
+            "budgets.mjs": "52984153977dcafd1d2682e848f1999f091d0966e17d46e902de76f5735a7018",
+            "host.mjs": "9de8dc0ef4bfc037a8ad0bff575d40c3dd4341bcc723351a412b2061bb661904",
+            "idbfs_source.mjs": "16eb57d471537f13d3e50018b56c2d416d2847f0d0249ba44433dd9ebb65f4d8",
+            "legacy_inspection.mjs": "db3a23a0221aa5d34a58a6a49aeeff930295ffe20bfcf73a7c11f0d49cffd671",
+            "legacy_seal.mjs": "9642132f5d4e7523e5966e802069af7f4bae803fae8e2e7c28ae55ee97d85610",
+            "legacy_v5.mjs": "8e7f4ad2d87aab77ac05361e4f46060476e933aa079ae94301998d08d4599621",
+            "lifecycle.mjs": "1cfaebb9a8745e2dc3e4f694ef475f250640870938f04160be1a5c9acd62935d",
+            "source_decode.mjs": "411f3bc784cb32a07f32eed5fc7d88f71b59a667cc0d68a50fe13c55bfdba18a",
+            "store.mjs": "2193b4397b8662a8ebc754dc4468e4d62964d209b4e1d0f0924a2ec81b409cbe"
+          }
+        }
+      },
+      "html_status": 200,
+      "html_sha256": "ccd7ab5bb40cdb85dca4b4caec1ac3888ff7e7c3bd6ba121feee199c8bd5e0a6",
+      "pck": {
+        "status": 200,
+        "bytes": 27093724,
+        "sha256": "df8b4807079717a3a51c273f09c617173aa6b50ce29b812e82d595cad62cd92a"
+      },
+      "utc": "2026-10-06T00:51:54Z",
+      "dependency_checks": [
+        {
+          "path": "open-source-licenses.html",
+          "status": 200,
+          "bytes": 147966,
+          "sha256": "9215f5fdd50039a9b6f3d8f0271cbc21bbdf64b917fb118dd29c8a16b9974e00"
+        },
+        {
+          "path": "web/save/bridge.mjs",
+          "status": 200,
+          "bytes": 1856,
+          "sha256": "ef18687554fdc0d745c1d18d4d091e959cc78559da0d61d6a093e562ff9bbc91"
+        },
+        {
+          "path": "web/save/budgets.mjs",
+          "status": 200,
+          "bytes": 340,
+          "sha256": "52984153977dcafd1d2682e848f1999f091d0966e17d46e902de76f5735a7018"
+        },
+        {
+          "path": "web/save/host.mjs",
+          "status": 200,
+          "bytes": 7730,
+          "sha256": "9de8dc0ef4bfc037a8ad0bff575d40c3dd4341bcc723351a412b2061bb661904"
+        },
+        {
+          "path": "web/save/idbfs_source.mjs",
+          "status": 200,
+          "bytes": 5550,
+          "sha256": "16eb57d471537f13d3e50018b56c2d416d2847f0d0249ba44433dd9ebb65f4d8"
+        },
+        {
+          "path": "web/save/legacy_inspection.mjs",
+          "status": 200,
+          "bytes": 2886,
+          "sha256": "db3a23a0221aa5d34a58a6a49aeeff930295ffe20bfcf73a7c11f0d49cffd671"
+        },
+        {
+          "path": "web/save/legacy_seal.mjs",
+          "status": 200,
+          "bytes": 2510,
+          "sha256": "9642132f5d4e7523e5966e802069af7f4bae803fae8e2e7c28ae55ee97d85610"
+        },
+        {
+          "path": "web/save/legacy_v5.mjs",
+          "status": 200,
+          "bytes": 2245,
+          "sha256": "8e7f4ad2d87aab77ac05361e4f46060476e933aa079ae94301998d08d4599621"
+        },
+        {
+          "path": "web/save/lifecycle.mjs",
+          "status": 200,
+          "bytes": 1878,
+          "sha256": "1cfaebb9a8745e2dc3e4f694ef475f250640870938f04160be1a5c9acd62935d"
+        },
+        {
+          "path": "web/save/source_decode.mjs",
+          "status": 200,
+          "bytes": 1542,
+          "sha256": "411f3bc784cb32a07f32eed5fc7d88f71b59a667cc0d68a50fe13c55bfdba18a"
+        },
+        {
+          "path": "web/save/store.mjs",
+          "status": 200,
+          "bytes": 13890,
+          "sha256": "2193b4397b8662a8ebc754dc4468e4d62964d209b4e1d0f0924a2ec81b409cbe"
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "console": [
+    {
+      "case": "volume",
+      "type": "log",
+      "text": "Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org"
+    },
+    {
+      "case": "volume",
+      "type": "log",
+      "text": "OpenGL API OpenGL ES 3.0 (WebGL 2.0 (OpenGL ES 3.0 Chromium)) - Compatibility - Using Device: WebKit - WebKit WebGL"
+    },
+    {
+      "case": "volume",
+      "type": "log",
+      "text": "Build configuration: Emscripten 4.0.20, single-threaded, no GDExtension support."
+    },
+    {
+      "case": "volume",
+      "type": "info",
+      "text": "[game-loading] timings_ms {\"engineScriptReady\":23,\"downloadComplete\":586,\"engineReady\":3020,\"firstFrame\":3966}"
+    }
+  ],
+  "asset_responses": [
+    {
+      "case": "volume",
+      "url": "http://127.0.0.1:8466/web/save/bridge.mjs",
+      "status": 200
+    },
+    {
+      "case": "volume",
+      "url": "http://127.0.0.1:8466/web/save/host.mjs",
+      "status": 200
+    },
+    {
+      "case": "volume",
+      "url": "http://127.0.0.1:8466/index.js",
+      "status": 200
+    },
+    {
+      "case": "volume",
+      "url": "http://127.0.0.1:8466/web/save/legacy_inspection.mjs",
+      "status": 200
+    },
+    {
+      "case": "volume",
+      "url": "http://127.0.0.1:8466/web/save/store.mjs",
+      "status": 200
+    },
+    {
+      "case": "volume",
+      "url": "http://127.0.0.1:8466/web/save/budgets.mjs",
+      "status": 200
+    },
+    {
+      "case": "volume",
+      "url": "http://127.0.0.1:8466/web/save/source_decode.mjs",
+      "status": 200
+    },
+    {
+      "case": "volume",
+      "url": "http://127.0.0.1:8466/web/save/legacy_v5.mjs",
+      "status": 200
+    },
+    {
+      "case": "volume",
+      "url": "http://127.0.0.1:8466/web/save/lifecycle.mjs",
+      "status": 200
+    },
+    {
+      "case": "volume",
+      "url": "http://127.0.0.1:8466/web/save/legacy_seal.mjs",
+      "status": 200
+    },
+    {
+      "case": "volume",
+      "url": "http://127.0.0.1:8466/web/save/idbfs_source.mjs",
+      "status": 200
+    },
+    {
+      "case": "volume",
+      "url": "http://127.0.0.1:8466/index.wasm",
+      "status": 200
+    },
+    {
+      "case": "volume",
+      "url": "http://127.0.0.1:8466/index.pck",
+      "status": 200
+    }
+  ],
+  "browser_args": [
+    "--no-sandbox",
+    "--use-gl=angle",
+    "--use-angle=swiftshader",
+    "--enable-webgl",
+    "--enable-unsafe-swiftshader",
+    "--renderer-process-limit=1"
+  ],
+  "started_utc": "2026-10-06T00:48:00Z",
+  "limits": [
+    "ordinary mouse/keyboard only; no save/game state/seed/time setters",
+    "browser media emulation at context creation, not physical device/OS setting",
+    "ordinary mouse sliders only; no audio comfort/gain, touch382, or focus459 claims; no business state injection",
+    "no hearing or complete storage acceptance"
+  ],
+  "closed_utc": "2026-10-06T00:51:55Z"
+}

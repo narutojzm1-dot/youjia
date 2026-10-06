@@ -1,0 +1,27 @@
+{
+  "integrated_at": "2026-10-06T01:00:38.575715+00:00",
+  "base": "b9f68c3c5c4e70e16cefde9b4400bb1d553ff915",
+  "ours_checkpoint": "38eed59689625b576cae944e0a58371380f6a327",
+  "new_main": "c50188a417920e3f400c833ebcf44fe9f28c89b4",
+  "conflicts": [
+    "docs/decisions.md",
+    "docs/requirements.md"
+  ],
+  "resolution": "retain complete c501 requirements with own040 row after its updated039; retain complete c501 decisions then append own466 section",
+  "upstream_paths_outside_466_preserved_exact": true,
+  "materialized_changed_existing_paths": [
+    "docs/collaboration/goal-ownership.md",
+    "scripts/exploration/find_reveal.gd",
+    "scripts/exploration/near_path_scroll.gd",
+    "test/exploration_slice_suite.gd"
+  ],
+  "large_new_art_qa_not_checked_out": true,
+  "runtime_requires_new_validation": true,
+  "old_candidate_source_retained": "146c3711537e4fa6657f1fd54e7472747cd0b10d",
+  "skip_worktree_command_first_attempt": {
+    "exit": 129,
+    "reason": "--stdin must be last argument; index merge and both doc resolutions had completed; no runtime executed"
+  },
+  "skip_worktree_corrected_exit": 0,
+  "unmaterialized_historical_paths": 4441
+}

@@ -1,0 +1,68 @@
+{
+  "checked_at": "2026-10-05T23:37:18.495948+00:00",
+  "remote_final": "0f4226dc6710ef3a11099baf45f707bbfd4fd30e",
+  "local_final": "b472b6a59f214da5716c87567baac77533edc0eb",
+  "tree": "63ff0706a9c60dd31a69cb412b9629398a67848d",
+  "parents": [
+    "942e402fdfd79975adbeda02defd9716549e76f4",
+    "cd836bf9e823b4e6276731b69e57f167c84547b8"
+  ],
+  "proposed_merge": "68e674d1030046d90c88a1e29c5d35e282edd44e",
+  "proposed_parents": [
+    "cd836bf9e823b4e6276731b69e57f167c84547b8",
+    "0f4226dc6710ef3a11099baf45f707bbfd4fd30e"
+  ],
+  "unchanged_runtime_top_entries": {
+    ".gitignore": "100644 blob e68529eef25d61792d1df06689b3c588993ecc72",
+    ".manus-game-template.json": "100644 blob 05ac4bbd1ca2b1ddbc2f431478cacb275e7c024d",
+    ".manus-starter-init.json": "100644 blob f25941aefdaae45b3cccdbf2b18fbd92b4d385d6",
+    "AGENTS.md": "100644 blob 3dc16e15f91c77781a4dd9e4f6605d94c6dcdeec",
+    "CONTRIBUTING.md": "100644 blob 8cd2aee0734001f78f4f5e8349805331b1390f22",
+    "README.md": "100644 blob a6cba97e9d8effecd74d48c087cbf51e17354333",
+    "art": "040000 tree 99e478e475cf968f22593db7a9acfbde58651476",
+    "asset-provenance.json": "100644 blob 41e2f1ea42ea9722e5f566898bb430c5ae21c9a8",
+    "assets.lock.json": "100644 blob b80c907ed9dbd246dbbb194810159bc1ea74d05c",
+    "assets": "040000 tree 54dc0e10797e5a84db3ac4a1574d5c8688beb2a5",
+    "autoload": "040000 tree 154d61a9286ce809c82e7ed1112197fa4689a6b0",
+    "build": "040000 tree 0be20b37e11e499eeee38cdc9131cdad2844da07",
+    "config": "040000 tree ac5abcd7ee991eadc830b594506a6ff531761aea",
+    "export_presets.cfg": "100644 blob 0de4f0bd02ff99376e106ed0d306215c4ad1e40f",
+    "game-sharing.json": "100644 blob 4a9e1eee798a58608f594010bb42cb9112330895",
+    "game-verification.json": "100644 blob 2ce004c3f39d1501e2fd23f1a18bcb4c3bb8d820",
+    "localization": "040000 tree 79207063be773584750062da334d7a294d69ab34",
+    "package.json": "100644 blob 93f7af4a35103b9b437e66b481176940ee68a5d6",
+    "project.godot": "100644 blob 863d890c353f781a758b698e5386315a6323df9a",
+    "scenes": "040000 tree 960b14c588ab734ff36eefb4b1fad7b224a8b0bd",
+    "scripts": "040000 tree 6eb877209df843c2fbeb0b1dcc0c8343d1c986c2",
+    "shaders": "040000 tree b5a74ec1f0745e4270eadf18555d1f4cec5c1950",
+    "site": "040000 tree 6558fde32b5a364bba4f02802ed3a585c450b0c2",
+    "template-provenance.json": "100644 blob 2d400af975b9ac2ecb8f2f9fd99fd860926cd545",
+    "template.json": "100644 blob 4fad95346f5c75e70357defb5a1522a8e41f5806",
+    "test": "040000 tree 0430e7d586861239e76c8d1f45921e97c3f120ed",
+    "tools": "040000 tree 6b7ca88a563389d38109df8d51af68bf63cc54ad",
+    "web": "040000 tree 1dd43d726780f30f0d9c30ac87c04c21fa43f415"
+  },
+  "main_pm_files_preserved": [
+    "docs/collaboration/goal-ownership.md",
+    "docs/decisions.md",
+    "docs/playtests/2026-10-06-0720-game-pm/.gdignore",
+    "docs/playtests/2026-10-06-0720-game-pm/00-yard.png",
+    "docs/playtests/2026-10-06-0720-game-pm/01-album.png",
+    "docs/playtests/2026-10-06-0720-game-pm/01-near-animal.png",
+    "docs/playtests/2026-10-06-0720-game-pm/02-close-yard.png",
+    "docs/playtests/2026-10-06-0720-game-pm/03-near-sheep.png",
+    "docs/playtests/2026-10-06-0720-game-pm/README.md",
+    "docs/playtests/2026-10-06-0720-game-pm/browser.cjs.txt",
+    "docs/playtests/2026-10-06-0720-game-pm/result.json",
+    "docs/pm/2026-10-06-0720-coordination.md",
+    "docs/release-prep/2026-10-06.md",
+    "docs/requirements.md"
+  ],
+  "requirements_base_plus_one_039_row": true,
+  "decisions_base_plus_039_section": true,
+  "archive_delta": [
+    "docs/playtests/2026-10-06-photo461-integration/README.md"
+  ],
+  "author_blobs_preserved": 5,
+  "status": "PASS"
+}

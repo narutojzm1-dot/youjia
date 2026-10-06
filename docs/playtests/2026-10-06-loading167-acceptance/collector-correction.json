@@ -1,0 +1,18 @@
+{
+  "v1_driver_exit": 1,
+  "v1_browser_closed_utc": "2026-10-06T00:05:58Z",
+  "v1_directory": "/dev/shm/loading167-public-qa",
+  "v1_operation_result": "Desktop initial loading, intentional JS abort, actual retry, real first frame/title and ordinary yard screenshots reached; no page error; collector failed before after-binding/next case",
+  "errors": [
+    "First-navigation host.mjs response body no longer available after reload",
+    "PCK body evicted from inspector cache"
+  ],
+  "bounded_adjustment": "v2 hashes module response bodies only from retry navigation onwards; PCK exact hashes are independent public HTTP downloads before/after, actual browser PCK URL/status/cache flags/transfer recorded without response.body claim",
+  "runtime_modified": false,
+  "v1_driver_sha256": "05e28be781bffca4cc5294493dec5d480961a0cfa3e5e5cdda271f2a57d8fa2b",
+  "v2_driver_sha256": "efd436ce8bfd2067de6dadc67988cd30e0c29b3d395c6ed04248581d6f088b5f",
+  "planned_new_directory": "/dev/shm/loading167-public-qa-v2",
+  "repeat_limit": "One corrected six-case matrix; preserve all initial original files, stop on further failure.",
+  "v2_actual_outer_exit": 0,
+  "v2_cases": 6
+}

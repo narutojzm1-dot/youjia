@@ -1,0 +1,66 @@
+{
+  "tested_old_source": "146c3711537e4fa6657f1fd54e7472747cd0b10d",
+  "integrated_main": "c50188a417920e3f400c833ebcf44fe9f28c89b4",
+  "actual_changed_runtime_and_affected_test_paths": [
+    "M\tscripts/exploration/find_reveal.gd",
+    "M\tscripts/exploration/near_path_scroll.gd",
+    "M\ttest/exploration_slice_suite.gd"
+  ],
+  "runtime_subtrees": [
+    {
+      "path": "scripts",
+      "tested146_tree_or_blob": "3ba775c12dc1890960be67a66772c56fa644f921",
+      "c501_combination_tree_or_blob": "82329b8a3f5f9b60380179267a5a6dd1b55806c7",
+      "unchanged": false
+    },
+    {
+      "path": "autoload",
+      "tested146_tree_or_blob": "95f6c72724ee0777e1a4b38150569a4cf8b7458f",
+      "c501_combination_tree_or_blob": "95f6c72724ee0777e1a4b38150569a4cf8b7458f",
+      "unchanged": true
+    },
+    {
+      "path": "scenes",
+      "tested146_tree_or_blob": "960b14c588ab734ff36eefb4b1fad7b224a8b0bd",
+      "c501_combination_tree_or_blob": "960b14c588ab734ff36eefb4b1fad7b224a8b0bd",
+      "unchanged": true
+    },
+    {
+      "path": "assets",
+      "tested146_tree_or_blob": "54dc0e10797e5a84db3ac4a1574d5c8688beb2a5",
+      "c501_combination_tree_or_blob": "54dc0e10797e5a84db3ac4a1574d5c8688beb2a5",
+      "unchanged": true
+    },
+    {
+      "path": "config",
+      "tested146_tree_or_blob": "ac5abcd7ee991eadc830b594506a6ff531761aea",
+      "c501_combination_tree_or_blob": "ac5abcd7ee991eadc830b594506a6ff531761aea",
+      "unchanged": true
+    },
+    {
+      "path": "localization",
+      "tested146_tree_or_blob": "79207063be773584750062da334d7a294d69ab34",
+      "c501_combination_tree_or_blob": "79207063be773584750062da334d7a294d69ab34",
+      "unchanged": true
+    },
+    {
+      "path": "web",
+      "tested146_tree_or_blob": "1dd43d726780f30f0d9c30ac87c04c21fa43f415",
+      "c501_combination_tree_or_blob": "1dd43d726780f30f0d9c30ac87c04c21fa43f415",
+      "unchanged": true
+    },
+    {
+      "path": "project.godot",
+      "tested146_tree_or_blob": "8b7cf203a0d45366d4b3f29368855ad362171f01",
+      "c501_combination_tree_or_blob": "8b7cf203a0d45366d4b3f29368855ad362171f01",
+      "unchanged": true
+    },
+    {
+      "path": "export_presets.cfg",
+      "tested146_tree_or_blob": "0de4f0bd02ff99376e106ed0d306215c4ad1e40f",
+      "c501_combination_tree_or_blob": "0de4f0bd02ff99376e106ed0d306215c4ad1e40f",
+      "unchanged": true
+    }
+  ],
+  "note": "Only scripts subtree changes due exact Cloud2 files; test3 affects validation. New candidate cannot reuse old source/package identity."
+}

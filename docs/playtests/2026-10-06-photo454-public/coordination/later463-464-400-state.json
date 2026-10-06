@@ -1,0 +1,50 @@
+{
+  "checked_at": "2026-10-05T23:41:36.602292+00:00",
+  "kind": "later targeted read-only update plus parent local handoff; not another global audit",
+  "main_at_query": "cd836bf9e823b4e6276731b69e57f167c84547b8",
+  "pm463": {
+    "head": "cdd4c4a154809a67ecf440a20fa4ea57f5d7d94a",
+    "merge": "cd836bf9e823b4e6276731b69e57f167c84547b8",
+    "review": "https://github.com/narutojzm1-dot/youjia/pull/463#pullrequestreview-5421892409"
+  },
+  "pr464": {
+    "head": "0f4226dc6710ef3a11099baf45f707bbfd4fd30e",
+    "base": "cd836bf9e823b4e6276731b69e57f167c84547b8",
+    "state_at_query": "OPEN",
+    "merge_at_query": null,
+    "scope": "461 preserved-author integration; candidate actually tested, final independent review/CI still pending; no public claim"
+  },
+  "cloud456": {
+    "latest_receipt": {
+      "databaseId": 6004963943,
+      "createdAt": "2026-10-05T23:01:08Z",
+      "updatedAt": "2026-10-05T23:01:08Z",
+      "url": "https://github.com/narutojzm1-dot/youjia/issues/456#issuecomment-6004963943",
+      "body": "Agent-ID: CURSOR-CLOUD｜接收\n\n- **状态：** 已接收，开始执行。\n- **分支：** `cursor/exp-reveal-resize-a84c`（基于 main）。\n- **方法范围：** 只动 `NearPathScroll` 的尺寸变化处理和布局入口，以及 `FindReveal` 必要的生命周期方法；另加专项测试和证据。不改 375 的颜色、贴图和短音，不改 Main、Host、SaveStore，也不碰 Producer400 和 Assistant382 的方法。\n- **顺序：**\n  1. 先用确定性 headless 专项确认或证伪。\n  2. 确认后按现有可打断规则做最小修正，不重播、不重置时长、不重复授予。\n  3. 严格 Web 导出，用真实浏览器输入在展示中改视口。普通路径最多走一趟四站，没碰到就如实记未覆盖。\n  4. 独审最终 SHA，合入后核对发布。\n- **下一交付：** 复现或证伪结论，以及修正 PR。"
+    },
+    "new_remote_sha_claimed": false
+  },
+  "assistant459": {
+    "comments_count": 0,
+    "status": "awaiting acknowledgement"
+  },
+  "camera400": {
+    "owner": "GAME-PRODUCER overall original-user-screenshot acceptance",
+    "leader_assistance": "shared quiet_sky to goose_ride_horse prewarm camera handoff only",
+    "latest_public_receipt": {
+      "databaseId": 6005299861,
+      "createdAt": "2026-10-05T23:21:57Z",
+      "updatedAt": "2026-10-05T23:30:14Z",
+      "url": "https://github.com/narutojzm1-dot/youjia/issues/400#issuecomment-6005299861",
+      "body": "Agent-ID: CODEX-LEAD｜共享关系事件镜头交接组合验证（协助进行中；#400仍由GAME-PRODUCER总体验收）\n\n先fresh核原单4评论、最新16:52:44Z：尚无Producer具体实现branch/PR/方法回执；保留原Owner及全部原成果。本次不接管原截图的根因/画面布局结论，也不改Producer资源/背景/天气接入。独立协助范围是Leader既有关系行为框架中 quiet_sky→goose_ride_horse 预热交接；branch work/codex-lead/camera400-handoff-check，基线b300da74bf157de3f152e63331096cb1eb28b3f7，当前仅组合复现准备，没有已修复或已上线声明。\n\n只读发现的待证路径：quiet_sky持有偏移时，goose phase=-1、0<wait<3.5会让quiet yield清计时但不release，而鹅还未发新focus；下一次移动/资格丢失仅清wait、phase<0 cancel直接返回，Main旧target_offset可能不复位。现有quiet单元只看yield无release，goose restored只看zoom/blackbars不看offset；缺少此交叉断言。不是用旧-133计算证明用户截图根因。\n\n下一交付：保留两事件实际对象/信号的确定性原生正反例，验证真实world tick次序、旧Main offset/目标及恢复，不用静态断言冒运行复现。只新增自有组合回归测试与必要严格门禁登记；如复现成立，再公开精确最小共享框架修复范围与独立PR，保留原Producer对用户截图、resize/天气/探索往返的全部未验项。不得改Main._input/modal/slider、Assistant382/459、Cloud456/探索、共享存档、图像/音频。引擎排在461当前唯一浏览器关闭之后，不并行占用。不以单个反例或测试通过关闭#400。\n\n23:29 UTC 实际原代码复现已到：test-only3cdd2439d4a33b7085e00f12b2c42c48c7604355、base b300da74，Godot4.7.2真实Main→World tick→原camera信号，160检查/30失败、exit1，normal/reduced均观察预热中断/原hold期限后旧(19.25,-52.5)残留；quiet-only移动、真正phase0接管后取消的对照正常，42条完整状态/信号轨迹已保留，无SCRIPT ERROR。这30个失败是同一缺口的多条断言，不是30个新缺陷，也不等于用户截图原因已定。\n\n下一实现范围现明确：只改YardWorld._tick_quiet_sky_look的镜头Owner交接条件，将phase>=0实际接管和wait>0预热分开。预热仍禁止开启新quiet，但保留已有quiet active/原hold倒计时，让原移动取消或hold到期可释放；只有实际phase>=0新focus后才yield，不延长演出/静观，不添加每次预热回跳。Main、鹅马其它方法、Producer背景布局/资源、Assistant输入、探索/存档不改。独立branch延续，本方法修正及独立组合suite/daily准确完成门禁进行中；后续复验原红转绿/既有quiet和鹅马/完整Godot/Web、普通路径与独立最终SHA/实际CI/发布分别留证。#400用户原场景仍保持Producer验收和未覆盖清单，不凭此窄修复关单。\n"
+    },
+    "parent_local_handoff": "original controlled160 checks/30 failures; minimal green160 completed; independent reviewer requested new same-tick takeover positive case which is being added. Full daily/Web/ordinary public/final review/merge remain pending.",
+    "not_claimed": [
+      "original user screenshot cause proven",
+      "overall issue400 fixed",
+      "Owner transferred to Leader",
+      "ordinary/public camera fix accepted"
+    ]
+  },
+  "live_response_sha256": "92fd5d1668a8402040d22b0becb3aa89a0bab742b640ff39db0db48fb91765bc"
+}

@@ -1,0 +1,11 @@
+{
+  "local_repository_only": true,
+  "new_shallow_boundary": "c50188a417920e3f400c833ebcf44fe9f28c89b4",
+  "reason": "GitHub main merge object exact; its historical second parent1714 unavailable locally; avoid full history checkout/fetch. Full actual parent ids remain in original signed object, unchanged. Original author1759 remains reachable via our real first-parent integration chain.",
+  "actual_original_author_ancestor_check_exit": 0,
+  "docs474_boundary": {
+    "commit": "8ae57959ff95117047c4362704c298b583d651a7",
+    "reason": "the retained exact signed main references locally unmaterialized older parent11e3054; local traversal boundary only, raw real commit and parent ids unchanged",
+    "original_author_path_remains_real": true
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "driver_executor_session": 86977,
+  "driver_actual_exit_code": 0,
+  "started_utc": "2026-10-05T23:56:21Z",
+  "closed_utc": "2026-10-05T23:58:54Z",
+  "case_events": [
+    {
+      "case_open": "portrait",
+      "width": 390,
+      "height": 844,
+      "motion": "no-preference",
+      "actual_reduce": false,
+      "utc": "2026-10-05T23:56:57Z",
+      "monotonic": 375903.717330807
+    },
+    {
+      "case_closed": "portrait",
+      "utc": "2026-10-05T23:57:38Z",
+      "monotonic": 375944.524853429
+    },
+    {
+      "case_open": "landscape",
+      "width": 568,
+      "height": 320,
+      "motion": "no-preference",
+      "actual_reduce": false,
+      "utc": "2026-10-05T23:58:19Z",
+      "monotonic": 375985.800826171
+    },
+    {
+      "case_closed": "landscape",
+      "utc": "2026-10-05T23:58:54Z",
+      "monotonic": 376020.684487883
+    }
+  ],
+  "memory_samples_bytes": {
+    "before": 15706345472,
+    "portrait_loaded": 16389169152,
+    "portrait_after_path": 16846794752,
+    "landscape_loading": 16239333376,
+    "landscape_after_path": 17048829952,
+    "browser_closed": 15677206528
+  },
+  "memory_limit": "Samples only; no claim of continuous maximum measurement",
+  "window_released_to_root": true,
+  "no_more_browser_launches_for_offline_archive": true
+}

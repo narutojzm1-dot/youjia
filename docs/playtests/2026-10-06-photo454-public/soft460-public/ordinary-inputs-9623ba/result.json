@@ -1,0 +1,834 @@
+{
+  "source": "9623ba22c8edc564e5c89dc6b0171324e9230764",
+  "entry": "game-9623ba2",
+  "expected_pck_sha256": "9de040c80027b41cccc6a331218b39ddd2c765ec108d94197a7fd01febcc0ae4",
+  "expected_pck_bytes": 27089276,
+  "inputs": [
+    {
+      "command": {
+        "op": "new",
+        "name": "portrait",
+        "width": 390,
+        "height": 844,
+        "motion": "no-preference"
+      },
+      "case": "",
+      "utc": "2026-10-05T23:06:51Z",
+      "monotonic": 372897.513290635
+    },
+    {
+      "case_open": "portrait",
+      "width": 390,
+      "height": 844,
+      "motion": "no-preference",
+      "actual_reduce": false,
+      "utc": "2026-10-05T23:07:22Z",
+      "monotonic": 372928.568639364
+    },
+    {
+      "screenshot_request": "portrait-title",
+      "case": "portrait",
+      "utc": "2026-10-05T23:07:22Z",
+      "monotonic": 372928.568995
+    },
+    {
+      "screenshot_complete": "portrait-title",
+      "case": "portrait",
+      "utc": "2026-10-05T23:07:23Z",
+      "monotonic": 372928.993276526
+    },
+    {
+      "command": {
+        "op": "click",
+        "x": 195,
+        "y": 486
+      },
+      "case": "portrait",
+      "utc": "2026-10-05T23:07:38Z",
+      "monotonic": 372944.381029326
+    },
+    {
+      "command": {
+        "op": "move",
+        "x": 382,
+        "y": 827
+      },
+      "case": "portrait",
+      "utc": "2026-10-05T23:07:38Z",
+      "monotonic": 372944.421975199
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 350
+      },
+      "case": "portrait",
+      "utc": "2026-10-05T23:07:38Z",
+      "monotonic": 372944.463013014
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "portrait-01-empty-album"
+      },
+      "case": "portrait",
+      "utc": "2026-10-05T23:07:38Z",
+      "monotonic": 372944.815421816
+    },
+    {
+      "screenshot_request": "portrait-01-empty-album",
+      "case": "portrait",
+      "utc": "2026-10-05T23:07:38Z",
+      "monotonic": 372944.815865767
+    },
+    {
+      "screenshot_complete": "portrait-01-empty-album",
+      "case": "portrait",
+      "utc": "2026-10-05T23:07:39Z",
+      "monotonic": 372945.29978377
+    },
+    {
+      "command": {
+        "op": "db",
+        "name": "portrait-01-before-disabled-db"
+      },
+      "case": "portrait",
+      "utc": "2026-10-05T23:07:39Z",
+      "monotonic": 372945.300238001
+    },
+    {
+      "command": {
+        "op": "click",
+        "x": 84,
+        "y": 666
+      },
+      "case": "portrait",
+      "utc": "2026-10-05T23:07:48Z",
+      "monotonic": 372954.443615174
+    },
+    {
+      "command": {
+        "op": "move",
+        "x": 382,
+        "y": 827
+      },
+      "case": "portrait",
+      "utc": "2026-10-05T23:07:48Z",
+      "monotonic": 372954.472320607
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 250
+      },
+      "case": "portrait",
+      "utc": "2026-10-05T23:07:48Z",
+      "monotonic": 372954.511757142
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "portrait-02-after-previous"
+      },
+      "case": "portrait",
+      "utc": "2026-10-05T23:07:48Z",
+      "monotonic": 372954.763661758
+    },
+    {
+      "screenshot_request": "portrait-02-after-previous",
+      "case": "portrait",
+      "utc": "2026-10-05T23:07:48Z",
+      "monotonic": 372954.764163147
+    },
+    {
+      "screenshot_complete": "portrait-02-after-previous",
+      "case": "portrait",
+      "utc": "2026-10-05T23:07:49Z",
+      "monotonic": 372955.302182025
+    },
+    {
+      "command": {
+        "op": "click",
+        "x": 195,
+        "y": 666
+      },
+      "case": "portrait",
+      "utc": "2026-10-05T23:07:49Z",
+      "monotonic": 372955.302682433
+    },
+    {
+      "command": {
+        "op": "move",
+        "x": 382,
+        "y": 827
+      },
+      "case": "portrait",
+      "utc": "2026-10-05T23:07:49Z",
+      "monotonic": 372955.360308617
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 250
+      },
+      "case": "portrait",
+      "utc": "2026-10-05T23:07:49Z",
+      "monotonic": 372955.407473263
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "portrait-03-after-next"
+      },
+      "case": "portrait",
+      "utc": "2026-10-05T23:07:49Z",
+      "monotonic": 372955.660629824
+    },
+    {
+      "screenshot_request": "portrait-03-after-next",
+      "case": "portrait",
+      "utc": "2026-10-05T23:07:49Z",
+      "monotonic": 372955.661643462
+    },
+    {
+      "screenshot_complete": "portrait-03-after-next",
+      "case": "portrait",
+      "utc": "2026-10-05T23:07:50Z",
+      "monotonic": 372956.14033204
+    },
+    {
+      "command": {
+        "op": "db",
+        "name": "portrait-03-after-disabled-db"
+      },
+      "case": "portrait",
+      "utc": "2026-10-05T23:07:50Z",
+      "monotonic": 372956.141355857
+    },
+    {
+      "command": {
+        "op": "click",
+        "x": 305,
+        "y": 666
+      },
+      "case": "portrait",
+      "utc": "2026-10-05T23:07:50Z",
+      "monotonic": 372956.416714726
+    },
+    {
+      "command": {
+        "op": "move",
+        "x": 382,
+        "y": 827
+      },
+      "case": "portrait",
+      "utc": "2026-10-05T23:07:50Z",
+      "monotonic": 372956.46870337
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 250
+      },
+      "case": "portrait",
+      "utc": "2026-10-05T23:07:50Z",
+      "monotonic": 372956.519923174
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "portrait-04-closed"
+      },
+      "case": "portrait",
+      "utc": "2026-10-05T23:07:50Z",
+      "monotonic": 372956.772203132
+    },
+    {
+      "screenshot_request": "portrait-04-closed",
+      "case": "portrait",
+      "utc": "2026-10-05T23:07:50Z",
+      "monotonic": 372956.772829997
+    },
+    {
+      "screenshot_complete": "portrait-04-closed",
+      "case": "portrait",
+      "utc": "2026-10-05T23:07:51Z",
+      "monotonic": 372957.193014283
+    },
+    {
+      "command": {
+        "op": "resize",
+        "width": 568,
+        "height": 320
+      },
+      "case": "portrait",
+      "utc": "2026-10-05T23:07:51Z",
+      "monotonic": 372957.193583389
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "landscape-00-title"
+      },
+      "case": "portrait",
+      "utc": "2026-10-05T23:07:51Z",
+      "monotonic": 372957.635096351
+    },
+    {
+      "screenshot_request": "landscape-00-title",
+      "case": "portrait",
+      "utc": "2026-10-05T23:07:51Z",
+      "monotonic": 372957.635691656
+    },
+    {
+      "screenshot_complete": "landscape-00-title",
+      "case": "portrait",
+      "utc": "2026-10-05T23:07:51Z",
+      "monotonic": 372957.931472451
+    },
+    {
+      "command": {
+        "op": "click",
+        "x": 284,
+        "y": 205
+      },
+      "case": "portrait",
+      "utc": "2026-10-05T23:08:02Z",
+      "monotonic": 372968.339319227
+    },
+    {
+      "command": {
+        "op": "move",
+        "x": 561,
+        "y": 315
+      },
+      "case": "portrait",
+      "utc": "2026-10-05T23:08:02Z",
+      "monotonic": 372968.364558722
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 350
+      },
+      "case": "portrait",
+      "utc": "2026-10-05T23:08:02Z",
+      "monotonic": 372968.38416603
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "landscape-01-empty-album"
+      },
+      "case": "portrait",
+      "utc": "2026-10-05T23:08:02Z",
+      "monotonic": 372968.736277267
+    },
+    {
+      "screenshot_request": "landscape-01-empty-album",
+      "case": "portrait",
+      "utc": "2026-10-05T23:08:02Z",
+      "monotonic": 372968.737015139
+    },
+    {
+      "screenshot_complete": "landscape-01-empty-album",
+      "case": "portrait",
+      "utc": "2026-10-05T23:08:03Z",
+      "monotonic": 372969.0192016
+    },
+    {
+      "command": {
+        "op": "db",
+        "name": "landscape-01-before-disabled-db"
+      },
+      "case": "portrait",
+      "utc": "2026-10-05T23:08:03Z",
+      "monotonic": 372969.019863489
+    },
+    {
+      "command": {
+        "op": "click",
+        "x": 114,
+        "y": 284
+      },
+      "case": "portrait",
+      "utc": "2026-10-05T23:08:13Z",
+      "monotonic": 372979.804908008
+    },
+    {
+      "command": {
+        "op": "move",
+        "x": 561,
+        "y": 315
+      },
+      "case": "portrait",
+      "utc": "2026-10-05T23:08:13Z",
+      "monotonic": 372979.823270417
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 250
+      },
+      "case": "portrait",
+      "utc": "2026-10-05T23:08:13Z",
+      "monotonic": 372979.865022689
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "landscape-02-after-previous"
+      },
+      "case": "portrait",
+      "utc": "2026-10-05T23:08:14Z",
+      "monotonic": 372980.119196117
+    },
+    {
+      "screenshot_request": "landscape-02-after-previous",
+      "case": "portrait",
+      "utc": "2026-10-05T23:08:14Z",
+      "monotonic": 372980.119905135
+    },
+    {
+      "screenshot_complete": "landscape-02-after-previous",
+      "case": "portrait",
+      "utc": "2026-10-05T23:08:14Z",
+      "monotonic": 372980.391392378
+    },
+    {
+      "command": {
+        "op": "click",
+        "x": 284,
+        "y": 284
+      },
+      "case": "portrait",
+      "utc": "2026-10-05T23:08:14Z",
+      "monotonic": 372980.392412057
+    },
+    {
+      "command": {
+        "op": "move",
+        "x": 561,
+        "y": 315
+      },
+      "case": "portrait",
+      "utc": "2026-10-05T23:08:14Z",
+      "monotonic": 372980.408322272
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 250
+      },
+      "case": "portrait",
+      "utc": "2026-10-05T23:08:14Z",
+      "monotonic": 372980.435781457
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "landscape-03-after-next"
+      },
+      "case": "portrait",
+      "utc": "2026-10-05T23:08:14Z",
+      "monotonic": 372980.687855082
+    },
+    {
+      "screenshot_request": "landscape-03-after-next",
+      "case": "portrait",
+      "utc": "2026-10-05T23:08:14Z",
+      "monotonic": 372980.689123908
+    },
+    {
+      "screenshot_complete": "landscape-03-after-next",
+      "case": "portrait",
+      "utc": "2026-10-05T23:08:14Z",
+      "monotonic": 372980.926626034
+    },
+    {
+      "command": {
+        "op": "db",
+        "name": "landscape-03-after-disabled-db"
+      },
+      "case": "portrait",
+      "utc": "2026-10-05T23:08:14Z",
+      "monotonic": 372980.927412727
+    },
+    {
+      "command": {
+        "op": "click",
+        "x": 454,
+        "y": 284
+      },
+      "case": "portrait",
+      "utc": "2026-10-05T23:08:15Z",
+      "monotonic": 372981.100903886
+    },
+    {
+      "command": {
+        "op": "move",
+        "x": 561,
+        "y": 315
+      },
+      "case": "portrait",
+      "utc": "2026-10-05T23:08:15Z",
+      "monotonic": 372981.12432582
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 250
+      },
+      "case": "portrait",
+      "utc": "2026-10-05T23:08:15Z",
+      "monotonic": 372981.168399389
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "landscape-04-closed"
+      },
+      "case": "portrait",
+      "utc": "2026-10-05T23:08:15Z",
+      "monotonic": 372981.420816829
+    },
+    {
+      "screenshot_request": "landscape-04-closed",
+      "case": "portrait",
+      "utc": "2026-10-05T23:08:15Z",
+      "monotonic": 372981.421612579
+    },
+    {
+      "screenshot_complete": "landscape-04-closed",
+      "case": "portrait",
+      "utc": "2026-10-05T23:08:15Z",
+      "monotonic": 372981.634839173
+    },
+    {
+      "command": {
+        "op": "end"
+      },
+      "case": "portrait",
+      "utc": "2026-10-05T23:08:15Z",
+      "monotonic": 372981.635577356
+    },
+    {
+      "case_closed": "portrait",
+      "utc": "2026-10-05T23:08:35Z",
+      "monotonic": 373001.710900227
+    }
+  ],
+  "bindings": [
+    {
+      "case": "portrait",
+      "stage": "before",
+      "manifest": {
+        "schema": "youjia.release/v1",
+        "sourceCommit": "9623ba22c8edc564e5c89dc6b0171324e9230764",
+        "engine": "4.7.2.stable.official.ed1daf0bf",
+        "entry": "game-9623ba2",
+        "publishedAt": "2026-10-05T23:03:50Z",
+        "storageModules": {
+          "entry": "save-9623ba2",
+          "sha256": {
+            "bridge.mjs": "ef18687554fdc0d745c1d18d4d091e959cc78559da0d61d6a093e562ff9bbc91",
+            "budgets.mjs": "52984153977dcafd1d2682e848f1999f091d0966e17d46e902de76f5735a7018",
+            "host.mjs": "9de8dc0ef4bfc037a8ad0bff575d40c3dd4341bcc723351a412b2061bb661904",
+            "idbfs_source.mjs": "16eb57d471537f13d3e50018b56c2d416d2847f0d0249ba44433dd9ebb65f4d8",
+            "legacy_inspection.mjs": "db3a23a0221aa5d34a58a6a49aeeff930295ffe20bfcf73a7c11f0d49cffd671",
+            "legacy_seal.mjs": "9642132f5d4e7523e5966e802069af7f4bae803fae8e2e7c28ae55ee97d85610",
+            "legacy_v5.mjs": "8e7f4ad2d87aab77ac05361e4f46060476e933aa079ae94301998d08d4599621",
+            "lifecycle.mjs": "1cfaebb9a8745e2dc3e4f694ef475f250640870938f04160be1a5c9acd62935d",
+            "source_decode.mjs": "411f3bc784cb32a07f32eed5fc7d88f71b59a667cc0d68a50fe13c55bfdba18a",
+            "store.mjs": "2193b4397b8662a8ebc754dc4468e4d62964d209b4e1d0f0924a2ec81b409cbe"
+          }
+        }
+      },
+      "html_status": 200,
+      "html_sha256": "43597c5477a651aaf79afe6cde05be98894e71b273c684fc9605f3b8af3a1a4b",
+      "pck": {
+        "status": 200,
+        "bytes": 27089276,
+        "sha256": "9de040c80027b41cccc6a331218b39ddd2c765ec108d94197a7fd01febcc0ae4"
+      },
+      "storage_module_checks": [
+        {
+          "path": "save-9623ba2/bridge.mjs",
+          "status": 200,
+          "bytes": 1856,
+          "sha256": "ef18687554fdc0d745c1d18d4d091e959cc78559da0d61d6a093e562ff9bbc91"
+        },
+        {
+          "path": "save-9623ba2/budgets.mjs",
+          "status": 200,
+          "bytes": 340,
+          "sha256": "52984153977dcafd1d2682e848f1999f091d0966e17d46e902de76f5735a7018"
+        },
+        {
+          "path": "save-9623ba2/host.mjs",
+          "status": 200,
+          "bytes": 7730,
+          "sha256": "9de8dc0ef4bfc037a8ad0bff575d40c3dd4341bcc723351a412b2061bb661904"
+        },
+        {
+          "path": "save-9623ba2/idbfs_source.mjs",
+          "status": 200,
+          "bytes": 5550,
+          "sha256": "16eb57d471537f13d3e50018b56c2d416d2847f0d0249ba44433dd9ebb65f4d8"
+        },
+        {
+          "path": "save-9623ba2/legacy_inspection.mjs",
+          "status": 200,
+          "bytes": 2886,
+          "sha256": "db3a23a0221aa5d34a58a6a49aeeff930295ffe20bfcf73a7c11f0d49cffd671"
+        },
+        {
+          "path": "save-9623ba2/legacy_seal.mjs",
+          "status": 200,
+          "bytes": 2510,
+          "sha256": "9642132f5d4e7523e5966e802069af7f4bae803fae8e2e7c28ae55ee97d85610"
+        },
+        {
+          "path": "save-9623ba2/legacy_v5.mjs",
+          "status": 200,
+          "bytes": 2245,
+          "sha256": "8e7f4ad2d87aab77ac05361e4f46060476e933aa079ae94301998d08d4599621"
+        },
+        {
+          "path": "save-9623ba2/lifecycle.mjs",
+          "status": 200,
+          "bytes": 1878,
+          "sha256": "1cfaebb9a8745e2dc3e4f694ef475f250640870938f04160be1a5c9acd62935d"
+        },
+        {
+          "path": "save-9623ba2/source_decode.mjs",
+          "status": 200,
+          "bytes": 1542,
+          "sha256": "411f3bc784cb32a07f32eed5fc7d88f71b59a667cc0d68a50fe13c55bfdba18a"
+        },
+        {
+          "path": "save-9623ba2/store.mjs",
+          "status": 200,
+          "bytes": 13890,
+          "sha256": "2193b4397b8662a8ebc754dc4468e4d62964d209b4e1d0f0924a2ec81b409cbe"
+        }
+      ],
+      "license_check": {
+        "path": "open-source-licenses.html",
+        "status": 200,
+        "bytes": 147966,
+        "sha256": "9215f5fdd50039a9b6f3d8f0271cbc21bbdf64b917fb118dd29c8a16b9974e00"
+      },
+      "utc": "2026-10-05T23:07:12Z",
+      "loaded_html_sha256": "43597c5477a651aaf79afe6cde05be98894e71b273c684fc9605f3b8af3a1a4b"
+    },
+    {
+      "case": "portrait",
+      "stage": "after",
+      "manifest": {
+        "schema": "youjia.release/v1",
+        "sourceCommit": "9623ba22c8edc564e5c89dc6b0171324e9230764",
+        "engine": "4.7.2.stable.official.ed1daf0bf",
+        "entry": "game-9623ba2",
+        "publishedAt": "2026-10-05T23:03:50Z",
+        "storageModules": {
+          "entry": "save-9623ba2",
+          "sha256": {
+            "bridge.mjs": "ef18687554fdc0d745c1d18d4d091e959cc78559da0d61d6a093e562ff9bbc91",
+            "budgets.mjs": "52984153977dcafd1d2682e848f1999f091d0966e17d46e902de76f5735a7018",
+            "host.mjs": "9de8dc0ef4bfc037a8ad0bff575d40c3dd4341bcc723351a412b2061bb661904",
+            "idbfs_source.mjs": "16eb57d471537f13d3e50018b56c2d416d2847f0d0249ba44433dd9ebb65f4d8",
+            "legacy_inspection.mjs": "db3a23a0221aa5d34a58a6a49aeeff930295ffe20bfcf73a7c11f0d49cffd671",
+            "legacy_seal.mjs": "9642132f5d4e7523e5966e802069af7f4bae803fae8e2e7c28ae55ee97d85610",
+            "legacy_v5.mjs": "8e7f4ad2d87aab77ac05361e4f46060476e933aa079ae94301998d08d4599621",
+            "lifecycle.mjs": "1cfaebb9a8745e2dc3e4f694ef475f250640870938f04160be1a5c9acd62935d",
+            "source_decode.mjs": "411f3bc784cb32a07f32eed5fc7d88f71b59a667cc0d68a50fe13c55bfdba18a",
+            "store.mjs": "2193b4397b8662a8ebc754dc4468e4d62964d209b4e1d0f0924a2ec81b409cbe"
+          }
+        }
+      },
+      "html_status": 200,
+      "html_sha256": "43597c5477a651aaf79afe6cde05be98894e71b273c684fc9605f3b8af3a1a4b",
+      "pck": {
+        "status": 200,
+        "bytes": 27089276,
+        "sha256": "9de040c80027b41cccc6a331218b39ddd2c765ec108d94197a7fd01febcc0ae4"
+      },
+      "storage_module_checks": [
+        {
+          "path": "save-9623ba2/bridge.mjs",
+          "status": 200,
+          "bytes": 1856,
+          "sha256": "ef18687554fdc0d745c1d18d4d091e959cc78559da0d61d6a093e562ff9bbc91"
+        },
+        {
+          "path": "save-9623ba2/budgets.mjs",
+          "status": 200,
+          "bytes": 340,
+          "sha256": "52984153977dcafd1d2682e848f1999f091d0966e17d46e902de76f5735a7018"
+        },
+        {
+          "path": "save-9623ba2/host.mjs",
+          "status": 200,
+          "bytes": 7730,
+          "sha256": "9de8dc0ef4bfc037a8ad0bff575d40c3dd4341bcc723351a412b2061bb661904"
+        },
+        {
+          "path": "save-9623ba2/idbfs_source.mjs",
+          "status": 200,
+          "bytes": 5550,
+          "sha256": "16eb57d471537f13d3e50018b56c2d416d2847f0d0249ba44433dd9ebb65f4d8"
+        },
+        {
+          "path": "save-9623ba2/legacy_inspection.mjs",
+          "status": 200,
+          "bytes": 2886,
+          "sha256": "db3a23a0221aa5d34a58a6a49aeeff930295ffe20bfcf73a7c11f0d49cffd671"
+        },
+        {
+          "path": "save-9623ba2/legacy_seal.mjs",
+          "status": 200,
+          "bytes": 2510,
+          "sha256": "9642132f5d4e7523e5966e802069af7f4bae803fae8e2e7c28ae55ee97d85610"
+        },
+        {
+          "path": "save-9623ba2/legacy_v5.mjs",
+          "status": 200,
+          "bytes": 2245,
+          "sha256": "8e7f4ad2d87aab77ac05361e4f46060476e933aa079ae94301998d08d4599621"
+        },
+        {
+          "path": "save-9623ba2/lifecycle.mjs",
+          "status": 200,
+          "bytes": 1878,
+          "sha256": "1cfaebb9a8745e2dc3e4f694ef475f250640870938f04160be1a5c9acd62935d"
+        },
+        {
+          "path": "save-9623ba2/source_decode.mjs",
+          "status": 200,
+          "bytes": 1542,
+          "sha256": "411f3bc784cb32a07f32eed5fc7d88f71b59a667cc0d68a50fe13c55bfdba18a"
+        },
+        {
+          "path": "save-9623ba2/store.mjs",
+          "status": 200,
+          "bytes": 13890,
+          "sha256": "2193b4397b8662a8ebc754dc4468e4d62964d209b4e1d0f0924a2ec81b409cbe"
+        }
+      ],
+      "license_check": {
+        "path": "open-source-licenses.html",
+        "status": 200,
+        "bytes": 147966,
+        "sha256": "9215f5fdd50039a9b6f3d8f0271cbc21bbdf64b917fb118dd29c8a16b9974e00"
+      },
+      "utc": "2026-10-05T23:08:35Z"
+    }
+  ],
+  "errors": [],
+  "console": [
+    {
+      "case": "portrait",
+      "type": "log",
+      "text": "Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org"
+    },
+    {
+      "case": "portrait",
+      "type": "log",
+      "text": "OpenGL API OpenGL ES 3.0 (WebGL 2.0 (OpenGL ES 3.0 Chromium)) - Compatibility - Using Device: WebKit - WebKit WebGL"
+    },
+    {
+      "case": "portrait",
+      "type": "log",
+      "text": "Build configuration: Emscripten 4.0.20, single-threaded, no GDExtension support."
+    },
+    {
+      "case": "portrait",
+      "type": "info",
+      "text": "[game-loading] timings_ms {\"engineScriptReady\":978,\"downloadComplete\":6171,\"engineReady\":8473,\"firstFrame\":8893}"
+    }
+  ],
+  "asset_responses": [
+    {
+      "case": "portrait",
+      "url": "https://narutojzm1-dot.github.io/youjia/save-9623ba2/bridge.mjs",
+      "status": 200
+    },
+    {
+      "case": "portrait",
+      "url": "https://narutojzm1-dot.github.io/youjia/game-9623ba2.js",
+      "status": 200
+    },
+    {
+      "case": "portrait",
+      "url": "https://narutojzm1-dot.github.io/youjia/save-9623ba2/host.mjs",
+      "status": 200
+    },
+    {
+      "case": "portrait",
+      "url": "https://narutojzm1-dot.github.io/youjia/save-9623ba2/budgets.mjs",
+      "status": 200
+    },
+    {
+      "case": "portrait",
+      "url": "https://narutojzm1-dot.github.io/youjia/save-9623ba2/legacy_v5.mjs",
+      "status": 200
+    },
+    {
+      "case": "portrait",
+      "url": "https://narutojzm1-dot.github.io/youjia/save-9623ba2/store.mjs",
+      "status": 200
+    },
+    {
+      "case": "portrait",
+      "url": "https://narutojzm1-dot.github.io/youjia/save-9623ba2/lifecycle.mjs",
+      "status": 200
+    },
+    {
+      "case": "portrait",
+      "url": "https://narutojzm1-dot.github.io/youjia/save-9623ba2/legacy_inspection.mjs",
+      "status": 200
+    },
+    {
+      "case": "portrait",
+      "url": "https://narutojzm1-dot.github.io/youjia/save-9623ba2/source_decode.mjs",
+      "status": 200
+    },
+    {
+      "case": "portrait",
+      "url": "https://narutojzm1-dot.github.io/youjia/save-9623ba2/legacy_seal.mjs",
+      "status": 200
+    },
+    {
+      "case": "portrait",
+      "url": "https://narutojzm1-dot.github.io/youjia/save-9623ba2/idbfs_source.mjs",
+      "status": 200
+    },
+    {
+      "case": "portrait",
+      "url": "https://narutojzm1-dot.github.io/youjia/game-9623ba2.pck",
+      "status": 200
+    },
+    {
+      "case": "portrait",
+      "url": "https://narutojzm1-dot.github.io/youjia/game-9623ba2.wasm",
+      "status": 200
+    }
+  ],
+  "browser_args": [
+    "--no-sandbox",
+    "--use-gl=angle",
+    "--use-angle=swiftshader",
+    "--enable-webgl",
+    "--enable-unsafe-swiftshader",
+    "--renderer-process-limit=1"
+  ],
+  "started_utc": "2026-10-05T23:06:46Z",
+  "limits": [
+    "ordinary mouse/keyboard only; no save/game state/seed/time setters",
+    "browser media emulation at context creation, not physical device/OS setting",
+    "ordinary naturally reachable empty album only; no recovery/writing state or keyboard459 diagnosis",
+    "no hearing or complete storage acceptance"
+  ],
+  "closed_utc": "2026-10-05T23:08:35Z"
+}

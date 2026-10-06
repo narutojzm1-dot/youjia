@@ -1,0 +1,35 @@
+{
+  "executor_session": 81590,
+  "actual_outer_exit": 0,
+  "browser_closed_utc": "2026-10-06T00:14:06Z",
+  "cases_closed": 6,
+  "context_and_page_max_concurrent": 1,
+  "memory_samples": [
+    {
+      "utc": "2026-10-06T00:08:29Z",
+      "bytes": 16271728640
+    },
+    {
+      "utc": "2026-10-06T00:09:46Z",
+      "bytes": 16267505664
+    },
+    {
+      "utc": "2026-10-06T00:10:33Z",
+      "bytes": 16160202752
+    },
+    {
+      "utc": "2026-10-06T00:11:54Z",
+      "bytes": 16186241024
+    },
+    {
+      "utc": "2026-10-06T00:13:07Z",
+      "bytes": 16142499840
+    },
+    {
+      "utc": "2026-10-06T00:14:13Z",
+      "bytes": 15608373248
+    }
+  ],
+  "memory_limit": "17.18 GB approximately; samples are not continuous peak telemetry",
+  "engine_run": false
+}
