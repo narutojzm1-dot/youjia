@@ -1,0 +1,537 @@
+{
+  "source": "b9f68c3c5c4e70e16cefde9b4400bb1d553ff915",
+  "entry": "game-b9f68c3",
+  "expected_pck_sha256": "2b719ae25bb58d91f4742e998faff212a3410a5ac1ecf47ed50c3fc7dbf0ca1f",
+  "expected_pck_bytes": 27090748,
+  "inputs": [
+    {
+      "command": {
+        "op": "new",
+        "name": "portrait",
+        "width": 390,
+        "height": 844,
+        "motion": "no-preference"
+      },
+      "case": "",
+      "utc": "2026-10-06T00:25:42Z",
+      "monotonic": 377628.190803716
+    },
+    {
+      "case_open": "portrait",
+      "width": 390,
+      "height": 844,
+      "motion": "no-preference",
+      "actual_reduce": false,
+      "utc": "2026-10-06T00:26:16Z",
+      "monotonic": 377662.735602388
+    },
+    {
+      "screenshot_request": "portrait-title",
+      "case": "portrait",
+      "utc": "2026-10-06T00:26:16Z",
+      "monotonic": 377662.737614406
+    },
+    {
+      "screenshot_complete": "portrait-title",
+      "case": "portrait",
+      "utc": "2026-10-06T00:26:17Z",
+      "monotonic": 377663.134136752
+    },
+    {
+      "command": {
+        "op": "click",
+        "x": 195,
+        "y": 430
+      },
+      "case": "portrait",
+      "utc": "2026-10-06T00:26:34Z",
+      "monotonic": 377680.160603147
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 700
+      },
+      "case": "portrait",
+      "utc": "2026-10-06T00:26:37Z",
+      "monotonic": 377683.914156459
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "portrait-01-entered"
+      },
+      "case": "portrait",
+      "utc": "2026-10-06T00:26:38Z",
+      "monotonic": 377684.615815092
+    },
+    {
+      "screenshot_request": "portrait-01-entered",
+      "case": "portrait",
+      "utc": "2026-10-06T00:26:38Z",
+      "monotonic": 377684.618672783
+    },
+    {
+      "screenshot_complete": "portrait-01-entered",
+      "case": "portrait",
+      "utc": "2026-10-06T00:26:38Z",
+      "monotonic": 377684.979984393
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 4700
+      },
+      "case": "portrait",
+      "utc": "2026-10-06T00:26:38Z",
+      "monotonic": 377684.980446007
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "portrait-02-stillness-a"
+      },
+      "case": "portrait",
+      "utc": "2026-10-06T00:26:43Z",
+      "monotonic": 377689.684809513
+    },
+    {
+      "screenshot_request": "portrait-02-stillness-a",
+      "case": "portrait",
+      "utc": "2026-10-06T00:26:43Z",
+      "monotonic": 377689.685242604
+    },
+    {
+      "screenshot_complete": "portrait-02-stillness-a",
+      "case": "portrait",
+      "utc": "2026-10-06T00:26:44Z",
+      "monotonic": 377690.162691199
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 100
+      },
+      "case": "portrait",
+      "utc": "2026-10-06T00:26:44Z",
+      "monotonic": 377690.16310295
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "portrait-03-stillness-b"
+      },
+      "case": "portrait",
+      "utc": "2026-10-06T00:26:44Z",
+      "monotonic": 377690.264349466
+    },
+    {
+      "screenshot_request": "portrait-03-stillness-b",
+      "case": "portrait",
+      "utc": "2026-10-06T00:26:44Z",
+      "monotonic": 377690.268182535
+    },
+    {
+      "screenshot_complete": "portrait-03-stillness-b",
+      "case": "portrait",
+      "utc": "2026-10-06T00:26:44Z",
+      "monotonic": 377690.625575453
+    },
+    {
+      "command": {
+        "op": "hold",
+        "key": "ArrowRight",
+        "ms": 450
+      },
+      "case": "portrait",
+      "utc": "2026-10-06T00:26:44Z",
+      "monotonic": 377690.625988206
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 300
+      },
+      "case": "portrait",
+      "utc": "2026-10-06T00:26:45Z",
+      "monotonic": 377691.147646271
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "portrait-04-after-movement"
+      },
+      "case": "portrait",
+      "utc": "2026-10-06T00:26:45Z",
+      "monotonic": 377691.452972939
+    },
+    {
+      "screenshot_request": "portrait-04-after-movement",
+      "case": "portrait",
+      "utc": "2026-10-06T00:26:45Z",
+      "monotonic": 377691.453461053
+    },
+    {
+      "screenshot_complete": "portrait-04-after-movement",
+      "case": "portrait",
+      "utc": "2026-10-06T00:26:45Z",
+      "monotonic": 377691.833702207
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 1500
+      },
+      "case": "portrait",
+      "utc": "2026-10-06T00:26:45Z",
+      "monotonic": 377691.834216149
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "portrait-05-settled"
+      },
+      "case": "portrait",
+      "utc": "2026-10-06T00:26:47Z",
+      "monotonic": 377693.336335713
+    },
+    {
+      "screenshot_request": "portrait-05-settled",
+      "case": "portrait",
+      "utc": "2026-10-06T00:26:47Z",
+      "monotonic": 377693.33688389
+    },
+    {
+      "screenshot_complete": "portrait-05-settled",
+      "case": "portrait",
+      "utc": "2026-10-06T00:26:47Z",
+      "monotonic": 377693.714076973
+    },
+    {
+      "command": {
+        "op": "end"
+      },
+      "case": "portrait",
+      "utc": "2026-10-06T00:26:47Z",
+      "monotonic": 377693.714608518
+    },
+    {
+      "case_closed": "portrait",
+      "utc": "2026-10-06T00:27:03Z",
+      "monotonic": 377709.265256135
+    }
+  ],
+  "bindings": [
+    {
+      "case": "portrait",
+      "stage": "before",
+      "manifest": {
+        "schema": "youjia.release/v1",
+        "sourceCommit": "b9f68c3c5c4e70e16cefde9b4400bb1d553ff915",
+        "engine": "4.7.2.stable.official.ed1daf0bf",
+        "entry": "game-b9f68c3",
+        "publishedAt": "2026-10-06T00:22:22Z",
+        "storageModules": {
+          "entry": "save-b9f68c3",
+          "sha256": {
+            "bridge.mjs": "ef18687554fdc0d745c1d18d4d091e959cc78559da0d61d6a093e562ff9bbc91",
+            "budgets.mjs": "52984153977dcafd1d2682e848f1999f091d0966e17d46e902de76f5735a7018",
+            "host.mjs": "9de8dc0ef4bfc037a8ad0bff575d40c3dd4341bcc723351a412b2061bb661904",
+            "idbfs_source.mjs": "16eb57d471537f13d3e50018b56c2d416d2847f0d0249ba44433dd9ebb65f4d8",
+            "legacy_inspection.mjs": "db3a23a0221aa5d34a58a6a49aeeff930295ffe20bfcf73a7c11f0d49cffd671",
+            "legacy_seal.mjs": "9642132f5d4e7523e5966e802069af7f4bae803fae8e2e7c28ae55ee97d85610",
+            "legacy_v5.mjs": "8e7f4ad2d87aab77ac05361e4f46060476e933aa079ae94301998d08d4599621",
+            "lifecycle.mjs": "1cfaebb9a8745e2dc3e4f694ef475f250640870938f04160be1a5c9acd62935d",
+            "source_decode.mjs": "411f3bc784cb32a07f32eed5fc7d88f71b59a667cc0d68a50fe13c55bfdba18a",
+            "store.mjs": "2193b4397b8662a8ebc754dc4468e4d62964d209b4e1d0f0924a2ec81b409cbe"
+          }
+        }
+      },
+      "html_status": 200,
+      "html_sha256": "baa6b9a6b8a37c621d22eead976a2c811761ce2a0df7983d1d2ed31bafad7e96",
+      "pck": {
+        "status": 200,
+        "bytes": 27090748,
+        "sha256": "2b719ae25bb58d91f4742e998faff212a3410a5ac1ecf47ed50c3fc7dbf0ca1f"
+      },
+      "storage_module_checks": [
+        {
+          "path": "save-b9f68c3/bridge.mjs",
+          "status": 200,
+          "bytes": 1856,
+          "sha256": "ef18687554fdc0d745c1d18d4d091e959cc78559da0d61d6a093e562ff9bbc91"
+        },
+        {
+          "path": "save-b9f68c3/budgets.mjs",
+          "status": 200,
+          "bytes": 340,
+          "sha256": "52984153977dcafd1d2682e848f1999f091d0966e17d46e902de76f5735a7018"
+        },
+        {
+          "path": "save-b9f68c3/host.mjs",
+          "status": 200,
+          "bytes": 7730,
+          "sha256": "9de8dc0ef4bfc037a8ad0bff575d40c3dd4341bcc723351a412b2061bb661904"
+        },
+        {
+          "path": "save-b9f68c3/idbfs_source.mjs",
+          "status": 200,
+          "bytes": 5550,
+          "sha256": "16eb57d471537f13d3e50018b56c2d416d2847f0d0249ba44433dd9ebb65f4d8"
+        },
+        {
+          "path": "save-b9f68c3/legacy_inspection.mjs",
+          "status": 200,
+          "bytes": 2886,
+          "sha256": "db3a23a0221aa5d34a58a6a49aeeff930295ffe20bfcf73a7c11f0d49cffd671"
+        },
+        {
+          "path": "save-b9f68c3/legacy_seal.mjs",
+          "status": 200,
+          "bytes": 2510,
+          "sha256": "9642132f5d4e7523e5966e802069af7f4bae803fae8e2e7c28ae55ee97d85610"
+        },
+        {
+          "path": "save-b9f68c3/legacy_v5.mjs",
+          "status": 200,
+          "bytes": 2245,
+          "sha256": "8e7f4ad2d87aab77ac05361e4f46060476e933aa079ae94301998d08d4599621"
+        },
+        {
+          "path": "save-b9f68c3/lifecycle.mjs",
+          "status": 200,
+          "bytes": 1878,
+          "sha256": "1cfaebb9a8745e2dc3e4f694ef475f250640870938f04160be1a5c9acd62935d"
+        },
+        {
+          "path": "save-b9f68c3/source_decode.mjs",
+          "status": 200,
+          "bytes": 1542,
+          "sha256": "411f3bc784cb32a07f32eed5fc7d88f71b59a667cc0d68a50fe13c55bfdba18a"
+        },
+        {
+          "path": "save-b9f68c3/store.mjs",
+          "status": 200,
+          "bytes": 13890,
+          "sha256": "2193b4397b8662a8ebc754dc4468e4d62964d209b4e1d0f0924a2ec81b409cbe"
+        }
+      ],
+      "license_check": {
+        "path": "open-source-licenses.html",
+        "status": 200,
+        "bytes": 147966,
+        "sha256": "9215f5fdd50039a9b6f3d8f0271cbc21bbdf64b917fb118dd29c8a16b9974e00"
+      },
+      "utc": "2026-10-06T00:26:05Z",
+      "loaded_html_sha256": "baa6b9a6b8a37c621d22eead976a2c811761ce2a0df7983d1d2ed31bafad7e96"
+    },
+    {
+      "case": "portrait",
+      "stage": "after",
+      "manifest": {
+        "schema": "youjia.release/v1",
+        "sourceCommit": "b9f68c3c5c4e70e16cefde9b4400bb1d553ff915",
+        "engine": "4.7.2.stable.official.ed1daf0bf",
+        "entry": "game-b9f68c3",
+        "publishedAt": "2026-10-06T00:22:22Z",
+        "storageModules": {
+          "entry": "save-b9f68c3",
+          "sha256": {
+            "bridge.mjs": "ef18687554fdc0d745c1d18d4d091e959cc78559da0d61d6a093e562ff9bbc91",
+            "budgets.mjs": "52984153977dcafd1d2682e848f1999f091d0966e17d46e902de76f5735a7018",
+            "host.mjs": "9de8dc0ef4bfc037a8ad0bff575d40c3dd4341bcc723351a412b2061bb661904",
+            "idbfs_source.mjs": "16eb57d471537f13d3e50018b56c2d416d2847f0d0249ba44433dd9ebb65f4d8",
+            "legacy_inspection.mjs": "db3a23a0221aa5d34a58a6a49aeeff930295ffe20bfcf73a7c11f0d49cffd671",
+            "legacy_seal.mjs": "9642132f5d4e7523e5966e802069af7f4bae803fae8e2e7c28ae55ee97d85610",
+            "legacy_v5.mjs": "8e7f4ad2d87aab77ac05361e4f46060476e933aa079ae94301998d08d4599621",
+            "lifecycle.mjs": "1cfaebb9a8745e2dc3e4f694ef475f250640870938f04160be1a5c9acd62935d",
+            "source_decode.mjs": "411f3bc784cb32a07f32eed5fc7d88f71b59a667cc0d68a50fe13c55bfdba18a",
+            "store.mjs": "2193b4397b8662a8ebc754dc4468e4d62964d209b4e1d0f0924a2ec81b409cbe"
+          }
+        }
+      },
+      "html_status": 200,
+      "html_sha256": "baa6b9a6b8a37c621d22eead976a2c811761ce2a0df7983d1d2ed31bafad7e96",
+      "pck": {
+        "status": 200,
+        "bytes": 27090748,
+        "sha256": "2b719ae25bb58d91f4742e998faff212a3410a5ac1ecf47ed50c3fc7dbf0ca1f"
+      },
+      "storage_module_checks": [
+        {
+          "path": "save-b9f68c3/bridge.mjs",
+          "status": 200,
+          "bytes": 1856,
+          "sha256": "ef18687554fdc0d745c1d18d4d091e959cc78559da0d61d6a093e562ff9bbc91"
+        },
+        {
+          "path": "save-b9f68c3/budgets.mjs",
+          "status": 200,
+          "bytes": 340,
+          "sha256": "52984153977dcafd1d2682e848f1999f091d0966e17d46e902de76f5735a7018"
+        },
+        {
+          "path": "save-b9f68c3/host.mjs",
+          "status": 200,
+          "bytes": 7730,
+          "sha256": "9de8dc0ef4bfc037a8ad0bff575d40c3dd4341bcc723351a412b2061bb661904"
+        },
+        {
+          "path": "save-b9f68c3/idbfs_source.mjs",
+          "status": 200,
+          "bytes": 5550,
+          "sha256": "16eb57d471537f13d3e50018b56c2d416d2847f0d0249ba44433dd9ebb65f4d8"
+        },
+        {
+          "path": "save-b9f68c3/legacy_inspection.mjs",
+          "status": 200,
+          "bytes": 2886,
+          "sha256": "db3a23a0221aa5d34a58a6a49aeeff930295ffe20bfcf73a7c11f0d49cffd671"
+        },
+        {
+          "path": "save-b9f68c3/legacy_seal.mjs",
+          "status": 200,
+          "bytes": 2510,
+          "sha256": "9642132f5d4e7523e5966e802069af7f4bae803fae8e2e7c28ae55ee97d85610"
+        },
+        {
+          "path": "save-b9f68c3/legacy_v5.mjs",
+          "status": 200,
+          "bytes": 2245,
+          "sha256": "8e7f4ad2d87aab77ac05361e4f46060476e933aa079ae94301998d08d4599621"
+        },
+        {
+          "path": "save-b9f68c3/lifecycle.mjs",
+          "status": 200,
+          "bytes": 1878,
+          "sha256": "1cfaebb9a8745e2dc3e4f694ef475f250640870938f04160be1a5c9acd62935d"
+        },
+        {
+          "path": "save-b9f68c3/source_decode.mjs",
+          "status": 200,
+          "bytes": 1542,
+          "sha256": "411f3bc784cb32a07f32eed5fc7d88f71b59a667cc0d68a50fe13c55bfdba18a"
+        },
+        {
+          "path": "save-b9f68c3/store.mjs",
+          "status": 200,
+          "bytes": 13890,
+          "sha256": "2193b4397b8662a8ebc754dc4468e4d62964d209b4e1d0f0924a2ec81b409cbe"
+        }
+      ],
+      "license_check": {
+        "path": "open-source-licenses.html",
+        "status": 200,
+        "bytes": 147966,
+        "sha256": "9215f5fdd50039a9b6f3d8f0271cbc21bbdf64b917fb118dd29c8a16b9974e00"
+      },
+      "utc": "2026-10-06T00:27:03Z"
+    }
+  ],
+  "errors": [],
+  "console": [
+    {
+      "case": "portrait",
+      "type": "log",
+      "text": "Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org"
+    },
+    {
+      "case": "portrait",
+      "type": "log",
+      "text": "OpenGL API OpenGL ES 3.0 (WebGL 2.0 (OpenGL ES 3.0 Chromium)) - Compatibility - Using Device: WebKit - WebKit WebGL"
+    },
+    {
+      "case": "portrait",
+      "type": "log",
+      "text": "Build configuration: Emscripten 4.0.20, single-threaded, no GDExtension support."
+    },
+    {
+      "case": "portrait",
+      "type": "info",
+      "text": "[game-loading] timings_ms {\"engineScriptReady\":501,\"downloadComplete\":7106,\"engineReady\":9383,\"firstFrame\":9772}"
+    }
+  ],
+  "asset_responses": [
+    {
+      "case": "portrait",
+      "url": "https://narutojzm1-dot.github.io/youjia/save-b9f68c3/bridge.mjs",
+      "status": 200
+    },
+    {
+      "case": "portrait",
+      "url": "https://narutojzm1-dot.github.io/youjia/save-b9f68c3/host.mjs",
+      "status": 200
+    },
+    {
+      "case": "portrait",
+      "url": "https://narutojzm1-dot.github.io/youjia/game-b9f68c3.js",
+      "status": 200
+    },
+    {
+      "case": "portrait",
+      "url": "https://narutojzm1-dot.github.io/youjia/save-b9f68c3/lifecycle.mjs",
+      "status": 200
+    },
+    {
+      "case": "portrait",
+      "url": "https://narutojzm1-dot.github.io/youjia/save-b9f68c3/store.mjs",
+      "status": 200
+    },
+    {
+      "case": "portrait",
+      "url": "https://narutojzm1-dot.github.io/youjia/save-b9f68c3/budgets.mjs",
+      "status": 200
+    },
+    {
+      "case": "portrait",
+      "url": "https://narutojzm1-dot.github.io/youjia/save-b9f68c3/source_decode.mjs",
+      "status": 200
+    },
+    {
+      "case": "portrait",
+      "url": "https://narutojzm1-dot.github.io/youjia/save-b9f68c3/legacy_inspection.mjs",
+      "status": 200
+    },
+    {
+      "case": "portrait",
+      "url": "https://narutojzm1-dot.github.io/youjia/save-b9f68c3/legacy_v5.mjs",
+      "status": 200
+    },
+    {
+      "case": "portrait",
+      "url": "https://narutojzm1-dot.github.io/youjia/save-b9f68c3/legacy_seal.mjs",
+      "status": 200
+    },
+    {
+      "case": "portrait",
+      "url": "https://narutojzm1-dot.github.io/youjia/save-b9f68c3/idbfs_source.mjs",
+      "status": 200
+    },
+    {
+      "case": "portrait",
+      "url": "https://narutojzm1-dot.github.io/youjia/game-b9f68c3.pck",
+      "status": 200
+    },
+    {
+      "case": "portrait",
+      "url": "https://narutojzm1-dot.github.io/youjia/game-b9f68c3.wasm",
+      "status": 200
+    }
+  ],
+  "browser_args": [
+    "--no-sandbox",
+    "--use-gl=angle",
+    "--use-angle=swiftshader",
+    "--enable-webgl",
+    "--enable-unsafe-swiftshader",
+    "--renderer-process-limit=1"
+  ],
+  "started_utc": "2026-10-06T00:25:35Z",
+  "limits": [
+    "ordinary mouse/keyboard only; no save/game state/seed/time setters",
+    "browser media emulation at context creation, not physical device/OS setting",
+    "ordinary Chinese quiet look / keyboard movement only; no phase/camera/seed/clock/game setters; not native same-tick handoff or original issue400 cause proof",
+    "no hearing or complete storage acceptance"
+  ],
+  "closed_utc": "2026-10-06T00:27:03Z"
+}

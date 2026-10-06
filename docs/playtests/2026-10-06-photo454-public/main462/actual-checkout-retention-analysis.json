@@ -1,0 +1,18 @@
+{
+  "checkout_action_commit": "11d5960a326750d5838078e36cf38b85af677262",
+  "actual_fetch_commands": [
+    "[command]/usr/bin/git -c protocol.version=2 fetch --prune --no-recurse-submodules --filter=blob:none origin +refs/heads/*:refs/remotes/origin/* +refs/tags/*:refs/tags/*"
+  ],
+  "full_heads_tags_refspec": true,
+  "filter_blob_none": true,
+  "depth_argument_absent": true,
+  "fetch_depth_input": 0,
+  "noncone_root_docs_sparse": true,
+  "shared_shallow_boolean_directly_logged": false,
+  "unchanged_helper_proves_not_shallow_by_successful_prune_with_five_existing_bundles": true,
+  "actual_pruned_bundles": [
+    "game-d788f48"
+  ],
+  "shallow_or_incomplete_history_warning": false,
+  "setup_action_sha_verified": true
+}

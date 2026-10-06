@@ -1,0 +1,83 @@
+{
+  "status": "PASS",
+  "checked_at": "2026-10-05T23:54:28.506743+00:00",
+  "source": "49596fa93bff3c29edfe441898017158c6e469a3",
+  "source_tree": "63ff0706a9c60dd31a69cb412b9629398a67848d",
+  "main": {
+    "run": 37390377329,
+    "job": 112033754125,
+    "conclusion": "success",
+    "log_zip_bytes": 97378,
+    "log_zip_sha256": "2fd4337f1281d2ff25629f8768d765488a4f2dec88f633f17ac4467dad5c4bc3",
+    "godot_launches": 75,
+    "suites": 74,
+    "gate_mock_cases": 50,
+    "node_completions": 2,
+    "retention_tests": 11,
+    "publisher_fixture_builds": 2,
+    "export_success": true,
+    "publish_success": true
+  },
+  "gh_pages": {
+    "commit": "aeac1d1c37862ba91e454e130d9e266dc08bcfdf",
+    "tree": "02fc98f9fdfe7d1f22837753fb22883cea8a9602",
+    "parent": "e6d192eab33cc67e32f76656cdc24eb222b2a869",
+    "retained_packages": [
+      "game-49596fa.pck",
+      "game-870f4fa.pck",
+      "game-9623ba2.pck",
+      "game-b300da7.pck"
+    ],
+    "pruned_old_bundle": "game-a0bb75e",
+    "previous_files_verified_unchanged": 477,
+    "current_source_modules": 10
+  },
+  "pages": {
+    "pages_run": 37390958733,
+    "pages_jobs": [
+      {
+        "id": 112035653051,
+        "name": "build",
+        "conclusion": "success"
+      },
+      {
+        "id": 112035783920,
+        "name": "report-build-status",
+        "conclusion": "success"
+      },
+      {
+        "id": 112035783942,
+        "name": "deploy",
+        "conclusion": "success"
+      }
+    ],
+    "deployment": [
+      {
+        "id": 6872095477,
+        "sha": "aeac1d1c37862ba91e454e130d9e266dc08bcfdf",
+        "status": 19313652296,
+        "created_at": "2026-10-05T23:53:27Z",
+        "environment_url": "https://narutojzm1-dot.github.io/youjia/"
+      }
+    ],
+    "pages_log_zip_bytes": 30954,
+    "pages_log_zip_sha256": "ef8b6f1654772811cbf5ab1d95cc465a8d395e754eafbda50ccdcacedab7a5e7"
+  },
+  "public_manifest_and_html_exact_gh_pages_blobs": [
+    {
+      "public_path": "game-release.json",
+      "git_blob": "43e93d18f9c0fb5d083374becb66bcaaa42dfb6f",
+      "bytes": 1203,
+      "sha256": "81af305800effe7f54a48bd74c331034e42298c4c9c4763c1695097647a419c7"
+    },
+    {
+      "public_path": "index.html",
+      "git_blob": "66e19e53186ad76ea0bdbce010bd8c9f0a244ba7",
+      "bytes": 358101,
+      "sha256": "9f3c4d8f66827663a136eaafb1527d5553154c5cea9d69d15157c1be31796385"
+    }
+  ],
+  "public_pck_license_validation": "root separate task; no claim here",
+  "independent_engine_or_browser_runs": false,
+  "dispatch_or_retry": false
+}

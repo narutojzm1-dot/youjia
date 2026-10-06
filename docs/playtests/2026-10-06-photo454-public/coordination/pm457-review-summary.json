@@ -1,0 +1,17 @@
+{
+  "reviewer": "CODEX-LEAD-REVIEW-PR457 / relationship45_qa",
+  "scope": "independent post-merge read-only review; does not replace author pre-merge review",
+  "head": "ef0924e3b229313d5a3ac3445fd354d23f95cc8f",
+  "tree": "4f085debcc2e8c82d8466f24419bf654458c1984",
+  "base": "a0bb75e38e59032a6df72a2122af4403c3c3e816",
+  "merge": "87076010555fc7283b97b583eff60a5fd8a9fccb",
+  "original_review": "https://github.com/narutojzm1-dot/youjia/pull/457#pullrequestreview-5421349591",
+  "result": "APPROVE in limited pure-docs and actual PM screenshot scope; no rollback blocker",
+  "limits": [
+    "PM only read HTML build/manifest, did not download complete PCK",
+    "music label screenshot is not hearing verification",
+    "four original 1280x720 frames are not new photo, touch or complete storage acceptance",
+    "old PM statement omitting local130 completion was nonblocking; final PR458 CI now separately archived, no repeated local regression implied"
+  ],
+  "source_report_sha256": "3d23fda903ddab5e196e6e93bd64b54555e95bc5b6f811c6da8527c5a860352f"
+}

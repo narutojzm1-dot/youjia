@@ -1,0 +1,603 @@
+{
+  "head": "0f4226dc6710ef3a11099baf45f707bbfd4fd30e",
+  "tree": "63ff0706a9c60dd31a69cb412b9629398a67848d",
+  "source": "actual GitHub run37389414385 game verification log",
+  "import_count": 1,
+  "suite_count": 74,
+  "godot_launches": 75,
+  "all_exact_completions": true,
+  "ordered_results": [
+    {
+      "suite": "test/test_suite.tscn",
+      "completion_pattern": "\\[game-generic-tests\\] PASS: [1-9][0-9]* checks",
+      "matching_completion_lines": [
+        "[game-generic-tests] PASS: 414 checks"
+      ],
+      "pass": true
+    },
+    {
+      "suite": "test/locomotion_suite.tscn",
+      "completion_pattern": "\\[locomotion-tests\\] PASS: [1-9][0-9]* checks",
+      "matching_completion_lines": [
+        "[locomotion-tests] PASS: 410 checks"
+      ],
+      "pass": true
+    },
+    {
+      "suite": "test/holiday_start_once_suite.gd",
+      "completion_pattern": "HOLIDAY_START_ONCE checks=[1-9][0-9]* failures=0",
+      "matching_completion_lines": [
+        "HOLIDAY_START_ONCE checks=14 failures=0"
+      ],
+      "pass": true
+    },
+    {
+      "suite": "test/animal_home_suite.gd",
+      "completion_pattern": "\\[animal-home-tests\\] PASS: [1-9][0-9]* checks",
+      "matching_completion_lines": [
+        "[animal-home-tests] PASS: 1005 checks"
+      ],
+      "pass": true
+    },
+    {
+      "suite": "test/photo_home_suite.gd",
+      "completion_pattern": "\\[photo-home-tests\\] PASS: [1-9][0-9]* checks",
+      "matching_completion_lines": [
+        "[photo-home-tests] PASS: 75 checks"
+      ],
+      "pass": true
+    },
+    {
+      "suite": "test/grass_state_suite.gd",
+      "completion_pattern": "\\[grass-state-tests\\] PASS: [1-9][0-9]* checks, 0 failures",
+      "matching_completion_lines": [
+        "[grass-state-tests] PASS: 368 checks, 0 failures"
+      ],
+      "pass": true
+    },
+    {
+      "suite": "test/grass_action_suite.gd",
+      "completion_pattern": "\\[grass-action-tests\\] PASS: [1-9][0-9]* checks, 0 failures",
+      "matching_completion_lines": [
+        "[grass-action-tests] PASS: 61 checks, 0 failures"
+      ],
+      "pass": true
+    },
+    {
+      "suite": "test/explicit_target_suite.gd",
+      "completion_pattern": "\\[explicit-target-tests\\] checks=[1-9][0-9]* failures=\\[\\]",
+      "matching_completion_lines": [
+        "[explicit-target-tests] checks=25 failures=[]"
+      ],
+      "pass": true
+    },
+    {
+      "suite": "test/ui_interaction_suite.gd",
+      "completion_pattern": "\\[ui-interaction-tests\\] checks=[1-9][0-9]* failures=\\[\\]",
+      "matching_completion_lines": [
+        "[ui-interaction-tests] checks=63 failures=[]"
+      ],
+      "pass": true
+    },
+    {
+      "suite": "test/physical_yard_suite.gd",
+      "completion_pattern": "\\[physical-yard-tests\\] PASS: [1-9][0-9]* checks",
+      "matching_completion_lines": [
+        "[physical-yard-tests] PASS: 658 checks"
+      ],
+      "pass": true
+    },
+    {
+      "suite": "test/keyboard_ground_suite.gd",
+      "completion_pattern": "\\[keyboard-ground-tests\\] PASS: [1-9][0-9]* checks \\[\\]",
+      "matching_completion_lines": [
+        "[keyboard-ground-tests] PASS: 45 checks []"
+      ],
+      "pass": true
+    },
+    {
+      "suite": "test/scrapbook_encounter_suite.gd",
+      "completion_pattern": "\\[scrapbook-encounters\\] PASS: [1-9][0-9]* checks \\[\\]",
+      "matching_completion_lines": [
+        "[scrapbook-encounters] PASS: 20 checks []"
+      ],
+      "pass": true
+    },
+    {
+      "suite": "test/photo_moment_render_suite.gd",
+      "completion_pattern": "\\[photo-moment-tests\\] PASS: [1-9][0-9]* checks",
+      "matching_completion_lines": [
+        "[photo-moment-tests] PASS: 1332 checks"
+      ],
+      "pass": true
+    },
+    {
+      "suite": "test/photo_moment_save_suite.gd",
+      "completion_pattern": "\\[photo-moment-save-tests\\] PASS: [1-9][0-9]* checks \\[\\]",
+      "matching_completion_lines": [
+        "[photo-moment-save-tests] PASS: 46 checks []"
+      ],
+      "pass": true
+    },
+    {
+      "suite": "test/save_data_codec_suite.gd",
+      "completion_pattern": "SAVE_DATA_CODEC [1-9][0-9]* checks; failures=\\[\\]",
+      "matching_completion_lines": [
+        "SAVE_DATA_CODEC 16 checks; failures=[]"
+      ],
+      "pass": true
+    },
+    {
+      "suite": "test/yard_snapshot_suite.gd",
+      "completion_pattern": "yard snapshot: [1-9][0-9]* checks, 0 failures",
+      "matching_completion_lines": [
+        "yard snapshot: 10 checks, 0 failures"
+      ],
+      "pass": true
+    },
+    {
+      "suite": "test/fishing_active_hud_suite.gd",
+      "completion_pattern": "fishing active HUD: [1-9][0-9]* checks, 0 failures",
+      "matching_completion_lines": [
+        "fishing active HUD: 10 checks, 0 failures"
+      ],
+      "pass": true
+    },
+    {
+      "suite": "test/save_recovery_suite.gd",
+      "completion_pattern": "SAVE RECOVERY PASS [1-9][0-9]*",
+      "matching_completion_lines": [
+        "SAVE RECOVERY PASS 24"
+      ],
+      "pass": true
+    },
+    {
+      "suite": "test/boundary_feedback_suite.gd",
+      "completion_pattern": "\\[boundary-feedback-tests\\] [1-9][0-9]* checks \\[\\]",
+      "matching_completion_lines": [
+        "[boundary-feedback-tests] 11 checks []"
+      ],
+      "pass": true
+    },
+    {
+      "suite": "test/mixed_input_photo_suite.gd",
+      "completion_pattern": "\\[mixed-input-photo-tests\\] [1-9][0-9]* checks \\[\\]",
+      "matching_completion_lines": [
+        "[mixed-input-photo-tests] 6 checks []"
+      ],
+      "pass": true
+    },
+    {
+      "suite": "test/leading_clearance_suite.gd",
+      "completion_pattern": "\\[leading-clearance-tests\\] [1-9][0-9]* checks \\[\\]",
+      "matching_completion_lines": [
+        "[leading-clearance-tests] 18 checks []"
+      ],
+      "pass": true
+    },
+    {
+      "suite": "test/portable_accept_suite.gd",
+      "completion_pattern": "\\[portable-accept-tests\\] [1-9][0-9]* checks \\[\\]",
+      "matching_completion_lines": [
+        "[portable-accept-tests] 16 checks []"
+      ],
+      "pass": true
+    },
+    {
+      "suite": "test/shipped_correctness_suite.gd",
+      "completion_pattern": "\\[shipped-correctness\\] [1-9][0-9]* checks \\[\\]",
+      "matching_completion_lines": [
+        "[shipped-correctness] 9 checks []"
+      ],
+      "pass": true
+    },
+    {
+      "suite": "test/interaction_photo_suite.gd",
+      "completion_pattern": "\\[interaction-photo-tests\\] [1-9][0-9]* checks, failures=\\[\\]",
+      "matching_completion_lines": [
+        "[interaction-photo-tests] 110 checks, failures=[]"
+      ],
+      "pass": true
+    },
+    {
+      "suite": "test/scene_hotspot_suite.gd",
+      "completion_pattern": "\\[scene-hotspot-tests\\] [1-9][0-9]* checks, failures=\\[\\]",
+      "matching_completion_lines": [
+        "[scene-hotspot-tests] 91 checks, failures=[]"
+      ],
+      "pass": true
+    },
+    {
+      "suite": "test/authored_sequence_suite.gd",
+      "completion_pattern": "\\[authored-sequence-tests\\] PASS: 16 distinct complete frames, uniform canvas and anchor, loop metadata",
+      "matching_completion_lines": [
+        "[authored-sequence-tests] PASS: 16 distinct complete frames, uniform canvas and anchor, loop metadata"
+      ],
+      "pass": true
+    },
+    {
+      "suite": "test/goose_mount_suite.gd",
+      "completion_pattern": "\\[goose-mount\\] PASS: [1-9][0-9]* checks \\[\\]",
+      "matching_completion_lines": [
+        "[goose-mount] PASS: 92 checks []"
+      ],
+      "pass": true
+    },
+    {
+      "suite": "test/quiet_stay_suite.gd",
+      "completion_pattern": "QUIET STAY PASS [1-9][0-9]*",
+      "matching_completion_lines": [
+        "QUIET STAY PASS 4"
+      ],
+      "pass": true
+    },
+    {
+      "suite": "test/quiet_sky_look_suite.gd",
+      "completion_pattern": "QUIET SKY LOOK PASS [1-9][0-9]*",
+      "matching_completion_lines": [
+        "QUIET SKY LOOK PASS 15"
+      ],
+      "pass": true
+    },
+    {
+      "suite": "test/still_catch_suite.gd",
+      "completion_pattern": "STILL CATCH PASS [1-9][0-9]*",
+      "matching_completion_lines": [
+        "STILL CATCH PASS 6"
+      ],
+      "pass": true
+    },
+    {
+      "suite": "test/still_target_pulse_suite.gd",
+      "completion_pattern": "STILL TARGET PULSE PASS [1-9][0-9]*",
+      "matching_completion_lines": [
+        "STILL TARGET PULSE PASS 5"
+      ],
+      "pass": true
+    },
+    {
+      "suite": "test/still_grass_glow_suite.gd",
+      "completion_pattern": "STILL GRASS GLOW PASS [1-9][0-9]*",
+      "matching_completion_lines": [
+        "STILL GRASS GLOW PASS 4"
+      ],
+      "pass": true
+    },
+    {
+      "suite": "test/still_object_feedback_suite.gd",
+      "completion_pattern": "STILL OBJECT FEEDBACK PASS [1-9][0-9]*",
+      "matching_completion_lines": [
+        "STILL OBJECT FEEDBACK PASS 14"
+      ],
+      "pass": true
+    },
+    {
+      "suite": "test/interaction_pose_suite.gd",
+      "completion_pattern": "INTERACTION POSE PASS [1-9][0-9]*",
+      "matching_completion_lines": [
+        "INTERACTION POSE PASS 35"
+      ],
+      "pass": true
+    },
+    {
+      "suite": "test/cow_glance_suite.gd",
+      "completion_pattern": "COW GLANCE PASS [1-9][0-9]*",
+      "matching_completion_lines": [
+        "COW GLANCE PASS 8"
+      ],
+      "pass": true
+    },
+    {
+      "suite": "test/sheep_attention_suite.gd",
+      "completion_pattern": "SHEEP ATTENTION PASS [1-9][0-9]*",
+      "matching_completion_lines": [
+        "SHEEP ATTENTION PASS 56"
+      ],
+      "pass": true
+    },
+    {
+      "suite": "test/duck_feed_attention_suite.gd",
+      "completion_pattern": "DUCK ATTENTION PASS [1-9][0-9]*",
+      "matching_completion_lines": [
+        "DUCK ATTENTION PASS 24"
+      ],
+      "pass": true
+    },
+    {
+      "suite": "test/goose_feed_attention_suite.gd",
+      "completion_pattern": "GOOSE ATTENTION PASS [1-9][0-9]*",
+      "matching_completion_lines": [
+        "GOOSE ATTENTION PASS 25"
+      ],
+      "pass": true
+    },
+    {
+      "suite": "test/fish_carry_consistency_suite.gd",
+      "completion_pattern": "\\[fish-carry\\] [1-9][0-9]* checks \\[\\]",
+      "matching_completion_lines": [
+        "[fish-carry] 94 checks []"
+      ],
+      "pass": true
+    },
+    {
+      "suite": "test/notice_paper_suite.gd",
+      "completion_pattern": "notice paper suite checks=[1-9][0-9]* failures=\\[\\]",
+      "matching_completion_lines": [
+        "notice paper suite checks=49 failures=[]"
+      ],
+      "pass": true
+    },
+    {
+      "suite": "test/photo_species_frame_suite.gd",
+      "completion_pattern": "PHOTO_SPECIES_FRAME checks=[1-9][0-9]* failures=0",
+      "matching_completion_lines": [
+        "PHOTO_SPECIES_FRAME checks=9 failures=0"
+      ],
+      "pass": true
+    },
+    {
+      "suite": "test/web_hidpi_suite.gd",
+      "completion_pattern": "web_hidpi: [1-9][0-9]* checks, 0 failures",
+      "matching_completion_lines": [
+        "web_hidpi: 102 checks, 0 failures"
+      ],
+      "pass": true
+    },
+    {
+      "suite": "test/save_candidate_suite.gd",
+      "completion_pattern": "save candidate: [1-9][0-9]* checks, 0 failures",
+      "matching_completion_lines": [
+        "save candidate: 80 checks, 0 failures"
+      ],
+      "pass": true
+    },
+    {
+      "suite": "test/exploration_core_suite.gd",
+      "completion_pattern": "EXPLORATION CORE PASS [1-9][0-9]*",
+      "matching_completion_lines": [
+        "EXPLORATION CORE PASS 357"
+      ],
+      "pass": true
+    },
+    {
+      "suite": "test/fish_miss_feedback_suite.gd",
+      "completion_pattern": "\\[fish-miss-feedback\\] [1-9][0-9]* checks, 0 failures: \\[\\]",
+      "matching_completion_lines": [
+        "[fish-miss-feedback] 16 checks, 0 failures: []"
+      ],
+      "pass": true
+    },
+    {
+      "suite": "test/save_coordinator_suite.gd",
+      "completion_pattern": "SAVE_COORDINATOR checks=[1-9][0-9]* failures=\\[\\]",
+      "matching_completion_lines": [
+        "SAVE_COORDINATOR checks=86 failures=[]"
+      ],
+      "pass": true
+    },
+    {
+      "suite": "test/native_save_host_suite.gd",
+      "completion_pattern": "NATIVE SAVE HOST PASS [1-9][0-9]*",
+      "matching_completion_lines": [
+        "NATIVE SAVE HOST PASS 200"
+      ],
+      "pass": true
+    },
+    {
+      "suite": "test/save_writer_guidance_suite.gd",
+      "completion_pattern": "SAVE WRITER GUIDANCE [1-9][0-9]* checks failures=\\[\\]",
+      "matching_completion_lines": [
+        "SAVE WRITER GUIDANCE 20 checks failures=[]"
+      ],
+      "pass": true
+    },
+    {
+      "suite": "test/exploration_cleanup_contract_suite.gd",
+      "completion_pattern": "EXPLORATION CLEANUP [1-9][0-9]* checks failures=\\[\\]",
+      "matching_completion_lines": [
+        "EXPLORATION CLEANUP 95 checks failures=[]"
+      ],
+      "pass": true
+    },
+    {
+      "suite": "test/exploration_cleanup_preservation_suite.gd",
+      "completion_pattern": "EXPLORATION CLEANUP PRESERVATION checks=[1-9][0-9]* failures=0",
+      "matching_completion_lines": [
+        "EXPLORATION CLEANUP PRESERVATION checks=51 failures=0"
+      ],
+      "pass": true
+    },
+    {
+      "suite": "test/save_feedback_suite.gd",
+      "completion_pattern": "SAVE FEEDBACK [1-9][0-9]* checks, failures 0",
+      "matching_completion_lines": [
+        "SAVE FEEDBACK 50 checks, failures 0"
+      ],
+      "pass": true
+    },
+    {
+      "suite": "test/day_label_layout_suite.gd",
+      "completion_pattern": "day_label_layout suite: [1-9][0-9]* checks passed",
+      "matching_completion_lines": [
+        "day_label_layout suite: 173 checks passed"
+      ],
+      "pass": true
+    },
+    {
+      "suite": "test/exploration_slice_suite.gd",
+      "completion_pattern": "EXPLORATION SLICE PASS ([1-9][0-9]*)/\\1 failures=\\[\\]",
+      "matching_completion_lines": [
+        "EXPLORATION SLICE PASS 218/218 failures=[]"
+      ],
+      "pass": true
+    },
+    {
+      "suite": "test/title_card_suite.gd",
+      "completion_pattern": "title_card suite: [1-9][0-9]* checks passed",
+      "matching_completion_lines": [
+        "title_card suite: 251 checks passed"
+      ],
+      "pass": true
+    },
+    {
+      "suite": "test/hint_paper_fit_suite.gd",
+      "completion_pattern": "hint_paper_fit suite: [1-9][0-9]* checks passed",
+      "matching_completion_lines": [
+        "hint_paper_fit suite: 4653 checks passed"
+      ],
+      "pass": true
+    },
+    {
+      "suite": "test/confirm_panel_fit_suite.gd",
+      "completion_pattern": "confirm_panel_fit suite: [1-9][0-9]* checks passed",
+      "matching_completion_lines": [
+        "confirm_panel_fit suite: 562 checks passed"
+      ],
+      "pass": true
+    },
+    {
+      "suite": "test/title_short_landscape_suite.gd",
+      "completion_pattern": "title_short_landscape suite: [1-9][0-9]* checks passed",
+      "matching_completion_lines": [
+        "title_short_landscape suite: 1541 checks passed"
+      ],
+      "pass": true
+    },
+    {
+      "suite": "test/licenses_dialog_fit_suite.gd",
+      "completion_pattern": "licenses_dialog_fit_suite checks=[1-9][0-9]* failures=0",
+      "matching_completion_lines": [
+        "licenses_dialog_fit_suite checks=124 failures=0"
+      ],
+      "pass": true
+    },
+    {
+      "suite": "test/motion_preference_suite.gd",
+      "completion_pattern": "MOTION PREFERENCE NATIVE PASS [1-9][0-9]*",
+      "matching_completion_lines": [
+        "MOTION PREFERENCE NATIVE PASS 18"
+      ],
+      "pass": true
+    },
+    {
+      "suite": "test/photo_arrival_fit_suite.gd",
+      "completion_pattern": "\\[photo-arrival-fit\\] PASS: [1-9][0-9]* checks",
+      "matching_completion_lines": [
+        "[photo-arrival-fit] PASS: 418 checks"
+      ],
+      "pass": true
+    },
+    {
+      "suite": "test/photo_arrival_combo_suite.gd",
+      "completion_pattern": "PHOTO ARRIVAL COMBO PASS [1-9][0-9]*",
+      "matching_completion_lines": [
+        "PHOTO ARRIVAL COMBO PASS 656"
+      ],
+      "pass": true
+    },
+    {
+      "suite": "test/photo_arrival_mat_suite.gd",
+      "completion_pattern": "\\[photo-arrival-mat\\] PASS: [1-9][0-9]* checks",
+      "matching_completion_lines": [
+        "[photo-arrival-mat] PASS: 550 checks"
+      ],
+      "pass": true
+    },
+    {
+      "suite": "test/photo_arrival_shutter_paper_suite.gd",
+      "completion_pattern": "\\[photo-arrival-shutter-paper\\] PASS: [1-9][0-9]* checks",
+      "matching_completion_lines": [
+        "[photo-arrival-shutter-paper] PASS: 1290 checks"
+      ],
+      "pass": true
+    },
+    {
+      "suite": "test/album_short_landscape_suite.gd",
+      "completion_pattern": "ALBUM_SHORT_LANDSCAPE checks=[1-9][0-9]* failures=0",
+      "matching_completion_lines": [
+        "ALBUM_SHORT_LANDSCAPE checks=52319 failures=0"
+      ],
+      "pass": true
+    },
+    {
+      "suite": "test/title_licenses_link_contrast_suite.gd",
+      "completion_pattern": "PASS: title_licenses_link_contrast [1-9][0-9]* checks",
+      "matching_completion_lines": [
+        "PASS: title_licenses_link_contrast 340 checks"
+      ],
+      "pass": true
+    },
+    {
+      "suite": "test/soft_button_focus_contrast_suite.gd",
+      "completion_pattern": "PASS: soft_button_focus_contrast [1-9][0-9]* checks",
+      "matching_completion_lines": [
+        "PASS: soft_button_focus_contrast 5080 checks"
+      ],
+      "pass": true
+    },
+    {
+      "suite": "test/soft_button_disabled_suite.gd",
+      "completion_pattern": "PASS: soft_button_disabled [1-9][0-9]* checks",
+      "matching_completion_lines": [
+        "PASS: soft_button_disabled 4400 checks"
+      ],
+      "pass": true
+    },
+    {
+      "suite": "test/album_layout_suite.gd",
+      "completion_pattern": "ALBUM_LAYOUT checks=[1-9][0-9]* failures=0",
+      "matching_completion_lines": [
+        "ALBUM_LAYOUT checks=45914 failures=0"
+      ],
+      "pass": true
+    },
+    {
+      "suite": "test/pause_notice_suite.gd",
+      "completion_pattern": "PAUSE_NOTICE checks=[1-9][0-9]* failures=0",
+      "matching_completion_lines": [
+        "PAUSE_NOTICE checks=168 failures=0"
+      ],
+      "pass": true
+    },
+    {
+      "suite": "test/audio_button_input_suite.gd",
+      "completion_pattern": "AUDIO_BUTTON_INPUT checks=[1-9][0-9]* failures=0",
+      "matching_completion_lines": [
+        "AUDIO_BUTTON_INPUT checks=648 failures=0"
+      ],
+      "pass": true
+    },
+    {
+      "suite": "test/still_boundary_feedback_suite.gd",
+      "completion_pattern": "STILL BOUNDARY FEEDBACK PASS [1-9][0-9]*",
+      "matching_completion_lines": [
+        "STILL BOUNDARY FEEDBACK PASS 44"
+      ],
+      "pass": true
+    },
+    {
+      "suite": "test/ui_viewports.gd",
+      "completion_pattern": "\\[viewport\\] checks=[1-9][0-9]* failures=\\[\\]",
+      "matching_completion_lines": [
+        "[viewport] checks=135 failures=[]"
+      ],
+      "pass": true
+    },
+    {
+      "suite": "test/web_save_bridge/decoder_suite.gd",
+      "completion_pattern": "WEB SAVE BRIDGE DECODER [1-9][0-9]* failures=\\[\\]",
+      "matching_completion_lines": [
+        "WEB SAVE BRIDGE DECODER 45 failures=[]"
+      ],
+      "pass": true
+    },
+    {
+      "suite": "test/web_save_bridge/legacy_suite.gd",
+      "completion_pattern": "LEGACY_BRIDGE_PASS [1-9][0-9]*",
+      "matching_completion_lines": [
+        "LEGACY_BRIDGE_PASS 22"
+      ],
+      "pass": true
+    }
+  ]
+}

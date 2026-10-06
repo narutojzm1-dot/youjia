@@ -1,0 +1,1387 @@
+{
+  "source": "49596fa93bff3c29edfe441898017158c6e469a3",
+  "entry": "game-49596fa",
+  "expected_pck_sha256": "c851ac2b66ef6bba5211b7ba8488173c6b6a336ee7508d6150a5f5ccd488f930",
+  "expected_pck_bytes": 27090652,
+  "inputs": [
+    {
+      "command": {
+        "op": "new",
+        "name": "portrait",
+        "width": 390,
+        "height": 844,
+        "motion": "no-preference"
+      },
+      "case": "",
+      "utc": "2026-10-05T23:56:25Z",
+      "monotonic": 375871.339485968
+    },
+    {
+      "case_open": "portrait",
+      "width": 390,
+      "height": 844,
+      "motion": "no-preference",
+      "actual_reduce": false,
+      "utc": "2026-10-05T23:56:57Z",
+      "monotonic": 375903.717330807
+    },
+    {
+      "screenshot_request": "portrait-title",
+      "case": "portrait",
+      "utc": "2026-10-05T23:56:57Z",
+      "monotonic": 375903.717758488
+    },
+    {
+      "screenshot_complete": "portrait-title",
+      "case": "portrait",
+      "utc": "2026-10-05T23:56:58Z",
+      "monotonic": 375904.112220291
+    },
+    {
+      "command": {
+        "op": "click",
+        "x": 195,
+        "y": 430
+      },
+      "case": "portrait",
+      "utc": "2026-10-05T23:57:11Z",
+      "monotonic": 375917.809433494
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 700
+      },
+      "case": "portrait",
+      "utc": "2026-10-05T23:57:15Z",
+      "monotonic": 375921.416743953
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "portrait-01-yard-before"
+      },
+      "case": "portrait",
+      "utc": "2026-10-05T23:57:16Z",
+      "monotonic": 375922.119063886
+    },
+    {
+      "screenshot_request": "portrait-01-yard-before",
+      "case": "portrait",
+      "utc": "2026-10-05T23:57:16Z",
+      "monotonic": 375922.119731396
+    },
+    {
+      "screenshot_complete": "portrait-01-yard-before",
+      "case": "portrait",
+      "utc": "2026-10-05T23:57:16Z",
+      "monotonic": 375922.486596246
+    },
+    {
+      "command": {
+        "op": "click",
+        "x": 236,
+        "y": 474
+      },
+      "case": "portrait",
+      "utc": "2026-10-05T23:57:16Z",
+      "monotonic": 375922.487007386
+    },
+    {
+      "command": {
+        "op": "burst",
+        "name": "portrait-02-arrival",
+        "count": 12,
+        "interval_ms": 30
+      },
+      "case": "portrait",
+      "utc": "2026-10-05T23:57:16Z",
+      "monotonic": 375922.568461654
+    },
+    {
+      "screenshot_request": "portrait-02-arrival-00",
+      "case": "portrait",
+      "utc": "2026-10-05T23:57:16Z",
+      "monotonic": 375922.56920693
+    },
+    {
+      "screenshot_complete": "portrait-02-arrival-00",
+      "case": "portrait",
+      "utc": "2026-10-05T23:57:16Z",
+      "monotonic": 375922.888256678
+    },
+    {
+      "screenshot_request": "portrait-02-arrival-01",
+      "case": "portrait",
+      "utc": "2026-10-05T23:57:16Z",
+      "monotonic": 375922.919789655
+    },
+    {
+      "screenshot_complete": "portrait-02-arrival-01",
+      "case": "portrait",
+      "utc": "2026-10-05T23:57:17Z",
+      "monotonic": 375923.239533544
+    },
+    {
+      "screenshot_request": "portrait-02-arrival-02",
+      "case": "portrait",
+      "utc": "2026-10-05T23:57:17Z",
+      "monotonic": 375923.27556242
+    },
+    {
+      "screenshot_complete": "portrait-02-arrival-02",
+      "case": "portrait",
+      "utc": "2026-10-05T23:57:17Z",
+      "monotonic": 375923.676041959
+    },
+    {
+      "screenshot_request": "portrait-02-arrival-03",
+      "case": "portrait",
+      "utc": "2026-10-05T23:57:17Z",
+      "monotonic": 375923.711226584
+    },
+    {
+      "screenshot_complete": "portrait-02-arrival-03",
+      "case": "portrait",
+      "utc": "2026-10-05T23:57:18Z",
+      "monotonic": 375924.139214147
+    },
+    {
+      "screenshot_request": "portrait-02-arrival-04",
+      "case": "portrait",
+      "utc": "2026-10-05T23:57:18Z",
+      "monotonic": 375924.171246268
+    },
+    {
+      "screenshot_complete": "portrait-02-arrival-04",
+      "case": "portrait",
+      "utc": "2026-10-05T23:57:18Z",
+      "monotonic": 375924.589799008
+    },
+    {
+      "screenshot_request": "portrait-02-arrival-05",
+      "case": "portrait",
+      "utc": "2026-10-05T23:57:18Z",
+      "monotonic": 375924.621370163
+    },
+    {
+      "screenshot_complete": "portrait-02-arrival-05",
+      "case": "portrait",
+      "utc": "2026-10-05T23:57:19Z",
+      "monotonic": 375925.028248028
+    },
+    {
+      "screenshot_request": "portrait-02-arrival-06",
+      "case": "portrait",
+      "utc": "2026-10-05T23:57:19Z",
+      "monotonic": 375925.059990934
+    },
+    {
+      "screenshot_complete": "portrait-02-arrival-06",
+      "case": "portrait",
+      "utc": "2026-10-05T23:57:19Z",
+      "monotonic": 375925.380851195
+    },
+    {
+      "screenshot_request": "portrait-02-arrival-07",
+      "case": "portrait",
+      "utc": "2026-10-05T23:57:19Z",
+      "monotonic": 375925.415689299
+    },
+    {
+      "screenshot_complete": "portrait-02-arrival-07",
+      "case": "portrait",
+      "utc": "2026-10-05T23:57:19Z",
+      "monotonic": 375925.765016272
+    },
+    {
+      "screenshot_request": "portrait-02-arrival-08",
+      "case": "portrait",
+      "utc": "2026-10-05T23:57:19Z",
+      "monotonic": 375925.800169726
+    },
+    {
+      "screenshot_complete": "portrait-02-arrival-08",
+      "case": "portrait",
+      "utc": "2026-10-05T23:57:20Z",
+      "monotonic": 375926.116362207
+    },
+    {
+      "screenshot_request": "portrait-02-arrival-09",
+      "case": "portrait",
+      "utc": "2026-10-05T23:57:20Z",
+      "monotonic": 375926.150049856
+    },
+    {
+      "screenshot_complete": "portrait-02-arrival-09",
+      "case": "portrait",
+      "utc": "2026-10-05T23:57:20Z",
+      "monotonic": 375926.507106218
+    },
+    {
+      "screenshot_request": "portrait-02-arrival-10",
+      "case": "portrait",
+      "utc": "2026-10-05T23:57:20Z",
+      "monotonic": 375926.540723265
+    },
+    {
+      "screenshot_complete": "portrait-02-arrival-10",
+      "case": "portrait",
+      "utc": "2026-10-05T23:57:20Z",
+      "monotonic": 375926.916163816
+    },
+    {
+      "screenshot_request": "portrait-02-arrival-11",
+      "case": "portrait",
+      "utc": "2026-10-05T23:57:20Z",
+      "monotonic": 375926.959830603
+    },
+    {
+      "screenshot_complete": "portrait-02-arrival-11",
+      "case": "portrait",
+      "utc": "2026-10-05T23:57:21Z",
+      "monotonic": 375927.381402748
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 500
+      },
+      "case": "portrait",
+      "utc": "2026-10-05T23:57:21Z",
+      "monotonic": 375927.381963338
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "portrait-03-after-natural-dismiss"
+      },
+      "case": "portrait",
+      "utc": "2026-10-05T23:57:21Z",
+      "monotonic": 375927.884044582
+    },
+    {
+      "screenshot_request": "portrait-03-after-natural-dismiss",
+      "case": "portrait",
+      "utc": "2026-10-05T23:57:21Z",
+      "monotonic": 375927.885412113
+    },
+    {
+      "screenshot_complete": "portrait-03-after-natural-dismiss",
+      "case": "portrait",
+      "utc": "2026-10-05T23:57:22Z",
+      "monotonic": 375928.308277845
+    },
+    {
+      "command": {
+        "op": "click",
+        "x": 100,
+        "y": 744
+      },
+      "case": "portrait",
+      "utc": "2026-10-05T23:57:22Z",
+      "monotonic": 375928.308976313
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 300
+      },
+      "case": "portrait",
+      "utc": "2026-10-05T23:57:22Z",
+      "monotonic": 375928.366313618
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "portrait-04-album"
+      },
+      "case": "portrait",
+      "utc": "2026-10-05T23:57:22Z",
+      "monotonic": 375928.668652337
+    },
+    {
+      "screenshot_request": "portrait-04-album",
+      "case": "portrait",
+      "utc": "2026-10-05T23:57:22Z",
+      "monotonic": 375928.669249074
+    },
+    {
+      "screenshot_complete": "portrait-04-album",
+      "case": "portrait",
+      "utc": "2026-10-05T23:57:23Z",
+      "monotonic": 375929.081242384
+    },
+    {
+      "command": {
+        "op": "db",
+        "name": "portrait-04-album-db"
+      },
+      "case": "portrait",
+      "utc": "2026-10-05T23:57:23Z",
+      "monotonic": 375929.081906929
+    },
+    {
+      "command": {
+        "op": "click",
+        "x": 307,
+        "y": 667
+      },
+      "case": "portrait",
+      "utc": "2026-10-05T23:57:23Z",
+      "monotonic": 375929.34071376
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 250
+      },
+      "case": "portrait",
+      "utc": "2026-10-05T23:57:23Z",
+      "monotonic": 375929.391587524
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "portrait-05-album-closed"
+      },
+      "case": "portrait",
+      "utc": "2026-10-05T23:57:23Z",
+      "monotonic": 375929.660347076
+    },
+    {
+      "screenshot_request": "portrait-05-album-closed",
+      "case": "portrait",
+      "utc": "2026-10-05T23:57:23Z",
+      "monotonic": 375929.661006721
+    },
+    {
+      "screenshot_complete": "portrait-05-album-closed",
+      "case": "portrait",
+      "utc": "2026-10-05T23:57:24Z",
+      "monotonic": 375929.997091979
+    },
+    {
+      "command": {
+        "op": "close"
+      },
+      "case": "portrait",
+      "utc": "2026-10-05T23:57:24Z",
+      "monotonic": 375929.997737949
+    },
+    {
+      "case_closed": "portrait",
+      "utc": "2026-10-05T23:57:38Z",
+      "monotonic": 375944.524853429
+    },
+    {
+      "command": {
+        "op": "new",
+        "name": "landscape",
+        "width": 568,
+        "height": 320,
+        "motion": "no-preference"
+      },
+      "case": "portrait",
+      "utc": "2026-10-05T23:57:54Z",
+      "monotonic": 375960.648946542
+    },
+    {
+      "case_open": "landscape",
+      "width": 568,
+      "height": 320,
+      "motion": "no-preference",
+      "actual_reduce": false,
+      "utc": "2026-10-05T23:58:19Z",
+      "monotonic": 375985.800826171
+    },
+    {
+      "screenshot_request": "landscape-title",
+      "case": "landscape",
+      "utc": "2026-10-05T23:58:19Z",
+      "monotonic": 375985.801725355
+    },
+    {
+      "screenshot_complete": "landscape-title",
+      "case": "landscape",
+      "utc": "2026-10-05T23:58:20Z",
+      "monotonic": 375986.040151456
+    },
+    {
+      "command": {
+        "op": "click",
+        "x": 284,
+        "y": 160
+      },
+      "case": "landscape",
+      "utc": "2026-10-05T23:58:28Z",
+      "monotonic": 375994.460327465
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 700
+      },
+      "case": "landscape",
+      "utc": "2026-10-05T23:58:32Z",
+      "monotonic": 375998.051089281
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "landscape-01-yard-before"
+      },
+      "case": "landscape",
+      "utc": "2026-10-05T23:58:32Z",
+      "monotonic": 375998.760398359
+    },
+    {
+      "screenshot_request": "landscape-01-yard-before",
+      "case": "landscape",
+      "utc": "2026-10-05T23:58:32Z",
+      "monotonic": 375998.761405645
+    },
+    {
+      "screenshot_complete": "landscape-01-yard-before",
+      "case": "landscape",
+      "utc": "2026-10-05T23:58:32Z",
+      "monotonic": 375998.933171329
+    },
+    {
+      "command": {
+        "op": "click",
+        "x": 205,
+        "y": 113
+      },
+      "case": "landscape",
+      "utc": "2026-10-05T23:58:32Z",
+      "monotonic": 375998.93419173
+    },
+    {
+      "command": {
+        "op": "burst",
+        "name": "landscape-02-arrival",
+        "count": 15,
+        "interval_ms": 50
+      },
+      "case": "landscape",
+      "utc": "2026-10-05T23:58:33Z",
+      "monotonic": 375999.022049255
+    },
+    {
+      "screenshot_request": "landscape-02-arrival-00",
+      "case": "landscape",
+      "utc": "2026-10-05T23:58:33Z",
+      "monotonic": 375999.023059988
+    },
+    {
+      "screenshot_complete": "landscape-02-arrival-00",
+      "case": "landscape",
+      "utc": "2026-10-05T23:58:33Z",
+      "monotonic": 375999.216285811
+    },
+    {
+      "screenshot_request": "landscape-02-arrival-01",
+      "case": "landscape",
+      "utc": "2026-10-05T23:58:33Z",
+      "monotonic": 375999.268439873
+    },
+    {
+      "screenshot_complete": "landscape-02-arrival-01",
+      "case": "landscape",
+      "utc": "2026-10-05T23:58:33Z",
+      "monotonic": 375999.489643761
+    },
+    {
+      "screenshot_request": "landscape-02-arrival-02",
+      "case": "landscape",
+      "utc": "2026-10-05T23:58:33Z",
+      "monotonic": 375999.543783451
+    },
+    {
+      "screenshot_complete": "landscape-02-arrival-02",
+      "case": "landscape",
+      "utc": "2026-10-05T23:58:33Z",
+      "monotonic": 375999.807446915
+    },
+    {
+      "screenshot_request": "landscape-02-arrival-03",
+      "case": "landscape",
+      "utc": "2026-10-05T23:58:33Z",
+      "monotonic": 375999.860372943
+    },
+    {
+      "screenshot_complete": "landscape-02-arrival-03",
+      "case": "landscape",
+      "utc": "2026-10-05T23:58:34Z",
+      "monotonic": 376000.04281458
+    },
+    {
+      "screenshot_request": "landscape-02-arrival-04",
+      "case": "landscape",
+      "utc": "2026-10-05T23:58:34Z",
+      "monotonic": 376000.111127032
+    },
+    {
+      "screenshot_complete": "landscape-02-arrival-04",
+      "case": "landscape",
+      "utc": "2026-10-05T23:58:34Z",
+      "monotonic": 376000.328367256
+    },
+    {
+      "screenshot_request": "landscape-02-arrival-05",
+      "case": "landscape",
+      "utc": "2026-10-05T23:58:34Z",
+      "monotonic": 376000.380869479
+    },
+    {
+      "screenshot_complete": "landscape-02-arrival-05",
+      "case": "landscape",
+      "utc": "2026-10-05T23:58:34Z",
+      "monotonic": 376000.57171738
+    },
+    {
+      "screenshot_request": "landscape-02-arrival-06",
+      "case": "landscape",
+      "utc": "2026-10-05T23:58:34Z",
+      "monotonic": 376000.624315974
+    },
+    {
+      "screenshot_complete": "landscape-02-arrival-06",
+      "case": "landscape",
+      "utc": "2026-10-05T23:58:34Z",
+      "monotonic": 376000.802688706
+    },
+    {
+      "screenshot_request": "landscape-02-arrival-07",
+      "case": "landscape",
+      "utc": "2026-10-05T23:58:34Z",
+      "monotonic": 376000.859875857
+    },
+    {
+      "screenshot_complete": "landscape-02-arrival-07",
+      "case": "landscape",
+      "utc": "2026-10-05T23:58:35Z",
+      "monotonic": 376001.017790482
+    },
+    {
+      "screenshot_request": "landscape-02-arrival-08",
+      "case": "landscape",
+      "utc": "2026-10-05T23:58:35Z",
+      "monotonic": 376001.070206604
+    },
+    {
+      "screenshot_complete": "landscape-02-arrival-08",
+      "case": "landscape",
+      "utc": "2026-10-05T23:58:35Z",
+      "monotonic": 376001.292304397
+    },
+    {
+      "screenshot_request": "landscape-02-arrival-09",
+      "case": "landscape",
+      "utc": "2026-10-05T23:58:35Z",
+      "monotonic": 376001.344718105
+    },
+    {
+      "screenshot_complete": "landscape-02-arrival-09",
+      "case": "landscape",
+      "utc": "2026-10-05T23:58:35Z",
+      "monotonic": 376001.502896023
+    },
+    {
+      "screenshot_request": "landscape-02-arrival-10",
+      "case": "landscape",
+      "utc": "2026-10-05T23:58:35Z",
+      "monotonic": 376001.560347776
+    },
+    {
+      "screenshot_complete": "landscape-02-arrival-10",
+      "case": "landscape",
+      "utc": "2026-10-05T23:58:35Z",
+      "monotonic": 376001.75993366
+    },
+    {
+      "screenshot_request": "landscape-02-arrival-11",
+      "case": "landscape",
+      "utc": "2026-10-05T23:58:35Z",
+      "monotonic": 376001.812214579
+    },
+    {
+      "screenshot_complete": "landscape-02-arrival-11",
+      "case": "landscape",
+      "utc": "2026-10-05T23:58:36Z",
+      "monotonic": 376002.007166034
+    },
+    {
+      "screenshot_request": "landscape-02-arrival-12",
+      "case": "landscape",
+      "utc": "2026-10-05T23:58:36Z",
+      "monotonic": 376002.060667178
+    },
+    {
+      "screenshot_complete": "landscape-02-arrival-12",
+      "case": "landscape",
+      "utc": "2026-10-05T23:58:36Z",
+      "monotonic": 376002.242358711
+    },
+    {
+      "screenshot_request": "landscape-02-arrival-13",
+      "case": "landscape",
+      "utc": "2026-10-05T23:58:36Z",
+      "monotonic": 376002.310690178
+    },
+    {
+      "screenshot_complete": "landscape-02-arrival-13",
+      "case": "landscape",
+      "utc": "2026-10-05T23:58:36Z",
+      "monotonic": 376002.519776755
+    },
+    {
+      "screenshot_request": "landscape-02-arrival-14",
+      "case": "landscape",
+      "utc": "2026-10-05T23:58:36Z",
+      "monotonic": 376002.572602024
+    },
+    {
+      "screenshot_complete": "landscape-02-arrival-14",
+      "case": "landscape",
+      "utc": "2026-10-05T23:58:36Z",
+      "monotonic": 376002.767657032
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 500
+      },
+      "case": "landscape",
+      "utc": "2026-10-05T23:58:36Z",
+      "monotonic": 376002.768896373
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "landscape-03-after-natural-dismiss"
+      },
+      "case": "landscape",
+      "utc": "2026-10-05T23:58:37Z",
+      "monotonic": 376003.272162644
+    },
+    {
+      "screenshot_request": "landscape-03-after-natural-dismiss",
+      "case": "landscape",
+      "utc": "2026-10-05T23:58:37Z",
+      "monotonic": 376003.273284394
+    },
+    {
+      "screenshot_complete": "landscape-03-after-natural-dismiss",
+      "case": "landscape",
+      "utc": "2026-10-05T23:58:37Z",
+      "monotonic": 376003.445586183
+    },
+    {
+      "command": {
+        "op": "click",
+        "x": 140,
+        "y": 220
+      },
+      "case": "landscape",
+      "utc": "2026-10-05T23:58:37Z",
+      "monotonic": 376003.446776432
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 300
+      },
+      "case": "landscape",
+      "utc": "2026-10-05T23:58:37Z",
+      "monotonic": 376003.499725963
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "landscape-04-album"
+      },
+      "case": "landscape",
+      "utc": "2026-10-05T23:58:37Z",
+      "monotonic": 376003.803289992
+    },
+    {
+      "screenshot_request": "landscape-04-album",
+      "case": "landscape",
+      "utc": "2026-10-05T23:58:37Z",
+      "monotonic": 376003.804459211
+    },
+    {
+      "screenshot_complete": "landscape-04-album",
+      "case": "landscape",
+      "utc": "2026-10-05T23:58:38Z",
+      "monotonic": 376004.012930957
+    },
+    {
+      "command": {
+        "op": "db",
+        "name": "landscape-04-album-db"
+      },
+      "case": "landscape",
+      "utc": "2026-10-05T23:58:38Z",
+      "monotonic": 376004.014078195
+    },
+    {
+      "command": {
+        "op": "click",
+        "x": 454,
+        "y": 284
+      },
+      "case": "landscape",
+      "utc": "2026-10-05T23:58:38Z",
+      "monotonic": 376004.133875696
+    },
+    {
+      "command": {
+        "op": "wait",
+        "ms": 250
+      },
+      "case": "landscape",
+      "utc": "2026-10-05T23:58:38Z",
+      "monotonic": 376004.176127462
+    },
+    {
+      "command": {
+        "op": "shot",
+        "name": "landscape-05-album-closed"
+      },
+      "case": "landscape",
+      "utc": "2026-10-05T23:58:38Z",
+      "monotonic": 376004.430872335
+    },
+    {
+      "screenshot_request": "landscape-05-album-closed",
+      "case": "landscape",
+      "utc": "2026-10-05T23:58:38Z",
+      "monotonic": 376004.432107588
+    },
+    {
+      "screenshot_complete": "landscape-05-album-closed",
+      "case": "landscape",
+      "utc": "2026-10-05T23:58:38Z",
+      "monotonic": 376004.680651899
+    },
+    {
+      "command": {
+        "op": "end"
+      },
+      "case": "landscape",
+      "utc": "2026-10-05T23:58:38Z",
+      "monotonic": 376004.681817311
+    },
+    {
+      "case_closed": "landscape",
+      "utc": "2026-10-05T23:58:54Z",
+      "monotonic": 376020.684487883
+    }
+  ],
+  "bindings": [
+    {
+      "case": "portrait",
+      "stage": "before",
+      "manifest": {
+        "schema": "youjia.release/v1",
+        "sourceCommit": "49596fa93bff3c29edfe441898017158c6e469a3",
+        "engine": "4.7.2.stable.official.ed1daf0bf",
+        "entry": "game-49596fa",
+        "publishedAt": "2026-10-05T23:52:26Z",
+        "storageModules": {
+          "entry": "save-49596fa",
+          "sha256": {
+            "bridge.mjs": "ef18687554fdc0d745c1d18d4d091e959cc78559da0d61d6a093e562ff9bbc91",
+            "budgets.mjs": "52984153977dcafd1d2682e848f1999f091d0966e17d46e902de76f5735a7018",
+            "host.mjs": "9de8dc0ef4bfc037a8ad0bff575d40c3dd4341bcc723351a412b2061bb661904",
+            "idbfs_source.mjs": "16eb57d471537f13d3e50018b56c2d416d2847f0d0249ba44433dd9ebb65f4d8",
+            "legacy_inspection.mjs": "db3a23a0221aa5d34a58a6a49aeeff930295ffe20bfcf73a7c11f0d49cffd671",
+            "legacy_seal.mjs": "9642132f5d4e7523e5966e802069af7f4bae803fae8e2e7c28ae55ee97d85610",
+            "legacy_v5.mjs": "8e7f4ad2d87aab77ac05361e4f46060476e933aa079ae94301998d08d4599621",
+            "lifecycle.mjs": "1cfaebb9a8745e2dc3e4f694ef475f250640870938f04160be1a5c9acd62935d",
+            "source_decode.mjs": "411f3bc784cb32a07f32eed5fc7d88f71b59a667cc0d68a50fe13c55bfdba18a",
+            "store.mjs": "2193b4397b8662a8ebc754dc4468e4d62964d209b4e1d0f0924a2ec81b409cbe"
+          }
+        }
+      },
+      "html_status": 200,
+      "html_sha256": "9f3c4d8f66827663a136eaafb1527d5553154c5cea9d69d15157c1be31796385",
+      "pck": {
+        "status": 200,
+        "bytes": 27090652,
+        "sha256": "c851ac2b66ef6bba5211b7ba8488173c6b6a336ee7508d6150a5f5ccd488f930"
+      },
+      "storage_module_checks": [
+        {
+          "path": "save-49596fa/bridge.mjs",
+          "status": 200,
+          "bytes": 1856,
+          "sha256": "ef18687554fdc0d745c1d18d4d091e959cc78559da0d61d6a093e562ff9bbc91"
+        },
+        {
+          "path": "save-49596fa/budgets.mjs",
+          "status": 200,
+          "bytes": 340,
+          "sha256": "52984153977dcafd1d2682e848f1999f091d0966e17d46e902de76f5735a7018"
+        },
+        {
+          "path": "save-49596fa/host.mjs",
+          "status": 200,
+          "bytes": 7730,
+          "sha256": "9de8dc0ef4bfc037a8ad0bff575d40c3dd4341bcc723351a412b2061bb661904"
+        },
+        {
+          "path": "save-49596fa/idbfs_source.mjs",
+          "status": 200,
+          "bytes": 5550,
+          "sha256": "16eb57d471537f13d3e50018b56c2d416d2847f0d0249ba44433dd9ebb65f4d8"
+        },
+        {
+          "path": "save-49596fa/legacy_inspection.mjs",
+          "status": 200,
+          "bytes": 2886,
+          "sha256": "db3a23a0221aa5d34a58a6a49aeeff930295ffe20bfcf73a7c11f0d49cffd671"
+        },
+        {
+          "path": "save-49596fa/legacy_seal.mjs",
+          "status": 200,
+          "bytes": 2510,
+          "sha256": "9642132f5d4e7523e5966e802069af7f4bae803fae8e2e7c28ae55ee97d85610"
+        },
+        {
+          "path": "save-49596fa/legacy_v5.mjs",
+          "status": 200,
+          "bytes": 2245,
+          "sha256": "8e7f4ad2d87aab77ac05361e4f46060476e933aa079ae94301998d08d4599621"
+        },
+        {
+          "path": "save-49596fa/lifecycle.mjs",
+          "status": 200,
+          "bytes": 1878,
+          "sha256": "1cfaebb9a8745e2dc3e4f694ef475f250640870938f04160be1a5c9acd62935d"
+        },
+        {
+          "path": "save-49596fa/source_decode.mjs",
+          "status": 200,
+          "bytes": 1542,
+          "sha256": "411f3bc784cb32a07f32eed5fc7d88f71b59a667cc0d68a50fe13c55bfdba18a"
+        },
+        {
+          "path": "save-49596fa/store.mjs",
+          "status": 200,
+          "bytes": 13890,
+          "sha256": "2193b4397b8662a8ebc754dc4468e4d62964d209b4e1d0f0924a2ec81b409cbe"
+        }
+      ],
+      "license_check": {
+        "path": "open-source-licenses.html",
+        "status": 200,
+        "bytes": 147966,
+        "sha256": "9215f5fdd50039a9b6f3d8f0271cbc21bbdf64b917fb118dd29c8a16b9974e00"
+      },
+      "utc": "2026-10-05T23:56:43Z",
+      "loaded_html_sha256": "9f3c4d8f66827663a136eaafb1527d5553154c5cea9d69d15157c1be31796385"
+    },
+    {
+      "case": "portrait",
+      "stage": "after",
+      "manifest": {
+        "schema": "youjia.release/v1",
+        "sourceCommit": "49596fa93bff3c29edfe441898017158c6e469a3",
+        "engine": "4.7.2.stable.official.ed1daf0bf",
+        "entry": "game-49596fa",
+        "publishedAt": "2026-10-05T23:52:26Z",
+        "storageModules": {
+          "entry": "save-49596fa",
+          "sha256": {
+            "bridge.mjs": "ef18687554fdc0d745c1d18d4d091e959cc78559da0d61d6a093e562ff9bbc91",
+            "budgets.mjs": "52984153977dcafd1d2682e848f1999f091d0966e17d46e902de76f5735a7018",
+            "host.mjs": "9de8dc0ef4bfc037a8ad0bff575d40c3dd4341bcc723351a412b2061bb661904",
+            "idbfs_source.mjs": "16eb57d471537f13d3e50018b56c2d416d2847f0d0249ba44433dd9ebb65f4d8",
+            "legacy_inspection.mjs": "db3a23a0221aa5d34a58a6a49aeeff930295ffe20bfcf73a7c11f0d49cffd671",
+            "legacy_seal.mjs": "9642132f5d4e7523e5966e802069af7f4bae803fae8e2e7c28ae55ee97d85610",
+            "legacy_v5.mjs": "8e7f4ad2d87aab77ac05361e4f46060476e933aa079ae94301998d08d4599621",
+            "lifecycle.mjs": "1cfaebb9a8745e2dc3e4f694ef475f250640870938f04160be1a5c9acd62935d",
+            "source_decode.mjs": "411f3bc784cb32a07f32eed5fc7d88f71b59a667cc0d68a50fe13c55bfdba18a",
+            "store.mjs": "2193b4397b8662a8ebc754dc4468e4d62964d209b4e1d0f0924a2ec81b409cbe"
+          }
+        }
+      },
+      "html_status": 200,
+      "html_sha256": "9f3c4d8f66827663a136eaafb1527d5553154c5cea9d69d15157c1be31796385",
+      "pck": {
+        "status": 200,
+        "bytes": 27090652,
+        "sha256": "c851ac2b66ef6bba5211b7ba8488173c6b6a336ee7508d6150a5f5ccd488f930"
+      },
+      "storage_module_checks": [
+        {
+          "path": "save-49596fa/bridge.mjs",
+          "status": 200,
+          "bytes": 1856,
+          "sha256": "ef18687554fdc0d745c1d18d4d091e959cc78559da0d61d6a093e562ff9bbc91"
+        },
+        {
+          "path": "save-49596fa/budgets.mjs",
+          "status": 200,
+          "bytes": 340,
+          "sha256": "52984153977dcafd1d2682e848f1999f091d0966e17d46e902de76f5735a7018"
+        },
+        {
+          "path": "save-49596fa/host.mjs",
+          "status": 200,
+          "bytes": 7730,
+          "sha256": "9de8dc0ef4bfc037a8ad0bff575d40c3dd4341bcc723351a412b2061bb661904"
+        },
+        {
+          "path": "save-49596fa/idbfs_source.mjs",
+          "status": 200,
+          "bytes": 5550,
+          "sha256": "16eb57d471537f13d3e50018b56c2d416d2847f0d0249ba44433dd9ebb65f4d8"
+        },
+        {
+          "path": "save-49596fa/legacy_inspection.mjs",
+          "status": 200,
+          "bytes": 2886,
+          "sha256": "db3a23a0221aa5d34a58a6a49aeeff930295ffe20bfcf73a7c11f0d49cffd671"
+        },
+        {
+          "path": "save-49596fa/legacy_seal.mjs",
+          "status": 200,
+          "bytes": 2510,
+          "sha256": "9642132f5d4e7523e5966e802069af7f4bae803fae8e2e7c28ae55ee97d85610"
+        },
+        {
+          "path": "save-49596fa/legacy_v5.mjs",
+          "status": 200,
+          "bytes": 2245,
+          "sha256": "8e7f4ad2d87aab77ac05361e4f46060476e933aa079ae94301998d08d4599621"
+        },
+        {
+          "path": "save-49596fa/lifecycle.mjs",
+          "status": 200,
+          "bytes": 1878,
+          "sha256": "1cfaebb9a8745e2dc3e4f694ef475f250640870938f04160be1a5c9acd62935d"
+        },
+        {
+          "path": "save-49596fa/source_decode.mjs",
+          "status": 200,
+          "bytes": 1542,
+          "sha256": "411f3bc784cb32a07f32eed5fc7d88f71b59a667cc0d68a50fe13c55bfdba18a"
+        },
+        {
+          "path": "save-49596fa/store.mjs",
+          "status": 200,
+          "bytes": 13890,
+          "sha256": "2193b4397b8662a8ebc754dc4468e4d62964d209b4e1d0f0924a2ec81b409cbe"
+        }
+      ],
+      "license_check": {
+        "path": "open-source-licenses.html",
+        "status": 200,
+        "bytes": 147966,
+        "sha256": "9215f5fdd50039a9b6f3d8f0271cbc21bbdf64b917fb118dd29c8a16b9974e00"
+      },
+      "utc": "2026-10-05T23:57:38Z"
+    },
+    {
+      "case": "landscape",
+      "stage": "before",
+      "manifest": {
+        "schema": "youjia.release/v1",
+        "sourceCommit": "49596fa93bff3c29edfe441898017158c6e469a3",
+        "engine": "4.7.2.stable.official.ed1daf0bf",
+        "entry": "game-49596fa",
+        "publishedAt": "2026-10-05T23:52:26Z",
+        "storageModules": {
+          "entry": "save-49596fa",
+          "sha256": {
+            "bridge.mjs": "ef18687554fdc0d745c1d18d4d091e959cc78559da0d61d6a093e562ff9bbc91",
+            "budgets.mjs": "52984153977dcafd1d2682e848f1999f091d0966e17d46e902de76f5735a7018",
+            "host.mjs": "9de8dc0ef4bfc037a8ad0bff575d40c3dd4341bcc723351a412b2061bb661904",
+            "idbfs_source.mjs": "16eb57d471537f13d3e50018b56c2d416d2847f0d0249ba44433dd9ebb65f4d8",
+            "legacy_inspection.mjs": "db3a23a0221aa5d34a58a6a49aeeff930295ffe20bfcf73a7c11f0d49cffd671",
+            "legacy_seal.mjs": "9642132f5d4e7523e5966e802069af7f4bae803fae8e2e7c28ae55ee97d85610",
+            "legacy_v5.mjs": "8e7f4ad2d87aab77ac05361e4f46060476e933aa079ae94301998d08d4599621",
+            "lifecycle.mjs": "1cfaebb9a8745e2dc3e4f694ef475f250640870938f04160be1a5c9acd62935d",
+            "source_decode.mjs": "411f3bc784cb32a07f32eed5fc7d88f71b59a667cc0d68a50fe13c55bfdba18a",
+            "store.mjs": "2193b4397b8662a8ebc754dc4468e4d62964d209b4e1d0f0924a2ec81b409cbe"
+          }
+        }
+      },
+      "html_status": 200,
+      "html_sha256": "9f3c4d8f66827663a136eaafb1527d5553154c5cea9d69d15157c1be31796385",
+      "pck": {
+        "status": 200,
+        "bytes": 27090652,
+        "sha256": "c851ac2b66ef6bba5211b7ba8488173c6b6a336ee7508d6150a5f5ccd488f930"
+      },
+      "storage_module_checks": [
+        {
+          "path": "save-49596fa/bridge.mjs",
+          "status": 200,
+          "bytes": 1856,
+          "sha256": "ef18687554fdc0d745c1d18d4d091e959cc78559da0d61d6a093e562ff9bbc91"
+        },
+        {
+          "path": "save-49596fa/budgets.mjs",
+          "status": 200,
+          "bytes": 340,
+          "sha256": "52984153977dcafd1d2682e848f1999f091d0966e17d46e902de76f5735a7018"
+        },
+        {
+          "path": "save-49596fa/host.mjs",
+          "status": 200,
+          "bytes": 7730,
+          "sha256": "9de8dc0ef4bfc037a8ad0bff575d40c3dd4341bcc723351a412b2061bb661904"
+        },
+        {
+          "path": "save-49596fa/idbfs_source.mjs",
+          "status": 200,
+          "bytes": 5550,
+          "sha256": "16eb57d471537f13d3e50018b56c2d416d2847f0d0249ba44433dd9ebb65f4d8"
+        },
+        {
+          "path": "save-49596fa/legacy_inspection.mjs",
+          "status": 200,
+          "bytes": 2886,
+          "sha256": "db3a23a0221aa5d34a58a6a49aeeff930295ffe20bfcf73a7c11f0d49cffd671"
+        },
+        {
+          "path": "save-49596fa/legacy_seal.mjs",
+          "status": 200,
+          "bytes": 2510,
+          "sha256": "9642132f5d4e7523e5966e802069af7f4bae803fae8e2e7c28ae55ee97d85610"
+        },
+        {
+          "path": "save-49596fa/legacy_v5.mjs",
+          "status": 200,
+          "bytes": 2245,
+          "sha256": "8e7f4ad2d87aab77ac05361e4f46060476e933aa079ae94301998d08d4599621"
+        },
+        {
+          "path": "save-49596fa/lifecycle.mjs",
+          "status": 200,
+          "bytes": 1878,
+          "sha256": "1cfaebb9a8745e2dc3e4f694ef475f250640870938f04160be1a5c9acd62935d"
+        },
+        {
+          "path": "save-49596fa/source_decode.mjs",
+          "status": 200,
+          "bytes": 1542,
+          "sha256": "411f3bc784cb32a07f32eed5fc7d88f71b59a667cc0d68a50fe13c55bfdba18a"
+        },
+        {
+          "path": "save-49596fa/store.mjs",
+          "status": 200,
+          "bytes": 13890,
+          "sha256": "2193b4397b8662a8ebc754dc4468e4d62964d209b4e1d0f0924a2ec81b409cbe"
+        }
+      ],
+      "license_check": {
+        "path": "open-source-licenses.html",
+        "status": 200,
+        "bytes": 147966,
+        "sha256": "9215f5fdd50039a9b6f3d8f0271cbc21bbdf64b917fb118dd29c8a16b9974e00"
+      },
+      "utc": "2026-10-05T23:58:10Z",
+      "loaded_html_sha256": "9f3c4d8f66827663a136eaafb1527d5553154c5cea9d69d15157c1be31796385"
+    },
+    {
+      "case": "landscape",
+      "stage": "after",
+      "manifest": {
+        "schema": "youjia.release/v1",
+        "sourceCommit": "49596fa93bff3c29edfe441898017158c6e469a3",
+        "engine": "4.7.2.stable.official.ed1daf0bf",
+        "entry": "game-49596fa",
+        "publishedAt": "2026-10-05T23:52:26Z",
+        "storageModules": {
+          "entry": "save-49596fa",
+          "sha256": {
+            "bridge.mjs": "ef18687554fdc0d745c1d18d4d091e959cc78559da0d61d6a093e562ff9bbc91",
+            "budgets.mjs": "52984153977dcafd1d2682e848f1999f091d0966e17d46e902de76f5735a7018",
+            "host.mjs": "9de8dc0ef4bfc037a8ad0bff575d40c3dd4341bcc723351a412b2061bb661904",
+            "idbfs_source.mjs": "16eb57d471537f13d3e50018b56c2d416d2847f0d0249ba44433dd9ebb65f4d8",
+            "legacy_inspection.mjs": "db3a23a0221aa5d34a58a6a49aeeff930295ffe20bfcf73a7c11f0d49cffd671",
+            "legacy_seal.mjs": "9642132f5d4e7523e5966e802069af7f4bae803fae8e2e7c28ae55ee97d85610",
+            "legacy_v5.mjs": "8e7f4ad2d87aab77ac05361e4f46060476e933aa079ae94301998d08d4599621",
+            "lifecycle.mjs": "1cfaebb9a8745e2dc3e4f694ef475f250640870938f04160be1a5c9acd62935d",
+            "source_decode.mjs": "411f3bc784cb32a07f32eed5fc7d88f71b59a667cc0d68a50fe13c55bfdba18a",
+            "store.mjs": "2193b4397b8662a8ebc754dc4468e4d62964d209b4e1d0f0924a2ec81b409cbe"
+          }
+        }
+      },
+      "html_status": 200,
+      "html_sha256": "9f3c4d8f66827663a136eaafb1527d5553154c5cea9d69d15157c1be31796385",
+      "pck": {
+        "status": 200,
+        "bytes": 27090652,
+        "sha256": "c851ac2b66ef6bba5211b7ba8488173c6b6a336ee7508d6150a5f5ccd488f930"
+      },
+      "storage_module_checks": [
+        {
+          "path": "save-49596fa/bridge.mjs",
+          "status": 200,
+          "bytes": 1856,
+          "sha256": "ef18687554fdc0d745c1d18d4d091e959cc78559da0d61d6a093e562ff9bbc91"
+        },
+        {
+          "path": "save-49596fa/budgets.mjs",
+          "status": 200,
+          "bytes": 340,
+          "sha256": "52984153977dcafd1d2682e848f1999f091d0966e17d46e902de76f5735a7018"
+        },
+        {
+          "path": "save-49596fa/host.mjs",
+          "status": 200,
+          "bytes": 7730,
+          "sha256": "9de8dc0ef4bfc037a8ad0bff575d40c3dd4341bcc723351a412b2061bb661904"
+        },
+        {
+          "path": "save-49596fa/idbfs_source.mjs",
+          "status": 200,
+          "bytes": 5550,
+          "sha256": "16eb57d471537f13d3e50018b56c2d416d2847f0d0249ba44433dd9ebb65f4d8"
+        },
+        {
+          "path": "save-49596fa/legacy_inspection.mjs",
+          "status": 200,
+          "bytes": 2886,
+          "sha256": "db3a23a0221aa5d34a58a6a49aeeff930295ffe20bfcf73a7c11f0d49cffd671"
+        },
+        {
+          "path": "save-49596fa/legacy_seal.mjs",
+          "status": 200,
+          "bytes": 2510,
+          "sha256": "9642132f5d4e7523e5966e802069af7f4bae803fae8e2e7c28ae55ee97d85610"
+        },
+        {
+          "path": "save-49596fa/legacy_v5.mjs",
+          "status": 200,
+          "bytes": 2245,
+          "sha256": "8e7f4ad2d87aab77ac05361e4f46060476e933aa079ae94301998d08d4599621"
+        },
+        {
+          "path": "save-49596fa/lifecycle.mjs",
+          "status": 200,
+          "bytes": 1878,
+          "sha256": "1cfaebb9a8745e2dc3e4f694ef475f250640870938f04160be1a5c9acd62935d"
+        },
+        {
+          "path": "save-49596fa/source_decode.mjs",
+          "status": 200,
+          "bytes": 1542,
+          "sha256": "411f3bc784cb32a07f32eed5fc7d88f71b59a667cc0d68a50fe13c55bfdba18a"
+        },
+        {
+          "path": "save-49596fa/store.mjs",
+          "status": 200,
+          "bytes": 13890,
+          "sha256": "2193b4397b8662a8ebc754dc4468e4d62964d209b4e1d0f0924a2ec81b409cbe"
+        }
+      ],
+      "license_check": {
+        "path": "open-source-licenses.html",
+        "status": 200,
+        "bytes": 147966,
+        "sha256": "9215f5fdd50039a9b6f3d8f0271cbc21bbdf64b917fb118dd29c8a16b9974e00"
+      },
+      "utc": "2026-10-05T23:58:54Z"
+    }
+  ],
+  "errors": [],
+  "console": [
+    {
+      "case": "portrait",
+      "type": "log",
+      "text": "Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org"
+    },
+    {
+      "case": "portrait",
+      "type": "log",
+      "text": "OpenGL API OpenGL ES 3.0 (WebGL 2.0 (OpenGL ES 3.0 Chromium)) - Compatibility - Using Device: WebKit - WebKit WebGL"
+    },
+    {
+      "case": "portrait",
+      "type": "log",
+      "text": "Build configuration: Emscripten 4.0.20, single-threaded, no GDExtension support."
+    },
+    {
+      "case": "portrait",
+      "type": "info",
+      "text": "[game-loading] timings_ms {\"engineScriptReady\":948,\"downloadComplete\":9900,\"engineReady\":12133,\"firstFrame\":12552}"
+    },
+    {
+      "case": "landscape",
+      "type": "log",
+      "text": "Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org"
+    },
+    {
+      "case": "landscape",
+      "type": "log",
+      "text": "OpenGL API OpenGL ES 3.0 (WebGL 2.0 (OpenGL ES 3.0 Chromium)) - Compatibility - Using Device: WebKit - WebKit WebGL"
+    },
+    {
+      "case": "landscape",
+      "type": "log",
+      "text": "Build configuration: Emscripten 4.0.20, single-threaded, no GDExtension support."
+    },
+    {
+      "case": "landscape",
+      "type": "info",
+      "text": "[game-loading] timings_ms {\"engineScriptReady\":574,\"downloadComplete\":5580,\"engineReady\":7760,\"firstFrame\":8151}"
+    }
+  ],
+  "asset_responses": [
+    {
+      "case": "portrait",
+      "url": "https://narutojzm1-dot.github.io/youjia/save-49596fa/bridge.mjs",
+      "status": 200
+    },
+    {
+      "case": "portrait",
+      "url": "https://narutojzm1-dot.github.io/youjia/save-49596fa/host.mjs",
+      "status": 200
+    },
+    {
+      "case": "portrait",
+      "url": "https://narutojzm1-dot.github.io/youjia/save-49596fa/source_decode.mjs",
+      "status": 200
+    },
+    {
+      "case": "portrait",
+      "url": "https://narutojzm1-dot.github.io/youjia/save-49596fa/lifecycle.mjs",
+      "status": 200
+    },
+    {
+      "case": "portrait",
+      "url": "https://narutojzm1-dot.github.io/youjia/save-49596fa/store.mjs",
+      "status": 200
+    },
+    {
+      "case": "portrait",
+      "url": "https://narutojzm1-dot.github.io/youjia/save-49596fa/legacy_v5.mjs",
+      "status": 200
+    },
+    {
+      "case": "portrait",
+      "url": "https://narutojzm1-dot.github.io/youjia/save-49596fa/budgets.mjs",
+      "status": 200
+    },
+    {
+      "case": "portrait",
+      "url": "https://narutojzm1-dot.github.io/youjia/save-49596fa/legacy_inspection.mjs",
+      "status": 200
+    },
+    {
+      "case": "portrait",
+      "url": "https://narutojzm1-dot.github.io/youjia/game-49596fa.js",
+      "status": 200
+    },
+    {
+      "case": "portrait",
+      "url": "https://narutojzm1-dot.github.io/youjia/save-49596fa/legacy_seal.mjs",
+      "status": 200
+    },
+    {
+      "case": "portrait",
+      "url": "https://narutojzm1-dot.github.io/youjia/save-49596fa/idbfs_source.mjs",
+      "status": 200
+    },
+    {
+      "case": "portrait",
+      "url": "https://narutojzm1-dot.github.io/youjia/game-49596fa.wasm",
+      "status": 200
+    },
+    {
+      "case": "portrait",
+      "url": "https://narutojzm1-dot.github.io/youjia/game-49596fa.pck",
+      "status": 200
+    },
+    {
+      "case": "landscape",
+      "url": "https://narutojzm1-dot.github.io/youjia/save-49596fa/bridge.mjs",
+      "status": 200
+    },
+    {
+      "case": "landscape",
+      "url": "https://narutojzm1-dot.github.io/youjia/save-49596fa/host.mjs",
+      "status": 200
+    },
+    {
+      "case": "landscape",
+      "url": "https://narutojzm1-dot.github.io/youjia/game-49596fa.js",
+      "status": 200
+    },
+    {
+      "case": "landscape",
+      "url": "https://narutojzm1-dot.github.io/youjia/save-49596fa/source_decode.mjs",
+      "status": 200
+    },
+    {
+      "case": "landscape",
+      "url": "https://narutojzm1-dot.github.io/youjia/save-49596fa/legacy_inspection.mjs",
+      "status": 200
+    },
+    {
+      "case": "landscape",
+      "url": "https://narutojzm1-dot.github.io/youjia/save-49596fa/budgets.mjs",
+      "status": 200
+    },
+    {
+      "case": "landscape",
+      "url": "https://narutojzm1-dot.github.io/youjia/save-49596fa/store.mjs",
+      "status": 200
+    },
+    {
+      "case": "landscape",
+      "url": "https://narutojzm1-dot.github.io/youjia/save-49596fa/lifecycle.mjs",
+      "status": 200
+    },
+    {
+      "case": "landscape",
+      "url": "https://narutojzm1-dot.github.io/youjia/save-49596fa/legacy_v5.mjs",
+      "status": 200
+    },
+    {
+      "case": "landscape",
+      "url": "https://narutojzm1-dot.github.io/youjia/save-49596fa/legacy_seal.mjs",
+      "status": 200
+    },
+    {
+      "case": "landscape",
+      "url": "https://narutojzm1-dot.github.io/youjia/save-49596fa/idbfs_source.mjs",
+      "status": 200
+    },
+    {
+      "case": "landscape",
+      "url": "https://narutojzm1-dot.github.io/youjia/game-49596fa.pck",
+      "status": 200
+    },
+    {
+      "case": "landscape",
+      "url": "https://narutojzm1-dot.github.io/youjia/game-49596fa.wasm",
+      "status": 200
+    }
+  ],
+  "browser_args": [
+    "--no-sandbox",
+    "--use-gl=angle",
+    "--use-angle=swiftshader",
+    "--enable-webgl",
+    "--enable-unsafe-swiftshader",
+    "--renderer-process-limit=1"
+  ],
+  "started_utc": "2026-10-05T23:56:21Z",
+  "limits": [
+    "ordinary mouse/keyboard only; no save/game state/seed/time setters",
+    "browser media emulation at context creation, not physical device/OS setting",
+    "ordinary Chinese normal-animation first-photo only; no locale/reduced-motion business setters or keyboard459 diagnosis",
+    "no hearing or complete storage acceptance"
+  ],
+  "closed_utc": "2026-10-05T23:58:54Z"
+}

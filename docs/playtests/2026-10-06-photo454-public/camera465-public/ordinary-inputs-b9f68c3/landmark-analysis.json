@@ -1,0 +1,60 @@
+{
+  "method": "Offline read-only original full PNG nearest RGB patch match. Exhaustive x=160..224,y=110..309; numpy mean absolute difference. Approximate image landmark displacement only, not engine camera offset or causal proof. No transformed evidence images.",
+  "baseline": "portrait-01-entered.png",
+  "baseline_box_xyxy": [
+    204,
+    122,
+    231,
+    153
+  ],
+  "results": [
+    {
+      "image": "portrait-02-stillness-a.png",
+      "matched_top_left": [
+        204,
+        245
+      ],
+      "delta_pixels_from_initial": [
+        0,
+        123
+      ],
+      "mean_absolute_channel_difference": 5.015929908403026
+    },
+    {
+      "image": "portrait-03-stillness-b.png",
+      "matched_top_left": [
+        204,
+        264
+      ],
+      "delta_pixels_from_initial": [
+        0,
+        142
+      ],
+      "mean_absolute_channel_difference": 0.4703305455993628
+    },
+    {
+      "image": "portrait-04-after-movement.png",
+      "matched_top_left": [
+        178,
+        129
+      ],
+      "delta_pixels_from_initial": [
+        -26,
+        7
+      ],
+      "mean_absolute_channel_difference": 7.998805256869773
+    },
+    {
+      "image": "portrait-05-settled.png",
+      "matched_top_left": [
+        177,
+        122
+      ],
+      "delta_pixels_from_initial": [
+        -27,
+        0
+      ],
+      "mean_absolute_channel_difference": 6.940661091198725
+    }
+  ]
+}

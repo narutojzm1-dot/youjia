@@ -1,0 +1,399 @@
+{
+  "method": "Read-only original PNG samples + independent visual inspection; no image transformations, no game state reads/setters beyond read-only saved DB. Screenshot timestamps are capture observations, not exact engine hold durations.",
+  "source": "49596fa93bff3c29edfe441898017158c6e469a3",
+  "cases": {
+    "portrait": {
+      "viewport": [
+        390,
+        844
+      ],
+      "fresh_store_id": "b577b1c28252497bbe10b75160ca32d1",
+      "generation": "2",
+      "album": [
+        "sheep_pet_gentle"
+      ],
+      "photo_moment_keys": [
+        "sheep_pet_gentle"
+      ],
+      "photo_rule_id": "sheep_pet_gentle",
+      "photo_weather": "sun",
+      "photo_day": 1,
+      "selected_full_caption_photo_frame": "portrait-02-arrival-03.png",
+      "full_frame_visible_warm_paper_and_text": true,
+      "ordinary_album_same_saved_rule_visible": true,
+      "ordinary_album_close_visible": true,
+      "natural_retirement_without_dismiss_click": true,
+      "caption_pixel_series": [
+        {
+          "file": "portrait-02-arrival-00.png",
+          "caption_sample_xy": [
+            195,
+            232
+          ],
+          "rgb": [
+            196,
+            147,
+            96
+          ]
+        },
+        {
+          "file": "portrait-02-arrival-01.png",
+          "caption_sample_xy": [
+            195,
+            232
+          ],
+          "rgb": [
+            196,
+            147,
+            96
+          ]
+        },
+        {
+          "file": "portrait-02-arrival-02.png",
+          "caption_sample_xy": [
+            195,
+            232
+          ],
+          "rgb": [
+            196,
+            147,
+            96
+          ]
+        },
+        {
+          "file": "portrait-02-arrival-03.png",
+          "caption_sample_xy": [
+            195,
+            232
+          ],
+          "rgb": [
+            252,
+            240,
+            224
+          ]
+        },
+        {
+          "file": "portrait-02-arrival-04.png",
+          "caption_sample_xy": [
+            195,
+            232
+          ],
+          "rgb": [
+            252,
+            240,
+            224
+          ]
+        },
+        {
+          "file": "portrait-02-arrival-05.png",
+          "caption_sample_xy": [
+            195,
+            232
+          ],
+          "rgb": [
+            240,
+            221,
+            198
+          ]
+        },
+        {
+          "file": "portrait-02-arrival-06.png",
+          "caption_sample_xy": [
+            195,
+            232
+          ],
+          "rgb": [
+            196,
+            146,
+            95
+          ]
+        },
+        {
+          "file": "portrait-02-arrival-07.png",
+          "caption_sample_xy": [
+            195,
+            232
+          ],
+          "rgb": [
+            196,
+            146,
+            95
+          ]
+        },
+        {
+          "file": "portrait-02-arrival-08.png",
+          "caption_sample_xy": [
+            195,
+            232
+          ],
+          "rgb": [
+            196,
+            146,
+            95
+          ]
+        },
+        {
+          "file": "portrait-02-arrival-09.png",
+          "caption_sample_xy": [
+            195,
+            232
+          ],
+          "rgb": [
+            196,
+            146,
+            95
+          ]
+        },
+        {
+          "file": "portrait-02-arrival-10.png",
+          "caption_sample_xy": [
+            195,
+            232
+          ],
+          "rgb": [
+            196,
+            146,
+            95
+          ]
+        },
+        {
+          "file": "portrait-02-arrival-11.png",
+          "caption_sample_xy": [
+            195,
+            232
+          ],
+          "rgb": [
+            227,
+            219,
+            205
+          ]
+        }
+      ],
+      "after_sample_rgb": [
+        233,
+        220,
+        200
+      ]
+    },
+    "landscape": {
+      "viewport": [
+        568,
+        320
+      ],
+      "fresh_store_id": "29055203b6724279abda276404b52fc1",
+      "generation": "2",
+      "album": [
+        "sheep_pet_gentle"
+      ],
+      "photo_moment_keys": [
+        "sheep_pet_gentle"
+      ],
+      "photo_rule_id": "sheep_pet_gentle",
+      "photo_weather": "sun",
+      "photo_day": 1,
+      "selected_full_caption_photo_frame": "landscape-02-arrival-04.png",
+      "full_frame_visible_warm_paper_and_text": true,
+      "ordinary_album_same_saved_rule_visible": true,
+      "ordinary_album_close_visible": true,
+      "natural_retirement_without_dismiss_click": true,
+      "caption_pixel_series": [
+        {
+          "file": "landscape-02-arrival-00.png",
+          "caption_sample_xy": [
+            284,
+            13
+          ],
+          "rgb": [
+            242,
+            238,
+            227
+          ]
+        },
+        {
+          "file": "landscape-02-arrival-01.png",
+          "caption_sample_xy": [
+            284,
+            13
+          ],
+          "rgb": [
+            254,
+            246,
+            232
+          ]
+        },
+        {
+          "file": "landscape-02-arrival-02.png",
+          "caption_sample_xy": [
+            284,
+            13
+          ],
+          "rgb": [
+            254,
+            246,
+            232
+          ]
+        },
+        {
+          "file": "landscape-02-arrival-03.png",
+          "caption_sample_xy": [
+            284,
+            13
+          ],
+          "rgb": [
+            254,
+            246,
+            232
+          ]
+        },
+        {
+          "file": "landscape-02-arrival-04.png",
+          "caption_sample_xy": [
+            284,
+            13
+          ],
+          "rgb": [
+            254,
+            246,
+            232
+          ]
+        },
+        {
+          "file": "landscape-02-arrival-05.png",
+          "caption_sample_xy": [
+            284,
+            13
+          ],
+          "rgb": [
+            253,
+            245,
+            231
+          ]
+        },
+        {
+          "file": "landscape-02-arrival-06.png",
+          "caption_sample_xy": [
+            284,
+            13
+          ],
+          "rgb": [
+            242,
+            238,
+            227
+          ]
+        },
+        {
+          "file": "landscape-02-arrival-07.png",
+          "caption_sample_xy": [
+            284,
+            13
+          ],
+          "rgb": [
+            242,
+            238,
+            227
+          ]
+        },
+        {
+          "file": "landscape-02-arrival-08.png",
+          "caption_sample_xy": [
+            284,
+            13
+          ],
+          "rgb": [
+            242,
+            238,
+            227
+          ]
+        },
+        {
+          "file": "landscape-02-arrival-09.png",
+          "caption_sample_xy": [
+            284,
+            13
+          ],
+          "rgb": [
+            241,
+            238,
+            227
+          ]
+        },
+        {
+          "file": "landscape-02-arrival-10.png",
+          "caption_sample_xy": [
+            284,
+            13
+          ],
+          "rgb": [
+            241,
+            238,
+            227
+          ]
+        },
+        {
+          "file": "landscape-02-arrival-11.png",
+          "caption_sample_xy": [
+            284,
+            13
+          ],
+          "rgb": [
+            241,
+            238,
+            227
+          ]
+        },
+        {
+          "file": "landscape-02-arrival-12.png",
+          "caption_sample_xy": [
+            284,
+            13
+          ],
+          "rgb": [
+            241,
+            238,
+            227
+          ]
+        },
+        {
+          "file": "landscape-02-arrival-13.png",
+          "caption_sample_xy": [
+            284,
+            13
+          ],
+          "rgb": [
+            241,
+            238,
+            227
+          ]
+        },
+        {
+          "file": "landscape-02-arrival-14.png",
+          "caption_sample_xy": [
+            284,
+            13
+          ],
+          "rgb": [
+            241,
+            238,
+            227
+          ]
+        }
+      ],
+      "after_sample_rgb": [
+        241,
+        238,
+        227
+      ]
+    }
+  },
+  "short_landscape_overlap": {
+    "caption_approx_x_range": [
+      183,
+      386
+    ],
+    "target_background_overlap": true,
+    "visible_actual_target": "目标：窗台花箱 / 看看花箱·空格/按钮",
+    "actual_short_text_obscured": false,
+    "longer_target_text_covered": false,
+    "limitation": "Longer target text NOT COVERED; no game state/locale setter or forced photo/replay."
+  }
+}

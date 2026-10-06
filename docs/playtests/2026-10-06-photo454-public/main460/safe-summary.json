@@ -1,0 +1,88 @@
+{
+  "source_commit": "9623ba22c8edc564e5c89dc6b0171324e9230764",
+  "source_tree": "df0321b4c3762cfe83b9262739016a782c6e0237",
+  "main_run_id": 37384961406,
+  "main_run_url": "https://github.com/narutojzm1-dot/youjia/actions/runs/37384961406",
+  "main_status": "completed",
+  "main_conclusion": "success",
+  "main_job_id": 112015859783,
+  "read_only_followup": true,
+  "dispatched_or_retried": false,
+  "public_http_checked_by_this_agent": false,
+  "ordinary_browser_checked_by_this_agent": false,
+  "source": "9623ba22c8edc564e5c89dc6b0171324e9230764",
+  "actual_checkout": "9623ba22c8edc564e5c89dc6b0171324e9230764",
+  "main_completed_at": "2026-10-05T23:03:59Z",
+  "godot_launches": 74,
+  "suite_count": 73,
+  "all_ordered_completions_pass": true,
+  "disabled4400": true,
+  "mat550": true,
+  "gate_mock50": true,
+  "node_gate_count": 2,
+  "retention_tests": 11,
+  "publisher_fixture": true,
+  "web_export_success": true,
+  "publish_success": true,
+  "engine_errors": [],
+  "entry": "game-9623ba2",
+  "gh_pages_commit": "16944e4fa02d280f8ff150b89e62ba76d1ec9f1c",
+  "gh_pages_tree": "79cd3df48226210e0c505f43ce1f7ea92e3b4523",
+  "git_release_source_verified": true,
+  "git_release_published_at": "2026-10-05T23:03:50Z",
+  "main_logs_zip": {
+    "bytes": 109375,
+    "sha256": "af9b36201ba89137527ce9cf0c9d27d0ede0c720bdd688a3d208107b5b264105"
+  },
+  "pages_run_id": 37386309986,
+  "pages_run_url": "https://github.com/narutojzm1-dot/youjia/actions/runs/37386309986",
+  "pages_status": "completed",
+  "pages_conclusion": "success",
+  "pages_jobs": [
+    {
+      "id": 112020339538,
+      "name": "build",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 112020488228,
+      "name": "deploy",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 112020488536,
+      "name": "report-build-status",
+      "status": "completed",
+      "conclusion": "success"
+    }
+  ],
+  "pages_actual_checkout": "16944e4fa02d280f8ff150b89e62ba76d1ec9f1c",
+  "pages_build_version": "16944e4fa02d280f8ff150b89e62ba76d1ec9f1c",
+  "pages_artifact_id": 11379435599,
+  "pages_deploy_reported_success": true,
+  "pages_logs_zip": {
+    "bytes": 30500,
+    "sha256": "14c5b6c2d9f578823f27a2e9f4d8705ca3ba7c567709362b8c10158d8a2d6a6b"
+  },
+  "pages_run_updated_at": "2026-10-05T23:04:54Z",
+  "verified_at_utc": "2026-10-05T23:05:02Z",
+  "main_diagnostic_warnings": [],
+  "pages_deploy_success_log": [
+    "2026-10-05T23:04:51.1378646Z Reported success!"
+  ],
+  "git_pck": {
+    "path": "game-9623ba2.pck",
+    "sha": "f72b2ad4e258601218c2e5f2a7c1cbc3af0f3a72",
+    "size": 27089276
+  },
+  "git_license": {
+    "path": "open-source-licenses.html",
+    "sha": "ad9ed8e77c0c50dd7dd3b1f24ba2b7417a66f601",
+    "size": 147966
+  },
+  "versioned_module_files_in_git_tree": 10,
+  "git_release_manifest_schema": "youjia.release/v1",
+  "git_release_manifest_contains_pck_hash": false
+}

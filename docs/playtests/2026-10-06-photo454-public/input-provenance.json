@@ -1,0 +1,458 @@
+{
+  "releases/pr451-public-release.json": {
+    "input_name": "pr451-public-release.json",
+    "input_sha256": "dede11563c33bbfa9036aa997e9b635021222eaca786a08c5c15dcc808fed83d",
+    "archived_sha256": "dede11563c33bbfa9036aa997e9b635021222eaca786a08c5c15dcc808fed83d",
+    "bytes": 4001,
+    "transformation": "none"
+  },
+  "releases/pr452-public-release.json": {
+    "input_name": "pr452-public-release.json",
+    "input_sha256": "251a76e79fc8276dcf392a98e40bac7ee1d8b9519da516f026ca010a766f1f82",
+    "archived_sha256": "251a76e79fc8276dcf392a98e40bac7ee1d8b9519da516f026ca010a766f1f82",
+    "bytes": 4001,
+    "transformation": "none"
+  },
+  "releases/pr450-public-release.json": {
+    "input_name": "pr450-public-release.json",
+    "input_sha256": "cba164d307eaf7c0889cd5e49165b42f9a2820b31b6c0cd9775c25b54d7aa8df",
+    "archived_sha256": "cba164d307eaf7c0889cd5e49165b42f9a2820b31b6c0cd9775c25b54d7aa8df",
+    "bytes": 4001,
+    "transformation": "none"
+  },
+  "verify-public-release-fresh.py": {
+    "input_name": "verify-public-release-fresh.py",
+    "input_sha256": "baa2a784b7a85814897f89cb1bb644f40ff21f238a49475177cf79ed63533fea",
+    "archived_sha256": "baa2a784b7a85814897f89cb1bb644f40ff21f238a49475177cf79ed63533fea",
+    "bytes": 2033,
+    "transformation": "none"
+  },
+  "ci454/actual-suite-completions.json": {
+    "input_name": "actual-suite-completions.json",
+    "input_sha256": "13b81b7ff62a92e745e27b65c8d60aca432637d859de50e11399e7fc1dde0fe9",
+    "archived_sha256": "13b81b7ff62a92e745e27b65c8d60aca432637d859de50e11399e7fc1dde0fe9",
+    "bytes": 18624,
+    "transformation": "none"
+  },
+  "ci454/review-summary.json": {
+    "input_name": "review-summary.json",
+    "input_sha256": "0dd57c9389e224554ec991ccfb865c37bcf6a967327f631d127e698739aee594",
+    "archived_sha256": "4076fc05756d6f0b9948fce28e3eb6d9c1900198e29a3ccbd92c13dcd30fce44",
+    "bytes": 839,
+    "transformation": "Only report field changed from local review path to public exact-SHA review URL; JSON reserialized. Counts and source fields unchanged."
+  },
+  "releases/pr454-public-release.json": {
+    "input_name": "pr454-public-release.json",
+    "input_sha256": "2be45980c89100c52d9ac82a0d3023c063338190ed54358163515c759fd585e4",
+    "archived_sha256": "2be45980c89100c52d9ac82a0d3023c063338190ed54358163515c759fd585e4",
+    "bytes": 4001,
+    "transformation": "none"
+  },
+  "main454/release-chain-summary.json": {
+    "input_name": "release-chain-summary.json",
+    "input_sha256": "e35928612f224a39d42493d7803e1b57701b9d90870eaca1a886ae564aab56e1",
+    "archived_sha256": "e35928612f224a39d42493d7803e1b57701b9d90870eaca1a886ae564aab56e1",
+    "bytes": 1229,
+    "transformation": "none"
+  },
+  "cloud-queue-audit.md": {
+    "input_name": "cloud-executable-queue-audit.md",
+    "input_sha256": "797852872dd013d51917986b7562d1eee840be51a86b1683eb099f00fd9f0c7b",
+    "archived_sha256": "797852872dd013d51917986b7562d1eee840be51a86b1683eb099f00fd9f0c7b",
+    "bytes": 13538,
+    "transformation": "none"
+  },
+  "main454/main-pages-review.md": {
+    "input_name": "pr454-main-pages-review.md",
+    "input_sha256": "6e1394413daa17b3ceef297383a1a68cbbc45c9c3ec9e47fd06362a60e233712",
+    "archived_sha256": "b5dd1a6e83b9b03c2753b7ef825fbfbe09e678ccce903c533abbae988aee2dd8",
+    "bytes": 2672,
+    "transformation": "Replaced one local evidence-directory paragraph with archived summary/Actions references; verification counts, hashes and scope unchanged."
+  },
+  "ordinary-inputs-a0bb": {
+    "input_name": "photo454-public-combo",
+    "files": 43,
+    "png_files": 25,
+    "bytes": 9706235,
+    "original_checksum_file_sha256": "c2cd4fc3547cf4fb2eb5b6ff71444e41d0e89dcbaded09c5270d31d37f6b51b6",
+    "checksum_file": "ordinary-inputs-a0bb/SHA256SUMS",
+    "transformation": "none; all 42 original file hashes verified after copying; no PCK or other large compiled binary"
+  },
+  "ci458/review-summary.json": {
+    "input_name": "review-summary.json",
+    "input_sha256": "dc42b459084638a50601f40b6062f9ed522712d2bf141197e66a40f62f2272cb",
+    "archived_sha256": "dc42b459084638a50601f40b6062f9ed522712d2bf141197e66a40f62f2272cb",
+    "bytes": 849,
+    "transformation": "none"
+  },
+  "ci458/actual-suite-completions.json": {
+    "input_name": "actual-suite-completions.json",
+    "input_sha256": "535ab539ecee53442458226c52f3e1df31d701c780621b7844da1c2be6129d2d",
+    "archived_sha256": "535ab539ecee53442458226c52f3e1df31d701c780621b7844da1c2be6129d2d",
+    "bytes": 18636,
+    "transformation": "none"
+  },
+  "ci458/final-review.md": {
+    "input_name": "pr130-sparse-final-review.md",
+    "input_sha256": "a8c4a52e1df4e404e7ef84fbcef089e266c97f52c66e6f6819f1a7d43283d46b",
+    "archived_sha256": "4fb450a852cf8b7a1adbb83c82cc718bb2506b6f3c1fb1944303da297b95ffd8",
+    "bytes": 9440,
+    "transformation": "Replaced one local evidence-directory sentence with archived CI summary and original GitHub run references; final SHA, counts, hashes and historical review limitations unchanged."
+  },
+  "coordination/pm457-review-summary.json": {
+    "input_name": "pr457-readonly-review.md",
+    "input_sha256": "3d23fda903ddab5e196e6e93bd64b54555e95bc5b6f811c6da8527c5a860352f",
+    "archived_sha256": "cae91300d290c8897608e8419a67bb070785c4f7c069fcc13aabe899c9c2c328",
+    "bytes": 1057,
+    "transformation": "Derived safe summary of exact final PM head and post-merge review scope; local paths and superseded private work-directory details omitted."
+  },
+  "soft460-public/candidate-pr-reference.json": {
+    "input_name": "soft455-integrated-pr-body.md.published.json",
+    "input_sha256": "332b50471651dab841a270904e9f967fed27c047ddda480ba05548a39dfce32e",
+    "archived_sha256": "332b50471651dab841a270904e9f967fed27c047ddda480ba05548a39dfce32e",
+    "bytes": 302,
+    "transformation": "none"
+  },
+  "releases/pr458-public-release.json": {
+    "input_name": "pr458-public-release.json",
+    "input_sha256": "f96652bda42258af8ec1cffa61b192e060052abfa99aeb7d4d4536f4564931c9",
+    "archived_sha256": "f96652bda42258af8ec1cffa61b192e060052abfa99aeb7d4d4536f4564931c9",
+    "bytes": 4001,
+    "transformation": "none"
+  },
+  "releases/pr460-public-release.json": {
+    "input_name": "pr460-public-release.json",
+    "input_sha256": "ecd47183be1e677746fc72c451cd0166faec60c9a76fa73fcef3eabc99b59a07",
+    "archived_sha256": "ecd47183be1e677746fc72c451cd0166faec60c9a76fa73fcef3eabc99b59a07",
+    "bytes": 4001,
+    "transformation": "none"
+  },
+  "releases/pr460-public-license.json": {
+    "input_name": "pr460-public-license.json",
+    "input_sha256": "9768c0bc1ee1012cb2091b125346f1f2a37b1022a9d3f6414120aeb6ae938a81",
+    "archived_sha256": "9768c0bc1ee1012cb2091b125346f1f2a37b1022a9d3f6414120aeb6ae938a81",
+    "bytes": 566,
+    "transformation": "none"
+  },
+  "main458/main-review-summary.json": {
+    "input_name": "main-review-summary.json",
+    "input_sha256": "e38f38c8d45a64689d6511d990d5a09fab43a01a050baeda9a96bcce5fc2fc40",
+    "archived_sha256": "e38f38c8d45a64689d6511d990d5a09fab43a01a050baeda9a96bcce5fc2fc40",
+    "bytes": 952,
+    "transformation": "none"
+  },
+  "main458/pages-review-summary.json": {
+    "input_name": "pages-review-summary.json",
+    "input_sha256": "9ec6cb18619ba8b62835496ec8c2920e1aaac3d2bec24eca3924ce488e2f77ed",
+    "archived_sha256": "9ec6cb18619ba8b62835496ec8c2920e1aaac3d2bec24eca3924ce488e2f77ed",
+    "bytes": 933,
+    "transformation": "none"
+  },
+  "main458/main-actual-suite-completions.json": {
+    "input_name": "main-actual-suite-completions.json",
+    "input_sha256": "5775830b1a0e1bc8d6d2070c58c7e40dcbd691d3a7204a3b4e955fbd4f0cf7f0",
+    "archived_sha256": "5775830b1a0e1bc8d6d2070c58c7e40dcbd691d3a7204a3b4e955fbd4f0cf7f0",
+    "bytes": 18573,
+    "transformation": "none"
+  },
+  "main458/main-pages-review.md": {
+    "input_name": "pr458-main-pages-review.md",
+    "input_sha256": "af8fa5704b209f6a670880570cc0746364f5a0228e5ede388f8c3787b198bd03",
+    "archived_sha256": "42515560e5b84e1463214f09563da3bbc9aff93a8af7e372861d98a31985f1c1",
+    "bytes": 3771,
+    "transformation": "Replaced one local directory reference with the public Actions and adjacent archived summary locations; SHA, counts, hashes and limitations unchanged."
+  },
+  "main460/safe-summary.json": {
+    "input_name": "safe-summary.json",
+    "input_sha256": "3864403980c39f48f72cfd102559cc7d133c013b1706fe84d2037225f441a9b7",
+    "archived_sha256": "3864403980c39f48f72cfd102559cc7d133c013b1706fe84d2037225f441a9b7",
+    "bytes": 2913,
+    "transformation": "none"
+  },
+  "main460/actual-main-suite-completions.json": {
+    "input_name": "actual-main-suite-completions.json",
+    "input_sha256": "7c9508a87c9d5884df4040a26a965529143ae1bf18aeeea2d00a26a3f374e044",
+    "archived_sha256": "7c9508a87c9d5884df4040a26a965529143ae1bf18aeeea2d00a26a3f374e044",
+    "bytes": 8317,
+    "transformation": "none"
+  },
+  "main460/main-pages-review.md": {
+    "input_name": "pr460-main-pages-review.md",
+    "input_sha256": "bf1322d7708a56d1e148fd87543fe619bcb6e11ed1c3929e3bf8cbd982235d97",
+    "archived_sha256": "b1f8c12c7d935a996d907f1f123adf1bfcf700e695f99c6b07b4ffd6fe2fc70a",
+    "bytes": 3702,
+    "transformation": "Replaced one local safe-summary path with the adjacent archived relative link; all findings, SHA, counts, hashes and limitations unchanged."
+  },
+  "ci460/ci-analysis.json": {
+    "input_name": "ci-analysis.json",
+    "input_sha256": "4eb7d819ae765b45ae5b59457486b455e3db9c57bf70f5fecd0e21e4b198f323",
+    "archived_sha256": "4eb7d819ae765b45ae5b59457486b455e3db9c57bf70f5fecd0e21e4b198f323",
+    "bytes": 9937,
+    "transformation": "none"
+  },
+  "soft460-public/ordinary-inputs-9623ba": {
+    "input_name": "soft460-public-qa",
+    "files": 25,
+    "png_files": 10,
+    "bytes": 3927669,
+    "original_checksum_file_sha256": "313a8da1ec6d4d1d1efd15403fef60d1e0bb9a6aad05d5739b701a627c2285d3",
+    "checksum_file": "soft460-public/ordinary-inputs-9623ba/SHA256SUMS",
+    "transformation": "none; all 24 original file hashes verified before and after copying; no large PCK or duplicated candidate images"
+  },
+  "coordination/hour2300-summary.json": {
+    "input_name": "leader-2300-live-audit.md and named fresh API responses",
+    "input_sha256": "e956f1bd6a0ff604e57a1119d472d5a32f848e73d2949edbc7dab8b803023c74",
+    "archived_sha256": "3d82b236284f1c690beaf1ab08f9580b413c6d1ffd2d250811c48515107c30c7",
+    "bytes": 6009,
+    "transformation": "Derived small public-safe accounting/exact Cloud receipt from read-only live audit. Full response hashes retained in summary; no request credentials, private paths or new execution claims."
+  },
+  "releases/pr462-public-release.json": {
+    "input_name": "pr462-public-release.json",
+    "input_sha256": "8a04042117607da06fd88c061fa3735b5a3a9becab85b1702f0edaa365700acc",
+    "archived_sha256": "8a04042117607da06fd88c061fa3735b5a3a9becab85b1702f0edaa365700acc",
+    "bytes": 4001,
+    "transformation": "none"
+  },
+  "releases/pr462-public-license.json": {
+    "input_name": "pr462-public-license.json",
+    "input_sha256": "02d3d627243883ab9385012b7d59ccbdfe0b86feb67907a2999dbe5ad5cda94e",
+    "archived_sha256": "02d3d627243883ab9385012b7d59ccbdfe0b86feb67907a2999dbe5ad5cda94e",
+    "bytes": 1934,
+    "transformation": "none"
+  },
+  "main462/safe-summary.json": {
+    "input_name": "safe-summary.json",
+    "input_sha256": "c90a2dca6dc0c9a06763590e19f885cc9413fec8975021b819c95c2af6596684",
+    "archived_sha256": "c90a2dca6dc0c9a06763590e19f885cc9413fec8975021b819c95c2af6596684",
+    "bytes": 5415,
+    "transformation": "none"
+  },
+  "main462/actual-checkout-retention-analysis.json": {
+    "input_name": "actual-checkout-retention-analysis.json",
+    "input_sha256": "ab296af354a5f0128817bcac9ed2cde7466ce1bbfd4b86025b51dd60728e732b",
+    "archived_sha256": "ab296af354a5f0128817bcac9ed2cde7466ce1bbfd4b86025b51dd60728e732b",
+    "bytes": 727,
+    "transformation": "none"
+  },
+  "main462/actual-main-suite-completions.json": {
+    "input_name": "actual-main-suite-completions.json",
+    "input_sha256": "7c9508a87c9d5884df4040a26a965529143ae1bf18aeeea2d00a26a3f374e044",
+    "archived_sha256": "7c9508a87c9d5884df4040a26a965529143ae1bf18aeeea2d00a26a3f374e044",
+    "bytes": 8317,
+    "transformation": "none"
+  },
+  "main462/published-tree-analysis.json": {
+    "input_name": "published-tree-analysis.json",
+    "input_sha256": "35328f7c6dfdc79e39f334c9581c174f3af2c66620b226986f4d3f47c16eb9f5",
+    "archived_sha256": "35328f7c6dfdc79e39f334c9581c174f3af2c66620b226986f4d3f47c16eb9f5",
+    "bytes": 1849,
+    "transformation": "none"
+  },
+  "main462/main-pages-review.md": {
+    "input_name": "pr462-main-pages-review.md",
+    "input_sha256": "90f2558782e7c6599d4d134a278ce34d993a28b11f59e7bcbe6f92b438ac4525",
+    "archived_sha256": "04cbff895190a375d658ca46bc50e4cc1314e1df79ccab1dda931b4487a6b67a",
+    "bytes": 6289,
+    "transformation": "Replaced local summary path with adjacent archived link only; SHA/counts/history limitations unchanged."
+  },
+  "ci462/ci-analysis.json": {
+    "input_name": "ci-analysis.json",
+    "input_sha256": "8d754e7e4be6da372fc005048e4f1a501f4e30edc61528fd7d73c3846d4e50d5",
+    "archived_sha256": "8d754e7e4be6da372fc005048e4f1a501f4e30edc61528fd7d73c3846d4e50d5",
+    "bytes": 9937,
+    "transformation": "none"
+  },
+  "coordination/pm463-review-summary.json": {
+    "input_name": "safe-summary.json",
+    "input_sha256": "479875638654554ae27be6478517428b02fbfd6ebd9ba1203a4450902a2ac2c9",
+    "archived_sha256": "479875638654554ae27be6478517428b02fbfd6ebd9ba1203a4450902a2ac2c9",
+    "bytes": 1850,
+    "transformation": "none"
+  },
+  "coordination/pm463-readonly-review.md": {
+    "input_name": "pr463-readonly-review.md",
+    "input_sha256": "188195aae960ad2f3d3fb2121c75bfe062e70380efab3d89e14f19a2ba11742f",
+    "archived_sha256": "4995ec01f597a7c2704c44db1599584fa5831ac155899d1a7ffc42bbef249622",
+    "bytes": 1860,
+    "transformation": "Replaced standalone local summary filename with archived relative link only; findings and review limits unchanged."
+  },
+  "coordination/later463-464-400-state.json": {
+    "input_name": "pm463-postreview live.json and parent explicit local handoff",
+    "input_sha256": "92fd5d1668a8402040d22b0becb3aa89a0bab742b640ff39db0db48fb91765bc",
+    "archived_sha256": "35a8323c8a3a0247511892267381bd1c3a066977de0baf40fd29c9b316b2adbf",
+    "bytes": 5992,
+    "transformation": "Selected public exact receipts and metadata with separately labelled parent local160-test handoff; no implementation or public success inferred."
+  },
+  "ci464/review-summary.json": {
+    "input_name": "review-summary.json",
+    "input_sha256": "7362da8c93bfcff0e02b08b6ac268cfc9ed3be10d23aea97467326dac0a0f80c",
+    "archived_sha256": "67f45c258fe459cac642ff5550a7dc93c483b96824699f02dc5a36aed198c8f4",
+    "bytes": 1128,
+    "transformation": "Only review_path replaced with exact final-SHA public independent approval URL; counts/source fields unchanged; JSON reserialized."
+  },
+  "ci464/actual-suite-completions.json": {
+    "input_name": "actual-suite-completions.json",
+    "input_sha256": "24f1d555b3ebc2c5a9f546cd7b3df74e18027c94ddaa45ce596cfb83d6fd6819",
+    "archived_sha256": "24f1d555b3ebc2c5a9f546cd7b3df74e18027c94ddaa45ce596cfb83d6fd6819",
+    "bytes": 19179,
+    "transformation": "none"
+  },
+  "ci464/incremental-verification.json": {
+    "input_name": "incremental-verification.json",
+    "input_sha256": "a0a25cb90a5d720d07fced49945643236f820d5acff7bc869595eef7e9edebc2",
+    "archived_sha256": "a0a25cb90a5d720d07fced49945643236f820d5acff7bc869595eef7e9edebc2",
+    "bytes": 3681,
+    "transformation": "none"
+  },
+  "ci464/final-review.md": {
+    "input_name": "pr464-final-review.md",
+    "input_sha256": "cbec2b8a872779c06b43f5a7e11c4ffecec1abee5ef9c87534f2caf3db48cb1b",
+    "archived_sha256": "cc88d7cb4c5e1e47b7d0393d3878e12a3c9d57097eb734fe636fe2c63ee4ba5c",
+    "bytes": 9448,
+    "transformation": "Replaced local auxiliary file/directory references with exact public review, candidate archive and relative safe summary links. Historical stages, actual checkout vs later preview, counts, hash and limitations unchanged."
+  },
+  "coordination/ownership-status-reconcile.json": {
+    "input_name": "ownership-status-reconcile before/payload/after12JSON",
+    "archived_sha256": "b2a3a034554bef79ddc7529bc2eda65f225f3f84f189e7fea86a870389f17940",
+    "bytes": 4112,
+    "transformation": "Derived minimal labels, timestamps, acknowledgement references and original file hashes; excluded full issue histories/user metadata; no new remote writes."
+  },
+  "coordination/camera400-v2-progress.json": {
+    "input_name": "camera400-code-prereview.md +README-v2.md +CODEX-LEAD execution and ordinary-observation handoffs",
+    "archived_sha256": "d79c77b9599b311a90366129bdabd58104cb2c98d8168926dea143046f700fb1",
+    "bytes": 3869,
+    "transformation": "Derived bounded state summary; controlled fixture vs actual ordinary observation separated, observed top paper-band defect retained; source report hashes included; no full implementation evidence or images copied."
+  },
+  "releases/pr464-public-release.json": {
+    "input_name": "pr464-public-release.json",
+    "input_sha256": "9b8df2f39f26c516f5de44d8e566ab44576966f1550d03bdec0e2810e7a13b3d",
+    "archived_sha256": "9b8df2f39f26c516f5de44d8e566ab44576966f1550d03bdec0e2810e7a13b3d",
+    "bytes": 4001,
+    "transformation": "none"
+  },
+  "releases/pr464-public-license.json": {
+    "input_name": "pr464-public-license.json",
+    "input_sha256": "04055bfc9df4df846b3776ed5e6c839a57e6cacdb89a80631469268c9b52625b",
+    "archived_sha256": "04055bfc9df4df846b3776ed5e6c839a57e6cacdb89a80631469268c9b52625b",
+    "bytes": 1934,
+    "transformation": "none"
+  },
+  "main464/safe-summary.json": {
+    "input_name": "safe-summary.json",
+    "input_sha256": "9761f2e82bbe2543f1c14cd958ffe1770d03b4ba44dc1075f073a72ef5cf62f8",
+    "archived_sha256": "9761f2e82bbe2543f1c14cd958ffe1770d03b4ba44dc1075f073a72ef5cf62f8",
+    "bytes": 2513,
+    "transformation": "none"
+  },
+  "main464/main-actual-suite-completions.json": {
+    "input_name": "main-actual-suite-completions.json",
+    "input_sha256": "af84ccc7173783cd2bfd669b13c0ade4a0542cbc8ace76debe071a4129a82b2b",
+    "archived_sha256": "af84ccc7173783cd2bfd669b13c0ade4a0542cbc8ace76debe071a4129a82b2b",
+    "bytes": 19116,
+    "transformation": "none"
+  },
+  "main464/main-pages-review.md": {
+    "input_name": "pr464-main-pages-review.md",
+    "input_sha256": "f785ae0015f2ca0ae803ed150e0ef33454b17a4ca10a39cb012ea0c994b5937b",
+    "archived_sha256": "d1ce8327e4d5359250234878901b333cc23ec96c9c08fdae9ff566289543ecfb",
+    "bytes": 4008,
+    "transformation": "Only two local evidence paths replaced by corresponding relative archived references; original independent scope and limitations preserved."
+  },
+  "shutter464-public/ordinary-inputs-49596fa": {
+    "input_name": "photo464-public-qa",
+    "files": 54,
+    "png_files": 37,
+    "bytes": 13357315,
+    "original_checksum_file_sha256": "4f79c389e8ea5355f92f460c5162011bf341e5d80f07080a4efe8f27a41753cc",
+    "checksum_file": "shutter464-public/ordinary-inputs-49596fa/SHA256SUMS",
+    "transformation": "none; all53 original SHA entries and54 source files preserved; no candidate PNG or large PCK/WASM copied"
+  },
+  "coordination/open-acceptance-six-summary.json": {
+    "input_name": "leader-open-acceptance-reconcile.json",
+    "input_sha256": "97810ac4b9f1cfb4925c917ab9352a77bbc70aac609e312a3df14e9ec41e1b3c",
+    "archived_sha256": "6139b32db88e87f2163dbdd1db9cf6e8a63bd8835d85c1695c9d073fa714736e",
+    "bytes": 9312,
+    "transformation": "Derived selected ownership/scope/remaining acceptance/next-step fields; six frozen audit items retained, later167 actual acceptance separately recorded; no long histories or duplicate Markdown copied."
+  },
+  "releases/pr465-public-release.json": {
+    "input_name": "pr465-public-release.json",
+    "input_sha256": "95a8deb81477b52cd5167d5f9095516c403099f1936a60c21b2c1df18796a4df",
+    "archived_sha256": "95a8deb81477b52cd5167d5f9095516c403099f1936a60c21b2c1df18796a4df",
+    "bytes": 4001,
+    "transformation": "none"
+  },
+  "releases/pr465-public-license.json": {
+    "input_name": "pr465-public-license.json",
+    "input_sha256": "2075dff95626e3be8dd12b44e566c0490f102ef2b655aafe4b327fdf98dad146",
+    "archived_sha256": "2075dff95626e3be8dd12b44e566c0490f102ef2b655aafe4b327fdf98dad146",
+    "bytes": 1934,
+    "transformation": "none"
+  },
+  "main465/actual-main-suite-completions.json": {
+    "input_name": "actual-main-suite-completions.json",
+    "input_sha256": "82e292ab995dc2c0991b4b3f4dcb77ddf155e9b70caa195ddf0a51862fdd78e7",
+    "archived_sha256": "82e292ab995dc2c0991b4b3f4dcb77ddf155e9b70caa195ddf0a51862fdd78e7",
+    "bytes": 8569,
+    "transformation": "none"
+  },
+  "main465/published-tree-analysis.json": {
+    "input_name": "published-tree-analysis.json",
+    "input_sha256": "ca3ad553e3c9b8269ec4686922f44a22ab1068c1d39078b9f503e7e675c822fe",
+    "archived_sha256": "ca3ad553e3c9b8269ec4686922f44a22ab1068c1d39078b9f503e7e675c822fe",
+    "bytes": 1849,
+    "transformation": "none"
+  },
+  "main465/safe-summary.json": {
+    "input_name": "safe-summary.json",
+    "input_sha256": "eb56fdaff8b958f8c7575309690477a95fb7d72e7281f170fbee0890d83a5950",
+    "archived_sha256": "68acd4d81856e238a1d17d86c27c2126da6345044f8b98b3c9e7e41526f202b4",
+    "bytes": 5584,
+    "transformation": "Only two local public evidence paths replaced with adjacent archive relative paths; exact source/counts/hashes/execution boundaries unchanged."
+  },
+  "main465/main-pages-review.md": {
+    "input_name": "pr465-main-pages-review.md",
+    "input_sha256": "8ab697dda1beb6727b8d0b7d6346b68193f981eaa0efb3be6387ed238f25a330",
+    "archived_sha256": "a38de852b7b30a79546f64cfb2b8fca17405846de2d539d321d745b6f3994ba8",
+    "bytes": 7059,
+    "transformation": "Local artifact references replaced with archived relative links or public PR; all observed source/counts/hash/retention/browser limitations preserved, including pending ordinary QA at original review time."
+  },
+  "coordination/later465-469-state.json": {
+    "input_name": "fresh selected GitHub PR/claim responses plus exact loading469 runtime handoff",
+    "archived_sha256": "b0f4baefcfbcd8a17a1ea0828bdbeb285e805ff9964d7e369919bbbc06c5d8cf",
+    "bytes": 12905,
+    "transformation": "Derived early selected-state snapshot plus final explicit-cutoff update; exact source response hashes retained, PM471/469/Cloud andProducer newer outcomes preserve historical earlier states without implying new runtime execution."
+  },
+  "camera465-public/ordinary-inputs-b9f68c3": {
+    "input_name": "camera465-public-qa",
+    "files": 18,
+    "png_files": 6,
+    "bytes": 3841835,
+    "original_checksum_file_sha256": "b8b13be94b6f8b380a1da2891843ecedf3d0043c71df4cc3f0446733c16dd3b2",
+    "checksum_file": "camera465-public/ordinary-inputs-b9f68c3/SHA256SUMS",
+    "transformation": "none;18 frozen files/17 original hashes byte-identical; ordinary movement return limited PASS and visible top-band composition FAIL both preserved; no candidate images or large compiled package copied"
+  },
+  "ci465/ci-analysis.json": {
+    "input_name": "ci-analysis.json",
+    "input_sha256": "e7c4bca5396fd390f92796048ccb1c743666500d30139953848a0e38c5b02d34",
+    "archived_sha256": "e7c4bca5396fd390f92796048ccb1c743666500d30139953848a0e38c5b02d34",
+    "bytes": 10304,
+    "transformation": "none; exact actual PR CI source and ordered completions audit"
+  },
+  "archive_author_handoff": {
+    "original_author": "pr130_validation",
+    "successor": "gate130_completion",
+    "original_files": 179,
+    "original_manifest_entries": 178,
+    "original_manifest_sha256": "3f66ea0968b7da79e79139e478bcf8def973a140b35db151f08923ed7f17cbc8",
+    "inherited_payloads_unchanged_except": [
+      "README.md",
+      "pending-state.json",
+      "team-handoff-draft.md",
+      "input-provenance.json"
+    ],
+    "original_archive_manifest_regenerated": true,
+    "final_cutoff_utc": "2026-10-06T00:49:32.337424+00:00",
+    "main_baseline": "c50188a417920e3f400c833ebcf44fe9f28c89b4",
+    "loading167_large_evidence_not_duplicated": true
+  }
+}

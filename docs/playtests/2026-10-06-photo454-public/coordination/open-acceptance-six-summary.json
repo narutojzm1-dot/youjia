@@ -1,0 +1,157 @@
+{
+  "read_only_audit_source": "49596fa93bff3c29edfe441898017158c6e469a3",
+  "original_generated_at": "2026-10-05T23:58:22.438806+00:00",
+  "original_final_recheck": {
+    "at_utc": "2026-10-06T00:00:03.524610+00:00",
+    "main_sha": "49596fa93bff3c29edfe441898017158c6e469a3",
+    "six_issues_unchanged": true
+  },
+  "original_source_snapshot": "main49596 after PR464; six full issue comment histories, 14 open PRs, related exact PR records, latest PM463 and goal-ownership; 242 last35 of223 (explicitly not whole history)",
+  "archived_at": "2026-10-06T00:04:30.159223+00:00",
+  "original_input_sha256": "97810ac4b9f1cfb4925c917ab9352a77bbc70aac609e312a3df14e9ec41e1b3c",
+  "scope": "Derived compact snapshot of six original-scope acceptance gaps; no issue closures, new claims, or fresh browser/engine execution by archive preparer.",
+  "items": [
+    {
+      "issue": 399,
+      "issue_url": "https://github.com/narutojzm1-dot/youjia/issues/399",
+      "owner": "GAME-PRODUCER（用户指定跟进验收）；CURSOR-CLOUD（已交门判定）；CODEX-LEAD（已交公共启动防重入）",
+      "active_implementation": "没有该门判定/启动切片新的在途实现；Producer具体验收接收回执未见，不冒已开工。",
+      "implemented": [
+        418,
+        432
+      ],
+      "evidence_prs": [
+        434,
+        443
+      ],
+      "not_covered": [
+        "用户原始未知构建/输入/实体设备未完整重放",
+        "当前正文所列完整触门×全部物品/故障组合未齐",
+        "三物那轮回院按钮不得改称触门证据；物理设备未验"
+      ],
+      "next_deliverable": "Producer先实际接收/复核434和443，提交原验收逐项映射；若仍需单一缺口，沿Cloud门方法边界只补缺的触门携物或故障路径，发现真实缺陷再交Owner。Leader可协助有界证据，不重写418/432。",
+      "blockers": "主要是验收接收与明确剩余矩阵，不是等待150整体、375资源、天气或产品选择。实体设备仅限制相应平台项。",
+      "full_scope_close_ready": false
+    },
+    {
+      "issue": 234,
+      "issue_url": "https://github.com/narutojzm1-dot/youjia/issues/234",
+      "owner": "CODEX-LEAD-ASSISTANT（剩余缺陷与验收）；GROK-BUILD为已交原实现作者，不等待其额度恢复",
+      "active_implementation": "本单余项queued无独立新PR；Assistant382的_input/modal/slider已有实际接收，必须沿原分支协调。",
+      "implemented": [
+        245,
+        262,
+        394
+      ],
+      "evidence_prs": [
+        268,
+        341,
+        421
+      ],
+      "not_covered": [
+        "真人可听输出/响度突跳/舒适度与长听未通过",
+        "真实物理触屏滑杆；后台/BFCache/迟到resume及极快并发输入未全覆盖",
+        "382确认取消触摸误改音量尚未有最终修复，不能用三toggle样式/388通过替代"
+      ],
+      "next_deliverable": "Assistant先继续已接382方法范围；本单下一无冲突产物为同构建0/中/满、独立分轨、恢复与滑杆输入剩余矩阵，并安排实际有输出设备的耳听记录。",
+      "blockers": "声音主观验收确需可听设备/执行者；其余可控技术矩阵可做，不需新194资源获准或旧Owner恢复。",
+      "full_scope_close_ready": false
+    },
+    {
+      "issue": 231,
+      "issue_url": "https://github.com/narutojzm1-dot/youjia/issues/231",
+      "owner": "CODEX-LEAD-ASSISTANT（最新剩余缺陷队列）；GROK-CONTRIBUTOR保留276测试/旧原图；GAME-QA独立序列",
+      "active_implementation": "余项queued无该单新实现PR；不是277/291/329仍在待合。",
+      "implemented": [
+        277,
+        291,
+        329
+      ],
+      "evidence_prs": [
+        276,
+        341
+      ],
+      "not_covered": [
+        "同正式构建完整普通无旧鱼失败、旧鱼失败、20秒到期、暂停恢复、投喂接近途中到期、连续点击单次消费的独立序列",
+        "276原106JPEG未转交且未独立逐帧核；不得用新采样冒旧原件",
+        "实际release到期路径与被误读抚摸反馈的原用户全路径仍须分列"
+      ],
+      "next_deliverable": "Assistant在原单认领一个明确的普通序列验收批次，保留合法旧鱼/20秒/随机失败；GAME-QA独立复测，原Grok仅在可取得时交旧原帧。出现真实矛盾再最小修复，未遇随机条件记未覆盖。",
+      "blockers": "原图外部字节确不可取；当前新序列可执行，无需天气/150整体/新资源或玩法决定。",
+      "full_scope_close_ready": false
+    },
+    {
+      "issue": 167,
+      "issue_url": "https://github.com/narutojzm1-dot/youjia/issues/167",
+      "owner": "CODEX-LEAD-ASSISTANT（原实现及有限技术复验）；GAME-QA（明确独立加载复测）",
+      "active_implementation": "无在途加载实现PR；无需重做加载壳美术。",
+      "implemented": [
+        184
+      ],
+      "evidence_prs": [
+        185,
+        341,
+        370
+      ],
+      "not_covered": [
+        "GAME-QA在同一明确构建完成原三尺寸加载/失败重试/标题入院与低动效整条专项仍未齐",
+        "原185确有PCK受控abort重试证据；不能把341未获得按钮那次说成全历史PCK失败路径从未覆盖",
+        "没有自然性能/真实手机/全游戏心流验收，但这些不应无边界扩张原加载视觉缺陷范围"
+      ],
+      "next_deliverable": "GAME-QA核对原185/341/370后，补同构建必要的独立加载专项剩余项（尤其低动效/窄屏失败重试边界），精确列已复测与未覆盖；无需等待新原画或全游戏所有关卡通过。",
+      "blockers": "没有新产品/资源/接口阻断；独立QA需实际执行接收，未知未来窗口不算已排定。真机只限该平台声明。",
+      "full_scope_close_ready": false
+    },
+    {
+      "issue": 180,
+      "issue_url": "https://github.com/narutojzm1-dot/youjia/issues/180",
+      "owner": "CODEX-LEAD-ASSISTANT（最新剩余缺陷/可运行验收队列）；WORKBUDDY保原乘骑资源/分析；ART专业组合画面、GAME-QA独立体验",
+      "active_implementation": "具体鹅马组合子项未新开工，无active实现PR；不能把Assistant总队列接收冒本项已执行。",
+      "implemented": [
+        173,
+        304
+      ],
+      "evidence_prs": [
+        238
+      ],
+      "not_covered": [
+        "同导演阶段远近位置×马双朝向×鹅上下扑翼帧的接触/遮挡画面",
+        "低动效定帧/走动打断/退出恢复及实际base_scale/scale/Camera.zoom记录",
+        "演出照片→真实保存→关页相册回放的组合稳定；自然和受控触发需各自标记",
+        "组合原画专业/独立QA结论未齐；替代idle损失甩尾变化，同尺度horse_tail新画未交"
+      ],
+      "next_deliverable": "Assistant先明确接具体可执行组合验收切片与方法边界，沿当前生产版本给同构建矩阵和自然有界观察；ART/QA对证据复核。Producer同尺度tail返修独立，不阻挡用已批准idle止血版本测现有鹅马导演。",
+      "blockers": "未交完整可运行组合证据，非已确认必须改挂点/镜头；自然触发未遇只记未覆盖，不提高概率冒实玩。原作者无引擎可由Leader授权助手协助，保身份分列。",
+      "full_scope_close_ready": false
+    },
+    {
+      "issue": 33,
+      "issue_url": "https://github.com/narutojzm1-dot/youjia/issues/33",
+      "owner": "CODEX-LEAD（功能接入）；GAME-PRODUCER（新增画帧/资源）；原MANUS/WORKBUDDY成果保留",
+      "active_implementation": "本父单无方法独占或新active PR；资源分项按119–123原单，不把全动物长项标正在并行开发。",
+      "implemented": [
+        34,
+        302,
+        353,
+        367,
+        395
+      ],
+      "evidence_prs": [],
+      "not_covered": [
+        "父需求明确的其余动物完整闲置/动作/表情及靠近回应尚未逐项完成",
+        "119牛资源余项、120马attend候选/比例、122鸭鹅接食/脚位镜像、123旅人完整自然动作等仍各有范围",
+        "各新帧低动效/接地遮挡/朝向/移动点击命中/照片全组合不得用鹅首片推全动物"
+      ],
+      "next_deliverable": "Producer在119–123沿既有候选补明确最小资源并独审，Leader仅在资源可取/专业适用且原单实际接收后接功能；122公共嘴前契约414已经交付，无需重复等产品投喂形式选择。",
+      "blockers": "实际资源原件/专业修订是局部真依赖；已有响应切片能继续做无冲突验收，整张动物清单并非全被阻断。",
+      "full_scope_close_ready": false
+    }
+  ],
+  "later167_execution_handoff": {
+    "claim": "https://github.com/narutojzm1-dot/youjia/issues/167#issuecomment-6005985387",
+    "owner": "CODEX-LEAD for bounded independent QA assistance; original runtime implementation ownership unchanged",
+    "branch": "loading167-acceptance",
+    "actual_state": "accepted; assigned independent assistant is executing six fresh public49596 cases per Leader handoff, results pending",
+    "boundary": "Independent evidence branch; not implementation or copied evidence in this archive."
+  }
+}

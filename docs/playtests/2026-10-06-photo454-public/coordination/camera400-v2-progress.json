@@ -1,0 +1,77 @@
+{
+  "prepared_at": "2026-10-05T23:55:43.109861+00:00",
+  "issue": "https://github.com/narutojzm1-dot/youjia/issues/400",
+  "claim": "https://github.com/narutojzm1-dot/youjia/issues/400#issuecomment-6005299861",
+  "overall_owner": "GAME-PRODUCER",
+  "leader_method_scope": "YardWorld._tick_quiet_sky_look; only prewarm versus actual goose-horse focus ownership",
+  "v2_controlled_native": {
+    "red_source": "96612f759eb51c50eebe2f2a4eaf14c6b8ade1e4",
+    "green_source": "95b11e8255ee1c9532b6428a0b2914574dec6e97",
+    "same_test_blob": "2a4da8d81264db1e5e902e5502ef27cfd49d35da",
+    "red_exit": 1,
+    "red_checks": 202,
+    "red_failed_assertions": 34,
+    "green_exit": 0,
+    "green_checks": 202,
+    "green_failed_assertions": 0,
+    "trace_rows_per_execution": 54,
+    "new_coverage": "normal/reduced same real tick ownership transfer while quiet focus still active; cancellation and subsequent movement release",
+    "fixture_boundary": "fixed time/weather/actors/seed; real Main process/World tick/signals; not ordinary browser input"
+  },
+  "mock_completion_contract": {
+    "new_fake_cases": 14,
+    "total_fake_cases": 64,
+    "exit": 0,
+    "two_separate_valid_lines": "accepted by existing at-least-one-valid-line semantics",
+    "same_line_concatenation": "rejected"
+  },
+  "combined_candidate": {
+    "source": "33bd42534d87ebd6e0cb0087d7ee0eaf258f548e",
+    "tree": "d629f692a58a2abfb847078fb8e9bac472833b49",
+    "native_suite_count": 75,
+    "godot_start_count": 76,
+    "native_and_web_exit": 0,
+    "basis": "CODEX-LEAD execution handoff received; detailed owned evidence will accompany its independent implementation PR, not duplicated here.",
+    "ordinary_candidate_qa": "bounded ordinary execution completed; known composition defect observed; not blanket visual acceptance"
+  },
+  "final_remote_review_merge_public": "pending",
+  "original_user_screenshot_cause_proven": false,
+  "historical_limitations": [
+    "Earlier160-check cases let old quiet focus naturally release before goose takeover; not used to prove live same-tick ownership transfer.",
+    "Initial runner expected204 after red actually completed202; raw red retained, expected count corrected and green resumed; not native failure or a changed test to match count."
+  ],
+  "source_reports": [
+    {
+      "name": "camera400-code-prereview.md",
+      "sha256": "ad5a6a3a845d43bd5d87972fa48caee2129509f9947e2b5275cb263efbf9465b",
+      "bytes": 19475
+    },
+    {
+      "name": "README-v2.md",
+      "sha256": "f9a402f2610430d398e0c511b6dab7456dac12fa6ace0ba619e095dc6de857cd",
+      "bytes": 3227
+    }
+  ],
+  "updated_at": "2026-10-06T00:04:30.159223+00:00",
+  "ordinary_candidate_observation": {
+    "basis": "CODEX-LEAD latest execution handoff and direct viewing of portrait01/02/05; original inputs/images will remain in independent implementation archive.",
+    "driver_exit": 0,
+    "browser_closed_at": "2026-10-05T23:53:29Z",
+    "viewport": "390x844",
+    "observed_path": "ordinary quiet observation visibly offsets camera; ordinary ArrowRight held450ms; view settles back",
+    "observed_defect": "During quiet view, background top moves down to y112/y138 and exposes light-paper empty band; movement restores it.",
+    "not_claimed": [
+      "all visuals natural",
+      "issue400 solved",
+      "original user screenshot root cause confirmed",
+      "Producer/Main layout scope transferred"
+    ],
+    "next_step": "Original400 claim6005299861 updated byLeader with raw image links and unrepaired top paper-band finding; overall Owner unchanged."
+  },
+  "implementation_pr": {
+    "url": "https://github.com/narutojzm1-dot/youjia/pull/465",
+    "head": "5b070d13bc2190325d16ef4219a2b4c1cefedde3",
+    "ci_run": 37391469666,
+    "status": "actual finalCI inprogress per Leader handoff; no merge/public claim; owned original images/evidence stay in that PR"
+  }
+}

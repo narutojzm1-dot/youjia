@@ -1,0 +1,33 @@
+{
+  "driver_actual_exit_code": 0,
+  "executor_session": 48939,
+  "started_utc": "2026-10-06T00:25:35Z",
+  "closed_utc": "2026-10-06T00:27:03Z",
+  "case_events": [
+    {
+      "case_open": "portrait",
+      "width": 390,
+      "height": 844,
+      "motion": "no-preference",
+      "actual_reduce": false,
+      "utc": "2026-10-06T00:26:16Z",
+      "monotonic": 377662.735602388
+    },
+    {
+      "case_closed": "portrait",
+      "utc": "2026-10-06T00:27:03Z",
+      "monotonic": 377709.265256135
+    }
+  ],
+  "memory_samples_bytes": {
+    "before": 15825960960,
+    "loading": 16336166912,
+    "ready": 16951836672,
+    "after_path": 16869318656,
+    "closed": 15608950784
+  },
+  "memory_limit": "Discrete observations only, not a continuous peak measurement",
+  "only_one_fresh_390x844_context": true,
+  "no_retries_or_wide_viewport": true,
+  "browser_window_released_to_root": true
+}
