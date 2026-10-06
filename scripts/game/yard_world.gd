@@ -393,6 +393,14 @@ func return_from_path(companion: Dictionary = {}) -> void:
 ## Confirmed resident identity controls one actor; unknown data never grants a dog.
 func sync_residents(value: Dictionary) -> void:
 	if value.is_empty(): return
+	if value.get("turtle", {}).get("stage", "") == "pond" and actor_named("turtle") == null:
+		var turtle := FeltActor.new()
+		add_child(turtle)
+		var turtle_config := TurtleArt.configure()
+		turtle.setup(turtle_config)
+		turtle.set_pose(turtle_config.position, turtle_config.scale, 1.0)
+		turtle.set_meta("base_speed", turtle_config.speed)
+		_actors["turtle"] = turtle
 	var stage: String = value.beibei.stage
 	var previous := actor_named("beibei")
 	if stage == "unmet": return

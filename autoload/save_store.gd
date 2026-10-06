@@ -246,7 +246,7 @@ func request_resident_action(revision: int, action: String) -> String:
 func prepare_resident_intent(revision: int, action: String) -> Callable:
 	var model := preload("res://scripts/game/world_residents.gd")
 	var encounter: Dictionary = {}
-	if action == "adopt_beibei":
+	if action in ["adopt_beibei", "find_turtle", "adopt_turtle"]:
 		if model.transition(_data, revision, action).has("error"): return Callable()
 		encounter = _data.exploration.duplicate(true)
 	return func(current: Dictionary) -> Variant:
