@@ -1195,6 +1195,8 @@ func _start_holiday(save_progress: bool = true) -> void:
 	_show_notice_key("notice.arrive")
 	# 上次外出途中被打断：安全回到院里，已带上的东西照常收下
 	var restored := _exploration.attach(SaveStore, _world_root)
+	if not _exploration.last_companion.is_empty():
+		_world.return_from_path(_exploration.last_companion)
 	if not restored.is_empty():
 		_show_notice_key(restored, _exploration.last_params)
 	_refresh_hud()
@@ -1230,7 +1232,7 @@ func _on_exploration_requested() -> void:
 	if _inventory != null and _inventory.busy(): return
 	_world._save_progress()
 	var weather := "overcast" if _world.weather == "overcast" else "sunny"
-	_exploration.try_begin({"day": _world.holiday_day, "elapsed": _world._day_elapsed}, weather)
+	_exploration.try_begin({"day": _world.holiday_day, "elapsed": _world._day_elapsed}, weather, null, _world.companion_context())
 
 
 ## 画卷有自己的相机与界面；小院在外出期间隐藏、不计时
@@ -1252,7 +1254,7 @@ func _on_exploration_returned(notice_key: String) -> void:
 	_screen = "game"
 	_world.visible = true
 	_world.input_enabled = true
-	_world.return_from_path()
+	_world.return_from_path(_exploration.last_companion)
 	_portrait_camera_x = _world.get_player().position.x
 	_camera.make_current()
 	_hud.visible = true

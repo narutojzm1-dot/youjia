@@ -91,7 +91,7 @@ static func resolve(world: Node2D, target: String) -> Dictionary:
 	# Durable carried food can travel with the player. Keep ordinary ambient
 	# observations suppressed while carrying; only an explicit exit is exempt.
 	var carrying_exit: bool = target == PATH_OUT and world.inventory_enabled \
-		and world.get_player() != null and not world.is_leading() and world._fish_state == world.FISH_IDLE
+		and world.get_player() != null and world._fish_state == world.FISH_IDLE
 	if hotspot.is_empty() or (not available(world) and not carrying_exit):
 		return {}
 	var point := Vector2.INF

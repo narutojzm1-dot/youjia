@@ -238,6 +238,8 @@ static func validate_session_structure(session: Dictionary) -> String:
 			return taken_reason
 	if not is_valid_seed_text(session.get("rng_seed")):
 		return "bad_rng_seed"
+	if session.has("companion") and not AnimalCompanions.valid_choice(session.companion):
+		return "bad_companion"
 	var proposal: Variant = session.get("proposal")
 	if state == STATE_ACTIVE:
 		if proposal != null:

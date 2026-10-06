@@ -26,6 +26,7 @@ var _carried: Array = []
 # 每处停留点的东西被带走后记在这里（停留点 → find_id）；同名东西可以分别来自不同停留点
 var _taken: Dictionary = {}
 var _rng_seed: String = ""
+var _companion: Variant = null # null preserves records created before this feature
 var _proposal: Variant = null
 var _failure: Variant = null
 var _last_save_failure: String = ""
@@ -161,6 +162,7 @@ func _load_session(session: Dictionary) -> void:
 	_carried = session["carried"].duplicate()
 	_taken = session["taken"].duplicate() if session.has("taken") else _derive_taken(_carried, _offers)
 	_rng_seed = session["rng_seed"]
+	_companion = session.get("companion", {}).duplicate(true) if session.has("companion") else null
 	_proposal = _normalize_proposal(session["proposal"]) if session["proposal"] != null else null
 	_failure = _normalize_failure(session["failure"]) if session["failure"] != null else null
 	_state = session["state"]
@@ -181,7 +183,7 @@ static func _is_future_version(record: Dictionary) -> bool:
 
 ## ───────────── 出门阶段事件 ─────────────
 
-func begin(route_id: String, clock: Dictionary, seed: Variant = null) -> Dictionary:
+func begin(route_id: String, clock: Dictionary, seed: Variant = null, companion_context: Dictionary = {}) -> Dictionary:
 	## 拒绝码优先级：watermark_untrusted > quarantine_frozen > exploration_unavailable > pending_exists
 	if _watermark == C.WATERMARK_UNTRUSTED:
 		return _reject("watermark_untrusted")
@@ -193,6 +195,8 @@ func begin(route_id: String, clock: Dictionary, seed: Variant = null) -> Diction
 		return _reject("illegal_transition")
 	if not _catalog.has_route(route_id):
 		return _reject("unknown_route")
+	if not AnimalCompanions.valid_context(companion_context):
+		return _reject("bad_companion_context")
 	if C.as_int(clock.get("day"), 0) == null or not C.is_number(clock.get("elapsed")):
 		return _reject("bad_clock")
 	var seed_value: int
@@ -216,6 +220,7 @@ func begin(route_id: String, clock: Dictionary, seed: Variant = null) -> Diction
 	_session_source = _catalog.source
 	_started_clock = {"day": int(clock["day"]), "elapsed": float(clock["elapsed"])}
 	_rng_seed = str(seed_value)
+	_companion = AnimalCompanions.choose(companion_context, _rng_seed) if not companion_context.is_empty() else null
 	_current_stop = route["start_stop"]
 	_visited = [_current_stop]
 	_offers = {}
@@ -477,6 +482,7 @@ func get_view() -> Dictionary:
 	view["route_id"] = _route_id
 	view["current_stop"] = _current_stop
 	view["carried"] = _carried.duplicate()
+	view["companion"] = _companion.duplicate(true) if _companion != null else {}
 	if _state == C.STATE_ACTIVE:
 		var route := _catalog.get_route(_route_id)
 		view["reachable"] = route["stops"][_current_stop].get("next", []).duplicate() if not route.is_empty() else []
@@ -521,6 +527,7 @@ func to_record() -> Variant:
 		"proposal": _copy(_proposal),
 		"failure": _copy(_failure),
 	}
+	if _companion != null: record.session.companion = _companion.duplicate(true)
 	return record
 
 
@@ -582,6 +589,7 @@ func _clear_session() -> void:
 	_carried = []
 	_taken = {}
 	_rng_seed = ""
+	_companion = null
 	_proposal = null
 	_failure = null
 	_last_save_failure = ""

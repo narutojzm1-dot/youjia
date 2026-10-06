@@ -18,6 +18,7 @@ var world_root: Node
 var _retry_timer := RETRY_SECONDS
 # 最近一条外出提示要填的物品名，Main 显示提示时一起用
 var last_params := {}
+var last_companion: Dictionary = {}
 
 
 func attach(store: Object, root: Node) -> String:
@@ -25,6 +26,7 @@ func attach(store: Object, root: Node) -> String:
 	host = ExplorationHost.new(store)
 	host.cleanup_resubmitted.connect(func(failed_ops: Array, op_id: String) -> void: cleanup_resubmitted.emit(failed_ops, op_id))
 	var outcome := host.restore()
+	last_companion = host.view().get("companion", {}).duplicate(true)
 	host.settled.connect(_on_settled)
 	if host.session.is_quarantined():
 		return "notice.exploration.unavailable"
@@ -36,7 +38,7 @@ func is_exploring() -> bool:
 
 
 ## 小院里在门前小路选“出门走走”时调用；不能出门时只给温和说明，不困住玩家
-func try_begin(clock: Dictionary, weather: String, seed: Variant = null) -> bool:
+func try_begin(clock: Dictionary, weather: String, seed: Variant = null, companion_context: Dictionary = {}) -> bool:
 	if host == null or scroll != null:
 		return false
 	if not host.can_begin():
@@ -54,9 +56,10 @@ func try_begin(clock: Dictionary, weather: String, seed: Variant = null) -> bool
 		else:
 			notice.emit("notice.exploration.unavailable")
 			return false
-	if not host.begin(clock, seed).ok:
+	if not host.begin(clock, seed, companion_context).ok:
 		notice.emit("notice.exploration.unavailable")
 		return false
+	last_companion = host.view().get("companion", {}).duplicate(true)
 	scroll = NearPathScroll.new()
 	scroll.name = "NearPathScroll"
 	world_root.add_child(scroll)

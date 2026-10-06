@@ -374,9 +374,29 @@ func debug_place_player(point: Vector2) -> void:
 
 
 ## 从近郊小路回来：人站回门前小路尽头，之前的走路目标作废
-func return_from_path() -> void:
+func return_from_path(companion: Dictionary = {}) -> void:
 	_consume_pending_action()
 	debug_place_player(YardSceneHotspots.get_hotspot(YardSceneHotspots.PATH_OUT).approach_points[0])
+	if not AnimalCompanions.valid_choice(companion) or companion.is_empty(): return
+	var actor := actor_named(companion.actor_id)
+	if actor == null: return
+	for offset: Vector2 in [Vector2(48, -18), Vector2(15, -52), Vector2(-42, -24), Vector2(66, -42)]:
+		var point := _player.position + offset
+		if YardGround.allows(point, YardGround.lawn(), true) and YardBodies.clear_at(point, actor.body_radius, physical_obstacles(actor.actor_id)):
+			actor.position = point
+			actor._velocity = Vector2.ZERO
+			actor.leave_food()
+			break
+	_update_lead_rope()
+
+
+func companion_context() -> Dictionary:
+	var nearby: Array = []
+	for id: String in _actors:
+		var actor := actor_named(id)
+		if AnimalCompanions.SPECIES.has(id) and not actor.posed and actor.position.distance_to(_player.position) <= AnimalCompanions.NEAR:
+			nearby.append(id)
+	return {"nearby": nearby, "rope": "llama" if _leading else ""}
 
 
 func tick(delta: float, move: Vector2) -> void:

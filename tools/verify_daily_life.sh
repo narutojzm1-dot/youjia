@@ -40,6 +40,7 @@ run_godot suite test/modal_touch_input_suite.gd
 run_godot suite test/yard_inventory_suite.gd
 run_godot suite test/yard_ground_food_ledger_suite.gd
 run_godot suite test/yard_ground_food_runtime_suite.gd
+run_godot suite test/animal_companion_suite.gd
 run_godot suite test/yard_basket_integration_suite.gd
 run_godot suite test/still_boundary_feedback_suite.gd
 run_godot suite test/pause_panel_fit_suite.gd

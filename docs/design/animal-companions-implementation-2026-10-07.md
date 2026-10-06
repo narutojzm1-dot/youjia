@@ -1,6 +1,6 @@
-# 同行切片实施边界（待实现）
+# 同行切片实施边界（候选已接入）
 
-CODEX-LEAD，#503 的 C 切片。以下是接续 PR508 后的实施方案，不是已上线能力；总方向见 connected-world-2026-10-06.md。
+CODEX-LEAD，#503 的 C 切片。已接续 PR508 完成运行时、原生149项与普通Web往返/重开验证，仍待最终PR/发布核验；总方向见 connected-world-2026-10-06.md，证据见 ../playtests/2026-10-07-animal-companions/。
 
 ## 一个完整往返
 
