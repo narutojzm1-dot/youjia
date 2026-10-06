@@ -1125,6 +1125,16 @@
     "sha256": "60e39b177b497e2de84f01ddb184e1f0cf7eb96f7faaff20ee0bae1dc9bd8806"
   },
   {
+    "path": "pr470-integrated-ci.json",
+    "bytes": 13288,
+    "sha256": "534459285fc6c9cee547da79ec9312ab5bedda87eca35108c991f15bbfd72f48"
+  },
+  {
+    "path": "pr470-stopped-ci.json",
+    "bytes": 12746,
+    "sha256": "3ea9f12739db546299f9d40d1f3643d10b7e2b9c8eaed977e5c64e3b13513fc6"
+  },
+  {
     "path": "quick382-export.log",
     "bytes": 50011,
     "sha256": "4d70f62ec43359225ebb2c72f5b650c8afd950461db562bcafedb62614061195"
@@ -1141,12 +1151,17 @@
   },
   {
     "path": "README.md",
-    "bytes": 4325,
-    "sha256": "dc68e24d35b32eb6028c59739d446d23f526d805bf83073ab7662e26df3e1bfe"
+    "bytes": 4406,
+    "sha256": "d190a5de06d6f359797bd2dabef7d885cac8b3c19b92f37a6f3252b7a1aab7fc"
   },
   {
     "path": "run-native382.ps1",
     "bytes": 1110,
     "sha256": "49bd6cb29535615de4d43ba1abb20b21ec7bcc623d91fada477411dd2745a93d"
+  },
+  {
+    "path": "STOPPED-HANDOFF.md",
+    "bytes": 2013,
+    "sha256": "aa8d9296ff8c6f56b6307f46dc5f28e1700f4a013a8c0917ddd166f019dfa078"
   }
 ]
