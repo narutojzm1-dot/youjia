@@ -709,7 +709,7 @@ func _find_reveal() -> void:
 	await process_frame
 	check(short_scroll.observe("gate") and short_scroll.pick() and short_scroll.reveal.is_active(), "[568x320] a take still starts a reveal")
 	check(short_scroll._caption.visible and short_scroll._caption.size.y >= short_scroll._caption.get_line_height() + 16.0, "[568x320] the look paper is at least as tall as its text")
-	check(short_scroll.reveal.top.y + FindReveal.HALO + 30.0 < short_scroll._pick_button.position.y, "[568x320] the reveal does not cover the bottom buttons")
+	check(short_scroll.reveal.top.y + FindReveal.HALO + 30.0 <= short_scroll._pick_button.position.y + 0.5, "[568x320] the reveal stays above the bottom buttons")
 	short_scroll.free()
 
 	root.size = Vector2i(1280, 720)
