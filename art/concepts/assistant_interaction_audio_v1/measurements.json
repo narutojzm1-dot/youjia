@@ -1,0 +1,43 @@
+{
+  "tools": {
+    "python": "3.12.14",
+    "numpy": "2.3.5",
+    "scipy": "1.17.0"
+  },
+  "source": "Original deterministic synthesis; no recordings or external samples",
+  "listening": "not performed",
+  "files": {
+    "pet_soft.wav": {
+      "duration_seconds": 0.46,
+      "sample_rate": 48000,
+      "channels": 1,
+      "sample_format": "PCM16",
+      "bytes": 44204,
+      "sha256": "5542bcb3b77315c4c09701eb93ace2086b4eb1023b1f7b123bb80f9fd297d2bf",
+      "pcm_sha256": "174537e5c1cac75e30e5dce2744e9f39d2c861dbe4ff016f98878f431c5ed195",
+      "peak_dbfs": -11.841009376020029,
+      "rms_dbfs": -27.000261038282815,
+      "clipped_samples": 0,
+      "first_last_samples": [
+        0,
+        0
+      ]
+    },
+    "feed_rustle.wav": {
+      "duration_seconds": 0.34,
+      "sample_rate": 48000,
+      "channels": 1,
+      "sample_format": "PCM16",
+      "bytes": 32684,
+      "sha256": "c89910056ccaa20b96d83dca5fc074762234b3a27767e80d857f204b8d1b6480",
+      "pcm_sha256": "9ef71d6815b352829b62fb21a4abe06d8ad3c4a8eab1fa8f8af7c8bffc466787",
+      "peak_dbfs": -12.33120558066263,
+      "rms_dbfs": -27.000254141282447,
+      "clipped_samples": 0,
+      "first_last_samples": [
+        0,
+        0
+      ]
+    }
+  }
+}
