@@ -1,0 +1,143 @@
+{
+  "updatedAt": "2026-10-06T07:49:38.591986+00:00",
+  "issues": [
+    {
+      "id": "QA-EXP-20261003-001",
+      "type": "已观察体验问题",
+      "severity": "P2",
+      "title": "晴阴院子构图不连续",
+      "detail": "房屋、池塘、远山及围栏位置与透视显著变化，像切换地点；既有策划已记录同构图改进方向。",
+      "lastCheckedBuild": "game-3e06802",
+      "status": "限定桌面同构图晴阴样本通过；全设备/自然天气未覆盖，不全局关闭",
+      "reproductionRate": "旧B不连续1组；新版本轮阴天稳定2帧未见旧构图换址",
+      "reproduction": "同B补测前晴天场景与24-b-return阴天场景对照；房屋和池塘透视不同",
+      "aliases": [
+        "EXP-001"
+      ],
+      "trackingLinks": [
+        "https://github.com/narutojzm1-dot/youjia/issues/51",
+        "https://github.com/narutojzm1-dot/youjia/issues/168"
+      ],
+      "expected": "同一院子的房屋、池塘、围栏与远山构图保持连续",
+      "actual": "新版颜色和云层变化，主要建筑布局保持；没有连续视频，不能宣称全部过渡帧通过",
+      "thisRound": "真实天气按钮切换，21/23/27主要房屋、池塘、围栏与山体保持位置；天气专项27检查通过；纸边云带另关联#400"
+    },
+    {
+      "id": "QA-EXP-20261003-002",
+      "type": "待复核",
+      "severity": "P2",
+      "title": "既有相册题词与入镜主体不对应",
+      "detail": "第1页写绵羊愿意靠近我了，截图未见绵羊，画面为马、羊驼和鸭子；首次生成版本不明。",
+      "lastCheckedBuild": "game-3e06802",
+      "status": "历史第1页题词与主体仍不对应；不判定新生成照片回归",
+      "reproduction": "打开既有手账第1页，绵羊题词与马/羊驼画面不对应",
+      "reproductionRate": "旧第1页1/1读取",
+      "aliases": [
+        "EXP-002"
+      ],
+      "trackingLinks": [
+        "https://github.com/narutojzm1-dot/youjia/issues/40"
+      ],
+      "expected": "绵羊题词对应绵羊入镜",
+      "actual": "历史图继续显示错配；相册入口与翻页可用",
+      "thisRound": "05-album仍为马/羊驼配绵羊题词；本轮未生成新照片"
+    },
+    {
+      "id": "QA-EXP-20261003-003",
+      "type": "已观察体验问题",
+      "severity": "P2",
+      "title": "新版加载封面使用科幻迷宫图",
+      "detail": "game-922be64 冷加载展示机器人/科幻迷宫，与水彩小院体验不一致。",
+      "lastCheckedBuild": "game-3e06802",
+      "status": "真实加载壳小院水彩样本通过；限定本次Chrome，不全局关闭",
+      "reproduction": "本轮新标签打开公开地址，观察真实加载壳01/02；此步骤验证修复，不重造历史BUG",
+      "reproductionRate": "本轮实际加载壳旧科幻问题0/1",
+      "trackingIssue": 167,
+      "aliases": [
+        "EXP-003"
+      ],
+      "trackingLinks": [
+        "https://github.com/narutojzm1-dot/youjia/issues/167"
+      ],
+      "expected": "水彩院子加载壳",
+      "actual": "真实加载画面符合当前小院主题",
+      "thisRound": "01-initial是实际加载进度壳，水彩小院及game-3e06802；02-title另为花纸标题，不混用"
+    },
+    {
+      "id": "QA-AUDIO-20261004-001",
+      "aliases": [
+        "issue-195-cold-start"
+      ],
+      "title": "首次进入院子共享音频接口未注册",
+      "severity": "P1",
+      "status": "两次新标签接口错误0/2；三组开关UI循环通过；真实听验未做，不关闭P1",
+      "lastCheckedBuild": "game-3e06802",
+      "reproduction": "新标签入院→分别关开音乐、环境声、总静音→关页新开恢复，读取warn/error",
+      "reproductionRate": "旧接口错误0/2入院；每个开关1次关/开循环；可听复现率未知",
+      "trackingLinks": [
+        "https://github.com/narutojzm1-dot/youjia/issues/195",
+        "https://github.com/narutojzm1-dot/youjia/issues/196"
+      ],
+      "owner": "修复Owner以仓库最新职责及原issue接收为准；GAME-QA独立复测",
+      "expected": "首次进入正常播放且音乐、环境声开关可靠",
+      "actual": "界面标签响应并恢复；未测试真听、10快/10慢、后台切换",
+      "thisRound": "console-first/reopen为空；08/09/10关闭，11恢复；原生audio648通过，不能替代听验"
+    },
+    {
+      "id": "QA-EXP-20261006-004",
+      "type": "已确认历史BUG；限定样本修复通过",
+      "severity": "P2",
+      "title": "探索拾物短展示的物品小标签疑似缺字方框",
+      "lastCheckedBuild": "game-3e06802",
+      "status": "1646×894中文圆石短展示修复回归通过；其他物品/设备未覆盖",
+      "reproduction": "1646×894中文普通探索：门前小路→溪声近处→停看→带上圆石；观察拾物短展示上方小标签",
+      "reproductionRate": "本轮1个可辨短展示未见方框；放回再拾闭环通过",
+      "expected": "圆石短展示的物品名与其他中文提示一样清楚可读",
+      "actual": "中文物品名可辨，历史缺字未在本样本复现",
+      "evidence": "evidence/16-pick-6.png / evidence/19-stone-stored.png",
+      "trackingLinks": [
+        "https://github.com/narutojzm1-dot/youjia/pull/467",
+        "https://github.com/narutojzm1-dot/youjia/issues/456"
+      ],
+      "relatedScope": "既有探索拾物短展示#372；#456是尺寸变更适配，不将两者当同一根因",
+      "owner": "CURSOR-CLOUD（既有467修复）；GAME-QA独立验证，不接开发",
+      "fixCommit": "392b330effb8dc345bbde4a140d0ba7dbf9821f7",
+      "thisRound": "16-pick-6清楚显示圆石；19回院提示圆石收好了"
+    },
+    {
+      "id": "QA-EXP-20261006-005",
+      "aliases": [
+        "issue-400-qa-overcast-edge"
+      ],
+      "type": "既有#400视觉问题的新版本观察，根因待复核",
+      "severity": "P2",
+      "title": "阴天云带在小院左上纸边形成截断竖缝并越入留白",
+      "lastCheckedBuild": "game-3e06802",
+      "status": "两次阴天稳定画面可见；关联既有#400，不新建重复issue，不宣称和原相机偏移同根因",
+      "reproduction": "Chrome1646×838既有第7天入院→点大太阳切阴天→观察主画左上和左右纸边→恢复晴天后再切阴天",
+      "reproductionRate": "两个阴天稳定截帧2/2可见，不是跨设备统计",
+      "expected": "天气云层与小院画面边界自然衔接，不在纸边出现突兀截断竖条",
+      "actual": "23左上约x148处和27约x98处有云带硬直截边；主景左边界约x177，云层越入左右纸色留白；房屋池塘位置保持",
+      "evidence": "evidence/23-overcast-stable.png / evidence/27-overcast-repeat.png",
+      "trackingLinks": [
+        "https://github.com/narutojzm1-dot/youjia/issues/400"
+      ],
+      "owner": "由Leader协调既有#400边界；GAME-QA只观察，不认领修复",
+      "limitations": "未复现原2444×1502用户路径，未确认设计意图或代码根因；不否定267b原相机专项通过"
+    }
+  ],
+  "nativeSupplement": {
+    "sourceSha": "267b0cb3df5842170877bf55e438917ad4253ce8",
+    "suiteCount": 5,
+    "checks": 45956,
+    "result": "5项专项通过，非全daily/非线上听验",
+    "report": "docs/playtests/2026-10-06-1003-game-qa-native/README.md"
+  },
+  "nativeThisRound": {
+    "sourceSha": "3e0680210b69665a5a46ad295ed3fe71e10d512a",
+    "suiteCount": 6,
+    "checks": 1388,
+    "results": "native/results.json",
+    "limitations": "隔离原生测试；非普通Web全流程或真实听验"
+  }
+}
