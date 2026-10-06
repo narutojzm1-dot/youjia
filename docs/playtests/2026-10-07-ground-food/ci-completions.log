@@ -1,0 +1,75 @@
+2026-10-06T18:14:09.7567997Z PASS: real publisher, local bare remote, two builds, HTML entries, exact module bytes/SHA256, relative imports and retained old module directory
+2026-10-06T18:14:09.8508118Z gate contract: zero-checks block
+2026-10-06T18:14:09.9193710Z gate contract: explicit-target-tests-zero-checks block
+2026-10-06T18:14:09.9310625Z gate contract: explicit-target-tests-positive-checks pass
+2026-10-06T18:14:09.9500568Z gate contract: ui-interaction-tests-zero-checks block
+2026-10-06T18:14:09.9621939Z gate contract: ui-interaction-tests-positive-checks pass
+2026-10-06T18:14:09.9829399Z gate contract: viewport-zero-checks block
+2026-10-06T18:14:09.9956628Z gate contract: viewport-positive-checks pass
+2026-10-06T18:14:10.9883903Z gate contract: YARD_INVENTORY-valid pass
+2026-10-06T18:14:10.9978304Z gate contract: YARD_INVENTORY-zero block
+2026-10-06T18:14:11.0072542Z gate contract: YARD_INVENTORY-failed block
+2026-10-06T18:14:11.0188057Z gate contract: YARD_BASKET_INTEGRATION-valid pass
+2026-10-06T18:14:11.0283503Z gate contract: YARD_BASKET_INTEGRATION-zero block
+2026-10-06T18:14:11.0379470Z gate contract: YARD_BASKET_INTEGRATION-failed block
+2026-10-06T18:14:33.7362179Z [game-generic-tests] PASS: 414 checks
+2026-10-06T18:14:48.8988782Z PASS: hint_paper_width 9264 checks
+2026-10-06T18:14:53.7637716Z [locomotion-tests] PASS: 410 checks
+2026-10-06T18:14:56.0626804Z HOLIDAY_START_ONCE checks=14 failures=0
+2026-10-06T18:15:22.1780769Z [animal-home-tests] PASS: 1005 checks
+2026-10-06T18:15:33.5134659Z [photo-home-tests] PASS: 75 checks
+2026-10-06T18:15:34.0312846Z [grass-state-tests] PASS: 368 checks, 0 failures
+2026-10-06T18:15:34.5689703Z [grass-action-tests] PASS: 61 checks, 0 failures
+2026-10-06T18:15:44.2423621Z [explicit-target-tests] checks=26 failures=[]
+2026-10-06T18:15:53.3564792Z [ui-interaction-tests] checks=64 failures=[]
+2026-10-06T18:16:15.9389524Z [physical-yard-tests] PASS: 658 checks
+2026-10-06T18:16:22.7878362Z [keyboard-ground-tests] PASS: 45 checks []
+2026-10-06T18:16:23.7740096Z [scrapbook-encounters] PASS: 20 checks []
+2026-10-06T18:16:25.8074107Z [photo-moment-tests] PASS: 1349 checks
+2026-10-06T18:16:29.1204244Z [photo-moment-save-tests] PASS: 47 checks []
+2026-10-06T18:16:33.0440476Z [boundary-feedback-tests] 11 checks []
+2026-10-06T18:16:34.2554337Z [mixed-input-photo-tests] 8 checks []
+2026-10-06T18:16:35.9189501Z [leading-clearance-tests] 18 checks []
+2026-10-06T18:16:37.1640124Z [portable-accept-tests] 18 checks []
+2026-10-06T18:16:38.6334061Z [shipped-correctness] 9 checks []
+2026-10-06T18:16:41.8742549Z [authored-sequence-tests] PASS: 16 distinct complete frames, uniform canvas and anchor, loop metadata
+2026-10-06T18:16:45.3358247Z [goose-mount] PASS: 92 checks []
+2026-10-06T18:16:52.4512726Z [camera400-handoff] PASS: 202 checks []
+2026-10-06T18:17:00.1508989Z [camera400-backdrop] PASS: 44734 checks []
+2026-10-06T18:17:13.3307485Z [fish-carry] 87 checks []
+2026-10-06T18:17:14.8635486Z notice paper suite checks=49 failures=[]
+2026-10-06T18:17:16.0045654Z PHOTO_SPECIES_FRAME checks=9 failures=0
+2026-10-06T18:17:21.5490222Z SAVE_COORDINATOR checks=86 failures=[]
+2026-10-06T18:17:22.3329717Z SAVE WRITER GUIDANCE 20 checks failures=[]
+2026-10-06T18:17:22.9060321Z EXPLORATION CLEANUP 95 checks failures=[]
+2026-10-06T18:17:23.2712477Z EXPLORATION CLEANUP PRESERVATION checks=51 failures=0
+2026-10-06T18:17:26.4272892Z day_label_layout suite: 173 checks passed
+2026-10-06T18:17:30.5914014Z title_card suite: 251 checks passed
+2026-10-06T18:17:38.5523309Z hint_paper_fit suite: 4653 checks passed
+2026-10-06T18:17:43.0698132Z confirm_panel_fit suite: 562 checks passed
+2026-10-06T18:17:45.6664136Z title_short_landscape suite: 1541 checks passed
+2026-10-06T18:18:03.5562456Z licenses_dialog_fit_suite checks=124 failures=0
+2026-10-06T18:18:08.4139321Z [photo-arrival-fit] PASS: 418 checks
+2026-10-06T18:18:13.9313967Z [photo-arrival-mat] PASS: 550 checks
+2026-10-06T18:18:17.4187525Z [photo-arrival-shutter-paper] PASS: 1290 checks
+2026-10-06T18:19:03.8887230Z ALBUM_SHORT_LANDSCAPE checks=52319 failures=0
+2026-10-06T18:19:11.9211775Z PASS: title_licenses_link_contrast 340 checks
+2026-10-06T18:19:17.8014771Z PASS: soft_button_focus_contrast 5080 checks
+2026-10-06T18:19:24.2741235Z PASS: soft_button_disabled 4400 checks
+2026-10-06T18:19:27.5657998Z [volume-slider-style] PASS: 708 checks
+2026-10-06T18:19:30.9059773Z [volume-slider-input] checks=267 failures=[]
+2026-10-06T18:19:43.5560265Z PASS: paper_tooltip_style 104 checks
+2026-10-06T18:20:15.0963843Z PASS: paper_tooltip_interaction 230 checks
+2026-10-06T18:20:51.6495048Z ALBUM_LAYOUT checks=45914 failures=0
+2026-10-06T18:20:58.5098892Z PASS: save_status_paper 573 checks
+2026-10-06T18:20:59.7818830Z PAUSE_NOTICE checks=168 failures=0
+2026-10-06T18:21:03.4464199Z AUDIO_BUTTON_INPUT checks=648 failures=0
+2026-10-06T18:21:07.4483906Z MODAL_TOUCH_INPUT checks=270 failures=0
+2026-10-06T18:21:07.8208728Z YARD_INVENTORY checks=53 failures=0
+2026-10-06T18:21:08.1617389Z YARD_GROUND_FOOD_LEDGER checks=22 failures=0
+2026-10-06T18:21:10.7207817Z YARD_GROUND_FOOD_RUNTIME checks=58 failures=0
+2026-10-06T18:21:12.4424874Z YARD_BASKET_INTEGRATION checks=66 failures=0
+2026-10-06T18:21:18.5255688Z PASS: pause_panel_fit 1228 checks
+2026-10-06T18:21:22.3393145Z [viewport] checks=135 failures=[]
+2026-10-06T18:21:25.4045740Z PASS: title_copy_balance 580 checks
+2026-10-06T18:21:25.6494945Z Loading shell PASS: module ordering, runtime readiness/rejection, persistentPaths isolation, save-blocked gate, bytes, unknown totals, stall and both first-frame orders

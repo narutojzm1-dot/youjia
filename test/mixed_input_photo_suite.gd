@@ -10,17 +10,20 @@ func run():
  await process_frame;await process_frame
  main.set_process(false);await main._start_holiday()
  var w=main._world
- w.debug_place_player(Vector2(600,540));w.debug_place_actor("llama",Vector2(700,540));w._player.pick_grass()
+ var store=root.get_node("SaveStore")
+ w.debug_place_player(w._grass_point());w._interact_with_target("grass")
+ check(await store.flush_pending(),"real grass harvest saved")
+ for i in 3: await process_frame
+ w.debug_place_player(Vector2(600,540));w.debug_place_actor("llama",Vector2(700,540))
  w.request_pointer_action(Vector2(700,540))
- check(w._pending_interaction=="llama","pointer approach pending before keyboard action")
+ check(w._pending_interaction.is_empty() and w._has_walk_goal,"carried grass pointer is a walk before keyboard drop")
  var e:=InputEventKey.new();e.device=0;e.physical_keycode=KEY_SPACE;e.keycode=KEY_SPACE;e.pressed=true;Input.parse_input_event(e)
  e=InputEventKey.new();e.device=0;e.physical_keycode=KEY_SPACE;e.keycode=KEY_SPACE;e.pressed=false;Input.parse_input_event(e)
  await process_frame
- for i in 600:
-  w.tick(1.0/60,Vector2.ZERO)
-  if not w._player.carrying_grass: break
- check(not w._player.carrying_grass,"ordinary Space retains feeding intent through arrival")
- check(w._pending_interaction.is_empty() and not w._has_walk_goal,"successful contextual feed consumes old approach intent")
+ check(await store.flush_pending(),"keyboard drop saved")
+ for i in 3: await process_frame
+ check(not w._player.carrying_grass and w.ground_food.items.size()==1,"ordinary Space drops exactly one real grass bundle")
+ check(w._pending_interaction.is_empty() and not w._has_walk_goal,"successful contextual drop consumes old walking intent")
  for i in 180:w.tick(1.0/60,Vector2.ZERO)
  check(not w._leading,"feeding is not followed by unintended automatic leading")
  # Keep the old rope on the left, then trigger an event that flips the llama right.

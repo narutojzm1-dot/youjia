@@ -13,16 +13,17 @@ func check(ok: bool, label: String) -> void:
 		push_error(label)
 
 func run() -> void:
-	var isolated := OS.get_environment("XDG_DATA_HOME")
-	if not isolated.begins_with("/tmp/youjia-daily-check.") or not OS.get_user_data_dir().begins_with(isolated + "/"):
+	var isolated := OS.get_environment("YOUJIA_TEST_ISOLATED_DATA").replace("\\", "/").to_lower()
+	if isolated.is_empty() or not OS.get_user_data_dir().replace("\\", "/").to_lower().begins_with(isolated + "/"):
 		printerr("REFUSED: isolated daily runner required")
 		quit(2)
 		return
 	var main = load("res://scenes/main.tscn").instantiate()
 	root.add_child(main)
 	await process_frame
-	main._on_play_pressed()
-	await process_frame
+	await main._start_holiday()
+	var store = root.get_node("SaveStore")
+	await store.flush_pending()
 	main.set_process(false)
 	var world = main._world
 	world.set_process(false)
@@ -37,24 +38,30 @@ func run() -> void:
 	check(chance_seed >= 0, "chance-miss seed available")
 	var caught: int = world._fish_caught_total
 	for bite_timeout in [false, true]:
-		for case in [{"kind":"", "time":0.0}, {"kind":"small", "time":12.0}, {"kind":"odd", "time":0.0}]:
-			world._fish_carry_type = case.kind
-			world._fish_carry_timer = case.time
+		for kind: String in ["", "small", "odd"]:
+			var held: String = main._inventory.view().held
+			if not held.is_empty():
+				main._inventory.request("return", held)
+				await store.flush_pending()
+			if not kind.is_empty():
+				main._inventory.request("catch", kind)
+				await store.flush_pending()
+				main._inventory.request("withdraw", kind)
+				await store.flush_pending()
+			var before: Dictionary = main._inventory.view()
 			world._fish_state = world.FISH_BITE if bite_timeout else world.FISH_CASTING
 			world._fish_timer = 0.1
 			world._fish_bite_nudge = 10.0
 			seed(chance_seed)
 			world._tick_fishing(0.2)
-			var expected := "notice.fishing.miss_with_carry" if case.time > 0.0 else "notice.fishing.miss"
-			check(main._notice_key == expected, "miss notice matches real carry: timeout=%s kind=%s time=%s" % [bite_timeout, case.kind, case.time])
-			check(world._fish_state == world.FISH_IDLE and world._fish_carry_type == case.kind and world._fish_carry_timer == case.time, "miss preserves existing carry/state/timer: %s" % case)
+			var expected := "notice.fishing.miss_with_carry" if not kind.is_empty() else "notice.fishing.miss"
+			check(main._notice_key == expected, "miss notice matches durable carry: timeout=%s kind=%s" % [bite_timeout, kind])
+			check(world._fish_state == world.FISH_IDLE and world._fish_carry_type == kind and main._inventory.view() == before, "miss preserves complete inventory and hand: " + kind)
 	check(world._fish_caught_total == caught, "failed cast does not create a new catch")
-	# Production carry expiry still clears the fish and supersedes prior text.
-	world._fish_carry_type = "small"
-	world._fish_carry_timer = 0.1
-	main._process(0.2)
-	check(world._fish_carry_type.is_empty() and world._fish_carry_timer <= 0.0 and main._notice_key == "notice.fishing.release", "expiry clears carry and says release")
-	check(world.primary_action_key() != "action.toss_fish", "expired fish cannot be offered")
+	# WORLD-BASKET keeps confirmed hand items instead of expiring after twenty seconds.
+	main._process(21.0)
+	check(world._fish_carry_type == "odd" and world._fish_carry_timer == 0.0 and main._notice_key != "notice.fishing.release", "durable fish remains without a false release notice")
+	check(world.primary_action_key() == "action.drop_food", "stored fish remains available for feeding")
 	await main._show_title()
 	root.get_node("AudioDirector").call("release_streams")
 	print("[fish-miss-feedback] %d checks, %d failures: %s" % [checks, failures.size(), failures])

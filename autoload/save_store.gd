@@ -27,6 +27,7 @@ const BACKUP_PATH := "user://youjia_save.bak"
 const SaveFilesType := preload("res://scripts/persistence/save_files.gd")
 const AnimalRelationshipsType := preload("res://scripts/game/animal_relationships.gd")
 const SaveDataCodec := preload("res://scripts/persistence/save_data_codec.gd")
+const YardInventory := preload("res://scripts/inventory/yard_inventory.gd")
 const SAVE_VERSION := SaveDataCodec.SAVE_VERSION
 const TUTORIAL_VERSION := SaveDataCodec.TUTORIAL_VERSION
 
@@ -228,6 +229,19 @@ func get_keepsakes() -> Dictionary:
 	return (_data.get("keepsakes", {}) as Dictionary).duplicate(true)
 
 
+func get_yard_inventory() -> Dictionary:
+	return YardInventory.read(_data)
+
+
+func request_inventory_action(revision: int, action: String, fish: String, details: Dictionary = {}) -> String:
+	var frozen := details.duplicate(true)
+	return request_intent("inventory", func(current: Dictionary) -> Variant:
+		var result := YardInventory.transition(current, revision, action, fish, frozen)
+		if result.has("error"):
+			return CoordinatorType.IntentRejection.new(result.error)
+		return result.candidate)
+
+
 func request_exploration_record(record: Variant) -> String:
 	var frozen: Variant = _copy_record(record)
 	var op_id := request_intent("exploration", func(current: Dictionary) -> Dictionary:
@@ -300,7 +314,7 @@ func _valid_exploration_cleanup(expected: Variant, watermark: Variant, target: V
 	if not expected.session is Dictionary or target.session != null: return false
 	# Restore requires explicit nullable children; never normalize missing fields.
 	if not expected.session.has("proposal") or not expected.session.has("failure"): return false
-	var allowed := ["trip_id", "trip_serial", "record_revision", "route_id", "catalog", "state", "started_clock", "current_stop", "visited", "offers", "carried", "taken", "rng_seed", "proposal", "failure"]
+	var allowed := ["trip_id", "trip_serial", "record_revision", "route_id", "catalog", "state", "started_clock", "current_stop", "visited", "offers", "carried", "taken", "rng_seed", "proposal", "failure", "companion"]
 	for key in expected.session:
 		if key not in allowed: return false # unsupported extensions are not discarded
 	if expected.session.get("catalog") != contract.SOURCE_FORMAL: return false

@@ -93,8 +93,8 @@ func is_settling() -> bool:
 	return false
 
 
-func begin(clock: Dictionary, seed: Variant = null) -> Dictionary:
-	var result := session.begin(ExplorationRoutes.NEAR_PATH, clock, seed)
+func begin(clock: Dictionary, seed: Variant = null, companion_context: Dictionary = {}) -> Dictionary:
+	var result := session.begin(ExplorationRoutes.NEAR_PATH, clock, seed, companion_context)
 	_apply(result)
 	return result
 

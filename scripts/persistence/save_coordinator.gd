@@ -12,7 +12,7 @@ signal ignored_receipt(reason: String)
 
 ## Typed local refusal. Never serialized, prepared, or sent to the backend.
 class IntentRejection extends RefCounted:
-	const CODES := ["EXPLORATION_CLEANUP_INVALID_ARGUMENT", "EXPLORATION_CLEANUP_PRECONDITION_CHANGED"]
+	const CODES := ["EXPLORATION_CLEANUP_INVALID_ARGUMENT", "EXPLORATION_CLEANUP_PRECONDITION_CHANGED", "BASKET_INVALID", "BASKET_CHANGED", "BASKET_LIMIT", "BASKET_EMPTY", "BASKET_HAND_OCCUPIED"]
 	var code: String
 	func _init(reason: String) -> void:
 		code = reason if reason in CODES else "INVALID_LOCAL_INTENT"

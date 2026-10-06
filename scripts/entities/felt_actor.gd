@@ -38,6 +38,9 @@ var walk_ground: PackedVector2Array = PackedVector2Array()
 var avoid_pond := false
 var body_radius := Vector2(16,8)
 var body_obstacles: Array = []
+var food_goal := Vector2.ZERO
+var _food_path: Array[Vector2] = []
+var _food_repath := 0.0
 var _lead_path: Array[Vector2] = []
 var _lead_repath := 0.0
 var use_ellipse := false
@@ -484,6 +487,20 @@ func tick(delta: float, world_size: Vector2) -> void:
 	var depth := YardGround.depth_at(position.y)
 	var desired := Vector2.ZERO
 	match state:
+		"food":
+			grazing = false
+			motion = food_goal - position
+			_food_repath -= delta
+			if use_ellipse:
+				desired = motion.normalized() * minf(speed * depth, motion.length() * 1.8)
+			else:
+				if _food_repath <= 0.0:
+					_food_path = YardBodies.route(position, food_goal, body_radius * depth, body_obstacles, walk_ground, avoid_pond)
+					_food_repath = 0.7
+				while not _food_path.is_empty() and position.distance_to(_food_path[0]) < 4.0:
+					_food_path.pop_front()
+				if not _food_path.is_empty():
+					desired = position.direction_to(_food_path[0]) * minf(speed * depth, position.distance_to(_food_path[0]) * 1.8)
 		"lead":
 			grazing = false
 			if is_instance_valid(_lead_target):
@@ -560,7 +577,7 @@ func tick(delta: float, world_size: Vector2) -> void:
 	var actual_speed := moved.length() / maxf(delta, 0.0001)
 	if desired.length() > 2.0 and actual_speed < 1.0:
 		_stuck += delta
-		if _stuck > 0.65 and state != "lead":
+		if _stuck > 0.65 and state not in ["lead", "food"]:
 			_target = _random_point()
 			if daily_routine: _start_rest()
 			_stuck = 0.0
@@ -608,6 +625,27 @@ func tick(delta: float, world_size: Vector2) -> void:
 		_sprite.position.y = 0.0
 		_sprite.rotation = 0.0
 		_rig.tick(delta, moved, depth, reduced)
+	z_index = roundi(position.y)
+
+
+## Road adapters own movement and depth; reuse the same anchored painted gait.
+func advance_path(delta: float, moved: Vector2, depth: float, reduced: bool) -> void:
+	state = "path"
+	grazing = false
+	if absf(moved.x) > 0.01: facing = signf(moved.x)
+	_velocity = moved / maxf(delta, 0.0001)
+	var stride := 38.0 if species in ["cow", "horse"] else (22.0 if species == "goose" else 30.0)
+	_gait.advance(delta, moved, depth, stride)
+	_gait.apply(_sprite, delta, facing, reduced)
+	_sprite.position = Vector2.ZERO
+	_sprite.rotation = 0.0
+	_gait._material.set_shader_parameter("grounded_stride", true)
+	_gait._material.set_shader_parameter("stride_uv", stride / maxf(_sprite.texture.get_width() * _base_scale, 1.0))
+	_gait._material.set_shader_parameter("lift_uv", 2.0 / maxf(_sprite.texture.get_height() * _base_scale, 1.0))
+	_gait._material.set_shader_parameter("native_walk_face", _native_facing)
+	_gait._material.set_shader_parameter("amount", 0.0 if reduced else minf(_gait.weight * 3.0, 1.0))
+	scale = Vector2(_gait.face, 1.0) * _base_scale * depth
+	_sprite.scale.x = _paint_facing()
 	z_index = roundi(position.y)
 
 
@@ -760,6 +798,22 @@ func _apply_face_override() -> void:
 		var size:=_sprite.texture.get_size()
 		_gait._material.set_shader_parameter("expression_texture",_expression_texture)
 		_gait._material.set_shader_parameter("face_region",Vector4(_face_region.position.x/size.x,_face_region.position.y/size.y,_face_region.size.x/size.x,_face_region.size.y/size.y))
+
+
+func seek_food(point: Vector2) -> void:
+	if posed or state == "lead": return
+	if state != "food" or food_goal.distance_to(point) > 2.0:
+		_food_repath = 0.0
+		_food_path.clear()
+	food_goal = point
+	state = "food"
+
+
+func leave_food() -> void:
+	if state != "food": return
+	state = "rest"
+	_idle_time = 3.0
+	_food_path.clear()
 
 
 func _route_to_leader(depth: float, obstacles: Array) -> Array[Vector2]:

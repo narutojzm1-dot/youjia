@@ -19,6 +19,7 @@ signal pause_requested
 
 var host: ExplorationHost
 var walker: SequenceResident
+var companion: PathCompanion
 var camera: Camera2D
 var painting: Sprite2D
 var items: Node2D
@@ -76,6 +77,13 @@ func setup(trip_host: ExplorationHost, _weather: String) -> void:
 	add_child(walker)
 	walker.position = foot()
 	walker.advance(0.0, Vector2.ZERO, L.depth(foot().y), facing, true)
+	walker.z_index = roundi(foot().y)
+	var partner: Dictionary = host.view().get("companion", {})
+	if not partner.is_empty():
+		companion = PathCompanion.new()
+		add_child(companion)
+		companion.setup(partner, spot)
+		companion.advance(0.0, spot, walker, reduced_motion())
 	camera = Camera2D.new()
 	camera.anchor_mode = Camera2D.ANCHOR_MODE_DRAG_CENTER
 	add_child(camera)
@@ -83,6 +91,8 @@ func setup(trip_host: ExplorationHost, _weather: String) -> void:
 	_build_hud()
 	_snap_camera()
 	_show_caption(I18n.t("exploration.caption.arrive"), 5.0)
+	if companion != null:
+		_show_caption(I18n.t("exploration.caption.companion", {"animal": I18n.t("actor." + companion.actor.species)}), 5.0)
 	_view_size = get_viewport().get_visible_rect().size
 	get_viewport().size_changed.connect(_on_view_resized)
 	_refresh()
@@ -176,6 +186,8 @@ func walk(direction: Vector2, delta: float) -> void:
 		_home_hold = 0.0
 	walker.position = foot()
 	walker.advance(delta, moved, L.depth(foot().y), facing, reduced_motion())
+	walker.z_index = roundi(foot().y)
+	if companion != null: companion.advance(delta, spot, walker, reduced_motion())
 	_snap_camera()
 
 

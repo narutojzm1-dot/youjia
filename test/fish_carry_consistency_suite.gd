@@ -1,7 +1,8 @@
 extends SceneTree
 
 ## #231 fish/carry consistency: reproduction + regression on production Main/YardWorld.
-## Scope: test only. Does not change Main/YardWorld/save/animal feedback.
+## WORLD-BASKET: production catch commits to basket, then withdraws to hand.
+## The approved durable inventory replaces historical twenty-second expiry checks.
 ## Every tick goes through Main._process (so the real pause gate applies).
 ## Controlled injection boundary (documented, nothing else is faked):
 ##   - randomness: seed() before each sequence; cast/bite/catch outcomes still come
@@ -159,6 +160,11 @@ func _catch(main, w) -> bool:
 	if not r.ok:
 		return false
 	w.request_primary_action()
+	await root.get_node("SaveStore").flush_pending()
+	var fish: Dictionary = main._inventory.view().fish
+	if fish.is_empty(): return false
+	main._inventory.request("withdraw", str(fish.keys()[0]))
+	await root.get_node("SaveStore").flush_pending()
 	return not w._fish_carry_type.is_empty()
 
 
@@ -209,7 +215,7 @@ func _seq_no_old_fish_miss(main) -> void:
 		_check(YardInteraction.selected(w, "toss_fish:" + bird.actor_id).is_empty(), "S1 toss_fish:%s unavailable without carry" % bird.actor_id)
 		w.request_pointer_action(bird.position)
 	_step(main, 4.0)
-	_check(_count_prefix("notice.toss_fish.") == 0, "S1 tapping birds after miss never feeds")
+	_check(_count("notice.food_dropped") == 0, "S1 tapping birds after miss never feeds")
 	_log("S1 no-old-fish miss: carry before=%s after=%s chance_misses=%d notices=%s" % [before, w._fish_carry_type, r.chance_misses, notices])
 
 
@@ -217,7 +223,7 @@ func _seq_no_old_fish_miss(main) -> void:
 func _seq_old_fish_miss(main) -> void:
 	seed(231002)
 	var w = await _fresh(main)
-	_check(_catch(main, w), "S2 real catch gives a carry")
+	_check(await _catch(main, w), "S2 real catch stored and withdrawn")
 	var kind := str(w._fish_carry_type)
 	var t0 := float(w._fish_carry_timer)
 	var caught := _count_prefix("notice.fishing.caught")
@@ -234,70 +240,54 @@ func _seq_old_fish_miss(main) -> void:
 	var elapsed := t0 - float(w._fish_carry_timer)
 	_check(_count("notice.fishing.miss_with_carry") >= 1, "S2 miss notice distinguishes the held old fish")
 	_check(w._fish_carry_type == kind, "S2 miss keeps the legal old fish (not deleted, not replaced)")
-	_check(w._fish_carry_timer > 0.0 and w._fish_carry_timer < t0, "S2 old fish timer keeps counting down (not reset by miss)")
-	_check(w.primary_action_key() == "action.toss_fish", "S2 after miss the old fish can still be tossed")
+	_check(w._fish_carry_timer == 0.0, "S2 durable held fish has no expiry")
+	_check(w.primary_action_key() == "action.drop_food", "S2 after miss the old fish can still be tossed")
 	_check(w.hint_context() == "hud.hint.carrying_fish", "S2 HUD hint says a fish is still in hand")
 	_check(main._notice_key == "notice.fishing.miss_with_carry", "S2 last visible notice says the old fish remains")
 	_log("S2 old-fish miss path=%s kind=%s timer %.2f->%.2f (elapsed %.2f) notice=%s hint=%s" % [path, kind, t0, w._fish_carry_timer, elapsed, main._notice_key, w.hint_context()])
 	_log("S2 historical FINDING fixed by #231 Assistant feedback slice: distinct miss_with_carry says the held old fish remains; original reports retain their baseline.")
 
 
-# 3. Carry expiry at 20 s: release once, carry empty, no feed possible.
+# User-authorized WORLD-BASKET replaces the old twenty-second expiry contract.
+# Preserve the old report in repository history; production now keeps fish.
 func _seq_carry_expiry(main) -> void:
 	seed(231003)
 	var w = await _fresh(main)
-	_check(_catch(main, w), "S3 real catch gives a carry")
-	_check(is_equal_approx(w._fish_carry_timer, 20.0) or w._fish_carry_timer > 19.0, "S3 carry window starts near 20 s")
-	_step_until(main, 21.0, func(): return w._fish_carry_type.is_empty())
-	_check(w._fish_carry_type.is_empty(), "S3 carry clears at expiry")
-	_check(_count("notice.fishing.release") == 1, "S3 release notice emitted exactly once")
-	_step(main, 2.0)
-	_check(_count("notice.fishing.release") == 1, "S3 release is not repeated after expiry")
-	_check(w.primary_action_key() != "action.toss_fish", "S3 toss unavailable after expiry")
-	for bird in _birds(w):
-		w.request_pointer_action(bird.position)
-	_step(main, 4.0)
-	_check(_count_prefix("notice.toss_fish.") == 0, "S3 tapping birds after expiry never feeds")
-	_check(_count_prefix("notice.pet.") == 0, "S3 bird taps produce no pet heart notice either")
-	_log("S3 expiry notices=%s" % [notices])
+	_check(await _catch(main, w), "S3 real catch stored and withdrawn")
+	var kind: String = w._fish_carry_type
+	_step(main, 23.0)
+	_check(w._fish_carry_type == kind, "S3 held fish survives former expiry window")
+	_check(_count("notice.fishing.release") == 0, "S3 no false release notice")
+	_check(root.get_node("SaveStore").get_yard_inventory().held == kind, "S3 durable ledger retains held fish")
 
 
-# 4. Auto-approach to a bird that is still walking when the fish expires.
 func _seq_expiry_during_approach(main) -> void:
 	seed(231004)
 	var w = await _fresh(main)
-	_check(_catch(main, w), "S4 real catch gives a carry")
+	_check(await _catch(main, w), "S4 real catch stored and withdrawn")
 	var birds := _birds(w)
 	_check(not birds.is_empty(), "S4 yard has a duck or goose")
-	if birds.is_empty():
-		return
-	# Approach the bird farthest from the pond; nothing is teleported.
+	if birds.is_empty(): return
 	var bird = birds[0]
-	for b in birds:
-		if w.get_player().position.distance_to(b.position) > w.get_player().position.distance_to(bird.position):
-			bird = b
-	_log("S4 birds=%s" % [birds.map(func(b): return "%s@%s" % [b.actor_id, b.position])])
-	# Start the approach with 0.5 s left, by ticking the real 20 s window down.
-	_step_until(main, 20.0, func(): return w._fish_carry_timer <= 0.5)
-	var gap: float = w.get_player().position.distance_to(bird.position)
-	_check(gap > YardInteraction.FEED_REACH, "S4 chosen bird is outside feed reach (approach needed)")
+	for candidate in birds:
+		if w.get_player().position.distance_to(candidate.position) > w.get_player().position.distance_to(bird.position):
+			bird = candidate
+	_step(main, 19.5)
 	w.request_pointer_action(bird.position)
-	_check(w._pending_interaction == "toss_fish:" + bird.actor_id, "S4 approach is pending toward the bird")
-	_step_until(main, 2.0, func(): return w._fish_carry_type.is_empty())
-	_check(w._fish_carry_type.is_empty(), "S4 fish expires mid-approach")
-	_check(w._pending_interaction.is_empty() and w._selected_target.is_empty(), "S4 expiry cancels the toss approach")
-	_check(not w._has_walk_goal, "S4 player stops instead of walking on to the bird")
-	_step(main, 6.0)
-	_check(_count_prefix("notice.toss_fish.") == 0, "S4 no feed happens after mid-approach expiry")
-	_check(_count("notice.fishing.release") == 1, "S4 release notice once")
-	_log("S4 approach gap=%.0f notices=%s" % [gap, notices])
+	_step(main, 25.0)
+	_check(not w._fish_carry_type.is_empty(), "S4 walking with fish does not automatically feed a target")
+	w.request_primary_action()
+	await root.get_node("SaveStore").flush_pending()
+	_check(_count("notice.fishing.release") == 0, "S4 approach does not expire the fish")
+	_check(_count("notice.food_dropped") == 1, "S4 explicit ground drop happens once beyond former expiry")
+	_check(w._fish_carry_type.is_empty(), "S4 confirmed ground drop clears hand")
 
 
 # 5. Pause freezes the carry window; input is ignored while paused.
 func _seq_pause_resume(main) -> void:
 	seed(231005)
 	var w = await _fresh(main)
-	_check(_catch(main, w), "S5 real catch gives a carry")
+	_check(await _catch(main, w), "S5 real catch stored and withdrawn")
 	var t0 := float(w._fish_carry_timer)
 	main._toggle_pause()
 	_check(main._pause_screen.visible and not w.input_enabled, "S5 pause screen open and input disabled")
@@ -305,10 +295,10 @@ func _seq_pause_resume(main) -> void:
 	_check(is_equal_approx(w._fish_carry_timer, t0), "S5 carry timer frozen while paused")
 	_check(not w._fish_carry_type.is_empty(), "S5 fish still held after 30 s paused")
 	w.request_primary_action()
-	_check(not w._fish_carry_type.is_empty() and _count_prefix("notice.toss_fish.") == 0, "S5 primary action ignored while paused")
+	_check(not w._fish_carry_type.is_empty() and _count("notice.food_dropped") == 0, "S5 primary action ignored while paused")
 	main._toggle_pause()
 	_step(main, 1.0)
-	_check(w._fish_carry_timer < t0 and w._fish_carry_timer > t0 - 1.2, "S5 carry resumes counting after unpause")
+	_check(w._fish_carry_timer == 0.0 and not w._fish_carry_type.is_empty(), "S5 durable fish remains after unpause")
 	paused_reset(main)
 	_log("S5 pause t0=%.2f after_resume=%.2f" % [t0, w._fish_carry_timer])
 
@@ -318,18 +308,20 @@ func paused_reset(main) -> void:
 		main._toggle_pause()
 
 
-# 6. Feed succeeds once; extra clicks do not double-consume or fake a second feed.
+# 6. WORLD-GROUND-FOOD: drop succeeds once; walking is no longer targeted feeding.
+# Autonomous eating and ground restoration are covered by yard_ground_food_runtime.
 func _seq_repeated_clicks(main) -> void:
 	seed(231006)
 	var w = await _fresh(main)
-	_check(_catch(main, w), "S6 real catch gives a carry")
+	_check(await _catch(main, w), "S6 real catch stored and withdrawn")
 	w.request_primary_action()
 	_step_until(main, 15.0, func(): return w._fish_carry_type.is_empty())
-	var fed := _count_prefix("notice.toss_fish.")
-	_check(fed == 1, "S6 primary action walks over and feeds exactly once")
-	_check(w._fish_carry_type.is_empty() and w._fish_carry_timer == 0.0, "S6 feeding consumes the carry")
+	await root.get_node("SaveStore").flush_pending()
+	var fed := _count("notice.food_dropped")
+	_check(fed == 1, "S6 primary action drops once at the player location")
+	_check(w._fish_carry_type.is_empty() and w._fish_carry_timer == 0.0, "S6 confirmed ground transfer clears the carry")
 	var key: String = main._notice_key
-	_check(key.begins_with("notice.toss_fish."), "S6 visible notice is the toss, not a pet heart")
+	_check(key == "notice.food_dropped", "S6 visible notice describes the ground drop")
 	for i in 3:
 		w.request_primary_action()
 		main._process(DT)
@@ -337,7 +329,7 @@ func _seq_repeated_clicks(main) -> void:
 		w.request_pointer_action(bird.position)
 		main._process(DT)
 	_step(main, 3.0)
-	_check(_count_prefix("notice.toss_fish.") == 1, "S6 repeated clicks do not feed again")
+	_check(_count("notice.food_dropped") == 1, "S6 repeated clicks do not duplicate the ground drop")
 	_check(_count("notice.fishing.release") == 0, "S6 consumed fish never emits a later release")
 	_check(_count_prefix("notice.pet.duck") + _count_prefix("notice.pet.goose") == 0, "S6 no bird pet notice mistaken for feeding")
 	_log("S6 fed notice=%s notices=%s" % [key, notices])
@@ -352,7 +344,7 @@ func _seq_odd_fish_wording(main) -> void:
 	for i in 40:
 		seed(231700 + i)
 		w = await _fresh(main)
-		if _catch(main, w) and w._fish_carry_type == "odd":
+		if await _catch(main, w) and w._fish_carry_type == "odd":
 			found = true
 			break
 	_check(found, "S7 real catch can produce the odd fish")
@@ -363,14 +355,15 @@ func _seq_odd_fish_wording(main) -> void:
 	var en_text := str(i18n._load_catalog("res://localization/en.json").get("notice.fishing.caught.odd", ""))
 	_check(_count("notice.fishing.caught.odd") >= 1, "S7 odd catch emits notice.fishing.caught.odd")
 	_check(main._notice_key == "notice.fishing.caught.odd", "S7 HUD shows the odd-catch notice")
-	_check(w._fish_carry_type == "odd" and w._fish_carry_timer > 19.0, "S7 odd fish is carried for the full window")
-	_check(w.primary_action_key() == "action.toss_fish", "S7 odd fish can be tossed")
+	_check(w._fish_carry_type == "odd" and w._fish_carry_timer == 0.0, "S7 odd fish is durably held without expiry")
+	_check(w.primary_action_key() == "action.drop_food", "S7 odd fish can be tossed")
 	w.request_primary_action()
 	_step_until(main, 15.0, func(): return w._fish_carry_type.is_empty())
-	_check(_count_prefix("notice.toss_fish.") == 1, "S7 odd fish feeds a bird once")
-	_log("S7 odd catch current text zh='%s' en='%s' carry=odd fed=%s" % [text, en_text, notices.filter(func(k): return k.begins_with("notice.toss_fish."))])
+	await root.get_node("SaveStore").flush_pending()
+	_check(_count("notice.food_dropped") == 1, "S7 odd fish can be dropped exactly once")
+	_log("S7 odd catch current text zh='%s' en='%s' carry=odd fed=%s" % [text, en_text, notices.filter(func(k): return k == "notice.food_dropped")])
 	var says_gone := text.contains("溜走") or en_text.to_lower().contains("slipped away")
 	if says_gone:
 		_log("S7 FINDING (current text): the odd-catch notice says the fish got away while it is carried and feedable; matches the report '鱼溜走后仍可喂鹅'.")
 	else:
-		_log("S7 NOTE: baseline 6e7435c wording said '…溜走了。'/'…slipped away.' (original finding); current wording above no longer says the fish left. Carry/feed behaviour itself is unchanged and still asserted here.")
+		_log("S7 NOTE: baseline 6e7435c wording said '…溜走了。'/'…slipped away.' (original finding); current wording above no longer says the fish left. WORLD-GROUND-FOOD now verifies drop instead of direct targeted feeding; autonomous consumption has separate runtime coverage.")

@@ -19,6 +19,9 @@ func touch_button(name):
  var b=main.get(name)
  for down in [true,false]:
   var e=InputEventScreenTouch.new();e.position=b.get_global_transform_with_canvas()*(b.size*0.5);e.pressed=down;e.index=0;root.push_input(e,true)
+func control_tap(b):
+ for down in [true,false]:
+  var e=InputEventScreenTouch.new();e.position=b.get_global_transform_with_canvas()*(b.size*0.5);e.pressed=down;e.index=0;root.push_input(e,true)
 func button(name):
  var b=main.get(name);mouse(b.get_global_transform_with_canvas()*(b.size*0.5))
 func key(code, down):
@@ -53,16 +56,16 @@ func review():
   if w.actor_named("llama").state=="wander" and w.actor_named("llama")._velocity.length()>10:break
  check(w.actor_named("llama")._velocity.length()>10,"target is naturally moving before approach")
  tap(w.actor_named("llama").position)
- check(w._pending_interaction == "llama" and w._walk_goal.distance_to(w.actor_named("llama").position) < 0.01,"moving llama selection retains exact destination")
+ check(w._pending_interaction == "" and w._has_walk_goal,"carrying grass turns the animal tap into a walk without automatic feeding")
  tap(Vector2(100,100))
  check(not w._has_walk_goal and w._pending_interaction=="" and p.carrying_grass and not w._leading,"invalid newer tap cancels pending llama approach without interacting")
  tap(w.actor_named("llama").position)
- var llama_start=w.actor_named("llama").position
- for i in 1500:
-  await frames(1)
-  if "llama_fed_gentle" in w.collected and not p.carrying_grass:break
- check("llama_fed_gentle" in w.collected and not p.carrying_grass,"raw touch reaches llama and collects exact feeding photo")
- print("AUDIT moving llama displacement=",llama_start.distance_to(w.actor_named("llama").position)," final reach=",p.position.distance_to(w.actor_named("llama").position))
+ await frames(300)
+ check(p.carrying_grass,"walking near llama retains the grass")
+ touch_button("_action_button")
+ await root.get_node("SaveStore").flush_pending()
+ await frames(2)
+ check(not p.carrying_grass and w.ground_food.items.size()==1,"HUD places a durable grass object instead of hand-feeding")
  tap(w.actor_named("llama").position+Vector2(0,-48))
  for i in 900:
   await frames(1)
@@ -77,13 +80,16 @@ func review():
  tap(w._grass_point())
  await frames(1)
  check(p.carrying_grass and w._leading,"explicit grass tap with full hands cannot feed nearby llama")
- # Walking to the grass has naturally picked some up; feed it through a real llama touch.
- if p.carrying_grass:
-  tap(w.actor_named("llama").position+Vector2(0,-48))
-  for i in 900:
-   await frames(1)
-   if not p.carrying_grass:break
- check(not p.carrying_grass,"empty hands after feeding by grass")
+ # Store the carried grass through the actual basket controls without toggling lead.
+ touch_button("_basket_chip")
+ await frames(2)
+ var deposit=main._basket_panel.return_button
+ control_tap(deposit)
+ await root.get_node("SaveStore").flush_pending()
+ var close=main._basket_panel.close_button
+ control_tap(close)
+ await frames(2)
+ check(not p.carrying_grass and w._leading,"basket stores grass without changing the lead intent")
  touch_button("_action_button");await frames(1)
  check(not w._leading,"release using actual HUD button")
  print("REPRO before llama tap p=",p.position," llama=",w.actor_named("llama").position," grass_dist=",p.position.distance_to(w._grass_point()))
@@ -107,6 +113,12 @@ func review():
  for i in 900:
   await frames(1)
   if not w._has_walk_goal:break
+ # Bring the led llama back into the overlap zone; its new food visit can
+ # legitimately leave the previous arrival farther from the grass.
+ tap(Vector2(355,560))
+ for i in 900:
+  await frames(1)
+  if not w._has_walk_goal:break
  print("ARRIVAL grass distance=",p.position.distance_to(w._grass_point()))
  check(p.position.distance_to(w._grass_point())<78,"arrival regression overlaps grass interaction range")
  check(w._leading and not p.carrying_grass,"llama intent survives arrival inside grass range")
@@ -114,13 +126,17 @@ func review():
  key(KEY_SPACE, false)
  await frames(1)
  check(not w._leading and not p.carrying_grass,"Space performs the same release displayed by HUD")
- tap(w._grass_point());await frames(1)
+ tap(w._grass_point())
+ for i in 900:
+  await frames(1)
+  if p.carrying_grass:break
+ await root.get_node("SaveStore").flush_pending()
  check(not w._leading and p.carrying_grass,"explicit grass tap picks grass after release")
  touch_button("_action_button")
  for i in 900:
   await frames(1)
   if not w._has_walk_goal:break
- check(not p.carrying_grass and not w._leading,"HUD feed selects llama near grass")
+ check(not p.carrying_grass and not w._leading,"HUD drops grass without toggling nearby llama")
  touch_button("_action_button")
  for i in 900:
   await frames(1)
