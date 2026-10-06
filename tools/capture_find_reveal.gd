@@ -20,26 +20,31 @@ func note(text: String) -> void:
 	log_lines.append(text)
 
 
-func brook_seed() -> int:
-	for value in 2000:
-		var session := ExplorationSession.new(ExplorationRoutes.catalog(), 0)
-		session.begin(ExplorationRoutes.NEAR_PATH, CLOCK, value)
-		session.visit("brook")
-		if str(session.get_view().get("offer", "")) != "":
-			return value
-	return -1
+## 第一个在某个停留点给出 want 的种子与停留点；want 为空时只找溪声处有东西的
+func find_seed(want: String = "") -> Array:
+	var stops := ["brook"] if want == "" else ["brook", "gate", "shade", "slope"]
+	for value in 4000:
+		for stop: String in stops:
+			var session := ExplorationSession.new(ExplorationRoutes.catalog(), 0)
+			session.begin(ExplorationRoutes.NEAR_PATH, CLOCK, value)
+			session.visit(stop)
+			var offer := str(session.get_view().get("offer", ""))
+			if offer != "" and (want == "" or offer == want):
+				return [value, stop]
+	return [-1, "brook"]
 
 
-func capture(tag: String, reduced: bool) -> void:
+func capture(tag: String, reduced: bool, want: String = "") -> void:
 	root.get_node("TuningStore").set_value("ui.reduced_motion", reduced, false)
 	var store := MemoryStore.new()
 	var host := ExplorationHost.new(store)
 	host.restore()
-	host.begin(CLOCK, brook_seed())
+	var found := find_seed(want)
+	host.begin(CLOCK, found[0])
 	var scroll: Node2D = load("res://scripts/exploration/near_path_scroll.gd").new()
 	root.add_child(scroll)
 	scroll.setup(host, "sunny")
-	scroll.place_at("brook")
+	scroll.place_at(found[1])
 	scroll.observe()
 	for i in 10:
 		await process_frame
@@ -71,6 +76,8 @@ func record() -> void:
 	await process_frame
 	await capture("motion", false)
 	await capture("calm", true)
+	await capture("pine", false, "formal.find.pine_cone")
+	await capture("feather", false, "formal.find.feather")
 	root.get_node("TuningStore").set_value("ui.reduced_motion", false, false)
 	var file := FileAccess.open(folder + "/capture-log.txt", FileAccess.WRITE)
 	file.store_string("\n".join(log_lines) + "\n")

@@ -1,0 +1,33 @@
+motion view 390x844 offer { "kind": "take", "find_id": "formal.find.brook_stone" }
+motion t=0.00 at=(155.0295, 668.5) size=1.71 alpha=1.00
+motion t=0.18 at=(188.4281, 536.1936) size=2.45 alpha=1.00
+motion t=0.36 at=(195.0, 510.1594) size=2.60 alpha=1.00
+motion t=0.80 at=(195.0, 510.1594) size=2.60 alpha=1.00
+motion t=1.30 at=(193.3815, 512.4463) size=2.58 alpha=1.00
+motion t=1.50 at=(139.1741, 589.0413) size=2.00 alpha=1.00
+motion t=1.62 at=(62.74519, 697.0351) size=1.17 alpha=1.00
+motion carried ["formal.find.brook_stone"], sound file present true
+calm view 390x844 offer { "kind": "take", "find_id": "formal.find.brook_stone" }
+calm t=0.15 at=(195.0, 510.1594) size=2.60 alpha=0.50
+calm t=0.40 at=(195.0, 510.1594) size=2.60 alpha=1.00
+calm t=0.80 at=(195.0, 510.1594) size=2.60 alpha=1.00
+calm t=1.05 at=(195.0, 510.1594) size=2.60 alpha=0.50
+calm carried ["formal.find.brook_stone"], sound file present true
+pine view 390x844 offer { "kind": "take", "find_id": "formal.find.pine_cone" }
+pine t=0.00 at=(228.5353, 779.9286) size=2.01 alpha=1.00
+pine t=0.18 at=(200.5138, 589.6451) size=2.50 alpha=1.00
+pine t=0.36 at=(195.0, 552.2026) size=2.60 alpha=1.00
+pine t=0.80 at=(195.0, 552.2026) size=2.60 alpha=1.00
+pine t=1.30 at=(193.3815, 554.0561) size=2.58 alpha=1.00
+pine t=1.50 at=(139.1741, 616.1348) size=2.00 alpha=1.00
+pine t=1.62 at=(62.74519, 703.6616) size=1.17 alpha=1.00
+pine carried ["formal.find.pine_cone"], sound file present true
+feather view 390x844 offer { "kind": "take", "find_id": "formal.find.feather" }
+feather t=0.00 at=(123.6952, 609.0714) size=1.51 alpha=1.00
+feather t=0.18 at=(183.2761, 483.1786) size=2.42 alpha=1.00
+feather t=0.36 at=(195.0, 458.4064) size=2.60 alpha=1.00
+feather t=0.80 at=(195.0, 458.4064) size=2.60 alpha=1.00
+feather t=1.30 at=(193.3815, 461.2267) size=2.58 alpha=1.00
+feather t=1.50 at=(139.1741, 555.6905) size=2.00 alpha=1.00
+feather t=1.62 at=(62.74519, 688.8782) size=1.17 alpha=1.00
+feather carried ["formal.find.feather"], sound file present true
