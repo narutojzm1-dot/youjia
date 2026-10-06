@@ -1,6 +1,6 @@
-# 同行切片实施边界（候选已接入）
+# 同行切片实施边界（PR510已合入）
 
-CODEX-LEAD，#503 的 C 切片。已接续 PR508 完成运行时、原生149项与普通Web往返/重开验证，仍待最终PR/发布核验；总方向见 connected-world-2026-10-06.md，证据见 ../playtests/2026-10-07-animal-companions/。
+CODEX-LEAD，#503 的 C 切片。已接续 PR508 完成运行时、原生149项与普通Web往返/重开验证，PR510最终CI与公开哈希核验已通过；公开实玩及限制见对应证据目录；总方向见 connected-world-2026-10-06.md，证据见 ../playtests/2026-10-07-animal-companions/。
 
 ## 一个完整往返
 
@@ -10,7 +10,7 @@ CODEX-LEAD，#503 的 C 切片。已接续 PR508 完成运行时、原生149项�
 
 正常回院返回同一 YardWorld 的同一 actor_id，回到玩家附近合法脚点；标题、重开、异常恢复按现有探索契约安全回院。不能把伙伴记作可堆叠背篓物品，也不创建第二只常驻动物。暂停/失焦/低动效仍可结束旅程。
 
-## 需落实的接口
+## 已落实的接口
 
 - YardSceneHotspots/YardInteraction：显式院门点击允许绳牵出院，仍保留松绳操作；普通环境观察不抢走牵绳意图。Main 的 _on_exploration_requested 采集候选与当前绳牵身份。
 - ExplorationSession/Contract：可验证的同行身份随旅程记录冻结；兼容没有同行字段的旧记录，坏值不能静默变成另一只动物。Host.begin 与 Director.try_begin 传递上下文，不让 NearPathScroll 自己随机选伙伴。
