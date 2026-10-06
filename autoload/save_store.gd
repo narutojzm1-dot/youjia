@@ -27,6 +27,7 @@ const BACKUP_PATH := "user://youjia_save.bak"
 const SaveFilesType := preload("res://scripts/persistence/save_files.gd")
 const AnimalRelationshipsType := preload("res://scripts/game/animal_relationships.gd")
 const SaveDataCodec := preload("res://scripts/persistence/save_data_codec.gd")
+const YardInventory := preload("res://scripts/inventory/yard_inventory.gd")
 const SAVE_VERSION := SaveDataCodec.SAVE_VERSION
 const TUTORIAL_VERSION := SaveDataCodec.TUTORIAL_VERSION
 
@@ -226,6 +227,18 @@ func get_exploration_committed_serial() -> int:
 
 func get_keepsakes() -> Dictionary:
 	return (_data.get("keepsakes", {}) as Dictionary).duplicate(true)
+
+
+func get_yard_inventory() -> Dictionary:
+	return YardInventory.read(_data)
+
+
+func request_inventory_action(revision: int, action: String, fish: String) -> String:
+	return request_intent("inventory", func(current: Dictionary) -> Variant:
+		var result := YardInventory.transition(current, revision, action, fish)
+		if result.has("error"):
+			return CoordinatorType.IntentRejection.new(result.error)
+		return result.candidate)
 
 
 func request_exploration_record(record: Variant) -> String:

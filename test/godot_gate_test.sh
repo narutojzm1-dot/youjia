@@ -193,3 +193,13 @@ done
 echo 'VOLUME466 COMPLETION CONTRACT PASS 28'
 
 echo "GODOT GATE CONTRACT PASS $checks"
+
+# New inventory entries must not accept zero work or failed assertions.
+for basket_pair in 'yard_inventory|YARD_INVENTORY' 'yard_basket_integration|YARD_BASKET_INTEGRATION'; do
+  basket_entry="test/${basket_pair%%|*}_suite.gd"
+  basket_marker="${basket_pair#*|}"
+  run_case "$basket_marker-valid" pass 0 "$basket_marker checks=1 failures=0" none suite "$basket_entry"
+  run_case "$basket_marker-zero" block 0 "$basket_marker checks=0 failures=0" none suite "$basket_entry"
+  run_case "$basket_marker-failed" block 0 "$basket_marker checks=1 failures=1" none suite "$basket_entry"
+done
+echo "BASKET GATE CONTRACT PASS 6"

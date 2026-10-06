@@ -37,6 +37,8 @@ run_godot suite test/save_status_paper_suite.gd
 run_godot suite test/pause_notice_suite.gd
 run_godot suite test/audio_button_input_suite.gd
 run_godot suite test/modal_touch_input_suite.gd
+run_godot suite test/yard_inventory_suite.gd
+run_godot suite test/yard_basket_integration_suite.gd
 run_godot suite test/still_boundary_feedback_suite.gd
 run_godot suite test/pause_panel_fit_suite.gd
 run_godot suite test/ui_viewports.gd
