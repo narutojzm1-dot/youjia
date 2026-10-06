@@ -100,9 +100,17 @@ func exercise(label: String):
 	check(main._confirm_screen.visible, label + " modal blank gesture stays modal")
 	main._cancel_destructive_action()
 	# A real new gesture remains usable, with exclusive finger/slider ownership.
+	main._last_touch_ms = -10000
+	mouse(music, true)
 	touch(music, true)
 	print("FRESH ", label, " point=", music, " value=", audio.music_gain(), " visible=", main._pause_screen.visible, " confirm=", main._confirm_screen.visible, " sliderVisible=", main._music_slider.is_visible_in_tree(), " sliderParent=", main._music_slider.get_parent(), " mainInput=", main.is_processing_input())
 	check(is_equal_approx(audio.music_gain(), 0.5), label + " fresh music touch works")
+	var synthetic_motion := InputEventMouseMotion.new()
+	synthetic_motion.position = music + Vector2(40, 135)
+	synthetic_motion.global_position = synthetic_motion.position
+	synthetic_motion.button_mask = MOUSE_BUTTON_MASK_LEFT
+	root.push_input(synthetic_motion, true)
+	check(is_equal_approx(audio.music_gain(), 0.5), label + " synthesized mouse motion cannot move touch-owned slider")
 	touch(ambience, true, 1)
 	drag(ambience, 1)
 	check(is_equal_approx(audio.ambience_gain(), 0.67), label + " second finger cannot acquire another slider")
@@ -112,6 +120,7 @@ func exercise(label: String):
 	drag(music + Vector2(20,0))
 	check(audio.music_gain() > 0.5, label + " other finger release cannot cancel owner")
 	touch(music, false)
+	mouse(music, false)
 	audio.set_music_gain(0.83)
 	main._refresh_volume_labels()
 	drag(music)

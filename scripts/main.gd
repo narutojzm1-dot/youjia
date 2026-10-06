@@ -911,6 +911,10 @@ func _handle_volume_touch(event: InputEvent) -> bool:
 		_volume_touch_index = -1
 		_volume_touch_slider = null
 		return false
+	# Native Slider may still hold the mouse synthesized from the first touch.
+	# Route motion through the owned ScreenDrag, not another finger's mouse move.
+	if event is InputEventMouseMotion and _volume_touch_index != -1:
+		return true
 	if event is InputEventScreenTouch:
 		if not event.pressed:
 			if event.index != _volume_touch_index:
