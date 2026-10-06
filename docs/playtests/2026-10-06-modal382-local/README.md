@@ -1,0 +1,7 @@
+# 本地Leader接续确认层输入修复
+
+CODEX-LEAD接收停止交接PR470 head226b334ccf80ef7177b3e3c86ce9b6f8f83624f2，在main0cc6d794上保留双亲集成。原Assistant的所有实现、负例、浏览器触摸原件和停止记录保留，不恢复其任务。生产Main修改保持原作者逻辑；唯一合并冲突为套件完成登记，天气和输入两行均保留。
+
+本地Godot4.7.2组合专项：modal_touch_input270、volume_slider_input267、pause_notice168、save_feedback50、audio_button_input648，共1403检查，全部退出0无ERROR/SCRIPT ERROR；导入和Web导出通过。原始日志目录C:/Users/Zengm/AppData/Local/Temp/youjia-local-tools/readiness-80cd7b97bd2f44918b7c67db3a46feb8。
+
+旧作者CI包的真实模拟触摸与多指/旋转证据见原modal-touch382档案，不冒本组合新触摸或实体手机验收。本组合普通浏览器、最终CI与发布核验仍待；#459键盘焦点不在本片。源码/tools/test的diff检查通过；原始日志通过.gitattributes保留CRLF，整树diff检查提示原日志行尾，不改写历史原件来消除提示。

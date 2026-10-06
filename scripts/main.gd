@@ -115,6 +115,8 @@ var _cam_quiet_bounds := false
 var _cam_effective_offset := Vector2.ZERO
 var _latest_photo := ""
 var _last_touch_ms := -1000
+var _volume_touch_index := -1
+var _volume_touch_slider: HSlider
 # 假期天数标签
 var _day_label: Label
 # 昼夜色调覆盖层
@@ -446,12 +448,7 @@ func _input(event: InputEvent) -> void:
 			# Arrow keys move the person in the yard, never focus HUD buttons.
 			get_viewport().set_input_as_handled()
 			return
-	var slider_point := Vector2.INF
-	if event is InputEventScreenTouch:
-		slider_point = (event as InputEventScreenTouch).position
-	elif event is InputEventScreenDrag:
-		slider_point = (event as InputEventScreenDrag).position
-	if slider_point != Vector2.INF and _pause_screen != null and _pause_screen.visible and _drag_volume_slider(slider_point):
+	if _handle_volume_touch(event):
 		_last_touch_ms = Time.get_ticks_msec()
 		get_viewport().set_input_as_handled()
 		return
@@ -490,8 +487,9 @@ func _input(event: InputEvent) -> void:
 		if button.is_visible_in_tree() and not button.disabled and button.get_global_rect().has_point(event_pos):
 			_last_touch_ms = Time.get_ticks_msec()
 			# An emulated mouse press can already hold the native GUI button.
-			# Let its release toggle audio once, including holds across frames.
-			if not (is_touch_press and button in [_music_toggle, _ambience_toggle, _mute_toggle] and button.is_pressed()):
+			# Let its release complete the pause/modal action once. Hiding the
+			# overlay from a second manual emission can interrupt GUI visibility.
+			if not (is_touch_press and button in [_music_toggle, _ambience_toggle, _mute_toggle, _resume_button, _restart_button, _pause_title_button, _confirm_accept_button, _confirm_cancel_button] and button.is_pressed()):
 				button.pressed.emit()
 			get_viewport().set_input_as_handled()
 			return
@@ -918,8 +916,34 @@ func _on_ambience_gain_changed(value: float) -> void:
 	_refresh_volume_labels()
 
 
-func _drag_volume_slider(point: Vector2) -> bool:
-	return _point_sets_slider(_music_slider, point) or _point_sets_slider(_ambience_slider, point)
+func _handle_volume_touch(event: InputEvent) -> bool:
+	# Only a gesture starting on an unobscured slider can own its later drag.
+	if not _pause_screen.visible or _confirm_screen.visible or _album_screen.visible:
+		_volume_touch_index = -1
+		_volume_touch_slider = null
+		return false
+	# Native Slider may still hold the mouse synthesized from the first touch.
+	# Route motion through the owned ScreenDrag, not another finger's mouse move.
+	if event is InputEventMouseMotion and _volume_touch_index != -1:
+		return true
+	if event is InputEventScreenTouch:
+		if not event.pressed:
+			if event.index != _volume_touch_index:
+				return false
+			_volume_touch_index = -1
+			_volume_touch_slider = null
+			return true
+		if _volume_touch_index != -1:
+			return false
+		for slider: HSlider in [_music_slider, _ambience_slider]:
+			if _point_sets_slider(slider, event.position):
+				_volume_touch_index = event.index
+				_volume_touch_slider = slider
+				return true
+	elif event is InputEventScreenDrag and event.index == _volume_touch_index and _volume_touch_slider != null:
+		_point_sets_slider(_volume_touch_slider, event.position)
+		return true
+	return false
 
 
 func _point_sets_slider(slider: HSlider, point: Vector2) -> bool:
@@ -1120,6 +1144,8 @@ func _show_title(save_progress: bool = true) -> void:
 func _toggle_pause() -> void:
 	if _screen not in ["game", "exploring"]:
 		return
+	_volume_touch_index = -1
+	_volume_touch_slider = null
 	var paused := not _pause_screen.visible
 	if paused:
 		_cancel_photo_arrivals()
@@ -1134,6 +1160,8 @@ func _toggle_pause() -> void:
 
 
 func _request_destructive_action(action: String) -> void:
+	_volume_touch_index = -1
+	_volume_touch_slider = null
 	_pending_destructive_action = action
 	_confirm_screen.visible = true
 	_refresh_texts()

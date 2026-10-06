@@ -1,0 +1,1167 @@
+[
+  {
+    "path": ".gdignore",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": ".gitattributes",
+    "bytes": 10,
+    "sha256": "4ce4b6e6b8435f8c3a8387387732964a2ebf0183e8d77b8247ae8061b033e462"
+  },
+  {
+    "path": "382-audio-regression.log",
+    "bytes": 117,
+    "sha256": "d2d07fb6b792eaacefab075f03ed48ecec1dc48222c6c8d34fd8f2315f5a9155"
+  },
+  {
+    "path": "382-baseline-boundaries.log",
+    "bytes": 7211,
+    "sha256": "d3f20bac2aaebf55b5bf96efc4a1ed6d7c77de1c848a768bd924758bf0362275"
+  },
+  {
+    "path": "382-baseline-debug.log",
+    "bytes": 2524,
+    "sha256": "44b290d0b69c89c58a473b836f766f7590f5e8bfa0d116603922cb887cfd8a80"
+  },
+  {
+    "path": "382-baseline-debug2.log",
+    "bytes": 3088,
+    "sha256": "151318b3b4583ad144ab883571dcb42d78fff475020b0f273a4cc1bf99850f71"
+  },
+  {
+    "path": "382-baseline-final.log",
+    "bytes": 4046,
+    "sha256": "3dc57e637a1feee8baa10f9e7378b9ebbe37deddad6a7939b1e56f4149ba1ac8"
+  },
+  {
+    "path": "382-baseline-import-import.log",
+    "bytes": 31172,
+    "sha256": "0fdb2d859172427f919bf25a803996818be128eeb5535f610088c04a406d05e1"
+  },
+  {
+    "path": "382-baseline-import.log",
+    "bytes": 1425,
+    "sha256": "f8ff832d134f7a3dec16715b746a6d487b4685803f539ba5f9969855f197ceaf"
+  },
+  {
+    "path": "382-baseline-settled.log",
+    "bytes": 1378,
+    "sha256": "39acecbbb45b38527c3c188fdd124d46517de306f84a0aadd9979ea72a96b6d3"
+  },
+  {
+    "path": "382-baseline.log",
+    "bytes": 8919,
+    "sha256": "de0dd5db38acffb4e4f125f0afe13861bb45e9ea12fa0cf429ca18a1fe54ba2a"
+  },
+  {
+    "path": "382-boundaries-import.log",
+    "bytes": 31054,
+    "sha256": "5980eab1aa17fe562382289e85685ce2857eb498e582c28c25f61cad3568ba3d"
+  },
+  {
+    "path": "382-boundaries.log",
+    "bytes": 1816,
+    "sha256": "c4d16662347cf69c98bad159d02c0cdba9509370ac356fb18731ecc6f9718096"
+  },
+  {
+    "path": "382-candidate1.log",
+    "bytes": 1816,
+    "sha256": "7b416a5458cd7604d656daa7d43d9a61bb0ccbaa1e19edb82c3cd01a4a8d8f7f"
+  },
+  {
+    "path": "382-candidate2.log",
+    "bytes": 2257,
+    "sha256": "d829e3511931902300c0ca3426f68638e7b12efc6d1c428a81bbe1418b2595a7"
+  },
+  {
+    "path": "382-candidate3.log",
+    "bytes": 1909,
+    "sha256": "b2498d0f21504b804212244214584c3039629fae8505adaf4120145c39a6e226"
+  },
+  {
+    "path": "382-candidate4.log",
+    "bytes": 1816,
+    "sha256": "a93327a962906cf925df6d2cf97d43af50dc5b6f80df93c6437db1993ccb85f6"
+  },
+  {
+    "path": "382-current-theme-import.log",
+    "bytes": 31582,
+    "sha256": "caf9a9f7ec3419ce7df9b5ce858657f0a5d65e54504105ff478b2f82ef0a72c5"
+  },
+  {
+    "path": "382-current-theme.log",
+    "bytes": 1816,
+    "sha256": "d7eedb7da500d4f94bb26fa6971a500cbc7ad5e339cfb99505bc549da756dcb6"
+  },
+  {
+    "path": "382-integrated-import.log",
+    "bytes": 32554,
+    "sha256": "7ec0d71594f250ff5f1b4c4acddc28c06a1e75acf161282364943b52d82c71a7"
+  },
+  {
+    "path": "382-integrated.log",
+    "bytes": 1816,
+    "sha256": "75e271c5be660baab7f1b923d2470641e226174fe8258045640f521c7cb8d388"
+  },
+  {
+    "path": "382-motion-negative.log",
+    "bytes": 2281,
+    "sha256": "55c696ae39aba1492234350e1794d5b6b248da51e277cb7a2c7b6ce592638d52"
+  },
+  {
+    "path": "382-multitouch-motion-import.log",
+    "bytes": 31247,
+    "sha256": "85efad0888b9d6411c1cd4da60491c5bd4212112c0bd168e25652cfd5d5e4006"
+  },
+  {
+    "path": "382-multitouch-motion.log",
+    "bytes": 1816,
+    "sha256": "eb8e68d853f525951079663dad3e3c656aee5b86cafba3a1adf715518192c97c"
+  },
+  {
+    "path": "382-multitouch-with-gui.log",
+    "bytes": 1816,
+    "sha256": "eb8e68d853f525951079663dad3e3c656aee5b86cafba3a1adf715518192c97c"
+  },
+  {
+    "path": "382-pause-regression.log",
+    "bytes": 111,
+    "sha256": "18d413abad390601e9703191fd541463cb8613af65157c8ea89e3971e7ad8035"
+  },
+  {
+    "path": "382-save-regression.log",
+    "bytes": 112,
+    "sha256": "11a4b997c8753382de441d48025f2049c544ad871e5021222961702f50f84bea"
+  },
+  {
+    "path": "assistant-validation382.yml",
+    "bytes": 2528,
+    "sha256": "141618fdd7ae7bc0b5a71da0328d778e7e33ddd892a54571c2bbde4634655985"
+  },
+  {
+    "path": "browser-local.py",
+    "bytes": 5097,
+    "sha256": "fc5e12349a31f63824dbbdd3b653001f4107b2d65a6fad9fc8f060f5b3da6630"
+  },
+  {
+    "path": "browser-modal382-landscape.py",
+    "bytes": 6898,
+    "sha256": "399a91dc94e95ba5351ab00b7d3984c08effd2d41d71bd28d3bfb44ec27c5e20"
+  },
+  {
+    "path": "browser-modal382.py",
+    "bytes": 6828,
+    "sha256": "d329f79983ebfd9660f17a84e20358cd3c3ab4e495004d7ac909d80b196ca500"
+  },
+  {
+    "path": "browser382-baseline/390-844-cancel-tap.png",
+    "bytes": 123934,
+    "sha256": "ad9e222b562867ba3ab268bd1f0443d30060102109fa8633efb07c97b5932f31"
+  },
+  {
+    "path": "browser382-baseline/390-844-confirm-open.png",
+    "bytes": 112813,
+    "sha256": "85b4f2076dc1e6b730c34a9cf0dec23f9cc2f425658b0b93abb827280adb059f"
+  },
+  {
+    "path": "browser382-baseline/390-844-pause-initial.png",
+    "bytes": 124081,
+    "sha256": "ba868858d0c6bc666afe3ea00fd41c91dbdcb3ca495a0843e9014acbf9272a6f"
+  },
+  {
+    "path": "browser382-baseline/events.json",
+    "bytes": 3366,
+    "sha256": "b99638a9f3c1994b575d0567f7e4605a9993e10bd787844c09277520f4e0fa55"
+  },
+  {
+    "path": "browser382-baseline.log",
+    "bytes": 636,
+    "sha256": "ff49a982c8144cfebbb1b8f9ee891acd36cca066c3fff34379286714cf7096c7"
+  },
+  {
+    "path": "browser382-candidate84/390-844-cancel-after-modal-drag.png",
+    "bytes": 124076,
+    "sha256": "85456ae01f640230d691137154b288fb9ff834c2a993421d1cde947e2e433399"
+  },
+  {
+    "path": "browser382-candidate84/390-844-cancel-held-after-release.png",
+    "bytes": 124076,
+    "sha256": "85456ae01f640230d691137154b288fb9ff834c2a993421d1cde947e2e433399"
+  },
+  {
+    "path": "browser382-candidate84/390-844-cancel-held-before-release.png",
+    "bytes": 112971,
+    "sha256": "787ce1115c86d2c2769c215b3ee62034630c05e2583d7ba0e0befc5d656670d9"
+  },
+  {
+    "path": "browser382-candidate84/390-844-cancel-tap.png",
+    "bytes": 124076,
+    "sha256": "85456ae01f640230d691137154b288fb9ff834c2a993421d1cde947e2e433399"
+  },
+  {
+    "path": "browser382-candidate84/390-844-confirm-open.png",
+    "bytes": 112894,
+    "sha256": "e24a1875e9c6ebf4163f924e9922547bd959cabd7c15b8964a1bdbdecd627611"
+  },
+  {
+    "path": "browser382-candidate84/390-844-escape-during-held-cancel.png",
+    "bytes": 124043,
+    "sha256": "ae0aa4ebec9798a59c52dc0ed8d841e5572ce8f8efcb8b4409f591946e13d22e"
+  },
+  {
+    "path": "browser382-candidate84/390-844-keyboard-cancel.png",
+    "bytes": 118177,
+    "sha256": "fc12359c68dafb0b26e5327b9e3d4395f8ba54c40604c6b76c96cd138a0266bb"
+  },
+  {
+    "path": "browser382-candidate84/390-844-modal-drag-over-slider.png",
+    "bytes": 112986,
+    "sha256": "361d3c331554194a9ef09b3d2c0dc43f2f57a4ec4cece29c66e4a0ccd65501d8"
+  },
+  {
+    "path": "browser382-candidate84/390-844-mouse-cancel.png",
+    "bytes": 118040,
+    "sha256": "f49fdc48b02b43a125ded02d30f2a821be81f0b8170fecd6c1ecd1c6d7dcd028"
+  },
+  {
+    "path": "browser382-candidate84/390-844-multitouch-first-slider.png",
+    "bytes": 117872,
+    "sha256": "517c462a09f97765d17f674589fe726cfb8e49789d46dd13c67b2df86b062886"
+  },
+  {
+    "path": "browser382-candidate84/390-844-multitouch-second-slider.png",
+    "bytes": 117890,
+    "sha256": "af3fae34c352098d768da1cea6ed75cd34847f4622bf10b4d742c2ac78ff83c8"
+  },
+  {
+    "path": "browser382-candidate84/390-844-ordinary-slider-drag.png",
+    "bytes": 117947,
+    "sha256": "7ab14c83851b8c1d007056d33cc024d6d693dd44a359c2abd7f41989c02b12d3"
+  },
+  {
+    "path": "browser382-candidate84/390-844-pause-initial.png",
+    "bytes": 124076,
+    "sha256": "85456ae01f640230d691137154b288fb9ff834c2a993421d1cde947e2e433399"
+  },
+  {
+    "path": "browser382-candidate84/390-844-resume-yard.png",
+    "bytes": 531168,
+    "sha256": "65eefa4e4a09896bb37485cc23dda3ae03949911e58da0900caee2a47c43e967"
+  },
+  {
+    "path": "browser382-candidate84/390-844-yard-after-walk.png",
+    "bytes": 530433,
+    "sha256": "b577227955aae3182018b3a4ba88d3cc534f77df6bdd2dc690de669458c5e7be"
+  },
+  {
+    "path": "browser382-candidate84/events.json",
+    "bytes": 18081,
+    "sha256": "75418dc13bf6bc3bef2534bb4d9e10920ffb69544fa02a36cccb3f24c6e8f150"
+  },
+  {
+    "path": "browser382-candidate84.log",
+    "bytes": 248,
+    "sha256": "1f5781d7067cd3528a836541f3ed954b7adaf1cbb564b83e2a0946b237f83e61"
+  },
+  {
+    "path": "browser382-ci7c7/360-640-accepted-return-title.png",
+    "bytes": 259052,
+    "sha256": "ae5c5c9c65c058ad8e3f2b8be1a877c5a8af18068c9103ef8c8b7e2e72b52671"
+  },
+  {
+    "path": "browser382-ci7c7/360-640-cancel-after-modal-drag.png",
+    "bytes": 65479,
+    "sha256": "1a39a05ce6b9a277f4217690c87d5bfff657e940bb41fc9f47ca3415eee71698"
+  },
+  {
+    "path": "browser382-ci7c7/360-640-cancel-held-after-release.png",
+    "bytes": 65479,
+    "sha256": "1a39a05ce6b9a277f4217690c87d5bfff657e940bb41fc9f47ca3415eee71698"
+  },
+  {
+    "path": "browser382-ci7c7/360-640-cancel-held-before-release.png",
+    "bytes": 62714,
+    "sha256": "939057bf7ea16425bba035faf30fab77dbee33d4c57ae780be12b27b22d2ee43"
+  },
+  {
+    "path": "browser382-ci7c7/360-640-cancel-tap.png",
+    "bytes": 65479,
+    "sha256": "1a39a05ce6b9a277f4217690c87d5bfff657e940bb41fc9f47ca3415eee71698"
+  },
+  {
+    "path": "browser382-ci7c7/360-640-confirm-open.png",
+    "bytes": 62482,
+    "sha256": "bcb8ba512d77f2ec846262916871bdd560c59ce57d5b1612e2a27858081cef83"
+  },
+  {
+    "path": "browser382-ci7c7/360-640-escape-during-held-cancel.png",
+    "bytes": 65530,
+    "sha256": "66dddf74c60d99b2a948b4a02bbb8c7cac589cbffa463631d2e52fabd7b2ea3a"
+  },
+  {
+    "path": "browser382-ci7c7/360-640-keyboard-cancel.png",
+    "bytes": 66152,
+    "sha256": "ffe5c41f44088f4423c009cc7a9e512ece484446adc71fbeb687482df5da6eb7"
+  },
+  {
+    "path": "browser382-ci7c7/360-640-modal-drag-over-slider.png",
+    "bytes": 62655,
+    "sha256": "c9c12d762066db761cc2a854b79fc5c3be50de41982bdffaf3699cb5958bd844"
+  },
+  {
+    "path": "browser382-ci7c7/360-640-mouse-after-touch-before.png",
+    "bytes": 66002,
+    "sha256": "89ed457cfbeb319a2c82b0b7fcd1e83dc2ac702931fced70fe5b2d0d9b8da5b4"
+  },
+  {
+    "path": "browser382-ci7c7/360-640-mouse-after-touch-drag.png",
+    "bytes": 66048,
+    "sha256": "6119bee23867f03bb7a51f0fc2e39ef40dc0ea9927255c27224297b76c90d064"
+  },
+  {
+    "path": "browser382-ci7c7/360-640-mouse-cancel.png",
+    "bytes": 65950,
+    "sha256": "8b8a094d3d7e1c11d6243b817cd383df06e482c69154da1579fa13d24ef2f84e"
+  },
+  {
+    "path": "browser382-ci7c7/360-640-multitouch-first-slider.png",
+    "bytes": 65968,
+    "sha256": "60b40ba45e3458fbcbb0d6236efe989f9e27c5c4bcf0ee7eb3e75a83a9d2a7c7"
+  },
+  {
+    "path": "browser382-ci7c7/360-640-multitouch-owner-released.png",
+    "bytes": 66002,
+    "sha256": "89ed457cfbeb319a2c82b0b7fcd1e83dc2ac702931fced70fe5b2d0d9b8da5b4"
+  },
+  {
+    "path": "browser382-ci7c7/360-640-multitouch-second-slider.png",
+    "bytes": 66002,
+    "sha256": "89ed457cfbeb319a2c82b0b7fcd1e83dc2ac702931fced70fe5b2d0d9b8da5b4"
+  },
+  {
+    "path": "browser382-ci7c7/360-640-ordinary-slider-drag.png",
+    "bytes": 66002,
+    "sha256": "9e118d685acd839110ea48e1b5b97c312505dcc3a60102fbeedbeb407c65d39c"
+  },
+  {
+    "path": "browser382-ci7c7/360-640-pause-initial.png",
+    "bytes": 65479,
+    "sha256": "1a39a05ce6b9a277f4217690c87d5bfff657e940bb41fc9f47ca3415eee71698"
+  },
+  {
+    "path": "browser382-ci7c7/360-640-reentered-yard.png",
+    "bytes": 360064,
+    "sha256": "6bec99c64d936473e91bee5e82ff856ff9782f8e0710dd7cac8553be3d20b8e1"
+  },
+  {
+    "path": "browser382-ci7c7/360-640-resume-yard.png",
+    "bytes": 356764,
+    "sha256": "afc0aa520ad28e98bdb0da64eb0659293f337d2598a8efabc98459f0bd8306c5"
+  },
+  {
+    "path": "browser382-ci7c7/360-640-rotation-held-after.png",
+    "bytes": 34764,
+    "sha256": "e4b7955cdebff233c757d85bc0a21ebbaf50ccbbd5da0733819977243658761d"
+  },
+  {
+    "path": "browser382-ci7c7/360-640-rotation-held-before.png",
+    "bytes": 65968,
+    "sha256": "60b40ba45e3458fbcbb0d6236efe989f9e27c5c4bcf0ee7eb3e75a83a9d2a7c7"
+  },
+  {
+    "path": "browser382-ci7c7/360-640-yard-after-walk.png",
+    "bytes": 356168,
+    "sha256": "b50a17c5e4ec20a1a2f62e05132693a4f5a449de5809c87e6adf0429957155e2"
+  },
+  {
+    "path": "browser382-ci7c7/390-844-accepted-return-title.png",
+    "bytes": 107763,
+    "sha256": "30edfc7d725ee18cfe6790adec4d127a2ca3d82a749f834675681f334278e6e9"
+  },
+  {
+    "path": "browser382-ci7c7/390-844-cancel-after-modal-drag.png",
+    "bytes": 124795,
+    "sha256": "21273b911b5f1eab3f12b0295471ab906bf439473bf8e8dc268dcc8d960d46e4"
+  },
+  {
+    "path": "browser382-ci7c7/390-844-cancel-held-after-release.png",
+    "bytes": 124795,
+    "sha256": "21273b911b5f1eab3f12b0295471ab906bf439473bf8e8dc268dcc8d960d46e4"
+  },
+  {
+    "path": "browser382-ci7c7/390-844-cancel-held-before-release.png",
+    "bytes": 113268,
+    "sha256": "c8afd9c728fbb3cd7ba6713661ec93e4c4aad018c3afeee1c45a85c4acf92074"
+  },
+  {
+    "path": "browser382-ci7c7/390-844-cancel-tap.png",
+    "bytes": 124795,
+    "sha256": "21273b911b5f1eab3f12b0295471ab906bf439473bf8e8dc268dcc8d960d46e4"
+  },
+  {
+    "path": "browser382-ci7c7/390-844-confirm-open.png",
+    "bytes": 113197,
+    "sha256": "df58b6f7b241d702bb0ece03dee746be1002a14a4a4ea2504e25f84801c09a58"
+  },
+  {
+    "path": "browser382-ci7c7/390-844-escape-during-held-cancel.png",
+    "bytes": 124848,
+    "sha256": "b04449007cc83aa796458d5962d28e5e6d9716a8803eb39c13f8a956fadb39f0"
+  },
+  {
+    "path": "browser382-ci7c7/390-844-keyboard-cancel.png",
+    "bytes": 118956,
+    "sha256": "c8ef6a148b3633cc0a8d60c316e97ddf987301c8e39dcdd0b6e4a1c7aabc2536"
+  },
+  {
+    "path": "browser382-ci7c7/390-844-modal-drag-over-slider.png",
+    "bytes": 113278,
+    "sha256": "dc0e4dd9b86151342f1c5841439d06cbf1a57d1e8abfb9ffa6998423d65446a6"
+  },
+  {
+    "path": "browser382-ci7c7/390-844-mouse-after-touch-before.png",
+    "bytes": 118735,
+    "sha256": "945cf9149376622902b6bee0d11e17255569b6017c713124d90e3912c0fedc44"
+  },
+  {
+    "path": "browser382-ci7c7/390-844-mouse-after-touch-drag.png",
+    "bytes": 118763,
+    "sha256": "28f7ddaada31882fd71ed1e03e44ebe5d36f9414b0609212762a8d38aa0fd03d"
+  },
+  {
+    "path": "browser382-ci7c7/390-844-mouse-cancel.png",
+    "bytes": 118815,
+    "sha256": "0e0747b423311a0da9d747582c19ef11d52c0dcadd533ce1fd0c361a13d6dab3"
+  },
+  {
+    "path": "browser382-ci7c7/390-844-multitouch-first-slider.png",
+    "bytes": 118746,
+    "sha256": "f8d3c8450de3923b19c68a109ad6b92926b46e1653101b9d4862c05425831d1f"
+  },
+  {
+    "path": "browser382-ci7c7/390-844-multitouch-owner-released.png",
+    "bytes": 118735,
+    "sha256": "945cf9149376622902b6bee0d11e17255569b6017c713124d90e3912c0fedc44"
+  },
+  {
+    "path": "browser382-ci7c7/390-844-multitouch-second-slider.png",
+    "bytes": 118735,
+    "sha256": "945cf9149376622902b6bee0d11e17255569b6017c713124d90e3912c0fedc44"
+  },
+  {
+    "path": "browser382-ci7c7/390-844-ordinary-slider-drag.png",
+    "bytes": 118834,
+    "sha256": "2a1b504c6f3bcdb1ea250395ae7481e9a91b379100141ce7f429598b4ba9d67a"
+  },
+  {
+    "path": "browser382-ci7c7/390-844-pause-initial.png",
+    "bytes": 124795,
+    "sha256": "21273b911b5f1eab3f12b0295471ab906bf439473bf8e8dc268dcc8d960d46e4"
+  },
+  {
+    "path": "browser382-ci7c7/390-844-reentered-yard.png",
+    "bytes": 412127,
+    "sha256": "419707c3e5e82830aa87277f0d7139faee63971c93c578211df5da4e1fbbd020"
+  },
+  {
+    "path": "browser382-ci7c7/390-844-resume-yard.png",
+    "bytes": 531186,
+    "sha256": "1cfb094e410f5d4e5436807b27a45e50fbc0413cb56dd091bae585582ab86957"
+  },
+  {
+    "path": "browser382-ci7c7/390-844-rotation-held-after.png",
+    "bytes": 32477,
+    "sha256": "d47a39e2b347b1308795b8e5d619de5e049ce70761492cc5a80b715b3c22988a"
+  },
+  {
+    "path": "browser382-ci7c7/390-844-rotation-held-before.png",
+    "bytes": 118746,
+    "sha256": "f8d3c8450de3923b19c68a109ad6b92926b46e1653101b9d4862c05425831d1f"
+  },
+  {
+    "path": "browser382-ci7c7/390-844-yard-after-walk.png",
+    "bytes": 531032,
+    "sha256": "63b1b2be9fac24741d58697710ac12f964ad735e452b37f141df5e06324e9b3b"
+  },
+  {
+    "path": "browser382-ci7c7/844-390-accepted-return-title.png",
+    "bytes": 28291,
+    "sha256": "e429278feb94344fe8fc8c02577b7567b4d7e0ad45e603c012fe17320c935a08"
+  },
+  {
+    "path": "browser382-ci7c7/844-390-cancel-after-modal-drag.png",
+    "bytes": 32721,
+    "sha256": "b081fd1130b16699225cfaafad718cf16ef13897d41416bc5dca8de2ba8563d5"
+  },
+  {
+    "path": "browser382-ci7c7/844-390-cancel-held-after-release.png",
+    "bytes": 32721,
+    "sha256": "b081fd1130b16699225cfaafad718cf16ef13897d41416bc5dca8de2ba8563d5"
+  },
+  {
+    "path": "browser382-ci7c7/844-390-cancel-held-before-release.png",
+    "bytes": 29004,
+    "sha256": "336ce57be90e69f2a7a6f42b583a87782181e0460c3502da649a7ad3fa302170"
+  },
+  {
+    "path": "browser382-ci7c7/844-390-cancel-tap.png",
+    "bytes": 32721,
+    "sha256": "b081fd1130b16699225cfaafad718cf16ef13897d41416bc5dca8de2ba8563d5"
+  },
+  {
+    "path": "browser382-ci7c7/844-390-confirm-open.png",
+    "bytes": 29007,
+    "sha256": "de2f68c67872ca4347f43f88fec4e4eaaf492fbd15de88f1e95d6e62b0f91db6"
+  },
+  {
+    "path": "browser382-ci7c7/844-390-escape-during-held-cancel.png",
+    "bytes": 32721,
+    "sha256": "b081fd1130b16699225cfaafad718cf16ef13897d41416bc5dca8de2ba8563d5"
+  },
+  {
+    "path": "browser382-ci7c7/844-390-keyboard-cancel.png",
+    "bytes": 32970,
+    "sha256": "678aded14e828d41aa99926795b9b7ef29306e7518cb2cae2acdfee791dce80b"
+  },
+  {
+    "path": "browser382-ci7c7/844-390-modal-drag-over-slider.png",
+    "bytes": 28999,
+    "sha256": "553b2b1bb439c246e0ce70c1ee4b564a83e1a90bf5e54e4babee61b51acbf2e8"
+  },
+  {
+    "path": "browser382-ci7c7/844-390-mouse-after-touch-before.png",
+    "bytes": 32502,
+    "sha256": "cd92c5895143d2f09708ca611c459b38514f1a297fb930f02d5d91574471ac2e"
+  },
+  {
+    "path": "browser382-ci7c7/844-390-mouse-after-touch-drag.png",
+    "bytes": 32525,
+    "sha256": "455608a957e5bee3da231522db6b16fb05df09eb472e34d77f4df8c9536ceb7d"
+  },
+  {
+    "path": "browser382-ci7c7/844-390-mouse-cancel.png",
+    "bytes": 32557,
+    "sha256": "71b17bc8f23f3679a09ba10e1f6cb65f7d4989201b44a6300c5f23c8a221e314"
+  },
+  {
+    "path": "browser382-ci7c7/844-390-multitouch-first-slider.png",
+    "bytes": 32500,
+    "sha256": "b187f3b2f9b3128fd7e2928476c9662bab0aadc2e77464fee68cb393b07a94c5"
+  },
+  {
+    "path": "browser382-ci7c7/844-390-multitouch-owner-released.png",
+    "bytes": 32502,
+    "sha256": "cd92c5895143d2f09708ca611c459b38514f1a297fb930f02d5d91574471ac2e"
+  },
+  {
+    "path": "browser382-ci7c7/844-390-multitouch-second-slider.png",
+    "bytes": 32502,
+    "sha256": "cd92c5895143d2f09708ca611c459b38514f1a297fb930f02d5d91574471ac2e"
+  },
+  {
+    "path": "browser382-ci7c7/844-390-ordinary-slider-drag.png",
+    "bytes": 32557,
+    "sha256": "1871d2bbe4bb3c5f6b64814c9ff7aa4c39bf78f3dec57e24439d0ae7f9c0ce86"
+  },
+  {
+    "path": "browser382-ci7c7/844-390-pause-initial.png",
+    "bytes": 32721,
+    "sha256": "b081fd1130b16699225cfaafad718cf16ef13897d41416bc5dca8de2ba8563d5"
+  },
+  {
+    "path": "browser382-ci7c7/844-390-reentered-yard.png",
+    "bytes": 383699,
+    "sha256": "696a4aaab9e9a3da90a43a54290efa39974b43935da068c4da484012208c2d70"
+  },
+  {
+    "path": "browser382-ci7c7/844-390-resume-yard.png",
+    "bytes": 372206,
+    "sha256": "8d0b5b9356eb9213a20fa79f72a2f52693b1f01e77476c229184cae9ad9faee5"
+  },
+  {
+    "path": "browser382-ci7c7/844-390-rotation-held-after.png",
+    "bytes": 118490,
+    "sha256": "618b1e8a1fbc260b5b1c353b78e7c66d0ead9dc6c76725aed1704e9264665a84"
+  },
+  {
+    "path": "browser382-ci7c7/844-390-rotation-held-before.png",
+    "bytes": 32500,
+    "sha256": "b187f3b2f9b3128fd7e2928476c9662bab0aadc2e77464fee68cb393b07a94c5"
+  },
+  {
+    "path": "browser382-ci7c7/844-390-yard-after-walk.png",
+    "bytes": 386585,
+    "sha256": "277e4761cb8fe47ab3ee1029cca0aedf7dcc51d9c711c49c5f77a092ba5bf3b1"
+  },
+  {
+    "path": "browser382-ci7c7/events.json",
+    "bytes": 86066,
+    "sha256": "6d400b5b08dd0340fa2b50f9ccae4d6096fec8412c0e97deb9609459a440eb7d"
+  },
+  {
+    "path": "browser382-ci7c7/source-proof.json",
+    "bytes": 1266,
+    "sha256": "3e0e16a12f42ebc2ac77f5f7adf4673310272968bc9a34b73f792ac0c4d71e22"
+  },
+  {
+    "path": "browser382-ci7c7-landscape/844-390-accepted-return-title.png",
+    "bytes": 385041,
+    "sha256": "1a817fa5b69164273d865bd2fd807f6e5a783eee7c5f7183198054f1641c1eb8"
+  },
+  {
+    "path": "browser382-ci7c7-landscape/844-390-cancel-after-modal-drag.png",
+    "bytes": 32723,
+    "sha256": "1225d38d4f77761ee8da7db409cd03d68393f762b24651818c9b3cdc45e914f2"
+  },
+  {
+    "path": "browser382-ci7c7-landscape/844-390-cancel-held-after-release.png",
+    "bytes": 32723,
+    "sha256": "1225d38d4f77761ee8da7db409cd03d68393f762b24651818c9b3cdc45e914f2"
+  },
+  {
+    "path": "browser382-ci7c7-landscape/844-390-cancel-held-before-release.png",
+    "bytes": 28969,
+    "sha256": "6d664461e7c0b0a0fcf3e3e9f38439c1e9c2f43f0a2a25a6588e7703276b2448"
+  },
+  {
+    "path": "browser382-ci7c7-landscape/844-390-cancel-tap.png",
+    "bytes": 32723,
+    "sha256": "1225d38d4f77761ee8da7db409cd03d68393f762b24651818c9b3cdc45e914f2"
+  },
+  {
+    "path": "browser382-ci7c7-landscape/844-390-confirm-open.png",
+    "bytes": 28971,
+    "sha256": "870e42c93dd31dbb23f7dfff06015db8d8bbcfd4ed1e6e3730d7c328e30f2bd2"
+  },
+  {
+    "path": "browser382-ci7c7-landscape/844-390-escape-during-held-cancel.png",
+    "bytes": 32723,
+    "sha256": "1225d38d4f77761ee8da7db409cd03d68393f762b24651818c9b3cdc45e914f2"
+  },
+  {
+    "path": "browser382-ci7c7-landscape/844-390-keyboard-cancel.png",
+    "bytes": 32979,
+    "sha256": "4d59b1872a729a21ec712535736ec199e934b34e74f4ef20f63fde26ee66cc15"
+  },
+  {
+    "path": "browser382-ci7c7-landscape/844-390-modal-drag-over-slider.png",
+    "bytes": 28962,
+    "sha256": "bf9557ea7bba5c84c0cd46f7b25c4c00a99adb5ac16c2fa99a7f7c651aeec942"
+  },
+  {
+    "path": "browser382-ci7c7-landscape/844-390-mouse-after-touch-before.png",
+    "bytes": 32511,
+    "sha256": "dd2e67c8204f1f01116ce522560028021b7ae6c925350ef49c8ad403d087bed1"
+  },
+  {
+    "path": "browser382-ci7c7-landscape/844-390-mouse-after-touch-drag.png",
+    "bytes": 32533,
+    "sha256": "91c3a5dad4d8849d4c9e043fb44f94a61f2a16091b944a31cc19b73eb6db4b64"
+  },
+  {
+    "path": "browser382-ci7c7-landscape/844-390-mouse-cancel.png",
+    "bytes": 32568,
+    "sha256": "86d6e58d9c471d39cfc542570424d050e6f287ea74cb914de697b809f9d8e29d"
+  },
+  {
+    "path": "browser382-ci7c7-landscape/844-390-multitouch-first-slider.png",
+    "bytes": 32512,
+    "sha256": "08e08c639224ab1b6d463a0a810f0b9098c2ec75ef8e8ebfc1372debb09d9be6"
+  },
+  {
+    "path": "browser382-ci7c7-landscape/844-390-multitouch-owner-released.png",
+    "bytes": 32511,
+    "sha256": "dd2e67c8204f1f01116ce522560028021b7ae6c925350ef49c8ad403d087bed1"
+  },
+  {
+    "path": "browser382-ci7c7-landscape/844-390-multitouch-second-slider.png",
+    "bytes": 32511,
+    "sha256": "dd2e67c8204f1f01116ce522560028021b7ae6c925350ef49c8ad403d087bed1"
+  },
+  {
+    "path": "browser382-ci7c7-landscape/844-390-ordinary-slider-drag.png",
+    "bytes": 32566,
+    "sha256": "98e666ea68dfc4d264367285d4fb53507952bc0a7518c995ab499fba2ac468d0"
+  },
+  {
+    "path": "browser382-ci7c7-landscape/844-390-pause-initial.png",
+    "bytes": 32723,
+    "sha256": "1225d38d4f77761ee8da7db409cd03d68393f762b24651818c9b3cdc45e914f2"
+  },
+  {
+    "path": "browser382-ci7c7-landscape/844-390-reentered-yard.png",
+    "bytes": 383662,
+    "sha256": "58af7e11ed561091cd9ad69167a94e5c6c47755cd1bef30b802ac51596016351"
+  },
+  {
+    "path": "browser382-ci7c7-landscape/844-390-resume-yard.png",
+    "bytes": 372259,
+    "sha256": "6dbc28f88f660839211f2d76285afe20d45ebb4e70cc818e0fa2c867663af95c"
+  },
+  {
+    "path": "browser382-ci7c7-landscape/844-390-rotation-held-after.png",
+    "bytes": 118638,
+    "sha256": "48b15f59cc9da08f97360627de8c4b035ede244e78bf87c76fc14d5fc39d7b02"
+  },
+  {
+    "path": "browser382-ci7c7-landscape/844-390-rotation-held-before.png",
+    "bytes": 32512,
+    "sha256": "08e08c639224ab1b6d463a0a810f0b9098c2ec75ef8e8ebfc1372debb09d9be6"
+  },
+  {
+    "path": "browser382-ci7c7-landscape/844-390-yard-after-walk.png",
+    "bytes": 386502,
+    "sha256": "7f717f5ae4aa37bdf85aa4a434ce889a0e2df9d2f6f98f7266bd73df251fad95"
+  },
+  {
+    "path": "browser382-ci7c7-landscape/events.json",
+    "bytes": 28611,
+    "sha256": "701349c3a8fcda374e44142547132a9a1559d53dfaf5090d6c5bc21234f7b955"
+  },
+  {
+    "path": "browser382-ci7c7-landscape/source-proof.json",
+    "bytes": 424,
+    "sha256": "3472b57a7ba204bf391bce62e5e844f576ce1c58595b7600127f65a7216e1cb3"
+  },
+  {
+    "path": "browser382-ci7c7-landscape.log",
+    "bytes": 41,
+    "sha256": "2d5a096eba88eed7a48383241c8de968c0a84b87e486c97dce6e37c60aac82ae"
+  },
+  {
+    "path": "browser382-ci7c7.log",
+    "bytes": 41,
+    "sha256": "6d761840c043581adc913bee3b76a8076e1d7d798042e8c8a6eb2db73d786f3b"
+  },
+  {
+    "path": "browser382-quick7c7/360-640-accepted-return-title.png",
+    "bytes": 259052,
+    "sha256": "ae5c5c9c65c058ad8e3f2b8be1a877c5a8af18068c9103ef8c8b7e2e72b52671"
+  },
+  {
+    "path": "browser382-quick7c7/360-640-cancel-after-modal-drag.png",
+    "bytes": 65482,
+    "sha256": "a2a998684420a1966e6405d0667d4085498c6d94646a5296e3db200050ecf388"
+  },
+  {
+    "path": "browser382-quick7c7/360-640-cancel-held-after-release.png",
+    "bytes": 65482,
+    "sha256": "a2a998684420a1966e6405d0667d4085498c6d94646a5296e3db200050ecf388"
+  },
+  {
+    "path": "browser382-quick7c7/360-640-cancel-held-before-release.png",
+    "bytes": 62690,
+    "sha256": "09075ddcca60d3ce2724b2cc7ae41c2986d6b14412c851e34618ea5ee676c0b1"
+  },
+  {
+    "path": "browser382-quick7c7/360-640-cancel-tap.png",
+    "bytes": 65482,
+    "sha256": "a2a998684420a1966e6405d0667d4085498c6d94646a5296e3db200050ecf388"
+  },
+  {
+    "path": "browser382-quick7c7/360-640-confirm-open.png",
+    "bytes": 62460,
+    "sha256": "d73a3d9bb8a4bf356d2f83cb6459ed1abc23b6b1fce35858eb38fa3c8c9cd620"
+  },
+  {
+    "path": "browser382-quick7c7/360-640-escape-during-held-cancel.png",
+    "bytes": 65532,
+    "sha256": "fcdbcaf9a7dace9cf0887b39a41b18dd1e3317903140a6a76241f65613abea80"
+  },
+  {
+    "path": "browser382-quick7c7/360-640-keyboard-cancel.png",
+    "bytes": 66190,
+    "sha256": "c50b80e884f3aeef49383dd2fc9ae863efcf868e558bb56315d174120468e40b"
+  },
+  {
+    "path": "browser382-quick7c7/360-640-modal-drag-over-slider.png",
+    "bytes": 62630,
+    "sha256": "54a3b11ef336666249c3d3176a995b2223e6cb7854d8da7aafd7f83f462367ee"
+  },
+  {
+    "path": "browser382-quick7c7/360-640-mouse-after-touch-before.png",
+    "bytes": 66071,
+    "sha256": "4b5c4307bdb29170d19587fbf7a7190e645b0368aa902c15f203177555dcb013"
+  },
+  {
+    "path": "browser382-quick7c7/360-640-mouse-after-touch-drag.png",
+    "bytes": 66108,
+    "sha256": "5b2e2eeb0a252dd45c1ea288863f690a118c7378480333db3ef3d266b01b6311"
+  },
+  {
+    "path": "browser382-quick7c7/360-640-mouse-cancel.png",
+    "bytes": 65995,
+    "sha256": "47164e0df3d34311abfcf3902e5a84096881cdf852d69aa7eb5e9c9c8567493a"
+  },
+  {
+    "path": "browser382-quick7c7/360-640-multitouch-first-slider.png",
+    "bytes": 66045,
+    "sha256": "76b165d6eaa32c4139a497d95ffe4ccb23e3c41b51eea5df5994af0ce66c924c"
+  },
+  {
+    "path": "browser382-quick7c7/360-640-multitouch-owner-released.png",
+    "bytes": 66071,
+    "sha256": "4b5c4307bdb29170d19587fbf7a7190e645b0368aa902c15f203177555dcb013"
+  },
+  {
+    "path": "browser382-quick7c7/360-640-multitouch-second-slider.png",
+    "bytes": 66071,
+    "sha256": "4b5c4307bdb29170d19587fbf7a7190e645b0368aa902c15f203177555dcb013"
+  },
+  {
+    "path": "browser382-quick7c7/360-640-ordinary-slider-drag.png",
+    "bytes": 66063,
+    "sha256": "bb92255b6440ef2d0ef33aee0408490c709c948798a8817dc67ef0811f3c5e1c"
+  },
+  {
+    "path": "browser382-quick7c7/360-640-pause-initial.png",
+    "bytes": 65482,
+    "sha256": "a2a998684420a1966e6405d0667d4085498c6d94646a5296e3db200050ecf388"
+  },
+  {
+    "path": "browser382-quick7c7/360-640-reentered-yard.png",
+    "bytes": 360002,
+    "sha256": "cd235448ca731181df11ac3ec28df485d344888c4c391d1609f49facbcb58a31"
+  },
+  {
+    "path": "browser382-quick7c7/360-640-resume-yard.png",
+    "bytes": 356794,
+    "sha256": "fca73ee4e349b5be519e0c075ee99f835e5c8de2e12247d70b29dceab336d8ce"
+  },
+  {
+    "path": "browser382-quick7c7/360-640-rotation-held-after.png",
+    "bytes": 34720,
+    "sha256": "48b93dc0386d22dd10fbdfb374af7ac995f0c7def7e8212cf056e5939ec5199c"
+  },
+  {
+    "path": "browser382-quick7c7/360-640-rotation-held-before.png",
+    "bytes": 66045,
+    "sha256": "76b165d6eaa32c4139a497d95ffe4ccb23e3c41b51eea5df5994af0ce66c924c"
+  },
+  {
+    "path": "browser382-quick7c7/360-640-yard-after-walk.png",
+    "bytes": 356417,
+    "sha256": "8c1d2e74ffc5b398585c4ef8b699f84cadbda73dade6cd05ec7c1016e3cb3b45"
+  },
+  {
+    "path": "browser382-quick7c7/390-844-accepted-return-title.png",
+    "bytes": 107892,
+    "sha256": "2ea448c7f54eb4c45e29d10132037c7ff4deee627f8de93e2861f2f7a08a7ea6"
+  },
+  {
+    "path": "browser382-quick7c7/390-844-cancel-after-modal-drag.png",
+    "bytes": 124782,
+    "sha256": "3820d3537eea7ab0d1b82db3ae32ce7fb6a1b5d2e02aa138603904eb1b7e821d"
+  },
+  {
+    "path": "browser382-quick7c7/390-844-cancel-held-after-release.png",
+    "bytes": 124782,
+    "sha256": "3820d3537eea7ab0d1b82db3ae32ce7fb6a1b5d2e02aa138603904eb1b7e821d"
+  },
+  {
+    "path": "browser382-quick7c7/390-844-cancel-held-before-release.png",
+    "bytes": 113263,
+    "sha256": "398291b1e72c70800854f12937b398d449fb4c6071eb3ce725acf8a1ff7e13b9"
+  },
+  {
+    "path": "browser382-quick7c7/390-844-cancel-tap.png",
+    "bytes": 124782,
+    "sha256": "3820d3537eea7ab0d1b82db3ae32ce7fb6a1b5d2e02aa138603904eb1b7e821d"
+  },
+  {
+    "path": "browser382-quick7c7/390-844-confirm-open.png",
+    "bytes": 113184,
+    "sha256": "58ac2b15b36a6be80ba6303b0841503d41429cf794d2e95834dc951b5f18e184"
+  },
+  {
+    "path": "browser382-quick7c7/390-844-escape-during-held-cancel.png",
+    "bytes": 124832,
+    "sha256": "2e195d84541aaf0014f357917f68d5920182a7367cd2a0de01fd51982b914d93"
+  },
+  {
+    "path": "browser382-quick7c7/390-844-keyboard-cancel.png",
+    "bytes": 118979,
+    "sha256": "8fa1be45615f51921380195b177532adeb6c9a812e8688e6f8bf648c4bf95554"
+  },
+  {
+    "path": "browser382-quick7c7/390-844-modal-drag-over-slider.png",
+    "bytes": 113276,
+    "sha256": "0f45260e3435ce9d9909ee2f9493fedcc7919dea37700db4904a9c44960859be"
+  },
+  {
+    "path": "browser382-quick7c7/390-844-mouse-after-touch-before.png",
+    "bytes": 118789,
+    "sha256": "9210bcaf66cc8110a0667752796841163a86081015e1f6c6ed851301aa3d4e61"
+  },
+  {
+    "path": "browser382-quick7c7/390-844-mouse-after-touch-drag.png",
+    "bytes": 118822,
+    "sha256": "7f655083d4f68817436e43c7868c1600472d20bea0fb369cef47b53b4658b39c"
+  },
+  {
+    "path": "browser382-quick7c7/390-844-mouse-cancel.png",
+    "bytes": 118864,
+    "sha256": "5fdf17eed33b4da5ab87b8f5d5b8459eb82ebd5b8984a9e45a5ee19c48f58bcc"
+  },
+  {
+    "path": "browser382-quick7c7/390-844-multitouch-first-slider.png",
+    "bytes": 118805,
+    "sha256": "f3d9ef6c62de445d5b68fcf2c0ce868ce9240a664f50c912032302087857ce34"
+  },
+  {
+    "path": "browser382-quick7c7/390-844-multitouch-owner-released.png",
+    "bytes": 118789,
+    "sha256": "9210bcaf66cc8110a0667752796841163a86081015e1f6c6ed851301aa3d4e61"
+  },
+  {
+    "path": "browser382-quick7c7/390-844-multitouch-second-slider.png",
+    "bytes": 118789,
+    "sha256": "9210bcaf66cc8110a0667752796841163a86081015e1f6c6ed851301aa3d4e61"
+  },
+  {
+    "path": "browser382-quick7c7/390-844-ordinary-slider-drag.png",
+    "bytes": 118898,
+    "sha256": "034a2e5ad000a4a1f3be47b7bcc16cc371a587c1a525b93097f4b5fd5b189da3"
+  },
+  {
+    "path": "browser382-quick7c7/390-844-pause-initial.png",
+    "bytes": 124782,
+    "sha256": "3820d3537eea7ab0d1b82db3ae32ce7fb6a1b5d2e02aa138603904eb1b7e821d"
+  },
+  {
+    "path": "browser382-quick7c7/390-844-reentered-yard.png",
+    "bytes": 538549,
+    "sha256": "a3e9b120a8e50232227307b924a9a38811734eb40e5c19cfb94c1f86022b9f75"
+  },
+  {
+    "path": "browser382-quick7c7/390-844-resume-yard.png",
+    "bytes": 531220,
+    "sha256": "5c9b558cd8e37948a97f66478f3cd9ff21b4bc8dc6573a005e347d321231d297"
+  },
+  {
+    "path": "browser382-quick7c7/390-844-rotation-held-after.png",
+    "bytes": 32455,
+    "sha256": "31998768ee2ef64c0824f84efa83afdcab58098a5ee6327b09d6fee10cdf5106"
+  },
+  {
+    "path": "browser382-quick7c7/390-844-rotation-held-before.png",
+    "bytes": 118805,
+    "sha256": "f3d9ef6c62de445d5b68fcf2c0ce868ce9240a664f50c912032302087857ce34"
+  },
+  {
+    "path": "browser382-quick7c7/390-844-yard-after-walk.png",
+    "bytes": 530797,
+    "sha256": "aca29088b7c6329905ff11883a196fe5a0ca56228e7bd44146038ed41c72c6f3"
+  },
+  {
+    "path": "browser382-quick7c7/844-390-accepted-return-title.png",
+    "bytes": 28328,
+    "sha256": "00f71285a0ffade855bfaef70f9f458c911cd17717e5fe31782b1104550cb013"
+  },
+  {
+    "path": "browser382-quick7c7/844-390-cancel-after-modal-drag.png",
+    "bytes": 32757,
+    "sha256": "3c99ed251cc0bf92c69d9fa02dea27209eb083f5c83e4fefd824ee501b7a6d17"
+  },
+  {
+    "path": "browser382-quick7c7/844-390-cancel-held-after-release.png",
+    "bytes": 32757,
+    "sha256": "3c99ed251cc0bf92c69d9fa02dea27209eb083f5c83e4fefd824ee501b7a6d17"
+  },
+  {
+    "path": "browser382-quick7c7/844-390-cancel-held-before-release.png",
+    "bytes": 29014,
+    "sha256": "3e34175411732e849122172fdfe1de010afa4bce60ce266239e714d4f903c121"
+  },
+  {
+    "path": "browser382-quick7c7/844-390-cancel-tap.png",
+    "bytes": 32757,
+    "sha256": "3c99ed251cc0bf92c69d9fa02dea27209eb083f5c83e4fefd824ee501b7a6d17"
+  },
+  {
+    "path": "browser382-quick7c7/844-390-confirm-open.png",
+    "bytes": 29016,
+    "sha256": "fed855cd5a1f00e5b19a4ba6ecf37d3da0fdffb914de7f3ce37f75ed40a1b8c5"
+  },
+  {
+    "path": "browser382-quick7c7/844-390-escape-during-held-cancel.png",
+    "bytes": 32757,
+    "sha256": "3c99ed251cc0bf92c69d9fa02dea27209eb083f5c83e4fefd824ee501b7a6d17"
+  },
+  {
+    "path": "browser382-quick7c7/844-390-keyboard-cancel.png",
+    "bytes": 32899,
+    "sha256": "038686bcca0d13edb0f0c5529e23439675745dfaec5400c4bb1f7db2baa2ab08"
+  },
+  {
+    "path": "browser382-quick7c7/844-390-modal-drag-over-slider.png",
+    "bytes": 29002,
+    "sha256": "5bd8ed41dc763749f2e97e319d2485147fb01c2fab359f0c1498a52970c0c432"
+  },
+  {
+    "path": "browser382-quick7c7/844-390-mouse-after-touch-before.png",
+    "bytes": 32442,
+    "sha256": "1cd401cf8d63aca1fa800b0c68774b6fcc17c7d4bfc9f0584b5d135f6613dcfb"
+  },
+  {
+    "path": "browser382-quick7c7/844-390-mouse-after-touch-drag.png",
+    "bytes": 32468,
+    "sha256": "65eb87bd1a252df1614a90a0a0219d42b103a27c5b3cf2df7e473be99f4d599d"
+  },
+  {
+    "path": "browser382-quick7c7/844-390-mouse-cancel.png",
+    "bytes": 32502,
+    "sha256": "577b0829f1a0291014848671d7b8f25b2773dc688f934324a33c05646590d1ad"
+  },
+  {
+    "path": "browser382-quick7c7/844-390-multitouch-first-slider.png",
+    "bytes": 32444,
+    "sha256": "e0fc4a0d43a8562c18d3654218a2c3f4391231561689016cfe7d419c98e31be8"
+  },
+  {
+    "path": "browser382-quick7c7/844-390-multitouch-owner-released.png",
+    "bytes": 32442,
+    "sha256": "1cd401cf8d63aca1fa800b0c68774b6fcc17c7d4bfc9f0584b5d135f6613dcfb"
+  },
+  {
+    "path": "browser382-quick7c7/844-390-multitouch-second-slider.png",
+    "bytes": 32442,
+    "sha256": "1cd401cf8d63aca1fa800b0c68774b6fcc17c7d4bfc9f0584b5d135f6613dcfb"
+  },
+  {
+    "path": "browser382-quick7c7/844-390-ordinary-slider-drag.png",
+    "bytes": 32500,
+    "sha256": "25276692587bdc64917686a0255a9ebb4175ed4824ac189714b2b7c268ed678d"
+  },
+  {
+    "path": "browser382-quick7c7/844-390-pause-initial.png",
+    "bytes": 32757,
+    "sha256": "3c99ed251cc0bf92c69d9fa02dea27209eb083f5c83e4fefd824ee501b7a6d17"
+  },
+  {
+    "path": "browser382-quick7c7/844-390-reentered-yard.png",
+    "bytes": 385041,
+    "sha256": "1a817fa5b69164273d865bd2fd807f6e5a783eee7c5f7183198054f1641c1eb8"
+  },
+  {
+    "path": "browser382-quick7c7/844-390-resume-yard.png",
+    "bytes": 372249,
+    "sha256": "9c5a3733fe3697c88856b12712a9a168dd283f89eeeeaa069732379c49c5d257"
+  },
+  {
+    "path": "browser382-quick7c7/844-390-rotation-held-after.png",
+    "bytes": 118566,
+    "sha256": "32d0b5fdc220410d6a68a8be15e1ee07ad0c6945cd579a6e7794e61014c26cbf"
+  },
+  {
+    "path": "browser382-quick7c7/844-390-rotation-held-before.png",
+    "bytes": 32444,
+    "sha256": "e0fc4a0d43a8562c18d3654218a2c3f4391231561689016cfe7d419c98e31be8"
+  },
+  {
+    "path": "browser382-quick7c7/844-390-yard-after-walk.png",
+    "bytes": 386712,
+    "sha256": "36aa37db60c76d3cba10a7d8e095120a69a194805ee6dac2c2304c2f4c93acba"
+  },
+  {
+    "path": "browser382-quick7c7/events.json",
+    "bytes": 86060,
+    "sha256": "89cb7b175c89736bc3e62ae59ade8147b73c1856d6410dd3491caae61b5d7fd0"
+  },
+  {
+    "path": "browser382-quick7c7/source-proof.json",
+    "bytes": 1266,
+    "sha256": "13c7edda6b60fb84a382719fea24e73d007080f789d177f50b231e9c46d0fd98"
+  },
+  {
+    "path": "browser382-quick7c7.log",
+    "bytes": 41,
+    "sha256": "6d761840c043581adc913bee3b76a8076e1d7d798042e8c8a6eb2db73d786f3b"
+  },
+  {
+    "path": "ci/bundle-retention.log",
+    "bytes": 1301,
+    "sha256": "db47505460e801d6558b71ce646a952944cc20846081028fd8752cd96a640634"
+  },
+  {
+    "path": "ci/engine-version.txt",
+    "bytes": 32,
+    "sha256": "edff16c1721dd4ae989cadf29a01f574ae8d51b118221f664725bd6980bbba5d"
+  },
+  {
+    "path": "ci/export-sha256.txt",
+    "bytes": 1730,
+    "sha256": "719e0da0f981ca80ad6c3173c85f9fb400b5b4e640daf0a5c2e274b6706d1008"
+  },
+  {
+    "path": "ci/export.log",
+    "bytes": 46562,
+    "sha256": "c7db4a9f1979a4606fabf43c918e6a3a3ad56577e927338125bb9e1d84abf24f"
+  },
+  {
+    "path": "ci/full-daily.log",
+    "bytes": 173750,
+    "sha256": "a21fd75c258748c85cc5c3431b3e1d7be85789c8084499bd7e91d1003818407b"
+  },
+  {
+    "path": "ci/source-shas.txt",
+    "bytes": 82,
+    "sha256": "d94d541216812e1e69fa001a68e4fc57c488013caf4ffef0131489561dddb953"
+  },
+  {
+    "path": "ci/storage-modules.log",
+    "bytes": 145,
+    "sha256": "69d2cfe36e55916187b1ce6b537c388a1bb633ee3f0ec77b42891590d5f8277d"
+  },
+  {
+    "path": "ci37401565744.json",
+    "bytes": 2053,
+    "sha256": "e60655bc2ca09ca9c47c7153c9f188fc67acb51723b88e4486127c39d4bcc0c0"
+  },
+  {
+    "path": "ci382-verification.json",
+    "bytes": 3326,
+    "sha256": "60e39b177b497e2de84f01ddb184e1f0cf7eb96f7faaff20ee0bae1dc9bd8806"
+  },
+  {
+    "path": "pr470-integrated-ci.json",
+    "bytes": 13288,
+    "sha256": "534459285fc6c9cee547da79ec9312ab5bedda87eca35108c991f15bbfd72f48"
+  },
+  {
+    "path": "pr470-stopped-ci.json",
+    "bytes": 12746,
+    "sha256": "3ea9f12739db546299f9d40d1f3643d10b7e2b9c8eaed977e5c64e3b13513fc6"
+  },
+  {
+    "path": "quick382-export.log",
+    "bytes": 50011,
+    "sha256": "4d70f62ec43359225ebb2c72f5b650c8afd950461db562bcafedb62614061195"
+  },
+  {
+    "path": "quick382-import.log",
+    "bytes": 30967,
+    "sha256": "a0c884a6870e02a1bf72618b917940ce87c5fbc742b1427af4cc7714a0731b0e"
+  },
+  {
+    "path": "quick382-package.json",
+    "bytes": 3278,
+    "sha256": "94aa4b2526c0016fb9eb3890931b36d6079ab091a2f2999f38a3e3771641a750"
+  },
+  {
+    "path": "README.md",
+    "bytes": 4406,
+    "sha256": "d190a5de06d6f359797bd2dabef7d885cac8b3c19b92f37a6f3252b7a1aab7fc"
+  },
+  {
+    "path": "run-native382.ps1",
+    "bytes": 1110,
+    "sha256": "49bd6cb29535615de4d43ba1abb20b21ec7bcc623d91fada477411dd2745a93d"
+  },
+  {
+    "path": "STOPPED-HANDOFF.md",
+    "bytes": 2013,
+    "sha256": "aa8d9296ff8c6f56b6307f46dc5f28e1700f4a013a8c0917ddd166f019dfa078"
+  }
+]

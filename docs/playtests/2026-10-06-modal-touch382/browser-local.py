@@ -1,0 +1,60 @@
+import json,sys,time
+from pathlib import Path
+from playwright.sync_api import sync_playwright
+url,folder=sys.argv[1:3];out=Path(folder);out.mkdir(parents=True,exist_ok=True)
+records=[]
+init="""window.first=false;window.addEventListener('youjia:first-frame',()=>window.first=true);window.domInputTrace=[];
+for(const k of ['pointerdown','pointerup','mousedown','mouseup','keydown','keyup'])document.addEventListener(k,e=>domInputTrace.push({kind:k,trusted:e.isTrusted,x:e.clientX,y:e.clientY,key:e.key,t:performance.now()}),true);
+window.audioSources=[];const proto=BaseAudioContext.prototype,create=proto.createBufferSource;
+proto.createBufferSource=function(...args){const node=Reflect.apply(create,this,args),o={node,active:false,gain:null};audioSources.push(o);
+const connect=node.connect,start=node.start,stop=node.stop,disconnect=node.disconnect;
+node.connect=function(...a){if(a[0] instanceof GainNode)o.gain=a[0];return Reflect.apply(connect,this,a)};
+node.start=function(...a){const r=Reflect.apply(start,this,a);o.active=true;return r};
+node.stop=function(...a){const r=Reflect.apply(stop,this,a);o.active=false;return r};
+node.disconnect=function(...a){const r=Reflect.apply(disconnect,this,a);o.active=false;return r};
+node.addEventListener('ended',()=>o.active=false);return node};"""
+with sync_playwright() as p:
+ for w,h in [(844,390),(390,844)]:
+  b=p.chromium.launch(executable_path=r'C:\Program Files\Google\Chrome\Application\chrome.exe',headless=True,args=['--no-sandbox','--use-gl=angle','--use-angle=swiftshader','--enable-webgl'])
+  pg=b.new_page(viewport={'width':w,'height':h},device_scale_factor=3,has_touch=True);errors=[];pg.add_init_script(init)
+  pg.on('pageerror',lambda e:errors.append(str(e)));pg.on('console',lambda m:errors.append(m.text) if m.type=='error' else None)
+  pg.goto(url);pg.wait_for_function('window.first',timeout=120000);build=pg.locator('html').get_attribute('data-build')
+  pg.mouse.click(w/2,h/2);pg.wait_for_timeout(350);pg.keyboard.press('Escape');pg.wait_for_timeout(8500)
+  cdp=pg.context.new_cdp_session(pg);last_input=0
+  def snap(stage,expected_playing=2,master_muted=False,png=False):
+   global last_input
+   row=pg.evaluate("({backend:JSON.parse(__manusBgm.diagnostics()),gains:audioSources.filter(o=>o.active&&o.gain).map(o=>o.gain.gain.value),inputs:domInputTrace})")
+   row['inputs']=row['inputs'][last_input:];last_input=pg.evaluate('domInputTrace.length')
+   row.update({'view':[w,h,3],'stage':stage,'build':build,'errors':errors.copy(),'utc':time.strftime('%Y-%m-%dT%H:%M:%SZ',time.gmtime()),'expected_playing':expected_playing,'expected_master_muted':master_muted})
+   if png:
+    name=f'{w}-{h}-{stage}.png';pg.screenshot(path=str(out/name),scale='css');row['screenshot']=name
+   records.append(row);(out/'events.json').write_text(json.dumps(records,ensure_ascii=False,indent=2))
+   assert row['backend']['playing']==expected_playing and len(row['gains'])==expected_playing,row
+   assert all(g==0 for g in row['gains']) if master_muted else all(g>0 for g in row['gains']),row
+   assert not errors,errors
+   return row
+  snap('initial')
+  for key in ['master','music','ambience']:
+   xy=((257,266) if key=='master' else (587,134) if key=='music' else (587,232)) if w==844 else ((195,666) if key=='master' else (195,396) if key=='music' else (195,531))
+   off_count=2 if key=='master' else 1;off_mute=key=='master'
+   for mode in ['mouse','tap','held']:
+    if mode=='mouse':pg.mouse.click(*xy,delay=80)
+    elif mode=='tap':pg.touchscreen.tap(*xy)
+    else:
+     cdp.send('Input.dispatchTouchEvent',{'type':'touchStart','touchPoints':[{'x':xy[0],'y':xy[1]}]});pg.wait_for_timeout(500);snap(key+'-held-before-release')
+     cdp.send('Input.dispatchTouchEvent',{'type':'touchEnd','touchPoints':[]})
+    pg.wait_for_timeout(650);snap(key+'-'+mode+'-off',off_count,off_mute,png=mode in ['tap','held'])
+    if mode=='mouse':pg.mouse.click(*xy,delay=80)
+    elif mode=='tap':pg.touchscreen.tap(*xy)
+    else:
+     cdp.send('Input.dispatchTouchEvent',{'type':'touchStart','touchPoints':[{'x':xy[0],'y':xy[1]}]});pg.wait_for_timeout(500)
+     cdp.send('Input.dispatchTouchEvent',{'type':'touchEnd','touchPoints':[]})
+    pg.wait_for_timeout(650);snap(key+'-'+mode+'-on')
+   cdp.send('Input.dispatchTouchEvent',{'type':'touchStart','touchPoints':[{'x':xy[0],'y':xy[1]}]});pg.wait_for_timeout(300)
+   cdp.send('Input.dispatchTouchEvent',{'type':'touchMove','touchPoints':[{'x':2,'y':2}]});pg.wait_for_timeout(300)
+   cdp.send('Input.dispatchTouchEvent',{'type':'touchEnd','touchPoints':[]});pg.wait_for_timeout(650);snap(key+'-drag-cancel',png=True)
+   # Mouse action focuses the native button, then Enter must still activate it.
+   pg.mouse.click(*xy,delay=80);pg.wait_for_timeout(650);snap(key+'-mouse-before-keyboard',off_count,off_mute)
+   pg.keyboard.press('Enter');pg.wait_for_timeout(650);snap(key+'-keyboard-restored')
+  b.close()
+print(json.dumps({'events':len(records),'builds':sorted(set(r['build'] for r in records)),'errors':sum(len(r['errors']) for r in records)}))
