@@ -1,0 +1,123 @@
+{
+  "status": "candidate_not_heard_not_runtime_ready",
+  "source_hashes": {
+    "source": "239efcb8235acb56e12450c2e40e409336c1c139403a07ee8b4803f621bde241",
+    "previous": "429b5f2d95f54b0a6902a7f5ce634eb78ea1bd3ffe3804196ef5a66cec5f2e05"
+  },
+  "sample_rate": 48000,
+  "channels": 2,
+  "events_center_width_strength": [
+    [
+      9,
+      10.5,
+      0.68
+    ],
+    [
+      28.5,
+      16,
+      0.46
+    ],
+    [
+      58,
+      12,
+      0.8
+    ],
+    [
+      76.5,
+      8,
+      0.38
+    ],
+    [
+      108,
+      19,
+      0.61
+    ]
+  ],
+  "floor": 0.08,
+  "pre_encode": {
+    "duration_seconds": 128.0,
+    "rms_dbfs": -25.80556434075482,
+    "peak_dbfs": -3.1999999999999993,
+    "clipped_samples": 0,
+    "seam_delta": [
+      0.001492418807063009,
+      0.0003485988886614867
+    ],
+    "pcm_float32_sha256": "19c619e16836929c4a278125df2a0ef985930ac700d33b60887ab3f4e856fa33"
+  },
+  "comparison_target_rms_dbfs": -27.0,
+  "versions": {
+    "python": "3.12.10",
+    "numpy": "2.5.3",
+    "scipy": "1.18.1",
+    "soundfile": "0.14.0",
+    "libsndfile": "1.2.2"
+  },
+  "files": {
+    "env_irregular_candidate.ogg": {
+      "sha256": "17c1eeee67fae2dbf5790a5d2a7a8d14e8462b0c0660a06c831bc5eb60d595d9",
+      "bytes": 1350496,
+      "duration_seconds": 128.0,
+      "rms_dbfs": -25.966617983465135,
+      "peak_dbfs": -3.261279287422054,
+      "clipped_samples": 0,
+      "seam_delta": [
+        0.0016573905013501644,
+        0.0013556331396102905
+      ],
+      "pcm_float32_sha256": "0c4b1fab156fe2dc6db881317fda29c6d05104e01dee83d3efc534b70565d46e"
+    },
+    "seam_once.ogg": {
+      "sha256": "7263135cf6a6f32f7a07df51457753fde6d0a4926071ae2ed18d7e6854757d16",
+      "bytes": 166887,
+      "duration_seconds": 16.0,
+      "rms_dbfs": -29.866229580603335,
+      "peak_dbfs": -7.155759503611464,
+      "clipped_samples": 0,
+      "seam_delta": [
+        0.22859374154359102,
+        0.007730455137789249
+      ],
+      "pcm_float32_sha256": "8e6f07a7cbbf8569580a9aa7fa3b051d13eb6ad9ba039ee6fbbfd259b826fdc5"
+    },
+    "compare_original.ogg": {
+      "sha256": "051e6d3b8fdcf23dda8110ed8be700ef4d48cae976167baccb8a941eb0cffd4d",
+      "bytes": 1818955,
+      "duration_seconds": 128.0,
+      "rms_dbfs": -26.94417606963135,
+      "peak_dbfs": -11.516684378384793,
+      "clipped_samples": 0,
+      "seam_delta": [
+        0.0014499761164188385,
+        0.018200727179646492
+      ],
+      "pcm_float32_sha256": "19c8ceb36a166c676e323b695661703c6f1becc256457f1cb3e62ea0f29cbef5"
+    },
+    "compare_previous.ogg": {
+      "sha256": "5265e36d70de7f2dce896ba182ac8a53e8a2b2c5338509c69080616c9040be9f",
+      "bytes": 1301268,
+      "duration_seconds": 128.0,
+      "rms_dbfs": -27.13991398506603,
+      "peak_dbfs": -8.246374815621973,
+      "clipped_samples": 0,
+      "seam_delta": [
+        0.006646282970905304,
+        0.0036051273345947266
+      ],
+      "pcm_float32_sha256": "2b07cc4f029b58e05bcbc319db870693cb69e5db6a70d0c6ef380a61550a6996"
+    },
+    "compare_irregular.ogg": {
+      "sha256": "fda6c71846ed860e915a2ca50159d2a76e46b9192e2c9d4b5f08c65a33ac167f",
+      "bytes": 1302118,
+      "duration_seconds": 128.0,
+      "rms_dbfs": -27.07944952831966,
+      "peak_dbfs": -4.332660115895205,
+      "clipped_samples": 0,
+      "seam_delta": [
+        0.0018981778994202614,
+        0.0015898235142230988
+      ],
+      "pcm_float32_sha256": "e3be257eddd317a58f3be598bce540de29cc04bb728aa6aecce52d759518a5f2"
+    }
+  }
+}
