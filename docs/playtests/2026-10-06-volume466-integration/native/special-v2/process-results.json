@@ -1,0 +1,206 @@
+[
+  {
+    "name": "import",
+    "command": [
+      "/tmp/youjia-godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+      "--headless",
+      "--path",
+      "/dev/shm/youjia-volume466",
+      "--editor",
+      "--import",
+      "--quit"
+    ],
+    "started": "2026-10-06T00:34:11.838895+00:00",
+    "source": "146c3711537e4fa6657f1fd54e7472747cd0b10d",
+    "ended": "2026-10-06T00:34:17.121335+00:00",
+    "direct_exit": 0,
+    "log": "import.log",
+    "log_bytes": 1017,
+    "log_sha256": "f15ffd4c558b01611d562c8c257508942bdc2dc542124f423ae2a592a46edfa6",
+    "strict_error_scan_exit": 1,
+    "strict_error_lines": [],
+    "verified": true
+  },
+  {
+    "name": "volume-input",
+    "command": [
+      "/tmp/youjia-godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+      "--headless",
+      "--path",
+      "/dev/shm/youjia-volume466",
+      "--script",
+      "res://test/volume_slider_input_suite.gd"
+    ],
+    "started": "2026-10-06T00:34:17.123473+00:00",
+    "source": "146c3711537e4fa6657f1fd54e7472747cd0b10d",
+    "ended": "2026-10-06T00:34:21.147612+00:00",
+    "direct_exit": 0,
+    "log": "volume-input.log",
+    "log_bytes": 1301,
+    "log_sha256": "e20062e68662dcde5279c2fa89b3e4d17e358d65cb786b73b9da60b687ff6afc",
+    "strict_error_scan_exit": 1,
+    "strict_error_lines": [],
+    "completion_pattern": "\\[volume-slider-input\\] checks=[1-9][0-9]* failures=\\[\\]",
+    "completion_exit": 0,
+    "completion_lines": [
+      "[volume-slider-input] checks=267 failures=[]"
+    ],
+    "verified": true
+  },
+  {
+    "name": "volume-style",
+    "command": [
+      "/tmp/youjia-godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+      "--headless",
+      "--path",
+      "/dev/shm/youjia-volume466",
+      "--script",
+      "res://test/volume_slider_style_suite.gd"
+    ],
+    "started": "2026-10-06T00:34:21.151577+00:00",
+    "source": "146c3711537e4fa6657f1fd54e7472747cd0b10d",
+    "ended": "2026-10-06T00:34:25.828356+00:00",
+    "direct_exit": 0,
+    "log": "volume-style.log",
+    "log_bytes": 112,
+    "log_sha256": "e5d8dc17f2816c4878da78419f0cd0bd39bba43eb89580f9a248ad4466a050ca",
+    "strict_error_scan_exit": 1,
+    "strict_error_lines": [],
+    "completion_pattern": "\\[volume-slider-style\\] PASS: [1-9][0-9]* checks",
+    "completion_exit": 0,
+    "completion_lines": [
+      "[volume-slider-style] PASS: 708 checks"
+    ],
+    "verified": true
+  },
+  {
+    "name": "audio-button",
+    "command": [
+      "/tmp/youjia-godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+      "--headless",
+      "--path",
+      "/dev/shm/youjia-volume466",
+      "--script",
+      "res://test/audio_button_input_suite.gd"
+    ],
+    "started": "2026-10-06T00:34:25.832045+00:00",
+    "source": "146c3711537e4fa6657f1fd54e7472747cd0b10d",
+    "ended": "2026-10-06T00:34:30.158248+00:00",
+    "direct_exit": 0,
+    "log": "audio-button.log",
+    "log_bytes": 114,
+    "log_sha256": "d2f6ebe2c5b73755a7c088837ed00301e7e85e9baf8e992ea35003c14a3387ea",
+    "strict_error_scan_exit": 1,
+    "strict_error_lines": [],
+    "completion_pattern": "AUDIO_BUTTON_INPUT checks=[1-9][0-9]* failures=0",
+    "completion_exit": 0,
+    "completion_lines": [
+      "AUDIO_BUTTON_INPUT checks=648 failures=0"
+    ],
+    "verified": true
+  },
+  {
+    "name": "confirm-fit",
+    "command": [
+      "/tmp/youjia-godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+      "--headless",
+      "--path",
+      "/dev/shm/youjia-volume466",
+      "--script",
+      "res://test/confirm_panel_fit_suite.gd"
+    ],
+    "started": "2026-10-06T00:34:30.161995+00:00",
+    "source": "146c3711537e4fa6657f1fd54e7472747cd0b10d",
+    "ended": "2026-10-06T00:34:35.841121+00:00",
+    "direct_exit": 0,
+    "log": "confirm-fit.log",
+    "log_bytes": 116,
+    "log_sha256": "9e84146125264fe0e28c6f705681af58603bf54a10fdec7b0bfdd8c7251276ec",
+    "strict_error_scan_exit": 1,
+    "strict_error_lines": [],
+    "completion_pattern": "confirm_panel_fit suite: [1-9][0-9]* checks passed",
+    "completion_exit": 0,
+    "completion_lines": [
+      "confirm_panel_fit suite: 562 checks passed"
+    ],
+    "verified": true
+  },
+  {
+    "name": "pause-notice",
+    "command": [
+      "/tmp/youjia-godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+      "--headless",
+      "--path",
+      "/dev/shm/youjia-volume466",
+      "--script",
+      "res://test/pause_notice_suite.gd"
+    ],
+    "started": "2026-10-06T00:34:35.844869+00:00",
+    "source": "146c3711537e4fa6657f1fd54e7472747cd0b10d",
+    "ended": "2026-10-06T00:34:37.714157+00:00",
+    "direct_exit": 0,
+    "log": "pause-notice.log",
+    "log_bytes": 108,
+    "log_sha256": "c4dd353d0273f5899e78a37f59d255afd811a74b19196eea153f5563f6d05ca4",
+    "strict_error_scan_exit": 1,
+    "strict_error_lines": [],
+    "completion_pattern": "PAUSE_NOTICE checks=[1-9][0-9]* failures=0",
+    "completion_exit": 0,
+    "completion_lines": [
+      "PAUSE_NOTICE checks=168 failures=0"
+    ],
+    "verified": true
+  },
+  {
+    "name": "focus-contrast",
+    "command": [
+      "/tmp/youjia-godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+      "--headless",
+      "--path",
+      "/dev/shm/youjia-volume466",
+      "--script",
+      "res://test/soft_button_focus_contrast_suite.gd"
+    ],
+    "started": "2026-10-06T00:34:37.718078+00:00",
+    "source": "146c3711537e4fa6657f1fd54e7472747cd0b10d",
+    "ended": "2026-10-06T00:34:45.004502+00:00",
+    "direct_exit": 0,
+    "log": "focus-contrast.log",
+    "log_bytes": 118,
+    "log_sha256": "a59ee039da06256de8764df28d888c998c673820c2019a074e12de32fe575f48",
+    "strict_error_scan_exit": 1,
+    "strict_error_lines": [],
+    "completion_pattern": "PASS: soft_button_focus_contrast [1-9][0-9]* checks",
+    "completion_exit": 0,
+    "completion_lines": [
+      "PASS: soft_button_focus_contrast 5080 checks"
+    ],
+    "verified": true
+  },
+  {
+    "name": "web-hidpi",
+    "command": [
+      "/tmp/youjia-godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+      "--headless",
+      "--path",
+      "/dev/shm/youjia-volume466",
+      "--script",
+      "res://test/web_hidpi_suite.gd"
+    ],
+    "started": "2026-10-06T00:34:45.008477+00:00",
+    "source": "146c3711537e4fa6657f1fd54e7472747cd0b10d",
+    "ended": "2026-10-06T00:34:49.332890+00:00",
+    "direct_exit": 0,
+    "log": "web-hidpi.log",
+    "log_bytes": 7390,
+    "log_sha256": "08f6ebf538b24fb887e40941dc0bdae4f76d5711cdd8e0fbb387dfb1a901adb4",
+    "strict_error_scan_exit": 1,
+    "strict_error_lines": [],
+    "completion_pattern": "web_hidpi: [1-9][0-9]* checks, 0 failures",
+    "completion_exit": 0,
+    "completion_lines": [
+      "web_hidpi: 102 checks, 0 failures"
+    ],
+    "verified": true
+  }
+]

@@ -1,0 +1,63 @@
+{
+  "verified_at": "2026-10-06T01:11:39.040645+00:00",
+  "checkpoint": "97792383a80ac967b1030a6cd66cf847f8f658b8",
+  "base": "8ae57959ff95117047c4362704c298b583d651a7",
+  "tested_combination_source": "49cf808ae6854406851592301e843bb557639500",
+  "original_author_ancestor": "1759c69cede5ba69a01bd219748796a7c50fc0d7",
+  "original9_exact": [
+    {
+      "path": "autoload/paper_slider_boot.gd",
+      "blob": "54419b60cab6419bbccfa0a6957793bcaad1a2d1"
+    },
+    {
+      "path": "autoload/paper_slider_boot.gd.uid",
+      "blob": "92f71c117109f1b156991cd2e61f8618f4a0c141"
+    },
+    {
+      "path": "docs/decisions/REQ-20261006-040.md",
+      "blob": "413cd64e54da925ea97c68fb0d89ca49b0c22719"
+    },
+    {
+      "path": "docs/playtests/2026-10-06-REQ-040-volume-slider-paper/README.md",
+      "blob": "aa46a9145ca58160333513da3a79e26ec8205962"
+    },
+    {
+      "path": "project.godot",
+      "blob": "8b7cf203a0d45366d4b3f29368855ad362171f01"
+    },
+    {
+      "path": "scripts/ui/paper_slider_style.gd",
+      "blob": "f8852ec45858b7115e36f1fdeb60995d06a11a84"
+    },
+    {
+      "path": "scripts/ui/paper_slider_style.gd.uid",
+      "blob": "e22d4d07b75728e5dae8177a4a6ee84aeed9218b"
+    },
+    {
+      "path": "test/volume_slider_style_suite.gd",
+      "blob": "41bea55300ca30de258b83f8e5b4affcf54f1385"
+    },
+    {
+      "path": "test/volume_slider_style_suite.gd.uid",
+      "blob": "d649d206598e0a7bd5d76daa988f690ee431e1ad"
+    }
+  ],
+  "browser_original_files": 55,
+  "browser_original_pngs": 44,
+  "browser_copy_exact": true,
+  "browser_sums_verified": 54,
+  "full_raw_diffcheck": {
+    "exit": 2,
+    "output": "docs/playtests/2026-10-06-volume466-integration/browser-candidate-146c/volume-after-index.html:238: new blank line at EOF.\ndocs/playtests/2026-10-06-volume466-integration/browser-candidate-146c/volume-before-index.html:238: new blank line at EOF.\ndocs/playtests/2026-10-06-volume466-integration/native/combined-generated-import.patch:6: trailing whitespace.\n+ \ndocs/playtests/2026-10-06-volume466-integration/native/combined-generated-import.patch:19: trailing whitespace.\n+ \ndocs/playtests/2026-10-06-volume466-integration/native/combined-generated-import.patch:31: trailing whitespace.\n+ \ndocs/playtests/2026-10-06-volume466-integration/native/combined-generated-import.patch:35: trailing whitespace.\n+ \ndocs/playtests/2026-10-06-volume466-integration/native/combined-generated-import.patch:37: trailing whitespace.\n+ \ndocs/playtests/2026-10-06-volume466-integration/native/combined-generated-import.patch:43: trailing whitespace.\n+ \ndocs/playtests/2026-10-06-volume466-integration/native/combined-generated-import.patch:55: trailing whitespace.\n+ \ndocs/playtests/2026-10-06-volume466-integration/native/combined-generated-import.patch:59: trailing whitespace.\n+ \ndocs/playtests/2026-10-06-volume466-integration/native/combined-generated-import.patch:61: trailing whitespace.\n+ \ndocs/playtests/2026-10-06-volume466-integration/native/combined-generated-import.patch:67: trailing whitespace.\n+ \ndocs/playtests/2026-10-06-volume466-integration/native/combined-generated-import.patch:79: trailing whitespace.\n+ \ndocs/playtests/2026-10-06-volume466-integration/native/combined-generated-import.patch:83: trailing whitespace.\n+ \ndocs/playtests/2026-10-06-volume466-integration/native/combined-generated-import.patch:85: trailing whitespace.\n+ \ndocs/playtests/2026-10-06-volume466-integration/native/combined-generated-import.patch:91: trailing whitespace.\n+ \ndocs/playtests/2026-10-06-volume466-integration/native/combined-generated-import.patch:103: trailing whitespace.\n+ \ndocs/playtests/2026-10-06-volume466-integration/native/combined-generated-import.patch:107: trailing whitespace.\n+ \ndocs/playtests/2026-10-06-volume466-integration/native/combined-generated-import.patch:109: trailing whitespace.\n+ \ndocs/playtests/2026-10-06-volume466-integration/native/combined-generated-import.patch:109: new blank line at EOF.\ndocs/playtests/2026-10-06-volume466-integration/native/generated-import-before-restore.patch:6: trailing whitespace.\n+ \ndocs/playtests/2026-10-06-volume466-integration/native/generated-import-before-restore.patch:19: trailing whitespace.\n+ \ndocs/playtests/2026-10-06-volume466-integration/native/generated-import-before-restore.patch:31: trailing whitespace.\n+ \ndocs/playtests/2026-10-06-volume466-integration/native/generated-import-before-restore.patch:35: trailing whitespace.\n+ \ndocs/playtests/2026-10-06-volume466-integration/native/generated-import-before-restore.patch:37: trailing whitespace.\n+ \ndocs/playtests/2026-10-06-volume466-integration/native/generated-import-before-restore.patch:43: trailing whitespace.\n+ \ndocs/playtests/2026-10-06-volume466-integration/native/generated-import-before-restore.patch:55: trailing whitespace.\n+ \ndocs/playtests/2026-10-06-volume466-integration/native/generated-import-before-restore.patch:59: trailing whitespace.\n+ \ndocs/playtests/2026-10-06-volume466-integration/native/generated-import-before-restore.patch:61: trailing whitespace.\n+ \ndocs/playtests/2026-10-06-volume466-integration/native/generated-import-before-restore.patch:67: trailing whitespace.\n+ \ndocs/playtests/2026-10-06-volume466-integration/native/generated-import-before-restore.patch:79: trailing whitespace.\n+ \ndocs/playtests/2026-10-06-volume466-integration/native/generated-import-before-restore.patch:83: trailing whitespace.\n+ \ndocs/playtests/2026-10-06-volume466-integration/native/generated-import-before-restore.patch:85: trailing whitespace.\n+ \ndocs/playtests/2026-10-06-volume466-integration/native/generated-import-before-restore.patch:91: trailing whitespace.\n+ \ndocs/playtests/2026-10-06-volume466-integration/native/generated-import-before-restore.patch:103: trailing whitespace.\n+ \ndocs/playtests/2026-10-06-volume466-integration/native/generated-import-before-restore.patch:107: trailing whitespace.\n+ \ndocs/playtests/2026-10-06-volume466-integration/native/generated-import-before-restore.patch:109: trailing whitespace.\n+ \ndocs/playtests/2026-10-06-volume466-integration/native/generated-import-before-restore.patch:109: new blank line at EOF.\n"
+  },
+  "edited_source_prose_json_diffcheck": {
+    "exit": 0,
+    "excluded_immutable_raw_files": [
+      "docs/playtests/2026-10-06-volume466-integration/browser-candidate-146c/volume-after-index.html",
+      "docs/playtests/2026-10-06-volume466-integration/browser-candidate-146c/volume-before-index.html",
+      "docs/playtests/2026-10-06-volume466-integration/native/combined-generated-import.patch",
+      "docs/playtests/2026-10-06-volume466-integration/native/generated-import-before-restore.patch"
+    ]
+  },
+  "state": "local candidate and exact evidence only; remote final SHA review/CI and main/Pages/public ordinary verification pending"
+}

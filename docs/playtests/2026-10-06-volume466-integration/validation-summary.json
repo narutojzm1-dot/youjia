@@ -1,0 +1,150 @@
+{
+  "updated_at": "2026-10-06T01:10:56.392340+00:00",
+  "source": "146c3711537e4fa6657f1fd54e7472747cd0b10d",
+  "tree": "2e622f91345fc1a223982480339d86fa9ff94117",
+  "base": "b9f68c3c5c4e70e16cefde9b4400bb1d553ff915",
+  "author_ancestor": "1759c69cede5ba69a01bd219748796a7c50fc0d7",
+  "special_v1": {
+    "source": "89223fdc830eb3698cf3575856cbd74bb0e5e4ad",
+    "import_exit": 0,
+    "input_checks": 267,
+    "input_failures": 4,
+    "input_exit": 1,
+    "reason": "fixture incorrectly expected unchanged-value press to emit no value_changed; actual native Slider emits once per press; production unchanged"
+  },
+  "special_v2": {
+    "import_exit": 0,
+    "volume_input_checks": 267,
+    "volume_input_failures": 0,
+    "volume_style_checks": 708,
+    "audio_button_checks": 648,
+    "confirm_fit_checks": 562,
+    "pause_notice_checks": 168,
+    "focus_contrast_checks": 5080,
+    "web_hidpi_checks": 102,
+    "all_direct_exit": 0
+  },
+  "full": {
+    "actual_direct_exit": 0,
+    "native_suites": 77,
+    "native_imports": 1,
+    "native_runtime_starts": 78,
+    "publisher_fixture_engine_version_queries": 2,
+    "all_recorded_engine_processes": 80,
+    "format_mock_cases": 92,
+    "node_checks": [
+      "loading shell actual exit0",
+      "motion preference21 actual exit0"
+    ],
+    "retention": {
+      "tests": 11,
+      "actual_exit": 0
+    },
+    "publisher_helper_fixture": {
+      "local_only_two_builds": true,
+      "actual_exit": 0
+    },
+    "every_runtime_completion_verified": true
+  },
+  "export": {
+    "frozen_at": "2026-10-06T00:45:21.456166+00:00",
+    "source": "146c3711537e4fa6657f1fd54e7472747cd0b10d",
+    "manifest_sha256": "48fe1d84e4f7365feba09adba5e59bb1e9fffc5f62dae04bf1cbdda9bc8ef825",
+    "html": {
+      "bytes": 357722,
+      "sha256": "ccd7ab5bb40cdb85dca4b4caec1ac3888ff7e7c3bd6ba121feee199c8bd5e0a6"
+    },
+    "pck": {
+      "bytes": 27093724,
+      "sha256": "df8b4807079717a3a51c273f09c617173aa6b50ce29b812e82d595cad62cd92a"
+    },
+    "expected_modules": 10,
+    "scope": "Local candidate actual export plus exact tracked storage modules/license; not a GitHub Pages release"
+  },
+  "browser": {
+    "actual_source": "146c3711537e4fa6657f1fd54e7472747cd0b10d",
+    "frozen_pck_sha256": "df8b4807079717a3a51c273f09c617173aa6b50ce29b812e82d595cad62cd92a",
+    "actual_exit": 0,
+    "closed_utc": "2026-10-06T00:51:55Z",
+    "agent": "hotspot36_qa",
+    "same_page_viewports": [
+      [
+        390,
+        844
+      ],
+      [
+        568,
+        320
+      ],
+      [
+        390,
+        844
+      ]
+    ],
+    "actual_dpr": 2,
+    "ordinary_mouse_path": "title→yard→Escape pause; both tracks click/held drag/release0/40/100; move to other track after up; 40/0 reflow; return endpoints; Escape resume",
+    "png_originals": 44,
+    "files_original": 55,
+    "sha256sum_entries": 54,
+    "sha256sums_sha256": "7b3ff6c8e4e8fb6d6270f5798ce5e30799c8f251a06ccbabeaf8a7d93c4952f6",
+    "uncovered": [
+      "DPR3",
+      "touch382",
+      "keyboard459",
+      "browser AudioDirector gain",
+      "hearing",
+      "settings persistence across sessions"
+    ]
+  },
+  "independent_final_review": "pending different non-author agent",
+  "remote_ci": "not created for integration yet",
+  "merge_release": "not merged or publicly released",
+  "new_main_integration": {
+    "target": "c50188a417920e3f400c833ebcf44fe9f28c89b4",
+    "state": "actual strict import, affected Cloud278 and strict new Web passed; new source ordinary browser pending",
+    "runtime_delta": [
+      "scripts/exploration/find_reveal.gd",
+      "scripts/exploration/near_path_scroll.gd"
+    ],
+    "test_delta": [
+      "test/exploration_slice_suite.gd"
+    ],
+    "evidence_checkpoint": "38eed59689625b576cae944e0a58371380f6a327",
+    "tested_source": "49cf808ae6854406851592301e843bb557639500",
+    "tested_tree": "7d5c2c090740e94771d86ede33b07a3a6baaf398",
+    "native_import_exit": 0,
+    "affected_exploration_slice_checks": 278,
+    "affected_exploration_slice_exit": 0,
+    "export_exit": 0,
+    "export": {
+      "frozen_at": "2026-10-06T01:03:38.772430+00:00",
+      "source": "49cf808ae6854406851592301e843bb557639500",
+      "manifest_sha256": "9b5633e7e1d1634a37231aae63bf3ab72518b55a6108656405a611a405d44584",
+      "html": {
+        "bytes": 357722,
+        "sha256": "142378cc0ebffdd92e46395f6882fab20b2c38f3c50dc64387a2dcaffb1d6c79"
+      },
+      "pck": {
+        "bytes": 27094188,
+        "sha256": "0a1e0f05c5a5a6ef9e2622614a1ee28e993841ab4e68ba4809dfe25dc8ef3eff"
+      },
+      "expected_modules": 10,
+      "scope": "Local candidate actual export plus exact tracked storage modules/license; not a GitHub Pages release"
+    }
+  },
+  "latest_docs_main": {
+    "source": "8ae57959ff95117047c4362704c298b583d651a7",
+    "tree": "f31ea8b88cd1b6529a7a93adf430d0d18dd49f10",
+    "main_changed_paths": 208,
+    "all_docs": true,
+    "non_docs_equal_to_tested_source": "49cf808ae6854406851592301e843bb557639500",
+    "no_new_runtime_run": true
+  },
+  "independent_package_review": {
+    "agent": "leader_scope_audit",
+    "members_each": 402,
+    "identical_payloads": 400,
+    "changed_payloads": 2,
+    "scope": "only the two Cloud exploration scripts; old ordinary UI evidence remains source146"
+  }
+}

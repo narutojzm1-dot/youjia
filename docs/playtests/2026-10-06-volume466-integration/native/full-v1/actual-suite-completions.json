@@ -1,0 +1,2007 @@
+{
+  "source": "146c3711537e4fa6657f1fd54e7472747cd0b10d",
+  "engine_starts": 78,
+  "import_starts": 1,
+  "suite_starts": 77,
+  "unique_suite_entries": 77,
+  "publisher_fixture_version_queries": [
+    {
+      "argv": [
+        "/tmp/youjia-godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+        "--version"
+      ],
+      "started": "2026-10-06T00:45:08.333310+00:00",
+      "pid": 477683,
+      "ended": "2026-10-06T00:45:08.361416+00:00",
+      "direct_exit": 0
+    },
+    {
+      "argv": [
+        "/tmp/youjia-godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+        "--version"
+      ],
+      "started": "2026-10-06T00:45:08.583655+00:00",
+      "pid": 477762,
+      "ended": "2026-10-06T00:45:08.605019+00:00",
+      "direct_exit": 0
+    }
+  ],
+  "all_recorded_engine_processes": 80,
+  "all_direct_exit_zero": true,
+  "every_invocation_verified": true,
+  "full_script_actual_exit": 0,
+  "log_sha256": "4d3b78160f639f6fb6619f4ac7073ae59123042c3adf00092be90b6d9de18ffe",
+  "node_tail": [
+    "[viewport] PASS (844, 390) positive _music_slider [P: (428.0, 180.0), S: (318.0, 28.0)]",
+    "[viewport] PASS (844, 390) visible _music_slider [P: (428.0, 180.0), S: (318.0, 28.0)]",
+    "[viewport] PASS (844, 390) in tree _ambience_slider",
+    "[viewport] PASS (844, 390) positive _ambience_slider [P: (428.0, 278.0), S: (318.0, 28.0)]",
+    "[viewport] PASS (844, 390) visible _ambience_slider [P: (428.0, 278.0), S: (318.0, 28.0)]",
+    "[viewport] PASS (844, 390) in tree _mute_toggle",
+    "[viewport] PASS (844, 390) positive _mute_toggle [P: (98.0, 246.0), S: (318.0, 40.0)]",
+    "[viewport] PASS (844, 390) visible _mute_toggle [P: (98.0, 246.0), S: (318.0, 40.0)]",
+    "[viewport] PASS (844, 390) music slider mute",
+    "[viewport] PASS (844, 390) ambience slider independent",
+    "[viewport] PASS pause resumes (844, 390)",
+    "[viewport] PASS touch album works",
+    "[viewport] PASS (844, 390) in tree _album_back_button",
+    "[viewport] PASS (844, 390) positive _album_back_button [P: (557.0, 316.0), S: (255.0, 44.0)]",
+    "[viewport] PASS (844, 390) visible _album_back_button [P: (557.0, 316.0), S: (255.0, 44.0)]",
+    "[viewport] PASS touch album closes",
+    "[viewport] checks=135 failures=[]",
+    "Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org",
+    "",
+    "WEB SAVE BRIDGE DECODER 45 failures=[]",
+    "Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org",
+    "",
+    "LEGACY_BRIDGE_PASS 22",
+    "Loading shell PASS: module ordering, runtime readiness/rejection, persistentPaths isolation, save-blocked gate, bytes, unknown totals, stall and both first-frame orders",
+    "MOTION PREFERENCE JS PASS 21"
+  ],
+  "invocations": [
+    {
+      "argv": [
+        "/tmp/youjia-godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+        "--headless",
+        "--path",
+        ".",
+        "--editor",
+        "--import",
+        "--quit"
+      ],
+      "started": "2026-10-06T00:37:33.943726+00:00",
+      "pid": 472182,
+      "ended": "2026-10-06T00:37:39.201326+00:00",
+      "direct_exit": 0,
+      "entry": null,
+      "log_first_line": 96,
+      "log_last_line": 111,
+      "strict_error_scan_exit": 1,
+      "strict_error_lines": [],
+      "verified": true
+    },
+    {
+      "argv": [
+        "/tmp/youjia-godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+        "--headless",
+        "--path",
+        ".",
+        "res://test/test_suite.tscn"
+      ],
+      "started": "2026-10-06T00:37:39.242087+00:00",
+      "pid": 472436,
+      "ended": "2026-10-06T00:37:41.575260+00:00",
+      "direct_exit": 0,
+      "entry": "test/test_suite.tscn",
+      "log_first_line": 112,
+      "log_last_line": 114,
+      "strict_error_scan_exit": 1,
+      "strict_error_lines": [],
+      "expected_completion": "\\[game-generic-tests\\] PASS: [1-9][0-9]* checks",
+      "completion_exit": 0,
+      "actual_completion_lines": [
+        "[game-generic-tests] PASS: 414 checks"
+      ],
+      "verified": true
+    },
+    {
+      "argv": [
+        "/tmp/youjia-godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+        "--headless",
+        "--path",
+        ".",
+        "res://test/locomotion_suite.tscn"
+      ],
+      "started": "2026-10-06T00:37:41.617769+00:00",
+      "pid": 472469,
+      "ended": "2026-10-06T00:37:49.525664+00:00",
+      "direct_exit": 0,
+      "entry": "test/locomotion_suite.tscn",
+      "log_first_line": 115,
+      "log_last_line": 125,
+      "strict_error_scan_exit": 1,
+      "strict_error_lines": [],
+      "expected_completion": "\\[locomotion-tests\\] PASS: [1-9][0-9]* checks",
+      "completion_exit": 0,
+      "actual_completion_lines": [
+        "[locomotion-tests] PASS: 410 checks"
+      ],
+      "verified": true
+    },
+    {
+      "argv": [
+        "/tmp/youjia-godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+        "--headless",
+        "--path",
+        ".",
+        "--script",
+        "res://test/holiday_start_once_suite.gd"
+      ],
+      "started": "2026-10-06T00:37:49.567554+00:00",
+      "pid": 472499,
+      "ended": "2026-10-06T00:37:51.817401+00:00",
+      "direct_exit": 0,
+      "entry": "test/holiday_start_once_suite.gd",
+      "log_first_line": 126,
+      "log_last_line": 128,
+      "strict_error_scan_exit": 1,
+      "strict_error_lines": [],
+      "expected_completion": "HOLIDAY_START_ONCE checks=[1-9][0-9]* failures=0",
+      "completion_exit": 0,
+      "actual_completion_lines": [
+        "HOLIDAY_START_ONCE checks=14 failures=0"
+      ],
+      "verified": true
+    },
+    {
+      "argv": [
+        "/tmp/youjia-godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+        "--headless",
+        "--path",
+        ".",
+        "--script",
+        "res://test/animal_home_suite.gd"
+      ],
+      "started": "2026-10-06T00:37:51.859602+00:00",
+      "pid": 472518,
+      "ended": "2026-10-06T00:38:38.547656+00:00",
+      "direct_exit": 0,
+      "entry": "test/animal_home_suite.gd",
+      "log_first_line": 129,
+      "log_last_line": 185,
+      "strict_error_scan_exit": 1,
+      "strict_error_lines": [],
+      "expected_completion": "\\[animal-home-tests\\] PASS: [1-9][0-9]* checks",
+      "completion_exit": 0,
+      "actual_completion_lines": [
+        "[animal-home-tests] PASS: 1005 checks"
+      ],
+      "verified": true
+    },
+    {
+      "argv": [
+        "/tmp/youjia-godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+        "--headless",
+        "--path",
+        ".",
+        "--script",
+        "res://test/photo_home_suite.gd"
+      ],
+      "started": "2026-10-06T00:38:38.593470+00:00",
+      "pid": 472653,
+      "ended": "2026-10-06T00:38:57.801990+00:00",
+      "direct_exit": 0,
+      "entry": "test/photo_home_suite.gd",
+      "log_first_line": 186,
+      "log_last_line": 191,
+      "strict_error_scan_exit": 1,
+      "strict_error_lines": [],
+      "expected_completion": "\\[photo-home-tests\\] PASS: [1-9][0-9]* checks",
+      "completion_exit": 0,
+      "actual_completion_lines": [
+        "[photo-home-tests] PASS: 75 checks"
+      ],
+      "verified": true
+    },
+    {
+      "argv": [
+        "/tmp/youjia-godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+        "--headless",
+        "--path",
+        ".",
+        "--script",
+        "res://test/grass_state_suite.gd"
+      ],
+      "started": "2026-10-06T00:38:57.844629+00:00",
+      "pid": 472697,
+      "ended": "2026-10-06T00:38:58.868834+00:00",
+      "direct_exit": 0,
+      "entry": "test/grass_state_suite.gd",
+      "log_first_line": 192,
+      "log_last_line": 194,
+      "strict_error_scan_exit": 1,
+      "strict_error_lines": [],
+      "expected_completion": "\\[grass-state-tests\\] PASS: [1-9][0-9]* checks, 0 failures",
+      "completion_exit": 0,
+      "actual_completion_lines": [
+        "[grass-state-tests] PASS: 368 checks, 0 failures"
+      ],
+      "verified": true
+    },
+    {
+      "argv": [
+        "/tmp/youjia-godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+        "--headless",
+        "--path",
+        ".",
+        "--script",
+        "res://test/grass_action_suite.gd"
+      ],
+      "started": "2026-10-06T00:38:58.912106+00:00",
+      "pid": 472716,
+      "ended": "2026-10-06T00:38:59.938095+00:00",
+      "direct_exit": 0,
+      "entry": "test/grass_action_suite.gd",
+      "log_first_line": 195,
+      "log_last_line": 197,
+      "strict_error_scan_exit": 1,
+      "strict_error_lines": [],
+      "expected_completion": "\\[grass-action-tests\\] PASS: [1-9][0-9]* checks, 0 failures",
+      "completion_exit": 0,
+      "actual_completion_lines": [
+        "[grass-action-tests] PASS: 61 checks, 0 failures"
+      ],
+      "verified": true
+    },
+    {
+      "argv": [
+        "/tmp/youjia-godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+        "--headless",
+        "--path",
+        ".",
+        "--script",
+        "res://test/explicit_target_suite.gd"
+      ],
+      "started": "2026-10-06T00:38:59.990596+00:00",
+      "pid": 472735,
+      "ended": "2026-10-06T00:39:09.952614+00:00",
+      "direct_exit": 0,
+      "entry": "test/explicit_target_suite.gd",
+      "log_first_line": 198,
+      "log_last_line": 230,
+      "strict_error_scan_exit": 1,
+      "strict_error_lines": [],
+      "expected_completion": "\\[explicit-target-tests\\] checks=[1-9][0-9]* failures=\\[\\]",
+      "completion_exit": 0,
+      "actual_completion_lines": [
+        "[explicit-target-tests] checks=25 failures=[]"
+      ],
+      "verified": true
+    },
+    {
+      "argv": [
+        "/tmp/youjia-godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+        "--headless",
+        "--path",
+        ".",
+        "--script",
+        "res://test/ui_interaction_suite.gd"
+      ],
+      "started": "2026-10-06T00:39:09.996249+00:00",
+      "pid": 472880,
+      "ended": "2026-10-06T00:39:19.970192+00:00",
+      "direct_exit": 0,
+      "entry": "test/ui_interaction_suite.gd",
+      "log_first_line": 231,
+      "log_last_line": 297,
+      "strict_error_scan_exit": 1,
+      "strict_error_lines": [],
+      "expected_completion": "\\[ui-interaction-tests\\] checks=[1-9][0-9]* failures=\\[\\]",
+      "completion_exit": 0,
+      "actual_completion_lines": [
+        "[ui-interaction-tests] checks=63 failures=[]"
+      ],
+      "verified": true
+    },
+    {
+      "argv": [
+        "/tmp/youjia-godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+        "--headless",
+        "--path",
+        ".",
+        "--script",
+        "res://test/physical_yard_suite.gd"
+      ],
+      "started": "2026-10-06T00:39:20.010715+00:00",
+      "pid": 473484,
+      "ended": "2026-10-06T00:39:57.965763+00:00",
+      "direct_exit": 0,
+      "entry": "test/physical_yard_suite.gd",
+      "log_first_line": 298,
+      "log_last_line": 344,
+      "strict_error_scan_exit": 1,
+      "strict_error_lines": [],
+      "expected_completion": "\\[physical-yard-tests\\] PASS: [1-9][0-9]* checks",
+      "completion_exit": 0,
+      "actual_completion_lines": [
+        "[physical-yard-tests] PASS: 658 checks"
+      ],
+      "verified": true
+    },
+    {
+      "argv": [
+        "/tmp/youjia-godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+        "--headless",
+        "--path",
+        ".",
+        "--script",
+        "res://test/keyboard_ground_suite.gd"
+      ],
+      "started": "2026-10-06T00:39:58.007475+00:00",
+      "pid": 474539,
+      "ended": "2026-10-06T00:40:05.652420+00:00",
+      "direct_exit": 0,
+      "entry": "test/keyboard_ground_suite.gd",
+      "log_first_line": 345,
+      "log_last_line": 347,
+      "strict_error_scan_exit": 1,
+      "strict_error_lines": [],
+      "expected_completion": "\\[keyboard-ground-tests\\] PASS: [1-9][0-9]* checks \\[\\]",
+      "completion_exit": 0,
+      "actual_completion_lines": [
+        "[keyboard-ground-tests] PASS: 45 checks []"
+      ],
+      "verified": true
+    },
+    {
+      "argv": [
+        "/tmp/youjia-godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+        "--headless",
+        "--path",
+        ".",
+        "--script",
+        "res://test/scrapbook_encounter_suite.gd"
+      ],
+      "started": "2026-10-06T00:40:05.695368+00:00",
+      "pid": 474657,
+      "ended": "2026-10-06T00:40:07.402394+00:00",
+      "direct_exit": 0,
+      "entry": "test/scrapbook_encounter_suite.gd",
+      "log_first_line": 348,
+      "log_last_line": 350,
+      "strict_error_scan_exit": 1,
+      "strict_error_lines": [],
+      "expected_completion": "\\[scrapbook-encounters\\] PASS: [1-9][0-9]* checks \\[\\]",
+      "completion_exit": 0,
+      "actual_completion_lines": [
+        "[scrapbook-encounters] PASS: 20 checks []"
+      ],
+      "verified": true
+    },
+    {
+      "argv": [
+        "/tmp/youjia-godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+        "--headless",
+        "--path",
+        ".",
+        "--script",
+        "res://test/photo_moment_render_suite.gd"
+      ],
+      "started": "2026-10-06T00:40:07.444462+00:00",
+      "pid": 474712,
+      "ended": "2026-10-06T00:40:10.246671+00:00",
+      "direct_exit": 0,
+      "entry": "test/photo_moment_render_suite.gd",
+      "log_first_line": 351,
+      "log_last_line": 368,
+      "strict_error_scan_exit": 1,
+      "strict_error_lines": [],
+      "expected_completion": "\\[photo-moment-tests\\] PASS: [1-9][0-9]* checks",
+      "completion_exit": 0,
+      "actual_completion_lines": [
+        "[photo-moment-tests] PASS: 1332 checks"
+      ],
+      "verified": true
+    },
+    {
+      "argv": [
+        "/tmp/youjia-godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+        "--headless",
+        "--path",
+        ".",
+        "--script",
+        "res://test/photo_moment_save_suite.gd"
+      ],
+      "started": "2026-10-06T00:40:10.290580+00:00",
+      "pid": 475155,
+      "ended": "2026-10-06T00:40:15.015396+00:00",
+      "direct_exit": 0,
+      "entry": "test/photo_moment_save_suite.gd",
+      "log_first_line": 369,
+      "log_last_line": 371,
+      "strict_error_scan_exit": 1,
+      "strict_error_lines": [],
+      "expected_completion": "\\[photo-moment-save-tests\\] PASS: [1-9][0-9]* checks \\[\\]",
+      "completion_exit": 0,
+      "actual_completion_lines": [
+        "[photo-moment-save-tests] PASS: 46 checks []"
+      ],
+      "verified": true
+    },
+    {
+      "argv": [
+        "/tmp/youjia-godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+        "--headless",
+        "--path",
+        ".",
+        "--script",
+        "res://test/save_data_codec_suite.gd"
+      ],
+      "started": "2026-10-06T00:40:15.056350+00:00",
+      "pid": 475692,
+      "ended": "2026-10-06T00:40:16.544143+00:00",
+      "direct_exit": 0,
+      "entry": "test/save_data_codec_suite.gd",
+      "log_first_line": 372,
+      "log_last_line": 374,
+      "strict_error_scan_exit": 1,
+      "strict_error_lines": [],
+      "expected_completion": "SAVE_DATA_CODEC [1-9][0-9]* checks; failures=\\[\\]",
+      "completion_exit": 0,
+      "actual_completion_lines": [
+        "SAVE_DATA_CODEC 16 checks; failures=[]"
+      ],
+      "verified": true
+    },
+    {
+      "argv": [
+        "/tmp/youjia-godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+        "--headless",
+        "--path",
+        ".",
+        "--script",
+        "res://test/yard_snapshot_suite.gd"
+      ],
+      "started": "2026-10-06T00:40:16.586909+00:00",
+      "pid": 475711,
+      "ended": "2026-10-06T00:40:17.798169+00:00",
+      "direct_exit": 0,
+      "entry": "test/yard_snapshot_suite.gd",
+      "log_first_line": 375,
+      "log_last_line": 377,
+      "strict_error_scan_exit": 1,
+      "strict_error_lines": [],
+      "expected_completion": "yard snapshot: [1-9][0-9]* checks, 0 failures",
+      "completion_exit": 0,
+      "actual_completion_lines": [
+        "yard snapshot: 10 checks, 0 failures"
+      ],
+      "verified": true
+    },
+    {
+      "argv": [
+        "/tmp/youjia-godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+        "--headless",
+        "--path",
+        ".",
+        "--script",
+        "res://test/fishing_active_hud_suite.gd"
+      ],
+      "started": "2026-10-06T00:40:17.841064+00:00",
+      "pid": 475734,
+      "ended": "2026-10-06T00:40:19.632385+00:00",
+      "direct_exit": 0,
+      "entry": "test/fishing_active_hud_suite.gd",
+      "log_first_line": 378,
+      "log_last_line": 380,
+      "strict_error_scan_exit": 1,
+      "strict_error_lines": [],
+      "expected_completion": "fishing active HUD: [1-9][0-9]* checks, 0 failures",
+      "completion_exit": 0,
+      "actual_completion_lines": [
+        "fishing active HUD: 10 checks, 0 failures"
+      ],
+      "verified": true
+    },
+    {
+      "argv": [
+        "/tmp/youjia-godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+        "--headless",
+        "--path",
+        ".",
+        "--script",
+        "res://test/save_recovery_suite.gd"
+      ],
+      "started": "2026-10-06T00:40:19.672839+00:00",
+      "pid": 475764,
+      "ended": "2026-10-06T00:40:20.416555+00:00",
+      "direct_exit": 0,
+      "entry": "test/save_recovery_suite.gd",
+      "log_first_line": 381,
+      "log_last_line": 383,
+      "strict_error_scan_exit": 1,
+      "strict_error_lines": [],
+      "expected_completion": "SAVE RECOVERY PASS [1-9][0-9]*",
+      "completion_exit": 0,
+      "actual_completion_lines": [
+        "SAVE RECOVERY PASS 24"
+      ],
+      "verified": true
+    },
+    {
+      "argv": [
+        "/tmp/youjia-godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+        "--headless",
+        "--path",
+        ".",
+        "--script",
+        "res://test/boundary_feedback_suite.gd"
+      ],
+      "started": "2026-10-06T00:40:20.458275+00:00",
+      "pid": 475783,
+      "ended": "2026-10-06T00:40:22.228360+00:00",
+      "direct_exit": 0,
+      "entry": "test/boundary_feedback_suite.gd",
+      "log_first_line": 384,
+      "log_last_line": 386,
+      "strict_error_scan_exit": 1,
+      "strict_error_lines": [],
+      "expected_completion": "\\[boundary-feedback-tests\\] [1-9][0-9]* checks \\[\\]",
+      "completion_exit": 0,
+      "actual_completion_lines": [
+        "[boundary-feedback-tests] 11 checks []"
+      ],
+      "verified": true
+    },
+    {
+      "argv": [
+        "/tmp/youjia-godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+        "--headless",
+        "--path",
+        ".",
+        "--script",
+        "res://test/mixed_input_photo_suite.gd"
+      ],
+      "started": "2026-10-06T00:40:22.270728+00:00",
+      "pid": 475819,
+      "ended": "2026-10-06T00:40:24.224827+00:00",
+      "direct_exit": 0,
+      "entry": "test/mixed_input_photo_suite.gd",
+      "log_first_line": 387,
+      "log_last_line": 389,
+      "strict_error_scan_exit": 1,
+      "strict_error_lines": [],
+      "expected_completion": "\\[mixed-input-photo-tests\\] [1-9][0-9]* checks \\[\\]",
+      "completion_exit": 0,
+      "actual_completion_lines": [
+        "[mixed-input-photo-tests] 6 checks []"
+      ],
+      "verified": true
+    },
+    {
+      "argv": [
+        "/tmp/youjia-godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+        "--headless",
+        "--path",
+        ".",
+        "--script",
+        "res://test/leading_clearance_suite.gd"
+      ],
+      "started": "2026-10-06T00:40:24.267322+00:00",
+      "pid": 475838,
+      "ended": "2026-10-06T00:40:27.155413+00:00",
+      "direct_exit": 0,
+      "entry": "test/leading_clearance_suite.gd",
+      "log_first_line": 390,
+      "log_last_line": 392,
+      "strict_error_scan_exit": 1,
+      "strict_error_lines": [],
+      "expected_completion": "\\[leading-clearance-tests\\] [1-9][0-9]* checks \\[\\]",
+      "completion_exit": 0,
+      "actual_completion_lines": [
+        "[leading-clearance-tests] 18 checks []"
+      ],
+      "verified": true
+    },
+    {
+      "argv": [
+        "/tmp/youjia-godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+        "--headless",
+        "--path",
+        ".",
+        "--script",
+        "res://test/portable_accept_suite.gd"
+      ],
+      "started": "2026-10-06T00:40:27.198367+00:00",
+      "pid": 475861,
+      "ended": "2026-10-06T00:40:29.348076+00:00",
+      "direct_exit": 0,
+      "entry": "test/portable_accept_suite.gd",
+      "log_first_line": 393,
+      "log_last_line": 395,
+      "strict_error_scan_exit": 1,
+      "strict_error_lines": [],
+      "expected_completion": "\\[portable-accept-tests\\] [1-9][0-9]* checks \\[\\]",
+      "completion_exit": 0,
+      "actual_completion_lines": [
+        "[portable-accept-tests] 16 checks []"
+      ],
+      "verified": true
+    },
+    {
+      "argv": [
+        "/tmp/youjia-godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+        "--headless",
+        "--path",
+        ".",
+        "--script",
+        "res://test/shipped_correctness_suite.gd"
+      ],
+      "started": "2026-10-06T00:40:29.395431+00:00",
+      "pid": 475893,
+      "ended": "2026-10-06T00:40:31.913741+00:00",
+      "direct_exit": 0,
+      "entry": "test/shipped_correctness_suite.gd",
+      "log_first_line": 396,
+      "log_last_line": 398,
+      "strict_error_scan_exit": 1,
+      "strict_error_lines": [],
+      "expected_completion": "\\[shipped-correctness\\] [1-9][0-9]* checks \\[\\]",
+      "completion_exit": 0,
+      "actual_completion_lines": [
+        "[shipped-correctness] 9 checks []"
+      ],
+      "verified": true
+    },
+    {
+      "argv": [
+        "/tmp/youjia-godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+        "--headless",
+        "--path",
+        ".",
+        "--script",
+        "res://test/interaction_photo_suite.gd"
+      ],
+      "started": "2026-10-06T00:40:31.957571+00:00",
+      "pid": 475923,
+      "ended": "2026-10-06T00:40:33.822184+00:00",
+      "direct_exit": 0,
+      "entry": "test/interaction_photo_suite.gd",
+      "log_first_line": 399,
+      "log_last_line": 401,
+      "strict_error_scan_exit": 1,
+      "strict_error_lines": [],
+      "expected_completion": "\\[interaction-photo-tests\\] [1-9][0-9]* checks, failures=\\[\\]",
+      "completion_exit": 0,
+      "actual_completion_lines": [
+        "[interaction-photo-tests] 110 checks, failures=[]"
+      ],
+      "verified": true
+    },
+    {
+      "argv": [
+        "/tmp/youjia-godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+        "--headless",
+        "--path",
+        ".",
+        "--script",
+        "res://test/scene_hotspot_suite.gd"
+      ],
+      "started": "2026-10-06T00:40:33.865830+00:00",
+      "pid": 475942,
+      "ended": "2026-10-06T00:40:36.658099+00:00",
+      "direct_exit": 0,
+      "entry": "test/scene_hotspot_suite.gd",
+      "log_first_line": 402,
+      "log_last_line": 404,
+      "strict_error_scan_exit": 1,
+      "strict_error_lines": [],
+      "expected_completion": "\\[scene-hotspot-tests\\] [1-9][0-9]* checks, failures=\\[\\]",
+      "completion_exit": 0,
+      "actual_completion_lines": [
+        "[scene-hotspot-tests] 91 checks, failures=[]"
+      ],
+      "verified": true
+    },
+    {
+      "argv": [
+        "/tmp/youjia-godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+        "--headless",
+        "--path",
+        ".",
+        "--script",
+        "res://test/authored_sequence_suite.gd"
+      ],
+      "started": "2026-10-06T00:40:36.700901+00:00",
+      "pid": 475972,
+      "ended": "2026-10-06T00:40:37.447244+00:00",
+      "direct_exit": 0,
+      "entry": "test/authored_sequence_suite.gd",
+      "log_first_line": 405,
+      "log_last_line": 407,
+      "strict_error_scan_exit": 1,
+      "strict_error_lines": [],
+      "expected_completion": "\\[authored-sequence-tests\\] PASS: 16 distinct complete frames, uniform canvas and anchor, loop metadata",
+      "completion_exit": 0,
+      "actual_completion_lines": [
+        "[authored-sequence-tests] PASS: 16 distinct complete frames, uniform canvas and anchor, loop metadata"
+      ],
+      "verified": true
+    },
+    {
+      "argv": [
+        "/tmp/youjia-godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+        "--headless",
+        "--path",
+        ".",
+        "--script",
+        "res://test/goose_mount_suite.gd"
+      ],
+      "started": "2026-10-06T00:40:37.488175+00:00",
+      "pid": 475991,
+      "ended": "2026-10-06T00:40:42.891012+00:00",
+      "direct_exit": 0,
+      "entry": "test/goose_mount_suite.gd",
+      "log_first_line": 408,
+      "log_last_line": 410,
+      "strict_error_scan_exit": 1,
+      "strict_error_lines": [],
+      "expected_completion": "\\[goose-mount\\] PASS: [1-9][0-9]* checks \\[\\]",
+      "completion_exit": 0,
+      "actual_completion_lines": [
+        "[goose-mount] PASS: 92 checks []"
+      ],
+      "verified": true
+    },
+    {
+      "argv": [
+        "/tmp/youjia-godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+        "--headless",
+        "--path",
+        ".",
+        "--script",
+        "res://test/quiet_stay_suite.gd"
+      ],
+      "started": "2026-10-06T00:40:42.932966+00:00",
+      "pid": 476016,
+      "ended": "2026-10-06T00:40:44.521978+00:00",
+      "direct_exit": 0,
+      "entry": "test/quiet_stay_suite.gd",
+      "log_first_line": 411,
+      "log_last_line": 413,
+      "strict_error_scan_exit": 1,
+      "strict_error_lines": [],
+      "expected_completion": "QUIET STAY PASS [1-9][0-9]*",
+      "completion_exit": 0,
+      "actual_completion_lines": [
+        "QUIET STAY PASS 4"
+      ],
+      "verified": true
+    },
+    {
+      "argv": [
+        "/tmp/youjia-godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+        "--headless",
+        "--path",
+        ".",
+        "--script",
+        "res://test/quiet_sky_look_suite.gd"
+      ],
+      "started": "2026-10-06T00:40:44.565136+00:00",
+      "pid": 476046,
+      "ended": "2026-10-06T00:40:46.725653+00:00",
+      "direct_exit": 0,
+      "entry": "test/quiet_sky_look_suite.gd",
+      "log_first_line": 414,
+      "log_last_line": 416,
+      "strict_error_scan_exit": 1,
+      "strict_error_lines": [],
+      "expected_completion": "QUIET SKY LOOK PASS [1-9][0-9]*",
+      "completion_exit": 0,
+      "actual_completion_lines": [
+        "QUIET SKY LOOK PASS 15"
+      ],
+      "verified": true
+    },
+    {
+      "argv": [
+        "/tmp/youjia-godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+        "--headless",
+        "--path",
+        ".",
+        "--script",
+        "res://test/camera400_handoff_suite.gd"
+      ],
+      "started": "2026-10-06T00:40:46.768253+00:00",
+      "pid": 476070,
+      "ended": "2026-10-06T00:40:55.531950+00:00",
+      "direct_exit": 0,
+      "entry": "test/camera400_handoff_suite.gd",
+      "log_first_line": 417,
+      "log_last_line": 473,
+      "strict_error_scan_exit": 1,
+      "strict_error_lines": [],
+      "expected_completion": "\\[camera400-handoff\\] PASS: [1-9][0-9]* checks \\[\\]",
+      "completion_exit": 0,
+      "actual_completion_lines": [
+        "[camera400-handoff] PASS: 202 checks []"
+      ],
+      "verified": true
+    },
+    {
+      "argv": [
+        "/tmp/youjia-godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+        "--headless",
+        "--path",
+        ".",
+        "--script",
+        "res://test/still_catch_suite.gd"
+      ],
+      "started": "2026-10-06T00:40:55.573265+00:00",
+      "pid": 476094,
+      "ended": "2026-10-06T00:40:56.405950+00:00",
+      "direct_exit": 0,
+      "entry": "test/still_catch_suite.gd",
+      "log_first_line": 474,
+      "log_last_line": 476,
+      "strict_error_scan_exit": 1,
+      "strict_error_lines": [],
+      "expected_completion": "STILL CATCH PASS [1-9][0-9]*",
+      "completion_exit": 0,
+      "actual_completion_lines": [
+        "STILL CATCH PASS 6"
+      ],
+      "verified": true
+    },
+    {
+      "argv": [
+        "/tmp/youjia-godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+        "--headless",
+        "--path",
+        ".",
+        "--script",
+        "res://test/still_target_pulse_suite.gd"
+      ],
+      "started": "2026-10-06T00:40:56.447657+00:00",
+      "pid": 476113,
+      "ended": "2026-10-06T00:40:57.288560+00:00",
+      "direct_exit": 0,
+      "entry": "test/still_target_pulse_suite.gd",
+      "log_first_line": 477,
+      "log_last_line": 479,
+      "strict_error_scan_exit": 1,
+      "strict_error_lines": [],
+      "expected_completion": "STILL TARGET PULSE PASS [1-9][0-9]*",
+      "completion_exit": 0,
+      "actual_completion_lines": [
+        "STILL TARGET PULSE PASS 5"
+      ],
+      "verified": true
+    },
+    {
+      "argv": [
+        "/tmp/youjia-godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+        "--headless",
+        "--path",
+        ".",
+        "--script",
+        "res://test/still_grass_glow_suite.gd"
+      ],
+      "started": "2026-10-06T00:40:57.330476+00:00",
+      "pid": 476132,
+      "ended": "2026-10-06T00:40:58.826202+00:00",
+      "direct_exit": 0,
+      "entry": "test/still_grass_glow_suite.gd",
+      "log_first_line": 480,
+      "log_last_line": 482,
+      "strict_error_scan_exit": 1,
+      "strict_error_lines": [],
+      "expected_completion": "STILL GRASS GLOW PASS [1-9][0-9]*",
+      "completion_exit": 0,
+      "actual_completion_lines": [
+        "STILL GRASS GLOW PASS 4"
+      ],
+      "verified": true
+    },
+    {
+      "argv": [
+        "/tmp/youjia-godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+        "--headless",
+        "--path",
+        ".",
+        "--script",
+        "res://test/still_object_feedback_suite.gd"
+      ],
+      "started": "2026-10-06T00:40:58.870289+00:00",
+      "pid": 476151,
+      "ended": "2026-10-06T00:40:59.706744+00:00",
+      "direct_exit": 0,
+      "entry": "test/still_object_feedback_suite.gd",
+      "log_first_line": 483,
+      "log_last_line": 485,
+      "strict_error_scan_exit": 1,
+      "strict_error_lines": [],
+      "expected_completion": "STILL OBJECT FEEDBACK PASS [1-9][0-9]*",
+      "completion_exit": 0,
+      "actual_completion_lines": [
+        "STILL OBJECT FEEDBACK PASS 14"
+      ],
+      "verified": true
+    },
+    {
+      "argv": [
+        "/tmp/youjia-godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+        "--headless",
+        "--path",
+        ".",
+        "--script",
+        "res://test/interaction_pose_suite.gd"
+      ],
+      "started": "2026-10-06T00:40:59.749417+00:00",
+      "pid": 476170,
+      "ended": "2026-10-06T00:41:01.349860+00:00",
+      "direct_exit": 0,
+      "entry": "test/interaction_pose_suite.gd",
+      "log_first_line": 486,
+      "log_last_line": 488,
+      "strict_error_scan_exit": 1,
+      "strict_error_lines": [],
+      "expected_completion": "INTERACTION POSE PASS [1-9][0-9]*",
+      "completion_exit": 0,
+      "actual_completion_lines": [
+        "INTERACTION POSE PASS 35"
+      ],
+      "verified": true
+    },
+    {
+      "argv": [
+        "/tmp/youjia-godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+        "--headless",
+        "--path",
+        ".",
+        "--script",
+        "res://test/cow_glance_suite.gd"
+      ],
+      "started": "2026-10-06T00:41:01.393019+00:00",
+      "pid": 476189,
+      "ended": "2026-10-06T00:41:02.983566+00:00",
+      "direct_exit": 0,
+      "entry": "test/cow_glance_suite.gd",
+      "log_first_line": 489,
+      "log_last_line": 491,
+      "strict_error_scan_exit": 1,
+      "strict_error_lines": [],
+      "expected_completion": "COW GLANCE PASS [1-9][0-9]*",
+      "completion_exit": 0,
+      "actual_completion_lines": [
+        "COW GLANCE PASS 8"
+      ],
+      "verified": true
+    },
+    {
+      "argv": [
+        "/tmp/youjia-godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+        "--headless",
+        "--path",
+        ".",
+        "--script",
+        "res://test/sheep_attention_suite.gd"
+      ],
+      "started": "2026-10-06T00:41:03.024720+00:00",
+      "pid": 476208,
+      "ended": "2026-10-06T00:41:04.796198+00:00",
+      "direct_exit": 0,
+      "entry": "test/sheep_attention_suite.gd",
+      "log_first_line": 492,
+      "log_last_line": 494,
+      "strict_error_scan_exit": 1,
+      "strict_error_lines": [],
+      "expected_completion": "SHEEP ATTENTION PASS [1-9][0-9]*",
+      "completion_exit": 0,
+      "actual_completion_lines": [
+        "SHEEP ATTENTION PASS 56"
+      ],
+      "verified": true
+    },
+    {
+      "argv": [
+        "/tmp/youjia-godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+        "--headless",
+        "--path",
+        ".",
+        "--script",
+        "res://test/duck_feed_attention_suite.gd"
+      ],
+      "started": "2026-10-06T00:41:04.837580+00:00",
+      "pid": 476252,
+      "ended": "2026-10-06T00:41:06.419895+00:00",
+      "direct_exit": 0,
+      "entry": "test/duck_feed_attention_suite.gd",
+      "log_first_line": 495,
+      "log_last_line": 497,
+      "strict_error_scan_exit": 1,
+      "strict_error_lines": [],
+      "expected_completion": "DUCK ATTENTION PASS [1-9][0-9]*",
+      "completion_exit": 0,
+      "actual_completion_lines": [
+        "DUCK ATTENTION PASS 24"
+      ],
+      "verified": true
+    },
+    {
+      "argv": [
+        "/tmp/youjia-godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+        "--headless",
+        "--path",
+        ".",
+        "--script",
+        "res://test/goose_feed_attention_suite.gd"
+      ],
+      "started": "2026-10-06T00:41:06.460745+00:00",
+      "pid": 476284,
+      "ended": "2026-10-06T00:41:08.238603+00:00",
+      "direct_exit": 0,
+      "entry": "test/goose_feed_attention_suite.gd",
+      "log_first_line": 498,
+      "log_last_line": 500,
+      "strict_error_scan_exit": 1,
+      "strict_error_lines": [],
+      "expected_completion": "GOOSE ATTENTION PASS [1-9][0-9]*",
+      "completion_exit": 0,
+      "actual_completion_lines": [
+        "GOOSE ATTENTION PASS 25"
+      ],
+      "verified": true
+    },
+    {
+      "argv": [
+        "/tmp/youjia-godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+        "--headless",
+        "--path",
+        ".",
+        "--script",
+        "res://test/fish_carry_consistency_suite.gd"
+      ],
+      "started": "2026-10-06T00:41:08.281915+00:00",
+      "pid": 476439,
+      "ended": "2026-10-06T00:41:17.223337+00:00",
+      "direct_exit": 0,
+      "entry": "test/fish_carry_consistency_suite.gd",
+      "log_first_line": 501,
+      "log_last_line": 523,
+      "strict_error_scan_exit": 1,
+      "strict_error_lines": [],
+      "expected_completion": "\\[fish-carry\\] [1-9][0-9]* checks \\[\\]",
+      "completion_exit": 0,
+      "actual_completion_lines": [
+        "[fish-carry] 94 checks []"
+      ],
+      "verified": true
+    },
+    {
+      "argv": [
+        "/tmp/youjia-godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+        "--headless",
+        "--path",
+        ".",
+        "--script",
+        "res://test/notice_paper_suite.gd"
+      ],
+      "started": "2026-10-06T00:41:17.265902+00:00",
+      "pid": 476486,
+      "ended": "2026-10-06T00:41:19.593245+00:00",
+      "direct_exit": 0,
+      "entry": "test/notice_paper_suite.gd",
+      "log_first_line": 524,
+      "log_last_line": 575,
+      "strict_error_scan_exit": 1,
+      "strict_error_lines": [],
+      "expected_completion": "notice paper suite checks=[1-9][0-9]* failures=\\[\\]",
+      "completion_exit": 0,
+      "actual_completion_lines": [
+        "notice paper suite checks=49 failures=[]"
+      ],
+      "verified": true
+    },
+    {
+      "argv": [
+        "/tmp/youjia-godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+        "--headless",
+        "--path",
+        ".",
+        "--script",
+        "res://test/photo_species_frame_suite.gd"
+      ],
+      "started": "2026-10-06T00:41:19.637277+00:00",
+      "pid": 476505,
+      "ended": "2026-10-06T00:41:21.408136+00:00",
+      "direct_exit": 0,
+      "entry": "test/photo_species_frame_suite.gd",
+      "log_first_line": 576,
+      "log_last_line": 578,
+      "strict_error_scan_exit": 1,
+      "strict_error_lines": [],
+      "expected_completion": "PHOTO_SPECIES_FRAME checks=[1-9][0-9]* failures=0",
+      "completion_exit": 0,
+      "actual_completion_lines": [
+        "PHOTO_SPECIES_FRAME checks=9 failures=0"
+      ],
+      "verified": true
+    },
+    {
+      "argv": [
+        "/tmp/youjia-godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+        "--headless",
+        "--path",
+        ".",
+        "--script",
+        "res://test/web_hidpi_suite.gd"
+      ],
+      "started": "2026-10-06T00:41:21.450428+00:00",
+      "pid": 476524,
+      "ended": "2026-10-06T00:41:25.732368+00:00",
+      "direct_exit": 0,
+      "entry": "test/web_hidpi_suite.gd",
+      "log_first_line": 579,
+      "log_last_line": 683,
+      "strict_error_scan_exit": 1,
+      "strict_error_lines": [],
+      "expected_completion": "web_hidpi: [1-9][0-9]* checks, 0 failures",
+      "completion_exit": 0,
+      "actual_completion_lines": [
+        "web_hidpi: 102 checks, 0 failures"
+      ],
+      "verified": true
+    },
+    {
+      "argv": [
+        "/tmp/youjia-godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+        "--headless",
+        "--path",
+        ".",
+        "--script",
+        "res://test/save_candidate_suite.gd"
+      ],
+      "started": "2026-10-06T00:41:25.775279+00:00",
+      "pid": 476543,
+      "ended": "2026-10-06T00:41:26.617619+00:00",
+      "direct_exit": 0,
+      "entry": "test/save_candidate_suite.gd",
+      "log_first_line": 684,
+      "log_last_line": 686,
+      "strict_error_scan_exit": 1,
+      "strict_error_lines": [],
+      "expected_completion": "save candidate: [1-9][0-9]* checks, 0 failures",
+      "completion_exit": 0,
+      "actual_completion_lines": [
+        "save candidate: 80 checks, 0 failures"
+      ],
+      "verified": true
+    },
+    {
+      "argv": [
+        "/tmp/youjia-godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+        "--headless",
+        "--path",
+        ".",
+        "--script",
+        "res://test/exploration_core_suite.gd"
+      ],
+      "started": "2026-10-06T00:41:26.659603+00:00",
+      "pid": 476562,
+      "ended": "2026-10-06T00:41:27.497331+00:00",
+      "direct_exit": 0,
+      "entry": "test/exploration_core_suite.gd",
+      "log_first_line": 687,
+      "log_last_line": 689,
+      "strict_error_scan_exit": 1,
+      "strict_error_lines": [],
+      "expected_completion": "EXPLORATION CORE PASS [1-9][0-9]*",
+      "completion_exit": 0,
+      "actual_completion_lines": [
+        "EXPLORATION CORE PASS 357"
+      ],
+      "verified": true
+    },
+    {
+      "argv": [
+        "/tmp/youjia-godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+        "--headless",
+        "--path",
+        ".",
+        "--script",
+        "res://test/fish_miss_feedback_suite.gd"
+      ],
+      "started": "2026-10-06T00:41:27.539696+00:00",
+      "pid": 476581,
+      "ended": "2026-10-06T00:41:29.310165+00:00",
+      "direct_exit": 0,
+      "entry": "test/fish_miss_feedback_suite.gd",
+      "log_first_line": 690,
+      "log_last_line": 692,
+      "strict_error_scan_exit": 1,
+      "strict_error_lines": [],
+      "expected_completion": "\\[fish-miss-feedback\\] [1-9][0-9]* checks, 0 failures: \\[\\]",
+      "completion_exit": 0,
+      "actual_completion_lines": [
+        "[fish-miss-feedback] 16 checks, 0 failures: []"
+      ],
+      "verified": true
+    },
+    {
+      "argv": [
+        "/tmp/youjia-godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+        "--headless",
+        "--path",
+        ".",
+        "--script",
+        "res://test/save_coordinator_suite.gd"
+      ],
+      "started": "2026-10-06T00:41:29.354967+00:00",
+      "pid": 476600,
+      "ended": "2026-10-06T00:41:30.292533+00:00",
+      "direct_exit": 0,
+      "entry": "test/save_coordinator_suite.gd",
+      "log_first_line": 693,
+      "log_last_line": 695,
+      "strict_error_scan_exit": 1,
+      "strict_error_lines": [],
+      "expected_completion": "SAVE_COORDINATOR checks=[1-9][0-9]* failures=\\[\\]",
+      "completion_exit": 0,
+      "actual_completion_lines": [
+        "SAVE_COORDINATOR checks=86 failures=[]"
+      ],
+      "verified": true
+    },
+    {
+      "argv": [
+        "/tmp/youjia-godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+        "--headless",
+        "--path",
+        ".",
+        "--script",
+        "res://test/native_save_host_suite.gd"
+      ],
+      "started": "2026-10-06T00:41:30.335401+00:00",
+      "pid": 476619,
+      "ended": "2026-10-06T00:41:31.181828+00:00",
+      "direct_exit": 0,
+      "entry": "test/native_save_host_suite.gd",
+      "log_first_line": 696,
+      "log_last_line": 698,
+      "strict_error_scan_exit": 1,
+      "strict_error_lines": [],
+      "expected_completion": "NATIVE SAVE HOST PASS [1-9][0-9]*",
+      "completion_exit": 0,
+      "actual_completion_lines": [
+        "NATIVE SAVE HOST PASS 200"
+      ],
+      "verified": true
+    },
+    {
+      "argv": [
+        "/tmp/youjia-godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+        "--headless",
+        "--path",
+        ".",
+        "--script",
+        "res://test/save_writer_guidance_suite.gd"
+      ],
+      "started": "2026-10-06T00:41:31.224293+00:00",
+      "pid": 476645,
+      "ended": "2026-10-06T00:41:31.975354+00:00",
+      "direct_exit": 0,
+      "entry": "test/save_writer_guidance_suite.gd",
+      "log_first_line": 699,
+      "log_last_line": 701,
+      "strict_error_scan_exit": 1,
+      "strict_error_lines": [],
+      "expected_completion": "SAVE WRITER GUIDANCE [1-9][0-9]* checks failures=\\[\\]",
+      "completion_exit": 0,
+      "actual_completion_lines": [
+        "SAVE WRITER GUIDANCE 20 checks failures=[]"
+      ],
+      "verified": true
+    },
+    {
+      "argv": [
+        "/tmp/youjia-godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+        "--headless",
+        "--path",
+        ".",
+        "--script",
+        "res://test/exploration_cleanup_contract_suite.gd"
+      ],
+      "started": "2026-10-06T00:41:32.016259+00:00",
+      "pid": 476664,
+      "ended": "2026-10-06T00:41:33.051116+00:00",
+      "direct_exit": 0,
+      "entry": "test/exploration_cleanup_contract_suite.gd",
+      "log_first_line": 702,
+      "log_last_line": 704,
+      "strict_error_scan_exit": 1,
+      "strict_error_lines": [],
+      "expected_completion": "EXPLORATION CLEANUP [1-9][0-9]* checks failures=\\[\\]",
+      "completion_exit": 0,
+      "actual_completion_lines": [
+        "EXPLORATION CLEANUP 95 checks failures=[]"
+      ],
+      "verified": true
+    },
+    {
+      "argv": [
+        "/tmp/youjia-godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+        "--headless",
+        "--path",
+        ".",
+        "--script",
+        "res://test/exploration_cleanup_preservation_suite.gd"
+      ],
+      "started": "2026-10-06T00:41:33.092213+00:00",
+      "pid": 476683,
+      "ended": "2026-10-06T00:41:33.929145+00:00",
+      "direct_exit": 0,
+      "entry": "test/exploration_cleanup_preservation_suite.gd",
+      "log_first_line": 705,
+      "log_last_line": 707,
+      "strict_error_scan_exit": 1,
+      "strict_error_lines": [],
+      "expected_completion": "EXPLORATION CLEANUP PRESERVATION checks=[1-9][0-9]* failures=0",
+      "completion_exit": 0,
+      "actual_completion_lines": [
+        "EXPLORATION CLEANUP PRESERVATION checks=51 failures=0"
+      ],
+      "verified": true
+    },
+    {
+      "argv": [
+        "/tmp/youjia-godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+        "--headless",
+        "--path",
+        ".",
+        "--script",
+        "res://test/save_feedback_suite.gd"
+      ],
+      "started": "2026-10-06T00:41:33.970398+00:00",
+      "pid": 476707,
+      "ended": "2026-10-06T00:41:35.556871+00:00",
+      "direct_exit": 0,
+      "entry": "test/save_feedback_suite.gd",
+      "log_first_line": 708,
+      "log_last_line": 710,
+      "strict_error_scan_exit": 1,
+      "strict_error_lines": [],
+      "expected_completion": "SAVE FEEDBACK [1-9][0-9]* checks, failures 0",
+      "completion_exit": 0,
+      "actual_completion_lines": [
+        "SAVE FEEDBACK 50 checks, failures 0"
+      ],
+      "verified": true
+    },
+    {
+      "argv": [
+        "/tmp/youjia-godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+        "--headless",
+        "--path",
+        ".",
+        "--script",
+        "res://test/day_label_layout_suite.gd"
+      ],
+      "started": "2026-10-06T00:41:35.609206+00:00",
+      "pid": 476730,
+      "ended": "2026-10-06T00:41:38.774803+00:00",
+      "direct_exit": 0,
+      "entry": "test/day_label_layout_suite.gd",
+      "log_first_line": 711,
+      "log_last_line": 713,
+      "strict_error_scan_exit": 1,
+      "strict_error_lines": [],
+      "expected_completion": "day_label_layout suite: [1-9][0-9]* checks passed",
+      "completion_exit": 0,
+      "actual_completion_lines": [
+        "day_label_layout suite: 173 checks passed"
+      ],
+      "verified": true
+    },
+    {
+      "argv": [
+        "/tmp/youjia-godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+        "--headless",
+        "--path",
+        ".",
+        "--script",
+        "res://test/exploration_slice_suite.gd"
+      ],
+      "started": "2026-10-06T00:41:38.817753+00:00",
+      "pid": 476749,
+      "ended": "2026-10-06T00:41:41.900100+00:00",
+      "direct_exit": 0,
+      "entry": "test/exploration_slice_suite.gd",
+      "log_first_line": 714,
+      "log_last_line": 716,
+      "strict_error_scan_exit": 1,
+      "strict_error_lines": [],
+      "expected_completion": "EXPLORATION SLICE PASS ([1-9][0-9]*)/\\1 failures=\\[\\]",
+      "completion_exit": 0,
+      "actual_completion_lines": [
+        "EXPLORATION SLICE PASS 218/218 failures=[]"
+      ],
+      "verified": true
+    },
+    {
+      "argv": [
+        "/tmp/youjia-godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+        "--headless",
+        "--path",
+        ".",
+        "--script",
+        "res://test/title_card_suite.gd"
+      ],
+      "started": "2026-10-06T00:41:41.941700+00:00",
+      "pid": 476768,
+      "ended": "2026-10-06T00:41:44.362444+00:00",
+      "direct_exit": 0,
+      "entry": "test/title_card_suite.gd",
+      "log_first_line": 717,
+      "log_last_line": 719,
+      "strict_error_scan_exit": 1,
+      "strict_error_lines": [],
+      "expected_completion": "title_card suite: [1-9][0-9]* checks passed",
+      "completion_exit": 0,
+      "actual_completion_lines": [
+        "title_card suite: 251 checks passed"
+      ],
+      "verified": true
+    },
+    {
+      "argv": [
+        "/tmp/youjia-godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+        "--headless",
+        "--path",
+        ".",
+        "--script",
+        "res://test/hint_paper_fit_suite.gd"
+      ],
+      "started": "2026-10-06T00:41:44.404434+00:00",
+      "pid": 476787,
+      "ended": "2026-10-06T00:41:51.850169+00:00",
+      "direct_exit": 0,
+      "entry": "test/hint_paper_fit_suite.gd",
+      "log_first_line": 720,
+      "log_last_line": 732,
+      "strict_error_scan_exit": 1,
+      "strict_error_lines": [],
+      "expected_completion": "hint_paper_fit suite: [1-9][0-9]* checks passed",
+      "completion_exit": 0,
+      "actual_completion_lines": [
+        "hint_paper_fit suite: 4653 checks passed"
+      ],
+      "verified": true
+    },
+    {
+      "argv": [
+        "/tmp/youjia-godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+        "--headless",
+        "--path",
+        ".",
+        "--script",
+        "res://test/confirm_panel_fit_suite.gd"
+      ],
+      "started": "2026-10-06T00:41:51.894696+00:00",
+      "pid": 476806,
+      "ended": "2026-10-06T00:41:57.577032+00:00",
+      "direct_exit": 0,
+      "entry": "test/confirm_panel_fit_suite.gd",
+      "log_first_line": 733,
+      "log_last_line": 735,
+      "strict_error_scan_exit": 1,
+      "strict_error_lines": [],
+      "expected_completion": "confirm_panel_fit suite: [1-9][0-9]* checks passed",
+      "completion_exit": 0,
+      "actual_completion_lines": [
+        "confirm_panel_fit suite: 562 checks passed"
+      ],
+      "verified": true
+    },
+    {
+      "argv": [
+        "/tmp/youjia-godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+        "--headless",
+        "--path",
+        ".",
+        "--script",
+        "res://test/title_short_landscape_suite.gd"
+      ],
+      "started": "2026-10-06T00:41:57.619740+00:00",
+      "pid": 476825,
+      "ended": "2026-10-06T00:42:01.069751+00:00",
+      "direct_exit": 0,
+      "entry": "test/title_short_landscape_suite.gd",
+      "log_first_line": 736,
+      "log_last_line": 738,
+      "strict_error_scan_exit": 1,
+      "strict_error_lines": [],
+      "expected_completion": "title_short_landscape suite: [1-9][0-9]* checks passed",
+      "completion_exit": 0,
+      "actual_completion_lines": [
+        "title_short_landscape suite: 1541 checks passed"
+      ],
+      "verified": true
+    },
+    {
+      "argv": [
+        "/tmp/youjia-godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+        "--headless",
+        "--path",
+        ".",
+        "--script",
+        "res://test/licenses_dialog_fit_suite.gd"
+      ],
+      "started": "2026-10-06T00:42:01.112087+00:00",
+      "pid": 476844,
+      "ended": "2026-10-06T00:42:26.507756+00:00",
+      "direct_exit": 0,
+      "entry": "test/licenses_dialog_fit_suite.gd",
+      "log_first_line": 739,
+      "log_last_line": 742,
+      "strict_error_scan_exit": 1,
+      "strict_error_lines": [],
+      "expected_completion": "licenses_dialog_fit_suite checks=[1-9][0-9]* failures=0",
+      "completion_exit": 0,
+      "actual_completion_lines": [
+        "licenses_dialog_fit_suite checks=124 failures=0"
+      ],
+      "verified": true
+    },
+    {
+      "argv": [
+        "/tmp/youjia-godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+        "--headless",
+        "--path",
+        ".",
+        "--script",
+        "res://test/motion_preference_suite.gd"
+      ],
+      "started": "2026-10-06T00:42:26.553139+00:00",
+      "pid": 476873,
+      "ended": "2026-10-06T00:42:29.459170+00:00",
+      "direct_exit": 0,
+      "entry": "test/motion_preference_suite.gd",
+      "log_first_line": 743,
+      "log_last_line": 745,
+      "strict_error_scan_exit": 1,
+      "strict_error_lines": [],
+      "expected_completion": "MOTION PREFERENCE NATIVE PASS [1-9][0-9]*",
+      "completion_exit": 0,
+      "actual_completion_lines": [
+        "MOTION PREFERENCE NATIVE PASS 18"
+      ],
+      "verified": true
+    },
+    {
+      "argv": [
+        "/tmp/youjia-godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+        "--headless",
+        "--path",
+        ".",
+        "--script",
+        "res://test/photo_arrival_fit_suite.gd"
+      ],
+      "started": "2026-10-06T00:42:29.499731+00:00",
+      "pid": 476892,
+      "ended": "2026-10-06T00:42:32.671928+00:00",
+      "direct_exit": 0,
+      "entry": "test/photo_arrival_fit_suite.gd",
+      "log_first_line": 746,
+      "log_last_line": 748,
+      "strict_error_scan_exit": 1,
+      "strict_error_lines": [],
+      "expected_completion": "\\[photo-arrival-fit\\] PASS: [1-9][0-9]* checks",
+      "completion_exit": 0,
+      "actual_completion_lines": [
+        "[photo-arrival-fit] PASS: 418 checks"
+      ],
+      "verified": true
+    },
+    {
+      "argv": [
+        "/tmp/youjia-godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+        "--headless",
+        "--path",
+        ".",
+        "--script",
+        "res://test/photo_arrival_combo_suite.gd"
+      ],
+      "started": "2026-10-06T00:42:32.714273+00:00",
+      "pid": 476916,
+      "ended": "2026-10-06T00:42:36.716655+00:00",
+      "direct_exit": 0,
+      "entry": "test/photo_arrival_combo_suite.gd",
+      "log_first_line": 749,
+      "log_last_line": 751,
+      "strict_error_scan_exit": 1,
+      "strict_error_lines": [],
+      "expected_completion": "PHOTO ARRIVAL COMBO PASS [1-9][0-9]*",
+      "completion_exit": 0,
+      "actual_completion_lines": [
+        "PHOTO ARRIVAL COMBO PASS 656"
+      ],
+      "verified": true
+    },
+    {
+      "argv": [
+        "/tmp/youjia-godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+        "--headless",
+        "--path",
+        ".",
+        "--script",
+        "res://test/photo_arrival_mat_suite.gd"
+      ],
+      "started": "2026-10-06T00:42:36.757885+00:00",
+      "pid": 476935,
+      "ended": "2026-10-06T00:42:39.650008+00:00",
+      "direct_exit": 0,
+      "entry": "test/photo_arrival_mat_suite.gd",
+      "log_first_line": 752,
+      "log_last_line": 754,
+      "strict_error_scan_exit": 1,
+      "strict_error_lines": [],
+      "expected_completion": "\\[photo-arrival-mat\\] PASS: [1-9][0-9]* checks",
+      "completion_exit": 0,
+      "actual_completion_lines": [
+        "[photo-arrival-mat] PASS: 550 checks"
+      ],
+      "verified": true
+    },
+    {
+      "argv": [
+        "/tmp/youjia-godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+        "--headless",
+        "--path",
+        ".",
+        "--script",
+        "res://test/photo_arrival_shutter_paper_suite.gd"
+      ],
+      "started": "2026-10-06T00:42:39.690137+00:00",
+      "pid": 476954,
+      "ended": "2026-10-06T00:42:43.784933+00:00",
+      "direct_exit": 0,
+      "entry": "test/photo_arrival_shutter_paper_suite.gd",
+      "log_first_line": 755,
+      "log_last_line": 757,
+      "strict_error_scan_exit": 1,
+      "strict_error_lines": [],
+      "expected_completion": "\\[photo-arrival-shutter-paper\\] PASS: [1-9][0-9]* checks",
+      "completion_exit": 0,
+      "actual_completion_lines": [
+        "[photo-arrival-shutter-paper] PASS: 1290 checks"
+      ],
+      "verified": true
+    },
+    {
+      "argv": [
+        "/tmp/youjia-godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+        "--headless",
+        "--path",
+        ".",
+        "--script",
+        "res://test/album_short_landscape_suite.gd"
+      ],
+      "started": "2026-10-06T00:42:43.827288+00:00",
+      "pid": 476977,
+      "ended": "2026-10-06T00:43:34.895021+00:00",
+      "direct_exit": 0,
+      "entry": "test/album_short_landscape_suite.gd",
+      "log_first_line": 758,
+      "log_last_line": 760,
+      "strict_error_scan_exit": 1,
+      "strict_error_lines": [],
+      "expected_completion": "ALBUM_SHORT_LANDSCAPE checks=[1-9][0-9]* failures=0",
+      "completion_exit": 0,
+      "actual_completion_lines": [
+        "ALBUM_SHORT_LANDSCAPE checks=52319 failures=0"
+      ],
+      "verified": true
+    },
+    {
+      "argv": [
+        "/tmp/youjia-godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+        "--headless",
+        "--path",
+        ".",
+        "--script",
+        "res://test/title_licenses_link_contrast_suite.gd"
+      ],
+      "started": "2026-10-06T00:43:34.936702+00:00",
+      "pid": 477100,
+      "ended": "2026-10-06T00:43:46.498082+00:00",
+      "direct_exit": 0,
+      "entry": "test/title_licenses_link_contrast_suite.gd",
+      "log_first_line": 761,
+      "log_last_line": 763,
+      "strict_error_scan_exit": 1,
+      "strict_error_lines": [],
+      "expected_completion": "PASS: title_licenses_link_contrast [1-9][0-9]* checks",
+      "completion_exit": 0,
+      "actual_completion_lines": [
+        "PASS: title_licenses_link_contrast 340 checks"
+      ],
+      "verified": true
+    },
+    {
+      "argv": [
+        "/tmp/youjia-godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+        "--headless",
+        "--path",
+        ".",
+        "--script",
+        "res://test/soft_button_focus_contrast_suite.gd"
+      ],
+      "started": "2026-10-06T00:43:46.541174+00:00",
+      "pid": 477119,
+      "ended": "2026-10-06T00:43:53.715152+00:00",
+      "direct_exit": 0,
+      "entry": "test/soft_button_focus_contrast_suite.gd",
+      "log_first_line": 764,
+      "log_last_line": 766,
+      "strict_error_scan_exit": 1,
+      "strict_error_lines": [],
+      "expected_completion": "PASS: soft_button_focus_contrast [1-9][0-9]* checks",
+      "completion_exit": 0,
+      "actual_completion_lines": [
+        "PASS: soft_button_focus_contrast 5080 checks"
+      ],
+      "verified": true
+    },
+    {
+      "argv": [
+        "/tmp/youjia-godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+        "--headless",
+        "--path",
+        ".",
+        "--script",
+        "res://test/soft_button_disabled_suite.gd"
+      ],
+      "started": "2026-10-06T00:43:53.757282+00:00",
+      "pid": 477146,
+      "ended": "2026-10-06T00:44:01.593323+00:00",
+      "direct_exit": 0,
+      "entry": "test/soft_button_disabled_suite.gd",
+      "log_first_line": 767,
+      "log_last_line": 769,
+      "strict_error_scan_exit": 1,
+      "strict_error_lines": [],
+      "expected_completion": "PASS: soft_button_disabled [1-9][0-9]* checks",
+      "completion_exit": 0,
+      "actual_completion_lines": [
+        "PASS: soft_button_disabled 4400 checks"
+      ],
+      "verified": true
+    },
+    {
+      "argv": [
+        "/tmp/youjia-godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+        "--headless",
+        "--path",
+        ".",
+        "--script",
+        "res://test/volume_slider_style_suite.gd"
+      ],
+      "started": "2026-10-06T00:44:01.635884+00:00",
+      "pid": 477165,
+      "ended": "2026-10-06T00:44:06.198071+00:00",
+      "direct_exit": 0,
+      "entry": "test/volume_slider_style_suite.gd",
+      "log_first_line": 770,
+      "log_last_line": 772,
+      "strict_error_scan_exit": 1,
+      "strict_error_lines": [],
+      "expected_completion": "\\[volume-slider-style\\] PASS: [1-9][0-9]* checks",
+      "completion_exit": 0,
+      "actual_completion_lines": [
+        "[volume-slider-style] PASS: 708 checks"
+      ],
+      "verified": true
+    },
+    {
+      "argv": [
+        "/tmp/youjia-godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+        "--headless",
+        "--path",
+        ".",
+        "--script",
+        "res://test/volume_slider_input_suite.gd"
+      ],
+      "started": "2026-10-06T00:44:06.240774+00:00",
+      "pid": 477184,
+      "ended": "2026-10-06T00:44:10.243878+00:00",
+      "direct_exit": 0,
+      "entry": "test/volume_slider_input_suite.gd",
+      "log_first_line": 773,
+      "log_last_line": 781,
+      "strict_error_scan_exit": 1,
+      "strict_error_lines": [],
+      "expected_completion": "\\[volume-slider-input\\] checks=[1-9][0-9]* failures=\\[\\]",
+      "completion_exit": 0,
+      "actual_completion_lines": [
+        "[volume-slider-input] checks=267 failures=[]"
+      ],
+      "verified": true
+    },
+    {
+      "argv": [
+        "/tmp/youjia-godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+        "--headless",
+        "--path",
+        ".",
+        "--script",
+        "res://test/album_layout_suite.gd"
+      ],
+      "started": "2026-10-06T00:44:10.285396+00:00",
+      "pid": 477203,
+      "ended": "2026-10-06T00:44:52.246158+00:00",
+      "direct_exit": 0,
+      "entry": "test/album_layout_suite.gd",
+      "log_first_line": 782,
+      "log_last_line": 784,
+      "strict_error_scan_exit": 1,
+      "strict_error_lines": [],
+      "expected_completion": "ALBUM_LAYOUT checks=[1-9][0-9]* failures=0",
+      "completion_exit": 0,
+      "actual_completion_lines": [
+        "ALBUM_LAYOUT checks=45914 failures=0"
+      ],
+      "verified": true
+    },
+    {
+      "argv": [
+        "/tmp/youjia-godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+        "--headless",
+        "--path",
+        ".",
+        "--script",
+        "res://test/pause_notice_suite.gd"
+      ],
+      "started": "2026-10-06T00:44:52.289393+00:00",
+      "pid": 477233,
+      "ended": "2026-10-06T00:44:54.152878+00:00",
+      "direct_exit": 0,
+      "entry": "test/pause_notice_suite.gd",
+      "log_first_line": 785,
+      "log_last_line": 787,
+      "strict_error_scan_exit": 1,
+      "strict_error_lines": [],
+      "expected_completion": "PAUSE_NOTICE checks=[1-9][0-9]* failures=0",
+      "completion_exit": 0,
+      "actual_completion_lines": [
+        "PAUSE_NOTICE checks=168 failures=0"
+      ],
+      "verified": true
+    },
+    {
+      "argv": [
+        "/tmp/youjia-godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+        "--headless",
+        "--path",
+        ".",
+        "--script",
+        "res://test/audio_button_input_suite.gd"
+      ],
+      "started": "2026-10-06T00:44:54.196953+00:00",
+      "pid": 477252,
+      "ended": "2026-10-06T00:44:58.401413+00:00",
+      "direct_exit": 0,
+      "entry": "test/audio_button_input_suite.gd",
+      "log_first_line": 788,
+      "log_last_line": 790,
+      "strict_error_scan_exit": 1,
+      "strict_error_lines": [],
+      "expected_completion": "AUDIO_BUTTON_INPUT checks=[1-9][0-9]* failures=0",
+      "completion_exit": 0,
+      "actual_completion_lines": [
+        "AUDIO_BUTTON_INPUT checks=648 failures=0"
+      ],
+      "verified": true
+    },
+    {
+      "argv": [
+        "/tmp/youjia-godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+        "--headless",
+        "--path",
+        ".",
+        "--script",
+        "res://test/still_boundary_feedback_suite.gd"
+      ],
+      "started": "2026-10-06T00:44:58.442561+00:00",
+      "pid": 477280,
+      "ended": "2026-10-06T00:45:00.399278+00:00",
+      "direct_exit": 0,
+      "entry": "test/still_boundary_feedback_suite.gd",
+      "log_first_line": 791,
+      "log_last_line": 793,
+      "strict_error_scan_exit": 1,
+      "strict_error_lines": [],
+      "expected_completion": "STILL BOUNDARY FEEDBACK PASS [1-9][0-9]*",
+      "completion_exit": 0,
+      "actual_completion_lines": [
+        "STILL BOUNDARY FEEDBACK PASS 44"
+      ],
+      "verified": true
+    },
+    {
+      "argv": [
+        "/tmp/youjia-godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+        "--headless",
+        "--path",
+        ".",
+        "--script",
+        "res://test/ui_viewports.gd"
+      ],
+      "started": "2026-10-06T00:45:00.441253+00:00",
+      "pid": 477299,
+      "ended": "2026-10-06T00:45:05.644455+00:00",
+      "direct_exit": 0,
+      "entry": "test/ui_viewports.gd",
+      "log_first_line": 794,
+      "log_last_line": 931,
+      "strict_error_scan_exit": 1,
+      "strict_error_lines": [],
+      "expected_completion": "\\[viewport\\] checks=[1-9][0-9]* failures=\\[\\]",
+      "completion_exit": 0,
+      "actual_completion_lines": [
+        "[viewport] checks=135 failures=[]"
+      ],
+      "verified": true
+    },
+    {
+      "argv": [
+        "/tmp/youjia-godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+        "--headless",
+        "--path",
+        ".",
+        "--script",
+        "res://test/web_save_bridge/decoder_suite.gd"
+      ],
+      "started": "2026-10-06T00:45:05.690138+00:00",
+      "pid": 477318,
+      "ended": "2026-10-06T00:45:06.441941+00:00",
+      "direct_exit": 0,
+      "entry": "test/web_save_bridge/decoder_suite.gd",
+      "log_first_line": 932,
+      "log_last_line": 934,
+      "strict_error_scan_exit": 1,
+      "strict_error_lines": [],
+      "expected_completion": "WEB SAVE BRIDGE DECODER [1-9][0-9]* failures=\\[\\]",
+      "completion_exit": 0,
+      "actual_completion_lines": [
+        "WEB SAVE BRIDGE DECODER 45 failures=[]"
+      ],
+      "verified": true
+    },
+    {
+      "argv": [
+        "/tmp/youjia-godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+        "--headless",
+        "--path",
+        ".",
+        "--script",
+        "res://test/web_save_bridge/legacy_suite.gd"
+      ],
+      "started": "2026-10-06T00:45:06.483836+00:00",
+      "pid": 477337,
+      "ended": "2026-10-06T00:45:07.235813+00:00",
+      "direct_exit": 0,
+      "entry": "test/web_save_bridge/legacy_suite.gd",
+      "log_first_line": 935,
+      "log_last_line": 939,
+      "strict_error_scan_exit": 1,
+      "strict_error_lines": [],
+      "expected_completion": "LEGACY_BRIDGE_PASS [1-9][0-9]*",
+      "completion_exit": 0,
+      "actual_completion_lines": [
+        "LEGACY_BRIDGE_PASS 22"
+      ],
+      "verified": true
+    }
+  ]
+}

@@ -1,0 +1,98 @@
+{
+  "verified_at": "2026-10-06T01:06:34.198190+00:00",
+  "candidate_source": "146c3711537e4fa6657f1fd54e7472747cd0b10d",
+  "combined_source": "49cf808ae6854406851592301e843bb557639500",
+  "old_pck": {
+    "path": "/dev/shm/volume466-web-v1/index.pck",
+    "bytes": 27093724,
+    "sha256": "df8b4807079717a3a51c273f09c617173aa6b50ce29b812e82d595cad62cd92a",
+    "format": 4,
+    "version": [
+      4,
+      7,
+      2
+    ],
+    "flags": 2,
+    "count": 402,
+    "directory_offset": 27057056,
+    "directory_end": 27093724
+  },
+  "new_pck": {
+    "path": "/dev/shm/volume466-web-v2/index.pck",
+    "bytes": 27094188,
+    "sha256": "0a1e0f05c5a5a6ef9e2622614a1ee28e993841ab4e68ba4809dfe25dc8ef3eff",
+    "format": 4,
+    "version": [
+      4,
+      7,
+      2
+    ],
+    "flags": 2,
+    "count": 402,
+    "directory_offset": 27057520,
+    "directory_end": 27094188
+  },
+  "added_members": [],
+  "removed_members": [],
+  "changed_members": {
+    "scripts/exploration/near_path_scroll.gdc": {
+      "old": {
+        "bytes": 16120,
+        "md5": "8888705aa9694d73de361dc681f58e0c",
+        "sha256": "5a639c3a3103fcf7a43541a8136a5c82b45ae75465ed68af4663fc2b4b356a56",
+        "flags": 0
+      },
+      "new": {
+        "bytes": 16546,
+        "md5": "b9518230a4fcb6291c5126f7371f8d54",
+        "sha256": "93b2eb6ba60991f1550fbf151732da64ff35d5b2ce25072f37d978f2525b5cd2",
+        "flags": 0
+      }
+    },
+    "scripts/exploration/find_reveal.gdc": {
+      "old": {
+        "bytes": 3362,
+        "md5": "3288f1085be4894e36b6b17e113aa1e2",
+        "sha256": "45970ae13aa9e63a892b22f3d3b17a7d7b63c045985fb67ce176513f5cca1e40",
+        "flags": 0
+      },
+      "new": {
+        "bytes": 3404,
+        "md5": "5fe26a13e2552cd91bb289a77b3a5b00",
+        "sha256": "f8c65e82b01c54555c9e009cce39575337492e8e8d07b0bc40a68c7044ec12cb",
+        "flags": 0
+      }
+    }
+  },
+  "identical_member_count": 400,
+  "qa55_files_exact": true,
+  "qa44_pngs": true,
+  "qa54_sums_pass": true,
+  "qa1_context0_DB": true,
+  "qa2_bindings_pass": true,
+  "logs": [
+    {
+      "stage": "combined-v1",
+      "name": "import",
+      "sha256": "86fef07b28e62aa182a65a2bd1bbe3dbf02a25f94748f090ae35bc107cfd8afc",
+      "direct_exit": 0,
+      "completion": null
+    },
+    {
+      "stage": "combined-v1",
+      "name": "exploration-slice",
+      "sha256": "b30af38eca8451b1ab1d96d109f4f5316ad102a949a4e32610e08923bcf46412",
+      "direct_exit": 0,
+      "completion": [
+        "EXPLORATION SLICE PASS 278/278 failures=[]"
+      ]
+    },
+    {
+      "stage": "export-v2",
+      "name": "export",
+      "sha256": "c9b83ebc557e5141a48e10ee34754a816426b43a9170c09dc1dcadaeece5f6ee",
+      "direct_exit": 0,
+      "completion": null
+    }
+  ]
+}
