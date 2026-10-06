@@ -1,0 +1,151 @@
+{
+  "source_commit": "b9f68c3c5c4e70e16cefde9b4400bb1d553ff915",
+  "source_tree": "2a4d0436d8ccf96c81e0427c54a09172ec25e856",
+  "main_run_id": 37392967346,
+  "main_run_url": "https://github.com/narutojzm1-dot/youjia/actions/runs/37392967346",
+  "main_status": "completed",
+  "main_conclusion": "success",
+  "main_job_id": 112042145721,
+  "read_only_followup": true,
+  "dispatched_or_retried": false,
+  "public_http_checked_by_this_agent": false,
+  "ordinary_browser_checked_by_this_agent": false,
+  "source": "b9f68c3c5c4e70e16cefde9b4400bb1d553ff915",
+  "actual_checkout": "b9f68c3c5c4e70e16cefde9b4400bb1d553ff915",
+  "main_completed_at": "2026-10-06T00:22:33Z",
+  "godot_launches": 76,
+  "suite_count": 75,
+  "all_ordered_completions_pass": true,
+  "disabled4400": true,
+  "mat550": true,
+  "gate_mock64": true,
+  "new_camera_mock14": true,
+  "camera202": true,
+  "shutter_paper1290": true,
+  "node_gate_count": 2,
+  "retention_tests": 11,
+  "publisher_fixture": true,
+  "web_export_success": true,
+  "publish_success": true,
+  "engine_errors": [],
+  "warning_lines": [],
+  "actual_checkout_fetch_commands": [
+    "[command]/usr/bin/git -c protocol.version=2 fetch --prune --no-recurse-submodules --filter=blob:none origin +refs/heads/*:refs/remotes/origin/* +refs/tags/*:refs/tags/*"
+  ],
+  "full_history_filtered_noncone_sparse_checkout": true,
+  "entry": "game-b9f68c3",
+  "gh_pages_commit": "30f25eea69b858a4d6ccf3c61e5b6e56865b213f",
+  "gh_pages_tree": "cf723673eb252569b58c0b37cddf6eb1022363cb",
+  "git_release_source_verified": true,
+  "git_release_published_at": "2026-10-06T00:22:22Z",
+  "main_logs_zip": {
+    "bytes": 104436,
+    "sha256": "d70a2e0a31c474b6d5fd946ae964292896457d941e26862c1fd90c1a1b7b7be7"
+  },
+  "pages_run_id": 37393667313,
+  "pages_run_url": "https://github.com/narutojzm1-dot/youjia/actions/runs/37393667313",
+  "pages_status": "completed",
+  "pages_conclusion": "success",
+  "pages_jobs": [
+    {
+      "id": 112044408678,
+      "name": "build",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 112044542140,
+      "name": "report-build-status",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 112044542146,
+      "name": "deploy",
+      "status": "completed",
+      "conclusion": "success"
+    }
+  ],
+  "pages_actual_checkout": "30f25eea69b858a4d6ccf3c61e5b6e56865b213f",
+  "pages_build_version": "30f25eea69b858a4d6ccf3c61e5b6e56865b213f",
+  "pages_artifact_id": 11381639336,
+  "pages_deploy_reported_success": true,
+  "pages_logs_zip": {
+    "bytes": 31047,
+    "sha256": "8c553d13a62d7b26fb3f454dcd2cbb36216e979a5eedd1db822757eece19bd03"
+  },
+  "pages_run_updated_at": "2026-10-06T00:23:27Z",
+  "verified_at_utc": "2026-10-06T00:23:51Z",
+  "pages_reported_success_utc": "2026-10-06T00:23:24.3504435Z",
+  "git_retention_analysis": {
+    "source": "b9f68c3c5c4e70e16cefde9b4400bb1d553ff915",
+    "gh_pages_commit": "30f25eea69b858a4d6ccf3c61e5b6e56865b213f",
+    "gh_pages_tree": "cf723673eb252569b58c0b37cddf6eb1022363cb",
+    "previous_pages_commit": "aeac1d1c37862ba91e454e130d9e266dc08bcfdf",
+    "first_parent_publish_history": [
+      {
+        "commit": "30f25eea69b858a4d6ccf3c61e5b6e56865b213f",
+        "source": "b9f68c3c5c4e70e16cefde9b4400bb1d553ff915",
+        "entry": "game-b9f68c3"
+      },
+      {
+        "commit": "aeac1d1c37862ba91e454e130d9e266dc08bcfdf",
+        "source": "49596fa93bff3c29edfe441898017158c6e469a3",
+        "entry": "game-49596fa"
+      },
+      {
+        "commit": "e6d192eab33cc67e32f76656cdc24eb222b2a869",
+        "source": "b300da74bf157de3f152e63331096cb1eb28b3f7",
+        "entry": "game-b300da7"
+      },
+      {
+        "commit": "16944e4fa02d280f8ff150b89e62ba76d1ec9f1c",
+        "source": "9623ba22c8edc564e5c89dc6b0171324e9230764",
+        "entry": "game-9623ba2"
+      },
+      {
+        "commit": "ea98067e715285a253824d8d0133cf2c196531db",
+        "source": "870f4faebd6e28c7314e9db97cb39ae27819eded",
+        "entry": "game-870f4fa"
+      }
+    ],
+    "retained_bundles": [
+      "game-49596fa",
+      "game-9623ba2",
+      "game-b300da7",
+      "game-b9f68c3"
+    ],
+    "removed_bundles": [
+      "game-870f4fa"
+    ],
+    "retained_old_files_exact": true,
+    "index_aliases_exact": true,
+    "html_source_and_size_bindings": true,
+    "prior_module_dirs_preserved": true,
+    "current_ten_module_blobs_match_source": true,
+    "manifest_module_sha256_match_source": true,
+    "historical_root_docs_present_in_real_pages": false,
+    "historical_docs_fixture_only_if_absent": true,
+    "pck_bytes": 27090748,
+    "pck_git_blob_sha1": "0367320325a08bd8d9859d22bf771dee91017458",
+    "license_git_blob_sha1": "ad9ed8e77c0c50dd7dd3b1f24ba2b7417a66f601",
+    "license_bytes": 147966,
+    "public_http_download_performed": false
+  },
+  "parent_public_evidence": {
+    "executor": "root",
+    "independently_read_json_by_reviewer": true,
+    "public_download_performed_by_reviewer": false,
+    "release_file": "../releases/pr465-public-release.json",
+    "license_file": "../releases/pr465-public-license.json",
+    "checked_at": "2026-10-06T00:24:05.805931+00:00",
+    "pck_bytes": 27090748,
+    "pck_sha256": "2b719ae25bb58d91f4742e998faff212a3410a5ac1ecf47ed50c3fc7dbf0ca1f",
+    "source": "b9f68c3c5c4e70e16cefde9b4400bb1d553ff915",
+    "module_count": 10,
+    "license_bytes": 147966,
+    "license_sha256": "9215f5fdd50039a9b6f3d8f0271cbc21bbdf64b917fb118dd29c8a16b9974e00",
+    "end_manifest_verified_at": "2026-10-06T00:24:08.672445+00:00",
+    "ordinary_public_browser": "pending separate sole-browser QA"
+  }
+}

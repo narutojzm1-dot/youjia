@@ -1,0 +1,29 @@
+{
+  "checked_at": "2026-10-05T23:44:34.210482+00:00",
+  "head": "0f4226dc6710ef3a11099baf45f707bbfd4fd30e",
+  "tree": "63ff0706a9c60dd31a69cb412b9629398a67848d",
+  "base": "cd836bf9e823b4e6276731b69e57f167c84547b8",
+  "proposed": "68e674d1030046d90c88a1e29c5d35e282edd44e",
+  "actual_checkout": "5dff8817b03ed39467c466922af058e0408a8ae9",
+  "actual_checkout_tree": "63ff0706a9c60dd31a69cb412b9629398a67848d",
+  "actual_checkout_parents": [
+    "cd836bf9e823b4e6276731b69e57f167c84547b8",
+    "0f4226dc6710ef3a11099baf45f707bbfd4fd30e"
+  ],
+  "run": 37389414385,
+  "job": 112030653947,
+  "status": "completed",
+  "conclusion": "success",
+  "log_zip_bytes": 79306,
+  "log_zip_sha256": "c4b86f2ca32f3edd65bd0e8580d99dbbce32a17459912fe606b51b660c1d2499",
+  "godot_launches": 75,
+  "suite_count": 74,
+  "mock_cases": 50,
+  "all_steps_success": true,
+  "sparse_filter_observed": true,
+  "depth_1_observed": true,
+  "final_head_unchanged": true,
+  "overall_review": "APPROVE",
+  "review_path": "https://github.com/narutojzm1-dot/youjia/pull/464#issuecomment-6005708356",
+  "approved_head": "0f4226dc6710ef3a11099baf45f707bbfd4fd30e"
+}

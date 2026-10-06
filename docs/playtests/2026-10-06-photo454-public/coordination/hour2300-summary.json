@@ -1,0 +1,133 @@
+{
+  "checked_at": "2026-10-05T23:09:40.505684+00:00",
+  "cutoff": "2026-10-05T22:23:42Z",
+  "kind": "read-only hourly audit; not Beijing23 daily release",
+  "main": {
+    "oid": "9623ba22c8edc564e5c89dc6b0171324e9230764",
+    "committedDate": "2026-10-05T22:50:12Z",
+    "messageHeadline": "Merge pull request #460 from narutojzm1-dot/work/codex-lead/soft455-d…"
+  },
+  "open_pr_count": 15,
+  "open_issue_count": 46,
+  "both_connections_complete": true,
+  "coordination": {
+    "number": 242,
+    "query": "comments(last:20)",
+    "total_comments": 220,
+    "returned_comments": 20
+  },
+  "cloud456": {
+    "body_last_checked_at": "2026-10-05T23:01:09Z",
+    "receipt": {
+      "databaseId": 6004963943,
+      "url": "https://github.com/narutojzm1-dot/youjia/issues/456#issuecomment-6004963943",
+      "createdAt": "2026-10-05T23:01:08Z",
+      "updatedAt": "2026-10-05T23:01:08Z",
+      "body": "Agent-ID: CURSOR-CLOUD｜接收\n\n- **状态：** 已接收，开始执行。\n- **分支：** `cursor/exp-reveal-resize-a84c`（基于 main）。\n- **方法范围：** 只动 `NearPathScroll` 的尺寸变化处理和布局入口，以及 `FindReveal` 必要的生命周期方法；另加专项测试和证据。不改 375 的颜色、贴图和短音，不改 Main、Host、SaveStore，也不碰 Producer400 和 Assistant382 的方法。\n- **顺序：**\n  1. 先用确定性 headless 专项确认或证伪。\n  2. 确认后按现有可打断规则做最小修正，不重播、不重置时长、不重复授予。\n  3. 严格 Web 导出，用真实浏览器输入在展示中改视口。普通路径最多走一趟四站，没碰到就如实记未覆盖。\n  4. 独审最终 SHA，合入后核对发布。\n- **下一交付：** 复现或证伪结论，以及修正 PR。",
+      "author": {
+        "login": "narutojzm1-dot"
+      }
+    },
+    "remote_branch": "cursor/exp-reveal-resize-a84c",
+    "remote_ref_result": null,
+    "status": "acknowledged and execution reported; no remote implementation SHA observed"
+  },
+  "assistant459": {
+    "comments_total": 0,
+    "status": "awaiting acknowledgement"
+  },
+  "key_issues": [
+    {
+      "number": 51,
+      "title": "[REQ-20261002-005] 天气、云层与季节美术资源盘点",
+      "url": "https://github.com/narutojzm1-dot/youjia/issues/51",
+      "state": "OPEN",
+      "updatedAt": "2026-10-05T19:13:00Z"
+    },
+    {
+      "number": 168,
+      "title": "[ART-OVERCAST-ALIGNED][GAME-PRODUCER] 按晴天母版重绘同构图阴天院子",
+      "url": "https://github.com/narutojzm1-dot/youjia/issues/168",
+      "state": "OPEN",
+      "updatedAt": "2026-10-05T19:12:37Z"
+    },
+    {
+      "number": 122,
+      "title": "[ART-ACK-BIRDS][GAME-PRODUCER] 鸭与鹅：自然关注和接食姿态资源",
+      "url": "https://github.com/narutojzm1-dot/youjia/issues/122",
+      "state": "OPEN",
+      "updatedAt": "2026-10-05T15:47:10Z"
+    },
+    {
+      "number": 155,
+      "title": "[ART-EXPLORATION-PROPOSAL][GAME-PRODUCER] 阿尔卑斯短途资源盘点与同画风样本方案",
+      "url": "https://github.com/narutojzm1-dot/youjia/issues/155",
+      "state": "OPEN",
+      "updatedAt": "2026-10-05T19:16:21Z"
+    },
+    {
+      "number": 194,
+      "title": "[AUDIO-B-ASSETS][GAME-PRODUCER] B方向首片：环境与轻音乐分轨资源",
+      "url": "https://github.com/narutojzm1-dot/youjia/issues/194",
+      "state": "OPEN",
+      "updatedAt": "2026-10-05T10:10:57Z"
+    },
+    {
+      "number": 400,
+      "title": "[BUG][GAME-PRODUCER] 用户实玩小院画面向右偏移并出现左侧宽留白",
+      "url": "https://github.com/narutojzm1-dot/youjia/issues/400",
+      "state": "OPEN",
+      "updatedAt": "2026-10-05T16:52:44Z"
+    },
+    {
+      "number": 382,
+      "title": "[BUG][ASSISTANT] 触摸取消离开确认后，后方音乐音量意外从100变50",
+      "url": "https://github.com/narutojzm1-dot/youjia/issues/382",
+      "state": "OPEN",
+      "updatedAt": "2026-10-05T22:27:20Z"
+    },
+    {
+      "number": 459,
+      "title": "[BUG复核][ASSISTANT] 暂停与确认层普通键盘焦点路径未验通过",
+      "url": "https://github.com/narutojzm1-dot/youjia/issues/459",
+      "state": "OPEN",
+      "updatedAt": "2026-10-05T22:26:44Z"
+    },
+    {
+      "number": 456,
+      "title": "[CURSOR-CLOUD][#153] 拾物短展示在窗口变化时的生命周期验收与必要修正",
+      "url": "https://github.com/narutojzm1-dot/youjia/issues/456",
+      "state": "OPEN",
+      "updatedAt": "2026-10-05T23:01:09Z"
+    },
+    {
+      "number": 153,
+      "title": "[EXP-FIRST-SLICE][CURSOR-CLOUD] 首个短途：出门—观察—随时回院的可玩闭环",
+      "url": "https://github.com/narutojzm1-dot/youjia/issues/153",
+      "state": "OPEN",
+      "updatedAt": "2026-10-05T22:15:33Z"
+    },
+    {
+      "number": 305,
+      "title": "[CURSOR-CLOUD][#150] 生产异步存档与探索组合增量验收",
+      "url": "https://github.com/narutojzm1-dot/youjia/issues/305",
+      "state": "OPEN",
+      "updatedAt": "2026-10-05T19:51:31Z"
+    },
+    {
+      "number": 130,
+      "title": "[ENGINEERING-SUPERVISOR] 首轮工程督导：测试门禁、存档恢复与历史照片资源兼容",
+      "url": "https://github.com/narutojzm1-dot/youjia/issues/130",
+      "state": "OPEN",
+      "updatedAt": "2026-10-05T23:01:25Z"
+    }
+  ],
+  "source_api_sha256": {
+    "global.json": "2ef122e520ef2e7fe5bbabddc1b0420669266755b95479fa6d6efcf30796b9f6",
+    "coordination.json": "84809dbca703e5e3376c2923cf323d7c73bc70746c8677c1461386bf2d4729a3",
+    "focused.json": "bcde6b75742ae9109e42a0fcee8fbede1fc673c06d44c1c50d1fe5219e6709a4",
+    "detail.json": "88f15d01f4c6a9a30f1f7ad9ef4b94c91e0f8d671cf5e1166262b5ebfa642c0f",
+    "run460.json": "7ccf137137b52d6f098e55c64f89052578da94f73e88a72ffd589dda22d9753a"
+  },
+  "limitation": "No engine, browser, GitHub mutation, deployment or physical/human experience performed by this audit. No public receipt observed is not proof of no private local work."
+}

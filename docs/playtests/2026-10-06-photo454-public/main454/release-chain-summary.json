@@ -1,0 +1,30 @@
+{
+  "source_sha": "a0bb75e38e59032a6df72a2122af4403c3c3e816",
+  "source_tree": "8394f116f24295b0800824e90db1cf56d9334c1d",
+  "main_run": 37379761014,
+  "main_job": 111998390379,
+  "main_conclusion": "success",
+  "gh_pages_commit": "29a434c286067c24db55e2adcf2b31e2d9cceb69",
+  "pages_run": 37380911155,
+  "pages_jobs": {
+    "build": 112002364268,
+    "report_build_status": 112002504298,
+    "deploy": 112002504340
+  },
+  "pages_conclusion": "success",
+  "pages_artifact_id": 11373024606,
+  "pages_run_updated_at": "2026-10-05T22:12:53Z",
+  "entry": "game-a0bb75e",
+  "git_manifest_published_at": "2026-10-05T22:11:56Z",
+  "actual_main_godot_launches": 73,
+  "actual_main_suites": 72,
+  "actual_main_exact_completions": 72,
+  "actual_main_gate_mock": 50,
+  "main_logs_zip_bytes": 108806,
+  "main_logs_zip_sha256": "bef878514e17b445b2280cf269f372d3543370a8190835c59f65ffc419bcd751",
+  "pages_logs_zip_bytes": 27904,
+  "pages_logs_zip_sha256": "e0f26cc8478804213908047df5418714ec015758bfb2349a956bee899447532b",
+  "public_http_pck_verification": "delegated to root; not performed by this reviewer",
+  "browser_playtest": "delegated to root / hotspot36_qa; not performed here",
+  "checked_at": "2026-10-05T22:14:36.206126+00:00"
+}

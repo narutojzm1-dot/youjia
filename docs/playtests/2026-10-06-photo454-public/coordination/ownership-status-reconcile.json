@@ -1,0 +1,92 @@
+{
+  "prepared_at": "2026-10-05T23:55:43.109861+00:00",
+  "source": "Actual before/payload/after responses retained by CODEX-LEAD; archive process performed no GitHub writes.",
+  "scope": "Four issue status reconciliations, not a fresh global or author activity audit.",
+  "entries": [
+    {
+      "issue": 168,
+      "url": "https://github.com/narutojzm1-dot/youjia/issues/168",
+      "before_updated_at": "2026-10-05T19:12:37Z",
+      "after_updated_at": "2026-10-05T23:50:05Z",
+      "before_labels": [
+        "owner:producer",
+        "status:in-progress",
+        "status:queued"
+      ],
+      "after_labels": [
+        "owner:producer",
+        "status:in-progress"
+      ],
+      "body_changed": false,
+      "meaning": "Remove simultaneous queued; keep Producer in-progress for reviewed unpublished candidate. Remote original/mask/weather wiring remain incomplete.",
+      "source_file_sha256": {
+        "before": "55f503788a0a8a03c7378c64c7145a7323e3336ca7473a8caecdec4c788c5b74",
+        "payload": "bcc08cbf411557216df735fe135d1f246288eec3d54bcfc355df4fd29bfed531",
+        "after": "c983188171473d087fd13e665c87aa32d3bf066193a92cc4a94afe353d49b994"
+      }
+    },
+    {
+      "issue": 382,
+      "url": "https://github.com/narutojzm1-dot/youjia/issues/382",
+      "before_updated_at": "2026-10-05T22:27:20Z",
+      "after_updated_at": "2026-10-05T23:50:03Z",
+      "before_labels": [],
+      "after_labels": [
+        "bug",
+        "owner:assistant",
+        "status:in-progress"
+      ],
+      "body_changed": false,
+      "meaning": "Existing original-body Assistant acknowledgement already in-progress; labels now agree. No new implementation SHA or completion established by label update.",
+      "source_file_sha256": {
+        "before": "cce74e7d8e3aa6d278c54a099255296f657f1ca4aee9d07d636358bb283a0373",
+        "payload": "72b01fd4019edc3d38a7b8293cbb4b53431a971a002e3a555bf54fd302e1ea8a",
+        "after": "3f861d5d6481928b14732f6662cb28316f1dd335cbd3eb650b40d9b148ed8e27"
+      },
+      "acknowledgement_source": "Original issue body: Assistant actual acceptance2026-10-06 00:35 Asia/Shanghai; branch work/codex-assistant/382-modal-touch; no implementation PR yet."
+    },
+    {
+      "issue": 456,
+      "url": "https://github.com/narutojzm1-dot/youjia/issues/456",
+      "before_updated_at": "2026-10-05T23:01:09Z",
+      "after_updated_at": "2026-10-05T23:49:58Z",
+      "before_labels": [
+        "owner:cursor-cloud",
+        "status:awaiting-receipt"
+      ],
+      "after_labels": [
+        "owner:cursor-cloud",
+        "status:in-progress"
+      ],
+      "body_changed": true,
+      "meaning": "Author receipt6004963943 at23:01:08Z acknowledges branch cursor/exp-reveal-resize-a84c. Header and label now agree. No new remote implementation SHA implied.",
+      "source_file_sha256": {
+        "before": "bd5b9ffe10ddd2040c0168847022961d37f10ced07905db65080034efcd86fbc",
+        "payload": "3e22a786b2eb93067d2f96b745a23de277274a1866cbc1c409ab305915332044",
+        "after": "1cf9f46e69804449c54d84d33ab587eb855a1fd72771d44f80fc3b2fe7a4a5a9"
+      },
+      "receipt": "https://github.com/narutojzm1-dot/youjia/issues/456#issuecomment-6004963943",
+      "branch": "cursor/exp-reveal-resize-a84c",
+      "body_change_scope": "Owner/status opening section updated; implementation progress not invented."
+    },
+    {
+      "issue": 459,
+      "url": "https://github.com/narutojzm1-dot/youjia/issues/459",
+      "before_updated_at": "2026-10-05T22:26:44Z",
+      "after_updated_at": "2026-10-05T23:50:00Z",
+      "before_labels": [],
+      "after_labels": [
+        "bug",
+        "owner:assistant",
+        "status:awaiting-receipt"
+      ],
+      "body_changed": false,
+      "meaning": "Assistant assigned, awaiting actual acknowledgement; no keyboard root-cause claim.",
+      "source_file_sha256": {
+        "before": "bd3e333553f955d47d84e984c71cc03055c5672ebefef5b110a71b99b6dd1ed7",
+        "payload": "67798b4eec28bb8bb575c727b2019929288fc66ee1d928f1e1ddef445851e76b",
+        "after": "2a0863d35e5fe459659cc6fff52f5a02bb8c84719ce771dc21e93e976ff2baab"
+      }
+    }
+  ]
+}

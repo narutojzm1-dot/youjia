@@ -1,0 +1,26 @@
+{
+  "checked_at": "2026-10-05T22:35:33.300550+00:00",
+  "head": "6862b4c65b6c037fa2319a38ed12f7f0238168b7",
+  "tree": "895be87dd881f1662d6b2b78c7c4b41e7883ebfa",
+  "base": "87076010555fc7283b97b583eff60a5fd8a9fccb",
+  "proposed": "5c236828ea23fd376a036dc2e83f92d4234b7780",
+  "run": 37382704512,
+  "job": 112008583888,
+  "status": "completed",
+  "conclusion": "success",
+  "log_zip_bytes": 78624,
+  "log_zip_sha256": "0f915e46a2daa4b80f393d104590b3c9c524c69d59032f22d572466e399a1ddc",
+  "godot_launches": 73,
+  "suite_count": 72,
+  "mock_cases": 50,
+  "all_steps_success": true,
+  "sparse_filter_observed": true,
+  "depth_1_observed": true,
+  "final_head_unchanged": true,
+  "node_checks": [
+    "Loading shell PASS",
+    "MOTION PREFERENCE JS PASS 21"
+  ],
+  "final_verdict": "APPROVE",
+  "final_fresh_api_at": "2026-10-05T22:36:15.178714+00:00"
+}
