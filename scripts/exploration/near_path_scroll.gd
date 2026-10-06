@@ -11,6 +11,8 @@ const MUTED := Color("8a7060")
 const APRICOT := Color("f3b27a")
 const CREAM := Color("fffaf1")
 const TOUCH_DEDUPE_MS := 400
+const BASKET_LABEL_AT := Vector2(84, 46)
+const BASKET_LABEL_WIDTH := 200.0
 
 signal return_requested(reason: String)
 signal pause_requested
@@ -88,7 +90,7 @@ func setup(trip_host: ExplorationHost, _weather: String) -> void:
 
 func release() -> void:
 	if reveal != null:
-		reveal.settle()
+		reveal.settle(true)
 	set_process(false)
 	set_process_unhandled_input(false)
 	if camera != null:
@@ -104,7 +106,7 @@ func _notification(what: int) -> void:
 	if what in [NOTIFICATION_PAUSED, NOTIFICATION_APPLICATION_FOCUS_OUT, NOTIFICATION_WM_WINDOW_FOCUS_OUT]:
 		walk_target = {}
 		if reveal != null:
-			reveal.settle()
+			reveal.settle(true)
 
 
 ## 拾起短展示的起点、停留点和篮位都是开始时的屏幕坐标：视口一变（转屏、拖窗）就按可打断规则收进篮子，
@@ -304,7 +306,7 @@ func _request_return(reason: String) -> void:
 	leaving = true
 	walk_target = {}
 	if reveal != null:
-		reveal.settle()
+		reveal.settle(true)
 	return_requested.emit(reason)
 
 
@@ -411,7 +413,7 @@ func _draw_items() -> void:
 			items.draw_circle(Vector2.ZERO, 34.0, Color(1.0, 0.96, 0.82, 0.55))
 			items.draw_circle(Vector2.ZERO, 24.0, Color(1.0, 0.98, 0.90, 0.6))
 			items.draw_set_transform(Vector2.ZERO)
-		KeepsakeArt.draw(items, find_id, anchor, 1.6 * depth)
+		KeepsakeArt.draw(items, find_id, anchor, 1.6 * depth, true)
 
 
 func _observe_caption() -> String:
@@ -529,7 +531,7 @@ func _build_hud() -> void:
 	_return_button = _button(I18n.t("exploration.action.return"), func() -> void: _request_return("player"))
 	# 触屏没有 Esc：暂停/音量入口在画卷里也要有
 	_pause_button = _button(I18n.t("hud.pause"), func() -> void:
-		reveal.settle()
+		reveal.settle(true)
 		pause_requested.emit())
 	_look_button = _button("", func() -> void: observe())
 	_pick_button = _button("", func() -> void: pick())
@@ -555,8 +557,21 @@ func _draw_basket() -> void:
 	for i in held.size():
 		KeepsakeArt.draw(_basket, held[i], Vector2(24 + i * 16, 22), 0.9)
 	var font := _basket.get_theme_default_font()
-	var text := I18n.t("exploration.basket.empty") if held.is_empty() else ExplorationDirector.items_text(PackedStringArray(held))
-	_basket.draw_string(font, Vector2(84, 46), text, HORIZONTAL_ALIGNMENT_LEFT, 200, 15, INK)
+	var text := basket_text()
+	_basket.draw_rect(basket_label_rect(font, text), Color(1.0, 0.97, 0.88, 0.86))
+	_basket.draw_string(font, BASKET_LABEL_AT, text, HORIZONTAL_ALIGNMENT_LEFT, BASKET_LABEL_WIDTH, 15, INK)
+
+
+func basket_text() -> String:
+	var held: Array = carried() if host != null else []
+	return I18n.t("exploration.basket.empty") if held.is_empty() else ExplorationDirector.items_text(PackedStringArray(held))
+
+
+## 篮子名称的小底板：每帧都画、只随文字宽度变，背景再花也读得清
+static func basket_label_rect(font: Font, text: String) -> Rect2:
+	var text_size := font.get_string_size(text, HORIZONTAL_ALIGNMENT_LEFT, BASKET_LABEL_WIDTH, 15)
+	var ascent := font.get_ascent(15)
+	return Rect2(BASKET_LABEL_AT + Vector2(-6, -ascent - 3), Vector2(minf(text_size.x, BASKET_LABEL_WIDTH) + 12, text_size.y + 6))
 
 
 func _label(font_size: int, color: Color) -> Label:
