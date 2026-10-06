@@ -1,0 +1,189 @@
+{
+  "at": "2026-10-06T02:05:47.728399+00:00",
+  "source_directory": "/dev/shm/tooltip473-candidate-qa",
+  "archive_relative_directory": "ordinary-candidate",
+  "source_manifest_sha256": "794d558fc113135a45f58dfc6b3326d0fc42ec500d134d36e1fae8ddcb5db408",
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 3281,
+      "sha256": "3a7a90f053091c5ff13253e8ccb35ea5df6c8434e5d08b09184cbafaa955415f",
+      "method": "small original bytes copy"
+    },
+    {
+      "path": "SHA256SUMS",
+      "bytes": 2405,
+      "sha256": "794d558fc113135a45f58dfc6b3326d0fc42ec500d134d36e1fae8ddcb5db408",
+      "method": "small original bytes copy"
+    },
+    {
+      "path": "analysis.json",
+      "bytes": 6409,
+      "sha256": "601ed517b839f2351912415fd32aa2194261fe99713c3d5ac59202be41f1f25a",
+      "method": "small original bytes copy"
+    },
+    {
+      "path": "desktop-01-entered.png",
+      "bytes": 4752635,
+      "sha256": "ced81f56bb64f5806f4f4a191bdc18d92afc0858fc714a77496351cccb943e5a",
+      "method": "immutable original PNG hardlink"
+    },
+    {
+      "path": "desktop-02-hover.png",
+      "bytes": 4770059,
+      "sha256": "ca619b5db5aaab811518e3f16c258edcd7507584bd85f9ddba52ce1b2758d2d8",
+      "method": "immutable original PNG hardlink"
+    },
+    {
+      "path": "desktop-03-left.png",
+      "bytes": 4732800,
+      "sha256": "1e3f0b6f9d8e19d5935167365478468b5aa039760dd5b8fec2f3c8396b83d45e",
+      "method": "immutable original PNG hardlink"
+    },
+    {
+      "path": "desktop-04-rehover.png",
+      "bytes": 4811770,
+      "sha256": "baaed7c03905face89a030b0ecd82e7a319b069fc46d6cf3d023219d20143a5c",
+      "method": "immutable original PNG hardlink"
+    },
+    {
+      "path": "desktop-05-opened.png",
+      "bytes": 3381918,
+      "sha256": "e3a058f766b25d86ee506f63ff30606a6ceada889a6fb62f72c3d00b57b7b1c3",
+      "method": "immutable original PNG hardlink"
+    },
+    {
+      "path": "desktop-06-returned.png",
+      "bytes": 4859405,
+      "sha256": "7f898ac03058294f603ed2a681f6ce10a151c98470535d57f132a1d9c89ec3e0",
+      "method": "immutable original PNG hardlink"
+    },
+    {
+      "path": "execution.json",
+      "bytes": 192,
+      "sha256": "2f5e4e64d886fd79c30e577bf571ae3122d01f1301710c77688fd68f676846d2",
+      "method": "small original bytes copy"
+    },
+    {
+      "path": "landscape-01-hover.png",
+      "bytes": 492379,
+      "sha256": "643e1fcc0ac46f825cc829ae7bf8cdd94cf827d9666b3be4be6e0aba2354a02a",
+      "method": "immutable original PNG hardlink"
+    },
+    {
+      "path": "landscape-02-left.png",
+      "bytes": 484125,
+      "sha256": "8d670212ebf7c2dd7d9857f2903283e1ab7415b8f232f05cf9778cb14f841feb",
+      "method": "immutable original PNG hardlink"
+    },
+    {
+      "path": "landscape-03-rehover.png",
+      "bytes": 493931,
+      "sha256": "2dd378ca9fded00cfecb272d12e2f79d148045c34e3318b097f3342afb37a9cf",
+      "method": "immutable original PNG hardlink"
+    },
+    {
+      "path": "landscape-04-opened.png",
+      "bytes": 623447,
+      "sha256": "b0134d62b6f7ce6f29411dcc6b509fbcc28695a7d9c0615b170c4e0a7179ff03",
+      "method": "immutable original PNG hardlink"
+    },
+    {
+      "path": "landscape-05-returned.png",
+      "bytes": 484506,
+      "sha256": "3ddd2f882b17ee121ace2a5b0d6e5dacf1a4607f9122d1a333d6d0cccfd1a4b3",
+      "method": "immutable original PNG hardlink"
+    },
+    {
+      "path": "offline-verification.json",
+      "bytes": 2869,
+      "sha256": "059f237b57964b926399b9ae8a2fd98c0c39a4b8859a281b1919ee8bb1e7a745",
+      "method": "small original bytes copy"
+    },
+    {
+      "path": "ordinary-zh-dpr2-after-index.html",
+      "bytes": 357722,
+      "sha256": "ef5e17634b0900b9aa763888926bf4b1e4da405223dc71b4521ae039aa189c20",
+      "method": "small original bytes copy"
+    },
+    {
+      "path": "ordinary-zh-dpr2-after-manifest.json",
+      "bytes": 4189,
+      "sha256": "a215f2e3ad3c228080148298272402eb767971fc340a09e89268aa37139615f5",
+      "method": "small original bytes copy"
+    },
+    {
+      "path": "ordinary-zh-dpr2-before-index.html",
+      "bytes": 357722,
+      "sha256": "ef5e17634b0900b9aa763888926bf4b1e4da405223dc71b4521ae039aa189c20",
+      "method": "small original bytes copy"
+    },
+    {
+      "path": "ordinary-zh-dpr2-before-manifest.json",
+      "bytes": 4189,
+      "sha256": "a215f2e3ad3c228080148298272402eb767971fc340a09e89268aa37139615f5",
+      "method": "small original bytes copy"
+    },
+    {
+      "path": "ordinary-zh-dpr2-title.png",
+      "bytes": 3645041,
+      "sha256": "63e048269a709479883e2c688a6877ddc9febf642337173edc057cd39c1195d4",
+      "method": "immutable original PNG hardlink"
+    },
+    {
+      "path": "portrait-01-hover.png",
+      "bytes": 1751374,
+      "sha256": "f644e77bfabe17d9415f74fa79d94813dddc76bee1914f72840123defb23f700",
+      "method": "immutable original PNG hardlink"
+    },
+    {
+      "path": "portrait-02-left.png",
+      "bytes": 1742351,
+      "sha256": "f2a755aaecb523e1cdbd9ada6dbe5def617b14c6d8446569ab7ad980f0d748fd",
+      "method": "immutable original PNG hardlink"
+    },
+    {
+      "path": "portrait-03-rehover.png",
+      "bytes": 1753679,
+      "sha256": "fe6b271e3858887bcb131093b1f7c447bab09a11bee8fdbe4291df9ff4bb10b6",
+      "method": "immutable original PNG hardlink"
+    },
+    {
+      "path": "portrait-04-opened.png",
+      "bytes": 1203200,
+      "sha256": "b34f7f9617bbc1897af6174df80921ec53c89db0350a233e470eace5db9102e0",
+      "method": "immutable original PNG hardlink"
+    },
+    {
+      "path": "portrait-05-returned.png",
+      "bytes": 1744937,
+      "sha256": "ebe25b8209224bcb19647c54cd5ce879c1efd65aea20cf33fa70ccf00ac97b8f",
+      "method": "immutable original PNG hardlink"
+    },
+    {
+      "path": "result.json",
+      "bytes": 37710,
+      "sha256": "b2fa465ddda6c58ec99695356eafd26f9e10d612d2a928c7c3beb2b1bf041d34",
+      "method": "small original bytes copy"
+    },
+    {
+      "path": "run.py",
+      "bytes": 8388,
+      "sha256": "fbbe7d62359f734b12d9a4cd26f877a25165c09cbcd6b44ac93f6a73b867eaaf",
+      "method": "small original bytes copy"
+    }
+  ],
+  "file_count": 28,
+  "png_count": 17,
+  "bytes": 42512633,
+  "all_archived_bytes_match_frozen_originals": true,
+  "runner": "soft444_integration",
+  "offline_visual_reviewer": "qa478_recovery",
+  "root_visual_spot_check": [
+    "desktop-02-hover.png",
+    "portrait-03-rehover.png",
+    "landscape-03-rehover.png",
+    "landscape-05-returned.png"
+  ],
+  "no_browser_or_engine_rerun": true
+}

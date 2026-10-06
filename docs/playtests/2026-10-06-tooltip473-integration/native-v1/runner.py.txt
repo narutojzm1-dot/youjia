@@ -1,0 +1,22 @@
+from pathlib import Path
+import subprocess,os,json,datetime,hashlib
+repo=Path('/dev/shm/youjia-tooltip473');out=Path('/dev/shm/tooltip473-native-v1');out.mkdir(exist_ok=False)
+def git(*args):return subprocess.check_output(['git','-C',str(repo),*args]).decode().strip()
+source=git('rev-parse','HEAD');assert source=='309b87c59f98455def267245c7a31601765b31ff'
+assert not git('diff','--name-only'),git('diff','--name-only')
+bin='/tmp/youjia-h2-bridge-bin/Godot_v4.7.2-stable_linux.x86_64'
+wrapper=out/'godot-direct-exit';wrapper.write_text('#!/usr/bin/env bash\nset +e\n"'+bin+'" "$@"\nresult=$?\nprintf "%s\\n" "$result" > "$RAW_EXIT_PATH"\nexit "$result"\n');wrapper.chmod(0o755)
+meta={'source':source,'tree':git('rev-parse','HEAD^{tree}'),'started_at':datetime.datetime.now(datetime.timezone.utc).isoformat(),'cases':[],'native_only':True,'engine_binary_sha256':hashlib.sha256(Path(bin).read_bytes()).hexdigest(),'source_materialization':'/dev/shm/tooltip473-materialization.json','window_authorized_by':'CODEX-LEAD root; specialized only, full/export pending merged base','active_process_precheck':'No non-zombie Godot/chrome/chromium before launch'}
+(out/'execution.json').write_text(json.dumps(meta,indent=2)+'\n')
+for name,entry in [('import',None),('style','test/paper_tooltip_style_suite.gd'),('interaction','test/paper_tooltip_interaction_suite.gd')]:
+ state=Path('/dev/shm/tooltip473-native-v1-state')/name
+ env=os.environ.copy();env.update({'GODOT':str(wrapper),'RAW_EXIT_PATH':str(out/(name+'.raw-exit')),'XDG_DATA_HOME':str(state/'data'),'XDG_CONFIG_HOME':str(state/'config'),'XDG_CACHE_HOME':str(state/'cache'),'YOUJIA_TEST_ISOLATED_DATA':str(state/'data')})
+ for k in ['XDG_DATA_HOME','XDG_CONFIG_HOME','XDG_CACHE_HOME']:Path(env[k]).mkdir(parents=True,exist_ok=True)
+ if entry:script='source tools/lib/verified_godot.sh\nrun_verified_godot_suite "$1" "$2" --headless --path .';cmd=['bash','-euo','pipefail','-c',script,'tooltip473',str(out/(name+'.log')),entry]
+ else:script='source tools/lib/verified_godot.sh\nrun_verified_godot "$1" --headless --path . --editor --import --quit';cmd=['bash','-euo','pipefail','-c',script,'tooltip473',str(out/(name+'.log'))]
+ start=datetime.datetime.now(datetime.timezone.utc).isoformat();print('START',name,start,flush=True)
+ with (out/(name+'.wrapper.log')).open('wb') as f:r=subprocess.run(cmd,cwd=repo,env=env,stdout=f,stderr=subprocess.STDOUT)
+ raw=(out/(name+'.raw-exit')).read_text().strip() if (out/(name+'.raw-exit')).exists() else None
+ result={'name':name,'entry':entry,'start':start,'end':datetime.datetime.now(datetime.timezone.utc).isoformat(),'direct_godot_exit':int(raw) if raw is not None else None,'strict_wrapper_exit':r.returncode,'isolated_data':env['XDG_DATA_HOME'],'log':name+'.log'};meta['cases'].append(result);(out/'execution.json').write_text(json.dumps(meta,indent=2)+'\n');print(json.dumps(result),flush=True)
+ if r.returncode!=0:break
+meta['closed_at']=datetime.datetime.now(datetime.timezone.utc).isoformat();(out/'execution.json').write_text(json.dumps(meta,indent=2)+'\n');print('CLOSED',meta['closed_at'],flush=True)

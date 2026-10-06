@@ -1,0 +1,67 @@
+{
+  "at": "2026-10-06T01:51:00.543479+00:00",
+  "source": "51fc996fb36ec6ff061025e7b1e3a5c8fecabfd9",
+  "tree": "b1c66c69daac178b0631d0f82245c19b3a16eb7e",
+  "parents": [
+    "41d4cb22a44cba446ec888e491fba2cde55b4c28",
+    "267b0cb3df5842170877bf55e438917ad4253ce8"
+  ],
+  "merged_main": "267b0cb3df5842170877bf55e438917ad4253ce8",
+  "merged_main_tree": "3ff1927fc5ef1d312d21573ea238a92dc6c5578f",
+  "merged_main_parents": [
+    "c159a4916bfd503c766ddfa0abc1f719fc69e5de",
+    "6eac2cc10c2060e4ee02a41b78a09acecafde20e"
+  ],
+  "previous_dependency_candidate": "6eac2cc10c2060e4ee02a41b78a09acecafde20e",
+  "merged_tree_identical_to_previous_candidate": true,
+  "tree_identical_to_own_premerge": true,
+  "main_is_actual_ancestor": true,
+  "explicit_hashed_parent_edge_paths": {
+    "267b0cb3df5842170877bf55e438917ad4253ce8": [
+      "51fc996fb36ec6ff061025e7b1e3a5c8fecabfd9",
+      "267b0cb3df5842170877bf55e438917ad4253ce8"
+    ],
+    "4ab54d7ab0dbbb902baebd123eaa4b18459a52d6": [
+      "51fc996fb36ec6ff061025e7b1e3a5c8fecabfd9",
+      "41d4cb22a44cba446ec888e491fba2cde55b4c28",
+      "994e3439ae4e64e6122a0f00fbaf851a3f0b8ec3",
+      "820bfdc0ab701871186c650305122fadad82b81b",
+      "a0a856f64e7764fbab5270412025e62b8e34cafd",
+      "355aa2b7137a49779ea9239c17450fc15e5df5a0",
+      "a3cae472d7774445ae8add3ea23528e0af7c9399",
+      "5c1efc77404607b9b4343b2df296b08e7e67c1fa",
+      "309b87c59f98455def267245c7a31601765b31ff",
+      "b31d6c31d9c6dd3a1dac2333a29352fe0e4a2a3c",
+      "4ab54d7ab0dbbb902baebd123eaa4b18459a52d6"
+    ],
+    "a0a856f64e7764fbab5270412025e62b8e34cafd": [
+      "51fc996fb36ec6ff061025e7b1e3a5c8fecabfd9",
+      "41d4cb22a44cba446ec888e491fba2cde55b4c28",
+      "994e3439ae4e64e6122a0f00fbaf851a3f0b8ec3",
+      "820bfdc0ab701871186c650305122fadad82b81b",
+      "a0a856f64e7764fbab5270412025e62b8e34cafd"
+    ]
+  },
+  "unrelated_unavailable_history_skipped": {
+    "267b0cb3df5842170877bf55e438917ad4253ce8": [],
+    "4ab54d7ab0dbbb902baebd123eaa4b18459a52d6": [],
+    "a0a856f64e7764fbab5270412025e62b8e34cafd": []
+  },
+  "first_attempt": {
+    "exit": 1,
+    "step": "merge-base --is-ancestor",
+    "cause": "Traversal could not read preexisting historical object 36e333cea9e38fb0a4f045a6b3ab6cc166503ec4; no lazy fetch. Merge commit was created; second attempt verifies its exact parent edges."
+  },
+  "original_grok_author": "4ab54d7ab0dbbb902baebd123eaa4b18459a52d6",
+  "original_grok_is_actual_ancestor": true,
+  "tested_source": "a0a856f64e7764fbab5270412025e62b8e34cafd",
+  "tested_tree": "0945747d4680e899bbfe5253a60ca5c0f8cf92e1",
+  "tested_source_is_actual_ancestor": true,
+  "all_production_and_tools_blobs_identical_to_export_source": true,
+  "only_non_docs_difference_from_tested_source": [
+    "test/paper_tooltip_interaction_suite.gd"
+  ],
+  "test_non_comment_lines_identical": true,
+  "engine_browser_started": false,
+  "scope": "267b is merged, not asserted published here; ordinary473 QA is running under independent owner. No 476 public evidence copied."
+}

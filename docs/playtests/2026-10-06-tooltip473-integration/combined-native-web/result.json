@@ -1,0 +1,77 @@
+{
+  "status": "passed",
+  "source": "a0a856f64e7764fbab5270412025e62b8e34cafd",
+  "tree": "0945747d4680e899bbfe5253a60ca5c0f8cf92e1",
+  "daily_actual_launches": 81,
+  "daily_actual_suites": 80,
+  "native_tooltip_style_checks": 104,
+  "native_tooltip_interaction_checks": 230,
+  "mock_total": 124,
+  "new_tooltip_mocks": 28,
+  "node_programs": 2,
+  "processes": [
+    {
+      "name": "daily",
+      "command": [
+        "bash",
+        "tools/verify_daily_life.sh"
+      ],
+      "started": "2026-10-06T01:30:48.100253+00:00",
+      "ended": "2026-10-06T01:39:33.965573+00:00",
+      "direct_exit": 0,
+      "log": "daily.log",
+      "sha256": "610f5b684870a3efd58bd12ed83a72f4ab1725ae9fa35d575bcc4ff3a7347b5a"
+    },
+    {
+      "name": "retention",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "test/web_bundle_retention_test.py"
+      ],
+      "started": "2026-10-06T01:39:33.968343+00:00",
+      "ended": "2026-10-06T01:39:34.796398+00:00",
+      "direct_exit": 0,
+      "log": "retention.log",
+      "sha256": "07fd5fa36c783440943ff92551b6d4bff1440179030da63f84ab26868590fffe"
+    },
+    {
+      "name": "publisher-fixture",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "test/publish_storage_modules_test.py"
+      ],
+      "started": "2026-10-06T01:39:34.796778+00:00",
+      "ended": "2026-10-06T01:39:35.679878+00:00",
+      "direct_exit": 0,
+      "log": "publisher-fixture.log",
+      "sha256": "69d2cfe36e55916187b1ce6b537c388a1bb633ee3f0ec77b42891590d5f8277d"
+    },
+    {
+      "name": "export",
+      "command": [
+        "bash",
+        "-euo",
+        "pipefail",
+        "-c",
+        "source tools/lib/verified_godot.sh; run_verified_godot \"$1\" --headless --path . --export-release Web \"$2\"",
+        "tooltip473",
+        "/dev/shm/tooltip473-combined-run/export-engine.log",
+        "/dev/shm/tooltip473-web/index.html"
+      ],
+      "started": "2026-10-06T01:39:35.680229+00:00",
+      "ended": "2026-10-06T01:39:42.674642+00:00",
+      "direct_exit": 0,
+      "log": "export.log",
+      "sha256": "7595aaf49381fb7140ac9cd415c9ca1c9719d9c9550f5a700bd87d91830fa5f6"
+    }
+  ],
+  "candidate_only": true,
+  "camera_dependency": "4598 candidate, not stated merged",
+  "browser_started": false,
+  "closed_at": "2026-10-06T01:39:42.756923+00:00",
+  "pck": {
+    "bytes": 27097128,
+    "sha256": "91028b52ee7c2d4441ce2e368b600a3fb2a70dfeaf8a309229611709bccd1207"
+  },
+  "manifest_sha256": "a215f2e3ad3c228080148298272402eb767971fc340a09e89268aa37139615f5"
+}

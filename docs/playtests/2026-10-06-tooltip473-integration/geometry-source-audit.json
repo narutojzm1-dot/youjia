@@ -1,0 +1,61 @@
+{
+  "engine_reference_tag": "4.7-stable",
+  "tag_commit": "5b4e0cb0fd279832bbdd69fed5354d4e5ad26f88",
+  "reference_read_utc": "2026-10-06T01:13:05.650290+00:00",
+  "scope": "Source/API geometry semantics only, not execution or proof of the separately installed 4.7.2 binary contents. Verify runtime popup.is_embedded and geometry in actual run.",
+  "references": [
+    "https://github.com/godotengine/godot/blob/5b4e0cb0fd279832bbdd69fed5354d4e5ad26f88/scene/main/viewport.cpp",
+    "https://github.com/godotengine/godot/blob/5b4e0cb0fd279832bbdd69fed5354d4e5ad26f88/scene/main/window.cpp",
+    "https://github.com/godotengine/godot/blob/5b4e0cb0fd279832bbdd69fed5354d4e5ad26f88/doc/classes/Window.xml",
+    "https://github.com/godotengine/godot/blob/5b4e0cb0fd279832bbdd69fed5354d4e5ad26f88/scene/gui/popup.cpp"
+  ],
+  "files": {
+    "viewport.cpp": {
+      "sha256": "db949779da96c93cbbdd3d97976efe00211fe900ca2e1283d67ce44671c4a652",
+      "segments": [
+        {
+          "first_line": 1689,
+          "last_line": 1737,
+          "text": "\tWindow *window = Object::cast_to<Window>(gui.tooltip_popup->get_embedder());\n\tif (!window) { // Not embedded.\n\t\twindow = gui.tooltip_popup->get_parent_visible_window();\n\t}\n\tSize2 scale = get_popup_base_transform().get_scale();\n\treal_t popup_scale = MIN(scale.x, scale.y);\n\tPoint2 tooltip_offset = GLOBAL_GET_CACHED(Point2, \"display/mouse_cursor/tooltip_position_offset\");\n\ttooltip_offset *= popup_scale;\n\tRect2 r(gui.tooltip_pos + tooltip_offset, gui.tooltip_popup->get_contents_minimum_size());\n\tRect2i vr;\n\tif (gui.tooltip_popup->is_embedded()) {\n\t\tvr = gui.tooltip_popup->get_embedder()->get_visible_rect();\n\t} else {\n\t\tvr = window->get_usable_parent_rect();\n\t}\n\tpanel->content_scale_factor = popup_scale;\n\tr.size *= popup_scale;\n\tr.size = r.size.ceil();\n\tr.size = r.size.min(panel->get_max_size());\n\n\tif (!DisplayServer::get_singleton()->has_feature(DisplayServerEnums::FEATURE_SELF_FITTING_WINDOWS) || gui.tooltip_popup->is_embedded()) {\n\t\tif (r.size.x + r.position.x > vr.size.x + vr.position.x) {\n\t\t\t// Place it in the opposite direction. If it fails, just hug the border.\n\t\t\tr.position.x = gui.tooltip_pos.x - r.size.x - tooltip_offset.x;\n\n\t\t\tif (r.position.x < vr.position.x) {\n\t\t\t\tr.position.x = vr.position.x + vr.size.x - r.size.x;\n\t\t\t}\n\t\t} else if (r.position.x < vr.position.x) {\n\t\t\tr.position.x = vr.position.x;\n\t\t}\n\n\t\tif (r.size.y + r.position.y > vr.size.y + vr.position.y) {\n\t\t\t// Same as above.\n\t\t\tr.position.y = gui.tooltip_pos.y - r.size.y - tooltip_offset.y;\n\n\t\t\tif (r.position.y < vr.position.y) {\n\t\t\t\tr.position.y = vr.position.y + vr.size.y - r.size.y;\n\t\t\t}\n\t\t} else if (r.position.y < vr.position.y) {\n\t\t\tr.position.y = vr.position.y;\n\t\t}\n\t}\n\n\tDisplayServerEnums::WindowID active_popup = DisplayServer::get_singleton()->window_get_active_popup();\n\tif (active_popup == DisplayServerEnums::INVALID_WINDOW_ID || active_popup == window->get_window_id()) {\n\t\tgui.tooltip_popup->popup(r);\n\t}\n\tgui.tooltip_popup->child_controls_changed();"
+        }
+      ]
+    },
+    "window.cpp": {
+      "sha256": "1e94ba6ccef7fea34b00aab4e40d06730e796471f232d21ced7255d06d45f9fb",
+      "segments": [
+        {
+          "first_line": 2451,
+          "last_line": 2466,
+          "text": "Rect2i Window::get_usable_parent_rect() const {\n\tERR_READ_THREAD_GUARD_V(Rect2i());\n\tERR_FAIL_COND_V(!is_inside_tree(), Rect2());\n\tRect2i parent_rect;\n\tif (is_embedded()) {\n\t\tparent_rect = get_embedder()->get_visible_rect();\n\t} else {\n\t\tconst Window *w = is_visible() ? this : get_parent_visible_window();\n\t\t//find a parent that can contain us\n\t\tERR_FAIL_NULL_V(w, Rect2());\n\n\t\tparent_rect = DisplayServer::get_singleton()->screen_get_usable_rect(DisplayServer::get_singleton()->window_get_current_screen(w->get_window_id()));\n\t}\n\treturn parent_rect;\n}\n"
+        }
+      ]
+    },
+    "Window.xml": {
+      "sha256": "b1cf64d5c9b142cf779bc6c7082ee2658fa8d4e3d0ca64153deb8b7d6fda67c3",
+      "segments": [
+        {
+          "first_line": 760,
+          "last_line": 764,
+          "text": "\t\t<member name=\"position\" type=\"Vector2i\" setter=\"set_position\" getter=\"get_position\" default=\"Vector2i(0, 0)\">\n\t\t\tThe window's position in pixels.\n\t\t\tIf [member ProjectSettings.display/window/subwindows/embed_subwindows] is [code]false[/code], the position is in absolute screen coordinates. This typically applies to editor plugins. If the setting is [code]true[/code], the window's position is in the coordinates of its parent [Viewport].\n\t\t\t[b]Note:[/b] This property only works if [member initial_position] is set to [constant WINDOW_INITIAL_POSITION_ABSOLUTE].\n\t\t</member>"
+        }
+      ]
+    },
+    "popup.cpp": {
+      "sha256": "b75226ee4d75fe8c8f6d2993ea6ef13fc09f903468514719f489228c188e2be1",
+      "segments": [
+        {
+          "first_line": 274,
+          "last_line": 316,
+          "text": "Size2 PopupPanel::_get_contents_minimum_size() const {\n\tSize2 ms;\n\n\tfor (int i = 0; i < get_child_count(); i++) {\n\t\tControl *c = Object::cast_to<Control>(get_child(i));\n\t\tif (!c || c == panel) {\n\t\t\tcontinue;\n\t\t}\n\n\t\tif (c->is_set_as_top_level()) {\n\t\t\tcontinue;\n\t\t}\n\n\t\tSize2 cms = c->get_bound_minimum_size();\n\t\tms = cms.max(ms);\n\t}\n\n\t// Take shadows into account.\n\tms.width += panel->get_offset(SIDE_LEFT) - panel->get_offset(SIDE_RIGHT);\n\tms.height += panel->get_offset(SIDE_TOP) - panel->get_offset(SIDE_BOTTOM);\n\n\treturn ms + theme_cache.panel_style->get_minimum_size();\n}\n\nRect2i PopupPanel::_popup_adjust_rect() const {\n\tRect2i current = Popup::_popup_adjust_rect();\n\tif (current == Rect2i()) {\n\t\treturn current;\n\t}\n\n\tpre_popup_rect = current;\n\n\t_update_shadow_offsets();\n\t_update_child_rects();\n\n\tif (is_layout_rtl()) {\n\t\tcurrent.position -= Vector2(-panel->get_offset(SIDE_RIGHT), panel->get_offset(SIDE_TOP)) * get_content_scale_factor();\n\t} else {\n\t\tcurrent.position -= Vector2(panel->get_offset(SIDE_LEFT), panel->get_offset(SIDE_TOP)) * get_content_scale_factor();\n\t}\n\tcurrent.size += Vector2(panel->get_offset(SIDE_LEFT) - panel->get_offset(SIDE_RIGHT), panel->get_offset(SIDE_TOP) - panel->get_offset(SIDE_BOTTOM)) * get_content_scale_factor();\n\n\treturn current;"
+        },
+        {
+          "first_line": 319,
+          "last_line": 372,
+          "text": "void PopupPanel::_update_shadow_offsets() const {\n\tif (!DisplayServer::get_singleton()->is_window_transparency_available() && !is_embedded()) {\n\t\tpanel->set_offsets_preset(Control::PRESET_FULL_RECT, Control::PRESET_MODE_MINSIZE, 0);\n\t\treturn;\n\t}\n\n\tconst Ref<StyleBoxFlat> sb = theme_cache.panel_style;\n\tif (sb.is_null()) {\n\t\tpanel->set_offsets_preset(Control::PRESET_FULL_RECT, Control::PRESET_MODE_MINSIZE, 0);\n\t\treturn;\n\t}\n\n\tconst int shadow_size = sb->get_shadow_size();\n\tif (shadow_size == 0) {\n\t\tpanel->set_offsets_preset(Control::PRESET_FULL_RECT, Control::PRESET_MODE_MINSIZE, 0);\n\t\treturn;\n\t}\n\n\t// Offset the background panel so it leaves space inside the window for the shadows to be drawn.\n\tconst Point2 shadow_offset = sb->get_shadow_offset();\n\tif (is_layout_rtl()) {\n\t\tpanel->set_offset(SIDE_LEFT, MAX(0, shadow_size + shadow_offset.x));\n\t\tpanel->set_offset(SIDE_RIGHT, MIN(0, -shadow_size + shadow_offset.x));\n\t} else {\n\t\tpanel->set_offset(SIDE_LEFT, MAX(0, shadow_size - shadow_offset.x));\n\t\tpanel->set_offset(SIDE_RIGHT, MIN(0, -shadow_size - shadow_offset.x));\n\t}\n\tpanel->set_offset(SIDE_TOP, MAX(0, shadow_size - shadow_offset.y));\n\tpanel->set_offset(SIDE_BOTTOM, MIN(0, -shadow_size - shadow_offset.y));\n}\n\nvoid PopupPanel::_update_child_rects() const {\n\tVector2 cpos(theme_cache.panel_style->get_offset());\n\tcpos += Vector2(is_layout_rtl() ? -panel->get_offset(SIDE_RIGHT) : panel->get_offset(SIDE_LEFT), panel->get_offset(SIDE_TOP));\n\n\tVector2 csize = Vector2(get_size()) / get_content_scale_factor() - theme_cache.panel_style->get_minimum_size();\n\t// Trim shadows.\n\tcsize.width -= panel->get_offset(SIDE_LEFT) - panel->get_offset(SIDE_RIGHT);\n\tcsize.height -= panel->get_offset(SIDE_TOP) - panel->get_offset(SIDE_BOTTOM);\n\n\tfor (int i = 0; i < get_child_count(); i++) {\n\t\tControl *c = Object::cast_to<Control>(get_child(i));\n\t\tif (!c || c == panel) {\n\t\t\tcontinue;\n\t\t}\n\n\t\tif (c->is_set_as_top_level()) {\n\t\t\tcontinue;\n\t\t}\n\n\t\tc->set_position(cpos);\n\t\tc->set_size(csize);\n\t}\n}"
+        }
+      ]
+    }
+  },
+  "conclusion": "Embedded popup.position is parent viewport space; nonembedded Window.position is absolute screen space, and engine uses OS screen usable rect. Old raw y684+height42 alone does not establish viewport clipping.",
+  "post_native_finding": "PopupPanel::_popup_adjust_rect grows the final Window for shadow offsets after placement. Actual Panel body/Label must be transformed into parent viewport separately; v3 records Window, paper, label, root and observes 6px shadow-only overflow in four cases."
+}

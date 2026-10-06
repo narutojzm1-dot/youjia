@@ -1,0 +1,195 @@
+extends SceneTree
+
+# REQ-20261006-041 integration coverage, separate from the author's unchanged
+# style suite. Real Main controls, engine tooltip timer and dispatched mouse
+# input; no fabricated popup, signal emission or direct album-open call.
+# Embed subwindows explicitly to exercise the Web-like viewport constraint.
+# Native OS popup positions instead use screen coordinates, so these checks
+# do not infer clipping from an old native Window.position + size alone.
+const VIEWPORTS := [Vector2i(1280, 720), Vector2i(390, 844), Vector2i(568, 320), Vector2i(844, 390), Vector2i(640, 300)]
+const EPS := 1.0
+var checks := 0
+var failures: Array[String] = []
+var main: Control
+var album_presses := 0
+
+
+func _initialize() -> void:
+	call_deferred("_run")
+
+
+func _run() -> void:
+	var data := OS.get_environment("XDG_DATA_HOME")
+	if data.is_empty() or OS.get_environment("YOUJIA_TEST_ISOLATED_DATA") != data:
+		push_error("FAIL: paper tooltip interaction requires isolated XDG data")
+		quit(2)
+		return
+	var was_embedded := root.gui_embed_subwindows
+	root.gui_embed_subwindows = true
+	var i18n = root.get_node("I18n")
+	var old_locale: String = i18n.get_locale()
+	for dims: Vector2i in VIEWPORTS:
+		for locale: String in ["zh-CN", "en"]:
+			root.size = dims
+			# Fresh live scene per case: one failed close must not poison the
+			# remaining viewport/language geometry checks.
+			main = (load("res://scenes/main.tscn") as PackedScene).instantiate()
+			root.add_child(main)
+			await _settle()
+			main.call("_start_holiday")
+			# Startup restores saved preferences, so set the tested locale after it.
+			i18n.set_locale(locale)
+			await _settle()
+			var chip: Button = main.get("_album_chip")
+			chip.pressed.connect(func() -> void: album_presses += 1)
+			await _check_interaction(chip, "%s %s" % [dims, locale], locale)
+			main.queue_free()
+			await _settle()
+	i18n.set_locale(old_locale)
+	root.get_node("AudioDirector").call("release_streams")
+	await _settle()
+	root.gui_embed_subwindows = was_embedded
+	if failures.is_empty():
+		print("PASS: paper_tooltip_interaction %d checks" % checks)
+		quit(0)
+	else:
+		print("FAIL: paper_tooltip_interaction %d/%d failed" % [failures.size(), checks])
+		quit(1)
+
+
+func _settle() -> void:
+	for _frame in 4:
+		await process_frame
+
+
+func _move(at: Vector2) -> void:
+	var event := InputEventMouseMotion.new()
+	event.position = at
+	event.global_position = at
+	root.push_input(event)
+	await process_frame
+
+
+func _click(at: Vector2) -> void:
+	for down: bool in [true, false]:
+		var event := InputEventMouseButton.new()
+		event.position = at
+		event.global_position = at
+		event.button_index = MOUSE_BUTTON_LEFT
+		event.button_mask = MOUSE_BUTTON_MASK_LEFT if down else 0
+		event.pressed = down
+		root.push_input(event)
+		await process_frame
+	await _settle()
+
+
+func _hover(chip: Control) -> PopupPanel:
+	var center := chip.get_global_rect().get_center()
+	for n in 3:
+		await _move(center + Vector2(n, 0))
+	var delay: float = ProjectSettings.get_setting("gui/timers/tooltip_delay_sec", 0.5)
+	await create_timer(delay + 0.6).timeout
+	for child in chip.get_children(true):
+		if child is PopupPanel and child.visible and not child.is_queued_for_deletion():
+			return child
+	return null
+
+
+func _check_interaction(chip: Button, tag: String, expected_locale: String) -> void:
+	var i18n = root.get_node("I18n")
+	_check(i18n.get_locale() == expected_locale, tag + ": actual locale matches requested case")
+	_check(not chip.tooltip_text.is_empty() and chip.tooltip_text == i18n.t("hud.album.tooltip"), tag + ": tooltip follows actual translation")
+	_check(chip.is_visible_in_tree() and not chip.disabled, tag + ": live album button is usable")
+	_check(not main.get("_album_screen").visible, tag + ": album starts closed")
+	var popup := await _hover(chip)
+	_check(popup != null, tag + ": engine hover opens popup")
+	if popup == null:
+		return
+	_check(popup.is_embedded(), tag + ": fixture popup really uses embedded coordinates")
+	var popup_rect := Rect2(Vector2(popup.position), Vector2(popup.size))
+	var viewport_rect := root.get_visible_rect()
+	# PopupPanel expands its Window around the paper for shadows *after*
+	# placement. The visible paper and text must fit; optional outer shadow
+	# clipping is recorded separately, not confused with clipped content.
+	var paper: Panel = null
+	for child in popup.get_children(true):
+		if child is Panel:
+			paper = child
+	_check(paper != null, tag + ": engine popup exposes its actual paper panel")
+	var paper_rect := _in_parent_viewport(popup, paper) if paper != null else Rect2()
+	_check(paper_rect.has_area() and _inside(paper_rect, viewport_rect), "%s: paper %s stays in viewport %s" % [tag, paper_rect, viewport_rect])
+	_check(not paper_rect.has_point(chip.get_global_rect().get_center()), tag + ": paper does not cover album click point")
+	_check(popup.mouse_passthrough and popup.unfocusable, tag + ": popup does not capture mouse or keyboard focus")
+	var label: Label = null
+	for child in popup.find_children("*", "Label", true, false):
+		label = child
+	_check(label != null, tag + ": live popup contains a label")
+	if label != null:
+		_check(label.text == chip.tooltip_text, tag + ": whole current locale text is retained")
+		var font := label.get_theme_font("font")
+		var all_glyphs := font != null
+		for index in label.text.length():
+			var code := label.text.unicode_at(index)
+			if code > 32 and (font == null or not font.has_char(code)):
+				all_glyphs = false
+		_check(all_glyphs, tag + ": bundled font supports every non-space codepoint")
+		_check(_inside(label.get_global_rect(), popup.get_visible_rect()), tag + ": entire label rectangle fits popup content viewport")
+		_check(_inside(_in_parent_viewport(popup, label), paper_rect) and _inside(_in_parent_viewport(popup, label), viewport_rect), tag + ": full label fits actual paper and root viewport")
+		_check(label.get_minimum_size().x <= label.size.x + EPS and label.get_minimum_size().y <= label.size.y + EPS, tag + ": label has room for its minimum text size")
+	print("TOOLTIP473_TRACE ", JSON.stringify({
+		"case": tag, "actual_locale": i18n.get_locale(), "mode": "embedded fixture", "root_position": _point(root.position),
+		"root_size": _point(root.size), "root_screen_transform": str(root.get_screen_transform()),
+		"embedded": popup.is_embedded(), "popup": _rect(popup_rect), "bounds": _rect(viewport_rect),
+		"paper_in_root": _rect(paper_rect), "label_in_root": _rect(_in_parent_viewport(popup, label)) if label != null else [],
+		"shadow_window_fully_inside": _inside(popup_rect, viewport_rect), "popup_final_transform": str(popup.get_final_transform()),
+		"chip": _rect(chip.get_global_rect()), "label": _rect(label.get_global_rect()) if label != null else [],
+		"text": label.text if label != null else "", "mouse_passthrough": popup.mouse_passthrough
+	}))
+	await _move(Vector2(viewport_rect.size.x * 0.5, 4))
+	await _settle()
+	_check(not is_instance_valid(popup) or not popup.visible, tag + ": leaving the button dismisses the tooltip")
+	popup = await _hover(chip)
+	_check(popup != null, tag + ": hovering again recreates tooltip")
+	var before := album_presses
+	await _click(chip.get_global_rect().get_center())
+	_check(album_presses == before + 1, tag + ": actual press/release reaches album button exactly once")
+	_check(main.get("_album_screen").visible and not main.get("_hud").visible, tag + ": actual button click opens the album")
+	_check(not is_instance_valid(popup) or not popup.visible, tag + ": album activation removes tooltip")
+	# Existing Main marks HUD presses as a 400ms deduplication window.
+	# Test a subsequent ordinary action after it; rapid repeated clicks are
+	# Assistant #382 scope and are not silently treated as covered here.
+	await create_timer(0.45).timeout
+	var back: Button = main.get("_album_back_button")
+	_check(back.is_visible_in_tree() and not back.disabled, tag + ": close button remains available")
+	await _move(back.get_global_rect().get_center())
+	await _click(back.get_global_rect().get_center())
+	_check(not main.get("_album_screen").visible and chip.is_visible_in_tree(), tag + ": actual close click returns to usable yard HUD")
+
+
+func _in_parent_viewport(popup: PopupPanel, control: Control) -> Rect2:
+	# Control global rect lives in the popup viewport; its final transform
+	# scales it to popup window pixels, then the embedded position places it
+	# in the parent viewport. Never apply root screen origin to this path.
+	var result: Rect2 = popup.get_final_transform() * control.get_global_rect()
+	result.position += Vector2(popup.position)
+	return result
+
+
+func _inside(inner: Rect2, outer: Rect2) -> bool:
+	return inner.position.x >= outer.position.x - EPS and inner.position.y >= outer.position.y - EPS \
+		and inner.end.x <= outer.end.x + EPS and inner.end.y <= outer.end.y + EPS
+
+
+func _point(point: Vector2) -> Array:
+	return [point.x, point.y]
+
+
+func _rect(rect: Rect2) -> Array:
+	return [rect.position.x, rect.position.y, rect.size.x, rect.size.y]
+
+
+func _check(ok: bool, description: String) -> void:
+	checks += 1
+	if not ok:
+		failures.append(description)
+		push_error("FAIL: " + description)

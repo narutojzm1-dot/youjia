@@ -1,0 +1,201 @@
+{
+  "source": "a0a856f64e7764fbab5270412025e62b8e34cafd",
+  "tree": "0945747d4680e899bbfe5253a60ca5c0f8cf92e1",
+  "actual_started_utc": "2026-10-06T01:47:48Z",
+  "actual_closed_utc": "2026-10-06T01:55:33Z",
+  "actual_exit_code": 0,
+  "ordinary_scope": "Chinese normal motion, one fresh context, DPR2, desktop to portrait to short landscape same page; mouse only",
+  "actual_click_count": 7,
+  "actual_click_gaps_ms": [
+    20213.521,
+    29471.262,
+    15208.433,
+    85486.013,
+    8272.423,
+    250420.351
+  ],
+  "minimum_actual_click_gap_ms": 8272.423,
+  "normal_independent_actions_not_rapid_input_test": true,
+  "source_binding_before_after": true,
+  "actual_dependency_responses": {
+    "http://127.0.0.1:8483/web/save/bridge.mjs": 200,
+    "http://127.0.0.1:8483/index.js": 200,
+    "http://127.0.0.1:8483/web/save/host.mjs": 200,
+    "http://127.0.0.1:8483/web/save/budgets.mjs": 200,
+    "http://127.0.0.1:8483/web/save/legacy_inspection.mjs": 200,
+    "http://127.0.0.1:8483/web/save/store.mjs": 200,
+    "http://127.0.0.1:8483/web/save/source_decode.mjs": 200,
+    "http://127.0.0.1:8483/web/save/legacy_v5.mjs": 200,
+    "http://127.0.0.1:8483/web/save/lifecycle.mjs": 200,
+    "http://127.0.0.1:8483/web/save/legacy_seal.mjs": 200,
+    "http://127.0.0.1:8483/web/save/idbfs_source.mjs": 200,
+    "http://127.0.0.1:8483/index.wasm": 200,
+    "http://127.0.0.1:8483/index.pck": 200
+  },
+  "png": [
+    {
+      "file": "desktop-01-entered.png",
+      "width": 2560,
+      "height": 1440
+    },
+    {
+      "file": "desktop-02-hover.png",
+      "width": 2560,
+      "height": 1440
+    },
+    {
+      "file": "desktop-03-left.png",
+      "width": 2560,
+      "height": 1440
+    },
+    {
+      "file": "desktop-04-rehover.png",
+      "width": 2560,
+      "height": 1440
+    },
+    {
+      "file": "desktop-05-opened.png",
+      "width": 2560,
+      "height": 1440
+    },
+    {
+      "file": "desktop-06-returned.png",
+      "width": 2560,
+      "height": 1440
+    },
+    {
+      "file": "landscape-01-hover.png",
+      "width": 1136,
+      "height": 640
+    },
+    {
+      "file": "landscape-02-left.png",
+      "width": 1136,
+      "height": 640
+    },
+    {
+      "file": "landscape-03-rehover.png",
+      "width": 1136,
+      "height": 640
+    },
+    {
+      "file": "landscape-04-opened.png",
+      "width": 1136,
+      "height": 640
+    },
+    {
+      "file": "landscape-05-returned.png",
+      "width": 1136,
+      "height": 640
+    },
+    {
+      "file": "ordinary-zh-dpr2-title.png",
+      "width": 2560,
+      "height": 1440
+    },
+    {
+      "file": "portrait-01-hover.png",
+      "width": 780,
+      "height": 1688
+    },
+    {
+      "file": "portrait-02-left.png",
+      "width": 780,
+      "height": 1688
+    },
+    {
+      "file": "portrait-03-rehover.png",
+      "width": 780,
+      "height": 1688
+    },
+    {
+      "file": "portrait-04-opened.png",
+      "width": 780,
+      "height": 1688
+    },
+    {
+      "file": "portrait-05-returned.png",
+      "width": 780,
+      "height": 1688
+    }
+  ],
+  "pixel_diagnostics": [
+    {
+      "viewport": "desktop",
+      "original_device_pixel_region": [
+        258,
+        1384,
+        572,
+        1428
+      ],
+      "hover_rehover_same_bytes": true,
+      "hover_differs_from_left": true,
+      "hover_differs_from_returned": true,
+      "limits": "Interior pixel diagnostic only; does not parse text or prove all paper/shadow bounds; full-image visual observations listed separately."
+    },
+    {
+      "viewport": "portrait",
+      "original_device_pixel_region": [
+        235,
+        1520,
+        540,
+        1568
+      ],
+      "hover_rehover_same_bytes": false,
+      "hover_differs_from_left": true,
+      "hover_differs_from_returned": true,
+      "limits": "Interior pixel diagnostic only; does not parse text or prove all paper/shadow bounds; full-image visual observations listed separately."
+    },
+    {
+      "viewport": "landscape",
+      "original_device_pixel_region": [
+        326,
+        470,
+        630,
+        516
+      ],
+      "hover_rehover_same_bytes": true,
+      "hover_differs_from_left": true,
+      "hover_differs_from_returned": true,
+      "limits": "Interior pixel diagnostic only; does not parse text or prove all paper/shadow bounds; full-image visual observations listed separately."
+    }
+  ],
+  "visual_observations": {
+    "desktop1280x720": {
+      "hover_text": "点此打开拍立得手帐",
+      "hover_rehover_visible": true,
+      "leave_hides": true,
+      "clicked_from_visible_tooltip_opens_empty_journal": true,
+      "normal_close_button_returns_to_yard_without_tooltip": true,
+      "paper_text_observed_complete": true,
+      "shadow_fully_within_screen_claimed": false
+    },
+    "portrait390x844": {
+      "hover_text": "点此打开拍立得手帐",
+      "hover_rehover_visible": true,
+      "leave_hides": true,
+      "clicked_from_visible_tooltip_opens_empty_journal": true,
+      "normal_close_button_returns_to_yard_without_tooltip": true,
+      "paper_text_observed_complete": true,
+      "shadow_fully_within_screen_claimed": false
+    },
+    "landscape568x320": {
+      "hover_text": "点此打开拍立得手帐",
+      "hover_rehover_visible": true,
+      "leave_hides": true,
+      "clicked_from_visible_tooltip_opens_empty_journal": true,
+      "normal_close_button_returns_to_yard_without_tooltip": true,
+      "paper_text_observed_complete": true,
+      "shadow_fully_within_screen_claimed": false
+    }
+  },
+  "limits": [
+    "All 17 full original screenshots visually inspected; pixel diagnostic is not OCR/semantic containment.",
+    "Desktop paper sits against bottom viewport edge; complete text remains legible. Do not claim the full drop shadow is visible. Portrait/landscape paper and text visibly fit.",
+    "No ordinary English UI exists; English native controlled tests separate.",
+    "No locale/game/save/seed/time setter, DB write or business state injection; readiness event observer and browser DPR/media reads only.",
+    "No touch, rapid consecutive input382, keyboard focus459, audio comfort, photo content or storage recovery acceptance.",
+    "A tool image delivery interruption delayed the final close command; retained same live context, no restart, no application error. Long album idle gap is not a designed stress test.",
+    "Candidate only; exact final PR approval, CI, merge, deployment and public verification separate."
+  ]
+}
