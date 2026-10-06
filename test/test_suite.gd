@@ -378,14 +378,9 @@ func _test_runtime_scene() -> void:
 		# 喂草测试前把所有可抚摸动物移走，确保 try_interact() 走到喂草泥马分支
 		world.debug_place_actor("sheep_a", Vector2(200, 460))
 		world.debug_place_actor("sheep_b", Vector2(200, 490))
-		world.debug_place_player(Vector2(340, 600))
-		world.try_interact()
-		_check(bool(world.get_player().carrying_grass), "yard grass pile must be pickable")
-		# 玩家走到草泥马旁边喂草（草泥马在 640,400；玩家在 600,400；可抚摸动物已远离）
-		world.debug_place_player(world.actor_named("llama").position + Vector2(-40, 0))
-		world.try_interact()
-		_check(not bool(world.get_player().carrying_grass), "feeding must consume the grass")
-		_check("llama_fed_gentle" in world.collected, "feeding should be photographable")
+		_check(await preload("res://test/fixtures/ground_llama_photo.gd").feed(instance,_save_store), "grass harvest, drop and actual llama consumption succeed")
+		_check(not bool(world.get_player().carrying_grass), "ground feeding must remove the held grass")
+		_check("llama_fed_gentle" in world.collected, "ground feeding should be photographable")
 		_check(world.collected_count() >= 3, "forced mainline photos must land in the album")
 	instance.call("_toggle_pause")
 	_check(bool((instance.get("_pause_screen") as Control).visible), "pause command must show the pause menu")

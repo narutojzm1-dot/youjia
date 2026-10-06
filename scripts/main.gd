@@ -63,7 +63,7 @@ var _weather_chip: Button
 var _basket_chip: Button
 var _basket_panel: Control
 var _inventory: RefCounted
-var _inventory_feed_target := ""
+var _inventory_food_consumer := ""
 var _pause_button: Button
 var _action_button: Button
 var _ui_layer: CanvasLayer
@@ -1166,7 +1166,7 @@ func _start_holiday(save_progress: bool = true) -> void:
 	_world.cinematic_view_changed.connect(_on_cinematic_view_changed)
 	_world.day_advanced.connect(_on_day_advanced)
 	_world.fish_caught.connect(_on_fish_caught)
-	_world.inventory_consume_requested.connect(_on_inventory_feed)
+	_world.ground_food_requested.connect(_on_ground_food_action)
 	_on_inventory_changed()
 	_world.exploration_requested.connect(_on_exploration_requested)
 	_camera.enabled = true
@@ -1315,21 +1315,21 @@ func _on_inventory_changed() -> void:
 	if _inventory == null: return
 	var inventory: Dictionary = _inventory.view()
 	if _world != null:
-		_world.sync_inventory(str(inventory.get("held", "")), _inventory.busy() or inventory.is_empty())
+		_world.sync_inventory(str(inventory.get("held", "")), _inventory.busy() or inventory.is_empty(), inventory.get("ground", []))
 	if _basket_panel != null:
 		_basket_panel.update_view(inventory, SaveStore.get_keepsakes(), _inventory.state, _inventory.busy())
 
 
-func _on_inventory_feed(bird_name: String) -> void:
+func _on_ground_food_action(action: String, kind: String, details: Dictionary, actor_id: String) -> void:
 	if _inventory == null or _inventory.busy(): return
-	_inventory_feed_target = bird_name
-	_inventory.request("consume", str(_inventory.view().get("held", "")))
+	_inventory_food_consumer = actor_id
+	_inventory.request(action, kind, details)
 
 
 func _on_inventory_settled(action: String, _fish: String) -> void:
-	if action == "consume" and _world != null:
-		_world.finish_inventory_feed(_inventory_feed_target)
-		_inventory_feed_target = ""
+	if _world != null and _world.ground_food != null:
+		_world.ground_food.settled(action, _inventory_food_consumer)
+	_inventory_food_consumer = ""
 
 
 func _on_inventory_resubmitted(failed_ops: Array, op_id: String) -> void:

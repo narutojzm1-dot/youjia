@@ -11,7 +11,8 @@ signal cinematic_view_changed(stage: String)
 signal day_advanced(day: int)
 ## 钓到鱼时触发，带上鱼种类字符串，供 HUD 做更强的收杆反馈动画
 signal fish_caught(carry_type: String)
-signal inventory_consume_requested(bird_name: String)
+signal ground_food_requested(action: String, kind: String, details: Dictionary, actor_id: String)
+var ground_food: Node2D
 var inventory_enabled := false
 var inventory_busy := false
 ## 走到门前小路尽头选“出门走走”：Main 接管，切到画卷近郊小路
@@ -226,6 +227,8 @@ func setup(
 	add_child(_scene_feedback)
 	_define_zones()
 	_spawn_grass()
+	ground_food = load("res://scripts/inventory/yard_ground_food.gd").new(self)
+	add_child(ground_food)
 	_spawn_cast()
 	_bind_grounds()
 	_plant_visual = YardPropVisual.new()
@@ -284,7 +287,7 @@ func hint_context() -> String:
 	var action := YardInteraction.primary(self)
 	var target := str(action.get("target", ""))
 	if target == "release": return "hud.hint.leading"
-	if target.begins_with("toss_fish:"): return "hud.hint.carrying_fish"
+	if not _fish_carry_type.is_empty(): return "hud.hint.carrying_fish"
 	if _player != null and _player.carrying_grass: return "hud.hint.carrying"
 	if target == "llama": return "hud.hint.near_llama"
 	if target.begins_with("pet:"): return "hud.hint.near_animal"
@@ -466,6 +469,7 @@ func tick(delta: float, move: Vector2) -> void:
 	else:
 		_player.tick(delta, Vector2.ZERO, WORLD_SIZE)
 	if _grass_patch != null: _grass_patch.tick(delta)
+	if ground_food != null and inventory_enabled: ground_food.tick(delta)
 	var animal_scale := float(TuningStore.get_value("enemies.visual.scale", 1.0))
 	var animal_speed := float(TuningStore.get_value("enemies.move.speed_multiplier", 1.0))
 	for actor_id: String in _actors:
@@ -694,9 +698,21 @@ func _interact_with_target(target: String) -> void:
 		_consume_pending_action()
 		exploration_requested.emit()
 		return
+	if target == "drop_food":
+		_consume_pending_action()
+		ground_food.drop_held()
+		return
+	if target.begins_with("ground_food:"):
+		_consume_pending_action()
+		ground_food.pickup(int(target.get_slice(":", 1)))
+		return
 	if target == "grass":
+		if inventory_enabled and not _fish_carry_type.is_empty(): return
 		if _player.position.distance_to(_grass_point()) < 78.0 and not _player.carrying_grass:
 			_consume_pending_action()
+			if inventory_enabled:
+				ground_food_requested.emit("harvest", "grass", {}, "")
+				return
 			_grass_patch.harvest(_player)
 			notice_requested.emit("notice.picked_grass")
 		return
@@ -704,6 +720,9 @@ func _interact_with_target(target: String) -> void:
 	if target == "llama" and llama != null and _player.position.distance_to(llama.position) < 88.0:
 		_consume_pending_action()
 		if _player.carrying_grass:
+			if inventory_enabled:
+				ground_food.drop_held()
+				return
 			_player.consume_grass(llama.global_position)
 			llama.hold_expression("happy", 4.0)
 			notice_requested.emit("notice.fed_llama")
@@ -726,7 +745,7 @@ func _interact_with_target(target: String) -> void:
 			return
 		_consume_pending_action()
 		if inventory_enabled:
-			inventory_consume_requested.emit(bird.actor_id)
+			ground_food.drop_held()
 			return
 		_fish_carry_type = ""
 		_fish_carry_timer = 0.0
@@ -773,6 +792,7 @@ func action_target_key(action: Dictionary) -> String:
 	var target := str(action.get("target", ""))
 	if target == "release" or target == "llama":
 		return "target.llama"
+	if target == "drop_food" or target.begins_with("ground_food:"): return "target.food"
 	if target.begins_with("pet:") or target.begins_with("toss_fish:"):
 		var actor := _interaction_actor(target)
 		return "target.%s" % actor.actor_id if actor != null else ""
@@ -1832,20 +1852,13 @@ func _reel_in_fish() -> void:
 
 
 ## 已落盘的大背篓是生产环境手持物品的唯一来源。
-func sync_inventory(held: String, pending: bool) -> void:
+func sync_inventory(held: String, pending: bool, items: Array = []) -> void:
 	inventory_enabled = true
 	inventory_busy = pending
-	_fish_carry_type = held
+	_fish_carry_type = held if held != "grass" else ""
+	if _player != null: _player.sync_grass(held == "grass")
+	if ground_food != null: ground_food.sync_items(items)
 	_fish_carry_timer = 0.0
-	queue_redraw()
-
-
-func finish_inventory_feed(bird_name: String) -> void:
-	var bird := actor_named(bird_name)
-	if bird == null: return
-	bird.hold_expression("idle", 3.5)
-	bird.acknowledge_feed(_player.position)
-	notice_requested.emit("notice.toss_fish.%s" % bird.species)
 	queue_redraw()
 
 

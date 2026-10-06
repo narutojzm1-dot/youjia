@@ -44,7 +44,7 @@ func run() -> void:
 	check(world.primary_action_key() == "action.reel", "old fish cannot hide reel label")
 	world._tick_fishing(0.2)
 	check(world._fish_state == world.FISH_IDLE and world._fish_carry_type == "small" and world._fish_carry_timer == 0.0, "miss retains legitimate old fish without an expiry")
-	check(world.primary_action_key() == "action.toss_fish", "after miss default returns to old fish")
+	check(world.primary_action_key() == "action.drop_food", "after miss default returns to old fish")
 	world._start_fishing()
 	world._fish_state = world.FISH_BITE
 	var previous: int = world._fish_caught_total
@@ -58,10 +58,10 @@ func run() -> void:
 	check(stored_total == 1 and world._fish_carry_type == "small", "new catch stored once and old held fish preserved")
 	world._fish_state = world.FISH_CASTING
 	world._selected_target = "toss_fish:goose"
-	check(world.primary_action().target == "toss_fish:goose", "explicit animal choice still wins")
+	check(world.primary_action().target == "fishing", "active cast takes priority over stale direct-feed selection")
 	world._selected_target = ""
 	world._player.position = world._fishing_point() + Vector2(0, -120)
-	check(world.primary_action_key() == "action.toss_fish", "walking away restores carried fish action")
+	check(world.primary_action_key() == "action.drop_food", "walking away restores carried fish action")
 	main._inventory.request("consume", "small")
 	await store.flush_pending()
 	world._player.position = world._fishing_point() + Vector2(0, -50)

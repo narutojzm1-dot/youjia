@@ -18,7 +18,7 @@ var keepsake_labels: Dictionary = {}
 var _touch_index := -1
 var _touch_start := Vector2.ZERO
 var _touch_scrolled := false
-const FISH := ["small", "medium", "odd"]
+const FISH := ["small", "medium", "odd", "grass"]
 
 func _ready() -> void:
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -123,15 +123,15 @@ func fit() -> void:
 func update_view(inventory: Dictionary, keepsakes: Dictionary, state: String, busy: bool) -> void:
 	var en := I18n.get_locale() == "en"
 	title.text = "The big basket" if en else "院里的大背篓"
-	var names := {"round_stone": "Round stone" if en else "圆石", "pine_cone": "Pine cone" if en else "松果", "feather": "Feather" if en else "落羽", "small": "Small fish" if en else "小鱼", "medium": "Fish" if en else "中鱼", "odd": "Curious fish" if en else "奇怪的鱼"}
+	var names := {"grass": "Grass" if en else "草束", "round_stone": "Round stone" if en else "圆石", "pine_cone": "Pine cone" if en else "松果", "feather": "Feather" if en else "落羽", "small": "Small fish" if en else "小鱼", "medium": "Fish" if en else "中鱼", "odd": "Curious fish" if en else "奇怪的鱼"}
 	var find_ids := {"round_stone": ExplorationRoutes.FIND_STONE, "pine_cone": ExplorationRoutes.FIND_PINE_CONE, "feather": ExplorationRoutes.FIND_FEATHER}
 	for kind: String in keepsake_labels:
 		keepsake_labels[kind].text = "%s  × %d" % [names[kind], int(keepsakes.get(find_ids[kind], 0))]
 	var held := str(inventory.get("held", ""))
 	for kind: String in FISH:
-		var count := int(inventory.get("fish", {}).get(kind, 0))
+		var count := int(inventory.get("grass", 0)) if kind == "grass" else int(inventory.get("fish", {}).get(kind, 0))
 		fish_labels[kind].text = "%s  × %d" % [names[kind], count]
-		fish_buttons[kind].text = "Take one" if en else "拿一条"
+		fish_buttons[kind].text = "Take one" if en else ("拿一束" if kind == "grass" else "拿一条")
 		fish_buttons[kind].disabled = inventory.is_empty() or busy or not held.is_empty() or count == 0
 	held_label.text = ("In hand: " if en else "手里拿着：") + str(names.get(held, "Nothing" if en else "空着"))
 	return_button.text = "Put it back" if en else "收回背篓"

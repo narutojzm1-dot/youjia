@@ -236,6 +236,14 @@ func pick_grass(visual_delay: float = 0.0) -> void:
 	_update_grass_visual()
 
 
+func sync_grass(held: bool) -> void:
+	if carrying_grass == held: return
+	carrying_grass = held
+	grass_visual_revision += 1
+	_grass_hold_delay = 0.0
+	_update_grass_visual()
+
+
 func consume_grass(target_position: Vector2 = Vector2.INF) -> bool:
 	if not carrying_grass:
 		return false
