@@ -18,6 +18,7 @@ const GAIT_DEFAULTS := {
 var _snapshot: Dictionary = {}
 var _stage: Node2D
 var _ground: Node2D
+var _shadows: Node2D
 var _background_texture: Texture2D
 
 
@@ -179,6 +180,10 @@ func setup(snapshot: Dictionary) -> void:
 	_ground.name = "RecordedGround"
 	_ground.draw.connect(_draw_ground)
 	_stage.add_child(_ground)
+	_shadows = Node2D.new()
+	_shadows.name = "RecordedShadows"
+	_shadows.draw.connect(_draw_shadows)
+	_stage.add_child(_shadows)
 	for item: Dictionary in _snapshot.items:
 		var visual: Node2D
 		if item.kind == "sprite":
@@ -220,6 +225,10 @@ func setup(snapshot: Dictionary) -> void:
 		visual.z_as_relative = true
 		visual.set_meta("subject", item.subject)
 		_stage.add_child(visual)
+		# Only the explicitly captured weather layer belongs below contact shadows.
+		# Keep legacy items (including negative-depth clouds) in their old order.
+		if item.kind == "sprite" and item.subject in ["weather_background", "weather_cloud"]:
+			_stage.move_child(visual, _shadows.get_index())
 	_fit()
 
 
@@ -243,14 +252,20 @@ func _draw_ground() -> void:
 	var texture_size := _background_texture.get_size()
 	var origin := _vec(background.offset) - (texture_size * 0.5 if background.centered else Vector2.ZERO)
 	_ground.draw_texture_rect(_background_texture, Rect2(origin, texture_size), false, _color(background.modulate))
+	_ground.draw_set_transform_matrix(Transform2D.IDENTITY)
+
+
+func _draw_shadows() -> void:
+	if _snapshot.is_empty():
+		return
 	for shadow: Array in _snapshot.shadows:
 		var point := Vector2(float(shadow[0]), float(shadow[1]) + 1.5)
 		var extent := Vector2(float(shadow[2]), float(shadow[3]))
-		_ground.draw_set_transform_matrix(Transform2D(Vector2(extent.x, 0), Vector2(0, extent.y), point))
-		_ground.draw_circle(Vector2.ZERO, 1.20, Color(0.29, 0.25, 0.16, 0.035))
-		_ground.draw_circle(Vector2.ZERO, 0.97, Color(0.29, 0.25, 0.16, 0.060))
-		_ground.draw_circle(Vector2.ZERO, 0.70, Color(0.29, 0.25, 0.16, 0.055))
-	_ground.draw_set_transform_matrix(Transform2D.IDENTITY)
+		_shadows.draw_set_transform_matrix(Transform2D(Vector2(extent.x, 0), Vector2(0, extent.y), point))
+		_shadows.draw_circle(Vector2.ZERO, 1.20, Color(0.29, 0.25, 0.16, 0.035))
+		_shadows.draw_circle(Vector2.ZERO, 0.97, Color(0.29, 0.25, 0.16, 0.060))
+		_shadows.draw_circle(Vector2.ZERO, 0.70, Color(0.29, 0.25, 0.16, 0.055))
+	_shadows.draw_set_transform_matrix(Transform2D.IDENTITY)
 
 
 static func _collect(node: Node, world: Node2D, backdrop: Node, subject: String, items: Array) -> void:
@@ -258,7 +273,13 @@ static func _collect(node: Node, world: Node2D, backdrop: Node, subject: String,
 		return
 	var actor_id: Variant = _property(node, "actor_id", "")
 	var script: Script = node.get_script() as Script
-	if actor_id is String and not actor_id.is_empty():
+	if node is Sprite2D and node.name == "WeatherBackdropBlend" and node.get_parent() == world:
+		subject = "weather_background"
+	elif node is Sprite2D and node.get_parent() == world and str(node.name) in [
+			"CloudBandA", "CloudBandB", "CloudMorningA", "CloudMorningB",
+			"CloudSunsetA", "CloudSunsetB", "CloudOvercastA", "CloudOvercastB"]:
+		subject = "weather_cloud"
+	elif actor_id is String and not actor_id.is_empty():
 		subject = actor_id
 	elif script != null and script.resource_path == "res://scripts/entities/vacationer.gd":
 		subject = "player"
