@@ -11,6 +11,9 @@ signal cinematic_view_changed(stage: String)
 signal day_advanced(day: int)
 ## 钓到鱼时触发，带上鱼种类字符串，供 HUD 做更强的收杆反馈动画
 signal fish_caught(carry_type: String)
+signal inventory_consume_requested(bird_name: String)
+var inventory_enabled := false
+var inventory_busy := false
 ## 走到门前小路尽头选“出门走走”：Main 接管，切到画卷近郊小路
 signal exploration_requested
 
@@ -396,7 +399,7 @@ func tick(delta: float, move: Vector2) -> void:
 		_plant_harvest_flash -= delta
 		queue_redraw()
 	# 钓到鱼后的携带倒计时：超时自动放回水里
-	if _fish_carry_timer > 0.0:
+	if not inventory_enabled and _fish_carry_timer > 0.0:
 		_fish_carry_timer -= delta
 		if _fish_carry_timer <= 0.0 and not _fish_carry_type.is_empty():
 			_fish_carry_type = ""
@@ -657,7 +660,7 @@ func _consume_pending_action() -> void:
 
 
 func _interact_with_target(target: String) -> void:
-	if not input_enabled or _player == null:
+	if not input_enabled or inventory_busy or _player == null:
 		return
 	TuningStore.apply_boundary("NEXT_ACTION")
 	if target == YardSceneHotspots.WINDOWBOX:
@@ -722,6 +725,9 @@ func _interact_with_target(target: String) -> void:
 		if bird == null or _fish_carry_type.is_empty() or _player.position.distance_to(bird.position) >= YardInteraction.FEED_REACH:
 			return
 		_consume_pending_action()
+		if inventory_enabled:
+			inventory_consume_requested.emit(bird.actor_id)
+			return
 		_fish_carry_type = ""
 		_fish_carry_timer = 0.0
 		bird.hold_expression("idle", 3.5)
@@ -783,7 +789,7 @@ func cancel_scene_feedback() -> void:
 
 
 func request_primary_action() -> void:
-	if not input_enabled or _player == null:
+	if not input_enabled or inventory_busy or _player == null:
 		return
 	_cancel_goose_mount_encounter()
 	_goose_mount_wait = 0.0
@@ -1749,7 +1755,7 @@ func _tick_fishing(delta: float) -> void:
 
 
 func _fishing_miss_notice_key() -> String:
-	if not _fish_carry_type.is_empty() and _fish_carry_timer > 0.0:
+	if not _fish_carry_type.is_empty() and (inventory_enabled or _fish_carry_timer > 0.0):
 		return "notice.fishing.miss_with_carry"
 	return "notice.fishing.miss"
 
@@ -1810,8 +1816,9 @@ func _reel_in_fish() -> void:
 		notice_requested.emit(catch_notice)
 	# 拍立得拍摄后重置钓鱼逻辑，改用携带计时器跟踪
 	_fish_state = FISH_IDLE
-	_fish_carry_type = carry_type
-	_fish_carry_timer = 20.0  # 20秒内可投喂给鸭/鹅，给玩家充裕时间走到鸭鹅旁
+	if not inventory_enabled:
+		_fish_carry_type = carry_type
+		_fish_carry_timer = 20.0
 	# 启动钓到庆祝闪光：3.2 秒多环扩散 + 粒子爆射（覆盖层时长同步）
 	_fish_catch_flash = 3.2
 	_fish_catch_type = carry_type
@@ -1821,6 +1828,24 @@ func _reel_in_fish() -> void:
 		_effects_overlay.fish_ring_type = carry_type
 		_effects_overlay.fish_ring_pos = _fishing_point()
 		_effects_overlay.queue_redraw()
+	queue_redraw()
+
+
+## 已落盘的大背篓是生产环境手持物品的唯一来源。
+func sync_inventory(held: String, pending: bool) -> void:
+	inventory_enabled = true
+	inventory_busy = pending
+	_fish_carry_type = held
+	_fish_carry_timer = 0.0
+	queue_redraw()
+
+
+func finish_inventory_feed(bird_name: String) -> void:
+	var bird := actor_named(bird_name)
+	if bird == null: return
+	bird.hold_expression("idle", 3.5)
+	bird.acknowledge_feed(_player.position)
+	notice_requested.emit("notice.toss_fish.%s" % bird.species)
 	queue_redraw()
 
 

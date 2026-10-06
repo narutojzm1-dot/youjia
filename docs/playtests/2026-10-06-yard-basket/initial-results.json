@@ -1,0 +1,44 @@
+[
+  {
+    "suite": "yard_inventory",
+    "passed": true,
+    "exit": 0,
+    "stdout": "initial-results-yard_inventory-stdout.log",
+    "stderr": "initial-results-yard_inventory-stderr.log"
+  },
+  {
+    "suite": "yard_basket_integration",
+    "passed": true,
+    "exit": 0,
+    "stdout": "initial-results-yard_basket_integration-stdout.log",
+    "stderr": "initial-results-yard_basket_integration-stderr.log"
+  },
+  {
+    "suite": "save_coordinator",
+    "passed": true,
+    "exit": 0,
+    "stdout": "initial-results-save_coordinator-stdout.log",
+    "stderr": "initial-results-save_coordinator-stderr.log"
+  },
+  {
+    "suite": "native_save_host",
+    "passed": true,
+    "exit": 0,
+    "stdout": "initial-results-native_save_host-stdout.log",
+    "stderr": "initial-results-native_save_host-stderr.log"
+  },
+  {
+    "suite": "exploration_cleanup_preservation",
+    "passed": true,
+    "exit": 0,
+    "stdout": "initial-results-exploration_cleanup_preservation-stdout.log",
+    "stderr": "initial-results-exploration_cleanup_preservation-stderr.log"
+  },
+  {
+    "suite": "fish_carry_consistency",
+    "passed": false,
+    "exit": 2,
+    "stdout": "initial-results-fish_carry_consistency-stdout.log",
+    "stderr": "initial-results-fish_carry_consistency-stderr.log"
+  }
+]
