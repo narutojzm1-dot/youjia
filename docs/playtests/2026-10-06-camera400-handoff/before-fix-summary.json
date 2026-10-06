@@ -1,0 +1,728 @@
+{
+  "production_source": "b300da74bf157de3f152e63331096cb1eb28b3f7",
+  "test_source": "3cdd2439d4a33b7085e00f12b2c42c48c7604355",
+  "actual_exit": 1,
+  "checks": 160,
+  "failure_count": 30,
+  "cases": {
+    "quiet_only_move/reduced=false": {
+      "failures": [],
+      "stages": [
+        {
+          "stage": "quiet_holds_camera",
+          "phase": -1,
+          "wait": 0.0,
+          "quiet_active": true,
+          "focus_seconds": 3.25,
+          "target_offset": [
+            19.25,
+            -52.5
+          ],
+          "interpolated_offset": [
+            17.2210655212402,
+            -46.9665451049805
+          ]
+        },
+        {
+          "stage": "quiet_move",
+          "phase": -1,
+          "wait": 0.0,
+          "quiet_active": false,
+          "focus_seconds": 0.0,
+          "target_offset": [
+            0.0,
+            0.0
+          ],
+          "interpolated_offset": [
+            16.3811836242676,
+            -44.6759605407715
+          ]
+        },
+        {
+          "stage": "quiet_move_after_old_hold",
+          "phase": -1,
+          "wait": 0.0,
+          "quiet_active": false,
+          "focus_seconds": 0.0,
+          "target_offset": [
+            0.0,
+            0.0
+          ],
+          "interpolated_offset": [
+            5.52376113773789e-05,
+            -0.000150648033013567
+          ]
+        }
+      ]
+    },
+    "prewarm_then_move/reduced=false": {
+      "failures": [
+        "prewarm alone preserves the active sky focus and its remaining hold",
+        "interruption releases the previous focus target",
+        "camera consumer receives a release event",
+        "continued movement settles the real interpolated offset to zero"
+      ],
+      "stages": [
+        {
+          "stage": "quiet_holds_camera",
+          "phase": -1,
+          "wait": 0.0,
+          "quiet_active": true,
+          "focus_seconds": 3.25,
+          "target_offset": [
+            19.25,
+            -52.5
+          ],
+          "interpolated_offset": [
+            17.2210655212402,
+            -46.9665451049805
+          ]
+        },
+        {
+          "stage": "partial_prewarm",
+          "phase": -1,
+          "wait": 0.0166666666666667,
+          "quiet_active": false,
+          "focus_seconds": 0.0,
+          "target_offset": [
+            19.25,
+            -52.5
+          ],
+          "interpolated_offset": [
+            17.3200187683105,
+            -47.2364158630371
+          ]
+        },
+        {
+          "stage": "prewarm_move",
+          "phase": -1,
+          "wait": 0.0,
+          "quiet_active": false,
+          "focus_seconds": 0.0,
+          "target_offset": [
+            19.25,
+            -52.5
+          ],
+          "interpolated_offset": [
+            17.4141445159912,
+            -47.4931221008301
+          ]
+        },
+        {
+          "stage": "prewarm_move_after_old_hold",
+          "phase": -1,
+          "wait": 0.0,
+          "quiet_active": false,
+          "focus_seconds": 0.0,
+          "target_offset": [
+            19.25,
+            -52.5
+          ],
+          "interpolated_offset": [
+            19.2499809265137,
+            -52.4999618530273
+          ]
+        }
+      ]
+    },
+    "prewarm_loses_actor_proximity/reduced=false": {
+      "failures": [
+        "prewarm alone preserves the active sky focus and its remaining hold",
+        "lost proximity leaves the existing quiet hold intact without an extra snap",
+        "quiet hold still expires naturally after prewarm loses eligibility",
+        "natural expiry reaches the real Main release consumer",
+        "camera finishes returning after natural expiry"
+      ],
+      "stages": [
+        {
+          "stage": "quiet_holds_camera",
+          "phase": -1,
+          "wait": 0.0,
+          "quiet_active": true,
+          "focus_seconds": 3.25,
+          "target_offset": [
+            19.25,
+            -52.5
+          ],
+          "interpolated_offset": [
+            17.2210655212402,
+            -46.9665451049805
+          ]
+        },
+        {
+          "stage": "partial_prewarm",
+          "phase": -1,
+          "wait": 0.0166666666666667,
+          "quiet_active": false,
+          "focus_seconds": 0.0,
+          "target_offset": [
+            19.25,
+            -52.5
+          ],
+          "interpolated_offset": [
+            17.3200187683105,
+            -47.2364158630371
+          ]
+        },
+        {
+          "stage": "prewarm_proximity_lost",
+          "phase": -1,
+          "wait": 0.0,
+          "quiet_active": false,
+          "focus_seconds": 0.0,
+          "target_offset": [
+            19.25,
+            -52.5
+          ],
+          "interpolated_offset": [
+            17.4141445159912,
+            -47.4931221008301
+          ]
+        },
+        {
+          "stage": "proximity_lost_after_old_hold",
+          "phase": -1,
+          "wait": 0.0,
+          "quiet_active": false,
+          "focus_seconds": 0.0,
+          "target_offset": [
+            19.25,
+            -52.5
+          ],
+          "interpolated_offset": [
+            19.2499809265137,
+            -52.4999618530273
+          ]
+        }
+      ]
+    },
+    "old_hold_expires_during_prewarm/reduced=false": {
+      "failures": [
+        "prewarm alone preserves the active sky focus and its remaining hold",
+        "natural expiry releases the old sky target during prewarm",
+        "interruption releases the previous focus target",
+        "camera consumer receives a release event",
+        "continued movement settles the real interpolated offset to zero"
+      ],
+      "stages": [
+        {
+          "stage": "quiet_holds_camera",
+          "phase": -1,
+          "wait": 0.0,
+          "quiet_active": true,
+          "focus_seconds": 3.25,
+          "target_offset": [
+            19.25,
+            -52.5
+          ],
+          "interpolated_offset": [
+            17.2210655212402,
+            -46.9665451049805
+          ]
+        },
+        {
+          "stage": "partial_prewarm",
+          "phase": -1,
+          "wait": 0.0166666666666667,
+          "quiet_active": false,
+          "focus_seconds": 0.0,
+          "target_offset": [
+            19.25,
+            -52.5
+          ],
+          "interpolated_offset": [
+            19.2496795654297,
+            -52.4991226196289
+          ]
+        },
+        {
+          "stage": "old_hold_expiry",
+          "phase": -1,
+          "wait": 0.616666666666667,
+          "quiet_active": false,
+          "focus_seconds": 0.0,
+          "target_offset": [
+            19.25,
+            -52.5
+          ],
+          "interpolated_offset": [
+            19.2499465942383,
+            -52.4998550415039
+          ]
+        },
+        {
+          "stage": "expired_prewarm_move",
+          "phase": -1,
+          "wait": 0.0,
+          "quiet_active": false,
+          "focus_seconds": 0.0,
+          "target_offset": [
+            19.25,
+            -52.5
+          ],
+          "interpolated_offset": [
+            19.2499485015869,
+            -52.4998626708984
+          ]
+        },
+        {
+          "stage": "expired_prewarm_move_after_old_hold",
+          "phase": -1,
+          "wait": 0.0,
+          "quiet_active": false,
+          "focus_seconds": 0.0,
+          "target_offset": [
+            19.25,
+            -52.5
+          ],
+          "interpolated_offset": [
+            19.2499809265137,
+            -52.4999618530273
+          ]
+        }
+      ]
+    },
+    "actual_takeover_then_move/reduced=false": {
+      "failures": [
+        "prewarm alone preserves the active sky focus and its remaining hold"
+      ],
+      "stages": [
+        {
+          "stage": "quiet_holds_camera",
+          "phase": -1,
+          "wait": 0.0,
+          "quiet_active": true,
+          "focus_seconds": 3.25,
+          "target_offset": [
+            19.25,
+            -52.5
+          ],
+          "interpolated_offset": [
+            17.2210655212402,
+            -46.9665451049805
+          ]
+        },
+        {
+          "stage": "partial_prewarm",
+          "phase": -1,
+          "wait": 0.0166666666666667,
+          "quiet_active": false,
+          "focus_seconds": 0.0,
+          "target_offset": [
+            19.25,
+            -52.5
+          ],
+          "interpolated_offset": [
+            17.3200187683105,
+            -47.2364158630371
+          ]
+        },
+        {
+          "stage": "actual_takeover",
+          "phase": 0,
+          "wait": 3.51666666666666,
+          "quiet_active": false,
+          "focus_seconds": 0.0,
+          "target_offset": [
+            14.875,
+            46.375
+          ],
+          "interpolated_offset": [
+            19.0365753173828,
+            -47.6776657104492
+          ]
+        },
+        {
+          "stage": "actual_takeover_move",
+          "phase": -1,
+          "wait": 0.0,
+          "quiet_active": false,
+          "focus_seconds": 0.0,
+          "target_offset": [
+            0.0,
+            0.0
+          ],
+          "interpolated_offset": [
+            18.1081504821777,
+            -45.3523979187012
+          ]
+        },
+        {
+          "stage": "actual_takeover_move_after_old_hold",
+          "phase": -1,
+          "wait": 0.0,
+          "quiet_active": false,
+          "focus_seconds": 0.0,
+          "target_offset": [
+            0.0,
+            0.0
+          ],
+          "interpolated_offset": [
+            6.1060993175488e-05,
+            -0.000152928885654546
+          ]
+        }
+      ]
+    },
+    "quiet_only_move/reduced=true": {
+      "failures": [],
+      "stages": [
+        {
+          "stage": "quiet_holds_camera",
+          "phase": -1,
+          "wait": 0.0,
+          "quiet_active": true,
+          "focus_seconds": 3.25,
+          "target_offset": [
+            19.25,
+            -52.5
+          ],
+          "interpolated_offset": [
+            19.2476253509521,
+            -52.4935188293457
+          ]
+        },
+        {
+          "stage": "quiet_move",
+          "phase": -1,
+          "wait": 0.0,
+          "quiet_active": false,
+          "focus_seconds": 0.0,
+          "target_offset": [
+            0.0,
+            0.0
+          ],
+          "interpolated_offset": [
+            15.7586231231689,
+            -42.9780578613281
+          ]
+        },
+        {
+          "stage": "quiet_move_after_old_hold",
+          "phase": -1,
+          "wait": 0.0,
+          "quiet_active": false,
+          "focus_seconds": 0.0,
+          "target_offset": [
+            0.0,
+            0.0
+          ],
+          "interpolated_offset": [
+            2.03740199037e-21,
+            -5.55655345308e-21
+          ]
+        }
+      ]
+    },
+    "prewarm_then_move/reduced=true": {
+      "failures": [
+        "prewarm alone preserves the active sky focus and its remaining hold",
+        "interruption releases the previous focus target",
+        "camera consumer receives a release event",
+        "continued movement settles the real interpolated offset to zero"
+      ],
+      "stages": [
+        {
+          "stage": "quiet_holds_camera",
+          "phase": -1,
+          "wait": 0.0,
+          "quiet_active": true,
+          "focus_seconds": 3.25,
+          "target_offset": [
+            19.25,
+            -52.5
+          ],
+          "interpolated_offset": [
+            19.2476253509521,
+            -52.4935188293457
+          ]
+        },
+        {
+          "stage": "partial_prewarm",
+          "phase": -1,
+          "wait": 0.0166666666666667,
+          "quiet_active": false,
+          "focus_seconds": 0.0,
+          "target_offset": [
+            19.25,
+            -52.5
+          ],
+          "interpolated_offset": [
+            19.2480564117432,
+            -52.4946937561035
+          ]
+        },
+        {
+          "stage": "prewarm_move",
+          "phase": -1,
+          "wait": 0.0,
+          "quiet_active": false,
+          "focus_seconds": 0.0,
+          "target_offset": [
+            19.25,
+            -52.5
+          ],
+          "interpolated_offset": [
+            19.2484092712402,
+            -52.4956550598145
+          ]
+        },
+        {
+          "stage": "prewarm_move_after_old_hold",
+          "phase": -1,
+          "wait": 0.0,
+          "quiet_active": false,
+          "focus_seconds": 0.0,
+          "target_offset": [
+            19.25,
+            -52.5
+          ],
+          "interpolated_offset": [
+            19.2499961853027,
+            -52.4999923706055
+          ]
+        }
+      ]
+    },
+    "prewarm_loses_actor_proximity/reduced=true": {
+      "failures": [
+        "prewarm alone preserves the active sky focus and its remaining hold",
+        "lost proximity leaves the existing quiet hold intact without an extra snap",
+        "quiet hold still expires naturally after prewarm loses eligibility",
+        "natural expiry reaches the real Main release consumer",
+        "camera finishes returning after natural expiry"
+      ],
+      "stages": [
+        {
+          "stage": "quiet_holds_camera",
+          "phase": -1,
+          "wait": 0.0,
+          "quiet_active": true,
+          "focus_seconds": 3.25,
+          "target_offset": [
+            19.25,
+            -52.5
+          ],
+          "interpolated_offset": [
+            19.2476253509521,
+            -52.4935188293457
+          ]
+        },
+        {
+          "stage": "partial_prewarm",
+          "phase": -1,
+          "wait": 0.0166666666666667,
+          "quiet_active": false,
+          "focus_seconds": 0.0,
+          "target_offset": [
+            19.25,
+            -52.5
+          ],
+          "interpolated_offset": [
+            19.2480564117432,
+            -52.4946937561035
+          ]
+        },
+        {
+          "stage": "prewarm_proximity_lost",
+          "phase": -1,
+          "wait": 0.0,
+          "quiet_active": false,
+          "focus_seconds": 0.0,
+          "target_offset": [
+            19.25,
+            -52.5
+          ],
+          "interpolated_offset": [
+            19.2484092712402,
+            -52.4956550598145
+          ]
+        },
+        {
+          "stage": "proximity_lost_after_old_hold",
+          "phase": -1,
+          "wait": 0.0,
+          "quiet_active": false,
+          "focus_seconds": 0.0,
+          "target_offset": [
+            19.25,
+            -52.5
+          ],
+          "interpolated_offset": [
+            19.2499961853027,
+            -52.4999923706055
+          ]
+        }
+      ]
+    },
+    "old_hold_expires_during_prewarm/reduced=true": {
+      "failures": [
+        "prewarm alone preserves the active sky focus and its remaining hold",
+        "natural expiry releases the old sky target during prewarm",
+        "interruption releases the previous focus target",
+        "camera consumer receives a release event",
+        "continued movement settles the real interpolated offset to zero"
+      ],
+      "stages": [
+        {
+          "stage": "quiet_holds_camera",
+          "phase": -1,
+          "wait": 0.0,
+          "quiet_active": true,
+          "focus_seconds": 3.25,
+          "target_offset": [
+            19.25,
+            -52.5
+          ],
+          "interpolated_offset": [
+            19.2476253509521,
+            -52.4935188293457
+          ]
+        },
+        {
+          "stage": "partial_prewarm",
+          "phase": -1,
+          "wait": 0.0166666666666667,
+          "quiet_active": false,
+          "focus_seconds": 0.0,
+          "target_offset": [
+            19.25,
+            -52.5
+          ],
+          "interpolated_offset": [
+            19.2499961853027,
+            -52.4999923706055
+          ]
+        },
+        {
+          "stage": "old_hold_expiry",
+          "phase": -1,
+          "wait": 0.616666666666667,
+          "quiet_active": false,
+          "focus_seconds": 0.0,
+          "target_offset": [
+            19.25,
+            -52.5
+          ],
+          "interpolated_offset": [
+            19.2499961853027,
+            -52.4999923706055
+          ]
+        },
+        {
+          "stage": "expired_prewarm_move",
+          "phase": -1,
+          "wait": 0.0,
+          "quiet_active": false,
+          "focus_seconds": 0.0,
+          "target_offset": [
+            19.25,
+            -52.5
+          ],
+          "interpolated_offset": [
+            19.2499961853027,
+            -52.4999923706055
+          ]
+        },
+        {
+          "stage": "expired_prewarm_move_after_old_hold",
+          "phase": -1,
+          "wait": 0.0,
+          "quiet_active": false,
+          "focus_seconds": 0.0,
+          "target_offset": [
+            19.25,
+            -52.5
+          ],
+          "interpolated_offset": [
+            19.2499961853027,
+            -52.4999923706055
+          ]
+        }
+      ]
+    },
+    "actual_takeover_then_move/reduced=true": {
+      "failures": [
+        "prewarm alone preserves the active sky focus and its remaining hold"
+      ],
+      "stages": [
+        {
+          "stage": "quiet_holds_camera",
+          "phase": -1,
+          "wait": 0.0,
+          "quiet_active": true,
+          "focus_seconds": 3.25,
+          "target_offset": [
+            19.25,
+            -52.5
+          ],
+          "interpolated_offset": [
+            19.2476253509521,
+            -52.4935188293457
+          ]
+        },
+        {
+          "stage": "partial_prewarm",
+          "phase": -1,
+          "wait": 0.0166666666666667,
+          "quiet_active": false,
+          "focus_seconds": 0.0,
+          "target_offset": [
+            19.25,
+            -52.5
+          ],
+          "interpolated_offset": [
+            19.2480564117432,
+            -52.4946937561035
+          ]
+        },
+        {
+          "stage": "actual_takeover",
+          "phase": 0,
+          "wait": 3.51666666666666,
+          "quiet_active": false,
+          "focus_seconds": 0.0,
+          "target_offset": [
+            14.875,
+            46.375
+          ],
+          "interpolated_offset": [
+            18.4569435119629,
+            -34.5769958496094
+          ]
+        },
+        {
+          "stage": "actual_takeover_move",
+          "phase": -1,
+          "wait": 0.0,
+          "quiet_active": false,
+          "focus_seconds": 0.0,
+          "target_offset": [
+            0.0,
+            0.0
+          ],
+          "interpolated_offset": [
+            15.1112670898438,
+            -28.3092498779297
+          ]
+        },
+        {
+          "stage": "actual_takeover_move_after_old_hold",
+          "phase": -1,
+          "wait": 0.0,
+          "quiet_active": false,
+          "focus_seconds": 0.0,
+          "target_offset": [
+            0.0,
+            0.0
+          ],
+          "interpolated_offset": [
+            1.95370589305e-21,
+            -3.66005004783e-21
+          ]
+        }
+      ]
+    }
+  },
+  "limits": "Controlled native input/clock/positions, not normal-browser reproduction of unknown user screenshot."
+}

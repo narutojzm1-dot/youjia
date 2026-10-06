@@ -1,0 +1,1610 @@
+{
+  "source": {
+    "repository": "/tmp/youjia-camera400",
+    "branch": "work/codex-lead/camera400-handoff-check",
+    "production_source": "b300da74bf157de3f152e63331096cb1eb28b3f7",
+    "test_source": "3cdd2439d4a33b7085e00f12b2c42c48c7604355",
+    "tree": "59240450110f9382503da55e62e84564626a0292",
+    "test_blob": "098c864ba980d499a1586e520e752628ffd8b447",
+    "test_sha256": "1eb8842e0aa225f73a0e5256dbba48be523f27bfb07c1cb47d747ea8594980d0",
+    "production_diff": [],
+    "engine_executed": false,
+    "browser_executed": false,
+    "expected_before_fix": "Nonzero suite result for short prewarm losing quiet ownership; keep failures, controls must be distinguished."
+  },
+  "actual_suite_exit": 1,
+  "completion_lines": [
+    "[camera400-handoff] FAIL: 160 checks [\"prewarm_then_move/reduced=false: prewarm alone preserves the active sky focus and its remaining hold\",\"prewarm_then_move/reduced=false: interruption releases the previous focus target\",\"prewarm_then_move/reduced=false: camera consumer receives a release event\",\"prewarm_then_move/reduced=false: continued movement settles the real interpolated offset to zero\",\"prewarm_loses_actor_proximity/reduced=false: prewarm alone preserves the active sky focus and its remaining hold\",\"prewarm_loses_actor_proximity/reduced=false: lost proximity leaves the existing quiet hold intact without an extra snap\",\"prewarm_loses_actor_proximity/reduced=false: quiet hold still expires naturally after prewarm loses eligibility\",\"prewarm_loses_actor_proximity/reduced=false: natural expiry reaches the real Main release consumer\",\"prewarm_loses_actor_proximity/reduced=false: camera finishes returning after natural expiry\",\"old_hold_expires_during_prewarm/reduced=false: prewarm alone preserves the active sky focus and its remaining hold\",\"old_hold_expires_during_prewarm/reduced=false: natural expiry releases the old sky target during prewarm\",\"old_hold_expires_during_prewarm/reduced=false: interruption releases the previous focus target\",\"old_hold_expires_during_prewarm/reduced=false: camera consumer receives a release event\",\"old_hold_expires_during_prewarm/reduced=false: continued movement settles the real interpolated offset to zero\",\"actual_takeover_then_move/reduced=false: prewarm alone preserves the active sky focus and its remaining hold\",\"prewarm_then_move/reduced=true: prewarm alone preserves the active sky focus and its remaining hold\",\"prewarm_then_move/reduced=true: interruption releases the previous focus target\",\"prewarm_then_move/reduced=true: camera consumer receives a release event\",\"prewarm_then_move/reduced=true: continued movement settles the real interpolated offset to zero\",\"prewarm_loses_actor_proximity/reduced=true: prewarm alone preserves the active sky focus and its remaining hold\",\"prewarm_loses_actor_proximity/reduced=true: lost proximity leaves the existing quiet hold intact without an extra snap\",\"prewarm_loses_actor_proximity/reduced=true: quiet hold still expires naturally after prewarm loses eligibility\",\"prewarm_loses_actor_proximity/reduced=true: natural expiry reaches the real Main release consumer\",\"prewarm_loses_actor_proximity/reduced=true: camera finishes returning after natural expiry\",\"old_hold_expires_during_prewarm/reduced=true: prewarm alone preserves the active sky focus and its remaining hold\",\"old_hold_expires_during_prewarm/reduced=true: natural expiry releases the old sky target during prewarm\",\"old_hold_expires_during_prewarm/reduced=true: interruption releases the previous focus target\",\"old_hold_expires_during_prewarm/reduced=true: camera consumer receives a release event\",\"old_hold_expires_during_prewarm/reduced=true: continued movement settles the real interpolated offset to zero\",\"actual_takeover_then_move/reduced=true: prewarm alone preserves the active sky focus and its remaining hold\"]"
+  ],
+  "trace_count": 42,
+  "traces": [
+    {
+      "camera_position": [
+        661.62109375,
+        367.517913818359
+      ],
+      "case": "quiet_only_move/reduced=false",
+      "events": [
+        {
+          "kind": "focus",
+          "point": [
+            695.0,
+            210.0
+          ],
+          "zoom": 1.0
+        }
+      ],
+      "focus_seconds": 3.25,
+      "interpolated_offset": [
+        17.2210655212402,
+        -46.9665451049805
+      ],
+      "phase": -1,
+      "player": [
+        695.0,
+        510.0
+      ],
+      "quiet_active": true,
+      "quiet_cooldown": 0.0,
+      "stage": "quiet_holds_camera",
+      "target_offset": [
+        19.25,
+        -52.5
+      ],
+      "target_zoom": 1.0,
+      "wait": 0.0
+    },
+    {
+      "camera_position": [
+        660.781188964844,
+        369.808502197266
+      ],
+      "case": "quiet_only_move/reduced=false",
+      "events": [
+        {
+          "kind": "focus",
+          "point": [
+            695.0,
+            210.0
+          ],
+          "zoom": 1.0
+        },
+        {
+          "kind": "release"
+        }
+      ],
+      "focus_seconds": 0.0,
+      "interpolated_offset": [
+        16.3811836242676,
+        -44.6759605407715
+      ],
+      "phase": -1,
+      "player": [
+        695.0,
+        510.0
+      ],
+      "quiet_active": false,
+      "quiet_cooldown": 27.9833333333333,
+      "stage": "quiet_move",
+      "target_offset": [
+        0.0,
+        0.0
+      ],
+      "target_zoom": 1.0,
+      "wait": 0.0
+    },
+    {
+      "camera_position": [
+        644.400085449219,
+        414.484313964844
+      ],
+      "case": "quiet_only_move/reduced=false",
+      "events": [
+        {
+          "kind": "focus",
+          "point": [
+            695.0,
+            210.0
+          ],
+          "zoom": 1.0
+        },
+        {
+          "kind": "release"
+        }
+      ],
+      "focus_seconds": 0.0,
+      "interpolated_offset": [
+        5.52376113773789e-05,
+        -0.000150648033013567
+      ],
+      "phase": -1,
+      "player": [
+        695.0,
+        510.0
+      ],
+      "quiet_active": false,
+      "quiet_cooldown": 23.7833333333336,
+      "stage": "quiet_move_after_old_hold",
+      "target_offset": [
+        0.0,
+        0.0
+      ],
+      "target_zoom": 1.0,
+      "wait": 0.0
+    },
+    {
+      "camera_position": [
+        661.62109375,
+        367.517913818359
+      ],
+      "case": "prewarm_then_move/reduced=false",
+      "events": [
+        {
+          "kind": "focus",
+          "point": [
+            695.0,
+            210.0
+          ],
+          "zoom": 1.0
+        }
+      ],
+      "focus_seconds": 3.25,
+      "interpolated_offset": [
+        17.2210655212402,
+        -46.9665451049805
+      ],
+      "phase": -1,
+      "player": [
+        695.0,
+        510.0
+      ],
+      "quiet_active": true,
+      "quiet_cooldown": 0.0,
+      "stage": "quiet_holds_camera",
+      "target_offset": [
+        19.25,
+        -52.5
+      ],
+      "target_zoom": 1.0,
+      "wait": 0.0
+    },
+    {
+      "camera_position": [
+        661.720031738281,
+        367.248046875
+      ],
+      "case": "prewarm_then_move/reduced=false",
+      "events": [
+        {
+          "kind": "focus",
+          "point": [
+            695.0,
+            210.0
+          ],
+          "zoom": 1.0
+        }
+      ],
+      "focus_seconds": 0.0,
+      "interpolated_offset": [
+        17.3200187683105,
+        -47.2364158630371
+      ],
+      "phase": -1,
+      "player": [
+        695.0,
+        510.0
+      ],
+      "quiet_active": false,
+      "quiet_cooldown": 28.0,
+      "stage": "partial_prewarm",
+      "target_offset": [
+        19.25,
+        -52.5
+      ],
+      "target_zoom": 1.0,
+      "wait": 0.0166666666666667
+    },
+    {
+      "camera_position": [
+        661.814147949219,
+        366.991333007812
+      ],
+      "case": "prewarm_then_move/reduced=false",
+      "events": [
+        {
+          "kind": "focus",
+          "point": [
+            695.0,
+            210.0
+          ],
+          "zoom": 1.0
+        }
+      ],
+      "focus_seconds": 0.0,
+      "interpolated_offset": [
+        17.4141445159912,
+        -47.4931221008301
+      ],
+      "phase": -1,
+      "player": [
+        695.0,
+        510.0
+      ],
+      "quiet_active": false,
+      "quiet_cooldown": 27.9833333333333,
+      "stage": "prewarm_move",
+      "target_offset": [
+        19.25,
+        -52.5
+      ],
+      "target_zoom": 1.0,
+      "wait": 0.0
+    },
+    {
+      "camera_position": [
+        663.650024414062,
+        361.984497070312
+      ],
+      "case": "prewarm_then_move/reduced=false",
+      "events": [
+        {
+          "kind": "focus",
+          "point": [
+            695.0,
+            210.0
+          ],
+          "zoom": 1.0
+        }
+      ],
+      "focus_seconds": 0.0,
+      "interpolated_offset": [
+        19.2499809265137,
+        -52.4999618530273
+      ],
+      "phase": -1,
+      "player": [
+        695.0,
+        510.0
+      ],
+      "quiet_active": false,
+      "quiet_cooldown": 23.7833333333336,
+      "stage": "prewarm_move_after_old_hold",
+      "target_offset": [
+        19.25,
+        -52.5
+      ],
+      "target_zoom": 1.0,
+      "wait": 0.0
+    },
+    {
+      "camera_position": [
+        661.62109375,
+        367.517913818359
+      ],
+      "case": "prewarm_loses_actor_proximity/reduced=false",
+      "events": [
+        {
+          "kind": "focus",
+          "point": [
+            695.0,
+            210.0
+          ],
+          "zoom": 1.0
+        }
+      ],
+      "focus_seconds": 3.25,
+      "interpolated_offset": [
+        17.2210655212402,
+        -46.9665451049805
+      ],
+      "phase": -1,
+      "player": [
+        695.0,
+        510.0
+      ],
+      "quiet_active": true,
+      "quiet_cooldown": 0.0,
+      "stage": "quiet_holds_camera",
+      "target_offset": [
+        19.25,
+        -52.5
+      ],
+      "target_zoom": 1.0,
+      "wait": 0.0
+    },
+    {
+      "camera_position": [
+        661.720031738281,
+        367.248046875
+      ],
+      "case": "prewarm_loses_actor_proximity/reduced=false",
+      "events": [
+        {
+          "kind": "focus",
+          "point": [
+            695.0,
+            210.0
+          ],
+          "zoom": 1.0
+        }
+      ],
+      "focus_seconds": 0.0,
+      "interpolated_offset": [
+        17.3200187683105,
+        -47.2364158630371
+      ],
+      "phase": -1,
+      "player": [
+        695.0,
+        510.0
+      ],
+      "quiet_active": false,
+      "quiet_cooldown": 28.0,
+      "stage": "partial_prewarm",
+      "target_offset": [
+        19.25,
+        -52.5
+      ],
+      "target_zoom": 1.0,
+      "wait": 0.0166666666666667
+    },
+    {
+      "camera_position": [
+        661.814147949219,
+        366.991333007812
+      ],
+      "case": "prewarm_loses_actor_proximity/reduced=false",
+      "events": [
+        {
+          "kind": "focus",
+          "point": [
+            695.0,
+            210.0
+          ],
+          "zoom": 1.0
+        }
+      ],
+      "focus_seconds": 0.0,
+      "interpolated_offset": [
+        17.4141445159912,
+        -47.4931221008301
+      ],
+      "phase": -1,
+      "player": [
+        695.0,
+        510.0
+      ],
+      "quiet_active": false,
+      "quiet_cooldown": 27.9833333333333,
+      "stage": "prewarm_proximity_lost",
+      "target_offset": [
+        19.25,
+        -52.5
+      ],
+      "target_zoom": 1.0,
+      "wait": 0.0
+    },
+    {
+      "camera_position": [
+        663.650024414062,
+        361.984497070312
+      ],
+      "case": "prewarm_loses_actor_proximity/reduced=false",
+      "events": [
+        {
+          "kind": "focus",
+          "point": [
+            695.0,
+            210.0
+          ],
+          "zoom": 1.0
+        }
+      ],
+      "focus_seconds": 0.0,
+      "interpolated_offset": [
+        19.2499809265137,
+        -52.4999618530273
+      ],
+      "phase": -1,
+      "player": [
+        695.0,
+        510.0
+      ],
+      "quiet_active": false,
+      "quiet_cooldown": 20.7833333333337,
+      "stage": "proximity_lost_after_old_hold",
+      "target_offset": [
+        19.25,
+        -52.5
+      ],
+      "target_zoom": 1.0,
+      "wait": 0.0
+    },
+    {
+      "camera_position": [
+        661.62109375,
+        367.517913818359
+      ],
+      "case": "old_hold_expires_during_prewarm/reduced=false",
+      "events": [
+        {
+          "kind": "focus",
+          "point": [
+            695.0,
+            210.0
+          ],
+          "zoom": 1.0
+        }
+      ],
+      "focus_seconds": 3.25,
+      "interpolated_offset": [
+        17.2210655212402,
+        -46.9665451049805
+      ],
+      "phase": -1,
+      "player": [
+        695.0,
+        510.0
+      ],
+      "quiet_active": true,
+      "quiet_cooldown": 0.0,
+      "stage": "quiet_holds_camera",
+      "target_offset": [
+        19.25,
+        -52.5
+      ],
+      "target_zoom": 1.0,
+      "wait": 0.0
+    },
+    {
+      "camera_position": [
+        663.649719238281,
+        361.9853515625
+      ],
+      "case": "old_hold_expires_during_prewarm/reduced=false",
+      "events": [
+        {
+          "kind": "focus",
+          "point": [
+            695.0,
+            210.0
+          ],
+          "zoom": 1.0
+        }
+      ],
+      "focus_seconds": 0.0,
+      "interpolated_offset": [
+        19.2496795654297,
+        -52.4991226196289
+      ],
+      "phase": -1,
+      "player": [
+        695.0,
+        510.0
+      ],
+      "quiet_active": false,
+      "quiet_cooldown": 28.0,
+      "stage": "partial_prewarm",
+      "target_offset": [
+        19.25,
+        -52.5
+      ],
+      "target_zoom": 1.0,
+      "wait": 0.0166666666666667
+    },
+    {
+      "camera_position": [
+        663.649963378906,
+        361.984619140625
+      ],
+      "case": "old_hold_expires_during_prewarm/reduced=false",
+      "events": [
+        {
+          "kind": "focus",
+          "point": [
+            695.0,
+            210.0
+          ],
+          "zoom": 1.0
+        }
+      ],
+      "focus_seconds": 0.0,
+      "interpolated_offset": [
+        19.2499465942383,
+        -52.4998550415039
+      ],
+      "phase": -1,
+      "player": [
+        695.0,
+        510.0
+      ],
+      "quiet_active": false,
+      "quiet_cooldown": 27.4,
+      "stage": "old_hold_expiry",
+      "target_offset": [
+        19.25,
+        -52.5
+      ],
+      "target_zoom": 1.0,
+      "wait": 0.616666666666667
+    },
+    {
+      "camera_position": [
+        663.649963378906,
+        361.984588623047
+      ],
+      "case": "old_hold_expires_during_prewarm/reduced=false",
+      "events": [
+        {
+          "kind": "focus",
+          "point": [
+            695.0,
+            210.0
+          ],
+          "zoom": 1.0
+        }
+      ],
+      "focus_seconds": 0.0,
+      "interpolated_offset": [
+        19.2499485015869,
+        -52.4998626708984
+      ],
+      "phase": -1,
+      "player": [
+        695.0,
+        510.0
+      ],
+      "quiet_active": false,
+      "quiet_cooldown": 27.3833333333334,
+      "stage": "expired_prewarm_move",
+      "target_offset": [
+        19.25,
+        -52.5
+      ],
+      "target_zoom": 1.0,
+      "wait": 0.0
+    },
+    {
+      "camera_position": [
+        663.650024414062,
+        361.984497070312
+      ],
+      "case": "old_hold_expires_during_prewarm/reduced=false",
+      "events": [
+        {
+          "kind": "focus",
+          "point": [
+            695.0,
+            210.0
+          ],
+          "zoom": 1.0
+        }
+      ],
+      "focus_seconds": 0.0,
+      "interpolated_offset": [
+        19.2499809265137,
+        -52.4999618530273
+      ],
+      "phase": -1,
+      "player": [
+        695.0,
+        510.0
+      ],
+      "quiet_active": false,
+      "quiet_cooldown": 23.1833333333336,
+      "stage": "expired_prewarm_move_after_old_hold",
+      "target_offset": [
+        19.25,
+        -52.5
+      ],
+      "target_zoom": 1.0,
+      "wait": 0.0
+    },
+    {
+      "camera_position": [
+        661.62109375,
+        367.517913818359
+      ],
+      "case": "actual_takeover_then_move/reduced=false",
+      "events": [
+        {
+          "kind": "focus",
+          "point": [
+            695.0,
+            210.0
+          ],
+          "zoom": 1.0
+        }
+      ],
+      "focus_seconds": 3.25,
+      "interpolated_offset": [
+        17.2210655212402,
+        -46.9665451049805
+      ],
+      "phase": -1,
+      "player": [
+        695.0,
+        510.0
+      ],
+      "quiet_active": true,
+      "quiet_cooldown": 0.0,
+      "stage": "quiet_holds_camera",
+      "target_offset": [
+        19.25,
+        -52.5
+      ],
+      "target_zoom": 1.0,
+      "wait": 0.0
+    },
+    {
+      "camera_position": [
+        661.720031738281,
+        367.248046875
+      ],
+      "case": "actual_takeover_then_move/reduced=false",
+      "events": [
+        {
+          "kind": "focus",
+          "point": [
+            695.0,
+            210.0
+          ],
+          "zoom": 1.0
+        }
+      ],
+      "focus_seconds": 0.0,
+      "interpolated_offset": [
+        17.3200187683105,
+        -47.2364158630371
+      ],
+      "phase": -1,
+      "player": [
+        695.0,
+        510.0
+      ],
+      "quiet_active": false,
+      "quiet_cooldown": 28.0,
+      "stage": "partial_prewarm",
+      "target_offset": [
+        19.25,
+        -52.5
+      ],
+      "target_zoom": 1.0,
+      "wait": 0.0166666666666667
+    },
+    {
+      "camera_position": [
+        663.436584472656,
+        366.806793212891
+      ],
+      "case": "actual_takeover_then_move/reduced=false",
+      "events": [
+        {
+          "kind": "focus",
+          "point": [
+            695.0,
+            210.0
+          ],
+          "zoom": 1.0
+        },
+        {
+          "kind": "focus",
+          "point": [
+            682.5,
+            492.5
+          ],
+          "zoom": 1.0
+        }
+      ],
+      "focus_seconds": 0.0,
+      "interpolated_offset": [
+        19.0365753173828,
+        -47.6776657104492
+      ],
+      "phase": 0,
+      "player": [
+        695.0,
+        510.0
+      ],
+      "quiet_active": false,
+      "quiet_cooldown": 24.5000000000002,
+      "stage": "actual_takeover",
+      "target_offset": [
+        14.875,
+        46.375
+      ],
+      "target_zoom": 1.0,
+      "wait": 3.51666666666666
+    },
+    {
+      "camera_position": [
+        662.508178710938,
+        369.132080078125
+      ],
+      "case": "actual_takeover_then_move/reduced=false",
+      "events": [
+        {
+          "kind": "focus",
+          "point": [
+            695.0,
+            210.0
+          ],
+          "zoom": 1.0
+        },
+        {
+          "kind": "focus",
+          "point": [
+            682.5,
+            492.5
+          ],
+          "zoom": 1.0
+        },
+        {
+          "kind": "release"
+        }
+      ],
+      "focus_seconds": 0.0,
+      "interpolated_offset": [
+        18.1081504821777,
+        -45.3523979187012
+      ],
+      "phase": -1,
+      "player": [
+        695.0,
+        510.0
+      ],
+      "quiet_active": false,
+      "quiet_cooldown": 24.4833333333335,
+      "stage": "actual_takeover_move",
+      "target_offset": [
+        0.0,
+        0.0
+      ],
+      "target_zoom": 1.0,
+      "wait": 0.0
+    },
+    {
+      "camera_position": [
+        644.400085449219,
+        414.484313964844
+      ],
+      "case": "actual_takeover_then_move/reduced=false",
+      "events": [
+        {
+          "kind": "focus",
+          "point": [
+            695.0,
+            210.0
+          ],
+          "zoom": 1.0
+        },
+        {
+          "kind": "focus",
+          "point": [
+            682.5,
+            492.5
+          ],
+          "zoom": 1.0
+        },
+        {
+          "kind": "release"
+        }
+      ],
+      "focus_seconds": 0.0,
+      "interpolated_offset": [
+        6.1060993175488e-05,
+        -0.000152928885654546
+      ],
+      "phase": -1,
+      "player": [
+        695.0,
+        510.0
+      ],
+      "quiet_active": false,
+      "quiet_cooldown": 20.2833333333338,
+      "stage": "actual_takeover_move_after_old_hold",
+      "target_offset": [
+        0.0,
+        0.0
+      ],
+      "target_zoom": 1.0,
+      "wait": 0.0
+    },
+    {
+      "camera_position": [
+        663.647644042969,
+        361.990936279297
+      ],
+      "case": "quiet_only_move/reduced=true",
+      "events": [
+        {
+          "kind": "focus",
+          "point": [
+            695.0,
+            210.0
+          ],
+          "zoom": 1.0
+        }
+      ],
+      "focus_seconds": 3.25,
+      "interpolated_offset": [
+        19.2476253509521,
+        -52.4935188293457
+      ],
+      "phase": -1,
+      "player": [
+        695.0,
+        510.0
+      ],
+      "quiet_active": true,
+      "quiet_cooldown": 0.0,
+      "stage": "quiet_holds_camera",
+      "target_offset": [
+        19.25,
+        -52.5
+      ],
+      "target_zoom": 1.0,
+      "wait": 0.0
+    },
+    {
+      "camera_position": [
+        660.158630371094,
+        371.506408691406
+      ],
+      "case": "quiet_only_move/reduced=true",
+      "events": [
+        {
+          "kind": "focus",
+          "point": [
+            695.0,
+            210.0
+          ],
+          "zoom": 1.0
+        },
+        {
+          "kind": "release"
+        }
+      ],
+      "focus_seconds": 0.0,
+      "interpolated_offset": [
+        15.7586231231689,
+        -42.9780578613281
+      ],
+      "phase": -1,
+      "player": [
+        695.0,
+        510.0
+      ],
+      "quiet_active": false,
+      "quiet_cooldown": 27.9833333333333,
+      "stage": "quiet_move",
+      "target_offset": [
+        0.0,
+        0.0
+      ],
+      "target_zoom": 1.0,
+      "wait": 0.0
+    },
+    {
+      "camera_position": [
+        644.400024414062,
+        414.484466552734
+      ],
+      "case": "quiet_only_move/reduced=true",
+      "events": [
+        {
+          "kind": "focus",
+          "point": [
+            695.0,
+            210.0
+          ],
+          "zoom": 1.0
+        },
+        {
+          "kind": "release"
+        }
+      ],
+      "focus_seconds": 0.0,
+      "interpolated_offset": [
+        2.03740199037e-21,
+        -5.55655345308e-21
+      ],
+      "phase": -1,
+      "player": [
+        695.0,
+        510.0
+      ],
+      "quiet_active": false,
+      "quiet_cooldown": 23.7833333333336,
+      "stage": "quiet_move_after_old_hold",
+      "target_offset": [
+        0.0,
+        0.0
+      ],
+      "target_zoom": 1.0,
+      "wait": 0.0
+    },
+    {
+      "camera_position": [
+        663.647644042969,
+        361.990936279297
+      ],
+      "case": "prewarm_then_move/reduced=true",
+      "events": [
+        {
+          "kind": "focus",
+          "point": [
+            695.0,
+            210.0
+          ],
+          "zoom": 1.0
+        }
+      ],
+      "focus_seconds": 3.25,
+      "interpolated_offset": [
+        19.2476253509521,
+        -52.4935188293457
+      ],
+      "phase": -1,
+      "player": [
+        695.0,
+        510.0
+      ],
+      "quiet_active": true,
+      "quiet_cooldown": 0.0,
+      "stage": "quiet_holds_camera",
+      "target_offset": [
+        19.25,
+        -52.5
+      ],
+      "target_zoom": 1.0,
+      "wait": 0.0
+    },
+    {
+      "camera_position": [
+        663.648071289062,
+        361.989776611328
+      ],
+      "case": "prewarm_then_move/reduced=true",
+      "events": [
+        {
+          "kind": "focus",
+          "point": [
+            695.0,
+            210.0
+          ],
+          "zoom": 1.0
+        }
+      ],
+      "focus_seconds": 0.0,
+      "interpolated_offset": [
+        19.2480564117432,
+        -52.4946937561035
+      ],
+      "phase": -1,
+      "player": [
+        695.0,
+        510.0
+      ],
+      "quiet_active": false,
+      "quiet_cooldown": 28.0,
+      "stage": "partial_prewarm",
+      "target_offset": [
+        19.25,
+        -52.5
+      ],
+      "target_zoom": 1.0,
+      "wait": 0.0166666666666667
+    },
+    {
+      "camera_position": [
+        663.6484375,
+        361.988800048828
+      ],
+      "case": "prewarm_then_move/reduced=true",
+      "events": [
+        {
+          "kind": "focus",
+          "point": [
+            695.0,
+            210.0
+          ],
+          "zoom": 1.0
+        }
+      ],
+      "focus_seconds": 0.0,
+      "interpolated_offset": [
+        19.2484092712402,
+        -52.4956550598145
+      ],
+      "phase": -1,
+      "player": [
+        695.0,
+        510.0
+      ],
+      "quiet_active": false,
+      "quiet_cooldown": 27.9833333333333,
+      "stage": "prewarm_move",
+      "target_offset": [
+        19.25,
+        -52.5
+      ],
+      "target_zoom": 1.0,
+      "wait": 0.0
+    },
+    {
+      "camera_position": [
+        663.650024414062,
+        361.984466552734
+      ],
+      "case": "prewarm_then_move/reduced=true",
+      "events": [
+        {
+          "kind": "focus",
+          "point": [
+            695.0,
+            210.0
+          ],
+          "zoom": 1.0
+        }
+      ],
+      "focus_seconds": 0.0,
+      "interpolated_offset": [
+        19.2499961853027,
+        -52.4999923706055
+      ],
+      "phase": -1,
+      "player": [
+        695.0,
+        510.0
+      ],
+      "quiet_active": false,
+      "quiet_cooldown": 23.7833333333336,
+      "stage": "prewarm_move_after_old_hold",
+      "target_offset": [
+        19.25,
+        -52.5
+      ],
+      "target_zoom": 1.0,
+      "wait": 0.0
+    },
+    {
+      "camera_position": [
+        663.647644042969,
+        361.990936279297
+      ],
+      "case": "prewarm_loses_actor_proximity/reduced=true",
+      "events": [
+        {
+          "kind": "focus",
+          "point": [
+            695.0,
+            210.0
+          ],
+          "zoom": 1.0
+        }
+      ],
+      "focus_seconds": 3.25,
+      "interpolated_offset": [
+        19.2476253509521,
+        -52.4935188293457
+      ],
+      "phase": -1,
+      "player": [
+        695.0,
+        510.0
+      ],
+      "quiet_active": true,
+      "quiet_cooldown": 0.0,
+      "stage": "quiet_holds_camera",
+      "target_offset": [
+        19.25,
+        -52.5
+      ],
+      "target_zoom": 1.0,
+      "wait": 0.0
+    },
+    {
+      "camera_position": [
+        663.648071289062,
+        361.989776611328
+      ],
+      "case": "prewarm_loses_actor_proximity/reduced=true",
+      "events": [
+        {
+          "kind": "focus",
+          "point": [
+            695.0,
+            210.0
+          ],
+          "zoom": 1.0
+        }
+      ],
+      "focus_seconds": 0.0,
+      "interpolated_offset": [
+        19.2480564117432,
+        -52.4946937561035
+      ],
+      "phase": -1,
+      "player": [
+        695.0,
+        510.0
+      ],
+      "quiet_active": false,
+      "quiet_cooldown": 28.0,
+      "stage": "partial_prewarm",
+      "target_offset": [
+        19.25,
+        -52.5
+      ],
+      "target_zoom": 1.0,
+      "wait": 0.0166666666666667
+    },
+    {
+      "camera_position": [
+        663.6484375,
+        361.988800048828
+      ],
+      "case": "prewarm_loses_actor_proximity/reduced=true",
+      "events": [
+        {
+          "kind": "focus",
+          "point": [
+            695.0,
+            210.0
+          ],
+          "zoom": 1.0
+        }
+      ],
+      "focus_seconds": 0.0,
+      "interpolated_offset": [
+        19.2484092712402,
+        -52.4956550598145
+      ],
+      "phase": -1,
+      "player": [
+        695.0,
+        510.0
+      ],
+      "quiet_active": false,
+      "quiet_cooldown": 27.9833333333333,
+      "stage": "prewarm_proximity_lost",
+      "target_offset": [
+        19.25,
+        -52.5
+      ],
+      "target_zoom": 1.0,
+      "wait": 0.0
+    },
+    {
+      "camera_position": [
+        663.650024414062,
+        361.984466552734
+      ],
+      "case": "prewarm_loses_actor_proximity/reduced=true",
+      "events": [
+        {
+          "kind": "focus",
+          "point": [
+            695.0,
+            210.0
+          ],
+          "zoom": 1.0
+        }
+      ],
+      "focus_seconds": 0.0,
+      "interpolated_offset": [
+        19.2499961853027,
+        -52.4999923706055
+      ],
+      "phase": -1,
+      "player": [
+        695.0,
+        510.0
+      ],
+      "quiet_active": false,
+      "quiet_cooldown": 20.7833333333337,
+      "stage": "proximity_lost_after_old_hold",
+      "target_offset": [
+        19.25,
+        -52.5
+      ],
+      "target_zoom": 1.0,
+      "wait": 0.0
+    },
+    {
+      "camera_position": [
+        663.647644042969,
+        361.990936279297
+      ],
+      "case": "old_hold_expires_during_prewarm/reduced=true",
+      "events": [
+        {
+          "kind": "focus",
+          "point": [
+            695.0,
+            210.0
+          ],
+          "zoom": 1.0
+        }
+      ],
+      "focus_seconds": 3.25,
+      "interpolated_offset": [
+        19.2476253509521,
+        -52.4935188293457
+      ],
+      "phase": -1,
+      "player": [
+        695.0,
+        510.0
+      ],
+      "quiet_active": true,
+      "quiet_cooldown": 0.0,
+      "stage": "quiet_holds_camera",
+      "target_offset": [
+        19.25,
+        -52.5
+      ],
+      "target_zoom": 1.0,
+      "wait": 0.0
+    },
+    {
+      "camera_position": [
+        663.650024414062,
+        361.984466552734
+      ],
+      "case": "old_hold_expires_during_prewarm/reduced=true",
+      "events": [
+        {
+          "kind": "focus",
+          "point": [
+            695.0,
+            210.0
+          ],
+          "zoom": 1.0
+        }
+      ],
+      "focus_seconds": 0.0,
+      "interpolated_offset": [
+        19.2499961853027,
+        -52.4999923706055
+      ],
+      "phase": -1,
+      "player": [
+        695.0,
+        510.0
+      ],
+      "quiet_active": false,
+      "quiet_cooldown": 28.0,
+      "stage": "partial_prewarm",
+      "target_offset": [
+        19.25,
+        -52.5
+      ],
+      "target_zoom": 1.0,
+      "wait": 0.0166666666666667
+    },
+    {
+      "camera_position": [
+        663.650024414062,
+        361.984466552734
+      ],
+      "case": "old_hold_expires_during_prewarm/reduced=true",
+      "events": [
+        {
+          "kind": "focus",
+          "point": [
+            695.0,
+            210.0
+          ],
+          "zoom": 1.0
+        }
+      ],
+      "focus_seconds": 0.0,
+      "interpolated_offset": [
+        19.2499961853027,
+        -52.4999923706055
+      ],
+      "phase": -1,
+      "player": [
+        695.0,
+        510.0
+      ],
+      "quiet_active": false,
+      "quiet_cooldown": 27.4,
+      "stage": "old_hold_expiry",
+      "target_offset": [
+        19.25,
+        -52.5
+      ],
+      "target_zoom": 1.0,
+      "wait": 0.616666666666667
+    },
+    {
+      "camera_position": [
+        663.650024414062,
+        361.984466552734
+      ],
+      "case": "old_hold_expires_during_prewarm/reduced=true",
+      "events": [
+        {
+          "kind": "focus",
+          "point": [
+            695.0,
+            210.0
+          ],
+          "zoom": 1.0
+        }
+      ],
+      "focus_seconds": 0.0,
+      "interpolated_offset": [
+        19.2499961853027,
+        -52.4999923706055
+      ],
+      "phase": -1,
+      "player": [
+        695.0,
+        510.0
+      ],
+      "quiet_active": false,
+      "quiet_cooldown": 27.3833333333334,
+      "stage": "expired_prewarm_move",
+      "target_offset": [
+        19.25,
+        -52.5
+      ],
+      "target_zoom": 1.0,
+      "wait": 0.0
+    },
+    {
+      "camera_position": [
+        663.650024414062,
+        361.984466552734
+      ],
+      "case": "old_hold_expires_during_prewarm/reduced=true",
+      "events": [
+        {
+          "kind": "focus",
+          "point": [
+            695.0,
+            210.0
+          ],
+          "zoom": 1.0
+        }
+      ],
+      "focus_seconds": 0.0,
+      "interpolated_offset": [
+        19.2499961853027,
+        -52.4999923706055
+      ],
+      "phase": -1,
+      "player": [
+        695.0,
+        510.0
+      ],
+      "quiet_active": false,
+      "quiet_cooldown": 23.1833333333336,
+      "stage": "expired_prewarm_move_after_old_hold",
+      "target_offset": [
+        19.25,
+        -52.5
+      ],
+      "target_zoom": 1.0,
+      "wait": 0.0
+    },
+    {
+      "camera_position": [
+        663.647644042969,
+        361.990936279297
+      ],
+      "case": "actual_takeover_then_move/reduced=true",
+      "events": [
+        {
+          "kind": "focus",
+          "point": [
+            695.0,
+            210.0
+          ],
+          "zoom": 1.0
+        }
+      ],
+      "focus_seconds": 3.25,
+      "interpolated_offset": [
+        19.2476253509521,
+        -52.4935188293457
+      ],
+      "phase": -1,
+      "player": [
+        695.0,
+        510.0
+      ],
+      "quiet_active": true,
+      "quiet_cooldown": 0.0,
+      "stage": "quiet_holds_camera",
+      "target_offset": [
+        19.25,
+        -52.5
+      ],
+      "target_zoom": 1.0,
+      "wait": 0.0
+    },
+    {
+      "camera_position": [
+        663.648071289062,
+        361.989776611328
+      ],
+      "case": "actual_takeover_then_move/reduced=true",
+      "events": [
+        {
+          "kind": "focus",
+          "point": [
+            695.0,
+            210.0
+          ],
+          "zoom": 1.0
+        }
+      ],
+      "focus_seconds": 0.0,
+      "interpolated_offset": [
+        19.2480564117432,
+        -52.4946937561035
+      ],
+      "phase": -1,
+      "player": [
+        695.0,
+        510.0
+      ],
+      "quiet_active": false,
+      "quiet_cooldown": 28.0,
+      "stage": "partial_prewarm",
+      "target_offset": [
+        19.25,
+        -52.5
+      ],
+      "target_zoom": 1.0,
+      "wait": 0.0166666666666667
+    },
+    {
+      "camera_position": [
+        662.856994628906,
+        379.907470703125
+      ],
+      "case": "actual_takeover_then_move/reduced=true",
+      "events": [
+        {
+          "kind": "focus",
+          "point": [
+            695.0,
+            210.0
+          ],
+          "zoom": 1.0
+        },
+        {
+          "kind": "focus",
+          "point": [
+            682.5,
+            492.5
+          ],
+          "zoom": 1.0
+        }
+      ],
+      "focus_seconds": 0.0,
+      "interpolated_offset": [
+        18.4569435119629,
+        -34.5769958496094
+      ],
+      "phase": 0,
+      "player": [
+        695.0,
+        510.0
+      ],
+      "quiet_active": false,
+      "quiet_cooldown": 24.5000000000002,
+      "stage": "actual_takeover",
+      "target_offset": [
+        14.875,
+        46.375
+      ],
+      "target_zoom": 1.0,
+      "wait": 3.51666666666666
+    },
+    {
+      "camera_position": [
+        659.511291503906,
+        386.175201416016
+      ],
+      "case": "actual_takeover_then_move/reduced=true",
+      "events": [
+        {
+          "kind": "focus",
+          "point": [
+            695.0,
+            210.0
+          ],
+          "zoom": 1.0
+        },
+        {
+          "kind": "focus",
+          "point": [
+            682.5,
+            492.5
+          ],
+          "zoom": 1.0
+        },
+        {
+          "kind": "release"
+        }
+      ],
+      "focus_seconds": 0.0,
+      "interpolated_offset": [
+        15.1112670898438,
+        -28.3092498779297
+      ],
+      "phase": -1,
+      "player": [
+        695.0,
+        510.0
+      ],
+      "quiet_active": false,
+      "quiet_cooldown": 24.4833333333335,
+      "stage": "actual_takeover_move",
+      "target_offset": [
+        0.0,
+        0.0
+      ],
+      "target_zoom": 1.0,
+      "wait": 0.0
+    },
+    {
+      "camera_position": [
+        644.400024414062,
+        414.484466552734
+      ],
+      "case": "actual_takeover_then_move/reduced=true",
+      "events": [
+        {
+          "kind": "focus",
+          "point": [
+            695.0,
+            210.0
+          ],
+          "zoom": 1.0
+        },
+        {
+          "kind": "focus",
+          "point": [
+            682.5,
+            492.5
+          ],
+          "zoom": 1.0
+        },
+        {
+          "kind": "release"
+        }
+      ],
+      "focus_seconds": 0.0,
+      "interpolated_offset": [
+        1.95370589305e-21,
+        -3.66005004783e-21
+      ],
+      "phase": -1,
+      "player": [
+        695.0,
+        510.0
+      ],
+      "quiet_active": false,
+      "quiet_cooldown": 20.2833333333338,
+      "stage": "actual_takeover_move_after_old_hold",
+      "target_offset": [
+        0.0,
+        0.0
+      ],
+      "target_zoom": 1.0,
+      "wait": 0.0
+    }
+  ],
+  "script_errors": [],
+  "before_fix_only": true,
+  "production_edited": false,
+  "browser_started": false
+}

@@ -1,0 +1,23 @@
+{
+  "driver_exit_code": 0,
+  "executor_session_id": 82340,
+  "browser_closed_utc": "2026-10-05T23:53:29Z",
+  "context_closed": [
+    {
+      "case_closed": "portrait",
+      "utc": "2026-10-05T23:53:14Z",
+      "monotonic": 375680.005706967
+    }
+  ],
+  "memory_observations_bytes": {
+    "before": 15785652224,
+    "during_sample_1": 17028358144,
+    "during_sample_2": 17043763200,
+    "after": 15681351680
+  },
+  "memory_observation_limit": "Samples only, not continuously measured peak",
+  "browser_window_released_to_root": true,
+  "png_originals": 6,
+  "extra_viewport_executed": false,
+  "business_state_injection": false
+}

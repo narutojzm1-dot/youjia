@@ -1187,11 +1187,15 @@ func _make_cloud_sprite(node_name: String) -> Sprite2D:
 ## REQ-012 切片 C：安静停留后轻微抬头看天；走动立刻取消；无新提示/道具/相册。
 func _tick_quiet_sky_look(delta: float, move: Vector2) -> void:
 	_quiet_sky_cooldown = maxf(0.0, _quiet_sky_cooldown - delta)
-	# 鹅马预热或演出中：只让出镜头，绝不 emit release 打断 Codex 演出。
-	if _goose_mount_phase >= 0 or _goose_mount_wait > 0.0:
+	# 只有演出已发出新 focus 才交出镜头，避免 release 打断实际接管。
+	if _goose_mount_phase >= 0:
 		_quiet_sky_still = 0.0
 		if _quiet_sky_active:
 			_yield_quiet_sky_look_to_encounter()
+		return
+	# 预热尚未持有镜头：不启动新静观，已有 hold 仍可取消或自然释放。
+	if _goose_mount_wait > 0.0:
+		_quiet_sky_still = 0.0
 		return
 	var player_busy := (
 		not input_enabled

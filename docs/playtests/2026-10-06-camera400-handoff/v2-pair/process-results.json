@@ -1,0 +1,61 @@
+[
+  {
+    "step": "red-v2",
+    "source": "96612f759eb51c50eebe2f2a4eaf14c6b8ade1e4",
+    "args": [
+      "timeout",
+      "180",
+      "/tmp/youjia-h2-bridge-bin/Godot_v4.7.2-stable_linux.x86_64",
+      "--headless",
+      "--path",
+      ".",
+      "--script",
+      "res://test/camera400_handoff_suite.gd"
+    ],
+    "started_at": "2026-10-05T23:38:16.365608+00:00",
+    "ended_at": "2026-10-05T23:38:25.125025+00:00",
+    "actual_exit": 1,
+    "expected_exit": 1,
+    "sha256": "f305043b11f95e55b5cb5eeaac17bec15cca235b64cc98386a3a76fe145aaa8e",
+    "log": "/tmp/camera400-evidence/v2-pair/red-v2.log",
+    "completion_lines": [
+      "[camera400-handoff] FAIL: 202 checks [\"prewarm_then_move/reduced=false: prewarm alone preserves the active sky focus and its remaining hold\",\"prewarm_then_move/reduced=false: interruption releases the previous focus target\",\"prewarm_then_move/reduced=false: camera consumer receives a release event\",\"prewarm_then_move/reduced=false: continued movement settles the real interpolated offset to zero\",\"prewarm_loses_actor_proximity/reduced=false: prewarm alone preserves the active sky focus and its remaining hold\",\"prewarm_loses_actor_proximity/reduced=false: lost proximity leaves the existing quiet hold intact without an extra snap\",\"prewarm_loses_actor_proximity/reduced=false: quiet hold still expires naturally after prewarm loses eligibility\",\"prewarm_loses_actor_proximity/reduced=false: natural expiry reaches the real Main release consumer\",\"prewarm_loses_actor_proximity/reduced=false: camera finishes returning after natural expiry\",\"old_hold_expires_during_prewarm/reduced=false: prewarm alone preserves the active sky focus and its remaining hold\",\"old_hold_expires_during_prewarm/reduced=false: natural expiry releases the old sky target during prewarm\",\"old_hold_expires_during_prewarm/reduced=false: interruption releases the previous focus target\",\"old_hold_expires_during_prewarm/reduced=false: camera consumer receives a release event\",\"old_hold_expires_during_prewarm/reduced=false: continued movement settles the real interpolated offset to zero\",\"actual_takeover_then_move/reduced=false: prewarm alone preserves the active sky focus and its remaining hold\",\"live_quiet_same_tick_takeover/reduced=false: prewarm alone preserves the active sky focus and its remaining hold\",\"live_quiet_same_tick_takeover/reduced=false: quiet really still owns a live hold immediately before actual takeover\",\"prewarm_then_move/reduced=true: prewarm alone preserves the active sky focus and its remaining hold\",\"prewarm_then_move/reduced=true: interruption releases the previous focus target\",\"prewarm_then_move/reduced=true: camera consumer receives a release event\",\"prewarm_then_move/reduced=true: continued movement settles the real interpolated offset to zero\",\"prewarm_loses_actor_proximity/reduced=true: prewarm alone preserves the active sky focus and its remaining hold\",\"prewarm_loses_actor_proximity/reduced=true: lost proximity leaves the existing quiet hold intact without an extra snap\",\"prewarm_loses_actor_proximity/reduced=true: quiet hold still expires naturally after prewarm loses eligibility\",\"prewarm_loses_actor_proximity/reduced=true: natural expiry reaches the real Main release consumer\",\"prewarm_loses_actor_proximity/reduced=true: camera finishes returning after natural expiry\",\"old_hold_expires_during_prewarm/reduced=true: prewarm alone preserves the active sky focus and its remaining hold\",\"old_hold_expires_during_prewarm/reduced=true: natural expiry releases the old sky target during prewarm\",\"old_hold_expires_during_prewarm/reduced=true: interruption releases the previous focus target\",\"old_hold_expires_during_prewarm/reduced=true: camera consumer receives a release event\",\"old_hold_expires_during_prewarm/reduced=true: continued movement settles the real interpolated offset to zero\",\"actual_takeover_then_move/reduced=true: prewarm alone preserves the active sky focus and its remaining hold\",\"live_quiet_same_tick_takeover/reduced=true: prewarm alone preserves the active sky focus and its remaining hold\",\"live_quiet_same_tick_takeover/reduced=true: quiet really still owns a live hold immediately before actual takeover\"]"
+    ]
+  },
+  {
+    "step": "green-v2",
+    "source": "95b11e8255ee1c9532b6428a0b2914574dec6e97",
+    "args": [
+      "bash",
+      "-c",
+      "source tools/lib/verified_godot.sh; run_verified_godot_suite /tmp/camera400-evidence/v2-pair/green-engine.log test/camera400_handoff_suite.gd --headless --path ."
+    ],
+    "started_at": "2026-10-05T23:38:59.797750+00:00",
+    "ended_at": "2026-10-05T23:39:08.664771+00:00",
+    "actual_exit": 0,
+    "expected_exit": 0,
+    "sha256": "25becb99b1a508c8f8e86907cb7c91f064364e60c246887df3548bdbcd2663f1",
+    "log": "/tmp/camera400-evidence/v2-pair/green-v2.log",
+    "completion_lines": [
+      "[camera400-handoff] PASS: 202 checks []"
+    ]
+  },
+  {
+    "step": "gate-contract-v2",
+    "source": "95b11e8255ee1c9532b6428a0b2914574dec6e97",
+    "args": [
+      "bash",
+      "test/godot_gate_test.sh"
+    ],
+    "started_at": "2026-10-05T23:39:08.667631+00:00",
+    "ended_at": "2026-10-05T23:39:09.439605+00:00",
+    "actual_exit": 0,
+    "expected_exit": 0,
+    "sha256": "08c4ab59578c7243c538e9c6ba2842b9e813010f9ed53609f584397db66d8283",
+    "log": "/tmp/camera400-evidence/v2-pair/gate-contract-v2.log",
+    "completion_lines": [
+      "CAMERA400 COMPLETION CONTRACT PASS 14",
+      "GODOT GATE CONTRACT PASS 64"
+    ]
+  }
+]

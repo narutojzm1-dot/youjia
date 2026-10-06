@@ -1,0 +1,445 @@
+{
+  "method": "Compare actual recorded Camera2D.position with quiet-only restoration control in the same reduced-motion setting. Equal observed player positions avoid confusing ordinary follow with focus residual. This is not rendered canvas/screenshot evidence.",
+  "records": [
+    {
+      "phase": "before",
+      "case": "quiet_only_move/reduced=false",
+      "stage": "quiet_move_after_old_hold",
+      "target": [
+        0.0,
+        0.0
+      ],
+      "interpolated": [
+        5.52376113773789e-05,
+        -0.000150648033013567
+      ],
+      "player_delta_from_quiet_control": [
+        0.0,
+        0.0
+      ],
+      "camera_delta_from_quiet_control": [
+        0.0,
+        0.0
+      ],
+      "camera_delta_length": 0.0
+    },
+    {
+      "phase": "before",
+      "case": "prewarm_then_move/reduced=false",
+      "stage": "prewarm_move_after_old_hold",
+      "target": [
+        19.25,
+        -52.5
+      ],
+      "interpolated": [
+        19.2499809265137,
+        -52.4999618530273
+      ],
+      "player_delta_from_quiet_control": [
+        0.0,
+        0.0
+      ],
+      "camera_delta_from_quiet_control": [
+        19.249938964843068,
+        -52.49981689453199
+      ],
+      "camera_delta_length": 55.917715655323136
+    },
+    {
+      "phase": "before",
+      "case": "prewarm_loses_actor_proximity/reduced=false",
+      "stage": "proximity_lost_after_old_hold",
+      "target": [
+        19.25,
+        -52.5
+      ],
+      "interpolated": [
+        19.2499809265137,
+        -52.4999618530273
+      ],
+      "player_delta_from_quiet_control": [
+        0.0,
+        0.0
+      ],
+      "camera_delta_from_quiet_control": [
+        19.249938964843068,
+        -52.49981689453199
+      ],
+      "camera_delta_length": 55.917715655323136
+    },
+    {
+      "phase": "before",
+      "case": "old_hold_expires_during_prewarm/reduced=false",
+      "stage": "expired_prewarm_move_after_old_hold",
+      "target": [
+        19.25,
+        -52.5
+      ],
+      "interpolated": [
+        19.2499809265137,
+        -52.4999618530273
+      ],
+      "player_delta_from_quiet_control": [
+        0.0,
+        0.0
+      ],
+      "camera_delta_from_quiet_control": [
+        19.249938964843068,
+        -52.49981689453199
+      ],
+      "camera_delta_length": 55.917715655323136
+    },
+    {
+      "phase": "before",
+      "case": "actual_takeover_then_move/reduced=false",
+      "stage": "actual_takeover_move_after_old_hold",
+      "target": [
+        0.0,
+        0.0
+      ],
+      "interpolated": [
+        6.1060993175488e-05,
+        -0.000152928885654546
+      ],
+      "player_delta_from_quiet_control": [
+        0.0,
+        0.0
+      ],
+      "camera_delta_from_quiet_control": [
+        0.0,
+        0.0
+      ],
+      "camera_delta_length": 0.0
+    },
+    {
+      "phase": "before",
+      "case": "quiet_only_move/reduced=true",
+      "stage": "quiet_move_after_old_hold",
+      "target": [
+        0.0,
+        0.0
+      ],
+      "interpolated": [
+        2.03740199037e-21,
+        -5.55655345308e-21
+      ],
+      "player_delta_from_quiet_control": [
+        0.0,
+        0.0
+      ],
+      "camera_delta_from_quiet_control": [
+        0.0,
+        0.0
+      ],
+      "camera_delta_length": 0.0
+    },
+    {
+      "phase": "before",
+      "case": "prewarm_then_move/reduced=true",
+      "stage": "prewarm_move_after_old_hold",
+      "target": [
+        19.25,
+        -52.5
+      ],
+      "interpolated": [
+        19.2499961853027,
+        -52.4999923706055
+      ],
+      "player_delta_from_quiet_control": [
+        0.0,
+        0.0
+      ],
+      "camera_delta_from_quiet_control": [
+        19.25,
+        -52.5
+      ],
+      "camera_delta_length": 55.9179085803466
+    },
+    {
+      "phase": "before",
+      "case": "prewarm_loses_actor_proximity/reduced=true",
+      "stage": "proximity_lost_after_old_hold",
+      "target": [
+        19.25,
+        -52.5
+      ],
+      "interpolated": [
+        19.2499961853027,
+        -52.4999923706055
+      ],
+      "player_delta_from_quiet_control": [
+        0.0,
+        0.0
+      ],
+      "camera_delta_from_quiet_control": [
+        19.25,
+        -52.5
+      ],
+      "camera_delta_length": 55.9179085803466
+    },
+    {
+      "phase": "before",
+      "case": "old_hold_expires_during_prewarm/reduced=true",
+      "stage": "expired_prewarm_move_after_old_hold",
+      "target": [
+        19.25,
+        -52.5
+      ],
+      "interpolated": [
+        19.2499961853027,
+        -52.4999923706055
+      ],
+      "player_delta_from_quiet_control": [
+        0.0,
+        0.0
+      ],
+      "camera_delta_from_quiet_control": [
+        19.25,
+        -52.5
+      ],
+      "camera_delta_length": 55.9179085803466
+    },
+    {
+      "phase": "before",
+      "case": "actual_takeover_then_move/reduced=true",
+      "stage": "actual_takeover_move_after_old_hold",
+      "target": [
+        0.0,
+        0.0
+      ],
+      "interpolated": [
+        1.95370589305e-21,
+        -3.66005004783e-21
+      ],
+      "player_delta_from_quiet_control": [
+        0.0,
+        0.0
+      ],
+      "camera_delta_from_quiet_control": [
+        0.0,
+        0.0
+      ],
+      "camera_delta_length": 0.0
+    },
+    {
+      "phase": "after",
+      "case": "quiet_only_move/reduced=false",
+      "stage": "quiet_move_after_old_hold",
+      "target": [
+        0.0,
+        0.0
+      ],
+      "interpolated": [
+        5.52376113773789e-05,
+        -0.000150648033013567
+      ],
+      "player_delta_from_quiet_control": [
+        0.0,
+        0.0
+      ],
+      "camera_delta_from_quiet_control": [
+        0.0,
+        0.0
+      ],
+      "camera_delta_length": 0.0
+    },
+    {
+      "phase": "after",
+      "case": "prewarm_then_move/reduced=false",
+      "stage": "prewarm_move_after_old_hold",
+      "target": [
+        0.0,
+        0.0
+      ],
+      "interpolated": [
+        5.55549959244672e-05,
+        -0.000151513624587096
+      ],
+      "player_delta_from_quiet_control": [
+        0.0,
+        0.0
+      ],
+      "camera_delta_from_quiet_control": [
+        0.0,
+        0.0
+      ],
+      "camera_delta_length": 0.0
+    },
+    {
+      "phase": "after",
+      "case": "prewarm_loses_actor_proximity/reduced=false",
+      "stage": "proximity_lost_after_old_hold",
+      "target": [
+        0.0,
+        0.0
+      ],
+      "interpolated": [
+        0.00012433942174539,
+        -0.000339107646141201
+      ],
+      "player_delta_from_quiet_control": [
+        0.0,
+        0.0
+      ],
+      "camera_delta_from_quiet_control": [
+        6.1035156022626325e-05,
+        -0.00018310546897737368
+      ],
+      "camera_delta_length": 0.00019301011123806517
+    },
+    {
+      "phase": "after",
+      "case": "old_hold_expires_during_prewarm/reduced=false",
+      "stage": "expired_prewarm_move_after_old_hold",
+      "target": [
+        0.0,
+        0.0
+      ],
+      "interpolated": [
+        2.77438794000773e-05,
+        -7.5665142503567e-05
+      ],
+      "player_delta_from_quiet_control": [
+        0.0,
+        0.0
+      ],
+      "camera_delta_from_quiet_control": [
+        -6.103515693212103e-05,
+        9.155273403393949e-05
+      ],
+      "camera_delta_length": 0.00011003269282725885
+    },
+    {
+      "phase": "after",
+      "case": "actual_takeover_then_move/reduced=false",
+      "stage": "actual_takeover_move_after_old_hold",
+      "target": [
+        0.0,
+        0.0
+      ],
+      "interpolated": [
+        3.00708124996163e-05,
+        -6.84104379615746e-05
+      ],
+      "player_delta_from_quiet_control": [
+        0.0,
+        0.0
+      ],
+      "camera_delta_from_quiet_control": [
+        -6.103515693212103e-05,
+        9.155273403393949e-05
+      ],
+      "camera_delta_length": 0.00011003269282725885
+    },
+    {
+      "phase": "after",
+      "case": "quiet_only_move/reduced=true",
+      "stage": "quiet_move_after_old_hold",
+      "target": [
+        0.0,
+        0.0
+      ],
+      "interpolated": [
+        2.03740199037e-21,
+        -5.55655345308e-21
+      ],
+      "player_delta_from_quiet_control": [
+        0.0,
+        0.0
+      ],
+      "camera_delta_from_quiet_control": [
+        0.0,
+        0.0
+      ],
+      "camera_delta_length": 0.0
+    },
+    {
+      "phase": "after",
+      "case": "prewarm_then_move/reduced=true",
+      "stage": "prewarm_move_after_old_hold",
+      "target": [
+        0.0,
+        0.0
+      ],
+      "interpolated": [
+        2.03744823655e-21,
+        -5.55667744939e-21
+      ],
+      "player_delta_from_quiet_control": [
+        0.0,
+        0.0
+      ],
+      "camera_delta_from_quiet_control": [
+        0.0,
+        0.0
+      ],
+      "camera_delta_length": 0.0
+    },
+    {
+      "phase": "after",
+      "case": "prewarm_loses_actor_proximity/reduced=true",
+      "stage": "proximity_lost_after_old_hold",
+      "target": [
+        0.0,
+        0.0
+      ],
+      "interpolated": [
+        3.350850823433e-20,
+        -9.138683006433e-20
+      ],
+      "player_delta_from_quiet_control": [
+        0.0,
+        0.0
+      ],
+      "camera_delta_from_quiet_control": [
+        0.0,
+        0.0
+      ],
+      "camera_delta_length": 0.0
+    },
+    {
+      "phase": "after",
+      "case": "old_hold_expires_during_prewarm/reduced=true",
+      "stage": "expired_prewarm_move_after_old_hold",
+      "target": [
+        0.0,
+        0.0
+      ],
+      "interpolated": [
+        8.305930986e-23,
+        -2.2652533431e-22
+      ],
+      "player_delta_from_quiet_control": [
+        0.0,
+        0.0
+      ],
+      "camera_delta_from_quiet_control": [
+        0.0,
+        0.0
+      ],
+      "camera_delta_length": 0.0
+    },
+    {
+      "phase": "after",
+      "case": "actual_takeover_then_move/reduced=true",
+      "stage": "actual_takeover_move_after_old_hold",
+      "target": [
+        0.0,
+        0.0
+      ],
+      "interpolated": [
+        3.684770298e-22,
+        6.633063589e-22
+      ],
+      "player_delta_from_quiet_control": [
+        0.0,
+        0.0
+      ],
+      "camera_delta_from_quiet_control": [
+        0.0,
+        0.0
+      ],
+      "camera_delta_length": 0.0
+    }
+  ]
+}

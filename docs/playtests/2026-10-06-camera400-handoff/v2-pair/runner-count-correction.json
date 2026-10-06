@@ -1,0 +1,7 @@
+{
+  "native_red_exit": 1,
+  "native_completion": "FAIL: 202 checks",
+  "runner_exit": 1,
+  "cause": "Incorrect runner count estimate 204; actual suite has 202. Runner stopped after full red log; no production/test changes required.",
+  "action": "Retain red log and resume only green and mock processes with actual 202."
+}

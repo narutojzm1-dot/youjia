@@ -1,0 +1,60 @@
+{
+  "method": "Offline full PNG read-only nearest RGB patch match (numpy mean absolute difference), exhaustive x=160..224/y=110..309. Proxy image landmark displacement, not game camera state or exact causal proof. Originals unchanged.",
+  "baseline": "portrait-01-entered.png",
+  "baseline_box_xyxy": [
+    204,
+    122,
+    231,
+    153
+  ],
+  "results": [
+    {
+      "image": "portrait-02-stillness-a.png",
+      "matched_top_left": [
+        204,
+        234
+      ],
+      "delta_pixels_from_initial": [
+        0,
+        112
+      ],
+      "mean_absolute_channel_difference": 8.4336917562724
+    },
+    {
+      "image": "portrait-03-stillness-b.png",
+      "matched_top_left": [
+        204,
+        260
+      ],
+      "delta_pixels_from_initial": [
+        0,
+        138
+      ],
+      "mean_absolute_channel_difference": 5.11310234966149
+    },
+    {
+      "image": "portrait-04-after-movement.png",
+      "matched_top_left": [
+        177,
+        129
+      ],
+      "delta_pixels_from_initial": [
+        -27,
+        7
+      ],
+      "mean_absolute_channel_difference": 6.466746316208682
+    },
+    {
+      "image": "portrait-05-settled.png",
+      "matched_top_left": [
+        176,
+        122
+      ],
+      "delta_pixels_from_initial": [
+        -28,
+        0
+      ],
+      "mean_absolute_channel_difference": 6.959776981282357
+    }
+  ]
+}

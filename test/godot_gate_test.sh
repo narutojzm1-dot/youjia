@@ -99,6 +99,27 @@ run_case missing-log block 0 "$complete" missing-log suite "$entry"
 run_case completion-log-read-failure block 0 "$complete" completion-read suite "$entry"
 run_case unregistered-suite block 0 "$complete" none suite test/not_registered_suite.gd
 [[ ! -e "$fixture/args" ]] || { echo 'unregistered suite reached Godot' >&2; exit 1; }
+# #400's new summary is tested through the actual wrapper, independently of
+# native engine evidence. Existing contract requires a valid complete line,
+# not uniqueness: two separate valid lines remain accepted for every suite.
+camera_start=$checks
+camera_entry=test/camera400_handoff_suite.gd
+camera_complete='[camera400-handoff] PASS: 204 checks []'
+run_case camera-positive-minimum pass 0 '[camera400-handoff] PASS: 1 checks []' none suite "$camera_entry"
+run_case camera-positive-count pass 0 "$camera_complete" none suite "$camera_entry"
+run_case camera-zero-count block 0 '[camera400-handoff] PASS: 0 checks []' none suite "$camera_entry"
+run_case camera-nonempty-failures block 0 '[camera400-handoff] PASS: 204 checks ["residual offset"]' none suite "$camera_entry"
+run_case camera-missing-marker block 0 '' none suite "$camera_entry"
+run_case camera-wrong-suite block 0 '[goose-mount] PASS: 204 checks []' none suite "$camera_entry"
+run_case camera-prefix block 0 "debug: $camera_complete" none suite "$camera_entry"
+run_case camera-suffix block 0 "$camera_complete incomplete" none suite "$camera_entry"
+run_case camera-concatenated-markers block 0 "$camera_complete$camera_complete" none suite "$camera_entry"
+run_case camera-two-separate-valid-lines pass 0 "$camera_complete"$'\n'"$camera_complete" none suite "$camera_entry"
+run_case camera-nonzero-exit block 9 "$camera_complete" none suite "$camera_entry"
+run_case camera-late-error block 0 "$camera_complete"$'\nERROR: simulated late error' none suite "$camera_entry"
+run_case camera-late-fail block 0 "$camera_complete"$'\nFAIL: simulated late assertion' none suite "$camera_entry"
+run_case camera-truncated-summary block 0 '[camera400-handoff] PASS: 204 checks' none suite "$camera_entry"
+echo "CAMERA400 COMPLETION CONTRACT PASS $((checks-camera_start))"
 # Imports legitimately have no test summary. Their independent process/log
 # contract remains strict; the importer must not fabricate a suite PASS line.
 run_case import-empty pass 0 '' none import ''

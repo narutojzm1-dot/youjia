@@ -1,0 +1,55 @@
+[
+  {
+    "step": "daily",
+    "args": [
+      "bash",
+      "tools/verify_daily_life.sh"
+    ],
+    "started_at": "2026-10-05T23:41:52.382900+00:00",
+    "ended_at": "2026-10-05T23:49:12.133125+00:00",
+    "actual_exit": 0,
+    "log": "/tmp/camera400-evidence/combined/daily.log",
+    "bytes": 93840,
+    "sha256": "3c45ff26e89a9643090f5aa48574c369e9605749c919e34d4a19d1caf34c8747"
+  },
+  {
+    "step": "retention",
+    "args": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+      "test/web_bundle_retention_test.py"
+    ],
+    "started_at": "2026-10-05T23:49:12.135825+00:00",
+    "ended_at": "2026-10-05T23:49:12.924789+00:00",
+    "actual_exit": 0,
+    "log": "/tmp/camera400-evidence/combined/retention.log",
+    "bytes": 1301,
+    "sha256": "1976a9438ed9dd9206d85adcbe5287d46989f5563c60580b62cf5568cb646847"
+  },
+  {
+    "step": "publisher-fixture",
+    "args": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+      "test/publish_storage_modules_test.py"
+    ],
+    "started_at": "2026-10-05T23:49:12.925060+00:00",
+    "ended_at": "2026-10-05T23:49:13.719118+00:00",
+    "actual_exit": 0,
+    "log": "/tmp/camera400-evidence/combined/publisher-fixture.log",
+    "bytes": 145,
+    "sha256": "69d2cfe36e55916187b1ce6b537c388a1bb633ee3f0ec77b42891590d5f8277d"
+  },
+  {
+    "step": "export",
+    "args": [
+      "bash",
+      "-c",
+      "source tools/lib/verified_godot.sh; run_verified_godot /tmp/camera400-evidence/combined/export-engine.log --headless --path . --export-release Web /tmp/camera400-web/index.html"
+    ],
+    "started_at": "2026-10-05T23:49:13.719414+00:00",
+    "ended_at": "2026-10-05T23:49:19.657935+00:00",
+    "actual_exit": 0,
+    "log": "/tmp/camera400-evidence/combined/export.log",
+    "bytes": 46170,
+    "sha256": "0e7e1ad52f28f23cb7b55299e2a9d6469166f7e18922d264987ce304778f8c45"
+  }
+]

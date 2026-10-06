@@ -1442,3 +1442,12 @@ CODEX-LEAD按作者[PR461](https://github.com/narutojzm1-dot/youjia/pull/461)明
 独立助手在同一浏览器内串行关闭/新建两个fresh context（390×844、568×320），只用普通中文正常动效进院→轻抚羊产生首照→完整快门纸底/相纸→自然退场→相册→合上；源/PCK/十模块/许可页前后HTTP绑定，实际driver exit0。短横本样本纸条覆盖目标提示纸片右半区域，但短文案“窗台花箱/看看花箱”在左侧没有被盖；不能写成长目标文字已测或所有HUD均可见。英文/低动效仅原生夹具，真机/触摸/听验/全部DPR未覆盖。
 
 候选PCK 27,090,652B / SHA256 `6f84caeb3dc92d6d12a91f39f6cc766dcc521a26bdb70b2f8c99063384eb73a3`；候选不等于已发布。native的fixed seed/day/player/debug_force_rule照片、直接refresh_locale/root.size和Tween.custom_step只是格式/布局/属性夹具，7.2277—8.2869:1是静止RGBA sRGB公式，不冒真实逐帧或普通触发。最终独立SHA审查、远端CI、合入和公开manifest/PCK/普通后验仍按后续实际环节留痕。
+
+
+### 2026-10-06 #400 quiet_sky 与鹅马预热的所有权交接
+
+CODEX-LEAD按[6005299861窄协助范围](https://github.com/narutojzm1-dot/youjia/issues/400#issuecomment-6005299861)从只读条件线索推进真实Main/World组合红测，不把旧-133数学分析或未知源用户截图重标新产物。原流程在鹅马wait>0而phase仍-1、尚未发新focus时yield静观，清掉active/计时；随后预热中断双方都不release，导致旧偏移保留。最小改动仅World._tick_quiet_sky_look区分预热与实际演出：保留旧hold原时长、正常取消与到期，实际phase≥0无release地让给新focus，不增加每次预热的额外回跳，不变玩法/资源方案。
+
+v1原160检查红绿均保留；独审指出其hold3.25<预热3.5，没有覆盖旧quiet仍活跃时接管。v2补normal/reduced实际剩0.4s的同tick新focus/no-release正例，相同测试blob原代码FAIL202/34失败、修正PASS202；runner误估204后按真实202续跑，原失败不抹去。新增完成行14个fake受控例使总数64，两个独立合法行仍允许，不声称wrapper唯一性。完整33bd组合含PR464原作者和74既有套件，加camera至75套/76启动、2Node、11项Python、本地publisher及Web实际exit0。随后只增加已合main49596真实祖先，整树不变，不因docs重跑引擎。原件、来源、候选PCK及边界见[归档](playtests/2026-10-06-camera400-handoff/README.md)。
+
+此仅Leader共享框架子片，不接管Producer对#400原截图与构图的总体验收，不改Main输入/背景/探索。独立QA候选390普通静观→真实ArrowRight→回稳有限通过，manifest/PCK/十模块前后实核；静观顶部y112/y138浅纸空带是另一个未通过构图的遗留，不冒原截图同因、不在本片越界修布局。普通短窗口未覆盖自然鹅马预热和同tick交叉链。最终完整SHA独审、真实PR CI、合入与公开后验依次留痕，未完成环节不冒已发布；本PR只Refs #400。
