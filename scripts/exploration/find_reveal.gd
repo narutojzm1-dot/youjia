@@ -30,6 +30,8 @@ var basket_size := 0.9
 var title := ""
 var sound: AudioStream
 var sound_plays := 0
+# Node2D 拿不到 UI 主题；不设时 ThemeDB.fallback_font 在 Web 上没有中文字形，名字会成方框
+var label_font: Font
 var _player: AudioStreamPlayer
 
 
@@ -122,6 +124,6 @@ func _draw() -> void:
 		draw_circle(p.at, HALO * 0.45, Color(1.0, 1.0, 0.96, 0.5 * halo))
 	KeepsakeArt.draw(self, find_id, p.at, p.size)
 	if halo > 0.5 and not title.is_empty():
-		var font := ThemeDB.fallback_font
+		var font := label_font if label_font != null else ThemeDB.fallback_font
 		var width := 200.0
 		draw_string(font, p.at + Vector2(-width * 0.5, -HALO - 6.0), title, HORIZONTAL_ALIGNMENT_CENTER, width, 17, Color(INK, halo))
