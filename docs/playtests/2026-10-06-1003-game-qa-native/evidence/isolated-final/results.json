@@ -1,0 +1,49 @@
+{
+  "sourceSha": "267b0cb3df5842170877bf55e438917ad4253ce8",
+  "startedUtc": "2026-10-06T02:06:27.766180+00:00",
+  "profileProbe": "D:/games/youjia-test/qa/native/2026-10-06-1008-isolated/roaming/Godot/app_userdata/youjia-qa-profile-probe",
+  "engine": "D:/games/youjia-tmp-godot/Godot_v4.7.2-stable_win64_console.exe",
+  "tests": [
+    {
+      "entry": "import",
+      "exit": 0,
+      "summary": []
+    },
+    {
+      "entry": "exploration_slice",
+      "exit": 0,
+      "summary": [
+        "EXPLORATION SLICE PASS 278/278 failures=[]"
+      ]
+    },
+    {
+      "entry": "fish_carry_consistency",
+      "exit": 0,
+      "summary": [
+        "[fish-carry] 94 checks []"
+      ]
+    },
+    {
+      "entry": "audio_button_input",
+      "exit": 0,
+      "summary": [
+        "AUDIO_BUTTON_INPUT checks=648 failures=0"
+      ]
+    },
+    {
+      "entry": "camera400_handoff",
+      "exit": 0,
+      "summary": [
+        "[camera400-handoff] PASS: 202 checks []"
+      ]
+    },
+    {
+      "entry": "camera400_backdrop",
+      "exit": 0,
+      "summary": [
+        "[camera400-backdrop] PASS: 44734 checks []"
+      ]
+    }
+  ],
+  "endedUtc": "2026-10-06T02:07:26.789437+00:00"
+}

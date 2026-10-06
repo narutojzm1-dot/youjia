@@ -1,0 +1,14 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ERROR: Parse JSON failed. Error at line 0: Unknown error getting token
+   at: parse_string (core/io/json.cpp:629)
+   GDScript backtrace (most recent call first):
+       [0] _painted_path_layout (res://test/exploration_slice_suite.gd:454)
+       [1] run (res://test/exploration_slice_suite.gd:36)
+SCRIPT ERROR: Trying to assign value of type 'Nil' to a variable of type 'Dictionary'.
+   at: _painted_path_layout (res://test/exploration_slice_suite.gd:454)
+   GDScript backtrace (most recent call first):
+       [0] _painted_path_layout (res://test/exploration_slice_suite.gd:454)
+       [1] run (res://test/exploration_slice_suite.gd:36)
+EXPLORATION SLICE PASS 268/268 failures=[]
+[daily-check] Godot reported an error or failed assertion

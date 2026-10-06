@@ -1,0 +1,23 @@
+{
+  "sourceSha": "267b0cb3df5842170877bf55e438917ad4253ce8",
+  "startedUtc": "2026-10-06T02:03:50.834008+00:00",
+  "profileProbe": "D:/games/youjia-test/qa/native/2026-10-06-1005/roaming/Godot/app_userdata/youjia-qa-profile-probe",
+  "engine": "D:/games/youjia-tmp-godot/Godot_v4.7.2-stable_win64_console.exe",
+  "tests": [
+    {
+      "entry": "import",
+      "exit": 0,
+      "summary": []
+    },
+    {
+      "entry": "exploration_slice",
+      "exit": 1,
+      "summary": [
+        "ERROR: Parse JSON failed. Error at line 0: Unknown error getting token",
+        "SCRIPT ERROR: Trying to assign value of type 'Nil' to a variable of type 'Dictionary'.",
+        "EXPLORATION SLICE PASS 268/268 failures=[]"
+      ]
+    }
+  ],
+  "endedUtc": "2026-10-06T02:04:21.139493+00:00"
+}
