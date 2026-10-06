@@ -1,0 +1,121 @@
+{
+  "source_sha": "9623ba22c8edc564e5c89dc6b0171324e9230764",
+  "action_sha": "11d5960a326750d5838078e36cf38b85af677262",
+  "files": [
+    {
+      "path": ".github/workflows/publish-pages.yml",
+      "blob": "0e84bebc58f0c06b88ce4e5f66f5b1856fb2ffc3",
+      "sha256": "641822de4d9dec7c592e065b13604241729deaffc9b24a48ff6c1d98f15484d2"
+    },
+    {
+      "path": "tools/publish_gh_pages.sh",
+      "blob": "971cc1e7d740830db235ad045f501e7835fe48ab",
+      "sha256": "5c21b408167735ebf6eb583fbca98677b6c048fb8fd2004bff3bae636fc73191"
+    },
+    {
+      "path": "tools/select_web_bundle_pruning.py",
+      "blob": "98d8c2d3d9fe795966f10b8042e4104b5f43372c",
+      "sha256": "e44af2c16f688183296fa319cd26030751a30891e52e0cbcf2714fc3d59b894b"
+    },
+    {
+      "path": "test/publish_storage_modules_test.py",
+      "blob": "70a8c49e4e430fd2f10da5e5fca4d2c8614f4de7",
+      "sha256": "8d17620e1b7a8c38a930c05697f3e9d720edc559e1c9186b7a2cd44462b42fb4"
+    },
+    {
+      "path": "test/web_bundle_retention_test.py",
+      "blob": "b579ce622eb822277848206a1844e25c21925f50",
+      "sha256": "21981ca2448f8b24f32bc5c090c76809cb9910402ff2e19e68cb59139ed6fb25"
+    },
+    {
+      "path": "tools/lib/verified_godot.sh",
+      "blob": "b56686b1ce55cdc339ff5d071d39b86d7aedad0b",
+      "sha256": "0ad077b04c2f534a5defdefb41a71fe4f2cd9c37db68012055f619422ee27ab1"
+    },
+    {
+      "action_path": "src/git-source-provider.ts",
+      "blob": "2d3513897655e0ea2eb4efc2b2c9d6132a69549f",
+      "sha256": "b1bf57713d94302decc7f440a1cd7daa24f205ddf677c52debeb654a5565d1a7"
+    },
+    {
+      "action_path": "src/git-command-manager.ts",
+      "blob": "9c789ac803e4d3b99463037d0ada654b79d8b863",
+      "sha256": "fbb9ebec4e1c94f9641ffe123a4e47df4ae5ec2023617f8646ce30e1d3221bcf"
+    },
+    {
+      "action_path": "src/ref-helper.ts",
+      "blob": "925be86614ded8ed4057bbbed4b3d15170f6e445",
+      "sha256": "711c01895acdc63a9c2d94c5c632cb77f9d0ec78602de713855410c8269553fb"
+    },
+    {
+      "action_path": "action.yml",
+      "blob": "24e73e5a12126edc2adb9e5cd1bf245ce85bde56",
+      "sha256": "6188f6991491ed38977347cdaad0b0cd921a6d6232892363c91f433c22954f4f"
+    },
+    {
+      "path": "web/save/bridge.mjs",
+      "blob": "b28e79f06de1d727e3fe454b0442082ba77c33c5",
+      "sha256": "ef18687554fdc0d745c1d18d4d091e959cc78559da0d61d6a093e562ff9bbc91"
+    },
+    {
+      "path": "web/save/budgets.mjs",
+      "blob": "2a2abebdd318a04d63c9eeee3fb275f59e1d58ae",
+      "sha256": "52984153977dcafd1d2682e848f1999f091d0966e17d46e902de76f5735a7018"
+    },
+    {
+      "path": "web/save/host.mjs",
+      "blob": "ffba045c0a3d0f2fe736f715bedb34da1c3c3e47",
+      "sha256": "9de8dc0ef4bfc037a8ad0bff575d40c3dd4341bcc723351a412b2061bb661904"
+    },
+    {
+      "path": "web/save/idbfs_source.mjs",
+      "blob": "bc1bf875e6726864b93299c469eb53c36956d18f",
+      "sha256": "16eb57d471537f13d3e50018b56c2d416d2847f0d0249ba44433dd9ebb65f4d8"
+    },
+    {
+      "path": "web/save/legacy_inspection.mjs",
+      "blob": "908794da407c525d1b68cac46737e6de61872784",
+      "sha256": "db3a23a0221aa5d34a58a6a49aeeff930295ffe20bfcf73a7c11f0d49cffd671"
+    },
+    {
+      "path": "web/save/legacy_seal.mjs",
+      "blob": "ae76de7400979664b23df34ac4300bf086f96fd7",
+      "sha256": "9642132f5d4e7523e5966e802069af7f4bae803fae8e2e7c28ae55ee97d85610"
+    },
+    {
+      "path": "web/save/legacy_v5.mjs",
+      "blob": "d5074e50774eb985e5d9c6e95fa6dcfdc0c4c12c",
+      "sha256": "8e7f4ad2d87aab77ac05361e4f46060476e933aa079ae94301998d08d4599621"
+    },
+    {
+      "path": "web/save/lifecycle.mjs",
+      "blob": "d30f5af087694e6dbf30d19e021b5509a8f74801",
+      "sha256": "1cfaebb9a8745e2dc3e4f694ef475f250640870938f04160be1a5c9acd62935d"
+    },
+    {
+      "path": "web/save/source_decode.mjs",
+      "blob": "3fb4b38fd00d399c6258ad4f7b5d08aa89ffbc26",
+      "sha256": "411f3bc784cb32a07f32eed5fc7d88f71b59a667cc0d68a50fe13c55bfdba18a"
+    },
+    {
+      "path": "web/save/store.mjs",
+      "blob": "4a05c51fd980f64ebb5033d8915ea6f4b044a3b6",
+      "sha256": "2193b4397b8662a8ebc754dc4468e4d62964d209b4e1d0f0924a2ec81b409cbe"
+    },
+    {
+      "path": "export_presets.cfg",
+      "blob": "0de4f0bd02ff99376e106ed0d306215c4ad1e40f",
+      "sha256": "4d520bb82732a26d3d591020bd0c826e4de64dff6a8e177aef18165ca5aef820"
+    },
+    {
+      "path": "tools/verify_daily_life.sh",
+      "blob": "194976d9a5a062d1869e991f4f19814be8769654",
+      "sha256": "b0a8e5c93eccb04e7a9487a2bd5d18a572df3d3deb71886ab79539ffe50f5a58"
+    },
+    {
+      "path": "project.godot",
+      "blob": "863d890c353f781a758b698e5386315a6323df9a",
+      "sha256": "cbc351664d89112f1f9a947164b4077d9eb8d11f46ab5650007f16b2af489859"
+    }
+  ]
+}

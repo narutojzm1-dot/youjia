@@ -1,0 +1,592 @@
+{
+  "source_sha": "1596cd1f05df3744045f19d929eabb906bdddaba",
+  "source_tree": "107463b049c86df7069aed3d3127b6b7725900cd",
+  "base_sha": "a0bb75e38e59032a6df72a2122af4403c3c3e816",
+  "godot_daily_processes": 73,
+  "suites": 72,
+  "gate_mock_cases": 50,
+  "node_processes": 2,
+  "retention_tests": 11,
+  "publisher_fixture_builds": 2,
+  "all_recorded_process_exit_codes_zero": true,
+  "photo_arrival_mat_checks": 550,
+  "root_docs_absent_through_all_phases": true,
+  "suite_completions": [
+    {
+      "entry": "test/test_suite.tscn",
+      "returncode": 0,
+      "completed_lines": [
+        "[game-generic-tests] PASS: 414 checks"
+      ],
+      "elapsed_seconds": 2.361
+    },
+    {
+      "entry": "test/locomotion_suite.tscn",
+      "returncode": 0,
+      "completed_lines": [
+        "[locomotion-tests] PASS: 410 checks"
+      ],
+      "elapsed_seconds": 8.092
+    },
+    {
+      "entry": "test/holiday_start_once_suite.gd",
+      "returncode": 0,
+      "completed_lines": [
+        "HOLIDAY_START_ONCE checks=14 failures=0"
+      ],
+      "elapsed_seconds": 2.236
+    },
+    {
+      "entry": "test/animal_home_suite.gd",
+      "returncode": 0,
+      "completed_lines": [
+        "[animal-home-tests] PASS: 1005 checks"
+      ],
+      "elapsed_seconds": 46.242
+    },
+    {
+      "entry": "test/photo_home_suite.gd",
+      "returncode": 0,
+      "completed_lines": [
+        "[photo-home-tests] PASS: 75 checks"
+      ],
+      "elapsed_seconds": 20.397
+    },
+    {
+      "entry": "test/grass_state_suite.gd",
+      "returncode": 0,
+      "completed_lines": [
+        "[grass-state-tests] PASS: 368 checks, 0 failures"
+      ],
+      "elapsed_seconds": 1.025
+    },
+    {
+      "entry": "test/grass_action_suite.gd",
+      "returncode": 0,
+      "completed_lines": [
+        "[grass-action-tests] PASS: 61 checks, 0 failures"
+      ],
+      "elapsed_seconds": 1.024
+    },
+    {
+      "entry": "test/explicit_target_suite.gd",
+      "returncode": 0,
+      "completed_lines": [
+        "[explicit-target-tests] checks=25 failures=[]"
+      ],
+      "elapsed_seconds": 10.079
+    },
+    {
+      "entry": "test/ui_interaction_suite.gd",
+      "returncode": 0,
+      "completed_lines": [
+        "[ui-interaction-tests] checks=63 failures=[]"
+      ],
+      "elapsed_seconds": 9.977
+    },
+    {
+      "entry": "test/physical_yard_suite.gd",
+      "returncode": 0,
+      "completed_lines": [
+        "[physical-yard-tests] PASS: 658 checks"
+      ],
+      "elapsed_seconds": 37.325
+    },
+    {
+      "entry": "test/keyboard_ground_suite.gd",
+      "returncode": 0,
+      "completed_lines": [
+        "[keyboard-ground-tests] PASS: 45 checks []"
+      ],
+      "elapsed_seconds": 7.545
+    },
+    {
+      "entry": "test/scrapbook_encounter_suite.gd",
+      "returncode": 0,
+      "completed_lines": [
+        "[scrapbook-encounters] PASS: 20 checks []"
+      ],
+      "elapsed_seconds": 1.592
+    },
+    {
+      "entry": "test/photo_moment_render_suite.gd",
+      "returncode": 0,
+      "completed_lines": [
+        "[photo-moment-tests] PASS: 1332 checks"
+      ],
+      "elapsed_seconds": 2.799
+    },
+    {
+      "entry": "test/photo_moment_save_suite.gd",
+      "returncode": 0,
+      "completed_lines": [
+        "[photo-moment-save-tests] PASS: 46 checks []"
+      ],
+      "elapsed_seconds": 4.564
+    },
+    {
+      "entry": "test/save_data_codec_suite.gd",
+      "returncode": 0,
+      "completed_lines": [
+        "SAVE_DATA_CODEC 16 checks; failures=[]"
+      ],
+      "elapsed_seconds": 1.528
+    },
+    {
+      "entry": "test/yard_snapshot_suite.gd",
+      "returncode": 0,
+      "completed_lines": [
+        "yard snapshot: 10 checks, 0 failures"
+      ],
+      "elapsed_seconds": 1.212
+    },
+    {
+      "entry": "test/fishing_active_hud_suite.gd",
+      "returncode": 0,
+      "completed_lines": [
+        "fishing active HUD: 10 checks, 0 failures"
+      ],
+      "elapsed_seconds": 1.775
+    },
+    {
+      "entry": "test/save_recovery_suite.gd",
+      "returncode": 0,
+      "completed_lines": [
+        "SAVE RECOVERY PASS 24"
+      ],
+      "elapsed_seconds": 0.758
+    },
+    {
+      "entry": "test/boundary_feedback_suite.gd",
+      "returncode": 0,
+      "completed_lines": [
+        "[boundary-feedback-tests] 11 checks []"
+      ],
+      "elapsed_seconds": 1.772
+    },
+    {
+      "entry": "test/mixed_input_photo_suite.gd",
+      "returncode": 0,
+      "completed_lines": [
+        "[mixed-input-photo-tests] 6 checks []"
+      ],
+      "elapsed_seconds": 1.953
+    },
+    {
+      "entry": "test/leading_clearance_suite.gd",
+      "returncode": 0,
+      "completed_lines": [
+        "[leading-clearance-tests] 18 checks []"
+      ],
+      "elapsed_seconds": 2.894
+    },
+    {
+      "entry": "test/portable_accept_suite.gd",
+      "returncode": 0,
+      "completed_lines": [
+        "[portable-accept-tests] 16 checks []"
+      ],
+      "elapsed_seconds": 2.158
+    },
+    {
+      "entry": "test/shipped_correctness_suite.gd",
+      "returncode": 0,
+      "completed_lines": [
+        "[shipped-correctness] 9 checks []"
+      ],
+      "elapsed_seconds": 2.427
+    },
+    {
+      "entry": "test/interaction_photo_suite.gd",
+      "returncode": 0,
+      "completed_lines": [
+        "[interaction-photo-tests] 110 checks, failures=[]"
+      ],
+      "elapsed_seconds": 1.861
+    },
+    {
+      "entry": "test/scene_hotspot_suite.gd",
+      "returncode": 0,
+      "completed_lines": [
+        "[scene-hotspot-tests] 91 checks, failures=[]"
+      ],
+      "elapsed_seconds": 2.896
+    },
+    {
+      "entry": "test/authored_sequence_suite.gd",
+      "returncode": 0,
+      "completed_lines": [
+        "[authored-sequence-tests] PASS: 16 distinct complete frames, uniform canvas and anchor, loop metadata"
+      ],
+      "elapsed_seconds": 0.744
+    },
+    {
+      "entry": "test/goose_mount_suite.gd",
+      "returncode": 0,
+      "completed_lines": [
+        "[goose-mount] PASS: 92 checks []"
+      ],
+      "elapsed_seconds": 5.5
+    },
+    {
+      "entry": "test/quiet_stay_suite.gd",
+      "returncode": 0,
+      "completed_lines": [
+        "QUIET STAY PASS 4"
+      ],
+      "elapsed_seconds": 1.595
+    },
+    {
+      "entry": "test/quiet_sky_look_suite.gd",
+      "returncode": 0,
+      "completed_lines": [
+        "QUIET SKY LOOK PASS 15"
+      ],
+      "elapsed_seconds": 2.145
+    },
+    {
+      "entry": "test/still_catch_suite.gd",
+      "returncode": 0,
+      "completed_lines": [
+        "STILL CATCH PASS 6"
+      ],
+      "elapsed_seconds": 0.844
+    },
+    {
+      "entry": "test/still_target_pulse_suite.gd",
+      "returncode": 0,
+      "completed_lines": [
+        "STILL TARGET PULSE PASS 5"
+      ],
+      "elapsed_seconds": 0.85
+    },
+    {
+      "entry": "test/still_grass_glow_suite.gd",
+      "returncode": 0,
+      "completed_lines": [
+        "STILL GRASS GLOW PASS 4"
+      ],
+      "elapsed_seconds": 1.492
+    },
+    {
+      "entry": "test/still_object_feedback_suite.gd",
+      "returncode": 0,
+      "completed_lines": [
+        "STILL OBJECT FEEDBACK PASS 14"
+      ],
+      "elapsed_seconds": 0.865
+    },
+    {
+      "entry": "test/interaction_pose_suite.gd",
+      "returncode": 0,
+      "completed_lines": [
+        "INTERACTION POSE PASS 35"
+      ],
+      "elapsed_seconds": 1.59
+    },
+    {
+      "entry": "test/cow_glance_suite.gd",
+      "returncode": 0,
+      "completed_lines": [
+        "COW GLANCE PASS 8"
+      ],
+      "elapsed_seconds": 1.495
+    },
+    {
+      "entry": "test/sheep_attention_suite.gd",
+      "returncode": 0,
+      "completed_lines": [
+        "SHEEP ATTENTION PASS 56"
+      ],
+      "elapsed_seconds": 1.77
+    },
+    {
+      "entry": "test/duck_feed_attention_suite.gd",
+      "returncode": 0,
+      "completed_lines": [
+        "DUCK ATTENTION PASS 24"
+      ],
+      "elapsed_seconds": 1.49
+    },
+    {
+      "entry": "test/goose_feed_attention_suite.gd",
+      "returncode": 0,
+      "completed_lines": [
+        "GOOSE ATTENTION PASS 25"
+      ],
+      "elapsed_seconds": 1.676
+    },
+    {
+      "entry": "test/fish_carry_consistency_suite.gd",
+      "returncode": 0,
+      "completed_lines": [
+        "[fish-carry] 94 checks []"
+      ],
+      "elapsed_seconds": 8.752
+    },
+    {
+      "entry": "test/notice_paper_suite.gd",
+      "returncode": 0,
+      "completed_lines": [
+        "notice paper suite checks=49 failures=[]"
+      ],
+      "elapsed_seconds": 2.344
+    },
+    {
+      "entry": "test/photo_species_frame_suite.gd",
+      "returncode": 0,
+      "completed_lines": [
+        "PHOTO_SPECIES_FRAME checks=9 failures=0"
+      ],
+      "elapsed_seconds": 1.779
+    },
+    {
+      "entry": "test/web_hidpi_suite.gd",
+      "returncode": 0,
+      "completed_lines": [
+        "web_hidpi: 102 checks, 0 failures"
+      ],
+      "elapsed_seconds": 4.286
+    },
+    {
+      "entry": "test/save_candidate_suite.gd",
+      "returncode": 0,
+      "completed_lines": [
+        "save candidate: 80 checks, 0 failures"
+      ],
+      "elapsed_seconds": 0.837
+    },
+    {
+      "entry": "test/exploration_core_suite.gd",
+      "returncode": 0,
+      "completed_lines": [
+        "EXPLORATION CORE PASS 357"
+      ],
+      "elapsed_seconds": 0.846
+    },
+    {
+      "entry": "test/fish_miss_feedback_suite.gd",
+      "returncode": 0,
+      "completed_lines": [
+        "[fish-miss-feedback] 16 checks, 0 failures: []"
+      ],
+      "elapsed_seconds": 1.781
+    },
+    {
+      "entry": "test/save_coordinator_suite.gd",
+      "returncode": 0,
+      "completed_lines": [
+        "SAVE_COORDINATOR checks=86 failures=[]"
+      ],
+      "elapsed_seconds": 0.93
+    },
+    {
+      "entry": "test/native_save_host_suite.gd",
+      "returncode": 0,
+      "completed_lines": [
+        "NATIVE SAVE HOST PASS 200"
+      ],
+      "elapsed_seconds": 0.834
+    },
+    {
+      "entry": "test/save_writer_guidance_suite.gd",
+      "returncode": 0,
+      "completed_lines": [
+        "SAVE WRITER GUIDANCE 20 checks failures=[]"
+      ],
+      "elapsed_seconds": 0.746
+    },
+    {
+      "entry": "test/exploration_cleanup_contract_suite.gd",
+      "returncode": 0,
+      "completed_lines": [
+        "EXPLORATION CLEANUP 95 checks failures=[]"
+      ],
+      "elapsed_seconds": 0.926
+    },
+    {
+      "entry": "test/exploration_cleanup_preservation_suite.gd",
+      "returncode": 0,
+      "completed_lines": [
+        "EXPLORATION CLEANUP PRESERVATION checks=51 failures=0"
+      ],
+      "elapsed_seconds": 0.839
+    },
+    {
+      "entry": "test/save_feedback_suite.gd",
+      "returncode": 0,
+      "completed_lines": [
+        "SAVE FEEDBACK 50 checks, failures 0"
+      ],
+      "elapsed_seconds": 1.577
+    },
+    {
+      "entry": "test/day_label_layout_suite.gd",
+      "returncode": 0,
+      "completed_lines": [
+        "day_label_layout suite: 173 checks passed"
+      ],
+      "elapsed_seconds": 3.17
+    },
+    {
+      "entry": "test/exploration_slice_suite.gd",
+      "returncode": 0,
+      "completed_lines": [
+        "EXPLORATION SLICE PASS 218/218 failures=[]"
+      ],
+      "elapsed_seconds": 2.983
+    },
+    {
+      "entry": "test/title_card_suite.gd",
+      "returncode": 0,
+      "completed_lines": [
+        "title_card suite: 251 checks passed"
+      ],
+      "elapsed_seconds": 2.33
+    },
+    {
+      "entry": "test/hint_paper_fit_suite.gd",
+      "returncode": 0,
+      "completed_lines": [
+        "hint_paper_fit suite: 4653 checks passed"
+      ],
+      "elapsed_seconds": 7.353
+    },
+    {
+      "entry": "test/confirm_panel_fit_suite.gd",
+      "returncode": 0,
+      "completed_lines": [
+        "confirm_panel_fit suite: 562 checks passed"
+      ],
+      "elapsed_seconds": 5.68
+    },
+    {
+      "entry": "test/title_short_landscape_suite.gd",
+      "returncode": 0,
+      "completed_lines": [
+        "title_short_landscape suite: 1541 checks passed"
+      ],
+      "elapsed_seconds": 3.361
+    },
+    {
+      "entry": "test/licenses_dialog_fit_suite.gd",
+      "returncode": 0,
+      "completed_lines": [
+        "licenses_dialog_fit_suite checks=124 failures=0"
+      ],
+      "elapsed_seconds": 25.311
+    },
+    {
+      "entry": "test/motion_preference_suite.gd",
+      "returncode": 0,
+      "completed_lines": [
+        "MOTION PREFERENCE NATIVE PASS 18"
+      ],
+      "elapsed_seconds": 2.891
+    },
+    {
+      "entry": "test/photo_arrival_fit_suite.gd",
+      "returncode": 0,
+      "completed_lines": [
+        "[photo-arrival-fit] PASS: 418 checks"
+      ],
+      "elapsed_seconds": 3.164
+    },
+    {
+      "entry": "test/photo_arrival_combo_suite.gd",
+      "returncode": 0,
+      "completed_lines": [
+        "PHOTO ARRIVAL COMBO PASS 656"
+      ],
+      "elapsed_seconds": 4.008
+    },
+    {
+      "entry": "test/photo_arrival_mat_suite.gd",
+      "returncode": 0,
+      "completed_lines": [
+        "[photo-arrival-mat] PASS: 550 checks"
+      ],
+      "elapsed_seconds": 2.99
+    },
+    {
+      "entry": "test/album_short_landscape_suite.gd",
+      "returncode": 0,
+      "completed_lines": [
+        "ALBUM_SHORT_LANDSCAPE checks=52319 failures=0"
+      ],
+      "elapsed_seconds": 50.839
+    },
+    {
+      "entry": "test/title_licenses_link_contrast_suite.gd",
+      "returncode": 0,
+      "completed_lines": [
+        "PASS: title_licenses_link_contrast 340 checks"
+      ],
+      "elapsed_seconds": 11.458
+    },
+    {
+      "entry": "test/soft_button_focus_contrast_suite.gd",
+      "returncode": 0,
+      "completed_lines": [
+        "PASS: soft_button_focus_contrast 5080 checks"
+      ],
+      "elapsed_seconds": 7.173
+    },
+    {
+      "entry": "test/album_layout_suite.gd",
+      "returncode": 0,
+      "completed_lines": [
+        "ALBUM_LAYOUT checks=45914 failures=0"
+      ],
+      "elapsed_seconds": 41.131
+    },
+    {
+      "entry": "test/pause_notice_suite.gd",
+      "returncode": 0,
+      "completed_lines": [
+        "PAUSE_NOTICE checks=168 failures=0"
+      ],
+      "elapsed_seconds": 1.868
+    },
+    {
+      "entry": "test/audio_button_input_suite.gd",
+      "returncode": 0,
+      "completed_lines": [
+        "AUDIO_BUTTON_INPUT checks=648 failures=0"
+      ],
+      "elapsed_seconds": 4.284
+    },
+    {
+      "entry": "test/still_boundary_feedback_suite.gd",
+      "returncode": 0,
+      "completed_lines": [
+        "STILL BOUNDARY FEEDBACK PASS 44"
+      ],
+      "elapsed_seconds": 1.957
+    },
+    {
+      "entry": "test/ui_viewports.gd",
+      "returncode": 0,
+      "completed_lines": [
+        "[viewport] checks=135 failures=[]"
+      ],
+      "elapsed_seconds": 5.125
+    },
+    {
+      "entry": "test/web_save_bridge/decoder_suite.gd",
+      "returncode": 0,
+      "completed_lines": [
+        "WEB SAVE BRIDGE DECODER 45 failures=[]"
+      ],
+      "elapsed_seconds": 0.744
+    },
+    {
+      "entry": "test/web_save_bridge/legacy_suite.gd",
+      "returncode": 0,
+      "completed_lines": [
+        "LEGACY_BRIDGE_PASS 22"
+      ],
+      "elapsed_seconds": 0.751
+    }
+  ]
+}

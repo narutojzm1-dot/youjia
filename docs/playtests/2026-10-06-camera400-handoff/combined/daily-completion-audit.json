@@ -1,0 +1,534 @@
+{
+  "source": "33bd42534d87ebd6e0cb0087d7ee0eaf258f548e",
+  "engine_startup_count": 76,
+  "suite_count": 75,
+  "import_has_no_suite_marker_contract": true,
+  "suite_blocks": [
+    {
+      "invocation_index": 2,
+      "entry": "test/test_suite.tscn",
+      "completion": "[game-generic-tests] PASS: 414 checks",
+      "observed_matching_line_count": 1,
+      "process_success_evidence": "Sequential fail-fast verified_godot wrapper completed and enclosing daily process exit0; no separate OS-exit telemetry was added."
+    },
+    {
+      "invocation_index": 3,
+      "entry": "test/locomotion_suite.tscn",
+      "completion": "[locomotion-tests] PASS: 410 checks",
+      "observed_matching_line_count": 1,
+      "process_success_evidence": "Sequential fail-fast verified_godot wrapper completed and enclosing daily process exit0; no separate OS-exit telemetry was added."
+    },
+    {
+      "invocation_index": 4,
+      "entry": "test/holiday_start_once_suite.gd",
+      "completion": "HOLIDAY_START_ONCE checks=14 failures=0",
+      "observed_matching_line_count": 1,
+      "process_success_evidence": "Sequential fail-fast verified_godot wrapper completed and enclosing daily process exit0; no separate OS-exit telemetry was added."
+    },
+    {
+      "invocation_index": 5,
+      "entry": "test/animal_home_suite.gd",
+      "completion": "[animal-home-tests] PASS: 1005 checks",
+      "observed_matching_line_count": 1,
+      "process_success_evidence": "Sequential fail-fast verified_godot wrapper completed and enclosing daily process exit0; no separate OS-exit telemetry was added."
+    },
+    {
+      "invocation_index": 6,
+      "entry": "test/photo_home_suite.gd",
+      "completion": "[photo-home-tests] PASS: 75 checks",
+      "observed_matching_line_count": 1,
+      "process_success_evidence": "Sequential fail-fast verified_godot wrapper completed and enclosing daily process exit0; no separate OS-exit telemetry was added."
+    },
+    {
+      "invocation_index": 7,
+      "entry": "test/grass_state_suite.gd",
+      "completion": "[grass-state-tests] PASS: 368 checks, 0 failures",
+      "observed_matching_line_count": 1,
+      "process_success_evidence": "Sequential fail-fast verified_godot wrapper completed and enclosing daily process exit0; no separate OS-exit telemetry was added."
+    },
+    {
+      "invocation_index": 8,
+      "entry": "test/grass_action_suite.gd",
+      "completion": "[grass-action-tests] PASS: 61 checks, 0 failures",
+      "observed_matching_line_count": 1,
+      "process_success_evidence": "Sequential fail-fast verified_godot wrapper completed and enclosing daily process exit0; no separate OS-exit telemetry was added."
+    },
+    {
+      "invocation_index": 9,
+      "entry": "test/explicit_target_suite.gd",
+      "completion": "[explicit-target-tests] checks=25 failures=[]",
+      "observed_matching_line_count": 1,
+      "process_success_evidence": "Sequential fail-fast verified_godot wrapper completed and enclosing daily process exit0; no separate OS-exit telemetry was added."
+    },
+    {
+      "invocation_index": 10,
+      "entry": "test/ui_interaction_suite.gd",
+      "completion": "[ui-interaction-tests] checks=63 failures=[]",
+      "observed_matching_line_count": 1,
+      "process_success_evidence": "Sequential fail-fast verified_godot wrapper completed and enclosing daily process exit0; no separate OS-exit telemetry was added."
+    },
+    {
+      "invocation_index": 11,
+      "entry": "test/physical_yard_suite.gd",
+      "completion": "[physical-yard-tests] PASS: 658 checks",
+      "observed_matching_line_count": 1,
+      "process_success_evidence": "Sequential fail-fast verified_godot wrapper completed and enclosing daily process exit0; no separate OS-exit telemetry was added."
+    },
+    {
+      "invocation_index": 12,
+      "entry": "test/keyboard_ground_suite.gd",
+      "completion": "[keyboard-ground-tests] PASS: 45 checks []",
+      "observed_matching_line_count": 1,
+      "process_success_evidence": "Sequential fail-fast verified_godot wrapper completed and enclosing daily process exit0; no separate OS-exit telemetry was added."
+    },
+    {
+      "invocation_index": 13,
+      "entry": "test/scrapbook_encounter_suite.gd",
+      "completion": "[scrapbook-encounters] PASS: 20 checks []",
+      "observed_matching_line_count": 1,
+      "process_success_evidence": "Sequential fail-fast verified_godot wrapper completed and enclosing daily process exit0; no separate OS-exit telemetry was added."
+    },
+    {
+      "invocation_index": 14,
+      "entry": "test/photo_moment_render_suite.gd",
+      "completion": "[photo-moment-tests] PASS: 1332 checks",
+      "observed_matching_line_count": 1,
+      "process_success_evidence": "Sequential fail-fast verified_godot wrapper completed and enclosing daily process exit0; no separate OS-exit telemetry was added."
+    },
+    {
+      "invocation_index": 15,
+      "entry": "test/photo_moment_save_suite.gd",
+      "completion": "[photo-moment-save-tests] PASS: 46 checks []",
+      "observed_matching_line_count": 1,
+      "process_success_evidence": "Sequential fail-fast verified_godot wrapper completed and enclosing daily process exit0; no separate OS-exit telemetry was added."
+    },
+    {
+      "invocation_index": 16,
+      "entry": "test/save_data_codec_suite.gd",
+      "completion": "SAVE_DATA_CODEC 16 checks; failures=[]",
+      "observed_matching_line_count": 1,
+      "process_success_evidence": "Sequential fail-fast verified_godot wrapper completed and enclosing daily process exit0; no separate OS-exit telemetry was added."
+    },
+    {
+      "invocation_index": 17,
+      "entry": "test/yard_snapshot_suite.gd",
+      "completion": "yard snapshot: 10 checks, 0 failures",
+      "observed_matching_line_count": 1,
+      "process_success_evidence": "Sequential fail-fast verified_godot wrapper completed and enclosing daily process exit0; no separate OS-exit telemetry was added."
+    },
+    {
+      "invocation_index": 18,
+      "entry": "test/fishing_active_hud_suite.gd",
+      "completion": "fishing active HUD: 10 checks, 0 failures",
+      "observed_matching_line_count": 1,
+      "process_success_evidence": "Sequential fail-fast verified_godot wrapper completed and enclosing daily process exit0; no separate OS-exit telemetry was added."
+    },
+    {
+      "invocation_index": 19,
+      "entry": "test/save_recovery_suite.gd",
+      "completion": "SAVE RECOVERY PASS 24",
+      "observed_matching_line_count": 1,
+      "process_success_evidence": "Sequential fail-fast verified_godot wrapper completed and enclosing daily process exit0; no separate OS-exit telemetry was added."
+    },
+    {
+      "invocation_index": 20,
+      "entry": "test/boundary_feedback_suite.gd",
+      "completion": "[boundary-feedback-tests] 11 checks []",
+      "observed_matching_line_count": 1,
+      "process_success_evidence": "Sequential fail-fast verified_godot wrapper completed and enclosing daily process exit0; no separate OS-exit telemetry was added."
+    },
+    {
+      "invocation_index": 21,
+      "entry": "test/mixed_input_photo_suite.gd",
+      "completion": "[mixed-input-photo-tests] 6 checks []",
+      "observed_matching_line_count": 1,
+      "process_success_evidence": "Sequential fail-fast verified_godot wrapper completed and enclosing daily process exit0; no separate OS-exit telemetry was added."
+    },
+    {
+      "invocation_index": 22,
+      "entry": "test/leading_clearance_suite.gd",
+      "completion": "[leading-clearance-tests] 18 checks []",
+      "observed_matching_line_count": 1,
+      "process_success_evidence": "Sequential fail-fast verified_godot wrapper completed and enclosing daily process exit0; no separate OS-exit telemetry was added."
+    },
+    {
+      "invocation_index": 23,
+      "entry": "test/portable_accept_suite.gd",
+      "completion": "[portable-accept-tests] 16 checks []",
+      "observed_matching_line_count": 1,
+      "process_success_evidence": "Sequential fail-fast verified_godot wrapper completed and enclosing daily process exit0; no separate OS-exit telemetry was added."
+    },
+    {
+      "invocation_index": 24,
+      "entry": "test/shipped_correctness_suite.gd",
+      "completion": "[shipped-correctness] 9 checks []",
+      "observed_matching_line_count": 1,
+      "process_success_evidence": "Sequential fail-fast verified_godot wrapper completed and enclosing daily process exit0; no separate OS-exit telemetry was added."
+    },
+    {
+      "invocation_index": 25,
+      "entry": "test/interaction_photo_suite.gd",
+      "completion": "[interaction-photo-tests] 110 checks, failures=[]",
+      "observed_matching_line_count": 1,
+      "process_success_evidence": "Sequential fail-fast verified_godot wrapper completed and enclosing daily process exit0; no separate OS-exit telemetry was added."
+    },
+    {
+      "invocation_index": 26,
+      "entry": "test/scene_hotspot_suite.gd",
+      "completion": "[scene-hotspot-tests] 91 checks, failures=[]",
+      "observed_matching_line_count": 1,
+      "process_success_evidence": "Sequential fail-fast verified_godot wrapper completed and enclosing daily process exit0; no separate OS-exit telemetry was added."
+    },
+    {
+      "invocation_index": 27,
+      "entry": "test/authored_sequence_suite.gd",
+      "completion": "[authored-sequence-tests] PASS: 16 distinct complete frames, uniform canvas and anchor, loop metadata",
+      "observed_matching_line_count": 1,
+      "process_success_evidence": "Sequential fail-fast verified_godot wrapper completed and enclosing daily process exit0; no separate OS-exit telemetry was added."
+    },
+    {
+      "invocation_index": 28,
+      "entry": "test/goose_mount_suite.gd",
+      "completion": "[goose-mount] PASS: 92 checks []",
+      "observed_matching_line_count": 1,
+      "process_success_evidence": "Sequential fail-fast verified_godot wrapper completed and enclosing daily process exit0; no separate OS-exit telemetry was added."
+    },
+    {
+      "invocation_index": 29,
+      "entry": "test/quiet_stay_suite.gd",
+      "completion": "QUIET STAY PASS 4",
+      "observed_matching_line_count": 1,
+      "process_success_evidence": "Sequential fail-fast verified_godot wrapper completed and enclosing daily process exit0; no separate OS-exit telemetry was added."
+    },
+    {
+      "invocation_index": 30,
+      "entry": "test/quiet_sky_look_suite.gd",
+      "completion": "QUIET SKY LOOK PASS 15",
+      "observed_matching_line_count": 1,
+      "process_success_evidence": "Sequential fail-fast verified_godot wrapper completed and enclosing daily process exit0; no separate OS-exit telemetry was added."
+    },
+    {
+      "invocation_index": 31,
+      "entry": "test/camera400_handoff_suite.gd",
+      "completion": "[camera400-handoff] PASS: 202 checks []",
+      "observed_matching_line_count": 1,
+      "process_success_evidence": "Sequential fail-fast verified_godot wrapper completed and enclosing daily process exit0; no separate OS-exit telemetry was added."
+    },
+    {
+      "invocation_index": 32,
+      "entry": "test/still_catch_suite.gd",
+      "completion": "STILL CATCH PASS 6",
+      "observed_matching_line_count": 1,
+      "process_success_evidence": "Sequential fail-fast verified_godot wrapper completed and enclosing daily process exit0; no separate OS-exit telemetry was added."
+    },
+    {
+      "invocation_index": 33,
+      "entry": "test/still_target_pulse_suite.gd",
+      "completion": "STILL TARGET PULSE PASS 5",
+      "observed_matching_line_count": 1,
+      "process_success_evidence": "Sequential fail-fast verified_godot wrapper completed and enclosing daily process exit0; no separate OS-exit telemetry was added."
+    },
+    {
+      "invocation_index": 34,
+      "entry": "test/still_grass_glow_suite.gd",
+      "completion": "STILL GRASS GLOW PASS 4",
+      "observed_matching_line_count": 1,
+      "process_success_evidence": "Sequential fail-fast verified_godot wrapper completed and enclosing daily process exit0; no separate OS-exit telemetry was added."
+    },
+    {
+      "invocation_index": 35,
+      "entry": "test/still_object_feedback_suite.gd",
+      "completion": "STILL OBJECT FEEDBACK PASS 14",
+      "observed_matching_line_count": 1,
+      "process_success_evidence": "Sequential fail-fast verified_godot wrapper completed and enclosing daily process exit0; no separate OS-exit telemetry was added."
+    },
+    {
+      "invocation_index": 36,
+      "entry": "test/interaction_pose_suite.gd",
+      "completion": "INTERACTION POSE PASS 35",
+      "observed_matching_line_count": 1,
+      "process_success_evidence": "Sequential fail-fast verified_godot wrapper completed and enclosing daily process exit0; no separate OS-exit telemetry was added."
+    },
+    {
+      "invocation_index": 37,
+      "entry": "test/cow_glance_suite.gd",
+      "completion": "COW GLANCE PASS 8",
+      "observed_matching_line_count": 1,
+      "process_success_evidence": "Sequential fail-fast verified_godot wrapper completed and enclosing daily process exit0; no separate OS-exit telemetry was added."
+    },
+    {
+      "invocation_index": 38,
+      "entry": "test/sheep_attention_suite.gd",
+      "completion": "SHEEP ATTENTION PASS 56",
+      "observed_matching_line_count": 1,
+      "process_success_evidence": "Sequential fail-fast verified_godot wrapper completed and enclosing daily process exit0; no separate OS-exit telemetry was added."
+    },
+    {
+      "invocation_index": 39,
+      "entry": "test/duck_feed_attention_suite.gd",
+      "completion": "DUCK ATTENTION PASS 24",
+      "observed_matching_line_count": 1,
+      "process_success_evidence": "Sequential fail-fast verified_godot wrapper completed and enclosing daily process exit0; no separate OS-exit telemetry was added."
+    },
+    {
+      "invocation_index": 40,
+      "entry": "test/goose_feed_attention_suite.gd",
+      "completion": "GOOSE ATTENTION PASS 25",
+      "observed_matching_line_count": 1,
+      "process_success_evidence": "Sequential fail-fast verified_godot wrapper completed and enclosing daily process exit0; no separate OS-exit telemetry was added."
+    },
+    {
+      "invocation_index": 41,
+      "entry": "test/fish_carry_consistency_suite.gd",
+      "completion": "[fish-carry] 94 checks []",
+      "observed_matching_line_count": 1,
+      "process_success_evidence": "Sequential fail-fast verified_godot wrapper completed and enclosing daily process exit0; no separate OS-exit telemetry was added."
+    },
+    {
+      "invocation_index": 42,
+      "entry": "test/notice_paper_suite.gd",
+      "completion": "notice paper suite checks=49 failures=[]",
+      "observed_matching_line_count": 1,
+      "process_success_evidence": "Sequential fail-fast verified_godot wrapper completed and enclosing daily process exit0; no separate OS-exit telemetry was added."
+    },
+    {
+      "invocation_index": 43,
+      "entry": "test/photo_species_frame_suite.gd",
+      "completion": "PHOTO_SPECIES_FRAME checks=9 failures=0",
+      "observed_matching_line_count": 1,
+      "process_success_evidence": "Sequential fail-fast verified_godot wrapper completed and enclosing daily process exit0; no separate OS-exit telemetry was added."
+    },
+    {
+      "invocation_index": 44,
+      "entry": "test/web_hidpi_suite.gd",
+      "completion": "web_hidpi: 102 checks, 0 failures",
+      "observed_matching_line_count": 1,
+      "process_success_evidence": "Sequential fail-fast verified_godot wrapper completed and enclosing daily process exit0; no separate OS-exit telemetry was added."
+    },
+    {
+      "invocation_index": 45,
+      "entry": "test/save_candidate_suite.gd",
+      "completion": "save candidate: 80 checks, 0 failures",
+      "observed_matching_line_count": 1,
+      "process_success_evidence": "Sequential fail-fast verified_godot wrapper completed and enclosing daily process exit0; no separate OS-exit telemetry was added."
+    },
+    {
+      "invocation_index": 46,
+      "entry": "test/exploration_core_suite.gd",
+      "completion": "EXPLORATION CORE PASS 357",
+      "observed_matching_line_count": 1,
+      "process_success_evidence": "Sequential fail-fast verified_godot wrapper completed and enclosing daily process exit0; no separate OS-exit telemetry was added."
+    },
+    {
+      "invocation_index": 47,
+      "entry": "test/fish_miss_feedback_suite.gd",
+      "completion": "[fish-miss-feedback] 16 checks, 0 failures: []",
+      "observed_matching_line_count": 1,
+      "process_success_evidence": "Sequential fail-fast verified_godot wrapper completed and enclosing daily process exit0; no separate OS-exit telemetry was added."
+    },
+    {
+      "invocation_index": 48,
+      "entry": "test/save_coordinator_suite.gd",
+      "completion": "SAVE_COORDINATOR checks=86 failures=[]",
+      "observed_matching_line_count": 1,
+      "process_success_evidence": "Sequential fail-fast verified_godot wrapper completed and enclosing daily process exit0; no separate OS-exit telemetry was added."
+    },
+    {
+      "invocation_index": 49,
+      "entry": "test/native_save_host_suite.gd",
+      "completion": "NATIVE SAVE HOST PASS 200",
+      "observed_matching_line_count": 1,
+      "process_success_evidence": "Sequential fail-fast verified_godot wrapper completed and enclosing daily process exit0; no separate OS-exit telemetry was added."
+    },
+    {
+      "invocation_index": 50,
+      "entry": "test/save_writer_guidance_suite.gd",
+      "completion": "SAVE WRITER GUIDANCE 20 checks failures=[]",
+      "observed_matching_line_count": 1,
+      "process_success_evidence": "Sequential fail-fast verified_godot wrapper completed and enclosing daily process exit0; no separate OS-exit telemetry was added."
+    },
+    {
+      "invocation_index": 51,
+      "entry": "test/exploration_cleanup_contract_suite.gd",
+      "completion": "EXPLORATION CLEANUP 95 checks failures=[]",
+      "observed_matching_line_count": 1,
+      "process_success_evidence": "Sequential fail-fast verified_godot wrapper completed and enclosing daily process exit0; no separate OS-exit telemetry was added."
+    },
+    {
+      "invocation_index": 52,
+      "entry": "test/exploration_cleanup_preservation_suite.gd",
+      "completion": "EXPLORATION CLEANUP PRESERVATION checks=51 failures=0",
+      "observed_matching_line_count": 1,
+      "process_success_evidence": "Sequential fail-fast verified_godot wrapper completed and enclosing daily process exit0; no separate OS-exit telemetry was added."
+    },
+    {
+      "invocation_index": 53,
+      "entry": "test/save_feedback_suite.gd",
+      "completion": "SAVE FEEDBACK 50 checks, failures 0",
+      "observed_matching_line_count": 1,
+      "process_success_evidence": "Sequential fail-fast verified_godot wrapper completed and enclosing daily process exit0; no separate OS-exit telemetry was added."
+    },
+    {
+      "invocation_index": 54,
+      "entry": "test/day_label_layout_suite.gd",
+      "completion": "day_label_layout suite: 173 checks passed",
+      "observed_matching_line_count": 1,
+      "process_success_evidence": "Sequential fail-fast verified_godot wrapper completed and enclosing daily process exit0; no separate OS-exit telemetry was added."
+    },
+    {
+      "invocation_index": 55,
+      "entry": "test/exploration_slice_suite.gd",
+      "completion": "EXPLORATION SLICE PASS 218/218 failures=[]",
+      "observed_matching_line_count": 1,
+      "process_success_evidence": "Sequential fail-fast verified_godot wrapper completed and enclosing daily process exit0; no separate OS-exit telemetry was added."
+    },
+    {
+      "invocation_index": 56,
+      "entry": "test/title_card_suite.gd",
+      "completion": "title_card suite: 251 checks passed",
+      "observed_matching_line_count": 1,
+      "process_success_evidence": "Sequential fail-fast verified_godot wrapper completed and enclosing daily process exit0; no separate OS-exit telemetry was added."
+    },
+    {
+      "invocation_index": 57,
+      "entry": "test/hint_paper_fit_suite.gd",
+      "completion": "hint_paper_fit suite: 4653 checks passed",
+      "observed_matching_line_count": 1,
+      "process_success_evidence": "Sequential fail-fast verified_godot wrapper completed and enclosing daily process exit0; no separate OS-exit telemetry was added."
+    },
+    {
+      "invocation_index": 58,
+      "entry": "test/confirm_panel_fit_suite.gd",
+      "completion": "confirm_panel_fit suite: 562 checks passed",
+      "observed_matching_line_count": 1,
+      "process_success_evidence": "Sequential fail-fast verified_godot wrapper completed and enclosing daily process exit0; no separate OS-exit telemetry was added."
+    },
+    {
+      "invocation_index": 59,
+      "entry": "test/title_short_landscape_suite.gd",
+      "completion": "title_short_landscape suite: 1541 checks passed",
+      "observed_matching_line_count": 1,
+      "process_success_evidence": "Sequential fail-fast verified_godot wrapper completed and enclosing daily process exit0; no separate OS-exit telemetry was added."
+    },
+    {
+      "invocation_index": 60,
+      "entry": "test/licenses_dialog_fit_suite.gd",
+      "completion": "licenses_dialog_fit_suite checks=124 failures=0",
+      "observed_matching_line_count": 1,
+      "process_success_evidence": "Sequential fail-fast verified_godot wrapper completed and enclosing daily process exit0; no separate OS-exit telemetry was added."
+    },
+    {
+      "invocation_index": 61,
+      "entry": "test/motion_preference_suite.gd",
+      "completion": "MOTION PREFERENCE NATIVE PASS 18",
+      "observed_matching_line_count": 1,
+      "process_success_evidence": "Sequential fail-fast verified_godot wrapper completed and enclosing daily process exit0; no separate OS-exit telemetry was added."
+    },
+    {
+      "invocation_index": 62,
+      "entry": "test/photo_arrival_fit_suite.gd",
+      "completion": "[photo-arrival-fit] PASS: 418 checks",
+      "observed_matching_line_count": 1,
+      "process_success_evidence": "Sequential fail-fast verified_godot wrapper completed and enclosing daily process exit0; no separate OS-exit telemetry was added."
+    },
+    {
+      "invocation_index": 63,
+      "entry": "test/photo_arrival_combo_suite.gd",
+      "completion": "PHOTO ARRIVAL COMBO PASS 656",
+      "observed_matching_line_count": 1,
+      "process_success_evidence": "Sequential fail-fast verified_godot wrapper completed and enclosing daily process exit0; no separate OS-exit telemetry was added."
+    },
+    {
+      "invocation_index": 64,
+      "entry": "test/photo_arrival_mat_suite.gd",
+      "completion": "[photo-arrival-mat] PASS: 550 checks",
+      "observed_matching_line_count": 1,
+      "process_success_evidence": "Sequential fail-fast verified_godot wrapper completed and enclosing daily process exit0; no separate OS-exit telemetry was added."
+    },
+    {
+      "invocation_index": 65,
+      "entry": "test/photo_arrival_shutter_paper_suite.gd",
+      "completion": "[photo-arrival-shutter-paper] PASS: 1290 checks",
+      "observed_matching_line_count": 1,
+      "process_success_evidence": "Sequential fail-fast verified_godot wrapper completed and enclosing daily process exit0; no separate OS-exit telemetry was added."
+    },
+    {
+      "invocation_index": 66,
+      "entry": "test/album_short_landscape_suite.gd",
+      "completion": "ALBUM_SHORT_LANDSCAPE checks=52319 failures=0",
+      "observed_matching_line_count": 1,
+      "process_success_evidence": "Sequential fail-fast verified_godot wrapper completed and enclosing daily process exit0; no separate OS-exit telemetry was added."
+    },
+    {
+      "invocation_index": 67,
+      "entry": "test/title_licenses_link_contrast_suite.gd",
+      "completion": "PASS: title_licenses_link_contrast 340 checks",
+      "observed_matching_line_count": 1,
+      "process_success_evidence": "Sequential fail-fast verified_godot wrapper completed and enclosing daily process exit0; no separate OS-exit telemetry was added."
+    },
+    {
+      "invocation_index": 68,
+      "entry": "test/soft_button_focus_contrast_suite.gd",
+      "completion": "PASS: soft_button_focus_contrast 5080 checks",
+      "observed_matching_line_count": 1,
+      "process_success_evidence": "Sequential fail-fast verified_godot wrapper completed and enclosing daily process exit0; no separate OS-exit telemetry was added."
+    },
+    {
+      "invocation_index": 69,
+      "entry": "test/soft_button_disabled_suite.gd",
+      "completion": "PASS: soft_button_disabled 4400 checks",
+      "observed_matching_line_count": 1,
+      "process_success_evidence": "Sequential fail-fast verified_godot wrapper completed and enclosing daily process exit0; no separate OS-exit telemetry was added."
+    },
+    {
+      "invocation_index": 70,
+      "entry": "test/album_layout_suite.gd",
+      "completion": "ALBUM_LAYOUT checks=45914 failures=0",
+      "observed_matching_line_count": 1,
+      "process_success_evidence": "Sequential fail-fast verified_godot wrapper completed and enclosing daily process exit0; no separate OS-exit telemetry was added."
+    },
+    {
+      "invocation_index": 71,
+      "entry": "test/pause_notice_suite.gd",
+      "completion": "PAUSE_NOTICE checks=168 failures=0",
+      "observed_matching_line_count": 1,
+      "process_success_evidence": "Sequential fail-fast verified_godot wrapper completed and enclosing daily process exit0; no separate OS-exit telemetry was added."
+    },
+    {
+      "invocation_index": 72,
+      "entry": "test/audio_button_input_suite.gd",
+      "completion": "AUDIO_BUTTON_INPUT checks=648 failures=0",
+      "observed_matching_line_count": 1,
+      "process_success_evidence": "Sequential fail-fast verified_godot wrapper completed and enclosing daily process exit0; no separate OS-exit telemetry was added."
+    },
+    {
+      "invocation_index": 73,
+      "entry": "test/still_boundary_feedback_suite.gd",
+      "completion": "STILL BOUNDARY FEEDBACK PASS 44",
+      "observed_matching_line_count": 1,
+      "process_success_evidence": "Sequential fail-fast verified_godot wrapper completed and enclosing daily process exit0; no separate OS-exit telemetry was added."
+    },
+    {
+      "invocation_index": 74,
+      "entry": "test/ui_viewports.gd",
+      "completion": "[viewport] checks=135 failures=[]",
+      "observed_matching_line_count": 1,
+      "process_success_evidence": "Sequential fail-fast verified_godot wrapper completed and enclosing daily process exit0; no separate OS-exit telemetry was added."
+    },
+    {
+      "invocation_index": 75,
+      "entry": "test/web_save_bridge/decoder_suite.gd",
+      "completion": "WEB SAVE BRIDGE DECODER 45 failures=[]",
+      "observed_matching_line_count": 1,
+      "process_success_evidence": "Sequential fail-fast verified_godot wrapper completed and enclosing daily process exit0; no separate OS-exit telemetry was added."
+    },
+    {
+      "invocation_index": 76,
+      "entry": "test/web_save_bridge/legacy_suite.gd",
+      "completion": "LEGACY_BRIDGE_PASS 22",
+      "observed_matching_line_count": 1,
+      "process_success_evidence": "Sequential fail-fast verified_godot wrapper completed and enclosing daily process exit0; no separate OS-exit telemetry was added."
+    }
+  ],
+  "uniqueness_is_actual_observation_not_wrapper_requirement": true
+}

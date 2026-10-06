@@ -1,0 +1,113 @@
+{
+  "checked_at": "2026-10-05T17:23:13.711115+00:00",
+  "run_id": 37347045289,
+  "source": "ecea67dba1afc9b99b6097970e4965fbcd99c53a",
+  "jobs": [
+    {
+      "id": 111888113221,
+      "name": "verify-export-publish",
+      "status": "completed",
+      "conclusion": "success",
+      "started_at": "2026-10-05T17:15:24Z",
+      "completed_at": "2026-10-05T17:22:16Z",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-10-05T17:15:25Z",
+          "completed_at": "2026-10-05T17:15:26Z"
+        },
+        {
+          "name": "Check out source with Pages write access",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-10-05T17:15:26Z",
+          "completed_at": "2026-10-05T17:15:51Z"
+        },
+        {
+          "name": "Install Godot 4.7.2 and Web export templates",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-10-05T17:15:51Z",
+          "completed_at": "2026-10-05T17:15:58Z"
+        },
+        {
+          "name": "Verify web bundle retention",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-10-05T17:15:58Z",
+          "completed_at": "2026-10-05T17:15:59Z"
+        },
+        {
+          "name": "Verify versioned persistence module publication",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-10-05T17:15:59Z",
+          "completed_at": "2026-10-05T17:16:00Z"
+        },
+        {
+          "name": "Run game verification",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6,
+          "started_at": "2026-10-05T17:16:00Z",
+          "completed_at": "2026-10-05T17:22:01Z"
+        },
+        {
+          "name": "Prepare Web export directory",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7,
+          "started_at": "2026-10-05T17:22:01Z",
+          "completed_at": "2026-10-05T17:22:01Z"
+        },
+        {
+          "name": "Export Web build",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8,
+          "started_at": "2026-10-05T17:22:01Z",
+          "completed_at": "2026-10-05T17:22:08Z"
+        },
+        {
+          "name": "Configure Pages commit identity",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9,
+          "started_at": "2026-10-05T17:22:08Z",
+          "completed_at": "2026-10-05T17:22:08Z"
+        },
+        {
+          "name": "Publish versioned build to GitHub Pages",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 10,
+          "started_at": "2026-10-05T17:22:08Z",
+          "completed_at": "2026-10-05T17:22:15Z"
+        },
+        {
+          "name": "Post Check out source with Pages write access",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 20,
+          "started_at": "2026-10-05T17:22:15Z",
+          "completed_at": "2026-10-05T17:22:15Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 21,
+          "started_at": "2026-10-05T17:22:15Z",
+          "completed_at": "2026-10-05T17:22:15Z"
+        }
+      ]
+    }
+  ]
+}

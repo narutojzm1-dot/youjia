@@ -1,0 +1,47 @@
+[publish] source commit: 61efaaea303a
+[publish] bundle entry name: game-61efaaea303a
+[publish] staging in /tmp/publisher130-partial-d4vld1a6/full_partial_sparse_filter_unsupported/tmp.61Ncb5Vy10
+[publish] injected cache-control meta into index.html
+[publish] cache-control meta tags injected; data-build=game-61efaaea303a
+[publish] verifying HTML patches...
+[publish] HTML verification passed: executable=game-61efaaea303a, fileSizes keys correct, script.src=game-61efaaea303a.js
+[publish] engine version: fixture-version-only-no-engine
+[publish] switching to gh-pages branch...
+HEAD is now at f3d9129 Pages changes after source checkout
+[publish] pruning 2 old bundle(s), retaining current and recent publications...
+[publish]   removing game-a.*
+[publish]   removing game-ff.*
+[detached HEAD 6c4cef3] Publish source history 2 (61efaaea303a)
+ Author: Cursor Agent <cursoragent@cursor.com>
+ 25 files changed, 690 insertions(+), 7 deletions(-)
+ create mode 100644 .nojekyll
+ create mode 100644 game-61efaaea303a.js
+ create mode 100644 game-61efaaea303a.pck
+ create mode 100644 game-61efaaea303a.wasm
+ delete mode 100644 game-a.js
+ delete mode 100644 game-a.pck
+ delete mode 100644 game-a.wasm
+ delete mode 100644 game-ff.js
+ delete mode 100644 game-ff.pck
+ delete mode 100644 game-ff.wasm
+ create mode 100644 game-release.json
+ create mode 100644 index.js
+ create mode 100644 index.pck
+ create mode 100644 index.wasm
+ create mode 100644 save-61efaaea303a/bridge.mjs
+ create mode 100644 save-61efaaea303a/budgets.mjs
+ create mode 100644 save-61efaaea303a/host.mjs
+ create mode 100644 save-61efaaea303a/idbfs_source.mjs
+ create mode 100644 save-61efaaea303a/legacy_inspection.mjs
+ create mode 100644 save-61efaaea303a/legacy_seal.mjs
+ create mode 100644 save-61efaaea303a/legacy_v5.mjs
+ create mode 100644 save-61efaaea303a/lifecycle.mjs
+ create mode 100644 save-61efaaea303a/source_decode.mjs
+ create mode 100644 save-61efaaea303a/store.mjs
+[publish] ✓ done.
+[publish]   entry:  game-61efaaea303a
+[publish]   pages:  https://narutojzm1-dot.github.io/youjia/
+[publish]   verify: document.documentElement.dataset.build in browser console should equal 'game-61efaaea303a'
+Preparing worktree (detached HEAD f3d9129)
+To file:///tmp/publisher130-partial-d4vld1a6/full_partial_sparse_filter_unsupported/remote.git
+   f3d9129..6c4cef3  HEAD -> gh-pages

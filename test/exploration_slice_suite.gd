@@ -31,9 +31,11 @@ func run() -> void:
 	_host_commit()
 	_host_failure_and_retry()
 	_host_restore()
+	_host_cleanup()
 	_host_basket_sizes()
 	_painted_path_layout()
 	await _painted_path_walk()
+	await _tap_home()
 	await _find_reveal()
 	await _scroll_and_director()
 	await _main_round_trip()
@@ -287,6 +289,98 @@ func _host_failure_and_retry() -> void:
 	check(host.last_outcome.get("state", "") == "deferred" and store.get_keepsakes() == {find: 2} and host.state() == C.STATE_FAILURE, "an unknown commit that did not land is deferred")
 
 
+## 走一趟：在树荫带上一件就回院（不 pump），返回带上的东西
+func trip_home(host: ExplorationHost, store: MemoryStore, value: int) -> String:
+	host.begin(CLOCK, value)
+	host.visit("shade")
+	var find := offer(host)
+	host.take(find)
+	store.pump()
+	host.request_return("player")
+	return find
+
+
+## 收尾清理接共享契约（#305 / #150）：成功一次清空；写失败、未知后查明被拒都只重交同一份冻结请求；
+## 次数有限；新旅程开始、原记录已变都不重交；重启照常清
+func _host_cleanup() -> void:
+	var value := seed_where(false, true)
+	var store := make_store()
+	var results: Array = []
+	store.commit_confirmed.connect(func(_op: String, kind: String) -> void: results.append([kind, "ok"]))
+	store.commit_rejected.connect(func(_op: String, kind: String, code: String) -> void: results.append([kind, code]))
+	var host := ExplorationHost.new(store)
+	var resubmits: Array = []
+	host.cleanup_resubmitted.connect(func(failed: Array, op_id: String) -> void: resubmits.append([failed, op_id]))
+	host.restore()
+	var cone := trip_home(host, store, value)
+	store.pump()
+	check(store.get_exploration_record().session == null and results.count(["exploration_cleanup", "ok"]) == 1 and resubmits.is_empty() and not host.pending_cleanup(), "a finished trip is cleaned through the cleanup contract in one write")
+	# 一次写失败：重交同一份请求，清空，带回物只授予一次
+	results.clear()
+	store.fail_kind_once = "exploration_cleanup"
+	trip_home(host, store, value)
+	store.pump()
+	check(results.has(["exploration_cleanup", "MEMORY_FAIL"]) and results.count(["exploration_cleanup", "ok"]) == 1, "a cleanup that fails to write is resubmitted and lands")
+	check(resubmits.size() == 1 and (resubmits[0][0] as Array).size() == 1 and store.get_exploration_record().session == null and store.get_keepsakes() == {cone: 2}, "the resubmit names the failed op and the find is kept once")
+	# 公开复现的那种：清理结果未知，“再确认一次”查明被拒 → 重交 → 清空
+	resubmits.clear()
+	store.unknown_kind = "exploration_cleanup"
+	trip_home(host, store, value)
+	store.pump()
+	check(store.get_exploration_record().session != null and host.pending_cleanup(), "an unknown cleanup waits instead of guessing")
+	store.resolve_unknown(false)
+	check(resubmits.size() == 1 and store.get_exploration_record().session == null and not host.pending_cleanup(), "a cleanup resolved as rejected is resubmitted once and the record ends idle")
+	# 新一趟已经开始：旧清理被拒后不重交，不覆盖新旅程
+	resubmits.clear()
+	store.unknown_kind = "exploration_cleanup"
+	trip_home(host, store, value)
+	store.pump()
+	host.begin(CLOCK, value)
+	store.resolve_unknown(false)
+	var live: Variant = store.get_exploration_record().session
+	check(resubmits.is_empty() and live is Dictionary and live.state == C.STATE_ACTIVE and live.trip_id == host.session.trip_id(), "a rejected cleanup is not replayed over a walk that already began")
+	host.visit("shade")
+	host.take(offer(host))
+	host.request_return("player")
+	store.pump()
+	# 一直写不上：最多重交 MAX_CLEANUP_RESUBMITS 次，记录留在已提交待清，授予不重复
+	resubmits.clear()
+	results.clear()
+	var keep_before := store.get_keepsakes()
+	host.begin(CLOCK, value)
+	host.visit("shade")
+	var last := offer(host)
+	host.take(last)
+	store.pump()
+	store.fail_after = 2
+	host.request_return("player")
+	store.pump()
+	store.fail_after = -1
+	var cleanup_fails := results.filter(func(r: Array) -> bool: return r[0] == "exploration_cleanup").size()
+	check(cleanup_fails == 1 + ExplorationHost.MAX_CLEANUP_RESUBMITS and resubmits.size() == ExplorationHost.MAX_CLEANUP_RESUBMITS, "a cleanup that keeps failing is resubmitted a limited number of times")
+	check(resubmits.size() == 2 and (resubmits[1][0] as Array).size() == 2, "each resubmit carries every failed op of the same cleanup")
+	check(store.get_exploration_record().session is Dictionary and int(store.get_keepsakes().get(last, 0)) == int(keep_before.get(last, 0)) + 1, "the find stays granted once while the record waits to be cleaned")
+	# 原记录在队首前变了：明确拒绝，不重交、不覆盖
+	results.clear()
+	var restarted := ExplorationHost.new(store)
+	var restarted_resubmits: Array = []
+	restarted.cleanup_resubmitted.connect(func(failed: Array, op_id: String) -> void: restarted_resubmits.append([failed, op_id]))
+	restarted.restore()
+	var changed: Dictionary = store._data.exploration.duplicate(true)
+	changed.session.record_revision = int(changed.session.record_revision) + 1
+	store._data.exploration = changed
+	store.unknown_kind = "exploration_cleanup"
+	store.pump()
+	check(results.has(["exploration_cleanup", ExplorationHost.CLEANUP_CHANGED]) and restarted_resubmits.is_empty() and store.get_exploration_record() == changed, "a cleanup whose record changed first is refused and not replayed")
+	check(not restarted.pending_cleanup() and store.is_save_idle(), "a typed refusal is final even when the queue would park that kind as unknown")
+	store.unknown_kind = ""
+	# 重启：按恢复契约 close，清理落盘
+	var again := ExplorationHost.new(store)
+	again.restore()
+	store.pump()
+	check(store.get_exploration_record().session == null and again.can_begin() and int(store.get_keepsakes().get(last, 0)) == int(keep_before.get(last, 0)) + 1, "a restart cleans the waiting record without a second grant")
+
+
 func _host_restore() -> void:
 	var value := seed_where(false, true)
 	var store := make_store()
@@ -440,6 +534,100 @@ func _painted_path_walk() -> void:
 	check(scroll.walk_target.is_empty(), "losing focus drops a pending tap walk")
 	scroll.free()
 	root.size = Vector2i(1280, 720)
+
+
+func tap_mouse(point: Vector2) -> void:
+	for pressed: bool in [true, false]:
+		var event := InputEventMouseButton.new()
+		event.button_index = MOUSE_BUTTON_LEFT
+		event.position = point
+		event.global_position = point
+		event.pressed = pressed
+		root.push_input(event)
+
+
+func tap_touch(point: Vector2) -> void:
+	for pressed: bool in [true, false]:
+		var event := InputEventScreenTouch.new()
+		event.position = point
+		event.pressed = pressed
+		root.push_input(event)
+
+
+## 点按回院（#399）：点院门或门里，走到门口才回院；刚出门、点在门外的路上不回；只回一次
+func _tap_home() -> void:
+	for view_size: Vector2i in [Vector2i(1280, 720), Vector2i(390, 844)]:
+		root.size = view_size
+		var tag := "%dx%d " % [view_size.x, view_size.y]
+		var store := make_store()
+		var host := ExplorationHost.new(store)
+		host.restore()
+		host.begin(CLOCK, seed_all_four())
+		var scroll: Node2D = load("res://scripts/exploration/near_path_scroll.gd").new()
+		root.add_child(scroll)
+		scroll.setup(host, "sunny")
+		var reasons: Array[String] = []
+		scroll.return_requested.connect(func(reason: String) -> void: reasons.append(reason))
+		await process_frame
+		for i in 90:
+			scroll.walk(Vector2.ZERO, 1.0 / 30.0)
+		check(reasons.is_empty() and not scroll.leaving, tag + "arriving from the yard does not bounce back home")
+		var short_of_gate: Dictionary = {"arm": L.HOME_ARM, "d": L.arm_length(L.HOME_ARM) - 12.0}
+		scroll.press_at(scroll.art_to_screen(L.point(short_of_gate.arm, short_of_gate.d)))
+		for i in 120:
+			scroll.walk(Vector2.ZERO, 1.0 / 30.0)
+		check(reasons.is_empty() and not L.at_home(scroll.spot), tag + "a tap on the lane just outside the gate only walks there")
+		var door: Vector2 = scroll.art_to_screen(L.point(L.HOME_ARM, L.arm_length(L.HOME_ARM)) + Vector2(10, -45))
+		# 横屏用鼠标点，竖屏用触屏点，都走真实输入
+		if view_size.x > view_size.y:
+			tap_mouse(door)
+		else:
+			tap_touch(door)
+		check(reasons.is_empty() and not scroll.walk_target.is_empty(), tag + "tapping the gate sets off without leaving before walking there")
+		for i in 120:
+			scroll.walk(Vector2.ZERO, 1.0 / 30.0)
+		check(reasons == ["player"] and scroll.leaving, tag + "walking to a tapped gate goes home once")
+		scroll.press_at(door)
+		for i in 30:
+			scroll.walk(Vector2.ZERO, 1.0 / 30.0)
+		check(reasons.size() == 1, tag + "tapping the gate again on the way out does not ask twice")
+		scroll.free()
+	# 公开复现里点过的屏幕位置（GAME-PM #399：1280×720 从出门处点 (1060,390) 与门里 (1100,320)）
+	root.size = Vector2i(1280, 720)
+	for point: Vector2 in [Vector2(1060, 390), Vector2(1100, 320)]:
+		var store := make_store()
+		var host := ExplorationHost.new(store)
+		host.restore()
+		host.begin(CLOCK, seed_all_four())
+		var scroll: Node2D = load("res://scripts/exploration/near_path_scroll.gd").new()
+		root.add_child(scroll)
+		scroll.setup(host, "sunny")
+		var reasons: Array[String] = []
+		scroll.return_requested.connect(func(reason: String) -> void: reasons.append(reason))
+		await process_frame
+		scroll.press_at(point)
+		for i in 120:
+			scroll.walk(Vector2.ZERO, 1.0 / 30.0)
+		check(reasons == ["player"], "the public repro tap at %s goes home" % point)
+		scroll.free()
+	# 路尽头右下的石头与草地：最近处也是路尽头，但只走过去，不回院
+	for point: Vector2 in [Vector2(1200, 600), Vector2(1220, 500)]:
+		var store := make_store()
+		var host := ExplorationHost.new(store)
+		host.restore()
+		host.begin(CLOCK, seed_all_four())
+		var scroll: Node2D = load("res://scripts/exploration/near_path_scroll.gd").new()
+		root.add_child(scroll)
+		scroll.setup(host, "sunny")
+		var reasons: Array[String] = []
+		scroll.return_requested.connect(func(reason: String) -> void: reasons.append(reason))
+		await process_frame
+		check(L.at_home(L.nearest(scroll.screen_to_art(point))), "the rocks at %s are nearest the road end" % point)
+		scroll.press_at(point)
+		for i in 120:
+			scroll.walk(Vector2.ZERO, 1.0 / 30.0)
+		check(reasons.is_empty() and L.at_home(scroll.spot) and not scroll.leaving, "a tap on the rocks at %s walks to the gate without going home" % point)
+		scroll.free()
 
 
 ## 拾起成功的短展示：只跟着核心接受的带上 / 换成走，打断即收尾，不碰篮子和存档
@@ -641,6 +829,32 @@ func _scroll_and_director() -> void:
 	director.idle_tick(Director.RETRY_SECONDS + 1.0)
 	store.pump()
 	check(notices.size() == quiet + 1 and notices[-1].begins_with("notice.exploration.kept."), "an idle retry that lands says the find is kept")
+	# 点院门走回去：带满 3 件也走同一条回院与保存路
+	director.try_begin(CLOCK, "sunny", value)
+	scroll = director.scroll
+	var tapped: Array[String] = []
+	for stop_id: String in ["brook", "shade", "slope"]:
+		scroll.place_at(stop_id)
+		scroll.observe()
+		tapped.append(scroll.pick_choice().find_id)
+		scroll.pick()
+		scroll.end_observe()
+	store.pump()
+	check(scroll.carried().size() == 3, "three finds are carried before tapping the gate")
+	var keep_before_tap: Dictionary = store.get_keepsakes().duplicate()
+	var returns := keys.size()
+	scroll.press_at(scroll.art_to_screen(L.point(L.HOME_ARM, L.arm_length(L.HOME_ARM)) + Vector2(0, -40)))
+	var steps := 0
+	while director.is_exploring() and steps < 600:
+		scroll.walk(Vector2.ZERO, 1.0 / 30.0)
+		steps += 1
+	await process_frame
+	store.pump()
+	check(keys.size() == returns + 1 and not director.is_exploring(), "tapping the gate walks there and goes home once")
+	var grown := true
+	for find_id: String in tapped:
+		grown = grown and int(store.get_keepsakes().get(find_id, 0)) == int(keep_before_tap.get(find_id, 0)) + tapped.count(find_id)
+	check(notices[-1] == "notice.exploration.kept_many" and grown, "three finds carried home by tapping the gate are each kept once")
 	director.free()
 	world.free()
 
@@ -722,14 +936,28 @@ func _main_round_trip() -> void:
 	check(main._pause_screen.visible and paused, "tapping the scroll pause button opens the pause menu")
 	main._toggle_pause()
 	check(not main._pause_screen.visible and not paused, "resume returns to the walk")
-	scroll._request_return("player")
-	await process_frame
+	var settled_kinds: Array[String] = []
+	var on_confirmed := func(_op_id: String, kind: String) -> void: settled_kinds.append("confirmed:" + kind)
+	var on_rejected := func(_op_id: String, kind: String, _code: String) -> void: settled_kinds.append("rejected:" + kind)
+	save_store.commit_confirmed.connect(on_confirmed)
+	save_store.commit_rejected.connect(on_rejected)
+	tap_mouse(scroll.art_to_screen(L.point(L.HOME_ARM, L.arm_length(L.HOME_ARM)) + Vector2(10, -45)))
+	var frames := 0
+	while main._screen == "exploring" and frames < 600:
+		await process_frame
+		frames += 1
+	check(main._screen != "exploring", "clicking the gate in Main walks the resident home (#399)")
 	check(main._notice_key == "notice.exploration.back" or main._notice_key == "notice.exploration.back_empty", "back in the yard says so at once")
 	await drain(save_store)
 	check(main._screen == "game" and world.visible and world.input_enabled and main._hud.visible, "return restores the yard")
 	check(world.get_player().position.distance_to(exit.approach_points[0]) < 1.0, "the resident stands at the path end after returning")
 	check(main._camera.is_current(), "yard camera is current again")
 	check(main._notice_key == "notice.exploration.back_empty", "empty return notice in the yard")
+	var cleaned: Variant = save_store.get_exploration_record()
+	check(cleaned is Dictionary and cleaned.session == null and not main._exploration.host.pending_cleanup() and not main._save_problem_active, "the real save is cleaned to idle through the cleanup contract")
+	save_store.commit_confirmed.disconnect(on_confirmed)
+	save_store.commit_rejected.disconnect(on_rejected)
+	check(settled_kinds.has("confirmed:exploration_cleanup") and not settled_kinds.has("rejected:exploration_cleanup"), "the real return confirms an exploration_cleanup op, not the fallback write")
 	# 外出中回标题：按宿主中断回院，带上的东西照常收下
 	world._save_progress()
 	check(main._exploration.try_begin({"day": world.holiday_day, "elapsed": world._day_elapsed}, "sunny", value), "can go out again")
@@ -747,5 +975,22 @@ func _main_round_trip() -> void:
 	await main._start_holiday()
 	await drain(save_store)
 	check(main._screen == "game" and main._notice_key == "notice.arrive", "next holiday starts in the yard with nothing pending")
+	# 收尾清理被拒后宿主重交（#305）：面板只在新编号确认、队列空闲后收起；绑定后失败又变了就不收
+	await drain(save_store)
+	main._on_save_rejected("cleanup-a", "exploration_cleanup", "WRITE_FAILED")
+	check(main._save_status_panel.visible and main._save_problem_active, "a rejected cleanup shows the save panel")
+	main._exploration.cleanup_resubmitted.emit(["cleanup-a"], "cleanup-b")
+	main._on_save_confirmed("cleanup-other", "yard")
+	main._on_save_state_changed("ready")
+	check(main._save_status_panel.visible, "an unrelated confirmation does not close the cleanup's panel")
+	main._on_save_confirmed("cleanup-b", "exploration_cleanup")
+	main._on_save_state_changed("ready")
+	check(not main._save_status_panel.visible and not main._save_problem_active, "the resubmitted cleanup's confirmation closes the panel on the same page")
+	main._on_save_rejected("cleanup-c", "exploration_cleanup", "WRITE_FAILED")
+	main._exploration.cleanup_resubmitted.emit(["cleanup-c"], "cleanup-d")
+	main._on_save_problem("cleanup-c", "exploration_cleanup", "AGAIN")
+	main._on_save_confirmed("cleanup-d", "exploration_cleanup")
+	main._on_save_state_changed("ready")
+	check(main._save_status_panel.visible, "a failure that changed after binding is not cleared by the old resubmit")
 	main.queue_free()
 	await process_frame

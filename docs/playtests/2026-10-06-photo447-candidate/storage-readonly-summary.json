@@ -1,0 +1,62 @@
+{
+  "cases": [
+    {
+      "case": "portrait-normal",
+      "generation": "2",
+      "album": [
+        "sheep_pet_gentle"
+      ],
+      "photo_rule_ids": [
+        "sheep_pet_gentle"
+      ],
+      "photo_moments_sha256": "5518556736eae78199d17258988a68a66f681a1697b4337309700b0c42cf1892"
+    },
+    {
+      "case": "portrait-reduce",
+      "generation": "2",
+      "album": [
+        "sheep_pet_gentle"
+      ],
+      "photo_rule_ids": [
+        "sheep_pet_gentle"
+      ],
+      "photo_moments_sha256": "54d70b6034d7d868e4226e44dad02a1c2124954f700c5903b8258668849d6fd1"
+    },
+    {
+      "case": "landscape-normal",
+      "generation": "2",
+      "album": [
+        "sheep_pet_gentle"
+      ],
+      "photo_rule_ids": [
+        "sheep_pet_gentle"
+      ],
+      "photo_moments_sha256": "53527b1ec7958063a614d1a5f38b434f57ee016599b49d5f777a4e2d14cf9e29"
+    },
+    {
+      "case": "landscape-reduce",
+      "generation": "2",
+      "album": [
+        "sheep_pet_gentle"
+      ],
+      "photo_rule_ids": [
+        "sheep_pet_gentle"
+      ],
+      "photo_moments_sha256": "3f77d89cd2a82a67c908fbd0d2a0f4800feb43974589e79535080ac6f38b938d"
+    }
+  ],
+  "reopened": {
+    "scope": "actual page close/new page in same browser context; browser process never restarted",
+    "before_generation": "2",
+    "after_generation": "2",
+    "whole_current_equal": true,
+    "album_equal": true,
+    "photo_moments_equal": true,
+    "album": [
+      "sheep_pet_gentle"
+    ],
+    "photo_rule_ids": [
+      "sheep_pet_gentle"
+    ]
+  }
+}

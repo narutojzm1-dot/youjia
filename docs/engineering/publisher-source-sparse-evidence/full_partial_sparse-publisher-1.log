@@ -1,0 +1,38 @@
+[publish] source commit: 01a24ff9ea77
+[publish] bundle entry name: game-01a24ff9ea77
+[publish] staging in /tmp/publisher130-partial-d4vld1a6/full_partial_sparse/tmp.G5WCzP00SA
+[publish] injected cache-control meta into index.html
+[publish] cache-control meta tags injected; data-build=game-01a24ff9ea77
+[publish] verifying HTML patches...
+[publish] HTML verification passed: executable=game-01a24ff9ea77, fileSizes keys correct, script.src=game-01a24ff9ea77.js
+[publish] engine version: fixture-version-only-no-engine
+[publish] switching to gh-pages branch...
+HEAD is now at 74cd90a Publish source history 2 (a8a0ca0613e7)
+[publish] pruning 1 old bundle(s), retaining current and recent publications...
+[publish]   removing game-b.*
+[detached HEAD 3730c9f] Publish second source fixture (01a24ff9ea77)
+ Author: Cursor Agent <cursoragent@cursor.com>
+ 18 files changed, 665 insertions(+), 10 deletions(-)
+ create mode 100644 game-01a24ff9ea77.js
+ create mode 100644 game-01a24ff9ea77.pck
+ create mode 100644 game-01a24ff9ea77.wasm
+ delete mode 100644 game-b.js
+ delete mode 100644 game-b.pck
+ delete mode 100644 game-b.wasm
+ create mode 100644 save-01a24ff9ea77/bridge.mjs
+ create mode 100644 save-01a24ff9ea77/budgets.mjs
+ create mode 100644 save-01a24ff9ea77/host.mjs
+ create mode 100644 save-01a24ff9ea77/idbfs_source.mjs
+ create mode 100644 save-01a24ff9ea77/legacy_inspection.mjs
+ create mode 100644 save-01a24ff9ea77/legacy_seal.mjs
+ create mode 100644 save-01a24ff9ea77/legacy_v5.mjs
+ create mode 100644 save-01a24ff9ea77/lifecycle.mjs
+ create mode 100644 save-01a24ff9ea77/source_decode.mjs
+ create mode 100644 save-01a24ff9ea77/store.mjs
+[publish] ✓ done.
+[publish]   entry:  game-01a24ff9ea77
+[publish]   pages:  https://narutojzm1-dot.github.io/youjia/
+[publish]   verify: document.documentElement.dataset.build in browser console should equal 'game-01a24ff9ea77'
+Preparing worktree (detached HEAD 74cd90a)
+To file:///tmp/publisher130-partial-d4vld1a6/full_partial_sparse/remote.git
+   74cd90a..3730c9f  HEAD -> gh-pages

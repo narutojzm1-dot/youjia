@@ -21,6 +21,9 @@ const WALK_SPEED := 85.0
 const NEAR := 55.0
 # 走到院门口还往院里走这么久，就当作走回院子
 const HOME_HOLD := 0.45
+# 点按回院的院门一带（原画像素，实验值）：离路尽头不超过这么远，且不低于路尽头这么多
+const HOME_TAP_REACH := 260.0
+const HOME_TAP_BELOW := 30.0
 # 方向与路的夹角太大时不走，免得按“上”在横路上乱滑
 const MIN_ALIGN := 0.3
 # 脚点 y → 人物比例：远（院门）小、近（画面下沿）大
@@ -157,6 +160,12 @@ static func at_home(spot: Dictionary) -> bool:
 
 static func home_direction() -> Vector2:
 	return tangent(HOME_ARM, arm_length(HOME_ARM))
+
+
+## 点在院门一带（路尽头上方、不太远）才算点了回院；路尽头右下的石头、草地只走过去
+static func is_home_tap(art: Vector2) -> bool:
+	var end := point(HOME_ARM, arm_length(HOME_ARM))
+	return at_home(nearest(art)) and art.distance_to(end) <= HOME_TAP_REACH and art.y <= end.y + HOME_TAP_BELOW
 
 
 static func nearby(spot: Dictionary) -> String:

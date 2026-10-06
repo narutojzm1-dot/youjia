@@ -1,0 +1,752 @@
+GODOT GATE CONTRACT PASS 11
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[   0% ] [90m[1mfirst_scan_filesystem[22m | Started Project initialization (5 steps)[39m[0m
+[   0% ] [90m[1mfirst_scan_filesystem[22m | Scanning file structure...[39m[0m
+[  16% ] [90m[1mfirst_scan_filesystem[22m | Loading global class names...[39m[0m
+[  33% ] [90m[1mfirst_scan_filesystem[22m | Verifying GDExtensions...[39m[0m
+[  50% ] [90m[1mfirst_scan_filesystem[22m | Creating autoload scripts...[39m[0m
+[  66% ] [90m[1mfirst_scan_filesystem[22m | Initializing plugins...[39m[0m
+[  83% ] [90m[1mfirst_scan_filesystem[22m | Starting file scan...[39m[0m
+[92m[ DONE ][39m [1mfirst_scan_filesystem[22m
+[0m
+[   0% ] [90m[1mloading_editor_layout[22m | Started Loading editor (5 steps)[39m[0m
+[   0% ] [90m[1mloading_editor_layout[22m | Loading editor layout...[39m[0m
+[  16% ] [90m[1mloading_editor_layout[22m | Loading docks...[39m[0m
+[92m[ DONE ][39m [1mloading_editor_layout[22m
+[0m
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[game-generic-tests] PASS: 414 checks
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[locomotion-tests] player distance at 30/60/120 Hz: [262.325500488281, 261.619201660156, 261.25244140625]; phases: [0.20888563545284, 0.10682017042633, 0.05382056972253]
+[locomotion-tests] animal distance at 30/60/120 Hz: [76.0414428710938, 75.8335876464844, 75.7266845703125]
+[locomotion-tests] player 30Hz planted slip=0.000000 mesh-foot error=0.000068 samples=94 unsupported_frames=0
+[locomotion-tests] llama 30Hz planted slip=0.000000 mesh-foot error=0.000043 samples=138 unsupported_frames=0
+[locomotion-tests] player 60Hz planted slip=0.000000 mesh-foot error=0.000068 samples=251 unsupported_frames=0
+[locomotion-tests] llama 60Hz planted slip=0.000000 mesh-foot error=0.000043 samples=284 unsupported_frames=0
+[locomotion-tests] player 120Hz planted slip=0.000000 mesh-foot error=0.000068 samples=507 unsupported_frames=0
+[locomotion-tests] llama 120Hz planted slip=0.000000 mesh-foot error=0.000043 samples=578 unsupported_frames=0
+[locomotion-tests] PASS: 410 checks
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[animal-home-tests] goose sun 30Hz quiet=90.8% travel=128.5px longest_leg=2.13s/19.9px legs=11 max_step=0.413 outside=0 states={ "graze": 2742, "wander": 526, "rest": 2132 }
+[animal-home-tests] sheep_a sun 30Hz quiet=90.7% travel=124.4px longest_leg=2.60s/22.3px legs=10 max_step=0.360 outside=0 states={ "rest": 1862, "wander": 522, "graze": 3016 }
+[animal-home-tests] sheep_b sun 30Hz quiet=91.1% travel=111.9px longest_leg=2.37s/19.0px legs=10 max_step=0.340 outside=0 states={ "graze": 3420, "wander": 504, "rest": 1476 }
+[animal-home-tests] cow sun 30Hz quiet=90.4% travel=132.2px longest_leg=3.00s/24.2px legs=7 max_step=0.320 outside=0 states={ "rest": 1817, "wander": 559, "graze": 3024 }
+[animal-home-tests] horse sun 30Hz quiet=91.8% travel=116.1px longest_leg=2.37s/19.9px legs=8 max_step=0.368 outside=0 states={ "rest": 1391, "wander": 459, "graze": 3550 }
+[animal-home-tests] duck_a sun 30Hz quiet=81.5% travel=265.1px longest_leg=3.30s/28.8px legs=13 max_step=0.373 outside=0 states={ "graze": 3303, "wander": 946, "rest": 1151 }
+[animal-home-tests] duck_b sun 30Hz quiet=83.4% travel=224.3px longest_leg=3.63s/31.6px legs=13 max_step=0.365 outside=0 states={ "graze": 2890, "wander": 849, "rest": 1661 }
+[animal-home-tests] duck_c sun 30Hz quiet=80.9% travel=277.5px longest_leg=3.77s/33.7px legs=13 max_step=0.373 outside=0 states={ "rest": 1463, "wander": 989, "graze": 2948 }
+[animal-home-tests] llama sun 30Hz quiet=75.9% travel=690.4px longest_leg=3.90s/68.4px legs=15 max_step=0.712 outside=0 states={ "graze": 2770, "wander": 1320, "rest": 1310 }
+[animal-home-tests] goose overcast 30Hz quiet=91.0% travel=116.9px longest_leg=2.13s/19.8px legs=13 max_step=0.413 outside=0 states={ "graze": 2489, "wander": 516, "rest": 2395 }
+[animal-home-tests] sheep_a overcast 30Hz quiet=91.9% travel=108.1px longest_leg=2.70s/23.5px legs=9 max_step=0.359 outside=0 states={ "graze": 3340, "wander": 459, "rest": 1601 }
+[animal-home-tests] sheep_b overcast 30Hz quiet=91.9% travel=104.2px longest_leg=2.10s/16.5px legs=9 max_step=0.345 outside=0 states={ "graze": 3354, "wander": 458, "rest": 1588 }
+[animal-home-tests] cow overcast 30Hz quiet=92.5% travel=91.7px longest_leg=2.93s/22.8px legs=8 max_step=0.320 outside=0 states={ "wander": 410, "graze": 3287, "rest": 1703 }
+[animal-home-tests] horse overcast 30Hz quiet=92.9% travel=94.7px longest_leg=2.67s/23.5px legs=8 max_step=0.370 outside=0 states={ "graze": 3231, "wander": 398, "rest": 1771 }
+[animal-home-tests] duck_a overcast 30Hz quiet=81.2% travel=254.4px longest_leg=3.70s/31.6px legs=14 max_step=0.362 outside=0 states={ "graze": 3009, "wander": 960, "rest": 1431 }
+[animal-home-tests] duck_b overcast 30Hz quiet=82.1% travel=245.5px longest_leg=3.40s/28.5px legs=13 max_step=0.366 outside=0 states={ "rest": 1582, "wander": 932, "graze": 2886 }
+[animal-home-tests] duck_c overcast 30Hz quiet=82.7% travel=227.9px longest_leg=3.57s/30.4px legs=14 max_step=0.368 outside=0 states={ "wander": 869, "graze": 2911, "rest": 1620 }
+[animal-home-tests] llama overcast 30Hz quiet=74.8% travel=730.3px longest_leg=4.43s/76.9px legs=15 max_step=0.718 outside=0 states={ "graze": 2838, "wander": 1377, "rest": 1185 }
+[animal-home-tests] goose sun 60Hz quiet=90.9% travel=125.8px longest_leg=2.17s/20.5px legs=12 max_step=0.208 outside=0 states={ "graze": 4652, "wander": 1036, "rest": 5112 }
+[animal-home-tests] sheep_a sun 60Hz quiet=92.0% travel=104.1px longest_leg=2.33s/19.2px legs=9 max_step=0.180 outside=0 states={ "rest": 3978, "wander": 898, "graze": 5924 }
+[animal-home-tests] sheep_b sun 60Hz quiet=91.3% travel=113.3px longest_leg=2.28s/18.1px legs=9 max_step=0.169 outside=0 states={ "graze": 6629, "wander": 984, "rest": 3187 }
+[animal-home-tests] cow sun 60Hz quiet=93.7% travel=76.0px longest_leg=2.22s/16.6px legs=7 max_step=0.160 outside=0 states={ "rest": 3155, "wander": 744, "graze": 6901 }
+[animal-home-tests] horse sun 60Hz quiet=92.7% travel=95.6px longest_leg=2.72s/22.9px legs=8 max_step=0.177 outside=0 states={ "rest": 2690, "wander": 825, "graze": 7285 }
+[animal-home-tests] duck_a sun 60Hz quiet=81.3% travel=257.7px longest_leg=3.45s/29.3px legs=13 max_step=0.179 outside=0 states={ "graze": 6319, "wander": 1950, "rest": 2531 }
+[animal-home-tests] duck_b sun 60Hz quiet=82.7% travel=230.4px longest_leg=3.22s/27.4px legs=14 max_step=0.185 outside=0 states={ "graze": 6077, "wander": 1761, "rest": 2962 }
+[animal-home-tests] duck_c sun 60Hz quiet=83.7% travel=215.8px longest_leg=3.45s/29.9px legs=13 max_step=0.182 outside=0 states={ "rest": 3248, "wander": 1654, "graze": 5898 }
+[animal-home-tests] llama sun 60Hz quiet=75.1% travel=745.1px longest_leg=4.05s/71.7px legs=15 max_step=0.372 outside=0 states={ "graze": 5540, "wander": 2716, "rest": 2544 }
+[animal-home-tests] goose overcast 60Hz quiet=90.8% travel=134.1px longest_leg=2.02s/18.5px legs=11 max_step=0.207 outside=0 states={ "graze": 5023, "wander": 1043, "rest": 4734 }
+[animal-home-tests] sheep_a overcast 60Hz quiet=90.9% travel=120.5px longest_leg=2.80s/24.7px legs=10 max_step=0.180 outside=0 states={ "rest": 3220, "wander": 1021, "graze": 6559 }
+[animal-home-tests] sheep_b overcast 60Hz quiet=90.6% travel=121.6px longest_leg=2.60s/21.4px legs=10 max_step=0.170 outside=0 states={ "graze": 6845, "wander": 1065, "rest": 2890 }
+[animal-home-tests] cow overcast 60Hz quiet=92.6% travel=88.5px longest_leg=2.45s/18.3px legs=8 max_step=0.159 outside=0 states={ "wander": 815, "graze": 6480, "rest": 3505 }
+[animal-home-tests] horse overcast 60Hz quiet=91.6% travel=110.7px longest_leg=2.78s/23.6px legs=9 max_step=0.174 outside=0 states={ "graze": 6514, "wander": 949, "rest": 3337 }
+[animal-home-tests] duck_a overcast 60Hz quiet=81.7% travel=246.6px longest_leg=3.48s/29.3px legs=14 max_step=0.180 outside=0 states={ "wander": 1830, "rest": 3578, "graze": 5392 }
+[animal-home-tests] duck_b overcast 60Hz quiet=80.6% travel=275.3px longest_leg=3.83s/32.9px legs=13 max_step=0.181 outside=0 states={ "graze": 5865, "wander": 1996, "rest": 2939 }
+[animal-home-tests] duck_c overcast 60Hz quiet=82.8% travel=229.8px longest_leg=3.12s/26.4px legs=14 max_step=0.185 outside=0 states={ "graze": 5888, "wander": 1743, "rest": 3169 }
+[animal-home-tests] llama overcast 60Hz quiet=73.5% travel=824.8px longest_leg=4.03s/77.2px legs=16 max_step=0.389 outside=0 states={ "graze": 5687, "wander": 2905, "rest": 2208 }
+[animal-home-tests] goose sun 120Hz quiet=91.6% travel=114.8px longest_leg=1.98s/17.6px legs=11 max_step=0.103 outside=0 states={ "graze": 10102, "wander": 1922, "rest": 9576 }
+[animal-home-tests] sheep_a sun 120Hz quiet=89.2% travel=149.4px longest_leg=2.52s/20.9px legs=10 max_step=0.088 outside=0 states={ "rest": 7447, "wander": 2386, "graze": 11767 }
+[animal-home-tests] sheep_b sun 120Hz quiet=92.0% travel=99.5px longest_leg=2.21s/17.2px legs=9 max_step=0.085 outside=0 states={ "graze": 13934, "wander": 1787, "rest": 5879 }
+[animal-home-tests] cow sun 120Hz quiet=93.3% travel=76.6px longest_leg=2.24s/16.4px legs=8 max_step=0.078 outside=0 states={ "rest": 6247, "wander": 1521, "graze": 13832 }
+[animal-home-tests] horse sun 120Hz quiet=92.6% travel=98.8px longest_leg=2.62s/22.6px legs=8 max_step=0.090 outside=0 states={ "rest": 7496, "wander": 1646, "graze": 12458 }
+[animal-home-tests] duck_a sun 120Hz quiet=83.9% travel=211.6px longest_leg=3.65s/31.6px legs=12 max_step=0.090 outside=0 states={ "graze": 12352, "wander": 3249, "rest": 5999 }
+[animal-home-tests] duck_b sun 120Hz quiet=81.4% travel=258.6px longest_leg=3.61s/30.6px legs=13 max_step=0.093 outside=0 states={ "graze": 11943, "wander": 3768, "rest": 5889 }
+[animal-home-tests] duck_c sun 120Hz quiet=83.1% travel=220.4px longest_leg=3.09s/25.9px legs=14 max_step=0.093 outside=0 states={ "rest": 5789, "wander": 3460, "graze": 12351 }
+[animal-home-tests] llama sun 120Hz quiet=78.8% travel=582.2px longest_leg=4.17s/70.4px legs=15 max_step=0.178 outside=0 states={ "graze": 11971, "wander": 4615, "rest": 5014 }
+[animal-home-tests] goose overcast 120Hz quiet=89.4% travel=156.5px longest_leg=2.33s/22.2px legs=12 max_step=0.103 outside=0 states={ "wander": 2318, "graze": 9895, "rest": 9387 }
+[animal-home-tests] sheep_a overcast 120Hz quiet=91.3% travel=115.2px longest_leg=2.52s/20.8px legs=9 max_step=0.087 outside=0 states={ "graze": 13106, "wander": 1996, "rest": 6498 }
+[animal-home-tests] sheep_b overcast 120Hz quiet=91.9% travel=98.3px longest_leg=2.34s/19.1px legs=10 max_step=0.088 outside=0 states={ "graze": 13626, "wander": 1811, "rest": 6163 }
+[animal-home-tests] cow overcast 120Hz quiet=93.4% travel=78.2px longest_leg=2.37s/17.8px legs=7 max_step=0.079 outside=0 states={ "graze": 12326, "wander": 1549, "rest": 7725 }
+[animal-home-tests] horse overcast 120Hz quiet=93.7% travel=77.3px longest_leg=2.36s/19.4px legs=8 max_step=0.091 outside=0 states={ "graze": 12988, "wander": 1409, "rest": 7203 }
+[animal-home-tests] duck_a overcast 120Hz quiet=80.7% travel=268.5px longest_leg=3.92s/33.6px legs=13 max_step=0.090 outside=0 states={ "graze": 11570, "wander": 3989, "rest": 6041 }
+[animal-home-tests] duck_b overcast 120Hz quiet=81.5% travel=253.7px longest_leg=3.23s/27.5px legs=14 max_step=0.092 outside=0 states={ "rest": 6496, "wander": 3723, "graze": 11381 }
+[animal-home-tests] duck_c overcast 120Hz quiet=81.3% travel=264.9px longest_leg=3.82s/34.5px legs=14 max_step=0.094 outside=0 states={ "wander": 3718, "rest": 6586, "graze": 11296 }
+[animal-home-tests] llama overcast 120Hz quiet=77.4% travel=644.5px longest_leg=4.07s/71.4px legs=16 max_step=0.186 outside=0 states={ "graze": 11432, "wander": 4922, "rest": 5246 }
+[animal-home-tests] PASS: 1005 checks
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[photo-home-tests] 30Hz photos=["llama_sun_sheep_happy", "llama_overcast_goose_annoyed"] release=(308.0765, 528.9205) free_travel=353.8px quiet=77.3%
+[photo-home-tests] 60Hz photos=["llama_sun_sheep_happy", "llama_overcast_goose_annoyed"] release=(307.6435, 542.7255) free_travel=342.4px quiet=78.6%
+[photo-home-tests] 120Hz photos=["llama_sun_sheep_happy", "llama_overcast_goose_annoyed"] release=(308.3254, 531.3578) free_travel=369.2px quiet=76.6%
+[photo-home-tests] PASS: 75 checks
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[grass-state-tests] PASS: 368 checks, 0 failures
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[grass-action-tests] PASS: 61 checks, 0 failures
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+AUDIT PASS title button dispatch starts game
+AUDIT PASS raw mouse moves initial player through GUI
+AUDIT PASS raw touch reaches grass and picks it up without teleport
+AUDIT PASS target is naturally moving before approach
+AUDIT PASS moving llama selection retains exact destination
+AUDIT PASS invalid newer tap cancels pending llama approach without interacting
+AUDIT PASS raw touch reaches llama and collects exact feeding photo
+AUDIT moving llama displacement=1.42977750301361 final reach=87.9507827758789
+AUDIT PASS start lead away from grass
+REPRO arrival p=(413.2305, 575.1405) llama=(484.0484, 552.9523) grass_dist=77.3349914550781 holding=true lead=true
+AUDIT PASS grass arrival picks grass without toggling nearby llama
+AUDIT PASS explicit grass tap with full hands cannot feed nearby llama
+AUDIT PASS empty hands after feeding by grass
+AUDIT PASS release using actual HUD button
+REPRO before llama tap p=(413.2305, 575.1405) llama=(482.0078, 553.5903) grass_dist=77.3349914550781
+REPRO result holding=false leading=true notice=草泥马跟着你，沿着草地走。 p=(413.2305, 575.1405) llama=(481.4511, 553.7643)
+AUDIT PASS explicit llama tap restarts lead instead of picking nearby grass
+AUDIT PASS second llama selection begins outside interaction range
+AUDIT PASS explicit llama route is not snapped to nearby grass or animals
+ARRIVAL grass distance=70.5074310302734
+AUDIT PASS arrival regression overlaps grass interaction range
+AUDIT PASS llama intent survives arrival inside grass range
+AUDIT PASS Space performs the same release displayed by HUD
+AUDIT PASS explicit grass tap picks grass after release
+AUDIT PASS HUD feed selects llama near grass
+AUDIT PASS HUD grass selects grass near llama
+AUDIT PASS natural scene provides lawn point near another animal
+AUDIT PASS background destination is not re-snapped to nearby actor
+AUDIT PASS invalid newer pointer cancels previous route and intent
+AUDIT PASS invalid pointer never consumes grass or toggles lead
+[explicit-target-tests] failures=[]
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+AUDIT PASS title button dispatch starts game
+AUDIT PASS Chinese HUD names the marked cow and the same pet action as the button
+AUDIT PASS HUD's marked cow is the actual action target
+AUDIT PASS English HUD names the same target and action
+AUDIT PASS raw touch targets the painted window flowers and Chinese HUD names the same action
+AUDIT PASS English HUD retains the exact touched windowbox target
+AUDIT PASS real touch action button keeps the flower-box approach without celebrating early
+AUDIT PASS raw touch chooses the painted bank stone and Chinese HUD/button describe water-touch, not fishing
+AUDIT PASS English HUD keeps the exact bank stone rather than silently changing to the pond
+AUDIT PASS real touch action button retains the bank route without splashing early
+AUDIT PASS raw touch selects the painted gate; Chinese HUD and action button agree
+AUDIT PASS English HUD keeps the touched wooden fence rather than suggesting entry
+AUDIT PASS actual action button retains the safe fence route without an early breeze
+AUDIT PASS pond selection names its fishing action rather than nearby animal
+AUDIT PASS raw mouse moves initial player through GUI
+AUDIT PASS raw touch reaches grass and picks it up without teleport
+AUDIT PASS target is naturally moving before approach
+AUDIT PASS raw touch reaches llama and collects exact feeding photo
+AUDIT moving llama displacement=1.42905044555664 final reach=87.4180145263672
+AUDIT PASS pause inside viewport during photo zoom
+AUDIT PASS zoom screen-to-world roundtrip
+AUDIT PASS tap llama starts lead
+AUDIT PASS rejected empty tap does not toggle lead
+AUDIT PASS touch walks while lead remains active
+AUDIT PASS actual action button releases lead
+AUDIT PASS actual pause button pauses
+AUDIT PASS actual resume button resumes
+AUDIT PASS real painted goose rest supplies a photograph for page browsing
+AUDIT PASS real close sheep supply another page, not a fabricated page counter
+AUDIT PASS actual album button opens a clean book without yard HUD controls
+AUDIT PASS wide album shows two paper pages and a spine, with only saved moments
+AUDIT PASS touching next turns one double-page spread
+AUDIT PASS left arrow turns back without moving the traveler
+AUDIT PASS right arrow turns forward while the album is modal
+AUDIT PASS portrait viewport keeps the current photo on a single readable page
+AUDIT PASS horizontal touch swipe advances one portrait page
+AUDIT PASS language switch retains the selected photo and translates controls
+AUDIT PASS portrait touch previous button returns one page
+AUDIT PASS actual album close restores yard HUD and walking
+AUDIT PASS overcast uses the painted overcast yard
+AUDIT PASS weather preserves backdrop scale and collision
+AUDIT PASS overcast swaps the overcast cloud band
+AUDIT PASS sun restores the painted sunny yard
+AUDIT PASS sun restores the sunny cloud band
+AUDIT PASS sunny morning uses the thinner morning cloud band
+AUDIT PASS sunny dawn uses the morning cloud band
+AUDIT PASS overcast morning keeps the overcast cloud band
+AUDIT PASS sunny noon restores the bright cloud band after morning
+AUDIT PASS sunny cloud band stays bright instead of dirty warm tint
+AUDIT PASS sunny evening uses the warm sunset cloud band
+AUDIT PASS overcast evening keeps the overcast cloud band
+AUDIT PASS sunny noon restores the bright cloud band
+AUDIT PASS sunny night keeps the daytime cloud shape
+AUDIT PASS sunny night clouds are cooler and dimmer than noon
+AUDIT PASS overcast night keeps the overcast cloud band
+AUDIT PASS sunny noon after night restores the bright cloud band
+AUDIT PASS reduced motion keeps cloud band static
+AUDIT PASS cloud band drifts when motion is allowed
+AUDIT PASS real windowbox observation paints a temporary world response
+AUDIT PASS real pause button clears painted windowbox encounter immediately
+AUDIT PASS actual pond-side stone action paints a ripple, never an unearned fish
+AUDIT PASS actual pause button clears a successful shore ripple immediately
+AUDIT PASS real gate observation paints a grass response rather than opening the shed
+AUDIT PASS actual pause button clears the painted fence breeze
+[ui-interaction-tests] failures=[]
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[physical-yard-tests] cow from east at 30Hz frames=328 travel=341.4 llama=39.4 min_gap=1.0000 overlap=0 depth=0
+[physical-yard-tests] cow from north at 30Hz frames=259 travel=163.1 llama=52.6 min_gap=0.9999 overlap=0 depth=0
+[physical-yard-tests] cow from south at 30Hz frames=260 travel=150.4 llama=0.0 min_gap=1.0001 overlap=0 depth=0
+[physical-yard-tests] sheep_a from west at 30Hz frames=204 travel=83.6 llama=34.6 min_gap=1.0001 overlap=0 depth=0
+[physical-yard-tests] sheep_a from east at 30Hz frames=220 travel=125.0 llama=0.0 min_gap=1.0000 overlap=0 depth=0
+[physical-yard-tests] sheep_a from north at 30Hz frames=250 travel=131.7 llama=25.9 min_gap=0.9993 overlap=0 depth=0
+[physical-yard-tests] sheep_a from south at 30Hz frames=247 travel=136.4 llama=42.3 min_gap=1.0001 overlap=0 depth=0
+[physical-yard-tests] horse from west at 30Hz frames=341 travel=375.0 llama=31.1 min_gap=1.0000 overlap=0 depth=0
+[physical-yard-tests] horse from east at 30Hz frames=229 travel=144.0 llama=55.8 min_gap=1.0001 overlap=0 depth=0
+[physical-yard-tests] horse from south at 30Hz frames=202 travel=33.4 llama=0.0 min_gap=1.0001 overlap=0 depth=0
+[physical-yard-tests] goose from east at 30Hz frames=463 travel=607.1 llama=33.3 min_gap=1.0001 overlap=0 depth=0
+[physical-yard-tests] goose from north at 30Hz frames=236 travel=109.2 llama=24.9 min_gap=0.9992 overlap=0 depth=0
+[physical-yard-tests] goose from south at 30Hz frames=236 travel=128.0 llama=0.1 min_gap=1.0001 overlap=0 depth=0
+[physical-yard-tests] multiple natural resident routes at 30Hz frames=1646 travel=3042.7 llama=239.0 min_gap=1.0009 overlap=0 depth=0
+[physical-yard-tests] leading around residents at 30Hz frames=2623 travel=1896.9 llama=1101.9 min_gap=1.0005 overlap=0 depth=0
+[physical-yard-tests] cow from east at 60Hz frames=654 travel=340.9 llama=43.6 min_gap=1.0000 overlap=0 depth=0
+[physical-yard-tests] cow from north at 60Hz frames=523 travel=157.0 llama=28.3 min_gap=0.9998 overlap=0 depth=0
+[physical-yard-tests] cow from south at 60Hz frames=526 travel=157.3 llama=76.3 min_gap=1.0000 overlap=0 depth=0
+[physical-yard-tests] sheep_a from west at 60Hz frames=406 travel=83.0 llama=0.0 min_gap=1.0000 overlap=0 depth=0
+[physical-yard-tests] sheep_a from east at 60Hz frames=440 travel=114.4 llama=28.0 min_gap=1.0000 overlap=0 depth=0
+[physical-yard-tests] sheep_a from north at 60Hz frames=500 travel=147.1 llama=49.4 min_gap=1.0000 overlap=0 depth=0
+[physical-yard-tests] sheep_a from south at 60Hz frames=499 travel=136.2 llama=0.0 min_gap=1.0000 overlap=0 depth=0
+[physical-yard-tests] horse from west at 60Hz frames=681 travel=377.0 llama=53.9 min_gap=1.0000 overlap=0 depth=0
+[physical-yard-tests] horse from east at 60Hz frames=448 travel=133.9 llama=63.0 min_gap=1.0000 overlap=0 depth=0
+[physical-yard-tests] horse from south at 60Hz frames=403 travel=32.9 llama=0.0 min_gap=1.0000 overlap=0 depth=0
+[physical-yard-tests] goose from east at 60Hz frames=926 travel=601.8 llama=72.3 min_gap=1.0000 overlap=0 depth=0
+[physical-yard-tests] goose from north at 60Hz frames=475 travel=102.4 llama=17.2 min_gap=0.9998 overlap=0 depth=0
+[physical-yard-tests] goose from south at 60Hz frames=517 travel=156.5 llama=17.3 min_gap=1.0000 overlap=0 depth=0
+[physical-yard-tests] multiple natural resident routes at 60Hz frames=3424 travel=3153.6 llama=216.3 min_gap=0.9999 overlap=0 depth=0
+[physical-yard-tests] leading around residents at 60Hz frames=5244 travel=1894.5 llama=1101.2 min_gap=1.0434 overlap=0 depth=0
+[physical-yard-tests] cow from east at 120Hz frames=1307 travel=298.3 llama=21.5 min_gap=0.9997 overlap=0 depth=0
+[physical-yard-tests] cow from north at 120Hz frames=926 travel=106.0 llama=40.8 min_gap=0.9999 overlap=0 depth=0
+[physical-yard-tests] cow from south at 120Hz frames=1003 travel=156.0 llama=6.1 min_gap=1.0000 overlap=0 depth=0
+[physical-yard-tests] sheep_a from west at 120Hz frames=812 travel=52.8 llama=7.7 min_gap=0.9994 overlap=0 depth=0
+[physical-yard-tests] sheep_a from east at 120Hz frames=947 travel=149.7 llama=14.2 min_gap=0.9998 overlap=0 depth=0
+[physical-yard-tests] sheep_a from north at 120Hz frames=1009 travel=133.7 llama=21.8 min_gap=0.9999 overlap=0 depth=0
+[physical-yard-tests] sheep_a from south at 120Hz frames=995 travel=140.2 llama=75.0 min_gap=1.0000 overlap=0 depth=0
+[physical-yard-tests] horse from west at 120Hz frames=1360 travel=384.2 llama=61.7 min_gap=1.0000 overlap=0 depth=0
+[physical-yard-tests] horse from east at 120Hz frames=1128 travel=200.1 llama=29.5 min_gap=0.9995 overlap=0 depth=0
+[physical-yard-tests] goose from east at 120Hz frames=1850 travel=585.9 llama=52.9 min_gap=0.9997 overlap=0 depth=0
+[physical-yard-tests] goose from north at 120Hz frames=903 travel=87.4 llama=61.0 min_gap=1.0000 overlap=0 depth=0
+[physical-yard-tests] goose from south at 120Hz frames=941 travel=109.4 llama=10.7 min_gap=1.0000 overlap=0 depth=0
+[physical-yard-tests] multiple natural resident routes at 120Hz frames=6802 travel=3096.6 llama=195.2 min_gap=0.9991 overlap=0 depth=0
+[physical-yard-tests] leading around residents at 120Hz frames=10489 travel=1893.4 llama=1100.6 min_gap=1.0460 overlap=0 depth=0
+[physical-yard-tests] PASS: 658 checks
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[keyboard-ground-tests] PASS: 45 checks []
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[scrapbook-encounters] PASS: 20 checks []
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[photo-moment-tests] goose_horse_mount: 15 items, span 260.5, 8082 JSON bytes
+[photo-moment-tests] llama_overcast_goose_annoyed: 17 items, span 200.0, 9346 JSON bytes
+[photo-moment-tests] llama_sun_sheep_happy: 15 items, span 220.0, 8094 JSON bytes
+[photo-moment-tests] llama_sheep_cow_smirk: 16 items, span 323.7, 8440 JSON bytes
+[photo-moment-tests] llama_fed_gentle: 16 items, span 211.1, 8560 JSON bytes
+[photo-moment-tests] duck_pond_chorus: 16 items, span 332.0, 8397 JSON bytes
+[photo-moment-tests] goose_pond_rest: 15 items, span 230.0, 8070 JSON bytes
+[photo-moment-tests] goose_duck_shore: 15 items, span 260.0, 8069 JSON bytes
+[photo-moment-tests] cow_rare_calm: 15 items, span 240.0, 8071 JSON bytes
+[photo-moment-tests] sheep_pet_gentle: 15 items, span 220.0, 8072 JSON bytes
+[photo-moment-tests] sheep_pair_near: 15 items, span 260.0, 8086 JSON bytes
+[photo-moment-tests] cow_pet_gentle: 15 items, span 220.0, 8069 JSON bytes
+[photo-moment-tests] horse_pet_sunny: 15 items, span 220.0, 8065 JSON bytes
+[photo-moment-tests] plant_first_bloom: 15 items, span 128.0, 8050 JSON bytes
+[photo-moment-tests] fish_first_catch: 16 items, span 568.4, 8468 JSON bytes
+[photo-moment-tests] PASS: 1332 checks
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[photo-moment-save-tests] PASS: 46 checks []
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+SAVE_DATA_CODEC 16 checks; failures=[]
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+yard snapshot: 10 checks, 0 failures
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+fishing active HUD: 10 checks, 0 failures
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+SAVE RECOVERY PASS 24
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[boundary-feedback-tests] 11 checks []
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[mixed-input-photo-tests] 6 checks []
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[leading-clearance-tests] 18 checks []
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[portable-accept-tests] 16 checks []
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[shipped-correctness] 9 checks []
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[interaction-photo-tests] 110 checks, failures=[]
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[scene-hotspot-tests] 91 checks, failures=[]
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[authored-sequence-tests] PASS: 16 distinct complete frames, uniform canvas and anchor, loop metadata
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[goose-mount] PASS: 92 checks []
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+QUIET STAY PASS 4
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+QUIET SKY LOOK PASS 15
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+STILL CATCH PASS 6
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+STILL TARGET PULSE PASS 5
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+STILL GRASS GLOW PASS 4
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+STILL OBJECT FEEDBACK PASS 14
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+INTERACTION POSE PASS 35
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+COW GLANCE PASS 8
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+SHEEP ATTENTION PASS 56
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+DUCK ATTENTION PASS 24
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+GOOSE ATTENTION PASS 25
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[fish-carry] fresh reset: prev_elapsed=-1.0 -> day=1 elapsed=0.0 plant={ "state": 0, "day_planted": 0, "watered_day": -1 }
+[fish-carry] S1 no-old-fish miss: carry before= after= chance_misses=0 notices=["notice.fishing.cast", "notice.fishing.bite", "notice.fishing.bite", "notice.fishing.bite", "notice.fishing.miss", "notice.fishing.cast", "notice.fishing.wait", "notice.fishing.wait"]
+[fish-carry] fresh reset: prev_elapsed=22.5 -> day=1 elapsed=0.0 plant={ "state": 0, "day_planted": 0, "watered_day": -1 }
+[fish-carry] S2 pond tap while carrying casts=true primary_while_carrying=action.fish_waiting
+[fish-carry] S2 old-fish miss path=bite_timeout kind=small timer 20.00->13.38 (elapsed 6.62) notice=notice.fishing.miss_with_carry hint=hud.hint.carrying_fish
+[fish-carry] S2 historical FINDING fixed by #231 Assistant feedback slice: distinct miss_with_carry says the held old fish remains; original reports retain their baseline.
+[fish-carry] fresh reset: prev_elapsed=12.9 -> day=1 elapsed=0.0 plant={ "state": 0, "day_planted": 0, "watered_day": -1 }
+[fish-carry] S3 expiry notices=["notice.fishing.cast", "notice.fishing.bite", "notice.fishing.caught", "notice.fishing.caught", "notice.fishing.release", "notice.fishing.cast", "notice.fishing.wait", "notice.fishing.wait"]
+[fish-carry] fresh reset: prev_elapsed=32.3 -> day=1 elapsed=0.0 plant={ "state": 0, "day_planted": 0, "watered_day": -1 }
+[fish-carry] S4 birds=["goose@(775.3414, 499.9771)", "duck_a@(682.3613, 586.0216)", "duck_b@(745.8864, 587.2455)", "duck_c@(650.0, 590.0)"]
+[fish-carry] S4 approach gap=143 notices=["notice.fishing.cast", "notice.fishing.miss", "notice.fishing.cast", "notice.fishing.bite", "notice.fishing.caught.odd", "notice.fishing.caught.odd", "notice.fishing.release"]
+[fish-carry] fresh reset: prev_elapsed=32.7 -> day=1 elapsed=0.0 plant={ "state": 0, "day_planted": 0, "watered_day": -1 }
+[fish-carry] S5 pause t0=20.00 after_resume=19.00
+[fish-carry] fresh reset: prev_elapsed=7.3 -> day=1 elapsed=0.0 plant={ "state": 0, "day_planted": 0, "watered_day": -1 }
+[fish-carry] S6 fed notice=notice.toss_fish.duck notices=["notice.fishing.cast", "notice.fishing.miss", "notice.fishing.cast", "notice.fishing.bite", "notice.fishing.caught", "notice.fishing.caught", "notice.toss_fish.duck", "notice.pet.horse", "notice.pet.horse", "notice.pet.horse", "notice.fishing.cast", "notice.fishing.wait", "notice.fishing.wait"]
+[fish-carry] fresh reset: prev_elapsed=9.9 -> day=1 elapsed=0.0 plant={ "state": 0, "day_planted": 0, "watered_day": -1 }
+[fish-carry] fresh reset: prev_elapsed=6.7 -> day=1 elapsed=0.0 plant={ "state": 0, "day_planted": 0, "watered_day": -1 }
+[fish-carry] fresh reset: prev_elapsed=6.3 -> day=1 elapsed=0.0 plant={ "state": 0, "day_planted": 0, "watered_day": -1 }
+[fish-carry] S7 odd catch current text zh='钓到一条奇怪的鱼。' en='Caught a peculiar fish.' carry=odd fed=["notice.toss_fish.duck"]
+[fish-carry] S7 NOTE: baseline 6e7435c wording said '…溜走了。'/'…slipped away.' (original finding); current wording above no longer says the fish left. Carry/feed behaviour itself is unchanged and still asserted here.
+[fish-carry] 94 checks []
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[notice_paper] PASS (1280, 720) notice has a flat paper backing
+[notice_paper] PASS (1280, 720) backing is mostly opaque paper (a=0.88)
+[notice_paper] PASS (1280, 720) backing uses the existing PAPER colour
+[notice_paper] PASS (1280, 720) backing has soft corners
+[notice_paper] PASS (1280, 720) ink colour unchanged
+[notice_paper] PASS (1280, 720) wrapped notice grows upward, not onto buttons
+[notice_paper] PASS (1280, 720) notice still ignores taps
+[notice_paper] PASS (1280, 720) ordinary notice still 16px
+[notice_paper] PASS (1280, 720) short notice centred
+[notice_paper] PASS (1280, 720) short notice paper hugs text (w=144)
+[notice_paper] PASS (1280, 720) short notice paper covers text plus padding (w=144 text=112)
+[notice_paper] PASS (1280, 720) short notice stays one line
+[notice_paper] PASS (1280, 720) backing does not move between frames
+[notice_paper] PASS (1280, 720) long notice keeps the original wrap width (220)
+[notice_paper] PASS (1280, 720) catch-size text refits on the next frame (144 -> 186)
+[notice_paper] PASS (1280, 720) backing disappears with the notice
+[notice_paper] PASS (390, 844) notice has a flat paper backing
+[notice_paper] PASS (390, 844) backing is mostly opaque paper (a=0.88)
+[notice_paper] PASS (390, 844) backing uses the existing PAPER colour
+[notice_paper] PASS (390, 844) backing has soft corners
+[notice_paper] PASS (390, 844) ink colour unchanged
+[notice_paper] PASS (390, 844) wrapped notice grows upward, not onto buttons
+[notice_paper] PASS (390, 844) notice still ignores taps
+[notice_paper] PASS (390, 844) ordinary notice still 16px
+[notice_paper] PASS (390, 844) short notice centred
+[notice_paper] PASS (390, 844) short notice paper hugs text (w=144)
+[notice_paper] PASS (390, 844) short notice paper covers text plus padding (w=144 text=112)
+[notice_paper] PASS (390, 844) short notice stays one line
+[notice_paper] PASS (390, 844) backing does not move between frames
+[notice_paper] PASS (390, 844) long notice keeps the original wrap width (175)
+[notice_paper] PASS (390, 844) catch-size text refits on the next frame (144 -> 186)
+[notice_paper] PASS (390, 844) backing disappears with the notice
+[notice_paper] PASS (844, 390) notice has a flat paper backing
+[notice_paper] PASS (844, 390) backing is mostly opaque paper (a=0.88)
+[notice_paper] PASS (844, 390) backing uses the existing PAPER colour
+[notice_paper] PASS (844, 390) backing has soft corners
+[notice_paper] PASS (844, 390) ink colour unchanged
+[notice_paper] PASS (844, 390) wrapped notice grows upward, not onto buttons
+[notice_paper] PASS (844, 390) notice still ignores taps
+[notice_paper] PASS (844, 390) ordinary notice still 16px
+[notice_paper] PASS (844, 390) short notice centred
+[notice_paper] PASS (844, 390) short notice paper hugs text (w=144)
+[notice_paper] PASS (844, 390) short notice paper covers text plus padding (w=144 text=112)
+[notice_paper] PASS (844, 390) short notice stays one line
+[notice_paper] PASS (844, 390) backing does not move between frames
+[notice_paper] PASS (844, 390) long notice keeps the original wrap width (220)
+[notice_paper] PASS (844, 390) catch-size text refits on the next frame (144 -> 186)
+[notice_paper] PASS (844, 390) backing disappears with the notice
+[notice_paper] PASS ink on paper over black still >= 4.5:1 (6.28)
+notice paper suite checks=49 failures=[]
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PHOTO_SPECIES_FRAME checks=9 failures=0
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PASS WebHiDpiBoot autoload is registered
+PASS DPR 1 keeps factor 1
+PASS DPR below 1 never shrinks the UI
+PASS NaN scale falls back to 1
+PASS infinite scale falls back to 1
+PASS DPR 2 gives factor 2
+PASS fractional DPR kept as-is
+PASS absurd DPR clamped to MAX_FACTOR
+PASS native/headless reads scale 1 (no web feature)
+PASS apply reports a change
+PASS apply is a no-op when already at that factor
+PASS apply tolerates a null window
+PASS (1170, 2532)@3.00 window factor follows browser scale
+PASS (1170, 2532)@3.00 main lays out in CSS pixels (390, 844) (got (390.0, 844.0))
+PASS (1170, 2532)@3.00 still renders at physical resolution
+PASS (1170, 2532)@3.00 翻开手帐 stays on screen
+PASS (1170, 2532)@3.00 大太阳 stays on screen
+PASS (1170, 2532)@3.00 歇一会儿 stays on screen
+PASS (1170, 2532)@3.00 看看花箱 stays on screen
+PASS (1170, 2532)@3.00 size matches DPR-1 (390, 844) ((390.0, 844.0) vs (390.0, 844.0))
+PASS (1170, 2532)@3.00 hint_pos matches DPR-1 (390, 844) ((20.0, 16.0) vs (20.0, 16.0))
+PASS (1170, 2532)@3.00 hint_size matches DPR-1 (390, 844) ((210.0, 49.0) vs (210.0, 49.0))
+PASS (1170, 2532)@3.00 day_pos matches DPR-1 (390, 844) ((250.0, 76.0) vs (250.0, 76.0))
+PASS (1170, 2532)@3.00 album_pos matches DPR-1 (390, 844) ((20.0, 720.0) vs (20.0, 720.0))
+PASS (1170, 2532)@3.00 album_size matches DPR-1 (390, 844) ((165.0, 48.0) vs (165.0, 48.0))
+PASS (1170, 2532)@3.00 weather_pos matches DPR-1 (390, 844) ((205.0, 720.0) vs (205.0, 720.0))
+PASS (1170, 2532)@3.00 action_pos matches DPR-1 (390, 844) ((20.0, 776.0) vs (20.0, 776.0))
+PASS (1170, 2532)@3.00 action_size matches DPR-1 (390, 844) ((350.0, 48.0) vs (350.0, 48.0))
+PASS (1170, 2532)@3.00 pause_pos matches DPR-1 (390, 844) ((250.0, 20.0) vs (250.0, 20.0))
+PASS (1170, 2532)@3.00 notice_top matches DPR-1 (390, 844) (-170.0 vs -170.0)
+PASS (1170, 2532)@3.00 zoom matches DPR-1 (390, 844) ((0.977778, 0.977778) vs (0.977778, 0.977778))
+PASS (1170, 2532)@3.00 hint_font matches DPR-1 (390, 844) (15 vs 15)
+PASS (1170, 2532)@3.00 day_font matches DPR-1 (390, 844) (14 vs 14)
+PASS (1688, 780)@2.00 window factor follows browser scale
+PASS (1688, 780)@2.00 main lays out in CSS pixels (844, 390) (got (844.0, 390.0))
+PASS (1688, 780)@2.00 still renders at physical resolution
+PASS (1688, 780)@2.00 翻开手帐 stays on screen
+PASS (1688, 780)@2.00 大太阳 stays on screen
+PASS (1688, 780)@2.00 歇一会儿 stays on screen
+PASS (1688, 780)@2.00 看看花箱 stays on screen
+PASS (1688, 780)@2.00 size matches DPR-1 (844, 390) ((844.0, 390.0) vs (844.0, 390.0))
+PASS (1688, 780)@2.00 hint_pos matches DPR-1 (844, 390) ((20.0, 16.0) vs (20.0, 16.0))
+PASS (1688, 780)@2.00 hint_size matches DPR-1 (844, 390) ((520.0, 32.0) vs (520.0, 32.0))
+PASS (1688, 780)@2.00 day_pos matches DPR-1 (844, 390) ((636.0, 76.0) vs (636.0, 76.0))
+PASS (1688, 780)@2.00 album_pos matches DPR-1 (844, 390) ((20.0, 322.0) vs (20.0, 322.0))
+PASS (1688, 780)@2.00 album_size matches DPR-1 (844, 390) ((188.0, 48.0) vs (188.0, 48.0))
+PASS (1688, 780)@2.00 weather_pos matches DPR-1 (844, 390) ((230.0, 322.0) vs (230.0, 322.0))
+PASS (1688, 780)@2.00 action_pos matches DPR-1 (844, 390) ((636.0, 322.0) vs (636.0, 322.0))
+PASS (1688, 780)@2.00 action_size matches DPR-1 (844, 390) ((188.0, 48.0) vs (188.0, 48.0))
+PASS (1688, 780)@2.00 pause_pos matches DPR-1 (844, 390) ((636.0, 20.0) vs (636.0, 20.0))
+PASS (1688, 780)@2.00 notice_top matches DPR-1 (844, 390) (-110.0 vs -110.0)
+PASS (1688, 780)@2.00 zoom matches DPR-1 (844, 390) ((0.436111, 0.436111) vs (0.436111, 0.436111))
+PASS (1688, 780)@2.00 hint_font matches DPR-1 (844, 390) (15 vs 15)
+PASS (1688, 780)@2.00 day_font matches DPR-1 (844, 390) (14 vs 14)
+PASS (1920, 1080)@1.50 window factor follows browser scale
+PASS (1920, 1080)@1.50 main lays out in CSS pixels (1280, 720) (got (1280.0, 720.0))
+PASS (1920, 1080)@1.50 still renders at physical resolution
+PASS (1920, 1080)@1.50 翻开手帐 stays on screen
+PASS (1920, 1080)@1.50 大太阳 stays on screen
+PASS (1920, 1080)@1.50 歇一会儿 stays on screen
+PASS (1920, 1080)@1.50 看看花箱 stays on screen
+PASS (1920, 1080)@1.50 size matches DPR-1 (1280, 720) ((1280.0, 720.0) vs (1280.0, 720.0))
+PASS (1920, 1080)@1.50 hint_pos matches DPR-1 (1280, 720) ((20.0, 16.0) vs (20.0, 16.0))
+PASS (1920, 1080)@1.50 hint_size matches DPR-1 (1280, 720) ((520.0, 32.0) vs (520.0, 32.0))
+PASS (1920, 1080)@1.50 day_pos matches DPR-1 (1280, 720) ((1072.0, 76.0) vs (1072.0, 76.0))
+PASS (1920, 1080)@1.50 album_pos matches DPR-1 (1280, 720) ((20.0, 652.0) vs (20.0, 652.0))
+PASS (1920, 1080)@1.50 album_size matches DPR-1 (1280, 720) ((188.0, 48.0) vs (188.0, 48.0))
+PASS (1920, 1080)@1.50 weather_pos matches DPR-1 (1280, 720) ((230.0, 652.0) vs (230.0, 652.0))
+PASS (1920, 1080)@1.50 action_pos matches DPR-1 (1280, 720) ((1072.0, 652.0) vs (1072.0, 652.0))
+PASS (1920, 1080)@1.50 action_size matches DPR-1 (1280, 720) ((188.0, 48.0) vs (188.0, 48.0))
+PASS (1920, 1080)@1.50 pause_pos matches DPR-1 (1280, 720) ((1072.0, 20.0) vs (1072.0, 20.0))
+PASS (1920, 1080)@1.50 notice_top matches DPR-1 (1280, 720) (-110.0 vs -110.0)
+PASS (1920, 1080)@1.50 zoom matches DPR-1 (1280, 720) ((0.894444, 0.894444) vs (0.894444, 0.894444))
+PASS (1920, 1080)@1.50 hint_font matches DPR-1 (1280, 720) (15 vs 15)
+PASS (1920, 1080)@1.50 day_font matches DPR-1 (1280, 720) (14 vs 14)
+PASS (1280, 720)@1.00 window factor follows browser scale
+PASS (1280, 720)@1.00 main lays out in CSS pixels (1280, 720) (got (1280.0, 720.0))
+PASS (1280, 720)@1.00 still renders at physical resolution
+PASS (1280, 720)@1.00 翻开手帐 stays on screen
+PASS (1280, 720)@1.00 大太阳 stays on screen
+PASS (1280, 720)@1.00 歇一会儿 stays on screen
+PASS (1280, 720)@1.00 看看花箱 stays on screen
+PASS (1280, 720)@1.00 size matches DPR-1 (1280, 720) ((1280.0, 720.0) vs (1280.0, 720.0))
+PASS (1280, 720)@1.00 hint_pos matches DPR-1 (1280, 720) ((20.0, 16.0) vs (20.0, 16.0))
+PASS (1280, 720)@1.00 hint_size matches DPR-1 (1280, 720) ((520.0, 32.0) vs (520.0, 32.0))
+PASS (1280, 720)@1.00 day_pos matches DPR-1 (1280, 720) ((1072.0, 76.0) vs (1072.0, 76.0))
+PASS (1280, 720)@1.00 album_pos matches DPR-1 (1280, 720) ((20.0, 652.0) vs (20.0, 652.0))
+PASS (1280, 720)@1.00 album_size matches DPR-1 (1280, 720) ((188.0, 48.0) vs (188.0, 48.0))
+PASS (1280, 720)@1.00 weather_pos matches DPR-1 (1280, 720) ((230.0, 652.0) vs (230.0, 652.0))
+PASS (1280, 720)@1.00 action_pos matches DPR-1 (1280, 720) ((1072.0, 652.0) vs (1072.0, 652.0))
+PASS (1280, 720)@1.00 action_size matches DPR-1 (1280, 720) ((188.0, 48.0) vs (188.0, 48.0))
+PASS (1280, 720)@1.00 pause_pos matches DPR-1 (1280, 720) ((1072.0, 20.0) vs (1072.0, 20.0))
+PASS (1280, 720)@1.00 notice_top matches DPR-1 (1280, 720) (-110.0 vs -110.0)
+PASS (1280, 720)@1.00 zoom matches DPR-1 (1280, 720) ((0.894444, 0.894444) vs (0.894444, 0.894444))
+PASS (1280, 720)@1.00 hint_font matches DPR-1 (1280, 720) (15 vs 15)
+PASS (1280, 720)@1.00 day_font matches DPR-1 (1280, 720) (14 vs 14)
+PASS DPR 2.625 width back to ~412 CSS px (got 412.2)
+PASS DPR 2.625 portrait phone gets the compact layout
+PASS DPR 2.625 full-width action button fits
+PASS factor re-read after the canvas resizes
+PASS layout stays 390×844 CSS after DPR change (got (390.0, 844.0))
+PASS still compact portrait after DPR change
+web_hidpi: 102 checks, 0 failures
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+save candidate: 80 checks, 0 failures
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+EXPLORATION CORE PASS 357
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[fish-miss-feedback] 16 checks, 0 failures: []
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+SAVE_COORDINATOR checks=86 failures=[]
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+NATIVE SAVE HOST PASS 200
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+SAVE WRITER GUIDANCE 20 checks failures=[]
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+EXPLORATION CLEANUP 95 checks failures=[]
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+SAVE FEEDBACK 50 checks, failures 0
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+day_label_layout suite: 173 checks passed
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+EXPLORATION SLICE PASS 180/180 failures=[]
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+title_card suite: 251 checks passed
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+(390, 844) zh-CN: 461 strings, up to 2 lines
+(390, 844) en: 461 strings, up to 4 lines
+(844, 390) zh-CN: 461 strings, up to 1 lines
+(844, 390) en: 461 strings, up to 1 lines
+(1280, 720) zh-CN: 461 strings, up to 1 lines
+(1280, 720) en: 461 strings, up to 1 lines
+(360, 640) zh-CN: 461 strings, up to 3 lines
+(360, 640) en: 461 strings, up to 4 lines
+(700, 400) zh-CN: 461 strings, up to 1 lines
+(700, 400) en: 461 strings, up to 2 lines
+hint_paper_fit suite: 4653 checks passed
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+confirm_panel_fit suite: 562 checks passed
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+title_short_landscape suite: 1541 checks passed
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+licenses_dialog_fit_suite checks=124 failures=0
+PASS licenses_dialog_fit_suite
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+MOTION PREFERENCE NATIVE PASS 18
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[photo-arrival-fit] PASS: 418 checks
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PHOTO ARRIVAL COMBO PASS 656
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ALBUM_LAYOUT checks=45914 failures=0
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PAUSE_NOTICE checks=168 failures=0
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+AUDIO_BUTTON_INPUT checks=648 failures=0
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+STILL BOUNDARY FEEDBACK PASS 44
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[viewport] PASS (1280, 720) in tree _play_button
+[viewport] PASS (1280, 720) positive _play_button [P: (400.0, 346.0), S: (480.0, 44.0)]
+[viewport] PASS (1280, 720) visible _play_button [P: (400.0, 346.0), S: (480.0, 44.0)]
+[viewport] PASS touch title starts (1280, 720)
+[viewport] PASS (1280, 720) in tree _action_button
+[viewport] PASS (1280, 720) positive _action_button [P: (1072.0, 652.0), S: (188.0, 48.0)]
+[viewport] PASS (1280, 720) visible _action_button [P: (1072.0, 652.0), S: (188.0, 48.0)]
+[viewport] PASS (1280, 720) in tree _album_chip
+[viewport] PASS (1280, 720) positive _album_chip [P: (20.0, 652.0), S: (188.0, 48.0)]
+[viewport] PASS (1280, 720) visible _album_chip [P: (20.0, 652.0), S: (188.0, 48.0)]
+[viewport] PASS (1280, 720) in tree _weather_chip
+[viewport] PASS (1280, 720) positive _weather_chip [P: (230.0, 652.0), S: (188.0, 48.0)]
+[viewport] PASS (1280, 720) visible _weather_chip [P: (230.0, 652.0), S: (188.0, 48.0)]
+[viewport] PASS (1280, 720) in tree _pause_button
+[viewport] PASS (1280, 720) positive _pause_button [P: (1072.0, 20.0), S: (188.0, 48.0)]
+[viewport] PASS (1280, 720) visible _pause_button [P: (1072.0, 20.0), S: (188.0, 48.0)]
+[viewport] PASS grass touch is inside real viewport
+[viewport] PASS touch grass works (1280, 720)
+[viewport] PASS (1280, 720) in tree _pause_button
+[viewport] PASS (1280, 720) positive _pause_button [P: (1072.0, 20.0), S: (188.0, 48.0)]
+[viewport] PASS (1280, 720) visible _pause_button [P: (1072.0, 20.0), S: (188.0, 48.0)]
+[viewport] PASS touch pause works
+[viewport] PASS (1280, 720) in tree _pause_title
+[viewport] PASS (1280, 720) positive _pause_title [P: (476.0, 93.0), S: (328.0, 39.0)]
+[viewport] PASS (1280, 720) visible _pause_title [P: (476.0, 93.0), S: (328.0, 39.0)]
+[viewport] PASS (1280, 720) in tree _resume_button
+[viewport] PASS (1280, 720) positive _resume_button [P: (476.0, 144.0), S: (328.0, 44.0)]
+[viewport] PASS (1280, 720) visible _resume_button [P: (476.0, 144.0), S: (328.0, 44.0)]
+[viewport] PASS (1280, 720) in tree _music_slider
+[viewport] PASS (1280, 720) positive _music_slider [P: (476.0, 403.0), S: (328.0, 32.0)]
+[viewport] PASS (1280, 720) visible _music_slider [P: (476.0, 403.0), S: (328.0, 32.0)]
+[viewport] PASS (1280, 720) in tree _ambience_slider
+[viewport] PASS (1280, 720) positive _ambience_slider [P: (476.0, 538.0), S: (328.0, 32.0)]
+[viewport] PASS (1280, 720) visible _ambience_slider [P: (476.0, 538.0), S: (328.0, 32.0)]
+[viewport] PASS (1280, 720) in tree _mute_toggle
+[viewport] PASS (1280, 720) positive _mute_toggle [P: (476.0, 582.0), S: (328.0, 44.0)]
+[viewport] PASS (1280, 720) visible _mute_toggle [P: (476.0, 582.0), S: (328.0, 44.0)]
+[viewport] PASS (1280, 720) music slider mute
+[viewport] PASS (1280, 720) ambience slider independent
+[viewport] PASS pause resumes (1280, 720)
+[viewport] PASS touch album works
+[viewport] PASS (1280, 720) in tree _album_back_button
+[viewport] PASS (1280, 720) positive _album_back_button [P: (783.0, 582.0), S: (271.0, 44.0)]
+[viewport] PASS (1280, 720) visible _album_back_button [P: (783.0, 582.0), S: (271.0, 44.0)]
+[viewport] PASS touch album closes
+[viewport] PASS (390, 844) in tree _play_button
+[viewport] PASS (390, 844) positive _play_button [P: (20.0, 408.0), S: (350.0, 44.0)]
+[viewport] PASS (390, 844) visible _play_button [P: (20.0, 408.0), S: (350.0, 44.0)]
+[viewport] PASS touch title starts (390, 844)
+[viewport] PASS (390, 844) in tree _action_button
+[viewport] PASS (390, 844) positive _action_button [P: (20.0, 776.0), S: (350.0, 48.0)]
+[viewport] PASS (390, 844) visible _action_button [P: (20.0, 776.0), S: (350.0, 48.0)]
+[viewport] PASS (390, 844) in tree _album_chip
+[viewport] PASS (390, 844) positive _album_chip [P: (20.0, 720.0), S: (165.0, 48.0)]
+[viewport] PASS (390, 844) visible _album_chip [P: (20.0, 720.0), S: (165.0, 48.0)]
+[viewport] PASS (390, 844) in tree _weather_chip
+[viewport] PASS (390, 844) positive _weather_chip [P: (205.0, 720.0), S: (165.0, 48.0)]
+[viewport] PASS (390, 844) visible _weather_chip [P: (205.0, 720.0), S: (165.0, 48.0)]
+[viewport] PASS (390, 844) in tree _pause_button
+[viewport] PASS (390, 844) positive _pause_button [P: (250.0, 20.0), S: (120.0, 48.0)]
+[viewport] PASS (390, 844) visible _pause_button [P: (250.0, 20.0), S: (120.0, 48.0)]
+[viewport] PASS grass touch is inside real viewport
+[viewport] PASS touch grass works (390, 844)
+[viewport] PASS (390, 844) in tree _pause_button
+[viewport] PASS (390, 844) positive _pause_button [P: (250.0, 20.0), S: (120.0, 48.0)]
+[viewport] PASS (390, 844) visible _pause_button [P: (250.0, 20.0), S: (120.0, 48.0)]
+[viewport] PASS touch pause works
+[viewport] PASS (390, 844) in tree _pause_title
+[viewport] PASS (390, 844) positive _pause_title [P: (31.0, 155.0), S: (328.0, 39.0)]
+[viewport] PASS (390, 844) visible _pause_title [P: (31.0, 155.0), S: (328.0, 39.0)]
+[viewport] PASS (390, 844) in tree _resume_button
+[viewport] PASS (390, 844) positive _resume_button [P: (31.0, 206.0), S: (328.0, 44.0)]
+[viewport] PASS (390, 844) visible _resume_button [P: (31.0, 206.0), S: (328.0, 44.0)]
+[viewport] PASS (390, 844) in tree _music_slider
+[viewport] PASS (390, 844) positive _music_slider [P: (31.0, 465.0), S: (328.0, 32.0)]
+[viewport] PASS (390, 844) visible _music_slider [P: (31.0, 465.0), S: (328.0, 32.0)]
+[viewport] PASS (390, 844) in tree _ambience_slider
+[viewport] PASS (390, 844) positive _ambience_slider [P: (31.0, 600.0), S: (328.0, 32.0)]
+[viewport] PASS (390, 844) visible _ambience_slider [P: (31.0, 600.0), S: (328.0, 32.0)]
+[viewport] PASS (390, 844) in tree _mute_toggle
+[viewport] PASS (390, 844) positive _mute_toggle [P: (31.0, 644.0), S: (328.0, 44.0)]
+[viewport] PASS (390, 844) visible _mute_toggle [P: (31.0, 644.0), S: (328.0, 44.0)]
+[viewport] PASS (390, 844) music slider mute
+[viewport] PASS (390, 844) ambience slider independent
+[viewport] PASS pause resumes (390, 844)
+[viewport] PASS touch album works
+[viewport] PASS (390, 844) in tree _album_back_button
+[viewport] PASS (390, 844) positive _album_back_button [P: (254.0, 644.0), S: (104.0, 44.0)]
+[viewport] PASS (390, 844) visible _album_back_button [P: (254.0, 644.0), S: (104.0, 44.0)]
+[viewport] PASS touch album closes
+[viewport] PASS (844, 390) in tree _play_button
+[viewport] PASS (844, 390) positive _play_button [P: (182.0, 174.0), S: (480.0, 44.0)]
+[viewport] PASS (844, 390) visible _play_button [P: (182.0, 174.0), S: (480.0, 44.0)]
+[viewport] PASS touch title starts (844, 390)
+[viewport] PASS (844, 390) in tree _action_button
+[viewport] PASS (844, 390) positive _action_button [P: (636.0, 322.0), S: (188.0, 48.0)]
+[viewport] PASS (844, 390) visible _action_button [P: (636.0, 322.0), S: (188.0, 48.0)]
+[viewport] PASS (844, 390) in tree _album_chip
+[viewport] PASS (844, 390) positive _album_chip [P: (20.0, 322.0), S: (188.0, 48.0)]
+[viewport] PASS (844, 390) visible _album_chip [P: (20.0, 322.0), S: (188.0, 48.0)]
+[viewport] PASS (844, 390) in tree _weather_chip
+[viewport] PASS (844, 390) positive _weather_chip [P: (230.0, 322.0), S: (188.0, 48.0)]
+[viewport] PASS (844, 390) visible _weather_chip [P: (230.0, 322.0), S: (188.0, 48.0)]
+[viewport] PASS (844, 390) in tree _pause_button
+[viewport] PASS (844, 390) positive _pause_button [P: (636.0, 20.0), S: (188.0, 48.0)]
+[viewport] PASS (844, 390) visible _pause_button [P: (636.0, 20.0), S: (188.0, 48.0)]
+[viewport] PASS grass touch is inside real viewport
+[viewport] PASS touch grass works (844, 390)
+[viewport] PASS (844, 390) in tree _pause_button
+[viewport] PASS (844, 390) positive _pause_button [P: (636.0, 20.0), S: (188.0, 48.0)]
+[viewport] PASS (844, 390) visible _pause_button [P: (636.0, 20.0), S: (188.0, 48.0)]
+[viewport] PASS touch pause works
+[viewport] PASS (844, 390) in tree _pause_title
+[viewport] PASS (844, 390) positive _pause_title [P: (98.0, 83.0), S: (648.0, 27.0)]
+[viewport] PASS (844, 390) visible _pause_title [P: (98.0, 83.0), S: (648.0, 27.0)]
+[viewport] PASS (844, 390) in tree _resume_button
+[viewport] PASS (844, 390) positive _resume_button [P: (98.0, 114.0), S: (318.0, 40.0)]
+[viewport] PASS (844, 390) visible _resume_button [P: (98.0, 114.0), S: (318.0, 40.0)]
+[viewport] PASS (844, 390) in tree _music_slider
+[viewport] PASS (844, 390) positive _music_slider [P: (428.0, 180.0), S: (318.0, 28.0)]
+[viewport] PASS (844, 390) visible _music_slider [P: (428.0, 180.0), S: (318.0, 28.0)]
+[viewport] PASS (844, 390) in tree _ambience_slider
+[viewport] PASS (844, 390) positive _ambience_slider [P: (428.0, 278.0), S: (318.0, 28.0)]
+[viewport] PASS (844, 390) visible _ambience_slider [P: (428.0, 278.0), S: (318.0, 28.0)]
+[viewport] PASS (844, 390) in tree _mute_toggle
+[viewport] PASS (844, 390) positive _mute_toggle [P: (98.0, 246.0), S: (318.0, 40.0)]
+[viewport] PASS (844, 390) visible _mute_toggle [P: (98.0, 246.0), S: (318.0, 40.0)]
+[viewport] PASS (844, 390) music slider mute
+[viewport] PASS (844, 390) ambience slider independent
+[viewport] PASS pause resumes (844, 390)
+[viewport] PASS touch album works
+[viewport] PASS (844, 390) in tree _album_back_button
+[viewport] PASS (844, 390) positive _album_back_button [P: (557.0, 316.0), S: (255.0, 44.0)]
+[viewport] PASS (844, 390) visible _album_back_button [P: (557.0, 316.0), S: (255.0, 44.0)]
+[viewport] PASS touch album closes
+[viewport] failures=[]
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+WEB SAVE BRIDGE DECODER 45 failures=[]
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+LEGACY_BRIDGE_PASS 22
+Loading shell PASS: module ordering, runtime readiness/rejection, persistentPaths isolation, save-blocked gate, bytes, unknown totals, stall and both first-frame orders
+MOTION PREFERENCE JS PASS 21

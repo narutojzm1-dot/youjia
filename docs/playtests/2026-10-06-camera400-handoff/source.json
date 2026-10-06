@@ -1,0 +1,13 @@
+{
+  "repository": "/tmp/youjia-camera400",
+  "branch": "work/codex-lead/camera400-handoff-check",
+  "production_source": "b300da74bf157de3f152e63331096cb1eb28b3f7",
+  "test_source": "3cdd2439d4a33b7085e00f12b2c42c48c7604355",
+  "tree": "59240450110f9382503da55e62e84564626a0292",
+  "test_blob": "098c864ba980d499a1586e520e752628ffd8b447",
+  "test_sha256": "1eb8842e0aa225f73a0e5256dbba48be523f27bfb07c1cb47d747ea8594980d0",
+  "production_diff": [],
+  "engine_executed": false,
+  "browser_executed": false,
+  "expected_before_fix": "Nonzero suite result for short prewarm losing quiet ownership; keep failures, controls must be distinguished."
+}

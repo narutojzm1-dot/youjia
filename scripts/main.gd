@@ -10,12 +10,15 @@ const MUTED := Color("8a7060")
 const APRICOT := Color("f3b27a")
 ## 标题页副标题用的深杏色：在 PAPER 上对比约 4.6:1（APRICOT 只有约 1.7:1），#REQ-20261005-028
 const TITLE_ACCENT := Color("a85d28")
+const TEXT_LINK := Color("6b5242")
+const TEXT_LINK_HOVER := Color("3d2d23")
 ## 目标纸片里文字区的最小高度：纸面最少 48px，与「歇一会儿」按钮同高（REQ-20261005-029）
 const HINT_MIN_TEXT_HEIGHT := 32.0
 ## 「现在离开吗？」确认纸片的设计尺寸；屏幕更窄/更矮时按 _fit_confirm_panel() 收进屏内（REQ-20261005-030）。
 const CONFIRM_PANEL_SIZE := Vector2(420, 240)
 ## 屏高不超过这个值时（手机横屏扣掉浏览器地址栏、568×320 等）标题页改用更紧的排版（REQ-20261005-031）。
 const TITLE_TIGHT_MAX_HEIGHT := 360.0
+const ALBUM_TIGHT_MAX_HEIGHT := 360.0
 const SAGE := Color("8fb389")
 const CREAM := Color("fffaf1")
 const LAVENDER := Color("cbb6d6")
@@ -124,6 +127,7 @@ var _photo_arrival: PhotoArrival
 var _photo_arrival_queue: Array[Dictionary] = []
 var _pending_photo_saves: Dictionary = {}
 var _save_transition := false
+var _holiday_start_pending := false
 var _save_problems: Dictionary = {}
 var _save_exploration_scopes: Dictionary = {}
 var _save_exploration_coverage: Dictionary = {}
@@ -295,6 +299,7 @@ func _ready() -> void:
 	_exploration.returned.connect(_on_exploration_returned)
 	_exploration.notice.connect(func(key: String) -> void:
 		if _screen == "game": _show_notice_key(key, _exploration.last_params))
+	_exploration.cleanup_resubmitted.connect(_on_exploration_cleanup_resubmitted)
 	I18n.locale_changed.connect(_on_locale_changed)
 	TuningStore.value_changed.connect(_on_tuning_value_changed)
 	resized.connect(_layout)
@@ -858,7 +863,10 @@ func _build_notice() -> void:
 
 
 func _on_play_pressed() -> void:
-	_start_holiday()
+	# A touch may also release the native GUI button after entering the yard.
+	# Only the title can request entry; keep audio unlock in this gesture stack.
+	if _screen == "title":
+		_start_holiday()
 	# Same pressed stack as the real enter control. Not deferred.
 	AudioDirector.unlock_audio()
 
@@ -967,10 +975,12 @@ func _notification(what: int) -> void:
 
 
 func _start_holiday(save_progress: bool = true) -> void:
-	if not SaveStore.can_play(): return
+	if _holiday_start_pending or not SaveStore.can_play(): return
+	_holiday_start_pending = true
 	_leave_exploration()
 	if save_progress and _world != null: _world._save_progress()
 	if not await SaveStore.flush_pending() or _save_problem_active:
+		_holiday_start_pending = false
 		_show_save_pending(false)
 		return
 	TuningStore.begin_run(false)
@@ -1027,6 +1037,7 @@ func _start_holiday(save_progress: bool = true) -> void:
 	AudioDirector.set_yard_active(true)
 	if _world.holiday_day == 1 and SaveStore.get_album().is_empty():
 		_show_delayed_soft_hint()
+	_holiday_start_pending = false
 
 
 ## 标题 / 重开前先按宿主中断回院，让这趟的提交排在随后的 flush 之前
@@ -1264,6 +1275,17 @@ func _on_save_rejected(op_id: String, kind: String, code: String) -> void:
 			_save_exploration_coverage[pending_id].problems[op_id] = _save_problems[op_id].duplicate(true)
 	_save_exploration_scopes.erase(op_id)
 	_save_exploration_coverage.erase(op_id)
+
+
+## 探索收尾清理被拒后宿主重交了同一份冻结请求：只把这次清理此前的失败（原样快照）绑到新编号，
+## 新编号确认后按快照精确清掉，面板在队列空闲时照常收起；失败又变了就不清
+func _on_exploration_cleanup_resubmitted(failed_ops: Array, op_id: String) -> void:
+	var problems := {}
+	for failed_id in failed_ops:
+		if _save_problems.get(failed_id, {}).get("kind", "") == "exploration_cleanup":
+			problems[failed_id] = _save_problems[failed_id].duplicate(true)
+	if not problems.is_empty():
+		_save_retry_coverage[op_id] = {"problems": problems, "untracked_revision": -1}
 
 
 func _on_save_problem(op_id: String, kind: String, _code: String) -> void:
@@ -1697,27 +1719,55 @@ func _flash_catch() -> void:
 	tween.tween_callback(func() -> void: _photo_flash.color = Color(CREAM, 0.0))
 
 
-func _layout() -> void:
-	var pad := 20.0
-	if _album_chip == null: return
-	var compact := size.x < 700.0
-	_fit_title_column()
+## REQ-20261006-034: on short landscape screens (usable height 360 or less,
+## e.g. 568x320 or a 640x300 phone browser with its bars showing) the album's
+## fixed chrome left a one-page book only 146-166 px tall, so the page number
+## and longer notes ran off the paper and into the buttons. Screens in this
+## tight band now trim the outer margin, paper padding, title size, spacing and
+## button height so the page gets the room; taller screens keep the original
+## numbers.
+func _fit_album_frame() -> void:
+	var tight := size.y <= ALBUM_TIGHT_MAX_HEIGHT
 	var album_width := minf(860.0,size.x-32.0)
-	var album_height := minf(560.0,size.y-32.0)
+	var album_height := minf(560.0,size.y-(16.0 if tight else 32.0))
 	_album_panel.custom_minimum_size = Vector2(album_width,album_height)
 	_album_panel.offset_left = -album_width*0.5
 	_album_panel.offset_right = album_width*0.5
 	_album_panel.offset_top = -album_height*0.5
 	_album_panel.offset_bottom = album_height*0.5
+	var separation := 4 if tight else 8
+	var button_height := 40.0 if tight else 42.0
+	var title_size := 18 if tight else 24
+	var padding := 6.0 if tight else 10.0
+	var frame_style := _album_panel.get_theme_stylebox("panel") as StyleBoxFlat
+	if frame_style != null:
+		frame_style.content_margin_top = padding
+		frame_style.content_margin_bottom = padding
+	(_album_title.get_parent() as VBoxContainer).add_theme_constant_override("separation", separation)
+	_album_title.add_theme_font_size_override("font_size", title_size)
+	for button: Button in [_album_previous_button, _album_next_button, _album_back_button]:
+		button.custom_minimum_size.y = button_height
 	var was_two_pages := _album_two_pages
 	_album_two_pages = album_width >= 670.0 and size.y >= 460.0
 	var book_width := album_width - 32.0
 	var book_height := album_height - 122.0
+	if tight:
+		# Panel padding + title line + two gaps + buttons + 4 px slack.
+		var title_height := ceilf(_album_title.get_theme_font("font").get_height(title_size))
+		book_height = floorf(album_height - padding * 2.0 - title_height - separation * 2.0 - button_height - 4.0)
 	_album_spread.custom_minimum_size = Vector2(book_width, book_height)
-	_album_previous_button.get_parent().custom_minimum_size = Vector2(book_width, 42)
+	_album_previous_button.get_parent().custom_minimum_size = Vector2(book_width, button_height)
 	_album_page_size = Vector2((book_width - 10.0) * 0.5 if _album_two_pages else book_width, book_height)
 	if _album_screen.visible or was_two_pages != _album_two_pages:
 		_render_album_pages()
+
+
+func _layout() -> void:
+	var pad := 20.0
+	if _album_chip == null: return
+	var compact := size.x < 700.0
+	_fit_title_column()
+	_fit_album_frame()
 	_fit_notice()
 	_notice.offset_top = -170 if compact else -110
 	_notice.offset_bottom = -130 if compact else -70
@@ -2031,18 +2081,47 @@ func _label(size_px: int, color: Color) -> Label:
 	return result
 
 
+## 暖纸主按钮（标题、暂停、确认、相册、存档重试共用）。原来只设了普通/悬停字色，
+## 键盘焦点和按下落回 Godot 默认近白字（对 CREAM 约 1.1:1），点过「音乐开着 · 关掉」等
+## 留在原页的按钮后鼠标移开，字就几乎看不见；焦点框是盖住底色的 3px 淡紫（约 1.8:1）。
+## 现在焦点/按下都用深墨字（≥4.5:1），焦点改为不填底、外扩 2px 的 TITLE_ACCENT 描边
+## （≥3:1），原有底色与杏色边保持可见（REQ-20261006-036）。
+## 禁用态（相册首/末页的翻页、存档确认中的「再确认一次」、备份恢复页处理中）原来也落回
+## Godot 默认：灰褐实心块（#aa9d8b）上半透明浅字，约 1.4:1，像一块没字的灰砖，和暖纸界面
+## 不搭。现在用淡一档的暖纸底、1px 浅棕边、柔墨字（≥4.5:1，仍比可点时浅），一看就是「暂时
+## 不能点」但字照样读得出（REQ-20261006-038）。
+const SOFT_DISABLED_FILL := Color("f3e9db")
+const SOFT_DISABLED_EDGE := Color("bfa588")
+const SOFT_DISABLED_TEXT := Color("7a6152")
+
+
 func _soft_button() -> Button:
 	var result := Button.new()
 	result.custom_minimum_size = Vector2(260, 44)
 	result.focus_mode = Control.FOCUS_ALL
 	result.add_theme_font_size_override("font_size", 16)
 	result.add_theme_color_override("font_color", INK)
-	result.add_theme_color_override("font_hover_color", Color("3d2d23"))
+	result.add_theme_color_override("font_hover_color", TEXT_LINK_HOVER)
+	result.add_theme_color_override("font_focus_color", INK)
+	result.add_theme_color_override("font_pressed_color", INK)
+	result.add_theme_color_override("font_hover_pressed_color", TEXT_LINK_HOVER)
 	result.add_theme_stylebox_override("normal", _flat(CREAM, APRICOT))
 	result.add_theme_stylebox_override("hover", _flat(Color("ffe7c8"), SAGE))
 	result.add_theme_stylebox_override("pressed", _flat(Color("f3d3ae"), INK))
-	result.add_theme_stylebox_override("focus", _flat(CREAM, LAVENDER, 3))
+	result.add_theme_stylebox_override("focus", _soft_focus_ring())
+	result.add_theme_color_override("font_disabled_color", SOFT_DISABLED_TEXT)
+	result.add_theme_stylebox_override("disabled", _flat(SOFT_DISABLED_FILL, SOFT_DISABLED_EDGE, 1))
 	return result
+
+
+func _soft_focus_ring() -> StyleBoxFlat:
+	var ring := StyleBoxFlat.new()
+	ring.draw_center = false
+	ring.set_border_width_all(2)
+	ring.border_color = TITLE_ACCENT
+	ring.set_corner_radius_all(18)
+	ring.set_expand_margin_all(2.0)
+	return ring
 
 
 func _chip_button() -> Button:
@@ -2052,10 +2131,24 @@ func _chip_button() -> Button:
 	return result
 
 
+## 标题页「开源软件声明」等纸卡上的文字链接。原来只设了 font_color（MUTED，在 PAPER 上约 4.3:1），
+## 悬停/键盘焦点/按下都落回 Godot 默认的近白字和近白焦点框，在浅色纸卡上几乎看不见（#413）。
+## 各态都改用深墨色：在纯 PAPER 和 84% 纸卡叠黑底两端都 ≥4.5:1；悬停更深；焦点画 2px TITLE_ACCENT 描边、不填底（REQ-20261006-035）。
 func _text_button() -> Button:
 	var result := Button.new()
 	result.flat = true
-	result.add_theme_color_override("font_color", MUTED)
+	result.focus_mode = Control.FOCUS_ALL
+	result.add_theme_color_override("font_color", TEXT_LINK)
+	result.add_theme_color_override("font_focus_color", INK)
+	result.add_theme_color_override("font_hover_color", TEXT_LINK_HOVER)
+	result.add_theme_color_override("font_pressed_color", INK)
+	result.add_theme_color_override("font_hover_pressed_color", TEXT_LINK_HOVER)
+	var ring := StyleBoxFlat.new()
+	ring.draw_center = false
+	ring.set_border_width_all(2)
+	ring.border_color = TITLE_ACCENT
+	ring.set_corner_radius_all(8)
+	result.add_theme_stylebox_override("focus", ring)
 	result.add_theme_font_size_override("font_size", 14)
 	return result
 

@@ -1,0 +1,214 @@
+{
+  "runtime": "47bb594006b4236d88e145969c2f5d1ca4118405",
+  "expected_pck": "0833fcc888dcf15a74d1ca600fe9ce8c0fb44c01d9cd45723f8faad95e187543",
+  "inputs": [
+    {
+      "touchscreen_tap": [
+        640,
+        368
+      ],
+      "time": 357071.880689659
+    },
+    {
+      "touchscreen_tap": [
+        364,
+        412
+      ],
+      "time": 357078.313593032
+    },
+    {
+      "screenshot": "natural-sheep",
+      "time": 357082.988277125
+    },
+    {
+      "touchscreen_tap": [
+        114,
+        675
+      ],
+      "time": 357087.060605777
+    },
+    {
+      "screenshot": "album-before",
+      "time": 357089.47662294
+    },
+    {
+      "touchscreen_tap": [
+        918,
+        605
+      ],
+      "time": 357098.815237935
+    },
+    {
+      "touchscreen_tap": [
+        329,
+        563
+      ],
+      "time": 357102.238739461
+    },
+    {
+      "screenshot": "outside",
+      "time": 357112.620275762
+    },
+    {
+      "touchscreen_tap": [
+        824,
+        540
+      ],
+      "time": 357117.384141754
+    },
+    {
+      "keyboard": "e",
+      "time": 357130.432705667
+    },
+    {
+      "screenshot": "shade-look",
+      "time": 357132.68278415
+    },
+    {
+      "keyboard": "t",
+      "time": 357137.211935177
+    },
+    {
+      "screenshot": "shade-take",
+      "time": 357139.936774328
+    },
+    {
+      "touchscreen_tap": [
+        720,
+        676
+      ],
+      "time": 357144.260421323
+    },
+    {
+      "touchscreen_tap": [
+        707,
+        596
+      ],
+      "time": 357146.905178694
+    },
+    {
+      "keyboard": "e",
+      "time": 357160.078242665
+    },
+    {
+      "screenshot": "brook-look",
+      "time": 357162.170340734
+    },
+    {
+      "keyboard": "t",
+      "time": 357164.960071238
+    },
+    {
+      "screenshot": "brook-take",
+      "time": 357167.768229669
+    },
+    {
+      "touchscreen_tap": [
+        720,
+        676
+      ],
+      "time": 357172.901098535
+    },
+    {
+      "touchscreen_tap": [
+        585,
+        641
+      ],
+      "time": 357175.06685399
+    },
+    {
+      "keyboard": "e",
+      "time": 357188.664597659
+    },
+    {
+      "screenshot": "slope-look",
+      "time": 357191.032699721
+    },
+    {
+      "keyboard": "t",
+      "time": 357196.332134229
+    }
+  ],
+  "media": [],
+  "errors": [],
+  "builds": [
+    {
+      "page": "carry-trip",
+      "entry": "game-47bb594"
+    }
+  ],
+  "limits": [
+    "browser media emulation, not OS settings or physical phone",
+    "one natural trip; no unknown-field fault injection; controlled Native preservation evidence separate"
+  ],
+  "manifests": [
+    {
+      "page": "carry-trip",
+      "stage": "before",
+      "manifest": {
+        "schema": "youjia.release/v1",
+        "scope": "local candidate only; not a public Pages release",
+        "sourceCommit": "47bb594006b4236d88e145969c2f5d1ca4118405",
+        "engine": "4.7.2.stable.official.ed1daf0bf",
+        "entry": "game-47bb594",
+        "createdAt": "2026-10-05T18:42:30.068337+00:00",
+        "storageModules": {
+          "entry": "save-47bb594",
+          "sha256": {
+            "bridge.mjs": "ef18687554fdc0d745c1d18d4d091e959cc78559da0d61d6a093e562ff9bbc91",
+            "budgets.mjs": "52984153977dcafd1d2682e848f1999f091d0966e17d46e902de76f5735a7018",
+            "host.mjs": "9de8dc0ef4bfc037a8ad0bff575d40c3dd4341bcc723351a412b2061bb661904",
+            "idbfs_source.mjs": "16eb57d471537f13d3e50018b56c2d416d2847f0d0249ba44433dd9ebb65f4d8",
+            "legacy_inspection.mjs": "db3a23a0221aa5d34a58a6a49aeeff930295ffe20bfcf73a7c11f0d49cffd671",
+            "legacy_seal.mjs": "9642132f5d4e7523e5966e802069af7f4bae803fae8e2e7c28ae55ee97d85610",
+            "legacy_v5.mjs": "8e7f4ad2d87aab77ac05361e4f46060476e933aa079ae94301998d08d4599621",
+            "lifecycle.mjs": "1cfaebb9a8745e2dc3e4f694ef475f250640870938f04160be1a5c9acd62935d",
+            "source_decode.mjs": "411f3bc784cb32a07f32eed5fc7d88f71b59a667cc0d68a50fe13c55bfdba18a",
+            "store.mjs": "2193b4397b8662a8ebc754dc4468e4d62964d209b4e1d0f0924a2ec81b409cbe"
+          }
+        }
+      },
+      "time": 357053.983181524
+    }
+  ],
+  "pck_checks": [
+    {
+      "page": "carry-trip",
+      "sha256": "0833fcc888dcf15a74d1ca600fe9ce8c0fb44c01d9cd45723f8faad95e187543",
+      "bytes": 27088028,
+      "status": 200
+    }
+  ],
+  "navigation": [
+    {
+      "time": 357065.044800978,
+      "url": "http://127.0.0.1:8202/",
+      "main": true
+    }
+  ],
+  "dom_ready": [
+    357065.062422018
+  ],
+  "all_console": [
+    {
+      "type": "log",
+      "text": "Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org",
+      "time": 357065.750349958
+    },
+    {
+      "type": "log",
+      "text": "OpenGL API OpenGL ES 3.0 (WebGL 2.0 (OpenGL ES 3.0 Chromium)) - Compatibility - Using Device: WebKit - WebKit WebGL",
+      "time": 357066.109298838
+    },
+    {
+      "type": "log",
+      "text": "Build configuration: Emscripten 4.0.20, single-threaded, no GDExtension support.",
+      "time": 357066.435723348
+    },
+    {
+      "type": "info",
+      "text": "[game-loading] timings_ms {\"engineScriptReady\":26,\"engineReady\":2986,\"downloadComplete\":2987,\"firstFrame\":5615}",
+      "time": 357070.672617851
+    }
+  ]
+}

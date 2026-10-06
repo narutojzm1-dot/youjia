@@ -1,0 +1,250 @@
+{
+  "runtime": "e54171822c67e602944e015daf3690085c1a1587",
+  "expected_pck": "566f40b4987914805a05879cae8d94e9604314694986f027d9b51fb40e828e8e",
+  "inputs": [
+    {
+      "click": [
+        640,
+        368
+      ],
+      "time": 350864.39676619
+    },
+    {
+      "click": [
+        364,
+        412
+      ],
+      "time": 350869.580420433
+    },
+    {
+      "card_visible_detector": "land",
+      "time": 350878.124361813
+    },
+    {
+      "set_viewport": [
+        568,
+        320
+      ],
+      "time": 350878.124363887
+    },
+    {
+      "emulate_media": "reduce",
+      "time": 350878.602935653
+    },
+    {
+      "screenshot": "land-expired",
+      "time": 350882.360392717
+    },
+    {
+      "click": [
+        140,
+        220
+      ],
+      "time": 350883.132344639
+    },
+    {
+      "screenshot": "land-album",
+      "time": 350883.868289367
+    },
+    {
+      "click": [
+        640,
+        368
+      ],
+      "time": 350898.08028435
+    },
+    {
+      "click": [
+        364,
+        412
+      ],
+      "time": 350904.340606664
+    },
+    {
+      "card_visible_detector": "portrait",
+      "time": 350923.615737094
+    },
+    {
+      "set_viewport": [
+        390,
+        844
+      ],
+      "time": 350923.615739098
+    },
+    {
+      "emulate_media": "reduce",
+      "time": 350924.512949772
+    },
+    {
+      "screenshot": "portrait-expired",
+      "time": 350931.365796125
+    },
+    {
+      "click": [
+        100,
+        744
+      ],
+      "time": 350934.221711847
+    },
+    {
+      "screenshot": "portrait-album",
+      "time": 350935.205632461
+    }
+  ],
+  "media": [
+    {
+      "time": 350879.200433288,
+      "requested": "reduce",
+      "actual": true
+    },
+    {
+      "time": 350925.616899087,
+      "requested": "reduce",
+      "actual": true
+    }
+  ],
+  "errors": [],
+  "builds": [
+    {
+      "page": "land",
+      "entry": "game-e541718"
+    },
+    {
+      "page": "portrait",
+      "entry": "game-e541718"
+    }
+  ],
+  "limits": [
+    "browser media emulation, not OS settings or physical phone",
+    "listener multiplicity is not proved by screenshots",
+    "photo detector needs visual confirmation"
+  ],
+  "manifests": [
+    {
+      "page": "land",
+      "stage": "before",
+      "manifest": {
+        "schema": "youjia.release/v1",
+        "scope": "local candidate only; not a public Pages release",
+        "sourceCommit": "e54171822c67e602944e015daf3690085c1a1587",
+        "engine": "4.7.2.stable.official.ed1daf0bf",
+        "entry": "game-e541718",
+        "createdAt": "2026-10-05T16:54:57.430064+00:00",
+        "storageModules": {
+          "entry": "save-e541718",
+          "sha256": {
+            "bridge.mjs": "ef18687554fdc0d745c1d18d4d091e959cc78559da0d61d6a093e562ff9bbc91",
+            "budgets.mjs": "52984153977dcafd1d2682e848f1999f091d0966e17d46e902de76f5735a7018",
+            "host.mjs": "9de8dc0ef4bfc037a8ad0bff575d40c3dd4341bcc723351a412b2061bb661904",
+            "idbfs_source.mjs": "16eb57d471537f13d3e50018b56c2d416d2847f0d0249ba44433dd9ebb65f4d8",
+            "legacy_inspection.mjs": "db3a23a0221aa5d34a58a6a49aeeff930295ffe20bfcf73a7c11f0d49cffd671",
+            "legacy_seal.mjs": "9642132f5d4e7523e5966e802069af7f4bae803fae8e2e7c28ae55ee97d85610",
+            "legacy_v5.mjs": "8e7f4ad2d87aab77ac05361e4f46060476e933aa079ae94301998d08d4599621",
+            "lifecycle.mjs": "1cfaebb9a8745e2dc3e4f694ef475f250640870938f04160be1a5c9acd62935d",
+            "source_decode.mjs": "411f3bc784cb32a07f32eed5fc7d88f71b59a667cc0d68a50fe13c55bfdba18a",
+            "store.mjs": "2193b4397b8662a8ebc754dc4468e4d62964d209b4e1d0f0924a2ec81b409cbe"
+          }
+        }
+      },
+      "time": 350849.917724542
+    },
+    {
+      "page": "land",
+      "stage": "after",
+      "manifest": {
+        "schema": "youjia.release/v1",
+        "scope": "local candidate only; not a public Pages release",
+        "sourceCommit": "e54171822c67e602944e015daf3690085c1a1587",
+        "engine": "4.7.2.stable.official.ed1daf0bf",
+        "entry": "game-e541718",
+        "createdAt": "2026-10-05T16:54:57.430064+00:00",
+        "storageModules": {
+          "entry": "save-e541718",
+          "sha256": {
+            "bridge.mjs": "ef18687554fdc0d745c1d18d4d091e959cc78559da0d61d6a093e562ff9bbc91",
+            "budgets.mjs": "52984153977dcafd1d2682e848f1999f091d0966e17d46e902de76f5735a7018",
+            "host.mjs": "9de8dc0ef4bfc037a8ad0bff575d40c3dd4341bcc723351a412b2061bb661904",
+            "idbfs_source.mjs": "16eb57d471537f13d3e50018b56c2d416d2847f0d0249ba44433dd9ebb65f4d8",
+            "legacy_inspection.mjs": "db3a23a0221aa5d34a58a6a49aeeff930295ffe20bfcf73a7c11f0d49cffd671",
+            "legacy_seal.mjs": "9642132f5d4e7523e5966e802069af7f4bae803fae8e2e7c28ae55ee97d85610",
+            "legacy_v5.mjs": "8e7f4ad2d87aab77ac05361e4f46060476e933aa079ae94301998d08d4599621",
+            "lifecycle.mjs": "1cfaebb9a8745e2dc3e4f694ef475f250640870938f04160be1a5c9acd62935d",
+            "source_decode.mjs": "411f3bc784cb32a07f32eed5fc7d88f71b59a667cc0d68a50fe13c55bfdba18a",
+            "store.mjs": "2193b4397b8662a8ebc754dc4468e4d62964d209b4e1d0f0924a2ec81b409cbe"
+          }
+        }
+      },
+      "time": 350884.864212398
+    },
+    {
+      "page": "portrait",
+      "stage": "before",
+      "manifest": {
+        "schema": "youjia.release/v1",
+        "scope": "local candidate only; not a public Pages release",
+        "sourceCommit": "e54171822c67e602944e015daf3690085c1a1587",
+        "engine": "4.7.2.stable.official.ed1daf0bf",
+        "entry": "game-e541718",
+        "createdAt": "2026-10-05T16:54:57.430064+00:00",
+        "storageModules": {
+          "entry": "save-e541718",
+          "sha256": {
+            "bridge.mjs": "ef18687554fdc0d745c1d18d4d091e959cc78559da0d61d6a093e562ff9bbc91",
+            "budgets.mjs": "52984153977dcafd1d2682e848f1999f091d0966e17d46e902de76f5735a7018",
+            "host.mjs": "9de8dc0ef4bfc037a8ad0bff575d40c3dd4341bcc723351a412b2061bb661904",
+            "idbfs_source.mjs": "16eb57d471537f13d3e50018b56c2d416d2847f0d0249ba44433dd9ebb65f4d8",
+            "legacy_inspection.mjs": "db3a23a0221aa5d34a58a6a49aeeff930295ffe20bfcf73a7c11f0d49cffd671",
+            "legacy_seal.mjs": "9642132f5d4e7523e5966e802069af7f4bae803fae8e2e7c28ae55ee97d85610",
+            "legacy_v5.mjs": "8e7f4ad2d87aab77ac05361e4f46060476e933aa079ae94301998d08d4599621",
+            "lifecycle.mjs": "1cfaebb9a8745e2dc3e4f694ef475f250640870938f04160be1a5c9acd62935d",
+            "source_decode.mjs": "411f3bc784cb32a07f32eed5fc7d88f71b59a667cc0d68a50fe13c55bfdba18a",
+            "store.mjs": "2193b4397b8662a8ebc754dc4468e4d62964d209b4e1d0f0924a2ec81b409cbe"
+          }
+        }
+      },
+      "time": 350885.31279022
+    },
+    {
+      "page": "portrait",
+      "stage": "after",
+      "manifest": {
+        "schema": "youjia.release/v1",
+        "scope": "local candidate only; not a public Pages release",
+        "sourceCommit": "e54171822c67e602944e015daf3690085c1a1587",
+        "engine": "4.7.2.stable.official.ed1daf0bf",
+        "entry": "game-e541718",
+        "createdAt": "2026-10-05T16:54:57.430064+00:00",
+        "storageModules": {
+          "entry": "save-e541718",
+          "sha256": {
+            "bridge.mjs": "ef18687554fdc0d745c1d18d4d091e959cc78559da0d61d6a093e562ff9bbc91",
+            "budgets.mjs": "52984153977dcafd1d2682e848f1999f091d0966e17d46e902de76f5735a7018",
+            "host.mjs": "9de8dc0ef4bfc037a8ad0bff575d40c3dd4341bcc723351a412b2061bb661904",
+            "idbfs_source.mjs": "16eb57d471537f13d3e50018b56c2d416d2847f0d0249ba44433dd9ebb65f4d8",
+            "legacy_inspection.mjs": "db3a23a0221aa5d34a58a6a49aeeff930295ffe20bfcf73a7c11f0d49cffd671",
+            "legacy_seal.mjs": "9642132f5d4e7523e5966e802069af7f4bae803fae8e2e7c28ae55ee97d85610",
+            "legacy_v5.mjs": "8e7f4ad2d87aab77ac05361e4f46060476e933aa079ae94301998d08d4599621",
+            "lifecycle.mjs": "1cfaebb9a8745e2dc3e4f694ef475f250640870938f04160be1a5c9acd62935d",
+            "source_decode.mjs": "411f3bc784cb32a07f32eed5fc7d88f71b59a667cc0d68a50fe13c55bfdba18a",
+            "store.mjs": "2193b4397b8662a8ebc754dc4468e4d62964d209b4e1d0f0924a2ec81b409cbe"
+          }
+        }
+      },
+      "time": 350939.267080795
+    }
+  ],
+  "pck_checks": [
+    {
+      "page": "land",
+      "sha256": "566f40b4987914805a05879cae8d94e9604314694986f027d9b51fb40e828e8e"
+    },
+    {
+      "page": "portrait",
+      "sha256": "566f40b4987914805a05879cae8d94e9604314694986f027d9b51fb40e828e8e"
+    }
+  ],
+  "found": {
+    "land": true,
+    "portrait": true
+  }
+}

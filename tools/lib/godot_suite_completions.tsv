@@ -1,0 +1,78 @@
+# Exact whole-line EREs for successful completion, not per-assertion PASS.
+# Entry paths are relative to the Godot project. Update with suite output changes.
+test/album_layout_suite.gd	ALBUM_LAYOUT checks=[1-9][0-9]* failures=0
+test/album_short_landscape_suite.gd	ALBUM_SHORT_LANDSCAPE checks=[1-9][0-9]* failures=0
+test/animal_home_suite.gd	\[animal-home-tests\] PASS: [1-9][0-9]* checks
+test/audio_button_input_suite.gd	AUDIO_BUTTON_INPUT checks=[1-9][0-9]* failures=0
+test/authored_sequence_suite.gd	\[authored-sequence-tests\] PASS: 16 distinct complete frames, uniform canvas and anchor, loop metadata
+test/boundary_feedback_suite.gd	\[boundary-feedback-tests\] [1-9][0-9]* checks \[\]
+test/confirm_panel_fit_suite.gd	confirm_panel_fit suite: [1-9][0-9]* checks passed
+test/cow_glance_suite.gd	COW GLANCE PASS [1-9][0-9]*
+test/day_label_layout_suite.gd	day_label_layout suite: [1-9][0-9]* checks passed
+test/duck_feed_attention_suite.gd	DUCK ATTENTION PASS [1-9][0-9]*
+test/explicit_target_suite.gd	\[explicit-target-tests\] checks=[1-9][0-9]* failures=\[\]
+test/exploration_cleanup_contract_suite.gd	EXPLORATION CLEANUP [1-9][0-9]* checks failures=\[\]
+test/exploration_cleanup_preservation_suite.gd	EXPLORATION CLEANUP PRESERVATION checks=[1-9][0-9]* failures=0
+test/exploration_core_suite.gd	EXPLORATION CORE PASS [1-9][0-9]*
+test/exploration_slice_suite.gd	EXPLORATION SLICE PASS ([1-9][0-9]*)/\1 failures=\[\]
+test/fish_carry_consistency_suite.gd	\[fish-carry\] [1-9][0-9]* checks \[\]
+test/fish_miss_feedback_suite.gd	\[fish-miss-feedback\] [1-9][0-9]* checks, 0 failures: \[\]
+test/fishing_active_hud_suite.gd	fishing active HUD: [1-9][0-9]* checks, 0 failures
+test/goose_feed_attention_suite.gd	GOOSE ATTENTION PASS [1-9][0-9]*
+test/goose_mount_suite.gd	\[goose-mount\] PASS: [1-9][0-9]* checks \[\]
+test/grass_action_suite.gd	\[grass-action-tests\] PASS: [1-9][0-9]* checks, 0 failures
+test/grass_state_suite.gd	\[grass-state-tests\] PASS: [1-9][0-9]* checks, 0 failures
+test/hint_paper_fit_suite.gd	hint_paper_fit suite: [1-9][0-9]* checks passed
+test/holiday_start_once_suite.gd	HOLIDAY_START_ONCE checks=[1-9][0-9]* failures=0
+test/interaction_photo_suite.gd	\[interaction-photo-tests\] [1-9][0-9]* checks, failures=\[\]
+test/interaction_pose_suite.gd	INTERACTION POSE PASS [1-9][0-9]*
+test/keyboard_ground_suite.gd	\[keyboard-ground-tests\] PASS: [1-9][0-9]* checks \[\]
+test/leading_clearance_suite.gd	\[leading-clearance-tests\] [1-9][0-9]* checks \[\]
+test/licenses_dialog_fit_suite.gd	licenses_dialog_fit_suite checks=[1-9][0-9]* failures=0
+test/locomotion_suite.tscn	\[locomotion-tests\] PASS: [1-9][0-9]* checks
+test/mixed_input_photo_suite.gd	\[mixed-input-photo-tests\] [1-9][0-9]* checks \[\]
+test/motion_preference_suite.gd	MOTION PREFERENCE NATIVE PASS [1-9][0-9]*
+test/native_save_host_suite.gd	NATIVE SAVE HOST PASS [1-9][0-9]*
+test/notice_paper_suite.gd	notice paper suite checks=[1-9][0-9]* failures=\[\]
+test/pause_notice_suite.gd	PAUSE_NOTICE checks=[1-9][0-9]* failures=0
+test/photo_arrival_combo_suite.gd	PHOTO ARRIVAL COMBO PASS [1-9][0-9]*
+test/photo_arrival_fit_suite.gd	\[photo-arrival-fit\] PASS: [1-9][0-9]* checks
+test/photo_arrival_mat_suite.gd	\[photo-arrival-mat\] PASS: [1-9][0-9]* checks
+test/photo_arrival_shutter_paper_suite.gd	\[photo-arrival-shutter-paper\] PASS: [1-9][0-9]* checks
+test/photo_home_suite.gd	\[photo-home-tests\] PASS: [1-9][0-9]* checks
+test/photo_moment_render_suite.gd	\[photo-moment-tests\] PASS: [1-9][0-9]* checks
+test/photo_moment_save_suite.gd	\[photo-moment-save-tests\] PASS: [1-9][0-9]* checks \[\]
+test/photo_species_frame_suite.gd	PHOTO_SPECIES_FRAME checks=[1-9][0-9]* failures=0
+test/physical_yard_suite.gd	\[physical-yard-tests\] PASS: [1-9][0-9]* checks
+test/portable_accept_suite.gd	\[portable-accept-tests\] [1-9][0-9]* checks \[\]
+test/quiet_sky_look_suite.gd	QUIET SKY LOOK PASS [1-9][0-9]*
+test/camera400_handoff_suite.gd	\[camera400-handoff\] PASS: [1-9][0-9]* checks \[\]
+test/quiet_stay_suite.gd	QUIET STAY PASS [1-9][0-9]*
+test/save_candidate_suite.gd	save candidate: [1-9][0-9]* checks, 0 failures
+test/save_coordinator_suite.gd	SAVE_COORDINATOR checks=[1-9][0-9]* failures=\[\]
+test/save_data_codec_suite.gd	SAVE_DATA_CODEC [1-9][0-9]* checks; failures=\[\]
+test/save_feedback_suite.gd	SAVE FEEDBACK [1-9][0-9]* checks, failures 0
+test/save_recovery_suite.gd	SAVE RECOVERY PASS [1-9][0-9]*
+test/save_writer_guidance_suite.gd	SAVE WRITER GUIDANCE [1-9][0-9]* checks failures=\[\]
+test/scene_hotspot_suite.gd	\[scene-hotspot-tests\] [1-9][0-9]* checks, failures=\[\]
+test/scrapbook_encounter_suite.gd	\[scrapbook-encounters\] PASS: [1-9][0-9]* checks \[\]
+test/sheep_attention_suite.gd	SHEEP ATTENTION PASS [1-9][0-9]*
+test/shipped_correctness_suite.gd	\[shipped-correctness\] [1-9][0-9]* checks \[\]
+test/soft_button_focus_contrast_suite.gd	PASS: soft_button_focus_contrast [1-9][0-9]* checks
+test/soft_button_disabled_suite.gd	PASS: soft_button_disabled [1-9][0-9]* checks
+test/still_boundary_feedback_suite.gd	STILL BOUNDARY FEEDBACK PASS [1-9][0-9]*
+test/still_catch_suite.gd	STILL CATCH PASS [1-9][0-9]*
+test/still_grass_glow_suite.gd	STILL GRASS GLOW PASS [1-9][0-9]*
+test/still_object_feedback_suite.gd	STILL OBJECT FEEDBACK PASS [1-9][0-9]*
+test/still_target_pulse_suite.gd	STILL TARGET PULSE PASS [1-9][0-9]*
+test/test_suite.tscn	\[game-generic-tests\] PASS: [1-9][0-9]* checks
+test/title_card_suite.gd	title_card suite: [1-9][0-9]* checks passed
+test/title_licenses_link_contrast_suite.gd	PASS: title_licenses_link_contrast [1-9][0-9]* checks
+test/title_short_landscape_suite.gd	title_short_landscape suite: [1-9][0-9]* checks passed
+test/ui_interaction_suite.gd	\[ui-interaction-tests\] checks=[1-9][0-9]* failures=\[\]
+test/ui_viewports.gd	\[viewport\] checks=[1-9][0-9]* failures=\[\]
+test/web_hidpi_suite.gd	web_hidpi: [1-9][0-9]* checks, 0 failures
+test/web_save_bridge/decoder_suite.gd	WEB SAVE BRIDGE DECODER [1-9][0-9]* failures=\[\]
+test/web_save_bridge/legacy_suite.gd	LEGACY_BRIDGE_PASS [1-9][0-9]*
+test/yard_snapshot_suite.gd	yard snapshot: [1-9][0-9]* checks, 0 failures
+test/modal_touch_input_suite.gd	MODAL_TOUCH_INPUT checks=[1-9][0-9]* failures=0

@@ -1,0 +1,101 @@
+{
+  "runtime_export_source": "85217509f369e2dc06495bb1fa4ff1649b181a47",
+  "full_daily_source": "3970488afd79c0419ed0cc0ad7f2d6d4ab10d983",
+  "full_daily_godot_start_count": 73,
+  "full_daily_complete_through": "MOTION PREFERENCE JS PASS 21",
+  "full_daily_internal_chain_success": true,
+  "first_outer_tool_exit_code": 1,
+  "first_internal_run_exit_code": 0,
+  "first_outer_discrepancy_cause": "unexplained; preserved separately, not called outer success",
+  "actual_mat_pass_counts": [
+    550,
+    550,
+    550
+  ],
+  "post_gate_wrapper_failure": "missing importer preparation after restoring tracked .import; preserved, reimport then rerun passed",
+  "post_gate_gate_contract_checks": 50,
+  "post_gate_subprocesses": {
+    "source": "85217509f369e2dc06495bb1fa4ff1649b181a47",
+    "steps": [
+      {
+        "step": "post-gate-import",
+        "args": [
+          "bash",
+          "-c",
+          "source tools/lib/verified_godot.sh; run_verified_godot /dev/shm/photo447-evidence/post-gate-import.log --headless --path . --editor --import --quit"
+        ],
+        "exit_code": 0
+      },
+      {
+        "step": "gate-contract",
+        "args": [
+          "bash",
+          "test/godot_gate_test.sh"
+        ],
+        "exit_code": 0
+      },
+      {
+        "step": "mat-completion",
+        "args": [
+          "bash",
+          "-c",
+          "source tools/lib/verified_godot.sh; run_verified_godot_suite /dev/shm/photo447-evidence/post-gate-mat.log test/photo_arrival_mat_suite.gd --headless --path ."
+        ],
+        "exit_code": 0
+      },
+      {
+        "step": "verified-export",
+        "args": [
+          "bash",
+          "-c",
+          "source tools/lib/verified_godot.sh; XDG_DATA_HOME=/tmp/262-export-state/data run_verified_godot /dev/shm/photo447-evidence/verified-export.log --headless --path . --export-release Web /dev/shm/photo447-preview/index.html"
+        ],
+        "exit_code": 0
+      }
+    ]
+  },
+  "post_gate_outer_tool_exit_code": 0,
+  "python_retention_tests": 11,
+  "python_publisher": "local bare repository, two builds, all asserted modules and exact bytes",
+  "runtime_source_diff_between_full_and_export": [],
+  "browser_qa": {
+    "source": "85217509f369e2dc06495bb1fa4ff1649b181a47",
+    "cases": [
+      "390x844 normal",
+      "390x844 reduce",
+      "568x320 normal",
+      "568x320 reduce"
+    ],
+    "path": "normal title to yard, actual sheep click, natural new photo, ordinary album; one real page.close/new page same context",
+    "result": "four candidate full-hold frames show opaque paper mat; normal landscape fade retained and not used as opacity proof",
+    "raw_png_count": 44,
+    "http_complete_source_bindings": 10,
+    "pck_bytes": 27076376,
+    "pck_sha256": "812144231f60d96c5b565d0cf735982b356e2efece0eeb0d4ffde865b600e030",
+    "driver_exit_code": 0,
+    "closed_utc": "2026-10-05T21:20:17Z",
+    "errors": [],
+    "evidence": "../2026-10-06-photo447-candidate/README.md",
+    "limits": "local candidate only; no physical touch/audio/process restart; normal short landscape no separate natural-dismiss frame"
+  },
+  "full_metadata_export": {
+    "source": "d22f28f40d72d9860eb5bb267a7a45df84253fe1",
+    "main": "67c87f08c673c18b33fd14ddfe8be54991024f3c",
+    "explicit_import_and_export_exit_codes": [
+      0,
+      0
+    ],
+    "outer_tool_exit_code": 0,
+    "pck_bytes": 27089100,
+    "pck_sha256": "faa935055fb62250c137625da28e15d2ac28ef3880db1e8993e5991afec84df6",
+    "metadata_files": [
+      "game-sharing.json",
+      "game-verification.json",
+      "template.json",
+      "template-provenance.json"
+    ],
+    "independent_pck_comparison": "photo447-full-pck-independent.json",
+    "old_394_payloads": "all identical including scene IDs; only four exact Git metadata files added; all members actual MD5 verified",
+    "qa_equivalence_limit": "Actual browser QA still old 812144 sparse package; mapped via exact unchanged runtime payloads, not reported as rerun on full metadata package or actual public release"
+  }
+}

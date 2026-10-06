@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/tmp/album431.py", line 31, in <module>
+    ctx=b.new_context(viewport={'width':1280,'height':720},device_scale_factor=2);pg=bind(ctx,'album-main');click(pg,640,368);pg.wait_for_timeout(1200);click(pg,364,412);pg.wait_for_timeout(8000);click(pg,114,675);pg.wait_for_timeout(700);shot(pg,'desktop-album')
+                                                                                     ^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/album431.py", line 24, in bind
+    stable(pg,name,'before')
+  File "/tmp/album431.py", line 20, in stable
+    sha=subprocess.check_output(['git','-C','/dev/shm/youjia-album431','rev-parse','HEAD'],text=True).strip();assert sha==a.runtime;r.setdefault('source_checks',[]).append({'page':name,'stage':stage,'git_sha':sha,'time':time.monotonic()})
+                                                                                                                     ^^^^^^^^^^^^^^
+AssertionError

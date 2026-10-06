@@ -126,16 +126,18 @@ func _process(delta: float) -> void:
 	_refresh()
 
 
-## 走一帧：方向键沿路投影；没有方向时朝点按的目标走；在院门口继续往院里走就回院
+## 走一帧：方向键沿路投影；没有方向时朝点按的目标走；在院门口继续往院里走、或点院门走到门口，就回院
 func walk(direction: Vector2, delta: float) -> void:
 	var before := foot()
 	var step := L.WALK_SPEED * delta
+	var tap_home := false
 	if direction.length() > 0.01:
 		walk_target = {}
 		spot = L.step_input(spot, direction, step)
 	elif not walk_target.is_empty():
 		spot = L.step_toward(spot, walk_target, step)
 		if L.route_length(spot, walk_target) < 0.5:
+			tap_home = bool(walk_target.get("home", false)) and L.at_home(spot)
 			walk_target = {}
 	var moved := foot() - before
 	if moved.length() > 0.01 and reveal != null:
@@ -144,6 +146,9 @@ func walk(direction: Vector2, delta: float) -> void:
 		facing = signf(moved.x)
 	if not _walked and L.route_length(spot, L.START) > 24.0:
 		_walked = true
+	if tap_home:
+		_request_return("player")
+		return
 	if L.at_home(spot) and direction.normalized().dot(L.home_direction()) > L.MIN_ALIGN:
 		_home_hold += delta
 		if _home_hold >= L.HOME_HOLD:
@@ -320,7 +325,7 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 ## 屏幕坐标的一次按下：先命中按钮；观察态里其余位置不走路（计数，免得误以为卡住时再提示）；
-## 其余点按沿路走到离按下处最近的路面
+## 其余点按沿路走到离按下处最近的路面；点在院门一带（NearPathLayout.is_home_tap），走到门口就回院
 func press_at(point: Vector2) -> void:
 	for button: Button in [_return_button, _pause_button, _look_button, _pick_button, _go_button]:
 		if button.is_visible_in_tree() and button.get_global_rect().has_point(point):
@@ -330,8 +335,9 @@ func press_at(point: Vector2) -> void:
 		suppressed_touches += 1
 		_show_caption(_observe_caption() + "\n" + I18n.t("exploration.caption.continue_hint"), 0.0)
 		return
-	var target := L.nearest(screen_to_art(point))
-	walk_target = {"arm": target.arm, "d": target.d}
+	var art := screen_to_art(point)
+	var target := L.nearest(art)
+	walk_target = {"arm": target.arm, "d": target.d, "home": L.is_home_tap(art)}
 
 
 func screen_to_art(point: Vector2) -> Vector2:

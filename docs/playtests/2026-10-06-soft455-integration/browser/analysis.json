@@ -1,0 +1,181 @@
+{
+  "scope": "PR455 local candidate ordinary empty album; one fresh context, portrait then same-page resize to landscape",
+  "source_commit": "910bdec3fe7bf07833d6b9ccb720f57a5332880c",
+  "source_tree": "9b47ef3a4a78a9ca2cab285e93772b5a9540e381",
+  "pck": {
+    "bytes": 27089276,
+    "sha256": "ef5c5c9e13037e83fd76a5c6764c35faaf00c4c3b5f34e007459889c4276549b"
+  },
+  "binding_stages": 2,
+  "dependency_counts": [
+    11,
+    11
+  ],
+  "views": [
+    {
+      "view": "portrait",
+      "width": 390,
+      "height": 844,
+      "before_file": "portrait-01-empty-album.png",
+      "actual_labels": [
+        "← 往前翻",
+        "往后翻 →",
+        "合上"
+      ],
+      "full_viewport_preserved": true,
+      "observed_clipping": false,
+      "click_diffs": [
+        {
+          "file": "portrait-02-after-previous.png",
+          "bbox_vs_before": null
+        },
+        {
+          "file": "portrait-03-after-next.png",
+          "bbox_vs_before": null
+        }
+      ],
+      "close_file": "portrait-04-closed.png",
+      "close_observed_title": true,
+      "readonly_current_equal_before_after": true,
+      "generation": [
+        "1",
+        "1"
+      ],
+      "album": [],
+      "fill_pixels": [
+        {
+          "point": [
+            42,
+            656
+          ],
+          "rgb": [
+            243,
+            233,
+            219
+          ]
+        },
+        {
+          "point": [
+            152,
+            656
+          ],
+          "rgb": [
+            243,
+            233,
+            219
+          ]
+        },
+        {
+          "point": [
+            264,
+            656
+          ],
+          "rgb": [
+            255,
+            250,
+            241
+          ]
+        }
+      ],
+      "disabled_label_roi": [
+        46,
+        655,
+        125,
+        678
+      ],
+      "disabled_label_color_pixel_count": 110
+    },
+    {
+      "view": "landscape",
+      "width": 568,
+      "height": 320,
+      "before_file": "landscape-01-empty-album.png",
+      "actual_labels": [
+        "← 往前翻",
+        "往后翻 →",
+        "合上"
+      ],
+      "full_viewport_preserved": true,
+      "observed_clipping": false,
+      "click_diffs": [
+        {
+          "file": "landscape-02-after-previous.png",
+          "bbox_vs_before": null
+        },
+        {
+          "file": "landscape-03-after-next.png",
+          "bbox_vs_before": null
+        }
+      ],
+      "close_file": "landscape-04-closed.png",
+      "close_observed_title": true,
+      "readonly_current_equal_before_after": true,
+      "generation": [
+        "1",
+        "1"
+      ],
+      "album": [],
+      "fill_pixels": [
+        {
+          "point": [
+            42,
+            275
+          ],
+          "rgb": [
+            243,
+            233,
+            219
+          ]
+        },
+        {
+          "point": [
+            212,
+            275
+          ],
+          "rgb": [
+            243,
+            233,
+            219
+          ]
+        },
+        {
+          "point": [
+            384,
+            275
+          ],
+          "rgb": [
+            255,
+            250,
+            241
+          ]
+        }
+      ],
+      "disabled_label_roi": [
+        79,
+        275,
+        146,
+        294
+      ],
+      "disabled_label_color_pixel_count": 110
+    }
+  ],
+  "business_observation_limit": "No visible page navigation or overlay closing occurred on disabled clicks; unchanged readonly current is supporting evidence only, not proof about every internal callback. No internal state was injected.",
+  "loaded_asset_count": 13,
+  "page_errors": [],
+  "console_errors": [],
+  "started_utc": "2026-10-05T22:33:37Z",
+  "closed_utc": "2026-10-05T22:35:04Z",
+  "observed_driver_exit_code": 0,
+  "memory_before_browser_bytes": 15923027968,
+  "memory_observed_peak_bytes": 17073336320,
+  "memory_after_close_bytes": 15852814336,
+  "not_covered": [
+    "Public released build (candidate only)",
+    "Actual mobile hardware/touch or hearing",
+    "PR459 keyboard focus diagnosis",
+    "writing/acknowledging/resolving/failed/recovery save UI states",
+    "single-photo/all album page boundary states",
+    "full storage recovery or save semantics",
+    "all disabled controls in game"
+  ]
+}

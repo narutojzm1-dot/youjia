@@ -1,0 +1,154 @@
+{
+  "files": [
+    {
+      "path": ".gdignore",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "daily.log",
+      "bytes": 55448,
+      "sha256": "54eece798c16829ecebfc2c8ba1cd5115046b0c0f583e237dd7f5cd2b27752df"
+    },
+    {
+      "path": "diagnostic/diagnostic.patch",
+      "bytes": 2872,
+      "sha256": "a387fe0f82665a99ba146a3c526c50b3e74876883a98727d600103db3aba2f20"
+    },
+    {
+      "path": "diagnostic/driver.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "diagnostic/export-release.log",
+      "bytes": 46170,
+      "sha256": "817e34a5df5dc9fb47a73e9b2af6741063a0d0078d2265add7aaf4001653bedf"
+    },
+    {
+      "path": "diagnostic/export.log",
+      "bytes": 104856,
+      "sha256": "fd0adead780452ccc81935277e248fcb8f2bb15a6d398410a9efcd5f615d273d"
+    },
+    {
+      "path": "diagnostic/instrument.py",
+      "bytes": 2404,
+      "sha256": "25727efa6484e583d62bf61c7f73e95198fae8d3c0c6fa0cc35d7a57f7bd57e8"
+    },
+    {
+      "path": "diagnostic/main-original.gd.txt",
+      "bytes": 86789,
+      "sha256": "058097d5484f2d36b5ce33ed8dc879213fbd4721fb697de8a80a98b9fecedf9d"
+    },
+    {
+      "path": "diagnostic/outside.png",
+      "bytes": 1817014,
+      "sha256": "01b6cb563352012b755fc56438588553bd601e8bc740e60a7f271de65b01a4da"
+    },
+    {
+      "path": "diagnostic/result.json",
+      "bytes": 4181,
+      "sha256": "9adb72ec2584d19f15354070f3330edc80c12402b3813d2380a1bfb17d09f9d5"
+    },
+    {
+      "path": "diagnostic/run.py",
+      "bytes": 1359,
+      "sha256": "34b5873027506454bc40fdb27096f81146782275f96a65be178f40eaad3b7a81"
+    },
+    {
+      "path": "diagnostic/walked.png",
+      "bytes": 1830618,
+      "sha256": "b14d5a1fcc8846bdf5238bbba6a8037e0cef6ea02cf84ba7622dde9117f341be"
+    },
+    {
+      "path": "diagnostic-hashes.json",
+      "bytes": 1767,
+      "sha256": "68ab5ad4b87dcc40ac8cad558814ee2d9c50ac1e2b1dfa778742771c5eb965ae"
+    },
+    {
+      "path": "export.log",
+      "bytes": 46447,
+      "sha256": "2a330f190bd335073974959b0342fb64b2e1462c604a2d9f8493f1bfb6fead48"
+    },
+    {
+      "path": "suite-final.log",
+      "bytes": 113,
+      "sha256": "41f1c80b100470df26a3bdea5e7a599e7f57a38d8bf390be8990a30108714d19"
+    },
+    {
+      "path": "suite-imported.log",
+      "bytes": 113,
+      "sha256": "41f1c80b100470df26a3bdea5e7a599e7f57a38d8bf390be8990a30108714d19"
+    },
+    {
+      "path": "suite.log",
+      "bytes": 6939,
+      "sha256": "bbdeeae145b34360aaa6a26e807c2c3860477921d5fd75584ec71be196e92eb0"
+    },
+    {
+      "path": "web/archive-manifest.json",
+      "bytes": 3646,
+      "sha256": "0e970a301321a81c3a2225bda97e1e7bf6da83c89aff46f97efa4d0d18d090d9"
+    },
+    {
+      "path": "web/keyboard-return.png",
+      "bytes": 1378749,
+      "sha256": "80d6657001bd3dd3fa961ee7cc3eef7e8515c91669d0b850dc76560449780ce3"
+    },
+    {
+      "path": "web/keyboard-walked.png",
+      "bytes": 1812210,
+      "sha256": "8097d42856ae44c5255e1d4216fb937cc3163fadff43b711ec56b62f054883fd"
+    },
+    {
+      "path": "web/result.json",
+      "bytes": 5119,
+      "sha256": "b2af050b449fe80142f23dd6b4965df7b86932f52ff443371a976f08585097a3"
+    },
+    {
+      "path": "web/run.py",
+      "bytes": 4212,
+      "sha256": "464c0e2b101cd44694ca41c7c381c838f5c4ff8ff60c7ee4ee2f1b1c20205e86"
+    },
+    {
+      "path": "web/touch-return.png",
+      "bytes": 1812122,
+      "sha256": "504b2fae2d471fabef7eb06ef66c72806c89a84a28037fb50efed2fbf8f0d93f"
+    },
+    {
+      "path": "web/touch-wait/result.json",
+      "bytes": 2922,
+      "sha256": "76010fc8e5320839f44b4e5a176dfd01b84f381c0cc08f5e06640bbf30e64b11"
+    },
+    {
+      "path": "web/touch-wait/run.py",
+      "bytes": 4255,
+      "sha256": "3049e4e55e878eb0f84d75932ebb887123b1b8d163874064e9bbc3f1c39f2aa0"
+    },
+    {
+      "path": "web/touch-wait/touch-no-bounce.png",
+      "bytes": 1817086,
+      "sha256": "03ecf744fcbd762588501ee9341b328cfb669e187e7f290b9eea08f621524e4a"
+    },
+    {
+      "path": "web/touch-wait/touch-return-7s.png",
+      "bytes": 1812276,
+      "sha256": "696b8eb49c26c21073f23b7636e6172fd97e9c838a6ff74611e2a6dae259623f"
+    },
+    {
+      "path": "web/touch-wait/touch-return.png",
+      "bytes": 1383121,
+      "sha256": "eed70253684c4660fe8e86401012bd5c59e53136a37a55ed0289b00283b4d8ad"
+    },
+    {
+      "path": "web/touch-wait/touch-still-outside.png",
+      "bytes": 1814243,
+      "sha256": "93d754a7ef1c366f3c34eacbe18b438547a69d6ce8c4bb265f60774d8879fee3"
+    },
+    {
+      "path": "web/touch-wait/touch-walked.png",
+      "bytes": 1830829,
+      "sha256": "2100f364c1d1d1e4f24019f16afd165e026a056f6ef441832140efa52057703b"
+    }
+  ]
+}

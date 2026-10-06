@@ -1,0 +1,33 @@
+{
+  "utc": "2026-10-05T23:41:52.382435+00:00",
+  "source": {
+    "source": "33bd42534d87ebd6e0cb0087d7ee0eaf258f548e",
+    "tree": "d629f692a58a2abfb847078fb8e9bac472833b49",
+    "parents": [
+      "95b11e8255ee1c9532b6428a0b2914574dec6e97",
+      "b472b6a59f214da5716c87567baac77533edc0eb"
+    ],
+    "integration_base": "b472b6a59f214da5716c87567baac77533edc0eb",
+    "upstream_runtime_equivalent_to": "fd887ff (as parent verified); exact upstream parent retained",
+    "own_files": [
+      "scripts/game/yard_world.gd",
+      "test/camera400_handoff_suite.gd",
+      "test/camera400_handoff_suite.gd.uid",
+      "test/godot_gate_test.sh",
+      "tools/lib/godot_suite_completions.tsv",
+      "tools/verify_daily_life.sh"
+    ],
+    "upstream_photo_files_preserved": true,
+    "main_unchanged": true,
+    "daily_mode": "100755",
+    "expected_daily_suites": 75,
+    "expected_daily_launches": 76,
+    "expected_new_suite_checks": 202,
+    "expected_gate_mocks": 64,
+    "new_format_mock_count": 14,
+    "full_validation": "not yet run",
+    "browser_executed": false
+  },
+  "live_engine_browser": [],
+  "memory_bytes": 15754194944
+}

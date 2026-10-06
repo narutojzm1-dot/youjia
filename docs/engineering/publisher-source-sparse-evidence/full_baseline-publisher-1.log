@@ -1,0 +1,38 @@
+[publish] source commit: 1c1c9c1af4ce
+[publish] bundle entry name: game-1c1c9c1af4ce
+[publish] staging in /tmp/publisher130-partial-d4vld1a6/full_baseline/tmp.yzEQQV6SRr
+[publish] injected cache-control meta into index.html
+[publish] cache-control meta tags injected; data-build=game-1c1c9c1af4ce
+[publish] verifying HTML patches...
+[publish] HTML verification passed: executable=game-1c1c9c1af4ce, fileSizes keys correct, script.src=game-1c1c9c1af4ce.js
+[publish] engine version: fixture-version-only-no-engine
+[publish] switching to gh-pages branch...
+HEAD is now at 0ae810c Publish source history 2 (29b06ed1551e)
+[publish] pruning 1 old bundle(s), retaining current and recent publications...
+[publish]   removing game-b.*
+[detached HEAD feea5ea] Publish second source fixture (1c1c9c1af4ce)
+ Author: Cursor Agent <cursoragent@cursor.com>
+ 18 files changed, 665 insertions(+), 10 deletions(-)
+ create mode 100644 game-1c1c9c1af4ce.js
+ create mode 100644 game-1c1c9c1af4ce.pck
+ create mode 100644 game-1c1c9c1af4ce.wasm
+ delete mode 100644 game-b.js
+ delete mode 100644 game-b.pck
+ delete mode 100644 game-b.wasm
+ create mode 100644 save-1c1c9c1af4ce/bridge.mjs
+ create mode 100644 save-1c1c9c1af4ce/budgets.mjs
+ create mode 100644 save-1c1c9c1af4ce/host.mjs
+ create mode 100644 save-1c1c9c1af4ce/idbfs_source.mjs
+ create mode 100644 save-1c1c9c1af4ce/legacy_inspection.mjs
+ create mode 100644 save-1c1c9c1af4ce/legacy_seal.mjs
+ create mode 100644 save-1c1c9c1af4ce/legacy_v5.mjs
+ create mode 100644 save-1c1c9c1af4ce/lifecycle.mjs
+ create mode 100644 save-1c1c9c1af4ce/source_decode.mjs
+ create mode 100644 save-1c1c9c1af4ce/store.mjs
+[publish] ✓ done.
+[publish]   entry:  game-1c1c9c1af4ce
+[publish]   pages:  https://narutojzm1-dot.github.io/youjia/
+[publish]   verify: document.documentElement.dataset.build in browser console should equal 'game-1c1c9c1af4ce'
+Preparing worktree (detached HEAD 0ae810c)
+To file:///tmp/publisher130-partial-d4vld1a6/full_baseline/remote.git
+   0ae810c..feea5ea  HEAD -> gh-pages

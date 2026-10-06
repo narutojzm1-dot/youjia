@@ -7,6 +7,8 @@ var fail_commits := false
 var fail_after := -1
 # 非空时 pump() 把下一笔这种 kind 的写入挂成结果未知，直到 resolve_unknown()
 var unknown_kind := ""
+# 非空时下一笔这种 kind 的写入被拒一次（存储写失败），之后恢复正常
+var fail_kind_once := ""
 var commits := 0
 var queue: Array[Dictionary] = []
 var _unknown: Dictionary = {}
@@ -35,11 +37,16 @@ func pump() -> void:
 	while _unknown.is_empty() and not queue.is_empty():
 		var op: Dictionary = queue.pop_front()
 		var candidate: Variant = op.intent.call(_data.duplicate(true))
-		if op.kind == unknown_kind:
+		# 真实协调器在 prepare 之前就按 typed 码拒绝，这样的请求不会挂成未知
+		if op.kind == unknown_kind and candidate is Dictionary:
 			unknown_kind = ""
 			_unknown = {"op_id": op.op_id, "candidate": candidate}
 			_on_commit_unknown(op.op_id, "MEMORY_UNKNOWN")
 			return
+		if op.kind == fail_kind_once and candidate is Dictionary:
+			fail_kind_once = ""
+			_on_commit_rejected(op.op_id, "MEMORY_FAIL")
+			continue
 		_settle(op.op_id, candidate)
 
 
@@ -54,6 +61,10 @@ func resolve_unknown(landed: bool) -> void:
 
 
 func _settle(op_id: String, candidate: Variant) -> void:
+	# 和真实协调器一样：清理接口的写前拒绝带它自己的码，在注入失败之前判定
+	if candidate is CoordinatorType.IntentRejection:
+		_on_commit_rejected(op_id, candidate.code)
+		return
 	if fail_commits or fail_after == 0 or not candidate is Dictionary:
 		_on_commit_rejected(op_id, "MEMORY_FAIL")
 		return

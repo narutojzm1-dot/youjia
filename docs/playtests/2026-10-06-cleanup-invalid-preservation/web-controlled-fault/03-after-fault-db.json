@@ -1,0 +1,22 @@
+{
+  "youjia-save-host-v1": {
+    "records": {
+      "keys": [
+        "current"
+      ],
+      "values": [
+        {
+          "schema": "youjia.save-envelope/v1",
+          "store_id": "8dc11b8474fa464c97531db4262febb2",
+          "commit_id": "b4cc74b6e4e545cda678d1b2a40640cb",
+          "request_id": "0ff9b66806a94159901fb61ae91a4c38",
+          "parent_commit_id": "db33c1da51114caea3dc7d98e876df7b",
+          "generation": "5",
+          "payload_bytes": "{\"album\":[],\"animal_relationship_memory\":{},\"exploration\":{\"contract_version\":1,\"next_trip_serial\":2,\"session\":{\"carried\":[\"formal.find.feather\"],\"catalog\":\"formal\",\"current_stop\":\"gate\",\"failure\":null,\"offers\":{\"gate\":\"formal.find.feather\"},\"proposal\":{\"items\":[{\"find_id\":\"formal.find.feather\"}],\"reason\":\"player\",\"revision\":1,\"route_id\":\"formal.near_path\",\"trip_id\":\"trip-1\"},\"record_revision\":3,\"rng_seed\":\"-6013206645036955208\",\"route_id\":\"formal.near_path\",\"started_clock\":{\"day\":1,\"elapsed\":1.46666666666667},\"state\":\"pending_commit\",\"taken\":{\"gate\":\"formal.find.feather\"},\"trip_id\":\"trip-1\",\"trip_serial\":1,\"visited\":[\"gate\"]}},\"exploration_committed_serial\":0,\"first_fish_caught\":false,\"holiday_day\":1,\"holiday_day_elapsed\":1.46666666666667,\"keepsakes\":{},\"locale\":\"zh-CN\",\"photo_moments\":{},\"plant_day_planted\":0,\"plant_state\":0,\"plant_watered_day\":-1,\"tutorial_version\":0,\"version\":5}",
+          "payload_sha256": "508fc500eee77dd52b37a8c77008fef6e7f09c4c9a3d0b8048177197dd3fc40a",
+          "envelope_sha256": "b5fde8d73fa9653813a8c1fae98d06c4d857feb478fc670cc6fe6f9fe5379b00"
+        }
+      ]
+    }
+  }
+}

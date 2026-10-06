@@ -1,0 +1,25 @@
+{
+  "pattern": "\\[photo-arrival-mat\\] PASS: [1-9][0-9]* checks",
+  "cases": [
+    {
+      "line": "[photo-arrival-mat] PASS: 550 checks",
+      "expected_exit": 0,
+      "actual_exit": 0
+    },
+    {
+      "line": "[photo-arrival-mat] PASS: 0 checks",
+      "expected_exit": 1,
+      "actual_exit": 1
+    },
+    {
+      "line": "[photo-arrival-mat] PASS: -1 checks",
+      "expected_exit": 1,
+      "actual_exit": 1
+    },
+    {
+      "line": "[other] PASS: 550 checks",
+      "expected_exit": 1,
+      "actual_exit": 1
+    }
+  ]
+}

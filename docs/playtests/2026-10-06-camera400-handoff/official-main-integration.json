@@ -1,0 +1,22 @@
+{
+  "tested_source": "33bd42534d87ebd6e0cb0087d7ee0eaf258f548e",
+  "official_main_tree_equals_local_464_tree": true,
+  "integrated_local_source": "c3a277edf61f3293f6fc67e524a402dfdfa44c91",
+  "tree": "d629f692a58a2abfb847078fb8e9bac472833b49",
+  "parents": [
+    "33bd42534d87ebd6e0cb0087d7ee0eaf258f548e",
+    "49596fa93bff3c29edfe441898017158c6e469a3"
+  ],
+  "entire_tree_unchanged_from_tested_source": true,
+  "need_repeat_runtime_validation": false,
+  "merged_main": "49596fa93bff3c29edfe441898017158c6e469a3",
+  "files_relative_to_merged_main": [
+    "scripts/game/yard_world.gd",
+    "test/camera400_handoff_suite.gd",
+    "test/camera400_handoff_suite.gd.uid",
+    "test/godot_gate_test.sh",
+    "tools/lib/godot_suite_completions.tsv",
+    "tools/verify_daily_life.sh"
+  ],
+  "main_release_status_at_integration": "Merged; formal Pages publication and public experience are separate checks owned by root."
+}

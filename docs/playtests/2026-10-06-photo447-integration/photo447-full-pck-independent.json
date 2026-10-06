@@ -1,0 +1,65 @@
+{
+  "reviewer": "/root/leader_scope_audit",
+  "source": "d22f28f40d72d9860eb5bb267a7a45df84253fe1",
+  "method": "PCK v4 actual directory/payload parse; each member stored MD5 checked, payload SHA256 compared; additions checked against exact git source blobs",
+  "before": {
+    "path": "/dev/shm/photo447-preview/index.pck",
+    "bytes": 27076376,
+    "sha256": "812144231f60d96c5b565d0cf735982b356e2efece0eeb0d4ffde865b600e030",
+    "format": 4,
+    "version": [
+      4,
+      7,
+      2
+    ],
+    "flags": 2,
+    "count": 394,
+    "directory_offset": 27040256,
+    "directory_end": 27076376
+  },
+  "after": {
+    "path": "/dev/shm/photo447-full-export/index.pck",
+    "bytes": 27089100,
+    "sha256": "faa935055fb62250c137625da28e15d2ac28ef3880db1e8993e5991afec84df6",
+    "format": 4,
+    "version": [
+      4,
+      7,
+      2
+    ],
+    "flags": 2,
+    "count": 398,
+    "directory_offset": 27052736,
+    "directory_end": 27089100
+  },
+  "added": {
+    "game-sharing.json": {
+      "bytes": 775,
+      "md5": "01297d01a0bd8f11b98d5ecf8b7dc2bf",
+      "sha256": "0b408d3cf2803041b65e578baba0f37c08bc26e781beff37052a611d2c6bf95d",
+      "flags": 0
+    },
+    "game-verification.json": {
+      "bytes": 344,
+      "md5": "c7e9ff601c71d276641470853b8f7ce2",
+      "sha256": "dcb58f55daaf55b82885e23126fe9ed23e5ca3690ee9d544d12b8c9eca26006a",
+      "flags": 0
+    },
+    "template.json": {
+      "bytes": 433,
+      "md5": "ae864dce61370014a8763056efd90759",
+      "sha256": "f3f9a0f3746f10687ea6903f8f38d17e08e4efc3f2e978cfe5ee2d3b98aef2ea",
+      "flags": 0
+    },
+    "template-provenance.json": {
+      "bytes": 10886,
+      "md5": "810d8291235ba4b00561479c8001066f",
+      "sha256": "5290da9f7d173a80b3efb536c799fa8d7237fb8ca79ec55a0cc9fb1006ca33b1",
+      "flags": 0
+    }
+  },
+  "removed": {},
+  "changed": {},
+  "identical_member_count": 394,
+  "all_original_payloads_byte_identical": true
+}

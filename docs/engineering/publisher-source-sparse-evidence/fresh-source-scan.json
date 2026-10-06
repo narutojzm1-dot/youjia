@@ -1,0 +1,81 @@
+{
+  "source_commit": "9623ba22c8edc564e5c89dc6b0171324e9230764",
+  "all_non_docs_tracked_blobs": 915,
+  "text_blobs_read_and_sha_verified": 734,
+  "binary_blobs_retained_by_path": 181,
+  "fresh_blobs_fetched": [
+    "scripts/main.gd",
+    "test/soft_button_disabled_suite.gd",
+    "test/soft_button_disabled_suite.gd.uid",
+    "tools/lib/godot_suite_completions.tsv"
+  ],
+  "res_token_occurrences": 943,
+  "literal_res_docs_references": [],
+  "non_documentation_docs_text_hits": [
+    {
+      "path": ".github/workflows/publish-pages.yml",
+      "line": 7,
+      "text": "      - 'docs/**'"
+    },
+    {
+      "path": ".github/workflows/verify-pr.yml",
+      "line": 7,
+      "text": "      - 'docs/**'"
+    },
+    {
+      "path": ".github/workflows/verify-pr.yml",
+      "line": 29,
+      "text": "            !/docs/"
+    },
+    {
+      "path": "export_presets.cfg",
+      "line": 11,
+      "text": "exclude_filter=\"assets/holiday/sharing/*,site/*,assets/template/environment/backdrop.png,art/*,dist/*,test/*,test-output/*,captures/*,docs/*,assets/template/provenance/*,tools/*\""
+    },
+    {
+      "path": "scripts/exploration/exploration_contract.gd",
+      "line": 4,
+      "text": "# 不持有状态，不访问 SaveStore；见 docs/architecture/exploration-module-contract.md。"
+    },
+    {
+      "path": "scripts/exploration/exploration_host.gd",
+      "line": 15,
+      "text": "# 收尾清理（契约 docs/architecture/exploration-cleanup-commit-contract.md）被明确拒绝后最多再交几次"
+    },
+    {
+      "path": "scripts/exploration/find_reveal.gd",
+      "line": 3,
+      "text": "# 拾起成功后的短展示（docs/architecture/exploration-find-reveal.md）：物件从路边升到人物上方停一下，"
+    },
+    {
+      "path": "site/THIRD_PARTY_NOTICES.txt",
+      "line": 2978,
+      "text": "Legacy LLVM License (https://llvm.org/docs/DeveloperPolicy.html#legacy):"
+    },
+    {
+      "path": "site/index.js",
+      "line": 629,
+      "text": " * of `Promises <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises>`__."
+    },
+    {
+      "path": "site/open-source-licenses.html",
+      "line": 2978,
+      "text": "Legacy LLVM License (https://llvm.org/docs/DeveloperPolicy.html#legacy):"
+    },
+    {
+      "path": "tools/capture_sky_acceptance.gd",
+      "line": 5,
+      "text": "# YOUJIA_SKY_CAPTURE_DIR=docs/playtests/2026-10-04-REQ-005-godot-accept"
+    },
+    {
+      "path": "web/loading.html",
+      "line": 33,
+      "text": "  <!-- Loading preview derives only from approved assets/holiday/environment/yard_sunny.png; JPEG 1280x720, quality 72. Source/provenance recorded in docs/playtests/2026-10-04-QA-EXP003-loading.md. -->"
+    }
+  ],
+  "dynamic_gd_candidates_count": 744,
+  "symlinks": 0,
+  "daily_suite_count": 73,
+  "production_runtime_executed": false,
+  "source_text_paths_file": "source-text-blobs.tsv"
+}

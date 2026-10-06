@@ -1,0 +1,38 @@
+{
+  "scripts/exploration/exploration_host.gd": {
+    "exact_head_equal": true,
+    "sha256": "a43438cfc1c5f89b398dac6ac239ac8bcd7ac537adee436d154bfdb892f88826"
+  },
+  "scripts/exploration/exploration_director.gd": {
+    "exact_head_equal": true,
+    "sha256": "9482b1db661145170d659ecc9b9de21d1d821d10cc542e73f0b832e48f4d0216"
+  },
+  "scripts/main.gd": {
+    "exact_head_equal": true,
+    "sha256": "a468d94be09a9c3eaf3f5ddba6027dbab542cc4e78f0ddfe41d821d0345f05cb"
+  },
+  "test/fixtures/exploration_memory_store.gd": {
+    "exact_head_equal": true,
+    "sha256": "fa04509c66992ad91e82ed7e0f68413b145bec8f0a80af7bb2950753d32221a9"
+  },
+  "autoload/save_store.gd": {
+    "exact_head_equal": true,
+    "sha256": "67b3029768f7d7689fee5c344e7cade1f850e8fd4a1456e9c2f1e3bb4be1296b"
+  },
+  "scripts/persistence/save_coordinator.gd": {
+    "exact_head_equal": true,
+    "sha256": "a95e388f74319be2a81bbfc2f2121b836af4660465c041c43b5c93bcccbfda8d"
+  },
+  "scripts/persistence/native_save_host.gd": {
+    "exact_head_equal": true,
+    "sha256": "4e02e265314f23c8759cb9b0cd347870e8baa62e9de128fe585e74a124a86e2b"
+  },
+  "scripts/persistence/save_data_codec.gd": {
+    "exact_head_equal": true,
+    "sha256": "c5e181e81df8c7e82c7dc36acd8a20dd974e72fc845066709e0ded09a3562e42"
+  },
+  "scripts/exploration/exploration_session.gd": {
+    "exact_head_equal": true,
+    "sha256": "6df0e0b98a8f87a9dee3928d54abb03042bbbb3b29b3cc8f0b116abefb6ddacd"
+  }
+}

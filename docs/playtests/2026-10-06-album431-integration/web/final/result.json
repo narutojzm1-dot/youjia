@@ -1,0 +1,289 @@
+{
+  "runtime": "95a3b0950f7612263e8f3939664fdd1b0906e73f",
+  "expected_pck": "8e64a09de7735786a50c98ed6ae7a33c297bc422358693d4c6eb762df78051da",
+  "inputs": [
+    {
+      "click": [
+        640,
+        368
+      ],
+      "time": 355128.036106829
+    },
+    {
+      "click": [
+        364,
+        412
+      ],
+      "time": 355133.67926822
+    },
+    {
+      "click": [
+        114,
+        675
+      ],
+      "time": 355141.868618082
+    },
+    {
+      "screenshot": "desktop-album",
+      "time": 355142.764262144
+    },
+    {
+      "viewport": [
+        568,
+        300
+      ],
+      "time": 355145.647433328
+    },
+    {
+      "screenshot": "568x300-album",
+      "time": 355146.482267315
+    },
+    {
+      "viewport": [
+        640,
+        300
+      ],
+      "time": 355147.168122
+    },
+    {
+      "screenshot": "640x300-album",
+      "time": 355147.730974212
+    },
+    {
+      "viewport": [
+        568,
+        320
+      ],
+      "time": 355148.390582574
+    },
+    {
+      "screenshot": "568x320-album",
+      "time": 355148.9802545
+    },
+    {
+      "click": [
+        455,
+        270
+      ],
+      "time": 355149.627205223
+    },
+    {
+      "screenshot": "closed-small",
+      "time": 355150.224374384
+    },
+    {
+      "click": [
+        145,
+        220
+      ],
+      "time": 355150.747570966
+    },
+    {
+      "screenshot": "reopened-small",
+      "time": 355151.334158098
+    },
+    {
+      "screenshot": "restored-desktop",
+      "time": 355152.552262565
+    },
+    {
+      "click": [
+        640,
+        368
+      ],
+      "time": 355165.328557274
+    },
+    {
+      "click": [
+        114,
+        675
+      ],
+      "time": 355171.262074359
+    },
+    {
+      "screenshot": "real-reopened-album",
+      "time": 355171.881292453
+    }
+  ],
+  "media": [],
+  "errors": [],
+  "builds": [
+    {
+      "page": "album-main",
+      "entry": "index"
+    },
+    {
+      "page": "album-real-reopen",
+      "entry": "index"
+    }
+  ],
+  "limits": [
+    "browser media emulation, not OS settings or physical phone",
+    "listener multiplicity is not proved by screenshots",
+    "photo detector needs visual confirmation"
+  ],
+  "docs_only_deltas": [
+    {
+      "head": "71b636d6b280cac3fbc783bccd2c11b207f36d23",
+      "runtime": "95a3b0950f7612263e8f3939664fdd1b0906e73f",
+      "files": [
+        "docs/playtests/2026-10-06-album431-integration/.gdignore",
+        "docs/playtests/2026-10-06-album431-integration/README.md",
+        "docs/playtests/2026-10-06-album431-integration/album431-combination.exit",
+        "docs/playtests/2026-10-06-album431-integration/album431-combination.log",
+        "docs/playtests/2026-10-06-album431-integration/album431-combination.sh",
+        "docs/playtests/2026-10-06-album431-integration/album431-export.exit",
+        "docs/playtests/2026-10-06-album431-integration/album431-export.log",
+        "docs/playtests/2026-10-06-album431-integration/album431-import.exit",
+        "docs/playtests/2026-10-06-album431-integration/album431-import.log",
+        "docs/playtests/2026-10-06-album431-integration/export-files.json",
+        "docs/playtests/2026-10-06-album431-integration/original-pr.json"
+      ]
+    },
+    {
+      "head": "71b636d6b280cac3fbc783bccd2c11b207f36d23",
+      "runtime": "95a3b0950f7612263e8f3939664fdd1b0906e73f",
+      "files": [
+        "docs/playtests/2026-10-06-album431-integration/.gdignore",
+        "docs/playtests/2026-10-06-album431-integration/README.md",
+        "docs/playtests/2026-10-06-album431-integration/album431-combination.exit",
+        "docs/playtests/2026-10-06-album431-integration/album431-combination.log",
+        "docs/playtests/2026-10-06-album431-integration/album431-combination.sh",
+        "docs/playtests/2026-10-06-album431-integration/album431-export.exit",
+        "docs/playtests/2026-10-06-album431-integration/album431-export.log",
+        "docs/playtests/2026-10-06-album431-integration/album431-import.exit",
+        "docs/playtests/2026-10-06-album431-integration/album431-import.log",
+        "docs/playtests/2026-10-06-album431-integration/export-files.json",
+        "docs/playtests/2026-10-06-album431-integration/original-pr.json"
+      ]
+    },
+    {
+      "head": "71b636d6b280cac3fbc783bccd2c11b207f36d23",
+      "runtime": "95a3b0950f7612263e8f3939664fdd1b0906e73f",
+      "files": [
+        "docs/playtests/2026-10-06-album431-integration/.gdignore",
+        "docs/playtests/2026-10-06-album431-integration/README.md",
+        "docs/playtests/2026-10-06-album431-integration/album431-combination.exit",
+        "docs/playtests/2026-10-06-album431-integration/album431-combination.log",
+        "docs/playtests/2026-10-06-album431-integration/album431-combination.sh",
+        "docs/playtests/2026-10-06-album431-integration/album431-export.exit",
+        "docs/playtests/2026-10-06-album431-integration/album431-export.log",
+        "docs/playtests/2026-10-06-album431-integration/album431-import.exit",
+        "docs/playtests/2026-10-06-album431-integration/album431-import.log",
+        "docs/playtests/2026-10-06-album431-integration/export-files.json",
+        "docs/playtests/2026-10-06-album431-integration/original-pr.json"
+      ]
+    },
+    {
+      "head": "71b636d6b280cac3fbc783bccd2c11b207f36d23",
+      "runtime": "95a3b0950f7612263e8f3939664fdd1b0906e73f",
+      "files": [
+        "docs/playtests/2026-10-06-album431-integration/.gdignore",
+        "docs/playtests/2026-10-06-album431-integration/README.md",
+        "docs/playtests/2026-10-06-album431-integration/album431-combination.exit",
+        "docs/playtests/2026-10-06-album431-integration/album431-combination.log",
+        "docs/playtests/2026-10-06-album431-integration/album431-combination.sh",
+        "docs/playtests/2026-10-06-album431-integration/album431-export.exit",
+        "docs/playtests/2026-10-06-album431-integration/album431-export.log",
+        "docs/playtests/2026-10-06-album431-integration/album431-import.exit",
+        "docs/playtests/2026-10-06-album431-integration/album431-import.log",
+        "docs/playtests/2026-10-06-album431-integration/export-files.json",
+        "docs/playtests/2026-10-06-album431-integration/original-pr.json"
+      ]
+    }
+  ],
+  "source_checks": [
+    {
+      "page": "album-main",
+      "stage": "before",
+      "git_sha": "71b636d6b280cac3fbc783bccd2c11b207f36d23",
+      "time": 355113.435765967
+    },
+    {
+      "page": "album-main",
+      "stage": "after",
+      "git_sha": "71b636d6b280cac3fbc783bccd2c11b207f36d23",
+      "time": 355155.751422652
+    },
+    {
+      "page": "album-real-reopen",
+      "stage": "before",
+      "git_sha": "71b636d6b280cac3fbc783bccd2c11b207f36d23",
+      "time": 355156.586272873
+    },
+    {
+      "page": "album-real-reopen",
+      "stage": "after",
+      "git_sha": "71b636d6b280cac3fbc783bccd2c11b207f36d23",
+      "time": 355174.501639454
+    }
+  ],
+  "pck_checks": [
+    {
+      "page": "album-main",
+      "sha256": "8e64a09de7735786a50c98ed6ae7a33c297bc422358693d4c6eb762df78051da"
+    },
+    {
+      "page": "album-real-reopen",
+      "sha256": "8e64a09de7735786a50c98ed6ae7a33c297bc422358693d4c6eb762df78051da"
+    }
+  ],
+  "navigation": [
+    {
+      "time": 355120.736696757,
+      "url": "http://127.0.0.1:8201/",
+      "main": true
+    },
+    {
+      "time": 355160.477891722,
+      "url": "http://127.0.0.1:8201/",
+      "main": true
+    }
+  ],
+  "dom_ready": [
+    355120.762193546,
+    355160.490586737
+  ],
+  "all_console": [
+    {
+      "type": "log",
+      "text": "Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org",
+      "time": 355122.590175965
+    },
+    {
+      "type": "log",
+      "text": "OpenGL API OpenGL ES 3.0 (WebGL 2.0 (OpenGL ES 3.0 Chromium)) - Compatibility - Using Device: WebKit - WebKit WebGL",
+      "time": 355123.040778027
+    },
+    {
+      "type": "log",
+      "text": "Build configuration: Emscripten 4.0.20, single-threaded, no GDExtension support.",
+      "time": 355123.508546008
+    },
+    {
+      "type": "info",
+      "text": "[game-loading] timings_ms {\"engineScriptReady\":70,\"engineReady\":4509,\"downloadComplete\":4509,\"firstFrame\":6070}",
+      "time": 355126.831644386
+    },
+    {
+      "type": "log",
+      "text": "Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org",
+      "time": 355161.248776072
+    },
+    {
+      "type": "log",
+      "text": "OpenGL API OpenGL ES 3.0 (WebGL 2.0 (OpenGL ES 3.0 Chromium)) - Compatibility - Using Device: WebKit - WebKit WebGL",
+      "time": 355161.470822166
+    },
+    {
+      "type": "log",
+      "text": "Build configuration: Emscripten 4.0.20, single-threaded, no GDExtension support.",
+      "time": 355161.750160125
+    },
+    {
+      "type": "info",
+      "text": "[game-loading] timings_ms {\"engineScriptReady\":21,\"engineReady\":2790,\"downloadComplete\":2791,\"firstFrame\":3632}",
+      "time": 355164.126720688
+    }
+  ]
+}

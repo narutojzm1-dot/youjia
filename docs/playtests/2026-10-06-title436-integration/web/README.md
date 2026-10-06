@@ -1,0 +1,13 @@
+# Title436 candidate ordinary title-link QA
+
+Independent review304, local candidate only, 2026-10-05 UTC. Runtime5aa5f2a090d740f91bbbce12d347e7511b1bfdda; http://127.0.0.1:8203/ ordinary index export. Actual HTML entry and before/after checkout HEAD/docs-only diff recorded in result.json. Actual PCK27,088,396 bytes SHA256410b0abfe23f48e0860efc6ec68eb393009ec342e794f581f323f8eb47793bf7. Not a public release or production manifest.
+
+Fresh ordinary Chromium CSS1280×720/DPR2, resized568×320 in same page. No Godot setter/business state/seed/save injection. Only pointer movement, real mouse.down/up, Tab keys and viewport change. Did not enter the yard/start a game.
+
+Observed limited PASS: initial normal dark readable declaration text; desktop-hover/desktop-pressed preserve readable link under real pointer hover and held mouse button. Release actually opens a second page at /open-source-licenses.html with title Open Source Licenses and THIRD-PARTY NOTICES/Godot license text retained in result.json. The popup was screenshotted, closed, and original title brought front. Actual Tab traversal then reaches the declaration (desktop-tab-link), giving a visible thin dark focus ring and readable dark text.
+
+At568×320, short-unfocused and short-hover/short-pressed show readable link fully inside title card; release opens the real license page again, original title remains, and three total Tab presses reach visible focus ring in short-tab-link. Popup text/URL captured for both opens. license-http.json separately records an actual200 response and bytes hash for the target; this is not mislabelled as a captured popup network event.
+
+Filenames are preserved honestly: short-normal was resized while declaration remained keyboard-focused, so it is a focused frame, not an unfocused baseline; short-unfocused is the actual link-unfocused frame. desktop-tab1/short-return show intermediate focus on other buttons and are not counted as declaration focus. No failed game interaction or popup refusal occurred. The generic wait-for-initial-image tool attempt happened before initial.png existed; it changed nothing and was not a failed game test.
+
+The original declarations are readable in these PNGs, but this report does not infer a numerical rendered pixel contrast ratio from the native palette calculation. Intermediate play/album focus colors visibly differ; this task verifies the declaration link only. No physical device, touch, audio, portrait layout, keyboard activation of the link, entire accessibility audit, or native license window behavior is claimed. errors=[] and run.exit0. Browser closed; original screenshots unedited at CSS scale. Full input timing in result.json; only error console events captured, not a full console/network transcript.

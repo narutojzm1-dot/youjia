@@ -1,10 +1,12 @@
 extends SceneTree
 # Real viewport input dispatch from the unmodified initial spawn.
 # Simulation steps are accelerated for assertions; this is not a browser timing test.
+var checks := 0
 var main:Control
 var failures=[]
 func _initialize(): call_deferred("review")
 func check(ok,label):
+ checks += 1
  print("AUDIT ","PASS " if ok else "FAIL ",label)
  if not ok: failures.append(label)
 func mouse(p):
@@ -258,5 +260,5 @@ func review():
  check(main._pause_screen.visible and w._scene_feedback.fence_snapshot().is_empty(), "actual pause button clears the painted fence breeze")
  touch_button("_resume_button");await frames(1)
  root.get_node("AudioDirector").call("release_streams")
- print("[ui-interaction-tests] failures=",failures)
+ print("[ui-interaction-tests] checks=",checks," failures=",failures)
  quit(0 if failures.is_empty() else 1)

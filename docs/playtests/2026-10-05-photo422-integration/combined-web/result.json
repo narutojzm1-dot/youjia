@@ -1,0 +1,191 @@
+{
+  "runtime": "9f4e2121d6168b6bf020266d7cdb3872393fe4f8",
+  "expected_pck": "049e6eb4ce22d5d811f932fb219a581195274c4408b857ce351e9a23655ce6aa",
+  "inputs": [
+    {
+      "click": [
+        640,
+        368
+      ],
+      "time": 351184.821473558
+    },
+    {
+      "click": [
+        364,
+        412
+      ],
+      "time": 351190.73558626
+    },
+    {
+      "card_visible_detector": "land",
+      "time": 351199.799906163
+    },
+    {
+      "set_viewport": [
+        568,
+        320
+      ],
+      "time": 351199.799908338
+    },
+    {
+      "emulate_media": "reduce",
+      "time": 351200.299368107
+    },
+    {
+      "screenshot": "land-expired",
+      "time": 351204.080273221
+    },
+    {
+      "click": [
+        140,
+        220
+      ],
+      "time": 351204.893348039
+    },
+    {
+      "screenshot": "land-album",
+      "time": 351205.630035295
+    },
+    {
+      "click": [
+        455,
+        270
+      ],
+      "time": 351206.684334193
+    },
+    {
+      "viewport": [
+        1280,
+        720
+      ],
+      "time": 351206.959928414
+    },
+    {
+      "screenshot": "yard-before-exit",
+      "time": 351208.161341262
+    },
+    {
+      "click": [
+        329,
+        563
+      ],
+      "time": 351210.516109755
+    },
+    {
+      "screenshot": "path-initial",
+      "time": 351217.984599139
+    },
+    {
+      "screenshot": "path-still-outside",
+      "time": 351223.512103631
+    },
+    {
+      "click": [
+        706,
+        500
+      ],
+      "time": 351227.876215754
+    },
+    {
+      "screenshot": "path-walked",
+      "time": 351231.824579894
+    },
+    {
+      "click": [
+        1060,
+        390
+      ],
+      "time": 351235.664082705
+    },
+    {
+      "screenshot": "gate-return",
+      "time": 351242.612303251
+    }
+  ],
+  "media": [
+    {
+      "time": 351200.911326249,
+      "requested": "reduce",
+      "actual": true
+    }
+  ],
+  "errors": [],
+  "builds": [
+    {
+      "page": "land",
+      "entry": "game-9f4e212"
+    }
+  ],
+  "limits": [
+    "browser media emulation, not OS settings or physical phone",
+    "listener multiplicity is not proved by screenshots",
+    "photo detector needs visual confirmation"
+  ],
+  "manifests": [
+    {
+      "page": "land",
+      "stage": "before",
+      "manifest": {
+        "schema": "youjia.release/v1",
+        "scope": "local candidate only; not a public Pages release",
+        "sourceCommit": "9f4e2121d6168b6bf020266d7cdb3872393fe4f8",
+        "engine": "4.7.2.stable.official.ed1daf0bf",
+        "entry": "game-9f4e212",
+        "createdAt": "2026-10-05T17:04:06.726881+00:00",
+        "storageModules": {
+          "entry": "save-9f4e212",
+          "sha256": {
+            "bridge.mjs": "ef18687554fdc0d745c1d18d4d091e959cc78559da0d61d6a093e562ff9bbc91",
+            "budgets.mjs": "52984153977dcafd1d2682e848f1999f091d0966e17d46e902de76f5735a7018",
+            "host.mjs": "9de8dc0ef4bfc037a8ad0bff575d40c3dd4341bcc723351a412b2061bb661904",
+            "idbfs_source.mjs": "16eb57d471537f13d3e50018b56c2d416d2847f0d0249ba44433dd9ebb65f4d8",
+            "legacy_inspection.mjs": "db3a23a0221aa5d34a58a6a49aeeff930295ffe20bfcf73a7c11f0d49cffd671",
+            "legacy_seal.mjs": "9642132f5d4e7523e5966e802069af7f4bae803fae8e2e7c28ae55ee97d85610",
+            "legacy_v5.mjs": "8e7f4ad2d87aab77ac05361e4f46060476e933aa079ae94301998d08d4599621",
+            "lifecycle.mjs": "1cfaebb9a8745e2dc3e4f694ef475f250640870938f04160be1a5c9acd62935d",
+            "source_decode.mjs": "411f3bc784cb32a07f32eed5fc7d88f71b59a667cc0d68a50fe13c55bfdba18a",
+            "store.mjs": "2193b4397b8662a8ebc754dc4468e4d62964d209b4e1d0f0924a2ec81b409cbe"
+          }
+        }
+      },
+      "time": 351170.660880826
+    },
+    {
+      "page": "land",
+      "stage": "after",
+      "manifest": {
+        "schema": "youjia.release/v1",
+        "scope": "local candidate only; not a public Pages release",
+        "sourceCommit": "9f4e2121d6168b6bf020266d7cdb3872393fe4f8",
+        "engine": "4.7.2.stable.official.ed1daf0bf",
+        "entry": "game-9f4e212",
+        "createdAt": "2026-10-05T17:04:06.726881+00:00",
+        "storageModules": {
+          "entry": "save-9f4e212",
+          "sha256": {
+            "bridge.mjs": "ef18687554fdc0d745c1d18d4d091e959cc78559da0d61d6a093e562ff9bbc91",
+            "budgets.mjs": "52984153977dcafd1d2682e848f1999f091d0966e17d46e902de76f5735a7018",
+            "host.mjs": "9de8dc0ef4bfc037a8ad0bff575d40c3dd4341bcc723351a412b2061bb661904",
+            "idbfs_source.mjs": "16eb57d471537f13d3e50018b56c2d416d2847f0d0249ba44433dd9ebb65f4d8",
+            "legacy_inspection.mjs": "db3a23a0221aa5d34a58a6a49aeeff930295ffe20bfcf73a7c11f0d49cffd671",
+            "legacy_seal.mjs": "9642132f5d4e7523e5966e802069af7f4bae803fae8e2e7c28ae55ee97d85610",
+            "legacy_v5.mjs": "8e7f4ad2d87aab77ac05361e4f46060476e933aa079ae94301998d08d4599621",
+            "lifecycle.mjs": "1cfaebb9a8745e2dc3e4f694ef475f250640870938f04160be1a5c9acd62935d",
+            "source_decode.mjs": "411f3bc784cb32a07f32eed5fc7d88f71b59a667cc0d68a50fe13c55bfdba18a",
+            "store.mjs": "2193b4397b8662a8ebc754dc4468e4d62964d209b4e1d0f0924a2ec81b409cbe"
+          }
+        }
+      },
+      "time": 351246.229727769
+    }
+  ],
+  "pck_checks": [
+    {
+      "page": "land",
+      "sha256": "049e6eb4ce22d5d811f932fb219a581195274c4408b857ce351e9a23655ce6aa"
+    }
+  ],
+  "found": {
+    "land": true
+  }
+}
