@@ -12,13 +12,15 @@ const FINDS := [FIND_STONE, FIND_PINE_CONE, FIND_FEATHER]
 
 # 停留点按画卷从院门往外的顺序排列；彼此都可直接到达，经过但不停下看不算到过。
 const ORDINARY_STOPS := ["gate", "brook", "shade", "slope"]
+const VILLAGE_STOPS := ["village_entry", "village_stray", "village_lake"]
 const NEAR_PATH_STOPS := ["gate", "brook", "shade", "slope", "leaf_pile"]
 
 
 static func routes() -> Dictionary:
 	var stops := {}
-	for stop_id: String in NEAR_PATH_STOPS:
-		var next: Array = NEAR_PATH_STOPS.duplicate()
+	var all_stops: Array = NEAR_PATH_STOPS + VILLAGE_STOPS
+	for stop_id: String in all_stops:
+		var next: Array = all_stops.duplicate()
 		next.erase(stop_id)
 		stops[stop_id] = {"next": next, "find_pool": [], "empty_weight": 1}
 	# 四处都可能有东西，空手的权重让一趟常见 1–2 件；凑满 3 件之后还会遇到第 4 件（换不换由玩家）

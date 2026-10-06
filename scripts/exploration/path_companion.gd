@@ -2,6 +2,7 @@ class_name PathCompanion
 extends Node2D
 ## A scene representation of an existing resident, not a second persistent animal.
 const L := preload("res://scripts/exploration/near_path_layout.gd")
+var layout: PaintedPath = L.geometry()
 var choice: Dictionary = {}
 var actor: FeltActor
 var spot: Dictionary = {}
@@ -30,16 +31,20 @@ func cancel_search() -> void:
 func search_complete() -> bool:
 	return not search_spot.is_empty() and search_elapsed >= SEARCH_SECONDS
 
-func setup(value: Dictionary, leader_spot: Dictionary) -> void:
+func setup(value: Dictionary, leader_spot: Dictionary, page: PaintedPath = null, resident_stage: String = "grown") -> void:
+	if page != null: layout = page
 	choice = value.duplicate(true)
 	var species: String = AnimalCompanions.SPECIES[choice.actor_id]
 	actor = FeltActor.new()
 	add_child(actor)
-	actor.setup(CastArt.configure({"id": choice.actor_id, "species": species, "scale": CastArt.LEGACY_SCALE[species], "textures": {"idle": CastArt.texture_path(species)}}))
+	if choice.actor_id == "beibei":
+		actor.setup(BeibeiArt.configure(resident_stage))
+	else:
+		actor.setup(CastArt.configure({"id": choice.actor_id, "species": species, "scale": CastArt.LEGACY_SCALE[species], "textures": {"idle": CastArt.texture_path(species)}}))
 	actor.facing = -1.0
-	spot = {"arm": leader_spot.arm, "d": minf(float(leader_spot.d) + 65.0, L.arm_length(leader_spot.arm))}
+	spot = {"arm": leader_spot.arm, "d": minf(float(leader_spot.d) + 65.0, layout.arm_length(leader_spot.arm))}
 	actor.position = feet()
-	actor.advance_path(0.0, Vector2.ZERO, L.depth(actor.position.y), true)
+	actor.advance_path(0.0, Vector2.ZERO, layout.depth(actor.position.y), true)
 	rope = Line2D.new()
 	rope.width = 2.0
 	rope.default_color = Color(0.38, 0.25, 0.13, 0.9)
@@ -58,29 +63,30 @@ func setup(value: Dictionary, leader_spot: Dictionary) -> void:
 		add_child(search_cel)
 
 func feet() -> Vector2:
-	var point := L.point(spot.arm, spot.d)
+	var point := layout.point(spot.arm, spot.d)
 	# A small shoulder-to-shoulder clearance stays inside the painted lane.
-	return point - L.tangent(spot.arm, spot.d).orthogonal() * 14.0 * L.depth(point.y)
+	var side := 30.0 if choice.get("actor_id", "") == "beibei" else -14.0
+	return point + layout.tangent(spot.arm, spot.d).orthogonal() * side * layout.depth(point.y)
 
 func advance(delta: float, leader_spot: Dictionary, walker: SequenceResident, reduced: bool) -> void:
 	var before := actor.position
 	var target := leader_spot if search_spot.is_empty() else search_spot
 	if return_to_side and search_spot.is_empty():
-		target = {"arm": leader_spot.arm, "d": minf(float(leader_spot.d) + 80.0, L.arm_length(leader_spot.arm))}
-	var gap := L.route_length(spot, target)
-	var spacing := 60.0 * L.depth(walker.position.y) if search_spot.is_empty() else 0.0
+		target = {"arm": leader_spot.arm, "d": minf(float(leader_spot.d) + 80.0, layout.arm_length(leader_spot.arm))}
+	var gap := layout.route_length(spot, target)
+	var spacing := (80.0 if choice.actor_id == "beibei" else 60.0) * layout.depth(walker.position.y) if search_spot.is_empty() else 0.0
 	if return_to_side: spacing = 0.0
 	if gap > spacing:
-		spot = L.step_toward(spot, target, minf(gap - spacing, L.WALK_SPEED * 1.25 * delta))
+		spot = layout.step_toward(spot, target, minf(gap - spacing, layout.WALK_SPEED * 1.25 * delta))
 	actor.position = feet()
-	actor.advance_path(delta, actor.position - before, L.depth(actor.position.y), reduced)
-	if return_to_side and L.route_length(spot, target) < 1.0: return_to_side = false
-	if not search_spot.is_empty() and L.route_length(spot, target) < 1.0:
+	actor.advance_path(delta, actor.position - before, layout.depth(actor.position.y), reduced)
+	if return_to_side and layout.route_length(spot, target) < 1.0: return_to_side = false
+	if not search_spot.is_empty() and layout.route_length(spot, target) < 1.0:
 		search_elapsed += delta
 		actor.visible = false
 		search_cel.visible = true
 		search_cel.position = actor.position
-		search_cel.scale = Vector2.ONE * actor._base_scale * L.depth(actor.position.y) * SEARCH_SCALE
+		search_cel.scale = Vector2.ONE * actor._base_scale * layout.depth(actor.position.y) * SEARCH_SCALE
 		search_cel.z_index = actor.z_index
 	if rope.visible:
 		var palm := Vector2(242, 253)
@@ -100,7 +106,7 @@ func advance(delta: float, leader_spot: Dictionary, walker: SequenceResident, re
 
 func _draw() -> void:
 	if actor == null: return
-	var radius := actor.body_radius * Vector2(1.0, 0.42) * L.depth(actor.position.y)
+	var radius := actor.body_radius * Vector2(1.0, 0.42) * layout.depth(actor.position.y)
 	draw_set_transform(actor.position + Vector2(0, 1), 0.0, radius)
 	draw_circle(Vector2.ZERO, 1.0, Color(0.29, 0.25, 0.16, 0.12))
 	draw_set_transform(Vector2.ZERO)

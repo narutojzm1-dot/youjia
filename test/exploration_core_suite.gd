@@ -831,7 +831,7 @@ func _formal_near_path() -> void:
 	var pooled := {}
 	for stop_id: String in ExplorationRoutes.NEAR_PATH_STOPS:
 		var stop: Dictionary = route["stops"][stop_id]
-		_check(stop["next"].size() == ExplorationRoutes.NEAR_PATH_STOPS.size() - 1, "stop %s reaches every other stop directly" % stop_id)
+		_check(stop["next"].size() == (ExplorationRoutes.NEAR_PATH_STOPS.size() + ExplorationRoutes.VILLAGE_STOPS.size()) - 1, "stop %s reaches every other stop directly" % stop_id)
 		_check(int(stop["empty_weight"]) > 0, "stop %s can be empty" % stop_id)
 		for entry: Dictionary in stop["find_pool"]:
 			pooled[entry["find_id"]] = true

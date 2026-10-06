@@ -9,3 +9,7 @@
 `art/` 不进 Web 导出，所以运行时需要这份副本。制作人交付修订版或清底分层后直接替换本文件，可走路与锚点在 `scripts/exploration/near_path_layout.gd` 按新画面重新校准。
 
 `finds/` 下没有贴图的物件（目前是圆石）继续用 `KeepsakeArt` 占位画法；圆石候选 PR #285 仍带宽柔影、未通过审查，没有接入。
+
+## WORLD-BEIBEI 村边页（2026-10-07）
+
+`lakeside_village.png` 逐字节复用既有 `art/concepts/producer_world_20261005/05_lakeside_village.png`，1672×941，SHA256 `2992c21bcbaa3fec7b1a74ec4532bffc60b108815706ff4a9eba9e815412616b`。沿画内石路接近郊前景路端，不把画内花木、船只当可拾物；路线与幼犬站位见 `VillagePathLayout` 及 beibei 体验记录。

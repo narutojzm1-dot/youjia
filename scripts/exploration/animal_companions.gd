@@ -1,7 +1,7 @@
 class_name AnimalCompanions
 extends RefCounted
 ## A choice belongs to one trip, never to a render frame or a retry.
-const SPECIES := {"llama": "llama", "cow": "cow", "horse": "horse", "sheep_a": "sheep", "sheep_b": "sheep", "goose": "goose"}
+const SPECIES := {"llama": "llama", "cow": "cow", "horse": "horse", "sheep_a": "sheep", "sheep_b": "sheep", "goose": "goose", "beibei": "dog"}
 const NEAR := 120.0
 const CHANCE := 0.35
 

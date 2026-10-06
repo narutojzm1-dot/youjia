@@ -62,6 +62,7 @@ var _album_chip: Button
 var _weather_chip: Button
 var _basket_chip: Button
 var _basket_panel: Control
+var _residents: RefCounted
 var _inventory: RefCounted
 var _inventory_food_consumer := ""
 var _pause_button: Button
@@ -309,6 +310,10 @@ func _ready() -> void:
 	_exploration.notice.connect(func(key: String) -> void:
 		if _screen == "game": _show_notice_key(key, _exploration.last_params))
 	_exploration.cleanup_resubmitted.connect(_on_exploration_cleanup_resubmitted)
+	_residents = load("res://scripts/game/world_residents_controller.gd").new(SaveStore)
+	_residents.changed.connect(_on_residents_changed)
+	_residents.resubmitted.connect(_on_residents_resubmitted)
+	_exploration.residents = _residents
 	_inventory = load("res://scripts/inventory/yard_inventory_controller.gd").new(SaveStore)
 	_inventory.changed.connect(_on_inventory_changed)
 	_inventory.settled.connect(_on_inventory_settled)
@@ -1168,6 +1173,8 @@ func _start_holiday(save_progress: bool = true) -> void:
 	_world.fish_caught.connect(_on_fish_caught)
 	_world.ground_food_requested.connect(_on_ground_food_action)
 	_on_inventory_changed()
+	_on_residents_changed()
+	_residents._check_growth()
 	_world.exploration_requested.connect(_on_exploration_requested)
 	_camera.enabled = true
 	_portrait_camera_x = _world.get_player().position.x
@@ -1332,6 +1339,18 @@ func _on_inventory_settled(action: String, _fish: String) -> void:
 	if _world != null and _world.ground_food != null:
 		_world.ground_food.settled(action, _inventory_food_consumer)
 	_inventory_food_consumer = ""
+
+
+func _on_residents_changed() -> void:
+	if _world != null and _residents != null: _world.sync_residents(_residents.view())
+
+func _on_residents_resubmitted(failed_ops: Array, op_id: String) -> void:
+	var problems := {}
+	for failed_id in failed_ops:
+		if _save_problems.get(failed_id, {}).get("kind", "") == "residents":
+			problems[failed_id] = _save_problems[failed_id].duplicate(true)
+	if not problems.is_empty():
+		_save_retry_coverage[op_id] = {"problems": problems, "untracked_revision": -1}
 
 
 func _on_inventory_resubmitted(failed_ops: Array, op_id: String) -> void:
@@ -1627,6 +1646,9 @@ func _retryable_save_problems(include_fish: bool) -> Dictionary:
 
 
 func _retry_save() -> void:
+	if _residents != null and _residents.busy() and _residents.state in ["failed", "unknown"]:
+		_residents.retry()
+		return
 	if _inventory != null and _inventory.busy():
 		_inventory.retry()
 		return

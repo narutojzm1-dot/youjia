@@ -5,6 +5,13 @@ extends Node2D
 # 看景总能进入；只有带上 / 放回依赖核心（首片研究建议第 10 节第 6 项）。
 
 const L := preload("res://scripts/exploration/near_path_layout.gd")
+var layout: PaintedPath = L.geometry()
+var village := false
+var residents: RefCounted
+var stray: PathCompanion
+var _rescue_requested := false
+var _rescued_here := false
+var _resident_caption := ""
 const PAPER := Color("fff6e8")
 const INK := Color("5b4637")
 const MUTED := Color("8a7060")
@@ -25,7 +32,7 @@ var painting: Sprite2D
 var items: Node2D
 var hud: CanvasLayer
 # 人物在路上的位置：哪条路、离岔口多远（原画像素）
-var spot: Dictionary = L.START.duplicate()
+var spot: Dictionary = layout.START.duplicate()
 var facing := -1.0
 var observing := ""
 var leaving := false
@@ -58,16 +65,17 @@ var leaf_texture: Texture2D
 
 
 ## 原画只有一版晴秋，天气暂不改画面
-func setup(trip_host: ExplorationHost, _weather: String) -> void:
+func setup(trip_host: ExplorationHost, _weather: String, resident_controller: RefCounted = null) -> void:
 	host = trip_host
+	residents = resident_controller
 	process_mode = Node.PROCESS_MODE_PAUSABLE
 	var paper := Polygon2D.new()
-	paper.polygon = PackedVector2Array([Vector2(-3000, -3000), Vector2(L.SIZE.x + 3000, -3000), Vector2(L.SIZE.x + 3000, L.SIZE.y + 3000), Vector2(-3000, L.SIZE.y + 3000)])
+	paper.polygon = PackedVector2Array([Vector2(-3000, -3000), Vector2(layout.SIZE.x + 3000, -3000), Vector2(layout.SIZE.x + 3000, layout.SIZE.y + 3000), Vector2(-3000, layout.SIZE.y + 3000)])
 	paper.color = PAPER
 	add_child(paper)
 	painting = Sprite2D.new()
 	painting.name = "Painting"
-	painting.texture = load(L.ART)
+	painting.texture = load(layout.ART)
 	painting.centered = false
 	painting.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
 	add_child(painting)
@@ -80,7 +88,7 @@ func setup(trip_host: ExplorationHost, _weather: String) -> void:
 	walker.z_index = 5
 	add_child(walker)
 	walker.position = foot()
-	walker.advance(0.0, Vector2.ZERO, L.depth(foot().y), facing, true)
+	walker.advance(0.0, Vector2.ZERO, layout.depth(foot().y), facing, true)
 	walker.z_index = roundi(foot().y)
 	var partner: Dictionary = host.view().get("companion", {})
 	if not partner.is_empty():
@@ -141,7 +149,7 @@ func reduced_motion() -> bool:
 
 
 func foot() -> Vector2:
-	return L.point(spot.arm, spot.d)
+	return layout.point(spot.arm, spot.d)
 
 
 func _process(delta: float) -> void:
@@ -154,6 +162,7 @@ func _process(delta: float) -> void:
 	if leaving:
 		return
 	_update_search()
+	_update_resident()
 	if _caption_time > 0.0:
 		_caption_time -= delta
 		if _caption_time <= 0.0 and observing.is_empty():
@@ -164,48 +173,49 @@ func _process(delta: float) -> void:
 ## 走一帧：方向键沿路投影；没有方向时朝点按的目标走；在院门口继续往院里走、或点院门走到门口，就回院
 func walk(direction: Vector2, delta: float) -> void:
 	var before := foot()
-	var step := L.WALK_SPEED * delta
+	var step := layout.WALK_SPEED * delta
 	var tap_home := false
 	if direction.length() > 0.01:
 		walk_target = {}
-		spot = L.step_input(spot, direction, step)
+		spot = layout.step_input(spot, direction, step)
 	elif not walk_target.is_empty():
-		spot = L.step_toward(spot, walk_target, step)
-		if L.route_length(spot, walk_target) < 0.5:
-			tap_home = bool(walk_target.get("home", false)) and L.at_home(spot)
+		spot = layout.step_toward(spot, walk_target, step)
+		if layout.route_length(spot, walk_target) < 0.5:
+			tap_home = bool(walk_target.get("home", false)) and layout.at_home(spot)
 			walk_target = {}
 	var moved := foot() - before
 	if moved.length() > 0.01 and reveal != null:
 		reveal.settle()
 	if absf(moved.x) > 0.01:
 		facing = signf(moved.x)
-	if not _walked and L.route_length(spot, L.START) > 24.0:
+	if not _walked and layout.route_length(spot, layout.START) > 24.0:
 		_walked = true
 	if tap_home:
 		_request_return("player")
 		return
-	if L.at_home(spot) and direction.normalized().dot(L.home_direction()) > L.MIN_ALIGN:
+	if layout.at_home(spot) and direction.normalized().dot(layout.home_direction()) > layout.MIN_ALIGN:
 		_home_hold += delta
-		if _home_hold >= L.HOME_HOLD:
+		if _home_hold >= layout.HOME_HOLD:
 			_request_return("player")
 			return
 	else:
 		_home_hold = 0.0
 	walker.position = foot()
-	walker.advance(delta, moved, L.depth(foot().y), facing, reduced_motion())
+	walker.advance(delta, moved, layout.depth(foot().y), facing, reduced_motion())
 	walker.z_index = roundi(foot().y)
 	if companion != null: companion.advance(delta, spot, walker, reduced_motion())
+	if stray != null and _rescued_here: stray.advance(delta, spot, walker, reduced_motion())
 	_snap_camera()
 
 
 ## ───────────── 看景、带上、回院 ─────────────
 
 func nearby_stop() -> String:
-	return L.nearby(spot)
+	return layout.nearby(spot)
 
 
 func place_at(stop_id: String) -> void:
-	var entry := L.stop(stop_id)
+	var entry := layout.stop(stop_id)
 	if entry.is_empty():
 		return
 	spot = {"arm": entry.arm, "d": entry.d}
@@ -251,6 +261,11 @@ func end_observe() -> void:
 
 ## 有东西时：带上 / 换成这个 / 放回；全由核心判定，界面只按结果刷新
 func pick() -> bool:
+	if observing == "village_stray" and residents != null:
+		if residents.state == "failed": return residents.retry()
+		if residents.busy() or residents.view().is_empty() or residents.view().beibei.stage != "unmet": return false
+		_rescue_requested = residents.request("adopt_beibei")
+		return _rescue_requested
 	if observing.is_empty():
 		return false
 	var choice := pick_choice()
@@ -280,10 +295,10 @@ func pick() -> bool:
 func _start_reveal(find_id: String) -> void:
 	if reveal == null:
 		return
-	var anchor: Vector2 = L.stop(observing).get("item", foot())
-	var depth := L.depth(foot().y)
+	var anchor: Vector2 = layout.stop(observing).get("item", foot())
+	var depth := layout.depth(foot().y)
 	var size := get_viewport().get_visible_rect().size
-	var top := art_to_screen(foot() + Vector2(0, -L.WALKER_BOX.size.y * depth)) - Vector2(0, FindReveal.HALO + 6.0)
+	var top := art_to_screen(foot() + Vector2(0, -layout.WALKER_BOX.size.y * depth)) - Vector2(0, FindReveal.HALO + 6.0)
 	var margin := FindReveal.HALO + 8.0
 	var ceiling := margin + FindReveal.LABEL_ROOM
 	if _caption.visible and top.x + margin > _caption.position.x and top.x - margin < _caption.position.x + _caption.size.x:
@@ -302,10 +317,12 @@ func _start_reveal(find_id: String) -> void:
 	var slot := maxi(carried().size() - 1, 0)
 	reveal.label_font = _basket.get_theme_default_font()
 	reveal.play(find_id, art_to_screen(anchor), top, _basket.position + Vector2(24 + slot * 16, 22),
-		1.6 * L.depth(anchor.y) * _cam_zoom, _find_name(find_id), reduced_motion())
+		1.6 * layout.depth(anchor.y) * _cam_zoom, _find_name(find_id), reduced_motion())
 
 
 func pick_choice() -> Dictionary:
+	if observing == "village_stray" and residents != null and not residents.view().is_empty():
+		if residents.view().beibei.stage == "unmet": return {"kind": "adopt"}
 	if observing.is_empty():
 		return {"kind": "none"}
 	var view := host.view()
@@ -350,7 +367,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			_request_return("player")
 		elif event.is_action_pressed("ui_accept") or code == KEY_E:
 			if observing.is_empty():
-				observe()
+				look_or_cross()
 			else:
 				end_observe()
 		elif code == KEY_T:
@@ -385,15 +402,15 @@ func _unhandled_input(event: InputEvent) -> void:
 func press_at(point: Vector2) -> void:
 	for button: Button in [_return_button, _pause_button, _look_button, _pick_button, _go_button]:
 		if button.is_visible_in_tree() and button.get_global_rect().has_point(point):
-			button.pressed.emit()
+			if not button.disabled: button.pressed.emit()
 			return
 	if not observing.is_empty():
 		suppressed_touches += 1
 		_show_caption(_observe_caption() + "\n" + I18n.t("exploration.caption.continue_hint"), 0.0)
 		return
 	var art := screen_to_art(point)
-	var target := L.nearest(art)
-	walk_target = {"arm": target.arm, "d": target.d, "home": L.is_home_tap(art)}
+	var target := layout.nearest(art)
+	walk_target = {"arm": target.arm, "d": target.d, "home": layout.is_home_tap(art)}
 
 
 func screen_to_art(point: Vector2) -> Vector2:
@@ -409,7 +426,7 @@ func art_to_screen(art: Vector2) -> Vector2:
 ## ───────────── 相机 ─────────────
 
 func target_frame() -> Dictionary:
-	return L.frame(foot(), get_viewport().get_visible_rect().size)
+	return layout.frame(foot(), get_viewport().get_visible_rect().size)
 
 
 func camera_zoom() -> float:
@@ -428,20 +445,20 @@ func _snap_camera() -> void:
 ## ───────────── 画面与界面 ─────────────
 
 func _draw_items() -> void:
-	if leaf_texture != null:
-		var anchor: Vector2 = L.stop("leaf_pile").item
+	if leaf_texture != null and not layout.stop("leaf_pile").is_empty():
+		var anchor: Vector2 = layout.stop("leaf_pile").item
 		var spread := 1.0 if not str(revealed.get("leaf_pile", "")).is_empty() else 0.0
 		if companion != null and _search_started and not reduced_motion():
 			spread = maxf(spread, clampf((companion.search_elapsed - 0.7) / 1.7, 0.0, 1.0))
-		var leaf_size := leaf_texture.get_size() * (56.0 / leaf_texture.get_width()) * L.depth(anchor.y)
+		var leaf_size := leaf_texture.get_size() * (56.0 / leaf_texture.get_width()) * layout.depth(anchor.y)
 		items.draw_texture_rect(leaf_texture, Rect2(anchor - leaf_size * 0.5 + Vector2(24, 4) * spread, leaf_size), false, Color(1, 1, 1, lerpf(1.0, 0.65, spread)))
 	var taken: Dictionary = host.view().get("taken", {}) if host != null else {}
 	for stop_id: String in revealed:
 		var find_id: String = revealed[stop_id]
-		var anchor: Vector2 = L.stop(stop_id).get("item", Vector2.ZERO)
+		var anchor: Vector2 = layout.stop(stop_id).get("item", Vector2.ZERO)
 		if find_id.is_empty() or taken.has(stop_id) or anchor == Vector2.ZERO:
 			continue
-		var depth := L.depth(anchor.y)
+		var depth := layout.depth(anchor.y)
 		if stop_id == observing:
 			# 静止的柔光地影，只在停下看的这一处；不闪、不动
 			items.draw_set_transform(anchor + Vector2(0, 6) * depth, 0.0, Vector2(depth, 0.4 * depth))
@@ -452,6 +469,7 @@ func _draw_items() -> void:
 
 
 func _observe_caption() -> String:
+	if observing == "village_stray": return _stray_caption()
 	var text := I18n.t("exploration.stop.%s" % observing)
 	if observing == "leaf_pile":
 		var view := host.view()
@@ -481,7 +499,7 @@ func _update_search() -> void:
 	if view.get("current_stop", "") != observing: return
 	if view.get("hidden_search", false):
 		if not _search_started:
-			companion.start_search(L.stop(observing))
+			companion.start_search(layout.stop(observing))
 			_search_started = true
 		if companion.search_complete():
 			host.uncover()
@@ -500,6 +518,70 @@ func _update_search() -> void:
 		if _search_started: _cancel_search()
 
 
+## The page boundary is reached on foot; it keeps the same trip and basket.
+func at_page_edge() -> bool:
+	return float(spot.d) <= 12.0
+
+func look_or_cross() -> void:
+	if at_page_edge() and observing.is_empty(): cross_page()
+	else: observe()
+
+func cross_page() -> bool:
+	if leaving or not observing.is_empty() or not at_page_edge(): return false
+	_cancel_search()
+	if reveal != null: reveal.settle(true)
+	village = not village
+	layout = VillagePathLayout.geometry() if village else L.geometry()
+	spot = {"arm": "lane", "d": 24.0}
+	walk_target = {}
+	_home_hold = 0.0
+	painting.texture = load(layout.ART)
+	walker.position = foot()
+	walker.advance(0.0, Vector2.ZERO, layout.depth(foot().y), facing, true)
+	walker.z_index = roundi(foot().y)
+	for partner: PathCompanion in [companion, stray if _rescued_here else null]:
+		if partner == null: continue
+		partner.layout = layout
+		partner.spot = {"arm": "lane", "d": 90.0}
+		partner.advance(0.0, spot, walker, reduced_motion())
+	_update_resident()
+	_snap_camera()
+	items.queue_redraw()
+	_show_caption(I18n.t("exploration.caption.village" if village else "exploration.caption.arrive"), 5.0)
+	_refresh()
+	return true
+
+func _stray_caption() -> String:
+	if residents == null or residents.view().is_empty(): return I18n.t("beibei.unavailable")
+	if residents.view().beibei.stage != "unmet":
+		return I18n.t("beibei.following" if _rescued_here else "beibei.home")
+	if residents.busy(): return I18n.t("beibei.retry_caption" if residents.state == "failed" else "beibei.saving")
+	return I18n.t("beibei.meet")
+
+func _update_resident() -> void:
+	if residents == null or residents.view().is_empty(): return
+	var stage: String = residents.view().beibei.stage
+	if _rescue_requested and stage != "unmet": _rescued_here = true
+	var should_show := _rescued_here or (village and stage == "unmet")
+	if not should_show and stray != null:
+		remove_child(stray)
+		stray.queue_free()
+		stray = null
+	if should_show and stray == null:
+		stray = PathCompanion.new()
+		add_child(stray)
+		var start := spot if _rescued_here else layout.stop("village_stray")
+		stray.setup({"actor_id": "beibei", "mode": "nearby"}, start, layout, "puppy")
+		stray.spot = {"arm": start.arm, "d": maxf(0.0, float(start.d) + (-40.0 if not _rescued_here else 65.0))}
+		stray.actor.position = stray.feet()
+		stray.actor.advance_path(0.0, Vector2.ZERO, layout.depth(stray.actor.position.y), true)
+	if observing == "village_stray":
+		var text := _stray_caption()
+		if text != _resident_caption:
+			_resident_caption = text
+			_show_caption(text, 0.0)
+
+
 func _find_name(find_id: String) -> String:
 	return I18n.t(ExplorationRoutes.find_name_key(find_id))
 
@@ -513,15 +595,24 @@ func _show_caption(text: String, seconds: float) -> void:
 func _refresh() -> void:
 	if _return_button == null:
 		return
+	_return_button.text = I18n.t("exploration.action.return")
+	_pause_button.text = I18n.t("hud.pause")
+	_go_button.text = I18n.t("exploration.action.continue")
+	_hint.text = I18n.t("exploration.caption.walk_hint")
 	var size := get_viewport().get_visible_rect().size
 	var compact := size.x < 700.0
 	var near := nearby_stop()
 	var choice := pick_choice()
-	_look_button.visible = observing.is_empty() and not near.is_empty() and not leaving
+	_look_button.visible = observing.is_empty() and (at_page_edge() or not near.is_empty()) and not leaving
 	if _look_button.visible:
 		_look_button.text = I18n.t("exploration.action.look", {"place": I18n.t("exploration.place.%s" % near)})
+	if _look_button.visible and at_page_edge():
+		_look_button.text = I18n.t("exploration.action.near_path" if village else "exploration.action.village")
 	_pick_button.visible = not observing.is_empty() and choice.kind != "none"
+	_pick_button.disabled = choice.kind == "adopt" and (residents.busy() and residents.state != "failed" or host.view().get("unsaved_changes", false))
 	match choice.kind:
+		"adopt":
+			_pick_button.text = I18n.t("beibei.retry" if residents.state == "failed" else "beibei.adopt")
 		"take":
 			_pick_button.text = I18n.t("exploration.action.take", {"item": _find_name(choice.find_id)})
 		"swap":
@@ -530,7 +621,7 @@ func _refresh() -> void:
 			_pick_button.text = I18n.t("exploration.action.release", {"item": _find_name(choice.find_id)})
 	_go_button.visible = not observing.is_empty()
 	_hint.visible = not _walked and observing.is_empty()
-	_place_label.text = I18n.t("exploration.place.title") if near.is_empty() or not observing.is_empty() else I18n.t("exploration.place.%s" % near)
+	_place_label.text = I18n.t("exploration.place.village" if village else "exploration.place.title") if near.is_empty() or not observing.is_empty() else I18n.t("exploration.place.%s" % near)
 	_layout(size, compact)
 	_basket.queue_redraw()
 
@@ -605,7 +696,7 @@ func _build_hud() -> void:
 	_pause_button = _button(I18n.t("hud.pause"), func() -> void:
 		reveal.settle(true)
 		pause_requested.emit())
-	_look_button = _button("", func() -> void: observe())
+	_look_button = _button("", look_or_cross)
 	_pick_button = _button("", func() -> void: pick())
 	_go_button = _button(I18n.t("exploration.action.continue"), end_observe)
 	_basket = Control.new()
