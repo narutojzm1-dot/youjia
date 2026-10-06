@@ -1820,11 +1820,50 @@ func _layout() -> void:
 func _fit_hint_panel() -> void:
 	if _hint_label == null or _hint_panel == null:
 		return
+	_hug_hint_width()
 	var lines := maxi(1, _hint_label.get_line_count())
 	var spacing := float(_hint_label.get_theme_constant("line_spacing"))
 	var text_height := lines * float(_hint_label.get_line_height()) + (lines - 1) * spacing
 	_hint_label.size = Vector2(_hint_label.size.x, maxf(HINT_MIN_TEXT_HEIGHT, ceilf(text_height)))
 	_hint_panel.size = _hint_label.size + Vector2(18.0, 16.0)
+
+
+## 目标纸片贴合文字宽度（REQ-20261006-045）：纸片原来总撑到最大宽度（最多 520px）。
+## 844×390 上一行目标只占左半，右边约 250px 空纸压住远山；640×360 / 568×320 的两行
+## 短目标（文案自带换行）每行一百多像素，纸却有 478 / 406px 宽。现在每一行（按文案里的
+## 换行分段）都能在最大宽度内放下时，纸宽 = 最长那一行的实际宽度（左缘不动，最窄 120px）；
+## 有任何一段放不下、需要自动换行时仍用原来的最大宽度。只在文字、可用宽度、字号或可见性
+## 变化时重新测量，不每帧排版。
+const HINT_HUG_MIN_WIDTH := 120.0
+var _hint_fit_key := ""
+var _hint_fit_width := 0.0
+
+
+func _hint_max_width() -> float:
+	var pad := 20.0
+	var pause_width := _pause_button.size.x if _pause_button != null else 188.0
+	return minf(520.0, maxf(120.0, size.x - pause_width - pad * 3.0))
+
+
+func _hug_hint_width() -> void:
+	var max_width := _hint_max_width()
+	var font_size := _hint_label.get_theme_font_size("font_size")
+	var key := "%s|%.2f|%d|%s" % [_hint_label.text, max_width, font_size, str(_hint_label.is_visible_in_tree())]
+	if key != _hint_fit_key:
+		_hint_fit_key = key
+		_hint_fit_width = max_width
+		_hint_label.size = Vector2(max_width, _hint_label.size.y)
+		var lines_at_max := _hint_label.get_line_count()
+		var font := _hint_label.get_theme_font("font")
+		var widest := 0.0
+		for segment: String in _hint_label.text.split("\n"):
+			widest = maxf(widest, font.get_string_size(segment, HORIZONTAL_ALIGNMENT_LEFT, -1, font_size).x)
+		if not _hint_label.text.is_empty() and ceilf(widest) + 2.0 <= max_width:
+			var hugged := clampf(ceilf(widest) + 2.0, minf(HINT_HUG_MIN_WIDTH, max_width), max_width)
+			_hint_label.size = Vector2(hugged, _hint_label.size.y)
+			if _hint_label.get_line_count() == lines_at_max:
+				_hint_fit_width = hugged
+	_hint_label.size = Vector2(_hint_fit_width, _hint_label.size.y)
 
 
 func _refresh_hud() -> void:
