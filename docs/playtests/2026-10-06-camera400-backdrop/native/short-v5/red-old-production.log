@@ -1,0 +1,230 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ERROR: idle_move/(390, 844)/reduced=false: real camera introduces no paper outside baseline coverage
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://test/camera400_backdrop_suite.gd:30)
+       [1] assert_frame_coverage (res://test/camera400_backdrop_suite.gd:101)
+       [2] advance_covered (res://test/camera400_backdrop_suite.gd:113)
+       [3] begin_quiet (res://test/camera400_backdrop_suite.gd:121)
+       [4] run (res://test/camera400_backdrop_suite.gd:191)
+       [5] fresh (res://test/camera400_backdrop_suite.gd:64)
+       [6] settle_layout (res://test/camera400_backdrop_suite.gd:35)
+CAMERA400_BOUNDS_TRACE {"case":"idle_move/(390, 844)/reduced=false","offset":"(0.0, -94.81808)","phase":-1,"position":"(695.0, 336.7728)","quiet":true,"stage":"quiet_started","target":"(0.0, -150.0)","viewport":"(390.0, 844.0)","zoom":"(0.977778, 0.977778)"}
+CAMERA400_BOUNDS_TRACE {"case":"idle_move/(390, 844)/reduced=false","offset":"(0.0, -0.000797)","phase":-1,"position":"(695.0, 431.5901)","quiet":false,"stage":"returned","target":"(0.0, 0.0)","viewport":"(390.0, 844.0)","zoom":"(0.977778, 0.977778)"}
+ERROR: idle_move/(360, 640)/reduced=false: real camera introduces no paper outside baseline coverage
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://test/camera400_backdrop_suite.gd:30)
+       [1] assert_frame_coverage (res://test/camera400_backdrop_suite.gd:101)
+       [2] advance_covered (res://test/camera400_backdrop_suite.gd:113)
+       [3] begin_quiet (res://test/camera400_backdrop_suite.gd:121)
+       [4] run (res://test/camera400_backdrop_suite.gd:191)
+       [5] fresh (res://test/camera400_backdrop_suite.gd:64)
+       [6] settle_layout (res://test/camera400_backdrop_suite.gd:35)
+CAMERA400_BOUNDS_TRACE {"case":"idle_move/(360, 640)/reduced=false","offset":"(0.0, -94.81808)","phase":-1,"position":"(695.0, 365.9819)","quiet":true,"stage":"quiet_started","target":"(0.0, -150.0)","viewport":"(360.0, 640.0)","zoom":"(0.694444, 0.694444)"}
+CAMERA400_BOUNDS_TRACE {"case":"idle_move/(360, 640)/reduced=false","offset":"(0.0, -0.000797)","phase":-1,"position":"(695.0, 460.7992)","quiet":false,"stage":"returned","target":"(0.0, 0.0)","viewport":"(360.0, 640.0)","zoom":"(0.694444, 0.694444)"}
+ERROR: idle_move/(568, 320)/reduced=false: real camera introduces no paper outside baseline coverage
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://test/camera400_backdrop_suite.gd:30)
+       [1] assert_frame_coverage (res://test/camera400_backdrop_suite.gd:101)
+       [2] advance_covered (res://test/camera400_backdrop_suite.gd:113)
+       [3] begin_quiet (res://test/camera400_backdrop_suite.gd:121)
+       [4] run (res://test/camera400_backdrop_suite.gd:191)
+       [5] fresh (res://test/camera400_backdrop_suite.gd:64)
+       [6] settle_layout (res://test/camera400_backdrop_suite.gd:35)
+CAMERA400_BOUNDS_TRACE {"case":"idle_move/(568, 320)/reduced=false","offset":"(12.16832, -33.18633)","phase":-1,"position":"(656.5684, 618.8137)","quiet":true,"stage":"quiet_started","target":"(19.25, -52.5)","viewport":"(568.0, 320.0)","zoom":"(0.25, 0.25)"}
+CAMERA400_BOUNDS_TRACE {"case":"idle_move/(568, 320)/reduced=false","offset":"(0.000102, -0.000279)","phase":-1,"position":"(644.4001, 651.9998)","quiet":false,"stage":"returned","target":"(0.0, 0.0)","viewport":"(568.0, 320.0)","zoom":"(0.25, 0.25)"}
+ERROR: idle_move/(1280, 720)/reduced=false: real camera introduces no paper outside baseline coverage
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://test/camera400_backdrop_suite.gd:30)
+       [1] assert_frame_coverage (res://test/camera400_backdrop_suite.gd:101)
+       [2] advance_covered (res://test/camera400_backdrop_suite.gd:113)
+       [3] begin_quiet (res://test/camera400_backdrop_suite.gd:121)
+       [4] run (res://test/camera400_backdrop_suite.gd:191)
+       [5] fresh (res://test/camera400_backdrop_suite.gd:64)
+       [6] settle_layout (res://test/camera400_backdrop_suite.gd:35)
+CAMERA400_BOUNDS_TRACE {"case":"idle_move/(1280, 720)/reduced=false","offset":"(12.16832, -33.18633)","phase":-1,"position":"(656.5684, 381.2981)","quiet":true,"stage":"quiet_started","target":"(19.25, -52.5)","viewport":"(1280.0, 720.0)","zoom":"(0.894444, 0.894444)"}
+CAMERA400_BOUNDS_TRACE {"case":"idle_move/(1280, 720)/reduced=false","offset":"(0.000102, -0.000279)","phase":-1,"position":"(644.4001, 414.4842)","quiet":false,"stage":"returned","target":"(0.0, 0.0)","viewport":"(1280.0, 720.0)","zoom":"(0.894444, 0.894444)"}
+ERROR: world_edge/90.0/reduced=false: real camera introduces no paper outside baseline coverage
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://test/camera400_backdrop_suite.gd:30)
+       [1] assert_frame_coverage (res://test/camera400_backdrop_suite.gd:101)
+       [2] advance_covered (res://test/camera400_backdrop_suite.gd:113)
+       [3] begin_quiet (res://test/camera400_backdrop_suite.gd:121)
+       [4] run (res://test/camera400_backdrop_suite.gd:203)
+       [5] fresh (res://test/camera400_backdrop_suite.gd:64)
+       [6] settle_layout (res://test/camera400_backdrop_suite.gd:35)
+CAMERA400_BOUNDS_TRACE {"case":"world_edge/90.0/reduced=false","offset":"(-69.17411, -94.81808)","phase":-1,"position":"(130.2577, 336.7728)","quiet":true,"stage":"quiet_started","target":"(-109.4318, -150.0)","viewport":"(390.0, 844.0)","zoom":"(0.977778, 0.977778)"}
+ERROR: world_edge/1190.0/reduced=false: real camera introduces no paper outside baseline coverage
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://test/camera400_backdrop_suite.gd:30)
+       [1] assert_frame_coverage (res://test/camera400_backdrop_suite.gd:101)
+       [2] advance_covered (res://test/camera400_backdrop_suite.gd:113)
+       [3] begin_quiet (res://test/camera400_backdrop_suite.gd:121)
+       [4] run (res://test/camera400_backdrop_suite.gd:203)
+       [5] fresh (res://test/camera400_backdrop_suite.gd:64)
+       [6] settle_layout (res://test/camera400_backdrop_suite.gd:35)
+CAMERA400_BOUNDS_TRACE {"case":"world_edge/1190.0/reduced=false","offset":"(69.17406, -94.81808)","phase":-1,"position":"(1149.742, 336.7728)","quiet":true,"stage":"quiet_started","target":"(109.4318, -150.0)","viewport":"(390.0, 844.0)","zoom":"(0.977778, 0.977778)"}
+ERROR: natural_expiry_and_resize/reduced=false: real camera introduces no paper outside baseline coverage
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://test/camera400_backdrop_suite.gd:30)
+       [1] assert_frame_coverage (res://test/camera400_backdrop_suite.gd:101)
+       [2] advance_covered (res://test/camera400_backdrop_suite.gd:113)
+       [3] begin_quiet (res://test/camera400_backdrop_suite.gd:121)
+       [4] run (res://test/camera400_backdrop_suite.gd:207)
+       [5] fresh (res://test/camera400_backdrop_suite.gd:64)
+       [6] settle_layout (res://test/camera400_backdrop_suite.gd:35)
+CAMERA400_BOUNDS_TRACE {"case":"natural_expiry_and_resize/reduced=false","offset":"(0.0, -94.81808)","phase":-1,"position":"(695.0, 336.7728)","quiet":true,"stage":"quiet_started","target":"(0.0, -150.0)","viewport":"(390.0, 844.0)","zoom":"(0.977778, 0.977778)"}
+CAMERA400_BOUNDS_TRACE {"case":"natural_expiry_and_resize/reduced=false","offset":"(0.0, -0.000168)","phase":-1,"position":"(695.0, 460.7998)","quiet":false,"stage":"natural_expiry","target":"(0.0, 0.0)","viewport":"(360.0, 640.0)","zoom":"(0.694444, 0.694444)"}
+CAMERA400_BOUNDS_API_CASES unavailable in old production; real-frame checks still execute
+ERROR: real_goose_takeover/reduced=false/resize=false: real camera introduces no paper outside baseline coverage
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://test/camera400_backdrop_suite.gd:30)
+       [1] assert_frame_coverage (res://test/camera400_backdrop_suite.gd:101)
+       [2] advance_covered (res://test/camera400_backdrop_suite.gd:113)
+       [3] begin_quiet (res://test/camera400_backdrop_suite.gd:121)
+       [4] run (res://test/camera400_backdrop_suite.gd:230)
+       [5] fresh (res://test/camera400_backdrop_suite.gd:64)
+       [6] settle_layout (res://test/camera400_backdrop_suite.gd:35)
+CAMERA400_BOUNDS_TRACE {"case":"real_goose_takeover/reduced=false/resize=false","offset":"(0.0, -38.87727)","phase":-1,"position":"(695.0, 392.7137)","quiet":true,"stage":"quiet_started","target":"(0.0, -150.0)","viewport":"(390.0, 844.0)","zoom":"(0.977778, 0.977778)"}
+CAMERA400_BOUNDS_TRACE {"case":"real_goose_takeover/reduced=false/resize=false","offset":"(0.0, -149.9969)","phase":-1,"position":"(695.0, 281.594)","quiet":true,"stage":"last_quiet_frame","target":"(0.0, -150.0)","viewport":"(390.0, 844.0)","zoom":"(0.977778, 0.977778)"}
+CAMERA400_TAKEOVER_CONTINUITY {"after_camera":"(694.3904, 295.3715)","after_canvas":"[X: (0.977778, 0.0), Y: (0.0, 0.977778), O: (-483.9595, 133.1923)]","before_camera":"(695.0, 281.594)","before_canvas":"[X: (0.977778, 0.0), Y: (0.0, 0.977778), O: (-484.5556, 146.6637)]","case":"real_goose_takeover/reduced=false/resize=false","effective_before":"(0.0, -149.9969)","expected_first":"(694.3904, 295.3715)","new_target":"(-12.5, 132.5)"}
+CAMERA400_BOUNDS_TRACE {"case":"real_goose_takeover/reduced=false/resize=false","offset":"(-0.609632, -136.2194)","phase":0,"position":"(694.3904, 295.3715)","quiet":false,"stage":"first_encounter_frame","target":"(-12.5, 132.5)","viewport":"(390.0, 844.0)","zoom":"(0.977778, 0.977778)"}
+CAMERA400_BOUNDS_TRACE {"case":"real_goose_takeover/reduced=false/resize=false","offset":"(-0.000212, 0.000589)","phase":-1,"position":"(694.9998, 431.5915)","quiet":false,"stage":"encounter_return","target":"(0.0, 0.0)","viewport":"(390.0, 844.0)","zoom":"(0.977778, 0.977778)"}
+ERROR: real_goose_takeover/reduced=false/resize=true: real camera introduces no paper outside baseline coverage
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://test/camera400_backdrop_suite.gd:30)
+       [1] assert_frame_coverage (res://test/camera400_backdrop_suite.gd:101)
+       [2] advance_covered (res://test/camera400_backdrop_suite.gd:113)
+       [3] begin_quiet (res://test/camera400_backdrop_suite.gd:121)
+       [4] run (res://test/camera400_backdrop_suite.gd:230)
+       [5] fresh (res://test/camera400_backdrop_suite.gd:64)
+       [6] settle_layout (res://test/camera400_backdrop_suite.gd:35)
+CAMERA400_BOUNDS_TRACE {"case":"real_goose_takeover/reduced=false/resize=true","offset":"(0.0, -38.87727)","phase":-1,"position":"(695.0, 392.7137)","quiet":true,"stage":"quiet_started","target":"(0.0, -150.0)","viewport":"(390.0, 844.0)","zoom":"(0.977778, 0.977778)"}
+CAMERA400_BOUNDS_TRACE {"case":"real_goose_takeover/reduced=false/resize=true","offset":"(0.0, -149.9969)","phase":-1,"position":"(695.0, 281.594)","quiet":true,"stage":"last_quiet_frame","target":"(0.0, -150.0)","viewport":"(390.0, 844.0)","zoom":"(0.977778, 0.977778)"}
+CAMERA400_TAKEOVER_CONTINUITY {"after_camera":"(645.1255, 511.5802)","after_canvas":"[X: (0.25, 0.0), Y: (0.0, 0.25), O: (122.7186, 32.10494)]","before_camera":"(695.0, 281.594)","before_canvas":"[X: (0.977778, 0.0), Y: (0.0, 0.977778), O: (-484.5556, 146.6637)]","case":"real_goose_takeover/reduced=false/resize=true","effective_before":"(0.0, -149.9969)","expected_first":"(645.1255, 511.5802)","new_target":"(14.875, 46.375)"}
+CAMERA400_BOUNDS_TRACE {"case":"real_goose_takeover/reduced=false/resize=true","offset":"(0.725462, -140.4198)","phase":0,"position":"(645.1255, 511.5802)","quiet":false,"stage":"first_encounter_frame","target":"(14.875, 46.375)","viewport":"(568.0, 320.0)","zoom":"(0.25, 0.25)"}
+CAMERA400_BOUNDS_TRACE {"case":"real_goose_takeover/reduced=false/resize=true","offset":"(0.000038, 0.000206)","phase":-1,"position":"(644.4001, 652.0002)","quiet":false,"stage":"encounter_return","target":"(0.0, 0.0)","viewport":"(568.0, 320.0)","zoom":"(0.25, 0.25)"}
+ERROR: idle_move/(390, 844)/reduced=true: real camera introduces no paper outside baseline coverage
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://test/camera400_backdrop_suite.gd:30)
+       [1] assert_frame_coverage (res://test/camera400_backdrop_suite.gd:101)
+       [2] advance_covered (res://test/camera400_backdrop_suite.gd:113)
+       [3] begin_quiet (res://test/camera400_backdrop_suite.gd:121)
+       [4] run (res://test/camera400_backdrop_suite.gd:191)
+       [5] fresh (res://test/camera400_backdrop_suite.gd:64)
+       [6] settle_layout (res://test/camera400_backdrop_suite.gd:35)
+CAMERA400_BOUNDS_TRACE {"case":"idle_move/(390, 844)/reduced=true","offset":"(0.0, -147.2527)","phase":-1,"position":"(695.0, 284.3383)","quiet":true,"stage":"quiet_started","target":"(0.0, -150.0)","viewport":"(390.0, 844.0)","zoom":"(0.977778, 0.977778)"}
+CAMERA400_BOUNDS_TRACE {"case":"idle_move/(390, 844)/reduced=true","offset":"(0.0, -0.0)","phase":-1,"position":"(695.0, 431.5909)","quiet":false,"stage":"returned","target":"(0.0, 0.0)","viewport":"(390.0, 844.0)","zoom":"(0.977778, 0.977778)"}
+ERROR: idle_move/(360, 640)/reduced=true: real camera introduces no paper outside baseline coverage
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://test/camera400_backdrop_suite.gd:30)
+       [1] assert_frame_coverage (res://test/camera400_backdrop_suite.gd:101)
+       [2] advance_covered (res://test/camera400_backdrop_suite.gd:113)
+       [3] begin_quiet (res://test/camera400_backdrop_suite.gd:121)
+       [4] run (res://test/camera400_backdrop_suite.gd:191)
+       [5] fresh (res://test/camera400_backdrop_suite.gd:64)
+       [6] settle_layout (res://test/camera400_backdrop_suite.gd:35)
+CAMERA400_BOUNDS_TRACE {"case":"idle_move/(360, 640)/reduced=true","offset":"(0.0, -147.2527)","phase":-1,"position":"(695.0, 313.5474)","quiet":true,"stage":"quiet_started","target":"(0.0, -150.0)","viewport":"(360.0, 640.0)","zoom":"(0.694444, 0.694444)"}
+CAMERA400_BOUNDS_TRACE {"case":"idle_move/(360, 640)/reduced=true","offset":"(0.0, -0.0)","phase":-1,"position":"(695.0, 460.8)","quiet":false,"stage":"returned","target":"(0.0, 0.0)","viewport":"(360.0, 640.0)","zoom":"(0.694444, 0.694444)"}
+ERROR: idle_move/(568, 320)/reduced=true: real camera introduces no paper outside baseline coverage
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://test/camera400_backdrop_suite.gd:30)
+       [1] assert_frame_coverage (res://test/camera400_backdrop_suite.gd:101)
+       [2] advance_covered (res://test/camera400_backdrop_suite.gd:113)
+       [3] begin_quiet (res://test/camera400_backdrop_suite.gd:121)
+       [4] run (res://test/camera400_backdrop_suite.gd:191)
+       [5] fresh (res://test/camera400_backdrop_suite.gd:64)
+       [6] settle_layout (res://test/camera400_backdrop_suite.gd:35)
+CAMERA400_BOUNDS_TRACE {"case":"idle_move/(568, 320)/reduced=true","offset":"(18.89742, -51.53843)","phase":-1,"position":"(663.2974, 600.4615)","quiet":true,"stage":"quiet_started","target":"(19.25, -52.5)","viewport":"(568.0, 320.0)","zoom":"(0.25, 0.25)"}
+CAMERA400_BOUNDS_TRACE {"case":"idle_move/(568, 320)/reduced=true","offset":"(0.0, -0.0)","phase":-1,"position":"(644.4, 652.0)","quiet":false,"stage":"returned","target":"(0.0, 0.0)","viewport":"(568.0, 320.0)","zoom":"(0.25, 0.25)"}
+ERROR: idle_move/(1280, 720)/reduced=true: real camera introduces no paper outside baseline coverage
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://test/camera400_backdrop_suite.gd:30)
+       [1] assert_frame_coverage (res://test/camera400_backdrop_suite.gd:101)
+       [2] advance_covered (res://test/camera400_backdrop_suite.gd:113)
+       [3] begin_quiet (res://test/camera400_backdrop_suite.gd:121)
+       [4] run (res://test/camera400_backdrop_suite.gd:191)
+       [5] fresh (res://test/camera400_backdrop_suite.gd:64)
+       [6] settle_layout (res://test/camera400_backdrop_suite.gd:35)
+CAMERA400_BOUNDS_TRACE {"case":"idle_move/(1280, 720)/reduced=true","offset":"(18.89742, -51.53843)","phase":-1,"position":"(663.2974, 362.946)","quiet":true,"stage":"quiet_started","target":"(19.25, -52.5)","viewport":"(1280.0, 720.0)","zoom":"(0.894444, 0.894444)"}
+CAMERA400_BOUNDS_TRACE {"case":"idle_move/(1280, 720)/reduced=true","offset":"(0.0, -0.0)","phase":-1,"position":"(644.4, 414.4845)","quiet":false,"stage":"returned","target":"(0.0, 0.0)","viewport":"(1280.0, 720.0)","zoom":"(0.894444, 0.894444)"}
+ERROR: world_edge/90.0/reduced=true: real camera introduces no paper outside baseline coverage
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://test/camera400_backdrop_suite.gd:30)
+       [1] assert_frame_coverage (res://test/camera400_backdrop_suite.gd:101)
+       [2] advance_covered (res://test/camera400_backdrop_suite.gd:113)
+       [3] begin_quiet (res://test/camera400_backdrop_suite.gd:121)
+       [4] run (res://test/camera400_backdrop_suite.gd:203)
+       [5] fresh (res://test/camera400_backdrop_suite.gd:64)
+       [6] settle_layout (res://test/camera400_backdrop_suite.gd:35)
+CAMERA400_BOUNDS_TRACE {"case":"world_edge/90.0/reduced=true","offset":"(-107.4275, -147.2527)","phase":-1,"position":"(92.00431, 284.3383)","quiet":true,"stage":"quiet_started","target":"(-109.4318, -150.0)","viewport":"(390.0, 844.0)","zoom":"(0.977778, 0.977778)"}
+ERROR: world_edge/1190.0/reduced=true: real camera introduces no paper outside baseline coverage
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://test/camera400_backdrop_suite.gd:30)
+       [1] assert_frame_coverage (res://test/camera400_backdrop_suite.gd:101)
+       [2] advance_covered (res://test/camera400_backdrop_suite.gd:113)
+       [3] begin_quiet (res://test/camera400_backdrop_suite.gd:121)
+       [4] run (res://test/camera400_backdrop_suite.gd:203)
+       [5] fresh (res://test/camera400_backdrop_suite.gd:64)
+       [6] settle_layout (res://test/camera400_backdrop_suite.gd:35)
+CAMERA400_BOUNDS_TRACE {"case":"world_edge/1190.0/reduced=true","offset":"(107.4275, -147.2527)","phase":-1,"position":"(1187.996, 284.3383)","quiet":true,"stage":"quiet_started","target":"(109.4318, -150.0)","viewport":"(390.0, 844.0)","zoom":"(0.977778, 0.977778)"}
+ERROR: natural_expiry_and_resize/reduced=true: real camera introduces no paper outside baseline coverage
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://test/camera400_backdrop_suite.gd:30)
+       [1] assert_frame_coverage (res://test/camera400_backdrop_suite.gd:101)
+       [2] advance_covered (res://test/camera400_backdrop_suite.gd:113)
+       [3] begin_quiet (res://test/camera400_backdrop_suite.gd:121)
+       [4] run (res://test/camera400_backdrop_suite.gd:207)
+       [5] fresh (res://test/camera400_backdrop_suite.gd:64)
+       [6] settle_layout (res://test/camera400_backdrop_suite.gd:35)
+CAMERA400_BOUNDS_TRACE {"case":"natural_expiry_and_resize/reduced=true","offset":"(0.0, -147.2527)","phase":-1,"position":"(695.0, 284.3383)","quiet":true,"stage":"quiet_started","target":"(0.0, -150.0)","viewport":"(390.0, 844.0)","zoom":"(0.977778, 0.977778)"}
+CAMERA400_BOUNDS_TRACE {"case":"natural_expiry_and_resize/reduced=true","offset":"(0.0, -0.0)","phase":-1,"position":"(695.0, 460.8)","quiet":false,"stage":"natural_expiry","target":"(0.0, 0.0)","viewport":"(360.0, 640.0)","zoom":"(0.694444, 0.694444)"}
+CAMERA400_BOUNDS_API_CASES unavailable in old production; real-frame checks still execute
+ERROR: real_goose_takeover/reduced=true/resize=false: real camera introduces no paper outside baseline coverage
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://test/camera400_backdrop_suite.gd:30)
+       [1] assert_frame_coverage (res://test/camera400_backdrop_suite.gd:101)
+       [2] advance_covered (res://test/camera400_backdrop_suite.gd:113)
+       [3] begin_quiet (res://test/camera400_backdrop_suite.gd:121)
+       [4] run (res://test/camera400_backdrop_suite.gd:230)
+       [5] fresh (res://test/camera400_backdrop_suite.gd:64)
+       [6] settle_layout (res://test/camera400_backdrop_suite.gd:35)
+CAMERA400_BOUNDS_TRACE {"case":"real_goose_takeover/reduced=true/resize=false","offset":"(0.0, -104.8209)","phase":-1,"position":"(695.0, 326.7701)","quiet":true,"stage":"quiet_started","target":"(0.0, -150.0)","viewport":"(390.0, 844.0)","zoom":"(0.977778, 0.977778)"}
+CAMERA400_BOUNDS_TRACE {"case":"real_goose_takeover/reduced=true/resize=false","offset":"(0.0, -150.0)","phase":-1,"position":"(695.0, 281.5909)","quiet":true,"stage":"last_quiet_frame","target":"(0.0, -150.0)","viewport":"(390.0, 844.0)","zoom":"(0.977778, 0.977778)"}
+CAMERA400_TAKEOVER_CONTINUITY {"after_camera":"(692.7341, 332.7995)","after_canvas":"[X: (0.977778, 0.0), Y: (0.0, 0.977778), O: (-482.3401, 96.59605)]","before_camera":"(695.0, 281.5909)","before_canvas":"[X: (0.977778, 0.0), Y: (0.0, 0.977778), O: (-484.5556, 146.6666)]","case":"real_goose_takeover/reduced=true/resize=false","effective_before":"(0.0, -150.0)","expected_first":"(692.7341, 332.7995)","new_target":"(-12.5, 132.5)"}
+CAMERA400_BOUNDS_TRACE {"case":"real_goose_takeover/reduced=true/resize=false","offset":"(-2.265866, -98.79141)","phase":0,"position":"(692.7341, 332.7995)","quiet":false,"stage":"first_encounter_frame","target":"(-12.5, 132.5)","viewport":"(390.0, 844.0)","zoom":"(0.977778, 0.977778)"}
+CAMERA400_BOUNDS_TRACE {"case":"real_goose_takeover/reduced=true/resize=false","offset":"(-0.0, 0.0)","phase":-1,"position":"(695.0, 431.5909)","quiet":false,"stage":"encounter_return","target":"(0.0, 0.0)","viewport":"(390.0, 844.0)","zoom":"(0.977778, 0.977778)"}
+ERROR: real_goose_takeover/reduced=true/resize=true: real camera introduces no paper outside baseline coverage
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://test/camera400_backdrop_suite.gd:30)
+       [1] assert_frame_coverage (res://test/camera400_backdrop_suite.gd:101)
+       [2] advance_covered (res://test/camera400_backdrop_suite.gd:113)
+       [3] begin_quiet (res://test/camera400_backdrop_suite.gd:121)
+       [4] run (res://test/camera400_backdrop_suite.gd:230)
+       [5] fresh (res://test/camera400_backdrop_suite.gd:64)
+       [6] settle_layout (res://test/camera400_backdrop_suite.gd:35)
+CAMERA400_BOUNDS_TRACE {"case":"real_goose_takeover/reduced=true/resize=true","offset":"(0.0, -104.8209)","phase":-1,"position":"(695.0, 326.7701)","quiet":true,"stage":"quiet_started","target":"(0.0, -150.0)","viewport":"(390.0, 844.0)","zoom":"(0.977778, 0.977778)"}
+CAMERA400_BOUNDS_TRACE {"case":"real_goose_takeover/reduced=true/resize=true","offset":"(0.0, -150.0)","phase":-1,"position":"(695.0, 281.5909)","quiet":true,"stage":"last_quiet_frame","target":"(0.0, -150.0)","viewport":"(390.0, 844.0)","zoom":"(0.977778, 0.977778)"}
+CAMERA400_TAKEOVER_CONTINUITY {"after_camera":"(647.0964, 537.5968)","after_canvas":"[X: (0.25, 0.0), Y: (0.0, 0.25), O: (122.2259, 25.6008)]","before_camera":"(695.0, 281.5909)","before_canvas":"[X: (0.977778, 0.0), Y: (0.0, 0.977778), O: (-484.5556, 146.6666)]","case":"real_goose_takeover/reduced=true/resize=true","effective_before":"(0.0, -150.0)","expected_first":"(647.0964, 537.5968)","new_target":"(14.875, 46.375)"}
+CAMERA400_BOUNDS_TRACE {"case":"real_goose_takeover/reduced=true/resize=true","offset":"(2.69638, -114.4032)","phase":0,"position":"(647.0964, 537.5968)","quiet":false,"stage":"first_encounter_frame","target":"(14.875, 46.375)","viewport":"(568.0, 320.0)","zoom":"(0.25, 0.25)"}
+CAMERA400_BOUNDS_TRACE {"case":"real_goose_takeover/reduced=true/resize=true","offset":"(-0.0, 0.0)","phase":-1,"position":"(644.4, 652.0)","quiet":false,"stage":"encounter_return","target":"(0.0, 0.0)","viewport":"(568.0, 320.0)","zoom":"(0.25, 0.25)"}
+CAMERA400_BOUNDS_FAILED_CHECKS 2026
+[camera400-backdrop] FAIL: 41894 checks ["idle_move/(390, 844)/reduced=false: real camera introduces no paper outside baseline coverage","idle_move/(360, 640)/reduced=false: real camera introduces no paper outside baseline coverage","idle_move/(568, 320)/reduced=false: real camera introduces no paper outside baseline coverage","idle_move/(1280, 720)/reduced=false: real camera introduces no paper outside baseline coverage","world_edge/90.0/reduced=false: real camera introduces no paper outside baseline coverage","world_edge/1190.0/reduced=false: real camera introduces no paper outside baseline coverage","natural_expiry_and_resize/reduced=false: real camera introduces no paper outside baseline coverage","real_goose_takeover/reduced=false/resize=false: real camera introduces no paper outside baseline coverage","real_goose_takeover/reduced=false/resize=true: real camera introduces no paper outside baseline coverage","idle_move/(390, 844)/reduced=true: real camera introduces no paper outside baseline coverage","idle_move/(360, 640)/reduced=true: real camera introduces no paper outside baseline coverage","idle_move/(568, 320)/reduced=true: real camera introduces no paper outside baseline coverage","idle_move/(1280, 720)/reduced=true: real camera introduces no paper outside baseline coverage","world_edge/90.0/reduced=true: real camera introduces no paper outside baseline coverage","world_edge/1190.0/reduced=true: real camera introduces no paper outside baseline coverage","natural_expiry_and_resize/reduced=true: real camera introduces no paper outside baseline coverage","real_goose_takeover/reduced=true/resize=false: real camera introduces no paper outside baseline coverage","real_goose_takeover/reduced=true/resize=true: real camera introduces no paper outside baseline coverage"]

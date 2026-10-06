@@ -110,6 +110,9 @@ var _cam_zoom := 1.0
 var _cam_target_zoom := 1.0
 var _cam_offset := Vector2.ZERO
 var _cam_target_offset := Vector2.ZERO
+# Quiet framing owns this guard through its release tween, until another focus.
+var _cam_quiet_bounds := false
+var _cam_effective_offset := Vector2.ZERO
 var _latest_photo := ""
 var _last_touch_ms := -1000
 # 假期天数标签
@@ -354,7 +357,15 @@ func _process(delta: float) -> void:
 			_portrait_camera_x = lerpf(_portrait_camera_x, target_x, 1.0 - exp(-delta * 5.0))
 		home.x = _portrait_camera_x
 		player_follow = Vector2.ZERO
-	_camera.position = home + _cam_offset + player_follow + Vector2(0,hud_space/(2.0*zoom))
+	var camera_home := home + player_follow + Vector2(0, hud_space / (2.0 * zoom))
+	if _cam_quiet_bounds and _cam_target_offset.is_zero_approx() and _cam_offset.length_squared() < 0.0001:
+		_cam_offset = Vector2.ZERO
+		_cam_quiet_bounds = false
+	var camera_position := camera_home + _cam_offset
+	if _cam_quiet_bounds and _world != null:
+		camera_position = _bound_quiet_camera(camera_position, camera_home, _world.get_backdrop_bounds(), size, zoom, hud_space)
+	_camera.position = camera_position
+	_cam_effective_offset = camera_position - camera_home
 	if _screen == "game":
 		_refresh_hud()
 		# 更新昼夜色调覆盖层与季节底色
@@ -993,6 +1004,8 @@ func _start_holiday(save_progress: bool = true) -> void:
 	_cam_target_zoom = 1.0
 	_cam_offset = Vector2.ZERO
 	_cam_target_offset = Vector2.ZERO
+	_cam_quiet_bounds = false
+	_cam_effective_offset = Vector2.ZERO
 	_camera.make_current()
 	_screen = "game"
 	_title_screen.visible = false
@@ -1578,7 +1591,32 @@ func _photo_card(rule: Dictionary, owned: bool, width: float = 240.0, caption_on
 	return holder
 
 
+## Keep the unfocused composition's existing coverage, including letterboxing.
+## No extra zoom or art is invented when an axis has no remaining pan budget.
+static func _bound_quiet_camera(requested: Vector2, baseline: Vector2, art: Rect2, viewport: Vector2, zoom: float, hud_space: float) -> Vector2:
+	if zoom <= 0.0 or not art.has_area():
+		return baseline
+	var playable := Rect2(Vector2.ZERO, Vector2(viewport.x, maxf(0.0, viewport.y - hud_space)))
+	var baseline_art := Rect2((art.position - baseline) * zoom + viewport * 0.5, art.size * zoom)
+	var covered := baseline_art.intersection(playable)
+	if not covered.has_area():
+		return baseline
+	var lower := art.position + (viewport * 0.5 - covered.position) / zoom
+	var upper := art.end + (viewport * 0.5 - covered.end) / zoom
+	return Vector2(
+		clampf(requested.x, lower.x, upper.x) if lower.x <= upper.x else baseline.x,
+		clampf(requested.y, lower.y, upper.y) if lower.y <= upper.y else baseline.y
+	)
+
+
 func _on_focus(world_point: Vector2, zoom: float) -> void:
+	# The world sets the encounter phase before emitting its focus, even when
+	# quiet's same-tick yield has not run yet. Never infer the source from zoom.
+	if _cam_quiet_bounds:
+		# The clipped intention was never visible. A new owner must interpolate
+		# from the last effective displacement, not reveal that latent offset.
+		_cam_offset = _cam_effective_offset
+	_cam_quiet_bounds = _world != null and _world.is_quiet_camera_focus()
 	_cam_target_zoom = zoom
 	var home := YardWorld.WORLD_SIZE * 0.5
 	var portrait := size.x < 700.0 and size.y > size.x
@@ -1587,6 +1625,7 @@ func _on_focus(world_point: Vector2, zoom: float) -> void:
 
 
 func _on_release_focus() -> void:
+	# Keep quiet bounds until its return finishes; a new focus replaces them.
 	_cam_target_zoom = 1.0
 	_cam_target_offset = Vector2.ZERO
 

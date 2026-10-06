@@ -1,0 +1,28 @@
+{
+  "source": "58437ae8977f2f0ac1fd51dbdd61e2274ac12132",
+  "scope": [
+    {
+      "path": "scripts/main.gd",
+      "changed_existing_functions": [
+        "_process",
+        "_start_holiday",
+        "_on_focus"
+      ],
+      "added_functions": [
+        "_bound_quiet_camera"
+      ]
+    },
+    {
+      "path": "scripts/game/yard_world.gd",
+      "changed_existing_functions": [],
+      "added_functions": [
+        "is_quiet_camera_focus",
+        "get_backdrop_bounds"
+      ]
+    }
+  ],
+  "startup_change": "only 2 new camera field resets, root explicitly authorized",
+  "all_existing_world_methods_unchanged": true,
+  "input_modal_slider_methods_unchanged": true,
+  "verification": "static only; enhanced native and browser pending"
+}
