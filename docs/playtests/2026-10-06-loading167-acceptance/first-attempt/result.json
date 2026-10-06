@@ -1,0 +1,2202 @@
+{
+  "source": "49596fa93bff3c29edfe441898017158c6e469a3",
+  "entry": "game-49596fa",
+  "role": "CODEX-LEAD delegated QA support; not GAME-QA impersonation",
+  "started_utc": "2026-10-06T00:04:53Z",
+  "cases": [
+    {
+      "name": "desktop-normal",
+      "viewport": {
+        "width": 1280,
+        "height": 720
+      },
+      "motion": "no-preference",
+      "events": [
+        {
+          "event": "injected_js_hold_start",
+          "utc": "2026-10-06T00:05:19Z",
+          "monotonic": 376405.09262585,
+          "url": "https://narutojzm1-dot.github.io/youjia/game-49596fa.js"
+        },
+        {
+          "event": "screenshot_requested",
+          "utc": "2026-10-06T00:05:19Z",
+          "monotonic": 376405.246400102,
+          "stage": "01-loading-initial"
+        },
+        {
+          "event": "screenshot_completed",
+          "utc": "2026-10-06T00:05:19Z",
+          "monotonic": 376405.788159409,
+          "stage": "01-loading-initial"
+        },
+        {
+          "event": "injected_js_abort",
+          "utc": "2026-10-06T00:05:19Z",
+          "monotonic": 376405.797240545,
+          "url": "https://narutojzm1-dot.github.io/youjia/game-49596fa.js",
+          "held_seconds": 0.7046176000148989
+        },
+        {
+          "event": "screenshot_requested",
+          "utc": "2026-10-06T00:05:19Z",
+          "monotonic": 376405.839696044,
+          "stage": "02-network-failure"
+        },
+        {
+          "event": "screenshot_completed",
+          "utc": "2026-10-06T00:05:20Z",
+          "monotonic": 376406.21018339,
+          "stage": "02-network-failure"
+        },
+        {
+          "event": "dom_retry_click",
+          "utc": "2026-10-06T00:05:20Z",
+          "monotonic": 376406.210999208,
+          "selector": "#loading-retry"
+        },
+        {
+          "event": "wasm_hold_start",
+          "utc": "2026-10-06T00:05:21Z",
+          "monotonic": 376407.510150277,
+          "url": "https://narutojzm1-dot.github.io/youjia/game-49596fa.wasm"
+        },
+        {
+          "event": "screenshot_requested",
+          "utc": "2026-10-06T00:05:21Z",
+          "monotonic": 376407.511213568,
+          "stage": "03-retry-loading-a"
+        },
+        {
+          "event": "screenshot_completed",
+          "utc": "2026-10-06T00:05:21Z",
+          "monotonic": 376407.899392505,
+          "stage": "03-retry-loading-a"
+        },
+        {
+          "event": "screenshot_requested",
+          "utc": "2026-10-06T00:05:22Z",
+          "monotonic": 376408.90137925,
+          "stage": "04-retry-loading-b"
+        },
+        {
+          "event": "screenshot_completed",
+          "utc": "2026-10-06T00:05:23Z",
+          "monotonic": 376409.248729794,
+          "stage": "04-retry-loading-b"
+        },
+        {
+          "event": "wasm_hold_released",
+          "utc": "2026-10-06T00:05:25Z",
+          "monotonic": 376411.513398972,
+          "held_seconds": 4.003249207045883
+        },
+        {
+          "event": "screenshot_requested",
+          "utc": "2026-10-06T00:05:31Z",
+          "monotonic": 376417.898795628,
+          "stage": "05-retry-title"
+        },
+        {
+          "event": "screenshot_completed",
+          "utc": "2026-10-06T00:05:33Z",
+          "monotonic": 376418.997534414,
+          "stage": "05-retry-title"
+        },
+        {
+          "event": "title_ready",
+          "utc": "2026-10-06T00:05:33Z",
+          "monotonic": 376419.000745167
+        },
+        {
+          "event": "ordinary_mouse_click",
+          "utc": "2026-10-06T00:05:51Z",
+          "monotonic": 376437.336196808,
+          "x": 640,
+          "y": 368
+        },
+        {
+          "event": "screenshot_requested",
+          "utc": "2026-10-06T00:05:55Z",
+          "monotonic": 376441.887338533,
+          "stage": "06-yard-entered"
+        },
+        {
+          "event": "screenshot_completed",
+          "utc": "2026-10-06T00:05:56Z",
+          "monotonic": 376442.821891602,
+          "stage": "06-yard-entered"
+        },
+        {
+          "event": "screenshot_requested",
+          "utc": "2026-10-06T00:05:57Z",
+          "monotonic": 376443.276639086,
+          "stage": "07-yard-stable"
+        },
+        {
+          "event": "screenshot_completed",
+          "utc": "2026-10-06T00:05:58Z",
+          "monotonic": 376444.116203563,
+          "stage": "07-yard-stable"
+        },
+        {
+          "event": "context_closed_in_finally",
+          "utc": "2026-10-06T00:05:58Z",
+          "monotonic": 376444.215562078
+        }
+      ],
+      "bindings": [
+        {
+          "stage": "before",
+          "utc": "2026-10-06T00:05:18Z",
+          "html_sha256": "9f3c4d8f66827663a136eaafb1527d5553154c5cea9d69d15157c1be31796385",
+          "pck": {
+            "status": 200,
+            "bytes": 27090652,
+            "sha256": "c851ac2b66ef6bba5211b7ba8488173c6b6a336ee7508d6150a5f5ccd488f930"
+          },
+          "storage_modules": [
+            {
+              "path": "save-49596fa/bridge.mjs",
+              "status": 200,
+              "bytes": 1856,
+              "sha256": "ef18687554fdc0d745c1d18d4d091e959cc78559da0d61d6a093e562ff9bbc91"
+            },
+            {
+              "path": "save-49596fa/budgets.mjs",
+              "status": 200,
+              "bytes": 340,
+              "sha256": "52984153977dcafd1d2682e848f1999f091d0966e17d46e902de76f5735a7018"
+            },
+            {
+              "path": "save-49596fa/host.mjs",
+              "status": 200,
+              "bytes": 7730,
+              "sha256": "9de8dc0ef4bfc037a8ad0bff575d40c3dd4341bcc723351a412b2061bb661904"
+            },
+            {
+              "path": "save-49596fa/idbfs_source.mjs",
+              "status": 200,
+              "bytes": 5550,
+              "sha256": "16eb57d471537f13d3e50018b56c2d416d2847f0d0249ba44433dd9ebb65f4d8"
+            },
+            {
+              "path": "save-49596fa/legacy_inspection.mjs",
+              "status": 200,
+              "bytes": 2886,
+              "sha256": "db3a23a0221aa5d34a58a6a49aeeff930295ffe20bfcf73a7c11f0d49cffd671"
+            },
+            {
+              "path": "save-49596fa/legacy_seal.mjs",
+              "status": 200,
+              "bytes": 2510,
+              "sha256": "9642132f5d4e7523e5966e802069af7f4bae803fae8e2e7c28ae55ee97d85610"
+            },
+            {
+              "path": "save-49596fa/legacy_v5.mjs",
+              "status": 200,
+              "bytes": 2245,
+              "sha256": "8e7f4ad2d87aab77ac05361e4f46060476e933aa079ae94301998d08d4599621"
+            },
+            {
+              "path": "save-49596fa/lifecycle.mjs",
+              "status": 200,
+              "bytes": 1878,
+              "sha256": "1cfaebb9a8745e2dc3e4f694ef475f250640870938f04160be1a5c9acd62935d"
+            },
+            {
+              "path": "save-49596fa/source_decode.mjs",
+              "status": 200,
+              "bytes": 1542,
+              "sha256": "411f3bc784cb32a07f32eed5fc7d88f71b59a667cc0d68a50fe13c55bfdba18a"
+            },
+            {
+              "path": "save-49596fa/store.mjs",
+              "status": 200,
+              "bytes": 13890,
+              "sha256": "2193b4397b8662a8ebc754dc4468e4d62964d209b4e1d0f0924a2ec81b409cbe"
+            }
+          ],
+          "license": {
+            "status": 200,
+            "bytes": 147966,
+            "sha256": "9215f5fdd50039a9b6f3d8f0271cbc21bbdf64b917fb118dd29c8a16b9974e00"
+          }
+        }
+      ],
+      "snapshots": [
+        {
+          "stage": "01-loading-initial",
+          "utc": "2026-10-06T00:05:19Z",
+          "file": "desktop-normal-01-loading-initial.png",
+          "dom": {
+            "elements": {
+              "loading": {
+                "text": "悠长的假期\n\n正在加载…\n\ngame-49596fa",
+                "hidden": false,
+                "display": "grid",
+                "rect": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 1280,
+                  "h": 720
+                },
+                "fontSize": "16px",
+                "lineHeight": "normal",
+                "color": "rgb(91, 70, 55)",
+                "backgroundColor": "rgb(255, 246, 232)",
+                "transform": "none",
+                "animationName": "none",
+                "animationDuration": "0s",
+                "transitionDuration": "0s",
+                "clientWidth": 1280,
+                "scrollWidth": 1280,
+                "clientHeight": 720,
+                "scrollHeight": 720
+              },
+              "game-title": {
+                "text": "悠长的假期",
+                "hidden": false,
+                "display": "block",
+                "rect": {
+                  "x": 534.984375,
+                  "y": 531.96875,
+                  "w": 210.015625,
+                  "h": 47.03125
+                },
+                "fontSize": "42px",
+                "lineHeight": "47.04px",
+                "color": "rgb(91, 70, 55)",
+                "backgroundColor": "rgba(0, 0, 0, 0)",
+                "transform": "none",
+                "animationName": "none",
+                "animationDuration": "0s",
+                "transitionDuration": "0s",
+                "clientWidth": 210,
+                "scrollWidth": 210,
+                "clientHeight": 47,
+                "scrollHeight": 54
+              },
+              "loading-status": {
+                "text": "正在加载…",
+                "hidden": false,
+                "display": "block",
+                "rect": {
+                  "x": 599.984375,
+                  "y": 591,
+                  "w": 80.015625,
+                  "h": 24
+                },
+                "fontSize": "16px",
+                "lineHeight": "24px",
+                "color": "rgb(91, 70, 55)",
+                "backgroundColor": "rgba(0, 0, 0, 0)",
+                "transform": "none",
+                "animationName": "none",
+                "animationDuration": "0s",
+                "transitionDuration": "0s",
+                "clientWidth": 80,
+                "scrollWidth": 80,
+                "clientHeight": 24,
+                "scrollHeight": 24
+              },
+              "loading-detail": {
+                "text": "",
+                "hidden": false,
+                "display": "block",
+                "rect": {
+                  "x": 640,
+                  "y": 627,
+                  "w": 0,
+                  "h": 0
+                },
+                "fontSize": "16px",
+                "lineHeight": "24px",
+                "color": "rgb(91, 70, 55)",
+                "backgroundColor": "rgba(0, 0, 0, 0)",
+                "transform": "none",
+                "animationName": "none",
+                "animationDuration": "0s",
+                "transitionDuration": "0s",
+                "clientWidth": 0,
+                "scrollWidth": 0,
+                "clientHeight": 0,
+                "scrollHeight": 0
+              },
+              "loading-progress": {
+                "text": "",
+                "hidden": false,
+                "display": "block",
+                "rect": {
+                  "x": 480,
+                  "y": 639,
+                  "w": 320,
+                  "h": 7
+                },
+                "fontSize": "16px",
+                "lineHeight": "normal",
+                "color": "rgb(91, 70, 55)",
+                "backgroundColor": "rgb(223, 201, 173)",
+                "transform": "none",
+                "animationName": "none",
+                "animationDuration": "0s",
+                "transitionDuration": "0s",
+                "clientWidth": 320,
+                "scrollWidth": 320,
+                "clientHeight": 7,
+                "scrollHeight": 7
+              },
+              "loading-notice": {
+                "text": "",
+                "hidden": true,
+                "display": "none",
+                "rect": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 0,
+                  "h": 0
+                },
+                "fontSize": "16px",
+                "lineHeight": "24px",
+                "color": "rgb(91, 70, 55)",
+                "backgroundColor": "rgba(0, 0, 0, 0)",
+                "transform": "none",
+                "animationName": "none",
+                "animationDuration": "0s",
+                "transitionDuration": "0s",
+                "clientWidth": 0,
+                "scrollWidth": 0,
+                "clientHeight": 0,
+                "scrollHeight": 0
+              },
+              "loading-retry": {
+                "text": "重试",
+                "hidden": true,
+                "display": "none",
+                "rect": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 0,
+                  "h": 0
+                },
+                "fontSize": "16px",
+                "lineHeight": "normal",
+                "color": "rgb(91, 70, 55)",
+                "backgroundColor": "rgb(255, 249, 240)",
+                "transform": "none",
+                "animationName": "none",
+                "animationDuration": "0s",
+                "transitionDuration": "0s",
+                "clientWidth": 0,
+                "scrollWidth": 0,
+                "clientHeight": 0,
+                "scrollHeight": 0
+              },
+              "loading-build": {
+                "text": "game-49596fa",
+                "hidden": false,
+                "display": "block",
+                "rect": {
+                  "x": 594.484375,
+                  "y": 666,
+                  "w": 91.015625,
+                  "h": 14
+                },
+                "fontSize": "12px",
+                "lineHeight": "normal",
+                "color": "rgb(91, 70, 55)",
+                "backgroundColor": "rgba(0, 0, 0, 0)",
+                "transform": "none",
+                "animationName": "none",
+                "animationDuration": "0s",
+                "transitionDuration": "0s",
+                "clientWidth": 91,
+                "scrollWidth": 91,
+                "clientHeight": 14,
+                "scrollHeight": 14
+              },
+              "pseudo": {
+                "::before": {
+                  "transform": "none",
+                  "animationName": "none",
+                  "animationDuration": "0s",
+                  "transitionDuration": "0s",
+                  "backgroundSize": "cover",
+                  "backgroundPosition": "50% 0%",
+                  "hasBackground": true
+                },
+                "::after": {
+                  "transform": "none",
+                  "animationName": "none",
+                  "animationDuration": "0s",
+                  "transitionDuration": "0s",
+                  "backgroundSize": "auto",
+                  "backgroundPosition": "0% 0%",
+                  "hasBackground": true
+                }
+              }
+            },
+            "viewport": {
+              "w": 1280,
+              "h": 720,
+              "dpr": 1
+            },
+            "reduce": false,
+            "build": "game-49596fa",
+            "firstFrameObserved": false,
+            "loadTimings": {}
+          }
+        },
+        {
+          "stage": "02-network-failure",
+          "utc": "2026-10-06T00:05:20Z",
+          "file": "desktop-normal-02-network-failure.png",
+          "dom": {
+            "elements": {
+              "loading": {
+                "text": "悠长的假期\n\n游戏加载失败，请重试。\n\nEngine script could not be loaded\n\n重试\n\ngame-49596fa",
+                "hidden": false,
+                "display": "grid",
+                "rect": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 1280,
+                  "h": 720
+                },
+                "fontSize": "16px",
+                "lineHeight": "normal",
+                "color": "rgb(91, 70, 55)",
+                "backgroundColor": "rgb(255, 246, 232)",
+                "transform": "none",
+                "animationName": "none",
+                "animationDuration": "0s",
+                "transitionDuration": "0s",
+                "clientWidth": 1280,
+                "scrollWidth": 1280,
+                "clientHeight": 720,
+                "scrollHeight": 720
+              },
+              "game-title": {
+                "text": "悠长的假期",
+                "hidden": false,
+                "display": "block",
+                "rect": {
+                  "x": 534.984375,
+                  "y": 464.96875,
+                  "w": 210.015625,
+                  "h": 47.03125
+                },
+                "fontSize": "42px",
+                "lineHeight": "47.04px",
+                "color": "rgb(91, 70, 55)",
+                "backgroundColor": "rgba(0, 0, 0, 0)",
+                "transform": "none",
+                "animationName": "none",
+                "animationDuration": "0s",
+                "transitionDuration": "0s",
+                "clientWidth": 210,
+                "scrollWidth": 210,
+                "clientHeight": 47,
+                "scrollHeight": 54
+              },
+              "loading-status": {
+                "text": "游戏加载失败，请重试。",
+                "hidden": false,
+                "display": "block",
+                "rect": {
+                  "x": 551.984375,
+                  "y": 524,
+                  "w": 176.015625,
+                  "h": 24
+                },
+                "fontSize": "16px",
+                "lineHeight": "24px",
+                "color": "rgb(91, 70, 55)",
+                "backgroundColor": "rgba(0, 0, 0, 0)",
+                "transform": "none",
+                "animationName": "none",
+                "animationDuration": "0s",
+                "transitionDuration": "0s",
+                "clientWidth": 176,
+                "scrollWidth": 176,
+                "clientHeight": 24,
+                "scrollHeight": 24
+              },
+              "loading-detail": {
+                "text": "Engine script could not be loaded",
+                "hidden": false,
+                "display": "block",
+                "rect": {
+                  "x": 515.921875,
+                  "y": 560,
+                  "w": 248.15625,
+                  "h": 24
+                },
+                "fontSize": "16px",
+                "lineHeight": "24px",
+                "color": "rgb(91, 70, 55)",
+                "backgroundColor": "rgba(0, 0, 0, 0)",
+                "transform": "none",
+                "animationName": "none",
+                "animationDuration": "0s",
+                "transitionDuration": "0s",
+                "clientWidth": 248,
+                "scrollWidth": 248,
+                "clientHeight": 24,
+                "scrollHeight": 24
+              },
+              "loading-progress": {
+                "text": "",
+                "hidden": true,
+                "display": "none",
+                "rect": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 0,
+                  "h": 0
+                },
+                "fontSize": "16px",
+                "lineHeight": "normal",
+                "color": "rgb(91, 70, 55)",
+                "backgroundColor": "rgb(223, 201, 173)",
+                "transform": "none",
+                "animationName": "none",
+                "animationDuration": "0s",
+                "transitionDuration": "0s",
+                "clientWidth": 0,
+                "scrollWidth": 0,
+                "clientHeight": 0,
+                "scrollHeight": 0
+              },
+              "loading-notice": {
+                "text": "",
+                "hidden": true,
+                "display": "none",
+                "rect": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 0,
+                  "h": 0
+                },
+                "fontSize": "16px",
+                "lineHeight": "24px",
+                "color": "rgb(91, 70, 55)",
+                "backgroundColor": "rgba(0, 0, 0, 0)",
+                "transform": "none",
+                "animationName": "none",
+                "animationDuration": "0s",
+                "transitionDuration": "0s",
+                "clientWidth": 0,
+                "scrollWidth": 0,
+                "clientHeight": 0,
+                "scrollHeight": 0
+              },
+              "loading-retry": {
+                "text": "重试",
+                "hidden": false,
+                "display": "block",
+                "rect": {
+                  "x": 598.984375,
+                  "y": 596,
+                  "w": 82.015625,
+                  "h": 50
+                },
+                "fontSize": "16px",
+                "lineHeight": "normal",
+                "color": "rgb(91, 70, 55)",
+                "backgroundColor": "rgb(255, 249, 240)",
+                "transform": "none",
+                "animationName": "none",
+                "animationDuration": "0s",
+                "transitionDuration": "0s",
+                "clientWidth": 80,
+                "scrollWidth": 80,
+                "clientHeight": 48,
+                "scrollHeight": 48
+              },
+              "loading-build": {
+                "text": "game-49596fa",
+                "hidden": false,
+                "display": "block",
+                "rect": {
+                  "x": 594.484375,
+                  "y": 666,
+                  "w": 91.015625,
+                  "h": 14
+                },
+                "fontSize": "12px",
+                "lineHeight": "normal",
+                "color": "rgb(91, 70, 55)",
+                "backgroundColor": "rgba(0, 0, 0, 0)",
+                "transform": "none",
+                "animationName": "none",
+                "animationDuration": "0s",
+                "transitionDuration": "0s",
+                "clientWidth": 91,
+                "scrollWidth": 91,
+                "clientHeight": 14,
+                "scrollHeight": 14
+              },
+              "pseudo": {
+                "::before": {
+                  "transform": "none",
+                  "animationName": "none",
+                  "animationDuration": "0s",
+                  "transitionDuration": "0s",
+                  "backgroundSize": "cover",
+                  "backgroundPosition": "50% 0%",
+                  "hasBackground": true
+                },
+                "::after": {
+                  "transform": "none",
+                  "animationName": "none",
+                  "animationDuration": "0s",
+                  "transitionDuration": "0s",
+                  "backgroundSize": "auto",
+                  "backgroundPosition": "0% 0%",
+                  "hasBackground": true
+                }
+              }
+            },
+            "viewport": {
+              "w": 1280,
+              "h": 720,
+              "dpr": 1
+            },
+            "reduce": false,
+            "build": "game-49596fa",
+            "firstFrameObserved": false,
+            "loadTimings": {
+              "failed": 709
+            }
+          }
+        },
+        {
+          "stage": "03-retry-loading-a",
+          "utc": "2026-10-06T00:05:21Z",
+          "file": "desktop-normal-03-retry-loading-a.png",
+          "dom": {
+            "elements": {
+              "loading": {
+                "text": "悠长的假期\n\n下载资源 2% · 1.3 / 63.5 MiB（解压后）\n\n已读取 1.3 MiB 资源数据（解压后）· 1 秒\n\ngame-49596fa",
+                "hidden": false,
+                "display": "grid",
+                "rect": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 1280,
+                  "h": 720
+                },
+                "fontSize": "16px",
+                "lineHeight": "normal",
+                "color": "rgb(91, 70, 55)",
+                "backgroundColor": "rgb(255, 246, 232)",
+                "transform": "none",
+                "animationName": "none",
+                "animationDuration": "0s",
+                "transitionDuration": "0s",
+                "clientWidth": 1280,
+                "scrollWidth": 1280,
+                "clientHeight": 720,
+                "scrollHeight": 720
+              },
+              "game-title": {
+                "text": "悠长的假期",
+                "hidden": false,
+                "display": "block",
+                "rect": {
+                  "x": 534.984375,
+                  "y": 507.96875,
+                  "w": 210.015625,
+                  "h": 47.03125
+                },
+                "fontSize": "42px",
+                "lineHeight": "47.04px",
+                "color": "rgb(91, 70, 55)",
+                "backgroundColor": "rgba(0, 0, 0, 0)",
+                "transform": "none",
+                "animationName": "none",
+                "animationDuration": "0s",
+                "transitionDuration": "0s",
+                "clientWidth": 210,
+                "scrollWidth": 210,
+                "clientHeight": 47,
+                "scrollHeight": 54
+              },
+              "loading-status": {
+                "text": "下载资源 2% · 1.3 / 63.5 MiB（解压后）",
+                "hidden": false,
+                "display": "block",
+                "rect": {
+                  "x": 492.15625,
+                  "y": 567,
+                  "w": 295.6875,
+                  "h": 24
+                },
+                "fontSize": "16px",
+                "lineHeight": "24px",
+                "color": "rgb(91, 70, 55)",
+                "backgroundColor": "rgba(0, 0, 0, 0)",
+                "transform": "none",
+                "animationName": "none",
+                "animationDuration": "0s",
+                "transitionDuration": "0s",
+                "clientWidth": 296,
+                "scrollWidth": 296,
+                "clientHeight": 24,
+                "scrollHeight": 24
+              },
+              "loading-detail": {
+                "text": "已读取 1.3 MiB 资源数据（解压后）· 1 秒",
+                "hidden": false,
+                "display": "block",
+                "rect": {
+                  "x": 493.53125,
+                  "y": 603,
+                  "w": 292.921875,
+                  "h": 24
+                },
+                "fontSize": "16px",
+                "lineHeight": "24px",
+                "color": "rgb(91, 70, 55)",
+                "backgroundColor": "rgba(0, 0, 0, 0)",
+                "transform": "none",
+                "animationName": "none",
+                "animationDuration": "0s",
+                "transitionDuration": "0s",
+                "clientWidth": 293,
+                "scrollWidth": 293,
+                "clientHeight": 24,
+                "scrollHeight": 24
+              },
+              "loading-progress": {
+                "text": "",
+                "hidden": false,
+                "display": "block",
+                "rect": {
+                  "x": 480,
+                  "y": 639,
+                  "w": 320,
+                  "h": 7
+                },
+                "fontSize": "16px",
+                "lineHeight": "normal",
+                "color": "rgb(91, 70, 55)",
+                "backgroundColor": "rgb(223, 201, 173)",
+                "transform": "none",
+                "animationName": "none",
+                "animationDuration": "0s",
+                "transitionDuration": "0s",
+                "clientWidth": 320,
+                "scrollWidth": 320,
+                "clientHeight": 7,
+                "scrollHeight": 7
+              },
+              "loading-notice": {
+                "text": "",
+                "hidden": true,
+                "display": "none",
+                "rect": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 0,
+                  "h": 0
+                },
+                "fontSize": "16px",
+                "lineHeight": "24px",
+                "color": "rgb(91, 70, 55)",
+                "backgroundColor": "rgba(0, 0, 0, 0)",
+                "transform": "none",
+                "animationName": "none",
+                "animationDuration": "0s",
+                "transitionDuration": "0s",
+                "clientWidth": 0,
+                "scrollWidth": 0,
+                "clientHeight": 0,
+                "scrollHeight": 0
+              },
+              "loading-retry": {
+                "text": "重试",
+                "hidden": true,
+                "display": "none",
+                "rect": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 0,
+                  "h": 0
+                },
+                "fontSize": "16px",
+                "lineHeight": "normal",
+                "color": "rgb(91, 70, 55)",
+                "backgroundColor": "rgb(255, 249, 240)",
+                "transform": "none",
+                "animationName": "none",
+                "animationDuration": "0s",
+                "transitionDuration": "0s",
+                "clientWidth": 0,
+                "scrollWidth": 0,
+                "clientHeight": 0,
+                "scrollHeight": 0
+              },
+              "loading-build": {
+                "text": "game-49596fa",
+                "hidden": false,
+                "display": "block",
+                "rect": {
+                  "x": 594.484375,
+                  "y": 666,
+                  "w": 91.015625,
+                  "h": 14
+                },
+                "fontSize": "12px",
+                "lineHeight": "normal",
+                "color": "rgb(91, 70, 55)",
+                "backgroundColor": "rgba(0, 0, 0, 0)",
+                "transform": "none",
+                "animationName": "none",
+                "animationDuration": "0s",
+                "transitionDuration": "0s",
+                "clientWidth": 91,
+                "scrollWidth": 91,
+                "clientHeight": 14,
+                "scrollHeight": 14
+              },
+              "pseudo": {
+                "::before": {
+                  "transform": "none",
+                  "animationName": "none",
+                  "animationDuration": "0s",
+                  "transitionDuration": "0s",
+                  "backgroundSize": "cover",
+                  "backgroundPosition": "50% 0%",
+                  "hasBackground": true
+                },
+                "::after": {
+                  "transform": "none",
+                  "animationName": "none",
+                  "animationDuration": "0s",
+                  "transitionDuration": "0s",
+                  "backgroundSize": "auto",
+                  "backgroundPosition": "0% 0%",
+                  "hasBackground": true
+                }
+              }
+            },
+            "viewport": {
+              "w": 1280,
+              "h": 720,
+              "dpr": 1
+            },
+            "reduce": false,
+            "build": "game-49596fa",
+            "firstFrameObserved": false,
+            "loadTimings": {
+              "engineScriptReady": 341
+            }
+          }
+        },
+        {
+          "stage": "04-retry-loading-b",
+          "utc": "2026-10-06T00:05:23Z",
+          "file": "desktop-normal-04-retry-loading-b.png",
+          "dom": {
+            "elements": {
+              "loading": {
+                "text": "悠长的假期\n\n下载资源 16% · 10.3 / 63.5 MiB（解压后）\n\n已读取 10.3 MiB 资源数据（解压后）· 2 秒\n\ngame-49596fa",
+                "hidden": false,
+                "display": "grid",
+                "rect": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 1280,
+                  "h": 720
+                },
+                "fontSize": "16px",
+                "lineHeight": "normal",
+                "color": "rgb(91, 70, 55)",
+                "backgroundColor": "rgb(255, 246, 232)",
+                "transform": "none",
+                "animationName": "none",
+                "animationDuration": "0s",
+                "transitionDuration": "0s",
+                "clientWidth": 1280,
+                "scrollWidth": 1280,
+                "clientHeight": 720,
+                "scrollHeight": 720
+              },
+              "game-title": {
+                "text": "悠长的假期",
+                "hidden": false,
+                "display": "block",
+                "rect": {
+                  "x": 534.984375,
+                  "y": 507.96875,
+                  "w": 210.015625,
+                  "h": 47.03125
+                },
+                "fontSize": "42px",
+                "lineHeight": "47.04px",
+                "color": "rgb(91, 70, 55)",
+                "backgroundColor": "rgba(0, 0, 0, 0)",
+                "transform": "none",
+                "animationName": "none",
+                "animationDuration": "0s",
+                "transitionDuration": "0s",
+                "clientWidth": 210,
+                "scrollWidth": 210,
+                "clientHeight": 47,
+                "scrollHeight": 54
+              },
+              "loading-status": {
+                "text": "下载资源 16% · 10.3 / 63.5 MiB（解压后）",
+                "hidden": false,
+                "display": "block",
+                "rect": {
+                  "x": 483.03125,
+                  "y": 567,
+                  "w": 313.921875,
+                  "h": 24
+                },
+                "fontSize": "16px",
+                "lineHeight": "24px",
+                "color": "rgb(91, 70, 55)",
+                "backgroundColor": "rgba(0, 0, 0, 0)",
+                "transform": "none",
+                "animationName": "none",
+                "animationDuration": "0s",
+                "transitionDuration": "0s",
+                "clientWidth": 314,
+                "scrollWidth": 314,
+                "clientHeight": 24,
+                "scrollHeight": 24
+              },
+              "loading-detail": {
+                "text": "已读取 10.3 MiB 资源数据（解压后）· 2 秒",
+                "hidden": false,
+                "display": "block",
+                "rect": {
+                  "x": 489.09375,
+                  "y": 603,
+                  "w": 301.796875,
+                  "h": 24
+                },
+                "fontSize": "16px",
+                "lineHeight": "24px",
+                "color": "rgb(91, 70, 55)",
+                "backgroundColor": "rgba(0, 0, 0, 0)",
+                "transform": "none",
+                "animationName": "none",
+                "animationDuration": "0s",
+                "transitionDuration": "0s",
+                "clientWidth": 302,
+                "scrollWidth": 302,
+                "clientHeight": 24,
+                "scrollHeight": 24
+              },
+              "loading-progress": {
+                "text": "",
+                "hidden": false,
+                "display": "block",
+                "rect": {
+                  "x": 480,
+                  "y": 639,
+                  "w": 320,
+                  "h": 7
+                },
+                "fontSize": "16px",
+                "lineHeight": "normal",
+                "color": "rgb(91, 70, 55)",
+                "backgroundColor": "rgb(223, 201, 173)",
+                "transform": "none",
+                "animationName": "none",
+                "animationDuration": "0s",
+                "transitionDuration": "0s",
+                "clientWidth": 320,
+                "scrollWidth": 320,
+                "clientHeight": 7,
+                "scrollHeight": 7
+              },
+              "loading-notice": {
+                "text": "",
+                "hidden": true,
+                "display": "none",
+                "rect": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 0,
+                  "h": 0
+                },
+                "fontSize": "16px",
+                "lineHeight": "24px",
+                "color": "rgb(91, 70, 55)",
+                "backgroundColor": "rgba(0, 0, 0, 0)",
+                "transform": "none",
+                "animationName": "none",
+                "animationDuration": "0s",
+                "transitionDuration": "0s",
+                "clientWidth": 0,
+                "scrollWidth": 0,
+                "clientHeight": 0,
+                "scrollHeight": 0
+              },
+              "loading-retry": {
+                "text": "重试",
+                "hidden": true,
+                "display": "none",
+                "rect": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 0,
+                  "h": 0
+                },
+                "fontSize": "16px",
+                "lineHeight": "normal",
+                "color": "rgb(91, 70, 55)",
+                "backgroundColor": "rgb(255, 249, 240)",
+                "transform": "none",
+                "animationName": "none",
+                "animationDuration": "0s",
+                "transitionDuration": "0s",
+                "clientWidth": 0,
+                "scrollWidth": 0,
+                "clientHeight": 0,
+                "scrollHeight": 0
+              },
+              "loading-build": {
+                "text": "game-49596fa",
+                "hidden": false,
+                "display": "block",
+                "rect": {
+                  "x": 594.484375,
+                  "y": 666,
+                  "w": 91.015625,
+                  "h": 14
+                },
+                "fontSize": "12px",
+                "lineHeight": "normal",
+                "color": "rgb(91, 70, 55)",
+                "backgroundColor": "rgba(0, 0, 0, 0)",
+                "transform": "none",
+                "animationName": "none",
+                "animationDuration": "0s",
+                "transitionDuration": "0s",
+                "clientWidth": 91,
+                "scrollWidth": 91,
+                "clientHeight": 14,
+                "scrollHeight": 14
+              },
+              "pseudo": {
+                "::before": {
+                  "transform": "none",
+                  "animationName": "none",
+                  "animationDuration": "0s",
+                  "transitionDuration": "0s",
+                  "backgroundSize": "cover",
+                  "backgroundPosition": "50% 0%",
+                  "hasBackground": true
+                },
+                "::after": {
+                  "transform": "none",
+                  "animationName": "none",
+                  "animationDuration": "0s",
+                  "transitionDuration": "0s",
+                  "backgroundSize": "auto",
+                  "backgroundPosition": "0% 0%",
+                  "hasBackground": true
+                }
+              }
+            },
+            "viewport": {
+              "w": 1280,
+              "h": 720,
+              "dpr": 1
+            },
+            "reduce": false,
+            "build": "game-49596fa",
+            "firstFrameObserved": false,
+            "loadTimings": {
+              "engineScriptReady": 341
+            }
+          }
+        },
+        {
+          "stage": "05-retry-title",
+          "utc": "2026-10-06T00:05:33Z",
+          "file": "desktop-normal-05-retry-title.png",
+          "dom": {
+            "elements": {
+              "loading": {
+                "text": "\n    悠长的假期\n    下载完成，正在启动引擎…\n    下载已完成 · 总计已用 10 秒\n    \n    \n    重试\n    game-49596fa\n    JavaScript is required to play this game.\n  ",
+                "hidden": true,
+                "display": "none",
+                "rect": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 0,
+                  "h": 0
+                },
+                "fontSize": "16px",
+                "lineHeight": "normal",
+                "color": "rgb(91, 70, 55)",
+                "backgroundColor": "rgb(255, 246, 232)",
+                "transform": "none",
+                "animationName": "none",
+                "animationDuration": "0s",
+                "transitionDuration": "0s",
+                "clientWidth": 0,
+                "scrollWidth": 0,
+                "clientHeight": 0,
+                "scrollHeight": 0
+              },
+              "game-title": {
+                "text": "悠长的假期",
+                "hidden": false,
+                "display": "block",
+                "rect": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 0,
+                  "h": 0
+                },
+                "fontSize": "42px",
+                "lineHeight": "47.04px",
+                "color": "rgb(91, 70, 55)",
+                "backgroundColor": "rgba(0, 0, 0, 0)",
+                "transform": "none",
+                "animationName": "none",
+                "animationDuration": "0s",
+                "transitionDuration": "0s",
+                "clientWidth": 0,
+                "scrollWidth": 0,
+                "clientHeight": 0,
+                "scrollHeight": 0
+              },
+              "loading-status": {
+                "text": "下载完成，正在启动引擎…",
+                "hidden": false,
+                "display": "block",
+                "rect": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 0,
+                  "h": 0
+                },
+                "fontSize": "16px",
+                "lineHeight": "24px",
+                "color": "rgb(91, 70, 55)",
+                "backgroundColor": "rgba(0, 0, 0, 0)",
+                "transform": "none",
+                "animationName": "none",
+                "animationDuration": "0s",
+                "transitionDuration": "0s",
+                "clientWidth": 0,
+                "scrollWidth": 0,
+                "clientHeight": 0,
+                "scrollHeight": 0
+              },
+              "loading-detail": {
+                "text": "下载已完成 · 总计已用 10 秒",
+                "hidden": false,
+                "display": "block",
+                "rect": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 0,
+                  "h": 0
+                },
+                "fontSize": "16px",
+                "lineHeight": "24px",
+                "color": "rgb(91, 70, 55)",
+                "backgroundColor": "rgba(0, 0, 0, 0)",
+                "transform": "none",
+                "animationName": "none",
+                "animationDuration": "0s",
+                "transitionDuration": "0s",
+                "clientWidth": 0,
+                "scrollWidth": 0,
+                "clientHeight": 0,
+                "scrollHeight": 0
+              },
+              "loading-progress": {
+                "text": "",
+                "hidden": false,
+                "display": "block",
+                "rect": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 0,
+                  "h": 0
+                },
+                "fontSize": "16px",
+                "lineHeight": "normal",
+                "color": "rgb(91, 70, 55)",
+                "backgroundColor": "rgb(223, 201, 173)",
+                "transform": "none",
+                "animationName": "none",
+                "animationDuration": "0s",
+                "transitionDuration": "0s",
+                "clientWidth": 0,
+                "scrollWidth": 0,
+                "clientHeight": 0,
+                "scrollHeight": 0
+              },
+              "loading-notice": {
+                "text": "",
+                "hidden": true,
+                "display": "none",
+                "rect": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 0,
+                  "h": 0
+                },
+                "fontSize": "16px",
+                "lineHeight": "24px",
+                "color": "rgb(91, 70, 55)",
+                "backgroundColor": "rgba(0, 0, 0, 0)",
+                "transform": "none",
+                "animationName": "none",
+                "animationDuration": "0s",
+                "transitionDuration": "0s",
+                "clientWidth": 0,
+                "scrollWidth": 0,
+                "clientHeight": 0,
+                "scrollHeight": 0
+              },
+              "loading-retry": {
+                "text": "重试",
+                "hidden": true,
+                "display": "none",
+                "rect": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 0,
+                  "h": 0
+                },
+                "fontSize": "16px",
+                "lineHeight": "normal",
+                "color": "rgb(91, 70, 55)",
+                "backgroundColor": "rgb(255, 249, 240)",
+                "transform": "none",
+                "animationName": "none",
+                "animationDuration": "0s",
+                "transitionDuration": "0s",
+                "clientWidth": 0,
+                "scrollWidth": 0,
+                "clientHeight": 0,
+                "scrollHeight": 0
+              },
+              "loading-build": {
+                "text": "game-49596fa",
+                "hidden": false,
+                "display": "block",
+                "rect": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 0,
+                  "h": 0
+                },
+                "fontSize": "12px",
+                "lineHeight": "normal",
+                "color": "rgb(91, 70, 55)",
+                "backgroundColor": "rgba(0, 0, 0, 0)",
+                "transform": "none",
+                "animationName": "none",
+                "animationDuration": "0s",
+                "transitionDuration": "0s",
+                "clientWidth": 0,
+                "scrollWidth": 0,
+                "clientHeight": 0,
+                "scrollHeight": 0
+              },
+              "pseudo": {
+                "::before": {
+                  "transform": "none",
+                  "animationName": "none",
+                  "animationDuration": "0s",
+                  "transitionDuration": "0s",
+                  "backgroundSize": "cover",
+                  "backgroundPosition": "50% 0%",
+                  "hasBackground": true
+                },
+                "::after": {
+                  "transform": "none",
+                  "animationName": "none",
+                  "animationDuration": "0s",
+                  "transitionDuration": "0s",
+                  "backgroundSize": "auto",
+                  "backgroundPosition": "0% 0%",
+                  "hasBackground": true
+                }
+              }
+            },
+            "viewport": {
+              "w": 1280,
+              "h": 720,
+              "dpr": 1
+            },
+            "reduce": false,
+            "build": "game-49596fa",
+            "firstFrameObserved": true,
+            "loadTimings": {
+              "engineScriptReady": 341,
+              "engineReady": 9923,
+              "downloadComplete": 9924,
+              "firstFrame": 10372
+            }
+          }
+        },
+        {
+          "stage": "06-yard-entered",
+          "utc": "2026-10-06T00:05:56Z",
+          "file": "desktop-normal-06-yard-entered.png",
+          "dom": {
+            "elements": {
+              "loading": {
+                "text": "\n    悠长的假期\n    下载完成，正在启动引擎…\n    下载已完成 · 总计已用 10 秒\n    \n    \n    重试\n    game-49596fa\n    JavaScript is required to play this game.\n  ",
+                "hidden": true,
+                "display": "none",
+                "rect": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 0,
+                  "h": 0
+                },
+                "fontSize": "16px",
+                "lineHeight": "normal",
+                "color": "rgb(91, 70, 55)",
+                "backgroundColor": "rgb(255, 246, 232)",
+                "transform": "none",
+                "animationName": "none",
+                "animationDuration": "0s",
+                "transitionDuration": "0s",
+                "clientWidth": 0,
+                "scrollWidth": 0,
+                "clientHeight": 0,
+                "scrollHeight": 0
+              },
+              "game-title": {
+                "text": "悠长的假期",
+                "hidden": false,
+                "display": "block",
+                "rect": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 0,
+                  "h": 0
+                },
+                "fontSize": "42px",
+                "lineHeight": "47.04px",
+                "color": "rgb(91, 70, 55)",
+                "backgroundColor": "rgba(0, 0, 0, 0)",
+                "transform": "none",
+                "animationName": "none",
+                "animationDuration": "0s",
+                "transitionDuration": "0s",
+                "clientWidth": 0,
+                "scrollWidth": 0,
+                "clientHeight": 0,
+                "scrollHeight": 0
+              },
+              "loading-status": {
+                "text": "下载完成，正在启动引擎…",
+                "hidden": false,
+                "display": "block",
+                "rect": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 0,
+                  "h": 0
+                },
+                "fontSize": "16px",
+                "lineHeight": "24px",
+                "color": "rgb(91, 70, 55)",
+                "backgroundColor": "rgba(0, 0, 0, 0)",
+                "transform": "none",
+                "animationName": "none",
+                "animationDuration": "0s",
+                "transitionDuration": "0s",
+                "clientWidth": 0,
+                "scrollWidth": 0,
+                "clientHeight": 0,
+                "scrollHeight": 0
+              },
+              "loading-detail": {
+                "text": "下载已完成 · 总计已用 10 秒",
+                "hidden": false,
+                "display": "block",
+                "rect": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 0,
+                  "h": 0
+                },
+                "fontSize": "16px",
+                "lineHeight": "24px",
+                "color": "rgb(91, 70, 55)",
+                "backgroundColor": "rgba(0, 0, 0, 0)",
+                "transform": "none",
+                "animationName": "none",
+                "animationDuration": "0s",
+                "transitionDuration": "0s",
+                "clientWidth": 0,
+                "scrollWidth": 0,
+                "clientHeight": 0,
+                "scrollHeight": 0
+              },
+              "loading-progress": {
+                "text": "",
+                "hidden": false,
+                "display": "block",
+                "rect": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 0,
+                  "h": 0
+                },
+                "fontSize": "16px",
+                "lineHeight": "normal",
+                "color": "rgb(91, 70, 55)",
+                "backgroundColor": "rgb(223, 201, 173)",
+                "transform": "none",
+                "animationName": "none",
+                "animationDuration": "0s",
+                "transitionDuration": "0s",
+                "clientWidth": 0,
+                "scrollWidth": 0,
+                "clientHeight": 0,
+                "scrollHeight": 0
+              },
+              "loading-notice": {
+                "text": "",
+                "hidden": true,
+                "display": "none",
+                "rect": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 0,
+                  "h": 0
+                },
+                "fontSize": "16px",
+                "lineHeight": "24px",
+                "color": "rgb(91, 70, 55)",
+                "backgroundColor": "rgba(0, 0, 0, 0)",
+                "transform": "none",
+                "animationName": "none",
+                "animationDuration": "0s",
+                "transitionDuration": "0s",
+                "clientWidth": 0,
+                "scrollWidth": 0,
+                "clientHeight": 0,
+                "scrollHeight": 0
+              },
+              "loading-retry": {
+                "text": "重试",
+                "hidden": true,
+                "display": "none",
+                "rect": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 0,
+                  "h": 0
+                },
+                "fontSize": "16px",
+                "lineHeight": "normal",
+                "color": "rgb(91, 70, 55)",
+                "backgroundColor": "rgb(255, 249, 240)",
+                "transform": "none",
+                "animationName": "none",
+                "animationDuration": "0s",
+                "transitionDuration": "0s",
+                "clientWidth": 0,
+                "scrollWidth": 0,
+                "clientHeight": 0,
+                "scrollHeight": 0
+              },
+              "loading-build": {
+                "text": "game-49596fa",
+                "hidden": false,
+                "display": "block",
+                "rect": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 0,
+                  "h": 0
+                },
+                "fontSize": "12px",
+                "lineHeight": "normal",
+                "color": "rgb(91, 70, 55)",
+                "backgroundColor": "rgba(0, 0, 0, 0)",
+                "transform": "none",
+                "animationName": "none",
+                "animationDuration": "0s",
+                "transitionDuration": "0s",
+                "clientWidth": 0,
+                "scrollWidth": 0,
+                "clientHeight": 0,
+                "scrollHeight": 0
+              },
+              "pseudo": {
+                "::before": {
+                  "transform": "none",
+                  "animationName": "none",
+                  "animationDuration": "0s",
+                  "transitionDuration": "0s",
+                  "backgroundSize": "cover",
+                  "backgroundPosition": "50% 0%",
+                  "hasBackground": true
+                },
+                "::after": {
+                  "transform": "none",
+                  "animationName": "none",
+                  "animationDuration": "0s",
+                  "transitionDuration": "0s",
+                  "backgroundSize": "auto",
+                  "backgroundPosition": "0% 0%",
+                  "hasBackground": true
+                }
+              }
+            },
+            "viewport": {
+              "w": 1280,
+              "h": 720,
+              "dpr": 1
+            },
+            "reduce": false,
+            "build": "game-49596fa",
+            "firstFrameObserved": true,
+            "loadTimings": {
+              "engineScriptReady": 341,
+              "engineReady": 9923,
+              "downloadComplete": 9924,
+              "firstFrame": 10372
+            }
+          }
+        },
+        {
+          "stage": "07-yard-stable",
+          "utc": "2026-10-06T00:05:58Z",
+          "file": "desktop-normal-07-yard-stable.png",
+          "dom": {
+            "elements": {
+              "loading": {
+                "text": "\n    悠长的假期\n    下载完成，正在启动引擎…\n    下载已完成 · 总计已用 10 秒\n    \n    \n    重试\n    game-49596fa\n    JavaScript is required to play this game.\n  ",
+                "hidden": true,
+                "display": "none",
+                "rect": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 0,
+                  "h": 0
+                },
+                "fontSize": "16px",
+                "lineHeight": "normal",
+                "color": "rgb(91, 70, 55)",
+                "backgroundColor": "rgb(255, 246, 232)",
+                "transform": "none",
+                "animationName": "none",
+                "animationDuration": "0s",
+                "transitionDuration": "0s",
+                "clientWidth": 0,
+                "scrollWidth": 0,
+                "clientHeight": 0,
+                "scrollHeight": 0
+              },
+              "game-title": {
+                "text": "悠长的假期",
+                "hidden": false,
+                "display": "block",
+                "rect": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 0,
+                  "h": 0
+                },
+                "fontSize": "42px",
+                "lineHeight": "47.04px",
+                "color": "rgb(91, 70, 55)",
+                "backgroundColor": "rgba(0, 0, 0, 0)",
+                "transform": "none",
+                "animationName": "none",
+                "animationDuration": "0s",
+                "transitionDuration": "0s",
+                "clientWidth": 0,
+                "scrollWidth": 0,
+                "clientHeight": 0,
+                "scrollHeight": 0
+              },
+              "loading-status": {
+                "text": "下载完成，正在启动引擎…",
+                "hidden": false,
+                "display": "block",
+                "rect": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 0,
+                  "h": 0
+                },
+                "fontSize": "16px",
+                "lineHeight": "24px",
+                "color": "rgb(91, 70, 55)",
+                "backgroundColor": "rgba(0, 0, 0, 0)",
+                "transform": "none",
+                "animationName": "none",
+                "animationDuration": "0s",
+                "transitionDuration": "0s",
+                "clientWidth": 0,
+                "scrollWidth": 0,
+                "clientHeight": 0,
+                "scrollHeight": 0
+              },
+              "loading-detail": {
+                "text": "下载已完成 · 总计已用 10 秒",
+                "hidden": false,
+                "display": "block",
+                "rect": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 0,
+                  "h": 0
+                },
+                "fontSize": "16px",
+                "lineHeight": "24px",
+                "color": "rgb(91, 70, 55)",
+                "backgroundColor": "rgba(0, 0, 0, 0)",
+                "transform": "none",
+                "animationName": "none",
+                "animationDuration": "0s",
+                "transitionDuration": "0s",
+                "clientWidth": 0,
+                "scrollWidth": 0,
+                "clientHeight": 0,
+                "scrollHeight": 0
+              },
+              "loading-progress": {
+                "text": "",
+                "hidden": false,
+                "display": "block",
+                "rect": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 0,
+                  "h": 0
+                },
+                "fontSize": "16px",
+                "lineHeight": "normal",
+                "color": "rgb(91, 70, 55)",
+                "backgroundColor": "rgb(223, 201, 173)",
+                "transform": "none",
+                "animationName": "none",
+                "animationDuration": "0s",
+                "transitionDuration": "0s",
+                "clientWidth": 0,
+                "scrollWidth": 0,
+                "clientHeight": 0,
+                "scrollHeight": 0
+              },
+              "loading-notice": {
+                "text": "",
+                "hidden": true,
+                "display": "none",
+                "rect": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 0,
+                  "h": 0
+                },
+                "fontSize": "16px",
+                "lineHeight": "24px",
+                "color": "rgb(91, 70, 55)",
+                "backgroundColor": "rgba(0, 0, 0, 0)",
+                "transform": "none",
+                "animationName": "none",
+                "animationDuration": "0s",
+                "transitionDuration": "0s",
+                "clientWidth": 0,
+                "scrollWidth": 0,
+                "clientHeight": 0,
+                "scrollHeight": 0
+              },
+              "loading-retry": {
+                "text": "重试",
+                "hidden": true,
+                "display": "none",
+                "rect": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 0,
+                  "h": 0
+                },
+                "fontSize": "16px",
+                "lineHeight": "normal",
+                "color": "rgb(91, 70, 55)",
+                "backgroundColor": "rgb(255, 249, 240)",
+                "transform": "none",
+                "animationName": "none",
+                "animationDuration": "0s",
+                "transitionDuration": "0s",
+                "clientWidth": 0,
+                "scrollWidth": 0,
+                "clientHeight": 0,
+                "scrollHeight": 0
+              },
+              "loading-build": {
+                "text": "game-49596fa",
+                "hidden": false,
+                "display": "block",
+                "rect": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 0,
+                  "h": 0
+                },
+                "fontSize": "12px",
+                "lineHeight": "normal",
+                "color": "rgb(91, 70, 55)",
+                "backgroundColor": "rgba(0, 0, 0, 0)",
+                "transform": "none",
+                "animationName": "none",
+                "animationDuration": "0s",
+                "transitionDuration": "0s",
+                "clientWidth": 0,
+                "scrollWidth": 0,
+                "clientHeight": 0,
+                "scrollHeight": 0
+              },
+              "pseudo": {
+                "::before": {
+                  "transform": "none",
+                  "animationName": "none",
+                  "animationDuration": "0s",
+                  "transitionDuration": "0s",
+                  "backgroundSize": "cover",
+                  "backgroundPosition": "50% 0%",
+                  "hasBackground": true
+                },
+                "::after": {
+                  "transform": "none",
+                  "animationName": "none",
+                  "animationDuration": "0s",
+                  "transitionDuration": "0s",
+                  "backgroundSize": "auto",
+                  "backgroundPosition": "0% 0%",
+                  "hasBackground": true
+                }
+              }
+            },
+            "viewport": {
+              "w": 1280,
+              "h": 720,
+              "dpr": 1
+            },
+            "reduce": false,
+            "build": "game-49596fa",
+            "firstFrameObserved": true,
+            "loadTimings": {
+              "engineScriptReady": 341,
+              "engineReady": 9923,
+              "downloadComplete": 9924,
+              "firstFrame": 10372
+            }
+          }
+        }
+      ],
+      "console": [
+        {
+          "utc": "2026-10-06T00:05:19Z",
+          "stage": "expected-network-failure",
+          "type": "error",
+          "text": "Failed to load resource: net::ERR_FAILED"
+        },
+        {
+          "utc": "2026-10-06T00:05:19Z",
+          "stage": "expected-network-failure",
+          "type": "error",
+          "text": "[game-loading] Startup failed Error: Engine script could not be loaded\n    at script.addEventListener.once (https://narutojzm1-dot.github.io/youjia/?qa167=1791245118693777496:237:51)"
+        },
+        {
+          "utc": "2026-10-06T00:05:28Z",
+          "stage": "retry-engine-start",
+          "type": "log",
+          "text": "Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org"
+        },
+        {
+          "utc": "2026-10-06T00:05:28Z",
+          "stage": "retry-engine-start",
+          "type": "log",
+          "text": "OpenGL API OpenGL ES 3.0 (WebGL 2.0 (OpenGL ES 3.0 Chromium)) - Compatibility - Using Device: WebKit - WebKit WebGL"
+        },
+        {
+          "utc": "2026-10-06T00:05:29Z",
+          "stage": "retry-engine-start",
+          "type": "log",
+          "text": "Build configuration: Emscripten 4.0.20, single-threaded, no GDExtension support."
+        },
+        {
+          "utc": "2026-10-06T00:05:31Z",
+          "stage": "retry-engine-start",
+          "type": "info",
+          "text": "[game-loading] timings_ms {\"engineScriptReady\":341,\"engineReady\":9923,\"downloadComplete\":9924,\"firstFrame\":10372}"
+        }
+      ],
+      "page_errors": [],
+      "requests_failed": [
+        {
+          "utc": "2026-10-06T00:05:19Z",
+          "stage": "expected-network-failure",
+          "url": "https://narutojzm1-dot.github.io/youjia/game-49596fa.js",
+          "failure": "net::ERR_FAILED"
+        }
+      ],
+      "responses": [
+        {
+          "url": "https://narutojzm1-dot.github.io/youjia/save-49596fa/bridge.mjs",
+          "status": 200,
+          "utc": "2026-10-06T00:05:19Z",
+          "phase": "controlled-initial-js-hold",
+          "decoded_body_bytes": 1856,
+          "sha256": "ef18687554fdc0d745c1d18d4d091e959cc78559da0d61d6a093e562ff9bbc91"
+        },
+        {
+          "url": "https://narutojzm1-dot.github.io/youjia/save-49596fa/host.mjs",
+          "status": 200,
+          "utc": "2026-10-06T00:05:20Z",
+          "phase": "dom-retry"
+        },
+        {
+          "url": "https://narutojzm1-dot.github.io/youjia/save-49596fa/bridge.mjs",
+          "status": 200,
+          "utc": "2026-10-06T00:05:20Z",
+          "phase": "retry-real-wasm-hold",
+          "decoded_body_bytes": 1856,
+          "sha256": "ef18687554fdc0d745c1d18d4d091e959cc78559da0d61d6a093e562ff9bbc91"
+        },
+        {
+          "url": "https://narutojzm1-dot.github.io/youjia/save-49596fa/host.mjs",
+          "status": 200,
+          "utc": "2026-10-06T00:05:20Z",
+          "phase": "retry-real-wasm-hold",
+          "decoded_body_bytes": 7730,
+          "sha256": "9de8dc0ef4bfc037a8ad0bff575d40c3dd4341bcc723351a412b2061bb661904"
+        },
+        {
+          "url": "https://narutojzm1-dot.github.io/youjia/game-49596fa.js",
+          "status": 200,
+          "utc": "2026-10-06T00:05:21Z",
+          "phase": "retry-real-wasm-hold"
+        },
+        {
+          "url": "https://narutojzm1-dot.github.io/youjia/save-49596fa/source_decode.mjs",
+          "status": 200,
+          "utc": "2026-10-06T00:05:21Z",
+          "phase": "retry-real-wasm-hold",
+          "decoded_body_bytes": 1542,
+          "sha256": "411f3bc784cb32a07f32eed5fc7d88f71b59a667cc0d68a50fe13c55bfdba18a"
+        },
+        {
+          "url": "https://narutojzm1-dot.github.io/youjia/save-49596fa/legacy_inspection.mjs",
+          "status": 200,
+          "utc": "2026-10-06T00:05:21Z",
+          "phase": "retry-real-wasm-hold",
+          "decoded_body_bytes": 2886,
+          "sha256": "db3a23a0221aa5d34a58a6a49aeeff930295ffe20bfcf73a7c11f0d49cffd671"
+        },
+        {
+          "url": "https://narutojzm1-dot.github.io/youjia/save-49596fa/store.mjs",
+          "status": 200,
+          "utc": "2026-10-06T00:05:21Z",
+          "phase": "retry-real-wasm-hold",
+          "decoded_body_bytes": 13890,
+          "sha256": "2193b4397b8662a8ebc754dc4468e4d62964d209b4e1d0f0924a2ec81b409cbe"
+        },
+        {
+          "url": "https://narutojzm1-dot.github.io/youjia/save-49596fa/legacy_v5.mjs",
+          "status": 200,
+          "utc": "2026-10-06T00:05:21Z",
+          "phase": "retry-real-wasm-hold",
+          "decoded_body_bytes": 2245,
+          "sha256": "8e7f4ad2d87aab77ac05361e4f46060476e933aa079ae94301998d08d4599621"
+        },
+        {
+          "url": "https://narutojzm1-dot.github.io/youjia/save-49596fa/lifecycle.mjs",
+          "status": 200,
+          "utc": "2026-10-06T00:05:21Z",
+          "phase": "retry-real-wasm-hold",
+          "decoded_body_bytes": 1878,
+          "sha256": "1cfaebb9a8745e2dc3e4f694ef475f250640870938f04160be1a5c9acd62935d"
+        },
+        {
+          "url": "https://narutojzm1-dot.github.io/youjia/save-49596fa/budgets.mjs",
+          "status": 200,
+          "utc": "2026-10-06T00:05:21Z",
+          "phase": "retry-real-wasm-hold",
+          "decoded_body_bytes": 340,
+          "sha256": "52984153977dcafd1d2682e848f1999f091d0966e17d46e902de76f5735a7018"
+        },
+        {
+          "url": "https://narutojzm1-dot.github.io/youjia/save-49596fa/legacy_seal.mjs",
+          "status": 200,
+          "utc": "2026-10-06T00:05:21Z",
+          "phase": "retry-real-wasm-hold",
+          "decoded_body_bytes": 2510,
+          "sha256": "9642132f5d4e7523e5966e802069af7f4bae803fae8e2e7c28ae55ee97d85610"
+        },
+        {
+          "url": "https://narutojzm1-dot.github.io/youjia/save-49596fa/idbfs_source.mjs",
+          "status": 200,
+          "utc": "2026-10-06T00:05:21Z",
+          "phase": "retry-real-wasm-hold",
+          "decoded_body_bytes": 5550,
+          "sha256": "16eb57d471537f13d3e50018b56c2d416d2847f0d0249ba44433dd9ebb65f4d8"
+        },
+        {
+          "url": "https://narutojzm1-dot.github.io/youjia/game-49596fa.pck",
+          "status": 200,
+          "utc": "2026-10-06T00:05:21Z",
+          "phase": "retry-real-wasm-hold"
+        },
+        {
+          "url": "https://narutojzm1-dot.github.io/youjia/game-49596fa.wasm",
+          "status": 200,
+          "utc": "2026-10-06T00:05:25Z",
+          "phase": "retry-engine-start"
+        }
+      ],
+      "cdp_responses": [
+        {
+          "requestId": "461163.2",
+          "url": "https://narutojzm1-dot.github.io/youjia/save-49596fa/bridge.mjs",
+          "status": 200,
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "fromPrefetchCache": false,
+          "mimeType": "text/javascript"
+        },
+        {
+          "requestId": "461163.6",
+          "url": "https://narutojzm1-dot.github.io/youjia/save-49596fa/host.mjs",
+          "status": 200,
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "fromPrefetchCache": false,
+          "mimeType": "text/javascript"
+        },
+        {
+          "requestId": "461163.15",
+          "url": "https://narutojzm1-dot.github.io/youjia/save-49596fa/bridge.mjs",
+          "status": 200,
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "fromPrefetchCache": false,
+          "mimeType": "text/javascript"
+        },
+        {
+          "requestId": "461163.19",
+          "url": "https://narutojzm1-dot.github.io/youjia/save-49596fa/host.mjs",
+          "status": 200,
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "fromPrefetchCache": false,
+          "mimeType": "text/javascript"
+        },
+        {
+          "requestId": "461163.16",
+          "url": "https://narutojzm1-dot.github.io/youjia/game-49596fa.js",
+          "status": 200,
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "fromPrefetchCache": false,
+          "mimeType": "application/javascript"
+        },
+        {
+          "requestId": "461163.24",
+          "url": "https://narutojzm1-dot.github.io/youjia/save-49596fa/source_decode.mjs",
+          "status": 200,
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "fromPrefetchCache": false,
+          "mimeType": "text/javascript"
+        },
+        {
+          "requestId": "461163.20",
+          "url": "https://narutojzm1-dot.github.io/youjia/save-49596fa/legacy_inspection.mjs",
+          "status": 200,
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "fromPrefetchCache": false,
+          "mimeType": "text/javascript"
+        },
+        {
+          "requestId": "461163.21",
+          "url": "https://narutojzm1-dot.github.io/youjia/save-49596fa/store.mjs",
+          "status": 200,
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "fromPrefetchCache": false,
+          "mimeType": "text/javascript"
+        },
+        {
+          "requestId": "461163.25",
+          "url": "https://narutojzm1-dot.github.io/youjia/save-49596fa/legacy_v5.mjs",
+          "status": 200,
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "fromPrefetchCache": false,
+          "mimeType": "text/javascript"
+        },
+        {
+          "requestId": "461163.22",
+          "url": "https://narutojzm1-dot.github.io/youjia/save-49596fa/lifecycle.mjs",
+          "status": 200,
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "fromPrefetchCache": false,
+          "mimeType": "text/javascript"
+        },
+        {
+          "requestId": "461163.23",
+          "url": "https://narutojzm1-dot.github.io/youjia/save-49596fa/budgets.mjs",
+          "status": 200,
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "fromPrefetchCache": false,
+          "mimeType": "text/javascript"
+        },
+        {
+          "requestId": "461163.27",
+          "url": "https://narutojzm1-dot.github.io/youjia/save-49596fa/legacy_seal.mjs",
+          "status": 200,
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "fromPrefetchCache": false,
+          "mimeType": "text/javascript"
+        },
+        {
+          "requestId": "461163.28",
+          "url": "https://narutojzm1-dot.github.io/youjia/save-49596fa/idbfs_source.mjs",
+          "status": 200,
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "fromPrefetchCache": false,
+          "mimeType": "text/javascript"
+        },
+        {
+          "requestId": "461163.30",
+          "url": "https://narutojzm1-dot.github.io/youjia/game-49596fa.pck",
+          "status": 200,
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "fromPrefetchCache": false,
+          "mimeType": "application/octet-stream"
+        },
+        {
+          "requestId": "461163.29",
+          "url": "https://narutojzm1-dot.github.io/youjia/game-49596fa.wasm",
+          "status": 200,
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "fromPrefetchCache": false,
+          "mimeType": "application/wasm"
+        }
+      ],
+      "cdp_transfer_bytes": [
+        {
+          "requestId": "461163.2",
+          "encodedDataLength": 1124
+        },
+        {
+          "requestId": "461163.6",
+          "encodedDataLength": 2612
+        },
+        {
+          "requestId": "461163.15",
+          "encodedDataLength": 988
+        },
+        {
+          "requestId": "461163.19",
+          "encodedDataLength": 2628
+        },
+        {
+          "requestId": "461163.16",
+          "encodedDataLength": 69771
+        },
+        {
+          "requestId": "461163.24",
+          "encodedDataLength": 983
+        },
+        {
+          "requestId": "461163.20",
+          "encodedDataLength": 1436
+        },
+        {
+          "requestId": "461163.21",
+          "encodedDataLength": 4230
+        },
+        {
+          "requestId": "461163.25",
+          "encodedDataLength": 1194
+        },
+        {
+          "requestId": "461163.22",
+          "encodedDataLength": 957
+        },
+        {
+          "requestId": "461163.23",
+          "encodedDataLength": 555
+        },
+        {
+          "requestId": "461163.27",
+          "encodedDataLength": 1258
+        },
+        {
+          "requestId": "461163.28",
+          "encodedDataLength": 2370
+        },
+        {
+          "requestId": "461163.30",
+          "encodedDataLength": 26676614
+        },
+        {
+          "requestId": "461163.29",
+          "encodedDataLength": 10255010
+        }
+      ],
+      "response_body_errors": [
+        "Response.body: Protocol error (Network.getResponseBody): No resource with given identifier found\nResponse body is not available for a response that was navigated away from. Read response.body() before triggering any navigation.",
+        "Response.body: Protocol error (Network.getResponseBody): Request content was evicted from inspector cache\nResponse body is not available for a response that was navigated away from. Read response.body() before triggering any navigation."
+      ],
+      "cache_controls": {
+        "fresh_context": true,
+        "service_workers": "block",
+        "Network.setCacheDisabled": true,
+        "routing_disables_http_cache": true
+      },
+      "phase": "ordinary-yard-entry",
+      "navigation_html_sha256": "9f3c4d8f66827663a136eaafb1527d5553154c5cea9d69d15157c1be31796385",
+      "route_counts": {
+        "engine_js": 2,
+        "wasm": 1,
+        "intentional_aborts": 1
+      }
+    }
+  ],
+  "browser_args": [
+    "--no-sandbox",
+    "--use-gl=angle",
+    "--use-angle=swiftshader",
+    "--enable-webgl",
+    "--enable-unsafe-swiftshader",
+    "--renderer-process-limit=1"
+  ],
+  "limits": [
+    "Desktop browser viewport/media emulation; not physical device/OS change",
+    "Exactly one injected engine-JS abort per context; expected errors retained",
+    "First WASM request held at least4 seconds through capture; not natural performance",
+    "No internal game/Tuning/save/seed/time setters; no synthetic failure DOM",
+    "Screenshots/CSS sampling cannot prove every animation frame; ordinary yard entry only"
+  ],
+  "browser_version": "151.0.7922.173",
+  "browser_opened_utc": "2026-10-06T00:04:53Z",
+  "driver_error": "Traceback (most recent call last):\n  File \"/tmp/loading167-prep/run.py\", line 121, in main\n    elif cmd['op']=='close':await close_case()\n                            ^^^^^^^^^^^^^^^^^^\n  File \"/tmp/loading167-prep/run.py\", line 106, in close_case\n    assert not c['response_body_errors'],c['response_body_errors']\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: ['Response.body: Protocol error (Network.getResponseBody): No resource with given identifier found\\nResponse body is not available for a response that was navigated away from. Read response.body() before triggering any navigation.', 'Response.body: Protocol error (Network.getResponseBody): Request content was evicted from inspector cache\\nResponse body is not available for a response that was navigated away from. Read response.body() before triggering any navigation.']\n",
+  "browser_closed_utc": "2026-10-06T00:05:58Z"
+}

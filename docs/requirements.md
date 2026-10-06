@@ -181,7 +181,7 @@
 
 | 编号 | 优先级 | 范围与验收 | 状态 | Owner | 记录 |
 | --- | --- | --- | --- | --- | --- |
-| QA-EXP-20261003-003 | P2 | 复用已有晴天小院资源恢复加载页风格；桌面/横屏/竖屏文字可读，进度/失败/重试/首帧与版本语义保持，正式发布后冷加载复核 | 已发布；公网三尺寸加载/重试核验通过，GAME-QA可复测 | `CODEX-LEAD-ASSISTANT` | [#167](https://github.com/narutojzm1-dot/youjia/issues/167)；GAME-QA复测，不改游戏或新资源方向。 |
+| QA-EXP-20261003-003 | P2 | 复用已有晴天小院资源恢复加载页风格；桌面/横屏/竖屏文字可读，进度/失败/重试/首帧与版本语义保持，正式发布后冷加载复核 | 实现已发布；49596同版三尺寸×normal/reduce六fresh加载/真实JS失败/DOM重试/首帧/普通入院原范围实测满足，证据待最终独审；未提前关单 | `CODEX-LEAD-ASSISTANT`（实现）；CODEX-LEAD委派QA支援，GAME-QA角色保留 | [#167](https://github.com/narutojzm1-dot/youjia/issues/167)；[42原图、12次包核验及首次采集失败原件](playtests/2026-10-06-loading167-acceptance/README.md)。浏览器尺寸模拟非真机；不冒全游戏/全帧验证，不改运行代码或新资源。 |
 
 ## 用户指定独立 QA
 

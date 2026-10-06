@@ -1475,3 +1475,16 @@ Assistant实际新PR470279994052541f289c8fc205274552e2e9afe84b0交382确认层/�
 PR468最终3f2da4270fc6488da42eaa4ec45ca43768bb778a已合175bfce8f9ef02991022188172de4cf3fec007d0。新6006526392由Producer转录独立GAME-PRODUCER-REVIEW-DUCK-ART专业复审，明确APPROVE该精确冻结范围例外和右侧底板美术返修，**不再仅候选归档批准**。雪框7257中实体4877精确同v1坐标/天空2380；y>=250的20437中实体18522同v1/天空1915，交集不相加，分类是制作mask+视觉不是独立自动语义分割。专业门禁据这份具体复审实际解除，不是PM意见代审；原RC只在精确候选范围解除，不授权任意改冻结区，不等ART个人再次签字。168顶栏及REQ005最新状态已直接同步。
 
 Producer下一本人新路径天气接入，保旧图字节、照片capture/sanitize/setup拍摄时混合与光色表达、真实保存重载/旧照、晴阴反转/低动效/实际包体→最终接入SHA独审合发/同构建QA。天气/照片/运行发布尚未完成。前段Draft/待冻区例外/未合是当时快照已被本段覆盖；实际已解除上传和精确专业返修两项，不再往Leader或用户堆同一已授权审批。当前main175bf包含资源归档，PM实际在线仍b9f，不冒新阴天已经玩家可见。
+
+
+### 2026-10-06 #167 同构建加载专项的独立QA协助收尾
+
+按[6005985387](https://github.com/narutojzm1-dot/youjia/issues/167#issuecomment-6005985387)，CODEX-LEAD委派gate130_completion补原加载余项，原实现Assistant与GAME-QA专业角色保留，不冒GAME-QA本人。184/185实现/发布和ART旧认可、341技术矩阵、370本人桌面003通过均保留，不继续说“QA完全未复测”；185已过的受控PCK路径不被341单次未得失败按钮的试验否定。
+
+固定公开source49596fa93bff3c29edfe441898017158c6e469a3/game-49596fa，在一个Chromium151.0.7922.173串行六fresh：1280×720、390×844、844×390×浏览器no-preference/reduce。每例真实JS请求一次abort→页面错误→实际DOM重试reload，恢复WASM真实请求hold至少4秒拍加载帧，再真实first-frame/壳隐藏→普通标题鼠标入院；没有DOM假错误或Tuning/游戏状态注入。六case42原PNG、12次前后公开PCK完整下载均27,090,652B/c851ac2b66ef6bba5211b7ba8488173c6b6a336ee7508d6150a5f5ccd488f930，十模块/许可及HTML一致；每case唯一预期网络错误与对应两console error逐条留痕，pageerror空/非预期错误不忽略。恢复十模块浏览器body实际hash，PCK浏览器仅loaded URL/200/cache/传输量、hash来自独立HTTP，不能混称。
+
+首次desktop采集器在UI已入院后因旧导航模块body失效/PCK inspector cache逐出退出1，00:05:58Z已关，原七图和失败全部保留；仅一次有界取证修正后新六fresh完成，实际outer0、00:14:06Z全部关闭。DOM在截图后读取，实时进度差不冒同帧像素值；reduce静态CSS/双帧/独立ROI说明采样无新增缩放闪烁，不作每帧保证。[完整证据、原范围映射与边界](playtests/2026-10-06-loading167-acceptance/README.md)。本docs基线b9f包含后续camera465，不能把本次49596体验转记它已验。
+
+本次未改runtime/素材/玩法，不重复Godot/Web导出或发布。三尺寸与reduce加载专项原范围实测满足，待最终证据SHA独立审核后由Leader核定收口，当前不提前关闭#167；真机/其他浏览器/DPR、自然慢网性能、听验、全部存档/所有关卡未覆盖准确保留，不新增为原视觉缺陷永久门槛。
+
+本证据PR在PM471合入后做纯文档集成：保留其全部新增需求/决策/分工与467探索、468候选文件；原证据档案93文件与被测公开49596字节未变。归档创建基线b9f是历史事实，当前整合基线为5bbba19f0090c3ec35c30166fa02fea669efdb3a；旧749c36已获独立审核，此次新head仍须重新绑定最终文档审查，未提前合入或关闭167。
