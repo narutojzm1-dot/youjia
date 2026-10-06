@@ -679,6 +679,14 @@ func _find_reveal() -> void:
 		scroll.pick()
 		scroll.walk(Vector2.LEFT, 0.2)
 		check(not reveal.is_active() and scroll.carried() == [at_gate, at_brook], tag + "walking off settles it without touching the basket")
+		var label_font: Font = scroll._basket.get_theme_default_font()
+		var label_text: String = scroll.basket_text()
+		var backing: Rect2 = scroll.basket_label_rect(label_font, label_text)
+		var ink_box := Rect2(scroll.BASKET_LABEL_AT + Vector2(0, -label_font.get_ascent(15)), label_font.get_string_size(label_text, HORIZONTAL_ALIGNMENT_LEFT, scroll.BASKET_LABEL_WIDTH, 15))
+		check(not label_text.is_empty() and backing.encloses(ink_box), tag + "the basket name sits on its own small backing")
+		check(Rect2(scroll._basket.global_position + backing.position, backing.size).intersection(shown) == Rect2(scroll._basket.global_position + backing.position, backing.size), tag + "the basket name backing stays on screen")
+		var disc_value := (FindReveal.DISC.r + FindReveal.DISC.g + FindReveal.DISC.b) / 3.0
+		check(disc_value < 0.85 and FindReveal.DISC.s < 0.2 and FindReveal.DISC.r >= FindReveal.DISC.b, tag + "the reveal disc is a darker low-saturation warm gray")
 		scroll.end_observe()
 		scroll.place_at("shade")
 		scroll.observe()
@@ -731,6 +739,15 @@ func _find_reveal() -> void:
 	check(scroll.pick() and reveal.is_active() and reveal.calm, "reduced motion still shows the get")
 	check(reveal.sound == null or ResourceLoader.exists(FindReveal.SOUND_PATH), "without the sound file the reveal stays silent")
 	check(reveal.sound != null or reveal.sound_plays == 0, "a missing sound is never replaced by another cue")
+	check(not ResourceLoader.exists(FindReveal.SOUND_PATH) or (reveal.sound != null and reveal.sound_plays == 1), "the delivered get sound loads and plays once")
+	check(KeepsakeArt.texture("formal.find.pine_cone") != null and KeepsakeArt.texture("formal.find.feather") != null, "the producer's pine cone and feather candidates are drawn as textures")
+	check(KeepsakeArt.texture("formal.find.brook_stone") == null, "the stone keeps its placeholder until a clean candidate exists")
+	var sounding_before := reveal.is_sounding()
+	scroll.walk(Vector2.LEFT, 0.2)
+	check(reveal.is_sounding() == sounding_before, "walking off lets the get sound finish")
+	scroll._notification(Node.NOTIFICATION_PAUSED)
+	check(not reveal.is_sounding(), "pausing stops the get sound; it is not replayed later")
+	print("[find-reveal] sound audible in this run: ", sounding_before)
 	var still := true
 	var start: Vector2 = reveal.pose().at
 	for step in 8:

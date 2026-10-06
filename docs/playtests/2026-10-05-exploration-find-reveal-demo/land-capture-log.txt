@@ -1,0 +1,33 @@
+motion view 1280x720 offer { "kind": "take", "find_id": "formal.find.brook_stone" }
+motion t=0.00 at=(673.6663, 575.3879) size=1.41 alpha=1.00
+motion t=0.18 at=(701.1868, 457.2495) size=2.40 alpha=1.00
+motion t=0.36 at=(706.602, 434.0032) size=2.60 alpha=1.00
+motion t=0.80 at=(706.602, 434.0032) size=2.60 alpha=1.00
+motion t=1.30 at=(699.7715, 435.735) size=2.58 alpha=1.00
+motion t=1.50 at=(470.9947, 493.7393) size=2.00 alpha=1.00
+motion t=1.62 at=(148.4344, 575.5216) size=1.17 alpha=1.00
+motion carried ["formal.find.brook_stone"], sound file present true
+calm view 1280x720 offer { "kind": "take", "find_id": "formal.find.brook_stone" }
+calm t=0.15 at=(706.602, 434.0032) size=2.60 alpha=0.50
+calm t=0.40 at=(706.602, 434.0032) size=2.60 alpha=1.00
+calm t=0.80 at=(706.602, 434.0032) size=2.60 alpha=1.00
+calm t=1.05 at=(706.602, 434.0032) size=2.60 alpha=0.50
+calm carried ["formal.find.brook_stone"], sound file present true
+pine view 1280x720 offer { "kind": "take", "find_id": "formal.find.pine_cone" }
+pine t=0.00 at=(612.4548, 667.2051) size=1.65 alpha=1.00
+pine t=0.18 at=(589.3651, 501.2936) size=2.44 alpha=1.00
+pine t=0.36 at=(584.8217, 468.6469) size=2.60 alpha=1.00
+pine t=0.80 at=(584.8217, 468.6469) size=2.60 alpha=1.00
+pine t=1.30 at=(579.2466, 470.0215) size=2.58 alpha=1.00
+pine t=1.50 at=(392.5169, 516.0645) size=2.00 alpha=1.00
+pine t=1.62 at=(129.2404, 580.9819) size=1.17 alpha=1.00
+pine carried ["formal.find.pine_cone"], sound file present true
+feather view 1280x720 offer { "kind": "take", "find_id": "formal.find.feather" }
+feather t=0.00 at=(765.4835, 526.4187) size=1.24 alpha=1.00
+feather t=0.18 at=(814.5783, 413.5651) size=2.38 alpha=1.00
+feather t=0.36 at=(824.2388, 391.3586) size=2.60 alpha=1.00
+feather t=0.80 at=(824.2388, 391.3586) size=2.60 alpha=1.00
+feather t=1.30 at=(816.1956, 393.53) size=2.58 alpha=1.00
+feather t=1.50 at=(546.8022, 466.2582) size=2.00 alpha=1.00
+feather t=1.62 at=(166.9755, 568.8002) size=1.17 alpha=1.00
+feather carried ["formal.find.feather"], sound file present true
