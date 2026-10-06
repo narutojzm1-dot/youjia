@@ -54,6 +54,7 @@ test/save_coordinator_suite.gd	SAVE_COORDINATOR checks=[1-9][0-9]* failures=\[\]
 test/save_data_codec_suite.gd	SAVE_DATA_CODEC [1-9][0-9]* checks; failures=\[\]
 test/save_feedback_suite.gd	SAVE FEEDBACK [1-9][0-9]* checks, failures 0
 test/save_recovery_suite.gd	SAVE RECOVERY PASS [1-9][0-9]*
+test/save_status_paper_suite.gd	PASS: save_status_paper [1-9][0-9]* checks
 test/save_writer_guidance_suite.gd	SAVE WRITER GUIDANCE [1-9][0-9]* checks failures=\[\]
 test/scene_hotspot_suite.gd	\[scene-hotspot-tests\] [1-9][0-9]* checks, failures=\[\]
 test/scrapbook_encounter_suite.gd	\[scrapbook-encounters\] PASS: [1-9][0-9]* checks \[\]
