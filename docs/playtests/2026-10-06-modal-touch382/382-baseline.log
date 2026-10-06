@@ -1,0 +1,138 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ERROR: Unable to open file: res://.godot/imported/cloud_band_sunny.png-a1b2c3d4e5f60718293a4b5c6d7e8f90.ctex.
+   at: _load_data (scene/resources/compressed_texture.cpp:45)
+   GDScript backtrace (most recent call first):
+       [0] run (res://test/modal_touch_input_suite.gd:18)
+ERROR: Failed loading resource: res://.godot/imported/cloud_band_sunny.png-a1b2c3d4e5f60718293a4b5c6d7e8f90.ctex.
+   at: _load (core/io/resource_loader.cpp:317)
+   GDScript backtrace (most recent call first):
+       [0] run (res://test/modal_touch_input_suite.gd:18)
+ERROR: Failed loading resource: res://assets/holiday/environment/cloud_band_sunny.png.
+   at: _load (core/io/resource_loader.cpp:317)
+   GDScript backtrace (most recent call first):
+       [0] run (res://test/modal_touch_input_suite.gd:18)
+ERROR: Unable to open file: res://.godot/imported/cloud_band_overcast.png-b2c3d4e5f60718293a4b5c6d7e8f901a.ctex.
+   at: _load_data (scene/resources/compressed_texture.cpp:45)
+   GDScript backtrace (most recent call first):
+       [0] run (res://test/modal_touch_input_suite.gd:18)
+ERROR: Failed loading resource: res://.godot/imported/cloud_band_overcast.png-b2c3d4e5f60718293a4b5c6d7e8f901a.ctex.
+   at: _load (core/io/resource_loader.cpp:317)
+   GDScript backtrace (most recent call first):
+       [0] run (res://test/modal_touch_input_suite.gd:18)
+ERROR: Failed loading resource: res://assets/holiday/environment/cloud_band_overcast.png.
+   at: _load (core/io/resource_loader.cpp:317)
+   GDScript backtrace (most recent call first):
+       [0] run (res://test/modal_touch_input_suite.gd:18)
+ERROR: Unable to open file: res://.godot/imported/cloud_band_sunset.png-c3d4e5f60718293a4b5c6d7e8f901a2b.ctex.
+   at: _load_data (scene/resources/compressed_texture.cpp:45)
+   GDScript backtrace (most recent call first):
+       [0] run (res://test/modal_touch_input_suite.gd:18)
+ERROR: Failed loading resource: res://.godot/imported/cloud_band_sunset.png-c3d4e5f60718293a4b5c6d7e8f901a2b.ctex.
+   at: _load (core/io/resource_loader.cpp:317)
+   GDScript backtrace (most recent call first):
+       [0] run (res://test/modal_touch_input_suite.gd:18)
+ERROR: Failed loading resource: res://assets/holiday/environment/cloud_band_sunset.png.
+   at: _load (core/io/resource_loader.cpp:317)
+   GDScript backtrace (most recent call first):
+       [0] run (res://test/modal_touch_input_suite.gd:18)
+ERROR: Unable to open file: res://.godot/imported/cloud_band_morning.png-d4e5f60718293a4b5c6d7e8f901a2b3c.ctex.
+   at: _load_data (scene/resources/compressed_texture.cpp:45)
+   GDScript backtrace (most recent call first):
+       [0] run (res://test/modal_touch_input_suite.gd:18)
+ERROR: Failed loading resource: res://.godot/imported/cloud_band_morning.png-d4e5f60718293a4b5c6d7e8f901a2b3c.ctex.
+   at: _load (core/io/resource_loader.cpp:317)
+   GDScript backtrace (most recent call first):
+       [0] run (res://test/modal_touch_input_suite.gd:18)
+ERROR: Failed loading resource: res://assets/holiday/environment/cloud_band_morning.png.
+   at: _load (core/io/resource_loader.cpp:317)
+   GDScript backtrace (most recent call first):
+       [0] run (res://test/modal_touch_input_suite.gd:18)
+SCRIPT ERROR: Parse Error: Could not preload resource file "res://assets/holiday/environment/cloud_band_sunny.png".
+   at: GDScript::reload (res://scripts/game/yard_world.gd:20)
+   GDScript backtrace (most recent call first):
+       [0] run (res://test/modal_touch_input_suite.gd:18)
+SCRIPT ERROR: Parse Error: Cannot infer the type of "CLOUD_SUNNY" constant because the value doesn't have a set type.
+   at: GDScript::reload (res://scripts/game/yard_world.gd:20)
+   GDScript backtrace (most recent call first):
+       [0] run (res://test/modal_touch_input_suite.gd:18)
+SCRIPT ERROR: Parse Error: Could not preload resource file "res://assets/holiday/environment/cloud_band_overcast.png".
+   at: GDScript::reload (res://scripts/game/yard_world.gd:21)
+   GDScript backtrace (most recent call first):
+       [0] run (res://test/modal_touch_input_suite.gd:18)
+SCRIPT ERROR: Parse Error: Cannot infer the type of "CLOUD_OVERCAST" constant because the value doesn't have a set type.
+   at: GDScript::reload (res://scripts/game/yard_world.gd:21)
+   GDScript backtrace (most recent call first):
+       [0] run (res://test/modal_touch_input_suite.gd:18)
+SCRIPT ERROR: Parse Error: Could not preload resource file "res://assets/holiday/environment/cloud_band_sunset.png".
+   at: GDScript::reload (res://scripts/game/yard_world.gd:23)
+   GDScript backtrace (most recent call first):
+       [0] run (res://test/modal_touch_input_suite.gd:18)
+SCRIPT ERROR: Parse Error: Cannot infer the type of "CLOUD_SUNSET" constant because the value doesn't have a set type.
+   at: GDScript::reload (res://scripts/game/yard_world.gd:23)
+   GDScript backtrace (most recent call first):
+       [0] run (res://test/modal_touch_input_suite.gd:18)
+SCRIPT ERROR: Parse Error: Could not preload resource file "res://assets/holiday/environment/cloud_band_morning.png".
+   at: GDScript::reload (res://scripts/game/yard_world.gd:25)
+   GDScript backtrace (most recent call first):
+       [0] run (res://test/modal_touch_input_suite.gd:18)
+SCRIPT ERROR: Parse Error: Cannot infer the type of "CLOUD_MORNING" constant because the value doesn't have a set type.
+   at: GDScript::reload (res://scripts/game/yard_world.gd:25)
+   GDScript backtrace (most recent call first):
+       [0] run (res://test/modal_touch_input_suite.gd:18)
+SCRIPT ERROR: Compile Error: Failed to compile depended scripts.
+   at: GDScript::reload (res://scripts/main.gd:0)
+   GDScript backtrace (most recent call first):
+       [0] run (res://test/modal_touch_input_suite.gd:18)
+ERROR: Failed to load script "res://scripts/main.gd" with error "Compilation failed".
+   at: load (modules/gdscript/gdscript_resource_format.cpp:46)
+   GDScript backtrace (most recent call first):
+       [0] run (res://test/modal_touch_input_suite.gd:18)
+SCRIPT ERROR: Invalid call. Nonexistent function 'new' in base 'GDScript'.
+   at: _start_holiday (res://scripts/main.gd:959)
+   GDScript backtrace (most recent call first):
+       [0] _start_holiday (res://scripts/main.gd:959)
+       [1] run (res://test/modal_touch_input_suite.gd:23)
+FAIL zh-CN (390, 844) GUI cancel waits for release
+FAIL zh-CN (390, 844) cancel returns to pause
+FAIL zh-CN (390, 844) GUI resume waits for release
+SCRIPT ERROR: Invalid access to property or key 'input_enabled' on a base object of type 'Nil'.
+   at: exercise (res://test/modal_touch_input_suite.gd:75)
+   GDScript backtrace (most recent call first):
+       [0] exercise (res://test/modal_touch_input_suite.gd:75)
+FAIL zh-CN (360, 640) GUI cancel waits for release
+FAIL zh-CN (360, 640) cancel returns to pause
+FAIL zh-CN (360, 640) GUI resume waits for release
+SCRIPT ERROR: Invalid access to property or key 'input_enabled' on a base object of type 'Nil'.
+   at: exercise (res://test/modal_touch_input_suite.gd:75)
+   GDScript backtrace (most recent call first):
+       [0] exercise (res://test/modal_touch_input_suite.gd:75)
+FAIL zh-CN (844, 390) GUI cancel waits for release
+FAIL zh-CN (844, 390) cancel returns to pause
+FAIL zh-CN (844, 390) GUI resume waits for release
+SCRIPT ERROR: Invalid access to property or key 'input_enabled' on a base object of type 'Nil'.
+   at: exercise (res://test/modal_touch_input_suite.gd:75)
+   GDScript backtrace (most recent call first):
+       [0] exercise (res://test/modal_touch_input_suite.gd:75)
+FAIL en (390, 844) GUI cancel waits for release
+FAIL en (390, 844) cancel returns to pause
+FAIL en (390, 844) GUI resume waits for release
+SCRIPT ERROR: Invalid access to property or key 'input_enabled' on a base object of type 'Nil'.
+   at: exercise (res://test/modal_touch_input_suite.gd:75)
+   GDScript backtrace (most recent call first):
+       [0] exercise (res://test/modal_touch_input_suite.gd:75)
+FAIL en (360, 640) GUI cancel waits for release
+FAIL en (360, 640) cancel returns to pause
+FAIL en (360, 640) GUI resume waits for release
+SCRIPT ERROR: Invalid access to property or key 'input_enabled' on a base object of type 'Nil'.
+   at: exercise (res://test/modal_touch_input_suite.gd:75)
+   GDScript backtrace (most recent call first):
+       [0] exercise (res://test/modal_touch_input_suite.gd:75)
+FAIL en (844, 390) GUI cancel waits for release
+FAIL en (844, 390) cancel returns to pause
+FAIL en (844, 390) GUI resume waits for release
+SCRIPT ERROR: Invalid access to property or key 'input_enabled' on a base object of type 'Nil'.
+   at: exercise (res://test/modal_touch_input_suite.gd:75)
+   GDScript backtrace (most recent call first):
+       [0] exercise (res://test/modal_touch_input_suite.gd:75)
+MODAL_TOUCH_INPUT checks=42 failures=18

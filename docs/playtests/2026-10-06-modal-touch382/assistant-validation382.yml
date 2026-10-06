@@ -1,0 +1,52 @@
+name: Assistant PR382 isolated verification
+on:
+  push:
+    branches: [work/codex-assistant/pr382-linux-validation]
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Install official Godot 4.7.2 and Web templates
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/godot" "$RUNNER_TEMP/template-files" evidence dist
+          git rev-parse HEAD HEAD^ > evidence/source-shas.txt
+          curl -fLsS --retry 3 https://github.com/godotengine/godot/releases/download/4.7.2-stable/Godot_v4.7.2-stable_linux.x86_64.zip -o "$RUNNER_TEMP/godot.zip"
+          unzip -q "$RUNNER_TEMP/godot.zip" -d "$RUNNER_TEMP/godot"
+          chmod +x "$RUNNER_TEMP/godot/Godot_v4.7.2-stable_linux.x86_64"
+          echo "GODOT=$RUNNER_TEMP/godot/Godot_v4.7.2-stable_linux.x86_64" >> "$GITHUB_ENV"
+          curl -fLsS --retry 3 https://github.com/godotengine/godot/releases/download/4.7.2-stable/Godot_v4.7.2-stable_export_templates.tpz -o "$RUNNER_TEMP/templates.tpz"
+          mkdir -p "$HOME/.local/share/godot/export_templates/4.7.2.stable"
+          unzip -q "$RUNNER_TEMP/templates.tpz" 'templates/web*' -d "$RUNNER_TEMP/template-files"
+          cp "$RUNNER_TEMP/template-files/templates/"web* "$HOME/.local/share/godot/export_templates/4.7.2.stable/"
+      - name: Verify publication helpers without publishing
+        run: |
+          set -euo pipefail
+          python3 test/web_bundle_retention_test.py 2>&1 | tee evidence/bundle-retention.log
+          python3 test/publish_storage_modules_test.py 2>&1 | tee evidence/storage-modules.log
+      - name: Full unmodified strict daily gate
+        run: |
+          set -euo pipefail
+          "$GODOT" --version | tee evidence/engine-version.txt
+          bash tools/verify_daily_life.sh 2>&1 | tee evidence/full-daily.log
+      - name: Export candidate Web, no deployment
+        run: |
+          set -euo pipefail
+          "$GODOT" --headless --path . --export-release Web dist/index.html 2>&1 | tee evidence/export.log
+          mkdir -p dist/web/save
+          cp web/save/*.mjs dist/web/save/
+          sha256sum dist/*.* dist/web/save/* > evidence/export-sha256.txt
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: pr382-verification
+          path: |
+            evidence/
+            dist/
+          retention-days: 14
