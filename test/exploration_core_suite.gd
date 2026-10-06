@@ -835,8 +835,9 @@ func _formal_near_path() -> void:
 		_check(int(stop["empty_weight"]) > 0, "stop %s can be empty" % stop_id)
 		for entry: Dictionary in stop["find_pool"]:
 			pooled[entry["find_id"]] = true
-	for stop_id: String in ExplorationRoutes.NEAR_PATH_STOPS:
+	for stop_id: String in ExplorationRoutes.ORDINARY_STOPS:
 		_check(not route["stops"][stop_id]["find_pool"].is_empty(), "stop %s may offer something, so a fourth find can turn up" % stop_id)
+	_check(route.stops.leaf_pile.find_pool.is_empty(), "animal-only find does not leak into the solo random pool")
 	for find_id: String in ExplorationRoutes.FINDS:
 		_check(pooled.has(find_id), "%s can be met on the near path" % find_id)
 	var seen := {}
@@ -863,7 +864,7 @@ func _formal_near_path() -> void:
 		var trip := ExplorationSession.new(catalog, 0)
 		trip.begin(ExplorationRoutes.NEAR_PATH, CLOCK, seed_value)
 		var found := {}
-		for stop_id: String in ExplorationRoutes.NEAR_PATH_STOPS:
+		for stop_id: String in ExplorationRoutes.ORDINARY_STOPS:
 			if stop_id != "gate":
 				trip.visit(stop_id)
 			found[stop_id] = trip.get_view()["offer"]

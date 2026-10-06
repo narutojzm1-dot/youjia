@@ -40,6 +40,8 @@ var _last_touch_ms := -10000
 var _cam_zoom := 1.0
 var _cam_pos := Vector2.ZERO
 var _caption_time := 0.0
+var _search_started := false
+var _hidden_caption_dirty := false
 
 var _place_label: Label
 var _caption: Label
@@ -52,6 +54,7 @@ var _go_button: Button
 var _basket: Control
 var _view_size := Vector2.ZERO
 var reveal: FindReveal
+var leaf_texture: Texture2D
 
 
 ## 原画只有一版晴秋，天气暂不改画面
@@ -72,6 +75,7 @@ func setup(trip_host: ExplorationHost, _weather: String) -> void:
 	items.name = "Finds"
 	add_child(items)
 	items.draw.connect(_draw_items)
+	leaf_texture = load("res://assets/holiday/exploration/finds/leaf_pile.png")
 	walker = SequenceResident.new()
 	walker.z_index = 5
 	add_child(walker)
@@ -92,13 +96,14 @@ func setup(trip_host: ExplorationHost, _weather: String) -> void:
 	_snap_camera()
 	_show_caption(I18n.t("exploration.caption.arrive"), 5.0)
 	if companion != null:
-		_show_caption(I18n.t("exploration.caption.companion", {"animal": I18n.t("actor." + companion.actor.species)}), 5.0)
+		_show_caption(I18n.t("exploration.caption.companion", {"animal": I18n.t("target." + companion.choice.actor_id)}), 5.0)
 	_view_size = get_viewport().get_visible_rect().size
 	get_viewport().size_changed.connect(_on_view_resized)
 	_refresh()
 
 
 func release() -> void:
+	_cancel_search()
 	if reveal != null:
 		reveal.settle(true)
 	set_process(false)
@@ -114,6 +119,7 @@ func release() -> void:
 ## 暂停或失焦时丢掉点按目标，恢复后不自己走起来
 func _notification(what: int) -> void:
 	if what in [NOTIFICATION_PAUSED, NOTIFICATION_APPLICATION_FOCUS_OUT, NOTIFICATION_WM_WINDOW_FOCUS_OUT]:
+		_cancel_search()
 		walk_target = {}
 		if reveal != null:
 			reveal.settle(true)
@@ -147,6 +153,7 @@ func _process(delta: float) -> void:
 	walk(direction, delta)
 	if leaving:
 		return
+	_update_search()
 	if _caption_time > 0.0:
 		_caption_time -= delta
 		if _caption_time <= 0.0 and observing.is_empty():
@@ -216,10 +223,14 @@ func observe(stop_id: String = "") -> bool:
 		return false
 	walk_target = {}
 	observing = target
+	_hidden_caption_dirty = target == "leaf_pile"
 	host.visit(target)
 	var view := host.view()
 	if view.get("current_stop", "") == target:
-		revealed[target] = str(view.get("taken", {}).get(target, view.get("offer", "")))
+		if target != "leaf_pile" or not view.get("unsaved_changes", false):
+			revealed[target] = str(view.get("taken", {}).get(target, view.get("offer", "")))
+		if target == "leaf_pile" and view.get("unsaved_changes", false) and not view.get("offer", "").is_empty():
+			host.uncover()
 	_show_caption(_observe_caption(), 0.0)
 	items.queue_redraw()
 	_refresh()
@@ -227,6 +238,7 @@ func observe(stop_id: String = "") -> bool:
 
 
 func end_observe() -> void:
+	_cancel_search()
 	if reveal != null:
 		reveal.settle()
 	if observing.is_empty():
@@ -253,6 +265,7 @@ func pick() -> bool:
 		"release":
 			ok = host.release(choice.find_id).ok
 	if ok:
+		if observing == "leaf_pile": _hidden_caption_dirty = true
 		if choice.kind in ["take", "swap"]:
 			walker.begin_action(&"pickup", reduced_motion())
 		_show_caption(_observe_caption(), 0.0)
@@ -273,7 +286,7 @@ func _start_reveal(find_id: String) -> void:
 	var top := art_to_screen(foot() + Vector2(0, -L.WALKER_BOX.size.y * depth)) - Vector2(0, FindReveal.HALO + 6.0)
 	var margin := FindReveal.HALO + 8.0
 	var ceiling := margin + FindReveal.LABEL_ROOM
-	if _caption.visible:
+	if _caption.visible and top.x + margin > _caption.position.x and top.x - margin < _caption.position.x + _caption.size.x:
 		# 名字画在物件上方 HALO+6；纸片下沿以下再留光晕和名字行，避免竖屏压到看景字幕
 		ceiling = _caption.position.y + _caption.size.y + margin + FindReveal.LABEL_ROOM
 	var floor_y := size.y - margin
@@ -296,6 +309,8 @@ func pick_choice() -> Dictionary:
 	if observing.is_empty():
 		return {"kind": "none"}
 	var view := host.view()
+	if observing == "leaf_pile" and (view.get("hidden_search", false) or view.get("unsaved_changes", false)):
+		return {"kind": "none"}
 	var carried: Array = view.get("carried", [])
 	var offer := str(view.get("offer", "")) if view.get("current_stop", "") == observing else ""
 	if not offer.is_empty():
@@ -313,6 +328,7 @@ func carried() -> Array:
 
 
 func _request_return(reason: String) -> void:
+	_cancel_search()
 	if leaving:
 		return
 	leaving = true
@@ -412,6 +428,13 @@ func _snap_camera() -> void:
 ## ───────────── 画面与界面 ─────────────
 
 func _draw_items() -> void:
+	if leaf_texture != null:
+		var anchor: Vector2 = L.stop("leaf_pile").item
+		var spread := 1.0 if not str(revealed.get("leaf_pile", "")).is_empty() else 0.0
+		if companion != null and _search_started and not reduced_motion():
+			spread = maxf(spread, clampf((companion.search_elapsed - 0.7) / 1.7, 0.0, 1.0))
+		var leaf_size := leaf_texture.get_size() * (56.0 / leaf_texture.get_width()) * L.depth(anchor.y)
+		items.draw_texture_rect(leaf_texture, Rect2(anchor - leaf_size * 0.5 + Vector2(24, 4) * spread, leaf_size), false, Color(1, 1, 1, lerpf(1.0, 0.65, spread)))
 	var taken: Dictionary = host.view().get("taken", {}) if host != null else {}
 	for stop_id: String in revealed:
 		var find_id: String = revealed[stop_id]
@@ -430,6 +453,10 @@ func _draw_items() -> void:
 
 func _observe_caption() -> String:
 	var text := I18n.t("exploration.stop.%s" % observing)
+	if observing == "leaf_pile":
+		var view := host.view()
+		if view.get("hidden_search", false): return text + "\n" + I18n.t("exploration.caption.searching")
+		if view.get("unsaved_changes", false) and (not view.get("offer", "").is_empty() or view.get("taken", {}).has(observing)): return text + "\n" + I18n.t("exploration.caption.search_wait")
 	var choice := pick_choice()
 	match choice.kind:
 		"take":
@@ -441,6 +468,36 @@ func _observe_caption() -> String:
 		_:
 			text += "\n" + I18n.t("exploration.caption.just_look")
 	return text
+
+
+func _cancel_search() -> void:
+	_search_started = false
+	if companion != null: companion.cancel_search()
+
+
+func _update_search() -> void:
+	if observing != "leaf_pile" or companion == null: return
+	var view := host.view()
+	if view.get("current_stop", "") != observing: return
+	if view.get("hidden_search", false):
+		if not _search_started:
+			companion.start_search(L.stop(observing))
+			_search_started = true
+		if companion.search_complete():
+			host.uncover()
+			_hidden_caption_dirty = true
+			_show_caption(_observe_caption(), 0.0)
+		items.queue_redraw()
+	elif not view.get("unsaved_changes", false):
+		var find_id := str(view.get("taken", {}).get(observing, view.get("offer", "")))
+		if revealed.get(observing, "") != find_id:
+			revealed[observing] = find_id
+			_hidden_caption_dirty = true
+			items.queue_redraw()
+		if _hidden_caption_dirty:
+			_show_caption(_observe_caption(), 0.0)
+			_hidden_caption_dirty = false
+		if _search_started: _cancel_search()
 
 
 func _find_name(find_id: String) -> String:
@@ -499,11 +556,14 @@ func _layout(size: Vector2, compact: bool) -> void:
 	if not _pick_button.visible:
 		_go_button.position.x = (size.x - _go_button.size.x) * 0.5
 	var caption_w := minf(size.x - pad * 2, 560.0)
+	var side_caption := observing == "leaf_pile" and size.y < 400.0 and size.x > size.y
+	if side_caption: caption_w = minf(caption_w, size.x * 0.43)
 	# 先定宽度再按实际行数长高：StyleBox 的纸片要包住字，展示安全区也按纸片下沿算
 	_fit_caption(caption_w)
 	# 字幕放在上方天空里，路面和路边的东西不被挡住；走路时让出“停下看看”按钮的位置
 	var caption_top := pad + button_h + 12.0
 	_caption.position = Vector2((size.x - caption_w) * 0.5, caption_top if not observing.is_empty() else caption_top + button_h + 12.0)
+	if side_caption: _caption.position.x = pad
 	_hint.size = Vector2(size.x - pad * 2, 24)
 	_hint.position = Vector2(pad, size.y - pad - 30)
 	_basket.position = Vector2(pad, size.y - pad - 64 - (button_h + 10 if not observing.is_empty() else 0) - (34 if _hint.visible else 0))

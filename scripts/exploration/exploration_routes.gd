@@ -11,7 +11,8 @@ const FIND_FEATHER := "formal.find.feather"
 const FINDS := [FIND_STONE, FIND_PINE_CONE, FIND_FEATHER]
 
 # 停留点按画卷从院门往外的顺序排列；彼此都可直接到达，经过但不停下看不算到过。
-const NEAR_PATH_STOPS := ["gate", "brook", "shade", "slope"]
+const ORDINARY_STOPS := ["gate", "brook", "shade", "slope"]
+const NEAR_PATH_STOPS := ["gate", "brook", "shade", "slope", "leaf_pile"]
 
 
 static func routes() -> Dictionary:
@@ -39,6 +40,8 @@ static func routes() -> Dictionary:
 		{"find_id": FIND_STONE, "weight": 1},
 		{"find_id": FIND_FEATHER, "weight": 1},
 	]
+	# Extra discovery; ordinary solo stops keep their original pools and seeds.
+	stops["leaf_pile"]["hidden"] = {"actor_id": "llama", "find_id": FIND_PINE_CONE}
 	return {
 		NEAR_PATH: {
 			"start_stop": "gate",

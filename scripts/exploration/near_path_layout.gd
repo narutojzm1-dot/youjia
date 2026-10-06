@@ -42,6 +42,7 @@ const STOPS := [
 	{"id": "brook", "arm": "lane", "d": 195.0, "item": Vector2(880, 752)},
 	{"id": "shade", "arm": "lane", "d": 365.0, "item": Vector2(1000, 688)},
 	{"id": "slope", "arm": "lane", "d": 25.0, "item": Vector2(800, 872)},
+	{"id": "leaf_pile", "arm": "lane", "d": 480.0, "item": Vector2(1214, 638)},
 ]
 
 
