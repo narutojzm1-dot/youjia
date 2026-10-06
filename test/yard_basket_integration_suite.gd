@@ -67,6 +67,11 @@ func run() -> void:
 			var bounds: Rect2 = main._basket_panel.panel.get_global_rect()
 			check(Rect2(Vector2.ZERO, Vector2(viewport)).encloses(bounds), "basket fits " + str(viewport) + locale)
 			check(bounds.encloses(main._basket_panel.close_button.get_global_rect()), "close remains inside panel")
+			var album: Rect2 = main._album_chip.get_global_rect()
+			var weather: Rect2 = main._weather_chip.get_global_rect()
+			var basket: Rect2 = main._basket_chip.get_global_rect()
+			check(not album.intersects(weather) and not weather.intersects(basket), "HUD chips do not overlap " + str(viewport) + locale)
+			check(Rect2(Vector2.ZERO, Vector2(viewport)).encloses(basket), "basket HUD stays on screen")
 	root.size = Vector2i(568, 320)
 	for frame in 5: await process_frame
 	var start: Vector2 = main._basket_panel.scroll.get_global_rect().get_center()

@@ -2089,6 +2089,7 @@ func _layout() -> void:
 	_notice.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 
 	var chip_width := (size.x - pad * 4.0) / 3.0 if compact else minf(188.0, (size.x - pad * 5.0) / 4.0)
+	_refresh_yard_chip_labels()
 	for button in [_album_chip,_weather_chip,_basket_chip]:
 		button.custom_minimum_size = Vector2(chip_width,48)
 		button.size = Vector2(chip_width,48)
@@ -2171,7 +2172,7 @@ func _refresh_hud() -> void:
 	if _world == null:
 		return
 	_hud.modulate.a = float(TuningStore.get_value("ui.hud.opacity", 0.94))
-	_album_chip.text = I18n.t("hud.album")
+	_refresh_yard_chip_labels()
 	_weather_chip.text = I18n.t("hud.weather.%s" % _world.weather)
 	_basket_chip.text = "Basket" if I18n.get_locale() == "en" else "大背篓"
 	_pause_button.text = I18n.t("hud.pause")
@@ -2198,6 +2199,10 @@ func _refresh_hud() -> void:
 	# 更新假期天数标签
 	if _day_label != null:
 		_day_label.text = I18n.t("hud.day", {"n": str(_world.holiday_day)})
+
+
+func _refresh_yard_chip_labels() -> void:
+	_album_chip.text = "Journal" if I18n.get_locale() == "en" and size.x < 400.0 else I18n.t("hud.album")
 
 
 func _on_day_advanced(day: int) -> void:

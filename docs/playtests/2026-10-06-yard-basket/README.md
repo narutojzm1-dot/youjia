@@ -19,7 +19,7 @@ Godot 4.7.2，Windows 独立临时 APPDATA/LOCALAPPDATA，未清理真实玩家�
 | 套件 | 检查数 | 范围 |
 | --- | ---: | --- |
 | yard_inventory | 53 | 旧档只读、数量守恒、重复 revision、损坏/未来字段、失败重试、未知结果；故障注入为内存夹具 |
-| yard_basket_integration | 46 | 实际 Main/SaveStore/NativeHost、真实文件重开、存取/消费、暂停与横竖屏、触摸滚动 |
+| yard_basket_integration | 66 | 实际 Main/SaveStore/NativeHost、真实文件重开、存取/消费、暂停与横竖屏、触摸滚动及HUD不重叠 |
 | save_coordinator | 86 | 串行提交与确认回归 |
 | native_save_host | 200 | 原生持久化回归 |
 | exploration_cleanup_preservation | 51 | 探索清理不覆盖账本 |
@@ -27,7 +27,9 @@ Godot 4.7.2，Windows 独立临时 APPDATA/LOCALAPPDATA，未清理真实玩家�
 | modal_touch_input | 270 | 既有弹窗输入回归 |
 | ui_interaction | 63 | 原有场景与 HUD 动作回归 |
 
-合计855项。新增两套件挂入 daily 和严格完成标记；BASKET gate六例验证正数成功、零检查及非零失败的区分。Web release 导出通过。原生截图为 `tools/capture_yard_basket.gd` 受控捕获，不能冒充普通操作。
+合计875项。新增两套件挂入 daily 和严格完成标记；BASKET gate六例验证正数成功、零检查及非零失败的区分。Web release 导出通过。原生截图为 `tools/capture_yard_basket.gd` 受控捕获，不能冒充普通操作。
+
+合入前新增20项HUD边界检查发现320宽英文 Open journal 与天气按钮重叠。窄屏改用 Journal，最终66项通过；`narrow-final.log` 与 `yard-hud-en-320.png` 为修正后证据。
 
 保留的 initial-results 中 fish_carry 首次被隔离检查拒绝：Windows 临时路径的反斜杠与 XDG 正斜杠不一致，未进入测试。修正启动器为一致的隔离路径后，最终 regression-results 的该套件86项通过；不把首次拒绝计为通过。
 

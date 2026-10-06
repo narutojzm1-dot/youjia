@@ -35,5 +35,8 @@ func capture() -> void:
 	root.size = Vector2i(390, 844)
 	root.get_node("I18n").set_locale("zh-CN")
 	await shot("yard-hud-390")
+	root.size = Vector2i(320, 568)
+	root.get_node("I18n").set_locale("en")
+	await shot("yard-hud-en-320")
 	root.get_node("AudioDirector").release_streams()
 	quit(0)
