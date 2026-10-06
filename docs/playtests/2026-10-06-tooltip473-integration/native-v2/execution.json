@@ -1,0 +1,23 @@
+{
+  "source": "5c1efc77404607b9b4343b2df296b08e7e67c1fa",
+  "tree": "55ddd72586f8347795e4f68812e6cd38b1f0975a",
+  "started_at": "2026-10-06T01:18:48.532986+00:00",
+  "cases": [
+    {
+      "name": "interaction",
+      "entry": "test/paper_tooltip_interaction_suite.gd",
+      "start": "2026-10-06T01:18:48.720778+00:00",
+      "end": "2026-10-06T01:19:21.677194+00:00",
+      "direct_godot_exit": 0,
+      "strict_wrapper_exit": 0,
+      "isolated_data": "/dev/shm/tooltip473-native-v2-state/interaction/data",
+      "log": "interaction.log"
+    }
+  ],
+  "native_only": true,
+  "engine_binary_sha256": "8d106cbe6144c2dc7e881d61d2429c1a8a76e6b22ef48bd5e48dcf934953f71e",
+  "source_materialization": "/dev/shm/tooltip473-materialization.json",
+  "window_authorized_by": "CODEX-LEAD root; specialized only, full/export pending merged base",
+  "active_process_precheck": "No non-zombie Godot/chrome/chromium before launch",
+  "closed_at": "2026-10-06T01:19:21.677730+00:00"
+}

@@ -1,0 +1,23 @@
+{
+  "at": "2026-10-06T02:10:17.169099+00:00",
+  "found_by": "CODEX-LEAD root final mode check before upload",
+  "pre_correction_local_head": "180b4f6c3cce8695c56ef8daabb2dd417c0df082",
+  "path": "test/godot_gate_test.sh",
+  "base_main": "267b0cb3df5842170877bf55e438917ad4253ce8",
+  "baseline_mode": "100755",
+  "tested_source": "a0a856f64e7764fbab5270412025e62b8e34cafd",
+  "tested_and_pre_correction_mode": "100644",
+  "corrected_mode": "100755",
+  "content_blob_unchanged_from_tested": "3f1a8443bdfe7922f7262fdce4be7eed8ba32de4",
+  "cause": "Shared registry merge propagated own older mode100644 over dependency mode100755; content merge retained both scopes. Final correction restores baseline executable mode.",
+  "actual_command": "./test/godot_gate_test.sh",
+  "direct_exit": 0,
+  "mock_checks": 124,
+  "tooltip_mock_checks": 28,
+  "log_sha256": "d510db3d1937658ed758c0e8ba9b3cde4ab460ce0f84aafe76072dc25fbb0c4f",
+  "full_original_preserved": true,
+  "full_used_explicit_bash_invocation": true,
+  "engine_or_browser_launched": false,
+  "frozen_web_export_changed": false,
+  "not_claimed_all_final_modes_identical_to_old_tested_source": true
+}
