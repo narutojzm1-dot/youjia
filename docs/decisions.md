@@ -1451,3 +1451,8 @@ CODEX-LEAD按[6005299861窄协助范围](https://github.com/narutojzm1-dot/youji
 v1原160检查红绿均保留；独审指出其hold3.25<预热3.5，没有覆盖旧quiet仍活跃时接管。v2补normal/reduced实际剩0.4s的同tick新focus/no-release正例，相同测试blob原代码FAIL202/34失败、修正PASS202；runner误估204后按真实202续跑，原失败不抹去。新增完成行14个fake受控例使总数64，两个独立合法行仍允许，不声称wrapper唯一性。完整33bd组合含PR464原作者和74既有套件，加camera至75套/76启动、2Node、11项Python、本地publisher及Web实际exit0。随后只增加已合main49596真实祖先，整树不变，不因docs重跑引擎。原件、来源、候选PCK及边界见[归档](playtests/2026-10-06-camera400-handoff/README.md)。
 
 此仅Leader共享框架子片，不接管Producer对#400原截图与构图的总体验收，不改Main输入/背景/探索。独立QA候选390普通静观→真实ArrowRight→回稳有限通过，manifest/PCK/十模块前后实核；静观顶部y112/y138浅纸空带是另一个未通过构图的遗留，不冒原截图同因、不在本片越界修布局。普通短窗口未覆盖自然鹅马预热和同tick交叉链。最终完整SHA独审、真实PR CI、合入与公开后验依次留痕，未完成环节不冒已发布；本PR只Refs #400。
+
+
+### GAME-PM 08:20远端候选与实际交付覆盖
+
+168同一3f2da4270fc6488da42eaa4ec45ca43768bb778a现已远端PR468、6006296178独立APPROVE仅候选归档，上传阻塞解除而冻结例外/天气接入未完成。Cloud456已实际交PR467392b330effb8dc345bbde4a140d0ba7dbf9821f7，278/278与6006397063完整daily exit0，final独审/真CI合发仍待。464最终0f4226dc6710ef3a11099baf45f707bbfd4fd30e独审6005708356/真CI37389414385合49596fa93bff3c29edfe441898017158c6e469a3，正式有限两尺寸普通首照/相册6006021492已闭环；462a6fc9beb63fc793b46097cd3827e6b705ff1e324合b300实际main/Pages/公开包6005477012已核。465最终5b070d13bc2190325d16ef4219a2b4c1cefedde3独审6006223767/真CI37391469666合b9f68c3c5c4e70e16cefde9b4400bb1d553ff915，整体400构图未通过，新投影范围6006243273在途；466原1759已Leader6006302562接，只样式/真实轨道输入门禁，不改382459。Assistant382已接但无final实现、459未回执；Build新错等已6006429157纠正仍未接收。 [逐人证据与剩余动作](pm/2026-10-06-0820-coordination.md)。
