@@ -9,6 +9,9 @@ const CATALOG_PATHS := {
 
 var _catalogs: Dictionary = {}
 var _locale := "zh-CN"
+## REQ-20261006-047: "" or "touch". When set, `text()` prefers `<key>.<variant>`
+## if the catalog has it (touch players are not told to press Space).
+var _input_variant := ""
 
 
 func _ready() -> void:
@@ -45,6 +48,10 @@ func _load_catalog(path: String) -> Dictionary:
 func text(key: String, replacements: Dictionary = {}) -> String:
 	var active: Dictionary = _catalogs.get(_locale, {})
 	var fallback: Dictionary = _catalogs.get("zh-CN", {})
+	if not _input_variant.is_empty():
+		var variant_key := key + "." + _input_variant
+		if active.has(variant_key) or fallback.has(variant_key):
+			key = variant_key
 	var result := str(active.get(key, fallback.get(key, key)))
 	for token: Variant in replacements:
 		result = result.replace("{%s}" % str(token), str(replacements[token]))
@@ -77,3 +84,12 @@ func has_key(key: String) -> bool:
 func catalog_keys(locale: String) -> Array:
 	var catalog: Dictionary = _catalogs.get(locale, {})
 	return catalog.keys()
+
+
+## REQ-20261006-047: set by `InputHintMode` (child of Main) from the last input kind.
+func set_input_variant(variant: String) -> void:
+	_input_variant = variant
+
+
+func get_input_variant() -> String:
+	return _input_variant
