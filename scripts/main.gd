@@ -144,6 +144,8 @@ var _save_ack_coverage: Dictionary = {}
 var _save_problem_active := false
 var _save_status_panel: PanelContainer
 var _save_retry_button: Button
+var _save_status_box: BoxContainer
+var _save_status_message: Label
 ## 钓到鱼时的蓝色庆祝闪光（独立于拍立得闪光，更冷更蓝）
 var _fish_flash: ColorRect
 var _cinematic_layer: CanvasLayer
@@ -588,6 +590,8 @@ func _build_title_screen() -> void:
 	_title_hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_title_hint.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	column.add_child(_title_hint)
+	I18n.locale_changed.connect(_on_title_copy_locale_changed)
+	call_deferred("_balance_title_copy")
 
 
 ## 标题列按屏高分三档排版。≥500 原样；短横屏缩字号与间距；屏高 ≤360（568×320、
@@ -613,6 +617,7 @@ func _fit_title_column() -> void:
 		button.custom_minimum_size = Vector2(260.0, 40.0 if tight else 44.0)
 		button.add_theme_font_size_override("font_size",14 if tight else 16)
 	_licenses_button.add_theme_font_size_override("font_size",12 if tight else 14)
+	_balance_title_copy()
 
 
 ## 纸片贴合标题列里实际可见的内容（列本身是整屏高、内容居中），左右留 18、上下留 14，并夹在屏内。
@@ -637,6 +642,87 @@ func _fit_title_card() -> void:
 		card = card.intersection(screen)
 	_title_card.position = card.position
 	_title_card.size = card.size
+
+
+## 标题页简介和操作说明在窄屏/矮屏上会把最后两三个字单独甩到下一行（360×640 操作说明剩「互动。」，
+## 844×390 简介剩「出现。」），像没排完。这里给两段文字各找一个「行数不变、尽量窄」的平衡宽度
+## （类似 CSS text-wrap: balance），文字仍居中；行数、字号、文案、按钮和纸片规则都不变，
+## 只是断行点更均匀（REQ-20261006-044）。
+const TITLE_BALANCE_SLACK := 2.0
+
+
+func _on_title_copy_locale_changed(_locale: String) -> void:
+	call_deferred("_balance_title_copy")
+
+
+func _balance_title_copy() -> void:
+	if _title_label == null or _tagline_label == null or _title_hint == null: return
+	var column: Control = _title_label.get_parent()
+	var avail := column.offset_right - column.offset_left
+	if avail < 64.0: return
+	for label: Label in [_tagline_label, _title_hint]:
+		_balance_label_width(label, avail)
+
+
+func _balance_label_width(label: Label, avail: float) -> void:
+	label.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	var font := label.get_theme_font("font")
+	var font_size := label.get_theme_font_size("font_size")
+	var width := avail
+	var lines := _title_copy_line_count(label.text, font, font_size, avail)
+	if lines >= 2:
+		var lo := avail * 0.4
+		var hi := avail
+		while hi - lo > 1.0:
+			var mid := (lo + hi) * 0.5
+			if _title_copy_line_count(label.text, font, font_size, mid) <= lines:
+				hi = mid
+			else:
+				lo = mid
+		width = minf(avail, ceilf(hi) + TITLE_BALANCE_SLACK)
+		# 平衡宽度可能把「草泥马」这类词拆在两行。行数不变的前提下再稍微放宽，优先让每处换行落在标点或空格后面；
+		# 找不到就保留平衡宽度（不比原来更差，也没有孤字）。
+		var probe := width
+		while probe <= avail:
+			if _title_copy_line_count(label.text, font, font_size, probe) == lines and _title_copy_breaks_at_pauses(label.text, font, font_size, probe):
+				width = probe
+				break
+			probe += 2.0
+	if not is_equal_approx(label.custom_minimum_size.x, width):
+		label.custom_minimum_size.x = width
+
+
+const TITLE_BREAK_PAUSES := "，。、：；！？）」,.;:!?) "
+
+
+## 给定宽度下，每处自动换行（不含最后一行和手动 \n）是否都落在标点或空格后面。
+func _title_copy_breaks_at_pauses(text: String, font: Font, font_size: int, width: float) -> bool:
+	var ts := TextServerManager.get_primary_interface()
+	for para: String in text.split("\n"):
+		if para.is_empty(): continue
+		var shaped := ts.create_shaped_text()
+		ts.shaped_text_add_string(shaped, para, font.get_rids(), font_size)
+		var breaks := ts.shaped_text_get_line_breaks(shaped, width, 0, TextServer.BREAK_WORD_BOUND | TextServer.BREAK_ADAPTIVE)
+		ts.free_rid(shaped)
+		for i in range(1, breaks.size() - 2, 2):
+			var end: int = breaks[i]
+			if end <= 0 or not TITLE_BREAK_PAUSES.contains(para.substr(end - 1, 1)):
+				return false
+	return true
+
+
+## 与 Label 的 AUTOWRAP_WORD_SMART 相同的断行规则下，这段文字在给定宽度里排几行（含 \n 手动换行）。
+func _title_copy_line_count(text: String, font: Font, font_size: int, width: float) -> int:
+	if text.is_empty() or font == null: return 0
+	var ts := TextServerManager.get_primary_interface()
+	var total := 0
+	for para: String in text.split("\n"):
+		var shaped := ts.create_shaped_text()
+		ts.shaped_text_add_string(shaped, para, font.get_rids(), font_size)
+		var breaks := ts.shaped_text_get_line_breaks(shaped, width, 0, TextServer.BREAK_WORD_BOUND | TextServer.BREAK_ADAPTIVE)
+		ts.free_rid(shaped)
+		total += maxi(1, breaks.size() / 2)
+	return total
 
 
 func _build_hud() -> void:
@@ -728,7 +814,15 @@ func _build_pause_screen() -> void:
 	_mute_toggle = _soft_button()
 	_mute_toggle.pressed.connect(_toggle_master_mute)
 	_place_pause(_pause_session, [_resume_button, _restart_button, _pause_title_button, _music_toggle, _music_volume_label, _music_slider, _ambience_toggle, _ambience_volume_label, _ambience_slider, _mute_toggle])
+	_pause_box.minimum_size_changed.connect(_on_pause_content_resized)
 	_fit_pause_panel()
+
+
+## 矮屏（高 < 500）暂停纸片原来固定撑到「屏高 − 24」，844×390 上标题和两列按钮只占中间约 220px，
+## 上下各留约 75px 空纸，像一张没排完的大白卡。现在矮屏按实际内容高度贴合（内容 + 纸边距 +
+## 上下各 PAUSE_SHORT_BREATH 留白），仍不超过「屏高 − 24」并保持居中；宽度、字号、按钮、两列
+## 分组与竖屏/大屏排版都不变（REQ-20261006-043）。
+const PAUSE_SHORT_BREATH := 14.0
 
 
 func _fit_pause_panel() -> void:
@@ -738,11 +832,6 @@ func _fit_pause_panel() -> void:
 	var margin := 12.0
 	var panel_w := minf(680.0 if short else 360.0, size.x - margin * 2.0)
 	var panel_h := minf(620.0, size.y - margin * 2.0)
-	_pause_panel.custom_minimum_size = Vector2(panel_w, panel_h)
-	_pause_panel.offset_left = -panel_w * 0.5
-	_pause_panel.offset_right = panel_w * 0.5
-	_pause_panel.offset_top = -panel_h * 0.5
-	_pause_panel.offset_bottom = panel_h * 0.5
 	var sep := 4 if short else 12
 	var button_h := 36.0 if short else 44.0
 	_pause_box.add_theme_constant_override("separation", sep)
@@ -764,6 +853,33 @@ func _fit_pause_panel() -> void:
 		_pause_audio.visible = false
 		_place_pause(_pause_session, [_resume_button, _restart_button, _pause_title_button, _music_toggle, _music_volume_label, _music_slider, _ambience_toggle, _ambience_volume_label, _ambience_slider, _mute_toggle])
 		_place_pause(_pause_audio, [])
+	_apply_pause_panel_size(panel_w, panel_h)
+
+
+## 矮屏改两列/切语言后子节点最小尺寸是延迟更新的，等内容最小高度真正变化时再贴合一次。
+func _on_pause_content_resized() -> void:
+	if _pause_panel == null or size.x < 64.0 or size.y < 64.0 or size.y >= 500.0:
+		return
+	_apply_pause_panel_size(minf(680.0, size.x - 24.0), minf(620.0, size.y - 24.0))
+
+
+func _apply_pause_panel_size(panel_w: float, panel_h: float) -> void:
+	if size.y < 500.0:
+		panel_h = minf(panel_h, _pause_content_height() + PAUSE_SHORT_BREATH * 2.0)
+	_pause_panel.custom_minimum_size = Vector2(panel_w, panel_h)
+	_pause_panel.offset_left = -panel_w * 0.5
+	_pause_panel.offset_right = panel_w * 0.5
+	_pause_panel.offset_top = -panel_h * 0.5
+	_pause_panel.offset_bottom = panel_h * 0.5
+
+
+## 暂停纸片装下当前内容所需的最小高度（含纸面上下内边距），只用于矮屏贴合。
+func _pause_content_height() -> float:
+	var height := _pause_box.get_combined_minimum_size().y
+	var style := _pause_panel.get_theme_stylebox("panel")
+	if style != null:
+		height += style.get_margin(SIDE_TOP) + style.get_margin(SIDE_BOTTOM)
+	return ceilf(height)
 
 
 func _place_pause(parent: Node, nodes: Array) -> void:
@@ -1322,20 +1438,84 @@ func _build_save_status() -> void:
 	_save_status_panel.set_anchors_and_offsets_preset(Control.PRESET_CENTER_TOP)
 	_save_status_panel.offset_left = -170
 	_save_status_panel.offset_right = 170
-	_save_status_panel.offset_top = 90
+	_save_status_panel.offset_top = SAVE_STATUS_TOP
 	layer.add_child(_save_status_panel)
-	var box := VBoxContainer.new()
-	_save_status_panel.add_child(box)
-	var message := _label(16, INK)
-	message.text = I18n.t("notice.save.pending")
-	message.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	message.custom_minimum_size.x = 320
-	box.add_child(message)
+	_save_status_box = BoxContainer.new()
+	_save_status_box.vertical = true
+	_save_status_box.alignment = BoxContainer.ALIGNMENT_CENTER
+	_save_status_panel.add_child(_save_status_box)
+	_save_status_message = _label(16, INK)
+	_save_status_message.text = I18n.t("notice.save.pending")
+	_save_status_message.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_save_status_message.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_save_status_message.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	_save_status_message.custom_minimum_size.x = 320
+	_save_status_box.add_child(_save_status_message)
 	_save_retry_button = _soft_button()
-	_save_retry_button.text = "再确认一次"
+	_save_retry_button.text = I18n.t("save.retry")
 	_save_retry_button.pressed.connect(_retry_save)
-	box.add_child(_save_retry_button)
+	_save_status_box.add_child(_save_retry_button)
 	_save_status_panel.hide()
+	_fit_save_status()
+
+
+## REQ-20261006-042：「保存暂时无法继续」纸片原来固定 352px 宽、顶边 y=90、居中，
+## 竖屏 360/390 会压住右上「假期第 N 天」，360 英文还压住两行半的目标纸片，360 宽时右边
+## 出屏 2px；568×320 短横屏也压住天数。文字左对齐而按钮居中，按钮写死「再确认一次」，
+## 切英文后消息和按钮都不跟着换。现在：宽度不超过屏宽减 20；顶边落在与它横向重叠的
+## 目标纸片/天数标签下方 8px；短横屏（高 ≤ 360 且横屏）改成文字在左、按钮在右的一行，
+## 留白收窄，免得往下压到「翻开手帐/天气」那排按钮；文字居中（横排时左对齐）；按钮与消息走 I18n，
+## 切语言即刷新。只改展示，不碰保存状态、重试逻辑和成功条件。
+const SAVE_STATUS_TOP := 90.0
+const SAVE_STATUS_MAX_WIDTH := 352.0
+const SAVE_STATUS_ROW_MAX_WIDTH := 548.0
+const SAVE_STATUS_GAP := 8.0
+const SAVE_STATUS_ROW_BUTTON := 168.0
+
+
+func _save_status_row_layout() -> bool:
+	return size.y <= 360.0 and size.x > size.y
+
+
+func _fit_save_status() -> void:
+	if _save_status_panel == null or _save_status_box == null:
+		return
+	var row := _save_status_row_layout()
+	var margin_x := 32.0
+	var width := minf(SAVE_STATUS_ROW_MAX_WIDTH if row else SAVE_STATUS_MAX_WIDTH, maxf(160.0, size.x - 20.0))
+	var inner := width - margin_x
+	_save_status_box.vertical = not row
+	_save_status_box.add_theme_constant_override("separation", 12 if row else 4)
+	# 横排时纸面上下留白收到 4px、文字 15px：640×300 这类更矮的横屏上，夹在天数标签和
+	# 底部按钮排之间只有约 56px，原 10px 留白 + 16px 两行会压到「翻开手帐」顶边。
+	var paper := _save_status_panel.get_theme_stylebox("panel") as StyleBoxFlat
+	if paper != null:
+		paper.content_margin_top = 4.0 if row else 10.0
+		paper.content_margin_bottom = 4.0 if row else 10.0
+	_save_status_message.add_theme_font_size_override("font_size", 15 if row else 16)
+	if row:
+		_save_retry_button.custom_minimum_size = Vector2(SAVE_STATUS_ROW_BUTTON, 44)
+		_save_status_message.custom_minimum_size.x = inner - SAVE_STATUS_ROW_BUTTON - 12.0
+		_save_status_message.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
+		_save_status_message.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	else:
+		_save_retry_button.custom_minimum_size = Vector2(minf(260.0, inner), 44)
+		_save_status_message.custom_minimum_size.x = inner
+		_save_status_message.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		_save_status_message.size_flags_horizontal = Control.SIZE_FILL
+	var left := size.x * 0.5 - width * 0.5
+	var top := SAVE_STATUS_TOP
+	for obstacle: Control in [_hint_panel, _day_label]:
+		if obstacle == null or not obstacle.is_visible_in_tree():
+			continue
+		var rect := obstacle.get_global_rect()
+		if rect.position.x < left + width and rect.end.x > left:
+			top = maxf(top, ceilf(rect.end.y) + SAVE_STATUS_GAP)
+	_save_status_panel.offset_left = -width * 0.5
+	_save_status_panel.offset_right = width * 0.5
+	_save_status_panel.offset_top = top
+	_save_status_panel.offset_bottom = top
+	_save_status_panel.reset_size()
 
 
 func _show_save_pending(untracked := true) -> void:
@@ -1343,7 +1523,9 @@ func _show_save_pending(untracked := true) -> void:
 		_save_untracked_problem = true
 		_save_untracked_revision += 1
 	_save_problem_active = true
-	if _save_status_panel != null: _save_status_panel.show()
+	if _save_status_panel != null:
+		_fit_save_status()
+		_save_status_panel.show()
 
 
 func _retryable_save_problems(include_fish: bool) -> Dictionary:
@@ -1834,6 +2016,7 @@ func _layout() -> void:
 	if _day_label != null:
 		_day_label.size = Vector2(_pause_button.size.x, 28)
 		_day_label.position = Vector2(_pause_button.position.x, _pause_button.position.y + _pause_button.size.y + 8.0)
+	_fit_save_status()
 	var row := size.y-124.0 if compact else size.y-68.0
 	_album_chip.position = Vector2(pad,row)
 	_weather_chip.position = Vector2(size.x-half-pad if compact else pad+210.0,row)
@@ -1848,11 +2031,50 @@ func _layout() -> void:
 func _fit_hint_panel() -> void:
 	if _hint_label == null or _hint_panel == null:
 		return
+	_hug_hint_width()
 	var lines := maxi(1, _hint_label.get_line_count())
 	var spacing := float(_hint_label.get_theme_constant("line_spacing"))
 	var text_height := lines * float(_hint_label.get_line_height()) + (lines - 1) * spacing
 	_hint_label.size = Vector2(_hint_label.size.x, maxf(HINT_MIN_TEXT_HEIGHT, ceilf(text_height)))
 	_hint_panel.size = _hint_label.size + Vector2(18.0, 16.0)
+
+
+## 目标纸片贴合文字宽度（REQ-20261006-045）：纸片原来总撑到最大宽度（最多 520px）。
+## 844×390 上一行目标只占左半，右边约 250px 空纸压住远山；640×360 / 568×320 的两行
+## 短目标（文案自带换行）每行一百多像素，纸却有 478 / 406px 宽。现在每一行（按文案里的
+## 换行分段）都能在最大宽度内放下时，纸宽 = 最长那一行的实际宽度（左缘不动，最窄 120px）；
+## 有任何一段放不下、需要自动换行时仍用原来的最大宽度。只在文字、可用宽度、字号或可见性
+## 变化时重新测量，不每帧排版。
+const HINT_HUG_MIN_WIDTH := 120.0
+var _hint_fit_key := ""
+var _hint_fit_width := 0.0
+
+
+func _hint_max_width() -> float:
+	var pad := 20.0
+	var pause_width := _pause_button.size.x if _pause_button != null else 188.0
+	return minf(520.0, maxf(120.0, size.x - pause_width - pad * 3.0))
+
+
+func _hug_hint_width() -> void:
+	var max_width := _hint_max_width()
+	var font_size := _hint_label.get_theme_font_size("font_size")
+	var key := "%s|%.2f|%d|%s" % [_hint_label.text, max_width, font_size, str(_hint_label.is_visible_in_tree())]
+	if key != _hint_fit_key:
+		_hint_fit_key = key
+		_hint_fit_width = max_width
+		_hint_label.size = Vector2(max_width, _hint_label.size.y)
+		var lines_at_max := _hint_label.get_line_count()
+		var font := _hint_label.get_theme_font("font")
+		var widest := 0.0
+		for segment: String in _hint_label.text.split("\n"):
+			widest = maxf(widest, font.get_string_size(segment, HORIZONTAL_ALIGNMENT_LEFT, -1, font_size).x)
+		if not _hint_label.text.is_empty() and ceilf(widest) + 2.0 <= max_width:
+			var hugged := clampf(ceilf(widest) + 2.0, minf(HINT_HUG_MIN_WIDTH, max_width), max_width)
+			_hint_label.size = Vector2(hugged, _hint_label.size.y)
+			if _hint_label.get_line_count() == lines_at_max:
+				_hint_fit_width = hugged
+	_hint_label.size = Vector2(_hint_fit_width, _hint_label.size.y)
 
 
 func _refresh_hud() -> void:
@@ -1880,6 +2102,8 @@ func _refresh_hud() -> void:
 		_hint_label.add_theme_color_override("font_color", INK)
 	_action_button.text = verb
 	_fit_hint_panel()
+	if _save_status_panel != null and _save_status_panel.visible:
+		_fit_save_status()
 	# 更新假期天数标签
 	if _day_label != null:
 		_day_label.text = I18n.t("hud.day", {"n": str(_world.holiday_day)})
@@ -2112,8 +2336,12 @@ func _refresh_texts() -> void:
 	# P0.2: locale 切换时同步更新相册 tooltip。
 	if _album_chip != null:
 		_album_chip.tooltip_text = I18n.t("hud.album.tooltip")
+	if _save_status_message != null:
+		_save_status_message.text = I18n.t("notice.save.pending")
+		_save_retry_button.text = I18n.t("save.retry")
 	if _world != null:
 		_refresh_hud()
+	_fit_save_status()
 
 
 func _label(size_px: int, color: Color) -> Label:
