@@ -1,0 +1,3 @@
+# Excluded first public attempt: natural gate empty
+
+Public source83b893035d76e9cdd1966b724fb748fab5e3ef59. Driver completed with exit0 and actual browser.close. Original01-offer/02-taken show no collectible at gate and empty basket; T did not create an item. The controlled cleanup predicate requires previously granted nonempty keepsakes, so this attempt is NOT a successful controlled fault test. All originals retained. The final source-check label fault-reopen is a reused driver's exit label; no new page was opened in this excluded run. Root requested waiting for the next439 deployment before one bounded fresh follow-up. No seed/business injection used.

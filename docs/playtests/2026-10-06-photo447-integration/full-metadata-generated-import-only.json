@@ -1,0 +1,32 @@
+[
+  {
+    "path": "assets/holiday/characters/cast_v2/goose_riding_up.png.import",
+    "generated_sha256": "17194be90a222f1fd0d01aa204c88d6c20644049cb4df80d49b13695f828c8b0",
+    "original_blob": "7a912ad7014a04adf9d77cfa0ea5ff18bd2d7d12",
+    "diff": "diff --git a/assets/holiday/characters/cast_v2/goose_riding_up.png.import b/assets/holiday/characters/cast_v2/goose_riding_up.png.import\nindex 7a912ad7..65b425a3 100644\n--- a/assets/holiday/characters/cast_v2/goose_riding_up.png.import\n+++ b/assets/holiday/characters/cast_v2/goose_riding_up.png.import\n@@ -2,7 +2,7 @@\n \n importer=\"texture\"\n type=\"CompressedTexture2D\"\n-uid=\"uid://bs594i8rym09s\"\n+uid=\"uid://bs6a4i8rym1as\"\n path=\"res://.godot/imported/goose_riding_up.png-f3b3d6fc6779df3cd356037367607c56.ctex\"\n metadata={\n \"vram_texture\": false\n"
+  },
+  {
+    "path": "assets/holiday/environment/cloud_band_morning.png.import",
+    "generated_sha256": "882280534b19fe4ad113810831cdb46456844da08b3732aa3d152ea4032fedb7",
+    "original_blob": "ca3cc9a8f6063cd82b8e6844b2a72ae94fd42eec",
+    "diff": "diff --git a/assets/holiday/environment/cloud_band_morning.png.import b/assets/holiday/environment/cloud_band_morning.png.import\nindex ca3cc9a8..6511e63b 100644\n--- a/assets/holiday/environment/cloud_band_morning.png.import\n+++ b/assets/holiday/environment/cloud_band_morning.png.import\n@@ -2,8 +2,8 @@\n \n importer=\"texture\"\n type=\"CompressedTexture2D\"\n-uid=\"uid://c1oudbandmorn001\"\n-path=\"res://.godot/imported/cloud_band_morning.png-d4e5f60718293a4b5c6d7e8f901a2b3c.ctex\"\n+uid=\"uid://cukm75e4xkwvg\"\n+path=\"res://.godot/imported/cloud_band_morning.png-da5e817e2c57675c137df4cc1148ae19.ctex\"\n metadata={\n \"vram_texture\": false\n }\n@@ -11,7 +11,7 @@ metadata={\n [deps]\n \n source_file=\"res://assets/holiday/environment/cloud_band_morning.png\"\n-dest_files=[\"res://.godot/imported/cloud_band_morning.png-d4e5f60718293a4b5c6d7e8f901a2b3c.ctex\"]\n+dest_files=[\"res://.godot/imported/cloud_band_morning.png-da5e817e2c57675c137df4cc1148ae19.ctex\"]\n \n [params]\n \n"
+  },
+  {
+    "path": "assets/holiday/environment/cloud_band_overcast.png.import",
+    "generated_sha256": "1df0a68394c13db0cc9158531c4834dec93b20d36d70f69871d3164f1a0fe7a8",
+    "original_blob": "3fb31ab7e05461377e1ce6e87ec4d28a82826560",
+    "diff": "diff --git a/assets/holiday/environment/cloud_band_overcast.png.import b/assets/holiday/environment/cloud_band_overcast.png.import\nindex 3fb31ab7..65485794 100644\n--- a/assets/holiday/environment/cloud_band_overcast.png.import\n+++ b/assets/holiday/environment/cloud_band_overcast.png.import\n@@ -2,8 +2,8 @@\n \n importer=\"texture\"\n type=\"CompressedTexture2D\"\n-uid=\"uid://c1oudbandoverc01\"\n-path=\"res://.godot/imported/cloud_band_overcast.png-b2c3d4e5f60718293a4b5c6d7e8f901a.ctex\"\n+uid=\"uid://cukm75hckn8vg\"\n+path=\"res://.godot/imported/cloud_band_overcast.png-ef97d4bcdd46302f3e9ecd49b0fa53a7.ctex\"\n metadata={\n \"vram_texture\": false\n }\n@@ -11,7 +11,7 @@ metadata={\n [deps]\n \n source_file=\"res://assets/holiday/environment/cloud_band_overcast.png\"\n-dest_files=[\"res://.godot/imported/cloud_band_overcast.png-b2c3d4e5f60718293a4b5c6d7e8f901a.ctex\"]\n+dest_files=[\"res://.godot/imported/cloud_band_overcast.png-ef97d4bcdd46302f3e9ecd49b0fa53a7.ctex\"]\n \n [params]\n \n"
+  },
+  {
+    "path": "assets/holiday/environment/cloud_band_sunny.png.import",
+    "generated_sha256": "d8e520e344fb8efd2b07f0f2285ba7ff322d9b07de5d0f3d7e2adbe163d378ed",
+    "original_blob": "1dd82e315ccd8c09d2467f4bea736e13251dce6c",
+    "diff": "diff --git a/assets/holiday/environment/cloud_band_sunny.png.import b/assets/holiday/environment/cloud_band_sunny.png.import\nindex 1dd82e31..457a128c 100644\n--- a/assets/holiday/environment/cloud_band_sunny.png.import\n+++ b/assets/holiday/environment/cloud_band_sunny.png.import\n@@ -2,8 +2,8 @@\n \n importer=\"texture\"\n type=\"CompressedTexture2D\"\n-uid=\"uid://c1oudbandsunny01\"\n-path=\"res://.godot/imported/cloud_band_sunny.png-a1b2c3d4e5f60718293a4b5c6d7e8f90.ctex\"\n+uid=\"uid://cukm75lbtkvvg\"\n+path=\"res://.godot/imported/cloud_band_sunny.png-aca1db27e6614feb58acfc0964b6c5fe.ctex\"\n metadata={\n \"vram_texture\": false\n }\n@@ -11,7 +11,7 @@ metadata={\n [deps]\n \n source_file=\"res://assets/holiday/environment/cloud_band_sunny.png\"\n-dest_files=[\"res://.godot/imported/cloud_band_sunny.png-a1b2c3d4e5f60718293a4b5c6d7e8f90.ctex\"]\n+dest_files=[\"res://.godot/imported/cloud_band_sunny.png-aca1db27e6614feb58acfc0964b6c5fe.ctex\"]\n \n [params]\n \n"
+  },
+  {
+    "path": "assets/holiday/environment/cloud_band_sunset.png.import",
+    "generated_sha256": "6161f1254989b7f26f42414c658ff135532570368c349b92f313194b627b6ec5",
+    "original_blob": "118d7e46ad868e0c39a1d97074865ff84fed9359",
+    "diff": "diff --git a/assets/holiday/environment/cloud_band_sunset.png.import b/assets/holiday/environment/cloud_band_sunset.png.import\nindex 118d7e46..4dbbddd9 100644\n--- a/assets/holiday/environment/cloud_band_sunset.png.import\n+++ b/assets/holiday/environment/cloud_band_sunset.png.import\n@@ -2,8 +2,8 @@\n \n importer=\"texture\"\n type=\"CompressedTexture2D\"\n-uid=\"uid://c1oudbandsunset01\"\n-path=\"res://.godot/imported/cloud_band_sunset.png-c3d4e5f60718293a4b5c6d7e8f901a2b.ctex\"\n+uid=\"uid://djn26c3baugq7\"\n+path=\"res://.godot/imported/cloud_band_sunset.png-ffbc4d4feb0c830d6cfd7111922d321e.ctex\"\n metadata={\n \"vram_texture\": false\n }\n@@ -11,7 +11,7 @@ metadata={\n [deps]\n \n source_file=\"res://assets/holiday/environment/cloud_band_sunset.png\"\n-dest_files=[\"res://.godot/imported/cloud_band_sunset.png-c3d4e5f60718293a4b5c6d7e8f901a2b.ctex\"]\n+dest_files=[\"res://.godot/imported/cloud_band_sunset.png-ffbc4d4feb0c830d6cfd7111922d321e.ctex\"]\n \n [params]\n \n"
+  }
+]

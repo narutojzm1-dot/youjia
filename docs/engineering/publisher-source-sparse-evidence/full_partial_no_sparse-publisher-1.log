@@ -1,0 +1,38 @@
+[publish] source commit: ca6c0b4597e6
+[publish] bundle entry name: game-ca6c0b4597e6
+[publish] staging in /tmp/publisher130-partial-d4vld1a6/full_partial_no_sparse/tmp.fmVh0DLTdk
+[publish] injected cache-control meta into index.html
+[publish] cache-control meta tags injected; data-build=game-ca6c0b4597e6
+[publish] verifying HTML patches...
+[publish] HTML verification passed: executable=game-ca6c0b4597e6, fileSizes keys correct, script.src=game-ca6c0b4597e6.js
+[publish] engine version: fixture-version-only-no-engine
+[publish] switching to gh-pages branch...
+HEAD is now at 26a51d3 Publish source history 2 (1b76bfa922d4)
+[publish] pruning 1 old bundle(s), retaining current and recent publications...
+[publish]   removing game-b.*
+[detached HEAD 0d65114] Publish second source fixture (ca6c0b4597e6)
+ Author: Cursor Agent <cursoragent@cursor.com>
+ 18 files changed, 665 insertions(+), 10 deletions(-)
+ delete mode 100644 game-b.js
+ delete mode 100644 game-b.pck
+ delete mode 100644 game-b.wasm
+ create mode 100644 game-ca6c0b4597e6.js
+ create mode 100644 game-ca6c0b4597e6.pck
+ create mode 100644 game-ca6c0b4597e6.wasm
+ create mode 100644 save-ca6c0b4597e6/bridge.mjs
+ create mode 100644 save-ca6c0b4597e6/budgets.mjs
+ create mode 100644 save-ca6c0b4597e6/host.mjs
+ create mode 100644 save-ca6c0b4597e6/idbfs_source.mjs
+ create mode 100644 save-ca6c0b4597e6/legacy_inspection.mjs
+ create mode 100644 save-ca6c0b4597e6/legacy_seal.mjs
+ create mode 100644 save-ca6c0b4597e6/legacy_v5.mjs
+ create mode 100644 save-ca6c0b4597e6/lifecycle.mjs
+ create mode 100644 save-ca6c0b4597e6/source_decode.mjs
+ create mode 100644 save-ca6c0b4597e6/store.mjs
+[publish] ✓ done.
+[publish]   entry:  game-ca6c0b4597e6
+[publish]   pages:  https://narutojzm1-dot.github.io/youjia/
+[publish]   verify: document.documentElement.dataset.build in browser console should equal 'game-ca6c0b4597e6'
+Preparing worktree (detached HEAD 26a51d3)
+To file:///tmp/publisher130-partial-d4vld1a6/full_partial_no_sparse/remote.git
+   26a51d3..0d65114  HEAD -> gh-pages

@@ -1,0 +1,632 @@
+{
+  "scope": "PR461 local candidate genuine Chinese ordinary new sheep photo, caption paper/full-card/retirement/album/close; two fresh contexts serial in one browser",
+  "source_commit": "fd887ff8691b41edba305ab946c43df082e793f7",
+  "source_tree": "382fc30536973f2809641a36fdc3a67fd20b145c",
+  "entry": "index",
+  "pck": {
+    "bytes": 27090652,
+    "sha256": "6f84caeb3dc92d6d12a91f39f6cc766dcc521a26bdb70b2f8c99063384eb73a3"
+  },
+  "binding_count": 4,
+  "dependency_counts": [
+    11,
+    11,
+    11,
+    11
+  ],
+  "views": [
+    {
+      "case": "portrait",
+      "viewport": [
+        390,
+        844
+      ],
+      "motion": "no-preference",
+      "language_observed": "zh-CN",
+      "actual_shutter_text": "旅人随手拍下了这一刻。",
+      "selected_complete_frame": "portrait-02-arrival-03.png",
+      "retired_frame": "portrait-03-after-natural-dismiss.png",
+      "album_frame": "portrait-04-album.png",
+      "album_closed_frame": "portrait-05-album-closed.png",
+      "samples": [
+        {
+          "file": "portrait-01-yard-before.png",
+          "paper_samples": [
+            {
+              "xy": [
+                110,
+                234
+              ],
+              "rgb": [
+                165,
+                142,
+                118
+              ]
+            },
+            {
+              "xy": [
+                195,
+                232
+              ],
+              "rgb": [
+                196,
+                147,
+                96
+              ]
+            },
+            {
+              "xy": [
+                280,
+                250
+              ],
+              "rgb": [
+                173,
+                152,
+                124
+              ]
+            }
+          ],
+          "mat_sample": {
+            "xy": [
+              96,
+              390
+            ],
+            "rgb": [
+              231,
+              195,
+              146
+            ]
+          }
+        },
+        {
+          "file": "portrait-02-arrival-03.png",
+          "paper_samples": [
+            {
+              "xy": [
+                110,
+                234
+              ],
+              "rgb": [
+                250,
+                240,
+                225
+              ]
+            },
+            {
+              "xy": [
+                195,
+                232
+              ],
+              "rgb": [
+                251,
+                240,
+                224
+              ]
+            },
+            {
+              "xy": [
+                280,
+                250
+              ],
+              "rgb": [
+                250,
+                240,
+                226
+              ]
+            }
+          ],
+          "mat_sample": {
+            "xy": [
+              96,
+              390
+            ],
+            "rgb": [
+              243,
+              227,
+              203
+            ]
+          }
+        },
+        {
+          "file": "portrait-03-after-natural-dismiss.png",
+          "paper_samples": [
+            {
+              "xy": [
+                110,
+                234
+              ],
+              "rgb": [
+                162,
+                140,
+                116
+              ]
+            },
+            {
+              "xy": [
+                195,
+                232
+              ],
+              "rgb": [
+                194,
+                144,
+                94
+              ]
+            },
+            {
+              "xy": [
+                280,
+                250
+              ],
+              "rgb": [
+                171,
+                150,
+                123
+              ]
+            }
+          ],
+          "mat_sample": {
+            "xy": [
+              96,
+              390
+            ],
+            "rgb": [
+              230,
+              194,
+              145
+            ]
+          }
+        }
+      ],
+      "all_burst_frame_samples": [
+        {
+          "file": "portrait-02-arrival-00.png",
+          "mat_sample_rgb": [
+            230,
+            194,
+            145
+          ]
+        },
+        {
+          "file": "portrait-02-arrival-01.png",
+          "mat_sample_rgb": [
+            230,
+            194,
+            145
+          ]
+        },
+        {
+          "file": "portrait-02-arrival-02.png",
+          "mat_sample_rgb": [
+            243,
+            227,
+            203
+          ]
+        },
+        {
+          "file": "portrait-02-arrival-03.png",
+          "mat_sample_rgb": [
+            243,
+            227,
+            203
+          ]
+        },
+        {
+          "file": "portrait-02-arrival-04.png",
+          "mat_sample_rgb": [
+            243,
+            227,
+            203
+          ]
+        },
+        {
+          "file": "portrait-02-arrival-05.png",
+          "mat_sample_rgb": [
+            230,
+            194,
+            145
+          ]
+        },
+        {
+          "file": "portrait-02-arrival-06.png",
+          "mat_sample_rgb": [
+            230,
+            194,
+            145
+          ]
+        },
+        {
+          "file": "portrait-02-arrival-07.png",
+          "mat_sample_rgb": [
+            230,
+            194,
+            145
+          ]
+        },
+        {
+          "file": "portrait-02-arrival-08.png",
+          "mat_sample_rgb": [
+            230,
+            194,
+            145
+          ]
+        },
+        {
+          "file": "portrait-02-arrival-09.png",
+          "mat_sample_rgb": [
+            230,
+            194,
+            145
+          ]
+        },
+        {
+          "file": "portrait-02-arrival-10.png",
+          "mat_sample_rgb": [
+            230,
+            194,
+            145
+          ]
+        },
+        {
+          "file": "portrait-02-arrival-11.png",
+          "mat_sample_rgb": [
+            230,
+            194,
+            145
+          ]
+        }
+      ],
+      "readonly_current_generation": "2",
+      "readonly_album": [
+        "sheep_pet_gentle"
+      ],
+      "readonly_photo_ids": [
+        "sheep_pet_gentle"
+      ]
+    },
+    {
+      "case": "landscape",
+      "viewport": [
+        568,
+        320
+      ],
+      "motion": "no-preference",
+      "language_observed": "zh-CN",
+      "actual_shutter_text": "旅人随手拍下了这一刻。",
+      "selected_complete_frame": "landscape-02-arrival-04.png",
+      "retired_frame": "landscape-03-after-natural-dismiss.png",
+      "album_frame": "landscape-04-album.png",
+      "album_closed_frame": "landscape-05-album-closed.png",
+      "samples": [
+        {
+          "file": "landscape-01-yard-before.png",
+          "paper_samples": [
+            {
+              "xy": [
+                200,
+                15
+              ],
+              "rgb": [
+                254,
+                245,
+                229
+              ]
+            },
+            {
+              "xy": [
+                284,
+                14
+              ],
+              "rgb": [
+                242,
+                238,
+                227
+              ]
+            },
+            {
+              "xy": [
+                370,
+                34
+              ],
+              "rgb": [
+                253,
+                243,
+                227
+              ]
+            }
+          ],
+          "mat_sample": {
+            "xy": [
+              198,
+              143
+            ],
+            "rgb": [
+              203,
+              184,
+              108
+            ]
+          }
+        },
+        {
+          "file": "landscape-02-arrival-04.png",
+          "paper_samples": [
+            {
+              "xy": [
+                200,
+                15
+              ],
+              "rgb": [
+                255,
+                246,
+                232
+              ]
+            },
+            {
+              "xy": [
+                284,
+                14
+              ],
+              "rgb": [
+                254,
+                246,
+                232
+              ]
+            },
+            {
+              "xy": [
+                370,
+                34
+              ],
+              "rgb": [
+                255,
+                246,
+                232
+              ]
+            }
+          ],
+          "mat_sample": {
+            "xy": [
+              198,
+              143
+            ],
+            "rgb": [
+              243,
+              227,
+              203
+            ]
+          }
+        },
+        {
+          "file": "landscape-03-after-natural-dismiss.png",
+          "paper_samples": [
+            {
+              "xy": [
+                200,
+                15
+              ],
+              "rgb": [
+                254,
+                245,
+                229
+              ]
+            },
+            {
+              "xy": [
+                284,
+                14
+              ],
+              "rgb": [
+                242,
+                238,
+                228
+              ]
+            },
+            {
+              "xy": [
+                370,
+                34
+              ],
+              "rgb": [
+                253,
+                243,
+                227
+              ]
+            }
+          ],
+          "mat_sample": {
+            "xy": [
+              198,
+              143
+            ],
+            "rgb": [
+              201,
+              183,
+              106
+            ]
+          }
+        }
+      ],
+      "all_burst_frame_samples": [
+        {
+          "file": "landscape-02-arrival-00.png",
+          "mat_sample_rgb": [
+            202,
+            183,
+            106
+          ]
+        },
+        {
+          "file": "landscape-02-arrival-01.png",
+          "mat_sample_rgb": [
+            202,
+            183,
+            106
+          ]
+        },
+        {
+          "file": "landscape-02-arrival-02.png",
+          "mat_sample_rgb": [
+            243,
+            227,
+            203
+          ]
+        },
+        {
+          "file": "landscape-02-arrival-03.png",
+          "mat_sample_rgb": [
+            243,
+            227,
+            203
+          ]
+        },
+        {
+          "file": "landscape-02-arrival-04.png",
+          "mat_sample_rgb": [
+            243,
+            227,
+            203
+          ]
+        },
+        {
+          "file": "landscape-02-arrival-05.png",
+          "mat_sample_rgb": [
+            243,
+            227,
+            203
+          ]
+        },
+        {
+          "file": "landscape-02-arrival-06.png",
+          "mat_sample_rgb": [
+            243,
+            227,
+            203
+          ]
+        },
+        {
+          "file": "landscape-02-arrival-07.png",
+          "mat_sample_rgb": [
+            207,
+            188,
+            118
+          ]
+        },
+        {
+          "file": "landscape-02-arrival-08.png",
+          "mat_sample_rgb": [
+            201,
+            183,
+            106
+          ]
+        },
+        {
+          "file": "landscape-02-arrival-09.png",
+          "mat_sample_rgb": [
+            201,
+            183,
+            106
+          ]
+        },
+        {
+          "file": "landscape-02-arrival-10.png",
+          "mat_sample_rgb": [
+            201,
+            183,
+            106
+          ]
+        },
+        {
+          "file": "landscape-02-arrival-11.png",
+          "mat_sample_rgb": [
+            201,
+            183,
+            106
+          ]
+        },
+        {
+          "file": "landscape-02-arrival-12.png",
+          "mat_sample_rgb": [
+            201,
+            183,
+            106
+          ]
+        },
+        {
+          "file": "landscape-02-arrival-13.png",
+          "mat_sample_rgb": [
+            201,
+            183,
+            106
+          ]
+        },
+        {
+          "file": "landscape-02-arrival-14.png",
+          "mat_sample_rgb": [
+            201,
+            183,
+            106
+          ]
+        }
+      ],
+      "readonly_current_generation": "2",
+      "readonly_album": [
+        "sheep_pet_gentle"
+      ],
+      "readonly_photo_ids": [
+        "sheep_pet_gentle"
+      ]
+    }
+  ],
+  "short_landscape_overlap": "Paper strip occupies the right-hand area of the existing target hint paper. In this actual sample the short 窗台花箱 / 看看花箱 text remains left of the new strip and was not obscured. Longer hints are NOT COVERED; overlap of panel area is not proof of actual glyph occlusion.",
+  "timing_limit": "Burst request/completion timestamps do not equal exact rendered frame times. Selected full frames and later natural disappearance are observed; no exact 1.58s/0.24s timing claim or complete fade characterization.",
+  "context_sequence": [
+    {
+      "case_open": "portrait",
+      "width": 390,
+      "height": 844,
+      "motion": "no-preference",
+      "actual_reduce": false,
+      "utc": "2026-10-05T23:20:30Z",
+      "monotonic": 373716.010312451
+    },
+    {
+      "case_closed": "portrait",
+      "utc": "2026-10-05T23:21:33Z",
+      "monotonic": 373779.844713996
+    },
+    {
+      "case_open": "landscape",
+      "width": 568,
+      "height": 320,
+      "motion": "no-preference",
+      "actual_reduce": false,
+      "utc": "2026-10-05T23:22:11Z",
+      "monotonic": 373817.884479333
+    },
+    {
+      "case_closed": "landscape",
+      "utc": "2026-10-05T23:23:49Z",
+      "monotonic": 373915.838008451
+    }
+  ],
+  "started_utc": "2026-10-05T23:20:14Z",
+  "closed_utc": "2026-10-05T23:23:49Z",
+  "observed_driver_exit_code": 0,
+  "memory_before_browser_bytes": 15970095104,
+  "memory_observed_high_bytes": 16989220864,
+  "memory_after_close_bytes": 15608426496,
+  "page_errors": [],
+  "console_errors": [],
+  "loaded_asset_count": 26,
+  "all_loaded_asset_responses_200": true,
+  "not_covered": [
+    "English and reduced-motion ordinary UI (no player toggle observed; no internal setters used)",
+    "Public release",
+    "Physical phone/touch/hearing",
+    "Keyboard459",
+    "Long target hints below caption paper",
+    "All photo event types",
+    "Exact frame rate/animation duration or comprehensive fade curve",
+    "Full save/recovery/browser-process restart",
+    "Guaranteed input-through of every overlapping control"
+  ]
+}

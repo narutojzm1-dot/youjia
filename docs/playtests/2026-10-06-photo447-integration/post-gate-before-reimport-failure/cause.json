@@ -1,0 +1,5 @@
+{
+  "cause": "Tracked .png.import files were restored to repository versions to merge main; four cloud-band mappings contain old placeholder cache paths. This standalone recheck omitted the required editor import before loading the suite.",
+  "remedy": "Run normal editor import, then rerun the same suite and strict verified export. No source image or assertion changes.",
+  "product_bug_claim": false
+}

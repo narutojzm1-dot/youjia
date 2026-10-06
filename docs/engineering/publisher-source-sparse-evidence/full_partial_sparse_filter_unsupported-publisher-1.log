@@ -1,0 +1,38 @@
+[publish] source commit: 8ab2c636f59e
+[publish] bundle entry name: game-8ab2c636f59e
+[publish] staging in /tmp/publisher130-partial-d4vld1a6/full_partial_sparse_filter_unsupported/tmp.3hZXOPacoF
+[publish] injected cache-control meta into index.html
+[publish] cache-control meta tags injected; data-build=game-8ab2c636f59e
+[publish] verifying HTML patches...
+[publish] HTML verification passed: executable=game-8ab2c636f59e, fileSizes keys correct, script.src=game-8ab2c636f59e.js
+[publish] engine version: fixture-version-only-no-engine
+[publish] switching to gh-pages branch...
+HEAD is now at 6c4cef3 Publish source history 2 (61efaaea303a)
+[publish] pruning 1 old bundle(s), retaining current and recent publications...
+[publish]   removing game-b.*
+[detached HEAD 06bf2d0] Publish second source fixture (8ab2c636f59e)
+ Author: Cursor Agent <cursoragent@cursor.com>
+ 18 files changed, 665 insertions(+), 10 deletions(-)
+ create mode 100644 game-8ab2c636f59e.js
+ create mode 100644 game-8ab2c636f59e.pck
+ create mode 100644 game-8ab2c636f59e.wasm
+ delete mode 100644 game-b.js
+ delete mode 100644 game-b.pck
+ delete mode 100644 game-b.wasm
+ create mode 100644 save-8ab2c636f59e/bridge.mjs
+ create mode 100644 save-8ab2c636f59e/budgets.mjs
+ create mode 100644 save-8ab2c636f59e/host.mjs
+ create mode 100644 save-8ab2c636f59e/idbfs_source.mjs
+ create mode 100644 save-8ab2c636f59e/legacy_inspection.mjs
+ create mode 100644 save-8ab2c636f59e/legacy_seal.mjs
+ create mode 100644 save-8ab2c636f59e/legacy_v5.mjs
+ create mode 100644 save-8ab2c636f59e/lifecycle.mjs
+ create mode 100644 save-8ab2c636f59e/source_decode.mjs
+ create mode 100644 save-8ab2c636f59e/store.mjs
+[publish] ✓ done.
+[publish]   entry:  game-8ab2c636f59e
+[publish]   pages:  https://narutojzm1-dot.github.io/youjia/
+[publish]   verify: document.documentElement.dataset.build in browser console should equal 'game-8ab2c636f59e'
+Preparing worktree (detached HEAD 6c4cef3)
+To file:///tmp/publisher130-partial-d4vld1a6/full_partial_sparse_filter_unsupported/remote.git
+   6c4cef3..06bf2d0  HEAD -> gh-pages

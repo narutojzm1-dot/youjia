@@ -1,0 +1,19 @@
+{
+  "full_staged_diff_check_exit": 2,
+  "exact_raw_evidence_findings": [
+    {
+      "path": "browser-candidate/portrait-after-index.html",
+      "line": 238,
+      "finding": "new blank line at EOF"
+    },
+    {
+      "path": "browser-candidate/portrait-before-index.html",
+      "line": 238,
+      "finding": "new blank line at EOF"
+    }
+  ],
+  "raw_evidence_bytes_preserved": true,
+  "all_other_staged_paths_diff_check_exit": 0,
+  "reason": "Keep exact downloaded HTML matching browser SHA256 evidence; do not normalize original evidence.",
+  "source_scope": "local v1/v2/33bd tested commit IDs; final remote SHA/tree to be separately bound; original464 ancestors preserved via actual main49596."
+}

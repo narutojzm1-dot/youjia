@@ -37,6 +37,7 @@ func run() -> void:
 	await _painted_path_walk()
 	await _tap_home()
 	await _find_reveal()
+	await _reveal_resize()
 	await _scroll_and_director()
 	await _main_round_trip()
 	for store in stores:
@@ -369,8 +370,11 @@ func _host_cleanup() -> void:
 	var changed: Dictionary = store._data.exploration.duplicate(true)
 	changed.session.record_revision = int(changed.session.record_revision) + 1
 	store._data.exploration = changed
+	store.unknown_kind = "exploration_cleanup"
 	store.pump()
 	check(results.has(["exploration_cleanup", ExplorationHost.CLEANUP_CHANGED]) and restarted_resubmits.is_empty() and store.get_exploration_record() == changed, "a cleanup whose record changed first is refused and not replayed")
+	check(not restarted.pending_cleanup() and store.is_save_idle(), "a typed refusal is final even when the queue would park that kind as unknown")
+	store.unknown_kind = ""
 	# 重启：按恢复契约 close，清理落盘
 	var again := ExplorationHost.new(store)
 	again.restore()
@@ -647,6 +651,11 @@ func _find_reveal() -> void:
 		check(scroll.observe("gate") and not reveal.is_active() and reveal.sound_plays == 0, tag + "stopping to look at a find is quiet")
 		var at_gate: String = scroll.pick_choice().find_id
 		check(scroll.pick() and reveal.is_active() and reveal.find_id == at_gate and reveal.sound_plays == 1, tag + "a take starts one reveal with one sound")
+		var glyphs_ok: bool = reveal.label_font != null and reveal.label_font == scroll._basket.get_theme_default_font()
+		for find_id: String in ExplorationRoutes.FINDS:
+			for ch in scroll._find_name(find_id):
+				glyphs_ok = glyphs_ok and reveal.label_font.has_char(ch.unicode_at(0))
+		check(glyphs_ok and not reveal.title.is_empty(), tag + "the reveal names the find in the bundled UI font, which has its glyphs on Web")
 		var foot_screen: Vector2 = scroll.art_to_screen(scroll.foot())
 		check(shown.grow(-FindReveal.HALO).has_point(reveal.top) and reveal.top.y < foot_screen.y, tag + "the find rises above the walker and stays on screen")
 		check(reveal.top.y + FindReveal.HALO + 30.0 < scroll._pick_button.position.y, tag + "the reveal does not cover the bottom buttons")
@@ -728,6 +737,88 @@ func _find_reveal() -> void:
 	check(still and reveal.pose().alpha < 1.0, "reduced motion fades in place: no rise, fly or scale")
 	tuning.set_value("ui.reduced_motion", false, false)
 	scroll.free()
+
+
+## #456 拾起短展示中途换视口（转屏、拖窗）：按可打断规则立即收进篮子，不留在旧坐标、不重播、不重复授予
+func _reveal_resize() -> void:
+	var tuning: Node = root.get_node("TuningStore")
+	var value := seed_all_four()
+	var phases := {"rise": 0.1, "hold": FindReveal.RISE + 0.3, "fly": FindReveal.RISE + FindReveal.HOLD + 0.1}
+	var cases: Array = []
+	for pair: Array in [[Vector2i(1280, 720), Vector2i(390, 844)], [Vector2i(390, 844), Vector2i(1280, 720)], [Vector2i(1280, 720), Vector2i(568, 320)], [Vector2i(568, 320), Vector2i(1280, 720)]]:
+		for phase: String in phases:
+			cases.append([pair[0], pair[1], phase, false])
+	cases.append([Vector2i(1280, 720), Vector2i(390, 844), "calm", true])
+	cases.append([Vector2i(390, 844), Vector2i(1280, 720), "calm", true])
+	for entry: Array in cases:
+		var before: Vector2i = entry[0]
+		var after: Vector2i = entry[1]
+		var calm: bool = entry[3]
+		var tag := "[%dx%d->%dx%d %s] " % [before.x, before.y, after.x, after.y, entry[2]]
+		root.size = before
+		tuning.set_value("ui.reduced_motion", calm, false)
+		var store := make_store()
+		var host := ExplorationHost.new(store)
+		host.restore()
+		host.begin(CLOCK, value)
+		var scroll: Node2D = load("res://scripts/exploration/near_path_scroll.gd").new()
+		root.add_child(scroll)
+		scroll.setup(host, "sunny")
+		await process_frame
+		var reveal: FindReveal = scroll.reveal
+		reveal.sound = AudioStreamWAV.new()
+		var settled: Array[String] = []
+		reveal.settled.connect(func(id: String) -> void: settled.append(id))
+		scroll.observe("gate")
+		var find: String = scroll.pick_choice().find_id
+		scroll.pick()
+		store.pump()
+		reveal._process(0.4 if calm else float(phases[entry[2]]))
+		var carried_before: Array = scroll.carried().duplicate()
+		var keep_before: Dictionary = store.get_keepsakes()
+		var plays := reveal.sound_plays
+		var mid_ok: bool = reveal.is_active() and settled.is_empty()
+		root.size = after
+		await process_frame
+		var screen := Rect2(Vector2.ZERO, Vector2(after))
+		var left_behind: bool = reveal.is_active() and reveal.visible and not screen.grow(-8.0).has_point(reveal.pose().at)
+		check(mid_ok and not reveal.is_active() and not reveal.visible and settled == [find], tag + "a resize mid-reveal settles it into the basket at once")
+		check(not left_behind, tag + "nothing is left drawn at the old screen position")
+		reveal._process(5.0)
+		await process_frame
+		check(settled == [find] and reveal.sound_plays == plays, tag + "no second play or settle afterwards")
+		check(scroll.carried() == carried_before and carried_before == [find] and store.get_keepsakes() == keep_before, tag + "the basket and saved finds are unchanged by the resize")
+		scroll.free()
+	tuning.set_value("ui.reduced_motion", false, false)
+	# 视口没变：同一趟里普通展示照常放完
+	root.size = Vector2i(1280, 720)
+	var store := make_store()
+	var host := ExplorationHost.new(store)
+	host.restore()
+	host.begin(CLOCK, value)
+	var scroll: Node2D = load("res://scripts/exploration/near_path_scroll.gd").new()
+	root.add_child(scroll)
+	scroll.setup(host, "sunny")
+	await process_frame
+	var reveal: FindReveal = scroll.reveal
+	scroll.observe("gate")
+	scroll.pick()
+	reveal._process(FindReveal.RISE + 0.3)
+	root.size = Vector2i(1280, 720)
+	await process_frame
+	check(reveal.is_active() and reveal.pose().at.is_equal_approx(reveal.top), "an unchanged viewport leaves the reveal playing")
+	# 换视口后再带一件：新展示用新视口的位置
+	reveal._process(5.0)
+	scroll.end_observe()
+	root.size = Vector2i(390, 844)
+	await process_frame
+	scroll.place_at("brook")
+	scroll.observe()
+	scroll.pick()
+	var portrait := Rect2(Vector2.ZERO, Vector2(390, 844))
+	check(reveal.is_active() and portrait.grow(-FindReveal.HALO).has_point(reveal.top) and portrait.has_point(reveal.basket), "a reveal started after the resize uses the new screen")
+	scroll.free()
+	root.size = Vector2i(1280, 720)
 
 
 func _scroll_and_director() -> void:
@@ -950,6 +1041,11 @@ func _main_round_trip() -> void:
 	check(main._pause_screen.visible and paused, "tapping the scroll pause button opens the pause menu")
 	main._toggle_pause()
 	check(not main._pause_screen.visible and not paused, "resume returns to the walk")
+	var settled_kinds: Array[String] = []
+	var on_confirmed := func(_op_id: String, kind: String) -> void: settled_kinds.append("confirmed:" + kind)
+	var on_rejected := func(_op_id: String, kind: String, _code: String) -> void: settled_kinds.append("rejected:" + kind)
+	save_store.commit_confirmed.connect(on_confirmed)
+	save_store.commit_rejected.connect(on_rejected)
 	tap_mouse(scroll.art_to_screen(L.point(L.HOME_ARM, L.arm_length(L.HOME_ARM)) + Vector2(10, -45)))
 	var frames := 0
 	while main._screen == "exploring" and frames < 600:
@@ -964,6 +1060,9 @@ func _main_round_trip() -> void:
 	check(main._notice_key == "notice.exploration.back_empty", "empty return notice in the yard")
 	var cleaned: Variant = save_store.get_exploration_record()
 	check(cleaned is Dictionary and cleaned.session == null and not main._exploration.host.pending_cleanup() and not main._save_problem_active, "the real save is cleaned to idle through the cleanup contract")
+	save_store.commit_confirmed.disconnect(on_confirmed)
+	save_store.commit_rejected.disconnect(on_rejected)
+	check(settled_kinds.has("confirmed:exploration_cleanup") and not settled_kinds.has("rejected:exploration_cleanup"), "the real return confirms an exploration_cleanup op, not the fallback write")
 	# 外出中回标题：按宿主中断回院，带上的东西照常收下
 	world._save_progress()
 	check(main._exploration.try_begin({"day": world.holiday_day, "elapsed": world._day_elapsed}, "sunny", value), "can go out again")

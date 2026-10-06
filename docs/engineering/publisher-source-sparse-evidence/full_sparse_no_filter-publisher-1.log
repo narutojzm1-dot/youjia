@@ -1,0 +1,38 @@
+[publish] source commit: b70471a0712d
+[publish] bundle entry name: game-b70471a0712d
+[publish] staging in /tmp/publisher130-partial-d4vld1a6/full_sparse_no_filter/tmp.mRkAxsBNdw
+[publish] injected cache-control meta into index.html
+[publish] cache-control meta tags injected; data-build=game-b70471a0712d
+[publish] verifying HTML patches...
+[publish] HTML verification passed: executable=game-b70471a0712d, fileSizes keys correct, script.src=game-b70471a0712d.js
+[publish] engine version: fixture-version-only-no-engine
+[publish] switching to gh-pages branch...
+HEAD is now at 80ad6b4 Publish source history 2 (2414c4146ceb)
+[publish] pruning 1 old bundle(s), retaining current and recent publications...
+[publish]   removing game-b.*
+[detached HEAD 586fb1f] Publish second source fixture (b70471a0712d)
+ Author: Cursor Agent <cursoragent@cursor.com>
+ 18 files changed, 665 insertions(+), 10 deletions(-)
+ delete mode 100644 game-b.js
+ delete mode 100644 game-b.pck
+ delete mode 100644 game-b.wasm
+ create mode 100644 game-b70471a0712d.js
+ create mode 100644 game-b70471a0712d.pck
+ create mode 100644 game-b70471a0712d.wasm
+ create mode 100644 save-b70471a0712d/bridge.mjs
+ create mode 100644 save-b70471a0712d/budgets.mjs
+ create mode 100644 save-b70471a0712d/host.mjs
+ create mode 100644 save-b70471a0712d/idbfs_source.mjs
+ create mode 100644 save-b70471a0712d/legacy_inspection.mjs
+ create mode 100644 save-b70471a0712d/legacy_seal.mjs
+ create mode 100644 save-b70471a0712d/legacy_v5.mjs
+ create mode 100644 save-b70471a0712d/lifecycle.mjs
+ create mode 100644 save-b70471a0712d/source_decode.mjs
+ create mode 100644 save-b70471a0712d/store.mjs
+[publish] ✓ done.
+[publish]   entry:  game-b70471a0712d
+[publish]   pages:  https://narutojzm1-dot.github.io/youjia/
+[publish]   verify: document.documentElement.dataset.build in browser console should equal 'game-b70471a0712d'
+Preparing worktree (detached HEAD 80ad6b4)
+To file:///tmp/publisher130-partial-d4vld1a6/full_sparse_no_filter/remote.git
+   80ad6b4..586fb1f  HEAD -> gh-pages

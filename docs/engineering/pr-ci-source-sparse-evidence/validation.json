@@ -1,0 +1,100 @@
+{
+  "source_sha": "1596cd1f05df3744045f19d929eabb906bdddaba",
+  "source_tree": "107463b049c86df7069aed3d3127b6b7725900cd",
+  "base_sha": "a0bb75e38e59032a6df72a2122af4403c3c3e816",
+  "started_at": "2026-10-05T22:07:10.627075+00:00",
+  "phases": [
+    {
+      "name": "daily",
+      "command": [
+        "bash",
+        "tools/verify_daily_life.sh"
+      ],
+      "started_at": "2026-10-05T22:07:10.627145+00:00",
+      "returncode": 0,
+      "elapsed_seconds": 445.922
+    },
+    {
+      "name": "retention",
+      "command": [
+        "python3",
+        "test/web_bundle_retention_test.py"
+      ],
+      "started_at": "2026-10-05T22:14:36.549543+00:00",
+      "returncode": 0,
+      "elapsed_seconds": 0.81
+    },
+    {
+      "name": "publisher_fixture",
+      "command": [
+        "python3",
+        "test/publish_storage_modules_test.py"
+      ],
+      "started_at": "2026-10-05T22:14:37.359909+00:00",
+      "returncode": 0,
+      "elapsed_seconds": 0.556
+    },
+    {
+      "name": "web_export",
+      "command": [
+        "bash",
+        "-c",
+        "source tools/lib/verified_godot.sh\nrun_verified_godot /tmp/pr130-sparse-evidence/export-engine.log --headless --path . --export-release Web dist/index.html\nfor output in dist/index.html dist/index.js dist/index.wasm dist/index.pck; do test -s \"$output\" || exit 1; done"
+      ],
+      "started_at": "2026-10-05T22:14:37.916621+00:00",
+      "returncode": 0,
+      "elapsed_seconds": 5.144
+    }
+  ],
+  "root_docs_absent_before": true,
+  "root_docs_absent_after": true,
+  "artifacts": [
+    {
+      "path": "dist/index.apple-touch-icon.png",
+      "bytes": 59343,
+      "sha256": "80d91adb306354c6e4d1af546d062e1e9236699ad0fd53153ab3d2fc34cd11d4"
+    },
+    {
+      "path": "dist/index.audio.position.worklet.js",
+      "bytes": 2973,
+      "sha256": "be33985bc7160d6bf9646f259cd86b259cd67b02ccb297ee5c44f8ac84327bc8"
+    },
+    {
+      "path": "dist/index.audio.worklet.js",
+      "bytes": 7298,
+      "sha256": "5b476a9c9ce642c0ee4256436d1bc31d9c38f868aca0f9a8e2a57c18d2dec2a3"
+    },
+    {
+      "path": "dist/index.html",
+      "bytes": 357722,
+      "sha256": "ba9e66de373bfb3cdeb394f95b90d6380ef26acc610f2ebdde00f01ce51cc889"
+    },
+    {
+      "path": "dist/index.icon.png",
+      "bytes": 389674,
+      "sha256": "1c591b9eb1b7af2a840a59a9feb637a0a7aeba2b0abde28042abf44f77d0acb3"
+    },
+    {
+      "path": "dist/index.js",
+      "bytes": 279815,
+      "sha256": "33c94cb3175f3333b82e2a3be5e8e86f77986f0aa2042b1631f6367a4e5bb6ba"
+    },
+    {
+      "path": "dist/index.pck",
+      "bytes": 27089100,
+      "sha256": "89b6593e8e05951fc24f139dc01092b3281bc59cd5dcf8616caef5dc198d00e8"
+    },
+    {
+      "path": "dist/index.png",
+      "bytes": 1010767,
+      "sha256": "5743a648b82437e0e60db5e4aa08103cea96b01e110961082223c0e7fa819ebf"
+    },
+    {
+      "path": "dist/index.wasm",
+      "bytes": 39514754,
+      "sha256": "fc74679e3b97f76878947fcd4fbe1268cbfa6188182a2e33bbc3f5dc9bfa57d0"
+    }
+  ],
+  "completed_at": "2026-10-05T22:14:43.155619+00:00",
+  "result": "PASS"
+}

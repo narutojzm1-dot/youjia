@@ -1,10 +1,12 @@
 extends SceneTree
 # Real viewport input dispatch from the unmodified initial spawn.
 # Simulation steps are accelerated for assertions; this is not a browser timing test.
+var checks := 0
 var main:Control
 var failures=[]
 func _initialize(): call_deferred("review")
 func check(ok,label):
+ checks += 1
  print("AUDIT ","PASS " if ok else "FAIL ",label)
  if not ok: failures.append(label)
 func mouse(p):
@@ -144,5 +146,5 @@ func review():
  check(not w._has_walk_goal and w._pending_interaction=="" and w._walk_path.is_empty(),"invalid newer pointer cancels previous route and intent")
  check(p.carrying_grass and not w._leading,"invalid pointer never consumes grass or toggles lead")
  root.get_node("AudioDirector").call("release_streams")
- print("[explicit-target-tests] failures=",failures)
+ print("[explicit-target-tests] checks=",checks," failures=",failures)
  quit(0 if failures.is_empty() else 1)

@@ -1,6 +1,12 @@
 # 悠长的假期 — 产品决策与需求变更台账
 
 
+### 2026-10-06 438共享保全正式发布与有限体验归档（CODEX-LEAD，#150/#305）
+
+PR438最终e43f1901经独立批准6001034317合83b8930，Actions/Pages及公开PCK/十模块核对通过；随后含该修正的正式089d453组合完成普通与受控两条有限验收。[完整来源、原件与边界](playtests/2026-10-06-cleanup438-public/README.md)：受控真实cleanup intent一次写失败9→resolve rejected→一次确认→10confirmed/ack，真关页新页完整current一致、落羽1圆石1、仅current；普通羊照＋松果1返院后四份完整DB采样一致gen9、仅current。Native51未知嵌套字段INVALID保全与Web I/O失败恢复分开，不互相冒证。首83b空篮未触fault、候选首次Target crashed和传播核验失败原件均保留；取消cdec旧发布不等于回滚main。
+
+稳定性邮件于2026-10-05T19:25:01Z已实际发送，去重键milestone:cleanup-invalid-preservation:game-089d453，[146回执6001504039](https://github.com/narutojzm1-dot/youjia/issues/146#issuecomment-6001504039)；仅记me不公开私人地址，439标题四视口在发送时仍待验，不改历史。共享本片完成不关闭150/305；真机、断电、全矩阵/未知格式仍未覆盖。
+
 ### 2026-10-05 双羊候选实际接线（CODEX-LEAD，#121/#30）
 
 已接收Producer121#5995594318并在121#5995752353/30#5995753656认领；不重复原画制作。按PR378 `bccf132251e845262eb2e374d5d645a02c80de62`复制黏人v2/呆羊v3，CastArt个体映射与既有成功pet短反馈接线；无新玩法/存档字段。原生镜像脚锚/连续反馈/照片兼容、独立Web与最终SHA审核见[候选记录](playtests/2026-10-05-sheep-attention/README.md)。尚未发布，不代表121或30所有资源/体验已结项。
@@ -28,7 +34,7 @@
 | REQ-20261002-008 | 2026-10-02 | 为主动互动补足真实对象回应 | 进行中 | 鸭鹅投鱼见 [PR #32](https://github.com/narutojzm1-dot/youjia/pull/32)，抚摸和浇水见 [PR #35](https://github.com/narutojzm1-dot/youjia/pull/35)；更多互动仍待盘点。 |
 | REQ-20261002-009 | 2026-10-02 | 让院子里的可见地点成为可选互动和彩蛋 | 进行中 | 花箱、岸石和栅栏三处已发布至 `game-df8b92d`（[PR #38](https://github.com/narutojzm1-dot/youjia/pull/38)、[#39](https://github.com/narutojzm1-dot/youjia/pull/39)、[#41](https://github.com/narutojzm1-dot/youjia/pull/41)）；更多热点与可变背景仍待实现。 |
 | REQ-20261002-010 | 2026-10-02 | 让旅人随手拍有清晰的成片、题词和收入相册反馈 | 已发布；用户认可显影效果 | [PR #43](https://github.com/narutojzm1-dot/youjia/pull/43) 已发布为正式 `game-e2d12b7`；Pages 公网 PCK 哈希已核实；用户试玩后提出真实抓拍、稳定题词与翻页手账的下一切片 REQ-013。 |
-| REQ-20261002-011 | 2026-10-02 | 让玩家互动在之后留下轻微、可感知的世界回响与后续故事 | 已发布；Pages 清单/PCK 已核对 | 制作人于 2026-10-03 确认“玩家牵引羊驼靠近大鹅、双方安静共处后留下记忆”。首个切片通过羊驼自身进入共享范围后才记来源；只存稀疏记忆与低概率行为回响，不涉关系数值、任务、缺席惩罚、相机/相册。独立 reviewer `CODEX-LEAD-REVIEW-PR-71` 批准精确 SHA `219ed34d5299aeaa0e8eff53ec2f6e7f7683d045`；PR #71 合并提交 `6dacd879ea0a2bac724ecfd548779e5d40c44308`。见 [PR #71](https://github.com/narutojzm1-dot/youjia/pull/71)、[issue #45](https://github.com/narutojzm1-dot/youjia/issues/45)与[关系模型](architecture/animal-relationship-model.md)。
+| REQ-20261002-011 | 2026-10-02 | 让玩家互动在之后留下轻微、可感知的世界回响与后续故事 | 已发布；普通牵引记忆/关页恢复有限实测，回响未实证 | 制作人于 2026-10-03 确认“玩家牵引羊驼靠近大鹅、双方安静共处后留下记忆”。首个切片通过羊驼自身进入共享范围后才记来源；只存稀疏记忆与低概率行为回响，不涉关系数值、任务、缺席惩罚、相机/相册。独立 reviewer `CODEX-LEAD-REVIEW-PR-71` 批准精确 SHA `219ed34d5299aeaa0e8eff53ec2f6e7f7683d045`；PR #71 合并提交 `6dacd879ea0a2bac724ecfd548779e5d40c44308`。见 [PR #71](https://github.com/narutojzm1-dot/youjia/pull/71)、[issue #45](https://github.com/narutojzm1-dot/youjia/issues/45)与[关系模型](architecture/animal-relationship-model.md)。
 | REQ-20261002-012 | 2026-10-02 | 让熟悉的小院因时段天空与玩家取景持续有新发现 | 进行中（切片 C 已发布，待制作人看抬头；D 延后） | Owner CURSOR-CONTRIBUTOR-LOCAL。A 云带已上线；B 树叶见 REQ-012-STAY / PR #85；C 无道具抬头微推已发布 `game-6a20cdc`（Actions 37100630995）；D 延后。见 [familiar-yard-observation.md](architecture/familiar-yard-observation.md)、[体验](playtests/2026-10-03-REQ-012-quiet-sky-look.md)。 |
 | REQ-20261002-013 | 2026-10-02 | 加入真实动物抓拍、稳定在照片内的有限题词和可翻页旅人手账 | 已发布；用户正式版试玩待反馈 | [PR #53](https://github.com/narutojzm1-dot/youjia/pull/53) 经独立审查后合并至 `b560dec94f08a1597e2b834e74c41841893ba36b`；[Actions 37025345857](https://github.com/narutojzm1-dot/youjia/actions/runs/37025345857) 与 Pages 发布成功。公开 PCK SHA-256 `e5b9c3f931b957ac4dd288e1c6786f6b9fc1d9ace946eac711e3bed723ac3d58` 已核验；详见[体验记录](playtests/2026-10-02-REQ-013-scrapbook.md)。不编造动作或旧照日期、不显示进度催促；与 REQ-012 自由构图及 REQ-011 关系回响独立。 |
 | REQ-012-STAY | 2026-10-03 | 站在栅栏边时重播已有草叶画 | 已合入 | `GROK-BUILD`。[PR #85](https://github.com/narutojzm1-dot/youjia/pull/85) 合并 `36fa443`。父 REQ-012 仍属 CURSOR。无网页实玩。 |
@@ -1322,3 +1328,150 @@ Cloud242/6000756272于18:38:12实际交375 Draft v2完整head18c049b1b1b11dd2f8b
 ### 2026-10-06 PR433 / REQ034 正式公开有限验收
 
 433最终aad4ef6fc0ee9898ab5178a2d307f890fd543d4a独审合c6e5c9b8b1764f8c41eb492b56b4d11da7f1386b，保原db89祖先/431自动合；Actions37355933384的69验证＋1导出与Pages37356777602成功，公开27,086,076B PCK实际f80ba8f58617ca6d4e91ce86deb80416f71f09286d7e2faaca99c48ae6d340c3。独立正常鼠标自然中文一照三短屏可读、合上再开、真关页新页同照视觉恢复通过，[原件/边界](playtests/2026-10-06-album433-public/README.md)。未翻页/英文/触屏/真机/听验/全DB；本次普通UI不另发邮件。main虽含427，cdec发布已取消，当前核验公开c6e5安全源不含427；47bb修正在途另管，不以新main内容冒公开验收。
+
+
+### GAME-PM 03:20最新接收覆盖
+
+438最终e43f1901ddf1c6f7847dea18b5df51aeaf7a6670独审合83b893035d76e9cdd1966b724fb748fab5e3ef59并发布，INVALID保全最小修订已交；Cloud6001369069明确接收/未重复同方法，旧接力未接收已解除。413由Grok436原b5423a67c9ca7aa0d9fd414a2d6ed1a5eadfbd31实际认领交付，439最终68084b6cffc52e5911c49f1004b4da5154281671独审合089d453dc7b4ac8a8b5dbe8fc250d032c6e80b21并发布；父单正式组合/各态验收仍在Leader实际持续轮次，不重复测试/不全关。375新753f1795831e1f3be8032796f6e50b754dd55413清底v2横竖视频/独立画面审核已交，Producer运行认可/耳听待。168远端原件/专业例外/接入、Assistant382最终实现head仍未交，不把别人的合入冒执行。详见[13身份最新产物/范围/窗口](pm/2026-10-06-0320-coordination.md)。
+
+
+## 2026-10-06｜REQ035 / PR439 标题声明链接正式公开验收归档
+
+Agent-ID: CODEX-LEAD。原作者GROK-CONTRIBUTOR的436 b5423a67c9ca7aa0d9fd414a2d6ed1a5eadfbd31保留实际祖先；439最终68084b6cffc52e5911c49f1004b4da5154281671经独立审6001101655后合089d453dc7b4ac8a8b5dbe8fc250d032c6e80b21。Actions37360164187（71次验证Godot启动、另1次导出）/Pages37361682942成功，gh-pages72eab79ca8af05b67dd6e3c29081b05d5ec8c203。root实际下载公开PCK27088396B，SHA256 fb7b1473608a999f76eb46a8fd18b7f6fa2e8456f0508ee0db0693b2cddba1f8，并核HTML/full manifest/十模块。早期两次默认URL旧83b传播不一致原日志保留，随后默认URL19:26:50Z已稳定同源，不把失败抹成一次即成功。
+
+独立review304在同一正式页面以普通输入顺序resize1280×720、568×320、640×300、390×844，normal/hover/held mouse.down/真实Tab焦点均可读；4次鼠标许可新tab及桌面Tab→Enter第5次实际打开/关闭返回，HTTP200、URL/title/全文/原图均留存。首末完整源/HTML和实际HTTP下载PCK一致，errors=[]、exit0、浏览器已关。33原件逐字节归档，原始正常态只保证声明本身无focus，其他按钮可有焦点。不是Web像素对比测量、完整无障碍审核、实体手机/触屏/原生许可窗口/听验；原生340数值专项另列。
+
+[完整正式档案与原件](playtests/2026-10-06-title439-public/README.md)。#413待本纯文档最终独审合入后由负责人按原范围结项；未预先称已关闭。不重复438故障档案或修改其邮件当时pending的历史事实，不因普通UI另发里程碑邮件。此提交只docs，无运行时/goal修改，不再导出发布。
+
+
+## 2026-10-06｜#150/#305 满篮异名替换有限公开尝试：未命中，未覆盖
+
+Agent-ID: CODEX-LEAD，独立普通QA review304，执行前已声明6001665569固定最多两趟。正式089d453dc7b4ac8a8b5dbe8fc250d032c6e80b21，一页自然羊互动生成旧照后，两趟均按gate→shade→brook→slope，普通行走/E观察/T拿取；实际八站分别空/松果/圆石/落羽、空/空/圆石/空。第一趟到最后站才满3件，无第四offer，第二趟仅1件，因此没有到达异名替换UI：目标NOT COVERED，不算PASS，也不据随机未命中报缺陷。全部未命中PNG/JSON保留，没有第三趟或换路线挑样本。两次普通回院画面正常，羊照在前后相册可见；只读技术证据pre-close与真正page.close/newpage的current完整相等gen22、watermark2、session:null、松果1/落羽1/圆石2，initial/reopened album与完整photo_moments相同。这只支持本两趟普通授予/关页无重复，不支持替换持久化、全DB或物理持久性；同context新page不冒浏览器进程重启。t2-settled文件是早gen21 pending，后pre-close22才清理完成，早态原件未删。四次full manifest与两次实际PCK下载hash均绑定089d/fb7b1473608a999f76eb46a8fd18b7f6fa2e8456f0508ee0db0693b2cddba1f8；复用驱动本次未记录下载长度，不冒它自行测得27,088,396B。errors=[]/exit0，51原件与原hash清单归[完整报告](playtests/2026-10-06-heteroswap305-bounded/README.md)。异名替换验收仍由Leader/QA保底，未改Cloud分支、未关150/305、未发邮件；本次仅docs收口，无运行时代码改变。
+
+
+### GAME-PM 04:20最新交付覆盖
+
+441/442/443精确独审档案已合：438两路限定正式故障/关页已交、413四视口各态及实际许可Tab→Enter已交并closed completed；旧在途/待归档文字保留历史、不当当前。异名替换两趟未命中仍NOT COVERED，不无限第三趟刷样本。Cloud445最终fe56914e13d69487d79679470aa79b2bd6b44184独审合8f464b25598421b448a2af9c10a6b0653bf11e1a仅测试/夹具补強，无运行时；375753f资源视听认可待。Grok444 cda5ab8ded8384f3f3b7bfeccf996652b65a1a9c已由Leader6002032456接独立集成，_soft_button不占382_input。Producer168/Assistant382无新实际产物保最近已证窗口。详见[13身份/端到端范围](pm/2026-10-06-0420-coordination.md)。
+
+### 2026-10-06 · REQ-011 普通牵引关系记忆与真实关页恢复补验
+
+CODEX-LEAD独立QA在正式`089d453dc7b4ac8a8b5dbe8fc250d032c6e80b21`同一新profile完成普通点击羊驼、牵离、带回鹅边和Space松开；第一轮15秒后的只读数据库出现唯一共享空间关系标记。继续90秒自然静观后，真实关页新建页面，原羊照、全部三张既有照片和关系保留；末五份完整DB字节一致。两页面首尾四次公开manifest/HTML/PCK实际下载均同源，27,088,396字节，SHA256 `fb7b1473608a999f76eb46a8fd18b7f6fa2e8456f0508ee0db0693b2cddba1f8`，浏览器exit0/errors空。没有游戏状态注入；保存标记不等于玩家已辨认10%停留回响，后者仍未覆盖。#45保持长期未完范围，#150亦不据此全项结案；未扩展故事或新资源。见[完整原件与步骤](playtests/2026-10-06-relationship45-public/README.md)。同页少量#444旧版UI旁证明确没有复现白字，也不是候选修复验收。
+
+
+## 2026-10-06｜REQ036 / PR444 暖纸按钮焦点可读性授权接力
+
+Agent-ID: CODEX-LEAD。按原作者444的接力请求及6002032456接收，将 GROK-CONTRIBUTOR 原 cda5ab8ded8384f3f3b7bfeccf996652b65a1a9c 作为真实父祖先保留，在最新main a99660937ef2942779d9cf217079559611616efa上集成。生产变更仅 Main._soft_button 的五文字状态及新增 _soft_focus_ring，原底色、按钮行为与布局保持；补原作者专项进入 tools/verify_daily_life.sh 永久门禁，文件100755。没有接管Assistant382输入/modal/slider或Cloud探索。原作者原生5080数值检查与未入仓截图说明保留为作者证据，不转述为Leader浏览器体验；Leader独立执行、候选Web与最终SHA审查结果随后按实际补齐。当前未合入、未发布，不扩大为音频开关行为缺陷全部解决。
+
+
+同片集成验证补充：Godot4.7.2内部主题/几何专项5080通过，首轮full因稀疏副本漏掉已有近郊anchors JSON被门禁拒绝；精确补回main原件后完整重跑72次Godot启动、Node检查、11 retention与本地publisher、Web export全通过。初失败/后通过原件均保留。[集成档案](playtests/2026-10-06-soft444-integration/README.md)明确标题兄弟Panel不在5080祖先采样覆盖中，透明底对比由独立公式另验，非像素实测；真实浏览器与最终SHA独审由独立代理接续，当前不冒已发布或实际听验。
+
+
+REQ036接力候选追加：实施代理以同一14a85a5候选在1280×720/390×844/568×320普通键鼠验41图、首末6次实际PCK同c8b05b9、errors=[]/exit0；实际取得的标题/暂停focus、held press、音乐标签关开恢复、确认Enter/取消范围与初始Tab未命中分别保留。[候选原档](playtests/2026-10-06-soft444-candidate/README.md)不是独立终审或公开体验，不冒听感、真机、触屏、相册或全无障碍。首次驱动误判运行dataset应为candidate标签而非实际index已单列失败并更正；候选文件/代码未改。合最新指定85fmain仅带新测试/文档，运行树对14a相同；补探索218专项通过，不重复声称全量重跑，独立final SHA/正式CI/发布待。
+
+### 2026-10-06 #130 可信套件完成标记：候选已通过真实组合门禁
+
+Agent-ID: CODEX-LEAD。按原督导未完成子项与[6002422874认领](https://github.com/narutojzm1-dot/youjia/issues/130#issuecomment-6002422874)，daily测试改走精确入口绑定的成功汇总检查，保留原进程/tee退出与全日志异常拒绝。新入口没有登记即拒绝，不以任意PASS代替完成；import/export等旧低层工具保持各自进程/日志契约，不伪造断言成功。独立审阅指出licenses旧PASS不证明正计数后，已改读其原有checks/零失败汇总；explicit_target、ui_interaction、ui_viewports仅在既有check入口累计数量并加入最终行，不改断言或游戏逻辑。
+
+候选 `819200429f94bfda60b14cec76de93d1d00381c6` 保留原Grok444的冻结组合祖先及soft_button门禁入口。实际Godot4.7.2全daily一次exit0：1次import+71套逐套可信完成（含新增三套计数25/63/135与licenses124）、50个独立mock及两项Node检查均通过；Web release导出也exit0。本地PCK 27,088,652 bytes，SHA256 `cd7b6ed95205d1cec307e704c9887be0d08d8bff080a7e413e37b5957eb9f8ed`，不是公开发布哈希。自动import元数据/UID变化已按精确清单恢复，未加入实现。见[契约、完整原生日志与导出记录](engineering/godot-completion-gate.md)。已组合实际main `de4ba4227a1ce0eff5db1106a051bdf9845332a9`，相对实跑候选仅文档差异，独立最终SHA审查与本片合入仍待；PR450只读workflow为另一独立切片，其GitHub验收/合入独立跟踪，不用本地检查冒其结果；#130不整体关闭。
+
+
+### 2026-10-06 #130 PR 阶段只读验证入口（VERIFY-PR-130）
+
+CODEX-LEAD 按 [原单认领6002379027](https://github.com/narutojzm1-dot/youjia/issues/130#issuecomment-6002379027) 接续工程督导指出的 PR 阶段验证缺口。新增 `pull_request` 到 main 的只读 workflow，沿现有 docs/README 排除范围；校验 proposed merge，运行已有发布辅助 Python 检查、严格 daily 与实际 Web 导出。同 PR 新头取消旧运行；不使用 `pull_request_target`，checkout 不保留凭据，不执行正式发布脚本，不改原 main 发布工作流或分支保护。没有玩法、资源、存档格式或玩家体验改变，策划基准不变。[实现及验收边界](validation/2026-10-06-pr130-verification.md)；真实本 PR CI、最终 SHA 独立审核和合入状态后续在 PR/原单记录，#130 父单不据此关闭。
+
+
+### GAME-PM 05:20最新范围覆盖
+
+451 finalf72独审合de4保Grok444祖先，候选已交正式发布待，公开实际仍089d；447faf507已Leader6002478671实际接独立候选3970488/final审验合发待。452 final6ce独审合16ef、450 final87bd独审并真实PR CI37373896187成功合d788，只两工程门禁已交，130父不全关/不冒公开发布。448/449有界关系记忆及低动效静帧档已交，概率回响/精准取消等未覆盖保留。Cloud21:00仅巡检/375认可待，Build05:07仅巡检，不假称实现或额度恢复。13身份及Owner下一动作见[本轮](pm/2026-10-06-0520-coordination.md)。
+
+
+### 2026-10-06 REQ037 新照片相紙襯底集成（CODEX-LEAD）
+
+按 [447作者請求與接收6002478671](https://github.com/narutojzm1-dot/youjia/pull/447#issuecomment-6002478671) 保留原作者 faf507ae47a1bd999a32b3720b22cf3391ea5b1e 的 PhotoArrival 襯底與專項，整合 main de4ba4227a1ce0eff5db1106a051bdf9845332a9，補 daily / 需求索引與[原始驗證證據](playtests/2026-10-06-photo447-integration/README.md)。只在相框下加紙色底，照片構圖、題詞、計時、低動效與存檔原路徑不變；普通顯影淡入淡出仍保留，不把過渡時整張相紙透明當成修復範圍。作者原生 550 / 修前19屬其報告，Leader 實際組合回歸、正常玩家留影與最後 SHA 獨審另記，不冒上線完成。
+
+
+REQ037 接力候选追加：运行源397的完整daily实际73次Godot启动并至两项JS完成行，后续retention11、本地publisher两构建及导出均到达；首次工具外层1与内部run.exit=0原因未解释，完整日志原样保留，不宣称外层首次成功。852整合可信完成标记后，正常import、50项门禁、实际550专项和严格Web导出由Python逐进程直接记录exit0；两真实PCK字节相同。独立QA在390×844、568×320各normal/reduce共四个新profile，以普通点羊自然首照和相册验到完整实纸衬；44原PNG和10轮完整HTTP源/包核验归[候选档案](playtests/2026-10-06-photo447-candidate/README.md)，driver exit0/errors空。正常短横02为预期淡入，不代完整hold，该样本未单独拍到自然到期收起；真实关页复开仅同context，不冒进程重启或旧档全矩阵。随后合main d788只带只读workflow/docs，生产/tools/test对实测852为空diff；原作者六文件原样保留。最终PR CI、独立final SHA审查、合入及公开发布仍后续核定。
+
+
+REQ037 完整导出补验：独立包审阅查明旧候选稀疏目录漏物化4个已跟踪根metadata。实际四组QA继续绑定852/812144原包，不改其manifest或原件。合PM453 main67c后源d22精确补原Git四JSON并正常import/严格export均直接exit0；新包27,089,100B / faa935055fb62250c137625da28e15d2ac28ef3880db1e8993e5991afec84df6。独立逐成员审计确认旧394个payload（含场景ID）全字节相同、只增四个精确Git文件至398项；限定运行内容等价映射候选结果，没有声称重跑新包浏览器或已公开发布。详情及原始失败完整保留在[工程档案](playtests/2026-10-06-photo447-integration/README.md)。
+
+
+### GAME-PM 06:20最新闭环与可执行队列
+
+451/452/450正式发布来源已分别6003231423/6003421082/6003651364核，不再笼统发布待。454 finald9302cdce4a7293d14df773ba50d7c5f231291c4独审6003668335及真实CI6003952106合a0bb75e38e59032a6df72a2122af4403c3c3e816，原447祖先保留；本PM所测公开a0bb，正式PCK/10模块6004247545已核，普通相纸后验仍Leader持续轮负责。455c79237181d76ab0929952c94b29867dc468425c8实际接6003991606；130只读取源新片6003973038与原已完成门禁分列。Cloud22:00仅巡检，456按既有153/372授权补无375资源依赖resize生命周期复现/必要修正，OwnerCloud，待接收不是已执行；375v2资源专业认可仍局部等待。其他身份无新本人产物不造回执。[逐人记录](pm/2026-10-06-0620-coordination.md)。
+
+
+### 2026-10-06 #130 PR 只读取源排除根 docs（VERIFY-PR-SOURCE-130）
+
+CODEX-LEAD 按 [6003973038认领](https://github.com/narutojzm1-dot/youjia/issues/130#issuecomment-6003973038)，从已审/真实CI通过的454合入main `a0bb75e38e59032a6df72a2122af4403c3c3e816` 独立实施。仅给 verify-pr 的原 checkout 增加非 cone 根模式 `/*`、`!/docs/`，保留全部 art/assets、根 metadata、测试与工具；默认 proposed merge、只读权限、无凭据持久化、超时与全部既有验证不变。当前 checkout v4 的 sparse 输入自动启用 blob:none；三组隔离 Git 正反例证明只隐藏 docs 或只设 filter 都不充分。此改动不把 paths-ignore 当下载排除，也不删除仓库证据。
+
+取源耗时样本说明成本但不能证明454慢的根因；当前 main 4743文件中 docs3830个/1,200,434,958B，非docs913个/212,708,182B。无 docs 的实际候选 `1596cd1f05df3744045f19d929eabb906bdddaba` 已用 Godot4.7.2完成 import+72套（逐套可信完成）、50门禁反例、2项Node、retention11、本地publisher两构建及严格Web导出，全部实际进程exit0。PCK有398成员，无漏项；与454完整metadata包相比394成员相同，UID映射相同但顺序不同，3个导出场景各4字节差异尚不冒称确定语义。未重跑浏览器，未声明新PR CI、合入或发布成功；详见[边界与原件](engineering/pr-ci-source-sparse.md)。
+
+发布工作流继续 fetch-depth=0：隔离fixture证实主仓depth1会使共享gh-pages工作树仍带shallow标记，现有保留helper保守保留全部包；即使Pages历史三提交均取回也不能直接改成depth1。生产发布与历史保留本片不改。最终HEAD独审和实际GitHub PR CI另行核验，#130长期单保留剩余范围。
+
+
+### 2026-10-06 REQ038 / PR455 暖纸按钮禁用态授权集成
+
+CODEX-LEAD按作者[PR455](https://github.com/narutojzm1-dot/youjia/pull/455)明确请求与[6003991606接收](https://github.com/narutojzm1-dot/youjia/pull/455#issuecomment-6003991606)，保留GROK-CONTRIBUTOR原 `c79237181d76ab0929952c94b29867dc468425c8` 真实祖先及五个原文件。在包含454相纸和130强门禁的main上只集成 `Main._soft_button` 禁用暖纸底/1px浅棕边/柔墨字及三个常量，不改输入、禁用规则、存档、相纸或探索。补soft_button_disabled的daily入口与正计数精确完成行，保留100755及所有既有入口。
+
+候选源 `910bdec3fe7bf07833d6b9ccb720f57a5332880c` 用实际Godot4.7.2完成专项4400、完整daily73套件+1import=74启动、50原有门禁受控案例及8个新登记受控边界、两项Web发布工具测试和Web release导出；进程退出码均0且逐项原始日志已归档。受控案例明确是fake executable，不冒原生Godot。实际Web由独立助手在390×844及568×320普通打开空手帐、分别点击禁用前翻/后翻仍留在空页、点击可用合上回标题；候选HTML、manifest、PCK和外部依赖在前后绑定，无page/consoleerror；真实截图/输入路径以[证据](playtests/2026-10-06-soft455-integration/README.md)为准。
+
+PCK为27,089,276B / SHA256 `ef5c5c9e13037e83fd76a5c6764c35faaf00c4c3b5f34e007459889c4276549b`，仅候选。原suite的_start_holiday/_show_album及writing/acknowledging/resolving是原生夹具；failed恢复只证允许重试，不能冒真实写入成功或确认完成。未覆盖的有照片页/备份恢复/真机触屏/听验单列；字体对比4.7795:1是sRGB公式，不是浏览器像素认证。最初僵尸进程误判的预检断言及未捕获初次untracked清单缺口保留，后续按STAT核真实独占，引擎日志没有因此伪报。最终提交独立审核、真实PR CI、合入与公开Pages验收由各环节另记，候选不等于已发布。
+
+
+### 2026-10-06 #130 完整历史下的发布取源排除（VERIFY-PUBLISH-SOURCE-130）
+
+CODEX-LEAD按[6004968169认领](https://github.com/narutojzm1-dot/youjia/issues/130#issuecomment-6004968169)从main9623独立实施。只给publish-pages原checkout增加非cone根docs排除四行，保留fetch-depth0、原ref/权限/凭据/并发、helper/worktree与全部测试/导出/发布步骤。与被7例证伪的depth1不同，full+partial+sparse实际保持main/Pages完整历史和shallow=false；后续原fetch沿用blob:none，linked工作树继承模式，但真实git add-A/commit/push保留隐藏Pages docs原blob。当前取源350秒已success，不把耗时推断为失败或根因；新配置性能仍待真实结果。
+
+fresh9623核到915非docs路径（734文本逐SHA+181保留二进制），460新增disabled专项无docs依赖，当前73套。运行源 `93d708d5fb20f8007b47b40bfc58f1845295aa4e` 的六配置/30保留检查、12次原publisher本地构建及6次缺当前PCK实际拒绝全部通过，origin未误推；全部只操作临时file://，版本查询为显式stub，未执行引擎或浏览器。首轮fixture把depth1不可达旧blob当应枚举的模型错误与后续更正/重跑保留。[可复现证据与边界](engineering/publisher-source-sparse.md)。这不是正式发布或加速已证，既有PR取源458与本发布片独立。
+
+最终head独立终审、真实PR CI全73套/导出与正式Pages核验均待；合入须先等460公开普通后验closed，避免验收中途切源。玩法/资源/存档协议不变，#130长期单不整体关闭。
+
+
+### GAME-PM 07:20最新闭环/接收
+
+454正式普通首照/相册/按住确认取消/真关页同contextcurrentgen2不变6004433457有限范围已交，键盘焦点未通过另459Assistant待接收。458 final6862b4c65b6c037fa2319a38ed12f7f0238168b7独审6004586550/真实CI37382704512合870f4faebd6e28c7314e9db97cb39ae27819eded并实际发布6004738969。460 final8a401350fedc57e59db86649b57ffd747649144f独审6004787590/真实CI37383994819合9623ba22c8edc564e5c89dc6b0171324e9230764、来源及两模拟尺寸空页普通路径6005141719已交，455原c792祖先保留。Cloud4566004963943实际接分支cursor/exp-reveal-resize-a84c，未有修正PR/fullhead；375资源等待只局部。461原742b293cc3e252f1fd7b46aa07333350155108cc已Leader6004903387接，462a6fc9beb63fc793b46097cd3827e6b705ff1e324新工程范围已独审6005260117/真CI37387083818合b300da74bf157de3f152e63331096cb1eb28b3f7，正式来源核验待，旧458不重挂等待。Build新错等已PM6005251654纠正，未回执；Producer168新完整候选已审而远端/例外/接入待，不冒无人返修。 [逐人记录](pm/2026-10-06-0720-coordination.md)。
+
+
+### 2026-10-06 REQ039 / PR461 新照片快门行纸片授权接力
+
+CODEX-LEAD按作者[PR461](https://github.com/narutojzm1-dot/youjia/pull/461)明确请求接收，保留原 `742b293cc3e252f1fd7b46aa07333350155108cc` 真实祖先及五个作者文件。运行修改仅PhotoArrival的ShutterCaption子Panel暖纸底、文字垂直居中和语言/尺寸贴合，保留行框几何、文案、墨色、照片及动画时长；字基线会因居中移动，不称字像素位置完全不变。Main输入、存档、探索、相纸衬底未改。daily加唯一专项和精确方括号正计数完成行，保留100755、mat/disabled/强门禁及最新CI/发布流程。
+
+实际验证源 `fd887ff8691b41edba305ab946c43df082e793f7` / tree `382fc30536973f2809641a36fdc3a67fd20b145c`：Godot4.7.2 import、专项1290、完整74套件+1import=75启动（含相纸550/禁用4400）、两个Web发布工具测试与release导出均direct exit0。原50门禁和新增9个完成行正反例为fake executable受控案例，单列不冒真实引擎。完整日志/退出码在[集成证据](playtests/2026-10-06-photo461-integration/README.md)。作者旧基线65失败和未上传PNG不冒本轮重做或已见。
+
+独立助手在同一浏览器内串行关闭/新建两个fresh context（390×844、568×320），只用普通中文正常动效进院→轻抚羊产生首照→完整快门纸底/相纸→自然退场→相册→合上；源/PCK/十模块/许可页前后HTTP绑定，实际driver exit0。短横本样本纸条覆盖目标提示纸片右半区域，但短文案“窗台花箱/看看花箱”在左侧没有被盖；不能写成长目标文字已测或所有HUD均可见。英文/低动效仅原生夹具，真机/触摸/听验/全部DPR未覆盖。
+
+候选PCK 27,090,652B / SHA256 `6f84caeb3dc92d6d12a91f39f6cc766dcc521a26bdb70b2f8c99063384eb73a3`；候选不等于已发布。native的fixed seed/day/player/debug_force_rule照片、直接refresh_locale/root.size和Tween.custom_step只是格式/布局/属性夹具，7.2277—8.2869:1是静止RGBA sRGB公式，不冒真实逐帧或普通触发。最终独立SHA审查、远端CI、合入和公开manifest/PCK/普通后验仍按后续实际环节留痕。
+
+
+### 2026-10-06 #400 quiet_sky 与鹅马预热的所有权交接
+
+CODEX-LEAD按[6005299861窄协助范围](https://github.com/narutojzm1-dot/youjia/issues/400#issuecomment-6005299861)从只读条件线索推进真实Main/World组合红测，不把旧-133数学分析或未知源用户截图重标新产物。原流程在鹅马wait>0而phase仍-1、尚未发新focus时yield静观，清掉active/计时；随后预热中断双方都不release，导致旧偏移保留。最小改动仅World._tick_quiet_sky_look区分预热与实际演出：保留旧hold原时长、正常取消与到期，实际phase≥0无release地让给新focus，不增加每次预热的额外回跳，不变玩法/资源方案。
+
+v1原160检查红绿均保留；独审指出其hold3.25<预热3.5，没有覆盖旧quiet仍活跃时接管。v2补normal/reduced实际剩0.4s的同tick新focus/no-release正例，相同测试blob原代码FAIL202/34失败、修正PASS202；runner误估204后按真实202续跑，原失败不抹去。新增完成行14个fake受控例使总数64，两个独立合法行仍允许，不声称wrapper唯一性。完整33bd组合含PR464原作者和74既有套件，加camera至75套/76启动、2Node、11项Python、本地publisher及Web实际exit0。随后只增加已合main49596真实祖先，整树不变，不因docs重跑引擎。原件、来源、候选PCK及边界见[归档](playtests/2026-10-06-camera400-handoff/README.md)。
+
+此仅Leader共享框架子片，不接管Producer对#400原截图与构图的总体验收，不改Main输入/背景/探索。独立QA候选390普通静观→真实ArrowRight→回稳有限通过，manifest/PCK/十模块前后实核；静观顶部y112/y138浅纸空带是另一个未通过构图的遗留，不冒原截图同因、不在本片越界修布局。普通短窗口未覆盖自然鹅马预热和同tick交叉链。最终完整SHA独审、真实PR CI、合入与公开后验依次留痕，未完成环节不冒已发布；本PR只Refs #400。
+
+
+### GAME-PM 08:20远端候选与实际交付覆盖
+
+168同一3f2da4270fc6488da42eaa4ec45ca43768bb778a现已远端PR468、6006296178独立APPROVE仅候选归档，上传阻塞解除而冻结例外/天气接入未完成。Cloud456已实际交PR467392b330effb8dc345bbde4a140d0ba7dbf9821f7，278/278与6006397063完整daily exit0，final独审/真CI合发仍待。464最终0f4226dc6710ef3a11099baf45f707bbfd4fd30e独审6005708356/真CI37389414385合49596fa93bff3c29edfe441898017158c6e469a3，正式有限两尺寸普通首照/相册6006021492已闭环；462a6fc9beb63fc793b46097cd3827e6b705ff1e324合b300实际main/Pages/公开包6005477012已核。465最终5b070d13bc2190325d16ef4219a2b4c1cefedde3独审6006223767/真CI37391469666合b9f68c3c5c4e70e16cefde9b4400bb1d553ff915，整体400构图未通过，新投影范围6006243273在途；466原1759已Leader6006302562接，只样式/真实轨道输入门禁，不改382459。Assistant382已接但无final实现、459未回执；Build新错等已6006429157纠正仍未接收。 [逐人证据与剩余动作](pm/2026-10-06-0820-coordination.md)。
+
+
+### 收尾时最新实际产物（覆盖前段等待快照）
+
+Cloud242/6006407904实际00:24:25Z确认本会话审查返回即可续、后续小时触发是计划窗口非执行保证。467原最终392b330effb8dc345bbde4a140d0ba7dbf9821f7已由作者组织独立CURSOR-CLOUD-REVIEW-PR-467 APPROVE并实际PR CI通过，自行合main dbf6f5aa902ecefeb168657e81a3bb12d97dbcbd；已合不等于已发布，Actions/Pages/实际公开包及适用后验仍Owner收尾。原review三条低级意见（同尺寸不发信号使守卫覆盖偏弱/冗余left_behind/无现存重复setup路径）保留不冒全面覆盖。
+
+Assistant实际新PR470279994052541f289c8fc205274552e2e9afe84b0交382确认层/暂停滑杆单手势隔离，264项修前96失败→修后0、音频648/暂停168/保存反馈50是作者原生报告，实际Web/最终独审未完成，旧79d CI不冒新279994最终CI。459仍未接收且不是470默认通过；无资源/Host/后端改动，原Owner保留。Leader167已有证据PR469749c36d343df09aaf0d9919e6cc2c6a618dcb752，独审未完成，不再只有计划分支。
+
+465正式main37392967346/Pages37393667313已success，6006482881实核b9f公开PCK27090748B/SHA2562b719ae25bb58d91f4742e998faff212a3410a5ac1ecf47ed50c3fc7dbf0ca1f与10模块/license，普通390静观→移动00:27:03Z CLOSED仍见123px空带FAIL；因此源码/部署证明闭环仅World交接，400新投影依旧在途，Producer整体未完成。PM实际被测仍b9f，最新源码dbf含467未本人体验；不拿已合的新head代前段实际页。
+
+
+独立终审时补核470远端head已变为84a310bc3c2df4b09146197f76ad8e4cbf9cf29a（API updated00:29:44Z），作者正文仍279994；新head内容/适用验证与独立终审需作者重新绑定，不能把旧279994或79dCI/原生报告当84a已审已验。Assistant已交实现这一事实保持，13行最新远端为84a，前段279994仅本轮初始产物快照。尚未合入/正式后验。
+
+
+### 阴天精确专业门禁实际解除（独立终审期间最新覆盖）
+
+PR468最终3f2da4270fc6488da42eaa4ec45ca43768bb778a已合175bfce8f9ef02991022188172de4cf3fec007d0。新6006526392由Producer转录独立GAME-PRODUCER-REVIEW-DUCK-ART专业复审，明确APPROVE该精确冻结范围例外和右侧底板美术返修，**不再仅候选归档批准**。雪框7257中实体4877精确同v1坐标/天空2380；y>=250的20437中实体18522同v1/天空1915，交集不相加，分类是制作mask+视觉不是独立自动语义分割。专业门禁据这份具体复审实际解除，不是PM意见代审；原RC只在精确候选范围解除，不授权任意改冻结区，不等ART个人再次签字。168顶栏及REQ005最新状态已直接同步。
+
+Producer下一本人新路径天气接入，保旧图字节、照片capture/sanitize/setup拍摄时混合与光色表达、真实保存重载/旧照、晴阴反转/低动效/实际包体→最终接入SHA独审合发/同构建QA。天气/照片/运行发布尚未完成。前段Draft/待冻区例外/未合是当时快照已被本段覆盖；实际已解除上传和精确专业返修两项，不再往Leader或用户堆同一已授权审批。当前main175bf包含资源归档，PM实际在线仍b9f，不冒新阴天已经玩家可见。

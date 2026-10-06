@@ -1,0 +1,22 @@
+{
+  "source": "85217509f369e2dc06495bb1fa4ff1649b181a47",
+  "steps": [
+    {
+      "step": "gate-contract",
+      "args": [
+        "bash",
+        "test/godot_gate_test.sh"
+      ],
+      "exit_code": 0
+    },
+    {
+      "step": "mat-completion",
+      "args": [
+        "bash",
+        "-c",
+        "source tools/lib/verified_godot.sh; run_verified_godot_suite /dev/shm/photo447-evidence/post-gate-mat.log test/photo_arrival_mat_suite.gd --headless --path ."
+      ],
+      "exit_code": 1
+    }
+  ]
+}

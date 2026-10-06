@@ -1,0 +1,40 @@
+{
+  "source": "85217509f369e2dc06495bb1fa4ff1649b181a47",
+  "steps": [
+    {
+      "step": "post-gate-import",
+      "args": [
+        "bash",
+        "-c",
+        "source tools/lib/verified_godot.sh; run_verified_godot /dev/shm/photo447-evidence/post-gate-import.log --headless --path . --editor --import --quit"
+      ],
+      "exit_code": 0
+    },
+    {
+      "step": "gate-contract",
+      "args": [
+        "bash",
+        "test/godot_gate_test.sh"
+      ],
+      "exit_code": 0
+    },
+    {
+      "step": "mat-completion",
+      "args": [
+        "bash",
+        "-c",
+        "source tools/lib/verified_godot.sh; run_verified_godot_suite /dev/shm/photo447-evidence/post-gate-mat.log test/photo_arrival_mat_suite.gd --headless --path ."
+      ],
+      "exit_code": 0
+    },
+    {
+      "step": "verified-export",
+      "args": [
+        "bash",
+        "-c",
+        "source tools/lib/verified_godot.sh; XDG_DATA_HOME=/tmp/262-export-state/data run_verified_godot /dev/shm/photo447-evidence/verified-export.log --headless --path . --export-release Web /dev/shm/photo447-preview/index.html"
+      ],
+      "exit_code": 0
+    }
+  ]
+}

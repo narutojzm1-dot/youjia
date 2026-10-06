@@ -1,0 +1,574 @@
+{
+  "schema": "youjia.ci-checkout-audit/v1",
+  "observed_at": "2026-10-05T21:52:44Z",
+  "source_main_sha": "67c87f08c673c18b33fd14ddfe8be54991024f3c",
+  "scope": "Read-only production inspection and temporary local Git fixtures; no workflow/source edits, cancellation, Godot or browser execution.",
+  "current_pr454": {
+    "run_id": 37376177070,
+    "head_sha": "d9302cdce4a7293d14df773ba50d7c5f231291c4",
+    "status": "in_progress",
+    "conclusion": null,
+    "stages": [
+      {
+        "name": "Check out proposed merge without persistent credentials",
+        "status": "completed",
+        "conclusion": "success",
+        "started_at": "2026-10-05T21:30:08Z",
+        "completed_at": "2026-10-05T21:50:54Z",
+        "seconds": 1246
+      },
+      {
+        "name": "Install Godot 4.7.2 and Web export templates",
+        "status": "completed",
+        "conclusion": "success",
+        "started_at": "2026-10-05T21:50:54Z",
+        "completed_at": "2026-10-05T21:51:03Z",
+        "seconds": 9
+      },
+      {
+        "name": "Verify web bundle retention",
+        "status": "completed",
+        "conclusion": "success",
+        "started_at": "2026-10-05T21:51:03Z",
+        "completed_at": "2026-10-05T21:51:04Z",
+        "seconds": 1
+      },
+      {
+        "name": "Verify versioned persistence module publication",
+        "status": "completed",
+        "conclusion": "success",
+        "started_at": "2026-10-05T21:51:04Z",
+        "completed_at": "2026-10-05T21:51:05Z",
+        "seconds": 1
+      },
+      {
+        "name": "Run game verification",
+        "status": "in_progress",
+        "conclusion": null,
+        "started_at": "2026-10-05T21:51:05Z",
+        "completed_at": null,
+        "seconds": null
+      },
+      {
+        "name": "Export Web build without publishing",
+        "status": "pending",
+        "conclusion": null,
+        "started_at": null,
+        "completed_at": null,
+        "seconds": null
+      }
+    ]
+  },
+  "current_pr454_annotation_count": 0,
+  "history": [
+    {
+      "run_id": 37373896187,
+      "head_sha": "87bd1e09905a014e843f677ab9379d9b9a05dbce",
+      "status": "completed",
+      "conclusion": "success",
+      "stages": [
+        {
+          "name": "Check out proposed merge without persistent credentials",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-05T21:07:27Z",
+          "completed_at": "2026-10-05T21:07:56Z",
+          "seconds": 29
+        },
+        {
+          "name": "Install Godot 4.7.2 and Web export templates",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-05T21:07:56Z",
+          "completed_at": "2026-10-05T21:08:19Z",
+          "seconds": 23
+        },
+        {
+          "name": "Verify web bundle retention",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-05T21:08:19Z",
+          "completed_at": "2026-10-05T21:08:22Z",
+          "seconds": 3
+        },
+        {
+          "name": "Verify versioned persistence module publication",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-05T21:08:22Z",
+          "completed_at": "2026-10-05T21:08:22Z",
+          "seconds": 0
+        },
+        {
+          "name": "Run game verification",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-05T21:08:22Z",
+          "completed_at": "2026-10-05T21:13:39Z",
+          "seconds": 317
+        },
+        {
+          "name": "Export Web build without publishing",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-05T21:13:39Z",
+          "completed_at": "2026-10-05T21:13:44Z",
+          "seconds": 5
+        }
+      ]
+    },
+    {
+      "run_id": 37374949959,
+      "head_sha": "d788f48b5f8d322d2d1dc86551fcab87770ee897",
+      "status": "completed",
+      "conclusion": "success",
+      "stages": [
+        {
+          "name": "Check out source with Pages write access",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-05T21:25:19Z",
+          "completed_at": "2026-10-05T21:36:52Z",
+          "seconds": 693
+        },
+        {
+          "name": "Install Godot 4.7.2 and Web export templates",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-05T21:36:52Z",
+          "completed_at": "2026-10-05T21:36:57Z",
+          "seconds": 5
+        },
+        {
+          "name": "Verify web bundle retention",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-05T21:36:57Z",
+          "completed_at": "2026-10-05T21:37:02Z",
+          "seconds": 5
+        },
+        {
+          "name": "Verify versioned persistence module publication",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-05T21:37:02Z",
+          "completed_at": "2026-10-05T21:37:03Z",
+          "seconds": 1
+        },
+        {
+          "name": "Run game verification",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-05T21:37:03Z",
+          "completed_at": "2026-10-05T21:43:43Z",
+          "seconds": 400
+        },
+        {
+          "name": "Export Web build",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-05T21:43:43Z",
+          "completed_at": "2026-10-05T21:43:49Z",
+          "seconds": 6
+        },
+        {
+          "name": "Publish versioned build to GitHub Pages",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-05T21:43:49Z",
+          "completed_at": "2026-10-05T21:43:57Z",
+          "seconds": 8
+        }
+      ]
+    },
+    {
+      "run_id": 37373687265,
+      "head_sha": "16ef89a2bcd7245485ad5f116b251cd2978d25d7",
+      "status": "completed",
+      "conclusion": "success",
+      "stages": [
+        {
+          "name": "Check out source with Pages write access",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-05T21:16:02Z",
+          "completed_at": "2026-10-05T21:17:17Z",
+          "seconds": 75
+        },
+        {
+          "name": "Install Godot 4.7.2 and Web export templates",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-05T21:17:17Z",
+          "completed_at": "2026-10-05T21:17:33Z",
+          "seconds": 16
+        },
+        {
+          "name": "Verify web bundle retention",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-05T21:17:33Z",
+          "completed_at": "2026-10-05T21:17:34Z",
+          "seconds": 1
+        },
+        {
+          "name": "Verify versioned persistence module publication",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-05T21:17:34Z",
+          "completed_at": "2026-10-05T21:17:35Z",
+          "seconds": 1
+        },
+        {
+          "name": "Run game verification",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-05T21:17:35Z",
+          "completed_at": "2026-10-05T21:24:55Z",
+          "seconds": 440
+        },
+        {
+          "name": "Export Web build",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-05T21:24:55Z",
+          "completed_at": "2026-10-05T21:25:02Z",
+          "seconds": 7
+        },
+        {
+          "name": "Publish versioned build to GitHub Pages",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-05T21:25:02Z",
+          "completed_at": "2026-10-05T21:25:10Z",
+          "seconds": 8
+        }
+      ]
+    },
+    {
+      "run_id": 37372893785,
+      "head_sha": "de4ba4227a1ce0eff5db1106a051bdf9845332a9",
+      "status": "completed",
+      "conclusion": "success",
+      "stages": [
+        {
+          "name": "Check out source with Pages write access",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-05T20:57:20Z",
+          "completed_at": "2026-10-05T20:58:03Z",
+          "seconds": 43
+        },
+        {
+          "name": "Install Godot 4.7.2 and Web export templates",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-05T20:58:03Z",
+          "completed_at": "2026-10-05T20:58:11Z",
+          "seconds": 8
+        },
+        {
+          "name": "Verify web bundle retention",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-05T20:58:11Z",
+          "completed_at": "2026-10-05T20:58:12Z",
+          "seconds": 1
+        },
+        {
+          "name": "Verify versioned persistence module publication",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-05T20:58:12Z",
+          "completed_at": "2026-10-05T20:58:12Z",
+          "seconds": 0
+        },
+        {
+          "name": "Run game verification",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-05T20:58:12Z",
+          "completed_at": "2026-10-05T21:05:25Z",
+          "seconds": 433
+        },
+        {
+          "name": "Export Web build",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-05T21:05:25Z",
+          "completed_at": "2026-10-05T21:05:32Z",
+          "seconds": 7
+        },
+        {
+          "name": "Publish versioned build to GitHub Pages",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-05T21:05:32Z",
+          "completed_at": "2026-10-05T21:05:40Z",
+          "seconds": 8
+        }
+      ]
+    },
+    {
+      "run_id": 37369296247,
+      "head_sha": "8f464b25598421b448a2af9c10a6b0653bf11e1a",
+      "status": "completed",
+      "conclusion": "success",
+      "stages": [
+        {
+          "name": "Check out source with Pages write access",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-05T20:23:01Z",
+          "completed_at": "2026-10-05T20:23:34Z",
+          "seconds": 33
+        },
+        {
+          "name": "Install Godot 4.7.2 and Web export templates",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-05T20:23:34Z",
+          "completed_at": "2026-10-05T20:23:39Z",
+          "seconds": 5
+        },
+        {
+          "name": "Verify web bundle retention",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-05T20:23:39Z",
+          "completed_at": "2026-10-05T20:23:45Z",
+          "seconds": 6
+        },
+        {
+          "name": "Verify versioned persistence module publication",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-05T20:23:45Z",
+          "completed_at": "2026-10-05T20:23:46Z",
+          "seconds": 1
+        },
+        {
+          "name": "Run game verification",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-05T20:23:46Z",
+          "completed_at": "2026-10-05T20:28:49Z",
+          "seconds": 303
+        },
+        {
+          "name": "Export Web build",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-05T20:28:49Z",
+          "completed_at": "2026-10-05T20:28:53Z",
+          "seconds": 4
+        },
+        {
+          "name": "Publish versioned build to GitHub Pages",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-05T20:28:53Z",
+          "completed_at": "2026-10-05T20:29:00Z",
+          "seconds": 7
+        }
+      ]
+    },
+    {
+      "run_id": 37360164187,
+      "head_sha": "089d453dc7b4ac8a8b5dbe8fc250d032c6e80b21",
+      "status": "completed",
+      "conclusion": "success",
+      "stages": [
+        {
+          "name": "Check out source with Pages write access",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-05T19:03:11Z",
+          "completed_at": "2026-10-05T19:04:13Z",
+          "seconds": 62
+        },
+        {
+          "name": "Install Godot 4.7.2 and Web export templates",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-05T19:04:13Z",
+          "completed_at": "2026-10-05T19:04:22Z",
+          "seconds": 9
+        },
+        {
+          "name": "Verify web bundle retention",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-05T19:04:22Z",
+          "completed_at": "2026-10-05T19:04:23Z",
+          "seconds": 1
+        },
+        {
+          "name": "Verify versioned persistence module publication",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-05T19:04:23Z",
+          "completed_at": "2026-10-05T19:04:23Z",
+          "seconds": 0
+        },
+        {
+          "name": "Run game verification",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-05T19:04:23Z",
+          "completed_at": "2026-10-05T19:11:32Z",
+          "seconds": 429
+        },
+        {
+          "name": "Export Web build",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-05T19:11:32Z",
+          "completed_at": "2026-10-05T19:11:38Z",
+          "seconds": 6
+        },
+        {
+          "name": "Publish versioned build to GitHub Pages",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-05T19:11:38Z",
+          "completed_at": "2026-10-05T19:12:06Z",
+          "seconds": 28
+        }
+      ]
+    }
+  ],
+  "source_tree": {
+    "current": {
+      "sha": "67c87f08c673c18b33fd14ddfe8be54991024f3c",
+      "blob_count": 4602,
+      "uncompressed_blob_bytes": 1393849518,
+      "docs_bytes": 1181151563,
+      "art_bytes": 134564245
+    },
+    "earlier": {
+      "sha": "089d453dc7b4ac8a8b5dbe8fc250d032c6e80b21",
+      "blob_count": 4211,
+      "uncompressed_blob_bytes": 1214771758,
+      "docs_bytes": 1002100124,
+      "art_bytes": 134564245
+    },
+    "measurement": "Sum of blob sizes per tracked HEAD path, uncompressed, not unique Git objects or checkout network bytes",
+    "github_reported_repo_size_kib": 1680564
+  },
+  "completed_checkout_command_observations": [
+    {
+      "run_id": 37374949959,
+      "command_scope": "git fetch --prune --no-recurse-submodules origin +refs/heads/*:refs/remotes/origin/* +refs/tags/*:refs/tags/*",
+      "started_at": "2026-10-05T21:25:19.6583033Z",
+      "next_output_at": "2026-10-05T21:36:50.2712253Z",
+      "no_output_interval_seconds": 690.612922,
+      "checkout_started_at": "2026-10-05T21:36:50.3033352Z",
+      "files_complete_at": "2026-10-05T21:36:52.4491407Z",
+      "files": 4594
+    },
+    {
+      "run_id": 37373896187,
+      "command_scope": "git fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +96106edf9856ff002d9780918d278b794a8550d2:refs/remotes/pull/450/merge",
+      "tested_merge_sha": "96106edf9856ff002d9780918d278b794a8550d2",
+      "started_at": "2026-10-05T21:07:27.2686071Z",
+      "next_output_at": "2026-10-05T21:07:55.0174364Z",
+      "no_output_interval_seconds": 27.748829,
+      "checkout_started_at": "2026-10-05T21:07:55.0238353Z",
+      "files_complete_at": "2026-10-05T21:07:56.5604769Z",
+      "files": 4594
+    }
+  ],
+  "immutable_inspected_file_sha256": {
+    "publish-pages.yml": "641822de4d9dec7c592e065b13604241729deaffc9b24a48ff6c1d98f15484d2",
+    "verify-pr.yml": "e013ae2a3347d6dab4c7ef39e29fe4c5726add76da26d7fc66ab6672fa5826fe",
+    "publish_gh_pages.sh": "5c21b408167735ebf6eb583fbca98677b6c048fb8fd2004bff3bae636fc73191",
+    "select_web_bundle_pruning.py": "e44af2c16f688183296fa319cd26030751a30891e52e0cbcf2714fc3d59b894b",
+    "publish_storage_modules_test.py": "8d17620e1b7a8c38a930c05697f3e9d720edc559e1c9186b7a2cd44462b42fb4",
+    "web_bundle_retention_test.py": "21981ca2448f8b24f32bc5c090c76809cb9910402ff2e19e68cb59139ed6fb25"
+  },
+  "shallow_fixture": {
+    "scope": "temporary file:// Git repositories only; immutable production helper copy",
+    "cases": [
+      {
+        "mode": "full_source",
+        "source_HEAD_and_latest_title_match": true,
+        "pages_history_commit_count": 3,
+        "pages_HEAD_matches_full_origin": true,
+        "repository_is_shallow": "false",
+        "existing_bundles": [
+          "game-0f",
+          "game-22",
+          "game-3e",
+          "game-ffff"
+        ],
+        "keep": 2,
+        "selected_for_pruning": [
+          "game-0f",
+          "game-ffff"
+        ],
+        "warning": ""
+      },
+      {
+        "mode": "full_source",
+        "current": "game-dead",
+        "keep": "2",
+        "exit": 1,
+        "safe_rejection": true
+      },
+      {
+        "mode": "full_source",
+        "current": "game-3e",
+        "keep": "-1",
+        "exit": 1,
+        "safe_rejection": true
+      },
+      {
+        "mode": "shallow_source",
+        "source_HEAD_and_latest_title_match": true,
+        "pages_history_commit_count": 3,
+        "pages_HEAD_matches_full_origin": true,
+        "repository_is_shallow": "true",
+        "existing_bundles": [
+          "game-0f",
+          "game-22",
+          "game-3e",
+          "game-ffff"
+        ],
+        "keep": 2,
+        "selected_for_pruning": [],
+        "warning": "[publish] WARNING: shallow bundle history; retaining all bundles"
+      },
+      {
+        "mode": "shallow_source",
+        "current": "game-dead",
+        "keep": "2",
+        "exit": 1,
+        "safe_rejection": true
+      },
+      {
+        "mode": "shallow_source",
+        "current": "game-3e",
+        "keep": "-1",
+        "exit": 1,
+        "safe_rejection": true
+      },
+      {
+        "mode": "isolated_full_pages_control",
+        "repository_is_shallow": false,
+        "selected_for_pruning": [
+          "game-0f",
+          "game-ffff"
+        ],
+        "main_history_absent": true
+      }
+    ],
+    "result": "PASS: 7 cases; naive source depth=1 changes retention despite complete Pages history"
+  },
+  "limits": [
+    "No live checkout log timing for PR454 was available at this observation; API proves step success, not internal cause.",
+    "Timing does not separate network, GitHub pack generation or runner object processing.",
+    "Historical successful jobs used different source SHA and runner instances; no causal A/B or performance guarantee.",
+    "A naive fetch-depth:1 publishing change is explicitly disproven as retention-equivalent."
+  ]
+}

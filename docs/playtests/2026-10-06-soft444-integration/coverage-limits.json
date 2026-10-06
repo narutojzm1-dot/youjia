@@ -1,0 +1,19 @@
+{
+  "numeric_suite": {
+    "actual_engine": "4.7.2.stable.official.ed1daf0bf",
+    "checks": 5080,
+    "driver": "internal grab_focus and pressed.emit",
+    "true_browser_input": false,
+    "title_translucent_card_ancestor_coverage": false
+  },
+  "independent_formula_review": "preliminary-review.md; title sibling Panel confirmed; independent linear-sRGB title 84% over black ring contrast 3.17798:1, not pixel measurement",
+  "actual_browser": "Pending independent QA from parent; no browser launched by implementation agent",
+  "scope_exclusions": [
+    "382 input/modal/slider logic",
+    "audio state-machine fixes or ear comfort",
+    "Cloud exploration logic",
+    "save-schema changes",
+    "disabled-state redesign",
+    "physical mobile device"
+  ]
+}

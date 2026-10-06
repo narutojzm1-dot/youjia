@@ -1,0 +1,22 @@
+{
+  "tested_source": "85217509f369e2dc06495bb1fa4ff1649b181a47",
+  "main_incorporated": "d788f48b5f8d322d2d1dc86551fcab87770ee897",
+  "merge_commit": "04808b0483f89cbd76b9769bb9d00961c149ec7e",
+  "changed_paths_from_tested_source": [
+    ".github/workflows/verify-pr.yml",
+    "docs/decisions.md",
+    "docs/requirements.md",
+    "docs/validation/2026-10-06-pr130-verification.md"
+  ],
+  "production_tools_test_diff": [],
+  "author_ancestor": "faf507ae47a1bd999a32b3720b22cf3391ea5b1e",
+  "original_author_files_unchanged": [
+    "scripts/ui/photo_arrival.gd",
+    "test/photo_arrival_mat_suite.gd",
+    "test/photo_arrival_mat_suite.gd.uid",
+    "docs/decisions/REQ-20261006-037.md",
+    "docs/playtests/2026-10-06-REQ-037-photo-arrival-mat/.gdignore",
+    "docs/playtests/2026-10-06-REQ-037-photo-arrival-mat/README.md"
+  ],
+  "no_engine_or_browser_rerun": "Changes from tested source only read-only workflow and docs; browser used original exact export/source"
+}
