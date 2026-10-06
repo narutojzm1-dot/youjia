@@ -590,6 +590,8 @@ func _build_title_screen() -> void:
 	_title_hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_title_hint.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	column.add_child(_title_hint)
+	I18n.locale_changed.connect(_on_title_copy_locale_changed)
+	call_deferred("_balance_title_copy")
 
 
 ## 标题列按屏高分三档排版。≥500 原样；短横屏缩字号与间距；屏高 ≤360（568×320、
@@ -615,6 +617,7 @@ func _fit_title_column() -> void:
 		button.custom_minimum_size = Vector2(260.0, 40.0 if tight else 44.0)
 		button.add_theme_font_size_override("font_size",14 if tight else 16)
 	_licenses_button.add_theme_font_size_override("font_size",12 if tight else 14)
+	_balance_title_copy()
 
 
 ## 纸片贴合标题列里实际可见的内容（列本身是整屏高、内容居中），左右留 18、上下留 14，并夹在屏内。
@@ -639,6 +642,87 @@ func _fit_title_card() -> void:
 		card = card.intersection(screen)
 	_title_card.position = card.position
 	_title_card.size = card.size
+
+
+## 标题页简介和操作说明在窄屏/矮屏上会把最后两三个字单独甩到下一行（360×640 操作说明剩「互动。」，
+## 844×390 简介剩「出现。」），像没排完。这里给两段文字各找一个「行数不变、尽量窄」的平衡宽度
+## （类似 CSS text-wrap: balance），文字仍居中；行数、字号、文案、按钮和纸片规则都不变，
+## 只是断行点更均匀（REQ-20261006-044）。
+const TITLE_BALANCE_SLACK := 2.0
+
+
+func _on_title_copy_locale_changed(_locale: String) -> void:
+	call_deferred("_balance_title_copy")
+
+
+func _balance_title_copy() -> void:
+	if _title_label == null or _tagline_label == null or _title_hint == null: return
+	var column: Control = _title_label.get_parent()
+	var avail := column.offset_right - column.offset_left
+	if avail < 64.0: return
+	for label: Label in [_tagline_label, _title_hint]:
+		_balance_label_width(label, avail)
+
+
+func _balance_label_width(label: Label, avail: float) -> void:
+	label.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	var font := label.get_theme_font("font")
+	var font_size := label.get_theme_font_size("font_size")
+	var width := avail
+	var lines := _title_copy_line_count(label.text, font, font_size, avail)
+	if lines >= 2:
+		var lo := avail * 0.4
+		var hi := avail
+		while hi - lo > 1.0:
+			var mid := (lo + hi) * 0.5
+			if _title_copy_line_count(label.text, font, font_size, mid) <= lines:
+				hi = mid
+			else:
+				lo = mid
+		width = minf(avail, ceilf(hi) + TITLE_BALANCE_SLACK)
+		# 平衡宽度可能把「草泥马」这类词拆在两行。行数不变的前提下再稍微放宽，优先让每处换行落在标点或空格后面；
+		# 找不到就保留平衡宽度（不比原来更差，也没有孤字）。
+		var probe := width
+		while probe <= avail:
+			if _title_copy_line_count(label.text, font, font_size, probe) == lines and _title_copy_breaks_at_pauses(label.text, font, font_size, probe):
+				width = probe
+				break
+			probe += 2.0
+	if not is_equal_approx(label.custom_minimum_size.x, width):
+		label.custom_minimum_size.x = width
+
+
+const TITLE_BREAK_PAUSES := "，。、：；！？）」,.;:!?) "
+
+
+## 给定宽度下，每处自动换行（不含最后一行和手动 \n）是否都落在标点或空格后面。
+func _title_copy_breaks_at_pauses(text: String, font: Font, font_size: int, width: float) -> bool:
+	var ts := TextServerManager.get_primary_interface()
+	for para: String in text.split("\n"):
+		if para.is_empty(): continue
+		var shaped := ts.create_shaped_text()
+		ts.shaped_text_add_string(shaped, para, font.get_rids(), font_size)
+		var breaks := ts.shaped_text_get_line_breaks(shaped, width, 0, TextServer.BREAK_WORD_BOUND | TextServer.BREAK_ADAPTIVE)
+		ts.free_rid(shaped)
+		for i in range(1, breaks.size() - 2, 2):
+			var end: int = breaks[i]
+			if end <= 0 or not TITLE_BREAK_PAUSES.contains(para.substr(end - 1, 1)):
+				return false
+	return true
+
+
+## 与 Label 的 AUTOWRAP_WORD_SMART 相同的断行规则下，这段文字在给定宽度里排几行（含 \n 手动换行）。
+func _title_copy_line_count(text: String, font: Font, font_size: int, width: float) -> int:
+	if text.is_empty() or font == null: return 0
+	var ts := TextServerManager.get_primary_interface()
+	var total := 0
+	for para: String in text.split("\n"):
+		var shaped := ts.create_shaped_text()
+		ts.shaped_text_add_string(shaped, para, font.get_rids(), font_size)
+		var breaks := ts.shaped_text_get_line_breaks(shaped, width, 0, TextServer.BREAK_WORD_BOUND | TextServer.BREAK_ADAPTIVE)
+		ts.free_rid(shaped)
+		total += maxi(1, breaks.size() / 2)
+	return total
 
 
 func _build_hud() -> void:
