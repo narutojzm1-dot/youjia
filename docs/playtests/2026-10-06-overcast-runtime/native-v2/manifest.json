@@ -1,0 +1,77 @@
+{
+	"frames": [
+		{
+			"cloud_scroll": 0.108333333333333,
+			"cloud_weights": [
+				1.0,
+				0.0,
+				0.0,
+				0.0
+			],
+			"file": "sunny.png",
+			"sha256": "996f4141b16a3ddb394bb1a2e6147dd0b64cd9e2fb808a2ca478182ef28fa707",
+			"weather_mix": 0.0
+		},
+		{
+			"cloud_scroll": 0.108333333333333,
+			"cloud_weights": [
+				0.5,
+				0.0,
+				0.0,
+				0.5
+			],
+			"file": "half-before-reverse.png",
+			"sha256": "331cfc261a7b550e40a8d7aa6b58e108332ff8715eeb04bdbc4b9d6e05ad04bf",
+			"weather_mix": 0.5
+		},
+		{
+			"cloud_scroll": 0.108333333333333,
+			"cloud_weights": [
+				0.5,
+				0.0,
+				0.0,
+				0.5
+			],
+			"file": "half-after-reverse.png",
+			"sha256": "331cfc261a7b550e40a8d7aa6b58e108332ff8715eeb04bdbc4b9d6e05ad04bf",
+			"weather_mix": 0.5
+		},
+		{
+			"cloud_scroll": 0.108333333333333,
+			"cloud_weights": [
+				0.5,
+				0.0,
+				0.0,
+				0.5
+			],
+			"file": "half-photo-replay.png",
+			"sha256": "2e260494ffdb35dc51cf1e19959a2e7c6974af9a438e0fdb2bddf1699565f49e",
+			"weather_mix": 0.5
+		},
+		{
+			"cloud_scroll": 0.108333333333333,
+			"cloud_weights": [
+				0.0,
+				0.0,
+				0.0,
+				1.0
+			],
+			"file": "overcast.png",
+			"sha256": "1d5c7c67c4021a86bd2e3fe3da0787f4c6f87144e7e4ec2bc842831dae43b25f",
+			"weather_mix": 1.0
+		},
+		{
+			"cloud_scroll": 0.108333333333333,
+			"cloud_weights": [
+				0.5,
+				0.0,
+				0.0,
+				0.5
+			],
+			"file": "reverse-half.png",
+			"sha256": "e7810bd54e8e332999c522eb9ec5bf895ab20e9b5a59eaddf8723a1e84fb9db2",
+			"weather_mix": 0.5
+		}
+	],
+	"scope": "controlled native Godot rendered weather/PhotoMoment fixture; no random play, no mobile input validation"
+}

@@ -15,7 +15,7 @@ signal fish_caught(carry_type: String)
 signal exploration_requested
 
 const SUNNY := preload("res://assets/holiday/environment/yard_sunny.png")
-const OVERCAST := preload("res://assets/holiday/environment/yard_overcast.png")
+const OVERCAST := preload("res://assets/holiday/environment/yard_overcast_aligned.png")
 ## 叠加云带：晴/阴各一帧半透明水彩带，不替换整张院子底图。
 const CLOUD_SUNNY := preload("res://assets/holiday/environment/cloud_band_sunny.png")
 const CLOUD_OVERCAST := preload("res://assets/holiday/environment/cloud_band_overcast.png")
@@ -108,6 +108,13 @@ var _just_petted_species: String = ""
 
 var _plant_visual: YardPropVisual
 var _fishing_visual: YardPropVisual
+const WEATHER_BLEND_SECONDS := 3.0
+var _weather_mix := 0.0
+var _weather_art_initialized := false
+var _weather_backdrop_blend: Sprite2D
+var _weather_cloud_pairs: Array = []
+var _weather_cloud_weights := [0.0, 0.0, 0.0, 0.0]
+var _cloud_tint := Color.WHITE
 var _backdrop: Sprite2D
 ## 两片首尾相接的云带 Sprite，用于无缝缓移。
 var _cloud_band_a: Sprite2D
@@ -188,12 +195,28 @@ func setup(
 	_backdrop.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
 	_backdrop.z_index = -1
 	add_child(_backdrop)
-	# 云带叠在底图之上、角色之下；z=-1 与底图同层，靠子节点顺序后绘。
+	_weather_backdrop_blend = _make_cloud_sprite("WeatherBackdropBlend")
+	_weather_backdrop_blend.position = Vector2.ZERO
+	_weather_backdrop_blend.texture = OVERCAST
+	add_child(_weather_backdrop_blend)
+	# All background/cloud sprites precede contact shadows and actors.
 	_cloud_band_a = _make_cloud_sprite("CloudBandA")
 	_cloud_band_b = _make_cloud_sprite("CloudBandB")
 	add_child(_cloud_band_a)
 	add_child(_cloud_band_b)
+	_weather_cloud_pairs = [[_cloud_band_a, _cloud_band_b]]
+	for prefix: String in ["CloudMorning", "CloudSunset", "CloudOvercast"]:
+		var pair: Array = [_make_cloud_sprite(prefix + "A"), _make_cloud_sprite(prefix + "B")]
+		for band: Sprite2D in pair:
+			add_child(band)
+		_weather_cloud_pairs.append(pair)
+	var textures: Array = [CLOUD_SUNNY, CLOUD_MORNING, CLOUD_SUNSET, CLOUD_OVERCAST]
+	for i in 4:
+		for band: Sprite2D in _weather_cloud_pairs[i]:
+			band.texture = textures[i]
+			band.scale = Vector2.ONE * WORLD_SIZE.x / band.texture.get_width()
 	_apply_weather_art()
+	TuningStore.value_changed.connect(_weather_tuning_changed)
 	_scene_feedback = YardSceneFeedbackType.new()
 	_scene_feedback.setup()
 	_scene_feedback.modulate = _backdrop.modulate
@@ -376,10 +399,10 @@ func tick(delta: float, move: Vector2) -> void:
 	if _weather_timer <= 0.0:
 		toggle_weather()
 		_weather_timer = randf_range(48.0, 90.0)
+	_tick_weather_transition(delta)
 	# 云带缓移：低动效只保留静止可读帧，不改存档字段。
 	_tick_cloud_drift(delta)
 	# 晨/傍晚/夜里按 TOD 换云带或 modulate，不改昼夜节奏长度。
-	_sync_cloud_band_art()
 	if _player == null:
 		return
 	_player.body_obstacles = physical_obstacles("player")
@@ -1269,36 +1292,71 @@ func _layout_cloud_bands() -> void:
 	var width := _cloud_band_width()
 	if width <= 0.001:
 		return
-	_cloud_band_a.position = Vector2(-_cloud_scroll, CLOUD_BAND_Y)
-	_cloud_band_b.position = Vector2(-_cloud_scroll + width, CLOUD_BAND_Y)
+	for pair: Array in _weather_cloud_pairs:
+		pair[0].position = Vector2(-_cloud_scroll, CLOUD_BAND_Y)
+		pair[1].position = Vector2(-_cloud_scroll + width, CLOUD_BAND_Y)
+
+
+func _weather_cloud_index() -> int:
+	if weather == "overcast": return 3
+	if _wants_sunset_clouds(): return 2
+	if _wants_morning_clouds(): return 1
+	return 0
+
+
+func _weather_cloud_pair() -> Array:
+	return _weather_cloud_pairs[_weather_cloud_index()]
+
+
+func _weather_tuning_changed(id: String, _requested: Variant, _active: Variant) -> void:
+	if id.begins_with("environment.filter.") or id == "ui.reduced_motion":
+		_tick_weather_transition(0.0, id.begins_with("environment.filter."))
 
 
 func _apply_weather_art() -> void:
-	if _backdrop == null:
-		return
-	# 天气只换已经对齐构图的晴/阴院子画，不改地面碰撞与可行走布局。
-	# 阴天必须用 OVERCAST 原画，不能只改 modulate 假装换天。
-	_backdrop.texture = OVERCAST if weather == "overcast" else SUNNY
-	if _backdrop.texture != null:
-		var tex_size := _backdrop.texture.get_size()
-		_backdrop.scale = Vector2(WORLD_SIZE.x / tex_size.x, WORLD_SIZE.y / tex_size.y)
-	_apply_cloud_band_art(_cloud_texture_for_now())
-	_layout_cloud_bands()
-	var filter_on := bool(TuningStore.get_value("environment.filter.enabled", true))
+	if _backdrop == null: return
+	# Target changes never reset the current blend, even after rapid reversals.
+	_tick_weather_transition(0.0)
+
+
+func _tick_weather_transition(delta: float, refresh_tint: bool = false) -> void:
+	if _backdrop == null or _weather_backdrop_blend == null: return
+	var reduced := bool(TuningStore.get_value("ui.reduced_motion", false))
+	var snap := reduced or not _weather_art_initialized
+	var step := 1.0 if snap else clampf(delta / WEATHER_BLEND_SECONDS, 0.0, 1.0)
+	var target := 1.0 if weather == "overcast" else 0.0
+	_weather_mix = target if snap else move_toward(_weather_mix, target, step)
+	var index := _weather_cloud_index()
+	# Move the whole weight vector toward its target; reversals preserve all layers.
+	var remaining := 1.0 - float(_weather_cloud_weights[index])
+	var fraction := 1.0 if snap or remaining <= step else step / remaining
+	for i in 4:
+		_weather_cloud_weights[i] = lerpf(float(_weather_cloud_weights[i]), 1.0 if i == index else 0.0, fraction)
 	var intensity := float(TuningStore.get_value("environment.filter.intensity", 0.12))
-	if not filter_on:
-		_backdrop.modulate = Color.WHITE
-		for band: Sprite2D in [_cloud_band_a, _cloud_band_b]:
-			if band != null:
-				band.modulate = Color.WHITE
-		if _scene_feedback != null: _scene_feedback.modulate = _backdrop.modulate
-		return
-	if weather == "overcast":
-		_backdrop.modulate = Color(0.92, 0.90, 0.96).lerp(Color.WHITE, 1.0 - intensity)
-	else:
-		_backdrop.modulate = Color(1.0, 0.97, 0.90).lerp(Color.WHITE, 1.0 - intensity)
-	_apply_cloud_band_modulate(intensity)
-	if _scene_feedback != null: _scene_feedback.modulate = _backdrop.modulate
+	var filtered := bool(TuningStore.get_value("environment.filter.enabled", true))
+	var sun_tint := Color.WHITE.lerp(Color(1.0, 0.97, 0.90), intensity) if filtered else Color.WHITE
+	var rain_tint := Color.WHITE.lerp(Color(0.92, 0.90, 0.96), intensity) if filtered else Color.WHITE
+	_backdrop.texture = SUNNY
+	_backdrop.scale = WORLD_SIZE / SUNNY.get_size()
+	_backdrop.modulate = sun_tint
+	_weather_backdrop_blend.scale = WORLD_SIZE / OVERCAST.get_size()
+	_weather_backdrop_blend.modulate = Color(rain_tint.r, rain_tint.g, rain_tint.b, _weather_mix)
+	_weather_backdrop_blend.visible = _weather_mix > 0.0
+	var cloud_target := Color.WHITE
+	if filtered:
+		if weather == "overcast": cloud_target = rain_tint
+		elif _wants_night_clouds(): cloud_target = Color(0.70, 0.74, 0.90).lerp(Color(0.82, 0.84, 0.94), 1.0 - intensity * 0.5)
+		elif _wants_sunset_clouds(): cloud_target = Color.WHITE.lerp(Color(1.04, 1.00, 0.98), intensity * 0.35)
+		elif _wants_morning_clouds(): cloud_target = Color.WHITE.lerp(Color(1.06, 1.04, 1.02), intensity * 0.4)
+		else: cloud_target = Color.WHITE.lerp(Color(1.08, 1.05, 1.02), intensity * 0.4)
+	_cloud_tint = cloud_target if snap or not filtered or refresh_tint else _cloud_tint.lerp(cloud_target, clampf(delta * 2.0, 0.0, 1.0))
+	for i in 4:
+		for band: Sprite2D in _weather_cloud_pairs[i]:
+			band.modulate = Color(_cloud_tint.r, _cloud_tint.g, _cloud_tint.b, float(_weather_cloud_weights[i]))
+			band.visible = float(_weather_cloud_weights[i]) > 0.0
+	if _scene_feedback != null: _scene_feedback.modulate = sun_tint.lerp(rain_tint, _weather_mix)
+	_weather_art_initialized = true
+	_layout_cloud_bands()
 
 
 ## 与 main._tod_phase_name 的 evening 窗口对齐：晴天傍晚才换暖色云。
@@ -1335,46 +1393,7 @@ func _cloud_texture_for_now() -> Texture2D:
 
 ## tick 里贴图未变时仍刷新 modulate：正午与夜里共用晴天帧，但亮度不同。
 func _sync_cloud_band_art() -> void:
-	var tex := _cloud_texture_for_now()
-	if _cloud_band_a == null or _cloud_band_a.texture != tex:
-		_apply_cloud_band_art(tex)
-		_layout_cloud_bands()
-	var intensity := float(TuningStore.get_value("environment.filter.intensity", 0.12))
-	if bool(TuningStore.get_value("environment.filter.enabled", true)):
-		_apply_cloud_band_modulate(intensity)
-	else:
-		for band: Sprite2D in [_cloud_band_a, _cloud_band_b]:
-			if band != null:
-				band.modulate = Color.WHITE
-
-
-func _apply_cloud_band_art(cloud_tex: Texture2D) -> void:
-	for band: Sprite2D in [_cloud_band_a, _cloud_band_b]:
-		if band == null:
-			continue
-		band.texture = cloud_tex
-		if cloud_tex != null:
-			var cloud_size := cloud_tex.get_size()
-			var sx := WORLD_SIZE.x / cloud_size.x
-			# 保持云带原始高宽比，仅按院子宽度缩放。
-			band.scale = Vector2(sx, sx)
-
-
-func _apply_cloud_band_modulate(intensity: float) -> void:
-	# 阴天跟院子滤色；晴天日间/傍晚单独提亮；夜里压暗偏冷，避免暖白日云在夜空发亮。
-	for band: Sprite2D in [_cloud_band_a, _cloud_band_b]:
-		if band == null:
-			continue
-		if weather == "overcast":
-			band.modulate = _backdrop.modulate
-		elif _wants_sunset_clouds():
-			band.modulate = Color(1.04, 1.00, 0.98).lerp(Color.WHITE, 1.0 - intensity * 0.35)
-		elif _wants_morning_clouds():
-			band.modulate = Color(1.06, 1.04, 1.02).lerp(Color.WHITE, 1.0 - intensity * 0.4)
-		elif _wants_night_clouds():
-			band.modulate = Color(0.70, 0.74, 0.90).lerp(Color(0.82, 0.84, 0.94), 1.0 - intensity * 0.5)
-		else:
-			band.modulate = Color(1.08, 1.05, 1.02).lerp(Color.WHITE, 1.0 - intensity * 0.4)
+	_apply_weather_art()
 
 
 func _evaluate_expressions() -> void:

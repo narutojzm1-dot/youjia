@@ -101,6 +101,25 @@ func run():
  store._load()
  check(fed_id in store.get_album() and same_numbers(pose,player_pose(store.get_photo_moment(fed_id))),"photo pose and progress survive reload")
  check(store.get_photo_moment(fed_id).get("caption_variant",-1)==moment.caption_variant and PhotoDiary.caption(store.get_photo_moment(fed_id))==original_caption,"saved variant and Chinese sentence survive real disk reload")
+ # A bounded version-one transition fixture must retain both texture identity
+ # and alpha through the real album writer; it is not a new earned encounter.
+ var transition:Dictionary=moment.duplicate(true)
+ var blend:Dictionary=transition.background.duplicate(true)
+ blend.subject="weather_background";blend.depth=-1;blend.order=transition.items.size()
+ blend.texture={"path":"res://assets/holiday/environment/yard_overcast.png"}
+ blend.modulate=[1.0,1.0,1.0,0.375]
+ transition.items.append(blend)
+ var transition_moments:Dictionary=store.get_photo_moments().duplicate(true)
+ transition_moments[fed_id]=transition
+ check(not store.request_album(PackedStringArray(store.get_album()),transition_moments).is_empty(),"existing album writer accepts version-one weather layer without new fields")
+ await store.flush_pending()
+ store._load()
+ var restored_blend:Dictionary={}
+ for item:Dictionary in store.get_photo_moment(fed_id).get("items",[]):
+  if item.subject=="weather_background":restored_blend=item
+ check(not restored_blend.is_empty(),"weather layer survives actual disk reload")
+ if not restored_blend.is_empty():
+  check(restored_blend.texture.path=="res://assets/holiday/environment/yard_overcast.png" and is_equal_approx(float(restored_blend.modulate[3]),0.375),"old texture path and captured transition alpha survive disk reload unchanged")
  main._show_album();await process_frame
  var scene_cards:=0
  var matching_diary:=false
