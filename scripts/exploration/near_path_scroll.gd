@@ -22,6 +22,11 @@ const CREAM := Color("fffaf1")
 const TOUCH_DEDUPE_MS := 400
 const BASKET_LABEL_AT := Vector2(84, 46)
 const BASKET_LABEL_WIDTH := 200.0
+# 篮子名称放不下时：先逐 1px 缩到 13px 保持一行，再不行就 13px 折两行往上长，不再截掉尾字
+const BASKET_LABEL_FONT_SIZE := 15
+const BASKET_LABEL_MIN_FONT_SIZE := 13
+const BASKET_LABEL_MAX_LINES := 2
+const BASKET_LABEL_MIN_WIDTH := 120.0
 
 signal return_requested(reason: String)
 signal pause_requested
@@ -61,6 +66,7 @@ var _look_button: Button
 var _pick_button: Button
 var _go_button: Button
 var _basket: Control
+var _basket_label_width := BASKET_LABEL_WIDTH
 var _view_size := Vector2.ZERO
 var reveal: FindReveal
 var leaf_texture: Texture2D
@@ -727,6 +733,8 @@ func _layout(size: Vector2, compact: bool) -> void:
 	_hint.size = Vector2(size.x - pad * 2, 24)
 	_hint.position = Vector2(pad, size.y - pad - 30)
 	_basket.position = Vector2(pad, size.y - pad - 64 - (button_h + 10 if not observing.is_empty() else 0) - (34 if _hint.visible else 0))
+	# 名称底板右缘 = 篮子左缘 + 文字起点 + 文字宽 + 6，窄屏时也留出右侧 pad
+	_basket_label_width = basket_label_width_for(size.x, pad, _basket.position.x)
 
 
 ## 看景纸片按当前宽度的实际行数长高，不再把高度写成 0（字会溢出纸外，展示安全区也会按空高度算）
@@ -790,8 +798,9 @@ func _draw_basket() -> void:
 		KeepsakeArt.draw(_basket, held[i], Vector2(24 + i * 16, 22), 0.9)
 	var font := _basket.get_theme_default_font()
 	var text := basket_text()
-	_basket.draw_rect(basket_label_rect(font, text), Color(1.0, 0.97, 0.88, 0.86))
-	_basket.draw_string(font, BASKET_LABEL_AT, text, HORIZONTAL_ALIGNMENT_LEFT, BASKET_LABEL_WIDTH, 15, INK)
+	var fit := basket_label_fit(font, text, _basket_label_width)
+	_basket.draw_rect(basket_label_rect(font, text, _basket_label_width), Color(1.0, 0.97, 0.88, 0.86))
+	_basket.draw_multiline_string(font, fit.baseline, text, HORIZONTAL_ALIGNMENT_LEFT, fit.wrap_width, fit.font_size, BASKET_LABEL_MAX_LINES, INK)
 
 
 func basket_text() -> String:
@@ -799,11 +808,32 @@ func basket_text() -> String:
 	return I18n.t("exploration.basket.empty") if held.is_empty() else ExplorationDirector.items_text(PackedStringArray(held))
 
 
+## 名称一行可用的宽度：最宽 200；窄屏让底板右缘停在屏宽 - pad 以内
+static func basket_label_width_for(view_width: float, pad: float, basket_x: float) -> float:
+	return clampf(view_width - pad - basket_x - BASKET_LABEL_AT.x - 6.0, BASKET_LABEL_MIN_WIDTH, BASKET_LABEL_WIDTH)
+
+
+## 篮子名称怎么排：一行放得下就 15px 原样；放不下逐 1px 缩到 13px；仍放不下就 13px 折行（最多两行），
+## 第二行留在原来的基线上，第一行往上长，篮子和下面的按钮位置都不动
+static func basket_label_fit(font: Font, text: String, max_width: float = BASKET_LABEL_WIDTH) -> Dictionary:
+	var font_size := BASKET_LABEL_FONT_SIZE
+	while font_size > BASKET_LABEL_MIN_FONT_SIZE and font.get_string_size(text, HORIZONTAL_ALIGNMENT_LEFT, -1, font_size).x > max_width:
+		font_size -= 1
+	var one_line := font.get_string_size(text, HORIZONTAL_ALIGNMENT_LEFT, -1, font_size)
+	if one_line.x <= max_width:
+		return {"font_size": font_size, "lines": 1, "size": one_line, "wrap_width": -1.0, "baseline": BASKET_LABEL_AT}
+	var block := font.get_multiline_string_size(text, HORIZONTAL_ALIGNMENT_LEFT, max_width, font_size, BASKET_LABEL_MAX_LINES)
+	var lines := clampi(roundi(block.y / font.get_height(font_size)), 1, BASKET_LABEL_MAX_LINES)
+	var baseline := BASKET_LABEL_AT - Vector2(0, (lines - 1) * font.get_height(font_size))
+	return {"font_size": font_size, "lines": lines, "size": Vector2(minf(block.x, max_width), block.y), "wrap_width": max_width, "baseline": baseline}
+
+
 ## 篮子名称的小底板：每帧都画、只随文字宽度变，背景再花也读得清
-static func basket_label_rect(font: Font, text: String) -> Rect2:
-	var text_size := font.get_string_size(text, HORIZONTAL_ALIGNMENT_LEFT, BASKET_LABEL_WIDTH, 15)
-	var ascent := font.get_ascent(15)
-	return Rect2(BASKET_LABEL_AT + Vector2(-6, -ascent - 3), Vector2(minf(text_size.x, BASKET_LABEL_WIDTH) + 12, text_size.y + 6))
+static func basket_label_rect(font: Font, text: String, max_width: float = BASKET_LABEL_WIDTH) -> Rect2:
+	var fit := basket_label_fit(font, text, max_width)
+	var ascent := font.get_ascent(fit.font_size)
+	var text_size: Vector2 = fit.size
+	return Rect2(fit.baseline + Vector2(-6, -ascent - 3), text_size + Vector2(12, 6))
 
 
 func _label(font_size: int, color: Color) -> Label:
