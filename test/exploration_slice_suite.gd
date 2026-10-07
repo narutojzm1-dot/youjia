@@ -1052,9 +1052,9 @@ func _main_round_trip() -> void:
 	await process_frame
 	check(main._screen == "exploring" and main._exploration.is_exploring(), "going out opens the near-path scroll")
 	check(not world.visible and not world.input_enabled and not main._hud.visible, "the yard and its HUD rest while walking")
-	var day_before: float = world._day_elapsed
+	var day_before: float = world.holiday_day * world.DAY_DURATION_SECONDS + world._day_elapsed
 	main._process(1.0)
-	check(world._day_elapsed == day_before, "yard time does not run while out walking")
+	check(is_equal_approx(world.holiday_day * world.DAY_DURATION_SECONDS + world._day_elapsed, day_before + 1.0), "one shared regional second passes while out walking, including across dawn")
 	var esc := InputEventAction.new()
 	esc.action = "pause"
 	esc.pressed = true
