@@ -27,6 +27,15 @@ const SHUTTER_PAPER := Color(1.0, 0.965, 0.91, 0.94) # PAPER fff6e8, nearly opaq
 const SHUTTER_EDGE := Color(0.953, 0.698, 0.478, 0.6) # APRICOT f3b27a
 const SHUTTER_PAD_X := 14.0
 const SHUTTER_PAD_Y := 3.0
+## REQ-20261007-049: the English line ("The traveler caught this little
+## moment.") is about 272px at 16px. The label is viewport width - 24, so on a
+## 280px-wide fold cover screen (256px label) the words ran past both edges of
+## the slip, which is capped at the label; at 300px the outline touched the
+## edges and at 320px the 14px side padding shrank to 12px. When the text plus
+## the slip's side padding does not fit the label, step the line down one px at
+## a time to SHUTTER_MIN_FONT_SIZE. Lines that already fit keep 16px.
+const SHUTTER_FONT_SIZE := 16
+const SHUTTER_MIN_FONT_SIZE := 13
 ## REQ-20261006-046: the print's caption ("Holiday day N" + the moment line) is a
 ## 192×56 box on the paper strip under the photo. 51 of 81 English captions
 ## (27 lines × day 1/12/365) and 6 Chinese ones wrap to three lines: at 13px that
@@ -104,7 +113,7 @@ func _ready() -> void:
 	_shutter.add_theme_color_override("font_color", SHUTTER_INK)
 	_shutter.add_theme_color_override("font_outline_color", Color(1.0, 0.98, 0.91, 0.95))
 	_shutter.add_theme_constant_override("outline_size", 3)
-	_shutter.add_theme_font_size_override("font_size", 16)
+	_shutter.add_theme_font_size_override("font_size", SHUTTER_FONT_SIZE)
 	_shutter.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_shutter.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	_shutter.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -237,11 +246,24 @@ static func shutter_paper_rect(label_size: Vector2, text_size: Vector2) -> Rect2
 	return Rect2((label_size - Vector2(width, height)) * 0.5, Vector2(width, height))
 
 
+## Largest size from SHUTTER_FONT_SIZE down to SHUTTER_MIN_FONT_SIZE at which
+## `text` plus the slip's side padding fits `label_width`; the minimum if none do.
+static func shutter_font_size(text: String, font: Font, label_width: float) -> int:
+	if text.is_empty() or font == null:
+		return SHUTTER_FONT_SIZE
+	for size: int in range(SHUTTER_FONT_SIZE, SHUTTER_MIN_FONT_SIZE - 1, -1):
+		if ceilf(font.get_string_size(text, HORIZONTAL_ALIGNMENT_LEFT, -1, size).x) + SHUTTER_PAD_X * 2.0 <= label_width:
+			return size
+	return SHUTTER_MIN_FONT_SIZE
+
+
 func _fit_shutter_paper() -> void:
 	if _shutter_paper == null:
 		return
 	var font := _shutter.get_theme_font("font")
-	var font_size := _shutter.get_theme_font_size("font_size")
+	var font_size := shutter_font_size(_shutter.text, font, _shutter.size.x)
+	if font_size != _shutter.get_theme_font_size("font_size"):
+		_shutter.add_theme_font_size_override("font_size", font_size)
 	var text_size := Vector2.ZERO
 	if font != null and not _shutter.text.is_empty():
 		text_size = font.get_string_size(_shutter.text, HORIZONTAL_ALIGNMENT_LEFT, -1, font_size)

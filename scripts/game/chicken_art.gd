@@ -10,4 +10,5 @@ static func configure(stage: String) -> Dictionary:
 		"ground_anchor": Vector2(660, 1200) if grown else Vector2(640, 1100),
 		"art_bounds": Rect2(163, 61, 887, 1160) if grown else Rect2(244, 137, 785, 989),
 		"body_radius": Vector2(16, 7) if grown else Vector2(9, 5), "native_facing": 1.0,
-		"speed": 18.0, "daily_routine": true, "position": Vector2(480, 530), "wander": Rect2(435, 485, 125, 70)}
+		# Dry left bank beside the pond, separate from the cow's grazing patch.
+		"speed": 24.0, "daily_routine": true, "position": Vector2(542, 522), "wander": Rect2(510, 507, 65, 30)}

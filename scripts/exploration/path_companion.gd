@@ -63,12 +63,12 @@ func setup(value: Dictionary, leader_spot: Dictionary, page: PaintedPath = null,
 		add_child(search_cel)
 
 func feet() -> Vector2:
-	var point := layout.point(spot.arm, spot.d)
+	var point := layout.position(spot)
 	if choice.get("actor_id", "") == "beibei" and not search_spot.is_empty():
 		return point + Vector2(45, 10) * layout.depth(point.y)
 	# A small shoulder-to-shoulder clearance stays inside the painted lane.
 	var side := 30.0 if choice.get("actor_id", "") == "beibei" else -14.0
-	return point + layout.tangent(spot.arm, spot.d).orthogonal() * side * layout.depth(point.y)
+	return layout.road_point(point + layout.tangent(spot.arm, spot.d).orthogonal() * side * layout.depth(point.y))
 
 func advance(delta: float, leader_spot: Dictionary, walker: SequenceResident, reduced: bool) -> void:
 	var before := actor.position
@@ -80,7 +80,9 @@ func advance(delta: float, leader_spot: Dictionary, walker: SequenceResident, re
 	if return_to_side: spacing = 0.0
 	if gap > spacing:
 		spot = layout.step_toward(spot, target, minf(gap - spacing, layout.WALK_SPEED * 1.25 * delta))
-	actor.position = feet()
+	# Route-arm tangents change at a fork; ease the shoulder offset too, so a
+	# continuous foot route cannot turn into a one-frame sideways animal jump.
+	actor.position = layout.road_point(before.move_toward(feet(), layout.WALK_SPEED * 1.5 * maxf(delta, 0.0))) if layout.free_walk() else feet()
 	actor.advance_path(delta, actor.position - before, layout.depth(actor.position.y), reduced)
 	if return_to_side and layout.route_length(spot, target) < 1.0: return_to_side = false
 	if not search_spot.is_empty() and layout.route_length(spot, target) < 1.0:

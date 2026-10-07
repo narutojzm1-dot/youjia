@@ -10,6 +10,7 @@ static func configure(stage: String) -> Dictionary:
 		"scale": (72.0 if grown else 43.0) / bounds.size.y,
 		"ground_anchor": Vector2(700, 1090), "art_bounds": bounds,
 		"body_radius": Vector2(26, 10) if grown else Vector2(16, 8),
-		"native_facing": 1.0, "speed": 22.0, "daily_routine": true,
-		"position": Vector2(300, 530), "wander": Rect2(255, 495, 145, 80),
+		"native_facing": 1.0, "speed": 34.0, "daily_routine": true,
+		# Cottage-side foreground, separate from the sheep's upper lawn.
+		"position": Vector2(295, 615), "wander": Rect2(270, 600, 50, 30),
 	}

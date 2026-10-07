@@ -89,6 +89,19 @@ func run() -> void:
 	check(main._inventory.view().held == "" and main._inventory.view().grass == 0, "grass conserved through harvest basket drop and consumption")
 	store._load()
 	check(store.get_yard_inventory().ground.is_empty(), "consumed food does not resurrect from native save")
+	# A lure changes where an animal visits, not its permanent home. Observe the
+	# same cow after the real durable consumption above, without relocating it.
+	var return_continuous := true
+	var return_on_ground := true
+	for frame in 1200:
+		var previous: Vector2 = cow.position
+		world.tick(0.05, Vector2.ZERO)
+		return_continuous = return_continuous and cow.position.distance_to(previous) <= cow.speed * 1.18 * 0.05 + 0.02
+		return_on_ground = return_on_ground and cow._stands_on(cow.position)
+		if cow.wander_rect.has_point(cow.position): break
+	check(cow.wander_rect.has_point(cow.position), "cow naturally returns to its daily area after eating a distant lure")
+	check(return_continuous and return_on_ground, "homeward walk stays on ground without teleporting")
+	check(cow.state != "lead" and not world.is_leading(), "homeward walk never turns feeding into player-following")
 	# Two sheep compete for one physical grass bundle. The second never double-eats.
 	for id: String in world._actors: world.actor_named(id).posed = true
 	for id: String in ["sheep_a", "sheep_b"]:

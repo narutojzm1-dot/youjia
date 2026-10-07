@@ -77,21 +77,49 @@ func _ready() -> void:
 	resized.connect(fit)
 	fit()
 
+# REQ-20261007-054: the chosen place (a pressed toggle) and an unavailable
+# button used to share one fill, so "House" selected looked exactly like
+# "Cone ×0" greyed out. Each state now reads on its own.
+const BUTTON_STATES := {
+	"normal": {"fill": Color("fffaf1"), "edge": Color("b88a61"), "width": 1, "ink": Color("5b4637")},
+	"hover": {"fill": Color("ffe7c8"), "edge": Color("b88a61"), "width": 1, "ink": Color("3d2d23")},
+	"pressed": {"fill": Color("f3d3ae"), "edge": Color("5b4637"), "width": 2, "ink": Color("3d2d23")},
+	"hover_pressed": {"fill": Color("f3d3ae"), "edge": Color("5b4637"), "width": 2, "ink": Color("3d2d23")},
+	"disabled": {"fill": Color("f3e9db"), "edge": Color("bfa588"), "width": 1, "ink": Color("7a6152")},
+}
+const FOCUS_EDGE := Color("916d49")
+
+static func state_style(mode: String) -> StyleBoxFlat:
+	var spec: Dictionary = BUTTON_STATES[mode]
+	var style := StyleBoxFlat.new()
+	style.bg_color = spec.fill
+	style.border_color = spec.edge
+	style.set_border_width_all(int(spec.width))
+	style.set_corner_radius_all(8)
+	# Same content margins in every state, so a 2px selected edge never resizes the row.
+	style.set_content_margin_all(1)
+	return style
+
+static func focus_style() -> StyleBoxFlat:
+	var ring := StyleBoxFlat.new()
+	ring.draw_center = false
+	ring.border_color = FOCUS_EDGE
+	ring.set_border_width_all(2)
+	ring.set_corner_radius_all(10)
+	ring.set_expand_margin_all(2.0)
+	return ring
+
 func button(parent: Node, text: String, action: Callable) -> Button:
 	var b := Button.new()
 	b.text = text
 	b.custom_minimum_size = Vector2(44, 44)
 	b.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	b.add_theme_font_size_override("font_size", 16)
-	for mode: String in ["normal", "hover", "pressed", "disabled"]:
-		var style := StyleBoxFlat.new()
-		style.bg_color = Color("fffaf1") if mode == "normal" else Color("eadcc8")
-		style.border_color = Color("b88a61")
-		style.set_border_width_all(1)
-		style.set_corner_radius_all(8)
-		b.add_theme_stylebox_override(mode, style)
-		b.add_theme_color_override("font_" + ("" if mode == "normal" else mode + "_") + "color", Color("7a6152") if mode == "disabled" else Color("5b4637"))
-	b.add_theme_color_override("font_focus_color", Color("5b4637"))
+	for mode: String in BUTTON_STATES:
+		b.add_theme_stylebox_override(mode, state_style(mode))
+		b.add_theme_color_override("font_" + ("" if mode == "normal" else mode + "_") + "color", BUTTON_STATES[mode].ink)
+	b.add_theme_stylebox_override("focus", focus_style())
+	b.add_theme_color_override("font_focus_color", BUTTON_STATES.normal.ink)
 	b.pressed.connect(action)
 	parent.add_child(b)
 	buttons.append(b)

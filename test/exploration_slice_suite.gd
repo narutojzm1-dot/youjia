@@ -457,7 +457,7 @@ func _painted_path_layout() -> void:
 	var matches: bool = producer.route.points.size() == route_points.size()
 	for i in mini(producer.route.points.size(), route_points.size()):
 		matches = matches and Vector2(producer.route.points[i][0], producer.route.points[i][1]) == route_points[i]
-	check(matches and L.ARMS.size() == 1, "the walkable lane is exactly the producer's candidate route, nothing more")
+	check(matches and L.ARMS.has("north") and L.geometry().free_walk(), "original lane is retained while authorized north road and free surface are added")
 	var painted_ok := true
 	for region: Dictionary in producer.painted_object_cleanup_regions:
 		var rect := Rect2(region.rect_xywh[0], region.rect_xywh[1], region.rect_xywh[2], region.rect_xywh[3]).grow(30.0)
@@ -469,14 +469,14 @@ func _painted_path_layout() -> void:
 	check(float(L.step_input(middle, Vector2.LEFT, 5.0).d) < 300.0 and float(L.step_input(middle, Vector2.DOWN, 5.0).d) < 300.0, "left or down walks toward the foreground")
 	check(float(L.step_input(middle, Vector2.RIGHT, 5.0).d) > 300.0 and float(L.step_input(middle, Vector2.UP, 5.0).d) > 300.0, "right or up walks back toward the gate")
 	var tip := {"arm": L.HOME_ARM, "d": 0.0}
-	check(L.step_input(tip, Vector2.LEFT, 5.0) == tip and not L.at_home(tip), "the foreground end is not an exit; pushing on stays put")
+	check(not L.at_home(L.step_input(tip, Vector2.LEFT, 120.0)), "the foreground road edge is not a home exit")
 	var route := {"arm": L.HOME_ARM, "d": 600.0}
 	var goal := {"arm": L.HOME_ARM, "d": 195.0}
 	var guard := 0
 	while L.route_length(route, goal) > 0.5 and guard < 400:
 		route = L.step_toward(route, goal, 5.0)
 		guard += 1
-	check(is_equal_approx(float(route.d), 195.0) and guard == 81, "walking toward a spot arrives without overshooting")
+	check(L.geometry().position(route).distance_to(L.geometry().position(goal)) < 0.1 and guard > 0 and guard <= 81, "road-surface walking reaches the target without overshooting or forced centerline detours")
 	var desk := L.frame(L.point(L.HOME_ARM, 300.0), Vector2(1280, 720))
 	check(L.visible_rect(desk).encloses(Rect2(Vector2.ZERO, L.SIZE).grow(-1.0)), "desktop shows the whole painting")
 	var phone_zoom := -1.0
@@ -533,6 +533,15 @@ func _painted_path_walk() -> void:
 	scroll.press_at(scroll.art_to_screen(L.point(brook.arm, brook.d)))
 	scroll.notification(Node.NOTIFICATION_APPLICATION_FOCUS_OUT)
 	check(scroll.walk_target.is_empty(), "losing focus drops a pending tap walk")
+	var held_before: Array = scroll.carried().duplicate()
+	scroll.press_at(scroll.art_to_screen(brook.item))
+	check(scroll.walk_target.get("inspect_stop", "") == "brook", "visible creek marker sets a walk-and-look target")
+	guard = 0
+	while scroll.observing.is_empty() and guard < 1200:
+		scroll.walk(Vector2.ZERO, 1.0 / 30.0)
+		guard += 1
+	check(scroll.observing == "brook" and scroll.nearby_stop() == "brook", "marker walks to creek before opening its discovery")
+	check(scroll.carried() == held_before, "looking via marker never silently grants an item")
 	scroll.free()
 	root.size = Vector2i(1280, 720)
 
@@ -741,7 +750,8 @@ func _find_reveal() -> void:
 	check(reveal.sound != null or reveal.sound_plays == 0, "a missing sound is never replaced by another cue")
 	check(not ResourceLoader.exists(FindReveal.SOUND_PATH) or (reveal.sound != null and reveal.sound_plays == 1), "the delivered get sound loads and plays once")
 	check(KeepsakeArt.texture("formal.find.pine_cone") != null and KeepsakeArt.texture("formal.find.feather") != null, "the producer's pine cone and feather candidates are drawn as textures")
-	check(KeepsakeArt.texture("formal.find.brook_stone") == null, "the stone keeps its placeholder until a clean candidate exists")
+	var stone_texture := KeepsakeArt.texture("formal.find.brook_stone")
+	check(stone_texture != null and stone_texture.get_width() == 128 and stone_texture.get_height() > 0, "the cleaned stone uses a bounded runtime texture")
 	var sounding_before := reveal.is_sounding()
 	scroll.walk(Vector2.LEFT, 0.2)
 	check(reveal.is_sounding() == sounding_before, "walking off lets the get sound finish")

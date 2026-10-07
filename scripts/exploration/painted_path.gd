@@ -23,10 +23,24 @@ var FULL_VIEW_MIN: float
 var PHONE_VIEW_HEIGHT: float
 var PHONE_VIEW_WIDTH: float
 var STOPS: Array
+var WALK_WIDTHS: Dictionary = {}
+var _corridor: RefCounted
 
 func _init(definition: Dictionary) -> void:
 	for key: String in definition:
 		set(key, definition[key])
+	if not WALK_WIDTHS.is_empty():
+		_corridor = preload("res://scripts/exploration/road_corridor.gd").new()
+		_corridor.configure(ARMS, WALK_WIDTHS)
+
+func position(spot: Dictionary) -> Vector2:
+	return spot.get("foot", point(spot.arm, spot.d))
+
+func free_walk() -> bool:
+	return _corridor != null
+
+func road_point(value: Vector2) -> Vector2:
+	return _corridor.project(value) if free_walk() else value
 
 func stop(stop_id: String) -> Dictionary:
 	for entry: Dictionary in STOPS:
@@ -76,6 +90,7 @@ func depth(y: float) -> float:
 
 ## 画面上任意一点最近的路上位置
 func nearest(target: Vector2) -> Dictionary:
+	if free_walk(): target = _corridor.project(target)
 	var best := {"arm": ARMS.keys()[0], "d": 0.0, "gap": INF}
 	for arm: String in ARMS:
 		var points: Array = ARMS[arm]
@@ -89,11 +104,13 @@ func nearest(target: Vector2) -> Dictionary:
 			if gap < float(best.gap):
 				best = {"arm": arm, "d": walked + t * span, "gap": gap}
 			walked += span
+	if free_walk(): best["foot"] = target
 	return best
 
 
 ## 沿路从 from 走向 to 的下一段：同一条路直接走，不同路先回岔口
 func step_toward(from: Dictionary, to: Dictionary, distance: float) -> Dictionary:
+	if free_walk(): return nearest(_corridor.advance(position(from), position(to), distance))
 	var arm: String = from.arm
 	var d: float = from.d
 	if arm == to.arm or d <= 0.01:
@@ -106,6 +123,7 @@ func step_toward(from: Dictionary, to: Dictionary, distance: float) -> Dictionar
 
 
 func route_length(from: Dictionary, to: Dictionary) -> float:
+	if free_walk(): return _corridor.distance(position(from), position(to))
 	if from.arm == to.arm:
 		return absf(float(from.d) - float(to.d))
 	return float(from.d) + float(to.d)
@@ -115,6 +133,7 @@ func route_length(from: Dictionary, to: Dictionary) -> float:
 func step_input(from: Dictionary, direction: Vector2, distance: float) -> Dictionary:
 	if direction.length() < 0.01:
 		return from
+	if free_walk(): return nearest(_corridor.move_input(position(from), direction, distance))
 	var dir := direction.normalized()
 	var arm: String = from.arm
 	var d: float = from.d
@@ -156,6 +175,7 @@ func nearby(spot: Dictionary) -> String:
 	var best := ""
 	var gap := NEAR
 	for entry: Dictionary in STOPS:
+		if free_walk() and position(spot).distance_to(position(entry)) > gap: continue
 		var distance := route_length(spot, entry)
 		if distance <= gap:
 			gap = distance

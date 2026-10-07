@@ -4,6 +4,8 @@ test/album_layout_suite.gd	ALBUM_LAYOUT checks=[1-9][0-9]* failures=0
 test/album_short_landscape_suite.gd	ALBUM_SHORT_LANDSCAPE checks=[1-9][0-9]* failures=0
 test/animal_home_suite.gd	\[animal-home-tests\] PASS: [1-9][0-9]* checks
 test/audio_button_input_suite.gd	AUDIO_BUTTON_INPUT checks=[1-9][0-9]* failures=0
+test/ambience_output_ceiling_suite.gd	AMBIENCE_CEILING checks=[1-9][0-9]* failures=0
+test/road_freedom_suite.gd	ROAD_FREEDOM checks=[1-9][0-9]* failures=0
 test/authored_sequence_suite.gd	\[authored-sequence-tests\] PASS: 16 distinct complete frames, uniform canvas and anchor, loop metadata
 test/boundary_feedback_suite.gd	\[boundary-feedback-tests\] [1-9][0-9]* checks \[\]
 test/confirm_panel_fit_suite.gd	confirm_panel_fit suite: [1-9][0-9]* checks passed
@@ -77,6 +79,7 @@ test/title_card_suite.gd	title_card suite: [1-9][0-9]* checks passed
 test/title_copy_balance_suite.gd	PASS: title_copy_balance [1-9][0-9]* checks
 test/title_licenses_link_contrast_suite.gd	PASS: title_licenses_link_contrast [1-9][0-9]* checks
 test/title_short_landscape_suite.gd	title_short_landscape suite: [1-9][0-9]* checks passed
+test/touch_hint_mode_suite.gd	PASS: touch_hint_mode [1-9][0-9]* checks
 test/ui_interaction_suite.gd	\[ui-interaction-tests\] checks=[1-9][0-9]* failures=\[\]
 test/ui_viewports.gd	\[viewport\] checks=[1-9][0-9]* failures=\[\]
 test/web_hidpi_suite.gd	web_hidpi: [1-9][0-9]* checks, 0 failures
@@ -91,6 +94,7 @@ test/yard_inventory_suite.gd	YARD_INVENTORY checks=[1-9][0-9]* failures=0
 test/yard_decor_suite.gd	YARD_DECOR checks=[1-9][0-9]* failures=0
 test/yard_decor_persistence_suite.gd	YARD_DECOR_PERSISTENCE checks=[1-9][0-9]* failures=0
 test/yard_decor_integration_suite.gd	YARD_DECOR_INTEGRATION checks=[1-9][0-9]* failures=0
+test/yard_decor_button_states_suite.gd	\[yard-decor-button-states\] PASS: [1-9][0-9]* checks
 test/yard_basket_integration_suite.gd	YARD_BASKET_INTEGRATION checks=[1-9][0-9]* failures=0
 test/yard_ground_food_ledger_suite.gd	YARD_GROUND_FOOD_LEDGER checks=[1-9][0-9]* failures=0
 test/yard_ground_food_runtime_suite.gd	YARD_GROUND_FOOD_RUNTIME checks=[1-9][0-9]* failures=0
@@ -104,3 +108,9 @@ test/chick_millet_model_suite.gd	CHICK_MILLET_MODEL checks=[1-9][0-9]* failures=
 test/chick_millet_integration_suite.gd	CHICK_MILLET_INTEGRATION checks=[1-9][0-9]* failures=0
 test/pond_story_sequence_suite.gd	POND_STORY_SEQUENCE: [1-9][0-9]* checks, 0 failures
 test/pond_story_integration_suite.gd	POND_STORY_INTEGRATION: [1-9][0-9]* checks, 0 failures
+test/album_caption_fit_suite.gd	PASS album_caption_fit_suite: [1-9][0-9]* checks
+test/photo_arrival_shutter_fit_suite.gd	\[photo-arrival-shutter-fit\] PASS: [1-9][0-9]* checks
+test/exploration_basket_label_fit_suite.gd	\[exploration-basket-label-fit\] PASS: [1-9][0-9]* checks
+test/yard_basket_panel_fit_suite.gd	\[yard-basket-panel-fit\] PASS: [1-9][0-9]* checks
+test/confirm_panel_narrow_suite.gd	\[confirm-panel-narrow\] PASS: [1-9][0-9]* checks
+test/find_reveal_name_slip_suite.gd	PASS find_reveal_name_slip_suite: [1-9][0-9]* checks

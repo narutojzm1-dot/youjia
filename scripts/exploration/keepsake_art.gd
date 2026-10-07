@@ -14,7 +14,7 @@ static var _textures := {}
 static func texture(find_id: String) -> Texture2D:
 	var slug := find_id.get_slice(".", 2)
 	if not _textures.has(slug):
-		var path := TEXTURE_DIR + slug + ".webp"
+		var path := TEXTURE_DIR + slug + (".png" if slug == "brook_stone" else ".webp")
 		_textures[slug] = load(path) if ResourceLoader.exists(path) else null
 	return _textures[slug]
 
@@ -22,7 +22,8 @@ static func texture(find_id: String) -> Texture2D:
 static func draw(canvas: CanvasItem, find_id: String, at: Vector2, size: float = 1.0, on_ground: bool = false) -> void:
 	var tex := texture(find_id)
 	if tex != null:
-		var span := TEXTURE_SPAN * size / maxf(tex.get_width(), tex.get_height())
+		var display_span := 24.0 if find_id.get_slice(".", 2) == "brook_stone" else TEXTURE_SPAN
+		var span := display_span * size / maxf(tex.get_width(), tex.get_height())
 		var extent := Vector2(tex.get_width(), tex.get_height()) * span
 		# 白羽在浅色路面上保留一圈静止的墨色接触边；只用于地面，不放大原画。
 		if on_ground and find_id.get_slice(".", 2) == "feather":

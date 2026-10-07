@@ -168,6 +168,13 @@ func _run() -> void:
 	audio.set_music_gain(1.0)
 	audio.set_ambience_gain(1.0)
 	audio.release_streams()
+	# This suite exercises the native transport even with a headless display.
+	# Let stopped playback objects retire before exiting the test process.
+	music_stream = null
+	ambience_stream = null
+	music_stream_now = null
+	ambience_stream_now = null
+	await create_timer(0.25).timeout
 	if failures.is_empty():
 		print("YARD AUDIO PASS ", checks)
 		quit(0)

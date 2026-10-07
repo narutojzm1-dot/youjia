@@ -22,6 +22,11 @@ const CREAM := Color("fffaf1")
 const TOUCH_DEDUPE_MS := 400
 const BASKET_LABEL_AT := Vector2(84, 46)
 const BASKET_LABEL_WIDTH := 200.0
+# 篮子名称放不下时：先逐 1px 缩到 13px 保持一行，再不行就 13px 折两行往上长，不再截掉尾字
+const BASKET_LABEL_FONT_SIZE := 15
+const BASKET_LABEL_MIN_FONT_SIZE := 13
+const BASKET_LABEL_MAX_LINES := 2
+const BASKET_LABEL_MIN_WIDTH := 120.0
 
 signal return_requested(reason: String)
 signal pause_requested
@@ -61,6 +66,7 @@ var _look_button: Button
 var _pick_button: Button
 var _go_button: Button
 var _basket: Control
+var _basket_label_width := BASKET_LABEL_WIDTH
 var _view_size := Vector2.ZERO
 var reveal: FindReveal
 var leaf_texture: Texture2D
@@ -151,7 +157,7 @@ func reduced_motion() -> bool:
 
 
 func foot() -> Vector2:
-	return layout.point(spot.arm, spot.d)
+	return layout.position(spot)
 
 
 func _process(delta: float) -> void:
@@ -178,6 +184,7 @@ func walk(direction: Vector2, delta: float) -> void:
 	var before := foot()
 	var step := layout.WALK_SPEED * delta
 	var tap_home := false
+	var inspect_stop := ""
 	if direction.length() > 0.01:
 		walk_target = {}
 		spot = layout.step_input(spot, direction, step)
@@ -185,6 +192,7 @@ func walk(direction: Vector2, delta: float) -> void:
 		spot = layout.step_toward(spot, walk_target, step)
 		if layout.route_length(spot, walk_target) < 0.5:
 			tap_home = bool(walk_target.get("home", false)) and layout.at_home(spot)
+			inspect_stop = str(walk_target.get("inspect_stop", ""))
 			walk_target = {}
 	var moved := foot() - before
 	if moved.length() > 0.01 and reveal != null:
@@ -209,6 +217,7 @@ func walk(direction: Vector2, delta: float) -> void:
 	if companion != null: companion.advance(delta, spot, walker, reduced_motion())
 	if stray != null and _rescued_here: stray.advance(delta, spot, walker, reduced_motion())
 	_snap_camera()
+	if not inspect_stop.is_empty(): observe(inspect_stop)
 
 
 ## ───────────── 看景、带上、回院 ─────────────
@@ -424,8 +433,17 @@ func press_at(point: Vector2) -> void:
 		_show_caption(_observe_caption() + "\n" + I18n.t("exploration.caption.continue_hint"), 0.0)
 		return
 	var art := screen_to_art(point)
+	# A visible place marker is an invitation to walk there and look, never an
+	# automatic pickup. Hidden animal finds remain hidden until searched.
+	for entry: Dictionary in layout.STOPS:
+		if entry.id == "leaf_pile" or not entry.has("item"): continue
+		if point.distance_to(art_to_screen(entry.item)) <= 28.0:
+			walk_target = layout.nearest(layout.position(entry))
+			walk_target["inspect_stop"] = entry.id
+			return
 	var target := layout.nearest(art)
-	walk_target = {"arm": target.arm, "d": target.d, "home": layout.is_home_tap(art)}
+	walk_target = target.duplicate()
+	walk_target["home"] = layout.is_home_tap(art)
 
 
 func screen_to_art(point: Vector2) -> Vector2:
@@ -460,6 +478,12 @@ func _snap_camera() -> void:
 ## ───────────── 画面与界面 ─────────────
 
 func _draw_items() -> void:
+	for entry: Dictionary in layout.STOPS:
+		if entry.id == "leaf_pile" or not entry.has("item") or revealed.has(entry.id): continue
+		var anchor: Vector2 = entry.item
+		items.draw_circle(anchor, 14.0, Color(1.0, 0.97, 0.85, 0.82))
+		items.draw_arc(anchor, 14.0, 0, TAU, 24, Color(0.48, 0.35, 0.18, 0.8), 2.0, true)
+		items.draw_circle(anchor, 3.0, Color(0.48, 0.35, 0.18, 0.8))
 	if leaf_texture != null and not layout.stop("leaf_pile").is_empty():
 		var anchor: Vector2 = layout.stop("leaf_pile").item
 		var spread := 1.0 if not str(revealed.get("leaf_pile", "")).is_empty() else 0.0
@@ -662,7 +686,7 @@ func _refresh() -> void:
 	_return_button.text = I18n.t("exploration.action.return")
 	_pause_button.text = I18n.t("hud.pause")
 	_go_button.text = I18n.t("exploration.action.continue")
-	_hint.text = I18n.t("exploration.caption.walk_hint")
+	_hint.text = I18n.t("exploration.caption.free_walk_hint" if layout.free_walk() else "exploration.caption.walk_hint")
 	var size := get_viewport().get_visible_rect().size
 	var compact := size.x < 700.0
 	var near := nearby_stop()
@@ -727,6 +751,8 @@ func _layout(size: Vector2, compact: bool) -> void:
 	_hint.size = Vector2(size.x - pad * 2, 24)
 	_hint.position = Vector2(pad, size.y - pad - 30)
 	_basket.position = Vector2(pad, size.y - pad - 64 - (button_h + 10 if not observing.is_empty() else 0) - (34 if _hint.visible else 0))
+	# 名称底板右缘 = 篮子左缘 + 文字起点 + 文字宽 + 6，窄屏时也留出右侧 pad
+	_basket_label_width = basket_label_width_for(size.x, pad, _basket.position.x)
 
 
 ## 看景纸片按当前宽度的实际行数长高，不再把高度写成 0（字会溢出纸外，展示安全区也会按空高度算）
@@ -790,8 +816,9 @@ func _draw_basket() -> void:
 		KeepsakeArt.draw(_basket, held[i], Vector2(24 + i * 16, 22), 0.9)
 	var font := _basket.get_theme_default_font()
 	var text := basket_text()
-	_basket.draw_rect(basket_label_rect(font, text), Color(1.0, 0.97, 0.88, 0.86))
-	_basket.draw_string(font, BASKET_LABEL_AT, text, HORIZONTAL_ALIGNMENT_LEFT, BASKET_LABEL_WIDTH, 15, INK)
+	var fit := basket_label_fit(font, text, _basket_label_width)
+	_basket.draw_rect(basket_label_rect(font, text, _basket_label_width), Color(1.0, 0.97, 0.88, 0.86))
+	_basket.draw_multiline_string(font, fit.baseline, text, HORIZONTAL_ALIGNMENT_LEFT, fit.wrap_width, fit.font_size, BASKET_LABEL_MAX_LINES, INK)
 
 
 func basket_text() -> String:
@@ -799,11 +826,32 @@ func basket_text() -> String:
 	return I18n.t("exploration.basket.empty") if held.is_empty() else ExplorationDirector.items_text(PackedStringArray(held))
 
 
+## 名称一行可用的宽度：最宽 200；窄屏让底板右缘停在屏宽 - pad 以内
+static func basket_label_width_for(view_width: float, pad: float, basket_x: float) -> float:
+	return clampf(view_width - pad - basket_x - BASKET_LABEL_AT.x - 6.0, BASKET_LABEL_MIN_WIDTH, BASKET_LABEL_WIDTH)
+
+
+## 篮子名称怎么排：一行放得下就 15px 原样；放不下逐 1px 缩到 13px；仍放不下就 13px 折行（最多两行），
+## 第二行留在原来的基线上，第一行往上长，篮子和下面的按钮位置都不动
+static func basket_label_fit(font: Font, text: String, max_width: float = BASKET_LABEL_WIDTH) -> Dictionary:
+	var font_size := BASKET_LABEL_FONT_SIZE
+	while font_size > BASKET_LABEL_MIN_FONT_SIZE and font.get_string_size(text, HORIZONTAL_ALIGNMENT_LEFT, -1, font_size).x > max_width:
+		font_size -= 1
+	var one_line := font.get_string_size(text, HORIZONTAL_ALIGNMENT_LEFT, -1, font_size)
+	if one_line.x <= max_width:
+		return {"font_size": font_size, "lines": 1, "size": one_line, "wrap_width": -1.0, "baseline": BASKET_LABEL_AT}
+	var block := font.get_multiline_string_size(text, HORIZONTAL_ALIGNMENT_LEFT, max_width, font_size, BASKET_LABEL_MAX_LINES)
+	var lines := clampi(roundi(block.y / font.get_height(font_size)), 1, BASKET_LABEL_MAX_LINES)
+	var baseline := BASKET_LABEL_AT - Vector2(0, (lines - 1) * font.get_height(font_size))
+	return {"font_size": font_size, "lines": lines, "size": Vector2(minf(block.x, max_width), block.y), "wrap_width": max_width, "baseline": baseline}
+
+
 ## 篮子名称的小底板：每帧都画、只随文字宽度变，背景再花也读得清
-static func basket_label_rect(font: Font, text: String) -> Rect2:
-	var text_size := font.get_string_size(text, HORIZONTAL_ALIGNMENT_LEFT, BASKET_LABEL_WIDTH, 15)
-	var ascent := font.get_ascent(15)
-	return Rect2(BASKET_LABEL_AT + Vector2(-6, -ascent - 3), Vector2(minf(text_size.x, BASKET_LABEL_WIDTH) + 12, text_size.y + 6))
+static func basket_label_rect(font: Font, text: String, max_width: float = BASKET_LABEL_WIDTH) -> Rect2:
+	var fit := basket_label_fit(font, text, max_width)
+	var ascent := font.get_ascent(fit.font_size)
+	var text_size: Vector2 = fit.size
+	return Rect2(fit.baseline + Vector2(-6, -ascent - 3), text_size + Vector2(12, 6))
 
 
 func _label(font_size: int, color: Color) -> Label:
