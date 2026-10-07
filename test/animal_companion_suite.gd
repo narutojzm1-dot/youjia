@@ -57,6 +57,11 @@ func run() -> void:
 	print("ANIMAL_COMPANION checks=%d failures=%d" % [checks, failures.size()])
 	quit(0 if failures.is_empty() else 1)
 
+func resident_ids(world) -> Array:
+	var ids: Array = world._actors.keys()
+	ids.sort()
+	return ids
+
 func runtime() -> void:
 	var isolated := OS.get_environment("YOUJIA_TEST_ISOLATED_DATA").replace("\\", "/").to_lower()
 	if isolated.is_empty() or not OS.get_user_data_dir().replace("\\", "/").to_lower().begins_with(isolated):
@@ -69,6 +74,9 @@ func runtime() -> void:
 	main.set_process(false)
 	var world = main._world
 	var store = root.get_node("SaveStore")
+	check(await store.flush_pending(), "initial residents confirmed before departure baseline")
+	var original_residents := resident_ids(world)
+	check("chicken" in original_residents, "baseline includes the confirmed chick")
 	var llama = world.actor_named("llama")
 	var original_id: int = llama.get_instance_id()
 	for id: String in world._actors: world.actor_named(id).posed = true
@@ -114,13 +122,13 @@ func runtime() -> void:
 	scroll._request_return("player")
 	check(await store.flush_pending(), "native return committed")
 	check(main._screen == "game" and world.visible and world.actor_named("llama").get_instance_id() == original_id, "return restores same resident, no second animal")
-	check(world._actors.size() == 9 and llama.position.distance_to(world.get_player().position) < 100.0, "partner returns beside player without spawning")
+	check(resident_ids(world) == original_residents and llama.position.distance_to(world.get_player().position) < 100.0, "partner returns beside player without spawning")
 	check(store.get_exploration_record().session == null, "supported partner session cleaned after return")
 	world._interact_with_target(YardSceneHotspots.PATH_OUT)
 	check(main._exploration.is_exploring(), "second actual trip can begin")
 	main._exploration.interrupt()
 	check(await store.flush_pending(), "interrupted trip safely settles")
-	check(main._screen == "game" and world._actors.size() == 9 and store.get_exploration_record().session == null, "host interrupt cannot lose or duplicate resident")
+	check(main._screen == "game" and resident_ids(world) == original_residents and store.get_exploration_record().session == null, "host interrupt cannot lose or duplicate resident")
 	world._interact_with_target(YardSceneHotspots.PATH_OUT)
 	check(await store.flush_pending(), "active trip saved before abrupt scene removal")
 	check(store.get_exploration_record().session.companion.actor_id == "llama", "crash fixture really has a durable companion trip")
@@ -133,7 +141,7 @@ func runtime() -> void:
 	await main._start_holiday()
 	main.set_process(false)
 	check(await store.flush_pending(), "fresh native Main restores and settles interrupted trip")
-	check(main._screen == "game" and main._world._actors.size() == 9, "restart returns all residents once")
+	check(main._screen == "game" and resident_ids(main._world) == original_residents, "restart returns all residents once")
 	check(main._world.actor_named("llama").position.distance_to(main._world.get_player().position) < 100.0, "restart places same stable partner beside safe return point")
 	check(store.get_exploration_record().session == null, "restart cleanup recognizes and preserves companion contract")
 	world = main._world
