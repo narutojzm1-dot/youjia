@@ -16,6 +16,8 @@ const TEXT_LINK_HOVER := Color("3d2d23")
 const HINT_MIN_TEXT_HEIGHT := 32.0
 ## 「现在离开吗？」确认纸片的设计尺寸；屏幕更窄/更矮时按 _fit_confirm_panel() 收进屏内（REQ-20261005-030）。
 const CONFIRM_PANEL_SIZE := Vector2(420, 240)
+## 确认纸片两颗按钮的设计宽度（与 _soft_button 默认一致）；纸片内宽更窄时才收窄（REQ-20261007-052）。
+const CONFIRM_BUTTON_WIDTH := 260.0
 ## 屏高不超过这个值时（手机横屏扣掉浏览器地址栏、568×320 等）标题页改用更紧的排版（REQ-20261005-031）。
 const TITLE_TIGHT_MAX_HEIGHT := 360.0
 const ALBUM_TIGHT_MAX_HEIGHT := 360.0
@@ -968,6 +970,17 @@ func _fit_confirm_panel() -> void:
 	_confirm_panel.offset_right = panel_w * 0.5
 	_confirm_panel.offset_top = -panel_h * 0.5
 	_confirm_panel.offset_bottom = panel_h * 0.5
+	# REQ-20261007-052：两颗按钮最小 260 宽，加纸面左右各 16 内边距要 292；屏宽不足 316
+	# （如 280 / 300 宽竖屏）时纸片被按钮撑过「屏宽 − 24」，280 宽两边各伸出屏外 6px。
+	# 只在这种窄纸片上把按钮收到纸片内宽，仍 44 高、字号不变；内宽 ≥ 260 时一律保持 260。
+	var style := _confirm_panel.get_theme_stylebox("panel")
+	var inner_w := panel_w
+	if style != null:
+		inner_w -= style.get_margin(SIDE_LEFT) + style.get_margin(SIDE_RIGHT)
+	var button_w := minf(CONFIRM_BUTTON_WIDTH, floorf(inner_w))
+	for button in [_confirm_accept_button, _confirm_cancel_button]:
+		if button != null:
+			button.custom_minimum_size = Vector2(button_w, button.custom_minimum_size.y)
 
 
 func _build_album_screen() -> void:
