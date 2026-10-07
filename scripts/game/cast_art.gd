@@ -75,6 +75,9 @@ static func configure(original: Dictionary) -> Dictionary:
 	elif species=="cow" and ResourceLoader.exists(DIRECTORY+"cow_chew.png"):
 		config.textures["chew"]=DIRECTORY+"cow_chew.png"
 		config.posture_metadata={"chew": manifest().get("cow_chew",{})}
+		var grazing := preload("res://scripts/game/cow_ground_art.gd")
+		config.textures["graze"] = grazing.TEXTURE
+		config.posture_metadata["graze"] = grazing.METADATA
 		if ResourceLoader.exists(DIRECTORY+"cow_glance.png"):
 			config.textures["glance"]=DIRECTORY+"cow_glance.png"
 			config.posture_metadata["glance"]=manifest().get("cow_glance",{})
