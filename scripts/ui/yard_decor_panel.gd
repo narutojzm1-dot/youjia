@@ -69,7 +69,7 @@ func _ready() -> void:
 		find_buttons[id] = button(finds, "", func() -> void: choose_find(id))
 	var nudges := HBoxContainer.new()
 	column.add_child(nudges)
-	for direction: Vector2i in [Vector2i.LEFT, Vector2i.RIGHT, Vector2i.UP, Vector2i.DOWN]:
+	for direction: Vector2i in NUDGE_DIRECTIONS:
 		var label: String = ["←", "→", "↑", "↓"][nudge_buttons.size()]
 		nudge_buttons.append(button(nudges, label, func() -> void: nudge(direction)))
 	var actions := HBoxContainer.new()
@@ -92,6 +92,16 @@ const BUTTON_STATES := {
 	"disabled": {"fill": Color("f3e9db"), "edge": Color("bfa588"), "width": 1, "ink": Color("7a6152")},
 }
 const FOCUS_EDGE := Color("916d49")
+const NUDGE_DIRECTIONS: Array[Vector2i] = [Vector2i.LEFT, Vector2i.RIGHT, Vector2i.UP, Vector2i.DOWN]
+
+# REQ-20261007-060: an arrow that cannot move the preview any further (the
+# offset is already at the model's ±1 step) used to stay lit; tapping it did
+# nothing and gave no sign the edge was reached. It now greys out there.
+func can_nudge(direction: Vector2i) -> bool:
+	if busy or draft.is_empty(): return false
+	var dx := int(draft.get("dx", 0))
+	var dy := int(draft.get("dy", 0))
+	return clampi(dx + direction.x, -1, 1) != dx or clampi(dy + direction.y, -1, 1) != dy
 
 static func state_style(mode: String) -> StyleBoxFlat:
 	var spec: Dictionary = BUTTON_STATES[mode]
@@ -175,7 +185,7 @@ func choose_find(id: String) -> void:
 	refresh()
 
 func nudge(direction: Vector2i) -> void:
-	if busy or draft.is_empty(): return
+	if not can_nudge(direction): return
 	draft.dx = clampi(int(draft.dx) + direction.x, -1, 1)
 	draft.dy = clampi(int(draft.dy) + direction.y, -1, 1)
 	refresh()
@@ -204,7 +214,7 @@ func refresh() -> void:
 		var id: String = ExplorationRoutes.FINDS[i]
 		find_buttons[id].text = "%s ×%d" % [names[i], int(counts.get(id, 0))]
 		find_buttons[id].disabled = busy or occupied or int(counts.get(id, 0)) <= 0
-	for b: Button in nudge_buttons: b.disabled = busy or draft.is_empty()
+	for i in nudge_buttons.size(): nudge_buttons[i].disabled = not can_nudge(NUDGE_DIRECTIONS[i])
 	confirm_button.disabled = busy or draft.is_empty() or unchanged
 	confirm_button.text = "Place" if en else "确认摆好"
 	remove_button.text = "Put back" if en else "收回背篓"
