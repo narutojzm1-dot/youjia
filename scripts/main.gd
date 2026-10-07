@@ -397,7 +397,9 @@ func _process(delta: float) -> void:
 	_cam_zoom = lerpf(_cam_zoom, _cam_target_zoom, 1.0 - exp(-delta * lerp_rate))
 	_cam_offset = _cam_offset.lerp(_cam_target_offset, 1.0 - exp(-delta * (12.0 if reduced else 3.0)))
 	var hud_space := 140.0 if size.x < 700.0 else 76.0
-	var fit := minf(size.x/YardWorld.WORLD_SIZE.x,maxf(100.0,size.y-hud_space)/YardWorld.WORLD_SIZE.y)
+	# Fill the playable frame in both orientations; crop surplus painted sky
+	# instead of shrinking the entire yard into a paper-bordered rectangle.
+	var fit := maxf(size.x/YardWorld.WORLD_SIZE.x,maxf(100.0,size.y-hud_space)/YardWorld.WORLD_SIZE.y)
 	var portrait := size.x < 700.0 and size.y > size.x
 	if portrait:
 		# Fill the playable height and follow the resident across the panorama.
@@ -419,6 +421,8 @@ func _process(delta: float) -> void:
 		home.x = _portrait_camera_x
 		player_follow = Vector2.ZERO
 	var camera_home := home + player_follow + Vector2(0, hud_space / (2.0 * zoom))
+	if _world != null:
+		camera_home = _cover_yard_frame(camera_home, _world.get_backdrop_bounds(), size, zoom, hud_space)
 	if _cam_quiet_bounds and _cam_target_offset.is_zero_approx() and _cam_offset.length_squared() < 0.0001:
 		_cam_offset = Vector2.ZERO
 		_cam_quiet_bounds = false
@@ -618,12 +622,16 @@ func _build_layers() -> void:
 	_season_rect.color = Color(0, 0, 0, 0)
 	_season_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_season_rect.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	var tint_material := ShaderMaterial.new()
+	tint_material.shader = preload("res://shaders/scene_tint.gdshader")
+	_season_rect.material = tint_material
 	_tod_canvas.add_child(_season_rect)
 	# 昼夜色调（覆盖在季节之上）
 	_tod_rect = ColorRect.new()
 	_tod_rect.color = Color(0, 0, 0, 0)
 	_tod_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_tod_rect.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	_tod_rect.material = tint_material
 	_tod_canvas.add_child(_tod_rect)
 
 
@@ -2081,8 +2089,18 @@ func _fit_album_caption(caption: Label, card_scale: float) -> void:
 	caption.size = Vector2(width, strip.size.y)
 
 
-## Keep the unfocused composition's existing coverage, including letterboxing.
-## No extra zoom or art is invented when an axis has no remaining pan budget.
+## Keep the playable frame inside the painting while retaining player follow.
+static func _cover_yard_frame(requested: Vector2, art: Rect2, viewport: Vector2, zoom: float, hud_space: float) -> Vector2:
+	if zoom <= 0.0 or not art.has_area(): return requested
+	var lower := art.position + viewport * 0.5 / zoom
+	var upper := art.end - Vector2(viewport.x * 0.5, viewport.y * 0.5 - hud_space) / zoom
+	return Vector2(
+		clampf(requested.x, lower.x, upper.x) if lower.x <= upper.x else art.get_center().x,
+		clampf(requested.y, lower.y, upper.y) if lower.y <= upper.y else art.get_center().y + hud_space / (2.0 * zoom)
+	)
+
+
+## Quiet focus preserves the baseline's coverage without adding magnification.
 static func _bound_quiet_camera(requested: Vector2, baseline: Vector2, art: Rect2, viewport: Vector2, zoom: float, hud_space: float) -> Vector2:
 	if zoom <= 0.0 or not art.has_area():
 		return baseline
