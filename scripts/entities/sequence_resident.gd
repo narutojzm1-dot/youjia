@@ -11,9 +11,9 @@ var action_elapsed := 0.0
 var action_kind: StringName = &""
 const STRIDE := 52.0
 const NOMINAL_FPS := 12.0
-# A brisk, comfortable walk while keeping the authored stride registered to travel.
-# At the default 96px/s tuning this gives 61.4px/s; frame phase still follows distance.
-const SPEED_MULTIPLIER := 0.64
+# Match the nearby path's 85px/s at unit depth (96 * 0.9 = 86.4).
+# Frame phase follows travelled distance, so faster travel keeps planted steps.
+const SPEED_MULTIPLIER := 0.9
 var distance_phase:=0.0
 
 func _ready() -> void:

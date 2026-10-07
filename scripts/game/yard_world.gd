@@ -414,8 +414,8 @@ func sync_residents(value: Dictionary) -> void:
 	var previous := actor_named("beibei")
 	if stage == "unmet": return
 	if previous != null and previous.get_meta("resident_stage", "") == stage: return
-	var point := previous.position if previous != null else Vector2(300, 530)
 	var config := BeibeiArt.configure(stage)
+	var point: Vector2 = previous.position if previous != null else config.position
 	for offset: Vector2 in [Vector2.ZERO, Vector2(0, 35), Vector2(35, 25), Vector2(-35, 25), Vector2(0, 60)]:
 		var candidate := point + offset
 		if YardGround.allows(candidate, YardGround.lawn(), true) and YardBodies.clear_at(candidate, config.body_radius, physical_obstacles("beibei")):
@@ -1275,7 +1275,9 @@ func _spawn_cast() -> void:
 			original.wander = homes[id]
 			original.position = homes[id].get_center()
 		if id == "llama": original.position = Vector2(705, 500)
-		original.speed = {"cow": 10.0, "horse": 12.0, "sheep": 11.0, "goose": 13.0, "duck": 10.0, "llama": 23.0}[str(original.species)]
+		# Walk between activities instead of creeping; pauses still define the
+		# relaxed daily rhythm, independently of the locomotion speed.
+		original.speed = {"cow": 26.0, "horse": 32.0, "sheep": 28.0, "goose": 34.0, "duck": 18.0, "llama": 40.0}[str(original.species)]
 		var config:=CastArt.configure(original)
 		var actor: FeltActor = FeltActorType.new()
 		add_child(actor)

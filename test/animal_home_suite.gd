@@ -23,6 +23,7 @@ func _run() -> void:
 	tuning.call("reset_defaults")
 	for fps: int in FRAME_RATES:
 		_test_daily_life(fps)
+	_test_new_residents()
 	root.get_node("AudioDirector").call("release_streams")
 	if _failures.is_empty():
 		print("[animal-home-tests] PASS: %d checks" % _checks)
@@ -81,6 +82,34 @@ func _test_daily_life(fps: int) -> void:
 		_check(world.weather == weather, "%s observation remains in requested weather at %d Hz" % [weather, fps])
 		for actor in actors:
 			_assert_rhythm(actor, metrics[actor.actor_id], weather, fps)
+	world.free()
+
+
+func _test_new_residents() -> void:
+	seed(10072026)
+	var world = load("res://scripts/game/yard_world.gd").new()
+	root.add_child(world)
+	world.setup()
+	world.input_enabled = false
+	world.sync_residents({"beibei": {"stage": "grown"}, "chicken": {"stage": "hen"}})
+	var dog = world.actor_named("beibei")
+	var hen = world.actor_named("chicken")
+	_check(dog.wander_rect.has_point(dog.position), "beibei spawns in its actual configured daily area")
+	_check(hen.wander_rect.has_point(hen.position), "hen spawns in its daily area")
+	_check(not dog.wander_rect.intersects(world.actor_named("sheep_a").wander_rect), "dog and cottage sheep have separate main areas")
+	_check(not hen.wander_rect.intersects(world.actor_named("cow").wander_rect), "hen and cow have separate main areas")
+	var start := {"beibei": dog.position, "chicken": hen.position}
+	var travel := {"beibei": 0.0, "chicken": 0.0}
+	var outside := {"beibei": 0, "chicken": 0}
+	for frame in 60 * 90:
+		world.tick(1.0 / 60.0, Vector2.ZERO)
+		for actor in [dog, hen]:
+			travel[actor.actor_id] += actor.position.distance_to(start[actor.actor_id])
+			start[actor.actor_id] = actor.position
+			if not _at_home(actor): outside[actor.actor_id] += 1
+	for actor in [dog, hen]:
+		_check(travel[actor.actor_id] > 20.0, "%s naturally explores its main area" % actor.actor_id)
+		_check(outside[actor.actor_id] == 0, "%s stays on its safe daily ground without a lure" % actor.actor_id)
 	world.free()
 
 

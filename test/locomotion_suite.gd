@@ -721,7 +721,12 @@ func _test_sequence_default() -> void:
 		_check(actor._sequence_walker.distance_phase==0.0,"relocation clears sequence phase")
 		actor.free()
 	_check(distances.max()-distances.min()<1.0,"calibrated sequence movement is frame-rate stable")
-	_check(distances[1]>160.0 and distances[1]<175.0,"accepted sequence walk uses the updated leisurely root speed")
+	_check(distances[1]>230.0 and distances[1]<245.0,"yard walk covers a useful distance within three seconds")
+	# Compare travelled distance after acceleration, normalized by perspective.
+	# Camera zoom scales both the person and the ground, so it cancels out.
+	var path_pace: float = NearPathLayout.WALK_SPEED
+	var yard_pace: float = distances[1] / 3.0 / YardGround.depth_at(500.0)
+	_check(absf(yard_pace - path_pace) / path_pace < 0.10,"yard and near-path unit-depth walking pace differ by less than ten percent")
 	var world:=YardWorld.new()
 	add_child(world)
 	world.setup([])

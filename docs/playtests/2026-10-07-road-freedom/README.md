@@ -21,4 +21,4 @@ Owner CODEX-LEAD。原lane中心线/停留点/返院和Host记录保留；按原
 
 最终截图final-north-390.jpeg、final-brook-568.jpeg、final-reopened-basket-1280.jpeg。原始过程还保留旧v1卡住及v2端点偏移，不能混作最终验收。
 
-完整CI、公开发布和物理手机未完成，不关闭#535。
+完整CI37584564707成功，合入02e3fd7153435afb04140a7b94603767f7e220da。Publish37585929368、Pages37587201758成功；公开game-02e3fd7 PCK 43,900,244 bytes、SHA256 `53eced12c3cfeaceeb3e94848f7f35b9b345b59abd724a9dbc1eb15ad04c033c`、Git blob `5155781ec2152636e81e787555f36a7ed978b8ee`与发布产物匹配，HTML入口和10存储模块一致。正式普通页面核验接续中，物理手机未验，不关闭#535。
