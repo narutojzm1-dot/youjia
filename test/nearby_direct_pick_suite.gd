@@ -158,6 +158,33 @@ func _return_input() -> void:
 			if main._pause_screen.visible: main._toggle_pause()
 			await process_frame
 			await process_frame
+		await root.get_node("SaveStore").flush_pending()
+		main._last_touch_ms = -10000
+		main._refresh_hud()
+		var start_point: Vector2 = main._action_button.get_global_rect().get_center()
+		var down := InputEventMouseButton.new()
+		down.position = start_point
+		down.global_position = start_point
+		down.button_index = MOUSE_BUTTON_LEFT
+		down.button_mask = MOUSE_BUTTON_MASK_LEFT
+		down.pressed = true
+		# Unlike push_input, this also updates Input's real held-button state.
+		Input.parse_input_event(down)
+		await process_frame
+		check(main._screen == "exploring", "HUD gesture enters actual nearby scene")
+		if main._exploration.scroll != null:
+			var entered_scroll = main._exploration.scroll
+			_touch(start_point, true)
+			check(entered_scroll.walk_target.is_empty(), "entering gesture cannot become nearby ground movement")
+			down.pressed = false
+			down.button_mask = 0
+			Input.parse_input_event(down)
+			_touch(start_point, false)
+			await process_frame
+			check(entered_scroll.walk_target.is_empty(), "entry release does not move newly entered scene")
+			main._exploration.interrupt()
+			await process_frame
+			await process_frame
 	main.queue_free()
 	await process_frame
 

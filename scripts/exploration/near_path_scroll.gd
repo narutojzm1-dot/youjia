@@ -54,6 +54,7 @@ var _pending_collect_stop := ""
 var _home_hold := 0.0
 var _walked := false
 var _last_touch_ms := -10000
+var _entry_pointer_held := false
 var _cam_zoom := 1.0
 var _cam_pos := Vector2.ZERO
 var _caption_time := 0.0
@@ -79,6 +80,9 @@ var leaf_texture: Texture2D
 func setup(trip_host: ExplorationHost, _weather: String, resident_controller: RefCounted = null) -> void:
 	host = trip_host
 	residents = resident_controller
+	# A HUD mouse press may create this scene before its paired touch event.
+	# Finish that existing gesture here without treating it as a ground click.
+	_entry_pointer_held = Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT)
 	process_mode = Node.PROCESS_MODE_PAUSABLE
 	var paper := Polygon2D.new()
 	paper.polygon = PackedVector2Array([Vector2(-3000, -3000), Vector2(layout.SIZE.x + 3000, -3000), Vector2(layout.SIZE.x + 3000, layout.SIZE.y + 3000), Vector2(-3000, layout.SIZE.y + 3000)])
@@ -139,6 +143,7 @@ func release() -> void:
 ## 暂停或失焦时丢掉点按目标，恢复后不自己走起来
 func _notification(what: int) -> void:
 	if what in [NOTIFICATION_PAUSED, NOTIFICATION_APPLICATION_FOCUS_OUT, NOTIFICATION_WM_WINDOW_FOCUS_OUT]:
+		_entry_pointer_held = false
 		_pending_collect_stop = ""
 		_cancel_search()
 		walk_target = {}
@@ -454,6 +459,10 @@ func _unhandled_input(event: InputEvent) -> void:
 		return
 	var point := Vector2.INF
 	var pressed := false
+	if _entry_pointer_held and (event is InputEventScreenTouch or event is InputEventMouseButton):
+		if not event.pressed: _entry_pointer_held = false
+		get_viewport().set_input_as_handled()
+		return
 	if event is InputEventScreenTouch:
 		point = event.position
 		pressed = event.pressed and not event.canceled
