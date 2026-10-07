@@ -913,6 +913,11 @@ func _build_pause_screen() -> void:
 ## 上下各 PAUSE_SHORT_BREATH 留白），仍不超过「屏高 − 24」并保持居中；宽度、字号、按钮、两列
 ## 分组与竖屏/大屏排版都不变（REQ-20261006-043）。
 const PAUSE_SHORT_BREATH := 14.0
+## 竖屏/大屏原来固定 min(620, 屏高 − 24)：390×844 上纸片 620px 高、单列内容连纸边距约 553px，
+## 标题上方和最后一个按钮下方各空出约 43px，纸片下端还压住底栏一排按钮的上沿。
+## 现在高屏也按内容贴合，上下各留 PAUSE_TALL_BREATH；上限、居中、360 宽、单列、字号与按钮都不变
+## （REQ-20261007-059）。
+const PAUSE_TALL_BREATH := 20.0
 
 
 func _fit_pause_panel() -> void:
@@ -948,14 +953,15 @@ func _fit_pause_panel() -> void:
 
 ## 矮屏改两列/切语言后子节点最小尺寸是延迟更新的，等内容最小高度真正变化时再贴合一次。
 func _on_pause_content_resized() -> void:
-	if _pause_panel == null or size.x < 64.0 or size.y < 64.0 or size.y >= 500.0:
+	if _pause_panel == null or size.x < 64.0 or size.y < 64.0:
 		return
-	_apply_pause_panel_size(minf(680.0, size.x - 24.0), minf(620.0, size.y - 24.0))
+	var short := size.y < 500.0
+	_apply_pause_panel_size(minf(680.0 if short else 360.0, size.x - 24.0), minf(620.0, size.y - 24.0))
 
 
 func _apply_pause_panel_size(panel_w: float, panel_h: float) -> void:
-	if size.y < 500.0:
-		panel_h = minf(panel_h, _pause_content_height() + PAUSE_SHORT_BREATH * 2.0)
+	var breath := PAUSE_SHORT_BREATH if size.y < 500.0 else PAUSE_TALL_BREATH
+	panel_h = minf(panel_h, _pause_content_height() + breath * 2.0)
 	_pause_panel.custom_minimum_size = Vector2(panel_w, panel_h)
 	_pause_panel.offset_left = -panel_w * 0.5
 	_pause_panel.offset_right = panel_w * 0.5
@@ -963,7 +969,7 @@ func _apply_pause_panel_size(panel_w: float, panel_h: float) -> void:
 	_pause_panel.offset_bottom = panel_h * 0.5
 
 
-## 暂停纸片装下当前内容所需的最小高度（含纸面上下内边距），只用于矮屏贴合。
+## 暂停纸片装下当前内容所需的最小高度（含纸面上下内边距），矮屏与高屏贴合共用。
 func _pause_content_height() -> float:
 	var height := _pause_box.get_combined_minimum_size().y
 	var style := _pause_panel.get_theme_stylebox("panel")

@@ -6,12 +6,23 @@ extends SceneTree
 ## above and below. It now hugs its content (content + paper padding + 14px
 ## breathing room top and bottom), still never exceeds "screen height - 24",
 ## stays centred, and keeps its width, fonts, buttons and two-column grouping.
-## Portrait and large screens keep the original height min(620, h - 24).
+##
+## REQ-20261007-059: portrait and large screens used to keep a fixed
+## min(620, h - 24). At 390x844 that was a 620px card around ~553px of
+## single-column content (padding included), ~43px of empty paper above the
+## title and below the last button, and the card's bottom pressed over the top
+## of the bottom HUD row.
+## Tall screens now hug too (content + padding + 20px top and bottom), still
+## capped at min(620, h - 24), centred, 360 wide, single column, same fonts.
 
 const SHORT := [Vector2i(844, 390), Vector2i(915, 412), Vector2i(700, 400), Vector2i(640, 360), Vector2i(568, 320), Vector2i(640, 300)]
 const TALL := [Vector2i(360, 640), Vector2i(390, 844), Vector2i(412, 915), Vector2i(1280, 720)]
 const MARGIN := 12.0
 const BREATH := 14.0
+const TALL_BREATH := 20.0
+## Portrait screens with room for the hugged card must leave the HUD chips uncovered
+## (1280x720 content alone is ~553px, so a few px of overlap with the bottom row remain there).
+const HUD_CLEAR := [Vector2i(390, 844), Vector2i(412, 915)]
 const EPS := 0.51
 
 var checks := 0
@@ -116,8 +127,18 @@ func _check_panel(dims: Vector2i, tag: String) -> void:
 		_check(main._pause_title.get_theme_font_size("font_size") == 18 and main._resume_button.get_theme_font_size("font_size") == 13 and main._music_volume_label.get_theme_font_size("font_size") == 12, "%s: short font sizes unchanged (18/13/12)" % tag)
 		_check(main._resume_button.custom_minimum_size.y == 36.0 and main._resume_button.size.y >= 36.0 - EPS, "%s: short buttons keep their 36px minimum (%.1f)" % [tag, main._resume_button.size.y])
 	else:
-		var expected_tall := minf(620.0, dims.y - MARGIN * 2.0)
-		_check(absf(rect.size.y - expected_tall) <= EPS, "%s: tall paper height %.1f == %.1f (unchanged)" % [tag, rect.size.y, expected_tall])
+		var expected_tall := minf(minf(620.0, dims.y - MARGIN * 2.0), content + TALL_BREATH * 2.0)
+		_check(absf(rect.size.y - expected_tall) <= EPS, "%s: tall paper height %.1f hugs content (%.1f)" % [tag, rect.size.y, expected_tall])
+		var tall_gap_top := top - rect.position.y
+		var tall_gap_bottom := rect.end.y - bottom
+		_check(tall_gap_top <= pad_top + TALL_BREATH + 2.0, "%s: empty paper above the title %.1f <= %.1f (was ~43px at 390x844)" % [tag, tall_gap_top, pad_top + TALL_BREATH + 2.0])
+		_check(tall_gap_bottom <= pad_bottom + TALL_BREATH + 2.0, "%s: empty paper below the last control %.1f stays small" % [tag, tall_gap_bottom])
+		if dims in HUD_CLEAR:
+			for chip: Control in [main._day_label, main._pause_button, main._album_chip, main._weather_chip, main._basket_chip, main._action_button]:
+				if chip != null and chip.is_visible_in_tree():
+					var c := chip.get_global_rect()
+					_check(not rect.intersects(c), "%s: paper %s leaves HUD %s %s uncovered" % [tag, rect, chip.name, c])
+		_check(main._resume_button.custom_minimum_size.y == 44.0, "%s: tall buttons keep their 44px minimum" % tag)
 		_check(not main._pause_audio.visible and main._music_toggle.get_parent() == main._pause_session, "%s: single column kept" % tag)
 		_check(main._pause_title.get_theme_font_size("font_size") == 26 and main._resume_button.get_theme_font_size("font_size") == 16, "%s: tall font sizes unchanged (26/16)" % tag)
 	_check(main._pause_title.text == i18n.t("pause.title") and main._resume_button.text == i18n.t("pause.resume"), "%s: copy unchanged" % tag)
