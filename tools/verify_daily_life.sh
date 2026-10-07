@@ -41,6 +41,7 @@ run_godot suite test/yard_inventory_suite.gd
 run_godot suite test/yard_decor_suite.gd
 run_godot suite test/yard_decor_persistence_suite.gd
 run_godot suite test/yard_decor_integration_suite.gd
+run_godot suite test/yard_decor_button_states_suite.gd
 run_godot suite test/yard_ground_food_ledger_suite.gd
 run_godot suite test/yard_ground_food_runtime_suite.gd
 run_godot suite test/animal_companion_suite.gd
