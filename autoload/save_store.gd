@@ -555,8 +555,15 @@ func request_album(photos: PackedStringArray, moments: Dictionary = {}) -> Strin
 		return current)
 
 
-func request_yard_progress(day: int, elapsed: float, state: int, day_planted: int, watered_day: int) -> String:
-	return request_patch("yard", {"holiday_day": maxi(1, day), "holiday_day_elapsed": maxf(0.0, elapsed), "plant_state": clampi(state, 0, 3), "plant_day_planted": maxi(0, day_planted), "plant_watered_day": watered_day})
+func get_world_weather() -> Dictionary:
+	return preload("res://scripts/game/world_weather.gd").sanitize(_data.get("world_weather", {}))
+
+
+func request_yard_progress(day: int, elapsed: float, state: int, day_planted: int, watered_day: int, climate: Dictionary = {}) -> String:
+	var patch := {"holiday_day": maxi(1, day), "holiday_day_elapsed": maxf(0.0, elapsed), "plant_state": clampi(state, 0, 3), "plant_day_planted": maxi(0, day_planted), "plant_watered_day": watered_day}
+	var clean := preload("res://scripts/game/world_weather.gd").sanitize(climate)
+	if not clean.is_empty(): patch.world_weather = clean
+	return request_patch("yard", patch)
 
 
 func request_plant_state(state: int, day_planted: int, watered_day: int) -> String:
