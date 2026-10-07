@@ -203,3 +203,13 @@ for basket_pair in 'yard_inventory|YARD_INVENTORY' 'yard_basket_integration|YARD
   run_case "$basket_marker-failed" block 0 "$basket_marker checks=1 failures=1" none suite "$basket_entry"
 done
 echo "BASKET GATE CONTRACT PASS 6"
+
+for decor_pair in 'yard_decor|YARD_DECOR' 'yard_decor_persistence|YARD_DECOR_PERSISTENCE'; do
+  decor_entry="test/${decor_pair%%|*}_suite.gd"
+  decor_marker="${decor_pair#*|}"
+  run_case "$decor_marker-valid" pass 0 "$decor_marker checks=1 failures=0" none suite "$decor_entry"
+  run_case "$decor_marker-zero" block 0 "$decor_marker checks=0 failures=0" none suite "$decor_entry"
+  run_case "$decor_marker-failed" block 0 "$decor_marker checks=1 failures=1" none suite "$decor_entry"
+  run_case "$decor_marker-missing" block 0 '' none suite "$decor_entry"
+done
+echo 'DECOR GATE CONTRACT PASS 8'

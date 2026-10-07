@@ -233,6 +233,22 @@ func get_yard_inventory() -> Dictionary:
 	return YardInventory.read(_data)
 
 
+func get_yard_decor() -> Dictionary:
+	return preload("res://scripts/inventory/yard_decor.gd").read(_data)
+
+
+func get_available_keepsakes() -> Dictionary:
+	return preload("res://scripts/inventory/yard_decor.gd").available(_data)
+
+
+func request_decor_action(revision: int, action: String, spot: String, details: Dictionary = {}) -> String:
+	var frozen := details.duplicate(true)
+	return request_intent("decor", func(current: Dictionary) -> Variant:
+		var result := preload("res://scripts/inventory/yard_decor.gd").transition(current, revision, action, spot, frozen)
+		if result.has("error"): return CoordinatorType.IntentRejection.new(result.error)
+		return result.candidate)
+
+
 func get_world_residents() -> Dictionary:
 	return preload("res://scripts/game/world_residents.gd").read(_data)
 
