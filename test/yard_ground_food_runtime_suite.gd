@@ -131,8 +131,17 @@ func run() -> void:
 	world.tick(20.0, Vector2.ZERO)
 	check(world.ground_food.items.size() == 1 and world.actor_named("sheep_a").position == positions[0], "paused simulation leaves food and competitors untouched")
 	world.simulation_active = true
+	var sheep_contacts: Dictionary = {}
 	for frame in 1000:
 		world.tick(0.05, Vector2.ZERO)
+		for id: String in ["sheep_a", "sheep_b"]:
+			var sheep = world.actor_named(id)
+			if sheep._posture_id == "graze":
+				var metadata: Dictionary = load("res://scripts/game/sheep_ground_art.gd").CELLS[id].metadata
+				var mouth := Vector2(metadata.mouth_anchor[0], metadata.mouth_anchor[1])
+				var anchor := Vector2(metadata.ground_anchor[0], metadata.ground_anchor[1])
+				var contact: Vector2 = sheep._sprite.to_global(mouth - anchor)
+				sheep_contacts[id] = bool(sheep_contacts.get(id, false)) or contact.distance_to(world.to_global(shared_food)) < 8.0
 		if main._inventory.busy(): await settle()
 		if world.ground_food.items.is_empty(): break
 	check(world.ground_food.items.is_empty(), "one of two sheep reaches and eats the shared grass")
@@ -143,8 +152,43 @@ func run() -> void:
 	for id: String in ["sheep_a", "sheep_b"]:
 		if float(world.ground_food.cooldowns.get(id, 0.0)) > 0.0:
 			winners += 1
-			check(world.actor_named(id).position.distance_to(shared_food) < 18.0, "winner physically reaches the food without expanded eating range")
+			check(bool(sheep_contacts.get(id, false)), "winning sheep's painted mouth touches the shared food before durable consumption")
 	check(winners == 1, "only the successful consumer receives a feeding cooldown")
+	# Exercise each identity as the consumer: competition alone can always let
+	# the same sheep win and conceal a broken route or cel on the other sheep.
+	for sheep_id: String in ["sheep_a", "sheep_b"]:
+		for id: String in world._actors:
+			world.actor_named(id).posed = true
+			world.actor_named(id).position = Vector2(1100, 450)
+		var sheep = world.actor_named(sheep_id)
+		sheep.posed = false
+		sheep.position = Vector2(400, 480)
+		sheep.state = "rest"
+		sheep._idle_time = 100.0
+		world.ground_food.cooldowns.erase(sheep_id)
+		player.position = world._grass_point()
+		world._interact_with_target("grass")
+		await settle()
+		player.position = Vector2(480, 500)
+		world.request_primary_action()
+		await settle()
+		player.position = Vector2(240, 590)
+		var own_food := Vector2(world.ground_food.items[0].x, world.ground_food.items[0].y)
+		var own_revision := int(main._inventory.view().revision)
+		var own_contact := false
+		var metadata: Dictionary = load("res://scripts/game/sheep_ground_art.gd").CELLS[sheep_id].metadata
+		var mouth := Vector2(metadata.mouth_anchor[0], metadata.mouth_anchor[1])
+		var anchor := Vector2(metadata.ground_anchor[0], metadata.ground_anchor[1])
+		for frame in 1000:
+			world.tick(0.05, Vector2.ZERO)
+			if sheep._posture_id == "graze":
+				own_contact = own_contact or sheep._sprite.to_global(mouth - anchor).distance_to(world.to_global(own_food)) < 8.0
+			if main._inventory.busy(): await settle()
+			if world.ground_food.items.is_empty(): break
+		check(own_contact and world.ground_food.items.is_empty(), sheep_id + " walks to food and bites with its own painted mouth")
+		check(int(main._inventory.view().revision) == own_revision + 1, sheep_id + " commits consumption exactly once")
+		store._load()
+		check(store.get_yard_inventory().ground.is_empty(), sheep_id + " consumed bundle remains absent after native reload")
 	# A basket fish becomes a real bank object; goose consumes it after walking.
 	for id: String in world._actors: world.actor_named(id).posed = true
 	var goose = world.actor_named("goose")
