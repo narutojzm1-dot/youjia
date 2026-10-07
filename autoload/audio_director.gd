@@ -4,6 +4,10 @@ const BrowserBgmPlayer = preload("res://scripts/manus/browser_bgm_player.gd")
 
 const MAX_SFX_VOICES := 8
 const MAX_UI_VOICES := 2
+# PLAYTEST-20261007: a full ambience slider is 30% of its previous output.
+# Keep this authored ceiling separate from the player's 0..1 slider value.
+const AMBIENCE_OUTPUT_SCALE := 0.3
+const DEFAULT_AMBIENCE_GAIN := 0.5
 # Optional resource paths. Empty means intentionally silent; add project audio
 # here or call register_cue() after importing an AudioStream resource.
 const CUES := {
@@ -36,9 +40,9 @@ var _yard_active := false
 var _application_active := true
 var _music_enabled := true
 var _ambience_enabled := true
-var _ambience_volume_db := 0.0
+var _ambience_volume_db := linear_to_db(DEFAULT_AMBIENCE_GAIN)
 var _music_gain := 1.0
-var _ambience_gain := 1.0
+var _ambience_gain := DEFAULT_AMBIENCE_GAIN
 var _epoch := 0
 var _awaiting_gesture := false
 var _backend_state := "uninitialized"
@@ -403,7 +407,7 @@ func _apply_bus_settings() -> void:
 	_set_plain_bus("SFX", sfx_db)
 	_set_plain_bus("UI", ui_db)
 	_set_layer_bus("Music", music_db, _music_gain, _paused)
-	_set_layer_bus("Ambience", 0.0, _ambience_gain, _paused)
+	_set_layer_bus("Ambience", linear_to_db(AMBIENCE_OUTPUT_SCALE), _ambience_gain, _paused)
 	var master := AudioServer.get_bus_index("Master")
 	if master >= 0:
 		AudioServer.set_bus_mute(master, bool(TuningStore.get_value("audio.master.muted", false)))
