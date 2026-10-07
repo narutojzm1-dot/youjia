@@ -85,6 +85,11 @@ static func configure(original: Dictionary) -> Dictionary:
 		config.textures["shake"]=DIRECTORY+"sheep_shake.png"
 		config.posture_metadata={"shake": manifest().get("sheep_shake",{})}
 	if species=="sheep":
+		var grazing := preload("res://scripts/game/sheep_ground_art.gd")
+		if grazing.CELLS.has(str(config.id)):
+			config.textures["graze"] = grazing.CELLS[str(config.id)].texture
+			config.posture_metadata = config.get("posture_metadata", {})
+			config.posture_metadata["graze"] = grazing.CELLS[str(config.id)].metadata
 		var response := "sheep_clingy_attend_v2" if str(config.id)=="sheep_a" else "sheep_dull_glance_v3"
 		if str(config.id) in ["sheep_a", "sheep_b"] and ResourceLoader.exists(DIRECTORY+response+".png"):
 			config.textures["attend"]=DIRECTORY+response+".png"

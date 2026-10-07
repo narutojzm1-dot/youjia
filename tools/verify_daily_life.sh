@@ -49,6 +49,7 @@ run_godot suite test/yard_decor_nudge_limit_suite.gd
 run_godot suite test/yard_ground_food_ledger_suite.gd
 run_godot suite test/yard_ground_food_runtime_suite.gd
 run_godot suite test/cow_ground_graze_suite.gd
+run_godot suite test/sheep_ground_graze_suite.gd
 run_godot suite test/animal_companion_suite.gd
 run_godot suite test/animal_hidden_find_suite.gd
 run_godot suite test/world_residents_suite.gd
