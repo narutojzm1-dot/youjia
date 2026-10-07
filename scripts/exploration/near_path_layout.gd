@@ -1,17 +1,22 @@
 class_name NearPathLayout
 extends RefCounted
 # 院外近郊原画（02_near_path，1672×941）上的可走路与取景（纯数据 + 纯函数）。
-# 坐标就是原画像素；人物脚点只落在折线上，不横穿花丛、溪水或纸边。
+# 坐标就是原画像素；道路内可自由走动，不横穿溪水或纸边。
 # 路线取自制作人候选 art/concepts/producer_world_20261005/near_path_anchors.candidate.json
-# （gate_to_foreground_candidate，折线、双向、前景终点不是出口）；左上小路与木桥未交付连接，不走。
-# 停留点、物件锚点、透视比例是 Cloud 按画面校准的实验参数，制作人尚未给出，不是用户批准的规格。
+# 原lane保留；2026-10-07用户授权开放画中北向支路及道路宽度。
+# 停留点沿用已发布契约；道路宽度和远景比例由Leader按实景校准。
 
 const ART := "res://assets/holiday/exploration/near_path_02.webp"
 const SIZE := Vector2(1672, 941)
-# 路从岔口出发；以后接相邻页时在这里加路。现在只有一条：从前景终点到院门台阶下
+# 两条路共享前景段；有宽度的路面寻路在实际分叉处转向，无需退回前景。
 const JUNCTION := Vector2(740, 845)
 const ARMS := {
 	"lane": [JUNCTION, Vector2(850, 811), Vector2(945, 769), Vector2(1030, 729), Vector2(1110, 690), Vector2(1150, 660), Vector2(1220, 630), Vector2(1305, 599), Vector2(1360, 565)],
+	"north": [JUNCTION, Vector2(850, 811), Vector2(945, 769), Vector2(1030, 729), Vector2(1110, 690), Vector2(1110, 637), Vector2(1010, 610), Vector2(910, 590), Vector2(810, 576), Vector2(775, 575)],
+}
+const WALK_WIDTHS := {
+	"lane": [65.0, 58.0, 52.0, 48.0, 42.0, 36.0, 30.0, 24.0, 18.0],
+	"north": [65.0, 58.0, 52.0, 48.0, 42.0, 30.0, 24.0, 19.0, 14.0, 10.0],
 }
 # 走到这条路的尽头再往前就是回院
 const HOME_ARM := "lane"
@@ -28,9 +33,9 @@ const HOME_TAP_BELOW := 30.0
 const MIN_ALIGN := 0.3
 # 脚点 y → 人物比例：远（院门）小、近（画面下沿）大
 const DEPTH_NEAR_Y := 845.0
-const DEPTH_FAR_Y := 565.0
+const DEPTH_FAR_Y := 530.0
 const DEPTH_NEAR := 1.35
-const DEPTH_FAR := 0.75
+const DEPTH_FAR := 0.45
 const WALKER_BOX := Rect2(-24, -108, 48, 108)
 # 桌面完整构图的最小视口短边（实验值）；更小（手机或很小的桌面窗口）时放大并随人物平移，缩放固定不变
 const FULL_VIEW_MIN := 600.0
@@ -55,6 +60,7 @@ static func geometry() -> PaintedPath:
 			"SIZE": SIZE,
 			"JUNCTION": JUNCTION,
 			"ARMS": ARMS,
+			"WALK_WIDTHS": WALK_WIDTHS,
 			"HOME_ARM": HOME_ARM,
 			"START": START,
 			"WALK_SPEED": WALK_SPEED,

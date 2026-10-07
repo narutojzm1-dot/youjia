@@ -157,7 +157,7 @@ func reduced_motion() -> bool:
 
 
 func foot() -> Vector2:
-	return layout.point(spot.arm, spot.d)
+	return layout.position(spot)
 
 
 func _process(delta: float) -> void:
@@ -184,6 +184,7 @@ func walk(direction: Vector2, delta: float) -> void:
 	var before := foot()
 	var step := layout.WALK_SPEED * delta
 	var tap_home := false
+	var inspect_stop := ""
 	if direction.length() > 0.01:
 		walk_target = {}
 		spot = layout.step_input(spot, direction, step)
@@ -191,6 +192,7 @@ func walk(direction: Vector2, delta: float) -> void:
 		spot = layout.step_toward(spot, walk_target, step)
 		if layout.route_length(spot, walk_target) < 0.5:
 			tap_home = bool(walk_target.get("home", false)) and layout.at_home(spot)
+			inspect_stop = str(walk_target.get("inspect_stop", ""))
 			walk_target = {}
 	var moved := foot() - before
 	if moved.length() > 0.01 and reveal != null:
@@ -215,6 +217,7 @@ func walk(direction: Vector2, delta: float) -> void:
 	if companion != null: companion.advance(delta, spot, walker, reduced_motion())
 	if stray != null and _rescued_here: stray.advance(delta, spot, walker, reduced_motion())
 	_snap_camera()
+	if not inspect_stop.is_empty(): observe(inspect_stop)
 
 
 ## ───────────── 看景、带上、回院 ─────────────
@@ -430,8 +433,17 @@ func press_at(point: Vector2) -> void:
 		_show_caption(_observe_caption() + "\n" + I18n.t("exploration.caption.continue_hint"), 0.0)
 		return
 	var art := screen_to_art(point)
+	# A visible place marker is an invitation to walk there and look, never an
+	# automatic pickup. Hidden animal finds remain hidden until searched.
+	for entry: Dictionary in layout.STOPS:
+		if entry.id == "leaf_pile" or not entry.has("item"): continue
+		if point.distance_to(art_to_screen(entry.item)) <= 28.0:
+			walk_target = layout.nearest(layout.position(entry))
+			walk_target["inspect_stop"] = entry.id
+			return
 	var target := layout.nearest(art)
-	walk_target = {"arm": target.arm, "d": target.d, "home": layout.is_home_tap(art)}
+	walk_target = target.duplicate()
+	walk_target["home"] = layout.is_home_tap(art)
 
 
 func screen_to_art(point: Vector2) -> Vector2:
@@ -466,6 +478,12 @@ func _snap_camera() -> void:
 ## ───────────── 画面与界面 ─────────────
 
 func _draw_items() -> void:
+	for entry: Dictionary in layout.STOPS:
+		if entry.id == "leaf_pile" or not entry.has("item") or revealed.has(entry.id): continue
+		var anchor: Vector2 = entry.item
+		items.draw_circle(anchor, 14.0, Color(1.0, 0.97, 0.85, 0.82))
+		items.draw_arc(anchor, 14.0, 0, TAU, 24, Color(0.48, 0.35, 0.18, 0.8), 2.0, true)
+		items.draw_circle(anchor, 3.0, Color(0.48, 0.35, 0.18, 0.8))
 	if leaf_texture != null and not layout.stop("leaf_pile").is_empty():
 		var anchor: Vector2 = layout.stop("leaf_pile").item
 		var spread := 1.0 if not str(revealed.get("leaf_pile", "")).is_empty() else 0.0
@@ -668,7 +686,7 @@ func _refresh() -> void:
 	_return_button.text = I18n.t("exploration.action.return")
 	_pause_button.text = I18n.t("hud.pause")
 	_go_button.text = I18n.t("exploration.action.continue")
-	_hint.text = I18n.t("exploration.caption.walk_hint")
+	_hint.text = I18n.t("exploration.caption.free_walk_hint" if layout.free_walk() else "exploration.caption.walk_hint")
 	var size := get_viewport().get_visible_rect().size
 	var compact := size.x < 700.0
 	var near := nearby_stop()

@@ -95,6 +95,26 @@ func runtime() -> void:
 	scroll.set_process(false)
 	check(scroll.companion != null and scroll.companion.choice.actor_id == "llama", "real near path renders the original stable identity")
 	check(scroll.companion.rope.visible and scroll.companion.rope.points.size() == 17, "rope joins real painted endpoints")
+	var north: Vector2 = scroll.layout.point("north", scroll.layout.arm_length("north"))
+	scroll.walk_target = scroll.layout.nearest(north)
+	var road_frames := 0
+	var companion_on_road := true
+	var companion_continuous := true
+	while not scroll.walk_target.is_empty() and road_frames < 1200:
+		var before_companion: Vector2 = scroll.companion.actor.position
+		scroll.walk(Vector2.ZERO, 1.0 / 60.0)
+		companion_on_road = companion_on_road and scroll.layout._corridor.contains(scroll.companion.actor.position)
+		companion_continuous = companion_continuous and before_companion.distance_to(scroll.companion.actor.position) < 8.0
+		road_frames += 1
+	check(road_frames < 1200 and scroll.foot().distance_to(north) < 0.5, "production player reaches the north route")
+	check(companion_on_road and companion_continuous, "rope companion follows north road continuously without walking off its narrow width")
+	check(scroll.companion.choice.actor_id == "llama" and scroll.companion.rope.visible, "north branch retains original companion identity and rope")
+	scroll.walk_target = scroll.layout.START.duplicate()
+	road_frames = 0
+	while not scroll.walk_target.is_empty() and road_frames < 1200:
+		scroll.walk(Vector2.ZERO, 1.0 / 60.0)
+		road_frames += 1
+	check(road_frames < 1200, "return from north restores the original lane test starting point")
 	var paused_position: Vector2 = scroll.companion.actor.position
 	scroll.set_process(true)
 	paused = true
