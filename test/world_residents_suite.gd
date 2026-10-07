@@ -62,7 +62,7 @@ func run() -> void:
 	check(Residents.read(corrupt).is_empty(), "unknown resident fields cannot be discarded")
 	check(Residents.transition(corrupt, 1, "grow_beibei").error == "RESIDENT_SOURCE_UNSUPPORTED", "unknown resident data blocks writes")
 	corrupt = rescued.duplicate(true)
-	corrupt.world_residents.schema = 3
+	corrupt.world_residents.schema = 4
 	check(Residents.read(corrupt).is_empty(), "future schema is preserved by refusing to write")
 	corrupt = rescued.duplicate(true)
 	corrupt.world_residents.beibei.adopted_clock.elapsed = NAN

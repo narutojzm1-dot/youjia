@@ -11,7 +11,7 @@ Owner CODEX-LEAD（兼制作人）。[完整策划](design/connected-world-2026-
 | WORLD-COMPANIONS | P1 | 院门旁动物概率同行、羊驼可绳牵出；在外跟随且所有返院/恢复路径保留身份 | PR510已合入，149项及全套CI通过；game-4f6d18f公开PCK/十模块已核验，公开实玩记录见同行体验目录 / CODEX-LEAD |
 | WORLD-ANIMAL-FINDS | P1 | 同行动物先翻找揭示隐藏物，玩家之后可见可拾；单次授予与回院持久化 | PR512已合入并公开发布game-f3ddfcb；92项/完整CI、公开包核验、正式Web返院重开已通过，详见体验记录 / CODEX-LEAD |
 | WORLD-BEIBEI | P1 | 村边白色流浪幼犬beibei带回、养大、随行发现；成长缺席不受罚 | E收养/成长/成年同行由PR515发布game-53ec80c；43+46项和完整CI、公开包及正式Web收养/返院/重开已核验；本地普通存档自然成长/重开也通过。beibei找乌龟继续接F，整条故事未关单 / CODEX-LEAD |
-| WORLD-POND-STORIES | P1 | beibei发现乌龟→带回池塘→与长大的鸡亲近/驮鸡→拒绝鹅骑背/鹅想啄；鸡吃小米 | 已批准；F龟/雏鸡/成年鸡/成年beibei探查原画及原生比例检查保存在本地独立分支codex/lead-pond-stories、ea71c5720c1fdc0b66f8818b800bb6581c14f385，尚未接入或发布 / CODEX-LEAD |
+| WORLD-POND-STORIES | P1 | beibei发现乌龟→带回池塘→与长大的鸡亲近/驮鸡→拒绝鹅骑背/鹅想啄；鸡吃小米 | F1寻龟/池塘已由PR517发布并核验；F2鸡吃小米/成长本地实现及普通Web啄食、重开证据已完成，待有效Web窄屏与PR发布；F3鸡龟/鹅龟关系未交付 / CODEX-LEAD |
 
 资源需求单[#504](https://github.com/narutojzm1-dot/youjia/issues/504)保留完整画作、接触锚点、Web预算与来源门禁；地面小鱼、动物首处翻找及beibei幼年/成年画已接入，草复用既有原画；F故事资源处于制作接入阶段。小米调查支持瑞士山脚村落栽培谷物的设定，不当作高山野生物。#150生产存档、#152/#153探索继续复用；#154自由布置仍待细化，不阻塞本主线。
 

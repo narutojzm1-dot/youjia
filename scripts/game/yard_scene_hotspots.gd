@@ -76,7 +76,7 @@ static func available(world: Node2D) -> bool:
 	# No environmental observation should steal leading, a cast, or an item
 	# being carried to an animal. Explicitly reserve their existing routes.
 	return player != null and not world.is_leading() and not player.carrying_grass \
-		and world._fish_carry_type.is_empty() and world._fish_state == world.FISH_IDLE
+		and not world._millet_held and world._fish_carry_type.is_empty() and world._fish_state == world.FISH_IDLE
 
 
 static func get_hotspot(target: String) -> Dictionary:
