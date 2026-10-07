@@ -119,7 +119,24 @@ func _approach(actor: FeltActor, item: Dictionary) -> Vector2:
 		if side == 0.0: side = actor.facing
 		var beak := (21.0 if actor.get_meta("resident_stage", "") == "hen" else 10.0) * YardGround.depth_at(point.y)
 		return point - Vector2(side * beak, -3.0)
-	if not actor.use_ellipse: return point
+	if not actor.use_ellipse:
+		var radius: Vector2 = actor.body_radius * YardGround.depth_at(point.y)
+		var obstacles: Array = world.physical_obstacles(actor.actor_id)
+		if YardBodies.clear_at(point, radius, obstacles): return point
+		# Another animal can occupy the food's centre while its edge remains
+		# reachable. Approach a clear nearby point without enlarging eating reach.
+		var approach := Vector2.INF
+		var nearest := INF
+		for step in 16:
+			var angle := TAU * float(step) / 16.0
+			var candidate := point + Vector2(cos(angle), sin(angle)) * 14.0
+			if not YardGround.allows(candidate, actor.walk_ground, actor.avoid_pond): continue
+			if not YardBodies.clear_at(candidate, radius, obstacles): continue
+			var distance := actor.position.distance_squared_to(candidate)
+			if distance < nearest:
+				nearest = distance
+				approach = candidate
+		return approach
 	# Ducks stay in their own water. Only a reachable bank morsel is considered.
 	var relative := (point - actor.ellipse_center) / actor.ellipse_radius
 	var bank := actor.ellipse_center + relative.limit_length(0.98) * actor.ellipse_radius
@@ -165,8 +182,13 @@ func tick(delta: float) -> void:
 				continue
 			targets[id] = int(item.id)
 		var goal := _approach(actor, item)
+		if not goal.is_finite():
+			actor.leave_food()
+			waiting.erase(id)
+			continue
 		actor.seek_food(goal)
-		var distance := actor.position.distance_to(goal)
+		var eating_point := goal if actor.use_ellipse or actor.species == "chicken" else Vector2(item.x, item.y)
+		var distance := actor.position.distance_to(eating_point)
 		if distance < (5.0 if actor.species == "chicken" else 18.0):
 			if actor.species == "chicken": actor.show_painted_ack("peck", 0.2)
 			waiting[id] = float(waiting.get(id, 0.0)) + delta
