@@ -58,6 +58,9 @@ var _busy := false
 var _loaded := false
 var _menu_action_id := ""
 var _layout_queued := false
+## 外层（背篓纸面）给定的排版宽度；> 0 时按它排列，不跟着滚动条出现/消失来回变宽变窄。
+## 否则格子变高 → 出滚动条 → 变窄 → 格子变矮 → 滚动条消失……会无限重排。
+var layout_width := -1.0
 
 func _ready() -> void:
 	mouse_filter = Control.MOUSE_FILTER_PASS
@@ -184,10 +187,16 @@ func _run_layout() -> void:
 	_layout_queued = false
 	_layout()
 
+func set_layout_width(width: float) -> void:
+	if is_equal_approx(width, layout_width): return
+	layout_width = width
+	_queue_layout()
+
 func _layout() -> void:
 	if grid == null: return
-	var cols := columns_for(size.x)
-	var side := cell_side(size.x)
+	var width := layout_width if layout_width > 0.0 else size.x
+	var cols := columns_for(width)
+	var side := cell_side(width)
 	grid.columns = cols
 	# 整行补齐：最后一行空着的位置画成浅色空格，看得出是一张格子而不是一串按钮
 	var need := (cols - ORDER.size() % cols) % cols
@@ -221,7 +230,7 @@ func _layout() -> void:
 	for blank: Panel in blanks:
 		blank.custom_minimum_size = cell_size
 	grid.size = Vector2(side * cols + GAP * (cols - 1), 0)
-	grid.position = Vector2((size.x - grid.size.x) * 0.5, 0)
+	grid.position = Vector2(maxf(0.0, (size.x - grid.size.x) * 0.5), 0)
 	custom_minimum_size.y = rows_for(cols) * cell_size.y + (rows_for(cols) - 1) * GAP
 	_fit_names()
 	if menu.visible: _place_menu()
@@ -267,7 +276,9 @@ func _fit_names() -> void:
 		var font_size := NAME_SIZE
 		while font_size > NAME_MIN_SIZE and font.get_string_size(label.text, HORIZONTAL_ALIGNMENT_LEFT, -1, font_size).x > label.size.x:
 			font_size -= 1
-		label.add_theme_font_size_override("font_size", font_size)
+		# 字号没变就不重设：每次重设都会触发一轮最小尺寸重算
+		if not label.has_theme_font_size_override("font_size") or label.get_theme_font_size("font_size") != font_size:
+			label.add_theme_font_size_override("font_size", font_size)
 
 ## 这一格现在能做什么：[动作 id, 按钮文字, 不能做时的原因]
 func action_for(kind: String) -> Array:
