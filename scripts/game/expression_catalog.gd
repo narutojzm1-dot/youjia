@@ -3,6 +3,16 @@ extends RefCounted
 
 const RULES := [
 	{
+		"id": "pond_hen_ride", "manual_only": true, "owner": "turtle",
+		"priority": 96, "expression": "idle", "hold": 0.0, "polaroid": true,
+		"title_key": "photo.pond_hen_ride.title", "note_key": "photo.pond_hen_ride.note",
+	},
+	{
+		"id": "pond_goose_refused", "manual_only": true, "owner": "turtle",
+		"priority": 96, "expression": "idle", "hold": 0.0, "polaroid": true,
+		"title_key": "photo.pond_goose_refused.title", "note_key": "photo.pond_goose_refused.note",
+	},
+	{
 		"id": "goose_horse_mount",
 		"manual_only": true,
 		"owner": "goose",
