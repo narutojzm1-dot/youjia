@@ -111,6 +111,16 @@ func _test_event(rule: Dictionary, index: int) -> void:
 	var player = world.get_player()
 	var rule_id: String = rule.id
 	match rule_id:
+		"pond_hen_ride", "pond_goose_refused":
+			var residents: Dictionary = load("res://scripts/game/world_residents.gd").empty()
+			residents.beibei = {"stage": "grown", "adopted_clock": {"day": 1, "elapsed": 0.0}}
+			residents.chicken = {"stage": "hen", "settled_clock": {"day": 1, "elapsed": 0.0}}
+			residents.turtle = {"stage": "pond", "found_trip": "photo-fixture"}
+			world.sync_residents(residents)
+			world.actor_named("turtle").set_pose(Vector2(480, 545), TurtleArt.SCALE, 1.0)
+			world.actor_named("turtle").hide()
+			world.actor_named("chicken" if rule_id == "pond_hen_ride" else "goose").hide()
+			world.pond_story.stage.present("ride" if rule_id == "pond_hen_ride" else "peck_attempt", Vector2(480, 545), world._backdrop.modulate)
 		"llama_fed_gentle":
 			world.debug_place_actor("llama", Vector2(365, 560))
 			world.debug_place_player(Vector2(300, 562))
@@ -166,6 +176,8 @@ func _test_event(rule: Dictionary, index: int) -> void:
 		world.free()
 		return
 	_check(snapshot.version == 1 and snapshot.rule_id == rule_id, "%s version and keyed identity" % rule_id)
+	if rule_id in ["pond_hen_ride", "pond_goose_refused"]:
+		_check(Moment.has_event_subject(snapshot, rule_id), "pond photo contains actual story cel")
 	_check(snapshot.weather == world.weather, "%s preserves light" % rule_id)
 	_check(snapshot.has("caption_variant") and int(snapshot.caption_variant) >= 0 and int(snapshot.caption_variant) < int(rule.get("caption_variants", 1)), "%s saves exactly one permitted caption variant" % rule_id)
 	var crop_focus := Vector2(float(snapshot.focus[0]), float(snapshot.focus[1]))

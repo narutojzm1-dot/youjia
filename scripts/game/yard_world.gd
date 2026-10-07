@@ -13,6 +13,7 @@ signal day_advanced(day: int)
 signal fish_caught(carry_type: String)
 signal ground_food_requested(action: String, kind: String, details: Dictionary, actor_id: String)
 var ground_food: Node2D
+var pond_story: Node
 var inventory_enabled := false
 var inventory_busy := false
 ## 走到门前小路尽头选“出门走走”：Main 接管，切到画卷近郊小路
@@ -230,6 +231,8 @@ func setup(
 	_spawn_grass()
 	ground_food = load("res://scripts/inventory/yard_ground_food.gd").new(self)
 	add_child(ground_food)
+	pond_story = load("res://scripts/game/pond_story_controller.gd").new(self)
+	add_child(pond_story)
 	_spawn_cast()
 	_bind_grounds()
 	_plant_visual = YardPropVisual.new()
@@ -563,12 +566,14 @@ func tick(delta: float, move: Vector2) -> void:
 			actor.state = "graze"
 			actor._idle_time = maxf(actor._idle_time, 0.5)
 		actor.body_obstacles = physical_obstacles(actor_id)
-		actor.tick(delta, WORLD_SIZE)
+		if not actor.has_meta("pond_story"):
+			actor.tick(delta, WORLD_SIZE)
 		actor.current_zone = _zone_at(actor.position)
 		# 生态扫视：可抚摸动物偶尔朝玩家转头，草泥马/鸭/大鹅除外
 		if _player != null and actor.species in ["cow", "sheep", "horse"]:
 			actor.tick_glance(delta, _player.position)
 	_update_lead_rope()
+	if pond_story != null: pond_story.tick(delta, move)
 	_tick_relationships(delta)
 	_tick_goose_mount_encounter(delta, move)
 	# 抬头微推放在鹅马之后：鹅马已接管时只让出镜头，不误发 release。
@@ -620,6 +625,9 @@ func tick(delta: float, move: Vector2) -> void:
 
 
 func _tick_goose_mount_encounter(delta: float, move: Vector2) -> void:
+	if pond_story != null and pond_story.busy():
+		_goose_mount_wait = 0.0
+		return
 	const EVENT_ID := "goose_horse_mount"
 	var goose: FeltActor = actor_named("goose")
 	var horse: FeltActor = actor_named("horse")
@@ -881,6 +889,7 @@ func action_target_key(action: Dictionary) -> String:
 
 
 func cancel_scene_feedback() -> void:
+	if pond_story != null: pond_story.cancel()
 	_cancel_goose_mount_encounter()
 	_goose_mount_wait = 0.0
 	if _scene_feedback != null:
@@ -888,6 +897,7 @@ func cancel_scene_feedback() -> void:
 
 
 func request_primary_action() -> void:
+	if pond_story != null: pond_story.cancel()
 	if not input_enabled or inventory_busy or _player == null:
 		return
 	_cancel_goose_mount_encounter()
@@ -906,6 +916,7 @@ func request_primary_action() -> void:
 
 
 func request_pointer_action(point: Vector2) -> void:
+	if pond_story != null: pond_story.cancel()
 	if not input_enabled or _player == null:
 		return
 	_cancel_goose_mount_encounter()
@@ -1536,6 +1547,9 @@ func _evaluate_expressions() -> void:
 	var used_owners: Dictionary = {}
 	for rule: Dictionary in ranked:
 		var owner := str(rule.get("owner", ""))
+		var participant := actor_named(owner)
+		if participant != null and participant.has_meta("pond_story"):
+			continue
 		if used_owners.has(owner):
 			continue
 		if not _rule_matches(rule, snapshot):
@@ -1788,6 +1802,7 @@ func _stop_leading_llama() -> void:
 
 
 func _tick_relationships(delta: float) -> void:
+	if pond_story != null and pond_story.busy(): return
 	var goose := actor_named("goose")
 	var llama := actor_named("llama")
 	if goose == null or llama == null or _relationship_encounter == null:
