@@ -51,6 +51,11 @@ const BUTTON_STATES := {
 	"hover_pressed": {"fill": Color("f3d3ae"), "edge": Color("5b4637"), "width": 2, "ink": Color("3d2d23")},
 	"disabled": {"fill": Color("f3e9db"), "edge": Color("bfa588"), "width": 1, "ink": Color("7a6152")},
 }
+## REQ-20261007-061：数量为 0 的行（「小米  × 0」「松果  × 0」）原先和有货的行同一深墨 5b4637，
+## 一眼分不出背篓里到底有什么。0 的名字改用与旁边灰掉按钮同色的 7a6152（纸上 5.36:1，仍达 AA），
+## 有货的行保持 5b4637；字号、折行、排版都不变。
+const ROW_INK := Color("5b4637")
+const EMPTY_ROW_INK := Color("7a6152")
 
 func _ready() -> void:
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -198,7 +203,9 @@ func update_view(inventory: Dictionary, keepsakes: Dictionary, state: String, bu
 	var names := {"grass": "Grass" if en else "草束", "round_stone": "Round stone" if en else "圆石", "pine_cone": "Pine cone" if en else "松果", "feather": "Feather" if en else "落羽", "small": "Small fish" if en else "小鱼", "medium": "Fish" if en else "中鱼", "odd": "Curious fish" if en else "奇怪的鱼"}
 	var find_ids := {"round_stone": ExplorationRoutes.FIND_STONE, "pine_cone": ExplorationRoutes.FIND_PINE_CONE, "feather": ExplorationRoutes.FIND_FEATHER}
 	for kind: String in keepsake_labels:
-		keepsake_labels[kind].text = "%s  × %d" % [names[kind], int(keepsakes.get(find_ids[kind], 0))]
+		var owned := int(keepsakes.get(find_ids[kind], 0))
+		keepsake_labels[kind].text = "%s  × %d" % [names[kind], owned]
+		_ink_row(keepsake_labels[kind], owned)
 	var held := str(inventory.get("held", ""))
 	names["millet"] = "Millet" if en else "小米"
 	scoop_button.text = "Scoop feed from the tin" if en else "从鸡食罐舀一小把米"
@@ -206,6 +213,7 @@ func update_view(inventory: Dictionary, keepsakes: Dictionary, state: String, bu
 	for kind: String in FISH:
 		var count := int(inventory.get(kind, 0)) if kind in ["grass", "millet"] else int(inventory.get("fish", {}).get(kind, 0))
 		fish_labels[kind].text = "%s  × %d" % [names[kind], count]
+		_ink_row(fish_labels[kind], count)
 		fish_buttons[kind].text = "Take one" if en else ("拿一把" if kind == "millet" else ("拿一束" if kind == "grass" else "拿一条"))
 		fish_buttons[kind].disabled = inventory.is_empty() or busy or not held.is_empty() or count == 0
 	held_label.text = ("In hand: " if en else "手里拿着：") + str(names.get(held, "Nothing" if en else "空着"))
@@ -227,6 +235,9 @@ func update_view(inventory: Dictionary, keepsakes: Dictionary, state: String, bu
 	retry_button.text = "Check again" if en else "再确认一次"
 	close_button.text = "Back to the yard" if en else "合上背篓"
 	call_deferred("fit")
+
+func _ink_row(label: Label, count: int) -> void:
+	label.add_theme_color_override("font_color", EMPTY_ROW_INK if count <= 0 else ROW_INK)
 
 func handle_touch_event(event: InputEvent) -> void:
 	if event is InputEventScreenTouch:
