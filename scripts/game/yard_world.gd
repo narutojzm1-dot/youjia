@@ -97,6 +97,7 @@ var _fish_caught_total := 0
 var _first_fish_polaroid_done := false
 ## 钓到后的携带状态："small"/"medium"/"odd"，空=无
 var _fish_carry_type: String = ""
+var _millet_held := false
 ## 携带倒计时（秒），归零后鱼自动溜走
 var _fish_carry_timer: float = 0.0
 ## 咬钩提醒计时器：BITE 期间每隔一段时间重发通知，防止玩家错过
@@ -287,6 +288,7 @@ func hint_context() -> String:
 	var action := YardInteraction.primary(self)
 	var target := str(action.get("target", ""))
 	if target == "release": return "hud.hint.leading"
+	if _millet_held: return "hud.hint.carrying_millet"
 	if not _fish_carry_type.is_empty(): return "hud.hint.carrying_fish"
 	if _player != null and _player.carrying_grass: return "hud.hint.carrying"
 	if target == "llama": return "hud.hint.near_llama"
@@ -393,6 +395,7 @@ func return_from_path(companion: Dictionary = {}) -> void:
 ## Confirmed resident identity controls one actor; unknown data never grants a dog.
 func sync_residents(value: Dictionary) -> void:
 	if value.is_empty(): return
+	_sync_chicken(value.get("chicken", {}))
 	if value.get("turtle", {}).get("stage", "") == "pond" and actor_named("turtle") == null:
 		var turtle := FeltActor.new()
 		add_child(turtle)
@@ -424,6 +427,25 @@ func sync_residents(value: Dictionary) -> void:
 	actor.set_meta("resident_stage", stage)
 	_actors["beibei"] = actor
 	if stage == "grown" and previous != null: notice_requested.emit("notice.beibei.grown")
+
+func _sync_chicken(value: Dictionary) -> void:
+	var stage: String = value.get("stage", "unmet")
+	if stage == "unmet": return
+	var previous := actor_named("chicken")
+	if previous != null and previous.get_meta("resident_stage", "") == stage: return
+	var config := ChickenArt.configure(stage)
+	if previous != null:
+		config.position = previous.position
+		remove_child(previous)
+		previous.queue_free()
+	var actor := FeltActor.new()
+	add_child(actor)
+	actor.setup(config)
+	actor.adopt_ground(YardGround.lawn(), true)
+	actor.set_meta("base_speed", config.speed)
+	actor.set_meta("resident_stage", stage)
+	_actors["chicken"] = actor
+	if previous != null: notice_requested.emit("notice.chicken.grown")
 
 
 func companion_context() -> Dictionary:
@@ -605,7 +627,7 @@ func _tick_goose_mount_encounter(delta: float, move: Vector2) -> void:
 		return
 	if _goose_mount_phase < 0:
 		if EVENT_ID in collected or _day_elapsed < 45.0 or not move.is_zero_approx() or _leading or _has_walk_goal \
-				or not input_enabled or _player.carrying_grass or not _fish_carry_type.is_empty() or _fish_state != FISH_IDLE:
+				or not input_enabled or _player.carrying_grass or _millet_held or not _fish_carry_type.is_empty() or _fish_state != FISH_IDLE:
 			_goose_mount_wait = 0.0
 			return
 		var scene_center := (goose.position + horse.position) * 0.5
@@ -764,7 +786,7 @@ func _interact_with_target(target: String) -> void:
 		ground_food.pickup(int(target.get_slice(":", 1)))
 		return
 	if target == "grass":
-		if inventory_enabled and not _fish_carry_type.is_empty(): return
+		if inventory_enabled and ground_food != null and not ground_food.held().is_empty(): return
 		if _player.position.distance_to(_grass_point()) < 78.0 and not _player.carrying_grass:
 			_consume_pending_action()
 			if inventory_enabled:
@@ -1321,6 +1343,7 @@ func _tick_quiet_sky_look(delta: float, move: Vector2) -> void:
 		or _has_walk_goal
 		or move.length() > 0.2
 		or _player.carrying_grass
+		or _millet_held
 		or not _fish_carry_type.is_empty()
 		or _fish_state != FISH_IDLE
 		or not _pending_interaction.is_empty()
@@ -1912,7 +1935,8 @@ func _reel_in_fish() -> void:
 func sync_inventory(held: String, pending: bool, items: Array = []) -> void:
 	inventory_enabled = true
 	inventory_busy = pending
-	_fish_carry_type = held if held != "grass" else ""
+	_fish_carry_type = held if held in ["small", "medium", "odd"] else ""
+	_millet_held = held == "millet"
 	if _player != null: _player.sync_grass(held == "grass")
 	if ground_food != null: ground_food.sync_items(items)
 	_fish_carry_timer = 0.0

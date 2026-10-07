@@ -3,7 +3,8 @@ extends RefCounted
 ## authoritative root field; this extension never copies or rewrites them.
 const FIELD := "yard_inventory"
 const FISH := ["small", "medium", "odd"]
-const FOOD := ["small", "medium", "odd", "grass"]
+const FOOD_V2 := ["small", "medium", "odd", "grass"]
+const FOOD := ["small", "medium", "odd", "grass", "millet"]
 const MAX_GROUND := 32
 const MAX_COUNT := 9999
 const MAX_REVISION := 2147483647
@@ -11,7 +12,7 @@ const Contract := preload("res://scripts/exploration/exploration_contract.gd")
 
 
 static func empty() -> Dictionary:
-	return {"schema": 2, "revision": 0, "fish": {}, "grass": 0, "held": "", "ground": [], "next_food_id": 1}
+	return {"schema": 3, "revision": 0, "fish": {}, "grass": 0, "millet": 0, "held": "", "ground": [], "next_food_id": 1}
 
 
 ## Absent is a legacy empty inventory; present but unknown/corrupt is blocked.
@@ -22,9 +23,10 @@ static func read(snapshot: Dictionary) -> Dictionary:
 	var raw: Variant = snapshot[FIELD]
 	if not raw is Dictionary:
 		return {}
-	var schema: Variant = Contract.as_int(raw.get("schema"), 1, 2)
+	var schema: Variant = Contract.as_int(raw.get("schema"), 1, 3)
 	if schema == null: return {}
 	var keys := ["schema", "revision", "fish", "held"] if schema == 1 else ["schema", "revision", "fish", "grass", "held", "ground", "next_food_id"]
+	if schema == 3: keys.append("millet")
 	if raw.size() != keys.size(): return {}
 	for key: String in keys:
 		if not raw.has(key): return {}
@@ -32,13 +34,16 @@ static func read(snapshot: Dictionary) -> Dictionary:
 		return {}
 	if not raw.fish is Dictionary or not raw.held is String:
 		return {}
-	if not raw.held.is_empty() and raw.held not in (FISH if schema == 1 else FOOD):
+	var allowed_food: Array = FISH if schema == 1 else (FOOD_V2 if schema == 2 else FOOD)
+	if not raw.held.is_empty() and raw.held not in allowed_food:
 		return {}
 	for kind: Variant in raw.fish:
 		if kind not in FISH or Contract.as_int(raw.fish[kind], 1, MAX_COUNT) == null:
 			return {}
 	var result: Dictionary = raw.duplicate(true)
-	result.schema = 2
+	result.schema = 3
+	if schema == 3 and Contract.as_int(raw.millet, 0, MAX_COUNT) == null: return {}
+	result.millet = int(raw.millet) if schema == 3 else 0
 	result.revision = int(raw.revision)
 	for kind: String in result.fish: result.fish[kind] = int(result.fish[kind])
 	if schema == 1:
@@ -53,7 +58,7 @@ static func read(snapshot: Dictionary) -> Dictionary:
 			if not item is Dictionary or item.size() != 4: return {}
 			if not item.has_all(["id", "kind", "x", "y"]): return {}
 			var id: Variant = Contract.as_int(item.id, 1, int(raw.next_food_id) - 1)
-			if id == null or ids.has(id) or item.kind not in FOOD or not _position_valid(item): return {}
+			if id == null or ids.has(id) or item.kind not in allowed_food or not _position_valid(item): return {}
 			ids[id] = true
 		result.grass = int(raw.grass)
 		result.next_food_id = int(raw.next_food_id)
@@ -72,7 +77,7 @@ static func transition(snapshot: Dictionary, expected_revision: int, action: Str
 	if inventory.revision != expected_revision: return {"error": "BASKET_CHANGED"}
 	if inventory.revision >= MAX_REVISION: return {"error": "BASKET_LIMIT"}
 	if kind not in FOOD: return {"error": "BASKET_INVALID"}
-	var count := int(inventory.grass) if kind == "grass" else int(inventory.fish.get(kind, 0))
+	var count := int(inventory.get(kind, 0)) if kind in ["grass", "millet"] else int(inventory.fish.get(kind, 0))
 	match action:
 		"catch":
 			if kind not in FISH: return {"error": "BASKET_INVALID"}
@@ -82,6 +87,10 @@ static func transition(snapshot: Dictionary, expected_revision: int, action: Str
 			if kind != "grass": return {"error": "BASKET_INVALID"}
 			if not inventory.held.is_empty(): return {"error": "BASKET_HAND_OCCUPIED"}
 			inventory.held = "grass"
+		"scoop":
+			if kind != "millet": return {"error": "BASKET_INVALID"}
+			if not inventory.held.is_empty(): return {"error": "BASKET_HAND_OCCUPIED"}
+			inventory.held = "millet"
 		"withdraw":
 			if not inventory.held.is_empty(): return {"error": "BASKET_HAND_OCCUPIED"}
 			if count == 0: return {"error": "BASKET_EMPTY"}
@@ -122,7 +131,7 @@ static func transition(snapshot: Dictionary, expected_revision: int, action: Str
 
 
 static func _set_stored_count(inventory: Dictionary, kind: String, count: int) -> void:
-	if kind == "grass": inventory.grass = count
+	if kind in ["grass", "millet"]: inventory[kind] = count
 	elif count == 0: inventory.fish.erase(kind)
 	else: inventory.fish[kind] = count
 

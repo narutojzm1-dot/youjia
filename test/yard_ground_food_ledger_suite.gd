@@ -16,7 +16,7 @@ func run() -> void:
 	var legacy := {"yard_inventory": {"schema": 1, "revision": 9, "fish": {"odd": 2}, "held": "small"}, "keepsakes": {"pine_cone": 1}}
 	var before := JSON.stringify(legacy)
 	var view := Inventory.read(legacy)
-	check(view.schema == 2 and view.fish.odd == 2 and view.held == "small", "schema1 basket upgraded without losing counts or hand")
+	check(view.schema == 3 and view.fish.odd == 2 and view.held == "small", "schema1 basket upgraded without losing counts or hand")
 	check(JSON.stringify(legacy) == before, "reading upgrade does not rewrite source")
 	var result := Inventory.transition(legacy, 9, "drop", "small", {"x": 450, "y": 500})
 	var state: Dictionary = result.candidate

@@ -1174,7 +1174,7 @@ func _start_holiday(save_progress: bool = true) -> void:
 	_world.ground_food_requested.connect(_on_ground_food_action)
 	_on_inventory_changed()
 	_on_residents_changed()
-	_residents._check_growth()
+	_residents.start_yard_residents()
 	_world.exploration_requested.connect(_on_exploration_requested)
 	_camera.enabled = true
 	_portrait_camera_x = _world.get_player().position.x

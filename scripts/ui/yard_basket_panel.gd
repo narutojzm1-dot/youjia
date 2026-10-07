@@ -12,13 +12,14 @@ var close_button: Button
 var retry_button: Button
 var return_button: Button
 var held_label: Label
+var scoop_button: Button
 var fish_labels: Dictionary = {}
 var fish_buttons: Dictionary = {}
 var keepsake_labels: Dictionary = {}
 var _touch_index := -1
 var _touch_start := Vector2.ZERO
 var _touch_scrolled := false
-const FISH := ["small", "medium", "odd", "grass"]
+const FISH := ["small", "medium", "odd", "grass", "millet"]
 
 func _ready() -> void:
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -71,6 +72,9 @@ func _ready() -> void:
 		fish_buttons[kind] = button
 	held_label = _label(16)
 	rows.add_child(held_label)
+	scoop_button = _button()
+	scoop_button.pressed.connect(func() -> void: action_requested.emit("scoop", "millet"))
+	rows.add_child(scoop_button)
 	return_button = _button()
 	rows.add_child(return_button)
 	status = _label(15)
@@ -128,10 +132,13 @@ func update_view(inventory: Dictionary, keepsakes: Dictionary, state: String, bu
 	for kind: String in keepsake_labels:
 		keepsake_labels[kind].text = "%s  × %d" % [names[kind], int(keepsakes.get(find_ids[kind], 0))]
 	var held := str(inventory.get("held", ""))
+	names["millet"] = "Millet" if en else "小米"
+	scoop_button.text = "Scoop feed from the tin" if en else "从鸡食罐舀一小把米"
+	scoop_button.disabled = inventory.is_empty() or busy or not held.is_empty()
 	for kind: String in FISH:
-		var count := int(inventory.get("grass", 0)) if kind == "grass" else int(inventory.get("fish", {}).get(kind, 0))
+		var count := int(inventory.get(kind, 0)) if kind in ["grass", "millet"] else int(inventory.get("fish", {}).get(kind, 0))
 		fish_labels[kind].text = "%s  × %d" % [names[kind], count]
-		fish_buttons[kind].text = "Take one" if en else ("拿一束" if kind == "grass" else "拿一条")
+		fish_buttons[kind].text = "Take one" if en else ("拿一把" if kind == "millet" else ("拿一束" if kind == "grass" else "拿一条"))
 		fish_buttons[kind].disabled = inventory.is_empty() or busy or not held.is_empty() or count == 0
 	held_label.text = ("In hand: " if en else "手里拿着：") + str(names.get(held, "Nothing" if en else "空着"))
 	return_button.text = "Put it back" if en else "收回背篓"
@@ -166,11 +173,11 @@ func handle_touch_event(event: InputEvent) -> void:
 			scroll.scroll_vertical -= int(event.relative.y)
 
 func _activate_touch(position_in_view: Vector2) -> void:
-	var buttons: Array = [close_button, retry_button, return_button]
+	var buttons: Array = [close_button, retry_button, return_button, scoop_button]
 	buttons.append_array(fish_buttons.values())
 	for button: Button in buttons:
 		if button.is_visible_in_tree() and not button.disabled and button.get_global_rect().has_point(position_in_view):
-			if button in fish_buttons.values() or button == return_button:
+			if button in fish_buttons.values() or button in [return_button, scoop_button]:
 				if not scroll.get_global_rect().has_point(position_in_view): continue
 			button.pressed.emit()
 			return

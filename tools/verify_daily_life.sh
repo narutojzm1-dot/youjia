@@ -46,6 +46,8 @@ run_godot suite test/world_residents_suite.gd
 run_godot suite test/beibei_integration_suite.gd
 run_godot suite test/pond_residents_suite.gd
 run_godot suite test/pond_integration_suite.gd
+run_godot suite test/chick_millet_model_suite.gd
+run_godot suite test/chick_millet_integration_suite.gd
 run_godot suite test/yard_basket_integration_suite.gd
 run_godot suite test/still_boundary_feedback_suite.gd
 run_godot suite test/pause_panel_fit_suite.gd

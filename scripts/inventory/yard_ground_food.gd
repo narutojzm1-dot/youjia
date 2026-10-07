@@ -2,6 +2,7 @@ extends Node2D
 ## Visuals and intentions only. SaveStore owns all food and removes it only on commit.
 const Grass := preload("res://scripts/entities/grass_art.gd")
 const Fish := preload("res://assets/holiday/objects/ground_fish.png")
+const Millet := preload("res://assets/holiday/objects/millet.png")
 var world: Node2D
 var items: Array = []
 var sprites: Dictionary = {}
@@ -15,6 +16,7 @@ func _init(host: Node2D) -> void:
 
 
 func held() -> String:
+	if world._millet_held: return "millet"
 	if world.get_player().carrying_grass: return "grass"
 	return world._fish_carry_type
 
@@ -44,7 +46,7 @@ func sync_items(confirmed: Array) -> void:
 		if not sprites.has(id):
 			var sprite := Sprite2D.new()
 			sprite.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
-			sprite.texture = Grass.texture_for(Grass.LOOSE) if item.kind == "grass" else Fish
+			sprite.texture = Millet if item.kind == "millet" else (Grass.texture_for(Grass.LOOSE) if item.kind == "grass" else Fish)
 			var width := 34.0 if item.kind == "grass" else (38.0 if item.kind == "medium" else 30.0)
 			sprite.scale = Vector2.ONE * width / sprite.texture.get_width()
 			sprite.z_as_relative = false
@@ -106,11 +108,17 @@ func settled(action: String, consumer: String) -> void:
 
 
 func _accepts(actor: FeltActor, item: Dictionary) -> bool:
+	if item.kind == "millet": return actor.species == "chicken"
 	return actor.species in ["cow", "sheep", "llama"] if item.kind == "grass" else actor.species in ["duck", "goose"]
 
 
 func _approach(actor: FeltActor, item: Dictionary) -> Vector2:
 	var point := Vector2(item.x, item.y)
+	if actor.species == "chicken":
+		var side := signf(point.x - actor.position.x)
+		if side == 0.0: side = actor.facing
+		var beak := (21.0 if actor.get_meta("resident_stage", "") == "hen" else 10.0) * YardGround.depth_at(point.y)
+		return point - Vector2(side * beak, -3.0)
 	if not actor.use_ellipse: return point
 	# Ducks stay in their own water. Only a reachable bank morsel is considered.
 	var relative := (point - actor.ellipse_center) / actor.ellipse_radius
@@ -159,7 +167,8 @@ func tick(delta: float) -> void:
 		var goal := _approach(actor, item)
 		actor.seek_food(goal)
 		var distance := actor.position.distance_to(goal)
-		if distance < 18.0:
+		if distance < (5.0 if actor.species == "chicken" else 18.0):
+			if actor.species == "chicken": actor.show_painted_ack("peck", 0.2)
 			waiting[id] = float(waiting.get(id, 0.0)) + delta
 			if float(waiting[id]) >= 1.2: ready.append({"actor": id, "item": item, "distance": distance})
 		else: waiting[id] = 0.0
