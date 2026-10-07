@@ -43,6 +43,8 @@ var _food_path: Array[Vector2] = []
 var _food_repath := 0.0
 var _lead_path: Array[Vector2] = []
 var _lead_repath := 0.0
+var _home_path: Array[Vector2] = []
+var _home_repath := 0.0
 var use_ellipse := false
 var ellipse_center := Vector2.ZERO
 var ellipse_radius := Vector2.ZERO
@@ -541,7 +543,10 @@ func tick(delta: float, world_size: Vector2) -> void:
 		_:
 			grazing = false
 			motion = _target - position
-			if motion.length() < 5.0:
+			if _needs_homeward_walk():
+				motion = _homeward_motion(delta)
+				desired = motion.normalized() * minf(speed * depth, motion.length() * 1.8)
+			elif motion.length() < 5.0:
 				# A quiet pause between purposeful walks, rather than a new
 				# random destination and a sudden reversal every few seconds.
 				state = "graze"
@@ -711,6 +716,30 @@ func _local_destination() -> Vector2:
 	return position
 
 
+func _needs_homeward_walk() -> bool:
+	# Llamas may settle wherever released. Swimmers keep their pond ellipse.
+	return daily_routine and species != "llama" and not use_ellipse and wander_rect.has_area() and not wander_rect.has_point(position)
+
+
+func _homeward_motion(delta: float) -> Vector2:
+	_home_repath -= delta
+	if _home_repath <= 0.0:
+		_home_repath = 0.7
+		_home_path.clear()
+		# Home is an activity area, not a mandatory occupied centre point.
+		# Retry clear interior locations when another resident blocks the centre.
+		for fraction: Vector2 in [Vector2(0.5, 0.5), Vector2(0.25, 0.5), Vector2(0.75, 0.5), Vector2(0.5, 0.25), Vector2(0.5, 0.75)]:
+			var goal := wander_rect.position + wander_rect.size * fraction
+			if not _stands_on(goal): continue
+			var radius := body_radius * YardGround.depth_at(position.y)
+			if not YardBodies.clear_at(goal, radius, body_obstacles): continue
+			_home_path = YardBodies.route(position, goal, radius, body_obstacles, walk_ground, avoid_pond)
+			if not _home_path.is_empty(): break
+	while not _home_path.is_empty() and position.distance_to(_home_path[0]) < 4.0:
+		_home_path.pop_front()
+	return _home_path[0] - position if not _home_path.is_empty() else Vector2.ZERO
+
+
 func _random_point() -> Vector2:
 	if daily_routine: return _local_destination()
 	if use_ellipse:
@@ -802,6 +831,8 @@ func _apply_face_override() -> void:
 
 func seek_food(point: Vector2) -> void:
 	if posed or state == "lead": return
+	_home_path.clear()
+	_home_repath = 0.0
 	if state != "food" or food_goal.distance_to(point) > 2.0:
 		_food_repath = 0.0
 		_food_path.clear()

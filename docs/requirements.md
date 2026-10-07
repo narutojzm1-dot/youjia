@@ -2,7 +2,7 @@
 
 ## 2026-10-07 用户实玩八项修订
 
-CODEX-LEAD接续[#535](https://github.com/narutojzm1-dot/youjia/issues/535)，[八项完整验收](decisions/PLAYTEST-20261007.md)为当前主线优先。环境声实际0.3上限由PR536发布game-cac442c，满幅/乘色首片由PR537发布game-8ad646e，两者完整CI、公开包及普通Web核验通过，未冒称扬声器听感/全天气夜间或物理手机已验。道路自由走动、北向分支/透视与可点发现标记由Leader接续实现，必要回归通过，完整CI及正式发布仍待验。移动速度、动物主场地和两地音乐仍未完成，#504完整取食姿态顺延。
+CODEX-LEAD接续[#535](https://github.com/narutojzm1-dot/youjia/issues/535)，[八项完整验收](decisions/PLAYTEST-20261007.md)为当前主线优先。环境声实际0.3上限由PR536发布game-cac442c，满幅/乘色首片由PR537发布game-8ad646e，两者完整CI、公开包及普通Web核验通过，未冒称扬声器听感/全天气夜间或物理手机已验。道路PR539完整CI37584564707通过并合入02e3fd7153435afb04140a7b94603767f7e220da，公开验收接续中。移动节奏/投食后自然回归及beibei、鸡的独立日常区域已实现，必要回归与普通Web证据见[本片记录](playtests/2026-10-07-yard-rhythm/README.md)，完整CI/公开验收前保持候选。两地音乐仍未完成，#504完整取食姿态顺延。
 
 ## 2026-10-06 用户新增：世界关联主线（#503）
 
