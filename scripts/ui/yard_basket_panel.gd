@@ -20,7 +20,26 @@ var keepsake_labels: Dictionary = {}
 var _touch_index := -1
 var _touch_start := Vector2.ZERO
 var _touch_scrolled := false
+var column: VBoxContainer
+var compact := false
+var _status_is_note := true
+var _fit_queued := false
 const FISH := ["small", "medium", "odd", "grass", "millet"]
+## REQ-20261007-051：纸面始终离屏幕边至少 EDGE；纸面不高于 COMPACT_HEIGHT（矮横屏）时
+## 标题收小、间距收紧、只省掉那句说明，让清单多露出几行。保存/失败提示照常显示。
+const EDGE := 12.0
+const COMPACT_HEIGHT := 420.0
+const TITLE_SIZE := 24
+const COMPACT_TITLE_SIZE := 19
+const COLUMN_GAP := 8
+const COMPACT_COLUMN_GAP := 4
+const ROW_GAP := 6
+const COMPACT_ROW_GAP := 3
+## 纸面窄于 NARROW_WIDTH（屏宽约 304 以下的手机）时，每行「拿一条」按钮从 104 收到 88px，
+## 字仍放得下、高度仍 44px，名字多出 16px，中文不用折行
+const NARROW_WIDTH := 280.0
+const ROW_BUTTON_WIDTH := 104.0
+const NARROW_ROW_BUTTON_WIDTH := 88.0
 
 func _ready() -> void:
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -42,10 +61,10 @@ func _ready() -> void:
 	paper.content_margin_bottom = 12
 	panel.add_theme_stylebox_override("panel", paper)
 	add_child(panel)
-	var column := VBoxContainer.new()
-	column.add_theme_constant_override("separation", 8)
+	column = VBoxContainer.new()
+	column.add_theme_constant_override("separation", COLUMN_GAP)
 	panel.add_child(column)
-	title = _label(24)
+	title = _label(TITLE_SIZE)
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	column.add_child(title)
 	scroll = ScrollContainer.new()
@@ -54,10 +73,11 @@ func _ready() -> void:
 	column.add_child(scroll)
 	rows = VBoxContainer.new()
 	rows.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	rows.add_theme_constant_override("separation", 6)
+	rows.add_theme_constant_override("separation", ROW_GAP)
 	scroll.add_child(rows)
 	for kind: String in ["round_stone", "pine_cone", "feather"]:
 		var label := _label(18)
+		label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		rows.add_child(label)
 		keepsake_labels[kind] = label
 	for kind: String in FISH:
@@ -65,6 +85,9 @@ func _ready() -> void:
 		rows.add_child(row)
 		var label := _label(18)
 		label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		# 名字放不下就在名字内折行，不再把整张纸撑出屏幕边
+		label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 		row.add_child(label)
 		fish_labels[kind] = label
 		var button := _button()
@@ -72,6 +95,7 @@ func _ready() -> void:
 		row.add_child(button)
 		fish_buttons[kind] = button
 	held_label = _label(16)
+	held_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	rows.add_child(held_label)
 	scoop_button = _button()
 	scoop_button.pressed.connect(func() -> void: action_requested.emit("scoop", "millet"))
@@ -88,6 +112,9 @@ func _ready() -> void:
 	close_button.pressed.connect(func() -> void: close_requested.emit())
 	column.add_child(close_button)
 	resized.connect(fit)
+	# 说明句显隐或折行变化后，隐藏期间的旧最小高度会把纸面撑高；下一帧按新内容再排一次
+	panel.minimum_size_changed.connect(_queue_fit)
+	_set_compact(false, true)
 	fit()
 
 func _label(font_size: int) -> Label:
@@ -122,8 +149,32 @@ func _button() -> Button:
 
 func fit() -> void:
 	if panel == null: return
-	panel.size = Vector2(minf(520, size.x - 24), minf(620, size.y - 24))
+	var target := Vector2(minf(520, size.x - EDGE * 2.0), minf(620, size.y - EDGE * 2.0))
+	_set_compact(target.y <= COMPACT_HEIGHT)
+	var row_width := NARROW_ROW_BUTTON_WIDTH if target.x < NARROW_WIDTH else ROW_BUTTON_WIDTH
+	for button: Button in fish_buttons.values():
+		button.custom_minimum_size.x = row_width
+	panel.size = target
 	panel.position = (size - panel.size) * 0.5
+
+func _queue_fit() -> void:
+	if _fit_queued: return
+	_fit_queued = true
+	call_deferred("_run_queued_fit")
+
+func _run_queued_fit() -> void:
+	_fit_queued = false
+	fit()
+
+func _set_compact(on: bool, force: bool = false) -> void:
+	if on != compact or force:
+		compact = on
+		title.add_theme_font_size_override("font_size", COMPACT_TITLE_SIZE if on else TITLE_SIZE)
+		column.add_theme_constant_override("separation", COMPACT_COLUMN_GAP if on else COLUMN_GAP)
+		rows.add_theme_constant_override("separation", COMPACT_ROW_GAP if on else ROW_GAP)
+	var show_status := not (on and _status_is_note)
+	if status.visible != show_status:
+		status.visible = show_status
 
 func update_view(inventory: Dictionary, keepsakes: Dictionary, state: String, busy: bool) -> void:
 	var en := I18n.get_locale() == "en"
@@ -148,6 +199,10 @@ func update_view(inventory: Dictionary, keepsakes: Dictionary, state: String, bu
 		return_button.pressed.disconnect(connection.callable)
 	return_button.pressed.connect(func() -> void: action_requested.emit("return", held))
 	status.text = "Caught fish and finds stay here." if en else "钓到的鱼、散步带回的小物，都收在这里。"
+	_status_is_note = not (state in ["saving", "unknown", "failed", "blocked"] or inventory.is_empty())
+	var show_status := not (compact and _status_is_note)
+	if status.visible != show_status:
+		status.visible = show_status
 	if state in ["saving", "unknown"]:
 		status.text = "Checking the save…" if en else "正在确认保存，东西还不能取用……"
 	elif state in ["failed", "blocked"] or inventory.is_empty():

@@ -213,3 +213,25 @@ for decor_pair in 'yard_decor|YARD_DECOR' 'yard_decor_persistence|YARD_DECOR_PER
   run_case "$decor_marker-missing" block 0 '' none suite "$decor_entry"
 done
 echo 'DECOR GATE CONTRACT PASS 12'
+
+# GROK UI bundle: exact whole-line positive summaries are required for every
+# new daily entry. These fake executables only exercise the runner contract.
+ui_before=$checks
+while IFS='|' read -r ui_name ui_good ui_zero; do
+  ui_entry="test/${ui_name}_suite.gd"
+  run_case "ui-$ui_name-valid" pass 0 "$ui_good" none suite "$ui_entry"
+  run_case "ui-$ui_name-zero" block 0 "$ui_zero" none suite "$ui_entry"
+  run_case "ui-$ui_name-missing" block 0 '' none suite "$ui_entry"
+  run_case "ui-$ui_name-late-error" block 0 "$ui_good"$'\nERROR: late assertion' none suite "$ui_entry"
+  run_case "ui-$ui_name-prefix" block 0 "debug: $ui_good" none suite "$ui_entry"
+  run_case "ui-$ui_name-suffix" block 0 "$ui_good failures=1" none suite "$ui_entry"
+done <<'UI_COMPLETIONS'
+touch_hint_mode|PASS: touch_hint_mode 1 checks|PASS: touch_hint_mode 0 checks
+album_caption_fit|PASS album_caption_fit_suite: 1 checks|PASS album_caption_fit_suite: 0 checks
+photo_arrival_shutter_fit|[photo-arrival-shutter-fit] PASS: 1 checks|[photo-arrival-shutter-fit] PASS: 0 checks
+exploration_basket_label_fit|[exploration-basket-label-fit] PASS: 1 checks|[exploration-basket-label-fit] PASS: 0 checks
+yard_basket_panel_fit|[yard-basket-panel-fit] PASS: 1 checks|[yard-basket-panel-fit] PASS: 0 checks
+confirm_panel_narrow|[confirm-panel-narrow] PASS: 1 checks|[confirm-panel-narrow] PASS: 0 checks
+find_reveal_name_slip|PASS find_reveal_name_slip_suite: 1 checks|PASS find_reveal_name_slip_suite: 0 checks
+UI_COMPLETIONS
+echo "GROK UI COMPLETION CONTRACT PASS $((checks-ui_before))"

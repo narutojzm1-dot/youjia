@@ -1,0 +1,23 @@
+Godot 4.7.2.stable.official.ed1daf0bf, --headless, one isolated /tmp/youjia-daily-check.* profile per suite
+test/test_suite.tscn            [game-generic-tests] PASS: 414 checks   (catalog parity + font coverage)
+touch_hint_mode                 PASS: touch_hint_mode 295 checks
+hint_paper_width                PASS: hint_paper_width 9264 checks
+hint_paper_fit                  4653 checks passed
+ui_interaction                  checks=63 failures=[]
+mixed_input_photo               6 checks []
+explicit_target                 checks=25 failures=[]
+keyboard_ground                 PASS: 45 checks
+modal_touch_input               checks=270 failures=0
+ui_viewports                    checks=135 failures=[]
+fishing_active_hud              10 checks, 0 failures
+save_status_paper               PASS: 573 checks
+notice_paper                    checks=49 failures=[]
+title_card                      251 checks passed
+pause_panel_fit                 PASS: 1228 checks
+exploration_slice               PASS 296/296
+photo_caption_fit               PASS: 1884 checks
+day_label_layout                173 checks passed
+title_copy_balance              PASS: 580 checks
+audio_button_input              checks=648 failures=0
+All exit 0, no SCRIPT ERROR / Parse Error. Import (--editor --import --quit) exit 0.
+Not run: full verify_daily_life.sh end to end, Web export (no 4.7.2 export templates on this machine), physical touch device, browser DPR.
