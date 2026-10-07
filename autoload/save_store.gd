@@ -233,6 +233,32 @@ func get_yard_inventory() -> Dictionary:
 	return YardInventory.read(_data)
 
 
+func get_world_residents() -> Dictionary:
+	return preload("res://scripts/game/world_residents.gd").read(_data)
+
+func request_resident_action(revision: int, action: String) -> String:
+	var intent := prepare_resident_intent(revision, action)
+	return request_intent("residents", intent) if intent.is_valid() else ""
+
+
+## Freeze a confirmed encounter at the click, so a rejected disk write can be
+## retried after returning home. Never restore that old trip over current data.
+func prepare_resident_intent(revision: int, action: String) -> Callable:
+	var model := preload("res://scripts/game/world_residents.gd")
+	var encounter: Dictionary = {}
+	if action in ["adopt_beibei", "find_turtle", "adopt_turtle"]:
+		if model.transition(_data, revision, action).has("error"): return Callable()
+		encounter = _data.exploration.duplicate(true)
+	return func(current: Dictionary) -> Variant:
+		var source := current.duplicate(true)
+		if not encounter.is_empty(): source.exploration = encounter.duplicate(true)
+		var result := model.transition(source, revision, action)
+		if result.has("error"): return CoordinatorType.IntentRejection.new(result.error)
+		if current.has("exploration"): result.candidate.exploration = current.exploration
+		else: result.candidate.erase("exploration")
+		return result.candidate
+
+
 func request_inventory_action(revision: int, action: String, fish: String, details: Dictionary = {}) -> String:
 	var frozen := details.duplicate(true)
 	return request_intent("inventory", func(current: Dictionary) -> Variant:

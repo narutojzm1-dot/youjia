@@ -84,7 +84,7 @@ func setup(config: Dictionary) -> void:
 	actor_id = str(config.get("id", ""))
 	daily_routine = bool(config.get("daily_routine", false))
 	species = str(config.get("species", actor_id))
-	body_radius = YardBodies.radius_for(species)
+	body_radius = config.get("body_radius", YardBodies.radius_for(species))
 	display_name_key = str(config.get("name_key", "actor.%s" % species))
 	position = config.get("position", Vector2.ZERO)
 	wander_rect = config.get("wander", Rect2(position - Vector2(40, 20), Vector2(80, 40)))
@@ -191,7 +191,7 @@ func show_painted_ack(cel: String, seconds: float) -> void:
 func acknowledge_pet(observer_position: Vector2) -> void:
 	if posed or _pet_ack_cooldown > 0.0:
 		return
-	var cel := str({"cow": "glance", "horse": "idle", "sheep": "attend"}.get(species, ""))
+	var cel := str({"cow": "glance", "horse": "idle", "sheep": "attend", "dog": "idle"}.get(species, ""))
 	if cel.is_empty() or not _textures.has(cel):
 		return
 	# Unreviewed tail/shake size changes are not reused as interaction poses.

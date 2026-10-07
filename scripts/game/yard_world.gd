@@ -390,10 +390,47 @@ func return_from_path(companion: Dictionary = {}) -> void:
 	_update_lead_rope()
 
 
+## Confirmed resident identity controls one actor; unknown data never grants a dog.
+func sync_residents(value: Dictionary) -> void:
+	if value.is_empty(): return
+	if value.get("turtle", {}).get("stage", "") == "pond" and actor_named("turtle") == null:
+		var turtle := FeltActor.new()
+		add_child(turtle)
+		var turtle_config := TurtleArt.configure()
+		turtle.setup(turtle_config)
+		turtle.set_pose(turtle_config.position, turtle_config.scale, 1.0)
+		turtle.set_meta("base_speed", turtle_config.speed)
+		_actors["turtle"] = turtle
+	var stage: String = value.beibei.stage
+	var previous := actor_named("beibei")
+	if stage == "unmet": return
+	if previous != null and previous.get_meta("resident_stage", "") == stage: return
+	var point := previous.position if previous != null else Vector2(300, 530)
+	var config := BeibeiArt.configure(stage)
+	for offset: Vector2 in [Vector2.ZERO, Vector2(0, 35), Vector2(35, 25), Vector2(-35, 25), Vector2(0, 60)]:
+		var candidate := point + offset
+		if YardGround.allows(candidate, YardGround.lawn(), true) and YardBodies.clear_at(candidate, config.body_radius, physical_obstacles("beibei")):
+			point = candidate
+			break
+	if previous != null:
+		remove_child(previous)
+		previous.queue_free()
+	var actor := FeltActor.new()
+	add_child(actor)
+	config.position = point
+	actor.setup(config)
+	actor.adopt_ground(YardGround.lawn(), true)
+	actor.set_meta("base_speed", config.speed)
+	actor.set_meta("resident_stage", stage)
+	_actors["beibei"] = actor
+	if stage == "grown" and previous != null: notice_requested.emit("notice.beibei.grown")
+
+
 func companion_context() -> Dictionary:
 	var nearby: Array = []
 	for id: String in _actors:
 		var actor := actor_named(id)
+		if id == "beibei" and actor.get_meta("resident_stage", "") != "grown": continue
 		if AnimalCompanions.SPECIES.has(id) and not actor.posed and actor.position.distance_to(_player.position) <= AnimalCompanions.NEAR:
 			nearby.append(id)
 	return {"nearby": nearby, "rope": "llama" if _leading else ""}

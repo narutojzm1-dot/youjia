@@ -184,6 +184,11 @@ static func validate_catalog(source: String, routes: Variant) -> PackedStringArr
 					errors.append("bad_find_entry:" + stop_where)
 			if as_int(stop.get("empty_weight", 0), 0) == null:
 				errors.append("bad_empty_weight:" + stop_where)
+			if stop.has("hidden"):
+				var hidden: Variant = stop.hidden
+				if not hidden is Dictionary or hidden.size() != 2 or hidden.get("actor_id") not in AnimalCompanions.SPECIES \
+						or not is_valid_id(hidden.get("find_id"), source) or not pool.is_empty():
+					errors.append("bad_hidden_find:" + stop_where)
 	return errors
 
 

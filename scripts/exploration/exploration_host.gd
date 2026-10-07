@@ -107,6 +107,17 @@ func visit(stop_id: String) -> Dictionary:
 	return result
 
 
+func uncover() -> Dictionary:
+	var result := session.uncover()
+	_apply(result)
+	# Revisiting is an explicit retry after a definite write rejection. Never
+	# enqueue a second copy while the previous write is still unresolved.
+	if result.ok and not result.get("persist", false) and session.has_unsaved_changes() \
+			and not view().get("last_save_failure", "").is_empty() and _ops.is_empty():
+		_persist()
+	return result
+
+
 func take(find_id: String) -> Dictionary:
 	var result := session.take(find_id)
 	_apply(result)
