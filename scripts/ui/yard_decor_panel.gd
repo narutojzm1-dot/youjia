@@ -204,6 +204,8 @@ func refresh() -> void:
 	var occupied: bool = value.get("places", {}).has(selected)
 	var unchanged: bool = occupied and draft == value.places[selected]
 	if unchanged and not busy: status.text = "Use the arrows to adjust, or put it back." if en else "用箭头稍微挪动，也可收回背篓。"
+	var empty_hint := empty_basket_hint(en)
+	if empty_hint != "" and not occupied and draft.is_empty() and not busy and not (state in ["failed", "unknown", "blocked"]): status.text = empty_hint
 	var places := {"house_edge": "House" if en else "屋前", "fence_edge": "Fence" if en else "篱边", "pond_path": "Path" if en else "塘边小路"}
 	for spot: String in slot_buttons:
 		slot_buttons[spot].text = places[spot]
@@ -225,6 +227,18 @@ func refresh() -> void:
 	if not draft.is_empty() and not unchanged: close_button.text = "Cancel preview · Back" if en else "取消预览 · 回到背篓"
 	preview_changed.emit(selected, draft)
 	call_deferred("fit")
+
+# REQ-20261007-062: with nothing left to place, an empty spot used to say
+# "pick a place, then a find" while every find button read ×0 and was grey, so
+# the panel asked for something the player could not do. It now says why and
+# what to do instead: go out for finds, or adjust the ones already placed.
+func empty_basket_hint(en: bool) -> String:
+	if value.is_empty(): return ""
+	for id: String in ExplorationRoutes.FINDS:
+		if int(counts.get(id, 0)) > 0: return ""
+	if not value.get("places", {}).is_empty():
+		return "All your finds are placed. Pick a filled place to adjust or put one back." if en else "小物都摆出去了；选已摆好的地方，可以挪动或收回背篓。"
+	return "No finds yet. Choose \"Take a walk outside\" on the path by the gate, then come back." if en else "背篓里还没有小物；去门前小路「出门走走」，捡到圆石、松果或落羽再来摆。"
 
 func handle_touch_event(event: InputEvent) -> void:
 	if event is InputEventScreenTouch:
