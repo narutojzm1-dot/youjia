@@ -79,12 +79,19 @@ func run() -> void:
 	var lure_point := Vector2(lure.x, lure.y)
 	player.position = Vector2(210, 595)
 	var before: Vector2 = cow.position
+	var saw_cow_bite := false
+	var mouth_contact := false
 	for frame in 1600:
 		world.tick(0.05, Vector2.ZERO)
+		if cow._posture_id == "graze":
+			saw_cow_bite = true
+			var mouth: Vector2 = cow._sprite.to_global(Vector2(223, 965) - Vector2(750, 990))
+			mouth_contact = mouth_contact or mouth.distance_to(world.to_global(lure_point)) < 8.0
 		if main._inventory.busy(): await settle()
 		if world.ground_food.items.is_empty(): break
 	check(world.ground_food.items.is_empty(), "cow walks to and consumes the ground lure")
-	check(cow.position.distance_to(lure_point) < 24.0 and cow.position.distance_to(before) > 50.0, "cow reaches food outside daily wander rectangle")
+	check(saw_cow_bite and mouth_contact, "cow's complete grazing cel puts its mouth at the ground food")
+	check(cow.position.distance_to(before) > 50.0, "cow reaches food outside daily wander rectangle")
 	check(cow.state != "lead" and not world.is_leading(), "eating grass does not make cow follow the player")
 	check(main._inventory.view().held == "" and main._inventory.view().grass == 0, "grass conserved through harvest basket drop and consumption")
 	store._load()
@@ -182,11 +189,15 @@ func run() -> void:
 			check(cow.state != "food", "one distant bundle does not call the cow across the yard")
 	check(world.ground_food.items.size() == 4, "four distinct exit-path bundles remain on the ground")
 	player.position = Vector2(370, 550)
+	var gate_bite := false
 	for frame in 2200:
 		world.tick(0.05, Vector2.ZERO)
+		if cow._posture_id == "graze":
+			var mouth: Vector2 = world.to_local(cow._sprite.to_global(Vector2(223, 965) - Vector2(750, 990)))
+			gate_bite = gate_bite or (mouth.x < 310.0 and mouth.y > 565.0)
 		if main._inventory.busy(): await settle()
 		if world.ground_food.items.size() < 4: break
-	check(world.ground_food.items.size() == 3 and cow.position.x < 310 and cow.position.y > 565, "a cluster draws the cow along a valid route to the exit path")
+	check(world.ground_food.items.size() == 3 and gate_bite, "a cluster draws the cow along a valid route to eat at the exit path")
 	check(cow.state != "lead", "cluster attraction never turns into player following")
 	# A duck reaches only a fish on its bank; its feet never leave the water ellipse.
 	for id: String in world._actors: world.actor_named(id).posed = true

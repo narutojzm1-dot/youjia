@@ -4,6 +4,7 @@ test/album_layout_suite.gd	ALBUM_LAYOUT checks=[1-9][0-9]* failures=0
 test/album_short_landscape_suite.gd	ALBUM_SHORT_LANDSCAPE checks=[1-9][0-9]* failures=0
 test/animal_home_suite.gd	\[animal-home-tests\] PASS: [1-9][0-9]* checks
 test/yard_decor_panel_hug_suite.gd	\[yard-decor-panel-hug\] PASS: [1-9][0-9]* checks
+test/yard_decor_nudge_limit_suite.gd	\[yard-decor-nudge-limit\] PASS: [1-9][0-9]* checks
 test/yard_basket_button_states_suite.gd	\[yard-basket-button-states\] PASS: [1-9][0-9]* checks
 test/paper_scrollbar_suite.gd	\[paper-scrollbar\] PASS: [1-9][0-9]* checks
 test/exploration_button_states_suite.gd	\[exploration-button-states\] PASS: [1-9][0-9]* checks
@@ -102,6 +103,7 @@ test/yard_decor_button_states_suite.gd	\[yard-decor-button-states\] PASS: [1-9][
 test/yard_basket_integration_suite.gd	YARD_BASKET_INTEGRATION checks=[1-9][0-9]* failures=0
 test/yard_ground_food_ledger_suite.gd	YARD_GROUND_FOOD_LEDGER checks=[1-9][0-9]* failures=0
 test/yard_ground_food_runtime_suite.gd	YARD_GROUND_FOOD_RUNTIME checks=[1-9][0-9]* failures=0
+test/cow_ground_graze_suite.gd	COW_GROUND_GRAZE checks=[1-9][0-9]* failures=0
 test/animal_companion_suite.gd	ANIMAL_COMPANION checks=[1-9][0-9]* failures=0
 test/animal_hidden_find_suite.gd	ANIMAL_HIDDEN_FIND checks=[1-9][0-9]* failures=0
 test/world_residents_suite.gd	WORLD_RESIDENTS checks=[1-9][0-9]* failures=0
@@ -118,3 +120,5 @@ test/exploration_basket_label_fit_suite.gd	\[exploration-basket-label-fit\] PASS
 test/yard_basket_panel_fit_suite.gd	\[yard-basket-panel-fit\] PASS: [1-9][0-9]* checks
 test/confirm_panel_narrow_suite.gd	\[confirm-panel-narrow\] PASS: [1-9][0-9]* checks
 test/find_reveal_name_slip_suite.gd	PASS find_reveal_name_slip_suite: [1-9][0-9]* checks
+test/yard_decor_empty_hint_suite.gd	\[yard-decor-empty-hint\] PASS: [1-9][0-9]* checks
+test/yard_basket_empty_row_ink_suite.gd	\[yard-basket-empty-row-ink\] PASS: [1-9][0-9]* checks

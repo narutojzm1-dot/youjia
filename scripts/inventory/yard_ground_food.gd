@@ -114,6 +114,12 @@ func _accepts(actor: FeltActor, item: Dictionary) -> bool:
 
 func _approach(actor: FeltActor, item: Dictionary) -> Vector2:
 	var point := Vector2(item.x, item.y)
+	if actor.species == "cow":
+		var grazing := preload("res://scripts/game/cow_ground_art.gd")
+		var feet := point - grazing.mouth_offset(actor, point)
+		if not YardGround.allows(feet, actor.walk_ground, actor.avoid_pond): return Vector2.INF
+		var radius := actor.body_radius * YardGround.depth_at(feet.y)
+		return feet if YardBodies.clear_at(feet, radius, world.physical_obstacles(actor.actor_id)) else Vector2.INF
 	if actor.species == "chicken":
 		var side := signf(point.x - actor.position.x)
 		if side == 0.0: side = actor.facing
@@ -187,10 +193,11 @@ func tick(delta: float) -> void:
 			waiting.erase(id)
 			continue
 		actor.seek_food(goal)
-		var eating_point := goal if actor.use_ellipse or actor.species == "chicken" else Vector2(item.x, item.y)
+		var eating_point := goal if actor.use_ellipse or actor.species in ["chicken", "cow"] else Vector2(item.x, item.y)
 		var distance := actor.position.distance_to(eating_point)
-		if distance < (5.0 if actor.species == "chicken" else 18.0):
+		if distance < (5.0 if actor.species in ["chicken", "cow"] else 18.0):
 			if actor.species == "chicken": actor.show_painted_ack("peck", 0.2)
+			if actor.species == "cow": actor.show_ground_bite("graze", Vector2(item.x, item.y))
 			waiting[id] = float(waiting.get(id, 0.0)) + delta
 			if float(waiting[id]) >= 1.2: ready.append({"actor": id, "item": item, "distance": distance})
 		else: waiting[id] = 0.0

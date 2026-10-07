@@ -190,6 +190,23 @@ func show_painted_ack(cel: String, seconds: float) -> void:
 	_refresh_painted_posture()
 
 
+func show_ground_bite(cel: String, food: Vector2) -> void:
+	if posed or not _textures.has(cel): return
+	# Stop the final approach before the actor tick; otherwise its residual
+	# food path immediately clears the stationary whole-body bite cel.
+	if state == "food":
+		food_goal = position
+		_food_path.clear()
+	if absf(food.x - position.x) > 2.0:
+		facing = signf(food.x - position.x)
+		_gait.face = facing
+		_gait._turning = false
+		_gait._next_face = facing
+		_gait.turn_width = 1.0
+		scale.x = absf(scale.x) * facing
+	show_painted_ack(cel, 0.2)
+
+
 func acknowledge_pet(observer_position: Vector2) -> void:
 	if posed or _pet_ack_cooldown > 0.0:
 		return
