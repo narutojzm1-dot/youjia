@@ -24,6 +24,9 @@ func run() -> void:
 		quit(2)
 		return
 	store = root.get_node("SaveStore")
+	var scenario_seed := int(OS.get_environment("YOUJIA_FOOD_TEST_SEED"))
+	seed(scenario_seed)
+	print("FOOD_SCENARIO_SEED ", scenario_seed)
 	main = load("res://scenes/main.tscn").instantiate()
 	root.add_child(main)
 	for i in 3: await process_frame
@@ -101,6 +104,7 @@ func run() -> void:
 	world.request_primary_action()
 	await settle()
 	player.position = Vector2(240, 590)
+	var shared_food := Vector2(world.ground_food.items[0].x, world.ground_food.items[0].y)
 	var revision := int(main._inventory.view().revision)
 	world.simulation_active = false
 	var positions := [world.actor_named("sheep_a").position, world.actor_named("sheep_b").position]
@@ -112,10 +116,14 @@ func run() -> void:
 		if main._inventory.busy(): await settle()
 		if world.ground_food.items.is_empty(): break
 	check(world.ground_food.items.is_empty(), "one of two sheep reaches and eats the shared grass")
+	if not world.ground_food.items.is_empty():
+		print("FOOD_FAILURE_TRACE ", {"items": world.ground_food.items, "targets": world.ground_food.targets, "waiting": world.ground_food.waiting, "busy": world.inventory_busy, "input": world.input_enabled, "inventory": main._inventory.view(), "sheep_a": [world.actor_named("sheep_a").position, world.actor_named("sheep_a").state], "sheep_b": [world.actor_named("sheep_b").position, world.actor_named("sheep_b").state]})
 	check(int(main._inventory.view().revision) == revision + 1, "two real competitors produce exactly one durable consumption")
 	var winners := 0
 	for id: String in ["sheep_a", "sheep_b"]:
-		if float(world.ground_food.cooldowns.get(id, 0.0)) > 0.0: winners += 1
+		if float(world.ground_food.cooldowns.get(id, 0.0)) > 0.0:
+			winners += 1
+			check(world.actor_named(id).position.distance_to(shared_food) < 18.0, "winner physically reaches the food without expanded eating range")
 	check(winners == 1, "only the successful consumer receives a feeding cooldown")
 	# A basket fish becomes a real bank object; goose consumes it after walking.
 	for id: String in world._actors: world.actor_named(id).posed = true

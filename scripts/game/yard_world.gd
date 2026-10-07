@@ -13,6 +13,7 @@ signal day_advanced(day: int)
 signal fish_caught(carry_type: String)
 signal ground_food_requested(action: String, kind: String, details: Dictionary, actor_id: String)
 var ground_food: Node2D
+var decor_view: Node2D
 var pond_story: Node
 var inventory_enabled := false
 var inventory_busy := false
@@ -231,6 +232,8 @@ func setup(
 	_spawn_grass()
 	ground_food = load("res://scripts/inventory/yard_ground_food.gd").new(self)
 	add_child(ground_food)
+	decor_view = load("res://scripts/inventory/yard_decor_view.gd").new()
+	add_child(decor_view)
 	pond_story = load("res://scripts/game/pond_story_controller.gd").new(self)
 	add_child(pond_story)
 	_spawn_cast()

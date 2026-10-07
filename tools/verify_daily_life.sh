@@ -38,6 +38,9 @@ run_godot suite test/pause_notice_suite.gd
 run_godot suite test/audio_button_input_suite.gd
 run_godot suite test/modal_touch_input_suite.gd
 run_godot suite test/yard_inventory_suite.gd
+run_godot suite test/yard_decor_suite.gd
+run_godot suite test/yard_decor_persistence_suite.gd
+run_godot suite test/yard_decor_integration_suite.gd
 run_godot suite test/yard_ground_food_ledger_suite.gd
 run_godot suite test/yard_ground_food_runtime_suite.gd
 run_godot suite test/animal_companion_suite.gd

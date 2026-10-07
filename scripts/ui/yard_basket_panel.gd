@@ -13,6 +13,7 @@ var retry_button: Button
 var return_button: Button
 var held_label: Label
 var scoop_button: Button
+var decor_button: Button
 var fish_labels: Dictionary = {}
 var fish_buttons: Dictionary = {}
 var keepsake_labels: Dictionary = {}
@@ -174,10 +175,11 @@ func handle_touch_event(event: InputEvent) -> void:
 
 func _activate_touch(position_in_view: Vector2) -> void:
 	var buttons: Array = [close_button, retry_button, return_button, scoop_button]
+	if decor_button != null: buttons.append(decor_button)
 	buttons.append_array(fish_buttons.values())
 	for button: Button in buttons:
 		if button.is_visible_in_tree() and not button.disabled and button.get_global_rect().has_point(position_in_view):
-			if button in fish_buttons.values() or button in [return_button, scoop_button]:
+			if button in fish_buttons.values() or button in [return_button, scoop_button, decor_button]:
 				if not scroll.get_global_rect().has_point(position_in_view): continue
 			button.pressed.emit()
 			return
