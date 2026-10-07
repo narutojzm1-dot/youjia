@@ -528,13 +528,15 @@ func tick(delta: float, move: Vector2) -> void:
 				_pending_interaction = ""
 				_interact_with_target(target)
 			var obstacles := _routing_obstacles()
-			if _has_walk_goal and _body_repath <= 0.0 and (_walk_path.is_empty() or not YardBodies.clear_segment(_player.position,_walk_path[0],_player.body_radius*YardGround.depth_at(_player.position.y),obstacles)):
+			if _has_walk_goal and _body_repath <= 0.0 and (_walk_path.is_empty() or not YardBodies.clear_segment(_player.position,_walk_path[0],_player.body_radius*YardGround.depth_at(_player.position.y),obstacles) or not YardBodies._ground_segment(_player.position, _walk_path[0], YardGround.lawn(), true)):
 				_walk_path = _route_to_walk_goal(obstacles)
 				_body_repath = 0.7
 				# A moving animal may occupy the destination briefly. Keep intent
 				# and retry while standing; never silently abandon the tap.
 			var destination := _walk_path[0] if not _walk_path.is_empty() else _walk_goal
-			if not _walk_path.is_empty() and _player.position.distance_to(destination) < ((12.0 if destination.distance_to(_walk_goal) < 0.01 else 2.0) if _walk_path.size() == 1 else 4.0):
+			# Rounding a waypoint early must not cut across the concave pond rim.
+			var next_leg_clear := _walk_path.size() < 2 or YardBodies._ground_segment(_player.position, _walk_path[1], YardGround.lawn(), true)
+			if not _walk_path.is_empty() and next_leg_clear and _player.position.distance_to(destination) < ((12.0 if destination.distance_to(_walk_goal) < 0.01 else 2.0) if _walk_path.size() == 1 else 4.0):
 				_walk_path.pop_front()
 				destination = _walk_path[0] if not _walk_path.is_empty() else _walk_goal
 			var to_goal := destination - _player.position

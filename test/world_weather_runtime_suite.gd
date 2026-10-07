@@ -34,9 +34,18 @@ func run() -> void:
 	main._process(30.0)
 	check(is_equal_approx(main._world._day_elapsed, before.elapsed + 20.0), "pause freezes shared travel clock")
 	main._pause_screen.hide()
+	main._save_problem_active = true
+	main._process(30.0)
+	check(is_equal_approx(main._world._day_elapsed, before.elapsed + 20.0), "save problem freezes shared travel clock")
+	main._save_problem_active = false
 	main._exploration.interrupt()
 	await settle(store)
 	check(main._screen == "game", "production return completes")
+	main._save_problem_active = true
+	var frozen: float = main._world._day_elapsed
+	main._process(30.0)
+	check(main._world._day_elapsed == frozen, "save problem freezes yard clock too")
+	main._save_problem_active = false
 	main._world._save_progress()
 	await settle(store)
 	var expected: Dictionary = store.get_world_weather()
@@ -44,7 +53,8 @@ func run() -> void:
 	store._load()
 	await main._start_holiday(false)
 	main.set_process(false)
-	check(main._world._regional_weather.snapshot() == expected, "fresh yard restores exact weather and remaining time")
+	var restored: Dictionary = main._world._regional_weather.snapshot()
+	check(restored.weather == expected.weather and restored.seed == expected.seed and restored.episode == expected.episode and absf(restored.remaining - expected.remaining) < 0.000001, "fresh yard restores weather sequence and remaining time within JSON precision")
 	check(main._world._day_elapsed == expected_elapsed, "fresh yard restores travel clock")
 	main.queue_free()
 	await process_frame

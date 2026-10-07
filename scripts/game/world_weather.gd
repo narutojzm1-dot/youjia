@@ -7,10 +7,15 @@ var state: Dictionary = {}
 
 static func sanitize(raw: Variant) -> Dictionary:
 	if not raw is Dictionary: return {}
+	if typeof(raw.get("remaining")) not in [TYPE_INT, TYPE_FLOAT]: return {}
+	for key: String in ["seed", "episode"]:
+		if typeof(raw.get(key)) not in [TYPE_INT, TYPE_FLOAT]: return {}
+		var number := float(raw[key])
+		if not is_finite(number) or number != floor(number) or number < 0 or number > 2147483646: return {}
 	var remaining := float(raw.get("remaining", -1.0))
 	var seed_value := int(raw.get("seed", 0))
 	var episode := int(raw.get("episode", -1))
-	if str(raw.get("weather", "")) not in ["sun", "overcast"]: return {}
+	if not raw.get("weather") is String or raw.weather not in ["sun", "overcast"]: return {}
 	if not is_finite(remaining) or remaining <= 0.0 or remaining > MAX_EPISODE: return {}
 	if seed_value <= 0 or seed_value > 2147483646 or episode < 0: return {}
 	return {"weather":str(raw.weather), "remaining":remaining, "seed":seed_value, "episode":episode}

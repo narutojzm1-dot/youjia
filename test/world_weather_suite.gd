@@ -36,6 +36,15 @@ func run() -> void:
 	climate.advance(-5)
 	check(climate.snapshot() == stable, "invalid delta cannot corrupt weather")
 	check(Weather.sanitize({"weather":"sun", "remaining":INF,"seed":1,"episode":0}).is_empty(), "invalid stored duration rejected")
+	for key: String in ["remaining", "seed", "episode"]:
+		for invalid: Variant in [null, [], {}, true, "5", NAN, INF]:
+			var bad: Dictionary = stable.duplicate(true)
+			bad[key] = invalid
+			check(Weather.sanitize(bad).is_empty(), "malformed weather field rejected without coercion: " + key)
+	for key: String in ["seed", "episode"]:
+		var bad: Dictionary = stable.duplicate(true)
+		bad[key] = 1.5
+		check(Weather.sanitize(bad).is_empty(), "fractional sequence field rejected")
 	var store = root.get_node("SaveStore")
 	check(await store.flush_pending(), "native store initialized")
 	store.request_yard_progress(7, 123.5, 0, 0, -1, stable)
