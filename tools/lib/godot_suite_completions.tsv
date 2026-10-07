@@ -88,6 +88,9 @@ test/volume_slider_input_suite.gd	\[volume-slider-input\] checks=[1-9][0-9]* fai
 test/weather_transition_suite.gd	Weather transition suite passed: [1-9][0-9]* checks
 test/modal_touch_input_suite.gd	MODAL_TOUCH_INPUT checks=[1-9][0-9]* failures=0
 test/yard_inventory_suite.gd	YARD_INVENTORY checks=[1-9][0-9]* failures=0
+test/yard_decor_suite.gd	YARD_DECOR checks=[1-9][0-9]* failures=0
+test/yard_decor_persistence_suite.gd	YARD_DECOR_PERSISTENCE checks=[1-9][0-9]* failures=0
+test/yard_decor_integration_suite.gd	YARD_DECOR_INTEGRATION checks=[1-9][0-9]* failures=0
 test/yard_basket_integration_suite.gd	YARD_BASKET_INTEGRATION checks=[1-9][0-9]* failures=0
 test/yard_ground_food_ledger_suite.gd	YARD_GROUND_FOOD_LEDGER checks=[1-9][0-9]* failures=0
 test/yard_ground_food_runtime_suite.gd	YARD_GROUND_FOOD_RUNTIME checks=[1-9][0-9]* failures=0
@@ -97,3 +100,7 @@ test/world_residents_suite.gd	WORLD_RESIDENTS checks=[1-9][0-9]* failures=0
 test/beibei_integration_suite.gd	BEIBEI_INTEGRATION checks=[1-9][0-9]* failures=0
 test/pond_residents_suite.gd	POND_RESIDENTS checks=[1-9][0-9]* failures=0
 test/pond_integration_suite.gd	POND_INTEGRATION checks=[1-9][0-9]* failures=0
+test/chick_millet_model_suite.gd	CHICK_MILLET_MODEL checks=[1-9][0-9]* failures=0
+test/chick_millet_integration_suite.gd	CHICK_MILLET_INTEGRATION checks=[1-9][0-9]* failures=0
+test/pond_story_sequence_suite.gd	POND_STORY_SEQUENCE: [1-9][0-9]* checks, 0 failures
+test/pond_story_integration_suite.gd	POND_STORY_INTEGRATION: [1-9][0-9]* checks, 0 failures

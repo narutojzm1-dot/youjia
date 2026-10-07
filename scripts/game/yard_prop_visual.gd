@@ -39,6 +39,9 @@ func configure(next_subject: String, next_state: Dictionary) -> void:
 	queue_redraw()
 
 static func sanitize_state(kind: String, raw: Variant) -> Dictionary:
+	if kind == "keepsake":
+		if not raw is Dictionary or raw.size() != 1 or not raw.get("find_id") is String: return {}
+		return {"find_id": raw.find_id} if ExplorationRoutes.is_formal_find(raw.find_id) else {}
 	if not raw is Dictionary or kind not in ["plant", "fishing"]:
 		return {}
 	if not raw.get("nearby") is bool or not _number(raw.get("phase"), 0.0, TAU * 10.0):
@@ -64,10 +67,12 @@ static func _integer(value: Variant, minimum: int, maximum: int) -> bool:
 	return _number(value, minimum, maximum) and float(value) == floorf(float(value))
 
 static func bounds(kind: String) -> Rect2:
+	if kind == "keepsake": return Rect2(-14, -12, 28, 24)
 	return Rect2(-36, -28, 72, 48) if kind == "plant" else Rect2(-8, -40, 52, 68)
 
 func _draw() -> void:
 	if state.is_empty(): return
+	if subject == "keepsake": KeepsakeArt.draw(self, state.find_id, Vector2.ZERO, 0.65, true)
 	if subject == "plant": _draw_plant_bed()
 	elif subject == "fishing": _draw_fishing_spot()
 

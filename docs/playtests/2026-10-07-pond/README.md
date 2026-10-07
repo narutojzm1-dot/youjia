@@ -1,6 +1,14 @@
 # F1：beibei 找龟并接回水塘
 
-2026-10-07，CODEX-LEAD；#503 / #504；本页先记录本地候选，不代表公开发布。父版本为 main `acc83e423bd6ca9340333d9134c36cbafef4680e`。
+2026-10-07，CODEX-LEAD；#503 / #504；F1 已由 PR517 发布。父版本为 main `acc83e423bd6ca9340333d9134c36cbafef4680e`。
+
+## 公开发布核验
+
+- PR517 最终 head `970fbef9e8996c9eeea9216b0d203103ff14ce2e`；本地源 `326dcc687c668fd306491d7e11cacbff6a061877`，两者 tree 均为 `bf3fe87318e58bcd510c6f8b8f7a274913ac2cfc`。
+- 合入/公开 source `f84f11d1753cc902d418a30185b84027c3f51ba6`；CI37546754470、Publish37547822659和Pages37548770063全部成功。CI及Publish日志均有 POND_RESIDENTS 42、POND_INTEGRATION 40，零失败。
+- Pages提交 `4d6f7dc9a31187a351ecd0e882d38f704c929470`；实际公开入口 `game-f84f11d`，PCK 37,293,136 字节，SHA256 `0fc26bf71d11a8f9045a56268280bba722bb014687a91557185bacc09be0ebdc`，Git blob `57c33305214f6810a5515e42e1da1ef6bf90b7a6`。公开HTML入口及全部10个存档模块哈希一致，见 `public/verification.json`。
+- 正式浏览器重新加载确认版本入口；旧第5天幼犬与松果1仍保留，控制台无warn/error，见 `public/`。这个公开存档仍为幼犬，未将它冒充成年犬找龟的正向体验；完整自然同行→找龟→收养→重开保留由下文普通本地Web旧档验证。
+- F2 小米/鸡成长在独立 `codex/lead-chick-millet` 本地接续，不含于本公开包；F3鸡龟/鹅龟未交付。不重复10月6日已经完成的日版本邮件。
 
 ## 范围与结果
 

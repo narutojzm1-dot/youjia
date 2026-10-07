@@ -13,6 +13,8 @@ signal day_advanced(day: int)
 signal fish_caught(carry_type: String)
 signal ground_food_requested(action: String, kind: String, details: Dictionary, actor_id: String)
 var ground_food: Node2D
+var decor_view: Node2D
+var pond_story: Node
 var inventory_enabled := false
 var inventory_busy := false
 ## 走到门前小路尽头选“出门走走”：Main 接管，切到画卷近郊小路
@@ -97,6 +99,7 @@ var _fish_caught_total := 0
 var _first_fish_polaroid_done := false
 ## 钓到后的携带状态："small"/"medium"/"odd"，空=无
 var _fish_carry_type: String = ""
+var _millet_held := false
 ## 携带倒计时（秒），归零后鱼自动溜走
 var _fish_carry_timer: float = 0.0
 ## 咬钩提醒计时器：BITE 期间每隔一段时间重发通知，防止玩家错过
@@ -229,6 +232,10 @@ func setup(
 	_spawn_grass()
 	ground_food = load("res://scripts/inventory/yard_ground_food.gd").new(self)
 	add_child(ground_food)
+	decor_view = load("res://scripts/inventory/yard_decor_view.gd").new()
+	add_child(decor_view)
+	pond_story = load("res://scripts/game/pond_story_controller.gd").new(self)
+	add_child(pond_story)
 	_spawn_cast()
 	_bind_grounds()
 	_plant_visual = YardPropVisual.new()
@@ -287,6 +294,7 @@ func hint_context() -> String:
 	var action := YardInteraction.primary(self)
 	var target := str(action.get("target", ""))
 	if target == "release": return "hud.hint.leading"
+	if _millet_held: return "hud.hint.carrying_millet"
 	if not _fish_carry_type.is_empty(): return "hud.hint.carrying_fish"
 	if _player != null and _player.carrying_grass: return "hud.hint.carrying"
 	if target == "llama": return "hud.hint.near_llama"
@@ -393,6 +401,7 @@ func return_from_path(companion: Dictionary = {}) -> void:
 ## Confirmed resident identity controls one actor; unknown data never grants a dog.
 func sync_residents(value: Dictionary) -> void:
 	if value.is_empty(): return
+	_sync_chicken(value.get("chicken", {}))
 	if value.get("turtle", {}).get("stage", "") == "pond" and actor_named("turtle") == null:
 		var turtle := FeltActor.new()
 		add_child(turtle)
@@ -424,6 +433,25 @@ func sync_residents(value: Dictionary) -> void:
 	actor.set_meta("resident_stage", stage)
 	_actors["beibei"] = actor
 	if stage == "grown" and previous != null: notice_requested.emit("notice.beibei.grown")
+
+func _sync_chicken(value: Dictionary) -> void:
+	var stage: String = value.get("stage", "unmet")
+	if stage == "unmet": return
+	var previous := actor_named("chicken")
+	if previous != null and previous.get_meta("resident_stage", "") == stage: return
+	var config := ChickenArt.configure(stage)
+	if previous != null:
+		config.position = previous.position
+		remove_child(previous)
+		previous.queue_free()
+	var actor := FeltActor.new()
+	add_child(actor)
+	actor.setup(config)
+	actor.adopt_ground(YardGround.lawn(), true)
+	actor.set_meta("base_speed", config.speed)
+	actor.set_meta("resident_stage", stage)
+	_actors["chicken"] = actor
+	if previous != null: notice_requested.emit("notice.chicken.grown")
 
 
 func companion_context() -> Dictionary:
@@ -541,12 +569,14 @@ func tick(delta: float, move: Vector2) -> void:
 			actor.state = "graze"
 			actor._idle_time = maxf(actor._idle_time, 0.5)
 		actor.body_obstacles = physical_obstacles(actor_id)
-		actor.tick(delta, WORLD_SIZE)
+		if not actor.has_meta("pond_story"):
+			actor.tick(delta, WORLD_SIZE)
 		actor.current_zone = _zone_at(actor.position)
 		# 生态扫视：可抚摸动物偶尔朝玩家转头，草泥马/鸭/大鹅除外
 		if _player != null and actor.species in ["cow", "sheep", "horse"]:
 			actor.tick_glance(delta, _player.position)
 	_update_lead_rope()
+	if pond_story != null: pond_story.tick(delta, move)
 	_tick_relationships(delta)
 	_tick_goose_mount_encounter(delta, move)
 	# 抬头微推放在鹅马之后：鹅马已接管时只让出镜头，不误发 release。
@@ -598,6 +628,9 @@ func tick(delta: float, move: Vector2) -> void:
 
 
 func _tick_goose_mount_encounter(delta: float, move: Vector2) -> void:
+	if pond_story != null and pond_story.busy():
+		_goose_mount_wait = 0.0
+		return
 	const EVENT_ID := "goose_horse_mount"
 	var goose: FeltActor = actor_named("goose")
 	var horse: FeltActor = actor_named("horse")
@@ -605,7 +638,7 @@ func _tick_goose_mount_encounter(delta: float, move: Vector2) -> void:
 		return
 	if _goose_mount_phase < 0:
 		if EVENT_ID in collected or _day_elapsed < 45.0 or not move.is_zero_approx() or _leading or _has_walk_goal \
-				or not input_enabled or _player.carrying_grass or not _fish_carry_type.is_empty() or _fish_state != FISH_IDLE:
+				or not input_enabled or _player.carrying_grass or _millet_held or not _fish_carry_type.is_empty() or _fish_state != FISH_IDLE:
 			_goose_mount_wait = 0.0
 			return
 		var scene_center := (goose.position + horse.position) * 0.5
@@ -764,7 +797,7 @@ func _interact_with_target(target: String) -> void:
 		ground_food.pickup(int(target.get_slice(":", 1)))
 		return
 	if target == "grass":
-		if inventory_enabled and not _fish_carry_type.is_empty(): return
+		if inventory_enabled and ground_food != null and not ground_food.held().is_empty(): return
 		if _player.position.distance_to(_grass_point()) < 78.0 and not _player.carrying_grass:
 			_consume_pending_action()
 			if inventory_enabled:
@@ -859,6 +892,7 @@ func action_target_key(action: Dictionary) -> String:
 
 
 func cancel_scene_feedback() -> void:
+	if pond_story != null: pond_story.cancel()
 	_cancel_goose_mount_encounter()
 	_goose_mount_wait = 0.0
 	if _scene_feedback != null:
@@ -866,6 +900,7 @@ func cancel_scene_feedback() -> void:
 
 
 func request_primary_action() -> void:
+	if pond_story != null: pond_story.cancel()
 	if not input_enabled or inventory_busy or _player == null:
 		return
 	_cancel_goose_mount_encounter()
@@ -884,6 +919,7 @@ func request_primary_action() -> void:
 
 
 func request_pointer_action(point: Vector2) -> void:
+	if pond_story != null: pond_story.cancel()
 	if not input_enabled or _player == null:
 		return
 	_cancel_goose_mount_encounter()
@@ -1321,6 +1357,7 @@ func _tick_quiet_sky_look(delta: float, move: Vector2) -> void:
 		or _has_walk_goal
 		or move.length() > 0.2
 		or _player.carrying_grass
+		or _millet_held
 		or not _fish_carry_type.is_empty()
 		or _fish_state != FISH_IDLE
 		or not _pending_interaction.is_empty()
@@ -1513,6 +1550,9 @@ func _evaluate_expressions() -> void:
 	var used_owners: Dictionary = {}
 	for rule: Dictionary in ranked:
 		var owner := str(rule.get("owner", ""))
+		var participant := actor_named(owner)
+		if participant != null and participant.has_meta("pond_story"):
+			continue
 		if used_owners.has(owner):
 			continue
 		if not _rule_matches(rule, snapshot):
@@ -1765,6 +1805,7 @@ func _stop_leading_llama() -> void:
 
 
 func _tick_relationships(delta: float) -> void:
+	if pond_story != null and pond_story.busy(): return
 	var goose := actor_named("goose")
 	var llama := actor_named("llama")
 	if goose == null or llama == null or _relationship_encounter == null:
@@ -1912,7 +1953,8 @@ func _reel_in_fish() -> void:
 func sync_inventory(held: String, pending: bool, items: Array = []) -> void:
 	inventory_enabled = true
 	inventory_busy = pending
-	_fish_carry_type = held if held != "grass" else ""
+	_fish_carry_type = held if held in ["small", "medium", "odd"] else ""
+	_millet_held = held == "millet"
 	if _player != null: _player.sync_grass(held == "grass")
 	if ground_food != null: ground_food.sync_items(items)
 	_fish_carry_timer = 0.0

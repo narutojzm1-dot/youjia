@@ -64,6 +64,9 @@ var _basket_chip: Button
 var _basket_panel: Control
 var _residents: RefCounted
 var _inventory: RefCounted
+var _decor: RefCounted
+var _decor_panel: Control
+var _decor_camera: Dictionary = {}
 var _inventory_food_consumer := ""
 var _pause_button: Button
 var _action_button: Button
@@ -325,6 +328,22 @@ func _ready() -> void:
 	_basket_panel.close_requested.connect(_hide_basket)
 	_basket_panel.action_requested.connect(func(action: String, fish: String) -> void: _inventory.request(action, fish))
 	_basket_panel.retry_requested.connect(func() -> void: _inventory.retry())
+	_decor = load("res://scripts/inventory/yard_decor_controller.gd").new(SaveStore)
+	_decor.changed.connect(_on_decor_changed)
+	_decor.resubmitted.connect(_on_decor_resubmitted)
+	_decor_panel = load("res://scripts/ui/yard_decor_panel.gd").new()
+	_ui_layer.add_child(_decor_panel)
+	_decor_panel.visible = false
+	_decor_panel.close_requested.connect(_hide_decor)
+	_decor_panel.action_requested.connect(func(action: String, spot: String, details: Dictionary) -> void: _decor.request(action, spot, details))
+	_decor_panel.retry_requested.connect(func() -> void: _decor.retry())
+	_decor_panel.preview_changed.connect(func(spot: String, entry: Dictionary) -> void:
+		if _world != null and _decor_panel.visible: _world.decor_view.show_preview(spot, entry))
+	var decor_button: Button = _basket_panel._button()
+	decor_button.text = "把小物摆在院里"
+	decor_button.pressed.connect(_show_decor)
+	_basket_panel.rows.add_child(decor_button)
+	_basket_panel.decor_button = decor_button
 	I18n.locale_changed.connect(_on_locale_changed)
 	TuningStore.value_changed.connect(_on_tuning_value_changed)
 	resized.connect(_layout)
@@ -344,6 +363,14 @@ func _report_web_first_frame() -> void:
 
 
 func _process(delta: float) -> void:
+	if _decor_panel != null and _decor_panel.visible:
+		var preview_area: Rect2 = _decor_panel.preview_rect()
+		var zoom := clampf(minf(preview_area.size.x / 260.0, preview_area.size.y / 170.0), 0.2, 1.6)
+		_camera.zoom = Vector2.ONE * zoom
+		var focus: Vector2 = preload("res://scripts/inventory/yard_decor.gd").SPOTS[_decor_panel.selected]
+		_camera.position = focus + (get_viewport_rect().size * 0.5 - preview_area.get_center()) / zoom
+		_camera.force_update_scroll()
+		return
 	if _notice_time > 0.0 and _can_show_notice():
 		_notice_time = maxf(0.0, _notice_time - delta)
 	_sync_notice_visibility()
@@ -419,6 +446,17 @@ func _process(delta: float) -> void:
 
 
 func _input(event: InputEvent) -> void:
+	if _decor_panel != null and _decor_panel.visible:
+		if event.is_action_pressed("pause") and not event.is_echo():
+			_hide_decor()
+			get_viewport().set_input_as_handled()
+		elif event is InputEventScreenTouch or event is InputEventScreenDrag:
+			_last_touch_ms = Time.get_ticks_msec()
+			_decor_panel.handle_touch_event(event)
+			get_viewport().set_input_as_handled()
+		elif event is InputEventMouseButton and Time.get_ticks_msec() - _last_touch_ms < 400:
+			get_viewport().set_input_as_handled()
+		return
 	if _basket_panel != null and _basket_panel.visible:
 		if event.is_action_pressed("pause") and not event.is_echo():
 			_hide_basket()
@@ -1173,8 +1211,9 @@ func _start_holiday(save_progress: bool = true) -> void:
 	_world.fish_caught.connect(_on_fish_caught)
 	_world.ground_food_requested.connect(_on_ground_food_action)
 	_on_inventory_changed()
+	_on_decor_changed()
 	_on_residents_changed()
-	_residents._check_growth()
+	_residents.start_yard_residents()
 	_world.exploration_requested.connect(_on_exploration_requested)
 	_camera.enabled = true
 	_portrait_camera_x = _world.get_player().position.x
@@ -1237,6 +1276,7 @@ func _on_exploration_requested() -> void:
 	if _screen != "game" or _world == null or _exploration.is_exploring():
 		return
 	if _inventory != null and _inventory.busy(): return
+	if _decor != null and _decor.busy(): return
 	_world._save_progress()
 	var weather := "overcast" if _world.weather == "overcast" else "sunny"
 	_exploration.try_begin({"day": _world.holiday_day, "elapsed": _world._day_elapsed}, weather, null, _world.companion_context())
@@ -1326,7 +1366,50 @@ func _on_inventory_changed() -> void:
 	if _world != null:
 		_world.sync_inventory(str(inventory.get("held", "")), _inventory.busy() or inventory.is_empty(), inventory.get("ground", []))
 	if _basket_panel != null:
-		_basket_panel.update_view(inventory, SaveStore.get_keepsakes(), _inventory.state, _inventory.busy())
+		_basket_panel.update_view(inventory, SaveStore.get_available_keepsakes(), _inventory.state, _inventory.busy())
+		if _basket_panel.decor_button != null:
+			_basket_panel.decor_button.text = "Arrange finds in the yard" if I18n.get_locale() == "en" else "把小物摆在院里"
+			_basket_panel.decor_button.disabled = _inventory.busy()
+
+
+func _show_decor() -> void:
+	if _world == null or _inventory.busy(): return
+	_basket_panel.visible = false
+	_decor_panel.visible = true
+	_hud.visible = false
+	_notice.visible = false
+	_decor_camera = {"position": _camera.position, "zoom": _camera.zoom}
+	_on_decor_changed()
+	_decor_panel.choose_spot(_decor_panel.selected)
+	_decor_panel.close_button.grab_focus()
+
+
+func _hide_decor() -> void:
+	_decor_panel.visible = false
+	_decor_panel.draft.clear()
+	if _world != null: _world.decor_view.clear_preview()
+	if not _decor_camera.is_empty():
+		_camera.position = _decor_camera.position
+		_camera.zoom = _decor_camera.zoom
+		_camera.force_update_scroll()
+	_hud.visible = true
+	_show_basket()
+
+
+func _on_decor_changed() -> void:
+	if _decor == null: return
+	if _world != null: _world.decor_view.sync(_decor.view())
+	if _decor_panel != null:
+		_decor_panel.update_view(_decor.view(), SaveStore.get_available_keepsakes(), _decor.state, _decor.busy())
+	_on_inventory_changed()
+
+
+func _on_decor_resubmitted(failed_ops: Array, op_id: String) -> void:
+	var problems := {}
+	for failed_id in failed_ops:
+		if _save_problems.get(failed_id, {}).get("kind", "") == "decor":
+			problems[failed_id] = _save_problems[failed_id].duplicate(true)
+	if not problems.is_empty(): _save_retry_coverage[op_id] = {"problems": problems, "untracked_revision": -1}
 
 
 func _on_ground_food_action(action: String, kind: String, details: Dictionary, actor_id: String) -> void:
@@ -1389,6 +1472,9 @@ func _request_destructive_action(action: String) -> void:
 
 
 func _confirm_destructive_action() -> void:
+	if _decor != null and _decor.busy():
+		_cancel_destructive_action()
+		return
 	if _inventory != null and _inventory.busy():
 		_cancel_destructive_action()
 		return
@@ -1646,6 +1732,9 @@ func _retryable_save_problems(include_fish: bool) -> Dictionary:
 
 
 func _retry_save() -> void:
+	if _decor != null and _decor.busy() and _decor.state in ["failed", "unknown"]:
+		_decor.retry()
+		return
 	if _residents != null and _residents.busy() and _residents.state in ["failed", "unknown"]:
 		_residents.retry()
 		return
@@ -2007,7 +2096,7 @@ func _fit_notice() -> void:
 
 
 func _can_show_notice() -> bool:
-	return _screen == "game" and not _pause_screen.visible and not _album_screen.visible and not _confirm_screen.visible and not _basket_panel.visible
+	return _screen == "game" and not _pause_screen.visible and not _album_screen.visible and not _confirm_screen.visible and not _basket_panel.visible and (_decor_panel == null or not _decor_panel.visible)
 
 
 func _sync_notice_visibility() -> void:

@@ -146,6 +146,11 @@ static func sanitize(data: Variant) -> Dictionary:
 
 static func has_event_subject(snapshot: Dictionary, rule_id: String) -> bool:
 	if snapshot.is_empty(): return false
+	if rule_id in ["pond_hen_ride", "pond_goose_refused"]:
+		var cel := "turtle-hen-ride.png" if rule_id == "pond_hen_ride" else "goose-turtle-peck-miss.png"
+		for item: Dictionary in snapshot.get("items", []):
+			if item.get("kind", "") == "sprite" and str(item.get("texture", {}).get("path", "")).ends_with("/pond/" + cel): return true
+		return false
 	if rule_id in ["goose_pond_rest", "goose_duck_shore", "sheep_pair_near"]:
 		var seen: Dictionary = {}
 		for item: Dictionary in snapshot.get("items", []):
@@ -346,6 +351,9 @@ static func _event_frame(rule: Dictionary, actors: Dictionary, items: Array) -> 
 	var minimum := 220.0
 	var event_id := str(rule.get("id", ""))
 	match event_id:
+		"pond_hen_ride", "pond_goose_refused":
+			selected = ["turtle"]
+			minimum = 240.0
 		"llama_fed_gentle":
 			selected = ["player", "llama"]
 			minimum = 190.0

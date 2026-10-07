@@ -9,15 +9,15 @@ const STRAY_STOP := "village_stray"
 const TURTLE_STOP := "village_lake"
 
 static func empty() -> Dictionary:
-	return {"schema": 2, "revision": 0, "beibei": {"stage": "unmet", "adopted_clock": null}, "turtle": {"stage": "unmet", "found_trip": ""}}
+	return {"schema": 3, "revision": 0, "beibei": {"stage": "unmet", "adopted_clock": null}, "turtle": {"stage": "unmet", "found_trip": ""}, "chicken": {"stage": "unmet", "settled_clock": null}}
 
 static func read(snapshot: Dictionary) -> Dictionary:
 	if not snapshot.has(FIELD): return empty()
 	var raw: Variant = snapshot[FIELD]
 	if not raw is Dictionary or not raw.has_all(["schema", "revision", "beibei"]): return {}
-	if Contract.as_int(raw.schema, 1, 2) == null or Contract.as_int(raw.revision, 0, MAX_REVISION) == null: return {}
-	if raw.size() != (3 if int(raw.schema) == 1 else 4): return {}
-	if int(raw.schema) == 2:
+	if Contract.as_int(raw.schema, 1, 3) == null or Contract.as_int(raw.revision, 0, MAX_REVISION) == null: return {}
+	if raw.size() != int(raw.schema) + 2: return {}
+	if int(raw.schema) >= 2:
 		var turtle: Variant = raw.get("turtle")
 		if not turtle is Dictionary or turtle.size() != 2 or not turtle.has_all(["stage", "found_trip"]): return {}
 		if turtle.stage not in ["unmet", "found", "pond"] or not turtle.found_trip is String: return {}
@@ -29,14 +29,25 @@ static func read(snapshot: Dictionary) -> Dictionary:
 	if dog.stage == "unmet":
 		if dog.adopted_clock != null: return {}
 	elif _clock_seconds(dog.adopted_clock) < 0.0: return {}
-	if int(raw.schema) == 2 and raw.turtle.stage != "unmet" and dog.stage != "grown": return {}
+	if int(raw.schema) >= 2 and raw.turtle.stage != "unmet" and dog.stage != "grown": return {}
+	if int(raw.schema) == 3:
+		var chicken: Variant = raw.get("chicken")
+		if not chicken is Dictionary or chicken.size() != 2 or not chicken.has_all(["stage", "settled_clock"]): return {}
+		if chicken.stage not in ["unmet", "chick", "hen"]: return {}
+		if chicken.stage == "unmet":
+			if chicken.settled_clock != null: return {}
+		elif _clock_seconds(chicken.settled_clock) < 0.0: return {}
 	var result: Dictionary = raw.duplicate(true)
-	result.schema = 2
+	result.schema = 3
+	if not result.has("chicken"): result.chicken = empty().chicken
 	if not result.has("turtle"): result.turtle = empty().turtle
 	result.revision = int(raw.revision)
 	if result.beibei.adopted_clock != null:
 		result.beibei.adopted_clock.day = int(result.beibei.adopted_clock.day)
 		result.beibei.adopted_clock.elapsed = float(result.beibei.adopted_clock.elapsed)
+	if result.chicken.settled_clock != null:
+		result.chicken.settled_clock.day = int(result.chicken.settled_clock.day)
+		result.chicken.settled_clock.elapsed = float(result.chicken.settled_clock.elapsed)
 	return result
 
 ## Evaluate at the SaveStore queue head, against its authoritative snapshot.
@@ -59,6 +70,13 @@ static func transition(snapshot: Dictionary, revision: int, action: String) -> D
 			if seconds - _clock_seconds(residents.beibei.adopted_clock) < GROW_SECONDS:
 				return {"error": "RESIDENT_NOT_READY"}
 			residents.beibei.stage = "grown"
+		"settle_chick":
+			if residents.chicken.stage != "unmet": return {"error": "RESIDENT_ALREADY_HOME"}
+			residents.chicken = {"stage": "chick", "settled_clock": now.duplicate(true)}
+		"grow_chicken":
+			if residents.chicken.stage != "chick": return {"error": "RESIDENT_NOT_CHICK"}
+			if seconds - _clock_seconds(residents.chicken.settled_clock) < GROW_SECONDS: return {"error": "RESIDENT_NOT_READY"}
+			residents.chicken.stage = "hen"
 		"find_turtle":
 			if residents.turtle.stage == "pond": return {"error": "RESIDENT_ALREADY_HOME"}
 			if not turtle_encounter(snapshot, residents): return {"error": "RESIDENT_NOT_PRESENT"}

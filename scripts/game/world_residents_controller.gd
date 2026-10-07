@@ -9,6 +9,7 @@ var state := "idle"
 var pending: Dictionary = {}
 var _op_id := ""
 var _failed: Array = []
+var _yard_started := false
 
 func _init(save_store: Object) -> void:
 	store = save_store
@@ -58,10 +59,19 @@ func _confirmed(op_id: String, _kind: String) -> void:
 func _check_growth() -> void:
 	if busy(): return
 	var value := view()
-	if value.is_empty() or value.beibei.stage != "puppy": return
+	if value.is_empty(): return
+	if _yard_started and value.chicken.stage == "unmet":
+		request("settle_chick")
+		return
 	var now := {"day": store.get_holiday_day(), "elapsed": store.get_holiday_day_elapsed()}
-	if Model._clock_seconds(now) - Model._clock_seconds(value.beibei.adopted_clock) >= Model.GROW_SECONDS:
+	if value.beibei.stage == "puppy" and Model._clock_seconds(now) - Model._clock_seconds(value.beibei.adopted_clock) >= Model.GROW_SECONDS:
 		request("grow_beibei")
+	elif value.chicken.stage == "chick" and Model._clock_seconds(now) - Model._clock_seconds(value.chicken.settled_clock) >= Model.GROW_SECONDS:
+		request("grow_chicken")
+
+func start_yard_residents() -> void:
+	_yard_started = true
+	_check_growth()
 
 func _rejected(op_id: String, _kind: String, _code: String) -> void:
 	if op_id != _op_id: return
