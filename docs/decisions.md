@@ -1,5 +1,9 @@
 # 悠长的假期 — 产品决策与需求变更台账
 
+## 2026-10-07 WORLD-POND F2/F3发布闭环
+
+CODEX-LEAD完成PR520（鸡吃小米/成长）与PR522（鸡龟搭乘、大鹅请求被拒/啄空、两张现场照片）。F2 source eb0c65779298ae83210057869ac1b3b6bf9fb9c9，证据PR523；F3 source `a5713c05f2c50ef8390f7ef884e9f52dc80b2f38`，公开 `game-a5713c0`。均经完整CI、Web导出、Publish/Pages和公开PCK/十模块实物哈希核验。F3普通本地旧档自然到第30天触发并刷新留存照片；窄屏是iframe真实画布而非物理手机，日志异常与独立页未复现也如实保留。见[小米记录](playtests/2026-10-07-chick-millet/README.md)及[关系故事记录](playtests/2026-10-07-pond-relationships/README.md)。没有加入离线惩罚、强制喂养、伤害、交易或任意装饰；既有待办和23:00集中审查/日邮件仍独立，本次增量不重复10月6日日结。
+
 ## 2026-10-07 WORLD-POND F1发布闭环
 
 PR517最终head `970fbef9e8996c9eeea9216b0d203103ff14ce2e`，合入/公开source `f84f11d1753cc902d418a30185b84027c3f51ba6`。CI37546754470、Publish37547822659、Pages37548770063成功，公开PCK SHA256 `0fc26bf71d11a8f9045a56268280bba722bb014687a91557185bacc09be0ebdc` 与实际发布Git blob匹配，HTML和10存储模块一致。正式Web旧幼犬和松果档保留；完整成年同行找龟正向体验在普通本地档完成，两类证据分开记载。见[证据](playtests/2026-10-07-pond/README.md)。
