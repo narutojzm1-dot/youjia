@@ -10,7 +10,7 @@ Runtime: approach with the mouth offset instead of the body's centre; validate l
 
 Evidence: controlled-contact.png is an isolated native GPU rendering from the real ground-food runtime suite with controlled positions, not ordinary mouse play. Visible muzzle contacts the separate grass sprite.63 native ground-food checks (durable drop/consume/reload, competitors, pause, return home, gate cluster, duck bank and rope priority),8 cow-glance and416 generic checks pass. Initial metadata-property access was invalid; corrected to the actor's existing visual_scale metadata. Initial gate assertion compared body centre to food region; now checks the actual biting mouth enters that same region, retaining durable consumption and route checks. Earlier failing runs are not counted as passing.
 
-Still required: ordinary Web cow feeding acceptance, final CI and public package verification. Sheep/llama/duck/goose low-head food poses are separate remaining scope; this cow slice does not complete #504.
+Still required: final integrated CI and public package verification. Ordinary Web cow feeding is verified below. Sheep/llama/duck/goose low-head food poses are separate remaining scope; this cow slice does not complete #504.
 
 ## Additional compatibility verification
 
@@ -21,3 +21,13 @@ cow_ground_graze_suite:48 checks pass for both facings, reduced motion on/off an
 Additional isolated native GPU capture at the first actual cow grazing frame: controlled-contact-390.png (390×844) shows the complete painted cow touching the separate grass; controlled-contact-568.png (568×320) retains the pose but the ordinary drop notice obscures part of the animal. The controlled camera was centered on the cow for the portrait capture. These are responsive render checks, not physical phone or ordinary pointer acceptance. The capture process exited0 without engine errors, stopped after these images, and is not counted as another complete63-check run.
 
 Ordinary localhost Web old save entered day43 and naturally advanced to44. Mouse walking, collecting grass and three ground drops succeeded. Other animals continued moving and competing; the cow bite moment has not yet been captured, so disappearance alone is not accepted as cow feeding evidence. No storage injection or actor teleport was used in this ordinary session. Candidate PCK SHA256: `1a09136bec6f2047cfbdeb1b92b8e505d8c499c6e55ce72e8bcc698d881bbb59`. Production package verification remains pending.
+
+## Ordinary Web acceptance, day47
+
+On that same candidate, reopened the existing save and saw three grass bundles in the basket. Took one with the ordinary basket button, closed the panel, clicked the clear lawn in front of the cow, waited for the player to arrive, then used the visible drop button. Continuous full-viewport screenshots show the cow approaching, stopping and lowering its painted muzzle onto the separate grass, followed by the explicit cow-eaten notice. Sheep were present and competing; an earlier ordinary drop was won by a sheep. No save edits, actor teleport, forced winner or debug action was used.
+
+- `cow-ordinary-bite.jpeg`: ordinary1280×720 cow-mouth/grass contact, frame60 of the capture sequence.
+- `cow-ordinary-eaten.jpeg`: frame74, grass removed and cow consumption notice visible.
+- `cow-ordinary-reopened.jpeg`: actual tab close and new tab, day47, basket remains grass2, stone2, cone5, feather1, millet2, empty hands. No duplicate grass was returned by reopening.
+
+Integrated main `d4f29e371cd699ace745196cb0677306017fddac` afterward, retaining pause/paper UI changes and both test registrations. The ordinary screenshots precede that UI-only integration; integrated runtime regressions and final CI remain separate evidence. This does not certify physical-phone play or every competing animal's new art.
