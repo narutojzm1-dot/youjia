@@ -8,6 +8,7 @@ const SAVE_VERSION := 5
 const TUTORIAL_VERSION := 1
 const ExplorationContractType := preload("res://scripts/exploration/exploration_contract.gd")
 const MAX_KEEPSAKE_COUNT := 9999
+const WorldWeather := preload("res://scripts/game/world_weather.gd")
 
 static func defaults() -> Dictionary:
 	return {
@@ -19,6 +20,7 @@ static func defaults() -> Dictionary:
 		# 假期天数系统（v4 兼容新增字段）
 		"holiday_day": 1,
 		"holiday_day_elapsed": 0.0,
+		"world_weather": {},
 		# 植物床状态（0=空, 1=已种, 2=发芽, 3=开花）
 		"plant_state": 0,
 		"plant_day_planted": 0,
@@ -50,6 +52,7 @@ static func project(candidate: Dictionary) -> Dictionary:
 	# 读取假期进度（旧存档没有这些字段时用默认值）
 	data.holiday_day = maxi(1, int(candidate.get("holiday_day", 1)))
 	data.holiday_day_elapsed = maxf(0.0, float(candidate.get("holiday_day_elapsed", 0.0)))
+	data.world_weather = WorldWeather.sanitize(candidate.get("world_weather", {}))
 	data.plant_state = clampi(int(candidate.get("plant_state", 0)), 0, 3)
 	data.plant_day_planted = maxi(0, int(candidate.get("plant_day_planted", 0)))
 	data.plant_watered_day = int(candidate.get("plant_watered_day", -1))
