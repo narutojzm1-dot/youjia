@@ -60,6 +60,19 @@ run_godot suite test/ui_viewports.gd
 run_godot suite test/web_save_bridge/decoder_suite.gd
 run_godot suite test/web_save_bridge/legacy_suite.gd
 run_godot suite test/title_copy_balance_suite.gd
+run_godot suite test/touch_hint_mode_suite.gd
 node test/loading_shell_test.cjs
 
 node test/motion_preference_test.cjs
+
+run_godot suite test/album_caption_fit_suite.gd
+
+run_godot suite test/photo_arrival_shutter_fit_suite.gd
+
+run_godot suite test/exploration_basket_label_fit_suite.gd
+
+run_godot suite test/yard_basket_panel_fit_suite.gd
+
+run_godot suite test/confirm_panel_narrow_suite.gd
+
+run_godot suite test/find_reveal_name_slip_suite.gd

@@ -3,6 +3,14 @@ const OpenSourceLicenses = preload("res://scripts/manus/open_source_licenses.gd"
 const YardWorldType := preload("res://scripts/game/yard_world.gd")
 const TITLE_PAPER := preload("res://assets/holiday/ui/scrapbook_paper.png")
 const POLAROID := preload("res://assets/holiday/ui/polaroid_frame.png")
+## REQ-20261007-048 album polaroid caption, in 240×300 card units. RECT is the
+## original box; STRIP is the frame's whole bottom paper strip (PhotoArrival).
+const ALBUM_CAPTION_RECT := Rect2(24, 232, 192, 52)
+const ALBUM_CAPTION_STRIP := Rect2(24, 227, 192, 56)
+const ALBUM_CAPTION_MIN_FONT_SIZE := 12
+const ALBUM_CAPTION_TIGHT_LINE_SPACING := 0
+const ALBUM_CAPTION_BALANCE_MIN_WIDTH := 96.0
+const ALBUM_CAPTION_BALANCE_SLACK := 2.0
 
 const PAPER := Color("fff6e8")
 const INK := Color("5b4637")
@@ -16,6 +24,8 @@ const TEXT_LINK_HOVER := Color("3d2d23")
 const HINT_MIN_TEXT_HEIGHT := 32.0
 ## 「现在离开吗？」确认纸片的设计尺寸；屏幕更窄/更矮时按 _fit_confirm_panel() 收进屏内（REQ-20261005-030）。
 const CONFIRM_PANEL_SIZE := Vector2(420, 240)
+## 确认纸片两颗按钮的设计宽度（与 _soft_button 默认一致）；纸片内宽更窄时才收窄（REQ-20261007-052）。
+const CONFIRM_BUTTON_WIDTH := 260.0
 ## 屏高不超过这个值时（手机横屏扣掉浏览器地址栏、568×320 等）标题页改用更紧的排版（REQ-20261005-031）。
 const TITLE_TIGHT_MAX_HEIGHT := 360.0
 const ALBUM_TIGHT_MAX_HEIGHT := 360.0
@@ -1006,6 +1016,17 @@ func _fit_confirm_panel() -> void:
 	_confirm_panel.offset_right = panel_w * 0.5
 	_confirm_panel.offset_top = -panel_h * 0.5
 	_confirm_panel.offset_bottom = panel_h * 0.5
+	# REQ-20261007-052：两颗按钮最小 260 宽，加纸面左右各 16 内边距要 292；屏宽不足 316
+	# （如 280 / 300 宽竖屏）时纸片被按钮撑过「屏宽 − 24」，280 宽两边各伸出屏外 6px。
+	# 只在这种窄纸片上把按钮收到纸片内宽，仍 44 高、字号不变；内宽 ≥ 260 时一律保持 260。
+	var style := _confirm_panel.get_theme_stylebox("panel")
+	var inner_w := panel_w
+	if style != null:
+		inner_w -= style.get_margin(SIDE_LEFT) + style.get_margin(SIDE_RIGHT)
+	var button_w := minf(CONFIRM_BUTTON_WIDTH, floorf(inner_w))
+	for button in [_confirm_accept_button, _confirm_cancel_button]:
+		if button != null:
+			button.custom_minimum_size = Vector2(button_w, button.custom_minimum_size.y)
 
 
 func _build_album_screen() -> void:
@@ -1993,15 +2014,71 @@ func _photo_card(rule: Dictionary, owned: bool, width: float = 240.0, caption_on
 	if not caption_on_frame:
 		return holder
 	var caption := _label(maxi(12, roundi(13.0 * card_scale)), INK if owned else MUTED)
-	caption.position = Vector2(24, 232) * card_scale
-	caption.size = Vector2(192, 52) * card_scale
+	caption.position = ALBUM_CAPTION_RECT.position * card_scale
+	caption.size = ALBUM_CAPTION_RECT.size * card_scale
 	caption.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	caption.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	caption.text = (PhotoDiary.caption(moment, str(rule.get("id", "")))
 		if owned and not moment.is_empty() else
 		I18n.t(str(rule.get("title_key", ""))) if owned else I18n.t("album.empty_slot"))
+	_fit_album_caption(caption, card_scale)
 	holder.add_child(caption)
 	return holder
+
+
+## REQ-20261007-048: the album polaroid's caption ("Holiday day N" + moment)
+## must stay on the frame's bottom paper strip. Captions that fit on their own
+## lines keep the original 24,232 192×52 box, size and spacing untouched.
+## Otherwise use the whole strip (same 24,227 192×56 as PhotoArrival), centre
+## vertically, tighten line spacing, then step the size down to 12px, and
+## narrow the box to the same line count so no lone last word is left.
+func _fit_album_caption(caption: Label, card_scale: float) -> void:
+	var text := caption.text
+	var font := get_theme_font("font", "Label")
+	var spacing := get_theme_constant("line_spacing", "Label")
+	if text.is_empty() or font == null:
+		return
+	var base_size := caption.get_theme_font_size("font_size")
+	var original := ALBUM_CAPTION_RECT.size * card_scale
+	var paragraphs := text.split("\n").size()
+	var lines := PhotoArrival.caption_line_count(text, font, base_size, original.x)
+	if lines <= paragraphs and PhotoArrival.caption_height(font, base_size, spacing, lines) <= original.y:
+		return
+	var strip := Rect2(ALBUM_CAPTION_STRIP.position * card_scale, ALBUM_CAPTION_STRIP.size * card_scale)
+	var font_size := base_size
+	var line_spacing := spacing
+	for candidate in range(base_size, ALBUM_CAPTION_MIN_FONT_SIZE - 1, -1):
+		font_size = candidate
+		lines = PhotoArrival.caption_line_count(text, font, font_size, strip.size.x)
+		line_spacing = spacing
+		if PhotoArrival.caption_height(font, font_size, spacing, lines) <= strip.size.y:
+			break
+		line_spacing = mini(spacing, ALBUM_CAPTION_TIGHT_LINE_SPACING)
+		if PhotoArrival.caption_height(font, font_size, line_spacing, lines) <= strip.size.y:
+			break
+	var width := strip.size.x
+	if lines > paragraphs:
+		var lo := minf(strip.size.x, ALBUM_CAPTION_BALANCE_MIN_WIDTH * card_scale)
+		var hi := strip.size.x
+		if PhotoArrival.caption_line_count(text, font, font_size, lo) <= lines:
+			hi = lo
+		while hi - lo > 1.0:
+			var mid := (lo + hi) * 0.5
+			if PhotoArrival.caption_line_count(text, font, font_size, mid) <= lines:
+				hi = mid
+			else:
+				lo = mid
+		width = minf(strip.size.x, ceilf(hi) + ALBUM_CAPTION_BALANCE_SLACK)
+	if font_size != base_size:
+		caption.add_theme_font_size_override("font_size", font_size)
+	if line_spacing != spacing:
+		caption.add_theme_constant_override("line_spacing", line_spacing)
+	caption.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	caption.position = Vector2(strip.position.x + (strip.size.x - width) * 0.5, strip.position.y)
+	# Autowrap minimum height depends on width: set width, refresh, then height.
+	caption.size = Vector2(width, strip.size.y)
+	caption.update_minimum_size()
+	caption.size = Vector2(width, strip.size.y)
 
 
 ## Keep the unfocused composition's existing coverage, including letterboxing.

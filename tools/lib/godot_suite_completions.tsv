@@ -77,6 +77,7 @@ test/title_card_suite.gd	title_card suite: [1-9][0-9]* checks passed
 test/title_copy_balance_suite.gd	PASS: title_copy_balance [1-9][0-9]* checks
 test/title_licenses_link_contrast_suite.gd	PASS: title_licenses_link_contrast [1-9][0-9]* checks
 test/title_short_landscape_suite.gd	title_short_landscape suite: [1-9][0-9]* checks passed
+test/touch_hint_mode_suite.gd	PASS: touch_hint_mode [1-9][0-9]* checks
 test/ui_interaction_suite.gd	\[ui-interaction-tests\] checks=[1-9][0-9]* failures=\[\]
 test/ui_viewports.gd	\[viewport\] checks=[1-9][0-9]* failures=\[\]
 test/web_hidpi_suite.gd	web_hidpi: [1-9][0-9]* checks, 0 failures
@@ -104,3 +105,9 @@ test/chick_millet_model_suite.gd	CHICK_MILLET_MODEL checks=[1-9][0-9]* failures=
 test/chick_millet_integration_suite.gd	CHICK_MILLET_INTEGRATION checks=[1-9][0-9]* failures=0
 test/pond_story_sequence_suite.gd	POND_STORY_SEQUENCE: [1-9][0-9]* checks, 0 failures
 test/pond_story_integration_suite.gd	POND_STORY_INTEGRATION: [1-9][0-9]* checks, 0 failures
+test/album_caption_fit_suite.gd	PASS album_caption_fit_suite: [1-9][0-9]* checks
+test/photo_arrival_shutter_fit_suite.gd	\[photo-arrival-shutter-fit\] PASS: [1-9][0-9]* checks
+test/exploration_basket_label_fit_suite.gd	\[exploration-basket-label-fit\] PASS: [1-9][0-9]* checks
+test/yard_basket_panel_fit_suite.gd	\[yard-basket-panel-fit\] PASS: [1-9][0-9]* checks
+test/confirm_panel_narrow_suite.gd	\[confirm-panel-narrow\] PASS: [1-9][0-9]* checks
+test/find_reveal_name_slip_suite.gd	PASS find_reveal_name_slip_suite: [1-9][0-9]* checks
