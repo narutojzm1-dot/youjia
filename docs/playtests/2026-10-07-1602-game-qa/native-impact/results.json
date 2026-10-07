@@ -1,0 +1,42 @@
+{
+  "sourceSha": "02e3fd7153435afb04140a7b94603767f7e220da",
+  "startedUtc": "2026-10-07T08:10:58.622529+00:00",
+  "profileProbe": "D:/games/youjia-test/qa/native/2026-10-07-1602-impact/roaming/Godot/app_userdata/youjia-qa-profile-probe",
+  "engine": "D:/games/youjia-tmp-godot/Godot_v4.7.2-stable_win64_console.exe",
+  "tests": [
+    {
+      "entry": "import",
+      "exit": 0,
+      "summary": []
+    },
+    {
+      "entry": "yard_inventory",
+      "exit": 0,
+      "summary": [
+        "YARD_INVENTORY checks=53 failures=0"
+      ]
+    },
+    {
+      "entry": "yard_decor_integration",
+      "exit": 0,
+      "summary": [
+        "YARD_DECOR_INTEGRATION checks=44 failures=0"
+      ]
+    },
+    {
+      "entry": "yard_basket_integration",
+      "exit": 0,
+      "summary": [
+        "YARD_BASKET_INTEGRATION checks=66 failures=0"
+      ]
+    },
+    {
+      "entry": "beibei_integration",
+      "exit": 0,
+      "summary": [
+        "BEIBEI_INTEGRATION checks=46 failures=0"
+      ]
+    }
+  ],
+  "endedUtc": "2026-10-07T08:11:11.646982+00:00"
+}
