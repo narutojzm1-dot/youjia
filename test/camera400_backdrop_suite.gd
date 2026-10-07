@@ -42,7 +42,10 @@ func record_focus(at: Vector2, zoom: float) -> void:
 func fresh(dims: Vector2i, reduced: bool):
 	root.size = dims
 	await settle_layout()
+	check(await store.flush_pending(), "previous resident writes settle before fixture reset")
+	var residents: Dictionary = store.get_world_residents().duplicate(true)
 	store._data = store._default_data()
+	store._data["world_residents"] = residents
 	await main._start_holiday(false)
 	tuning.set_value("ui.reduced_motion", reduced)
 	var w = main._world

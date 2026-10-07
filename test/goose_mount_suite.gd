@@ -17,7 +17,10 @@ func check(ok: bool, label: String) -> void:
 		push_error(label)
 
 func fresh():
+	check(await store.flush_pending(), "previous resident writes settle before fixture reset")
+	var residents: Dictionary = store.get_world_residents().duplicate(true)
 	store._data = store._default_data()
+	store._data["world_residents"] = residents
 	await main._start_holiday()
 	var w = main._world
 	w._day_elapsed = 46.0
