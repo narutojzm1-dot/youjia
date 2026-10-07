@@ -70,14 +70,19 @@ func run() -> void:
 	w.debug_place_actor("goose", Vector2(370, 530))
 	for id: String in w._actors:
 		var animal = w.actor_named(id)
-		animal.posed = id not in ["chicken", "goose"]
-		if not animal.posed:
+		if id not in ["chicken", "goose"]:
+			# set_pose also sets state="pose". Merely setting posed=true still
+			# lets a graze/wander actor move, randomly blocking the goose on CI.
+			animal.set_pose(animal.position, animal._base_scale, animal.facing)
+		else:
+			animal.posed = false
 			animal.state = "graze"
 			animal._idle_time = 100.0
 	story.sequence.cooldown = 0.0
 	var phases: Array[String] = []
 	check(YardBodies.clear_at(hen.position, hen.body_radius * YardGround.depth_at(hen.position.y), w.physical_obstacles("chicken")), "walking fixture begins outside other animals")
 	check(YardBodies.clear_at(goose.position, goose.body_radius * YardGround.depth_at(goose.position.y), w.physical_obstacles("goose")), "goose fixture begins outside other animals")
+	check(YardBodies.clear_at(story.GOOSE_POINT, goose.body_radius * YardGround.depth_at(YardGround.NEAR_Y), w.physical_obstacles("goose")), "controlled goose destination is reachable before the arc")
 	var capture_dir := OS.get_environment("YOUJIA_CAPTURE_DIR")
 	if not capture_dir.is_empty(): DirAccess.make_dir_recursive_absolute(capture_dir)
 	for i in range(900):
@@ -124,5 +129,23 @@ func run() -> void:
 	print("POND_DISTANT phases=%s goose=%s" % [distant_phases, goose.position])
 	check([w.collected.count("pond_hen_ride"), w.collected.count("pond_goose_refused")] == story_counts, "repeat story does not duplicate its album rewards")
 	root.get_node("TuningStore").set_value("ui.reduced_motion", false, false)
+	# A genuinely occupied destination must time out and release ownership,
+	# rather than teleport the goose through the blocker or reward a missed act.
+	w.debug_place_actor("goose", Vector2(800, 490))
+	story.sequence.cooldown = 0.0
+	hen.state = "graze"
+	goose.state = "graze"
+	story.tick(0.1, Vector2.ZERO)
+	check(story.busy(), "blocked route fixture starts a new real encounter")
+	story.sequence.phase = "approach_goose"
+	story.sequence.elapsed = 0.0
+	w.actor_named("beibei").set_pose(story.GOOSE_POINT, w.actor_named("beibei")._base_scale, 1.0)
+	var blocked_start: Vector2 = goose.position
+	for i in range(355): story.tick(0.25, Vector2.ZERO)
+	check(story.sequence.phase == "approach_goose", "blocked goose never advances to refusal or peck before arriving")
+	for i in range(10): story.tick(0.25, Vector2.ZERO)
+	check(not story.busy() and story.borrowed.is_empty(), "occupied route times out and releases every participant")
+	check(goose.position == blocked_start, "blocked goose is not teleported onto another animal")
+	check([w.collected.count("pond_hen_ride"), w.collected.count("pond_goose_refused")] == story_counts, "blocked encounter creates no additional photos")
 	print("POND_STORY_INTEGRATION: %d checks, %d failures" % [checks, failed])
 	quit(0 if failed == 0 else 1)
