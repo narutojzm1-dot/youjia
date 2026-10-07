@@ -234,6 +234,7 @@ yard_basket_panel_fit|[yard-basket-panel-fit] PASS: 1 checks|[yard-basket-panel-
 confirm_panel_narrow|[confirm-panel-narrow] PASS: 1 checks|[confirm-panel-narrow] PASS: 0 checks
 find_reveal_name_slip|PASS find_reveal_name_slip_suite: 1 checks|PASS find_reveal_name_slip_suite: 0 checks
 ambience_output_ceiling|AMBIENCE_CEILING checks=1 failures=0|AMBIENCE_CEILING checks=0 failures=0
+yard_audio|YARD AUDIO PASS 1|YARD AUDIO PASS 0
 road_freedom|ROAD_FREEDOM checks=1 failures=0|ROAD_FREEDOM checks=0 failures=0
 yard_decor_button_states|[yard-decor-button-states] PASS: 1 checks|[yard-decor-button-states] PASS: 0 checks
 UI_COMPLETIONS
