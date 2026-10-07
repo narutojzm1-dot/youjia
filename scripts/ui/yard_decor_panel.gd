@@ -5,6 +5,7 @@ signal action_requested(action: String, spot: String, details: Dictionary)
 signal retry_requested
 const Model := preload("res://scripts/inventory/yard_decor.gd")
 var paper: PanelContainer
+var outer: VBoxContainer
 var column: VBoxContainer
 var scroll: ScrollContainer
 var status: Label
@@ -39,7 +40,7 @@ func _ready() -> void:
 	style.content_margin_bottom = 8
 	paper.add_theme_stylebox_override("panel", style)
 	add_child(paper)
-	var outer := VBoxContainer.new()
+	outer = VBoxContainer.new()
 	paper.add_child(outer)
 	status = Label.new()
 	status.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
@@ -125,14 +126,27 @@ func button(parent: Node, text: String, action: Callable) -> Button:
 	buttons.append(b)
 	return b
 
+# REQ-20261007-055: the paper used to always take its whole allowance (the full
+# screen height in landscape), so on a 1280x720 window the five rows sat at the
+# top and the close button at the bottom with ~420px of blank paper between.
+# It now hugs its rows; only when they don't fit does it stop at the old
+# allowance and scroll exactly as before.
 func fit() -> void:
 	if paper == null: return
-	if size.x > size.y:
-		paper.size = Vector2(minf(310, size.x * 0.48), size.y - 16)
-		paper.position = Vector2(size.x - paper.size.x - 8, 8)
-	else:
-		paper.size = Vector2(size.x - 16, minf(320, size.y * 0.48))
-		paper.position = Vector2(8, size.y - paper.size.y - 8)
+	var landscape := size.x > size.y
+	var width := minf(310, size.x * 0.48) if landscape else size.x - 16
+	var allowance := size.y - 16 if landscape else minf(320, size.y * 0.48)
+	var height := minf(allowance, content_height(width))
+	paper.size = Vector2(width, height)
+	paper.position = Vector2(size.x - paper.size.x - 8, 8) if landscape else Vector2(8, size.y - paper.size.y - 8)
+
+func content_height(width: float) -> float:
+	var frame := paper.get_theme_stylebox("panel").get_minimum_size()
+	# Wrap the status line at the width it will really get before measuring it.
+	status.size = Vector2(maxf(1.0, width - frame.x), status.size.y)
+	var gap := float(outer.get_theme_constant("separation"))
+	var rows := status.get_combined_minimum_size().y + column.get_combined_minimum_size().y + close_button.get_combined_minimum_size().y
+	return ceilf(frame.y + rows + gap * 2.0)
 
 func preview_rect() -> Rect2:
 	return Rect2(8, 8, paper.position.x - 16, size.y - 16) if size.x > size.y else Rect2(8, 8, size.x - 16, paper.position.y - 16)
