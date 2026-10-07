@@ -44,6 +44,7 @@ run_godot suite test/yard_decor_suite.gd
 run_godot suite test/yard_decor_persistence_suite.gd
 run_godot suite test/yard_decor_integration_suite.gd
 run_godot suite test/yard_decor_button_states_suite.gd
+run_godot suite test/yard_decor_panel_hug_suite.gd
 run_godot suite test/yard_ground_food_ledger_suite.gd
 run_godot suite test/yard_ground_food_runtime_suite.gd
 run_godot suite test/animal_companion_suite.gd
@@ -57,6 +58,7 @@ run_godot suite test/chick_millet_integration_suite.gd
 run_godot suite test/pond_story_sequence_suite.gd
 run_godot suite test/pond_story_integration_suite.gd
 run_godot suite test/yard_basket_integration_suite.gd
+run_godot suite test/yard_basket_button_states_suite.gd
 run_godot suite test/still_boundary_feedback_suite.gd
 run_godot suite test/pause_panel_fit_suite.gd
 run_godot suite test/ui_viewports.gd
