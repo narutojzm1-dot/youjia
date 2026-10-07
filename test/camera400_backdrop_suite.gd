@@ -75,7 +75,8 @@ func tick(moving := false) -> void:
 	main._camera.force_update_scroll()
 
 
-# Oracle describes the existing unfocused composition, not the new clamp.
+# Project the requested composition, then correct any uncovered playable edge.
+# Independent screen-space oracle for the full-frame contract from #535.
 func baseline_position() -> Vector2:
 	var dims: Vector2 = main.size
 	var zoom: float = main._camera.zoom.x
@@ -85,7 +86,18 @@ func baseline_position() -> Vector2:
 	if dims.x < 700.0 and dims.y > dims.x:
 		center.x = main._portrait_camera_x
 		follow = Vector2.ZERO
-	return center + follow + Vector2(0, hud / (2.0 * zoom))
+	var requested := center + follow + Vector2(0, hud / (2.0 * zoom))
+	var art := actual_art_rect()
+	var projected := Rect2((art.position - requested) * zoom + dims * 0.5, art.size * zoom)
+	if projected.position.x > 0.0:
+		requested.x += projected.position.x / zoom
+	elif projected.end.x < dims.x:
+		requested.x -= (dims.x - projected.end.x) / zoom
+	if projected.position.y > 0.0:
+		requested.y += projected.position.y / zoom
+	elif projected.end.y < dims.y - hud:
+		requested.y -= (dims.y - hud - projected.end.y) / zoom
+	return requested
 
 
 func actual_art_rect() -> Rect2:
@@ -98,10 +110,9 @@ func assert_frame_coverage() -> void:
 	var z: float = main._camera.zoom.x
 	var art := actual_art_rect()
 	var hud := 140.0 if dims.x < 700.0 else 76.0
-	var reference := Rect2((art.position - baseline_position()) * z + dims * 0.5, art.size * z)
-	var needed := reference.intersection(Rect2(Vector2.ZERO, Vector2(dims.x, maxf(0.0, dims.y - hud))))
+	var needed := Rect2(Vector2.ZERO, Vector2(dims.x, maxf(0.0, dims.y - hud)))
 	var actual := Rect2((art.position - main._camera.position) * z + dims * 0.5, art.size * z)
-	check(actual.grow(EPS).encloses(needed), "real camera introduces no paper outside baseline coverage")
+	check(actual.grow(EPS).encloses(needed), "real camera covers the entire playable frame without paper borders")
 	check(is_equal_approx(main._cam_zoom, 1.0) and is_equal_approx(main._cam_target_zoom, 1.0), "quiet never adds magnification")
 	# Real Camera2D canvas update and unchanged Main inverse input mapping.
 	var p: Vector2 = main._world.get_player().position
@@ -188,7 +199,7 @@ func run() -> void:
 	await settle_layout()
 	main.set_process(false)
 	for reduced: bool in [false, true]:
-		for dims: Vector2i in [Vector2i(390, 844), Vector2i(360, 640), Vector2i(568, 320), Vector2i(1280, 720)]:
+		for dims: Vector2i in [Vector2i(280, 844), Vector2i(390, 844), Vector2i(360, 640), Vector2i(568, 320), Vector2i(1280, 720), Vector2i(3440, 1440)]:
 			case_name = "idle_move/%s/reduced=%s" % [dims, reduced]
 			var w = await fresh(dims, reduced)
 			begin_quiet(w)
