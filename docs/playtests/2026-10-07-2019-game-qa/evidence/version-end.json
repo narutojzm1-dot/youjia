@@ -1,0 +1,651 @@
+{
+  "at": "2026-10-07",
+  "main": "cf7cf8cde2d921847c0646e575fb15fe71dc1de9",
+  "onlineReadOnlyDom": "game-d4f29e3",
+  "source": "d4f29e371cd699ace745196cb0677306017fddac",
+  "releases": [],
+  "tags": [],
+  "delta2bcToD4": {
+    "url": "https://api.github.com/repos/narutojzm1-dot/youjia/compare/2bc66558c1865efe549c7b8ab9464b8e7e72c5f7...d4f29e371cd699ace745196cb0677306017fddac",
+    "html_url": "https://github.com/narutojzm1-dot/youjia/compare/2bc66558c1865efe549c7b8ab9464b8e7e72c5f7...d4f29e371cd699ace745196cb0677306017fddac",
+    "permalink_url": "https://github.com/narutojzm1-dot/youjia/compare/narutojzm1-dot:2bc6655...narutojzm1-dot:d4f29e3",
+    "diff_url": "https://github.com/narutojzm1-dot/youjia/compare/2bc66558c1865efe549c7b8ab9464b8e7e72c5f7...d4f29e371cd699ace745196cb0677306017fddac.diff",
+    "patch_url": "https://github.com/narutojzm1-dot/youjia/compare/2bc66558c1865efe549c7b8ab9464b8e7e72c5f7...d4f29e371cd699ace745196cb0677306017fddac.patch",
+    "base_commit": {
+      "sha": "2bc66558c1865efe549c7b8ab9464b8e7e72c5f7",
+      "node_id": "C_kwDOU0hxntoAKDJiYzY2NTU4YzE4NjVlZmU1NDljN2I4YWI5NDY0YjhlN2U3MmM1Zjc",
+      "commit": {
+        "author": {
+          "name": "narutojzm1-dot",
+          "email": "narutojzm1@gmail.com",
+          "date": "2026-10-07T10:54:10Z"
+        },
+        "committer": {
+          "name": "GitHub",
+          "email": "noreply@github.com",
+          "date": "2026-10-07T10:54:10Z"
+        },
+        "message": "Merge pull request #551 from narutojzm1-dot/codex/lead-paper-controls-545-548\n\n[CODEX-LEAD][REQ-057/058] 集成探索按钮状态和背篓纸面滚动条",
+        "tree": {
+          "sha": "c3966f9a08c84251b8c3a5859b2257e90ffe56ed",
+          "url": "https://api.github.com/repos/narutojzm1-dot/youjia/git/trees/c3966f9a08c84251b8c3a5859b2257e90ffe56ed"
+        },
+        "url": "https://api.github.com/repos/narutojzm1-dot/youjia/git/commits/2bc66558c1865efe549c7b8ab9464b8e7e72c5f7",
+        "comment_count": 0,
+        "verification": {
+          "verified": true,
+          "reason": "valid",
+          "signature": "-----BEGIN PGP SIGNATURE-----\n\nwsFcBAABCAAQBQJqxiTSCRC1aQ7uu5UhlAAAg5AQADgqoQ1xocrKLFeG7y99Io1H\nOnRhnyzqgqDimNwdPge33mJ3CdNN7C1H3IXkjCZhgA6rEajMS+HT8m27tMlGfkOj\npK2QyEoQahaKnSvrfAN6EMU34ykqIATvZkvX+sEoDEdXMAQwtHGpgFYe/rBONKWN\nzk+OZPe/9mrCJ2JEYfuPnBhLqDIO5zojqSaocvXHEsxa3JHn2Ki0JPDwCWQryPuN\nXEQGlVzXbNg0MqkEbz1njlThTBepWwLRdGJeX+Sn5hIm8zBaAXfCLyk58Kx+sveG\n8scrBYheT1JWv/QXI+7o/Fo4YkDa4Ro6UnB4GZ1sEg5NzG7wTreRM/fDNHs1ARYX\n/8bDQht0AM6bacJJ9gcI/BDy+tJMOYgAVk7oEH5iTJzgeCZGChKO0DvzsbKP7VvZ\n2qzdMY97mjeqAjU7g3EzxhN82raVGLn8G2qpmnEXQoqSD0M9IXp9BSCj22Y6nrK1\nN/nR0Cb96izy2+rvAkEQzyiLEXQ2nuXq7++6TPckFChukAWd7SC1PgGartUZ+vEA\nnj0wEaeYErl03jry0H3OhJbA17Chk89jGe97lfORqKjtMBLQPiEroMau9mq3IZkY\ncchoAfZVPjd7eqCesBI+/En9jATeM59PRwSWY1i/tnma2EMifh4ENTAyCDg0ptQa\nUpZXgcx8YwDmvdJr53QI\n=YX8w\n-----END PGP SIGNATURE-----\n",
+          "payload": "tree c3966f9a08c84251b8c3a5859b2257e90ffe56ed\nparent d71ff1ec68529ae4fa520989542790cef5927d09\nparent 606e89ea6373790ee8dee3b2920c9e144befc7df\nauthor narutojzm1-dot <narutojzm1@gmail.com> 1791370450 +0800\ncommitter GitHub <noreply@github.com> 1791370450 +0800\n\nMerge pull request #551 from narutojzm1-dot/codex/lead-paper-controls-545-548\n\n[CODEX-LEAD][REQ-057/058] 集成探索按钮状态和背篓纸面滚动条",
+          "verified_at": "2026-10-07T10:54:11Z"
+        }
+      },
+      "url": "https://api.github.com/repos/narutojzm1-dot/youjia/commits/2bc66558c1865efe549c7b8ab9464b8e7e72c5f7",
+      "html_url": "https://github.com/narutojzm1-dot/youjia/commit/2bc66558c1865efe549c7b8ab9464b8e7e72c5f7",
+      "comments_url": "https://api.github.com/repos/narutojzm1-dot/youjia/commits/2bc66558c1865efe549c7b8ab9464b8e7e72c5f7/comments",
+      "author": {
+        "login": "narutojzm1-dot",
+        "id": 251535879,
+        "node_id": "U_kgDODv4iBw",
+        "avatar_url": "https://avatars.githubusercontent.com/u/251535879?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/narutojzm1-dot",
+        "html_url": "https://github.com/narutojzm1-dot",
+        "followers_url": "https://api.github.com/users/narutojzm1-dot/followers",
+        "following_url": "https://api.github.com/users/narutojzm1-dot/following{/other_user}",
+        "gists_url": "https://api.github.com/users/narutojzm1-dot/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/narutojzm1-dot/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/narutojzm1-dot/subscriptions",
+        "organizations_url": "https://api.github.com/users/narutojzm1-dot/orgs",
+        "repos_url": "https://api.github.com/users/narutojzm1-dot/repos",
+        "events_url": "https://api.github.com/users/narutojzm1-dot/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/narutojzm1-dot/received_events",
+        "type": "User",
+        "user_view_type": "public",
+        "site_admin": false
+      },
+      "committer": {
+        "login": "web-flow",
+        "id": 19864447,
+        "node_id": "MDQ6VXNlcjE5ODY0NDQ3",
+        "avatar_url": "https://avatars.githubusercontent.com/u/19864447?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/web-flow",
+        "html_url": "https://github.com/web-flow",
+        "followers_url": "https://api.github.com/users/web-flow/followers",
+        "following_url": "https://api.github.com/users/web-flow/following{/other_user}",
+        "gists_url": "https://api.github.com/users/web-flow/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/web-flow/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/web-flow/subscriptions",
+        "organizations_url": "https://api.github.com/users/web-flow/orgs",
+        "repos_url": "https://api.github.com/users/web-flow/repos",
+        "events_url": "https://api.github.com/users/web-flow/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/web-flow/received_events",
+        "type": "User",
+        "user_view_type": "public",
+        "site_admin": false
+      },
+      "parents": [
+        {
+          "sha": "d71ff1ec68529ae4fa520989542790cef5927d09",
+          "url": "https://api.github.com/repos/narutojzm1-dot/youjia/commits/d71ff1ec68529ae4fa520989542790cef5927d09",
+          "html_url": "https://github.com/narutojzm1-dot/youjia/commit/d71ff1ec68529ae4fa520989542790cef5927d09"
+        },
+        {
+          "sha": "606e89ea6373790ee8dee3b2920c9e144befc7df",
+          "url": "https://api.github.com/repos/narutojzm1-dot/youjia/commits/606e89ea6373790ee8dee3b2920c9e144befc7df",
+          "html_url": "https://github.com/narutojzm1-dot/youjia/commit/606e89ea6373790ee8dee3b2920c9e144befc7df"
+        }
+      ]
+    },
+    "merge_base_commit": {
+      "sha": "2bc66558c1865efe549c7b8ab9464b8e7e72c5f7",
+      "node_id": "C_kwDOU0hxntoAKDJiYzY2NTU4YzE4NjVlZmU1NDljN2I4YWI5NDY0YjhlN2U3MmM1Zjc",
+      "commit": {
+        "author": {
+          "name": "narutojzm1-dot",
+          "email": "narutojzm1@gmail.com",
+          "date": "2026-10-07T10:54:10Z"
+        },
+        "committer": {
+          "name": "GitHub",
+          "email": "noreply@github.com",
+          "date": "2026-10-07T10:54:10Z"
+        },
+        "message": "Merge pull request #551 from narutojzm1-dot/codex/lead-paper-controls-545-548\n\n[CODEX-LEAD][REQ-057/058] 集成探索按钮状态和背篓纸面滚动条",
+        "tree": {
+          "sha": "c3966f9a08c84251b8c3a5859b2257e90ffe56ed",
+          "url": "https://api.github.com/repos/narutojzm1-dot/youjia/git/trees/c3966f9a08c84251b8c3a5859b2257e90ffe56ed"
+        },
+        "url": "https://api.github.com/repos/narutojzm1-dot/youjia/git/commits/2bc66558c1865efe549c7b8ab9464b8e7e72c5f7",
+        "comment_count": 0,
+        "verification": {
+          "verified": true,
+          "reason": "valid",
+          "signature": "-----BEGIN PGP SIGNATURE-----\n\nwsFcBAABCAAQBQJqxiTSCRC1aQ7uu5UhlAAAg5AQADgqoQ1xocrKLFeG7y99Io1H\nOnRhnyzqgqDimNwdPge33mJ3CdNN7C1H3IXkjCZhgA6rEajMS+HT8m27tMlGfkOj\npK2QyEoQahaKnSvrfAN6EMU34ykqIATvZkvX+sEoDEdXMAQwtHGpgFYe/rBONKWN\nzk+OZPe/9mrCJ2JEYfuPnBhLqDIO5zojqSaocvXHEsxa3JHn2Ki0JPDwCWQryPuN\nXEQGlVzXbNg0MqkEbz1njlThTBepWwLRdGJeX+Sn5hIm8zBaAXfCLyk58Kx+sveG\n8scrBYheT1JWv/QXI+7o/Fo4YkDa4Ro6UnB4GZ1sEg5NzG7wTreRM/fDNHs1ARYX\n/8bDQht0AM6bacJJ9gcI/BDy+tJMOYgAVk7oEH5iTJzgeCZGChKO0DvzsbKP7VvZ\n2qzdMY97mjeqAjU7g3EzxhN82raVGLn8G2qpmnEXQoqSD0M9IXp9BSCj22Y6nrK1\nN/nR0Cb96izy2+rvAkEQzyiLEXQ2nuXq7++6TPckFChukAWd7SC1PgGartUZ+vEA\nnj0wEaeYErl03jry0H3OhJbA17Chk89jGe97lfORqKjtMBLQPiEroMau9mq3IZkY\ncchoAfZVPjd7eqCesBI+/En9jATeM59PRwSWY1i/tnma2EMifh4ENTAyCDg0ptQa\nUpZXgcx8YwDmvdJr53QI\n=YX8w\n-----END PGP SIGNATURE-----\n",
+          "payload": "tree c3966f9a08c84251b8c3a5859b2257e90ffe56ed\nparent d71ff1ec68529ae4fa520989542790cef5927d09\nparent 606e89ea6373790ee8dee3b2920c9e144befc7df\nauthor narutojzm1-dot <narutojzm1@gmail.com> 1791370450 +0800\ncommitter GitHub <noreply@github.com> 1791370450 +0800\n\nMerge pull request #551 from narutojzm1-dot/codex/lead-paper-controls-545-548\n\n[CODEX-LEAD][REQ-057/058] 集成探索按钮状态和背篓纸面滚动条",
+          "verified_at": "2026-10-07T10:54:11Z"
+        }
+      },
+      "url": "https://api.github.com/repos/narutojzm1-dot/youjia/commits/2bc66558c1865efe549c7b8ab9464b8e7e72c5f7",
+      "html_url": "https://github.com/narutojzm1-dot/youjia/commit/2bc66558c1865efe549c7b8ab9464b8e7e72c5f7",
+      "comments_url": "https://api.github.com/repos/narutojzm1-dot/youjia/commits/2bc66558c1865efe549c7b8ab9464b8e7e72c5f7/comments",
+      "author": {
+        "login": "narutojzm1-dot",
+        "id": 251535879,
+        "node_id": "U_kgDODv4iBw",
+        "avatar_url": "https://avatars.githubusercontent.com/u/251535879?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/narutojzm1-dot",
+        "html_url": "https://github.com/narutojzm1-dot",
+        "followers_url": "https://api.github.com/users/narutojzm1-dot/followers",
+        "following_url": "https://api.github.com/users/narutojzm1-dot/following{/other_user}",
+        "gists_url": "https://api.github.com/users/narutojzm1-dot/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/narutojzm1-dot/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/narutojzm1-dot/subscriptions",
+        "organizations_url": "https://api.github.com/users/narutojzm1-dot/orgs",
+        "repos_url": "https://api.github.com/users/narutojzm1-dot/repos",
+        "events_url": "https://api.github.com/users/narutojzm1-dot/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/narutojzm1-dot/received_events",
+        "type": "User",
+        "user_view_type": "public",
+        "site_admin": false
+      },
+      "committer": {
+        "login": "web-flow",
+        "id": 19864447,
+        "node_id": "MDQ6VXNlcjE5ODY0NDQ3",
+        "avatar_url": "https://avatars.githubusercontent.com/u/19864447?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/web-flow",
+        "html_url": "https://github.com/web-flow",
+        "followers_url": "https://api.github.com/users/web-flow/followers",
+        "following_url": "https://api.github.com/users/web-flow/following{/other_user}",
+        "gists_url": "https://api.github.com/users/web-flow/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/web-flow/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/web-flow/subscriptions",
+        "organizations_url": "https://api.github.com/users/web-flow/orgs",
+        "repos_url": "https://api.github.com/users/web-flow/repos",
+        "events_url": "https://api.github.com/users/web-flow/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/web-flow/received_events",
+        "type": "User",
+        "user_view_type": "public",
+        "site_admin": false
+      },
+      "parents": [
+        {
+          "sha": "d71ff1ec68529ae4fa520989542790cef5927d09",
+          "url": "https://api.github.com/repos/narutojzm1-dot/youjia/commits/d71ff1ec68529ae4fa520989542790cef5927d09",
+          "html_url": "https://github.com/narutojzm1-dot/youjia/commit/d71ff1ec68529ae4fa520989542790cef5927d09"
+        },
+        {
+          "sha": "606e89ea6373790ee8dee3b2920c9e144befc7df",
+          "url": "https://api.github.com/repos/narutojzm1-dot/youjia/commits/606e89ea6373790ee8dee3b2920c9e144befc7df",
+          "html_url": "https://github.com/narutojzm1-dot/youjia/commit/606e89ea6373790ee8dee3b2920c9e144befc7df"
+        }
+      ]
+    },
+    "status": "ahead",
+    "ahead_by": 4,
+    "behind_by": 0,
+    "total_commits": 4,
+    "commits": [
+      {
+        "sha": "89544c4fa3bf1554585a1418a0b07db5b22d479a",
+        "node_id": "C_kwDOU0hxntoAKDg5NTQ0YzRmYTNiZjE1NTQ1ODVhMTQxOGEwYjA3ZGI1YjIyZDQ3OWE",
+        "commit": {
+          "author": {
+            "name": "narutojzm1-dot",
+            "email": "narutojzm1@gmail.com",
+            "date": "2026-10-07T10:36:05Z"
+          },
+          "committer": {
+            "name": "narutojzm1-dot",
+            "email": "narutojzm1@gmail.com",
+            "date": "2026-10-07T10:36:05Z"
+          },
+          "message": "[GROK-CONTRIBUTOR] REQ-20261007-059 暂停纸片高屏贴合：套件与决策记录 (1/2)",
+          "tree": {
+            "sha": "0d66edc023592ef47466083647c3be435ae0c1fd",
+            "url": "https://api.github.com/repos/narutojzm1-dot/youjia/git/trees/0d66edc023592ef47466083647c3be435ae0c1fd"
+          },
+          "url": "https://api.github.com/repos/narutojzm1-dot/youjia/git/commits/89544c4fa3bf1554585a1418a0b07db5b22d479a",
+          "comment_count": 0,
+          "verification": {
+            "verified": false,
+            "reason": "unsigned",
+            "signature": null,
+            "payload": null,
+            "verified_at": null
+          }
+        },
+        "url": "https://api.github.com/repos/narutojzm1-dot/youjia/commits/89544c4fa3bf1554585a1418a0b07db5b22d479a",
+        "html_url": "https://github.com/narutojzm1-dot/youjia/commit/89544c4fa3bf1554585a1418a0b07db5b22d479a",
+        "comments_url": "https://api.github.com/repos/narutojzm1-dot/youjia/commits/89544c4fa3bf1554585a1418a0b07db5b22d479a/comments",
+        "author": {
+          "login": "narutojzm1-dot",
+          "id": 251535879,
+          "node_id": "U_kgDODv4iBw",
+          "avatar_url": "https://avatars.githubusercontent.com/u/251535879?v=4",
+          "gravatar_id": "",
+          "url": "https://api.github.com/users/narutojzm1-dot",
+          "html_url": "https://github.com/narutojzm1-dot",
+          "followers_url": "https://api.github.com/users/narutojzm1-dot/followers",
+          "following_url": "https://api.github.com/users/narutojzm1-dot/following{/other_user}",
+          "gists_url": "https://api.github.com/users/narutojzm1-dot/gists{/gist_id}",
+          "starred_url": "https://api.github.com/users/narutojzm1-dot/starred{/owner}{/repo}",
+          "subscriptions_url": "https://api.github.com/users/narutojzm1-dot/subscriptions",
+          "organizations_url": "https://api.github.com/users/narutojzm1-dot/orgs",
+          "repos_url": "https://api.github.com/users/narutojzm1-dot/repos",
+          "events_url": "https://api.github.com/users/narutojzm1-dot/events{/privacy}",
+          "received_events_url": "https://api.github.com/users/narutojzm1-dot/received_events",
+          "type": "User",
+          "user_view_type": "public",
+          "site_admin": false
+        },
+        "committer": {
+          "login": "narutojzm1-dot",
+          "id": 251535879,
+          "node_id": "U_kgDODv4iBw",
+          "avatar_url": "https://avatars.githubusercontent.com/u/251535879?v=4",
+          "gravatar_id": "",
+          "url": "https://api.github.com/users/narutojzm1-dot",
+          "html_url": "https://github.com/narutojzm1-dot",
+          "followers_url": "https://api.github.com/users/narutojzm1-dot/followers",
+          "following_url": "https://api.github.com/users/narutojzm1-dot/following{/other_user}",
+          "gists_url": "https://api.github.com/users/narutojzm1-dot/gists{/gist_id}",
+          "starred_url": "https://api.github.com/users/narutojzm1-dot/starred{/owner}{/repo}",
+          "subscriptions_url": "https://api.github.com/users/narutojzm1-dot/subscriptions",
+          "organizations_url": "https://api.github.com/users/narutojzm1-dot/orgs",
+          "repos_url": "https://api.github.com/users/narutojzm1-dot/repos",
+          "events_url": "https://api.github.com/users/narutojzm1-dot/events{/privacy}",
+          "received_events_url": "https://api.github.com/users/narutojzm1-dot/received_events",
+          "type": "User",
+          "user_view_type": "public",
+          "site_admin": false
+        },
+        "parents": [
+          {
+            "sha": "d71ff1ec68529ae4fa520989542790cef5927d09",
+            "url": "https://api.github.com/repos/narutojzm1-dot/youjia/commits/d71ff1ec68529ae4fa520989542790cef5927d09",
+            "html_url": "https://github.com/narutojzm1-dot/youjia/commit/d71ff1ec68529ae4fa520989542790cef5927d09"
+          }
+        ]
+      },
+      {
+        "sha": "77b6ea8fdb7dc27816ab1a7a47c7aedb86da8f3d",
+        "node_id": "C_kwDOU0hxntoAKDc3YjZlYThmZGI3ZGMyNzgxNmFiMWE3YTQ3YzdhZWRiODZkYThmM2Q",
+        "commit": {
+          "author": {
+            "name": "narutojzm1-dot",
+            "email": "narutojzm1@gmail.com",
+            "date": "2026-10-07T10:54:57Z"
+          },
+          "committer": {
+            "name": "narutojzm1-dot",
+            "email": "narutojzm1@gmail.com",
+            "date": "2026-10-07T10:54:57Z"
+          },
+          "message": "[GROK-CONTRIBUTOR] REQ-20261007-059 暂停纸片高屏也按内容贴合，不再压住底栏按钮 (2/2)",
+          "tree": {
+            "sha": "6793d50219d5733930eeba252b61bc1779ad23c8",
+            "url": "https://api.github.com/repos/narutojzm1-dot/youjia/git/trees/6793d50219d5733930eeba252b61bc1779ad23c8"
+          },
+          "url": "https://api.github.com/repos/narutojzm1-dot/youjia/git/commits/77b6ea8fdb7dc27816ab1a7a47c7aedb86da8f3d",
+          "comment_count": 0,
+          "verification": {
+            "verified": false,
+            "reason": "unsigned",
+            "signature": null,
+            "payload": null,
+            "verified_at": null
+          }
+        },
+        "url": "https://api.github.com/repos/narutojzm1-dot/youjia/commits/77b6ea8fdb7dc27816ab1a7a47c7aedb86da8f3d",
+        "html_url": "https://github.com/narutojzm1-dot/youjia/commit/77b6ea8fdb7dc27816ab1a7a47c7aedb86da8f3d",
+        "comments_url": "https://api.github.com/repos/narutojzm1-dot/youjia/commits/77b6ea8fdb7dc27816ab1a7a47c7aedb86da8f3d/comments",
+        "author": {
+          "login": "narutojzm1-dot",
+          "id": 251535879,
+          "node_id": "U_kgDODv4iBw",
+          "avatar_url": "https://avatars.githubusercontent.com/u/251535879?v=4",
+          "gravatar_id": "",
+          "url": "https://api.github.com/users/narutojzm1-dot",
+          "html_url": "https://github.com/narutojzm1-dot",
+          "followers_url": "https://api.github.com/users/narutojzm1-dot/followers",
+          "following_url": "https://api.github.com/users/narutojzm1-dot/following{/other_user}",
+          "gists_url": "https://api.github.com/users/narutojzm1-dot/gists{/gist_id}",
+          "starred_url": "https://api.github.com/users/narutojzm1-dot/starred{/owner}{/repo}",
+          "subscriptions_url": "https://api.github.com/users/narutojzm1-dot/subscriptions",
+          "organizations_url": "https://api.github.com/users/narutojzm1-dot/orgs",
+          "repos_url": "https://api.github.com/users/narutojzm1-dot/repos",
+          "events_url": "https://api.github.com/users/narutojzm1-dot/events{/privacy}",
+          "received_events_url": "https://api.github.com/users/narutojzm1-dot/received_events",
+          "type": "User",
+          "user_view_type": "public",
+          "site_admin": false
+        },
+        "committer": {
+          "login": "narutojzm1-dot",
+          "id": 251535879,
+          "node_id": "U_kgDODv4iBw",
+          "avatar_url": "https://avatars.githubusercontent.com/u/251535879?v=4",
+          "gravatar_id": "",
+          "url": "https://api.github.com/users/narutojzm1-dot",
+          "html_url": "https://github.com/narutojzm1-dot",
+          "followers_url": "https://api.github.com/users/narutojzm1-dot/followers",
+          "following_url": "https://api.github.com/users/narutojzm1-dot/following{/other_user}",
+          "gists_url": "https://api.github.com/users/narutojzm1-dot/gists{/gist_id}",
+          "starred_url": "https://api.github.com/users/narutojzm1-dot/starred{/owner}{/repo}",
+          "subscriptions_url": "https://api.github.com/users/narutojzm1-dot/subscriptions",
+          "organizations_url": "https://api.github.com/users/narutojzm1-dot/orgs",
+          "repos_url": "https://api.github.com/users/narutojzm1-dot/repos",
+          "events_url": "https://api.github.com/users/narutojzm1-dot/events{/privacy}",
+          "received_events_url": "https://api.github.com/users/narutojzm1-dot/received_events",
+          "type": "User",
+          "user_view_type": "public",
+          "site_admin": false
+        },
+        "parents": [
+          {
+            "sha": "89544c4fa3bf1554585a1418a0b07db5b22d479a",
+            "url": "https://api.github.com/repos/narutojzm1-dot/youjia/commits/89544c4fa3bf1554585a1418a0b07db5b22d479a",
+            "html_url": "https://github.com/narutojzm1-dot/youjia/commit/89544c4fa3bf1554585a1418a0b07db5b22d479a"
+          }
+        ]
+      },
+      {
+        "sha": "5f727525d9f77c0af82c661a1675d06346e326ff",
+        "node_id": "C_kwDOU0hxntoAKDVmNzI3NTI1ZDlmNzdjMGFmODJjNjYxYTE2NzVkMDYzNDZlMzI2ZmY",
+        "commit": {
+          "author": {
+            "name": "narutojzm1-dot",
+            "email": "narutojzm1@gmail.com",
+            "date": "2026-10-07T12:05:17Z"
+          },
+          "committer": {
+            "name": "narutojzm1-dot",
+            "email": "narutojzm1@gmail.com",
+            "date": "2026-10-07T12:05:17Z"
+          },
+          "message": "[CODEX-LEAD][REQ-059] Integrate Grok pause paper fit with ordinary Web evidence",
+          "tree": {
+            "sha": "2f549a85d24b0a21ec72728a8cba77cf31723432",
+            "url": "https://api.github.com/repos/narutojzm1-dot/youjia/git/trees/2f549a85d24b0a21ec72728a8cba77cf31723432"
+          },
+          "url": "https://api.github.com/repos/narutojzm1-dot/youjia/git/commits/5f727525d9f77c0af82c661a1675d06346e326ff",
+          "comment_count": 0,
+          "verification": {
+            "verified": false,
+            "reason": "unsigned",
+            "signature": null,
+            "payload": null,
+            "verified_at": null
+          }
+        },
+        "url": "https://api.github.com/repos/narutojzm1-dot/youjia/commits/5f727525d9f77c0af82c661a1675d06346e326ff",
+        "html_url": "https://github.com/narutojzm1-dot/youjia/commit/5f727525d9f77c0af82c661a1675d06346e326ff",
+        "comments_url": "https://api.github.com/repos/narutojzm1-dot/youjia/commits/5f727525d9f77c0af82c661a1675d06346e326ff/comments",
+        "author": {
+          "login": "narutojzm1-dot",
+          "id": 251535879,
+          "node_id": "U_kgDODv4iBw",
+          "avatar_url": "https://avatars.githubusercontent.com/u/251535879?v=4",
+          "gravatar_id": "",
+          "url": "https://api.github.com/users/narutojzm1-dot",
+          "html_url": "https://github.com/narutojzm1-dot",
+          "followers_url": "https://api.github.com/users/narutojzm1-dot/followers",
+          "following_url": "https://api.github.com/users/narutojzm1-dot/following{/other_user}",
+          "gists_url": "https://api.github.com/users/narutojzm1-dot/gists{/gist_id}",
+          "starred_url": "https://api.github.com/users/narutojzm1-dot/starred{/owner}{/repo}",
+          "subscriptions_url": "https://api.github.com/users/narutojzm1-dot/subscriptions",
+          "organizations_url": "https://api.github.com/users/narutojzm1-dot/orgs",
+          "repos_url": "https://api.github.com/users/narutojzm1-dot/repos",
+          "events_url": "https://api.github.com/users/narutojzm1-dot/events{/privacy}",
+          "received_events_url": "https://api.github.com/users/narutojzm1-dot/received_events",
+          "type": "User",
+          "user_view_type": "public",
+          "site_admin": false
+        },
+        "committer": {
+          "login": "narutojzm1-dot",
+          "id": 251535879,
+          "node_id": "U_kgDODv4iBw",
+          "avatar_url": "https://avatars.githubusercontent.com/u/251535879?v=4",
+          "gravatar_id": "",
+          "url": "https://api.github.com/users/narutojzm1-dot",
+          "html_url": "https://github.com/narutojzm1-dot",
+          "followers_url": "https://api.github.com/users/narutojzm1-dot/followers",
+          "following_url": "https://api.github.com/users/narutojzm1-dot/following{/other_user}",
+          "gists_url": "https://api.github.com/users/narutojzm1-dot/gists{/gist_id}",
+          "starred_url": "https://api.github.com/users/narutojzm1-dot/starred{/owner}{/repo}",
+          "subscriptions_url": "https://api.github.com/users/narutojzm1-dot/subscriptions",
+          "organizations_url": "https://api.github.com/users/narutojzm1-dot/orgs",
+          "repos_url": "https://api.github.com/users/narutojzm1-dot/repos",
+          "events_url": "https://api.github.com/users/narutojzm1-dot/events{/privacy}",
+          "received_events_url": "https://api.github.com/users/narutojzm1-dot/received_events",
+          "type": "User",
+          "user_view_type": "public",
+          "site_admin": false
+        },
+        "parents": [
+          {
+            "sha": "2bc66558c1865efe549c7b8ab9464b8e7e72c5f7",
+            "url": "https://api.github.com/repos/narutojzm1-dot/youjia/commits/2bc66558c1865efe549c7b8ab9464b8e7e72c5f7",
+            "html_url": "https://github.com/narutojzm1-dot/youjia/commit/2bc66558c1865efe549c7b8ab9464b8e7e72c5f7"
+          },
+          {
+            "sha": "77b6ea8fdb7dc27816ab1a7a47c7aedb86da8f3d",
+            "url": "https://api.github.com/repos/narutojzm1-dot/youjia/commits/77b6ea8fdb7dc27816ab1a7a47c7aedb86da8f3d",
+            "html_url": "https://github.com/narutojzm1-dot/youjia/commit/77b6ea8fdb7dc27816ab1a7a47c7aedb86da8f3d"
+          }
+        ]
+      },
+      {
+        "sha": "d4f29e371cd699ace745196cb0677306017fddac",
+        "node_id": "C_kwDOU0hxntoAKGQ0ZjI5ZTM3MWNkNjk5YWNlNzQ1MTk2Y2IwNjc3MzA2MDE3ZmRkYWM",
+        "commit": {
+          "author": {
+            "name": "narutojzm1-dot",
+            "email": "narutojzm1@gmail.com",
+            "date": "2026-10-07T12:20:15Z"
+          },
+          "committer": {
+            "name": "GitHub",
+            "email": "noreply@github.com",
+            "date": "2026-10-07T12:20:15Z"
+          },
+          "message": "Merge pull request #555 from narutojzm1-dot/codex/lead-pause-fit-552\n\n[CODEX-LEAD][REQ-059] 集成 Grok 暂停纸片高屏贴合及三尺寸实玩",
+          "tree": {
+            "sha": "2f549a85d24b0a21ec72728a8cba77cf31723432",
+            "url": "https://api.github.com/repos/narutojzm1-dot/youjia/git/trees/2f549a85d24b0a21ec72728a8cba77cf31723432"
+          },
+          "url": "https://api.github.com/repos/narutojzm1-dot/youjia/git/commits/d4f29e371cd699ace745196cb0677306017fddac",
+          "comment_count": 0,
+          "verification": {
+            "verified": true,
+            "reason": "valid",
+            "signature": "-----BEGIN PGP SIGNATURE-----\n\nwsFcBAABCAAQBQJqxjj/CRC1aQ7uu5UhlAAAoCQQAHw5n0DjBd1CAUk1K+Y3xZlR\njmR7/0XplERbS6tGwiou36rUTEY5kBEK6WRky2X+Lp05+atfHTQY2U8sEmm1KLZ8\nvy43eX5i6jDRdbGmoWfDDUNk+EBQdImZJKvYNL972jo99qbb00yb0RxRbG92vkqk\nJ3sCfo6EDXUAEiGd30QBR0OVgaMhin3VIs1+uS6yKpi5puY5CCXqZ1n13cfHsRcw\nsPTV0lZr/wOWdnhzKBmN9jR2nVsuUQh++BTuqnYzWfzPu6fxwTHyOzkbinUE+1I4\nM2KTjWozINQ7Rk9bW7OSAUMC+uxsOe8gklrD+OHnkuoJxpQWUvGpw6LrrGB94UVb\nVbFIZpNyhVN822ba0tAUaxtupwn9Dl10lyonmcFaBVh+c7Hlb1YR/KDum9srgHoc\nP/NiPcbycdywjRk54A6FJ9eBsw7OWH0+g62D7lh1jGqu0dHBZw+j9sRCM91I4LJn\njAcEZNJ1gSiRZUWosT00xy8wq/R/+/kz3UN+otHmTNkYMCHe+KX0pSkcWcvf1bnF\nzFAYEHzPf3TUDWS9quEqkI9fMRcsTuJAf70jBpqFe4+rtugRoYHVU4Szk0jIMDZ7\nbp4aQi9FiYo7Dc5H7sbArpU8MZPTYCvnAYT6Y0NXLWtnQAUFYclm2KvKjD6yfwCs\ndmQigWsS/CYQ7NC2gQV0\n=4BcD\n-----END PGP SIGNATURE-----\n",
+            "payload": "tree 2f549a85d24b0a21ec72728a8cba77cf31723432\nparent 2bc66558c1865efe549c7b8ab9464b8e7e72c5f7\nparent 5f727525d9f77c0af82c661a1675d06346e326ff\nauthor narutojzm1-dot <narutojzm1@gmail.com> 1791375615 +0800\ncommitter GitHub <noreply@github.com> 1791375615 +0800\n\nMerge pull request #555 from narutojzm1-dot/codex/lead-pause-fit-552\n\n[CODEX-LEAD][REQ-059] 集成 Grok 暂停纸片高屏贴合及三尺寸实玩",
+            "verified_at": "2026-10-07T12:20:16Z"
+          }
+        },
+        "url": "https://api.github.com/repos/narutojzm1-dot/youjia/commits/d4f29e371cd699ace745196cb0677306017fddac",
+        "html_url": "https://github.com/narutojzm1-dot/youjia/commit/d4f29e371cd699ace745196cb0677306017fddac",
+        "comments_url": "https://api.github.com/repos/narutojzm1-dot/youjia/commits/d4f29e371cd699ace745196cb0677306017fddac/comments",
+        "author": {
+          "login": "narutojzm1-dot",
+          "id": 251535879,
+          "node_id": "U_kgDODv4iBw",
+          "avatar_url": "https://avatars.githubusercontent.com/u/251535879?v=4",
+          "gravatar_id": "",
+          "url": "https://api.github.com/users/narutojzm1-dot",
+          "html_url": "https://github.com/narutojzm1-dot",
+          "followers_url": "https://api.github.com/users/narutojzm1-dot/followers",
+          "following_url": "https://api.github.com/users/narutojzm1-dot/following{/other_user}",
+          "gists_url": "https://api.github.com/users/narutojzm1-dot/gists{/gist_id}",
+          "starred_url": "https://api.github.com/users/narutojzm1-dot/starred{/owner}{/repo}",
+          "subscriptions_url": "https://api.github.com/users/narutojzm1-dot/subscriptions",
+          "organizations_url": "https://api.github.com/users/narutojzm1-dot/orgs",
+          "repos_url": "https://api.github.com/users/narutojzm1-dot/repos",
+          "events_url": "https://api.github.com/users/narutojzm1-dot/events{/privacy}",
+          "received_events_url": "https://api.github.com/users/narutojzm1-dot/received_events",
+          "type": "User",
+          "user_view_type": "public",
+          "site_admin": false
+        },
+        "committer": {
+          "login": "web-flow",
+          "id": 19864447,
+          "node_id": "MDQ6VXNlcjE5ODY0NDQ3",
+          "avatar_url": "https://avatars.githubusercontent.com/u/19864447?v=4",
+          "gravatar_id": "",
+          "url": "https://api.github.com/users/web-flow",
+          "html_url": "https://github.com/web-flow",
+          "followers_url": "https://api.github.com/users/web-flow/followers",
+          "following_url": "https://api.github.com/users/web-flow/following{/other_user}",
+          "gists_url": "https://api.github.com/users/web-flow/gists{/gist_id}",
+          "starred_url": "https://api.github.com/users/web-flow/starred{/owner}{/repo}",
+          "subscriptions_url": "https://api.github.com/users/web-flow/subscriptions",
+          "organizations_url": "https://api.github.com/users/web-flow/orgs",
+          "repos_url": "https://api.github.com/users/web-flow/repos",
+          "events_url": "https://api.github.com/users/web-flow/events{/privacy}",
+          "received_events_url": "https://api.github.com/users/web-flow/received_events",
+          "type": "User",
+          "user_view_type": "public",
+          "site_admin": false
+        },
+        "parents": [
+          {
+            "sha": "2bc66558c1865efe549c7b8ab9464b8e7e72c5f7",
+            "url": "https://api.github.com/repos/narutojzm1-dot/youjia/commits/2bc66558c1865efe549c7b8ab9464b8e7e72c5f7",
+            "html_url": "https://github.com/narutojzm1-dot/youjia/commit/2bc66558c1865efe549c7b8ab9464b8e7e72c5f7"
+          },
+          {
+            "sha": "5f727525d9f77c0af82c661a1675d06346e326ff",
+            "url": "https://api.github.com/repos/narutojzm1-dot/youjia/commits/5f727525d9f77c0af82c661a1675d06346e326ff",
+            "html_url": "https://github.com/narutojzm1-dot/youjia/commit/5f727525d9f77c0af82c661a1675d06346e326ff"
+          }
+        ]
+      }
+    ],
+    "files": [
+      {
+        "sha": "ca19da5047e5919241cb98cd9fbb414a629ebcd3",
+        "filename": "docs/decisions/REQ-20261007-059.md",
+        "status": "added",
+        "additions": 37,
+        "deletions": 0,
+        "changes": 37,
+        "blob_url": "https://github.com/narutojzm1-dot/youjia/blob/d4f29e371cd699ace745196cb0677306017fddac/docs%2Fdecisions%2FREQ-20261007-059.md",
+        "raw_url": "https://github.com/narutojzm1-dot/youjia/raw/d4f29e371cd699ace745196cb0677306017fddac/docs%2Fdecisions%2FREQ-20261007-059.md",
+        "contents_url": "https://api.github.com/repos/narutojzm1-dot/youjia/contents/docs%2Fdecisions%2FREQ-20261007-059.md?ref=d4f29e371cd699ace745196cb0677306017fddac",
+        "patch": "@@ -0,0 +1,37 @@\n+# REQ-20261007-059 竖屏/大屏暂停纸片也按内容贴合，不再压住底栏按钮\n+\n+- Agent-ID / Owner：GROK-CONTRIBUTOR（独立界面工作线自选 UI 小切片；依据 `docs/collaboration/team-focus-2026-10-06.md`「界面制作与修改，包括视觉样式和界面体验修订」）\n+- 日期：2026-10-07\n+- 状态：作者实现并自测；待 CODEX-LEAD 集中审查 / 合入（作者不合入、不发布）\n+- 基线：main `d71ff1ec68529ae4fa520989542790cef5927d09`（含 #549、#550）\n+- 前置：REQ-20261006-043（矮屏 < 500 高的暂停纸片按内容贴合，#492 已合入）\n+\n+## 问题\n+\n+REQ-043 只处理了矮横屏；竖屏和大屏（高 ≥ 500）的暂停纸片仍固定为 `min(620, 屏高 − 24)`：\n+\n+- 390×844：纸片 620px 高（y 112–732），单列内容连纸边距只有约 553px，标题上方和最后一个按钮下方各空出约 43px 纸；\n+- 纸片下端压住底栏「翻开手帐 / 大太阳 / 大背篓」一排按钮（y 720 起）的上沿约 12px，暂停时底栏看起来被切掉一截；\n+- 1280×720：纸片 620px（y 50–670），盖住底栏按钮（y 652 起）约 18px。\n+\n+## 决定\n+\n+高屏也按内容贴合：纸片高 = `min(620, 屏高 − 24, 内容 + 纸面上下内边距 + 2 × PAUSE_TALL_BREATH)`，`PAUSE_TALL_BREATH = 20`（矮屏仍是 14）。\n+\n+- 宽度 360、单列、居中、字号 26/16、按钮最小高 44、滑块高 32、中英文案、所有按钮行为都不变。\n+- `_on_pause_content_resized` 不再只在矮屏生效：语言切换、内容最小高变化后高屏同样重新贴合，宽度按矮/高屏各自规则传入。\n+- 结果：390×844 纸片 620 → 593px（y 125.5–718.5），底栏按钮与右上「假期第 N 天」小签都完整露出；412×915 同样不压底栏；1280×720 620 → 593px，与底栏重叠从约 18px 降到约 4.5px（内容本身约 553px，这一档不再强求完全不重叠）。\n+\n+## 改动范围\n+\n+- `scripts/main.gd`：新增常量 `PAUSE_TALL_BREATH` 及注释；`_on_pause_content_resized`、`_apply_pause_panel_size` 各改 2–3 行；`_pause_content_height` 注释。共 +11/−5，未碰 #542 改的 `_start_holiday` / 外出进出段落。\n+- `test/pause_panel_fit_suite.gd`：高屏分支由「高度保持 620」改为「贴合内容」，并加标题上方/末行下方留白上限、44px 按钮、390×844 与 412×915 纸片不盖住 HUD 小签与底栏按钮的检查。套件已在 daily 与 completions 中登记（REQ-043），无需新增登记。\n+- 本 PR 不改 `docs/requirements.md`（避开在途 PR 都要加行的登记文件），请合入方补一行：\n+  `| REQ-20261007-059 | 竖屏/大屏暂停纸片按内容贴合，不再压住底栏；宽度、单列、字号和按钮不变 | GROK-CONTRIBUTOR制作 / CODEX-LEAD集成 | 本地1291及暂停/音量/确认回归通过；Web实玩/发布接续 |`\n+\n+## 验收（作者自测，Godot 4.7.2 headless，逐套隔离 XDG）\n+\n+- `pause_panel_fit`：1291/1291 通过（中英 × 844×390、915×412、700×400、640×360、568×320、640×300、360×640、390×844、412×915、1280×720，以及暂停中连续改尺寸、切语言、继续待着）。同一套在未改动的 main 上 42/1291 失败（高屏 620 不贴合、留白超限、390×844 压住底栏）。\n+- 回归：`modal_touch_input` 270、`volume_slider_input` 267、`volume_slider_style` 708、`audio_button_input` 648、`soft_button_focus_contrast` 5080、`pause_notice` 168、`confirm_panel_fit` 562、`confirm_panel_narrow` 2225、`test_suite.tscn` 416，均通过。\n+- 本地 GPU 截图（390×844，未入库）：改前纸片下端盖住底栏一排按钮上沿；改后底栏三个按钮和「看看花箱」完整可见，纸片上下留白均匀。\n+- 未做：真实浏览器、手机。"
+      },
+      {
+        "sha": "d3f5a12faa99758192ecc4ed3fc22c9249232e86",
+        "filename": "docs/playtests/2026-10-07-pause-fit/.gdignore",
+        "status": "added",
+        "additions": 1,
+        "deletions": 0,
+        "changes": 1,
+        "blob_url": "https://github.com/narutojzm1-dot/youjia/blob/d4f29e371cd699ace745196cb0677306017fddac/docs%2Fplaytests%2F2026-10-07-pause-fit%2F.gdignore",
+        "raw_url": "https://github.com/narutojzm1-dot/youjia/raw/d4f29e371cd699ace745196cb0677306017fddac/docs%2Fplaytests%2F2026-10-07-pause-fit%2F.gdignore",
+        "contents_url": "https://api.github.com/repos/narutojzm1-dot/youjia/contents/docs%2Fplaytests%2F2026-10-07-pause-fit%2F.gdignore?ref=d4f29e371cd699ace745196cb0677306017fddac",
+        "patch": "@@ -0,0 +1 @@\n+\r"
+      },
+      {
+        "sha": "9e16b2e6a45f545ef0640a6f41d0df8459f4df2b",
+        "filename": "docs/playtests/2026-10-07-pause-fit/README.md",
+        "status": "added",
+        "additions": 13,
+        "deletions": 0,
+        "changes": 13,
+        "blob_url": "https://github.com/narutojzm1-dot/youjia/blob/d4f29e371cd699ace745196cb0677306017fddac/docs%2Fplaytests%2F2026-10-07-pause-fit%2FREADME.md",
+        "raw_url": "https://github.com/narutojzm1-dot/youjia/raw/d4f29e371cd699ace745196cb0677306017fddac/docs%2Fplaytests%2F2026-10-07-pause-fit%2FREADME.md",
+        "contents_url": "https://api.github.com/repos/narutojzm1-dot/youjia/contents/docs%2Fplaytests%2F2026-10-07-pause-fit%2FREADME.md?ref=d4f29e371cd699ace745196cb0677306017fddac",
+        "patch": "@@ -0,0 +1,13 @@\n+# Pause paper fit integration — CODEX-LEAD / GROK-CONTRIBUTOR\n+\n+Original implementation: PR552, `77b6ea8fdb7dc27816ab1a7a47c7aedb86da8f3d`; integrated with main `2bc66558c1865efe549c7b8ab9464b8e7e72c5f7`, preserving the author's commit. Runtime source in local merge `dd88fb41a54c7c5c01a25a31ab84a909dee76080`; subsequent changes only record requirements and evidence.\n+\n+Local isolated Godot4.7.2 checks passed: pause_panel_fit1291, modal_touch_input270, pause_notice168 and generic416. Web export exited0. Candidate PCK SHA256 `5b39e87c3fd0d5a949915ccdcb813d38c658ad3bb387894c34e56f3e65199369`.\n+\n+Ordinary browser, existing local day46 save, no state injection: entered at390×844, opened pause and resumed; switched to568×320, opened pause, opened restart confirmation and cancelled; music100%/ambience50% remained unchanged. While paused resized to1280×720 and resumed successfully. Screenshots are the ordinary page at these three viewport sizes, not physical phone tests.\n+\n+- `web-pause-390.jpeg`: panel fits above the bottom row, day label remains visible; single-column buttons and sliders readable.\n+- `web-pause-568.jpeg`, `web-cancel-568.jpeg`: short two-column layout retained; cancel returns to the same settings without resetting the save.\n+- `web-pause-1280.jpeg`: content fits and controls readable. The paper still overlaps the bottom basket's top edge by roughly4.5px; this is disclosed in the original design and is not claimed as zero overlap at all sizes. The underlying HUD is inactive while paused.\n+\n+Full integration CI and public source/PCK/HTML/save-module verification must pass before claiming this candidate publicly delivered. English layout is covered by the native suite; ordinary browser screenshots here are Chinese only. No music or cow candidate is included in this integration."
+      },
+      {
+        "sha": "0f607a0726ed952022b606158231eef0cab85e65",
+        "filename": "docs/playtests/2026-10-07-pause-fit/web-cancel-568.jpeg",
+        "status": "added",
+        "additions": 0,
+        "deletions": 0,
+        "changes": 0,
+        "blob_url": "https://github.com/narutojzm1-dot/youjia/blob/d4f29e371cd699ace745196cb0677306017fddac/docs%2Fplaytests%2F2026-10-07-pause-fit%2Fweb-cancel-568.jpeg",
+        "raw_url": "https://github.com/narutojzm1-dot/youjia/raw/d4f29e371cd699ace745196cb0677306017fddac/docs%2Fplaytests%2F2026-10-07-pause-fit%2Fweb-cancel-568.jpeg",
+        "contents_url": "https://api.github.com/repos/narutojzm1-dot/youjia/contents/docs%2Fplaytests%2F2026-10-07-pause-fit%2Fweb-cancel-568.jpeg?ref=d4f29e371cd699ace745196cb0677306017fddac"
+      },
+      {
+        "sha": "3be8ab43767fe776231c6661d20b5180361225fc",
+        "filename": "docs/playtests/2026-10-07-pause-fit/web-pause-1280.jpeg",
+        "status": "added",
+        "additions": 0,
+        "deletions": 0,
+        "changes": 0,
+        "blob_url": "https://github.com/narutojzm1-dot/youjia/blob/d4f29e371cd699ace745196cb0677306017fddac/docs%2Fplaytests%2F2026-10-07-pause-fit%2Fweb-pause-1280.jpeg",
+        "raw_url": "https://github.com/narutojzm1-dot/youjia/raw/d4f29e371cd699ace745196cb0677306017fddac/docs%2Fplaytests%2F2026-10-07-pause-fit%2Fweb-pause-1280.jpeg",
+        "contents_url": "https://api.github.com/repos/narutojzm1-dot/youjia/contents/docs%2Fplaytests%2F2026-10-07-pause-fit%2Fweb-pause-1280.jpeg?ref=d4f29e371cd699ace745196cb0677306017fddac"
+      },
+      {
+        "sha": "79f8612be59b3e8641c02e7f2770f7d494c6c930",
+        "filename": "docs/playtests/2026-10-07-pause-fit/web-pause-390.jpeg",
+        "status": "added",
+        "additions": 0,
+        "deletions": 0,
+        "changes": 0,
+        "blob_url": "https://github.com/narutojzm1-dot/youjia/blob/d4f29e371cd699ace745196cb0677306017fddac/docs%2Fplaytests%2F2026-10-07-pause-fit%2Fweb-pause-390.jpeg",
+        "raw_url": "https://github.com/narutojzm1-dot/youjia/raw/d4f29e371cd699ace745196cb0677306017fddac/docs%2Fplaytests%2F2026-10-07-pause-fit%2Fweb-pause-390.jpeg",
+        "contents_url": "https://api.github.com/repos/narutojzm1-dot/youjia/contents/docs%2Fplaytests%2F2026-10-07-pause-fit%2Fweb-pause-390.jpeg?ref=d4f29e371cd699ace745196cb0677306017fddac"
+      },
+      {
+        "sha": "0f607a0726ed952022b606158231eef0cab85e65",
+        "filename": "docs/playtests/2026-10-07-pause-fit/web-pause-568.jpeg",
+        "status": "added",
+        "additions": 0,
+        "deletions": 0,
+        "changes": 0,
+        "blob_url": "https://github.com/narutojzm1-dot/youjia/blob/d4f29e371cd699ace745196cb0677306017fddac/docs%2Fplaytests%2F2026-10-07-pause-fit%2Fweb-pause-568.jpeg",
+        "raw_url": "https://github.com/narutojzm1-dot/youjia/raw/d4f29e371cd699ace745196cb0677306017fddac/docs%2Fplaytests%2F2026-10-07-pause-fit%2Fweb-pause-568.jpeg",
+        "contents_url": "https://api.github.com/repos/narutojzm1-dot/youjia/contents/docs%2Fplaytests%2F2026-10-07-pause-fit%2Fweb-pause-568.jpeg?ref=d4f29e371cd699ace745196cb0677306017fddac"
+      },
+      {
+        "sha": "5959d9b8d61f844e14d659f7008c3b1f821d27c0",
+        "filename": "docs/requirements.md",
+        "status": "modified",
+        "additions": 4,
+        "deletions": 0,
+        "changes": 4,
+        "blob_url": "https://github.com/narutojzm1-dot/youjia/blob/d4f29e371cd699ace745196cb0677306017fddac/docs%2Frequirements.md",
+        "raw_url": "https://github.com/narutojzm1-dot/youjia/raw/d4f29e371cd699ace745196cb0677306017fddac/docs%2Frequirements.md",
+        "contents_url": "https://api.github.com/repos/narutojzm1-dot/youjia/contents/docs%2Frequirements.md?ref=d4f29e371cd699ace745196cb0677306017fddac",
+        "patch": "@@ -1,5 +1,9 @@\n # 需求列表\n \n+## 2026-10-07 暂停纸片高屏贴合（REQ-20261007-059）\n+\n+GROK-CONTRIBUTOR制作 / CODEX-LEAD集成；[原始切片](decisions/REQ-20261007-059.md)。竖屏和大屏按实际内容收紧暂停纸片，保留单列、字号和按钮尺寸；390×844、412×915不盖住底栏，1280×720减少重叠但仍约4.5px，不宣称所有尺寸完全不重叠。本地集成树1291布局、270输入、168提示及416通用回归通过，普通Web与发布验收见本轮记录；完整发布核验前保持候选。\n+\n ## 2026-10-07 用户实玩八项修订\n \n CODEX-LEAD接续[#535](https://github.com/narutojzm1-dot/youjia/issues/535)，[八项完整验收](decisions/PLAYTEST-20261007.md)为当前主线优先。环境声实际0.3上限由PR536发布game-cac442c，满幅/乘色首片由PR537发布game-8ad646e，两者完整CI、公开包及普通Web核验通过，未冒称扬声器听感/全天气夜间或物理手机已验。道路PR539完整CI37584564707通过并合入02e3fd7153435afb04140a7b94603767f7e220da，公开验收接续中。移动节奏/投食后自然回归及beibei、鸡的独立日常区域已实现，必要回归与普通Web证据见[本片记录](playtests/2026-10-07-yard-rhythm/README.md)，完整CI/公开验收前保持候选。两地音乐仍未完成，#504完整取食姿态顺延。"
+      },
+      {
+        "sha": "41a3ba9e557b327c312433bb558be16661bb0f7d",
+        "filename": "scripts/main.gd",
+        "status": "modified",
+        "additions": 11,
+        "deletions": 5,
+        "changes": 16,
+        "blob_url": "https://github.com/narutojzm1-dot/youjia/blob/d4f29e371cd699ace745196cb0677306017fddac/scripts%2Fmain.gd",
+        "raw_url": "https://github.com/narutojzm1-dot/youjia/raw/d4f29e371cd699ace745196cb0677306017fddac/scripts%2Fmain.gd",
+        "contents_url": "https://api.github.com/repos/narutojzm1-dot/youjia/contents/scripts%2Fmain.gd?ref=d4f29e371cd699ace745196cb0677306017fddac",
+        "patch": "@@ -913,6 +913,11 @@ func _build_pause_screen() -> void:\n ## 上下各 PAUSE_SHORT_BREATH 留白），仍不超过「屏高 − 24」并保持居中；宽度、字号、按钮、两列\n ## 分组与竖屏/大屏排版都不变（REQ-20261006-043）。\n const PAUSE_SHORT_BREATH := 14.0\n+## 竖屏/大屏原来固定 min(620, 屏高 − 24)：390×844 上纸片 620px 高、单列内容连纸边距约 553px，\n+## 标题上方和最后一个按钮下方各空出约 43px，纸片下端还压住底栏一排按钮的上沿。\n+## 现在高屏也按内容贴合，上下各留 PAUSE_TALL_BREATH；上限、居中、360 宽、单列、字号与按钮都不变\n+## （REQ-20261007-059）。\n+const PAUSE_TALL_BREATH := 20.0\n \n \n func _fit_pause_panel() -> void:\n@@ -948,22 +953,23 @@ func _fit_pause_panel() -> void:\n \n ## 矮屏改两列/切语言后子节点最小尺寸是延迟更新的，等内容最小高度真正变化时再贴合一次。\n func _on_pause_content_resized() -> void:\n-\tif _pause_panel == null or size.x < 64.0 or size.y < 64.0 or size.y >= 500.0:\n+\tif _pause_panel == null or size.x < 64.0 or size.y < 64.0:\n \t\treturn\n-\t_apply_pause_panel_size(minf(680.0, size.x - 24.0), minf(620.0, size.y - 24.0))\n+\tvar short := size.y < 500.0\n+\t_apply_pause_panel_size(minf(680.0 if short else 360.0, size.x - 24.0), minf(620.0, size.y - 24.0))\n \n \n func _apply_pause_panel_size(panel_w: float, panel_h: float) -> void:\n-\tif size.y < 500.0:\n-\t\tpanel_h = minf(panel_h, _pause_content_height() + PAUSE_SHORT_BREATH * 2.0)\n+\tvar breath := PAUSE_SHORT_BREATH if size.y < 500.0 else PAUSE_TALL_BREATH\n+\tpanel_h = minf(panel_h, _pause_content_height() + breath * 2.0)\n \t_pause_panel.custom_minimum_size = Vector2(panel_w, panel_h)\n \t_pause_panel.offset_left = -panel_w * 0.5\n \t_pause_panel.offset_right = panel_w * 0.5\n \t_pause_panel.offset_top = -panel_h * 0.5\n \t_pause_panel.offset_bottom = panel_h * 0.5\n \n \n-## 暂停纸片装下当前内容所需的最小高度（含纸面上下内边距），只用于矮屏贴合。\n+## 暂停纸片装下当前内容所需的最小高度（含纸面上下内边距），矮屏与高屏贴合共用。\n func _pause_content_height() -> float:\n \tvar height := _pause_box.get_combined_minimum_size().y\n \tvar style := _pause_panel.get_theme_stylebox(\"panel\")"
+      },
+      {
+        "sha": "8e261338b928d1a51316e8ad5fb8a225b35bb6e5",
+        "filename": "test/pause_panel_fit_suite.gd",
+        "status": "modified",
+        "additions": 24,
+        "deletions": 3,
+        "changes": 27,
+        "blob_url": "https://github.com/narutojzm1-dot/youjia/blob/d4f29e371cd699ace745196cb0677306017fddac/test%2Fpause_panel_fit_suite.gd",
+        "raw_url": "https://github.com/narutojzm1-dot/youjia/raw/d4f29e371cd699ace745196cb0677306017fddac/test%2Fpause_panel_fit_suite.gd",
+        "contents_url": "https://api.github.com/repos/narutojzm1-dot/youjia/contents/test%2Fpause_panel_fit_suite.gd?ref=d4f29e371cd699ace745196cb0677306017fddac",
+        "patch": "@@ -6,12 +6,23 @@ extends SceneTree\n ## above and below. It now hugs its content (content + paper padding + 14px\n ## breathing room top and bottom), still never exceeds \"screen height - 24\",\n ## stays centred, and keeps its width, fonts, buttons and two-column grouping.\n-## Portrait and large screens keep the original height min(620, h - 24).\n+##\n+## REQ-20261007-059: portrait and large screens used to keep a fixed\n+## min(620, h - 24). At 390x844 that was a 620px card around ~553px of\n+## single-column content (padding included), ~43px of empty paper above the\n+## title and below the last button, and the card's bottom pressed over the top\n+## of the bottom HUD row.\n+## Tall screens now hug too (content + padding + 20px top and bottom), still\n+## capped at min(620, h - 24), centred, 360 wide, single column, same fonts.\n \n const SHORT := [Vector2i(844, 390), Vector2i(915, 412), Vector2i(700, 400), Vector2i(640, 360), Vector2i(568, 320), Vector2i(640, 300)]\n const TALL := [Vector2i(360, 640), Vector2i(390, 844), Vector2i(412, 915), Vector2i(1280, 720)]\n const MARGIN := 12.0\n const BREATH := 14.0\n+const TALL_BREATH := 20.0\n+## Portrait screens with room for the hugged card must leave the HUD chips uncovered\n+## (1280x720 content alone is ~553px, so a few px of overlap with the bottom row remain there).\n+const HUD_CLEAR := [Vector2i(390, 844), Vector2i(412, 915)]\n const EPS := 0.51\n \n var checks := 0\n@@ -116,8 +127,18 @@ func _check_panel(dims: Vector2i, tag: String) -> void:\n \t\t_check(main._pause_title.get_theme_font_size(\"font_size\") == 18 and main._resume_button.get_theme_font_size(\"font_size\") == 13 and main._music_volume_label.get_theme_font_size(\"font_size\") == 12, \"%s: short font sizes unchanged (18/13/12)\" % tag)\n \t\t_check(main._resume_button.custom_minimum_size.y == 36.0 and main._resume_button.size.y >= 36.0 - EPS, \"%s: short buttons keep their 36px minimum (%.1f)\" % [tag, main._resume_button.size.y])\n \telse:\n-\t\tvar expected_tall := minf(620.0, dims.y - MARGIN * 2.0)\n-\t\t_check(absf(rect.size.y - expected_tall) <= EPS, \"%s: tall paper height %.1f == %.1f (unchanged)\" % [tag, rect.size.y, expected_tall])\n+\t\tvar expected_tall := minf(minf(620.0, dims.y - MARGIN * 2.0), content + TALL_BREATH * 2.0)\n+\t\t_check(absf(rect.size.y - expected_tall) <= EPS, \"%s: tall paper height %.1f hugs content (%.1f)\" % [tag, rect.size.y, expected_tall])\n+\t\tvar tall_gap_top := top - rect.position.y\n+\t\tvar tall_gap_bottom := rect.end.y - bottom\n+\t\t_check(tall_gap_top <= pad_top + TALL_BREATH + 2.0, \"%s: empty paper above the title %.1f <= %.1f (was ~43px at 390x844)\" % [tag, tall_gap_top, pad_top + TALL_BREATH + 2.0])\n+\t\t_check(tall_gap_bottom <= pad_bottom + TALL_BREATH + 2.0, \"%s: empty paper below the last control %.1f stays small\" % [tag, tall_gap_bottom])\n+\t\tif dims in HUD_CLEAR:\n+\t\t\tfor chip: Control in [main._day_label, main._pause_button, main._album_chip, main._weather_chip, main._basket_chip, main._action_button]:\n+\t\t\t\tif chip != null and chip.is_visible_in_tree():\n+\t\t\t\t\tvar c := chip.get_global_rect()\n+\t\t\t\t\t_check(not rect.intersects(c), \"%s: paper %s leaves HUD %s %s uncovered\" % [tag, rect, chip.name, c])\n+\t\t_check(main._resume_button.custom_minimum_size.y == 44.0, \"%s: tall buttons keep their 44px minimum\" % tag)\n \t\t_check(not main._pause_audio.visible and main._music_toggle.get_parent() == main._pause_session, \"%s: single column kept\" % tag)\n \t\t_check(main._pause_title.get_theme_font_size(\"font_size\") == 26 and main._resume_button.get_theme_font_size(\"font_size\") == 16, \"%s: tall font sizes unchanged (26/16)\" % tag)\n \t_check(main._pause_title.text == i18n.t(\"pause.title\") and main._resume_button.text == i18n.t(\"pause.resume\"), \"%s: copy unchanged\" % tag)"
+      }
+    ]
+  }
+}
