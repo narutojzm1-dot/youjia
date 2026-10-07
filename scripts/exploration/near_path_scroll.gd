@@ -459,6 +459,12 @@ func _unhandled_input(event: InputEvent) -> void:
 		pressed = event.pressed and not event.canceled
 		_last_touch_ms = Time.get_ticks_msec()
 	elif event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
+		# Godot can dispatch the mouse synthesized from a touch first. Let the
+		# real touch own this gesture, so returning cannot expose yard controls
+		# before its matching touch press arrives.
+		if event.device == InputEvent.DEVICE_ID_EMULATION:
+			get_viewport().set_input_as_handled()
+			return
 		if Time.get_ticks_msec() - _last_touch_ms < TOUCH_DEDUPE_MS:
 			get_viewport().set_input_as_handled()
 			return
@@ -471,8 +477,8 @@ func _unhandled_input(event: InputEvent) -> void:
 		press_at(point)
 
 
-## 屏幕坐标的一次按下：先命中按钮；观察态里其余位置不走路（计数，免得误以为卡住时再提示）；
-## 其余点按沿路走到离按下处最近的路面；点在院门一带（NearPathLayout.is_home_tap），走到门口就回院
+## 屏幕坐标的一次按下：先命中按钮，观察态点地直接继续；
+## 物品点击走近拾取，其余点击沿道路走到近处；点院门走到门口回院
 func press_at(point: Vector2) -> void:
 	for button: Button in [_return_button, _pause_button, _look_button, _pick_button, _go_button]:
 		if button.is_visible_in_tree() and button.get_global_rect().has_point(point):

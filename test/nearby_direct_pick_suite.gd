@@ -29,6 +29,7 @@ func run() -> void:
 	for view_size: Vector2i in [Vector2i(390, 844), Vector2i(844, 390), Vector2i(1280, 720)]:
 		await _scene(seed_value, view_size)
 	await _pending_and_failure(seed_value)
+	await _return_input()
 	print("NEARBY_DIRECT_PICK checks=", checks, " failures=", failures.size())
 	quit(0 if failures.is_empty() else 1)
 
@@ -124,6 +125,56 @@ func _scene(seed_value: int, view_size: Vector2i) -> void:
 	scroll.queue_free()
 	store.queue_free()
 	await process_frame
+
+# Dispatch through the real Main/Viewport. Web touch may synthesize its mouse
+# press first; that press must not reveal the yard before the touch follows.
+func _return_input() -> void:
+	var main = load("res://scenes/main.tscn").instantiate()
+	root.add_child(main)
+	await process_frame
+	await process_frame
+	await root.get_node("SaveStore").flush_pending()
+	await main._start_holiday(false)
+	main.set_process(false)
+	for dims: Vector2i in [Vector2i(390, 844), Vector2i(844, 390), Vector2i(1280, 720)]:
+		root.size = dims
+		main.size = dims
+		main._layout()
+		await process_frame
+		for mode: String in ["mouse_first", "touch_first", "mouse_only", "touch_only"]:
+			await root.get_node("SaveStore").flush_pending()
+			check(main._exploration.try_begin(CLOCK, "sunny"), "return input opens scene " + mode)
+			await process_frame
+			var point: Vector2 = main._exploration.scroll._return_button.get_global_rect().get_center()
+			main._last_touch_ms = -10000
+			if mode in ["mouse_first", "mouse_only"]: _mouse(point, true, mode != "mouse_only")
+			if mode != "mouse_only": _touch(point, true)
+			if mode == "touch_first": _mouse(point, true, true)
+			if mode != "touch_only": _mouse(point, false, mode != "mouse_only")
+			if mode != "mouse_only": _touch(point, false)
+			check(main._screen == "game" and main._exploration.scroll == null, "one gesture returns exactly once " + mode)
+			check(not main._pause_screen.visible and not paused and main._world.input_enabled, "return gesture cannot hit newly visible pause " + mode)
+			# Failure cleanup only: keep the next independent case runnable.
+			if main._pause_screen.visible: main._toggle_pause()
+			await process_frame
+			await process_frame
+	main.queue_free()
+	await process_frame
+
+func _mouse(point: Vector2, down: bool, emulated: bool) -> void:
+	var event := InputEventMouseButton.new()
+	event.position = point
+	event.global_position = point
+	event.button_index = MOUSE_BUTTON_LEFT
+	event.pressed = down
+	event.device = InputEvent.DEVICE_ID_EMULATION if emulated else 0
+	root.push_input(event, true)
+
+func _touch(point: Vector2, down: bool) -> void:
+	var event := InputEventScreenTouch.new()
+	event.position = point
+	event.pressed = down
+	root.push_input(event, true)
 
 func _pending_and_failure(seed_value: int) -> void:
 	var context := _new_scene(seed_value)
