@@ -21,6 +21,10 @@ const APRICOT := Color("f3b27a")
 const CREAM := Color("fffaf1")
 const DISABLED_FILL := Color("f3e9db")
 const DISABLED_EDGE := Color("bfa588")
+# 点按回应：画卷按钮不接鼠标事件（点按统一走 press_at），Godot 的按下态永远不会出现；
+# 点中可用按钮时短暂换成按下的杏纸 f3d3ae + 墨色 2px 边，手指一点就知道点到了
+const TAP_FILL := Color("f3d3ae")
+const TAP_SECONDS := 0.14
 const TOUCH_DEDUPE_MS := 400
 const BASKET_LABEL_AT := Vector2(84, 46)
 const BASKET_LABEL_WIDTH := 200.0
@@ -58,6 +62,8 @@ var _cam_pos := Vector2.ZERO
 var _caption_time := 0.0
 var _search_started := false
 var _hidden_caption_dirty := false
+# 正在显示点按回应的按钮 → 剩余秒数
+var _tap_flash: Dictionary = {}
 
 var _place_label: Label
 var _caption: Label
@@ -121,6 +127,7 @@ func setup(trip_host: ExplorationHost, _weather: String, resident_controller: Re
 
 
 func release() -> void:
+	settle_tap_flash()
 	_cancel_search()
 	if reveal != null:
 		reveal.settle(true)
@@ -139,6 +146,7 @@ func _notification(what: int) -> void:
 	if what in [NOTIFICATION_PAUSED, NOTIFICATION_APPLICATION_FOCUS_OUT, NOTIFICATION_WM_WINDOW_FOCUS_OUT]:
 		_cancel_search()
 		walk_target = {}
+		settle_tap_flash()
 		if reveal != null:
 			reveal.settle(true)
 
@@ -163,6 +171,7 @@ func foot() -> Vector2:
 
 
 func _process(delta: float) -> void:
+	_tick_tap_flash(delta)
 	if leaving:
 		return
 	var direction := Vector2.ZERO
@@ -428,7 +437,9 @@ func _unhandled_input(event: InputEvent) -> void:
 func press_at(point: Vector2) -> void:
 	for button: Button in [_return_button, _pause_button, _look_button, _pick_button, _go_button]:
 		if button.is_visible_in_tree() and button.get_global_rect().has_point(point):
-			if not button.disabled: button.pressed.emit()
+			if not button.disabled:
+				flash_tap(button)
+				button.pressed.emit()
 			return
 	if not observing.is_empty():
 		suppressed_touches += 1
@@ -876,6 +887,45 @@ static func button_style(state: String) -> StyleBoxFlat:
 	style.set_border_width_all(2)
 	style.set_corner_radius_all(16)
 	return style
+
+
+## 点按回应的底：按下的杏纸 + 墨色边；边宽、圆角、内容边距与可用底相同，按钮不跳大小
+static func tap_style() -> StyleBoxFlat:
+	var style := button_style("normal")
+	style.bg_color = TAP_FILL
+	style.border_color = INK
+	return style
+
+
+## 点中可用按钮：TAP_SECONDS 内把 normal 底换成 tap_style，到时换回；不改按钮文字、大小和点按逻辑
+func flash_tap(button: Button) -> void:
+	if button == null:
+		return
+	button.add_theme_stylebox_override("normal", tap_style())
+	_tap_flash[button] = TAP_SECONDS
+
+
+func tap_flashing(button: Button) -> bool:
+	return _tap_flash.has(button)
+
+
+func _tick_tap_flash(delta: float) -> void:
+	for button: Variant in _tap_flash.keys():
+		_tap_flash[button] -= delta
+		if _tap_flash[button] <= 0.0 or not is_instance_valid(button):
+			_end_tap_flash(button)
+
+
+## 暂停、失焦、离开时立刻收回点按回应，回来时按钮不停在按下的样子
+func settle_tap_flash() -> void:
+	for button: Variant in _tap_flash.keys():
+		_end_tap_flash(button)
+
+
+func _end_tap_flash(button: Variant) -> void:
+	_tap_flash.erase(button)
+	if is_instance_valid(button):
+		(button as Button).add_theme_stylebox_override("normal", button_style("normal"))
 
 
 func _button(text: String, action: Callable) -> Button:
