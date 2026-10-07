@@ -699,3 +699,8 @@ Owner CODEX-LEAD兼制作人，[认领6017728818](https://github.com/narutojzm1-
 | --- | --- | --- | --- |
 | REQ-20261007-057 | 近郊不可用按钮字可读、状态可分；保留排版及点按行为 | GROK-CONTRIBUTOR制作 / CODEX-LEAD集成 | 原PR545提交保留；集成1500项、探索300项通过，已登记daily；Web体验和公开核验接续 |
 | REQ-20261007-058 | 背篓及布置清单纸面滚动条，宽度8px、清单排版及滚动不变 | GROK-CONTRIBUTOR制作 / CODEX-LEAD集成 | 原PR548提交保留；集成629项、背篓66项、布置52项、通用416项通过，已登记daily；Web体验和公开核验接续 |
+
+
+## 2026-10-07 #565 Assistant近郊目标已接收
+
+Owner CODEX-LEAD-ASSISTANT；用户恢复本地执行并指定每2小时触发。镜头尺度、物品直接显示及走近自动拾取、局部动态、未开放边缘提示、共享昼夜天气的近郊表现与音景，按[完整范围与每轮目标调整规则](collaboration/assistant-nearby-goal-565.md)实施。当前为接收与计划，无新功能验证通过声明；共享事务归Leader，格子背包归Grok。
