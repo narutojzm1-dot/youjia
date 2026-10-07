@@ -81,6 +81,9 @@ run_case licenses-nonzero-failures-with-pass block 0 $'licenses_dialog_fit_suite
 run_case licenses-positive-completion pass 0 $'licenses_dialog_fit_suite checks=16 failures=0\nPASS licenses_dialog_fit_suite' none suite test/licenses_dialog_fit_suite.gd
 run_case zero-failure-count pass 0 'HOLIDAY_START_ONCE checks=34 failures=0' none suite test/holiday_start_once_suite.gd
 run_case nonzero-failure-count block 0 'HOLIDAY_START_ONCE checks=34 failures=1' none suite test/holiday_start_once_suite.gd
+run_case nearby-direct-pick-complete pass 0 'NEARBY_DIRECT_PICK checks=144 failures=0' none suite test/nearby_direct_pick_suite.gd
+run_case nearby-direct-pick-zero block 0 'NEARBY_DIRECT_PICK checks=0 failures=0' none suite test/nearby_direct_pick_suite.gd
+run_case nearby-direct-pick-failure block 0 'NEARBY_DIRECT_PICK checks=144 failures=1' none suite test/nearby_direct_pick_suite.gd
 run_case matching-completion-counts pass 0 'EXPLORATION SLICE PASS 206/206 failures=[]' none suite test/exploration_slice_suite.gd
 run_case incomplete-completion-counts block 0 'EXPLORATION SLICE PASS 205/206 failures=[]' none suite test/exploration_slice_suite.gd
 for status in 1 124 127 139; do
