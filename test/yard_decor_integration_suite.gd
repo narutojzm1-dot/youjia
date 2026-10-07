@@ -25,13 +25,31 @@ func run() -> void:
 	var id: String = ExplorationRoutes.FIND_PINE_CONE
 	store.request_exploration_trip(null, 1, PackedStringArray([id]), {})
 	await settle()
+	var occluder = main._world.actor_named("cow")
+	var occluder_position: Vector2 = occluder.position
+	var occluder_z: int = occluder.z_index
+	var original_tint := Color(0.8, 0.9, 1.0, 0.7)
+	occluder.modulate = original_tint
+	occluder.position = Vector2(290, 615)
+	occluder.z_index = 615
+	var bystander = main._world.actor_named("horse")
+	var bystander_tint: Color = bystander.modulate
 	main._show_basket()
 	main._basket_panel.decor_button.pressed.emit()
 	check(main._decor_panel.visible and paused and not main._world.input_enabled, "editor pauses world")
 	main._decor_panel.choose_find(id)
 	check(main._world.decor_view.preview != null, "preview rendered in actual world")
+	check(occluder.modulate.a < 0.1, "animal covering preview becomes translucent")
+	check(bystander.modulate == bystander_tint, "unrelated animal keeps its appearance")
+	main._decor_panel.choose_find(id)
+	check(is_equal_approx(occluder.modulate.a, original_tint.a * 0.12), "repeated preview does not accumulate fading")
+	main._decor_panel.choose_spot("pond_path")
+	check(occluder.modulate == original_tint, "switching away restores original tint and alpha")
+	main._decor_panel.choose_spot("house_edge")
+	main._decor_panel.choose_find(id)
 	check(store.get_yard_decor().places.is_empty(), "preview does not write")
 	main._hide_decor()
+	check(occluder.modulate == original_tint, "cancel restores occluding animal")
 	check(main._world.decor_view.preview == null and store.get_available_keepsakes()[id] == 1, "cancel discards only preview")
 	main._show_decor()
 	main._decor_panel.choose_find(id)
@@ -48,8 +66,14 @@ func run() -> void:
 	check(main._decor.busy(), "confirm waits for durable commit")
 	await settle()
 	check(main._world.decor_view.visuals.size() == 1, "confirmed item enters actual yard")
+	check(occluder.modulate.a < 0.1, "confirmed selected object remains visible through animal")
 	check(store.get_available_keepsakes()[id] == 0, "placed object unavailable from basket")
 	main._hide_decor()
+	check(occluder.modulate == original_tint, "leaving editor restores normal animal composition")
+	check(occluder.position == Vector2(290, 615), "editing never relocates an animal")
+	occluder.position = occluder_position
+	occluder.z_index = occluder_z
+	occluder.modulate = Color.WHITE
 	main._hide_basket()
 	var moment := PhotoMoment.capture(main._world, {"id": "sheep_pair_near"})
 	var keepsakes: Array = moment.items.filter(func(item: Dictionary) -> bool: return item.get("kind") == "prop" and item.get("subject") == "keepsake")
