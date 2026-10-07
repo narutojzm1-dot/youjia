@@ -1,0 +1,176 @@
+{
+  "updatedAt": "2026-10-07T08:23:24.666030+00:00",
+  "issues": [
+    {
+      "id": "QA-EXP-20261003-001",
+      "type": "已观察体验问题",
+      "severity": "P2",
+      "title": "晴阴院子构图不连续",
+      "detail": "房屋、池塘、远山及围栏位置与透视显著变化，像切换地点；既有策划已记录同构图改进方向。",
+      "lastCheckedBuild": "game-02e3fd7（a1bef56范围见thisRound）",
+      "status": "本轮限定结果见thisRound；保留历史问题，未全局关闭",
+      "reproductionRate": "本轮次数/版本见thisRound，历史复现率不沿用作本轮",
+      "reproduction": "同B补测前晴天场景与24-b-return阴天场景对照；房屋和池塘透视不同",
+      "aliases": [
+        "EXP-001"
+      ],
+      "trackingLinks": [
+        "https://github.com/narutojzm1-dot/youjia/issues/51",
+        "https://github.com/narutojzm1-dot/youjia/issues/168"
+      ],
+      "expected": "同一院子的房屋、池塘、围栏与远山构图保持连续",
+      "actual": "02e3fd7晴阴17/19主景同构图限定通过，最新a1bef56天气未重测",
+      "thisRound": "02e3fd7晴阴17/19主景同构图限定通过，最新a1bef56天气未重测",
+      "thisRoundBeijing": "2026-10-07 16:02",
+      "historicalActual": "新版颜色和云层变化，主要建筑布局保持；没有连续视频，不能宣称全部过渡帧通过",
+      "historicalEvidence": null,
+      "historicalReproductionRate": "本轮1组晴阴稳定对照未见旧换址，旧B历史1组不连续保留",
+      "evidence": "evidence/17-return-yard.png / evidence/19-overcast.png"
+    },
+    {
+      "id": "QA-EXP-20261003-002",
+      "type": "待复核",
+      "severity": "P2",
+      "title": "既有相册题词与入镜主体不对应",
+      "detail": "第1页写绵羊愿意靠近我了，截图未见绵羊，画面为马、羊驼和鸭子；首次生成版本不明。",
+      "lastCheckedBuild": "game-02e3fd7（a1bef56范围见thisRound）",
+      "status": "本轮限定结果见thisRound；保留历史问题，未全局关闭",
+      "reproduction": "打开既有手账第1页，绵羊题词与马/羊驼画面不对应",
+      "reproductionRate": "本轮次数/版本见thisRound，历史复现率不沿用作本轮",
+      "aliases": [
+        "EXP-002"
+      ],
+      "trackingLinks": [
+        "https://github.com/narutojzm1-dot/youjia/issues/40"
+      ],
+      "expected": "绵羊题词对应绵羊入镜",
+      "actual": "02e3fd7旧第1页题词绵羊照片马/羊驼继续错配1/1，生成版本未知；a1bef56未重测",
+      "thisRound": "02e3fd7旧第1页题词绵羊照片马/羊驼继续错配1/1，生成版本未知；a1bef56未重测",
+      "thisRoundBeijing": "2026-10-07 16:02",
+      "evidence": "evidence/05-album.png",
+      "historicalActual": "历史图继续显示错配；相册入口与翻页可用",
+      "historicalEvidence": "evidence/05-album.png",
+      "historicalReproductionRate": "本轮旧第1页1/1读取，生成版本未知；未产生新照片"
+    },
+    {
+      "id": "QA-EXP-20261003-003",
+      "type": "已观察体验问题",
+      "severity": "P2",
+      "title": "新版加载封面使用科幻迷宫图",
+      "detail": "game-922be64 冷加载展示机器人/科幻迷宫，与水彩小院体验不一致。",
+      "lastCheckedBuild": "game-02e3fd7（a1bef56范围见thisRound）",
+      "status": "本轮限定结果见thisRound；保留历史问题，未全局关闭",
+      "reproduction": "本轮新标签打开公开地址，观察真实加载壳01/02；此步骤验证修复，不重造历史BUG",
+      "reproductionRate": "本轮次数/版本见thisRound，历史复现率不沿用作本轮",
+      "trackingIssue": 167,
+      "aliases": [
+        "EXP-003"
+      ],
+      "trackingLinks": [
+        "https://github.com/narutojzm1-dot/youjia/issues/167"
+      ],
+      "expected": "水彩院子加载壳",
+      "actual": "本轮02e3fd7与a1bef56真实水彩加载壳均可见，未见旧科幻壳，限定2次；旧2963网络失败另轮",
+      "thisRound": "本轮02e3fd7与a1bef56真实水彩加载壳均可见，未见旧科幻壳，限定2次；旧2963网络失败另轮",
+      "thisRoundBeijing": "2026-10-07 16:02",
+      "evidence": "evidence/01-loading.png / evidence/22-reload-current.png",
+      "historicalActual": "真实加载画面符合当前小院主题",
+      "historicalEvidence": "evidence/01-initial.png",
+      "historicalReproductionRate": "本轮真实加载壳旧科幻问题0/1"
+    },
+    {
+      "id": "QA-AUDIO-20261004-001",
+      "aliases": [
+        "issue-195-cold-start"
+      ],
+      "title": "首次进入院子共享音频接口未注册",
+      "severity": "P1",
+      "status": "本轮限定结果见thisRound；保留历史问题，未全局关闭",
+      "lastCheckedBuild": "game-02e3fd7（a1bef56范围见thisRound）",
+      "reproduction": "新标签入院→分别关开音乐、环境声、总静音→关页新开恢复，读取warn/error",
+      "reproductionRate": "本轮次数/版本见thisRound，历史复现率不沿用作本轮",
+      "trackingLinks": [
+        "https://github.com/narutojzm1-dot/youjia/issues/195",
+        "https://github.com/narutojzm1-dot/youjia/issues/196"
+      ],
+      "owner": "修复Owner以仓库最新职责及原issue接收为准；GAME-QA独立复测",
+      "expected": "首次进入正常播放且音乐、环境声开关可靠",
+      "actual": "02e3fd7三音频开关单步08/09/10关闭、11恢复音乐100环境50；两个版本原生648各通过，真听未做不关闭P1",
+      "thisRound": "02e3fd7三音频开关单步08/09/10关闭、11恢复音乐100环境50；两个版本原生648各通过，真听未做不关闭P1",
+      "thisRoundBeijing": "2026-10-07 16:02",
+      "evidence": "evidence/08-music-off.png / evidence/09-env-off.png / evidence/10-muted.png / evidence/11-audio-restored.png",
+      "historicalActual": "前期08/09/10截图滞后不能证明关闭，11实际静音不是已恢复；17/20稳定原设置，18/19明确关闭，不把错误文件名当证据",
+      "historicalEvidence": "evidence/11-audio-restored.png / evidence/18-music-off-confirmed.png / evidence/19-environment-off-confirmed.png / evidence/20-audio-stable-restored.png",
+      "historicalReproductionRate": "旧接口错误0/2；三个开关各有至少1次可辨关闭和恢复；真实可听率未知"
+    },
+    {
+      "id": "QA-EXP-20261006-004",
+      "type": "已确认历史BUG；限定样本修复通过",
+      "severity": "P2",
+      "title": "探索拾物短展示的物品小标签疑似缺字方框",
+      "lastCheckedBuild": "game-02e3fd7（a1bef56范围见thisRound）",
+      "status": "本轮限定结果见thisRound；保留历史问题，未全局关闭",
+      "reproduction": "1646×894中文普通探索：门前小路→溪声近处→停看→带上圆石；观察拾物短展示上方小标签",
+      "reproductionRate": "本轮次数/版本见thisRound，历史复现率不沿用作本轮",
+      "expected": "圆石短展示的物品名与其他中文提示一样清楚可读",
+      "actual": "02e3fd7松果16真实短签中文可读1/1；a1bef56拾取28篮内中文松果可读但短签瞬态未保留，不冒短签全通过",
+      "evidence": "evidence/16-pine-picked.png / evidence/28-latest-pick.png",
+      "trackingLinks": [
+        "https://github.com/narutojzm1-dot/youjia/pull/467",
+        "https://github.com/narutojzm1-dot/youjia/issues/456"
+      ],
+      "relatedScope": "既有探索拾物短展示#372；#456是尺寸变更适配，不将两者当同一根因",
+      "owner": "CURSOR-CLOUD（既有467修复）；GAME-QA独立验证，不接开发",
+      "fixCommit": "392b330effb8dc345bbde4a140d0ba7dbf9821f7",
+      "thisRound": "02e3fd7松果16真实短签中文可读1/1；a1bef56拾取28篮内中文松果可读但短签瞬态未保留，不冒短签全通过",
+      "thisRoundBeijing": "2026-10-07 16:02",
+      "historicalActual": "圆石中文可辨并入篮；R已回院，未独立核验圆石累计库存",
+      "historicalEvidence": "evidence/16-pick-6.png",
+      "historicalReproductionRate": "本轮另一个圆石地点1次可辨展示无方框"
+    },
+    {
+      "id": "QA-EXP-20261006-005",
+      "aliases": [
+        "issue-400-qa-overcast-edge"
+      ],
+      "type": "既有#400视觉问题的新版本观察，根因待复核",
+      "severity": "P2",
+      "title": "阴天云带在小院左上纸边形成截断竖缝并越入留白",
+      "lastCheckedBuild": "game-02e3fd7（a1bef56范围见thisRound）",
+      "status": "本轮限定结果见thisRound；保留历史问题，未全局关闭",
+      "reproduction": "Chrome1646×838既有第7天入院→点大太阳切阴天→观察主画左上和左右纸边→恢复晴天后再切阴天",
+      "reproductionRate": "本轮次数/版本见thisRound，历史复现率不沿用作本轮",
+      "expected": "天气云层与小院画面边界自然衔接，不在纸边出现突兀截断竖条",
+      "actual": "02e3fd7全幅1646x894阴天19未见旧纸边竖缝，限定1帧改善；不同构图不可全球关闭#400，a1bef56未重测",
+      "evidence": "evidence/19-overcast.png",
+      "trackingLinks": [
+        "https://github.com/narutojzm1-dot/youjia/issues/400"
+      ],
+      "owner": "由Leader协调既有#400边界；GAME-QA只观察，不认领修复",
+      "limitations": "未复现原2444×1502用户路径，未确认设计意图或代码根因；不否定267b原相机专项通过",
+      "thisRoundBeijing": "2026-10-07 16:02",
+      "thisRound": "02e3fd7全幅1646x894阴天19未见旧纸边竖缝，限定1帧改善；不同构图不可全球关闭#400，a1bef56未重测",
+      "historicalActual": "主景左边界约x130；左上纸边约x18有云带竖截边，右上也越入纸边；房屋和池塘布局保持",
+      "historicalEvidence": "evidence/21-overcast-stable.png",
+      "historicalReproductionRate": "本轮1个阴天稳定帧1/1可见；中午2帧另算"
+    }
+  ],
+  "nativeSupplement": {
+    "sourceSha": "267b0cb3df5842170877bf55e438917ad4253ce8",
+    "suiteCount": 5,
+    "checks": 45956,
+    "result": "5项专项通过，非全daily/非线上听验",
+    "report": "docs/playtests/2026-10-06-1003-game-qa-native/README.md"
+  },
+  "nativeThisRound": {
+    "version02e3fd7": {
+      "suiteCount": 8,
+      "checks": 1330
+    },
+    "versionA1bef56": {
+      "suiteCount": 6,
+      "checks": 1241
+    },
+    "limitations": "两个版本分别计数，非同版本全量通过/真听/完整流程"
+  }
+}

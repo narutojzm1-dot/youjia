@@ -1,4 +1,5 @@
 extends Control
+const PaperScrollbarStyle := preload("res://scripts/ui/paper_scrollbar_style.gd")
 signal close_requested
 signal action_requested(action: String, fish: String)
 signal retry_requested
@@ -40,6 +41,16 @@ const COMPACT_ROW_GAP := 3
 const NARROW_WIDTH := 280.0
 const ROW_BUTTON_WIDTH := 104.0
 const NARROW_ROW_BUTTON_WIDTH := 88.0
+## REQ-20261007-056：悬停、按下和不可用原先共用同一块 eadcc8 浅褐底和同一条边，
+## 「小米 × 0」旁点不了的「拿一把」和鼠标停着的按钮长得一样。与院内布置面板（#531）同一套：
+## 悬停暖杏、按下（含按住时悬停，原先掉回引擎灰底）杏色加 2px 墨边、不可用浅纸淡边，字色不变。
+const BUTTON_STATES := {
+	"normal": {"fill": Color("fffaf1"), "edge": Color("b88a61"), "width": 1, "ink": Color("5b4637")},
+	"hover": {"fill": Color("ffe7c8"), "edge": Color("b88a61"), "width": 1, "ink": Color("3d2d23")},
+	"pressed": {"fill": Color("f3d3ae"), "edge": Color("5b4637"), "width": 2, "ink": Color("3d2d23")},
+	"hover_pressed": {"fill": Color("f3d3ae"), "edge": Color("5b4637"), "width": 2, "ink": Color("3d2d23")},
+	"disabled": {"fill": Color("f3e9db"), "edge": Color("bfa588"), "width": 1, "ink": Color("7a6152")},
+}
 
 func _ready() -> void:
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -71,6 +82,8 @@ func _ready() -> void:
 	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 	column.add_child(scroll)
+	# REQ-20261007-058：清单滚动条换成纸面浅槽 + 褐色滑块，不再是一条默认深灰条
+	PaperScrollbarStyle.apply(scroll.get_v_scroll_bar())
 	rows = VBoxContainer.new()
 	rows.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	rows.add_theme_constant_override("separation", ROW_GAP)
@@ -127,25 +140,28 @@ func _button() -> Button:
 	var button := Button.new()
 	button.custom_minimum_size = Vector2(104, 44)
 	button.add_theme_font_size_override("font_size", 17)
-	button.add_theme_color_override("font_color", Color("5b4637"))
-	button.add_theme_color_override("font_hover_color", Color("3d2d23"))
-	button.add_theme_color_override("font_pressed_color", Color("3d2d23"))
-	button.add_theme_color_override("font_focus_color", Color("5b4637"))
-	button.add_theme_color_override("font_disabled_color", Color("7a6152"))
+	for mode: String in BUTTON_STATES:
+		button.add_theme_stylebox_override(mode, state_style(mode))
+		button.add_theme_color_override("font_" + ("" if mode == "normal" else mode + "_") + "color", BUTTON_STATES[mode].ink)
+	button.add_theme_color_override("font_focus_color", BUTTON_STATES.normal.ink)
 	var focus := StyleBoxFlat.new()
 	focus.draw_center = false
 	focus.border_color = Color("916d49")
 	focus.set_border_width_all(2)
 	focus.set_corner_radius_all(12)
 	button.add_theme_stylebox_override("focus", focus)
-	for mode: String in ["normal", "hover", "pressed", "disabled"]:
-		var style := StyleBoxFlat.new()
-		style.bg_color = Color("fffaf1") if mode == "normal" else Color("eadcc8")
-		style.border_color = Color("b88a61")
-		style.set_border_width_all(1)
-		style.set_corner_radius_all(12)
-		button.add_theme_stylebox_override(mode, style)
 	return button
+
+static func state_style(mode: String) -> StyleBoxFlat:
+	var spec: Dictionary = BUTTON_STATES[mode]
+	var style := StyleBoxFlat.new()
+	style.bg_color = spec.fill
+	style.border_color = spec.edge
+	style.set_border_width_all(int(spec.width))
+	style.set_corner_radius_all(12)
+	# 各状态内容边距一致，按下时 2px 墨边不会让按钮或整行变大
+	style.set_content_margin_all(1)
+	return style
 
 func fit() -> void:
 	if panel == null: return

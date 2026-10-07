@@ -1,0 +1,56 @@
+{
+  "sourceSha": "a1bef56e4515ae49a9d46451700cb12977325a59",
+  "startedUtc": "2026-10-07T08:18:52.569207+00:00",
+  "profileProbe": "D:/games/youjia-test/qa/native/2026-10-07-1602-reload/roaming/Godot/app_userdata/youjia-qa-profile-probe",
+  "engine": "D:/games/youjia-tmp-godot/Godot_v4.7.2-stable_win64_console.exe",
+  "tests": [
+    {
+      "entry": "import",
+      "exit": 0,
+      "summary": []
+    },
+    {
+      "entry": "audio_button_input",
+      "exit": 0,
+      "summary": [
+        "AUDIO_BUTTON_INPUT checks=648 failures=0"
+      ]
+    },
+    {
+      "entry": "fish_carry_consistency",
+      "exit": 0,
+      "summary": [
+        "[fish-carry] 79 checks []"
+      ]
+    },
+    {
+      "entry": "exploration_slice",
+      "exit": 0,
+      "summary": [
+        "EXPLORATION SLICE PASS 300/300 failures=[]"
+      ]
+    },
+    {
+      "entry": "save_coordinator",
+      "exit": 0,
+      "summary": [
+        "SAVE_COORDINATOR checks=86 failures=[]"
+      ]
+    },
+    {
+      "entry": "yard_ground_food_runtime",
+      "exit": 0,
+      "summary": [
+        "YARD_GROUND_FOOD_RUNTIME checks=62 failures=0"
+      ]
+    },
+    {
+      "entry": "yard_basket_integration",
+      "exit": 0,
+      "summary": [
+        "YARD_BASKET_INTEGRATION checks=66 failures=0"
+      ]
+    }
+  ],
+  "endedUtc": "2026-10-07T08:19:24.925531+00:00"
+}
