@@ -136,7 +136,12 @@ var _player: Vacationer
 var _actors: Dictionary = {}
 var _zones: Dictionary = {}
 var _pulse := 0.0
-var _weather_timer := 0.0
+var _regional_weather = preload("res://scripts/game/world_weather.gd").new()
+# Compatibility for existing controlled photo/weather capture fixtures. Runtime
+# scheduling uses the persisted regional episode, never a second countdown.
+var _weather_timer: float:
+	get: return float(_regional_weather.state.get("remaining", 0.0))
+	set(value): _regional_weather.state["remaining"] = value
 var _cooldowns: Dictionary = {}
 var _held: Dictionary = {}
 var _focus_seconds := 0.0
@@ -174,7 +179,8 @@ func setup(
 	saved_day_elapsed: float = 0.0,
 	saved_plant: Dictionary = {},
 	saved_fish_caught: bool = false,
-	saved_relationship_memory: Dictionary = {}
+	saved_relationship_memory: Dictionary = {},
+	saved_weather: Dictionary = {}
 ) -> void:
 	process_mode = Node.PROCESS_MODE_PAUSABLE
 	collected = PackedStringArray()
@@ -189,6 +195,8 @@ func setup(
 	# 读取假期天数进度
 	holiday_day = maxi(1, saved_day)
 	_day_elapsed = maxf(0.0, saved_day_elapsed)
+	_regional_weather.restore(saved_weather)
+	weather = str(_regional_weather.state.weather)
 	# 读取植物床进度
 	_plant_state = clampi(int(saved_plant.get("state", 0)), 0, 3)
 	_plant_day_planted = maxi(0, int(saved_plant.get("day_planted", 0)))
@@ -259,7 +267,6 @@ func setup(
 	_effects_overlay = WorldEffectsOverlayType.new()
 	_update_effects_overlay(0.0)
 	add_child(_effects_overlay)
-	_weather_timer = randf_range(42.0, 78.0)
 	queue_redraw()
 
 
@@ -341,9 +348,11 @@ func set_weather(next_weather: String) -> void:
 	if next_weather == weather:
 		return
 	weather = next_weather
+	_regional_weather.select(weather)
 	_apply_weather_art()
 	TuningStore.apply_boundary("NEXT_STAGE")
 	weather_changed.emit(weather)
+	_save_progress()
 
 
 func toggle_weather() -> void:
@@ -467,19 +476,9 @@ func companion_context() -> Dictionary:
 func tick(delta: float, move: Vector2) -> void:
 	if not simulation_active:
 		return
+	advance_world_time(delta)
 	_rejected_seconds = maxf(0.0, _rejected_seconds - delta)
 	_day_seconds += delta
-	# 推进假期天数（每 DAY_DURATION_SECONDS 秒 = 1天）
-	_day_elapsed += delta
-	if _day_elapsed >= DAY_DURATION_SECONDS:
-		_day_elapsed -= DAY_DURATION_SECONDS
-		holiday_day += 1
-		_on_new_day()
-	# 定时自动存档
-	_save_interval -= delta
-	if _save_interval <= 0.0:
-		_save_interval = 60.0
-		_save_progress()
 	# 钓鱼计时
 	_tick_fishing(delta)
 	# 收获花朵庆祝动画计时
@@ -498,10 +497,6 @@ func tick(delta: float, move: Vector2) -> void:
 				_selected_target = ""
 			notice_requested.emit("notice.fishing.release")
 			queue_redraw()
-	_weather_timer -= delta
-	if _weather_timer <= 0.0:
-		toggle_weather()
-		_weather_timer = randf_range(48.0, 90.0)
 	_tick_weather_transition(delta)
 	# 云带缓移：低动效只保留静止可读帧，不改存档字段。
 	_tick_cloud_drift(delta)
@@ -1790,7 +1785,32 @@ func _on_new_day() -> void:
 
 ## 保存当前假期进度到 SaveStore
 func _save_progress() -> void:
-	SaveStore.request_yard_progress(holiday_day, _day_elapsed, _plant_state, _plant_day_planted, _plant_watered_day)
+	SaveStore.request_yard_progress(holiday_day, _day_elapsed, _plant_state, _plant_day_planted, _plant_watered_day, _regional_weather.snapshot())
+
+
+## Main advances this same clock while exploring, without ticking hidden yard actors.
+func advance_world_time(delta: float) -> void:
+	if not is_finite(delta) or delta <= 0.0: return
+	var weather_changed_now: bool = _regional_weather.advance(delta)
+	if weather_changed_now:
+		weather = str(_regional_weather.state.weather)
+		_apply_weather_art()
+		weather_changed.emit(weather)
+	_day_elapsed += delta
+	while _day_elapsed >= DAY_DURATION_SECONDS:
+		_day_elapsed -= DAY_DURATION_SECONDS
+		holiday_day += 1
+		_on_new_day()
+	_save_interval -= delta
+	if _save_interval <= 0.0 or weather_changed_now:
+		_save_interval = 60.0
+		_save_progress()
+
+
+func environment_snapshot() -> Dictionary:
+	return {"day":holiday_day, "elapsed":_day_elapsed, "day_fraction":tod_fraction(),
+		"hour":fmod(6.0 + tod_fraction()*24.0, 24.0), "weather":weather,
+		"weather_remaining":float(_regional_weather.state.remaining)}
 
 
 func _stop_leading_llama() -> void:

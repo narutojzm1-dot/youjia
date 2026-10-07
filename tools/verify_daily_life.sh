@@ -51,6 +51,8 @@ run_godot suite test/yard_basket_empty_row_ink_suite.gd
 run_godot suite test/yard_ground_food_ledger_suite.gd
 run_godot suite test/yard_ground_food_runtime_suite.gd
 run_godot suite test/cow_ground_graze_suite.gd
+run_godot suite test/world_weather_suite.gd
+run_godot suite test/world_weather_runtime_suite.gd
 run_godot suite test/animal_companion_suite.gd
 run_godot suite test/animal_hidden_find_suite.gd
 run_godot suite test/world_residents_suite.gd

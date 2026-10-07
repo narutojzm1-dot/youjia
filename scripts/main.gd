@@ -392,6 +392,8 @@ func _process(delta: float) -> void:
 			move = Input.get_vector("move_left", "move_right", "move_up", "move_down")
 		_world.tick(delta, move)
 		_exploration.idle_tick(delta)
+	elif _screen == "exploring" and _world != null and not _pause_screen.visible and not _confirm_screen.visible and not _save_problem_active:
+		_world.advance_world_time(delta)
 	var reduced := bool(TuningStore.get_value("ui.reduced_motion", false))
 	var lerp_rate := 12.0 if reduced else 3.2
 	_cam_zoom = lerpf(_cam_zoom, _cam_target_zoom, 1.0 - exp(-delta * lerp_rate))
@@ -1233,7 +1235,8 @@ func _start_holiday(save_progress: bool = true) -> void:
 		SaveStore.get_holiday_day_elapsed(),
 		SaveStore.get_plant_state(),
 		SaveStore.get_first_fish_caught(),
-		SaveStore.get_animal_relationship_memory()
+		SaveStore.get_animal_relationship_memory(),
+		SaveStore.get_world_weather()
 	)
 	_world.album_updated.connect(_on_album_updated)
 	_world.notice_requested.connect(_show_notice_key)
@@ -1280,6 +1283,9 @@ func _start_holiday(save_progress: bool = true) -> void:
 		_world.return_from_path(_exploration.last_companion)
 	if not restored.is_empty():
 		_show_notice_key(restored, _exploration.last_params)
+	# Persist the first regional seed immediately, rather than rerolling it when
+	# a new/legacy save closes before the first periodic checkpoint.
+	if SaveStore.get_world_weather().is_empty(): _world._save_progress()
 	_refresh_hud()
 	AudioDirector.set_yard_active(true)
 	if _world.holiday_day == 1 and SaveStore.get_album().is_empty():
@@ -1317,7 +1323,7 @@ func _on_exploration_requested() -> void:
 	_exploration.try_begin({"day": _world.holiday_day, "elapsed": _world._day_elapsed}, weather, null, _world.companion_context())
 
 
-## 画卷有自己的相机与界面；小院在外出期间隐藏、不计时
+## 画卷有自己的相机与界面；小院隐藏，公共时钟继续推进。
 func _on_exploration_entered() -> void:
 	_screen = "exploring"
 	_cancel_photo_arrivals()
