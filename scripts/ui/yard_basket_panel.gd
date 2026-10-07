@@ -15,6 +15,15 @@ var return_button: Button
 var held_label: Label
 var scoop_button: Button
 var decor_button: Button
+## REQ-20261007-064（#565 图8，Owner GROK-CONTRIBUTOR）：玩家看到的是一张行列格子（yard_basket_grid.gd），
+## 每样东西一格、点格子弹操作。原来逐行的「名字 × N + 拿一条」清单节点仍保留（fish_buttons /
+## fish_labels / keepsake_labels 及其信号给旧接口与旧测试用），但不再显示，避免同一样东西出现两遍。
+var grid: Control
+var list_rows: Array[Control] = []
+## 院内布置面板（Main 在同一层建的兄弟节点）。Main 可直接赋值；未赋值时在同层按脚本找一次。
+var decor_panel: Control
+const DECOR_PANEL_SCRIPT := "res://scripts/ui/yard_decor_panel.gd"
+const DECOR_SPOTS_SCRIPT := "res://scripts/inventory/yard_decor.gd"
 var fish_labels: Dictionary = {}
 var fish_buttons: Dictionary = {}
 var keepsake_labels: Dictionary = {}
@@ -93,14 +102,28 @@ func _ready() -> void:
 	rows.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	rows.add_theme_constant_override("separation", ROW_GAP)
 	scroll.add_child(rows)
+	# 运行时 load：格子脚本 preload 了本脚本的按钮样式，这里不能再反向 preload
+	grid = load("res://scripts/ui/yard_basket_grid.gd").new()
+	grid.name = "BasketGrid"
+	grid.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	rows.add_child(grid)
+	grid.action_requested.connect(_on_grid_action)
+	# 清单滚动后格子位置变了，操作纸片不再贴着那一格，先收起
+	scroll.get_v_scroll_bar().value_changed.connect(func(_value: float) -> void: grid.close_menu())
+	visibility_changed.connect(func() -> void:
+		if not visible: grid.close_menu())
 	for kind: String in ["round_stone", "pine_cone", "feather"]:
 		var label := _label(18)
 		label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		rows.add_child(label)
 		keepsake_labels[kind] = label
+		label.visible = false
+		list_rows.append(label)
 	for kind: String in FISH:
 		var row := HBoxContainer.new()
 		rows.add_child(row)
+		row.visible = false
+		list_rows.append(row)
 		var label := _label(18)
 		label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		# 名字放不下就在名字内折行，不再把整张纸撑出屏幕边
@@ -177,6 +200,10 @@ func fit() -> void:
 		button.custom_minimum_size.x = row_width
 	panel.size = target
 	panel.position = (size - panel.size) * 0.5
+	# 格子按「纸内宽 − 滚动条宽」排，不论滚动条此刻显不显示，格子尺寸都不变
+	if grid != null:
+		var bar := scroll.get_v_scroll_bar().get_combined_minimum_size().x
+		grid.set_layout_width(maxf(0.0, target.x - 32.0 - bar))
 
 func _queue_fit() -> void:
 	if _fit_queued: return
@@ -234,7 +261,41 @@ func update_view(inventory: Dictionary, keepsakes: Dictionary, state: String, bu
 	retry_button.visible = state in ["failed", "unknown"]
 	retry_button.text = "Check again" if en else "再确认一次"
 	close_button.text = "Back to the yard" if en else "合上背篓"
+	grid.update_view(inventory, keepsakes, state, busy)
 	call_deferred("fit")
+
+func _on_grid_action(action: String, kind: String) -> void:
+	if action == "decor": open_decor_with(kind)
+	else: action_requested.emit(action, kind)
+
+## 格子里点圆石/松果/落羽「摆到院里」：走现有「把小物摆在院里」入口（Main._show_decor 收起背篓、
+## 打开布置面板），再在布置面板里预选这件；当前位置已摆了东西就换到第一个空位置。
+## 只是预览：不提交、不扣数量，确认仍由布置面板走 YardDecorController.request('place', …)。
+func open_decor_with(kind: String) -> void:
+	if decor_button == null or decor_button.disabled: return
+	decor_button.pressed.emit()
+	var decor := _find_decor_panel()
+	if decor == null or not decor.visible: return
+	var id: String = grid.FIND_IDS.get(kind, "")
+	if id.is_empty(): return
+	var places: Dictionary = decor.value.get("places", {})
+	if places.has(decor.selected):
+		for spot: String in load(DECOR_SPOTS_SCRIPT).SPOTS:
+			if not places.has(spot):
+				decor.choose_spot(spot)
+				break
+	decor.choose_find(id)
+
+func _find_decor_panel() -> Control:
+	if decor_panel != null and is_instance_valid(decor_panel): return decor_panel
+	var parent := get_parent()
+	if parent == null: return null
+	for child: Node in parent.get_children():
+		var script: Script = child.get_script()
+		if child is Control and script != null and script.resource_path == DECOR_PANEL_SCRIPT:
+			decor_panel = child
+			return decor_panel
+	return null
 
 func _ink_row(label: Label, count: int) -> void:
 	label.add_theme_color_override("font_color", EMPTY_ROW_INK if count <= 0 else ROW_INK)
@@ -256,6 +317,9 @@ func handle_touch_event(event: InputEvent) -> void:
 			scroll.scroll_vertical -= int(event.relative.y)
 
 func _activate_touch(position_in_view: Vector2) -> void:
+	# 格子与它的操作纸片先接：纸片开着时点别处只收起纸片，不顺手触发底下的按钮
+	if grid != null and (grid.menu.visible or scroll.get_global_rect().has_point(position_in_view)):
+		if grid.press_at(position_in_view): return
 	var buttons: Array = [close_button, retry_button, return_button, scoop_button]
 	if decor_button != null: buttons.append(decor_button)
 	buttons.append_array(fish_buttons.values())
