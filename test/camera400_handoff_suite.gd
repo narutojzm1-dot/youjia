@@ -71,7 +71,12 @@ func advance(seconds: float, moving := false) -> void:
 
 func fresh(reduced: bool):
 	Input.action_release("move_right")
+	# A previous yard can still be committing its first resident. Do not erase
+	# that confirmed model behind its optimistic revision/controller queue.
+	check(await store.flush_pending(), "previous yard saves settle before fixture reset")
+	var residents: Dictionary = store.get_world_residents().duplicate(true)
 	store._data = store._default_data()
+	store._data["world_residents"] = residents
 	await main._start_holiday(false)
 	tuning.set_value("ui.reduced_motion", reduced)
 	var w = main._world
