@@ -34,6 +34,9 @@ func run() -> void:
 		for dx: int in [-1, 0, 1]:
 			for dy: int in [-1, 0, 1]:
 				check(YardGround.allows(Model.position_for(spot, {"dx": dx, "dy": dy}), YardGround.lawn(), true), "candidate center remains lawn " + spot)
+				for corner: Vector2 in [Vector2(-14,-12),Vector2(14,-12),Vector2(-14,12),Vector2(14,12)]:
+					var point := Model.position_for(spot, {"dx": dx, "dy": dy})
+					check(YardGround.allows(point + corner * YardGround.depth_at(point.y), YardGround.lawn(), true), "full keepsake bounds remain on lawn " + spot)
 	for bad: Variant in [null, [], {"schema": 2, "revision": 0, "places": {}}, {"schema": 1, "revision": 0, "places": {}, "future": true}]:
 		var source := original.duplicate(true)
 		source[Model.FIELD] = bad

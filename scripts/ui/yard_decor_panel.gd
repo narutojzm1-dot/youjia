@@ -1,0 +1,190 @@
+extends Control
+signal close_requested
+signal preview_changed(spot: String, entry: Dictionary)
+signal action_requested(action: String, spot: String, details: Dictionary)
+signal retry_requested
+const Model := preload("res://scripts/inventory/yard_decor.gd")
+var paper: PanelContainer
+var column: VBoxContainer
+var scroll: ScrollContainer
+var status: Label
+var close_button: Button
+var confirm_button: Button
+var remove_button: Button
+var retry_button: Button
+var buttons: Array[Button] = []
+var slot_buttons: Dictionary = {}
+var find_buttons: Dictionary = {}
+var nudge_buttons: Array[Button] = []
+var selected := "house_edge"
+var draft: Dictionary = {}
+var value: Dictionary = {}
+var counts: Dictionary = {}
+var busy := false
+var state := "idle"
+var _touch := -1
+var _start := Vector2.ZERO
+var _dragged := false
+
+func _ready() -> void:
+	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	mouse_filter = Control.MOUSE_FILTER_STOP
+	paper = PanelContainer.new()
+	var style := StyleBoxFlat.new()
+	style.bg_color = Color("fff6e8")
+	style.set_corner_radius_all(12)
+	style.content_margin_left = 10
+	style.content_margin_right = 10
+	style.content_margin_top = 8
+	style.content_margin_bottom = 8
+	paper.add_theme_stylebox_override("panel", style)
+	add_child(paper)
+	var outer := VBoxContainer.new()
+	paper.add_child(outer)
+	status = Label.new()
+	status.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	status.add_theme_color_override("font_color", Color("5b4637"))
+	outer.add_child(status)
+	scroll = ScrollContainer.new()
+	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	outer.add_child(scroll)
+	column = VBoxContainer.new()
+	column.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	scroll.add_child(column)
+	var slots := HBoxContainer.new()
+	column.add_child(slots)
+	var names := ["屋前", "篱边", "塘边小路"]
+	for i in Model.SPOTS.size():
+		var spot: String = Model.SPOTS.keys()[i]
+		slot_buttons[spot] = button(slots, names[i], func() -> void: choose_spot(spot))
+		slot_buttons[spot].toggle_mode = true
+	var finds := HBoxContainer.new()
+	column.add_child(finds)
+	for id: String in ExplorationRoutes.FINDS:
+		find_buttons[id] = button(finds, "", func() -> void: choose_find(id))
+	var nudges := HBoxContainer.new()
+	column.add_child(nudges)
+	for direction: Vector2i in [Vector2i.LEFT, Vector2i.RIGHT, Vector2i.UP, Vector2i.DOWN]:
+		var label: String = ["←", "→", "↑", "↓"][nudge_buttons.size()]
+		nudge_buttons.append(button(nudges, label, func() -> void: nudge(direction)))
+	var actions := HBoxContainer.new()
+	column.add_child(actions)
+	confirm_button = button(actions, "确认摆好", commit)
+	remove_button = button(actions, "收回背篓", func() -> void: action_requested.emit("remove", selected, {}))
+	retry_button = button(column, "再确认保存", func() -> void: retry_requested.emit())
+	close_button = button(outer, "取消预览 · 回到背篓", func() -> void: close_requested.emit())
+	resized.connect(fit)
+	fit()
+
+func button(parent: Node, text: String, action: Callable) -> Button:
+	var b := Button.new()
+	b.text = text
+	b.custom_minimum_size = Vector2(44, 44)
+	b.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	b.add_theme_font_size_override("font_size", 16)
+	for mode: String in ["normal", "hover", "pressed", "disabled"]:
+		var style := StyleBoxFlat.new()
+		style.bg_color = Color("fffaf1") if mode == "normal" else Color("eadcc8")
+		style.border_color = Color("b88a61")
+		style.set_border_width_all(1)
+		style.set_corner_radius_all(8)
+		b.add_theme_stylebox_override(mode, style)
+		b.add_theme_color_override("font_" + ("" if mode == "normal" else mode + "_") + "color", Color("7a6152") if mode == "disabled" else Color("5b4637"))
+	b.add_theme_color_override("font_focus_color", Color("5b4637"))
+	b.pressed.connect(action)
+	parent.add_child(b)
+	buttons.append(b)
+	return b
+
+func fit() -> void:
+	if paper == null: return
+	if size.x > size.y:
+		paper.size = Vector2(minf(310, size.x * 0.48), size.y - 16)
+		paper.position = Vector2(size.x - paper.size.x - 8, 8)
+	else:
+		paper.size = Vector2(size.x - 16, minf(320, size.y * 0.48))
+		paper.position = Vector2(8, size.y - paper.size.y - 8)
+
+func preview_rect() -> Rect2:
+	return Rect2(8, 8, paper.position.x - 16, size.y - 16) if size.x > size.y else Rect2(8, 8, size.x - 16, paper.position.y - 16)
+
+func update_view(next: Dictionary, available: Dictionary, next_state: String, waiting: bool) -> void:
+	value = next
+	counts = available
+	state = next_state
+	busy = waiting
+	if busy: draft.clear()
+	elif value.get("places", {}).has(selected): draft = value.places[selected].duplicate(true)
+	refresh()
+
+func choose_spot(spot: String) -> void:
+	if busy: return
+	selected = spot
+	draft = value.get("places", {}).get(spot, {}).duplicate(true)
+	refresh()
+
+func choose_find(id: String) -> void:
+	if busy or value.get("places", {}).has(selected) or int(counts.get(id, 0)) == 0: return
+	draft = {"find_id": id, "dx": 0, "dy": 0}
+	refresh()
+
+func nudge(direction: Vector2i) -> void:
+	if busy or draft.is_empty(): return
+	draft.dx = clampi(int(draft.dx) + direction.x, -1, 1)
+	draft.dy = clampi(int(draft.dy) + direction.y, -1, 1)
+	refresh()
+
+func commit() -> void:
+	if busy or draft.is_empty(): return
+	if value.get("places", {}).has(selected): action_requested.emit("move", selected, {"dx": draft.dx, "dy": draft.dy})
+	else: action_requested.emit("place", selected, draft.duplicate(true))
+
+func refresh() -> void:
+	if status == null: return
+	var en := I18n.get_locale() == "en"
+	status.text = "Choose a place and a find. The faded item is a preview." if en else "选一处，再选小物；半透明的是预览。"
+	if busy: status.text = "Checking the save. Your arrangement is kept." if en else "正在确认保存，原有摆设保留着。"
+	if state in ["failed", "unknown", "blocked"]: status.text = "Not confirmed yet. Your items are kept." if en else "这次还未确认保存，原有物品保留着。"
+	var occupied: bool = value.get("places", {}).has(selected)
+	var unchanged: bool = occupied and draft == value.places[selected]
+	if unchanged and not busy: status.text = "Use the arrows to adjust, or put it back." if en else "用箭头稍微挪动，也可收回背篓。"
+	var places := {"house_edge": "House" if en else "屋前", "fence_edge": "Fence" if en else "篱边", "pond_path": "Path" if en else "塘边小路"}
+	for spot: String in slot_buttons:
+		slot_buttons[spot].text = places[spot]
+		slot_buttons[spot].disabled = busy or value.is_empty()
+		slot_buttons[spot].button_pressed = spot == selected
+	var names := ["Stone", "Cone", "Feather"] if en else ["圆石", "松果", "落羽"]
+	for i in ExplorationRoutes.FINDS.size():
+		var id: String = ExplorationRoutes.FINDS[i]
+		find_buttons[id].text = "%s ×%d" % [names[i], int(counts.get(id, 0))]
+		find_buttons[id].disabled = busy or occupied or int(counts.get(id, 0)) <= 0
+	for b: Button in nudge_buttons: b.disabled = busy or draft.is_empty()
+	confirm_button.disabled = busy or draft.is_empty() or unchanged
+	confirm_button.text = "Place" if en else "确认摆好"
+	remove_button.text = "Put back" if en else "收回背篓"
+	remove_button.disabled = busy or not occupied
+	retry_button.visible = state in ["failed", "unknown"]
+	retry_button.text = "Check save again" if en else "再确认保存"
+	close_button.text = "Back to basket" if en else "回到背篓"
+	if not draft.is_empty() and not unchanged: close_button.text = "Cancel preview · Back" if en else "取消预览 · 回到背篓"
+	preview_changed.emit(selected, draft)
+	call_deferred("fit")
+
+func handle_touch_event(event: InputEvent) -> void:
+	if event is InputEventScreenTouch:
+		if event.pressed and _touch == -1:
+			_touch = event.index
+			_start = event.position
+			_dragged = false
+		elif not event.pressed and event.index == _touch:
+			_touch = -1
+			if not _dragged and event.position.distance_to(_start) < 12:
+				for b: Button in buttons:
+					if b.is_visible_in_tree() and not b.disabled and b.get_global_rect().has_point(event.position):
+						if b != close_button and not scroll.get_global_rect().has_point(event.position): continue
+						b.pressed.emit()
+						break
+	elif event is InputEventScreenDrag and event.index == _touch:
+		if event.position.distance_to(_start) >= 12: _dragged = true
+		if _dragged and scroll.get_global_rect().has_point(_start): scroll.scroll_vertical -= int(event.relative.y)

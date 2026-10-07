@@ -4,7 +4,7 @@ extends RefCounted
 const FIELD := "yard_decor"
 const Contract := preload("res://scripts/exploration/exploration_contract.gd")
 const MAX_REVISION := 2147483647
-const SPOTS := {"house_edge": Vector2(360, 485), "fence_edge": Vector2(655, 465), "pond_path": Vector2(490, 530)}
+const SPOTS := {"house_edge": Vector2(290, 575), "fence_edge": Vector2(655, 465), "pond_path": Vector2(490, 516)}
 const NUDGE := Vector2(16, 8)
 
 static func empty() -> Dictionary:
