@@ -4,6 +4,7 @@ signal preview_changed(spot: String, entry: Dictionary)
 signal action_requested(action: String, spot: String, details: Dictionary)
 signal retry_requested
 const Model := preload("res://scripts/inventory/yard_decor.gd")
+const PaperScrollbarStyle := preload("res://scripts/ui/paper_scrollbar_style.gd")
 var paper: PanelContainer
 var outer: VBoxContainer
 var column: VBoxContainer
@@ -50,6 +51,8 @@ func _ready() -> void:
 	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 	outer.add_child(scroll)
+	# REQ-20261007-058：与大背篓同一套纸面滚动条
+	PaperScrollbarStyle.apply(scroll.get_v_scroll_bar())
 	column = VBoxContainer.new()
 	column.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	scroll.add_child(column)

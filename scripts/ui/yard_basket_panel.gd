@@ -1,4 +1,5 @@
 extends Control
+const PaperScrollbarStyle := preload("res://scripts/ui/paper_scrollbar_style.gd")
 signal close_requested
 signal action_requested(action: String, fish: String)
 signal retry_requested
@@ -81,6 +82,8 @@ func _ready() -> void:
 	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 	column.add_child(scroll)
+	# REQ-20261007-058：清单滚动条换成纸面浅槽 + 褐色滑块，不再是一条默认深灰条
+	PaperScrollbarStyle.apply(scroll.get_v_scroll_bar())
 	rows = VBoxContainer.new()
 	rows.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	rows.add_theme_constant_override("separation", ROW_GAP)

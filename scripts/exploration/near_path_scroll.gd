@@ -19,6 +19,8 @@ const INK := Color("5b4637")
 const MUTED := Color("8a7060")
 const APRICOT := Color("f3b27a")
 const CREAM := Color("fffaf1")
+const DISABLED_FILL := Color("f3e9db")
+const DISABLED_EDGE := Color("bfa588")
 const TOUCH_DEDUPE_MS := 400
 const BASKET_LABEL_AT := Vector2(84, 46)
 const BASKET_LABEL_WIDTH := 200.0
@@ -863,20 +865,30 @@ func _label(font_size: int, color: Color) -> Label:
 	return label
 
 
+## 画卷按钮的底：可用时奶油底 + 杏色 2px 边（不变）；不可用（如保存中、收养进行中的「收养」）
+## 用与院内布置/背篓面板同一块浅纸 f3e9db + 褪色边 bfa588，字用 MUTED，一眼看出现在点不了。
+## 边宽、圆角、内容边距各状态相同，切换可用性时按钮不变大小。
+static func button_style(state: String) -> StyleBoxFlat:
+	var style := StyleBoxFlat.new()
+	var disabled := state == "disabled"
+	style.bg_color = DISABLED_FILL if disabled else CREAM
+	style.border_color = DISABLED_EDGE if disabled else APRICOT
+	style.set_border_width_all(2)
+	style.set_corner_radius_all(16)
+	return style
+
+
 func _button(text: String, action: Callable) -> Button:
 	var button := Button.new()
 	button.text = text
 	button.focus_mode = Control.FOCUS_NONE
 	button.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	button.add_theme_font_size_override("font_size", 17)
-	button.add_theme_color_override("font_color", INK)
-	var style := StyleBoxFlat.new()
-	style.bg_color = CREAM
-	style.border_color = APRICOT
-	style.set_border_width_all(2)
-	style.set_corner_radius_all(16)
-	for state in ["normal", "hover", "pressed", "disabled"]:
-		button.add_theme_stylebox_override(state, style)
+	for color_name: String in ["font_color", "font_hover_color", "font_pressed_color", "font_hover_pressed_color", "font_focus_color"]:
+		button.add_theme_color_override(color_name, INK)
+	button.add_theme_color_override("font_disabled_color", MUTED)
+	for state: String in ["normal", "hover", "pressed", "hover_pressed", "disabled"]:
+		button.add_theme_stylebox_override(state, button_style(state))
 	button.pressed.connect(action)
 	hud.add_child(button)
 	return button
