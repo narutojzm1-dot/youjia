@@ -1,0 +1,91 @@
+{
+  "sourceSha": "d4f29e371cd699ace745196cb0677306017fddac",
+  "startedUtc": "2026-10-07T12:54:41.290740+00:00",
+  "profileProbe": "D:/games/youjia-test/qa/native/2026-10-07-2019-impact/roaming/Godot/app_userdata/youjia-qa-profile-probe",
+  "engine": "D:/games/youjia-tmp-godot/Godot_v4.7.2-stable_win64_console.exe",
+  "tests": [
+    {
+      "entry": "import",
+      "exit": 0,
+      "summary": []
+    },
+    {
+      "entry": "audio_button_input",
+      "exit": 0,
+      "summary": [
+        "AUDIO_BUTTON_INPUT checks=648 failures=0"
+      ]
+    },
+    {
+      "entry": "fish_carry_consistency",
+      "exit": 0,
+      "summary": [
+        "[fish-carry] 79 checks []"
+      ]
+    },
+    {
+      "entry": "exploration_slice",
+      "exit": 0,
+      "summary": [
+        "EXPLORATION SLICE PASS 300/300 failures=[]"
+      ]
+    },
+    {
+      "entry": "save_coordinator",
+      "exit": 0,
+      "summary": [
+        "SAVE_COORDINATOR checks=86 failures=[]"
+      ]
+    },
+    {
+      "entry": "save_recovery",
+      "exit": 0,
+      "summary": [
+        "SAVE RECOVERY PASS 24"
+      ]
+    },
+    {
+      "entry": "yard_decor_persistence",
+      "exit": 0,
+      "summary": [
+        "YARD_DECOR_PERSISTENCE checks=15 failures=0"
+      ]
+    },
+    {
+      "entry": "yard_decor_integration",
+      "exit": 0,
+      "summary": [
+        "YARD_DECOR_INTEGRATION checks=52 failures=0"
+      ]
+    },
+    {
+      "entry": "beibei_integration",
+      "exit": 0,
+      "summary": [
+        "BEIBEI_INTEGRATION checks=46 failures=0"
+      ]
+    },
+    {
+      "entry": "album_short_landscape",
+      "exit": 0,
+      "summary": [
+        "ALBUM_SHORT_LANDSCAPE checks=57869 failures=0"
+      ]
+    },
+    {
+      "entry": "weather_transition",
+      "exit": 0,
+      "summary": [
+        "Weather transition suite passed: 75 checks"
+      ]
+    },
+    {
+      "entry": "pause_panel_fit",
+      "exit": 0,
+      "summary": [
+        "PASS: pause_panel_fit 1291 checks"
+      ]
+    }
+  ],
+  "endedUtc": "2026-10-07T12:56:32.374822+00:00"
+}
