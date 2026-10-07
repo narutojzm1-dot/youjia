@@ -10,8 +10,14 @@ Runtime: approach with the mouth offset instead of the body's centre; validate l
 
 Evidence: controlled-contact.png is an isolated native GPU rendering from the real ground-food runtime suite with controlled positions, not ordinary mouse play. Visible muzzle contacts the separate grass sprite.63 native ground-food checks (durable drop/consume/reload, competitors, pause, return home, gate cluster, duck bank and rope priority),8 cow-glance and416 generic checks pass. Initial metadata-property access was invalid; corrected to the actor's existing visual_scale metadata. Initial gate assertion compared body centre to food region; now checks the actual biting mouth enters that same region, retaining durable consumption and route checks. Earlier failing runs are not counted as passing.
 
-Still required: right-facing/reduced-motion and small viewport contact, photo compatibility, ordinary Web play, PR/CI and public package verification. Sheep/llama/duck/goose low-head food poses are separate remaining scope; this cow slice does not complete #504.
+Still required: ordinary Web cow feeding acceptance, final CI and public package verification. Sheep/llama/duck/goose low-head food poses are separate remaining scope; this cow slice does not complete #504.
 
 ## Additional compatibility verification
 
 cow_ground_graze_suite:48 checks pass for both facings, reduced motion on/off and visual scales0.75/1.25: stationary foot placement, mouth contact<2px, cel retained after actor tick, expiry after food interaction, photo JSON round trip preserving exact texture path/offset. Suite registered in daily/completions. Initial test preload compiled actor dependencies before the TuningStore autoload; changed the test to runtime loading, then all48 passed without engine errors. This is controlled compatibility coverage, not ordinary browser feeding or small-screen visual acceptance.
+
+## Viewport and ordinary Web follow-up
+
+Additional isolated native GPU capture at the first actual cow grazing frame: controlled-contact-390.png (390×844) shows the complete painted cow touching the separate grass; controlled-contact-568.png (568×320) retains the pose but the ordinary drop notice obscures part of the animal. The controlled camera was centered on the cow for the portrait capture. These are responsive render checks, not physical phone or ordinary pointer acceptance. The capture process exited0 without engine errors, stopped after these images, and is not counted as another complete63-check run.
+
+Ordinary localhost Web old save entered day43 and naturally advanced to44. Mouse walking, collecting grass and three ground drops succeeded. Other animals continued moving and competing; the cow bite moment has not yet been captured, so disappearance alone is not accepted as cow feeding evidence. No storage injection or actor teleport was used in this ordinary session. Candidate PCK SHA256: `1a09136bec6f2047cfbdeb1b92b8e505d8c499c6e55ce72e8bcc698d881bbb59`. Production package verification remains pending.
