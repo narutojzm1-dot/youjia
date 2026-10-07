@@ -2521,12 +2521,7 @@ func _show_idle_hint() -> void:
 
 ## 将 tod_fraction 映射到日段名称（用于 TOD 相位变化通知）
 func _tod_phase_name(t: float) -> String:
-	if t < 0.10: return "dawn"
-	if t < 0.30: return "morning"
-	if t < 0.55: return "noon"
-	if t < 0.72: return "afternoon"
-	if t < 0.87: return "evening"
-	return "night"
+	return preload("res://scripts/game/world_daylight.gd").phase(t)
 
 
 ## 行动按钮按下时触发短暂视觉脉冲：暖光闪亮再消散，给触控/鼠标点击明确反馈
@@ -2576,41 +2571,11 @@ func _update_season_tint(day: int) -> void:
 	_season_rect.color = Color(sc.r, sc.g, sc.b, alpha)
 
 
-## 根据 tod_fraction (0.0-1.0) 计算并应用昼夜渐变覆盖色
-## 0.0 = 日出, 0.5 = 正午, 0.85 = 黄昏, 1.0 = 深夜
-## alpha 加强约 1.5x，让昼夜变化肉眼可见，假期"很长"的感觉更明显
+## One persisted day starts at 06:00. Blend continuously through midnight
+## and the 06:00 save-day boundary; phase and clouds use the same clock.
 func _update_tod_tint(t: float) -> void:
-	if _tod_rect == null:
-		return
-	var base_color: Color
-	var alpha: float
-	if t < 0.10:
-		# 日出：金橙暖光（更明显）
-		base_color = TOD_COLORS.dawn
-		alpha = lerpf(0.14, 0.08, t / 0.10)
-	elif t < 0.25:
-		# 早晨：淡金渐隐
-		base_color = TOD_COLORS.morning
-		alpha = lerpf(0.08, 0.02, (t - 0.10) / 0.15)
-	elif t < 0.55:
-		# 正午：几乎无色
-		base_color = TOD_COLORS.noon
-		alpha = 0.0
-	elif t < 0.72:
-		# 下午：暖琥珀渐强（加深约50%）
-		base_color = TOD_COLORS.afternoon
-		alpha = lerpf(0.0, 0.14, (t - 0.55) / 0.17)
-	elif t < 0.87:
-		# 傍晚/黄昏：桃橙（更浓郁）
-		var frac := (t - 0.72) / 0.15
-		base_color = TOD_COLORS.afternoon.lerp(TOD_COLORS.evening, frac)
-		alpha = lerpf(0.14, 0.24, frac)
-	else:
-		# 夜晚：蓝紫（更深沉）
-		var frac := (t - 0.87) / 0.13
-		base_color = TOD_COLORS.evening.lerp(TOD_COLORS.night, frac)
-		alpha = lerpf(0.24, 0.32, frac)
-	_tod_rect.color = Color(base_color.r, base_color.g, base_color.b, alpha)
+	if _tod_rect != null:
+		_tod_rect.color = preload("res://scripts/game/world_daylight.gd").tint(t, TOD_COLORS)
 
 
 func _on_locale_changed(_locale: String) -> void:
