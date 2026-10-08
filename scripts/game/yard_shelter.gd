@@ -17,7 +17,7 @@ func _init(host: Node2D) -> void:
 	for id: String in IDS:
 		var actor = world.actor_named(id)
 		outdoors[id] = actor.wander_rect
-		if not world.gate.opened or is_night():
+		if not world.gate.opened or needs_shelter():
 			actor.position = BEDS[id]
 			actor._velocity = Vector2.ZERO
 			actor._gait.weight = 0.0
@@ -30,8 +30,11 @@ func is_night() -> bool:
 func inside(actor: FeltActor) -> bool:
 	return YardGround.contains(Ground.inside(), actor.position)
 
+func needs_shelter() -> bool:
+	return is_night() or world.weather == "rain"
+
 func prepare(delta: float) -> void:
-	var night := is_night()
+	var night := needs_shelter()
 	returning = false
 	for id: String in IDS:
 		var actor = world.actor_named(id)
@@ -75,10 +78,10 @@ func step(actor: FeltActor, delta: float) -> bool:
 	if id != active or not world.gate.opened:
 		rest(actor, delta)
 		return true
-	var goal: Vector2 = BEDS[id] if is_night() else outdoors[id].get_center()
+	var goal: Vector2 = BEDS[id] if needs_shelter() else outdoors[id].get_center()
 	# First approach the inside of the doorway. A direct smoothed route from
 	# the eastern beds can skim the concave rail corner between grid samples.
-	if not is_night() and inside(actor) and actor.position.x > 936.0:
+	if not needs_shelter() and inside(actor) and actor.position.x > 936.0:
 		goal = Vector2(924,466)
 	var obstacles: Array = world.physical_obstacles(id)
 	if repath <= 0.0:

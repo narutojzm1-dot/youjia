@@ -21,7 +21,9 @@ func run() -> void:
 	restored.restore(JSON.parse_string(JSON.stringify(climate.snapshot())))
 	var same := 0
 	var changed := 0
+	var rain_episodes := 0
 	for i in 80:
+		if climate.state.weather == "rain": rain_episodes += 1
 		var before: String = climate.state.weather
 		var duration: float = climate.state.remaining
 		climate.advance(duration)
@@ -31,6 +33,7 @@ func run() -> void:
 		if before == climate.state.weather: same += 1
 		else: changed += 1
 	check(same > 0 and changed > 0, "random choices include staying and changing, not fixed alternation")
+	check(rain_episodes > 0,"persisted random sequence includes rain")
 	var stable: Dictionary = climate.snapshot()
 	climate.advance(NAN)
 	climate.advance(-5)
