@@ -12,7 +12,7 @@ const TEXT := {
 	"zh-CN": {
 		"choose": "选一处，再选小物；半透明的是预览。",
 		"none": "背篓里还没有小物；去门前小路「出门走走」，捡到圆石、松果或落羽再来摆。",
-		"placed": "小物都摆出去了；选已摆好的地方，可以挪动或收回背篓。",
+		"placed": "小物都摆出去了。点地上的小物就能捡回背篓，也可以选已摆好的地方挪动。",
 		"adjust": "用箭头稍微挪动，也可收回背篓。",
 		"busy": "正在确认保存，原有摆设保留着。",
 		"failed": "这次还未确认保存，原有物品保留着。",
@@ -20,7 +20,7 @@ const TEXT := {
 	"en": {
 		"choose": "Choose a place and a find. The faded item is a preview.",
 		"none": "No finds yet. Choose \"Take a walk outside\" on the path by the gate, then come back.",
-		"placed": "All your finds are placed. Pick a filled place to adjust or put one back.",
+		"placed": "All your finds are placed. Tap one on the ground to pick it up, or choose a filled place to nudge it.",
 		"adjust": "Use the arrows to adjust, or put it back.",
 		"busy": "Checking the save. Your arrangement is kept.",
 		"failed": "Not confirmed yet. Your items are kept.",

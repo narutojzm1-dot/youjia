@@ -29,6 +29,10 @@ def stage(dist: Path, work: Path, game: str) -> dict:
     sizes = config['fileSizes']
     sizes[f'{engine}.wasm'] = sizes.pop('index.wasm')
     sizes[f'{game}.pck'] = sizes.pop('index.pck')
+    config['fileHashes'] = {
+        f'{engine}.wasm': hashes['wasm'],
+        f'{game}.pck': hashlib.sha256((dist / 'index.pck').read_bytes()).hexdigest(),
+    }
     text = text[:match.start(1)] + json.dumps(config, separators=(',', ':')) + text[match.end(1):]
     script = "script.src = 'index.js'"
     if script not in text:

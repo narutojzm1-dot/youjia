@@ -82,6 +82,7 @@ run_godot suite test/title_copy_balance_suite.gd
 run_godot suite test/touch_hint_mode_suite.gd
 node test/loading_shell_test.cjs
 node test/download_assets_test.mjs
+node test/sha256_stream_test.mjs
 
 node test/motion_preference_test.cjs
 

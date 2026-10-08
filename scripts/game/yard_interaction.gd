@@ -73,6 +73,10 @@ static func selected(world: Node2D, target: String) -> Dictionary:
 	var player = world.get_player()
 	if player == null:
 		return {}
+	if target.begins_with("decor:") and world.decor_view != null:
+		var placed: Dictionary = world.decor_view.placed(target.get_slice(":", 1))
+		if placed.is_empty(): return {}
+		return action(target, placed.point, "action.pickup_food", 48.0)
 	if target.begins_with("ground_food:") and world.ground_food != null:
 		var item: Dictionary = world.ground_food.find_item(int(target.get_slice(":", 1)))
 		if item.is_empty() or not world.ground_food.held().is_empty(): return {}
@@ -105,6 +109,10 @@ static func pointer(world: Node2D, point: Vector2) -> Dictionary:
 	if world.inventory_enabled and world.is_leading():
 		var exit_action := YardSceneHotspots.at_point(world, point)
 		if exit_action.get("target", "") == YardSceneHotspots.PATH_OUT: return exit_action
+	if world.inventory_enabled and world.decor_view != null:
+		var placed: Dictionary = world.decor_view.hit_spot(point)
+		if not placed.is_empty():
+			return action("decor:%s" % placed.spot, placed.point, "action.pickup_food", 48.0)
 	if world.inventory_enabled and world.ground_food != null:
 		var item: Dictionary = world.ground_food.near_item(point, 22.0)
 		if not item.is_empty() and world.ground_food.held().is_empty():
@@ -171,7 +179,7 @@ static func fishing(world: Node2D) -> Dictionary:
 
 static func reach(target: String) -> float:
 	if target == "drop_food": return INF
-	if target.begins_with("ground_food:"): return 48.0
+	if target.begins_with("ground_food:") or target.begins_with("decor:"): return 48.0
 	if target == "llama": return 88.0
 	if target == "grass": return 78.0
 	if target == "plant": return 75.0

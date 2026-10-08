@@ -88,6 +88,7 @@ import('./web/boot/download_assets.mjs');
         cfg = json.loads(re.search(r'const config = (\{.*?\});', page)[1])
         assert cfg['executable'] == engine and cfg['mainPack'] == f'game-{short}.pck'
         assert set(cfg['fileSizes']) == {f'{engine}.wasm', f'game-{short}.pck'}
+        assert cfg['fileHashes'] == {name: hashlib.sha256((checkout / name).read_bytes()).hexdigest() for name in cfg['fileSizes']}
         assert f"script.src = '{engine}.js'" in page
         for name, digest in manifest['engineAssets']['sha256'].items():
             assert hashlib.sha256((checkout / name).read_bytes()).hexdigest() == digest

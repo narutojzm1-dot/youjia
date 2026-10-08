@@ -237,7 +237,7 @@ func empty_basket_hint(en: bool) -> String:
 	for id: String in ExplorationRoutes.FINDS:
 		if int(counts.get(id, 0)) > 0: return ""
 	if not value.get("places", {}).is_empty():
-		return "All your finds are placed. Pick a filled place to adjust or put one back." if en else "小物都摆出去了；选已摆好的地方，可以挪动或收回背篓。"
+		return "All your finds are placed. Tap one on the ground to pick it up, or choose a filled place to nudge it." if en else "小物都摆出去了。点地上的小物就能捡回背篓，也可以选已摆好的地方挪动。"
 	return "No finds yet. Choose \"Take a walk outside\" on the path by the gate, then come back." if en else "背篓里还没有小物；去门前小路「出门走走」，捡到圆石、松果或落羽再来摆。"
 
 func handle_touch_event(event: InputEvent) -> void:
