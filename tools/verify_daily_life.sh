@@ -81,6 +81,7 @@ run_godot suite test/web_save_bridge/legacy_suite.gd
 run_godot suite test/title_copy_balance_suite.gd
 run_godot suite test/touch_hint_mode_suite.gd
 node test/loading_shell_test.cjs
+node test/download_assets_test.mjs
 
 node test/motion_preference_test.cjs
 
@@ -99,5 +100,11 @@ run_godot suite test/find_reveal_name_slip_suite.gd
 run_godot suite test/nearby_direct_pick_suite.gd
 
 run_godot suite test/yard_gate_suite.gd
+
 run_godot suite test/yard_shelter_suite.gd
+
 run_godot suite test/regional_rain_suite.gd
+
+run_godot suite test/hold_hotbar_suite.gd
+
+run_godot suite test/hold_hotbar_mount_suite.gd

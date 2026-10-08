@@ -1,0 +1,6 @@
+{"requests": [{"range": null, "offset": 0, "bytes": 51493512}, {"range": "bytes=1048576-", "offset": 1048576, "bytes": 50444936}], "cold": {"build": "game-7ae8f89", "timings": {"engineScriptReady": 201, "bootstrapReady": 206, "downloadRetry": 20305, "downloadComplete": 20509, "engineReady": 25317, "firstFrame": 25881}}, "reload": {"engineScriptReady": 10, "bootstrapReady": 32, "assetCacheHit": 41, "downloadComplete": 180, "engineReady": 1905, "firstFrame": 2329}, "warm": {"engineScriptReady": 7, "bootstrapReady": 26, "assetCacheHit": 34, "downloadComplete": 158, "engineReady": 1871, "firstFrame": 2301}, "errors": []}
+Traceback (most recent call last):
+  File "D:\games\youjia-test\assistant-recovery\verify-loading-candidate.py", line 106, in <module>
+    assert not record['invalidRange']['hidden'];assert '断点响应不正确' in record['invalidRange']['detail'];assert 'firstFrame' not in record['invalidRange']['timings']
+                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError
