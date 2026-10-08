@@ -1,0 +1,9 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ERROR: runtime requires an isolated profile
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://test/animal_companion_suite.gd:12)
+       [1] runtime (res://test/animal_companion_suite.gd:68)
+       [2] run (res://test/animal_companion_suite.gd:56)
+ANIMAL_COMPANION checks=118 failures=1

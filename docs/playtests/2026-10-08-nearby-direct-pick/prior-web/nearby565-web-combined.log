@@ -1,0 +1,13 @@
+{"view": [390, 844], "stage": "title", "keepsakes": {}}
+{"view": [390, 844], "stage": "yard", "keepsakes": {}}
+Traceback (most recent call last):
+  File "D:\games\youjia-test\assistant-recovery\browser-complete565.py", line 84, in <module>
+    active=wait_state(lambda v:(v.get('exploration',{}).get('session') or {}).get('state')=='active','ordinary outing')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\games\youjia-test\assistant-recovery\browser-complete565.py", line 51, in wait_state
+    if value and predicate(value):return value
+                 ^^^^^^^^^^^^^^^^
+  File "D:\games\youjia-test\assistant-recovery\browser-complete565.py", line 84, in <lambda>
+    active=wait_state(lambda v:(v.get('exploration',{}).get('session') or {}).get('state')=='active','ordinary outing')
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'get'
