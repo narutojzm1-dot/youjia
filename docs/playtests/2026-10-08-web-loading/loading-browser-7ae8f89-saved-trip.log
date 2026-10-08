@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "D:\games\youjia-test\assistant-recovery\verify-loading-candidate.py", line 83, in <module>
+    assert record['saveAfter']['exploration_committed_serial']==record['saveBefore']['exploration_committed_serial']>0
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError
