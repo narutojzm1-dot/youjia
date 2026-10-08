@@ -99,5 +99,11 @@ run_godot suite test/find_reveal_name_slip_suite.gd
 run_godot suite test/nearby_direct_pick_suite.gd
 
 run_godot suite test/yard_gate_suite.gd
+
 run_godot suite test/yard_shelter_suite.gd
+
 run_godot suite test/regional_rain_suite.gd
+
+run_godot suite test/hold_hotbar_suite.gd
+
+run_godot suite test/hold_hotbar_mount_suite.gd
