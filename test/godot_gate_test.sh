@@ -245,5 +245,7 @@ road_freedom|ROAD_FREEDOM checks=1 failures=0|ROAD_FREEDOM checks=0 failures=0
 yard_decor_button_states|[yard-decor-button-states] PASS: 1 checks|[yard-decor-button-states] PASS: 0 checks
 yard_decor_panel_hug|[yard-decor-panel-hug] PASS: 1 checks|[yard-decor-panel-hug] PASS: 0 checks
 yard_basket_button_states|[yard-basket-button-states] PASS: 1 checks|[yard-basket-button-states] PASS: 0 checks
+hold_hotbar|[hold-hotbar] PASS: 1 checks|[hold-hotbar] PASS: 0 checks
+hold_hotbar_mount|[hold-hotbar-mount] PASS: 1 checks|[hold-hotbar-mount] PASS: 0 checks
 UI_COMPLETIONS
 echo "GROK UI COMPLETION CONTRACT PASS $((checks-ui_before))"

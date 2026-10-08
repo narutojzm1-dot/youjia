@@ -73,6 +73,7 @@ var _album_chip: Button
 var _weather_chip: Button
 var _basket_chip: Button
 var _basket_panel: Control
+var _hold_hotbar: Control
 var _residents: RefCounted
 var _inventory: RefCounted
 var _decor: RefCounted
@@ -355,6 +356,7 @@ func _ready() -> void:
 	decor_button.pressed.connect(_show_decor)
 	_basket_panel.rows.add_child(decor_button)
 	_basket_panel.decor_button = decor_button
+	_ensure_hold_hotbar()
 	I18n.locale_changed.connect(_on_locale_changed)
 	TuningStore.value_changed.connect(_on_tuning_value_changed)
 	resized.connect(_layout)
@@ -470,6 +472,8 @@ func _input(event: InputEvent) -> void:
 		if event.is_action_pressed("pause") and not event.is_echo():
 			_hide_decor()
 			get_viewport().set_input_as_handled()
+		elif _decor_ground_recall(event):
+			get_viewport().set_input_as_handled()
 		elif event is InputEventScreenTouch or event is InputEventScreenDrag:
 			_last_touch_ms = Time.get_ticks_msec()
 			_decor_panel.handle_touch_event(event)
@@ -584,6 +588,12 @@ func _input(event: InputEvent) -> void:
 				button.pressed.emit()
 			get_viewport().set_input_as_handled()
 			return
+	# 手持快捷栏触屏命中（与背篓格子同思路；不依赖 GUI 路由）
+	if _in_game_hud and _hold_hotbar != null and _hold_hotbar.visible:
+		if _hold_hotbar.press_at(event_pos):
+			_last_touch_ms = Time.get_ticks_msec()
+			get_viewport().set_input_as_handled()
+			return
 	# 触屏点到空白处：更新时间戳，交给 _unhandled_input 处理世界点击
 	if is_touch_press:
 		_last_touch_ms = Time.get_ticks_msec()
@@ -594,14 +604,24 @@ func _unhandled_input(event: InputEvent) -> void:
 		return
 	if _pause_screen.visible or _album_screen.visible or _confirm_screen.visible:
 		return
+	if _basket_panel != null and _basket_panel.visible:
+		return
+	if _decor_panel != null and _decor_panel.visible:
+		return
 	# 触屏和鼠标世界点击：触屏已在 _input() 中更新 _last_touch_ms，此处只处理
 	# 真正落到世界画布上的点击（HUD 命中测试未拦截的情况）。
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 		if Time.get_ticks_msec() - _last_touch_ms > 400:
+			if _try_hold_place_at(event.position):
+				get_viewport().set_input_as_handled()
+				return
 			_world.request_pointer_action(_screen_to_world(event.position))
 		get_viewport().set_input_as_handled()
 	elif event is InputEventScreenTouch and event.pressed:
 		# 触屏已在 _input() 中标记时间戳；此分支只处理落到世界的触点
+		if _try_hold_place_at(event.position):
+			get_viewport().set_input_as_handled()
+			return
 		_world.request_pointer_action(_screen_to_world(event.position))
 		get_viewport().set_input_as_handled()
 
@@ -1253,6 +1273,7 @@ func _start_holiday(save_progress: bool = true) -> void:
 	_world.day_advanced.connect(_on_day_advanced)
 	_world.fish_caught.connect(_on_fish_caught)
 	_world.ground_food_requested.connect(_on_ground_food_action)
+	_world.decor_recall_requested.connect(_on_decor_recall)
 	_on_inventory_changed()
 	_on_decor_changed()
 	_on_residents_changed()
@@ -1337,6 +1358,7 @@ func _on_exploration_entered() -> void:
 	_world.input_enabled = false
 	_world.visible = false
 	_hud.visible = false
+	_sync_hold_hotbar_visibility()
 	_notice_time = 0.0
 	_exploration.scroll.pause_requested.connect(_toggle_pause)
 	_path_rain = null
@@ -1392,6 +1414,7 @@ func _show_title(save_progress: bool = true) -> void:
 	_pause_screen.visible = false
 	_confirm_screen.visible = false
 	_album_screen.visible = false
+	_sync_hold_hotbar_visibility()
 	# 回到标题时清除昼夜叠色与季节底色
 	if _tod_rect != null:
 		_tod_rect.color = Color(0, 0, 0, 0)
@@ -1409,6 +1432,7 @@ func _show_basket() -> void:
 	_basket_panel.visible = true
 	_ui_layer.move_child(_basket_panel, _ui_layer.get_child_count() - 1)
 	_on_inventory_changed()
+	_sync_hold_hotbar_visibility()
 	get_tree().paused = true
 	AudioDirector.set_game_paused(true)
 	_basket_panel.close_button.grab_focus()
@@ -1420,6 +1444,7 @@ func _hide_basket() -> void:
 	AudioDirector.set_game_paused(false)
 	if _world != null: _world.input_enabled = true
 	get_viewport().gui_release_focus()
+	_sync_hold_hotbar_visibility()
 
 
 func _on_inventory_changed() -> void:
@@ -1432,6 +1457,9 @@ func _on_inventory_changed() -> void:
 		if _basket_panel.decor_button != null:
 			_basket_panel.decor_button.text = "Arrange finds in the yard" if I18n.get_locale() == "en" else "把小物摆在院里"
 			_basket_panel.decor_button.disabled = _inventory.busy()
+	if _hold_hotbar != null:
+		_hold_hotbar.update_view(inventory, SaveStore.get_available_keepsakes(), _inventory.state, _inventory.busy())
+		_sync_hold_hotbar_visibility()
 
 
 func _show_decor() -> void:
@@ -1440,6 +1468,7 @@ func _show_decor() -> void:
 	_decor_panel.visible = true
 	_hud.visible = false
 	_notice.visible = false
+	_sync_hold_hotbar_visibility()
 	_decor_camera = {"position": _camera.position, "zoom": _camera.zoom}
 	_on_decor_changed()
 	_decor_panel.choose_spot(_decor_panel.selected)
@@ -1455,7 +1484,40 @@ func _hide_decor() -> void:
 		_camera.zoom = _decor_camera.zoom
 		_camera.force_update_scroll()
 	_hud.visible = true
+	_sync_hold_hotbar_visibility()
 	_show_basket()
+
+
+func _decor_ground_recall(event: InputEvent) -> bool:
+	if _decor == null or _world == null or _decor.busy():
+		return false
+	var at := Vector2.INF
+	if event is InputEventScreenTouch and event.pressed:
+		at = event.position
+	elif event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+		if Time.get_ticks_msec() - _last_touch_ms < 400:
+			return false
+		at = event.position
+	else:
+		return false
+	if _decor_panel.paper != null and _decor_panel.paper.get_global_rect().has_point(at):
+		return false
+	var Decor = load("res://scripts/inventory/yard_decor.gd")
+	var spot: String = Decor.spot_at(_decor.view(), _screen_to_world(at))
+	if spot.is_empty():
+		return false
+	_last_touch_ms = Time.get_ticks_msec()
+	_on_decor_recall(spot)
+	return true
+
+
+func _on_decor_recall(spot: String) -> void:
+	if _decor == null or _decor.busy() or spot.is_empty():
+		return
+	if _decor.request("remove", spot, {}):
+		_show_notice_key("notice.decor_recalled")
+	else:
+		_show_notice_key("notice.decor_recall_blocked")
 
 
 func _on_decor_changed() -> void:
@@ -1523,6 +1585,7 @@ func _toggle_pause() -> void:
 		if paused: _world.cancel_scene_feedback()
 	_refresh_texts()
 	_sync_notice_visibility()
+	_sync_hold_hotbar_visibility()
 
 
 func _request_destructive_action(action: String) -> void:
@@ -1531,6 +1594,7 @@ func _request_destructive_action(action: String) -> void:
 	_pending_destructive_action = action
 	_confirm_screen.visible = true
 	_refresh_texts()
+	_sync_hold_hotbar_visibility()
 
 
 func _confirm_destructive_action() -> void:
@@ -1562,6 +1626,7 @@ func _confirm_destructive_action() -> void:
 func _cancel_destructive_action() -> void:
 	_pending_destructive_action = ""
 	_confirm_screen.visible = false
+	_sync_hold_hotbar_visibility()
 
 
 func _on_weather_pressed() -> void:
@@ -1862,6 +1927,7 @@ func _show_album() -> void:
 	else:
 		_rebuild_album(PackedStringArray(SaveStore.get_album()))
 	_refresh_texts()
+	_sync_hold_hotbar_visibility()
 
 
 func _hide_album() -> void:
@@ -1870,6 +1936,7 @@ func _hide_album() -> void:
 	if _screen == "game": _hud.visible = true
 	if _world != null and not _pause_screen.visible:
 		_world.input_enabled = true
+	_sync_hold_hotbar_visibility()
 
 
 func _rebuild_album(collected: PackedStringArray) -> void:
@@ -2185,6 +2252,71 @@ func _on_cinematic_view_changed(stage: String) -> void:
 	_cinematic_bottom_bar.color.a = bar_alpha
 
 
+
+## REQ-20261008-075：底部手持快捷栏挂在 _ui_layer，跟背篓同一份 inventory 视图。
+## 开院可见；暂停 / 相册 / 确认 / 背篓 / 布置面板时隐藏。树暂停由那些叠层负责，快捷栏本身不 WHEN_PAUSED。
+func _ensure_hold_hotbar() -> void:
+	if _hold_hotbar != null or _ui_layer == null:
+		return
+	_hold_hotbar = load("res://scripts/ui/hold_hotbar.gd").new()
+	_hold_hotbar.name = "HoldHotbar"
+	_ui_layer.add_child(_hold_hotbar)
+	_hold_hotbar.withdraw_requested.connect(_on_hold_withdraw)
+	_hold_hotbar.visible = false
+	_layout_hold_hotbar()
+
+
+func _layout_hold_hotbar() -> void:
+	if _hold_hotbar == null:
+		return
+	var Hotbar = load("res://scripts/ui/hold_hotbar.gd")
+	var rect: Rect2 = Hotbar.preferred_rect(size, size.x < 700.0)
+	_hold_hotbar.position = rect.position
+	_hold_hotbar.size = rect.size
+	_sync_hold_hotbar_visibility()
+
+
+func _sync_hold_hotbar_visibility() -> void:
+	if _hold_hotbar == null:
+		return
+	var show := (
+		_screen == "game"
+		and _hud.visible
+		and not _pause_screen.visible
+		and not _album_screen.visible
+		and not _confirm_screen.visible
+		and (_basket_panel == null or not _basket_panel.visible)
+		and (_decor_panel == null or not _decor_panel.visible)
+	)
+	_hold_hotbar.visible = show
+
+
+func _on_hold_withdraw(kind: String) -> void:
+	if _inventory == null or kind.is_empty() or _inventory.busy():
+		return
+	_inventory.request("withdraw", kind)
+
+
+## 武装点地投放：合法才走既有 drop 事务；非法只提示，不扣数、不改 held。
+func _try_hold_place_at(screen_pos: Vector2) -> bool:
+	if _hold_hotbar == null or not _hold_hotbar.visible or not _hold_hotbar.is_place_armed():
+		return false
+	if _inventory == null or _inventory.busy():
+		return false
+	var inventory: Dictionary = _inventory.view()
+	var held := str(inventory.get("held", ""))
+	if held.is_empty():
+		return false
+	var Intent = load("res://scripts/inventory/hold_place_intent.gd")
+	var obstacles: Array = _world.physical_obstacles("player") if _world != null else []
+	var intent: Dictionary = Intent.food_drop_at(held, _screen_to_world(screen_pos), obstacles)
+	if intent.has("error"):
+		_show_notice_key("notice.cannot_walk")
+		return true
+	_inventory.request(str(intent.get("action", "drop")), str(intent.get("kind", held)), intent.get("details", {}))
+	return true
+
+
 func _screen_to_world(screen: Vector2) -> Vector2:
 	return get_viewport().get_canvas_transform().affine_inverse() * screen
 
@@ -2229,6 +2361,12 @@ func _can_show_notice() -> bool:
 
 func _sync_notice_visibility() -> void:
 	_notice.visible = _notice_time > 0.0 and _can_show_notice()
+	# Keep growing/wrapped notices above the actual hotbar, not behind its slots.
+	var bottom := -130.0 if size.x < 700.0 else -70.0
+	if _hold_hotbar != null and _hold_hotbar.visible:
+		bottom = _hold_hotbar.position.y - size.y - 8.0
+	_notice.offset_top = bottom - 40.0
+	_notice.offset_bottom = bottom
 
 
 func _show_notice_key(key: String, params: Dictionary = {}) -> void:
@@ -2355,6 +2493,7 @@ func _layout() -> void:
 	_action_button.position = Vector2(pad if compact else size.x-_action_button.size.x-pad,size.y-68.0)
 	_fit_pause_panel()
 	_fit_confirm_panel()
+	_layout_hold_hotbar()
 
 
 ## 目标纸片按目标文字的实际行数伸缩（REQ-20261005-029）：
