@@ -507,6 +507,14 @@ func get_view() -> Dictionary:
 		view["can_return"] = _can_return_here()
 		view["carry_limit"] = _catalog.carry_limit(_route_id) if not route.is_empty() else 0
 		view["taken"] = _taken.duplicate()
+		# Ordinary ground finds are visible before visiting. This preview uses
+		# the existing trip/stop seed, never visits, persists or reveals secrets.
+		view["ground_offers"] = {}
+		for stop_id: String in route.get("stops", {}):
+			var stop: Dictionary = route.stops[stop_id]
+			if not stop.get("hidden", {}).is_empty() or _taken.has(stop_id): continue
+			var visible_offer: String = _offers.get(stop_id, _offer_for_stop(stop_id))
+			if not visible_offer.is_empty(): view.ground_offers[stop_id] = visible_offer
 		var hidden: Dictionary = route.get("stops", {}).get(_current_stop, {}).get("hidden", {})
 		view["hidden_search"] = not hidden.is_empty() and offer.is_empty() and _companion != null and _companion.get("actor_id", "") == hidden.actor_id
 	else:
@@ -552,6 +560,10 @@ func to_record() -> Variant:
 ## ───────────── 内部 ─────────────
 
 func _roll_offer(stop_id: String) -> void:
+	_offers[stop_id] = _offer_for_stop(stop_id)
+
+
+func _offer_for_stop(stop_id: String) -> String:
 	var stop: Dictionary = _catalog.get_route(_route_id)["stops"][stop_id]
 	var pool: Array = stop.get("find_pool", [])
 	var empty_weight: int = int(stop.get("empty_weight", 0))
@@ -559,17 +571,15 @@ func _roll_offer(stop_id: String) -> void:
 	for entry: Dictionary in pool:
 		total += int(entry["weight"])
 	if total <= 0:
-		_offers[stop_id] = ""
-		return
+		return ""
 	var rng := RandomNumberGenerator.new()
 	rng.seed = C.derive_stop_seed(_rng_seed, stop_id)
 	var roll := rng.randi_range(0, total - 1)
 	for entry: Dictionary in pool:
 		roll -= int(entry["weight"])
 		if roll < 0:
-			_offers[stop_id] = entry["find_id"]
-			return
-	_offers[stop_id] = ""
+			return entry["find_id"]
+	return ""
 
 
 func _can_return_here() -> bool:

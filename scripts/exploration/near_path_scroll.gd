@@ -50,9 +50,11 @@ var suppressed_touches := 0
 var revealed: Dictionary = {}
 # 点按路面后要走去的位置；方向键一按就取消
 var walk_target: Dictionary = {}
+var _pending_collect_stop := ""
 var _home_hold := 0.0
 var _walked := false
 var _last_touch_ms := -10000
+var _entry_pointer_held := false
 var _cam_zoom := 1.0
 var _cam_pos := Vector2.ZERO
 var _caption_time := 0.0
@@ -78,6 +80,9 @@ var leaf_texture: Texture2D
 func setup(trip_host: ExplorationHost, _weather: String, resident_controller: RefCounted = null) -> void:
 	host = trip_host
 	residents = resident_controller
+	# A HUD mouse press may create this scene before its paired touch event.
+	# Finish that existing gesture here without treating it as a ground click.
+	_entry_pointer_held = Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT)
 	process_mode = Node.PROCESS_MODE_PAUSABLE
 	var paper := Polygon2D.new()
 	paper.polygon = PackedVector2Array([Vector2(-3000, -3000), Vector2(layout.SIZE.x + 3000, -3000), Vector2(layout.SIZE.x + 3000, layout.SIZE.y + 3000), Vector2(-3000, layout.SIZE.y + 3000)])
@@ -121,6 +126,7 @@ func setup(trip_host: ExplorationHost, _weather: String, resident_controller: Re
 
 
 func release() -> void:
+	_pending_collect_stop = ""
 	_cancel_search()
 	if reveal != null:
 		reveal.settle(true)
@@ -137,6 +143,8 @@ func release() -> void:
 ## 暂停或失焦时丢掉点按目标，恢复后不自己走起来
 func _notification(what: int) -> void:
 	if what in [NOTIFICATION_PAUSED, NOTIFICATION_APPLICATION_FOCUS_OUT, NOTIFICATION_WM_WINDOW_FOCUS_OUT]:
+		_entry_pointer_held = false
+		_pending_collect_stop = ""
 		_cancel_search()
 		walk_target = {}
 		if reveal != null:
@@ -171,6 +179,7 @@ func _process(delta: float) -> void:
 	walk(direction, delta)
 	if leaving:
 		return
+	if not _pending_collect_stop.is_empty(): _collect_at_stop(_pending_collect_stop)
 	_update_search()
 	_update_resident()
 	_update_turtle()
@@ -187,7 +196,11 @@ func walk(direction: Vector2, delta: float) -> void:
 	var step := layout.WALK_SPEED * delta
 	var tap_home := false
 	var inspect_stop := ""
+	var collect_stop := ""
 	if direction.length() > 0.01:
+		_pending_collect_stop = ""
+		if _closed_edge(spot) and direction.normalized().dot(layout.tangent(spot.arm, spot.d)) > layout.MIN_ALIGN:
+			_show_caption(I18n.t("exploration.caption.closed_edge"), 3.0)
 		walk_target = {}
 		spot = layout.step_input(spot, direction, step)
 	elif not walk_target.is_empty():
@@ -195,6 +208,7 @@ func walk(direction: Vector2, delta: float) -> void:
 		if layout.route_length(spot, walk_target) < 0.5:
 			tap_home = bool(walk_target.get("home", false)) and layout.at_home(spot)
 			inspect_stop = str(walk_target.get("inspect_stop", ""))
+			collect_stop = str(walk_target.get("collect_stop", ""))
 			walk_target = {}
 	var moved := foot() - before
 	if moved.length() > 0.01 and reveal != null:
@@ -220,6 +234,45 @@ func walk(direction: Vector2, delta: float) -> void:
 	if stray != null and _rescued_here: stray.advance(delta, spot, walker, reduced_motion())
 	_snap_camera()
 	if not inspect_stop.is_empty(): observe(inspect_stop)
+	if not collect_stop.is_empty(): _collect_at_stop(collect_stop)
+
+
+## Wait for an earlier unresolved write, then collect once at the actual
+## road anchor. A new movement cancels the intent; capacity never auto-swaps.
+func _collect_at_stop(stop_id: String) -> void:
+	if leaving: return
+	var entry := layout.stop(stop_id)
+	if entry.is_empty() or layout.route_length(spot, entry) > 0.5: return
+	var view := host.view()
+	if view.get("unsaved_changes", false) and view.get("last_save_failure", "").is_empty():
+		_pending_collect_stop = stop_id
+		_show_caption(I18n.t("exploration.caption.pick_saving"), 3.0)
+		return
+	_pending_collect_stop = ""
+	if not ground_finds().has(stop_id): return
+	if not observe(stop_id) or host.view().get("current_stop", "") != stop_id: return
+	var choice := pick_choice()
+	var picked: bool = choice.kind == "take" and pick()
+	observing = ""
+	_cancel_search()
+	if picked:
+		_show_caption(I18n.t("exploration.caption.pick_saving"), 3.0)
+	elif choice.kind == "swap":
+		_show_caption(I18n.t("exploration.caption.basket_full_keep"), 4.0)
+	_refresh()
+
+
+func ground_finds() -> Dictionary:
+	var view := host.view() if host != null else {}
+	var result: Dictionary = view.get("ground_offers", {}).duplicate()
+	for stop_id: String in revealed:
+		if not str(revealed[stop_id]).is_empty() and not view.get("taken", {}).has(stop_id):
+			result[stop_id] = revealed[stop_id]
+	return result
+
+
+func _closed_edge(at: Dictionary) -> bool:
+	return at.arm != layout.HOME_ARM and float(at.d) >= layout.arm_length(at.arm) - 0.5
 
 
 ## ───────────── 看景、带上、回院 ─────────────
@@ -406,11 +459,21 @@ func _unhandled_input(event: InputEvent) -> void:
 		return
 	var point := Vector2.INF
 	var pressed := false
+	if _entry_pointer_held and (event is InputEventScreenTouch or event is InputEventMouseButton):
+		if not event.pressed: _entry_pointer_held = false
+		get_viewport().set_input_as_handled()
+		return
 	if event is InputEventScreenTouch:
 		point = event.position
 		pressed = event.pressed and not event.canceled
 		_last_touch_ms = Time.get_ticks_msec()
 	elif event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
+		# Godot can dispatch the mouse synthesized from a touch first. Let the
+		# real touch own this gesture, so returning cannot expose yard controls
+		# before its matching touch press arrives.
+		if event.device == InputEvent.DEVICE_ID_EMULATION:
+			get_viewport().set_input_as_handled()
+			return
 		if Time.get_ticks_msec() - _last_touch_ms < TOUCH_DEDUPE_MS:
 			get_viewport().set_input_as_handled()
 			return
@@ -423,27 +486,32 @@ func _unhandled_input(event: InputEvent) -> void:
 		press_at(point)
 
 
-## 屏幕坐标的一次按下：先命中按钮；观察态里其余位置不走路（计数，免得误以为卡住时再提示）；
-## 其余点按沿路走到离按下处最近的路面；点在院门一带（NearPathLayout.is_home_tap），走到门口就回院
+## 屏幕坐标的一次按下：先命中按钮，观察态点地直接继续；
+## 物品点击走近拾取，其余点击沿道路走到近处；点院门走到门口回院
 func press_at(point: Vector2) -> void:
 	for button: Button in [_return_button, _pause_button, _look_button, _pick_button, _go_button]:
 		if button.is_visible_in_tree() and button.get_global_rect().has_point(point):
 			if not button.disabled: button.pressed.emit()
 			return
 	if not observing.is_empty():
-		suppressed_touches += 1
-		_show_caption(_observe_caption() + "\n" + I18n.t("exploration.caption.continue_hint"), 0.0)
-		return
+		end_observe()
+	_pending_collect_stop = ""
 	var art := screen_to_art(point)
-	# A visible place marker is an invitation to walk there and look, never an
-	# automatic pickup. Hidden animal finds remain hidden until searched.
+	var finds := ground_finds()
 	for entry: Dictionary in layout.STOPS:
-		if entry.id == "leaf_pile" or not entry.has("item"): continue
+		if not entry.has("item"): continue
 		if point.distance_to(art_to_screen(entry.item)) <= 28.0:
-			walk_target = layout.nearest(layout.position(entry))
-			walk_target["inspect_stop"] = entry.id
-			return
+			if finds.has(entry.id):
+				walk_target = layout.nearest(layout.position(entry))
+				walk_target["collect_stop"] = entry.id
+				return
+			if entry.id == "leaf_pile":
+				walk_target = layout.nearest(layout.position(entry))
+				walk_target["inspect_stop"] = entry.id
+				return
 	var target := layout.nearest(art)
+	if _closed_edge(target) and (art - layout.position(target)).dot(layout.tangent(target.arm, target.d)) > 24.0:
+		_show_caption(I18n.t("exploration.caption.closed_edge"), 3.0)
 	walk_target = target.duplicate()
 	walk_target["home"] = layout.is_home_tap(art)
 
@@ -480,12 +548,6 @@ func _snap_camera() -> void:
 ## ───────────── 画面与界面 ─────────────
 
 func _draw_items() -> void:
-	for entry: Dictionary in layout.STOPS:
-		if entry.id == "leaf_pile" or not entry.has("item") or revealed.has(entry.id): continue
-		var anchor: Vector2 = entry.item
-		items.draw_circle(anchor, 14.0, Color(1.0, 0.97, 0.85, 0.82))
-		items.draw_arc(anchor, 14.0, 0, TAU, 24, Color(0.48, 0.35, 0.18, 0.8), 2.0, true)
-		items.draw_circle(anchor, 3.0, Color(0.48, 0.35, 0.18, 0.8))
 	if leaf_texture != null and not layout.stop("leaf_pile").is_empty():
 		var anchor: Vector2 = layout.stop("leaf_pile").item
 		var spread := 1.0 if not str(revealed.get("leaf_pile", "")).is_empty() else 0.0
@@ -493,11 +555,11 @@ func _draw_items() -> void:
 			spread = maxf(spread, clampf((companion.search_elapsed - 0.7) / 1.7, 0.0, 1.0))
 		var leaf_size := leaf_texture.get_size() * (56.0 / leaf_texture.get_width()) * layout.depth(anchor.y)
 		items.draw_texture_rect(leaf_texture, Rect2(anchor - leaf_size * 0.5 + Vector2(24, 4) * spread, leaf_size), false, Color(1, 1, 1, lerpf(1.0, 0.65, spread)))
-	var taken: Dictionary = host.view().get("taken", {}) if host != null else {}
-	for stop_id: String in revealed:
-		var find_id: String = revealed[stop_id]
+	var finds := ground_finds()
+	for stop_id: String in finds:
+		var find_id: String = finds[stop_id]
 		var anchor: Vector2 = layout.stop(stop_id).get("item", Vector2.ZERO)
-		if find_id.is_empty() or taken.has(stop_id) or anchor == Vector2.ZERO:
+		if find_id.is_empty() or anchor == Vector2.ZERO:
 			continue
 		var depth := layout.depth(anchor.y)
 		if stop_id == observing:

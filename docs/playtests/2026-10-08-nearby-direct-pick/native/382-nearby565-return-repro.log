@@ -1,0 +1,18 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ERROR: return gesture cannot hit newly visible pause mouse_first
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://test/nearby_direct_pick_suite.gd:15)
+       [1] _return_input (res://test/nearby_direct_pick_suite.gd:156)
+ERROR: return gesture cannot hit newly visible pause mouse_first
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://test/nearby_direct_pick_suite.gd:15)
+       [1] _return_input (res://test/nearby_direct_pick_suite.gd:156)
+ERROR: return gesture cannot hit newly visible pause mouse_first
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://test/nearby_direct_pick_suite.gd:15)
+       [1] _return_input (res://test/nearby_direct_pick_suite.gd:156)
+NEARBY_DIRECT_PICK checks=180 failures=3

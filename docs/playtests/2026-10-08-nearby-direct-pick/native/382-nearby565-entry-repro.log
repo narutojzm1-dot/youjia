@@ -1,0 +1,33 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ERROR: entering gesture cannot become nearby ground movement
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://test/nearby_direct_pick_suite.gd:15)
+       [1] _return_input (res://test/nearby_direct_pick_suite.gd:178)
+ERROR: entry release does not move newly entered scene
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://test/nearby_direct_pick_suite.gd:15)
+       [1] _return_input (res://test/nearby_direct_pick_suite.gd:184)
+ERROR: entering gesture cannot become nearby ground movement
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://test/nearby_direct_pick_suite.gd:15)
+       [1] _return_input (res://test/nearby_direct_pick_suite.gd:178)
+ERROR: entry release does not move newly entered scene
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://test/nearby_direct_pick_suite.gd:15)
+       [1] _return_input (res://test/nearby_direct_pick_suite.gd:184)
+ERROR: entering gesture cannot become nearby ground movement
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://test/nearby_direct_pick_suite.gd:15)
+       [1] _return_input (res://test/nearby_direct_pick_suite.gd:178)
+ERROR: entry release does not move newly entered scene
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://test/nearby_direct_pick_suite.gd:15)
+       [1] _return_input (res://test/nearby_direct_pick_suite.gd:184)
+NEARBY_DIRECT_PICK checks=189 failures=6
