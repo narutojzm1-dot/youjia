@@ -10,7 +10,7 @@ extends SceneTree
 
 const VIEWPORTS := [Vector2i(390, 844), Vector2i(844, 390), Vector2i(1280, 720), Vector2i(360, 640), Vector2i(700, 400)]
 const TARGETS := ["llama", "cow", "horse", "sheep_a", "sheep_b", "goose", "duck_a", "grass", "plant", "fishing", "windowbox", "shore_stones", "fence_gate", "path_out"]
-const ACTIONS := ["fish", "fish_waiting", "reel", "pet", "observe_windowbox", "touch_shore", "observe_fence", "plant", "water", "harvest", "toss_fish", "release", "feed", "grass", "lead", "go_out"]
+const ACTIONS := ["fish", "fish_waiting", "reel", "pet", "observe_windowbox", "touch_shore", "observe_fence", "open_gate", "close_gate", "plant", "water", "harvest", "toss_fish", "release", "feed", "grass", "lead", "go_out"]
 const CONTEXTS := ["hud.hint.default", "hud.hint.leading", "hud.hint.carrying", "hud.hint.near_grass", "hud.hint.near_llama", "hud.hint.near_pond", "hud.hint.fishing", "hud.hint.fish_bite", "hud.hint.plant_empty", "hud.hint.plant_water", "hud.hint.plant_bloomed", "hud.hint.near_animal", "hud.hint.carrying_fish"]
 const MIN_PAPER := 48.0
 const MARGIN := 16.0

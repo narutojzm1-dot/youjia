@@ -54,6 +54,7 @@ const SEASON_COLORS := {
 var _paper: TextureRect
 var _world_root: Node2D
 var _world: YardWorld
+var _path_rain: Node2D
 var _exploration: ExplorationDirector
 var _camera: Camera2D
 var _title_screen: Control
@@ -394,6 +395,7 @@ func _process(delta: float) -> void:
 		_exploration.idle_tick(delta)
 	elif _screen == "exploring" and _world != null and not _pause_screen.visible and not _confirm_screen.visible and not _save_problem_active:
 		_world.advance_world_time(delta)
+		_sync_path_rain(delta)
 	var reduced := bool(TuningStore.get_value("ui.reduced_motion", false))
 	var lerp_rate := 12.0 if reduced else 3.2
 	_cam_zoom = lerpf(_cam_zoom, _cam_target_zoom, 1.0 - exp(-delta * lerp_rate))
@@ -1238,7 +1240,8 @@ func _start_holiday(save_progress: bool = true) -> void:
 		SaveStore.get_plant_state(),
 		SaveStore.get_first_fish_caught(),
 		SaveStore.get_animal_relationship_memory(),
-		SaveStore.get_world_weather()
+		SaveStore.get_world_weather(),
+		SaveStore.get_yard_gate_open()
 	)
 	_world.album_updated.connect(_on_album_updated)
 	_world.notice_requested.connect(_show_notice_key)
@@ -1321,7 +1324,7 @@ func _on_exploration_requested() -> void:
 	if _inventory != null and _inventory.busy(): return
 	if _decor != null and _decor.busy(): return
 	_world._save_progress()
-	var weather := "overcast" if _world.weather == "overcast" else "sunny"
+	var weather := "sunny" if _world.weather == "sun" else _world.weather
 	_exploration.try_begin({"day": _world.holiday_day, "elapsed": _world._day_elapsed}, weather, null, _world.companion_context())
 
 
@@ -1336,6 +1339,22 @@ func _on_exploration_entered() -> void:
 	_hud.visible = false
 	_notice_time = 0.0
 	_exploration.scroll.pause_requested.connect(_toggle_pause)
+	_path_rain = null
+	_sync_path_rain(0.0)
+
+
+## Public regional weather layer. Near-path motion/geometry stays with its Owner.
+func _sync_path_rain(delta: float) -> void:
+	if _world == null or _exploration.scroll == null: return
+	if not is_instance_valid(_path_rain):
+		_path_rain = preload("res://scripts/game/regional_rain.gd").new()
+		_exploration.scroll.add_child(_path_rain)
+		_path_rain.configure(_exploration.scroll.layout.SIZE,false)
+		_path_rain.restore({"clock":0.0,"amount":1.0 if _world.weather == "rain" else 0.0,"reduced":bool(TuningStore.get_value("ui.reduced_motion",false))})
+	_path_rain.advance(delta,_world.weather == "rain",bool(TuningStore.get_value("ui.reduced_motion",false)))
+	var tint := Color(0.78,0.82,0.89) if _world.weather == "rain" else Color(0.88,0.91,0.96) if _world.weather == "overcast" else Color.WHITE
+	var painting: Sprite2D = _exploration.scroll.painting
+	painting.modulate = tint if delta == 0.0 or bool(TuningStore.get_value("ui.reduced_motion",false)) else painting.modulate.lerp(tint,clampf(delta/3.0,0.0,1.0))
 
 
 func _on_exploration_returned(notice_key: String) -> void:

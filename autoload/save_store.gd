@@ -555,6 +555,14 @@ func request_album(photos: PackedStringArray, moments: Dictionary = {}) -> Strin
 		return current)
 
 
+func get_yard_gate_open() -> bool:
+	return _data.get("yard_gate_open", false) == true and _data.get("yard_gate_open", false) is bool
+
+
+func request_yard_gate(opened: bool) -> String:
+	return request_patch("yard-gate", {"yard_gate_open": opened})
+
+
 func get_world_weather() -> Dictionary:
 	return preload("res://scripts/game/world_weather.gd").sanitize(_data.get("world_weather", {}))
 

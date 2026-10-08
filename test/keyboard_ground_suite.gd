@@ -42,10 +42,13 @@ func run():
  check(not main._confirm_screen.visible and main._pause_screen.visible and main._world==w,"Esc cancels restart without resetting")
  key(KEY_ESCAPE,true);key(KEY_ESCAPE,false);await frames(1)
  check(not paused,"Esc exits remaining pause")
- for point in [Vector2(810,430),Vector2(850,455),Vector2(895,480),Vector2(865,478),Vector2(758,442)]:
+ for point in [Vector2(810,430),Vector2(850,455),Vector2(875,480),Vector2(865,478),Vector2(758,442)]:
   check(not YardGround.allows(point,YardGround.lawn(),true),"painted rail is not walkable %s"%point)
   w.request_pointer_action(point)
   check(not w._has_walk_goal,"rail tap never starts a walk %s"%point)
+ w.request_pointer_action(Vector2(895,480))
+ check(w._pending_interaction == "fence_gate" and w._has_walk_goal,"door leaf tap approaches its explicit action instead of becoming a rail walk")
+ check(not w.gate.opened and not YardGround.allows(Vector2(895,480),w.player_ground(),true),"distant door tap neither opens early nor permits walking through its wood")
  for point in [Vector2(740,480),Vector2(790,510),Vector2(840,535),Vector2(850,540)]:
   check(YardGround.allows(point,YardGround.lawn(),true),"foreground grass remains reachable %s"%point)
  w.request_pointer_action(w.actor_named("llama").position)

@@ -1,5 +1,15 @@
 # 需求列表
 
+## 2026-10-08 #565 细雨与牛羊避雨接续
+
+牛羊居棚/放出/自然夜归PR602已公开核验（source d4093935efac690b8a2fc1813e884f1029da607a）。CODEX-LEAD在codex/lead-rain-shelter-565推进可保存随机细雨、池塘GPU雨纹、同地域近郊雨层、牛羊白天避雨及照片当时雨势；[本片证据与限制](playtests/2026-10-08-regional-rain/README.md)。使用既有共享天气与门洞，不另建时钟或隐式扣库存。马/羊驼避雨、休息资源、入屋睡眠、雨声和星月夜景尚未完成。ASSISTANT独立近郊，Grok界面主线保留。
+
+
+## 2026-10-08 #565 棚门实现接续
+
+CODEX-LEAD 在 `codex/lead-yard-shelter-565` 实现可保存的棚门开关、门洞双向通行、栏杆遮挡、占位保护及照片状态保留。[本片证据](playtests/2026-10-08-yard-gate/README.md)。棚门PR600已公开验证（source 3d0dd9f103a2d00387f4c6c3bec99970824e7ce1）。CODEX-LEAD现于codex/lead-shelter-residents-565接续牛羊居棚、开门依次走出、共享夜间回棚和独立卧姿；[接续证据](playtests/2026-10-08-yard-shelter/README.md)。自动夜归时先持久打开关闭的门，队列未结束暂不能关门；不瞬移或扣食物。当前待完整CI与发布，雨天避雨、马/羊驼和房门睡眠仍未完成。ASSISTANT继续独立近郊，不恢复停用角色或逐PR外部审查。
+
+
 ## 2026-10-08 共享日夜基础（#565）
 
 CODEX-LEAD认领并实现[共享时辰与日光基础](design/world-daylight-2026-10-08.md)：统一06:00起算的公共小时、日段、太阳强度和现有画面/云层，不改存档格式；ASSISTANT独立消费近郊呈现。当前候选，后续完整星月/雨夜音画、归棚和入睡闭环继续，未经普通Web及公开核验不称发布完成。
