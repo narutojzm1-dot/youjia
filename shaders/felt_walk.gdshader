@@ -12,6 +12,16 @@ uniform float native_walk_face = 1.0;
 uniform bool face_override = false;
 uniform sampler2D expression_texture : filter_linear;
 uniform vec4 face_region = vec4(0.0,0.0,1.0,1.0);
+uniform float blink_amount = 0.0;
+uniform sampler2D blink_texture : filter_linear;
+uniform vec4 blink_eye_a = vec4(0.0, 0.0, 1.0, 1.0);
+uniform vec4 blink_eye_b = vec4(0.0, 0.0, 1.0, 1.0);
+
+float eye_mask(vec2 uv, vec4 region) {
+	vec2 local = (uv - region.xy) / region.zw;
+	vec2 edge = smoothstep(vec2(0.0), vec2(0.14), local) * smoothstep(vec2(0.0), vec2(0.14), vec2(1.0) - local);
+	return edge.x * edge.y;
+}
 
 varying vec4 tint;
 
@@ -48,5 +58,11 @@ void fragment() {
 		// Preserve the canonical alpha silhouette, feet and body exactly.
 	}
 	float inside = step(0.0, uv.x) * step(uv.x, 1.0) * step(0.0, uv.y) * step(uv.y, 1.0);
+	if (blink_amount > 0.0) {
+		vec4 closed = texture(blink_texture, uv);
+		float mask = max(eye_mask(uv, blink_eye_a), eye_mask(uv, blink_eye_b));
+		ink.rgb = mix(ink.rgb, closed.rgb, mask * blink_amount * closed.a);
+		// Canonical alpha, pose, muzzle, body and feet stay unchanged.
+	}
 	COLOR = ink * tint * inside;
 }
