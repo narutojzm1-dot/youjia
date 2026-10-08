@@ -16,3 +16,7 @@ Owner：CODEX-LEAD；保留 GROK-CONTRIBUTOR PR #601 原提交 `416565a430ba4670
 鱼类库存和挂载事务由自动套件覆盖。本轮普通 UI 未成功走完钓鱼取得鱼的流程，不将其写成真实钓鱼验证；没有将本地截图冒充公开 Pages。合入、CI 和公开发布核验以集成 PR 后续精确 SHA/Actions 记录为准。
 
 本片仍不包含拖出背篓、移除独立布置面板、近郊开发或马/羊驼避雨资源接入。
+
+## 日版本补充
+
+普通本地Web刷新仍恢复手持小米，非法天空落点保留手持，截图见 `web-reopened-held.jpeg`、`web-invalid-preserved.jpeg`。最终公开版本与适用边界见[日结](../../releases/2026-10-08.md)。
