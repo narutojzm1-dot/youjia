@@ -102,7 +102,7 @@ echo "[publish] cache-control meta tags injected; data-build=${ENTRY}"
 # 验证三处均已替换
 echo "[publish] verifying HTML patches..."
 python3 - "$HTML" "$ENTRY" "$WORK_DIR/engine-assets.json" <<'PYEOF'
-import sys, json, re
+import sys, json, re, hashlib, pathlib
 
 html_path = sys.argv[1]
 entry = sys.argv[2]
@@ -127,6 +127,9 @@ if pck_key not in file_sizes:
     errors.append(f"fileSizes missing key '{pck_key}' (got: {list(file_sizes.keys())})")
 if wasm_key not in file_sizes:
     errors.append(f"fileSizes missing key '{wasm_key}'")
+expected_hashes = {name: hashlib.sha256((pathlib.Path(html_path).parent / name).read_bytes()).hexdigest() for name in (pck_key, wasm_key)}
+if cfg.get('fileHashes') != expected_hashes:
+    errors.append('fileHashes do not match actual staged WASM/PCK bytes')
 
 if f"script.src = '{engine}.js'" not in content:
     errors.append('script.src does not match engine bytes')

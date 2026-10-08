@@ -141,6 +141,7 @@ var _volume_touch_slider: HSlider
 var _day_label: Label
 # 昼夜色调覆盖层
 var _tod_canvas: CanvasLayer
+var _house_lights_overlay: Node2D
 var _tod_rect: ColorRect
 # 季节底色（渲染在昼夜层之下，随假期天数推进）
 var _season_rect: ColorRect
@@ -437,6 +438,12 @@ func _process(delta: float) -> void:
 		camera_position = _bound_quiet_camera(camera_position, camera_home, _world.get_backdrop_bounds(), size, zoom, hud_space)
 	_camera.position = camera_position
 	_cam_effective_offset = camera_position - camera_home
+	if _house_lights_overlay != null:
+		_house_lights_overlay.visible = _screen == "game" and _world != null
+		if _house_lights_overlay.visible:
+			_house_lights_overlay.transform = _world.get_global_transform_with_canvas()
+			_house_lights_overlay.lights = _world.house.lights
+			_house_lights_overlay.queue_redraw()
 	# Both regional scenes share the clock and the same painted-light overlay.
 	if _screen in ["game", "exploring"] and _world != null:
 		_update_tod_tint(_world.tod_fraction())
@@ -659,6 +666,8 @@ func _build_layers() -> void:
 	_tod_rect.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	_tod_rect.material = tint_material
 	_tod_canvas.add_child(_tod_rect)
+	_house_lights_overlay = preload("res://scripts/game/house_lights.gd").new()
+	_tod_canvas.add_child(_house_lights_overlay)
 
 
 func _build_title_screen() -> void:
@@ -1424,6 +1433,7 @@ func _show_title(save_progress: bool = true) -> void:
 
 
 func _show_basket() -> void:
+	if _world != null and _world.house != null and _world.house.busy(): return
 	if _screen != "game" or _world == null or _pause_screen.visible or _album_screen.visible:
 		return
 	_cancel_photo_arrivals()
@@ -1859,6 +1869,13 @@ func _retryable_save_problems(include_fish: bool) -> Dictionary:
 
 
 func _retry_save() -> void:
+	if _world != null and _world.house != null and _world.house.failed:
+		var coverage := {}
+		for old_id in _save_problems:
+			if _save_problems[old_id].kind == "house-sleep": coverage[old_id] = _save_problems[old_id].duplicate(true)
+		var next: String = _world.house.retry()
+		if not next.is_empty(): _save_retry_coverage[next] = {"problems":coverage,"untracked_revision":-1}
+		return
 	if _decor != null and _decor.busy() and _decor.state in ["failed", "unknown"]:
 		_decor.retry()
 		return
@@ -2279,9 +2296,10 @@ func _layout_hold_hotbar() -> void:
 func _sync_hold_hotbar_visibility() -> void:
 	if _hold_hotbar == null:
 		return
-	var show := (
+	var show: bool = (
 		_screen == "game"
 		and _hud.visible
+		and (_world == null or _world.house == null or not _world.house.busy())
 		and not _pause_screen.visible
 		and not _album_screen.visible
 		and not _confirm_screen.visible
@@ -2292,6 +2310,7 @@ func _sync_hold_hotbar_visibility() -> void:
 
 
 func _on_hold_withdraw(kind: String) -> void:
+	if _world != null and _world.house != null and _world.house.busy(): return
 	if _inventory == null or kind.is_empty() or _inventory.busy():
 		return
 	_inventory.request("withdraw", kind)
@@ -2306,6 +2325,9 @@ func _try_hold_place_at(screen_pos: Vector2) -> bool:
 	var inventory: Dictionary = _inventory.view()
 	var held := str(inventory.get("held", ""))
 	if held.is_empty():
+		return false
+	# A painted house door is an explicit scene action, never a food drop spot.
+	if _world != null and YardSceneHotspots.at_point(_world, _screen_to_world(screen_pos)).get("target", "") == YardSceneHotspots.HOUSE_DOOR:
 		return false
 	var Intent = load("res://scripts/inventory/hold_place_intent.gd")
 	var obstacles: Array = _world.physical_obstacles("player") if _world != null else []
@@ -2549,6 +2571,7 @@ func _hug_hint_width() -> void:
 
 
 func _refresh_hud() -> void:
+	_sync_hold_hotbar_visibility()
 	if _world == null:
 		return
 	_hud.modulate.a = float(TuningStore.get_value("ui.hud.opacity", 0.94))
