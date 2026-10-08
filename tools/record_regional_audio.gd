@@ -54,6 +54,19 @@ func run() -> void:
 		rows.append(row)
 		print("REGIONAL_PCM ",JSON.stringify(row))
 	director.set_yard_active(false)
+	# Real native playback crosses each imported loop boundary, with no
+	# manual finished callback/restart that could conceal a missing loop flag.
+	for cue: String in ["night.ambience","rain.ambience","sleep.ambience","night.music"]:
+		var probe := AudioStreamPlayer.new()
+		probe.stream = director._streams[cue]
+		probe.volume_db = -80.0
+		root.add_child(probe)
+		probe.play(probe.stream.get_length()-0.2)
+		await create_timer(0.8).timeout
+		var loop_ok: bool = probe.playing and probe.get_playback_position() < 2.0
+		rows.append({"case":"loop-boundary-"+cue,"passed":loop_ok,"position":probe.get_playback_position(),"listening":"not reviewed"})
+		print("REGIONAL_LOOP ",cue," passed=",loop_ok)
+		probe.queue_free()
 	var output := FileAccess.open(folder.path_join("capture.json"),FileAccess.WRITE)
 	output.store_string(JSON.stringify(rows,"\t")+"\n")
 	output.close()

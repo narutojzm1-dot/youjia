@@ -22,6 +22,7 @@ func run() -> void:
 	check(capacity.ambience == 4 and capacity.music == 2,"fixed six music/environment voices")
 	for cue: String in ["night.music","night.ambience","rain.ambience","sleep.ambience"]:
 		check(audio._streams.get(cue) != null,"actual imported candidate " + cue)
+		check(audio._streams[cue].loop,"native and Web both loop " + cue)
 	for n: bool in [false,true]:
 		for r: bool in [false,true]:
 			for s: bool in [false,true]:

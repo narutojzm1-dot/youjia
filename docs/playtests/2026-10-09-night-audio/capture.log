@@ -1,10 +1,14 @@
 Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
 OpenGL API 3.3.0 NVIDIA 561.00 - Compatibility - Using Device: NVIDIA - NVIDIA GeForce RTX 4070 Laptop GPU
 
-REGIONAL_PCM {"audio_driver":"WASAPI","case":"day","frames":190976,"listening":"not reviewed","mix_rate":48000,"no_dropped_frames":true,"passed":true,"peak":0.174962386488914,"rms":0.0356232694598807}
-REGIONAL_PCM {"audio_driver":"WASAPI","case":"night","frames":192000,"listening":"not reviewed","mix_rate":48000,"no_dropped_frames":true,"passed":true,"peak":0.0434333197772503,"rms":0.00352760827960929}
-REGIONAL_PCM {"audio_driver":"WASAPI","case":"rain-night","frames":192000,"listening":"not reviewed","mix_rate":48000,"no_dropped_frames":true,"passed":true,"peak":0.0177695099264383,"rms":0.00368319546401457}
-REGIONAL_PCM {"audio_driver":"WASAPI","case":"sleep","frames":192000,"listening":"not reviewed","mix_rate":48000,"no_dropped_frames":true,"passed":true,"peak":0.0207141172140837,"rms":0.00316521069343654}
+REGIONAL_PCM {"audio_driver":"WASAPI","case":"day","frames":192000,"listening":"not reviewed","mix_rate":48000,"no_dropped_frames":true,"passed":true,"peak":0.174962386488914,"rms":0.0355970522035809}
+REGIONAL_PCM {"audio_driver":"WASAPI","case":"night","frames":192512,"listening":"not reviewed","mix_rate":48000,"no_dropped_frames":true,"passed":true,"peak":0.0434327460825443,"rms":0.0035230309822559}
+REGIONAL_PCM {"audio_driver":"WASAPI","case":"rain-night","frames":192512,"listening":"not reviewed","mix_rate":48000,"no_dropped_frames":true,"passed":true,"peak":0.0193329360336065,"rms":0.0036862596373706}
+REGIONAL_PCM {"audio_driver":"WASAPI","case":"sleep","frames":192000,"listening":"not reviewed","mix_rate":48000,"no_dropped_frames":true,"passed":true,"peak":0.0438143499195576,"rms":0.0078762921100089}
 REGIONAL_PCM {"audio_driver":"WASAPI","case":"environment-off","frames":192000,"listening":"not reviewed","mix_rate":48000,"no_dropped_frames":true,"passed":true,"peak":0.0,"rms":0.0}
-REGIONAL_PCM {"audio_driver":"WASAPI","case":"wake","frames":192000,"listening":"not reviewed","mix_rate":48000,"no_dropped_frames":true,"passed":true,"peak":0.174962386488914,"rms":0.035670689011161}
+REGIONAL_PCM {"audio_driver":"WASAPI","case":"wake","frames":192000,"listening":"not reviewed","mix_rate":48000,"no_dropped_frames":true,"passed":true,"peak":0.174962386488914,"rms":0.0356631299505254}
+REGIONAL_LOOP night.ambience passed=true
+REGIONAL_LOOP rain.ambience passed=true
+REGIONAL_LOOP sleep.ambience passed=true
+REGIONAL_LOOP night.music passed=true
 REGIONAL_PCM_COMPLETE passed=true
