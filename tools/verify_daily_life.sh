@@ -107,3 +107,23 @@ run_godot suite test/regional_rain_suite.gd
 run_godot suite test/hold_hotbar_suite.gd
 
 run_godot suite test/hold_hotbar_mount_suite.gd
+
+run_godot suite test/yard_decor_place_label_suite.gd
+
+run_godot suite test/yard_keepsake_shadow_suite.gd
+
+run_godot suite test/yard_basket_dismiss_focus_suite.gd
+
+run_godot suite test/yard_basket_zone_label_suite.gd
+
+run_godot suite test/yard_decor_settle_ring_suite.gd
+
+run_godot suite test/photo_arrival_fade_in_suite.gd
+
+run_godot suite test/fish_catch_palette_suite.gd
+
+run_godot suite test/path_snail_fade_suite.gd
+
+run_godot suite test/find_reveal_name_fade_suite.gd
+
+run_godot suite test/walk_goal_marker_suite.gd
