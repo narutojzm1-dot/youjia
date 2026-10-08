@@ -38,6 +38,7 @@ var walker: SequenceResident
 var companion: PathCompanion
 var camera: Camera2D
 var painting: Sprite2D
+var scenery_motion: NearPathMotion
 var items: Node2D
 var hud: CanvasLayer
 # 人物在路上的位置：哪条路、离岔口多远（原画像素）
@@ -94,6 +95,9 @@ func setup(trip_host: ExplorationHost, _weather: String, resident_controller: Re
 	painting.centered = false
 	painting.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
 	add_child(painting)
+	scenery_motion = NearPathMotion.new()
+	scenery_motion.bind(painting, reduced_motion())
+	TuningStore.value_changed.connect(_motion_setting_changed)
 	items = Node2D.new()
 	items.name = "Finds"
 	add_child(items)
@@ -126,6 +130,9 @@ func setup(trip_host: ExplorationHost, _weather: String, resident_controller: Re
 
 
 func release() -> void:
+	if scenery_motion != null: scenery_motion.release()
+	if TuningStore.value_changed.is_connected(_motion_setting_changed):
+		TuningStore.value_changed.disconnect(_motion_setting_changed)
 	_pending_collect_stop = ""
 	_cancel_search()
 	if reveal != null:
@@ -166,6 +173,11 @@ func reduced_motion() -> bool:
 	return bool(TuningStore.get_value("ui.reduced_motion", false))
 
 
+func _motion_setting_changed(id: String, _requested: Variant, _active: Variant) -> void:
+	if id == "ui.reduced_motion" and scenery_motion != null:
+		scenery_motion.apply(not village and not leaving, reduced_motion())
+
+
 func foot() -> Vector2:
 	return layout.position(spot)
 
@@ -173,6 +185,7 @@ func foot() -> Vector2:
 func _process(delta: float) -> void:
 	if leaving:
 		return
+	if scenery_motion != null: scenery_motion.advance(delta, reduced_motion())
 	var direction := Vector2.ZERO
 	if observing.is_empty():
 		direction = Input.get_vector("move_left", "move_right", "move_up", "move_down", 0.2)
@@ -640,6 +653,7 @@ func cross_page() -> bool:
 	walk_target = {}
 	_home_hold = 0.0
 	painting.texture = load(layout.ART)
+	if scenery_motion != null: scenery_motion.apply(not village, reduced_motion())
 	walker.position = foot()
 	walker.advance(0.0, Vector2.ZERO, layout.depth(foot().y), facing, true)
 	walker.z_index = roundi(foot().y)
