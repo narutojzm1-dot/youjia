@@ -52,6 +52,7 @@ var _step_phase := 0.0
 var _stuck := 0.0
 var _velocity := Vector2.ZERO
 var _gait := GroundedGait.new()
+var _blink: RefCounted
 var _rig: PlantedGait
 var _following := false
 var _native_facing := 1.0
@@ -112,6 +113,9 @@ func setup(config: Dictionary) -> void:
 	set_expression("idle")
 	_native_facing = float(config.get("native_facing", 1.0))
 	_gait.setup(_sprite, float(config.get("leg_start",0.74 if species in ["goose", "duck"] else 0.68)))
+	if species == "cow":
+		_blink = preload("res://scripts/entities/painted_blink.gd").new()
+		_blink.bind(_gait._material)
 	_apply_face_override()
 	if species == "llama" and bool(config.get("experimental_planted_gait", false)):
 		enable_experimental_planted_gait()
@@ -143,6 +147,8 @@ func enable_experimental_planted_gait() -> void:
 
 
 func set_expression(expression_id: String) -> void:
+	if _blink != null:
+		_blink.cancel()
 	current_expression = expression_id
 	var posture_key := _painted_posture()
 	var texture_key := posture_key if posture_key != "idle" else expression_id
@@ -493,6 +499,8 @@ func tick(delta: float, world_size: Vector2) -> void:
 			set_expression("idle")
 	# 活的画：脚钉在落点上。鸭子只在水面轻轻起伏，不横着滑过院子。
 	if posed and state == "pose":
+		if _blink != null:
+			_blink.cancel()
 		var bob := 0.0
 		if species == "duck" and not reduced:
 			bob = sin(_breath * 1.4) * 2.0
@@ -654,11 +662,15 @@ func tick(delta: float, world_size: Vector2) -> void:
 		_sprite.position.y = 0.0
 		_sprite.rotation = 0.0
 		_rig.tick(delta, moved, depth, reduced)
+	if _blink != null:
+		_blink.advance(delta, not reduced and not posed and state == "rest" and _posture_id == "chew" and _ack_cel.is_empty() and _velocity.length() <= 0.3 and _gait.weight <= 0.08 and _sprite.texture.resource_path == _blink.SOURCE)
 	z_index = roundi(position.y)
 
 
 ## Road adapters own movement and depth; reuse the same anchored painted gait.
 func advance_path(delta: float, moved: Vector2, depth: float, reduced: bool) -> void:
+	if _blink != null:
+		_blink.cancel()
 	state = "path"
 	grazing = false
 	if absf(moved.x) > 0.01: facing = signf(moved.x)

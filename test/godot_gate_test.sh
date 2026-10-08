@@ -243,5 +243,6 @@ yard_decor_panel_hug|[yard-decor-panel-hug] PASS: 1 checks|[yard-decor-panel-hug
 yard_basket_button_states|[yard-basket-button-states] PASS: 1 checks|[yard-basket-button-states] PASS: 0 checks
 hold_hotbar|[hold-hotbar] PASS: 1 checks|[hold-hotbar] PASS: 0 checks
 hold_hotbar_mount|[hold-hotbar-mount] PASS: 1 checks|[hold-hotbar-mount] PASS: 0 checks
+painted_blink|PAINTED_BLINK checks=1 failures=0|PAINTED_BLINK checks=0 failures=0
 UI_COMPLETIONS
 echo "GROK UI COMPLETION CONTRACT PASS $((checks-ui_before))"
