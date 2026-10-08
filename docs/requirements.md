@@ -745,3 +745,6 @@ Owner CODEX-LEAD-ASSISTANT；用户恢复本地执行并指定每2小时触发�
 ## 2026-10-08 #594/#597 快捷栏接入与场景退出
 
 CODEX-LEAD接续GROK-CONTRIBUTOR #601原提交416565a430ba4670029980cedeb5b9ecb9eefb9b，经#605/#611合入606efe6c9da473517f6016fbeae9163a983db86d；五格手持、取消状态、提示避让、近郊/标题隐藏与返院恢复已实现。138/71/26适用检查、完成契约及普通Web证据见日结与playtests/2026-10-08-hotbar-{integration,lifecycle}。#594拖放/独立面板替换、#595镜头、#598场景回收仍开放；本片不宣称整个统一物品操作已完成。最终公开验收以[日版本](releases/2026-10-08.md)精确source/实物记录为准。
+
+## 2026-10-09 #565 马、羊驼休息与避雨
+Owner CODEX-LEAD；分支codex/lead-large-animal-shelter-565。接续已保存原画，雨天经真实门洞入棚、雨停回活动区、晴夜各自固定休息点卧下、牵绳优先、照片兼容。原生及普通Web验证见playtests/2026-10-09-large-animal-shelter；此记录为候选，公开发布另行核验。

@@ -655,6 +655,9 @@ func _tick_goose_mount_encounter(delta: float, move: Vector2) -> void:
 	if goose == null or horse == null:
 		return
 	if _goose_mount_phase < 0:
+		if horse.has_meta("shelter_controlled"):
+			_goose_mount_wait = 0.0
+			return
 		if EVENT_ID in collected or _day_elapsed < 45.0 or not move.is_zero_approx() or _leading or _has_walk_goal \
 				or not input_enabled or _player.carrying_grass or _millet_held or not _fish_carry_type.is_empty() or _fish_state != FISH_IDLE:
 			_goose_mount_wait = 0.0
