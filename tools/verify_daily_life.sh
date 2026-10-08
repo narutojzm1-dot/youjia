@@ -127,3 +127,5 @@ run_godot suite test/path_snail_fade_suite.gd
 run_godot suite test/find_reveal_name_fade_suite.gd
 
 run_godot suite test/walk_goal_marker_suite.gd
+
+run_godot suite test/exploration_tap_feedback_suite.gd
