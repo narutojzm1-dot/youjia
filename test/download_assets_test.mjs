@@ -93,4 +93,6 @@ t = fixture(()=>new Response(bytes),{caches:{open(){throw Error('storage denied'
 assert.deepEqual(await t.read('game-ab.pck'),bytes);assert.equal(t.errors.length,0);t.restore();
 t = fixture(()=>new Response(bytes),{caches:{async open(){return {...cache,put(){throw Error('quota')}}}}});
 saved.clear();assert.deepEqual(await t.read('game-ab.pck'),bytes);assert.equal(t.errors.length,0);t.restore();
+t = fixture(()=>new Response(bytes),{cacheWaitMs:5,caches:{open(){return new Promise(()=>{})}}});
+assert.deepEqual(await t.read('game-ab.pck'),bytes);assert.equal(t.errors.length,0);t.restore();
 console.log('Asset cache PASS: recovered reload, incomplete rejection, bounded retention, current-build protection and storage-denied fallback');

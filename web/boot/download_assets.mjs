@@ -4,6 +4,7 @@
 // optional, stores only completed assets, and never touches the save database.
 export function installAssetRecovery(config, {
   target = window, idleMs = 20000, maxRetries = 3,
+  cacheWaitMs = 1500,
   onRetry = () => {}, onError = () => {},
   onCacheHit = () => {},
 } = {}) {
@@ -21,16 +22,23 @@ export function installAssetRecovery(config, {
   };
   const fatal = (message) => Object.assign(new Error(message), {invalidAsset: true});
   async function recover(url, size) {
-    let cache;
+    let cache, cacheTimer;
     try {
-      cache = await target.caches?.open('youjia-startup-assets-v1');
-      const saved = await cache?.match(url);
+      const cached = target.caches && await Promise.race([
+        (async () => {
+          const store = await target.caches.open('youjia-startup-assets-v1');
+          return {store, saved: await store.match(url)};
+        })(),
+        new Promise(resolve => { cacheTimer = setTimeout(() => resolve(null), cacheWaitMs); }),
+      ]);
+      cache = cached?.store;
+      const saved = cached?.saved;
       if (saved?.headers.get('x-youjia-asset-size') === String(size)) {
-        onCacheHit({url});
-        return saved;
+        if (!stopped) { onCacheHit({url}); return saved; }
       }
-      if (saved) await cache.delete(url);
+      if (saved) cache.delete(url).catch(() => {});
     } catch { /* Private mode, quota or storage failures must not block startup. */ }
+    finally { clearTimeout(cacheTimer); }
     let offset = 0, retries = 0, etag;
     const stream = new ReadableStream({
       async start(output) {
