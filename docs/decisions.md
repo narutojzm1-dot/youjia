@@ -1,5 +1,9 @@
 # 悠长的假期 — 产品决策与需求变更台账
 
+## 2026-10-08 用户调整：Cloud 界面开发与维护，Grok 认领修 bug
+
+用户在 CURSOR-CLOUD 会话直接指示：“你的职责改为UI开发及维护，GROK那边职责改为认领BUG并修复。”CURSOR-CLOUD 接手原 Grok 界面线（新界面、布局、样式、体验修订及既有界面组件维护）；GROK-CONTRIBUTOR 改为从 QA/实玩/issue 认领缺陷并修复，与 Assistant 按缺陷编号划界。Grok 在途界面 PR 保留原提交，逐个说明自收尾或交 Cloud，Cloud 不改写其分支；#601 已由 Leader #605 接续。[完整规则](collaboration/team-focus-2026-10-06.md#2026-10-08-用户调整cloud-接界面grok-改修-bug)。仓库同步不代表 Grok 已接收。
+
 ## 2026-10-08 #565 细雨与牛羊避雨接续
 
 牛羊居棚/放出/自然夜归PR602已公开核验（source d4093935efac690b8a2fc1813e884f1029da607a）。CODEX-LEAD在codex/lead-rain-shelter-565推进可保存随机细雨、池塘GPU雨纹、同地域近郊雨层、牛羊白天避雨及照片当时雨势；[本片证据与限制](playtests/2026-10-08-regional-rain/README.md)。使用既有共享天气与门洞，不另建时钟或隐式扣库存。马/羊驼避雨、休息资源、入屋睡眠、雨声和星月夜景尚未完成。ASSISTANT独立近郊，Grok界面主线保留。

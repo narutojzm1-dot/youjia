@@ -14,6 +14,8 @@
 
 用户2026-10-05通知GROK-BUILD额度耗尽、预计10月9日恢复；按最新319持续分工，关键背景/世界图/普通物件/动物/音频资源由GAME-PRODUCER接续，Leader功能/共享框架，Assistant缺陷；旧候选保留并精确交接。开工先看[人员公告](docs/collaboration/personnel-availability.md)与登记表，不按旧排期继续等待不可执行角色；恢复仍须实际确认。
 
+**2026-10-08 用户调整：** CURSOR-CLOUD 负责界面开发与维护；GROK-CONTRIBUTOR 改为认领并修复 bug。以[团队规则](docs/collaboration/team-focus-2026-10-06.md#2026-10-08-用户调整cloud-接界面grok-改修-bug)为准，下文旧的 Cloud 探索授权仅保留历史。
+
 ## 每项工作的开始方式
 
 - 先确认自己在 `docs/agents.md` 中登记的 `Agent-ID`，再从 `docs/requirements.md` 查看负责人和状态。
