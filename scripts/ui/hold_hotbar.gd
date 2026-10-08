@@ -2,7 +2,7 @@ extends Control
 ## REQ-20261008-075（Owner GROK-CONTRIBUTOR）：Minecraft 式底部横排快捷栏。
 ## 只展示真实 yard_inventory 的手持 / 可拿食物格（小鱼 / 中鱼 / 怪鱼 / 草束 / 小米），不另建库存。
 ## 选中态跟着 held 走；点选中格可解除「点地投放」武装；点有货的其他格发出 withdraw_requested，
-## 由 Main 走既有 YardInventoryController.request("withdraw", …)。取消 / 非法落点不在此扣数。
+## 由 Main 走既有 YardInventoryController.request("withdraw", …）。取消 / 非法落点不在此扣数。
 ## 本切片不改 main.gd / yard_world.gd（开放 PR #600/#542/#592 占用）；合入方接 layout 与点地路由。
 
 signal slot_selected(kind: String)
@@ -168,8 +168,10 @@ func update_view(inventory: Dictionary, _keepsakes: Dictionary = {}, state: Stri
 		_set_armed(false)
 	else:
 		_set_selected(held)
-		# 手持变化时默认武装点地投放（玩家可再点同一格解除）
-		if not place_armed:
+		# 鱼/小米：手持变化时默认武装点地投放（玩家可再点同一格解除）。
+		# 草束不自动武装：院里拔草后仍走 YardInteraction 走动/牵绳/取消语义，
+		# 投放继续由动作键负责；需要点地投放时再点草格武装。
+		if held != "grass" and not place_armed:
 			_set_armed(true)
 
 
