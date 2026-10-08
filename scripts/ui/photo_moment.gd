@@ -90,6 +90,7 @@ static func capture(world: Node2D, rule: Dictionary) -> Dictionary:
 		"world_size": [world_size.x, world_size.y],
 		"focus": [focus.x, focus.y], "span": span,
 		"background": background, "items": items, "shadows": shadows,
+		"house_lights": float(world.house.lights) if _property(world,"house") != null else 0.0,
 		"yard_gate": world.gate_view.record.duplicate(true) if _property(world,"gate_view") != null else {},
 		"rain": world.rain.snapshot() if _property(world,"rain") != null else {},
 	})
@@ -145,6 +146,7 @@ static func sanitize(data: Variant) -> Dictionary:
 		cleaned.caption_variant = int(data.caption_variant)
 	var rain := preload("res://scripts/game/regional_rain.gd").sanitize(data.get("rain", {}))
 	if not rain.is_empty() and float(rain.amount) > 0.0: cleaned.rain = rain
+	if data.has("house_lights") and _number(data.house_lights,0.0,1.0): cleaned.house_lights = float(data.house_lights)
 	var gate: Variant = data.get("yard_gate", {})
 	if gate is Dictionary and gate.get("opened") is bool and _number(gate.get("mix"),0.0,1.0) and _numbers(gate.get("sun"),4,0.0,2.0) and _numbers(gate.get("cloud"),4,0.0,2.0):
 		cleaned.yard_gate = gate.duplicate(true)
@@ -242,6 +244,10 @@ func setup(snapshot: Dictionary) -> void:
 		# Keep legacy items (including negative-depth clouds) in their old order.
 		if item.kind == "sprite" and item.subject in ["weather_background", "weather_cloud"]:
 			_stage.move_child(visual, _shadows.get_index())
+	if float(_snapshot.get("house_lights",0.0)) > 0.0:
+		var light_view = preload("res://scripts/game/house_lights.gd").new()
+		light_view.lights = float(_snapshot.house_lights)
+		_stage.add_child(light_view)
 	if _snapshot.has("yard_gate"):
 		var gate = preload("res://scripts/game/yard_gate_view.gd").new()
 		_stage.add_child(gate)

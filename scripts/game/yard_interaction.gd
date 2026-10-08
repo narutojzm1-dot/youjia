@@ -14,6 +14,8 @@ static func primary(world: Node2D) -> Dictionary:
 	var player = world.get_player()
 	if player == null:
 		return {}
+	if world.house != null and world.house.busy():
+		return action("",player.position,"action.house_resting",INF)
 	if world.is_leading():
 		if world.inventory_enabled:
 			var exit_action := YardSceneHotspots.resolve(world, YardSceneHotspots.PATH_OUT)
