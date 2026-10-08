@@ -1287,6 +1287,7 @@ func _start_holiday(save_progress: bool = true) -> void:
 	# a new/legacy save closes before the first periodic checkpoint.
 	if SaveStore.get_world_weather().is_empty(): _world._save_progress()
 	_refresh_hud()
+	AudioDirector.set_music_scene("yard")
 	AudioDirector.set_yard_active(true)
 	if _world.holiday_day == 1 and SaveStore.get_album().is_empty():
 		_show_delayed_soft_hint()
@@ -1326,6 +1327,7 @@ func _on_exploration_requested() -> void:
 ## 画卷有自己的相机与界面；小院隐藏，公共时钟继续推进。
 func _on_exploration_entered() -> void:
 	_screen = "exploring"
+	AudioDirector.set_music_scene("near_path")
 	_cancel_photo_arrivals()
 	_on_cinematic_view_changed("")
 	_world.cancel_scene_feedback()
@@ -1340,6 +1342,7 @@ func _on_exploration_returned(notice_key: String) -> void:
 	if _screen != "exploring" or _world == null:
 		return
 	_screen = "game"
+	AudioDirector.set_music_scene("yard")
 	_world.visible = true
 	_world.input_enabled = true
 	_world.return_from_path(_exploration.last_companion)

@@ -1008,6 +1008,7 @@ func drain(save_store: Node) -> bool:
 
 func _main_round_trip() -> void:
 	var save_store := root.get_node("SaveStore")
+	var audio := root.get_node("AudioDirector")
 	var keep_before: Dictionary = save_store.get_keepsakes()
 	# 先在真实 SaveStore 里留一趟“走到一半”的记录，模拟上次外出途中关掉游戏
 	var value := seed_where(true, false)
@@ -1023,6 +1024,7 @@ func _main_round_trip() -> void:
 	await process_frame
 	main.set_process(false)
 	await main._start_holiday()
+	check(audio._music_cue == "yard.music", "Main starts a restored holiday with yard music")
 	check(main._notice_key == "notice.arrive" or main._notice_key.begins_with("notice.exploration.kept."), "Main enters the yard before the restored commit settles")
 	await drain(save_store)
 	check(main._notice_key == "notice.exploration.kept.%s" % find.get_slice(".", 2), "Main restores an interrupted walk with a kept notice")
@@ -1055,6 +1057,7 @@ func _main_round_trip() -> void:
 	world._interact_with_target(YardSceneHotspots.PATH_OUT)
 	await process_frame
 	check(main._screen == "exploring" and main._exploration.is_exploring(), "going out opens the near-path scroll")
+	check(audio._music_cue == "near_path.music", "confirmed exploration entry selects near-path music")
 	check(not world.visible and not world.input_enabled and not main._hud.visible, "the yard and its HUD rest while walking")
 	var day_before: float = world.holiday_day * world.DAY_DURATION_SECONDS + world._day_elapsed
 	main._process(1.0)
@@ -1088,6 +1091,7 @@ func _main_round_trip() -> void:
 	check(main._notice_key == "notice.exploration.back" or main._notice_key == "notice.exploration.back_empty", "back in the yard says so at once")
 	await drain(save_store)
 	check(main._screen == "game" and world.visible and world.input_enabled and main._hud.visible, "return restores the yard")
+	check(audio._music_cue == "yard.music", "normal exploration return restores yard music")
 	check(world.get_player().position.distance_to(exit.approach_points[0]) < 1.0, "the resident stands at the path end after returning")
 	check(main._camera.is_current(), "yard camera is current again")
 	check(main._notice_key == "notice.exploration.back_empty", "empty return notice in the yard")
@@ -1108,11 +1112,13 @@ func _main_round_trip() -> void:
 	var before_title: Dictionary = save_store.get_keepsakes()
 	await main._show_title()
 	check(main._screen == "title" and not main._exploration.is_exploring(), "title interrupts the walk safely")
+	check(audio._music_cue.is_empty(), "interrupting a trip to title stops scene music")
 	check(main._exploration.host.state() == C.STATE_IDLE, "interrupted walk is closed in the save")
 	check(int(save_store.get_keepsakes().get(carried_find, 0)) == int(before_title.get(carried_find, 0)) + 1, "the find carried when leaving to the title is kept")
 	await main._start_holiday()
 	await drain(save_store)
 	check(main._screen == "game" and main._notice_key == "notice.arrive", "next holiday starts in the yard with nothing pending")
+	check(audio._music_cue == "yard.music", "re-entering after an interrupted trip starts yard music")
 	# 收尾清理被拒后宿主重交（#305）：面板只在新编号确认、队列空闲后收起；绑定后失败又变了就不收
 	await drain(save_store)
 	main._on_save_rejected("cleanup-a", "exploration_cleanup", "WRITE_FAILED")

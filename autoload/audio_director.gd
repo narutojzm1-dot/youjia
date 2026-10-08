@@ -23,6 +23,7 @@ const CUES := {
 	"game.defeat": {"path": "", "bus": "SFX", "kind": "sfx"},
 	"yard.ambience": {"path": "res://assets/holiday/audio/bed_yard_env.ogg", "kind": "ambience"},
 	"yard.music": {"path": "res://assets/holiday/audio/bed_yard_music.ogg", "kind": "music"},
+	"near_path.music": {"path": "res://assets/holiday/audio/bed_near_path_music.ogg", "kind": "music"},
 }
 
 var _streams: Dictionary = {}
@@ -31,6 +32,7 @@ var _sfx_players: Array[AudioStreamPlayer] = []
 var _ui_players: Array[AudioStreamPlayer] = []
 var _music_index := 0
 var _music_cue := ""
+var _music_scene := "yard"
 var _unlocked := false
 var _headless := false
 var _paused := false
@@ -92,6 +94,7 @@ func release_streams() -> void:
 	_epoch += 1
 	_resume_token += 1
 	_yard_active = false
+	_music_scene = "yard"
 	stop_music(0.0)
 	_stop_ambience_immediate()
 	for player: AudioStreamPlayer in _sfx_players + _ui_players:
@@ -174,6 +177,16 @@ func set_yard_active(active: bool) -> void:
 		_release_idle_yard_caches()
 		return
 	_reconcile()
+
+
+## Scene is an independent fact: changing it while muted/backgrounded must
+## choose the correct track when transport is allowed to resume.
+func set_music_scene(scene_id: String) -> bool:
+	if scene_id != "yard" and scene_id != "near_path":
+		return false
+	_music_scene = scene_id
+	_reconcile()
+	return true
 
 
 func set_application_active(active: bool) -> void:
@@ -460,7 +473,7 @@ func _retire_faded_music(player: BrowserBgmPlayer, epoch: int, generation: int) 
 
 
 func _release_idle_yard_caches() -> void:
-	for cue_id: String in ["yard.music", "yard.ambience"]:
+	for cue_id: String in ["yard.music", "near_path.music", "yard.ambience"]:
 		var stream: AudioStream = _streams.get(cue_id)
 		if stream != null:
 			BrowserBgmPlayer.release_cached_stream(stream)
@@ -511,7 +524,7 @@ func _backend_starts_now(state: String) -> bool:
 
 
 func _music_continues() -> bool:
-	return _yard_active and _application_active and _music_enabled and _music_cue == "yard.music" and (_unlocked or _headless) and not _awaiting_gesture
+	return _yard_active and _application_active and _music_enabled and _music_cue == _music_scene + ".music" and (_unlocked or _headless) and not _awaiting_gesture
 
 
 func _ambience_continues() -> bool:
@@ -535,7 +548,7 @@ func _reconcile() -> void:
 	if _ambience_enabled:
 		_start_ambience()
 	if _music_enabled:
-		play_music("yard.music")
+		play_music(_music_scene + ".music")
 
 
 func _apply_transport_pause(paused: bool) -> void:

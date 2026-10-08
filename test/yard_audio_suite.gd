@@ -167,6 +167,7 @@ func _run() -> void:
 	_check(is_equal_approx(audio.music_gain(), 0.25) and is_equal_approx(audio.ambience_gain(), 0.4), "leaving and returning keeps this session's two levels")
 	audio.set_music_gain(1.0)
 	audio.set_ambience_gain(1.0)
+	await _scene_music_cases(audio)
 	audio.release_streams()
 	# This suite exercises the native transport even with a headless display.
 	# Let stopped playback objects retire before exiting the test process.
@@ -183,6 +184,57 @@ func _run() -> void:
 		push_error(failure)
 	print("YARD AUDIO FAIL ", failures.size())
 	quit(1)
+
+
+func _scene_music_cases(audio: Node) -> void:
+	var yard: AudioStream = _music_stream(audio)
+	var air: AudioStream = _ambience_stream(audio)
+	_check(audio.set_music_scene("near_path"), "near-path scene is accepted")
+	var path: AudioStream = _music_stream(audio)
+	_check(path != null and path != yard and path.resource_path.ends_with("bed_near_path_music.ogg"), "going out selects a different authored music stream")
+	_check(audio._music_continues(), "near-path finished callbacks may continue the current music")
+	var index: int = audio._music_index
+	audio.set_music_scene("near_path")
+	_check(audio._music_index == index and _ambience_stream(audio) == air, "repeated scene facts do not restart music or ambience")
+	_check(not audio.set_music_scene("unknown") and _music_stream(audio) == path, "an unknown scene does not replace the current track")
+	audio.set_music_enabled(false)
+	audio.set_music_scene("yard")
+	_check(_music_stream(audio) == null, "scene changes do not enable disabled music")
+	audio.set_music_scene("near_path")
+	audio.set_music_enabled(true)
+	_check(_music_stream(audio) == path, "enabling music starts the latest scene instead of the yard default")
+	audio.set_application_active(false)
+	audio.set_music_scene("yard")
+	_check(_transport_paused(audio) and _music_stream(audio) == path, "a background scene change keeps transport paused")
+	audio.set_application_active(true)
+	_check(_music_stream(audio) == yard and not _transport_paused(audio), "foreground reconciles the latest scene")
+	audio.set_game_paused(true)
+	audio.set_music_gain(0.0)
+	audio.set_music_scene("near_path")
+	_check(_music_stream(audio) == path and AudioServer.is_bus_mute(AudioServer.get_bus_index("Music")), "scene crossfade cannot override a zero music slider or pause")
+	audio.set_game_paused(false)
+	audio.set_music_gain(1.0)
+	for i: int in 8:
+		audio.set_music_scene("yard" if i % 2 == 0 else "near_path")
+	await create_timer(0.5).timeout
+	var active := 0
+	for player: Node in audio._music_players:
+		if player.playing: active += 1
+	_check(_music_stream(audio) == path and active == 1, "rapid scene changes retire the old voice and leave exactly one latest track")
+	_check(audio.get_voice_capacity().music == 2 and _ambience_stream(audio) == air, "scene changes reuse the same pair and leave ambience intact")
+	audio.unregister_cue("near_path.music")
+	audio.set_music_scene("near_path")
+	_check(_music_stream(audio) == null and _ambience_stream(audio) == air, "missing scene music safely silences only that layer")
+	audio.register_stream("near_path.music", path)
+	audio.set_music_scene("near_path")
+	_check(_music_stream(audio) == path, "restoring a scene resource can resume its own track")
+	audio.set_yard_active(false)
+	_check(_music_stream(audio) == null and _ambience_stream(audio) == null, "title stops near-path music too")
+	audio._on_music_finished(audio._music_players[audio._music_index])
+	_check(_music_stream(audio) == null, "late near-path completion cannot revive title audio")
+	audio.set_music_scene("yard")
+	audio.set_yard_active(true)
+	_check(_music_stream(audio) == yard, "a fresh yard entry restores the yard track")
 
 
 func _music_stream(audio: Node) -> AudioStream:
