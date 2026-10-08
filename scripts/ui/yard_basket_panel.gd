@@ -15,6 +15,44 @@ var return_button: Button
 var held_label: Label
 var scoop_button: Button
 var decor_button: Button
+## REQ-20261007-064（#565 图8，Owner GROK-CONTRIBUTOR）：玩家看到的是一张行列格子（yard_basket_grid.gd），
+## 每样东西一格、点格子弹操作。原来逐行的「名字 × N + 拿一条」清单节点仍保留（fish_buttons /
+## fish_labels / keepsake_labels 及其信号给旧接口与旧测试用），但不再显示，避免同一样东西出现两遍。
+var grid: Control
+var list_rows: Array[Control] = []
+## 院内布置面板（Main 在同一层建的兄弟节点）。Main 可直接赋值；未赋值时在同层按脚本找一次。
+var decor_panel: Control
+const DECOR_PANEL_SCRIPT := "res://scripts/ui/yard_decor_panel.gd"
+const DECOR_SPOTS_SCRIPT := "res://scripts/inventory/yard_decor.gd"
+## REQ-20261007-064 第三切片（#565 图8 拖出）：按住圆石 / 松果 / 落羽的格子拖出来，
+## 背篓纸面变半透明、暗底撤掉，院里只有还空着的固定摆放处（屋前 / 篱边 / 塘边小路）亮起杏色圈；
+## 松在亮圈里 = 打开现有布置预览、选好那一处和那件小物（不提交、不扣数量，确认仍在布置面板）；
+## 松在别处、Esc、背篓被收起或保存忙起来 = 取消，什么都不提交。
+## 院子世界（Main._world）。Main 可直接赋值；未赋值时沿父节点找一次 `_world`。
+var world: Node2D
+var drag_kind := ""
+var drag_spot := ""
+var drag_layer: Control
+var drag_ghost: TextureRect
+var shade: ColorRect
+var _drag_from := Vector2.ZERO
+var _touch_time := 0
+var _touch_kind := ""
+var _mouse_kind := ""
+var _mouse_start := Vector2.ZERO
+var _swallow_toggle := false
+## 手指 / 鼠标移动超过 DRAG_START 才算拖；列表能滚时手指竖着划仍是滚动，
+## 横着拖、列表不用滚、或按住 HOLD_MS 以后再动，才把小物拖出来
+const DRAG_START := 12.0
+const HOLD_MS := 300
+const ZONE_RADIUS := 40.0
+const ZONE_SLOP := 8.0
+const DRAG_ALPHA := 0.3
+const GHOST_SIZE := 56.0
+const ZONE_FILL := Color(0.953, 0.827, 0.682, 0.55)
+const ZONE_HOT_FILL := Color(1.0, 0.906, 0.784, 0.9)
+const ZONE_EDGE := Color("b88a61")
+const ZONE_HOT_EDGE := Color("5b4637")
 var fish_labels: Dictionary = {}
 var fish_buttons: Dictionary = {}
 var keepsake_labels: Dictionary = {}
@@ -60,7 +98,7 @@ const EMPTY_ROW_INK := Color("7a6152")
 func _ready() -> void:
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	mouse_filter = Control.MOUSE_FILTER_STOP
-	var shade := ColorRect.new()
+	shade = ColorRect.new()
 	shade.color = Color(0.2, 0.15, 0.1, 0.35)
 	shade.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	shade.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -93,14 +131,35 @@ func _ready() -> void:
 	rows.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	rows.add_theme_constant_override("separation", ROW_GAP)
 	scroll.add_child(rows)
+	# 运行时 load：格子脚本 preload 了本脚本的按钮样式，这里不能再反向 preload
+	grid = load("res://scripts/ui/yard_basket_grid.gd").new()
+	grid.name = "BasketGrid"
+	grid.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	rows.add_child(grid)
+	grid.action_requested.connect(_on_grid_action)
+	# 清单滚动后格子位置变了，操作纸片不再贴着那一格，先收起
+	scroll.get_v_scroll_bar().value_changed.connect(func(_value: float) -> void: grid.close_menu())
+	visibility_changed.connect(func() -> void:
+		if not visible:
+			cancel_drag()
+			grid.close_menu())
+	for kind: String in grid.KEEPSAKES:
+		grid.cells[kind].gui_input.connect(func(event: InputEvent) -> void: _on_cell_mouse(kind, event))
+		# 鼠标拖完松在原格上：格子自己会把这一下当点按开纸片，这里随即收起，拖出不顺带弹纸片
+		grid.cells[kind].toggled.connect(func(_on: bool) -> void:
+			if _swallow_toggle: grid.close_menu())
 	for kind: String in ["round_stone", "pine_cone", "feather"]:
 		var label := _label(18)
 		label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		rows.add_child(label)
 		keepsake_labels[kind] = label
+		label.visible = false
+		list_rows.append(label)
 	for kind: String in FISH:
 		var row := HBoxContainer.new()
 		rows.add_child(row)
+		row.visible = false
+		list_rows.append(row)
 		var label := _label(18)
 		label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		# 名字放不下就在名字内折行，不再把整张纸撑出屏幕边
@@ -129,6 +188,19 @@ func _ready() -> void:
 	close_button = _button()
 	close_button.pressed.connect(func() -> void: close_requested.emit())
 	column.add_child(close_button)
+	drag_layer = Control.new()
+	drag_layer.name = "DragZones"
+	drag_layer.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	drag_layer.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	drag_layer.visible = false
+	drag_layer.draw.connect(_draw_zones)
+	add_child(drag_layer)
+	drag_ghost = TextureRect.new()
+	drag_ghost.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	drag_ghost.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	drag_ghost.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	drag_ghost.size = Vector2.ONE * GHOST_SIZE
+	drag_layer.add_child(drag_ghost)
 	resized.connect(fit)
 	# 说明句显隐或折行变化后，隐藏期间的旧最小高度会把纸面撑高；下一帧按新内容再排一次
 	panel.minimum_size_changed.connect(_queue_fit)
@@ -177,6 +249,10 @@ func fit() -> void:
 		button.custom_minimum_size.x = row_width
 	panel.size = target
 	panel.position = (size - panel.size) * 0.5
+	# 格子按「纸内宽 − 滚动条宽」排，不论滚动条此刻显不显示，格子尺寸都不变
+	if grid != null:
+		var bar := scroll.get_v_scroll_bar().get_combined_minimum_size().x
+		grid.set_layout_width(maxf(0.0, target.x - 32.0 - bar))
 
 func _queue_fit() -> void:
 	if _fit_queued: return
@@ -234,7 +310,181 @@ func update_view(inventory: Dictionary, keepsakes: Dictionary, state: String, bu
 	retry_button.visible = state in ["failed", "unknown"]
 	retry_button.text = "Check again" if en else "再确认一次"
 	close_button.text = "Back to the yard" if en else "合上背篓"
+	grid.update_view(inventory, keepsakes, state, busy)
+	# 拖着的时候保存忙起来、或那件小物没了：直接取消，不留半截拖动
+	if not drag_kind.is_empty() and not can_drag(drag_kind): cancel_drag()
 	call_deferred("fit")
+
+func _on_grid_action(action: String, kind: String) -> void:
+	if action == "decor": open_decor_with(kind)
+	else: action_requested.emit(action, kind)
+
+## 格子里点圆石/松果/落羽「摆到院里」：走现有「把小物摆在院里」入口（Main._show_decor 收起背篓、
+## 打开布置面板），再在布置面板里预选这件；当前位置已摆了东西就换到第一个空位置。
+## 只是预览：不提交、不扣数量，确认仍由布置面板走 YardDecorController.request('place', …)。
+## 拖出时 spot 给出松手的那一处（必须空着），预览直接落在那里。
+func open_decor_with(kind: String, spot: String = "") -> void:
+	if decor_button == null or decor_button.disabled: return
+	decor_button.pressed.emit()
+	var decor := _find_decor_panel()
+	if decor == null or not decor.visible: return
+	var id: String = grid.FIND_IDS.get(kind, "")
+	if id.is_empty(): return
+	var places: Dictionary = decor.value.get("places", {})
+	if not spot.is_empty() and not places.has(spot):
+		decor.choose_spot(spot)
+	elif places.has(decor.selected):
+		for free: String in load(DECOR_SPOTS_SCRIPT).SPOTS:
+			if not places.has(free):
+				decor.choose_spot(free)
+				break
+	decor.choose_find(id)
+
+func _find_decor_panel() -> Control:
+	if decor_panel != null and is_instance_valid(decor_panel): return decor_panel
+	var parent := get_parent()
+	if parent == null: return null
+	for child: Node in parent.get_children():
+		var script: Script = child.get_script()
+		if child is Control and script != null and script.resource_path == DECOR_PANEL_SCRIPT:
+			decor_panel = child
+			return decor_panel
+	return null
+
+func _find_world() -> Node2D:
+	if world != null and is_instance_valid(world): return world
+	var node := get_parent()
+	while node != null:
+		var found: Variant = node.get("_world")
+		if found is Node2D:
+			world = found
+			return world
+		node = node.get_parent()
+	return null
+
+## 现在能不能把这一格拖出来：只有小物、背篓里有、没在确认保存、布置面板已载入且还有空位
+func can_drag(kind: String) -> bool:
+	if kind not in grid.KEEPSAKES or int(grid.counts.get(kind, 0)) <= 0 or grid._busy or not grid._loaded: return false
+	if decor_button == null or decor_button.disabled: return false
+	var decor := _find_decor_panel()
+	if decor == null or decor.busy or _find_world() == null: return false
+	return not legal_spots().is_empty()
+
+## 还空着、可以摆的固定位置（已摆了东西的那处不亮、也不接）
+func legal_spots() -> Array[String]:
+	var result: Array[String] = []
+	var decor := _find_decor_panel()
+	if decor == null or decor.value.is_empty(): return result
+	var places: Dictionary = decor.value.get("places", {})
+	for spot: String in load(DECOR_SPOTS_SCRIPT).SPOTS:
+		if not places.has(spot): result.append(spot)
+	return result
+
+## 院里固定位置在屏幕上的点：世界坐标经院子（相机）的画布变换换到屏幕，再夹进屏内，
+## 镜头外的那处贴在屏边，仍可松手
+func spot_screen_position(spot: String) -> Vector2:
+	var w := _find_world()
+	if w == null: return Vector2(-INF, -INF)
+	var holder: Node2D = w.get("decor_view") if w.get("decor_view") is Node2D else w
+	var at: Vector2 = holder.get_global_transform_with_canvas() * Vector2(load(DECOR_SPOTS_SCRIPT).SPOTS[spot])
+	var margin := ZONE_RADIUS + 4.0
+	return Vector2(clampf(at.x, margin, maxf(margin, size.x - margin)), clampf(at.y, margin + 20.0, maxf(margin + 20.0, size.y - margin)))
+
+func zone_at(at: Vector2) -> String:
+	var best := ""
+	var best_distance := ZONE_RADIUS + ZONE_SLOP
+	for spot: String in legal_spots():
+		var d := at.distance_to(spot_screen_position(spot))
+		if d <= best_distance:
+			best = spot
+			best_distance = d
+	return best
+
+func begin_drag(kind: String, at: Vector2) -> bool:
+	if not drag_kind.is_empty() or not can_drag(kind): return false
+	grid.close_menu()
+	drag_kind = kind
+	_drag_from = at
+	panel.modulate.a = DRAG_ALPHA
+	shade.visible = false
+	drag_ghost.texture = grid._icon_texture(kind)
+	drag_layer.visible = true
+	move_child(drag_layer, get_child_count() - 1)
+	drag_to(at)
+	return true
+
+func drag_to(at: Vector2) -> void:
+	if drag_kind.is_empty(): return
+	drag_ghost.position = at - drag_ghost.size * 0.5
+	drag_spot = zone_at(at)
+	drag_layer.queue_redraw()
+
+## 松手：落在亮圈里返回那一处并打开预览；否则什么都不做，返回 ""
+func end_drag(at: Vector2) -> String:
+	if drag_kind.is_empty(): return ""
+	var kind := drag_kind
+	var spot := zone_at(at)
+	_finish_drag()
+	if spot.is_empty():
+		var en := I18n.get_locale() == "en"
+		status.text = "Drop it on a lit spot in the yard. It is still in the basket." if en else "要松在院里亮着的圈上；东西还在背篓里。"
+		_status_is_note = false
+		status.visible = true
+		return ""
+	open_decor_with(kind, spot)
+	return spot
+
+func cancel_drag() -> void:
+	if drag_kind.is_empty(): return
+	_finish_drag()
+
+func _finish_drag() -> void:
+	drag_kind = ""
+	drag_spot = ""
+	_touch_kind = ""
+	_mouse_kind = ""
+	panel.modulate.a = 1.0
+	shade.visible = true
+	drag_layer.visible = false
+
+func _draw_zones() -> void:
+	if drag_kind.is_empty(): return
+	var en := I18n.get_locale() == "en"
+	var names := {"house_edge": "House" if en else "屋前", "fence_edge": "Fence" if en else "篱边", "pond_path": "Path" if en else "塘边小路"}
+	var font := get_theme_default_font()
+	for spot: String in legal_spots():
+		var at := spot_screen_position(spot)
+		var hot := spot == drag_spot
+		drag_layer.draw_circle(at, ZONE_RADIUS, ZONE_HOT_FILL if hot else ZONE_FILL)
+		drag_layer.draw_arc(at, ZONE_RADIUS, 0.0, TAU, 48, ZONE_HOT_EDGE if hot else ZONE_EDGE, 3.0 if hot else 2.0, true)
+		var text: String = names.get(spot, spot)
+		var width := font.get_string_size(text, HORIZONTAL_ALIGNMENT_LEFT, -1, 16).x
+		drag_layer.draw_string(font, at + Vector2(-width * 0.5, -ZONE_RADIUS - 6.0), text, HORIZONTAL_ALIGNMENT_LEFT, -1, 16, ROW_INK)
+
+## 鼠标：按在小物格上、移动超过 DRAG_START 开始拖，松开时落点决定预览或取消。
+## 松手若仍在原格上，这一下不再当作点格子开纸片。
+func _on_cell_mouse(kind: String, event: InputEvent) -> void:
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
+		if event.pressed:
+			_mouse_kind = kind
+			_mouse_start = event.global_position
+		elif not drag_kind.is_empty():
+			_swallow_toggle = true
+			set_deferred("_swallow_toggle", false)
+			end_drag(event.global_position)
+		else:
+			_mouse_kind = ""
+	elif event is InputEventMouseMotion and _mouse_kind == kind:
+		if drag_kind.is_empty():
+			if event.global_position.distance_to(_mouse_start) >= DRAG_START:
+				begin_drag(kind, event.global_position)
+		else:
+			drag_to(event.global_position)
+
+func _unhandled_key_input(event: InputEvent) -> void:
+	if not drag_kind.is_empty() and event.is_action_pressed("ui_cancel"):
+		cancel_drag()
+		get_viewport().set_input_as_handled()
 
 func _ink_row(label: Label, count: int) -> void:
 	label.add_theme_color_override("font_color", EMPTY_ROW_INK if count <= 0 else ROW_INK)
@@ -246,16 +496,39 @@ func handle_touch_event(event: InputEvent) -> void:
 			_touch_index = event.index
 			_touch_start = event.position
 			_touch_scrolled = false
+			_touch_time = Time.get_ticks_msec()
+			_touch_kind = _keepsake_cell_at(event.position)
 		elif event.index == _touch_index:
 			_touch_index = -1
+			if not drag_kind.is_empty():
+				end_drag(event.position)
+				return
 			if not _touch_scrolled and event.position.distance_to(_touch_start) < 12.0:
 				_activate_touch(event.position)
 	elif event is InputEventScreenDrag and event.index == _touch_index:
+		if not drag_kind.is_empty():
+			drag_to(event.position)
+			return
+		if not _touch_scrolled and not _touch_kind.is_empty() and event.position.distance_to(_touch_start) >= DRAG_START:
+			var moved: Vector2 = event.position - _touch_start
+			var scrolls := scroll.get_v_scroll_bar().visible
+			if not scrolls or absf(moved.x) > absf(moved.y) or Time.get_ticks_msec() - _touch_time >= HOLD_MS:
+				if begin_drag(_touch_kind, event.position): return
 		if event.position.distance_to(_touch_start) >= 12.0: _touch_scrolled = true
 		if _touch_scrolled and scroll.get_global_rect().has_point(_touch_start):
 			scroll.scroll_vertical -= int(event.relative.y)
 
+## 手指按下处是不是一格小物（拖出只认圆石 / 松果 / 落羽，且在清单窗内可见）
+func _keepsake_cell_at(at: Vector2) -> String:
+	if grid == null or not scroll.get_global_rect().has_point(at): return ""
+	for kind: String in grid.KEEPSAKES:
+		if grid.cells[kind].get_global_rect().has_point(at): return kind
+	return ""
+
 func _activate_touch(position_in_view: Vector2) -> void:
+	# 格子与它的操作纸片先接：纸片开着时点别处只收起纸片，不顺手触发底下的按钮
+	if grid != null and (grid.menu.visible or scroll.get_global_rect().has_point(position_in_view)):
+		if grid.press_at(position_in_view): return
 	var buttons: Array = [close_button, retry_button, return_button, scoop_button]
 	if decor_button != null: buttons.append(decor_button)
 	buttons.append_array(fish_buttons.values())

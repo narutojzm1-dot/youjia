@@ -104,6 +104,8 @@ test/yard_basket_integration_suite.gd	YARD_BASKET_INTEGRATION checks=[1-9][0-9]*
 test/yard_ground_food_ledger_suite.gd	YARD_GROUND_FOOD_LEDGER checks=[1-9][0-9]* failures=0
 test/yard_ground_food_runtime_suite.gd	YARD_GROUND_FOOD_RUNTIME checks=[1-9][0-9]* failures=0
 test/cow_ground_graze_suite.gd	COW_GROUND_GRAZE checks=[1-9][0-9]* failures=0
+test/world_weather_suite.gd	WORLD_WEATHER checks=[1-9][0-9]* failures=0
+test/world_weather_runtime_suite.gd	WORLD_WEATHER_RUNTIME checks=[1-9][0-9]* failures=0
 test/animal_companion_suite.gd	ANIMAL_COMPANION checks=[1-9][0-9]* failures=0
 test/animal_hidden_find_suite.gd	ANIMAL_HIDDEN_FIND checks=[1-9][0-9]* failures=0
 test/world_residents_suite.gd	WORLD_RESIDENTS checks=[1-9][0-9]* failures=0
@@ -123,3 +125,6 @@ test/find_reveal_name_slip_suite.gd	PASS find_reveal_name_slip_suite: [1-9][0-9]
 test/yard_decor_empty_hint_suite.gd	\[yard-decor-empty-hint\] PASS: [1-9][0-9]* checks
 test/yard_basket_empty_row_ink_suite.gd	\[yard-basket-empty-row-ink\] PASS: [1-9][0-9]* checks
 test/nearby_direct_pick_suite.gd	NEARBY_DIRECT_PICK checks=[1-9][0-9]* failures=0
+test/yard_basket_grid_suite.gd	\[yard-basket-grid\] PASS: [1-9][0-9]* checks
+test/yard_basket_grid_entry_suite.gd	\[yard-basket-grid-entry\] PASS: [1-9][0-9]* checks
+test/yard_basket_drag_suite.gd	\[yard-basket-drag\] PASS: [1-9][0-9]* checks
