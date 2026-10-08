@@ -1,5 +1,5 @@
 <!doctype html>
-<html data-build="game-606efe6" lang="zh-CN">
+<html data-build="game-7ed6cc0" lang="zh-CN">
 <head>
   <meta http-equiv="Cache-Control" content="no-cache, must-revalidate, max-age=0">
   <meta http-equiv="Pragma" content="no-cache">
@@ -10,8 +10,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="manus-game-loading-screen" content="1">
   <title>悠长的假期</title>
-  <link id="-gd-engine-icon" rel="icon" type="image/png" href="game-606efe6.icon.png" />
-<link rel="apple-touch-icon" href="game-606efe6.apple-touch-icon.png"/>
+  <link id="-gd-engine-icon" rel="icon" type="image/png" href="game-7ed6cc0.icon.png" />
+<link rel="apple-touch-icon" href="game-7ed6cc0.apple-touch-icon.png"/>
 
   <!-- Project-owned starting point, not the platform default. Customize the presentation below. -->
   <!-- Embedded Noto Sans SC loader subset: SIL Open Font License 1.1; license text: assets/template/fonts/NotoSansSC-OFL.txt. -->
@@ -72,15 +72,18 @@ Source SHA-256: 38f4c5f927f746b3dfa4c3a5d7edf0b7a3e828e27438418fa54f9e1565289412
   </section>
   <script>
     (() => {
-      const config = {"args":[],"canvasResizePolicy":2,"emscriptenPoolSize":8,"ensureCrossOriginIsolationHeaders":true,"executable":"game-606efe6","experimentalVK":false,"fileSizes":{"game-606efe6.pck":51501172,"game-606efe6.wasm":39514754},"focusCanvas":true,"gdextensionLibs":[],"godotPoolSize":4};
+      const config = {"args":[],"canvasResizePolicy":2,"emscriptenPoolSize":8,"ensureCrossOriginIsolationHeaders":true,"executable":"engine-3b105340f798ed0e7d6aa7725328dc8c0bf8cd94ffea14835e43f83045048c74","experimentalVK":false,"fileSizes":{"engine-3b105340f798ed0e7d6aa7725328dc8c0bf8cd94ffea14835e43f83045048c74.wasm":39514754,"game-7ed6cc0.pck":51501172},"focusCanvas":true,"gdextensionLibs":[],"godotPoolSize":4,"mainPack":"game-7ed6cc0.pck"};
       let resolveSaveRuntime, rejectSaveRuntime;
       const saveRuntimeReady = new Promise((resolve, reject) => { resolveSaveRuntime = resolve; rejectSaveRuntime = reject; });
       saveRuntimeReady.catch(() => {}); // Observe immediately; preserve original rejection.
-      const saveBridgeReady = import('./save-606efe6/bridge.mjs').then(async ({installSaveHost}) => {
-        const {captureIdbfsSource} = await import('./save-606efe6/idbfs_source.mjs');
+      const saveBridgeReady = import('./save-7ed6cc0/bridge.mjs').then(async ({installSaveHost}) => {
+        const {captureIdbfsSource} = await import('./save-7ed6cc0/idbfs_source.mjs');
         installSaveHost({runtimeReady: saveRuntimeReady, captureLegacy: captureIdbfsSource});
       });
       saveBridgeReady.catch(() => {});
+      const assetRecoveryReady = import('./boot-7ed6cc0/download_assets.mjs');
+      assetRecoveryReady.catch(() => {});
+      let restoreAssetFetch = () => {};
       const threads = false;
       const canvas = document.getElementById('canvas');
       const loading = document.getElementById('loading');
@@ -91,11 +94,12 @@ Source SHA-256: 38f4c5f927f746b3dfa4c3a5d7edf0b7a3e828e27438418fa54f9e1565289412
       const retry = document.getElementById('loading-retry');
       const buildLabel = document.getElementById('loading-build');
       document.getElementById('game-title').textContent = document.title;
-      // 显示 build ID（即 executable 名称，如 game-ca1fb67），可用于快速核验缓存是否命中最新版本
-      if (buildLabel && config.executable) {
-        buildLabel.textContent = config.executable;
+      // The engine URL is shared by unchanged engine bytes across game builds.
+      const buildId = config.mainPack?.replace(/\.pck$/, '') || config.executable;
+      if (buildLabel && buildId) {
+        buildLabel.textContent = buildId;
         // 将版本 ID 同步写入 document.documentElement.dataset.build，方便控制台查询
-        document.documentElement.dataset.build = config.executable;
+        document.documentElement.dataset.build = buildId;
       }
       // Single-language holiday: pin Simplified Chinese on the loader.
       const zh = true;
@@ -108,6 +112,7 @@ Source SHA-256: 38f4c5f927f746b3dfa4c3a5d7edf0b7a3e828e27438418fa54f9e1565289412
       let ready = false;
       let engineReady = false;
       let firstFrame = false;
+      let bootstrapReady = false;
       const timings = window.youjiaLoadTimings = {};
       const stamp = (name) => {
         if (timings[name] === undefined) timings[name] = Math.round(performance.now() - startedAt);
@@ -120,6 +125,7 @@ Source SHA-256: 38f4c5f927f746b3dfa4c3a5d7edf0b7a3e828e27438418fa54f9e1565289412
       const finish = () => {
         if (failed || !engineReady || !firstFrame) return;
         ready = true;
+        restoreAssetFetch();
         stopObserving();
         loading.hidden = true;
         if (config.focusCanvas) canvas.focus();
@@ -130,6 +136,10 @@ Source SHA-256: 38f4c5f927f746b3dfa4c3a5d7edf0b7a3e828e27438418fa54f9e1565289412
       const updateNotice = () => {
         if (failed || ready) return;
         const seconds = Math.floor((performance.now() - startedAt) / 1000);
+        if (seconds >= 60 && !bootstrapReady) {
+          fail(new Error('游戏启动模块下载超时，请检查网络连接后重试。'));
+          return;
+        }
         detail.textContent = downloadComplete
           ? `下载已完成 · 总计已用 ${seconds} 秒`
           : `已读取 ${mib(downloadedBytes)} MiB 资源数据（解压后）· ${seconds} 秒`;
@@ -159,6 +169,7 @@ Source SHA-256: 38f4c5f927f746b3dfa4c3a5d7edf0b7a3e828e27438418fa54f9e1565289412
       const fail = (error) => {
         if (failed || ready) return;
         failed = true;
+        restoreAssetFetch();
         rejectSaveRuntime(error);
         stopObserving();
         const writerOwned = error.saveBlockedCode === 'SAVE_WRITER_OWNED';
@@ -218,7 +229,20 @@ Source SHA-256: 38f4c5f927f746b3dfa4c3a5d7edf0b7a3e828e27438418fa54f9e1565289412
           stamp('engineScriptReady');
           const missing = Engine.getMissingFeatures({ threads });
           if (missing.length) throw new Error(`Missing browser features: ${missing.join(', ')}`);
-          await saveBridgeReady;
+          const [, {installAssetRecovery}] = await Promise.all([saveBridgeReady, assetRecoveryReady]);
+          if (failed) return; // Late imports cannot restart an already failed page.
+          bootstrapReady = true;
+          stamp('bootstrapReady');
+          restoreAssetFetch = installAssetRecovery(config, {
+            onError: fail,
+            onCacheHit: () => stamp('assetCacheHit'),
+            onRetry: ({url, offset, retry: attempt, maxRetries}) => {
+              stamp('downloadRetry');
+              notice.hidden = false;
+              notice.textContent = `下载连接中断，正在恢复（${attempt}/${maxRetries}）…`;
+              console.info('[game-loading] resume', url, offset, attempt);
+            },
+          });
           const engine = new Engine({ ...config, canvas, persistentPaths: [] });
           await engine.startGame({ onProgress, persistentPaths: [] });
           resolveSaveRuntime();
@@ -232,7 +256,7 @@ Source SHA-256: 38f4c5f927f746b3dfa4c3a5d7edf0b7a3e828e27438418fa54f9e1565289412
         }
       };
       const script = document.createElement('script');
-      script.src = 'game-606efe6.js';
+      script.src = 'engine-3b105340f798ed0e7d6aa7725328dc8c0bf8cd94ffea14835e43f83045048c74.js';
       script.addEventListener('load', start, { once: true });
       script.addEventListener('error', () => fail(new Error('Engine script could not be loaded')), { once: true });
       document.head.appendChild(script);
