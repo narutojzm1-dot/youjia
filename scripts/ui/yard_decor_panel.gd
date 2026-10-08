@@ -154,7 +154,7 @@ func fit() -> void:
 	var allowance := size.y - 16 if landscape else minf(320, size.y * 0.48)
 	var height := minf(allowance, content_height(width))
 	if holding and not landscape:
-		if _held.x == size.x: height = maxf(height, _held.y)
+		if _held.x == size.x: height = maxf(height, minf(_held.y, allowance))
 		_held = Vector2(size.x, height)
 	paper.size = Vector2(width, height)
 	paper.position = Vector2(size.x - paper.size.x - 8, 8) if landscape else Vector2(8, size.y - paper.size.y - 8)

@@ -157,6 +157,11 @@ func shrinking_paper(main) -> void:
 			panel.nudge(Vector2i(0, 1))
 			for frame in 2: await process_frame
 			check(bare_samples(main, vs) == 0, "%s nudging stays on the yard" % tag)
+			root.size = Vector2i(vs.x, int(vs.y * 0.66))
+			for frame in 3: await process_frame
+			var short := Vector2(vs.x, int(vs.y * 0.66))
+			check(panel.paper.size.y <= minf(320.0, short.y * 0.48) + 0.6, "%s held paper respects a shorter window" % tag)
+			check(bare_samples(main, short) == 0, "%s shorter window stays on the yard" % tag)
 			main._hide_decor()
 			main._basket_panel.visible = false
 			for frame in 2: await process_frame
