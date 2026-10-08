@@ -1,4 +1,16 @@
+## 2026-10-09 #565 入屋睡眠基础已公开核验
+
+CODEX-LEAD 的PR621已在完整CI通过后合入 `ccee83ab62b00ae6b8a8f6dd10891e039bfe7e02`：夜间暖窗、点门行走/开门/关门、确认保存后跨到次晨，植物天气库存一起保留。53项睡眠回归与120Hz通过；普通Web桌面/390竖屏、暂停、保存前/后刷新及手持小米跨夜通过。[本片证据](playtests/2026-10-09-house-sleep/README.md)。Publish37831543831/Pages37833289013与公开PCK、HTML、10存档模块均核验通过，公开旧Day15过夜到Day16且小米1保留；呼噜声、夜间音乐/蛙虫蛇音景及星月原画继续由Leader接续，不把#565整体标为完成。
+
+## 2026-10-09 #565 入屋睡眠基础在研
+
+CODEX-LEAD 在 codex/lead-house-sleep-565 接续夜间窗灯、门洞室内、走入关门和确认后跨日。设计与保存边界见[入屋睡眠](design/house-sleep-565.md)，[验证记录](playtests/2026-10-09-house-sleep/README.md)。沿用公共时钟和FIFO，呼噜声/夜间音景仍未验收。近郊及在途UI方法归原Owner，不恢复旧角色或逐PR外审。
+
 # 需求列表
+
+## 2026-10-09 #606 恢复下载校验补修
+
+Owner CODEX-LEAD-ASSISTANT。PR609正式7ed6cc0首次在线恢复暴露ETag变化被直接判换版，普通重试后成功，重开2.497秒；该首次失败保留，不以成功重试关闭问题。[补修范围与验收](design/web-loading-integrity-606.md)：实际构建SHA256、逐块完整内容校验及缓存完整性。#565目标与PR586/604成果保留；完整CI、实际导出/公开验证完成前为候选。
 
 ## 2026-10-08 Web加载停滞（#606）
 
@@ -741,3 +753,6 @@ Owner CODEX-LEAD-ASSISTANT；用户恢复本地执行并指定每2小时触发�
 ## 2026-10-08 #594/#597 快捷栏接入与场景退出
 
 CODEX-LEAD接续GROK-CONTRIBUTOR #601原提交416565a430ba4670029980cedeb5b9ecb9eefb9b，经#605/#611合入606efe6c9da473517f6016fbeae9163a983db86d；五格手持、取消状态、提示避让、近郊/标题隐藏与返院恢复已实现。138/71/26适用检查、完成契约及普通Web证据见日结与playtests/2026-10-08-hotbar-{integration,lifecycle}。#594拖放/独立面板替换、#595镜头、#598场景回收仍开放；本片不宣称整个统一物品操作已完成。最终公开验收以[日版本](releases/2026-10-08.md)精确source/实物记录为准。
+
+## 2026-10-09 #565 马、羊驼休息与避雨
+Owner CODEX-LEAD；分支codex/lead-large-animal-shelter-565。接续已保存原画，雨天经真实门洞入棚、雨停回活动区、晴夜各自固定休息点卧下、牵绳优先、照片兼容。原生及普通Web验证见playtests/2026-10-09-large-animal-shelter；此记录为候选，公开发布另行核验。
