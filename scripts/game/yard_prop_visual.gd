@@ -12,6 +12,14 @@ const FISH_BITE := 2
 const FISH_CAUGHT := 3
 var subject := ""
 var state: Dictionary = {}
+# REQ-20261008-066：院里摆好的小物用贴图画时（圆石 / 松果 / 落羽），贴图下没有任何落地的暗部，
+# 草地上看像一张浮着的贴纸。在贴图下沿垫一圈静止的柔和接触影：两层低透明暖墨椭圆，
+# 不随时间变化、低动效相同；整圈留在 bounds("keepsake") 里，布置遮挡判断与照片取景矩形不变。
+# 占位画法（无贴图）自带影子，不再叠加。
+const KEEPSAKE_SIZE := 0.65
+const KEEPSAKE_SHADOW_INK := Color(0.16, 0.11, 0.07)
+const KEEPSAKE_SHADOW_ALPHA := 0.16
+const KEEPSAKE_CORE_ALPHA := 0.20
 
 
 # Low-motion keeps the same shapes readable, without sway, ripple travel, or a flashing bite.
@@ -72,9 +80,38 @@ static func bounds(kind: String) -> Rect2:
 
 func _draw() -> void:
 	if state.is_empty(): return
-	if subject == "keepsake": KeepsakeArt.draw(self, state.find_id, Vector2.ZERO, 0.65, true)
+	if subject == "keepsake":
+		_draw_keepsake_shadow()
+		KeepsakeArt.draw(self, state.find_id, Vector2.ZERO, KEEPSAKE_SIZE, true)
 	if subject == "plant": _draw_plant_bed()
 	elif subject == "fishing": _draw_fishing_spot()
+
+## 贴图小物的接触影：center / radii 以道具本地坐标给出；无贴图时为空。
+## 尺寸与 KeepsakeArt.draw 的贴图占地同算法（圆石长边 24，其余 30，乘院内 0.65）。
+## 落羽是斜放的，影子收在羽身中段；圆石、松果贴着贴图下沿。
+static func keepsake_shadow(find_id: String) -> Dictionary:
+	var tex := KeepsakeArt.texture(find_id)
+	if tex == null: return {}
+	var slug := find_id.get_slice(".", 2)
+	var display_span := 24.0 if slug == "brook_stone" else KeepsakeArt.TEXTURE_SPAN
+	var span := display_span * KEEPSAKE_SIZE / maxf(tex.get_width(), tex.get_height())
+	var extent := Vector2(tex.get_width(), tex.get_height()) * span
+	var feather := slug == "feather"
+	return {
+		"center": Vector2(0.0, extent.y * (0.14 if feather else 0.38)),
+		"radii": Vector2(extent.x * (0.36 if feather else 0.42), maxf(2.2, extent.y * 0.14)),
+	}
+
+func _draw_keepsake_shadow() -> void:
+	var shadow := keepsake_shadow(state.find_id)
+	if shadow.is_empty(): return
+	var center: Vector2 = shadow.center
+	var radii: Vector2 = shadow.radii
+	draw_set_transform(center, 0.0, radii)
+	draw_circle(Vector2.ZERO, 1.0, Color(KEEPSAKE_SHADOW_INK, KEEPSAKE_SHADOW_ALPHA))
+	draw_set_transform(center + Vector2(0.0, -radii.y * 0.15), 0.0, radii * Vector2(0.66, 0.6))
+	draw_circle(Vector2.ZERO, 1.0, Color(KEEPSAKE_SHADOW_INK, KEEPSAKE_CORE_ALPHA))
+	draw_set_transform(Vector2.ZERO)
 
 func _draw_plant_bed() -> void:
 	var pt := Vector2.ZERO
