@@ -175,7 +175,10 @@ func _hotbar_ui(HotbarScript) -> void:
 			# Touch press_at
 			bar.update_view(_inv("grass", {}, 0, 0), {}, "idle", false)
 			await process_frame
+			check(bar.selected_kind() == "grass" and not bar.is_place_armed(), tag + " held grass selects but does not auto-arm")
 			check(bar.press_at(bar.cells["grass"].get_global_rect().get_center()), tag + " touch press_at hits the grass slot")
+			check(bar.is_place_armed(), tag + " first touch arms grass place")
+			check(bar.press_at(bar.cells["grass"].get_global_rect().get_center()), tag + " second touch hits grass slot")
 			check(not bar.is_place_armed(), tag + " touch retap clears place-arm on held grass")
 			# Hand occupied blocks switching via hotbar (must return first)
 			emitted.clear()
