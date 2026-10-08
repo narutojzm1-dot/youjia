@@ -105,6 +105,7 @@ test/yard_ground_food_ledger_suite.gd	YARD_GROUND_FOOD_LEDGER checks=[1-9][0-9]*
 test/yard_ground_food_runtime_suite.gd	YARD_GROUND_FOOD_RUNTIME checks=[1-9][0-9]* failures=0
 test/cow_ground_graze_suite.gd	COW_GROUND_GRAZE checks=[1-9][0-9]* failures=0
 test/world_weather_suite.gd	WORLD_WEATHER checks=[1-9][0-9]* failures=0
+test/world_daylight_suite.gd	WORLD_DAYLIGHT checks=[1-9][0-9]* failures=0
 test/world_weather_runtime_suite.gd	WORLD_WEATHER_RUNTIME checks=[1-9][0-9]* failures=0
 test/animal_companion_suite.gd	ANIMAL_COMPANION checks=[1-9][0-9]* failures=0
 test/animal_hidden_find_suite.gd	ANIMAL_HIDDEN_FIND checks=[1-9][0-9]* failures=0
