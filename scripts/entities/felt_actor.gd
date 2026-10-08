@@ -150,7 +150,9 @@ func set_expression(expression_id: String) -> void:
 	if path.is_empty() or not ResourceLoader.exists(path):
 		return
 	_expression_texture=load(path) as Texture2D
-	_sprite.texture=load(_base_texture_path) as Texture2D if not _base_texture_path.is_empty() else _expression_texture
+	# Face-only expression swaps use the standing body; a whole-body resting
+	# painting must replace that body as well as its face.
+	_sprite.texture=load(_base_texture_path) as Texture2D if not _base_texture_path.is_empty() and posture_key == "idle" else _expression_texture
 	if _posture_metadata.has(texture_key):
 		_posture_id = texture_key
 		var posture: Dictionary = _posture_metadata.get(texture_key,{})
@@ -843,7 +845,7 @@ func _build_spit() -> void:
 func _apply_face_override() -> void:
 	if _gait._material==null or _sprite==null or _sprite.texture==null:
 		return
-	var enabled:=not _base_texture_path.is_empty() and _expression_texture!=null
+	var enabled:=not _base_texture_path.is_empty() and _expression_texture!=null and _posture_id == "idle"
 	_gait._material.set_shader_parameter("face_override",enabled)
 	if enabled:
 		var size:=_sprite.texture.get_size()
