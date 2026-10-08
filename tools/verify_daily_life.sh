@@ -110,3 +110,5 @@ run_godot suite test/hold_hotbar_suite.gd
 run_godot suite test/hold_hotbar_mount_suite.gd
 
 run_godot suite test/yard_decor_spot_at_suite.gd
+
+run_godot suite test/yard_decor_camera_bounds_suite.gd

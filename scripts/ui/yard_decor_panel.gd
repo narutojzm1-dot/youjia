@@ -257,3 +257,24 @@ func handle_touch_event(event: InputEvent) -> void:
 	elif event is InputEventScreenDrag and event.index == _touch:
 		if event.position.distance_to(_start) >= 12: _dragged = true
 		if _dragged and scroll.get_global_rect().has_point(_start): scroll.scroll_vertical -= int(event.relative.y)
+
+## 布置镜头中心：所选位置尽量落在预览区中央，视野尽量不越出院子画面。
+## 冲突时依次保证：所选位置在预览区内 > 预览区全是院子 > 整个画面都是院子。
+static func camera_center(spot: Vector2, viewport_size: Vector2, preview: Rect2, zoom: float, world_size: Vector2, margin: float = 48.0) -> Vector2:
+	var center := spot + (viewport_size * 0.5 - preview.get_center()) / zoom
+	var half := viewport_size * 0.5 / zoom
+	for axis in 2:
+		var mid := viewport_size[axis] * 0.5
+		if half[axis] * 2.0 >= world_size[axis]:
+			center[axis] = world_size[axis] * 0.5
+		else:
+			center[axis] = clampf(center[axis], half[axis], world_size[axis] - half[axis])
+		var preview_lo := (mid - preview.position[axis]) / zoom
+		var preview_hi := world_size[axis] - (preview.end[axis] - mid) / zoom
+		if preview_lo <= preview_hi:
+			center[axis] = clampf(center[axis], preview_lo, preview_hi)
+		var inset := minf(margin, preview.size[axis] * 0.5)
+		var lo := spot[axis] - (preview.end[axis] - inset - mid) / zoom
+		var hi := spot[axis] - (preview.position[axis] + inset - mid) / zoom
+		center[axis] = clampf(center[axis], lo, hi)
+	return center

@@ -381,7 +381,7 @@ func _process(delta: float) -> void:
 		var zoom := clampf(minf(preview_area.size.x / 260.0, preview_area.size.y / 170.0), 0.2, 1.6)
 		_camera.zoom = Vector2.ONE * zoom
 		var focus: Vector2 = preload("res://scripts/inventory/yard_decor.gd").SPOTS[_decor_panel.selected]
-		_camera.position = focus + (get_viewport_rect().size * 0.5 - preview_area.get_center()) / zoom
+		_camera.position = _decor_panel.get_script().camera_center(focus, get_viewport_rect().size, preview_area, zoom, YardWorld.WORLD_SIZE)
 		_camera.force_update_scroll()
 		return
 	if _notice_time > 0.0 and _can_show_notice():
