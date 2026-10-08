@@ -1,0 +1,17 @@
+{
+  "sourceSha": "cf482229b70b57ca6255c3a99a238167172d96af",
+  "startedUtc": "2026-10-08T00:36:07.562642+00:00",
+  "profileProbe": "D:/games/youjia-test/qa/native/2026-10-08-0825-fish-recheck/roaming/Godot/app_userdata/youjia-qa-profile-probe",
+  "engine": "D:/games/youjia-tmp-godot/Godot_v4.7.2-stable_win64_console.exe",
+  "tests": [
+    {
+      "entry": "fish_carry_consistency",
+      "exit": 1,
+      "summary": [
+        "ERROR: S7 HUD shows the odd-catch notice",
+        "[fish-carry] 107 checks [\"S7 HUD shows the odd-catch notice\"]"
+      ]
+    }
+  ],
+  "endedUtc": "2026-10-08T00:36:35.363192+00:00"
+}

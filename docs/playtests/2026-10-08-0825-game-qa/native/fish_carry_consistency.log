@@ -1,0 +1,32 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[fish-carry] fresh reset: prev_elapsed=-1.0 -> day=1 elapsed=0.0 plant={ "state": 0, "day_planted": 0, "watered_day": -1 }
+[fish-carry] S1 no-old-fish miss: carry before= after= chance_misses=0 notices=["notice.fishing.cast", "notice.fishing.bite", "notice.fishing.bite", "notice.fishing.bite", "notice.fishing.miss", "notice.fishing.cast", "notice.fishing.wait", "notice.fishing.wait"]
+[fish-carry] fresh reset: prev_elapsed=20.1 -> day=1 elapsed=0.0 plant={ "state": 0, "day_planted": 0, "watered_day": -1 }
+[fish-carry] S2 pond tap while carrying casts=true primary_while_carrying=action.fish_waiting
+[fish-carry] S2 old-fish miss path=bite_timeout kind=odd timer 0.00->0.00 (elapsed 0.00) notice=notice.fishing.miss_with_carry hint=hud.hint.carrying_fish
+[fish-carry] S2 historical FINDING fixed by #231 Assistant feedback slice: distinct miss_with_carry says the held old fish remains; original reports retain their baseline.
+[fish-carry] fresh reset: prev_elapsed=11.3 -> day=1 elapsed=0.0 plant={ "state": 0, "day_planted": 0, "watered_day": -1 }
+[fish-carry] fresh reset: prev_elapsed=27.6 -> day=1 elapsed=0.0 plant={ "state": 0, "day_planted": 0, "watered_day": -1 }
+[fish-carry] fresh reset: prev_elapsed=49.6 -> day=1 elapsed=0.0 plant={ "state": 0, "day_planted": 0, "watered_day": -1 }
+[fish-carry] S5 pause t0=0.00 after_resume=0.00
+[fish-carry] fresh reset: prev_elapsed=5.6 -> day=1 elapsed=0.0 plant={ "state": 0, "day_planted": 0, "watered_day": -1 }
+[fish-carry] S6 fed notice=notice.food_dropped notices=["notice.fishing.cast", "notice.fishing.bite", "notice.fishing.caught", "notice.fishing.caught", "notice.food_dropped", "notice.pet.horse", "notice.pet.horse", "notice.pet.horse", "notice.fishing.cast", "notice.fishing.wait", "notice.fishing.wait"]
+[fish-carry] fresh reset: prev_elapsed=22.8 -> day=1 elapsed=0.0 plant={ "state": 0, "day_planted": 0, "watered_day": -1 }
+[fish-carry] fresh reset: prev_elapsed=5.1 -> day=1 elapsed=0.0 plant={ "state": 0, "day_planted": 0, "watered_day": -1 }
+[fish-carry] fresh reset: prev_elapsed=5.1 -> day=1 elapsed=0.0 plant={ "state": 0, "day_planted": 0, "watered_day": -1 }
+[fish-carry] fresh reset: prev_elapsed=5.1 -> day=1 elapsed=0.0 plant={ "state": 0, "day_planted": 0, "watered_day": -1 }
+[fish-carry] fresh reset: prev_elapsed=4.6 -> day=1 elapsed=0.0 plant={ "state": 0, "day_planted": 0, "watered_day": -1 }
+[fish-carry] fresh reset: prev_elapsed=4.6 -> day=1 elapsed=0.0 plant={ "state": 0, "day_planted": 0, "watered_day": -1 }
+[fish-carry] fresh reset: prev_elapsed=4.6 -> day=1 elapsed=0.0 plant={ "state": 0, "day_planted": 0, "watered_day": -1 }
+[fish-carry] fresh reset: prev_elapsed=5.1 -> day=1 elapsed=0.0 plant={ "state": 0, "day_planted": 0, "watered_day": -1 }
+ERROR: S7 HUD shows the odd-catch notice
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] _check (res://test/fish_carry_consistency_suite.gd:66)
+       [1] _seq_odd_fish_wording (res://test/fish_carry_consistency_suite.gd:357)
+       [2] _catch (res://test/fish_carry_consistency_suite.gd:168)
+       [3] flush_pending (res://autoload/save_store.gd:612)
+[fish-carry] S7 odd catch current text zh='钓到一条奇怪的鱼。' en='Caught a peculiar fish.' carry=odd fed=["notice.food_dropped"]
+[fish-carry] S7 NOTE: baseline 6e7435c wording said '…溜走了。'/'…slipped away.' (original finding); current wording above no longer says the fish left. WORLD-GROUND-FOOD now verifies drop instead of direct targeted feeding; autonomous consumption has separate runtime coverage.
+[fish-carry] 107 checks ["S7 HUD shows the odd-catch notice"]

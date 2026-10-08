@@ -1,0 +1,120 @@
+{
+  "sourceSha": "cf482229b70b57ca6255c3a99a238167172d96af",
+  "startedUtc": "2026-10-08T00:32:05.548283+00:00",
+  "profileProbe": "D:/games/youjia-test/qa/native/2026-10-08-0825/roaming/Godot/app_userdata/youjia-qa-profile-probe",
+  "engine": "D:/games/youjia-tmp-godot/Godot_v4.7.2-stable_win64_console.exe",
+  "tests": [
+    {
+      "entry": "import",
+      "exit": 0,
+      "summary": []
+    },
+    {
+      "entry": "yard_basket_grid",
+      "exit": 0,
+      "summary": [
+        "[yard-basket-grid] PASS: 1320 checks"
+      ]
+    },
+    {
+      "entry": "yard_basket_grid_entry",
+      "exit": 0,
+      "summary": [
+        "[yard-basket-grid-entry] PASS: 50 checks"
+      ]
+    },
+    {
+      "entry": "yard_basket_drag",
+      "exit": 0,
+      "summary": [
+        "[yard-basket-drag] PASS: 120 checks"
+      ]
+    },
+    {
+      "entry": "yard_basket_panel_fit",
+      "exit": 0,
+      "summary": [
+        "[yard-basket-panel-fit] PASS: 8875 checks"
+      ]
+    },
+    {
+      "entry": "yard_basket_empty_row_ink",
+      "exit": 0,
+      "summary": [
+        "[yard-basket-empty-row-ink] PASS: 130 checks"
+      ]
+    },
+    {
+      "entry": "yard_decor_empty_hint",
+      "exit": 0,
+      "summary": [
+        "[yard-decor-empty-hint] PASS: 204 checks"
+      ]
+    },
+    {
+      "entry": "yard_decor_nudge_limit",
+      "exit": 0,
+      "summary": [
+        "[yard-decor-nudge-limit] PASS: 204 checks"
+      ]
+    },
+    {
+      "entry": "world_weather",
+      "exit": 0,
+      "summary": [
+        "WORLD_WEATHER checks=198 failures=0"
+      ]
+    },
+    {
+      "entry": "world_weather_runtime",
+      "exit": 0,
+      "summary": [
+        "WORLD_WEATHER_RUNTIME checks=15 failures=0"
+      ]
+    },
+    {
+      "entry": "cow_ground_graze",
+      "exit": 0,
+      "summary": [
+        "COW_GROUND_GRAZE checks=48 failures=0"
+      ]
+    },
+    {
+      "entry": "yard_ground_food_runtime",
+      "exit": 0,
+      "summary": [
+        "YARD_GROUND_FOOD_RUNTIME checks=63 failures=0"
+      ]
+    },
+    {
+      "entry": "exploration_slice",
+      "exit": 0,
+      "summary": [
+        "EXPLORATION SLICE PASS 300/300 failures=[]"
+      ]
+    },
+    {
+      "entry": "save_coordinator",
+      "exit": 0,
+      "summary": [
+        "SAVE_COORDINATOR checks=86 failures=[]"
+      ]
+    },
+    {
+      "entry": "save_recovery",
+      "exit": 0,
+      "summary": [
+        "SAVE RECOVERY PASS 24"
+      ]
+    },
+    {
+      "entry": "fish_carry_consistency",
+      "exit": 1,
+      "summary": [
+        "ERROR: S7 HUD shows the odd-catch notice",
+        "[fish-carry] 107 checks [\"S7 HUD shows the odd-catch notice\"]"
+      ]
+    }
+  ],
+  "endedUtc": "2026-10-08T00:33:59.223171+00:00"
+}
