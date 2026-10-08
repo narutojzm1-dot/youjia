@@ -1,3 +1,7 @@
+## 2026-10-09 #565 入屋睡眠基础在研
+
+CODEX-LEAD 在 codex/lead-house-sleep-565 接续夜间窗灯、门洞室内、走入关门和确认后跨日。设计与保存边界见[入屋睡眠](design/house-sleep-565.md)，[验证记录](playtests/2026-10-09-house-sleep/README.md)。沿用公共时钟和FIFO，呼噜声/夜间音景仍未验收。近郊及在途UI方法归原Owner，不恢复旧角色或逐PR外审。
+
 # 需求列表
 
 ## 2026-10-09 #606 恢复下载校验补修
