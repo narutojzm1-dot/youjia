@@ -166,6 +166,16 @@ func run() -> void:
 	main._on_inventory_changed()
 	await process_frame
 	check(not main._hold_hotbar.is_place_armed(), "inventory refresh does not re-arm world grass")
+	main._on_exploration_requested()
+	await settle()
+	check(main._screen == "exploring", "real travel entered")
+	check(not main._hold_hotbar.visible, "yard hotbar hidden on near path")
+	main._exploration.interrupt()
+	await settle()
+	check(main._screen == "game" and main._hold_hotbar.visible, "yard hotbar restored on real return")
+	await main._show_title()
+	await settle()
+	check(main._screen == "title" and not main._hold_hotbar.visible, "yard hotbar hidden on title")
 	_finish()
 
 
