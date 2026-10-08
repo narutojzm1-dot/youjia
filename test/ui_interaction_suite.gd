@@ -188,7 +188,7 @@ func review():
  check(before_scale==w._backdrop.scale and walk==w._player.walk_ground,"weather preserves backdrop scale and collision")
  # 云带 B：阴天换阴云帧，且不改碰撞。
  check(w._weather_cloud_pair()[0]!=null and w._weather_cloud_pair()[0].texture==w.CLOUD_OVERCAST,"overcast swaps the overcast cloud band")
- w.toggle_weather()
+ w.set_weather("sun")
  w._day_elapsed = w.DAY_DURATION_SECONDS * 0.40
  w._apply_weather_art()
  check(w.weather=="sun" and w._backdrop.texture==w.SUNNY,"sun restores the painted sunny yard")
@@ -202,7 +202,7 @@ func review():
  check(w._weather_cloud_pair()[0].texture==w.CLOUD_MORNING,"sunny dawn uses the morning cloud band")
  w.toggle_weather()
  check(w.weather=="overcast" and w._weather_cloud_pair()[0].texture==w.CLOUD_OVERCAST,"overcast morning keeps the overcast cloud band")
- w.toggle_weather()
+ w.set_weather("sun")
  w._day_elapsed = w.DAY_DURATION_SECONDS * 0.40
  w._apply_weather_art()
  check(w.weather=="sun" and w._weather_cloud_pair()[0].texture==w.CLOUD_SUNNY,"sunny noon restores the bright cloud band after morning")
@@ -214,7 +214,7 @@ func review():
  check(w._weather_cloud_pair()[0].texture==w.CLOUD_SUNSET,"sunny evening uses the warm sunset cloud band")
  w.toggle_weather()
  check(w.weather=="overcast" and w._weather_cloud_pair()[0].texture==w.CLOUD_OVERCAST,"overcast evening keeps the overcast cloud band")
- w.toggle_weather()
+ w.set_weather("sun")
  w._day_elapsed = w.DAY_DURATION_SECONDS * 0.40
  w._apply_weather_art()
  check(w.weather=="sun" and w._weather_cloud_pair()[0].texture==w.CLOUD_SUNNY,"sunny noon restores the bright cloud band")
@@ -226,7 +226,7 @@ func review():
  check(night_mod.r < 1.0 and night_mod.b > night_mod.r,"sunny night clouds are cooler and dimmer than noon")
  w.toggle_weather()
  check(w.weather=="overcast" and w._weather_cloud_pair()[0].texture==w.CLOUD_OVERCAST,"overcast night keeps the overcast cloud band")
- w.toggle_weather()
+ w.set_weather("sun")
  w._day_elapsed = w.DAY_DURATION_SECONDS * 0.40
  w._apply_weather_art()
  check(w._weather_cloud_pair()[0].modulate.r >= 1.0,"sunny noon after night restores the bright cloud band")

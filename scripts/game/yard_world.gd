@@ -18,6 +18,7 @@ var pond_story: Node
 var gate: Node2D
 var gate_view: Node2D
 var shelter: Node
+var rain: Node2D
 var inventory_enabled := false
 var inventory_busy := false
 ## 走到门前小路尽头选“出门走走”：Main 接管，切到画卷近郊小路
@@ -255,6 +256,10 @@ func setup(
 	add_child(gate_view)
 	_apply_weather_art()
 	_bind_grounds()
+	rain = preload("res://scripts/game/regional_rain.gd").new()
+	add_child(rain)
+	rain.configure(WORLD_SIZE)
+	rain.restore({"clock":0.0,"amount":1.0 if weather == "rain" else 0.0,"reduced":bool(TuningStore.get_value("ui.reduced_motion",false))})
 	_plant_visual = YardPropVisual.new()
 	_plant_visual.name = "PlantBed"
 	_plant_visual.position = _plant_point()
@@ -354,7 +359,7 @@ func is_mainline_complete() -> bool:
 
 
 func set_weather(next_weather: String) -> void:
-	if next_weather == weather:
+	if next_weather not in ["sun", "overcast", "rain"] or next_weather == weather:
 		return
 	weather = next_weather
 	_regional_weather.select(weather)
@@ -365,7 +370,7 @@ func set_weather(next_weather: String) -> void:
 
 
 func toggle_weather() -> void:
-	set_weather("overcast" if weather == "sun" else "sun")
+	set_weather("overcast" if weather == "sun" else "rain" if weather == "overcast" else "sun")
 
 
 func debug_force_rule(rule_id: String) -> bool:
@@ -508,6 +513,7 @@ func tick(delta: float, move: Vector2) -> void:
 			notice_requested.emit("notice.fishing.release")
 			queue_redraw()
 	_tick_weather_transition(delta)
+	if rain != null: rain.advance(delta,weather == "rain",bool(TuningStore.get_value("ui.reduced_motion",false)))
 	# 云带缓移：低动效只保留静止可读帧，不改存档字段。
 	_tick_cloud_drift(delta)
 	# 晨/傍晚/夜里按 TOD 换云带或 modulate，不改昼夜节奏长度。
@@ -1459,7 +1465,7 @@ func _layout_cloud_bands() -> void:
 
 
 func _weather_cloud_index() -> int:
-	if weather == "overcast": return 3
+	if weather in ["overcast", "rain"]: return 3
 	if _wants_sunset_clouds(): return 2
 	if _wants_morning_clouds(): return 1
 	return 0
@@ -1483,9 +1489,10 @@ func _apply_weather_art() -> void:
 func _tick_weather_transition(delta: float, refresh_tint: bool = false) -> void:
 	if _backdrop == null or _weather_backdrop_blend == null: return
 	var reduced := bool(TuningStore.get_value("ui.reduced_motion", false))
+	if rain != null: rain.advance(0.0,weather == "rain",reduced)
 	var snap := reduced or not _weather_art_initialized
 	var step := 1.0 if snap else clampf(delta / WEATHER_BLEND_SECONDS, 0.0, 1.0)
-	var target := 1.0 if weather == "overcast" else 0.0
+	var target := 1.0 if weather in ["overcast", "rain"] else 0.0
 	_weather_mix = target if snap else move_toward(_weather_mix, target, step)
 	var index := _weather_cloud_index()
 	# Move the whole weight vector toward its target; reversals preserve all layers.
@@ -1505,7 +1512,7 @@ func _tick_weather_transition(delta: float, refresh_tint: bool = false) -> void:
 	_weather_backdrop_blend.visible = _weather_mix > 0.0
 	var cloud_target := Color.WHITE
 	if filtered:
-		if weather == "overcast": cloud_target = rain_tint
+		if weather in ["overcast", "rain"]: cloud_target = rain_tint
 		elif _wants_night_clouds(): cloud_target = Color(0.70, 0.74, 0.90).lerp(Color(0.82, 0.84, 0.94), 1.0 - intensity * 0.5)
 		elif _wants_sunset_clouds(): cloud_target = Color.WHITE.lerp(Color(1.04, 1.00, 0.98), intensity * 0.35)
 		elif _wants_morning_clouds(): cloud_target = Color.WHITE.lerp(Color(1.06, 1.04, 1.02), intensity * 0.4)
@@ -1544,7 +1551,7 @@ func _wants_night_clouds() -> bool:
 
 
 func _cloud_texture_for_now() -> Texture2D:
-	if weather == "overcast":
+	if weather in ["overcast", "rain"]:
 		return CLOUD_OVERCAST
 	if _wants_sunset_clouds():
 		return CLOUD_SUNSET
