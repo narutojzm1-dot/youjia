@@ -28,6 +28,9 @@ const NAME_PAD := Vector2(9.0, 3.0)
 const NAME_GAP := 2.0
 const NAME_SHADOW := Vector2(0.0, 2.0)
 const NAME_SHADOW_SIZE := 3
+# REQ-20261008-073：名字纸签原来在光晕过半那一帧以半透明整块冒出、飞向篮子时又在半透明处整块消失。
+# 现在光晕 0.5→1 之间名字从透明淡到全显，飞走时对称淡尽；何时出现（光晕 > 0.5）、停留全显、低动效都不变。
+const NAME_FADE_FROM := 0.5
 
 signal settled(find_id: String)
 
@@ -143,12 +146,18 @@ func _draw() -> void:
 		draw_circle(p.at, HALO * 0.9, Color(DISC, 0.94 * halo))
 		draw_arc(p.at, HALO * 0.9, 0.0, TAU, 48, Color(INK, 0.22 * halo), 1.5, true)
 	KeepsakeArt.draw(self, find_id, p.at, p.size)
-	if halo > 0.5 and not title.is_empty():
+	if halo > NAME_FADE_FROM and not title.is_empty():
+		var fade := name_fade(halo)
 		var font := name_font()
 		var slip := name_slip_rect(p.at, font, title)
-		draw_style_box(name_slip_style(halo), slip)
+		draw_style_box(name_slip_style(fade), slip)
 		var baseline := Vector2(slip.position.x + NAME_PAD.x, slip.position.y + NAME_PAD.y + font.get_ascent(NAME_SIZE))
-		draw_string(font, baseline, title, HORIZONTAL_ALIGNMENT_LEFT, -1, NAME_SIZE, Color(INK, halo))
+		draw_string(font, baseline, title, HORIZONTAL_ALIGNMENT_LEFT, -1, NAME_SIZE, Color(INK, fade))
+
+
+## 名字纸签与字的透明度：光晕 ≤ 0.5 时为 0，0.5→1 线性升到 1（升起时淡入、飞走时淡尽）
+static func name_fade(halo: float) -> float:
+	return clampf((halo - NAME_FADE_FROM) / (1.0 - NAME_FADE_FROM), 0.0, 1.0)
 
 
 func name_font() -> Font:
