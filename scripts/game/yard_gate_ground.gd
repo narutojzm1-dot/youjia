@@ -18,8 +18,8 @@ static func outside() -> PackedVector2Array:
 	return _outside
 
 static func inside() -> PackedVector2Array:
-	return PackedVector2Array([Vector2(902,472), Vector2(920,450),
-		Vector2(1018,455), Vector2(1120,478), Vector2(1100,499),
+	return PackedVector2Array([Vector2(902,472), Vector2(924,432),
+		Vector2(1050,432), Vector2(1120,470), Vector2(1100,499),
 		Vector2(948,474), Vector2(927,479), Vector2(927,482), Vector2(902,482)])
 
 static func connected() -> PackedVector2Array:

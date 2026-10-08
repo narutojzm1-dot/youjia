@@ -14,6 +14,8 @@ static func primary(world: Node2D) -> Dictionary:
 	var player = world.get_player()
 	if player == null:
 		return {}
+	if world.house != null and world.house.busy():
+		return action("",player.position,"action.house_resting",INF)
 	if world.is_leading():
 		if world.inventory_enabled:
 			var exit_action := YardSceneHotspots.resolve(world, YardSceneHotspots.PATH_OUT)
@@ -74,7 +76,7 @@ static func selected(world: Node2D, target: String) -> Dictionary:
 	if player == null:
 		return {}
 	if target.begins_with("decor:") and world.decor_view != null:
-		var placed := world.decor_view.placed(target.get_slice(":", 1))
+		var placed: Dictionary = world.decor_view.placed(target.get_slice(":", 1))
 		if placed.is_empty(): return {}
 		return action(target, placed.point, "action.pickup_food", 48.0)
 	if target.begins_with("ground_food:") and world.ground_food != null:
@@ -110,7 +112,7 @@ static func pointer(world: Node2D, point: Vector2) -> Dictionary:
 		var exit_action := YardSceneHotspots.at_point(world, point)
 		if exit_action.get("target", "") == YardSceneHotspots.PATH_OUT: return exit_action
 	if world.inventory_enabled and world.decor_view != null:
-		var placed := world.decor_view.hit_spot(point)
+		var placed: Dictionary = world.decor_view.hit_spot(point)
 		if not placed.is_empty():
 			return action("decor:%s" % placed.spot, placed.point, "action.pickup_food", 48.0)
 	if world.inventory_enabled and world.ground_food != null:

@@ -20,6 +20,7 @@ var gate: Node2D
 var gate_view: Node2D
 var shelter: Node
 var rain: Node2D
+var house: Node2D
 var inventory_enabled := false
 var inventory_busy := false
 ## 走到门前小路尽头选“出门走走”：Main 接管，切到画卷近郊小路
@@ -259,6 +260,8 @@ func setup(
 	add_child(gate_view)
 	_apply_weather_art()
 	_bind_grounds()
+	house = preload("res://scripts/game/house_sleep.gd").new(self,SaveStore)
+	add_child(house)
 	rain = preload("res://scripts/game/regional_rain.gd").new()
 	add_child(rain)
 	rain.configure(WORLD_SIZE)
@@ -362,6 +365,7 @@ func is_mainline_complete() -> bool:
 
 
 func set_weather(next_weather: String) -> void:
+	if house != null and house.busy(): return
 	if next_weather not in ["sun", "overcast", "rain"] or next_weather == weather:
 		return
 	weather = next_weather
@@ -494,7 +498,9 @@ func tick(delta: float, move: Vector2) -> void:
 	if gate != null and not gate.pending.is_empty(): return
 	if not simulation_active:
 		return
-	advance_world_time(delta)
+	var house_owned_tick: bool = house != null and house.busy()
+	if house != null: house.tick(delta)
+	if not house_owned_tick: advance_world_time(delta)
 	_rejected_seconds = maxf(0.0, _rejected_seconds - delta)
 	if _has_walk_goal:
 		_walk_goal_age += delta
@@ -526,7 +532,9 @@ func tick(delta: float, move: Vector2) -> void:
 		return
 	_player.body_obstacles = physical_obstacles("player")
 	_body_repath = maxf(0.0,_body_repath-delta)
-	if input_enabled:
+	if house != null and house.busy():
+		move = Vector2.ZERO
+	elif input_enabled:
 		if move.length() > 0.2:
 			_scene_feedback.cancel()
 			# 走动意图出现时立刻放下抬头镜头，避免只依赖后置 quiet-sky tick。
@@ -599,10 +607,11 @@ func tick(delta: float, move: Vector2) -> void:
 			actor.tick_glance(delta, _player.position)
 	_update_lead_rope()
 	if pond_story != null: pond_story.tick(delta, move)
-	_tick_relationships(delta)
-	_tick_goose_mount_encounter(delta, move)
+	if house == null or not house.busy():
+		_tick_relationships(delta)
+		_tick_goose_mount_encounter(delta, move)
 	# 抬头微推放在鹅马之后：鹅马已接管时只让出镜头，不误发 release。
-	_tick_quiet_sky_look(delta, move)
+	if house == null or not house.busy(): _tick_quiet_sky_look(delta, move)
 	_player.player_state = _player.snapshot_state()
 	for key: Variant in _cooldowns.keys():
 		_cooldowns[key] = float(_cooldowns[key]) - delta
@@ -616,7 +625,9 @@ func tick(delta: float, move: Vector2) -> void:
 	var interval := float(TuningStore.get_value("gameplay.expression.pulse", 1.6))
 	if _pulse >= interval:
 		_pulse = 0.0
-		_evaluate_expressions()
+		if house == null or not house.busy():
+			_ensure_bloom_photo()
+			_evaluate_expressions()
 	if _focus_seconds > 0.0:
 		_focus_seconds -= delta
 		if _focus_seconds <= 0.0:
@@ -659,6 +670,9 @@ func _tick_goose_mount_encounter(delta: float, move: Vector2) -> void:
 	if goose == null or horse == null:
 		return
 	if _goose_mount_phase < 0:
+		if horse.has_meta("shelter_controlled"):
+			_goose_mount_wait = 0.0
+			return
 		if EVENT_ID in collected or _day_elapsed < 45.0 or not move.is_zero_approx() or _leading or _has_walk_goal \
 				or not input_enabled or _player.carrying_grass or _millet_held or not _fish_carry_type.is_empty() or _fish_state != FISH_IDLE:
 			_goose_mount_wait = 0.0
@@ -776,9 +790,13 @@ func _consume_pending_action() -> void:
 
 
 func _interact_with_target(target: String) -> void:
+	if house != null and house.busy(): return
 	if not input_enabled or inventory_busy or _player == null:
 		return
 	TuningStore.apply_boundary("NEXT_ACTION")
+	if target == "house_door":
+		if _player.position.distance_to(house.APPROACH) < 20.0: house.begin()
+		return
 	if target == YardSceneHotspots.WINDOWBOX:
 		var scene_action := YardSceneHotspots.resolve(self, target)
 		if scene_action.is_empty() or _player.position.distance_to(scene_action.point) >= scene_action.reach:
@@ -930,6 +948,7 @@ func cancel_scene_feedback() -> void:
 
 
 func request_primary_action() -> void:
+	if house != null and house.busy(): return
 	if pond_story != null: pond_story.cancel()
 	if not input_enabled or inventory_busy or _player == null:
 		return
@@ -949,6 +968,7 @@ func request_primary_action() -> void:
 
 
 func request_pointer_action(point: Vector2) -> void:
+	if house != null and house.busy(): return
 	if pond_story != null: pond_story.cancel()
 	if not input_enabled or _player == null:
 		return
@@ -993,6 +1013,7 @@ func _request_action(target: String, goal: Vector2) -> void:
 
 
 func try_walk_to(goal: Vector2) -> bool:
+	if house != null and house.busy(): return false
 	if not input_enabled or _player == null:
 		return false
 	# Hit-testing happens once, in request_pointer_action. Re-snapping here could
@@ -1816,17 +1837,22 @@ func _on_new_day() -> void:
 	elif _plant_state == PLANT_SPROUTING and holiday_day >= _plant_day_planted + 3 and _plant_watered_day >= _plant_day_planted:
 		_plant_state = PLANT_BLOOMED
 		notice_requested.emit("notice.plant.bloomed")
-		# 首次开花触发拍立得（手动规则）
-		if not PhotoMoment.has_event_subject(photo_moments.get("plant_first_bloom", {}), "plant_first_bloom"):
-			var bloom_rule := ExpressionCatalog.find_rule("plant_first_bloom")
-			if not bloom_rule.is_empty():
-				_apply_rule(bloom_rule, true)
+		_ensure_bloom_photo()
 	_save_progress()
 	queue_redraw()
 
 
+## Also recover the real blooming scene after a confirmed sleep or interrupted wake.
+func _ensure_bloom_photo() -> void:
+	if _plant_state != PLANT_BLOOMED or (house != null and house.busy()): return
+	if PhotoMoment.has_event_subject(photo_moments.get("plant_first_bloom", {}), "plant_first_bloom"): return
+	var bloom_rule := ExpressionCatalog.find_rule("plant_first_bloom")
+	if not bloom_rule.is_empty(): _apply_rule(bloom_rule, true)
+
+
 ## 保存当前假期进度到 SaveStore
 func _save_progress() -> void:
+	if house != null and house.busy(): return
 	SaveStore.request_yard_progress(holiday_day, _day_elapsed, _plant_state, _plant_day_planted, _plant_watered_day, _regional_weather.snapshot())
 
 
@@ -2155,7 +2181,7 @@ func _draw() -> void:
 		# REQ-20261008-074: a flattened, depth-scaled ground ring that fades in.
 		var mark := WalkGoalMarker.pose(_walk_goal_age, bool(TuningStore.get_value("ui.reduced_motion", false)), YardGround.depth_at(_walk_goal.y))
 		draw_polyline(WalkGoalMarker.points(_walk_goal, mark.radius), Color(WalkGoalMarker.COLOR, float(mark.alpha)), WalkGoalMarker.WIDTH, true)
-	if _player != null:
+	if _player != null and _player.visible:
 		_draw_contact_shadow(_player.position,Vector2(11,4)*YardGround.depth_at(_player.position.y))
 	for actor_id: String in _actors:
 		var actor: FeltActor = _actors[actor_id]
