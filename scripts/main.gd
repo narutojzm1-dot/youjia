@@ -1355,6 +1355,7 @@ func _on_exploration_entered() -> void:
 	_world.input_enabled = false
 	_world.visible = false
 	_hud.visible = false
+	_sync_hold_hotbar_visibility()
 	_notice_time = 0.0
 	_exploration.scroll.pause_requested.connect(_toggle_pause)
 	_path_rain = null
@@ -1410,6 +1411,7 @@ func _show_title(save_progress: bool = true) -> void:
 	_pause_screen.visible = false
 	_confirm_screen.visible = false
 	_album_screen.visible = false
+	_sync_hold_hotbar_visibility()
 	# 回到标题时清除昼夜叠色与季节底色
 	if _tod_rect != null:
 		_tod_rect.color = Color(0, 0, 0, 0)
