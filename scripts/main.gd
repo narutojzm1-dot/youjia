@@ -79,6 +79,7 @@ var _inventory: RefCounted
 var _decor: RefCounted
 var _decor_panel: Control
 var _decor_camera: Dictionary = {}
+var _decor_frame: Dictionary = {}
 var _inventory_food_consumer := ""
 var _pause_button: Button
 var _action_button: Button
@@ -378,11 +379,16 @@ func _report_web_first_frame() -> void:
 
 func _process(delta: float) -> void:
 	if _decor_panel != null and _decor_panel.visible:
-		var preview_area: Rect2 = _decor_panel.preview_rect()
-		var zoom := clampf(minf(preview_area.size.x / 260.0, preview_area.size.y / 170.0), 0.2, 1.6)
-		_camera.zoom = Vector2.ONE * zoom
-		var focus: Vector2 = preload("res://scripts/inventory/yard_decor.gd").SPOTS[_decor_panel.selected]
-		_camera.position = _decor_panel.get_script().camera_center(focus, get_viewport_rect().size, preview_area, zoom, YardWorld.WORLD_SIZE)
+		var spot: Vector2 = preload("res://scripts/inventory/yard_decor.gd").SPOTS[_decor_panel.selected]
+		var viewport_size := get_viewport_rect().size
+		var fit: Rect2 = _decor_panel.steady_preview_rect()
+		var inset := fit.grow(-24.0)
+		var spot_seen := not _decor_frame.is_empty() and inset.has_point(viewport_size * 0.5 + (spot - _decor_frame.center) * float(_decor_frame.zoom))
+		if _decor_frame.get("size", Vector2.ZERO) != viewport_size or not spot_seen:
+			_decor_frame = _decor_panel.get_script().camera_frame(spot, viewport_size, fit, _decor_panel.preview_rect(), YardWorld.WORLD_SIZE)
+			_decor_frame["size"] = viewport_size
+		_camera.zoom = Vector2.ONE * float(_decor_frame.zoom)
+		_camera.position = _decor_frame.center
 		_camera.force_update_scroll()
 		return
 	if _notice_time > 0.0 and _can_show_notice():
@@ -1480,6 +1486,7 @@ func _show_decor() -> void:
 	_notice.visible = false
 	_sync_hold_hotbar_visibility()
 	_decor_camera = {"position": _camera.position, "zoom": _camera.zoom}
+	_decor_frame = {}
 	_on_decor_changed()
 	_decor_panel.choose_spot(_decor_panel.selected)
 	_decor_panel.close_button.grab_focus()
