@@ -1,5 +1,9 @@
 # Assistant 近郊开发与自测试目标（#565）
 
+## 2026-10-08 用户加载阻塞反馈优先
+
+用户直接反馈公开game-070ae5a反复下载停滞，本轮优先处理[加载缺陷#606](https://github.com/narutojzm1-dot/youjia/issues/606)，边界和证据见[修复说明](../design/web-loading-recovery-606.md)。近郊总目标保持active，不重复Leader已公开的公共日光/近郊雨层，不接管小院睡眠或公共音频。PR569及证据585已合入；局部动态PR586接上最新main070ae5a后的头40d54b09d9ad8857fac8b91d2adf6c35b5659aa0，完整CI37789036495通过，但该新组合头还需最终实际Web验证，保持Draft。原2179候选完整证据保留于PR604，不能把旧候选体验冒称新头已测。
+
 来源：用户2026-10-07在本地Assistant聊天明确恢复工作，指定每2小时执行并设置目标；[Leader最新分工#565](https://github.com/narutojzm1-dot/youjia/issues/565)。Owner：CODEX-LEAD-ASSISTANT，已实际接收。该分工覆盖旧“Assistant只修bug、Cloud负责探索”的安排。
 
 ## 完成范围

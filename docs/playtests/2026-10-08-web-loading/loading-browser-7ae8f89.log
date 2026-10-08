@@ -1,0 +1,6 @@
+{"requests": [{"range": null, "offset": 0, "bytes": 51493512}, {"range": "bytes=1048576-", "offset": 1048576, "bytes": 50444936}], "cold": {"build": "game-7ae8f89", "timings": {"engineScriptReady": 221, "bootstrapReady": 225, "downloadRetry": 20285, "downloadComplete": 20487, "engineReady": 26301, "firstFrame": 26891}}, "reload": {"engineScriptReady": 11, "bootstrapReady": 39, "assetCacheHit": 50, "downloadComplete": 182, "engineReady": 1968, "firstFrame": 2427}, "warm": {"engineScriptReady": 7, "bootstrapReady": 23, "assetCacheHit": 31, "downloadComplete": 141, "engineReady": 1924, "firstFrame": 2361}, "errors": []}
+Traceback (most recent call last):
+  File "D:\games\youjia-test\assistant-recovery\verify-loading-candidate.py", line 88, in <module>
+    negative=b.new_context(viewport={'width':1280,'height':720});page=negative.new_page()
+             ^
+NameError: name 'b' is not defined

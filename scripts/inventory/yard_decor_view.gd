@@ -96,3 +96,15 @@ func clear_preview() -> void:
 		preview.queue_free()
 	preview = null
 	for visual: Node2D in visuals.values(): visual.visible = true
+
+func placed(spot: String) -> Dictionary:
+	var entry: Variant = confirmed.get("places", {}).get(spot, {})
+	if not entry is Dictionary or entry.is_empty():
+		return {}
+	return {"spot": spot, "point": Model.position_for(spot, entry), "find_id": str(entry.get("find_id", ""))}
+
+func hit_spot(point: Vector2) -> Dictionary:
+	var spot := Model.spot_at(confirmed, point)
+	if spot.is_empty():
+		return {}
+	return placed(spot)
