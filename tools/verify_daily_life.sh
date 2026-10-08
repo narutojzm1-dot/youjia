@@ -38,6 +38,7 @@ run_godot suite test/save_status_paper_suite.gd
 run_godot suite test/pause_notice_suite.gd
 run_godot suite test/audio_button_input_suite.gd
 run_godot suite test/ambience_output_ceiling_suite.gd
+run_godot suite test/yard_audio_suite.gd
 run_godot suite test/modal_touch_input_suite.gd
 run_godot suite test/yard_inventory_suite.gd
 run_godot suite test/yard_decor_suite.gd
@@ -111,3 +112,5 @@ run_godot suite test/regional_rain_suite.gd
 run_godot suite test/hold_hotbar_suite.gd
 
 run_godot suite test/hold_hotbar_mount_suite.gd
+
+run_godot suite test/regional_audio_suite.gd

@@ -1,0 +1,68 @@
+[
+	{
+		"audio_driver": "WASAPI",
+		"case": "day",
+		"frames": 190976,
+		"listening": "not reviewed",
+		"mix_rate": 48000,
+		"no_dropped_frames": true,
+		"passed": true,
+		"peak": 0.174962386488914,
+		"rms": 0.0356232694598807
+	},
+	{
+		"audio_driver": "WASAPI",
+		"case": "night",
+		"frames": 192000,
+		"listening": "not reviewed",
+		"mix_rate": 48000,
+		"no_dropped_frames": true,
+		"passed": true,
+		"peak": 0.0434333197772503,
+		"rms": 0.00352760827960929
+	},
+	{
+		"audio_driver": "WASAPI",
+		"case": "rain-night",
+		"frames": 192000,
+		"listening": "not reviewed",
+		"mix_rate": 48000,
+		"no_dropped_frames": true,
+		"passed": true,
+		"peak": 0.0177695099264383,
+		"rms": 0.00368319546401457
+	},
+	{
+		"audio_driver": "WASAPI",
+		"case": "sleep",
+		"frames": 192000,
+		"listening": "not reviewed",
+		"mix_rate": 48000,
+		"no_dropped_frames": true,
+		"passed": true,
+		"peak": 0.0207141172140837,
+		"rms": 0.00316521069343654
+	},
+	{
+		"audio_driver": "WASAPI",
+		"case": "environment-off",
+		"frames": 192000,
+		"listening": "not reviewed",
+		"mix_rate": 48000,
+		"no_dropped_frames": true,
+		"passed": true,
+		"peak": 0.0,
+		"rms": 0.0
+	},
+	{
+		"audio_driver": "WASAPI",
+		"case": "wake",
+		"frames": 192000,
+		"listening": "not reviewed",
+		"mix_rate": 48000,
+		"no_dropped_frames": true,
+		"passed": true,
+		"peak": 0.174962386488914,
+		"rms": 0.035670689011161
+	}
+]
