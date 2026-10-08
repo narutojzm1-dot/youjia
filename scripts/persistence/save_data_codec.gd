@@ -21,6 +21,7 @@ static func defaults() -> Dictionary:
 		"holiday_day": 1,
 		"holiday_day_elapsed": 0.0,
 		"world_weather": {},
+		"yard_gate_open": false,
 		# 植物床状态（0=空, 1=已种, 2=发芽, 3=开花）
 		"plant_state": 0,
 		"plant_day_planted": 0,
@@ -52,6 +53,7 @@ static func project(candidate: Dictionary) -> Dictionary:
 	# 读取假期进度（旧存档没有这些字段时用默认值）
 	data.holiday_day = maxi(1, int(candidate.get("holiday_day", 1)))
 	data.holiday_day_elapsed = maxf(0.0, float(candidate.get("holiday_day_elapsed", 0.0)))
+	data.yard_gate_open = candidate.get("yard_gate_open", false) is bool and candidate.get("yard_gate_open", false) == true
 	data.world_weather = WorldWeather.sanitize(candidate.get("world_weather", {}))
 	data.plant_state = clampi(int(candidate.get("plant_state", 0)), 0, 3)
 	data.plant_day_planted = maxi(0, int(candidate.get("plant_day_planted", 0)))

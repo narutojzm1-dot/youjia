@@ -38,19 +38,15 @@ static var CATALOG: Array[Dictionary] = [
 		"target_key": "target.shore_stones",
 	},
 	{
-		# The gate is only a painted background detail. The player remains
-		# well inside the yard while observing it; opening it needs separate art.
+		# Door leaf, with separate approach points on each side.
 		"id": FENCE_GATE,
-		"hit_polygon": PackedVector2Array([
-			Vector2(907, 412), Vector2(959, 412), Vector2(967, 440),
-			Vector2(970, 487), Vector2(961, 506), Vector2(910, 506),
-			Vector2(905, 480), Vector2(903, 444),
-		]),
-		"approach_points": [Vector2(830, 510), Vector2(820, 505)],
-		"visual_anchor": Vector2(929, 507),
-		"ambient_anchor": Vector2(1008, 393),
-		"reach": 64.0,
-		"label_key": "action.observe_fence",
+		"hit_polygon": PackedVector2Array([Vector2(888,435), Vector2(940,440),
+			Vector2(941,509), Vector2(885,503)]),
+		"approach_points": [Vector2(914,516), Vector2(914,466)],
+		"visual_anchor": Vector2(912,488),
+		"ambient_anchor": Vector2(1008,393),
+		"reach": 20.0,
+		"label_key": "action.open_gate",
 		"target_key": "target.fence_gate",
 	},
 	{
@@ -89,20 +85,24 @@ static func get_hotspot(target: String) -> Dictionary:
 static func resolve(world: Node2D, target: String) -> Dictionary:
 	var hotspot := get_hotspot(target)
 	# Durable carried food can travel with the player. Keep ordinary ambient
-	# observations suppressed while carrying; only an explicit exit is exempt.
-	var carrying_exit: bool = target == PATH_OUT and world.inventory_enabled \
+	# observations suppressed while carrying; explicit doors do not consume food.
+	var carrying_exit: bool = (target == PATH_OUT or (target == FENCE_GATE and not world.is_leading())) and world.inventory_enabled \
 		and world.get_player() != null and world._fish_state == world.FISH_IDLE
 	if hotspot.is_empty() or (not available(world) and not carrying_exit):
 		return {}
 	var point := Vector2.INF
+	var best_distance := INF
 	for candidate: Vector2 in hotspot.approach_points:
-		if YardGround.allows(candidate, YardGround.lawn(), true):
-			point = candidate
-			break
+		if YardGround.allows(candidate, world.player_ground(), true):
+			var distance: float = world.get_player().position.distance_squared_to(candidate)
+			if distance < best_distance:
+				point = candidate
+				best_distance = distance
+			if target != FENCE_GATE: break
 	if not point.is_finite():
 		return {}
 	return {
-		"target": target, "point": point, "label": hotspot.label_key,
+		"target": target, "point": point, "label": ("action.close_gate" if world.gate.opened else "action.open_gate") if target == FENCE_GATE else hotspot.label_key,
 		"reach": hotspot.reach,
 	}
 

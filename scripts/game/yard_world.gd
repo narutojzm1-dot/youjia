@@ -15,6 +15,8 @@ signal ground_food_requested(action: String, kind: String, details: Dictionary, 
 var ground_food: Node2D
 var decor_view: Node2D
 var pond_story: Node
+var gate: Node2D
+var gate_view: Node2D
 var inventory_enabled := false
 var inventory_busy := false
 ## 走到门前小路尽头选“出门走走”：Main 接管，切到画卷近郊小路
@@ -180,7 +182,8 @@ func setup(
 	saved_plant: Dictionary = {},
 	saved_fish_caught: bool = false,
 	saved_relationship_memory: Dictionary = {},
-	saved_weather: Dictionary = {}
+	saved_weather: Dictionary = {},
+	saved_gate_open: bool = false
 ) -> void:
 	process_mode = Node.PROCESS_MODE_PAUSABLE
 	collected = PackedStringArray()
@@ -245,6 +248,11 @@ func setup(
 	pond_story = load("res://scripts/game/pond_story_controller.gd").new(self)
 	add_child(pond_story)
 	_spawn_cast()
+	gate = preload("res://scripts/game/yard_gate.gd").new(self, SaveStore, saved_gate_open)
+	add_child(gate)
+	gate_view = preload("res://scripts/game/yard_gate_view.gd").new()
+	add_child(gate_view)
+	_apply_weather_art()
 	_bind_grounds()
 	_plant_visual = YardPropVisual.new()
 	_plant_visual.name = "PlantBed"
@@ -474,6 +482,7 @@ func companion_context() -> Dictionary:
 
 
 func tick(delta: float, move: Vector2) -> void:
+	if gate != null and not gate.pending.is_empty(): return
 	if not simulation_active:
 		return
 	advance_world_time(delta)
@@ -528,14 +537,14 @@ func tick(delta: float, move: Vector2) -> void:
 				_pending_interaction = ""
 				_interact_with_target(target)
 			var obstacles := _routing_obstacles()
-			if _has_walk_goal and _body_repath <= 0.0 and (_walk_path.is_empty() or not YardBodies.clear_segment(_player.position,_walk_path[0],_player.body_radius*YardGround.depth_at(_player.position.y),obstacles) or not YardBodies._ground_segment(_player.position, _walk_path[0], YardGround.lawn(), true)):
+			if _has_walk_goal and _body_repath <= 0.0 and (_walk_path.is_empty() or not YardBodies.clear_segment(_player.position,_walk_path[0],_player.body_radius*YardGround.depth_at(_player.position.y),obstacles) or not YardBodies._ground_segment(_player.position, _walk_path[0], player_ground(), true)):
 				_walk_path = _route_to_walk_goal(obstacles)
 				_body_repath = 0.7
 				# A moving animal may occupy the destination briefly. Keep intent
 				# and retry while standing; never silently abandon the tap.
 			var destination := _walk_path[0] if not _walk_path.is_empty() else _walk_goal
 			# Rounding a waypoint early must not cut across the concave pond rim.
-			var next_leg_clear := _walk_path.size() < 2 or YardBodies._ground_segment(_player.position, _walk_path[1], YardGround.lawn(), true)
+			var next_leg_clear := _walk_path.size() < 2 or YardBodies._ground_segment(_player.position, _walk_path[1], player_ground(), true)
 			if not _walk_path.is_empty() and next_leg_clear and _player.position.distance_to(destination) < ((12.0 if destination.distance_to(_walk_goal) < 0.01 else 2.0) if _walk_path.size() == 1 else 4.0):
 				_walk_path.pop_front()
 				destination = _walk_path[0] if not _walk_path.is_empty() else _walk_goal
@@ -775,8 +784,7 @@ func _interact_with_target(target: String) -> void:
 		if fence_action.is_empty() or _player.position.distance_to(fence_action.point) >= fence_action.reach:
 			return
 		_consume_pending_action()
-		_scene_feedback.play_fence_grass(YardSceneHotspots.get_hotspot(target).visual_anchor)
-		notice_requested.emit("notice.fence_gate")
+		gate.toggle()
 		return
 	if target == YardSceneHotspots.PATH_OUT:
 		var path_action := YardSceneHotspots.resolve(self, target)
@@ -938,7 +946,7 @@ func _request_action(target: String, goal: Vector2) -> void:
 	_scene_feedback.cancel()
 	notice_dismiss_requested.emit("notice.cannot_walk")
 	_rejected_seconds = 0.0
-	if target.is_empty() and YardGround.allows(goal,YardGround.lawn(),true):
+	if target.is_empty() and YardGround.allows(goal,player_ground(),true):
 		goal = _open_goal_near_body(goal)
 	_pending_interaction = target
 	_has_walk_goal = false
@@ -948,7 +956,7 @@ func _request_action(target: String, goal: Vector2) -> void:
 		_interact_with_target(target)
 		return
 	# A tap at our feet means stop here, not an unreachable destination.
-	if target.is_empty() and YardGround.allows(goal,YardGround.lawn(),true) and _player.position.distance_to(goal) < 12.0:
+	if target.is_empty() and YardGround.allows(goal,player_ground(),true) and _player.position.distance_to(goal) < 12.0:
 		return
 	if not try_walk_to(goal):
 		_pending_interaction = ""
@@ -964,11 +972,11 @@ func try_walk_to(goal: Vector2) -> bool:
 		return false
 	# Hit-testing happens once, in request_pointer_action. Re-snapping here could
 	# replace an explicit llama destination with nearby grass or another animal.
-	if not YardGround.allows(goal, YardGround.lawn(), true):
+	if not YardGround.allows(goal, player_ground(), true):
 		return false
 	if _player.position.distance_to(goal) < 12.0:
 		return false
-	_walk_path = YardBodies.route(_player.position, goal, _player.body_radius*YardGround.depth_at(_player.position.y), _routing_obstacles(), YardGround.lawn())
+	_walk_path = YardBodies.route(_player.position, goal, _player.body_radius*YardGround.depth_at(_player.position.y), _routing_obstacles(), player_ground())
 	_body_repath = 0.7
 	# A valid lawn destination can be occupied by a moving animal at click time.
 	# Retain it and let the normal waiting/repath loop resume when it clears.
@@ -982,7 +990,7 @@ func try_walk_to(goal: Vector2) -> bool:
 # Keep the original goal and all explicit interaction targets unchanged.
 func _route_to_walk_goal(obstacles: Array) -> Array[Vector2]:
 	var radius := _player.body_radius * YardGround.depth_at(_player.position.y)
-	var path := YardBodies.route(_player.position, _walk_goal, radius, obstacles, YardGround.lawn())
+	var path := YardBodies.route(_player.position, _walk_goal, radius, obstacles, player_ground())
 	if not path.is_empty() or not _pending_interaction.is_empty() or YardBodies.clear_at(_walk_goal, radius, obstacles):
 		return path
 	for margin: float in [4.0, 8.0, 11.0]:
@@ -991,7 +999,7 @@ func _route_to_walk_goal(obstacles: Array) -> Array[Vector2]:
 			candidates.append(_walk_goal + Vector2.from_angle(float(i) * TAU / 16.0) * margin)
 		candidates.sort_custom(func(a: Vector2, b: Vector2): return a.distance_squared_to(_player.position) < b.distance_squared_to(_player.position))
 		for candidate: Vector2 in candidates:
-			path = YardBodies.route(_player.position, candidate, radius, obstacles, YardGround.lawn())
+			path = YardBodies.route(_player.position, candidate, radius, obstacles, player_ground())
 			if not path.is_empty(): return path
 	return []
 
@@ -1029,7 +1037,7 @@ func _open_goal_near_body(goal: Vector2) -> Vector2:
 		for i in 16:
 			var angle := float(i)*TAU/16.0
 			var candidate: Vector2 = item.position + Vector2(cos(angle),sin(angle))*extent
-			if not YardGround.allows(candidate,YardGround.lawn(),true) or not YardBodies.clear_at(candidate,radius,obstacles): continue
+			if not YardGround.allows(candidate,player_ground(),true) or not YardBodies.clear_at(candidate,radius,obstacles): continue
 			var score := candidate.distance_squared_to(_player.position)
 			if score < distance:
 				distance = score
@@ -1301,10 +1309,14 @@ func _zone_at(point: Vector2) -> String:
 	return "pasture"
 
 
+func player_ground() -> PackedVector2Array:
+	return preload("res://scripts/game/yard_gate_ground.gd").for_body(gate != null and gate.opened, _player.position if _player != null else Vector2.ZERO)
+
+
 func _bind_grounds() -> void:
-	_player.walk_ground = YardGround.lawn()
+	_player.walk_ground = player_ground()
 	_player.avoid_pond = true
-	if not YardGround.allows(_player.position, YardGround.lawn(), true):
+	if not YardGround.allows(_player.position, player_ground(), true):
 		_player.position = Vector2(260, 540)
 	for actor_id: String in _actors:
 		var actor: FeltActor = _actors[actor_id]
@@ -1499,6 +1511,7 @@ func _tick_weather_transition(delta: float, refresh_tint: bool = false) -> void:
 			band.modulate = Color(_cloud_tint.r, _cloud_tint.g, _cloud_tint.b, float(_weather_cloud_weights[i]))
 			band.visible = float(_weather_cloud_weights[i]) > 0.0
 	if _scene_feedback != null: _scene_feedback.modulate = sun_tint.lerp(rain_tint, _weather_mix)
+	if gate_view != null: gate_view.refresh(gate.opened, _weather_mix, sun_tint, rain_tint)
 	_weather_art_initialized = true
 	_layout_cloud_bands()
 
