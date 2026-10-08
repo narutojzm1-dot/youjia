@@ -183,13 +183,13 @@ func nearby(spot: Dictionary) -> String:
 	return best
 
 
-## 取景：足够大的视口完整展示原画；手机按固定缩放放大并随人物平移，不因停下看而变焦
+## Use the yard's 1280x720 viewing scale, following a local painted frame
+## at every size. Perspective belongs to the actors, never to a new zoom.
 func frame(foot: Vector2, viewport: Vector2) -> Dictionary:
 	var size := Vector2(maxf(viewport.x, 1.0), maxf(viewport.y, 1.0))
 	var fit := minf(size.x / SIZE.x, size.y / SIZE.y)
-	var zoom := fit
-	if minf(size.x, size.y) < FULL_VIEW_MIN:
-		zoom = maxf(fit, minf(size.y / PHONE_VIEW_HEIGHT, size.x / PHONE_VIEW_WIDTH))
+	var hud_space := 140.0 if size.x < 700.0 else 76.0
+	var zoom := maxf(fit, maxf(size.x / 1280.0, maxf(100.0, size.y - hud_space) / 720.0))
 	var visible := size / zoom
 	var center := Vector2(_axis(foot.x, visible.x, SIZE.x), _axis(foot.y - visible.y * 0.1, visible.y, SIZE.y))
 	return {"zoom": zoom, "camera": center, "visible": visible}
