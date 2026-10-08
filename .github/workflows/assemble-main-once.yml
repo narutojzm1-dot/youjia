@@ -1,5 +1,11 @@
 name: assemble-main-once
 on:
+  push:
+    branches:
+      - work/grok-contributor/hold-hotbar-place-intent
+    paths:
+      - tools/main_hold_hotbar.mount.patch
+      - tools/apply_hold_main_mount.sh
   workflow_dispatch:
 permissions:
   contents: write
@@ -10,6 +16,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: ${{ github.ref_name }}
+          token: ${{ secrets.GITHUB_TOKEN }}
       - name: Apply HoldHotbar Main mount patch
         run: bash tools/apply_hold_main_mount.sh
       - name: Commit restored main.gd and remove one-shot scaffolding
@@ -22,5 +29,5 @@ jobs:
           git add scripts/main.gd
           git add -u
           git status
-          git commit -m "REQ-20261008-075: restore Main.gd HoldHotbar end-to-end mount"
+          git commit -m "REQ-20261008-075: restore Main.gd HoldHotbar end-to-end mount" || echo "nothing to commit"
           git push origin "HEAD:${{ github.ref_name }}"
