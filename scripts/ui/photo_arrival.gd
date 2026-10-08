@@ -36,6 +36,12 @@ const SHUTTER_PAD_Y := 3.0
 ## a time to SHUTTER_MIN_FONT_SIZE. Lines that already fit keep 16px.
 const SHUTTER_FONT_SIZE := 16
 const SHUTTER_MIN_FONT_SIZE := 13
+## REQ-20261008-070: the shutter line and its paper slip appeared at full
+## strength on the first frame while the print was still fading in, so the
+## words popped over the yard a beat before the photo. In normal motion they
+## now fade in together with the print over the same ARRIVE_FADE seconds;
+## reduced motion still shows both at once with no fade.
+const ARRIVE_FADE := 0.20
 ## REQ-20261006-046: the print's caption ("Holiday day N" + the moment line) is a
 ## 192×56 box on the paper strip under the photo. 51 of 81 English captions
 ## (27 lines × day 1/12/365) and 6 Chinese ones wrap to three lines: at 13px that
@@ -150,8 +156,10 @@ func play(snapshot: Dictionary, reduced_motion: bool) -> bool:
 		_tween.tween_callback(_finish)
 		return true
 	_card.modulate.a = 0.0
+	_shutter.modulate.a = 0.0
 	_tween = create_tween().set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
-	_tween.tween_property(_card, "modulate:a", 1.0, 0.20)
+	_tween.tween_property(_card, "modulate:a", 1.0, ARRIVE_FADE)
+	_tween.parallel().tween_property(_shutter, "modulate:a", 1.0, ARRIVE_FADE)
 	_tween.tween_interval(1.10)
 	_tween.tween_property(_card, "modulate:a", 0.0, 0.28).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 	_tween.parallel().tween_property(_shutter, "modulate:a", 0.0, 0.24)
