@@ -1,0 +1,13 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+POND_PHASE approach_hen turtle=(470.0, 650.0) hen=(435.0, 515.0) goose=(370.0, 530.0)
+POND_PHASE greet turtle=(479.8126, 546.9675) hen=(460.0, 530.0) goose=(370.0, 530.0)
+POND_PHASE ride turtle=(480.0, 545.0) hen=(460.0, 530.0) goose=(370.0, 530.0)
+POND_PHASE dismount turtle=(480.0, 545.0) hen=(460.0, 530.0) goose=(370.0, 530.0)
+POND_PHASE approach_goose turtle=(480.0, 545.0) hen=(460.0, 530.0) goose=(370.0, 530.0)
+POND_PHASE refuse turtle=(480.0, 545.0) hen=(460.0, 530.0) goose=(343.6704, 536.8262)
+POND_PHASE peck_attempt turtle=(480.0, 545.0) hen=(460.0, 530.0) goose=(343.6704, 536.8262)
+POND_PHASE retreat turtle=(480.0, 545.0) hen=(460.0, 530.0) goose=(343.6704, 536.8262)
+POND_PHASE idle turtle=(470.1874, 648.0325) hen=(460.0, 530.0) goose=(343.6704, 536.8262)
+POND_DISTANT phases=["approach_hen", "greet", "ride", "dismount", "approach_goose", "refuse", "peck_attempt", "retreat", "idle"] goose=(343.0, 537.0)
+POND_STORY_INTEGRATION: 109 checks, 0 failures
