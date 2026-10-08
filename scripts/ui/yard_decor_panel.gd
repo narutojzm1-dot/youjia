@@ -25,6 +25,9 @@ var counts: Dictionary = {}
 var busy := false
 var state := "idle"
 var _touch := -1
+## 竖屏布置打开期间纸片只增高不缩短：布置镜头按打开时纸片上沿取景，纸片变矮会露出院外空白
+var holding := false
+var _held := Vector2.ZERO
 var _start := Vector2.ZERO
 var _dragged := false
 
@@ -150,6 +153,9 @@ func fit() -> void:
 	var width := minf(310, size.x * 0.48) if landscape else size.x - 16
 	var allowance := size.y - 16 if landscape else minf(320, size.y * 0.48)
 	var height := minf(allowance, content_height(width))
+	if holding and not landscape:
+		if _held.x == size.x: height = maxf(height, _held.y)
+		_held = Vector2(size.x, height)
 	paper.size = Vector2(width, height)
 	paper.position = Vector2(size.x - paper.size.x - 8, 8) if landscape else Vector2(8, size.y - paper.size.y - 8)
 
@@ -163,6 +169,11 @@ func content_height(width: float) -> float:
 
 func preview_rect() -> Rect2:
 	return Rect2(8, 8, paper.position.x - 16, size.y - 16) if size.x > size.y else Rect2(8, 8, size.x - 16, paper.position.y - 16)
+
+func hold_paper(on: bool) -> void:
+	holding = on
+	_held = Vector2.ZERO
+	fit()
 
 ## 预览区按纸片最大可占高度算，纸片随内容伸缩时布置镜头不跟着动
 func steady_preview_rect() -> Rect2:
@@ -272,7 +283,7 @@ static func camera_frame(spot: Vector2, viewport_size: Vector2, fit: Rect2, show
 	var landscape := viewport_size.x > viewport_size.y
 	var seen := Rect2(Vector2.ZERO, viewport_size) if landscape else shown.grow(8.0).intersection(Rect2(Vector2.ZERO, viewport_size))
 	var zoom := minf(fit.size.x / box.size.x, fit.size.y / box.size.y)
-	zoom = clampf(maxf(zoom, maxf(seen.size.x / world_size.x, seen.size.y / world_size.y)), 0.2, 1.6)
+	zoom = maxf(clampf(zoom, 0.2, 1.6), maxf(seen.size.x / world_size.x, seen.size.y / world_size.y))
 	var center := box.get_center() + (viewport_size * 0.5 - fit.get_center()) / zoom
 	for axis in 2:
 		var mid := viewport_size[axis] * 0.5

@@ -382,7 +382,7 @@ func _process(delta: float) -> void:
 		var spot: Vector2 = preload("res://scripts/inventory/yard_decor.gd").SPOTS[_decor_panel.selected]
 		var viewport_size := get_viewport_rect().size
 		var fit: Rect2 = _decor_panel.steady_preview_rect()
-		var inset := fit.grow(-24.0)
+		var inset := fit.grow(-23.5)
 		var spot_seen := not _decor_frame.is_empty() and inset.has_point(viewport_size * 0.5 + (spot - _decor_frame.center) * float(_decor_frame.zoom))
 		if _decor_frame.get("size", Vector2.ZERO) != viewport_size or not spot_seen:
 			_decor_frame = _decor_panel.get_script().camera_frame(spot, viewport_size, fit, _decor_panel.preview_rect(), YardWorld.WORLD_SIZE)
@@ -1487,6 +1487,7 @@ func _show_decor() -> void:
 	_sync_hold_hotbar_visibility()
 	_decor_camera = {"position": _camera.position, "zoom": _camera.zoom}
 	_decor_frame = {}
+	_decor_panel.hold_paper(true)
 	_on_decor_changed()
 	_decor_panel.choose_spot(_decor_panel.selected)
 	_decor_panel.close_button.grab_focus()
@@ -1494,6 +1495,7 @@ func _show_decor() -> void:
 
 func _hide_decor() -> void:
 	_decor_panel.visible = false
+	_decor_panel.hold_paper(false)
 	_decor_panel.draft.clear()
 	if _world != null: _world.decor_view.clear_preview()
 	if not _decor_camera.is_empty():

@@ -37,6 +37,7 @@ func helper_checks() -> void:
 	check(unclamped.y + vs.y * 0.5 / 1.6 > 720.0, "old centring ran past the yard bottom at 1280x720")
 	frame_ok("helper 1280x720", vs, preview, preview)
 	frame_ok("helper 390x844", Vector2(390, 844), Rect2(8, 8, 374, 500), Rect2(8, 8, 374, 513))
+	frame_ok("helper 2560x1440", Vector2(2560, 1440), Rect2(8, 8, 2226, 1424), Rect2(8, 8, 2226, 1424))
 
 func run() -> void:
 	DecorPanel = load("res://scripts/ui/yard_decor_panel.gd")
@@ -93,9 +94,70 @@ func run() -> void:
 		main._hide_decor()
 		main._basket_panel.visible = false
 		for frame in 2: await process_frame
+	await shrinking_paper(main)
 	if failures.is_empty():
 		print("YARD_DECOR_CAMERA_BOUNDS checks=%d failures=0" % checks)
 	else:
 		for f in failures: print("FAIL ", f)
 		print("YARD_DECOR_CAMERA_BOUNDS checks=%d failures=%d" % [checks, failures.size()])
 	quit(0 if failures.is_empty() else 1)
+
+func bare_samples(main, vs: Vector2) -> int:
+	var cam: Camera2D = main._camera
+	var center: Vector2 = cam.get_screen_center_position()
+	var paper: Rect2 = main._decor_panel.paper.get_global_rect()
+	var bare := 0
+	for gx in 33:
+		for gy in 33:
+			var at := Vector2(vs.x * gx / 32.0, vs.y * gy / 32.0)
+			if paper.grow(9.0).has_point(at): continue
+			var w := center + (at - vs * 0.5) / cam.zoom
+			if w.x < -0.5 or w.y < -0.5 or w.x > 1280.5 or w.y > 720.5: bare += 1
+	return bare
+
+# Review of 616f7471: in portrait the paper hugs its rows, so opening on an empty
+# place (longer hint) and then switching to a placed find used to shorten the
+# paper under a frame cached for the taller one, uncovering the yard's edge.
+func shrinking_paper(main) -> void:
+	var store = root.get_node("SaveStore")
+	var panel = main._decor_panel
+	main._show_basket()
+	main._basket_panel.decor_button.pressed.emit()
+	for frame in 2: await process_frame
+	panel.choose_spot("fence_edge")
+	panel.choose_find(ExplorationRoutes.FINDS[0])
+	panel.commit()
+	check(await store.flush_pending(), "find placed at the fence")
+	for frame in 3: await process_frame
+	check(not main._world.decor_view.placed("fence_edge").is_empty(), "fence place now holds a find")
+	main._hide_decor()
+	main._basket_panel.visible = false
+	for loc: String in ["zh-CN", "en"]:
+		root.get_node("I18n").set_locale(loc)
+		for vs: Vector2 in [Vector2(390, 844), Vector2(360, 640), Vector2(768, 1024), Vector2(320, 568)]:
+			root.size = Vector2i(vs)
+			for frame in 3: await process_frame
+			main._show_basket()
+			main._basket_panel.decor_button.pressed.emit()
+			panel.choose_spot("house_edge")
+			for frame in 2: await process_frame
+			main._hide_decor()
+			main._basket_panel.visible = false
+			for frame in 2: await process_frame
+			main._show_basket()
+			main._basket_panel.decor_button.pressed.emit()
+			for frame in 2: await process_frame
+			var tall: float = panel.paper.size.y
+			var tag := "%s %dx%d" % [loc, vs.x, vs.y]
+			check(bare_samples(main, vs) == 0, "%s opened on an empty place stays on the yard" % tag)
+			panel.choose_spot("fence_edge")
+			for frame in 2: await process_frame
+			check(panel.paper.size.y >= tall - 0.5, "%s paper does not shorten while decor is open (%.1f < %.1f)" % [tag, panel.paper.size.y, tall])
+			check(bare_samples(main, vs) == 0, "%s switching to the placed find stays on the yard" % tag)
+			panel.nudge(Vector2i(0, 1))
+			for frame in 2: await process_frame
+			check(bare_samples(main, vs) == 0, "%s nudging stays on the yard" % tag)
+			main._hide_decor()
+			main._basket_panel.visible = false
+			for frame in 2: await process_frame
+	root.get_node("I18n").set_locale("zh-CN")
