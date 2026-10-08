@@ -144,6 +144,7 @@ func _refresh_names() -> void:
 func update_view(inventory: Dictionary, _keepsakes: Dictionary = {}, state: String = "idle", is_busy: bool = false) -> void:
 	_refresh_names()
 	busy = is_busy or state in ["saving", "unknown", "failed", "blocked"]
+	var previous_held := held
 	held = str(inventory.get("held", "")) if not inventory.is_empty() else ""
 	for kind: String in SLOT_ORDER:
 		var count := 0
@@ -171,8 +172,8 @@ func update_view(inventory: Dictionary, _keepsakes: Dictionary = {}, state: Stri
 		# 鱼/小米：手持变化时默认武装点地投放（玩家可再点同一格解除）。
 		# 草束不自动武装：院里拔草后仍走 YardInteraction 走动/牵绳/取消语义，
 		# 投放继续由动作键负责；需要点地投放时再点草格武装。
-		if held != "grass" and not place_armed:
-			_set_armed(true)
+		if held != previous_held:
+			_set_armed(held != "grass")
 
 
 func selected_kind() -> String:

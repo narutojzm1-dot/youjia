@@ -2324,6 +2324,12 @@ func _can_show_notice() -> bool:
 
 func _sync_notice_visibility() -> void:
 	_notice.visible = _notice_time > 0.0 and _can_show_notice()
+	# Keep growing/wrapped notices above the actual hotbar, not behind its slots.
+	var bottom := -130.0 if size.x < 700.0 else -70.0
+	if _hold_hotbar != null and _hold_hotbar.visible:
+		bottom = _hold_hotbar.position.y - size.y - 8.0
+	_notice.offset_top = bottom - 40.0
+	_notice.offset_bottom = bottom
 
 
 func _show_notice_key(key: String, params: Dictionary = {}) -> void:

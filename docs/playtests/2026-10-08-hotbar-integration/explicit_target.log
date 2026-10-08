@@ -1,0 +1,33 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+AUDIT PASS title button dispatch starts game
+AUDIT PASS raw mouse moves initial player through GUI
+AUDIT PASS raw touch reaches grass and picks it up without teleport
+AUDIT PASS target is naturally moving before approach
+AUDIT PASS carrying grass turns the animal tap into a walk without automatic feeding
+AUDIT PASS invalid newer tap cancels pending llama approach without interacting
+AUDIT PASS walking near llama retains the grass
+AUDIT PASS HUD places a durable grass object instead of hand-feeding
+AUDIT PASS start lead away from grass
+REPRO arrival p=(406.4503, 562.9042) llama=(478.0991, 529.8726) grass_dist=76.1035385131836 holding=true lead=true
+AUDIT PASS grass arrival picks grass without toggling nearby llama
+AUDIT PASS explicit grass tap with full hands cannot feed nearby llama
+AUDIT PASS basket stores grass without changing the lead intent
+AUDIT PASS release using actual HUD button
+REPRO before llama tap p=(405.5404, 563.4122) llama=(474.6149, 531.4501) grass_dist=75.0613708496094
+REPRO result holding=false leading=true notice=草泥马跟着你，沿着草地走。 p=(405.3245, 563.5327) llama=(473.958, 531.7529)
+AUDIT PASS explicit llama tap restarts lead instead of picking nearby grass
+AUDIT PASS second llama selection begins outside interaction range
+AUDIT PASS explicit llama route is not snapped to nearby grass or animals
+ARRIVAL grass distance=50.6402931213379
+AUDIT PASS arrival regression overlaps grass interaction range
+AUDIT PASS llama intent survives arrival inside grass range
+AUDIT PASS Space performs the same release displayed by HUD
+AUDIT PASS explicit grass tap picks grass after release
+AUDIT PASS HUD drops grass without toggling nearby llama
+AUDIT PASS HUD grass selects grass near llama
+AUDIT PASS natural scene provides lawn point near another animal
+AUDIT PASS background destination is not re-snapped to nearby actor
+AUDIT PASS invalid newer pointer cancels previous route and intent
+AUDIT PASS invalid pointer never consumes grass or toggles lead
+[explicit-target-tests] checks=26 failures=[]

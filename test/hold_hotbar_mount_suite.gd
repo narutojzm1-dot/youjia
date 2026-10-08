@@ -85,6 +85,9 @@ func run() -> void:
 		check(not bar.intersects(basket), tag + " hotbar does not cover basket chip")
 		check(not bar.intersects(album), tag + " hotbar does not cover album chip")
 		check(main._hold_hotbar.visible, tag + " hotbar remains visible in open yard")
+		main._show_notice_key("notice.cannot_walk")
+		for _frame in 3: await process_frame
+		check(not bar.intersects(main._notice.get_global_rect()), tag + " hotbar does not obscure ordinary notices")
 	# Overlay hides
 	main._show_basket()
 	await process_frame

@@ -163,6 +163,8 @@ func _hotbar_ui(HotbarScript) -> void:
 			bar.cells["medium"].pressed.emit()
 			await process_frame
 			check(bar.selected_kind() == "medium" and not bar.is_place_armed(), tag + " retap held slot clears place-arm, hand unchanged")
+			bar.update_view(_inv("medium", {"medium": 0}, 0, 0), {}, "idle", false)
+			check(not bar.is_place_armed(), tag + " basket refresh preserves canceled placement for the same held item")
 			bar.arm_placement(true)
 			check(bar.is_place_armed(), tag + " arm_placement restores place mode")
 			# Busy: no withdraw
