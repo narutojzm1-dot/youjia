@@ -1,0 +1,44 @@
+[
+  {
+    "status": "integrated_in_shelter_candidate_local_verified",
+    "owner": "CODEX-LEAD",
+    "issue": 565,
+    "tool": "built-in image_gen",
+    "source": "assets/holiday/characters/cast_v2/cow.png",
+    "output": "cow-rest-v1.png",
+    "prompt": "Use case: identity-preserve. Asset type: transparent 2D game character rest-pose sprite for youjia. Input image 1 is the existing cow character identity/style reference. Render exactly this same adult orange-brown and ivory patched cow naturally lying on its breast/belly, all four legs folded comfortably under the body, head upright facing left in the same three-quarter camera angle. Preserve its individual face, ivory forehead tuft, two curved tan horns, large pink inner ears and pink muzzle, brown eyes, patch placement as closely as the pose allows, adult proportions and softly painted short broken brushstroke texture. Eyes gently half-closed in calm rest, no grin. The cow must read as comfortably lying, never collapsed, injured or standing with cut-off legs. One cow only, whole silhouette including tail and horns with generous transparent margins. Neutral soft daylight consistent with original. True transparent alpha background, no floor, hay, shed, props, cast background shadow, text, labels, grid or watermark. Preserve detailed painterly edges. This is one rest pose, not a sprite sheet.",
+    "review": "Identity, painterly texture and folded-leg silhouette inspected. Transparent output preserved. Controlled Godot 1280x720 rendering at feet (1010,474), source ground anchor (735,1061) viewed against standing cow: plausible size and front-rail occlusion. This is forced preview placement, not autonomous housing or rest behavior; no production runtime integration yet.",
+    "sha256": "7282f5fbdf8eaad5d3b7e4da4657cfe68825b3015645ff931bd99efb9c624dae",
+    "alpha_bbox_gt16_xywh": [
+      68,
+      213,
+      1165,
+      849
+    ],
+    "border_pixels_alpha_gt16": 0,
+    "controlled_preview": "cow-rest-controlled-preview.png",
+    "runtime_path": "assets/holiday/characters/shelter/cow-rest.png"
+  },
+  {
+    "status": "integrated_in_shelter_candidate_local_verified",
+    "owner": "CODEX-LEAD",
+    "issue": 565,
+    "tool": "built-in image_gen",
+    "source": "assets/holiday/characters/cast_v2/sheep_clingy.png",
+    "output": "sheep-clingy-rest-v1.png",
+    "prompt": "Use case: identity-preserve. Transparent 2D painterly game sprite. Input image is the identity reference for this exact right-facing three-quarter, small affectionate lamb with bright gentle brown eyes. Change only the posture to natural relaxed lying on the belly with all four hooves tucked under the body. Preserve its individual head shape, muzzle, pink inner ears and blush, ivory curled wool clumps, warm painted brushwork and same camera angle and facing. Head remains lifted gently, eyelids relaxed partly closed, calm healthy rest. Remove any grass from its mouth for resting. Keep body and head relative sizes consistent with reference, no enlarged head. Whole animal visible including ears and tail with transparent margins. One animal only on true transparent alpha background; no floor, grass, shed, props, text or grid. Not collapsed or injured; do not simply cut off standing legs. One rest cel only.",
+    "review": "Distinct original identity, curled wool and folded legs retained. Lying pose only; not blink animation or sleeping behavior. Runtime sizing and border checks remain before integration.",
+    "runtime_path": "assets/holiday/characters/shelter/sheep-clingy-rest.png"
+  },
+  {
+    "status": "integrated_in_shelter_candidate_local_verified",
+    "owner": "CODEX-LEAD",
+    "issue": 565,
+    "tool": "built-in image_gen",
+    "source": "assets/holiday/characters/cast_v2/sheep_dull.png",
+    "output": "sheep-dull-rest-v1.png",
+    "prompt": "Use case: identity-preserve. Transparent 2D painterly game sprite. Input image is the identity reference for this exact left-facing three-quarter, larger broad oval sheep with drooping ears and naturally sleepy eyes. Change only the posture to natural relaxed lying on the belly with all four hooves tucked under the body. Preserve its individual head shape, muzzle, pink inner ears and blush, ivory curled wool clumps, warm painted brushwork and same camera angle and facing. Head remains lifted gently, eyelids relaxed partly closed, calm healthy rest. Remove any grass from its mouth for resting. Keep body and head relative sizes consistent with reference, no enlarged head. Whole animal visible including ears and tail with transparent margins. One animal only on true transparent alpha background; no floor, grass, shed, props, text or grid. Not collapsed or injured; do not simply cut off standing legs. One rest cel only.",
+    "review": "Distinct original identity, curled wool and folded legs retained. Lying pose only; not blink animation or sleeping behavior. Runtime sizing and border checks remain before integration.",
+    "runtime_path": "assets/holiday/characters/shelter/sheep-dull-rest.png"
+  }
+]

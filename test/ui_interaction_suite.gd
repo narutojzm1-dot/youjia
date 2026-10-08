@@ -38,6 +38,8 @@ func review():
  var i18n=root.get_node("I18n")
  await create_timer(0.5).timeout
  var start=p.position
+ # Controlled HUD target fixture: the production cow now lives behind the gate.
+ w.debug_place_actor("cow", Vector2(460,500))
  w.debug_place_actor("sheep_b", Vector2(1090, 505))
  w.debug_place_player(w.actor_named("cow").position + Vector2(-50, 20))
  w.tick(0.016, Vector2.ZERO)
@@ -239,6 +241,8 @@ func review():
  w.tick(2.0, Vector2.ZERO)
  check(w._cloud_scroll>scroll_before,"cloud band drifts when motion is allowed")
  w.debug_place_player(YardSceneHotspots.get_hotspot("windowbox").approach_points[0] + Vector2(5, 5))
+ # Wait for the previous simulation/save batch before the next real action.
+ await root.get_node("SaveStore").flush_pending()
  w.request_pointer_action(Vector2(285, 275))
  check(not w._scene_feedback.active_snapshot().is_empty(), "real windowbox observation paints a temporary world response")
  touch_button("_pause_button");await frames(1)

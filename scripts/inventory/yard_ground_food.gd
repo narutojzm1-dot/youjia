@@ -173,6 +173,7 @@ func tick(delta: float) -> void:
 	var ready: Array = []
 	for id: String in world._actors:
 		var actor: FeltActor = world.actor_named(id)
+		if actor.has_meta("shelter_controlled"): continue
 		if actor.posed or actor.state == "lead" or float(cooldowns.get(id, 0.0)) > 0.0: continue
 		var item := find_item(int(targets.get(id, -1)))
 		if item.is_empty():

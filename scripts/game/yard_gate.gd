@@ -15,6 +15,9 @@ func _init(owner_world: Node2D, save_store: Node, initial: bool) -> void:
 
 func toggle() -> void:
 	if not pending.is_empty(): return
+	if opened and world.shelter != null and world.shelter.returning:
+		world.notice_requested.emit("notice.gate_returning")
+		return
 	if opened and threshold_occupied():
 		world.notice_requested.emit("notice.gate_occupied")
 		return

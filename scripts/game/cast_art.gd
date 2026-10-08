@@ -95,6 +95,11 @@ static func configure(original: Dictionary) -> Dictionary:
 			config.textures["attend"]=DIRECTORY+response+".png"
 			config.posture_metadata=config.get("posture_metadata",{})
 			config.posture_metadata["attend"]=manifest().get(response,{})
+	var shelter := preload("res://scripts/game/shelter_art.gd")
+	if shelter.CELLS.has(str(config.id)):
+		config.textures["shelter_rest"] = shelter.CELLS[str(config.id)].texture
+		config.posture_metadata = config.get("posture_metadata", {})
+		config.posture_metadata["shelter_rest"] = shelter.CELLS[str(config.id)].metadata
 	return config
 
 static func texture_path(species: String,expression: String="idle") -> String:

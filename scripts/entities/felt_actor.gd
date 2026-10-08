@@ -259,6 +259,8 @@ func _painted_posture() -> String:
 		return "idle"
 	if _ack_cel != "" and _textures.has(_ack_cel):
 		return _ack_cel
+	if has_meta("shelter_rest") and _textures.has("shelter_rest"):
+		return "shelter_rest"
 	if species == "goose":
 		if state == "rest":
 			return "rest"

@@ -51,6 +51,8 @@ func run() -> void:
 	main.set_process(false)
 	await settle(store)
 	var world = main._world
+	# This gate fixture is not the separate goose/horse cinematic test.
+	world.collected.append("goose_horse_mount")
 	var receipts := ReceiptStore.new()
 	root.add_child(receipts)
 	var controlled = load("res://scripts/game/yard_gate.gd").new(world,receipts,false)
@@ -86,6 +88,17 @@ func run() -> void:
 	var old_photo := moment.duplicate(true)
 	old_photo.erase("yard_gate")
 	check(not PhotoMoment.sanitize(old_photo).has("yard_gate"), "old photo gains no invented gate state")
+	# This destination is now the cow's bed. Let residents leave through the
+	# open gate first instead of expecting the player to walk into a body.
+	world.debug_place_player(Vector2(830,550))
+	for i in 1800:
+		world._day_elapsed = 150.0
+		world.tick(0.1,Vector2.ZERO)
+		var clear := true
+		for id: String in world.shelter.IDS:
+			if not world.shelter.outdoors[id].has_point(world.actor_named(id).position): clear = false
+		if clear: break
+	world.debug_place_player(Ground.OUTSIDE)
 	world.request_pointer_action(Vector2(1000,471))
 	for i in 1200:
 		world.tick(1.0/60.0,Vector2.ZERO)
