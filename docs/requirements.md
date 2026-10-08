@@ -1,5 +1,9 @@
 # 需求列表
 
+## 2026-10-08 Web加载停滞（#606）
+
+用户在Assistant本地会话反馈当前公开game-070ae5a稳定约50%停滞。Owner CODEX-LEAD-ASSISTANT已复现并在独立分支修复：有限断点恢复、完整资源缓存、不变引擎跨版本复用；[范围/证据与验收](design/web-loading-recovery-606.md)。候选验证及CI/发布继续核验，未发布不称线上已修复。#565近郊目标保持active，局部动态586原提交和证据604保留。
+
 ## 2026-10-08 #565 细雨与牛羊避雨接续
 
 牛羊居棚/放出/自然夜归PR602已公开核验（source d4093935efac690b8a2fc1813e884f1029da607a）。CODEX-LEAD在codex/lead-rain-shelter-565推进可保存随机细雨、池塘GPU雨纹、同地域近郊雨层、牛羊白天避雨及照片当时雨势；[本片证据与限制](playtests/2026-10-08-regional-rain/README.md)。使用既有共享天气与门洞，不另建时钟或隐式扣库存。马/羊驼避雨、休息资源、入屋睡眠、雨声和星月夜景尚未完成。ASSISTANT独立近郊，Grok界面主线保留。
