@@ -48,6 +48,9 @@ run_godot suite test/yard_decor_panel_hug_suite.gd
 run_godot suite test/yard_decor_nudge_limit_suite.gd
 run_godot suite test/yard_decor_empty_hint_suite.gd
 run_godot suite test/yard_basket_empty_row_ink_suite.gd
+run_godot suite test/yard_basket_grid_suite.gd
+run_godot suite test/yard_basket_grid_entry_suite.gd
+run_godot suite test/yard_basket_drag_suite.gd
 run_godot suite test/yard_ground_food_ledger_suite.gd
 run_godot suite test/yard_ground_food_runtime_suite.gd
 run_godot suite test/cow_ground_graze_suite.gd
