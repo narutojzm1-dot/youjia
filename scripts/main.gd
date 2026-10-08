@@ -472,6 +472,8 @@ func _input(event: InputEvent) -> void:
 		if event.is_action_pressed("pause") and not event.is_echo():
 			_hide_decor()
 			get_viewport().set_input_as_handled()
+		elif _decor_ground_recall(event):
+			get_viewport().set_input_as_handled()
 		elif event is InputEventScreenTouch or event is InputEventScreenDrag:
 			_last_touch_ms = Time.get_ticks_msec()
 			_decor_panel.handle_touch_event(event)
@@ -1271,6 +1273,7 @@ func _start_holiday(save_progress: bool = true) -> void:
 	_world.day_advanced.connect(_on_day_advanced)
 	_world.fish_caught.connect(_on_fish_caught)
 	_world.ground_food_requested.connect(_on_ground_food_action)
+	_world.decor_recall_requested.connect(_on_decor_recall)
 	_on_inventory_changed()
 	_on_decor_changed()
 	_on_residents_changed()
@@ -1483,6 +1486,38 @@ func _hide_decor() -> void:
 	_hud.visible = true
 	_sync_hold_hotbar_visibility()
 	_show_basket()
+
+
+func _decor_ground_recall(event: InputEvent) -> bool:
+	if _decor == null or _world == null or _decor.busy():
+		return false
+	var at := Vector2.INF
+	if event is InputEventScreenTouch and event.pressed:
+		at = event.position
+	elif event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+		if Time.get_ticks_msec() - _last_touch_ms < 400:
+			return false
+		at = event.position
+	else:
+		return false
+	if _decor_panel.paper != null and _decor_panel.paper.get_global_rect().has_point(at):
+		return false
+	var Decor = load("res://scripts/inventory/yard_decor.gd")
+	var spot := Decor.spot_at(_decor.view(), _screen_to_world(at))
+	if spot.is_empty():
+		return false
+	_last_touch_ms = Time.get_ticks_msec()
+	_on_decor_recall(spot)
+	return true
+
+
+func _on_decor_recall(spot: String) -> void:
+	if _decor == null or _decor.busy() or spot.is_empty():
+		return
+	if _decor.request("remove", spot, {}):
+		_show_notice_key("notice.decor_recalled")
+	else:
+		_show_notice_key("notice.decor_recall_blocked")
 
 
 func _on_decor_changed() -> void:
