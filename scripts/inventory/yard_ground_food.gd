@@ -3,9 +3,12 @@ extends Node2D
 const Grass := preload("res://scripts/entities/grass_art.gd")
 const Fish := preload("res://assets/holiday/objects/ground_fish.png")
 const Millet := preload("res://assets/holiday/objects/millet.png")
+const GroundShadow := preload("res://scripts/inventory/ground_food_shadow.gd")
 var world: Node2D
 var items: Array = []
 var sprites: Dictionary = {}
+## REQ-20261008-075：每份地上食物脚下的静止接触影（id → GroundShadow）
+var shadows: Dictionary = {}
 var targets: Dictionary = {}
 var waiting: Dictionary = {}
 var cooldowns: Dictionary = {}
@@ -43,7 +46,13 @@ func sync_items(confirmed: Array) -> void:
 	for item: Dictionary in items:
 		var id := int(item.id)
 		seen.append(id)
+		var point := Vector2(item.x, item.y)
+		var depth := YardGround.depth_at(point.y)
 		if not sprites.has(id):
+			var shadow: Node2D = GroundShadow.new()
+			shadow.z_as_relative = false
+			add_child(shadow)
+			shadows[id] = shadow
 			var sprite := Sprite2D.new()
 			sprite.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
 			sprite.texture = Millet if item.kind == "millet" else (Grass.texture_for(Grass.LOOSE) if item.kind == "grass" else Fish)
@@ -53,12 +62,19 @@ func sync_items(confirmed: Array) -> void:
 			add_child(sprite)
 			sprites[id] = sprite
 		var visual: Sprite2D = sprites[id]
-		visual.position = Vector2(item.x, item.y)
-		visual.z_index = roundi(visual.position.y)
+		visual.position = point
+		visual.z_index = roundi(point.y)
+		var shadow_node: Node2D = shadows[id]
+		shadow_node.position = point
+		shadow_node.z_index = roundi(point.y) - 1
+		shadow_node.configure(str(item.kind), depth)
 	for id: int in sprites.keys():
 		if not seen.has(id):
 			sprites[id].queue_free()
 			sprites.erase(id)
+			if shadows.has(id):
+				shadows[id].queue_free()
+				shadows.erase(id)
 
 
 func drop_held() -> void:
