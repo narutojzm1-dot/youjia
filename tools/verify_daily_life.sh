@@ -57,6 +57,8 @@ run_godot suite test/cow_ground_graze_suite.gd
 run_godot suite test/world_weather_suite.gd
 run_godot suite test/world_daylight_suite.gd
 run_godot suite test/world_weather_runtime_suite.gd
+run_godot suite test/sheep_ground_graze_suite.gd
+run_godot suite test/animal_glance_facing_suite.gd
 run_godot suite test/animal_companion_suite.gd
 run_godot suite test/animal_hidden_find_suite.gd
 run_godot suite test/world_residents_suite.gd
