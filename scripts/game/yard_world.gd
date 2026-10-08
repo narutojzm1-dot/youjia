@@ -17,6 +17,7 @@ var decor_view: Node2D
 var pond_story: Node
 var gate: Node2D
 var gate_view: Node2D
+var shelter: Node
 var inventory_enabled := false
 var inventory_busy := false
 ## 走到门前小路尽头选“出门走走”：Main 接管，切到画卷近郊小路
@@ -560,6 +561,7 @@ func tick(delta: float, move: Vector2) -> void:
 	else:
 		_player.tick(delta, Vector2.ZERO, WORLD_SIZE)
 	if _grass_patch != null: _grass_patch.tick(delta)
+	if shelter != null: shelter.prepare(delta)
 	if ground_food != null and inventory_enabled: ground_food.tick(delta)
 	var animal_scale := float(TuningStore.get_value("enemies.visual.scale", 1.0))
 	var animal_speed := float(TuningStore.get_value("enemies.move.speed_multiplier", 1.0))
@@ -575,6 +577,9 @@ func tick(delta: float, move: Vector2) -> void:
 			actor.state = "graze"
 			actor._idle_time = maxf(actor._idle_time, 0.5)
 		actor.body_obstacles = physical_obstacles(actor_id)
+		if shelter != null and shelter.step(actor, delta):
+			actor.current_zone = _zone_at(actor.position)
+			continue
 		if not actor.has_meta("pond_story"):
 			actor.tick(delta, WORLD_SIZE)
 		actor.current_zone = _zone_at(actor.position)
@@ -1991,6 +1996,9 @@ func _reel_in_fish() -> void:
 ## 已落盘的大背篓是生产环境手持物品的唯一来源。
 func sync_inventory(held: String, pending: bool, items: Array = []) -> void:
 	inventory_enabled = true
+	if shelter == null:
+		shelter = preload("res://scripts/game/yard_shelter.gd").new(self)
+		add_child(shelter)
 	inventory_busy = pending
 	_fish_carry_type = held if held in ["small", "medium", "odd"] else ""
 	_millet_held = held == "millet"

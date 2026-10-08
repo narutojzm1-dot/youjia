@@ -2,7 +2,7 @@
 
 ## 2026-10-08 #565 棚门实现接续
 
-CODEX-LEAD 在 `codex/lead-yard-shelter-565` 实现可保存的棚门开关、门洞双向通行、栏杆遮挡、占位保护及照片状态保留。[本片证据](playtests/2026-10-08-yard-gate/README.md)。当前待PR/发布验收；不把门可用记成牛羊已经入住。后续同一Owner继续牛羊居棚、开门放出、夜归、雨天避雨及卧姿。ASSISTANT继续独立近郊，不恢复停用角色或逐PR外部审查。
+CODEX-LEAD 在 `codex/lead-yard-shelter-565` 实现可保存的棚门开关、门洞双向通行、栏杆遮挡、占位保护及照片状态保留。[本片证据](playtests/2026-10-08-yard-gate/README.md)。棚门PR600已公开验证（source 3d0dd9f103a2d00387f4c6c3bec99970824e7ce1）。CODEX-LEAD现于codex/lead-shelter-residents-565接续牛羊居棚、开门依次走出、共享夜间回棚和独立卧姿；[接续证据](playtests/2026-10-08-yard-shelter/README.md)。自动夜归时先持久打开关闭的门，队列未结束暂不能关门；不瞬移或扣食物。当前待完整CI与发布，雨天避雨、马/羊驼和房门睡眠仍未完成。ASSISTANT继续独立近郊，不恢复停用角色或逐PR外部审查。
 
 
 ## 2026-10-07 小院节奏与主场地返修
