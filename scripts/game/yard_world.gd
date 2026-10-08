@@ -621,7 +621,9 @@ func tick(delta: float, move: Vector2) -> void:
 	var interval := float(TuningStore.get_value("gameplay.expression.pulse", 1.6))
 	if _pulse >= interval:
 		_pulse = 0.0
-		if house == null or not house.busy(): _evaluate_expressions()
+		if house == null or not house.busy():
+			_ensure_bloom_photo()
+			_evaluate_expressions()
 	if _focus_seconds > 0.0:
 		_focus_seconds -= delta
 		if _focus_seconds <= 0.0:
@@ -1830,13 +1832,17 @@ func _on_new_day() -> void:
 	elif _plant_state == PLANT_SPROUTING and holiday_day >= _plant_day_planted + 3 and _plant_watered_day >= _plant_day_planted:
 		_plant_state = PLANT_BLOOMED
 		notice_requested.emit("notice.plant.bloomed")
-		# 首次开花触发拍立得（手动规则）
-		if not PhotoMoment.has_event_subject(photo_moments.get("plant_first_bloom", {}), "plant_first_bloom"):
-			var bloom_rule := ExpressionCatalog.find_rule("plant_first_bloom")
-			if not bloom_rule.is_empty():
-				_apply_rule(bloom_rule, true)
+		_ensure_bloom_photo()
 	_save_progress()
 	queue_redraw()
+
+
+## Also recover the real blooming scene after a confirmed sleep or interrupted wake.
+func _ensure_bloom_photo() -> void:
+	if _plant_state != PLANT_BLOOMED or (house != null and house.busy()): return
+	if PhotoMoment.has_event_subject(photo_moments.get("plant_first_bloom", {}), "plant_first_bloom"): return
+	var bloom_rule := ExpressionCatalog.find_rule("plant_first_bloom")
+	if not bloom_rule.is_empty(): _apply_rule(bloom_rule, true)
 
 
 ## 保存当前假期进度到 SaveStore

@@ -98,6 +98,16 @@ func run() -> void:
 	check(YardGround.allows(world.get_player().position,world.player_ground(),true),"restored normal walk geometry")
 	check(world.holiday_day == 5 and world._plant_state == 3,"runtime adopts confirmed plant and day")
 	check(world._regional_weather.snapshot() == store.get_world_weather(),"runtime adopts confirmed weather")
+	world._pulse = 100.0
+	world.tick(1.0/60.0,Vector2.ZERO)
+	check(PhotoMoment.has_event_subject(world.photo_moments.get("plant_first_bloom",{}),"plant_first_bloom"),"sleep bloom earns real scene photo after exit")
+	check(await store.flush_pending(),"bloom photo reaches durable album")
+	check("plant_first_bloom" in store.get_album(),"sleep bloom unlock survives storage")
+	world.photo_moments.erase("plant_first_bloom")
+	world._pulse = 100.0
+	world.tick(1.0/60.0,Vector2.ZERO)
+	check(PhotoMoment.has_event_subject(world.photo_moments.get("plant_first_bloom",{}),"plant_first_bloom"),"restored blooming yard fills missing photo without new growth")
+	check(world.collected.count("plant_first_bloom") == 1,"recovered bloom does not duplicate unlock")
 	world.house.begin()
 	check(not world.house.busy(),"daytime door does not advance another day")
 	world.house.lights = 0.8
