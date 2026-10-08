@@ -29,6 +29,10 @@ const BASKET_LABEL_FONT_SIZE := 15
 const BASKET_LABEL_MIN_FONT_SIZE := 13
 const BASKET_LABEL_MAX_LINES := 2
 const BASKET_LABEL_MIN_WIDTH := 120.0
+# 地面可拾取实体（圆石/松果/落羽）的显示系数：对齐 KeepsakeArt TEXTURE_SPAN(30) 基线，
+# 去掉原 1.6 的过度放大；issue #596 反映松果相对人物/周边物件过大。精确最终值由
+# Leader/ART-DIRECTOR 按实景校准（near_path_layout 注记“远景比例由Leader按实景校准”）。
+const FIND_GROUND_SCALE := 1.0
 
 signal return_requested(reason: String)
 signal pause_requested
@@ -392,7 +396,7 @@ func _start_reveal(find_id: String) -> void:
 	var slot := maxi(carried().size() - 1, 0)
 	reveal.label_font = _basket.get_theme_default_font()
 	reveal.play(find_id, art_to_screen(anchor), top, _basket.position + Vector2(24 + slot * 16, 22),
-		1.6 * layout.depth(anchor.y) * _cam_zoom, _find_name(find_id), reduced_motion())
+		FIND_GROUND_SCALE * layout.depth(anchor.y) * _cam_zoom, _find_name(find_id), reduced_motion())
 
 
 func pick_choice() -> Dictionary:
@@ -568,7 +572,7 @@ func _draw_items() -> void:
 			items.draw_circle(Vector2.ZERO, 34.0, Color(1.0, 0.96, 0.82, 0.55))
 			items.draw_circle(Vector2.ZERO, 24.0, Color(1.0, 0.98, 0.90, 0.6))
 			items.draw_set_transform(Vector2.ZERO)
-		KeepsakeArt.draw(items, find_id, anchor, 1.6 * depth, true)
+		KeepsakeArt.draw(items, find_id, anchor, FIND_GROUND_SCALE * depth, true)
 
 
 func _observe_caption() -> String:
