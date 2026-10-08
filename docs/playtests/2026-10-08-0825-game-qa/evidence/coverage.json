@@ -1,0 +1,152 @@
+{
+  "dateBeijing": "2026-10-08",
+  "lastTestedBefore": "d4f29e371cd699ace745196cb0677306017fddac",
+  "features": [
+    {
+      "id": "REQ-20261007-064-grid",
+      "pr": "#575 / #565",
+      "feature": "格子背篓与点按菜单",
+      "steps": "大背篓→舀米→收回→点小米格→拿一把→收回",
+      "normal": "实测0→手持→库存1→取出0→收回1；物品名字、图与角标可见",
+      "boundary": "390×844全部格及按钮可见；568×320滚动可达操作区；空格图文变淡。实体触屏、全部物件菜单未测",
+      "evidence": "10、12–15、20、25–27",
+      "native": [
+        "yard_basket_grid",
+        "yard_basket_grid_entry",
+        "yard_basket_panel_fit"
+      ],
+      "result": "限定通过",
+      "next": "12点补全部物品菜单及280窄屏",
+      "build": "game-cf48222",
+      "sha": "cf482229b70b57ca6255c3a99a238167172d96af",
+      "testedBeijing": "2026-10-08T08:55:08.707148+08:00"
+    },
+    {
+      "id": "REQ-20261007-064-drag",
+      "pr": "#575",
+      "feature": "从格子拖出圆石进入摆放预览",
+      "steps": "近郊拾圆石回院→从圆石格拖到屋前→确认→收回",
+      "normal": "实际拖出进入预览，库存仍1；确认后0；收回后1",
+      "boundary": "中途半透明帧未抓取；无效落点取消/已占槽/手机拖放未实测，自动120检查通过",
+      "evidence": "18–24",
+      "native": [
+        "yard_basket_drag"
+      ],
+      "result": "限定通过",
+      "next": "12点补无效落点取消及占槽边界",
+      "build": "game-cf48222",
+      "sha": "cf482229b70b57ca6255c3a99a238167172d96af",
+      "testedBeijing": "2026-10-08T08:55:08.707148+08:00"
+    },
+    {
+      "id": "REQ-20261007-060",
+      "pr": "#557 / #554",
+      "feature": "布置微调边界按钮禁用",
+      "steps": "屋前圆石预览→左箭头",
+      "normal": "到左边界后左箭头变灰，其他方向可用；正常确认、收回",
+      "boundary": "只实测左边界；其余方向自动204检查，不冒全方向实际",
+      "evidence": "21–24",
+      "native": [
+        "yard_decor_nudge_limit"
+      ],
+      "result": "限定通过",
+      "next": "12点补其余方向与其它槽",
+      "build": "game-cf48222",
+      "sha": "cf482229b70b57ca6255c3a99a238167172d96af",
+      "testedBeijing": "2026-10-08T08:55:08.707148+08:00"
+    },
+    {
+      "id": "REQ-20261007-061",
+      "pr": "#562 / #556",
+      "feature": "空库存格子的淡墨与可辨名称",
+      "steps": "打开本浏览器既有空背篓",
+      "normal": "四类食物与三种小物加小米，空量0、图案淡墨、名称可辨；米/石有货后恢复有货外观",
+      "boundary": "已切换新格子实现，旧行版不重复测；390/568有限观察",
+      "evidence": "10、20、25–27",
+      "native": [
+        "yard_basket_empty_row_ink",
+        "yard_basket_grid"
+      ],
+      "result": "限定通过",
+      "next": "20点结合最新UI复查新影响",
+      "build": "game-cf48222",
+      "sha": "cf482229b70b57ca6255c3a99a238167172d96af",
+      "testedBeijing": "2026-10-08T08:55:08.707148+08:00"
+    },
+    {
+      "id": "REQ-20261007-062",
+      "pr": "#562 / #559",
+      "feature": "空背篓布置说明",
+      "steps": "零小物→把小物摆院里",
+      "normal": "提示背篓还没有小物，去门前小路找圆石/松果/落羽；零库存按钮灰，返回可用",
+      "boundary": "只有既有空档状态；占槽但可用0的专项由原生覆盖",
+      "evidence": "11",
+      "native": [
+        "yard_decor_empty_hint"
+      ],
+      "result": "限定通过",
+      "next": "12点补已摆满/剩余0说明",
+      "build": "game-cf48222",
+      "sha": "cf482229b70b57ca6255c3a99a238167172d96af",
+      "testedBeijing": "2026-10-08T08:55:08.707148+08:00"
+    },
+    {
+      "id": "WORLD-WEATHER-565",
+      "pr": "#571 / #566",
+      "feature": "共享区域天气持久化、探索期间推进同一时钟",
+      "steps": "院子选阴天→近郊探索→回院→刷新恢复",
+      "normal": "19回院仍阴天；刷新结果以recovery.json为准。真实自然天气轮换与跨日未完成",
+      "boundary": "存档sanitize、运行时及探索时钟共198/15/300自动检查通过；没有用墙钟代游戏时钟",
+      "evidence": "16–19、recovery.json",
+      "native": [
+        "world_weather",
+        "world_weather_runtime",
+        "exploration_slice",
+        "save_coordinator",
+        "save_recovery"
+      ],
+      "result": "部分通过",
+      "next": "12点补自然天气轮换/探索跨日；20点长时段",
+      "build": "game-cf48222",
+      "sha": "cf482229b70b57ca6255c3a99a238167172d96af",
+      "testedBeijing": "2026-10-08T08:55:08.707148+08:00"
+    },
+    {
+      "id": "COW-GROUND-504",
+      "pr": "#553 / #504",
+      "feature": "牛吃地面草的完整原画姿态与接触",
+      "steps": "正常采草→地面放草→等待牛进食",
+      "normal": "当前仅原生姿态48、地面食物运行时63通过；本轮普通浏览器牛进食未完成",
+      "boundary": "牛朝向/低动效/拍照保存/小屏接触未实际验证",
+      "evidence": "native/cow_ground_graze.log / yard_ground_food_runtime.log",
+      "native": [
+        "cow_ground_graze",
+        "yard_ground_food_runtime"
+      ],
+      "result": "实际未覆盖；自动通过",
+      "next": "12点优先普通采草、放草、牛进食和留影",
+      "build": "game-cf48222",
+      "sha": "cf482229b70b57ca6255c3a99a238167172d96af",
+      "testedBeijing": "2026-10-08T08:55:08.707148+08:00"
+    },
+    {
+      "id": "SHARED-INVENTORY-IMPACT",
+      "pr": "#571 / #575",
+      "feature": "共享时间/库存影响回归",
+      "steps": "隔离运行鱼携带一致性原生专项；新目录重复一次",
+      "normal": "两次107检查均有1个S7奇怪鱼HUD提示断言失败；持有、库存、投放相关断言未失败",
+      "boundary": "尚未取得普通玩家奇怪鱼反馈，产品原因与测试契约需定位；不能因其余检查过而报套件通过",
+      "evidence": "native/fish_carry_consistency.log / native-recheck/fish_carry_consistency.log",
+      "native": [
+        "fish_carry_consistency"
+      ],
+      "result": "自动测试失败2/2",
+      "next": "交Leader/Assistant定位；QA下一轮核对相关修订部署后定向复测",
+      "build": "game-cf48222",
+      "sha": "cf482229b70b57ca6255c3a99a238167172d96af",
+      "testedBeijing": "2026-10-08T08:55:08.707148+08:00"
+    }
+  ],
+  "allNewFeaturesPassed": false,
+  "actualComplete": false
+}
