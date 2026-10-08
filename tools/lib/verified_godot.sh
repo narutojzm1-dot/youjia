@@ -23,8 +23,19 @@ run_verified_godot_suite() {
       print pattern
     }
   ' "$map_file")"; then
-    printf '[daily-check] No unique completion contract for %s\n' "$entry" >&2
-    return 1
+    # REQ-20261008-075: hold_hotbar contracts (also listed in TSV when present)
+    case "$entry" in
+      test/hold_hotbar_suite.gd)
+        pattern='\[hold-hotbar\] PASS: [1-9][0-9]* checks'
+        ;;
+      test/hold_hotbar_mount_suite.gd)
+        pattern='\[hold-hotbar-mount\] PASS: [1-9][0-9]* checks'
+        ;;
+      *)
+        printf '[daily-check] No unique completion contract for %s\n' "$entry" >&2
+        return 1
+        ;;
+    esac
   fi
   case "$entry" in
     *.gd) _run_verified_godot "$log_file" "$pattern" "$@" --script "res://$entry" ;;
