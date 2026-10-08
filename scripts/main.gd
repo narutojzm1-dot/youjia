@@ -433,13 +433,15 @@ func _process(delta: float) -> void:
 		camera_position = _bound_quiet_camera(camera_position, camera_home, _world.get_backdrop_bounds(), size, zoom, hud_space)
 	_camera.position = camera_position
 	_cam_effective_offset = camera_position - camera_home
+	# Both regional scenes share the clock and the same painted-light overlay.
+	if _screen in ["game", "exploring"] and _world != null:
+		_update_tod_tint(_world.tod_fraction())
+		_update_season_tint(_world.holiday_day)
 	if _screen == "game":
 		_refresh_hud()
 		# 更新昼夜色调覆盖层与季节底色
 		if _world != null:
 			var tod := _world.tod_fraction()
-			_update_tod_tint(tod)
-			_update_season_tint(_world.holiday_day)
 			# 空闲提示轮播：初次 55s 后，每 75s 给一条软引导
 			## playtest #3 修复：原版通知 3.2s/16px 太短太小；现在等待活跃通知结束后再显示
 			if not _pause_screen.visible and not _album_screen.visible:
