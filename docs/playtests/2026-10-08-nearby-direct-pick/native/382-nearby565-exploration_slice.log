@@ -1,0 +1,24 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ERROR: Parse JSON failed. Error at line 0: Unknown error getting token
+   at: parse_string (core/io/json.cpp:629)
+   GDScript backtrace (most recent call first):
+       [0] _painted_path_layout (res://test/exploration_slice_suite.gd:454)
+       [1] run (res://test/exploration_slice_suite.gd:36)
+SCRIPT ERROR: Trying to assign value of type 'Nil' to a variable of type 'Dictionary'.
+   at: _painted_path_layout (res://test/exploration_slice_suite.gd:454)
+   GDScript backtrace (most recent call first):
+       [0] _painted_path_layout (res://test/exploration_slice_suite.gd:454)
+       [1] run (res://test/exploration_slice_suite.gd:36)
+ERROR: visible creek marker sets a walk-and-look target
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://test/exploration_slice_suite.gd:25)
+       [1] _painted_path_walk (res://test/exploration_slice_suite.gd:538)
+ERROR: marker walks to creek before opening its discovery
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://test/exploration_slice_suite.gd:25)
+       [1] _painted_path_walk (res://test/exploration_slice_suite.gd:543)
+[find-reveal] sound audible in this run: false
+EXPLORATION SLICE PASS 288/290 failures=["visible creek marker sets a walk-and-look target", "marker walks to creek before opening its discovery"]

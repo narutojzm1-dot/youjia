@@ -1,0 +1,9 @@
+{"view": [1280, 720], "stage": "title", "keepsakes": {}}
+{"view": [1280, 720], "stage": "yard", "keepsakes": {}}
+Traceback (most recent call last):
+  File "D:\games\youjia-test\assistant-recovery\browser-complete565.py", line 87, in <module>
+    active=wait_state(lambda v:((v.get('exploration') or {}).get('session') or {}).get('state')=='active','ordinary outing')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\games\youjia-test\assistant-recovery\browser-complete565.py", line 56, in wait_state
+    raise AssertionError(label+' timed out')
+AssertionError: ordinary outing timed out
