@@ -97,7 +97,7 @@ func run() -> void:
 	check(world._pending_interaction.is_empty() and world._scene_feedback.active_snapshot().is_empty(), "new walk cancels an unfinished flower-box approach without a false bloom")
 	world.free()
 	check_shore_stones()
-	check_fence_gate()
+	await check_fence_gate()
 	root.get_node("AudioDirector").call("release_streams")
 	print("[scene-hotspot-tests] %d checks, failures=%s" % [checks, failures])
 	quit(0 if failures.is_empty() else 1)
@@ -187,8 +187,8 @@ func check_fence_gate() -> void:
 	var fence := YardSceneHotspots.get_hotspot("fence_gate")
 	var approach: Vector2 = fence.approach_points[0]
 	check(Geometry2D.is_point_in_polygon(gate, fence.hit_polygon), "the actual painted wooden gate is in the authored hit polygon")
-	check(not Geometry2D.is_point_in_polygon(Vector2(1070, 430), fence.hit_polygon) and not Geometry2D.is_point_in_polygon(Vector2(830, 470), fence.hit_polygon) and not Geometry2D.is_point_in_polygon(Vector2(895, 480), fence.hit_polygon), "shed wall, old non-walkable rail, and bare lawn are not mislabeled as a gate")
-	check(not YardGround.allows(gate, YardGround.lawn(), true) and YardGround.allows(approach, YardGround.lawn(), true) and approach.distance_to(gate) > 75.0, "gate art is outside the lawn but its observation footpoint is safely inside")
+	check(not Geometry2D.is_point_in_polygon(Vector2(1070, 430), fence.hit_polygon) and not Geometry2D.is_point_in_polygon(Vector2(830, 470), fence.hit_polygon) and not Geometry2D.is_point_in_polygon(Vector2(875, 480), fence.hit_polygon), "shed wall, old non-walkable rail, and bare lawn are not mislabeled as a gate")
+	check(not YardGround.allows(gate, YardGround.lawn(), true) and YardGround.allows(approach, world.player_ground(), true) and approach.distance_to(gate) > 20.0, "gate art is outside the lawn but its observation footpoint is safely inside")
 	check(fence.ambient_anchor.x - approach.x <= 190.0, "shed-feather encounter remains within the actual portrait camera beside the yard-side approach")
 	check(YardInteraction.pointer(world, world._fishing_point()).target == "fishing" and YardInteraction.pointer(world, world._plant_point()).target == "plant", "existing pond and garden clicks still keep priority")
 	for actor_id: String in world._actors:
@@ -200,18 +200,19 @@ func check_fence_gate() -> void:
 	world.notice_requested.connect(func(key: String): notices.append(key))
 	world.request_pointer_action(gate)
 	check(world._pending_interaction == "fence_gate" and world._has_walk_goal and world._walk_goal == approach, "distant gate click starts only a safe yard-side route")
-	check(world.primary_action().target == "fence_gate" and world.primary_action_key() == "action.observe_fence" and world.action_target_key(world.primary_action()) == "target.fence_gate", "HUD, keyboard and action button retain the selected wooden fence")
+	check(world.primary_action().target == "fence_gate" and world.primary_action_key() == "action.open_gate" and world.action_target_key(world.primary_action()) == "target.fence_gate", "HUD, keyboard and action button retain the selected wooden fence")
 	world.try_interact()
 	world.request_primary_action()
 	check(world._pending_interaction == "fence_gate" and world._scene_feedback.fence_snapshot().is_empty(), "Space and button while approaching do not falsely move any painted grass")
 	for frame in 960:
 		world.tick(1.0 / 60.0, Vector2.ZERO)
-		if not world._scene_feedback.fence_snapshot().is_empty():
+		if not world.gate.pending.is_empty():
 			break
-	var response: Dictionary = world._scene_feedback.fence_snapshot()
-	check(not response.is_empty() and response.get("anchor", Vector2.INF) == fence.visual_anchor and not world._has_walk_goal, "only real arrival within the yard paints the gate-side grass")
-	check(YardGround.allows(player.position, YardGround.lawn(), true) and player.position.distance_to(approach) < 64.0, "player stays inside the fence instead of passing through the painted gate")
-	check(notices.count("notice.fence_gate") == 1 and not notices.has("notice.fishing.cast"), "fence success has its own one-time line and does not fish")
+	check(not world.gate.pending.is_empty() and not world.gate.opened, "arrival requests a durable gate operation before opening")
+	check(await root.get_node("SaveStore").flush_pending(), "gate commit completes")
+	check(world.gate.opened and not world._has_walk_goal, "receipt opens the gate after real arrival")
+	check(YardGround.allows(player.position, world.player_ground(), true) and player.position.distance_to(approach) < 20.0, "player stops at the actual doorway")
+	check(notices.count("notice.gate_open") == 1 and not notices.has("notice.fishing.cast"), "gate opening has its own one-time confirmation")
 	check(world.collected == album and world.photo_moments == moments and not player.carrying_grass, "observing the gate never changes items, photo moments or saved album")
 	world.request_pointer_action(Vector2(650, 515))
 	check(world._scene_feedback.fence_snapshot().is_empty() and world._scene_feedback.feather_snapshot().is_empty(), "moving away cancels both grass and shed-feather paintings immediately")
@@ -241,7 +242,7 @@ func check_fence_gate() -> void:
 	ambient.debug_place_player(Vector2(695, 510))
 	ambient.tick(0.02, Vector2.ZERO)
 	check(ambient._scene_feedback.feather_snapshot().is_empty(), "shed feather does not appear far from the gate")
-	ambient.request_pointer_action(Vector2(830, 510)) # Ordinary grass walk, not the gate.
+	ambient.request_pointer_action(approach) # Ordinary grass walk, not the gate.
 	check(ambient._pending_interaction.is_empty(), "ambient breeze never requires tapping the gate or spending a resource")
 	for frame in 720:
 		ambient.tick(1.0 / 60.0, Vector2.ZERO)

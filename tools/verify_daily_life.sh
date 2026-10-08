@@ -55,7 +55,10 @@ run_godot suite test/yard_ground_food_ledger_suite.gd
 run_godot suite test/yard_ground_food_runtime_suite.gd
 run_godot suite test/cow_ground_graze_suite.gd
 run_godot suite test/world_weather_suite.gd
+run_godot suite test/world_daylight_suite.gd
 run_godot suite test/world_weather_runtime_suite.gd
+run_godot suite test/sheep_ground_graze_suite.gd
+run_godot suite test/animal_glance_facing_suite.gd
 run_godot suite test/animal_companion_suite.gd
 run_godot suite test/animal_hidden_find_suite.gd
 run_godot suite test/world_residents_suite.gd
@@ -95,3 +98,7 @@ run_godot suite test/find_reveal_name_slip_suite.gd
 
 run_godot suite test/nearby_direct_pick_suite.gd
 run_godot suite test/nearby_motion_suite.gd
+
+run_godot suite test/yard_gate_suite.gd
+run_godot suite test/yard_shelter_suite.gd
+run_godot suite test/regional_rain_suite.gd

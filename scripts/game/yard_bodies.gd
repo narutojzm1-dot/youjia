@@ -68,6 +68,9 @@ static func route(start: Vector2, goal: Vector2, radius: Vector2, obstacles: Arr
 	if clear_segment(start,goal,radius,obstacles) and _ground_segment(start,goal,ground,avoid_pond): return [goal]
 	var grid := AStarGrid2D.new()
 	grid.region = Rect2i(14,33,65,23)
+	# Preserve the established lawn grid; extend east only for pen routes.
+	for corner: Vector2 in ground:
+		grid.region = grid.region.expand(Vector2i(ceili(corner.x/CELL), ceili(corner.y/CELL)))
 	grid.cell_size = Vector2.ONE*CELL
 	grid.diagonal_mode = AStarGrid2D.DIAGONAL_MODE_ONLY_IF_NO_OBSTACLES
 	grid.update()
