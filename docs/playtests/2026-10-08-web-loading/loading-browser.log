@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "D:\games\youjia-test\assistant-recovery\verify-loading-candidate.py", line 76, in <module>
+    assert len(record['requests'])==3,'fully completed resource should be served by browser cache on the next reload'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: fully completed resource should be served by browser cache on the next reload
