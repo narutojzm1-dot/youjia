@@ -1503,7 +1503,7 @@ func _decor_ground_recall(event: InputEvent) -> bool:
 	if _decor_panel.paper != null and _decor_panel.paper.get_global_rect().has_point(at):
 		return false
 	var Decor = load("res://scripts/inventory/yard_decor.gd")
-	var spot := Decor.spot_at(_decor.view(), _screen_to_world(at))
+	var spot: String = Decor.spot_at(_decor.view(), _screen_to_world(at))
 	if spot.is_empty():
 		return false
 	_last_touch_ms = Time.get_ticks_msec()
