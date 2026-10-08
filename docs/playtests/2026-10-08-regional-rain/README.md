@@ -24,3 +24,7 @@ Agent-ID：CODEX-LEAD。基线 d4093935efac690b8a2fc1813e884f1029da607a（棚舍
 普通Web隔离8770通过入口进入，正常天气按钮晴→阴→雨，看到夜间细雨/池塘雨纹；第一次远处点棚门未生效，走近后底部“打开棚门”成功。紧接保存事务批量点其他动作曾被拒，待状态确认后天气按钮正常。真实昼夜已进入第一夜，不将本次雨夜居棚当白天避雨实玩；白天雨前在外→雨中回棚由35项原生覆盖，后续普通体验另记。截图web-rain-night.jpeg。
 
 普通Web刷新并再次进入后细雨、第一夜和开门居棚延续，截图web-rain-reopened.jpeg；390×844竖屏雨层与按钮重排正常，web-rain-390.jpeg。该环境为浏览器画布模拟，不宣称实体手机。
+
+## 公开070ae5a补证归档
+
+`public-verification.json`记录当时Actions/Pages/PCK哈希及重试限制；`public-before-rain-all-out.jpeg`、`public-rain-all-home.jpeg`记录普通公开游戏三只居民白天雨前在外至雨中依次归棚。最终画面已自然入夜，不能以末张图单独证明白天触发。马/羊驼未接入。
