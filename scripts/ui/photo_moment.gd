@@ -90,6 +90,7 @@ static func capture(world: Node2D, rule: Dictionary) -> Dictionary:
 		"world_size": [world_size.x, world_size.y],
 		"focus": [focus.x, focus.y], "span": span,
 		"background": background, "items": items, "shadows": shadows,
+		"yard_gate": world.gate_view.record.duplicate(true) if _property(world,"gate_view") != null else {},
 	})
 
 
@@ -141,6 +142,9 @@ static func sanitize(data: Variant) -> Dictionary:
 		cleaned.day = int(data.day)
 	if data.has("caption_variant"):
 		cleaned.caption_variant = int(data.caption_variant)
+	var gate: Variant = data.get("yard_gate", {})
+	if gate is Dictionary and gate.get("opened") is bool and _number(gate.get("mix"),0.0,1.0) and _numbers(gate.get("sun"),4,0.0,2.0) and _numbers(gate.get("cloud"),4,0.0,2.0):
+		cleaned.yard_gate = gate.duplicate(true)
 	return cleaned
 
 
@@ -229,11 +233,29 @@ func setup(snapshot: Dictionary) -> void:
 		visual.z_index = 0
 		visual.z_as_relative = true
 		visual.set_meta("subject", item.subject)
+		visual.set_meta("recorded_depth", item.depth)
 		_stage.add_child(visual)
 		# Only the explicitly captured weather layer belongs below contact shadows.
 		# Keep legacy items (including negative-depth clouds) in their old order.
 		if item.kind == "sprite" and item.subject in ["weather_background", "weather_cloud"]:
 			_stage.move_child(visual, _shadows.get_index())
+	if _snapshot.has("yard_gate"):
+		var gate = preload("res://scripts/game/yard_gate_view.gd").new()
+		_stage.add_child(gate)
+		var state: Dictionary = _snapshot.yard_gate
+		gate.refresh(state.opened,state.mix,_color(state.sun),_color(state.cloud))
+		# Flatten painted pieces into the same inert, clipped draw order as poses.
+		# They must not use live yard Z values above the album's modal controls.
+		for piece: Node2D in gate.get_children():
+			var depth := piece.z_index
+			piece.reparent(_stage, false)
+			piece.z_index = 0
+			piece.set_meta("recorded_depth",depth)
+			for other: Node in _stage.get_children():
+				if other != piece and int(other.get_meta("recorded_depth",-1)) > depth:
+					_stage.move_child(piece,other.get_index())
+					break
+		gate.free()
 	_fit()
 
 

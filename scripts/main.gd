@@ -1238,7 +1238,8 @@ func _start_holiday(save_progress: bool = true) -> void:
 		SaveStore.get_plant_state(),
 		SaveStore.get_first_fish_caught(),
 		SaveStore.get_animal_relationship_memory(),
-		SaveStore.get_world_weather()
+		SaveStore.get_world_weather(),
+		SaveStore.get_yard_gate_open()
 	)
 	_world.album_updated.connect(_on_album_updated)
 	_world.notice_requested.connect(_show_notice_key)

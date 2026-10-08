@@ -234,7 +234,9 @@ func _test_event(rule: Dictionary, index: int) -> void:
 	_gallery.add_child(card)
 	_check(card.clip_contents, "card clips contents")
 	_check(card._stage.process_mode == Node.PROCESS_MODE_DISABLED, "card has no active simulation")
-	_check(card._stage.get_child_count() == snapshot.items.size() + 2, "one static primitive per recorded item plus background and shadows")
+	var gate_pieces: int = card._stage.get_children().filter(func(child: Node): return child is Polygon2D).size()
+	_check(card._stage.get_child_count() == snapshot.items.size() + 2 + gate_pieces, "one static primitive per recorded item plus background, shadows and recorded gate wood")
+	_check(gate_pieces == 27 if snapshot.has("yard_gate") else gate_pieces == 0, "recorded gate restores all painted pieces; legacy cards gain none")
 	for child: CanvasItem in card._stage.get_children():
 		_check(child.z_index == 0 and child.z_as_relative, "yard z ordering cannot escape the card")
 		_check(not child is AnimatedSprite2D, "hero is a static selected frame")
