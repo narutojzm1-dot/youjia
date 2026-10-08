@@ -10,6 +10,7 @@ test/paper_scrollbar_suite.gd	\[paper-scrollbar\] PASS: [1-9][0-9]* checks
 test/exploration_button_states_suite.gd	\[exploration-button-states\] PASS: [1-9][0-9]* checks
 test/audio_button_input_suite.gd	AUDIO_BUTTON_INPUT checks=[1-9][0-9]* failures=0
 test/ambience_output_ceiling_suite.gd	AMBIENCE_CEILING checks=[1-9][0-9]* failures=0
+test/yard_audio_suite.gd	YARD AUDIO PASS [1-9][0-9]*
 test/road_freedom_suite.gd	ROAD_FREEDOM checks=[1-9][0-9]* failures=0
 test/authored_sequence_suite.gd	\[authored-sequence-tests\] PASS: 16 distinct complete frames, uniform canvas and anchor, loop metadata
 test/boundary_feedback_suite.gd	\[boundary-feedback-tests\] [1-9][0-9]* checks \[\]
@@ -138,3 +139,4 @@ test/hold_hotbar_suite.gd	\[hold-hotbar\] PASS: [1-9][0-9]* checks
 test/hold_hotbar_mount_suite.gd	\[hold-hotbar-mount\] PASS: [1-9][0-9]* checks
 test/large_animal_shelter_suite.gd	LARGE_ANIMAL_SHELTER checks=[1-9][0-9]* failures=0
 test/house_sleep_suite.gd	house_sleep_suite checks=[1-9][0-9]* failures=0
+test/regional_audio_suite.gd	REGIONAL_AUDIO checks=[1-9][0-9]* failures=0
