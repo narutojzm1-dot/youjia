@@ -426,7 +426,8 @@ func tick_glance(delta: float, player_pos: Vector2) -> void:
 	if state not in ["graze", "rest", "pose"]:
 		# 若正在扫视途中动物开始走动，立即结束扫视
 		if _glance_timer > 0.0:
-			facing = _glance_saved_facing
+			# Movement already chose its heading in tick(). Do not overwrite it
+			# with the heading saved before the animal looked at the player.
 			_glance_timer = -randf_range(12.0, 20.0)
 		return
 	if _glance_timer > 0.0:
@@ -443,7 +444,9 @@ func tick_glance(delta: float, player_pos: Vector2) -> void:
 		if _glance_timer >= 0.0:
 			# 冷却结束：检查玩家是否在附近
 			var dist := position.distance_to(player_pos)
-			if dist < 180.0 and dist > 20.0:
+			# A nearly vertical observer provides no meaningful left/right turn.
+			# signf(0) would collapse the entire actor's horizontal scale.
+			if dist < 180.0 and dist > 20.0 and absf(player_pos.x - position.x) > 3.0:
 				# 概率触发扫视（距离越近越容易触发）
 				var chance := lerpf(0.35, 0.80, 1.0 - dist / 180.0)
 				if randf() < chance:

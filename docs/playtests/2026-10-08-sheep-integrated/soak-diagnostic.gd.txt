@@ -1,0 +1,35 @@
+extends SceneTree
+func _initialize() -> void: call_deferred("run")
+func run() -> void:
+	for hz: int in [30, 60, 120]:
+		seed(565)
+		var world = load("res://scripts/game/yard_world.gd").new()
+		root.add_child(world)
+		world.setup()
+		var records := {}
+		for id in ["sheep_a", "sheep_b"]:
+			records[id] = {"face":world.actor_named(id).facing, "last":-10.0, "flips":0, "rapid":0, "distance":0.0}
+		for frame in 120 * hz:
+			var now := float(frame) / hz
+			# Real wandering, collision and glance order; no forced actor state.
+			world.get_player().position = Vector2(280 + 70 * sin(now / 6.0), 550)
+			var old := {}
+			for id in records: old[id] = world.actor_named(id).position
+			world.tick(1.0 / hz, Vector2.ZERO)
+			for id in records:
+				var actor = world.actor_named(id)
+				var r: Dictionary = records[id]
+				r.distance += actor.position.distance_to(old[id])
+				if actor.facing != r.face:
+					r.flips += 1
+					if now - r.last < 0.5:
+						r.rapid += 1
+						print("RAPID ", hz, " ", id, " ", now, " ", actor.state, " ", actor._velocity)
+					r.face = actor.facing
+					r.last = now
+			if frame % hz == 0: await process_frame
+		print("SOAK ", hz, " ", JSON.stringify(records))
+		world.free()
+		await process_frame
+	root.get_node("AudioDirector").release_streams()
+	quit()
