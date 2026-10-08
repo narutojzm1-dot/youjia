@@ -57,6 +57,10 @@ const PATH_POINT := Vector2(300, 620)
 const PATH_STILL_SECONDS := 2.5
 const PATH_HOLD_SECONDS := 3.2
 const PATH_GAP_SECONDS := 14.0
+# REQ-20261008-072: the snail and clover ease in, and fade out at the end of
+# the hold like the other painted responses, instead of popping on and off.
+const PATH_FADE_IN := 0.3
+const PATH_FADE_OUT := 0.35
 var _snail: Sprite2D
 var _clover: Sprite2D
 var _path_still := 0.0
@@ -326,6 +330,7 @@ func advance(delta: float) -> void:
 	if _path_wait > 0.0:
 		_path_wait = maxf(0.0, _path_wait - delta)
 	if not _path_wants:
+		# Walking off still clears the pair at once, like every other response.
 		_path_duration = 0.0
 		_path_still = 0.0
 	elif _path_duration > 0.0:
@@ -341,7 +346,27 @@ func advance(delta: float) -> void:
 			_path_duration = PATH_HOLD_SECONDS
 			_snail.position = PATH_POINT + Vector2(-16, -8)
 			_clover.position = PATH_POINT + Vector2(22, -4)
+	_update_path_paint()
 	_sync_visible()
+
+
+## Current opacity of the path snail and clover (0 when hidden).
+func path_alpha() -> float:
+	if _path_duration > 0.0:
+		if bool(TuningStore.get_value("ui.reduced_motion", false)):
+			return 1.0
+		var fade_in := clampf(_path_elapsed / PATH_FADE_IN, 0.0, 1.0)
+		var fade_out := clampf((_path_duration - _path_elapsed) / PATH_FADE_OUT, 0.0, 1.0)
+		return minf(fade_in, fade_out)
+	return 0.0
+
+
+func _update_path_paint() -> void:
+	if _snail == null:
+		return
+	var alpha := path_alpha()
+	_snail.modulate.a = alpha
+	_clover.modulate.a = alpha
 
 
 func _sync_visible() -> void:
