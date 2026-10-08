@@ -478,7 +478,7 @@ func _painted_path_layout() -> void:
 		guard += 1
 	check(L.geometry().position(route).distance_to(L.geometry().position(goal)) < 0.1 and guard > 0 and guard <= 81, "road-surface walking reaches the target without overshooting or forced centerline detours")
 	var desk := L.frame(L.point(L.HOME_ARM, 300.0), Vector2(1280, 720))
-	check(L.visible_rect(desk).encloses(Rect2(Vector2.ZERO, L.SIZE).grow(-1.0)), "desktop shows the whole painting")
+	check(not L.visible_rect(desk).encloses(Rect2(Vector2.ZERO, L.SIZE).grow(-1.0)) and is_equal_approx(float(desk.zoom), 1.0), "desktop follows a local view at the yard scale")
 	var phone_zoom := -1.0
 	var phone_ok := true
 	for arm: String in L.ARMS:
@@ -534,14 +534,18 @@ func _painted_path_walk() -> void:
 	scroll.notification(Node.NOTIFICATION_APPLICATION_FOCUS_OUT)
 	check(scroll.walk_target.is_empty(), "losing focus drops a pending tap walk")
 	var held_before: Array = scroll.carried().duplicate()
+	store.pump()
+	var pictured: String = scroll.ground_finds().get("brook", "")
 	scroll.press_at(scroll.art_to_screen(brook.item))
-	check(scroll.walk_target.get("inspect_stop", "") == "brook", "visible creek marker sets a walk-and-look target")
+	check(scroll.walk_target.get("collect_stop", "") == "brook", "visible creek find sets a walk-and-pick target")
 	guard = 0
-	while scroll.observing.is_empty() and guard < 1200:
+	while (not scroll.walk_target.is_empty() or not scroll._pending_collect_stop.is_empty()) and guard < 1200:
 		scroll.walk(Vector2.ZERO, 1.0 / 30.0)
+		store.pump()
+		if not scroll._pending_collect_stop.is_empty(): scroll._collect_at_stop(scroll._pending_collect_stop)
 		guard += 1
-	check(scroll.observing == "brook" and scroll.nearby_stop() == "brook", "marker walks to creek before opening its discovery")
-	check(scroll.carried() == held_before, "looking via marker never silently grants an item")
+	check(scroll.observing.is_empty() and scroll.nearby_stop() == "brook", "ground click reaches the creek and remains free to walk")
+	check(scroll.carried() == held_before + [pictured], "one direct item click picks exactly the visible find")
 	scroll.free()
 	root.size = Vector2i(1280, 720)
 
@@ -880,7 +884,7 @@ func _scroll_and_director() -> void:
 	check(scroll.pick_choice().kind == "take" and scroll.pick() and scroll.carried() == [at_gate, at_brook], "take adds to the basket")
 	check(scroll.pick_choice().kind == "release" and scroll.pick_choice().find_id == at_brook, "the find can be put back where it was found")
 	scroll.press_at(Vector2(200, 300))
-	check(scroll.suppressed_touches == 1 and scroll.observing == "brook", "tapping the scene while looking does not walk away")
+	check(scroll.observing.is_empty() and not scroll.walk_target.is_empty(), "a scene tap resumes walking without a continue button")
 	scroll.end_observe()
 	scroll.place_at("shade")
 	scroll.observe()

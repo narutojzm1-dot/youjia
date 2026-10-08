@@ -75,7 +75,8 @@ func _run() -> void:
 					panel.update_view(_inventory(held), _keepsakes(), state, state == "saving")
 					await _settle()
 					_check_layout(dims, "%s %s %s held=%s" % [language, dims, state, held], language, state)
-	check(wrapped_en > 0, "some narrow English row name actually wraps (%d)" % wrapped_en)
+	# The legacy rows are hidden behind the grid (REQ-20261007-064), so no row name wraps any more.
+	check(wrapped_en == 0, "hidden legacy rows are no longer laid out as wrapped names (%d)" % wrapped_en)
 	check(compact_cases > 0, "short landscape uses the compact layout (%d)" % compact_cases)
 	await _specific_cases(locale)
 	_finish()
@@ -105,10 +106,18 @@ func _check_layout(dims: Vector2i, tag: String, language: String, state: String)
 		if button.is_visible_in_tree():
 			_check_button(button, tag)
 			check(button.size.y >= 44.0 - EPS, tag + ": %s keeps a 44px touch target" % button.text)
+	# REQ-20261007-064: the player-facing list is now the rows x columns grid; the old
+	# per-row name + "Take one" nodes stay for the legacy interface but are hidden.
+	check(panel.grid.is_visible_in_tree(), tag + ": basket grid is what the player sees")
+	for kind: String in panel.grid.cells:
+		var cell: Rect2 = panel.grid.cells[kind].get_global_rect()
+		check(cell.position.x >= scroll_rect.position.x - EPS and cell.end.x <= scroll_rect.end.x + EPS, tag + ": %s cell inside the list width" % kind)
+	for row: Control in panel.list_rows:
+		check(not row.is_visible_in_tree(), tag + ": legacy list row hidden behind the grid")
 	# Rows: horizontally inside the list window, names never wider than their label.
-	for label: Label in panel.keepsake_labels.values() + [panel.held_label]:
+	for label: Label in [panel.held_label]:
 		_check_label(label, scroll_rect, tag)
-	for kind: String in panel.fish_labels:
+	for kind: String in ([] if not panel.fish_labels.values()[0].is_visible_in_tree() else panel.fish_labels.keys()):
 		var label: Label = panel.fish_labels[kind]
 		var button: Button = panel.fish_buttons[kind]
 		_check_label(label, scroll_rect, tag)
@@ -161,7 +170,8 @@ func _specific_cases(locale: Node) -> void:
 	await _settle()
 	var paper: Rect2 = panel.panel.get_global_rect()
 	check(is_equal_approx(paper.position.x, 12.0) and is_equal_approx(paper.size.x, 256.0), "en 280x653 paper is 256px wide at x=12 (got %s)" % paper)
-	check(panel.fish_labels["odd"].get_line_count() == 2, "en 280x653 'Curious fish' wraps onto a second line")
+	check(panel.grid.grid.columns == 3, "en 280x653 basket grid uses three columns")
+	check(panel.grid.name_labels["odd"].get_line_count() == 1, "en 280x653 'Odd fish' cell name stays on one line")
 	# Short landscape: the list window really is taller than before (146 / 126px).
 	for dims: Vector2i in [Vector2i(568, 320), Vector2i(640, 300)]:
 		root.size = dims

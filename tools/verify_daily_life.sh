@@ -48,10 +48,14 @@ run_godot suite test/yard_decor_panel_hug_suite.gd
 run_godot suite test/yard_decor_nudge_limit_suite.gd
 run_godot suite test/yard_decor_empty_hint_suite.gd
 run_godot suite test/yard_basket_empty_row_ink_suite.gd
+run_godot suite test/yard_basket_grid_suite.gd
+run_godot suite test/yard_basket_grid_entry_suite.gd
+run_godot suite test/yard_basket_drag_suite.gd
 run_godot suite test/yard_ground_food_ledger_suite.gd
 run_godot suite test/yard_ground_food_runtime_suite.gd
 run_godot suite test/cow_ground_graze_suite.gd
 run_godot suite test/world_weather_suite.gd
+run_godot suite test/world_daylight_suite.gd
 run_godot suite test/world_weather_runtime_suite.gd
 run_godot suite test/sheep_ground_graze_suite.gd
 run_godot suite test/animal_glance_facing_suite.gd
@@ -91,3 +95,5 @@ run_godot suite test/yard_basket_panel_fit_suite.gd
 run_godot suite test/confirm_panel_narrow_suite.gd
 
 run_godot suite test/find_reveal_name_slip_suite.gd
+
+run_godot suite test/nearby_direct_pick_suite.gd

@@ -1508,21 +1508,21 @@ func _wants_sunset_clouds() -> bool:
 	if weather != "sun":
 		return false
 	var t := tod_fraction()
-	return t >= 0.72 and t < 0.87
+	return preload("res://scripts/game/world_daylight.gd").phase(t) == "evening"
 
 
-## 与 main._tod_phase_name 的 dawn/morning 对齐：t < 0.30。
+## 与 main._tod_phase_name 的 dawn/morning 对齐：当地时间05:00–11:00。
 func _wants_morning_clouds() -> bool:
 	if weather != "sun":
 		return false
-	return tod_fraction() < 0.30
+	return preload("res://scripts/game/world_daylight.gd").phase(tod_fraction()) in ["dawn", "morning"]
 
 
-## 与 main._tod_phase_name 的 night 对齐：t >= 0.87。
+## 与 main._tod_phase_name 的 night 对齐：当地时间20:00–05:00。
 func _wants_night_clouds() -> bool:
 	if weather != "sun":
 		return false
-	return tod_fraction() >= 0.87
+	return preload("res://scripts/game/world_daylight.gd").phase(tod_fraction()) == "night"
 
 
 func _cloud_texture_for_now() -> Texture2D:
@@ -1811,7 +1811,9 @@ func advance_world_time(delta: float) -> void:
 
 func environment_snapshot() -> Dictionary:
 	return {"day":holiday_day, "elapsed":_day_elapsed, "day_fraction":tod_fraction(),
-		"hour":fmod(6.0 + tod_fraction()*24.0, 24.0), "weather":weather,
+		"hour":preload("res://scripts/game/world_daylight.gd").hour(tod_fraction()),
+		"phase":preload("res://scripts/game/world_daylight.gd").phase(tod_fraction()),
+		"daylight":preload("res://scripts/game/world_daylight.gd").daylight(tod_fraction()), "weather":weather,
 		"weather_remaining":float(_regional_weather.state.remaining)}
 
 

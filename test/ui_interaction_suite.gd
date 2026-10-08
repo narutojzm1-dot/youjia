@@ -207,7 +207,7 @@ func review():
  # 晴天云带 modulate 应偏亮，不跟院子暖滤色一起变脏。
  check(w._weather_cloud_pair()[0].modulate.r >= 1.0 and w._weather_cloud_pair()[0].modulate.g >= 1.0,"sunny cloud band stays bright instead of dirty warm tint")
  # 傍晚暖云：只在晴天 TOD evening 窗口换帧；阴天不抢。
- w._day_elapsed = w.DAY_DURATION_SECONDS * 0.80
+ w._day_elapsed = w.DAY_DURATION_SECONDS * (13.0 / 24.0) # 19:00 local time
  w._apply_weather_art()
  check(w._weather_cloud_pair()[0].texture==w.CLOUD_SUNSET,"sunny evening uses the warm sunset cloud band")
  w.toggle_weather()

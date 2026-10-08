@@ -1,0 +1,33 @@
+{"view": [390, 844], "stage": "title", "keepsakes": {}}
+{"view": [390, 844], "stage": "yard", "keepsakes": {}}
+{"view": [390, 844], "stage": "entry-1", "keepsakes": {}}
+{"view": [390, 844], "stage": "empty-return-1", "keepsakes": {}}
+{"view": [390, 844], "stage": "entry-2", "keepsakes": {}}
+{"view": [390, 844], "stage": "direct-pick", "keepsakes": {}}
+{"view": [390, 844], "stage": "free-ground", "keepsakes": {}}
+{"view": [390, 844], "stage": "collected-return", "keepsakes": {"formal.find.brook_stone": 1}}
+{"view": [390, 844], "stage": "hud-entry-steady", "keepsakes": {"formal.find.brook_stone": 1}}
+{"view": [390, 844], "stage": "hud-return", "keepsakes": {"formal.find.brook_stone": 1}}
+{"view": [390, 844], "stage": "reload-title", "keepsakes": {"formal.find.brook_stone": 1}}
+{"view": [390, 844], "stage": "reload-yard", "keepsakes": {"formal.find.brook_stone": 1}}
+{"view": [844, 390], "stage": "title", "keepsakes": {}}
+{"view": [844, 390], "stage": "yard", "keepsakes": {}}
+{"view": [844, 390], "stage": "entry-1", "keepsakes": {}}
+{"view": [844, 390], "stage": "empty-return-1", "keepsakes": {}}
+{"view": [844, 390], "stage": "entry-2", "keepsakes": {}}
+{"view": [844, 390], "stage": "direct-pick", "keepsakes": {}}
+{"view": [844, 390], "stage": "free-ground", "keepsakes": {}}
+{"view": [844, 390], "stage": "collected-return", "keepsakes": {"formal.find.brook_stone": 1}}
+{"view": [844, 390], "stage": "hud-entry-steady", "keepsakes": {"formal.find.brook_stone": 1}}
+{"view": [844, 390], "stage": "hud-return", "keepsakes": {"formal.find.brook_stone": 1}}
+{"view": [844, 390], "stage": "reload-title", "keepsakes": {"formal.find.brook_stone": 1}}
+{"view": [844, 390], "stage": "reload-yard", "keepsakes": {"formal.find.brook_stone": 1}}
+{"view": [1280, 720], "stage": "title", "keepsakes": {}}
+{"view": [1280, 720], "stage": "yard", "keepsakes": {}}
+Traceback (most recent call last):
+  File "D:\games\youjia-test\assistant-recovery\browser-complete565.py", line 84, in <module>
+    active=wait_state(lambda v:((v.get('exploration') or {}).get('session') or {}).get('state')=='active','ordinary outing')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\games\youjia-test\assistant-recovery\browser-complete565.py", line 53, in wait_state
+    raise AssertionError(label+' timed out')
+AssertionError: ordinary outing timed out
