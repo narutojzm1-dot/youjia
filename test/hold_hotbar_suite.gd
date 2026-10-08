@@ -42,10 +42,15 @@ func run() -> void:
 
 
 func _inv(held: String = "", fish: Dictionary = {}, grass: int = 0, millet: int = 0, revision: int = 1) -> Dictionary:
+	var clean_fish := {}
+	for kind: Variant in fish:
+		var n := int(fish[kind])
+		if n > 0:
+			clean_fish[kind] = n
 	return {
 		"schema": 3,
 		"revision": revision,
-		"fish": fish,
+		"fish": clean_fish,
 		"grass": grass,
 		"millet": millet,
 		"held": held,
@@ -100,15 +105,16 @@ func _intent_no_deduct_on_illegal(Intent) -> void:
 	var bad: Dictionary = Intent.would_commit_food_drop(snap, "medium", YardGround.POND_CENTER, [])
 	check(bad.has("error"), "illegal tap yields an error intent")
 	var after_bad: Dictionary = Inventory.read(snap)
-	check(after_bad.revision == before.revision and after_bad.held == "medium", "illegal intent does not mutate the snapshot")
+	check(not before.is_empty(), "fixture inventory is readable")
+	check(int(after_bad.get("revision", -1)) == int(before.get("revision", -2)) and str(after_bad.get("held", "")) == "medium", "illegal intent does not mutate the snapshot")
 	var good_point := Vector2(400, 520)
 	var good: Dictionary = Intent.would_commit_food_drop(snap, "medium", good_point, [])
 	check(good.has("candidate"), "lawful tap builds a candidate via Inventory.transition")
 	if good.has("candidate"):
 		var next: Dictionary = Inventory.read(good.candidate)
-		check(next.held.is_empty() and next.ground.size() == 1, "lawful drop clears hand and adds one ground item")
-		check(int(next.revision) == int(before.revision) + 1, "lawful drop advances revision once")
-		check(is_equal_approx(float(next.ground[0].x), good_point.x), "ground item sits on the tapped point")
+		check(str(next.get("held", "x")).is_empty() and next.get("ground", []).size() == 1, "lawful drop clears hand and adds one ground item")
+		check(int(next.get("revision", -1)) == int(before.get("revision", -2)) + 1, "lawful drop advances revision once")
+		check(is_equal_approx(float(next.get("ground", [{}])[0].get("x", -1.0)), good_point.x), "ground item sits on the tapped point")
 	# Cancel path: empty hand / mismatch must not consume
 	var cancel: Dictionary = Intent.would_commit_food_drop(snap, "", good_point, [])
 	check(cancel.get("error", "") == "EMPTY_HAND", "cancel / empty hand never builds a candidate")
