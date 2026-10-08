@@ -571,7 +571,19 @@ func request_yard_progress(day: int, elapsed: float, state: int, day_planted: in
 	var patch := {"holiday_day": maxi(1, day), "holiday_day_elapsed": maxf(0.0, elapsed), "plant_state": clampi(state, 0, 3), "plant_day_planted": maxi(0, day_planted), "plant_watered_day": watered_day}
 	var clean := preload("res://scripts/game/world_weather.gd").sanitize(climate)
 	if not clean.is_empty(): patch.world_weather = clean
-	return request_patch("yard", patch)
+	return request_intent("yard", func(current: Dictionary) -> Dictionary:
+		# A queued pre-sleep autosave cannot overwrite a committed morning.
+		var saved_day := int(current.get("holiday_day", 1))
+		if int(patch.holiday_day) < saved_day: return current
+		if int(patch.holiday_day) == saved_day and float(patch.holiday_day_elapsed) < float(current.get("holiday_day_elapsed",0.0)): return current
+		current.merge(patch,true)
+		return current)
+
+
+func request_house_sleep(night: Dictionary) -> String:
+	var frozen := night.duplicate(true)
+	return request_intent("house-sleep", func(current: Dictionary) -> Variant:
+		return preload("res://scripts/game/house_sleep_state.gd").finish(current,frozen))
 
 
 func request_plant_state(state: int, day_planted: int, watered_day: int) -> String:

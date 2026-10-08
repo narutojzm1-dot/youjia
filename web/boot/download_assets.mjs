@@ -2,6 +2,8 @@
 // full-response HTTP cache on the successful path; resume decoded bytes on idle.
 // Large PCK files may exceed the HTTP cache's per-entry limit. CacheStorage is
 // optional, stores only completed assets, and never touches the save database.
+import {Sha256Stream} from './sha256_stream.mjs';
+
 export function installAssetRecovery(config, {
   target = window, idleMs = 20000, maxRetries = 3,
   cacheWaitMs = 1500,
@@ -10,7 +12,9 @@ export function installAssetRecovery(config, {
 } = {}) {
   const assets = new Map(Object.entries(config.fileSizes || {})
     .filter(([name, size]) => /\.(wasm|pck)$/.test(name) && Number.isSafeInteger(size) && size > 0)
-    .map(([name, size]) => [new URL(name, target.location.href).href, size]));
+    .map(([name, size]) => [new URL(name, target.location.href).href, {
+      size, hash: /^[a-f0-9]{64}$/.test(config.fileHashes?.[name]) ? config.fileHashes[name] : null,
+    }]));
   const original = target.fetch;
   const active = new Set();
   let stopped = false;
@@ -21,7 +25,28 @@ export function installAssetRecovery(config, {
     active.clear();
   };
   const fatal = (message) => Object.assign(new Error(message), {invalidAsset: true});
-  async function recover(url, size) {
+  function checked(body, size, hash, invalid = () => {}) {
+    if (!hash) return body; // Raw, unpublished Godot exports have no fileHashes.
+    const digest = new Sha256Stream();
+    let read = 0;
+    const fail = message => {
+      const error = fatal(message);
+      invalid();
+      if (!stopped) onError(error);
+      throw error;
+    };
+    return body.pipeThrough(new TransformStream({
+      transform(chunk, output) {
+        read += chunk.byteLength;
+        if (read > size) fail('资源大小与构建不符，请重新加载');
+        digest.update(chunk); output.enqueue(chunk);
+      },
+      flush() {
+        if (read !== size || digest.digest() !== hash) fail('资源内容校验失败，请重试下载');
+      },
+    }));
+  }
+  async function recover(url, {size, hash}) {
     let cache, cacheTimer;
     try {
       const cached = target.caches && await Promise.race([
@@ -33,8 +58,12 @@ export function installAssetRecovery(config, {
       ]);
       cache = cached?.store;
       const saved = cached?.saved;
-      if (saved?.headers.get('x-youjia-asset-size') === String(size)) {
-        if (!stopped) { onCacheHit({url}); return saved; }
+      if (saved?.headers.get('x-youjia-asset-size') === String(size) &&
+          (!hash || saved.headers.get('x-youjia-asset-sha256') === hash)) {
+        if (!stopped) {
+          onCacheHit({url});
+          return new Response(checked(saved.body, size, hash, () => cache.delete(url).catch(() => {})), {headers: saved.headers});
+        }
       }
       else if (saved) cache.delete(url).catch(() => {});
     } catch { /* Private mode, quota or storage failures must not block startup. */ }
@@ -59,8 +88,11 @@ export function installAssetRecovery(config, {
                 ...(offset ? {headers: {Range: `bytes=${offset}-`}} : {}),
               });
               if (!response.ok || !response.body) throw new Error(`资源请求失败 (${response.status})`);
-              const nextEtag = response.headers.get('etag')?.replace(/^W\//, '');
-              if (etag && nextEtag && etag !== nextEtag) throw fatal('重试时资源版本发生变化，请重新加载');
+              // A decoded gzip response and an identity Range response can have
+              // different validators. Published assets are pinned by the actual
+              // full-file digest; never strip W/ and mistake it for strong identity.
+              const nextEtag = response.headers.get('etag');
+              if (!hash && etag && nextEtag && etag !== nextEtag) throw fatal('重试时资源版本发生变化，请重新加载');
               etag ||= nextEtag;
               let skip = offset;
               if (response.status === 206) {
@@ -109,10 +141,11 @@ export function installAssetRecovery(config, {
       },
       cancel() { restore(); },
     });
-    const response = new Response(stream, {headers: {
+    const response = new Response(checked(stream, size, hash), {headers: {
       'content-type': url.endsWith('.wasm') ? 'application/wasm' : 'application/octet-stream',
       'content-length': String(size),
       'x-youjia-asset-size': String(size),
+      ...(hash ? {'x-youjia-asset-sha256': hash} : {}),
     }});
     if (cache) {
       // put() rejects if any part of the body fails. No partial pack is stored.
