@@ -983,12 +983,35 @@ func _interaction_actor(target: String) -> FeltActor:
 	return null
 
 
+
+func _decor_approach_point(goal: Vector2) -> Vector2:
+	# Placed keepsakes sit on a spot centre that may be just off walkable grass.
+	# Walk to the nearest standable point still inside pickup reach, then recall.
+	var poly := player_ground()
+	if YardGround.allows(goal, poly, true):
+		return goal
+	var best := goal
+	var best_d := INF
+	for step in range(6, 46, 4):
+		for i in range(12):
+			var ang := float(i) * TAU / 12.0
+			var candidate := goal + Vector2(cos(ang), sin(ang)) * float(step)
+			if not YardGround.allows(candidate, poly, true):
+				continue
+			var dist := candidate.distance_to(goal)
+			if dist < best_d:
+				best_d = dist
+				best = candidate
+	return best
+
 func _request_action(target: String, goal: Vector2) -> void:
 	_scene_feedback.cancel()
 	notice_dismiss_requested.emit("notice.cannot_walk")
 	_rejected_seconds = 0.0
 	if target.is_empty() and YardGround.allows(goal,player_ground(),true):
 		goal = _open_goal_near_body(goal)
+	if target.begins_with("decor:"):
+		goal = _decor_approach_point(goal)
 	_pending_interaction = target
 	_has_walk_goal = false
 	_walk_path.clear()
