@@ -144,6 +144,8 @@ func _refresh_names() -> void:
 func update_view(inventory: Dictionary, _keepsakes: Dictionary = {}, state: String = "idle", is_busy: bool = false) -> void:
 	_refresh_names()
 	busy = is_busy or state in ["saving", "unknown", "failed", "blocked"]
+	# 先记下栏上原来的手持，下面用种类是否变化决定要不要默认武装。
+	var previous_held := held
 	held = str(inventory.get("held", "")) if not inventory.is_empty() else ""
 	for kind: String in SLOT_ORDER:
 		var count := 0
@@ -168,8 +170,9 @@ func update_view(inventory: Dictionary, _keepsakes: Dictionary = {}, state: Stri
 		_set_armed(false)
 	else:
 		_set_selected(held)
-		# 手持变化时默认武装点地投放（玩家可再点同一格解除）
-		if not place_armed:
+		# 只有手持种类变化时才默认武装点地投放（玩家可再点同一格解除）。
+		# 同一件手里物品的存档回执、计数刷新不能把刚取消的武装重新打开。
+		if held != previous_held:
 			_set_armed(true)
 
 

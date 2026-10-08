@@ -155,6 +155,14 @@ func run() -> void:
 	await settle()
 	check(main._inventory.view().held.is_empty(), "lawful drop clears held via inventory request")
 	check(main._inventory.view().ground.size() >= 1, "lawful drop adds ground food")
+	# 院子拾取会让 held 从空变成草，栏的默认武装必须卸掉；否则带着草点地不再是走路。
+	main._on_ground_food_action("harvest", "grass", {}, "")
+	await settle()
+	check(main._inventory.view().held == "grass", "yard harvest puts grass in hand")
+	check(not main._hold_hotbar.is_place_armed(), "yard harvest does not keep tap-to-place armed")
+	main._on_inventory_changed()
+	await process_frame
+	check(not main._hold_hotbar.is_place_armed(), "inventory refresh does not re-arm world grass")
 	_finish()
 
 

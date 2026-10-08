@@ -73,6 +73,8 @@ var _weather_chip: Button
 var _basket_chip: Button
 var _basket_panel: Control
 var _hold_hotbar: Control
+# 仅快捷栏「取出」才保留点地武装。院子拾取会让 held 从空变成有东西，栏会默认武装，这里再卸掉。
+var _hold_withdraw_arms_place := false
 var _residents: RefCounted
 var _inventory: RefCounted
 var _decor: RefCounted
@@ -1435,7 +1437,16 @@ func _on_inventory_changed() -> void:
 			_basket_panel.decor_button.text = "Arrange finds in the yard" if I18n.get_locale() == "en" else "把小物摆在院里"
 			_basket_panel.decor_button.disabled = _inventory.busy()
 	if _hold_hotbar != null:
+		var before_held := str(_hold_hotbar.held)
+		var before_armed: bool = _hold_hotbar.is_place_armed()
 		_hold_hotbar.update_view(inventory, SaveStore.get_available_keepsakes(), _inventory.state, _inventory.busy())
+		# 带着草点羊驼 / 点草地仍是走路与既有互动（动作键才放下）。
+		# 点地投放只留给玩家从快捷栏取出后的武装，避免院子拾取把这些点击吃掉。
+		var held_now := str(_hold_hotbar.held)
+		if not before_armed and _hold_hotbar.is_place_armed() and held_now != before_held and not _hold_withdraw_arms_place:
+			_hold_hotbar.arm_placement(false)
+		if not _inventory.busy():
+			_hold_withdraw_arms_place = false
 		_sync_hold_hotbar_visibility()
 
 
@@ -2239,7 +2250,10 @@ func _sync_hold_hotbar_visibility() -> void:
 func _on_hold_withdraw(kind: String) -> void:
 	if _inventory == null or kind.is_empty() or _inventory.busy():
 		return
-	_inventory.request("withdraw", kind)
+	# 取出成功后的库存回执要保留栏上的默认点地武装；失败则不要把标志留到下一次拾取。
+	_hold_withdraw_arms_place = true
+	if not _inventory.request("withdraw", kind):
+		_hold_withdraw_arms_place = false
 
 
 ## 武装点地投放：合法才走既有 drop 事务；非法只提示，不扣数、不改 held。
