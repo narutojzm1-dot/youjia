@@ -12,6 +12,7 @@ signal day_advanced(day: int)
 ## 钓到鱼时触发，带上鱼种类字符串，供 HUD 做更强的收杆反馈动画
 signal fish_caught(carry_type: String)
 signal ground_food_requested(action: String, kind: String, details: Dictionary, actor_id: String)
+signal decor_recall_requested(spot: String)
 var ground_food: Node2D
 var decor_view: Node2D
 var pond_story: Node
@@ -811,6 +812,15 @@ func _interact_with_target(target: String) -> void:
 	if target.begins_with("ground_food:"):
 		_consume_pending_action()
 		ground_food.pickup(int(target.get_slice(":", 1)))
+		return
+	if target.begins_with("decor:"):
+		var spot := target.get_slice(":", 1)
+		if decor_view == null or decor_view.placed(spot).is_empty():
+			return
+		if _player.position.distance_to(decor_view.placed(spot).point) >= 48.0:
+			return
+		_consume_pending_action()
+		decor_recall_requested.emit(spot)
 		return
 	if target == "grass":
 		if inventory_enabled and ground_food != null and not ground_food.held().is_empty(): return

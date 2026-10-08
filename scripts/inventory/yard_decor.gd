@@ -43,6 +43,28 @@ static func offset_valid(entry: Dictionary) -> bool:
 static func position_for(spot: String, entry: Dictionary) -> Vector2:
 	return SPOTS[spot] + Vector2(float(entry.dx), float(entry.dy)) * NUDGE
 
+## Scene pick-up hit. Radius is in yard units, around the placed prop centre.
+## Empty string means the point did not land on a reserved find.
+static func spot_at(decor: Dictionary, point: Vector2, radius: float = 28.0) -> String:
+	if not decor is Dictionary or not decor.get("places", {}) is Dictionary:
+		return ""
+	if not point.x == point.x or not point.y == point.y:
+		return ""
+	var best := ""
+	var best_dist := radius
+	for spot: Variant in decor.places:
+		if not spot is String or spot not in SPOTS:
+			continue
+		var entry: Variant = decor.places[spot]
+		if not entry is Dictionary:
+			continue
+		var dist := point.distance_to(position_for(spot, entry))
+		if dist <= best_dist:
+			best_dist = dist
+			best = spot
+	return best
+
+
 static func available(snapshot: Dictionary) -> Dictionary:
 	var decor := read(snapshot)
 	if decor.is_empty(): return {}
