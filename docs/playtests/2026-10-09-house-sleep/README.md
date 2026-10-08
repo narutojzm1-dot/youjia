@@ -1,6 +1,6 @@
 # #565 入屋睡眠验证
 
-Owner CODEX-LEAD。PR621最终候选`a3c03b27fab70e44e27fc09b188d2893817cb84d`，tree `06b239a135d50c97e57307f859e870127aa1977b`；本地同树提交`e640a8563e`。实现基于main `1b02f46b69b7046ed000386f6990c7eb5fc3e983`。完整CI 37829427901通过；PR621已合入 `ccee83ab62b00ae6b8a8f6dd10891e039bfe7e02`。自动发布与公开核验进行中，尚未宣称公开发布。
+Owner CODEX-LEAD。PR621最终候选`a3c03b27fab70e44e27fc09b188d2893817cb84d`，tree `06b239a135d50c97e57307f859e870127aa1977b`；本地同树提交`e640a8563e`。实现基于main `1b02f46b69b7046ed000386f6990c7eb5fc3e983`。完整CI 37829427901通过；PR621已合入 `ccee83ab62b00ae6b8a8f6dd10891e039bfe7e02`。Publish37831543831、Pages37833289013成功，公开包及旧存档已核验。
 
 ## 已覆盖
 
@@ -41,3 +41,17 @@ Owner CODEX-LEAD。PR621最终候选`a3c03b27fab70e44e27fc09b188d2893817cb84d`�
 ## 限制
 
 呼噜声、夜间音乐、蛙虫蛇音景、星月专用原画仍未交付/真实听验；不关闭整个#565。纹理来源、完整提示、原始SHA256见art-provenance.md。原始门洞资源保留字节，未替换整幅小院背景。
+
+## 正式公开核验（2026-10-09 03:39 CST 起）
+
+- 游戏源 `ccee83ab62b00ae6b8a8f6dd10891e039bfe7e02`，构建 `game-ccee83a`；Pages提交 `3fbe4eebb8805713230d175e8728b733048b3ce8`。
+- [PR CI](https://github.com/narutojzm1-dot/youjia/actions/runs/37829427901)、[Publish](https://github.com/narutojzm1-dot/youjia/actions/runs/37831543831)、[Pages](https://github.com/narutojzm1-dot/youjia/actions/runs/37833289013) 均成功。CI日志明确包含 `house_sleep_suite checks=53 failures=0`。
+- PCK实际下载55,196,096字节；SHA256 `1aced6e6928120c2a77db9abebd602b81543a251455a2aa73376b06e364ca261`，Git blob `c677399bff6927db4c746e17193d4778ede83bd5` 与gh-pages原件一致。
+- HTML SHA256 `35f8a5f04851ee3e3821fa5fe021c8fc1db338498fd08fc3f231cdc6845e86b9`，Git blob `280390a4c9ce676679d2c348c97211043d072ce5`；十个存档模块、四个引擎资源、两个加载模块逐一下载并匹配manifest哈希。[原始清单](public/game-release.json)、[实际验证结果](public/verification.json)、[工作流标识](public/workflows.json)。
+- 同一公开浏览器旧profile，不清档：升级前Day15雨夜；新版恢复Day15/小米×1/beibei及其他动物进展，暖窗可见；点击家门入睡到Day16，续算为阴天，小米仍×1。再次刷新重开仍Day16/小米×1，动物进展保留，未重复跨日；公开控制台warn/error为空。
+
+![公开版旧档恢复](public-day15-restored.jpeg)
+![公开版过夜与持物](public-day16-millet.jpeg)
+![公开版再次重开](public-day16-restored.jpeg)
+
+本轮不是10月8日23:00日节点的重复执行；原日结/邮件保持，不额外发日推。整体Goal与#565未完成项保持开放。
