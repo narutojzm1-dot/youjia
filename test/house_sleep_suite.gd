@@ -51,6 +51,9 @@ func run() -> void:
 	main.set_process(false)
 	check(await store.flush_pending(),"initial durable state")
 	var world = main._world
+	check(main._inventory.request("scoop","millet"),"take real held millet before sleep")
+	check(await store.flush_pending(),"held millet confirmed before entry")
+	check(main._hold_hotbar.is_place_armed(),"real held food arms pointer placement")
 	world.holiday_day = 4
 	world._day_elapsed = 400.0
 	world._plant_state = 2
@@ -66,7 +69,10 @@ func run() -> void:
 	world._fish_state = world.FISH_CASTING
 	check(not world.house.available(),"casting blocks entry")
 	world._fish_state = world.FISH_IDLE
-	world._interact_with_target("house_door")
+	var door_screen: Vector2 = root.get_canvas_transform() * Vector2(263,400)
+	check(not main._try_hold_place_at(door_screen),"armed held food does not consume house door pointer")
+	check(main._inventory.view().held == "millet","house click does not drop held food")
+	world.request_pointer_action(Vector2(263,400))
 	check(world.house.busy(),"ordinary door action begins sequence")
 	var began_at: Vector2 = world.get_player().position
 	world.request_pointer_action(Vector2(600,500))
@@ -97,6 +103,7 @@ func run() -> void:
 	check(world.get_player().position.distance_to(world.house.APPROACH) < 2.0,"walks back to original lawn approach")
 	check(YardGround.allows(world.get_player().position,world.player_ground(),true),"restored normal walk geometry")
 	check(world.holiday_day == 5 and world._plant_state == 3,"runtime adopts confirmed plant and day")
+	check(main._inventory.view().held == "millet" and world._millet_held,"morning retains actual held millet")
 	check(world._regional_weather.snapshot() == store.get_world_weather(),"runtime adopts confirmed weather")
 	world._pulse = 100.0
 	world.tick(1.0/60.0,Vector2.ZERO)

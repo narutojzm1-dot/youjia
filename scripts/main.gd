@@ -2326,6 +2326,9 @@ func _try_hold_place_at(screen_pos: Vector2) -> bool:
 	var held := str(inventory.get("held", ""))
 	if held.is_empty():
 		return false
+	# A painted house door is an explicit scene action, never a food drop spot.
+	if _world != null and YardSceneHotspots.at_point(_world, _screen_to_world(screen_pos)).get("target", "") == YardSceneHotspots.HOUSE_DOOR:
+		return false
 	var Intent = load("res://scripts/inventory/hold_place_intent.gd")
 	var obstacles: Array = _world.physical_obstacles("player") if _world != null else []
 	var intent: Dictionary = Intent.food_drop_at(held, _screen_to_world(screen_pos), obstacles)
