@@ -95,4 +95,8 @@ t = fixture(()=>new Response(bytes),{caches:{async open(){return {...cache,put()
 saved.clear();assert.deepEqual(await t.read('game-ab.pck'),bytes);assert.equal(t.errors.length,0);t.restore();
 t = fixture(()=>new Response(bytes),{cacheWaitMs:5,caches:{open(){return new Promise(()=>{})}}});
 assert.deepEqual(await t.read('game-ab.pck'),bytes);assert.equal(t.errors.length,0);t.restore();
+saved.set('https://example.invalid/game/game-ab.pck',new Response(bytes,{headers:{'x-youjia-asset-size':'8'}}));
+t=fixture(()=>new Response(bytes),{caches});
+const cachedCancel=t.read('game-ab.pck');t.restore();await assert.rejects(cachedCancel);
+assert(saved.has('https://example.invalid/game/game-ab.pck'),'cancelling startup must preserve an already completed cache entry');
 console.log('Asset cache PASS: recovered reload, incomplete rejection, bounded retention, current-build protection and storage-denied fallback');

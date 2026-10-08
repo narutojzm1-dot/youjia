@@ -36,7 +36,7 @@ export function installAssetRecovery(config, {
       if (saved?.headers.get('x-youjia-asset-size') === String(size)) {
         if (!stopped) { onCacheHit({url}); return saved; }
       }
-      if (saved) cache.delete(url).catch(() => {});
+      else if (saved) cache.delete(url).catch(() => {});
     } catch { /* Private mode, quota or storage failures must not block startup. */ }
     finally { clearTimeout(cacheTimer); }
     let offset = 0, retries = 0, etag;
