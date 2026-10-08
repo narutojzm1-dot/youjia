@@ -94,4 +94,3 @@ func run() -> void:
 	print("LARGE_ANIMAL_SHELTER checks=%d failures=%d" % [checks,failures.size()])
 	for failure in failures: push_error(failure)
 	quit(0 if failures.is_empty() else 1)
-

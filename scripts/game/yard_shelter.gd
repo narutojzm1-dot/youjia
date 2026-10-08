@@ -145,4 +145,3 @@ func rest(actor: FeltActor, delta: float) -> void:
 	if (IDS.has(actor.actor_id) and inside(actor)) or (wants_pen(actor) and at_bed(actor)) or (GUESTS.has(actor.actor_id) and is_night() and actor.position.distance_to(destination(actor)) < 4.0): actor.set_meta("shelter_rest", true)
 	else: actor.remove_meta("shelter_rest")
 	actor.tick(delta, world.WORLD_SIZE)
-
