@@ -76,12 +76,18 @@ func step(actor: FeltActor, delta: float) -> bool:
 		rest(actor, delta)
 		return true
 	var goal: Vector2 = BEDS[id] if is_night() else outdoors[id].get_center()
+	# First approach the inside of the doorway. A direct smoothed route from
+	# the eastern beds can skim the concave rail corner between grid samples.
+	if not is_night() and inside(actor) and actor.position.x > 936.0:
+		goal = Vector2(924,466)
 	var obstacles: Array = world.physical_obstacles(id)
 	if repath <= 0.0:
 		paths[id] = YardBodies.route(actor.position, goal, actor.body_radius * YardGround.depth_at(actor.position.y), obstacles, actor.walk_ground)
 		repath = 0.6
 	var path: Array = paths.get(id, [])
-	while not path.is_empty() and actor.position.distance_to(path[0]) < 3.0: path.pop_front()
+	# The inner fence corner is narrow. Dropping a waypoint several pixels early
+	# cuts across its rail at small frame steps and leaves the next resident stuck.
+	while not path.is_empty() and actor.position.distance_to(path[0]) < 0.05: path.pop_front()
 	if path.is_empty():
 		rest(actor, delta)
 		return true

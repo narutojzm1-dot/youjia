@@ -24,18 +24,19 @@ func run() -> void:
 	for id: String in world.shelter.IDS:
 		var actor = world.actor_named(id)
 		check(world.shelter.inside(actor), id+" starts inside closed pen")
-		world.tick(0.1,Vector2.ZERO)
+		world.tick(1.0/60.0,Vector2.ZERO)
 		check(actor._posture_id == "shelter_rest", id+" uses own lying cel")
 	world.debug_place_player(Vector2(830,550))
 	world.gate.toggle()
 	await store.flush_pending()
 	var jumps := 0
 	var rail_crossings := 0
-	for i in 1800:
+	# Browser-sized steps catch premature waypoint skipping at the inner rail.
+	for i in 10800:
 		var prior: Dictionary = {}
 		for id: String in world.shelter.IDS: prior[id] = world.actor_named(id).position
 		world._day_elapsed = 150.0
-		world.tick(0.1,Vector2.ZERO)
+		world.tick(1.0/60.0,Vector2.ZERO)
 		for id: String in world.shelter.IDS:
 			var actor = world.actor_named(id)
 			if actor.position.distance_to(prior[id]) > 5.0: jumps += 1
@@ -52,7 +53,7 @@ func run() -> void:
 	await store.flush_pending()
 	check(not world.gate.opened, "manual gate closure outside remains possible")
 	world._day_elapsed = 400.0 # 22:00 on the shared clock
-	world.tick(0.1,Vector2.ZERO)
+	world.tick(1.0/60.0,Vector2.ZERO)
 	check(not world.gate.pending.is_empty() and not world.gate.opened, "night return waits for real gate save")
 	await store.flush_pending()
 	check(world.gate.opened, "evening opens closed gate durably")
@@ -63,9 +64,9 @@ func run() -> void:
 	world.tick(2.0,Vector2.ZERO)
 	check(world.actor_named("cow").position == paused, "pause freezes resident travel")
 	world.simulation_active = true
-	for i in 2400:
+	for i in 14400:
 		world._day_elapsed = 400.0
-		world.tick(0.1,Vector2.ZERO)
+		world.tick(1.0/60.0,Vector2.ZERO)
 		if not world.shelter.returning and i > 10: break
 	for id: String in world.shelter.IDS:
 		var actor = world.actor_named(id)
