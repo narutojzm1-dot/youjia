@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# One-shot: fetch unmounted main.gd and apply HoldHotbar mount patch.
 set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 BASE_SHA="${BASE_SHA:-13374001e3b26ac3b8796da1943b6477f95a412e}"
