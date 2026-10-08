@@ -103,6 +103,7 @@ run_godot suite test/nearby_direct_pick_suite.gd
 run_godot suite test/yard_gate_suite.gd
 
 run_godot suite test/yard_shelter_suite.gd
+run_godot suite test/large_animal_shelter_suite.gd
 
 run_godot suite test/regional_rain_suite.gd
 
