@@ -1,8 +1,9 @@
 extends SceneTree
 # REQ-20261008-075: the bottom paper notice used to appear and vanish in one
-# frame. It now fades in over 0.2s and fades out over the last 0.35s of its
-# remaining time; reduced motion stays fully opaque while shown. Paper colour,
-# ink, size, keys, pause hiding and durations are unchanged.
+# frame. NoticeFadeBoot fades it in over 0.2s and out over the last 0.35s of
+# remaining time without editing main.gd; reduced motion stays fully opaque
+# while shown. Paper colour, ink, size, keys, pause hiding and durations are
+# unchanged.
 
 const STEP := 1.0 / 60.0
 const FADE := preload("res://scripts/ui/notice_fade.gd")
@@ -23,6 +24,7 @@ func _check(ok: bool, label: String) -> void:
 
 func _run() -> void:
 	_curve()
+	_boot_present()
 	await _live()
 	_finish()
 
@@ -55,7 +57,14 @@ func _curve() -> void:
 	_check(falling, "fade out falls monotonically")
 
 
+func _boot_present() -> void:
+	var boot := root.get_node_or_null("NoticeFadeBoot")
+	_check(boot != null, "NoticeFadeBoot autoload is present")
+	_check(boot != null and boot.has_method("notice_age"), "boot exposes notice_age()")
+
+
 func _live() -> void:
+	var boot = root.get_node_or_null("NoticeFadeBoot")
 	var tuning := root.get_node("TuningStore")
 	for reduced: bool in [false, true]:
 		tuning.reset_defaults()
@@ -70,58 +79,75 @@ func _live() -> void:
 		var tag := " (reduced=%s)" % reduced
 		var n: Label = main._notice
 		_check(n != null, "main has the bottom notice" + tag)
+		# Let the boot bind to Main.
+		for _i: int in 4:
+			await process_frame
+		_check(boot != null and boot._host == main, "boot bound to Main" + tag)
 		main._show_notice_key("notice.fishing.miss")
-		_check(main._notice_time > 3.0 and is_zero_approx(main._notice_age), "new notice starts at age 0" + tag)
+		# Boot processes on the next frames even when Main's process is off.
+		await process_frame
+		await process_frame
+		_check(main._notice_time > 3.0, "new notice has remaining time" + tag)
 		_check(n.visible, "notice is visible after show" + tag)
 		if reduced:
 			_check(is_equal_approx(n.modulate.a, 1.0), "reduced motion: full on the show frame" + tag)
 		else:
-			_check(n.modulate.a < 0.05, "show frame is nearly transparent" + tag)
-		# Advance ~0.2s of owned clock.
-		for _i: int in 12:
+			_check(n.modulate.a < 0.25, "show frame is nearly transparent (a=%.2f)" % n.modulate.a + tag)
+		# Advance ~0.25s of the boot clock.
+		for _i: int in 15:
+			boot._process(STEP)
 			main._process(STEP)
-		_check(absf(main._notice_age - 12.0 * STEP) < 0.001, "process advances notice age" + tag)
-		_check(is_equal_approx(n.modulate.a, 1.0), "fully shown by ~0.2s" + tag)
-		# Mid hold still full.
+		_check(boot.notice_age() > 0.15, "boot advances notice age" + tag)
+		_check(is_equal_approx(n.modulate.a, 1.0), "fully shown by ~0.25s" + tag)
 		for _i: int in 30:
+			boot._process(STEP)
 			main._process(STEP)
 		_check(is_equal_approx(n.modulate.a, 1.0), "stays full mid-hold" + tag)
-		# Drive into the fade-out window.
 		while main._notice_time > 0.2:
+			boot._process(STEP)
 			main._process(STEP)
 		if reduced:
 			_check(is_equal_approx(n.modulate.a, 1.0), "reduced motion stays full near the end" + tag)
 		else:
 			_check(n.modulate.a > 0.05 and n.modulate.a < 0.95, "mid fade-out near the end (a=%.2f)" % n.modulate.a + tag)
 		while main._notice_time > 0.0:
+			boot._process(STEP)
 			main._process(STEP)
+		boot._process(STEP)
 		main._process(STEP)
 		_check(not n.visible, "notice gone once remaining hits 0" + tag)
 		# Pause still hides instantly and preserves remaining (regression).
 		main._show_notice_key("notice.first_hint")
 		for _i: int in 20:
+			boot._process(STEP)
 			main._process(STEP)
 		var before: float = main._notice_time
+		var age_before: float = boot.notice_age()
 		main._toggle_pause()
+		boot._process(STEP)
 		_check(main._pause_screen.visible and not n.visible, "pause hides the notice at once" + tag)
 		main._process(1.0)
+		boot._process(1.0)
 		_check(is_equal_approx(main._notice_time, before), "pause preserves remaining time" + tag)
 		main._toggle_pause()
+		boot._process(STEP)
 		_check(n.visible, "resume shows the preserved notice" + tag)
 		# Extending remaining (fish catch) keeps a running fade age.
 		main._show_notice_key("notice.fishing.miss")
 		for _i: int in 30:
+			boot._process(STEP)
 			main._process(STEP)
-		var age_before: float = main._notice_age
+		age_before = boot.notice_age()
 		main._notice_time = maxf(main._notice_time, 6.5)
 		main._sync_notice_visibility()
-		_check(is_equal_approx(main._notice_age, age_before), "extending remaining does not restart the fade" + tag)
+		boot._process(STEP)
+		_check(boot.notice_age() >= age_before - 0.001, "extending remaining does not restart the fade" + tag)
 		_check(is_equal_approx(n.modulate.a, 1.0), "extended notice stays fully shown mid-hold" + tag)
-		# Paper style still present.
 		var style = n.get_theme_stylebox("normal")
 		_check(style is StyleBoxFlat, "paper backing unchanged" + tag)
 		main.queue_free()
 		await process_frame
+		boot._host = null
 	tuning.reset_defaults()
 	_check(checks >= 30, "suite ran enough checks (%d)" % checks)
 
