@@ -39,7 +39,7 @@ assert len(bundle['sha256'])==19
 (artifact/'bundle.json').write_text(json.dumps(bundle,indent=2)+'\n',encoding='utf-8')
 shutil.copy2(recovery/'browser-complete565.py',artifact/'browser-complete565.py')
 shutil.copy2(recovery/'archive-nearby565.py',artifact/'archive-nearby565.py')
-(artifact/'.gitattributes').write_text('* -text\n',encoding='utf-8')
+(artifact/'.gitattributes').write_text('* -text whitespace=cr-at-eol\n*.log -diff\n',encoding='utf-8')
 hashes={path.relative_to(artifact).as_posix():hashlib.sha256(path.read_bytes()).hexdigest() for path in sorted(artifact.rglob('*')) if path.is_file() and path.name!='sha256.json'}
 (artifact/'sha256.json').write_text(json.dumps(hashes,indent=2)+'\n',encoding='utf-8')
 print(json.dumps({'source':source,'states':sum(row['events'] for row in summary),'errors':sum(len(row['errors']) for row in summary),'files':len(hashes),'pck_sha256':bundle['sha256']['index.pck']},indent=2))
