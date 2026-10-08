@@ -33,6 +33,9 @@ func run() -> void:
 		var light: Color = main._tod_rect.color
 		if h >= 20 or h < 5:
 			check(light.b > light.r and light.a >= 0.3, "actual night is cool and dim %d" % h)
+			# scene_tint multiplies by mix(white, tint, alpha), not tint alone.
+			var night_gain := Color.WHITE.lerp(Color(light.r, light.g, light.b), light.a)
+			check(night_gain.g < 0.55 and night_gain.b > 0.5, "night visibly dims paint while keeping blue detail %d" % h)
 		if h >= 11 and h <= 14: check(is_zero_approx(light.a), "midday remains clear %d" % h)
 		check(view.daylight >= 0.0 and view.daylight <= 1.0, "solar strength bounded")
 	# Both midnight and the saved day's 06:00 rollover must have no color jump.

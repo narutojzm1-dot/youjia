@@ -21,7 +21,7 @@ static func tint(fraction: float, palette: Dictionary) -> Color:
 	var h := hour(fraction)
 	var hours := [0.0, 5.0, 6.0, 8.0, 11.0, 14.0, 17.0, 19.0, 20.0, 24.0]
 	var keys := ["night", "night", "dawn", "morning", "noon", "noon", "afternoon", "evening", "night", "night"]
-	var strengths := [0.32, 0.32, 0.14, 0.08, 0.0, 0.0, 0.14, 0.24, 0.32, 0.32]
+	var strengths := [0.8, 0.8, 0.14, 0.08, 0.0, 0.0, 0.14, 0.24, 0.8, 0.8]
 	for i in range(hours.size() - 1):
 		if h < hours[i + 1]:
 			var a: Color = palette[keys[i]]
