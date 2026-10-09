@@ -14,3 +14,17 @@ Owner CODEX-LEAD，基线 fc6566e1a045ad33e99997ebc3247857fcf65172，分支 code
 ## 后续
 
 继续其他动物自然呼吸态与主角方向步态；ASSISTANT近郊、Grok/Cloud界面在途范围不重复实现。整体闭环Goal仍未验收完成。
+
+## 本轮补充体验与协作
+
+- 普通8779重新加载夜间存档后点房门→进屋睡一觉，截到开门室内和第2天正在歇息，随后人物走出、门复原；再次刷新/进入仍第2天，warn/error为空。保留sleep-door-day2、sleep-morning-out、sleep-day2-reloaded.png。未连续捕获全部夜间关门/熄灯阶段或听验声音。
+- Grok628最新b6b895e8f5af5f350b1c7465614098d7a0b78c28，CI37878734441成功，本机精确UI+suite隔离副本90项通过，已保留作者提交合入0fb7e3027fb9d2fa05f0fedeefcbbaa57cf39ca1。普通8780新候选1280实际看到新tooltip“再点一次，可点地放下”，390宽度布局和开启态纸签已留图；未把390多次坐标点击计为稳定取消通过，也未计手机实机。候选副本含先前羊代码，非整树最终head。
+- 新Grok632 head20779a597c3c0fc9209a14cb264194947db41a57，精确photo_diary/suite文件隔离副本30项通过，日志入库。已回原PR6074558639请求原Owner登记新suite/CI/真实相册证据，未合入632。
+
+## 公开交付完成（2026-10-09 13:05 CST）
+
+PR631 head e665224d7f0670451cb4d4732ecb6b26f4cb26d0，tree bc11b4d7f04b5ce2101aeb092b00563ea93a3ec3；CI37884397785通过。合入游戏source 08c16a01de2712c9d4f4a81a10ef576e4ed709bf，包含先合入的Grok628。Publish37885679700、Pages37886729413成功，gh-pages bbf8379f799879802d2704452eaa59a8196101e6。
+
+实际公开PCK59,778,324字节，SHA256 1b34e96ed6f79252c9d931fbdc5c7119b779b1db6b1dbf0834cfc2344b0c812d。HTML/PCK Git blob与发布分支一致，10存档模块、4引擎资源、2加载模块SHA256全部实际匹配，见public/verification.json和game-release.json。普通公开页面重开后旧第16天、阴天、手持小米×1恢复，控制台warn/error为空，截图day16-restored.png，随后暂停。
+
+本轮开工和发布前读取完整3封决策线程及含已读增量搜索，无新用户邮件；154既定决定不再等待，无重复日结/日推。其他动物/主角步态、手机实机、623真实听验和整体Goal仍未验收完成。现有5个import现场修改未提交；未覆盖其他Owner在途。
