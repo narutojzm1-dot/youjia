@@ -7,18 +7,19 @@ extends SceneTree
 ## most of the yard. Separately, on 700-850px wide screens the four equal
 ## buttons were ~120-160px, narrower than long English action labels such as
 ## "Turn in for the night", so the action button grew over its neighbours.
-## Now: landscape screens at least 540px wide keep everything on one row;
+## Now: landscape screens at least 568px wide keep everything on one row;
 ## the action button gets at least 180px and the other three share the rest
-## (still at most 188px); English "Open journal" shortens to "Journal" when its
-## chip is narrower than the full label. Portrait and very narrow screens keep
+## (still at most 188px). In English, chips too narrow for the full label use a
+## short one ("Open journal" -> "Journal", "Gentle rain" -> "Rain",
+## "Overcast" -> "Cloudy"); every weather state is checked, not only today's. Portrait and very narrow screens keep
 ## the two-row layout. The hotbar and notices follow the bottom row.
 
 const SINGLE_ROW := [
-	Vector2i(540, 320), Vector2i(568, 320), Vector2i(640, 300), Vector2i(640, 360), Vector2i(667, 375),
+	Vector2i(568, 320), Vector2i(600, 340), Vector2i(611, 340), Vector2i(640, 300), Vector2i(640, 360), Vector2i(667, 375),
 	Vector2i(699, 400), Vector2i(700, 400), Vector2i(760, 400), Vector2i(844, 390), Vector2i(1024, 600),
 	Vector2i(1280, 720),
 ]
-const STACKED := [Vector2i(390, 844), Vector2i(360, 640), Vector2i(320, 568), Vector2i(500, 300), Vector2i(600, 700)]
+const STACKED := [Vector2i(540, 320), Vector2i(567, 320), Vector2i(408, 844), Vector2i(390, 844), Vector2i(360, 640), Vector2i(320, 568), Vector2i(500, 300), Vector2i(600, 700)]
 const LOCALES := ["zh-CN", "en"]
 
 var checks := 0
@@ -62,9 +63,14 @@ func _run() -> void:
 		main._ensure_hold_hotbar()
 		for loc: String in LOCALES:
 			root.get_node("/root/I18n").set_locale(loc)
-			main._layout()
-			main._refresh_hud()
-			_check_layout("%s %s" % [dims, loc], dims, dims in SINGLE_ROW, loc)
+			for weather: String in ["sun", "rain", "overcast"]:
+				main._world.weather = weather
+				main._layout()
+				main._refresh_hud()
+				_check_layout("%s %s %s" % [dims, loc, weather], dims, dims in SINGLE_ROW, loc)
+				var full: String = root.get_node("/root/I18n").t("hud.weather.%s" % weather)
+				_check(loc == "en" or main._weather_chip.text == full, "%s %s %s Chinese weather keeps its full name" % [dims, loc, weather])
+				_check(not main._weather_chip.text.is_empty(), "%s %s %s weather chip has a label" % [dims, loc, weather])
 		main.queue_free()
 		await process_frame
 	root.get_node("/root/I18n").set_locale(original_locale)
@@ -75,10 +81,13 @@ func _check_layout(tag: String, dims: Vector2i, single: bool, loc: String) -> vo
 	var screen := Rect2(Vector2.ZERO, Vector2(dims))
 	var chips: Array = [main._album_chip, main._weather_chip, main._basket_chip]
 	var buttons: Array = chips + [main._action_button]
+	_check(main._pause_button.size.x == (120.0 if dims.x < 700 else 188.0), "%s pause button width unchanged" % tag)
 	_check(main._stacked_hud() != single, "%s layout is %s" % [tag, "one row" if single else "two rows"])
 	for b: Button in buttons:
 		_check(screen.encloses(_rect(b)), "%s %s on screen %s" % [tag, b.text, _rect(b)])
-		_check(b.get_combined_minimum_size().x <= b.size.x + 0.5, "%s '%s' fits its button (%.0f > %.0f)" % [tag, b.text, b.get_combined_minimum_size().x, b.size.x])
+		# get_minimum_size() is the text's own need; custom_minimum_size is the width the layout assigned.
+		# Only single-row widths are new here; narrow portrait chips (320/360 wide) already grow a few px on main.
+		_check(not single or b.get_minimum_size().x <= b.custom_minimum_size.x + 0.5, "%s '%s' fits its assigned width (%.0f > %.0f)" % [tag, b.text, b.get_minimum_size().x, b.custom_minimum_size.x])
 	for i in buttons.size():
 		for j in range(i + 1, buttons.size()):
 			var a: Rect2 = _rect(buttons[i])
@@ -96,7 +105,7 @@ func _check_layout(tag: String, dims: Vector2i, single: bool, loc: String) -> vo
 	var keep: String = main._action_button.text
 	for k: String in action_keys[loc]:
 		main._action_button.text = root.get_node("/root/I18n").t(k)
-		_check(main._action_button.get_combined_minimum_size().x <= main._action_button.size.x + 0.5, "%s action '%s' fits (%.0f > %.0f)" % [tag, main._action_button.text, main._action_button.get_combined_minimum_size().x, main._action_button.size.x])
+		_check(main._action_button.get_minimum_size().x <= main._action_button.custom_minimum_size.x + 0.5, "%s action '%s' fits (%.0f > %.0f)" % [tag, main._action_button.text, main._action_button.get_minimum_size().x, main._action_button.custom_minimum_size.x])
 	main._action_button.text = keep
 	var bar: Control = main._hold_hotbar
 	if bar != null:

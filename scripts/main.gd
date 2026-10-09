@@ -2428,12 +2428,13 @@ func _fit_album_frame() -> void:
 ## 底部按钮排两行（三枚小按钮在上、行动按钮整行在下）只给竖屏和窄屏。
 ## 568×320、640×300 这类短横屏原来也排两行，加上快捷栏，底部 HUD 盖住大半个院子；
 ## 现在横着放且宽度够（≥ SINGLE_ROW_MIN_WIDTH）就排成一行。
-const SINGLE_ROW_MIN_WIDTH := 540.0
+const SINGLE_ROW_MIN_WIDTH := 568.0
 ## 一行排开时行动按钮至少这么宽，最长的英文动作「Turn in for the night」（按钮内约 175px）也放得下；
 ## 其余三枚分剩下的宽度，仍不超过 188。
 const ACTION_MIN_WIDTH := 180.0
-## 手帐按钮窄于这个宽度时，英文改用短名「Journal」（「Open journal」约 101px 加两侧留白）
-const ALBUM_CHIP_FULL_LABEL_WIDTH := 112.0
+## 小按钮按实际排版宽度放不下全名时，英文换短名：「Open journal」→「Journal」，
+## 「Gentle rain」→「Rain」，「Overcast」→「Cloudy」。中文全名在各宽度都放得下。
+const SHORT_WEATHER_EN := {"rain": "Rain", "sun": "Sun", "overcast": "Cloudy"}
 
 func _stacked_hud() -> bool:
 	return size.x < 700.0 and not (size.x > size.y and size.x >= SINGLE_ROW_MIN_WIDTH)
@@ -2460,7 +2461,7 @@ func _layout() -> void:
 		button.size = Vector2(chip_width,48)
 	_action_button.custom_minimum_size = Vector2(action_width,48)
 	_action_button.size = _action_button.custom_minimum_size
-	_pause_button.custom_minimum_size = Vector2(120.0 if compact else 188.0,48)
+	_pause_button.custom_minimum_size = Vector2(120.0 if size.x < 700.0 else 188.0,48)
 	_pause_button.size = _pause_button.custom_minimum_size
 	_pause_button.position = Vector2(size.x-_pause_button.size.x-pad,pad)
 	_hint_label.position = Vector2(pad,16)
@@ -2540,7 +2541,6 @@ func _refresh_hud() -> void:
 		return
 	_hud.modulate.a = float(TuningStore.get_value("ui.hud.opacity", 0.94))
 	_refresh_yard_chip_labels()
-	_weather_chip.text = I18n.t("hud.weather.%s" % _world.weather)
 	_basket_chip.text = "Basket" if I18n.get_locale() == "en" else "大背篓"
 	_pause_button.text = I18n.t("hud.pause")
 	# 显示与空格/行动按钮完全相同的实时目标和动作；橙色说明对应脚边标记。
@@ -2589,8 +2589,16 @@ func _sync_regional_clock() -> void:
 func _refresh_yard_chip_labels(chip_width: float = -1.0) -> void:
 	if chip_width < 0.0:
 		chip_width = _album_chip.size.x
-	var short := size.x < 400.0 or chip_width < ALBUM_CHIP_FULL_LABEL_WIDTH
-	_album_chip.text = "Journal" if I18n.get_locale() == "en" and short else I18n.t("hud.album")
+	_fit_chip_text(_album_chip, I18n.t("hud.album"), "Journal", chip_width)
+	if _world != null:
+		var weather := str(_world.weather)
+		_fit_chip_text(_weather_chip, I18n.t("hud.weather.%s" % weather), str(SHORT_WEATHER_EN.get(weather, "")), chip_width)
+
+
+func _fit_chip_text(button: Button, full: String, short: String, width: float) -> void:
+	button.text = full
+	if I18n.get_locale() == "en" and not short.is_empty() and button.get_minimum_size().x > width + 0.5:
+		button.text = short
 
 
 func _on_day_advanced(day: int) -> void:
