@@ -168,8 +168,8 @@ func _slot_tooltip(kind: String, count: int) -> String:
 	var en := I18n.get_locale() == "en"
 	if place_armed:
 		return base + (" · tap ground to place" if en else " · 点地放下")
-	# 选中但未武装（草默认，或用户点格解除）：提示再点一次可武装。
-	return base + (" · tap again to arm place" if en else " · 再点一次可武装投放")
+	# 选中但未武装（草默认，或用户点格解除）：提示再点一次可点地放下。
+	return base + (" · Tap again, then tap the ground" if en else " · 再点一次，可点地放下")
 
 
 func _refresh_tooltips() -> void:
