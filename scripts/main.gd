@@ -2332,19 +2332,28 @@ func _dismiss_notice_key(key: String) -> void:
 
 
 const NOTICE_PAD_X := 14.0
+const NOTICE_PAD_Y := 4.0
 const NOTICE_MIN_HALF := 60.0
+## 短横屏（如 640×300、568×320）上通知纸片贴着快捷栏往上长，两行时会盖住右上角那一列。
+## 够得着那一列时，长纸片往左挪到右缘离那一列 NOTICE_COLUMN_GAP，尽量保持原宽；只有那一列左边
+## 放不下原宽（左缘最多到离屏幕 NOTICE_EDGE，如 568 宽时 440→408）才收窄。短纸片放得下就仍居中。
+const NOTICE_COLUMN_GAP := 8.0
+const NOTICE_EDGE := 12.0
+## 判断「够得着」用的固定高度（约三行通知），不按每条文字的折行去猜：底边离那一列不到这么高就收窄
+const NOTICE_REACH := 120.0
 
 
 func _notice_paper() -> StyleBoxFlat:
 	var style := _flat(Color(PAPER, 0.88), Color(APRICOT, 0.55), 1, 14)
 	style.content_margin_left = NOTICE_PAD_X
 	style.content_margin_right = NOTICE_PAD_X
-	style.content_margin_top = 4
-	style.content_margin_bottom = 4
+	style.content_margin_top = NOTICE_PAD_Y
+	style.content_margin_bottom = NOTICE_PAD_Y
 	return style
 
 
-## 纸片宽度贴合当前文字（含后设的大字号），最宽仍是原来的 ±220 / 屏宽减 20，超出照旧换行。
+## 纸片宽度贴合当前文字（含后设的大字号），最宽仍是原来的 ±220 / 屏宽减 20，超出照旧换行；
+## 会长到右上角那一列的高度时，往左挪开那一列（NOTICE_COLUMN_GAP）。
 func _fit_notice() -> void:
 	if _notice == null:
 		return
@@ -2354,9 +2363,25 @@ func _fit_notice() -> void:
 	var text_width := 0.0
 	if font != null:
 		text_width = font.get_string_size(_notice.text, HORIZONTAL_ALIGNMENT_LEFT, -1, font_size).x
+	var right := INF
+	var column := _top_right_column_rect()
+	if column.has_area() and size.y + _notice.offset_bottom - NOTICE_REACH < column.end.y + NOTICE_COLUMN_GAP:
+		right = column.position.x - NOTICE_COLUMN_GAP
+		limit = minf(limit, (right - NOTICE_EDGE) * 0.5)
 	var half := clampf(ceilf(text_width * 0.5) + NOTICE_PAD_X + 2.0, minf(NOTICE_MIN_HALF, limit), limit)
-	_notice.offset_left = -half
-	_notice.offset_right = half
+	var shift := minf(0.0, right - (size.x * 0.5 + half))
+	_notice.offset_left = shift - half
+	_notice.offset_right = shift + half
+
+
+## 右上角「歇一会儿」、天数纸签和时钟这一列（时钟紧贴天数下方，见 _sync_regional_clock）
+func _top_right_column_rect() -> Rect2:
+	if _pause_button == null or _day_label == null or not _hud.visible:
+		return Rect2()
+	var top := _pause_button.get_global_rect()
+	var day := _day_label.get_global_rect()
+	var clock := Rect2(day.position + Vector2(0, day.size.y + 4.0), Vector2(day.size.x, 24.0))
+	return top.merge(day).merge(clock)
 
 
 func _can_show_notice() -> bool:
