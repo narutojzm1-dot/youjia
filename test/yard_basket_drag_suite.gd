@@ -84,7 +84,7 @@ func placed_by_drop(tag: String, spot: String, cone_before: int, places_before: 
 	check(panel.visible, tag + " drop keeps the basket open")
 	check(store.get_yard_decor().places.get(spot, {}).get("find_id", "") == ExplorationRoutes.FIND_PINE_CONE, tag + " drop places the cone at %s" % spot)
 	check(int(store.get_available_keepsakes().get(ExplorationRoutes.FIND_PINE_CONE, 0)) == cone_before - 1 and store.get_yard_decor().places.size() == places_before + 1, tag + " drop spends exactly one cone")
-	check(panel.status.visible and (panel.status.text.contains("摆在") or panel.status.text.contains("Tap it in the yard")), tag + " basket says where it went: " + panel.status.text)
+	check(panel.status.visible and (panel.status.text.contains("摆在") or panel.status.text.contains("Tap it outside the basket")), tag + " basket says where it went: " + panel.status.text)
 	check(not panel.legal_spots().has(spot), tag + " the filled spot no longer lights up")
 	main._decor.request("remove", spot)
 	await settle()

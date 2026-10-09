@@ -61,11 +61,32 @@ func run() -> void:
 	store._load()
 	main._on_decor_changed()
 	check(main._world.decor_view.visuals.size() == 1, "actual saved placement reconstructs")
+	# Move the find to pond_path so the portrait basket paper does not cover it
+	# (house_edge sits under the paper on 390×844; fence/pond stay in the right margin).
 	main._on_decor_recall("house_edge")
+	await settle()
+	check(main._decor.request("place", "pond_path", {"find_id": id, "dx": 0, "dy": 0}), "re-place on pond path for uncovered tap")
+	await settle()
+	# #598 / #594: while the basket is still open (place note says tap the yard find),
+	# a press outside the paper on the placed prop must recall — not only a closed-yard walk-up.
+	main._show_basket()
+	for frame in 3: await process_frame
+	check(main._basket_panel.visible and not main._world.input_enabled, "basket open again before recall tap")
+	var placed_at: Vector2 = main._world.decor_view.placed("pond_path").point
+	var screen_at: Vector2 = main._world.decor_view.get_global_transform_with_canvas() * placed_at
+	check(not main._basket_panel.panel.get_global_rect().has_point(screen_at), "pond path find is outside the basket paper")
+	var press := InputEventMouseButton.new()
+	press.pressed = true
+	press.button_index = MOUSE_BUTTON_LEFT
+	press.position = screen_at
+	panel.show_place_note(id, "pond_path", "placed")
+	check(main._basket_ground_recall(press), "basket-open ground recall accepts the yard tap")
 	check(main._decor.busy(), "putting it back waits for durable commit")
 	await settle()
 	check(main._world.decor_view.visuals.is_empty(), "recall clears scene after confirmation")
 	check(store.get_available_keepsakes()[id] == 1, "recall restores one available object")
+	check(panel.place_note.is_empty() and not panel.status.text.contains("摆在"), "recalled find does not retain the old placement instruction")
+	main._hide_basket()
 	check(moment.items.filter(func(item: Dictionary) -> bool: return item.get("subject") == "keepsake").size() == 1, "old photo remains independent of removal")
 	# The basket's status line with every placement note stays on screen in English.
 	root.get_node("I18n").set_locale("en")
