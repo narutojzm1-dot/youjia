@@ -77,7 +77,7 @@ func _run() -> void:
 	cow.set_meta("shelter_rest", true)
 	cow.tick(0.1, Vector2(1280, 720))
 	check(cow._blink.amount == 0.0 and cow._posture_id == "shelter_rest", "shelter cel cannot inherit standing eyes")
-	check(world._actors.sheep_a._blink == null, "unsupported art has no blink player")
+	check(world._actors.goose._blink == null, "unsupported art has no blink player")
 	var horse = world._actors.horse
 	horse.remove_meta("shelter_rest")
 	horse.state = "rest"
@@ -109,6 +109,72 @@ func _run() -> void:
 	horse.advance_path(0.1, Vector2(3, 0), 1.0, false)
 	check(horse._blink.amount == 0.0, "moving horse clears eyes")
 	check(horse._blink.rng != cow._blink.rng, "animals do not share a blink clock or RNG")
+	for id: String in ["sheep_a", "sheep_b"]:
+		_check_sheep(world, id)
+	check(world._actors.sheep_a._blink.rng != world._actors.sheep_b._blink.rng, "two sheep have independent blink clocks")
 	world.free()
 	print("PAINTED_BLINK checks=%d failures=%d" % [checks, failures])
 	quit(0 if failures == 0 else 1)
+
+func _check_sheep(world, id: String) -> void:
+	var sheep = world.actor_named(id)
+	sheep.remove_meta("shelter_rest")
+	sheep.posed = false
+	sheep._idle_time = 100.0
+	sheep._velocity = Vector2.ZERO
+	sheep._gait.weight = 0.0
+	sheep._ack_cel = ""
+	sheep._ack_left = 0.0
+	sheep.state = "rest"
+	sheep.set_expression("idle")
+	var original = sheep._sprite.texture
+	var anchor = sheep._ground_anchor
+	var bounds = sheep._art_bounds
+	var expected := Blink.SHEEP_A_SOURCE if id == "sheep_a" else Blink.SHEEP_B_SOURCE
+	check(original.resource_path == expected and sheep._posture_id == "idle", id + " keeps its own standing body at rest")
+	check(not sheep._textures.has("shake"), id + " cannot switch to the shared mismatched body")
+	sheep._blink.wait_left = 0.0
+	for i in 8: sheep.tick(1.0 / 60.0, Vector2(1280, 720))
+	check(sheep._blink.amount > 0.99, id + " actual resting actor closes eyes")
+	check(sheep._sprite.texture == original and sheep._ground_anchor == anchor, id + " blink preserves body and feet")
+	sheep.show_ground_bite("graze", sheep.position + Vector2(30, 0))
+	check(sheep._blink.amount == 0.0 and sheep._posture_id == "graze", id + " eating clears standing eyes immediately")
+	sheep._ack_cel = ""
+	sheep._ack_left = 0.0
+	sheep.set_expression("idle")
+	sheep._blink.wait_left = 0.0
+	for i in 8: sheep.tick(1.0 / 60.0, Vector2(1280, 720))
+	sheep.show_painted_ack("attend", 1.0)
+	check(sheep._blink.amount == 0.0 and sheep._posture_id == "attend", id + " pet response clears eye patch")
+	sheep._ack_cel = ""
+	sheep._ack_left = 0.0
+	sheep.set_meta("shelter_rest", true)
+	sheep._blink.wait_left = 0.0
+	for i in 8: sheep.tick(1.0 / 60.0, Vector2(1280, 720))
+	check(sheep._blink.amount == 0.0 and sheep._posture_id == "shelter_rest", id + " lying body excludes standing eyes")
+	sheep.remove_meta("shelter_rest")
+	for reduced: bool in [false, true]:
+		root.get_node("TuningStore").set_value("ui.reduced_motion", reduced, false)
+		for face: float in [-1.0, 1.0]:
+			for posture: String in ["graze", "rest", "graze", "rest"]:
+				sheep.state = posture
+				sheep.facing = face
+				sheep._gait.face = face
+				sheep.tick(0.0, Vector2(1280,720))
+				check(sheep._sprite.texture == original and sheep._ground_anchor == anchor and sheep._art_bounds == bounds, id + " rest/graze transition preserves identity, size and anchor")
+	var snapshot: Dictionary = PhotoMoment.capture(world, {"id":"legacy_sheep_blink", "subjects":[id]})
+	for item: Dictionary in snapshot.get("items", []):
+		if item.get("subject", "") == id:
+			item.texture = {"path":"res://assets/holiday/characters/cast_v2/sheep_shake.png"}
+	var legacy_kept := false
+	for item: Dictionary in PhotoMoment.sanitize(snapshot).get("items", []):
+		if item.get("subject", "") == id:
+			legacy_kept = item.get("texture", {}).get("path", "").ends_with("/sheep_shake.png")
+	check(legacy_kept, id + " historical shake photograph remains readable")
+	sheep.state = "rest"
+	sheep._blink.wait_left = 0.0
+	for i in 12: sheep.tick(1.0 / 60.0, Vector2(1280,720))
+	check(sheep._blink.amount == 0.0, id + " reduced motion is static")
+	root.get_node("TuningStore").set_value("ui.reduced_motion", false, false)
+	sheep.advance_path(0.1, Vector2(3, 0), 1.0, false)
+	check(sheep._blink.amount == 0.0, id + " movement has no resting eye patch")
