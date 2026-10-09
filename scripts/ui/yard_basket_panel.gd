@@ -3,6 +3,9 @@ const PaperScrollbarStyle := preload("res://scripts/ui/paper_scrollbar_style.gd"
 signal close_requested
 signal action_requested(action: String, fish: String)
 signal retry_requested
+## #594：小物拖到院里空着的亮圈上松手，直接摆在那处（Main 走 YardDecorController.request('place', …)），
+## 不再转进独立布置面板。没人接这个信号时仍按旧路打开布置面板预览。
+signal place_requested(find_id: String, spot: String)
 
 var panel: PanelContainer
 var rows: VBoxContainer
@@ -26,7 +29,7 @@ const DECOR_PANEL_SCRIPT := "res://scripts/ui/yard_decor_panel.gd"
 const DECOR_SPOTS_SCRIPT := "res://scripts/inventory/yard_decor.gd"
 ## REQ-20261007-064 第三切片（#565 图8 拖出）：按住圆石 / 松果 / 落羽的格子拖出来，
 ## 背篓纸面变半透明、暗底撤掉，院里只有还空着的固定摆放处（屋前 / 篱边 / 塘边小路）亮起杏色圈；
-## 松在亮圈里 = 打开现有布置预览、选好那一处和那件小物（不提交、不扣数量，确认仍在布置面板）；
+## 松在亮圈里 = 发 place_requested，Main 直接摆在那一处（#594）；没人接时退回打开布置预览；
 ## 松在别处、Esc、背篓被收起或保存忙起来 = 取消，什么都不提交。
 ## 院子世界（Main._world）。Main 可直接赋值；未赋值时沿父节点找一次 `_world`。
 var world: Node2D
@@ -62,6 +65,8 @@ var _touch_scrolled := false
 var column: VBoxContainer
 var compact := false
 var _status_is_note := true
+## 拖放摆好/正在摆/没摆成的那句话；背篓刷新时保留，下次拖动或合上背篓时清掉
+var place_note := ""
 var _fit_queued := false
 const FISH := ["small", "medium", "odd", "grass", "millet"]
 ## REQ-20261007-051：纸面始终离屏幕边至少 EDGE；纸面不高于 COMPACT_HEIGHT（矮横屏）时
@@ -142,6 +147,7 @@ func _ready() -> void:
 	visibility_changed.connect(func() -> void:
 		if not visible:
 			cancel_drag()
+			place_note = ""
 			grid.close_menu())
 	for kind: String in grid.KEEPSAKES:
 		grid.cells[kind].gui_input.connect(func(event: InputEvent) -> void: _on_cell_mouse(kind, event))
@@ -307,6 +313,10 @@ func update_view(inventory: Dictionary, keepsakes: Dictionary, state: String, bu
 		status.text = "Checking the save…" if en else "正在确认保存，东西还不能取用……"
 	elif state in ["failed", "blocked"] or inventory.is_empty():
 		status.text = "Not saved yet. Your stored items are kept." if en else "这次还没存好，原有物品保留着。"
+	if not place_note.is_empty() and not state in ["saving", "unknown", "failed", "blocked"]:
+		status.text = place_note
+		_status_is_note = false
+		status.visible = true
 	retry_button.visible = state in ["failed", "unknown"]
 	retry_button.text = "Check again" if en else "再确认一次"
 	close_button.text = "Back to the yard" if en else "合上背篓"
@@ -402,6 +412,7 @@ func zone_at(at: Vector2) -> String:
 
 func begin_drag(kind: String, at: Vector2) -> bool:
 	if not drag_kind.is_empty() or not can_drag(kind): return false
+	place_note = ""
 	grid.close_menu()
 	drag_kind = kind
 	_drag_from = at
@@ -419,7 +430,7 @@ func drag_to(at: Vector2) -> void:
 	drag_spot = zone_at(at)
 	drag_layer.queue_redraw()
 
-## 松手：落在亮圈里返回那一处并打开预览；否则什么都不做，返回 ""
+## 松手：落在亮圈里返回那一处并请求摆在那里；否则什么都不做，返回 ""
 func end_drag(at: Vector2) -> String:
 	if drag_kind.is_empty(): return ""
 	var kind := drag_kind
@@ -431,8 +442,30 @@ func end_drag(at: Vector2) -> String:
 		_status_is_note = false
 		status.visible = true
 		return ""
-	open_decor_with(kind, spot)
+	var id: String = grid.FIND_IDS.get(kind, "")
+	if place_requested.get_connections().is_empty() or id.is_empty():
+		open_decor_with(kind, spot)
+	else:
+		place_requested.emit(id, spot)
 	return spot
+
+## 拖放摆放的进展写在背篓状态行：stage 为 saving / placed
+func show_place_note(find_id: String, spot: String, stage: String) -> void:
+	var en := I18n.get_locale() == "en"
+	var kind := ""
+	for k: String in grid.FIND_IDS:
+		if grid.FIND_IDS[k] == find_id: kind = k
+	var names := {"round_stone": "The round stone" if en else "圆石", "pine_cone": "The pine cone" if en else "松果", "feather": "The feather" if en else "落羽"}
+	var places := {"house_edge": "by the house" if en else "屋前", "fence_edge": "by the fence" if en else "篱边", "pond_path": "on the pond path" if en else "塘边小路"}
+	var thing: String = names.get(kind, "It" if en else "小物")
+	var where: String = places.get(spot, spot)
+	if stage == "saving":
+		place_note = ("Setting %s down %s…" % [thing.to_lower(), where]) if en else "正在把%s摆到%s……" % [thing, where]
+	else:
+		place_note = ("%s is %s now. Tap it in the yard to put it back." % [thing, where]) if en else "%s摆在%s了。在院里点它，就能收回背篓。" % [thing, where]
+	status.text = place_note
+	_status_is_note = false
+	status.visible = true
 
 func cancel_drag() -> void:
 	if drag_kind.is_empty(): return

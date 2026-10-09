@@ -79,6 +79,7 @@ var _inventory: RefCounted
 var _decor: RefCounted
 var _decor_panel: Control
 var _decor_camera: Dictionary = {}
+var _basket_drop: Dictionary = {}
 var _inventory_food_consumer := ""
 var _pause_button: Button
 var _action_button: Button
@@ -357,6 +358,7 @@ func _ready() -> void:
 	decor_button.pressed.connect(_show_decor)
 	_basket_panel.rows.add_child(decor_button)
 	_basket_panel.decor_button = decor_button
+	_basket_panel.place_requested.connect(_place_from_basket)
 	_ensure_hold_hotbar()
 	I18n.locale_changed.connect(_on_locale_changed)
 	TuningStore.value_changed.connect(_on_tuning_value_changed)
@@ -1536,6 +1538,23 @@ func _on_decor_changed() -> void:
 	if _decor_panel != null:
 		_decor_panel.update_view(_decor.view(), SaveStore.get_available_keepsakes(), _decor.state, _decor.busy())
 	_on_inventory_changed()
+	if not _basket_drop.is_empty() and _decor.state != "saving":
+		var drop := _basket_drop
+		_basket_drop = {}
+		if _decor.state == "idle" and _decor.view().get("places", {}).has(drop.spot):
+			_basket_panel.show_place_note(drop.find_id, drop.spot, "placed")
+		elif _basket_panel.visible:
+			# 没存好：转到布置面板，那里有保存状态和「再确认一次」
+			_decor_panel.selected = drop.spot
+			_show_decor()
+
+
+## #594：背篓里的小物拖到院里空着的固定位置，松手就摆好（不微调，dx/dy 为 0）
+func _place_from_basket(find_id: String, spot: String) -> void:
+	if _decor == null or _decor.busy() or not _basket_drop.is_empty(): return
+	_basket_drop = {"find_id": find_id, "spot": spot}
+	_basket_panel.show_place_note(find_id, spot, "saving")
+	if not _decor.request("place", spot, {"find_id": find_id, "dx": 0, "dy": 0}): _on_decor_changed()
 
 
 func _on_decor_resubmitted(failed_ops: Array, op_id: String) -> void:
