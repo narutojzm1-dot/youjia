@@ -1,14 +1,22 @@
 extends Node2D
 const Model := preload("res://scripts/inventory/yard_decor.gd")
+const SettleRing := preload("res://scripts/inventory/yard_decor_settle_ring.gd")
 var visuals: Dictionary = {}
+## REQ-20261008-069：某处新摆上（或换了另一样）小物、存档确认后，脚下泛一圈落定圈（spot → 圈）。
+## 第一次 sync 是读档重建，不算“刚放好”；同一处只微调偏移也不泛圈。
+var settle_rings: Dictionary = {}
+var _synced := false
 var preview: YardPropVisual
 var confirmed: Dictionary = {}
 var _occluding_actors: Dictionary = {}
 
 func sync(value: Dictionary) -> void:
+	var before: Dictionary = confirmed.get("places", {})
+	var announce := _synced
+	_synced = true
 	confirmed = value.duplicate(true)
 	for child: Node in get_children():
-		if child != preview:
+		if child != preview and not child is SettleRing:
 			child.visible = false
 			child.queue_free()
 	visuals.clear()
@@ -22,6 +30,29 @@ func sync(value: Dictionary) -> void:
 		prop.z_index = roundi(prop.position.y)
 		add_child(prop)
 		visuals[spot] = prop
+		if announce and str(before.get(spot, {}).get("find_id", "")) != str(entry.find_id):
+			_settle(spot, prop)
+	for spot: String in settle_rings.keys():
+		if not visuals.has(spot) or not is_instance_valid(settle_rings[spot]):
+			_drop_ring(spot)
+
+func _settle(spot: String, prop: YardPropVisual) -> void:
+	_drop_ring(spot)
+	var ring := SettleRing.new()
+	ring.reduced = ScreenFactory.reduced_motion()
+	ring.position = prop.position
+	ring.scale = prop.scale
+	ring.z_as_relative = false
+	ring.z_index = prop.z_index - 1
+	add_child(ring)
+	settle_rings[spot] = ring
+
+func _drop_ring(spot: String) -> void:
+	var ring: Variant = settle_rings.get(spot)
+	settle_rings.erase(spot)
+	if is_instance_valid(ring):
+		ring.visible = false
+		ring.queue_free()
 
 func show_preview(spot: String, entry: Dictionary) -> void:
 	clear_preview()
