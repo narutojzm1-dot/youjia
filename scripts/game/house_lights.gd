@@ -1,6 +1,12 @@
 extends Node2D
 var lights := 0.0
 
+# #640: the house remains welcoming through the evening; only a traveller
+# actually indoors turns the panes dark after midnight. One regional clock.
+static func wants_light(fraction: float, inside_room: bool) -> bool:
+	var hour := preload("res://scripts/game/world_daylight.gd").hour(fraction)
+	return hour >= 20.0 or (hour < 5.0 and not inside_room)
+
 func _draw() -> void:
 	if lights <= 0.0: return
 	# Separate panes preserve the painted frames and flower boxes.

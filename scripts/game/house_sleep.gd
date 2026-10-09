@@ -62,8 +62,14 @@ func _enter(next: String) -> void:
 	stage = next
 	seconds = 0.0
 
+func inside_room() -> bool:
+	return stage in ["close", "saving", "sleep", "wake"]
+
+func window_light_target() -> float:
+	return 1.0 if wants_light(world.tod_fraction(), inside_room()) else 0.0
+
 func tick(delta: float) -> void:
-	var target := 1.0 if Daylight.phase(world.tod_fraction()) == "night" and stage not in ["saving","sleep","wake","out"] else 0.0
+	var target := window_light_target()
 	lights = move_toward(lights,target,delta * 0.7)
 	queue_redraw()
 	if not busy(): return

@@ -51,6 +51,7 @@ func run() -> void:
 	main.set_process(false)
 	check(await store.flush_pending(),"initial durable state")
 	var world = main._world
+	_check_window_hours(world)
 	check(main._inventory.request("scoop","millet"),"take real held millet before sleep")
 	check(await store.flush_pending(),"held millet confirmed before entry")
 	check(main._hold_hotbar.is_place_armed(),"real held food arms pointer placement")
@@ -152,3 +153,29 @@ func run() -> void:
 	for failure: String in failures: printerr(failure)
 	print("house_sleep_suite checks=%d failures=%d" % [checks,failures.size()])
 	quit(0 if failures.is_empty() else 1)
+
+func _check_window_hours(world) -> void:
+	var house = world.house
+	var old_elapsed: float = world._day_elapsed
+	var old_stage: String = house.stage
+	# Exercise the real room facts, including failed/pending saves, rather than
+	# treating every busy stage (or an outdoor doze) as inside the room.
+	for stage: String in ["", "porch", "open", "in", "close", "saving", "sleep", "wake", "out"]:
+		house.stage = stage
+		var inside := stage in ["close", "saving", "sleep", "wake"]
+		check(house.inside_room() == inside, "room occupancy follows passage stage " + stage)
+		for hour: float in [0.0, 4.99, 5.0, 6.0, 12.0, 19.99, 20.0, 23.99]:
+			world._day_elapsed = fposmod(hour - 6.0,24.0) / 24.0 * 600.0
+			var expected := hour >= 20.0 or (hour < 5.0 and not inside)
+			check((house.window_light_target() == 1.0) == expected,
+				"window rule at %.2f with passage %s" % [hour,stage])
+	house.stage = ""
+	world._day_elapsed = 400.0 # 22:00, traveller outdoors.
+	house.lights = 0.0
+	house.tick(1.0)
+	check(house.lights > 0.0 and house.lights < 1.0, "panes fade in rather than snap")
+	world._day_elapsed = 0.0 # Morning after sleep or natural rollover.
+	house.tick(1.0)
+	check(house.lights == 0.0, "morning fades the outdoor panes out")
+	house.stage = old_stage
+	world._day_elapsed = old_elapsed
