@@ -1440,6 +1440,9 @@ func _show_crops() -> void:
 	_sync_hold_hotbar_visibility()
 
 func _hide_crops() -> void:
+	# Keep the inventory modal closed to other writers until this transaction
+	# settles; otherwise a rapid close + withdrawal uses the old revision.
+	if _crop_panel.is_saving(): return
 	_crop_panel.visible = false
 	get_tree().paused = false
 	AudioDirector.set_game_paused(false)

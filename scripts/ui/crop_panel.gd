@@ -81,6 +81,7 @@ func _fit() -> void:
 
 func refresh() -> void:
 	if heading == null: return
+	close_button.disabled = not _op.is_empty()
 	var en := I18n.get_locale() == "en"
 	heading.text = "A little growing patch" if en else "小小种植地"
 	close_button.text = "Back to the yard" if en else "回到院子"
@@ -138,6 +139,9 @@ func open() -> void:
 	visible = true
 	refresh()
 	close_button.grab_focus()
+
+func is_saving() -> bool:
+	return not _op.is_empty()
 
 func _confirmed(op_id: String, _kind: String) -> void:
 	if op_id == _op: _op = ""

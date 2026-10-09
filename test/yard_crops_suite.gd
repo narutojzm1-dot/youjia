@@ -99,6 +99,8 @@ func run() -> void:
 	main._world._interact_plant()
 	check(main._crop_panel.visible and paused and not main._world.input_enabled,"actual plant interaction opens modal and freezes world")
 	main._crop_panel._request("plant","wheat")
+	main._hide_crops()
+	check(main._crop_panel.visible and paused and main._crop_panel.close_button.disabled,"pending sow cannot expose stale inventory to another writer")
 	check(await store.flush_pending(),"production sow transaction persists")
 	check(store.get_yard_crops().kind == "wheat" and store.get_yard_inventory().wheat == 1,"production sow confirms both")
 	check(main._world.crop_sprite.visible,"actual scene shows installed crop art after confirmation")
