@@ -13,6 +13,7 @@ const STONE := "formal.find.brook_stone"
 const PINE := "formal.find.pine_cone"
 const FEATHER := "formal.find.feather"
 var store
+var integration_done := false
 
 func _initialize() -> void: call_deferred("run")
 
@@ -28,6 +29,14 @@ func entry(id: String, dx: int = 0, dy: int = 0) -> Dictionary:
 
 func rings(view: Node) -> Array:
 	return view.get_children().filter(func(c: Node) -> bool: return c.get_script() == Ring and not c.is_queued_for_deletion())
+
+## The ring counts its own process delta, which the engine smooths; a wall-clock timer can
+## finish before the ring has seen half a second, so step frames until it removes itself.
+func wait_gone(node: Node, max_frames: int = 600) -> void:
+	for frame in max_frames:
+		if not is_instance_valid(node): return
+		await process_frame
+	await process_frame
 
 func photo_type(node: Node) -> bool:
 	return node is YardPropVisual or node is Sprite2D or node is AnimatedSprite2D or node is Line2D
@@ -64,11 +73,10 @@ func unit() -> void:
 	await process_frame
 	check(is_instance_valid(ring) and rings(view).size() == 1, "panel refresh keeps the running ring and adds none")
 	paused = true
-	await create_timer(0.22, true, false, true).timeout
+	for frame in 6: await process_frame
 	check(is_instance_valid(ring) and ring.radii().x > Ring.START_RADII.x and ring.radii().x <= Ring.END_RADII.x, "ring widens while the yard is paused")
 	check(is_instance_valid(ring) and ring.fade() < 1.0 and ring.fade() > 0.0, "ring fades while widening")
-	await create_timer(0.5, true, false, true).timeout
-	await process_frame
+	await wait_gone(ring)
 	check(not is_instance_valid(ring), "ring removes itself after its half second")
 	paused = false
 	view.sync(decor({"house_edge": entry(STONE, 1, 0), "fence_edge": entry(PINE)}, 3))
@@ -123,11 +131,14 @@ func integration() -> void:
 	var view = main._world.decor_view
 	check(view.settle_rings.is_empty(), "starting the holiday shows no ring")
 	main._show_basket()
-	main._basket_panel.decor_button.pressed.emit()
-	main._decor_panel.choose_spot("house_edge")
-	main._decor_panel.choose_find(id)
-	check(rings(view).is_empty(), "preview alone shows no ring")
-	main._decor_panel.commit()
+	for frame in 3: await process_frame
+	var panel = main._basket_panel
+	check(panel.begin_drag("pine_cone", panel.size * 0.5), "basket drag starts")
+	panel.drag_to(panel.spot_screen_position("house_edge"))
+	await process_frame
+	check(rings(view).is_empty(), "dragging over a spot alone shows no ring")
+	panel.cancel_drag()
+	main._place_from_basket(id, "house_edge")
 	check(rings(view).is_empty(), "no ring before the save confirms")
 	await settle_save()
 	var ring = view.settle_rings.get("house_edge")
@@ -136,10 +147,8 @@ func integration() -> void:
 	var moment := PhotoMoment.capture(main._world, {"id": "sheep_pair_near"})
 	var keepsakes: Array = moment.items.filter(func(item: Dictionary) -> bool: return item.get("subject") == "keepsake")
 	check(keepsakes.size() == 1, "photo taken during the ring still records exactly one keepsake")
-	await create_timer(0.7, true, false, true).timeout
-	await process_frame
-	check(not is_instance_valid(ring) and rings(view).is_empty(), "real ring finishes while the editor pauses the yard")
-	main._hide_decor()
+	await wait_gone(ring)
+	check(not is_instance_valid(ring) and rings(view).is_empty(), "real ring finishes on its own")
 	main._hide_basket()
 	store._load()
 	main._on_decor_changed()
@@ -147,6 +156,7 @@ func integration() -> void:
 	await settle_save()
 	main.queue_free()
 	for frame in 3: await process_frame
+	integration_done = true
 
 func run() -> void:
 	View = load("res://scripts/inventory/yard_decor_view.gd")
@@ -154,6 +164,7 @@ func run() -> void:
 	Model = load("res://scripts/inventory/yard_decor.gd")
 	await unit()
 	await integration()
+	check(integration_done, "integration ran to the end")
 	print("YARD_DECOR_SETTLE_RING checks=%d failures=%d" % [checks, failures.size()])
 	for failure: String in failures: push_error(failure)
 	quit(0 if failures.is_empty() else 1)
