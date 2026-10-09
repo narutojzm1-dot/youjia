@@ -77,7 +77,7 @@ static func read(snapshot: Dictionary) -> Dictionary:
 
 ## Pure optimistic transition, evaluated at the SaveCoordinator FIFO head.
 ## Replaying the same expected revision cannot mint or consume a second item.
-static func transition(snapshot: Dictionary, expected_revision: int, action: String, kind: String, details: Dictionary = {}) -> Dictionary:
+static func transition(snapshot: Dictionary, expected_revision: int, action: String, kind: String, details: Dictionary = {}, consumer: String = "") -> Dictionary:
 	var inventory := read(snapshot)
 	if inventory.is_empty(): return {"error": "BASKET_INVALID"}
 	if inventory.revision != expected_revision: return {"error": "BASKET_CHANGED"}
@@ -135,7 +135,7 @@ static func transition(snapshot: Dictionary, expected_revision: int, action: Str
 	inventory.revision = int(inventory.revision) + 1
 	var candidate := snapshot.duplicate(true)
 	candidate[FIELD] = inventory
-	return {"candidate": candidate}
+	return preload("res://scripts/game/chick_care.gd").credit(candidate, action, kind, consumer)
 
 
 static func _set_stored_count(inventory: Dictionary, kind: String, count: int) -> void:

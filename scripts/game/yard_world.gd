@@ -13,6 +13,7 @@ signal day_advanced(day: int)
 signal fish_caught(carry_type: String)
 signal ground_food_requested(action: String, kind: String, details: Dictionary, actor_id: String)
 signal decor_recall_requested(spot: String)
+signal chick_care_requested
 signal basket_requested
 signal plant_bed_requested
 var crop_sprite: Sprite2D
@@ -842,6 +843,12 @@ func _interact_with_target(target: String) -> void:
 		_consume_pending_action()
 		exploration_requested.emit()
 		return
+	if target.begins_with("chick_care:"):
+		var chick := _interaction_actor(target)
+		if chick != null and _player.position.distance_to(chick.position) < YardInteraction.PET_REACH:
+			_consume_pending_action()
+			chick_care_requested.emit()
+		return
 	if target == "drop_food":
 		_consume_pending_action()
 		ground_food.drop_held()
@@ -946,6 +953,9 @@ func action_target_key(action: Dictionary) -> String:
 	if target == "release" or target == "llama":
 		return "target.llama"
 	if target == "drop_food" or target.begins_with("ground_food:"): return "target.food"
+	if target.begins_with("chick_care:"):
+		var chick := _interaction_actor(target)
+		return chick.display_name_key if chick != null else ""
 	if target.begins_with("pet:") or target.begins_with("toss_fish:"):
 		var actor := _interaction_actor(target)
 		return "target.%s" % actor.actor_id if actor != null else ""

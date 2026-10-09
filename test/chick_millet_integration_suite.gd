@@ -77,10 +77,12 @@ func run() -> void:
 		if world.ground_food.items.is_empty(): break
 	check(peck_seen, "chick uses full peck cel before eating")
 	check(world.ground_food.items.is_empty() and float(world.ground_food.cooldowns.get("chicken", 0.0)) > 0.0, "real chick routes to grain and consumes once")
+	check(store.get_chick_growth().bonus_seconds == 300, "actual ground-food winner grants feeding credit")
 	store._load()
+	check(store.get_chick_growth().bonus_seconds == 300, "real bite credit survives disk reload")
 	check(store.get_yard_inventory().ground.is_empty(), "consumed grain stays gone after native reload")
 	# A controlled clock boundary tests growth, not ordinary elapsed play.
-	store.request_patch("growth-fixture", {"holiday_day": int(birth.day) + 3, "holiday_day_elapsed": float(birth.elapsed)})
+	store.request_patch("growth-fixture", {"holiday_day": int(birth.day) + 2, "holiday_day_elapsed": float(birth.elapsed) + 300.0})
 	await settle()
 	await settle()
 	check(store.get_world_residents().chicken.stage == "hen" and world.actor_named("chicken").get_meta("resident_stage") == "hen", "same resident grows using confirmed clock")

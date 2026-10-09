@@ -76,6 +76,7 @@ var _basket_chip: Button
 var _basket_panel: Control
 var _hold_hotbar: Control
 var _residents: RefCounted
+var _chick_panel: Control
 var _crop_panel: Control
 var _inventory: RefCounted
 var _decor: RefCounted
@@ -343,6 +344,11 @@ func _ready() -> void:
 	_basket_panel.close_requested.connect(_hide_basket)
 	_basket_panel.action_requested.connect(func(action: String, fish: String) -> void: _inventory.request(action, fish))
 	_basket_panel.retry_requested.connect(_retry_basket)
+	_chick_panel = preload("res://scripts/ui/chick_care_panel.gd").new()
+	_chick_panel.name = "ChickCarePanel"
+	_ui_layer.add_child(_chick_panel)
+	_chick_panel.visible = false
+	_chick_panel.close_requested.connect(_hide_chick_care)
 	_crop_panel = preload("res://scripts/ui/crop_panel.gd").new()
 	_crop_panel.name = "CropPanel"
 	_ui_layer.add_child(_crop_panel)
@@ -380,7 +386,7 @@ func _process(delta: float) -> void:
 	_sync_notice_visibility()
 	if _notice.visible:
 		_fit_notice()
-	if _screen == "game" and _world != null and not _pause_screen.visible and not _album_screen.visible and not _confirm_screen.visible and not _basket_panel.visible and not _crop_panel.visible and not _save_problem_active:
+	if _screen == "game" and _world != null and not _pause_screen.visible and not _album_screen.visible and not _confirm_screen.visible and not _basket_panel.visible and not _crop_panel.visible and not _chick_panel.visible and not _save_problem_active:
 		var move := Vector2.ZERO
 		if _world.input_enabled:
 			move = Input.get_vector("move_left", "move_right", "move_up", "move_down")
@@ -466,6 +472,11 @@ func _process(delta: float) -> void:
 
 
 func _input(event: InputEvent) -> void:
+	if _chick_panel != null and _chick_panel.visible:
+		if event.is_action_pressed("pause") and not event.is_echo():
+			_hide_chick_care()
+			get_viewport().set_input_as_handled()
+		return
 	if _crop_panel != null and _crop_panel.visible:
 		if event.is_action_pressed("pause") and not event.is_echo():
 			_hide_crops()
@@ -1271,6 +1282,7 @@ func _start_holiday(save_progress: bool = true) -> void:
 	)
 	_world.album_updated.connect(_on_album_updated)
 	_world.notice_requested.connect(_show_notice_key)
+	_world.chick_care_requested.connect(_show_chick_care)
 	_world.basket_requested.connect(_show_basket)
 	_world.plant_bed_requested.connect(_show_crops)
 	_world.notice_dismiss_requested.connect(_dismiss_notice_key)
@@ -1431,7 +1443,28 @@ func _show_title(save_progress: bool = true) -> void:
 	_refresh_texts()
 
 
+func _show_chick_care() -> void:
+	if _screen != "game" or _world == null or _pause_screen.visible or _album_screen.visible or _basket_panel.visible or _crop_panel.visible: return
+	if _world.house != null and _world.house.busy(): return
+	_world._save_progress()
+	_world.cancel_scene_feedback()
+	_world.input_enabled = false
+	_chick_panel.open()
+	_ui_layer.move_child(_chick_panel, _ui_layer.get_child_count()-1)
+	get_tree().paused = true
+	AudioDirector.set_game_paused(true)
+	_sync_hold_hotbar_visibility()
+
+func _hide_chick_care() -> void:
+	_chick_panel.visible = false
+	get_tree().paused = false
+	AudioDirector.set_game_paused(false)
+	if _world != null: _world.input_enabled = true
+	get_viewport().gui_release_focus()
+	_sync_hold_hotbar_visibility()
+
 func _show_crops() -> void:
+	if _chick_panel != null and _chick_panel.visible: return
 	if _screen != "game" or _world == null or _pause_screen.visible or _album_screen.visible: return
 	if _world.house != null and _world.house.busy(): return
 	_world._save_progress()
@@ -1455,6 +1488,7 @@ func _hide_crops() -> void:
 	_sync_hold_hotbar_visibility()
 
 func _show_basket() -> void:
+	if _chick_panel != null and _chick_panel.visible: return
 	if _crop_panel != null and _crop_panel.visible: return
 	if _world != null and _world.house != null and _world.house.busy(): return
 	if _screen != "game" or _world == null or _pause_screen.visible or _album_screen.visible:
@@ -1580,7 +1614,7 @@ func _on_decor_resubmitted(failed_ops: Array, op_id: String) -> void:
 func _on_ground_food_action(action: String, kind: String, details: Dictionary, actor_id: String) -> void:
 	if _inventory == null or _inventory.busy(): return
 	_inventory_food_consumer = actor_id
-	_inventory.request(action, kind, details)
+	_inventory.request(action, kind, details, actor_id)
 
 
 func _on_inventory_settled(action: String, _fish: String) -> void:
@@ -2341,6 +2375,7 @@ func _sync_hold_hotbar_visibility() -> void:
 		and not _album_screen.visible
 		and not _confirm_screen.visible
 		and (_basket_panel == null or not _basket_panel.visible)
+		and (_chick_panel == null or not _chick_panel.visible)
 		and (_crop_panel == null or not _crop_panel.visible)
 	)
 	_hold_hotbar.visible = show
@@ -2442,6 +2477,7 @@ func _top_right_column_rect() -> Rect2:
 
 
 func _can_show_notice() -> bool:
+	if _chick_panel != null and _chick_panel.visible: return false
 	return _screen == "game" and not _pause_screen.visible and not _album_screen.visible and not _confirm_screen.visible and not _basket_panel.visible
 
 

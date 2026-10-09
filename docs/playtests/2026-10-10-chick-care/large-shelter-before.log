@@ -1,0 +1,39 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ROUTE_DEBUG true true [(672.0, 528.0), (888.0, 516.0), (912.0, 480.0), (960.0, 444.0), (1041.0, 444.0)]
+RAIN_BED sheep_a (977.0, 478.0)
+STATE rain active= cel=shelter_rest controlled=true
+RAIN_BED cow (1041.0, 476.0)
+STATE rain active= cel=shelter_rest controlled=true
+RAIN_BED sheep_b (1103.0, 484.0)
+STATE rain active= cel=shelter_rest controlled=true
+RAIN_BED horse (1037.265, 444.0013)
+STATE rain active= cel=shelter_rest controlled=true
+RAIN_BED llama (966.2545, 443.3746)
+STATE rain active= cel=shelter_rest controlled=true
+SUN_RETURN horse (584.8111, 474.9154) active= {  }
+SUN_RETURN llama (552.5584, 499.6135) active= {  }
+NIGHT_ALL sheep_a (846.298, 506.2572) paths={ "sheep_a": [(912.0, 492.0), (960.0, 444.0)] }
+NIGHT_ALL cow (1037.419, 474.5852) paths={ "sheep_a": [(912.0, 492.0), (960.0, 444.0)] }
+NIGHT_ALL sheep_b (1099.217, 482.9419) paths={ "sheep_a": [(912.0, 492.0), (960.0, 444.0)] }
+NIGHT_ALL horse (584.8111, 474.9154) paths={ "sheep_a": [(912.0, 492.0), (960.0, 444.0)] }
+NIGHT_ALL llama (552.5584, 499.6135) paths={ "sheep_a": [(912.0, 492.0), (960.0, 444.0)] }
+NIGHT horse (584.8111, 474.9154) active=sheep_a
+NIGHT llama (552.5584, 499.6135) active=sheep_a
+LARGE_ANIMAL_SHELTER checks=27 failures=4
+ERROR: horse returns to own outdoor night area
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] run (res://test/large_animal_shelter_suite.gd:95)
+ERROR: horse rests at night without crowding cow pen
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] run (res://test/large_animal_shelter_suite.gd:95)
+ERROR: llama returns to own outdoor night area
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] run (res://test/large_animal_shelter_suite.gd:95)
+ERROR: llama rests at night without crowding cow pen
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] run (res://test/large_animal_shelter_suite.gd:95)
