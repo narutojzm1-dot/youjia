@@ -66,7 +66,7 @@ func _check_growth() -> void:
 	var now := {"day": store.get_holiday_day(), "elapsed": store.get_holiday_day_elapsed()}
 	if value.beibei.stage == "puppy" and Model._clock_seconds(now) - Model._clock_seconds(value.beibei.adopted_clock) >= Model.GROW_SECONDS:
 		request("grow_beibei")
-	elif value.chicken.stage == "chick" and Model._clock_seconds(now) - Model._clock_seconds(value.chicken.settled_clock) >= Model.GROW_SECONDS:
+	elif value.chicken.stage == "chick" and _chick_ready(value, now):
 		request("grow_chicken")
 
 func start_yard_residents() -> void:
@@ -83,3 +83,8 @@ func _unknown(op_id: String, _kind: String, _code: String) -> void:
 	if op_id != _op_id: return
 	state = "unknown"
 	changed.emit()
+
+func _chick_ready(value: Dictionary, now: Dictionary) -> bool:
+	# Production store includes feeding credit; legacy test/store adapters retain natural growth.
+	if store.has_method("get_chick_growth"): return bool(store.get_chick_growth().get("ready", false))
+	return Model._clock_seconds(now) - Model._clock_seconds(value.chicken.settled_clock) >= Model.GROW_SECONDS

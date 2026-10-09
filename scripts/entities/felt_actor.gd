@@ -739,6 +739,9 @@ func _start_rest() -> void:
 	if species == "goose":
 		_idle_time /= maxf(0.5, float(TuningStore.get_value("enemies.goose.nosiness", 1.0)))
 	_turn_pause = 0.0
+	# Natural foraging is a quiet painted peck, never a free inventory grant.
+	if species == "chicken" and _routine_step % 3 == 1:
+		show_painted_ack("peck", 0.9)
 
 
 func _local_destination() -> Vector2:

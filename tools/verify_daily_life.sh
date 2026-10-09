@@ -64,6 +64,7 @@ run_godot suite test/world_residents_suite.gd
 run_godot suite test/beibei_integration_suite.gd
 run_godot suite test/pond_residents_suite.gd
 run_godot suite test/pond_integration_suite.gd
+run_godot suite test/chick_care_suite.gd
 run_godot suite test/chick_millet_model_suite.gd
 run_godot suite test/chick_millet_integration_suite.gd
 run_godot suite test/pond_story_sequence_suite.gd

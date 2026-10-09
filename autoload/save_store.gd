@@ -266,6 +266,15 @@ func request_decor_action(revision: int, action: String, spot: String, details: 
 func get_world_residents() -> Dictionary:
 	return preload("res://scripts/game/world_residents.gd").read(_data)
 
+func get_chick_growth() -> Dictionary:
+	var residents := get_world_residents()
+	if residents.is_empty(): return {}
+	var care := preload("res://scripts/game/chick_care.gd").read(_data)
+	if care.is_empty(): return {}
+	var model = preload("res://scripts/game/world_residents.gd")
+	var age: float = preload("res://scripts/game/chick_care.gd").age(_data, model._clock_seconds(residents.chicken.settled_clock), model._clock_seconds({"day": get_holiday_day(), "elapsed": get_holiday_day_elapsed()}))
+	return {"stage": residents.chicken.stage, "age_seconds": age, "bonus_seconds": care.bonus_seconds, "ready": age >= model.GROW_SECONDS}
+
 func request_resident_action(revision: int, action: String) -> String:
 	var intent := prepare_resident_intent(revision, action)
 	return request_intent("residents", intent) if intent.is_valid() else ""
@@ -289,10 +298,10 @@ func prepare_resident_intent(revision: int, action: String) -> Callable:
 		return result.candidate
 
 
-func request_inventory_action(revision: int, action: String, fish: String, details: Dictionary = {}) -> String:
+func request_inventory_action(revision: int, action: String, fish: String, details: Dictionary = {}, consumer: String = "") -> String:
 	var frozen := details.duplicate(true)
 	return request_intent("inventory", func(current: Dictionary) -> Variant:
-		var result := YardInventory.transition(current, revision, action, fish, frozen)
+		var result := YardInventory.transition(current, revision, action, fish, frozen, consumer)
 		if result.has("error"):
 			return CoordinatorType.IntentRejection.new(result.error)
 		return result.candidate)
