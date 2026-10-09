@@ -1,5 +1,5 @@
 <!doctype html>
-<html data-build="game-8d5b2aa" lang="zh-CN">
+<html data-build="game-d2e0ba9" lang="zh-CN">
 <head>
   <meta http-equiv="Cache-Control" content="no-cache, must-revalidate, max-age=0">
   <meta http-equiv="Pragma" content="no-cache">
@@ -10,8 +10,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="manus-game-loading-screen" content="1">
   <title>悠长的假期</title>
-  <link id="-gd-engine-icon" rel="icon" type="image/png" href="game-8d5b2aa.icon.png" />
-<link rel="apple-touch-icon" href="game-8d5b2aa.apple-touch-icon.png"/>
+  <link id="-gd-engine-icon" rel="icon" type="image/png" href="game-d2e0ba9.icon.png" />
+<link rel="apple-touch-icon" href="game-d2e0ba9.apple-touch-icon.png"/>
 
   <!-- Project-owned starting point, not the platform default. Customize the presentation below. -->
   <!-- Embedded Noto Sans SC loader subset: SIL Open Font License 1.1; license text: assets/template/fonts/NotoSansSC-OFL.txt. -->
@@ -62,6 +62,7 @@ Source SHA-256: 38f4c5f927f746b3dfa4c3a5d7edf0b7a3e828e27438418fa54f9e1565289412
   <canvas id="canvas" tabindex="0">Your browser does not support canvas.</canvas>
   <section id="loading" role="status">
     <h1 id="game-title"></h1>
+    <p id="loading-version" style="margin:6px 0 0;font-size:clamp(15px,2.2vw,18px);letter-spacing:0.04em">0.2.0 · 第2版内部测试</p>
     <p id="loading-status">Loading…</p>
     <p id="loading-detail"></p>
     <progress id="loading-progress" aria-label="Download progress"></progress>
@@ -72,16 +73,16 @@ Source SHA-256: 38f4c5f927f746b3dfa4c3a5d7edf0b7a3e828e27438418fa54f9e1565289412
   </section>
   <script>
     (() => {
-      const config = {"args":[],"canvasResizePolicy":2,"emscriptenPoolSize":8,"ensureCrossOriginIsolationHeaders":true,"executable":"engine-3b105340f798ed0e7d6aa7725328dc8c0bf8cd94ffea14835e43f83045048c74","experimentalVK":false,"fileSizes":{"engine-3b105340f798ed0e7d6aa7725328dc8c0bf8cd94ffea14835e43f83045048c74.wasm":39514754,"game-8d5b2aa.pck":60456668},"focusCanvas":true,"gdextensionLibs":[],"godotPoolSize":4,"mainPack":"game-8d5b2aa.pck","fileHashes":{"engine-3b105340f798ed0e7d6aa7725328dc8c0bf8cd94ffea14835e43f83045048c74.wasm":"fc74679e3b97f76878947fcd4fbe1268cbfa6188182a2e33bbc3f5dc9bfa57d0","game-8d5b2aa.pck":"200d0a05a4b5b79ac847128eeb611527aa5bfa4e5f2d89df9e82dd663d667c29"}};
+      const config = {"args":[],"canvasResizePolicy":2,"emscriptenPoolSize":8,"ensureCrossOriginIsolationHeaders":true,"executable":"engine-3b105340f798ed0e7d6aa7725328dc8c0bf8cd94ffea14835e43f83045048c74","experimentalVK":false,"fileSizes":{"engine-3b105340f798ed0e7d6aa7725328dc8c0bf8cd94ffea14835e43f83045048c74.wasm":39514754,"game-d2e0ba9.pck":60456668},"focusCanvas":true,"gdextensionLibs":[],"godotPoolSize":4,"mainPack":"game-d2e0ba9.pck","fileHashes":{"engine-3b105340f798ed0e7d6aa7725328dc8c0bf8cd94ffea14835e43f83045048c74.wasm":"fc74679e3b97f76878947fcd4fbe1268cbfa6188182a2e33bbc3f5dc9bfa57d0","game-d2e0ba9.pck":"b8ee21901a5d5a2590ea9b8c3b72acf07c2f90c2a7c1b1fe2277b9fa8b475d50"}};
       let resolveSaveRuntime, rejectSaveRuntime;
       const saveRuntimeReady = new Promise((resolve, reject) => { resolveSaveRuntime = resolve; rejectSaveRuntime = reject; });
       saveRuntimeReady.catch(() => {}); // Observe immediately; preserve original rejection.
-      const saveBridgeReady = import('./save-8d5b2aa/bridge.mjs').then(async ({installSaveHost}) => {
-        const {captureIdbfsSource} = await import('./save-8d5b2aa/idbfs_source.mjs');
+      const saveBridgeReady = import('./save-d2e0ba9/bridge.mjs').then(async ({installSaveHost}) => {
+        const {captureIdbfsSource} = await import('./save-d2e0ba9/idbfs_source.mjs');
         installSaveHost({runtimeReady: saveRuntimeReady, captureLegacy: captureIdbfsSource});
       });
       saveBridgeReady.catch(() => {});
-      const assetRecoveryReady = import('./boot-8d5b2aa/download_assets.mjs');
+      const assetRecoveryReady = import('./boot-d2e0ba9/download_assets.mjs');
       assetRecoveryReady.catch(() => {});
       let restoreAssetFetch = () => {};
       const threads = false;
@@ -93,12 +94,19 @@ Source SHA-256: 38f4c5f927f746b3dfa4c3a5d7edf0b7a3e828e27438418fa54f9e1565289412
       const notice = document.getElementById('loading-notice');
       const retry = document.getElementById('loading-retry');
       const buildLabel = document.getElementById('loading-build');
+      const versionLabel = document.getElementById('loading-version');
       document.getElementById('game-title').textContent = document.title;
+      // Player-facing version starts at 0.2.0 (第2版内部测试). Do not treat the
+      // internal pack name as the player version, and do not invent later rules.
+      const playerVersion = '0.2.0';
+      const playerVersionLabel = '0.2.0 · 第2版内部测试';
+      if (versionLabel) versionLabel.textContent = playerVersionLabel;
+      document.documentElement.dataset.playerVersion = playerVersion;
       // The engine URL is shared by unchanged engine bytes across game builds.
       const buildId = config.mainPack?.replace(/\.pck$/, '') || config.executable;
       if (buildLabel && buildId) {
         buildLabel.textContent = buildId;
-        // 将版本 ID 同步写入 document.documentElement.dataset.build，方便控制台查询
+        // 内部构建号保留为次要诊断信息，方便对应真实构建。
         document.documentElement.dataset.build = buildId;
       }
       // Single-language holiday: pin Simplified Chinese on the loader.
