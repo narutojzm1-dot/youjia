@@ -58,12 +58,15 @@ func run() -> void:
 			g.action_requested.connect(func(a: String, k: String) -> void: emitted.append([a, k]))
 			await settle()
 			g.update_view(inventory, keepsakes, "ready", false)
+			var free: Array[String] = ["house_edge", "fence_edge", "pond_path"]
+			g.set_free_spots(free, false)
 			await settle()
 			# --- mouse / keyboard: "Never mind" button returns focus to the cell ---
 			for kind: String in ["small", "grass", "feather"]:
 				g.open_menu(kind)
 				await settle()
-				check(g.menu.visible and g.menu_action.has_focus(), tag + " " + kind + " paper opens with focus on its action")
+				var first: Button = g.spot_buttons["house_edge"] if kind == "feather" else g.menu_action
+				check(g.menu.visible and first.has_focus(), tag + " " + kind + " paper opens with focus on its first action")
 				g.menu_close.pressed.emit()
 				await settle()
 				check(not g.menu.visible and g.selected.is_empty(), tag + " " + kind + " never mind closes the paper")
