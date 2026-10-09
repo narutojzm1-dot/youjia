@@ -43,6 +43,7 @@ run_godot suite test/yard_inventory_suite.gd
 run_godot suite test/yard_decor_suite.gd
 run_godot suite test/yard_decor_persistence_suite.gd
 run_godot suite test/yard_decor_integration_suite.gd
+run_godot suite test/yard_decor_rejection_suite.gd
 run_godot suite test/yard_basket_empty_row_ink_suite.gd
 run_godot suite test/yard_basket_grid_suite.gd
 run_godot suite test/yard_basket_grid_entry_suite.gd
