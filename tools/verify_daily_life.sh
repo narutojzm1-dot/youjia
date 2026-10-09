@@ -113,3 +113,4 @@ run_godot suite test/painted_blink_suite.gd
 
 run_godot suite test/yard_decor_spot_at_suite.gd
 
+run_godot suite test/photo_diary_weather_suite.gd
