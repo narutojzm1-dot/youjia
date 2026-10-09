@@ -123,7 +123,7 @@ func _check_disabled_shows(button: Button, tag: String) -> void:
 
 func _check_album(dims: Vector2i, locale: String) -> void:
 	var tag := "%s %s album" % [dims, locale]
-	main._start_holiday()
+	await main._start_holiday()
 	await _settle()
 	main._show_album()
 	await _settle()

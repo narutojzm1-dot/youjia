@@ -9,7 +9,7 @@ const KeepsakeArtScript := preload("res://scripts/exploration/keepsake_art.gd")
 signal action_requested(action: String, kind: String)
 signal menu_toggled(open: bool)
 
-const ORDER := ["small", "medium", "odd", "grass", "millet", "round_stone", "pine_cone", "feather"]
+const ORDER := ["small", "medium", "odd", "grass", "millet", "wheat", "corn", "round_stone", "pine_cone", "feather"]
 const FISH := ["small", "medium", "odd"]
 const KEEPSAKES := ["round_stone", "pine_cone", "feather"]
 const FIND_IDS := {"round_stone": ExplorationRoutes.FIND_STONE, "pine_cone": ExplorationRoutes.FIND_PINE_CONE, "feather": ExplorationRoutes.FIND_FEATHER}
@@ -181,6 +181,7 @@ func _cell(kind: String) -> Button:
 	return cell
 
 static func _icon_texture(kind: String) -> Texture2D:
+	if kind in ["wheat", "corn"]: return preload("res://scripts/game/crop_art.gd").texture(kind)
 	if kind in KEEPSAKES:
 		return KeepsakeArtScript.texture(FIND_IDS[kind])
 	var path: String = ICONS.get(kind, "")
@@ -256,7 +257,7 @@ func rows_for(cols: int) -> int:
 
 func update_view(inventory: Dictionary, keepsakes: Dictionary, state: String, busy: bool) -> void:
 	var en := I18n.get_locale() == "en"
-	_names = {"small": "Small fish" if en else "小鱼", "medium": "Fish" if en else "中鱼", "odd": "Curious fish" if en else "奇怪的鱼", "grass": "Grass" if en else "草束", "millet": "Millet" if en else "小米", "round_stone": "Round stone" if en else "圆石", "pine_cone": "Pine cone" if en else "松果", "feather": "Feather" if en else "落羽"}
+	_names = {"small": "Small fish" if en else "小鱼", "medium": "Fish" if en else "中鱼", "odd": "Curious fish" if en else "奇怪的鱼", "grass": "Grass" if en else "草束", "millet": "Millet" if en else "小米", "wheat": "Wheat" if en else "麦粒", "corn": "Corn" if en else "玉米粒", "round_stone": "Round stone" if en else "圆石", "pine_cone": "Pine cone" if en else "松果", "feather": "Feather" if en else "落羽"}
 	# 格内只放得下短名；完整名字在弹出的纸片标题和悬停提示里
 	var short := _names.duplicate()
 	if en: short.merge({"small": "Small", "odd": "Odd fish", "round_stone": "Stone", "pine_cone": "Cone"}, true)
@@ -306,11 +307,12 @@ func action_for(kind: String) -> Array:
 	if kind in KEEPSAKES:
 		action = "place"
 		label = "Place in yard" if en else "摆到院里"
-	elif kind == "millet": label = "Take a scoop" if en else "拿一把"
+	elif kind in ["millet", "wheat", "corn"]: label = "Take a scoop" if en else "拿一把"
 	elif kind == "grass": label = "Take a bundle" if en else "拿一束"
 	else: label = "Take one" if en else "拿一条"
 	var reason := ""
 	if not _loaded or _busy: reason = _busy_note(en)
+	elif kind in ["wheat", "corn"] and counts.get(kind, 0) == 1: reason = "Keep one handful for planting." if en else "留这一把下次播种。"
 	elif counts.get(kind, 0) <= 0: reason = "None in the basket." if en else "背篓里还没有。"
 	elif action == "place" and _decor_busy: reason = _busy_note(en)
 	elif action == "place" and free_spots.is_empty(): reason = "All three spots in the yard are taken. Tap one in the yard to put it back first." if en else "院里三处都摆着东西了；先在院里点一件，收回背篓。"

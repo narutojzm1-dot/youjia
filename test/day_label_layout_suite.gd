@@ -26,7 +26,7 @@ func _run() -> void:
 		await process_frame
 		await process_frame
 		main.set_process(false)
-		main._start_holiday()
+		await main._start_holiday()
 		main._layout()
 		main._refresh_hud()
 		_check_style(dims)
@@ -81,7 +81,7 @@ func _check_resize() -> void:
 	await process_frame
 	await process_frame
 	main.set_process(false)
-	main._start_holiday()
+	await main._start_holiday()
 	for dims in [Vector2i(390, 844), Vector2i(1280, 720), Vector2i(844, 390)]:
 		root.size = dims
 		await process_frame

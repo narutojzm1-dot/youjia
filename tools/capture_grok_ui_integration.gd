@@ -22,7 +22,7 @@ func capture() -> void:
 	var main = load("res://scenes/main.tscn").instantiate()
 	root.add_child(main)
 	await shot("title-390")
-	main._start_holiday()
+	await main._start_holiday()
 	await shot("yard-hint-390")
 	main._show_save_pending()
 	await shot("save-pending-390")

@@ -25,7 +25,7 @@ func _run() -> void:
 	await process_frame
 	await process_frame
 	main.set_process(false)
-	main._start_holiday()
+	await main._start_holiday()
 	var world = main._world
 	world.holiday_day = 3
 	world._weather_timer = 10000.0

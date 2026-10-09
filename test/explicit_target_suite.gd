@@ -83,7 +83,11 @@ func review():
  # Store the carried grass through the actual basket controls without toggling lead.
  touch_button("_basket_chip")
  await frames(2)
- var deposit=main._basket_panel.return_button
+ # Use the visible held-item cell. With ten item kinds the legacy return row
+ # can be below the scroll fold; tapping its offscreen coordinates is invalid.
+ control_tap(main._basket_panel.grid.cells["grass"])
+ await frames(2)
+ var deposit=main._basket_panel.grid.menu_action
  control_tap(deposit)
  await root.get_node("SaveStore").flush_pending()
  var close=main._basket_panel.close_button

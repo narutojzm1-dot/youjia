@@ -40,6 +40,7 @@ run_godot suite test/audio_button_input_suite.gd
 run_godot suite test/ambience_output_ceiling_suite.gd
 run_godot suite test/modal_touch_input_suite.gd
 run_godot suite test/yard_inventory_suite.gd
+run_godot suite test/yard_crops_suite.gd
 run_godot suite test/yard_decor_suite.gd
 run_godot suite test/yard_decor_persistence_suite.gd
 run_godot suite test/yard_decor_integration_suite.gd

@@ -16,6 +16,7 @@ func _init(host: Node2D) -> void:
 
 
 func held() -> String:
+	if not world._grain_held.is_empty(): return world._grain_held
 	if world._millet_held: return "millet"
 	if world.get_player().carrying_grass: return "grass"
 	return world._fish_carry_type
@@ -46,7 +47,7 @@ func sync_items(confirmed: Array) -> void:
 		if not sprites.has(id):
 			var sprite := Sprite2D.new()
 			sprite.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
-			sprite.texture = Millet if item.kind == "millet" else (Grass.texture_for(Grass.LOOSE) if item.kind == "grass" else Fish)
+			sprite.texture = preload("res://scripts/game/crop_art.gd").texture(item.kind) if item.kind in ["wheat", "corn"] else Millet if item.kind == "millet" else (Grass.texture_for(Grass.LOOSE) if item.kind == "grass" else Fish)
 			var width := 34.0 if item.kind == "grass" else (38.0 if item.kind == "medium" else 30.0)
 			sprite.scale = Vector2.ONE * width / sprite.texture.get_width()
 			sprite.z_as_relative = false
@@ -108,7 +109,7 @@ func settled(action: String, consumer: String) -> void:
 
 
 func _accepts(actor: FeltActor, item: Dictionary) -> bool:
-	if item.kind == "millet": return actor.species == "chicken"
+	if item.kind in ["millet", "wheat", "corn"]: return actor.species == "chicken"
 	return actor.species in ["cow", "sheep", "llama"] if item.kind == "grass" else actor.species in ["duck", "goose"]
 
 

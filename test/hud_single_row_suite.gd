@@ -59,7 +59,7 @@ func _run() -> void:
 		await process_frame
 		await process_frame
 		main.set_process(false)
-		main._start_holiday()
+		await main._start_holiday()
 		main._ensure_hold_hotbar()
 		for loc: String in LOCALES:
 			root.get_node("/root/I18n").set_locale(loc)

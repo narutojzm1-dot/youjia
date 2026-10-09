@@ -233,6 +233,20 @@ func get_yard_inventory() -> Dictionary:
 	return YardInventory.read(_data)
 
 
+func get_yard_crops() -> Dictionary:
+	return preload("res://scripts/game/yard_crops.gd").read(_data)
+
+func has_yard_crops() -> bool:
+	return _data.has("yard_crops")
+
+
+func request_crop_action(revision: int, inventory_revision: int, action: String, kind: String = "") -> String:
+	return request_intent("crops", func(current: Dictionary) -> Variant:
+		var result := preload("res://scripts/game/yard_crops.gd").transition(current, revision, inventory_revision, action, kind)
+		if result.has("error"): return CoordinatorType.IntentRejection.new(result.error)
+		return result.candidate)
+
+
 func get_yard_decor() -> Dictionary:
 	return preload("res://scripts/inventory/yard_decor.gd").read(_data)
 

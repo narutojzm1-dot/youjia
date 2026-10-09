@@ -176,6 +176,7 @@ static func nearest(world: Node2D, species: Array):
 
 static func plant(world: Node2D) -> Dictionary:
 	var label: String = ["action.plant", "action.water", "action.water", "action.harvest"][world._plant_state]
+	if world.inventory_enabled and world._plant_state == world.PLANT_EMPTY: label = "action.crop_patch"
 	return action("plant", world._plant_point(), label, 75.0)
 
 static func fishing(world: Node2D) -> Dictionary:

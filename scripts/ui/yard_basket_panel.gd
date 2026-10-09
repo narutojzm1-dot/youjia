@@ -303,6 +303,9 @@ func update_view(inventory: Dictionary, keepsakes: Dictionary, state: String, bu
 		_ink_row(keepsake_labels[kind], owned)
 	var held := str(inventory.get("held", ""))
 	names["millet"] = "Millet" if en else "小米"
+	names["wheat"] = "Wheat grains" if en else "麦粒"
+	names["corn"] = "Corn kernels" if en else "玉米粒"
+	scoop_button.visible = false
 	scoop_button.text = "Scoop feed from the tin" if en else "从鸡食罐舀一小把米"
 	scoop_button.disabled = inventory.is_empty() or busy or not held.is_empty()
 	for kind: String in FISH:

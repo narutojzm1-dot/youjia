@@ -59,9 +59,9 @@ func run() -> void:
 			var cols: int = g.grid.columns
 			var expect_cols := 3 if inner_width(vs) < 4 * 64 + 3 * 8 else 4
 			check(cols == expect_cols, tag + " columns %d (expected %d)" % [cols, expect_cols])
-			check(g.cells.size() == 8, tag + " one cell for each of 8 items")
+			check(g.cells.size() == 10, tag + " one cell for each of 10 items")
 			check((g.cells.size() + g.blanks.size()) % cols == 0, tag + " last row padded to full width")
-			check(g.blanks.size() == (cols - 8 % cols) % cols, tag + " blank slot count")
+			check(g.blanks.size() == (cols - 10 % cols) % cols, tag + " blank slot count")
 			var rects: Array[Rect2] = []
 			for kind: String in g.ORDER:
 				var r: Rect2 = g.cells[kind].get_global_rect()

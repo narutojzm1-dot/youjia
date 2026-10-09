@@ -76,6 +76,7 @@ var _basket_chip: Button
 var _basket_panel: Control
 var _hold_hotbar: Control
 var _residents: RefCounted
+var _crop_panel: Control
 var _inventory: RefCounted
 var _decor: RefCounted
 var _basket_drop: Dictionary = {}
@@ -342,6 +343,14 @@ func _ready() -> void:
 	_basket_panel.close_requested.connect(_hide_basket)
 	_basket_panel.action_requested.connect(func(action: String, fish: String) -> void: _inventory.request(action, fish))
 	_basket_panel.retry_requested.connect(_retry_basket)
+	_crop_panel = preload("res://scripts/ui/crop_panel.gd").new()
+	_crop_panel.name = "CropPanel"
+	_ui_layer.add_child(_crop_panel)
+	_crop_panel.visible = false
+	_crop_panel.close_requested.connect(_hide_crops)
+	_crop_panel.flower_requested.connect(func() -> void:
+		_hide_crops()
+		if _world != null: _world._interact_legacy_plant())
 	_decor = load("res://scripts/inventory/yard_decor_controller.gd").new(SaveStore)
 	_decor.changed.connect(_on_decor_changed)
 	_decor.resubmitted.connect(_on_decor_resubmitted)
@@ -371,7 +380,7 @@ func _process(delta: float) -> void:
 	_sync_notice_visibility()
 	if _notice.visible:
 		_fit_notice()
-	if _screen == "game" and _world != null and not _pause_screen.visible and not _album_screen.visible and not _confirm_screen.visible and not _basket_panel.visible and not _save_problem_active:
+	if _screen == "game" and _world != null and not _pause_screen.visible and not _album_screen.visible and not _confirm_screen.visible and not _basket_panel.visible and not _crop_panel.visible and not _save_problem_active:
 		var move := Vector2.ZERO
 		if _world.input_enabled:
 			move = Input.get_vector("move_left", "move_right", "move_up", "move_down")
@@ -457,6 +466,11 @@ func _process(delta: float) -> void:
 
 
 func _input(event: InputEvent) -> void:
+	if _crop_panel != null and _crop_panel.visible:
+		if event.is_action_pressed("pause") and not event.is_echo():
+			_hide_crops()
+			get_viewport().set_input_as_handled()
+		return
 	if _basket_panel != null and _basket_panel.visible:
 		if event.is_action_pressed("pause") and not event.is_echo():
 			_hide_basket()
@@ -1225,6 +1239,16 @@ func _start_holiday(save_progress: bool = true) -> void:
 		_holiday_start_pending = false
 		_show_save_pending(false)
 		return
+	# Finish the once-only grant before enabling inventory actions. Otherwise an
+	# immediate grass pickup can carry the pre-grant inventory revision.
+	var crop_bed := SaveStore.get_yard_crops()
+	var crop_inventory := SaveStore.get_yard_inventory()
+	if not SaveStore.has_yard_crops() and not crop_bed.is_empty() and not crop_inventory.is_empty():
+		SaveStore.request_crop_action(int(crop_bed.revision),int(crop_inventory.revision),"initialize")
+		if not await SaveStore.flush_pending():
+			_holiday_start_pending = false
+			_show_save_pending(false)
+			return
 	TuningStore.begin_run(false)
 	AudioDirector.set_game_paused(false)
 	_clear_world(false)
@@ -1244,6 +1268,7 @@ func _start_holiday(save_progress: bool = true) -> void:
 	_world.album_updated.connect(_on_album_updated)
 	_world.notice_requested.connect(_show_notice_key)
 	_world.basket_requested.connect(_show_basket)
+	_world.plant_bed_requested.connect(_show_crops)
 	_world.notice_dismiss_requested.connect(_dismiss_notice_key)
 	_world.weather_changed.connect(func(_w: String) -> void: _refresh_hud())
 	_world.camera_focus_requested.connect(_on_focus)
@@ -1402,7 +1427,31 @@ func _show_title(save_progress: bool = true) -> void:
 	_refresh_texts()
 
 
+func _show_crops() -> void:
+	if _screen != "game" or _world == null or _pause_screen.visible or _album_screen.visible: return
+	if _world.house != null and _world.house.busy(): return
+	_world._save_progress()
+	_world.cancel_scene_feedback()
+	_world.input_enabled = false
+	_crop_panel.open()
+	_ui_layer.move_child(_crop_panel,_ui_layer.get_child_count()-1)
+	get_tree().paused = true
+	AudioDirector.set_game_paused(true)
+	_sync_hold_hotbar_visibility()
+
+func _hide_crops() -> void:
+	# Keep the inventory modal closed to other writers until this transaction
+	# settles; otherwise a rapid close + withdrawal uses the old revision.
+	if _crop_panel.is_saving(): return
+	_crop_panel.visible = false
+	get_tree().paused = false
+	AudioDirector.set_game_paused(false)
+	if _world != null: _world.input_enabled = true
+	get_viewport().gui_release_focus()
+	_sync_hold_hotbar_visibility()
+
 func _show_basket() -> void:
+	if _crop_panel != null and _crop_panel.visible: return
 	if _world != null and _world.house != null and _world.house.busy(): return
 	if _screen != "game" or _world == null or _pause_screen.visible or _album_screen.visible:
 		return
@@ -1429,6 +1478,7 @@ func _hide_basket() -> void:
 
 func _on_inventory_changed() -> void:
 	if _inventory == null: return
+	if _crop_panel != null: _crop_panel.refresh()
 	var inventory: Dictionary = _inventory.view()
 	if _world != null:
 		_world.sync_inventory(str(inventory.get("held", "")), _inventory.busy() or inventory.is_empty(), inventory.get("ground", []))
@@ -1676,6 +1726,8 @@ func _clear_covered_save_problems(coverage: Dictionary) -> void:
 func _on_save_rejected(op_id: String, kind: String, code: String) -> void:
 	# These are authoritative FIFO domain refusals, not a failed disk write.
 	# Keep actual writer/unknown failures and already-durable receipts tracked.
+	if kind == "crops" and code.begins_with("CROP_") and not _save_durable_ops.has(op_id): return
+	if kind == "inventory" and code == "BASKET_SEED_RESERVED" and not _save_durable_ops.has(op_id): return
 	if kind == "decor" and not _save_durable_ops.has(op_id) and code in ["DECOR_CHANGED", "DECOR_OCCUPIED", "DECOR_EMPTY", "DECOR_INVALID", "DECOR_LIMIT"]:
 		return
 	_pending_photo_saves.erase(op_id)
@@ -2253,6 +2305,7 @@ func _sync_hold_hotbar_visibility() -> void:
 		and not _album_screen.visible
 		and not _confirm_screen.visible
 		and (_basket_panel == null or not _basket_panel.visible)
+		and (_crop_panel == null or not _crop_panel.visible)
 	)
 	_hold_hotbar.visible = show
 
@@ -2275,6 +2328,8 @@ func _try_hold_place_at(screen_pos: Vector2) -> bool:
 	if held.is_empty():
 		return false
 	# Explicit world entrances take priority over armed food placement.
+	if _world != null and Rect2(_world._plant_point()-Vector2(36,28),Vector2(72,48)).has_point(_screen_to_world(screen_pos)):
+		return false
 	if _world != null and YardSceneHotspots.at_point(_world, _screen_to_world(screen_pos)).get("target", "") in [YardSceneHotspots.HOUSE_DOOR, YardSceneHotspots.BASKET]:
 		return false
 	var Intent = load("res://scripts/inventory/hold_place_intent.gd")
@@ -2705,7 +2760,9 @@ func _show_idle_hint() -> void:
 	# 离钓鱼点远（>220px）时提示去钓鱼
 	if pos.distance_to(Vector2(700, 535)) > 220.0:
 		candidates.append("notice.hint.go_fish")
-	candidates.append("notice.hint.go_plant")
+	var crop := SaveStore.get_yard_crops()
+	if not crop.is_empty() and crop.kind.is_empty() and _world._plant_state == _world.PLANT_EMPTY:
+		candidates.append("notice.hint.go_plant")
 	candidates.append("notice.hint.go_pet")
 	candidates.append("notice.hint.go_explore")
 	if player == null or not player.carrying_grass:

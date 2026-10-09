@@ -75,6 +75,13 @@ func _confirmed(op_id: String, _kind: String) -> void:
 
 func _rejected(op_id: String, _kind: String, code: String) -> void:
 	if op_id != _op_id: return
+	if code == "BASKET_SEED_RESERVED":
+		pending.clear()
+		_op_id = ""
+		state = "idle"
+		error = code
+		changed.emit()
+		return
 	_failed.append(op_id)
 	state = "blocked" if code.begins_with("BASKET_") else "failed"
 	error = code

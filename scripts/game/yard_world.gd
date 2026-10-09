@@ -14,6 +14,9 @@ signal fish_caught(carry_type: String)
 signal ground_food_requested(action: String, kind: String, details: Dictionary, actor_id: String)
 signal decor_recall_requested(spot: String)
 signal basket_requested
+signal plant_bed_requested
+var crop_sprite: Sprite2D
+var _grain_held := ""
 var ground_food: Node2D
 var decor_view: Node2D
 var pond_story: Node
@@ -323,6 +326,7 @@ func hint_context() -> String:
 	var action := YardInteraction.primary(self)
 	var target := str(action.get("target", ""))
 	if target == "release": return "hud.hint.leading"
+	if not _grain_held.is_empty(): return "hud.hint.carrying_grain"
 	if _millet_held: return "hud.hint.carrying_millet"
 	if not _fish_carry_type.is_empty(): return "hud.hint.carrying_fish"
 	if _player != null and _player.carrying_grass: return "hud.hint.carrying"
@@ -331,6 +335,9 @@ func hint_context() -> String:
 	if target == "fishing":
 		return "hud.hint.fish_bite" if _fish_state == FISH_BITE else "hud.hint.fishing" if _fish_state == FISH_CASTING else "hud.hint.near_pond"
 	if target == "plant":
+		if inventory_enabled:
+			var bed := SaveStore.get_yard_crops()
+			if not bed.is_empty() and not bed.kind.is_empty(): return "hud.hint.crop_growing"
 		return "hud.hint.plant_empty" if _plant_state == PLANT_EMPTY else "hud.hint.plant_bloomed" if _plant_state == PLANT_BLOOMED else "hud.hint.plant_water"
 	if target == "grass" and is_near_grass(): return "hud.hint.near_grass"
 	return "hud.hint.default"
@@ -2057,7 +2064,9 @@ func sync_inventory(held: String, pending: bool, items: Array = []) -> void:
 		add_child(shelter)
 	inventory_busy = pending
 	_fish_carry_type = held if held in ["small", "medium", "odd"] else ""
-	_millet_held = held == "millet"
+	_millet_held = held in ["millet", "wheat", "corn"]
+	_grain_held = held if held in ["wheat", "corn"] else ""
+	sync_crops()
 	if _player != null: _player.sync_grass(held == "grass")
 	if ground_food != null: ground_food.sync_items(items)
 	_fish_carry_timer = 0.0
@@ -2066,6 +2075,37 @@ func sync_inventory(held: String, pending: bool, items: Array = []) -> void:
 
 ## 与植物床互动（种植 / 浇水）
 func _interact_plant() -> void:
+	if _player == null: return
+	if _player.position.distance_to(_plant_point()) > 75.0:
+		_request_action("plant", _plant_point())
+		return
+	if inventory_enabled and _plant_state == PLANT_EMPTY:
+		plant_bed_requested.emit()
+		return
+	_interact_legacy_plant()
+
+func sync_crops() -> void:
+	if not inventory_enabled: return
+	if crop_sprite == null:
+		crop_sprite = Sprite2D.new()
+		crop_sprite.name = "YardCrop"
+		crop_sprite.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
+		crop_sprite.centered = false
+		crop_sprite.position = _plant_point()
+		crop_sprite.z_as_relative = false
+		crop_sprite.z_index = roundi(crop_sprite.position.y)
+		add_child(crop_sprite)
+	var bed := SaveStore.get_yard_crops()
+	crop_sprite.visible = not bed.is_empty() and not str(bed.kind).is_empty()
+	if not crop_sprite.visible: return
+	var ripe := preload("res://scripts/game/yard_crops.gd").mature(bed,holiday_day)
+	var tex := preload("res://scripts/game/crop_art.gd").texture(bed.kind,"mature" if ripe else "seedling")
+	crop_sprite.texture = tex
+	crop_sprite.offset = Vector2(-tex.get_width()*0.5,-tex.get_height())
+	var height: float = (36.0 if ripe else 32.0) if bed.kind == "grass" else (88.0 if bed.kind == "corn" else 68.0) if ripe else 45.0
+	crop_sprite.scale = Vector2.ONE * height / tex.get_height()
+
+func _interact_legacy_plant() -> void:
 	if _player == null:
 		return
 	if _player.position.distance_to(_plant_point()) > 75.0:

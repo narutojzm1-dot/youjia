@@ -135,7 +135,7 @@ func _check_resize_and_return() -> void:
 		root.size = dims
 		await _settle()
 		_check_layout("resize->%s" % dims)
-	main._start_holiday()
+	await main._start_holiday()
 	await _settle()
 	_check(not main._title_screen.visible, "card hidden with the title screen during play")
 	main._show_title(false)
