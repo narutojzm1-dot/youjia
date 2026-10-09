@@ -1,0 +1,13 @@
+{
+  "mode": "built-in image_gen edit",
+  "transparent_background": true,
+  "input": "assets/holiday/characters/cast_v2/llama_smirk.png",
+  "generated_output": "C:/Users/Zengm/.codex/generated_images/01a10c6a-ba19-7b02-94ff-3e31da2cdea3/exec-0650e00d-9560-41ae-86f8-f30945ac7fe7.png",
+  "asset": "assets\\holiday\\characters\\cast_v2\\llama_smirk_blink.png",
+  "prompt": "Use case: precise-object-edit. Asset type: transparent painted game blink animation cel. Input image is the EDIT TARGET. Change ONLY this alpaca/llama's two visible eyes to gently closed slim natural eyelids at exactly the same original eye locations. Preserve its cheeky smirk, mouth, muzzle, tilted head, ears, curly wool, body, feet, color, brushwork and positions exactly. No head motion, no enlargement, no smile change, no added eyelashes. Preserve original square canvas and genuine transparent alpha silhouette. Do not crop, reposition or add background/text. The result is sampled ONLY in two tiny eye patches of the original; closed eye pixels must align with the original eyes.",
+  "width": 1254,
+  "height": 1254,
+  "bytes": 1257239,
+  "sha256": "6e2cb7a60523512e40a9772411f879315f3da9877c3777ca29063697a8a3928f",
+  "runtime_use": "Two feathered eye regions only; canonical body RGB and alpha remain unchanged."
+}

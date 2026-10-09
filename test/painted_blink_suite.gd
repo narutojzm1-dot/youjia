@@ -112,9 +112,52 @@ func _run() -> void:
 	for id: String in ["sheep_a", "sheep_b"]:
 		_check_sheep(world, id)
 	check(world._actors.sheep_a._blink.rng != world._actors.sheep_b._blink.rng, "two sheep have independent blink clocks")
+	_check_llama(world)
 	world.free()
 	print("PAINTED_BLINK checks=%d failures=%d" % [checks, failures])
 	quit(0 if failures == 0 else 1)
+
+func _check_llama(world) -> void:
+	var llama = world.actor_named("llama")
+	llama.remove_meta("shelter_rest")
+	llama.posed = false
+	llama._idle_time = 100.0
+	llama._velocity = Vector2.ZERO
+	llama._gait.weight = 0.0
+	llama._ack_cel = ""
+	llama.state = "rest"
+	llama.set_expression("idle")
+	var original = llama._sprite.texture
+	var anchor = llama._ground_anchor
+	check(original.resource_path == Blink.LLAMA_SOURCE, "llama keeps canonical smirk and feet")
+	llama._blink.wait_left = 0.0
+	for i in 8: llama.tick(1.0 / 60.0, Vector2(1280,720))
+	check(llama._blink.amount > 0.99, "actual resting llama closes eyes")
+	check(llama._sprite.texture == original and llama._ground_anchor == anchor, "llama blink preserves body and foot anchor")
+	for state: String in ["lead", "graze", "alert", "rest"]:
+		llama.state = state
+		llama._velocity = Vector2.ZERO
+		llama._gait.weight = 0.0
+		llama._blink.wait_left = 0.0
+		for i in 8: llama.tick(1.0 / 60.0, Vector2(1280,720))
+		check((llama._blink.amount > 0.99) == (state == "rest"), "llama eyes respect state " + state)
+	llama.set_meta("shelter_rest", true)
+	llama.tick(0.01, Vector2(1280,720))
+	check(llama._blink.amount == 0.0 and llama._posture_id == "shelter_rest", "lying llama cannot inherit standing eyes")
+	llama.remove_meta("shelter_rest")
+	llama._blink.wait_left = 0.0
+	for i in 8: llama.tick(1.0 / 60.0, Vector2(1280,720))
+	llama.advance_path(0.1, Vector2(3,0), 1.0, false)
+	check(llama._blink.amount == 0.0, "walking llama clears eyes immediately")
+	llama._velocity = Vector2.ZERO
+	llama._gait.weight = 0.0
+	llama._blink.wait_left = 0.0
+	for i in 8: llama.tick(1.0 / 60.0, Vector2(1280,720))
+	root.get_node("TuningStore").set_value("ui.reduced_motion", true, false)
+	llama.tick(0.01, Vector2(1280,720))
+	check(llama._blink.amount == 0.0, "reduced motion clears llama eyes")
+	root.get_node("TuningStore").set_value("ui.reduced_motion", false, false)
+	check(llama._blink.rng != world._actors.horse._blink.rng, "llama owns its cosmetic RNG")
 
 func _check_sheep(world, id: String) -> void:
 	var sheep = world.actor_named(id)

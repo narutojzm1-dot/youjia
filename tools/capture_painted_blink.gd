@@ -16,7 +16,7 @@ func _run() -> void:
 	root.add_child(viewport)
 	var sprite := Sprite2D.new()
 	var species := OS.get_environment("YOUJIA_BLINK_SPECIES")
-	if species not in ["horse", "sheep_a", "sheep_b"]: species = "cow"
+	if species not in ["horse", "sheep_a", "sheep_b", "llama"]: species = "cow"
 	var blink := preload("res://scripts/entities/painted_blink.gd").new()
 	sprite.position = Vector2(320, 320)
 	sprite.scale = Vector2(0.5, 0.5)
