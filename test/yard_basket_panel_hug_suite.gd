@@ -18,6 +18,7 @@ const LOCALES := ["zh-CN", "en"]
 const STATES := ["ready", "saving", "failed"]
 const EDGE := 12.0
 const EPS := 1.5
+const PAPER_BOTTOM_MARGIN := 12.0
 
 var checks := 0
 var failures: Array[String] = []
@@ -83,7 +84,7 @@ func _run() -> void:
 				check(paper.position.y >= EDGE - EPS and paper.end.y <= viewport.y - EDGE + EPS, tag + " paper keeps the screen margin (%s)" % paper)
 				check(absf(paper.get_center().y - viewport.y * 0.5) <= EPS, tag + " paper stays centred (%s)" % paper)
 				var gap := paper.end.y - _last_visible_bottom()
-				check(gap <= 12.0 + EPS + 1.0, tag + " no blank band under the last line (gap %.1f)" % gap)
+				check(gap <= PAPER_BOTTOM_MARGIN + EPS + 1.0, tag + " no blank band under the last line (gap %.1f)" % gap)
 				var list_room: float = panel.scroll.size.y
 				var list_need: float = panel.rows.get_combined_minimum_size().y
 				if paper.size.y < cap - EPS:
@@ -103,6 +104,18 @@ func _run() -> void:
 	await _settle()
 	var without_retry: float = panel.panel.size.y
 	check(without_retry < with_retry - 20.0, "paper shortens once the retry button goes away (%.1f -> %.1f)" % [with_retry, without_retry])
+	# A row-only change (nothing else resizes) still re-hugs: grow the list by 30px, then shrink it back.
+	var before: float = panel.panel.size.y
+	var extra := Control.new()
+	extra.custom_minimum_size = Vector2(10, 30)
+	panel.rows.add_child(extra)
+	await _settle()
+	var grown: float = panel.panel.size.y
+	check(absf(grown - before - 30.0 - float(panel.rows.get_theme_constant("separation"))) <= EPS, "paper grows with a row-only change (%.1f -> %.1f)" % [before, grown])
+	extra.queue_free()
+	await _settle()
+	check(absf(panel.panel.size.y - before) <= EPS, "paper shrinks back after the row goes (%.1f)" % panel.panel.size.y)
+	check(not panel._fit_queued, "panel settles after content changes")
 	check(hugged >= 10, "tall screens hug the content (%d cases)" % hugged)
 	check(capped >= 4, "short screens keep the capped scrolling paper (%d cases)" % capped)
 	_finish()
