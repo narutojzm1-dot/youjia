@@ -1,0 +1,44 @@
+[
+  {
+    "suite": "painted_blink",
+    "passed": true,
+    "exit": 0,
+    "stdout": "native/painted_blink-stdout.log",
+    "stderr": "native/painted_blink-stderr.log"
+  },
+  {
+    "suite": "interaction_pose",
+    "passed": true,
+    "exit": 0,
+    "stdout": "native/interaction_pose-stdout.log",
+    "stderr": "native/interaction_pose-stderr.log"
+  },
+  {
+    "suite": "sheep_ground_graze",
+    "passed": true,
+    "exit": 0,
+    "stdout": "native/sheep_ground_graze-stdout.log",
+    "stderr": "native/sheep_ground_graze-stderr.log"
+  },
+  {
+    "suite": "sheep_attention",
+    "passed": true,
+    "exit": 0,
+    "stdout": "native/sheep_attention-stdout.log",
+    "stderr": "native/sheep_attention-stderr.log"
+  },
+  {
+    "suite": "cow_glance",
+    "passed": true,
+    "exit": 0,
+    "stdout": "native/cow_glance-stdout.log",
+    "stderr": "native/cow_glance-stderr.log"
+  },
+  {
+    "suite": "large_animal_shelter",
+    "passed": true,
+    "exit": 0,
+    "stdout": "native/large_animal_shelter-stdout.log",
+    "stderr": "native/large_animal_shelter-stderr.log"
+  }
+]
