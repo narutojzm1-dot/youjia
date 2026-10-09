@@ -15,15 +15,16 @@ func _run() -> void:
 	viewport.render_target_update_mode = SubViewport.UPDATE_ALWAYS
 	root.add_child(viewport)
 	var sprite := Sprite2D.new()
-	var species := "horse" if OS.get_environment("YOUJIA_BLINK_SPECIES") == "horse" else "cow"
-	sprite.texture = load("res://assets/holiday/characters/cast_v2/horse.png" if species == "horse" else "res://assets/holiday/characters/cast_v2/cow_chew.png")
+	var species := OS.get_environment("YOUJIA_BLINK_SPECIES")
+	if species not in ["horse", "sheep_a", "sheep_b"]: species = "cow"
+	var blink := preload("res://scripts/entities/painted_blink.gd").new()
 	sprite.position = Vector2(320, 320)
 	sprite.scale = Vector2(0.5, 0.5)
 	viewport.add_child(sprite)
 	var gait := GroundedGait.new()
 	gait.setup(sprite, 0.70)
-	var blink := preload("res://scripts/entities/painted_blink.gd").new()
 	blink.bind(gait._material, species)
+	sprite.texture = load(blink.source_path)
 	var frames: Array[Image] = []
 	for value: float in [0.0, 0.5, 1.0]:
 		gait._material.set_shader_parameter("blink_amount", value)
@@ -46,8 +47,8 @@ func _run() -> void:
 				changed += 1
 				var local := inverse * (Vector2(x, y) + Vector2(0.5, 0.5))
 				var uv := (local - image_rect.position) / image_rect.size * 1280.0
-				var eye_a := Rect2(189,270,92,68) if species == "horse" else Rect2(163,388,69,62)
-				var eye_b := Rect2(109,310,43,47) if species == "horse" else Rect2(288,410,117,74)
+				var eye_a := Rect2(Vector2(blink.eye_a.x, blink.eye_a.y), Vector2(blink.eye_a.z, blink.eye_a.w)).grow(2.0)
+				var eye_b := Rect2(Vector2(blink.eye_b.x, blink.eye_b.y), Vector2(blink.eye_b.z, blink.eye_b.w)).grow(2.0)
 				if not eye_a.has_point(uv) and not eye_b.has_point(uv): outside += 1
 	print("BLINK_GPU changed=%d outside=%d alpha_changed=%d" % [changed, outside, alpha_changed])
 	viewport.queue_free()

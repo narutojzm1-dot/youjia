@@ -113,9 +113,9 @@ func setup(config: Dictionary) -> void:
 	set_expression("idle")
 	_native_facing = float(config.get("native_facing", 1.0))
 	_gait.setup(_sprite, float(config.get("leg_start",0.74 if species in ["goose", "duck"] else 0.68)))
-	if species in ["cow", "horse"]:
+	if species in ["cow", "horse"] or actor_id in ["sheep_a", "sheep_b"]:
 		_blink = preload("res://scripts/entities/painted_blink.gd").new()
-		_blink.bind(_gait._material, species)
+		_blink.bind(_gait._material, actor_id if species == "sheep" else species)
 	_apply_face_override()
 	if species == "llama" and bool(config.get("experimental_planted_gait", false)):
 		enable_experimental_planted_gait()
@@ -285,8 +285,8 @@ func _painted_posture() -> String:
 		return "tail"
 	if species == "cow" and _textures.has("chew"):
 		return "chew"
-	if species == "sheep" and _textures.has("shake"):
-		return "shake"
+	# Each sheep keeps its own standing body at rest. The shared shake cel changes
+	# both identity and silhouette; natural idle motion now lives in the eye patch.
 	return "idle"
 
 
