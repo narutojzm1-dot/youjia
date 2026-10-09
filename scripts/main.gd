@@ -2269,7 +2269,7 @@ func _layout_hold_hotbar() -> void:
 	if _hold_hotbar == null:
 		return
 	var Hotbar = load("res://scripts/ui/hold_hotbar.gd")
-	var rect: Rect2 = Hotbar.preferred_rect(size, size.x < 700.0)
+	var rect: Rect2 = Hotbar.preferred_rect(size, _stacked_hud())
 	_hold_hotbar.position = rect.position
 	_hold_hotbar.size = rect.size
 	_sync_hold_hotbar_visibility()
@@ -2365,7 +2365,7 @@ func _can_show_notice() -> bool:
 func _sync_notice_visibility() -> void:
 	_notice.visible = _notice_time > 0.0 and _can_show_notice()
 	# Keep growing/wrapped notices above the actual hotbar, not behind its slots.
-	var bottom := -130.0 if size.x < 700.0 else -70.0
+	var bottom := -130.0 if _stacked_hud() else -70.0
 	if _hold_hotbar != null and _hold_hotbar.visible:
 		bottom = _hold_hotbar.position.y - size.y - 8.0
 	_notice.offset_top = bottom - 40.0
@@ -2459,10 +2459,24 @@ func _fit_album_frame() -> void:
 		_render_album_pages()
 
 
+## 底部按钮排两行（三枚小按钮在上、行动按钮整行在下）只给竖屏和窄屏。
+## 568×320、640×300 这类短横屏原来也排两行，加上快捷栏，底部 HUD 盖住大半个院子；
+## 现在横着放且宽度够（≥ SINGLE_ROW_MIN_WIDTH）就排成一行。
+const SINGLE_ROW_MIN_WIDTH := 568.0
+## 一行排开时行动按钮至少这么宽，最长的英文动作「Turn in for the night」（按钮内约 175px）也放得下；
+## 其余三枚分剩下的宽度，仍不超过 188。
+const ACTION_MIN_WIDTH := 180.0
+## 小按钮按实际排版宽度放不下全名时，英文换短名：「Open journal」→「Journal」，
+## 「Gentle rain」→「Rain」，「Overcast」→「Cloudy」。中文全名在各宽度都放得下。
+const SHORT_WEATHER_EN := {"rain": "Rain", "sun": "Sun", "overcast": "Cloudy"}
+
+func _stacked_hud() -> bool:
+	return size.x < 700.0 and not (size.x > size.y and size.x >= SINGLE_ROW_MIN_WIDTH)
+
 func _layout() -> void:
 	var pad := 20.0
 	if _album_chip == null: return
-	var compact := size.x < 700.0
+	var compact := _stacked_hud()
 	_fit_title_column()
 	_fit_album_frame()
 	_fit_notice()
@@ -2470,14 +2484,18 @@ func _layout() -> void:
 	_notice.offset_bottom = -130 if compact else -70
 	_notice.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 
-	var chip_width := (size.x - pad * 4.0) / 3.0 if compact else minf(188.0, (size.x - pad * 5.0) / 4.0)
-	_refresh_yard_chip_labels()
+	var action_width := size.x - pad * 2.0
+	var chip_width := (size.x - pad * 4.0) / 3.0
+	if not compact:
+		action_width = maxf(minf(188.0, (size.x - pad * 5.0) / 4.0), ACTION_MIN_WIDTH)
+		chip_width = minf(188.0, (size.x - pad * 5.0 - action_width) / 3.0)
+	_refresh_yard_chip_labels(chip_width)
 	for button in [_album_chip,_weather_chip,_basket_chip]:
 		button.custom_minimum_size = Vector2(chip_width,48)
 		button.size = Vector2(chip_width,48)
-	_action_button.custom_minimum_size = Vector2(size.x-pad*2.0 if compact else chip_width,48)
+	_action_button.custom_minimum_size = Vector2(action_width,48)
 	_action_button.size = _action_button.custom_minimum_size
-	_pause_button.custom_minimum_size = Vector2(120.0 if compact else 188.0,48)
+	_pause_button.custom_minimum_size = Vector2(120.0 if size.x < 700.0 else 188.0,48)
 	_pause_button.size = _pause_button.custom_minimum_size
 	_pause_button.position = Vector2(size.x-_pause_button.size.x-pad,pad)
 	_hint_label.position = Vector2(pad,16)
@@ -2557,7 +2575,6 @@ func _refresh_hud() -> void:
 		return
 	_hud.modulate.a = float(TuningStore.get_value("ui.hud.opacity", 0.94))
 	_refresh_yard_chip_labels()
-	_weather_chip.text = I18n.t("hud.weather.%s" % _world.weather)
 	_basket_chip.text = "Basket" if I18n.get_locale() == "en" else "大背篓"
 	_pause_button.text = I18n.t("hud.pause")
 	# 显示与空格/行动按钮完全相同的实时目标和动作；橙色说明对应脚边标记。
@@ -2603,8 +2620,19 @@ func _sync_regional_clock() -> void:
 			place.position + Vector2(0, place.size.y), Vector2(minf(place.size.x, 180.0), 22)), 14)
 
 
-func _refresh_yard_chip_labels() -> void:
-	_album_chip.text = "Journal" if I18n.get_locale() == "en" and size.x < 400.0 else I18n.t("hud.album")
+func _refresh_yard_chip_labels(chip_width: float = -1.0) -> void:
+	if chip_width < 0.0:
+		chip_width = _album_chip.size.x
+	_fit_chip_text(_album_chip, I18n.t("hud.album"), "Journal", chip_width)
+	if _world != null:
+		var weather := str(_world.weather)
+		_fit_chip_text(_weather_chip, I18n.t("hud.weather.%s" % weather), str(SHORT_WEATHER_EN.get(weather, "")), chip_width)
+
+
+func _fit_chip_text(button: Button, full: String, short: String, width: float) -> void:
+	button.text = full
+	if I18n.get_locale() == "en" and not short.is_empty() and button.get_minimum_size().x > width + 0.5:
+		button.text = short
 
 
 func _on_day_advanced(day: int) -> void:
