@@ -14,7 +14,7 @@ Assistant对已发布7ed6cc0核实16文件实际哈希与Git blob后，干净浏
 
 ## 2026-10-08 用户调整：Cloud 界面开发与维护，Grok 认领修 bug
 
-用户在 CURSOR-CLOUD 会话直接指示：“你的职责改为UI开发及维护，GROK那边职责改为认领BUG并修复。”CURSOR-CLOUD 接手原 Grok 界面线（新界面、布局、样式、体验修订及既有界面组件维护）；GROK-CONTRIBUTOR 改为从 QA/实玩/issue 认领缺陷并修复，与 Assistant 按缺陷编号划界。Grok 在途界面 PR 保留原提交，逐个说明自收尾或交 Cloud，Cloud 不改写其分支；#601 已由 Leader #605 接续。[完整规则](collaboration/team-focus-2026-10-06.md#2026-10-08-用户调整cloud-接界面grok-改修-bug)。仓库同步不代表 Grok 已接收。
+用户在 CURSOR-CLOUD 会话直接指示：“你的职责改为UI开发及维护，GROK那边职责改为认领BUG并修复。”CURSOR-CLOUD 接手原 Grok 界面线（新界面、布局、样式、体验修订及既有界面组件维护）；GROK-CONTRIBUTOR 改为从 QA/实玩/issue 认领缺陷并修复，与 Assistant 按缺陷编号划界。Grok 在途界面 PR 保留原提交，逐个说明自收尾或交 Cloud，Cloud 不改写其分支；#601 已由 Leader #605 接续。[完整规则](collaboration/team-focus-2026-10-06.md#2026-10-08-用户调整cloud-接界面grok-改修-bug)。2026-10-09 Grok 已在 #242 回执并交出在途界面 PR，交接结果见完整规则末尾。
 
 ## 2026-10-08 用户稳定加载停滞反馈（#606）
 
