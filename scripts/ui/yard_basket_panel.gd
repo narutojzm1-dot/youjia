@@ -57,6 +57,15 @@ const ZONE_FILL := Color(0.953, 0.827, 0.682, 0.55)
 const ZONE_HOT_FILL := Color(1.0, 0.906, 0.784, 0.9)
 const ZONE_EDGE := Color("b88a61")
 const ZONE_HOT_EDGE := Color("5b4637")
+## REQ-20261008-068（Owner GROK-CONTRIBUTOR）：亮圈旁的位置名（屋前 / 篱边 / 塘边小路）原先直接用墨字
+## 画在院子画面上，压在草地、篱笆和塘边深色处很难认。字下垫一块与背篓纸同色的小纸签，亮着的那处换墨边；
+## 纸签整块留在屏内，圈上方放不下（镜头外贴屏顶的那处）就放到圈下方，不盖住圈。
+const ZONE_LABEL_SIZE := 16
+const ZONE_LABEL_PAD := Vector2(8, 3)
+const ZONE_LABEL_GAP := 6.0
+const ZONE_LABEL_MARGIN := 4.0
+const ZONE_LABEL_FILL := Color(1.0, 0.965, 0.91, 0.92)
+const ZONE_LABEL_EDGE := Color("d6ae78")
 var fish_labels: Dictionary = {}
 var fish_buttons: Dictionary = {}
 var keepsake_labels: Dictionary = {}
@@ -211,6 +220,7 @@ func _ready() -> void:
 	resized.connect(fit)
 	# 说明句显隐或折行变化后，隐藏期间的旧最小高度会把纸面撑高；下一帧按新内容再排一次
 	panel.minimum_size_changed.connect(_queue_fit)
+	rows.minimum_size_changed.connect(_queue_fit)
 	_set_compact(false, true)
 	fit()
 
@@ -254,12 +264,14 @@ func fit() -> void:
 	var row_width := NARROW_ROW_BUTTON_WIDTH if target.x < NARROW_WIDTH else ROW_BUTTON_WIDTH
 	for button: Button in fish_buttons.values():
 		button.custom_minimum_size.x = row_width
-	panel.size = target
-	panel.position = (size - panel.size) * 0.5
 	# 格子按「纸内宽 − 滚动条宽」排，不论滚动条此刻显不显示，格子尺寸都不变
 	if grid != null:
 		var bar := scroll.get_v_scroll_bar().get_combined_minimum_size().x
 		grid.set_layout_width(maxf(0.0, target.x - 32.0 - bar))
+	# 内容放得下时纸面贴着内容收高，不在「收回背篓」和提示之间留一大块空白；放不下才按上限滚动
+	var natural := panel.get_combined_minimum_size().y - scroll.get_combined_minimum_size().y + rows.get_combined_minimum_size().y
+	panel.size = Vector2(target.x, minf(target.y, ceilf(natural)))
+	panel.position = (size - panel.size) * 0.5
 
 func _queue_fit() -> void:
 	if _fit_queued: return
@@ -472,17 +484,41 @@ func _finish_drag() -> void:
 
 func _draw_zones() -> void:
 	if drag_kind.is_empty(): return
-	var en := I18n.get_locale() == "en"
-	var names := {"house_edge": "House" if en else "屋前", "fence_edge": "Fence" if en else "篱边", "pond_path": "Path" if en else "塘边小路"}
 	var font := get_theme_default_font()
 	for spot: String in legal_spots():
 		var at := spot_screen_position(spot)
 		var hot := spot == drag_spot
 		drag_layer.draw_circle(at, ZONE_RADIUS, ZONE_HOT_FILL if hot else ZONE_FILL)
 		drag_layer.draw_arc(at, ZONE_RADIUS, 0.0, TAU, 48, ZONE_HOT_EDGE if hot else ZONE_EDGE, 3.0 if hot else 2.0, true)
-		var text: String = names.get(spot, spot)
-		var width := font.get_string_size(text, HORIZONTAL_ALIGNMENT_LEFT, -1, 16).x
-		drag_layer.draw_string(font, at + Vector2(-width * 0.5, -ZONE_RADIUS - 6.0), text, HORIZONTAL_ALIGNMENT_LEFT, -1, 16, ROW_INK)
+		var slip := zone_label_rect(spot)
+		drag_layer.draw_style_box(zone_label_style(hot), slip)
+		var baseline := slip.position + Vector2(ZONE_LABEL_PAD.x, ZONE_LABEL_PAD.y + font.get_ascent(ZONE_LABEL_SIZE))
+		drag_layer.draw_string(font, baseline, zone_label_text(spot), HORIZONTAL_ALIGNMENT_LEFT, -1, ZONE_LABEL_SIZE, ROW_INK)
+
+func zone_label_text(spot: String) -> String:
+	var en := I18n.get_locale() == "en"
+	var names := {"house_edge": "House" if en else "屋前", "fence_edge": "Fence" if en else "篱边", "pond_path": "Path" if en else "塘边小路"}
+	return names.get(spot, spot)
+
+## 位置名纸签在屏幕上的框：默认居中在圈上方 ZONE_LABEL_GAP 处；上方放不下就放圈下方；最后整块夹进屏内
+func zone_label_rect(spot: String) -> Rect2:
+	var font := get_theme_default_font()
+	var text_width := font.get_string_size(zone_label_text(spot), HORIZONTAL_ALIGNMENT_LEFT, -1, ZONE_LABEL_SIZE).x
+	var box := Vector2(ceilf(text_width), ceilf(font.get_height(ZONE_LABEL_SIZE))) + ZONE_LABEL_PAD * 2.0
+	var at := spot_screen_position(spot)
+	var top := at.y - ZONE_RADIUS - ZONE_LABEL_GAP - box.y
+	if top < ZONE_LABEL_MARGIN: top = at.y + ZONE_RADIUS + ZONE_LABEL_GAP
+	var left := clampf(at.x - box.x * 0.5, ZONE_LABEL_MARGIN, maxf(ZONE_LABEL_MARGIN, size.x - box.x - ZONE_LABEL_MARGIN))
+	top = clampf(top, ZONE_LABEL_MARGIN, maxf(ZONE_LABEL_MARGIN, size.y - box.y - ZONE_LABEL_MARGIN))
+	return Rect2(Vector2(left, top), box)
+
+static func zone_label_style(hot: bool) -> StyleBoxFlat:
+	var style := StyleBoxFlat.new()
+	style.bg_color = ZONE_LABEL_FILL
+	style.border_color = ZONE_HOT_EDGE if hot else ZONE_LABEL_EDGE
+	style.set_border_width_all(2 if hot else 1)
+	style.set_corner_radius_all(8)
+	return style
 
 ## 鼠标：按在小物格上、移动超过 DRAG_START 开始拖，松开时落点决定预览或取消。
 ## 松手若仍在原格上，这一下不再当作点格子开纸片。

@@ -118,7 +118,7 @@ func _ready() -> void:
 	menu_action.pressed.connect(_on_menu_action)
 	actions.add_child(menu_action)
 	menu_close = _menu_button()
-	menu_close.pressed.connect(close_menu)
+	menu_close.pressed.connect(dismiss_menu)
 	actions.add_child(menu_close)
 	resized.connect(_queue_layout)
 	_layout()
@@ -344,6 +344,16 @@ func close_menu() -> void:
 	selected = ""
 	menu.visible = false
 	if was_open: menu_toggled.emit(false)
+
+## REQ-20261008-067（Owner GROK-CONTRIBUTOR）：玩家按「算了」收起纸片时，焦点回到刚才那一格，
+## 键盘玩家不用从头 Tab 找位置，回车 / 空格就能再打开。滚动、开始拖、点纸片外、格子变空、
+## Esc（游戏里 Esc 连背篓一起关）仍走 close_menu()，不抢焦点（免得滚动容器跟着焦点跳回去）。
+func dismiss_menu() -> void:
+	var kind := selected
+	close_menu()
+	if cells.has(kind):
+		var cell: Button = cells[kind]
+		if not cell.disabled and cell.is_visible_in_tree(): cell.grab_focus()
 
 func _fill_menu(kind: String) -> void:
 	var en := I18n.get_locale() == "en"

@@ -90,6 +90,7 @@ run_godot suite test/photo_arrival_shutter_fit_suite.gd
 run_godot suite test/exploration_basket_label_fit_suite.gd
 
 run_godot suite test/yard_basket_panel_fit_suite.gd
+run_godot suite test/yard_basket_panel_hug_suite.gd
 
 run_godot suite test/confirm_panel_narrow_suite.gd
 
@@ -113,4 +114,15 @@ run_godot suite test/painted_blink_suite.gd
 
 run_godot suite test/yard_decor_spot_at_suite.gd
 
+
+run_godot suite test/yard_keepsake_shadow_suite.gd
+run_godot suite test/yard_basket_zone_label_suite.gd
+run_godot suite test/photo_arrival_fade_in_suite.gd
+run_godot suite test/fish_catch_palette_suite.gd
+run_godot suite test/path_snail_fade_suite.gd
+run_godot suite test/find_reveal_name_fade_suite.gd
+run_godot suite test/yard_basket_dismiss_focus_suite.gd
+run_godot suite test/yard_decor_settle_ring_suite.gd
+run_godot suite test/walk_goal_marker_suite.gd
+run_godot suite test/exploration_tap_feedback_suite.gd
 run_godot suite test/photo_diary_weather_suite.gd
