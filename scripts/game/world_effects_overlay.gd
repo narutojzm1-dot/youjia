@@ -235,7 +235,55 @@ func _draw_pet_arc() -> void:
 	draw_circle(tip, 4.5, Color(1.0, 0.88, 0.50, alpha * 0.95))
 
 
-## 钓鱼庆祝扩散环：更大、更久、更亮，保证桌面 Web 一眼可见
+## REQ-20261008-071: the catch rings used to be neon cyan / blue / violet
+## (saturation 0.56–0.71) around an empty navy disc — a sci-fi HUD badge on a
+## gouache yard, with nothing inside it. Keep every radius, alpha, timing and
+## the low-motion pose (`celebration_pose`), but paint them in the yard's own
+## palette: warm gold outer ring, a muted pond tone per fish, cream inner ring,
+## and a paper badge (Main's PAPER fff6e8 + INK 5b4637) holding a small fish.
+const CATCH_GOLD := Color("f0c46a")
+const CATCH_CREAM := Color("fff6e8")
+const CATCH_CORE := Color("ffe7b0")
+const CATCH_INK := Color("5b4637")
+const CATCH_WATER := {
+	"small": Color("8fbfb4"),
+	"medium": Color("6f9fae"),
+	"odd": Color("a58fb3"),
+}
+const CATCH_BADGE_RADIUS := 22.0
+
+
+static func catch_palette(kind: String) -> Dictionary:
+	var water: Color = CATCH_WATER.get(kind, CATCH_WATER["small"])
+	return {
+		"outer": CATCH_GOLD,
+		"water": water,
+		"inner": CATCH_CREAM,
+		"core": CATCH_CORE,
+		"speck": water.lightened(0.25),
+		"badge_fill": CATCH_CREAM,
+		"badge_edge": CATCH_INK,
+		"fish_fill": water,
+		"fish_ink": CATCH_INK,
+	}
+
+
+## A small side-on fish that sits inside the badge: body, tail and eye.
+static func catch_badge_fish(center: Vector2, radius: float) -> Dictionary:
+	var body := PackedVector2Array()
+	var body_center := center + Vector2(-radius * 0.12, 0.0)
+	for i: int in 20:
+		var angle := float(i) * TAU / 20.0
+		body.append(body_center + Vector2(cos(angle) * radius * 0.46, sin(angle) * radius * 0.27))
+	var tail := PackedVector2Array([
+		center + Vector2(radius * 0.26, 0.0),
+		center + Vector2(radius * 0.62, -radius * 0.28),
+		center + Vector2(radius * 0.62, radius * 0.28),
+	])
+	return {"body": body, "tail": tail,
+		"eye": body_center + Vector2(-radius * 0.24, -radius * 0.05), "eye_radius": maxf(1.2, radius * 0.07)}
+
+
 func _draw_fish_rings() -> void:
 	if fish_ring_time <= 0.0:
 		return
@@ -244,25 +292,23 @@ func _draw_fish_rings() -> void:
 	var t := 1.0 - clampf(fish_ring_time / TOTAL, 0.0, 1.0)
 	var reduced := bool(TuningStore.get_value("ui.reduced_motion", false))
 	var pose := celebration_pose("catch", t, reduced)
-	var mc: Color
-	match fish_ring_type:
-		"medium": mc = Color(0.28, 0.58, 0.95)
-		"odd":    mc = Color(0.55, 0.40, 0.92)
-		_:        mc = Color(0.35, 0.78, 0.95)
+	var palette := catch_palette(fish_ring_type)
+	var gold: Color = palette.outer
+	var water: Color = palette.water
+	var cream: Color = palette.inner
 	var outer_a := float(pose.outer_alpha)
-	draw_arc(fp, float(pose.outer_radius), 0.0, TAU, 56,
-		Color(1.0, 0.86, 0.35, outer_a), 6.0, true)
+	draw_arc(fp, float(pose.outer_radius), 0.0, TAU, 56, Color(gold, outer_a), 6.0, true)
 	var ro := float(pose.mid_radius)
 	var ao := float(pose.mid_alpha)
-	draw_circle(fp, ro, Color(mc.r, mc.g, mc.b, ao * 0.28))
-	draw_arc(fp, ro, 0.0, TAU, 40, Color(mc.r, mc.g + 0.10, mc.b + 0.08, ao), 5.0, true)
+	draw_circle(fp, ro, Color(water, ao * 0.28))
+	draw_arc(fp, ro, 0.0, TAU, 40, Color(water, ao), 5.0, true)
 	var ri := float(pose.inner_radius)
 	var ai := float(pose.inner_alpha)
-	draw_arc(fp, ri, 0.0, TAU, 32, Color(0.85, 0.98, 1.0, ai), 4.0, true)
+	draw_arc(fp, ri, 0.0, TAU, 32, Color(cream, ai), 4.0, true)
 	var cr := float(pose.core_radius)
 	if cr > 0.5:
-		draw_circle(fp, cr * 1.6, Color(1.0, 0.90, 0.45, ai * 0.90))
-		draw_circle(fp, cr, Color(1.0, 1.0, 1.0, ai * 1.25))
+		draw_circle(fp, cr * 1.6, Color(palette.core, ai * 0.90))
+		draw_circle(fp, cr, Color(cream, minf(1.0, ai * 1.25)))
 	var specks := int(pose.particle_count)
 	if specks > 0:
 		var pt2 := t / 0.7
@@ -270,12 +316,24 @@ func _draw_fish_rings() -> void:
 		for i: int in specks:
 			var angle := float(i) * TAU / float(specks)
 			var px := fp + Vector2(cos(angle), sin(angle) * 0.55) * lerpf(10.0, 64.0, pt2)
-			draw_circle(px, lerpf(6.0, 1.5, pt2), Color(mc.r, mc.g + 0.18, 1.0, pa))
+			draw_circle(px, lerpf(6.0, 1.5, pt2), Color(palette.speck, pa))
 	if bool(pose.show_banner):
 		var banner_a := 0.95 if reduced else (1.0 - t / 0.55) * 0.95
 		var bp := fp + Vector2(0.0, -48.0)
-		draw_circle(bp, 22.0, Color(0.12, 0.22, 0.38, banner_a * 0.55))
-		draw_arc(bp, 22.0, 0.0, TAU, 28, Color(1.0, 0.92, 0.55, banner_a), 3.0, true)
+		draw_circle(bp, CATCH_BADGE_RADIUS, Color(palette.badge_fill, banner_a * 0.92))
+		draw_arc(bp, CATCH_BADGE_RADIUS, 0.0, TAU, 28, Color(palette.badge_edge, banner_a * 0.85), 2.0, true)
+		var fish := catch_badge_fish(bp, CATCH_BADGE_RADIUS)
+		var ink := Color(palette.fish_ink, banner_a)
+		# Tail first, so the body covers the tail's inner edge.
+		var tail_outline: PackedVector2Array = fish.tail.duplicate()
+		tail_outline.append(tail_outline[0])
+		draw_colored_polygon(fish.tail, Color(palette.fish_fill, banner_a))
+		draw_polyline(tail_outline, ink, 1.2, true)
+		var outline: PackedVector2Array = fish.body.duplicate()
+		outline.append(outline[0])
+		draw_colored_polygon(fish.body, Color(palette.fish_fill, banner_a))
+		draw_polyline(outline, ink, 1.4, true)
+		draw_circle(fish.eye, float(fish.eye_radius), ink)
 
 
 func _draw_bird_feedback() -> void:

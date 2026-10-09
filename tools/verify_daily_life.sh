@@ -113,3 +113,10 @@ run_godot suite test/painted_blink_suite.gd
 
 run_godot suite test/yard_decor_spot_at_suite.gd
 
+
+run_godot suite test/yard_keepsake_shadow_suite.gd
+run_godot suite test/yard_basket_zone_label_suite.gd
+run_godot suite test/photo_arrival_fade_in_suite.gd
+run_godot suite test/fish_catch_palette_suite.gd
+run_godot suite test/path_snail_fade_suite.gd
+run_godot suite test/find_reveal_name_fade_suite.gd

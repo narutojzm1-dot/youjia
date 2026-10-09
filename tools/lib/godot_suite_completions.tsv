@@ -138,3 +138,9 @@ test/large_animal_shelter_suite.gd	LARGE_ANIMAL_SHELTER checks=[1-9][0-9]* failu
 test/house_sleep_suite.gd	house_sleep_suite checks=[1-9][0-9]* failures=0
 test/painted_blink_suite.gd	PAINTED_BLINK checks=[1-9][0-9]* failures=0
 test/yard_decor_spot_at_suite.gd	YARD_DECOR_SPOT_AT checks=[1-9][0-9]* failures=0$
+test/yard_keepsake_shadow_suite.gd	\[yard-keepsake-shadow\] PASS: [1-9][0-9]* checks
+test/yard_basket_zone_label_suite.gd	\[yard-basket-zone-label\] PASS: [1-9][0-9]* checks
+test/photo_arrival_fade_in_suite.gd	\[photo-arrival-fade-in\] PASS: [1-9][0-9]* checks
+test/fish_catch_palette_suite.gd	\[fish-catch-palette\] PASS: [1-9][0-9]* checks
+test/path_snail_fade_suite.gd	PATH SNAIL FADE PASS [1-9][0-9]*
+test/find_reveal_name_fade_suite.gd	PASS find_reveal_name_fade_suite: [1-9][0-9]* checks
