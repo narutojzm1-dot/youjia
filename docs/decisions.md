@@ -46,6 +46,10 @@ CODEX-LEAD 在 codex/lead-house-sleep-565 接续夜间窗灯、门洞室内、�
 
 Assistant对已发布7ed6cc0核实16文件实际哈希与Git blob后，干净浏览器首轮恢复出现ETag不一致失败；重试进入及2.497秒重开均保留，不把后者当作全通过。原单重新打开，补实际构建SHA256流式校验，接受相同解压字节的ETag差异，同时拒绝同长度损坏及坏缓存。[实施与限制](design/web-loading-integrity-606.md)。不重复创建需求、日结或邮件，原扩展错误归因仍只说明非必要条件。
 
+## 2026-10-08 用户调整：Cloud 界面开发与维护，Grok 认领修 bug
+
+用户在 CURSOR-CLOUD 会话直接指示：“你的职责改为UI开发及维护，GROK那边职责改为认领BUG并修复。”CURSOR-CLOUD 接手原 Grok 界面线（新界面、布局、样式、体验修订及既有界面组件维护）；GROK-CONTRIBUTOR 改为从 QA/实玩/issue 认领缺陷并修复，与 Assistant 按缺陷编号划界。Grok 在途界面 PR 保留原提交，逐个说明自收尾或交 Cloud，Cloud 不改写其分支；#601 已由 Leader #605 接续。[完整规则](collaboration/team-focus-2026-10-06.md#2026-10-08-用户调整cloud-接界面grok-改修-bug)。2026-10-09 Grok 已在 #242 回执并交出在途界面 PR，交接结果见完整规则末尾。
+
 ## 2026-10-08 用户稳定加载停滞反馈（#606）
 
 用户给出game-070ae5a下载44.0/86.8MiB、134秒停滞及runtime.lastError截图。无扩展浏览器也在真实PCK传输中停滞，无游戏pageerror，因此不能以扩展报错认定因果。Assistant按直接反馈优先修[加载缺陷#606](design/web-loading-recovery-606.md)，不改Host存档或他人玩法。用独立资源缓存和有限断点恢复，不要求玩家清存档；不变引擎内容地址复用，保留游戏构建和存档模块版本。候选冷启动/重开与正式部署分别记录。近郊#565总目标和既有成果保持。
