@@ -108,6 +108,11 @@ static func selected(world: Node2D, target: String) -> Dictionary:
 	return {}
 
 static func pointer(world: Node2D, point: Vector2) -> Dictionary:
+	# The visible basket remains usable while holding food. Its body excludes
+	# resident feet, and its hit area is independent of the approach point.
+	if world.inventory_enabled and Geometry2D.is_point_in_polygon(point, YardSceneHotspots.get_hotspot(YardSceneHotspots.BASKET).hit_polygon):
+		var basket := YardSceneHotspots.resolve(world, YardSceneHotspots.BASKET)
+		if not basket.is_empty(): return basket
 	if world.inventory_enabled and world.is_leading():
 		var exit_action := YardSceneHotspots.at_point(world, point)
 		if exit_action.get("target", "") == YardSceneHotspots.PATH_OUT: return exit_action

@@ -806,3 +806,7 @@ Owner CODEX-LEAD；分支codex/lead-large-animal-shelter-565。接续已保存�
 
 
 21:14中断后接续：重新检查完整邮件线程和15:20以来含已读增量，成功且无新增回复。公开旧档恢复图实际为后继game-b7b5261，仍为第16天阴天、小米1与Beibei，warn/error空；不能把该图冒作15:43的9cb原图。9cb清单和下载核验文件为当时保留的原件。
+
+## 2026-10-10 #637 实体大背篓首片
+
+Owner CODEX-LEAD，codex/lead-physical-basket-637：实体入口已实现并验证，#637保持未完成；麦子/玉米一次性初始化、多作物种植收获投喂继续开发。
