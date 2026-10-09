@@ -1,0 +1,15 @@
+{
+  "owner": "CODEX-LEAD",
+  "source": "built-in image_gen edit",
+  "reference": "assets/holiday/characters/cast_v2/cow_chew.png",
+  "output": "assets/holiday/characters/cast_v2/cow_chew_blink.png",
+  "sha256": "dc81beee9afb3321a33fb0664257e349170de182fad715e927c54d9017d47e2f",
+  "bytes": 1242947,
+  "actual_size": [
+    1254,
+    1254
+  ],
+  "prompt_canvas_note": "prompt used displayed 1280 coordinates; actual input/output both1254; shader masks use normalized display coordinates",
+  "prompt": "Edit target: the supplied 1280x1280 transparent cow_chew.png game sprite. Change ONLY both eyes: gently close BOTH eyelids completely, relaxed natural blink. Retain exactly the existing eye positions and head angle. Absolutely preserve full composition, canvas 1280x1280, cow position, proportions, ears, horns, eyebrows, muzzle, mouth with grass, brush strokes, body, legs, hooves, tail, colors and transparent alpha background. No new shadow, no lighting change, no text. This is a registered animation cel: must align perfectly with the original; not a new pose. Fully closed soft curved eyelid line, no visible iris or white in either eye. Maintain original richly painted gouache felt texture.",
+  "gpu_rgba_bytes": 6290064
+}
