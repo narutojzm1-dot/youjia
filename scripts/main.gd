@@ -77,9 +77,9 @@ var _hold_hotbar: Control
 var _residents: RefCounted
 var _inventory: RefCounted
 var _decor: RefCounted
+var _basket_drop: Dictionary = {}
 var _decor_panel: Control
 var _decor_camera: Dictionary = {}
-var _basket_drop: Dictionary = {}
 var _inventory_food_consumer := ""
 var _pause_button: Button
 var _action_button: Button
