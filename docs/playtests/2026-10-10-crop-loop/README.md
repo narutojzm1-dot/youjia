@@ -26,3 +26,5 @@ localhost8796独立测试存档：Day1种麦/浇水，正常入屋睡眠至Day2�
 web/各PNG均普通操作原始截图：mature-wheat、harvest-four、reloaded-three、corn-ground/consumed；phone-growing为390×844，landscape-growing和landscape-empty-scroll为568×320，后者真实滚动触达关闭按钮并回院。仅模拟浏览器尺寸，无手机实机触摸/声音结论。
 
 首轮完整CI37984680640发现day_label_layout在首次入院初始化保存前同步读取_world而失败，原错误片段保留native/ci-initial-start-await-failure.log。修正15个旧测试/截图工具调用为await _start_holiday，保留holiday_start_once的刻意并发启动覆盖，不削弱持久化保护。9套受影响原生suite全部通过（648/173/5844/104/168/573/4400/5080/251检查）；最终完整CI仍以PR最新SHA为准。
+
+追加小屏回归：旧panel_fit仍要求已隐藏无限鸡食罐有可见几何，首次9323检查/128失败原件保留。改为逐状态明确断言该入口隐藏，继续检查可见返回按钮/格子/标签/滚动窗口；9099检查通过，scrollbar220与button_states456通过。此修正只更新旧夹具，不恢复无限食源。

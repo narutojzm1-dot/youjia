@@ -134,7 +134,8 @@ func _check_layout(dims: Vector2i, tag: String, language: String, state: String)
 		elif label.get_line_count() > 1:
 			wrapped_en += 1
 			check(dims.x <= 300, tag + ": English %s name only wraps on the narrowest phones" % kind)
-	for button: Button in [panel.scoop_button, panel.return_button]:
+	check(not panel.scoop_button.is_visible_in_tree(), tag + ": retired infinite grain tin stays hidden")
+	for button: Button in [panel.return_button]:
 		_check_button(button, tag)
 		check(button.get_global_rect().end.x <= scroll_rect.end.x + EPS, tag + ": %s inside the list window" % button.text)
 
