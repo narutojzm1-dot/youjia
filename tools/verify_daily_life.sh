@@ -90,6 +90,7 @@ run_godot suite test/photo_arrival_shutter_fit_suite.gd
 run_godot suite test/exploration_basket_label_fit_suite.gd
 
 run_godot suite test/yard_basket_panel_fit_suite.gd
+run_godot suite test/yard_basket_panel_hug_suite.gd
 
 run_godot suite test/confirm_panel_narrow_suite.gd
 

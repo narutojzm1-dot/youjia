@@ -220,6 +220,7 @@ func _ready() -> void:
 	resized.connect(fit)
 	# 说明句显隐或折行变化后，隐藏期间的旧最小高度会把纸面撑高；下一帧按新内容再排一次
 	panel.minimum_size_changed.connect(_queue_fit)
+	rows.minimum_size_changed.connect(_queue_fit)
 	_set_compact(false, true)
 	fit()
 
@@ -263,12 +264,14 @@ func fit() -> void:
 	var row_width := NARROW_ROW_BUTTON_WIDTH if target.x < NARROW_WIDTH else ROW_BUTTON_WIDTH
 	for button: Button in fish_buttons.values():
 		button.custom_minimum_size.x = row_width
-	panel.size = target
-	panel.position = (size - panel.size) * 0.5
 	# 格子按「纸内宽 − 滚动条宽」排，不论滚动条此刻显不显示，格子尺寸都不变
 	if grid != null:
 		var bar := scroll.get_v_scroll_bar().get_combined_minimum_size().x
 		grid.set_layout_width(maxf(0.0, target.x - 32.0 - bar))
+	# 内容放得下时纸面贴着内容收高，不在「收回背篓」和提示之间留一大块空白；放不下才按上限滚动
+	var natural := panel.get_combined_minimum_size().y - scroll.get_combined_minimum_size().y + rows.get_combined_minimum_size().y
+	panel.size = Vector2(target.x, minf(target.y, ceilf(natural)))
+	panel.position = (size - panel.size) * 0.5
 
 func _queue_fit() -> void:
 	if _fit_queued: return
