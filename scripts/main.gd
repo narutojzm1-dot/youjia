@@ -78,9 +78,6 @@ var _residents: RefCounted
 var _inventory: RefCounted
 var _decor: RefCounted
 var _basket_drop: Dictionary = {}
-var _decor_panel: Control
-var _decor_camera: Dictionary = {}
-var _decor_frame: Dictionary = {}
 var _inventory_food_consumer := ""
 var _pause_button: Button
 var _action_button: Button
@@ -342,23 +339,10 @@ func _ready() -> void:
 	_basket_panel.visible = false
 	_basket_panel.close_requested.connect(_hide_basket)
 	_basket_panel.action_requested.connect(func(action: String, fish: String) -> void: _inventory.request(action, fish))
-	_basket_panel.retry_requested.connect(func() -> void: _inventory.retry())
+	_basket_panel.retry_requested.connect(_retry_basket)
 	_decor = load("res://scripts/inventory/yard_decor_controller.gd").new(SaveStore)
 	_decor.changed.connect(_on_decor_changed)
 	_decor.resubmitted.connect(_on_decor_resubmitted)
-	_decor_panel = load("res://scripts/ui/yard_decor_panel.gd").new()
-	_ui_layer.add_child(_decor_panel)
-	_decor_panel.visible = false
-	_decor_panel.close_requested.connect(_hide_decor)
-	_decor_panel.action_requested.connect(func(action: String, spot: String, details: Dictionary) -> void: _decor.request(action, spot, details))
-	_decor_panel.retry_requested.connect(func() -> void: _decor.retry())
-	_decor_panel.preview_changed.connect(func(spot: String, entry: Dictionary) -> void:
-		if _world != null and _decor_panel.visible: _world.decor_view.show_preview(spot, entry))
-	var decor_button: Button = _basket_panel._button()
-	decor_button.text = "把小物摆在院里"
-	decor_button.pressed.connect(_show_decor)
-	_basket_panel.rows.add_child(decor_button)
-	_basket_panel.decor_button = decor_button
 	_basket_panel.place_requested.connect(_place_from_basket)
 	_ensure_hold_hotbar()
 	I18n.locale_changed.connect(_on_locale_changed)
@@ -380,19 +364,6 @@ func _report_web_first_frame() -> void:
 
 
 func _process(delta: float) -> void:
-	if _decor_panel != null and _decor_panel.visible:
-		var spot: Vector2 = preload("res://scripts/inventory/yard_decor.gd").SPOTS[_decor_panel.selected]
-		var viewport_size := get_viewport_rect().size
-		var fit: Rect2 = _decor_panel.steady_preview_rect()
-		var inset := fit.grow(-23.5)
-		var spot_seen := not _decor_frame.is_empty() and inset.has_point(viewport_size * 0.5 + (spot - _decor_frame.center) * float(_decor_frame.zoom))
-		if _decor_frame.get("size", Vector2.ZERO) != viewport_size or not spot_seen:
-			_decor_frame = _decor_panel.get_script().camera_frame(spot, viewport_size, fit, _decor_panel.preview_rect(), YardWorld.WORLD_SIZE)
-			_decor_frame["size"] = viewport_size
-		_camera.zoom = Vector2.ONE * float(_decor_frame.zoom)
-		_camera.position = _decor_frame.center
-		_camera.force_update_scroll()
-		return
 	if _notice_time > 0.0 and _can_show_notice():
 		_notice_time = maxf(0.0, _notice_time - delta)
 	_sync_notice_visibility()
@@ -483,19 +454,6 @@ func _process(delta: float) -> void:
 
 
 func _input(event: InputEvent) -> void:
-	if _decor_panel != null and _decor_panel.visible:
-		if event.is_action_pressed("pause") and not event.is_echo():
-			_hide_decor()
-			get_viewport().set_input_as_handled()
-		elif _decor_ground_recall(event):
-			get_viewport().set_input_as_handled()
-		elif event is InputEventScreenTouch or event is InputEventScreenDrag:
-			_last_touch_ms = Time.get_ticks_msec()
-			_decor_panel.handle_touch_event(event)
-			get_viewport().set_input_as_handled()
-		elif event is InputEventMouseButton and Time.get_ticks_msec() - _last_touch_ms < 400:
-			get_viewport().set_input_as_handled()
-		return
 	if _basket_panel != null and _basket_panel.visible:
 		if event.is_action_pressed("pause") and not event.is_echo():
 			_hide_basket()
@@ -620,8 +578,6 @@ func _unhandled_input(event: InputEvent) -> void:
 	if _pause_screen.visible or _album_screen.visible or _confirm_screen.visible:
 		return
 	if _basket_panel != null and _basket_panel.visible:
-		return
-	if _decor_panel != null and _decor_panel.visible:
 		return
 	# 触屏和鼠标世界点击：触屏已在 _input() 中更新 _last_touch_ms，此处只处理
 	# 真正落到世界画布上的点击（HUD 命中测试未拦截的情况）。
@@ -1472,64 +1428,9 @@ func _on_inventory_changed() -> void:
 		_world.sync_inventory(str(inventory.get("held", "")), _inventory.busy() or inventory.is_empty(), inventory.get("ground", []))
 	if _basket_panel != null:
 		_basket_panel.update_view(inventory, SaveStore.get_available_keepsakes(), _inventory.state, _inventory.busy())
-		if _basket_panel.decor_button != null:
-			_basket_panel.decor_button.text = "Arrange finds in the yard" if I18n.get_locale() == "en" else "把小物摆在院里"
-			_basket_panel.decor_button.disabled = _inventory.busy()
 	if _hold_hotbar != null:
 		_hold_hotbar.update_view(inventory, SaveStore.get_available_keepsakes(), _inventory.state, _inventory.busy())
 		_sync_hold_hotbar_visibility()
-
-
-func _show_decor() -> void:
-	if _world == null or _inventory.busy(): return
-	_basket_panel.visible = false
-	_decor_panel.visible = true
-	_hud.visible = false
-	_notice.visible = false
-	_sync_hold_hotbar_visibility()
-	_decor_camera = {"position": _camera.position, "zoom": _camera.zoom}
-	_decor_frame = {}
-	_decor_panel.hold_paper(true)
-	_on_decor_changed()
-	_decor_panel.choose_spot(_decor_panel.selected)
-	_decor_panel.close_button.grab_focus()
-
-
-func _hide_decor() -> void:
-	_decor_panel.visible = false
-	_decor_panel.hold_paper(false)
-	_decor_panel.draft.clear()
-	if _world != null: _world.decor_view.clear_preview()
-	if not _decor_camera.is_empty():
-		_camera.position = _decor_camera.position
-		_camera.zoom = _decor_camera.zoom
-		_camera.force_update_scroll()
-	_hud.visible = true
-	_sync_hold_hotbar_visibility()
-	_show_basket()
-
-
-func _decor_ground_recall(event: InputEvent) -> bool:
-	if _decor == null or _world == null or _decor.busy():
-		return false
-	var at := Vector2.INF
-	if event is InputEventScreenTouch and event.pressed:
-		at = event.position
-	elif event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
-		if Time.get_ticks_msec() - _last_touch_ms < 400:
-			return false
-		at = event.position
-	else:
-		return false
-	if _decor_panel.paper != null and _decor_panel.paper.get_global_rect().has_point(at):
-		return false
-	var Decor = load("res://scripts/inventory/yard_decor.gd")
-	var spot: String = Decor.spot_at(_decor.view(), _screen_to_world(at))
-	if spot.is_empty():
-		return false
-	_last_touch_ms = Time.get_ticks_msec()
-	_on_decor_recall(spot)
-	return true
 
 
 func _on_decor_recall(spot: String) -> void:
@@ -1544,28 +1445,36 @@ func _on_decor_recall(spot: String) -> void:
 func _on_decor_changed() -> void:
 	if _decor == null: return
 	if _world != null: _world.decor_view.sync(_decor.view())
-	if _decor_panel != null:
-		_decor_panel.update_view(_decor.view(), SaveStore.get_available_keepsakes(), _decor.state, _decor.busy())
+	if _basket_panel != null:
+		_basket_panel.update_decor(_decor.view(), _decor.state, _decor.busy())
 	_on_inventory_changed()
-	if not _basket_drop.is_empty() and _decor.state != "saving":
-		var drop := _basket_drop
-		_basket_drop = {}
-		if _decor.state == "idle" and _decor.view().get("places", {}).has(drop.spot):
-			_basket_panel.show_place_note(drop.find_id, drop.spot, "placed")
-		else:
-			_basket_panel.show_place_note(drop.find_id, drop.spot, "failed")
-			# 没存好：转到布置面板，那里有保存状态和「再确认保存」；背篓忙或已合上时留在背篓提示里
-			if _basket_panel.visible and not _inventory.busy():
-				_decor_panel.selected = drop.spot
-				_show_decor()
+	if _basket_drop.is_empty() or _decor.state == "saving": return
+	var drop := _basket_drop
+	if _decor.state in ["failed", "unknown"]:
+		# 等「再确认一次」或全局重试：成功后仍按这一次拖放报“摆好了”
+		_basket_panel.show_place_note(drop.find_id, drop.spot, "failed")
+		return
+	_basket_drop = {}
+	if _decor.state == "idle" and _decor.view().get("places", {}).has(drop.spot):
+		_basket_panel.show_place_note(drop.find_id, drop.spot, "placed")
+	else:
+		_basket_panel.show_place_note(drop.find_id, drop.spot, "blocked")
 
 
-## #594：背篓里的小物拖到院里空着的固定位置，松手就摆好（不微调，dx/dy 为 0）
+## #594：背篓里的小物拖到院里空着的固定位置（或在格子纸片里点那一处），就摆在那里（不微调，dx/dy 为 0）
 func _place_from_basket(find_id: String, spot: String) -> void:
 	if _decor == null or _decor.busy() or not _basket_drop.is_empty(): return
 	_basket_drop = {"find_id": find_id, "spot": spot}
 	_basket_panel.show_place_note(find_id, spot, "saving")
 	if not _decor.request("place", spot, {"find_id": find_id, "dx": 0, "dy": 0}): _on_decor_changed()
+
+
+func _retry_basket() -> void:
+	if _decor != null and _decor.busy() and _decor.state in ["failed", "unknown"]:
+		if not _basket_drop.is_empty(): _basket_panel.show_place_note(_basket_drop.find_id, _basket_drop.spot, "saving")
+		_decor.retry()
+		return
+	_inventory.retry()
 
 
 func _on_decor_resubmitted(failed_ops: Array, op_id: String) -> void:
@@ -2334,7 +2243,6 @@ func _sync_hold_hotbar_visibility() -> void:
 		and not _album_screen.visible
 		and not _confirm_screen.visible
 		and (_basket_panel == null or not _basket_panel.visible)
-		and (_decor_panel == null or not _decor_panel.visible)
 	)
 	_hold_hotbar.visible = show
 
@@ -2408,7 +2316,7 @@ func _fit_notice() -> void:
 
 
 func _can_show_notice() -> bool:
-	return _screen == "game" and not _pause_screen.visible and not _album_screen.visible and not _confirm_screen.visible and not _basket_panel.visible and (_decor_panel == null or not _decor_panel.visible)
+	return _screen == "game" and not _pause_screen.visible and not _album_screen.visible and not _confirm_screen.visible and not _basket_panel.visible
 
 
 func _sync_notice_visibility() -> void:

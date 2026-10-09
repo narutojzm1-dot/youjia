@@ -2,8 +2,8 @@ extends SceneTree
 ## REQ-20261007-064 slice 2 (#565 picture 8, Owner GROK-CONTRIBUTOR): the basket grid is
 ## wired into the real game. Opening the basket in Main shows the rows x columns grid
 ## (the old per-row list stays hidden); a finger tap on a cell opens its action paper and a
-## tap on the action really goes through the yard inventory (withdraw / put back) or opens
-## the existing decor preview with that find chosen (no commit, nothing spent). Esc closes
+## tap on the action really goes through the yard inventory (withdraw / put back); a find's
+## paper lists the free yard spots and tapping one places it there (#594). Esc closes
 ## the basket together with any open paper. Runs against an isolated native save.
 var checks := 0
 var failures: Array[String] = []
@@ -107,7 +107,8 @@ func run() -> void:
 		await frames()
 		esc()
 		check(not panel.visible and not paused and not grid.menu.visible, tag + " Esc closes the basket and its paper, the yard resumes")
-	# Finds: tapping a pine cone cell opens the decor preview with it chosen, nothing committed.
+	# Finds (#594): tapping a pine cone cell opens a paper listing the free yard spots; tapping one
+	# places it there with the basket still open.
 	root.size = Vector2i(390, 844)
 	await frames()
 	var cone: String = ExplorationRoutes.FIND_PINE_CONE
@@ -120,20 +121,16 @@ func run() -> void:
 	await bring_into_view(g.cells["pine_cone"])
 	tap(center(g.cells["pine_cone"]))
 	await frames()
-	check(g.menu.visible and g.menu_action.text in ["摆到院里", "Place in yard"], "find cell offers place in yard")
-	tap(center(g.menu_action))
+	check(g.menu.visible and not g.menu_action.visible and g.spot_row.is_visible_in_tree(), "find cell offers the yard spots")
+	check(Rect2(Vector2.ZERO, Vector2(root.size)).encloses(g.menu.get_global_rect()), "spot paper stays on screen")
+	tap(center(g.spot_buttons["fence_edge"]))
+	check(main._decor.busy(), "placing waits for the durable save")
 	await frames()
-	check(main._decor_panel.visible and not main._basket_panel.visible, "place in yard opens the decor editor")
-	check(main._decor_panel.draft.get("find_id", "") == cone, "decor preview starts with the tapped find")
-	check(main._world.decor_view.preview != null, "preview drawn in the yard")
-	check(store.get_yard_decor().places.is_empty() and int(store.get_available_keepsakes().get(cone, 0)) == 1, "preview neither commits nor spends the find")
-	main._decor_panel.commit()
+	check(not g.menu.visible and main._basket_panel.visible, "choosing a spot closes the paper, the basket stays open")
 	await settle()
-	check(store.get_yard_decor().places.has(main._decor_panel.selected), "confirming through the decor panel still places it")
-	var used: String = main._decor_panel.selected
-	main._hide_decor()
-	await frames()
-	# With the current spot already taken, the next find goes to the first free spot.
+	check(store.get_yard_decor().places.get("fence_edge", {}).get("find_id", "") == cone and int(store.get_available_keepsakes().get(cone, 0)) == 0, "the tapped spot really places the cone")
+	check(main._world.decor_view.visuals.size() == 1, "the cone shows in the yard")
+	# The next find's paper no longer offers the taken spot.
 	var feather: String = ExplorationRoutes.FIND_FEATHER
 	store.request_exploration_trip(null, 2, PackedStringArray([feather]), {})
 	await settle()
@@ -143,11 +140,8 @@ func run() -> void:
 	await bring_into_view(g.cells["feather"])
 	tap(center(g.cells["feather"]))
 	await frames()
-	tap(center(g.menu_action))
-	await frames()
-	check(main._decor_panel.visible and main._decor_panel.selected != used, "occupied spot is skipped for the next find")
-	check(main._decor_panel.draft.get("find_id", "") == feather, "free spot previews the feather")
-	main._hide_decor()
+	check(not g.spot_buttons["fence_edge"].visible and g.spot_buttons["house_edge"].visible and g.spot_buttons["pond_path"].visible, "occupied spot is not offered for the next find")
+	g.close_menu()
 	main._hide_basket()
 	root.get_node("AudioDirector").release_streams()
 	print("[yard-basket-grid-entry] %s: %d checks" % ["PASS" if failures.is_empty() else "FAIL: %d of" % failures.size(), checks])
