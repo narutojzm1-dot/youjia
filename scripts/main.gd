@@ -1673,6 +1673,10 @@ func _clear_covered_save_problems(coverage: Dictionary) -> void:
 
 
 func _on_save_rejected(op_id: String, kind: String, code: String) -> void:
+	# These are authoritative FIFO domain refusals, not a failed disk write.
+	# Keep actual writer/unknown failures and already-durable receipts tracked.
+	if kind == "decor" and not _save_durable_ops.has(op_id) and code in ["DECOR_CHANGED", "DECOR_OCCUPIED", "DECOR_EMPTY", "DECOR_INVALID", "DECOR_LIMIT"]:
+		return
 	_pending_photo_saves.erase(op_id)
 	_save_retry_coverage.erase(op_id)
 	_on_save_problem(op_id, kind, code)
