@@ -25,6 +25,9 @@ var counts: Dictionary = {}
 var busy := false
 var state := "idle"
 var _touch := -1
+## 竖屏布置打开期间纸片只增高不缩短：布置镜头按打开时纸片上沿取景，纸片变矮会露出院外空白
+var holding := false
+var _held := Vector2.ZERO
 var _start := Vector2.ZERO
 var _dragged := false
 
@@ -150,6 +153,9 @@ func fit() -> void:
 	var width := minf(310, size.x * 0.48) if landscape else size.x - 16
 	var allowance := size.y - 16 if landscape else minf(320, size.y * 0.48)
 	var height := minf(allowance, content_height(width))
+	if holding and not landscape:
+		if _held.x == size.x: height = maxf(height, minf(_held.y, allowance))
+		_held = Vector2(size.x, height)
 	paper.size = Vector2(width, height)
 	paper.position = Vector2(size.x - paper.size.x - 8, 8) if landscape else Vector2(8, size.y - paper.size.y - 8)
 
@@ -163,6 +169,16 @@ func content_height(width: float) -> float:
 
 func preview_rect() -> Rect2:
 	return Rect2(8, 8, paper.position.x - 16, size.y - 16) if size.x > size.y else Rect2(8, 8, size.x - 16, paper.position.y - 16)
+
+func hold_paper(on: bool) -> void:
+	holding = on
+	_held = Vector2.ZERO
+	fit()
+
+## 预览区按纸片最大可占高度算，纸片随内容伸缩时布置镜头不跟着动
+func steady_preview_rect() -> Rect2:
+	if size.x > size.y: return preview_rect()
+	return Rect2(8, 8, size.x - 16, size.y - 8 - minf(320, size.y * 0.48) - 16)
 
 func update_view(next: Dictionary, available: Dictionary, next_state: String, waiting: bool) -> void:
 	value = next
@@ -257,3 +273,34 @@ func handle_touch_event(event: InputEvent) -> void:
 	elif event is InputEventScreenDrag and event.index == _touch:
 		if event.position.distance_to(_start) >= 12: _dragged = true
 		if _dragged and scroll.get_global_rect().has_point(_start): scroll.scroll_vertical -= int(event.relative.y)
+
+## 布置镜头：一次框住全部摆放位置，切换位置和微调时画面不动。
+## fit 是纸片最高时的预览区，用来放下全部位置；shown 是打开时纸片外实际看得到的区域，必须都是院子。
+## 横屏纸片下方也露出画面，所以整屏都要是院子；竖屏纸片横贯底部，只看 shown。
+## 冲突时依次保证：所选位置在 fit 内 > shown 全是院子 > 整屏是院子 > 位置外框居中。
+static func camera_frame(spot: Vector2, viewport_size: Vector2, fit: Rect2, shown: Rect2, world_size: Vector2) -> Dictionary:
+	var box := spots_box()
+	var landscape := viewport_size.x > viewport_size.y
+	var seen := Rect2(Vector2.ZERO, viewport_size) if landscape else shown.grow(8.0).intersection(Rect2(Vector2.ZERO, viewport_size))
+	var zoom := minf(fit.size.x / box.size.x, fit.size.y / box.size.y)
+	zoom = maxf(clampf(zoom, 0.2, 1.6), maxf(seen.size.x / world_size.x, seen.size.y / world_size.y))
+	var center := box.get_center() + (viewport_size * 0.5 - fit.get_center()) / zoom
+	for axis in 2:
+		var mid := viewport_size[axis] * 0.5
+		var lo := (mid - seen.position[axis]) / zoom
+		var hi := world_size[axis] - (seen.end[axis] - mid) / zoom
+		center[axis] = clampf(center[axis], lo, hi) if lo <= hi else world_size[axis] * 0.5 + (mid - seen.get_center()[axis]) / zoom
+		var inset := minf(24.0, fit.size[axis] * 0.5)
+		center[axis] = clampf(center[axis], spot[axis] - (fit.end[axis] - inset - mid) / zoom, spot[axis] - (fit.position[axis] + inset - mid) / zoom)
+	return {"zoom": zoom, "center": center}
+
+## 全部摆放位置连同微调范围与小物高度的外框（院子坐标）
+static func spots_box() -> Rect2:
+	var box := Rect2()
+	var first := true
+	for point: Vector2 in Model.SPOTS.values():
+		if first: box = Rect2(point, Vector2.ZERO)
+		else: box = box.expand(point)
+		first = false
+	var reach := Model.NUDGE
+	return Rect2(box.position - Vector2(56, 96) - reach, box.size + Vector2(112, 128) + reach * 2.0)
