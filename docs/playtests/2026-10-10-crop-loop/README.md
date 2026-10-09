@@ -28,3 +28,11 @@ web/各PNG均普通操作原始截图：mature-wheat、harvest-four、reloaded-t
 首轮完整CI37984680640发现day_label_layout在首次入院初始化保存前同步读取_world而失败，原错误片段保留native/ci-initial-start-await-failure.log。修正15个旧测试/截图工具调用为await _start_holiday，保留holiday_start_once的刻意并发启动覆盖，不削弱持久化保护。9套受影响原生suite全部通过（648/173/5844/104/168/573/4400/5080/251检查）；最终完整CI仍以PR最新SHA为准。
 
 追加小屏回归：旧panel_fit仍要求已隐藏无限鸡食罐有可见几何，首次9323检查/128失败原件保留。改为逐状态明确断言该入口隐藏，继续检查可见返回按钮/格子/标签/滚动窗口；9099检查通过，scrollbar220与button_states456通过。此修正只更新旧夹具，不恢复无限食源。
+
+## 三种作物普通跨日收获与团队组合
+
+继续同一独立测试存档，Day3种下最后一把玉米并浇水，正常户外时间和夜间入屋睡眠至Day6；实际成熟后点击收获，玉米0→3。Day6种青草并浇水，正常睡眠至Day7，收获青草3。web/all-three-harvested.png记录背篓青草3、麦粒3、玉米粒3；mature-corn、harvest-corn-three、mature-grass为相应原始截图。未使用浏览器时钟或存档注入。
+
+再取1束收获青草落地，库存3→2，harvest-grass-ground.png记录地上草束。随后遇雨动物回棚，草仍留地；没有宣称此轮普通浏览器已看到草被吃掉。喂养匹配与单次扣除仍以独立原生ledger/runtime回归为证。
+
+PR673 e9af0293904c2e46725034ce5038c20ebe3aea72完整CI37988669455通过，包括90项种植专项、存档/照片/布局及Web导出。之后组合main a8c45549c312a83efbe634eeb72d9878bb3d6388（保留Grok674候选资源、Cloud675提示栏修复及原作者提交）；新增notice_column_clear夹具也改为等待首次初始化。原组合首次11883项/1失败来自夹具提前运行，保留几何断言，等待后11883项通过。组合最新SHA完整CI和公开包仍另核验，本文不将待发布候选标成上线。
