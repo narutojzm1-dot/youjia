@@ -26,6 +26,7 @@ var inventory_busy := false
 ## 走到门前小路尽头选“出门走走”：Main 接管，切到画卷近郊小路
 signal exploration_requested
 
+const WalkGoalMarker := preload("res://scripts/game/walk_goal_marker.gd")
 const SUNNY := preload("res://assets/holiday/environment/yard_sunny.png")
 const OVERCAST := preload("res://assets/holiday/environment/yard_overcast_aligned.png")
 ## 叠加云带：晴/阴各一帧半透明水彩带，不替换整张院子底图。
@@ -161,6 +162,7 @@ var _scene_feedback: YardSceneFeedback
 var _spot := "door"
 var _move_held := false
 var _has_walk_goal := false
+var _walk_goal_age := 0.0
 var _walk_goal := Vector2.ZERO
 var _pending_interaction := ""
 var _selected_target := ""
@@ -500,6 +502,8 @@ func tick(delta: float, move: Vector2) -> void:
 	if house != null: house.tick(delta)
 	if not house_owned_tick: advance_world_time(delta)
 	_rejected_seconds = maxf(0.0, _rejected_seconds - delta)
+	if _has_walk_goal:
+		_walk_goal_age += delta
 	_day_seconds += delta
 	# 钓鱼计时
 	_tick_fishing(delta)
@@ -1024,6 +1028,7 @@ func try_walk_to(goal: Vector2) -> bool:
 	# Retain it and let the normal waiting/repath loop resume when it clears.
 	_has_walk_goal = true
 	_walk_goal = goal
+	_walk_goal_age = 0.0
 	return true
 
 
@@ -2173,7 +2178,9 @@ func _draw() -> void:
 		draw_arc(_rejected_point, 12.0, 0.30, PI-0.30, 20, ink, 2.2, true)
 		draw_arc(_rejected_point, 12.0, PI+0.30, TAU-0.30, 20, ink, 2.2, true)
 	if _has_walk_goal:
-		draw_arc(_walk_goal, 10.0, 0.0, TAU, 24, Color(1.0,0.92,0.65,0.85), 2.0)
+		# REQ-20261008-074: a flattened, depth-scaled ground ring that fades in.
+		var mark := WalkGoalMarker.pose(_walk_goal_age, bool(TuningStore.get_value("ui.reduced_motion", false)), YardGround.depth_at(_walk_goal.y))
+		draw_polyline(WalkGoalMarker.points(_walk_goal, mark.radius), Color(WalkGoalMarker.COLOR, float(mark.alpha)), WalkGoalMarker.WIDTH, true)
 	if _player != null and _player.visible:
 		_draw_contact_shadow(_player.position,Vector2(11,4)*YardGround.depth_at(_player.position.y))
 	for actor_id: String in _actors:
