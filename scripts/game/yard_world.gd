@@ -13,6 +13,7 @@ signal day_advanced(day: int)
 signal fish_caught(carry_type: String)
 signal ground_food_requested(action: String, kind: String, details: Dictionary, actor_id: String)
 signal decor_recall_requested(spot: String)
+signal basket_requested
 var ground_food: Node2D
 var decor_view: Node2D
 var pond_story: Node
@@ -270,6 +271,7 @@ func setup(
 	_plant_visual.name = "PlantBed"
 	_plant_visual.position = _plant_point()
 	add_child(_plant_visual)
+	add_child(preload("res://scripts/game/physical_basket.gd").new())
 	_fishing_visual = YardPropVisual.new()
 	_fishing_visual.name = "FishingSpot"
 	_fishing_visual.position = _fishing_point()
@@ -794,6 +796,12 @@ func _interact_with_target(target: String) -> void:
 	if not input_enabled or inventory_busy or _player == null:
 		return
 	TuningStore.apply_boundary("NEXT_ACTION")
+	if target == YardSceneHotspots.BASKET:
+		var basket_action := YardSceneHotspots.resolve(self, target)
+		if basket_action.is_empty() or _player.position.distance_to(basket_action.point) >= basket_action.reach: return
+		_consume_pending_action()
+		basket_requested.emit()
+		return
 	if target == "house_door":
 		if _player.position.distance_to(house.APPROACH) < 20.0: house.begin()
 		return
@@ -1052,7 +1060,7 @@ func _route_to_walk_goal(obstacles: Array) -> Array[Vector2]:
 
 
 func physical_obstacles(exclude_id: String = "") -> Array:
-	var result: Array = []
+	var result: Array = [{"id":"yard_basket", "position":Vector2(335,485), "radius":Vector2(17,8)}]
 	if exclude_id != "player" and _player != null:
 		result.append({"id":"player", "position":_player.position, "radius":_player.body_radius*YardGround.depth_at(_player.position.y)})
 	for id: String in _actors:
