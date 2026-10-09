@@ -1,0 +1,9 @@
+# #598 背篓开着时收回已摆小物
+
+GROK-CONTRIBUTOR原实现：PR651、8882e8bf61b3be6d1e17755d38f0ff8ef967522c。CODEX-LEAD保留原作者提交，组合种植PR673与提示栏PR675，解决台账文首冲突并补普通体验。原作者分支未被覆盖。
+
+localhost8796沿用种植测试存档，Day8普通点击院门出门，在近郊点击松果、自动走近拾取，正常点击回院。打开背篓松果1，选“摆在屋前”，背篓库存0、屋前出现松果；不关闭背篓，直接点击纸面左侧屋前松果，地面消失、库存恢复1。没有浏览器存档/时钟注入，没有从公开用户存档取物。原生集成另覆盖实际落盘、重载、照片独立性与未盖住的点击位置。
+
+首次实玩原始before-recall和after-recall截图保留，后者准确记录发现的问题：库存恢复但旧“摆在屋前了”提示仍留着。返修在remove提交前撤销旧placement note，让保存回调刷新纸面；最终截图final-recall另记。未把最初截图冒作返修后的结果。
+
+隔离Windows原生数据：yard_decor_integration52、yard_basket_drop_place42、yard_decor_spot_at4、yard_basket_drag158、yard_decor_rejection19、yard_crops90检查通过，合计365。Windows第一次缺少隔离环境的启动被安全拒绝，不计通过；实际成功运行每套独立临时APPDATA且指定YOUJIA_TEST_ISOLATED_DATA。完整CI、公开manifest/PCK以及真机触摸结论均另核验。
