@@ -77,7 +77,7 @@ func _run() -> void:
 	cow.set_meta("shelter_rest", true)
 	cow.tick(0.1, Vector2(1280, 720))
 	check(cow._blink.amount == 0.0 and cow._posture_id == "shelter_rest", "shelter cel cannot inherit standing eyes")
-	check(world._actors.goose._blink == null, "unsupported art has no blink player")
+	check(world._actors.goose._blink != null, "resting goose has its own blink player")
 	var horse = world._actors.horse
 	horse.remove_meta("shelter_rest")
 	horse.state = "rest"
@@ -113,9 +113,66 @@ func _run() -> void:
 		_check_sheep(world, id)
 	check(world._actors.sheep_a._blink.rng != world._actors.sheep_b._blink.rng, "two sheep have independent blink clocks")
 	_check_llama(world)
+	_check_goose(world)
 	world.free()
 	print("PAINTED_BLINK checks=%d failures=%d" % [checks, failures])
 	quit(0 if failures == 0 else 1)
+
+func _check_goose(world) -> void:
+	var goose = world.actor_named("goose")
+	goose.posed = false
+	goose._idle_time = 100.0
+	goose._ack_cel = ""
+	goose._ack_left = 0.0
+	goose._velocity = Vector2.ZERO
+	goose._gait.weight = 0.0
+	goose.state = "rest"
+	goose.set_expression("idle")
+	var original = goose._sprite.texture
+	var anchor = goose._ground_anchor
+	check(original.resource_path == Blink.GOOSE_SOURCE and goose._posture_id == "rest", "goose blink binds lying rest art")
+	goose._blink.wait_left = 0.0
+	for i in 8: goose.tick(1.0 / 60.0, Vector2(1280,720))
+	check(goose._blink.amount > 0.99, "actual resting goose closes its eye")
+	check(goose._sprite.texture == original and goose._ground_anchor == anchor, "goose blink preserves feathers and folded feet")
+	for cel: String in ["calm", "riding_up", "riding_down"]:
+		goose.show_goose_encounter_cel(cel)
+		check(goose._blink.amount == 0.0 and goose._posture_id == cel, "encounter cel synchronously clears resting eye: " + cel)
+		goose.state = "rest"
+		goose.set_expression("idle")
+		goose._blink.wait_left = 0.0
+		for i in 8: goose.tick(1.0 / 60.0, Vector2(1280,720))
+	goose.acknowledge_feed(goose.position + Vector2(30,0))
+	check(goose._blink.amount == 0.0, "food attention immediately clears resting eye")
+	goose._ack_cel = ""
+	goose._ack_left = 0.0
+	for state: String in ["graze", "alert", "rest"]:
+		goose.state = state
+		goose._velocity = Vector2.ZERO
+		goose._gait.weight = 0.0
+		goose.set_expression("idle")
+		goose._blink.wait_left = 0.0
+		for i in 8: goose.tick(1.0 / 60.0, Vector2(1280,720))
+		check((goose._blink.amount > 0.99) == (state == "rest"), "goose resting eye respects state " + state)
+	goose.advance_path(0.1, Vector2(3,0), 1.0, false)
+	check(goose._blink.amount == 0.0, "walking goose clears resting eye")
+	goose.set_encounter_pose(goose.position, goose._base_scale, 1.0)
+	goose._blink.wait_left = 0.0
+	for i in 8: goose.tick(1.0 / 60.0, Vector2(1280,720))
+	check(goose._blink.amount == 0.0, "posed goose cannot inherit resting eye")
+	goose.release_encounter_pose()
+	goose.state = "rest"
+	goose._idle_time = 100.0
+	goose._velocity = Vector2.ZERO
+	goose._gait.weight = 0.0
+	goose.set_expression("idle")
+	goose._blink.wait_left = 0.0
+	for i in 8: goose.tick(1.0 / 60.0, Vector2(1280,720))
+	root.get_node("TuningStore").set_value("ui.reduced_motion", true, false)
+	goose.tick(0.01, Vector2(1280,720))
+	check(goose._blink.amount == 0.0, "reduced motion clears goose eye")
+	root.get_node("TuningStore").set_value("ui.reduced_motion", false, false)
+	check(goose._blink.rng != world._actors.llama._blink.rng, "goose owns its cosmetic clock and RNG")
 
 func _check_llama(world) -> void:
 	var llama = world.actor_named("llama")
