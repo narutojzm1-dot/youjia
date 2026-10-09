@@ -3,8 +3,8 @@ const PaperScrollbarStyle := preload("res://scripts/ui/paper_scrollbar_style.gd"
 signal close_requested
 signal action_requested(action: String, fish: String)
 signal retry_requested
-## #594：小物拖到院里空着的亮圈上松手，直接摆在那处（Main 走 YardDecorController.request('place', …)），
-## 不再转进独立布置面板。没人接这个信号时仍按旧路打开布置面板预览。
+## #594：小物拖到院里空着的亮圈上松手、或在格子纸片里点「摆在某处」，就摆在那处
+## （Main 走 YardDecorController.request('place', …)）。没有单独的布置面板。
 signal place_requested(find_id: String, spot: String)
 
 var panel: PanelContainer
@@ -17,19 +17,20 @@ var retry_button: Button
 var return_button: Button
 var held_label: Label
 var scoop_button: Button
-var decor_button: Button
 ## REQ-20261007-064（#565 图8，Owner GROK-CONTRIBUTOR）：玩家看到的是一张行列格子（yard_basket_grid.gd），
 ## 每样东西一格、点格子弹操作。原来逐行的「名字 × N + 拿一条」清单节点仍保留（fish_buttons /
 ## fish_labels / keepsake_labels 及其信号给旧接口与旧测试用），但不再显示，避免同一样东西出现两遍。
 var grid: Control
 var list_rows: Array[Control] = []
-## 院内布置面板（Main 在同一层建的兄弟节点）。Main 可直接赋值；未赋值时在同层按脚本找一次。
-var decor_panel: Control
-const DECOR_PANEL_SCRIPT := "res://scripts/ui/yard_decor_panel.gd"
+## 院内布置的现状（YardDecorController.view() / state / busy()），由 Main.update_decor 送来
+var decor_value: Dictionary = {}
+var decor_state := "idle"
+var decor_busy := false
+var _inventory_state := ""
 const DECOR_SPOTS_SCRIPT := "res://scripts/inventory/yard_decor.gd"
 ## REQ-20261007-064 第三切片（#565 图8 拖出）：按住圆石 / 松果 / 落羽的格子拖出来，
 ## 背篓纸面变半透明、暗底撤掉，院里只有还空着的固定摆放处（屋前 / 篱边 / 塘边小路）亮起杏色圈；
-## 松在亮圈里 = 发 place_requested，Main 直接摆在那一处（#594）；没人接时退回打开布置预览；
+## 松在亮圈里 = 发 place_requested，Main 直接摆在那一处（#594）；
 ## 松在别处、Esc、背篓被收起或保存忙起来 = 取消，什么都不提交。
 ## 院子世界（Main._world）。Main 可直接赋值；未赋值时沿父节点找一次 `_world`。
 var world: Node2D
@@ -317,7 +318,8 @@ func update_view(inventory: Dictionary, keepsakes: Dictionary, state: String, bu
 		status.text = place_note
 		_status_is_note = false
 		status.visible = true
-	retry_button.visible = state in ["failed", "unknown"]
+	_inventory_state = state
+	_sync_retry()
 	retry_button.text = "Check again" if en else "再确认一次"
 	close_button.text = "Back to the yard" if en else "合上背篓"
 	grid.update_view(inventory, keepsakes, state, busy)
@@ -326,40 +328,26 @@ func update_view(inventory: Dictionary, keepsakes: Dictionary, state: String, bu
 	call_deferred("fit")
 
 func _on_grid_action(action: String, kind: String) -> void:
-	if action == "decor": open_decor_with(kind)
+	if action.begins_with("place:"):
+		var id: String = grid.FIND_IDS.get(kind, "")
+		var spot := action.trim_prefix("place:")
+		if not id.is_empty() and spot in legal_spots() and can_drag(kind):
+			place_note = ""
+			place_requested.emit(id, spot)
 	else: action_requested.emit(action, kind)
 
-## 格子里点圆石/松果/落羽「摆到院里」：走现有「把小物摆在院里」入口（Main._show_decor 收起背篓、
-## 打开布置面板），再在布置面板里预选这件；当前位置已摆了东西就换到第一个空位置。
-## 只是预览：不提交、不扣数量，确认仍由布置面板走 YardDecorController.request('place', …)。
-## 拖出时 spot 给出松手的那一处（必须空着），预览直接落在那里。
-func open_decor_with(kind: String, spot: String = "") -> void:
-	if decor_button == null or decor_button.disabled: return
-	decor_button.pressed.emit()
-	var decor := _find_decor_panel()
-	if decor == null or not decor.visible: return
-	var id: String = grid.FIND_IDS.get(kind, "")
-	if id.is_empty(): return
-	var places: Dictionary = decor.value.get("places", {})
-	if not spot.is_empty() and not places.has(spot):
-		decor.choose_spot(spot)
-	elif places.has(decor.selected):
-		for free: String in load(DECOR_SPOTS_SCRIPT).SPOTS:
-			if not places.has(free):
-				decor.choose_spot(free)
-				break
-	decor.choose_find(id)
+## 背篓存储或布置任一边没存好（失败 / 结果未知）时给「再确认一次」；Main 先重试布置那一边
+func _sync_retry() -> void:
+	retry_button.visible = _inventory_state in ["failed", "unknown"] or (decor_busy and decor_state in ["failed", "unknown"])
 
-func _find_decor_panel() -> Control:
-	if decor_panel != null and is_instance_valid(decor_panel): return decor_panel
-	var parent := get_parent()
-	if parent == null: return null
-	for child: Node in parent.get_children():
-		var script: Script = child.get_script()
-		if child is Control and script != null and script.resource_path == DECOR_PANEL_SCRIPT:
-			decor_panel = child
-			return decor_panel
-	return null
+func update_decor(value: Dictionary, state: String, busy: bool) -> void:
+	decor_value = value
+	decor_state = state
+	decor_busy = busy
+	_sync_retry()
+	grid.set_free_spots(legal_spots(), busy or value.is_empty())
+	if not drag_kind.is_empty() and not can_drag(drag_kind): cancel_drag()
+	call_deferred("fit")
 
 func _find_world() -> Node2D:
 	if world != null and is_instance_valid(world): return world
@@ -372,20 +360,17 @@ func _find_world() -> Node2D:
 		node = node.get_parent()
 	return null
 
-## 现在能不能把这一格拖出来：只有小物、背篓里有、没在确认保存、布置面板已载入且还有空位
+## 现在能不能把这一格拖出来：只有小物、背篓里有、背篓与布置都没在确认保存、布置已载入且还有空位
 func can_drag(kind: String) -> bool:
 	if kind not in grid.KEEPSAKES or int(grid.counts.get(kind, 0)) <= 0 or grid._busy or not grid._loaded: return false
-	if decor_button == null or decor_button.disabled: return false
-	var decor := _find_decor_panel()
-	if decor == null or decor.busy or _find_world() == null: return false
+	if decor_value.is_empty() or decor_busy or _find_world() == null: return false
 	return not legal_spots().is_empty()
 
 ## 还空着、可以摆的固定位置（已摆了东西的那处不亮、也不接）
 func legal_spots() -> Array[String]:
 	var result: Array[String] = []
-	var decor := _find_decor_panel()
-	if decor == null or decor.value.is_empty(): return result
-	var places: Dictionary = decor.value.get("places", {})
+	if decor_value.is_empty(): return result
+	var places: Dictionary = decor_value.get("places", {})
 	for spot: String in load(DECOR_SPOTS_SCRIPT).SPOTS:
 		if not places.has(spot): result.append(spot)
 	return result
@@ -443,13 +428,11 @@ func end_drag(at: Vector2) -> String:
 		status.visible = true
 		return ""
 	var id: String = grid.FIND_IDS.get(kind, "")
-	if place_requested.get_connections().is_empty() or id.is_empty():
-		open_decor_with(kind, spot)
-	else:
-		place_requested.emit(id, spot)
+	if not id.is_empty(): place_requested.emit(id, spot)
 	return spot
 
-## 拖放摆放的进展写在背篓状态行：stage 为 saving / placed / failed；背篓合着时不留话
+## 拖放摆放的进展写在背篓状态行：stage 为 saving / placed / failed（可再确认）/ blocked（没摆成）；
+## 背篓合着时不留话
 func show_place_note(find_id: String, spot: String, stage: String) -> void:
 	if not visible:
 		place_note = ""
@@ -465,7 +448,9 @@ func show_place_note(find_id: String, spot: String, stage: String) -> void:
 	if stage == "saving":
 		place_note = ("Setting %s down %s…" % [thing.to_lower(), where]) if en else "正在把%s摆到%s……" % [thing, where]
 	elif stage == "failed":
-		place_note = ("%s is not set down yet and is still in the basket. Check the save again from \"Arrange finds in the yard\"." % thing) if en else "%s还没摆好，还在背篓里；可以在「把小物摆在院里」里再确认保存。" % thing
+		place_note = ("%s is not set down yet and is still in the basket. Tap \"Check again\" to save it once more." % thing) if en else "%s还没摆好，还在背篓里；点「再确认一次」再存一次。" % thing
+	elif stage == "blocked":
+		place_note = ("%s could not be set down there and is still in the basket." % thing) if en else "%s没能摆在那里，还在背篓里。" % thing
 	else:
 		place_note = ("%s is %s now. Tap it in the yard to put it back." % [thing, where]) if en else "%s摆在%s了。在院里点它，就能收回背篓。" % [thing, where]
 	status.text = place_note
@@ -568,11 +553,10 @@ func _activate_touch(position_in_view: Vector2) -> void:
 	if grid != null and (grid.menu.visible or scroll.get_global_rect().has_point(position_in_view)):
 		if grid.press_at(position_in_view): return
 	var buttons: Array = [close_button, retry_button, return_button, scoop_button]
-	if decor_button != null: buttons.append(decor_button)
 	buttons.append_array(fish_buttons.values())
 	for button: Button in buttons:
 		if button.is_visible_in_tree() and not button.disabled and button.get_global_rect().has_point(position_in_view):
-			if button in fish_buttons.values() or button in [return_button, scoop_button, decor_button]:
+			if button in fish_buttons.values() or button in [return_button, scoop_button]:
 				if not scroll.get_global_rect().has_point(position_in_view): continue
 			button.pressed.emit()
 			return

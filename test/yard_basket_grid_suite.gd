@@ -113,10 +113,34 @@ func run() -> void:
 			g.press_at(center(g.cells["grass"]))
 			check(g.menu_action.text == ("Take a bundle" if en else "拿一束"), tag + " grass action")
 			g.press_at(center(g.menu_action))
+			# #594: a find's paper lists the free yard spots instead of opening a decor panel
+			var free: Array[String] = ["house_edge", "fence_edge", "pond_path"]
+			g.set_free_spots(free, false)
 			g.press_at(center(g.cells["round_stone"]))
-			check(g.menu_action.text == ("Place in yard" if en else "摆到院里") and not g.menu_action.disabled, tag + " stone action is place in yard")
-			g.press_at(center(g.menu_action))
-			check(emitted == [["withdraw", "grass"], ["decor", "round_stone"]], tag + " grass/stone emits: %s" % [emitted])
+			await process_frame
+			check(not g.menu_action.visible and g.spot_row.is_visible_in_tree(), tag + " stone paper shows spot buttons, not a single action")
+			check(g.spot_buttons["fence_edge"].text == ("By the fence" if en else "摆在篱边") and not g.spot_buttons["fence_edge"].disabled, tag + " fence spot offered")
+			check(g.spot_buttons["house_edge"].has_focus(), tag + " first free spot takes focus for the keyboard")
+			check(Rect2(Vector2.ZERO, Vector2(vs)).encloses(g.menu.get_global_rect()), tag + " stone paper inside the screen %s" % g.menu.get_global_rect())
+			var spot_rects_ok := true
+			for spot: String in free:
+				var r: Rect2 = g.spot_buttons[spot].get_global_rect()
+				spot_rects_ok = spot_rects_ok and r.size.y >= 44 and g.menu.get_global_rect().encloses(r)
+			check(spot_rects_ok, tag + " spot buttons 44px tall and inside the paper")
+			g.press_at(center(g.spot_buttons["fence_edge"]))
+			check(emitted == [["withdraw", "grass"], ["place:fence_edge", "round_stone"]], tag + " grass/stone emits: %s" % [emitted])
+			check(not g.menu.visible, tag + " paper closes after choosing a spot")
+			var two: Array[String] = ["house_edge", "pond_path"]
+			g.set_free_spots(two, false)
+			g.press_at(center(g.cells["round_stone"]))
+			check(not g.spot_buttons["fence_edge"].visible and g.spot_buttons["pond_path"].visible, tag + " a taken spot is not offered")
+			var none: Array[String] = []
+			g.set_free_spots(none, false)
+			check(g.menu.visible and not g.spot_row.visible and g.menu_note.visible and g.menu_note.text.contains("All three" if en else "三处"), tag + " all spots taken says how to free one: " + g.menu_note.text)
+			g.set_free_spots(free, true)
+			check(not g.spot_row.visible and g.menu_note.text == ("Checking the save…" if en else "正在确认保存，先等一下。"), tag + " placing waits while the yard saves")
+			g.close_menu()
+			g.set_free_spots(free, false)
 			# --- empty cell, switching, outside tap, never mind, Esc ---
 			emitted.clear()
 			check(g.press_at(center(g.cells["medium"])) and not g.menu.visible, tag + " zero cell opens nothing")

@@ -1,7 +1,7 @@
 extends Control
 ## REQ-20261007-064（#565 图8，Owner GROK-CONTRIBUTOR）：大背篓的标准行列格子。
 ## 每样东西一格（贴图 + 名字 + 数量），整行补齐空格；点有货的一格弹出这一格的操作纸片
-## （拿一条 / 拿一束 / 拿一把 / 摆到院里 / 收回背篓），手机点按同样可用。
+## （拿一条 / 拿一束 / 拿一把 / 摆在屋前·篱边·塘边小路 / 收回背篓），手机点按同样可用。
 ## 本切片只做格子与点按操作，发出与 yard_basket_panel 相同的 action_requested(action, kind)，
 ## 不读写存档、不改库存事务。拖出（面板半透明、合法摆放区着色）在下一切片接 Leader 的摆放接口。
 const BasketPanel := preload("res://scripts/ui/yard_basket_panel.gd")
@@ -50,6 +50,13 @@ var menu_title: Label
 var menu_note: Label
 var menu_action: Button
 var menu_close: Button
+## #594：小物的纸片不再开布置面板，而是列出院里还空着的固定位置，点哪处就摆在哪处
+## （键盘、触屏与拖不动的人都能摆）；action 为 "place:<spot>"
+const SPOTS := ["house_edge", "fence_edge", "pond_path"]
+var spot_row: HFlowContainer
+var spot_buttons: Dictionary = {}
+var free_spots: Array[String] = []
+var _decor_busy := true
 var selected := ""
 var counts: Dictionary = {}
 var _names: Dictionary = {}
@@ -95,6 +102,15 @@ func _ready() -> void:
 	menu_note = _label(14, EMPTY_INK)
 	menu_note.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	column.add_child(menu_note)
+	spot_row = HFlowContainer.new()
+	spot_row.add_theme_constant_override("h_separation", 8)
+	spot_row.add_theme_constant_override("v_separation", 6)
+	column.add_child(spot_row)
+	for spot: String in SPOTS:
+		var button := _menu_button()
+		button.pressed.connect(func() -> void: _on_spot_pressed(spot))
+		spot_row.add_child(button)
+		spot_buttons[spot] = button
 	var actions := HBoxContainer.new()
 	actions.add_theme_constant_override("separation", 8)
 	column.add_child(actions)
@@ -288,7 +304,7 @@ func action_for(kind: String) -> Array:
 	var label := ""
 	var action := "withdraw"
 	if kind in KEEPSAKES:
-		action = "decor"
+		action = "place"
 		label = "Place in yard" if en else "摆到院里"
 	elif kind == "millet": label = "Take a scoop" if en else "拿一把"
 	elif kind == "grass": label = "Take a bundle" if en else "拿一束"
@@ -296,6 +312,8 @@ func action_for(kind: String) -> Array:
 	var reason := ""
 	if not _loaded or _busy: reason = _busy_note(en)
 	elif counts.get(kind, 0) <= 0: reason = "None in the basket." if en else "背篓里还没有。"
+	elif action == "place" and _decor_busy: reason = _busy_note(en)
+	elif action == "place" and free_spots.is_empty(): reason = "All three spots in the yard are taken. Tap one in the yard to put it back first." if en else "院里三处都摆着东西了；先在院里点一件，收回背篓。"
 	elif action == "withdraw" and not _held.is_empty():
 		reason = ("Put back the %s first." % _names.get(_held, _held).to_lower()) if en else ("先把手里的%s收回背篓。" % _names.get(_held, _held))
 	return [action, label, reason]
@@ -313,8 +331,11 @@ func open_menu(kind: String) -> void:
 	menu.visible = true
 	_place_menu()
 	menu_toggled.emit(true)
-	if menu_action.disabled: menu_close.grab_focus()
-	else: menu_action.grab_focus()
+	for button: Button in _menu_buttons():
+		if button.visible and not button.disabled:
+			button.grab_focus()
+			return
+	menu_close.grab_focus()
 
 func close_menu() -> void:
 	var was_open := menu.visible
@@ -331,26 +352,69 @@ func _fill_menu(kind: String) -> void:
 	menu_title.text = "%s  ×%d" % [_names.get(kind, kind), counts.get(kind, 0)]
 	menu_action.text = spec[1]
 	menu_action.disabled = not str(spec[2]).is_empty()
+	var placing: bool = spec[0] == "place"
+	menu_action.visible = not placing
+	spot_row.visible = placing and not menu_action.disabled
+	var names := {"house_edge": "By the house" if en else "摆在屋前", "fence_edge": "By the fence" if en else "摆在篱边", "pond_path": "On the pond path" if en else "摆在塘边小路"}
+	for spot: String in SPOTS:
+		spot_buttons[spot].text = names[spot]
+		spot_buttons[spot].visible = spot in free_spots
 	menu_note.text = spec[2]
 	menu_note.visible = not str(spec[2]).is_empty()
 	menu_close.text = "Never mind" if en else "算了"
 	menu.reset_size()
+	_sort_menu()
+
+## 纸片内容一换（小物的位置行 ↔ 单个动作按钮），按钮立刻排到新位置，不留一帧旧的点按区域
+func _sort_menu() -> void:
+	for box: Container in [menu, menu.get_child(0), spot_row, menu_action.get_parent()]:
+		box.notification(Container.NOTIFICATION_SORT_CHILDREN)
 
 func _place_menu() -> void:
 	if selected.is_empty(): return
 	menu.reset_size()
 	var view := get_viewport_rect()
 	var cell_rect: Rect2 = cells[selected].get_global_rect()
-	var width := minf(maxf(menu.get_combined_minimum_size().x, 200.0), view.size.x - 16.0)
+	var want := 200.0
+	if spot_row.visible:
+		# 放得下就把还空着的几处排成一行，矮横屏里纸片不至于竖着撑出屏幕
+		var row := 0.0
+		for spot: String in SPOTS:
+			if spot_buttons[spot].visible: row += spot_buttons[spot].get_combined_minimum_size().x + 8.0
+		want = maxf(want, row - 8.0 + 20.0)
+	var width := minf(maxf(menu.get_combined_minimum_size().x, want), view.size.x - 16.0)
 	menu.size = Vector2(width, 0)
 	menu.reset_size()
 	menu.size.x = width
+	_sort_menu()
 	var h := menu.size.y
 	var y := cell_rect.end.y + 6.0
 	if y + h > view.size.y - 8.0: y = cell_rect.position.y - h - 6.0
 	y = clampf(y, 8.0, maxf(8.0, view.size.y - h - 8.0))
 	var x := clampf(cell_rect.get_center().x - width * 0.5, 8.0, maxf(8.0, view.size.x - width - 8.0))
 	menu.global_position = Vector2(x, y)
+
+func _menu_buttons() -> Array[Button]:
+	var result: Array[Button] = [menu_action]
+	for spot: String in SPOTS: result.append(spot_buttons[spot])
+	result.append(menu_close)
+	return result
+
+## Main 送来院里还空着的位置与布置是否在确认保存；纸片开着就按新情况重排
+func set_free_spots(spots: Array[String], busy: bool) -> void:
+	free_spots = spots.duplicate()
+	_decor_busy = busy
+	if not selected.is_empty():
+		if cells[selected].disabled: close_menu()
+		else:
+			_fill_menu(selected)
+			_place_menu()
+
+func _on_spot_pressed(spot: String) -> void:
+	if selected.is_empty() or not spot_row.visible or not spot in free_spots: return
+	var kind := selected
+	close_menu()
+	action_requested.emit("place:" + spot, kind)
 
 func _on_menu_action() -> void:
 	if selected.is_empty() or menu_action.disabled: return
@@ -362,7 +426,7 @@ func _on_menu_action() -> void:
 ## 触屏 / 外层统一点按入口：返回 true 表示这一下被格子或纸片接住了
 func press_at(at: Vector2) -> bool:
 	if menu.visible:
-		for button: Button in [menu_action, menu_close]:
+		for button: Button in _menu_buttons():
 			if button.is_visible_in_tree() and button.get_global_rect().has_point(at):
 				if not button.disabled: button.pressed.emit()
 				return true
