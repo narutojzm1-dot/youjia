@@ -77,6 +77,21 @@ func _run() -> void:
 	cow.set_meta("shelter_rest", true)
 	cow.tick(0.1, Vector2(1280, 720))
 	check(cow._blink.amount == 0.0 and cow._posture_id == "shelter_rest", "shelter cel cannot inherit standing eyes")
+	check(cow._blink.source_path == Blink.COW_REST_SOURCE, "lying cow binds its own face mask")
+	var lying_texture = cow._sprite.texture
+	var lying_anchor = cow._ground_anchor
+	cow._blink.wait_left = 0.0
+	for i in 8: cow.tick(1.0 / 60.0, Vector2(1280,720))
+	check(cow._blink.amount > 0.99, "actual shelter cow closes eyes")
+	check(cow._sprite.texture == lying_texture and cow._ground_anchor == lying_anchor, "lying blink preserves folded body and feet")
+	root.get_node("TuningStore").set_value("ui.reduced_motion", true, false)
+	cow.tick(0.02, Vector2(1280,720))
+	check(cow._blink.amount == 0.0, "reduced motion clears lying blink")
+	root.get_node("TuningStore").set_value("ui.reduced_motion", false, false)
+	cow.remove_meta("shelter_rest")
+	cow.tick(0.02, Vector2(1280,720))
+	check(cow._blink.source_path == Blink.SOURCE and cow._blink.amount == 0.0, "standing restores its own open eyes")
+	check(cow._blink.eye_a == Vector4(165,390,65,58) and cow._blink.eye_b == Vector4(290,412,113,70), "standing mask coordinates restored")
 	check(world._actors.goose._blink != null, "resting goose has its own blink player")
 	var horse = world._actors.horse
 	horse.remove_meta("shelter_rest")

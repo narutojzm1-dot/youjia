@@ -12,6 +12,8 @@ const LLAMA_SOURCE := "res://assets/holiday/characters/cast_v2/llama_smirk.png"
 const LLAMA_CLOSED := preload("res://assets/holiday/characters/cast_v2/llama_smirk_blink.png")
 const GOOSE_SOURCE := "res://assets/holiday/characters/cast_v2/goose_rest.png"
 const GOOSE_CLOSED := preload("res://assets/holiday/characters/cast_v2/goose_rest_blink.png")
+const COW_REST_SOURCE := "res://assets/holiday/characters/shelter/cow-rest.png"
+const COW_REST_CLOSED := preload("res://assets/holiday/characters/shelter/cow-rest-blink.png")
 const DURATION := 0.30
 var rng := RandomNumberGenerator.new()
 var wait_left := 0.0
@@ -28,8 +30,16 @@ func _init() -> void:
 
 func bind(target: ShaderMaterial, species: String = "cow") -> void:
 	material = target
+	source_path = SOURCE
+	eye_a = Vector4(165, 390, 65, 58)
+	eye_b = Vector4(290, 412, 113, 70)
 	var closed: Texture2D = CLOSED
 	match species:
+		"cow_rest":
+			source_path = COW_REST_SOURCE
+			closed = COW_REST_CLOSED
+			eye_a = Vector4(181, 435, 60, 51)
+			eye_b = Vector4(321, 465, 115, 72)
 		"goose":
 			source_path = GOOSE_SOURCE
 			closed = GOOSE_CLOSED

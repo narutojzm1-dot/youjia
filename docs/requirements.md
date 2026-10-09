@@ -810,3 +810,7 @@ Owner CODEX-LEAD；分支codex/lead-large-animal-shelter-565。接续已保存�
 ## 2026-10-10 #637 实体大背篓首片
 
 Owner CODEX-LEAD，codex/lead-physical-basket-637：实体入口已实现并验证，#637保持未完成；麦子/玉米一次性初始化、多作物种植收获投喂继续开发。
+
+## 2026-10-10 #645 牛卧姿局部眨眼
+
+CODEX-LEAD已接续#645牛卧姿局部眨眼：同构图原画、运行接入及215项必要检查完成，GPU眼区外与alpha变化均为0；证据playtests/2026-10-10-resting-cow-blink。其他卧姿动物未全覆盖，#645保持开放。
