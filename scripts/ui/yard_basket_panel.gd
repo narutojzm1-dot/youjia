@@ -464,7 +464,7 @@ func show_place_note(find_id: String, spot: String, stage: String) -> void:
 	elif stage == "blocked":
 		place_note = ("%s could not be set down there and is still in the basket." % thing) if en else "%s没能摆在那里，还在背篓里。" % thing
 	else:
-		place_note = ("%s is %s now.\nTap it in the yard to put it back." % [thing, where]) if en else "%s摆在%s了。\n在院里点它，就能收回背篓。" % [thing, where]
+		place_note = ("%s is %s now.\nTap it outside the basket, or close the basket and tap it." % [thing, where]) if en else "%s摆在%s了。\n背篓外点它，或合上背篓再点，就能收回。" % [thing, where]
 	status.text = place_note
 	_status_is_note = false
 	status.visible = true

@@ -461,6 +461,10 @@ func _input(event: InputEvent) -> void:
 		if event.is_action_pressed("pause") and not event.is_echo():
 			_hide_basket()
 			get_viewport().set_input_as_handled()
+		elif _basket_ground_recall(event):
+			# #598 after #594: place note says tap the yard find while the basket is
+			# still open; do not let the paper swallow that hit.
+			get_viewport().set_input_as_handled()
 		elif event is InputEventScreenTouch or event is InputEventScreenDrag:
 			_last_touch_ms = Time.get_ticks_msec()
 			_basket_panel.handle_touch_event(event)
@@ -1436,6 +1440,36 @@ func _on_inventory_changed() -> void:
 	if _hold_hotbar != null:
 		_hold_hotbar.update_view(inventory, SaveStore.get_available_keepsakes(), _inventory.state, _inventory.busy())
 		_sync_hold_hotbar_visibility()
+
+
+## Basket-only UX (#594): while the big basket is open, a press on a placed find
+## outside the paper recalls it. Same remove transaction as closed-yard 「捡起来」;
+## never grants a second keepsake. Skips while a drag-place is in progress.
+func _basket_ground_recall(event: InputEvent) -> bool:
+	if _decor == null or _world == null or _decor.busy():
+		return false
+	if _basket_panel == null or not _basket_panel.visible:
+		return false
+	if not str(_basket_panel.drag_kind).is_empty():
+		return false
+	var at := Vector2.INF
+	if event is InputEventScreenTouch and event.pressed:
+		at = event.position
+	elif event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+		if Time.get_ticks_msec() - _last_touch_ms < 400:
+			return false
+		at = event.position
+	else:
+		return false
+	if _basket_panel.panel != null and _basket_panel.panel.get_global_rect().has_point(at):
+		return false
+	var Decor = load("res://scripts/inventory/yard_decor.gd")
+	var spot: String = Decor.spot_at(_decor.view(), _screen_to_world(at))
+	if spot.is_empty():
+		return false
+	_last_touch_ms = Time.get_ticks_msec()
+	_on_decor_recall(spot)
+	return true
 
 
 func _on_decor_recall(spot: String) -> void:

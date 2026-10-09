@@ -76,7 +76,7 @@ func run() -> void:
 	await frames()
 	check(decor.state == "idle" and decor.view().places.get("fence_edge", {}).get("find_id", "") == cone, "check again finishes the placement")
 	check(memory.get_available_keepsakes().get(cone, 0) == 1, "exactly one cone reserved")
-	check(panel.status.text == "松果摆在篱边了。\n在院里点它，就能收回背篓。" and not panel.retry_button.visible, "after check again the note says it is placed: " + panel.status.text)
+	check(panel.status.text == "松果摆在篱边了。\n背篓外点它，或合上背篓再点，就能收回。" and not panel.retry_button.visible, "after check again the note says it is placed: " + panel.status.text)
 
 	# Success in English: placed at once, basket open, note says where and how to take it back.
 	root.get_node("I18n").set_locale("en")
@@ -87,7 +87,7 @@ func run() -> void:
 	await frames()
 	check(decor.view().places.get("pond_path", {}).get("find_id", "") == cone, "drop places the cone on the path")
 	check(panel.visible, "success keeps the basket open")
-	check(panel.status.visible and panel.status.text == "The pine cone is on the pond path now.\nTap it in the yard to put it back.", "English note: " + panel.status.text)
+	check(panel.status.visible and panel.status.text == "The pine cone is on the pond path now.\nTap it outside the basket, or close the basket and tap it.", "English note: " + panel.status.text)
 	main._on_inventory_changed()
 	await frames()
 	check(panel.status.text.begins_with("The pine cone is on the pond path"), "the note survives a basket refresh")
@@ -95,7 +95,7 @@ func run() -> void:
 	await frames()
 	main._show_basket()
 	await frames()
-	check(panel.place_note.is_empty() and panel.status.text != "The pine cone is on the pond path now.\nTap it in the yard to put it back.", "closing the basket clears the note")
+	check(panel.place_note.is_empty() and panel.status.text != "The pine cone is on the pond path now.\nTap it outside the basket, or close the basket and tap it.", "closing the basket clears the note")
 	root.get_node("I18n").set_locale("zh-CN")
 	await frames()
 
@@ -120,7 +120,7 @@ func run() -> void:
 	memory.pump()
 	await frames()
 	check(decor.state == "idle" and decor.view().places.has("house_edge"), "the global retry still lands it")
-	check(panel.status.text == "松果摆在屋前了。\n在院里点它，就能收回背篓。", "the stale failure note becomes placed: " + panel.status.text)
+	check(panel.status.text == "松果摆在屋前了。\n背篓外点它，或合上背篓再点，就能收回。", "the stale failure note becomes placed: " + panel.status.text)
 
 	# Blocked (the controller's DECOR_ rejection): the drop is settled with a "could not" note and
 	# no check again, since retrying the same request cannot succeed.
