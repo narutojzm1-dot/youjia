@@ -7,8 +7,8 @@ extends SceneTree
 ## 440px width it covered the day tag and the clock under 「歇一会儿」.
 ## Now: when the notice could grow up to that column, a long notice slides left
 ## until its right edge is NOTICE_COLUMN_GAP left of the column, keeping its
-## width (at most NOTICE_EDGE from the left screen edge), so it does not wrap
-## more and grow into the goal paper either. Short notices that already fit stay
+## width unless the room left of the column (down to NOTICE_EDGE from the screen
+## edge) is narrower, e.g. 440 -> 408px at 568 wide. Short notices that already fit stay
 ## centred; wide and portrait screens are unchanged.
 
 const VIEWPORTS := [
