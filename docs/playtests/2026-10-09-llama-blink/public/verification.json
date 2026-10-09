@@ -1,0 +1,49 @@
+{
+  "source": "08c16a01de2712c9d4f4a81a10ef576e4ed709bf",
+  "checkedAt": "2026-10-09T13:05:01.7154937+08:00",
+  "storageModules": 10,
+  "records": [
+    {
+      "name": "index.html",
+      "bytes": 359708,
+      "blob": "e4dc3b3f156403af38c2575521c94bcc1e33ae7b",
+      "sha256": "e3109ef121ff7fc58fd1842bb0463542f869e53f06218f5335292aa2db8814eb"
+    },
+    {
+      "name": "game-08c16a0.pck",
+      "bytes": 59778324,
+      "blob": "79553ec020f53a76e67c8c675f563c0b168a4041",
+      "sha256": "1b34e96ed6f79252c9d931fbdc5c7119b779b1db6b1dbf0834cfc2344b0c812d"
+    },
+    {
+      "name": "engine-3b105340f798ed0e7d6aa7725328dc8c0bf8cd94ffea14835e43f83045048c74.js",
+      "bytes": 279815,
+      "sha256": "33c94cb3175f3333b82e2a3be5e8e86f77986f0aa2042b1631f6367a4e5bb6ba"
+    },
+    {
+      "name": "engine-3b105340f798ed0e7d6aa7725328dc8c0bf8cd94ffea14835e43f83045048c74.wasm",
+      "bytes": 39514754,
+      "sha256": "fc74679e3b97f76878947fcd4fbe1268cbfa6188182a2e33bbc3f5dc9bfa57d0"
+    },
+    {
+      "name": "engine-3b105340f798ed0e7d6aa7725328dc8c0bf8cd94ffea14835e43f83045048c74.audio.worklet.js",
+      "bytes": 7298,
+      "sha256": "5b476a9c9ce642c0ee4256436d1bc31d9c38f868aca0f9a8e2a57c18d2dec2a3"
+    },
+    {
+      "name": "engine-3b105340f798ed0e7d6aa7725328dc8c0bf8cd94ffea14835e43f83045048c74.audio.position.worklet.js",
+      "bytes": 2973,
+      "sha256": "be33985bc7160d6bf9646f259cd86b259cd67b02ccb297ee5c44f8ac84327bc8"
+    },
+    {
+      "name": "boot-08c16a0/download_assets.mjs",
+      "bytes": 7714,
+      "sha256": "0c0e0f179641bd524a8d0d4f520e4158152bcc884f0d17ff3b0e0a0b0b21e238"
+    },
+    {
+      "name": "boot-08c16a0/sha256_stream.mjs",
+      "bytes": 3448,
+      "sha256": "c26338f465688208706256f83aef6a510f01b671c6e679ae1a0d9ab7797af85e"
+    }
+  ]
+}
