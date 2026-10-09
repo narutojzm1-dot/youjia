@@ -12,7 +12,7 @@ function setup(missing=[],config={focusCanvas:true}){
  const captureLegacy=()=>{};
  vm.runInNewContext(code,{window,document,Engine,performance:{now:()=>clock},console:{error(){},info(){}},setInterval(f){interval=f;return 1},clearInterval(){},__import(path){return new Promise((resolve,reject)=>imports.set(path,{resolve,reject}))}});
  const bridge={installSaveHost({runtimeReady,captureLegacy:capture}){assert.equal(capture,captureLegacy);runtime='pending';runtimeReady.then(()=>runtime='resolved',()=>runtime='rejected')}};
- return {nodes,window,get starts(){return starts},get constructed(){return constructed},get runtime(){return runtime},get restored(){return restored},assetFailure(){assetOptions.onError(Error('asset recovery failed'))},
+ return {nodes,window,document,get starts(){return starts},get constructed(){return constructed},get runtime(){return runtime},get restored(){return restored},assetFailure(){assetOptions.onError(Error('asset recovery failed'))},
   async modules(){imports.get('./web/save/bridge.mjs').resolve(bridge);await flush();assert.equal(starts,0,'reader must load before engine starts');imports.get('./web/save/idbfs_source.mjs').resolve({captureIdbfsSource:captureLegacy});await flush();assert.equal(constructed,0,'download recovery must install before engine construction');imports.get('./web/boot/download_assets.mjs').resolve({installAssetRecovery(cfg,options){assetOptions=options;return ()=>restored++}});await flush()},
   async moduleFailure(){imports.get('./web/save/bridge.mjs').reject(Error('module fetch failed'));await flush()},
   progress:(a,b)=>onProgress(a,b),resolve:()=>resolve(),reject:()=>reject(Error('engine start failed')),frame:()=>listeners['youjia:first-frame']?.(),blocked:(detail='quarantined')=>listeners['youjia:save-blocked']?.({detail}),tick(t){clock=t;interval()}};
@@ -41,5 +41,10 @@ function setup(missing=[],config={focusCanvas:true}){
   else {assert.equal(t.nodes['loading-status'].textContent,'游戏加载失败，请重试。');assert.match(t.nodes['loading-detail'].textContent,new RegExp(code))}
   let retries=0;t.window.location.reload=()=>retries++;t.nodes['loading-retry'].click();assert.equal(retries,1,'retry reloads; it does not bypass the writer lock');
  }
+ t=setup([],{mainPack:'game-abc.pck',focusCanvas:true});
+ assert.equal(t.nodes['loading-version'].textContent,'0.2.0 · 第2版内部测试');
+ assert.equal(t.document.documentElement.dataset.playerVersion,'0.2.0');
+ assert.equal(t.nodes['loading-build'].textContent,'game-abc');
+ assert.notEqual(t.nodes['loading-version'].textContent, t.nodes['loading-build'].textContent);
  console.log('Loading shell PASS: module ordering, runtime readiness/rejection, persistentPaths isolation, save-blocked gate, bytes, unknown totals, stall and both first-frame orders');
 })().catch(e=>{console.error(e);process.exitCode=1});
