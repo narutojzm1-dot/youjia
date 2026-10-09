@@ -40,6 +40,7 @@ const TOD_COLORS := {
 	"noon":    Color(1.0, 1.0, 0.96),   # 正午：几乎无色
 	"afternoon": Color(1.0, 0.80, 0.52), # 下午：暖琥珀
 	"evening": Color(0.90, 0.60, 0.42), # 傍晚：桃橙
+	"midnight": Color(0.12, 0.16, 0.34),
 	"night":   Color(0.26, 0.34, 0.55), # 月下冷光；乘色保留原画明暗与细节
 }
 
@@ -426,7 +427,7 @@ func _process(delta: float) -> void:
 			_house_lights_overlay.queue_redraw()
 	# Both regional scenes share the clock and the same painted-light overlay.
 	if _screen in ["game", "exploring"] and _world != null:
-		_update_tod_tint(_world.tod_fraction())
+		_update_tod_tint(_world.tod_fraction(), delta)
 		_update_season_tint(_world.holiday_day)
 	_sync_regional_clock()
 	if _screen == "game":
@@ -2716,9 +2717,11 @@ func _update_season_tint(day: int) -> void:
 
 ## One persisted day starts at 06:00. Blend continuously through midnight
 ## and the 06:00 save-day boundary; phase and clouds use the same clock.
-func _update_tod_tint(t: float) -> void:
+func _update_tod_tint(t: float, delta: float = 0.0) -> void:
 	if _tod_rect != null:
-		_tod_rect.color = preload("res://scripts/game/world_daylight.gd").tint(t, TOD_COLORS)
+		var target: Color = preload("res://scripts/game/world_daylight.gd").tint(t, TOD_COLORS, _world.weather if _world != null else "sun")
+		var snap := delta <= 0.0 or bool(TuningStore.get_value("ui.reduced_motion", false))
+		_tod_rect.color = target if snap else _tod_rect.color.lerp(target, 1.0 - exp(-delta * 2.0))
 
 
 func _on_locale_changed(_locale: String) -> void:
