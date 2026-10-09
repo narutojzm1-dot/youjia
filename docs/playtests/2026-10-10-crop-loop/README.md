@@ -15,6 +15,14 @@ Owner CODEX-LEAD，2026-10-10。该片接续已公开的实体背篓 #669，不�
 
 相关原生回归日志保留在native/。旧yard_snapshot_suite在Windows明确拒绝非/tmp隔离路径，未算本地通过，Linux完整CI另验。首轮入院竞态、英语格子宽度、旧无限鸡食罐可见断言发现后修复，日志为修正后结果。
 
-web/sown-wheat-pre-refinement.png来自普通localhost8796新存档实际点击地块、种麦、浇水；图为后续提示和原画显示尺寸修正前。已真正重载并普通入院，背篓仍麦粒1/玉米粒2，无重复初始化；普通成熟/收获/投喂与最终版本Web证据待补。无真实手机触摸或声音听验结论。
+web/sown-wheat-pre-refinement.png来自普通localhost8796新存档实际点击地块、种麦、浇水；图为后续提示和原画显示尺寸修正前。已真正重载并普通入院，背篓仍麦粒1/玉米粒2，无重复初始化；后续普通Web证据见下。无真实手机触摸或声音听验结论。
 
 保存中的种植操作禁止提前关闭面板，避免旧库存版本被其他操作使用；专项新增即时关闭保护断言，90项通过。
+
+## 普通浏览器闭环补证
+
+localhost8796独立测试存档：Day1种麦/浇水，正常入屋睡眠至Day2，随后户外时间自然流逝至Day3；成熟面板→点击收获，麦粒1→4且地块清空。取1把麦粒落地后重载，麦粒3、玉米粒2、空地均保留，无再次发种。最终运行树194c08b（d2c6628）重载入院后，又实际取1把玉米粒投放小鸡旁，先见地上玉米，随后该物件消失，小鸡仍在附近；截图未连续记录完整啄食动作，不将前后静帧冒作动作录像。原生ledger/runtime与种植专项另验证喂养类型及单次消耗。
+
+web/各PNG均普通操作原始截图：mature-wheat、harvest-four、reloaded-three、corn-ground/consumed；phone-growing为390×844，landscape-growing和landscape-empty-scroll为568×320，后者真实滚动触达关闭按钮并回院。仅模拟浏览器尺寸，无手机实机触摸/声音结论。
+
+首轮完整CI37984680640发现day_label_layout在首次入院初始化保存前同步读取_world而失败，原错误片段保留native/ci-initial-start-await-failure.log。修正15个旧测试/截图工具调用为await _start_holiday，保留holiday_start_once的刻意并发启动覆盖，不削弱持久化保护。9套受影响原生suite全部通过（648/173/5844/104/168/573/4400/5080/251检查）；最终完整CI仍以PR最新SHA为准。

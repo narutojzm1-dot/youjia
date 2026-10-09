@@ -1,0 +1,19 @@
+2654566Z Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+2026-10-09T20:10:45.2852742Z 
+2026-10-09T20:10:46.5995848Z SAVE FEEDBACK 50 checks, failures 0
+2026-10-09T20:10:46.7274715Z Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+2026-10-09T20:10:46.7473160Z 
+2026-10-09T20:10:47.9142129Z SCRIPT ERROR: Invalid assignment of property or key 'holiday_day' with value of type 'int' on a base object of type 'Nil'.
+2026-10-09T20:10:47.9142742Z           at: _run (res://test/day_label_layout_suite.gd:35)
+2026-10-09T20:10:47.9143104Z           GDScript backtrace (most recent call first):
+2026-10-09T20:10:47.9143621Z               [0] _run (res://test/day_label_layout_suite.gd:35)
+2026-10-09T20:15:46.7163792Z [daily-check] Godot/timeout exit=124; tee exit=0
+2026-10-09T20:15:46.7570495Z ##[error]Process completed with exit code 1.
+2026-10-09T20:15:46.7667962Z Post job cleanup.
+2026-10-09T20:15:46.8199243Z [command]/usr/bin/git version
+2026-10-09T20:15:46.8227933Z git version 2.55.0
+2026-10-09T20:15:46.8250224Z Temporarily overriding HOME='/home/runner/work/_temp/d1b94cca-7197-40d5-88ed-7e4f9a75dec5' before making global git config changes
+2026-10-09T20:15:46.8250873Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-09T20:15:46.8254151Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/youjia/youjia
+2026-10-09T20:15:46.8283480Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-09T20:15:

@@ -146,7 +146,7 @@ func _check_paths(dims: Vector2i, locale: String) -> void:
 	_check(main._screen == "title", "%s: starts on title" % tag)
 	await _focus_reads(main._play_button, tag + " title play")
 	await _focus_reads(main._album_button, tag + " title album")
-	main._start_holiday()
+	await main._start_holiday()
 	await _settle()
 	main._toggle_pause()
 	await _settle()

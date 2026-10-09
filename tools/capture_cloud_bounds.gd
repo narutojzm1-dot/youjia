@@ -14,7 +14,7 @@ func capture() -> void:
 	var main = load("res://scenes/main.tscn").instantiate()
 	root.add_child(main)
 	await process_frame
-	main._start_holiday()
+	await main._start_holiday()
 	await process_frame
 	main.set_process(false)
 	var world = main._world

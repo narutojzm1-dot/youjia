@@ -4,7 +4,7 @@ func _ready():
  var main=load('res://scenes/main.tscn').instantiate();add_child(main)
  await get_tree().process_frame
  await get_tree().process_frame
- main.set_process(false);main._start_holiday()
+ main.set_process(false);await main._start_holiday()
  var w=main._world;w.set_process(false)
  w.actor_named('sheep_a').position=Vector2(230,420)
  w.actor_named('sheep_b').position=Vector2(340,450)

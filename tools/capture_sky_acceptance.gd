@@ -28,7 +28,7 @@ func _capture() -> void:
 	await process_frame
 	var i18n: Variant = root.get_node("I18n")
 	i18n.set_locale("zh-CN")
-	main._start_holiday()
+	await main._start_holiday()
 	await _settle_frames(10)
 
 	# 云带时段：与 main._tod_phase_name / YardWorld 换帧与夜里 modulate 对齐。
