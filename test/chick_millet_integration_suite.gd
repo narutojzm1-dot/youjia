@@ -37,7 +37,7 @@ func run() -> void:
 	check(store.get_world_residents().chicken.stage == "chick" and world.actor_named("chicken") != null, "new yard introduces one confirmed chick")
 	var birth: Dictionary = store.get_world_residents().chicken.settled_clock.duplicate(true)
 	main._show_basket()
-	check(main._basket_panel.scoop_button.visible and not main._basket_panel.scoop_button.disabled, "grain tin discoverable through basket")
+	check(not main._basket_panel.scoop_button.visible, "infinite tin retired; legacy millet remains compatible")
 	main._basket_panel.scoop_button.pressed.emit()
 	check(main._inventory.busy() and not world._millet_held, "no optimistic grain grant")
 	await settle()

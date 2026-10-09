@@ -97,6 +97,10 @@ func _run() -> void:
 	# Content shrink re-fits: dropping the retry button and status shortens the paper again.
 	locale.call("set_locale", "zh-CN")
 	root.size = Vector2i(1280, 720)
+	# Ten kinds now fill three grid rows and legitimately hit the height cap.
+	# The real ten-kind layouts above cover that case. Isolate the existing
+	# row-sizing mechanism here with a short content fixture below the cap.
+	panel.grid.hide()
 	panel.update_view(_inventory(), _keepsakes(), "failed", false)
 	await _settle()
 	var with_retry: float = panel.panel.size.y
