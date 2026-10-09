@@ -138,6 +138,7 @@ var _volume_touch_index := -1
 var _volume_touch_slider: HSlider
 # 假期天数标签
 var _day_label: Label
+var _regional_clock: Label
 # 昼夜色调覆盖层
 var _tod_canvas: CanvasLayer
 var _house_lights_overlay: Node2D
@@ -278,7 +279,7 @@ func _ready() -> void:
 	_ui_layer = CanvasLayer.new()
 	_ui_layer.layer = 10
 	add_child(_ui_layer)
-	for panel in [_paper,_title_screen,_hud,_pause_screen,_confirm_screen,_album_screen,_notice]:
+	for panel in [_paper,_title_screen,_hud,_regional_clock,_pause_screen,_confirm_screen,_album_screen,_notice]:
 		panel.reparent(_ui_layer, false)
 	# 拍立得闪光叠加层加入 _ui_layer，确保渲染在所有 UI 之上。
 	_photo_flash = ColorRect.new()
@@ -427,6 +428,7 @@ func _process(delta: float) -> void:
 	if _screen in ["game", "exploring"] and _world != null:
 		_update_tod_tint(_world.tod_fraction())
 		_update_season_tint(_world.holiday_day)
+	_sync_regional_clock()
 	if _screen == "game":
 		_refresh_hud()
 		# 更新昼夜色调覆盖层与季节底色
@@ -841,6 +843,8 @@ func _build_hud() -> void:
 	_day_label.size = Vector2(160, 28)
 	_day_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_hud.add_child(_day_label)
+	_regional_clock = preload("res://scripts/ui/regional_clock.gd").new()
+	add_child(_regional_clock)
 	_album_chip = _chip_button()
 	# _show_album() 内部已调用 _pulse_button，此处直接连接即可
 	_album_chip.pressed.connect(_show_album)
@@ -2540,6 +2544,24 @@ func _refresh_hud() -> void:
 	# 更新假期天数标签
 	if _day_label != null:
 		_day_label.text = I18n.t("hud.day", {"n": str(_world.holiday_day)})
+
+
+## Both scenes read the same persisted clock; pause and menus do not advance it.
+func _sync_regional_clock() -> void:
+	if _regional_clock == null: return
+	_regional_clock.visible = false
+	if _world == null or _screen not in ["game", "exploring"]: return
+	if _pause_screen.visible or _album_screen.visible or _confirm_screen.visible or _save_problem_active: return
+	if _basket_panel != null and _basket_panel.visible: return
+	if _screen == "game":
+		if not _hud.visible: return
+		_regional_clock.show_time(_world.tod_fraction(), Rect2(
+			_day_label.position + Vector2(0, _day_label.size.y + 4),
+			Vector2(_day_label.size.x, 24)), 14)
+	elif _exploration.scroll != null:
+		var place: Label = _exploration.scroll._place_label
+		_regional_clock.show_time(_world.tod_fraction(), Rect2(
+			place.position + Vector2(0, place.size.y), Vector2(minf(place.size.x, 180.0), 22)), 14)
 
 
 func _refresh_yard_chip_labels() -> void:
