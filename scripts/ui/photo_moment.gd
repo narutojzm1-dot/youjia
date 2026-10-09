@@ -325,6 +325,8 @@ static func _collect(node: Node, world: Node2D, backdrop: Node, subject: String,
 			"CloudBandA", "CloudBandB", "CloudMorningA", "CloudMorningB",
 			"CloudSunsetA", "CloudSunsetB", "CloudOvercastA", "CloudOvercastB"]:
 		subject = "weather_cloud"
+	elif node.name == "PhysicalBasket":
+		subject = "basket"
 	elif actor_id is String and not actor_id.is_empty():
 		subject = actor_id
 	elif script != null and script.resource_path == "res://scripts/entities/vacationer.gd":
