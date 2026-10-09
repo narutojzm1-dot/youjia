@@ -208,7 +208,7 @@ func refresh() -> void:
 	if empty_hint != "" and not occupied and draft.is_empty() and not busy and not (state in ["failed", "unknown", "blocked"]): status.text = empty_hint
 	var places := {"house_edge": "House" if en else "屋前", "fence_edge": "Fence" if en else "篱边", "pond_path": "Path" if en else "塘边小路"}
 	for spot: String in slot_buttons:
-		slot_buttons[spot].text = places[spot]
+		slot_buttons[spot].text = slot_label(spot, places[spot], en)
 		slot_buttons[spot].disabled = busy or value.is_empty()
 		slot_buttons[spot].button_pressed = spot == selected
 	var names := ["Stone", "Cone", "Feather"] if en else ["圆石", "松果", "落羽"]
@@ -227,6 +227,19 @@ func refresh() -> void:
 	if not draft.is_empty() and not unchanged: close_button.text = "Cancel preview · Back" if en else "取消预览 · 回到背篓"
 	preview_changed.emit(selected, draft)
 	call_deferred("fit")
+
+# REQ-20261007-065: the three place buttons only ever said 屋前 / 篱边 / 塘边小路,
+# so the player had to tap each one to learn what was already standing there
+# (and that a find button had gone grey because the spot was taken). A place
+# that holds a saved find now names it on a second line; empty places and the
+# unsaved preview keep the plain name.
+func slot_label(spot: String, place: String, en: bool) -> String:
+	var placed: Dictionary = value.get("places", {}).get(spot, {})
+	var id := str(placed.get("find_id", ""))
+	var i := ExplorationRoutes.FINDS.find(id)
+	if i < 0: return place
+	var names := ["Stone", "Cone", "Feather"] if en else ["圆石", "松果", "落羽"]
+	return "%s\n%s" % [place, names[i]]
 
 # REQ-20261007-062: with nothing left to place, an empty spot used to say
 # "pick a place, then a find" while every find button read ×0 and was grey, so
