@@ -10,6 +10,8 @@ const SHEEP_A_CLOSED := preload("res://assets/holiday/characters/cast_v2/sheep_c
 const SHEEP_B_CLOSED := preload("res://assets/holiday/characters/cast_v2/sheep_dull_blink.png")
 const LLAMA_SOURCE := "res://assets/holiday/characters/cast_v2/llama_smirk.png"
 const LLAMA_CLOSED := preload("res://assets/holiday/characters/cast_v2/llama_smirk_blink.png")
+const GOOSE_SOURCE := "res://assets/holiday/characters/cast_v2/goose_rest.png"
+const GOOSE_CLOSED := preload("res://assets/holiday/characters/cast_v2/goose_rest_blink.png")
 const DURATION := 0.30
 var rng := RandomNumberGenerator.new()
 var wait_left := 0.0
@@ -28,6 +30,11 @@ func bind(target: ShaderMaterial, species: String = "cow") -> void:
 	material = target
 	var closed: Texture2D = CLOSED
 	match species:
+		"goose":
+			source_path = GOOSE_SOURCE
+			closed = GOOSE_CLOSED
+			eye_a = Vector4(960, 328, 125, 77)
+			eye_b = eye_a # Profile view has only one visible eye.
 		"llama":
 			source_path = LLAMA_SOURCE
 			closed = LLAMA_CLOSED
