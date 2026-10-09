@@ -2210,7 +2210,7 @@ func _on_cinematic_view_changed(stage: String) -> void:
 
 
 ## REQ-20261008-075：底部手持快捷栏挂在 _ui_layer，跟背篓同一份 inventory 视图。
-## 开院可见；暂停 / 相册 / 确认 / 背篓 / 布置面板时隐藏。树暂停由那些叠层负责，快捷栏本身不 WHEN_PAUSED。
+## 开院可见；暂停 / 相册 / 确认 / 背篓打开时隐藏。树暂停由那些叠层负责，快捷栏本身不 WHEN_PAUSED。
 func _ensure_hold_hotbar() -> void:
 	if _hold_hotbar != null or _ui_layer == null:
 		return
