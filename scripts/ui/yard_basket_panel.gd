@@ -449,8 +449,11 @@ func end_drag(at: Vector2) -> String:
 		place_requested.emit(id, spot)
 	return spot
 
-## 拖放摆放的进展写在背篓状态行：stage 为 saving / placed
+## 拖放摆放的进展写在背篓状态行：stage 为 saving / placed / failed；背篓合着时不留话
 func show_place_note(find_id: String, spot: String, stage: String) -> void:
+	if not visible:
+		place_note = ""
+		return
 	var en := I18n.get_locale() == "en"
 	var kind := ""
 	for k: String in grid.FIND_IDS:
@@ -461,6 +464,8 @@ func show_place_note(find_id: String, spot: String, stage: String) -> void:
 	var where: String = places.get(spot, spot)
 	if stage == "saving":
 		place_note = ("Setting %s down %s…" % [thing.to_lower(), where]) if en else "正在把%s摆到%s……" % [thing, where]
+	elif stage == "failed":
+		place_note = ("%s is not set down yet and is still in the basket. Check the save again from \"Arrange finds in the yard\"." % thing) if en else "%s还没摆好，还在背篓里；可以在「把小物摆在院里」里再确认保存。" % thing
 	else:
 		place_note = ("%s is %s now. Tap it in the yard to put it back." % [thing, where]) if en else "%s摆在%s了。在院里点它，就能收回背篓。" % [thing, where]
 	status.text = place_note

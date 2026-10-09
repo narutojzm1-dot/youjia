@@ -1543,10 +1543,12 @@ func _on_decor_changed() -> void:
 		_basket_drop = {}
 		if _decor.state == "idle" and _decor.view().get("places", {}).has(drop.spot):
 			_basket_panel.show_place_note(drop.find_id, drop.spot, "placed")
-		elif _basket_panel.visible:
-			# 没存好：转到布置面板，那里有保存状态和「再确认一次」
-			_decor_panel.selected = drop.spot
-			_show_decor()
+		else:
+			_basket_panel.show_place_note(drop.find_id, drop.spot, "failed")
+			# 没存好：转到布置面板，那里有保存状态和「再确认保存」；背篓忙或已合上时留在背篓提示里
+			if _basket_panel.visible and not _inventory.busy():
+				_decor_panel.selected = drop.spot
+				_show_decor()
 
 
 ## #594：背篓里的小物拖到院里空着的固定位置，松手就摆好（不微调，dx/dy 为 0）

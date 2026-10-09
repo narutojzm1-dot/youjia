@@ -92,6 +92,43 @@ func run() -> void:
 	await frames()
 	check(panel.place_note.is_empty() and panel.status.text != "The pine cone is on the pond path now. Tap it in the yard to put it back.", "closing the basket clears the note")
 	root.get_node("I18n").set_locale("zh-CN")
+	await frames()
+
+	# Failure while the inventory is busy: no decor panel can open, so the basket note says it
+	# was not saved instead of leaving "being set down" behind.
+	memory._data.keepsakes = {cone: 3}
+	main._on_decor_changed()
+	await frames()
+	memory.fail_kind_once = "decor"
+	drop(panel, "house_edge")
+	main._world._reel_in_fish()
+	main._on_inventory_changed()
+	check(main._inventory.busy(), "inventory save in flight")
+	memory.pump()
+	await frames(1)
+	check(decor.state == "failed" and not main._decor_panel.visible and panel.visible, "busy inventory keeps the basket up on failure")
+	check(panel.status.text == "松果还没摆好，还在背篓里；可以在「把小物摆在院里」里再确认保存。", "failure note replaces the saving note: " + panel.status.text)
+	check(await store.flush_pending(), "inventory save settles")
+	await frames()
+	check(panel.status.text.begins_with("松果还没摆好"), "failure note survives the inventory refresh")
+	decor.retry()
+	memory.pump()
+	await frames()
+	check(decor.state == "idle" and decor.view().places.has("house_edge"), "check again from the global retry still lands it")
+
+	# Basket closed while saving: the note is not kept for the next opening.
+	decor.request("remove", "fence_edge")
+	memory.pump()
+	main._hide_basket()
+	main._show_basket()
+	await frames()
+	drop(panel, "fence_edge")
+	main._hide_basket()
+	memory.pump()
+	await frames()
+	main._show_basket()
+	await frames()
+	check(panel.place_note.is_empty(), "a hidden basket keeps no placement note")
 	main._hide_basket()
 	root.get_node("AudioDirector").release_streams()
 	decor.changed.disconnect(main._on_decor_changed)
