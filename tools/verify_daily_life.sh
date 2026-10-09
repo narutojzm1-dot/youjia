@@ -111,4 +111,5 @@ run_godot suite test/regional_rain_suite.gd
 run_godot suite test/hold_hotbar_suite.gd
 
 run_godot suite test/hold_hotbar_mount_suite.gd
+run_godot suite test/hold_hotbar_armed_style_suite.gd
 run_godot suite test/painted_blink_suite.gd

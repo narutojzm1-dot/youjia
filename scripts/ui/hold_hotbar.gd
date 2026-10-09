@@ -1,9 +1,10 @@
 extends Control
 ## REQ-20261008-075（Owner GROK-CONTRIBUTOR）：Minecraft 式底部横排快捷栏。
+## REQ-20261009-076：选中且 place_armed 时加墨色底边角标，空手持选中一眼可分。
 ## 只展示真实 yard_inventory 的手持 / 可拿食物格（小鱼 / 中鱼 / 怪鱼 / 草束 / 小米），不另建库存。
 ## 选中态跟着 held 走；点选中格可解除「点地投放」武装；点有货的其他格发出 withdraw_requested，
 ## 由 Main 走既有 YardInventoryController.request("withdraw", …)。取消 / 非法落点不在此扣数。
-## 本切片不改 main.gd / yard_world.gd（开放 PR #600/#542/#592 占用）；合入方接 layout 与点地路由。
+## 本切片不改 main.gd / yard_world.gd；不改 withdraw/arm/grass-no-auto-arm 逻辑。
 
 signal slot_selected(kind: String)
 signal selection_cleared
@@ -30,6 +31,8 @@ const SELECT_EDGE := Color("5b4637")
 const EMPTY_INK := Color("7a6152")
 const SLOT_FILL := Color("f7ecdc")
 const SLOT_HOT := Color("f3d3ae")
+## 武装态在选中描边之外加 3px 墨色底边，一眼区分「仅选中」与「点地投放已武装」。
+const ARMED_ACCENT_PX := 3
 
 var strip: HBoxContainer
 var cells: Dictionary = {}
@@ -74,7 +77,7 @@ func _make_cell(kind: String) -> Button:
 	cell.focus_mode = Control.FOCUS_ALL
 	cell.custom_minimum_size = Vector2(SLOT, SLOT)
 	cell.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
-	_apply_cell_style(cell, false)
+	_apply_cell_style(cell, false, false)
 	cell.pressed.connect(func() -> void: _on_slot_pressed(kind))
 	var icon := TextureRect.new()
 	icon.name = "Icon"
@@ -111,12 +114,17 @@ func _make_cell(kind: String) -> Button:
 	return cell
 
 
-func _apply_cell_style(cell: Button, selected_slot: bool) -> void:
+func _apply_cell_style(cell: Button, selected_slot: bool, armed: bool) -> void:
+	var show_armed := selected_slot and armed
 	for state: String in ["normal", "hover", "pressed", "disabled", "focus"]:
 		var box := StyleBoxFlat.new()
 		box.bg_color = SLOT_HOT if selected_slot else SLOT_FILL
 		box.border_color = SELECT_EDGE if selected_slot else EDGE
 		box.set_border_width_all(2 if selected_slot else 1)
+		if show_armed:
+			# 底边加粗：选中描边 2px + 墨色武装角标 3px，保持水彩纸语言。
+			box.set_border_width(SIDE_BOTTOM, 2 + ARMED_ACCENT_PX)
+			box.border_color = SELECT_EDGE
 		box.set_corner_radius_all(8)
 		box.set_content_margin_all(2)
 		cell.add_theme_stylebox_override(state, box)
@@ -125,8 +133,21 @@ func _apply_cell_style(cell: Button, selected_slot: bool) -> void:
 		focus.draw_center = false
 		focus.border_color = SELECT_EDGE
 		focus.set_border_width_all(2)
+		if show_armed:
+			focus.set_border_width(SIDE_BOTTOM, 2 + ARMED_ACCENT_PX)
 		focus.set_corner_radius_all(8)
 		cell.add_theme_stylebox_override("focus", focus)
+
+
+## 套件用：选中且武装的格底边宽于顶边（有墨色武装角标）。
+func slot_has_armed_accent(kind: String) -> bool:
+	if not cells.has(kind):
+		return false
+	var cell: Button = cells[kind]
+	var box := cell.get_theme_stylebox("normal") as StyleBoxFlat
+	if box == null:
+		return false
+	return box.get_border_width(SIDE_BOTTOM) > box.get_border_width(SIDE_TOP)
 
 
 func _refresh_names() -> void:
@@ -138,6 +159,24 @@ func _refresh_names() -> void:
 		"grass": "Grass" if en else "草束",
 		"millet": "Millet" if en else "小米",
 	}
+
+
+func _slot_tooltip(kind: String, count: int) -> String:
+	var base := "%s ×%d" % [_names.get(kind, kind), count]
+	if kind.is_empty() or kind != selected or kind != held or selected.is_empty():
+		return base
+	var en := I18n.get_locale() == "en"
+	if place_armed:
+		return base + (" · tap ground to place" if en else " · 点地放下")
+	# 选中但未武装（草默认，或用户点格解除）：提示再点一次可点地放下。
+	return base + (" · Tap again, then tap the ground" if en else " · 再点一次，可点地放下")
+
+
+func _refresh_tooltips() -> void:
+	for kind: String in SLOT_ORDER:
+		var count := int(counts.get(kind, 0))
+		var cell: Button = cells[kind]
+		cell.tooltip_text = _slot_tooltip(kind, count)
 
 
 ## 与背篓 / Main 同一份 inventory 视图同步；keepsakes 本切片不进栏（拖放小物留给后续，避开 #579/#576）。
@@ -159,7 +198,6 @@ func update_view(inventory: Dictionary, _keepsakes: Dictionary = {}, state: Stri
 		var owned := count > 0
 		var cell: Button = cells[kind]
 		cell.disabled = not owned or busy
-		cell.tooltip_text = "%s ×%d" % [_names.get(kind, kind), count]
 		counts_labels[kind].text = "×%d" % count if owned else ""
 		counts_labels[kind].add_theme_color_override("font_color", INK if owned else EMPTY_INK)
 		icons[kind].modulate = Color(1, 1, 1, 1.0 if owned else 0.28)
@@ -174,6 +212,7 @@ func update_view(inventory: Dictionary, _keepsakes: Dictionary = {}, state: Stri
 		# 投放继续由动作键负责；需要点地投放时再点草格武装。
 		if held != previous_held:
 			_set_armed(held != "grass")
+	_refresh_tooltips()
 
 
 func selected_kind() -> String:
@@ -221,14 +260,19 @@ func _set_selected(kind: String) -> void:
 		var cell: Button = cells[id]
 		var on := id == kind and not kind.is_empty()
 		cell.set_pressed_no_signal(on)
-		_apply_cell_style(cell, on)
+		_apply_cell_style(cell, on, on and place_armed)
+	_refresh_tooltips()
 
 
 func _set_armed(armed: bool) -> void:
-	if place_armed == armed:
-		return
-	place_armed = armed
-	place_armed_changed.emit(place_armed)
+	var changed := place_armed != armed
+	if changed:
+		place_armed = armed
+		place_armed_changed.emit(place_armed)
+	# 武装变化或重复同步时都重绘选中格，保证角标与 place_armed 一致。
+	if not selected.is_empty() and cells.has(selected):
+		_apply_cell_style(cells[selected], true, place_armed)
+	_refresh_tooltips()
 
 
 ## 触屏：点在某格中心即选中（与背篓 press_at 同思路）
