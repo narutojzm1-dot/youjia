@@ -113,9 +113,9 @@ func setup(config: Dictionary) -> void:
 	set_expression("idle")
 	_native_facing = float(config.get("native_facing", 1.0))
 	_gait.setup(_sprite, float(config.get("leg_start",0.74 if species in ["goose", "duck"] else 0.68)))
-	if species == "cow":
+	if species in ["cow", "horse"]:
 		_blink = preload("res://scripts/entities/painted_blink.gd").new()
-		_blink.bind(_gait._material)
+		_blink.bind(_gait._material, species)
 	_apply_face_override()
 	if species == "llama" and bool(config.get("experimental_planted_gait", false)):
 		enable_experimental_planted_gait()
@@ -190,6 +190,8 @@ func _paint_facing() -> float:
 func show_painted_ack(cel: String, seconds: float) -> void:
 	if posed or seconds <= 0.0 or not _textures.has(cel):
 		return
+	if _blink != null:
+		_blink.cancel()
 	_feed_ack_active = false
 	_ack_cel = cel
 	_ack_left = seconds
@@ -663,7 +665,7 @@ func tick(delta: float, world_size: Vector2) -> void:
 		_sprite.rotation = 0.0
 		_rig.tick(delta, moved, depth, reduced)
 	if _blink != null:
-		_blink.advance(delta, not reduced and not posed and state == "rest" and _posture_id == "chew" and _ack_cel.is_empty() and _velocity.length() <= 0.3 and _gait.weight <= 0.08 and _sprite.texture.resource_path == _blink.SOURCE)
+		_blink.advance(delta, not reduced and not posed and state == "rest" and _ack_cel.is_empty() and _velocity.length() <= 0.3 and _gait.weight <= 0.08 and _sprite.texture.resource_path == _blink.source_path)
 	z_index = roundi(position.y)
 
 

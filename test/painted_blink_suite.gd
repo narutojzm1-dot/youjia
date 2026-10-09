@@ -78,6 +78,37 @@ func _run() -> void:
 	cow.tick(0.1, Vector2(1280, 720))
 	check(cow._blink.amount == 0.0 and cow._posture_id == "shelter_rest", "shelter cel cannot inherit standing eyes")
 	check(world._actors.sheep_a._blink == null, "unsupported art has no blink player")
+	var horse = world._actors.horse
+	horse.remove_meta("shelter_rest")
+	horse.state = "rest"
+	horse.posed = false
+	horse._idle_time = 100.0
+	horse._velocity = Vector2.ZERO
+	horse._gait.weight = 0.0
+	horse.set_expression("idle")
+	var horse_texture = horse._sprite.texture
+	var horse_anchor = horse._ground_anchor
+	check(horse._blink.source_path == Blink.HORSE_SOURCE and horse._posture_id == "idle", "horse binds its own resting cel")
+	horse._blink.wait_left = 0.0
+	for i in 8:
+		horse.tick(1.0 / 60.0, Vector2(1280, 720))
+	check(horse._blink.amount > 0.99, "actual resting horse closes eyes: %s %s %s %s %s" % [horse._blink.amount, horse._posture_id, horse._sprite.texture.resource_path, horse._gait.weight, horse.position])
+	check(horse._sprite.texture == horse_texture and horse._ground_anchor == horse_anchor, "horse blink preserves original body and feet")
+	horse.show_painted_ack("idle", 1.0)
+	check(horse._blink.amount == 0.0, "horse response clears eyes immediately")
+	horse._ack_cel = ""
+	horse._ack_left = 0.0
+	horse.set_meta("shelter_rest", true)
+	horse._blink.wait_left = 0.0
+	for i in 8:
+		horse.tick(1.0 / 60.0, Vector2(1280, 720))
+	check(horse._blink.amount == 0.0 and horse._posture_id == "shelter_rest", "lying horse cannot inherit standing eyes")
+	horse.remove_meta("shelter_rest")
+	horse.set_expression("idle")
+	horse._blink.wait_left = 0.0
+	horse.advance_path(0.1, Vector2(3, 0), 1.0, false)
+	check(horse._blink.amount == 0.0, "moving horse clears eyes")
+	check(horse._blink.rng != cow._blink.rng, "animals do not share a blink clock or RNG")
 	world.free()
 	print("PAINTED_BLINK checks=%d failures=%d" % [checks, failures])
 	quit(0 if failures == 0 else 1)
