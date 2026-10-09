@@ -2,23 +2,28 @@ extends RefCounted
 ## Cosmetic only: one local clock/RNG, no gameplay random draws or saved state.
 const CLOSED := preload("res://assets/holiday/characters/cast_v2/cow_chew_blink.png")
 const SOURCE := "res://assets/holiday/characters/cast_v2/cow_chew.png"
+const HORSE_CLOSED := preload("res://assets/holiday/characters/cast_v2/horse_blink.png")
+const HORSE_SOURCE := "res://assets/holiday/characters/cast_v2/horse.png"
 const DURATION := 0.30
 var rng := RandomNumberGenerator.new()
 var wait_left := 0.0
 var elapsed := -1.0
 var amount := 0.0
 var material: ShaderMaterial
+var source_path := SOURCE
 
 func _init() -> void:
 	rng.randomize()
 	_schedule()
 
-func bind(target: ShaderMaterial) -> void:
+func bind(target: ShaderMaterial, species: String = "cow") -> void:
 	material = target
-	material.set_shader_parameter("blink_texture", CLOSED)
-	# Two small feathered regions, in canonical 1280px chew-cel coordinates.
-	material.set_shader_parameter("blink_eye_a", Vector4(165, 390, 65, 58) / 1280.0)
-	material.set_shader_parameter("blink_eye_b", Vector4(290, 412, 113, 70) / 1280.0)
+	var horse := species == "horse"
+	source_path = HORSE_SOURCE if horse else SOURCE
+	material.set_shader_parameter("blink_texture", HORSE_CLOSED if horse else CLOSED)
+	# Two small feathered regions, normalized from each canonical 1280px display.
+	material.set_shader_parameter("blink_eye_a", (Vector4(191, 272, 88, 64) if horse else Vector4(165, 390, 65, 58)) / 1280.0)
+	material.set_shader_parameter("blink_eye_b", (Vector4(111, 312, 39, 43) if horse else Vector4(290, 412, 113, 70)) / 1280.0)
 	_write(0.0)
 
 func cancel() -> void:
