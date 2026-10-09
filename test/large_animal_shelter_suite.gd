@@ -15,6 +15,7 @@ func run() -> void:
 	if isolated.is_empty() or not OS.get_user_data_dir().replace("\\", "/").to_lower().begins_with(isolated):
 		quit(2)
 		return
+	check(not YardBodies._ground_segment(Vector2(846.298,506.2572), Vector2(912,492), YardGateGround.connected(), true), "route rejects sub-five-pixel concave rail crossing")
 	seed(565)
 	var main = load("res://scenes/main.tscn").instantiate()
 	root.add_child(main)
