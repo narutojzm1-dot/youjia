@@ -2,7 +2,7 @@ extends SceneTree
 ## REQ-20261009-076: hold hotbar selected+armed shows ink bottom accent;
 ## selected+!armed keeps hot fill without accent; grass starts unarmed;
 ## fish starts armed; tooltips carry place cues. Does not edit main.gd.
-## Integrator should register this suite in verify_daily_life / completions.tsv.
+## Suite registered in verify_daily_life.sh + godot_suite_completions.tsv (this PR).
 
 const HotbarPath := "res://scripts/ui/hold_hotbar.gd"
 const VIEWPORTS := [Vector2i(390, 844), Vector2i(1280, 720)]
@@ -87,9 +87,9 @@ func _styles(HotbarScript) -> void:
 			check(not bar.slot_has_armed_accent("medium"), tag + " selected+!armed lacks accent")
 			var tip_disarmed: String = bar.cells["medium"].tooltip_text
 			if loc == "en":
-				check(tip_disarmed.contains("tap again to arm place"), tag + " en disarmed tooltip cue")
+				check(tip_disarmed.contains("Tap again, then tap the ground"), tag + " en disarmed tooltip cue")
 			else:
-				check(tip_disarmed.contains("再点一次可武装投放"), tag + " zh disarmed tooltip cue")
+				check(tip_disarmed.contains("再点一次，可点地放下"), tag + " zh disarmed tooltip cue")
 
 			# arm_placement restores accent
 			bar.arm_placement(true)
@@ -108,9 +108,9 @@ func _styles(HotbarScript) -> void:
 			check(not bar.slot_has_armed_accent("grass"), tag + " grass unarmed has no accent")
 			var tip_grass: String = bar.cells["grass"].tooltip_text
 			if loc == "en":
-				check(tip_grass.contains("tap again to arm place"), tag + " en grass unarmed tooltip")
+				check(tip_grass.contains("Tap again, then tap the ground"), tag + " en grass unarmed tooltip")
 			else:
-				check(tip_grass.contains("再点一次可武装投放"), tag + " zh grass unarmed tooltip")
+				check(tip_grass.contains("再点一次，可点地放下"), tag + " zh grass unarmed tooltip")
 
 			# Manual arm grass: accent appears
 			bar.arm_placement(true)
