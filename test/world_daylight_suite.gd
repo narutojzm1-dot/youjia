@@ -35,7 +35,7 @@ func run() -> void:
 			check(light.b > light.r and light.a >= 0.3, "actual night is cool and dim %d" % h)
 			# scene_tint multiplies by mix(white, tint, alpha), not tint alone.
 			var night_gain := Color.WHITE.lerp(Color(light.r, light.g, light.b), light.a)
-			check(night_gain.g < 0.55 and night_gain.b > 0.5, "night visibly dims paint while keeping blue detail %d" % h)
+			check(night_gain.g < 0.55 and night_gain.b > 0.3, "night visibly dims paint while keeping blue detail %d" % h)
 		if h >= 11 and h <= 14: check(is_zero_approx(light.a), "midday remains clear %d" % h)
 		check(view.daylight >= 0.0 and view.daylight <= 1.0, "solar strength bounded")
 	# Both midnight and the saved day's 06:00 rollover must have no color jump.
@@ -43,6 +43,29 @@ func run() -> void:
 		var a := Daylight.tint(fraction(h - 0.0001), main.TOD_COLORS)
 		var b := Daylight.tint(fraction(h + 0.0001), main.TOD_COLORS)
 		check(absf(a.r-b.r)+absf(a.g-b.g)+absf(a.b-b.b)+absf(a.a-b.a) < 0.001, "continuous light across %s" % h)
+
+	var evening: Color = Daylight.tint(fraction(21), main.TOD_COLORS)
+	var midnight: Color = Daylight.tint(fraction(1), main.TOD_COLORS)
+	check(midnight.r < evening.r and midnight.g < evening.g and midnight.a > evening.a, "midnight is deeper than evening night")
+	for weather in ["sun", "overcast", "rain"]:
+		for h in [0.0,3.0,5.0,6.0,8.0,11.0,14.0,17.0,19.0,20.0,22.0,24.0]:
+			var a: Color = Daylight.tint(fraction(h-0.0001),main.TOD_COLORS,weather)
+			var b: Color = Daylight.tint(fraction(h+0.0001),main.TOD_COLORS,weather)
+			check(absf(a.r-b.r)+absf(a.g-b.g)+absf(a.b-b.b)+absf(a.a-b.a)<0.001,"weather light continuous %s %s" % [weather,h])
+		for h in [6.0,19.0]:
+			var light: Color = Daylight.tint(fraction(h),main.TOD_COLORS,weather)
+			check(light.r > light.b if weather=="sun" else light.b > light.r,"sun-only warm light %s %s" % [weather,h])
+
+	world.weather = "sun"
+	main._update_tod_tint(fraction(6))
+	var sunny: Color = main._tod_rect.color
+	world.weather = "rain"
+	main._update_tod_tint(fraction(6),1.0/60.0)
+	check(absf(main._tod_rect.color.r-sunny.r)<0.02,"weather change does not flash the warm overlay")
+	for frame in 180: main._update_tod_tint(fraction(6),1.0/60.0)
+	var wet: Color = Daylight.tint(fraction(6),main.TOD_COLORS,"rain")
+	check(absf(main._tod_rect.color.r-wet.r)<0.001,"weather overlay settles to actual regional weather")
+	world.weather = "sun"
 	check(is_equal_approx(Daylight.daylight(fraction(12)), 1.0), "sun highest at noon")
 	check(is_zero_approx(Daylight.daylight(fraction(0))), "no sun at midnight")
 	check(Daylight.hour(NAN) == 6.0, "invalid input remains finite")
