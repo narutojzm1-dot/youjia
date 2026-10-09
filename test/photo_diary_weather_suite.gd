@@ -1,8 +1,7 @@
 extends SceneTree
-## REQ-20261009-077: album diary captions pad a short weather crumb (hud.weather.*)
-## between the day line and the moment when the snapshot recorded sun / overcast /
-## rain. Missing or unknown weather keeps the previous caption. Capture, layout,
-## and localization JSON are unchanged — only PhotoDiary presentation.
+## REQ-20261009-077：带 caption_variant 的快照，在日子和瞬间文案之间垫天气纸签（hud.weather.*）。
+## 无 weather、未知天气，或有天气但没有 caption_variant 的旧日期档，说明与原文相等。
+## 不改捕获、布局和 localization JSON，只改 PhotoDiary 展示。
 
 var checks := 0
 var failures: Array[String] = []
@@ -65,6 +64,22 @@ func run() -> void:
 		var legacy: String = PhotoDiary.caption({"rule_id": "fish_first_catch", "weather": "sun"})
 		check(not legacy.is_empty() and not legacy.contains(sun_label),
 			tag + " legacy no-day caption stays title-only (no invented day/weather line)")
+		# 有日期、保留 weather、没有 caption_variant：中英说明都等于不含天气纸签的原文。
+		var original_text := str(i18n.call("t", "photo.diary.day", {
+			"day": "3",
+			"moment": str(i18n.call("t", "photo.diary.fish_first_catch")),
+		}))
+		for legacy_weather: String in ["sun", "overcast", "rain"]:
+			var dated_legacy := {
+				"version": 1,
+				"rule_id": "fish_first_catch",
+				"day": 3,
+				"weather": legacy_weather,
+			}
+			check(dated_legacy.has("weather") and not dated_legacy.has("caption_variant"),
+				tag + " dated legacy keeps " + legacy_weather + " and has no caption_variant")
+			check(PhotoDiary.caption(dated_legacy) == original_text,
+				tag + " dated legacy with " + legacy_weather + " and no caption_variant keeps original caption")
 
 	check(checks >= 20, "suite ran enough checks (%d)" % checks)
 	if root.has_node("AudioDirector"):

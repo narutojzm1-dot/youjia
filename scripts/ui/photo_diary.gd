@@ -4,10 +4,10 @@ extends RefCounted
 # Pure presentation. A bounded variant is chosen once by PhotoMoment.capture.
 # Reading, switching languages and reopening the album never draw again.
 #
-# REQ-20261009-077 (Owner GROK-CONTRIBUTOR): when the snapshot recorded weather,
-# the diary line pads a short weather crumb (reusing hud.weather.*) between the
-# day and the moment — sunny / overcast / rainy photos read apart at a glance.
-# Old saves without a weather field keep the previous two-line caption.
+# REQ-20261009-077：只有记下 caption_variant 的新快照，才在瞬间文案前垫天气纸签。
+# 纸签复用 hud.weather.*（大太阳 / 阴天 / 细雨）。
+# 缺 caption_variant 的旧照片即使仍带合法 weather，也保持原先说明，不回溯改字。
+# 无 weather、未知值、或旧存档没有 day：行为与改前一致。
 static func caption(snapshot: Dictionary, rule_id: String = "") -> String:
 	var id := rule_id if not rule_id.is_empty() else str(snapshot.get("rule_id", ""))
 	var rule := ExpressionCatalog.find_rule(id)
@@ -31,7 +31,8 @@ static func caption(snapshot: Dictionary, rule_id: String = "") -> String:
 		var alternative := key + ".v%d" % variant
 		if locale.call("has_key", alternative): key = alternative
 	var moment := str(locale.call("t", key)) if locale.call("has_key", key) else title
-	var weather := weather_crumb(snapshot, locale)
+	# 天气纸签只加给带 caption_variant 的快照；缺该字段的旧照片保持原文。
+	var weather := weather_crumb(snapshot, locale) if snapshot.has("caption_variant") else ""
 	if not weather.is_empty():
 		moment = "%s · %s" % [weather, moment]
 	return str(locale.call("t", "photo.diary.day", {"day": str(day), "moment": moment}))
