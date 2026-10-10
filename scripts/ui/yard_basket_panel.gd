@@ -37,6 +37,11 @@ var world: Node2D
 ## #597：手持快捷栏；背篓开着时它贴在屏幕底边当落点，纸面让出 reserve_bottom 这一条
 var hotbar: Control
 var reserve_bottom := 0.0
+## 矮横屏里纸面高度不够再让一条：快捷栏放进纸面右下角，与收窄的「合上背篓」同排
+var shared_row := false
+const SHARED_CLOSE_MIN := 140.0
+const SHARED_GAP := 8.0
+const SHARED_INSET := 4.0
 var drag_kind := ""
 var drag_spot := ""
 var drag_layer: Control
@@ -266,9 +271,14 @@ static func state_style(mode: String) -> StyleBoxFlat:
 
 func fit() -> void:
 	if panel == null: return
-	var room := size.y - _reserved_bottom()
-	var target := Vector2(minf(520, size.x - EDGE * 2.0), minf(620, room - EDGE * 2.0))
+	var bar_on := _bar_ready() and hotbar.visible
+	var bar_size: Vector2 = hotbar.get_combined_minimum_size() if bar_on else Vector2.ZERO
+	var width := minf(520, size.x - EDGE * 2.0)
+	shared_row = bar_on and minf(620, size.y - EDGE * 2.0) <= COMPACT_HEIGHT and width - 32.0 - bar_size.x - SHARED_GAP >= SHARED_CLOSE_MIN
+	var room := size.y - (reserve_bottom if bar_on and not shared_row else 0.0)
+	var target := Vector2(width, minf(620, room - EDGE * 2.0))
 	_set_compact(target.y <= COMPACT_HEIGHT)
+	_sync_close_row(bar_size)
 	var row_width := NARROW_ROW_BUTTON_WIDTH if target.x < NARROW_WIDTH else ROW_BUTTON_WIDTH
 	for button: Button in fish_buttons.values():
 		button.custom_minimum_size.x = row_width
@@ -280,6 +290,7 @@ func fit() -> void:
 	var natural := panel.get_combined_minimum_size().y - scroll.get_combined_minimum_size().y + rows.get_combined_minimum_size().y
 	panel.size = Vector2(target.x, minf(target.y, ceilf(natural)))
 	panel.position = (Vector2(size.x, room) - panel.size) * 0.5
+	if bar_on: _place_hotbar(bar_size)
 
 func set_hotbar(bar: Control, reserve: float) -> void:
 	hotbar = bar
@@ -287,8 +298,26 @@ func set_hotbar(bar: Control, reserve: float) -> void:
 	grid.hotbar = bar
 	fit()
 
-func _reserved_bottom() -> float:
-	return reserve_bottom if _bar_ready() else 0.0
+## 同排时「合上背篓」收窄、加高到快捷栏那么高，快捷栏压在它右边；否则快捷栏贴屏幕底边居中
+func _sync_close_row(bar_size: Vector2) -> void:
+	if shared_row:
+		var inner := panel.size.x - 32.0
+		close_button.custom_minimum_size = Vector2(maxf(SHARED_CLOSE_MIN, inner - bar_size.x - SHARED_GAP + SHARED_INSET * 2.0), bar_size.y - SHARED_INSET * 2.0)
+		close_button.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
+	else:
+		close_button.custom_minimum_size = Vector2(104, 44)
+		close_button.size_flags_horizontal = Control.SIZE_FILL
+
+func _place_hotbar(bar_size: Vector2) -> void:
+	var rect := hotbar_rect(bar_size)
+	hotbar.position = rect.position
+	hotbar.size = rect.size
+
+func hotbar_rect(bar_size: Vector2) -> Rect2:
+	if shared_row:
+		var end := panel.position + panel.size
+		return Rect2(end - bar_size - Vector2(16.0 - SHARED_INSET, 12.0 - SHARED_INSET), bar_size)
+	return Rect2(Vector2((size.x - bar_size.x) * 0.5, size.y - bar_size.y - (reserve_bottom - bar_size.y) * 0.5), bar_size)
 
 func _bar_ready() -> bool:
 	return hotbar != null and is_instance_valid(hotbar)
@@ -363,12 +392,12 @@ func update_view(inventory: Dictionary, keepsakes: Dictionary, state: String, bu
 	call_deferred("fit")
 
 func _on_grid_action(action: String, kind: String) -> void:
-	if action == "hotbar_add" and _bar_ready():
-		var index: int = hotbar.add_to_first_empty(kind)
+	if action == "hotbar_add":
+		var index: int = hotbar.add_to_first_empty(kind) if _bar_ready() else -1
 		if index >= 0: _hotbar_note(kind, index)
 		return
-	if action == "hotbar_remove" and _bar_ready():
-		if hotbar.remove_kind(kind): _hotbar_note(kind, -1)
+	if action == "hotbar_remove":
+		if _bar_ready() and hotbar.remove_kind(kind): _hotbar_note(kind, -1)
 		return
 	if action.begins_with("place:"):
 		var id: String = grid.FIND_IDS.get(kind, "")

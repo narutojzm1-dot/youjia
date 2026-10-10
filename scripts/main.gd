@@ -2390,15 +2390,16 @@ func _layout_hold_hotbar() -> void:
 		return
 	var Hotbar = load("res://scripts/ui/hold_hotbar.gd")
 	var over_basket := _basket_panel != null and _basket_panel.visible
-	var rect: Rect2 = Hotbar.basket_rect(size) if over_basket else Hotbar.preferred_rect(size, _stacked_hud())
 	_hold_hotbar.set_slot_side(Hotbar.slot_side(size.x))
 	if _basket_panel != null:
-		var reserve: float = Hotbar.basket_rect(size).size.y + Hotbar.BASKET_MARGIN * 2.0
-		if not is_equal_approx(reserve, _basket_panel.reserve_bottom):
-			_basket_panel.reserve_bottom = reserve
-			_basket_panel._queue_fit()
-	_hold_hotbar.position = rect.position
-	_hold_hotbar.size = rect.size
+		_basket_panel.reserve_bottom = Hotbar.basket_rect(size).size.y + Hotbar.BASKET_MARGIN * 2.0
+	if over_basket:
+		# 背篓开着：位置由背篓纸面排定（贴底边，或矮横屏里放进纸面右下角）
+		_basket_panel.fit()
+	else:
+		var rect: Rect2 = Hotbar.preferred_rect(size, _stacked_hud())
+		_hold_hotbar.position = rect.position
+		_hold_hotbar.size = rect.size
 	_sync_hold_hotbar_visibility()
 
 
@@ -2420,10 +2421,13 @@ func _sync_hold_hotbar_visibility() -> void:
 		# 背篓开着：快捷栏压在背篓纸面之上、贴屏幕底边，只当拖放落点
 		_ui_layer.move_child(_hold_hotbar, _ui_layer.get_child_count() - 1)
 	var was_over: bool = _hold_hotbar.configuring
+	var was_shown: bool = _hold_hotbar.visible
 	_hold_hotbar.set_configuring(over_basket)
 	_hold_hotbar.visible = show
 	if was_over != over_basket:
 		_layout_hold_hotbar()
+	elif over_basket and was_shown != show:
+		_basket_panel._queue_fit()
 
 
 func _on_hold_withdraw(kind: String) -> void:

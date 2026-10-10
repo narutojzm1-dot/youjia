@@ -476,9 +476,11 @@ func press_at(at: Vector2) -> bool:
 				if not button.disabled: button.pressed.emit()
 				return true
 		if menu.get_global_rect().has_point(at): return true
+	# 滚出清单窗的格子仍有位置，但看不见；只认窗内的点，免得点到窗外的按钮却开了被遮住那格
+	var clip := _clip_rect()
 	for kind: String in ORDER:
 		var cell: Button = cells[kind]
-		if cell.get_global_rect().has_point(at):
+		if cell.get_global_rect().has_point(at) and (clip.size == Vector2.ZERO or clip.has_point(at)):
 			if cell.disabled:
 				close_menu()
 				return true
@@ -489,6 +491,13 @@ func press_at(at: Vector2) -> bool:
 		close_menu()
 		return true
 	return false
+
+func _clip_rect() -> Rect2:
+	var node := get_parent()
+	while node != null:
+		if node is ScrollContainer: return (node as Control).get_global_rect()
+		node = node.get_parent()
+	return Rect2()
 
 func _unhandled_key_input(event: InputEvent) -> void:
 	if menu.visible and event.is_action_pressed("ui_cancel"):
