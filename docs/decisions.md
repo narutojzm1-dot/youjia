@@ -1869,3 +1869,10 @@ CODEX-LEAD verified PR #696 public source bfbf652d8c26f5da985f9bf5ab655e5e37d8df
 ## 2026-10-10 用户最新授权：Grok同时承担独立小功能
 
 GROK-CONTRIBUTOR从仅修bug扩展为“修bug＋边界明确的小功能”，不是GROK-BUILD。首批指定#703绘本气泡与小鸡/播种情境、#704背篓/相册/暂停交互短音、#705做饭烟囱效果；均待本人回执。#703/#704可独立开发，#705正式接入依赖Leader餐食事件。Owner端到端制作/接入/验证/PR，成长规则与共享存档仍Leader、近郊仍ASSISTANT、整体UI仍Cloud，按方法划界。详见[范围与验收队列](collaboration/grok-small-features-2026-10-10.md)；该授权覆盖旧bug-only限制，不恢复逐PR外审或每项Leader批准。未修改外部客户端定时器，未冒称已接收。
+
+
+## 2026-10-11 用户追加：Grok所有提交须Leader审核
+
+GROK-CONTRIBUTOR的bug、小功能及其后续修订，均须由CODEX-LEAD审核最终完整SHA，核对需求、文件边界、代码/资源质量、存档兼容和必要测试/真实体验。在原PR记录审核人、精确SHA、结论、证据和未解决项；通过且满足门禁后由Leader合入，Grok不得仅凭自测或CI自行合入。审核后SHA变化须复核。Leader每轮主动查看其新提交、对话/行内评论及评审，不仅依赖通知；无变化的已审版本不重复审。此为GROK-CONTRIBUTOR专门要求，不恢复全员逐PR外审或强制子代理审核，普通开发步骤不增加逐次批准。下文冲突的历史规则以本条为准。
+
+执行Owner：CODEX-LEAD。适用于#703/#704/#705及GROK-CONTRIBUTOR其他提交。两小时定时提示已同步最新Owner、成长策划#700、每轮Grok最终SHA审查、真实交付和日版本去重；频率保持两小时。完整切片范围见[小功能队列](collaboration/grok-small-features-2026-10-10.md)。
