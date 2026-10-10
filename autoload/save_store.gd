@@ -324,14 +324,23 @@ func request_exploration_trip(record: Variant, trip_serial: int, find_ids: Packe
 			return ""
 	var frozen: Variant = _copy_record(record)
 	var finds := find_ids.duplicate()
-	var op_id := request_intent("exploration_trip", func(current: Dictionary) -> Dictionary:
-		receipt.granted = trip_serial > int(current.get("exploration_committed_serial", 0))
-		if receipt.granted:
+	var op_id := request_intent("exploration_trip", func(current: Dictionary) -> Variant:
+		receipt.granted = false
+		if trip_serial > int(current.get("exploration_committed_serial", 0)):
 			var keepsakes: Dictionary = (current.get("keepsakes", {}) as Dictionary).duplicate(true)
+			# Check the entire grant at the FIFO head, including repeated finds.
+			# Clamping would lose items while making this trip impossible to retry.
+			var incoming: Dictionary = {}
 			for find_id: String in finds:
-				keepsakes[find_id] = mini(int(keepsakes.get(find_id, 0)) + 1, SaveDataCodec.MAX_KEEPSAKE_COUNT)
+				incoming[find_id] = int(incoming.get(find_id, 0)) + 1
+			for find_id: String in incoming:
+				if int(keepsakes.get(find_id, 0)) > SaveDataCodec.MAX_KEEPSAKE_COUNT - int(incoming[find_id]):
+					return CoordinatorType.IntentRejection.new("EXPLORATION_KEEPSAKE_LIMIT")
+			for find_id: String in incoming:
+				keepsakes[find_id] = int(keepsakes.get(find_id, 0)) + int(incoming[find_id])
 			current.keepsakes = keepsakes
 			current.exploration_committed_serial = trip_serial
+			receipt.granted = true
 		current.exploration = _copy_record(frozen)
 		return current)
 	_emit_exploration_identity(op_id, "exploration_trip", frozen, trip_serial, finds)
