@@ -16,6 +16,24 @@ func _initialize() -> void: call_deferred("run")
 func check(ok: bool, label: String) -> void:
 	checks += 1
 	if not ok: failures.append(label)
+# 把动物停在当前落点。长休息盖过本夹具里的 randf 游走，避免再走进门洞。
+func hold_still(actor) -> void:
+	actor._velocity = Vector2.ZERO
+	actor._stuck = 0.0
+	actor.state = "rest"
+	actor._idle_time = 100000.0
+	actor._target = actor.position
+# 棚内牛羊放到各自室外活动区中心，并退出棚舍接管，进圈路线上不再有它们的身体。
+func park_pen_resident(world, id: String) -> void:
+	var actor = world.actor_named(id)
+	var home: Rect2 = world.shelter.outdoors[id]
+	world.debug_place_actor(id, home.get_center())
+	actor.walk_ground = Ground.for_body(world.gate.opened, actor.position)
+	if world.shelter.active == id:
+		world.shelter.active = ""
+		world.shelter.paths.erase(id)
+	world.shelter.release(actor)
+	hold_still(actor)
 func settle(store: Node) -> void:
 	check(await store.flush_pending(), "native commit acknowledged")
 	for i in 3: await process_frame
@@ -90,7 +108,10 @@ func run() -> void:
 	check(not PhotoMoment.sanitize(old_photo).has("yard_gate"), "old photo gains no invented gate state")
 	# This destination is now the cow's bed. Let residents leave through the
 	# open gate first instead of expecting the player to walk into a body.
+	# 羊驼不受活动区约束，会随机走到门外窄路上；马和大鹅的身体也会挡出棚。先按住它们。
 	world.debug_place_player(Vector2(830,550))
+	for id: String in ["llama", "horse", "goose"]:
+		hold_still(world.actor_named(id))
 	for i in 1800:
 		world._day_elapsed = 150.0
 		world.tick(0.1,Vector2.ZERO)
@@ -98,6 +119,12 @@ func run() -> void:
 		for id: String in world.shelter.IDS:
 			if not world.shelter.outdoors[id].has_point(world.actor_named(id).position): clear = false
 		if clear: break
+	# 到时仍没出棚必须失败，不能当成路已清空继续走。
+	for id: String in world.shelter.IDS:
+		var resident = world.actor_named(id)
+		var home: Rect2 = world.shelter.outdoors[id]
+		check(home.has_point(resident.position), "pen resident %s is outdoors before the doorway walk at %s" % [id, resident.position])
+		park_pen_resident(world, id)
 	world.debug_place_player(Ground.OUTSIDE)
 	world.request_pointer_action(Vector2(1000,471))
 	for i in 1200:
