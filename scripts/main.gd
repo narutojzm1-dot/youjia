@@ -78,6 +78,7 @@ var _album_chip: Button
 var _weather_chip: Button
 var _basket_chip: Button
 var _basket_panel: Control
+var _ui_sfx: RefCounted
 var _hotbar_save: Node
 var _hold_hotbar: Control
 var _residents: RefCounted
@@ -347,6 +348,8 @@ func _ready() -> void:
 	_ui_layer.add_child(_basket_panel)
 	_basket_panel.visible = false
 	_basket_panel.close_requested.connect(_hide_basket)
+	_ui_sfx = preload("res://scripts/presentation/ui_interaction_audio.gd").new()
+	_ui_sfx.ensure_registered()
 	_basket_panel.action_requested.connect(func(action: String, fish: String) -> void: _inventory.request(action, fish))
 	_basket_panel.retry_requested.connect(_retry_basket)
 	_chick_panel = preload("res://scripts/ui/chick_care_panel.gd").new()
@@ -1514,6 +1517,7 @@ func _show_basket() -> void:
 	_world.cancel_scene_feedback()
 	_world.input_enabled = false
 	_basket_panel.visible = true
+	if _ui_sfx != null: _ui_sfx.play_open()
 	_ui_layer.move_child(_basket_panel, _ui_layer.get_child_count() - 1)
 	_on_inventory_changed()
 	_sync_hold_hotbar_visibility()
@@ -1525,6 +1529,7 @@ func _show_basket() -> void:
 
 func _hide_basket() -> void:
 	_basket_panel.visible = false
+	if _ui_sfx != null: _ui_sfx.play_close()
 	get_tree().paused = false
 	AudioDirector.set_game_paused(false)
 	if _world != null: _world.input_enabled = true
@@ -1673,6 +1678,9 @@ func _toggle_pause() -> void:
 		_cancel_photo_arrivals()
 	_pause_screen.visible = paused
 	get_tree().paused = paused
+	if _ui_sfx != null:
+		if paused: _ui_sfx.play_open()
+		else: _ui_sfx.play_close()
 	AudioDirector.set_game_paused(paused)
 	if _world != null and _screen == "game":
 		_world.input_enabled = not paused
@@ -2037,6 +2045,7 @@ func _show_album() -> void:
 	_cancel_photo_arrivals()
 	_album_index = 0
 	_album_screen.visible = true
+	if _ui_sfx != null: _ui_sfx.play_open()
 	# 打开相册：更强脉冲 + 居中 pivot，让桌面 Web 一次点击就有明确“开了”的反馈
 	if _album_chip != null:
 		_album_chip.pivot_offset = _album_chip.size * 0.5
@@ -2054,6 +2063,7 @@ func _show_album() -> void:
 
 func _hide_album() -> void:
 	_album_screen.visible = false
+	if _ui_sfx != null: _ui_sfx.play_close()
 	_album_touch_origin = Vector2.INF
 	if _screen == "game": _hud.visible = true
 	if _world != null and not _pause_screen.visible:
@@ -2076,6 +2086,7 @@ func _flip_album(direction: int) -> void:
 	if next_index == _album_index: return
 	_album_index = next_index
 	_render_album_pages()
+	if _ui_sfx != null: _ui_sfx.play_page()
 
 
 func _render_album_pages() -> void:

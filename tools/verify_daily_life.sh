@@ -37,6 +37,7 @@ run_godot suite test/photo_caption_fit_suite.gd
 run_godot suite test/save_status_paper_suite.gd
 run_godot suite test/pause_notice_suite.gd
 run_godot suite test/audio_button_input_suite.gd
+run_godot suite test/ui_interaction_audio_suite.gd
 run_godot suite test/ambience_output_ceiling_suite.gd
 run_godot suite test/modal_touch_input_suite.gd
 run_godot suite test/yard_inventory_suite.gd
