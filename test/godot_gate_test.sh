@@ -207,6 +207,10 @@ for basket_pair in 'yard_inventory|YARD_INVENTORY' 'yard_basket_integration|YARD
 done
 echo "BASKET GATE CONTRACT PASS 6"
 
+run_case nearby-motion-valid pass 0 'NEARBY_MOTION checks=1 failures=0' none suite test/nearby_motion_suite.gd
+run_case nearby-motion-zero block 0 'NEARBY_MOTION checks=0 failures=0' none suite test/nearby_motion_suite.gd
+run_case nearby-motion-failed block 0 'NEARBY_MOTION checks=1 failures=1' none suite test/nearby_motion_suite.gd
+
 for decor_pair in 'yard_decor|YARD_DECOR' 'yard_decor_persistence|YARD_DECOR_PERSISTENCE' 'yard_decor_integration|YARD_DECOR_INTEGRATION'; do
   decor_entry="test/${decor_pair%%|*}_suite.gd"
   decor_marker="${decor_pair#*|}"
