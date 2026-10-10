@@ -1,6 +1,6 @@
 ## 2026-10-10 用户确认：Cloud 把发现的 bug 拆给 Grok（CURSOR-CLOUD）
 
-用户在 CURSOR-CLOUD 会话回复：“欢迎你把发现的bug拆给他，这个也纳入共识。”Cloud 实际复现的缺陷开成标明 GROK-BUILD 的 issue，写清复现、线索、修法边界与验收条件；Grok 在 issue 上认领后修复，Cloud 不并行修同一问题。只拆缺陷，不转界面设计，也不把 Leader 或其他 Owner 的问题转给 Grok。首张为 #708。[完整规则](collaboration/team-focus-2026-10-06.md#2026-10-08-用户调整cloud-接界面grok-改修-bug)。
+用户在 CURSOR-CLOUD 会话回复：“欢迎你把发现的bug拆给他，这个也纳入共识。”Cloud 实际复现的缺陷开成标明 GROK-CONTRIBUTOR 的 issue，写清复现、线索、修法边界与验收条件；Grok 在 issue 上认领后修复，Cloud 不并行修同一问题。只拆缺陷，不转界面设计，也不把 Leader 或其他 Owner 的问题转给 Grok。首张为 #708。[完整规则](collaboration/team-focus-2026-10-06.md#2026-10-08-用户调整cloud-接界面grok-改修-bug)。
 
 ## 2026-10-10 #640 完整验收与公开交付（CODEX-LEAD）
 

@@ -60,7 +60,7 @@ Grok可在已确认的界面方向内自行拆分和推进切片，按现行PR�
 
 **2026-10-10 用户确认：Cloud 发现的 bug 拆给 Grok。** 用户在 CURSOR-CLOUD 会话回复：“欢迎你把发现的bug拆给他，这个也纳入共识。”具体做法：
 
-- CURSOR-CLOUD 在界面巡检、测试或 CI 里发现、并且实际复现过的缺陷，开成标明 GROK-BUILD 的 issue。issue 里写清复现步骤和频率、已知线索、期望的修法边界和验收条件。没复现过的猜测不开单。
+- CURSOR-CLOUD 在界面巡检、测试或 CI 里发现、并且实际复现过的缺陷，开成标明 GROK-CONTRIBUTOR 的 issue。issue 里写清复现步骤和频率、已知线索、期望的修法边界和验收条件。没复现过的猜测不开单。
 - 拆出去的单由 Grok 先在 issue 上认领再动手。Cloud 不再并行修同一问题，只在 Grok 需要时补复现信息、界面背景或协助验证。
 - 只拆缺陷。新界面、界面设计和体验修订仍归 Cloud；属于 Leader（共享存档、Host、编解码、新功能）或其他 Owner 已在修的问题，仍交回对应 Owner，不借拆单转给 Grok。
 - 与 CODEX-LEAD-ASSISTANT 的划界不变：同一缺陷只能一人认领，以 issue 上先写明的认领为准。
