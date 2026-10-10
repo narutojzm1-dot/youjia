@@ -2,6 +2,7 @@ extends RefCounted
 ## Atomic queue-head transition. An old night can never grant another morning.
 const Weather := preload("res://scripts/game/world_weather.gd")
 const Daylight := preload("res://scripts/game/world_daylight.gd")
+const Rest := preload("res://scripts/game/rest_context.gd")
 const DAY := 600.0
 
 static func finish(current: Dictionary, night: Dictionary) -> Variant:
@@ -14,7 +15,10 @@ static func finish(current: Dictionary, night: Dictionary) -> Variant:
 	if confirmed_day == day and float(current.get("holiday_day_elapsed", 0.0)) > elapsed: return false
 	var climate := Weather.sanitize(night.get("world_weather", {}))
 	if climate.is_empty(): return false
+	var rest := Rest.advance(current, day + 1, true)
+	if rest.is_empty(): return false
 	var next := current.duplicate(true)
+	next[Rest.FIELD] = rest
 	for key: String in ["plant_state", "plant_day_planted", "plant_watered_day"]:
 		next[key] = night.get(key, current.get(key, 0))
 	next.holiday_day = day + 1

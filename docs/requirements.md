@@ -918,3 +918,11 @@ GROK-CONTRIBUTOR的bug、小功能及其后续修订，均须由CODEX-LEAD审核
 Owner CODEX-LEAD；分支 `codex/lead-meal-ledger-700`。新增餐次完成凭据与食材扣除共享事务，确认后才可读、失败/未知/重开不重复扣料或发点；普通1/3/2、疲劳0/1/1。暂不挂主场景，不是完整成长已完成；跨日余点、食谱/时窗、疲劳自动判定、成长行动仍在#700接续。领域与SaveStore回归证据见 `docs/playtests/2026-10-11-meal-ledger/README.md`。
 
 Grok #703/#704已回执提交PR718/720；Leader分别在最终SHA 76b3df7f144f42eab7a71dfdb5172de38ed25061 / 445204d0d5073e4f72dc14190df1b31a3358a163 复现解析失败并退回，不合入。#705仍待本人回执；详细边界与原PR审核索引见小功能队列。
+
+## 2026-10-11 #700 真实休息来源与疲劳计餐
+
+Owner CODEX-LEAD；PR722核心已合入`45673209c8e88b4f6a8320cb9bf4d1020de53bc6`，完整门禁/Web导出通过；与Cloud721集成树`b3128dcd767d322179fdb6c260b805ae4e0b4d83`的餐次/快捷栏/窄屏回归通过。
+
+本次新增`resident_rest`，与自然跨日/房间睡眠同一快照写入。按当前游戏日记录legacy/sleep/awake来源；旧档无证据不倒追熬夜，自然跨日为awake，正常睡眠次日为sleep，重复/迟到事件不清除或叠加疲劳。SaveStore餐次入口不再接收调用者传入的fatigued，而在共享队首读取真实状态；未知/损坏字段拒绝写入，不重置原始数据。自主劳动速度接口为0.5/1.0，尚无劳动导演消费；手动走路不变。
+
+39项新回归+meal72/house_sleep154/regional_clock92通过，含生产World跨日、真实文件重读、普通睡眠恢复、三餐0/1/1、正常早餐1及SaveStore unknown两种解析。没有宣称做饭动画、疲劳气泡或自主劳动已上线；实际做饭仍待食谱/时间窗/导演，Grok气泡与烟囱待返修，跨日余点待决定。证据见`docs/playtests/2026-10-11-rest-context/README.md`。

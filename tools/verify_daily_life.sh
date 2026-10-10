@@ -147,3 +147,4 @@ run_godot suite test/resident_idle_rest_suite.gd
 run_godot suite test/exploration_trip_capacity_suite.gd
 
 run_godot suite test/meal_ledger_suite.gd
+run_godot suite test/rest_context_suite.gd

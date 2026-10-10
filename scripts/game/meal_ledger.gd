@@ -1,6 +1,6 @@
 extends RefCounted
 ## Completion receipts, not an AP balance or a recipe/time-window controller.
-## The cooking director must supply a validated recipe cost and fatigue context.
+## The director supplies recipe cost; SaveStore derives confirmed fatigue.
 ## Neither clock observation nor this API starts cooking or simulates offline meals.
 const FIELD := "meal_ledger"
 const GRANTS := {"breakfast": 1, "lunch": 3, "dinner": 2}
