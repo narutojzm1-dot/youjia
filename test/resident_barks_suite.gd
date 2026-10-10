@@ -54,6 +54,13 @@ func run() -> void:
 			misses += 1
 	check(misses > 0 and misses < 40, "chick chance is neither always nor never (misses=%d)" % misses)
 
+	# Probe interval: first roll consumes probe slot; sub-interval frames must not re-roll.
+	barks.reset()
+	var first = barks.try_chick_proximity(10.0, false, false)
+	var blocked = barks.try_chick_proximity(10.0 + Barks.CHICK_PROBE_INTERVAL * 0.5, false, false)
+	check(blocked.is_empty(), "chick probe interval blocks mid-window re-roll (first=%s)" % first)
+	check(Barks.CHICK_PROBE_INTERVAL >= 2.0, "chick probe interval is at least 2s (got %s)" % Barks.CHICK_PROBE_INTERVAL)
+
 	barks.reset()
 	check(barks.try_fatigue(0.0, false, false).is_empty(), "fatigue requires Leader flag")
 	check(barks.try_fatigue(0.0, false, true) == Barks.BARK_FATIGUE, "fatigue accepts when flagged")
