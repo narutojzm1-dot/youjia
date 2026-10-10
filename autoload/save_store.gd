@@ -159,6 +159,9 @@ func set_holiday_progress(day: int, elapsed: float) -> void:
 	var candidate := _data.duplicate(true)
 	candidate.holiday_day = maxi(1, day)
 	candidate.holiday_day_elapsed = maxf(0.0, elapsed)
+	var rest := RestContext.assign_clock(_data, int(candidate.holiday_day))
+	if rest.is_empty(): return
+	candidate[RestContext.FIELD] = rest
 	_commit_candidate(candidate)
 
 
@@ -168,6 +171,9 @@ func set_yard_progress(day: int, elapsed: float, state: int, day_planted: int, w
 	var candidate: Dictionary = _data.duplicate(true)
 	candidate.holiday_day = maxi(1, day)
 	candidate.holiday_day_elapsed = maxf(0.0, elapsed)
+	var rest := RestContext.assign_clock(_data, int(candidate.holiday_day))
+	if rest.is_empty(): return false
+	candidate[RestContext.FIELD] = rest
 	candidate.plant_state = clampi(state, 0, 3)
 	candidate.plant_day_planted = maxi(0, day_planted)
 	candidate.plant_watered_day = watered_day

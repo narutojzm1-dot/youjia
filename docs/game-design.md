@@ -514,4 +514,4 @@ Owner CODEX-LEAD；PR722核心已合入`45673209c8e88b4f6a8320cb9bf4d1020de53bc6
 
 本次新增`resident_rest`，与自然跨日/房间睡眠同一快照写入。按当前游戏日记录legacy/sleep/awake来源；旧档无证据不倒追熬夜，自然跨日为awake，正常睡眠次日为sleep，重复/迟到事件不清除或叠加疲劳。SaveStore餐次入口不再接收调用者传入的fatigued，而在共享队首读取真实状态；未知/损坏字段拒绝写入，不重置原始数据。自主劳动速度接口为0.5/1.0，尚无劳动导演消费；手动走路不变。
 
-39项新回归+meal72/house_sleep154/regional_clock92通过，含生产World跨日、真实文件重读、普通睡眠恢复、三餐0/1/1、正常早餐1及SaveStore unknown两种解析。没有宣称做饭动画、疲劳气泡或自主劳动已上线；实际做饭仍待食谱/时间窗/导演，Grok气泡与烟囱待返修，跨日余点待决定。证据见`docs/playtests/2026-10-11-rest-context/README.md`。
+43项新回归+meal72/house_sleep154/regional_clock92通过，含生产World跨日、真实文件重读、普通睡眠恢复、三餐0/1/1、正常早餐1及SaveStore unknown两种解析。没有宣称做饭动画、疲劳气泡或自主劳动已上线；实际做饭仍待食谱/时间窗/导演，Grok气泡与烟囱待返修，跨日余点待决定。证据见`docs/playtests/2026-10-11-rest-context/README.md`。

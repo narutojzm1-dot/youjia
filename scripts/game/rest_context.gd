@@ -24,6 +24,16 @@ static func advance(snapshot: Dictionary, next_day: int, slept: bool) -> Diction
 static func fatigued(state: Dictionary) -> bool:
 	return state.get("cause", "") == "awake"
 
+## Legacy native setters explicitly assign a clock (including test/tool rewind).
+## Keep their old bounds contract without leaving a mismatched rest day or
+## clearing fatigue on rewind. The production queued clock stays monotonic.
+static func assign_clock(snapshot: Dictionary, next_day: int) -> Dictionary:
+	var state := read(snapshot)
+	if state.is_empty() or next_day < 1 or next_day > MAX_DAY: return {}
+	if next_day > int(state.day): return advance(snapshot, next_day, false)
+	state.day = next_day
+	return state
+
 ## For future autonomous work only; do not change player movement or ambience.
 static func work_speed(state: Dictionary) -> float:
 	if state.is_empty(): return 0.0

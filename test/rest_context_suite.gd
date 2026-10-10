@@ -69,6 +69,12 @@ func run() -> void:
 	check(store.get_rest_context().cause == "sleep", "rested provenance also survives reread")
 	main.queue_free()
 	await process_frame
+	store.set_holiday_progress(4,0.0)
+	check(store.get_holiday_day() == 4 and Rest.fatigued(store.get_rest_context()), "legacy native clock setter keeps context aligned")
+	check(store.set_yard_progress(3,0.0,0,0,-1), "legacy explicit clock assignment retains bounds contract")
+	check(store.get_rest_context().day == 3 and Rest.fatigued(store.get_rest_context()), "legacy rewind does not erase fatigue or corrupt rest day")
+	store.request_house_sleep({"holiday_day":3,"holiday_day_elapsed":400.0,"world_weather":night.world_weather})
+	check(await store.flush_pending() and store.get_rest_context().cause == "sleep", "normal sleep restores rest after legacy assignments")
 	# Production SaveStore with controlled unknown receipts: neither clock nor
 	# fatigue may change until the same transaction is authoritatively resolved.
 	for landed: bool in [false,true]:
