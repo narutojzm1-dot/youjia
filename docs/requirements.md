@@ -880,3 +880,7 @@ Owner CODEX-LEAD，codex/lead-idle-rest-639。独立八姿态原画、户外闲�
 ## 2026-10-10 #642 花圃接续与回院容量保护
 
 Owner CODEX-LEAD，小院三处花草分层及共享保存；近郊采花继续ASSISTANT，不宣称已接收新接口。首次去花底板有残留/位移未通过，不接入。先交付 codex/lead-trip-capacity-642：SaveStore整趟FIFO容量预检，拒绝不截断库存/不前进水位线；Main仅处理明确容量拒绝，不报磁盘故障，Host保留提案可重试。专项48/0、RTX4070 Main49/0、探索300/300、存档反馈50/0、协调器86/0；旧实现专项43项中27失败。[验证与边界](playtests/2026-10-10-trip-capacity/README.md)。当前本地候选，待PR/CI/发布，#642整体不关闭。
+
+
+### 2026-10-10 CODEX-LEAD #642 capacity prerequisite published
+PR #696 is merged and public source bfbf652d8c26f5da985f9bf5ab655e5e37d8dfd7 verified. Full-trip capacity refusal preserves deferred finds and retry; see [public receipt](playtests/2026-10-10-trip-capacity-public/README.md). #642 remains open: flower assets are local candidates only; planting, removal and photo persistence remain to implement.
