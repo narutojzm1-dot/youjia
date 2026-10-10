@@ -12,6 +12,8 @@ uniform float native_walk_face = 1.0;
 uniform bool face_override = false;
 uniform sampler2D expression_texture : filter_linear;
 uniform vec4 face_region = vec4(0.0,0.0,1.0,1.0);
+uniform float rest_breath_shift = 0.0;
+uniform vec4 rest_breath_region = vec4(0.0, 0.0, 1.0, 1.0);
 uniform float blink_amount = 0.0;
 uniform sampler2D blink_texture : filter_linear;
 uniform vec4 blink_eye_a = vec4(0.0, 0.0, 1.0, 1.0);
@@ -49,6 +51,8 @@ void fragment() {
 		uv.x -= foot * stride_uv * native_walk_face * leg * amount;
 		uv.y += lift * lift_uv * leg * amount;
 	}
+	// Feather the chest, including its upper silhouette; head/feet lie outside.
+	uv.y += clamp(rest_breath_shift, 0.0, 0.006) * eye_mask(UV, rest_breath_region);
 	vec4 ink = texture(TEXTURE, uv);
 	if (face_override) {
 		vec2 local = (uv-face_region.xy)/face_region.zw;
