@@ -124,6 +124,7 @@ func run() -> void:
 	check(bar.slots[0] == fish, "menu puts the fish into the first empty slot")
 	check(grid.menu.visible and grid.menu_hotbar.text == "从快捷栏第1格拿下", "paper stays open and now offers taking it off slot 1")
 	check(panel.status.text.contains("第1格"), "basket note says which slot")
+	check(Prefs.persistent(), "native user:// is a real file, so the preference is written")
 	check(Prefs.load_slots() == bar.slots, "slots are saved to the UI preference file")
 	check(bar.slot_counts[0].text == "×1" and bar.slot_icons[0].texture != null, "slot shows the fish and its basket count")
 	grid.menu_hotbar.pressed.emit()
