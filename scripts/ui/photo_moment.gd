@@ -93,6 +93,7 @@ static func capture(world: Node2D, rule: Dictionary) -> Dictionary:
 		"house_lights": float(world.house.lights) if _property(world,"house") != null else 0.0,
 		"yard_gate": world.gate_view.record.duplicate(true) if _property(world,"gate_view") != null else {},
 		"rain": world.rain.snapshot() if _property(world,"rain") != null else {},
+		"night_sky": world.get_node("RegionalNightSky").snapshot() if world.has_node("RegionalNightSky") else {},
 	})
 
 
@@ -146,6 +147,8 @@ static func sanitize(data: Variant) -> Dictionary:
 		cleaned.caption_variant = int(data.caption_variant)
 	var rain := preload("res://scripts/game/regional_rain.gd").sanitize(data.get("rain", {}))
 	if not rain.is_empty() and float(rain.amount) > 0.0: cleaned.rain = rain
+	var night_sky := preload("res://scripts/game/regional_night_sky.gd").sanitize(data.get("night_sky", {}))
+	if not night_sky.is_empty() and float(night_sky.amount) > 0.0: cleaned.night_sky = night_sky
 	if data.has("house_lights") and _number(data.house_lights,0.0,1.0): cleaned.house_lights = float(data.house_lights)
 	var gate: Variant = data.get("yard_gate", {})
 	if gate is Dictionary and gate.get("opened") is bool and _number(gate.get("mix"),0.0,1.0) and _numbers(gate.get("sun"),4,0.0,2.0) and _numbers(gate.get("cloud"),4,0.0,2.0):
@@ -244,6 +247,17 @@ func setup(snapshot: Dictionary) -> void:
 		# Keep legacy items (including negative-depth clouds) in their old order.
 		if item.kind == "sprite" and item.subject in ["weather_background", "weather_cloud"]:
 			_stage.move_child(visual, _shadows.get_index())
+	if _snapshot.has("night_sky"):
+		var painted := Sprite2D.new()
+		painted.texture = _background_texture
+		painted.transform = _transform(_snapshot.background.transform)
+		var sky = preload("res://scripts/game/regional_night_sky.gd").new()
+		sky.configure(painted)
+		painted.free()
+		sky.restore(_snapshot.night_sky)
+		sky.z_index = 0
+		_stage.add_child(sky)
+		_stage.move_child(sky, _shadows.get_index())
 	if float(_snapshot.get("house_lights",0.0)) > 0.0:
 		var light_view = preload("res://scripts/game/house_lights.gd").new()
 		light_view.lights = float(_snapshot.house_lights)
@@ -315,6 +329,8 @@ func _draw_shadows() -> void:
 
 
 static func _collect(node: Node, world: Node2D, backdrop: Node, subject: String, items: Array) -> void:
+	# Shader output has its own bounded frozen record, never the unshaded source bitmap.
+	if node.get_script() == preload("res://scripts/game/regional_night_sky.gd"): return
 	if node is CanvasItem and not node.is_visible_in_tree():
 		return
 	var actor_id: Variant = _property(node, "actor_id", "")
