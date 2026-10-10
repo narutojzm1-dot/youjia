@@ -2,7 +2,8 @@ extends SceneTree
 ## Short landscapes: the pause / confirm paper covers part of the yard HUD (goal paper, 「歇一会儿」,
 ## day label, bottom chips) and left half-cut text peeking past its edge. Any HUD piece the open
 ## paper overlaps is now faded out with its group (goal paper / top-right column / bottom row, so the
-## row never shows a gap; self_modulate only) and comes back when the paper closes.
+## row never shows a gap; self_modulate only) and comes back when the paper closes. The basket,
+## chick care and crop papers follow the same rule.
 const VIEWPORTS := [Vector2i(280, 653), Vector2i(320, 568), Vector2i(390, 844), Vector2i(568, 320), Vector2i(640, 300), Vector2i(640, 360), Vector2i(844, 390), Vector2i(1024, 600), Vector2i(1280, 720), Vector2i(1920, 1080)]
 var checks := 0
 var failures: Array[String] = []
@@ -95,6 +96,36 @@ func run() -> void:
 				for node: Control in group:
 					check(is_equal_approx(node.self_modulate.a, 1.0), tag + " every HUD piece comes back after resuming")
 			check(flags(main) == before, tag + " resuming leaves HUD state as before")
+	var papers := {
+		"basket": [func() -> void: main._show_basket(), func() -> void: main._hide_basket(), func() -> Control: return main._basket_panel.panel],
+		"chick": [func() -> void: main._show_chick_care(), func() -> void: main._hide_chick_care(), func() -> Control: return main._chick_panel.paper],
+		"crop": [func() -> void: main._show_crops(), func() -> void: main._hide_crops(), func() -> Control: return main._crop_panel.paper],
+	}
+	for locale: String in ["zh-CN", "en"]:
+		root.get_node("I18n").set_locale(locale)
+		for viewport: Vector2i in VIEWPORTS:
+			root.size = viewport
+			await settle()
+			for kind: String in papers:
+				var tag := "%s %s %s" % [kind, locale, viewport]
+				var before := flags(main)
+				(papers[kind][0] as Callable).call()
+				await settle()
+				var paper: Control = (papers[kind][2] as Callable).call()
+				check(paper.is_visible_in_tree(), tag + " paper open")
+				var hidden := check_against(main, [paper.get_global_rect()], tag + ":")
+				hidden_at["%s %s %s" % [kind, locale, viewport]] = hidden
+				check(flags(main) == before, tag + " opening changes no HUD visibility, input filter or disabled state")
+				(papers[kind][1] as Callable).call()
+				await settle()
+				for group: Array in groups(main):
+					for node: Control in group:
+						check(is_equal_approx(node.self_modulate.a, 1.0), tag + " every HUD piece comes back after closing")
+				check(flags(main) == before, tag + " closing leaves HUD state as before")
+	for locale: String in ["zh-CN", "en"]:
+		check((hidden_at["basket %s (568, 320)" % locale] as Dictionary).size() == 3, locale + " 568x320: basket paper fades all three groups it covers")
+		check((hidden_at["basket %s (390, 844)" % locale] as Dictionary).is_empty(), locale + " 390x844: basket paper covers no HUD, all stay")
+		check((hidden_at["crop %s (1920, 1080)" % locale] as Dictionary).is_empty(), locale + " 1920x1080: crop paper covers no HUD")
 	if OS.get_environment("HUD_UNDER_MENU_REPORT") == "1":
 		for key: String in hidden_at: print("hidden ", key, " ", (hidden_at[key] as Dictionary).keys())
 	for locale: String in ["zh-CN", "en"]:
