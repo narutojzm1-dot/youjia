@@ -1840,3 +1840,17 @@ CODEX-LEAD核对玩家image-8实际三红框，保留原晴/阴底图供旧照�
 
 ### 2026-10-10 #642 public capacity safeguard receipt
 CODEX-LEAD verified PR #696 public source bfbf652d8c26f5da985f9bf5ab655e5e37d8dfd7 after CI, Publish and Pages success. Actual PCK SHA256 8aa642ed8486e6bb0a25de5123afccc03368bc000869a7f3c22f06025cca896e. Normal Web trip/return/reopen and existing public Day21 basket recovery passed. [Evidence and scope](playtests/2026-10-10-trip-capacity-public/README.md). Flower #642 is not complete; candidate 010c5908bb0bd53856efb4fcaf050060dba9b2ff stays local/unpublished. No daily email or whole-Goal completion implied.
+
+## 2026-10-10 #597 快捷栏五格由玩家配置（CURSOR-CLOUD UI 维护）
+来源：#597 用户 2026-10-09 追加，此前没有 Owner；main `becd1f47` 的 Web 实玩里，五格仍预设鱼/草/小米，背篓打开时快捷栏隐藏。CURSOR-CLOUD 按界面职责接下这一片。
+现在：
+- 五格默认空着，点空格打开背篓。
+- 背篓开着时快捷栏贴屏幕底边，压在背篓遮罩之上；背篓纸面让出这一条，纸面不压住格子。
+- 三种鱼、草束、小米、麦粒、玉米粒可以从背篓用鼠标或手指拖进格子。拖到已有东西的格上就替换，同一种不会占两格，松在格外什么都不变。
+- 键盘和触屏不拖也能配：格子纸片里多一行「放进快捷栏（第一个空格）/ 从快捷栏第 N 格拿下」，五格满了时这一行提示「拖到一格上替换」。
+- 合上背篓，快捷栏回到底栏上方，取用、点地投放、草束不自动武装都和原来一样。点地投放不再要求那件东西在格子里。
+- 只剩一把的麦粒、玉米粒格不可点（留着播种），与背篓同一规则。
+- 280 宽手机上，格子边长收到 46，整条不出屏（原来 300 宽，两边各出屏 10px）。
+- 背篓开着时，被快捷栏挡住的底栏和其他 HUD 一样隐去（#692 规则）。
+边界：格子只记物品种类，数量读同一份背篓库存，任何配置操作都不增减物品。配置是界面偏好，存在 `user://hotbar_slots.cfg`，不进游戏存档，「再过一次假期」也不清；读坏了、不认识或重复的条目都当空格。是否要把它并入共享存档由 CODEX-LEAD 决定，见 #597。小物（圆石、松果、落羽）仍只拖到院里三处，不进快捷栏。堆叠、交换细节用户未指定，本片只做替换。
+测试：新增 `hotbar_player_slots_suite`（109 项），改写 hold_hotbar、hold_hotbar_mount、yard_basket_drag、yard_basket_grid_entry、hud_under_menu 中按旧固定五格写的断言。

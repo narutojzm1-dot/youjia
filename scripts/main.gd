@@ -1,4 +1,5 @@
 extends Control
+const HotbarSlotsPrefs := preload("res://scripts/ui/hotbar_slots_prefs.gd")
 const OpenSourceLicenses = preload("res://scripts/manus/open_source_licenses.gd")
 const YardWorldType := preload("res://scripts/game/yard_world.gd")
 const TITLE_PAPER := preload("res://assets/holiday/ui/scrapbook_paper.png")
@@ -2375,7 +2376,12 @@ func _ensure_hold_hotbar() -> void:
 	_hold_hotbar.name = "HoldHotbar"
 	_ui_layer.add_child(_hold_hotbar)
 	_hold_hotbar.withdraw_requested.connect(_on_hold_withdraw)
+	_hold_hotbar.set_slots(HotbarSlotsPrefs.load_slots())
+	_hold_hotbar.slots_changed.connect(func(slots: Array) -> void: HotbarSlotsPrefs.save_slots(slots))
+	_hold_hotbar.basket_requested.connect(_show_basket)
 	_hold_hotbar.visible = false
+	if _basket_panel != null:
+		_basket_panel.set_hotbar(_hold_hotbar, _hold_hotbar.basket_rect(size).size.y + _hold_hotbar.BASKET_MARGIN * 2.0)
 	_layout_hold_hotbar()
 
 
@@ -2383,7 +2389,14 @@ func _layout_hold_hotbar() -> void:
 	if _hold_hotbar == null:
 		return
 	var Hotbar = load("res://scripts/ui/hold_hotbar.gd")
-	var rect: Rect2 = Hotbar.preferred_rect(size, _stacked_hud())
+	var over_basket := _basket_panel != null and _basket_panel.visible
+	var rect: Rect2 = Hotbar.basket_rect(size) if over_basket else Hotbar.preferred_rect(size, _stacked_hud())
+	_hold_hotbar.set_slot_side(Hotbar.slot_side(size.x))
+	if _basket_panel != null:
+		var reserve: float = Hotbar.basket_rect(size).size.y + Hotbar.BASKET_MARGIN * 2.0
+		if not is_equal_approx(reserve, _basket_panel.reserve_bottom):
+			_basket_panel.reserve_bottom = reserve
+			_basket_panel._queue_fit()
 	_hold_hotbar.position = rect.position
 	_hold_hotbar.size = rect.size
 	_sync_hold_hotbar_visibility()
@@ -2399,11 +2412,18 @@ func _sync_hold_hotbar_visibility() -> void:
 		and not _pause_screen.visible
 		and not _album_screen.visible
 		and not _confirm_screen.visible
-		and (_basket_panel == null or not _basket_panel.visible)
 		and (_chick_panel == null or not _chick_panel.visible)
 		and (_crop_panel == null or not _crop_panel.visible)
 	)
+	var over_basket := _basket_panel != null and _basket_panel.visible
+	if over_basket and show:
+		# 背篓开着：快捷栏压在背篓纸面之上、贴屏幕底边，只当拖放落点
+		_ui_layer.move_child(_hold_hotbar, _ui_layer.get_child_count() - 1)
+	var was_over: bool = _hold_hotbar.configuring
+	_hold_hotbar.set_configuring(over_basket)
 	_hold_hotbar.visible = show
+	if was_over != over_basket:
+		_layout_hold_hotbar()
 
 
 func _on_hold_withdraw(kind: String) -> void:
@@ -2529,6 +2549,8 @@ func _open_yard_papers() -> Array[Control]:
 	if _basket_panel != null and _basket_panel.visible and _basket_panel.panel != null: out.append(_basket_panel.panel)
 	if _chick_panel != null and _chick_panel.visible and _chick_panel.paper != null: out.append(_chick_panel.paper)
 	if _crop_panel != null and _crop_panel.visible and _crop_panel.paper != null: out.append(_crop_panel.paper)
+	# 背篓开着时快捷栏贴在底边当落点，它挡住的底栏也一并隐去
+	if _basket_panel != null and _basket_panel.visible and _hold_hotbar != null and _hold_hotbar.visible: out.append(_hold_hotbar)
 	return out
 
 

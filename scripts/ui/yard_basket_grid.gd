@@ -50,6 +50,10 @@ var menu_title: Label
 var menu_note: Label
 var menu_action: Button
 var menu_close: Button
+## #597：可手持的东西在纸片里多一个「放进快捷栏 / 从快捷栏拿下」，键盘与触屏不拖也能配
+var menu_hotbar: Button
+var hotbar: Control
+const HOLDABLE := ["small", "medium", "odd", "grass", "millet", "wheat", "corn"]
 ## #594：小物的纸片不再开布置面板，而是列出院里还空着的固定位置，点哪处就摆在哪处
 ## （键盘、触屏与拖不动的人都能摆）；action 为 "place:<spot>"
 const SPOTS := ["house_edge", "fence_edge", "pond_path"]
@@ -111,6 +115,9 @@ func _ready() -> void:
 		button.pressed.connect(func() -> void: _on_spot_pressed(spot))
 		spot_row.add_child(button)
 		spot_buttons[spot] = button
+	menu_hotbar = _menu_button()
+	menu_hotbar.pressed.connect(_on_menu_hotbar)
+	column.add_child(menu_hotbar)
 	var actions := HBoxContainer.new()
 	actions.add_theme_constant_override("separation", 8)
 	column.add_child(actions)
@@ -373,6 +380,7 @@ func _fill_menu(kind: String) -> void:
 		spot_buttons[spot].visible = spot in free_spots
 	menu_note.text = spec[2]
 	menu_note.visible = not str(spec[2]).is_empty()
+	_fill_hotbar_button(kind, en)
 	menu_close.text = "Never mind" if en else "算了"
 	menu.reset_size()
 	_sort_menu()
@@ -406,8 +414,33 @@ func _place_menu() -> void:
 	var x := clampf(cell_rect.get_center().x - width * 0.5, 8.0, maxf(8.0, view.size.x - width - 8.0))
 	menu.global_position = Vector2(x, y)
 
+func _fill_hotbar_button(kind: String, en: bool) -> void:
+	var can := hotbar != null and is_instance_valid(hotbar) and kind in HOLDABLE
+	menu_hotbar.visible = can
+	if not can: return
+	var index: int = hotbar.slot_of(kind)
+	if index >= 0:
+		menu_hotbar.text = ("Take off hotbar slot %d" % (index + 1)) if en else ("从快捷栏第%d格拿下" % (index + 1))
+		menu_hotbar.disabled = false
+	elif hotbar.is_full():
+		menu_hotbar.text = "Hotbar full: drag onto a slot to swap" if en else "快捷栏满了，拖到一格上替换"
+		menu_hotbar.disabled = true
+	else:
+		menu_hotbar.text = "Put on the hotbar" if en else "放进快捷栏"
+		menu_hotbar.disabled = false
+
+func _on_menu_hotbar() -> void:
+	if selected.is_empty() or menu_hotbar.disabled or not menu_hotbar.visible: return
+	var kind := selected
+	var on_bar: bool = hotbar.slot_of(kind) >= 0
+	action_requested.emit("hotbar_remove" if on_bar else "hotbar_add", kind)
+	if not selected.is_empty():
+		_fill_menu(selected)
+		_place_menu()
+		menu_hotbar.grab_focus()
+
 func _menu_buttons() -> Array[Button]:
-	var result: Array[Button] = [menu_action]
+	var result: Array[Button] = [menu_action, menu_hotbar]
 	for spot: String in SPOTS: result.append(spot_buttons[spot])
 	result.append(menu_close)
 	return result

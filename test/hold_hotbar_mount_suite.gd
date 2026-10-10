@@ -91,7 +91,7 @@ func run() -> void:
 	# Overlay hides
 	main._show_basket()
 	await process_frame
-	check(not main._hold_hotbar.visible, "hotbar hidden while basket open")
+	check(main._hold_hotbar.visible and main._hold_hotbar.configuring and is_equal_approx(main._hold_hotbar.get_global_rect().end.y, main.size.y - main._hold_hotbar.BASKET_MARGIN), "hotbar stays at the bottom as a drop target while basket open")
 	main._hide_basket()
 	await process_frame
 	check(main._hold_hotbar.visible, "hotbar returns after basket close")
@@ -143,7 +143,7 @@ func run() -> void:
 	check(main._hold_hotbar.selected_kind() == held_before, "selection restored after unpause")
 	main._show_basket()
 	await process_frame
-	check(not main._hold_hotbar.visible, "hotbar hidden while basket open (reopen path)")
+	check(main._hold_hotbar.visible and main._hold_hotbar.configuring and is_equal_approx(main._hold_hotbar.get_global_rect().end.y, main.size.y - main._hold_hotbar.BASKET_MARGIN), "hotbar stays at the bottom as a drop target while basket open (reopen path)")
 	main._hide_basket()
 	await process_frame
 	main._on_inventory_changed()

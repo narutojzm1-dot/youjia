@@ -94,7 +94,11 @@ func run() -> void:
 		tap(center(grid.cells[fish]))
 		await frames()
 		check(grid.menu.visible and grid.menu_action.text in ["收回背篓", "Put it back"], tag + " held cell offers put back")
-		tap(center(panel.close_button))
+		# 纸片在矮横屏上可能盖住「合上背篓」；点一处确实在纸片外的地方
+		var outside := center(panel.close_button)
+		if grid.menu.get_global_rect().has_point(outside): outside = center(panel.title)
+		check(not grid.menu.get_global_rect().has_point(outside), tag + " probe point is outside the paper")
+		tap(outside)
 		check(not grid.menu.visible and panel.visible, tag + " tap outside the paper closes only the paper")
 		tap(center(grid.cells[fish]))
 		await frames()
