@@ -70,7 +70,7 @@ func run() -> void:
 	await process_frame
 
 	if failures == 0:
-	print("[ui-interaction-audio] PASS: %d checks" % checks)
-else:
-	print("[ui-interaction-audio] FAIL: %d/%d" % [failures, checks])
+		print("[ui-interaction-audio] PASS: %d checks" % checks)
+	else:
+		print("[ui-interaction-audio] FAIL: %d/%d" % [failures, checks])
 	quit(0 if failures == 0 else 1)
