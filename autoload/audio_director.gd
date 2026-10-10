@@ -15,6 +15,7 @@ const CUES := {
 	"music.gameplay": {"path": "", "kind": "music"},
 	"ui.confirm": {"path": "", "bus": "UI"},
 	"ui.cancel": {"path": "", "bus": "UI"},
+	"ui.page": {"path": "", "bus": "UI"},
 	"player.action": {"path": "", "bus": "SFX"},
 	"enemy.impact": {"path": "", "bus": "SFX"},
 	"score.reward": {"path": "", "bus": "SFX"},
