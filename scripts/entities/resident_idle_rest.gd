@@ -16,6 +16,7 @@ var pose: Sprite2D
 var textures: Array[AtlasTexture] = []
 var cel := 0
 var ground_scale := 1.0
+var rise_keys: Array[int] = [2,7,0]
 
 func _ready() -> void:
 	pose = Sprite2D.new()
@@ -45,6 +46,7 @@ func wake(reduced: bool = false) -> void:
 	if reduced:
 		clear()
 	elif stage != "rise":
+		rise_keys.assign([5,4,3,2,7,0] if stage in ["nap","recline"] else [2,7,0])
 		stage = "rise"
 		elapsed = 0.0
 
@@ -75,7 +77,7 @@ func advance(delta: float, allowed: bool, depth: float, face: float, reduced: bo
 		"sit": cel = 2
 		"recline": cel = 3 if elapsed < 0.45 else (4 if elapsed < 0.95 else 5)
 		"nap": cel = 6
-		"rise": cel = 7 if elapsed < 0.24 else 0
+		"rise": cel = rise_keys[mini(int(elapsed / 0.36 * rise_keys.size()), rise_keys.size()-1)]
 	ground_scale = depth * visual_scale
 	pose.texture = textures[cel]
 	pose.offset = REGIONS[cel].position - CONTACTS[cel]
@@ -85,6 +87,6 @@ func advance(delta: float, allowed: bool, depth: float, face: float, reduced: bo
 func _draw() -> void:
 	if not active(): return
 	# Soft contact ink stays on the ground; the painted body is never stretched.
-	var width := 32.0 if stage in ["recline", "nap"] else 19.0
+	var width := 32.0 if cel in [4,5,6] else 19.0
 	draw_set_transform(Vector2(0,-1),0,Vector2(width,3.0) * ground_scale)
 	draw_circle(Vector2.ZERO,1.0,Color(0.20,0.22,0.14,0.12))

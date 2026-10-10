@@ -37,6 +37,12 @@ func run() -> void:
 	var clock: float = world._day_elapsed
 	world.tick(0.1,Vector2.ZERO)
 	check(day == world.holiday_day and absf(world._day_elapsed-clock-0.1) < 0.001, "outdoor nap follows ordinary clock without day skip")
+	rest.wake(false)
+	var rises: Array[int] = []
+	for i: int in 21:
+		rest.advance(1.0/60.0,false,1,1,false,1)
+		if rest.active() and not rest.cel in rises: rises.append(rest.cel)
+	check(rises == [5,4,3,2,7,0], "lying wake uses eyeopen elbow palm sit crouch stand keys")
 	world.input_enabled = false
 	check(not rest.active() and rest.idle_seconds == 0.0, "all menu input locks immediately clear rest")
 	world.input_enabled = true
