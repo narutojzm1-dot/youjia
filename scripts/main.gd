@@ -1465,6 +1465,7 @@ func _show_chick_care() -> void:
 	get_tree().paused = true
 	AudioDirector.set_game_paused(true)
 	_sync_hold_hotbar_visibility()
+	_sync_hud_under_menu()
 
 func _hide_chick_care() -> void:
 	_chick_panel.visible = false
@@ -1473,6 +1474,7 @@ func _hide_chick_care() -> void:
 	if _world != null: _world.input_enabled = true
 	get_viewport().gui_release_focus()
 	_sync_hold_hotbar_visibility()
+	_sync_hud_under_menu()
 
 func _show_crops() -> void:
 	if _chick_panel != null and _chick_panel.visible: return
@@ -1486,6 +1488,7 @@ func _show_crops() -> void:
 	get_tree().paused = true
 	AudioDirector.set_game_paused(true)
 	_sync_hold_hotbar_visibility()
+	_sync_hud_under_menu()
 
 func _hide_crops() -> void:
 	# Keep the inventory modal closed to other writers until this transaction
@@ -1497,6 +1500,7 @@ func _hide_crops() -> void:
 	if _world != null: _world.input_enabled = true
 	get_viewport().gui_release_focus()
 	_sync_hold_hotbar_visibility()
+	_sync_hud_under_menu()
 
 func _show_basket() -> void:
 	if _chick_panel != null and _chick_panel.visible: return
@@ -1514,6 +1518,7 @@ func _show_basket() -> void:
 	get_tree().paused = true
 	AudioDirector.set_game_paused(true)
 	_basket_panel.close_button.grab_focus()
+	_sync_hud_under_menu()
 
 
 func _hide_basket() -> void:
@@ -1523,6 +1528,7 @@ func _hide_basket() -> void:
 	if _world != null: _world.input_enabled = true
 	get_viewport().gui_release_focus()
 	_sync_hold_hotbar_visibility()
+	_sync_hud_under_menu()
 
 
 func _on_inventory_changed() -> void:
@@ -2500,6 +2506,8 @@ func _sync_hud_under_menu() -> void:
 	var covers: Array[Rect2] = []
 	if _pause_screen.visible: covers.append(_centered_panel_rect(_pause_panel))
 	if _confirm_screen.visible: covers.append(_centered_panel_rect(_confirm_panel))
+	for paper: Control in _open_yard_papers():
+		covers.append(paper.get_global_rect())
 	for group: Array in _hud_menu_groups():
 		var covered := false
 		for node: Control in group:
@@ -2507,6 +2515,16 @@ func _sync_hud_under_menu() -> void:
 				if node.get_global_rect().intersects(cover): covered = true
 		for node: Control in group:
 			node.self_modulate.a = 0.0 if covered else 1.0
+
+
+## 背篓、小鸡成长、种植三张纸面也会压住同样的 HUD（568×320 上背篓纸面盖到目标纸片和底栏）。
+## 它们自己延迟排版，这里读排好后的实际纸面；院内每帧 _refresh_hud → _fit_hint_panel 都会再同步一次。
+func _open_yard_papers() -> Array[Control]:
+	var out: Array[Control] = []
+	if _basket_panel != null and _basket_panel.visible and _basket_panel.panel != null: out.append(_basket_panel.panel)
+	if _chick_panel != null and _chick_panel.visible and _chick_panel.paper != null: out.append(_chick_panel.paper)
+	if _crop_panel != null and _crop_panel.visible and _crop_panel.paper != null: out.append(_crop_panel.paper)
+	return out
 
 
 func _hud_menu_groups() -> Array:
