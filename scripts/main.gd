@@ -56,6 +56,9 @@ var _paper: TextureRect
 var _world_root: Node2D
 var _world: YardWorld
 var _path_rain: Node2D
+var _yard_night_sky: Sprite2D
+var _path_night_sky: Sprite2D
+var _night_sky_overlay: Sprite2D
 var _exploration: ExplorationDirector
 var _camera: Camera2D
 var _title_screen: Control
@@ -662,6 +665,9 @@ func _build_layers() -> void:
 	_tod_rect.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	_tod_rect.material = tint_material
 	_tod_canvas.add_child(_tod_rect)
+	_night_sky_overlay = Sprite2D.new()
+	_night_sky_overlay.centered = false
+	_tod_canvas.add_child(_night_sky_overlay)
 	_house_lights_overlay = preload("res://scripts/game/house_lights.gd").new()
 	_tod_canvas.add_child(_house_lights_overlay)
 
@@ -1346,6 +1352,7 @@ func _leave_exploration() -> void:
 
 
 func _clear_world(save_progress: bool = true) -> void:
+	if _night_sky_overlay != null: _night_sky_overlay.visible = false
 	if _exploration != null and _exploration.is_exploring():
 		if _screen == "exploring":
 			_screen = "leaving"
@@ -1382,6 +1389,7 @@ func _on_exploration_entered() -> void:
 	_notice_time = 0.0
 	_exploration.scroll.pause_requested.connect(_toggle_pause)
 	_path_rain = null
+	_path_night_sky = null
 	_sync_path_rain(0.0)
 
 
@@ -2905,10 +2913,38 @@ func _update_season_tint(day: int) -> void:
 ## One persisted day starts at 06:00. Blend continuously through midnight
 ## and the 06:00 save-day boundary; phase and clouds use the same clock.
 func _update_tod_tint(t: float, delta: float = 0.0) -> void:
+	_sync_night_sky(t, delta)
 	if _tod_rect != null:
 		var target: Color = preload("res://scripts/game/world_daylight.gd").tint(t, TOD_COLORS, _world.weather if _world != null else "sun")
 		var snap := delta <= 0.0 or bool(TuningStore.get_value("ui.reduced_motion", false))
 		_tod_rect.color = target if snap else _tod_rect.color.lerp(target, 1.0 - exp(-delta * 2.0))
+
+
+## Background-only adapter shared with the independently owned nearby module.
+func _sync_night_sky(t: float, delta: float) -> void:
+	if not is_instance_valid(_world): return
+	var nearby := _screen == "exploring" and _exploration != null and is_instance_valid(_exploration.scroll)
+	var sky = _path_night_sky if nearby else _yard_night_sky
+	if not is_instance_valid(sky):
+		var painting: Sprite2D = _exploration.scroll.painting if nearby else _world._backdrop
+		if painting == null or painting.texture == null: return
+		sky = preload("res://scripts/game/regional_night_sky.gd").new()
+		painting.get_parent().add_child(sky)
+		sky.configure(painting, nearby)
+		# Existing cloud bands include opaque blue paint. Sky ink belongs above
+		# those bands, while its authored blue/horizon mask protects the scenery.
+		painting.get_parent().move_child(sky, painting.get_index() + 1 if nearby else _world.get_child_count() - 1)
+		if nearby: _path_night_sky = sky
+		else: _yard_night_sky = sky
+	var reduced := bool(TuningStore.get_value("ui.reduced_motion", false))
+	sky.sync(t, _world.weather, delta, reduced)
+	# Light sits after the scene multiplier, like the window panes, rather than
+	# becoming dark paint. Keep the world record for frozen photo reconstruction.
+	_night_sky_overlay.texture = sky.texture
+	_night_sky_overlay.material = sky.material
+	_night_sky_overlay.transform = sky.get_global_transform_with_canvas()
+	_night_sky_overlay.visible = sky.visible and _screen in ["game", "exploring"]
+	sky.visible = false
 
 
 func _on_locale_changed(_locale: String) -> void:
