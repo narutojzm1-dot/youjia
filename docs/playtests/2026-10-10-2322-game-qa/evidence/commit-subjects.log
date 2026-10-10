@@ -1,0 +1,175 @@
+ui(#597): no fake hotbar persistence on Web; record the shared-save gap [CURSOR-CLOUD]
+ui(#597): short landscape shares the close row with the hotbar; grid taps only inside the item window [CURSOR-CLOUD]
+docs(#597): Web evidence for player-configured hotbar [CURSOR-CLOUD]
+ui(#597): player-configured hotbar slots, drag from basket, empty slot opens basket [CURSOR-CLOUD]
+docs(#642): verify published trip capacity and Web persistence
+fix(save): keep full exploration grants when inventory reaches limit (#642)
+docs(#639,#634): record public package and natural rest acceptance [CODEX-LEAD]
+fix(#639): reclined wake passes through palm support before standing [CODEX-LEAD]
+fix(#639): full ground footprint and natural Web evidence [CODEX-LEAD]
+feat(#639): authored outdoor sitting and nap with responsive wake [CODEX-LEAD]
+docs(#641,#638): public package and natural overnight acceptance
+docs(hud-under-panels): Web before/after evidence [CURSOR-CLOUD]
+ui(hud): basket, chick care and crop papers fade the HUD groups they cover [CURSOR-CLOUD]
+feat(#641): occasional balcony mornings with complete house return
+docs: record public #645 rest idle delivery and next main feature
+CODEX-LEAD #645 add resting sheep eyelids and goose breathing
+ci: re-run verify after unrelated yard_gate random-walk flake [CURSOR-CLOUD]
+feat: add local chest breathing to five resting animals (#645) [CODEX-LEAD]
+docs(hud-under-menu): list narrow-portrait and English 1024x600 fades [CURSOR-CLOUD]
+docs(hud-under-menu): Web before/after evidence [CURSOR-CLOUD]
+ui(hud): fade yard HUD groups the pause/confirm paper covers instead of leaving half-cut buttons [CURSOR-CLOUD]
+CODEX-LEAD #640 archive verified public night lighting acceptance
+CODEX-LEAD #640 archive continuous light proof and preserve historical SHA text
+CODEX-LEAD #640 clear stale sky references before same-session reload
+art(#642): add candidate concept sheets for removable flower beds, pickable flowers, sway and insects
+CODEX-LEAD #640 add shared painted night sky and frozen photo replay
+fix(playtests): skip other evidence folders whose JPEGs carry a .png name [CURSOR-CLOUD]
+docs(care-panels): controlled-render evidence [CURSOR-CLOUD]
+fix(#636): keep Godot from importing chick-care evidence JPEGs [CURSOR-CLOUD]
+ui(care-panels): paper scroll bar, shared ink focus ring, chick paper opens focused [CURSOR-CLOUD]
+docs(#636): record public release and ordinary growth evidence [CODEX-LEAD]
+fix(#636): prevent concave rail route from blocking night return [CODEX-LEAD]
+Candidate concepts for #642 flower beds, pickable flowers and insects
+feat(#636): chick growth panel and atomic feeding credit [CODEX-LEAD]
+docs(CODEX-LEAD): record verified #637 crops and #598 public recall delivery
+art: add 8-direction walk evaluation candidate for #635
+docs(CURSOR-CLOUD): notice slide keeps width only where the room left of the column allows
+test(637): verify retired grain tin is hidden in basket layouts
+test(637): await durable first entry and record ordinary crop loop
+UI(CURSOR-CLOUD): yard notices slide clear of the top-right day/clock column on short landscapes
+fix(637): keep crop transaction modal open until save resolves
+[#636] 小鸡成长阶段与偶发啄食候选，不覆盖运行时
+feat(637): grow grass wheat and corn through durable basket and feeding loop
+docs(CODEX-LEAD): record public verification for #637 and #645
+feat(645): add local eyelid blink to resting cow
+test(637): register physical basket completion contract
+[#644] 近郊溪水与山雾候选范围板
+feat(637): add physical yard basket with safe inventory entrance
+docs(art): record #646 stream-bridge map candidate scope
+UI(CURSOR-CLOUD): short English chip labels when narrow, single row from 568px, test sweeps all weather labels
+UI(CURSOR-CLOUD): short landscape yard HUD keeps one bottom row; action button fits long English labels
+docs(CURSOR-CLOUD #595): attribute right-strip pixel changes to animal idle only
+docs(CURSOR-CLOUD #595): Web evidence that the yard stays still during basket drags
+feat(#639): idle sit-then-lie pose candidates
+art(#641): sunrise balcony pose candidates, not runtime
+docs: record verified October 9 daily release and open risks
+fix(#598): recall placed finds while the basket is open
+docs(CODEX-LEAD): archive evening gameplay and public clock verification
+fix(CODEX-LEAD #594): release rejected decor intents without dropping save retries
+art(#643): smaller grounded near-path feather candidate
+feat(CODEX-LEAD #640): weather-aware golden dawn and deeper midnight with rendered evidence
+feat(CODEX-LEAD #638): shared twelve-hour regional clock with native and browser evidence
+docs(CODEX-LEAD #565 #640): archive goose/window delivery and interrupted recovery
+test(CURSOR-CLOUD): hug suite covers row-only re-fit and settling
+docs(CURSOR-CLOUD): record basket paper hug-height polish
+UI(CURSOR-CLOUD): yard basket paper hugs its content instead of leaving a blank band
+Update role banners in CONTRIBUTING/AGENTS and clarify #632/#576 and UI-vs-bug split (CURSOR-CLOUD)
+Record Grok's receipt and the UI PR handoff result (CURSOR-CLOUD)
+Register second-batch handed-over UI suites and record the batch (CURSOR-CLOUD)
+[GROK-CONTRIBUTOR] REQ-20261007-063 近郊画卷按钮点中时短暂显示按下杏纸，手指一点就知道点到了
+[GROK-CONTRIBUTOR] REQ-20261008-074 YardWorld 用贴地扁圆画落点圈并在 tick 里计淡入；决定记录
+[GROK-CONTRIBUTOR] REQ-20261008-074 落点圈贴地扁圆、随远近缩放、轻淡入（helper + suite + 决定记录）
+Adapt settle-ring suite to basket placing and step frames instead of wall-clock timers (REQ-20261008-069, CURSOR-CLOUD)
+[GROK-CONTRIBUTOR] REQ-20261008-069 小物放好时脚下泛一圈淡落定圈
+Adapt basket dismiss-focus suite to the spot buttons from #648 (REQ-20261008-067, CURSOR-CLOUD)
+[GROK-CONTRIBUTOR] REQ-20261008-067 背篓格子按「算了」收起纸片后焦点回到原格
+REQ-20261009-077: record Godot suite results for the weather caption
+REQ-20261009-077: keep weather on dated legacy photos
+REQ-20261009-077: erase weather on legacy dated photo fixture
+REQ-20261009-077: register photo_diary_weather_suite in verify + completions
+REQ-20261009-077: register photo_diary_weather_suite in verify + completions
+feat(ui): REQ-20261009-077 相册手帐说明带天气纸签
+Register handed-over Grok UI suites and record the handoff (CURSOR-CLOUD)
+[GROK-CONTRIBUTOR] REQ-20261008-073 拾起短展示名字纸签随光晕淡入淡尽
+[GROK-CONTRIBUTOR] REQ-20261008-072 院南小路蜗牛与三叶草淡入、到时淡出
+feat(REQ-20261008-071): paint fish-catch rings in the yard palette with a paper fish badge (GROK-CONTRIBUTOR)
+test+docs: REQ-20261008-070 photo arrival fade-in suite and decision record
+feat: REQ-20261008-070 shutter line fades in together with the arriving photo
+[GROK-CONTRIBUTOR] REQ-20261008-068 亮圈纸签测试与决定记录 (2/2)
+[GROK-CONTRIBUTOR] REQ-20261008-068 背篓拖出时亮圈位置名垫小纸签 (1/2)
+[GROK-CONTRIBUTOR] REQ-20261008-066 院里摆好的贴图小物垫一圈静止接触影
+feat(#634): show player version 0.2.0 on the loading page
+feat(#640): keep windows lit until midnight when the traveller sleeps
+feat(#565): resting goose blinks without changing its painted body
+Break basket place notes at the sentence end (#594, CURSOR-CLOUD)
+feat(#594): place finds only from the basket; remove the separate decor panel and nudging [CURSOR-CLOUD]
+docs(#565): verify llama blink publication and integrated hotbar
+feat(#565): add localized natural llama blink
+REQ-20261009-076: register armed-style suite in godot_suite_completions.tsv
+REQ-20261009-076: player-facing disarmed tooltip avoids 武装
+REQ-20261009-076: register hold_hotbar_armed_style_suite after hold_hotbar_mount
+REQ-20261009-076: update armed-style suite tooltip asserts + registration note
+REQ-20261009-076: fix playtest typo (舀小米)
+docs(#565): archive sheep release verification and isolated Grok UI evidence
+REQ-20261009-076: revise disarmed tooltip copy; register armed-style suite; archive playtest
+fix(#565): preserve individual sheep resting bodies and add localized blinks
+REQ-20261009-076 decision: record head SHA 716cc8d7
+REQ-20261009-076 hold_hotbar: armed ink accent + tooltips
+REQ-20261009-076 hold_hotbar: armed ink accent + tooltips
+REQ-20261009-076 add hold_hotbar_armed_style_suite.gd
+REQ-20261009-076 hold hotbar: ink accent when place-armed (GROK-CONTRIBUTOR)
+[CODEX-LEAD][#565] horse blink public verification and ordinary cow grass loop
+chore: drop locally generated tools/*.uid files [CURSOR-CLOUD]
+fix(#594): restore generated imports; settle basket notes on failure and hidden basket [CURSOR-CLOUD]
+feat(#565): localized resting horse blink with canonical standing art
+chore(#594): keep basket drop state apart from the decor camera fields
+feat(#594): place a find straight from the basket drop [CURSOR-CLOUD]
+feat(#565): resting cow painted blink with GPU and Web evidence
+fix(#595): cap the held decor paper at the current allowance [CURSOR-CLOUD]
+fix(#595): hold the portrait decor paper height while decor is open [CURSOR-CLOUD]
+fix(#595): keep decor camera still while choosing and nudging [CURSOR-CLOUD]
+docs(#565): verify published sleep build and old-save recovery
+docs(#565): archive house sleep playtests and delivery evidence
+fix(#565): reserve house clicks while food placement is armed
+fix(#565): preserve first bloom photo across sleep and reload
+feat(#565): durable house sleep and warm night windows [CODEX-LEAD]
+docs(#565): archive public shelter release and natural night evidence [CODEX-LEAD]
+fix(ui): 布置镜头不越出院子画面，所选位置仍留在预览区（CURSOR-CLOUD）
+feat(#565): CODEX-LEAD horse and llama rain shelter and night rest
+chore: 移除误提交的本地导入生成 .uid 文件
+fix: 显式标注 #615 新增的无类型推断变量，修复 main 主脚本解析失败无法启动（CURSOR-CLOUD）
+fix(#606): declare placed-prop dictionaries in combined startup
+fix(#606): type placed-prop hit result in latest main integration
+fix(#606): validate resumed startup bytes against published SHA256
+fix: pick up a placed pine cone from the yard ground
+[CODEX-LEAD][#242 #565 #597] Record 2026-10-08 release and public verification
+docs(#606): preserve loading network, resume, cache and saved-trip evidence
+CODEX-LEAD: hide yard hotbar explicitly on scene exit (#597)
+fix(#606): preserve complete cached assets when startup is cancelled
+fix(#606): bound optional asset-cache lookup before network fallback
+docs(#606): record loading recovery scope and candidate limits
+fix(#606): resume stalled Web downloads and reuse complete assets [CODEX-LEAD-ASSISTANT]
+docs: GAME-QA 2026-10-08-2153-game-qa
+docs: 用户调整 CURSOR-CLOUD 负责界面开发与维护，GROK-CONTRIBUTOR 改为认领修 bug
+CODEX-LEAD: integrate Grok hotbar with cancel/notice fixes and real Web evidence (#594 #597)
+REQ-20261008-075: record explicit-target fix and main merge
+REQ-20261008-075: keep yard grass taps as walks unless hotbar withdraw armed place
+REQ-20261008-075: decision note for explicit_target CI fix (grass no-auto-arm)
+REQ-20261008-075: suite/decision/daily after grass no-auto-arm (explicit_target CI)
+REQ-20261008-075: do not auto-arm place-on-tap when holding grass (fix explicit_target)
+REQ-20261008-075: fill decision head SHA
+REQ-20261008-075: align decision head SHA with pin commit
+REQ-20261008-075: pin decision head SHA after cancel/reopen + daily
+REQ-20261008-075: hold_hotbar daily completion fallback contracts
+REQ-20261008-075: daily CI registration + decision doc for cancel/reopen
+REQ-20261008-075: restore hold_hotbar_mount_suite cancel/reopen evidence
+REQ-20261008-075: cancel/reopen mount evidence + register hold_hotbar in daily CI
+REQ-20261008-075: pin decision head SHA after Main mount restore
+REQ-20261008-075: restore Main.gd HoldHotbar end-to-end mount
+REQ-20261008-075: trigger Main mount assemble workflow
+REQ-20261008-075: trigger assemble on push of mount patch
+REQ-20261008-075: add Main HoldHotbar mount patch
+REQ-20261008-075: one-shot Main mount patch + assemble workflow
+REQ-20261008-075: stage main.gd assemble part_0
+REQ-20261008-075: Main.gd HoldHotbar end-to-end mount
+REQ-20261008-075: fix hold_hotbar_suite inventory fixtures
+REQ-20261008-075: add hold_hotbar_mount_suite.gd
+REQ-20261008-075: Main-mount HoldHotbar + place intent on same PR
+REQ-20261008-075: add hold_hotbar_suite.gd
+REQ-20261008-075: real hold_hotbar.gd (replace placeholder)
+REQ-20261008-075: add hold_hotbar.gd and hold_hotbar_suite.gd
+REQ-20261008-075: decision record
+REQ-20261008-075: add hold_place_intent.gd
+REQ-20261008-075: 底部手持快捷栏 + 选中后点地投放意图（#594/#597 第一片）
+docs(CURSOR-CLOUD): QA004 补落羽短展示标签放大复核

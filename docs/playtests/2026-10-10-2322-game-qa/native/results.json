@@ -1,0 +1,98 @@
+{
+  "sourceSha": "e9e72920446705415c9a41da7380ab48fe75664e",
+  "startedUtc": "2026-10-10T15:32:23.034795+00:00",
+  "profileProbe": "D:/games/youjia-test/qa/native/2026-10-10-2322/roaming/Godot/app_userdata/youjia-qa-profile-probe",
+  "engine": "D:/games/youjia-tmp-godot/Godot_v4.7.2-stable_win64_console.exe",
+  "tests": [
+    {
+      "entry": "import",
+      "exit": 0,
+      "summary": []
+    },
+    {
+      "entry": "hotbar_player_slots",
+      "exit": 0,
+      "summary": [
+        "[hotbar-player-slots] PASS: 136 checks"
+      ]
+    },
+    {
+      "entry": "yard_crops",
+      "exit": 0,
+      "summary": [
+        "YARD_CROPS checks=90 failures=0"
+      ]
+    },
+    {
+      "entry": "chick_care",
+      "exit": 0,
+      "summary": [
+        "CHICK_CARE checks=73 failures=0"
+      ]
+    },
+    {
+      "entry": "exploration_trip_capacity",
+      "exit": 0,
+      "summary": [
+        "EXPLORATION_TRIP_CAPACITY checks=48 failures=0"
+      ]
+    },
+    {
+      "entry": "physical_basket",
+      "exit": 0,
+      "summary": [
+        "physical_basket_suite: 22 checks, 0 failures"
+      ]
+    },
+    {
+      "entry": "resident_idle_rest",
+      "exit": 0,
+      "summary": [
+        "resident_idle_rest_suite checks=61 failures=0"
+      ]
+    },
+    {
+      "entry": "balcony_morning",
+      "exit": 0,
+      "summary": [
+        "balcony_morning_suite checks=3867 failures=0"
+      ]
+    },
+    {
+      "entry": "regional_clock",
+      "exit": 0,
+      "summary": [
+        "REGIONAL_CLOCK checks=92 failures=0"
+      ]
+    },
+    {
+      "entry": "regional_night_sky",
+      "exit": 0,
+      "summary": [
+        "REGIONAL_NIGHT_SKY checks=3759 failures=0"
+      ]
+    },
+    {
+      "entry": "hud_under_menu",
+      "exit": 0,
+      "summary": [
+        "[hud_under_menu] PASS: 2257 checks"
+      ]
+    },
+    {
+      "entry": "yard_basket_drop_place",
+      "exit": 0,
+      "summary": [
+        "YARD_BASKET_DROP_PLACE checks=42 failures=0"
+      ]
+    },
+    {
+      "entry": "save_recovery",
+      "exit": 0,
+      "summary": [
+        "SAVE RECOVERY PASS 24"
+      ]
+    }
+  ],
+  "endedUtc": "2026-10-10T15:33:29.481684+00:00"
+}
