@@ -77,6 +77,7 @@ run_godot suite test/care_panels_paper_suite.gd
 run_godot suite test/exploration_button_states_suite.gd
 run_godot suite test/still_boundary_feedback_suite.gd
 run_godot suite test/pause_panel_fit_suite.gd
+run_godot suite test/hud_under_menu_suite.gd
 run_godot suite test/ui_viewports.gd
 run_godot suite test/web_save_bridge/decoder_suite.gd
 run_godot suite test/web_save_bridge/legacy_suite.gd
