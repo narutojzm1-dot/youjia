@@ -160,9 +160,9 @@ func _check_window_hours(world) -> void:
 	var old_stage: String = house.stage
 	# Exercise the real room facts, including failed/pending saves, rather than
 	# treating every busy stage (or an outdoor doze) as inside the room.
-	for stage: String in ["", "porch", "open", "in", "close", "saving", "sleep", "wake", "out"]:
+	for stage: String in ["", "porch", "open", "in", "close", "saving", "sleep", "balcony", "stairs", "wake", "out"]:
 		house.stage = stage
-		var inside := stage in ["close", "saving", "sleep", "wake"]
+		var inside := stage in ["close", "saving", "sleep", "balcony", "stairs", "wake"]
 		check(house.inside_room() == inside, "room occupancy follows passage stage " + stage)
 		for hour: float in [0.0, 4.99, 5.0, 6.0, 12.0, 19.99, 20.0, 23.99]:
 			world._day_elapsed = fposmod(hour - 6.0,24.0) / 24.0 * 600.0
