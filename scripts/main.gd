@@ -1006,6 +1006,7 @@ func _apply_pause_panel_size(panel_w: float, panel_h: float) -> void:
 	_pause_panel.offset_right = panel_w * 0.5
 	_pause_panel.offset_top = -panel_h * 0.5
 	_pause_panel.offset_bottom = panel_h * 0.5
+	_sync_hud_under_menu()
 
 
 ## 暂停纸片装下当前内容所需的最小高度（含纸面上下内边距），矮屏与高屏贴合共用。
@@ -1671,6 +1672,7 @@ func _toggle_pause() -> void:
 	_refresh_texts()
 	_sync_notice_visibility()
 	_sync_hold_hotbar_visibility()
+	_sync_hud_under_menu()
 
 
 func _request_destructive_action(action: String) -> void:
@@ -1680,6 +1682,7 @@ func _request_destructive_action(action: String) -> void:
 	_confirm_screen.visible = true
 	_refresh_texts()
 	_sync_hold_hotbar_visibility()
+	_sync_hud_under_menu()
 
 
 func _confirm_destructive_action() -> void:
@@ -1712,6 +1715,7 @@ func _cancel_destructive_action() -> void:
 	_pending_destructive_action = ""
 	_confirm_screen.visible = false
 	_sync_hold_hotbar_visibility()
+	_sync_hud_under_menu()
 
 
 func _on_weather_pressed() -> void:
@@ -2486,6 +2490,43 @@ func _top_right_column_rect() -> Rect2:
 	return top.merge(day).merge(clock)
 
 
+## 短横屏（568×320、640×360、844×390）上暂停/确认纸面几乎占满屏幕，压住目标纸片、「歇一会儿」、
+## 天数纸签和底栏按钮的一部分，纸边外露出半截文字。现在纸面打开时，按组判断：目标纸片、右上一列
+## （「歇一会儿」+ 天数）、底栏一排，组里任何一枚和纸面重叠，整组隐去（底栏不留缺口），关上再显示；
+## 没被压到的组照常显示。只改 self_modulate：原有的显示、禁用、焦点和输入逻辑都不动（底下一层本来
+## 就被遮罩挡住）。
+func _sync_hud_under_menu() -> void:
+	if _hud == null or _pause_panel == null or _confirm_panel == null or _hint_panel == null: return
+	var covers: Array[Rect2] = []
+	if _pause_screen.visible: covers.append(_centered_panel_rect(_pause_panel))
+	if _confirm_screen.visible: covers.append(_centered_panel_rect(_confirm_panel))
+	for group: Array in _hud_menu_groups():
+		var covered := false
+		for node: Control in group:
+			for cover: Rect2 in covers:
+				if node.get_global_rect().intersects(cover): covered = true
+		for node: Control in group:
+			node.self_modulate.a = 0.0 if covered else 1.0
+
+
+func _hud_menu_groups() -> Array:
+	return [[_hint_panel, _hint_label], [_pause_button, _day_label], [_album_chip, _weather_chip, _basket_chip, _action_button]]
+
+
+## 暂停/确认纸片锚在屏幕中心、四边 offset 对称；内容比 offset 大时按各自 grow 方向长。
+## 不等下一帧排版就能算出实际占位。
+func _centered_panel_rect(panel: Control) -> Rect2:
+	var start := size * 0.5 + Vector2(panel.offset_left, panel.offset_top)
+	var want := Vector2(panel.offset_right - panel.offset_left, panel.offset_bottom - panel.offset_top)
+	var used := want.max(panel.get_combined_minimum_size())
+	var extra := used - want
+	var grows := [panel.grow_horizontal, panel.grow_vertical]
+	for axis in 2:
+		if grows[axis] == Control.GROW_DIRECTION_BOTH: start[axis] -= extra[axis] * 0.5
+		elif grows[axis] == Control.GROW_DIRECTION_BEGIN: start[axis] -= extra[axis]
+	return Rect2(start, used)
+
+
 func _can_show_notice() -> bool:
 	if _chick_panel != null and _chick_panel.visible: return false
 	return _screen == "game" and not _pause_screen.visible and not _album_screen.visible and not _confirm_screen.visible and not _basket_panel.visible
@@ -2644,6 +2685,7 @@ func _layout() -> void:
 	_fit_pause_panel()
 	_fit_confirm_panel()
 	_layout_hold_hotbar()
+	_sync_hud_under_menu()
 
 
 ## 目标纸片按目标文字的实际行数伸缩（REQ-20261005-029）：
@@ -2658,6 +2700,7 @@ func _fit_hint_panel() -> void:
 	var text_height := lines * float(_hint_label.get_line_height()) + (lines - 1) * spacing
 	_hint_label.size = Vector2(_hint_label.size.x, maxf(HINT_MIN_TEXT_HEIGHT, ceilf(text_height)))
 	_hint_panel.size = _hint_label.size + Vector2(18.0, 16.0)
+	_sync_hud_under_menu()
 
 
 ## 目标纸片贴合文字宽度（REQ-20261006-045）：纸片原来总撑到最大宽度（最多 520px）。
