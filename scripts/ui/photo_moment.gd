@@ -12,7 +12,7 @@ const MAX_COORD := 16384.0
 const GAIT_DEFAULTS := {
 	"phase": 0.0, "amount": 0.0, "hip": 0.68, "foot_split": 0.5,
 	"stride_uv": 0.1, "lift_uv": 0.015, "native_walk_face": 1.0,
-	"grounded_stride": false, "face_override": false,
+	"grounded_stride": false, "face_override": false, "rest_breath_shift": 0.0,
 }
 
 var _snapshot: Dictionary = {}
@@ -217,7 +217,7 @@ func setup(snapshot: Dictionary) -> void:
 				sprite.region_enabled = true
 				sprite.region_rect = _rect(item.region)
 			if item.has("gait"):
-				sprite.material = _load_gait(item.gait)
+				sprite.material = _load_gait(item.gait, str(item.texture.get("path", "")))
 			visual = sprite
 		elif item.kind == "prop":
 			var prop := YardPropVisual.new()
@@ -571,6 +571,7 @@ static func _sanitize_gait(raw: Variant) -> Dictionary:
 			if not value is bool: return {}
 		else:
 			if not _number(value, -100000.0 if key == "phase" else -4.0, 100000.0 if key == "phase" else 4.0): return {}
+		if key == "rest_breath_shift" and not _number(value, 0.0, 0.006): return {}
 		result[key] = value
 	if result.face_override:
 		var expression := _sanitize_texture(raw.get("expression"))
@@ -610,11 +611,12 @@ static func _load_texture(data: Dictionary) -> Texture2D:
 	return texture
 
 
-static func _load_gait(data: Dictionary) -> ShaderMaterial:
+static func _load_gait(data: Dictionary, texture_path := "") -> ShaderMaterial:
 	var material := ShaderMaterial.new()
 	material.shader = WALK_SHADER
 	for key: String in GAIT_DEFAULTS:
 		material.set_shader_parameter(key, data[key])
+	preload("res://scripts/entities/painted_rest_breath.gd").configure(material, texture_path)
 	if data.face_override:
 		material.set_shader_parameter("expression_texture", _load_texture(data.expression))
 		var region: Array = data.face_region
