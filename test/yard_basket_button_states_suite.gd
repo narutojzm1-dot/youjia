@@ -3,7 +3,7 @@ extends SceneTree
 ## button and an unavailable one ("Take one" next to "Millet  x 0") used to
 ## share the same eadcc8 fill and 1px edge, and holding the mouse down fell back
 ## to the engine's grey hover_pressed slab. Each state now reads on its own,
-## using the same palette as the yard decor panel (#531), and no row moves.
+## using the same palette as the old yard decor panel (#531), and no row moves.
 ## Fixture only: the panel is built on its own; no save is read or written.
 var checks := 0
 var failures: Array[String] = []
@@ -34,7 +34,6 @@ func flat(b: Button, mode: String) -> StyleBoxFlat:
 
 func all_buttons(p: Control) -> Array:
 	var list: Array = [p.close_button, p.retry_button, p.return_button, p.scoop_button]
-	if p.decor_button != null: list.append(p.decor_button)
 	list.append_array(p.fish_buttons.values())
 	return list
 
@@ -62,11 +61,6 @@ func run() -> void:
 			var p: Control = load("res://scripts/ui/yard_basket_panel.gd").new()
 			root.add_child(p)
 			await settle()
-			# Main adds the "arrange finds" row through the same factory.
-			var decor: Button = p._button()
-			decor.text = "Arrange finds in the yard" if loc == "en" else "把小物摆在院里"
-			p.rows.add_child(decor)
-			p.decor_button = decor
 			p.update_view(inventory, keepsakes, "ready", false)
 			await settle()
 			var ready: Button = p.fish_buttons["small"]

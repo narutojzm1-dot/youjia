@@ -12,14 +12,26 @@ signal day_advanced(day: int)
 ## 钓到鱼时触发，带上鱼种类字符串，供 HUD 做更强的收杆反馈动画
 signal fish_caught(carry_type: String)
 signal ground_food_requested(action: String, kind: String, details: Dictionary, actor_id: String)
+signal decor_recall_requested(spot: String)
+signal chick_care_requested
+signal basket_requested
+signal plant_bed_requested
+var crop_sprite: Sprite2D
+var _grain_held := ""
 var ground_food: Node2D
 var decor_view: Node2D
 var pond_story: Node
+var gate: Node2D
+var gate_view: Node2D
+var shelter: Node
+var rain: Node2D
+var house: Node2D
 var inventory_enabled := false
 var inventory_busy := false
 ## 走到门前小路尽头选“出门走走”：Main 接管，切到画卷近郊小路
 signal exploration_requested
 
+const WalkGoalMarker := preload("res://scripts/game/walk_goal_marker.gd")
 const SUNNY := preload("res://assets/holiday/environment/yard_sunny.png")
 const OVERCAST := preload("res://assets/holiday/environment/yard_overcast_aligned.png")
 ## 叠加云带：晴/阴各一帧半透明水彩带，不替换整张院子底图。
@@ -68,7 +80,10 @@ var collected: PackedStringArray = []
 var last_photo := ""
 var photo_moments: Dictionary = {}
 var simulation_active := true
-var input_enabled := true
+var input_enabled := true:
+	set(value):
+		input_enabled = value
+		if not value and _player != null: _player.clear_idle_rest()
 
 # ── 假期天数 / 昼夜 ───────────────────────────────────────────────────────────
 ## 每 DAY_DURATION_SECONDS 真实游玩秒数 = 1个假期天
@@ -155,6 +170,7 @@ var _scene_feedback: YardSceneFeedback
 var _spot := "door"
 var _move_held := false
 var _has_walk_goal := false
+var _walk_goal_age := 0.0
 var _walk_goal := Vector2.ZERO
 var _pending_interaction := ""
 var _selected_target := ""
@@ -180,7 +196,8 @@ func setup(
 	saved_plant: Dictionary = {},
 	saved_fish_caught: bool = false,
 	saved_relationship_memory: Dictionary = {},
-	saved_weather: Dictionary = {}
+	saved_weather: Dictionary = {},
+	saved_gate_open: bool = false
 ) -> void:
 	process_mode = Node.PROCESS_MODE_PAUSABLE
 	collected = PackedStringArray()
@@ -245,11 +262,23 @@ func setup(
 	pond_story = load("res://scripts/game/pond_story_controller.gd").new(self)
 	add_child(pond_story)
 	_spawn_cast()
+	gate = preload("res://scripts/game/yard_gate.gd").new(self, SaveStore, saved_gate_open)
+	add_child(gate)
+	gate_view = preload("res://scripts/game/yard_gate_view.gd").new()
+	add_child(gate_view)
+	_apply_weather_art()
 	_bind_grounds()
+	house = preload("res://scripts/game/house_sleep.gd").new(self,SaveStore)
+	add_child(house)
+	rain = preload("res://scripts/game/regional_rain.gd").new()
+	add_child(rain)
+	rain.configure(WORLD_SIZE)
+	rain.restore({"clock":0.0,"amount":1.0 if weather == "rain" else 0.0,"reduced":bool(TuningStore.get_value("ui.reduced_motion",false))})
 	_plant_visual = YardPropVisual.new()
 	_plant_visual.name = "PlantBed"
 	_plant_visual.position = _plant_point()
 	add_child(_plant_visual)
+	add_child(preload("res://scripts/game/physical_basket.gd").new())
 	_fishing_visual = YardPropVisual.new()
 	_fishing_visual.name = "FishingSpot"
 	_fishing_visual.position = _fishing_point()
@@ -301,6 +330,7 @@ func hint_context() -> String:
 	var action := YardInteraction.primary(self)
 	var target := str(action.get("target", ""))
 	if target == "release": return "hud.hint.leading"
+	if not _grain_held.is_empty(): return "hud.hint.carrying_grain"
 	if _millet_held: return "hud.hint.carrying_millet"
 	if not _fish_carry_type.is_empty(): return "hud.hint.carrying_fish"
 	if _player != null and _player.carrying_grass: return "hud.hint.carrying"
@@ -309,6 +339,9 @@ func hint_context() -> String:
 	if target == "fishing":
 		return "hud.hint.fish_bite" if _fish_state == FISH_BITE else "hud.hint.fishing" if _fish_state == FISH_CASTING else "hud.hint.near_pond"
 	if target == "plant":
+		if inventory_enabled:
+			var bed := SaveStore.get_yard_crops()
+			if not bed.is_empty() and not bed.kind.is_empty(): return "hud.hint.crop_growing"
 		return "hud.hint.plant_empty" if _plant_state == PLANT_EMPTY else "hud.hint.plant_bloomed" if _plant_state == PLANT_BLOOMED else "hud.hint.plant_water"
 	if target == "grass" and is_near_grass(): return "hud.hint.near_grass"
 	return "hud.hint.default"
@@ -345,7 +378,8 @@ func is_mainline_complete() -> bool:
 
 
 func set_weather(next_weather: String) -> void:
-	if next_weather == weather:
+	if house != null and house.busy(): return
+	if next_weather not in ["sun", "overcast", "rain"] or next_weather == weather:
 		return
 	weather = next_weather
 	_regional_weather.select(weather)
@@ -356,7 +390,7 @@ func set_weather(next_weather: String) -> void:
 
 
 func toggle_weather() -> void:
-	set_weather("overcast" if weather == "sun" else "sun")
+	set_weather("overcast" if weather == "sun" else "rain" if weather == "overcast" else "sun")
 
 
 func debug_force_rule(rule_id: String) -> bool:
@@ -474,10 +508,16 @@ func companion_context() -> Dictionary:
 
 
 func tick(delta: float, move: Vector2) -> void:
+	if gate != null and not gate.pending.is_empty(): return
 	if not simulation_active:
 		return
-	advance_world_time(delta)
+	var house_owned_tick: bool = house != null and house.busy()
+	if house_owned_tick and move.length() > 0.2: house.skip_balcony()
+	if house != null: house.tick(delta)
+	if not house_owned_tick: advance_world_time(delta)
 	_rejected_seconds = maxf(0.0, _rejected_seconds - delta)
+	if _has_walk_goal:
+		_walk_goal_age += delta
 	_day_seconds += delta
 	# 钓鱼计时
 	_tick_fishing(delta)
@@ -498,14 +538,18 @@ func tick(delta: float, move: Vector2) -> void:
 			notice_requested.emit("notice.fishing.release")
 			queue_redraw()
 	_tick_weather_transition(delta)
+	if rain != null: rain.advance(delta,weather == "rain",bool(TuningStore.get_value("ui.reduced_motion",false)))
 	# 云带缓移：低动效只保留静止可读帧，不改存档字段。
 	_tick_cloud_drift(delta)
 	# 晨/傍晚/夜里按 TOD 换云带或 modulate，不改昼夜节奏长度。
 	if _player == null:
 		return
 	_player.body_obstacles = physical_obstacles("player")
+	_player.rest_allowed = _outdoor_rest_allowed(move)
 	_body_repath = maxf(0.0,_body_repath-delta)
-	if input_enabled:
+	if house != null and house.busy():
+		move = Vector2.ZERO
+	elif input_enabled:
 		if move.length() > 0.2:
 			_scene_feedback.cancel()
 			# 走动意图出现时立刻放下抬头镜头，避免只依赖后置 quiet-sky tick。
@@ -528,14 +572,14 @@ func tick(delta: float, move: Vector2) -> void:
 				_pending_interaction = ""
 				_interact_with_target(target)
 			var obstacles := _routing_obstacles()
-			if _has_walk_goal and _body_repath <= 0.0 and (_walk_path.is_empty() or not YardBodies.clear_segment(_player.position,_walk_path[0],_player.body_radius*YardGround.depth_at(_player.position.y),obstacles) or not YardBodies._ground_segment(_player.position, _walk_path[0], YardGround.lawn(), true)):
+			if _has_walk_goal and _body_repath <= 0.0 and (_walk_path.is_empty() or not YardBodies.clear_segment(_player.position,_walk_path[0],_player.body_radius*YardGround.depth_at(_player.position.y),obstacles) or not YardBodies._ground_segment(_player.position, _walk_path[0], player_ground(), true)):
 				_walk_path = _route_to_walk_goal(obstacles)
 				_body_repath = 0.7
 				# A moving animal may occupy the destination briefly. Keep intent
 				# and retry while standing; never silently abandon the tap.
 			var destination := _walk_path[0] if not _walk_path.is_empty() else _walk_goal
 			# Rounding a waypoint early must not cut across the concave pond rim.
-			var next_leg_clear := _walk_path.size() < 2 or YardBodies._ground_segment(_player.position, _walk_path[1], YardGround.lawn(), true)
+			var next_leg_clear := _walk_path.size() < 2 or YardBodies._ground_segment(_player.position, _walk_path[1], player_ground(), true)
 			if not _walk_path.is_empty() and next_leg_clear and _player.position.distance_to(destination) < ((12.0 if destination.distance_to(_walk_goal) < 0.01 else 2.0) if _walk_path.size() == 1 else 4.0):
 				_walk_path.pop_front()
 				destination = _walk_path[0] if not _walk_path.is_empty() else _walk_goal
@@ -551,6 +595,7 @@ func tick(delta: float, move: Vector2) -> void:
 	else:
 		_player.tick(delta, Vector2.ZERO, WORLD_SIZE)
 	if _grass_patch != null: _grass_patch.tick(delta)
+	if shelter != null: shelter.prepare(delta)
 	if ground_food != null and inventory_enabled: ground_food.tick(delta)
 	var animal_scale := float(TuningStore.get_value("enemies.visual.scale", 1.0))
 	var animal_speed := float(TuningStore.get_value("enemies.move.speed_multiplier", 1.0))
@@ -566,6 +611,9 @@ func tick(delta: float, move: Vector2) -> void:
 			actor.state = "graze"
 			actor._idle_time = maxf(actor._idle_time, 0.5)
 		actor.body_obstacles = physical_obstacles(actor_id)
+		if shelter != null and shelter.step(actor, delta):
+			actor.current_zone = _zone_at(actor.position)
+			continue
 		if not actor.has_meta("pond_story"):
 			actor.tick(delta, WORLD_SIZE)
 		actor.current_zone = _zone_at(actor.position)
@@ -574,10 +622,11 @@ func tick(delta: float, move: Vector2) -> void:
 			actor.tick_glance(delta, _player.position)
 	_update_lead_rope()
 	if pond_story != null: pond_story.tick(delta, move)
-	_tick_relationships(delta)
-	_tick_goose_mount_encounter(delta, move)
+	if house == null or not house.busy():
+		_tick_relationships(delta)
+		_tick_goose_mount_encounter(delta, move)
 	# 抬头微推放在鹅马之后：鹅马已接管时只让出镜头，不误发 release。
-	_tick_quiet_sky_look(delta, move)
+	if house == null or not house.busy(): _tick_quiet_sky_look(delta, move)
 	_player.player_state = _player.snapshot_state()
 	for key: Variant in _cooldowns.keys():
 		_cooldowns[key] = float(_cooldowns[key]) - delta
@@ -591,7 +640,9 @@ func tick(delta: float, move: Vector2) -> void:
 	var interval := float(TuningStore.get_value("gameplay.expression.pulse", 1.6))
 	if _pulse >= interval:
 		_pulse = 0.0
-		_evaluate_expressions()
+		if house == null or not house.busy():
+			_ensure_bloom_photo()
+			_evaluate_expressions()
 	if _focus_seconds > 0.0:
 		_focus_seconds -= delta
 		if _focus_seconds <= 0.0:
@@ -634,6 +685,9 @@ func _tick_goose_mount_encounter(delta: float, move: Vector2) -> void:
 	if goose == null or horse == null:
 		return
 	if _goose_mount_phase < 0:
+		if horse.has_meta("shelter_controlled"):
+			_goose_mount_wait = 0.0
+			return
 		if EVENT_ID in collected or _day_elapsed < 45.0 or not move.is_zero_approx() or _leading or _has_walk_goal \
 				or not input_enabled or _player.carrying_grass or _millet_held or not _fish_carry_type.is_empty() or _fish_state != FISH_IDLE:
 			_goose_mount_wait = 0.0
@@ -751,9 +805,19 @@ func _consume_pending_action() -> void:
 
 
 func _interact_with_target(target: String) -> void:
+	if house != null and house.busy(): return
 	if not input_enabled or inventory_busy or _player == null:
 		return
 	TuningStore.apply_boundary("NEXT_ACTION")
+	if target == YardSceneHotspots.BASKET:
+		var basket_action := YardSceneHotspots.resolve(self, target)
+		if basket_action.is_empty() or _player.position.distance_to(basket_action.point) >= basket_action.reach: return
+		_consume_pending_action()
+		basket_requested.emit()
+		return
+	if target == "house_door":
+		if _player.position.distance_to(house.APPROACH) < 20.0: house.begin()
+		return
 	if target == YardSceneHotspots.WINDOWBOX:
 		var scene_action := YardSceneHotspots.resolve(self, target)
 		if scene_action.is_empty() or _player.position.distance_to(scene_action.point) >= scene_action.reach:
@@ -775,8 +839,7 @@ func _interact_with_target(target: String) -> void:
 		if fence_action.is_empty() or _player.position.distance_to(fence_action.point) >= fence_action.reach:
 			return
 		_consume_pending_action()
-		_scene_feedback.play_fence_grass(YardSceneHotspots.get_hotspot(target).visual_anchor)
-		notice_requested.emit("notice.fence_gate")
+		gate.toggle()
 		return
 	if target == YardSceneHotspots.PATH_OUT:
 		var path_action := YardSceneHotspots.resolve(self, target)
@@ -785,6 +848,12 @@ func _interact_with_target(target: String) -> void:
 		_consume_pending_action()
 		exploration_requested.emit()
 		return
+	if target.begins_with("chick_care:"):
+		var chick := _interaction_actor(target)
+		if chick != null and _player.position.distance_to(chick.position) < YardInteraction.PET_REACH:
+			_consume_pending_action()
+			chick_care_requested.emit()
+		return
 	if target == "drop_food":
 		_consume_pending_action()
 		ground_food.drop_held()
@@ -792,6 +861,15 @@ func _interact_with_target(target: String) -> void:
 	if target.begins_with("ground_food:"):
 		_consume_pending_action()
 		ground_food.pickup(int(target.get_slice(":", 1)))
+		return
+	if target.begins_with("decor:"):
+		var spot := target.get_slice(":", 1)
+		if decor_view == null or decor_view.placed(spot).is_empty():
+			return
+		if _player.position.distance_to(decor_view.placed(spot).point) >= 48.0:
+			return
+		_consume_pending_action()
+		decor_recall_requested.emit(spot)
 		return
 	if target == "grass":
 		if inventory_enabled and ground_food != null and not ground_food.held().is_empty(): return
@@ -880,6 +958,9 @@ func action_target_key(action: Dictionary) -> String:
 	if target == "release" or target == "llama":
 		return "target.llama"
 	if target == "drop_food" or target.begins_with("ground_food:"): return "target.food"
+	if target.begins_with("chick_care:"):
+		var chick := _interaction_actor(target)
+		return chick.display_name_key if chick != null else ""
 	if target.begins_with("pet:") or target.begins_with("toss_fish:"):
 		var actor := _interaction_actor(target)
 		return "target.%s" % actor.actor_id if actor != null else ""
@@ -889,6 +970,7 @@ func action_target_key(action: Dictionary) -> String:
 
 
 func cancel_scene_feedback() -> void:
+	if _player != null: _player.clear_idle_rest()
 	if pond_story != null: pond_story.cancel()
 	_cancel_goose_mount_encounter()
 	_goose_mount_wait = 0.0
@@ -897,6 +979,10 @@ func cancel_scene_feedback() -> void:
 
 
 func request_primary_action() -> void:
+	if _player != null: _player.idle_rest.wake(bool(TuningStore.get_value("ui.reduced_motion", false)))
+	if house != null and house.busy():
+		house.skip_balcony()
+		return
 	if pond_story != null: pond_story.cancel()
 	if not input_enabled or inventory_busy or _player == null:
 		return
@@ -916,6 +1002,10 @@ func request_primary_action() -> void:
 
 
 func request_pointer_action(point: Vector2) -> void:
+	if _player != null: _player.idle_rest.wake(bool(TuningStore.get_value("ui.reduced_motion", false)))
+	if house != null and house.busy():
+		house.skip_balcony()
+		return
 	if pond_story != null: pond_story.cancel()
 	if not input_enabled or _player == null:
 		return
@@ -938,7 +1028,7 @@ func _request_action(target: String, goal: Vector2) -> void:
 	_scene_feedback.cancel()
 	notice_dismiss_requested.emit("notice.cannot_walk")
 	_rejected_seconds = 0.0
-	if target.is_empty() and YardGround.allows(goal,YardGround.lawn(),true):
+	if target.is_empty() and YardGround.allows(goal,player_ground(),true):
 		goal = _open_goal_near_body(goal)
 	_pending_interaction = target
 	_has_walk_goal = false
@@ -948,7 +1038,7 @@ func _request_action(target: String, goal: Vector2) -> void:
 		_interact_with_target(target)
 		return
 	# A tap at our feet means stop here, not an unreachable destination.
-	if target.is_empty() and YardGround.allows(goal,YardGround.lawn(),true) and _player.position.distance_to(goal) < 12.0:
+	if target.is_empty() and YardGround.allows(goal,player_ground(),true) and _player.position.distance_to(goal) < 12.0:
 		return
 	if not try_walk_to(goal):
 		_pending_interaction = ""
@@ -960,20 +1050,22 @@ func _request_action(target: String, goal: Vector2) -> void:
 
 
 func try_walk_to(goal: Vector2) -> bool:
+	if house != null and house.busy(): return false
 	if not input_enabled or _player == null:
 		return false
 	# Hit-testing happens once, in request_pointer_action. Re-snapping here could
 	# replace an explicit llama destination with nearby grass or another animal.
-	if not YardGround.allows(goal, YardGround.lawn(), true):
+	if not YardGround.allows(goal, player_ground(), true):
 		return false
 	if _player.position.distance_to(goal) < 12.0:
 		return false
-	_walk_path = YardBodies.route(_player.position, goal, _player.body_radius*YardGround.depth_at(_player.position.y), _routing_obstacles(), YardGround.lawn())
+	_walk_path = YardBodies.route(_player.position, goal, _player.body_radius*YardGround.depth_at(_player.position.y), _routing_obstacles(), player_ground())
 	_body_repath = 0.7
 	# A valid lawn destination can be occupied by a moving animal at click time.
 	# Retain it and let the normal waiting/repath loop resume when it clears.
 	_has_walk_goal = true
 	_walk_goal = goal
+	_walk_goal_age = 0.0
 	return true
 
 
@@ -982,7 +1074,7 @@ func try_walk_to(goal: Vector2) -> bool:
 # Keep the original goal and all explicit interaction targets unchanged.
 func _route_to_walk_goal(obstacles: Array) -> Array[Vector2]:
 	var radius := _player.body_radius * YardGround.depth_at(_player.position.y)
-	var path := YardBodies.route(_player.position, _walk_goal, radius, obstacles, YardGround.lawn())
+	var path := YardBodies.route(_player.position, _walk_goal, radius, obstacles, player_ground())
 	if not path.is_empty() or not _pending_interaction.is_empty() or YardBodies.clear_at(_walk_goal, radius, obstacles):
 		return path
 	for margin: float in [4.0, 8.0, 11.0]:
@@ -991,15 +1083,15 @@ func _route_to_walk_goal(obstacles: Array) -> Array[Vector2]:
 			candidates.append(_walk_goal + Vector2.from_angle(float(i) * TAU / 16.0) * margin)
 		candidates.sort_custom(func(a: Vector2, b: Vector2): return a.distance_squared_to(_player.position) < b.distance_squared_to(_player.position))
 		for candidate: Vector2 in candidates:
-			path = YardBodies.route(_player.position, candidate, radius, obstacles, YardGround.lawn())
+			path = YardBodies.route(_player.position, candidate, radius, obstacles, player_ground())
 			if not path.is_empty(): return path
 	return []
 
 
 func physical_obstacles(exclude_id: String = "") -> Array:
-	var result: Array = []
+	var result: Array = [{"id":"yard_basket", "position":Vector2(335,485), "radius":Vector2(17,8)}]
 	if exclude_id != "player" and _player != null:
-		result.append({"id":"player", "position":_player.position, "radius":_player.body_radius*YardGround.depth_at(_player.position.y)})
+		result.append({"id":"player", "position":_player.position, "radius":(Vector2(39,10) if _player.idle_rest.active() else _player.body_radius)*YardGround.depth_at(_player.position.y)})
 	for id: String in _actors:
 		var actor: FeltActor = _actors[id]
 		if id == exclude_id or actor.species == "duck": continue
@@ -1029,7 +1121,7 @@ func _open_goal_near_body(goal: Vector2) -> Vector2:
 		for i in 16:
 			var angle := float(i)*TAU/16.0
 			var candidate: Vector2 = item.position + Vector2(cos(angle),sin(angle))*extent
-			if not YardGround.allows(candidate,YardGround.lawn(),true) or not YardBodies.clear_at(candidate,radius,obstacles): continue
+			if not YardGround.allows(candidate,player_ground(),true) or not YardBodies.clear_at(candidate,radius,obstacles): continue
 			var score := candidate.distance_squared_to(_player.position)
 			if score < distance:
 				distance = score
@@ -1301,10 +1393,14 @@ func _zone_at(point: Vector2) -> String:
 	return "pasture"
 
 
+func player_ground() -> PackedVector2Array:
+	return preload("res://scripts/game/yard_gate_ground.gd").for_body(gate != null and gate.opened, _player.position if _player != null else Vector2.ZERO)
+
+
 func _bind_grounds() -> void:
-	_player.walk_ground = YardGround.lawn()
+	_player.walk_ground = player_ground()
 	_player.avoid_pond = true
-	if not YardGround.allows(_player.position, YardGround.lawn(), true):
+	if not YardGround.allows(_player.position, player_ground(), true):
 		_player.position = Vector2(260, 540)
 	for actor_id: String in _actors:
 		var actor: FeltActor = _actors[actor_id]
@@ -1338,7 +1434,26 @@ func _make_cloud_sprite(node_name: String) -> Sprite2D:
 
 
 ## REQ-012 切片 C：安静停留后轻微抬头看天；走动立刻取消；无新提示/道具/相册。
+func _outdoor_rest_allowed(move: Vector2) -> bool:
+	if not input_enabled or inventory_busy or not _player.visible or not _player.sequence_walker_enabled: return false
+	if house != null and house.busy(): return false
+	if _leading or _has_walk_goal or not _pending_interaction.is_empty() or not move.is_zero_approx(): return false
+	if _player.carrying_grass or _millet_held or not _grain_held.is_empty() or not _fish_carry_type.is_empty() or _fish_state != FISH_IDLE: return false
+	if _goose_mount_phase >= 0 or _goose_mount_wait > 0.0 or (_focus_seconds > 0.0 and not _quiet_sky_active): return false
+	if pond_story != null and pond_story.busy(): return false
+	var radius := Vector2(39,10) * YardGround.depth_at(_player.position.y)
+	if not YardBodies.clear_at(_player.position, radius, _player.body_obstacles): return false
+	for index: int in 24:
+		var point := Vector2.from_angle(TAU * index / 24.0) * (radius + Vector2(2,2))
+		if not YardGround.allows(_player.position + point, player_ground(), true): return false
+	return true
+
+
 func _tick_quiet_sky_look(delta: float, move: Vector2) -> void:
+	if _player.idle_rest.active():
+		_cancel_quiet_sky_look()
+		_quiet_sky_still = 0.0
+		return
 	_quiet_sky_cooldown = maxf(0.0, _quiet_sky_cooldown - delta)
 	# 只有演出已发出新 focus 才交出镜头，避免 release 打断实际接管。
 	if _goose_mount_phase >= 0:
@@ -1442,7 +1557,7 @@ func _layout_cloud_bands() -> void:
 
 
 func _weather_cloud_index() -> int:
-	if weather == "overcast": return 3
+	if weather in ["overcast", "rain"]: return 3
 	if _wants_sunset_clouds(): return 2
 	if _wants_morning_clouds(): return 1
 	return 0
@@ -1466,9 +1581,10 @@ func _apply_weather_art() -> void:
 func _tick_weather_transition(delta: float, refresh_tint: bool = false) -> void:
 	if _backdrop == null or _weather_backdrop_blend == null: return
 	var reduced := bool(TuningStore.get_value("ui.reduced_motion", false))
+	if rain != null: rain.advance(0.0,weather == "rain",reduced)
 	var snap := reduced or not _weather_art_initialized
 	var step := 1.0 if snap else clampf(delta / WEATHER_BLEND_SECONDS, 0.0, 1.0)
-	var target := 1.0 if weather == "overcast" else 0.0
+	var target := 1.0 if weather in ["overcast", "rain"] else 0.0
 	_weather_mix = target if snap else move_toward(_weather_mix, target, step)
 	var index := _weather_cloud_index()
 	# Move the whole weight vector toward its target; reversals preserve all layers.
@@ -1488,7 +1604,7 @@ func _tick_weather_transition(delta: float, refresh_tint: bool = false) -> void:
 	_weather_backdrop_blend.visible = _weather_mix > 0.0
 	var cloud_target := Color.WHITE
 	if filtered:
-		if weather == "overcast": cloud_target = rain_tint
+		if weather in ["overcast", "rain"]: cloud_target = rain_tint
 		elif _wants_night_clouds(): cloud_target = Color(0.70, 0.74, 0.90).lerp(Color(0.82, 0.84, 0.94), 1.0 - intensity * 0.5)
 		elif _wants_sunset_clouds(): cloud_target = Color.WHITE.lerp(Color(1.04, 1.00, 0.98), intensity * 0.35)
 		elif _wants_morning_clouds(): cloud_target = Color.WHITE.lerp(Color(1.06, 1.04, 1.02), intensity * 0.4)
@@ -1499,6 +1615,7 @@ func _tick_weather_transition(delta: float, refresh_tint: bool = false) -> void:
 			band.modulate = Color(_cloud_tint.r, _cloud_tint.g, _cloud_tint.b, float(_weather_cloud_weights[i]))
 			band.visible = float(_weather_cloud_weights[i]) > 0.0
 	if _scene_feedback != null: _scene_feedback.modulate = sun_tint.lerp(rain_tint, _weather_mix)
+	if gate_view != null: gate_view.refresh(gate.opened, _weather_mix, sun_tint, rain_tint)
 	_weather_art_initialized = true
 	_layout_cloud_bands()
 
@@ -1508,25 +1625,25 @@ func _wants_sunset_clouds() -> bool:
 	if weather != "sun":
 		return false
 	var t := tod_fraction()
-	return t >= 0.72 and t < 0.87
+	return preload("res://scripts/game/world_daylight.gd").phase(t) == "evening"
 
 
-## 与 main._tod_phase_name 的 dawn/morning 对齐：t < 0.30。
+## 与 main._tod_phase_name 的 dawn/morning 对齐：当地时间05:00–11:00。
 func _wants_morning_clouds() -> bool:
 	if weather != "sun":
 		return false
-	return tod_fraction() < 0.30
+	return preload("res://scripts/game/world_daylight.gd").phase(tod_fraction()) in ["dawn", "morning"]
 
 
-## 与 main._tod_phase_name 的 night 对齐：t >= 0.87。
+## 与 main._tod_phase_name 的 night 对齐：当地时间20:00–05:00。
 func _wants_night_clouds() -> bool:
 	if weather != "sun":
 		return false
-	return tod_fraction() >= 0.87
+	return preload("res://scripts/game/world_daylight.gd").phase(tod_fraction()) == "night"
 
 
 func _cloud_texture_for_now() -> Texture2D:
-	if weather == "overcast":
+	if weather in ["overcast", "rain"]:
 		return CLOUD_OVERCAST
 	if _wants_sunset_clouds():
 		return CLOUD_SUNSET
@@ -1776,17 +1893,22 @@ func _on_new_day() -> void:
 	elif _plant_state == PLANT_SPROUTING and holiday_day >= _plant_day_planted + 3 and _plant_watered_day >= _plant_day_planted:
 		_plant_state = PLANT_BLOOMED
 		notice_requested.emit("notice.plant.bloomed")
-		# 首次开花触发拍立得（手动规则）
-		if not PhotoMoment.has_event_subject(photo_moments.get("plant_first_bloom", {}), "plant_first_bloom"):
-			var bloom_rule := ExpressionCatalog.find_rule("plant_first_bloom")
-			if not bloom_rule.is_empty():
-				_apply_rule(bloom_rule, true)
+		_ensure_bloom_photo()
 	_save_progress()
 	queue_redraw()
 
 
+## Also recover the real blooming scene after a confirmed sleep or interrupted wake.
+func _ensure_bloom_photo() -> void:
+	if _plant_state != PLANT_BLOOMED or (house != null and house.busy()): return
+	if PhotoMoment.has_event_subject(photo_moments.get("plant_first_bloom", {}), "plant_first_bloom"): return
+	var bloom_rule := ExpressionCatalog.find_rule("plant_first_bloom")
+	if not bloom_rule.is_empty(): _apply_rule(bloom_rule, true)
+
+
 ## 保存当前假期进度到 SaveStore
 func _save_progress() -> void:
+	if house != null and house.busy(): return
 	SaveStore.request_yard_progress(holiday_day, _day_elapsed, _plant_state, _plant_day_planted, _plant_watered_day, _regional_weather.snapshot())
 
 
@@ -1811,7 +1933,9 @@ func advance_world_time(delta: float) -> void:
 
 func environment_snapshot() -> Dictionary:
 	return {"day":holiday_day, "elapsed":_day_elapsed, "day_fraction":tod_fraction(),
-		"hour":fmod(6.0 + tod_fraction()*24.0, 24.0), "weather":weather,
+		"hour":preload("res://scripts/game/world_daylight.gd").hour(tod_fraction()),
+		"phase":preload("res://scripts/game/world_daylight.gd").phase(tod_fraction()),
+		"daylight":preload("res://scripts/game/world_daylight.gd").daylight(tod_fraction()), "weather":weather,
 		"weather_remaining":float(_regional_weather.state.remaining)}
 
 
@@ -1976,9 +2100,14 @@ func _reel_in_fish() -> void:
 ## 已落盘的大背篓是生产环境手持物品的唯一来源。
 func sync_inventory(held: String, pending: bool, items: Array = []) -> void:
 	inventory_enabled = true
+	if shelter == null:
+		shelter = preload("res://scripts/game/yard_shelter.gd").new(self)
+		add_child(shelter)
 	inventory_busy = pending
 	_fish_carry_type = held if held in ["small", "medium", "odd"] else ""
-	_millet_held = held == "millet"
+	_millet_held = held in ["millet", "wheat", "corn"]
+	_grain_held = held if held in ["wheat", "corn"] else ""
+	sync_crops()
 	if _player != null: _player.sync_grass(held == "grass")
 	if ground_food != null: ground_food.sync_items(items)
 	_fish_carry_timer = 0.0
@@ -1987,6 +2116,37 @@ func sync_inventory(held: String, pending: bool, items: Array = []) -> void:
 
 ## 与植物床互动（种植 / 浇水）
 func _interact_plant() -> void:
+	if _player == null: return
+	if _player.position.distance_to(_plant_point()) > 75.0:
+		_request_action("plant", _plant_point())
+		return
+	if inventory_enabled and _plant_state == PLANT_EMPTY:
+		plant_bed_requested.emit()
+		return
+	_interact_legacy_plant()
+
+func sync_crops() -> void:
+	if not inventory_enabled: return
+	if crop_sprite == null:
+		crop_sprite = Sprite2D.new()
+		crop_sprite.name = "YardCrop"
+		crop_sprite.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
+		crop_sprite.centered = false
+		crop_sprite.position = _plant_point()
+		crop_sprite.z_as_relative = false
+		crop_sprite.z_index = roundi(crop_sprite.position.y)
+		add_child(crop_sprite)
+	var bed := SaveStore.get_yard_crops()
+	crop_sprite.visible = not bed.is_empty() and not str(bed.kind).is_empty()
+	if not crop_sprite.visible: return
+	var ripe := preload("res://scripts/game/yard_crops.gd").mature(bed,holiday_day)
+	var tex := preload("res://scripts/game/crop_art.gd").texture(bed.kind,"mature" if ripe else "seedling")
+	crop_sprite.texture = tex
+	crop_sprite.offset = Vector2(-tex.get_width()*0.5,-tex.get_height())
+	var height: float = (36.0 if ripe else 32.0) if bed.kind == "grass" else (88.0 if bed.kind == "corn" else 68.0) if ripe else 45.0
+	crop_sprite.scale = Vector2.ONE * height / tex.get_height()
+
+func _interact_legacy_plant() -> void:
 	if _player == null:
 		return
 	if _player.position.distance_to(_plant_point()) > 75.0:
@@ -2107,8 +2267,10 @@ func _draw() -> void:
 		draw_arc(_rejected_point, 12.0, 0.30, PI-0.30, 20, ink, 2.2, true)
 		draw_arc(_rejected_point, 12.0, PI+0.30, TAU-0.30, 20, ink, 2.2, true)
 	if _has_walk_goal:
-		draw_arc(_walk_goal, 10.0, 0.0, TAU, 24, Color(1.0,0.92,0.65,0.85), 2.0)
-	if _player != null:
+		# REQ-20261008-074: a flattened, depth-scaled ground ring that fades in.
+		var mark := WalkGoalMarker.pose(_walk_goal_age, bool(TuningStore.get_value("ui.reduced_motion", false)), YardGround.depth_at(_walk_goal.y))
+		draw_polyline(WalkGoalMarker.points(_walk_goal, mark.radius), Color(WalkGoalMarker.COLOR, float(mark.alpha)), WalkGoalMarker.WIDTH, true)
+	if _player != null and _player.visible:
 		_draw_contact_shadow(_player.position,Vector2(11,4)*YardGround.depth_at(_player.position.y))
 	for actor_id: String in _actors:
 		var actor: FeltActor = _actors[actor_id]

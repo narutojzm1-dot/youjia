@@ -3,9 +3,10 @@ extends SceneTree
 ## Main, a round stone / pine cone / feather cell can be dragged out of the big basket with a
 ## finger or the mouse. While dragging the basket paper turns translucent, the dim shade goes
 ## away and only the still-empty fixed yard spots light up, at the spot's world position
-## converted to the screen. Dropping on a lit spot opens the existing decor preview at that
-## spot with that find (nothing committed, nothing spent). Dropping elsewhere, Esc, or the
-## basket closing cancel without committing. Runs against an isolated native save.
+## converted to the screen. #594 (CURSOR-CLOUD): dropping on a lit spot places that find there
+## at once through YardDecorController (no separate decor panel); the basket stays open and says
+## where it went. Dropping elsewhere, Esc, or the basket closing cancel without committing.
+## Runs against an isolated native save.
 var checks := 0
 var failures: Array[String] = []
 var main
@@ -76,6 +77,19 @@ func bring_into_view(c: Control) -> void:
 func committed_nothing(cone_before: int, places_before: int) -> bool:
 	return store.get_yard_decor().places.size() == places_before and int(store.get_available_keepsakes().get(ExplorationRoutes.FIND_PINE_CONE, 0)) == cone_before
 
+## Drop on a lit spot: placed there, one spent, basket stays open; then put it back for the next case.
+func placed_by_drop(tag: String, spot: String, cone_before: int, places_before: int) -> void:
+	await settle()
+	var panel = main._basket_panel
+	check(panel.visible, tag + " drop keeps the basket open")
+	check(store.get_yard_decor().places.get(spot, {}).get("find_id", "") == ExplorationRoutes.FIND_PINE_CONE, tag + " drop places the cone at %s" % spot)
+	check(int(store.get_available_keepsakes().get(ExplorationRoutes.FIND_PINE_CONE, 0)) == cone_before - 1 and store.get_yard_decor().places.size() == places_before + 1, tag + " drop spends exactly one cone")
+	check(panel.status.visible and (panel.status.text.contains("摆在") or panel.status.text.contains("Tap it outside the basket")), tag + " basket says where it went: " + panel.status.text)
+	check(not panel.legal_spots().has(spot), tag + " the filled spot no longer lights up")
+	main._decor.request("remove", spot)
+	await settle()
+	check(committed_nothing(cone_before, places_before), tag + " putting it back restores the basket")
+
 func run() -> void:
 	var isolated := OS.get_environment("YOUJIA_TEST_ISOLATED_DATA").replace("\\", "/").to_lower()
 	if isolated.is_empty() or not OS.get_user_data_dir().replace("\\", "/").to_lower().begins_with(isolated):
@@ -106,7 +120,9 @@ func run() -> void:
 		var panel = main._basket_panel
 		var grid = panel.grid
 		var view_rect := Rect2(Vector2.ZERO, Vector2(viewport))
-		check(panel.can_drag("pine_cone") and not panel.can_drag(fish), tag + " finds can be dragged, fish cannot")
+		check(panel.can_drag("pine_cone"), tag + " finds can be dragged")
+		# #597：鱼只能拖到底下的快捷格（只配格子，不进院子的三处位置）
+		check(not panel.can_drag(fish) or main._hold_hotbar.visible, tag + " fish drags only toward the visible hotbar")
 		check(panel.legal_spots().size() == 3, tag + " all three fixed spots are free")
 		# Zones sit at the world spot converted through the yard camera, kept on screen.
 		var canvas: Transform2D = main._world.decor_view.get_global_transform_with_canvas()
@@ -134,13 +150,7 @@ func run() -> void:
 		touch(target, false)
 		await frames()
 		check(panel.drag_kind.is_empty() and panel.panel.modulate.a == 1.0 and panel.shade.visible, tag + " drop restores the basket look")
-		check(main._decor_panel.visible and not panel.visible, tag + " drop on a lit spot opens the decor preview")
-		check(main._decor_panel.selected == target_spot and main._decor_panel.draft.get("find_id", "") == cone, tag + " preview is at the dropped spot with the cone")
-		check(main._world.decor_view.preview != null, tag + " preview drawn in the yard")
-		check(committed_nothing(cone_before, places_before), tag + " drop neither commits nor spends")
-		main._hide_decor()
-		await frames()
-		check(panel.visible, tag + " back to the basket after cancelling the preview")
+		await placed_by_drop(tag + " finger", target_spot, cone_before, places_before)
 		# Drop away from every lit spot -> nothing happens, the find stays in the basket.
 		await bring_into_view(grid.cells["pine_cone"])
 		start = center(grid.cells["pine_cone"])
@@ -153,7 +163,7 @@ func run() -> void:
 		check(panel.drag_kind == "pine_cone" and panel.drag_spot.is_empty(), tag + " nothing lit away from the spots")
 		touch(away, false)
 		await frames()
-		check(panel.visible and not main._decor_panel.visible and panel.drag_kind.is_empty(), tag + " drop elsewhere cancels")
+		check(panel.visible and panel.drag_kind.is_empty(), tag + " drop elsewhere cancels")
 		check(panel.status.visible and panel.status.text in ["要松在院里亮着的圈上；东西还在背篓里。", "Drop it on a lit spot in the yard. It is still in the basket."], tag + " cancelled drop says the find is still in the basket")
 		check(committed_nothing(cone_before, places_before), tag + " cancelled drop commits nothing")
 		# Esc mid-drag: basket closes, nothing committed, look restored next time.
@@ -164,7 +174,7 @@ func run() -> void:
 		await frames()
 		check(not panel.visible and panel.drag_kind.is_empty() and not panel.drag_layer.visible, tag + " Esc mid-drag closes the basket and drops the drag")
 		touch(start, false)
-		check(committed_nothing(cone_before, places_before) and not main._decor_panel.visible, tag + " Esc mid-drag commits nothing")
+		check(committed_nothing(cone_before, places_before), tag + " Esc mid-drag commits nothing")
 		await open_basket()
 		check(panel.panel.modulate.a == 1.0 and panel.shade.visible, tag + " basket reopens opaque")
 		# A fish cell does not drag; a sideways move on it is just a cancelled tap.
@@ -193,7 +203,7 @@ func run() -> void:
 			touch(start + Vector2(0, -30), false)
 			await frames()
 			check(panel.drag_kind.is_empty() and committed_nothing(cone_before, places_before), tag + " hold drag dropped on nothing commits nothing")
-		# Mouse: press on the cone, move to a spot, release -> preview there.
+		# Mouse: press on the cone, move to a spot, release -> placed there.
 		main._last_touch_ms = -100000
 		await bring_into_view(grid.cells["pine_cone"])
 		start = center(grid.cells["pine_cone"])
@@ -206,10 +216,7 @@ func run() -> void:
 		check(panel.drag_spot == target_spot, tag + " zone under the mouse lights up")
 		mouse_button(target, false)
 		await frames()
-		check(main._decor_panel.visible and main._decor_panel.selected == target_spot and main._decor_panel.draft.get("find_id", "") == cone, tag + " mouse drop opens the preview at that spot")
-		check(committed_nothing(cone_before, places_before), tag + " mouse drop commits nothing")
-		main._hide_decor()
-		await frames()
+		await placed_by_drop(tag + " mouse", target_spot, cone_before, places_before)
 		# Mouse drag that ends back on its own cell cancels and does not open the paper.
 		await bring_into_view(grid.cells["pine_cone"])
 		start = center(grid.cells["pine_cone"])
@@ -220,12 +227,11 @@ func run() -> void:
 		mouse_button(start, false)
 		await frames()
 		if lit_under_cell.is_empty():
-			check(panel.drag_kind.is_empty() and not grid.menu.visible and not main._decor_panel.visible, tag + " mouse drag back onto the cell cancels without opening the paper")
+			check(panel.drag_kind.is_empty() and not grid.menu.visible and committed_nothing(cone_before, places_before), tag + " mouse drag back onto the cell cancels without opening the paper")
 		else:
 			# Landscape: a lit spot can sit behind the cell itself; the lit spot wins.
-			check(panel.drag_kind.is_empty() and not grid.menu.visible and main._decor_panel.selected == lit_under_cell, tag + " drop on a lit spot behind the cell opens that spot, no paper")
-			main._hide_decor()
-			await frames()
+			check(panel.drag_kind.is_empty() and not grid.menu.visible, tag + " drop on a lit spot behind the cell places there, no paper")
+			await placed_by_drop(tag + " behind cell", lit_under_cell, cone_before, places_before)
 		check(committed_nothing(cone_before, places_before), tag + " drag back commits nothing")
 		mouse_button(start, true)
 		mouse_button(start, false)
@@ -240,12 +246,9 @@ func run() -> void:
 	await open_basket()
 	var p = main._basket_panel
 	var g = p.grid
-	p.open_decor_with("pine_cone", "house_edge")
-	await frames()
-	main._decor_panel.commit()
+	main._place_from_basket(ExplorationRoutes.FIND_PINE_CONE, "house_edge")
 	await settle()
-	check(store.get_yard_decor().places.has("house_edge"), "decor panel confirm still places the cone")
-	main._hide_decor()
+	check(store.get_yard_decor().places.has("house_edge"), "the cone is placed at the house")
 	await frames()
 	check(p.legal_spots().size() == 2 and not p.legal_spots().has("house_edge"), "occupied house spot is no longer legal")
 	await bring_into_view(g.cells["feather"])
@@ -257,8 +260,7 @@ func run() -> void:
 	check(p.drag_kind == "feather" and p.drag_spot != "house_edge", "occupied spot does not light up")
 	touch(house, false)
 	await frames()
-	check(not main._decor_panel.visible or main._decor_panel.selected != "house_edge", "drop on the occupied spot does not open it")
-	if main._decor_panel.visible: main._hide_decor()
+	check(p.visible and not main._decor.busy(), "drop on the occupied spot submits nothing")
 	await frames()
 	check(store.get_yard_decor().places.size() == 1 and int(store.get_available_keepsakes().get(feather, 0)) == 1, "feather not spent")
 	# Saving: while the inventory is busy no drag starts, and a drag in progress is cancelled.

@@ -1,8 +1,9 @@
 const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict');
-const code=fs.readFileSync('web/loading.html','utf8').match(/<script>([\s\S]*?)<\/script>/)[1].replace('$GODOT_CONFIG','{"focusCanvas":true}').replace('$GODOT_THREADS_ENABLED','false').replace(/\bimport\(/g,'__import(');
+const shell=fs.readFileSync('web/loading.html','utf8').match(/<script>([\s\S]*?)<\/script>/)[1];
 const flush=()=>new Promise(setImmediate);
-function setup(missing=[]){
- const nodes={},listeners={};let onProgress,resolve,reject,clock=0,interval,starts=0,constructed=0,runtime='uninstalled';
+function setup(missing=[],config={focusCanvas:true}){
+ const code=shell.replace('$GODOT_CONFIG',JSON.stringify(config)).replace('$GODOT_THREADS_ENABLED','false').replace(/\bimport\(/g,'__import(');
+ const nodes={},listeners={};let onProgress,resolve,reject,clock=0,interval,starts=0,constructed=0,runtime='uninstalled',restored=0,assetOptions;
  const imports=new Map();
  const make=()=>({hidden:false,textContent:'',value:0,setAttribute(){},removeAttribute(k){delete this[k]},addEventListener(k,f){this[k]=f},focus(){this.focused=true}});
  const window={addEventListener(k,f){listeners[k]=f},removeEventListener(k){delete listeners[k]},location:{reload(){}}};
@@ -11,12 +12,17 @@ function setup(missing=[]){
  const captureLegacy=()=>{};
  vm.runInNewContext(code,{window,document,Engine,performance:{now:()=>clock},console:{error(){},info(){}},setInterval(f){interval=f;return 1},clearInterval(){},__import(path){return new Promise((resolve,reject)=>imports.set(path,{resolve,reject}))}});
  const bridge={installSaveHost({runtimeReady,captureLegacy:capture}){assert.equal(capture,captureLegacy);runtime='pending';runtimeReady.then(()=>runtime='resolved',()=>runtime='rejected')}};
- return {nodes,window,get starts(){return starts},get constructed(){return constructed},get runtime(){return runtime},
-  async modules(){imports.get('./web/save/bridge.mjs').resolve(bridge);await flush();assert.equal(starts,0,'reader must load before engine starts');imports.get('./web/save/idbfs_source.mjs').resolve({captureIdbfsSource:captureLegacy});await flush()},
+ return {nodes,window,document,get starts(){return starts},get constructed(){return constructed},get runtime(){return runtime},get restored(){return restored},assetFailure(){assetOptions.onError(Error('asset recovery failed'))},
+  async modules(){imports.get('./web/save/bridge.mjs').resolve(bridge);await flush();assert.equal(starts,0,'reader must load before engine starts');imports.get('./web/save/idbfs_source.mjs').resolve({captureIdbfsSource:captureLegacy});await flush();assert.equal(constructed,0,'download recovery must install before engine construction');imports.get('./web/boot/download_assets.mjs').resolve({installAssetRecovery(cfg,options){assetOptions=options;return ()=>restored++}});await flush()},
   async moduleFailure(){imports.get('./web/save/bridge.mjs').reject(Error('module fetch failed'));await flush()},
   progress:(a,b)=>onProgress(a,b),resolve:()=>resolve(),reject:()=>reject(Error('engine start failed')),frame:()=>listeners['youjia:first-frame']?.(),blocked:(detail='quarantined')=>listeners['youjia:save-blocked']?.({detail}),tick(t){clock=t;interval()}};
 }
 (async()=>{
+ let timedOut=setup();timedOut.tick(60000);assert.match(timedOut.nodes['loading-detail'].textContent,/启动模块下载超时/);
+ await timedOut.modules();assert.equal(timedOut.starts,0,'late modules cannot launch after startup timeout');assert.equal(timedOut.runtime,'rejected');
+ let published=setup([],{executable:'engine-123',mainPack:'game-abc.pck'});await published.modules();
+ assert.equal(published.nodes['loading-build'].textContent,'game-abc');assert.equal(published.window.youjiaLoadTimings.failed,undefined);
+ published.assetFailure();assert.equal(published.restored,1);await flush();assert.equal(published.runtime,'rejected');assert.match(published.nodes['loading-detail'].textContent,/asset recovery failed/);published.frame();assert.equal(published.nodes.loading.hidden,false);
  let t=setup();await flush();assert.equal(t.constructed,0,'bridge must finish before Engine is constructed');assert.equal(t.starts,0);await t.modules();assert.equal(t.starts,1);assert.equal(t.runtime,'pending','installing bridge does not resolve Host runtime');
  t.progress(5*1048576,10*1048576);assert.match(t.nodes['loading-status'].textContent,/50%.*5.0 \/ 10.0 MiB/);assert.match(t.nodes['loading-status'].textContent,/解压后/);
  t.progress(10*1048576,10*1048576);assert.equal(t.nodes.loading.hidden,false);assert.equal(t.window.youjiaLoadTimings.downloadComplete,0);
@@ -35,5 +41,10 @@ function setup(missing=[]){
   else {assert.equal(t.nodes['loading-status'].textContent,'游戏加载失败，请重试。');assert.match(t.nodes['loading-detail'].textContent,new RegExp(code))}
   let retries=0;t.window.location.reload=()=>retries++;t.nodes['loading-retry'].click();assert.equal(retries,1,'retry reloads; it does not bypass the writer lock');
  }
+ t=setup([],{mainPack:'game-abc.pck',focusCanvas:true});
+ assert.equal(t.nodes['loading-version'].textContent,'0.2.0 · 第2版内部测试');
+ assert.equal(t.document.documentElement.dataset.playerVersion,'0.2.0');
+ assert.equal(t.nodes['loading-build'].textContent,'game-abc');
+ assert.notEqual(t.nodes['loading-version'].textContent, t.nodes['loading-build'].textContent);
  console.log('Loading shell PASS: module ordering, runtime readiness/rejection, persistentPaths isolation, save-blocked gate, bytes, unknown totals, stall and both first-frame orders');
 })().catch(e=>{console.error(e);process.exitCode=1});

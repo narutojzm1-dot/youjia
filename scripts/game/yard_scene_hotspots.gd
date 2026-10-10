@@ -3,11 +3,17 @@ extends RefCounted
 
 # All positions use the existing 1280x720 YardWorld coordinates. The painted
 # balcony is not walkable: hit, safe approach and art anchors stay independent.
+const HOUSE_DOOR := "house_door"
+const BASKET := "yard_basket"
 const WINDOWBOX := "windowbox"
 const SHORE_STONES := "shore_stones"
 const FENCE_GATE := "fence_gate"
 const PATH_OUT := "path_out"
 static var CATALOG: Array[Dictionary] = [
+	{"id":BASKET, "hit_polygon":PackedVector2Array([Vector2(301,415),Vector2(369,415),Vector2(369,488),Vector2(301,488)]),
+	"approach_points":[Vector2(335,522)],"visual_anchor":Vector2(335,485),"reach":18.0,"label_key":"action.open_basket","target_key":"target.basket"},
+	{"id":HOUSE_DOOR, "hit_polygon":PackedVector2Array([Vector2(233,337),Vector2(296,337),Vector2(296,450),Vector2(233,450)]),
+	"approach_points":[Vector2(263,472)],"visual_anchor":Vector2(263,432),"reach":20.0,"label_key":"action.house_sleep","target_key":"target.house"},
 	{
 		"id": WINDOWBOX,
 		"hit_polygon": PackedVector2Array([
@@ -38,19 +44,15 @@ static var CATALOG: Array[Dictionary] = [
 		"target_key": "target.shore_stones",
 	},
 	{
-		# The gate is only a painted background detail. The player remains
-		# well inside the yard while observing it; opening it needs separate art.
+		# Door leaf, with separate approach points on each side.
 		"id": FENCE_GATE,
-		"hit_polygon": PackedVector2Array([
-			Vector2(907, 412), Vector2(959, 412), Vector2(967, 440),
-			Vector2(970, 487), Vector2(961, 506), Vector2(910, 506),
-			Vector2(905, 480), Vector2(903, 444),
-		]),
-		"approach_points": [Vector2(830, 510), Vector2(820, 505)],
-		"visual_anchor": Vector2(929, 507),
-		"ambient_anchor": Vector2(1008, 393),
-		"reach": 64.0,
-		"label_key": "action.observe_fence",
+		"hit_polygon": PackedVector2Array([Vector2(888,435), Vector2(940,440),
+			Vector2(941,509), Vector2(885,503)]),
+		"approach_points": [Vector2(914,516), Vector2(914,466)],
+		"visual_anchor": Vector2(912,488),
+		"ambient_anchor": Vector2(1008,393),
+		"reach": 20.0,
+		"label_key": "action.open_gate",
 		"target_key": "target.fence_gate",
 	},
 	{
@@ -88,21 +90,26 @@ static func get_hotspot(target: String) -> Dictionary:
 
 static func resolve(world: Node2D, target: String) -> Dictionary:
 	var hotspot := get_hotspot(target)
+	if target == HOUSE_DOOR and world.house != null and not world.house.available(): return {}
 	# Durable carried food can travel with the player. Keep ordinary ambient
-	# observations suppressed while carrying; only an explicit exit is exempt.
-	var carrying_exit: bool = target == PATH_OUT and world.inventory_enabled \
+	# observations suppressed while carrying; explicit doors do not consume food.
+	var carrying_exit: bool = (target == BASKET or target == PATH_OUT or target == HOUSE_DOOR or (target == FENCE_GATE and not world.is_leading())) and world.inventory_enabled \
 		and world.get_player() != null and world._fish_state == world.FISH_IDLE
 	if hotspot.is_empty() or (not available(world) and not carrying_exit):
 		return {}
 	var point := Vector2.INF
+	var best_distance := INF
 	for candidate: Vector2 in hotspot.approach_points:
-		if YardGround.allows(candidate, YardGround.lawn(), true):
-			point = candidate
-			break
+		if YardGround.allows(candidate, world.player_ground(), true):
+			var distance: float = world.get_player().position.distance_squared_to(candidate)
+			if distance < best_distance:
+				point = candidate
+				best_distance = distance
+			if target != FENCE_GATE: break
 	if not point.is_finite():
 		return {}
 	return {
-		"target": target, "point": point, "label": hotspot.label_key,
+		"target": target, "point": point, "label": ("action.close_gate" if world.gate.opened else "action.open_gate") if target == FENCE_GATE else hotspot.label_key,
 		"reach": hotspot.reach,
 	}
 

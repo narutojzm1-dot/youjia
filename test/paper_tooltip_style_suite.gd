@@ -31,7 +31,7 @@ func _run() -> void:
 	root.add_child(main)
 	await process_frame
 	await process_frame
-	main._start_holiday()
+	await main._start_holiday()
 	for _f in 6:
 		await process_frame
 	for dims: Vector2i in VIEWPORTS:

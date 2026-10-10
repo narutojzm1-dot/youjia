@@ -16,6 +16,7 @@ func _init(host: Node2D) -> void:
 
 
 func held() -> String:
+	if not world._grain_held.is_empty(): return world._grain_held
 	if world._millet_held: return "millet"
 	if world.get_player().carrying_grass: return "grass"
 	return world._fish_carry_type
@@ -46,7 +47,7 @@ func sync_items(confirmed: Array) -> void:
 		if not sprites.has(id):
 			var sprite := Sprite2D.new()
 			sprite.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
-			sprite.texture = Millet if item.kind == "millet" else (Grass.texture_for(Grass.LOOSE) if item.kind == "grass" else Fish)
+			sprite.texture = preload("res://scripts/game/crop_art.gd").texture(item.kind) if item.kind in ["wheat", "corn"] else Millet if item.kind == "millet" else (Grass.texture_for(Grass.LOOSE) if item.kind == "grass" else Fish)
 			var width := 34.0 if item.kind == "grass" else (38.0 if item.kind == "medium" else 30.0)
 			sprite.scale = Vector2.ONE * width / sprite.texture.get_width()
 			sprite.z_as_relative = false
@@ -108,18 +109,23 @@ func settled(action: String, consumer: String) -> void:
 
 
 func _accepts(actor: FeltActor, item: Dictionary) -> bool:
-	if item.kind == "millet": return actor.species == "chicken"
+	if item.kind in ["millet", "wheat", "corn"]: return actor.species == "chicken"
 	return actor.species in ["cow", "sheep", "llama"] if item.kind == "grass" else actor.species in ["duck", "goose"]
 
 
 func _approach(actor: FeltActor, item: Dictionary) -> Vector2:
 	var point := Vector2(item.x, item.y)
-	if actor.species == "cow":
-		var grazing := preload("res://scripts/game/cow_ground_art.gd")
-		var feet := point - grazing.mouth_offset(actor, point)
-		if not YardGround.allows(feet, actor.walk_ground, actor.avoid_pond): return Vector2.INF
-		var radius := actor.body_radius * YardGround.depth_at(feet.y)
-		return feet if YardBodies.clear_at(feet, radius, world.physical_obstacles(actor.actor_id)) else Vector2.INF
+	if actor.species in ["cow", "sheep"]:
+		var grazing = preload("res://scripts/game/cow_ground_art.gd") if actor.species == "cow" else preload("res://scripts/game/sheep_ground_art.gd")
+		var mouth: Vector2 = grazing.mouth_offset(actor, point)
+		# Another animal may occupy the near-side stance. Walk around to the
+		# mirrored stance when clear; do not enlarge bite reach or move the food.
+		for side: float in [1.0, -1.0]:
+			var feet := point - Vector2(mouth.x * side, mouth.y)
+			if not YardGround.allows(feet, actor.walk_ground, actor.avoid_pond): continue
+			var radius := actor.body_radius * YardGround.depth_at(feet.y)
+			if YardBodies.clear_at(feet, radius, world.physical_obstacles(actor.actor_id)): return feet
+		return Vector2.INF
 	if actor.species == "chicken":
 		var side := signf(point.x - actor.position.x)
 		if side == 0.0: side = actor.facing
@@ -168,6 +174,7 @@ func tick(delta: float) -> void:
 	var ready: Array = []
 	for id: String in world._actors:
 		var actor: FeltActor = world.actor_named(id)
+		if actor.has_meta("shelter_controlled"): continue
 		if actor.posed or actor.state == "lead" or float(cooldowns.get(id, 0.0)) > 0.0: continue
 		var item := find_item(int(targets.get(id, -1)))
 		if item.is_empty():
@@ -193,11 +200,11 @@ func tick(delta: float) -> void:
 			waiting.erase(id)
 			continue
 		actor.seek_food(goal)
-		var eating_point := goal if actor.use_ellipse or actor.species in ["chicken", "cow"] else Vector2(item.x, item.y)
+		var eating_point := goal if actor.use_ellipse or actor.species in ["chicken", "cow", "sheep"] else Vector2(item.x, item.y)
 		var distance := actor.position.distance_to(eating_point)
-		if distance < (5.0 if actor.species in ["chicken", "cow"] else 18.0):
+		if distance < (5.0 if actor.species in ["chicken", "cow", "sheep"] else 18.0):
 			if actor.species == "chicken": actor.show_painted_ack("peck", 0.2)
-			if actor.species == "cow": actor.show_ground_bite("graze", Vector2(item.x, item.y))
+			if actor.species in ["cow", "sheep"]: actor.show_ground_bite("graze", Vector2(item.x, item.y))
 			waiting[id] = float(waiting.get(id, 0.0)) + delta
 			if float(waiting[id]) >= 1.2: ready.append({"actor": id, "item": item, "distance": distance})
 		else: waiting[id] = 0.0

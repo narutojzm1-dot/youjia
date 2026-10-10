@@ -15,7 +15,7 @@ static func sanitize(raw: Variant) -> Dictionary:
 	var remaining := float(raw.get("remaining", -1.0))
 	var seed_value := int(raw.get("seed", 0))
 	var episode := int(raw.get("episode", -1))
-	if not raw.get("weather") is String or raw.weather not in ["sun", "overcast"]: return {}
+	if not raw.get("weather") is String or raw.weather not in ["sun", "overcast", "rain"]: return {}
 	if not is_finite(remaining) or remaining <= 0.0 or remaining > MAX_EPISODE: return {}
 	if seed_value <= 0 or seed_value > 2147483646 or episode < 0: return {}
 	return {"weather":str(raw.weather), "remaining":remaining, "seed":seed_value, "episode":episode}
@@ -29,7 +29,9 @@ func restore(raw: Variant) -> void:
 func _roll(choose_weather: bool = true) -> void:
 	var rng := RandomNumberGenerator.new()
 	rng.seed = int(state.seed) ^ int(state.episode)
-	if choose_weather: state.weather = "sun" if rng.randf() < 0.5 else "overcast"
+	if choose_weather:
+		var choice := rng.randf()
+		state.weather = "sun" if choice < 0.45 else "overcast" if choice < 0.8 else "rain"
 	state.remaining = rng.randf_range(MIN_EPISODE, MAX_EPISODE)
 
 func advance(seconds: float) -> bool:
@@ -43,7 +45,7 @@ func advance(seconds: float) -> bool:
 	return str(state.weather) != before
 
 func select(weather: String) -> void:
-	if weather not in ["sun", "overcast"]: return
+	if weather not in ["sun", "overcast", "rain"]: return
 	state.episode = int(state.episode) + 1
 	_roll(false)
 	state.weather = weather

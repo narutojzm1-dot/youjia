@@ -14,6 +14,8 @@ static func primary(world: Node2D) -> Dictionary:
 	var player = world.get_player()
 	if player == null:
 		return {}
+	if world.house != null and world.house.busy():
+		return action("",player.position,"action.house_resting",INF)
 	if world.is_leading():
 		if world.inventory_enabled:
 			var exit_action := YardSceneHotspots.resolve(world, YardSceneHotspots.PATH_OUT)
@@ -58,6 +60,8 @@ static func primary(world: Node2D) -> Dictionary:
 		var actor = world.actor_named(id)
 		if actor.species == "llama":
 			candidates.append(action("llama", actor.position, "action.lead", 88.0))
+		elif actor.species == "chicken":
+			candidates.append(action("chick_care:" + id, actor.position, "action.chick_care", PET_REACH))
 		elif actor.species in ["cow", "sheep", "horse", "dog"]:
 			candidates.append(action("pet:" + id, actor.position, "action.pet", PET_REACH))
 	var selected: Dictionary = {}
@@ -73,10 +77,18 @@ static func selected(world: Node2D, target: String) -> Dictionary:
 	var player = world.get_player()
 	if player == null:
 		return {}
+	if target.begins_with("decor:") and world.decor_view != null:
+		var placed: Dictionary = world.decor_view.placed(target.get_slice(":", 1))
+		if placed.is_empty(): return {}
+		return action(target, placed.point, "action.pickup_food", 48.0)
 	if target.begins_with("ground_food:") and world.ground_food != null:
 		var item: Dictionary = world.ground_food.find_item(int(target.get_slice(":", 1)))
 		if item.is_empty() or not world.ground_food.held().is_empty(): return {}
 		return action(target, Vector2(item.x, item.y), "action.pickup_food", 48.0)
+	if target.begins_with("chick_care:"):
+		var chick = world.actor_named(target.get_slice(":", 1))
+		if chick != null and chick.species == "chicken": return action(target, chick.position, "action.chick_care", PET_REACH)
+		return {}
 	if target.begins_with("pet:") or target.begins_with("toss_fish:"):
 		var actor = world.actor_named(target.get_slice(":", 1))
 		if actor == null:
@@ -102,9 +114,18 @@ static func selected(world: Node2D, target: String) -> Dictionary:
 	return {}
 
 static func pointer(world: Node2D, point: Vector2) -> Dictionary:
+	# The visible basket remains usable while holding food. Its body excludes
+	# resident feet, and its hit area is independent of the approach point.
+	if world.inventory_enabled and Geometry2D.is_point_in_polygon(point, YardSceneHotspots.get_hotspot(YardSceneHotspots.BASKET).hit_polygon):
+		var basket := YardSceneHotspots.resolve(world, YardSceneHotspots.BASKET)
+		if not basket.is_empty(): return basket
 	if world.inventory_enabled and world.is_leading():
 		var exit_action := YardSceneHotspots.at_point(world, point)
 		if exit_action.get("target", "") == YardSceneHotspots.PATH_OUT: return exit_action
+	if world.inventory_enabled and world.decor_view != null:
+		var placed: Dictionary = world.decor_view.hit_spot(point)
+		if not placed.is_empty():
+			return action("decor:%s" % placed.spot, placed.point, "action.pickup_food", 48.0)
 	if world.inventory_enabled and world.ground_food != null:
 		var item: Dictionary = world.ground_food.near_item(point, 22.0)
 		if not item.is_empty() and world.ground_food.held().is_empty():
@@ -122,9 +143,9 @@ static func pointer(world: Node2D, point: Vector2) -> Dictionary:
 	for id: String in world._actors:
 		var actor = world.actor_named(id)
 		var can_feed: bool = not world._fish_carry_type.is_empty() and actor.species in ["duck", "goose"]
-		if not can_feed and actor.species not in ["llama", "cow", "sheep", "horse", "dog"]:
+		if not can_feed and actor.species not in ["llama", "cow", "sheep", "horse", "dog", "chicken"]:
 			continue
-		var bounds: Rect2 = actor.visual_hit_rect().grow(5.0)
+		var bounds: Rect2 = actor.visual_hit_rect().grow(12.0 if actor.species == "chicken" else 5.0)
 		if not bounds.has_point(point):
 			continue
 		var candidate: float = point.distance_to(bounds.get_center()) / maxf(bounds.size.y, 1.0)
@@ -132,6 +153,7 @@ static func pointer(world: Node2D, point: Vector2) -> Dictionary:
 			score = candidate
 			selected = actor
 	if selected != null:
+		if selected.species == "chicken": return action("chick_care:" + selected.actor_id, selected.position, "action.chick_care", PET_REACH)
 		if selected.species in ["duck", "goose"]:
 			return action("toss_fish:" + selected.actor_id, selected.position, "action.toss_fish", FEED_REACH)
 		if selected.species == "llama":
@@ -161,6 +183,7 @@ static func nearest(world: Node2D, species: Array):
 
 static func plant(world: Node2D) -> Dictionary:
 	var label: String = ["action.plant", "action.water", "action.water", "action.harvest"][world._plant_state]
+	if world.inventory_enabled and world._plant_state == world.PLANT_EMPTY: label = "action.crop_patch"
 	return action("plant", world._plant_point(), label, 75.0)
 
 static func fishing(world: Node2D) -> Dictionary:
@@ -171,7 +194,8 @@ static func fishing(world: Node2D) -> Dictionary:
 
 static func reach(target: String) -> float:
 	if target == "drop_food": return INF
-	if target.begins_with("ground_food:"): return 48.0
+	if target.begins_with("ground_food:") or target.begins_with("decor:"): return 48.0
+	if target.begins_with("chick_care:"): return PET_REACH
 	if target == "llama": return 88.0
 	if target == "grass": return 78.0
 	if target == "plant": return 75.0

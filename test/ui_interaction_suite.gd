@@ -38,6 +38,8 @@ func review():
  var i18n=root.get_node("I18n")
  await create_timer(0.5).timeout
  var start=p.position
+ # Controlled HUD target fixture: the production cow now lives behind the gate.
+ w.debug_place_actor("cow", Vector2(460,500))
  w.debug_place_actor("sheep_b", Vector2(1090, 505))
  w.debug_place_player(w.actor_named("cow").position + Vector2(-50, 20))
  w.tick(0.016, Vector2.ZERO)
@@ -76,10 +78,10 @@ func review():
  tap(Vector2(923, 470))
  await frames(1)
  main._refresh_hud()
- check(w._pending_interaction == "fence_gate" and main._hint_label.text.contains("木栅栏边") and main._action_button.text == i18n.t("action.observe_fence"), "raw touch selects the painted gate; Chinese HUD and action button agree")
+ check(w._pending_interaction == "fence_gate" and main._hint_label.text.contains("木栅栏边") and main._action_button.text == i18n.t("action.open_gate"), "raw touch selects the painted gate; Chinese HUD and action button agree")
  i18n.set_locale("en")
  main._refresh_hud()
- check(main._hint_label.text.contains("Wooden fence") and main._action_button.text == i18n.t("action.observe_fence"), "English HUD keeps the touched wooden fence rather than suggesting entry")
+ check(main._hint_label.text.contains("Wooden fence") and main._action_button.text == i18n.t("action.open_gate"), "English HUD keeps the touched wooden fence rather than suggesting entry")
  i18n.set_locale("zh-CN")
  touch_button("_action_button")
  await frames(1)
@@ -186,7 +188,7 @@ func review():
  check(before_scale==w._backdrop.scale and walk==w._player.walk_ground,"weather preserves backdrop scale and collision")
  # 云带 B：阴天换阴云帧，且不改碰撞。
  check(w._weather_cloud_pair()[0]!=null and w._weather_cloud_pair()[0].texture==w.CLOUD_OVERCAST,"overcast swaps the overcast cloud band")
- w.toggle_weather()
+ w.set_weather("sun")
  w._day_elapsed = w.DAY_DURATION_SECONDS * 0.40
  w._apply_weather_art()
  check(w.weather=="sun" and w._backdrop.texture==w.SUNNY,"sun restores the painted sunny yard")
@@ -200,19 +202,19 @@ func review():
  check(w._weather_cloud_pair()[0].texture==w.CLOUD_MORNING,"sunny dawn uses the morning cloud band")
  w.toggle_weather()
  check(w.weather=="overcast" and w._weather_cloud_pair()[0].texture==w.CLOUD_OVERCAST,"overcast morning keeps the overcast cloud band")
- w.toggle_weather()
+ w.set_weather("sun")
  w._day_elapsed = w.DAY_DURATION_SECONDS * 0.40
  w._apply_weather_art()
  check(w.weather=="sun" and w._weather_cloud_pair()[0].texture==w.CLOUD_SUNNY,"sunny noon restores the bright cloud band after morning")
  # 晴天云带 modulate 应偏亮，不跟院子暖滤色一起变脏。
  check(w._weather_cloud_pair()[0].modulate.r >= 1.0 and w._weather_cloud_pair()[0].modulate.g >= 1.0,"sunny cloud band stays bright instead of dirty warm tint")
  # 傍晚暖云：只在晴天 TOD evening 窗口换帧；阴天不抢。
- w._day_elapsed = w.DAY_DURATION_SECONDS * 0.80
+ w._day_elapsed = w.DAY_DURATION_SECONDS * (13.0 / 24.0) # 19:00 local time
  w._apply_weather_art()
  check(w._weather_cloud_pair()[0].texture==w.CLOUD_SUNSET,"sunny evening uses the warm sunset cloud band")
  w.toggle_weather()
  check(w.weather=="overcast" and w._weather_cloud_pair()[0].texture==w.CLOUD_OVERCAST,"overcast evening keeps the overcast cloud band")
- w.toggle_weather()
+ w.set_weather("sun")
  w._day_elapsed = w.DAY_DURATION_SECONDS * 0.40
  w._apply_weather_art()
  check(w.weather=="sun" and w._weather_cloud_pair()[0].texture==w.CLOUD_SUNNY,"sunny noon restores the bright cloud band")
@@ -224,7 +226,7 @@ func review():
  check(night_mod.r < 1.0 and night_mod.b > night_mod.r,"sunny night clouds are cooler and dimmer than noon")
  w.toggle_weather()
  check(w.weather=="overcast" and w._weather_cloud_pair()[0].texture==w.CLOUD_OVERCAST,"overcast night keeps the overcast cloud band")
- w.toggle_weather()
+ w.set_weather("sun")
  w._day_elapsed = w.DAY_DURATION_SECONDS * 0.40
  w._apply_weather_art()
  check(w._weather_cloud_pair()[0].modulate.r >= 1.0,"sunny noon after night restores the bright cloud band")
@@ -239,6 +241,8 @@ func review():
  w.tick(2.0, Vector2.ZERO)
  check(w._cloud_scroll>scroll_before,"cloud band drifts when motion is allowed")
  w.debug_place_player(YardSceneHotspots.get_hotspot("windowbox").approach_points[0] + Vector2(5, 5))
+ # Wait for the previous simulation/save batch before the next real action.
+ await root.get_node("SaveStore").flush_pending()
  w.request_pointer_action(Vector2(285, 275))
  check(not w._scene_feedback.active_snapshot().is_empty(), "real windowbox observation paints a temporary world response")
  touch_button("_pause_button");await frames(1)
@@ -258,7 +262,9 @@ func review():
   if w.actor_named(id).visual_hit_rect().grow(5.0).has_point(Vector2(923, 470)):
    w.debug_place_actor(id, Vector2(700, 455))
  w.request_pointer_action(Vector2(923, 470))
- check(not w._scene_feedback.fence_snapshot().is_empty(), "real gate observation paints a grass response rather than opening the shed")
+ check(not w.gate.pending.is_empty() and not w.gate.opened, "real gate action waits for durable confirmation")
+ await root.get_node("SaveStore").flush_pending()
+ check(w.gate.opened, "real gate action opens after persistence confirmation")
  touch_button("_pause_button");await frames(1)
  check(main._pause_screen.visible and w._scene_feedback.fence_snapshot().is_empty(), "actual pause button clears the painted fence breeze")
  touch_button("_resume_button");await frames(1)

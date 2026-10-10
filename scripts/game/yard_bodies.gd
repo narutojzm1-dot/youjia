@@ -58,6 +58,18 @@ static func move_inside(start: Vector2, step: Vector2, radius: Vector2, obstacle
 	return point
 
 static func _ground_segment(a: Vector2, b: Vector2, ground: PackedVector2Array, avoid_pond: bool) -> bool:
+	# Five-pixel probes can skip a very narrow concave fence corner. Split at
+	# every polygon intersection and check each open interval before smoothing.
+	var axis := b - a
+	if axis.length_squared() > 0.000001:
+		var cuts: Array[float] = [0.0, 1.0]
+		for edge: int in ground.size():
+			var crossing: Variant = Geometry2D.segment_intersects_segment(a, b, ground[edge], ground[(edge + 1) % ground.size()])
+			if crossing != null:
+				cuts.append(clampf((crossing - a).dot(axis) / axis.length_squared(), 0.0, 1.0))
+		cuts.sort()
+		for index: int in range(1, cuts.size()):
+			if cuts[index] - cuts[index - 1] > 0.000001 and not YardGround.allows(a.lerp(b, (cuts[index] + cuts[index - 1]) * 0.5), ground, avoid_pond): return false
 	var count := maxi(1, ceili(a.distance_to(b)/5.0))
 	for i in range(count+1):
 		if not YardGround.allows(a.lerp(b,float(i)/count),ground,avoid_pond): return false
@@ -68,6 +80,9 @@ static func route(start: Vector2, goal: Vector2, radius: Vector2, obstacles: Arr
 	if clear_segment(start,goal,radius,obstacles) and _ground_segment(start,goal,ground,avoid_pond): return [goal]
 	var grid := AStarGrid2D.new()
 	grid.region = Rect2i(14,33,65,23)
+	# Preserve the established lawn grid; extend east only for pen routes.
+	for corner: Vector2 in ground:
+		grid.region = grid.region.expand(Vector2i(ceili(corner.x/CELL), ceili(corner.y/CELL)))
 	grid.cell_size = Vector2.ONE*CELL
 	grid.diagonal_mode = AStarGrid2D.DIAGONAL_MODE_ONLY_IF_NO_OBSTACLES
 	grid.update()

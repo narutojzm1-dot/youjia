@@ -30,9 +30,12 @@ func run() -> void:
 	check(is_equal_approx(main._world._day_elapsed, before.elapsed + 20.0), "production exploring branch advances shared clock once")
 	check(is_equal_approx(main._world.environment_snapshot().weather_remaining, before.weather_remaining - 20.0), "production exploring branch consumes same weather episode")
 	check(main._world.actor_named("sheep_b").position == feet, "hidden animals stationary")
+	var light_before: Color = main._tod_rect.color
+	check(light_before == preload("res://scripts/game/world_daylight.gd").tint(main._world.tod_fraction(), main.TOD_COLORS), "exploring refreshes actual shared light from advancing clock")
 	main._pause_screen.show()
 	main._process(30.0)
 	check(is_equal_approx(main._world._day_elapsed, before.elapsed + 20.0), "pause freezes shared travel clock")
+	check(main._tod_rect.color == light_before, "pause freezes travel light with clock")
 	main._pause_screen.hide()
 	main._save_problem_active = true
 	main._process(30.0)
@@ -41,6 +44,8 @@ func run() -> void:
 	main._exploration.interrupt()
 	await settle(store)
 	check(main._screen == "game", "production return completes")
+	main._process(0.0)
+	check(main._tod_rect.color == light_before, "return retains regional light without resetting time")
 	main._save_problem_active = true
 	var frozen: float = main._world._day_elapsed
 	main._process(30.0)

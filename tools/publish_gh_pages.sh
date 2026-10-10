@@ -8,10 +8,10 @@
 # 导出产物来自 dist/ 目录（export_path = dist/index.html）。
 #
 # 本脚本完成以下任务:
-#   1. 将 dist/index.* 重命名为 game-{sha}.*（用于强制浏览器缓存清除）
-#   2. 在 index.html 中将 executable 从 "index" 改为 "game-{sha}"
-#   3. 在 index.html 中将 script.src 从 'index.js' 改为 'game-{sha}.js'
-#   4. 将 fileSizes 键从 index.* 改为 game-{sha}.*（保持与 executable 一致）
+#   1. PCK 使用 game-{sha}，相同引擎字节使用稳定的 engine-{content-hash}
+#   2. executable 指向引擎，mainPack 独立指向本次游戏资源包
+#   3. script.src 与音频 worklet 使用同一引擎内容版本
+#   4. fileSizes 使用实际引擎/资源包名称，保留旧 game/index 链接
 #   5. 注入 cache-control meta 标签，对抗浏览器/CDN 缓存 index.html
 #   6. 将所有文件推送到 gh-pages 分支
 #   7. 自动剪除超出 KEEP_BUNDLES 数量的旧 game-* 资源包（默认保留最近 4 个）
@@ -66,10 +66,15 @@ done
 MODULE_ENTRY="save-${SHA}"
 mkdir -p "$WORK_DIR/$MODULE_ENTRY"
 cp "$REPO_ROOT"/web/save/*.mjs "$WORK_DIR/$MODULE_ENTRY/"
+BOOT_ENTRY="boot-${SHA}"
+mkdir -p "$WORK_DIR/$BOOT_ENTRY"
+cp "$REPO_ROOT"/web/boot/*.mjs "$WORK_DIR/$BOOT_ENTRY/"
+printf '*.mjs -text\n' > "$WORK_DIR/$BOOT_ENTRY/.gitattributes"
 
 # ---- 修补 index.html 中的三处关键配置 ----
 HTML="$WORK_DIR/index.html"
 sed -i "s|./web/save/|./${MODULE_ENTRY}/|g" "$HTML"
+sed -i "s|./web/boot/|./${BOOT_ENTRY}/|g" "$HTML"
 
 # 0. 注入 Cache-Control meta，防止浏览器将 index.html 长期缓存（gh-pages 无自定义响应头）
 #    只在尚未注入时才添加，避免重复发布时重复插入。
@@ -78,15 +83,9 @@ if ! grep -q 'Cache-Control.*no-cache' "$HTML"; then
     echo "[publish] injected cache-control meta into index.html"
 fi
 
-# 1. executable: "index" → "game-{sha}"
-sed -i "s/\"executable\":\"index\"/\"executable\":\"${ENTRY}\"/" "$HTML"
-
-# 2. fileSizes 键: index.pck / index.wasm → game-{sha}.pck / game-{sha}.wasm
-sed -i "s/\"index\.pck\":/\"${ENTRY}.pck\":/g" "$HTML"
-sed -i "s/\"index\.wasm\":/\"${ENTRY}.wasm\":/g" "$HTML"
-
-# 3. script.src = 'index.js' → 'game-{sha}.js'（匹配单引号版本）
-sed -i "s/script\.src = 'index\.js'/script.src = '${ENTRY}.js'/" "$HTML"
+# Reuse engine bytes across code-only releases. Both generated worklets and
+# WASM belong to this content hash; startGame loads the separate mainPack.
+python3 "$REPO_ROOT/tools/stage_web_engine.py" "$DIST_DIR" "$WORK_DIR" "$ENTRY"
 
 # 4. icon href 已由导出过程正确设置；如有需要也修补
 sed -i "s/href=\"index\.icon\.png\"/href=\"${ENTRY}.icon.png\"/" "$HTML"
@@ -102,12 +101,13 @@ echo "[publish] cache-control meta tags injected; data-build=${ENTRY}"
 
 # 验证三处均已替换
 echo "[publish] verifying HTML patches..."
-python3 - "$HTML" "$ENTRY" <<'PYEOF'
-import sys, json, re
+python3 - "$HTML" "$ENTRY" "$WORK_DIR/engine-assets.json" <<'PYEOF'
+import sys, json, re, hashlib, pathlib
 
 html_path = sys.argv[1]
 entry = sys.argv[2]
-content = open(html_path).read()
+content = open(html_path, encoding='utf-8').read()
+engine = json.load(open(sys.argv[3]))['entry']
 
 # 提取 config 对象
 m = re.search(r'const config = ({.*?});', content)
@@ -117,26 +117,29 @@ if not m:
 cfg = json.loads(m.group(1))
 
 errors = []
-if cfg.get('executable') != entry:
-    errors.append(f"executable is '{cfg.get('executable')}', expected '{entry}'")
+if cfg.get('executable') != engine or cfg.get('mainPack') != f'{entry}.pck':
+    errors.append('engine/mainPack do not match this staged build')
 
 file_sizes = cfg.get('fileSizes', {})
 pck_key = f"{entry}.pck"
-wasm_key = f"{entry}.wasm"
+wasm_key = f"{engine}.wasm"
 if pck_key not in file_sizes:
     errors.append(f"fileSizes missing key '{pck_key}' (got: {list(file_sizes.keys())})")
 if wasm_key not in file_sizes:
     errors.append(f"fileSizes missing key '{wasm_key}'")
+expected_hashes = {name: hashlib.sha256((pathlib.Path(html_path).parent / name).read_bytes()).hexdigest() for name in (pck_key, wasm_key)}
+if cfg.get('fileHashes') != expected_hashes:
+    errors.append('fileHashes do not match actual staged WASM/PCK bytes')
 
-if f"script.src = '{entry}.js'" not in content:
-    errors.append(f"script.src not updated to '{entry}.js'")
+if f"script.src = '{engine}.js'" not in content:
+    errors.append('script.src does not match engine bytes')
 
 if errors:
     for e in errors:
         print(f"ERROR: {e}", file=sys.stderr)
     sys.exit(1)
 else:
-    print(f"[publish] HTML verification passed: executable={entry}, fileSizes keys correct, script.src={entry}.js")
+    print(f"[publish] HTML verification passed: executable={engine}, mainPack={entry}.pck, fileSizes keys correct")
 PYEOF
 
 # ---- 更新 game-release.json ----
@@ -177,6 +180,16 @@ v = json.loads(p.read_text())
 v['storageModules'] = {'entry': entry, 'sha256': {f.name: hashlib.sha256(f.read_bytes()).hexdigest() for f in sorted(pathlib.Path(directory).glob('*.mjs'))}}
 p.write_text(json.dumps(v, ensure_ascii=False, indent=2) + '\n')
 PYMODULE
+python3 - "$RELEASE_JSON" "$WORK_DIR/engine-assets.json" "$WORK_DIR/$BOOT_ENTRY" "$BOOT_ENTRY" <<'PYBOOT'
+import hashlib, json, pathlib, sys
+manifest, engine, directory, entry = sys.argv[1:]
+p = pathlib.Path(manifest)
+v = json.loads(p.read_text())
+v['engineAssets'] = json.loads(pathlib.Path(engine).read_text())
+v['loaderModules'] = {'entry': entry, 'sha256': {f.name: hashlib.sha256(f.read_bytes()).hexdigest() for f in sorted(pathlib.Path(directory).glob('*.mjs'))}}
+p.write_text(json.dumps(v, ensure_ascii=False, indent=2) + '\n')
+pathlib.Path(engine).unlink()  # Staging metadata belongs in the release manifest.
+PYBOOT
 
 # ---- 推送到 gh-pages ----
 echo "[publish] switching to gh-pages branch..."
@@ -191,6 +204,11 @@ git worktree add "$GH_PAGES_DIR" origin/gh-pages
 # 复制新产物到 gh-pages 工作目录
 cp -R "$WORK_DIR"/* "$GH_PAGES_DIR/"
 touch "$GH_PAGES_DIR/.nojekyll"
+# The URL hash describes exact engine bytes, including line endings.
+touch "$GH_PAGES_DIR/.gitattributes"
+if ! grep -Fxq 'engine-*.js -text' "$GH_PAGES_DIR/.gitattributes"; then
+    printf '\nengine-*.js -text\n' >> "$GH_PAGES_DIR/.gitattributes"
+fi
 
 # ---- 剪除旧 game-* 资源包（可选，由 KEEP_BUNDLES 控制）----
 # 以 .pck 为锚点，按 gh-pages 实际发布历史保留当前与最近版本。

@@ -77,7 +77,10 @@ func _check_long(dims: Vector2i) -> void:
 	n.add_theme_font_size_override("font_size", 18)
 	main._fit_notice()
 	var half := _half_limit()
-	_check(is_equal_approx(n.offset_right, half) and is_equal_approx(n.offset_left, -half), "%s long notice keeps the original wrap width (%.0f)" % [dims, half])
+	_check(is_equal_approx(n.offset_right - n.offset_left, half * 2.0), "%s long notice keeps the original wrap width (%.0f)" % [dims, half])
+	# Near the top-right column (short landscapes) the paper may slide left instead of centring, never right
+	var column: Rect2 = main._top_right_column_rect()
+	_check(n.offset_left <= -half + 0.01 and (is_equal_approx(n.offset_left, -half) or main.size.x * 0.5 + n.offset_right <= column.position.x - main.NOTICE_COLUMN_GAP + 0.5), "%s long notice is centred or slid just clear of the top-right column" % dims)
 
 
 func _check_big_font_refit(dims: Vector2i) -> void:

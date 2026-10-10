@@ -33,6 +33,7 @@ var checks := 0
 var failures: Array[String] = []
 var notices: Array[String] = []
 var log_lines: Array[String] = []
+var last_catch_hud_notice := ""
 
 
 func _initialize() -> void:
@@ -156,10 +157,14 @@ func _cast_until_bite(main, w, shorten_wait: bool) -> Dictionary:
 
 ## Real catch: bite, then the same primary action the HUD/keyboard uses.
 func _catch(main, w) -> bool:
+	last_catch_hud_notice = ""
 	var r := _cast_until_bite(main, w, true)
 	if not r.ok:
 		return false
 	w.request_primary_action()
+	# The HUD response belongs to the reel action. Awaiting two native save
+	# commits below lets normal frames expire a short-lived notice on slow I/O.
+	last_catch_hud_notice = main._notice_key
 	await root.get_node("SaveStore").flush_pending()
 	var fish: Dictionary = main._inventory.view().fish
 	if fish.is_empty(): return false
@@ -354,7 +359,8 @@ func _seq_odd_fish_wording(main) -> void:
 	var text: String = i18n.t("notice.fishing.caught.odd")
 	var en_text := str(i18n._load_catalog("res://localization/en.json").get("notice.fishing.caught.odd", ""))
 	_check(_count("notice.fishing.caught.odd") >= 1, "S7 odd catch emits notice.fishing.caught.odd")
-	_check(main._notice_key == "notice.fishing.caught.odd", "S7 HUD shows the odd-catch notice")
+	_log("S7 actual HUD after catch/withdraw: %s; notices=%s" % [main._notice_key, notices])
+	_check(last_catch_hud_notice == "notice.fishing.caught.odd", "S7 HUD shows the odd-catch notice on reel")
 	_check(w._fish_carry_type == "odd" and w._fish_carry_timer == 0.0, "S7 odd fish is durably held without expiry")
 	_check(w.primary_action_key() == "action.drop_food", "S7 odd fish can be tossed")
 	w.request_primary_action()

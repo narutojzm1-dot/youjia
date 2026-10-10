@@ -81,15 +81,22 @@ static func configure(original: Dictionary) -> Dictionary:
 		if ResourceLoader.exists(DIRECTORY+"cow_glance.png"):
 			config.textures["glance"]=DIRECTORY+"cow_glance.png"
 			config.posture_metadata["glance"]=manifest().get("cow_glance",{})
-	elif species=="sheep" and ResourceLoader.exists(DIRECTORY+"sheep_shake.png"):
-		config.textures["shake"]=DIRECTORY+"sheep_shake.png"
-		config.posture_metadata={"shake": manifest().get("sheep_shake",{})}
 	if species=="sheep":
+		var grazing := preload("res://scripts/game/sheep_ground_art.gd")
+		if grazing.CELLS.has(str(config.id)):
+			config.textures["graze"] = grazing.CELLS[str(config.id)].texture
+			config.posture_metadata = config.get("posture_metadata", {})
+			config.posture_metadata["graze"] = grazing.CELLS[str(config.id)].metadata
 		var response := "sheep_clingy_attend_v2" if str(config.id)=="sheep_a" else "sheep_dull_glance_v3"
 		if str(config.id) in ["sheep_a", "sheep_b"] and ResourceLoader.exists(DIRECTORY+response+".png"):
 			config.textures["attend"]=DIRECTORY+response+".png"
 			config.posture_metadata=config.get("posture_metadata",{})
 			config.posture_metadata["attend"]=manifest().get(response,{})
+	var shelter := preload("res://scripts/game/shelter_art.gd")
+	if shelter.CELLS.has(str(config.id)):
+		config.textures["shelter_rest"] = shelter.CELLS[str(config.id)].texture
+		config.posture_metadata = config.get("posture_metadata", {})
+		config.posture_metadata["shelter_rest"] = shelter.CELLS[str(config.id)].metadata
 	return config
 
 static func texture_path(species: String,expression: String="idle") -> String:

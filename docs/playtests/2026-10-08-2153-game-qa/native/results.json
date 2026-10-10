@@ -1,0 +1,98 @@
+{
+  "sourceSha": "070ae5a4f45f73105801cc029a1f86def87b6f6b",
+  "startedUtc": "2026-10-08T14:00:59.258590+00:00",
+  "profileProbe": "D:/games/youjia-test/qa/native/2026-10-08-1915/roaming/Godot/app_userdata/youjia-qa-profile-probe",
+  "engine": "D:/games/youjia-tmp-godot/Godot_v4.7.2-stable_win64_console.exe",
+  "tests": [
+    {
+      "entry": "import",
+      "exit": 0,
+      "summary": []
+    },
+    {
+      "entry": "nearby_direct_pick",
+      "exit": 0,
+      "summary": [
+        "NEARBY_DIRECT_PICK checks=189 failures=0"
+      ]
+    },
+    {
+      "entry": "animal_glance_facing",
+      "exit": 0,
+      "summary": [
+        "ANIMAL_GLANCE_FACING checks=48 failures=0"
+      ]
+    },
+    {
+      "entry": "sheep_ground_graze",
+      "exit": 0,
+      "summary": [
+        "SHEEP_GROUND_GRAZE checks=96 failures=0"
+      ]
+    },
+    {
+      "entry": "world_daylight",
+      "exit": 0,
+      "summary": [
+        "WORLD_DAYLIGHT checks=181 failures=0"
+      ]
+    },
+    {
+      "entry": "regional_rain",
+      "exit": 0,
+      "summary": [
+        "REGIONAL_RAIN checks=35 failures=0"
+      ]
+    },
+    {
+      "entry": "yard_gate",
+      "exit": 0,
+      "summary": [
+        "YARD_GATE checks=41 failures=0"
+      ]
+    },
+    {
+      "entry": "yard_shelter",
+      "exit": 0,
+      "summary": [
+        "YARD_SHELTER checks=34 failures=0"
+      ]
+    },
+    {
+      "entry": "world_weather_runtime",
+      "exit": 0,
+      "summary": [
+        "WORLD_WEATHER_RUNTIME checks=18 failures=0"
+      ]
+    },
+    {
+      "entry": "yard_ground_food_runtime",
+      "exit": 0,
+      "summary": [
+        "YARD_GROUND_FOOD_RUNTIME checks=75 failures=0"
+      ]
+    },
+    {
+      "entry": "save_coordinator",
+      "exit": 0,
+      "summary": [
+        "SAVE_COORDINATOR checks=86 failures=[]"
+      ]
+    },
+    {
+      "entry": "save_recovery",
+      "exit": 0,
+      "summary": [
+        "SAVE RECOVERY PASS 24"
+      ]
+    },
+    {
+      "entry": "fish_carry_consistency",
+      "exit": 0,
+      "summary": [
+        "[fish-carry] 107 checks []"
+      ]
+    }
+  ],
+  "endedUtc": "2026-10-08T14:02:24.874165+00:00"
+}

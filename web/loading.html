@@ -55,6 +55,7 @@ Source SHA-256: 38f4c5f927f746b3dfa4c3a5d7edf0b7a3e828e27438418fa54f9e1565289412
   <canvas id="canvas" tabindex="0">Your browser does not support canvas.</canvas>
   <section id="loading" role="status">
     <h1 id="game-title"></h1>
+    <p id="loading-version" style="margin:6px 0 0;font-size:clamp(15px,2.2vw,18px);letter-spacing:0.04em">0.2.0 · 第2版内部测试</p>
     <p id="loading-status">Loading…</p>
     <p id="loading-detail"></p>
     <progress id="loading-progress" aria-label="Download progress"></progress>
@@ -74,6 +75,9 @@ Source SHA-256: 38f4c5f927f746b3dfa4c3a5d7edf0b7a3e828e27438418fa54f9e1565289412
         installSaveHost({runtimeReady: saveRuntimeReady, captureLegacy: captureIdbfsSource});
       });
       saveBridgeReady.catch(() => {});
+      const assetRecoveryReady = import('./web/boot/download_assets.mjs');
+      assetRecoveryReady.catch(() => {});
+      let restoreAssetFetch = () => {};
       const threads = $GODOT_THREADS_ENABLED;
       const canvas = document.getElementById('canvas');
       const loading = document.getElementById('loading');
@@ -83,12 +87,20 @@ Source SHA-256: 38f4c5f927f746b3dfa4c3a5d7edf0b7a3e828e27438418fa54f9e1565289412
       const notice = document.getElementById('loading-notice');
       const retry = document.getElementById('loading-retry');
       const buildLabel = document.getElementById('loading-build');
+      const versionLabel = document.getElementById('loading-version');
       document.getElementById('game-title').textContent = document.title;
-      // 显示 build ID（即 executable 名称，如 game-ca1fb67），可用于快速核验缓存是否命中最新版本
-      if (buildLabel && config.executable) {
-        buildLabel.textContent = config.executable;
-        // 将版本 ID 同步写入 document.documentElement.dataset.build，方便控制台查询
-        document.documentElement.dataset.build = config.executable;
+      // Player-facing version starts at 0.2.0 (第2版内部测试). Do not treat the
+      // internal pack name as the player version, and do not invent later rules.
+      const playerVersion = '0.2.0';
+      const playerVersionLabel = '0.2.0 · 第2版内部测试';
+      if (versionLabel) versionLabel.textContent = playerVersionLabel;
+      document.documentElement.dataset.playerVersion = playerVersion;
+      // The engine URL is shared by unchanged engine bytes across game builds.
+      const buildId = config.mainPack?.replace(/\.pck$/, '') || config.executable;
+      if (buildLabel && buildId) {
+        buildLabel.textContent = buildId;
+        // 内部构建号保留为次要诊断信息，方便对应真实构建。
+        document.documentElement.dataset.build = buildId;
       }
       // Single-language holiday: pin Simplified Chinese on the loader.
       const zh = true;
@@ -101,6 +113,7 @@ Source SHA-256: 38f4c5f927f746b3dfa4c3a5d7edf0b7a3e828e27438418fa54f9e1565289412
       let ready = false;
       let engineReady = false;
       let firstFrame = false;
+      let bootstrapReady = false;
       const timings = window.youjiaLoadTimings = {};
       const stamp = (name) => {
         if (timings[name] === undefined) timings[name] = Math.round(performance.now() - startedAt);
@@ -113,6 +126,7 @@ Source SHA-256: 38f4c5f927f746b3dfa4c3a5d7edf0b7a3e828e27438418fa54f9e1565289412
       const finish = () => {
         if (failed || !engineReady || !firstFrame) return;
         ready = true;
+        restoreAssetFetch();
         stopObserving();
         loading.hidden = true;
         if (config.focusCanvas) canvas.focus();
@@ -123,6 +137,10 @@ Source SHA-256: 38f4c5f927f746b3dfa4c3a5d7edf0b7a3e828e27438418fa54f9e1565289412
       const updateNotice = () => {
         if (failed || ready) return;
         const seconds = Math.floor((performance.now() - startedAt) / 1000);
+        if (seconds >= 60 && !bootstrapReady) {
+          fail(new Error('游戏启动模块下载超时，请检查网络连接后重试。'));
+          return;
+        }
         detail.textContent = downloadComplete
           ? `下载已完成 · 总计已用 ${seconds} 秒`
           : `已读取 ${mib(downloadedBytes)} MiB 资源数据（解压后）· ${seconds} 秒`;
@@ -152,6 +170,7 @@ Source SHA-256: 38f4c5f927f746b3dfa4c3a5d7edf0b7a3e828e27438418fa54f9e1565289412
       const fail = (error) => {
         if (failed || ready) return;
         failed = true;
+        restoreAssetFetch();
         rejectSaveRuntime(error);
         stopObserving();
         const writerOwned = error.saveBlockedCode === 'SAVE_WRITER_OWNED';
@@ -211,7 +230,20 @@ Source SHA-256: 38f4c5f927f746b3dfa4c3a5d7edf0b7a3e828e27438418fa54f9e1565289412
           stamp('engineScriptReady');
           const missing = Engine.getMissingFeatures({ threads });
           if (missing.length) throw new Error(`Missing browser features: ${missing.join(', ')}`);
-          await saveBridgeReady;
+          const [, {installAssetRecovery}] = await Promise.all([saveBridgeReady, assetRecoveryReady]);
+          if (failed) return; // Late imports cannot restart an already failed page.
+          bootstrapReady = true;
+          stamp('bootstrapReady');
+          restoreAssetFetch = installAssetRecovery(config, {
+            onError: fail,
+            onCacheHit: () => stamp('assetCacheHit'),
+            onRetry: ({url, offset, retry: attempt, maxRetries}) => {
+              stamp('downloadRetry');
+              notice.hidden = false;
+              notice.textContent = `下载连接中断，正在恢复（${attempt}/${maxRetries}）…`;
+              console.info('[game-loading] resume', url, offset, attempt);
+            },
+          });
           const engine = new Engine({ ...config, canvas, persistentPaths: [] });
           await engine.startGame({ onProgress, persistentPaths: [] });
           resolveSaveRuntime();

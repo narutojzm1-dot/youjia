@@ -134,7 +134,8 @@ func _check_layout(dims: Vector2i, tag: String, language: String, state: String)
 		elif label.get_line_count() > 1:
 			wrapped_en += 1
 			check(dims.x <= 300, tag + ": English %s name only wraps on the narrowest phones" % kind)
-	for button: Button in [panel.scoop_button, panel.return_button]:
+	check(not panel.scoop_button.is_visible_in_tree(), tag + ": retired infinite grain tin stays hidden")
+	for button: Button in [panel.return_button]:
 		_check_button(button, tag)
 		check(button.get_global_rect().end.x <= scroll_rect.end.x + EPS, tag + ": %s inside the list window" % button.text)
 
@@ -235,13 +236,13 @@ func _specific_cases(locale: Node) -> void:
 		if panel._fit_queued:
 			queued_frames += 1
 	check(queued_frames == 0, "the panel settles instead of re-fitting every frame")
-	# Tall screens: identical to the old layout.
+	# Tall screens: same 520px width, centred; the height now hugs the content (capped at 620).
 	locale.call("set_locale", "zh-CN")
 	root.size = Vector2i(1280, 720)
 	panel.update_view(_inventory(""), _keepsakes(), "ready", false)
 	await _settle()
 	paper = panel.panel.get_global_rect()
-	check(paper == Rect2(380, 50, 520, 620), "1280x720 paper unchanged at 380,50 520x620 (got %s)" % paper)
+	check(is_equal_approx(paper.position.x, 380.0) and is_equal_approx(paper.size.x, 520.0) and paper.size.y <= 620.0 and absf(paper.get_center().y - 360.0) <= EPS, "1280x720 paper 520 wide at x=380, centred, at most 620 tall (got %s)" % paper)
 	check(panel.status.visible and panel.status.text == "钓到的鱼、散步带回的小物，都收在这里。", "tall screens keep the note")
 
 

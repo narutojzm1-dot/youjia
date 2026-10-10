@@ -1,0 +1,26 @@
+{
+  "source": "070ae5a4f45f73105801cc029a1f86def87b6f6b",
+  "head": "30fda6ccc9088668ad9be8d44446d8e8dbfad675",
+  "gh_pages": "bd391377572162be6c20f5808b03416a28f5ec79",
+  "ci": 37772352573,
+  "publish": 37773746799,
+  "pages": 37775440535,
+  "pck": "game-070ae5a.pck",
+  "bytes": 51489076,
+  "sha256": "5fafb26da9e4c46cccfd1983392fe2f7a59cde9ef98c5e2b8f46cb8af30d058e",
+  "git_blob": "f3575e18c963ef9b73ec3b2026d226a3d39295b7",
+  "index_sha256": "bd13395795196e6ed45229b4f0e305b42ac11f33c4b38a4e989cace42016a052",
+  "storage_modules_verified": 10,
+  "verified_at": "2026-10-08T12:21:49.402931+00:00",
+  "notes": [
+    "First read before Pages deployment correctly rejected old manifest.",
+    "First file download timed out at 60 seconds; retry completed and all hashes matched gh-pages.",
+    "Public UI stalled at 61 percent once; ordinary retry reached title screen.",
+    "First public load logged two network errors at 12:20:20Z; normal Retry resolved, no new errors/warnings during gameplay."
+  ],
+  "ordinary_public_play": "Day14 old save restored. Day15 all three residents outside, normal overcast-to-rain button; sheep_b, cow, sheep_a returned in order and rested. Return began in daylight and final screenshot was naturally night. Public tab paused.",
+  "screenshots": [
+    "public-before-rain-all-out.jpeg",
+    "public-rain-all-home.jpeg"
+  ]
+}

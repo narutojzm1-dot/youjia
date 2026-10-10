@@ -40,7 +40,7 @@ func run() -> void:
 	world.set_weather("sun")
 	check(world._weather_mix == 0.0, "reduced reverse settles immediately")
 	check(world._backdrop.scale == scale_before and world._backdrop.position == Vector2.ZERO, "world backdrop bounds unchanged")
-	for phase: float in [0.18, 0.4, 0.8, 0.92]:
+	for phase: float in [0.18, 0.4, 13.0 / 24.0, 0.92]:
 		world._day_elapsed = phase * world.DAY_DURATION_SECONDS
 		world._apply_weather_art()
 		check(world._weather_cloud_pair()[0].texture == world._cloud_texture_for_now(), "TOD uses correct cloud resource")
@@ -62,7 +62,8 @@ func run() -> void:
 	world._day_elapsed = 0.4 * world.DAY_DURATION_SECONDS
 	world._apply_weather_art()
 	var weights: Array = world._weather_cloud_weights.duplicate()
-	world._day_elapsed = 0.8 * world.DAY_DURATION_SECONDS
+	# A saved day starts at 06:00; 19:00 is thirteen hours into that day.
+	world._day_elapsed = (13.0 / 24.0) * world.DAY_DURATION_SECONDS
 	world._apply_weather_art()
 	check(world._weather_cloud_weights == weights, "TOD change does not snap cloud weights")
 	world.tick(1.5, Vector2.ZERO)
