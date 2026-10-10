@@ -1,0 +1,33 @@
+extends SceneTree
+func _initialize(): call_deferred("run")
+func run():
+ var isolated=OS.get_environment("YOUJIA_TEST_ISOLATED_DATA").replace("\\","/").to_lower()
+ if isolated.is_empty() or not OS.get_user_data_dir().replace("\\","/").to_lower().begins_with(isolated):
+  quit(2)
+  return
+ root.size=Vector2i(960,540)
+ var main=load("res://scenes/main.tscn").instantiate()
+ root.add_child(main)
+ for i in 3: await process_frame
+ await main._start_holiday()
+ main.set_process(false)
+ main._world._day_elapsed=11.0/24.0*600.0
+ main._world._regional_weather.state.weather="sun"
+ main._world._regional_weather.state.remaining=1800.0
+ main._world.weather="sun"
+ main._process(0.0)
+ main._update_tod_tint(main._world.tod_fraction())
+ print("NIGHT640_CONTINUOUS_START isolated initial17:00, controlled clear episode; from here normal .05s runtime steps at20fps")
+ for frame in 7000:
+  main._process(0.05)
+  await process_frame
+  if frame % 500 == 0:
+   print("NIGHT640_CONTINUOUS_FRAME ",frame," ",main._world.environment_snapshot())
+   await RenderingServer.frame_post_draw
+   root.get_texture().get_image().save_jpg("C:/Users/Zengm/AppData/Local/Temp/night640-video-hour-%04d.jpg" % frame,0.88)
+ await root.get_node("SaveStore").flush_pending()
+ print("NIGHT640_CONTINUOUS_END ",main._world.environment_snapshot())
+ main.queue_free()
+ await process_frame
+ root.get_node("AudioDirector").release_streams()
+ quit(0)
