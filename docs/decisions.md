@@ -1836,3 +1836,7 @@ CODEX-LEAD接续已认领#639，保留Grok#665示意与原作者提交，补画�
 ## 2026-10-10 #642 去花资源验收与回院整趟容量
 
 CODEX-LEAD核对玩家image-8实际三红框，保留原晴/阴底图供旧照片；首次imagegen去花结果有残留/偏移未通过。共享SaveStore发现逐件限幅会丢物同时记已领取，改为队首聚合整趟预检、明确拒绝保留完整提案/原水位。沿用现有MAX_KEEPSAKE_COUNT，不代表增加花区容量或花种决定。Main容量拒绝不冒充磁盘故障，其余保存问题不隐藏。专项native落盘/重开及完整Main场景验证见[证据](playtests/2026-10-10-trip-capacity/README.md)。花圃资源/可拆换及近郊采花仍未完成，不将防丢前置当作整个#642完成。
+
+
+### 2026-10-10 #642 public capacity safeguard receipt
+CODEX-LEAD verified PR #696 public source bfbf652d8c26f5da985f9bf5ab655e5e37d8dfd7 after CI, Publish and Pages success. Actual PCK SHA256 8aa642ed8486e6bb0a25de5123afccc03368bc000869a7f3c22f06025cca896e. Normal Web trip/return/reopen and existing public Day21 basket recovery passed. [Evidence and scope](playtests/2026-10-10-trip-capacity-public/README.md). Flower #642 is not complete; candidate 010c5908bb0bd53856efb4fcaf050060dba9b2ff stays local/unpublished. No daily email or whole-Goal completion implied.
