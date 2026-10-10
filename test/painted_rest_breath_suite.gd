@@ -13,7 +13,7 @@ func run() -> void:
 	root.add_child(world)
 	world.setup()
 	var phases: Array[float] = []
-	for id in ["cow", "horse", "llama", "sheep_a", "sheep_b"]:
+	for id in ["cow", "horse", "llama", "sheep_a", "sheep_b", "goose"]:
 		var actor = world.actor_named(id)
 		actor.set_meta("shelter_rest", true)
 		actor.state = "rest"
