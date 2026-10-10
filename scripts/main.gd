@@ -3303,7 +3303,7 @@ func _on_crops_confirmed_for_bark(kind: String) -> void:
 	if not was_empty or now_kind.is_empty():
 		return
 	# Plant success may land while CropPanel is still open; allow that moment.
-	var busy := _resident_bubble.is_showing() or _resident_bark_hard_blocked()
+	var busy: bool = _resident_bubble.is_showing() or _resident_bark_hard_blocked()
 	var bark_id: String = _resident_barks.try_plant_sown(_bark_clock, busy)
 	if bark_id.is_empty():
 		return
@@ -3336,7 +3336,7 @@ func _try_chick_bark() -> void:
 func offer_fatigue_bark(fatigue_active: bool) -> bool:
 	if _resident_barks == null or _resident_bubble == null:
 		return false
-	var busy := _resident_bubble.is_showing() or _resident_bark_blocked()
+	var busy: bool = _resident_bubble.is_showing() or _resident_bark_blocked()
 	var bark_id: String = _resident_barks.try_fatigue(_bark_clock, busy, fatigue_active)
 	if bark_id.is_empty():
 		return false

@@ -23,11 +23,14 @@ const PER_ID_COOLDOWN := {
 }
 ## Chance when near a chick and otherwise eligible (0..1).
 const CHICK_CHANCE := 0.22
+## Minimum seconds between chick proximity *dice rolls* (not every render frame).
+const CHICK_PROBE_INTERVAL := 2.5
 ## How long a shown bark stays up (seconds).
 const DISPLAY_SECONDS := 3.6
 
 var _last_global_at := -INF
 var _last_id_at: Dictionary = {}
+var _last_chick_probe_at := -INF
 var _rng := RandomNumberGenerator.new()
 
 
@@ -41,6 +44,7 @@ func _init(seed_value: int = 0) -> void:
 func reset() -> void:
 	_last_global_at = -INF
 	_last_id_at.clear()
+	_last_chick_probe_at = -INF
 
 
 func i18n_key(bark_id: String) -> String:
@@ -60,8 +64,12 @@ func can_offer(bark_id: String, now: float, busy: bool) -> bool:
 	return true
 
 
-## Deterministic gate for occasional chick bark (call only when near chick).
+## Occasional chick bark. Rolls at most once per CHICK_PROBE_INTERVAL while near chick.
 func try_chick_proximity(now: float, busy: bool, force: bool = false) -> String:
+	if not force:
+		if now - _last_chick_probe_at < CHICK_PROBE_INTERVAL:
+			return ""
+		_last_chick_probe_at = now
 	if not can_offer(BARK_CHICK_EGGS, now, busy):
 		return ""
 	if not force and _rng.randf() > CHICK_CHANCE:
