@@ -1865,3 +1865,8 @@ CODEX-LEAD verified PR #696 public source bfbf652d8c26f5da985f9bf5ab655e5e37d8df
 ## 2026-10-10 用户最新授权：Grok同时承担独立小功能
 
 GROK-CONTRIBUTOR从仅修bug扩展为“修bug＋边界明确的小功能”，不是GROK-BUILD。首批指定#703绘本气泡与小鸡/播种情境、#704背篓/相册/暂停交互短音、#705做饭烟囱效果；均待本人回执。#703/#704可独立开发，#705正式接入依赖Leader餐食事件。Owner端到端制作/接入/验证/PR，成长规则与共享存档仍Leader、近郊仍ASSISTANT、整体UI仍Cloud，按方法划界。详见[范围与验收队列](collaboration/grok-small-features-2026-10-10.md)；该授权覆盖旧bug-only限制，不恢复逐PR外审或每项Leader批准。未修改外部客户端定时器，未冒称已接收。
+
+
+## 2026-10-10-2350-game-qa — GAME-QA
+
+game-e9e7292实际青草种收3束、麦子播种留种、夜眠第4→5天与阳台晨间、种植和库存重开恢复限定通过；快捷配置清空对应#597/#698已知缺口。未新增BUG、未重复自动专项；完整成长/全模式/音频兼容等覆盖不足，不全量放行。 [报告与原件](playtests/2026-10-10-2350-game-qa/README.md)。独立PR保留待审，不开发不发布。
