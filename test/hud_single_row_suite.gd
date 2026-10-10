@@ -13,13 +13,16 @@ extends SceneTree
 ## short one ("Open journal" -> "Journal", "Gentle rain" -> "Rain",
 ## "Overcast" -> "Cloudy"); every weather state is checked, not only today's. Portrait and very narrow screens keep
 ## the two-row layout. The hotbar and notices follow the bottom row.
+## Narrow portrait (280-320 wide): when the Chinese full labels ("翻开手帐") do not fit
+## equal thirds, the chips are sized to their text with a 10px gap (and 8px inner
+## padding if still needed) instead of overlapping each other or the right margin.
 
 const SINGLE_ROW := [
 	Vector2i(568, 320), Vector2i(600, 340), Vector2i(611, 340), Vector2i(640, 300), Vector2i(640, 360), Vector2i(667, 375),
 	Vector2i(699, 400), Vector2i(700, 400), Vector2i(760, 400), Vector2i(844, 390), Vector2i(1024, 600),
 	Vector2i(1280, 720),
 ]
-const STACKED := [Vector2i(540, 320), Vector2i(567, 320), Vector2i(408, 844), Vector2i(390, 844), Vector2i(360, 640), Vector2i(320, 568), Vector2i(500, 300), Vector2i(600, 700)]
+const STACKED := [Vector2i(540, 320), Vector2i(567, 320), Vector2i(408, 844), Vector2i(390, 844), Vector2i(360, 640), Vector2i(320, 568), Vector2i(280, 653), Vector2i(300, 600), Vector2i(500, 300), Vector2i(600, 700)]
 const LOCALES := ["zh-CN", "en"]
 
 var checks := 0
@@ -86,8 +89,7 @@ func _check_layout(tag: String, dims: Vector2i, single: bool, loc: String) -> vo
 	for b: Button in buttons:
 		_check(screen.encloses(_rect(b)), "%s %s on screen %s" % [tag, b.text, _rect(b)])
 		# get_minimum_size() is the text's own need; custom_minimum_size is the width the layout assigned.
-		# Only single-row widths are new here; narrow portrait chips (320/360 wide) already grow a few px on main.
-		_check(not single or b.get_minimum_size().x <= b.custom_minimum_size.x + 0.5, "%s '%s' fits its assigned width (%.0f > %.0f)" % [tag, b.text, b.get_minimum_size().x, b.custom_minimum_size.x])
+		_check(b.get_minimum_size().x <= b.custom_minimum_size.x + 0.5, "%s '%s' fits its assigned width (%.0f > %.0f)" % [tag, b.text, b.get_minimum_size().x, b.custom_minimum_size.x])
 	for i in buttons.size():
 		for j in range(i + 1, buttons.size()):
 			var a: Rect2 = _rect(buttons[i])
@@ -101,6 +103,13 @@ func _check_layout(tag: String, dims: Vector2i, single: bool, loc: String) -> vo
 			_check(b.size.x <= 188.5, "%s %s at most 188 wide" % [tag, b.text])
 	else:
 		_check(main._action_button.position.y > main._album_chip.position.y + 40.0, "%s action button keeps its own row" % tag)
+		# 280 宽：中文全名放不进平分宽度时按文字宽度排，仍守住两侧 20px 边距，间距不小于 8px
+		_check(chips[0].position.x >= 19.5 and _rect(chips[2]).end.x <= dims.x - 19.5, "%s chip row keeps the 20px side margins (%.0f..%.0f)" % [tag, chips[0].position.x, _rect(chips[2]).end.x])
+		for i in 2:
+			var gap: float = chips[i + 1].position.x - _rect(chips[i]).end.x
+			_check(gap >= 8.0 - 0.5, "%s gap after '%s' at least 8px (%.1f)" % [tag, chips[i].text, gap])
+		for b: Button in chips:
+			_check(b.get_theme_stylebox("normal").content_margin_left >= 8.0, "%s '%s' keeps at least 8px inner padding" % [tag, b.text])
 	# Every action label the button can show still fits without widening it.
 	var keep: String = main._action_button.text
 	for k: String in action_keys[loc]:

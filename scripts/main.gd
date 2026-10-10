@@ -80,6 +80,7 @@ var _basket_chip: Button
 var _basket_panel: Control
 var _hotbar_save: Node
 var _hold_hotbar: Control
+var _chip_label_width := -1.0
 var _residents: RefCounted
 var _chick_panel: Control
 var _crop_panel: Control
@@ -2702,9 +2703,52 @@ const SINGLE_ROW_MIN_WIDTH := 568.0
 ## 一行排开时行动按钮至少这么宽，最长的英文动作「Turn in for the night」（按钮内约 175px）也放得下；
 ## 其余三枚分剩下的宽度，仍不超过 188。
 const ACTION_MIN_WIDTH := 180.0
+const CHIP_SIDE_MARGIN := 16.0
+const CHIP_TIGHT_SIDE_MARGIN := 8.0
+const CHIP_TIGHT_GAP := 10.0
 ## 小按钮按实际排版宽度放不下全名时，英文换短名：「Open journal」→「Journal」，
 ## 「Gentle rain」→「Rain」，「Overcast」→「Cloudy」。中文全名在各宽度都放得下。
 const SHORT_WEATHER_EN := {"rain": "Rain", "sun": "Sun", "overcast": "Cloudy"}
+
+## 竖屏三枚小按钮平分一排；最窄屏（280 宽）上「翻开手帐」等中文全名放不进平分宽度时，
+## 改按各自文字宽度排、缩小间距，仍不够再收窄左右内边距，保证互不重叠、不出边距。
+## 天气按钮按所有天气里最长的名字留宽，换天气时不必重排。
+func _chip_row_plan(chips: Array[Button], equal: float, avail: float, pad: float) -> Dictionary:
+	var needs := _chip_text_needs(chips, equal)
+	if needs.max() <= equal + 0.5:
+		return {"widths": [equal, equal, equal], "gap": pad}
+	var total: float = needs[0] + needs[1] + needs[2]
+	if total + CHIP_TIGHT_GAP * 2.0 > avail:
+		_set_chip_side_margin(chips, CHIP_TIGHT_SIDE_MARGIN)
+		needs = _chip_text_needs(chips, equal)
+		total = needs[0] + needs[1] + needs[2]
+	var gap := clampf((avail - total) / 2.0, 0.0, CHIP_TIGHT_GAP)
+	var extra := maxf(0.0, (avail - total - gap * 2.0) / 3.0)
+	return {"widths": [needs[0] + extra, needs[1] + extra, needs[2] + extra], "gap": gap}
+
+
+func _chip_text_needs(chips: Array[Button], label_width: float) -> Array[float]:
+	var needs: Array[float] = []
+	for chip: Button in chips:
+		var keep := chip.text
+		var need := chip.get_minimum_size().x
+		if chip == _weather_chip:
+			for weather: String in SHORT_WEATHER_EN:
+				_fit_chip_text(chip, I18n.t("hud.weather.%s" % weather), str(SHORT_WEATHER_EN[weather]), label_width)
+				need = maxf(need, chip.get_minimum_size().x)
+		chip.text = keep
+		needs.append(ceilf(need))
+	return needs
+
+
+func _set_chip_side_margin(chips: Array[Button], margin: float) -> void:
+	for chip: Button in chips:
+		for state: String in ["normal", "hover", "pressed", "disabled"]:
+			var box := chip.get_theme_stylebox(state) as StyleBoxFlat
+			if box != null and box.content_margin_left != margin:
+				box.content_margin_left = margin
+				box.content_margin_right = margin
+
 
 func _stacked_hud() -> bool:
 	return size.x < 700.0 and not (size.x > size.y and size.x >= SINGLE_ROW_MIN_WIDTH)
@@ -2725,10 +2769,15 @@ func _layout() -> void:
 	if not compact:
 		action_width = maxf(minf(188.0, (size.x - pad * 5.0) / 4.0), ACTION_MIN_WIDTH)
 		chip_width = minf(188.0, (size.x - pad * 5.0 - action_width) / 3.0)
+	_chip_label_width = chip_width
 	_refresh_yard_chip_labels(chip_width)
-	for button in [_album_chip,_weather_chip,_basket_chip]:
-		button.custom_minimum_size = Vector2(chip_width,48)
-		button.size = Vector2(chip_width,48)
+	var chips: Array[Button] = [_album_chip,_weather_chip,_basket_chip]
+	_set_chip_side_margin(chips, CHIP_SIDE_MARGIN)
+	var row_plan := _chip_row_plan(chips, chip_width, size.x - pad * 2.0, pad) if compact else {"widths": [chip_width, chip_width, chip_width], "gap": pad}
+	for index in chips.size():
+		var width: float = row_plan.widths[index]
+		chips[index].custom_minimum_size = Vector2(width,48)
+		chips[index].size = Vector2(width,48)
 	_action_button.custom_minimum_size = Vector2(action_width,48)
 	_action_button.size = _action_button.custom_minimum_size
 	_pause_button.custom_minimum_size = Vector2(120.0 if size.x < 700.0 else 188.0,48)
@@ -2744,9 +2793,10 @@ func _layout() -> void:
 		_day_label.position = Vector2(_pause_button.position.x, _pause_button.position.y + _pause_button.size.y + 8.0)
 	_fit_save_status()
 	var row := size.y-124.0 if compact else size.y-68.0
-	_album_chip.position = Vector2(pad,row)
-	_weather_chip.position = Vector2(pad * 2.0 + chip_width,row)
-	_basket_chip.position = Vector2(pad * 3.0 + chip_width * 2.0,row)
+	var chip_x := pad
+	for chip: Button in chips:
+		chip.position = Vector2(chip_x,row)
+		chip_x += chip.size.x + float(row_plan.gap)
 	_action_button.position = Vector2(pad if compact else size.x-_action_button.size.x-pad,size.y-68.0)
 	_fit_pause_panel()
 	_fit_confirm_panel()
@@ -2860,7 +2910,7 @@ func _sync_regional_clock() -> void:
 
 func _refresh_yard_chip_labels(chip_width: float = -1.0) -> void:
 	if chip_width < 0.0:
-		chip_width = _album_chip.size.x
+		chip_width = _chip_label_width if _chip_label_width > 0.0 else _album_chip.size.x
 	_fit_chip_text(_album_chip, I18n.t("hud.album"), "Journal", chip_width)
 	if _world != null:
 		var weather := str(_world.weather)
