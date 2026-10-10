@@ -142,3 +142,4 @@ run_godot suite test/photo_diary_weather_suite.gd
 
 run_godot suite test/resident_idle_rest_suite.gd
 run_godot suite test/exploration_trip_capacity_suite.gd
+run_godot suite test/yard_original_plants_suite.gd

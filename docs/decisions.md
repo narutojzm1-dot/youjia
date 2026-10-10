@@ -1840,3 +1840,7 @@ CODEX-LEAD核对玩家image-8实际三红框，保留原晴/阴底图供旧照�
 
 ### 2026-10-10 #642 public capacity safeguard receipt
 CODEX-LEAD verified PR #696 public source bfbf652d8c26f5da985f9bf5ab655e5e37d8dfd7 after CI, Publish and Pages success. Actual PCK SHA256 8aa642ed8486e6bb0a25de5123afccc03368bc000869a7f3c22f06025cca896e. Normal Web trip/return/reopen and existing public Day21 basket recovery passed. [Evidence and scope](playtests/2026-10-10-trip-capacity-public/README.md). Flower #642 is not complete; candidate 010c5908bb0bd53856efb4fcaf050060dba9b2ff stays local/unpublished. No daily email or whole-Goal completion implied.
+
+
+### 2026-10-10 #642 原布局保存候选，不冒称花园完成
+Leader接续独立原花草root extension与confirmed-only控制器，不改旧三小物槽、食物账本、ASSISTANT近郊或Cursor #698快捷栏。移除不创建额外拥有量，复原保留原组合，尚未批准或实现新花种/混种容量/刷新。86项生产原生持久化测试通过；UI、画作无缝、照片与Web闭环继续开发。[具体证据](playtests/2026-10-10-original-plants-state/README.md)。

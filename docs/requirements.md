@@ -884,3 +884,7 @@ Owner CODEX-LEAD，小院三处花草分层及共享保存；近郊采花继续A
 
 ### 2026-10-10 CODEX-LEAD #642 capacity prerequisite published
 PR #696 is merged and public source bfbf652d8c26f5da985f9bf5ab655e5e37d8dfd7 verified. Full-trip capacity refusal preserves deferred finds and retry; see [public receipt](playtests/2026-10-10-trip-capacity-public/README.md). #642 remains open: flower assets are local candidates only; planting, removal and photo persistence remain to implement.
+
+
+### 2026-10-10 #642 原布局确认式保存候选
+CODEX-LEAD 在 codex/lead-flower-original-state-642 接续三处原花草 remove/restore 数据和控制器：缺字段旧布局与显式移空区分、FIFO revision、未知/失败安全重试、未来schema保留。真实原生86项及容量48/旧摆件19/协调器86/反馈50通过。[候选证据与未完成范围](playtests/2026-10-10-original-plants-state/README.md)。无正式编辑入口、照片接入或花园发布；底板接缝仍需收尾，#642保持开放。
