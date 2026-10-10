@@ -1,0 +1,35 @@
+{
+  "candidate": "d616ccfaa3bc116660356f73aa30e18be900ea12",
+  "ordinary": {
+    "origin": "http://127.0.0.1:8797/",
+    "steps": [
+      "fresh Day1 chick",
+      "wheat 2 to 1 held and dropped",
+      "chick eats wheat, care bonus 0.5 game days",
+      "real reload preserves bonus",
+      "corn 2 to 1 held and dropped on Day2",
+      "ordinary time to Day3 morning shows hen and 100%",
+      "re-export latest candidate with rail fix, real reload retains hen and 100%"
+    ],
+    "clockInjection": false,
+    "saveInjection": false,
+    "screenshots": [
+      "chick636-ordinary-grown.png",
+      "chick636-ordinary-grown-reloaded-final.png"
+    ]
+  },
+  "viewports": {
+    "390x844": "all panel content and back button visible",
+    "568x320": "scroll to bottom and click back restores yard",
+    "device": "desktop browser, not physical phone"
+  },
+  "supplementalNative": {
+    "yard_ground_food_runtime": 75,
+    "animal_companion": 155,
+    "leading_clearance": 18,
+    "beibei_integration": 46,
+    "chick_millet_integration": 39
+  },
+  "initialCIFailure": 38002409996,
+  "fixedCIRun": 38004510510
+}
