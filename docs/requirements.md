@@ -889,3 +889,8 @@ PR #696 is merged and public source bfbf652d8c26f5da985f9bf5ab655e5e37d8dfd7 ver
 ## 2026-10-10 下一阶段成长闭环（#700）
 
 用户已确认三餐1/3/2自主行动点、物品驱动实际世界行动与建筑/园艺/厨艺经验，近郊八格农田、基础工具/磨盘及相册/纪念册分离。早餐余点可到下午；下午余点最多1点到晚上；三种经验均到1级才统一显现相关UI。跨日/等级阈值等未定。Owner CODEX-LEAD，方向已接收、实现待进行；ASSISTANT近郊与Cursor UI按接口回执接入，不冒称开工。详细规则、交付顺序、兼容和待细化项见[成长基准](design/growth-phase-2026-10-10.md)及[原单#700](https://github.com/narutojzm1-dot/youjia/issues/700)。保留原#637/#642/#646等已交付事实，新规划不代表已上线。
+
+
+## 2026-10-10 用户最新授权：Grok同时承担独立小功能
+
+GROK-CONTRIBUTOR从仅修bug扩展为“修bug＋边界明确的小功能”，不是GROK-BUILD。首批指定#703绘本气泡与小鸡/播种情境、#704背篓/相册/暂停交互短音、#705做饭烟囱效果；均待本人回执。#703/#704可独立开发，#705正式接入依赖Leader餐食事件。Owner端到端制作/接入/验证/PR，成长规则与共享存档仍Leader、近郊仍ASSISTANT、整体UI仍Cloud，按方法划界。详见[范围与验收队列](collaboration/grok-small-features-2026-10-10.md)；该授权覆盖旧bug-only限制，不恢复逐PR外审或每项Leader批准。未修改外部客户端定时器，未冒称已接收。

@@ -1,5 +1,11 @@
 # 悠长的假期 — 协作与合入规范
 
+
+## 2026-10-10 用户最新授权：Grok同时承担独立小功能
+
+GROK-CONTRIBUTOR从仅修bug扩展为“修bug＋边界明确的小功能”，不是GROK-BUILD。首批指定#703绘本气泡与小鸡/播种情境、#704背篓/相册/暂停交互短音、#705做饭烟囱效果；均待本人回执。#703/#704可独立开发，#705正式接入依赖Leader餐食事件。Owner端到端制作/接入/验证/PR，成长规则与共享存档仍Leader、近郊仍ASSISTANT、整体UI仍Cloud，按方法划界。详见[范围与验收队列](docs/collaboration/grok-small-features-2026-10-10.md)；该授权覆盖旧bug-only限制，不恢复逐PR外审或每项Leader批准。未修改外部客户端定时器，未冒称已接收。
+
+
 > **2026-10-06 生效：** [用户最新团队与审核规则](docs/collaboration/team-focus-2026-10-06.md)覆盖本文冲突的旧规则。本地 Leader 兼制作人，集中推进新功能/探索/资源；Assistant、Cursor Cloud 辅助修 bug，QA 独立测试，PM/制作人停止独立运转。取消逐 PR 强制独立子代理/他人审核，改为每日23:00发版前由Leader集中审查当天全部工作；必要测试、PR与发布核验保持。以下旧快照和审核记录仅保留历史，不作为新的等待条件。2026-10-08 起 Cursor Cloud 改为负责界面开发与维护，GROK-CONTRIBUTOR 改为认领并修复 bug（见[用户调整](docs/collaboration/team-focus-2026-10-06.md#2026-10-08-用户调整cloud-接界面grok-改修-bug)）。
 
 本规范适用于 Codex、GROK 和其他参与维护的开发者。目的是让大家在用户指导下并行推进功能，同时保护主分支、玩法方向和彼此的工作。

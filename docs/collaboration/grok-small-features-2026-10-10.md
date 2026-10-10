@@ -1,0 +1,31 @@
+# GROK-CONTRIBUTOR 小功能队列（2026-10-10）
+
+用户直接授权：bug较少，可将边界清楚、可控、不影响Leader主干的小功能交给Grok，减轻细节工作。此规则扩展2026-10-08的bug-only限制，保留修bug职责；不恢复旧全局UI Owner身份，不与GROK-BUILD混淆。
+
+## 当前分工与任务
+
+| 顺序 | 原单 | Owner / 状态 | 产物与依赖 |
+| --- | --- | --- | --- |
+| 1 | [#703 绘本气泡](https://github.com/narutojzm1-dot/youjia/issues/703) | GROK-CONTRIBUTOR / 已指定、待本人回执 | 独立气泡及小鸡/已确认播种情境接入，可立即开发；无成长数值/存档改动 |
+| 2 | [#704 轻交互音](https://github.com/narutojzm1-dot/youjia/issues/704) | GROK-CONTRIBUTOR / 已指定、待本人回执 | 背篓/相册/暂停开关与翻页短音制作、接入、真实听验，可独立推进 |
+| 3 | [#705 做饭烟雾](https://github.com/narutojzm1-dot/youjia/issues/705) | GROK-CONTRIBUTOR / 已指定、待本人回执 | 烟囱局部效果先制作；正式接入依赖Leader真实做饭开始/结束事件，不以隔离演示冒上线 |
+
+每项原单定义具体范围和验收。前三项来自用户#700，不是任意扩展玩法。当前未见新的Grok回执，不能宣称已开工。核对最新#242：Grok此前仅在修#598/PR651，后续已由Leader#676完成；旧界面PR已交Cloud，不能因重新授权小功能重复接回。
+
+## 文件和方法边界
+
+- Grok优先新增scripts/presentation/下独立叶子组件、独立资源和测试；允许为自身切片完成必要运行挂载，不只交候选等别人接线。
+- #703 owns resident_bubble.gd / resident_barks.gd、气泡专用文案，现有World/Main只做锚点与已确认事件订阅。
+- #704 owns ui_interaction_audio.gd / assets/holiday/audio/ui_grok/；复用AudioDirector，允许最小cue登记。Main限已列UI事件音效钩子；不改Cloud面板布局、快捷栏策略、音量UI或事件业务逻辑。
+- #705 owns cooking_smoke.gd及其资源；建议set_cooking(active)/set_paused接口。Leader提供真实餐食状态与锚点；不自行推断饭点就是正在做饭。
+- Leader保留成长模型、餐食选择/时间/行动点/经验/奖励、做饭与睡眠/刷牙导演、SaveStore/codec/WebHost、纪念状态、农田迁移。
+- ASSISTANT保留近郊。Cloud保留整体UI与面板布局；上述气泡和限定音效钩子是用户本次授权的Grok切片，不形成所有UI全面转交。
+- 不覆盖音频Draft542/623/317；不改其他Owner在途资源与方法。真实方法重叠在原PR协调，不锁整个Main，不新增Leader逐次签字关卡。
+
+## 执行与完成定义
+
+Grok先回执当前项、分支、精确SHA/方法范围，再按1→2→3持续交付；阻塞只约束实际依赖步骤，前两项不等待做饭系统。明确范围的小功能可继续从已授权需求拆分，先在原单标明Owner和范围，无需逐个请求产品批准；新玩法、成长规则和未决产品数值仍归用户/Leader主线。
+
+每个切片由Owner制作、实现、必要接入、验证和PR收尾。保留桌面/窄屏真实体验；音效要求真实出声和重复听验，条件缺失据实记录。候选/隔离演示/已接入/已发布分别说明，不将headless或自动分析当真实体验。取消逐PR强制子代理审核规则保持，日23:00Leader集中审查保持。
+
+#242仅作短索引，讨论回原issue/PR。本次安排未修改外部Grok客户端定时器，不假定Grok已读或在线。
