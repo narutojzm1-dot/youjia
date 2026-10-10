@@ -1443,7 +1443,8 @@ func _outdoor_rest_allowed(move: Vector2) -> bool:
 	if pond_story != null and pond_story.busy(): return false
 	var radius := Vector2(39,10) * YardGround.depth_at(_player.position.y)
 	if not YardBodies.clear_at(_player.position, radius, _player.body_obstacles): return false
-	for point: Vector2 in [Vector2(-radius.x,0),Vector2(radius.x,0),Vector2(0,-radius.y),Vector2(0,radius.y)]:
+	for index: int in 24:
+		var point := Vector2.from_angle(TAU * index / 24.0) * (radius + Vector2(2,2))
 		if not YardGround.allows(_player.position + point, player_ground(), true): return false
 	return true
 
