@@ -110,6 +110,13 @@ func _check_layout(tag: String, dims: Vector2i, single: bool, loc: String) -> vo
 			_check(gap >= 8.0 - 0.5, "%s gap after '%s' at least 8px (%.1f)" % [tag, chips[i].text, gap])
 		for b: Button in chips:
 			_check(b.get_theme_stylebox("normal").content_margin_left >= 8.0, "%s '%s' keeps at least 8px inner padding" % [tag, b.text])
+		# 360 宽只差几像素：天气 / 背篓仍是平分宽度，间距只略收，不改成按字宽排
+		if dims.x >= 360:
+			var equal := (dims.x - 80.0) / 3.0
+			for b: Button in [chips[1], chips[2]]:
+				_check(absf(b.size.x - equal) < 0.5 or b.size.x <= b.get_minimum_size().x + 0.5, "%s '%s' keeps the equal third (%.1f vs %.1f)" % [tag, b.text, b.size.x, equal])
+			for i in 2:
+				_check(chips[i + 1].position.x - _rect(chips[i]).end.x >= 16.0, "%s gap after '%s' stays near 20px" % [tag, chips[i].text])
 	# Every action label the button can show still fits without widening it.
 	var keep: String = main._action_button.text
 	for k: String in action_keys[loc]:

@@ -2711,13 +2711,18 @@ const CHIP_TIGHT_GAP := 10.0
 ## 「Gentle rain」→「Rain」，「Overcast」→「Cloudy」。中文全名在各宽度都放得下。
 const SHORT_WEATHER_EN := {"rain": "Rain", "sun": "Sun", "overcast": "Cloudy"}
 
-## 竖屏三枚小按钮平分一排；最窄屏（280 宽）上「翻开手帐」等中文全名放不进平分宽度时，
-## 改按各自文字宽度排、缩小间距，仍不够再收窄左右内边距，保证互不重叠、不出边距。
+## 竖屏三枚小按钮平分一排；中文全名「翻开手帐」放不进平分宽度时，先只让它变宽、收窄间距；
+## 最窄屏（280 宽）仍放不下再按各自文字宽度排，必要时收窄左右内边距，保证互不重叠、不出边距。
 ## 天气按钮按所有天气里最长的名字留宽，换天气时不必重排。
 func _chip_row_plan(chips: Array[Button], equal: float, avail: float, pad: float) -> Dictionary:
 	var needs := _chip_text_needs(chips, equal)
 	if needs.max() <= equal + 0.5:
 		return {"widths": [equal, equal, equal], "gap": pad}
+	# 只差几像素（360 宽「翻开手帐」）：其余仍平分，只让放不下的那枚变宽，间距从 20 往 10 收
+	var grown: Array[float] = [maxf(equal, needs[0]), maxf(equal, needs[1]), maxf(equal, needs[2])]
+	var grown_gap := (avail - grown[0] - grown[1] - grown[2]) / 2.0
+	if grown_gap >= CHIP_TIGHT_GAP - 0.01:
+		return {"widths": grown, "gap": minf(pad, grown_gap)}
 	var total: float = needs[0] + needs[1] + needs[2]
 	if total + CHIP_TIGHT_GAP * 2.0 > avail:
 		_set_chip_side_margin(chips, CHIP_TIGHT_SIDE_MARGIN)
