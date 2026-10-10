@@ -80,7 +80,10 @@ var collected: PackedStringArray = []
 var last_photo := ""
 var photo_moments: Dictionary = {}
 var simulation_active := true
-var input_enabled := true
+var input_enabled := true:
+	set(value):
+		input_enabled = value
+		if not value and _player != null: _player.clear_idle_rest()
 
 # ── 假期天数 / 昼夜 ───────────────────────────────────────────────────────────
 ## 每 DAY_DURATION_SECONDS 真实游玩秒数 = 1个假期天
@@ -542,6 +545,7 @@ func tick(delta: float, move: Vector2) -> void:
 	if _player == null:
 		return
 	_player.body_obstacles = physical_obstacles("player")
+	_player.rest_allowed = _outdoor_rest_allowed(move)
 	_body_repath = maxf(0.0,_body_repath-delta)
 	if house != null and house.busy():
 		move = Vector2.ZERO
@@ -966,6 +970,7 @@ func action_target_key(action: Dictionary) -> String:
 
 
 func cancel_scene_feedback() -> void:
+	if _player != null: _player.clear_idle_rest()
 	if pond_story != null: pond_story.cancel()
 	_cancel_goose_mount_encounter()
 	_goose_mount_wait = 0.0
@@ -974,6 +979,7 @@ func cancel_scene_feedback() -> void:
 
 
 func request_primary_action() -> void:
+	if _player != null: _player.idle_rest.wake(bool(TuningStore.get_value("ui.reduced_motion", false)))
 	if house != null and house.busy():
 		house.skip_balcony()
 		return
@@ -996,6 +1002,7 @@ func request_primary_action() -> void:
 
 
 func request_pointer_action(point: Vector2) -> void:
+	if _player != null: _player.idle_rest.wake(bool(TuningStore.get_value("ui.reduced_motion", false)))
 	if house != null and house.busy():
 		house.skip_balcony()
 		return
@@ -1084,7 +1091,7 @@ func _route_to_walk_goal(obstacles: Array) -> Array[Vector2]:
 func physical_obstacles(exclude_id: String = "") -> Array:
 	var result: Array = [{"id":"yard_basket", "position":Vector2(335,485), "radius":Vector2(17,8)}]
 	if exclude_id != "player" and _player != null:
-		result.append({"id":"player", "position":_player.position, "radius":_player.body_radius*YardGround.depth_at(_player.position.y)})
+		result.append({"id":"player", "position":_player.position, "radius":(Vector2(39,10) if _player.idle_rest.active() else _player.body_radius)*YardGround.depth_at(_player.position.y)})
 	for id: String in _actors:
 		var actor: FeltActor = _actors[id]
 		if id == exclude_id or actor.species == "duck": continue
@@ -1427,7 +1434,26 @@ func _make_cloud_sprite(node_name: String) -> Sprite2D:
 
 
 ## REQ-012 切片 C：安静停留后轻微抬头看天；走动立刻取消；无新提示/道具/相册。
+func _outdoor_rest_allowed(move: Vector2) -> bool:
+	if not input_enabled or inventory_busy or not _player.visible or not _player.sequence_walker_enabled: return false
+	if house != null and house.busy(): return false
+	if _leading or _has_walk_goal or not _pending_interaction.is_empty() or not move.is_zero_approx(): return false
+	if _player.carrying_grass or _millet_held or not _grain_held.is_empty() or not _fish_carry_type.is_empty() or _fish_state != FISH_IDLE: return false
+	if _goose_mount_phase >= 0 or _goose_mount_wait > 0.0 or (_focus_seconds > 0.0 and not _quiet_sky_active): return false
+	if pond_story != null and pond_story.busy(): return false
+	var radius := Vector2(39,10) * YardGround.depth_at(_player.position.y)
+	if not YardBodies.clear_at(_player.position, radius, _player.body_obstacles): return false
+	for index: int in 24:
+		var point := Vector2.from_angle(TAU * index / 24.0) * (radius + Vector2(2,2))
+		if not YardGround.allows(_player.position + point, player_ground(), true): return false
+	return true
+
+
 func _tick_quiet_sky_look(delta: float, move: Vector2) -> void:
+	if _player.idle_rest.active():
+		_cancel_quiet_sky_look()
+		_quiet_sky_still = 0.0
+		return
 	_quiet_sky_cooldown = maxf(0.0, _quiet_sky_cooldown - delta)
 	# 只有演出已发出新 focus 才交出镜头，避免 release 打断实际接管。
 	if _goose_mount_phase >= 0:
