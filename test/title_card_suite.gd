@@ -6,7 +6,7 @@ extends SceneTree
 ## on PAPER. Text, font sizes and buttons are unchanged.
 
 const PAPER := Color("fff6e8")
-const VIEWPORTS := [Vector2i(390, 844), Vector2i(844, 390), Vector2i(1280, 720), Vector2i(360, 640), Vector2i(700, 400)]
+const VIEWPORTS := [Vector2i(390, 844), Vector2i(844, 390), Vector2i(1280, 720), Vector2i(360, 640), Vector2i(700, 400), Vector2i(320, 568), Vector2i(280, 653)]
 
 var checks := 0
 var failures: Array[String] = []

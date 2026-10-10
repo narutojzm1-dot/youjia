@@ -741,7 +741,8 @@ func _fit_title_column() -> void:
 	_tagline_label.add_theme_font_size_override("font_size",14 if short else 16)
 	_title_hint.add_theme_font_size_override("font_size",12 if short else 14)
 	for button: Button in [_play_button, _album_button]:
-		button.custom_minimum_size = Vector2(260.0, 40.0 if tight else 44.0)
+		# 280 宽竖屏列只有 240，按钮不能把列撑出纸片
+		button.custom_minimum_size = Vector2(minf(260.0, title_width), 40.0 if tight else 44.0)
 		button.add_theme_font_size_override("font_size",14 if tight else 16)
 	_licenses_button.add_theme_font_size_override("font_size",12 if tight else 14)
 	_balance_title_copy()
