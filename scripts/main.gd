@@ -1816,6 +1816,11 @@ func _clear_covered_save_problems(coverage: Dictionary) -> void:
 func _on_save_rejected(op_id: String, kind: String, code: String) -> void:
 	# These are authoritative FIFO domain refusals, not a failed disk write.
 	# Keep actual writer/unknown failures and already-durable receipts tracked.
+	if kind == "exploration_trip" and code == "EXPLORATION_KEEPSAKE_LIMIT" and not _save_durable_ops.has(op_id):
+		# ExplorationHost retains the proposal and owns its deferred retry.
+		_save_exploration_scopes.erase(op_id)
+		_save_exploration_coverage.erase(op_id)
+		return
 	if kind == "crops" and code.begins_with("CROP_") and not _save_durable_ops.has(op_id): return
 	if kind == "inventory" and code == "BASKET_SEED_RESERVED" and not _save_durable_ops.has(op_id): return
 	if kind == "decor" and not _save_durable_ops.has(op_id) and code in ["DECOR_CHANGED", "DECOR_OCCUPIED", "DECOR_EMPTY", "DECOR_INVALID", "DECOR_LIMIT"]:
