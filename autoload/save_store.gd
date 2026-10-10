@@ -236,6 +236,20 @@ func get_yard_inventory() -> Dictionary:
 func get_yard_crops() -> Dictionary:
 	return preload("res://scripts/game/yard_crops.gd").read(_data)
 
+
+func get_meal_ledger() -> Dictionary:
+	return preload("res://scripts/game/meal_ledger.gd").read(_data)
+
+
+## Inactive foundation until the cooking director validates recipe/time/fatigue.
+## Capture the cost now; the FIFO head validates both revisions and the game day.
+func request_meal_completion(revision: int, inventory_revision: int, day: int, meal: String, ingredients: Dictionary, fatigued: bool) -> String:
+	var cost := ingredients.duplicate(true)
+	return request_intent("meal", func(current: Dictionary) -> Variant:
+		var result := preload("res://scripts/game/meal_ledger.gd").complete(current, revision, inventory_revision, day, meal, cost, fatigued)
+		if result.has("error"): return CoordinatorType.IntentRejection.new(result.error)
+		return result.candidate)
+
 func has_yard_crops() -> bool:
 	return _data.has("yard_crops")
 
