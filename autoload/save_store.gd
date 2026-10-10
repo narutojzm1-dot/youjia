@@ -587,6 +587,18 @@ func request_album(photos: PackedStringArray, moments: Dictionary = {}) -> Strin
 		return current)
 
 
+func has_hotbar_slots() -> bool:
+	return _data.has("hotbar_slots")
+
+
+func get_hotbar_slots() -> Array:
+	return preload("res://scripts/persistence/hotbar_slots.gd").clean(_data.get("hotbar_slots", []))
+
+
+func request_hotbar_slots(slots: Array) -> String:
+	return request_patch("hotbar-slots", {"hotbar_slots": preload("res://scripts/persistence/hotbar_slots.gd").clean(slots)})
+
+
 func get_yard_gate_open() -> bool:
 	return _data.get("yard_gate_open", false) == true and _data.get("yard_gate_open", false) is bool
 

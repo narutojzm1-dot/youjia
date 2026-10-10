@@ -1,0 +1,38 @@
+[
+  {
+    "suite": "hotbar_persistence_suite",
+    "exit": 0,
+    "errors": [],
+    "summary": [
+      "HOTBAR_PERSISTENCE checks=42 failures=0"
+    ]
+  },
+  {
+    "suite": "hotbar_player_slots_suite",
+    "exit": 0,
+    "errors": [],
+    "summary": []
+  },
+  {
+    "suite": "save_data_codec_suite",
+    "exit": 0,
+    "errors": [],
+    "summary": [
+      "SAVE_DATA_CODEC 16 checks; failures=[]"
+    ]
+  },
+  {
+    "suite": "save_coordinator_suite",
+    "exit": 0,
+    "errors": [],
+    "summary": [
+      "SAVE_COORDINATOR checks=86 failures=[]"
+    ]
+  },
+  {
+    "suite": "native_save_host_suite",
+    "exit": 0,
+    "errors": [],
+    "summary": []
+  }
+]
