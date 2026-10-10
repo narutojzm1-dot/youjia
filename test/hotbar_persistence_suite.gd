@@ -98,6 +98,28 @@ func run() -> void:
 	main._hold_hotbar.assign("millet",4)
 	check(await store.flush_pending(),"production assignment shares writer")
 	check(store.get_hotbar_slots()[4] == "millet","production signal persisted")
+	# A refused hotbar edit must not steal the shared retry button from another
+	# domain's unresolved write. Drive the real coordinator with a fault backend.
+	check(store._coordinator.close_when_idle(), "native writer drained before fault fixture")
+	store._backend = preload("res://test/save_coordinator_suite.gd").Backend.new()
+	var backend = store._backend
+	backend.backend_namespace = "youjia-native-file-v1"
+	check(store._connect_coordinator(store._data, "root-token", "youjia-native-file-v1"), "fault fixture initialized")
+	store.request_patch("yard", {"retry_fixture": true})
+	await process_frame
+	backend.prepare_ok()
+	backend.send("unknown", {}, "TIMEOUT")
+	main._hold_hotbar.assign("corn",3)
+	check(main._hotbar_save.state == "failed", "hotbar enqueue refused during unrelated unknown")
+	main._retry_save()
+	check(backend.calls.back().method == "resolve", "UI retry first resolves existing shared transaction")
+	if backend.calls.back().method != "resolve": store.retry_pending()
+	backend.receipt("confirmed")
+	backend.ack()
+	backend.sync = true
+	main._retry_save()
+	check(await store.flush_pending(), "hotbar retry drains after prior write resolves")
+	check(store.get_hotbar_slots()[3] == "corn", "refused hotbar intention is not lost during recovery")
 	main.queue_free()
 	await process_frame
 	for failure in failures: push_error(failure)

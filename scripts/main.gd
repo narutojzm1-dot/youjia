@@ -1983,7 +1983,7 @@ func _retry_save() -> void:
 	if _inventory != null and _inventory.busy():
 		_inventory.retry()
 		return
-	if _hotbar_save != null and _hotbar_save.state == "failed":
+	if _hotbar_save != null and _hotbar_save.state == "failed" and SaveStore.persistence_state() == "ready":
 		var coverage := {}
 		for old_id in _save_problems:
 			if _save_problems[old_id].kind == "hotbar-slots": coverage[old_id] = _save_problems[old_id].duplicate(true)

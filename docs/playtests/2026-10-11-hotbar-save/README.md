@@ -8,7 +8,9 @@ Owner: CODEX-LEAD。基线 9b086e6e44ec3d6165a7c3e8055b9e1e2dbcc309。2026-10-11
 旧原生 hotbar_slots.cfg 只读迁移：共享存档字段缺失才导入；共享字段已存在时，即使五格全空也优先，避免旧配置复活。未知种类、重复和错误类型清空，保留五格位置。Web Host 本来就保存完整版本5 JSON，无需改变协议或版本号。
 
 ## 自动验证
-Godot 4.7.2，隔离 APPDATA/LOCALAPPDATA，真实原生文件写入、重读与生产 Main 接线。hotbar_persistence 42项、hotbar_player_slots 145项、save_data_codec 16项、save_coordinator 86项及 native_save_host 均通过；日志见同目录。失败/重试/未确认请求的故障序列用可控假宿主验证，不冒称真实浏览器断电实验。新增持久化套件已加入 verify_daily_life.sh。
+Godot 4.7.2，隔离 APPDATA/LOCALAPPDATA，真实原生文件写入、重读与生产 Main 接线。hotbar_persistence 最终48项、hotbar_player_slots 145项、save_data_codec 16项、save_coordinator 86项及 native_save_host 均通过；日志见同目录。失败/重试/未确认请求的故障序列用可控假宿主验证，不冒称真实浏览器断电实验。新增持久化套件已加入 verify_daily_life.sh 及成功结束标记表。
+
+补充复核：其他域写入未知时，快捷栏提交被拒绝，原重试优先级会阻止共享事务恢复。新增真实Coordinator＋故障Backend序列修前48项中1失败，修后48/0；UI先恢复原事务，之后重试快捷栏仍保留最新意图。save_feedback与原UI145项回归通过，见final日志。截图对应同一UI/成功路径；最后修订仅影响失败重试分支，未冒称普通浏览器故障注入。
 
 ## 普通 Web 体验
 本地 Web 导出成功，独立 localhost:8879 新测试存档，普通鼠标操作，不注入游戏或 IndexedDB 数据。
