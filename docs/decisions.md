@@ -1855,3 +1855,8 @@ CODEX-LEAD verified PR #696 public source bfbf652d8c26f5da985f9bf5ab655e5e37d8df
 - 背篓开着时，被快捷栏挡住的底栏和其他 HUD 一样隐去（#692 规则）。
 边界：格子只记物品种类，数量读同一份背篓库存，任何配置操作都不增减物品。配置是界面偏好，原生平台存在 `user://hotbar_slots.cfg`，不进游戏存档，「再过一次假期」也不清；读坏了、不认识或重复的条目都当空格。**Web 缺口：** Web 包以 `persistentPaths: []` 启动，`user://` 刷新即丢，所有落盘都走共享 Save Host。所以 Web 上这份偏好不写也不读，五格配置只在本次打开有效，刷新后回到空格；界面不宣称已保存。要跨刷新保留，需把 `hotbar_slots` 并入共享存档（SaveStore、codec、Web Host），属 CODEX-LEAD 的共享存档范围，已在 #597 请求，未接收前不另开浏览器存储通道。小物（圆石、松果、落羽）仍只拖到院里三处，不进快捷栏。堆叠、交换细节用户未指定，本片只做替换。
 测试：新增 `hotbar_player_slots_suite`（135 项），改写 hold_hotbar、hold_hotbar_mount、yard_basket_drag、yard_basket_grid_entry、hud_under_menu 中按旧固定五格写的断言。
+
+
+## 2026-10-10 下一阶段成长闭环（#700）
+
+用户已确认三餐1/3/2自主行动点、物品驱动实际世界行动与建筑/园艺/厨艺经验，近郊八格农田、基础工具/磨盘及相册/纪念册分离。早餐余点可到下午；下午余点最多1点到晚上；三种经验均到1级才统一显现相关UI。跨日/等级阈值等未定。Owner CODEX-LEAD，方向已接收、实现待进行；ASSISTANT近郊与Cursor UI按接口回执接入，不冒称开工。详细规则、交付顺序、兼容和待细化项见[成长基准](design/growth-phase-2026-10-10.md)及[原单#700](https://github.com/narutojzm1-dot/youjia/issues/700)。保留原#637/#642/#646等已交付事实，新规划不代表已上线。
