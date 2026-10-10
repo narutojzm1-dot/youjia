@@ -78,6 +78,7 @@ var _album_chip: Button
 var _weather_chip: Button
 var _basket_chip: Button
 var _basket_panel: Control
+var _hotbar_save: Node
 var _hold_hotbar: Control
 var _residents: RefCounted
 var _chick_panel: Control
@@ -1982,6 +1983,13 @@ func _retry_save() -> void:
 	if _inventory != null and _inventory.busy():
 		_inventory.retry()
 		return
+	if _hotbar_save != null and _hotbar_save.state == "failed" and SaveStore.persistence_state() == "ready":
+		var coverage := {}
+		for old_id in _save_problems:
+			if _save_problems[old_id].kind == "hotbar-slots": coverage[old_id] = _save_problems[old_id].duplicate(true)
+		var next: String = _hotbar_save.retry()
+		if not next.is_empty(): _save_retry_coverage[next] = {"problems":coverage,"untracked_revision":_save_untracked_revision}
+		return
 	var before := SaveStore.persistence_state()
 	# Capture before retry: a native backend may complete synchronously.
 	_save_ack_coverage = {}
@@ -2376,13 +2384,22 @@ func _ensure_hold_hotbar() -> void:
 	_hold_hotbar.name = "HoldHotbar"
 	_ui_layer.add_child(_hold_hotbar)
 	_hold_hotbar.withdraw_requested.connect(_on_hold_withdraw)
-	_hold_hotbar.set_slots(HotbarSlotsPrefs.load_slots())
-	_hold_hotbar.slots_changed.connect(func(slots: Array) -> void: HotbarSlotsPrefs.save_slots(slots))
+	_hotbar_save = preload("res://scripts/persistence/hotbar_save_controller.gd").new()
+	add_child(_hotbar_save)
+	_hotbar_save.view_changed.connect(_hold_hotbar.set_slots)
+	_hotbar_save.initialize(SaveStore, HotbarSlotsPrefs.load_slots())
+	if _hotbar_save.state == "failed": _show_save_pending(true)
+	_hold_hotbar.slots_changed.connect(_on_hotbar_slots_changed)
 	_hold_hotbar.basket_requested.connect(_show_basket)
 	_hold_hotbar.visible = false
 	if _basket_panel != null:
 		_basket_panel.set_hotbar(_hold_hotbar, _hold_hotbar.basket_rect(size).size.y + _hold_hotbar.BASKET_MARGIN * 2.0)
 	_layout_hold_hotbar()
+
+
+func _on_hotbar_slots_changed(slots: Array) -> void:
+	_hotbar_save.change(slots)
+	if _hotbar_save.state == "failed": _show_save_pending(true)
 
 
 func _layout_hold_hotbar() -> void:

@@ -1,0 +1,7 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ERROR: UI retry first resolves existing shared transaction
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] run (res://test/hotbar_persistence_suite.gd:125)
+HOTBAR_PERSISTENCE checks=48 failures=1

@@ -124,8 +124,8 @@ func run() -> void:
 	check(bar.slots[0] == fish, "menu puts the fish into the first empty slot")
 	check(grid.menu.visible and grid.menu_hotbar.text == "从快捷栏第1格拿下", "paper stays open and now offers taking it off slot 1")
 	check(panel.status.text.contains("第1格"), "basket note says which slot")
-	check(Prefs.persistent(), "native user:// is a real file, so the preference is written")
-	check(Prefs.load_slots() == bar.slots, "slots are saved to the UI preference file")
+	await settle()
+	check(store.get_hotbar_slots() == bar.slots, "slots are confirmed in the shared save")
 	check(bar.slot_counts[0].text == "×1" and bar.slot_icons[0].texture != null, "slot shows the fish and its basket count")
 	grid.menu_hotbar.pressed.emit()
 	await frames()
@@ -207,8 +207,10 @@ func run() -> void:
 	await settle()
 
 	# 7. 读回：配置跨重开保留；坏值、重复都当空格
-	bar.set_slots(Prefs.load_slots())
-	check(bar.slots == ["wheat", "corn", "", "", fish], "slots reload from the preference file")
+	await settle()
+	store._load()
+	bar.set_slots(store.get_hotbar_slots())
+	check(bar.slots == ["wheat", "corn", "", "", fish], "slots reload from the shared save")
 	var fresh = HotbarScript.new()
 	root.add_child(fresh)
 	await frames(1)
