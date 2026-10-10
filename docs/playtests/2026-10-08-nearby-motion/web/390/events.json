@@ -1,0 +1,1083 @@
+[
+  {
+    "stage": "title",
+    "utc": "2026-10-08T01:37:53Z",
+    "errors": [],
+    "inputs": [],
+    "payload": {
+      "album": [],
+      "animal_relationship_memory": {},
+      "exploration": null,
+      "exploration_committed_serial": 0,
+      "first_fish_caught": false,
+      "holiday_day": 1,
+      "holiday_day_elapsed": 0,
+      "keepsakes": {},
+      "locale": "zh-CN",
+      "photo_moments": {},
+      "plant_day_planted": 0,
+      "plant_state": 0,
+      "plant_watered_day": -1,
+      "tutorial_version": 0,
+      "version": 5,
+      "world_weather": {}
+    }
+  },
+  {
+    "stage": "yard",
+    "utc": "2026-10-08T01:37:57Z",
+    "errors": [],
+    "inputs": [
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 194,
+        "y": 430,
+        "key": null,
+        "t": 20853.600000023842
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 194,
+        "y": 430,
+        "key": null,
+        "t": 22928.300000071526
+      }
+    ],
+    "payload": {
+      "album": [],
+      "animal_relationship_memory": {},
+      "exploration": null,
+      "exploration_committed_serial": 0,
+      "first_fish_caught": false,
+      "holiday_day": 1,
+      "holiday_day_elapsed": 0,
+      "keepsakes": {},
+      "locale": "zh-CN",
+      "photo_moments": {},
+      "plant_day_planted": 0,
+      "plant_state": 0,
+      "plant_watered_day": -1,
+      "tutorial_version": 0,
+      "version": 5,
+      "world_residents": {
+        "beibei": {
+          "adopted_clock": null,
+          "stage": "unmet"
+        },
+        "chicken": {
+          "settled_clock": {
+            "day": 1,
+            "elapsed": 0
+          },
+          "stage": "chick"
+        },
+        "revision": 1,
+        "schema": 3,
+        "turtle": {
+          "found_trip": "",
+          "stage": "unmet"
+        }
+      },
+      "world_weather": {}
+    }
+  },
+  {
+    "stage": "entry-1",
+    "utc": "2026-10-08T01:38:02Z",
+    "errors": [],
+    "inputs": [
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 194,
+        "y": 430,
+        "key": null,
+        "t": 20853.600000023842
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 194,
+        "y": 430,
+        "key": null,
+        "t": 22928.300000071526
+      },
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 76,
+        "y": 610,
+        "key": null,
+        "t": 25032.200000047684
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 76,
+        "y": 610,
+        "key": null,
+        "t": 25033.700000047684
+      }
+    ],
+    "payload": {
+      "album": [],
+      "animal_relationship_memory": {},
+      "exploration": {
+        "contract_version": 1,
+        "next_trip_serial": 2,
+        "session": {
+          "carried": [],
+          "catalog": "formal",
+          "companion": {
+            "actor_id": "sheep_a",
+            "mode": "nearby"
+          },
+          "current_stop": "gate",
+          "failure": null,
+          "offers": {
+            "gate": "formal.find.feather"
+          },
+          "proposal": null,
+          "record_revision": 1,
+          "rng_seed": "1032549774956437648",
+          "route_id": "formal.near_path",
+          "started_clock": {
+            "day": 1,
+            "elapsed": 2.82732222222222
+          },
+          "state": "active",
+          "taken": {},
+          "trip_id": "trip-1",
+          "trip_serial": 1,
+          "visited": [
+            "gate"
+          ]
+        }
+      },
+      "exploration_committed_serial": 0,
+      "first_fish_caught": false,
+      "holiday_day": 1,
+      "holiday_day_elapsed": 2.82732222222222,
+      "keepsakes": {},
+      "locale": "zh-CN",
+      "photo_moments": {},
+      "plant_day_planted": 0,
+      "plant_state": 0,
+      "plant_watered_day": -1,
+      "tutorial_version": 0,
+      "version": 5,
+      "world_residents": {
+        "beibei": {
+          "adopted_clock": null,
+          "stage": "unmet"
+        },
+        "chicken": {
+          "settled_clock": {
+            "day": 1,
+            "elapsed": 0
+          },
+          "stage": "chick"
+        },
+        "revision": 1,
+        "schema": 3,
+        "turtle": {
+          "found_trip": "",
+          "stage": "unmet"
+        }
+      },
+      "world_weather": {
+        "episode": 0,
+        "remaining": 744.284738324653,
+        "seed": 1411035347,
+        "weather": "sun"
+      }
+    }
+  },
+  {
+    "stage": "direct-pick",
+    "utc": "2026-10-08T01:38:20Z",
+    "errors": [],
+    "inputs": [
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 194,
+        "y": 430,
+        "key": null,
+        "t": 20853.600000023842
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 194,
+        "y": 430,
+        "key": null,
+        "t": 22928.300000071526
+      },
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 76,
+        "y": 610,
+        "key": null,
+        "t": 25032.200000047684
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 76,
+        "y": 610,
+        "key": null,
+        "t": 25033.700000047684
+      },
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 94.50110626220703,
+        "y": 596.704345703125,
+        "key": null,
+        "t": 42945.800000071526
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 94.50110626220703,
+        "y": 596.704345703125,
+        "key": null,
+        "t": 42946.700000047684
+      }
+    ],
+    "payload": {
+      "album": [],
+      "animal_relationship_memory": {},
+      "exploration": {
+        "contract_version": 1,
+        "next_trip_serial": 2,
+        "session": {
+          "carried": [
+            "formal.find.feather"
+          ],
+          "catalog": "formal",
+          "companion": {
+            "actor_id": "sheep_a",
+            "mode": "nearby"
+          },
+          "current_stop": "gate",
+          "failure": null,
+          "offers": {
+            "gate": "formal.find.feather"
+          },
+          "proposal": null,
+          "record_revision": 2,
+          "rng_seed": "1032549774956437648",
+          "route_id": "formal.near_path",
+          "started_clock": {
+            "day": 1,
+            "elapsed": 2.82732222222222
+          },
+          "state": "active",
+          "taken": {
+            "gate": "formal.find.feather"
+          },
+          "trip_id": "trip-1",
+          "trip_serial": 1,
+          "visited": [
+            "gate"
+          ]
+        }
+      },
+      "exploration_committed_serial": 0,
+      "first_fish_caught": false,
+      "holiday_day": 1,
+      "holiday_day_elapsed": 2.82732222222222,
+      "keepsakes": {},
+      "locale": "zh-CN",
+      "photo_moments": {},
+      "plant_day_planted": 0,
+      "plant_state": 0,
+      "plant_watered_day": -1,
+      "tutorial_version": 0,
+      "version": 5,
+      "world_residents": {
+        "beibei": {
+          "adopted_clock": null,
+          "stage": "unmet"
+        },
+        "chicken": {
+          "settled_clock": {
+            "day": 1,
+            "elapsed": 0
+          },
+          "stage": "chick"
+        },
+        "revision": 1,
+        "schema": 3,
+        "turtle": {
+          "found_trip": "",
+          "stage": "unmet"
+        }
+      },
+      "world_weather": {
+        "episode": 0,
+        "remaining": 744.284738324653,
+        "seed": 1411035347,
+        "weather": "sun"
+      }
+    }
+  },
+  {
+    "stage": "free-ground",
+    "utc": "2026-10-08T01:38:22Z",
+    "errors": [],
+    "inputs": [
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 194,
+        "y": 430,
+        "key": null,
+        "t": 20853.600000023842
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 194,
+        "y": 430,
+        "key": null,
+        "t": 22928.300000071526
+      },
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 76,
+        "y": 610,
+        "key": null,
+        "t": 25032.200000047684
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 76,
+        "y": 610,
+        "key": null,
+        "t": 25033.700000047684
+      },
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 94.50110626220703,
+        "y": 596.704345703125,
+        "key": null,
+        "t": 42945.800000071526
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 94.50110626220703,
+        "y": 596.704345703125,
+        "key": null,
+        "t": 42946.700000047684
+      },
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 85,
+        "y": 570,
+        "key": null,
+        "t": 47638.200000047684
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 85,
+        "y": 570,
+        "key": null,
+        "t": 47639.10000002384
+      }
+    ],
+    "payload": {
+      "album": [],
+      "animal_relationship_memory": {},
+      "exploration": {
+        "contract_version": 1,
+        "next_trip_serial": 2,
+        "session": {
+          "carried": [
+            "formal.find.feather"
+          ],
+          "catalog": "formal",
+          "companion": {
+            "actor_id": "sheep_a",
+            "mode": "nearby"
+          },
+          "current_stop": "gate",
+          "failure": null,
+          "offers": {
+            "gate": "formal.find.feather"
+          },
+          "proposal": null,
+          "record_revision": 2,
+          "rng_seed": "1032549774956437648",
+          "route_id": "formal.near_path",
+          "started_clock": {
+            "day": 1,
+            "elapsed": 2.82732222222222
+          },
+          "state": "active",
+          "taken": {
+            "gate": "formal.find.feather"
+          },
+          "trip_id": "trip-1",
+          "trip_serial": 1,
+          "visited": [
+            "gate"
+          ]
+        }
+      },
+      "exploration_committed_serial": 0,
+      "first_fish_caught": false,
+      "holiday_day": 1,
+      "holiday_day_elapsed": 2.82732222222222,
+      "keepsakes": {},
+      "locale": "zh-CN",
+      "photo_moments": {},
+      "plant_day_planted": 0,
+      "plant_state": 0,
+      "plant_watered_day": -1,
+      "tutorial_version": 0,
+      "version": 5,
+      "world_residents": {
+        "beibei": {
+          "adopted_clock": null,
+          "stage": "unmet"
+        },
+        "chicken": {
+          "settled_clock": {
+            "day": 1,
+            "elapsed": 0
+          },
+          "stage": "chick"
+        },
+        "revision": 1,
+        "schema": 3,
+        "turtle": {
+          "found_trip": "",
+          "stage": "unmet"
+        }
+      },
+      "world_weather": {
+        "episode": 0,
+        "remaining": 744.284738324653,
+        "seed": 1411035347,
+        "weather": "sun"
+      }
+    }
+  },
+  {
+    "stage": "collected-return",
+    "utc": "2026-10-08T01:38:29Z",
+    "errors": [],
+    "inputs": [
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 194,
+        "y": 430,
+        "key": null,
+        "t": 20853.600000023842
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 194,
+        "y": 430,
+        "key": null,
+        "t": 22928.300000071526
+      },
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 76,
+        "y": 610,
+        "key": null,
+        "t": 25032.200000047684
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 76,
+        "y": 610,
+        "key": null,
+        "t": 25033.700000047684
+      },
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 94.50110626220703,
+        "y": 596.704345703125,
+        "key": null,
+        "t": 42945.800000071526
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 94.50110626220703,
+        "y": 596.704345703125,
+        "key": null,
+        "t": 42946.700000047684
+      },
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 85,
+        "y": 570,
+        "key": null,
+        "t": 47638.200000047684
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 85,
+        "y": 570,
+        "key": null,
+        "t": 47639.10000002384
+      },
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 317,
+        "y": 37,
+        "key": null,
+        "t": 50450.89999997616
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 317,
+        "y": 37,
+        "key": null,
+        "t": 50458.700000047684
+      }
+    ],
+    "payload": {
+      "album": [],
+      "animal_relationship_memory": {},
+      "exploration": {
+        "contract_version": 1,
+        "next_trip_serial": 2,
+        "session": null
+      },
+      "exploration_committed_serial": 1,
+      "first_fish_caught": false,
+      "holiday_day": 1,
+      "holiday_day_elapsed": 2.82732222222222,
+      "keepsakes": {
+        "formal.find.feather": 1
+      },
+      "locale": "zh-CN",
+      "photo_moments": {},
+      "plant_day_planted": 0,
+      "plant_state": 0,
+      "plant_watered_day": -1,
+      "tutorial_version": 0,
+      "version": 5,
+      "world_residents": {
+        "beibei": {
+          "adopted_clock": null,
+          "stage": "unmet"
+        },
+        "chicken": {
+          "settled_clock": {
+            "day": 1,
+            "elapsed": 0
+          },
+          "stage": "chick"
+        },
+        "revision": 1,
+        "schema": 3,
+        "turtle": {
+          "found_trip": "",
+          "stage": "unmet"
+        }
+      },
+      "world_weather": {
+        "episode": 0,
+        "remaining": 744.284738324653,
+        "seed": 1411035347,
+        "weather": "sun"
+      }
+    }
+  },
+  {
+    "stage": "hud-entry-steady",
+    "utc": "2026-10-08T01:38:34Z",
+    "errors": [],
+    "inputs": [
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 194,
+        "y": 430,
+        "key": null,
+        "t": 20853.600000023842
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 194,
+        "y": 430,
+        "key": null,
+        "t": 22928.300000071526
+      },
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 76,
+        "y": 610,
+        "key": null,
+        "t": 25032.200000047684
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 76,
+        "y": 610,
+        "key": null,
+        "t": 25033.700000047684
+      },
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 94.50110626220703,
+        "y": 596.704345703125,
+        "key": null,
+        "t": 42945.800000071526
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 94.50110626220703,
+        "y": 596.704345703125,
+        "key": null,
+        "t": 42946.700000047684
+      },
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 85,
+        "y": 570,
+        "key": null,
+        "t": 47638.200000047684
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 85,
+        "y": 570,
+        "key": null,
+        "t": 47639.10000002384
+      },
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 317,
+        "y": 37,
+        "key": null,
+        "t": 50450.89999997616
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 317,
+        "y": 37,
+        "key": null,
+        "t": 50458.700000047684
+      },
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 195,
+        "y": 801,
+        "key": null,
+        "t": 56653.10000002384
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 195,
+        "y": 801,
+        "key": null,
+        "t": 56761.700000047684
+      }
+    ],
+    "payload": {
+      "album": [],
+      "animal_relationship_memory": {},
+      "exploration": {
+        "contract_version": 1,
+        "next_trip_serial": 3,
+        "session": {
+          "carried": [],
+          "catalog": "formal",
+          "companion": {
+            "actor_id": "sheep_a",
+            "mode": "nearby"
+          },
+          "current_stop": "gate",
+          "failure": null,
+          "offers": {
+            "gate": ""
+          },
+          "proposal": null,
+          "record_revision": 1,
+          "rng_seed": "-8860146196032855148",
+          "route_id": "formal.near_path",
+          "started_clock": {
+            "day": 1,
+            "elapsed": 33.7725333333334
+          },
+          "state": "active",
+          "taken": {},
+          "trip_id": "trip-2",
+          "trip_serial": 2,
+          "visited": [
+            "gate"
+          ]
+        }
+      },
+      "exploration_committed_serial": 1,
+      "first_fish_caught": false,
+      "holiday_day": 1,
+      "holiday_day_elapsed": 33.7725333333334,
+      "keepsakes": {
+        "formal.find.feather": 1
+      },
+      "locale": "zh-CN",
+      "photo_moments": {},
+      "plant_day_planted": 0,
+      "plant_state": 0,
+      "plant_watered_day": -1,
+      "tutorial_version": 0,
+      "version": 5,
+      "world_residents": {
+        "beibei": {
+          "adopted_clock": null,
+          "stage": "unmet"
+        },
+        "chicken": {
+          "settled_clock": {
+            "day": 1,
+            "elapsed": 0
+          },
+          "stage": "chick"
+        },
+        "revision": 1,
+        "schema": 3,
+        "turtle": {
+          "found_trip": "",
+          "stage": "unmet"
+        }
+      },
+      "world_weather": {
+        "episode": 0,
+        "remaining": 713.339527213551,
+        "seed": 1411035347,
+        "weather": "sun"
+      }
+    }
+  },
+  {
+    "stage": "hud-return",
+    "utc": "2026-10-08T01:38:40Z",
+    "errors": [],
+    "inputs": [
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 194,
+        "y": 430,
+        "key": null,
+        "t": 20853.600000023842
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 194,
+        "y": 430,
+        "key": null,
+        "t": 22928.300000071526
+      },
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 76,
+        "y": 610,
+        "key": null,
+        "t": 25032.200000047684
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 76,
+        "y": 610,
+        "key": null,
+        "t": 25033.700000047684
+      },
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 94.50110626220703,
+        "y": 596.704345703125,
+        "key": null,
+        "t": 42945.800000071526
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 94.50110626220703,
+        "y": 596.704345703125,
+        "key": null,
+        "t": 42946.700000047684
+      },
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 85,
+        "y": 570,
+        "key": null,
+        "t": 47638.200000047684
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 85,
+        "y": 570,
+        "key": null,
+        "t": 47639.10000002384
+      },
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 317,
+        "y": 37,
+        "key": null,
+        "t": 50450.89999997616
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 317,
+        "y": 37,
+        "key": null,
+        "t": 50458.700000047684
+      },
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 195,
+        "y": 801,
+        "key": null,
+        "t": 56653.10000002384
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 195,
+        "y": 801,
+        "key": null,
+        "t": 56761.700000047684
+      },
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 317,
+        "y": 37,
+        "key": null,
+        "t": 62377.10000002384
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 317,
+        "y": 37,
+        "key": null,
+        "t": 62390.800000071526
+      }
+    ],
+    "payload": {
+      "album": [],
+      "animal_relationship_memory": {},
+      "exploration": {
+        "contract_version": 1,
+        "next_trip_serial": 3,
+        "session": null
+      },
+      "exploration_committed_serial": 2,
+      "first_fish_caught": false,
+      "holiday_day": 1,
+      "holiday_day_elapsed": 33.7725333333334,
+      "keepsakes": {
+        "formal.find.feather": 1
+      },
+      "locale": "zh-CN",
+      "photo_moments": {},
+      "plant_day_planted": 0,
+      "plant_state": 0,
+      "plant_watered_day": -1,
+      "tutorial_version": 0,
+      "version": 5,
+      "world_residents": {
+        "beibei": {
+          "adopted_clock": null,
+          "stage": "unmet"
+        },
+        "chicken": {
+          "settled_clock": {
+            "day": 1,
+            "elapsed": 0
+          },
+          "stage": "chick"
+        },
+        "revision": 1,
+        "schema": 3,
+        "turtle": {
+          "found_trip": "",
+          "stage": "unmet"
+        }
+      },
+      "world_weather": {
+        "episode": 0,
+        "remaining": 713.339527213551,
+        "seed": 1411035347,
+        "weather": "sun"
+      }
+    }
+  },
+  {
+    "stage": "reload-title",
+    "utc": "2026-10-08T01:38:44Z",
+    "errors": [],
+    "inputs": [],
+    "payload": {
+      "album": [],
+      "animal_relationship_memory": {},
+      "exploration": {
+        "contract_version": 1,
+        "next_trip_serial": 3,
+        "session": null
+      },
+      "exploration_committed_serial": 2,
+      "first_fish_caught": false,
+      "holiday_day": 1,
+      "holiday_day_elapsed": 33.7725333333334,
+      "keepsakes": {
+        "formal.find.feather": 1
+      },
+      "locale": "zh-CN",
+      "photo_moments": {},
+      "plant_day_planted": 0,
+      "plant_state": 0,
+      "plant_watered_day": -1,
+      "tutorial_version": 0,
+      "version": 5,
+      "world_residents": {
+        "beibei": {
+          "adopted_clock": null,
+          "stage": "unmet"
+        },
+        "chicken": {
+          "settled_clock": {
+            "day": 1,
+            "elapsed": 0
+          },
+          "stage": "chick"
+        },
+        "revision": 1,
+        "schema": 3,
+        "turtle": {
+          "found_trip": "",
+          "stage": "unmet"
+        }
+      },
+      "world_weather": {
+        "episode": 0,
+        "remaining": 713.339527213551,
+        "seed": 1411035347,
+        "weather": "sun"
+      }
+    }
+  },
+  {
+    "stage": "reload-yard",
+    "utc": "2026-10-08T01:38:48Z",
+    "errors": [],
+    "inputs": [
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 194,
+        "y": 430,
+        "key": null,
+        "t": 3411.399999976158
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 194,
+        "y": 430,
+        "key": null,
+        "t": 5590.299999952316
+      }
+    ],
+    "payload": {
+      "album": [],
+      "animal_relationship_memory": {},
+      "exploration": {
+        "contract_version": 1,
+        "next_trip_serial": 3,
+        "session": null
+      },
+      "exploration_committed_serial": 2,
+      "first_fish_caught": false,
+      "holiday_day": 1,
+      "holiday_day_elapsed": 33.7725333333334,
+      "keepsakes": {
+        "formal.find.feather": 1
+      },
+      "locale": "zh-CN",
+      "photo_moments": {},
+      "plant_day_planted": 0,
+      "plant_state": 0,
+      "plant_watered_day": -1,
+      "tutorial_version": 0,
+      "version": 5,
+      "world_residents": {
+        "beibei": {
+          "adopted_clock": null,
+          "stage": "unmet"
+        },
+        "chicken": {
+          "settled_clock": {
+            "day": 1,
+            "elapsed": 0
+          },
+          "stage": "chick"
+        },
+        "revision": 1,
+        "schema": 3,
+        "turtle": {
+          "found_trip": "",
+          "stage": "unmet"
+        }
+      },
+      "world_weather": {
+        "episode": 0,
+        "remaining": 713.339527213551,
+        "seed": 1411035347,
+        "weather": "sun"
+      }
+    }
+  }
+]
