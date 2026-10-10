@@ -1,5 +1,11 @@
 # 代理开发入口
 
+
+## 2026-10-10 用户最新授权：Grok同时承担独立小功能
+
+GROK-CONTRIBUTOR从仅修bug扩展为“修bug＋边界明确的小功能”，不是GROK-BUILD。首批指定#703绘本气泡与小鸡/播种情境、#704背篓/相册/暂停交互短音、#705做饭烟囱效果；均待本人回执。#703/#704可独立开发，#705正式接入依赖Leader餐食事件。Owner端到端制作/接入/验证/PR，成长规则与共享存档仍Leader、近郊仍ASSISTANT、整体UI仍Cloud，按方法划界。详见[范围与验收队列](docs/collaboration/grok-small-features-2026-10-10.md)；该授权覆盖旧bug-only限制，不恢复逐PR外审或每项Leader批准。未修改外部客户端定时器，未冒称已接收。
+
+
 > **2026-10-06 最高优先级更新：** [团队集中交付规则](docs/collaboration/team-focus-2026-10-06.md)已由用户直接授权。本地 CODEX-LEAD 同时承担制作人与 Leader，新功能/探索/资源集中推进；Assistant 与 Cursor Cloud 辅助修 bug，GAME-QA 独立测试；PM/制作人停止独立运转。取消逐 PR 强制他人或子代理审核，改为每日23:00发版前由Leader集中审查当天全部工作。下文冲突的旧独审、角色分工和等待要求已被替代，测试、PR和发布核验保持。2026-10-08 起 Cursor Cloud 改为负责界面开发与维护，GROK-CONTRIBUTOR 改为认领并修复 bug，见下方说明。
 
 此文件适用于 Codex、GROK、MANUS、Cursor Local（`CURSOR-CONTRIBUTOR-LOCAL`）及其他参与本仓库的开发代理。每次开始任务时，先阅读以下仓库记录：
