@@ -271,7 +271,8 @@ static func state_style(mode: String) -> StyleBoxFlat:
 
 func fit() -> void:
 	if panel == null: return
-	var bar_on := _bar_ready() and hotbar.visible
+	# 背篓合着时快捷栏归院里排（Main.preferred_rect），这里的延后 fit 不能把它挪到背篓位置
+	var bar_on := visible and _bar_ready() and hotbar.visible
 	var bar_size: Vector2 = hotbar.get_combined_minimum_size() if bar_on else Vector2.ZERO
 	var width := minf(520, size.x - EDGE * 2.0)
 	shared_row = bar_on and minf(620, size.y - EDGE * 2.0) <= COMPACT_HEIGHT and width - 32.0 - bar_size.x - SHARED_GAP >= SHARED_CLOSE_MIN

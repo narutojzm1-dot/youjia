@@ -189,6 +189,12 @@ func run() -> void:
 		await frames()
 		var yr: Rect2 = bar.get_global_rect()
 		check(yr.position.x >= 0.0 and yr.end.x <= float(viewport.x) + 0.5, str(viewport) + " yard hotbar fits the width")
+		var want: Rect2 = HotbarScript.preferred_rect(main.size, main._stacked_hud())
+		check(yr.position.is_equal_approx(want.position), str(viewport) + " closed basket leaves the hotbar at its yard place (%s, want %s)" % [yr.position, want.position])
+		var covered := []
+		for button: Button in [main._album_chip, main._basket_chip, main._weather_chip, main._action_button, main._pause_button]:
+			if button != null and button.is_visible_in_tree() and button.get_global_rect().intersects(yr): covered.append(button.text)
+		check(covered.is_empty(), str(viewport) + " yard hotbar covers no bottom button %s" % [covered])
 		check(yr.size.is_equal_approx(bar.get_combined_minimum_size()) or yr.size.x >= bar.get_combined_minimum_size().x, str(viewport) + " slots are not squeezed below their size")
 	root.size = Vector2i(390, 844)
 	await frames()
