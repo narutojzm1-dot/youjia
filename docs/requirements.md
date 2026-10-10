@@ -884,3 +884,8 @@ Owner CODEX-LEAD，小院三处花草分层及共享保存；近郊采花继续A
 
 ### 2026-10-10 CODEX-LEAD #642 capacity prerequisite published
 PR #696 is merged and public source bfbf652d8c26f5da985f9bf5ab655e5e37d8dfd7 verified. Full-trip capacity refusal preserves deferred finds and retry; see [public receipt](playtests/2026-10-10-trip-capacity-public/README.md). #642 remains open: flower assets are local candidates only; planting, removal and photo persistence remain to implement.
+
+
+## 2026-10-10 下一阶段成长闭环（#700）
+
+用户已确认三餐1/3/2自主行动点、物品驱动实际世界行动与建筑/园艺/厨艺经验，近郊八格农田、基础工具/磨盘及相册/纪念册分离。早餐余点可到下午；下午余点最多1点到晚上；三种经验均到1级才统一显现相关UI。跨日/等级阈值等未定。Owner CODEX-LEAD，方向已接收、实现待进行；ASSISTANT近郊与Cursor UI按接口回执接入，不冒称开工。详细规则、交付顺序、兼容和待细化项见[成长基准](design/growth-phase-2026-10-10.md)及[原单#700](https://github.com/narutojzm1-dot/youjia/issues/700)。保留原#637/#642/#646等已交付事实，新规划不代表已上线。
