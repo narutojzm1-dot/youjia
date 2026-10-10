@@ -185,7 +185,7 @@ func _test_animal_relationship_memory() -> void:
 
 func _test_audio_architecture() -> void:
 	var cue_ids: Array = _audio.call("get_cue_ids")
-	for cue: String in ["music.title", "music.gameplay", "ui.confirm", "ui.cancel", "player.action", "enemy.impact", "score.reward", "game.pause", "game.victory", "game.defeat"]:
+	for cue: String in ["music.title", "music.gameplay", "ui.confirm", "ui.cancel", "ui.page", "player.action", "enemy.impact", "score.reward", "game.pause", "game.victory", "game.defeat"]:
 		_check(cue in cue_ids, "missing semantic audio cue: " + cue)
 	var capacity: Dictionary = _audio.call("get_voice_capacity")
 	_check(int(capacity.music) == 2, "music crossfade requires two voices")
