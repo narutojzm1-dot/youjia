@@ -72,6 +72,7 @@ run_godot suite test/pond_story_integration_suite.gd
 run_godot suite test/yard_basket_integration_suite.gd
 run_godot suite test/yard_basket_button_states_suite.gd
 run_godot suite test/paper_scrollbar_suite.gd
+run_godot suite test/care_panels_paper_suite.gd
 run_godot suite test/exploration_button_states_suite.gd
 run_godot suite test/still_boundary_feedback_suite.gd
 run_godot suite test/pause_panel_fit_suite.gd

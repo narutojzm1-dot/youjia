@@ -35,6 +35,7 @@ func _ready() -> void:
 	scroll = ScrollContainer.new()
 	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 	paper.add_child(scroll)
+	preload("res://scripts/ui/paper_scrollbar_style.gd").apply(scroll.get_v_scroll_bar())
 	column = VBoxContainer.new()
 	column.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	column.add_theme_constant_override("separation",12)
@@ -68,6 +69,7 @@ func _button(text: String, callback: Callable) -> Button:
 		button.add_theme_stylebox_override(mode,preload("res://scripts/ui/yard_basket_panel.gd").state_style(mode))
 		button.add_theme_color_override("font_"+("" if mode == "normal" else mode+"_")+"color",Color("5b4637"))
 	button.add_theme_color_override("font_focus_color",Color("5b4637"))
+	button.add_theme_stylebox_override("focus",preload("res://scripts/ui/yard_basket_panel.gd").focus_style())
 	button.pressed.connect(callback)
 	return button
 

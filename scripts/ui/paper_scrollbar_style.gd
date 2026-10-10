@@ -1,7 +1,7 @@
 extends RefCounted
 
-## REQ-20261007-058: the yard basket list and the yard decor list scroll inside
-## their warm paper, but their vertical scroll bar kept Godot's default theme —
+## REQ-20261007-058: the yard basket list (and the chick care / crop papers)
+## scroll inside their warm paper, but their vertical scroll bar kept Godot's default theme —
 ## a dark grey slab (1a1a1a @ 0.6, which composites to a ~76756c grey strip on
 ## the fff6e8 paper) with a translucent white thumb. It was the only dark,
 ## off-palette strip left on those papers, and the thumb told nothing about
@@ -9,7 +9,7 @@ extends RefCounted
 ##
 ## Visual only: the bar keeps its 8px width (4px content margin each side, the
 ## same minimum size as the default theme), so rows, buttons, wrapping, touch
-## scrolling and tap routing in both panels are untouched.
+## scrolling and tap routing in those panels are untouched.
 
 ## Track: the same light warm groove as the pause-page volume slider (#459/040).
 const TRACK := Color("eadcc8")

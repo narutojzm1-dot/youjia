@@ -238,13 +238,17 @@ func _button() -> Button:
 		button.add_theme_stylebox_override(mode, state_style(mode))
 		button.add_theme_color_override("font_" + ("" if mode == "normal" else mode + "_") + "color", BUTTON_STATES[mode].ink)
 	button.add_theme_color_override("font_focus_color", BUTTON_STATES.normal.ink)
+	button.add_theme_stylebox_override("focus", focus_style())
+	return button
+
+## 键盘焦点：2px 褐墨描边、不填底。小鸡成长、种植纸面上的按钮也用这一套。
+static func focus_style() -> StyleBoxFlat:
 	var focus := StyleBoxFlat.new()
 	focus.draw_center = false
 	focus.border_color = Color("916d49")
 	focus.set_border_width_all(2)
 	focus.set_corner_radius_all(12)
-	button.add_theme_stylebox_override("focus", focus)
-	return button
+	return focus
 
 static func state_style(mode: String) -> StyleBoxFlat:
 	var spec: Dictionary = BUTTON_STATES[mode]
