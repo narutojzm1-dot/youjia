@@ -4,7 +4,7 @@
 
 ## 新增功能与缺口
 
-受测线上0.2.0（第2版内部测试）game-e9e7292，完整SHA `e9e72920446705415c9a41da7380ab48fe75664e`。从最后受测070ae5a跨多日累计比较，全部原始[提交主题](evidence/commit-subjects.log)、[路径清单](evidence/changed-files.log)、[逐项矩阵](evidence/coverage.json)归档。GitHub compare返回296提交和300文件上限；不能把300个文件当完整变更集，已另用本地无rename完整清单。
+受测线上0.2.0（第2版内部测试）game-e9e7292，完整SHA `e9e72920446705415c9a41da7380ab48fe75664e`。从最后受测070ae5a跨多日累计比较，全部原始[提交主题](evidence/commit-subjects.log)、[路径清单](evidence/changed-files.log)、[逐项矩阵](evidence/coverage.json)归档。GitHub compare原件比较到main候选f787f9d，返回296提交和300文件上限，不能把其中全部变更当已受测线上，也不能把300文件当完整清单；实际受测范围以本地070ae5a→e9e7292的提交主题和无rename路径清单为准。
 
 | 功能 | 需求/PR | 实际结果 | 自动证据 | 结果与缺口 |
 |---|---|---|---|---|
