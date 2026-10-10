@@ -52,6 +52,7 @@ var _step_phase := 0.0
 var _stuck := 0.0
 var _velocity := Vector2.ZERO
 var _gait := GroundedGait.new()
+var _rest_breath: RefCounted
 var _blink: RefCounted
 var _rig: PlantedGait
 var _following := false
@@ -116,6 +117,8 @@ func setup(config: Dictionary) -> void:
 	if species in ["cow", "horse", "llama", "goose"] or actor_id in ["sheep_a", "sheep_b"]:
 		_blink = preload("res://scripts/entities/painted_blink.gd").new()
 		_blink.bind(_gait._material, actor_id if species == "sheep" else species)
+	_rest_breath = preload("res://scripts/entities/painted_rest_breath.gd").new()
+	_rest_breath.bind(_gait._material, actor_id)
 	_apply_face_override()
 	if species == "llama" and bool(config.get("experimental_planted_gait", false)):
 		enable_experimental_planted_gait()
@@ -147,6 +150,8 @@ func enable_experimental_planted_gait() -> void:
 
 
 func set_expression(expression_id: String) -> void:
+	if _rest_breath != null:
+		_rest_breath.cancel()
 	if _blink != null:
 		_blink.cancel()
 	current_expression = expression_id
@@ -503,6 +508,8 @@ func tick(delta: float, world_size: Vector2) -> void:
 			set_expression("idle")
 	# 活的画：脚钉在落点上。鸭子只在水面轻轻起伏，不横着滑过院子。
 	if posed and state == "pose":
+		if _rest_breath != null:
+			_rest_breath.cancel()
 		if _blink != null:
 			_blink.cancel()
 		var bob := 0.0
@@ -658,7 +665,10 @@ func tick(delta: float, world_size: Vector2) -> void:
 		_gait._material.set_shader_parameter("amount", 0.0 if reduced or use_ellipse else minf(_gait.weight * 3.0, 1.0))
 	var visual := _base_scale * visual_scale * YardGround.depth_at(position.y)
 	# Breathing belongs to resting animals; don't squash a walking silhouette.
-	var resting_breath := lerpf(breath, 1.0, _gait.weight)
+	var lying := preload("res://scripts/entities/painted_rest_breath.gd").REGIONS.has(_sprite.texture.resource_path)
+	var resting_breath := 1.0 if lying else lerpf(breath, 1.0, _gait.weight)
+	if _rest_breath != null:
+		_rest_breath.advance(delta, not reduced and not posed and state == "rest" and _ack_cel.is_empty() and _velocity.length() <= 0.3 and _gait.weight <= 0.08, _sprite.texture.resource_path)
 	scale = Vector2(visual * _gait.face * (1.0 if _ground_anchor.x >= 0.0 else _gait.turn_width), visual * resting_breath)
 	_sprite.scale.x = _paint_facing()
 	if _rig != null:
@@ -668,17 +678,19 @@ func tick(delta: float, world_size: Vector2) -> void:
 		_rig.tick(delta, moved, depth, reduced)
 	if _blink != null:
 		if species == "cow":
-			var lying: bool = _sprite.texture.resource_path == _blink.COW_REST_SOURCE
-			var desired_source: String = _blink.COW_REST_SOURCE if lying else _blink.SOURCE
+			var cow_lying: bool = _sprite.texture.resource_path == _blink.COW_REST_SOURCE
+			var desired_source: String = _blink.COW_REST_SOURCE if cow_lying else _blink.SOURCE
 			if _blink.source_path != desired_source:
 				_blink.cancel()
-				_blink.bind(_gait._material, "cow_rest" if lying else "cow")
+				_blink.bind(_gait._material, "cow_rest" if cow_lying else "cow")
 		_blink.advance(delta, not reduced and not posed and state == "rest" and _ack_cel.is_empty() and _velocity.length() <= 0.3 and _gait.weight <= 0.08 and _sprite.texture.resource_path == _blink.source_path)
 	z_index = roundi(position.y)
 
 
 ## Road adapters own movement and depth; reuse the same anchored painted gait.
 func advance_path(delta: float, moved: Vector2, depth: float, reduced: bool) -> void:
+	if _rest_breath != null:
+		_rest_breath.cancel()
 	if _blink != null:
 		_blink.cancel()
 	state = "path"

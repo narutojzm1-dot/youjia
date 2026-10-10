@@ -846,3 +846,6 @@ Owner CODEX-LEAD，codex/lead-physical-basket-637：实体入口已实现并验�
 ## 2026-10-10 #645 牛卧姿局部眨眼
 
 CODEX-LEAD已接续#645牛卧姿局部眨眼：同构图原画、运行接入及215项必要检查完成，GPU眼区外与alpha变化均为0；证据playtests/2026-10-10-resting-cow-blink。其他卧姿动物未全覆盖，#645保持开放。
+
+## 2026-10-10 #645 卧姿胸腹呼吸接续
+CODEX-LEAD认领五只大动物独立相位的局部胸腹呼吸，保留脚/头/落地点、原图与棚栏遮挡。仅静止卧姿开启，移动/交互/减少动态关闭，照片定格兼容旧存档。范围painted_rest_breath、FeltActor及原步态shader可选参数；[证据](playtests/2026-10-10-rest-breath/README.md)。鹅及其余卧姿自然小动作尚未全覆盖，#645保持开放。
