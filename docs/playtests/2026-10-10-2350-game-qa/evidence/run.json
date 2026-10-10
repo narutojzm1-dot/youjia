@@ -1,0 +1,14 @@
+{
+  "startedBeijing": "2026-10-10T23:50:24+08:00",
+  "recordedBeijing": "2026-10-10T23:58:31.941602+08:00",
+  "scheduled": "20:00深测，延迟执行",
+  "build": "0.2.0 game-e9e7292",
+  "sha": "e9e72920446705415c9a41da7380ab48fe75664e",
+  "main": "f787f9d3cbc8b15ac2cae853de355e1f06ba3bc0",
+  "environment": "Windows / Codex IAB / 1280x720 / mouse",
+  "save": "延续此前普通Web档，无注入/清档；现第5天麦子已种并浇水",
+  "newAutomatedTests": 0,
+  "priorTests": "PR706同SHA 17专项17987检查；本轮未重跑",
+  "newBugs": 0,
+  "knownGap": "#597/#698 Web快捷配置刷新清空1/1；跨共享保存非小范围修复"
+}
