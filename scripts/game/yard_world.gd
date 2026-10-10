@@ -509,6 +509,7 @@ func tick(delta: float, move: Vector2) -> void:
 	if not simulation_active:
 		return
 	var house_owned_tick: bool = house != null and house.busy()
+	if house_owned_tick and move.length() > 0.2: house.skip_balcony()
 	if house != null: house.tick(delta)
 	if not house_owned_tick: advance_world_time(delta)
 	_rejected_seconds = maxf(0.0, _rejected_seconds - delta)
@@ -973,7 +974,9 @@ func cancel_scene_feedback() -> void:
 
 
 func request_primary_action() -> void:
-	if house != null and house.busy(): return
+	if house != null and house.busy():
+		house.skip_balcony()
+		return
 	if pond_story != null: pond_story.cancel()
 	if not input_enabled or inventory_busy or _player == null:
 		return
@@ -993,7 +996,9 @@ func request_primary_action() -> void:
 
 
 func request_pointer_action(point: Vector2) -> void:
-	if house != null and house.busy(): return
+	if house != null and house.busy():
+		house.skip_balcony()
+		return
 	if pond_story != null: pond_story.cancel()
 	if not input_enabled or _player == null:
 		return

@@ -17,6 +17,7 @@ var failed := false
 var night: Dictionary = {}
 var door: Sprite2D
 var _night_elapsed := 0.0
+var balcony: Node2D
 
 func _init(owner_world: Node2D, save_store: Node) -> void:
 	world = owner_world
@@ -32,6 +33,8 @@ func _init(owner_world: Node2D, save_store: Node) -> void:
 	door.visible = false
 	add_child(door)
 	z_index = 1
+	balcony = preload("res://scripts/game/balcony_morning.gd").new(world)
+	add_child(balcony)
 
 func busy() -> bool: return not stage.is_empty()
 
@@ -63,7 +66,10 @@ func _enter(next: String) -> void:
 	seconds = 0.0
 
 func inside_room() -> bool:
-	return stage in ["close", "saving", "sleep", "wake"]
+	return stage in ["close", "saving", "sleep", "balcony", "stairs", "wake"]
+
+func skip_balcony() -> void:
+	if stage == "balcony": balcony.skip()
 
 func window_light_target() -> float:
 	return 1.0 if wants_light(world.tod_fraction(), inside_room()) else 0.0
@@ -99,7 +105,21 @@ func tick(delta: float) -> void:
 			world._day_elapsed = lerpf(_night_elapsed,599.99,clampf(seconds / 5.0,0.0,1.0))
 			if seconds >= 5.0:
 				_apply_morning()
-				_enter("wake")
+				var kind: String = balcony.plan(world.holiday_day, world.weather)
+				if kind.is_empty():
+					_enter("wake")
+				else:
+					balcony.begin(kind)
+					_enter("balcony")
+					world.camera_focus_requested.emit(Vector2(278, 300), 1.25)
+		"balcony":
+			balcony.tick(delta, bool(TuningStore.get_value("ui.reduced_motion", false)))
+			if not balcony.busy():
+				world.camera_release_requested.emit()
+				_enter("stairs")
+		"stairs":
+			# The traveller is hidden inside the house throughout the descent.
+			if seconds >= 1.2: _enter("wake")
 		"wake":
 			door.visible = true
 			door.modulate.a = minf(seconds / 0.6,1.0)
