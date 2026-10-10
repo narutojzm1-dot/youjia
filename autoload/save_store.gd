@@ -247,6 +247,17 @@ func request_crop_action(revision: int, inventory_revision: int, action: String,
 		return result.candidate)
 
 
+func get_yard_original_plants() -> Dictionary:
+	return preload("res://scripts/inventory/yard_original_plants.gd").read(_data)
+
+
+func request_original_plant_action(revision: int, action: String, area: String) -> String:
+	return request_intent("original-plants", func(current: Dictionary) -> Variant:
+		var result := preload("res://scripts/inventory/yard_original_plants.gd").transition(current, revision, action, area)
+		if result.has("error"): return CoordinatorType.IntentRejection.new(result.error)
+		return result.candidate)
+
+
 func get_yard_decor() -> Dictionary:
 	return preload("res://scripts/inventory/yard_decor.gd").read(_data)
 
