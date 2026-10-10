@@ -1,0 +1,44 @@
+{
+  "sourceSha": "e9e72920446705415c9a41da7380ab48fe75664e",
+  "startedUtc": "2026-10-10T15:40:29.639863+00:00",
+  "profileProbe": "D:/games/youjia-test/qa/native/2026-10-10-2322-extra/roaming/Godot/app_userdata/youjia-qa-profile-probe",
+  "engine": "D:/games/youjia-tmp-godot/Godot_v4.7.2-stable_win64_console.exe",
+  "tests": [
+    {
+      "entry": "photo_diary_weather",
+      "exit": 0,
+      "summary": [
+        "[photo-diary-weather] PASS: 42 checks"
+      ]
+    },
+    {
+      "entry": "house_sleep",
+      "exit": 0,
+      "summary": [
+        "house_sleep_suite checks=154 failures=0"
+      ]
+    },
+    {
+      "entry": "yard_decor_rejection",
+      "exit": 0,
+      "summary": [
+        "YARD_DECOR_REJECTION checks=19 failures=0"
+      ]
+    },
+    {
+      "entry": "resting_eyelids",
+      "exit": 0,
+      "summary": [
+        "RESTING_EYELIDS checks=37 failures=0"
+      ]
+    },
+    {
+      "entry": "painted_rest_breath",
+      "exit": 0,
+      "summary": [
+        "PAINTED_REST_BREATH checks=7264 failures=0"
+      ]
+    }
+  ],
+  "endedUtc": "2026-10-10T15:40:43.937240+00:00"
+}
