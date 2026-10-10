@@ -83,6 +83,10 @@ var _hold_hotbar: Control
 var _residents: RefCounted
 var _chick_panel: Control
 var _crop_panel: Control
+var _resident_bubble: Control
+var _resident_barks: RefCounted
+var _crop_kind_watch := ""
+var _bark_clock := 0.0
 var _inventory: RefCounted
 var _decor: RefCounted
 var _basket_drop: Dictionary = {}
@@ -362,6 +366,10 @@ func _ready() -> void:
 	_crop_panel.flower_requested.connect(func() -> void:
 		_hide_crops()
 		if _world != null: _world._interact_legacy_plant())
+	_resident_barks = preload("res://scripts/presentation/resident_barks.gd").new()
+	_resident_bubble = preload("res://scripts/presentation/resident_bubble.gd").new()
+	_resident_bubble.name = "ResidentBubble"
+	_ui_layer.add_child(_resident_bubble)
 	_decor = load("res://scripts/inventory/yard_decor_controller.gd").new(SaveStore)
 	_decor.changed.connect(_on_decor_changed)
 	_decor.resubmitted.connect(_on_decor_resubmitted)
@@ -386,6 +394,8 @@ func _report_web_first_frame() -> void:
 
 
 func _process(delta: float) -> void:
+	_bark_clock += delta
+	_tick_resident_barks(delta)
 	if _notice_time > 0.0 and _can_show_notice():
 		_notice_time = maxf(0.0, _notice_time - delta)
 	_sync_notice_visibility()
@@ -1771,6 +1781,7 @@ func _exploration_save_covers(accepted: Dictionary, problem: Dictionary) -> bool
 
 
 func _on_save_confirmed(op_id: String, kind: String) -> void:
+	_on_crops_confirmed_for_bark(kind)
 	if _save_exploration_coverage.has(op_id) and _save_exploration_coverage[op_id].kind == kind:
 		_clear_covered_save_problems(_save_exploration_coverage[op_id].problems)
 		_save_exploration_coverage.erase(op_id)
@@ -3232,3 +3243,122 @@ func _flat(bg: Color, border: Color, width: int = 2, radius: int = 16) -> StyleB
 	style.content_margin_top = 10
 	style.content_margin_bottom = 10
 	return style
+
+## GROK #703: picture-book resident barks (chick / plant / Leader fatigue hook).
+func _tick_resident_barks(_delta: float) -> void:
+	if _crop_panel != null and _crop_panel.visible:
+		var bed := SaveStore.get_yard_crops()
+		if not bed.is_empty():
+			_crop_kind_watch = str(bed.get("kind", ""))
+	var hard_block := _resident_bark_hard_blocked()
+	if hard_block and _resident_bubble != null and _resident_bubble.visible:
+		_resident_bubble.dismiss()
+	if hard_block or _world == null or _screen != "game":
+		return
+	if _crop_panel != null and _crop_panel.visible:
+		return
+	if _chick_panel != null and _chick_panel.visible:
+		return
+	if _basket_panel != null and _basket_panel.visible:
+		return
+	_try_chick_bark()
+
+
+func _resident_bark_hard_blocked() -> bool:
+	# Pause / album / confirm / leave-game: dismiss and do not replay.
+	if _screen != "game":
+		return true
+	if _pause_screen != null and _pause_screen.visible:
+		return true
+	if _album_screen != null and _album_screen.visible:
+		return true
+	if _confirm_screen != null and _confirm_screen.visible:
+		return true
+	if _save_problem_active:
+		return true
+	return false
+
+
+func _resident_bark_blocked() -> bool:
+	if _resident_bark_hard_blocked():
+		return true
+	if _basket_panel != null and _basket_panel.visible:
+		return true
+	if _crop_panel != null and _crop_panel.visible:
+		return true
+	if _chick_panel != null and _chick_panel.visible:
+		return true
+	return false
+
+
+func _on_crops_confirmed_for_bark(kind: String) -> void:
+	if kind != "crops" or _resident_barks == null or _resident_bubble == null:
+		return
+	var bed := SaveStore.get_yard_crops()
+	if bed.is_empty():
+		return
+	var now_kind := str(bed.get("kind", ""))
+	var was_empty := _crop_kind_watch.is_empty()
+	_crop_kind_watch = now_kind
+	if not was_empty or now_kind.is_empty():
+		return
+	# Plant success may land while CropPanel is still open; allow that moment.
+	var busy := _resident_bubble.is_showing() or _resident_bark_hard_blocked()
+	var bark_id: String = _resident_barks.try_plant_sown(_bark_clock, busy)
+	if bark_id.is_empty():
+		return
+	_show_resident_bark(bark_id)
+
+
+func _try_chick_bark() -> void:
+	if _resident_barks == null or _resident_bubble == null or _world == null:
+		return
+	if _resident_bubble.is_showing():
+		return
+	var growth := SaveStore.get_chick_growth()
+	if growth.is_empty() or str(growth.get("stage", "")) != "chick":
+		return
+	var chick = _world.actor_named("chicken")
+	var player = _world.get_player()
+	if chick == null or player == null:
+		return
+	var reach := YardInteraction.PET_REACH
+	if player.position.distance_to(chick.position) > reach:
+		return
+	var bark_id: String = _resident_barks.try_chick_proximity(_bark_clock, false)
+	if bark_id.is_empty():
+		return
+	_show_resident_bark(bark_id)
+
+
+## Leader fatigue hook (#700 / #703): pass true only from real fatigue state.
+## Does not infer overnight or missed sleep.
+func offer_fatigue_bark(fatigue_active: bool) -> bool:
+	if _resident_barks == null or _resident_bubble == null:
+		return false
+	var busy := _resident_bubble.is_showing() or _resident_bark_blocked()
+	var bark_id: String = _resident_barks.try_fatigue(_bark_clock, busy, fatigue_active)
+	if bark_id.is_empty():
+		return false
+	_show_resident_bark(bark_id)
+	return true
+
+
+func _show_resident_bark(bark_id: String) -> void:
+	var key: String = _resident_barks.i18n_key(bark_id)
+	if key.is_empty():
+		return
+	var text := I18n.t(key)
+	var anchor := Vector2.ZERO
+	var follow := Callable()
+	if _world != null and _world.get_player() != null:
+		var player = _world.get_player()
+		anchor = player.position
+		follow = func() -> Vector2:
+			if _world == null or _world.get_player() == null:
+				return anchor
+			return _world.get_player().position
+	if _ui_layer != null:
+		_ui_layer.move_child(_resident_bubble, _ui_layer.get_child_count() - 1)
+	_resident_bubble.show_bark(text, anchor, preload("res://scripts/presentation/resident_barks.gd").DISPLAY_SECONDS, follow)
+

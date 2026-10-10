@@ -2,7 +2,6 @@
   "action.chick_care": "Check the chick",
   "hud.hint.crop_growing": "Crops are growing · Check or harvest the patch",
   "action.crop_patch": "Growing patch",
-
   "hud.clock.am": "{h}:{m} AM",
   "hud.clock.pm": "{h}:{m} PM",
   "app.title": "悠长的假期",
@@ -351,8 +350,8 @@
   "action.pickup_food": "Pick up",
   "notice.food_dropped": "On the ground. See who notices.",
   "notice.food_picked": "Back in your hand.",
-	"notice.decor_recalled": "Back in the basket.",
-	"notice.decor_recall_blocked": "That find cannot be picked up right now.",
+  "notice.decor_recalled": "Back in the basket.",
+  "notice.decor_recall_blocked": "That find cannot be picked up right now.",
   "notice.food_eaten": "An animal ate the food on the ground.",
   "notice.food_full": "Plenty on the ground. Pick some back up first.",
   "target.food": "Food",
@@ -421,5 +420,8 @@
   "notice.house.morning": "Good morning. A new day.",
   "action.house_resting": "Resting at home",
   "action.open_basket": "Open basket",
-  "target.basket": "Basket"
+  "target.basket": "Basket",
+  "bark.chick_eggs_hope": "When they grow up, there will be eggs to gather.",
+  "bark.plant_sown": "Planted. Now we wait for it to grow.",
+  "bark.fatigue_sleepy": "So sleepy… don’t feel like working."
 }
