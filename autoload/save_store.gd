@@ -233,6 +233,20 @@ func get_yard_inventory() -> Dictionary:
 	return YardInventory.read(_data)
 
 
+func get_yard_crops() -> Dictionary:
+	return preload("res://scripts/game/yard_crops.gd").read(_data)
+
+func has_yard_crops() -> bool:
+	return _data.has("yard_crops")
+
+
+func request_crop_action(revision: int, inventory_revision: int, action: String, kind: String = "") -> String:
+	return request_intent("crops", func(current: Dictionary) -> Variant:
+		var result := preload("res://scripts/game/yard_crops.gd").transition(current, revision, inventory_revision, action, kind)
+		if result.has("error"): return CoordinatorType.IntentRejection.new(result.error)
+		return result.candidate)
+
+
 func get_yard_decor() -> Dictionary:
 	return preload("res://scripts/inventory/yard_decor.gd").read(_data)
 
@@ -251,6 +265,15 @@ func request_decor_action(revision: int, action: String, spot: String, details: 
 
 func get_world_residents() -> Dictionary:
 	return preload("res://scripts/game/world_residents.gd").read(_data)
+
+func get_chick_growth() -> Dictionary:
+	var residents := get_world_residents()
+	if residents.is_empty(): return {}
+	var care := preload("res://scripts/game/chick_care.gd").read(_data)
+	if care.is_empty(): return {}
+	var model = preload("res://scripts/game/world_residents.gd")
+	var age: float = preload("res://scripts/game/chick_care.gd").age(_data, model._clock_seconds(residents.chicken.settled_clock), model._clock_seconds({"day": get_holiday_day(), "elapsed": get_holiday_day_elapsed()}))
+	return {"stage": residents.chicken.stage, "age_seconds": age, "bonus_seconds": care.bonus_seconds, "ready": age >= model.GROW_SECONDS}
 
 func request_resident_action(revision: int, action: String) -> String:
 	var intent := prepare_resident_intent(revision, action)
@@ -275,10 +298,10 @@ func prepare_resident_intent(revision: int, action: String) -> Callable:
 		return result.candidate
 
 
-func request_inventory_action(revision: int, action: String, fish: String, details: Dictionary = {}) -> String:
+func request_inventory_action(revision: int, action: String, fish: String, details: Dictionary = {}, consumer: String = "") -> String:
 	var frozen := details.duplicate(true)
 	return request_intent("inventory", func(current: Dictionary) -> Variant:
-		var result := YardInventory.transition(current, revision, action, fish, frozen)
+		var result := YardInventory.transition(current, revision, action, fish, frozen, consumer)
 		if result.has("error"):
 			return CoordinatorType.IntentRejection.new(result.error)
 		return result.candidate)
@@ -301,14 +324,23 @@ func request_exploration_trip(record: Variant, trip_serial: int, find_ids: Packe
 			return ""
 	var frozen: Variant = _copy_record(record)
 	var finds := find_ids.duplicate()
-	var op_id := request_intent("exploration_trip", func(current: Dictionary) -> Dictionary:
-		receipt.granted = trip_serial > int(current.get("exploration_committed_serial", 0))
-		if receipt.granted:
+	var op_id := request_intent("exploration_trip", func(current: Dictionary) -> Variant:
+		receipt.granted = false
+		if trip_serial > int(current.get("exploration_committed_serial", 0)):
 			var keepsakes: Dictionary = (current.get("keepsakes", {}) as Dictionary).duplicate(true)
+			# Check the entire grant at the FIFO head, including repeated finds.
+			# Clamping would lose items while making this trip impossible to retry.
+			var incoming: Dictionary = {}
 			for find_id: String in finds:
-				keepsakes[find_id] = mini(int(keepsakes.get(find_id, 0)) + 1, SaveDataCodec.MAX_KEEPSAKE_COUNT)
+				incoming[find_id] = int(incoming.get(find_id, 0)) + 1
+			for find_id: String in incoming:
+				if int(keepsakes.get(find_id, 0)) > SaveDataCodec.MAX_KEEPSAKE_COUNT - int(incoming[find_id]):
+					return CoordinatorType.IntentRejection.new("EXPLORATION_KEEPSAKE_LIMIT")
+			for find_id: String in incoming:
+				keepsakes[find_id] = int(keepsakes.get(find_id, 0)) + int(incoming[find_id])
 			current.keepsakes = keepsakes
 			current.exploration_committed_serial = trip_serial
+			receipt.granted = true
 		current.exploration = _copy_record(frozen)
 		return current)
 	_emit_exploration_identity(op_id, "exploration_trip", frozen, trip_serial, finds)
@@ -571,7 +603,19 @@ func request_yard_progress(day: int, elapsed: float, state: int, day_planted: in
 	var patch := {"holiday_day": maxi(1, day), "holiday_day_elapsed": maxf(0.0, elapsed), "plant_state": clampi(state, 0, 3), "plant_day_planted": maxi(0, day_planted), "plant_watered_day": watered_day}
 	var clean := preload("res://scripts/game/world_weather.gd").sanitize(climate)
 	if not clean.is_empty(): patch.world_weather = clean
-	return request_patch("yard", patch)
+	return request_intent("yard", func(current: Dictionary) -> Dictionary:
+		# A queued pre-sleep autosave cannot overwrite a committed morning.
+		var saved_day := int(current.get("holiday_day", 1))
+		if int(patch.holiday_day) < saved_day: return current
+		if int(patch.holiday_day) == saved_day and float(patch.holiday_day_elapsed) < float(current.get("holiday_day_elapsed",0.0)): return current
+		current.merge(patch,true)
+		return current)
+
+
+func request_house_sleep(night: Dictionary) -> String:
+	var frozen := night.duplicate(true)
+	return request_intent("house-sleep", func(current: Dictionary) -> Variant:
+		return preload("res://scripts/game/house_sleep_state.gd").finish(current,frozen))
 
 
 func request_plant_state(state: int, day_planted: int, watered_day: int) -> String:

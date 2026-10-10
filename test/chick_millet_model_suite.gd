@@ -12,7 +12,7 @@ func _initialize() -> void:
 	var root_data := {"yard_inventory": {"schema": 2, "revision": 7, "fish": {"small": 2}, "grass": 3, "held": "", "ground": [{"id": 1, "kind": "grass", "x": 400.0, "y": 500.0}], "next_food_id": 2}, "keepsakes": {"old": 4}}
 	var old := root_data.duplicate(true)
 	var view := Inventory.read(root_data)
-	check(view.schema == 3 and view.millet == 0 and view.fish.small == 2 and view.grass == 3 and view.ground.size() == 1, "schema2 migrates without losing any location")
+	check(view.schema == 4 and view.millet == 0 and view.fish.small == 2 and view.grass == 3 and view.ground.size() == 1, "schema2 migrates without losing any location")
 	check(root_data == old, "migration view does not mutate source")
 	var scoop := Inventory.transition(root_data, 7, "scoop", "millet")
 	check(scoop.has("candidate") and scoop.candidate.yard_inventory.held == "millet", "one handful from grain tin")
@@ -39,7 +39,7 @@ func _initialize() -> void:
 	bad.yard_inventory.millet = -1
 	check(Inventory.read(bad).is_empty(), "negative grain blocked")
 	bad = root_data.duplicate(true)
-	bad.yard_inventory.schema = 4
+	bad.yard_inventory.schema = 5
 	check(Inventory.read(bad).is_empty(), "future inventory untouched")
 	var residents := {"schema": 2, "revision": 4, "beibei": {"stage": "grown", "adopted_clock": {"day": 1, "elapsed": 0.0}}, "turtle": {"stage": "pond", "found_trip": "trip-2"}}
 	root_data.world_residents = residents.duplicate(true)

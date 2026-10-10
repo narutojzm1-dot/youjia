@@ -55,7 +55,15 @@ func _rejected(op_id: String, _kind: String, code: String) -> void:
 	if op_id != _op_id: return
 	error = code
 	_failed.append(op_id)
-	state = "blocked" if code.begins_with("DECOR_") else "failed"
+	if code.begins_with("DECOR_"):
+		# A semantic rejection never reached storage. The player may choose
+		# another spot/item against the latest confirmed revision.
+		state = "blocked"
+		pending.clear()
+		_failed.clear()
+		_op_id = ""
+	else:
+		state = "failed"
 	changed.emit()
 
 func _unknown(op_id: String, _kind: String, code: String) -> void:

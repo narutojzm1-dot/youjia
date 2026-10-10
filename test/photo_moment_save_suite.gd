@@ -57,7 +57,10 @@ func run():
  var old_moment:Dictionary=moment.duplicate(true);old_moment.erase("day");old_moment.erase("caption_variant")
  check(not PhotoMoment.sanitize(old_moment).is_empty() and not PhotoMoment.sanitize(old_moment).has("day"),"a version-one photograph without a date remains valid without a fake first day")
  check(PhotoDiary.caption(old_moment)==i18n.t("photo.llama_fed.title"),"legacy undated photographs retain their original title")
+ # 旧日期档保留 weather，只去掉 caption_variant。这条输入必须仍能通过 sanitize。
  var dated_legacy:=moment.duplicate(true);dated_legacy.erase("caption_variant")
+ var sanitized_dated:=PhotoMoment.sanitize(dated_legacy)
+ check(not sanitized_dated.is_empty() and sanitized_dated.has("weather") and str(sanitized_dated.get("weather",""))==str(dated_legacy.get("weather","")) and not sanitized_dated.has("caption_variant"),"dated legacy keeps weather, drops only caption_variant, and stays valid after sanitize")
  check(PhotoDiary.caption(dated_legacy)==i18n.t("photo.diary.day",{"day":str(moment.day),"moment":i18n.t("photo.diary.llama_fed_gentle")}),"legacy dated photos retain original title and do not retroactively change wording")
  var bad_variant:=moment.duplicate(true);bad_variant.caption_variant=3
  check(PhotoMoment.sanitize(bad_variant).is_empty(),"out-of-range caption variant cannot enter saved photo")

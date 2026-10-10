@@ -20,14 +20,14 @@ func _run() -> void:
 	_expect_rest(world, "duck_a", "preen", "duck_preen.png")
 	_expect_rest(world, "horse", "idle", "horse.png")
 	_expect_rest(world, "cow", "chew", "cow_chew.png")
-	_expect_rest(world, "sheep_a", "shake", "sheep_shake.png")
+	_expect_rest(world, "sheep_a", "idle", "sheep_clingy.png")
 	var dull = world._actors["sheep_b"]
 	dull.state = "rest"
 	dull._velocity = Vector2.ZERO
 	dull._gait.weight = 0.0
 	dull.posed = false
 	dull.set_expression("idle")
-	_check(dull._posture_id == "shake" and is_equal_approx(dull._sprite.scale.x, 1.0), "the left-facing sheep keeps the shake painting upright")
+	_check(dull._posture_id == "idle" and dull._sprite.texture.resource_path.ends_with("sheep_dull.png") and is_equal_approx(dull._sprite.scale.x, dull._native_facing), "the left-facing sheep retains its own resting body and native orientation")
 	var duck = world._actors["duck_a"]
 	duck.state = "wander"
 	duck._velocity = Vector2(20, 0)

@@ -1,4 +1,10 @@
 {
+  "action.chick_care": "看看小鸡",
+  "hud.hint.crop_growing": "地里的作物慢慢长着 · 点击照看或收获",
+  "action.crop_patch": "照看种植地",
+
+  "hud.clock.am": "上午 {h}:{m}",
+  "hud.clock.pm": "下午 {h}:{m}",
   "app.title": "悠长的假期",
   "app.subtitle": "没有待办的几天",
   "app.tagline": "住进阿尔卑斯山脚的独一户。喂草、溜草泥马，或者什么都不做。表情会自己出现。",
@@ -96,7 +102,7 @@
   "notice.tod.noon": "正午很安静。",
   "notice.tod.afternoon": "下午的暖意铺开来。",
   "notice.tod.evening": "天色开始橙了。",
-  "notice.tod.night": "星星还没出来。",
+  "notice.tod.night": "夜色慢慢静下来。",
   "notice.new_day.a": "新的一天。露水还没干透。",
   "notice.new_day.b": "昨天的假期还没散。今天又来了。",
   "notice.new_day.c": "又是新的一天。院子很安静。",
@@ -391,6 +397,7 @@
   "target.hen": "长大的鸡",
   "notice.chicken.grown": "小鸡已经长出了丰厚的羽毛。",
   "notice.food_eaten.chicken": "小鸡把地上的米粒啄干净了。",
+  "hud.hint.carrying_grain": "手里是谷粒。丢到地上，小鸡会自己来吃。",
   "hud.hint.carrying_millet": "手里是一小把米，可以丢在地上让鸡自己吃。",
   "photo.pond_hen_ride.title": "慢慢的顺风车",
   "photo.pond_hen_ride.note": "小鸡长大了，乌龟的背上刚好留着一个位置。",
@@ -405,5 +412,14 @@
   "notice.gate_closed": "棚门关好了。",
   "notice.gate_occupied": "门口还有人或动物，等他们走开再关吧。",
   "notice.gate_returning": "牛羊正在回棚，等它们进来再关吧。",
-  "notice.gate_save_wait": "正在保存，请稍后再试。"
+  "notice.gate_save_wait": "正在保存，请稍后再试。",
+  "action.house_sleep": "进屋睡一觉",
+  "target.house": "家门",
+  "notice.house.day": "天还亮着，再在院子里待一会儿吧。",
+  "notice.house.enter": "回屋歇息了。",
+  "notice.house.sleep": "屋里安静下来，夜色慢慢过去。",
+  "notice.house.morning": "早安，新的一天。",
+  "action.house_resting": "正在歇息",
+  "action.open_basket": "打开大背篓",
+  "target.basket": "大背篓"
 }

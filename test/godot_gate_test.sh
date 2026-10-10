@@ -242,10 +242,9 @@ confirm_panel_narrow|[confirm-panel-narrow] PASS: 1 checks|[confirm-panel-narrow
 find_reveal_name_slip|PASS find_reveal_name_slip_suite: 1 checks|PASS find_reveal_name_slip_suite: 0 checks
 ambience_output_ceiling|AMBIENCE_CEILING checks=1 failures=0|AMBIENCE_CEILING checks=0 failures=0
 road_freedom|ROAD_FREEDOM checks=1 failures=0|ROAD_FREEDOM checks=0 failures=0
-yard_decor_button_states|[yard-decor-button-states] PASS: 1 checks|[yard-decor-button-states] PASS: 0 checks
-yard_decor_panel_hug|[yard-decor-panel-hug] PASS: 1 checks|[yard-decor-panel-hug] PASS: 0 checks
 yard_basket_button_states|[yard-basket-button-states] PASS: 1 checks|[yard-basket-button-states] PASS: 0 checks
 hold_hotbar|[hold-hotbar] PASS: 1 checks|[hold-hotbar] PASS: 0 checks
 hold_hotbar_mount|[hold-hotbar-mount] PASS: 1 checks|[hold-hotbar-mount] PASS: 0 checks
+painted_blink|PAINTED_BLINK checks=1 failures=0|PAINTED_BLINK checks=0 failures=0
 UI_COMPLETIONS
 echo "GROK UI COMPLETION CONTRACT PASS $((checks-ui_before))"

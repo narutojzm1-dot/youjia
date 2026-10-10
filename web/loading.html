@@ -55,6 +55,7 @@ Source SHA-256: 38f4c5f927f746b3dfa4c3a5d7edf0b7a3e828e27438418fa54f9e1565289412
   <canvas id="canvas" tabindex="0">Your browser does not support canvas.</canvas>
   <section id="loading" role="status">
     <h1 id="game-title"></h1>
+    <p id="loading-version" style="margin:6px 0 0;font-size:clamp(15px,2.2vw,18px);letter-spacing:0.04em">0.2.0 · 第2版内部测试</p>
     <p id="loading-status">Loading…</p>
     <p id="loading-detail"></p>
     <progress id="loading-progress" aria-label="Download progress"></progress>
@@ -86,12 +87,19 @@ Source SHA-256: 38f4c5f927f746b3dfa4c3a5d7edf0b7a3e828e27438418fa54f9e1565289412
       const notice = document.getElementById('loading-notice');
       const retry = document.getElementById('loading-retry');
       const buildLabel = document.getElementById('loading-build');
+      const versionLabel = document.getElementById('loading-version');
       document.getElementById('game-title').textContent = document.title;
+      // Player-facing version starts at 0.2.0 (第2版内部测试). Do not treat the
+      // internal pack name as the player version, and do not invent later rules.
+      const playerVersion = '0.2.0';
+      const playerVersionLabel = '0.2.0 · 第2版内部测试';
+      if (versionLabel) versionLabel.textContent = playerVersionLabel;
+      document.documentElement.dataset.playerVersion = playerVersion;
       // The engine URL is shared by unchanged engine bytes across game builds.
       const buildId = config.mainPack?.replace(/\.pck$/, '') || config.executable;
       if (buildLabel && buildId) {
         buildLabel.textContent = buildId;
-        // 将版本 ID 同步写入 document.documentElement.dataset.build，方便控制台查询
+        // 内部构建号保留为次要诊断信息，方便对应真实构建。
         document.documentElement.dataset.build = buildId;
       }
       // Single-language holiday: pin Simplified Chinese on the loader.

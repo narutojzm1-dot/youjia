@@ -37,7 +37,7 @@ func run() -> void:
 	check(store.get_world_residents().chicken.stage == "chick" and world.actor_named("chicken") != null, "new yard introduces one confirmed chick")
 	var birth: Dictionary = store.get_world_residents().chicken.settled_clock.duplicate(true)
 	main._show_basket()
-	check(main._basket_panel.scoop_button.visible and not main._basket_panel.scoop_button.disabled, "grain tin discoverable through basket")
+	check(not main._basket_panel.scoop_button.visible, "infinite tin retired; legacy millet remains compatible")
 	main._basket_panel.scoop_button.pressed.emit()
 	check(main._inventory.busy() and not world._millet_held, "no optimistic grain grant")
 	await settle()
@@ -77,10 +77,12 @@ func run() -> void:
 		if world.ground_food.items.is_empty(): break
 	check(peck_seen, "chick uses full peck cel before eating")
 	check(world.ground_food.items.is_empty() and float(world.ground_food.cooldowns.get("chicken", 0.0)) > 0.0, "real chick routes to grain and consumes once")
+	check(store.get_chick_growth().bonus_seconds == 300, "actual ground-food winner grants feeding credit")
 	store._load()
+	check(store.get_chick_growth().bonus_seconds == 300, "real bite credit survives disk reload")
 	check(store.get_yard_inventory().ground.is_empty(), "consumed grain stays gone after native reload")
 	# A controlled clock boundary tests growth, not ordinary elapsed play.
-	store.request_patch("growth-fixture", {"holiday_day": int(birth.day) + 3, "holiday_day_elapsed": float(birth.elapsed)})
+	store.request_patch("growth-fixture", {"holiday_day": int(birth.day) + 2, "holiday_day_elapsed": float(birth.elapsed) + 300.0})
 	await settle()
 	await settle()
 	check(store.get_world_residents().chicken.stage == "hen" and world.actor_named("chicken").get_meta("resident_stage") == "hen", "same resident grows using confirmed clock")

@@ -19,15 +19,15 @@ func _capture() -> void:
 	var i18n: Variant = root.get_node("I18n")
 	i18n.set_locale("zh-CN")
 	if OS.get_environment("GENERIC2D_CAPTURE_PAUSE") == "1":
-		main._start_holiday()
+		await main._start_holiday()
 		await process_frame
 		main._toggle_pause()
 	elif OS.get_environment("GENERIC2D_CAPTURE_GAME") == "1":
-		main._start_holiday()
+		await main._start_holiday()
 		if OS.get_environment("GENERIC2D_CAPTURE_WEATHER") == "overcast":
 			main.get("_world").set_weather("overcast")
 	elif OS.get_environment("GENERIC2D_CAPTURE_CONFIRM") == "1":
-		main._start_holiday()
+		await main._start_holiday()
 		await process_frame
 		main._toggle_pause()
 		main._request_destructive_action("restart")

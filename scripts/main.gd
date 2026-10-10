@@ -1,4 +1,5 @@
 extends Control
+const HotbarSlotsPrefs := preload("res://scripts/ui/hotbar_slots_prefs.gd")
 const OpenSourceLicenses = preload("res://scripts/manus/open_source_licenses.gd")
 const YardWorldType := preload("res://scripts/game/yard_world.gd")
 const TITLE_PAPER := preload("res://assets/holiday/ui/scrapbook_paper.png")
@@ -40,6 +41,7 @@ const TOD_COLORS := {
 	"noon":    Color(1.0, 1.0, 0.96),   # 正午：几乎无色
 	"afternoon": Color(1.0, 0.80, 0.52), # 下午：暖琥珀
 	"evening": Color(0.90, 0.60, 0.42), # 傍晚：桃橙
+	"midnight": Color(0.12, 0.16, 0.34),
 	"night":   Color(0.26, 0.34, 0.55), # 月下冷光；乘色保留原画明暗与细节
 }
 
@@ -55,6 +57,9 @@ var _paper: TextureRect
 var _world_root: Node2D
 var _world: YardWorld
 var _path_rain: Node2D
+var _yard_night_sky: Sprite2D
+var _path_night_sky: Sprite2D
+var _night_sky_overlay: Sprite2D
 var _exploration: ExplorationDirector
 var _camera: Camera2D
 var _title_screen: Control
@@ -75,10 +80,11 @@ var _basket_chip: Button
 var _basket_panel: Control
 var _hold_hotbar: Control
 var _residents: RefCounted
+var _chick_panel: Control
+var _crop_panel: Control
 var _inventory: RefCounted
 var _decor: RefCounted
-var _decor_panel: Control
-var _decor_camera: Dictionary = {}
+var _basket_drop: Dictionary = {}
 var _inventory_food_consumer := ""
 var _pause_button: Button
 var _action_button: Button
@@ -139,8 +145,10 @@ var _volume_touch_index := -1
 var _volume_touch_slider: HSlider
 # 假期天数标签
 var _day_label: Label
+var _regional_clock: Label
 # 昼夜色调覆盖层
 var _tod_canvas: CanvasLayer
+var _house_lights_overlay: Node2D
 var _tod_rect: ColorRect
 # 季节底色（渲染在昼夜层之下，随假期天数推进）
 var _season_rect: ColorRect
@@ -278,7 +286,7 @@ func _ready() -> void:
 	_ui_layer = CanvasLayer.new()
 	_ui_layer.layer = 10
 	add_child(_ui_layer)
-	for panel in [_paper,_title_screen,_hud,_pause_screen,_confirm_screen,_album_screen,_notice]:
+	for panel in [_paper,_title_screen,_hud,_regional_clock,_pause_screen,_confirm_screen,_album_screen,_notice]:
 		panel.reparent(_ui_layer, false)
 	# 拍立得闪光叠加层加入 _ui_layer，确保渲染在所有 UI 之上。
 	_photo_flash = ColorRect.new()
@@ -339,23 +347,24 @@ func _ready() -> void:
 	_basket_panel.visible = false
 	_basket_panel.close_requested.connect(_hide_basket)
 	_basket_panel.action_requested.connect(func(action: String, fish: String) -> void: _inventory.request(action, fish))
-	_basket_panel.retry_requested.connect(func() -> void: _inventory.retry())
+	_basket_panel.retry_requested.connect(_retry_basket)
+	_chick_panel = preload("res://scripts/ui/chick_care_panel.gd").new()
+	_chick_panel.name = "ChickCarePanel"
+	_ui_layer.add_child(_chick_panel)
+	_chick_panel.visible = false
+	_chick_panel.close_requested.connect(_hide_chick_care)
+	_crop_panel = preload("res://scripts/ui/crop_panel.gd").new()
+	_crop_panel.name = "CropPanel"
+	_ui_layer.add_child(_crop_panel)
+	_crop_panel.visible = false
+	_crop_panel.close_requested.connect(_hide_crops)
+	_crop_panel.flower_requested.connect(func() -> void:
+		_hide_crops()
+		if _world != null: _world._interact_legacy_plant())
 	_decor = load("res://scripts/inventory/yard_decor_controller.gd").new(SaveStore)
 	_decor.changed.connect(_on_decor_changed)
 	_decor.resubmitted.connect(_on_decor_resubmitted)
-	_decor_panel = load("res://scripts/ui/yard_decor_panel.gd").new()
-	_ui_layer.add_child(_decor_panel)
-	_decor_panel.visible = false
-	_decor_panel.close_requested.connect(_hide_decor)
-	_decor_panel.action_requested.connect(func(action: String, spot: String, details: Dictionary) -> void: _decor.request(action, spot, details))
-	_decor_panel.retry_requested.connect(func() -> void: _decor.retry())
-	_decor_panel.preview_changed.connect(func(spot: String, entry: Dictionary) -> void:
-		if _world != null and _decor_panel.visible: _world.decor_view.show_preview(spot, entry))
-	var decor_button: Button = _basket_panel._button()
-	decor_button.text = "把小物摆在院里"
-	decor_button.pressed.connect(_show_decor)
-	_basket_panel.rows.add_child(decor_button)
-	_basket_panel.decor_button = decor_button
+	_basket_panel.place_requested.connect(_place_from_basket)
 	_ensure_hold_hotbar()
 	I18n.locale_changed.connect(_on_locale_changed)
 	TuningStore.value_changed.connect(_on_tuning_value_changed)
@@ -376,20 +385,12 @@ func _report_web_first_frame() -> void:
 
 
 func _process(delta: float) -> void:
-	if _decor_panel != null and _decor_panel.visible:
-		var preview_area: Rect2 = _decor_panel.preview_rect()
-		var zoom := clampf(minf(preview_area.size.x / 260.0, preview_area.size.y / 170.0), 0.2, 1.6)
-		_camera.zoom = Vector2.ONE * zoom
-		var focus: Vector2 = preload("res://scripts/inventory/yard_decor.gd").SPOTS[_decor_panel.selected]
-		_camera.position = focus + (get_viewport_rect().size * 0.5 - preview_area.get_center()) / zoom
-		_camera.force_update_scroll()
-		return
 	if _notice_time > 0.0 and _can_show_notice():
 		_notice_time = maxf(0.0, _notice_time - delta)
 	_sync_notice_visibility()
 	if _notice.visible:
 		_fit_notice()
-	if _screen == "game" and _world != null and not _pause_screen.visible and not _album_screen.visible and not _confirm_screen.visible and not _basket_panel.visible and not _save_problem_active:
+	if _screen == "game" and _world != null and not _pause_screen.visible and not _album_screen.visible and not _confirm_screen.visible and not _basket_panel.visible and not _crop_panel.visible and not _chick_panel.visible and not _save_problem_active:
 		var move := Vector2.ZERO
 		if _world.input_enabled:
 			move = Input.get_vector("move_left", "move_right", "move_up", "move_down")
@@ -437,10 +438,17 @@ func _process(delta: float) -> void:
 		camera_position = _bound_quiet_camera(camera_position, camera_home, _world.get_backdrop_bounds(), size, zoom, hud_space)
 	_camera.position = camera_position
 	_cam_effective_offset = camera_position - camera_home
+	if _house_lights_overlay != null:
+		_house_lights_overlay.visible = _screen == "game" and _world != null
+		if _house_lights_overlay.visible:
+			_house_lights_overlay.transform = _world.get_global_transform_with_canvas()
+			_house_lights_overlay.lights = _world.house.lights
+			_house_lights_overlay.queue_redraw()
 	# Both regional scenes share the clock and the same painted-light overlay.
 	if _screen in ["game", "exploring"] and _world != null:
-		_update_tod_tint(_world.tod_fraction())
+		_update_tod_tint(_world.tod_fraction(), delta)
 		_update_season_tint(_world.holiday_day)
+	_sync_regional_clock()
 	if _screen == "game":
 		_refresh_hud()
 		# 更新昼夜色调覆盖层与季节底色
@@ -468,22 +476,23 @@ func _process(delta: float) -> void:
 
 
 func _input(event: InputEvent) -> void:
-	if _decor_panel != null and _decor_panel.visible:
+	if _chick_panel != null and _chick_panel.visible:
 		if event.is_action_pressed("pause") and not event.is_echo():
-			_hide_decor()
+			_hide_chick_care()
 			get_viewport().set_input_as_handled()
-		elif _decor_ground_recall(event):
-			get_viewport().set_input_as_handled()
-		elif event is InputEventScreenTouch or event is InputEventScreenDrag:
-			_last_touch_ms = Time.get_ticks_msec()
-			_decor_panel.handle_touch_event(event)
-			get_viewport().set_input_as_handled()
-		elif event is InputEventMouseButton and Time.get_ticks_msec() - _last_touch_ms < 400:
+		return
+	if _crop_panel != null and _crop_panel.visible:
+		if event.is_action_pressed("pause") and not event.is_echo():
+			_hide_crops()
 			get_viewport().set_input_as_handled()
 		return
 	if _basket_panel != null and _basket_panel.visible:
 		if event.is_action_pressed("pause") and not event.is_echo():
 			_hide_basket()
+			get_viewport().set_input_as_handled()
+		elif _basket_ground_recall(event):
+			# #598 after #594: place note says tap the yard find while the basket is
+			# still open; do not let the paper swallow that hit.
 			get_viewport().set_input_as_handled()
 		elif event is InputEventScreenTouch or event is InputEventScreenDrag:
 			_last_touch_ms = Time.get_ticks_msec()
@@ -606,8 +615,6 @@ func _unhandled_input(event: InputEvent) -> void:
 		return
 	if _basket_panel != null and _basket_panel.visible:
 		return
-	if _decor_panel != null and _decor_panel.visible:
-		return
 	# 触屏和鼠标世界点击：触屏已在 _input() 中更新 _last_touch_ms，此处只处理
 	# 真正落到世界画布上的点击（HUD 命中测试未拦截的情况）。
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
@@ -659,6 +666,11 @@ func _build_layers() -> void:
 	_tod_rect.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	_tod_rect.material = tint_material
 	_tod_canvas.add_child(_tod_rect)
+	_night_sky_overlay = Sprite2D.new()
+	_night_sky_overlay.centered = false
+	_tod_canvas.add_child(_night_sky_overlay)
+	_house_lights_overlay = preload("res://scripts/game/house_lights.gd").new()
+	_tod_canvas.add_child(_house_lights_overlay)
 
 
 func _build_title_screen() -> void:
@@ -868,6 +880,8 @@ func _build_hud() -> void:
 	_day_label.size = Vector2(160, 28)
 	_day_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_hud.add_child(_day_label)
+	_regional_clock = preload("res://scripts/ui/regional_clock.gd").new()
+	add_child(_regional_clock)
 	_album_chip = _chip_button()
 	# _show_album() 内部已调用 _pulse_button，此处直接连接即可
 	_album_chip.pressed.connect(_show_album)
@@ -993,6 +1007,7 @@ func _apply_pause_panel_size(panel_w: float, panel_h: float) -> void:
 	_pause_panel.offset_right = panel_w * 0.5
 	_pause_panel.offset_top = -panel_h * 0.5
 	_pause_panel.offset_bottom = panel_h * 0.5
+	_sync_hud_under_menu()
 
 
 ## 暂停纸片装下当前内容所需的最小高度（含纸面上下内边距），矮屏与高屏贴合共用。
@@ -1247,6 +1262,16 @@ func _start_holiday(save_progress: bool = true) -> void:
 		_holiday_start_pending = false
 		_show_save_pending(false)
 		return
+	# Finish the once-only grant before enabling inventory actions. Otherwise an
+	# immediate grass pickup can carry the pre-grant inventory revision.
+	var crop_bed := SaveStore.get_yard_crops()
+	var crop_inventory := SaveStore.get_yard_inventory()
+	if not SaveStore.has_yard_crops() and not crop_bed.is_empty() and not crop_inventory.is_empty():
+		SaveStore.request_crop_action(int(crop_bed.revision),int(crop_inventory.revision),"initialize")
+		if not await SaveStore.flush_pending():
+			_holiday_start_pending = false
+			_show_save_pending(false)
+			return
 	TuningStore.begin_run(false)
 	AudioDirector.set_game_paused(false)
 	_clear_world(false)
@@ -1265,6 +1290,9 @@ func _start_holiday(save_progress: bool = true) -> void:
 	)
 	_world.album_updated.connect(_on_album_updated)
 	_world.notice_requested.connect(_show_notice_key)
+	_world.chick_care_requested.connect(_show_chick_care)
+	_world.basket_requested.connect(_show_basket)
+	_world.plant_bed_requested.connect(_show_crops)
 	_world.notice_dismiss_requested.connect(_dismiss_notice_key)
 	_world.weather_changed.connect(func(_w: String) -> void: _refresh_hud())
 	_world.camera_focus_requested.connect(_on_focus)
@@ -1326,6 +1354,9 @@ func _leave_exploration() -> void:
 
 
 func _clear_world(save_progress: bool = true) -> void:
+	if _night_sky_overlay != null: _night_sky_overlay.visible = false
+	_yard_night_sky = null
+	_path_night_sky = null
 	if _exploration != null and _exploration.is_exploring():
 		if _screen == "exploring":
 			_screen = "leaving"
@@ -1362,6 +1393,7 @@ func _on_exploration_entered() -> void:
 	_notice_time = 0.0
 	_exploration.scroll.pause_requested.connect(_toggle_pause)
 	_path_rain = null
+	_path_night_sky = null
 	_sync_path_rain(0.0)
 
 
@@ -1423,7 +1455,58 @@ func _show_title(save_progress: bool = true) -> void:
 	_refresh_texts()
 
 
+func _show_chick_care() -> void:
+	if _screen != "game" or _world == null or _pause_screen.visible or _album_screen.visible or _basket_panel.visible or _crop_panel.visible: return
+	if _world.house != null and _world.house.busy(): return
+	_world._save_progress()
+	_world.cancel_scene_feedback()
+	_world.input_enabled = false
+	_chick_panel.open()
+	_ui_layer.move_child(_chick_panel, _ui_layer.get_child_count()-1)
+	get_tree().paused = true
+	AudioDirector.set_game_paused(true)
+	_sync_hold_hotbar_visibility()
+	_sync_hud_under_menu()
+
+func _hide_chick_care() -> void:
+	_chick_panel.visible = false
+	get_tree().paused = false
+	AudioDirector.set_game_paused(false)
+	if _world != null: _world.input_enabled = true
+	get_viewport().gui_release_focus()
+	_sync_hold_hotbar_visibility()
+	_sync_hud_under_menu()
+
+func _show_crops() -> void:
+	if _chick_panel != null and _chick_panel.visible: return
+	if _screen != "game" or _world == null or _pause_screen.visible or _album_screen.visible: return
+	if _world.house != null and _world.house.busy(): return
+	_world._save_progress()
+	_world.cancel_scene_feedback()
+	_world.input_enabled = false
+	_crop_panel.open()
+	_ui_layer.move_child(_crop_panel,_ui_layer.get_child_count()-1)
+	get_tree().paused = true
+	AudioDirector.set_game_paused(true)
+	_sync_hold_hotbar_visibility()
+	_sync_hud_under_menu()
+
+func _hide_crops() -> void:
+	# Keep the inventory modal closed to other writers until this transaction
+	# settles; otherwise a rapid close + withdrawal uses the old revision.
+	if _crop_panel.is_saving(): return
+	_crop_panel.visible = false
+	get_tree().paused = false
+	AudioDirector.set_game_paused(false)
+	if _world != null: _world.input_enabled = true
+	get_viewport().gui_release_focus()
+	_sync_hold_hotbar_visibility()
+	_sync_hud_under_menu()
+
 func _show_basket() -> void:
+	if _chick_panel != null and _chick_panel.visible: return
+	if _crop_panel != null and _crop_panel.visible: return
+	if _world != null and _world.house != null and _world.house.busy(): return
 	if _screen != "game" or _world == null or _pause_screen.visible or _album_screen.visible:
 		return
 	_cancel_photo_arrivals()
@@ -1436,6 +1519,7 @@ func _show_basket() -> void:
 	get_tree().paused = true
 	AudioDirector.set_game_paused(true)
 	_basket_panel.close_button.grab_focus()
+	_sync_hud_under_menu()
 
 
 func _hide_basket() -> void:
@@ -1445,51 +1529,31 @@ func _hide_basket() -> void:
 	if _world != null: _world.input_enabled = true
 	get_viewport().gui_release_focus()
 	_sync_hold_hotbar_visibility()
+	_sync_hud_under_menu()
 
 
 func _on_inventory_changed() -> void:
 	if _inventory == null: return
+	if _crop_panel != null: _crop_panel.refresh()
 	var inventory: Dictionary = _inventory.view()
 	if _world != null:
 		_world.sync_inventory(str(inventory.get("held", "")), _inventory.busy() or inventory.is_empty(), inventory.get("ground", []))
 	if _basket_panel != null:
 		_basket_panel.update_view(inventory, SaveStore.get_available_keepsakes(), _inventory.state, _inventory.busy())
-		if _basket_panel.decor_button != null:
-			_basket_panel.decor_button.text = "Arrange finds in the yard" if I18n.get_locale() == "en" else "把小物摆在院里"
-			_basket_panel.decor_button.disabled = _inventory.busy()
 	if _hold_hotbar != null:
 		_hold_hotbar.update_view(inventory, SaveStore.get_available_keepsakes(), _inventory.state, _inventory.busy())
 		_sync_hold_hotbar_visibility()
 
 
-func _show_decor() -> void:
-	if _world == null or _inventory.busy(): return
-	_basket_panel.visible = false
-	_decor_panel.visible = true
-	_hud.visible = false
-	_notice.visible = false
-	_sync_hold_hotbar_visibility()
-	_decor_camera = {"position": _camera.position, "zoom": _camera.zoom}
-	_on_decor_changed()
-	_decor_panel.choose_spot(_decor_panel.selected)
-	_decor_panel.close_button.grab_focus()
-
-
-func _hide_decor() -> void:
-	_decor_panel.visible = false
-	_decor_panel.draft.clear()
-	if _world != null: _world.decor_view.clear_preview()
-	if not _decor_camera.is_empty():
-		_camera.position = _decor_camera.position
-		_camera.zoom = _decor_camera.zoom
-		_camera.force_update_scroll()
-	_hud.visible = true
-	_sync_hold_hotbar_visibility()
-	_show_basket()
-
-
-func _decor_ground_recall(event: InputEvent) -> bool:
+## Basket-only UX (#594): while the big basket is open, a press on a placed find
+## outside the paper recalls it. Same remove transaction as closed-yard 「捡起来」;
+## never grants a second keepsake. Skips while a drag-place is in progress.
+func _basket_ground_recall(event: InputEvent) -> bool:
 	if _decor == null or _world == null or _decor.busy():
+		return false
+	if _basket_panel == null or not _basket_panel.visible:
+		return false
+	if not str(_basket_panel.drag_kind).is_empty():
 		return false
 	var at := Vector2.INF
 	if event is InputEventScreenTouch and event.pressed:
@@ -1500,7 +1564,7 @@ func _decor_ground_recall(event: InputEvent) -> bool:
 		at = event.position
 	else:
 		return false
-	if _decor_panel.paper != null and _decor_panel.paper.get_global_rect().has_point(at):
+	if _basket_panel.panel != null and _basket_panel.panel.get_global_rect().has_point(at):
 		return false
 	var Decor = load("res://scripts/inventory/yard_decor.gd")
 	var spot: String = Decor.spot_at(_decor.view(), _screen_to_world(at))
@@ -1514,6 +1578,8 @@ func _decor_ground_recall(event: InputEvent) -> bool:
 func _on_decor_recall(spot: String) -> void:
 	if _decor == null or _decor.busy() or spot.is_empty():
 		return
+	# A removal retires the old placement instruction before save callbacks refresh the paper.
+	if _basket_panel != null: _basket_panel.place_note = ""
 	if _decor.request("remove", spot, {}):
 		_show_notice_key("notice.decor_recalled")
 	else:
@@ -1523,9 +1589,36 @@ func _on_decor_recall(spot: String) -> void:
 func _on_decor_changed() -> void:
 	if _decor == null: return
 	if _world != null: _world.decor_view.sync(_decor.view())
-	if _decor_panel != null:
-		_decor_panel.update_view(_decor.view(), SaveStore.get_available_keepsakes(), _decor.state, _decor.busy())
+	if _basket_panel != null:
+		_basket_panel.update_decor(_decor.view(), _decor.state, _decor.busy())
 	_on_inventory_changed()
+	if _basket_drop.is_empty() or _decor.state == "saving": return
+	var drop := _basket_drop
+	if _decor.state in ["failed", "unknown"]:
+		# 等「再确认一次」或全局重试：成功后仍按这一次拖放报“摆好了”
+		_basket_panel.show_place_note(drop.find_id, drop.spot, "failed")
+		return
+	_basket_drop = {}
+	if _decor.state == "idle" and _decor.view().get("places", {}).has(drop.spot):
+		_basket_panel.show_place_note(drop.find_id, drop.spot, "placed")
+	else:
+		_basket_panel.show_place_note(drop.find_id, drop.spot, "blocked")
+
+
+## #594：背篓里的小物拖到院里空着的固定位置（或在格子纸片里点那一处），就摆在那里（不微调，dx/dy 为 0）
+func _place_from_basket(find_id: String, spot: String) -> void:
+	if _decor == null or _decor.busy() or not _basket_drop.is_empty(): return
+	_basket_drop = {"find_id": find_id, "spot": spot}
+	_basket_panel.show_place_note(find_id, spot, "saving")
+	if not _decor.request("place", spot, {"find_id": find_id, "dx": 0, "dy": 0}): _on_decor_changed()
+
+
+func _retry_basket() -> void:
+	if _decor != null and _decor.busy() and _decor.state in ["failed", "unknown"]:
+		if not _basket_drop.is_empty(): _basket_panel.show_place_note(_basket_drop.find_id, _basket_drop.spot, "saving")
+		_decor.retry()
+		return
+	_inventory.retry()
 
 
 func _on_decor_resubmitted(failed_ops: Array, op_id: String) -> void:
@@ -1539,7 +1632,7 @@ func _on_decor_resubmitted(failed_ops: Array, op_id: String) -> void:
 func _on_ground_food_action(action: String, kind: String, details: Dictionary, actor_id: String) -> void:
 	if _inventory == null or _inventory.busy(): return
 	_inventory_food_consumer = actor_id
-	_inventory.request(action, kind, details)
+	_inventory.request(action, kind, details, actor_id)
 
 
 func _on_inventory_settled(action: String, _fish: String) -> void:
@@ -1586,6 +1679,7 @@ func _toggle_pause() -> void:
 	_refresh_texts()
 	_sync_notice_visibility()
 	_sync_hold_hotbar_visibility()
+	_sync_hud_under_menu()
 
 
 func _request_destructive_action(action: String) -> void:
@@ -1595,6 +1689,7 @@ func _request_destructive_action(action: String) -> void:
 	_confirm_screen.visible = true
 	_refresh_texts()
 	_sync_hold_hotbar_visibility()
+	_sync_hud_under_menu()
 
 
 func _confirm_destructive_action() -> void:
@@ -1627,6 +1722,7 @@ func _cancel_destructive_action() -> void:
 	_pending_destructive_action = ""
 	_confirm_screen.visible = false
 	_sync_hold_hotbar_visibility()
+	_sync_hud_under_menu()
 
 
 func _on_weather_pressed() -> void:
@@ -1719,6 +1815,17 @@ func _clear_covered_save_problems(coverage: Dictionary) -> void:
 
 
 func _on_save_rejected(op_id: String, kind: String, code: String) -> void:
+	# These are authoritative FIFO domain refusals, not a failed disk write.
+	# Keep actual writer/unknown failures and already-durable receipts tracked.
+	if kind == "exploration_trip" and code == "EXPLORATION_KEEPSAKE_LIMIT" and not _save_durable_ops.has(op_id):
+		# ExplorationHost retains the proposal and owns its deferred retry.
+		_save_exploration_scopes.erase(op_id)
+		_save_exploration_coverage.erase(op_id)
+		return
+	if kind == "crops" and code.begins_with("CROP_") and not _save_durable_ops.has(op_id): return
+	if kind == "inventory" and code == "BASKET_SEED_RESERVED" and not _save_durable_ops.has(op_id): return
+	if kind == "decor" and not _save_durable_ops.has(op_id) and code in ["DECOR_CHANGED", "DECOR_OCCUPIED", "DECOR_EMPTY", "DECOR_INVALID", "DECOR_LIMIT"]:
+		return
 	_pending_photo_saves.erase(op_id)
 	_save_retry_coverage.erase(op_id)
 	_on_save_problem(op_id, kind, code)
@@ -1859,6 +1966,13 @@ func _retryable_save_problems(include_fish: bool) -> Dictionary:
 
 
 func _retry_save() -> void:
+	if _world != null and _world.house != null and _world.house.failed:
+		var coverage := {}
+		for old_id in _save_problems:
+			if _save_problems[old_id].kind == "house-sleep": coverage[old_id] = _save_problems[old_id].duplicate(true)
+		var next: String = _world.house.retry()
+		if not next.is_empty(): _save_retry_coverage[next] = {"problems":coverage,"untracked_revision":-1}
+		return
 	if _decor != null and _decor.busy() and _decor.state in ["failed", "unknown"]:
 		_decor.retry()
 		return
@@ -2254,7 +2368,7 @@ func _on_cinematic_view_changed(stage: String) -> void:
 
 
 ## REQ-20261008-075：底部手持快捷栏挂在 _ui_layer，跟背篓同一份 inventory 视图。
-## 开院可见；暂停 / 相册 / 确认 / 背篓 / 布置面板时隐藏。树暂停由那些叠层负责，快捷栏本身不 WHEN_PAUSED。
+## 开院可见；暂停 / 相册 / 确认 / 背篓打开时隐藏。树暂停由那些叠层负责，快捷栏本身不 WHEN_PAUSED。
 func _ensure_hold_hotbar() -> void:
 	if _hold_hotbar != null or _ui_layer == null:
 		return
@@ -2262,7 +2376,12 @@ func _ensure_hold_hotbar() -> void:
 	_hold_hotbar.name = "HoldHotbar"
 	_ui_layer.add_child(_hold_hotbar)
 	_hold_hotbar.withdraw_requested.connect(_on_hold_withdraw)
+	_hold_hotbar.set_slots(HotbarSlotsPrefs.load_slots())
+	_hold_hotbar.slots_changed.connect(func(slots: Array) -> void: HotbarSlotsPrefs.save_slots(slots))
+	_hold_hotbar.basket_requested.connect(_show_basket)
 	_hold_hotbar.visible = false
+	if _basket_panel != null:
+		_basket_panel.set_hotbar(_hold_hotbar, _hold_hotbar.basket_rect(size).size.y + _hold_hotbar.BASKET_MARGIN * 2.0)
 	_layout_hold_hotbar()
 
 
@@ -2270,28 +2389,49 @@ func _layout_hold_hotbar() -> void:
 	if _hold_hotbar == null:
 		return
 	var Hotbar = load("res://scripts/ui/hold_hotbar.gd")
-	var rect: Rect2 = Hotbar.preferred_rect(size, size.x < 700.0)
-	_hold_hotbar.position = rect.position
-	_hold_hotbar.size = rect.size
+	var over_basket := _basket_panel != null and _basket_panel.visible
+	_hold_hotbar.set_slot_side(Hotbar.slot_side(size.x))
+	if _basket_panel != null:
+		_basket_panel.reserve_bottom = Hotbar.basket_rect(size).size.y + Hotbar.BASKET_MARGIN * 2.0
+	if over_basket:
+		# 背篓开着：位置由背篓纸面排定（贴底边，或矮横屏里放进纸面右下角）
+		_basket_panel.fit()
+	else:
+		var rect: Rect2 = Hotbar.preferred_rect(size, _stacked_hud())
+		_hold_hotbar.position = rect.position
+		_hold_hotbar.size = rect.size
 	_sync_hold_hotbar_visibility()
 
 
 func _sync_hold_hotbar_visibility() -> void:
 	if _hold_hotbar == null:
 		return
-	var show := (
+	var show: bool = (
 		_screen == "game"
 		and _hud.visible
+		and (_world == null or _world.house == null or not _world.house.busy())
 		and not _pause_screen.visible
 		and not _album_screen.visible
 		and not _confirm_screen.visible
-		and (_basket_panel == null or not _basket_panel.visible)
-		and (_decor_panel == null or not _decor_panel.visible)
+		and (_chick_panel == null or not _chick_panel.visible)
+		and (_crop_panel == null or not _crop_panel.visible)
 	)
+	var over_basket := _basket_panel != null and _basket_panel.visible
+	if over_basket and show:
+		# 背篓开着：快捷栏压在背篓纸面之上、贴屏幕底边，只当拖放落点
+		_ui_layer.move_child(_hold_hotbar, _ui_layer.get_child_count() - 1)
+	var was_over: bool = _hold_hotbar.configuring
+	var was_shown: bool = _hold_hotbar.visible
+	_hold_hotbar.set_configuring(over_basket)
 	_hold_hotbar.visible = show
+	if was_over != over_basket:
+		_layout_hold_hotbar()
+	elif over_basket and was_shown != show:
+		_basket_panel._queue_fit()
 
 
 func _on_hold_withdraw(kind: String) -> void:
+	if _world != null and _world.house != null and _world.house.busy(): return
 	if _inventory == null or kind.is_empty() or _inventory.busy():
 		return
 	_inventory.request("withdraw", kind)
@@ -2306,6 +2446,11 @@ func _try_hold_place_at(screen_pos: Vector2) -> bool:
 	var inventory: Dictionary = _inventory.view()
 	var held := str(inventory.get("held", ""))
 	if held.is_empty():
+		return false
+	# Explicit world entrances take priority over armed food placement.
+	if _world != null and Rect2(_world._plant_point()-Vector2(36,28),Vector2(72,48)).has_point(_screen_to_world(screen_pos)):
+		return false
+	if _world != null and YardSceneHotspots.at_point(_world, _screen_to_world(screen_pos)).get("target", "") in [YardSceneHotspots.HOUSE_DOOR, YardSceneHotspots.BASKET]:
 		return false
 	var Intent = load("res://scripts/inventory/hold_place_intent.gd")
 	var obstacles: Array = _world.physical_obstacles("player") if _world != null else []
@@ -2328,19 +2473,28 @@ func _dismiss_notice_key(key: String) -> void:
 
 
 const NOTICE_PAD_X := 14.0
+const NOTICE_PAD_Y := 4.0
 const NOTICE_MIN_HALF := 60.0
+## 短横屏（如 640×300、568×320）上通知纸片贴着快捷栏往上长，两行时会盖住右上角那一列。
+## 够得着那一列时，长纸片往左挪到右缘离那一列 NOTICE_COLUMN_GAP，尽量保持原宽；只有那一列左边
+## 放不下原宽（左缘最多到离屏幕 NOTICE_EDGE，如 568 宽时 440→408）才收窄。短纸片放得下就仍居中。
+const NOTICE_COLUMN_GAP := 8.0
+const NOTICE_EDGE := 12.0
+## 判断「够得着」用的固定高度（约三行通知），不按每条文字的折行去猜：底边离那一列不到这么高就收窄
+const NOTICE_REACH := 120.0
 
 
 func _notice_paper() -> StyleBoxFlat:
 	var style := _flat(Color(PAPER, 0.88), Color(APRICOT, 0.55), 1, 14)
 	style.content_margin_left = NOTICE_PAD_X
 	style.content_margin_right = NOTICE_PAD_X
-	style.content_margin_top = 4
-	style.content_margin_bottom = 4
+	style.content_margin_top = NOTICE_PAD_Y
+	style.content_margin_bottom = NOTICE_PAD_Y
 	return style
 
 
-## 纸片宽度贴合当前文字（含后设的大字号），最宽仍是原来的 ±220 / 屏宽减 20，超出照旧换行。
+## 纸片宽度贴合当前文字（含后设的大字号），最宽仍是原来的 ±220 / 屏宽减 20，超出照旧换行；
+## 会长到右上角那一列的高度时，往左挪开那一列（NOTICE_COLUMN_GAP）。
 func _fit_notice() -> void:
 	if _notice == null:
 		return
@@ -2350,19 +2504,87 @@ func _fit_notice() -> void:
 	var text_width := 0.0
 	if font != null:
 		text_width = font.get_string_size(_notice.text, HORIZONTAL_ALIGNMENT_LEFT, -1, font_size).x
+	var right := INF
+	var column := _top_right_column_rect()
+	if column.has_area() and size.y + _notice.offset_bottom - NOTICE_REACH < column.end.y + NOTICE_COLUMN_GAP:
+		right = column.position.x - NOTICE_COLUMN_GAP
+		limit = minf(limit, (right - NOTICE_EDGE) * 0.5)
 	var half := clampf(ceilf(text_width * 0.5) + NOTICE_PAD_X + 2.0, minf(NOTICE_MIN_HALF, limit), limit)
-	_notice.offset_left = -half
-	_notice.offset_right = half
+	var shift := minf(0.0, right - (size.x * 0.5 + half))
+	_notice.offset_left = shift - half
+	_notice.offset_right = shift + half
+
+
+## 右上角「歇一会儿」、天数纸签和时钟这一列（时钟紧贴天数下方，见 _sync_regional_clock）
+func _top_right_column_rect() -> Rect2:
+	if _pause_button == null or _day_label == null or not _hud.visible:
+		return Rect2()
+	var top := _pause_button.get_global_rect()
+	var day := _day_label.get_global_rect()
+	var clock := Rect2(day.position + Vector2(0, day.size.y + 4.0), Vector2(day.size.x, 24.0))
+	return top.merge(day).merge(clock)
+
+
+## 短横屏（568×320、640×360、844×390）上暂停/确认纸面几乎占满屏幕，压住目标纸片、「歇一会儿」、
+## 天数纸签和底栏按钮的一部分，纸边外露出半截文字。现在纸面打开时，按组判断：目标纸片、右上一列
+## （「歇一会儿」+ 天数）、底栏一排，组里任何一枚和纸面重叠，整组隐去（底栏不留缺口），关上再显示；
+## 没被压到的组照常显示。只改 self_modulate：原有的显示、禁用、焦点和输入逻辑都不动（底下一层本来
+## 就被遮罩挡住）。
+func _sync_hud_under_menu() -> void:
+	if _hud == null or _pause_panel == null or _confirm_panel == null or _hint_panel == null: return
+	var covers: Array[Rect2] = []
+	if _pause_screen.visible: covers.append(_centered_panel_rect(_pause_panel))
+	if _confirm_screen.visible: covers.append(_centered_panel_rect(_confirm_panel))
+	for paper: Control in _open_yard_papers():
+		covers.append(paper.get_global_rect())
+	for group: Array in _hud_menu_groups():
+		var covered := false
+		for node: Control in group:
+			for cover: Rect2 in covers:
+				if node.get_global_rect().intersects(cover): covered = true
+		for node: Control in group:
+			node.self_modulate.a = 0.0 if covered else 1.0
+
+
+## 背篓、小鸡成长、种植三张纸面也会压住同样的 HUD（568×320 上背篓纸面盖到目标纸片和底栏）。
+## 它们自己延迟排版，这里读排好后的实际纸面；院内每帧 _refresh_hud → _fit_hint_panel 都会再同步一次。
+func _open_yard_papers() -> Array[Control]:
+	var out: Array[Control] = []
+	if _basket_panel != null and _basket_panel.visible and _basket_panel.panel != null: out.append(_basket_panel.panel)
+	if _chick_panel != null and _chick_panel.visible and _chick_panel.paper != null: out.append(_chick_panel.paper)
+	if _crop_panel != null and _crop_panel.visible and _crop_panel.paper != null: out.append(_crop_panel.paper)
+	# 背篓开着时快捷栏贴在底边当落点，它挡住的底栏也一并隐去
+	if _basket_panel != null and _basket_panel.visible and _hold_hotbar != null and _hold_hotbar.visible: out.append(_hold_hotbar)
+	return out
+
+
+func _hud_menu_groups() -> Array:
+	return [[_hint_panel, _hint_label], [_pause_button, _day_label], [_album_chip, _weather_chip, _basket_chip, _action_button]]
+
+
+## 暂停/确认纸片锚在屏幕中心、四边 offset 对称；内容比 offset 大时按各自 grow 方向长。
+## 不等下一帧排版就能算出实际占位。
+func _centered_panel_rect(panel: Control) -> Rect2:
+	var start := size * 0.5 + Vector2(panel.offset_left, panel.offset_top)
+	var want := Vector2(panel.offset_right - panel.offset_left, panel.offset_bottom - panel.offset_top)
+	var used := want.max(panel.get_combined_minimum_size())
+	var extra := used - want
+	var grows := [panel.grow_horizontal, panel.grow_vertical]
+	for axis in 2:
+		if grows[axis] == Control.GROW_DIRECTION_BOTH: start[axis] -= extra[axis] * 0.5
+		elif grows[axis] == Control.GROW_DIRECTION_BEGIN: start[axis] -= extra[axis]
+	return Rect2(start, used)
 
 
 func _can_show_notice() -> bool:
-	return _screen == "game" and not _pause_screen.visible and not _album_screen.visible and not _confirm_screen.visible and not _basket_panel.visible and (_decor_panel == null or not _decor_panel.visible)
+	if _chick_panel != null and _chick_panel.visible: return false
+	return _screen == "game" and not _pause_screen.visible and not _album_screen.visible and not _confirm_screen.visible and not _basket_panel.visible
 
 
 func _sync_notice_visibility() -> void:
 	_notice.visible = _notice_time > 0.0 and _can_show_notice()
 	# Keep growing/wrapped notices above the actual hotbar, not behind its slots.
-	var bottom := -130.0 if size.x < 700.0 else -70.0
+	var bottom := -130.0 if _stacked_hud() else -70.0
 	if _hold_hotbar != null and _hold_hotbar.visible:
 		bottom = _hold_hotbar.position.y - size.y - 8.0
 	_notice.offset_top = bottom - 40.0
@@ -2456,10 +2678,24 @@ func _fit_album_frame() -> void:
 		_render_album_pages()
 
 
+## 底部按钮排两行（三枚小按钮在上、行动按钮整行在下）只给竖屏和窄屏。
+## 568×320、640×300 这类短横屏原来也排两行，加上快捷栏，底部 HUD 盖住大半个院子；
+## 现在横着放且宽度够（≥ SINGLE_ROW_MIN_WIDTH）就排成一行。
+const SINGLE_ROW_MIN_WIDTH := 568.0
+## 一行排开时行动按钮至少这么宽，最长的英文动作「Turn in for the night」（按钮内约 175px）也放得下；
+## 其余三枚分剩下的宽度，仍不超过 188。
+const ACTION_MIN_WIDTH := 180.0
+## 小按钮按实际排版宽度放不下全名时，英文换短名：「Open journal」→「Journal」，
+## 「Gentle rain」→「Rain」，「Overcast」→「Cloudy」。中文全名在各宽度都放得下。
+const SHORT_WEATHER_EN := {"rain": "Rain", "sun": "Sun", "overcast": "Cloudy"}
+
+func _stacked_hud() -> bool:
+	return size.x < 700.0 and not (size.x > size.y and size.x >= SINGLE_ROW_MIN_WIDTH)
+
 func _layout() -> void:
 	var pad := 20.0
 	if _album_chip == null: return
-	var compact := size.x < 700.0
+	var compact := _stacked_hud()
 	_fit_title_column()
 	_fit_album_frame()
 	_fit_notice()
@@ -2467,14 +2703,18 @@ func _layout() -> void:
 	_notice.offset_bottom = -130 if compact else -70
 	_notice.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 
-	var chip_width := (size.x - pad * 4.0) / 3.0 if compact else minf(188.0, (size.x - pad * 5.0) / 4.0)
-	_refresh_yard_chip_labels()
+	var action_width := size.x - pad * 2.0
+	var chip_width := (size.x - pad * 4.0) / 3.0
+	if not compact:
+		action_width = maxf(minf(188.0, (size.x - pad * 5.0) / 4.0), ACTION_MIN_WIDTH)
+		chip_width = minf(188.0, (size.x - pad * 5.0 - action_width) / 3.0)
+	_refresh_yard_chip_labels(chip_width)
 	for button in [_album_chip,_weather_chip,_basket_chip]:
 		button.custom_minimum_size = Vector2(chip_width,48)
 		button.size = Vector2(chip_width,48)
-	_action_button.custom_minimum_size = Vector2(size.x-pad*2.0 if compact else chip_width,48)
+	_action_button.custom_minimum_size = Vector2(action_width,48)
 	_action_button.size = _action_button.custom_minimum_size
-	_pause_button.custom_minimum_size = Vector2(120.0 if compact else 188.0,48)
+	_pause_button.custom_minimum_size = Vector2(120.0 if size.x < 700.0 else 188.0,48)
 	_pause_button.size = _pause_button.custom_minimum_size
 	_pause_button.position = Vector2(size.x-_pause_button.size.x-pad,pad)
 	_hint_label.position = Vector2(pad,16)
@@ -2494,6 +2734,7 @@ func _layout() -> void:
 	_fit_pause_panel()
 	_fit_confirm_panel()
 	_layout_hold_hotbar()
+	_sync_hud_under_menu()
 
 
 ## 目标纸片按目标文字的实际行数伸缩（REQ-20261005-029）：
@@ -2508,6 +2749,7 @@ func _fit_hint_panel() -> void:
 	var text_height := lines * float(_hint_label.get_line_height()) + (lines - 1) * spacing
 	_hint_label.size = Vector2(_hint_label.size.x, maxf(HINT_MIN_TEXT_HEIGHT, ceilf(text_height)))
 	_hint_panel.size = _hint_label.size + Vector2(18.0, 16.0)
+	_sync_hud_under_menu()
 
 
 ## 目标纸片贴合文字宽度（REQ-20261006-045）：纸片原来总撑到最大宽度（最多 520px）。
@@ -2549,11 +2791,11 @@ func _hug_hint_width() -> void:
 
 
 func _refresh_hud() -> void:
+	_sync_hold_hotbar_visibility()
 	if _world == null:
 		return
 	_hud.modulate.a = float(TuningStore.get_value("ui.hud.opacity", 0.94))
 	_refresh_yard_chip_labels()
-	_weather_chip.text = I18n.t("hud.weather.%s" % _world.weather)
 	_basket_chip.text = "Basket" if I18n.get_locale() == "en" else "大背篓"
 	_pause_button.text = I18n.t("hud.pause")
 	# 显示与空格/行动按钮完全相同的实时目标和动作；橙色说明对应脚边标记。
@@ -2581,8 +2823,37 @@ func _refresh_hud() -> void:
 		_day_label.text = I18n.t("hud.day", {"n": str(_world.holiday_day)})
 
 
-func _refresh_yard_chip_labels() -> void:
-	_album_chip.text = "Journal" if I18n.get_locale() == "en" and size.x < 400.0 else I18n.t("hud.album")
+## Both scenes read the same persisted clock; pause and menus do not advance it.
+func _sync_regional_clock() -> void:
+	if _regional_clock == null: return
+	_regional_clock.visible = false
+	if _world == null or _screen not in ["game", "exploring"]: return
+	if _pause_screen.visible or _album_screen.visible or _confirm_screen.visible or _save_problem_active: return
+	if _basket_panel != null and _basket_panel.visible: return
+	if _screen == "game":
+		if not _hud.visible: return
+		_regional_clock.show_time(_world.tod_fraction(), Rect2(
+			_day_label.position + Vector2(0, _day_label.size.y + 4),
+			Vector2(_day_label.size.x, 24)), 14)
+	elif _exploration.scroll != null:
+		var place: Label = _exploration.scroll._place_label
+		_regional_clock.show_time(_world.tod_fraction(), Rect2(
+			place.position + Vector2(0, place.size.y), Vector2(minf(place.size.x, 180.0), 22)), 14)
+
+
+func _refresh_yard_chip_labels(chip_width: float = -1.0) -> void:
+	if chip_width < 0.0:
+		chip_width = _album_chip.size.x
+	_fit_chip_text(_album_chip, I18n.t("hud.album"), "Journal", chip_width)
+	if _world != null:
+		var weather := str(_world.weather)
+		_fit_chip_text(_weather_chip, I18n.t("hud.weather.%s" % weather), str(SHORT_WEATHER_EN.get(weather, "")), chip_width)
+
+
+func _fit_chip_text(button: Button, full: String, short: String, width: float) -> void:
+	button.text = full
+	if I18n.get_locale() == "en" and not short.is_empty() and button.get_minimum_size().x > width + 0.5:
+		button.text = short
 
 
 func _on_day_advanced(day: int) -> void:
@@ -2663,7 +2934,9 @@ func _show_idle_hint() -> void:
 	# 离钓鱼点远（>220px）时提示去钓鱼
 	if pos.distance_to(Vector2(700, 535)) > 220.0:
 		candidates.append("notice.hint.go_fish")
-	candidates.append("notice.hint.go_plant")
+	var crop := SaveStore.get_yard_crops()
+	if not crop.is_empty() and crop.kind.is_empty() and _world._plant_state == _world.PLANT_EMPTY:
+		candidates.append("notice.hint.go_plant")
 	candidates.append("notice.hint.go_pet")
 	candidates.append("notice.hint.go_explore")
 	if player == null or not player.carrying_grass:
@@ -2733,9 +3006,39 @@ func _update_season_tint(day: int) -> void:
 
 ## One persisted day starts at 06:00. Blend continuously through midnight
 ## and the 06:00 save-day boundary; phase and clouds use the same clock.
-func _update_tod_tint(t: float) -> void:
+func _update_tod_tint(t: float, delta: float = 0.0) -> void:
+	_sync_night_sky(t, delta)
 	if _tod_rect != null:
-		_tod_rect.color = preload("res://scripts/game/world_daylight.gd").tint(t, TOD_COLORS)
+		var target: Color = preload("res://scripts/game/world_daylight.gd").tint(t, TOD_COLORS, _world.weather if _world != null else "sun")
+		var snap := delta <= 0.0 or bool(TuningStore.get_value("ui.reduced_motion", false))
+		_tod_rect.color = target if snap else _tod_rect.color.lerp(target, 1.0 - exp(-delta * 2.0))
+
+
+## Background-only adapter shared with the independently owned nearby module.
+func _sync_night_sky(t: float, delta: float) -> void:
+	if not is_instance_valid(_world): return
+	var nearby := _screen == "exploring" and _exploration != null and is_instance_valid(_exploration.scroll)
+	var sky = _path_night_sky if nearby else _yard_night_sky
+	if not is_instance_valid(sky):
+		var painting: Sprite2D = _exploration.scroll.painting if nearby else _world._backdrop
+		if painting == null or painting.texture == null: return
+		sky = preload("res://scripts/game/regional_night_sky.gd").new()
+		painting.get_parent().add_child(sky)
+		sky.configure(painting, nearby)
+		# Existing cloud bands include opaque blue paint. Sky ink belongs above
+		# those bands, while its authored blue/horizon mask protects the scenery.
+		painting.get_parent().move_child(sky, painting.get_index() + 1 if nearby else _world.get_child_count() - 1)
+		if nearby: _path_night_sky = sky
+		else: _yard_night_sky = sky
+	var reduced := bool(TuningStore.get_value("ui.reduced_motion", false))
+	sky.sync(t, _world.weather, delta, reduced)
+	# Light sits after the scene multiplier, like the window panes, rather than
+	# becoming dark paint. Keep the world record for frozen photo reconstruction.
+	_night_sky_overlay.texture = sky.texture
+	_night_sky_overlay.material = sky.material
+	_night_sky_overlay.transform = sky.get_global_transform_with_canvas()
+	_night_sky_overlay.visible = sky.visible and _screen in ["game", "exploring"]
+	sky.visible = false
 
 
 func _on_locale_changed(_locale: String) -> void:

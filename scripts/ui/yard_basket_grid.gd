@@ -1,7 +1,7 @@
 extends Control
 ## REQ-20261007-064（#565 图8，Owner GROK-CONTRIBUTOR）：大背篓的标准行列格子。
 ## 每样东西一格（贴图 + 名字 + 数量），整行补齐空格；点有货的一格弹出这一格的操作纸片
-## （拿一条 / 拿一束 / 拿一把 / 摆到院里 / 收回背篓），手机点按同样可用。
+## （拿一条 / 拿一束 / 拿一把 / 摆在屋前·篱边·塘边小路 / 收回背篓），手机点按同样可用。
 ## 本切片只做格子与点按操作，发出与 yard_basket_panel 相同的 action_requested(action, kind)，
 ## 不读写存档、不改库存事务。拖出（面板半透明、合法摆放区着色）在下一切片接 Leader 的摆放接口。
 const BasketPanel := preload("res://scripts/ui/yard_basket_panel.gd")
@@ -9,7 +9,7 @@ const KeepsakeArtScript := preload("res://scripts/exploration/keepsake_art.gd")
 signal action_requested(action: String, kind: String)
 signal menu_toggled(open: bool)
 
-const ORDER := ["small", "medium", "odd", "grass", "millet", "round_stone", "pine_cone", "feather"]
+const ORDER := ["small", "medium", "odd", "grass", "millet", "wheat", "corn", "round_stone", "pine_cone", "feather"]
 const FISH := ["small", "medium", "odd"]
 const KEEPSAKES := ["round_stone", "pine_cone", "feather"]
 const FIND_IDS := {"round_stone": ExplorationRoutes.FIND_STONE, "pine_cone": ExplorationRoutes.FIND_PINE_CONE, "feather": ExplorationRoutes.FIND_FEATHER}
@@ -50,6 +50,17 @@ var menu_title: Label
 var menu_note: Label
 var menu_action: Button
 var menu_close: Button
+## #597：可手持的东西在纸片里多一个「放进快捷栏 / 从快捷栏拿下」，键盘与触屏不拖也能配
+var menu_hotbar: Button
+var hotbar: Control
+const HOLDABLE := ["small", "medium", "odd", "grass", "millet", "wheat", "corn"]
+## #594：小物的纸片不再开布置面板，而是列出院里还空着的固定位置，点哪处就摆在哪处
+## （键盘、触屏与拖不动的人都能摆）；action 为 "place:<spot>"
+const SPOTS := ["house_edge", "fence_edge", "pond_path"]
+var spot_row: HFlowContainer
+var spot_buttons: Dictionary = {}
+var free_spots: Array[String] = []
+var _decor_busy := true
 var selected := ""
 var counts: Dictionary = {}
 var _names: Dictionary = {}
@@ -95,6 +106,18 @@ func _ready() -> void:
 	menu_note = _label(14, EMPTY_INK)
 	menu_note.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	column.add_child(menu_note)
+	spot_row = HFlowContainer.new()
+	spot_row.add_theme_constant_override("h_separation", 8)
+	spot_row.add_theme_constant_override("v_separation", 6)
+	column.add_child(spot_row)
+	for spot: String in SPOTS:
+		var button := _menu_button()
+		button.pressed.connect(func() -> void: _on_spot_pressed(spot))
+		spot_row.add_child(button)
+		spot_buttons[spot] = button
+	menu_hotbar = _menu_button()
+	menu_hotbar.pressed.connect(_on_menu_hotbar)
+	column.add_child(menu_hotbar)
 	var actions := HBoxContainer.new()
 	actions.add_theme_constant_override("separation", 8)
 	column.add_child(actions)
@@ -102,7 +125,7 @@ func _ready() -> void:
 	menu_action.pressed.connect(_on_menu_action)
 	actions.add_child(menu_action)
 	menu_close = _menu_button()
-	menu_close.pressed.connect(close_menu)
+	menu_close.pressed.connect(dismiss_menu)
 	actions.add_child(menu_close)
 	resized.connect(_queue_layout)
 	_layout()
@@ -165,6 +188,7 @@ func _cell(kind: String) -> Button:
 	return cell
 
 static func _icon_texture(kind: String) -> Texture2D:
+	if kind in ["wheat", "corn"]: return preload("res://scripts/game/crop_art.gd").texture(kind)
 	if kind in KEEPSAKES:
 		return KeepsakeArtScript.texture(FIND_IDS[kind])
 	var path: String = ICONS.get(kind, "")
@@ -240,7 +264,7 @@ func rows_for(cols: int) -> int:
 
 func update_view(inventory: Dictionary, keepsakes: Dictionary, state: String, busy: bool) -> void:
 	var en := I18n.get_locale() == "en"
-	_names = {"small": "Small fish" if en else "小鱼", "medium": "Fish" if en else "中鱼", "odd": "Curious fish" if en else "奇怪的鱼", "grass": "Grass" if en else "草束", "millet": "Millet" if en else "小米", "round_stone": "Round stone" if en else "圆石", "pine_cone": "Pine cone" if en else "松果", "feather": "Feather" if en else "落羽"}
+	_names = {"small": "Small fish" if en else "小鱼", "medium": "Fish" if en else "中鱼", "odd": "Curious fish" if en else "奇怪的鱼", "grass": "Grass" if en else "草束", "millet": "Millet" if en else "小米", "wheat": "Wheat" if en else "麦粒", "corn": "Corn" if en else "玉米粒", "round_stone": "Round stone" if en else "圆石", "pine_cone": "Pine cone" if en else "松果", "feather": "Feather" if en else "落羽"}
 	# 格内只放得下短名；完整名字在弹出的纸片标题和悬停提示里
 	var short := _names.duplicate()
 	if en: short.merge({"small": "Small", "odd": "Odd fish", "round_stone": "Stone", "pine_cone": "Cone"}, true)
@@ -288,14 +312,17 @@ func action_for(kind: String) -> Array:
 	var label := ""
 	var action := "withdraw"
 	if kind in KEEPSAKES:
-		action = "decor"
+		action = "place"
 		label = "Place in yard" if en else "摆到院里"
-	elif kind == "millet": label = "Take a scoop" if en else "拿一把"
+	elif kind in ["millet", "wheat", "corn"]: label = "Take a scoop" if en else "拿一把"
 	elif kind == "grass": label = "Take a bundle" if en else "拿一束"
 	else: label = "Take one" if en else "拿一条"
 	var reason := ""
 	if not _loaded or _busy: reason = _busy_note(en)
+	elif kind in ["wheat", "corn"] and counts.get(kind, 0) == 1: reason = "Keep one handful for planting." if en else "留这一把下次播种。"
 	elif counts.get(kind, 0) <= 0: reason = "None in the basket." if en else "背篓里还没有。"
+	elif action == "place" and _decor_busy: reason = _busy_note(en)
+	elif action == "place" and free_spots.is_empty(): reason = "All three spots in the yard are taken. Tap one in the yard to put it back first." if en else "院里三处都摆着东西了；先在院里点一件，收回背篓。"
 	elif action == "withdraw" and not _held.is_empty():
 		reason = ("Put back the %s first." % _names.get(_held, _held).to_lower()) if en else ("先把手里的%s收回背篓。" % _names.get(_held, _held))
 	return [action, label, reason]
@@ -313,8 +340,11 @@ func open_menu(kind: String) -> void:
 	menu.visible = true
 	_place_menu()
 	menu_toggled.emit(true)
-	if menu_action.disabled: menu_close.grab_focus()
-	else: menu_action.grab_focus()
+	for button: Button in _menu_buttons():
+		if button.visible and not button.disabled:
+			button.grab_focus()
+			return
+	menu_close.grab_focus()
 
 func close_menu() -> void:
 	var was_open := menu.visible
@@ -324,6 +354,16 @@ func close_menu() -> void:
 	menu.visible = false
 	if was_open: menu_toggled.emit(false)
 
+## REQ-20261008-067（Owner GROK-CONTRIBUTOR）：玩家按「算了」收起纸片时，焦点回到刚才那一格，
+## 键盘玩家不用从头 Tab 找位置，回车 / 空格就能再打开。滚动、开始拖、点纸片外、格子变空、
+## Esc（游戏里 Esc 连背篓一起关）仍走 close_menu()，不抢焦点（免得滚动容器跟着焦点跳回去）。
+func dismiss_menu() -> void:
+	var kind := selected
+	close_menu()
+	if cells.has(kind):
+		var cell: Button = cells[kind]
+		if not cell.disabled and cell.is_visible_in_tree(): cell.grab_focus()
+
 func _fill_menu(kind: String) -> void:
 	var en := I18n.get_locale() == "en"
 	var spec := action_for(kind)
@@ -331,26 +371,95 @@ func _fill_menu(kind: String) -> void:
 	menu_title.text = "%s  ×%d" % [_names.get(kind, kind), counts.get(kind, 0)]
 	menu_action.text = spec[1]
 	menu_action.disabled = not str(spec[2]).is_empty()
+	var placing: bool = spec[0] == "place"
+	menu_action.visible = not placing
+	spot_row.visible = placing and not menu_action.disabled
+	var names := {"house_edge": "By the house" if en else "摆在屋前", "fence_edge": "By the fence" if en else "摆在篱边", "pond_path": "On the pond path" if en else "摆在塘边小路"}
+	for spot: String in SPOTS:
+		spot_buttons[spot].text = names[spot]
+		spot_buttons[spot].visible = spot in free_spots
 	menu_note.text = spec[2]
 	menu_note.visible = not str(spec[2]).is_empty()
+	_fill_hotbar_button(kind, en)
 	menu_close.text = "Never mind" if en else "算了"
 	menu.reset_size()
+	_sort_menu()
+
+## 纸片内容一换（小物的位置行 ↔ 单个动作按钮），按钮立刻排到新位置，不留一帧旧的点按区域
+func _sort_menu() -> void:
+	for box: Container in [menu, menu.get_child(0), spot_row, menu_action.get_parent()]:
+		box.notification(Container.NOTIFICATION_SORT_CHILDREN)
 
 func _place_menu() -> void:
 	if selected.is_empty(): return
 	menu.reset_size()
 	var view := get_viewport_rect()
 	var cell_rect: Rect2 = cells[selected].get_global_rect()
-	var width := minf(maxf(menu.get_combined_minimum_size().x, 200.0), view.size.x - 16.0)
+	var want := 200.0
+	if spot_row.visible:
+		# 放得下就把还空着的几处排成一行，矮横屏里纸片不至于竖着撑出屏幕
+		var row := 0.0
+		for spot: String in SPOTS:
+			if spot_buttons[spot].visible: row += spot_buttons[spot].get_combined_minimum_size().x + 8.0
+		want = maxf(want, row - 8.0 + 20.0)
+	var width := minf(maxf(menu.get_combined_minimum_size().x, want), view.size.x - 16.0)
 	menu.size = Vector2(width, 0)
 	menu.reset_size()
 	menu.size.x = width
+	_sort_menu()
 	var h := menu.size.y
 	var y := cell_rect.end.y + 6.0
 	if y + h > view.size.y - 8.0: y = cell_rect.position.y - h - 6.0
 	y = clampf(y, 8.0, maxf(8.0, view.size.y - h - 8.0))
 	var x := clampf(cell_rect.get_center().x - width * 0.5, 8.0, maxf(8.0, view.size.x - width - 8.0))
 	menu.global_position = Vector2(x, y)
+
+func _fill_hotbar_button(kind: String, en: bool) -> void:
+	var can := hotbar != null and is_instance_valid(hotbar) and kind in HOLDABLE
+	menu_hotbar.visible = can
+	if not can: return
+	var index: int = hotbar.slot_of(kind)
+	if index >= 0:
+		menu_hotbar.text = ("Take off hotbar slot %d" % (index + 1)) if en else ("从快捷栏第%d格拿下" % (index + 1))
+		menu_hotbar.disabled = false
+	elif hotbar.is_full():
+		menu_hotbar.text = "Hotbar full: drag onto a slot to swap" if en else "快捷栏满了，拖到一格上替换"
+		menu_hotbar.disabled = true
+	else:
+		menu_hotbar.text = "Put on the hotbar" if en else "放进快捷栏"
+		menu_hotbar.disabled = false
+
+func _on_menu_hotbar() -> void:
+	if selected.is_empty() or menu_hotbar.disabled or not menu_hotbar.visible: return
+	var kind := selected
+	var on_bar: bool = hotbar.slot_of(kind) >= 0
+	action_requested.emit("hotbar_remove" if on_bar else "hotbar_add", kind)
+	if not selected.is_empty():
+		_fill_menu(selected)
+		_place_menu()
+		menu_hotbar.grab_focus()
+
+func _menu_buttons() -> Array[Button]:
+	var result: Array[Button] = [menu_action, menu_hotbar]
+	for spot: String in SPOTS: result.append(spot_buttons[spot])
+	result.append(menu_close)
+	return result
+
+## Main 送来院里还空着的位置与布置是否在确认保存；纸片开着就按新情况重排
+func set_free_spots(spots: Array[String], busy: bool) -> void:
+	free_spots = spots.duplicate()
+	_decor_busy = busy
+	if not selected.is_empty():
+		if cells[selected].disabled: close_menu()
+		else:
+			_fill_menu(selected)
+			_place_menu()
+
+func _on_spot_pressed(spot: String) -> void:
+	if selected.is_empty() or not spot_row.visible or not spot in free_spots: return
+	var kind := selected
+	close_menu()
+	action_requested.emit("place:" + spot, kind)
 
 func _on_menu_action() -> void:
 	if selected.is_empty() or menu_action.disabled: return
@@ -362,14 +471,16 @@ func _on_menu_action() -> void:
 ## 触屏 / 外层统一点按入口：返回 true 表示这一下被格子或纸片接住了
 func press_at(at: Vector2) -> bool:
 	if menu.visible:
-		for button: Button in [menu_action, menu_close]:
+		for button: Button in _menu_buttons():
 			if button.is_visible_in_tree() and button.get_global_rect().has_point(at):
 				if not button.disabled: button.pressed.emit()
 				return true
 		if menu.get_global_rect().has_point(at): return true
+	# 滚出清单窗的格子仍有位置，但看不见；只认窗内的点，免得点到窗外的按钮却开了被遮住那格
+	var clip := _clip_rect()
 	for kind: String in ORDER:
 		var cell: Button = cells[kind]
-		if cell.get_global_rect().has_point(at):
+		if cell.get_global_rect().has_point(at) and (clip.size == Vector2.ZERO or clip.has_point(at)):
 			if cell.disabled:
 				close_menu()
 				return true
@@ -380,6 +491,13 @@ func press_at(at: Vector2) -> bool:
 		close_menu()
 		return true
 	return false
+
+func _clip_rect() -> Rect2:
+	var node := get_parent()
+	while node != null:
+		if node is ScrollContainer: return (node as Control).get_global_rect()
+		node = node.get_parent()
+	return Rect2()
 
 func _unhandled_key_input(event: InputEvent) -> void:
 	if menu.visible and event.is_action_pressed("ui_cancel"):

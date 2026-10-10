@@ -52,6 +52,8 @@ var _step_phase := 0.0
 var _stuck := 0.0
 var _velocity := Vector2.ZERO
 var _gait := GroundedGait.new()
+var _rest_breath: RefCounted
+var _blink: RefCounted
 var _rig: PlantedGait
 var _following := false
 var _native_facing := 1.0
@@ -112,6 +114,11 @@ func setup(config: Dictionary) -> void:
 	set_expression("idle")
 	_native_facing = float(config.get("native_facing", 1.0))
 	_gait.setup(_sprite, float(config.get("leg_start",0.74 if species in ["goose", "duck"] else 0.68)))
+	if species in ["cow", "horse", "llama", "goose"] or actor_id in ["sheep_a", "sheep_b"]:
+		_blink = preload("res://scripts/entities/painted_blink.gd").new()
+		_blink.bind(_gait._material, actor_id if species == "sheep" else species)
+	_rest_breath = preload("res://scripts/entities/painted_rest_breath.gd").new()
+	_rest_breath.bind(_gait._material, actor_id)
 	_apply_face_override()
 	if species == "llama" and bool(config.get("experimental_planted_gait", false)):
 		enable_experimental_planted_gait()
@@ -143,6 +150,10 @@ func enable_experimental_planted_gait() -> void:
 
 
 func set_expression(expression_id: String) -> void:
+	if _rest_breath != null:
+		_rest_breath.cancel()
+	if _blink != null:
+		_blink.cancel()
 	current_expression = expression_id
 	var posture_key := _painted_posture()
 	var texture_key := posture_key if posture_key != "idle" else expression_id
@@ -150,7 +161,9 @@ func set_expression(expression_id: String) -> void:
 	if path.is_empty() or not ResourceLoader.exists(path):
 		return
 	_expression_texture=load(path) as Texture2D
-	_sprite.texture=load(_base_texture_path) as Texture2D if not _base_texture_path.is_empty() else _expression_texture
+	# Face-only expression swaps use the standing body; a whole-body resting
+	# painting must replace that body as well as its face.
+	_sprite.texture=load(_base_texture_path) as Texture2D if not _base_texture_path.is_empty() and posture_key == "idle" else _expression_texture
 	if _posture_metadata.has(texture_key):
 		_posture_id = texture_key
 		var posture: Dictionary = _posture_metadata.get(texture_key,{})
@@ -182,6 +195,8 @@ func _paint_facing() -> float:
 func show_painted_ack(cel: String, seconds: float) -> void:
 	if posed or seconds <= 0.0 or not _textures.has(cel):
 		return
+	if _blink != null:
+		_blink.cancel()
 	_feed_ack_active = false
 	_ack_cel = cel
 	_ack_left = seconds
@@ -275,8 +290,8 @@ func _painted_posture() -> String:
 		return "tail"
 	if species == "cow" and _textures.has("chew"):
 		return "chew"
-	if species == "sheep" and _textures.has("shake"):
-		return "shake"
+	# Each sheep keeps its own standing body at rest. The shared shake cel changes
+	# both identity and silhouette; natural idle motion now lives in the eye patch.
 	return "idle"
 
 
@@ -356,6 +371,8 @@ func set_encounter_pose(point: Vector2, next_scale: float, face: float) -> void:
 func show_goose_encounter_cel(cel: String) -> void:
 	if species != "goose" or not _textures.has(cel) or _sprite == null:
 		return
+	if _blink != null:
+		_blink.cancel()
 	_posture_id = cel
 	_sprite.texture = load(str(_textures[cel])) as Texture2D
 	var posture: Dictionary = _posture_metadata.get(cel, {})
@@ -491,6 +508,10 @@ func tick(delta: float, world_size: Vector2) -> void:
 			set_expression("idle")
 	# 活的画：脚钉在落点上。鸭子只在水面轻轻起伏，不横着滑过院子。
 	if posed and state == "pose":
+		if _rest_breath != null:
+			_rest_breath.cancel()
+		if _blink != null:
+			_blink.cancel()
 		var bob := 0.0
 		if species == "duck" and not reduced:
 			bob = sin(_breath * 1.4) * 2.0
@@ -644,7 +665,10 @@ func tick(delta: float, world_size: Vector2) -> void:
 		_gait._material.set_shader_parameter("amount", 0.0 if reduced or use_ellipse else minf(_gait.weight * 3.0, 1.0))
 	var visual := _base_scale * visual_scale * YardGround.depth_at(position.y)
 	# Breathing belongs to resting animals; don't squash a walking silhouette.
-	var resting_breath := lerpf(breath, 1.0, _gait.weight)
+	var lying := preload("res://scripts/entities/painted_rest_breath.gd").REGIONS.has(_sprite.texture.resource_path)
+	var resting_breath := 1.0 if lying else lerpf(breath, 1.0, _gait.weight)
+	if _rest_breath != null:
+		_rest_breath.advance(delta, not reduced and not posed and state == "rest" and _ack_cel.is_empty() and _velocity.length() <= 0.3 and _gait.weight <= 0.08, _sprite.texture.resource_path)
 	scale = Vector2(visual * _gait.face * (1.0 if _ground_anchor.x >= 0.0 else _gait.turn_width), visual * resting_breath)
 	_sprite.scale.x = _paint_facing()
 	if _rig != null:
@@ -652,11 +676,21 @@ func tick(delta: float, world_size: Vector2) -> void:
 		_sprite.position.y = 0.0
 		_sprite.rotation = 0.0
 		_rig.tick(delta, moved, depth, reduced)
+	if _blink != null:
+		var profile: String = _blink.profile_for_source(_sprite.texture.resource_path)
+		if not profile.is_empty() and _blink.source_path != _sprite.texture.resource_path:
+			_blink.cancel()
+			_blink.bind(_gait._material, profile)
+		_blink.advance(delta, not reduced and not posed and state == "rest" and _ack_cel.is_empty() and _velocity.length() <= 0.3 and _gait.weight <= 0.08 and _sprite.texture.resource_path == _blink.source_path)
 	z_index = roundi(position.y)
 
 
 ## Road adapters own movement and depth; reuse the same anchored painted gait.
 func advance_path(delta: float, moved: Vector2, depth: float, reduced: bool) -> void:
+	if _rest_breath != null:
+		_rest_breath.cancel()
+	if _blink != null:
+		_blink.cancel()
 	state = "path"
 	grazing = false
 	if absf(moved.x) > 0.01: facing = signf(moved.x)
@@ -715,6 +749,9 @@ func _start_rest() -> void:
 	if species == "goose":
 		_idle_time /= maxf(0.5, float(TuningStore.get_value("enemies.goose.nosiness", 1.0)))
 	_turn_pause = 0.0
+	# Natural foraging is a quiet painted peck, never a free inventory grant.
+	if species == "chicken" and _routine_step % 3 == 1:
+		show_painted_ack("peck", 0.9)
 
 
 func _local_destination() -> Vector2:
@@ -843,7 +880,7 @@ func _build_spit() -> void:
 func _apply_face_override() -> void:
 	if _gait._material==null or _sprite==null or _sprite.texture==null:
 		return
-	var enabled:=not _base_texture_path.is_empty() and _expression_texture!=null
+	var enabled:=not _base_texture_path.is_empty() and _expression_texture!=null and _posture_id == "idle"
 	_gait._material.set_shader_parameter("face_override",enabled)
 	if enabled:
 		var size:=_sprite.texture.get_size()

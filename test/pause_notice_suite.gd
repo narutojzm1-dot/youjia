@@ -17,7 +17,7 @@ func run():
 	await process_frame
 	await process_frame
 	await root.get_node("SaveStore").flush_pending()
-	main._start_holiday(false)
+	await main._start_holiday(false)
 	await process_frame
 	await process_frame
 	main.set_process(false)

@@ -33,7 +33,7 @@ func _run() -> void:
 		main = load("res://scenes/main.tscn").instantiate()
 		root.add_child(main)
 		await _settle()
-		main._start_holiday()
+		await main._start_holiday()
 		await _settle()
 		for locale in ["zh-CN", "en"]:
 			i18n.set_locale(locale)
@@ -120,7 +120,7 @@ func _check_resize_while_showing() -> void:
 	main = load("res://scenes/main.tscn").instantiate()
 	root.add_child(main)
 	await _settle()
-	main._start_holiday()
+	await main._start_holiday()
 	await _settle()
 	i18n.set_locale("en")
 	main._on_save_problem("suite-resize", "yard", "suite")

@@ -1,9 +1,10 @@
 extends SceneTree
-## REQ-20261007-058: the yard basket list and the yard decor list kept Godot's
-## default scroll bar — a dark grey slab with a translucent white thumb — on
-## their warm paper. Both now use a light paper groove with a brown thumb that
-## darkens on hover and drag. The bar keeps its 8px width, so nothing in either
-## panel moves. Fixture only: panels are built on their own; no save is touched.
+## REQ-20261007-058: the yard basket list kept Godot's default scroll bar — a
+## dark grey slab with a translucent white thumb — on its warm paper. It now uses
+## a light paper groove with a brown thumb that darkens on hover and drag. The bar
+## keeps its 8px width, so nothing in the panel moves. (The separate yard decor
+## panel was removed in #594.) Fixture only: the panel is built on its own; no
+## save is touched.
 const PaperScrollbarStyle := preload("res://scripts/ui/paper_scrollbar_style.gd")
 var checks := 0
 var failures: Array[String] = []
@@ -79,22 +80,13 @@ func basket_buttons(p: Control) -> Array:
 	list.append_array(p.fish_buttons.values())
 	return list
 
-func decor_buttons(p: Control) -> Array:
-	var list: Array = [p.close_button]
-	list.append_array(p.slot_buttons.values())
-	list.append_array(p.find_buttons.values())
-	return list
-
 func run() -> void:
 	var tuning := root.get_node_or_null("TuningStore")
 	if tuning != null and tuning.has_method("end_run"): tuning.call("end_run")
 	var i18n := root.get_node("I18n")
 	var inventory := {"fish": {"small": 2, "medium": 0, "odd": 1}, "grass": 3, "millet": 0, "held": ""}
 	var keepsakes := {ExplorationRoutes.FIND_STONE: 1, ExplorationRoutes.FIND_PINE_CONE: 0, ExplorationRoutes.FIND_FEATHER: 2}
-	var stone: String = ExplorationRoutes.FINDS[0]
-	var counts := {stone: 2, ExplorationRoutes.FINDS[1]: 0, ExplorationRoutes.FINDS[2]: 1}
 	var basket_scrolled := 0
-	var decor_scrolled := 0
 	for loc: String in ["zh-CN", "en"]:
 		i18n.set_locale(loc)
 		for vs: Vector2i in VIEWPORTS:
@@ -124,39 +116,7 @@ func run() -> void:
 			check(same_layout(styled, layout(p, basket_buttons(p))), tag + " paper bar moves no row, button or list edge")
 			p.queue_free()
 			await process_frame
-			# Yard decor panel (idle and with a find chosen)
-			for state: String in ["idle", "draft"]:
-				tag = "decor %s %dx%d %s" % [loc, vs.x, vs.y, state]
-				var host := Control.new()
-				root.add_child(host)
-				host.size = Vector2(vs)
-				var d: Control = load("res://scripts/ui/yard_decor_panel.gd").new()
-				host.add_child(d)
-				await process_frame
-				d.size = Vector2(vs)
-				d.update_view({"places": {}}, counts, "idle", false)
-				if state == "draft": d.choose_find(stone)
-				await settle()
-				var dbar: VScrollBar = d.scroll.get_v_scroll_bar()
-				check_style(dbar, tag)
-				if dbar.is_visible_in_tree():
-					check(is_equal_approx(dbar.get_global_rect().size.x, BAR_WIDTH), tag + " visible bar is 8px wide")
-					check(d.paper.get_global_rect().encloses(dbar.get_global_rect()), tag + " visible bar sits inside the paper")
-					if dbar.max_value - dbar.page >= 8.0:
-						decor_scrolled += 1
-						d.scroll.scroll_vertical = 8
-						await settle()
-						check(is_equal_approx(dbar.value, 8.0), tag + " list still scrolls with the paper bar")
-						d.scroll.scroll_vertical = 0
-						await settle()
-				var dstyled := layout(d, decor_buttons(d))
-				strip(dbar)
-				await settle()
-				check(same_layout(dstyled, layout(d, decor_buttons(d))), tag + " paper bar moves no row, button or list edge")
-				host.queue_free()
-				await process_frame
 	check(basket_scrolled > 0, "at least one basket layout actually scrolls (bar is really shown)")
-	check(decor_scrolled > 0, "at least one decor layout actually scrolls (bar is really shown)")
 	if failures.is_empty():
 		print("[paper-scrollbar] PASS: %d checks" % checks)
 	else:

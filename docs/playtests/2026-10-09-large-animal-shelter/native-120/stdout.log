@@ -1,0 +1,23 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ROUTE_DEBUG true true [(672.0, 528.0), (888.0, 516.0), (912.0, 480.0), (960.0, 444.0), (1041.0, 444.0)]
+RAIN_BED sheep_a (977.0, 478.0)
+STATE rain active= cel=shelter_rest controlled=true
+RAIN_BED cow (1041.0, 476.0)
+STATE rain active= cel=shelter_rest controlled=true
+RAIN_BED sheep_b (1103.0, 484.0)
+STATE rain active= cel=shelter_rest controlled=true
+RAIN_BED horse (1037.068, 444.0)
+STATE rain active= cel=shelter_rest controlled=true
+RAIN_BED llama (966.2542, 443.3746)
+STATE rain active= cel=shelter_rest controlled=true
+SUN_RETURN horse (597.8179, 473.9402) active= {  }
+SUN_RETURN llama (652.0451, 533.2183) active= {  }
+NIGHT_ALL sheep_a (975.2621, 474.5245) paths={  }
+NIGHT_ALL cow (1037.424, 474.5873) paths={  }
+NIGHT_ALL sheep_b (1099.224, 482.9439) paths={  }
+NIGHT_ALL horse (611.5361, 467.6008) paths={  }
+NIGHT_ALL llama (706.6151, 501.9402) paths={  }
+NIGHT horse (611.5361, 467.6008) active=
+NIGHT llama (706.6151, 501.9402) active=
+LARGE_ANIMAL_SHELTER checks=27 failures=0

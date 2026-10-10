@@ -1,6 +1,6 @@
 # 代理开发入口
 
-> **2026-10-06 最高优先级更新：** [团队集中交付规则](docs/collaboration/team-focus-2026-10-06.md)已由用户直接授权。本地 CODEX-LEAD 同时承担制作人与 Leader，新功能/探索/资源集中推进；Assistant 与 Cursor Cloud 辅助修 bug，GAME-QA 独立测试；PM/制作人停止独立运转。取消逐 PR 强制他人或子代理审核，改为每日23:00发版前由Leader集中审查当天全部工作。下文冲突的旧独审、角色分工和等待要求已被替代，测试、PR和发布核验保持。
+> **2026-10-06 最高优先级更新：** [团队集中交付规则](docs/collaboration/team-focus-2026-10-06.md)已由用户直接授权。本地 CODEX-LEAD 同时承担制作人与 Leader，新功能/探索/资源集中推进；Assistant 与 Cursor Cloud 辅助修 bug，GAME-QA 独立测试；PM/制作人停止独立运转。取消逐 PR 强制他人或子代理审核，改为每日23:00发版前由Leader集中审查当天全部工作。下文冲突的旧独审、角色分工和等待要求已被替代，测试、PR和发布核验保持。2026-10-08 起 Cursor Cloud 改为负责界面开发与维护，GROK-CONTRIBUTOR 改为认领并修复 bug，见下方说明。
 
 此文件适用于 Codex、GROK、MANUS、Cursor Local（`CURSOR-CONTRIBUTOR-LOCAL`）及其他参与本仓库的开发代理。每次开始任务时，先阅读以下仓库记录：
 
@@ -13,6 +13,8 @@
 ## 当前人员可用性
 
 用户2026-10-05通知GROK-BUILD额度耗尽、预计10月9日恢复；按最新319持续分工，关键背景/世界图/普通物件/动物/音频资源由GAME-PRODUCER接续，Leader功能/共享框架，Assistant缺陷；旧候选保留并精确交接。开工先看[人员公告](docs/collaboration/personnel-availability.md)与登记表，不按旧排期继续等待不可执行角色；恢复仍须实际确认。
+
+**2026-10-08 用户调整：** CURSOR-CLOUD 负责界面开发与维护；GROK-CONTRIBUTOR 改为认领并修复 bug。以[团队规则](docs/collaboration/team-focus-2026-10-06.md#2026-10-08-用户调整cloud-接界面grok-改修-bug)为准，下文旧的 Cloud 探索授权仅保留历史。
 
 ## 每项工作的开始方式
 

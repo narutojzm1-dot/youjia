@@ -1,4 +1,10 @@
 {
+  "action.chick_care": "Check the chick",
+  "hud.hint.crop_growing": "Crops are growing · Check or harvest the patch",
+  "action.crop_patch": "Growing patch",
+
+  "hud.clock.am": "{h}:{m} AM",
+  "hud.clock.pm": "{h}:{m} PM",
   "app.title": "悠长的假期",
   "app.subtitle": "A holiday with no to-do list",
   "app.tagline": "A quiet Alpine yard. Feed grass, walk the llama, or do nothing. Expressions arrive on their own.",
@@ -96,7 +102,7 @@
   "notice.tod.noon": "Midday quiet.",
   "notice.tod.afternoon": "Afternoon warmth settles in.",
   "notice.tod.evening": "The sky is turning orange.",
-  "notice.tod.night": "Not quite dark yet.",
+  "notice.tod.night": "The night settles softly.",
   "notice.new_day.a": "A new day. The dew hasn't quite dried.",
   "notice.new_day.b": "Yesterday's holiday fades into today's.",
   "notice.new_day.c": "Another day. The yard is still.",
@@ -391,6 +397,7 @@
   "target.hen": "Hen",
   "notice.chicken.grown": "The little chick has grown new feathers.",
   "notice.food_eaten.chicken": "The chicken pecked up the millet.",
+  "hud.hint.carrying_grain": "Grains in hand. Drop them on the ground for the chickens.",
   "hud.hint.carrying_millet": "A handful of millet — put it down for the chicken.",
   "photo.pond_hen_ride.title": "A very slow lift",
   "photo.pond_hen_ride.note": "The chick has grown. There is just enough room on the turtle’s back.",
@@ -405,5 +412,14 @@
   "notice.gate_closed": "The pen gate is closed.",
   "notice.gate_occupied": "Someone is in the doorway. Wait until it is clear.",
   "notice.gate_returning": "The cow and sheep are coming home. Let them in before closing.",
-  "notice.gate_save_wait": "Saving. Please try again shortly."
+  "notice.gate_save_wait": "Saving. Please try again shortly.",
+  "action.house_sleep": "Turn in for the night",
+  "target.house": "Home",
+  "notice.house.day": "It is still light. Enjoy a little more time outside.",
+  "notice.house.enter": "Time to turn in.",
+  "notice.house.sleep": "The house settles into sleep as the night passes.",
+  "notice.house.morning": "Good morning. A new day.",
+  "action.house_resting": "Resting at home",
+  "action.open_basket": "Open basket",
+  "target.basket": "Basket"
 }

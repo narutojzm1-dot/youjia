@@ -1,0 +1,26 @@
+[
+  {
+    "owner": "CODEX-LEAD",
+    "tool": "built-in imagegen",
+    "edit_target": "assets/holiday/characters/shelter/sheep-clingy-rest.png",
+    "saved_path": "assets/holiday/characters/shelter/sheep-clingy-rest-blink.png",
+    "actual_dimensions": [
+      1254,
+      1254
+    ],
+    "sha256": "a65d56116d62ea5ba385ad4a3c3334a8cba9c457876b77fac4efea677f8a1414",
+    "prompt": "Precise-object-edit for an existing 2D painted game sprite. Supplied image is the EDIT TARGET. Keep the EXACT same 1280x1280 transparent canvas and original lying lamb artwork: exact animal position, scale, upward looking head orientation, ears, nose, muzzle, mouth, wool shapes, folded feet, watercolor texture, warm colors, lighting and alpha outline. Change ONLY both visible eyes to gently fully closed sleepy eyelids, no visible pupils, using soft curved dark lash lines on the same eye locations. The head must NOT tilt, turn or move. No new objects or ground/shadow. It must be the original same painted resting sheep with eyes shut for a seamless local blink overlay. Preserve alpha transparency."
+  },
+  {
+    "owner": "CODEX-LEAD",
+    "tool": "built-in imagegen",
+    "edit_target": "assets/holiday/characters/shelter/sheep-dull-rest.png",
+    "saved_path": "assets/holiday/characters/shelter/sheep-dull-rest-blink.png",
+    "actual_dimensions": [
+      1254,
+      1254
+    ],
+    "sha256": "2c4316fb9025b1cd06286d18a6d700f5912fd35566038ea444146b238c3af691",
+    "prompt": "Precise-object-edit for a 2D painted game sprite. The supplied image is the EDIT TARGET, not a loose style reference. Preserve the EXACT same 1280x1280 transparent canvas, animal placement, scale, lying pose, facing direction, watercolor wool, face anatomy, soft warm palette, all ears, nose, mouth, body, feet, alpha silhouette and lighting. Change ONLY the two visible eyes into gently fully closed sleepy eyelids, with a restrained curved dark lash line. Both eyes relaxed and shut, no visible pupils. Do not tilt or reposition the head, do not move the ears or muzzle, do not change fur or add objects. Same original painted image with just closed eyelids, for seamless blink overlay animation. Real alpha transparent background."
+  }
+]

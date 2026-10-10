@@ -3,11 +3,17 @@ extends RefCounted
 
 # All positions use the existing 1280x720 YardWorld coordinates. The painted
 # balcony is not walkable: hit, safe approach and art anchors stay independent.
+const HOUSE_DOOR := "house_door"
+const BASKET := "yard_basket"
 const WINDOWBOX := "windowbox"
 const SHORE_STONES := "shore_stones"
 const FENCE_GATE := "fence_gate"
 const PATH_OUT := "path_out"
 static var CATALOG: Array[Dictionary] = [
+	{"id":BASKET, "hit_polygon":PackedVector2Array([Vector2(301,415),Vector2(369,415),Vector2(369,488),Vector2(301,488)]),
+	"approach_points":[Vector2(335,522)],"visual_anchor":Vector2(335,485),"reach":18.0,"label_key":"action.open_basket","target_key":"target.basket"},
+	{"id":HOUSE_DOOR, "hit_polygon":PackedVector2Array([Vector2(233,337),Vector2(296,337),Vector2(296,450),Vector2(233,450)]),
+	"approach_points":[Vector2(263,472)],"visual_anchor":Vector2(263,432),"reach":20.0,"label_key":"action.house_sleep","target_key":"target.house"},
 	{
 		"id": WINDOWBOX,
 		"hit_polygon": PackedVector2Array([
@@ -84,9 +90,10 @@ static func get_hotspot(target: String) -> Dictionary:
 
 static func resolve(world: Node2D, target: String) -> Dictionary:
 	var hotspot := get_hotspot(target)
+	if target == HOUSE_DOOR and world.house != null and not world.house.available(): return {}
 	# Durable carried food can travel with the player. Keep ordinary ambient
 	# observations suppressed while carrying; explicit doors do not consume food.
-	var carrying_exit: bool = (target == PATH_OUT or (target == FENCE_GATE and not world.is_leading())) and world.inventory_enabled \
+	var carrying_exit: bool = (target == BASKET or target == PATH_OUT or target == HOUSE_DOOR or (target == FENCE_GATE and not world.is_leading())) and world.inventory_enabled \
 		and world.get_player() != null and world._fish_state == world.FISH_IDLE
 	if hotspot.is_empty() or (not available(world) and not carrying_exit):
 		return {}

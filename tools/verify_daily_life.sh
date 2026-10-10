@@ -40,22 +40,22 @@ run_godot suite test/audio_button_input_suite.gd
 run_godot suite test/ambience_output_ceiling_suite.gd
 run_godot suite test/modal_touch_input_suite.gd
 run_godot suite test/yard_inventory_suite.gd
+run_godot suite test/yard_crops_suite.gd
 run_godot suite test/yard_decor_suite.gd
 run_godot suite test/yard_decor_persistence_suite.gd
 run_godot suite test/yard_decor_integration_suite.gd
-run_godot suite test/yard_decor_button_states_suite.gd
-run_godot suite test/yard_decor_panel_hug_suite.gd
-run_godot suite test/yard_decor_nudge_limit_suite.gd
-run_godot suite test/yard_decor_empty_hint_suite.gd
+run_godot suite test/yard_decor_rejection_suite.gd
 run_godot suite test/yard_basket_empty_row_ink_suite.gd
 run_godot suite test/yard_basket_grid_suite.gd
 run_godot suite test/yard_basket_grid_entry_suite.gd
 run_godot suite test/yard_basket_drag_suite.gd
+run_godot suite test/yard_basket_drop_place_suite.gd
 run_godot suite test/yard_ground_food_ledger_suite.gd
 run_godot suite test/yard_ground_food_runtime_suite.gd
 run_godot suite test/cow_ground_graze_suite.gd
 run_godot suite test/world_weather_suite.gd
 run_godot suite test/world_daylight_suite.gd
+run_godot suite test/regional_night_sky_suite.gd
 run_godot suite test/world_weather_runtime_suite.gd
 run_godot suite test/sheep_ground_graze_suite.gd
 run_godot suite test/animal_glance_facing_suite.gd
@@ -65,6 +65,7 @@ run_godot suite test/world_residents_suite.gd
 run_godot suite test/beibei_integration_suite.gd
 run_godot suite test/pond_residents_suite.gd
 run_godot suite test/pond_integration_suite.gd
+run_godot suite test/chick_care_suite.gd
 run_godot suite test/chick_millet_model_suite.gd
 run_godot suite test/chick_millet_integration_suite.gd
 run_godot suite test/pond_story_sequence_suite.gd
@@ -72,9 +73,12 @@ run_godot suite test/pond_story_integration_suite.gd
 run_godot suite test/yard_basket_integration_suite.gd
 run_godot suite test/yard_basket_button_states_suite.gd
 run_godot suite test/paper_scrollbar_suite.gd
+run_godot suite test/care_panels_paper_suite.gd
 run_godot suite test/exploration_button_states_suite.gd
 run_godot suite test/still_boundary_feedback_suite.gd
 run_godot suite test/pause_panel_fit_suite.gd
+run_godot suite test/hud_under_menu_suite.gd
+run_godot suite test/hotbar_player_slots_suite.gd
 run_godot suite test/ui_viewports.gd
 run_godot suite test/web_save_bridge/decoder_suite.gd
 run_godot suite test/web_save_bridge/legacy_suite.gd
@@ -93,6 +97,7 @@ run_godot suite test/photo_arrival_shutter_fit_suite.gd
 run_godot suite test/exploration_basket_label_fit_suite.gd
 
 run_godot suite test/yard_basket_panel_fit_suite.gd
+run_godot suite test/yard_basket_panel_hug_suite.gd
 
 run_godot suite test/confirm_panel_narrow_suite.gd
 
@@ -104,9 +109,38 @@ run_godot suite test/nearby_motion_suite.gd
 run_godot suite test/yard_gate_suite.gd
 
 run_godot suite test/yard_shelter_suite.gd
+run_godot suite test/large_animal_shelter_suite.gd
+run_godot suite test/house_sleep_suite.gd
+run_godot suite test/balcony_morning_suite.gd
 
 run_godot suite test/regional_rain_suite.gd
 
 run_godot suite test/hold_hotbar_suite.gd
+run_godot suite test/hud_single_row_suite.gd
+run_godot suite test/notice_column_clear_suite.gd
 
 run_godot suite test/hold_hotbar_mount_suite.gd
+run_godot suite test/hold_hotbar_armed_style_suite.gd
+run_godot suite test/painted_blink_suite.gd
+run_godot suite test/painted_rest_breath_suite.gd
+run_godot suite test/resting_eyelids_suite.gd
+
+run_godot suite test/yard_decor_spot_at_suite.gd
+
+
+run_godot suite test/yard_keepsake_shadow_suite.gd
+run_godot suite test/yard_basket_zone_label_suite.gd
+run_godot suite test/photo_arrival_fade_in_suite.gd
+run_godot suite test/fish_catch_palette_suite.gd
+run_godot suite test/path_snail_fade_suite.gd
+run_godot suite test/find_reveal_name_fade_suite.gd
+run_godot suite test/yard_basket_dismiss_focus_suite.gd
+run_godot suite test/yard_decor_settle_ring_suite.gd
+run_godot suite test/walk_goal_marker_suite.gd
+run_godot suite test/exploration_tap_feedback_suite.gd
+run_godot suite test/regional_clock_suite.gd
+run_godot suite test/physical_basket_suite.gd
+run_godot suite test/photo_diary_weather_suite.gd
+
+run_godot suite test/resident_idle_rest_suite.gd
+run_godot suite test/exploration_trip_capacity_suite.gd

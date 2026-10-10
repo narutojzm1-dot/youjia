@@ -1,0 +1,69 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+AUDIT PASS title button dispatch starts game
+AUDIT PASS Chinese HUD names the marked cow and the same pet action as the button
+AUDIT PASS HUD's marked cow is the actual action target
+AUDIT PASS English HUD names the same target and action
+AUDIT PASS raw touch targets the painted window flowers and Chinese HUD names the same action
+AUDIT PASS English HUD retains the exact touched windowbox target
+AUDIT PASS real touch action button keeps the flower-box approach without celebrating early
+AUDIT PASS raw touch chooses the painted bank stone and Chinese HUD/button describe water-touch, not fishing
+AUDIT PASS English HUD keeps the exact bank stone rather than silently changing to the pond
+AUDIT PASS real touch action button retains the bank route without splashing early
+AUDIT PASS raw touch selects the painted gate; Chinese HUD and action button agree
+AUDIT PASS English HUD keeps the touched wooden fence rather than suggesting entry
+AUDIT PASS actual action button retains the safe fence route without an early breeze
+AUDIT PASS pond selection names its fishing action rather than nearby animal
+AUDIT PASS raw mouse moves initial player through GUI
+AUDIT PASS raw touch reaches grass and picks it up without teleport
+AUDIT PASS target is naturally moving before approach
+AUDIT PASS walking toward an animal does not hand-feed it
+AUDIT PASS raw action button creates one durable ground grass bundle
+AUDIT ground food position=[{ "id": 1, "kind": "grass", "x": 629.567321777344, "y": 512.664916992188 }]
+AUDIT PASS pause remains inside viewport after dropping food
+AUDIT PASS zoom screen-to-world roundtrip
+AUDIT PASS tap llama starts lead
+AUDIT PASS rejected empty tap does not toggle lead
+AUDIT PASS touch walks while lead remains active
+AUDIT PASS actual action button releases lead
+AUDIT PASS actual pause button pauses
+AUDIT PASS actual resume button resumes
+AUDIT PASS real painted goose rest supplies a photograph for page browsing
+AUDIT PASS real close sheep supply another page, not a fabricated page counter
+AUDIT PASS actual album button opens a clean book without yard HUD controls
+AUDIT PASS wide album shows two paper pages and a spine, with only saved moments
+AUDIT PASS touching next turns one double-page spread
+AUDIT PASS left arrow turns back without moving the traveler
+AUDIT PASS right arrow turns forward while the album is modal
+AUDIT PASS portrait viewport keeps the current photo on a single readable page
+AUDIT PASS horizontal touch swipe advances one portrait page
+AUDIT PASS language switch retains the selected photo and translates controls
+AUDIT PASS portrait touch previous button returns one page
+AUDIT PASS actual album close restores yard HUD and walking
+AUDIT PASS overcast uses the painted overcast yard
+AUDIT PASS weather preserves backdrop scale and collision
+AUDIT PASS overcast swaps the overcast cloud band
+AUDIT PASS sun restores the painted sunny yard
+AUDIT PASS sun restores the sunny cloud band
+AUDIT PASS sunny morning uses the thinner morning cloud band
+AUDIT PASS sunny dawn uses the morning cloud band
+AUDIT PASS overcast morning keeps the overcast cloud band
+AUDIT PASS sunny noon restores the bright cloud band after morning
+AUDIT PASS sunny cloud band stays bright instead of dirty warm tint
+AUDIT PASS sunny evening uses the warm sunset cloud band
+AUDIT PASS overcast evening keeps the overcast cloud band
+AUDIT PASS sunny noon restores the bright cloud band
+AUDIT PASS sunny night keeps the daytime cloud shape
+AUDIT PASS sunny night clouds are cooler and dimmer than noon
+AUDIT PASS overcast night keeps the overcast cloud band
+AUDIT PASS sunny noon after night restores the bright cloud band
+AUDIT PASS reduced motion keeps cloud band static
+AUDIT PASS cloud band drifts when motion is allowed
+AUDIT PASS real windowbox observation paints a temporary world response
+AUDIT PASS real pause button clears painted windowbox encounter immediately
+AUDIT PASS actual pond-side stone action paints a ripple, never an unearned fish
+AUDIT PASS actual pause button clears a successful shore ripple immediately
+AUDIT PASS real gate action waits for durable confirmation
+AUDIT PASS real gate action opens after persistence confirmation
+AUDIT PASS actual pause button clears the painted fence breeze
+[ui-interaction-tests] checks=65 failures=[]

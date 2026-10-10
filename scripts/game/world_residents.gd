@@ -75,7 +75,7 @@ static func transition(snapshot: Dictionary, revision: int, action: String) -> D
 			residents.chicken = {"stage": "chick", "settled_clock": now.duplicate(true)}
 		"grow_chicken":
 			if residents.chicken.stage != "chick": return {"error": "RESIDENT_NOT_CHICK"}
-			if seconds - _clock_seconds(residents.chicken.settled_clock) < GROW_SECONDS: return {"error": "RESIDENT_NOT_READY"}
+			if preload("res://scripts/game/chick_care.gd").age(snapshot, _clock_seconds(residents.chicken.settled_clock), seconds) < GROW_SECONDS: return {"error": "RESIDENT_NOT_READY"}
 			residents.chicken.stage = "hen"
 		"find_turtle":
 			if residents.turtle.stage == "pond": return {"error": "RESIDENT_ALREADY_HOME"}

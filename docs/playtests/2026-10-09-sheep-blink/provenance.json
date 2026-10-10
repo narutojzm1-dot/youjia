@@ -1,0 +1,30 @@
+{
+  "mode": "built-in image_gen",
+  "edit_targets": [
+    "assets/holiday/characters/cast_v2/sheep_clingy.png",
+    "assets/holiday/characters/cast_v2/sheep_dull.png"
+  ],
+  "outputs": [
+    {
+      "path": "assets/holiday/characters/cast_v2/sheep_clingy_blink.png",
+      "generated_from": "exec-4e18474b-01dd-46cb-acb4-43ff157e38e7.png",
+      "prompt": "Use case: precise-object-edit. Asset type: transparent painted game blink animation cel. Input is the EDIT TARGET, not a style reference. Change ONLY this fluffy clingy sheep's two visible eyes from open to gently closed: slim natural curved eyelids located at the EXACT original eyes. Keep its raised cheerful head, muzzle, mouth, expression, ears, wool, body proportions, legs, hooves, shadow, brushwork and every position unchanged. No head movement or enlargement, no smile change, no camera change, no crop or repositioning. Preserve original 1280x1280 canvas and genuine transparent alpha silhouette. This output is sampled only inside two tiny eye patches of the original; all closed-eye pixels must line up exactly with those original eye regions. No background, no text.",
+      "sha256": "c05aef4796e96f7f17e328f38f6167b416b5a750abd443a8fe25744b60339513",
+      "bytes": 1277387,
+      "width": 1254,
+      "height": 1254,
+      "decoded_rgba_bytes": 6290064
+    },
+    {
+      "path": "assets/holiday/characters/cast_v2/sheep_dull_blink.png",
+      "generated_from": "exec-74b1a7d8-8c82-450f-85af-f2382a00a058.png",
+      "prompt": "Use case: precise-object-edit. Asset type: transparent painted game blink animation cel. Input is the EDIT TARGET, not a style reference. Change ONLY this sleepy sheep's two partially open eyes to fully closed: thin relaxed eyelid lines in the EXACT original eye positions. Preserve its sleepy calm personality; do NOT add a big smile, eyelashes or eyebrows. Preserve its grass held in mouth, lips, cheeks, head angle, ears, wool, torso, hooves, shading and alpha silhouette. Preserve full 1280x1280 canvas, positions and proportions. No crop, scale, repositioning, head movement or changes elsewhere. The result is used ONLY in two tiny original eye patches, so closed eyes must align precisely with the original eyes. Genuine transparent background, no text, no new objects.",
+      "sha256": "08b33eb34cdf11e4d8269a89137b9237cf851fb3ec576b58d9157b950a446cc8",
+      "bytes": 1417147,
+      "width": 1254,
+      "height": 1254,
+      "decoded_rgba_bytes": 6290064
+    }
+  ],
+  "notes": "Only normalized local eye regions are sampled; original body and alpha retained in production. No original texture overwritten."
+}

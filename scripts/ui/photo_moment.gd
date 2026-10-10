@@ -12,7 +12,7 @@ const MAX_COORD := 16384.0
 const GAIT_DEFAULTS := {
 	"phase": 0.0, "amount": 0.0, "hip": 0.68, "foot_split": 0.5,
 	"stride_uv": 0.1, "lift_uv": 0.015, "native_walk_face": 1.0,
-	"grounded_stride": false, "face_override": false,
+	"grounded_stride": false, "face_override": false, "rest_breath_shift": 0.0, "blink_amount": 0.0,
 }
 
 var _snapshot: Dictionary = {}
@@ -90,8 +90,10 @@ static func capture(world: Node2D, rule: Dictionary) -> Dictionary:
 		"world_size": [world_size.x, world_size.y],
 		"focus": [focus.x, focus.y], "span": span,
 		"background": background, "items": items, "shadows": shadows,
+		"house_lights": float(world.house.lights) if _property(world,"house") != null else 0.0,
 		"yard_gate": world.gate_view.record.duplicate(true) if _property(world,"gate_view") != null else {},
 		"rain": world.rain.snapshot() if _property(world,"rain") != null else {},
+		"night_sky": world.get_node("RegionalNightSky").snapshot() if world.has_node("RegionalNightSky") else {},
 	})
 
 
@@ -145,6 +147,9 @@ static func sanitize(data: Variant) -> Dictionary:
 		cleaned.caption_variant = int(data.caption_variant)
 	var rain := preload("res://scripts/game/regional_rain.gd").sanitize(data.get("rain", {}))
 	if not rain.is_empty() and float(rain.amount) > 0.0: cleaned.rain = rain
+	var night_sky := preload("res://scripts/game/regional_night_sky.gd").sanitize(data.get("night_sky", {}))
+	if not night_sky.is_empty() and float(night_sky.amount) > 0.0: cleaned.night_sky = night_sky
+	if data.has("house_lights") and _number(data.house_lights,0.0,1.0): cleaned.house_lights = float(data.house_lights)
 	var gate: Variant = data.get("yard_gate", {})
 	if gate is Dictionary and gate.get("opened") is bool and _number(gate.get("mix"),0.0,1.0) and _numbers(gate.get("sun"),4,0.0,2.0) and _numbers(gate.get("cloud"),4,0.0,2.0):
 		cleaned.yard_gate = gate.duplicate(true)
@@ -212,7 +217,7 @@ func setup(snapshot: Dictionary) -> void:
 				sprite.region_enabled = true
 				sprite.region_rect = _rect(item.region)
 			if item.has("gait"):
-				sprite.material = _load_gait(item.gait)
+				sprite.material = _load_gait(item.gait, str(item.texture.get("path", "")))
 			visual = sprite
 		elif item.kind == "prop":
 			var prop := YardPropVisual.new()
@@ -242,6 +247,21 @@ func setup(snapshot: Dictionary) -> void:
 		# Keep legacy items (including negative-depth clouds) in their old order.
 		if item.kind == "sprite" and item.subject in ["weather_background", "weather_cloud"]:
 			_stage.move_child(visual, _shadows.get_index())
+	if _snapshot.has("night_sky"):
+		var painted := Sprite2D.new()
+		painted.texture = _background_texture
+		painted.transform = _transform(_snapshot.background.transform)
+		var sky = preload("res://scripts/game/regional_night_sky.gd").new()
+		sky.configure(painted)
+		painted.free()
+		sky.restore(_snapshot.night_sky)
+		sky.z_index = 0
+		_stage.add_child(sky)
+		_stage.move_child(sky, _shadows.get_index())
+	if float(_snapshot.get("house_lights",0.0)) > 0.0:
+		var light_view = preload("res://scripts/game/house_lights.gd").new()
+		light_view.lights = float(_snapshot.house_lights)
+		_stage.add_child(light_view)
 	if _snapshot.has("yard_gate"):
 		var gate = preload("res://scripts/game/yard_gate_view.gd").new()
 		_stage.add_child(gate)
@@ -309,6 +329,8 @@ func _draw_shadows() -> void:
 
 
 static func _collect(node: Node, world: Node2D, backdrop: Node, subject: String, items: Array) -> void:
+	# Shader output has its own bounded frozen record, never the unshaded source bitmap.
+	if node.get_script() == preload("res://scripts/game/regional_night_sky.gd"): return
 	if node is CanvasItem and not node.is_visible_in_tree():
 		return
 	var actor_id: Variant = _property(node, "actor_id", "")
@@ -319,6 +341,10 @@ static func _collect(node: Node, world: Node2D, backdrop: Node, subject: String,
 			"CloudBandA", "CloudBandB", "CloudMorningA", "CloudMorningB",
 			"CloudSunsetA", "CloudSunsetB", "CloudOvercastA", "CloudOvercastB"]:
 		subject = "weather_cloud"
+	elif node.name == "PhysicalBasket":
+		subject = "basket"
+	elif node.name == "YardCrop":
+		subject = "crop"
 	elif actor_id is String and not actor_id.is_empty():
 		subject = actor_id
 	elif script != null and script.resource_path == "res://scripts/entities/vacationer.gd":
@@ -545,6 +571,8 @@ static func _sanitize_gait(raw: Variant) -> Dictionary:
 			if not value is bool: return {}
 		else:
 			if not _number(value, -100000.0 if key == "phase" else -4.0, 100000.0 if key == "phase" else 4.0): return {}
+		if key == "blink_amount" and not _number(value, 0.0, 1.0): return {}
+		if key == "rest_breath_shift" and not _number(value, 0.0, 0.006): return {}
 		result[key] = value
 	if result.face_override:
 		var expression := _sanitize_texture(raw.get("expression"))
@@ -584,11 +612,20 @@ static func _load_texture(data: Dictionary) -> Texture2D:
 	return texture
 
 
-static func _load_gait(data: Dictionary) -> ShaderMaterial:
+static func _load_gait(data: Dictionary, texture_path := "") -> ShaderMaterial:
 	var material := ShaderMaterial.new()
 	material.shader = WALK_SHADER
 	for key: String in GAIT_DEFAULTS:
 		material.set_shader_parameter(key, data[key])
+	preload("res://scripts/entities/painted_rest_breath.gd").configure(material, texture_path)
+	if float(data.blink_amount) > 0.0:
+		var blink := preload("res://scripts/entities/painted_blink.gd").new()
+		var profile: String = blink.profile_for_source(texture_path)
+		if profile.is_empty():
+			material.set_shader_parameter("blink_amount", 0.0)
+		else:
+			blink.bind(material, profile)
+			material.set_shader_parameter("blink_amount", float(data.blink_amount))
 	if data.face_override:
 		material.set_shader_parameter("expression_texture", _load_texture(data.expression))
 		var region: Array = data.face_region
