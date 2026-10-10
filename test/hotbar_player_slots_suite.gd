@@ -225,7 +225,33 @@ func run() -> void:
 	check(reserve.cells["wheat"].disabled and reserve.slot_counts[0].text == "×1", "last handful of wheat stays for planting")
 	reserve.queue_free()
 
-	# 9. 英文
+	# 9. 空闲帧不重建格子样式（每帧 _refresh_hud 都会同步配置态）
+	var builds: int = bar.restyle_builds
+	await frames(30)
+	check(bar.restyle_builds == builds, "idle yard frames rebuild no slot styles (%d)" % (bar.restyle_builds - builds))
+	main._show_basket()
+	await frames()
+	builds = bar.restyle_builds
+	await frames(30)
+	check(bar.configuring and bar.restyle_builds == builds, "idle frames with the basket open rebuild no slot styles")
+	await bring_into_view(grid.cells["wheat"])
+	check(panel.begin_drag("wheat", center(grid.cells["wheat"])), "wheat drag starts for the hint check")
+	panel.drag_to(center(bar.slot_cells[3]))
+	check(bar.drop_hint == 3 and bar.restyle_builds > builds, "drag hint still restyles the slot it lights")
+	var hot_box := bar.slot_cells[3].get_theme_stylebox("normal") as StyleBoxFlat
+	check(hot_box.border_color == bar.DROP_EDGE, "lit slot shows the drop edge")
+	main._hide_basket()
+	await frames()
+	check(bar.drop_hint == -1 and not bar.configuring, "closing the basket clears the drop hint")
+	var cool_box := bar.slot_cells[3].get_theme_stylebox("normal") as StyleBoxFlat
+	check(cool_box.border_color != bar.DROP_EDGE, "slot loses the drop edge after the basket closes")
+	builds = bar.restyle_builds
+	for repeat in 5:
+		bar.set_configuring(false)
+		bar.set_drop_hint(-1)
+	check(bar.restyle_builds == builds, "repeating the same configuring state rebuilds nothing")
+
+	# 10. 英文
 	root.get_node("I18n").set_locale("en")
 	main._show_basket()
 	await frames()
