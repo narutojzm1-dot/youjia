@@ -18,6 +18,7 @@ GROK-CONTRIBUTOR从仅修bug扩展为“修bug＋边界明确的小功能”，�
 
 | Agent-ID | 名称 | 角色 | 状态 | 责任范围 |
 | --- | --- | --- | --- | --- |
+| `codex dot reviewer` | codex dot reviewer | 代码与架构审查 | 活跃 | 用户于北京时间 2026-10-11 指定；每 4 小时读取新增提交和活跃 PR，以具体代码证据在对应 Issue/PR 留评并跟进，不重复已知问题。只作静态审查，不修改产品实现、不启动 Codex 执行任务、不接管既有 Owner、不合并或发布；不新增逐 PR 审批关卡，不替代 CODEX-LEAD 的集中审查。 |
 | `CODEX-LEAD` | Codex（本地） | 制作人 / 新功能 / 共享架构 / 集成发布 | 活跃 | 接续制作、探索新功能及资源端到端交付，统筹辅助修复和独立QA；每日发版前统一审查，不再等待逐项他人批准。 |
 | `CODEX-LEAD-ASSISTANT` | Codex 协作维护者 | 近郊独立开发与自测试 | 活跃（2026-10-07用户恢复，已接收） | 按[#565](https://github.com/narutojzm1-dot/youjia/issues/565)独立负责近郊镜头/呈现/交互/局部效果及场景音景，消费Leader公共状态；与Grok及Cloud按方法协调。[目标与接续](collaboration/assistant-nearby-goal-565.md)，旧470交接保留。 |
 | `GROK-CONTRIBUTOR` | GROK BOT | 认领并修复 bug | 活跃（2026-10-08 职责调整，2026-10-09 已在 #242 回执） | 按[用户2026-10-08调整](collaboration/team-focus-2026-10-06.md#2026-10-08-用户调整cloud-接界面grok-改修-bug)，从QA报告、实玩反馈和issue认领缺陷，复现、修复并补回归；与Assistant按缺陷编号/方法划界。此前界面成果保留，在途界面PR已交Cloud收尾。不是Grok Build。 |
