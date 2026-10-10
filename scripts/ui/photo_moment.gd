@@ -12,7 +12,7 @@ const MAX_COORD := 16384.0
 const GAIT_DEFAULTS := {
 	"phase": 0.0, "amount": 0.0, "hip": 0.68, "foot_split": 0.5,
 	"stride_uv": 0.1, "lift_uv": 0.015, "native_walk_face": 1.0,
-	"grounded_stride": false, "face_override": false, "rest_breath_shift": 0.0,
+	"grounded_stride": false, "face_override": false, "rest_breath_shift": 0.0, "blink_amount": 0.0,
 }
 
 var _snapshot: Dictionary = {}
@@ -571,6 +571,7 @@ static func _sanitize_gait(raw: Variant) -> Dictionary:
 			if not value is bool: return {}
 		else:
 			if not _number(value, -100000.0 if key == "phase" else -4.0, 100000.0 if key == "phase" else 4.0): return {}
+		if key == "blink_amount" and not _number(value, 0.0, 1.0): return {}
 		if key == "rest_breath_shift" and not _number(value, 0.0, 0.006): return {}
 		result[key] = value
 	if result.face_override:
@@ -617,6 +618,14 @@ static func _load_gait(data: Dictionary, texture_path := "") -> ShaderMaterial:
 	for key: String in GAIT_DEFAULTS:
 		material.set_shader_parameter(key, data[key])
 	preload("res://scripts/entities/painted_rest_breath.gd").configure(material, texture_path)
+	if float(data.blink_amount) > 0.0:
+		var blink := preload("res://scripts/entities/painted_blink.gd").new()
+		var profile: String = blink.profile_for_source(texture_path)
+		if profile.is_empty():
+			material.set_shader_parameter("blink_amount", 0.0)
+		else:
+			blink.bind(material, profile)
+			material.set_shader_parameter("blink_amount", float(data.blink_amount))
 	if data.face_override:
 		material.set_shader_parameter("expression_texture", _load_texture(data.expression))
 		var region: Array = data.face_region

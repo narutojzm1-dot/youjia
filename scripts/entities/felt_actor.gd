@@ -677,12 +677,10 @@ func tick(delta: float, world_size: Vector2) -> void:
 		_sprite.rotation = 0.0
 		_rig.tick(delta, moved, depth, reduced)
 	if _blink != null:
-		if species == "cow":
-			var cow_lying: bool = _sprite.texture.resource_path == _blink.COW_REST_SOURCE
-			var desired_source: String = _blink.COW_REST_SOURCE if cow_lying else _blink.SOURCE
-			if _blink.source_path != desired_source:
-				_blink.cancel()
-				_blink.bind(_gait._material, "cow_rest" if cow_lying else "cow")
+		var profile: String = _blink.profile_for_source(_sprite.texture.resource_path)
+		if not profile.is_empty() and _blink.source_path != _sprite.texture.resource_path:
+			_blink.cancel()
+			_blink.bind(_gait._material, profile)
 		_blink.advance(delta, not reduced and not posed and state == "rest" and _ack_cel.is_empty() and _velocity.length() <= 0.3 and _gait.weight <= 0.08 and _sprite.texture.resource_path == _blink.source_path)
 	z_index = roundi(position.y)
 

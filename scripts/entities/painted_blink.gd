@@ -14,6 +14,11 @@ const GOOSE_SOURCE := "res://assets/holiday/characters/cast_v2/goose_rest.png"
 const GOOSE_CLOSED := preload("res://assets/holiday/characters/cast_v2/goose_rest_blink.png")
 const COW_REST_SOURCE := "res://assets/holiday/characters/shelter/cow-rest.png"
 const COW_REST_CLOSED := preload("res://assets/holiday/characters/shelter/cow-rest-blink.png")
+const SHEEP_A_REST_SOURCE := "res://assets/holiday/characters/shelter/sheep-clingy-rest.png"
+const SHEEP_B_REST_SOURCE := "res://assets/holiday/characters/shelter/sheep-dull-rest.png"
+const SHEEP_A_REST_CLOSED := preload("res://assets/holiday/characters/shelter/sheep-clingy-rest-blink.png")
+const SHEEP_B_REST_CLOSED := preload("res://assets/holiday/characters/shelter/sheep-dull-rest-blink.png")
+const SOURCE_PROFILES := {SOURCE:"cow", COW_REST_SOURCE:"cow_rest", HORSE_SOURCE:"horse", LLAMA_SOURCE:"llama", GOOSE_SOURCE:"goose", SHEEP_A_SOURCE:"sheep_a", SHEEP_B_SOURCE:"sheep_b", SHEEP_A_REST_SOURCE:"sheep_a_rest", SHEEP_B_REST_SOURCE:"sheep_b_rest"}
 const DURATION := 0.30
 var rng := RandomNumberGenerator.new()
 var wait_left := 0.0
@@ -28,6 +33,9 @@ func _init() -> void:
 	rng.randomize()
 	_schedule()
 
+static func profile_for_source(path: String) -> String:
+	return str(SOURCE_PROFILES.get(path, ""))
+
 func bind(target: ShaderMaterial, species: String = "cow") -> void:
 	material = target
 	source_path = SOURCE
@@ -40,6 +48,16 @@ func bind(target: ShaderMaterial, species: String = "cow") -> void:
 			closed = COW_REST_CLOSED
 			eye_a = Vector4(181, 435, 60, 51)
 			eye_b = Vector4(321, 465, 115, 72)
+		"sheep_a_rest":
+			source_path = SHEEP_A_REST_SOURCE
+			closed = SHEEP_A_REST_CLOSED
+			eye_a = Vector4(838, 442, 151, 112)
+			eye_b = Vector4(1030, 391, 91, 67)
+		"sheep_b_rest":
+			source_path = SHEEP_B_REST_SOURCE
+			closed = SHEEP_B_REST_CLOSED
+			eye_a = Vector4(282, 510, 125, 81)
+			eye_b = Vector4(132, 514, 57, 64)
 		"goose":
 			source_path = GOOSE_SOURCE
 			closed = GOOSE_CLOSED

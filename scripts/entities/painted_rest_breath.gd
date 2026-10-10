@@ -3,6 +3,7 @@ extends RefCounted
 ## A per-actor cosmetic clock never consumes gameplay RNG or shader TIME.
 const ROOT := "res://assets/holiday/characters/shelter/"
 const REGIONS := {
+	"res://assets/holiday/characters/cast_v2/goose_rest.png": Vector4(0.15, 0.43, 0.63, 0.34),
 	ROOT+"cow-rest.png": Vector4(0.50, 0.40, 0.35, 0.32),
 	ROOT+"horse-rest.png": Vector4(0.53, 0.40, 0.27, 0.29),
 	ROOT+"llama-rest.png": Vector4(0.12, 0.50, 0.46, 0.35),

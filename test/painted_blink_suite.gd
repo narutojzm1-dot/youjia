@@ -266,7 +266,7 @@ func _check_sheep(world, id: String) -> void:
 	sheep.set_meta("shelter_rest", true)
 	sheep._blink.wait_left = 0.0
 	for i in 8: sheep.tick(1.0 / 60.0, Vector2(1280, 720))
-	check(sheep._blink.amount == 0.0 and sheep._posture_id == "shelter_rest", id + " lying body excludes standing eyes")
+	check(sheep._blink.source_path == (Blink.SHEEP_A_REST_SOURCE if id == "sheep_a" else Blink.SHEEP_B_REST_SOURCE) and sheep._posture_id == "shelter_rest", id + " lying body binds its own eyes instead of standing eyes")
 	sheep.remove_meta("shelter_rest")
 	for reduced: bool in [false, true]:
 		root.get_node("TuningStore").set_value("ui.reduced_motion", reduced, false)

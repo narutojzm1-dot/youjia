@@ -38,7 +38,8 @@ func run() -> void:
 			for x in 384:
 				if baseline.get_pixel(x,y).is_equal_approx(peak.get_pixel(x,y)): continue
 				changed += 1
-				var uv := (Vector2(x,y)+Vector2(0.5,0.5))/384.0
+				var extent := Vector2(sprite.texture.get_size()) * sprite.scale
+				var uv := (Vector2(x,y)+Vector2(0.5,0.5)-sprite.position+extent*0.5)/extent
 				if not Rect2(region.x,region.y,region.z,region.w).grow(0.5/384.0).has_point(uv): outside += 1
 		if changed == 0 or outside > 0: failures += 1
 		var label := path.get_file().get_basename()
