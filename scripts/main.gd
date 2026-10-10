@@ -1353,6 +1353,8 @@ func _leave_exploration() -> void:
 
 func _clear_world(save_progress: bool = true) -> void:
 	if _night_sky_overlay != null: _night_sky_overlay.visible = false
+	_yard_night_sky = null
+	_path_night_sky = null
 	if _exploration != null and _exploration.is_exploring():
 		if _screen == "exploring":
 			_screen = "leaving"
