@@ -45,6 +45,10 @@ var walk_ground: PackedVector2Array = PackedVector2Array()
 var avoid_pond := false
 var body_radius := Vector2(10,6)
 var body_obstacles: Array = []
+var idle_rest: ResidentIdleRest
+var rest_allowed := false
+var _rest_input := Vector2.ZERO
+var _rest_replay := 0.0
 
 
 func setup(start: Vector2) -> void:
@@ -80,6 +84,8 @@ func setup(start: Vector2) -> void:
 	_sequence_walker.visible=sequence_walker_enabled
 	if sequence_walker_enabled:
 		_sprite.visible=false
+	idle_rest = ResidentIdleRest.new()
+	add_child(idle_rest)
 	_grass = Sprite2D.new()
 	GRASS_ART.configure_bundle(_grass)
 	_grass.visible = false
@@ -89,6 +95,17 @@ func setup(start: Vector2) -> void:
 
 
 func tick(delta: float, input_vector: Vector2, world_size: Vector2) -> void:
+	var reduced := bool(TuningStore.get_value("ui.reduced_motion", false))
+	if not input_vector.is_zero_approx():
+		if idle_rest.active():
+			_rest_input = input_vector
+			_rest_replay = 0.18
+		idle_rest.wake(reduced)
+	if idle_rest.getting_up():
+		input_vector = Vector2.ZERO
+	elif _rest_replay > 0.0:
+		if input_vector.is_zero_approx(): input_vector = _rest_input
+		_rest_replay = maxf(0.0, _rest_replay - delta)
 	var depth := YardGround.depth_at(position.y)
 	picture_depth = depth
 	var speed := float(TuningStore.get_value("player.move.max_speed", 96.0)) * depth
@@ -159,6 +176,10 @@ func tick(delta: float, input_vector: Vector2, world_size: Vector2) -> void:
 			if not _sequence_walker.action_kind.is_empty():
 				_sequence_walker.reset_motion()
 		_sequence_walker.advance(delta,moved,depth,_gait.face,bool(TuningStore.get_value("ui.reduced_motion",false)),float(TuningStore.get_value("player.visual.scale",1.0)))
+	idle_rest.advance(delta, rest_allowed and input_vector.is_zero_approx() and not moving and not carrying_grass and not leading and _sequence_walker.action_kind.is_empty(), depth, _gait.face, reduced, float(TuningStore.get_value("player.visual.scale", 1.0)))
+	if sequence_walker_enabled:
+		_sequence_walker.visible = not idle_rest.active()
+	if idle_rest.active(): player_state = "resting" if idle_rest.stage == "nap" else "sitting"
 	_grass_hold_delay = maxf(0.0, _grass_hold_delay - delta)
 	if bool(TuningStore.get_value("ui.reduced_motion", false)):
 		_grass_hold_delay = 0.0
@@ -184,6 +205,7 @@ func set_planted_gait_enabled(enabled: bool) -> void:
 
 
 func reset_locomotion() -> void:
+	clear_idle_rest()
 	if _sequence_walker!=null:
 		_sequence_walker.reset_motion()
 	if _painted_walker!=null:
@@ -191,6 +213,13 @@ func reset_locomotion() -> void:
 	_velocity=Vector2.ZERO
 	_gait.weight=0.0
 	_rig.reset_contacts()
+
+
+func clear_idle_rest() -> void:
+	if idle_rest != null: idle_rest.clear()
+	_rest_replay = 0.0
+	_rest_input = Vector2.ZERO
+	if _sequence_walker != null: _sequence_walker.visible = sequence_walker_enabled
 
 
 func grass_hand_global_position() -> Vector2:
@@ -263,6 +292,7 @@ func consume_grass(target_position: Vector2 = Vector2.INF) -> bool:
 
 
 func _play_grass_action(kind: StringName) -> void:
+	clear_idle_rest()
 	if sequence_walker_enabled and is_instance_valid(_sequence_walker):
 		# Settle arrival momentum; the next movement input still cancels immediately.
 		_velocity = Vector2.ZERO

@@ -1,0 +1,58 @@
+{
+  "status": "candidate_not_runtime",
+  "source_size": [
+    1448,
+    1086
+  ],
+  "note": "Unequal cells and changed lying silhouettes; these are inspection regions, not approved runtime anchors.",
+  "regions": {
+    "stand": [
+      64,
+      43,
+      242,
+      570
+    ],
+    "lower": [
+      394,
+      245,
+      250,
+      370
+    ],
+    "sit": [
+      734,
+      266,
+      320,
+      350
+    ],
+    "lean": [
+      1071,
+      273,
+      367,
+      337
+    ],
+    "elbow": [
+      8,
+      744,
+      389,
+      246
+    ],
+    "lie_awake": [
+      394,
+      810,
+      365,
+      175
+    ],
+    "lie_closed": [
+      755,
+      810,
+      421,
+      175
+    ],
+    "rise": [
+      1177,
+      667,
+      241,
+      342
+    ]
+  }
+}
