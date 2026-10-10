@@ -912,3 +912,9 @@ CODEX-LEAD 接续 CURSOR-CLOUD 已交付界面，五格引用接入 SaveStore/co
 GROK-CONTRIBUTOR的bug、小功能及其后续修订，均须由CODEX-LEAD审核最终完整SHA，核对需求、文件边界、代码/资源质量、存档兼容和必要测试/真实体验。在原PR记录审核人、精确SHA、结论、证据和未解决项；通过且满足门禁后由Leader合入，Grok不得仅凭自测或CI自行合入。审核后SHA变化须复核。Leader每轮主动查看其新提交、对话/行内评论及评审，不仅依赖通知；无变化的已审版本不重复审。此为GROK-CONTRIBUTOR专门要求，不恢复全员逐PR外审或强制子代理审核，普通开发步骤不增加逐次批准。下文冲突的历史规则以本条为准。
 
 执行Owner：CODEX-LEAD。适用于#703/#704/#705及GROK-CONTRIBUTOR其他提交。两小时定时提示已同步最新Owner、成长策划#700、每轮Grok最终SHA审查、真实交付和日版本去重；频率保持两小时。完整切片范围见[小功能队列](collaboration/grok-small-features-2026-10-10.md)。
+
+## 2026-10-11 #700 三餐核心切片与Grok审核
+
+Owner CODEX-LEAD；分支 `codex/lead-meal-ledger-700`。新增餐次完成凭据与食材扣除共享事务，确认后才可读、失败/未知/重开不重复扣料或发点；普通1/3/2、疲劳0/1/1。暂不挂主场景，不是完整成长已完成；跨日余点、食谱/时窗、疲劳自动判定、成长行动仍在#700接续。领域与SaveStore回归证据见 `docs/playtests/2026-10-11-meal-ledger/README.md`。
+
+Grok #703/#704已回执提交PR718/720；Leader分别在最终SHA 76b3df7f144f42eab7a71dfdb5172de38ed25061 / 445204d0d5073e4f72dc14190df1b31a3358a163 复现解析失败并退回，不合入。#705仍待本人回执；详细边界与原PR审核索引见小功能队列。
