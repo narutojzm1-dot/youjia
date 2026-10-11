@@ -7,9 +7,10 @@
 - 需求/变更编号：
 - Agent-ID（见 `docs/agents.md`；首次身份登记 PR 可填 `REGISTER:<Agent-ID>`）：
 - 需求列表中的 Owner/状态是否匹配：是 / 否（原因）
+- 适用门禁类型（见 `docs/collaboration/qa-reporting.md`）：普通 QA 报告 / QA 简单修复 / GROK-CONTRIBUTOR 提交 / 其他（注明有效依据）
 - 适用验证对应的完整 commit SHA：
 - 当日发版集中审查记录（可待日结补充）：
-- 如有专项审阅，填写实际结论与链接（不强制启动子代理）：
+- 专项审核（普通 QA 报告填不适用；QA 简单修复填 A/B 身份、B 审核最终完整 SHA/结论/证据；Grok 提交填 Leader 审核最终完整 SHA/结论/证据；其他按有效授权）：
 - 台账状态是否更新：是 / 否（原因）
 - 是否更新 `docs/game-design.md`：是 / 否（原因）
 - 若为方向提案，当前决策状态：待决策 / 已批准 / 不适用

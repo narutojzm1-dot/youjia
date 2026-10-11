@@ -1,0 +1,30 @@
+{
+  "rawFiles": 160,
+  "rawBytes": 164870323,
+  "selection": "Every original browser/release file except duplicate PCK/WASM, exact metadata/scripts and requirement audit. Initial version race, desktop30s navigation and cold180s failure preserved. First two terminal stderr traces were returned by exec but not recorded to files; not reconstructed. Observed driver stdout text may have native code-page corruption; canonical loading-network JSON was written UTF8.",
+  "missingNotReconstructed": [
+    "nearby-public-input3ca-browser.log"
+  ],
+  "excludedLocallyRetained": [
+    {
+      "path": "nearby-public-input3ca-release/engine-3b105340f798ed0e7d6aa7725328dc8c0bf8cd94ffea14835e43f83045048c74.wasm",
+      "bytes": 39514754,
+      "sha256": "fc74679e3b97f76878947fcd4fbe1268cbfa6188182a2e33bbc3f5dc9bfa57d0"
+    },
+    {
+      "path": "nearby-public-input3ca-release/game-3caeb1f.pck",
+      "bytes": 69625924,
+      "sha256": "dd14a0ee9777f2b1466c20e54602c0007b52e8e6aa902e4d60ba13ffb01c8a9c"
+    },
+    {
+      "path": "nearby-public-inputc282-release/engine-3b105340f798ed0e7d6aa7725328dc8c0bf8cd94ffea14835e43f83045048c74.wasm",
+      "bytes": 39514754,
+      "sha256": "fc74679e3b97f76878947fcd4fbe1268cbfa6188182a2e33bbc3f5dc9bfa57d0"
+    },
+    {
+      "path": "nearby-public-inputc282-release/game-c28246f.pck",
+      "bytes": 69626676,
+      "sha256": "f6159b930d7a6230c0f42f6b4687d8b3b23ed4b752a2845734a4fd723a170281"
+    }
+  ]
+}
