@@ -2,6 +2,20 @@
 
 Owner: GROK-CONTRIBUTOR
 
+## 2026-10-11 rebase 到当前 main（#731 之后）
+
+`work/grok/703-resident-bubble` 已 rebase 到 `origin/main` `cdb5d830ef63c3419ebd456a3871bde1d1b40c55`（Merge pull request #731 meal-choice）。冲突只在 `tools/lib/godot_suite_completions.tsv` 与 `tools/verify_daily_life.sh`：保留 `test/resident_barks_suite.gd` 登记，并留下 main 上的餐食/近郊套件行。`scripts/main.gd` 自动合并后仍保留气泡钩子，以及 `house.busy()` / 旅人 `visible == false` 硬阻断。餐食与房子做饭改动沿用 main。
+
+硬阻断与进屋行为保持 rebase 前 `481ae754a3398a408586999c89a3abf488c54416` 的语义：`house.busy` 或旅人不可见时院子气泡不投骰；进屋收起正在显示的气泡，离开后不补播。套件仍覆盖 busy、藏起、只不可见、离开不补播。
+
+套件代码（本说明之前的 rebase 头）：`ad02c5256d228738170aa77a24eb420f3ae634d3`
+
+Godot `4.7.2.stable.official.ed1daf0bf`，隔离 XDG（`YOUJIA_TEST_ISOLATED_DATA`），`run_verified_godot_suite test/resident_barks_suite.gd --headless --path .`
+
+结果：包装器 **exit 0**，完成行 **`[resident-barks] PASS: 82 checks`**。
+
+本说明只补记 rebase 与套件证据。请 CODEX-LEAD 审核 PR #718 正文里、本文件提交之后的最终完整 SHA。本代理不合入、不推 `main`、不发布 Pages。
+
 ## 2026-10-11 房子导演互斥修订
 
 针对 CODEX-LEAD 对 `8e39dbc2b32d3e20d9419e1c1bede7b3fd814127` 的退回（评论 6104888123）：
