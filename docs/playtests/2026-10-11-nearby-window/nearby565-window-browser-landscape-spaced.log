@@ -1,0 +1,9 @@
+{"view": [844, 390], "stage": "title", "keepsakes": {}}
+{"view": [844, 390], "stage": "yard", "keepsakes": {}}
+Traceback (most recent call last):
+  File "D:\games\youjia-test\assistant-recovery\browser-window565-natural-video-spaced.py", line 132, in <module>
+    active=wait_state(lambda v:((v.get('exploration') or {}).get('session') or {}).get('state')=='active','ordinary outing')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\games\youjia-test\assistant-recovery\browser-window565-natural-video-spaced.py", line 55, in wait_state
+    raise AssertionError(label+' timed out')
+AssertionError: ordinary outing timed out
