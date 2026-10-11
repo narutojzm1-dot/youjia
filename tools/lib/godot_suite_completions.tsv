@@ -160,6 +160,7 @@ test/exploration_tap_feedback_suite.gd	\[exploration-tap-feedback\] PASS: [1-9][
 test/regional_clock_suite.gd	REGIONAL_CLOCK checks=[1-9][0-9]* failures=0$
 test/exploration_hud_readable_suite.gd	\[exploration-hud-readable\] PASS: [1-9][0-9]* checks
 test/cjk_line_break_suite.gd	CJK_LINE_BREAK checks=[1-9][0-9]* failures=0$
+test/menu_keyboard_focus_suite.gd	MENU_KEYBOARD_FOCUS checks=[1-9][0-9]* failures=0$
 test/photo_diary_weather_suite.gd	\[photo-diary-weather\] PASS: [1-9][0-9]* checks
 test/physical_basket_suite.gd	physical_basket_suite: [1-9][0-9]* checks, 0 failures
 test/yard_crops_suite.gd	YARD_CROPS checks=[1-9][0-9]* failures=0
@@ -181,3 +182,4 @@ test/hud_pointer_input_suite.gd	HUD_POINTER_INPUT checks=[1-9][0-9]* failures=0
 test/meal_audio_suite.gd	\[meal-audio\] PASS: [1-9][0-9]* checks
 
 test/meal_audio_host_suite.gd	MEAL_AUDIO_HOST checks=[1-9][0-9]* failures=0
+test/resident_barks_suite.gd	\[resident-barks\] PASS: [1-9][0-9]* checks

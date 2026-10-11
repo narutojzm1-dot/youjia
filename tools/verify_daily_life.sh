@@ -146,11 +146,13 @@ run_godot suite test/exploration_tap_feedback_suite.gd
 run_godot suite test/regional_clock_suite.gd
 run_godot suite test/exploration_hud_readable_suite.gd
 run_godot suite test/cjk_line_break_suite.gd
+run_godot suite test/menu_keyboard_focus_suite.gd
 run_godot suite test/physical_basket_suite.gd
 run_godot suite test/photo_diary_weather_suite.gd
 
 run_godot suite test/resident_idle_rest_suite.gd
 run_godot suite test/exploration_trip_capacity_suite.gd
+run_godot suite test/resident_barks_suite.gd
 
 run_godot suite test/meal_ledger_suite.gd
 run_godot suite test/rest_context_suite.gd

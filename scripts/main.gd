@@ -84,6 +84,13 @@ var _chip_label_width := -1.0
 var _residents: RefCounted
 var _chick_panel: Control
 var _crop_panel: Control
+var _resident_bubble: Control
+var _resident_barks: RefCounted
+var _crop_kind_watch := ""
+var _bark_clock := 0.0
+## Chick proximity hysteresis: stay latched until beyond PET_REACH + margin.
+var _chick_proximity_latched := false
+const CHICK_LEAVE_MARGIN := 28.0
 var _inventory: RefCounted
 var _decor: RefCounted
 var _basket_drop: Dictionary = {}
@@ -367,6 +374,10 @@ func _ready() -> void:
 	_crop_panel.flower_requested.connect(func() -> void:
 		_hide_crops()
 		if _world != null: _world._interact_legacy_plant())
+	_resident_barks = preload("res://scripts/presentation/resident_barks.gd").new()
+	_resident_bubble = preload("res://scripts/presentation/resident_bubble.gd").new()
+	_resident_bubble.name = "ResidentBubble"
+	_ui_layer.add_child(_resident_bubble)
 	_decor = load("res://scripts/inventory/yard_decor_controller.gd").new(SaveStore)
 	_decor.changed.connect(_on_decor_changed)
 	_decor.resubmitted.connect(_on_decor_resubmitted)
@@ -391,6 +402,8 @@ func _report_web_first_frame() -> void:
 
 
 func _process(delta: float) -> void:
+	_bark_clock += delta
+	_tick_resident_barks(delta)
 	if _notice_time > 0.0 and _can_show_notice():
 		_notice_time = maxf(0.0, _notice_time - delta)
 	_sync_notice_visibility()
@@ -482,6 +495,46 @@ func _process(delta: float) -> void:
 			_last_tod_phase = phase
 
 
+const MENU_FOCUS_ACTIONS: Array[StringName] = [&"ui_focus_next", &"ui_focus_prev", &"ui_up", &"ui_down", &"ui_accept"]
+
+
+## 菜单打开时没有按钮拿着焦点，Godot 不会因 Tab/方向键自动选中按钮，纯键盘玩家在标题、暂停、
+## 确认和相册里按键毫无反应。第一次导航键只把焦点交给该界面的默认按钮，之后由 Godot 正常移动和按下；
+## 鼠标玩家不会凭空多出焦点框。焦点留在被确认框盖住的暂停按钮上时同样交给最上层菜单。
+## 相册左右键仍归翻页，不在此列。
+func _top_menu() -> Control:
+	if _confirm_screen.visible: return _confirm_screen
+	if _album_screen.visible: return _album_screen
+	if _pause_screen.visible: return _pause_screen
+	if _screen == "title" and _title_screen.visible: return _title_screen
+	return null
+
+
+func _menu_default_button(menu: Control) -> Button:
+	if menu == _confirm_screen: return _confirm_cancel_button
+	if menu == _album_screen: return _album_back_button
+	if menu == _pause_screen: return _resume_button
+	return _play_button
+
+
+func _focus_menu_default(event: InputEvent) -> bool:
+	if not (event is InputEventKey or event is InputEventJoypadButton) or event.is_echo():
+		return false
+	var menu := _top_menu()
+	if menu == null:
+		return false
+	var focused := get_viewport().gui_get_focus_owner()
+	if focused != null and focused.is_visible_in_tree() and menu.is_ancestor_of(focused):
+		return false
+	if not MENU_FOCUS_ACTIONS.any(func(action: StringName) -> bool: return event.is_action_pressed(action)):
+		return false
+	var target := _menu_default_button(menu)
+	if not target.is_visible_in_tree() or target.disabled:
+		return false
+	target.grab_focus()
+	return true
+
+
 func _input(event: InputEvent) -> void:
 	if _world != null and _world.house != null and ((event is InputEventMouseButton and event.pressed) or (event is InputEventScreenTouch and event.pressed) or (event is InputEventKey and event.pressed and not event.echo)):
 		_world.house.player_activity()
@@ -532,6 +585,9 @@ func _input(event: InputEvent) -> void:
 			_hide_album()
 		elif _screen in ["game", "exploring"]:
 			_toggle_pause()
+		get_viewport().set_input_as_handled()
+		return
+	if _focus_menu_default(event):
 		get_viewport().set_input_as_handled()
 		return
 	if _album_screen.visible:
@@ -1807,6 +1863,7 @@ func _exploration_save_covers(accepted: Dictionary, problem: Dictionary) -> bool
 
 
 func _on_save_confirmed(op_id: String, kind: String) -> void:
+	_on_crops_confirmed_for_bark(kind)
 	if _save_exploration_coverage.has(op_id) and _save_exploration_coverage[op_id].kind == kind:
 		_clear_covered_save_problems(_save_exploration_coverage[op_id].problems)
 		_save_exploration_coverage.erase(op_id)
@@ -3362,3 +3419,148 @@ func _flat(bg: Color, border: Color, width: int = 2, radius: int = 16) -> StyleB
 	style.content_margin_top = 10
 	style.content_margin_bottom = 10
 	return style
+
+## GROK #703: picture-book resident barks (chick / plant / Leader fatigue hook).
+func _tick_resident_barks(_delta: float) -> void:
+	_sync_resident_bark_avoidance()
+	if _crop_panel != null and _crop_panel.visible:
+		var bed := SaveStore.get_yard_crops()
+		if not bed.is_empty():
+			_crop_kind_watch = str(bed.get("kind", ""))
+	var hard_block := _resident_bark_hard_blocked()
+	# 暂停、近郊、进屋或旅人被藏起：收起正在显示的气泡，不保留补播。
+	if hard_block and _resident_bubble != null and _resident_bubble.visible:
+		_resident_bubble.dismiss()
+	if hard_block or _world == null or _screen != "game":
+		return
+	if _crop_panel != null and _crop_panel.visible:
+		return
+	if _chick_panel != null and _chick_panel.visible:
+		return
+	if _basket_panel != null and _basket_panel.visible:
+		return
+	_try_chick_bark()
+
+
+func _resident_bark_hard_blocked() -> bool:
+	# Pause / album / confirm / leave-game: dismiss and do not replay.
+	if _screen != "game":
+		return true
+	if _pause_screen != null and _pause_screen.visible:
+		return true
+	if _album_screen != null and _album_screen.visible:
+		return true
+	if _confirm_screen != null and _confirm_screen.visible:
+		return true
+	if _save_problem_active:
+		return true
+	# 睡眠/阳台导演：house.busy 或旅人已不可见。一楼坐标还在，也不能据此冒泡。
+	if _world != null and _world.house != null and _world.house.busy():
+		return true
+	if _world != null and _world.get_player() != null and not _world.get_player().visible:
+		return true
+	return false
+
+
+func _resident_bark_blocked() -> bool:
+	if _resident_bark_hard_blocked():
+		return true
+	if _basket_panel != null and _basket_panel.visible:
+		return true
+	if _crop_panel != null and _crop_panel.visible:
+		return true
+	if _chick_panel != null and _chick_panel.visible:
+		return true
+	return false
+
+
+func _on_crops_confirmed_for_bark(kind: String) -> void:
+	if kind != "crops" or _resident_barks == null or _resident_bubble == null:
+		return
+	var bed := SaveStore.get_yard_crops()
+	if bed.is_empty():
+		return
+	var now_kind := str(bed.get("kind", ""))
+	var was_empty := _crop_kind_watch.is_empty()
+	_crop_kind_watch = now_kind
+	if not was_empty or now_kind.is_empty():
+		return
+	# Confirmed sow beats chick idle: may preempt a showing idle line and ignores
+	# global cooldown left by that idle. Only hard blocks stop it; panel may stay open.
+	var hard: bool = _resident_bark_hard_blocked()
+	var bark_id: String = _resident_barks.try_plant_sown(_bark_clock, hard)
+	if bark_id.is_empty():
+		return
+	_show_resident_bark(bark_id)
+
+
+func _try_chick_bark() -> void:
+	if _resident_barks == null or _resident_bubble == null or _world == null:
+		return
+	var growth := SaveStore.get_chick_growth()
+	if growth.is_empty() or str(growth.get("stage", "")) != "chick":
+		_chick_proximity_latched = false
+		_resident_barks.try_chick_proximity(_bark_clock, true, false)
+		return
+	var chick = _world.actor_named("chicken")
+	var player = _world.get_player()
+	if chick == null or player == null:
+		_chick_proximity_latched = false
+		_resident_barks.try_chick_proximity(_bark_clock, true, false)
+		return
+	var reach := YardInteraction.PET_REACH
+	var dist: float = player.position.distance_to(chick.position)
+	# Enter at PET_REACH; leave only beyond reach + margin (anti-jitter).
+	if _chick_proximity_latched:
+		_chick_proximity_latched = dist <= reach + CHICK_LEAVE_MARGIN
+	else:
+		_chick_proximity_latched = dist <= reach
+	# 人被藏进屋里时距离仍按一楼坐标算；硬阻断/已有气泡时不投骰，但仍同步靠近状态。
+	var soft_busy: bool = _resident_bark_hard_blocked() or _resident_bubble.is_showing()
+	var bark_id: String = _resident_barks.try_chick_proximity(
+		_bark_clock, soft_busy, _chick_proximity_latched
+	)
+	if bark_id.is_empty():
+		return
+	_show_resident_bark(bark_id)
+
+
+## Leader fatigue hook (#700 / #703): pass true only from real fatigue state.
+## Does not infer overnight or missed sleep.
+func offer_fatigue_bark(fatigue_active: bool) -> bool:
+	if _resident_barks == null or _resident_bubble == null:
+		return false
+	var busy: bool = _resident_bubble.is_showing() or _resident_bark_blocked()
+	var bark_id: String = _resident_barks.try_fatigue(_bark_clock, busy, fatigue_active)
+	if bark_id.is_empty():
+		return false
+	_show_resident_bark(bark_id)
+	return true
+
+
+func _show_resident_bark(bark_id: String) -> void:
+	var key: String = _resident_barks.i18n_key(bark_id)
+	if key.is_empty():
+		return
+	var text := I18n.t(key)
+	var anchor := Vector2.ZERO
+	var follow := Callable()
+	if _world != null and _world.get_player() != null:
+		var player = _world.get_player()
+		anchor = player.position
+		follow = func() -> Vector2:
+			if _world == null or _world.get_player() == null:
+				return anchor
+			return _world.get_player().position
+	if _ui_layer != null:
+		_ui_layer.move_child(_resident_bubble, _ui_layer.get_child_count() - 1)
+	_sync_resident_bark_avoidance()
+	_resident_bubble.show_bark(text, anchor, preload("res://scripts/presentation/resident_barks.gd").DISPLAY_SECONDS, follow)
+
+
+func _sync_resident_bark_avoidance() -> void:
+	if _resident_bubble == null:
+		return
+	_resident_bubble.avoid_rect = Rect2()
+	if _crop_panel != null and _crop_panel.visible and _crop_panel.paper != null:
+		_resident_bubble.avoid_rect = _crop_panel.paper.get_global_rect()
