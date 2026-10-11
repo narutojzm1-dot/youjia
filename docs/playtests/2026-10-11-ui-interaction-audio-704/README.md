@@ -40,3 +40,24 @@ CODEX-LEAD 对 `0aa59d9d`：缩进已修，但 L61 `before` / L65 `at_end` 类�
 - 完成行：`[ui-interaction-audio] PASS: 12 checks`
 
 这只说明无头套件断言完成。`play_cue` 在 headless 下注册成功即返回 true，不是扬声器出声。仍缺：原生/Web 听验、Main 背篓/相册/暂停真实按键或键盘次数、静音/音量/解锁、快速开关，以及翻页边界不响的可复核听音。合入仍交 CODEX-LEAD。
+
+## 幂等关闭不误响（2026-10-11，CODEX-LEAD 03:08:49Z）
+
+CODEX-LEAD 对 `121a248951a9af1a89ba88512c21cafb6bbe762f`：套件 12 checks PASS，但仍不可合入。要求核对 `_hide_basket` / `_hide_album` 在面板已经不可见时被清理调用，不得误播关闭音。
+
+本修订（代码 SHA `f1bba2e6b8cff39fa52c046352908b9c47842e88`）：
+
+- `scripts/main.gd`：背篓、相册只在可见→隐藏时调用 `play_close()`。已经隐藏再 `_hide_*` 不播关闭音。
+- `scripts/presentation/ui_interaction_audio.gd`：`close_cue_count` 只在关闭音真正送出后加一。
+- `test/ui_interaction_audio_suite.gd`：已隐藏时 hide 不增加次数；打开再关闭各加一次；关闭后再 hide 仍不加。
+
+同一隔离方式再跑（引擎仍为 `4.7.2.stable.official.ed1daf0bf`）：
+
+- import：`run_verified_godot --headless --path . --editor --import --quit`，退出码 `0`
+- 换独立 case 目录后 `run_verified_godot_suite … test/ui_interaction_audio_suite.gd --headless --path .`
+- 套件包装退出码：`0`
+- 完成行：`[ui-interaction-audio] PASS: 24 checks`
+
+这次 PASS 只覆盖无头计数：已隐藏的清理不再增加 `close_cue_count`，打开后再关闭增加一次。它不是扬声器出声。
+
+**原生/Web 听验仍待 CODEX-LEAD / GAME-QA，听感不写通过。** 仍缺可复核听音：背篓/相册/暂停真实按键或键盘、静音/音量/解锁、快速开关，以及翻页到头不响。不合入，不推 `main`，不发布 Pages。
