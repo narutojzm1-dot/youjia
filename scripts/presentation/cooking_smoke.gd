@@ -12,17 +12,39 @@ const DEFAULT_CHIMNEY_ANCHOR := Vector2(292.0, 218.0)
 const SMOKE_DAY := Color(0.82, 0.78, 0.72, 0.30)
 const SMOKE_NIGHT := Color(0.68, 0.66, 0.64, 0.22)
 
+## MotionPreference 写入的真实键。隔离套件里不能把自动加载名写成裸标识符。
+const REDUCED_MOTION_ID := "ui.reduced_motion"
+
+const PUFF_AMOUNT := 8
+const PUFF_LIFETIME := 3.2
+const PUFF_SIZE := 48
+
 var _emitter: CPUParticles2D
 var _cooking := false
 var _paused := false
 var _built := false
 var _night_tint := false
+var _puff_texture: ImageTexture
+var _tuning_hooked := false
+var _seen_reduced := false
+var _seen_reduced_valid := false
 
 
 func _ready() -> void:
 	_ensure_emitter()
+	_hook_tuning()
 	if position == Vector2.ZERO:
 		position = DEFAULT_CHIMNEY_ANCHOR
+	_apply_emission()
+
+
+func _process(_delta: float) -> void:
+	# 自动加载晚于本节点出现时，下一帧再订一次；订上之后仍比对当前值，避免只靠一次信号。
+	if not _tuning_hooked:
+		_hook_tuning()
+	var reduced := _reduced_motion()
+	if _seen_reduced_valid and reduced == _seen_reduced:
+		return
 	_apply_emission()
 
 
@@ -36,8 +58,8 @@ func set_night_tint(night: bool) -> void:
 	if _night_tint == night:
 		return
 	_night_tint = night
-	if _emitter != null:
-		_emitter.color = SMOKE_NIGHT if _night_tint else SMOKE_DAY
+	# 做饭标志不变，夜色变了也要重刷渐变，不能只改一个恒定色。
+	_apply_emission()
 
 
 ## Start or stop cooking smoke. Same value is a no-op (no restart, no extra nodes).
@@ -69,6 +91,24 @@ func is_emitting() -> bool:
 
 
 func debug_snapshot() -> Dictionary:
+	var wash := _wash()
+	var ramp_peak := 0.0
+	var ramp_end := 1.0
+	var center_a := 0.0
+	var corner_a := 1.0
+	var has_texture := false
+	if _emitter != null and _emitter.color_ramp is Gradient:
+		var ramp: Gradient = _emitter.color_ramp
+		var peak: Color = ramp.sample(0.12)
+		wash = peak
+		ramp_peak = peak.a
+		ramp_end = ramp.sample(1.0).a
+	if _emitter != null and _emitter.texture is ImageTexture:
+		has_texture = true
+		var image := (_emitter.texture as ImageTexture).get_image()
+		if image != null and image.get_width() > 1 and image.get_height() > 1:
+			center_a = image.get_pixel(image.get_width() / 2, image.get_height() / 2).a
+			corner_a = image.get_pixel(0, 0).a
 	return {
 		"cooking": _cooking,
 		"paused": _paused,
@@ -77,6 +117,13 @@ func debug_snapshot() -> Dictionary:
 		"anchor": position,
 		"night_tint": _night_tint,
 		"reduced_motion": _reduced_motion(),
+		"tuning_hooked": _tuning_hooked,
+		"has_soft_texture": has_texture,
+		"ramp_peak_alpha": ramp_peak,
+		"ramp_end_alpha": ramp_end,
+		"texture_center_alpha": center_a,
+		"texture_corner_alpha": corner_a,
+		"wash": wash,
 	}
 
 
@@ -92,22 +139,28 @@ func _ensure_emitter() -> void:
 	_emitter.emitting = false
 	_emitter.one_shot = false
 	_emitter.explosiveness = 0.0
-	_emitter.randomness = 0.55
-	_emitter.lifetime = 2.8
+	_emitter.randomness = 0.45
+	_emitter.lifetime = PUFF_LIFETIME
 	_emitter.preprocess = 0.0
-	_emitter.amount = 10
+	_emitter.amount = PUFF_AMOUNT
 	_emitter.emission_shape = CPUParticles2D.EMISSION_SHAPE_SPHERE
-	_emitter.emission_sphere_radius = 6.0
+	_emitter.emission_sphere_radius = 4.0
 	_emitter.direction = Vector2(0.0, -1.0)
-	_emitter.spread = 18.0
-	_emitter.gravity = Vector2(4.0, -12.0)
-	_emitter.initial_velocity_min = 8.0
-	_emitter.initial_velocity_max = 18.0
-	_emitter.angular_velocity_min = -12.0
-	_emitter.angular_velocity_max = 12.0
-	_emitter.scale_amount_min = 0.55
-	_emitter.scale_amount_max = 1.35
-	_emitter.color = SMOKE_DAY
+	_emitter.spread = 16.0
+	_emitter.gravity = Vector2(6.0, -16.0)
+	_emitter.initial_velocity_min = 10.0
+	_emitter.initial_velocity_max = 22.0
+	_emitter.angular_velocity_min = -8.0
+	_emitter.angular_velocity_max = 8.0
+	_emitter.scale_amount_min = 0.28
+	_emitter.scale_amount_max = 0.72
+	var grow := _grow_curve()
+	_emitter.scale_curve_x = grow
+	_emitter.scale_curve_y = grow
+	_emitter.texture = _soft_puff_texture()
+	_emitter.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
+	_emitter.color = Color(1, 1, 1, 1)
+	_emitter.color_ramp = _fade_ramp(_wash())
 	# Local roof puff sits above yard props but below HUD/UI.
 	_emitter.z_index = 6
 	_emitter.local_coords = true
@@ -118,20 +171,99 @@ func _ensure_emitter() -> void:
 func _apply_emission() -> void:
 	_ensure_emitter()
 	var reduced := _reduced_motion()
+	_seen_reduced = reduced
+	_seen_reduced_valid = true
+	# 纹理与寿命渐变每次都按当前昼夜重刷；已经在冒的时候不 restart()。
+	_emitter.texture = _soft_puff_texture()
+	_emitter.color = Color(1, 1, 1, 1)
+	_emitter.color_ramp = _fade_ramp(_wash())
 	var should_emit := _cooking and not _paused and not reduced
 	if should_emit:
-		_emitter.amount = 6 if reduced else 10
-		_emitter.lifetime = 1.6 if reduced else 2.8
-		_emitter.color = SMOKE_NIGHT if _night_tint else SMOKE_DAY
-		# Do not restart() while already emitting — that would pop a new burst.
+		if _emitter.amount != PUFF_AMOUNT:
+			_emitter.amount = PUFF_AMOUNT
+		if not is_equal_approx(_emitter.lifetime, PUFF_LIFETIME):
+			_emitter.lifetime = PUFF_LIFETIME
 		if not _emitter.emitting:
 			_emitter.emitting = true
 	else:
-		# Stop spawning; living particles keep rising and fade (natural dissipate).
+		# 停发后已出生的粒子仍走 color_ramp，末尾 alpha 为 0。
 		_emitter.emitting = false
 
 
+func _wash() -> Color:
+	return SMOKE_NIGHT if _night_tint else SMOKE_DAY
+
+
+func _fade_ramp(wash: Color) -> Gradient:
+	# 寿命颜色：刚出烟囱几乎看不见，中段是淡水粉，结尾散尽。
+	## 停发本身不负责变淡，渐变才让一缕烟自己消失。
+	var ramp := Gradient.new()
+	ramp.offsets = PackedFloat32Array([0.0, 0.12, 0.42, 1.0])
+	ramp.colors = PackedColorArray([
+		Color(wash.r, wash.g, wash.b, 0.0),
+		Color(wash.r, wash.g, wash.b, wash.a),
+		Color(wash.r, wash.g, wash.b, wash.a * 0.42),
+		Color(wash.r, wash.g, wash.b, 0.0),
+	])
+	return ramp
+
+
+func _grow_curve() -> Curve:
+	var curve := Curve.new()
+	curve.min_value = 0.0
+	curve.max_value = 1.6
+	curve.add_point(Vector2(0.0, 0.4))
+	curve.add_point(Vector2(1.0, 1.2))
+	return curve
+
+
+func _soft_puff_texture() -> ImageTexture:
+	if _puff_texture != null:
+		return _puff_texture
+	# 程序生成的软圆，归本切片，不另做一套设置或雾层。
+	var image := Image.create(PUFF_SIZE, PUFF_SIZE, false, Image.FORMAT_RGBA8)
+	image.fill(Color(1, 1, 1, 0))
+	var center := Vector2((PUFF_SIZE - 1) * 0.5, (PUFF_SIZE - 1) * 0.5)
+	var radius := (PUFF_SIZE - 1) * 0.5
+	for y in PUFF_SIZE:
+		for x in PUFF_SIZE:
+			var remain := 1.0 - Vector2(x, y).distance_to(center) / radius
+			if remain <= 0.0:
+				continue
+			var soft := remain * remain * (3.0 - 2.0 * remain)
+			soft = soft * soft
+			image.set_pixel(x, y, Color(1, 1, 1, soft))
+	_puff_texture = ImageTexture.create_from_image(image)
+	return _puff_texture
+
+
+func _tuning_store() -> Node:
+	var tree := get_tree()
+	if tree == null or tree.root == null:
+		return null
+	return tree.root.get_node_or_null("/root/TuningStore")
+
+
+func _hook_tuning() -> void:
+	if _tuning_hooked:
+		return
+	var store := _tuning_store()
+	if store == null or not store.has_signal("value_changed"):
+		return
+	if not store.value_changed.is_connected(_on_tuning_value_changed):
+		store.value_changed.connect(_on_tuning_value_changed)
+	_tuning_hooked = true
+
+
+func _on_tuning_value_changed(id: String, _requested: Variant, _active: Variant) -> void:
+	if id != REDUCED_MOTION_ID:
+		return
+	# 做饭仍为 true 时，减少动态变化也要重刷发射，且不新增节点。
+	_apply_emission()
+
+
 func _reduced_motion() -> bool:
-	if typeof(TuningStore) == TYPE_NIL:
+	var store := _tuning_store()
+	if store == null or not store.has_method("get_value"):
 		return false
-	return bool(TuningStore.get_value("ui.reduced_motion", false))
+	return bool(store.get_value(REDUCED_MOTION_ID, false))
