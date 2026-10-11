@@ -1,0 +1,8 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ERROR: JSON number normalization retains ledger and guard
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] run (res://test/growth_materials_suite.gd:150)
+       [1] flush_pending (res://autoload/save_store.gd:718)
+GROWTH_MATERIALS checks=65 failures=1

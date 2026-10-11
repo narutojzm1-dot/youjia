@@ -258,6 +258,12 @@ func plan_meal(meal: String, eligible_recipes: Dictionary, rng: RandomNumberGene
 	return preload("res://scripts/game/meal_planner.gd").plan(_data, meal, eligible_recipes, rng)
 
 
+## Read-only foundation; caller supplies executable actions, never raw materials
+## as implied recipes. Does not start autonomous work or spend action points.
+func plan_growth_materials(eligible_actions: Dictionary, rng: RandomNumberGenerator) -> Dictionary:
+	return preload("res://scripts/game/growth_materials.gd").plan(_data, eligible_actions, rng)
+
+
 ## Inactive foundation until the cooking director validates recipe/time.
 ## Capture the cost now; the FIFO head validates both revisions and the game day.
 func request_meal_completion(revision: int, inventory_revision: int, day: int, meal: String, ingredients: Dictionary) -> String:

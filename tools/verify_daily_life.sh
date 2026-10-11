@@ -157,3 +157,4 @@ run_godot suite test/resident_barks_suite.gd
 run_godot suite test/meal_ledger_suite.gd
 run_godot suite test/rest_context_suite.gd
 run_godot suite test/meal_planner_suite.gd
+run_godot suite test/growth_materials_suite.gd
