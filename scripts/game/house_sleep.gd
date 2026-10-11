@@ -203,7 +203,8 @@ func retry() -> String:
 		pending = store.request_house_sleep(night)
 	else:
 		pending = store.request_meal_completion(cooking_plan.revision, cooking_plan.inventory_revision,
-			cooking_plan.day, cooking_plan.meal, cooking_plan.ingredients)
+			cooking_plan.day, cooking_plan.meal, cooking_plan.ingredients,
+			{"elapsed":night.holiday_day_elapsed, "weather":night.world_weather})
 	if pending.is_empty(): failed = true
 	return pending
 

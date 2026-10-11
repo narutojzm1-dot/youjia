@@ -1,0 +1,34 @@
+[
+  {
+    "diagnostic": "actual IndexedDB transaction abortion in isolated Chrome, not ordinary uninjected proof",
+    "mode": "pickup-abort",
+    "view": [
+      1280,
+      720,
+      1
+    ],
+    "events": 13,
+    "gate_trip": 3,
+    "picked": "formal.find.feather",
+    "keepsakes_after_reload": {
+      "formal.find.feather": 1
+    },
+    "errors": []
+  },
+  {
+    "diagnostic": "actual IndexedDB transaction abortion in isolated Chrome, not ordinary uninjected proof",
+    "mode": "return-abort",
+    "view": [
+      1280,
+      720,
+      1
+    ],
+    "events": 8,
+    "gate_trip": 1,
+    "picked": "formal.find.brook_stone",
+    "keepsakes_after_reload": {
+      "formal.find.brook_stone": 1
+    },
+    "errors": []
+  }
+]

@@ -258,15 +258,26 @@ func plan_meal(meal: String, eligible_recipes: Dictionary, rng: RandomNumberGene
 	return preload("res://scripts/game/meal_planner.gd").plan(_data, meal, eligible_recipes, rng)
 
 
-## Inactive foundation until the cooking director validates recipe/time.
+## The cooking director validates recipe/time before submitting this completion.
 ## Capture the cost now; the FIFO head validates both revisions and the game day.
-func request_meal_completion(revision: int, inventory_revision: int, day: int, meal: String, ingredients: Dictionary) -> String:
+func request_meal_completion(revision: int, inventory_revision: int, day: int, meal: String, ingredients: Dictionary, progress: Dictionary = {}) -> String:
 	var cost := ingredients.duplicate(true)
+	var clock := progress.duplicate(true)
 	return request_intent("meal", func(current: Dictionary) -> Variant:
 		var rest := RestContext.read(current)
 		if rest.is_empty(): return CoordinatorType.IntentRejection.new("REST_INVALID")
 		var result := preload("res://scripts/game/meal_ledger.gd").complete(current, revision, inventory_revision, day, meal, cost, RestContext.fatigued(rest))
 		if result.has("error"): return CoordinatorType.IntentRejection.new(result.error)
+		if not clock.is_empty():
+			var elapsed: Variant = clock.get("elapsed")
+			if not (elapsed is float or elapsed is int) or not is_finite(float(elapsed)) or float(elapsed) < 0.0 or float(elapsed) >= 600.0:
+				return CoordinatorType.IntentRejection.new("MEAL_CLOCK_INVALID")
+			var climate := preload("res://scripts/game/world_weather.gd").sanitize(clock.get("weather", {}))
+			if climate.is_empty(): return CoordinatorType.IntentRejection.new("MEAL_CLOCK_INVALID")
+			# Preserve any newer queue-head clock/weather; never rewind another writer.
+			if float(elapsed) >= float(current.get("holiday_day_elapsed", 0.0)):
+				result.candidate.holiday_day_elapsed = float(elapsed)
+				result.candidate.world_weather = climate
 		return result.candidate)
 
 func has_yard_crops() -> bool:

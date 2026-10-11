@@ -1,0 +1,42 @@
+[
+  {
+    "kind": "log",
+    "text": "Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org"
+  },
+  {
+    "kind": "log",
+    "text": "OpenGL API OpenGL ES 3.0 (WebGL 2.0 (OpenGL ES 3.0 Chromium)) - Compatibility - Using Device: WebKit - WebKit WebGL"
+  },
+  {
+    "kind": "log",
+    "text": "Build configuration: Emscripten 4.0.20, single-threaded, no GDExtension support."
+  },
+  {
+    "kind": "info",
+    "text": "[game-loading] timings_ms {\"engineScriptReady\":30,\"bootstrapReady\":61,\"downloadComplete\":284,\"engineReady\":1880,\"firstFrame\":2162}"
+  },
+  {
+    "kind": "log",
+    "text": "ASSISTANT_INPUT_TRACE {\"device\":-1,\"event\":\"Left Mouse Button\",\"last_touch\":-1000,\"main_size\":\"(390.0, 844.0)\",\"method\":\"input\",\"now\":2630,\"point\":\"(194.0, 430.0)\",\"screen\":\"title\",\"viewport\":\"[P: (0.0, 0.0), S: (390.0, 844.0)]\",\"world\":\"(194.0, 430.0)\"}"
+  },
+  {
+    "kind": "log",
+    "text": "ASSISTANT_INPUT_TRACE {\"device\":0,\"event\":\"Screen touched at ((194.0, 430.0)) with 0 touch points\",\"last_touch\":-1000,\"main_size\":\"(390.0, 844.0)\",\"method\":\"input\",\"now\":2631,\"point\":\"(194.0, 430.0)\",\"screen\":\"title\",\"viewport\":\"[P: (0.0, 0.0), S: (390.0, 844.0)]\",\"world\":\"(194.0, 430.0)\"}"
+  },
+  {
+    "kind": "log",
+    "text": "ASSISTANT_INPUT_TRACE {\"device\":-1,\"event\":\"Left Mouse Button\",\"last_touch\":2632,\"main_size\":\"(390.0, 844.0)\",\"method\":\"input\",\"now\":10766,\"point\":\"(76.0, 610.0)\",\"screen\":\"game\",\"viewport\":\"[P: (0.0, 0.0), S: (390.0, 844.0)]\",\"world\":\"(138.2955, 623.8635)\"}"
+  },
+  {
+    "kind": "log",
+    "text": "ASSISTANT_INPUT_TRACE {\"device\":-1,\"event\":\"Left Mouse Button\",\"last_touch\":2632,\"main_size\":\"(390.0, 844.0)\",\"method\":\"unhandled_input\",\"now\":10766,\"point\":\"(76.0, 610.0)\",\"screen\":\"game\",\"viewport\":\"[P: (0.0, 0.0), S: (390.0, 844.0)]\",\"world\":\"(138.2955, 623.8635)\"}"
+  },
+  {
+    "kind": "log",
+    "text": "ASSISTANT_INPUT_TRACE {\"device\":0,\"event\":\"Screen touched at ((76.0, 610.0)) with 0 touch points\",\"last_touch\":2632,\"main_size\":\"(390.0, 844.0)\",\"method\":\"input\",\"now\":10767,\"point\":\"(76.0, 610.0)\",\"screen\":\"game\",\"viewport\":\"[P: (0.0, 0.0), S: (390.0, 844.0)]\",\"world\":\"(138.2955, 623.8635)\"}"
+  },
+  {
+    "kind": "log",
+    "text": "ASSISTANT_INPUT_TRACE {\"device\":0,\"event\":\"Screen touched at ((76.0, 610.0)) with 0 touch points\",\"last_touch\":10767,\"main_size\":\"(390.0, 844.0)\",\"method\":\"unhandled_input\",\"now\":10767,\"point\":\"(76.0, 610.0)\",\"screen\":\"game\",\"viewport\":\"[P: (0.0, 0.0), S: (390.0, 844.0)]\",\"world\":\"(138.2955, 623.8635)\"}"
+  }
+]

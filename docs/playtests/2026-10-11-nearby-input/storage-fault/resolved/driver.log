@@ -1,0 +1,26 @@
+{"view": [1280, 720], "stage": "title", "keepsakes": {}}
+{"view": [1280, 720], "stage": "yard", "keepsakes": {}}
+{"view": [1280, 720], "stage": "entry-1", "keepsakes": {}}
+MOTION_PERFORMANCE {"renderer": "Chrome ANGLE headless DPR1; actual WebGL renderer recorded, not a physical phone", "webgl": {"renderer": "ANGLE (AMD, AMD Radeon(TM) 8060S Graphics (0x00001586) Direct3D11 vs_5_0 ps_5_0, D3D11)", "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)"}, "viewport": [1280, 720, 1], "reduce_media_after_restore": false, "ordinary": {"reduced": false, "median_ms": 16.69999999999709, "p95_ms": 16.80000000000291, "over_50ms": 0}, "reduced": {"reduced": true, "median_ms": 16.69999999999709, "p95_ms": 16.80000000000291, "over_50ms": 0}}
+{"view": [1280, 720], "stage": "empty-return-1", "keepsakes": {}}
+{"view": [1280, 720], "stage": "entry-2", "keepsakes": {}}
+{"view": [1280, 720], "stage": "empty-return-2", "keepsakes": {}}
+{"view": [1280, 720], "stage": "entry-3", "keepsakes": {}}
+{"view": [1280, 720], "stage": "pickup-write-aborted", "keepsakes": {}}
+FAULT_UI_READY pickup-abort
+{"view": [1280, 720], "stage": "pickup-after-resolve", "keepsakes": {}}
+{"view": [1280, 720], "stage": "pickup-retained-in-memory", "keepsakes": {}}
+{"view": [1280, 720], "stage": "return-confirmed", "keepsakes": {"formal.find.feather": 1}}
+{"view": [1280, 720], "stage": "reload-title", "keepsakes": {"formal.find.feather": 1}}
+{"view": [1280, 720], "stage": "reload-yard", "keepsakes": {"formal.find.feather": 1}}
+{"view": [1280, 720], "stage": "title", "keepsakes": {}}
+{"view": [1280, 720], "stage": "yard", "keepsakes": {}}
+{"view": [1280, 720], "stage": "entry-1", "keepsakes": {}}
+MOTION_PERFORMANCE {"renderer": "Chrome ANGLE headless DPR1; actual WebGL renderer recorded, not a physical phone", "webgl": {"renderer": "ANGLE (AMD, AMD Radeon(TM) 8060S Graphics (0x00001586) Direct3D11 vs_5_0 ps_5_0, D3D11)", "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)"}, "viewport": [1280, 720, 1], "reduce_media_after_restore": false, "ordinary": {"reduced": false, "median_ms": 16.69999999999709, "p95_ms": 16.80000000000291, "over_50ms": 0}, "reduced": {"reduced": true, "median_ms": 16.69999999999709, "p95_ms": 16.80000000000291, "over_50ms": 0}}
+{"view": [1280, 720], "stage": "pickup-confirmed", "keepsakes": {}}
+{"view": [1280, 720], "stage": "return-write-aborted", "keepsakes": {}}
+FAULT_UI_READY return-abort
+{"view": [1280, 720], "stage": "return-confirmed", "keepsakes": {"formal.find.brook_stone": 1}}
+{"view": [1280, 720], "stage": "reload-title", "keepsakes": {"formal.find.brook_stone": 1}}
+{"view": [1280, 720], "stage": "reload-yard", "keepsakes": {"formal.find.brook_stone": 1}}
+NEARBY_ACTUAL_WEB_STORAGE_FAULT_COMPLETE [{"diagnostic": "actual IndexedDB transaction abortion in isolated Chrome, not ordinary uninjected proof", "mode": "pickup-abort", "view": [1280, 720, 1], "events": 13, "gate_trip": 3, "picked": "formal.find.feather", "keepsakes_after_reload": {"formal.find.feather": 1}, "errors": []}, {"diagnostic": "actual IndexedDB transaction abortion in isolated Chrome, not ordinary uninjected proof", "mode": "return-abort", "view": [1280, 720, 1], "events": 8, "gate_trip": 1, "picked": "formal.find.brook_stone", "keepsakes_after_reload": {"formal.find.brook_stone": 1}, "errors": []}]

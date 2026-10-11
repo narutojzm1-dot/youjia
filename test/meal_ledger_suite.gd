@@ -102,6 +102,22 @@ func run() -> void:
 	store.request_meal_completion(1,1,1,"breakfast",{"wheat":1})
 	check(await store.flush_pending(), "reopened replay rejected without a write")
 	check(store.get_meal_ledger().receipts.size() == 1 and store.get_yard_inventory().wheat == 11, "reopen cannot farm meal grants")
+	# Clock/weather join the same confirmed meal write, with no backwards overwrite.
+	var weather_model = preload("res://scripts/game/world_weather.gd").new()
+	weather_model.restore({})
+	var weather: Dictionary = weather_model.snapshot()
+	for elapsed: Variant in [NAN, INF, -2.0, 600.0, "150"]:
+		store.request_meal_completion(1,1,1,"lunch",{"wheat":1}, {"elapsed":elapsed,"weather":weather})
+		check(await store.flush_pending(), "invalid clock rejection drains")
+		check(store.get_meal_ledger().receipts.size() == 1 and store.get_yard_inventory().wheat == 11, "invalid clock never partially consumes meal")
+	var progress := {"elapsed":175.0,"weather":weather}
+	store.request_meal_completion(1,1,1,"lunch",{"wheat":1}, progress)
+	progress.elapsed = 400.0
+	check(await store.flush_pending(), "meal with clock confirms")
+	store._load()
+	check(store.get_holiday_day_elapsed() == 175.0 and store.get_meal_ledger().receipts.size() == 2 and store.get_yard_inventory().wheat == 10, "captured clock and receipt/cost survive same native write")
+	store.request_meal_completion(2,2,1,"dinner",{"wheat":1}, {"elapsed":150.0,"weather":weather})
+	check(await store.flush_pending() and store.get_holiday_day_elapsed() == 175.0, "older meal clock cannot rewind a newer confirmed clock")
 	for failure in failures: push_error(failure)
 	print("MEAL_LEDGER checks=%d failures=%d" % [checks,failures.size()])
 	quit(0 if failures.is_empty() else 1)

@@ -23,6 +23,7 @@ const CLOCK_ROOM := 26.0
 const CLOCK_MIN_WIDTH := 96.0
 const CLOCK_MAX_WIDTH := 180.0
 const HINT_MAX_LINES := 3
+const BUTTON_WRAP_ROOM := 12.0
 const CAPTION_MIN_WIDTH := 240.0
 const APRICOT := Color("f3b27a")
 const CREAM := Color("fffaf1")
@@ -859,12 +860,16 @@ func _layout(size: Vector2, compact: bool) -> void:
 	var clock_right := pad + maxf(place_w, CLOCK_MIN_WIDTH) + 8.0
 	if (size.x - look_w) * 0.5 < clock_right:
 		content_top = maxf(content_top, _place_label.position.y + place_h + CLOCK_ROOM + 8.0)
-	_look_button.size = Vector2(look_w, button_h)
+	var look_h := _fit_button(_look_button, look_w, button_h)
 	_look_button.position = Vector2((size.x - look_w) * 0.5, content_top)
-	var bar_y := size.y - button_h - pad
+	# 底排两枚按钮同高：英文窄屏「Take the round pebble」要折两行，另一枚跟着长高
 	var half := (size.x - pad * 3) * 0.5
-	_pick_button.size = Vector2(minf(half, 300.0), button_h)
-	_go_button.size = Vector2(minf(half, 300.0), button_h)
+	var bar_h := _fit_button(_go_button, minf(half, 300.0), button_h)
+	if _pick_button.visible:
+		bar_h = maxf(bar_h, _fit_button(_pick_button, minf(half, 300.0), button_h))
+		_pick_button.size.y = bar_h
+		_go_button.size.y = bar_h
+	var bar_y := size.y - bar_h - pad
 	_pick_button.position = Vector2(size.x * 0.5 - pad * 0.5 - _pick_button.size.x, bar_y)
 	_go_button.position = Vector2(size.x * 0.5 + pad * 0.5, bar_y)
 	if not _pick_button.visible:
@@ -874,7 +879,7 @@ func _layout(size: Vector2, compact: bool) -> void:
 	if side_caption: caption_w = minf(caption_w, size.x * 0.43)
 	# 字幕放在上方天空里，路面和路边的东西不被挡住；走路时让出“停下看看”按钮的位置
 	var clock_bottom := _place_label.position.y + place_h + CLOCK_ROOM + 8.0
-	var caption_top := pad + button_h + 12.0 if not observing.is_empty() else content_top + button_h + 12.0
+	var caption_top := pad + button_h + 12.0 if not observing.is_empty() else content_top + look_h + 12.0
 	var caption_x := pad if side_caption else (size.x - caption_w) * 0.5
 	if caption_top < clock_bottom and caption_x < clock_right:
 		# 与地名、时钟同一高度：挪到时钟右边（宽度尽量不收，免得折成多行压到篮子），放不下才挪到时钟下面
@@ -889,9 +894,26 @@ func _layout(size: Vector2, compact: bool) -> void:
 	_caption.position = Vector2(caption_x, caption_top)
 	var hint_h := _fit_hint(size.x - pad * 2)
 	_hint.position = Vector2((size.x - _hint.size.x) * 0.5, size.y - pad - hint_h)
-	_basket.position = Vector2(pad, size.y - pad - 64 - (button_h + 10 if not observing.is_empty() else 0) - (hint_h + 10.0 if _hint.visible else 0.0))
+	_basket.position = Vector2(pad, size.y - pad - 64 - (bar_h + 10.0 if not observing.is_empty() else 0.0) - (hint_h + 10.0 if _hint.visible else 0.0))
 	# 名称底板右缘 = 篮子左缘 + 文字起点 + 文字宽 + 6，窄屏时也留出右侧 pad
 	_basket_label_width = basket_label_width_for(size.x, pad, _basket.position.x)
+
+
+## 按钮定宽：一行放不下就按词折行并按实际行数长高，不再被文字撑出屏幕
+func _fit_button(button: Button, width: float, min_height: float) -> float:
+	var paper := button.get_theme_stylebox("normal")
+	var inner := width - paper.get_margin(SIDE_LEFT) - paper.get_margin(SIDE_RIGHT)
+	var font := button.get_theme_font("font")
+	var font_size := button.get_theme_font_size("font_size")
+	var wrap := font.get_string_size(button.text, HORIZONTAL_ALIGNMENT_LEFT, -1, font_size).x > inner
+	var mode := TextServer.AUTOWRAP_WORD if wrap else TextServer.AUTOWRAP_OFF
+	if button.autowrap_mode != mode: button.autowrap_mode = mode
+	var height := min_height
+	if wrap:
+		var text_h := font.get_multiline_string_size(button.text, HORIZONTAL_ALIGNMENT_CENTER, inner, font_size).y
+		height = maxf(min_height, ceilf(text_h + paper.get_margin(SIDE_TOP) + paper.get_margin(SIDE_BOTTOM) + BUTTON_WRAP_ROOM))
+	button.size = Vector2(width, height)
+	return height
 
 
 ## 操作提示：纸片贴一行字宽，窄屏折行（英文 280 宽要三行），不再越出屏幕

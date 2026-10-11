@@ -78,6 +78,7 @@ func run() -> void:
 	check(world._has_walk_goal and world._pending_interaction == "house_meal", "idle meal uses production walking route")
 	check(world.get_player().position.distance_to(Vector2(380,520)) < 1.0, "meal request never teleports")
 	check(await step_until("cook"), "walk, open, enter, close reaches cooking")
+	var meal_arrival_elapsed: float = world._day_elapsed
 	check(not world.get_player().visible and world.house.smoke.is_cooking(), "indoor cook hides one actor and emits smoke")
 	check(store.get_meal_ledger().receipts.is_empty() and store.get_yard_inventory().millet == 3, "unconfirmed cooking does not debit or grant")
 	world.house.meal_rng.seed = brush_seed(true)
@@ -89,6 +90,7 @@ func run() -> void:
 	check(store.get_yard_inventory().millet == 2, "exactly one ingredient consumed")
 	check(not world.house.smoke.is_cooking(), "smoke stops after meal")
 	store._load()
+	check(is_equal_approx(store.get_holiday_day_elapsed(), meal_arrival_elapsed), "meal arrival clock persists atomically with receipt after reopen")
 	check(store.get_meal_ledger().receipts.size() == 1 and store.get_yard_inventory().millet == 2, "native reopen preserves receipt and stock")
 	world.house.meal_cooldown = 0.0
 	world.house.consider_meal(9.0, Vector2.ZERO)
