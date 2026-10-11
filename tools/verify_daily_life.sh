@@ -38,6 +38,7 @@ run_godot suite test/save_status_paper_suite.gd
 run_godot suite test/pause_notice_suite.gd
 run_godot suite test/audio_button_input_suite.gd
 run_godot suite test/ambience_output_ceiling_suite.gd
+run_godot suite test/meal_audio_suite.gd
 run_godot suite test/modal_touch_input_suite.gd
 run_godot suite test/hud_pointer_input_suite.gd
 run_godot suite test/yard_inventory_suite.gd
@@ -156,3 +157,5 @@ run_godot suite test/rest_context_suite.gd
 run_godot suite test/meal_planner_suite.gd
 run_godot suite test/cooking_smoke_suite.gd
 run_godot suite test/house_cooking_suite.gd
+
+run_godot suite test/meal_audio_host_suite.gd

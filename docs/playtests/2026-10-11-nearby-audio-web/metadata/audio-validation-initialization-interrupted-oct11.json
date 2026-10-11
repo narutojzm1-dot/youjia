@@ -1,0 +1,50 @@
+[
+  {
+    "ProcessId": 107892,
+    "ParentProcessId": 82260,
+    "Name": "git.exe",
+    "CommandLine": "\"C:\\Program Files\\Git\\cmd\\git.exe\" -C D:\\games\\youjia-test\\assistant-recovery\\nearby-audio-web-validation merge --no-commit --no-ff e00f11a88679e0efe2ee2dccb2a8eea9ae0a0169"
+  },
+  {
+    "ProcessId": 94640,
+    "ParentProcessId": 107892,
+    "Name": "git.exe",
+    "CommandLine": "git.exe -C D:\\games\\youjia-test\\assistant-recovery\\nearby-audio-web-validation merge --no-commit --no-ff e00f11a88679e0efe2ee2dccb2a8eea9ae0a0169"
+  },
+  {
+    "ProcessId": 143188,
+    "ParentProcessId": 94640,
+    "Name": "git.exe",
+    "CommandLine": "git stash apply --index --quiet d44cc9461395a8f45a587bbf5ce3fd73a48bea8d"
+  },
+  {
+    "ProcessId": 122000,
+    "ParentProcessId": 143188,
+    "Name": "git.exe",
+    "CommandLine": "git diff-tree --binary --no-color d44cc9461395a8f45a587bbf5ce3fd73a48bea8d^2^..d44cc9461395a8f45a587bbf5ce3fd73a48bea8d^2"
+  },
+  {
+    "ProcessId": 177140,
+    "ParentProcessId": 122000,
+    "Name": "git.exe",
+    "CommandLine": "git -c fetch.negotiationAlgorithm=noop fetch origin --no-tags --no-write-fetch-head --recurse-submodules=no --filter=blob:none --stdin"
+  },
+  {
+    "ProcessId": 207064,
+    "ParentProcessId": 177140,
+    "Name": "git.exe",
+    "CommandLine": "git remote-https origin https://github.com/narutojzm1-dot/youjia.git"
+  },
+  {
+    "ProcessId": 184944,
+    "ParentProcessId": 177140,
+    "Name": "git.exe",
+    "CommandLine": "git index-pack --stdin --fix-thin \"--keep=fetch-pack 177140 on jiangzengming\" --promisor --pack_header=2,2886"
+  },
+  {
+    "ProcessId": 88616,
+    "ParentProcessId": 207064,
+    "Name": "git-remote-https.exe",
+    "CommandLine": "git-remote-https origin https://github.com/narutojzm1-dot/youjia.git"
+  }
+]

@@ -1,0 +1,53 @@
+{
+  "method": "Synthetic sine positive/silent controls in separate about:blank page; not game audio or listening",
+  "positive": {
+    "wallMs": 788.1999999284744,
+    "signal": [
+      {
+        "node": 1,
+        "context": 1,
+        "type": "GainNode",
+        "contextState": "running",
+        "audioTime": 0.4106666666666667,
+        "sampleRate": 48000,
+        "gain": 0.10000000149011612,
+        "rms": 0.07073173332094383,
+        "peak": 0.10000000149011612,
+        "nonFinite": 0
+      }
+    ],
+    "sources": [],
+    "failures": [],
+    "backend": null,
+    "jsHeap": {
+      "used": 10000000,
+      "total": 10000000,
+      "limit": 3760000000
+    }
+  },
+  "silent": {
+    "wallMs": 1051.0999999046326,
+    "signal": [
+      {
+        "node": 1,
+        "context": 1,
+        "type": "GainNode",
+        "contextState": "running",
+        "audioTime": 0.672,
+        "sampleRate": 48000,
+        "gain": 0,
+        "rms": 0,
+        "peak": 0,
+        "nonFinite": 0
+      }
+    ],
+    "sources": [],
+    "failures": [],
+    "backend": null,
+    "jsHeap": {
+      "used": 10000000,
+      "total": 10000000,
+      "limit": 3760000000
+    }
+  }
+}

@@ -1,0 +1,98 @@
+{
+  "source": "5700377e248a4d871c9fb1711956dba1400d5e8f",
+  "candidate": {
+    "exportedAt": "2026-10-11T19:37:17.3321099+08:00",
+    "pckSha256": "f6b70c584739b411e427208cafb02ede141b66305818bc9e3d229cb19b5e4d28",
+    "candidateOnly": true,
+    "parents": [
+      "5d23acbec9d756fc5e3ddee678e2db478ff18935",
+      "e00f11a88679e0efe2ee2dccb2a8eea9ae0a0169"
+    ],
+    "source": "5700377e248a4d871c9fb1711956dba1400d5e8f",
+    "exportExit": 0
+  },
+  "files": [
+    {
+      "path": "web/save/bridge.mjs",
+      "bytes": 1880,
+      "sha256": "d4860373cf9183fffe1748e0e15fdfd83d33c83b66be142fda5c6a8a898fd232"
+    },
+    {
+      "path": "web/boot/download_assets.mjs",
+      "bytes": 7714,
+      "sha256": "0c0e0f179641bd524a8d0d4f520e4158152bcc884f0d17ff3b0e0a0b0b21e238"
+    },
+    {
+      "path": "index.js",
+      "bytes": 279815,
+      "sha256": "33c94cb3175f3333b82e2a3be5e8e86f77986f0aa2042b1631f6367a4e5bb6ba"
+    },
+    {
+      "path": "web/boot/sha256_stream.mjs",
+      "bytes": 3448,
+      "sha256": "c26338f465688208706256f83aef6a510f01b671c6e679ae1a0d9ab7797af85e"
+    },
+    {
+      "path": "web/save/host.mjs",
+      "bytes": 7855,
+      "sha256": "7663de32146a748f11303c0de71f2b036074c9a910736c606e09ea435a926d5b"
+    },
+    {
+      "path": "web/save/legacy_inspection.mjs",
+      "bytes": 2924,
+      "sha256": "1f46cca5873ec62bf1425b9ee82405758f1e9f5375269ef8a0a4282ae4579d98"
+    },
+    {
+      "path": "web/save/budgets.mjs",
+      "bytes": 344,
+      "sha256": "5dac7246a91387f74d1da43e01f842f0017c9e38cf0e3273379b9a68323422b6"
+    },
+    {
+      "path": "web/save/store.mjs",
+      "bytes": 14128,
+      "sha256": "9b4e3b2b45dae11cf0b23a3814b14e15e21986cbfe0569beb395bab290885bb9"
+    },
+    {
+      "path": "web/save/lifecycle.mjs",
+      "bytes": 1916,
+      "sha256": "b861a848e786e5435493e5a476a00cc489e613b9f9e024c1162e5b5b37692a85"
+    },
+    {
+      "path": "web/save/source_decode.mjs",
+      "bytes": 1563,
+      "sha256": "814c791829f182eb6893685ce184502bbbe94277cbfc92c9884b0916a9413ba9"
+    },
+    {
+      "path": "web/save/legacy_v5.mjs",
+      "bytes": 2280,
+      "sha256": "e06e5eae9e2f31ed96e42e66bc70c123fb2966b8a539eb153cbd4b442e8360ad"
+    },
+    {
+      "path": "web/save/legacy_seal.mjs",
+      "bytes": 2543,
+      "sha256": "5086fa800744f720dd2cc96b3f7b056bb84114dfb1bd8155516c1996369f51e8"
+    },
+    {
+      "path": "web/save/idbfs_source.mjs",
+      "bytes": 5647,
+      "sha256": "740614f55409c97e93f2abf984637bd1e01d07893f5aaa4047863b02084b392e"
+    },
+    {
+      "path": "index.wasm",
+      "bytes": 39514754,
+      "sha256": "fc74679e3b97f76878947fcd4fbe1268cbfa6188182a2e33bbc3f5dc9bfa57d0"
+    },
+    {
+      "path": "index.pck",
+      "bytes": 75539060,
+      "sha256": "f6b70c584739b411e427208cafb02ede141b66305818bc9e3d229cb19b5e4d28"
+    }
+  ],
+  "browser": "154.0.8037.98",
+  "webgl": {
+    "renderer": "ANGLE (AMD, AMD Radeon(TM) 8060S Graphics (0x00001586) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)"
+  },
+  "observerSha256": "cc02dc921162d1b6f365d7c883d8732f7361464eb1fd00ead2fda52cd3a719b3",
+  "conditions": "Fresh isolated headless Chrome profile; default mute-audio retained. Parallel mono analysers and MediaRecorder streams measure graph software, not hardware audible output. No player/time/weather/seed/storage injection."
+}

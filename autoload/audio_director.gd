@@ -15,6 +15,8 @@ const CUES := {
 	"music.gameplay": {"path": "", "kind": "music"},
 	"ui.confirm": {"path": "", "bus": "UI"},
 	"ui.cancel": {"path": "", "bus": "UI"},
+	"meal.spoon": {"path": "", "bus": "SFX"},
+	"meal.hunger": {"path": "", "bus": "SFX"},
 	"player.action": {"path": "", "bus": "SFX"},
 	"enemy.impact": {"path": "", "bus": "SFX"},
 	"score.reward": {"path": "", "bus": "SFX"},
@@ -32,6 +34,8 @@ var _ui_players: Array[AudioStreamPlayer] = []
 var _music_index := 0
 var _music_cue := ""
 var _unlocked := false
+## cue_id -> stop_cue invocation count (suite ownership proof).
+var _stop_cue_counts: Dictionary = {}
 var _headless := false
 var _paused := false
 var _music_tween: Tween
@@ -233,6 +237,10 @@ func set_ambience_volume_db(volume_db: float) -> void:
 	set_ambience_gain(0.0 if db <= -40.0 else db_to_linear(db))
 
 
+func effects_playback_allowed() -> bool:
+	return _application_active and (_unlocked or _headless) and not _awaiting_gesture
+
+
 func yard_active() -> bool:
 	return _yard_active
 
@@ -330,6 +338,51 @@ func play_cue(cue_id: String, pitch_scale: float = 1.0) -> bool:
 	player.pitch_scale = clampf(pitch_scale, 0.75, 1.35)
 	player.play()
 	return true
+
+
+## Stop SFX/UI voices currently playing this cue's stream. Narrow ownership stop; not release_streams.
+func stop_cue(cue_id: String) -> void:
+	if not CUES.has(cue_id):
+		return
+	var kind := str(CUES.get(cue_id, {}).get("kind", ""))
+	if kind == "music" or kind == "ambience":
+		return
+	_stop_cue_counts[cue_id] = int(_stop_cue_counts.get(cue_id, 0)) + 1
+	var stream: AudioStream = _streams.get(cue_id)
+	if stream == null:
+		return
+	var cue: Dictionary = CUES[cue_id]
+	var players := _ui_players if str(cue.get("bus", "SFX")) == "UI" else _sfx_players
+	for player: AudioStreamPlayer in players:
+		if player.stream == stream and (player.playing or player.stream_paused):
+			player.stop()
+			player.stream = null
+
+
+func get_stop_cue_count(cue_id: String) -> int:
+	return int(_stop_cue_counts.get(cue_id, 0))
+
+
+func get_cue_stream(cue_id: String) -> AudioStream:
+	return _streams.get(cue_id) as AudioStream
+
+
+## Whether any SFX/UI voice currently holds this cue's stream (playing or paused).
+func is_cue_voice_active(cue_id: String) -> bool:
+	if not CUES.has(cue_id):
+		return false
+	var kind := str(CUES.get(cue_id, {}).get("kind", ""))
+	if kind == "music" or kind == "ambience":
+		return false
+	var stream: AudioStream = _streams.get(cue_id)
+	if stream == null:
+		return false
+	var cue: Dictionary = CUES[cue_id]
+	var players := _ui_players if str(cue.get("bus", "SFX")) == "UI" else _sfx_players
+	for player: AudioStreamPlayer in players:
+		if player.stream == stream and (player.playing or player.stream_paused):
+			return true
+	return false
 
 
 func register_button(button: Button, cancel_cue: bool = false) -> void:

@@ -1,0 +1,38 @@
+[
+  {
+    "path": "scripts/main.gd",
+    "conflictSha256": "0f42f13f40651896aba8b60983755fe5c3a7fba15697a7a93ff0b0ed5c7ed086",
+    "resolvedSha256": "76d411da6fba236bc4d2b2a7f2a45fae5200aa32ea7d7c4d0c232357fa273764",
+    "resolution": "only audio call, preserve current decor-camera methods"
+  },
+  {
+    "path": "tools/lib/godot_suite_completions.tsv",
+    "conflictSha256": "479b575d6662a38c5d1e56fd1958458a7ad9e55f5a79e18a57b8d4a9231e1e5c",
+    "resolvedSha256": "3f581b36efaa0170ed46410d8e550004b5181d92f1b290a74e843a4526454ff1",
+    "resolution": "keep current sections/registrations and append original candidate additions"
+  },
+  {
+    "path": "tools/verify_daily_life.sh",
+    "conflictSha256": "4eb865d10ec3315263dffd2bc0698c12fc9b32d09f8aae06fdb2e27cd971a27d",
+    "resolvedSha256": "574080175c8be49d1a25a3fefc63b9c3fe1d4fa8eed095cf5e35c5b604b8810b",
+    "resolution": "keep current sections/registrations and append original candidate additions"
+  },
+  {
+    "path": "docs/game-design.md",
+    "conflictSha256": "8f17d02bcae8f88ed646bac64809800a24a14d3469a020265e9ffd9b050cbd14",
+    "resolvedSha256": "5905a4f8ab9051e28bd00b1526fc3a614d81e7ee6d7653495039b422eacee93c",
+    "resolution": "keep current sections/registrations and append original candidate additions"
+  },
+  {
+    "path": "docs/requirements.md",
+    "conflictSha256": "2be3f37f6ec6c90224d5f4b37f2d921a478ed29666b3f70f647d185114594fe3",
+    "resolvedSha256": "baee476012d80fde8963986418b9dddc5023594a9ce296b07da8b54c62f0b899",
+    "resolution": "keep current sections/registrations and append original candidate additions"
+  },
+  {
+    "path": "docs/decisions.md",
+    "conflictSha256": "8c4dc3b5f3fb60b82e9cb444f533694dc6fa33c5fad0936eea73a51aa27db2e9",
+    "resolvedSha256": "7e04d57cd86a980d9ea49ce3c9eca69dc0626a9781e8a6359d8e517a89a155a1",
+    "resolution": "keep current sections/registrations and append original candidate additions"
+  }
+]

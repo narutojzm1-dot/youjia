@@ -17,6 +17,7 @@ func check(ok: bool, label: String) -> void:
 func step_until(target: String, frames: int = 2400) -> bool:
 	for i in frames:
 		world.tick(1.0 / 30.0, Vector2.ZERO)
+		main._sync_meal_audio()
 		await process_frame
 		if not world.house.pending.is_empty(): await store.flush_pending()
 		var stage: String = world.house.stage
@@ -101,6 +102,7 @@ func run() -> void:
 	check(await step_until("cook"), "walk, open, enter, close reaches cooking")
 	check(not world.house.meal_ingredient.visible, "closed room hides ingredient")
 	var meal_arrival_elapsed: float = world._day_elapsed
+	check(main._meal_audio_host.leaf.is_cooking(), "production cook stage starts audio")
 	check(not world.get_player().visible and world.house.smoke.is_cooking(), "indoor cook hides one actor and emits smoke")
 	check(store.get_meal_ledger().receipts.is_empty() and store.get_yard_inventory().millet == 3, "unconfirmed cooking does not debit or grant")
 	world.house.meal_rng.seed = brush_seed(true)
@@ -111,6 +113,7 @@ func run() -> void:
 	check(store.get_meal_ledger().receipts.size() == 1 and store.get_meal_ledger().receipts[0].earned == 0, "fatigued breakfast completes once with zero grant")
 	check(store.get_yard_inventory().millet == 2, "exactly one ingredient consumed")
 	check(not world.house.smoke.is_cooking(), "smoke stops after meal")
+	check(not main._meal_audio_host.leaf.is_cooking(), "production confirmed meal stops cook audio")
 	check(not world.house.meal_ingredient.visible, "returning traveller has no ingredient ghost")
 	store._load()
 	check(is_equal_approx(store.get_holiday_day_elapsed(), meal_arrival_elapsed), "meal arrival clock persists atomically with receipt after reopen")
@@ -271,6 +274,8 @@ func run() -> void:
 	check(world.house.busy() and world.house.cooking_plan.is_empty(), "explicit player door action still starts nighttime sleep")
 	check(await step_until(""), "explicit sleep completes normally")
 	check(store.get_holiday_day() == 3 and world.holiday_day == 3, "only explicit sleep advances to next morning")
+	main._clear_world(false)
+	check(main._meal_audio_host.last_day == -1, "replacing world clears meal audio observation immediately")
 	main.queue_free()
 	await process_frame
 	for failure in failures: push_error(failure)
