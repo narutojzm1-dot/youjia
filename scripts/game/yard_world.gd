@@ -83,6 +83,7 @@ var simulation_active := true
 var input_enabled := true:
 	set(value):
 		input_enabled = value
+		if house != null: house.player_activity()
 		if not value and _player != null: _player.clear_idle_rest()
 
 # ── 假期天数 / 昼夜 ───────────────────────────────────────────────────────────
@@ -327,6 +328,7 @@ func tod_fraction() -> float:
 ## 根据玩家当前位置返回合适的上下文提示键
 ## 牵行/持草/持鱼时优先显示操作提示，其余按位置决定
 func hint_context() -> String:
+	if house != null and not house.meal_hint().is_empty(): return house.meal_hint()
 	var action := YardInteraction.primary(self)
 	var target := str(action.get("target", ""))
 	if target == "release": return "hud.hint.leading"
@@ -513,7 +515,6 @@ func tick(delta: float, move: Vector2) -> void:
 		return
 	if house != null: house.consider_meal(delta, move)
 	var house_owned_tick: bool = house != null and house.busy()
-	if house_owned_tick and move.length() > 0.2: house.skip_balcony()
 	if house != null: house.tick(delta)
 	if not house_owned_tick: advance_world_time(delta)
 	_rejected_seconds = maxf(0.0, _rejected_seconds - delta)
@@ -984,9 +985,10 @@ func cancel_scene_feedback() -> void:
 
 func request_primary_action() -> void:
 	if _player != null: _player.idle_rest.wake(bool(TuningStore.get_value("ui.reduced_motion", false)))
-	if house != null and house.busy():
-		house.skip_balcony()
-		return
+	if house != null:
+		var was_in_house: bool = house.busy()
+		house.request_player_intent({"kind":"cancel"})
+		if was_in_house: return
 	if pond_story != null: pond_story.cancel()
 	if not input_enabled or inventory_busy or _player == null:
 		return
@@ -1007,8 +1009,7 @@ func request_primary_action() -> void:
 
 func request_pointer_action(point: Vector2) -> void:
 	if _player != null: _player.idle_rest.wake(bool(TuningStore.get_value("ui.reduced_motion", false)))
-	if house != null and house.busy():
-		house.skip_balcony()
+	if house != null and house.request_player_intent({"kind":"pointer", "point":point}):
 		return
 	if pond_story != null: pond_story.cancel()
 	if not input_enabled or _player == null:

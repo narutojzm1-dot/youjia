@@ -480,6 +480,8 @@ func _process(delta: float) -> void:
 
 
 func _input(event: InputEvent) -> void:
+	if _world != null and _world.house != null and ((event is InputEventMouseButton and event.pressed) or (event is InputEventScreenTouch and event.pressed) or (event is InputEventKey and event.pressed and not event.echo)):
+		_world.house.player_activity()
 	if _chick_panel != null and _chick_panel.visible:
 		if event.is_action_pressed("pause") and not event.is_echo():
 			_hide_chick_care()
@@ -1260,6 +1262,8 @@ func _refresh_volume_labels() -> void:
 
 
 func _notification(what: int) -> void:
+	if what in [NOTIFICATION_APPLICATION_PAUSED, NOTIFICATION_APPLICATION_RESUMED, NOTIFICATION_APPLICATION_FOCUS_IN, NOTIFICATION_APPLICATION_FOCUS_OUT] and _world != null and _world.house != null:
+		_world.house.player_activity()
 	if what == NOTIFICATION_APPLICATION_PAUSED:
 		AudioDirector.set_application_active(false)
 	elif what == NOTIFICATION_APPLICATION_RESUMED:
@@ -1520,7 +1524,7 @@ func _hide_crops() -> void:
 func _show_basket() -> void:
 	if _chick_panel != null and _chick_panel.visible: return
 	if _crop_panel != null and _crop_panel.visible: return
-	if _world != null and _world.house != null and _world.house.busy(): return
+	if _world != null and _world.house != null and _world.house.request_player_intent({"kind":"basket"}): return
 	if _screen != "game" or _world == null or _pause_screen.visible or _album_screen.visible:
 		return
 	_cancel_photo_arrivals()
@@ -2462,7 +2466,7 @@ func _sync_hold_hotbar_visibility() -> void:
 
 
 func _on_hold_withdraw(kind: String) -> void:
-	if _world != null and _world.house != null and _world.house.busy(): return
+	if _world != null and _world.house != null and _world.house.request_player_intent({"kind":"basket"}): return
 	if _inventory == null or kind.is_empty() or _inventory.busy():
 		return
 	_inventory.request("withdraw", kind)

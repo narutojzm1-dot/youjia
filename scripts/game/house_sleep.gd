@@ -27,6 +27,8 @@ var meal_cooldown := 0.0
 var meal_rng := RandomNumberGenerator.new()
 var meal_succeeded := false
 var meal_ingredient: Sprite2D
+# One latest player intent, never a queue of stale clicks. Not persistent.
+var player_intent: Dictionary = {}
 
 
 func _init(owner_world: Node2D, save_store: Node) -> void:
@@ -142,6 +144,9 @@ func _start_entry() -> void:
 func _enter(next: String) -> void:
 	stage = next
 	seconds = 0.0
+	if not cooking_plan.is_empty():
+		var hint: String = {"take":"notice.meal.take", "cook":"notice.meal.cook", "balcony":"notice.meal.brush"}.get(next, "")
+		if not hint.is_empty(): world.notice_requested.emit(hint)
 
 func inside_room() -> bool:
 	return stage in ["close", "saving", "cook", "sleep", "balcony", "stairs", "wake"]
@@ -151,6 +156,7 @@ func skip_balcony() -> void:
 		cancel_preparation()
 		return
 	if stage == "balcony":
+		world.camera_release_requested.emit()
 		balcony.skip()
 	elif not cooking_plan.is_empty() and pending.is_empty() and stage in ["porch", "open", "in", "close", "cook"]:
 		# A player's input can interrupt uncommitted cooking without losing food.
@@ -161,6 +167,44 @@ func skip_balcony() -> void:
 			_enter("out")
 		else:
 			_enter("wake")
+
+func player_activity() -> void:
+	meal_idle = 0.0
+
+func request_player_intent(intent: Dictionary) -> bool:
+	player_activity()
+	if not busy():
+		if world._pending_interaction in ["meal_basket", "house_meal"] or not cooking_plan.is_empty():
+			cancel_preparation()
+		return false
+	player_intent = intent.duplicate()
+	skip_balcony()
+	if not busy():
+		# Taking food is wholly outside; caller can execute this input now.
+		player_intent = {}
+		return false
+	return true
+
+func _resume_player_intent() -> void:
+	var intent := player_intent
+	player_intent = {}
+	match str(intent.get("kind", "")):
+		"pointer": world.request_pointer_action(intent.point)
+		"basket": world.basket_requested.emit()
+
+func meal_hint() -> String:
+	if cooking_plan.is_empty(): return ""
+	if stage == "take" or (stage.is_empty() and world._pending_interaction == "house_meal"): return "notice.meal.take"
+	if stage in ["porch", "open", "in"]: return "notice.meal.enter"
+	if stage in ["cook", "close", "saving"]: return "notice.meal.cook"
+	if stage == "balcony": return "notice.meal.brush"
+	return ""
+
+func action_label() -> String:
+	if cooking_plan.is_empty(): return "action.house_resting"
+	if stage == "saving": return "action.meal_saving"
+	if stage in ["take", "porch", "open", "in"]: return "action.meal_cancel"
+	return "action.meal_return"
 
 func window_light_target() -> float:
 	return 1.0 if wants_light(world.tod_fraction(), inside_room()) else 0.0
@@ -218,7 +262,7 @@ func tick(delta: float) -> void:
 				else:
 					balcony.begin(kind)
 					_enter("balcony")
-					world.camera_focus_requested.emit(Vector2(278, 300), 1.25)
+					world.camera_focus_requested.emit(Vector2(278, 300), 1.0 if bool(TuningStore.get_value("ui.reduced_motion", false)) else 1.25)
 		"balcony":
 			balcony.tick(delta, bool(TuningStore.get_value("ui.reduced_motion", false)))
 			if not balcony.busy():
@@ -248,6 +292,7 @@ func tick(delta: float) -> void:
 					meal_cooldown = 30.0
 					meal_idle = 0.0
 				world._save_interval = 60.0
+				_resume_player_intent.call_deferred()
 
 func _walk(delta: float, point: Vector2) -> bool:
 	var player = world.get_player()
@@ -279,10 +324,12 @@ func _confirmed(op_id: String, _kind: String) -> void:
 		world.notice_requested.emit("notice.house.sleep")
 	else:
 		meal_succeeded = true
-		if meal_rng.randf() < 0.8:
+		if not player_intent.is_empty():
+			_enter("wake")
+		elif meal_rng.randf() < 0.8:
 			balcony.begin("brush")
 			_enter("balcony")
-			world.camera_focus_requested.emit(Vector2(278, 300), 1.25)
+			world.camera_focus_requested.emit(Vector2(278, 300), 1.0 if bool(TuningStore.get_value("ui.reduced_motion", false)) else 1.25)
 		else:
 			_enter("wake")
 
@@ -316,6 +363,8 @@ func _draw() -> void: pass
 
 # Called only by the live yard tick; no real-time/offline catch-up.
 func consider_meal(delta: float, move: Vector2) -> void:
+	if move.length() > 0.2:
+		request_player_intent({"kind":"move"})
 	if not busy() and not cooking_plan.is_empty():
 		if move.length() > 0.2 or world._pending_interaction != "house_meal" or not _prepared_meal_valid():
 			cancel_preparation()
