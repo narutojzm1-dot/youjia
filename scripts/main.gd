@@ -3313,6 +3313,7 @@ func _tick_resident_barks(_delta: float) -> void:
 		if not bed.is_empty():
 			_crop_kind_watch = str(bed.get("kind", ""))
 	var hard_block := _resident_bark_hard_blocked()
+	# 暂停、近郊、进屋或旅人被藏起：收起正在显示的气泡，不保留补播。
 	if hard_block and _resident_bubble != null and _resident_bubble.visible:
 		_resident_bubble.dismiss()
 	if hard_block or _world == null or _screen != "game":
@@ -3337,6 +3338,11 @@ func _resident_bark_hard_blocked() -> bool:
 	if _confirm_screen != null and _confirm_screen.visible:
 		return true
 	if _save_problem_active:
+		return true
+	# 睡眠/阳台导演：house.busy 或旅人已不可见。一楼坐标还在，也不能据此冒泡。
+	if _world != null and _world.house != null and _world.house.busy():
+		return true
+	if _world != null and _world.get_player() != null and not _world.get_player().visible:
 		return true
 	return false
 
@@ -3374,6 +3380,9 @@ func _on_crops_confirmed_for_bark(kind: String) -> void:
 
 func _try_chick_bark() -> void:
 	if _resident_barks == null or _resident_bubble == null or _world == null:
+		return
+	# 人被藏进屋里时距离仍按一楼坐标算；硬阻断时不投骰、不入队。
+	if _resident_bark_hard_blocked():
 		return
 	if _resident_bubble.is_showing():
 		return
