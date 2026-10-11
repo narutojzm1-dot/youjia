@@ -1,5 +1,15 @@
 # Assistant 近郊开发与自测试目标（#565）
 
+## 2026-10-11 输入修复正式组合核验、长冷启动及音频更正
+
+PR737合入3ca的Publish38108960020/Pages38110504456均success；站点随后升级Cloud741的source `c28246f14dd8bca837624699ca9447124e39d0d1`，Publish38112894768/Pages38113778036 success。两集合各17文件完整SHA256/Pages Git blob核对一致。c282普通HTTPS三视口合计47状态（原驱动已完成11/21状态＋独立桌面15状态），直接拾物/点地继续、返院、HUD重进及刷新各保留1件，0page/console错误；桌面天气后133.2ms点击生效。[正式原始证据、失败与范围](../playtests/2026-10-11-nearby-input-release/README.md)。初次三视口驱动桌面reload30秒超时，独立冷启动180秒也超时，未称原驱动全程通过。
+
+最终无扩展同页桌面冷启动firstFrame565.131秒、完整缓存warm5.191秒；PCK实际请求至结束551.664秒，连续接收且0Network.loadingFailed/Range，未触发停滞续传。加载仍有严重首次等待；不同条件的旧e9/f872速度记录保持，不宣称固定加速。HTTP1.1/本机代理/浏览器驱动禁用HTTP2条件如实列出。新证据跟进已有性能#740，保留已完成#606续传/校验成果，不靠放宽测试预算称性能修复。本轮只读挂包盘点630条目，无生产资源修改；资源压缩、线路/引擎实验须沿最新单Owner接收范围。
+
+更正上条#565评论6105175212：`set_yard_active(false)`在Main `_show_title`，不是进入探索；现行近郊沿用院内音频状态，不能据此说完全无声。主线尚无正式分场/夜雨API，Leader623 e00f11a88679e0efe2ee2dccb2a8eea9ae0a0169候选已有set_music_scene/set_world_sound及Main适配，仍Draft待真实听验，542同样未合入。本轮不重复接线、不用无声录像替代听验。[完整#565逐项验收矩阵](../playtests/2026-10-11-nearby-input-release/completion-audit.md)。
+
+总目标保持active/每2小时。下一按最新main、#740认领和Leader623/QA196实际回执调整：保留近郊已完成范围，协助明确接收的加载/Host兼容测量，区域音景正式接口进入主线后完成近郊侧实际验证。没有新增笼统审批或接管他人Draft；当前未把音景缺口冒作Goal完成。
+
 ## 2026-10-11 窗光真实公开、输入修复与保存异常验证
 
 窗光正式source `64c25672cb384058f73f92818dd323c499f8ef87`，Publish38106423557与Pages38107311681成功，Pages `41c4531b32626c393c1e01f66b728597328acd8a`；实际公开17文件核对manifest SHA256及Pages Git blob，普通HTTPS三视口共30状态，自然圆石/落羽返院、HUD再进出、刷新各保留1件，0page/console错误。[完整原始证据与限定](../playtests/2026-10-11-nearby-input/README.md)。旧段“窗光公开待验”已完成；本轮没有另跑正式站自然过夜，前份a9夜晚证据保留，a9/64c树相同。

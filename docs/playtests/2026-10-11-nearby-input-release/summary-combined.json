@@ -1,0 +1,48 @@
+{
+  "source": "c28246f14dd8bca837624699ca9447124e39d0d1",
+  "aggregation": "two completed original viewports plus independent desktop repeat; not a fabricated original all-view runner pass",
+  "viewports": [
+    {
+      "view": [
+        390,
+        844,
+        1
+      ],
+      "events": 11,
+      "keepsakes_after_reload": {
+        "formal.find.brook_stone": 1
+      },
+      "errors": [],
+      "provenance": "completed viewport within original three-view driver; overall run later failed desktop navigation30s"
+    },
+    {
+      "view": [
+        844,
+        390,
+        1
+      ],
+      "events": 21,
+      "keepsakes_after_reload": {
+        "formal.find.feather": 1
+      },
+      "errors": [],
+      "provenance": "completed viewport within original three-view driver; overall run later failed desktop navigation30s"
+    },
+    {
+      "view": [
+        1280,
+        720,
+        1
+      ],
+      "events": 15,
+      "gate_trip": 3,
+      "picked": "formal.find.feather",
+      "keepsakes_after_reload": {
+        "formal.find.feather": 1
+      },
+      "errors": [],
+      "provenance": "independent desktop observed run with domcontentloaded then actual first-frame, cold600s observation budget; actual completion marker and summary retained, terminal exit code not retained"
+    }
+  ],
+  "events": 47
+}
