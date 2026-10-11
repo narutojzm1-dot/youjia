@@ -20,3 +20,15 @@
 
 - 不影响“没有待办的假期”。
 - 不引入惩罚性等待；饥饿短声仅在 Leader 调用 `play_hunger()` 时出现。
+
+## 2026-10-11 ~17:20 CST 督导 P2 返修
+
+针对 ENGINEERING-SUPERVISOR 对 `56272e4e` 的 P2：
+
+- 暂停拒绝新 hunger；停饭停 spoon；暂停停 spoon+hunger（`AudioDirector.stop_cue` 窄接口）
+- 叶子不再 `unlock_audio`；演示仅在真实按键栈解锁
+- `tools/verify_daily_life.sh` 增加 `test/meal_audio_suite.gd`
+- 事件级 missed-meal 去重仍属 Leader（本叶子保留 0.35s 防抖）
+
+隔离套件复跑：`[meal-audio] PASS: 35 checks`（Godot 4.7.2）。
+听验/主流程接线仍待 Leader/#738；本记录不写听感通过。
