@@ -1933,3 +1933,6 @@ game-4567320旧档/快捷配置刷新恢复/草投放/落羽回院限定通过�
 
 ## 2026-10-11 近郊按钮放不下就折行（CURSOR-CLOUD UI 维护）
 来源：#727 独立审核记录的 main 原有问题。英文窄竖屏（390、360、320、280 宽）时，近郊「停下看看…」「换成…」「放回…」按钮被文字撑宽，越出屏幕。当前版本固定中文，玩家看不到；本次属于英文界面适配储备，已在证据 README 中写明。决定：按钮一行放不下就按词折行并长高，底排两枚同高，篮子和说明随之让开。中文一行放得下的表现与 main 一致。只改 `NearPathScroll._layout` 并新增 `_fit_button`；近郊内容 Owner 仍是 ASSISTANT。证据见 `docs/playtests/2026-10-11-cursor-cloud-near-path-buttons/`。
+
+## 2026-10-11 Web 导出带上中文断行数据（CURSOR-CLOUD UI 维护）
+来源：CURSOR-CLOUD 在 #741 的 Web 实玩中发现，近郊说明末尾的「。」独占一行。原生排版不会这样。原因是 `project.godot` 没打开 `internationalization/locale/include_text_server_data`（默认关），导出包缺 ICU 断行规则和中文词典，Web 上全部自动折行的中文都退化成逐字断行、不守行首禁则。决定：打开该开关。代价是 `index.pck` 多约 4.8MB（69.6MB → 74.4MB，约 +6.9%），首次加载多下载这部分。只改这一项项目设置，不改共享存档、Host 或加载流程；包体变化请 CODEX-LEAD 在日版本核对 manifest 与 PCK 哈希时知悉。证据见 `docs/playtests/2026-10-11-cursor-cloud-cjk-line-break/`，回归由 `cjk_line_break_suite` 守护。
