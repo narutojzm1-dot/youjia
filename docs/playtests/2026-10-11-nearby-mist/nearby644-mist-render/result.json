@@ -1,0 +1,44 @@
+{
+	"changed_lake": 1531,
+	"changed_ridge": 3145,
+	"checks": 8,
+	"failures": [],
+	"mask_bytes": 475200,
+	"method": "gl_compatibility",
+	"outside_mask": 0,
+	"painted": 5631,
+	"quad_pixels": 118800.0,
+	"renderer": "AMD Radeon(TM) 8060S Graphics",
+	"states": {
+		"overcast-day": {
+			"lake_rgb": "7c8998ff",
+			"ridge_rgb": "fef7ecff",
+			"strength": 0.174
+		},
+		"overcast-night": {
+			"lake_rgb": "798696ff",
+			"ridge_rgb": "fef7ecff",
+			"strength": 0.0609
+		},
+		"rain-day": {
+			"lake_rgb": "7d8a99ff",
+			"ridge_rgb": "fef7ecff",
+			"strength": 0.204
+		},
+		"rain-night": {
+			"lake_rgb": "798796ff",
+			"ridge_rgb": "fef7ecff",
+			"strength": 0.0714
+		},
+		"sun-day": {
+			"lake_rgb": "7b8897ff",
+			"ridge_rgb": "fef7ecff",
+			"strength": 0.12
+		},
+		"sun-night": {
+			"lake_rgb": "788696ff",
+			"ridge_rgb": "fef7ecff",
+			"strength": 0.042
+		}
+	}
+}

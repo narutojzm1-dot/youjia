@@ -1,0 +1,45 @@
+45673209 Merge pull request #722 from narutojzm1-dot/codex/lead-meal-ledger-700
+200e2682 Merge pull request #721 from narutojzm1-dot/cursor/ui-narrow-chip-row-a84c
+fc73f005 docs: 写明中途切语言不重排的已知限制（CURSOR-CLOUD）
+abe73c7e docs: 补 360×640 证据，改正「360 不变」表述（CURSOR-CLOUD）
+a39f50bd feat(#700): persist meal costs and once-only grant receipts atomically
+3fa40bdc fix(ui): 360 宽只让放不下的小按钮变宽，其余保持平分（CURSOR-CLOUD）
+5f4c4346 docs: 280 宽溢出修正的 Web 前后对照证据与台账（CURSOR-CLOUD）
+562effec fix(ui): 280 宽标题页按钮不再撑出纸片（CURSOR-CLOUD）
+239a4417 fix(ui): 最窄竖屏底排小按钮按文字宽度排，不再互相压住（CURSOR-CLOUD）
+f63ff05a Merge pull request #719 from narutojzm1-dot/cursor/ui-hotbar-yard-place-a84c
+14df71df docs: 快捷栏不压底排按钮的 Web 前后对照证据与台账（CURSOR-CLOUD）
+36845748 fix(ui): 背篓合着时不再把快捷栏挪到底排按钮上（CURSOR-CLOUD）
+2605e5b3 Merge pull request #717 from narutojzm1-dot/codex/lead-hotbar-public-597
+a36d492f docs(#597): verify public hotbar persistence and integrate QA710 [CODEX-LEAD]
+f2edc3ca Merge pull request #716 from narutojzm1-dot/codex/lead-hotbar-save-597
+07c98973 fix: recover shared unknown writes before retrying hotbar
+55d3717a Merge pull request #712 from narutojzm1-dot/codex/lead-grok-review-rules-20261011
+dbc7be3d fix: persist player hotbar through shared save (#597)
+aa0c3468 Merge pull request #715 from narutojzm1-dot/grok/708-yard-gate-suite-flake
+a890e412 Merge latest main into Grok review rules; retain fatigue #714 and original author
+2fadde6c test(708): stop yard_gate_suite from depending on animal wander
+9b086e6e Merge pull request #713 from narutojzm1-dot/cursor/ui-hotbar-restyle-once-a84c
+defe80c4 Merge pull request #604 from narutojzm1-dot/work/codex-assistant/565-motion-evidence
+ecd54656 docs(565): archive final motion combination and actual browser video [CODEX-LEAD-ASSISTANT]
+70ca1292 Merge pull request #714 from narutojzm1-dot/codex/lead-growth-fatigue-700
+f0c1338b docs: specify next-day fatigue after staying awake overnight (#700)
+d21e0598 Merge remote-tracking branch 'origin/main' into work/codex-assistant/565-motion-evidence
+0556b912 fix(ui): 快捷栏配置态不变时不再逐帧重建格子样式（CURSOR-CLOUD）
+fc4692d6 Merge pull request #586 from narutojzm1-dot/work/codex-assistant/565-local-motion
+add1b878 docs: require Leader review for Grok submissions and align heartbeat
+8c1ccdf2 docs: GAME-QA 2026-10-10-2350-game-qa
+58830223 Merge pull request #709 from narutojzm1-dot/cursor/roles-cloud-splits-bugs-a84c
+b806f9b7 Merge pull request #707 from narutojzm1-dot/codex/lead-grok-small-features-20261010
+75640bca docs: 拆单对象改为 GROK-CONTRIBUTOR（修 bug 的 Grok）
+7bca726d docs: 记录用户共识——Cloud 发现的 bug 拆给 Grok（CURSOR-CLOUD）
+4c42b7f8 docs(grok): delegate small features alongside fixes [CODEX-LEAD]
+db633e05 Merge remote-tracking branch 'origin/main' into work/codex-assistant/565-local-motion
+f787f9d3 Merge pull request #702 from narutojzm1-dot/codex/lead-daily-release-20261010
+75554a72 docs(release): October10 public audit and cooking guidance [CODEX-LEAD]
+a3758946 Merge pull request #701 from narutojzm1-dot/codex/lead-growth-phase-700
+507b2885 docs(#700): record user-approved item-driven growth phase [CODEX-LEAD]
+c785d11d Merge branch 'work/codex-assistant/606-loading-integrity' into work/codex-assistant/565-local-motion
+40d54b09 Merge remote-tracking branch 'origin/main' into work/codex-assistant/565-local-motion
+6028d8bd [CODEX-LEAD-ASSISTANT][#565] 归档局部动态像素、GPU与Web最终证据
+2179e80e [CODEX-LEAD-ASSISTANT][#565] 溪水草木局部动态与减少动态适配

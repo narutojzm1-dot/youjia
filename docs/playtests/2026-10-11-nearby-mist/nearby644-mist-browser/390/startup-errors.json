@@ -1,0 +1,11 @@
+{
+  "errors": [
+    "Failed to load resource: the server responded with a status of 404 (File not found)",
+    "Failed to load resource: the server responded with a status of 404 (File not found)",
+    "[game-loading] Startup failed TypeError: Failed to fetch dynamically imported module: http://127.0.0.1:8790/web/save/bridge.mjs"
+  ],
+  "responses": [
+    "http://127.0.0.1:8790/web/save/bridge.mjs",
+    "http://127.0.0.1:8790/web/boot/download_assets.mjs"
+  ]
+}
