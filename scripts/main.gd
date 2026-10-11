@@ -88,6 +88,9 @@ var _resident_bubble: Control
 var _resident_barks: RefCounted
 var _crop_kind_watch := ""
 var _bark_clock := 0.0
+var _fatigue_bark_day := -1
+var _fatigue_bark_ready_seconds := 0.0
+const FATIGUE_BARK_SETTLE_SECONDS := 15.0
 ## Chick proximity hysteresis: stay latched until beyond PET_REACH + margin.
 var _chick_proximity_latched := false
 const CHICK_LEAVE_MARGIN := 28.0
@@ -3446,8 +3449,9 @@ func _flat(bg: Color, border: Color, width: int = 2, radius: int = 16) -> StyleB
 	return style
 
 ## GROK #703: picture-book resident barks (chick / plant / Leader fatigue hook).
-func _tick_resident_barks(_delta: float) -> void:
+func _tick_resident_barks(delta: float) -> void:
 	_sync_resident_bark_avoidance()
+	_tick_confirmed_fatigue_bark(delta)
 	if _crop_panel != null and _crop_panel.visible:
 		var bed := SaveStore.get_yard_crops()
 		if not bed.is_empty():
@@ -3465,6 +3469,28 @@ func _tick_resident_barks(_delta: float) -> void:
 	if _basket_panel != null and _basket_panel.visible:
 		return
 	_try_chick_bark()
+
+
+## Presentation only: the saved morning provenance, never the sky or AP count.
+## Require a fresh quiet interval after menus/house/scene changes; no overdue queue.
+func _tick_confirmed_fatigue_bark(delta: float) -> void:
+	var rest := SaveStore.get_rest_context()
+	if rest.is_empty() or rest.get("cause", "") != "awake":
+		_fatigue_bark_day = -1
+		_fatigue_bark_ready_seconds = 0.0
+		return
+	var day := int(rest.get("day", -1))
+	if day != _fatigue_bark_day:
+		_fatigue_bark_day = day
+		_fatigue_bark_ready_seconds = 0.0
+	if _world == null or _resident_bubble == null or _resident_bark_blocked() or not SaveStore.is_save_idle() or _resident_bubble.is_showing():
+		_fatigue_bark_ready_seconds = 0.0
+		return
+	_fatigue_bark_ready_seconds += maxf(delta, 0.0)
+	if _fatigue_bark_ready_seconds >= FATIGUE_BARK_SETTLE_SECONDS:
+		# Existing per-line 60s/global cooldowns still arbitrate with other barks.
+		if offer_fatigue_bark(true):
+			_fatigue_bark_ready_seconds = 0.0
 
 
 func _resident_bark_hard_blocked() -> bool:

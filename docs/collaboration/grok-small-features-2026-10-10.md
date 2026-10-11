@@ -6,9 +6,9 @@
 
 | 顺序 | 原单 | Owner / 状态 | 产物与依赖 |
 | --- | --- | --- | --- |
-| 1 | [#703 绘本气泡](https://github.com/narutojzm1-dot/youjia/issues/703) | GROK-CONTRIBUTOR / 已回执，PR #718 待返修 | 独立气泡及小鸡/已确认播种情境接入，可立即开发；无成长数值/存档改动 |
-| 2 | [#704 轻交互音](https://github.com/narutojzm1-dot/youjia/issues/704) | GROK-CONTRIBUTOR / 已回执，PR #720 待返修 | 背篓/相册/暂停开关与翻页短音制作、接入、真实听验，可独立推进 |
-| 3 | [#705 做饭烟雾](https://github.com/narutojzm1-dot/youjia/issues/705) | GROK-CONTRIBUTOR / 已回执，PR #723 待返修 | 烟囱局部效果先制作；正式接入依赖Leader真实做饭开始/结束事件，不以隔离演示冒上线 |
+| 1 | [#703 绘本气泡](https://github.com/narutojzm1-dot/youjia/issues/703) | GROK-CONTRIBUTOR / #758保留作者合入并公开验收，#703关闭 | 独立气泡及小鸡/已确认播种情境已接入；无成长数值/存档改动 |
+| 2 | [#704 轻交互音](https://github.com/narutojzm1-dot/youjia/issues/704) | GROK-CONTRIBUTOR / #720源码及软件录音已审，真实听验/操作链待验 | 背篓/相册/暂停开关与翻页短音制作、接入、真实听验，可独立推进 |
+| 3 | [#705 做饭烟雾](https://github.com/narutojzm1-dot/youjia/issues/705) | GROK-CONTRIBUTOR / #723叶子已审，Leader #738生产接入候选 | 烟囱局部效果先制作；正式接入依赖Leader真实做饭开始/结束事件，不以隔离演示冒上线 |
 
 每项原单定义具体范围和验收。前三项来自用户#700，不是任意扩展玩法。2026-10-11已核对#703/#704本人回执及PR；#705也已回执提交#723，当前待返修。核对最新#242：Grok此前仅在修#598/PR651，后续已由Leader#676完成；旧界面PR已交Cloud，不能因重新授权小功能重复接回。
 
@@ -49,3 +49,6 @@ GROK-CONTRIBUTOR的bug、小功能及其后续修订，均须由CODEX-LEAD审核
 ## 2026-10-11 09点最终SHA复核
 
 #703/#704/#705均已回执并提交，不再等待接收。718新47b8bf6e31d9f1c1f39f35efc71dd7a88d096a3e与720新0aa59d9d6510e8cfd9acb8ebf0b0bf3462bbd6fa仍实跑编译失败，分别退回I18n访问和变量类型；723新6afafd1ecc397a2acfafbdae7163de6c4c6a8674通过37项及隔离GPU渲染，视觉仍需原画屋顶/昼夜/窄屏可辨识证据，不合入。原PR保留审核结论与具体位置，Leader不覆盖作者分支。
+
+
+2026-10-12接续：上述为当前首批状态；既有历史返修记录保留。疲劳真实触发由Leader在#700接续，不再派Grok重复接线。声音邮件17项已发，未收到用户听验确认，不以软件录音作为人耳验收。

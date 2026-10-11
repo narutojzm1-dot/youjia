@@ -307,6 +307,72 @@ func run() -> void:
 	check(not main._resident_bubble.visible, "leaving house does not replay dismissed bark")
 	yard_player.visible = true
 	main._world.house.stage = ""
+	# Controlled clock advancement through the production persistence boundary.
+	# This is integration coverage, not an ordinary-player elapsed-night claim.
+	check(await store.flush_pending(), "fatigue fixture starts with confirmed state")
+	main._resident_barks.reset()
+	main._bark_clock = 2000.0
+	main._tick_resident_barks(15.0)
+	check(not main._resident_bubble.visible, "legacy morning never invents fatigue")
+	main._world._day_elapsed = 599.9
+	main._world.advance_world_time(0.2)
+	main._tick_resident_barks(15.0)
+	check(not main._resident_bubble.visible, "pending natural rollover does not announce fatigue")
+	check(await store.flush_pending(), "natural rollover confirms rest provenance")
+	check(store.get_rest_context().cause == "awake", "natural rollover supplies real fatigue")
+	var saved_before_bark: Dictionary = store._data.duplicate(true)
+	main._tick_resident_barks(14.0)
+	check(not main._resident_bubble.visible, "fatigue waits for visible quiet interval")
+	main._tick_resident_barks(1.0)
+	check(main._resident_bubble.visible and main._resident_bubble._label.text == i18n.t("bark.fatigue_sleepy"), "confirmed awake state automatically shows localized fatigue line")
+	check(store._data == saved_before_bark and store.is_save_idle(), "fatigue presentation changes no saved AP inventory clock or experience")
+	main._resident_bubble.dismiss()
+	main._bark_clock = 2016.0
+	main._tick_resident_barks(15.0)
+	check(not main._resident_bubble.visible, "fatigue does not bypass 60 second cooldown")
+	main._pause_screen.visible = true
+	main._bark_clock = 2100.0
+	main._tick_resident_barks(80.0)
+	main._pause_screen.visible = false
+	main._tick_resident_barks(1.0)
+	check(not main._resident_bubble.visible, "pause does not bank an overdue fatigue line")
+	main._tick_resident_barks(14.0)
+	check(main._resident_bubble.visible, "fresh quiet interval can offer fatigue again")
+	main._resident_bubble.dismiss()
+	main._bark_clock = 2200.0
+	main._screen = "exploring"
+	main._tick_resident_barks(80.0)
+	main._screen = "game"
+	main._tick_resident_barks(1.0)
+	check(not main._resident_bubble.visible, "return from exploring does not replay fatigue")
+	main._basket_panel.visible = true
+	main._tick_resident_barks(80.0)
+	main._basket_panel.visible = false
+	main._tick_resident_barks(1.0)
+	check(not main._resident_bubble.visible, "basket resets fatigue settle interval")
+	main._save_problem_active = true
+	main._tick_resident_barks(80.0)
+	main._save_problem_active = false
+	main._tick_resident_barks(1.0)
+	check(not main._resident_bubble.visible, "unresolved saving does not accumulate fatigue prompt")
+	var original_rest: Dictionary = store._data.resident_rest.duplicate(true)
+	store._data.resident_rest.day = 0
+	main._tick_resident_barks(80.0)
+	check(not main._resident_bubble.visible, "invalid provenance is not fatigue")
+	store._data.resident_rest = original_rest
+	store._load()
+	check(store.get_rest_context().cause == "awake", "native reload retains true fatigue provenance")
+	main._tick_resident_barks(14.0)
+	check(not main._resident_bubble.visible, "reload starts a fresh fatigue interval")
+	main._tick_resident_barks(1.0)
+	check(main._resident_bubble.visible, "reloaded real fatigue can be shown")
+	main._resident_bubble.dismiss()
+	store.request_house_sleep({"holiday_day": store.get_holiday_day(), "holiday_day_elapsed":400.0, "world_weather":main._world._regional_weather.snapshot()})
+	check(await store.flush_pending(), "normal sleep confirms rested morning")
+	check(store.get_rest_context().cause == "sleep", "sleep provenance replaces awake on new day")
+	main._bark_clock = 2300.0
+	main._tick_resident_barks(80.0)
+	check(not main._resident_bubble.visible, "rested morning stops automatic fatigue hints")
 	main.queue_free()
 	await process_frame
 
