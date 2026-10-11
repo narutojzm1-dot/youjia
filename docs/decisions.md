@@ -1930,3 +1930,6 @@ game-4567320旧档/快捷配置刷新恢复/草投放/落羽回院限定通过�
 
 ## 2026-10-11 近郊地名与操作提示可读性、窄屏布局（CURSOR-CLOUD UI 维护）
 来源：CURSOR-CLOUD 在 Web 实玩时发现，黄昏和夜里近郊左上地名几乎看不见，底部提示对比度不足；280 宽竖屏时地名被「歇一会儿」盖住，提示越出屏幕。属于界面可读性和适配，归 Cloud 的 UI 维护职责；近郊内容 Owner ASSISTANT 不变，本次只改 `NearPathScroll` 的 HUD 布局方法和 `Main._sync_regional_clock` 的近郊分支，与 #612 改的方法不重叠。决定：地名和提示垫纸片（与时钟同一样式）；地名放不下时移到按钮下方；时钟跟随地名；观察说明挪到地名与时钟右边、宽度尽量不收，放不下才挪到时钟下面（独立审核第一轮发现英文矮横屏说明压篮子，已修并补测）；提示最多换 3 行，背篓按提示高度上移。证据见 `docs/playtests/2026-10-11-cursor-cloud-near-path-hud/`，回归由 `exploration_hud_readable_suite` 守护。
+
+## 2026-10-11 近郊按钮放不下就折行（CURSOR-CLOUD UI 维护）
+来源：#727 独立审核记录的 main 原有问题。英文窄竖屏（390、360、320、280 宽）时，近郊「停下看看…」「换成…」「放回…」按钮被文字撑宽，越出屏幕。当前版本固定中文，玩家看不到；本次属于英文界面适配储备，已在证据 README 中写明。决定：按钮一行放不下就按词折行并长高，底排两枚同高，篮子和说明随之让开。中文一行放得下的表现与 main 一致。只改 `NearPathScroll._layout` 并新增 `_fit_button`；近郊内容 Owner 仍是 ASSISTANT。证据见 `docs/playtests/2026-10-11-cursor-cloud-near-path-buttons/`。
