@@ -1,0 +1,20 @@
+[
+  {
+    "exit": 0,
+    "status": "PASS",
+    "completionPattern": null,
+    "seconds": 52.8070791,
+    "profile": "youjia-assistant-audio-565-830c9736319147b3ad44adb1ce24bd81",
+    "source": "4ac427ddbce543c9836cd2813d1575db2be6bbb4",
+    "name": "import"
+  },
+  {
+    "exit": 0,
+    "status": "FAIL",
+    "completionPattern": "^REGIONAL_AUDIO checks=[1-9][0-9]* failures=0$",
+    "seconds": 3.342349,
+    "profile": "youjia-assistant-audio-565-890ff87a458b42ba9e82ed0b7f9475cd",
+    "source": "4ac427ddbce543c9836cd2813d1575db2be6bbb4",
+    "name": "regional_audio"
+  }
+]

@@ -1,0 +1,33 @@
+{
+  "source": "5700377e248a4d871c9fb1711956dba1400d5e8f",
+  "states": 27,
+  "longSpanSeconds": 699.390999999945,
+  "samples": 728,
+  "naturalPicked": "formal.find.feather",
+  "keepsakesAfterReload": {
+    "formal.find.feather": 1
+  },
+  "nightControls": true,
+  "errors": [],
+  "recordings": [
+    {
+      "context": 1,
+      "contextState": "running",
+      "sampleRate": 48000,
+      "mime": "audio/webm;codecs=opus",
+      "bytes": 202539,
+      "path": "long-context-1.webm",
+      "sha256": "b593c68958e8808a73baa7762944868585d9f18f19c3bb5c76d3c9285fd6a636"
+    },
+    {
+      "context": 2,
+      "contextState": "running",
+      "sampleRate": 48000,
+      "mime": "audio/webm;codecs=opus",
+      "bytes": 9584436,
+      "path": "long-context-2.webm",
+      "sha256": "8783d4b7af148a9340700893879f492feb49acce8d2c3268ac06e7e9e5c6a3a4"
+    }
+  ],
+  "limitations": "Diagnostic WebAudio graph capture and normal UI; default headless mute-audio. Includes deliberate muted control segments, not uninterrupted10-minute listening. No headphone/speaker quality, actual hardware, full browser-process/GPU memory, phone or background lifecycle claim."
+}

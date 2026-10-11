@@ -1,0 +1,1634 @@
+[
+  {
+    "wallMs": 9928.699999928474,
+    "signal": [
+      {
+        "node": 1,
+        "context": 1,
+        "type": "GainNode",
+        "contextState": "running",
+        "audioTime": 9.261333333333333,
+        "sampleRate": 48000,
+        "gain": 1,
+        "rms": 0,
+        "peak": 0,
+        "nonFinite": 0
+      },
+      {
+        "node": 2,
+        "context": 1,
+        "type": "AudioWorkletNode",
+        "contextState": "running",
+        "audioTime": 9.261333333333333,
+        "sampleRate": 48000,
+        "gain": null,
+        "rms": 0,
+        "peak": 0,
+        "nonFinite": 0
+      },
+      {
+        "node": 3,
+        "context": 2,
+        "type": "GainNode",
+        "contextState": "running",
+        "audioTime": 5.341333333333333,
+        "sampleRate": 48000,
+        "gain": 0.09000000357627869,
+        "rms": 0.007926302809581192,
+        "peak": 0.025646869093179703,
+        "nonFinite": 0
+      },
+      {
+        "node": 5,
+        "context": 2,
+        "type": "GainNode",
+        "contextState": "running",
+        "audioTime": 5.341333333333333,
+        "sampleRate": 48000,
+        "gain": 0.3981071710586548,
+        "rms": 0.037904260246541456,
+        "peak": 0.11399424821138382,
+        "nonFinite": 0
+      },
+      {
+        "node": 7,
+        "context": 2,
+        "type": "GainNode",
+        "contextState": "running",
+        "audioTime": 5.341333333333333,
+        "sampleRate": 48000,
+        "gain": 0.06000000238418579,
+        "rms": 0.0017379792178749596,
+        "peak": 0.006252123974263668,
+        "nonFinite": 0
+      }
+    ],
+    "sources": [
+      {
+        "wallMs": 5817.199999928474,
+        "audioTime": 1.232,
+        "node": 4,
+        "outputGainNode": 3,
+        "buffer": 1,
+        "frames": 6144000,
+        "channels": 2,
+        "sampleRate": 48000,
+        "duration": 128,
+        "loop": true,
+        "loopStart": 0,
+        "loopEnd": 128,
+        "startArgs": [
+          0,
+          0
+        ]
+      },
+      {
+        "wallMs": 6846.600000023842,
+        "audioTime": 2.2613333333333334,
+        "node": 6,
+        "outputGainNode": 5,
+        "buffer": 2,
+        "frames": 6144000,
+        "channels": 2,
+        "sampleRate": 48000,
+        "duration": 128,
+        "loop": true,
+        "loopStart": 0,
+        "loopEnd": 128,
+        "startArgs": [
+          0,
+          0
+        ]
+      },
+      {
+        "wallMs": 7094,
+        "audioTime": 2.501333333333333,
+        "node": 8,
+        "outputGainNode": 7,
+        "buffer": 3,
+        "frames": 1536000,
+        "channels": 2,
+        "sampleRate": 48000,
+        "duration": 32,
+        "loop": true,
+        "loopStart": 0,
+        "loopEnd": 32,
+        "startArgs": [
+          0,
+          0
+        ]
+      }
+    ],
+    "failures": [],
+    "backend": {
+      "buffers": 3,
+      "bytes": 110592000,
+      "decoded": 3,
+      "starts": 3,
+      "players": 3,
+      "playing": 3,
+      "state": "running"
+    },
+    "jsHeap": {
+      "used": 359024206,
+      "total": 383673806,
+      "limit": 4395630592
+    }
+  },
+  {
+    "wallMs": 10041.899999976158,
+    "signal": [
+      {
+        "node": 1,
+        "context": 1,
+        "type": "GainNode",
+        "contextState": "running",
+        "audioTime": 9.370666666666667,
+        "sampleRate": 48000,
+        "gain": 1,
+        "rms": 0,
+        "peak": 0,
+        "nonFinite": 0
+      },
+      {
+        "node": 2,
+        "context": 1,
+        "type": "AudioWorkletNode",
+        "contextState": "running",
+        "audioTime": 9.370666666666667,
+        "sampleRate": 48000,
+        "gain": null,
+        "rms": 0,
+        "peak": 0,
+        "nonFinite": 0
+      },
+      {
+        "node": 3,
+        "context": 2,
+        "type": "GainNode",
+        "contextState": "running",
+        "audioTime": 5.450666666666667,
+        "sampleRate": 48000,
+        "gain": 0.09000000357627869,
+        "rms": 0.007792646638397884,
+        "peak": 0.02900087647140026,
+        "nonFinite": 0
+      },
+      {
+        "node": 5,
+        "context": 2,
+        "type": "GainNode",
+        "contextState": "running",
+        "audioTime": 5.450666666666667,
+        "sampleRate": 48000,
+        "gain": 0.3981071710586548,
+        "rms": 0.039160180651851784,
+        "peak": 0.12014877796173096,
+        "nonFinite": 0
+      },
+      {
+        "node": 7,
+        "context": 2,
+        "type": "GainNode",
+        "contextState": "running",
+        "audioTime": 5.450666666666667,
+        "sampleRate": 48000,
+        "gain": 0.06000000238418579,
+        "rms": 0.0017264929521106408,
+        "peak": 0.006238605827093124,
+        "nonFinite": 0
+      }
+    ],
+    "sources": [
+      {
+        "wallMs": 5817.199999928474,
+        "audioTime": 1.232,
+        "node": 4,
+        "outputGainNode": 3,
+        "buffer": 1,
+        "frames": 6144000,
+        "channels": 2,
+        "sampleRate": 48000,
+        "duration": 128,
+        "loop": true,
+        "loopStart": 0,
+        "loopEnd": 128,
+        "startArgs": [
+          0,
+          0
+        ]
+      },
+      {
+        "wallMs": 6846.600000023842,
+        "audioTime": 2.2613333333333334,
+        "node": 6,
+        "outputGainNode": 5,
+        "buffer": 2,
+        "frames": 6144000,
+        "channels": 2,
+        "sampleRate": 48000,
+        "duration": 128,
+        "loop": true,
+        "loopStart": 0,
+        "loopEnd": 128,
+        "startArgs": [
+          0,
+          0
+        ]
+      },
+      {
+        "wallMs": 7094,
+        "audioTime": 2.501333333333333,
+        "node": 8,
+        "outputGainNode": 7,
+        "buffer": 3,
+        "frames": 1536000,
+        "channels": 2,
+        "sampleRate": 48000,
+        "duration": 32,
+        "loop": true,
+        "loopStart": 0,
+        "loopEnd": 32,
+        "startArgs": [
+          0,
+          0
+        ]
+      }
+    ],
+    "failures": [],
+    "backend": {
+      "buffers": 3,
+      "bytes": 110592000,
+      "decoded": 3,
+      "starts": 3,
+      "players": 3,
+      "playing": 3,
+      "state": "running"
+    },
+    "jsHeap": {
+      "used": 360641058,
+      "total": 383673806,
+      "limit": 4395630592
+    }
+  },
+  {
+    "wallMs": 10167.100000023842,
+    "signal": [
+      {
+        "node": 1,
+        "context": 1,
+        "type": "GainNode",
+        "contextState": "running",
+        "audioTime": 9.490666666666666,
+        "sampleRate": 48000,
+        "gain": 1,
+        "rms": 0,
+        "peak": 0,
+        "nonFinite": 0
+      },
+      {
+        "node": 2,
+        "context": 1,
+        "type": "AudioWorkletNode",
+        "contextState": "running",
+        "audioTime": 9.490666666666666,
+        "sampleRate": 48000,
+        "gain": null,
+        "rms": 0,
+        "peak": 0,
+        "nonFinite": 0
+      },
+      {
+        "node": 3,
+        "context": 2,
+        "type": "GainNode",
+        "contextState": "running",
+        "audioTime": 5.581333333333333,
+        "sampleRate": 48000,
+        "gain": 0.09000000357627869,
+        "rms": 0.007180638872200639,
+        "peak": 0.027727479115128517,
+        "nonFinite": 0
+      },
+      {
+        "node": 5,
+        "context": 2,
+        "type": "GainNode",
+        "contextState": "running",
+        "audioTime": 5.581333333333333,
+        "sampleRate": 48000,
+        "gain": 0.3981071710586548,
+        "rms": 0.03886073492785353,
+        "peak": 0.08624765276908875,
+        "nonFinite": 0
+      },
+      {
+        "node": 7,
+        "context": 2,
+        "type": "GainNode",
+        "contextState": "running",
+        "audioTime": 5.581333333333333,
+        "sampleRate": 48000,
+        "gain": 0.06000000238418579,
+        "rms": 0.0017654032589004575,
+        "peak": 0.006887759082019329,
+        "nonFinite": 0
+      }
+    ],
+    "sources": [
+      {
+        "wallMs": 5817.199999928474,
+        "audioTime": 1.232,
+        "node": 4,
+        "outputGainNode": 3,
+        "buffer": 1,
+        "frames": 6144000,
+        "channels": 2,
+        "sampleRate": 48000,
+        "duration": 128,
+        "loop": true,
+        "loopStart": 0,
+        "loopEnd": 128,
+        "startArgs": [
+          0,
+          0
+        ]
+      },
+      {
+        "wallMs": 6846.600000023842,
+        "audioTime": 2.2613333333333334,
+        "node": 6,
+        "outputGainNode": 5,
+        "buffer": 2,
+        "frames": 6144000,
+        "channels": 2,
+        "sampleRate": 48000,
+        "duration": 128,
+        "loop": true,
+        "loopStart": 0,
+        "loopEnd": 128,
+        "startArgs": [
+          0,
+          0
+        ]
+      },
+      {
+        "wallMs": 7094,
+        "audioTime": 2.501333333333333,
+        "node": 8,
+        "outputGainNode": 7,
+        "buffer": 3,
+        "frames": 1536000,
+        "channels": 2,
+        "sampleRate": 48000,
+        "duration": 32,
+        "loop": true,
+        "loopStart": 0,
+        "loopEnd": 32,
+        "startArgs": [
+          0,
+          0
+        ]
+      }
+    ],
+    "failures": [],
+    "backend": {
+      "buffers": 3,
+      "bytes": 110592000,
+      "decoded": 3,
+      "starts": 3,
+      "players": 3,
+      "playing": 3,
+      "state": "running"
+    },
+    "jsHeap": {
+      "used": 361468554,
+      "total": 383673806,
+      "limit": 4395630592
+    }
+  },
+  {
+    "wallMs": 10287.699999928474,
+    "signal": [
+      {
+        "node": 1,
+        "context": 1,
+        "type": "GainNode",
+        "contextState": "running",
+        "audioTime": 9.621333333333334,
+        "sampleRate": 48000,
+        "gain": 1,
+        "rms": 0,
+        "peak": 0,
+        "nonFinite": 0
+      },
+      {
+        "node": 2,
+        "context": 1,
+        "type": "AudioWorkletNode",
+        "contextState": "running",
+        "audioTime": 9.621333333333334,
+        "sampleRate": 48000,
+        "gain": null,
+        "rms": 0,
+        "peak": 0,
+        "nonFinite": 0
+      },
+      {
+        "node": 3,
+        "context": 2,
+        "type": "GainNode",
+        "contextState": "running",
+        "audioTime": 5.701333333333333,
+        "sampleRate": 48000,
+        "gain": 0.09000000357627869,
+        "rms": 0.007364109727728321,
+        "peak": 0.023298803716897964,
+        "nonFinite": 0
+      },
+      {
+        "node": 5,
+        "context": 2,
+        "type": "GainNode",
+        "contextState": "running",
+        "audioTime": 5.701333333333333,
+        "sampleRate": 48000,
+        "gain": 0.3981071710586548,
+        "rms": 0.03923548549133068,
+        "peak": 0.12039385735988617,
+        "nonFinite": 0
+      },
+      {
+        "node": 7,
+        "context": 2,
+        "type": "GainNode",
+        "contextState": "running",
+        "audioTime": 5.701333333333333,
+        "sampleRate": 48000,
+        "gain": 0.06000000238418579,
+        "rms": 0.0017281545024766967,
+        "peak": 0.006418584380298853,
+        "nonFinite": 0
+      }
+    ],
+    "sources": [
+      {
+        "wallMs": 5817.199999928474,
+        "audioTime": 1.232,
+        "node": 4,
+        "outputGainNode": 3,
+        "buffer": 1,
+        "frames": 6144000,
+        "channels": 2,
+        "sampleRate": 48000,
+        "duration": 128,
+        "loop": true,
+        "loopStart": 0,
+        "loopEnd": 128,
+        "startArgs": [
+          0,
+          0
+        ]
+      },
+      {
+        "wallMs": 6846.600000023842,
+        "audioTime": 2.2613333333333334,
+        "node": 6,
+        "outputGainNode": 5,
+        "buffer": 2,
+        "frames": 6144000,
+        "channels": 2,
+        "sampleRate": 48000,
+        "duration": 128,
+        "loop": true,
+        "loopStart": 0,
+        "loopEnd": 128,
+        "startArgs": [
+          0,
+          0
+        ]
+      },
+      {
+        "wallMs": 7094,
+        "audioTime": 2.501333333333333,
+        "node": 8,
+        "outputGainNode": 7,
+        "buffer": 3,
+        "frames": 1536000,
+        "channels": 2,
+        "sampleRate": 48000,
+        "duration": 32,
+        "loop": true,
+        "loopStart": 0,
+        "loopEnd": 32,
+        "startArgs": [
+          0,
+          0
+        ]
+      }
+    ],
+    "failures": [],
+    "backend": {
+      "buffers": 3,
+      "bytes": 110592000,
+      "decoded": 3,
+      "starts": 3,
+      "players": 3,
+      "playing": 3,
+      "state": "running"
+    },
+    "jsHeap": {
+      "used": 362309938,
+      "total": 383673806,
+      "limit": 4395630592
+    }
+  },
+  {
+    "wallMs": 10412.199999928474,
+    "signal": [
+      {
+        "node": 1,
+        "context": 1,
+        "type": "GainNode",
+        "contextState": "running",
+        "audioTime": 9.741333333333333,
+        "sampleRate": 48000,
+        "gain": 1,
+        "rms": 0,
+        "peak": 0,
+        "nonFinite": 0
+      },
+      {
+        "node": 2,
+        "context": 1,
+        "type": "AudioWorkletNode",
+        "contextState": "running",
+        "audioTime": 9.741333333333333,
+        "sampleRate": 48000,
+        "gain": null,
+        "rms": 0,
+        "peak": 0,
+        "nonFinite": 0
+      },
+      {
+        "node": 3,
+        "context": 2,
+        "type": "GainNode",
+        "contextState": "running",
+        "audioTime": 5.8213333333333335,
+        "sampleRate": 48000,
+        "gain": 0.09000000357627869,
+        "rms": 0.00852769722314716,
+        "peak": 0.02916106954216957,
+        "nonFinite": 0
+      },
+      {
+        "node": 5,
+        "context": 2,
+        "type": "GainNode",
+        "contextState": "running",
+        "audioTime": 5.8213333333333335,
+        "sampleRate": 48000,
+        "gain": 0.3981071710586548,
+        "rms": 0.03967571152830167,
+        "peak": 0.11798743903636932,
+        "nonFinite": 0
+      },
+      {
+        "node": 7,
+        "context": 2,
+        "type": "GainNode",
+        "contextState": "running",
+        "audioTime": 5.8213333333333335,
+        "sampleRate": 48000,
+        "gain": 0.06000000238418579,
+        "rms": 0.0016767073737009267,
+        "peak": 0.006266536191105843,
+        "nonFinite": 0
+      }
+    ],
+    "sources": [
+      {
+        "wallMs": 5817.199999928474,
+        "audioTime": 1.232,
+        "node": 4,
+        "outputGainNode": 3,
+        "buffer": 1,
+        "frames": 6144000,
+        "channels": 2,
+        "sampleRate": 48000,
+        "duration": 128,
+        "loop": true,
+        "loopStart": 0,
+        "loopEnd": 128,
+        "startArgs": [
+          0,
+          0
+        ]
+      },
+      {
+        "wallMs": 6846.600000023842,
+        "audioTime": 2.2613333333333334,
+        "node": 6,
+        "outputGainNode": 5,
+        "buffer": 2,
+        "frames": 6144000,
+        "channels": 2,
+        "sampleRate": 48000,
+        "duration": 128,
+        "loop": true,
+        "loopStart": 0,
+        "loopEnd": 128,
+        "startArgs": [
+          0,
+          0
+        ]
+      },
+      {
+        "wallMs": 7094,
+        "audioTime": 2.501333333333333,
+        "node": 8,
+        "outputGainNode": 7,
+        "buffer": 3,
+        "frames": 1536000,
+        "channels": 2,
+        "sampleRate": 48000,
+        "duration": 32,
+        "loop": true,
+        "loopStart": 0,
+        "loopEnd": 32,
+        "startArgs": [
+          0,
+          0
+        ]
+      }
+    ],
+    "failures": [],
+    "backend": {
+      "buffers": 3,
+      "bytes": 110592000,
+      "decoded": 3,
+      "starts": 3,
+      "players": 3,
+      "playing": 3,
+      "state": "running"
+    },
+    "jsHeap": {
+      "used": 363135070,
+      "total": 383673806,
+      "limit": 4395630592
+    }
+  },
+  {
+    "wallMs": 10533.399999976158,
+    "signal": [
+      {
+        "node": 1,
+        "context": 1,
+        "type": "GainNode",
+        "contextState": "running",
+        "audioTime": 9.861333333333333,
+        "sampleRate": 48000,
+        "gain": 1,
+        "rms": 0,
+        "peak": 0,
+        "nonFinite": 0
+      },
+      {
+        "node": 2,
+        "context": 1,
+        "type": "AudioWorkletNode",
+        "contextState": "running",
+        "audioTime": 9.861333333333333,
+        "sampleRate": 48000,
+        "gain": null,
+        "rms": 0,
+        "peak": 0,
+        "nonFinite": 0
+      },
+      {
+        "node": 3,
+        "context": 2,
+        "type": "GainNode",
+        "contextState": "running",
+        "audioTime": 5.941333333333334,
+        "sampleRate": 48000,
+        "gain": 0.09000000357627869,
+        "rms": 0.008157128529066962,
+        "peak": 0.025831304490566254,
+        "nonFinite": 0
+      },
+      {
+        "node": 5,
+        "context": 2,
+        "type": "GainNode",
+        "contextState": "running",
+        "audioTime": 5.941333333333334,
+        "sampleRate": 48000,
+        "gain": 0.3981071710586548,
+        "rms": 0.0395453915520996,
+        "peak": 0.08404512703418732,
+        "nonFinite": 0
+      },
+      {
+        "node": 7,
+        "context": 2,
+        "type": "GainNode",
+        "contextState": "running",
+        "audioTime": 5.941333333333334,
+        "sampleRate": 48000,
+        "gain": 0.06000000238418579,
+        "rms": 0.0016961239411942973,
+        "peak": 0.006979828700423241,
+        "nonFinite": 0
+      }
+    ],
+    "sources": [
+      {
+        "wallMs": 5817.199999928474,
+        "audioTime": 1.232,
+        "node": 4,
+        "outputGainNode": 3,
+        "buffer": 1,
+        "frames": 6144000,
+        "channels": 2,
+        "sampleRate": 48000,
+        "duration": 128,
+        "loop": true,
+        "loopStart": 0,
+        "loopEnd": 128,
+        "startArgs": [
+          0,
+          0
+        ]
+      },
+      {
+        "wallMs": 6846.600000023842,
+        "audioTime": 2.2613333333333334,
+        "node": 6,
+        "outputGainNode": 5,
+        "buffer": 2,
+        "frames": 6144000,
+        "channels": 2,
+        "sampleRate": 48000,
+        "duration": 128,
+        "loop": true,
+        "loopStart": 0,
+        "loopEnd": 128,
+        "startArgs": [
+          0,
+          0
+        ]
+      },
+      {
+        "wallMs": 7094,
+        "audioTime": 2.501333333333333,
+        "node": 8,
+        "outputGainNode": 7,
+        "buffer": 3,
+        "frames": 1536000,
+        "channels": 2,
+        "sampleRate": 48000,
+        "duration": 32,
+        "loop": true,
+        "loopStart": 0,
+        "loopEnd": 32,
+        "startArgs": [
+          0,
+          0
+        ]
+      }
+    ],
+    "failures": [],
+    "backend": {
+      "buffers": 3,
+      "bytes": 110592000,
+      "decoded": 3,
+      "starts": 3,
+      "players": 3,
+      "playing": 3,
+      "state": "running"
+    },
+    "jsHeap": {
+      "used": 363957854,
+      "total": 383673806,
+      "limit": 4395630592
+    }
+  },
+  {
+    "wallMs": 10659.100000023842,
+    "signal": [
+      {
+        "node": 1,
+        "context": 1,
+        "type": "GainNode",
+        "contextState": "running",
+        "audioTime": 9.992,
+        "sampleRate": 48000,
+        "gain": 1,
+        "rms": 0,
+        "peak": 0,
+        "nonFinite": 0
+      },
+      {
+        "node": 2,
+        "context": 1,
+        "type": "AudioWorkletNode",
+        "contextState": "running",
+        "audioTime": 9.992,
+        "sampleRate": 48000,
+        "gain": null,
+        "rms": 0,
+        "peak": 0,
+        "nonFinite": 0
+      },
+      {
+        "node": 3,
+        "context": 2,
+        "type": "GainNode",
+        "contextState": "running",
+        "audioTime": 6.072,
+        "sampleRate": 48000,
+        "gain": 0.09000000357627869,
+        "rms": 0.0068991313508645616,
+        "peak": 0.023223966360092163,
+        "nonFinite": 0
+      },
+      {
+        "node": 5,
+        "context": 2,
+        "type": "GainNode",
+        "contextState": "running",
+        "audioTime": 6.072,
+        "sampleRate": 48000,
+        "gain": 0.3981071710586548,
+        "rms": 0.03916801746348491,
+        "peak": 0.11278846114873886,
+        "nonFinite": 0
+      },
+      {
+        "node": 7,
+        "context": 2,
+        "type": "GainNode",
+        "contextState": "running",
+        "audioTime": 6.072,
+        "sampleRate": 48000,
+        "gain": 0.06000000238418579,
+        "rms": 0.00176739205532191,
+        "peak": 0.005971849896013737,
+        "nonFinite": 0
+      }
+    ],
+    "sources": [
+      {
+        "wallMs": 5817.199999928474,
+        "audioTime": 1.232,
+        "node": 4,
+        "outputGainNode": 3,
+        "buffer": 1,
+        "frames": 6144000,
+        "channels": 2,
+        "sampleRate": 48000,
+        "duration": 128,
+        "loop": true,
+        "loopStart": 0,
+        "loopEnd": 128,
+        "startArgs": [
+          0,
+          0
+        ]
+      },
+      {
+        "wallMs": 6846.600000023842,
+        "audioTime": 2.2613333333333334,
+        "node": 6,
+        "outputGainNode": 5,
+        "buffer": 2,
+        "frames": 6144000,
+        "channels": 2,
+        "sampleRate": 48000,
+        "duration": 128,
+        "loop": true,
+        "loopStart": 0,
+        "loopEnd": 128,
+        "startArgs": [
+          0,
+          0
+        ]
+      },
+      {
+        "wallMs": 7094,
+        "audioTime": 2.501333333333333,
+        "node": 8,
+        "outputGainNode": 7,
+        "buffer": 3,
+        "frames": 1536000,
+        "channels": 2,
+        "sampleRate": 48000,
+        "duration": 32,
+        "loop": true,
+        "loopStart": 0,
+        "loopEnd": 32,
+        "startArgs": [
+          0,
+          0
+        ]
+      }
+    ],
+    "failures": [],
+    "backend": {
+      "buffers": 3,
+      "bytes": 110592000,
+      "decoded": 3,
+      "starts": 3,
+      "players": 3,
+      "playing": 3,
+      "state": "running"
+    },
+    "jsHeap": {
+      "used": 225987186,
+      "total": 258408910,
+      "limit": 4395630592
+    }
+  },
+  {
+    "wallMs": 10780.399999976158,
+    "signal": [
+      {
+        "node": 1,
+        "context": 1,
+        "type": "GainNode",
+        "contextState": "running",
+        "audioTime": 10.112,
+        "sampleRate": 48000,
+        "gain": 1,
+        "rms": 0,
+        "peak": 0,
+        "nonFinite": 0
+      },
+      {
+        "node": 2,
+        "context": 1,
+        "type": "AudioWorkletNode",
+        "contextState": "running",
+        "audioTime": 10.112,
+        "sampleRate": 48000,
+        "gain": null,
+        "rms": 0,
+        "peak": 0,
+        "nonFinite": 0
+      },
+      {
+        "node": 3,
+        "context": 2,
+        "type": "GainNode",
+        "contextState": "running",
+        "audioTime": 6.192,
+        "sampleRate": 48000,
+        "gain": 0.09000000357627869,
+        "rms": 0.007758108769090487,
+        "peak": 0.03033631294965744,
+        "nonFinite": 0
+      },
+      {
+        "node": 5,
+        "context": 2,
+        "type": "GainNode",
+        "contextState": "running",
+        "audioTime": 6.192,
+        "sampleRate": 48000,
+        "gain": 0.3981071710586548,
+        "rms": 0.040139191517570325,
+        "peak": 0.11179371923208237,
+        "nonFinite": 0
+      },
+      {
+        "node": 7,
+        "context": 2,
+        "type": "GainNode",
+        "contextState": "running",
+        "audioTime": 6.192,
+        "sampleRate": 48000,
+        "gain": 0.06000000238418579,
+        "rms": 0.0016850338373478818,
+        "peak": 0.006212479434907436,
+        "nonFinite": 0
+      }
+    ],
+    "sources": [
+      {
+        "wallMs": 5817.199999928474,
+        "audioTime": 1.232,
+        "node": 4,
+        "outputGainNode": 3,
+        "buffer": 1,
+        "frames": 6144000,
+        "channels": 2,
+        "sampleRate": 48000,
+        "duration": 128,
+        "loop": true,
+        "loopStart": 0,
+        "loopEnd": 128,
+        "startArgs": [
+          0,
+          0
+        ]
+      },
+      {
+        "wallMs": 6846.600000023842,
+        "audioTime": 2.2613333333333334,
+        "node": 6,
+        "outputGainNode": 5,
+        "buffer": 2,
+        "frames": 6144000,
+        "channels": 2,
+        "sampleRate": 48000,
+        "duration": 128,
+        "loop": true,
+        "loopStart": 0,
+        "loopEnd": 128,
+        "startArgs": [
+          0,
+          0
+        ]
+      },
+      {
+        "wallMs": 7094,
+        "audioTime": 2.501333333333333,
+        "node": 8,
+        "outputGainNode": 7,
+        "buffer": 3,
+        "frames": 1536000,
+        "channels": 2,
+        "sampleRate": 48000,
+        "duration": 32,
+        "loop": true,
+        "loopStart": 0,
+        "loopEnd": 32,
+        "startArgs": [
+          0,
+          0
+        ]
+      }
+    ],
+    "failures": [],
+    "backend": {
+      "buffers": 3,
+      "bytes": 110592000,
+      "decoded": 3,
+      "starts": 3,
+      "players": 3,
+      "playing": 3,
+      "state": "running"
+    },
+    "jsHeap": {
+      "used": 226823242,
+      "total": 258408910,
+      "limit": 4395630592
+    }
+  },
+  {
+    "wallMs": 10888.799999952316,
+    "signal": [
+      {
+        "node": 1,
+        "context": 1,
+        "type": "GainNode",
+        "contextState": "running",
+        "audioTime": 10.221333333333334,
+        "sampleRate": 48000,
+        "gain": 1,
+        "rms": 0,
+        "peak": 0,
+        "nonFinite": 0
+      },
+      {
+        "node": 2,
+        "context": 1,
+        "type": "AudioWorkletNode",
+        "contextState": "running",
+        "audioTime": 10.221333333333334,
+        "sampleRate": 48000,
+        "gain": null,
+        "rms": 0,
+        "peak": 0,
+        "nonFinite": 0
+      },
+      {
+        "node": 3,
+        "context": 2,
+        "type": "GainNode",
+        "contextState": "running",
+        "audioTime": 6.301333333333333,
+        "sampleRate": 48000,
+        "gain": 0.09000000357627869,
+        "rms": 0.007192603296343614,
+        "peak": 0.025567876175045967,
+        "nonFinite": 0
+      },
+      {
+        "node": 5,
+        "context": 2,
+        "type": "GainNode",
+        "contextState": "running",
+        "audioTime": 6.301333333333333,
+        "sampleRate": 48000,
+        "gain": 0.3981071710586548,
+        "rms": 0.04036524783008922,
+        "peak": 0.09065499156713486,
+        "nonFinite": 0
+      },
+      {
+        "node": 7,
+        "context": 2,
+        "type": "GainNode",
+        "contextState": "running",
+        "audioTime": 6.301333333333333,
+        "sampleRate": 48000,
+        "gain": 0.06000000238418579,
+        "rms": 0.001766352389653177,
+        "peak": 0.005950908176600933,
+        "nonFinite": 0
+      }
+    ],
+    "sources": [
+      {
+        "wallMs": 5817.199999928474,
+        "audioTime": 1.232,
+        "node": 4,
+        "outputGainNode": 3,
+        "buffer": 1,
+        "frames": 6144000,
+        "channels": 2,
+        "sampleRate": 48000,
+        "duration": 128,
+        "loop": true,
+        "loopStart": 0,
+        "loopEnd": 128,
+        "startArgs": [
+          0,
+          0
+        ]
+      },
+      {
+        "wallMs": 6846.600000023842,
+        "audioTime": 2.2613333333333334,
+        "node": 6,
+        "outputGainNode": 5,
+        "buffer": 2,
+        "frames": 6144000,
+        "channels": 2,
+        "sampleRate": 48000,
+        "duration": 128,
+        "loop": true,
+        "loopStart": 0,
+        "loopEnd": 128,
+        "startArgs": [
+          0,
+          0
+        ]
+      },
+      {
+        "wallMs": 7094,
+        "audioTime": 2.501333333333333,
+        "node": 8,
+        "outputGainNode": 7,
+        "buffer": 3,
+        "frames": 1536000,
+        "channels": 2,
+        "sampleRate": 48000,
+        "duration": 32,
+        "loop": true,
+        "loopStart": 0,
+        "loopEnd": 32,
+        "startArgs": [
+          0,
+          0
+        ]
+      }
+    ],
+    "failures": [],
+    "backend": {
+      "buffers": 3,
+      "bytes": 110592000,
+      "decoded": 3,
+      "starts": 3,
+      "players": 3,
+      "playing": 3,
+      "state": "running"
+    },
+    "jsHeap": {
+      "used": 227627974,
+      "total": 258408910,
+      "limit": 4395630592
+    }
+  },
+  {
+    "wallMs": 10998.100000023842,
+    "signal": [
+      {
+        "node": 1,
+        "context": 1,
+        "type": "GainNode",
+        "contextState": "running",
+        "audioTime": 10.330666666666668,
+        "sampleRate": 48000,
+        "gain": 1,
+        "rms": 0,
+        "peak": 0,
+        "nonFinite": 0
+      },
+      {
+        "node": 2,
+        "context": 1,
+        "type": "AudioWorkletNode",
+        "contextState": "running",
+        "audioTime": 10.330666666666668,
+        "sampleRate": 48000,
+        "gain": null,
+        "rms": 0,
+        "peak": 0,
+        "nonFinite": 0
+      },
+      {
+        "node": 3,
+        "context": 2,
+        "type": "GainNode",
+        "contextState": "running",
+        "audioTime": 6.410666666666667,
+        "sampleRate": 48000,
+        "gain": 0.09000000357627869,
+        "rms": 0.007900386357290536,
+        "peak": 0.027952950447797775,
+        "nonFinite": 0
+      },
+      {
+        "node": 5,
+        "context": 2,
+        "type": "GainNode",
+        "contextState": "running",
+        "audioTime": 6.410666666666667,
+        "sampleRate": 48000,
+        "gain": 0.3981071710586548,
+        "rms": 0.04022848610297306,
+        "peak": 0.11611384898424149,
+        "nonFinite": 0
+      },
+      {
+        "node": 7,
+        "context": 2,
+        "type": "GainNode",
+        "contextState": "running",
+        "audioTime": 6.410666666666667,
+        "sampleRate": 48000,
+        "gain": 0.06000000238418579,
+        "rms": 0.0016994725351475396,
+        "peak": 0.006610470823943615,
+        "nonFinite": 0
+      }
+    ],
+    "sources": [
+      {
+        "wallMs": 5817.199999928474,
+        "audioTime": 1.232,
+        "node": 4,
+        "outputGainNode": 3,
+        "buffer": 1,
+        "frames": 6144000,
+        "channels": 2,
+        "sampleRate": 48000,
+        "duration": 128,
+        "loop": true,
+        "loopStart": 0,
+        "loopEnd": 128,
+        "startArgs": [
+          0,
+          0
+        ]
+      },
+      {
+        "wallMs": 6846.600000023842,
+        "audioTime": 2.2613333333333334,
+        "node": 6,
+        "outputGainNode": 5,
+        "buffer": 2,
+        "frames": 6144000,
+        "channels": 2,
+        "sampleRate": 48000,
+        "duration": 128,
+        "loop": true,
+        "loopStart": 0,
+        "loopEnd": 128,
+        "startArgs": [
+          0,
+          0
+        ]
+      },
+      {
+        "wallMs": 7094,
+        "audioTime": 2.501333333333333,
+        "node": 8,
+        "outputGainNode": 7,
+        "buffer": 3,
+        "frames": 1536000,
+        "channels": 2,
+        "sampleRate": 48000,
+        "duration": 32,
+        "loop": true,
+        "loopStart": 0,
+        "loopEnd": 32,
+        "startArgs": [
+          0,
+          0
+        ]
+      }
+    ],
+    "failures": [],
+    "backend": {
+      "buffers": 3,
+      "bytes": 110592000,
+      "decoded": 3,
+      "starts": 3,
+      "players": 3,
+      "playing": 3,
+      "state": "running"
+    },
+    "jsHeap": {
+      "used": 228433338,
+      "total": 258408910,
+      "limit": 4395630592
+    }
+  },
+  {
+    "wallMs": 11115.600000023842,
+    "signal": [
+      {
+        "node": 1,
+        "context": 1,
+        "type": "GainNode",
+        "contextState": "running",
+        "audioTime": 10.44,
+        "sampleRate": 48000,
+        "gain": 1,
+        "rms": 0,
+        "peak": 0,
+        "nonFinite": 0
+      },
+      {
+        "node": 2,
+        "context": 1,
+        "type": "AudioWorkletNode",
+        "contextState": "running",
+        "audioTime": 10.44,
+        "sampleRate": 48000,
+        "gain": null,
+        "rms": 0,
+        "peak": 0,
+        "nonFinite": 0
+      },
+      {
+        "node": 3,
+        "context": 2,
+        "type": "GainNode",
+        "contextState": "running",
+        "audioTime": 6.52,
+        "sampleRate": 48000,
+        "gain": 0.09000000357627869,
+        "rms": 0.0066473131800732855,
+        "peak": 0.02150469459593296,
+        "nonFinite": 0
+      },
+      {
+        "node": 5,
+        "context": 2,
+        "type": "GainNode",
+        "contextState": "running",
+        "audioTime": 6.52,
+        "sampleRate": 48000,
+        "gain": 0.3981071710586548,
+        "rms": 0.03941590027865083,
+        "peak": 0.1157432496547699,
+        "nonFinite": 0
+      },
+      {
+        "node": 7,
+        "context": 2,
+        "type": "GainNode",
+        "contextState": "running",
+        "audioTime": 6.52,
+        "sampleRate": 48000,
+        "gain": 0.06000000238418579,
+        "rms": 0.001693117385853555,
+        "peak": 0.005861292127519846,
+        "nonFinite": 0
+      }
+    ],
+    "sources": [
+      {
+        "wallMs": 5817.199999928474,
+        "audioTime": 1.232,
+        "node": 4,
+        "outputGainNode": 3,
+        "buffer": 1,
+        "frames": 6144000,
+        "channels": 2,
+        "sampleRate": 48000,
+        "duration": 128,
+        "loop": true,
+        "loopStart": 0,
+        "loopEnd": 128,
+        "startArgs": [
+          0,
+          0
+        ]
+      },
+      {
+        "wallMs": 6846.600000023842,
+        "audioTime": 2.2613333333333334,
+        "node": 6,
+        "outputGainNode": 5,
+        "buffer": 2,
+        "frames": 6144000,
+        "channels": 2,
+        "sampleRate": 48000,
+        "duration": 128,
+        "loop": true,
+        "loopStart": 0,
+        "loopEnd": 128,
+        "startArgs": [
+          0,
+          0
+        ]
+      },
+      {
+        "wallMs": 7094,
+        "audioTime": 2.501333333333333,
+        "node": 8,
+        "outputGainNode": 7,
+        "buffer": 3,
+        "frames": 1536000,
+        "channels": 2,
+        "sampleRate": 48000,
+        "duration": 32,
+        "loop": true,
+        "loopStart": 0,
+        "loopEnd": 32,
+        "startArgs": [
+          0,
+          0
+        ]
+      }
+    ],
+    "failures": [],
+    "backend": {
+      "buffers": 3,
+      "bytes": 110592000,
+      "decoded": 3,
+      "starts": 3,
+      "players": 3,
+      "playing": 3,
+      "state": "running"
+    },
+    "jsHeap": {
+      "used": 229248010,
+      "total": 258408910,
+      "limit": 4395630592
+    }
+  },
+  {
+    "wallMs": 11237.100000023842,
+    "signal": [
+      {
+        "node": 1,
+        "context": 1,
+        "type": "GainNode",
+        "contextState": "running",
+        "audioTime": 10.56,
+        "sampleRate": 48000,
+        "gain": 1,
+        "rms": 0,
+        "peak": 0,
+        "nonFinite": 0
+      },
+      {
+        "node": 2,
+        "context": 1,
+        "type": "AudioWorkletNode",
+        "contextState": "running",
+        "audioTime": 10.570666666666666,
+        "sampleRate": 48000,
+        "gain": null,
+        "rms": 0,
+        "peak": 0,
+        "nonFinite": 0
+      },
+      {
+        "node": 3,
+        "context": 2,
+        "type": "GainNode",
+        "contextState": "running",
+        "audioTime": 6.650666666666667,
+        "sampleRate": 48000,
+        "gain": 0.09000000357627869,
+        "rms": 0.007152844070979341,
+        "peak": 0.02635829523205757,
+        "nonFinite": 0
+      },
+      {
+        "node": 5,
+        "context": 2,
+        "type": "GainNode",
+        "contextState": "running",
+        "audioTime": 6.650666666666667,
+        "sampleRate": 48000,
+        "gain": 0.3981071710586548,
+        "rms": 0.04025257020399471,
+        "peak": 0.11133693903684616,
+        "nonFinite": 0
+      },
+      {
+        "node": 7,
+        "context": 2,
+        "type": "GainNode",
+        "contextState": "running",
+        "audioTime": 6.650666666666667,
+        "sampleRate": 48000,
+        "gain": 0.06000000238418579,
+        "rms": 0.0017337045527451094,
+        "peak": 0.0063691032119095325,
+        "nonFinite": 0
+      }
+    ],
+    "sources": [
+      {
+        "wallMs": 5817.199999928474,
+        "audioTime": 1.232,
+        "node": 4,
+        "outputGainNode": 3,
+        "buffer": 1,
+        "frames": 6144000,
+        "channels": 2,
+        "sampleRate": 48000,
+        "duration": 128,
+        "loop": true,
+        "loopStart": 0,
+        "loopEnd": 128,
+        "startArgs": [
+          0,
+          0
+        ]
+      },
+      {
+        "wallMs": 6846.600000023842,
+        "audioTime": 2.2613333333333334,
+        "node": 6,
+        "outputGainNode": 5,
+        "buffer": 2,
+        "frames": 6144000,
+        "channels": 2,
+        "sampleRate": 48000,
+        "duration": 128,
+        "loop": true,
+        "loopStart": 0,
+        "loopEnd": 128,
+        "startArgs": [
+          0,
+          0
+        ]
+      },
+      {
+        "wallMs": 7094,
+        "audioTime": 2.501333333333333,
+        "node": 8,
+        "outputGainNode": 7,
+        "buffer": 3,
+        "frames": 1536000,
+        "channels": 2,
+        "sampleRate": 48000,
+        "duration": 32,
+        "loop": true,
+        "loopStart": 0,
+        "loopEnd": 32,
+        "startArgs": [
+          0,
+          0
+        ]
+      }
+    ],
+    "failures": [],
+    "backend": {
+      "buffers": 3,
+      "bytes": 110592000,
+      "decoded": 3,
+      "starts": 3,
+      "players": 3,
+      "playing": 3,
+      "state": "running"
+    },
+    "jsHeap": {
+      "used": 230675998,
+      "total": 259023310,
+      "limit": 4395630592
+    }
+  }
+]
