@@ -6,9 +6,9 @@
 
 | 顺序 | 原单 | Owner / 状态 | 产物与依赖 |
 | --- | --- | --- | --- |
-| 1 | [#703 绘本气泡](https://github.com/narutojzm1-dot/youjia/issues/703) | GROK-CONTRIBUTOR / 已回执，PR #718 待返修 | 独立气泡及小鸡/已确认播种情境接入，可立即开发；无成长数值/存档改动 |
-| 2 | [#704 轻交互音](https://github.com/narutojzm1-dot/youjia/issues/704) | GROK-CONTRIBUTOR / 已回执，PR #720 待返修 | 背篓/相册/暂停开关与翻页短音制作、接入、真实听验，可独立推进 |
-| 3 | [#705 做饭烟雾](https://github.com/narutojzm1-dot/youjia/issues/705) | GROK-CONTRIBUTOR / 已回执，PR #723 待返修 | 烟囱局部效果先制作；正式接入依赖Leader真实做饭开始/结束事件，不以隔离演示冒上线 |
+| 1 | [#703 绘本气泡](https://github.com/narutojzm1-dot/youjia/issues/703) | GROK-CONTRIBUTOR / #758保留作者合入并公开验收，#703关闭 | 独立气泡及小鸡/已确认播种情境已接入；无成长数值/存档改动 |
+| 2 | [#704 轻交互音](https://github.com/narutojzm1-dot/youjia/issues/704) | GROK-CONTRIBUTOR / #720源码及软件录音已审，真实听验/操作链待验 | 背篓/相册/暂停开关与翻页短音制作、接入、真实听验，可独立推进 |
+| 3 | [#705 做饭烟雾](https://github.com/narutojzm1-dot/youjia/issues/705) | GROK-CONTRIBUTOR / #723叶子已审，Leader #738生产接入候选 | 烟囱局部效果先制作；正式接入依赖Leader真实做饭开始/结束事件，不以隔离演示冒上线 |
 
 每项原单定义具体范围和验收。前三项来自用户#700，不是任意扩展玩法。2026-10-11已核对#703/#704本人回执及PR；#705也已回执提交#723，当前待返修。核对最新#242：Grok此前仅在修#598/PR651，后续已由Leader#676完成；旧界面PR已交Cloud，不能因重新授权小功能重复接回。
 
@@ -60,3 +60,5 @@ GROK-CONTRIBUTOR的bug、小功能及其后续修订，均须由CODEX-LEAD审核
 [#745 做饭声与缺餐肚子叫](https://github.com/narutojzm1-dot/youjia/issues/745)已指定GROK-CONTRIBUTOR，待本人回执。独立`meal_audio.gd`/`audio/meal_grok`，接口set_cooking/set_paused/play_hunger，复用效果音/静音设置；真实餐次/饥饿判定仍Leader。做饭导演调用只按原单方法边界协作，不覆盖Leader738在途手持视觉，不碰UI720/既有音景。制作、必要接入、测试和真实听验由Owner持续交付，最终SHA由Leader审核合入；未回执不记开工。
 
 本轮718/720/723最终头与已审记录未变；718/720 CI已通过，但普通Web气泡/真实声音听验缺口仍在，不能仅凭CI自行合入。723叶子保留在738原作者祖先；738旧头162完整CI通过，新增手持表现后须以新头验证为准。
+
+2026-10-12接续：上述为当前首批状态；既有历史返修记录保留。疲劳真实触发由Leader在#700接续，不再派Grok重复接线。声音邮件17项已发，未收到用户听验确认，不以软件录音作为人耳验收。
