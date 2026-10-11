@@ -1,0 +1,1934 @@
+[
+  {
+    "stage": "title",
+    "utc": "2026-10-11T03:17:01Z",
+    "errors": [],
+    "inputs": [],
+    "payload": {
+      "album": [],
+      "animal_relationship_memory": {},
+      "exploration": null,
+      "exploration_committed_serial": 0,
+      "first_fish_caught": false,
+      "holiday_day": 1,
+      "holiday_day_elapsed": 0,
+      "keepsakes": {},
+      "locale": "zh-CN",
+      "photo_moments": {},
+      "plant_day_planted": 0,
+      "plant_state": 0,
+      "plant_watered_day": -1,
+      "tutorial_version": 0,
+      "version": 5,
+      "world_weather": {},
+      "yard_gate_open": false
+    }
+  },
+  {
+    "stage": "yard",
+    "utc": "2026-10-11T03:17:10Z",
+    "errors": [],
+    "inputs": [
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 194,
+        "y": 430,
+        "key": null,
+        "t": 30276
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 194,
+        "y": 430,
+        "key": null,
+        "t": 30304.399999976158
+      }
+    ],
+    "payload": {
+      "album": [],
+      "animal_relationship_memory": {},
+      "exploration": null,
+      "exploration_committed_serial": 0,
+      "first_fish_caught": false,
+      "holiday_day": 1,
+      "holiday_day_elapsed": 0,
+      "keepsakes": {},
+      "locale": "zh-CN",
+      "photo_moments": {},
+      "plant_day_planted": 0,
+      "plant_state": 0,
+      "plant_watered_day": -1,
+      "tutorial_version": 0,
+      "version": 5,
+      "world_residents": {
+        "beibei": {
+          "adopted_clock": null,
+          "stage": "unmet"
+        },
+        "chicken": {
+          "settled_clock": {
+            "day": 1,
+            "elapsed": 0
+          },
+          "stage": "chick"
+        },
+        "revision": 1,
+        "schema": 3,
+        "turtle": {
+          "found_trip": "",
+          "stage": "unmet"
+        }
+      },
+      "world_weather": {
+        "episode": 0,
+        "remaining": 1472.38330078125,
+        "seed": 1118611993,
+        "weather": "sun"
+      },
+      "yard_crops": {
+        "kind": "",
+        "planted_day": 0,
+        "revision": 0,
+        "schema": 1,
+        "watered_day": -1
+      },
+      "yard_gate_open": false,
+      "yard_inventory": {
+        "corn": 2,
+        "fish": {},
+        "grass": 0,
+        "ground": [],
+        "held": "",
+        "millet": 0,
+        "next_food_id": 1,
+        "revision": 1,
+        "schema": 4,
+        "wheat": 2
+      }
+    }
+  },
+  {
+    "stage": "entry-1",
+    "utc": "2026-10-11T03:17:11Z",
+    "errors": [],
+    "inputs": [
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 194,
+        "y": 430,
+        "key": null,
+        "t": 30276
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 194,
+        "y": 430,
+        "key": null,
+        "t": 30304.399999976158
+      },
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 76,
+        "y": 610,
+        "key": null,
+        "t": 38428.5
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 76,
+        "y": 610,
+        "key": null,
+        "t": 38429.199999928474
+      }
+    ],
+    "payload": {
+      "album": [],
+      "animal_relationship_memory": {},
+      "exploration": {
+        "contract_version": 1,
+        "next_trip_serial": 2,
+        "session": {
+          "carried": [],
+          "catalog": "formal",
+          "companion": {},
+          "current_stop": "gate",
+          "failure": null,
+          "offers": {
+            "gate": ""
+          },
+          "proposal": null,
+          "record_revision": 1,
+          "rng_seed": "-8327165402477248723",
+          "route_id": "formal.near_path",
+          "started_clock": {
+            "day": 1,
+            "elapsed": 7.16765066666662
+          },
+          "state": "active",
+          "taken": {},
+          "trip_id": "trip-1",
+          "trip_serial": 1,
+          "visited": [
+            "gate"
+          ]
+        }
+      },
+      "exploration_committed_serial": 0,
+      "first_fish_caught": false,
+      "holiday_day": 1,
+      "holiday_day_elapsed": 7.16765066666662,
+      "keepsakes": {},
+      "locale": "zh-CN",
+      "photo_moments": {},
+      "plant_day_planted": 0,
+      "plant_state": 0,
+      "plant_watered_day": -1,
+      "tutorial_version": 0,
+      "version": 5,
+      "world_residents": {
+        "beibei": {
+          "adopted_clock": null,
+          "stage": "unmet"
+        },
+        "chicken": {
+          "settled_clock": {
+            "day": 1,
+            "elapsed": 0
+          },
+          "stage": "chick"
+        },
+        "revision": 1,
+        "schema": 3,
+        "turtle": {
+          "found_trip": "",
+          "stage": "unmet"
+        }
+      },
+      "world_weather": {
+        "episode": 0,
+        "remaining": 1465.21565011459,
+        "seed": 1118611993,
+        "weather": "sun"
+      },
+      "yard_crops": {
+        "kind": "",
+        "planted_day": 0,
+        "revision": 0,
+        "schema": 1,
+        "watered_day": -1
+      },
+      "yard_gate_open": false,
+      "yard_inventory": {
+        "corn": 2,
+        "fish": {},
+        "grass": 0,
+        "ground": [],
+        "held": "",
+        "millet": 0,
+        "next_food_id": 1,
+        "revision": 1,
+        "schema": 4,
+        "wheat": 2
+      }
+    }
+  },
+  {
+    "stage": "empty-return-1",
+    "utc": "2026-10-11T03:17:18Z",
+    "errors": [],
+    "inputs": [
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 194,
+        "y": 430,
+        "key": null,
+        "t": 30276
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 194,
+        "y": 430,
+        "key": null,
+        "t": 30304.399999976158
+      },
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 76,
+        "y": 610,
+        "key": null,
+        "t": 38428.5
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 76,
+        "y": 610,
+        "key": null,
+        "t": 38429.199999928474
+      },
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 317,
+        "y": 37,
+        "key": null,
+        "t": 45393.09999990463
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 317,
+        "y": 37,
+        "key": null,
+        "t": 45397.09999990463
+      }
+    ],
+    "payload": {
+      "album": [],
+      "animal_relationship_memory": {},
+      "exploration": {
+        "contract_version": 1,
+        "next_trip_serial": 2,
+        "session": null
+      },
+      "exploration_committed_serial": 1,
+      "first_fish_caught": false,
+      "holiday_day": 1,
+      "holiday_day_elapsed": 7.16765066666662,
+      "keepsakes": {},
+      "locale": "zh-CN",
+      "photo_moments": {},
+      "plant_day_planted": 0,
+      "plant_state": 0,
+      "plant_watered_day": -1,
+      "tutorial_version": 0,
+      "version": 5,
+      "world_residents": {
+        "beibei": {
+          "adopted_clock": null,
+          "stage": "unmet"
+        },
+        "chicken": {
+          "settled_clock": {
+            "day": 1,
+            "elapsed": 0
+          },
+          "stage": "chick"
+        },
+        "revision": 1,
+        "schema": 3,
+        "turtle": {
+          "found_trip": "",
+          "stage": "unmet"
+        }
+      },
+      "world_weather": {
+        "episode": 0,
+        "remaining": 1465.21565011459,
+        "seed": 1118611993,
+        "weather": "sun"
+      },
+      "yard_crops": {
+        "kind": "",
+        "planted_day": 0,
+        "revision": 0,
+        "schema": 1,
+        "watered_day": -1
+      },
+      "yard_gate_open": false,
+      "yard_inventory": {
+        "corn": 2,
+        "fish": {},
+        "grass": 0,
+        "ground": [],
+        "held": "",
+        "millet": 0,
+        "next_food_id": 1,
+        "revision": 1,
+        "schema": 4,
+        "wheat": 2
+      }
+    }
+  },
+  {
+    "stage": "entry-2",
+    "utc": "2026-10-11T03:17:19Z",
+    "errors": [],
+    "inputs": [
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 194,
+        "y": 430,
+        "key": null,
+        "t": 30276
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 194,
+        "y": 430,
+        "key": null,
+        "t": 30304.399999976158
+      },
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 76,
+        "y": 610,
+        "key": null,
+        "t": 38428.5
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 76,
+        "y": 610,
+        "key": null,
+        "t": 38429.199999928474
+      },
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 317,
+        "y": 37,
+        "key": null,
+        "t": 45393.09999990463
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 317,
+        "y": 37,
+        "key": null,
+        "t": 45397.09999990463
+      },
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 195,
+        "y": 801,
+        "key": null,
+        "t": 46479.5
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 195,
+        "y": 801,
+        "key": null,
+        "t": 46532.699999928474
+      }
+    ],
+    "payload": {
+      "album": [],
+      "animal_relationship_memory": {},
+      "exploration": {
+        "contract_version": 1,
+        "next_trip_serial": 3,
+        "session": {
+          "carried": [],
+          "catalog": "formal",
+          "companion": {},
+          "current_stop": "gate",
+          "failure": null,
+          "offers": {
+            "gate": "formal.find.feather"
+          },
+          "proposal": null,
+          "record_revision": 1,
+          "rng_seed": "444689439469689944",
+          "route_id": "formal.near_path",
+          "started_clock": {
+            "day": 1,
+            "elapsed": 14.5923633333336
+          },
+          "state": "active",
+          "taken": {},
+          "trip_id": "trip-2",
+          "trip_serial": 2,
+          "visited": [
+            "gate"
+          ]
+        }
+      },
+      "exploration_committed_serial": 1,
+      "first_fish_caught": false,
+      "holiday_day": 1,
+      "holiday_day_elapsed": 14.5923633333336,
+      "keepsakes": {},
+      "locale": "zh-CN",
+      "photo_moments": {},
+      "plant_day_planted": 0,
+      "plant_state": 0,
+      "plant_watered_day": -1,
+      "tutorial_version": 0,
+      "version": 5,
+      "world_residents": {
+        "beibei": {
+          "adopted_clock": null,
+          "stage": "unmet"
+        },
+        "chicken": {
+          "settled_clock": {
+            "day": 1,
+            "elapsed": 0
+          },
+          "stage": "chick"
+        },
+        "revision": 1,
+        "schema": 3,
+        "turtle": {
+          "found_trip": "",
+          "stage": "unmet"
+        }
+      },
+      "world_weather": {
+        "episode": 0,
+        "remaining": 1457.79093744793,
+        "seed": 1118611993,
+        "weather": "sun"
+      },
+      "yard_crops": {
+        "kind": "",
+        "planted_day": 0,
+        "revision": 0,
+        "schema": 1,
+        "watered_day": -1
+      },
+      "yard_gate_open": false,
+      "yard_inventory": {
+        "corn": 2,
+        "fish": {},
+        "grass": 0,
+        "ground": [],
+        "held": "",
+        "millet": 0,
+        "next_food_id": 1,
+        "revision": 1,
+        "schema": 4,
+        "wheat": 2
+      }
+    }
+  },
+  {
+    "stage": "direct-pick",
+    "utc": "2026-10-11T03:17:22Z",
+    "errors": [],
+    "inputs": [
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 194,
+        "y": 430,
+        "key": null,
+        "t": 30276
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 194,
+        "y": 430,
+        "key": null,
+        "t": 30304.399999976158
+      },
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 76,
+        "y": 610,
+        "key": null,
+        "t": 38428.5
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 76,
+        "y": 610,
+        "key": null,
+        "t": 38429.199999928474
+      },
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 317,
+        "y": 37,
+        "key": null,
+        "t": 45393.09999990463
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 317,
+        "y": 37,
+        "key": null,
+        "t": 45397.09999990463
+      },
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 195,
+        "y": 801,
+        "key": null,
+        "t": 46479.5
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 195,
+        "y": 801,
+        "key": null,
+        "t": 46532.699999928474
+      },
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 94.50110626220703,
+        "y": 596.704345703125,
+        "key": null,
+        "t": 47493.39999997616
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 94.50110626220703,
+        "y": 596.704345703125,
+        "key": null,
+        "t": 47493.89999997616
+      }
+    ],
+    "payload": {
+      "album": [],
+      "animal_relationship_memory": {},
+      "exploration": {
+        "contract_version": 1,
+        "next_trip_serial": 3,
+        "session": {
+          "carried": [
+            "formal.find.feather"
+          ],
+          "catalog": "formal",
+          "companion": {},
+          "current_stop": "gate",
+          "failure": null,
+          "offers": {
+            "gate": "formal.find.feather"
+          },
+          "proposal": null,
+          "record_revision": 2,
+          "rng_seed": "444689439469689944",
+          "route_id": "formal.near_path",
+          "started_clock": {
+            "day": 1,
+            "elapsed": 14.5923633333336
+          },
+          "state": "active",
+          "taken": {
+            "gate": "formal.find.feather"
+          },
+          "trip_id": "trip-2",
+          "trip_serial": 2,
+          "visited": [
+            "gate"
+          ]
+        }
+      },
+      "exploration_committed_serial": 1,
+      "first_fish_caught": false,
+      "holiday_day": 1,
+      "holiday_day_elapsed": 14.5923633333336,
+      "keepsakes": {},
+      "locale": "zh-CN",
+      "photo_moments": {},
+      "plant_day_planted": 0,
+      "plant_state": 0,
+      "plant_watered_day": -1,
+      "tutorial_version": 0,
+      "version": 5,
+      "world_residents": {
+        "beibei": {
+          "adopted_clock": null,
+          "stage": "unmet"
+        },
+        "chicken": {
+          "settled_clock": {
+            "day": 1,
+            "elapsed": 0
+          },
+          "stage": "chick"
+        },
+        "revision": 1,
+        "schema": 3,
+        "turtle": {
+          "found_trip": "",
+          "stage": "unmet"
+        }
+      },
+      "world_weather": {
+        "episode": 0,
+        "remaining": 1457.79093744793,
+        "seed": 1118611993,
+        "weather": "sun"
+      },
+      "yard_crops": {
+        "kind": "",
+        "planted_day": 0,
+        "revision": 0,
+        "schema": 1,
+        "watered_day": -1
+      },
+      "yard_gate_open": false,
+      "yard_inventory": {
+        "corn": 2,
+        "fish": {},
+        "grass": 0,
+        "ground": [],
+        "held": "",
+        "millet": 0,
+        "next_food_id": 1,
+        "revision": 1,
+        "schema": 4,
+        "wheat": 2
+      }
+    }
+  },
+  {
+    "stage": "free-ground",
+    "utc": "2026-10-11T03:17:24Z",
+    "errors": [],
+    "inputs": [
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 194,
+        "y": 430,
+        "key": null,
+        "t": 30276
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 194,
+        "y": 430,
+        "key": null,
+        "t": 30304.399999976158
+      },
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 76,
+        "y": 610,
+        "key": null,
+        "t": 38428.5
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 76,
+        "y": 610,
+        "key": null,
+        "t": 38429.199999928474
+      },
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 317,
+        "y": 37,
+        "key": null,
+        "t": 45393.09999990463
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 317,
+        "y": 37,
+        "key": null,
+        "t": 45397.09999990463
+      },
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 195,
+        "y": 801,
+        "key": null,
+        "t": 46479.5
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 195,
+        "y": 801,
+        "key": null,
+        "t": 46532.699999928474
+      },
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 94.50110626220703,
+        "y": 596.704345703125,
+        "key": null,
+        "t": 47493.39999997616
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 94.50110626220703,
+        "y": 596.704345703125,
+        "key": null,
+        "t": 47493.89999997616
+      },
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 85,
+        "y": 570,
+        "key": null,
+        "t": 50410.799999952316
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 85,
+        "y": 570,
+        "key": null,
+        "t": 50411.39999997616
+      }
+    ],
+    "payload": {
+      "album": [],
+      "animal_relationship_memory": {},
+      "exploration": {
+        "contract_version": 1,
+        "next_trip_serial": 3,
+        "session": {
+          "carried": [
+            "formal.find.feather"
+          ],
+          "catalog": "formal",
+          "companion": {},
+          "current_stop": "gate",
+          "failure": null,
+          "offers": {
+            "gate": "formal.find.feather"
+          },
+          "proposal": null,
+          "record_revision": 2,
+          "rng_seed": "444689439469689944",
+          "route_id": "formal.near_path",
+          "started_clock": {
+            "day": 1,
+            "elapsed": 14.5923633333336
+          },
+          "state": "active",
+          "taken": {
+            "gate": "formal.find.feather"
+          },
+          "trip_id": "trip-2",
+          "trip_serial": 2,
+          "visited": [
+            "gate"
+          ]
+        }
+      },
+      "exploration_committed_serial": 1,
+      "first_fish_caught": false,
+      "holiday_day": 1,
+      "holiday_day_elapsed": 14.5923633333336,
+      "keepsakes": {},
+      "locale": "zh-CN",
+      "photo_moments": {},
+      "plant_day_planted": 0,
+      "plant_state": 0,
+      "plant_watered_day": -1,
+      "tutorial_version": 0,
+      "version": 5,
+      "world_residents": {
+        "beibei": {
+          "adopted_clock": null,
+          "stage": "unmet"
+        },
+        "chicken": {
+          "settled_clock": {
+            "day": 1,
+            "elapsed": 0
+          },
+          "stage": "chick"
+        },
+        "revision": 1,
+        "schema": 3,
+        "turtle": {
+          "found_trip": "",
+          "stage": "unmet"
+        }
+      },
+      "world_weather": {
+        "episode": 0,
+        "remaining": 1457.79093744793,
+        "seed": 1118611993,
+        "weather": "sun"
+      },
+      "yard_crops": {
+        "kind": "",
+        "planted_day": 0,
+        "revision": 0,
+        "schema": 1,
+        "watered_day": -1
+      },
+      "yard_gate_open": false,
+      "yard_inventory": {
+        "corn": 2,
+        "fish": {},
+        "grass": 0,
+        "ground": [],
+        "held": "",
+        "millet": 0,
+        "next_food_id": 1,
+        "revision": 1,
+        "schema": 4,
+        "wheat": 2
+      }
+    }
+  },
+  {
+    "stage": "collected-return",
+    "utc": "2026-10-11T03:17:25Z",
+    "errors": [],
+    "inputs": [
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 194,
+        "y": 430,
+        "key": null,
+        "t": 30276
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 194,
+        "y": 430,
+        "key": null,
+        "t": 30304.399999976158
+      },
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 76,
+        "y": 610,
+        "key": null,
+        "t": 38428.5
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 76,
+        "y": 610,
+        "key": null,
+        "t": 38429.199999928474
+      },
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 317,
+        "y": 37,
+        "key": null,
+        "t": 45393.09999990463
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 317,
+        "y": 37,
+        "key": null,
+        "t": 45397.09999990463
+      },
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 195,
+        "y": 801,
+        "key": null,
+        "t": 46479.5
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 195,
+        "y": 801,
+        "key": null,
+        "t": 46532.699999928474
+      },
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 94.50110626220703,
+        "y": 596.704345703125,
+        "key": null,
+        "t": 47493.39999997616
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 94.50110626220703,
+        "y": 596.704345703125,
+        "key": null,
+        "t": 47493.89999997616
+      },
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 85,
+        "y": 570,
+        "key": null,
+        "t": 50410.799999952316
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 85,
+        "y": 570,
+        "key": null,
+        "t": 50411.39999997616
+      },
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 317,
+        "y": 37,
+        "key": null,
+        "t": 52344.09999990463
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 317,
+        "y": 37,
+        "key": null,
+        "t": 52348.299999952316
+      }
+    ],
+    "payload": {
+      "album": [],
+      "animal_relationship_memory": {},
+      "exploration": {
+        "contract_version": 1,
+        "next_trip_serial": 3,
+        "session": null
+      },
+      "exploration_committed_serial": 2,
+      "first_fish_caught": false,
+      "holiday_day": 1,
+      "holiday_day_elapsed": 14.5923633333336,
+      "keepsakes": {
+        "formal.find.feather": 1
+      },
+      "locale": "zh-CN",
+      "photo_moments": {},
+      "plant_day_planted": 0,
+      "plant_state": 0,
+      "plant_watered_day": -1,
+      "tutorial_version": 0,
+      "version": 5,
+      "world_residents": {
+        "beibei": {
+          "adopted_clock": null,
+          "stage": "unmet"
+        },
+        "chicken": {
+          "settled_clock": {
+            "day": 1,
+            "elapsed": 0
+          },
+          "stage": "chick"
+        },
+        "revision": 1,
+        "schema": 3,
+        "turtle": {
+          "found_trip": "",
+          "stage": "unmet"
+        }
+      },
+      "world_weather": {
+        "episode": 0,
+        "remaining": 1457.79093744793,
+        "seed": 1118611993,
+        "weather": "sun"
+      },
+      "yard_crops": {
+        "kind": "",
+        "planted_day": 0,
+        "revision": 0,
+        "schema": 1,
+        "watered_day": -1
+      },
+      "yard_gate_open": false,
+      "yard_inventory": {
+        "corn": 2,
+        "fish": {},
+        "grass": 0,
+        "ground": [],
+        "held": "",
+        "millet": 0,
+        "next_food_id": 1,
+        "revision": 1,
+        "schema": 4,
+        "wheat": 2
+      }
+    }
+  },
+  {
+    "stage": "one-weather-click",
+    "utc": "2026-10-11T03:17:26Z",
+    "errors": [],
+    "inputs": [
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 194,
+        "y": 430,
+        "key": null,
+        "t": 30276
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 194,
+        "y": 430,
+        "key": null,
+        "t": 30304.399999976158
+      },
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 76,
+        "y": 610,
+        "key": null,
+        "t": 38428.5
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 76,
+        "y": 610,
+        "key": null,
+        "t": 38429.199999928474
+      },
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 317,
+        "y": 37,
+        "key": null,
+        "t": 45393.09999990463
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 317,
+        "y": 37,
+        "key": null,
+        "t": 45397.09999990463
+      },
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 195,
+        "y": 801,
+        "key": null,
+        "t": 46479.5
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 195,
+        "y": 801,
+        "key": null,
+        "t": 46532.699999928474
+      },
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 94.50110626220703,
+        "y": 596.704345703125,
+        "key": null,
+        "t": 47493.39999997616
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 94.50110626220703,
+        "y": 596.704345703125,
+        "key": null,
+        "t": 47493.89999997616
+      },
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 85,
+        "y": 570,
+        "key": null,
+        "t": 50410.799999952316
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 85,
+        "y": 570,
+        "key": null,
+        "t": 50411.39999997616
+      },
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 317,
+        "y": 37,
+        "key": null,
+        "t": 52344.09999990463
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 317,
+        "y": 37,
+        "key": null,
+        "t": 52348.299999952316
+      },
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 195,
+        "y": 745,
+        "key": null,
+        "t": 53429.799999952316
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 195,
+        "y": 745,
+        "key": null,
+        "t": 53431
+      }
+    ],
+    "payload": {
+      "album": [],
+      "animal_relationship_memory": {},
+      "exploration": {
+        "contract_version": 1,
+        "next_trip_serial": 3,
+        "session": null
+      },
+      "exploration_committed_serial": 2,
+      "first_fish_caught": false,
+      "holiday_day": 1,
+      "holiday_day_elapsed": 21.52566,
+      "keepsakes": {
+        "formal.find.feather": 1
+      },
+      "locale": "zh-CN",
+      "photo_moments": {},
+      "plant_day_planted": 0,
+      "plant_state": 0,
+      "plant_watered_day": -1,
+      "tutorial_version": 0,
+      "version": 5,
+      "world_residents": {
+        "beibei": {
+          "adopted_clock": null,
+          "stage": "unmet"
+        },
+        "chicken": {
+          "settled_clock": {
+            "day": 1,
+            "elapsed": 0
+          },
+          "stage": "chick"
+        },
+        "revision": 1,
+        "schema": 3,
+        "turtle": {
+          "found_trip": "",
+          "stage": "unmet"
+        }
+      },
+      "world_weather": {
+        "episode": 1,
+        "remaining": 436.2412109375,
+        "seed": 1118611993,
+        "weather": "overcast"
+      },
+      "yard_crops": {
+        "kind": "",
+        "planted_day": 0,
+        "revision": 0,
+        "schema": 1,
+        "watered_day": -1
+      },
+      "yard_gate_open": false,
+      "yard_inventory": {
+        "corn": 2,
+        "fish": {},
+        "grass": 0,
+        "ground": [],
+        "held": "",
+        "millet": 0,
+        "next_food_id": 1,
+        "revision": 1,
+        "schema": 4,
+        "wheat": 2
+      }
+    }
+  },
+  {
+    "stage": "hud-entry-steady",
+    "utc": "2026-10-11T03:17:28Z",
+    "errors": [],
+    "inputs": [
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 194,
+        "y": 430,
+        "key": null,
+        "t": 30276
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 194,
+        "y": 430,
+        "key": null,
+        "t": 30304.399999976158
+      },
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 76,
+        "y": 610,
+        "key": null,
+        "t": 38428.5
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 76,
+        "y": 610,
+        "key": null,
+        "t": 38429.199999928474
+      },
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 317,
+        "y": 37,
+        "key": null,
+        "t": 45393.09999990463
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 317,
+        "y": 37,
+        "key": null,
+        "t": 45397.09999990463
+      },
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 195,
+        "y": 801,
+        "key": null,
+        "t": 46479.5
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 195,
+        "y": 801,
+        "key": null,
+        "t": 46532.699999928474
+      },
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 94.50110626220703,
+        "y": 596.704345703125,
+        "key": null,
+        "t": 47493.39999997616
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 94.50110626220703,
+        "y": 596.704345703125,
+        "key": null,
+        "t": 47493.89999997616
+      },
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 85,
+        "y": 570,
+        "key": null,
+        "t": 50410.799999952316
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 85,
+        "y": 570,
+        "key": null,
+        "t": 50411.39999997616
+      },
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 317,
+        "y": 37,
+        "key": null,
+        "t": 52344.09999990463
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 317,
+        "y": 37,
+        "key": null,
+        "t": 52348.299999952316
+      },
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 195,
+        "y": 745,
+        "key": null,
+        "t": 53429.799999952316
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 195,
+        "y": 745,
+        "key": null,
+        "t": 53431
+      },
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 195,
+        "y": 801,
+        "key": null,
+        "t": 54396
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 195,
+        "y": 801,
+        "key": null,
+        "t": 54450.5
+      }
+    ],
+    "payload": {
+      "album": [],
+      "animal_relationship_memory": {},
+      "exploration": {
+        "contract_version": 1,
+        "next_trip_serial": 4,
+        "session": {
+          "carried": [],
+          "catalog": "formal",
+          "companion": {},
+          "current_stop": "gate",
+          "failure": null,
+          "offers": {
+            "gate": ""
+          },
+          "proposal": null,
+          "record_revision": 1,
+          "rng_seed": "-6535047392643645366",
+          "route_id": "formal.near_path",
+          "started_clock": {
+            "day": 1,
+            "elapsed": 22.4923266666666
+          },
+          "state": "active",
+          "taken": {},
+          "trip_id": "trip-3",
+          "trip_serial": 3,
+          "visited": [
+            "gate"
+          ]
+        }
+      },
+      "exploration_committed_serial": 2,
+      "first_fish_caught": false,
+      "holiday_day": 1,
+      "holiday_day_elapsed": 22.4923266666666,
+      "keepsakes": {
+        "formal.find.feather": 1
+      },
+      "locale": "zh-CN",
+      "photo_moments": {},
+      "plant_day_planted": 0,
+      "plant_state": 0,
+      "plant_watered_day": -1,
+      "tutorial_version": 0,
+      "version": 5,
+      "world_residents": {
+        "beibei": {
+          "adopted_clock": null,
+          "stage": "unmet"
+        },
+        "chicken": {
+          "settled_clock": {
+            "day": 1,
+            "elapsed": 0
+          },
+          "stage": "chick"
+        },
+        "revision": 1,
+        "schema": 3,
+        "turtle": {
+          "found_trip": "",
+          "stage": "unmet"
+        }
+      },
+      "world_weather": {
+        "episode": 1,
+        "remaining": 435.274544270834,
+        "seed": 1118611993,
+        "weather": "overcast"
+      },
+      "yard_crops": {
+        "kind": "",
+        "planted_day": 0,
+        "revision": 0,
+        "schema": 1,
+        "watered_day": -1
+      },
+      "yard_gate_open": false,
+      "yard_inventory": {
+        "corn": 2,
+        "fish": {},
+        "grass": 0,
+        "ground": [],
+        "held": "",
+        "millet": 0,
+        "next_food_id": 1,
+        "revision": 1,
+        "schema": 4,
+        "wheat": 2
+      }
+    }
+  },
+  {
+    "stage": "hud-return",
+    "utc": "2026-10-11T03:17:29Z",
+    "errors": [],
+    "inputs": [
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 194,
+        "y": 430,
+        "key": null,
+        "t": 30276
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 194,
+        "y": 430,
+        "key": null,
+        "t": 30304.399999976158
+      },
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 76,
+        "y": 610,
+        "key": null,
+        "t": 38428.5
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 76,
+        "y": 610,
+        "key": null,
+        "t": 38429.199999928474
+      },
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 317,
+        "y": 37,
+        "key": null,
+        "t": 45393.09999990463
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 317,
+        "y": 37,
+        "key": null,
+        "t": 45397.09999990463
+      },
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 195,
+        "y": 801,
+        "key": null,
+        "t": 46479.5
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 195,
+        "y": 801,
+        "key": null,
+        "t": 46532.699999928474
+      },
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 94.50110626220703,
+        "y": 596.704345703125,
+        "key": null,
+        "t": 47493.39999997616
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 94.50110626220703,
+        "y": 596.704345703125,
+        "key": null,
+        "t": 47493.89999997616
+      },
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 85,
+        "y": 570,
+        "key": null,
+        "t": 50410.799999952316
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 85,
+        "y": 570,
+        "key": null,
+        "t": 50411.39999997616
+      },
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 317,
+        "y": 37,
+        "key": null,
+        "t": 52344.09999990463
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 317,
+        "y": 37,
+        "key": null,
+        "t": 52348.299999952316
+      },
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 195,
+        "y": 745,
+        "key": null,
+        "t": 53429.799999952316
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 195,
+        "y": 745,
+        "key": null,
+        "t": 53431
+      },
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 195,
+        "y": 801,
+        "key": null,
+        "t": 54396
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 195,
+        "y": 801,
+        "key": null,
+        "t": 54450.5
+      },
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 317,
+        "y": 37,
+        "key": null,
+        "t": 56393.89999997616
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 317,
+        "y": 37,
+        "key": null,
+        "t": 56397.299999952316
+      }
+    ],
+    "payload": {
+      "album": [],
+      "animal_relationship_memory": {},
+      "exploration": {
+        "contract_version": 1,
+        "next_trip_serial": 4,
+        "session": null
+      },
+      "exploration_committed_serial": 3,
+      "first_fish_caught": false,
+      "holiday_day": 1,
+      "holiday_day_elapsed": 22.4923266666666,
+      "keepsakes": {
+        "formal.find.feather": 1
+      },
+      "locale": "zh-CN",
+      "photo_moments": {},
+      "plant_day_planted": 0,
+      "plant_state": 0,
+      "plant_watered_day": -1,
+      "tutorial_version": 0,
+      "version": 5,
+      "world_residents": {
+        "beibei": {
+          "adopted_clock": null,
+          "stage": "unmet"
+        },
+        "chicken": {
+          "settled_clock": {
+            "day": 1,
+            "elapsed": 0
+          },
+          "stage": "chick"
+        },
+        "revision": 1,
+        "schema": 3,
+        "turtle": {
+          "found_trip": "",
+          "stage": "unmet"
+        }
+      },
+      "world_weather": {
+        "episode": 1,
+        "remaining": 435.274544270834,
+        "seed": 1118611993,
+        "weather": "overcast"
+      },
+      "yard_crops": {
+        "kind": "",
+        "planted_day": 0,
+        "revision": 0,
+        "schema": 1,
+        "watered_day": -1
+      },
+      "yard_gate_open": false,
+      "yard_inventory": {
+        "corn": 2,
+        "fish": {},
+        "grass": 0,
+        "ground": [],
+        "held": "",
+        "millet": 0,
+        "next_food_id": 1,
+        "revision": 1,
+        "schema": 4,
+        "wheat": 2
+      }
+    }
+  },
+  {
+    "stage": "reload-title",
+    "utc": "2026-10-11T03:17:31Z",
+    "errors": [],
+    "inputs": [],
+    "payload": {
+      "album": [],
+      "animal_relationship_memory": {},
+      "exploration": {
+        "contract_version": 1,
+        "next_trip_serial": 4,
+        "session": null
+      },
+      "exploration_committed_serial": 3,
+      "first_fish_caught": false,
+      "holiday_day": 1,
+      "holiday_day_elapsed": 22.4923266666666,
+      "keepsakes": {
+        "formal.find.feather": 1
+      },
+      "locale": "zh-CN",
+      "photo_moments": {},
+      "plant_day_planted": 0,
+      "plant_state": 0,
+      "plant_watered_day": -1,
+      "tutorial_version": 0,
+      "version": 5,
+      "world_residents": {
+        "beibei": {
+          "adopted_clock": null,
+          "stage": "unmet"
+        },
+        "chicken": {
+          "settled_clock": {
+            "day": 1,
+            "elapsed": 0
+          },
+          "stage": "chick"
+        },
+        "revision": 1,
+        "schema": 3,
+        "turtle": {
+          "found_trip": "",
+          "stage": "unmet"
+        }
+      },
+      "world_weather": {
+        "episode": 1,
+        "remaining": 435.274544270834,
+        "seed": 1118611993,
+        "weather": "overcast"
+      },
+      "yard_crops": {
+        "kind": "",
+        "planted_day": 0,
+        "revision": 0,
+        "schema": 1,
+        "watered_day": -1
+      },
+      "yard_gate_open": false,
+      "yard_inventory": {
+        "corn": 2,
+        "fish": {},
+        "grass": 0,
+        "ground": [],
+        "held": "",
+        "millet": 0,
+        "next_food_id": 1,
+        "revision": 1,
+        "schema": 4,
+        "wheat": 2
+      }
+    }
+  },
+  {
+    "stage": "reload-yard",
+    "utc": "2026-10-11T03:17:34Z",
+    "errors": [],
+    "inputs": [
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 194,
+        "y": 430,
+        "key": null,
+        "t": 2568.899999976158
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 194,
+        "y": 430,
+        "key": null,
+        "t": 4195.099999904633
+      }
+    ],
+    "payload": {
+      "album": [],
+      "animal_relationship_memory": {},
+      "exploration": {
+        "contract_version": 1,
+        "next_trip_serial": 4,
+        "session": null
+      },
+      "exploration_committed_serial": 3,
+      "first_fish_caught": false,
+      "holiday_day": 1,
+      "holiday_day_elapsed": 22.4923266666666,
+      "keepsakes": {
+        "formal.find.feather": 1
+      },
+      "locale": "zh-CN",
+      "photo_moments": {},
+      "plant_day_planted": 0,
+      "plant_state": 0,
+      "plant_watered_day": -1,
+      "tutorial_version": 0,
+      "version": 5,
+      "world_residents": {
+        "beibei": {
+          "adopted_clock": null,
+          "stage": "unmet"
+        },
+        "chicken": {
+          "settled_clock": {
+            "day": 1,
+            "elapsed": 0
+          },
+          "stage": "chick"
+        },
+        "revision": 1,
+        "schema": 3,
+        "turtle": {
+          "found_trip": "",
+          "stage": "unmet"
+        }
+      },
+      "world_weather": {
+        "episode": 1,
+        "remaining": 435.274544270834,
+        "seed": 1118611993,
+        "weather": "overcast"
+      },
+      "yard_crops": {
+        "kind": "",
+        "planted_day": 0,
+        "revision": 0,
+        "schema": 1,
+        "watered_day": -1
+      },
+      "yard_gate_open": false,
+      "yard_inventory": {
+        "corn": 2,
+        "fish": {},
+        "grass": 0,
+        "ground": [],
+        "held": "",
+        "millet": 0,
+        "next_food_id": 1,
+        "revision": 1,
+        "schema": 4,
+        "wheat": 2
+      }
+    }
+  }
+]

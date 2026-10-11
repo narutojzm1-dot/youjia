@@ -1,0 +1,90 @@
+{
+  "album": [],
+  "animal_relationship_memory": {},
+  "exploration": {
+    "contract_version": 1,
+    "next_trip_serial": 2,
+    "session": {
+      "carried": [],
+      "catalog": "formal",
+      "companion": {},
+      "current_stop": "gate",
+      "failure": null,
+      "offers": {
+        "gate": "formal.find.brook_stone"
+      },
+      "proposal": null,
+      "record_revision": 1,
+      "rng_seed": "-7444721669912467512",
+      "route_id": "formal.near_path",
+      "started_clock": {
+        "day": 1,
+        "elapsed": 6.44996066666664
+      },
+      "state": "active",
+      "taken": {},
+      "trip_id": "trip-1",
+      "trip_serial": 1,
+      "visited": [
+        "gate"
+      ]
+    }
+  },
+  "exploration_committed_serial": 0,
+  "first_fish_caught": false,
+  "holiday_day": 1,
+  "holiday_day_elapsed": 6.44996066666664,
+  "keepsakes": {},
+  "locale": "zh-CN",
+  "photo_moments": {},
+  "plant_day_planted": 0,
+  "plant_state": 0,
+  "plant_watered_day": -1,
+  "tutorial_version": 0,
+  "version": 5,
+  "world_residents": {
+    "beibei": {
+      "adopted_clock": null,
+      "stage": "unmet"
+    },
+    "chicken": {
+      "settled_clock": {
+        "day": 1,
+        "elapsed": 0
+      },
+      "stage": "chick"
+    },
+    "revision": 1,
+    "schema": 3,
+    "turtle": {
+      "found_trip": "",
+      "stage": "unmet"
+    }
+  },
+  "world_weather": {
+    "episode": 1,
+    "remaining": 980.665865921876,
+    "seed": 1112328092,
+    "weather": "overcast"
+  },
+  "yard_crops": {
+    "kind": "",
+    "planted_day": 0,
+    "revision": 0,
+    "schema": 1,
+    "watered_day": -1
+  },
+  "yard_gate_open": false,
+  "yard_inventory": {
+    "corn": 2,
+    "fish": {},
+    "grass": 0,
+    "ground": [],
+    "held": "",
+    "millet": 0,
+    "next_food_id": 1,
+    "revision": 1,
+    "schema": 4,
+    "wheat": 2
+  }
+}
