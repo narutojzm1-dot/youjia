@@ -218,27 +218,27 @@ func run() -> void:
 	var chick_actor = main._world.actor_named("chicken")
 	var chick_growth: Dictionary = store.get_chick_growth()
 	check(chick_actor != null and str(chick_growth.get("stage", "")) == "chick", "yard chick exists for house mutex")
-	var traveler = main._world.get_player()
-	traveler.visible = true
+	var yard_player = main._world.get_player()
+	yard_player.visible = true
 	main._world.house.stage = ""
 	if chick_actor != null:
-		traveler.position = chick_actor.position
-	check(chick_actor != null and traveler.position.distance_to(chick_actor.position) <= YardInteract.PET_REACH, "player stands on chick yard coordinates")
+		yard_player.position = chick_actor.position
+	check(chick_actor != null and yard_player.position.distance_to(chick_actor.position) <= YardInteract.PET_REACH, "player stands on chick yard coordinates")
 	main._resident_barks.reset()
 	main._bark_clock = 900.0
 	main._show_resident_bark(Barks.BARK_PLANT_SOWN)
 	await process_frame
 	check(main._resident_bubble.visible, "bark visible before house entry")
 	main._world.house.stage = "porch"
-	check(main._world.house.busy() and traveler.visible, "entering house is busy while traveler still drawn")
+	check(main._world.house.busy() and yard_player.visible, "entering house is busy while traveler still drawn")
 	check(main._resident_bark_hard_blocked(), "house busy hard-blocks barks")
 	main._tick_resident_barks(0.0)
 	check(not main._resident_bubble.visible and not main._resident_bubble.is_showing(), "entering house closes bark")
 	check(not main._resident_bubble._follow.is_valid(), "closed bark is not queued for replay")
 	# 人已藏进睡眠/阳台，一楼坐标仍贴着小鸡。
-	traveler.visible = false
+	yard_player.visible = false
 	main._world.house.stage = "sleep"
-	check(main._world.house.busy() and not traveler.visible, "sleep director hides traveler")
+	check(main._world.house.busy() and not yard_player.visible, "sleep director hides traveler")
 	main._resident_barks.reset()
 	main._bark_clock = 1200.0
 	main._tick_resident_barks(0.0)
@@ -246,7 +246,7 @@ func run() -> void:
 	check(main._resident_barks._last_chick_probe_at == -INF, "busy hidden traveler does not roll chick probe")
 	check(not main._resident_bubble.visible, "house busy suppresses chick bark")
 	main._world.house.stage = ""
-	check(not main._world.house.busy() and not traveler.visible, "traveler stays hidden after director stage clears")
+	check(not main._world.house.busy() and not yard_player.visible, "traveler stays hidden after director stage clears")
 	check(main._resident_bark_hard_blocked(), "invisible traveler hard-blocks barks")
 	main._resident_barks.reset()
 	main._bark_clock = 1400.0
@@ -254,12 +254,12 @@ func run() -> void:
 	main._try_chick_bark()
 	check(main._resident_barks._last_chick_probe_at == -INF, "invisible traveler does not roll chick probe")
 	check(not main._resident_bubble.visible, "invisible traveler suppresses chick bark")
-	traveler.visible = true
+	yard_player.visible = true
 	if chick_actor != null:
-		traveler.position = chick_actor.position + Vector2(400.0, 0.0)
+		yard_player.position = chick_actor.position + Vector2(400.0, 0.0)
 	main._tick_resident_barks(0.0)
 	check(not main._resident_bubble.visible, "leaving house does not replay dismissed bark")
-	traveler.visible = true
+	yard_player.visible = true
 	main._world.house.stage = ""
 	main.queue_free()
 	await process_frame
