@@ -17,6 +17,13 @@ var _turtle_caption := ""
 const PAPER := Color("fff6e8")
 const INK := Color("5b4637")
 const MUTED := Color("8a7060")
+const PLACE_HEIGHT := 30.0
+## Main 把共用时钟摆在地名下方 4px、22px 高
+const CLOCK_ROOM := 26.0
+const CLOCK_MIN_WIDTH := 96.0
+const CLOCK_MAX_WIDTH := 180.0
+const HINT_MAX_LINES := 3
+const CAPTION_MIN_WIDTH := 240.0
 const APRICOT := Color("f3b27a")
 const CREAM := Color("fffaf1")
 const DISABLED_FILL := Color("f3e9db")
@@ -835,11 +842,25 @@ func _layout(size: Vector2, compact: bool) -> void:
 	_return_button.position = Vector2(size.x - _return_button.size.x - pad, pad)
 	_pause_button.size = Vector2(104 if compact else 128, button_h)
 	_pause_button.position = Vector2(_return_button.position.x - _pause_button.size.x - 10, pad)
-	_place_label.position = Vector2(pad, pad + 8)
-	_place_label.size = Vector2(maxf(80.0, _pause_button.position.x - pad * 2), 30)
+	# 地名垫一块和时钟同款的小纸片，傍晚夜里压在暗山上也读得出；纸片贴字宽。
+	# 按钮左边放不下（280 宽竖屏）就移到按钮下面一行，下面的「停下看看」和字幕跟着让出地名与时钟
+	var place_need := _place_label.get_minimum_size()
+	var place_w := ceilf(place_need.x)
+	var place_h := maxf(PLACE_HEIGHT, ceilf(place_need.y))
+	var content_top := pad + button_h + 12.0
+	if place_w <= _pause_button.position.x - pad - 10.0:
+		_place_label.position = Vector2(pad, pad + (button_h - place_h) * 0.5)
+	else:
+		place_w = minf(place_w, size.x - pad * 2)
+		_place_label.position = Vector2(pad, pad + button_h + 8.0)
+		content_top = _place_label.position.y + place_h + CLOCK_ROOM + 8.0
+	_place_label.size = Vector2(place_w, place_h)
 	var look_w := minf(size.x - pad * 2, 320.0)
+	var clock_right := pad + maxf(place_w, CLOCK_MIN_WIDTH) + 8.0
+	if (size.x - look_w) * 0.5 < clock_right:
+		content_top = maxf(content_top, _place_label.position.y + place_h + CLOCK_ROOM + 8.0)
 	_look_button.size = Vector2(look_w, button_h)
-	_look_button.position = Vector2((size.x - look_w) * 0.5, pad + button_h + 12)
+	_look_button.position = Vector2((size.x - look_w) * 0.5, content_top)
 	var bar_y := size.y - button_h - pad
 	var half := (size.x - pad * 3) * 0.5
 	_pick_button.size = Vector2(minf(half, 300.0), button_h)
@@ -851,17 +872,42 @@ func _layout(size: Vector2, compact: bool) -> void:
 	var caption_w := minf(size.x - pad * 2, 560.0)
 	var side_caption := observing == "leaf_pile" and size.y < 400.0 and size.x > size.y
 	if side_caption: caption_w = minf(caption_w, size.x * 0.43)
+	# 字幕放在上方天空里，路面和路边的东西不被挡住；走路时让出“停下看看”按钮的位置
+	var clock_bottom := _place_label.position.y + place_h + CLOCK_ROOM + 8.0
+	var caption_top := pad + button_h + 12.0 if not observing.is_empty() else content_top + button_h + 12.0
+	var caption_x := pad if side_caption else (size.x - caption_w) * 0.5
+	if caption_top < clock_bottom and caption_x < clock_right:
+		# 与地名、时钟同一高度：挪到时钟右边（宽度尽量不收，免得折成多行压到篮子），放不下才挪到时钟下面
+		var beside_w := minf(caption_w, size.x - pad - clock_right)
+		if not side_caption and beside_w >= CAPTION_MIN_WIDTH:
+			caption_w = beside_w
+			caption_x = maxf(clock_right, (size.x - caption_w) * 0.5)
+		else:
+			caption_top = clock_bottom
 	# 先定宽度再按实际行数长高：StyleBox 的纸片要包住字，展示安全区也按纸片下沿算
 	_fit_caption(caption_w)
-	# 字幕放在上方天空里，路面和路边的东西不被挡住；走路时让出“停下看看”按钮的位置
-	var caption_top := pad + button_h + 12.0
-	_caption.position = Vector2((size.x - caption_w) * 0.5, caption_top if not observing.is_empty() else caption_top + button_h + 12.0)
-	if side_caption: _caption.position.x = pad
-	_hint.size = Vector2(size.x - pad * 2, 24)
-	_hint.position = Vector2(pad, size.y - pad - 30)
-	_basket.position = Vector2(pad, size.y - pad - 64 - (button_h + 10 if not observing.is_empty() else 0) - (34 if _hint.visible else 0))
+	_caption.position = Vector2(caption_x, caption_top)
+	var hint_h := _fit_hint(size.x - pad * 2)
+	_hint.position = Vector2((size.x - _hint.size.x) * 0.5, size.y - pad - hint_h)
+	_basket.position = Vector2(pad, size.y - pad - 64 - (button_h + 10 if not observing.is_empty() else 0) - (hint_h + 10.0 if _hint.visible else 0.0))
 	# 名称底板右缘 = 篮子左缘 + 文字起点 + 文字宽 + 6，窄屏时也留出右侧 pad
 	_basket_label_width = basket_label_width_for(size.x, pad, _basket.position.x)
+
+
+## 操作提示：纸片贴一行字宽，窄屏折行（英文 280 宽要三行），不再越出屏幕
+func _fit_hint(max_width: float) -> float:
+	var paper := _hint.get_theme_stylebox("normal")
+	var pad_x := paper.get_margin(SIDE_LEFT) + paper.get_margin(SIDE_RIGHT)
+	var pad_y := paper.get_margin(SIDE_TOP) + paper.get_margin(SIDE_BOTTOM)
+	var font := _hint.get_theme_font("font")
+	var font_size := _hint.get_theme_font_size("font_size")
+	var one_line := font.get_string_size(_hint.text, HORIZONTAL_ALIGNMENT_LEFT, -1, font_size).x
+	var width := minf(ceilf(one_line + pad_x) + 1.0, max_width)
+	_hint.size = Vector2(width, 0.0)
+	var lines := clampi(_hint.get_line_count(), 1, HINT_MAX_LINES)
+	var height := ceilf(lines * float(_hint.get_line_height()) + (lines - 1) * float(_hint.get_theme_constant("line_spacing")) + pad_y)
+	_hint.size = Vector2(width, height)
+	return height
 
 
 ## 看景纸片按当前宽度的实际行数长高，不再把高度写成 0（字会溢出纸外，展示安全区也会按空高度算）
@@ -883,6 +929,8 @@ func _build_hud() -> void:
 	hud.layer = 8
 	add_child(hud)
 	_place_label = _label(20, INK)
+	_place_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	_place_label.add_theme_stylebox_override("normal", hud_paper(10.0, 2.0))
 	_caption = _label(17, INK)
 	_caption.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	_caption.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -892,8 +940,11 @@ func _build_hud() -> void:
 	caption_style.set_content_margin_all(10)
 	_caption.add_theme_stylebox_override("normal", caption_style)
 	_caption.visible = false
-	_hint = _label(14, MUTED)
+	_hint = _label(14, INK)
 	_hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_hint.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_hint.max_lines_visible = HINT_MAX_LINES
+	_hint.add_theme_stylebox_override("normal", hud_paper(10.0, 3.0))
 	_hint.text = I18n.t("exploration.caption.walk_hint")
 	_return_button = _button(I18n.t("exploration.action.return"), func() -> void: _request_return("player"))
 	# 触屏没有 Esc：暂停/音量入口在画卷里也要有
@@ -961,6 +1012,20 @@ static func basket_label_rect(font: Font, text: String, max_width: float = BASKE
 	var ascent := font.get_ascent(fit.font_size)
 	var text_size: Vector2 = fit.size
 	return Rect2(fit.baseline + Vector2(-6, -ascent - 3), text_size + Vector2(12, 6))
+
+
+## 地名与操作提示的小纸片：与院里/近郊时钟同一块纸（奶油底 0.9、杏色细边、8px 圆角）
+static func hud_paper(margin_x: float, margin_y: float) -> StyleBoxFlat:
+	var paper := StyleBoxFlat.new()
+	paper.bg_color = Color(PAPER, 0.90)
+	paper.border_color = Color(Color("f3b27a"), 0.65)
+	paper.set_border_width_all(1)
+	paper.set_corner_radius_all(8)
+	paper.content_margin_left = margin_x
+	paper.content_margin_right = margin_x
+	paper.content_margin_top = margin_y
+	paper.content_margin_bottom = margin_y
+	return paper
 
 
 func _label(font_size: int, color: Color) -> Label:
