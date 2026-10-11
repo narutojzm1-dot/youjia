@@ -88,6 +88,10 @@ pause={
 ]
 }
 
+[internationalization]
+
+locale/include_text_server_data=true
+
 [rendering]
 
 environment/defaults/default_clear_color=Color(0.996,0.965,0.91,1)
