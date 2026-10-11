@@ -41,3 +41,10 @@
 听验/主流程接线仍待 Leader/#738；本记录不写听感通过。
 
 隔离套件复跑：`[meal-audio] PASS: 63 checks`（Godot 4.7.2，本轮许可/_exit_tree）。
+
+## 2026-10-11 ~20:30 CST Native Pulse 听验证据（GROK）
+
+- 路径：`docs/playtests/2026-10-11-meal-audio-745/native-listen/`
+- 基于 SHA `023d8000`：非 headless Godot 4.7.2 → PulseAudio `auto_null` → `ffmpeg` 录 `auto_null.monitor`
+- 已切 OGG：cook / hunger+spoon / pause 静音 / unpause / mute 静音 / unmute / deny allow 静音 / reallow
+- **未**冒充 Web 听验；**未**写合入通过。详见该目录 README。
