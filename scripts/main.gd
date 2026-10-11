@@ -514,6 +514,42 @@ func _menu_default_button(menu: Control) -> Button:
 	return _play_button
 
 
+## 院内底栏按钮平时不拿焦点：鼠标点过按钮后空格仍是互动，Web 上点击也由 _input 手动命中。
+## 纯键盘玩家原来打不开手帐、背篓、天气。Tab / Shift+Tab 只在轮转期间临时让按钮可聚焦并显示焦点框，
+## 回车/空格按下；方向键、WASD、鼠标或触屏一操作就放下焦点，按钮失焦即恢复不可聚焦。
+func _hud_keyboard_buttons() -> Array[Button]:
+	var out: Array[Button] = []
+	for button: Button in [_album_chip, _weather_chip, _basket_chip, _action_button, _pause_button]:
+		if button != null and button.is_visible_in_tree() and not button.disabled and button.self_modulate.a > 0.0:
+			out.append(button)
+	return out
+
+
+func _hud_keyboard_focus() -> Button:
+	var focused := get_viewport().gui_get_focus_owner()
+	if focused != null and focused in [_album_chip, _weather_chip, _basket_chip, _action_button, _pause_button]:
+		return focused as Button
+	return null
+
+
+func _cycle_hud_focus(step: int) -> void:
+	var buttons := _hud_keyboard_buttons()
+	if buttons.is_empty():
+		return
+	var current := buttons.find(_hud_keyboard_focus())
+	var index := (current + step + buttons.size()) % buttons.size() if current >= 0 else (0 if step > 0 else buttons.size() - 1)
+	var button := buttons[index]
+	button.focus_mode = Control.FOCUS_ALL
+	if not button.has_meta(&"hud_keyboard_focus"):
+		button.set_meta(&"hud_keyboard_focus", true)
+		button.focus_exited.connect(_on_hud_button_focus_exited.bind(button))
+	button.grab_focus()
+
+
+func _on_hud_button_focus_exited(button: Button) -> void:
+	button.focus_mode = Control.FOCUS_NONE
+
+
 func _focus_menu_default(event: InputEvent) -> bool:
 	if not (event is InputEventKey or event is InputEventJoypadButton) or event.is_echo():
 		return false
@@ -602,6 +638,19 @@ func _input(event: InputEvent) -> void:
 					get_viewport().set_input_as_handled()
 					return
 	if _screen == "game" and _world != null and _world.input_enabled and not _pause_screen.visible and not _album_screen.visible and not _confirm_screen.visible:
+		if event is InputEventKey and event.pressed and not event.is_echo() and (event.is_action_pressed("ui_focus_prev") or event.is_action_pressed("ui_focus_next")):
+			_cycle_hud_focus(-1 if event.is_action_pressed("ui_focus_prev") else 1)
+			get_viewport().set_input_as_handled()
+			return
+		var hud_focus := _hud_keyboard_focus()
+		if hud_focus != null:
+			if event.is_action_pressed("ui_accept") and not event.is_echo():
+				hud_focus.pressed.emit()
+				get_viewport().set_input_as_handled()
+				return
+			if (event is InputEventKey and event.pressed and (event.is_action("move_left") or event.is_action("move_right") or event.is_action("move_up") or event.is_action("move_down"))) \
+					or (event is InputEventMouseButton and event.pressed) or (event is InputEventScreenTouch and event.pressed):
+				hud_focus.release_focus()
 		if event.is_action_pressed("ui_accept") and not event.is_echo():
 			# 键盘 Space/Enter 触发动作时同步触发行动按钮视觉脉冲，保持键盘与触控体验一致
 			_pulse_button(_action_button)

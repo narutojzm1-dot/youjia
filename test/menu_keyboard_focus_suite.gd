@@ -97,9 +97,9 @@ func _check_pause_and_confirm(dims: Vector2i) -> void:
 	await _spawn(dims)
 	await _start_game()
 	await _key(KEY_TAB)
-	_check(_focus() == null, "%s: in the yard Tab does not focus a HUD button, got %s" % [dims, _name(_focus())])
+	_check(_focus() == main._album_chip, "%s: in the yard Tab walks the HUD row (hud_keyboard_focus_suite), got %s" % [dims, _name(_focus())])
 	await _key(KEY_DOWN)
-	_check(_focus() == null, "%s: in the yard arrows still walk, got %s" % [dims, _name(_focus())])
+	_check(_focus() == null, "%s: in the yard arrows drop HUD focus and walk, got %s" % [dims, _name(_focus())])
 	await _key(KEY_ESCAPE)
 	await _settle()
 	_check(main._pause_screen.visible, "%s: Esc opens the pause paper" % dims)
@@ -132,8 +132,9 @@ func _check_pause_and_confirm(dims: Vector2i) -> void:
 	await _key(KEY_ENTER)
 	await _settle()
 	_check(not main._pause_screen.visible and main._screen == "game", "%s: Enter on 继续待着 resumes" % dims)
+	_check(_focus() == null or not main._pause_screen.is_ancestor_of(_focus()), "%s: back in the yard no pause focus lingers, got %s" % [dims, _name(_focus())])
 	await _key(KEY_TAB)
-	_check(_focus() == null, "%s: back in the yard no menu focus lingers, got %s" % [dims, _name(_focus())])
+	_check(_focus() == main._album_chip, "%s: back in the yard Tab starts at 翻开手帐, got %s" % [dims, _name(_focus())])
 
 
 func _check_album(dims: Vector2i) -> void:
