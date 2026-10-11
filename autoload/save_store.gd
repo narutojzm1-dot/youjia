@@ -252,6 +252,12 @@ func get_rest_context() -> Dictionary:
 	return RestContext.read(_data)
 
 
+## Read-only proposal; caller supplies recipes whose world prerequisites pass.
+## It does not reserve materials, start cooking, infer a mealtime or grant AP.
+func plan_meal(meal: String, eligible_recipes: Dictionary, rng: RandomNumberGenerator) -> Dictionary:
+	return preload("res://scripts/game/meal_planner.gd").plan(_data, meal, eligible_recipes, rng)
+
+
 ## Inactive foundation until the cooking director validates recipe/time.
 ## Capture the cost now; the FIFO head validates both revisions and the game day.
 func request_meal_completion(revision: int, inventory_revision: int, day: int, meal: String, ingredients: Dictionary) -> String:
