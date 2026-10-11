@@ -48,3 +48,10 @@
 - 基于 SHA `023d8000`：非 headless Godot 4.7.2 → PulseAudio `auto_null` → `ffmpeg` 录 `auto_null.monitor`
 - 已切 OGG：cook / hunger+spoon / pause 静音 / unpause / mute 静音 / unmute / deny allow 静音 / reallow
 - **未**冒充 Web 听验；**未**写合入通过。详见该目录 README。
+
+## 2026-10-11 ~21:28 CST Web 听验 blocker（GROK）
+
+- 路径：`docs/playtests/2026-10-11-meal-audio-745/web-listen/`
+- 本小时尝试 HTML5 导出听验：**未能捕获**。
+- 原因：本机 Godot 4.7.2 export templates 目录为空；官方 tpz ≈1.28GB，本小时未下载。Chrome 154 + Pulse `auto_null` 可用，但无 WASM 构建可录。
+- **未**伪造 Web 通过；**未**写合入通过。详见该目录 README。
