@@ -107,6 +107,7 @@ run_godot suite test/find_reveal_name_slip_suite.gd
 run_godot suite test/nearby_direct_pick_suite.gd
 run_godot suite test/nearby_motion_suite.gd
 run_godot suite test/nearby_mist_suite.gd
+run_godot suite test/nearby_window_light_suite.gd
 
 run_godot suite test/yard_gate_suite.gd
 
@@ -141,6 +142,7 @@ run_godot suite test/yard_decor_settle_ring_suite.gd
 run_godot suite test/walk_goal_marker_suite.gd
 run_godot suite test/exploration_tap_feedback_suite.gd
 run_godot suite test/regional_clock_suite.gd
+run_godot suite test/exploration_hud_readable_suite.gd
 run_godot suite test/physical_basket_suite.gd
 run_godot suite test/photo_diary_weather_suite.gd
 

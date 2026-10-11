@@ -158,6 +158,7 @@ test/yard_decor_settle_ring_suite.gd	YARD_DECOR_SETTLE_RING checks=[1-9][0-9]* f
 test/walk_goal_marker_suite.gd	WALK GOAL MARKER PASS [1-9][0-9]*
 test/exploration_tap_feedback_suite.gd	\[exploration-tap-feedback\] PASS: [1-9][0-9]* checks
 test/regional_clock_suite.gd	REGIONAL_CLOCK checks=[1-9][0-9]* failures=0$
+test/exploration_hud_readable_suite.gd	\[exploration-hud-readable\] PASS: [1-9][0-9]* checks
 test/photo_diary_weather_suite.gd	\[photo-diary-weather\] PASS: [1-9][0-9]* checks
 test/physical_basket_suite.gd	physical_basket_suite: [1-9][0-9]* checks, 0 failures
 test/yard_crops_suite.gd	YARD_CROPS checks=[1-9][0-9]* failures=0
@@ -172,3 +173,4 @@ test/meal_ledger_suite.gd	MEAL_LEDGER checks=[1-9][0-9]* failures=0
 test/rest_context_suite.gd	REST_CONTEXT checks=[1-9][0-9]* failures=0
 test/nearby_mist_suite.gd	NEARBY_MIST checks=[1-9][0-9]* failures=0
 test/meal_planner_suite.gd	MEAL_PLANNER checks=[1-9][0-9]* failures=0
+test/nearby_window_light_suite.gd	NEARBY_WINDOW_LIGHT checks=[1-9][0-9]* failures=0
