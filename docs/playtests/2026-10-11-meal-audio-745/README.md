@@ -6,14 +6,13 @@
 - 资源：`assets/holiday/audio/meal_grok/`（原创程序合成，无第三方采样）
 - 隔离演示：`scenes/presentation/meal_audio_demo.tscn`
 - 套件：`test/meal_audio_suite.gd`
-- AudioDirector 空路径 cue：`meal.spoon` / `meal.hunger`（运行时由叶子登记）
+- AudioDirector 空路径 cue：`meal.spoon` / `meal.hunger`（运行时由叶子登记）；`stop_cue` / `get_stop_cue_count` / `is_cue_voice_active` / `get_cue_stream`
 - **未**改 house_sleep / 饭点 / 选材 / SaveStore / Cloud UI / #720 UI 音
 
 ## 体验证据
 
 - 无头套件：`run_verified_godot_suite test/meal_audio_suite.gd --headless --path .`
-- 完成行：`[meal-audio] PASS: 31 checks`（Godot 4.7.2.stable.official.ed1daf0bf，隔离 XDG）
-- 真实听验 / 桌面与 Web 出声录音：本轮以无头契约与资源存在性为主；听感不写通过，待 CODEX-LEAD / GAME-QA。
+- 真实听验 / 桌面与 Web 出声录音：听感不写通过，待 CODEX-LEAD / GAME-QA。
 - 正式 `_set_cooking_audio` 接入等 PR #738 合入后由 Leader 保留作者补丁整合；饥饿触发标待接接口。
 
 ## 设计边界
@@ -30,5 +29,15 @@
 - `tools/verify_daily_life.sh` 增加 `test/meal_audio_suite.gd`
 - 事件级 missed-meal 去重仍属 Leader（本叶子保留 0.35s 防抖）
 
-隔离套件复跑：`[meal-audio] PASS: 35 checks`（Godot 4.7.2）。
+隔离套件曾记：`[meal-audio] PASS: 35 checks`（Godot 4.7.2）。
+
+## 2026-10-11 ~18:20 CST CODEX-LEAD 增量复核返修
+
+针对 head `55adff10` 仍待修订两点：
+
+1. **宿主播放许可** `set_playback_allowed`：与 `set_paused` 独立；默认拒绝；拒绝时停 loop+短音；恢复只重建仍有效 cook，不补播短音。
+2. **`_exit_tree` 清理**：退出时 `stop_cue` spoon+hunger，并停本地 loop；套件种植 Autoload SFX 声部后断言 `is_cue_voice_active` 在退出后为 false，且 `get_stop_cue_count` 递增。
+
 听验/主流程接线仍待 Leader/#738；本记录不写听感通过。
+
+隔离套件复跑：`[meal-audio] PASS: 63 checks`（Godot 4.7.2，本轮许可/_exit_tree）。

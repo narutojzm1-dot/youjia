@@ -37,6 +37,10 @@ func run() -> void:
 	check(ResourceLoader.exists(MealAudioScript.COOK_LOOP_PATH), "cook_loop tres exists")
 	check(ResourceLoader.exists(MealAudioScript.SPOON_PATH), "cook_spoon tres exists")
 	check(ResourceLoader.exists(MealAudioScript.HUNGER_PATH), "hunger tres exists")
+	check(audio.has_method("stop_cue"), "AudioDirector exposes stop_cue for leaf ownership")
+	check(audio.has_method("get_stop_cue_count"), "AudioDirector exposes get_stop_cue_count")
+	check(audio.has_method("is_cue_voice_active"), "AudioDirector exposes is_cue_voice_active")
+	check(audio.has_method("get_cue_stream"), "AudioDirector exposes get_cue_stream")
 
 	var leaf: Node = MealAudioScript.new()
 	leaf.name = "MealAudioUnderTest"
@@ -46,43 +50,70 @@ func run() -> void:
 
 	leaf.ensure_registered()
 	audio.call("unlock_audio")
-
+	check(not leaf.is_playback_allowed(), "playback starts denied")
 	check(not leaf.is_cooking(), "starts not cooking")
 	check(not leaf.is_cook_playing(), "starts not playing")
 
 	leaf.set_cooking(true)
 	await process_frame
 	check(leaf.is_cooking(), "set_cooking true")
-	check(leaf.is_cook_playing(), "cook loop playing after start")
+	check(not leaf.is_cook_playing(), "cook silent without playback permission")
+	check(not bool(leaf.play_spoon_now()), "spoon blocked without permission")
+	check(not bool(leaf.play_hunger()), "hunger blocked without permission")
+
+	var hunger_before_allow: int = int(leaf.hunger_play_count)
+	var spoon_before_allow: int = int(leaf.spoon_play_count)
+	leaf.set_playback_allowed(true)
+	await process_frame
+	check(leaf.is_playback_allowed(), "playback allowed")
+	check(leaf.is_cook_playing(), "cook loop playing after permission")
+	check(int(leaf.hunger_play_count) == hunger_before_allow, "allow does not replay hunger")
+	check(int(leaf.spoon_play_count) == spoon_before_allow, "allow does not replay spoon")
 	var players_after_start: int = int(leaf.debug_snapshot()["child_players"])
 	check(players_after_start == 1, "exactly one cook player after start")
 
-	# Repeat true is no-op: no restart stacking, still one player.
 	leaf.set_cooking(true)
 	await process_frame
 	check(int(leaf.debug_snapshot()["child_players"]) == 1, "repeat set_cooking true keeps one player")
 	check(leaf.is_cook_playing(), "still playing after repeat true")
 
-	# Spoon while cooking.
 	check(bool(leaf.play_spoon_now()), "spoon plays while cooking")
 	check(int(leaf.spoon_play_count) == 1, "spoon count 1")
 
-	# Pause stops loop; cooking flag stays.
+	leaf.set_playback_allowed(false)
+	await process_frame
+	check(not leaf.is_playback_allowed(), "permission revoked")
+	check(leaf.is_cooking(), "cooking flag kept without permission")
+	check(not leaf.is_paused(), "pause flag independent of permission revoke")
+	check(not leaf.is_cook_playing(), "cook stopped without permission")
+	check(not bool(leaf.play_spoon_now()), "spoon blocked without permission after revoke")
+	check(not bool(leaf.play_hunger()), "hunger blocked without permission after revoke")
+
+	leaf.set_playback_allowed(true)
+	await process_frame
+	check(leaf.is_cook_playing(), "cook rebuilds after re-allow")
+	check(not leaf.is_paused(), "still unpaused after re-allow")
+
 	leaf.set_paused(true)
 	await process_frame
 	check(leaf.is_paused(), "paused true")
 	check(leaf.is_cooking(), "cooking flag kept while paused")
+	check(leaf.is_playback_allowed(), "permission kept while paused")
 	check(not leaf.is_cook_playing(), "cook stopped while paused")
 	check(not bool(leaf.play_spoon_now()), "spoon blocked while paused")
 	check(not bool(leaf.play_hunger()), "hunger blocked while paused")
 	check(int(leaf.hunger_play_count) == 0, "hunger count stays 0 while paused")
 
-	# Idempotent pause.
+	leaf.set_playback_allowed(false)
+	leaf.set_playback_allowed(true)
+	await process_frame
+	check(leaf.is_paused(), "pause survives permission toggle")
+	check(not leaf.is_cook_playing(), "paused+allowed still silent")
+
 	leaf.set_paused(true)
 	await process_frame
 	check(not leaf.is_cook_playing(), "repeat pause stays stopped")
 
-	# Resume cooking sound.
 	leaf.set_paused(false)
 	await process_frame
 	check(leaf.is_cook_playing(), "cook resumes after unpause")
@@ -91,7 +122,6 @@ func run() -> void:
 	check(int(leaf.hunger_play_count) == 1, "hunger count 1 after unpause")
 	await _wait_ms(int(ceil((MealAudioScript.HUNGER_MIN_GAP + 0.05) * 1000.0)))
 
-	# Stop cooking.
 	leaf.set_cooking(false)
 	await process_frame
 	check(not leaf.is_cooking(), "cooking false")
@@ -101,18 +131,39 @@ func run() -> void:
 	check(not leaf.is_cook_playing(), "idempotent stop")
 	check(int(leaf.debug_snapshot()["child_players"]) == 1, "stop does not free/stack players")
 
-	# Hunger cue (independent of cooking; pause already exercised above).
 	check(bool(leaf.play_hunger()), "hunger plays while not cooking")
 	check(int(leaf.hunger_play_count) == 2, "hunger count 2")
 	check(not bool(leaf.play_hunger()), "hunger debounce blocks immediate second")
 	await _wait_ms(int(ceil((MealAudioScript.HUNGER_MIN_GAP + 0.05) * 1000.0)))
 	check(bool(leaf.play_hunger()), "hunger plays after gap")
 	check(int(leaf.hunger_play_count) == 3, "hunger count 3")
-	# Leaf must not unlock; suite host already unlocked once for headless play_cue.
-	check(audio.has_method("stop_cue"), "AudioDirector exposes stop_cue for leaf ownership")
+
+	# Plant a real Autoload SFX voice using the Director's registered stream reference
+	# so stop_cue can match and clear it (headless play_cue does not start voices).
+	var hunger_stream: AudioStream = audio.call("get_cue_stream", "meal.hunger") as AudioStream
+	check(hunger_stream != null, "hunger cue stream registered")
+	var planted := false
+	for child in audio.get_children():
+		if child is AudioStreamPlayer and str(child.name).begins_with("Sfx"):
+			child.stream = hunger_stream
+			child.play()
+			planted = child.playing or child.stream_paused or child.stream == hunger_stream
+			break
+	check(planted, "planted hunger stream on an SFX player for exit stop proof")
+	check(bool(audio.call("is_cue_voice_active", "meal.hunger")), "hunger voice active before leaf exit")
+
+	var stops_spoon_before: int = int(audio.call("get_stop_cue_count", "meal.spoon"))
+	var stops_hunger_before: int = int(audio.call("get_stop_cue_count", "meal.hunger"))
+	leaf.set_cooking(true)
+	check(bool(leaf.play_spoon_now()), "spoon before exit for stop ownership")
 
 	leaf.queue_free()
-	await process_frame
+	for _j in 3:
+		await process_frame
+
+	check(int(audio.call("get_stop_cue_count", "meal.spoon")) > stops_spoon_before, "exit stop_cue spoon invoked")
+	check(int(audio.call("get_stop_cue_count", "meal.hunger")) > stops_hunger_before, "exit stop_cue hunger invoked")
+	check(not bool(audio.call("is_cue_voice_active", "meal.hunger")), "hunger voice cleared after leaf exit")
 
 	if failures == 0:
 		print("[meal-audio] PASS: %d checks" % checks)

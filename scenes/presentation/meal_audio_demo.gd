@@ -15,7 +15,7 @@ func _ready() -> void:
 	_label.position = Vector2(24, 24)
 	_label.add_theme_font_size_override("font_size", 18)
 	add_child(_label)
-	# Do not unlock here: AudioDirector requires a real input gesture.
+	# Do not unlock / allow here: AudioDirector requires a real input gesture.
 	_leaf.ensure_registered()
 	_refresh()
 
@@ -23,9 +23,10 @@ func _ready() -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if not event is InputEventKey or not event.pressed or event.echo:
 		return
-	# First real key press unlocks host audio for this isolation demo.
+	# First real key press unlocks host audio and grants leaf playback permission.
 	var audio: Node = get_node("/root/AudioDirector")
 	audio.call("unlock_audio")
+	_leaf.set_playback_allowed(true)
 	match event.keycode:
 		KEY_C:
 			_leaf.set_cooking(not _leaf.is_cooking())
@@ -49,6 +50,8 @@ func _refresh() -> void:
 	_label.text = (
 		"GROK #745 meal audio demo\n"
 		+ "C cook | P pause | H hunger | S spoon\n"
-		+ "cooking=%s paused=%s playing=%s\n" % [snap["cooking"], snap["paused"], snap["cook_playing"]]
-		+ "hunger=%s spoon=%s players=%s" % [snap["hunger_play_count"], snap["spoon_play_count"], snap["child_players"]]
+		+ "cooking=%s paused=%s allowed=%s playing=%s\n"
+		% [snap["cooking"], snap["paused"], snap["playback_allowed"], snap["cook_playing"]]
+		+ "hunger=%s spoon=%s players=%s"
+		% [snap["hunger_play_count"], snap["spoon_play_count"], snap["child_players"]]
 	)
