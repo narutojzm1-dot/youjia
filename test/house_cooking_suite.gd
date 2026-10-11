@@ -66,6 +66,7 @@ func run() -> void:
 	await main._start_holiday()
 	main.set_process(false)
 	world = main._world
+	check(world.house.smoke == null, "unused house allocates no cooking particles")
 	await fixture(50.0)
 	world.house.consider_meal(10.0, Vector2.RIGHT)
 	check(not world._has_walk_goal and not world.house.busy(), "manual movement prevents auto meal")
@@ -74,7 +75,7 @@ func run() -> void:
 	check(not world._has_walk_goal, "modal input block prevents auto meal")
 	world.input_enabled = true
 	world.house.consider_meal(8.1, Vector2.ZERO)
-	check(world._has_walk_goal and world._pending_interaction == "house_door", "idle meal uses production walking route")
+	check(world._has_walk_goal and world._pending_interaction == "house_meal", "idle meal uses production walking route")
 	check(world.get_player().position.distance_to(Vector2(380,520)) < 1.0, "meal request never teleports")
 	check(await step_until("cook"), "walk, open, enter, close reaches cooking")
 	check(not world.get_player().visible and world.house.smoke.is_cooking(), "indoor cook hides one actor and emits smoke")
@@ -125,6 +126,24 @@ func run() -> void:
 	check(await step_until(""), "stale plan rejects and restores actor")
 	check(store.get_yard_inventory().millet == 2 and store.get_meal_ledger().receipts.is_empty(), "rejected meal neither rerolls nor double consumes")
 	check(not main._save_problem_active and not world.house.failed, "stale inventory is a domain refusal, not a save modal that traps the hidden actor")
+	# A real autonomous approach crosses the dinner deadline before arrival.
+	await fixture(374.9)
+	world.house.consider_meal(8.1, Vector2.ZERO)
+	check(world._pending_interaction == "house_meal", "late dinner queues only a meal intent")
+	check(world.primary_action().target == "house_meal", "HUD preserves queued meal intent")
+	for frame in 1800:
+		world.tick(1.0 / 30.0, Vector2.ZERO)
+		await process_frame
+		if not world._has_walk_goal and world._pending_interaction.is_empty(): break
+	check(world.get_player().position.distance_to(world.house.APPROACH) < 20.0, "late meal actually reaches house along walking route")
+	check(world._day_elapsed >= 375.0 and not world.house.busy(), "expired dinner stays outside instead of starting sleep")
+	check(await store.flush_pending(), "late arrival pending saves settle")
+	check(store.get_holiday_day() == 2 and world.holiday_day == 2 and store.get_rest_context().cause == "awake", "autonomous late arrival does not advance day or grant sleep")
+	check(store.get_meal_ledger().receipts.is_empty() and store.get_yard_inventory().millet == 3, "expired meal changes neither receipt nor ingredients")
+	world._interact_with_target("house_door")
+	check(world.house.busy() and world.house.cooking_plan.is_empty(), "explicit player door action still starts nighttime sleep")
+	check(await step_until(""), "explicit sleep completes normally")
+	check(store.get_holiday_day() == 3 and world.holiday_day == 3, "only explicit sleep advances to next morning")
 	main.queue_free()
 	await process_frame
 	for failure in failures: push_error(failure)

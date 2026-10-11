@@ -44,17 +44,14 @@ func _init(owner_world: Node2D, save_store: Node) -> void:
 	balcony = preload("res://scripts/game/balcony_morning.gd").new(world)
 	add_child(balcony)
 	meal_rng.randomize()
-	smoke = preload("res://scripts/presentation/cooking_smoke.gd").new()
-	smoke.process_mode = Node.PROCESS_MODE_PAUSABLE
-	add_child(smoke)
-	smoke.set_chimney_anchor(Vector2(286, 122))
+
 
 func busy() -> bool: return not stage.is_empty()
 
 func available() -> bool:
 	return not busy() and not world.is_leading() and world._fish_state == world.FISH_IDLE and not world.inventory_busy
 
-func begin() -> void:
+func begin(meal_only: bool = false) -> void:
 	if not available(): return
 	var meal := Meals.meal_at(world.tod_fraction())
 	if not meal.is_empty() and store.has_method("plan_meal") and store.is_save_idle():
@@ -65,6 +62,10 @@ func begin() -> void:
 			_start_entry()
 			world.notice_requested.emit("notice.meal.enter")
 			return
+	# Arrival revalidates food/time, but an autonomous meal never becomes sleep.
+	if meal_only:
+		meal_cooldown = 30.0
+		return
 	if Daylight.phase(world.tod_fraction()) != "night":
 		world.notice_requested.emit("notice.house.day")
 		return
@@ -98,7 +99,7 @@ func skip_balcony() -> void:
 		balcony.skip()
 	elif not cooking_plan.is_empty() and pending.is_empty() and stage in ["porch", "open", "in", "close", "cook"]:
 		# A player's input can interrupt uncommitted cooking without losing food.
-		smoke.set_cooking(false)
+		_set_cooking_smoke(false)
 		meal_cooldown = 30.0
 		if stage in ["porch", "open", "in"]:
 			_enter("out")
@@ -112,7 +113,7 @@ func tick(delta: float) -> void:
 	var target := window_light_target()
 	lights = move_toward(lights,target,delta * 0.7)
 	queue_redraw()
-	smoke.set_night_tint(Daylight.phase(world.tod_fraction()) == "night")
+	if smoke != null: smoke.set_night_tint(Daylight.phase(world.tod_fraction()) == "night")
 	if not busy(): return
 	seconds += delta
 	var player = world.get_player()
@@ -138,10 +139,10 @@ func tick(delta: float) -> void:
 					retry()
 				else:
 					_enter("cook")
-					smoke.set_cooking(true)
+					_set_cooking_smoke(true)
 		"cook":
 			if seconds >= Meals.COOK_SECONDS:
-				smoke.set_cooking(false)
+				_set_cooking_smoke(false)
 				_enter("saving")
 				retry()
 		"sleep":
@@ -272,4 +273,14 @@ func consider_meal(delta: float, move: Vector2) -> void:
 	# Use the normal walk route to the porch; never clamp/teleport from the yard
 	# into the narrow indoor passage. Input can replace this unreserved route.
 	world.notice_requested.emit("notice.meal.hungry")
-	world._request_action("house_door", APPROACH)
+	world._request_action("house_meal", APPROACH)
+
+func _set_cooking_smoke(active: bool) -> void:
+	# Do not allocate a particle emitter for a house that has never cooked.
+	if smoke == null and active:
+		smoke = preload("res://scripts/presentation/cooking_smoke.gd").new()
+		smoke.process_mode = Node.PROCESS_MODE_PAUSABLE
+		add_child(smoke)
+		smoke.set_chimney_anchor(Vector2(286, 122))
+		smoke.set_night_tint(Daylight.phase(world.tod_fraction()) == "night")
+	if smoke != null: smoke.set_cooking(active)

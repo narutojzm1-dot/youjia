@@ -816,8 +816,8 @@ func _interact_with_target(target: String) -> void:
 		_consume_pending_action()
 		basket_requested.emit()
 		return
-	if target == "house_door":
-		if _player.position.distance_to(house.APPROACH) < 20.0: house.begin()
+	if target in ["house_door", "house_meal"]:
+		if _player.position.distance_to(house.APPROACH) < 20.0: house.begin(target == "house_meal")
 		return
 	if target == YardSceneHotspots.WINDOWBOX:
 		var scene_action := YardSceneHotspots.resolve(self, target)

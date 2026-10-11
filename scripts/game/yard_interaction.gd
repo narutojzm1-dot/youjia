@@ -77,6 +77,8 @@ static func selected(world: Node2D, target: String) -> Dictionary:
 	var player = world.get_player()
 	if player == null:
 		return {}
+	if target == "house_meal" and world.house.available():
+		return action(target, world.house.APPROACH, "action.house_cooking", 20.0)
 	if target.begins_with("decor:") and world.decor_view != null:
 		var placed: Dictionary = world.decor_view.placed(target.get_slice(":", 1))
 		if placed.is_empty(): return {}
@@ -193,6 +195,7 @@ static func fishing(world: Node2D) -> Dictionary:
 	return action("fishing", world._fishing_point(), label, 85.0)
 
 static func reach(target: String) -> float:
+	if target == "house_meal": return 20.0
 	if target == "drop_food": return INF
 	if target.begins_with("ground_food:") or target.begins_with("decor:"): return 48.0
 	if target.begins_with("chick_care:"): return PET_REACH

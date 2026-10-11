@@ -22,3 +22,14 @@ CI38108336924 on4238830 failed the old UI interaction fixture: fixed tap(780,480
 Integrated main3caeb1fe6082da0cf0db00e3bea20dc47eb50edf (Assistant #737) preserving original commits. Completion-table conflict retains both cooking suites and HUD pointer suite. Integrated native checks: cooking38, UI67, HUD pointer72 passed. A mistyped hud_mouse_input_suite invocation failed because no such file exists; the correct hud_pointer_input_suite72 then passed.
 
 Ordinary local Web export of4238830: release export succeeded; CUA browser entered title and yard1280x720 and opened/closed the actual grid basket, with no console errors at that check. Fresh save contained wheat2/corn2, no millet/fish; no ordinary browser meal completion has been demonstrated. Native meal fixtures are not a substitute for the still-missing ordinary food-supply/cooking/phone/audio acceptance.
+
+
+## 2026-10-11 午间返修：自主晚饭不转为睡觉
+
+Owner CODEX-LEAD，PR #738；回应评审评论 6105288353。自主饭点请求使用独立 house_meal 意图，抵达门口重验饭点与食材；失效即取消，只有玩家 house_door 请求才允许夜间睡觉。HUD/键盘继续保留该用餐意图。
+
+真实 World 路径回归从 20:59 附近出发，走到门口时跨过 21:00，确认没有进屋睡觉、没有扣食材/餐次记录、没有跨日或写入已睡状态；随后显式点门仍能睡到第三天。house_cooking_suite 50/50，house_sleep_suite 154/154。
+
+同时将烟囱粒子延迟至首次真正做饭时创建，取消/普通夜景兼容未创建状态。原 b3f1a02 的 ground-food 测试本地与 CI 均复现四项失败；修改后原种子 0 的同一套真实觅食/持久化测试 75/75。此证据说明初始化改动解除该回归，不宣称穷尽所有动物随机布局。原失败和修复后完整日志分别保存；没有删除、放宽觅食断言。
+
+本节为原生运行验证，未冒充普通 Web 三餐实玩。全量 CI、普通 Web 做饭和音频验收仍须另行记录。
