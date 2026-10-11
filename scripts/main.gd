@@ -88,6 +88,9 @@ var _resident_bubble: Control
 var _resident_barks: RefCounted
 var _crop_kind_watch := ""
 var _bark_clock := 0.0
+## Chick proximity hysteresis: stay latched until beyond PET_REACH + margin.
+var _chick_proximity_latched := false
+const CHICK_LEAVE_MARGIN := 28.0
 var _inventory: RefCounted
 var _decor: RefCounted
 var _basket_drop: Dictionary = {}
@@ -3370,9 +3373,10 @@ func _on_crops_confirmed_for_bark(kind: String) -> void:
 	_crop_kind_watch = now_kind
 	if not was_empty or now_kind.is_empty():
 		return
-	# Plant success may land while CropPanel is still open; allow that moment.
-	var busy: bool = _resident_bubble.is_showing() or _resident_bark_hard_blocked()
-	var bark_id: String = _resident_barks.try_plant_sown(_bark_clock, busy)
+	# Confirmed sow beats chick idle: may preempt a showing idle line and ignores
+	# global cooldown left by that idle. Only hard blocks stop it; panel may stay open.
+	var hard: bool = _resident_bark_hard_blocked()
+	var bark_id: String = _resident_barks.try_plant_sown(_bark_clock, hard)
 	if bark_id.is_empty():
 		return
 	_show_resident_bark(bark_id)
@@ -3381,22 +3385,29 @@ func _on_crops_confirmed_for_bark(kind: String) -> void:
 func _try_chick_bark() -> void:
 	if _resident_barks == null or _resident_bubble == null or _world == null:
 		return
-	# 人被藏进屋里时距离仍按一楼坐标算；硬阻断时不投骰、不入队。
-	if _resident_bark_hard_blocked():
-		return
-	if _resident_bubble.is_showing():
-		return
 	var growth := SaveStore.get_chick_growth()
 	if growth.is_empty() or str(growth.get("stage", "")) != "chick":
+		_chick_proximity_latched = false
+		_resident_barks.try_chick_proximity(_bark_clock, true, false)
 		return
 	var chick = _world.actor_named("chicken")
 	var player = _world.get_player()
 	if chick == null or player == null:
+		_chick_proximity_latched = false
+		_resident_barks.try_chick_proximity(_bark_clock, true, false)
 		return
 	var reach := YardInteraction.PET_REACH
-	if player.position.distance_to(chick.position) > reach:
-		return
-	var bark_id: String = _resident_barks.try_chick_proximity(_bark_clock, false)
+	var dist: float = player.position.distance_to(chick.position)
+	# Enter at PET_REACH; leave only beyond reach + margin (anti-jitter).
+	if _chick_proximity_latched:
+		_chick_proximity_latched = dist <= reach + CHICK_LEAVE_MARGIN
+	else:
+		_chick_proximity_latched = dist <= reach
+	# 人被藏进屋里时距离仍按一楼坐标算；硬阻断/已有气泡时不投骰，但仍同步靠近状态。
+	var soft_busy: bool = _resident_bark_hard_blocked() or _resident_bubble.is_showing()
+	var bark_id: String = _resident_barks.try_chick_proximity(
+		_bark_clock, soft_busy, _chick_proximity_latched
+	)
 	if bark_id.is_empty():
 		return
 	_show_resident_bark(bark_id)

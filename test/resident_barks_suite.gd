@@ -45,32 +45,51 @@ func run() -> void:
 	var plant_text: String = str(i18n.t("bark.plant_sown"))
 	check(not plant_text.is_empty() and plant_text != "bark.plant_sown", "plant text resolves")
 
-	check(barks.can_offer(Barks.BARK_PLANT_SOWN, 0.0, false), "fresh catalog can plant")
-	check(not barks.can_offer(Barks.BARK_PLANT_SOWN, 0.0, true), "busy blocks offer")
+	check(barks.can_offer_plant(0.0, false), "fresh catalog can plant")
+	check(not barks.can_offer_plant(0.0, true), "hard block blocks plant")
 	var planted: String = barks.try_plant_sown(1.0, false)
 	check(planted == Barks.BARK_PLANT_SOWN, "plant accepts once")
-	check(barks.try_plant_sown(2.0, false).is_empty(), "global cooldown blocks immediate second bark")
-	check(barks.try_plant_sown(1.0 + Barks.GLOBAL_COOLDOWN + 0.1, false).is_empty(), "per-id plant cooldown still holds")
+	check(barks.try_plant_sown(2.0, false).is_empty(), "plant per-id cooldown blocks immediate second")
+	check(barks.try_plant_sown(1.0 + Barks.GLOBAL_COOLDOWN + 0.1, false).is_empty(), "per-id plant cooldown still holds past global")
 	check(barks.try_plant_sown(1.0 + float(Barks.PER_ID_COOLDOWN[Barks.BARK_PLANT_SOWN]) + 0.1, false) == Barks.BARK_PLANT_SOWN, "plant after per-id cooldown")
 
 	barks.reset()
-	var forced: String = barks.try_chick_proximity(0.0, false, true)
+	var forced: String = barks.try_chick_proximity(0.0, false, true, true)
 	check(forced == Barks.BARK_CHICK_EGGS, "forced chick bark")
-	check(barks.try_chick_proximity(1.0, false, true).is_empty(), "chick respects global cooldown")
+	check(barks.try_chick_proximity(1.0, false, true, true).is_empty(), "chick respects global cooldown")
 	barks.reset()
 	var misses := 0
 	for _i in 40:
 		barks.reset()
-		if barks.try_chick_proximity(0.0, false, false).is_empty():
+		# Encounter: enter near, wait settle, one roll; force=false uses chance.
+		barks.try_chick_proximity(0.0, false, true, false)
+		var rolled: String = barks.try_chick_proximity(0.0 + Barks.CHICK_PROBE_INTERVAL + 0.01, false, true, false)
+		if rolled.is_empty():
 			misses += 1
 	check(misses > 0 and misses < 40, "chick chance is neither always nor never (misses=%d)" % misses)
 
-	# Probe interval: first roll consumes probe slot; sub-interval frames must not re-roll.
+	# Encounter-once: settle then one roll; staying near must not re-roll (even after probe window).
 	barks.reset()
-	var first: String = barks.try_chick_proximity(10.0, false, false)
-	var blocked: String = barks.try_chick_proximity(10.0 + Barks.CHICK_PROBE_INTERVAL * 0.5, false, false)
-	check(blocked.is_empty(), "chick probe interval blocks mid-window re-roll (first=%s)" % first)
+	check(barks.try_chick_proximity(10.0, false, true, false).is_empty(), "chick settle waits probe interval")
+	var first: String = barks.try_chick_proximity(10.0 + Barks.CHICK_PROBE_INTERVAL + 0.01, false, true, false)
+	var blocked: String = barks.try_chick_proximity(10.0 + Barks.CHICK_PROBE_INTERVAL + 5.0, false, true, false)
+	check(blocked.is_empty(), "same encounter does not re-roll (first=%s)" % first)
 	check(Barks.CHICK_PROBE_INTERVAL >= 2.0, "chick probe interval is at least 2s (got %s)" % Barks.CHICK_PROBE_INTERVAL)
+	# Leave clears encounter spent; re-enter settles then attempts a new roll (probe clock advances).
+	var probe_after_spend: float = float(barks._last_chick_probe_at)
+	check(barks.try_chick_proximity(40.0, false, true, false).is_empty(), "still near after spend stays empty")
+	check(is_equal_approx(float(barks._last_chick_probe_at), probe_after_spend), "spent encounter does not re-probe")
+	barks.try_chick_proximity(41.0, false, false, false)
+	check(barks.try_chick_proximity(42.0, false, true, false).is_empty(), "re-enter starts new settle")
+	barks.try_chick_proximity(42.0 + Barks.CHICK_PROBE_INTERVAL + 0.01, false, true, false)
+	check(float(barks._last_chick_probe_at) > probe_after_spend + 1.0, "leave+reenter attempts a new encounter roll")
+
+	# Plant priority: chick idle global cooldown must not swallow confirmed sow.
+	barks.reset()
+	check(barks.try_chick_proximity(0.0, false, true, true) == Barks.BARK_CHICK_EGGS, "chick for plant-priority setup")
+	check(barks.try_plant_sown(1.0, false) == Barks.BARK_PLANT_SOWN, "plant bypasses idle global cooldown")
+	check(barks.try_plant_sown(2.0, false).is_empty(), "plant still has per-id cooldown")
+	check(barks.try_plant_sown(1.0, true).is_empty(), "plant respects hard block")
 
 	barks.reset()
 	check(barks.try_fatigue(0.0, false, false).is_empty(), "fatigue requires Leader flag")

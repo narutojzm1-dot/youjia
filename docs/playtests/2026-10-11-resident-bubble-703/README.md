@@ -77,3 +77,9 @@ Godot `4.7.2.stable.official.ed1daf0bf`，隔离 XDG，`run_verified_godot_suite
 - 没有暂停、相册、近郊的手动游玩。套件调用的是 `_tick_resident_barks` / `_try_chick_bark` 硬阻断，没有点开这些面板手测。
 - 没有播种/浇水/失败/重开的画面截图。没有复现存档协调器的 unknown 播种。失败路径是占用地块后再种玉米，床仍是小麦。
 - 未跑完整 `tools/verify_daily_life.sh`。未做 Web 导出，未发布 Pages。无头 82 checks 与上面两张取景图都不等于可合入的体验通过。
+
+## 2026-10-11 ~22:25 CST 窄修订（ART 6109324019 / Leader 6109386814）
+
+- 同一连续靠近小鸡只抽一次（成功/失败都消耗）；离开超过 `PET_REACH+28` 再靠近才重置。
+- 已确认播种优先于小鸡闲聊：可接管当前闲聊气泡，并不被闲聊留下的全局冷却吞掉；保留播种 12s 去重与硬阻断。
+- 不重做组件；不合入 / 不推 main / 不发 Pages。
