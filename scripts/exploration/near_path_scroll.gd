@@ -43,6 +43,7 @@ var companion: PathCompanion
 var camera: Camera2D
 var painting: Sprite2D
 var scenery_motion: NearPathMotion
+var scenery_mist: NearPathMist
 var items: Node2D
 var hud: CanvasLayer
 # 人物在路上的位置：哪条路、离岔口多远（原画像素）
@@ -83,7 +84,7 @@ var reveal: FindReveal
 var leaf_texture: Texture2D
 
 
-## 原画只有一版晴秋，天气暂不改画面
+## 同一原画的公共天气/日光由Main转发；局部效果不另建世界状态。
 func setup(trip_host: ExplorationHost, _weather: String, resident_controller: RefCounted = null) -> void:
 	host = trip_host
 	residents = resident_controller
@@ -103,6 +104,9 @@ func setup(trip_host: ExplorationHost, _weather: String, resident_controller: Re
 	add_child(painting)
 	scenery_motion = NearPathMotion.new()
 	scenery_motion.bind(painting, reduced_motion())
+	scenery_mist = NearPathMist.new()
+	scenery_mist.bind(painting, reduced_motion())
+	scenery_mist.sync_environment({"weather": _weather, "daylight": 1.0}, true)
 	TuningStore.value_changed.connect(_motion_setting_changed)
 	items = Node2D.new()
 	items.name = "Finds"
@@ -137,6 +141,7 @@ func setup(trip_host: ExplorationHost, _weather: String, resident_controller: Re
 
 func release() -> void:
 	if scenery_motion != null: scenery_motion.release()
+	if scenery_mist != null: scenery_mist.release()
 	if TuningStore.value_changed.is_connected(_motion_setting_changed):
 		TuningStore.value_changed.disconnect(_motion_setting_changed)
 	_pending_collect_stop = ""
@@ -182,8 +187,13 @@ func reduced_motion() -> bool:
 
 
 func _motion_setting_changed(id: String, _requested: Variant, _active: Variant) -> void:
-	if id == "ui.reduced_motion" and scenery_motion != null:
-		scenery_motion.apply(not village and not leaving, reduced_motion())
+	if id == "ui.reduced_motion":
+		if scenery_motion != null: scenery_motion.apply(not village and not leaving, reduced_motion())
+		if scenery_mist != null: scenery_mist.apply(not village and not leaving, reduced_motion())
+
+
+func sync_environment(state: Dictionary, snap: bool = false) -> void:
+	if scenery_mist != null: scenery_mist.sync_environment(state, snap)
 
 
 func foot() -> Vector2:
@@ -195,6 +205,7 @@ func _process(delta: float) -> void:
 	if leaving:
 		return
 	if scenery_motion != null: scenery_motion.advance(delta, reduced_motion())
+	if scenery_mist != null: scenery_mist.advance(delta, reduced_motion())
 	var direction := Vector2.ZERO
 	if observing.is_empty():
 		direction = Input.get_vector("move_left", "move_right", "move_up", "move_down", 0.2)
@@ -665,6 +676,7 @@ func cross_page() -> bool:
 	_home_hold = 0.0
 	painting.texture = load(layout.ART)
 	if scenery_motion != null: scenery_motion.apply(not village, reduced_motion())
+	if scenery_mist != null: scenery_mist.apply(not village, reduced_motion())
 	walker.position = foot()
 	walker.advance(0.0, Vector2.ZERO, layout.depth(foot().y), facing, true)
 	walker.z_index = roundi(foot().y)
