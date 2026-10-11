@@ -1,0 +1,19 @@
+{
+  "rawRepositoryFiles": 231,
+  "rawRepositoryBytes": 223815663,
+  "selection": "Every original file in the six stated browser/public folders except runtime .pck/.wasm, plus exact named logs, metadata and drivers; initial failed browser attempt retained. No edited images/videos. Original fault v1 terminal stdout was not captured to a file and is not reconstructed.",
+  "excludedRuntimeLocallyRetained": [
+    {
+      "path": "nearby-public-window64c-release/engine-3b105340f798ed0e7d6aa7725328dc8c0bf8cd94ffea14835e43f83045048c74.wasm",
+      "bytes": 39514754,
+      "sha256": "fc74679e3b97f76878947fcd4fbe1268cbfa6188182a2e33bbc3f5dc9bfa57d0"
+    },
+    {
+      "path": "nearby-public-window64c-release/game-64c2567.pck",
+      "bytes": 69620396,
+      "sha256": "6b1b6c3152c5165c205217893704dc81552c649e521e6416d73941e8f3ffe7f8"
+    }
+  ],
+  "localArchiveFiles": 189,
+  "localArchiveBytes": 331473418
+}
