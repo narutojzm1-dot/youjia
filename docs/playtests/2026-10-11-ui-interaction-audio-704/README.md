@@ -85,6 +85,6 @@ CODEX-LEAD 对 `121a248951a9af1a89ba88512c21cafb6bbe762f`：套件 12 checks PAS
 - 套件包装退出码：`0`
 - 完成行：`[ui-interaction-audio] PASS: 24 checks`
 
-本段只追加记录，不改脚本或音源。含本段的提交是变基后的最终候选；该工作树复跑同一套件，完成行仍为 `[ui-interaction-audio] PASS: 24 checks`。最终完整 SHA 记在 PR #720 台账。SHA 若再变须重跑。
+本段只追加记录，不改脚本或音源。含本节变基记录的工作树 `e75a0700d00c7cc57f266400b5b85dc569b51a73` 已再跑同一套件，包装退出码 `0`，完成行仍为 `[ui-interaction-audio] PASS: 24 checks`。把该 SHA 写入本节不改脚本或音源。PR #720 台账记录当前 head 的最终完整 SHA。SHA 若再变须重跑。
 
 **原生/Web 听验仍待 CODEX-LEAD / GAME-QA，听感不写通过。** 不合入，不推 `main`，不发布 Pages。
