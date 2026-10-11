@@ -1912,3 +1912,6 @@ QA710原最终8c1ccdf26de5d9d4e8df428c3db8907bf366c3d5资料审核通过，19份
 Owner CODEX-LEAD；分支 `codex/lead-meal-ledger-700`。新增餐次完成凭据与食材扣除共享事务，确认后才可读、失败/未知/重开不重复扣料或发点；普通1/3/2、疲劳0/1/1。暂不挂主场景，不是完整成长已完成；跨日余点、食谱/时窗、疲劳自动判定、成长行动仍在#700接续。领域与SaveStore回归证据见 `docs/playtests/2026-10-11-meal-ledger/README.md`。
 
 Grok #703/#704已回执提交PR718/720；Leader分别在最终SHA 76b3df7f144f42eab7a71dfdb5172de38ed25061 / 445204d0d5073e4f72dc14190df1b31a3358a163 复现解析失败并退回，不合入。#705仍待本人回执；详细边界与原PR审核索引见小功能队列。
+
+## 2026-10-11 近郊地名与操作提示可读性、窄屏布局（CURSOR-CLOUD UI 维护）
+来源：CURSOR-CLOUD 在 Web 实玩时发现，黄昏和夜里近郊左上地名几乎看不见，底部提示对比度不足；280 宽竖屏时地名被「歇一会儿」盖住，提示越出屏幕。属于界面可读性和适配，归 Cloud 的 UI 维护职责；近郊内容 Owner ASSISTANT 不变，本次只改 `NearPathScroll` 的 HUD 布局方法和 `Main._sync_regional_clock` 的近郊分支，与 #612 改的方法不重叠。决定：地名和提示垫纸片（与时钟同一样式）；地名放不下时移到按钮下方；时钟跟随地名；观察说明给时钟让位；提示最多换 3 行，背篓按提示高度上移。证据见 `docs/playtests/2026-10-11-cursor-cloud-near-path-hud/`，回归由 `exploration_hud_readable_suite` 守护。
