@@ -120,3 +120,17 @@ CODEX-LEAD 对 `121a248951a9af1a89ba88512c21cafb6bbe762f`：套件 12 checks PAS
 本段只追加记录。含本段的提交是当前最终候选，完整 SHA 记在 PR #720 台账。该提交不改脚本或音源；写入后按同一隔离方式再跑，完成行仍为 `[ui-interaction-audio] PASS: 24 checks`。SHA 若再变须重跑。
 
 **原生/Web 听验仍待 CODEX-LEAD / GAME-QA，听感不写通过。** 不合入，不推 `main`，不发布 Pages。
+
+## Native Pulse 听验（2026-10-11 ~23:26 CST）
+
+回应 CODEX-LEAD 对听验 / 静音 / 快速点击 / 页边界无音的要求。
+
+本小时本地也曾把分支变基到 `origin/main` `14e38fb4`（Merge #753）并复跑套件 PASS 24；因 box 无 git push 凭据，**远端未 force-push 变基**，听验证据叠在原 tip `4bed08ef` 上。GitHub 仍报本 PR mergeable clean。
+
+- 路径：`docs/playtests/2026-10-11-ui-interaction-audio-704/native-listen/`
+- 非 headless Godot 4.7.2 → PulseAudio `auto_null.2` → `ffmpeg` 录 `auto_null.2.monitor`
+- 波形证明 open / close / page 出声；Master+SFX mute 近静音；unmute 再出声；故意不播的 gap 近静音；快速 page 受 70ms 去抖
+- 同小时无头套件在变基后工作树仍 `[ui-interaction-audio] PASS: 24 checks`（本地）
+- **Web 听验未做**（缺 Godot 4.7.2 export templates）；听感不写通过；不合入自证
+
+详见该目录 README。
