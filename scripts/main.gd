@@ -2111,6 +2111,18 @@ func _render_album_pages() -> void:
 	_album_next_button.disabled = _album_entries.is_empty() or _album_index + stride >= _album_entries.size()
 
 
+const ALBUM_HEADING_PAD_X := 8.0
+const ALBUM_HEADING_PAD_Y := 2.0
+
+func _album_heading_paper() -> StyleBoxFlat:
+	var style := _flat(Color(PAPER, 0.88), Color(APRICOT, 0.45), 1, 6)
+	style.content_margin_left = ALBUM_HEADING_PAD_X
+	style.content_margin_right = ALBUM_HEADING_PAD_X
+	style.content_margin_top = ALBUM_HEADING_PAD_Y
+	style.content_margin_bottom = ALBUM_HEADING_PAD_Y
+	return style
+
+
 func _album_page(index: int) -> Control:
 	var page := Control.new()
 	page.custom_minimum_size = _album_page_size
@@ -2147,8 +2159,11 @@ func _album_page(index: int) -> Control:
 	content.offset_bottom = -10
 	content.add_theme_constant_override("separation", 5)
 	page.add_child(content)
-	var heading := _label(14, MUTED)
+	# 页眉压在相纸的薰衣草枝上读不清，垫一片贴字宽的小纸签，字用墨色（浅褐在纸签上不到 4.5:1）
+	var heading := _label(14, INK)
 	heading.text = I18n.t("album.page_label")
+	heading.add_theme_stylebox_override("normal", _album_heading_paper())
+	heading.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
 	content.add_child(heading)
 	var rule_id := _album_entries[index]
 	var rule := ExpressionCatalog.find_rule(rule_id)
@@ -2168,7 +2183,7 @@ func _album_page(index: int) -> Control:
 		return ceilf(font.get_height(font_size) * lines + get_theme_constant("line_spacing", "Label") * maxi(0, lines - 1))
 	var text_width := _album_page_size.x - 44.0
 	var note_height := maxf(36.0, text_height.call(note_text, text_width, 14))
-	var body_height: float = _album_page_size.y - 25.0 - text_height.call(heading.text, text_width, 14) - text_height.call(I18n.t("album.page", {"page": str(index + 1)}), text_width, 12) - 10.0
+	var body_height: float = _album_page_size.y - 25.0 - text_height.call(heading.text, text_width, 14) - ALBUM_HEADING_PAD_Y * 2.0 - text_height.call(I18n.t("album.page", {"page": str(index + 1)}), text_width, 12) - 10.0
 	var compact_page := _album_page_size.y < 370.0 or body_height - note_height - 5.0 < 300.0
 	var wide_page := compact_page and _album_page_size.x > _album_page_size.y * 1.6
 	var body: BoxContainer = HBoxContainer.new() if wide_page else VBoxContainer.new()
