@@ -1,0 +1,24 @@
+{
+  "checkedSource": "c28246f14dd8bca837624699ca9447124e39d0d1",
+  "publicSource": "c28246f14dd8bca837624699ca9447124e39d0d1",
+  "motionHashComparison": {
+    "against": "db633e05664856278da0d62a7347e2c98ffeff6d",
+    "paths": [
+      "scripts/exploration/near_path_motion.gd",
+      "shaders/near_path_motion.gdshader",
+      "assets/holiday/exploration/near_path_motion_mask.svg"
+    ],
+    "changed": []
+  },
+  "audioMainFactCorrection": "set_yard_active(false) is in _show_title, NOT _on_exploration_entered. Main keeps current yard audio active while exploring; no set_music_scene/set_world_sound in main. Previous issue565 6105175212 false-location statement must be corrected.",
+  "candidateAudio623": {
+    "head": "e00f11a88679e0efe2ee2dccb2a8eea9ae0a0169",
+    "state": "OPEN Draft",
+    "interfaces": [
+      "set_music_scene(scene_id: String) -> bool",
+      "set_world_sound(night: bool, rain: bool, sleeping: bool) -> void"
+    ],
+    "MainAdapter": "_sync_world_sound called from _process, start holiday, and yard/near_path music selection on entry/return",
+    "remaining": "Leader623/542 real headphone/speaker hearing, loops/fades, continuous10min and actual public integration, QA196 no receipt"
+  }
+}
