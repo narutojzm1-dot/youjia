@@ -22,8 +22,8 @@ func step_until(target: String, frames: int = 2400) -> bool:
 		var stage: String = world.house.stage
 		seen_stages[stage] = true
 		var folder := OS.get_environment("YOUJIA_COOK_CAPTURE")
-		if not folder.is_empty() and stage in ["open", "cook", "balcony", "out"] and not captured.has(stage):
-			if (stage == "open" and world.house.seconds > 0.7) or (stage == "cook" and world.house.seconds > 3.0) or (stage == "balcony" and world.house.balcony.stage == "activity" and world.house.balcony.seconds > 1.0) or (stage == "out" and world.house.seconds > 1.0):
+		if not folder.is_empty() and stage in ["take", "open", "cook", "balcony", "out"] and not captured.has(stage):
+			if (stage == "take" and world.house.seconds > 0.4) or (stage == "open" and world.house.seconds > 0.7) or (stage == "cook" and world.house.seconds > 3.0) or (stage == "balcony" and world.house.balcony.stage == "activity" and world.house.balcony.seconds > 1.0) or (stage == "out" and world.house.seconds > 1.0):
 				main._process(0.0)
 				await RenderingServer.frame_post_draw
 				root.get_texture().get_image().save_jpg(folder.path_join(stage + ".jpg"), 0.8)
@@ -80,9 +80,14 @@ func run() -> void:
 	check(not world._has_walk_goal, "modal input block prevents auto meal")
 	world.input_enabled = true
 	world.house.consider_meal(8.1, Vector2.ZERO)
-	check(world._has_walk_goal and world._pending_interaction == "house_meal", "idle meal uses production walking route")
+	check(world._has_walk_goal and world._pending_interaction == "meal_basket", "idle meal routes to physical basket")
 	check(world.get_player().position.distance_to(Vector2(380,520)) < 1.0, "meal request never teleports")
+	check(await step_until("take"), "meal first reaches physical basket")
+	check(world.get_player().position.distance_to(world.house.Basket.APPROACH) < 18.0, "retrieval stays at real basket approach")
+	check(world.house.meal_ingredient.visible and store.get_yard_inventory().millet == 3, "basket pickup is visible without predebit")
+	var picked: Dictionary = world.house.cooking_plan.duplicate(true)
 	check(await step_until("porch"), "chosen meal enters the porch")
+	check(world.house.cooking_plan == picked, "walk retains exact selected ingredient and revisions")
 	world.house._sync_meal_ingredient()
 	check(world.house.meal_ingredient.visible and world.house.meal_ingredient.texture.resource_path.ends_with("millet.png"), "porch carries the selected millet")
 	check(world.house.meal_ingredient.global_position.distance_to(world.get_player().grass_hand_global_position()) < 0.01, "ingredient follows actual hand anchor")
@@ -119,6 +124,42 @@ func run() -> void:
 		print("HOUSE_COOKING_CAPTURE failures=%d" % failures.size())
 		quit(0 if failures.is_empty() else 1)
 		return
+	# Taking and carrying are interruptible, with no inventory reservation.
+	await fixture(175.0)
+	world.house.consider_meal(8.1, Vector2.ZERO)
+	check(await step_until("take"), "cancel scenario reaches basket")
+	world.house.skip_balcony()
+	check(not world.house.busy() and world.house.cooking_plan.is_empty() and not world.house.meal_ingredient.visible, "cancel at basket immediately releases traveller and prop")
+	check(store.get_yard_inventory().millet == 3 and store.get_meal_ledger().receipts.is_empty(), "basket cancellation neither debits nor grants")
+	await fixture(175.0)
+	world.house.consider_meal(8.1, Vector2.ZERO)
+	check(await step_until("take"), "walking cancel fetches ingredient")
+	world.house.tick(1.1)
+	check(world._pending_interaction == "house_meal" and not world.house.busy(), "picked ingredient uses ordinary route from basket to house")
+	world.tick(0.1, Vector2.RIGHT)
+	check(world.house.cooking_plan.is_empty() and not world.house.meal_ingredient.visible and not world._has_walk_goal, "manual walking cancels carried meal immediately")
+	check(store.get_yard_inventory().millet == 3, "manual interruption returns virtual ingredient without changing stock")
+	await fixture(175.0)
+	world.house.consider_meal(8.1, Vector2.ZERO)
+	check(await step_until("take"), "stale carry fetches ingredient")
+	world.house.tick(1.1)
+	var carried_stock: Dictionary = store.get_yard_inventory()
+	carried_stock.revision += 1
+	carried_stock.millet = 2
+	store.request_patch("stock-during-carry", {Inventory.FIELD:carried_stock})
+	check(await store.flush_pending(), "stock change during carry committed")
+	world.tick(0.1, Vector2.ZERO)
+	check(world.house.cooking_plan.is_empty() and not world.house.busy() and not world.house.meal_ingredient.visible, "stale carried plan cancels instead of rerolling food")
+	check(store.get_meal_ledger().receipts.is_empty() and store.get_yard_inventory().millet == 2, "stale carried plan never consumes an extra ingredient")
+	await fixture(374.0)
+	world.debug_place_player(world.house.Basket.APPROACH)
+	world.house.take_from_basket()
+	check(world.house.stage == "take", "late meal can pick up during valid window")
+	world.house.tick(1.1)
+	world._day_elapsed = 375.1
+	world.tick(0.1, Vector2.ZERO)
+	check(not world.house.busy() and world.house.cooking_plan.is_empty() and world._pending_interaction.is_empty(), "deadline during carry cancels without entering sleep")
+	check(world.holiday_day == 2 and store.get_yard_inventory().millet == 3 and store.get_meal_ledger().receipts.is_empty(), "carry deadline preserves day, ingredients and meal receipts")
 	await fixture(325.0)
 	world.debug_place_player(world.house.APPROACH)
 	world.house.begin()
@@ -150,17 +191,18 @@ func run() -> void:
 	# A real autonomous approach crosses the dinner deadline before arrival.
 	await fixture(374.9)
 	world.house.consider_meal(8.1, Vector2.ZERO)
-	check(world._pending_interaction == "house_meal", "late dinner queues only a meal intent")
-	check(world.primary_action().target == "house_meal", "HUD preserves queued meal intent")
+	check(world._pending_interaction == "meal_basket", "late dinner queues only basket meal intent")
+	check(world.primary_action().target == "meal_basket", "HUD preserves queued meal intent")
 	for frame in 1800:
 		world.tick(1.0 / 30.0, Vector2.ZERO)
 		await process_frame
 		if not world._has_walk_goal and world._pending_interaction.is_empty(): break
-	check(world.get_player().position.distance_to(world.house.APPROACH) < 20.0, "late meal actually reaches house along walking route")
+	check(world.get_player().position.distance_to(world.house.Basket.APPROACH) < 18.0, "late meal reaches basket before deadline revalidation")
 	check(world._day_elapsed >= 375.0 and not world.house.busy(), "expired dinner stays outside instead of starting sleep")
 	check(await store.flush_pending(), "late arrival pending saves settle")
 	check(store.get_holiday_day() == 2 and world.holiday_day == 2 and store.get_rest_context().cause == "awake", "autonomous late arrival does not advance day or grant sleep")
 	check(store.get_meal_ledger().receipts.is_empty() and store.get_yard_inventory().millet == 3, "expired meal changes neither receipt nor ingredients")
+	world.debug_place_player(world.house.APPROACH)
 	world._interact_with_target("house_door")
 	check(world.house.busy() and world.house.cooking_plan.is_empty(), "explicit player door action still starts nighttime sleep")
 	check(await step_until(""), "explicit sleep completes normally")

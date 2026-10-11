@@ -1,5 +1,6 @@
 extends "res://scripts/game/house_lights.gd"
 ## A narrow authored porch, never part of the general roaming ground.
+const Basket := preload("res://scripts/game/physical_basket.gd")
 const Meals := preload("res://scripts/game/meal_schedule.gd")
 const State := preload("res://scripts/game/house_sleep_state.gd")
 const Daylight := preload("res://scripts/game/world_daylight.gd")
@@ -63,14 +64,23 @@ func begin(meal_only: bool = false) -> void:
 	var meal := Meals.meal_at(world.tod_fraction())
 	var hands_free: bool = not world.get_player().carrying_grass and (world.ground_food == null or world.ground_food.held().is_empty())
 	if hands_free and not meal.is_empty() and store.has_method("plan_meal") and store.is_save_idle():
+		if not cooking_plan.is_empty():
+			if _prepared_meal_valid():
+				meal_succeeded = false
+				_start_entry()
+				_sync_meal_ingredient()
+				world.notice_requested.emit("notice.meal.enter")
+				return
+			cancel_preparation()
+			return
 		var plan: Dictionary = store.plan_meal(meal, Meals.RECIPES, meal_rng)
 		if not plan.is_empty():
-			cooking_plan = plan
-			meal_succeeded = false
-			_start_entry()
-			_sync_meal_ingredient()
-			world.notice_requested.emit("notice.meal.enter")
+			# A door click also fetches food from the physical basket first.
+			world._request_action("meal_basket", Basket.APPROACH)
 			return
+	if not cooking_plan.is_empty():
+		cancel_preparation()
+		return
 	# Arrival revalidates food/time, but an autonomous meal never becomes sleep.
 	if meal_only:
 		meal_cooldown = 30.0
@@ -83,6 +93,39 @@ func begin(meal_only: bool = false) -> void:
 		return
 	_start_entry()
 	world.notice_requested.emit("notice.house.enter")
+
+func take_from_basket() -> void:
+	if not available() or not store.is_save_idle(): return
+	if world.get_player().position.distance_to(Basket.APPROACH) >= 18.0: return
+	if world.get_player().carrying_grass or (world.ground_food != null and not world.ground_food.held().is_empty()): return
+	var meal := Meals.meal_at(world.tod_fraction())
+	if meal.is_empty():
+		cancel_preparation()
+		return
+	cooking_plan = store.plan_meal(meal, Meals.RECIPES, meal_rng)
+	if cooking_plan.is_empty():
+		cancel_preparation()
+		return
+	world._consume_pending_action()
+	meal_succeeded = false
+	_enter("take")
+	_sync_meal_ingredient()
+
+func _prepared_meal_valid() -> bool:
+	return not cooking_plan.is_empty() and cooking_plan.day == world.holiday_day \
+		and cooking_plan.meal == Meals.meal_at(world.tod_fraction()) \
+		and cooking_plan.revision == store.get_meal_ledger().get("revision", -1) \
+		and cooking_plan.inventory_revision == store.get_yard_inventory().get("revision", -1)
+
+func cancel_preparation() -> void:
+	# Nothing is debited before the confirmed cooking transaction.
+	cooking_plan = {}
+	meal_ingredient.visible = false
+	meal_idle = 0.0
+	meal_cooldown = 30.0
+	if stage == "take": stage = ""
+	if world._pending_interaction in ["meal_basket", "house_meal"]:
+		world._consume_pending_action()
 
 func _start_entry() -> void:
 	world._consume_pending_action()
@@ -104,6 +147,9 @@ func inside_room() -> bool:
 	return stage in ["close", "saving", "cook", "sleep", "balcony", "stairs", "wake"]
 
 func skip_balcony() -> void:
+	if stage == "take":
+		cancel_preparation()
+		return
 	if stage == "balcony":
 		balcony.skip()
 	elif not cooking_plan.is_empty() and pending.is_empty() and stage in ["porch", "open", "in", "close", "cook"]:
@@ -130,6 +176,10 @@ func tick(delta: float) -> void:
 	var player = world.get_player()
 	player.body_obstacles = world.physical_obstacles("player")
 	match stage:
+		"take":
+			if seconds >= 1.0:
+				stage = ""
+				world._request_action("house_meal", APPROACH)
 		"porch":
 			if _walk(delta,PORCH): _enter("open")
 		"open":
@@ -266,6 +316,10 @@ func _draw() -> void: pass
 
 # Called only by the live yard tick; no real-time/offline catch-up.
 func consider_meal(delta: float, move: Vector2) -> void:
+	if not busy() and not cooking_plan.is_empty():
+		if move.length() > 0.2 or world._pending_interaction != "house_meal" or not _prepared_meal_valid():
+			cancel_preparation()
+		return
 	meal_cooldown = maxf(0.0, meal_cooldown - delta)
 	if busy() or meal_cooldown > 0.0 or not world.input_enabled or not available():
 		meal_idle = 0.0
@@ -286,7 +340,7 @@ func consider_meal(delta: float, move: Vector2) -> void:
 	# Use the normal walk route to the porch; never clamp/teleport from the yard
 	# into the narrow indoor passage. Input can replace this unreserved route.
 	world.notice_requested.emit("notice.meal.hungry")
-	world._request_action("house_meal", APPROACH)
+	world._request_action("meal_basket", Basket.APPROACH)
 
 func _set_cooking_smoke(active: bool) -> void:
 	# Do not allocate a particle emitter for a house that has never cooked.
@@ -302,7 +356,7 @@ func _sync_meal_ingredient() -> void:
 	# Presentation of the chosen basket ingredient, never a second held ledger.
 	# Cancellation and hidden-room stages must not leave a floating item behind.
 	var player = world.get_player()
-	meal_ingredient.visible = not cooking_plan.is_empty() and stage in ["porch", "open", "in"] and player.visible
+	meal_ingredient.visible = not cooking_plan.is_empty() and (stage in ["take", "porch", "open", "in"] or (stage.is_empty() and world._pending_interaction == "house_meal")) and player.visible
 	if not meal_ingredient.visible: return
 	var ingredients: Dictionary = cooking_plan.get("ingredients", {})
 	if ingredients.size() != 1:

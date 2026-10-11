@@ -816,6 +816,9 @@ func _interact_with_target(target: String) -> void:
 		_consume_pending_action()
 		basket_requested.emit()
 		return
+	if target == "meal_basket":
+		house.take_from_basket()
+		return
 	if target in ["house_door", "house_meal"]:
 		if _player.position.distance_to(house.APPROACH) < 20.0: house.begin(target == "house_meal")
 		return
@@ -1026,6 +1029,8 @@ func _interaction_actor(target: String) -> FeltActor:
 
 
 func _request_action(target: String, goal: Vector2) -> void:
+	if house != null and not house.busy() and target != "house_meal" and not house.cooking_plan.is_empty():
+		house.cancel_preparation()
 	_scene_feedback.cancel()
 	notice_dismiss_requested.emit("notice.cannot_walk")
 	_rejected_seconds = 0.0
