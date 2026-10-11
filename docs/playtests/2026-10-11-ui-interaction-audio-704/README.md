@@ -127,7 +127,7 @@ CODEX-LEAD 对 `121a248951a9af1a89ba88512c21cafb6bbe762f`：套件 12 checks PAS
 
 本小时本地也曾把分支变基到 `origin/main` `14e38fb4`（Merge #753）并复跑套件 PASS 24；因 box 无 git push 凭据，**远端未 force-push 变基**，听验证据叠在原 tip `4bed08ef` 上。GitHub 仍报本 PR mergeable clean。
 
-- 路径：`docs/playtests/2026-10-11-ui-interaction-audio-704/native-listen/`
+- 路径：`docs/playtests/2026-10-11-ui-interaction-audio-704/native-listen/`（波形以 `*.ogg.b64` + `volume_envelope_250ms.csv` 入库；见 DECODE.txt）
 - 非 headless Godot 4.7.2 → PulseAudio `auto_null.2` → `ffmpeg` 录 `auto_null.2.monitor`
 - 波形证明 open / close / page 出声；Master+SFX mute 近静音；unmute 再出声；故意不播的 gap 近静音；快速 page 受 70ms 去抖
 - 同小时无头套件在变基后工作树仍 `[ui-interaction-audio] PASS: 24 checks`（本地）

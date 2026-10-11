@@ -55,3 +55,7 @@ Locally rebased onto `origin/main` `14e38fb4` then ran Godot `4.7.2` isolation i
 - Hostname: `grok-bot-vm-478310` (GROK box)
 - PulseAudio 17.0, default sink/source `auto_null.2` / `auto_null.2.monitor`
 - No Pages publish; no `main` push
+
+## Clip packaging note
+
+Binary `.ogg` could not be force-pushed from this box (no git HTTPS creds; MCP `$file:` is text-only). Clips are also stored as `*.ogg.b64` (base64, no newlines). Decode with `base64 -d FILE.ogg.b64 > FILE.ogg` (see `DECODE.txt`). Envelope CSV + driver log remain the primary numeric evidence.
