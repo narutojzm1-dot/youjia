@@ -9,3 +9,7 @@ rest_context_suite 43，meal_ledger_suite 72，house_sleep_suite 154，regional_
 附烟囱PR723最终8ae4e0a67e6c1155260b80705e544a2187f53549独立套件编译失败诊断；未修改Grok分支。
 
 最终补查：旧原生set_holiday_progress/set_yard_progress同样同步休息日号，保留原有显式赋时的边界行为；回拨不会清除既有疲劳。生产异步进度仍保持单调。新增4项回归，最终共361项通过。
+
+## CI candidate regression correction
+
+Final-head CI38094588522 failed before Web export: legacy save_candidate expected snapshots omitted resident_rest (80 checks / 4 failures). Updated both clock setter expectations with explicit schema/day/cause, retaining full memory/file/backup equality and failure-write checks. Added normalized-JSON rest provenance checks after actual native reload. Windows isolated profile is now accepted only with explicit YOUJIA_TEST_ISOLATED_DATA and a strict child-directory boundary; Linux disposable XDG guard remains. Local save_candidate82 and rest_context43 pass; logs archived here. This supersedes the earlier CI-pending status, not a claim of full CI success.
