@@ -74,6 +74,8 @@ func run() -> void:
 	check(leaf.is_cooking(), "cooking flag kept while paused")
 	check(not leaf.is_cook_playing(), "cook stopped while paused")
 	check(not bool(leaf.play_spoon_now()), "spoon blocked while paused")
+	check(not bool(leaf.play_hunger()), "hunger blocked while paused")
+	check(int(leaf.hunger_play_count) == 0, "hunger count stays 0 while paused")
 
 	# Idempotent pause.
 	leaf.set_paused(true)
@@ -85,6 +87,9 @@ func run() -> void:
 	await process_frame
 	check(leaf.is_cook_playing(), "cook resumes after unpause")
 	check(int(leaf.debug_snapshot()["child_players"]) == 1, "still one player after resume")
+	check(bool(leaf.play_hunger()), "hunger plays after unpause")
+	check(int(leaf.hunger_play_count) == 1, "hunger count 1 after unpause")
+	await _wait_ms(int(ceil((MealAudioScript.HUNGER_MIN_GAP + 0.05) * 1000.0)))
 
 	# Stop cooking.
 	leaf.set_cooking(false)
@@ -96,13 +101,15 @@ func run() -> void:
 	check(not leaf.is_cook_playing(), "idempotent stop")
 	check(int(leaf.debug_snapshot()["child_players"]) == 1, "stop does not free/stack players")
 
-	# Hunger cue (independent of cooking).
-	check(bool(leaf.play_hunger()), "hunger plays once")
-	check(int(leaf.hunger_play_count) == 1, "hunger count 1")
+	# Hunger cue (independent of cooking; pause already exercised above).
+	check(bool(leaf.play_hunger()), "hunger plays while not cooking")
+	check(int(leaf.hunger_play_count) == 2, "hunger count 2")
 	check(not bool(leaf.play_hunger()), "hunger debounce blocks immediate second")
 	await _wait_ms(int(ceil((MealAudioScript.HUNGER_MIN_GAP + 0.05) * 1000.0)))
 	check(bool(leaf.play_hunger()), "hunger plays after gap")
-	check(int(leaf.hunger_play_count) == 2, "hunger count 2")
+	check(int(leaf.hunger_play_count) == 3, "hunger count 3")
+	# Leaf must not unlock; suite host already unlocked once for headless play_cue.
+	check(audio.has_method("stop_cue"), "AudioDirector exposes stop_cue for leaf ownership")
 
 	leaf.queue_free()
 	await process_frame

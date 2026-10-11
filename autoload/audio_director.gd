@@ -334,6 +334,24 @@ func play_cue(cue_id: String, pitch_scale: float = 1.0) -> bool:
 	return true
 
 
+## Stop SFX/UI voices currently playing this cue's stream. Narrow ownership stop; not release_streams.
+func stop_cue(cue_id: String) -> void:
+	if not CUES.has(cue_id):
+		return
+	var kind := str(CUES.get(cue_id, {}).get("kind", ""))
+	if kind == "music" or kind == "ambience":
+		return
+	var stream: AudioStream = _streams.get(cue_id)
+	if stream == null:
+		return
+	var cue: Dictionary = CUES[cue_id]
+	var players := _ui_players if str(cue.get("bus", "SFX")) == "UI" else _sfx_players
+	for player: AudioStreamPlayer in players:
+		if player.stream == stream and (player.playing or player.stream_paused):
+			player.stop()
+			player.stream = null
+
+
 func register_button(button: Button, cancel_cue: bool = false) -> void:
 	if button == null or button.has_meta("audio_registered"):
 		return

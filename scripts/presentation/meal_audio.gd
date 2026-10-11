@@ -58,27 +58,32 @@ func set_cooking(active: bool) -> void:
 	_cooking = active
 	if not active:
 		_spoon_accum = 0.0
+		_stop_leaf_cue(CUE_SPOON)
 	_apply()
 
 
-## Pause stops cook loop and spoon ticks; cooking flag unchanged. Idempotent.
+## Pause stops cook loop, spoon ticks, and in-flight spoon/hunger short cues. Idempotent.
 func set_paused(paused: bool) -> void:
 	if _paused == paused:
 		return
 	_paused = paused
 	if paused:
 		_spoon_accum = 0.0
+		_stop_leaf_cue(CUE_SPOON)
+		_stop_leaf_cue(CUE_HUNGER)
 	_apply()
 
 
 ## Missed-meal hunger short cue. Leader calls when real hunger state fires.
+## Refuses while paused; does not unlock audio (host/demo must use a real gesture).
 func play_hunger() -> bool:
+	if _paused:
+		return false
 	ensure_registered()
 	var now := Time.get_ticks_msec() * 0.001
 	if now - _last_hunger_at < HUNGER_MIN_GAP:
 		return false
 	var audio: Node = _director()
-	audio.call("unlock_audio")
 	var ok: bool = bool(audio.call("play_cue", CUE_HUNGER))
 	if ok:
 		_last_hunger_at = now
@@ -87,12 +92,12 @@ func play_hunger() -> bool:
 
 
 ## Optional spoon tap (also used by the cooking timer). Public for suites.
+## Does not unlock audio; host/demo owns the real gesture unlock.
 func play_spoon_now() -> bool:
 	if not _cooking or _paused:
 		return false
 	ensure_registered()
 	var audio: Node = _director()
-	audio.call("unlock_audio")
 	var ok: bool = bool(audio.call("play_cue", CUE_SPOON))
 	if ok:
 		spoon_play_count += 1
@@ -176,6 +181,12 @@ func _load_cook_stream() -> AudioStream:
 	if ProceduralSfx == null:
 		return null
 	return ProceduralSfx.tone(72.0, 0.4, 0.12, 88.0)
+
+
+func _stop_leaf_cue(cue_id: String) -> void:
+	var audio: Node = _director()
+	if audio != null and audio.has_method("stop_cue"):
+		audio.call("stop_cue", cue_id)
 
 
 # --script suites compile before autoloads; never write AudioDirector as a bare name.
