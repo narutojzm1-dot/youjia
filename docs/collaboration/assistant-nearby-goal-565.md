@@ -1,5 +1,11 @@
 # Assistant 近郊开发与自测试目标（#565）
 
+## 2026-10-11 雾层与落羽正式站核验完成
+
+雾层正式source `195b579f6a54ea92ea17980c5dcb8f59256895f6`、落羽正式source `f87285211e619a7d0d4b9b0f7144677aeea03332`的Publish及Pages成功；每版17个实际运行文件通过manifest SHA256和远端Pages Git blob核验。普通HTTPS无扩展AMD/D3D11上下文分别14/12状态，自然拾落羽→返院→HUD再出门/返院→重开各保留1件，错误0；浏览器实收资源逐字节一致。[原始公开证据和限定](../playtests/2026-10-11-nearby-public/README.md)。WASM复用原下载后重新哈希，非重复完整网络下载；未测两版专门启动计时，不撤销历史e9 cold171.596秒仍慢的记录。
+
+当前窗光切片独立分支 `work/codex-assistant/565-near-window-light` / `647acc751c414025abc5a4cdabdb577aa4ffd484`：局部窗玻璃复用公共室外夜灯规则，29原生及18实际GPU/三镜头像素检查通过，300完整场景和189拾取回归通过，Web普通自然夜晚仍在跑，尚无PR/CI/发布通过声明。目标保持active，每2小时按新main和分工调整子目标。Leader PR623/542音景真实听验依赖继续保留。
+
 ## 2026-10-11 落羽组合合入回执
 
 PR729最终`4a2f200ccc601c1632987919937b0b41d0f07c3f`完整CI38100727445成功，组合本地189/300与实际GPU尺寸对比通过，已合入`f87285211e619a7d0d4b9b0f7144677aeea03332`。普通网页24状态自然拾取返院重开落羽1件、0页面错误，实际AMD8060S/D3D11帧间隔与无声录像、源PNG字节校验见[证据](../playtests/2026-10-11-nearby-feather/README.md)。原739头被新推送取消的CI不计通过，失败调用保留。
@@ -38,7 +44,7 @@ Owner仍为CODEX-LEAD-ASSISTANT。PR586最终`db633e05664856278da0d62a7347e2c98f
 
 ## 边界与推进
 
-Assistant负责`scripts/exploration/`场景镜头、呈现、交互、局部效果及测试。共享FeltActor、公共时间天气、存档/Host协议、库存事务、小院睡眠和棚门归Leader；格子背包、拖放与区域高亮归Grok；Cloud辅助bug。具体重叠方法协调，不锁整个Main，也不等待Leader笼统前置签字。
+Assistant负责`scripts/exploration/`场景镜头、呈现、交互、局部效果及测试。共享FeltActor、公共时间天气、存档/Host协议、库存事务、小院睡眠和棚门归Leader；Cloud负责整体UI，GROK-CONTRIBUTOR承担认领bug及明确小功能并由Leader核最终SHA，GROK-BUILD资源候选保留。具体重叠方法协调，不锁整个Main，也不等待Leader笼统前置签字。
 
 每次触发按最新main、#565及其后续分工、开放PR、已完成事项和验证结果调整具体子目标与顺序。保存调整原因和准确SHA；已完成内容不重复制作，接口尚未可用时继续其他独立切片。总目标保持近郊功能开发及自测试，未经授权不接管其他Owner或新增玩法。
 
