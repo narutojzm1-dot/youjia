@@ -42,29 +42,31 @@ func run() -> void:
 	check(bool(sfx.play_page()), "page cue plays after gap")
 
 	# game.pause stays empty so set_game_paused does not invent a second UI voice.
-	var pause_stream = AudioDirector.get("_streams").get("game.pause")
+	var pause_stream: Variant = AudioDirector.get("_streams").get("game.pause")
 	check(pause_stream == null, "game.pause left unregistered to avoid double-fire")
 
 	# Main wiring smoke: holiday start mounts helper and hooks do not throw.
-	var main = load("res://scenes/main.tscn").instantiate()
+	var main: Node = load("res://scenes/main.tscn").instantiate()
 	root.add_child(main)
 	for _i in 3:
 		await process_frame
 	await main._start_holiday()
 	main.set_process(false)
-	check(main._ui_sfx != null, "Main mounts UiInteractionAudio")
-	main._ui_sfx.ensure_registered()
+	check(main.get("_ui_sfx") != null, "Main mounts UiInteractionAudio")
+	var mounted_sfx: Variant = main.get("_ui_sfx")
+	if mounted_sfx != null:
+		mounted_sfx.ensure_registered()
 	# Successful album flip path: rebuild with two entries then flip.
-	main._album_entries = PackedStringArray(["a", "b", "c", "d"])
-	main._album_index = 0
-	main._album_two_pages = true
-	var before := main._album_index
-	main._flip_album(1)
-	check(main._album_index != before, "album flip advances index")
+	main.set("_album_entries", PackedStringArray(["a", "b", "c", "d"]))
+	main.set("_album_index", 0)
+	main.set("_album_two_pages", true)
+	var before: int = int(main.get("_album_index"))
+	main.call("_flip_album", 1)
+	check(int(main.get("_album_index")) != before, "album flip advances index")
 	# Boundary flip does not advance and must not require a sound.
-	var at_end := main._album_index
-	main._flip_album(1)
-	check(main._album_index == at_end, "album flip at end is no-op")
+	var at_end: int = int(main.get("_album_index"))
+	main.call("_flip_album", 1)
+	check(int(main.get("_album_index")) == at_end, "album flip at end is no-op")
 
 	main.queue_free()
 	await process_frame
