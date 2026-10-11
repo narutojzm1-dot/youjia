@@ -91,7 +91,28 @@ func run() -> void:
 				scroll._refresh()
 				main._sync_regional_clock()
 				_check_top(tag + " looking at " + stop_id, scroll)
+				_check_buttons(tag + " looking at " + stop_id, scroll)
 				scroll.end_observe()
+			# 「停下看看」走到每处都在屏幕内、字装得下；村口那句也一样
+			for stop_id: String in ["gate", "brook", "shade", "slope"]:
+				scroll.place_at(stop_id)
+				scroll._refresh()
+				_check_buttons(tag + " near " + stop_id, scroll)
+			for key: String in ["exploration.action.village", "exploration.action.near_path"]:
+				scroll._look_button.text = i18n.t(key)
+				scroll._layout(main.size, main.size.x < 700.0)
+				_check_buttons(tag + " look '%s'" % key, scroll)
+			# 底排「带上 / 换成 / 放回 / 带回水塘」：每种说法配最长的东西名，都不出屏、不压篮子
+			scroll.place_at("brook")
+			scroll.observe("brook")
+			scroll._refresh()
+			for text: String in _pick_texts(i18n):
+				scroll._pick_button.visible = true
+				scroll._pick_button.text = text
+				scroll._layout(main.size, main.size.x < 700.0)
+				_check_buttons(tag + " pick '%s'" % text, scroll)
+				_check_top(tag + " pick '%s'" % text, scroll)
+			scroll.end_observe()
 	i18n.set_locale("zh-CN")
 	_finish()
 
@@ -153,3 +174,35 @@ func _basket_rect(scroll) -> Rect2:
 	var basket: Control = scroll._basket
 	var backing: Rect2 = scroll.basket_label_rect(basket.get_theme_default_font(), scroll.basket_text(), scroll._basket_label_width)
 	return Rect2(basket.global_position + Vector2(6, 22), Vector2(70, 36)).merge(Rect2(basket.global_position + backing.position, backing.size))
+
+
+func _pick_texts(i18n) -> Array[String]:
+	var texts: Array[String] = [i18n.t("turtle.adopt"), i18n.t("beibei.adopt"), i18n.t("beibei.retry")]
+	for key: String in ["exploration.action.take", "exploration.action.swap", "exploration.action.release"]:
+		for find_id: String in ExplorationRoutes.FINDS:
+			texts.append(i18n.t(key, {"item": i18n.t(ExplorationRoutes.find_name_key(find_id))}))
+	return texts
+
+
+func _check_buttons(tag: String, scroll) -> void:
+	var screen := Rect2(Vector2.ZERO, main.size)
+	var shown: Array[Button] = []
+	for button: Button in [scroll._look_button, scroll._pick_button, scroll._go_button]:
+		if not button.visible: continue
+		shown.append(button)
+		var rect := button.get_global_rect()
+		check(screen.encloses(rect), tag + " '%s' on screen %s" % [button.text, rect])
+		var paper := button.get_theme_stylebox("normal")
+		var inner := button.size.x - paper.get_margin(SIDE_LEFT) - paper.get_margin(SIDE_RIGHT)
+		var font := button.get_theme_font("font")
+		var font_size := button.get_theme_font_size("font_size")
+		var one_line := font.get_string_size(button.text, HORIZONTAL_ALIGNMENT_LEFT, -1, font_size).x
+		if one_line > inner:
+			check(button.autowrap_mode != TextServer.AUTOWRAP_OFF, tag + " '%s' wraps instead of stretching" % button.text)
+			var text_h := font.get_multiline_string_size(button.text, HORIZONTAL_ALIGNMENT_CENTER, inner, font_size).y
+			check(text_h + paper.get_margin(SIDE_TOP) + paper.get_margin(SIDE_BOTTOM) <= button.size.y + 0.5, tag + " '%s' is tall enough for its lines" % button.text)
+		check(button.size.y >= 46.0, tag + " '%s' keeps a full touch height" % button.text)
+		check(not rect.intersects(_basket_rect(scroll)), tag + " '%s' clear of the basket" % button.text)
+	if scroll._pick_button.visible and scroll._go_button.visible:
+		check(not scroll._pick_button.get_global_rect().intersects(scroll._go_button.get_global_rect()), tag + " pick and walk-on buttons sit apart")
+		check(is_equal_approx(scroll._pick_button.size.y, scroll._go_button.size.y), tag + " bottom buttons share one height")
