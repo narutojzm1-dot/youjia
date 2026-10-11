@@ -14,7 +14,11 @@ func check(ok: bool, label: String) -> void:
 
 func run() -> void:
 	var isolated := OS.get_environment("XDG_DATA_HOME")
-	if not isolated.begins_with("/tmp/youjia-daily-check.") or not OS.get_user_data_dir().begins_with(isolated + "/"):
+	var native := OS.get_environment("YOUJIA_TEST_ISOLATED_DATA").replace("\\", "/").to_lower()
+	var user_dir := OS.get_user_data_dir().replace("\\", "/").to_lower()
+	var daily_safe := isolated.begins_with("/tmp/youjia-daily-check.") and user_dir.begins_with(isolated.to_lower() + "/")
+	var native_safe := not native.is_empty() and user_dir.begins_with(native.trim_suffix("/") + "/")
+	if not daily_safe and not native_safe:
 		print("REFUSED: disposable daily XDG directory required")
 		quit(2)
 		return
@@ -24,8 +28,8 @@ func run() -> void:
 		{"method":"set_locale", "args":["en"], "expected":{"locale":"en"}},
 		{"method":"set_tutorial_completed", "args":[true], "expected":{"tutorial_version":1}},
 		{"method":"set_album", "args":[PackedStringArray(["photo-a", "photo-a", "photo-b"])], "expected":{"album":["photo-a", "photo-b"]}},
-		{"method":"set_holiday_progress", "args":[7, 12.5], "expected":{"holiday_day":7,"holiday_day_elapsed":12.5}},
-		{"method":"set_yard_progress", "args":[7,12.5,2,5,6], "expected":{"holiday_day":7,"holiday_day_elapsed":12.5,"plant_state":2,"plant_day_planted":5,"plant_watered_day":6}},
+		{"method":"set_holiday_progress", "args":[7, 12.5], "expected":{"holiday_day":7,"holiday_day_elapsed":12.5,"resident_rest":{"schema":1,"day":7,"cause":"awake"}}},
+		{"method":"set_yard_progress", "args":[7,12.5,2,5,6], "expected":{"holiday_day":7,"holiday_day_elapsed":12.5,"plant_state":2,"plant_day_planted":5,"plant_watered_day":6,"resident_rest":{"schema":1,"day":7,"cause":"awake"}}},
 		{"method":"set_plant_state", "args":[2,5,6], "expected":{"plant_state":2,"plant_day_planted":5,"plant_watered_day":6}},
 		{"method":"set_first_fish_caught", "args":[], "expected":{"first_fish_caught":true}},
 		{"method":"set_animal_relationship_memory", "args":[{memory_key:true}], "expected":{"animal_relationship_memory":{memory_key:true}}},
@@ -62,6 +66,8 @@ func run() -> void:
 		store._load()
 		var known_expected: Dictionary = store.SaveDataCodec.project(expected)
 		check(store.SaveDataCodec.project(store._data) == known_expected, name + ": accepted gameplay values survive real reload")
+		if operation.expected.has("resident_rest"):
+			check(JSON.parse_string(JSON.stringify(store._data.get("resident_rest"))) == JSON.parse_string(JSON.stringify(operation.expected.resident_rest)), name + ": rest provenance survives real reload")
 		check(store._data.get("shared_owner_data") == before.shared_owner_data, name + ": unrelated owner fields survive authoritative reload")
 	print("save candidate: %d checks, %d failures" % [checks, failures.size()])
 	quit(0 if failures.is_empty() else 1)

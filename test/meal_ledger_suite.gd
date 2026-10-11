@@ -89,9 +89,9 @@ func run() -> void:
 	store.request_patch("meal-fixture", original)
 	check(await store.flush_pending(), "native fixture persisted")
 	var cost := {"wheat": 1}
-	var one: String = store.request_meal_completion(0,0,1,"breakfast",cost,false)
+	var one: String = store.request_meal_completion(0,0,1,"breakfast",cost)
 	cost.wheat = 9
-	store.request_meal_completion(0,0,1,"breakfast",{"wheat":1},false)
+	store.request_meal_completion(0,0,1,"breakfast",{"wheat":1})
 	check(not one.is_empty() and store.get_meal_ledger().receipts.is_empty(), "native acceptance is not confirmation")
 	check(await store.flush_pending(), "native duplicate queue drained")
 	check(store.get_yard_inventory().wheat == 11 and store.get_meal_ledger().receipts.size() == 1, "captured cost and duplicate callback cannot double debit")
@@ -99,7 +99,7 @@ func run() -> void:
 	check(disk.yard_inventory.wheat == 11 and disk.meal_ledger.receipts[0].earned == 1, "real file contains cost and entitlement")
 	store._load()
 	check(store.get_meal_ledger().receipts.size() == 1 and store.get_yard_inventory().wheat == 11, "native reopen preserves receipt and cost")
-	store.request_meal_completion(1,1,1,"breakfast",{"wheat":1},false)
+	store.request_meal_completion(1,1,1,"breakfast",{"wheat":1})
 	check(await store.flush_pending(), "reopened replay rejected without a write")
 	check(store.get_meal_ledger().receipts.size() == 1 and store.get_yard_inventory().wheat == 11, "reopen cannot farm meal grants")
 	for failure in failures: push_error(failure)
