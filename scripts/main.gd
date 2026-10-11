@@ -2707,7 +2707,9 @@ func _fit_album_frame() -> void:
 	var two_rows := _album_buttons_need(book_width)
 	var back_row := low if two_rows else controls
 	if _album_back_button.get_parent() != back_row:
+		var had_focus := _album_back_button.has_focus()
 		_album_back_button.reparent(back_row, false)
+		if had_focus: _album_back_button.grab_focus()
 	low.visible = two_rows
 	if two_rows:
 		book_height -= button_height + separation

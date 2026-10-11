@@ -70,6 +70,15 @@ func scenario(moments: Dictionary, description: String) -> void:
 			for frame in range(3): await process_frame
 			inspect_pages(main, "%s %s empty" % [locale, dims])
 			main._album_entries = PackedStringArray(store._data.album)
+	# 键盘焦点停在「合上」时转屏跨过分行宽度，焦点跟着按钮走，不丢
+	for dims in [Vector2i(390, 844), Vector2i(280, 653), Vector2i(390, 844)]:
+		main._album_back_button.grab_focus()
+		root.size = dims
+		await process_frame
+		main._layout()
+		await process_frame
+		check(main._album_back_button.has_focus(), "close keeps keyboard focus after resizing to %s" % dims)
+		check(main._album_controls_low.visible == (dims.x < 336), "close sits on its own row only when one row cannot hold all three at %s" % dims)
 	check(store._data.album == before.album and store._data.photo_moments == before.photo_moments, "resizing, languages, legacy and empty pages preserve historical photographs")
 	main.queue_free()
 	await process_frame
