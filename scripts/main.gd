@@ -124,6 +124,8 @@ var _album_spread: HBoxContainer
 var _album_previous_button: Button
 var _album_next_button: Button
 var _album_back_button: Button
+## 窄竖屏一行放不下三枚翻页按钮时，「合上」移到这第二行
+var _album_controls_low: HBoxContainer
 var _album_entries := PackedStringArray()
 var _album_index := 0
 var _album_two_pages := true
@@ -1125,6 +1127,9 @@ func _build_album_screen() -> void:
 	_album_back_button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	_album_back_button.pressed.connect(_hide_album)
 	controls.add_child(_album_back_button)
+	_album_controls_low = HBoxContainer.new()
+	_album_controls_low.visible = false
+	box.add_child(_album_controls_low)
 
 
 func _build_notice() -> void:
@@ -2697,11 +2702,35 @@ func _fit_album_frame() -> void:
 		# Panel padding + title line + two gaps + buttons + 4 px slack.
 		var title_height := ceilf(_album_title.get_theme_font("font").get_height(title_size))
 		book_height = floorf(album_height - padding * 2.0 - title_height - separation * 2.0 - button_height - 4.0)
+	# 280 宽竖屏三枚按钮的字宽加间距超过书宽，整张手帐会被撑出屏幕；放不下就把「合上」移到第二行
+	var controls := _album_previous_button.get_parent() as HBoxContainer
+	var low := _album_controls_low
+	var two_rows := _album_buttons_need(book_width)
+	var back_row := low if two_rows else controls
+	if _album_back_button.get_parent() != back_row:
+		var had_focus := _album_back_button.has_focus()
+		_album_back_button.reparent(back_row, false)
+		if had_focus: _album_back_button.grab_focus()
+	low.visible = two_rows
+	if two_rows:
+		book_height -= button_height + separation
+		low.custom_minimum_size = Vector2(book_width, button_height)
 	_album_spread.custom_minimum_size = Vector2(book_width, book_height)
-	_album_previous_button.get_parent().custom_minimum_size = Vector2(book_width, button_height)
+	controls.custom_minimum_size = Vector2(book_width, button_height)
 	_album_page_size = Vector2((book_width - 10.0) * 0.5 if _album_two_pages else book_width, book_height)
 	if _album_screen.visible or was_two_pages != _album_two_pages:
 		_render_album_pages()
+
+
+## 三枚翻页按钮按当前语言的字宽排一行要多宽；超过书宽就要分两行
+func _album_buttons_need(book_width: float) -> bool:
+	var total := 8.0 * 2.0
+	for pair: Array in [[_album_previous_button, "album.previous"], [_album_next_button, "album.next"], [_album_back_button, "album.back"]]:
+		var button: Button = pair[0]
+		var paper := button.get_theme_stylebox("normal")
+		total += button.get_theme_font("font").get_string_size(I18n.t(pair[1]), HORIZONTAL_ALIGNMENT_LEFT, -1, button.get_theme_font_size("font_size")).x
+		total += paper.get_margin(SIDE_LEFT) + paper.get_margin(SIDE_RIGHT)
+	return total > book_width
 
 
 ## 底部按钮排两行（三枚小按钮在上、行动按钮整行在下）只给竖屏和窄屏。

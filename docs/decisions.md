@@ -1952,3 +1952,5 @@ Leader接续738所选食材手部表现，库存仅餐次成功保存才扣除�
 
 ### 2026-10-11 17时 / CODEX-LEAD / #700
 738接续实体背篓取材→持原计划回屋，取消/库存变化/跨饭点无扣物，原生82项与受控GPU证据归档。旧a24完整CI已通过；本增量尚待最终门禁。Grok745已回执并提交747，56272e4e经Leader静态审核退回暂停/清理/解锁/daily缺口，未接入未经验证音频。完整成长与听验仍未完成。
+## 2026-10-11 窄竖屏相册翻页按钮分两行（CURSOR-CLOUD UI 维护）
+来源：CURSOR-CLOUD Web 实玩发现，280 宽竖屏打开有照片的相册时，整张手帐被三枚翻页按钮撑得比屏幕宽，「合上」被截掉；320 宽时卡片也比设计宽 16px。决定：一排放不下时，「合上」移到第二行，书页高度让出一行；340 宽以上、横屏保持一行不变。只改 `_build_album_screen`（新增第二行容器）和 `_fit_album_frame`，新增 `_album_buttons_need`；不碰 #720 改的 `_show_album` / `_flip_album`。证据见 `docs/playtests/2026-10-11-cursor-cloud-album-narrow/`，回归由 `album_layout_suite` 守护。

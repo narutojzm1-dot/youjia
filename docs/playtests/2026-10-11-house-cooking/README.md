@@ -63,3 +63,10 @@ Leader接续738：用原可走路线先到实体背篓APPROACH(335,522)，在背
 原生house_cooking82项通过，包括真正走到背篓、取材后原计划不重抽、手动走动取消、背篓前取消、途中库存改动、拿好材料后跨饭点取消与原有真实保存/显式睡眠对照。physical_basket与HUD72通过，先前同实现sleep154/food75通过。GPU basket-take/open.jpg与basket-gpu.log来自真实Main受控小米夹具，明确非普通网页或专用取物动画验收；原画脚点、食材手锚与屋门可见。普通Web新路线与最终CI另验，旧a24 CI38120865825 success不代替新SHA。
 
 Grok已回执745并交747候选56272e4e20c4764bdb17a063dd7c4ce77674b8b4。Leader静态审核退回暂停饥饿/本叶子短音清理、自动伪手势解锁及daily未接套件（5482683568）；共享GitHub账号拒绝REQUEST_CHANGES，COMMENT明确不通过，不冒充运行或听验。叶子文件保留Grok Owner，Leader独立完成本取材切片。
+
+
+## 本轮普通网页取材、用餐和重开验证
+
+受测运行代码为0937d166e44ea753113618cf1be32010a97d238b（与本地6f08dcc15a1f04b01404919fabbc81784357fdf0同树），localhost:8769、1280×720，复用浏览器旧第3天档，未注入或清空游戏状态。正常垂钓获得小鱼1，第四天8:57出现自主回屋提示并走向背篓，随后房内“正在做饭”，10点角色从一楼回院。背篓小鱼1→0，麦粒2/玉米2不变；正常刷新、从标题重进后仍为0/2/2，console error/warn为空。
+
+web-stock-before/after/reopened.jpg分别为上述真实库存；web-basket-route.jpg实际截到房内做饭阶段，文件名不代表捕获了背篓取材瞬间。此次未及时截到普通Web手上鱼、阳台刷牙分支或清晰烟雾，不据此宣称三者视觉验收。受控basket-take/open.jpg继续单独标记。本轮Web不包含其后main的相册布局合并；该合并的针对性回归及最终CI另记。
