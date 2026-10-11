@@ -4,20 +4,21 @@ extends Node2D
 ## Leaf presentation only. Leader supplies real cooking start/end + roof anchor.
 ## Does not infer mealtime, does not touch house door / sleep / brush directors.
 
-## Default near painted cottage roof above the house_door hotspot (YardWorld 1280×720).
-## Override with set_chimney_anchor once Leader publishes the authentic roof point.
-const DEFAULT_CHIMNEY_ANCHOR := Vector2(292.0, 218.0)
+## 晴天院子原画烟囱帽顶（世界 1280×720，背景 1920×1080 按 2/3 映射）。
+## Leader 公布正式屋顶点后仍用 set_chimney_anchor 覆盖，本默认只给叶子和隔离演示。
+const DEFAULT_CHIMNEY_ANCHOR := Vector2(286.0, 122.0)
 
-## Soft warm gray wash — light watercolor puff, not a screen fog.
-const SMOKE_DAY := Color(0.82, 0.78, 0.72, 0.30)
-const SMOKE_NIGHT := Color(0.68, 0.66, 0.64, 0.22)
+## 比天空略深的暖灰，短时间做饭能在淡蓝天上读出一缕；不是铺满屋顶的雾。
+## 夜色 r 仍低于白天，套件用这个差值确认渐变被重刷。
+const SMOKE_DAY := Color(0.55, 0.52, 0.48, 0.72)
+const SMOKE_NIGHT := Color(0.46, 0.48, 0.52, 0.64)
 
 ## MotionPreference 写入的真实键。隔离套件里不能把自动加载名写成裸标识符。
 const REDUCED_MOTION_ID := "ui.reduced_motion"
 
-const PUFF_AMOUNT := 8
-const PUFF_LIFETIME := 3.2
-const PUFF_SIZE := 48
+const PUFF_AMOUNT := 14
+const PUFF_LIFETIME := 2.8
+const PUFF_SIZE := 64
 
 var _emitter: CPUParticles2D
 var _cooking := false
@@ -144,16 +145,16 @@ func _ensure_emitter() -> void:
 	_emitter.preprocess = 0.0
 	_emitter.amount = PUFF_AMOUNT
 	_emitter.emission_shape = CPUParticles2D.EMISSION_SHAPE_SPHERE
-	_emitter.emission_sphere_radius = 4.0
-	_emitter.direction = Vector2(0.0, -1.0)
-	_emitter.spread = 16.0
-	_emitter.gravity = Vector2(6.0, -16.0)
-	_emitter.initial_velocity_min = 10.0
-	_emitter.initial_velocity_max = 22.0
+	_emitter.emission_sphere_radius = 3.5
+	_emitter.direction = Vector2(0.08, -1.0).normalized()
+	_emitter.spread = 12.0
+	_emitter.gravity = Vector2(3.0, -10.0)
+	_emitter.initial_velocity_min = 18.0
+	_emitter.initial_velocity_max = 34.0
 	_emitter.angular_velocity_min = -8.0
 	_emitter.angular_velocity_max = 8.0
-	_emitter.scale_amount_min = 0.28
-	_emitter.scale_amount_max = 0.72
+	_emitter.scale_amount_min = 0.55
+	_emitter.scale_amount_max = 1.0
 	var grow := _grow_curve()
 	_emitter.scale_curve_x = grow
 	_emitter.scale_curve_y = grow
@@ -198,11 +199,11 @@ func _fade_ramp(wash: Color) -> Gradient:
 	# 寿命颜色：刚出烟囱几乎看不见，中段是淡水粉，结尾散尽。
 	## 停发本身不负责变淡，渐变才让一缕烟自己消失。
 	var ramp := Gradient.new()
-	ramp.offsets = PackedFloat32Array([0.0, 0.12, 0.42, 1.0])
+	ramp.offsets = PackedFloat32Array([0.0, 0.12, 0.50, 1.0])
 	ramp.colors = PackedColorArray([
 		Color(wash.r, wash.g, wash.b, 0.0),
 		Color(wash.r, wash.g, wash.b, wash.a),
-		Color(wash.r, wash.g, wash.b, wash.a * 0.42),
+		Color(wash.r, wash.g, wash.b, wash.a * 0.55),
 		Color(wash.r, wash.g, wash.b, 0.0),
 	])
 	return ramp
@@ -212,8 +213,8 @@ func _grow_curve() -> Curve:
 	var curve := Curve.new()
 	curve.min_value = 0.0
 	curve.max_value = 1.6
-	curve.add_point(Vector2(0.0, 0.4))
-	curve.add_point(Vector2(1.0, 1.2))
+	curve.add_point(Vector2(0.0, 0.55))
+	curve.add_point(Vector2(1.0, 1.15))
 	return curve
 
 
@@ -230,8 +231,8 @@ func _soft_puff_texture() -> ImageTexture:
 			var remain := 1.0 - Vector2(x, y).distance_to(center) / radius
 			if remain <= 0.0:
 				continue
+			# 一次 smoothstep：中心仍是实的，身体比再平方后的针尖更看得清，四角保持全透明。
 			var soft := remain * remain * (3.0 - 2.0 * remain)
-			soft = soft * soft
 			image.set_pixel(x, y, Color(1, 1, 1, soft))
 	_puff_texture = ImageTexture.create_from_image(image)
 	return _puff_texture

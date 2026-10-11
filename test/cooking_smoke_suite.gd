@@ -63,6 +63,7 @@ func run() -> void:
 	await process_frame
 
 	check(smoke.position == Smoke.DEFAULT_CHIMNEY_ANCHOR or smoke.position != Vector2.ZERO, "default chimney anchor applied")
+	check(smoke.position.y < 180.0 and smoke.position.x > 220.0 and smoke.position.x < 340.0, "default anchor sits on the cottage roof band")
 	check(smoke.get_child_count() == 1, "exactly one emitter child after ready")
 	check(not smoke.is_cooking() and not smoke.is_emitting(), "starts idle")
 

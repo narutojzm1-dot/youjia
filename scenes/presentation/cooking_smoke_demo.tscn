@@ -1,10 +1,19 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene load_steps=4 format=3]
 
 [ext_resource type="Script" path="res://scripts/presentation/cooking_smoke_demo.gd" id="1_demo"]
 [ext_resource type="Script" path="res://scripts/presentation/cooking_smoke.gd" id="2_smoke"]
+[ext_resource type="Texture2D" path="res://assets/holiday/environment/yard_sunny.png" id="3_yard"]
 
 [node name="CookingSmokeDemo" type="Node2D"]
 script = ExtResource("1_demo")
 
+[node name="Backdrop" type="Sprite2D" parent="."]
+centered = false
+z_index = -1
+texture = ExtResource("3_yard")
+
 [node name="CookingSmoke" type="Node2D" parent="."]
 script = ExtResource("2_smoke")
+
+[node name="FrameCamera" type="Camera2D" parent="."]
+enabled = false
