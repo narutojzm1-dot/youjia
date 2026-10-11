@@ -13,3 +13,12 @@ Owner CODEX-LEAD。基于731候选db4704afe8100f56a5e2df225cfb69e5548e13ec，保
 RTX4070/OpenGL实际Main渲染cook/balcony/out三阶段，JPEG为直接引擎截图。截图来自受控8点小米用例，主界面在截图时刷新；不是网页、手机或自然玩到饭点的证据。首轮截在刚进阳台/刚出门，人物尚未显现，已调整为刷牙动作和出门中段再截，未拿早期帧作动作验收。
 
 仍未完成：做饭声/肚子叫与真实听验、拿食材的手持表现、头顶饥饿泡、普通Web往返/刷新和手机做饭体验、磨盘/面食/产蛋采奶初期供应。未实现AP花费/结转、经验或自主世界劳动。早期面食方向保留，小麦未被当成直接可吃；奇怪鱼不入食谱。候选保持Draft，满足这些适用条件前不称整套玩法完成。
+
+
+## CI follow-up / integration with Assistant #737
+
+CI38108336924 on4238830 failed the old UI interaction fixture: fixed tap(780,480) hit the moving llama (759.46,525.38), releasing its rope. Six failures cascaded from that mistaken input. Local reproduction retained in ui-original-failure.log. The corrected fixture resolves an actual empty walkable point before real viewport touch, explicitly checks movement, and retains the lead/release assertions; it does not disable cooking or change gameplay to pass tests.
+
+Integrated main3caeb1fe6082da0cf0db00e3bea20dc47eb50edf (Assistant #737) preserving original commits. Completion-table conflict retains both cooking suites and HUD pointer suite. Integrated native checks: cooking38, UI67, HUD pointer72 passed. A mistyped hud_mouse_input_suite invocation failed because no such file exists; the correct hud_pointer_input_suite72 then passed.
+
+Ordinary local Web export of4238830: release export succeeded; CUA browser entered title and yard1280x720 and opened/closed the actual grid basket, with no console errors at that check. Fresh save contained wheat2/corn2, no millet/fish; no ordinary browser meal completion has been demonstrated. Native meal fixtures are not a substitute for the still-missing ordinary food-supply/cooking/phone/audio acceptance.
