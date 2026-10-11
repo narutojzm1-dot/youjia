@@ -574,6 +574,11 @@ func _input(event: InputEvent) -> void:
 		and event is InputEventMouseButton
 		and (event as InputEventMouseButton).pressed
 		and (event as InputEventMouseButton).button_index == MOUSE_BUTTON_LEFT)
+	# Web may deliver the synthesized mouse before its real touch. In the
+	# yard, the touch owns both HUD and world actions; do not emit twice.
+	if is_mouse_press and event.device == InputEvent.DEVICE_ID_EMULATION:
+		get_viewport().set_input_as_handled()
+		return
 	if not is_touch_press and not is_mouse_press:
 		return
 	var event_pos: Vector2 = (event as InputEventMouseButton).position if is_mouse_press else (event as InputEventScreenTouch).position
@@ -591,7 +596,7 @@ func _input(event: InputEvent) -> void:
 	# get_global_rect() 在 web 导出的 CanvasLayer 中比 get_global_transform_with_canvas() 更可靠
 	for button: Button in buttons:
 		if button.is_visible_in_tree() and not button.disabled and button.get_global_rect().has_point(event_pos):
-			_last_touch_ms = Time.get_ticks_msec()
+			if is_touch_press: _last_touch_ms = Time.get_ticks_msec()
 			# An emulated mouse press can already hold the native GUI button.
 			# Let its release complete the pause/modal action once. Hiding the
 			# overlay from a second manual emission can interrupt GUI visibility.
@@ -602,7 +607,7 @@ func _input(event: InputEvent) -> void:
 	# 手持快捷栏触屏命中（与背篓格子同思路；不依赖 GUI 路由）
 	if _in_game_hud and _hold_hotbar != null and _hold_hotbar.visible:
 		if _hold_hotbar.press_at(event_pos):
-			_last_touch_ms = Time.get_ticks_msec()
+			if is_touch_press: _last_touch_ms = Time.get_ticks_msec()
 			get_viewport().set_input_as_handled()
 			return
 	# 触屏点到空白处：更新时间戳，交给 _unhandled_input 处理世界点击
