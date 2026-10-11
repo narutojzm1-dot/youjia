@@ -2,7 +2,8 @@ extends SceneTree
 
 # #350: isolated presentation fixture derived from an actual public photograph.
 # No save mutation, world stepping or browser injection is needed for geometry.
-const VIEWS := [Vector2i(390, 844), Vector2i(844, 390), Vector2i(1280, 720), Vector2i(360, 640), Vector2i(700, 400), Vector2i(700, 460), Vector2i(720, 460), Vector2i(700, 500)]
+const VIEWS := [Vector2i(390, 844), Vector2i(844, 390), Vector2i(1280, 720), Vector2i(360, 640), Vector2i(700, 400), Vector2i(700, 460), Vector2i(720, 460), Vector2i(700, 500),
+	Vector2i(320, 568), Vector2i(280, 653)]
 var checks := 0
 var failures: Array[String] = []
 
@@ -82,6 +83,7 @@ func inspect_pages(main: Control, tag: String) -> void:
 		var navigation: Array[Control] = [main._album_previous_button, main._album_next_button, main._album_back_button]
 		for button in navigation:
 			check(not bounds.grow(-0.5).intersects(button.get_global_rect()), tag + " page clear of navigation")
+		_check_frame(main, tag)
 		var texts: Array[Label] = []
 		var photos: Array[Control] = []
 		for node in descendants(page):
@@ -118,3 +120,19 @@ func inspect_pages(main: Control, tag: String) -> void:
 			for text in texts:
 				if text.text == expected: found = true
 			check(found, tag + " full original photograph date and caption remain present")
+
+## 窄竖屏（280、320 宽）：整张手帐和三枚翻页按钮都留在屏幕里，按钮字不被挤出按钮，按钮互不重叠
+func _check_frame(main: Control, tag: String) -> void:
+	var screen := Rect2(Vector2.ZERO, main.size)
+	check(screen.encloses(main._album_panel.get_global_rect()), tag + " album frame stays on screen %s" % main._album_panel.get_global_rect())
+	var navigation: Array[Button] = [main._album_previous_button, main._album_next_button, main._album_back_button]
+	for button in navigation:
+		var rect := button.get_global_rect()
+		check(main._album_panel.get_global_rect().grow(0.5).encloses(rect), tag + " '%s' stays inside the album frame" % button.text)
+		var paper := button.get_theme_stylebox("normal")
+		var need := button.get_theme_font("font").get_string_size(button.text, HORIZONTAL_ALIGNMENT_LEFT, -1, button.get_theme_font_size("font_size")).x + paper.get_margin(SIDE_LEFT) + paper.get_margin(SIDE_RIGHT)
+		check(need <= button.size.x + 0.5, tag + " '%s' label fits its button" % button.text)
+		check(button.size.y >= 40.0, tag + " '%s' keeps a touch height" % button.text)
+		for other in navigation:
+			if other != button:
+				check(not rect.intersects(other.get_global_rect()), tag + " '%s' clear of '%s'" % [button.text, other.text])

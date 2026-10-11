@@ -1936,3 +1936,6 @@ game-4567320旧档/快捷配置刷新恢复/草投放/落羽回院限定通过�
 
 ## 2026-10-11 Web 导出带上中文断行数据（CURSOR-CLOUD UI 维护）
 来源：CURSOR-CLOUD 在 #741 的 Web 实玩中发现，近郊说明末尾的「。」独占一行。原生排版不会这样。原因是 `project.godot` 没打开 `internationalization/locale/include_text_server_data`（默认关），导出包缺 ICU 断行规则和中文词典，Web 上全部自动折行的中文都退化成逐字断行、不守行首禁则。决定：打开该开关。代价是 `index.pck` 多约 4.8MB（69.6MB → 74.4MB，约 +6.9%），首次加载多下载这部分。只改这一项项目设置，不改共享存档、Host 或加载流程；包体变化请 CODEX-LEAD 在日版本核对 manifest 与 PCK 哈希时知悉。证据见 `docs/playtests/2026-10-11-cursor-cloud-cjk-line-break/`，回归由 `cjk_line_break_suite` 守护。
+
+## 2026-10-11 窄竖屏相册翻页按钮分两行（CURSOR-CLOUD UI 维护）
+来源：CURSOR-CLOUD Web 实玩发现，280 宽竖屏打开有照片的相册时，整张手帐被三枚翻页按钮撑得比屏幕宽，「合上」被截掉；320 宽时卡片也比设计宽 16px。决定：一排放不下时，「合上」移到第二行，书页高度让出一行；340 宽以上、横屏保持一行不变。只改 `_build_album_screen`（新增第二行容器）和 `_fit_album_frame`，新增 `_album_buttons_need`；不碰 #720 改的 `_show_album` / `_flip_album`。证据见 `docs/playtests/2026-10-11-cursor-cloud-album-narrow/`，回归由 `album_layout_suite` 守护。
