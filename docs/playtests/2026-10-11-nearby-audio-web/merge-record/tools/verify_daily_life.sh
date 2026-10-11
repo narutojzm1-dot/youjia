@@ -1,0 +1,162 @@
+#!/usr/bin/env bash
+set -euo pipefail
+cd "$(dirname "$0")/.."
+state="$(mktemp -d /tmp/youjia-daily-check.XXXXXX)"
+trap 'rm -rf "$state"' EXIT
+export XDG_DATA_HOME="$state/data" XDG_CONFIG_HOME="$state/config" XDG_CACHE_HOME="$state/cache"
+export YOUJIA_TEST_ISOLATED_DATA="$XDG_DATA_HOME"
+mkdir -p "$XDG_DATA_HOME" "$XDG_CONFIG_HOME" "$XDG_CACHE_HOME"
+source tools/lib/verified_godot.sh
+bash test/godot_gate_test.sh
+case_number=0
+run_godot() {
+  local mode="$1"
+  shift
+  # Each standalone suite starts a separate player profile, including migration
+  # sidecars. A prior suite's fault fixture is not a real next-player save.
+  case_number=$((case_number + 1))
+  export XDG_DATA_HOME="$state/case-$case_number/data" XDG_CONFIG_HOME="$state/case-$case_number/config" XDG_CACHE_HOME="$state/case-$case_number/cache"
+  export YOUJIA_TEST_ISOLATED_DATA="$XDG_DATA_HOME"
+  mkdir -p "$XDG_DATA_HOME" "$XDG_CONFIG_HOME" "$XDG_CACHE_HOME"
+  case "$mode" in
+    import) run_verified_godot "$state/run.log" --headless --path . --editor --import --quit ;;
+    suite) run_verified_godot_suite "$state/run.log" "$1" --headless --path . ;;
+    *) echo "Unknown Godot verification mode: $mode" >&2; return 1 ;;
+  esac
+}
+run_godot import
+run_godot suite test/test_suite.tscn
+run_godot suite test/hint_paper_width_suite.gd
+run_godot suite test/locomotion_suite.tscn
+run_godot suite test/road_freedom_suite.gd
+for suite in weather_transition holiday_start_once animal_home photo_home grass_state grass_action explicit_target ui_interaction physical_yard keyboard_ground scrapbook_encounter photo_moment_render photo_moment_save save_data_codec yard_snapshot fishing_active_hud save_recovery boundary_feedback mixed_input_photo leading_clearance portable_accept shipped_correctness interaction_photo scene_hotspot authored_sequence goose_mount quiet_stay quiet_sky_look camera400_handoff camera400_backdrop still_catch still_target_pulse still_grass_glow still_object_feedback interaction_pose cow_glance sheep_attention duck_feed_attention goose_feed_attention fish_carry_consistency notice_paper photo_species_frame web_hidpi save_candidate exploration_core fish_miss_feedback save_coordinator native_save_host save_writer_guidance exploration_cleanup_contract exploration_cleanup_preservation save_feedback day_label_layout exploration_slice title_card hint_paper_fit confirm_panel_fit title_short_landscape licenses_dialog_fit motion_preference photo_arrival_fit photo_arrival_combo photo_arrival_mat photo_arrival_shutter_paper album_short_landscape title_licenses_link_contrast soft_button_focus_contrast soft_button_disabled volume_slider_style volume_slider_input paper_tooltip_style paper_tooltip_interaction; do
+  run_godot suite "test/${suite}_suite.gd"
+done
+run_godot suite test/album_layout_suite.gd
+run_godot suite test/photo_caption_fit_suite.gd
+run_godot suite test/save_status_paper_suite.gd
+run_godot suite test/pause_notice_suite.gd
+run_godot suite test/audio_button_input_suite.gd
+run_godot suite test/ambience_output_ceiling_suite.gd
+run_godot suite test/yard_audio_suite.gd
+run_godot suite test/modal_touch_input_suite.gd
+run_godot suite test/hud_pointer_input_suite.gd
+run_godot suite test/yard_inventory_suite.gd
+run_godot suite test/yard_crops_suite.gd
+run_godot suite test/yard_decor_suite.gd
+run_godot suite test/yard_decor_persistence_suite.gd
+run_godot suite test/yard_decor_integration_suite.gd
+run_godot suite test/yard_decor_rejection_suite.gd
+run_godot suite test/yard_basket_empty_row_ink_suite.gd
+run_godot suite test/yard_basket_grid_suite.gd
+run_godot suite test/yard_basket_grid_entry_suite.gd
+run_godot suite test/yard_basket_drag_suite.gd
+run_godot suite test/yard_basket_drop_place_suite.gd
+run_godot suite test/yard_ground_food_ledger_suite.gd
+run_godot suite test/yard_ground_food_runtime_suite.gd
+run_godot suite test/cow_ground_graze_suite.gd
+run_godot suite test/world_weather_suite.gd
+run_godot suite test/world_daylight_suite.gd
+run_godot suite test/regional_night_sky_suite.gd
+run_godot suite test/world_weather_runtime_suite.gd
+run_godot suite test/sheep_ground_graze_suite.gd
+run_godot suite test/animal_glance_facing_suite.gd
+run_godot suite test/animal_companion_suite.gd
+run_godot suite test/animal_hidden_find_suite.gd
+run_godot suite test/world_residents_suite.gd
+run_godot suite test/beibei_integration_suite.gd
+run_godot suite test/pond_residents_suite.gd
+run_godot suite test/pond_integration_suite.gd
+run_godot suite test/chick_care_suite.gd
+run_godot suite test/chick_millet_model_suite.gd
+run_godot suite test/chick_millet_integration_suite.gd
+run_godot suite test/pond_story_sequence_suite.gd
+run_godot suite test/pond_story_integration_suite.gd
+run_godot suite test/yard_basket_integration_suite.gd
+run_godot suite test/yard_basket_button_states_suite.gd
+run_godot suite test/paper_scrollbar_suite.gd
+run_godot suite test/care_panels_paper_suite.gd
+run_godot suite test/exploration_button_states_suite.gd
+run_godot suite test/still_boundary_feedback_suite.gd
+run_godot suite test/pause_panel_fit_suite.gd
+run_godot suite test/hud_under_menu_suite.gd
+run_godot suite test/hotbar_player_slots_suite.gd
+run_godot suite test/hotbar_persistence_suite.gd
+run_godot suite test/ui_viewports.gd
+run_godot suite test/web_save_bridge/decoder_suite.gd
+run_godot suite test/web_save_bridge/legacy_suite.gd
+run_godot suite test/title_copy_balance_suite.gd
+run_godot suite test/touch_hint_mode_suite.gd
+node test/loading_shell_test.cjs
+node test/download_assets_test.mjs
+node test/sha256_stream_test.mjs
+
+node test/motion_preference_test.cjs
+
+run_godot suite test/album_caption_fit_suite.gd
+
+run_godot suite test/photo_arrival_shutter_fit_suite.gd
+
+run_godot suite test/exploration_basket_label_fit_suite.gd
+
+run_godot suite test/yard_basket_panel_fit_suite.gd
+run_godot suite test/yard_basket_panel_hug_suite.gd
+
+run_godot suite test/confirm_panel_narrow_suite.gd
+
+run_godot suite test/find_reveal_name_slip_suite.gd
+
+run_godot suite test/nearby_direct_pick_suite.gd
+run_godot suite test/nearby_motion_suite.gd
+run_godot suite test/nearby_mist_suite.gd
+run_godot suite test/nearby_window_light_suite.gd
+
+run_godot suite test/yard_gate_suite.gd
+
+run_godot suite test/yard_shelter_suite.gd
+run_godot suite test/large_animal_shelter_suite.gd
+run_godot suite test/house_sleep_suite.gd
+run_godot suite test/balcony_morning_suite.gd
+
+run_godot suite test/regional_rain_suite.gd
+
+run_godot suite test/hold_hotbar_suite.gd
+run_godot suite test/hud_single_row_suite.gd
+run_godot suite test/notice_column_clear_suite.gd
+
+run_godot suite test/hold_hotbar_mount_suite.gd
+<<<<<<< HEAD
+run_godot suite test/hold_hotbar_armed_style_suite.gd
+run_godot suite test/painted_blink_suite.gd
+run_godot suite test/painted_rest_breath_suite.gd
+run_godot suite test/resting_eyelids_suite.gd
+
+run_godot suite test/yard_decor_spot_at_suite.gd
+
+
+run_godot suite test/yard_keepsake_shadow_suite.gd
+run_godot suite test/yard_basket_zone_label_suite.gd
+run_godot suite test/photo_arrival_fade_in_suite.gd
+run_godot suite test/fish_catch_palette_suite.gd
+run_godot suite test/path_snail_fade_suite.gd
+run_godot suite test/find_reveal_name_fade_suite.gd
+run_godot suite test/yard_basket_dismiss_focus_suite.gd
+run_godot suite test/yard_decor_settle_ring_suite.gd
+run_godot suite test/walk_goal_marker_suite.gd
+run_godot suite test/exploration_tap_feedback_suite.gd
+run_godot suite test/regional_clock_suite.gd
+run_godot suite test/exploration_hud_readable_suite.gd
+run_godot suite test/cjk_line_break_suite.gd
+run_godot suite test/physical_basket_suite.gd
+run_godot suite test/photo_diary_weather_suite.gd
+
+run_godot suite test/resident_idle_rest_suite.gd
+run_godot suite test/exploration_trip_capacity_suite.gd
+
+run_godot suite test/meal_ledger_suite.gd
+run_godot suite test/rest_context_suite.gd
+run_godot suite test/meal_planner_suite.gd
+=======
+
+run_godot suite test/regional_audio_suite.gd
+>>>>>>> e00f11a88679e0efe2ee2dccb2a8eea9ae0a0169

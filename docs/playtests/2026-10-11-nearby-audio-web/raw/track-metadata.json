@@ -1,0 +1,54 @@
+{
+	"method": "readonly actual imported AudioDirector streams in isolated native profile; not playback or listening",
+	"tracks": [
+		{
+			"cue": "night.music",
+			"length_seconds": 64.0,
+			"loop": true,
+			"path": "res://assets/holiday/audio/night_music.ogg",
+			"resource_type": "AudioStreamOggVorbis"
+		},
+		{
+			"cue": "night.ambience",
+			"length_seconds": 64.0,
+			"loop": true,
+			"path": "res://assets/holiday/audio/night_air.ogg",
+			"resource_type": "AudioStreamOggVorbis"
+		},
+		{
+			"cue": "rain.ambience",
+			"length_seconds": 32.0,
+			"loop": true,
+			"path": "res://assets/holiday/audio/rain_air.ogg",
+			"resource_type": "AudioStreamOggVorbis"
+		},
+		{
+			"cue": "sleep.ambience",
+			"length_seconds": 4.80000019073486,
+			"loop": true,
+			"path": "res://assets/holiday/audio/sleep_breath.ogg",
+			"resource_type": "AudioStreamOggVorbis"
+		},
+		{
+			"cue": "yard.ambience",
+			"length_seconds": 128.0,
+			"loop": false,
+			"path": "res://assets/holiday/audio/bed_yard_env.ogg",
+			"resource_type": "AudioStreamOggVorbis"
+		},
+		{
+			"cue": "yard.music",
+			"length_seconds": 128.0,
+			"loop": false,
+			"path": "res://assets/holiday/audio/bed_yard_music.ogg",
+			"resource_type": "AudioStreamOggVorbis"
+		},
+		{
+			"cue": "near_path.music",
+			"length_seconds": 76.8000030517578,
+			"loop": false,
+			"path": "res://assets/holiday/audio/bed_near_path_music.ogg",
+			"resource_type": "AudioStreamOggVorbis"
+		}
+	]
+}
