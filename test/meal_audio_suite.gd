@@ -165,6 +165,14 @@ func run() -> void:
 	check(int(audio.call("get_stop_cue_count", "meal.hunger")) > stops_hunger_before, "exit stop_cue hunger invoked")
 	check(not bool(audio.call("is_cue_voice_active", "meal.hunger")), "hunger voice cleared after leaf exit")
 
+	# The suite deliberately starts real native AudioStreamPlayers even headless.
+	# Match yard_audio_suite teardown: release fixture references and allow the
+	# mixer to retire stopped playback before terminating the test process.
+	check(not is_instance_valid(leaf), "leaf freed before process teardown")
+	hunger_stream = null
+	audio.call("release_streams")
+	check(audio.call("get_cue_stream", "meal.hunger") == null, "fixture cue references released")
+	await create_timer(0.25).timeout
 	if failures == 0:
 		print("[meal-audio] PASS: %d checks" % checks)
 	else:

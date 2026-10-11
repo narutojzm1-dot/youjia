@@ -14,3 +14,9 @@ Godot 4.7.2 isolated native integration checks:
 Each suite used a separate APPDATA. These are software checks, not human listening or physical-phone tests. Launch of the local HTTP server for another ordinary browser run was rejected by automatic approval policy, with no more specific reason; this integrated tree has no new ordinary Web playtest claim. Earlier cooking and #758 screenshots remain evidence for their stated source trees only.
 
 Still Draft: user's audio listening reply, physical mobile/background lifecycle and updated ordinary cooking playtest remain open. No release, no audio approval, no claim that the complete growth loop is finished. Existing sleep/fatigue rules and pending cross-day AP decisions remain unchanged.
+
+## Full-CI teardown failure and correction
+
+Full CI 38169437986 for 9fd22f0 failed after meal_audio_suite printed 63 PASS: Linux reported four ObjectDB instances / two resources still in use at process exit. The wrapper correctly failed; no gate was weakened. Windows verbose reproduction passed without this leak, so it is not claimed as a locally reproduced Linux failure.
+
+The suite intentionally starts native audio voices. Its teardown now follows the existing yard_audio_suite pattern: verify leaf deletion, clear the retained stream reference, release AudioDirector fixture streams, verify release, then allow 0.25 seconds for mixer retirement. Audio assets and runtime behavior are untouched. Local verbose corrected run: 65 PASS with no ERROR/WARNING; Linux confirmation remains the new final CI's job.
