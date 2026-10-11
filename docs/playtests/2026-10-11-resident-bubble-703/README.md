@@ -8,7 +8,9 @@ Owner: GROK-CONTRIBUTOR
 
 `test/resident_barks_suite.gd --headless --path .`
 
-结果：包装器 **exit 0**，日志完成行 **`[resident-barks] PASS: 66 checks`**。没有开窗口，没有截图。完整 head SHA 见 PR #718 本轮回执。
+结果：包装器 **exit 0**，日志完成行 **`[resident-barks] PASS: 66 checks`**。没有开窗口，没有截图。
+
+套件与初稿说明提交：`643e6c2a84196a2754527b7fe3fdd190c5d7e592`。本段 SHA 补记之后的分支头以 PR #718 回执为准，请 Leader 审核那个完整 head。
 
 ## Leader 再退回（2026-10-11 ~09:09 CST，对 SHA 47b8bf6e）
 
