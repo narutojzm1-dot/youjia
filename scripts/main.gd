@@ -2911,7 +2911,7 @@ func _sync_regional_clock() -> void:
 	elif _exploration.scroll != null:
 		var place: Label = _exploration.scroll._place_label
 		_regional_clock.show_time(_world.tod_fraction(), Rect2(
-			place.position + Vector2(0, place.size.y), Vector2(minf(place.size.x, 180.0), 22)), 14)
+			place.position + Vector2(0, place.size.y + 4.0), Vector2(clampf(place.size.x, _exploration.scroll.CLOCK_MIN_WIDTH, _exploration.scroll.CLOCK_MAX_WIDTH), 22)), 14)
 
 
 func _refresh_yard_chip_labels(chip_width: float = -1.0) -> void:
