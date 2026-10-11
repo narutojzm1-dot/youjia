@@ -124,8 +124,8 @@ func run() -> void:
 	check(bar.slots[0] == fish, "menu puts the fish into the first empty slot")
 	check(grid.menu.visible and grid.menu_hotbar.text == "从快捷栏第1格拿下", "paper stays open and now offers taking it off slot 1")
 	check(panel.status.text.contains("第1格"), "basket note says which slot")
-	check(Prefs.persistent(), "native user:// is a real file, so the preference is written")
-	check(Prefs.load_slots() == bar.slots, "slots are saved to the UI preference file")
+	await settle()
+	check(store.get_hotbar_slots() == bar.slots, "slots are confirmed in the shared save")
 	check(bar.slot_counts[0].text == "×1" and bar.slot_icons[0].texture != null, "slot shows the fish and its basket count")
 	grid.menu_hotbar.pressed.emit()
 	await frames()
@@ -189,6 +189,12 @@ func run() -> void:
 		await frames()
 		var yr: Rect2 = bar.get_global_rect()
 		check(yr.position.x >= 0.0 and yr.end.x <= float(viewport.x) + 0.5, str(viewport) + " yard hotbar fits the width")
+		var want: Rect2 = HotbarScript.preferred_rect(main.size, main._stacked_hud())
+		check(yr.position.is_equal_approx(want.position), str(viewport) + " closed basket leaves the hotbar at its yard place (%s, want %s)" % [yr.position, want.position])
+		var covered := []
+		for button: Button in [main._album_chip, main._basket_chip, main._weather_chip, main._action_button, main._pause_button]:
+			if button != null and button.is_visible_in_tree() and button.get_global_rect().intersects(yr): covered.append(button.text)
+		check(covered.is_empty(), str(viewport) + " yard hotbar covers no bottom button %s" % [covered])
 		check(yr.size.is_equal_approx(bar.get_combined_minimum_size()) or yr.size.x >= bar.get_combined_minimum_size().x, str(viewport) + " slots are not squeezed below their size")
 	root.size = Vector2i(390, 844)
 	await frames()
@@ -207,8 +213,10 @@ func run() -> void:
 	await settle()
 
 	# 7. 读回：配置跨重开保留；坏值、重复都当空格
-	bar.set_slots(Prefs.load_slots())
-	check(bar.slots == ["wheat", "corn", "", "", fish], "slots reload from the preference file")
+	await settle()
+	store._load()
+	bar.set_slots(store.get_hotbar_slots())
+	check(bar.slots == ["wheat", "corn", "", "", fish], "slots reload from the shared save")
 	var fresh = HotbarScript.new()
 	root.add_child(fresh)
 	await frames(1)
@@ -225,7 +233,33 @@ func run() -> void:
 	check(reserve.cells["wheat"].disabled and reserve.slot_counts[0].text == "×1", "last handful of wheat stays for planting")
 	reserve.queue_free()
 
-	# 9. 英文
+	# 9. 空闲帧不重建格子样式（每帧 _refresh_hud 都会同步配置态）
+	var builds: int = bar.restyle_builds
+	await frames(30)
+	check(bar.restyle_builds == builds, "idle yard frames rebuild no slot styles (%d)" % (bar.restyle_builds - builds))
+	main._show_basket()
+	await frames()
+	builds = bar.restyle_builds
+	await frames(30)
+	check(bar.configuring and bar.restyle_builds == builds, "idle frames with the basket open rebuild no slot styles")
+	await bring_into_view(grid.cells["wheat"])
+	check(panel.begin_drag("wheat", center(grid.cells["wheat"])), "wheat drag starts for the hint check")
+	panel.drag_to(center(bar.slot_cells[3]))
+	check(bar.drop_hint == 3 and bar.restyle_builds > builds, "drag hint still restyles the slot it lights")
+	var hot_box := bar.slot_cells[3].get_theme_stylebox("normal") as StyleBoxFlat
+	check(hot_box.border_color == bar.DROP_EDGE, "lit slot shows the drop edge")
+	main._hide_basket()
+	await frames()
+	check(bar.drop_hint == -1 and not bar.configuring, "closing the basket clears the drop hint")
+	var cool_box := bar.slot_cells[3].get_theme_stylebox("normal") as StyleBoxFlat
+	check(cool_box.border_color != bar.DROP_EDGE, "slot loses the drop edge after the basket closes")
+	builds = bar.restyle_builds
+	for repeat in 5:
+		bar.set_configuring(false)
+		bar.set_drop_hint(-1)
+	check(bar.restyle_builds == builds, "repeating the same configuring state rebuilds nothing")
+
+	# 10. 英文
 	root.get_node("I18n").set_locale("en")
 	main._show_basket()
 	await frames()

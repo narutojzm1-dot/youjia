@@ -65,6 +65,9 @@ var busy := false
 var configuring := false
 var drop_hint := -1
 var _names: Dictionary = {}
+var _cell_style_keys: Array[int] = []
+## 套件用：实际新建格子样式的次数。
+var restyle_builds := 0
 
 
 func _ready() -> void:
@@ -123,6 +126,7 @@ func _make_cell(index: int) -> Button:
 	slot_cells.append(cell)
 	slot_icons.append(icon)
 	slot_counts.append(count)
+	_cell_style_keys.append(-1)
 	return cell
 
 
@@ -196,8 +200,10 @@ func set_drop_hint(index: int) -> void:
 
 
 func set_configuring(on: bool) -> void:
+	var hint := drop_hint if on else -1
+	if configuring == on and drop_hint == hint: return
 	configuring = on
-	if not on: drop_hint = -1
+	drop_hint = hint
 	_restyle()
 
 
@@ -399,7 +405,13 @@ func _restyle() -> void:
 		var kind := slots[index]
 		var on := not kind.is_empty() and kind == selected
 		cell.set_pressed_no_signal(on)
-		_apply_cell_style(cell, on, on and place_armed, kind.is_empty(), index == drop_hint)
+		var armed := on and place_armed
+		var hot := index == drop_hint
+		var key := int(on) | int(armed) << 1 | int(kind.is_empty()) << 2 | int(hot) << 3
+		if _cell_style_keys[index] != key:
+			_cell_style_keys[index] = key
+			restyle_builds += 1
+			_apply_cell_style(cell, on, armed, kind.is_empty(), hot)
 	_refresh_tooltips()
 
 

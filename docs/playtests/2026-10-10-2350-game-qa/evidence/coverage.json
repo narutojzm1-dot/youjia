@@ -1,0 +1,459 @@
+{
+  "dateBeijing": "2026-10-10",
+  "baseline": "070ae5a4f45f73105801cc029a1f86def87b6f6b",
+  "tested": "e9e72920446705415c9a41da7380ab48fe75664e",
+  "updatedAt": "2026-10-10T23:58:31.941602+08:00",
+  "features": [
+    {
+      "feature": "玩家自配五格快捷栏",
+      "build": "0.2.0 game-e9e7292",
+      "sha": "e9e72920446705415c9a41da7380ab48fe75664e",
+      "requirementsPR": "#597/#698",
+      "playerSteps": "拖小米到空格→关闭背篓→点快捷槽→点击地面",
+      "normalAndActualEvidence": "08拖入未扣库存；12手持；13投放小鸡低头啄米；16米1→0",
+      "automaticEvidence": "hotbar_player_slots136",
+      "failureBoundaryAndSaveCompatibility": "正常闭环限定通过；Web快捷栏偏好持久化源码明确尚缺共享保存，未宣称重开保留",
+      "impactRegression": "按070ae5a到e9e7292变化选择，未执行不计通过",
+      "result": "刷新后五格清空1/1；库存保留。与#698已声明Web偏好不持久化一致，关联#597，非新发现。",
+      "next": "共享存档Owner跟进；不由QA直接修改协议",
+      "evidenceTypes": [
+        "actual where stated",
+        "native where named",
+        "static commit scope"
+      ],
+      "deepRound": {
+        "at": "2026-10-10T23:58:31.941602+08:00",
+        "result": "刷新后五格清空1/1；库存保留。与#698已声明Web偏好不持久化一致，关联#597，非新发现。",
+        "actualEvidence": "04/05；前轮08绑定截图",
+        "next": "共享存档Owner跟进；不由QA直接修改协议"
+      }
+    },
+    {
+      "feature": "手持投放意图与武装样式",
+      "build": "0.2.0 game-e9e7292",
+      "sha": "e9e72920446705415c9a41da7380ab48fe75664e",
+      "requirementsPR": "REQ075/076",
+      "playerSteps": "取用后点地与取消/再取",
+      "normalAndActualEvidence": "正常投放通过，取消/全部物件与移动端未测",
+      "automaticEvidence": "由快捷槽专项覆盖部分",
+      "failureBoundaryAndSaveCompatibility": "部分覆盖",
+      "impactRegression": "按070ae5a到e9e7292变化选择，未执行不计通过",
+      "result": "部分覆盖",
+      "next": "补齐本行实际/边界缺口；优先种收/成长/睡眠/快捷栏兼容",
+      "evidenceTypes": [
+        "actual where stated",
+        "native where named",
+        "static commit scope"
+      ]
+    },
+    {
+      "feature": "物理背篓/麦粒玉米/种植",
+      "build": "0.2.0 game-e9e7292",
+      "sha": "e9e72920446705415c9a41da7380ab48fe75664e",
+      "requirementsPR": "#637",
+      "playerSteps": "走到实体背篓→种植→收获→喂食",
+      "normalAndActualEvidence": "实体背篓可见；新版库存麦粒2玉米2，未种收",
+      "automaticEvidence": "physical_basket22 / yard_crops90",
+      "failureBoundaryAndSaveCompatibility": "自动通过，实际种收完整流程未测；下轮优先",
+      "impactRegression": "按070ae5a到e9e7292变化选择，未执行不计通过",
+      "result": "青草播种→浇水→刷新保留→夜眠次日成熟→收获3束，地块重置；麦粒2→1播种、浇水；最后一把拿取禁用。",
+      "next": "补麦子2日/玉米3日收获、容量上限与收获后喂食",
+      "evidenceTypes": [
+        "actual where stated",
+        "native where named",
+        "static commit scope"
+      ],
+      "deepRound": {
+        "at": "2026-10-10T23:58:31.941602+08:00",
+        "result": "青草播种→浇水→刷新保留→夜眠次日成熟→收获3束，地块重置；麦粒2→1播种、浇水；最后一把拿取禁用。",
+        "actualEvidence": "01/02/06/09/10/11/12",
+        "next": "补麦子2日/玉米3日收获、容量上限与收获后喂食"
+      }
+    },
+    {
+      "feature": "小鸡成长照料面板/原子喂食",
+      "build": "0.2.0 game-e9e7292",
+      "sha": "e9e72920446705415c9a41da7380ab48fe75664e",
+      "requirementsPR": "#636",
+      "playerSteps": "打开照料面板→喂食→查看成长进度",
+      "normalAndActualEvidence": "实际地面投米，小鸡低头靠近；成长面板及信用累计未验",
+      "automaticEvidence": "chick_care73",
+      "failureBoundaryAndSaveCompatibility": "部分覆盖，下轮实际面板",
+      "impactRegression": "按070ae5a到e9e7292变化选择，未执行不计通过",
+      "result": "旧档第4天打开成长面板为成年100%；未完成幼鸡到成年连续观察，不能把前轮喂米归因为成长完成。",
+      "next": "另准备普通新档完整成长样本，不覆盖保留档",
+      "evidenceTypes": [
+        "actual where stated",
+        "native where named",
+        "static commit scope"
+      ],
+      "deepRound": {
+        "at": "2026-10-10T23:58:31.941602+08:00",
+        "result": "旧档第4天打开成长面板为成年100%；未完成幼鸡到成年连续观察，不能把前轮喂米归因为成长完成。",
+        "actualEvidence": "03",
+        "next": "另准备普通新档完整成长样本，不覆盖保留档"
+      }
+    },
+    {
+      "feature": "入屋睡觉/夜窗",
+      "build": "0.2.0 game-e9e7292",
+      "sha": "e9e72920446705415c9a41da7380ab48fe75664e",
+      "requirementsPR": "#565/#640",
+      "playerSteps": "屋门→白天拒绝→晚间睡觉→翌日",
+      "normalAndActualEvidence": "18图下午睡觉提示天还亮着；夜间完整睡眠未验",
+      "automaticEvidence": "house_sleep154",
+      "failureBoundaryAndSaveCompatibility": "白天边界通过，完整闭环未测",
+      "impactRegression": "按070ae5a到e9e7292变化选择，未执行不计通过",
+      "result": "第4天夜间21:17进屋，随后第5天06:00，过场结束可操作。夜窗亮灯可见。",
+      "next": "补睡眠过程中断重开等边界",
+      "evidenceTypes": [
+        "actual where stated",
+        "native where named",
+        "static commit scope"
+      ],
+      "deepRound": {
+        "at": "2026-10-10T23:58:31.941602+08:00",
+        "result": "第4天夜间21:17进屋，随后第5天06:00，过场结束可操作。夜窗亮灯可见。",
+        "actualEvidence": "07/08/09",
+        "next": "补睡眠过程中断重开等边界"
+      }
+    },
+    {
+      "feature": "室外坐下躺卧与起身",
+      "build": "0.2.0 game-e9e7292",
+      "sha": "e9e72920446705415c9a41da7380ab48fe75664e",
+      "requirementsPR": "#639/#634",
+      "playerSteps": "待机坐下/躺下→鼠标唤醒",
+      "normalAndActualEvidence": "未等自然动作完整周期",
+      "automaticEvidence": "resident_idle_rest61",
+      "failureBoundaryAndSaveCompatibility": "自动通过；下轮自然待机",
+      "impactRegression": "按070ae5a到e9e7292变化选择，未执行不计通过",
+      "result": "自动通过；下轮自然待机",
+      "next": "补齐本行实际/边界缺口；优先种收/成长/睡眠/快捷栏兼容",
+      "evidenceTypes": [
+        "actual where stated",
+        "native where named",
+        "static commit scope"
+      ]
+    },
+    {
+      "feature": "阳台清晨",
+      "build": "0.2.0 game-e9e7292",
+      "sha": "e9e72920446705415c9a41da7380ab48fe75664e",
+      "requirementsPR": "#641/#638",
+      "playerSteps": "自然过夜→偶发阳台→回屋回院",
+      "normalAndActualEvidence": "未达偶发条件",
+      "automaticEvidence": "balcony_morning3867",
+      "failureBoundaryAndSaveCompatibility": "自动通过；实际未测",
+      "impactRegression": "按070ae5a到e9e7292变化选择，未执行不计通过",
+      "result": "第5天06:00实际触发阳台人物晨间过场，随后回院恢复操作。",
+      "next": "补其他天气/窗口与不中断边界",
+      "evidenceTypes": [
+        "actual where stated",
+        "native where named",
+        "static commit scope"
+      ],
+      "deepRound": {
+        "at": "2026-10-10T23:58:31.941602+08:00",
+        "result": "第5天06:00实际触发阳台人物晨间过场，随后回院恢复操作。",
+        "actualEvidence": "08/09",
+        "next": "补其他天气/窗口与不中断边界"
+      }
+    },
+    {
+      "feature": "共享12小时时钟",
+      "build": "0.2.0 game-e9e7292",
+      "sha": "e9e72920446705415c9a41da7380ab48fe75664e",
+      "requirementsPR": "#638",
+      "playerSteps": "院子→附近→回院",
+      "normalAndActualEvidence": "院内上午→下午，附近下午1:31→2:06，回院下午2:35，顺序推进",
+      "automaticEvidence": "regional_clock92",
+      "failureBoundaryAndSaveCompatibility": "限定通过；长期边界未实际",
+      "impactRegression": "按070ae5a到e9e7292变化选择，未执行不计通过",
+      "result": "重载恢复第4天17:21，夜间21:17睡眠，次日06:00→06:51。",
+      "next": "其他区域/暂停长时边界未补",
+      "evidenceTypes": [
+        "actual where stated",
+        "native where named",
+        "static commit scope"
+      ],
+      "deepRound": {
+        "at": "2026-10-10T23:58:31.941602+08:00",
+        "result": "重载恢复第4天17:21，夜间21:17睡眠，次日06:00→06:51。",
+        "actualEvidence": "04/07/08/09",
+        "next": "其他区域/暂停长时边界未补"
+      }
+    },
+    {
+      "feature": "夜空/黄金晨光/照片冻结光照",
+      "build": "0.2.0 game-e9e7292",
+      "sha": "e9e72920446705415c9a41da7380ab48fe75664e",
+      "requirementsPR": "#640",
+      "playerSteps": "昼夜→照片→重开",
+      "normalAndActualEvidence": "日景和时钟可见，夜天空与照片回放未实际",
+      "automaticEvidence": "regional_night_sky3759",
+      "failureBoundaryAndSaveCompatibility": "自动通过；下轮完整光照",
+      "impactRegression": "按070ae5a到e9e7292变化选择，未执行不计通过",
+      "result": "自然夜间月亮星空/窗灯及睡眠后晨光实际可见；未重测照片冻结光照。",
+      "next": "照片与天气组合保留缺口",
+      "evidenceTypes": [
+        "actual where stated",
+        "native where named",
+        "static commit scope"
+      ],
+      "deepRound": {
+        "at": "2026-10-10T23:58:31.941602+08:00",
+        "result": "自然夜间月亮星空/窗灯及睡眠后晨光实际可见；未重测照片冻结光照。",
+        "actualEvidence": "07/08",
+        "next": "照片与天气组合保留缺口"
+      }
+    },
+    {
+      "feature": "动物呼吸/闭眼/局部眨眼",
+      "build": "0.2.0 game-e9e7292",
+      "sha": "e9e72920446705415c9a41da7380ab48fe75664e",
+      "requirementsPR": "#645/#565",
+      "playerSteps": "观察各动物休息与唤醒",
+      "normalAndActualEvidence": "无完整周期视觉证据",
+      "automaticEvidence": "resting_eyelids37 / painted_rest_breath7264",
+      "failureBoundaryAndSaveCompatibility": "自动通过；不当实际视觉验收",
+      "impactRegression": "按070ae5a到e9e7292变化选择，未执行不计通过",
+      "result": "自动通过；不当实际视觉验收",
+      "next": "补齐本行实际/边界缺口；优先种收/成长/睡眠/快捷栏兼容",
+      "evidenceTypes": [
+        "actual where stated",
+        "native where named",
+        "static commit scope"
+      ]
+    },
+    {
+      "feature": "背篓内摆放、收回与拒绝保存",
+      "build": "0.2.0 game-e9e7292",
+      "sha": "e9e72920446705415c9a41da7380ab48fe75664e",
+      "requirementsPR": "#594/#598",
+      "playerSteps": "背篓选物→摆点→确认→收回/失败恢复",
+      "normalAndActualEvidence": "未实际摆放当前新流程",
+      "automaticEvidence": "yard_basket_drop_place42 / yard_decor_rejection19",
+      "failureBoundaryAndSaveCompatibility": "自动通过；旧微调已移除不沿用旧通过",
+      "impactRegression": "按070ae5a到e9e7292变化选择，未执行不计通过",
+      "result": "自动通过；旧微调已移除不沿用旧通过",
+      "next": "补齐本行实际/边界缺口；优先种收/成长/睡眠/快捷栏兼容",
+      "evidenceTypes": [
+        "actual where stated",
+        "native where named",
+        "static commit scope"
+      ]
+    },
+    {
+      "feature": "旅行背篓容量保护",
+      "build": "0.2.0 game-e9e7292",
+      "sha": "e9e72920446705415c9a41da7380ab48fe75664e",
+      "requirementsPR": "#642",
+      "playerSteps": "临近上限拾取→回院保存",
+      "normalAndActualEvidence": "普通松果0→1入库通过；未达到容量边界",
+      "automaticEvidence": "exploration_trip_capacity48",
+      "failureBoundaryAndSaveCompatibility": "正常路径通过；容量边界仅自动",
+      "impactRegression": "按070ae5a到e9e7292变化选择，未执行不计通过",
+      "result": "正常路径通过；容量边界仅自动",
+      "next": "补齐本行实际/边界缺口；优先种收/成长/睡眠/快捷栏兼容",
+      "evidenceTypes": [
+        "actual where stated",
+        "native where named",
+        "static commit scope"
+      ]
+    },
+    {
+      "feature": "HUD被面板遮挡时淡出",
+      "build": "0.2.0 game-e9e7292",
+      "sha": "e9e72920446705415c9a41da7380ab48fe75664e",
+      "requirementsPR": "#692/#687",
+      "playerSteps": "背篓/暂停/确认/照料/作物面板",
+      "normalAndActualEvidence": "07/16背篓布局可见；未全分辨率扫屏",
+      "automaticEvidence": "hud_under_menu2257",
+      "failureBoundaryAndSaveCompatibility": "限定视觉/自动通过",
+      "impactRegression": "按070ae5a到e9e7292变化选择，未执行不计通过",
+      "result": "限定视觉/自动通过",
+      "next": "补齐本行实际/边界缺口；优先种收/成长/睡眠/快捷栏兼容",
+      "evidenceTypes": [
+        "actual where stated",
+        "native where named",
+        "static commit scope"
+      ]
+    },
+    {
+      "feature": "背篓hug高度、短横屏单行与提示避让",
+      "build": "0.2.0 game-e9e7292",
+      "sha": "e9e72920446705415c9a41da7380ab48fe75664e",
+      "requirementsPR": "#595/REQ相关UI",
+      "playerSteps": "窄横屏与英语切换",
+      "normalAndActualEvidence": "当前1280×720，未实际横竖屏切换",
+      "automaticEvidence": "未跑无重复补齐项",
+      "failureBoundaryAndSaveCompatibility": "未测：本轮冒烟优先核心闭环，下轮尺寸/英语专项",
+      "impactRegression": "按070ae5a到e9e7292变化选择，未执行不计通过",
+      "result": "未测：本轮冒烟优先核心闭环，下轮尺寸/英语专项",
+      "next": "补齐本行实际/边界缺口；优先种收/成长/睡眠/快捷栏兼容",
+      "evidenceTypes": [
+        "actual where stated",
+        "native where named",
+        "static commit scope"
+      ]
+    },
+    {
+      "feature": "纸面滚动条/焦点/禁用色/工具提示",
+      "build": "0.2.0 game-e9e7292",
+      "sha": "e9e72920446705415c9a41da7380ab48fe75664e",
+      "requirementsPR": "care-panels/REQ UI",
+      "playerSteps": "键盘焦点与滚动、禁用按钮",
+      "normalAndActualEvidence": "滚动条可见；键盘及全状态未验",
+      "automaticEvidence": "未专项",
+      "failureBoundaryAndSaveCompatibility": "部分可见，输入未测",
+      "impactRegression": "按070ae5a到e9e7292变化选择，未执行不计通过",
+      "result": "部分可见，输入未测",
+      "next": "补齐本行实际/边界缺口；优先种收/成长/睡眠/快捷栏兼容",
+      "evidenceTypes": [
+        "actual where stated",
+        "native where named",
+        "static commit scope"
+      ]
+    },
+    {
+      "feature": "天气纸签与照片到达淡入",
+      "build": "0.2.0 game-e9e7292",
+      "sha": "e9e72920446705415c9a41da7380ab48fe75664e",
+      "requirementsPR": "REQ077/070",
+      "playerSteps": "新旧日期照片天气字段→展示",
+      "normalAndActualEvidence": "未开相册；相关天气字段改变触发定向自动，不重复旧题词#40",
+      "automaticEvidence": "photo_diary_weather42",
+      "failureBoundaryAndSaveCompatibility": "自动通过；题词错配未专项",
+      "impactRegression": "按070ae5a到e9e7292变化选择，未执行不计通过",
+      "result": "自动通过；题词错配未专项",
+      "next": "补齐本行实际/边界缺口；优先种收/成长/睡眠/快捷栏兼容",
+      "evidenceTypes": [
+        "actual where stated",
+        "native where named",
+        "static commit scope"
+      ]
+    },
+    {
+      "feature": "小物接触影/位置纸签/落定圈",
+      "build": "0.2.0 game-e9e7292",
+      "sha": "e9e72920446705415c9a41da7380ab48fe75664e",
+      "requirementsPR": "REQ066/068/069",
+      "playerSteps": "拖放并观察位置名/落定圈",
+      "normalAndActualEvidence": "未实际摆小物",
+      "automaticEvidence": "未专项",
+      "failureBoundaryAndSaveCompatibility": "未测，下轮摆放闭环一并覆盖",
+      "impactRegression": "按070ae5a到e9e7292变化选择，未执行不计通过",
+      "result": "未测，下轮摆放闭环一并覆盖",
+      "next": "补齐本行实际/边界缺口；优先种收/成长/睡眠/快捷栏兼容",
+      "evidenceTypes": [
+        "actual where stated",
+        "native where named",
+        "static commit scope"
+      ]
+    },
+    {
+      "feature": "附近点击反馈/拾取名称淡出",
+      "build": "0.2.0 game-e9e7292",
+      "sha": "e9e72920446705415c9a41da7380ab48fe75664e",
+      "requirementsPR": "REQ063/073",
+      "playerSteps": "点击松果→拾取→回院",
+      "normalAndActualEvidence": "15图篮子松果，16松果1；按压瞬态与淡出时长未验",
+      "automaticEvidence": "未专项",
+      "failureBoundaryAndSaveCompatibility": "核心拾取通过，动效未测",
+      "impactRegression": "按070ae5a到e9e7292变化选择，未执行不计通过",
+      "result": "核心拾取通过，动效未测",
+      "next": "补齐本行实际/边界缺口；优先种收/成长/睡眠/快捷栏兼容",
+      "evidenceTypes": [
+        "actual where stated",
+        "native where named",
+        "static commit scope"
+      ]
+    },
+    {
+      "feature": "蜗牛苜蓿淡出/鱼圈调色/落点圈",
+      "build": "0.2.0 game-e9e7292",
+      "sha": "e9e72920446705415c9a41da7380ab48fe75664e",
+      "requirementsPR": "REQ072/071/074",
+      "playerSteps": "触发院南偶发/钓鱼/走路标记",
+      "normalAndActualEvidence": "未触发完整效果",
+      "automaticEvidence": "未专项",
+      "failureBoundaryAndSaveCompatibility": "未测，下轮动效与钓鱼",
+      "impactRegression": "按070ae5a到e9e7292变化选择，未执行不计通过",
+      "result": "未测，下轮动效与钓鱼",
+      "next": "补齐本行实际/边界缺口；优先种收/成长/睡眠/快捷栏兼容",
+      "evidenceTypes": [
+        "actual where stated",
+        "native where named",
+        "static commit scope"
+      ]
+    },
+    {
+      "feature": "0.2.0加载页与下载计数",
+      "build": "0.2.0 game-e9e7292",
+      "sha": "e9e72920446705415c9a41da7380ab48fe75664e",
+      "requirementsPR": "#634/loading-shell",
+      "playerSteps": "首次加载失败→重试→标题→院子",
+      "normalAndActualEvidence": "01/02进度21%→58%，03中止，04重试，05标题，06院子",
+      "automaticEvidence": "本轮未跑shell测试",
+      "failureBoundaryAndSaveCompatibility": "重试恢复通过，首次异常原因未确认",
+      "impactRegression": "按070ae5a到e9e7292变化选择，未执行不计通过",
+      "result": "本轮重载同game-e9e7292成功进入标题和旧档，未再见前轮下载中断；单次成功不关闭环境问题。",
+      "next": "不同网络首次加载保留缺口",
+      "evidenceTypes": [
+        "actual where stated",
+        "native where named",
+        "static commit scope"
+      ],
+      "deepRound": {
+        "at": "2026-10-10T23:58:31.941602+08:00",
+        "result": "本轮重载同game-e9e7292成功进入标题和旧档，未再见前轮下载中断；单次成功不关闭环境问题。",
+        "actualEvidence": "操作日志",
+        "next": "不同网络首次加载保留缺口"
+      }
+    },
+    {
+      "feature": "花坛/花朵昆虫/桥图/雾/8方向角色/小落羽候选",
+      "build": "0.2.0 game-e9e7292",
+      "sha": "e9e72920446705415c9a41da7380ab48fe75664e",
+      "requirementsPR": "#642/#643/#644/#646/#635",
+      "playerSteps": "核对资源所在路径与接入记录",
+      "normalAndActualEvidence": "候选概念图不冒充已接入玩法",
+      "automaticEvidence": "静态提交清单",
+      "failureBoundaryAndSaveCompatibility": "候选单列，完整资源调用链未做",
+      "impactRegression": "按070ae5a到e9e7292变化选择，未执行不计通过",
+      "result": "候选单列，完整资源调用链未做",
+      "next": "补齐本行实际/边界缺口；优先种收/成长/睡眠/快捷栏兼容",
+      "evidenceTypes": [
+        "actual where stated",
+        "native where named",
+        "static commit scope"
+      ]
+    },
+    {
+      "feature": "保存兼容",
+      "build": "0.2.0 game-e9e7292",
+      "sha": "e9e72920446705415c9a41da7380ab48fe75664e",
+      "requirementsPR": "070ae5a→e9e7292",
+      "playerSteps": "重开→背篓核对日数和旧库存",
+      "normalAndActualEvidence": "第4天米1石1羽1恢复；完成后米0松1石1羽1",
+      "automaticEvidence": "save_recovery24",
+      "failureBoundaryAndSaveCompatibility": "限定旧档通过；本轮修改后再次重载未验",
+      "impactRegression": "按070ae5a到e9e7292变化选择，未执行不计通过",
+      "result": "刷新保留第4天天数、青草已浇水及库存米0麦2玉米2石1松1羽1；快捷配置按已知限制不保留。",
+      "next": "收获后再次重开、麦子长期状态待补",
+      "evidenceTypes": [
+        "actual where stated",
+        "native where named",
+        "static commit scope"
+      ],
+      "deepRound": {
+        "at": "2026-10-10T23:58:31.941602+08:00",
+        "result": "刷新保留第4天天数、青草已浇水及库存米0麦2玉米2石1松1羽1；快捷配置按已知限制不保留。",
+        "actualEvidence": "04/05/06",
+        "next": "收获后再次重开、麦子长期状态待补"
+      }
+    }
+  ],
+  "limits": "多日累计增量；GitHub compare文件最多300，已用本地git diff --no-renames完整路径清单补足；提交主题不是逐条需求验收，不能称全部新功能通过。"
+}
