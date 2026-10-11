@@ -1403,6 +1403,7 @@ func _on_exploration_entered() -> void:
 ## Public regional weather layer. Near-path motion/geometry stays with its Owner.
 func _sync_path_rain(delta: float) -> void:
 	if _world == null or _exploration.scroll == null: return
+	_exploration.scroll.sync_environment(_world.environment_snapshot(), delta <= 0.0)
 	if not is_instance_valid(_path_rain):
 		_path_rain = preload("res://scripts/game/regional_rain.gd").new()
 		_exploration.scroll.add_child(_path_rain)
