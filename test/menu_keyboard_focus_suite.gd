@@ -2,7 +2,7 @@ extends SceneTree
 
 ## 纯键盘玩家在标题、暂停、确认和相册里按 Tab/方向键/回车原来毫无反应：菜单打开时没有任何
 ## 按钮拿着焦点，Godot 不会自动选中。现在第一次导航键把焦点交给该界面的默认按钮
-## （走进院子 / 继续待着 / 算了 / 合上），之后由 Godot 正常移动、按下，且不越出最上层菜单；
+## （走进院子 / 继续待着 / 再待一会儿 / 合上），之后由 Godot 正常移动、按下，且不越出最上层菜单；
 ## 打开菜单本身不抢焦点，鼠标玩家看不到多出的焦点框；游戏中回车仍是互动、方向键仍是走路。
 
 const VIEWS := [Vector2i(1280, 720), Vector2i(390, 844), Vector2i(640, 300)]
@@ -117,7 +117,7 @@ func _check_pause_and_confirm(dims: Vector2i) -> void:
 	_check(main._confirm_screen.visible, "%s: Enter on 再过一次假期 asks to confirm" % dims)
 	await _key(KEY_TAB)
 	_check(_focus() == main._confirm_cancel_button,
-		"%s: focus left behind the confirm paper moves to its safe 算了, got %s" % [dims, _name(_focus())])
+		"%s: focus left behind the confirm paper moves to its safe 再待一会儿, got %s" % [dims, _name(_focus())])
 	for i in 4:
 		await _key(KEY_TAB)
 		var focused := _focus()
@@ -126,9 +126,9 @@ func _check_pause_and_confirm(dims: Vector2i) -> void:
 	main._confirm_cancel_button.grab_focus()
 	await _key(KEY_ENTER)
 	await _settle()
-	_check(not main._confirm_screen.visible and main._pause_screen.visible, "%s: Enter on 算了 returns to pause" % dims)
+	_check(not main._confirm_screen.visible and main._pause_screen.visible, "%s: Enter on 再待一会儿 returns to pause" % dims)
 	await _key(KEY_UP)
-	_check(_focus() == main._resume_button, "%s: after 算了 the next key lands on 继续待着, got %s" % [dims, _name(_focus())])
+	_check(_focus() == main._resume_button, "%s: after 再待一会儿 the next key lands on 继续待着, got %s" % [dims, _name(_focus())])
 	await _key(KEY_ENTER)
 	await _settle()
 	_check(not main._pause_screen.visible and main._screen == "game", "%s: Enter on 继续待着 resumes" % dims)
