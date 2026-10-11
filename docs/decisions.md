@@ -1939,3 +1939,6 @@ game-4567320旧档/快捷配置刷新恢复/草投放/落羽回院限定通过�
 
 ## 2026-10-11 窄竖屏相册翻页按钮分两行（CURSOR-CLOUD UI 维护）
 来源：CURSOR-CLOUD Web 实玩发现，280 宽竖屏打开有照片的相册时，整张手帐被三枚翻页按钮撑得比屏幕宽，「合上」被截掉；320 宽时卡片也比设计宽 16px。决定：一排放不下时，「合上」移到第二行，书页高度让出一行；340 宽以上、横屏保持一行不变。只改 `_build_album_screen`（新增第二行容器）和 `_fit_album_frame`，新增 `_album_buttons_need`；不碰 #720 改的 `_show_album` / `_flip_album`。证据见 `docs/playtests/2026-10-11-cursor-cloud-album-narrow/`，回归由 `album_layout_suite` 守护。
+
+## 2026-10-11 相册页眉垫小纸签（CURSOR-CLOUD UI 维护）
+来源：CURSOR-CLOUD Web 实玩发现，相册每页左上的「假期里的小记」压在相纸背景的薰衣草枝上，小屏几乎读不出；原 MUTED 字色对纸色只有 4.29:1。决定：页眉改为 INK 字，垫一张 88% 不透明的小纸签，宽度只包住文字，书页总高不变。只改 `_album_page`，新增 `_album_heading_paper`；不碰 #720 改的 `_show_album` / `_flip_album`。证据见 `docs/playtests/2026-10-11-cursor-cloud-album-heading/`，回归由 `album_layout_suite` 守护。
