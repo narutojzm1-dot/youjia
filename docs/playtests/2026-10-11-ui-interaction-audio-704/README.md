@@ -88,3 +88,35 @@ CODEX-LEAD 对 `121a248951a9af1a89ba88512c21cafb6bbe762f`：套件 12 checks PAS
 本段只追加记录，不改脚本或音源。含本节变基记录的工作树 `e75a0700d00c7cc57f266400b5b85dc569b51a73` 已再跑同一套件，包装退出码 `0`，完成行仍为 `[ui-interaction-audio] PASS: 24 checks`。把该 SHA 写入本节不改脚本或音源。PR #720 台账记录当前 head 的最终完整 SHA。SHA 若再变须重跑。
 
 **原生/Web 听验仍待 CODEX-LEAD / GAME-QA，听感不写通过。** 不合入，不推 `main`，不发布 Pages。
+
+## 再变基到最新 main（含 Merge #737）（2026-10-11）
+
+上一节变基到 `cdb5d830` 之后，`origin/main` 又前进到 `3caeb1fe6082da0cf0db00e3bea20dc47eb50edf`（Merge pull request #737，#734 鼠标/触摸 HUD 输入）。分支再次变基到这个 main。
+
+- `scripts/main.gd`：背篓/相册仍只在可见→隐藏时播关闭音；暂停与翻页钩子保留。#734 的 `DEVICE_ID_EMULATION` 与触屏时间戳改动保留。
+- `tools/lib/godot_suite_completions.tsv`：保留 `ui_interaction_audio_suite`，并保留 main 的 `hud_pointer_input_suite`。
+- `tools/verify_daily_life.sh`：两行都在。
+
+实跑工作树（本段写入前）：`756c8ec5e745a54ff83ca18fb3fd8866204c0624`
+
+引擎与隔离方式同上。import 退出码 `0`。`run_verified_godot_suite test/ui_interaction_audio_suite.gd --headless --path .` 包装退出码 `0`。完成行：`[ui-interaction-audio] PASS: 24 checks`。
+
+本段只追加记录。含本段的提交是当前最终候选，完整 SHA 记在 PR #720 台账。该提交不改脚本或音源；写入后按同一隔离方式再跑，完成行仍为 `[ui-interaction-audio] PASS: 24 checks`。SHA 若再变须重跑。
+
+**原生/Web 听验仍待 CODEX-LEAD / GAME-QA，听感不写通过。** 不合入，不推 `main`，不发布 Pages。
+
+## 再变基到最新 main（含 Merge #737）（2026-10-11）
+
+上一节变基到 `cdb5d830` 之后，`origin/main` 又前进到 `3caeb1fe6082da0cf0db00e3bea20dc47eb50edf`（Merge pull request #737，#734 鼠标/触摸 HUD 输入）。分支再次变基到这个 main。
+
+- `scripts/main.gd`：背篓/相册仍只在可见→隐藏时播关闭音；暂停与翻页钩子保留。#734 的 `DEVICE_ID_EMULATION` 与触屏时间戳改动保留。
+- `tools/lib/godot_suite_completions.tsv`：保留 `ui_interaction_audio_suite`，并保留 main 的 `hud_pointer_input_suite`。
+- `tools/verify_daily_life.sh`：两行都在。
+
+实跑工作树（本段写入前）：`756c8ec5e745a54ff83ca18fb3fd8866204c0624`
+
+引擎与隔离方式同上。import 退出码 `0`。`run_verified_godot_suite test/ui_interaction_audio_suite.gd --headless --path .` 包装退出码 `0`。完成行：`[ui-interaction-audio] PASS: 24 checks`。
+
+本段只追加记录。含本段的提交是当前最终候选，完整 SHA 记在 PR #720 台账。该提交不改脚本或音源；写入后按同一隔离方式再跑，完成行仍为 `[ui-interaction-audio] PASS: 24 checks`。SHA 若再变须重跑。
+
+**原生/Web 听验仍待 CODEX-LEAD / GAME-QA，听感不写通过。** 不合入，不推 `main`，不发布 Pages。
