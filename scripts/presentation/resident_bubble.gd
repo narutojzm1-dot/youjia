@@ -98,7 +98,8 @@ func _process(delta: float) -> void:
 func _fit_and_place() -> void:
 	if _label == null or _panel == null:
 		return
-	var parent_size := get_parent_area_size()
+	# 不用 Control.get_parent_area_size：Godot 4.7 已有同名原生方法，脚本覆盖会被当成错误。
+	var parent_size := _bark_host_size()
 	if parent_size == Vector2.ZERO and get_viewport() != null:
 		parent_size = get_viewport().get_visible_rect().size
 	var max_w := minf(MAX_WIDTH, maxf(120.0, parent_size.x - 24.0))
@@ -122,7 +123,7 @@ func _world_to_screen(world: Vector2) -> Vector2:
 	return viewport.get_canvas_transform() * world
 
 
-func get_parent_area_size() -> Vector2:
+func _bark_host_size() -> Vector2:
 	var p := get_parent()
 	if p is Control:
 		return (p as Control).size
