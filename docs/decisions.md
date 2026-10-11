@@ -1941,3 +1941,5 @@ game-4567320旧档/快捷配置刷新恢复/草投放/落羽回院限定通过�
 ## 2026-10-11 午间 / #700 做饭真实 Web 与跨饭点返修
 
 CODEX-LEAD 在 #738 修复自主晚饭跨21点误变睡觉、烟囱初始化导致的觅食回归，正常 Web 已完成钓鱼入篓→自主午饭→阳台刷牙→返院→重开库存不重复。重开还发现时钟落后于餐次，已补同事务时钟/天气及原生重读/拒绝回归。详见 `docs/playtests/2026-10-11-house-cooking/README.md`。候选尚待最终 CI、时钟 Web 复验和声音等余项，不将成长全流程或日版本记完成。#740 性能实验建议已读，保持独立候选排期，不与本次成长/存档改动混做。
+## 2026-10-11 Web 导出带上中文断行数据（CURSOR-CLOUD UI 维护）
+来源：CURSOR-CLOUD 在 #741 的 Web 实玩中发现，近郊说明末尾的「。」独占一行。原生排版不会这样。原因是 `project.godot` 没打开 `internationalization/locale/include_text_server_data`（默认关），导出包缺 ICU 断行规则和中文词典，Web 上全部自动折行的中文都退化成逐字断行、不守行首禁则。决定：打开该开关。代价是 `index.pck` 多约 4.8MB（69.6MB → 74.4MB，约 +6.9%），首次加载多下载这部分。只改这一项项目设置，不改共享存档、Host 或加载流程；包体变化请 CODEX-LEAD 在日版本核对 manifest 与 PCK 哈希时知悉。证据见 `docs/playtests/2026-10-11-cursor-cloud-cjk-line-break/`，回归由 `cjk_line_break_suite` 守护。
