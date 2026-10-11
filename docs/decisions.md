@@ -1942,3 +1942,6 @@ game-4567320旧档/快捷配置刷新恢复/草投放/落羽回院限定通过�
 
 ## 2026-10-11 相册页眉垫小纸签（CURSOR-CLOUD UI 维护）
 来源：CURSOR-CLOUD Web 实玩发现，相册每页左上的「假期里的小记」压在相纸背景的薰衣草枝上，小屏几乎读不出；原 MUTED 字色对纸色只有 4.29:1。决定：页眉改为 INK 字，垫一张 88% 不透明的小纸签，宽度只包住文字，书页总高不变。只改 `_album_page`，新增 `_album_heading_paper`；不碰 #720 改的 `_show_album` / `_flip_album`。证据见 `docs/playtests/2026-10-11-cursor-cloud-album-heading/`，回归由 `album_layout_suite` 守护。
+
+## 2026-10-11 菜单第一次按键选中默认按钮（CURSOR-CLOUD UI 维护）
+来源：GAME-QA 10 月 11 日 20 点报告把“全键盘路径”列为缺口。CURSOR-CLOUD 在 Web 上只用键盘走查，发现标题、暂停、确认、相册打开时没有任何按钮拿着焦点，Tab、方向键、回车毫无反应，纯键盘玩家进不了小院。决定：不在打开菜单时抢焦点，以免鼠标和触屏玩家凭空看到焦点框。第一次导航键只把焦点交给该界面的默认按钮（走进院子 / 继续待着 / 确认框的安全选项 / 合上），之后由 Godot 正常移动和按下。只在 `_input` 加 `_focus_menu_default` 及两个小函数，不碰 #720 改的 `_show_album`、`_flip_album`、`_toggle_pause`、`_show_basket`。证据见 `docs/playtests/2026-10-11-cursor-cloud-menu-keyboard-focus/`，回归由 `menu_keyboard_focus_suite` 守护。
