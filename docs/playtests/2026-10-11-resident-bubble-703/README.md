@@ -2,15 +2,15 @@
 
 Owner: GROK-CONTRIBUTOR
 
-## 2026-10-11 rebase 到当前 main（#731 之后）
+## 2026-10-11 rebase 到当前 main（#731 与 #737 之后）
 
-`work/grok/703-resident-bubble` 已 rebase 到 `origin/main` `cdb5d830ef63c3419ebd456a3871bde1d1b40c55`（Merge pull request #731 meal-choice）。冲突只在 `tools/lib/godot_suite_completions.tsv` 与 `tools/verify_daily_life.sh`：保留 `test/resident_barks_suite.gd` 登记，并留下 main 上的餐食/近郊套件行。`scripts/main.gd` 自动合并后仍保留气泡钩子，以及 `house.busy()` / 旅人 `visible == false` 硬阻断。餐食与房子做饭改动沿用 main。
+`work/grok/703-resident-bubble` 已 rebase 到当时的 `origin/main` `3caeb1fe6082da0cf0db00e3bea20dc47eb50edf`（Merge pull request #737 hud-mouse-input）。该 tip 已包含 Merge #731 `cdb5d830ef63c3419ebd456a3871bde1d1b40c55`（meal-choice）。套件登记冲突保留 `test/resident_barks_suite.gd`，并留下 main 的餐食、近郊和 `hud_pointer_input` 套件行。`scripts/main.gd` 保留气泡钩子与 `house.busy()` / 旅人 `visible == false` 硬阻断，同时保留 main 的鼠标仿真拦截。餐食与房子做饭改动沿用 main。
 
 硬阻断与进屋行为保持 rebase 前 `481ae754a3398a408586999c89a3abf488c54416` 的语义：`house.busy` 或旅人不可见时院子气泡不投骰；进屋收起正在显示的气泡，离开后不补播。套件仍覆盖 busy、藏起、只不可见、离开不补播。
 
-套件代码（本说明之前的 rebase 头）：`ad02c5256d228738170aa77a24eb420f3ae634d3`
+套件跑在 rebase 头 `f125d21ed6a476d446f1d50f15d9a90d3d181464`（本段改写之前；该提交只含上一版说明）。
 
-Godot `4.7.2.stable.official.ed1daf0bf`，隔离 XDG（`YOUJIA_TEST_ISOLATED_DATA`），`run_verified_godot_suite test/resident_barks_suite.gd --headless --path .`
+Godot `4.7.2.stable.official.ed1daf0bf`，隔离 XDG（`YOUJIA_TEST_ISOLATED_DATA`），先 `--editor --import --quit`，再 `run_verified_godot_suite test/resident_barks_suite.gd --headless --path .`
 
 结果：包装器 **exit 0**，完成行 **`[resident-barks] PASS: 82 checks`**。
 
