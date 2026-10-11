@@ -479,6 +479,46 @@ func _process(delta: float) -> void:
 			_last_tod_phase = phase
 
 
+const MENU_FOCUS_ACTIONS: Array[StringName] = [&"ui_focus_next", &"ui_focus_prev", &"ui_up", &"ui_down", &"ui_accept"]
+
+
+## 菜单打开时没有按钮拿着焦点，Godot 不会因 Tab/方向键自动选中按钮，纯键盘玩家在标题、暂停、
+## 确认和相册里按键毫无反应。第一次导航键只把焦点交给该界面的默认按钮，之后由 Godot 正常移动和按下；
+## 鼠标玩家不会凭空多出焦点框。焦点留在被确认框盖住的暂停按钮上时同样交给最上层菜单。
+## 相册左右键仍归翻页，不在此列。
+func _top_menu() -> Control:
+	if _confirm_screen.visible: return _confirm_screen
+	if _album_screen.visible: return _album_screen
+	if _pause_screen.visible: return _pause_screen
+	if _screen == "title" and _title_screen.visible: return _title_screen
+	return null
+
+
+func _menu_default_button(menu: Control) -> Button:
+	if menu == _confirm_screen: return _confirm_cancel_button
+	if menu == _album_screen: return _album_back_button
+	if menu == _pause_screen: return _resume_button
+	return _play_button
+
+
+func _focus_menu_default(event: InputEvent) -> bool:
+	if not (event is InputEventKey or event is InputEventJoypadButton) or event.is_echo():
+		return false
+	var menu := _top_menu()
+	if menu == null:
+		return false
+	var focused := get_viewport().gui_get_focus_owner()
+	if focused != null and focused.is_visible_in_tree() and menu.is_ancestor_of(focused):
+		return false
+	if not MENU_FOCUS_ACTIONS.any(func(action: StringName) -> bool: return event.is_action_pressed(action)):
+		return false
+	var target := _menu_default_button(menu)
+	if not target.is_visible_in_tree() or target.disabled:
+		return false
+	target.grab_focus()
+	return true
+
+
 func _input(event: InputEvent) -> void:
 	if _chick_panel != null and _chick_panel.visible:
 		if event.is_action_pressed("pause") and not event.is_echo():
@@ -527,6 +567,9 @@ func _input(event: InputEvent) -> void:
 			_hide_album()
 		elif _screen in ["game", "exploring"]:
 			_toggle_pause()
+		get_viewport().set_input_as_handled()
+		return
+	if _focus_menu_default(event):
 		get_viewport().set_input_as_handled()
 		return
 	if _album_screen.visible:
