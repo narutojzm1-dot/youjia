@@ -98,6 +98,8 @@ func inspect_pages(main: Control, tag: String) -> void:
 		for node in descendants(page):
 			if node is Label and not node.text.is_empty():
 				texts.append(node)
+				if node.text == root.get_node("I18n").t("album.page_label"):
+					_check_heading(node, tag)
 				check(bounds.encloses(node.get_global_rect()), tag + " text stays on page: " + node.text)
 				check(node.size.y + 0.5 >= node.get_minimum_size().y, tag + " text fits its height")
 			if node is PhotoMoment:
@@ -145,3 +147,22 @@ func _check_frame(main: Control, tag: String) -> void:
 		for other in navigation:
 			if other != button:
 				check(not rect.intersects(other.get_global_rect()), tag + " '%s' clear of '%s'" % [button.text, other.text])
+
+## 页眉「假期里的小记」压在相纸薰衣草枝上：垫贴字宽的不透明小纸签，墨字对纸签至少 4.5:1
+func _check_heading(heading: Label, tag: String) -> void:
+	var paper := heading.get_theme_stylebox("normal") as StyleBoxFlat
+	check(paper != null and paper.bg_color.a >= 0.85, tag + " page heading sits on a mostly opaque paper")
+	if paper == null: return
+	check(_contrast(heading.get_theme_color("font_color"), Color(paper.bg_color, 1.0)) >= 4.5, tag + " page heading ink reaches 4.5:1 on its paper")
+	check(heading.size.x <= heading.get_minimum_size().x + 1.0, tag + " page heading paper hugs its text (%.0f vs %.0f)" % [heading.size.x, heading.get_minimum_size().x])
+
+func _luminance(c: Color) -> float:
+	var parts: Array[float] = []
+	for v: float in [c.r, c.g, c.b]:
+		parts.append(v / 12.92 if v <= 0.03928 else pow((v + 0.055) / 1.055, 2.4))
+	return 0.2126 * parts[0] + 0.7152 * parts[1] + 0.0722 * parts[2]
+
+func _contrast(a: Color, b: Color) -> float:
+	var la := _luminance(a)
+	var lb := _luminance(b)
+	return (maxf(la, lb) + 0.05) / (minf(la, lb) + 0.05)
