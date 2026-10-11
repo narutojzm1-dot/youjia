@@ -22,8 +22,8 @@ func step_until(target: String, frames: int = 2400) -> bool:
 		var stage: String = world.house.stage
 		seen_stages[stage] = true
 		var folder := OS.get_environment("YOUJIA_COOK_CAPTURE")
-		if not folder.is_empty() and stage in ["cook", "balcony", "out"] and not captured.has(stage):
-			if (stage == "cook" and world.house.seconds > 3.0) or (stage == "balcony" and world.house.balcony.stage == "activity" and world.house.balcony.seconds > 1.0) or (stage == "out" and world.house.seconds > 1.0):
+		if not folder.is_empty() and stage in ["open", "cook", "balcony", "out"] and not captured.has(stage):
+			if (stage == "open" and world.house.seconds > 0.7) or (stage == "cook" and world.house.seconds > 3.0) or (stage == "balcony" and world.house.balcony.stage == "activity" and world.house.balcony.seconds > 1.0) or (stage == "out" and world.house.seconds > 1.0):
 				main._process(0.0)
 				await RenderingServer.frame_post_draw
 				root.get_texture().get_image().save_jpg(folder.path_join(stage + ".jpg"), 0.8)
@@ -68,6 +68,11 @@ func run() -> void:
 	world = main._world
 	check(world.house.smoke == null, "unused house allocates no cooking particles")
 	await fixture(50.0)
+	world.get_player().sync_grass(true)
+	world.house.begin(true)
+	check(not world.house.busy() and not world.house.meal_ingredient.visible, "held item cannot overlap a second cooking ingredient")
+	world.get_player().sync_grass(false)
+	world.house.meal_cooldown = 0.0
 	world.house.consider_meal(10.0, Vector2.RIGHT)
 	check(not world._has_walk_goal and not world.house.busy(), "manual movement prevents auto meal")
 	world.input_enabled = false
@@ -77,7 +82,19 @@ func run() -> void:
 	world.house.consider_meal(8.1, Vector2.ZERO)
 	check(world._has_walk_goal and world._pending_interaction == "house_meal", "idle meal uses production walking route")
 	check(world.get_player().position.distance_to(Vector2(380,520)) < 1.0, "meal request never teleports")
+	check(await step_until("porch"), "chosen meal enters the porch")
+	world.house._sync_meal_ingredient()
+	check(world.house.meal_ingredient.visible and world.house.meal_ingredient.texture.resource_path.ends_with("millet.png"), "porch carries the selected millet")
+	check(world.house.meal_ingredient.global_position.distance_to(world.get_player().grass_hand_global_position()) < 0.01, "ingredient follows actual hand anchor")
+	check(world.ground_food.held().is_empty() and store.get_yard_inventory().millet == 3, "ingredient visual neither changes held inventory nor predebits")
+	var original_ingredients: Dictionary = world.house.cooking_plan.ingredients.duplicate(true)
+	world.house.cooking_plan.ingredients = {"medium": 1}
+	world.house._sync_meal_ingredient()
+	check(world.house.meal_ingredient.texture.resource_path.ends_with("ground_fish.png"), "fish meal displays fish rather than grain")
+	world.house.cooking_plan.ingredients = original_ingredients
+	world.house._sync_meal_ingredient()
 	check(await step_until("cook"), "walk, open, enter, close reaches cooking")
+	check(not world.house.meal_ingredient.visible, "closed room hides ingredient")
 	var meal_arrival_elapsed: float = world._day_elapsed
 	check(not world.get_player().visible and world.house.smoke.is_cooking(), "indoor cook hides one actor and emits smoke")
 	check(store.get_meal_ledger().receipts.is_empty() and store.get_yard_inventory().millet == 3, "unconfirmed cooking does not debit or grant")
@@ -89,6 +106,7 @@ func run() -> void:
 	check(store.get_meal_ledger().receipts.size() == 1 and store.get_meal_ledger().receipts[0].earned == 0, "fatigued breakfast completes once with zero grant")
 	check(store.get_yard_inventory().millet == 2, "exactly one ingredient consumed")
 	check(not world.house.smoke.is_cooking(), "smoke stops after meal")
+	check(not world.house.meal_ingredient.visible, "returning traveller has no ingredient ghost")
 	store._load()
 	check(is_equal_approx(store.get_holiday_day_elapsed(), meal_arrival_elapsed), "meal arrival clock persists atomically with receipt after reopen")
 	check(store.get_meal_ledger().receipts.size() == 1 and store.get_yard_inventory().millet == 2, "native reopen preserves receipt and stock")
@@ -114,6 +132,7 @@ func run() -> void:
 	world.house.begin()
 	check(await step_until("cook"), "lunch cooking starts")
 	world.house.skip_balcony()
+	check(not world.house.meal_ingredient.visible, "cancel hides ingredient immediately")
 	check(await step_until(""), "player interrupts uncommitted meal and exits")
 	check(store.get_yard_inventory().millet == 3 and store.get_meal_ledger().receipts.is_empty(), "interrupted meal keeps all food and grants nothing")
 	await fixture(175.0)

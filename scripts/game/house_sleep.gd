@@ -25,6 +25,7 @@ var meal_idle := 0.0
 var meal_cooldown := 0.0
 var meal_rng := RandomNumberGenerator.new()
 var meal_succeeded := false
+var meal_ingredient: Sprite2D
 
 
 func _init(owner_world: Node2D, save_store: Node) -> void:
@@ -44,6 +45,12 @@ func _init(owner_world: Node2D, save_store: Node) -> void:
 	balcony = preload("res://scripts/game/balcony_morning.gd").new(world)
 	add_child(balcony)
 	meal_rng.randomize()
+	meal_ingredient = Sprite2D.new()
+	meal_ingredient.name = "MealIngredient"
+	meal_ingredient.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
+	meal_ingredient.z_as_relative = false
+	meal_ingredient.visible = false
+	add_child(meal_ingredient)
 
 
 func busy() -> bool: return not stage.is_empty()
@@ -54,12 +61,14 @@ func available() -> bool:
 func begin(meal_only: bool = false) -> void:
 	if not available(): return
 	var meal := Meals.meal_at(world.tod_fraction())
-	if not meal.is_empty() and store.has_method("plan_meal") and store.is_save_idle():
+	var hands_free: bool = not world.get_player().carrying_grass and (world.ground_food == null or world.ground_food.held().is_empty())
+	if hands_free and not meal.is_empty() and store.has_method("plan_meal") and store.is_save_idle():
 		var plan: Dictionary = store.plan_meal(meal, Meals.RECIPES, meal_rng)
 		if not plan.is_empty():
 			cooking_plan = plan
 			meal_succeeded = false
 			_start_entry()
+			_sync_meal_ingredient()
 			world.notice_requested.emit("notice.meal.enter")
 			return
 	# Arrival revalidates food/time, but an autonomous meal never becomes sleep.
@@ -100,6 +109,7 @@ func skip_balcony() -> void:
 	elif not cooking_plan.is_empty() and pending.is_empty() and stage in ["porch", "open", "in", "close", "cook"]:
 		# A player's input can interrupt uncommitted cooking without losing food.
 		_set_cooking_smoke(false)
+		meal_ingredient.visible = false
 		meal_cooldown = 30.0
 		if stage in ["porch", "open", "in"]:
 			_enter("out")
@@ -110,6 +120,7 @@ func window_light_target() -> float:
 	return 1.0 if wants_light(world.tod_fraction(), inside_room()) else 0.0
 
 func tick(delta: float) -> void:
+	_sync_meal_ingredient()
 	var target := window_light_target()
 	lights = move_toward(lights,target,delta * 0.7)
 	queue_redraw()
@@ -129,6 +140,7 @@ func tick(delta: float) -> void:
 			player.modulate.a = clampf((player.position.y - INSIDE.y) / 12.0,0.0,1.0)
 			if _walk(delta,INSIDE):
 				player.visible = false
+				meal_ingredient.visible = false
 				_enter("close")
 		"close":
 			door.modulate.a = maxf(0.0,1.0 - seconds / 0.8)
@@ -285,3 +297,25 @@ func _set_cooking_smoke(active: bool) -> void:
 		smoke.set_chimney_anchor(Vector2(286, 122))
 		smoke.set_night_tint(Daylight.phase(world.tod_fraction()) == "night")
 	if smoke != null: smoke.set_cooking(active)
+
+func _sync_meal_ingredient() -> void:
+	# Presentation of the chosen basket ingredient, never a second held ledger.
+	# Cancellation and hidden-room stages must not leave a floating item behind.
+	var player = world.get_player()
+	meal_ingredient.visible = not cooking_plan.is_empty() and stage in ["porch", "open", "in"] and player.visible
+	if not meal_ingredient.visible: return
+	var ingredients: Dictionary = cooking_plan.get("ingredients", {})
+	if ingredients.size() != 1:
+		meal_ingredient.visible = false
+		return
+	var kind := str(ingredients.keys()[0])
+	if kind not in ["millet", "small", "medium"]:
+		meal_ingredient.visible = false
+		return
+	meal_ingredient.texture = preload("res://assets/holiday/objects/millet.png") if kind == "millet" else preload("res://assets/holiday/objects/ground_fish.png")
+	var width := 25.0 if kind == "millet" else 32.0 if kind == "medium" else 26.0
+	var size: float = width * player.picture_depth * float(TuningStore.get_value("player.visual.scale", 1.0)) / meal_ingredient.texture.get_width()
+	meal_ingredient.global_position = player.grass_hand_global_position()
+	meal_ingredient.scale = Vector2(player.grass_hand_facing(), 1.0) * size
+	meal_ingredient.modulate.a = player.modulate.a
+	meal_ingredient.z_index = player.z_index + 1
