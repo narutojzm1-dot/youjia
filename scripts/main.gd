@@ -84,6 +84,13 @@ var _chip_label_width := -1.0
 var _residents: RefCounted
 var _chick_panel: Control
 var _crop_panel: Control
+var _resident_bubble: Control
+var _resident_barks: RefCounted
+var _crop_kind_watch := ""
+var _bark_clock := 0.0
+## Chick proximity hysteresis: stay latched until beyond PET_REACH + margin.
+var _chick_proximity_latched := false
+const CHICK_LEAVE_MARGIN := 28.0
 var _inventory: RefCounted
 var _decor: RefCounted
 var _basket_drop: Dictionary = {}
@@ -365,6 +372,10 @@ func _ready() -> void:
 	_crop_panel.flower_requested.connect(func() -> void:
 		_hide_crops()
 		if _world != null: _world._interact_legacy_plant())
+	_resident_barks = preload("res://scripts/presentation/resident_barks.gd").new()
+	_resident_bubble = preload("res://scripts/presentation/resident_bubble.gd").new()
+	_resident_bubble.name = "ResidentBubble"
+	_ui_layer.add_child(_resident_bubble)
 	_decor = load("res://scripts/inventory/yard_decor_controller.gd").new(SaveStore)
 	_decor.changed.connect(_on_decor_changed)
 	_decor.resubmitted.connect(_on_decor_resubmitted)
@@ -389,6 +400,8 @@ func _report_web_first_frame() -> void:
 
 
 func _process(delta: float) -> void:
+	_bark_clock += delta
+	_tick_resident_barks(delta)
 	if _notice_time > 0.0 and _can_show_notice():
 		_notice_time = maxf(0.0, _notice_time - delta)
 	_sync_notice_visibility()
@@ -1827,6 +1840,7 @@ func _exploration_save_covers(accepted: Dictionary, problem: Dictionary) -> bool
 
 
 func _on_save_confirmed(op_id: String, kind: String) -> void:
+	_on_crops_confirmed_for_bark(kind)
 	if _save_exploration_coverage.has(op_id) and _save_exploration_coverage[op_id].kind == kind:
 		_clear_covered_save_problems(_save_exploration_coverage[op_id].problems)
 		_save_exploration_coverage.erase(op_id)
@@ -3381,3 +3395,149 @@ func _flat(bg: Color, border: Color, width: int = 2, radius: int = 16) -> StyleB
 	style.content_margin_top = 10
 	style.content_margin_bottom = 10
 	return style
+
+## GROK #703: picture-book resident barks (chick / plant / Leader fatigue hook).
+func _tick_resident_barks(_delta: float) -> void:
+	_sync_resident_bark_avoidance()
+	if _crop_panel != null and _crop_panel.visible:
+		var bed := SaveStore.get_yard_crops()
+		if not bed.is_empty():
+			_crop_kind_watch = str(bed.get("kind", ""))
+	var hard_block := _resident_bark_hard_blocked()
+	# 暂停、近郊、进屋或旅人被藏起：收起正在显示的气泡，不保留补播。
+	if hard_block and _resident_bubble != null and _resident_bubble.visible:
+		_resident_bubble.dismiss()
+	if hard_block or _world == null or _screen != "game":
+		return
+	if _crop_panel != null and _crop_panel.visible:
+		return
+	if _chick_panel != null and _chick_panel.visible:
+		return
+	if _basket_panel != null and _basket_panel.visible:
+		return
+	_try_chick_bark()
+
+
+func _resident_bark_hard_blocked() -> bool:
+	# Pause / album / confirm / leave-game: dismiss and do not replay.
+	if _screen != "game":
+		return true
+	if _pause_screen != null and _pause_screen.visible:
+		return true
+	if _album_screen != null and _album_screen.visible:
+		return true
+	if _confirm_screen != null and _confirm_screen.visible:
+		return true
+	if _save_problem_active:
+		return true
+	# 睡眠/阳台导演：house.busy 或旅人已不可见。一楼坐标还在，也不能据此冒泡。
+	if _world != null and _world.house != null and _world.house.busy():
+		return true
+	if _world != null and _world.get_player() != null and not _world.get_player().visible:
+		return true
+	return false
+
+
+func _resident_bark_blocked() -> bool:
+	if _resident_bark_hard_blocked():
+		return true
+	if _basket_panel != null and _basket_panel.visible:
+		return true
+	if _crop_panel != null and _crop_panel.visible:
+		return true
+	if _chick_panel != null and _chick_panel.visible:
+		return true
+	return false
+
+
+func _on_crops_confirmed_for_bark(kind: String) -> void:
+	if kind != "crops" or _resident_barks == null or _resident_bubble == null:
+		return
+	var bed := SaveStore.get_yard_crops()
+	if bed.is_empty():
+		return
+	var now_kind := str(bed.get("kind", ""))
+	var was_empty := _crop_kind_watch.is_empty()
+	_crop_kind_watch = now_kind
+	if not was_empty or now_kind.is_empty():
+		return
+	# Confirmed sow beats chick idle: may preempt a showing idle line and ignores
+	# global cooldown left by that idle. Only hard blocks stop it; panel may stay open.
+	var hard: bool = _resident_bark_hard_blocked()
+	var bark_id: String = _resident_barks.try_plant_sown(_bark_clock, hard)
+	if bark_id.is_empty():
+		return
+	_show_resident_bark(bark_id)
+
+
+func _try_chick_bark() -> void:
+	if _resident_barks == null or _resident_bubble == null or _world == null:
+		return
+	var growth := SaveStore.get_chick_growth()
+	if growth.is_empty() or str(growth.get("stage", "")) != "chick":
+		_chick_proximity_latched = false
+		_resident_barks.try_chick_proximity(_bark_clock, true, false)
+		return
+	var chick = _world.actor_named("chicken")
+	var player = _world.get_player()
+	if chick == null or player == null:
+		_chick_proximity_latched = false
+		_resident_barks.try_chick_proximity(_bark_clock, true, false)
+		return
+	var reach := YardInteraction.PET_REACH
+	var dist: float = player.position.distance_to(chick.position)
+	# Enter at PET_REACH; leave only beyond reach + margin (anti-jitter).
+	if _chick_proximity_latched:
+		_chick_proximity_latched = dist <= reach + CHICK_LEAVE_MARGIN
+	else:
+		_chick_proximity_latched = dist <= reach
+	# 人被藏进屋里时距离仍按一楼坐标算；硬阻断/已有气泡时不投骰，但仍同步靠近状态。
+	var soft_busy: bool = _resident_bark_hard_blocked() or _resident_bubble.is_showing()
+	var bark_id: String = _resident_barks.try_chick_proximity(
+		_bark_clock, soft_busy, _chick_proximity_latched
+	)
+	if bark_id.is_empty():
+		return
+	_show_resident_bark(bark_id)
+
+
+## Leader fatigue hook (#700 / #703): pass true only from real fatigue state.
+## Does not infer overnight or missed sleep.
+func offer_fatigue_bark(fatigue_active: bool) -> bool:
+	if _resident_barks == null or _resident_bubble == null:
+		return false
+	var busy: bool = _resident_bubble.is_showing() or _resident_bark_blocked()
+	var bark_id: String = _resident_barks.try_fatigue(_bark_clock, busy, fatigue_active)
+	if bark_id.is_empty():
+		return false
+	_show_resident_bark(bark_id)
+	return true
+
+
+func _show_resident_bark(bark_id: String) -> void:
+	var key: String = _resident_barks.i18n_key(bark_id)
+	if key.is_empty():
+		return
+	var text := I18n.t(key)
+	var anchor := Vector2.ZERO
+	var follow := Callable()
+	if _world != null and _world.get_player() != null:
+		var player = _world.get_player()
+		anchor = player.position
+		follow = func() -> Vector2:
+			if _world == null or _world.get_player() == null:
+				return anchor
+			return _world.get_player().position
+	if _ui_layer != null:
+		_ui_layer.move_child(_resident_bubble, _ui_layer.get_child_count() - 1)
+	_sync_resident_bark_avoidance()
+	_resident_bubble.show_bark(text, anchor, preload("res://scripts/presentation/resident_barks.gd").DISPLAY_SECONDS, follow)
+
+
+func _sync_resident_bark_avoidance() -> void:
+	if _resident_bubble == null:
+		return
+	_resident_bubble.avoid_rect = Rect2()
+	if _crop_panel != null and _crop_panel.visible and _crop_panel.paper != null:
+		_resident_bubble.avoid_rect = _crop_panel.paper.get_global_rect()
+
