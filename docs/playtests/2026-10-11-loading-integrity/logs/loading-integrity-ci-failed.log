@@ -1,0 +1,1024 @@
+verify-export	Run game verification	﻿2026-10-08T16:16:11.3365809Z ##[group]Run GODOT="$RUNNER_TEMP/godot/Godot_v4.7.2-stable_linux.x86_64" bash tools/verify_daily_life.sh
+verify-export	Run game verification	2026-10-08T16:16:11.3366537Z ^[[36;1mGODOT="$RUNNER_TEMP/godot/Godot_v4.7.2-stable_linux.x86_64" bash tools/verify_daily_life.sh^[[0m
+verify-export	Run game verification	2026-10-08T16:16:11.3435427Z shell: /usr/bin/bash -e {0}
+verify-export	Run game verification	2026-10-08T16:16:11.3435709Z ##[endgroup]
+verify-export	Run game verification	2026-10-08T16:16:11.3836700Z gate contract: suite-complete pass
+verify-export	Run game verification	2026-10-08T16:16:11.4025672Z gate contract: scene-complete pass
+verify-export	Run game verification	2026-10-08T16:16:11.4185269Z gate contract: empty-zero-exit block
+verify-export	Run game verification	2026-10-08T16:16:11.4329118Z gate contract: unrelated-pass block
+verify-export	Run game verification	2026-10-08T16:16:11.4474916Z gate contract: different-suite block
+verify-export	Run game verification	2026-10-08T16:16:11.4618287Z gate contract: zero-checks block
+verify-export	Run game verification	2026-10-08T16:16:11.4763875Z gate contract: prefixed-marker block
+verify-export	Run game verification	2026-10-08T16:16:11.4906776Z gate contract: suffixed-marker block
+verify-export	Run game verification	2026-10-08T16:16:11.5050788Z gate contract: truncated-marker block
+verify-export	Run game verification	2026-10-08T16:16:11.5194967Z gate contract: individual-assertion-pass block
+verify-export	Run game verification	2026-10-08T16:16:11.5374565Z gate contract: empty-failure-summary pass
+verify-export	Run game verification	2026-10-08T16:16:11.5520293Z gate contract: nonempty-failure-summary block
+verify-export	Run game verification	2026-10-08T16:16:11.5668987Z gate contract: explicit-target-tests-zero-checks block
+verify-export	Run game verification	2026-10-08T16:16:11.5846877Z gate contract: explicit-target-tests-positive-checks pass
+verify-export	Run game verification	2026-10-08T16:16:11.5989723Z gate contract: explicit-target-tests-old-counterless-summary block
+verify-export	Run game verification	2026-10-08T16:16:11.6133183Z gate contract: ui-interaction-tests-zero-checks block
+verify-export	Run game verification	2026-10-08T16:16:11.6306919Z gate contract: ui-interaction-tests-positive-checks pass
+verify-export	Run game verification	2026-10-08T16:16:11.6449777Z gate contract: ui-interaction-tests-old-counterless-summary block
+verify-export	Run game verification	2026-10-08T16:16:11.6591987Z gate contract: viewport-zero-checks block
+verify-export	Run game verification	2026-10-08T16:16:11.6765947Z gate contract: viewport-positive-checks pass
+verify-export	Run game verification	2026-10-08T16:16:11.6907848Z gate contract: viewport-old-counterless-summary block
+verify-export	Run game verification	2026-10-08T16:16:11.7051700Z gate contract: licenses-zero-checks-with-pass block
+verify-export	Run game verification	2026-10-08T16:16:11.7194666Z gate contract: licenses-nonzero-failures-with-pass block
+verify-export	Run game verification	2026-10-08T16:16:11.7367522Z gate contract: licenses-positive-completion pass
+verify-export	Run game verification	2026-10-08T16:16:11.7542050Z gate contract: zero-failure-count pass
+verify-export	Run game verification	2026-10-08T16:16:11.7687545Z gate contract: nonzero-failure-count block
+verify-export	Run game verification	2026-10-08T16:16:11.7862365Z gate contract: nearby-direct-pick-complete pass
+verify-export	Run game verification	2026-10-08T16:16:11.8007022Z gate contract: nearby-direct-pick-zero block
+verify-export	Run game verification	2026-10-08T16:16:11.8151196Z gate contract: nearby-direct-pick-failure block
+verify-export	Run game verification	2026-10-08T16:16:11.8325808Z gate contract: matching-completion-counts pass
+verify-export	Run game verification	2026-10-08T16:16:11.8468942Z gate contract: incomplete-completion-counts block
+verify-export	Run game verification	2026-10-08T16:16:11.8581586Z gate contract: nonzero-1-after-completion block
+verify-export	Run game verification	2026-10-08T16:16:11.8694350Z gate contract: nonzero-124-after-completion block
+verify-export	Run game verification	2026-10-08T16:16:11.8807373Z gate contract: nonzero-127-after-completion block
+verify-export	Run game verification	2026-10-08T16:16:11.8919136Z gate contract: nonzero-139-after-completion block
+verify-export	Run game verification	2026-10-08T16:16:11.9034473Z gate contract: silent-timeout block
+verify-export	Run game verification	2026-10-08T16:16:11.9162616Z gate contract: script-error block
+verify-export	Run game verification	2026-10-08T16:16:11.9293751Z gate contract: engine-error block
+verify-export	Run game verification	2026-10-08T16:16:11.9422718Z gate contract: audit-fail block
+verify-export	Run game verification	2026-10-08T16:16:11.9552791Z gate contract: assertion-fail block
+verify-export	Run game verification	2026-10-08T16:16:11.9682338Z gate contract: completion-then-fail block
+verify-export	Run game verification	2026-10-08T16:16:11.9812179Z gate contract: fail-then-completion block
+verify-export	Run game verification	2026-10-08T16:16:11.9939350Z gate contract: completion-then-error block
+verify-export	Run game verification	2026-10-08T16:16:12.0054755Z gate contract: tee-failure block
+verify-export	Run game verification	2026-10-08T16:16:12.0186993Z gate contract: missing-log block
+verify-export	Run game verification	2026-10-08T16:16:12.0320167Z gate contract: completion-log-read-failure block
+verify-export	Run game verification	2026-10-08T16:16:12.0393081Z gate contract: unregistered-suite block
+verify-export	Run game verification	2026-10-08T16:16:12.0570650Z gate contract: camera-positive-minimum pass
+verify-export	Run game verification	2026-10-08T16:16:12.0748594Z gate contract: camera-positive-count pass
+verify-export	Run game verification	2026-10-08T16:16:12.0895905Z gate contract: camera-zero-count block
+verify-export	Run game verification	2026-10-08T16:16:12.1041332Z gate contract: camera-nonempty-failures block
+verify-export	Run game verification	2026-10-08T16:16:12.1182192Z gate contract: camera-missing-marker block
+verify-export	Run game verification	2026-10-08T16:16:12.1324213Z gate contract: camera-wrong-suite block
+verify-export	Run game verification	2026-10-08T16:16:12.1465758Z gate contract: camera-prefix block
+verify-export	Run game verification	2026-10-08T16:16:12.1608452Z gate contract: camera-suffix block
+verify-export	Run game verification	2026-10-08T16:16:12.1750653Z gate contract: camera-concatenated-markers block
+verify-export	Run game verification	2026-10-08T16:16:12.1923773Z gate contract: camera-two-separate-valid-lines pass
+verify-export	Run game verification	2026-10-08T16:16:12.2036140Z gate contract: camera-nonzero-exit block
+verify-export	Run game verification	2026-10-08T16:16:12.2163933Z gate contract: camera-late-error block
+verify-export	Run game verification	2026-10-08T16:16:12.2290453Z gate contract: camera-late-fail block
+verify-export	Run game verification	2026-10-08T16:16:12.2431151Z gate contract: camera-truncated-summary block
+verify-export	Run game verification	2026-10-08T16:16:12.2431723Z CAMERA400 COMPLETION CONTRACT PASS 14
+verify-export	Run game verification	2026-10-08T16:16:12.2605845Z gate contract: bounds-complete pass
+verify-export	Run game verification	2026-10-08T16:16:12.2747381Z gate contract: bounds-zero block
+verify-export	Run game verification	2026-10-08T16:16:12.2888876Z gate contract: bounds-failure-list block
+verify-export	Run game verification	2026-10-08T16:16:12.3029598Z gate contract: bounds-wrong-suite block
+verify-export	Run game verification	2026-10-08T16:16:12.3202537Z gate contract: paper_tooltip_style-positive-minimum pass
+verify-export	Run game verification	2026-10-08T16:16:12.3376164Z gate contract: paper_tooltip_style-positive-count pass
+verify-export	Run game verification	2026-10-08T16:16:12.3516920Z gate contract: paper_tooltip_style-zero-count block
+verify-export	Run game verification	2026-10-08T16:16:12.3657696Z gate contract: paper_tooltip_style-missing block
+verify-export	Run game verification	2026-10-08T16:16:12.3797590Z gate contract: paper_tooltip_style-wrong-suite block
+verify-export	Run game verification	2026-10-08T16:16:12.3937441Z gate contract: paper_tooltip_style-prefix block
+verify-export	Run game verification	2026-10-08T16:16:12.4078649Z gate contract: paper_tooltip_style-suffix block
+verify-export	Run game verification	2026-10-08T16:16:12.4220628Z gate contract: paper_tooltip_style-failure-count block
+verify-export	Run game verification	2026-10-08T16:16:12.4332325Z gate contract: paper_tooltip_style-nonzero-exit block
+verify-export	Run game verification	2026-10-08T16:16:12.4459613Z gate contract: paper_tooltip_style-late-error block
+verify-export	Run game verification	2026-10-08T16:16:12.4586360Z gate contract: paper_tooltip_style-late-fail block
+verify-export	Run game verification	2026-10-08T16:16:12.4711401Z gate contract: paper_tooltip_style-log-read-failure block
+verify-export	Run game verification	2026-10-08T16:16:12.4850714Z gate contract: paper_tooltip_style-concatenated-markers block
+verify-export	Run game verification	2026-10-08T16:16:12.5020742Z gate contract: paper_tooltip_style-two-valid-lines pass
+verify-export	Run game verification	2026-10-08T16:16:12.5193055Z gate contract: paper_tooltip_interaction-positive-minimum pass
+verify-export	Run game verification	2026-10-08T16:16:12.5363855Z gate contract: paper_tooltip_interaction-positive-count pass
+verify-export	Run game verification	2026-10-08T16:16:12.5504918Z gate contract: paper_tooltip_interaction-zero-count block
+verify-export	Run game verification	2026-10-08T16:16:12.5642435Z gate contract: paper_tooltip_interaction-missing block
+verify-export	Run game verification	2026-10-08T16:16:12.5782501Z gate contract: paper_tooltip_interaction-wrong-suite block
+verify-export	Run game verification	2026-10-08T16:16:12.5924522Z gate contract: paper_tooltip_interaction-prefix block
+verify-export	Run game verification	2026-10-08T16:16:12.6066853Z gate contract: paper_tooltip_interaction-suffix block
+verify-export	Run game verification	2026-10-08T16:16:12.6207978Z gate contract: paper_tooltip_interaction-failure-count block
+verify-export	Run game verification	2026-10-08T16:16:12.6319684Z gate contract: paper_tooltip_interaction-nonzero-exit block
+verify-export	Run game verification	2026-10-08T16:16:12.6446656Z gate contract: paper_tooltip_interaction-late-error block
+verify-export	Run game verification	2026-10-08T16:16:12.6574970Z gate contract: paper_tooltip_interaction-late-fail block
+verify-export	Run game verification	2026-10-08T16:16:12.6703560Z gate contract: paper_tooltip_interaction-log-read-failure block
+verify-export	Run game verification	2026-10-08T16:16:12.6847558Z gate contract: paper_tooltip_interaction-concatenated-markers block
+verify-export	Run game verification	2026-10-08T16:16:12.7022280Z gate contract: paper_tooltip_interaction-two-valid-lines pass
+verify-export	Run game verification	2026-10-08T16:16:12.7022973Z TOOLTIP473 COMPLETION CONTRACT PASS 28
+verify-export	Run game verification	2026-10-08T16:16:12.7144373Z gate contract: import-empty pass
+verify-export	Run game verification	2026-10-08T16:16:12.7264792Z gate contract: import-with-no-suite pass
+verify-export	Run game verification	2026-10-08T16:16:12.7339719Z gate contract: import-nonzero block
+verify-export	Run game verification	2026-10-08T16:16:12.7431717Z gate contract: import-error block
+verify-export	Run game verification	2026-10-08T16:16:12.7508790Z gate contract: import-tee-failure block
+verify-export	Run game verification	2026-10-08T16:16:12.7609534Z gate contract: import-missing-log block
+verify-export	Run game verification	2026-10-08T16:16:12.7787920Z gate contract: volume466-style-min-positive pass
+verify-export	Run game verification	2026-10-08T16:16:12.7962689Z gate contract: volume466-style-positive pass
+verify-export	Run game verification	2026-10-08T16:16:12.8106906Z gate contract: volume466-style-zero block
+verify-export	Run game verification	2026-10-08T16:16:12.8248967Z gate contract: volume466-style-missing block
+verify-export	Run game verification	2026-10-08T16:16:12.8377423Z gate contract: volume466-style-failed block
+verify-export	Run game verification	2026-10-08T16:16:12.8519022Z gate contract: volume466-style-wrong-suite block
+verify-export	Run game verification	2026-10-08T16:16:12.8660759Z gate contract: volume466-style-prefix block
+verify-export	Run game verification	2026-10-08T16:16:12.8804943Z gate contract: volume466-style-suffix block
+verify-export	Run game verification	2026-10-08T16:16:12.8949120Z gate contract: volume466-style-concatenated block
+verify-export	Run game verification	2026-10-08T16:16:12.9124278Z gate contract: volume466-style-two-valid-lines pass
+verify-export	Run game verification	2026-10-08T16:16:12.9238820Z gate contract: volume466-style-nonzero-exit block
+verify-export	Run game verification	2026-10-08T16:16:12.9369149Z gate contract: volume466-style-later-error block
+verify-export	Run game verification	2026-10-08T16:16:12.9498637Z gate contract: volume466-style-later-fail block
+verify-export	Run game verification	2026-10-08T16:16:12.9641454Z gate contract: volume466-style-truncated block
+verify-export	Run game verification	2026-10-08T16:16:12.9815741Z gate contract: volume466-input-min-positive pass
+verify-export	Run game verification	2026-10-08T16:16:12.9992611Z gate contract: volume466-input-positive pass
+verify-export	Run game verification	2026-10-08T16:16:13.0139679Z gate contract: volume466-input-zero block
+verify-export	Run game verification	2026-10-08T16:16:13.0283800Z gate contract: volume466-input-missing block
+verify-export	Run game verification	2026-10-08T16:16:13.0428714Z gate contract: volume466-input-failed block
+verify-export	Run game verification	2026-10-08T16:16:13.0570867Z gate contract: volume466-input-wrong-suite block
+verify-export	Run game verification	2026-10-08T16:16:13.0713195Z gate contract: volume466-input-prefix block
+verify-export	Run game verification	2026-10-08T16:16:13.0854543Z gate contract: volume466-input-suffix block
+verify-export	Run game verification	2026-10-08T16:16:13.0994606Z gate contract: volume466-input-concatenated block
+verify-export	Run game verification	2026-10-08T16:16:13.1166743Z gate contract: volume466-input-two-valid-lines pass
+verify-export	Run game verification	2026-10-08T16:16:13.1278626Z gate contract: volume466-input-nonzero-exit block
+verify-export	Run game verification	2026-10-08T16:16:13.1407353Z gate contract: volume466-input-later-error block
+verify-export	Run game verification	2026-10-08T16:16:13.1534375Z gate contract: volume466-input-later-fail block
+verify-export	Run game verification	2026-10-08T16:16:13.1673921Z gate contract: volume466-input-truncated block
+verify-export	Run game verification	2026-10-08T16:16:13.1674363Z VOLUME466 COMPLETION CONTRACT PASS 28
+verify-export	Run game verification	2026-10-08T16:16:13.1674669Z GODOT GATE CONTRACT PASS 127
+verify-export	Run game verification	2026-10-08T16:16:13.1845212Z gate contract: YARD_INVENTORY-valid pass
+verify-export	Run game verification	2026-10-08T16:16:13.1987974Z gate contract: YARD_INVENTORY-zero block
+verify-export	Run game verification	2026-10-08T16:16:13.2129238Z gate contract: YARD_INVENTORY-failed block
+verify-export	Run game verification	2026-10-08T16:16:13.2301486Z gate contract: YARD_BASKET_INTEGRATION-valid pass
+verify-export	Run game verification	2026-10-08T16:16:13.2440790Z gate contract: YARD_BASKET_INTEGRATION-zero block
+verify-export	Run game verification	2026-10-08T16:16:13.2581871Z gate contract: YARD_BASKET_INTEGRATION-failed block
+verify-export	Run game verification	2026-10-08T16:16:13.2582451Z BASKET GATE CONTRACT PASS 6
+verify-export	Run game verification	2026-10-08T16:16:13.2754829Z gate contract: YARD_DECOR-valid pass
+verify-export	Run game verification	2026-10-08T16:16:13.2895079Z gate contract: YARD_DECOR-zero block
+verify-export	Run game verification	2026-10-08T16:16:13.3035246Z gate contract: YARD_DECOR-failed block
+verify-export	Run game verification	2026-10-08T16:16:13.3173807Z gate contract: YARD_DECOR-missing block
+verify-export	Run game verification	2026-10-08T16:16:13.3344967Z gate contract: YARD_DECOR_PERSISTENCE-valid pass
+verify-export	Run game verification	2026-10-08T16:16:13.3485206Z gate contract: YARD_DECOR_PERSISTENCE-zero block
+verify-export	Run game verification	2026-10-08T16:16:13.3625378Z gate contract: YARD_DECOR_PERSISTENCE-failed block
+verify-export	Run game verification	2026-10-08T16:16:13.3765377Z gate contract: YARD_DECOR_PERSISTENCE-missing block
+verify-export	Run game verification	2026-10-08T16:16:13.3938465Z gate contract: YARD_DECOR_INTEGRATION-valid pass
+verify-export	Run game verification	2026-10-08T16:16:13.4079490Z gate contract: YARD_DECOR_INTEGRATION-zero block
+verify-export	Run game verification	2026-10-08T16:16:13.4221111Z gate contract: YARD_DECOR_INTEGRATION-failed block
+verify-export	Run game verification	2026-10-08T16:16:13.4362317Z gate contract: YARD_DECOR_INTEGRATION-missing block
+verify-export	Run game verification	2026-10-08T16:16:13.4362895Z DECOR GATE CONTRACT PASS 12
+verify-export	Run game verification	2026-10-08T16:16:13.4538362Z gate contract: ui-touch_hint_mode-valid pass
+verify-export	Run game verification	2026-10-08T16:16:13.4683542Z gate contract: ui-touch_hint_mode-zero block
+verify-export	Run game verification	2026-10-08T16:16:13.4827882Z gate contract: ui-touch_hint_mode-missing block
+verify-export	Run game verification	2026-10-08T16:16:13.4955802Z gate contract: ui-touch_hint_mode-late-error block
+verify-export	Run game verification	2026-10-08T16:16:13.5097014Z gate contract: ui-touch_hint_mode-prefix block
+verify-export	Run game verification	2026-10-08T16:16:13.5238491Z gate contract: ui-touch_hint_mode-suffix block
+verify-export	Run game verification	2026-10-08T16:16:13.5412423Z gate contract: ui-album_caption_fit-valid pass
+verify-export	Run game verification	2026-10-08T16:16:13.5554533Z gate contract: ui-album_caption_fit-zero block
+verify-export	Run game verification	2026-10-08T16:16:13.5694297Z gate contract: ui-album_caption_fit-missing block
+verify-export	Run game verification	2026-10-08T16:16:13.5820843Z gate contract: ui-album_caption_fit-late-error block
+verify-export	Run game verification	2026-10-08T16:16:13.5960685Z gate contract: ui-album_caption_fit-prefix block
+verify-export	Run game verification	2026-10-08T16:16:13.6101744Z gate contract: ui-album_caption_fit-suffix block
+verify-export	Run game verification	2026-10-08T16:16:13.6274794Z gate contract: ui-photo_arrival_shutter_fit-valid pass
+verify-export	Run game verification	2026-10-08T16:16:13.6415867Z gate contract: ui-photo_arrival_shutter_fit-zero block
+verify-export	Run game verification	2026-10-08T16:16:13.6556838Z gate contract: ui-photo_arrival_shutter_fit-missing block
+verify-export	Run game verification	2026-10-08T16:16:13.6685538Z gate contract: ui-photo_arrival_shutter_fit-late-error block
+verify-export	Run game verification	2026-10-08T16:16:13.6828069Z gate contract: ui-photo_arrival_shutter_fit-prefix block
+verify-export	Run game verification	2026-10-08T16:16:13.6970576Z gate contract: ui-photo_arrival_shutter_fit-suffix block
+verify-export	Run game verification	2026-10-08T16:16:13.7264032Z gate contract: ui-exploration_basket_label_fit-valid pass
+verify-export	Run game verification	2026-10-08T16:16:13.7404872Z gate contract: ui-exploration_basket_label_fit-zero block
+verify-export	Run game verification	2026-10-08T16:16:13.7547153Z gate contract: ui-exploration_basket_label_fit-missing block
+verify-export	Run game verification	2026-10-08T16:16:13.7677980Z gate contract: ui-exploration_basket_label_fit-late-error block
+verify-export	Run game verification	2026-10-08T16:16:13.7816403Z gate contract: ui-exploration_basket_label_fit-prefix block
+verify-export	Run game verification	2026-10-08T16:16:13.7956422Z gate contract: ui-exploration_basket_label_fit-suffix block
+verify-export	Run game verification	2026-10-08T16:16:13.8128234Z gate contract: ui-yard_basket_panel_fit-valid pass
+verify-export	Run game verification	2026-10-08T16:16:13.8268740Z gate contract: ui-yard_basket_panel_fit-zero block
+verify-export	Run game verification	2026-10-08T16:16:13.8408188Z gate contract: ui-yard_basket_panel_fit-missing block
+verify-export	Run game verification	2026-10-08T16:16:13.8533043Z gate contract: ui-yard_basket_panel_fit-late-error block
+verify-export	Run game verification	2026-10-08T16:16:13.8672850Z gate contract: ui-yard_basket_panel_fit-prefix block
+verify-export	Run game verification	2026-10-08T16:16:13.8812873Z gate contract: ui-yard_basket_panel_fit-suffix block
+verify-export	Run game verification	2026-10-08T16:16:13.8985451Z gate contract: ui-confirm_panel_narrow-valid pass
+verify-export	Run game verification	2026-10-08T16:16:13.9125917Z gate contract: ui-confirm_panel_narrow-zero block
+verify-export	Run game verification	2026-10-08T16:16:13.9265035Z gate contract: ui-confirm_panel_narrow-missing block
+verify-export	Run game verification	2026-10-08T16:16:13.9390449Z gate contract: ui-confirm_panel_narrow-late-error block
+verify-export	Run game verification	2026-10-08T16:16:13.9529098Z gate contract: ui-confirm_panel_narrow-prefix block
+verify-export	Run game verification	2026-10-08T16:16:13.9668198Z gate contract: ui-confirm_panel_narrow-suffix block
+verify-export	Run game verification	2026-10-08T16:16:13.9839953Z gate contract: ui-find_reveal_name_slip-valid pass
+verify-export	Run game verification	2026-10-08T16:16:13.9980976Z gate contract: ui-find_reveal_name_slip-zero block
+verify-export	Run game verification	2026-10-08T16:16:14.0130331Z gate contract: ui-find_reveal_name_slip-missing block
+verify-export	Run game verification	2026-10-08T16:16:14.0261557Z gate contract: ui-find_reveal_name_slip-late-error block
+verify-export	Run game verification	2026-10-08T16:16:14.0402274Z gate contract: ui-find_reveal_name_slip-prefix block
+verify-export	Run game verification	2026-10-08T16:16:14.0544554Z gate contract: ui-find_reveal_name_slip-suffix block
+verify-export	Run game verification	2026-10-08T16:16:14.0715839Z gate contract: ui-ambience_output_ceiling-valid pass
+verify-export	Run game verification	2026-10-08T16:16:14.0857511Z gate contract: ui-ambience_output_ceiling-zero block
+verify-export	Run game verification	2026-10-08T16:16:14.0996009Z gate contract: ui-ambience_output_ceiling-missing block
+verify-export	Run game verification	2026-10-08T16:16:14.1120761Z gate contract: ui-ambience_output_ceiling-late-error block
+verify-export	Run game verification	2026-10-08T16:16:14.1258328Z gate contract: ui-ambience_output_ceiling-prefix block
+verify-export	Run game verification	2026-10-08T16:16:14.1396369Z gate contract: ui-ambience_output_ceiling-suffix block
+verify-export	Run game verification	2026-10-08T16:16:14.1565996Z gate contract: ui-road_freedom-valid pass
+verify-export	Run game verification	2026-10-08T16:16:14.1705386Z gate contract: ui-road_freedom-zero block
+verify-export	Run game verification	2026-10-08T16:16:14.1843730Z gate contract: ui-road_freedom-missing block
+verify-export	Run game verification	2026-10-08T16:16:14.1967334Z gate contract: ui-road_freedom-late-error block
+verify-export	Run game verification	2026-10-08T16:16:14.2105711Z gate contract: ui-road_freedom-prefix block
+verify-export	Run game verification	2026-10-08T16:16:14.2244718Z gate contract: ui-road_freedom-suffix block
+verify-export	Run game verification	2026-10-08T16:16:14.2416282Z gate contract: ui-yard_decor_button_states-valid pass
+verify-export	Run game verification	2026-10-08T16:16:14.2557916Z gate contract: ui-yard_decor_button_states-zero block
+verify-export	Run game verification	2026-10-08T16:16:14.2704826Z gate contract: ui-yard_decor_button_states-missing block
+verify-export	Run game verification	2026-10-08T16:16:14.2830864Z gate contract: ui-yard_decor_button_states-late-error block
+verify-export	Run game verification	2026-10-08T16:16:14.2970283Z gate contract: ui-yard_decor_button_states-prefix block
+verify-export	Run game verification	2026-10-08T16:16:14.3110248Z gate contract: ui-yard_decor_button_states-suffix block
+verify-export	Run game verification	2026-10-08T16:16:14.3283934Z gate contract: ui-yard_decor_panel_hug-valid pass
+verify-export	Run game verification	2026-10-08T16:16:14.3425320Z gate contract: ui-yard_decor_panel_hug-zero block
+verify-export	Run game verification	2026-10-08T16:16:14.3564930Z gate contract: ui-yard_decor_panel_hug-missing block
+verify-export	Run game verification	2026-10-08T16:16:14.3690210Z gate contract: ui-yard_decor_panel_hug-late-error block
+verify-export	Run game verification	2026-10-08T16:16:14.3828650Z gate contract: ui-yard_decor_panel_hug-prefix block
+verify-export	Run game verification	2026-10-08T16:16:14.3968860Z gate contract: ui-yard_decor_panel_hug-suffix block
+verify-export	Run game verification	2026-10-08T16:16:14.4140192Z gate contract: ui-yard_basket_button_states-valid pass
+verify-export	Run game verification	2026-10-08T16:16:14.4279638Z gate contract: ui-yard_basket_button_states-zero block
+verify-export	Run game verification	2026-10-08T16:16:14.4417827Z gate contract: ui-yard_basket_button_states-missing block
+verify-export	Run game verification	2026-10-08T16:16:14.4543077Z gate contract: ui-yard_basket_button_states-late-error block
+verify-export	Run game verification	2026-10-08T16:16:14.4682585Z gate contract: ui-yard_basket_button_states-prefix block
+verify-export	Run game verification	2026-10-08T16:16:14.4828227Z gate contract: ui-yard_basket_button_states-suffix block
+verify-export	Run game verification	2026-10-08T16:16:14.5002064Z gate contract: ui-hold_hotbar-valid pass
+verify-export	Run game verification	2026-10-08T16:16:14.5152307Z gate contract: ui-hold_hotbar-zero block
+verify-export	Run game verification	2026-10-08T16:16:14.5295717Z gate contract: ui-hold_hotbar-missing block
+verify-export	Run game verification	2026-10-08T16:16:14.5424281Z gate contract: ui-hold_hotbar-late-error block
+verify-export	Run game verification	2026-10-08T16:16:14.5564269Z gate contract: ui-hold_hotbar-prefix block
+verify-export	Run game verification	2026-10-08T16:16:14.5707079Z gate contract: ui-hold_hotbar-suffix block
+verify-export	Run game verification	2026-10-08T16:16:14.5878952Z gate contract: ui-hold_hotbar_mount-valid pass
+verify-export	Run game verification	2026-10-08T16:16:14.6020298Z gate contract: ui-hold_hotbar_mount-zero block
+verify-export	Run game verification	2026-10-08T16:16:14.6159973Z gate contract: ui-hold_hotbar_mount-missing block
+verify-export	Run game verification	2026-10-08T16:16:14.6287840Z gate contract: ui-hold_hotbar_mount-late-error block
+verify-export	Run game verification	2026-10-08T16:16:14.6428740Z gate contract: ui-hold_hotbar_mount-prefix block
+verify-export	Run game verification	2026-10-08T16:16:14.6570234Z gate contract: ui-hold_hotbar_mount-suffix block
+verify-export	Run game verification	2026-10-08T16:16:14.6570804Z GROK UI COMPLETION CONTRACT PASS 84
+verify-export	Run game verification	2026-10-08T16:16:14.8635995Z Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+verify-export	Run game verification	2026-10-08T16:16:14.9311303Z 
+verify-export	Run game verification	2026-10-08T16:16:20.4527464Z [   0% ] ^[[90m^[[1mfirst_scan_filesystem^[[22m | Started Project initialization (5 steps)^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:20.4528592Z [   0% ] ^[[90m^[[1mfirst_scan_filesystem^[[22m | Scanning file structure...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:20.4591014Z [  16% ] ^[[90m^[[1mfirst_scan_filesystem^[[22m | Loading global class names...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:20.4980898Z [  33% ] ^[[90m^[[1mfirst_scan_filesystem^[[22m | Verifying GDExtensions...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:20.4981881Z [  50% ] ^[[90m^[[1mfirst_scan_filesystem^[[22m | Creating autoload scripts...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:21.9683726Z [  66% ] ^[[90m^[[1mfirst_scan_filesystem^[[22m | Initializing plugins...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:21.9685146Z [  83% ] ^[[90m^[[1mfirst_scan_filesystem^[[22m | Starting file scan...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:21.9685885Z ^[[92m[ DONE ]^[[39m ^[[1mfirst_scan_filesystem^[[22m
+verify-export	Run game verification	2026-10-08T16:16:21.9686308Z ^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5170842Z [   0% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | Started Registering global classes... (312 steps)^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5174365Z [   0% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5174874Z [   0% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5175269Z [   0% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5175630Z [   0% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5176011Z [   1% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5176385Z [   1% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5176738Z [   1% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5177160Z [   2% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | EffectsDirector^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5177903Z [   2% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | FeltActor^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5178351Z [   2% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | GrassArt^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5178960Z [   3% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | GrassPatch^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5179403Z [   3% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | GroundedGait^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5179845Z [   3% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | LayeredHero^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5180579Z [   4% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | LayeredLlama^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5181099Z [   4% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | NativeWalker^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5181779Z [   4% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | PaintedWalker^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5182473Z [   5% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | PlantedGait^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5183193Z [   5% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ResidentWalker^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5184123Z [   5% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | MazeRunner^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5184829Z [   6% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | MazeSentinel^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5185561Z [   6% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | SequenceResident^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5186250Z [   6% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | Vacationer^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5186962Z [   7% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | AnimalCompanions^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5187740Z [   7% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ExplorationCatalog^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5188507Z [   7% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ExplorationContract^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5189252Z [   7% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ExplorationDirector^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5189966Z [   8% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ExplorationHost^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5190701Z [   8% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ExplorationRoutes^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5191469Z [   8% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ExplorationSession^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5192159Z [   9% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | FindReveal^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5192874Z [   9% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | KeepsakeArt^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5193766Z [   9% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | NearPathLayout^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5194499Z [  10% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | NearPathScroll^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5216762Z [  10% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | PaintedPath^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5217698Z [  10% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | PathCompanion^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5218321Z [  11% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5218957Z [  11% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | VillagePathLayout^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5219721Z [  11% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | AnimalRelationships^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5220539Z [  12% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | AnimalRelationshipEncounter^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5221317Z [  12% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | BeibeiArt^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5222044Z [  12% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | BoundaryFeedback^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5222764Z [  13% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | CastArt^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5223607Z [  13% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ChickenArt^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5224244Z [  13% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5224923Z [  14% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ExpressionCatalog^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5225641Z [  14% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | MazeWorld^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5226288Z [  14% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5226980Z [  15% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | PondStorySequence^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5227639Z [  15% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5228127Z [  15% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5228704Z [  15% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5229072Z [  16% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5229621Z [  16% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | StageCatalog^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5230059Z [  16% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | TurtleArt^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5230460Z [  17% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5230831Z [  17% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5231185Z [  17% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5231535Z [  18% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5231887Z [  18% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5232288Z [  18% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | YardBodies^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5232687Z [  19% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5233104Z [  19% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | YardGateGround^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5233804Z [  19% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5234479Z [  20% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | YardGround^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5235210Z [  20% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | YardInteraction^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5235818Z [  20% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | YardPropVisual^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5236316Z [  21% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | YardSceneFeedback^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5236798Z [  21% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | YardSceneHotspots^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5237230Z [  21% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5237637Z [  22% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | YardWorld^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5238033Z [  22% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5238416Z [  22% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5238780Z [  23% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5239137Z [  23% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5239494Z [  23% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5239848Z [  23% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5240212Z [  24% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5240566Z [  24% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5240921Z [  24% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5241278Z [  25% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5241633Z [  25% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5241986Z [  25% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5242343Z [  26% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5242693Z [  26% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5243048Z [  26% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5243818Z [  27% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | SaveCoordinator^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5244486Z [  27% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5245025Z [  27% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5245390Z [  28% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5245744Z [  28% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5246097Z [  28% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5246452Z [  29% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5246858Z [  29% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | RunScoreService^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5247267Z [  29% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5247633Z [  30% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5248221Z [  30% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | InputHintMode^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5248625Z [  30% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5249111Z [  30% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5249531Z [  31% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | PaperSliderStyle^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5249954Z [  31% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5250353Z [  31% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | PhotoArrival^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5250791Z [  32% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | PhotoDiary^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5251230Z [  32% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | PhotoMoment^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5251822Z [  32% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ScreenFactory^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5252231Z [  33% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5252778Z [  33% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | TutorialCallout^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5253710Z [  33% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | WebHiDpi^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5254136Z [  34% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5254507Z [  34% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5254861Z [  34% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5255214Z [  35% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5255578Z [  35% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5255930Z [  35% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5256474Z [  36% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5257036Z [  36% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5257611Z [  36% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5258145Z [  37% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5258745Z [  37% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5259306Z [  37% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5259758Z [  38% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5260337Z [  38% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5260925Z [  38% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5261447Z [  38% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5262034Z [  39% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5262605Z [  39% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5263139Z [  39% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5263885Z [  40% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5264447Z [  40% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5264957Z [  40% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5265570Z [  41% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5266133Z [  41% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5266637Z [  41% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5267163Z [  42% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5267518Z [  42% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5267869Z [  42% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5268467Z [  43% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5269038Z [  43% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5269606Z [  43% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5270137Z [  44% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5270678Z [  44% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5271242Z [  44% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5272060Z [  45% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5272616Z [  45% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5273422Z [  45% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5273879Z [  46% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5274366Z [  46% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5274723Z [  46% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5275085Z [  46% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5275433Z [  47% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5275786Z [  47% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5276256Z [  47% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5276608Z [  48% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5276958Z [  48% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5277320Z [  48% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5277671Z [  49% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5278146Z [  49% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5278519Z [  49% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5278868Z [  50% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5279222Z [  50% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5279577Z [  50% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5279982Z [  51% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5280400Z [  51% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5280757Z [  51% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5281108Z [  52% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5281469Z [  52% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5281828Z [  52% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5282302Z [  53% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5282672Z [  53% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5283037Z [  53% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5283594Z [  53% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5283951Z [  54% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5284450Z [  54% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5284818Z [  54% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5285173Z [  55% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5285533Z [  55% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5285883Z [  55% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5286327Z [  56% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5286759Z [  56% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5287120Z [  56% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5287470Z [  57% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5287824Z [  57% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5288187Z [  57% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5288690Z [  58% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5289056Z [  58% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5289409Z [  58% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5289760Z [  59% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5290113Z [  59% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5290610Z [  59% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5291142Z [  60% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5291496Z [  60% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5291980Z [  60% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5292421Z [  61% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5292845Z [  61% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5293196Z [  61% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5293783Z [  61% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5294141Z [  62% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5294559Z [  62% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5294996Z [  62% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5295351Z [  63% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5295702Z [  63% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5296063Z [  63% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5296412Z [  64% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5296917Z [  64% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5297268Z [  64% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5297620Z [  65% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5297973Z [  65% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5298334Z [  65% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5298828Z [  66% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5299183Z [  66% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5299536Z [  66% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5299890Z [  67% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5300241Z [  67% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5300745Z [  67% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5301104Z [  68% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5301465Z [  68% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5301822Z [  68% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5302171Z [  69% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5302603Z [  69% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5303034Z [  69% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5303643Z [  69% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5304003Z [  70% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5304354Z [  70% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5304756Z [  70% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5305200Z [  71% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5305561Z [  71% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5305921Z [  71% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5306276Z [  72% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5306628Z [  72% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5307125Z [  72% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5307481Z [  73% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5307831Z [  73% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5308183Z [  73% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5308537Z [  74% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5309043Z [  74% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5309407Z [  74% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5309952Z [  75% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5310325Z [  75% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5310937Z [  75% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5311327Z [  76% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5311687Z [  76% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5312040Z [  76% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5312398Z [  76% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5312849Z [  77% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5313494Z [  77% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5313874Z [  77% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5314229Z [  78% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5314576Z [  78% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5315012Z [  78% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5315436Z [  79% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5315794Z [  79% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5316147Z [  79% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5316507Z [  80% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5316857Z [  80% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5317357Z [  80% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5317711Z [  81% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5318059Z [  81% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5318411Z [  81% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5318764Z [  82% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5319264Z [  82% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5319629Z [  82% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5319989Z [  83% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5320350Z [  83% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5320705Z [  83% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5321195Z [  84% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5321559Z [  84% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5321910Z [  84% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5322264Z [  84% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5322619Z [  85% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5322970Z [  85% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5323641Z [  85% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5324000Z [  86% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5324350Z [  86% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5324707Z [  86% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5325057Z [  87% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5325546Z [  87% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5325903Z [  87% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5326256Z [  88% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5326608Z [  88% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5326966Z [  88% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5327448Z [  89% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5327823Z [  89% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5328176Z [  89% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5328693Z [  90% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5329043Z [  90% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5329704Z [  90% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5330057Z [  91% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5330413Z [  91% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5330775Z [  91% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5331129Z [  92% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5331627Z [  92% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5331986Z [  92% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5332338Z [  92% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5332689Z [  93% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5333041Z [  93% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5333658Z [  93% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5334041Z [  94% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5334417Z [  94% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5334768Z [  94% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5335127Z [  95% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5335581Z [  95% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5336023Z [  95% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5336378Z [  96% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5336732Z [  96% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5337084Z [  96% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5337490Z [  97% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5337957Z [  97% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5338321Z [  97% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5338676Z [  98% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5339035Z [  98% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5339386Z [  98% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5339881Z [  99% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5340235Z [  99% ] ^[[90m^[[1mupdate_scripts_classes^[[22m | ^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5340597Z ^[[92m[ DONE ]^[[39m ^[[1mupdate_scripts_classes^[[22m
+verify-export	Run game verification	2026-10-08T16:16:22.5340906Z ^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5341326Z [   0% ] ^[[90m^[[1m_update_scan_actions^[[22m | Started Scanning actions... (147 steps)^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5342044Z [   0% ] ^[[90m^[[1m_update_scan_actions^[[22m | llama-search-v1.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5342548Z [   0% ] ^[[90m^[[1m_update_scan_actions^[[22m | small-fish-v1.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5343064Z [   1% ] ^[[90m^[[1m_update_scan_actions^[[22m | animal_cast_approval_v1.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5343724Z [   2% ] ^[[90m^[[1m_update_scan_actions^[[22m | animal_cast_approval_v2.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5344403Z [   2% ] ^[[90m^[[1m_update_scan_actions^[[22m | cow_cutout_initial_edge_touch.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5344909Z [   3% ] ^[[90m^[[1m_update_scan_actions^[[22m | cow_chew.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5345379Z [   4% ] ^[[90m^[[1m_update_scan_actions^[[22m | duck_preen.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5345811Z [   4% ] ^[[90m^[[1m_update_scan_actions^[[22m | horse_tail.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5346445Z [   5% ] ^[[90m^[[1m_update_scan_actions^[[22m | path_clover.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5346893Z [   6% ] ^[[90m^[[1m_update_scan_actions^[[22m | path_snail.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5347313Z [   6% ] ^[[90m^[[1m_update_scan_actions^[[22m | sheep_shake.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5347742Z [   7% ] ^[[90m^[[1m_update_scan_actions^[[22m | path_clover.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5348489Z [   8% ] ^[[90m^[[1m_update_scan_actions^[[22m | path_snail.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5348930Z [   8% ] ^[[90m^[[1m_update_scan_actions^[[22m | bed_yard_env.ogg^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5349532Z [   9% ] ^[[90m^[[1m_update_scan_actions^[[22m | bed_yard_music.ogg^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5350055Z [  10% ] ^[[90m^[[1m_update_scan_actions^[[22m | grown.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5350534Z [  10% ] ^[[90m^[[1m_update_scan_actions^[[22m | puppy.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5350951Z [  11% ] ^[[90m^[[1m_update_scan_actions^[[22m | search.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5351361Z [  12% ] ^[[90m^[[1m_update_scan_actions^[[22m | cow.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5351771Z [  12% ] ^[[90m^[[1m_update_scan_actions^[[22m | cow_chew.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5352342Z [  13% ] ^[[90m^[[1m_update_scan_actions^[[22m | cow_glance.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5352771Z [  14% ] ^[[90m^[[1m_update_scan_actions^[[22m | duck.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5353199Z [  14% ] ^[[90m^[[1m_update_scan_actions^[[22m | duck_attend.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5353752Z [  15% ] ^[[90m^[[1m_update_scan_actions^[[22m | duck_preen.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5354242Z [  16% ] ^[[90m^[[1m_update_scan_actions^[[22m | goose.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5354726Z [  16% ] ^[[90m^[[1m_update_scan_actions^[[22m | goose_calm.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5355146Z [  17% ] ^[[90m^[[1m_update_scan_actions^[[22m | goose_rest.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5355598Z [  18% ] ^[[90m^[[1m_update_scan_actions^[[22m | goose_riding_down.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5356081Z [  18% ] ^[[90m^[[1m_update_scan_actions^[[22m | goose_riding_up.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5356657Z [  19% ] ^[[90m^[[1m_update_scan_actions^[[22m | horse.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5357094Z [  20% ] ^[[90m^[[1m_update_scan_actions^[[22m | horse_tail.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5357531Z [  20% ] ^[[90m^[[1m_update_scan_actions^[[22m | llama_annoyed.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5357978Z [  21% ] ^[[90m^[[1m_update_scan_actions^[[22m | llama_happy.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5358570Z [  22% ] ^[[90m^[[1m_update_scan_actions^[[22m | llama_idle.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5359029Z [  22% ] ^[[90m^[[1m_update_scan_actions^[[22m | llama_search.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5359489Z [  23% ] ^[[90m^[[1m_update_scan_actions^[[22m | llama_smirk.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5359924Z [  24% ] ^[[90m^[[1m_update_scan_actions^[[22m | sheep_clingy.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5360551Z [  25% ] ^[[90m^[[1m_update_scan_actions^[[22m | sheep_clingy_attend_v2.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5361046Z [  25% ] ^[[90m^[[1m_update_scan_actions^[[22m | sheep_dull.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5361516Z [  26% ] ^[[90m^[[1m_update_scan_actions^[[22m | sheep_dull_glance_v3.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5361984Z [  27% ] ^[[90m^[[1m_update_scan_actions^[[22m | sheep_shake.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5362555Z [  27% ] ^[[90m^[[1m_update_scan_actions^[[22m | chick-peck.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5362984Z [  28% ] ^[[90m^[[1m_update_scan_actions^[[22m | chick.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5363525Z [  29% ] ^[[90m^[[1m_update_scan_actions^[[22m | hen-peck.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5363943Z [  29% ] ^[[90m^[[1m_update_scan_actions^[[22m | hen.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5364379Z [  30% ] ^[[90m^[[1m_update_scan_actions^[[22m | cow-graze-v2.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5364985Z [  31% ] ^[[90m^[[1m_update_scan_actions^[[22m | sheep-clingy-graze-v1.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5365509Z [  31% ] ^[[90m^[[1m_update_scan_actions^[[22m | sheep-dull-graze-v1.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5366039Z [  32% ] ^[[90m^[[1m_update_scan_actions^[[22m | goose-turtle-peck-miss.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5366621Z [  33% ] ^[[90m^[[1m_update_scan_actions^[[22m | turtle-hen-ride.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5367146Z [  33% ] ^[[90m^[[1m_update_scan_actions^[[22m | turtle.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5367681Z [  34% ] ^[[90m^[[1m_update_scan_actions^[[22m | actions.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5368131Z [  35% ] ^[[90m^[[1m_update_scan_actions^[[22m | 00.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5368824Z [  35% ] ^[[90m^[[1m_update_scan_actions^[[22m | 01.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5369215Z [  36% ] ^[[90m^[[1m_update_scan_actions^[[22m | 02.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5369732Z [  37% ] ^[[90m^[[1m_update_scan_actions^[[22m | 03.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5370131Z [  37% ] ^[[90m^[[1m_update_scan_actions^[[22m | 04.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5370576Z [  38% ] ^[[90m^[[1m_update_scan_actions^[[22m | 05.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5371032Z [  39% ] ^[[90m^[[1m_update_scan_actions^[[22m | 06.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5371401Z [  39% ] ^[[90m^[[1m_update_scan_actions^[[22m | 07.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5371769Z [  40% ] ^[[90m^[[1m_update_scan_actions^[[22m | 08.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5372915Z [  41% ] ^[[90m^[[1m_update_scan_actions^[[22m | 09.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5375228Z [  41% ] ^[[90m^[[1m_update_scan_actions^[[22m | 10.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5377219Z [  42% ] ^[[90m^[[1m_update_scan_actions^[[22m | 11.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5379178Z [  43% ] ^[[90m^[[1m_update_scan_actions^[[22m | 12.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5381131Z [  43% ] ^[[90m^[[1m_update_scan_actions^[[22m | 13.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5383127Z [  44% ] ^[[90m^[[1m_update_scan_actions^[[22m | 14.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5385279Z [  45% ] ^[[90m^[[1m_update_scan_actions^[[22m | 15.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5387317Z [  45% ] ^[[90m^[[1m_update_scan_actions^[[22m | idle.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5389355Z [  46% ] ^[[90m^[[1m_update_scan_actions^[[22m | cow-rest.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5391381Z [  47% ] ^[[90m^[[1m_update_scan_actions^[[22m | sheep-clingy-rest.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5393546Z [  47% ] ^[[90m^[[1m_update_scan_actions^[[22m | sheep-dull-rest.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5395530Z [  48% ] ^[[90m^[[1m_update_scan_actions^[[22m | approved_resident_upper_v1.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5397509Z [  49% ] ^[[90m^[[1m_update_scan_actions^[[22m | approved_traveler_pants_v1.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5399454Z [  50% ] ^[[90m^[[1m_update_scan_actions^[[22m | approved_traveler_upper_v1.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5401289Z [  50% ] ^[[90m^[[1m_update_scan_actions^[[22m | cow.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5403181Z [  51% ] ^[[90m^[[1m_update_scan_actions^[[22m | duck.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5405268Z [  52% ] ^[[90m^[[1m_update_scan_actions^[[22m | goose.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5407182Z [  52% ] ^[[90m^[[1m_update_scan_actions^[[22m | llama.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5409160Z [  53% ] ^[[90m^[[1m_update_scan_actions^[[22m | llama_annoyed.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5411027Z [  54% ] ^[[90m^[[1m_update_scan_actions^[[22m | llama_happy.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5413002Z [  54% ] ^[[90m^[[1m_update_scan_actions^[[22m | llama_legs_atlas_v1.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5415034Z [  55% ] ^[[90m^[[1m_update_scan_actions^[[22m | llama_smirk.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5416910Z [  56% ] ^[[90m^[[1m_update_scan_actions^[[22m | player.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5418870Z [  56% ] ^[[90m^[[1m_update_scan_actions^[[22m | player_rig_atlas_v1.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5420784Z [  57% ] ^[[90m^[[1m_update_scan_actions^[[22m | sheep_clingy.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5422693Z [  58% ] ^[[90m^[[1m_update_scan_actions^[[22m | sheep_dull.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5424845Z [  58% ] ^[[90m^[[1m_update_scan_actions^[[22m | cloud_band_morning.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5426756Z [  59% ] ^[[90m^[[1m_update_scan_actions^[[22m | cloud_band_overcast.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5428701Z [  60% ] ^[[90m^[[1m_update_scan_actions^[[22m | cloud_band_sunny.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5430663Z [  60% ] ^[[90m^[[1m_update_scan_actions^[[22m | cloud_band_sunset.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5543990Z [  61% ] ^[[90m^[[1m_update_scan_actions^[[22m | yard_gate_clean.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5545836Z [  62% ] ^[[90m^[[1m_update_scan_actions^[[22m | yard_overcast.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5632458Z [  62% ] ^[[90m^[[1m_update_scan_actions^[[22m | yard_overcast_aligned.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5728713Z [  63% ] ^[[90m^[[1m_update_scan_actions^[[22m | yard_sunny.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5730812Z [  64% ] ^[[90m^[[1m_update_scan_actions^[[22m | brook_stone.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5732863Z [  64% ] ^[[90m^[[1m_update_scan_actions^[[22m | feather.webp^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5735116Z [  65% ] ^[[90m^[[1m_update_scan_actions^[[22m | leaf_pile.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5737133Z [  66% ] ^[[90m^[[1m_update_scan_actions^[[22m | pine_cone.webp^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5739147Z [  66% ] ^[[90m^[[1m_update_scan_actions^[[22m | lakeside_village.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5741080Z [  67% ] ^[[90m^[[1m_update_scan_actions^[[22m | near_path_02.webp^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5743025Z [  68% ] ^[[90m^[[1m_update_scan_actions^[[22m | felt_spit.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5745301Z [  68% ] ^[[90m^[[1m_update_scan_actions^[[22m | fence_grass_bent.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5747291Z [  69% ] ^[[90m^[[1m_update_scan_actions^[[22m | fence_grass_still.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5749201Z [  70% ] ^[[90m^[[1m_update_scan_actions^[[22m | grass_bundle.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5751174Z [  70% ] ^[[90m^[[1m_update_scan_actions^[[22m | grass_states_v2.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5753109Z [  71% ] ^[[90m^[[1m_update_scan_actions^[[22m | path_clover.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5755168Z [  72% ] ^[[90m^[[1m_update_scan_actions^[[22m | path_snail.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5757167Z [  72% ] ^[[90m^[[1m_update_scan_actions^[[22m | pet_heart_watercolor.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5759053Z [  73% ] ^[[90m^[[1m_update_scan_actions^[[22m | shed_feather.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5761038Z [  74% ] ^[[90m^[[1m_update_scan_actions^[[22m | shore_dragonfly_flight.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5762987Z [  75% ] ^[[90m^[[1m_update_scan_actions^[[22m | shore_dragonfly_rest.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5765131Z [  75% ] ^[[90m^[[1m_update_scan_actions^[[22m | shore_ripple_start.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5767075Z [  76% ] ^[[90m^[[1m_update_scan_actions^[[22m | shore_ripple_wide.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5769045Z [  77% ] ^[[90m^[[1m_update_scan_actions^[[22m | water_splash_watercolor.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5770992Z [  77% ] ^[[90m^[[1m_update_scan_actions^[[22m | windowbox_butterfly_open.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5772939Z [  78% ] ^[[90m^[[1m_update_scan_actions^[[22m | windowbox_butterfly_rest.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5775019Z [  79% ] ^[[90m^[[1m_update_scan_actions^[[22m | windowbox_petals.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5776976Z [  79% ] ^[[90m^[[1m_update_scan_actions^[[22m | ground_fish.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5778921Z [  80% ] ^[[90m^[[1m_update_scan_actions^[[22m | millet.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5780874Z [  81% ] ^[[90m^[[1m_update_scan_actions^[[22m | favicon.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5782796Z [  81% ] ^[[90m^[[1m_update_scan_actions^[[22m | favicon_fallback.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5784881Z [  82% ] ^[[90m^[[1m_update_scan_actions^[[22m | og.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5786901Z [  83% ] ^[[90m^[[1m_update_scan_actions^[[22m | polaroid_frame.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5788869Z [  83% ] ^[[90m^[[1m_update_scan_actions^[[22m | scrapbook_paper.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5790721Z [  84% ] ^[[90m^[[1m_update_scan_actions^[[22m | favicon.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5792551Z [  85% ] ^[[90m^[[1m_update_scan_actions^[[22m | og.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5794692Z [  85% ] ^[[90m^[[1m_update_scan_actions^[[22m | runner.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5796633Z [  86% ] ^[[90m^[[1m_update_scan_actions^[[22m | sentinel.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5798557Z [  87% ] ^[[90m^[[1m_update_scan_actions^[[22m | backdrop.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5800487Z [  87% ] ^[[90m^[[1m_update_scan_actions^[[22m | foreground.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5802508Z [  88% ] ^[[90m^[[1m_update_scan_actions^[[22m | Sora-VF.subset.woff2^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5804626Z [  89% ] ^[[90m^[[1m_update_scan_actions^[[22m | Figtree-VF.subset.woff2^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5806558Z [  89% ] ^[[90m^[[1m_update_scan_actions^[[22m | NotoSansSC-VF.subset.woff2^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5808418Z [  90% ] ^[[90m^[[1m_update_scan_actions^[[22m | energy.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5810365Z [  91% ] ^[[90m^[[1m_update_scan_actions^[[22m | magnet.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5812227Z [  91% ] ^[[90m^[[1m_update_scan_actions^[[22m | overdrive.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5814380Z [  92% ] ^[[90m^[[1m_update_scan_actions^[[22m | shield.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5816335Z [  93% ] ^[[90m^[[1m_update_scan_actions^[[22m | slow_field.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5818299Z [  93% ] ^[[90m^[[1m_update_scan_actions^[[22m | loading-background.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5820160Z [  94% ] ^[[90m^[[1m_update_scan_actions^[[22m | pause_glass.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5822085Z [  95% ] ^[[90m^[[1m_update_scan_actions^[[22m | title_glass.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5824549Z [  95% ] ^[[90m^[[1m_update_scan_actions^[[22m | 7e67d7987c0566aa7608d8069d8c49d1e195bf0ff0aa5c82d7808f2d470e45a3.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5826391Z [  96% ] ^[[90m^[[1m_update_scan_actions^[[22m | 744c4ef4ff02a5c20b4bf6b258cd91327cc6f16e40105c4b640c10bec936a509.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5828023Z [  97% ] ^[[90m^[[1m_update_scan_actions^[[22m | index.apple-touch-icon.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5829883Z [  97% ] ^[[90m^[[1m_update_scan_actions^[[22m | index.icon.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5831817Z [  98% ] ^[[90m^[[1m_update_scan_actions^[[22m | index.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5832236Z ^[[92m[ DONE ]^[[39m ^[[1m_update_scan_actions^[[22m
+verify-export	Run game verification	2026-10-08T16:16:22.5832545Z ^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5834441Z [   0% ] ^[[90m^[[1mreimport^[[22m | Started (Re)Importing Assets (144 steps)^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5834982Z [   0% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5835988Z [   0% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5837198Z [   1% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5839164Z [   2% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5840244Z [   2% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5842133Z [   3% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5843460Z [   4% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5844749Z [   4% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5846500Z [   5% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5848270Z [   6% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5849482Z [   6% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5850746Z [   7% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5851911Z [   8% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5853176Z [   8% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5854811Z [   9% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5856293Z [  10% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5857895Z [  11% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5859440Z [  11% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5861000Z [  12% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5862546Z [  13% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5864419Z [  13% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5865948Z [  14% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5867494Z [  15% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5869035Z [  15% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5870553Z [  16% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5872151Z [  17% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5873849Z [  17% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5875485Z [  18% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5877097Z [  19% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5878704Z [  20% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5880220Z [  20% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5881768Z [  21% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5883473Z [  22% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5885038Z [  22% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5886590Z [  23% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5888120Z [  24% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5889653Z [  24% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5891203Z [  25% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5892763Z [  26% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5894480Z [  26% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5896056Z [  27% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5897587Z [  28% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5899108Z [  28% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5900625Z [  29% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5902150Z [  30% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5903837Z [  31% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5905415Z [  31% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5906995Z [  32% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5908573Z [  33% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5910140Z [  33% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5911706Z [  34% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5913191Z [  35% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5914952Z [  35% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5916510Z [  36% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5918073Z [  37% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5919614Z [  37% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5921183Z [  38% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5922716Z [  39% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5924434Z [  40% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5925962Z [  40% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5927508Z [  41% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5929094Z [  42% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5930586Z [  42% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5932141Z [  43% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5933831Z [  44% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5935454Z [  44% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5937027Z [  45% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5938629Z [  46% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5940161Z [  46% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5941691Z [  47% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5943209Z [  48% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5944953Z [  48% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5946500Z [  49% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5948027Z [  50% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5949543Z [  51% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5951036Z [  51% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5952484Z [  52% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5954089Z [  53% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5955582Z [  53% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5957045Z [  54% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5958496Z [  55% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5959938Z [  55% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5961385Z [  56% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5962931Z [  57% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5964587Z [  57% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5966083Z [  58% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5967561Z [  59% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5969051Z [  60% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5970485Z [  60% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5971975Z [  61% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5973606Z [  62% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5975138Z [  62% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5976563Z [  63% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5978128Z [  64% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5979727Z [  64% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5981255Z [  65% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5982779Z [  66% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5984430Z [  66% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5985944Z [  67% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5987368Z [  68% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5988852Z [  68% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5990282Z [  69% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5991710Z [  70% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5993155Z [  71% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5994836Z [  71% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5996307Z [  72% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5997809Z [  73% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.5999259Z [  73% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.6000745Z [  74% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.6002187Z [  75% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.6003826Z [  75% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.6005324Z [  76% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.6006796Z [  77% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.6008248Z [  77% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.6009696Z [  78% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.6011157Z [  79% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.6012640Z [  80% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.6014283Z [  80% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.6015764Z [  81% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.6017256Z [  82% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.6018689Z [  82% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.6020147Z [  83% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.6021602Z [  84% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.6023039Z [  84% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.6024601Z [  85% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.6026079Z [  86% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.6027562Z [  86% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.6029013Z [  87% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.6030463Z [  88% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.6032041Z [  88% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.6033618Z [  89% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.6035116Z [  90% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.6036612Z [  91% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.6038089Z [  91% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.6039548Z [  92% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.6041000Z [  93% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.6042465Z [  93% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.6044156Z [  94% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.6045640Z [  95% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.6047077Z [  95% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.6048594Z [  96% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.6050129Z [  97% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.6051494Z [  97% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.6052770Z [  98% ] ^[[90m^[[1mreimport^[[22m | Preparing files to reimport...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.6054789Z [   0% ] ^[[90m^[[1mreimport^[[22m | Executing pre-reimport operations...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.6073674Z [   0% ] ^[[90m^[[1mreimport^[[22m | Sora-VF.subset.woff2^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.6111110Z [   0% ] ^[[90m^[[1mreimport^[[22m | Figtree-VF.subset.woff2^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.6139844Z [   1% ] ^[[90m^[[1mreimport^[[22m | NotoSansSC-VF.subset.woff2^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.6696183Z [   2% ] ^[[90m^[[1mreimport^[[22m | bed_yard_music.ogg^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.6825620Z [   2% ] ^[[90m^[[1mreimport^[[22m | bed_yard_env.ogg^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.7014219Z [   3% ] ^[[90m^[[1mreimport^[[22m | cloud_band_sunset.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:22.8086234Z [   4% ] ^[[90m^[[1mreimport^[[22m | yard_overcast.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:23.1000892Z [   4% ] ^[[90m^[[1mreimport^[[22m | brook_stone.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:23.1262484Z [   5% ] ^[[90m^[[1mreimport^[[22m | feather.webp^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:23.1444560Z [   6% ] ^[[90m^[[1mreimport^[[22m | leaf_pile.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:23.5569061Z [   6% ] ^[[90m^[[1mreimport^[[22m | pine_cone.webp^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:23.5775080Z [   7% ] ^[[90m^[[1mreimport^[[22m | lakeside_village.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:24.0268823Z [   8% ] ^[[90m^[[1mreimport^[[22m | near_path_02.webp^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:24.4589707Z [   8% ] ^[[90m^[[1mreimport^[[22m | felt_spit.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:24.4611763Z [   9% ] ^[[90m^[[1mreimport^[[22m | fence_grass_bent.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:24.4934360Z [  10% ] ^[[90m^[[1mreimport^[[22m | fence_grass_still.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:24.5248479Z [  11% ] ^[[90m^[[1mreimport^[[22m | grass_bundle.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:24.5287057Z [  11% ] ^[[90m^[[1mreimport^[[22m | grass_states_v2.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:24.9559347Z [  12% ] ^[[90m^[[1mreimport^[[22m | path_clover.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:24.9841874Z [  13% ] ^[[90m^[[1mreimport^[[22m | path_snail.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:25.0083917Z [  13% ] ^[[90m^[[1mreimport^[[22m | pet_heart_watercolor.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:25.0855807Z [  14% ] ^[[90m^[[1mreimport^[[22m | shed_feather.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:25.1057761Z [  15% ] ^[[90m^[[1mreimport^[[22m | approved_traveler_pants_v1.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:25.4840371Z [  15% ] ^[[90m^[[1mreimport^[[22m | approved_traveler_upper_v1.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:25.8775928Z [  16% ] ^[[90m^[[1mreimport^[[22m | cow.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:25.8994936Z [  17% ] ^[[90m^[[1mreimport^[[22m | duck.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:25.9047621Z [  17% ] ^[[90m^[[1mreimport^[[22m | goose.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:25.9144662Z [  18% ] ^[[90m^[[1mreimport^[[22m | llama.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:25.9314285Z [  19% ] ^[[90m^[[1mreimport^[[22m | llama_annoyed.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:25.9554753Z [  20% ] ^[[90m^[[1mreimport^[[22m | llama_happy.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:25.9764703Z [  20% ] ^[[90m^[[1mreimport^[[22m | llama_legs_atlas_v1.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:26.3848379Z [  21% ] ^[[90m^[[1mreimport^[[22m | llama_smirk.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:26.4086481Z [  22% ] ^[[90m^[[1mreimport^[[22m | player.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:26.4166491Z [  22% ] ^[[90m^[[1mreimport^[[22m | player_rig_atlas_v1.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:26.8284156Z [  23% ] ^[[90m^[[1mreimport^[[22m | sheep_clingy.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:26.8418843Z [  24% ] ^[[90m^[[1mreimport^[[22m | sheep_dull.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:26.8618607Z [  24% ] ^[[90m^[[1mreimport^[[22m | cloud_band_morning.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:26.9764724Z [  25% ] ^[[90m^[[1mreimport^[[22m | cloud_band_overcast.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:27.0882976Z [  26% ] ^[[90m^[[1mreimport^[[22m | cloud_band_sunny.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:27.1936829Z [  26% ] ^[[90m^[[1mreimport^[[22m | runner.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:27.2140598Z [  27% ] ^[[90m^[[1mreimport^[[22m | sentinel.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:27.2339956Z [  28% ] ^[[90m^[[1mreimport^[[22m | backdrop.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:27.4666708Z [  28% ] ^[[90m^[[1mreimport^[[22m | foreground.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:27.6932438Z [  29% ] ^[[90m^[[1mreimport^[[22m | energy.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:27.7128180Z [  30% ] ^[[90m^[[1mreimport^[[22m | magnet.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:27.7340993Z [  31% ] ^[[90m^[[1mreimport^[[22m | overdrive.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:27.7534994Z [  31% ] ^[[90m^[[1mreimport^[[22m | shield.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:27.7734720Z [  32% ] ^[[90m^[[1mreimport^[[22m | slow_field.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:27.7937814Z [  33% ] ^[[90m^[[1mreimport^[[22m | loading-background.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:27.9794983Z [  33% ] ^[[90m^[[1mreimport^[[22m | pause_glass.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:28.1354379Z [  34% ] ^[[90m^[[1mreimport^[[22m | title_glass.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:28.2559964Z [  35% ] ^[[90m^[[1mreimport^[[22m | 7e67d7987c0566aa7608d8069d8c49d1e195bf0ff0aa5c82d7808f2d470e45a3.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:28.3372028Z [  35% ] ^[[90m^[[1mreimport^[[22m | 744c4ef4ff02a5c20b4bf6b258cd91327cc6f16e40105c4b640c10bec936a509.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:28.5347585Z [  36% ] ^[[90m^[[1mreimport^[[22m | index.apple-touch-icon.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:28.5466071Z [  37% ] ^[[90m^[[1mreimport^[[22m | index.icon.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:28.6324373Z [  37% ] ^[[90m^[[1mreimport^[[22m | index.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:28.8253556Z [  38% ] ^[[90m^[[1mreimport^[[22m | shore_dragonfly_flight.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:28.8559868Z [  39% ] ^[[90m^[[1mreimport^[[22m | shore_dragonfly_rest.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:28.8858342Z [  40% ] ^[[90m^[[1mreimport^[[22m | shore_ripple_start.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:28.9123799Z [  40% ] ^[[90m^[[1mreimport^[[22m | shore_ripple_wide.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:28.9389671Z [  41% ] ^[[90m^[[1mreimport^[[22m | water_splash_watercolor.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:29.0296589Z [  42% ] ^[[90m^[[1mreimport^[[22m | windowbox_butterfly_open.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:29.0482970Z [  42% ] ^[[90m^[[1mreimport^[[22m | windowbox_butterfly_rest.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:29.0666613Z [  43% ] ^[[90m^[[1mreimport^[[22m | windowbox_petals.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:29.0810829Z [  44% ] ^[[90m^[[1mreimport^[[22m | ground_fish.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:29.4782279Z [  44% ] ^[[90m^[[1mreimport^[[22m | millet.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:30.1598720Z [  45% ] ^[[90m^[[1mreimport^[[22m | favicon.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:31.2920675Z [  46% ] ^[[90m^[[1mreimport^[[22m | favicon_fallback.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:31.3051535Z [  46% ] ^[[90m^[[1mreimport^[[22m | og.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:32.4132574Z [  47% ] ^[[90m^[[1mreimport^[[22m | polaroid_frame.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:32.4574067Z [  48% ] ^[[90m^[[1mreimport^[[22m | scrapbook_paper.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:32.5907927Z [  48% ] ^[[90m^[[1mreimport^[[22m | favicon.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:32.6713782Z [  49% ] ^[[90m^[[1mreimport^[[22m | og.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:32.8714302Z [  50% ] ^[[90m^[[1mreimport^[[22m | cow_glance.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:33.2921687Z [  51% ] ^[[90m^[[1mreimport^[[22m | duck.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:33.7139003Z [  51% ] ^[[90m^[[1mreimport^[[22m | duck_attend.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:34.1889170Z [  52% ] ^[[90m^[[1mreimport^[[22m | duck_preen.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:34.6126596Z [  53% ] ^[[90m^[[1mreimport^[[22m | goose.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:35.0302694Z [  53% ] ^[[90m^[[1mreimport^[[22m | goose_calm.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:35.4555402Z [  54% ] ^[[90m^[[1mreimport^[[22m | goose_rest.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:35.8605580Z [  55% ] ^[[90m^[[1mreimport^[[22m | goose_riding_down.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:36.2596468Z [  55% ] ^[[90m^[[1mreimport^[[22m | goose_riding_up.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:36.6813679Z [  56% ] ^[[90m^[[1mreimport^[[22m | horse.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:37.0922660Z [  57% ] ^[[90m^[[1mreimport^[[22m | horse_tail.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:37.5089049Z [  57% ] ^[[90m^[[1mreimport^[[22m | llama_annoyed.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:37.8878812Z [  58% ] ^[[90m^[[1mreimport^[[22m | llama_happy.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:38.2711950Z [  59% ] ^[[90m^[[1mreimport^[[22m | llama_idle.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:38.6516437Z [  60% ] ^[[90m^[[1mreimport^[[22m | llama_search.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:39.0834576Z [  60% ] ^[[90m^[[1mreimport^[[22m | llama_smirk.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:39.4936534Z [  61% ] ^[[90m^[[1mreimport^[[22m | sheep_clingy.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:39.9165339Z [  62% ] ^[[90m^[[1mreimport^[[22m | llama-search-v1.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:40.3487846Z [  62% ] ^[[90m^[[1mreimport^[[22m | small-fish-v1.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:40.7306809Z [  63% ] ^[[90m^[[1mreimport^[[22m | animal_cast_approval_v1.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:41.1109407Z [  64% ] ^[[90m^[[1mreimport^[[22m | animal_cast_approval_v2.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:41.5270849Z [  64% ] ^[[90m^[[1mreimport^[[22m | cow_cutout_initial_edge_touch.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:41.9664298Z [  65% ] ^[[90m^[[1mreimport^[[22m | cow_chew.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:42.3912525Z [  66% ] ^[[90m^[[1mreimport^[[22m | duck_preen.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:42.8152710Z [  66% ] ^[[90m^[[1mreimport^[[22m | horse_tail.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:43.2282058Z [  67% ] ^[[90m^[[1mreimport^[[22m | path_clover.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:43.2562603Z [  68% ] ^[[90m^[[1mreimport^[[22m | path_snail.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:43.2803175Z [  68% ] ^[[90m^[[1mreimport^[[22m | sheep_shake.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:43.7267370Z [  69% ] ^[[90m^[[1mreimport^[[22m | path_clover.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:43.7794148Z [  70% ] ^[[90m^[[1mreimport^[[22m | path_snail.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:43.8000748Z [  71% ] ^[[90m^[[1mreimport^[[22m | grown.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:44.2197445Z [  71% ] ^[[90m^[[1mreimport^[[22m | puppy.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:44.6552081Z [  72% ] ^[[90m^[[1mreimport^[[22m | search.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:45.0920202Z [  73% ] ^[[90m^[[1mreimport^[[22m | cow.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:45.4715663Z [  73% ] ^[[90m^[[1mreimport^[[22m | cow_chew.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:45.8984980Z [  74% ] ^[[90m^[[1mreimport^[[22m | 03.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:45.9349103Z [  75% ] ^[[90m^[[1mreimport^[[22m | 04.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:45.9712150Z [  75% ] ^[[90m^[[1mreimport^[[22m | 05.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:46.0074576Z [  76% ] ^[[90m^[[1mreimport^[[22m | 06.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:46.0439514Z [  77% ] ^[[90m^[[1mreimport^[[22m | 07.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:46.0803615Z [  77% ] ^[[90m^[[1mreimport^[[22m | 08.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:46.1168435Z [  78% ] ^[[90m^[[1mreimport^[[22m | 09.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:46.1532641Z [  79% ] ^[[90m^[[1mreimport^[[22m | 10.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:46.1897132Z [  80% ] ^[[90m^[[1mreimport^[[22m | 11.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:46.2262099Z [  80% ] ^[[90m^[[1mreimport^[[22m | 12.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:46.2625760Z [  81% ] ^[[90m^[[1mreimport^[[22m | 13.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:46.2993904Z [  82% ] ^[[90m^[[1mreimport^[[22m | 14.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:46.3364711Z [  82% ] ^[[90m^[[1mreimport^[[22m | 15.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:46.3730436Z [  83% ] ^[[90m^[[1mreimport^[[22m | idle.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:46.4097057Z [  84% ] ^[[90m^[[1mreimport^[[22m | cow-rest.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:46.8342256Z [  84% ] ^[[90m^[[1mreimport^[[22m | sheep-clingy-rest.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:47.2429321Z [  85% ] ^[[90m^[[1mreimport^[[22m | sheep-dull-rest.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:47.6757006Z [  86% ] ^[[90m^[[1mreimport^[[22m | approved_resident_upper_v1.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:48.0830313Z [  86% ] ^[[90m^[[1mreimport^[[22m | sheep_clingy_attend_v2.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:48.5179422Z [  87% ] ^[[90m^[[1mreimport^[[22m | sheep_dull.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:48.9388819Z [  88% ] ^[[90m^[[1mreimport^[[22m | sheep_dull_glance_v3.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:49.3831538Z [  88% ] ^[[90m^[[1mreimport^[[22m | sheep_shake.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:49.8289761Z [  89% ] ^[[90m^[[1mreimport^[[22m | chick-peck.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:50.2253567Z [  90% ] ^[[90m^[[1mreimport^[[22m | chick.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:50.6228610Z [  91% ] ^[[90m^[[1mreimport^[[22m | hen-peck.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:51.0232461Z [  91% ] ^[[90m^[[1mreimport^[[22m | hen.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:51.4402619Z [  92% ] ^[[90m^[[1mreimport^[[22m | cow-graze-v2.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:51.8541257Z [  93% ] ^[[90m^[[1mreimport^[[22m | sheep-clingy-graze-v1.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:52.2856954Z [  93% ] ^[[90m^[[1mreimport^[[22m | sheep-dull-graze-v1.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:52.6803695Z [  94% ] ^[[90m^[[1mreimport^[[22m | goose-turtle-peck-miss.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:53.0957016Z [  95% ] ^[[90m^[[1mreimport^[[22m | turtle-hen-ride.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:53.5271957Z [  95% ] ^[[90m^[[1mreimport^[[22m | turtle.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:53.9070173Z [  96% ] ^[[90m^[[1mreimport^[[22m | actions.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:54.5614102Z [  97% ] ^[[90m^[[1mreimport^[[22m | 00.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:54.5979972Z [  97% ] ^[[90m^[[1mreimport^[[22m | 01.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:54.6344070Z [  98% ] ^[[90m^[[1mreimport^[[22m | 02.png^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:54.6709111Z [  99% ] ^[[90m^[[1mreimport^[[22m | Finalizing Asset Import...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:54.6726036Z ^[[92m[ DONE ]^[[39m ^[[1mreimport^[[22m
+verify-export	Run game verification	2026-10-08T16:16:54.6726483Z ^[[0m
+verify-export	Run game verification	2026-10-08T16:16:54.6726952Z [   0% ] ^[[90m^[[1mreimport^[[22m | Started (Re)Importing Assets (144 steps)^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:54.6727796Z [   0% ] ^[[90m^[[1mreimport^[[22m | Executing post-reimport operations...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:54.6730180Z ^[[92m[ DONE ]^[[39m ^[[1mreimport^[[22m
+verify-export	Run game verification	2026-10-08T16:16:54.6730650Z ^[[0m
+verify-export	Run game verification	2026-10-08T16:16:54.6832314Z [   0% ] ^[[90m^[[1mloading_editor_layout^[[22m | Started Loading editor (5 steps)^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:54.6833175Z [   0% ] ^[[90m^[[1mloading_editor_layout^[[22m | Loading editor layout...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:54.6844281Z [  16% ] ^[[90m^[[1mloading_editor_layout^[[22m | Loading docks...^[[39m^[[0m
+verify-export	Run game verification	2026-10-08T16:16:54.6844945Z ^[[92m[ DONE ]^[[39m ^[[1mloading_editor_layout^[[22m
+verify-export	Run game verification	2026-10-08T16:16:54.6845333Z ^[[0m
+verify-export	Run game verification	2026-10-08T16:16:54.7946786Z SCRIPT ERROR: Parse Error: Cannot infer the type of "spot" variable because the value doesn't have a set type.
+verify-export	Run game verification	2026-10-08T16:16:54.7953806Z           at: GDScript::reload (res://scripts/main.gd:1506)
+verify-export	Run game verification	2026-10-08T16:16:54.8023949Z ERROR: Failed to load script "res://scripts/main.gd" with error "Parse error".
+verify-export	Run game verification	2026-10-08T16:16:54.8024515Z    at: load (modules/gdscript/gdscript_resource_format.cpp:46)
+verify-export	Run game verification	2026-10-08T16:16:56.0255783Z [daily-check] Godot reported an error or failed assertion
+verify-export	Run game verification	2026-10-08T16:16:56.0303615Z ##[error]Process completed with exit code 1.

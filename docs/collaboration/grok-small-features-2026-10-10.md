@@ -45,3 +45,7 @@ GROK-CONTRIBUTOR的bug、小功能及其后续修订，均须由CODEX-LEAD审核
 ## 2026-10-11 07时烟囱候选审核
 
 #705本人已回执并提交#723；`8ae4e0a67e6c1155260b80705e544a2187f53549`经Leader本机Godot4.7.2隔离实跑，独立套件加载cooking_smoke.gd:135失败（Identifier not found: TuningStore），继而无法实例化叶子，未到PASS。原180秒套件超时，另15秒诊断保留输出。没有真实画面证据，透明度寿命衰减/纹理等表现亦未验收，已在[原PR](https://github.com/narutojzm1-dot/youjia/pull/723#issuecomment-6103163731)退回。#718/#720仍原SHA且无修订回应，状态为待作者返修，不能记作等待Leader合入。
+
+## 2026-10-11 09点最终SHA复核
+
+#703/#704/#705均已回执并提交，不再等待接收。718新47b8bf6e31d9f1c1f39f35efc71dd7a88d096a3e与720新0aa59d9d6510e8cfd9acb8ebf0b0bf3462bbd6fa仍实跑编译失败，分别退回I18n访问和变量类型；723新6afafd1ecc397a2acfafbdae7163de6c4c6a8674通过37项及隔离GPU渲染，视觉仍需原画屋顶/昼夜/窄屏可辨识证据，不合入。原PR保留审核结论与具体位置，Leader不覆盖作者分支。

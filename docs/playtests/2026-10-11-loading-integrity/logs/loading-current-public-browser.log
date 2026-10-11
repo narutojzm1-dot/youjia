@@ -1,0 +1,11 @@
+{"build": "game-e9e7292", "hidden": false, "status": "正在加载…", "detail": "已读取 0.0 MiB 资源数据（解压后）· 10 秒", "timings": {"engineScriptReady": 1177}, "attempt": 0, "elapsed": 10}
+{"build": "game-e9e7292", "hidden": false, "status": "正在加载…", "detail": "已读取 0.0 MiB 资源数据（解压后）· 20 秒", "timings": {"engineScriptReady": 1177}, "attempt": 0, "elapsed": 20}
+{"build": "game-e9e7292", "hidden": false, "status": "正在加载…", "detail": "已读取 0.0 MiB 资源数据（解压后）· 30 秒", "timings": {"engineScriptReady": 1177}, "attempt": 0, "elapsed": 30}
+{"build": "game-e9e7292", "hidden": false, "status": "正在加载…", "detail": "已读取 0.0 MiB 资源数据（解压后）· 40 秒", "timings": {"engineScriptReady": 1177}, "attempt": 0, "elapsed": 40}
+{"build": "game-e9e7292", "hidden": false, "status": "正在加载…", "detail": "已读取 0.0 MiB 资源数据（解压后）· 50 秒", "timings": {"engineScriptReady": 1177}, "attempt": 0, "elapsed": 50}
+{"build": "game-e9e7292", "hidden": false, "status": "游戏加载失败，请重试。", "detail": "游戏启动模块下载超时，请检查网络连接后重试。", "timings": {"engineScriptReady": 1177, "failed": 60005}, "attempt": 0, "elapsed": 60}
+Traceback (most recent call last):
+  File "D:\games\youjia-test\assistant-recovery\verify-loading-integrity-public-browser.py", line 23, in <module>
+    page.screenshot(path=str(OUT/'failed-or-timeout.png'));raise AssertionError('actual public startup did not finish')
+                                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: actual public startup did not finish
