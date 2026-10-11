@@ -1826,6 +1826,7 @@ func _on_save_rejected(op_id: String, kind: String, code: String) -> void:
 		_save_exploration_scopes.erase(op_id)
 		_save_exploration_coverage.erase(op_id)
 		return
+	if kind == "meal" and code.begins_with("MEAL_") and not _save_durable_ops.has(op_id): return
 	if kind == "crops" and code.begins_with("CROP_") and not _save_durable_ops.has(op_id): return
 	if kind == "inventory" and code == "BASKET_SEED_RESERVED" and not _save_durable_ops.has(op_id): return
 	if kind == "decor" and not _save_durable_ops.has(op_id) and code in ["DECOR_CHANGED", "DECOR_OCCUPIED", "DECOR_EMPTY", "DECOR_INVALID", "DECOR_LIMIT"]:
@@ -1973,7 +1974,7 @@ func _retry_save() -> void:
 	if _world != null and _world.house != null and _world.house.failed:
 		var coverage := {}
 		for old_id in _save_problems:
-			if _save_problems[old_id].kind == "house-sleep": coverage[old_id] = _save_problems[old_id].duplicate(true)
+			if _save_problems[old_id].kind in ["house-sleep", "meal"]: coverage[old_id] = _save_problems[old_id].duplicate(true)
 		var next: String = _world.house.retry()
 		if not next.is_empty(): _save_retry_coverage[next] = {"problems":coverage,"untracked_revision":-1}
 		return

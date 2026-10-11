@@ -511,6 +511,7 @@ func tick(delta: float, move: Vector2) -> void:
 	if gate != null and not gate.pending.is_empty(): return
 	if not simulation_active:
 		return
+	if house != null: house.consider_meal(delta, move)
 	var house_owned_tick: bool = house != null and house.busy()
 	if house_owned_tick and move.length() > 0.2: house.skip_balcony()
 	if house != null: house.tick(delta)

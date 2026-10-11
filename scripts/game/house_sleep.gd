@@ -1,5 +1,6 @@
 extends "res://scripts/game/house_lights.gd"
 ## A narrow authored porch, never part of the general roaming ground.
+const Meals := preload("res://scripts/game/meal_schedule.gd")
 const State := preload("res://scripts/game/house_sleep_state.gd")
 const Daylight := preload("res://scripts/game/world_daylight.gd")
 const OPEN := preload("res://assets/holiday/environment/house_open.png")
@@ -18,6 +19,13 @@ var night: Dictionary = {}
 var door: Sprite2D
 var _night_elapsed := 0.0
 var balcony: Node2D
+var cooking_plan: Dictionary = {}
+var smoke: Node2D
+var meal_idle := 0.0
+var meal_cooldown := 0.0
+var meal_rng := RandomNumberGenerator.new()
+var meal_succeeded := false
+
 
 func _init(owner_world: Node2D, save_store: Node) -> void:
 	world = owner_world
@@ -35,6 +43,11 @@ func _init(owner_world: Node2D, save_store: Node) -> void:
 	z_index = 1
 	balcony = preload("res://scripts/game/balcony_morning.gd").new(world)
 	add_child(balcony)
+	meal_rng.randomize()
+	smoke = preload("res://scripts/presentation/cooking_smoke.gd").new()
+	smoke.process_mode = Node.PROCESS_MODE_PAUSABLE
+	add_child(smoke)
+	smoke.set_chimney_anchor(Vector2(286, 122))
 
 func busy() -> bool: return not stage.is_empty()
 
@@ -43,12 +56,25 @@ func available() -> bool:
 
 func begin() -> void:
 	if not available(): return
+	var meal := Meals.meal_at(world.tod_fraction())
+	if not meal.is_empty() and store.has_method("plan_meal") and store.is_save_idle():
+		var plan: Dictionary = store.plan_meal(meal, Meals.RECIPES, meal_rng)
+		if not plan.is_empty():
+			cooking_plan = plan
+			meal_succeeded = false
+			_start_entry()
+			world.notice_requested.emit("notice.meal.enter")
+			return
 	if Daylight.phase(world.tod_fraction()) != "night":
 		world.notice_requested.emit("notice.house.day")
 		return
 	if not store.is_save_idle():
 		world.notice_requested.emit("notice.gate_save_wait")
 		return
+	_start_entry()
+	world.notice_requested.emit("notice.house.enter")
+
+func _start_entry() -> void:
 	world._consume_pending_action()
 	world.cancel_scene_feedback()
 	world._cancel_quiet_sky_look()
@@ -59,17 +85,25 @@ func begin() -> void:
 		"plant_watered_day":world._plant_watered_day,"world_weather":world._regional_weather.snapshot()}
 	_night_elapsed = world._day_elapsed
 	_enter("porch")
-	world.notice_requested.emit("notice.house.enter")
 
 func _enter(next: String) -> void:
 	stage = next
 	seconds = 0.0
 
 func inside_room() -> bool:
-	return stage in ["close", "saving", "sleep", "balcony", "stairs", "wake"]
+	return stage in ["close", "saving", "cook", "sleep", "balcony", "stairs", "wake"]
 
 func skip_balcony() -> void:
-	if stage == "balcony": balcony.skip()
+	if stage == "balcony":
+		balcony.skip()
+	elif not cooking_plan.is_empty() and pending.is_empty() and stage in ["porch", "open", "in", "close", "cook"]:
+		# A player's input can interrupt uncommitted cooking without losing food.
+		smoke.set_cooking(false)
+		meal_cooldown = 30.0
+		if stage in ["porch", "open", "in"]:
+			_enter("out")
+		else:
+			_enter("wake")
 
 func window_light_target() -> float:
 	return 1.0 if wants_light(world.tod_fraction(), inside_room()) else 0.0
@@ -78,6 +112,7 @@ func tick(delta: float) -> void:
 	var target := window_light_target()
 	lights = move_toward(lights,target,delta * 0.7)
 	queue_redraw()
+	smoke.set_night_tint(Daylight.phase(world.tod_fraction()) == "night")
 	if not busy(): return
 	seconds += delta
 	var player = world.get_player()
@@ -98,6 +133,15 @@ func tick(delta: float) -> void:
 			door.modulate.a = maxf(0.0,1.0 - seconds / 0.8)
 			if seconds >= 1.1:
 				door.visible = false
+				if cooking_plan.is_empty():
+					_enter("saving")
+					retry()
+				else:
+					_enter("cook")
+					smoke.set_cooking(true)
+		"cook":
+			if seconds >= Meals.COOK_SECONDS:
+				smoke.set_cooking(false)
 				_enter("saving")
 				retry()
 		"sleep":
@@ -133,7 +177,13 @@ func tick(delta: float) -> void:
 				player.walk_ground = world.player_ground()
 				door.visible = false
 				stage = ""
-				world.notice_requested.emit("notice.house.morning")
+				if cooking_plan.is_empty():
+					world.notice_requested.emit("notice.house.morning")
+				else:
+					world.notice_requested.emit("notice.meal.done" if meal_succeeded else "notice.meal.cancel")
+					cooking_plan = {}
+					meal_cooldown = 30.0
+					meal_idle = 0.0
 				world._save_interval = 60.0
 
 func _walk(delta: float, point: Vector2) -> bool:
@@ -148,7 +198,11 @@ func _walk(delta: float, point: Vector2) -> bool:
 func retry() -> String:
 	if stage != "saving" or not pending.is_empty(): return ""
 	failed = false
-	pending = store.request_house_sleep(night)
+	if cooking_plan.is_empty():
+		pending = store.request_house_sleep(night)
+	else:
+		pending = store.request_meal_completion(cooking_plan.revision, cooking_plan.inventory_revision,
+			cooking_plan.day, cooking_plan.meal, cooking_plan.ingredients)
 	if pending.is_empty(): failed = true
 	return pending
 
@@ -156,13 +210,27 @@ func _confirmed(op_id: String, _kind: String) -> void:
 	if op_id != pending or pending.is_empty(): return
 	pending = ""
 	failed = false
-	_enter("sleep")
-	world.notice_requested.emit("notice.house.sleep")
+	if cooking_plan.is_empty():
+		_enter("sleep")
+		world.notice_requested.emit("notice.house.sleep")
+	else:
+		meal_succeeded = true
+		if meal_rng.randf() < 0.8:
+			balcony.begin("brush")
+			_enter("balcony")
+			world.camera_focus_requested.emit(Vector2(278, 300), 1.25)
+		else:
+			_enter("wake")
 
 func _rejected(op_id: String, _kind: String, _code: String) -> void:
 	if op_id != pending or pending.is_empty(): return
 	pending = ""
 	failed = true
+	# Definitive rejection does not award a meal. Unknown writes stay pending
+	# until the existing save-problem flow resolves that same operation.
+	if not cooking_plan.is_empty() and _code.begins_with("MEAL_"):
+		failed = false
+		_enter("wake")
 
 func _apply_morning() -> void:
 	world.holiday_day = store.get_holiday_day()
@@ -181,3 +249,27 @@ func _apply_morning() -> void:
 
 # Live light is drawn after the shared night tint; PhotoMoment uses the same panes.
 func _draw() -> void: pass
+
+# Called only by the live yard tick; no real-time/offline catch-up.
+func consider_meal(delta: float, move: Vector2) -> void:
+	meal_cooldown = maxf(0.0, meal_cooldown - delta)
+	if busy() or meal_cooldown > 0.0 or not world.input_enabled or not available():
+		meal_idle = 0.0
+		return
+	if move.length() > 0.2 or world._has_walk_goal or not world._pending_interaction.is_empty():
+		meal_idle = 0.0
+		return
+	if world.get_player().carrying_grass or (world.ground_food != null and not world.ground_food.held().is_empty()):
+		meal_idle = 0.0
+		return
+	meal_idle += delta
+	if meal_idle < Meals.IDLE_SECONDS or not store.has_method("plan_meal") or not store.is_save_idle(): return
+	meal_idle = 0.0
+	var meal := Meals.meal_at(world.tod_fraction())
+	if meal.is_empty(): return
+	var plan: Dictionary = store.plan_meal(meal, Meals.RECIPES, meal_rng)
+	if plan.is_empty(): return
+	# Use the normal walk route to the porch; never clamp/teleport from the yard
+	# into the narrow indoor passage. Input can replace this unreserved route.
+	world.notice_requested.emit("notice.meal.hungry")
+	world._request_action("house_door", APPROACH)
