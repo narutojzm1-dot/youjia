@@ -5,7 +5,8 @@ extends SceneTree
 ## 现在：地名与提示垫和时钟同款的小纸片；地名在按钮左边放不下时移到按钮下面一行，
 ## 「停下看看」和字幕让出地名与时钟；提示窄屏折行（最多三行）。真实 Main 进入近郊，中英文、八种视口。
 const VIEWPORTS := [Vector2i(1280, 720), Vector2i(844, 390), Vector2i(640, 300), Vector2i(568, 320),
-	Vector2i(390, 844), Vector2i(360, 640), Vector2i(320, 568), Vector2i(280, 653)]
+	Vector2i(390, 844), Vector2i(360, 640), Vector2i(320, 568), Vector2i(280, 653),
+	Vector2i(700, 300), Vector2i(480, 320)]
 const PAPER := Color("fff6e8")
 
 var checks := 0
@@ -83,11 +84,14 @@ func run() -> void:
 			main._sync_regional_clock()
 			check(scroll._look_button.visible, tag + " look button shows near the brook")
 			_check_top(tag + " near brook", scroll)
-			scroll.observe("brook")
-			scroll._refresh()
-			main._sync_regional_clock()
-			_check_top(tag + " looking", scroll)
-			scroll.end_observe()
+			# 每一处看景字幕：不压地名、时钟，也不压左下篮子（英文矮横屏折行最多）
+			for stop_id: String in ["gate", "brook", "shade", "slope", "leaf_pile"]:
+				scroll.place_at(stop_id)
+				check(scroll.observe(stop_id), tag + " can look at " + stop_id)
+				scroll._refresh()
+				main._sync_regional_clock()
+				_check_top(tag + " looking at " + stop_id, scroll)
+				scroll.end_observe()
 	i18n.set_locale("zh-CN")
 	_finish()
 
@@ -110,6 +114,11 @@ func _check_top(tag: String, scroll) -> void:
 	if scroll._caption.visible:
 		var cr: Rect2 = scroll._caption.get_global_rect()
 		check(not cr.intersects(pr) and not cr.intersects(clock.get_global_rect()), tag + " look paper clear of place name and clock")
+		check(screen.encloses(cr), tag + " look paper on screen %s" % cr)
+		check(not cr.intersects(_basket_rect(scroll)), tag + " look paper clear of the basket and its name")
+		for button: Button in [scroll._pause_button, scroll._return_button, scroll._pick_button, scroll._go_button]:
+			if button.visible:
+				check(not cr.intersects(button.get_global_rect()), tag + " look paper clear of '%s'" % button.text)
 
 
 func _check_hint(tag: String, scroll, view: Vector2) -> void:
@@ -125,10 +134,7 @@ func _check_hint(tag: String, scroll, view: Vector2) -> void:
 	var font := hint.get_theme_font("font")
 	var one_line: float = font.get_string_size(hint.text, HORIZONTAL_ALIGNMENT_LEFT, -1, hint.get_theme_font_size("font_size")).x
 	check(lines > 1 or one_line + paper.get_margin(SIDE_LEFT) + paper.get_margin(SIDE_RIGHT) <= hint.size.x + 1.5, tag + " single-line hint is not cut off")
-	var basket: Control = scroll._basket
-	var backing: Rect2 = scroll.basket_label_rect(basket.get_theme_default_font(), scroll.basket_text(), scroll._basket_label_width)
-	var basket_rect := Rect2(basket.global_position + Vector2(6, 22), Vector2(70, 36)).merge(Rect2(basket.global_position + backing.position, backing.size))
-	check(not hr.intersects(basket_rect), tag + " walk hint clear of the basket and its name")
+	check(not hr.intersects(_basket_rect(scroll)), tag + " walk hint clear of the basket and its name")
 
 
 func _finish() -> void:
@@ -141,3 +147,9 @@ func _finish() -> void:
 		for failure in failures: push_error(failure)
 		print("[exploration-hud-readable] FAIL: %d of %d" % [failures.size(), checks])
 		quit(1)
+
+
+func _basket_rect(scroll) -> Rect2:
+	var basket: Control = scroll._basket
+	var backing: Rect2 = scroll.basket_label_rect(basket.get_theme_default_font(), scroll.basket_text(), scroll._basket_label_width)
+	return Rect2(basket.global_position + Vector2(6, 22), Vector2(70, 36)).merge(Rect2(basket.global_position + backing.position, backing.size))

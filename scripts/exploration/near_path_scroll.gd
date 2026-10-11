@@ -828,7 +828,7 @@ func _layout(size: Vector2, compact: bool) -> void:
 	var place_w := ceilf(place_need.x)
 	var place_h := maxf(PLACE_HEIGHT, ceilf(place_need.y))
 	var content_top := pad + button_h + 12.0
-	if place_w <= _pause_button.position.x - pad * 2:
+	if place_w <= _pause_button.position.x - pad - 10.0:
 		_place_label.position = Vector2(pad, pad + (button_h - place_h) * 0.5)
 	else:
 		place_w = minf(place_w, size.x - pad * 2)
@@ -836,7 +836,7 @@ func _layout(size: Vector2, compact: bool) -> void:
 		content_top = _place_label.position.y + place_h + CLOCK_ROOM + 8.0
 	_place_label.size = Vector2(place_w, place_h)
 	var look_w := minf(size.x - pad * 2, 320.0)
-	var clock_right := pad + clampf(place_w, CLOCK_MIN_WIDTH, CLOCK_MAX_WIDTH) + 8.0
+	var clock_right := pad + maxf(place_w, CLOCK_MIN_WIDTH) + 8.0
 	if (size.x - look_w) * 0.5 < clock_right:
 		content_top = maxf(content_top, _place_label.position.y + place_h + CLOCK_ROOM + 8.0)
 	_look_button.size = Vector2(look_w, button_h)
@@ -853,19 +853,20 @@ func _layout(size: Vector2, compact: bool) -> void:
 	var side_caption := observing == "leaf_pile" and size.y < 400.0 and size.x > size.y
 	if side_caption: caption_w = minf(caption_w, size.x * 0.43)
 	# 字幕放在上方天空里，路面和路边的东西不被挡住；走路时让出“停下看看”按钮的位置
-	var caption_top := content_top if not observing.is_empty() else content_top + button_h + 12.0
 	var clock_bottom := _place_label.position.y + place_h + CLOCK_ROOM + 8.0
+	var caption_top := pad + button_h + 12.0 if not observing.is_empty() else content_top + button_h + 12.0
 	var caption_x := pad if side_caption else (size.x - caption_w) * 0.5
 	if caption_top < clock_bottom and caption_x < clock_right:
-		# 与地名、时钟同一高度：宽屏收窄让到时钟右边，放不下才挪到时钟下面
-		if not side_caption and size.x - clock_right * 2.0 >= CAPTION_MIN_WIDTH:
-			caption_w = size.x - clock_right * 2.0
+		# 与地名、时钟同一高度：挪到时钟右边（宽度尽量不收，免得折成多行压到篮子），放不下才挪到时钟下面
+		var beside_w := minf(caption_w, size.x - pad - clock_right)
+		if not side_caption and beside_w >= CAPTION_MIN_WIDTH:
+			caption_w = beside_w
+			caption_x = maxf(clock_right, (size.x - caption_w) * 0.5)
 		else:
 			caption_top = clock_bottom
 	# 先定宽度再按实际行数长高：StyleBox 的纸片要包住字，展示安全区也按纸片下沿算
 	_fit_caption(caption_w)
-	_caption.position = Vector2((size.x - caption_w) * 0.5, caption_top)
-	if side_caption: _caption.position.x = pad
+	_caption.position = Vector2(caption_x, caption_top)
 	var hint_h := _fit_hint(size.x - pad * 2)
 	_hint.position = Vector2((size.x - _hint.size.x) * 0.5, size.y - pad - hint_h)
 	_basket.position = Vector2(pad, size.y - pad - 64 - (button_h + 10 if not observing.is_empty() else 0) - (hint_h + 10.0 if _hint.visible else 0.0))
