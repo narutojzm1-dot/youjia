@@ -248,3 +248,14 @@ hold_hotbar_mount|[hold-hotbar-mount] PASS: 1 checks|[hold-hotbar-mount] PASS: 0
 painted_blink|PAINTED_BLINK checks=1 failures=0|PAINTED_BLINK checks=0 failures=0
 UI_COMPLETIONS
 echo "GROK UI COMPLETION CONTRACT PASS $((checks-ui_before))"
+
+# Growth foundation: exact positive completion, never unrelated or partial work.
+growth_entry=test/growth_materials_suite.gd
+run_case growth-valid pass 0 'GROWTH_MATERIALS checks=77 failures=0' none suite "$growth_entry"
+run_case growth-zero block 0 'GROWTH_MATERIALS checks=0 failures=0' none suite "$growth_entry"
+run_case growth-failed block 0 'GROWTH_MATERIALS checks=77 failures=1' none suite "$growth_entry"
+run_case growth-wrong-suite block 0 'MEAL_PLANNER checks=28 failures=0' none suite "$growth_entry"
+run_case growth-missing block 0 '' none suite "$growth_entry"
+run_case growth-prefix block 0 'debug: GROWTH_MATERIALS checks=77 failures=0' none suite "$growth_entry"
+run_case growth-nonzero block 1 'GROWTH_MATERIALS checks=77 failures=0' none suite "$growth_entry"
+echo 'GROWTH COMPLETION CONTRACT PASS 7'
