@@ -1,0 +1,1182 @@
+{
+  "browser": "154.0.8037.98",
+  "actualPublic": true,
+  "snapshots": [
+    {
+      "build": "game-7ed6cc0",
+      "hidden": false,
+      "status": "下载资源 2% · 2.0 / 86.8 MiB（解压后）",
+      "detail": "已读取 2.0 MiB 资源数据（解压后）· 10 秒",
+      "timings": {
+        "engineScriptReady": 1177,
+        "bootstrapReady": 5152
+      },
+      "attempt": 0,
+      "elapsed": 10
+    },
+    {
+      "build": "game-7ed6cc0",
+      "hidden": false,
+      "status": "下载资源 18% · 16.0 / 86.8 MiB（解压后）",
+      "detail": "已读取 16.0 MiB 资源数据（解压后）· 20 秒",
+      "timings": {
+        "engineScriptReady": 1177,
+        "bootstrapReady": 5152
+      },
+      "attempt": 0,
+      "elapsed": 20
+    },
+    {
+      "build": "game-7ed6cc0",
+      "hidden": false,
+      "status": "下载资源 32% · 28.5 / 86.8 MiB（解压后）",
+      "detail": "已读取 28.5 MiB 资源数据（解压后）· 30 秒",
+      "timings": {
+        "engineScriptReady": 1177,
+        "bootstrapReady": 5152
+      },
+      "attempt": 0,
+      "elapsed": 30
+    },
+    {
+      "build": "game-7ed6cc0",
+      "hidden": false,
+      "status": "下载资源 55% · 48.2 / 86.8 MiB（解压后）",
+      "detail": "已读取 48.2 MiB 资源数据（解压后）· 40 秒",
+      "timings": {
+        "engineScriptReady": 1177,
+        "bootstrapReady": 5152
+      },
+      "attempt": 0,
+      "elapsed": 40
+    },
+    {
+      "build": "game-7ed6cc0",
+      "hidden": false,
+      "status": "下载资源 78% · 68.2 / 86.8 MiB（解压后）",
+      "detail": "已读取 68.2 MiB 资源数据（解压后）· 50 秒",
+      "timings": {
+        "engineScriptReady": 1177,
+        "bootstrapReady": 5152
+      },
+      "attempt": 0,
+      "elapsed": 50
+    },
+    {
+      "build": "game-7ed6cc0",
+      "hidden": false,
+      "status": "引擎已启动，正在绘制画面…",
+      "detail": "下载已完成 · 总计已用 59 秒",
+      "timings": {
+        "engineScriptReady": 1177,
+        "bootstrapReady": 5152,
+        "downloadComplete": 59403,
+        "engineReady": 64529
+      },
+      "attempt": 0,
+      "elapsed": 60
+    },
+    {
+      "build": "game-7ed6cc0",
+      "hidden": true,
+      "status": "引擎已启动，正在绘制画面…",
+      "detail": "下载已完成 · 总计已用 64 秒",
+      "timings": {
+        "engineScriptReady": 1177,
+        "bootstrapReady": 5152,
+        "downloadComplete": 59403,
+        "engineReady": 64529,
+        "firstFrame": 65103
+      },
+      "attempt": 0,
+      "elapsed": 70
+    }
+  ],
+  "events": [
+    {
+      "network": {
+        "url": "https://narutojzm1-dot.github.io/youjia/",
+        "status": 200,
+        "fromDiskCache": false,
+        "headers": {
+          "accept-ranges": "bytes",
+          "access-control-allow-origin": "*",
+          "age": "0",
+          "cache-control": "max-age=600",
+          "content-encoding": "gzip",
+          "content-length": "266320",
+          "content-type": "text/html; charset=utf-8",
+          "date": "Thu, 08 Oct 2026 16:14:59 GMT",
+          "etag": "W/\"6ac7bb3b-57c25\"",
+          "expires": "Thu, 08 Oct 2026 16:24:59 GMT",
+          "last-modified": "Thu, 08 Oct 2026 15:48:11 GMT",
+          "server": "GitHub.com",
+          "strict-transport-security": "max-age=31556952",
+          "vary": "Accept-Encoding",
+          "via": "1.1 varnish",
+          "x-cache": "MISS",
+          "x-cache-hits": "0",
+          "x-fastly-request-id": "30a78862927eb47ddd15a4737bde62501d45d7fd",
+          "x-github-edge-region": "westus3",
+          "x-github-request-id": "598A:27E82F:481B6:52104:6AC7C182",
+          "x-proxy-cache": "MISS",
+          "x-served-by": "cache-bur-kbur8200109-BUR",
+          "x-timer": "S1791476099.254884,VS0,VE123"
+        }
+      }
+    },
+    {
+      "network": {
+        "url": "https://narutojzm1-dot.github.io/youjia/boot-7ed6cc0/download_assets.mjs",
+        "status": 200,
+        "fromDiskCache": false,
+        "headers": {
+          "x-fastly-request-id": "c0e3d3cd9237306ccf47e7b2547ad3ae25c0d8be",
+          "content-encoding": "gzip",
+          "etag": "W/\"6ac7bb3a-1888\"",
+          "age": "0",
+          "x-github-request-id": "C38C:1EAA8B:47BD0:51B53:6AC7C185",
+          "expires": "Thu, 08 Oct 2026 16:25:02 GMT",
+          "x-proxy-cache": "MISS",
+          "x-cache": "MISS",
+          "date": "Thu, 08 Oct 2026 16:15:02 GMT",
+          "content-type": "text/javascript; charset=utf-8",
+          "last-modified": "Thu, 08 Oct 2026 15:48:10 GMT",
+          "x-served-by": "cache-bur-kbur8200109-BUR",
+          "x-cache-hits": "0",
+          "vary": "Accept-Encoding",
+          "strict-transport-security": "max-age=31556952",
+          "cache-control": "max-age=600",
+          "x-github-edge-region": "westus3",
+          "x-timer": "S1791476103.564512,VS0,VE95",
+          "via": "1.1 varnish",
+          "accept-ranges": "bytes",
+          "access-control-allow-origin": "*",
+          "content-length": "2506",
+          "server": "GitHub.com"
+        }
+      }
+    },
+    {
+      "network": {
+        "url": "https://narutojzm1-dot.github.io/youjia/save-7ed6cc0/bridge.mjs",
+        "status": 200,
+        "fromDiskCache": false,
+        "headers": {
+          "x-fastly-request-id": "eb8406be5faa89050d87062de30d6d85272a9d78",
+          "content-encoding": "gzip",
+          "etag": "W/\"6ac7bb3b-740\"",
+          "age": "0",
+          "x-github-request-id": "E030:29B514:45856:4F7E7:6AC7C186",
+          "expires": "Thu, 08 Oct 2026 16:25:02 GMT",
+          "x-proxy-cache": "MISS",
+          "x-cache": "MISS",
+          "date": "Thu, 08 Oct 2026 16:15:02 GMT",
+          "content-type": "text/javascript; charset=utf-8",
+          "last-modified": "Thu, 08 Oct 2026 15:48:11 GMT",
+          "x-served-by": "cache-bur-kbur8200109-BUR",
+          "x-cache-hits": "0",
+          "vary": "Accept-Encoding",
+          "strict-transport-security": "max-age=31556952",
+          "cache-control": "max-age=600",
+          "x-github-edge-region": "westus3",
+          "x-timer": "S1791476103.533261,VS0,VE194",
+          "via": "1.1 varnish",
+          "accept-ranges": "bytes",
+          "access-control-allow-origin": "*",
+          "content-length": "882",
+          "server": "GitHub.com"
+        }
+      }
+    },
+    {
+      "network": {
+        "url": "https://narutojzm1-dot.github.io/youjia/engine-3b105340f798ed0e7d6aa7725328dc8c0bf8cd94ffea14835e43f83045048c74.js",
+        "status": 200,
+        "fromDiskCache": false,
+        "headers": {
+          "x-fastly-request-id": "90d88d334b77685d923800af44198d8d66d2bec2",
+          "content-encoding": "gzip",
+          "etag": "W/\"6ac7bb3a-44507\"",
+          "age": "0",
+          "x-github-request-id": "4470:221808:3F5CC:48853:6AC7BC5A",
+          "expires": "Thu, 08 Oct 2026 16:02:58 GMT",
+          "x-proxy-cache": "MISS",
+          "x-cache": "HIT",
+          "date": "Thu, 08 Oct 2026 16:15:02 GMT",
+          "content-type": "application/javascript; charset=utf-8",
+          "last-modified": "Thu, 08 Oct 2026 15:48:10 GMT",
+          "x-served-by": "cache-bur-kbur8200109-BUR",
+          "x-cache-hits": "0",
+          "vary": "Accept-Encoding",
+          "strict-transport-security": "max-age=31556952",
+          "cache-control": "max-age=600",
+          "x-github-edge-region": "westus3",
+          "x-timer": "S1791476103.594401,VS0,VE110",
+          "via": "1.1 varnish",
+          "accept-ranges": "bytes",
+          "access-control-allow-origin": "*",
+          "content-length": "69442",
+          "server": "GitHub.com"
+        }
+      }
+    },
+    {
+      "network": {
+        "url": "https://narutojzm1-dot.github.io/youjia/game-7ed6cc0.icon.png",
+        "status": 200,
+        "fromDiskCache": false,
+        "headers": {
+          "x-fastly-request-id": "041c9a6867ee2605d37190d78b8cff5fe478f7d2",
+          "etag": "\"6ac7bb3b-5f22a\"",
+          "age": "0",
+          "x-github-request-id": "404C:27E82F:48237:52191:6AC7C185",
+          "expires": "Thu, 08 Oct 2026 16:25:03 GMT",
+          "x-proxy-cache": "MISS",
+          "x-cache": "MISS",
+          "date": "Thu, 08 Oct 2026 16:15:03 GMT",
+          "content-type": "image/png",
+          "last-modified": "Thu, 08 Oct 2026 15:48:11 GMT",
+          "x-served-by": "cache-bur-kbur8200109-BUR",
+          "x-cache-hits": "0",
+          "vary": "Accept-Encoding",
+          "strict-transport-security": "max-age=31556952",
+          "cache-control": "max-age=600",
+          "x-github-edge-region": "westus3",
+          "x-timer": "S1791476104.731009,VS0,VE132",
+          "via": "1.1 varnish",
+          "accept-ranges": "bytes",
+          "access-control-allow-origin": "*",
+          "content-length": "389674",
+          "server": "GitHub.com"
+        }
+      }
+    },
+    {
+      "network": {
+        "url": "https://narutojzm1-dot.github.io/youjia/save-7ed6cc0/host.mjs",
+        "status": 200,
+        "fromDiskCache": false,
+        "headers": {
+          "x-fastly-request-id": "1d0ace0d56f8212262caa9e579ea6bd2237c7abc",
+          "content-encoding": "gzip",
+          "etag": "W/\"6ac7bb3a-1e32\"",
+          "age": "0",
+          "x-github-request-id": "C9F4:FDFC2:47217:511CD:6AC7C187",
+          "expires": "Thu, 08 Oct 2026 16:25:03 GMT",
+          "x-proxy-cache": "MISS",
+          "x-cache": "MISS",
+          "date": "Thu, 08 Oct 2026 16:15:03 GMT",
+          "content-type": "text/javascript; charset=utf-8",
+          "last-modified": "Thu, 08 Oct 2026 15:48:10 GMT",
+          "x-served-by": "cache-bur-kbur8200109-BUR",
+          "x-cache-hits": "0",
+          "vary": "Accept-Encoding",
+          "strict-transport-security": "max-age=31556952",
+          "cache-control": "max-age=600",
+          "x-github-edge-region": "westus3",
+          "x-timer": "S1791476104.702431,VS0,VE86",
+          "via": "1.1 varnish",
+          "accept-ranges": "bytes",
+          "access-control-allow-origin": "*",
+          "content-length": "2420",
+          "server": "GitHub.com"
+        }
+      }
+    },
+    {
+      "network": {
+        "url": "https://narutojzm1-dot.github.io/youjia/save-7ed6cc0/legacy_inspection.mjs",
+        "status": 200,
+        "fromDiskCache": false,
+        "headers": {
+          "x-fastly-request-id": "061fa66c4d840ea256a3975c0f2a723a190a4c2f",
+          "content-encoding": "gzip",
+          "etag": "W/\"6ac7bb3a-b46\"",
+          "age": "0",
+          "x-github-request-id": "D896:29E65B:47433:513A7:6AC7C188",
+          "expires": "Thu, 08 Oct 2026 16:25:04 GMT",
+          "x-proxy-cache": "MISS",
+          "x-cache": "MISS",
+          "date": "Thu, 08 Oct 2026 16:15:04 GMT",
+          "content-type": "text/javascript; charset=utf-8",
+          "last-modified": "Thu, 08 Oct 2026 15:48:10 GMT",
+          "x-served-by": "cache-bur-kbur8200109-BUR",
+          "x-cache-hits": "0",
+          "vary": "Accept-Encoding",
+          "strict-transport-security": "max-age=31556952",
+          "cache-control": "max-age=600",
+          "x-github-edge-region": "westus3",
+          "x-timer": "S1791476105.500407,VS0,VE80",
+          "via": "1.1 varnish",
+          "accept-ranges": "bytes",
+          "access-control-allow-origin": "*",
+          "content-length": "1243",
+          "server": "GitHub.com"
+        }
+      }
+    },
+    {
+      "network": {
+        "url": "https://narutojzm1-dot.github.io/youjia/save-7ed6cc0/source_decode.mjs",
+        "status": 200,
+        "fromDiskCache": false,
+        "headers": {
+          "x-fastly-request-id": "c628940ffb1710fd5e96e88712bf1e571bc09e9c",
+          "content-encoding": "gzip",
+          "etag": "W/\"6ac7bb3b-606\"",
+          "age": "0",
+          "x-github-request-id": "4A6A:6EC1D:408D4:49B5D:6AC7BC5A",
+          "expires": "Thu, 08 Oct 2026 16:02:58 GMT",
+          "x-proxy-cache": "MISS",
+          "x-cache": "HIT",
+          "date": "Thu, 08 Oct 2026 16:15:04 GMT",
+          "content-type": "text/javascript; charset=utf-8",
+          "last-modified": "Thu, 08 Oct 2026 15:48:11 GMT",
+          "x-served-by": "cache-bur-kbur8200109-BUR",
+          "x-cache-hits": "0",
+          "vary": "Accept-Encoding",
+          "strict-transport-security": "max-age=31556952",
+          "cache-control": "max-age=600",
+          "x-github-edge-region": "westus3",
+          "x-timer": "S1791476105.529676,VS0,VE79",
+          "via": "1.1 varnish",
+          "accept-ranges": "bytes",
+          "access-control-allow-origin": "*",
+          "content-length": "760",
+          "server": "GitHub.com"
+        }
+      }
+    },
+    {
+      "network": {
+        "url": "https://narutojzm1-dot.github.io/youjia/save-7ed6cc0/budgets.mjs",
+        "status": 200,
+        "fromDiskCache": false,
+        "headers": {
+          "x-fastly-request-id": "01bdfb1e8e0f150b6b69e16a0d5ed43f6aa72be8",
+          "content-encoding": "gzip",
+          "etag": "W/\"6ac7bb3b-154\"",
+          "age": "0",
+          "x-github-request-id": "37AA:299F5C:42907:4BC3E:6AC7BC8D",
+          "expires": "Thu, 08 Oct 2026 16:03:49 GMT",
+          "x-proxy-cache": "MISS",
+          "x-cache": "HIT",
+          "date": "Thu, 08 Oct 2026 16:15:04 GMT",
+          "content-type": "text/javascript; charset=utf-8",
+          "last-modified": "Thu, 08 Oct 2026 15:48:11 GMT",
+          "x-served-by": "cache-bur-kbur8200109-BUR",
+          "x-cache-hits": "0",
+          "vary": "Accept-Encoding",
+          "strict-transport-security": "max-age=31556952",
+          "cache-control": "max-age=600",
+          "x-github-edge-region": "westus3",
+          "x-timer": "S1791476105.530508,VS0,VE96",
+          "via": "1.1 varnish",
+          "accept-ranges": "bytes",
+          "access-control-allow-origin": "*",
+          "content-length": "266",
+          "server": "GitHub.com"
+        }
+      }
+    },
+    {
+      "network": {
+        "url": "https://narutojzm1-dot.github.io/youjia/save-7ed6cc0/legacy_v5.mjs",
+        "status": 200,
+        "fromDiskCache": false,
+        "headers": {
+          "x-fastly-request-id": "2483a5be94707e498ba481d3ac5dc8e3409d5fe2",
+          "content-encoding": "gzip",
+          "etag": "W/\"6ac7bb3b-8c5\"",
+          "age": "0",
+          "x-github-request-id": "5598:12C54B:3FBEA:48E53:6AC7BC5A",
+          "expires": "Thu, 08 Oct 2026 16:02:58 GMT",
+          "x-proxy-cache": "MISS",
+          "x-cache": "HIT",
+          "date": "Thu, 08 Oct 2026 16:15:04 GMT",
+          "content-type": "text/javascript; charset=utf-8",
+          "last-modified": "Thu, 08 Oct 2026 15:48:11 GMT",
+          "x-served-by": "cache-bur-kbur8200109-BUR",
+          "x-cache-hits": "0",
+          "vary": "Accept-Encoding",
+          "strict-transport-security": "max-age=31556952",
+          "cache-control": "max-age=600",
+          "x-github-edge-region": "westus3",
+          "x-timer": "S1791476105.529643,VS0,VE113",
+          "via": "1.1 varnish",
+          "accept-ranges": "bytes",
+          "access-control-allow-origin": "*",
+          "content-length": "1007",
+          "server": "GitHub.com"
+        }
+      }
+    },
+    {
+      "network": {
+        "url": "https://narutojzm1-dot.github.io/youjia/save-7ed6cc0/lifecycle.mjs",
+        "status": 200,
+        "fromDiskCache": false,
+        "headers": {
+          "x-fastly-request-id": "0fb7bc1a74b0179ff21cfa0c20144f8d3cc67329",
+          "content-encoding": "gzip",
+          "etag": "W/\"6ac7bb3a-756\"",
+          "age": "0",
+          "x-github-request-id": "6620:299951:4669E:5068B:6AC7C188",
+          "expires": "Thu, 08 Oct 2026 16:25:04 GMT",
+          "x-proxy-cache": "MISS",
+          "x-cache": "MISS",
+          "date": "Thu, 08 Oct 2026 16:15:04 GMT",
+          "content-type": "text/javascript; charset=utf-8",
+          "last-modified": "Thu, 08 Oct 2026 15:48:10 GMT",
+          "x-served-by": "cache-bur-kbur8200109-BUR",
+          "x-cache-hits": "0",
+          "vary": "Accept-Encoding",
+          "strict-transport-security": "max-age=31556952",
+          "cache-control": "max-age=600",
+          "x-github-edge-region": "westus3",
+          "x-timer": "S1791476105.530626,VS0,VE109",
+          "via": "1.1 varnish",
+          "accept-ranges": "bytes",
+          "access-control-allow-origin": "*",
+          "content-length": "810",
+          "server": "GitHub.com"
+        }
+      }
+    },
+    {
+      "network": {
+        "url": "https://narutojzm1-dot.github.io/youjia/save-7ed6cc0/store.mjs",
+        "status": 200,
+        "fromDiskCache": false,
+        "headers": {
+          "x-fastly-request-id": "55b5f90df5a96e6623239aa9a58c4d1c7ee1703a",
+          "content-encoding": "gzip",
+          "etag": "W/\"6ac7bb3b-3642\"",
+          "age": "0",
+          "x-github-request-id": "2402:7088F:3F589:48830:6AC7BC5A",
+          "expires": "Thu, 08 Oct 2026 16:02:58 GMT",
+          "x-proxy-cache": "MISS",
+          "x-cache": "HIT",
+          "date": "Thu, 08 Oct 2026 16:15:04 GMT",
+          "content-type": "text/javascript; charset=utf-8",
+          "last-modified": "Thu, 08 Oct 2026 15:48:11 GMT",
+          "x-served-by": "cache-bur-kbur8200109-BUR",
+          "x-cache-hits": "0",
+          "vary": "Accept-Encoding",
+          "strict-transport-security": "max-age=31556952",
+          "cache-control": "max-age=600",
+          "x-github-edge-region": "westus3",
+          "x-timer": "S1791476105.529837,VS0,VE129",
+          "via": "1.1 varnish",
+          "accept-ranges": "bytes",
+          "access-control-allow-origin": "*",
+          "content-length": "4077",
+          "x-origin-cache": "HIT",
+          "server": "GitHub.com"
+        }
+      }
+    },
+    {
+      "network": {
+        "url": "https://narutojzm1-dot.github.io/youjia/save-7ed6cc0/legacy_seal.mjs",
+        "status": 200,
+        "fromDiskCache": false,
+        "headers": {
+          "x-fastly-request-id": "13bd749ca3d2385520c6c6625bef45a0821e4d9e",
+          "content-encoding": "gzip",
+          "etag": "W/\"6ac7bb3b-9ce\"",
+          "age": "0",
+          "x-github-request-id": "1AD8:281934:4624C:5020E:6AC7C189",
+          "expires": "Thu, 08 Oct 2026 16:25:07 GMT",
+          "x-proxy-cache": "MISS",
+          "x-cache": "MISS",
+          "date": "Thu, 08 Oct 2026 16:15:07 GMT",
+          "content-type": "text/javascript; charset=utf-8",
+          "last-modified": "Thu, 08 Oct 2026 15:48:11 GMT",
+          "x-served-by": "cache-bur-kbur8200109-BUR",
+          "x-cache-hits": "0",
+          "vary": "Accept-Encoding",
+          "strict-transport-security": "max-age=31556952",
+          "cache-control": "max-age=600",
+          "x-github-edge-region": "westus3",
+          "x-timer": "S1791476107.182461,VS0,VE93",
+          "via": "1.1 varnish",
+          "accept-ranges": "bytes",
+          "access-control-allow-origin": "*",
+          "content-length": "1027",
+          "x-origin-cache": "HIT",
+          "server": "GitHub.com"
+        }
+      }
+    },
+    {
+      "network": {
+        "url": "https://narutojzm1-dot.github.io/youjia/save-7ed6cc0/idbfs_source.mjs",
+        "status": 200,
+        "fromDiskCache": false,
+        "headers": {
+          "x-fastly-request-id": "918745aa058b175545ce999134408f57c07d06cf",
+          "content-encoding": "gzip",
+          "etag": "W/\"6ac7bb3b-15ae\"",
+          "age": "0",
+          "x-github-request-id": "4DB4:29A6B2:41FFD:4B25B:6AC7BC5C",
+          "expires": "Thu, 08 Oct 2026 16:03:00 GMT",
+          "x-proxy-cache": "MISS",
+          "x-cache": "HIT",
+          "date": "Thu, 08 Oct 2026 16:15:07 GMT",
+          "content-type": "text/javascript; charset=utf-8",
+          "last-modified": "Thu, 08 Oct 2026 15:48:11 GMT",
+          "x-served-by": "cache-bur-kbur8200109-BUR",
+          "x-cache-hits": "0",
+          "vary": "Accept-Encoding",
+          "strict-transport-security": "max-age=31556952",
+          "cache-control": "max-age=600",
+          "x-github-edge-region": "westus3",
+          "x-timer": "S1791476107.445412,VS0,VE65",
+          "via": "1.1 varnish",
+          "accept-ranges": "bytes",
+          "access-control-allow-origin": "*",
+          "content-length": "2200",
+          "server": "GitHub.com"
+        }
+      }
+    },
+    {
+      "network": {
+        "url": "https://narutojzm1-dot.github.io/youjia/engine-3b105340f798ed0e7d6aa7725328dc8c0bf8cd94ffea14835e43f83045048c74.wasm",
+        "status": 200,
+        "fromDiskCache": false,
+        "headers": {
+          "x-fastly-request-id": "80f2ffbbc89bbceb97131209527ac098ed58de31",
+          "content-encoding": "gzip",
+          "etag": "W/\"6ac7bb3b-25af282\"",
+          "age": "1",
+          "x-github-request-id": "E6C0:3EABFF:45C0C:4FBE7:6AC7C18A",
+          "expires": "Thu, 08 Oct 2026 16:25:07 GMT",
+          "x-proxy-cache": "MISS",
+          "x-cache": "MISS",
+          "date": "Thu, 08 Oct 2026 16:15:08 GMT",
+          "content-type": "application/wasm",
+          "last-modified": "Thu, 08 Oct 2026 15:48:11 GMT",
+          "x-served-by": "cache-bur-kbur8200109-BUR",
+          "x-cache-hits": "0",
+          "vary": "Accept-Encoding",
+          "strict-transport-security": "max-age=31556952",
+          "cache-control": "max-age=600",
+          "x-github-edge-region": "westus3",
+          "x-timer": "S1791476108.689223,VS0,VE1193",
+          "via": "1.1 varnish",
+          "accept-ranges": "bytes",
+          "access-control-allow-origin": "*",
+          "content-length": "10248949",
+          "x-origin-cache": "HIT",
+          "server": "GitHub.com"
+        }
+      }
+    },
+    {
+      "network": {
+        "url": "https://narutojzm1-dot.github.io/youjia/game-7ed6cc0.pck",
+        "status": 200,
+        "fromDiskCache": false,
+        "headers": {
+          "x-fastly-request-id": "7c4700b5e3a10ad63414d930e9348b491219ce93",
+          "content-encoding": "gzip",
+          "etag": "W/\"6ac7bb3b-311d874\"",
+          "age": "2",
+          "x-github-request-id": "E412:27E82F:482DC:5224F:6AC7C18B",
+          "expires": "Thu, 08 Oct 2026 16:25:07 GMT",
+          "x-proxy-cache": "MISS",
+          "x-cache": "MISS",
+          "date": "Thu, 08 Oct 2026 16:15:09 GMT",
+          "content-type": "application/octet-stream",
+          "last-modified": "Thu, 08 Oct 2026 15:48:11 GMT",
+          "x-served-by": "cache-bur-kbur8200109-BUR",
+          "x-cache-hits": "0",
+          "vary": "Accept-Encoding",
+          "strict-transport-security": "max-age=31556952",
+          "cache-control": "max-age=600",
+          "x-github-edge-region": "westus3",
+          "x-timer": "S1791476108.719726,VS0,VE1813",
+          "via": "1.1 varnish",
+          "accept-ranges": "bytes",
+          "access-control-allow-origin": "*",
+          "content-length": "51035201",
+          "server": "GitHub.com"
+        }
+      }
+    },
+    {
+      "type": "info",
+      "text": "[game-loading] timings_ms {\"engineScriptReady\":1177,\"bootstrapReady\":5152,\"downloadComplete\":59403,\"engineReady\":64529,\"firstFrame\":65103}"
+    },
+    {
+      "network": {
+        "url": "https://narutojzm1-dot.github.io/youjia/",
+        "status": 200,
+        "fromDiskCache": false,
+        "headers": {
+          "accept-ranges": "bytes",
+          "access-control-allow-origin": "*",
+          "age": "0",
+          "cache-control": "max-age=600",
+          "content-encoding": "gzip",
+          "content-length": "266320",
+          "content-type": "text/html; charset=utf-8",
+          "date": "Thu, 08 Oct 2026 16:16:22 GMT",
+          "etag": "W/\"6ac7bb3b-57c25\"",
+          "expires": "Thu, 08 Oct 2026 16:24:59 GMT",
+          "last-modified": "Thu, 08 Oct 2026 15:48:11 GMT",
+          "server": "GitHub.com",
+          "vary": "Accept-Encoding",
+          "via": "1.1 varnish",
+          "x-cache": "HIT",
+          "x-cache-hits": "0",
+          "x-fastly-request-id": "e859eb655d73587a103011aea07d4b675d69bec0",
+          "x-github-edge-region": "westus3",
+          "x-github-request-id": "598A:27E82F:481B6:52104:6AC7C182",
+          "x-proxy-cache": "MISS",
+          "x-served-by": "cache-bur-kbur8200109-BUR",
+          "x-timer": "S1791476182.496666,VS0,VE70"
+        }
+      }
+    },
+    {
+      "network": {
+        "url": "https://narutojzm1-dot.github.io/youjia/save-7ed6cc0/bridge.mjs",
+        "status": 200,
+        "fromDiskCache": false,
+        "headers": {
+          "x-fastly-request-id": "eb8406be5faa89050d87062de30d6d85272a9d78",
+          "content-encoding": "gzip",
+          "etag": "W/\"6ac7bb3b-740\"",
+          "age": "0",
+          "x-github-request-id": "E030:29B514:45856:4F7E7:6AC7C186",
+          "expires": "Thu, 08 Oct 2026 16:25:02 GMT",
+          "x-proxy-cache": "MISS",
+          "x-cache": "MISS",
+          "date": "Thu, 08 Oct 2026 16:15:02 GMT",
+          "content-type": "text/javascript; charset=utf-8",
+          "last-modified": "Thu, 08 Oct 2026 15:48:11 GMT",
+          "x-served-by": "cache-bur-kbur8200109-BUR",
+          "x-cache-hits": "0",
+          "vary": "Accept-Encoding",
+          "strict-transport-security": "max-age=31556952",
+          "cache-control": "max-age=600",
+          "x-github-edge-region": "westus3",
+          "x-timer": "S1791476103.533261,VS0,VE194",
+          "via": "1.1 varnish",
+          "accept-ranges": "bytes",
+          "access-control-allow-origin": "*",
+          "content-length": "882",
+          "server": "GitHub.com"
+        }
+      }
+    },
+    {
+      "network": {
+        "url": "https://narutojzm1-dot.github.io/youjia/boot-7ed6cc0/download_assets.mjs",
+        "status": 200,
+        "fromDiskCache": false,
+        "headers": {
+          "x-fastly-request-id": "c0e3d3cd9237306ccf47e7b2547ad3ae25c0d8be",
+          "content-encoding": "gzip",
+          "etag": "W/\"6ac7bb3a-1888\"",
+          "age": "0",
+          "x-github-request-id": "C38C:1EAA8B:47BD0:51B53:6AC7C185",
+          "expires": "Thu, 08 Oct 2026 16:25:02 GMT",
+          "x-proxy-cache": "MISS",
+          "x-cache": "MISS",
+          "date": "Thu, 08 Oct 2026 16:15:02 GMT",
+          "content-type": "text/javascript; charset=utf-8",
+          "last-modified": "Thu, 08 Oct 2026 15:48:10 GMT",
+          "x-served-by": "cache-bur-kbur8200109-BUR",
+          "x-cache-hits": "0",
+          "vary": "Accept-Encoding",
+          "strict-transport-security": "max-age=31556952",
+          "cache-control": "max-age=600",
+          "x-github-edge-region": "westus3",
+          "x-timer": "S1791476103.564512,VS0,VE95",
+          "via": "1.1 varnish",
+          "accept-ranges": "bytes",
+          "access-control-allow-origin": "*",
+          "content-length": "2506",
+          "server": "GitHub.com"
+        }
+      }
+    },
+    {
+      "network": {
+        "url": "https://narutojzm1-dot.github.io/youjia/engine-3b105340f798ed0e7d6aa7725328dc8c0bf8cd94ffea14835e43f83045048c74.js",
+        "status": 200,
+        "fromDiskCache": false,
+        "headers": {
+          "x-fastly-request-id": "90d88d334b77685d923800af44198d8d66d2bec2",
+          "content-encoding": "gzip",
+          "etag": "W/\"6ac7bb3a-44507\"",
+          "age": "0",
+          "x-github-request-id": "4470:221808:3F5CC:48853:6AC7BC5A",
+          "expires": "Thu, 08 Oct 2026 16:02:58 GMT",
+          "x-proxy-cache": "MISS",
+          "x-cache": "HIT",
+          "date": "Thu, 08 Oct 2026 16:15:02 GMT",
+          "content-type": "application/javascript; charset=utf-8",
+          "last-modified": "Thu, 08 Oct 2026 15:48:10 GMT",
+          "x-served-by": "cache-bur-kbur8200109-BUR",
+          "x-cache-hits": "0",
+          "vary": "Accept-Encoding",
+          "strict-transport-security": "max-age=31556952",
+          "cache-control": "max-age=600",
+          "x-github-edge-region": "westus3",
+          "x-timer": "S1791476103.594401,VS0,VE110",
+          "via": "1.1 varnish",
+          "accept-ranges": "bytes",
+          "access-control-allow-origin": "*",
+          "content-length": "69442",
+          "server": "GitHub.com"
+        }
+      }
+    },
+    {
+      "network": {
+        "url": "https://narutojzm1-dot.github.io/youjia/save-7ed6cc0/host.mjs",
+        "status": 200,
+        "fromDiskCache": false,
+        "headers": {
+          "x-fastly-request-id": "1d0ace0d56f8212262caa9e579ea6bd2237c7abc",
+          "content-encoding": "gzip",
+          "etag": "W/\"6ac7bb3a-1e32\"",
+          "age": "0",
+          "x-github-request-id": "C9F4:FDFC2:47217:511CD:6AC7C187",
+          "expires": "Thu, 08 Oct 2026 16:25:03 GMT",
+          "x-proxy-cache": "MISS",
+          "x-cache": "MISS",
+          "date": "Thu, 08 Oct 2026 16:15:03 GMT",
+          "content-type": "text/javascript; charset=utf-8",
+          "last-modified": "Thu, 08 Oct 2026 15:48:10 GMT",
+          "x-served-by": "cache-bur-kbur8200109-BUR",
+          "x-cache-hits": "0",
+          "vary": "Accept-Encoding",
+          "strict-transport-security": "max-age=31556952",
+          "cache-control": "max-age=600",
+          "x-github-edge-region": "westus3",
+          "x-timer": "S1791476104.702431,VS0,VE86",
+          "via": "1.1 varnish",
+          "accept-ranges": "bytes",
+          "access-control-allow-origin": "*",
+          "content-length": "2420",
+          "server": "GitHub.com"
+        }
+      }
+    },
+    {
+      "network": {
+        "url": "https://narutojzm1-dot.github.io/youjia/save-7ed6cc0/legacy_inspection.mjs",
+        "status": 200,
+        "fromDiskCache": false,
+        "headers": {
+          "x-fastly-request-id": "061fa66c4d840ea256a3975c0f2a723a190a4c2f",
+          "content-encoding": "gzip",
+          "etag": "W/\"6ac7bb3a-b46\"",
+          "age": "0",
+          "x-github-request-id": "D896:29E65B:47433:513A7:6AC7C188",
+          "expires": "Thu, 08 Oct 2026 16:25:04 GMT",
+          "x-proxy-cache": "MISS",
+          "x-cache": "MISS",
+          "date": "Thu, 08 Oct 2026 16:15:04 GMT",
+          "content-type": "text/javascript; charset=utf-8",
+          "last-modified": "Thu, 08 Oct 2026 15:48:10 GMT",
+          "x-served-by": "cache-bur-kbur8200109-BUR",
+          "x-cache-hits": "0",
+          "vary": "Accept-Encoding",
+          "strict-transport-security": "max-age=31556952",
+          "cache-control": "max-age=600",
+          "x-github-edge-region": "westus3",
+          "x-timer": "S1791476105.500407,VS0,VE80",
+          "via": "1.1 varnish",
+          "accept-ranges": "bytes",
+          "access-control-allow-origin": "*",
+          "content-length": "1243",
+          "server": "GitHub.com"
+        }
+      }
+    },
+    {
+      "network": {
+        "url": "https://narutojzm1-dot.github.io/youjia/save-7ed6cc0/store.mjs",
+        "status": 200,
+        "fromDiskCache": false,
+        "headers": {
+          "x-fastly-request-id": "55b5f90df5a96e6623239aa9a58c4d1c7ee1703a",
+          "content-encoding": "gzip",
+          "etag": "W/\"6ac7bb3b-3642\"",
+          "age": "0",
+          "x-github-request-id": "2402:7088F:3F589:48830:6AC7BC5A",
+          "expires": "Thu, 08 Oct 2026 16:02:58 GMT",
+          "x-proxy-cache": "MISS",
+          "x-cache": "HIT",
+          "date": "Thu, 08 Oct 2026 16:15:04 GMT",
+          "content-type": "text/javascript; charset=utf-8",
+          "last-modified": "Thu, 08 Oct 2026 15:48:11 GMT",
+          "x-served-by": "cache-bur-kbur8200109-BUR",
+          "x-cache-hits": "0",
+          "vary": "Accept-Encoding",
+          "strict-transport-security": "max-age=31556952",
+          "cache-control": "max-age=600",
+          "x-github-edge-region": "westus3",
+          "x-timer": "S1791476105.529837,VS0,VE129",
+          "via": "1.1 varnish",
+          "accept-ranges": "bytes",
+          "access-control-allow-origin": "*",
+          "content-length": "4077",
+          "x-origin-cache": "HIT",
+          "server": "GitHub.com"
+        }
+      }
+    },
+    {
+      "network": {
+        "url": "https://narutojzm1-dot.github.io/youjia/save-7ed6cc0/lifecycle.mjs",
+        "status": 200,
+        "fromDiskCache": false,
+        "headers": {
+          "x-fastly-request-id": "0fb7bc1a74b0179ff21cfa0c20144f8d3cc67329",
+          "content-encoding": "gzip",
+          "etag": "W/\"6ac7bb3a-756\"",
+          "age": "0",
+          "x-github-request-id": "6620:299951:4669E:5068B:6AC7C188",
+          "expires": "Thu, 08 Oct 2026 16:25:04 GMT",
+          "x-proxy-cache": "MISS",
+          "x-cache": "MISS",
+          "date": "Thu, 08 Oct 2026 16:15:04 GMT",
+          "content-type": "text/javascript; charset=utf-8",
+          "last-modified": "Thu, 08 Oct 2026 15:48:10 GMT",
+          "x-served-by": "cache-bur-kbur8200109-BUR",
+          "x-cache-hits": "0",
+          "vary": "Accept-Encoding",
+          "strict-transport-security": "max-age=31556952",
+          "cache-control": "max-age=600",
+          "x-github-edge-region": "westus3",
+          "x-timer": "S1791476105.530626,VS0,VE109",
+          "via": "1.1 varnish",
+          "accept-ranges": "bytes",
+          "access-control-allow-origin": "*",
+          "content-length": "810",
+          "server": "GitHub.com"
+        }
+      }
+    },
+    {
+      "network": {
+        "url": "https://narutojzm1-dot.github.io/youjia/save-7ed6cc0/budgets.mjs",
+        "status": 200,
+        "fromDiskCache": false,
+        "headers": {
+          "x-fastly-request-id": "01bdfb1e8e0f150b6b69e16a0d5ed43f6aa72be8",
+          "content-encoding": "gzip",
+          "etag": "W/\"6ac7bb3b-154\"",
+          "age": "0",
+          "x-github-request-id": "37AA:299F5C:42907:4BC3E:6AC7BC8D",
+          "expires": "Thu, 08 Oct 2026 16:03:49 GMT",
+          "x-proxy-cache": "MISS",
+          "x-cache": "HIT",
+          "date": "Thu, 08 Oct 2026 16:15:04 GMT",
+          "content-type": "text/javascript; charset=utf-8",
+          "last-modified": "Thu, 08 Oct 2026 15:48:11 GMT",
+          "x-served-by": "cache-bur-kbur8200109-BUR",
+          "x-cache-hits": "0",
+          "vary": "Accept-Encoding",
+          "strict-transport-security": "max-age=31556952",
+          "cache-control": "max-age=600",
+          "x-github-edge-region": "westus3",
+          "x-timer": "S1791476105.530508,VS0,VE96",
+          "via": "1.1 varnish",
+          "accept-ranges": "bytes",
+          "access-control-allow-origin": "*",
+          "content-length": "266",
+          "server": "GitHub.com"
+        }
+      }
+    },
+    {
+      "network": {
+        "url": "https://narutojzm1-dot.github.io/youjia/save-7ed6cc0/source_decode.mjs",
+        "status": 200,
+        "fromDiskCache": false,
+        "headers": {
+          "x-fastly-request-id": "c628940ffb1710fd5e96e88712bf1e571bc09e9c",
+          "content-encoding": "gzip",
+          "etag": "W/\"6ac7bb3b-606\"",
+          "age": "0",
+          "x-github-request-id": "4A6A:6EC1D:408D4:49B5D:6AC7BC5A",
+          "expires": "Thu, 08 Oct 2026 16:02:58 GMT",
+          "x-proxy-cache": "MISS",
+          "x-cache": "HIT",
+          "date": "Thu, 08 Oct 2026 16:15:04 GMT",
+          "content-type": "text/javascript; charset=utf-8",
+          "last-modified": "Thu, 08 Oct 2026 15:48:11 GMT",
+          "x-served-by": "cache-bur-kbur8200109-BUR",
+          "x-cache-hits": "0",
+          "vary": "Accept-Encoding",
+          "strict-transport-security": "max-age=31556952",
+          "cache-control": "max-age=600",
+          "x-github-edge-region": "westus3",
+          "x-timer": "S1791476105.529676,VS0,VE79",
+          "via": "1.1 varnish",
+          "accept-ranges": "bytes",
+          "access-control-allow-origin": "*",
+          "content-length": "760",
+          "server": "GitHub.com"
+        }
+      }
+    },
+    {
+      "network": {
+        "url": "https://narutojzm1-dot.github.io/youjia/save-7ed6cc0/legacy_v5.mjs",
+        "status": 200,
+        "fromDiskCache": false,
+        "headers": {
+          "x-fastly-request-id": "2483a5be94707e498ba481d3ac5dc8e3409d5fe2",
+          "content-encoding": "gzip",
+          "etag": "W/\"6ac7bb3b-8c5\"",
+          "age": "0",
+          "x-github-request-id": "5598:12C54B:3FBEA:48E53:6AC7BC5A",
+          "expires": "Thu, 08 Oct 2026 16:02:58 GMT",
+          "x-proxy-cache": "MISS",
+          "x-cache": "HIT",
+          "date": "Thu, 08 Oct 2026 16:15:04 GMT",
+          "content-type": "text/javascript; charset=utf-8",
+          "last-modified": "Thu, 08 Oct 2026 15:48:11 GMT",
+          "x-served-by": "cache-bur-kbur8200109-BUR",
+          "x-cache-hits": "0",
+          "vary": "Accept-Encoding",
+          "strict-transport-security": "max-age=31556952",
+          "cache-control": "max-age=600",
+          "x-github-edge-region": "westus3",
+          "x-timer": "S1791476105.529643,VS0,VE113",
+          "via": "1.1 varnish",
+          "accept-ranges": "bytes",
+          "access-control-allow-origin": "*",
+          "content-length": "1007",
+          "server": "GitHub.com"
+        }
+      }
+    },
+    {
+      "network": {
+        "url": "https://narutojzm1-dot.github.io/youjia/save-7ed6cc0/legacy_seal.mjs",
+        "status": 200,
+        "fromDiskCache": false,
+        "headers": {
+          "x-fastly-request-id": "13bd749ca3d2385520c6c6625bef45a0821e4d9e",
+          "content-encoding": "gzip",
+          "etag": "W/\"6ac7bb3b-9ce\"",
+          "age": "0",
+          "x-github-request-id": "1AD8:281934:4624C:5020E:6AC7C189",
+          "expires": "Thu, 08 Oct 2026 16:25:07 GMT",
+          "x-proxy-cache": "MISS",
+          "x-cache": "MISS",
+          "date": "Thu, 08 Oct 2026 16:15:07 GMT",
+          "content-type": "text/javascript; charset=utf-8",
+          "last-modified": "Thu, 08 Oct 2026 15:48:11 GMT",
+          "x-served-by": "cache-bur-kbur8200109-BUR",
+          "x-cache-hits": "0",
+          "vary": "Accept-Encoding",
+          "strict-transport-security": "max-age=31556952",
+          "cache-control": "max-age=600",
+          "x-github-edge-region": "westus3",
+          "x-timer": "S1791476107.182461,VS0,VE93",
+          "via": "1.1 varnish",
+          "accept-ranges": "bytes",
+          "access-control-allow-origin": "*",
+          "content-length": "1027",
+          "x-origin-cache": "HIT",
+          "server": "GitHub.com"
+        }
+      }
+    },
+    {
+      "network": {
+        "url": "https://narutojzm1-dot.github.io/youjia/save-7ed6cc0/idbfs_source.mjs",
+        "status": 200,
+        "fromDiskCache": false,
+        "headers": {
+          "x-fastly-request-id": "918745aa058b175545ce999134408f57c07d06cf",
+          "content-encoding": "gzip",
+          "etag": "W/\"6ac7bb3b-15ae\"",
+          "age": "0",
+          "x-github-request-id": "4DB4:29A6B2:41FFD:4B25B:6AC7BC5C",
+          "expires": "Thu, 08 Oct 2026 16:03:00 GMT",
+          "x-proxy-cache": "MISS",
+          "x-cache": "HIT",
+          "date": "Thu, 08 Oct 2026 16:15:07 GMT",
+          "content-type": "text/javascript; charset=utf-8",
+          "last-modified": "Thu, 08 Oct 2026 15:48:11 GMT",
+          "x-served-by": "cache-bur-kbur8200109-BUR",
+          "x-cache-hits": "0",
+          "vary": "Accept-Encoding",
+          "strict-transport-security": "max-age=31556952",
+          "cache-control": "max-age=600",
+          "x-github-edge-region": "westus3",
+          "x-timer": "S1791476107.445412,VS0,VE65",
+          "via": "1.1 varnish",
+          "accept-ranges": "bytes",
+          "access-control-allow-origin": "*",
+          "content-length": "2200",
+          "server": "GitHub.com"
+        }
+      }
+    },
+    {
+      "network": {
+        "url": "https://narutojzm1-dot.github.io/youjia/game-7ed6cc0.icon.png",
+        "status": 200,
+        "fromDiskCache": true,
+        "headers": {
+          "x-fastly-request-id": "041c9a6867ee2605d37190d78b8cff5fe478f7d2",
+          "etag": "\"6ac7bb3b-5f22a\"",
+          "age": "0",
+          "x-github-request-id": "404C:27E82F:48237:52191:6AC7C185",
+          "expires": "Thu, 08 Oct 2026 16:25:03 GMT",
+          "x-proxy-cache": "MISS",
+          "x-cache": "MISS",
+          "date": "Thu, 08 Oct 2026 16:15:03 GMT",
+          "content-type": "image/png",
+          "last-modified": "Thu, 08 Oct 2026 15:48:11 GMT",
+          "x-served-by": "cache-bur-kbur8200109-BUR",
+          "x-cache-hits": "0",
+          "vary": "Accept-Encoding",
+          "cache-control": "max-age=600",
+          "x-github-edge-region": "westus3",
+          "x-timer": "S1791476104.731009,VS0,VE132",
+          "via": "1.1 varnish",
+          "accept-ranges": "bytes",
+          "access-control-allow-origin": "*",
+          "content-length": "389674",
+          "server": "GitHub.com"
+        }
+      }
+    },
+    {
+      "type": "info",
+      "text": "[game-loading] timings_ms {\"engineScriptReady\":10,\"bootstrapReady\":33,\"assetCacheHit\":43,\"downloadComplete\":143,\"engineReady\":1822,\"firstFrame\":2266}"
+    }
+  ],
+  "errors": [],
+  "cold": {
+    "build": "game-7ed6cc0",
+    "hidden": true,
+    "status": "引擎已启动，正在绘制画面…",
+    "detail": "下载已完成 · 总计已用 64 秒",
+    "timings": {
+      "engineScriptReady": 1177,
+      "bootstrapReady": 5152,
+      "downloadComplete": 59403,
+      "engineReady": 64529,
+      "firstFrame": 65103
+    },
+    "attempt": 0,
+    "elapsed": 70
+  },
+  "saveBefore": {
+    "album": [],
+    "animal_relationship_memory": {},
+    "exploration": null,
+    "exploration_committed_serial": 0,
+    "first_fish_caught": false,
+    "holiday_day": 1,
+    "holiday_day_elapsed": 0,
+    "keepsakes": {},
+    "locale": "zh-CN",
+    "photo_moments": {},
+    "plant_day_planted": 0,
+    "plant_state": 0,
+    "plant_watered_day": -1,
+    "tutorial_version": 0,
+    "version": 5,
+    "world_residents": {
+      "beibei": {
+        "adopted_clock": null,
+        "stage": "unmet"
+      },
+      "chicken": {
+        "settled_clock": {
+          "day": 1,
+          "elapsed": 0
+        },
+        "stage": "chick"
+      },
+      "revision": 1,
+      "schema": 3,
+      "turtle": {
+        "found_trip": "",
+        "stage": "unmet"
+      }
+    },
+    "world_weather": {
+      "episode": 0,
+      "remaining": 1472.87756347656,
+      "seed": 1075118659,
+      "weather": "sun"
+    },
+    "yard_gate_open": false
+  },
+  "warm": {
+    "build": "game-7ed6cc0",
+    "hidden": true,
+    "status": "引擎已启动，正在绘制画面…",
+    "detail": "下载已完成 · 总计已用 1 秒",
+    "timings": {
+      "engineScriptReady": 10,
+      "bootstrapReady": 33,
+      "assetCacheHit": 43,
+      "downloadComplete": 143,
+      "engineReady": 1822,
+      "firstFrame": 2266
+    }
+  },
+  "saveAfter": {
+    "album": [],
+    "animal_relationship_memory": {},
+    "exploration": null,
+    "exploration_committed_serial": 0,
+    "first_fish_caught": false,
+    "holiday_day": 1,
+    "holiday_day_elapsed": 0,
+    "keepsakes": {},
+    "locale": "zh-CN",
+    "photo_moments": {},
+    "plant_day_planted": 0,
+    "plant_state": 0,
+    "plant_watered_day": -1,
+    "tutorial_version": 0,
+    "version": 5,
+    "world_residents": {
+      "beibei": {
+        "adopted_clock": null,
+        "stage": "unmet"
+      },
+      "chicken": {
+        "settled_clock": {
+          "day": 1,
+          "elapsed": 0
+        },
+        "stage": "chick"
+      },
+      "revision": 1,
+      "schema": 3,
+      "turtle": {
+        "found_trip": "",
+        "stage": "unmet"
+      }
+    },
+    "world_weather": {
+      "episode": 0,
+      "remaining": 1472.87756347656,
+      "seed": 1075118659,
+      "weather": "sun"
+    },
+    "yard_gate_open": false
+  }
+}
