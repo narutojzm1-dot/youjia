@@ -1,6 +1,6 @@
 # 近郊公开窗光、HUD 输入与实际存储故障验证
 
-Owner / Agent-ID：CODEX-LEAD-ASSISTANT；#565、#734。所有原图、视频、JSON和日志按原字节上传；索引见 `evidence-index.json`，完整本地运行文件与未上传PCK/WASM见 `local-full-archive-manifest.json` / `curation.json`。231份原始文件、223,815,663字节；不编辑截图或剪辑视频。
+Owner / Agent-ID：CODEX-LEAD-ASSISTANT；#565、#734。所有原图、视频、JSON和日志按原字节上传；索引见 `evidence-index.json`，完整本地运行文件与未上传PCK/WASM见 `local-full-archive-manifest.json` / `curation.json`。239份原始文件、223,880,639字节；不编辑截图或剪辑视频。
 
 ## 已发布窗光：真实公开64c
 
@@ -38,6 +38,10 @@ PR735候选 `a9c24e152a0fff5af0d385d521af8a4145a47855`，完整CI38105254139通�
 两类0page/console错误。故障时不强制刷新、不证明断电后恢复未提交的内存物品，也未验证永久配额耗尽或其他浏览器。确认按钮坐标通过当时实际PNG核对后输入，`retry-coordinate.json`保留。
 
 初版 `storage-fault/initial-assertion-failure` 错将“再确认一次”当作自动新排队保存拾取，等待carried重新写入15秒超时。该断言超出保守Host的解析拒绝语义，失败原图/载荷/事件/完整视频与初版驱动原件保留；初次terminal stdout未录到文件，没有重建假日志。改的是测试预期，不是Host；修正脚本另存并有真正 `driver.log`，随后正常返院/刷新证明上述明确范围。
+
+## Leader餐食/保存扩展后的原生组合
+
+3ca包含Leader PR731餐食/休息保存扩展。`combination-3ca`重新实跑HUD72、容量48、直接拾物189、Main探索300，零失败；实际运行HEAD `b1329f02771b6f6e593b59ef86a9a79a475589a6` 与3ca只差docs。每套独立profile，原锚点JSON按Git恢复；48项容量是种测试夹具。PowerShell5先受脚本执行策略阻止、后因native stderr警告抛异常而中断导入，未运行测试；保留部分导入日志，不重建未捕获的terminal错误。改用原环境PowerShell7.6.5后，真实导入及四套测试全部完成。无生产代码或Host改动。3ca正式发布/实际公开资源仍独立核验。
 
 ## 仍未完成
 

@@ -1,6 +1,6 @@
 {
-  "rawRepositoryFiles": 231,
-  "rawRepositoryBytes": 223815663,
+  "rawRepositoryFiles": 239,
+  "rawRepositoryBytes": 223880639,
   "selection": "Every original file in the six stated browser/public folders except runtime .pck/.wasm, plus exact named logs, metadata and drivers; initial failed browser attempt retained. No edited images/videos. Original fault v1 terminal stdout was not captured to a file and is not reconstructed.",
   "excludedRuntimeLocallyRetained": [
     {
@@ -15,5 +15,6 @@
     }
   ],
   "localArchiveFiles": 189,
-  "localArchiveBytes": 331473418
+  "localArchiveBytes": 331473418,
+  "addition": "Actual 3ca runtime-equivalent native combination logs/source and prior b132 Git byte verification; original source logs unchanged. First PowerShell5 partial import failure retained."
 }
