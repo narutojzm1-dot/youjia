@@ -19,4 +19,4 @@ Chrome154、DPR1、1280×720、实际AMD 8060S ANGLE D3D11无扩展独立上下�
 
 这是桌面硬件的无扩展headless自动体验，不是实体手机、人耳听验或所有网络性能保证。录像为完整原速VP8屏幕记录，无音轨；文件fps不等于游戏fps。没有专门记录这两版cold/warm启动计时，不从状态截图时间推断下载速度。之前正式e9版的专门加载实测171.596秒cold/4.506秒warm在[加载证据](../2026-10-11-loading-integrity/README.md)，首次下载仍慢的限制不撤销。
 
-64个原始仓库证据文件、41,559,474字节及其SHA256见`evidence-index.json`；另有索引、说明和属性。完整视频、全部JSON/网络/输入、五张关键原始PNG/轮次均原样保留，`.gitattributes * -text`避免日志/脚本换行被规范化。重复PNG与完整PCK/WASM保留在`D:\games\youjia-test\assistant-recovery`，80个相关本地文件、294,703,383字节列入`local-full-archive-manifest.json`。这两个索引含义不同；仓库不是整个本地下载的全集，不把本地总字节冒充已上传字节。
+65个原始仓库证据文件、42,010,670字节及其SHA256见`evidence-index.json`；另有索引、说明和属性。完整视频、全部JSON/网络/输入、五张关键原始PNG/轮次均原样保留，`.gitattributes * -text`避免日志/脚本换行被规范化。重复PNG与完整PCK/WASM保留在`D:\games\youjia-test\assistant-recovery`，80个相关本地文件、294,703,383字节列入`local-full-archive-manifest.json`。这两个索引含义不同；仓库不是整个本地下载的全集，不把本地总字节冒充已上传字节。
