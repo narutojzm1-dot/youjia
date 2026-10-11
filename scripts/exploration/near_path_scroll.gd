@@ -432,7 +432,7 @@ func _start_reveal(find_id: String) -> void:
 	var slot := maxi(carried().size() - 1, 0)
 	reveal.label_font = _basket.get_theme_default_font()
 	reveal.play(find_id, art_to_screen(anchor), top, _basket.position + Vector2(24 + slot * 16, 22),
-		1.6 * layout.depth(anchor.y) * _cam_zoom, _find_name(find_id), reduced_motion())
+		1.6 * layout.depth(anchor.y) * _cam_zoom * NearGroundFindArt.reveal_scale(find_id), _find_name(find_id), reduced_motion())
 
 
 func pick_choice() -> Dictionary:
@@ -610,7 +610,7 @@ func _draw_items() -> void:
 			items.draw_circle(Vector2.ZERO, 34.0, Color(1.0, 0.96, 0.82, 0.55))
 			items.draw_circle(Vector2.ZERO, 24.0, Color(1.0, 0.98, 0.90, 0.6))
 			items.draw_set_transform(Vector2.ZERO)
-		KeepsakeArt.draw(items, find_id, anchor, 1.6 * depth, true)
+		NearGroundFindArt.draw(items, find_id, anchor, 1.6 * depth)
 
 
 func _observe_caption() -> String:

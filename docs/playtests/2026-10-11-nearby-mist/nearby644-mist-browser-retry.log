@@ -1,0 +1,44 @@
+{"view": [390, 844], "stage": "title", "keepsakes": {}}
+{"view": [390, 844], "stage": "yard", "keepsakes": {}}
+{"view": [390, 844], "stage": "entry-1", "keepsakes": {}}
+MOTION_PERFORMANCE {"renderer": "Chrome ANGLE SwiftShader headless, DPR2 emulation, not a physical phone", "viewport": [390, 844, 2], "reduce_media_after_restore": false, "ordinary": {"reduced": false, "median_ms": 99.89999999999418, "p95_ms": 100.10000000000582, "over_50ms": 120}, "reduced": {"reduced": true, "median_ms": 100, "p95_ms": 116.60000000000582, "over_50ms": 120}}
+{"view": [390, 844], "stage": "direct-pick", "keepsakes": {}}
+{"view": [390, 844], "stage": "free-ground", "keepsakes": {}}
+{"view": [390, 844], "stage": "collected-return", "keepsakes": {"formal.find.brook_stone": 1}}
+{"view": [390, 844], "stage": "hud-entry-steady", "keepsakes": {"formal.find.brook_stone": 1}}
+{"view": [390, 844], "stage": "hud-return", "keepsakes": {"formal.find.brook_stone": 1}}
+{"view": [390, 844], "stage": "reload-title", "keepsakes": {"formal.find.brook_stone": 1}}
+{"view": [390, 844], "stage": "reload-yard", "keepsakes": {"formal.find.brook_stone": 1}}
+{"view": [844, 390], "stage": "title", "keepsakes": {}}
+{"view": [844, 390], "stage": "yard", "keepsakes": {}}
+{"view": [844, 390], "stage": "entry-1", "keepsakes": {}}
+MOTION_PERFORMANCE {"renderer": "Chrome ANGLE SwiftShader headless, DPR2 emulation, not a physical phone", "viewport": [844, 390, 2], "reduce_media_after_restore": false, "ordinary": {"reduced": false, "median_ms": 100, "p95_ms": 116.59999999999127, "over_50ms": 120}, "reduced": {"reduced": true, "median_ms": 100, "p95_ms": 100.10000000000582, "over_50ms": 120}}
+{"view": [844, 390], "stage": "empty-return-1", "keepsakes": {}}
+{"view": [844, 390], "stage": "entry-2", "keepsakes": {}}
+{"view": [844, 390], "stage": "direct-pick", "keepsakes": {}}
+{"view": [844, 390], "stage": "free-ground", "keepsakes": {}}
+{"view": [844, 390], "stage": "collected-return", "keepsakes": {"formal.find.feather": 1}}
+{"view": [844, 390], "stage": "hud-entry-steady", "keepsakes": {"formal.find.feather": 1}}
+{"view": [844, 390], "stage": "hud-return", "keepsakes": {"formal.find.feather": 1}}
+{"view": [844, 390], "stage": "reload-title", "keepsakes": {"formal.find.feather": 1}}
+{"view": [844, 390], "stage": "reload-yard", "keepsakes": {"formal.find.feather": 1}}
+Traceback (most recent call last):
+  File "D:\games\youjia-test\assistant-recovery\browser-mist644-views.py", line 99, in <module>
+    try:page.wait_for_function('window.first',timeout=180000)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Zengm\AppData\Local\Programs\Python\Python312\Lib\site-packages\playwright\sync_api\_generated.py", line 12761, in wait_for_function
+    self._sync(
+  File "C:\Users\Zengm\AppData\Local\Programs\Python\Python312\Lib\site-packages\playwright\_impl\_sync_base.py", line 115, in _sync
+    return task.result()
+           ^^^^^^^^^^^^^
+  File "C:\Users\Zengm\AppData\Local\Programs\Python\Python312\Lib\site-packages\playwright\_impl\_page.py", line 1151, in wait_for_function
+    return await self._main_frame.wait_for_function(**locals_to_params(locals()))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Zengm\AppData\Local\Programs\Python\Python312\Lib\site-packages\playwright\_impl\_frame.py", line 940, in wait_for_function
+    await self._channel.send("waitForFunction", self._timeout, params)
+  File "C:\Users\Zengm\AppData\Local\Programs\Python\Python312\Lib\site-packages\playwright\_impl\_connection.py", line 76, in send
+    return await self._connection.wrap_api_call(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Zengm\AppData\Local\Programs\Python\Python312\Lib\site-packages\playwright\_impl\_connection.py", line 632, in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+playwright._impl._errors.TimeoutError: Page.wait_for_function: Timeout 180000ms exceeded.
