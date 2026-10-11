@@ -17,6 +17,8 @@ const MIN_GAP := 0.07
 
 var _last_play_at := -INF
 var _registered := false
+# 成功送出的关闭音次数。面板已隐藏时的清理不得增加。
+var close_cue_count := 0
 
 
 func ensure_registered() -> void:
@@ -33,7 +35,10 @@ func play_open() -> bool:
 
 
 func play_close() -> bool:
-	return _play(CUE_CLOSE)
+	var played := _play(CUE_CLOSE)
+	if played:
+		close_cue_count += 1
+	return played
 
 
 func play_page() -> bool:

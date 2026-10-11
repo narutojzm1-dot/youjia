@@ -1536,8 +1536,11 @@ func _show_basket() -> void:
 
 
 func _hide_basket() -> void:
+	# 只有背篓从可见变成隐藏才播关闭音；已经隐藏时的幂等清理保持静音。
+	var closing: bool = _basket_panel.visible
 	_basket_panel.visible = false
-	if _ui_sfx != null: _ui_sfx.play_close()
+	if closing and _ui_sfx != null:
+		_ui_sfx.play_close()
 	get_tree().paused = false
 	AudioDirector.set_game_paused(false)
 	if _world != null: _world.input_enabled = true
@@ -2070,8 +2073,11 @@ func _show_album() -> void:
 
 
 func _hide_album() -> void:
+	# 只有相册从可见变成隐藏才播关闭音；已经隐藏时的幂等清理保持静音。
+	var closing: bool = _album_screen.visible
 	_album_screen.visible = false
-	if _ui_sfx != null: _ui_sfx.play_close()
+	if closing and _ui_sfx != null:
+		_ui_sfx.play_close()
 	_album_touch_origin = Vector2.INF
 	if _screen == "game": _hud.visible = true
 	if _world != null and not _pause_screen.visible:

@@ -18,6 +18,11 @@ func check(ok: bool, why: String) -> void:
 		push_error(why)
 
 
+func _close_cue_count(sfx: Variant) -> int:
+	var holder: Object = sfx as Object
+	return int(holder.get("close_cue_count"))
+
+
 # 防抖看 Time.get_ticks_msec。headless --script 里首个 create_timer 可能同帧结束。
 func _wait_past_gap() -> void:
 	var start := Time.get_ticks_msec()
@@ -79,6 +84,40 @@ func run() -> void:
 	var at_end: int = int(main.get("_album_index"))
 	main.call("_flip_album", 1)
 	check(int(main.get("_album_index")) == at_end, "album flip at end is no-op")
+
+	# 幂等 hide：面板已经不可见时不得增加关闭音次数。
+	# 先等到去抖窗口过去，避免上一次翻页音把误播的关闭音挡掉。
+	await _wait_past_gap()
+	var close_before: int = _close_cue_count(mounted_sfx)
+	var basket: Control = main.get("_basket_panel") as Control
+	var album: Control = main.get("_album_screen") as Control
+	check(basket != null and not basket.visible, "basket starts hidden before idempotent hide")
+	check(album != null and not album.visible, "album starts hidden before idempotent hide")
+	main.call("_hide_basket")
+	check(_close_cue_count(mounted_sfx) == close_before, "hide basket while hidden does not play close")
+	main.call("_hide_album")
+	check(_close_cue_count(mounted_sfx) == close_before, "hide album while hidden does not play close")
+
+	# 真正打开再关闭：各播一次关闭音；随后再 hide 仍是静音清理。
+	main.call("_show_basket")
+	check(basket.visible, "show basket makes panel visible")
+	await _wait_past_gap()
+	main.call("_hide_basket")
+	check(not basket.visible, "hide basket after open closes panel")
+	check(_close_cue_count(mounted_sfx) == close_before + 1, "open then hide basket plays close once")
+	await _wait_past_gap()
+	main.call("_hide_basket")
+	check(_close_cue_count(mounted_sfx) == close_before + 1, "second basket hide stays silent")
+
+	main.call("_show_album")
+	check(album.visible, "show album makes panel visible")
+	await _wait_past_gap()
+	main.call("_hide_album")
+	check(not album.visible, "hide album after open closes panel")
+	check(_close_cue_count(mounted_sfx) == close_before + 2, "open then hide album plays close once")
+	await _wait_past_gap()
+	main.call("_hide_album")
+	check(_close_cue_count(mounted_sfx) == close_before + 2, "second album hide stays silent")
 
 	main.queue_free()
 	await process_frame
