@@ -18,31 +18,43 @@ func check(ok: bool, why: String) -> void:
 		push_error(why)
 
 
+# 防抖看 Time.get_ticks_msec。headless --script 里首个 create_timer 可能同帧结束。
+func _wait_past_gap() -> void:
+	var start := Time.get_ticks_msec()
+	var need := int(ceil((UiSfx.MIN_GAP + 0.03) * 1000.0))
+	while Time.get_ticks_msec() - start < need:
+		await process_frame
+
+
 func run() -> void:
 	var isolated := OS.get_environment("YOUJIA_TEST_ISOLATED_DATA").replace("\\", "/").to_lower()
 	if isolated.is_empty() or not OS.get_user_data_dir().replace("\\", "/").to_lower().begins_with(isolated):
 		quit(2)
 		return
 
-	check(AudioDirector.get_cue_ids().has("ui.page"), "ui.page cue exists in AudioDirector")
+	# --script 入口在自动加载注册前编译，不能直接写 AudioDirector 全局名。
+	var audio: Node = root.get_node("AudioDirector")
+	var cue_ids: Array = audio.call("get_cue_ids")
+	check(cue_ids.has("ui.page"), "ui.page cue exists in AudioDirector")
 	check(ResourceLoader.exists(UiSfx.OPEN_PATH), "open tres exists")
 	check(ResourceLoader.exists(UiSfx.CLOSE_PATH), "close tres exists")
 	check(ResourceLoader.exists(UiSfx.PAGE_PATH), "page tres exists")
 
 	var sfx: RefCounted = UiSfx.new()
 	sfx.ensure_registered()
-	AudioDirector.unlock_audio()
+	audio.call("unlock_audio")
 
 	# Headless play_cue returns true when stream registered.
 	check(bool(sfx.play_open()), "open cue plays once")
 	check(not bool(sfx.play_open()), "debounce blocks immediate second open")
-	await create_timer(UiSfx.MIN_GAP + 0.03).timeout
+	await _wait_past_gap()
 	check(bool(sfx.play_close()), "close cue plays after gap")
-	await create_timer(UiSfx.MIN_GAP + 0.03).timeout
+	await _wait_past_gap()
 	check(bool(sfx.play_page()), "page cue plays after gap")
 
 	# game.pause stays empty so set_game_paused does not invent a second UI voice.
-	var pause_stream: Variant = AudioDirector.get("_streams").get("game.pause")
+	var streams: Dictionary = audio.get("_streams")
+	var pause_stream: Variant = streams.get("game.pause")
 	check(pause_stream == null, "game.pause left unregistered to avoid double-fire")
 
 	# Main wiring smoke: holiday start mounts helper and hooks do not throw.

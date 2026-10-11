@@ -40,15 +40,22 @@ func play_page() -> bool:
 	return _play(CUE_PAGE)
 
 
+# --script 套件在自动加载注册前编译本文件，不能直接写 AudioDirector 全局名。
+func _director() -> Node:
+	var tree: SceneTree = Engine.get_main_loop() as SceneTree
+	return tree.root.get_node("AudioDirector")
+
+
 func _register(cue_id: String, resource_path: String, fallback_hz: float) -> void:
-	if AudioDirector.register_cue(cue_id, resource_path):
+	var audio: Node = _director()
+	if bool(audio.call("register_cue", cue_id, resource_path)):
 		return
 	# Procedural fallback when the .tres is missing (should not happen in-tree).
 	var ProceduralSfx = load("res://scripts/manus/procedural_sfx.gd")
 	if ProceduralSfx == null:
 		return
 	var stream: AudioStream = ProceduralSfx.tone(fallback_hz, 0.09, 0.16, fallback_hz * 0.92)
-	AudioDirector.register_stream(cue_id, stream)
+	audio.call("register_stream", cue_id, stream)
 
 
 func _play(cue_id: String) -> bool:
@@ -57,8 +64,9 @@ func _play(cue_id: String) -> bool:
 	if now - _last_play_at < MIN_GAP:
 		return false
 	# Unlock attempt does not block UI when gesture is still pending.
-	AudioDirector.unlock_audio()
-	var ok := AudioDirector.play_cue(cue_id)
+	var audio: Node = _director()
+	audio.call("unlock_audio")
+	var ok: bool = bool(audio.call("play_cue", cue_id))
 	if ok:
 		_last_play_at = now
 	return ok
