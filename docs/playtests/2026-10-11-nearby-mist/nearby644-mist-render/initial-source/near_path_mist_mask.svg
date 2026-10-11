@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="540" height="220" viewBox="480 240 540 220">
+  <!-- Code-native soft interiors registered to the existing 1672x941 painting.
+       Red: open far-lake water. Green: existing mist on far ridges.
+       Neither region reaches a shoreline, building, foreground tree or the road. -->
+  <defs>
+    <radialGradient id="lake"><stop offset="0" stop-color="#ff0000"/><stop offset="0.45" stop-color="#b80000"/><stop offset="1" stop-color="#000000"/></radialGradient>
+    <radialGradient id="ridge"><stop offset="0" stop-color="#00ee00"/><stop offset="0.5" stop-color="#009b00"/><stop offset="1" stop-color="#000000"/></radialGradient>
+  </defs>
+  <rect x="480" y="240" width="540" height="220" fill="#000000"/>
+  <g fill="url(#lake)">
+    <ellipse cx="532" cy="371" rx="48" ry="5"/>
+    <ellipse cx="716" cy="410" rx="72" ry="6"/>
+    <ellipse cx="763" cy="432" rx="67" ry="8"/>
+  </g>
+  <g fill="url(#ridge)">
+    <ellipse cx="648" cy="294" rx="48" ry="12"/>
+    <ellipse cx="834" cy="266" rx="62" ry="18"/>
+    <ellipse cx="927" cy="288" rx="51" ry="13"/>
+    <ellipse cx="827" cy="356" rx="39" ry="10"/>
+    <ellipse cx="970" cy="389" rx="28" ry="13"/>
+  </g>
+</svg>
