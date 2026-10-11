@@ -1,0 +1,533 @@
+{
+  "exportDeclaredSource": "5700377e248a4d871c9fb1711956dba1400d5e8f",
+  "recoverableWorkingTreeSource": "06d8887a65ef04fd73066b340fefcfcb9a5f8422",
+  "trackedDirty": "",
+  "privateCombinationParents": [
+    "5d23acbec9d756fc5e3ddee678e2db478ff18935",
+    "e00f11a88679e0efe2ee2dccb2a8eea9ae0a0169"
+  ],
+  "provenance": "Native129/104/72/189 logs identify4ac plus actual Godot-generated UID/import metadata subsequently recorded by570. Native305/48 and export identify570. Export also generated5 untracked metadata files, and148 tracked modifications were only CRLF/LF. Final06d records those5 original generated files; it is a recoverable snapshot after export, not a newly exported or newly tested production SHA. Both Git bundles and original state hashes retained. Original Leader/542 ancestry is preserved; candidate remains private.",
+  "states": 27,
+  "samples": 728,
+  "longSpanSeconds": 699.390999999945,
+  "naturalPicked": "formal.find.feather",
+  "keepsakesAfterReload": {
+    "formal.find.feather": 1
+  },
+  "backendPeaks": {
+    "buffers": 6,
+    "bytes": 189235208,
+    "decoded": 6,
+    "starts": 17,
+    "players": 5,
+    "playing": 5
+  },
+  "backendFinal": {
+    "buffers": 6,
+    "bytes": 189235208,
+    "decoded": 6,
+    "starts": 17,
+    "players": 5,
+    "playing": 3,
+    "state": "running"
+  },
+  "maximumSignalPeak": 0.16551968455314636,
+  "nonFinite": 0,
+  "observedJsHeapPeakBytes": 381873660,
+  "ordinaryInputEventsAfterReload": 2,
+  "controls": [
+    {
+      "stage": "day-controls-environment-only",
+      "windows": 12,
+      "expectedSignal": true,
+      "minMaximumRms": 0.004320054851372204,
+      "maxMaximumRms": 0.005467621399910657
+    },
+    {
+      "stage": "day-controls-both-off",
+      "windows": 12,
+      "expectedSignal": false,
+      "minMaximumRms": 0,
+      "maxMaximumRms": 0
+    },
+    {
+      "stage": "day-controls-music-only",
+      "windows": 12,
+      "expectedSignal": true,
+      "minMaximumRms": 0.014617092598449566,
+      "maxMaximumRms": 0.015777221056781265
+    },
+    {
+      "stage": "day-controls-master-muted",
+      "windows": 12,
+      "expectedSignal": false,
+      "minMaximumRms": 0,
+      "maxMaximumRms": 0
+    },
+    {
+      "stage": "day-controls-restored",
+      "windows": 12,
+      "expectedSignal": true,
+      "minMaximumRms": 0.011066448100404365,
+      "maxMaximumRms": 0.019103340932555092
+    },
+    {
+      "stage": "night-controls-environment-only",
+      "windows": 12,
+      "expectedSignal": true,
+      "minMaximumRms": 0.0006667146932504558,
+      "maxMaximumRms": 0.0007070176790205822
+    },
+    {
+      "stage": "night-controls-both-off",
+      "windows": 12,
+      "expectedSignal": false,
+      "minMaximumRms": 0,
+      "maxMaximumRms": 0
+    },
+    {
+      "stage": "night-controls-music-only",
+      "windows": 12,
+      "expectedSignal": true,
+      "minMaximumRms": 0.0008347733826194065,
+      "maxMaximumRms": 0.0023141202257398537
+    },
+    {
+      "stage": "night-controls-master-muted",
+      "windows": 12,
+      "expectedSignal": false,
+      "minMaximumRms": 0,
+      "maxMaximumRms": 0
+    },
+    {
+      "stage": "night-controls-restored",
+      "windows": 12,
+      "expectedSignal": true,
+      "minMaximumRms": 0.0011654942724893004,
+      "maxMaximumRms": 0.0032744705220740726
+    }
+  ],
+  "nightState": {
+    "utc": "2026-10-11T11:52:26Z",
+    "payload": {
+      "album": [],
+      "animal_relationship_memory": {},
+      "exploration": {
+        "contract_version": 1,
+        "next_trip_serial": 4,
+        "session": {
+          "carried": [],
+          "catalog": "formal",
+          "companion": {},
+          "current_stop": "gate",
+          "failure": null,
+          "offers": {
+            "gate": ""
+          },
+          "proposal": null,
+          "record_revision": 1,
+          "rng_seed": "1923541688060824574",
+          "route_id": "formal.near_path",
+          "started_clock": {
+            "day": 1,
+            "elapsed": 213.686917999964
+          },
+          "state": "active",
+          "taken": {},
+          "trip_id": "trip-3",
+          "trip_serial": 3,
+          "visited": [
+            "gate"
+          ]
+        }
+      },
+      "exploration_committed_serial": 2,
+      "first_fish_caught": false,
+      "holiday_day": 1,
+      "holiday_day_elapsed": 360.052427666556,
+      "keepsakes": {
+        "formal.find.feather": 1
+      },
+      "locale": "zh-CN",
+      "photo_moments": {},
+      "plant_day_planted": 0,
+      "plant_state": 0,
+      "plant_watered_day": -1,
+      "resident_rest": {
+        "cause": "legacy",
+        "day": 1,
+        "schema": 1
+      },
+      "tutorial_version": 0,
+      "version": 5,
+      "world_residents": {
+        "beibei": {
+          "adopted_clock": null,
+          "stage": "unmet"
+        },
+        "chicken": {
+          "settled_clock": {
+            "day": 1,
+            "elapsed": 0
+          },
+          "stage": "chick"
+        },
+        "revision": 1,
+        "schema": 3,
+        "turtle": {
+          "found_trip": "",
+          "stage": "unmet"
+        }
+      },
+      "world_weather": {
+        "episode": 2,
+        "remaining": 1346.20639540638,
+        "seed": 2140506766,
+        "weather": "rain"
+      },
+      "yard_crops": {
+        "kind": "",
+        "planted_day": 0,
+        "revision": 0,
+        "schema": 1,
+        "watered_day": -1
+      },
+      "yard_gate_open": true,
+      "yard_inventory": {
+        "corn": 2,
+        "fish": {},
+        "grass": 0,
+        "ground": [],
+        "held": "",
+        "millet": 0,
+        "next_food_id": 1,
+        "revision": 1,
+        "schema": 4,
+        "wheat": 2
+      }
+    },
+    "audio": {
+      "wallMs": 394771.8000000715,
+      "signal": [
+        {
+          "node": 1,
+          "context": 1,
+          "type": "GainNode",
+          "contextState": "running",
+          "audioTime": 390.5013333333333,
+          "sampleRate": 48000,
+          "gain": 1,
+          "rms": 0,
+          "peak": 0,
+          "nonFinite": 0
+        },
+        {
+          "node": 2,
+          "context": 1,
+          "type": "AudioWorkletNode",
+          "contextState": "running",
+          "audioTime": 390.5013333333333,
+          "sampleRate": 48000,
+          "gain": null,
+          "rms": 0,
+          "peak": 0,
+          "nonFinite": 0
+        },
+        {
+          "node": 3,
+          "context": 2,
+          "type": "GainNode",
+          "contextState": "running",
+          "audioTime": 385.68,
+          "sampleRate": 48000,
+          "gain": 4.0012611179918167e-07,
+          "rms": 3.0884570870865864e-08,
+          "peak": 1.0842860831417056e-07,
+          "nonFinite": 0
+        },
+        {
+          "node": 5,
+          "context": 2,
+          "type": "GainNode",
+          "contextState": "running",
+          "audioTime": 385.68,
+          "sampleRate": 48000,
+          "gain": 0.004005524795502424,
+          "rms": 0,
+          "peak": 0,
+          "nonFinite": 0
+        },
+        {
+          "node": 7,
+          "context": 2,
+          "type": "GainNode",
+          "contextState": "running",
+          "audioTime": 385.68,
+          "sampleRate": 48000,
+          "gain": 0.3981071710586548,
+          "rms": 0.00122790420942424,
+          "peak": 0.0025618502404540777,
+          "nonFinite": 0
+        },
+        {
+          "node": 10,
+          "context": 2,
+          "type": "GainNode",
+          "contextState": "running",
+          "audioTime": 385.68,
+          "sampleRate": 48000,
+          "gain": 0.059996385127305984,
+          "rms": 0.0017341912656640996,
+          "peak": 0.005970047786831856,
+          "nonFinite": 0
+        },
+        {
+          "node": 18,
+          "context": 2,
+          "type": "GainNode",
+          "contextState": "running",
+          "audioTime": 385.68,
+          "sampleRate": 48000,
+          "gain": 0.08999960869550705,
+          "rms": 0.000151535364864819,
+          "peak": 0.0005303083453327417,
+          "nonFinite": 0
+        }
+      ],
+      "sources": [
+        {
+          "wallMs": 11246.300000071526,
+          "audioTime": 2.1813333333333333,
+          "node": 4,
+          "outputGainNode": 3,
+          "buffer": 1,
+          "frames": 6144000,
+          "channels": 2,
+          "sampleRate": 48000,
+          "duration": 128,
+          "loop": true,
+          "loopStart": 0,
+          "loopEnd": 128,
+          "startArgs": [
+            0,
+            0
+          ]
+        },
+        {
+          "wallMs": 12558.800000071526,
+          "audioTime": 3.490666666666667,
+          "node": 6,
+          "outputGainNode": 5,
+          "buffer": 2,
+          "frames": 6144000,
+          "channels": 2,
+          "sampleRate": 48000,
+          "duration": 128,
+          "loop": true,
+          "loopStart": 0,
+          "loopEnd": 128,
+          "startArgs": [
+            0,
+            0
+          ]
+        },
+        {
+          "wallMs": 86571,
+          "audioTime": 77.50133333333333,
+          "node": 8,
+          "outputGainNode": 7,
+          "buffer": 2,
+          "frames": 6144000,
+          "channels": 2,
+          "sampleRate": 48000,
+          "duration": 128,
+          "loop": true,
+          "loopStart": 0,
+          "loopEnd": 128,
+          "startArgs": [
+            0,
+            0
+          ]
+        },
+        {
+          "wallMs": 89671.20000004768,
+          "audioTime": 80.6,
+          "node": 9,
+          "outputGainNode": 3,
+          "buffer": 1,
+          "frames": 6144000,
+          "channels": 2,
+          "sampleRate": 48000,
+          "duration": 128,
+          "loop": true,
+          "loopStart": 0,
+          "loopEnd": 128,
+          "startArgs": [
+            0,
+            0
+          ]
+        },
+        {
+          "wallMs": 98253.20000004768,
+          "audioTime": 89.18133333333333,
+          "node": 11,
+          "outputGainNode": 10,
+          "buffer": 3,
+          "frames": 1536000,
+          "channels": 2,
+          "sampleRate": 48000,
+          "duration": 32,
+          "loop": true,
+          "loopStart": 0,
+          "loopEnd": 32,
+          "startArgs": [
+            0,
+            0
+          ]
+        },
+        {
+          "wallMs": 100880.10000002384,
+          "audioTime": 91.81066666666666,
+          "node": 12,
+          "outputGainNode": 5,
+          "buffer": 4,
+          "frames": 3686401,
+          "channels": 2,
+          "sampleRate": 48000,
+          "duration": 76.80002083333333,
+          "loop": true,
+          "loopStart": 0,
+          "loopEnd": 76.80000305175781,
+          "startArgs": [
+            0,
+            0
+          ]
+        },
+        {
+          "wallMs": 109831.5,
+          "audioTime": 100.76,
+          "node": 13,
+          "outputGainNode": 7,
+          "buffer": 2,
+          "frames": 6144000,
+          "channels": 2,
+          "sampleRate": 48000,
+          "duration": 128,
+          "loop": true,
+          "loopStart": 0,
+          "loopEnd": 128,
+          "startArgs": [
+            0,
+            0
+          ]
+        },
+        {
+          "wallMs": 111782.90000009537,
+          "audioTime": 102.712,
+          "node": 14,
+          "outputGainNode": 5,
+          "buffer": 4,
+          "frames": 3686401,
+          "channels": 2,
+          "sampleRate": 48000,
+          "duration": 76.80002083333333,
+          "loop": true,
+          "loopStart": 0,
+          "loopEnd": 76.80000305175781,
+          "startArgs": [
+            0,
+            0
+          ]
+        },
+        {
+          "wallMs": 243527,
+          "audioTime": 234.45066666666668,
+          "node": 15,
+          "outputGainNode": 7,
+          "buffer": 2,
+          "frames": 6144000,
+          "channels": 2,
+          "sampleRate": 48000,
+          "duration": 128,
+          "loop": true,
+          "loopStart": 0,
+          "loopEnd": 128,
+          "startArgs": [
+            0,
+            0
+          ]
+        },
+        {
+          "wallMs": 245657.20000004768,
+          "audioTime": 236.58133333333333,
+          "node": 16,
+          "outputGainNode": 5,
+          "buffer": 4,
+          "frames": 3686401,
+          "channels": 2,
+          "sampleRate": 48000,
+          "duration": 76.80002083333333,
+          "loop": true,
+          "loopStart": 0,
+          "loopEnd": 76.80000305175781,
+          "startArgs": [
+            0,
+            0
+          ]
+        },
+        {
+          "wallMs": 383133.8000000715,
+          "audioTime": 374.04,
+          "node": 17,
+          "outputGainNode": 7,
+          "buffer": 5,
+          "frames": 3072000,
+          "channels": 2,
+          "sampleRate": 48000,
+          "duration": 64,
+          "loop": true,
+          "loopStart": 0,
+          "loopEnd": 64,
+          "startArgs": [
+            0,
+            0
+          ]
+        },
+        {
+          "wallMs": 384295.8000000715,
+          "audioTime": 375.21066666666667,
+          "node": 19,
+          "outputGainNode": 18,
+          "buffer": 6,
+          "frames": 3072000,
+          "channels": 2,
+          "sampleRate": 48000,
+          "duration": 64,
+          "loop": true,
+          "loopStart": 0,
+          "loopEnd": 64,
+          "startArgs": [
+            0,
+            0
+          ]
+        }
+      ],
+      "failures": [],
+      "backend": {
+        "buffers": 6,
+        "bytes": 189235208,
+        "decoded": 6,
+        "starts": 12,
+        "players": 5,
+        "playing": 4,
+        "state": "running"
+      },
+      "jsHeap": {
+        "used": 301235773,
+        "total": 303204449,
+        "limit": 4395630592
+      }
+    }
+  },
+  "limitations": "Fresh local diagnostic browser only, default mute-audio; captured software PCM/Opus and independent decode are not perceptual listening, hardware output, physical phone/background lifecycle, whole browser/WASM/GPU memory or official public version. Deliberate control mute gaps are not uninterrupted listening."
+}
