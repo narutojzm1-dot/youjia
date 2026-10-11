@@ -51,6 +51,7 @@ var camera: Camera2D
 var painting: Sprite2D
 var scenery_motion: NearPathMotion
 var scenery_mist: NearPathMist
+var window_light: NearPathWindowLight
 var items: Node2D
 var hud: CanvasLayer
 # 人物在路上的位置：哪条路、离岔口多远（原画像素）
@@ -114,6 +115,8 @@ func setup(trip_host: ExplorationHost, _weather: String, resident_controller: Re
 	scenery_mist = NearPathMist.new()
 	scenery_mist.bind(painting, reduced_motion())
 	scenery_mist.sync_environment({"weather": _weather, "daylight": 1.0}, true)
+	window_light = NearPathWindowLight.new()
+	window_light.bind(painting, reduced_motion())
 	TuningStore.value_changed.connect(_motion_setting_changed)
 	items = Node2D.new()
 	items.name = "Finds"
@@ -149,6 +152,7 @@ func setup(trip_host: ExplorationHost, _weather: String, resident_controller: Re
 func release() -> void:
 	if scenery_motion != null: scenery_motion.release()
 	if scenery_mist != null: scenery_mist.release()
+	if window_light != null: window_light.release()
 	if TuningStore.value_changed.is_connected(_motion_setting_changed):
 		TuningStore.value_changed.disconnect(_motion_setting_changed)
 	_pending_collect_stop = ""
@@ -197,10 +201,12 @@ func _motion_setting_changed(id: String, _requested: Variant, _active: Variant) 
 	if id == "ui.reduced_motion":
 		if scenery_motion != null: scenery_motion.apply(not village and not leaving, reduced_motion())
 		if scenery_mist != null: scenery_mist.apply(not village and not leaving, reduced_motion())
+		if window_light != null: window_light.apply(not village and not leaving, reduced_motion())
 
 
 func sync_environment(state: Dictionary, snap: bool = false) -> void:
 	if scenery_mist != null: scenery_mist.sync_environment(state, snap)
+	if window_light != null: window_light.sync_environment(state, snap)
 
 
 func foot() -> Vector2:
@@ -213,6 +219,7 @@ func _process(delta: float) -> void:
 		return
 	if scenery_motion != null: scenery_motion.advance(delta, reduced_motion())
 	if scenery_mist != null: scenery_mist.advance(delta, reduced_motion())
+	if window_light != null: window_light.advance(delta, reduced_motion())
 	var direction := Vector2.ZERO
 	if observing.is_empty():
 		direction = Input.get_vector("move_left", "move_right", "move_up", "move_down", 0.2)
@@ -684,6 +691,7 @@ func cross_page() -> bool:
 	painting.texture = load(layout.ART)
 	if scenery_motion != null: scenery_motion.apply(not village, reduced_motion())
 	if scenery_mist != null: scenery_mist.apply(not village, reduced_motion())
+	if window_light != null: window_light.apply(not village, reduced_motion())
 	walker.position = foot()
 	walker.advance(0.0, Vector2.ZERO, layout.depth(foot().y), facing, true)
 	walker.z_index = roundi(foot().y)
