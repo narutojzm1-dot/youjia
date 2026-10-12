@@ -264,7 +264,13 @@ func plan_growth_materials(eligible_actions: Dictionary, rng: RandomNumberGenera
 	return preload("res://scripts/game/growth_materials.gd").plan(_data, eligible_actions, rng)
 
 
-## Inactive until a director supplies validated period, target and action costs.
+## Confirmed world projection, validated against matching action receipts.
+func get_pond_edging() -> Dictionary:
+	# Do not project orphan world results without their matching AP receipts.
+	if preload("res://scripts/game/growth_budget.gd").read(_data).is_empty(): return {}
+	return preload("res://scripts/game/pond_edging.gd").read(_data)
+
+
 func get_growth_budget(period: String) -> Dictionary:
 	return preload("res://scripts/game/growth_budget.gd").budget(_data, period)
 

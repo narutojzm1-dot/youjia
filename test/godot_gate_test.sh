@@ -269,3 +269,13 @@ run_case budget-missing block 0 '' none suite "$budget_entry"
 run_case budget-prefix block 0 'debug: GROWTH_BUDGET checks=74 failures=0' none suite "$budget_entry"
 run_case budget-nonzero block 1 'GROWTH_BUDGET checks=74 failures=0' none suite "$budget_entry"
 echo 'GROWTH BUDGET COMPLETION CONTRACT PASS 7'
+
+edging_entry=test/pond_edging_view_suite.gd
+run_case edging-valid pass 0 'POND_EDGING_VIEW checks=74 failures=0' none suite "$edging_entry"
+run_case edging-zero block 0 'POND_EDGING_VIEW checks=0 failures=0' none suite "$edging_entry"
+run_case edging-failed block 0 'POND_EDGING_VIEW checks=74 failures=1' none suite "$edging_entry"
+run_case edging-wrong-suite block 0 'GROWTH_MATERIALS checks=77 failures=0' none suite "$edging_entry"
+run_case edging-missing block 0 '' none suite "$edging_entry"
+run_case edging-prefix block 0 'debug: POND_EDGING_VIEW checks=74 failures=0' none suite "$edging_entry"
+run_case edging-nonzero block 1 'POND_EDGING_VIEW checks=74 failures=0' none suite "$edging_entry"
+echo 'POND EDGING COMPLETION CONTRACT PASS 7'

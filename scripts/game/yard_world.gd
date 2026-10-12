@@ -20,6 +20,7 @@ var crop_sprite: Sprite2D
 var _grain_held := ""
 var ground_food: Node2D
 var decor_view: Node2D
+var pond_edging_view: Node2D
 var pond_story: Node
 var gate: Node2D
 var gate_view: Node2D
@@ -259,6 +260,8 @@ func setup(
 	add_child(ground_food)
 	decor_view = load("res://scripts/inventory/yard_decor_view.gd").new()
 	add_child(decor_view)
+	pond_edging_view = preload("res://scripts/game/pond_edging_view.gd").new(SaveStore)
+	add_child(pond_edging_view)
 	pond_story = load("res://scripts/game/pond_story_controller.gd").new(self)
 	add_child(pond_story)
 	_spawn_cast()
@@ -1615,6 +1618,7 @@ func _tick_weather_transition(delta: float, refresh_tint: bool = false) -> void:
 			band.modulate = Color(_cloud_tint.r, _cloud_tint.g, _cloud_tint.b, float(_weather_cloud_weights[i]))
 			band.visible = float(_weather_cloud_weights[i]) > 0.0
 	if _scene_feedback != null: _scene_feedback.modulate = sun_tint.lerp(rain_tint, _weather_mix)
+	if pond_edging_view != null: pond_edging_view.modulate = sun_tint.lerp(rain_tint, _weather_mix)
 	if gate_view != null: gate_view.refresh(gate.opened, _weather_mix, sun_tint, rain_tint)
 	_weather_art_initialized = true
 	_layout_cloud_bands()
