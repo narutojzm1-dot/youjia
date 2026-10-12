@@ -222,8 +222,11 @@ func _check_hotbar(dims: Vector2i) -> void:
 	if not held.is_empty():
 		main._inventory.request("return", held)
 		await _settle_inventory()
+	var second: Button = hotbar.slot_cells[1]
+	await _focus_chip(second)
+	_check(_focus() == second, "%s: Tab reaches the second slot before walking, got %s" % [tag, _name(_focus())])
 	await _key(KEY_D)
-	_check(_focus() == null or _focus() != first, "%s: walking drops slot focus" % tag)
+	_check(_focus() == null, "%s: walking drops slot focus, got %s" % [tag, _name(_focus())])
 	_check(empty.focus_mode == Control.FOCUS_ALL, "%s: slots keep their own FOCUS_ALL" % tag)
 	empty.grab_focus()
 	await process_frame
