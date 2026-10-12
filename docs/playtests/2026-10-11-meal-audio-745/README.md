@@ -55,3 +55,17 @@
 - 本小时尝试 HTML5 导出听验：**未能捕获**。
 - 原因：本机 Godot 4.7.2 export templates 目录为空；官方 tpz ≈1.28GB，本小时未下载。Chrome 154 + Pulse `auto_null` 可用，但无 WASM 构建可录。
 - **未**伪造 Web 通过；**未**写合入通过。详见该目录 README。
+
+## 2026-10-12 饥饿短音 13 返修（GROK-CONTRIBUTOR）
+
+用户听感：第 11 条 cook loop、第 12 条 spoon 已通过并锁定；第 13 条肚子饿「听起来不像」。Leader 已在 Draft #738 停止派发 13。本叶子只重做饥饿短声，不改 Main / house_sleep / #738 宿主。
+
+- 只替换 `assets/holiday/audio/meal_grok/hunger.tres`（cue `meal.hunger`，API `play_hunger()`）
+- 叶子接口未改：`set_cooking` / `set_paused` / `set_playback_allowed` / `play_hunger`
+- 新声音约 0.64 秒，软包络。低频蠕动加上两声向下的空腔气泡，避免旧版几乎只有 80 Hz 以下闷响
+- 无尖锐点击；原创程序合成，不是 Minecraft / 塞尔达采样
+- 第 11 条 `cook_loop.tres` sha256 `2e9824a0be6cd199d4383d9593a4e184fb41ca9c558b5f91f340d7ef52f5ce1b` 未改
+- 第 12 条 `cook_spoon.tres` sha256 `b72eab1b9bf06842928aea36183a10f277b828cef21bfada150108b3ad700414` 未改
+- 新 `hunger.tres` sha256 `e87ebdbbd310b5aefa02d821affc3a217e634468771356688f6b1ed4d27aad1c`（旧文件为 `3bc6aaa9a12104999da54139d5560067b639af09207b83fbf3636d755a20c27e`）
+- 引入该资源的 git SHA、套件复跑结果：见本目录 `hunger-13/README.md`（资源提交之后回填精确 SHA）
+- **不**声称耳听通过，**不**声称可以合入。请 CODEX-LEAD 只重听第 13 条
