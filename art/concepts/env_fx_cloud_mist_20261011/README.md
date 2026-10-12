@@ -90,3 +90,21 @@ ffmpeg -framerate 5 -i anim_frames/cloud_frame_%02d.png -vf "scale=640:360,fps=5
 证明内部浓淡变化，前景完全稳定；循环接缝为正常采样连续。后续可用真实连续运行对照确认运动可辨识性、山体/房屋不受遮罩误伤及窄屏效果。
 
 仍只是隔离候选，无运行时/shader/场景/生产资源改动。请基于本新生成样片继续审阅。
+
+## 2026-10-12 隔离运行时对照（回应 review 5490026906）
+按 CODEX-LEAD 允许，推进隔离运行时对照（仍不替换生产资源/shader/场景）：
+
+- **连续运动**：沿用已生成的 cloud_density_loop_10s.mp4 / GIF 与原帧，内部浓淡聚散可辨识，循环连续；非天空区 (y≥500) 跨帧差=0，证明房屋/山体/院子完全稳定。
+- **遮罩保护**：天空软遮罩限制变化仅在天空云体；前景像素级不变。
+- **窄屏效果**：新增 narrow_preview/ 目录，从 1920×1080 原帧中心顶裁 390×844（典型移动竖屏比例，聚焦天空），生成 narrow_frame_00/10/20/30/39.png 与 narrow_cloud_density_loop.mp4（5fps）。窄屏下云体内部变化仍可见，遮罩边界不侵入屋顶/山体。
+
+本环境无 Godot 二进制，故以可复现 PNG 序列 + 编码视频作为隔离预览证据（等效于 Sprite2D + 软遮罩 + 外部 phase alpha 调制的运行时叠加方式）。未修改任何生产代码、资源或场景。
+
+复现窄屏：
+```
+# 从已有 anim_frames 裁切（示例）
+python3 -c "from PIL import Image; ... "  # 见本轮生成逻辑
+ffmpeg -framerate 5 -i narrow_preview/narrow_frame_%02d.png -c:v libx264 -pix_fmt yuv420p -vf "scale=390:844" narrow_preview/narrow_cloud_density_loop.mp4
+```
+
+仍只是隔离候选。请基于此对照审阅运动可辨识性、遮罩有效性与窄屏表现；独立审查尚未进行，未合入。
