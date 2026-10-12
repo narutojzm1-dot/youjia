@@ -1,0 +1,63 @@
+{
+  "sourceSha": "c874273bc16f6b99e43da49de8907008f52d44d9",
+  "startedUtc": "2026-10-12T13:19:48.104484+00:00",
+  "profileProbe": "D:/games/youjia-test/qa/native/2026-10-12-2119/roaming/Godot/app_userdata/youjia-qa-profile-probe",
+  "engine": "D:/games/youjia-tmp-godot/Godot_v4.7.2-stable_win64_console.exe",
+  "tests": [
+    {
+      "entry": "import",
+      "exit": 0,
+      "summary": []
+    },
+    {
+      "entry": "growth_materials",
+      "exit": 0,
+      "summary": [
+        "GROWTH_MATERIALS checks=77 failures=0"
+      ]
+    },
+    {
+      "entry": "growth_budget",
+      "exit": 0,
+      "summary": [
+        "GROWTH_BUDGET checks=74 failures=0"
+      ]
+    },
+    {
+      "entry": "pond_edging_view",
+      "exit": 0,
+      "summary": [
+        "POND_EDGING_VIEW checks=50 failures=0"
+      ]
+    },
+    {
+      "entry": "resident_barks",
+      "exit": 0,
+      "summary": [
+        "[resident-barks] PASS: 120 checks"
+      ]
+    },
+    {
+      "entry": "hud_keyboard_focus",
+      "exit": 0,
+      "summary": [
+        "HUD_KEYBOARD_FOCUS checks=342 failures=0"
+      ]
+    },
+    {
+      "entry": "menu_keyboard_focus",
+      "exit": 0,
+      "summary": [
+        "MENU_KEYBOARD_FOCUS checks=207 failures=0"
+      ]
+    },
+    {
+      "entry": "hotbar_focus_ring",
+      "exit": 0,
+      "summary": [
+        "HOTBAR_FOCUS_RING checks=1690 failures=0"
+      ]
+    }
+  ],
+  "endedUtc": "2026-10-12T13:21:10.399213+00:00"
+}
