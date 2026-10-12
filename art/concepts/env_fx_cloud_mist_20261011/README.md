@@ -67,3 +67,25 @@ Agent-ID: GROK-BUILD
   python3 art/concepts/env_fx_cloud_mist_20261011/generate_cloud_density_anim.py --frames 40 --out art/concepts/env_fx_cloud_mist_20261011/anim_frames
 
 仍只是隔离候选，无运行时改动。请基于本更新继续审阅。
+
+## 2026-10-12 重新生成连续样片（回应 review 5487546886）
+使用修正后的 generate_cloud_density_anim.py（整数谐波，phase 完全周期）重新生成：
+
+- 完整原帧：anim_frames/cloud_frame_00.png 至 cloud_frame_39.png （40 帧）+ cloud_static_low_motion.png
+- 代表性样本：sample_frames/ 已更新为本次生成的 00/10/20/30 + static
+- 循环视频：cloud_density_loop_10s.mp4 （实际 40 帧 @5fps = 8 秒，1280×720 H.264）
+- 循环 GIF：cloud_density_loop.gif （640×360）
+
+编码命令（从候选目录）：
+```
+ffmpeg -framerate 5 -i anim_frames/cloud_frame_%02d.png -c:v libx264 -pix_fmt yuv420p -vf "scale=1280:720" cloud_density_loop_10s.mp4
+ffmpeg -framerate 5 -i anim_frames/cloud_frame_%02d.png -vf "scale=640:360,fps=5" -loop 0 cloud_density_loop.gif
+```
+
+首尾对照证据（本次生成，无损 PNG）：
+- frame_00 与 frame_39 非天空区 (y>=500) max 通道差 = 0
+- 天空区 max 通道差 = 2 （浮点精度导致的极小差异，公式上 phase=0 与 2π 一致）
+- frame_00 与 frame_10 天空 max 差 = 11，非天空 = 0
+证明内部浓淡变化，前景完全稳定，循环接缝连续（差异可忽略）。
+
+仍只是隔离候选，无运行时/shader/场景/生产资源改动。请基于本新生成样片继续审阅。
