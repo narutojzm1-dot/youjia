@@ -1,5 +1,13 @@
 # 院景首片音频
 
+## 2026-10-12 获批近郊拾物短音（16）
+
+`exploration_find_get.wav` 是原 GAME-PRODUCER [PR359](https://github.com/narutojzm1-dot/youjia/pull/359) 的 `discovery_soft.wav` 原字节副本：来源提交 `0e07ef5eabcd5766726d1c9d95904b1ad8ef54e3`，SHA256 `14d19c82019fe48ee7fa9b2d843e8bfc69fe155c59ef736e255ac40e8975aea3`，91,244字节。用户2026-10-12批准听验编号16，许可回执见 [6123651164](https://github.com/narutojzm1-dot/youjia/pull/359#issuecomment-6123651164)。原创程序合成、无采样；原生成器/测量/作者提交保留在原PR，未重新合成、转OGG或更改电平。
+
+48kHz、单声道PCM16、45,600帧/0.95秒，非循环。Godot导入不裁剪、不归一化、不压缩；导入PCM SHA256 `936184f59a29c5d519f1d1ca831916e8fef997e373778a15a50f26adb90e443e`。只在近郊真实take/swap成功后的既有短展示入口播放，消费现有SFX/静音/解锁状态；缺件安静降级，无替代音。源素材获批不等于当前组合听感、实体设备或正式公开版本已验收。接续说明见 [声音16](../../../docs/audio/nearby-find-16-2026-10-12.md)。
+
+以下为院景两轨历史记录，其接入/许可/正式发布状态以各自最新原单为准。
+
 这两条是 [#194](https://github.com/narutojzm1-dot/youjia/issues/194) 的候选分轨，给 [#195](https://github.com/narutojzm1-dot/youjia/issues/195) 播放。听验还没过，不是定稿，也不是已经听感通过。
 
 | 文件 | 用途 | SHA-256 |

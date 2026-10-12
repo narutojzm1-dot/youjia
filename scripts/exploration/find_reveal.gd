@@ -4,8 +4,8 @@ extends Node2D
 # 再飞进提篮，同时一声原创短音。只是表现：核心状态在调用前已经改变，打断时立即收尾，不影响提交。
 # 时长与尺寸都是等用户看过再调的候选值。
 
-# 保留原静音降级路径；PR359短音仍待真实听验，不随视觉接入启用。
-const SOUND_PATH := "res://assets/audio/sfx/exploration_find_get.ogg"
+# 用户2026-10-12批准听验16；原PR359 WAV逐字节接入，不合成或替换缺件。
+const SOUND_PATH := "res://assets/holiday/audio/exploration_find_get.wav"
 const RISE := 0.35
 const HOLD := 0.9
 const FLY := 0.4
@@ -49,6 +49,8 @@ var sound_plays := 0
 var label_font: Font
 var _player: AudioStreamPlayer
 var _name_slip: StyleBoxFlat
+var _application_active := true
+var _audio: Node
 
 
 func _ready() -> void:
@@ -57,6 +59,8 @@ func _ready() -> void:
 	_player = AudioStreamPlayer.new()
 	_player.bus = "SFX" if AudioServer.get_bus_index("SFX") >= 0 else "Master"
 	add_child(_player)
+	_audio = get_node("/root/AudioDirector")
+	get_node("/root/TuningStore").value_changed.connect(_on_audio_setting_changed)
 	visible = false
 
 
@@ -81,7 +85,7 @@ func play(id: String, from_screen: Vector2, top_screen: Vector2, basket_screen: 
 	title = name_text
 	modulate.a = pose().alpha
 	visible = true
-	if sound != null:
+	if sound != null and _sound_allowed():
 		sound_plays += 1
 		if _player != null:
 			_player.stream = sound
@@ -91,6 +95,34 @@ func play(id: String, from_screen: Vector2, top_screen: Vector2, basket_screen: 
 
 func is_sounding() -> bool:
 	return _player != null and _player.playing
+
+
+## 一次性的获得声不能排队等解锁或解除静音；只消费已有音频状态。
+func _sound_allowed() -> bool:
+	if not is_inside_tree() or get_tree().paused or not _application_active:
+		return false
+	for bus_name: StringName in [&"Master", &"SFX"]:
+		var index := AudioServer.get_bus_index(bus_name)
+		if index >= 0 and (AudioServer.is_bus_mute(index) or AudioServer.get_bus_volume_db(index) <= -80.0):
+			return false
+	if OS.has_feature("web"):
+		return _audio != null and not _audio.awaiting_gesture() and _audio.backend_state() == "running"
+	return true
+
+
+func _on_audio_setting_changed(id: String, _requested: Variant, _active: Variant) -> void:
+	if id.begins_with("audio.") and not _sound_allowed() and _player != null:
+		_player.stop()
+
+
+func _notification(what: int) -> void:
+	if what in [NOTIFICATION_APPLICATION_FOCUS_OUT, NOTIFICATION_WM_WINDOW_FOCUS_OUT, NOTIFICATION_APPLICATION_PAUSED]:
+		_application_active = false
+		settle(true)
+	elif what in [NOTIFICATION_APPLICATION_FOCUS_IN, NOTIFICATION_WM_WINDOW_FOCUS_IN, NOTIFICATION_APPLICATION_RESUMED]:
+		_application_active = true
+	elif what == NOTIFICATION_PAUSED:
+		settle(true)
 
 
 ## 走动、接着走时调用：物件直接算进篮子，声音让它自然放完。
@@ -108,6 +140,8 @@ func settle(silence: bool = false) -> void:
 
 
 func _process(delta: float) -> void:
+	if is_sounding() and not _sound_allowed():
+		_player.stop()
 	if find_id.is_empty():
 		return
 	elapsed += delta
