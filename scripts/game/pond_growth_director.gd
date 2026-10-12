@@ -1,10 +1,11 @@
 extends Node
-## Explicitly scheduled construction. No default costs, clock policy or automatic
-## activation: the meal/period director supplies a live period reader and recipe.
+## Active-world autonomous construction; producer tuning lives in GrowthSchedule.
+## Explicit callers can also supply a live period reader and validated recipe.
 const Rest := preload("res://scripts/game/rest_context.gd")
 const View := preload("res://scripts/game/pond_edging_view.gd")
 const Inventory := preload("res://scripts/inventory/yard_inventory.gd")
 const Basket := preload("res://scripts/game/physical_basket.gd")
+const Schedule := preload("res://scripts/game/growth_schedule.gd")
 const STONE := ExplorationRoutes.FIND_STONE
 signal finished(result: String)
 var world: Node2D
@@ -21,6 +22,25 @@ var section := ""
 var period_reader: Callable
 var leg_target := Vector2.ZERO
 var material: Sprite2D
+var autonomous_enabled := true
+var idle_seconds := 0.0
+
+func consider(delta: float, move: Vector2) -> void:
+	if not autonomous_enabled or busy() or not available() or not move.is_zero_approx() \
+		or world._has_walk_goal or not world._pending_interaction.is_empty() or not store.is_save_idle():
+		idle_seconds = 0.0
+		return
+	# Only active simulation seconds count: no offline/cross-day catch-up bursts.
+	idle_seconds += clampf(delta, 0.0, 0.25)
+	if idle_seconds < Schedule.IDLE_SECONDS: return
+	idle_seconds = 0.0
+	var current := Schedule.period(world.tod_fraction())
+	var budget: Dictionary = store.get_growth_budget(current)
+	if budget.has("error") or budget.get("available",0) < Schedule.POND_RECIPE.ap: return
+	for id: String in Schedule.ORDER:
+		if store.get_pond_edging().get("sections",{}).has(id): continue
+		if begin(id, Schedule.station(id), Schedule.POND_RECIPE, func(): return Schedule.period(world.tod_fraction())):
+			return
 
 func _init(owner_world: Node2D, save_store: Node) -> void:
 	world = owner_world
@@ -84,6 +104,7 @@ func begin(id: String, station: Vector2, config: Dictionary, current_period: Cal
 	return true
 
 func cancel() -> void:
+	idle_seconds = 0.0
 	# An accepted write can no longer be cancelled. Release actor ownership but
 	# retain the identity until its durable result; never submit a replacement.
 	if stage in ["fetching","taking","walking","working"]:

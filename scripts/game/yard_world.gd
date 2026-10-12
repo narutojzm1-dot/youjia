@@ -554,6 +554,7 @@ func tick(delta: float, move: Vector2) -> void:
 		return
 	_player.body_obstacles = physical_obstacles("player")
 	if pond_growth != null: pond_growth.tick(delta,move)
+	if pond_growth != null: pond_growth.consider(delta,move)
 	_player.rest_allowed = _outdoor_rest_allowed(move)
 	_body_repath = maxf(0.0,_body_repath-delta)
 	if house != null and house.busy():
@@ -685,6 +686,9 @@ func tick(delta: float, move: Vector2) -> void:
 
 
 func _tick_goose_mount_encounter(delta: float, move: Vector2) -> void:
+	if pond_growth != null and pond_growth.busy():
+		_goose_mount_wait = 0.0
+		return
 	if pond_story != null and pond_story.busy():
 		_goose_mount_wait = 0.0
 		return

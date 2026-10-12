@@ -33,6 +33,7 @@ func reset(tired := false) -> void:
 	await process_frame
 	world.simulation_active = true
 	world.input_enabled = true
+	world.pond_growth.autonomous_enabled = false
 	world.get_player().position = Vector2(440,545)
 	period = "lunch"
 func begin(seconds := 2.0) -> bool:
@@ -159,6 +160,7 @@ func run() -> void:
 	reach_stage("taking")
 	check(not world.pond_growth.busy() and not world.pond_growth.material.visible,"stale material plan cancels before pickup")
 	check(store.get_pond_edging().sections.is_empty() and store.get_growth_budget("lunch").available == 3,"stale retrieval has no world or AP result")
+	await check_autonomous_work()
 	await check_meal_reservation()
 	world.queue_free()
 	await process_frame
@@ -289,3 +291,53 @@ func check_meal_reservation() -> void:
 	world.simulation_active = true
 	world.tick(0.0, Vector2.ZERO)
 	await capture("integrated-reopened")
+
+func check_autonomous_work() -> void:
+	var schedule = preload("res://scripts/game/growth_schedule.gd")
+	for entry in [[0.0,"breakfast"],[0.24,"breakfast"],[0.25,"lunch"],[0.49,"lunch"],[0.5,"dinner"],[0.99,"dinner"],[1.0,""]]:
+		check(schedule.period(entry[0]) == entry[1], "live AP period boundary")
+	await reset()
+	world._day_elapsed = 160.0
+	world.pond_growth.autonomous_enabled = true
+	world.pond_growth.consider(1000.0, Vector2.ZERO)
+	check(not world.pond_growth.busy(), "large delta cannot catch up offline work")
+	for i in 300: world.tick(1.0/30, Vector2.ZERO)
+	check(not world.pond_growth.busy(), "short idle does not seize actor")
+	world.tick(1.0/30, Vector2.RIGHT)
+	for i in 60: world.tick(1.0/30, Vector2.ZERO)
+	check(not world.pond_growth.busy(), "movement resets idle grace")
+	for i in 360:
+		world.tick(1.0/30, Vector2.ZERO)
+		if world.pond_growth.busy(): break
+	check(world.pond_growth.stage == "fetching" and world.pond_growth.section == "rim_04", "ordinary world automatically chooses first accessible unfinished bank")
+	world.pond_growth.autonomous_enabled = false
+	approach()
+	check(world.pond_growth.stage == "working", "autonomous actor really reaches the bank")
+	world._goose_mount_wait = 3.49
+	world._tick_goose_mount_encounter(1.0/30, Vector2.ZERO)
+	check(world._goose_mount_phase < 0 and world._goose_mount_wait == 0.0, "ambient encounter cannot steal production actor")
+	await capture("autonomous-working")
+	for i in 361: world.tick(1.0/30, Vector2.ZERO)
+	print("AUTO_BEFORE_SAVE ",world.pond_growth.stage," work=",world.pond_growth.work," pos=",world.get_player().position," target=",world.pond_growth.target," elapsed=",world._day_elapsed," pending=",world._pending_interaction," house=",world.house.stage)
+	check(await store.flush_pending(), "autonomous completion durably confirmed")
+	print("AUTO_AFTER_SAVE ",store.get_growth_budget("lunch")," sections=",store.get_pond_edging())
+	check(store.get_growth_budget("lunch").available == 2 and int(store.get_keepsakes()[STONE]) == 19, "autonomous action charges one AP and one stone")
+	check(world.pond_edging_view.visuals.has("rim_04"), "autonomous confirmed world effect visible")
+	world.pond_growth.autonomous_enabled = true
+	for i in 361:
+		world.tick(1.0/30, Vector2.ZERO)
+		if world.pond_growth.busy(): break
+	check(world.pond_growth.section == "rim_05", "next autonomous job skips completed bank")
+	world.cancel_scene_feedback()
+	check(not world.pond_growth.busy() and world.pond_growth.idle_seconds == 0.0, "menu takeover cancels and resets grace")
+	world.pond_growth.autonomous_enabled = false
+	await reset()
+	var empty_ap: Dictionary = fixture.duplicate(true)
+	empty_ap.meal_ledger = {"schema":1,"revision":0,"receipts":[]}
+	store.request_patch("unfed-fixture", empty_ap)
+	check(await store.flush_pending(), "unfed fixture persisted")
+	world._day_elapsed = 160.0
+	world.pond_growth.autonomous_enabled = true
+	for i in 400: world.tick(1.0/30, Vector2.ZERO)
+	check(not world.pond_growth.busy() and store.get_pond_edging().sections.is_empty(), "no food receipt means no autonomous world impact")
+	world.pond_growth.autonomous_enabled = false
