@@ -62,16 +62,26 @@ func run() -> void:
 	var pause_stream: Variant = streams.get("game.pause")
 	check(pause_stream == null, "game.pause left unregistered to avoid double-fire")
 
-	# Negative: missing .tres must quiet-degrade — no ProceduralSfx tone stream.
+	# Negative: missing .tres on a *known* cue must quiet-degrade.
+	# Use real CUES id (ui.page): AudioDirector.register_cue unregisters on missing path.
+	# Old ProceduralSfx.tone fallback would re-register_stream a tone → this assert fails.
+	# Vacuous ui.suite_missing is NOT in CUES, so both quiet-degrade and old fallback leave null.
 	var bogus := "res://assets/holiday/audio/ui_grok/__missing_for_suite__.tres"
 	check(not ResourceLoader.exists(bogus), "bogus path does not exist")
+	var streams_before: Dictionary = audio.get("_streams")
+	var page_before: Variant = streams_before.get("ui.page")
+	check(page_before != null, "ui.page stream registered before missing-path attempt")
 	var sfx_neg: RefCounted = UiSfx.new()
-	sfx_neg.try_register_path("ui.suite_missing", bogus)
+	sfx_neg.try_register_path(UiSfx.CUE_PAGE, bogus)
 	var streams_neg: Dictionary = audio.get("_streams")
-	var missing_stream: Variant = streams_neg.get("ui.suite_missing")
-	check(missing_stream == null, "missing resource does not register procedural fallback stream")
-	# Approved cues remain real streams after the missing-path attempt.
-	var open_stream: Variant = streams_neg.get("ui.confirm")
+	var page_after_missing: Variant = streams_neg.get("ui.page")
+	check(page_after_missing == null, "missing path on known cue leaves stream empty (no tone fallback)")
+	# Restore approved page asset; other approved cues stay intact.
+	sfx_neg.try_register_path(UiSfx.CUE_PAGE, UiSfx.PAGE_PATH)
+	var streams_restored: Dictionary = audio.get("_streams")
+	var page_restored: Variant = streams_restored.get("ui.page")
+	check(page_restored != null, "approved ui.page restored after missing-path attempt")
+	var open_stream: Variant = streams_restored.get("ui.confirm")
 	check(open_stream != null, "approved open cue still registered after missing-path attempt")
 
 	# Main wiring smoke: holiday start mounts helper and hooks do not throw.

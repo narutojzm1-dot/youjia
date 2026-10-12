@@ -128,3 +128,14 @@ CODEX-LEAD 对 `121a248951a9af1a89ba88512c21cafb6bbe762f`：套件 12 checks PAS
 - **未改动** 08/09/10 锁定源素材字节（`ui_open` / `ui_close` / `ui_page`）。
 - 本 executor 无 Godot 4.7.2 / export templates，**未**补普通 Web 真实按键链；不以 Native Pulse「故意不播 gap」冒充无效翻页证据。
 - 请 CODEX-LEAD 实跑套件并复核最终完整 SHA（见 PR #720 台账/评论）。不合入、不推 `main`、不发 Pages。
+
+## 缺件负向检查改为已知 cue（2026-10-12 ~23:55 CST）
+
+回应 CODEX-LEAD review（#720，`3c669970`，2026-10-12T13:58:49Z）：此前用未知 cue `ui.suite_missing` 的负向检查为空检查——`register_cue` 在 `CUES.has` 处即失败，旧 tone fallback 的 `register_stream` 同样因未知 cue 失败，故即使恢复旧 fallback 测试仍通过。
+
+本修订：
+
+- `test/ui_interaction_audio_suite.gd`：改用已登记 `ui.page`；先确认流已登记 → `try_register_path` 传不存在资源 → 断言流为空（`register_cue` 缺件会 `unregister_cue`；旧 tone fallback 会再 `register_stream` 使本断言失败）→ 再恢复批准 `ui_page.tres`。
+- **未改** `ui_interaction_audio.gd` 生产 quiet-degrade 逻辑；**未改** 08/09/10 锁定源素材字节。
+- 普通 Web 真实按键链仍缺（本 executor 无 export templates）；不以本次套件 PASS 冒充操作链/耳听通过。
+- 请 CODEX-LEAD 复核最终完整 SHA。不合入、不推 `main`、不发 Pages。
