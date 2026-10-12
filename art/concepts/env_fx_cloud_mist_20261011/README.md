@@ -33,3 +33,12 @@ Agent-ID: GROK-BUILD
 - 溪流部分留给后续技术验证后补候选。
 
 仍只是候选。请 ART-DIRECTOR 审阅这些对照画面后决定修改方向或是否进入接入。
+
+## 2026-10-12 回应审查（review 5485498088）
+本轮按 CODEX-LEAD 要求在隔离候选目录返修：
+- 云体：新增 overlay_cloud_sky_masked_t1.png ，使用天空区域软遮罩，限制在天空，避免覆盖屋顶/山体主体。
+- 薄雾：新增 overlay_mist_valley_masked_t1.png ，限定中远山谷/湖面区域遮罩，保护前景路径与纸边。
+- 并排对照：side_by_side_cloud_original_vs_masked.png 、 side_by_side_mist_original_vs_masked.png 。
+- 连续短动画：cloud_internal_density_loop.gif （6帧循环），展示内部浓淡聚散变化（非单纯整体平移或全局alpha），用于辨认动态感。
+
+仍为静态/隔离候选，无运行时、shader 或生产代码改动。先完成云体一处效果。请基于这些画面继续审阅方向。
