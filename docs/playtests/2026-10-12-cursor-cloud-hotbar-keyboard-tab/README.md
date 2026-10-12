@@ -14,7 +14,7 @@
 
 ## 回归
 
-`test/hud_keyboard_focus_suite.gd` 扩到 339 项，三个视口检查：
+`test/hud_keyboard_focus_suite.gd` 扩到 342 项，三个视口检查：
 
 - 轮转包含五格，顺序与画面一致。
 - 空格子回车打开背篓。
