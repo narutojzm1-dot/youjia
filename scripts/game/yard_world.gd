@@ -20,6 +20,7 @@ var crop_sprite: Sprite2D
 var _grain_held := ""
 var ground_food: Node2D
 var decor_view: Node2D
+var pond_growth: Node
 var pond_edging_view: Node2D
 var pond_story: Node
 var gate: Node2D
@@ -262,6 +263,8 @@ func setup(
 	add_child(decor_view)
 	pond_edging_view = preload("res://scripts/game/pond_edging_view.gd").new(SaveStore)
 	add_child(pond_edging_view)
+	pond_growth = preload("res://scripts/game/pond_growth_director.gd").new(self,SaveStore)
+	add_child(pond_growth)
 	pond_story = load("res://scripts/game/pond_story_controller.gd").new(self)
 	add_child(pond_story)
 	_spawn_cast()
@@ -548,6 +551,7 @@ func tick(delta: float, move: Vector2) -> void:
 	if _player == null:
 		return
 	_player.body_obstacles = physical_obstacles("player")
+	if pond_growth != null: pond_growth.tick(delta,move)
 	_player.rest_allowed = _outdoor_rest_allowed(move)
 	_body_repath = maxf(0.0,_body_repath-delta)
 	if house != null and house.busy():
@@ -982,6 +986,7 @@ func cancel_scene_feedback() -> void:
 
 
 func request_primary_action() -> void:
+	if pond_growth != null: pond_growth.cancel()
 	if _player != null: _player.idle_rest.wake(bool(TuningStore.get_value("ui.reduced_motion", false)))
 	if house != null and house.busy():
 		house.skip_balcony()
@@ -1005,6 +1010,7 @@ func request_primary_action() -> void:
 
 
 func request_pointer_action(point: Vector2) -> void:
+	if pond_growth != null: pond_growth.cancel()
 	if _player != null: _player.idle_rest.wake(bool(TuningStore.get_value("ui.reduced_motion", false)))
 	if house != null and house.busy():
 		house.skip_balcony()
@@ -1438,6 +1444,7 @@ func _make_cloud_sprite(node_name: String) -> Sprite2D:
 
 ## REQ-012 切片 C：安静停留后轻微抬头看天；走动立刻取消；无新提示/道具/相册。
 func _outdoor_rest_allowed(move: Vector2) -> bool:
+	if pond_growth != null and pond_growth.busy(): return false
 	if not input_enabled or inventory_busy or not _player.visible or not _player.sequence_walker_enabled: return false
 	if house != null and house.busy(): return false
 	if _leading or _has_walk_goal or not _pending_interaction.is_empty() or not move.is_zero_approx(): return false
@@ -1468,8 +1475,9 @@ func _tick_quiet_sky_look(delta: float, move: Vector2) -> void:
 	if _goose_mount_wait > 0.0:
 		_quiet_sky_still = 0.0
 		return
-	var player_busy := (
-		not input_enabled
+	var player_busy: bool = (
+		(pond_growth != null and pond_growth.busy())
+		or not input_enabled
 		or _leading
 		or _has_walk_goal
 		or move.length() > 0.2
