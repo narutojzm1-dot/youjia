@@ -4,6 +4,7 @@ extends Node
 const Rest := preload("res://scripts/game/rest_context.gd")
 const View := preload("res://scripts/game/pond_edging_view.gd")
 const Inventory := preload("res://scripts/inventory/yard_inventory.gd")
+const Basket := preload("res://scripts/game/physical_basket.gd")
 const STONE := ExplorationRoutes.FIND_STONE
 signal finished(result: String)
 var world: Node2D
@@ -18,12 +19,20 @@ var expected := {}
 var proposal := {}
 var section := ""
 var period_reader: Callable
+var leg_target := Vector2.ZERO
+var material: Sprite2D
 
 func _init(owner_world: Node2D, save_store: Node) -> void:
 	world = owner_world
 	store = save_store
 
 func _ready() -> void:
+	material = Sprite2D.new()
+	material.name = "ConstructionMaterial"
+	material.texture = KeepsakeArt.texture(STONE)
+	material.z_as_relative = false
+	material.hide()
+	add_child(material)
 	store.commit_confirmed.connect(_confirmed)
 	store.commit_rejected.connect(_rejected)
 
@@ -61,7 +70,8 @@ func begin(id: String, station: Vector2, config: Dictionary, current_period: Cal
 	proposal = store.plan_growth_materials({STONE:{"id":"pond_edging","materials":{STONE:config.stones}}},RandomNumberGenerator.new())
 	if proposal.is_empty() or store.get_rest_context().is_empty(): return false
 	target = station
-	if world.get_player().position.distance_to(target) >= 14 and not world.try_walk_to(target): return false
+	leg_target = Basket.APPROACH
+	if world.get_player().position.distance_to(leg_target) >= 14 and not world.try_walk_to(leg_target): return false
 	if world.pond_story != null: world.pond_story.cancel()
 	world._cancel_quiet_sky_look()
 	world.get_player().clear_idle_rest()
@@ -70,17 +80,18 @@ func begin(id: String, station: Vector2, config: Dictionary, current_period: Cal
 	section = id
 	elapsed = 0.0
 	work = 0.0
-	stage = "walking"
+	stage = "fetching"
 	return true
 
 func cancel() -> void:
 	# An accepted write can no longer be cancelled. Release actor ownership but
 	# retain the identity until its durable result; never submit a replacement.
-	if stage in ["walking","working"]:
-		if world._has_walk_goal and world._walk_goal == target: world._consume_pending_action()
+	if stage in ["fetching","taking","walking","working"]:
+		if world._has_walk_goal and world._walk_goal == leg_target: world._consume_pending_action()
 		world.get_player().clear_idle_rest()
 		if is_instance_valid(world.get_player()._sequence_walker): world.get_player()._sequence_walker.reset_motion()
 		stage = ""
+		material.hide()
 		finished.emit("cancelled")
 
 func tick(delta: float, move: Vector2) -> void:
@@ -91,10 +102,38 @@ func tick(delta: float, move: Vector2) -> void:
 	if period_reader.call() != expected.period or store.get_holiday_day() != expected.day:
 		cancel()
 		return
-	if world._has_walk_goal and world._walk_goal != target:
+	if world._has_walk_goal and world._walk_goal != leg_target:
 		cancel()
 		return
 	elapsed += maxf(0,delta)
+	_sync_material()
+	if stage == "fetching":
+		if elapsed > 90:
+			cancel()
+		elif not world._has_walk_goal and world.get_player().position.distance_to(Basket.APPROACH) < 16:
+			# Revalidate at the basket; never carry a visual for unavailable stock.
+			var fresh: Dictionary = store.plan_growth_materials({STONE:{"id":"pond_edging","materials":{STONE:recipe.stones}}},RandomNumberGenerator.new())
+			if fresh != proposal:
+				cancel()
+				return
+			stage = "taking"
+			elapsed = 0
+			world.get_player()._play_grass_action(&"pickup")
+		return
+	if stage == "taking":
+		if world.get_player().position.distance_to(Basket.APPROACH) >= 16:
+			cancel()
+			return
+		# Presentation timing only; fatigue does not slow material retrieval.
+		if elapsed < 0.8: return
+		leg_target = target
+		if world.get_player().position.distance_to(target) >= 14 and not world.try_walk_to(target):
+			cancel()
+			return
+		stage = "walking"
+		elapsed = 0
+		_sync_material()
+		return
 	if stage == "walking":
 		if elapsed > 90:
 			cancel()
@@ -111,10 +150,22 @@ func tick(delta: float, move: Vector2) -> void:
 	work += maxf(0,delta) * Rest.work_speed(store.get_rest_context())
 	if work < float(recipe.seconds): return
 	stage = "saving"
+	material.hide()
 	pending = store.request_pond_growth(expected,section,proposal,recipe.ap,recipe.stones,recipe.experience)
 	if pending.is_empty():
 		stage = ""
 		finished.emit("rejected")
+
+func _sync_material() -> void:
+	# Presentation of this plan only, not a second inventory/held-item ledger.
+	# The existing atomic completion is still the sole material debit.
+	var player = world.get_player()
+	material.visible = stage in ["walking","working"] and player.visible
+	if not material.visible: return
+	material.global_position = player.grass_hand_global_position()
+	material.scale = Vector2(player.grass_hand_facing(),1) * 22.0 * player.picture_depth / material.texture.get_width()
+	material.modulate = player.modulate
+	material.z_index = player.z_index + 1
 
 func _confirmed(id: String, kind: String) -> void:
 	if pending.is_empty() or id != pending or kind != "growth": return

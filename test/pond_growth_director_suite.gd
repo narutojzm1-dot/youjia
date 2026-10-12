@@ -40,7 +40,11 @@ func begin(seconds := 2.0) -> bool:
 func approach() -> void:
 	for i in 1200:
 		world.tick(1.0/30,Vector2.ZERO)
-		if world.pond_growth.stage != "walking": return
+		if world.pond_growth.stage not in ["fetching","taking","walking"]: return
+func reach_stage(wanted: String) -> void:
+	for i in 2400:
+		if world.pond_growth.stage == wanted or not world.pond_growth.busy(): return
+		world.tick(1.0/30,Vector2.ZERO)
 func capture(label: String) -> void:
 	var output := OS.get_environment("YOUJIA_DIRECTOR_CAPTURE")
 	if output.is_empty(): return
@@ -61,6 +65,14 @@ func run() -> void:
 	check(not world.pond_growth.begin("rim_04",Vector2(755,615),{"ap":1,"stones":1,"experience":1,"seconds":2.0},func(): return period),"pond water is not a work station")
 	check(begin(),"eligible explicit job starts")
 	check(not begin(),"no overlapping job")
+	check(world.pond_growth.stage == "fetching" and world._walk_goal == Vector2(335,522),"first route leads to real basket")
+	check(not world.pond_growth.material.visible,"no material before basket arrival")
+	reach_stage("taking")
+	check(world.get_player().position.distance_to(Vector2(335,522)) < 16,"pickup occurs at physical basket")
+	check(store.get_growth_budget("lunch").available == 3 and int(store.get_keepsakes()[STONE]) == 20,"fetching does not debit AP or materials")
+	reach_stage("walking")
+	check(world.pond_growth.material.visible and world._walk_goal == Vector2(480,545),"visible material carried on second route")
+	await capture("transport")
 	approach()
 	check(world.pond_growth.stage == "working","real world path arrives at station")
 	for i in 10: world.tick(1.0/30,Vector2.ZERO)
@@ -128,6 +140,23 @@ func run() -> void:
 	world.tick(1.0/30,Vector2.ZERO)
 	check(not world.pond_growth.busy(),"inventory takes control without finishing work")
 	check(store.get_growth_budget("lunch").available == 3,"menu interruption has no charge")
+	for interrupted in ["fetching","taking","walking"]:
+		await reset()
+		check(begin(),"retrieval cancellation starts " + interrupted)
+		reach_stage(interrupted)
+		check(world.pond_growth.stage == interrupted,"retrieval phase reached " + interrupted)
+		world.request_pointer_action(Vector2(440,545))
+		check(not world.pond_growth.busy() and not world.pond_growth.material.visible,"player takeover clears carried presentation " + interrupted)
+		check(int(store.get_keepsakes()[STONE]) == 20 and store.get_growth_budget("lunch").available == 3,"retrieval cancellation preserves stock and AP " + interrupted)
+	await reset()
+	check(begin(),"basket revalidation begins")
+	var unavailable: Dictionary = fixture.duplicate(true)
+	unavailable.keepsakes[STONE] = 19
+	store.request_patch("fixture",unavailable)
+	check(await store.flush_pending(),"inventory changes before basket arrival")
+	reach_stage("taking")
+	check(not world.pond_growth.busy() and not world.pond_growth.material.visible,"stale material plan cancels before pickup")
+	check(store.get_pond_edging().sections.is_empty() and store.get_growth_budget("lunch").available == 3,"stale retrieval has no world or AP result")
 	world.queue_free()
 	await process_frame
 	await check_real_menus()
@@ -145,7 +174,7 @@ func check_real_menus() -> void:
 	await main._start_holiday()
 	world = main._world
 	for menu in ["basket", "album", "pause"]:
-		for phase in ["walking", "working", "saving"]:
+		for phase in ["fetching", "taking", "walking", "working", "saving"]:
 			world.pond_growth.cancel()
 			world._consume_pending_action()
 			store.request_patch("fixture", fixture.duplicate(true))
@@ -153,10 +182,20 @@ func check_real_menus() -> void:
 			world.simulation_active = true
 			world.input_enabled = true
 			world.inventory_busy = false
+			world.cancel_scene_feedback()
+			world._consume_pending_action()
+			# Each menu case is an independent same-day fixture. Long paths from
+			# prior cases must not roll the actual world clock into a different day.
+			world.holiday_day = 1
+			world._day_elapsed = world.DAY_DURATION_SECONDS * 0.4
 			world.get_player().position = Vector2(440,545)
 			period = "lunch"
-			check(begin(2.0), "Main job begins " + menu + ":" + phase)
-			if phase != "walking": approach()
+			var started := begin(2.0)
+			if not started:
+				print("START_CONTEXT ", menu, ":", phase, " avail=",world.pond_growth.available()," busy=",world.pond_growth.stage," walk=",world._has_walk_goal," budget=",store.get_growth_budget(period)," rest=",store.get_rest_context()," sections=",store.get_pond_edging())
+			check(started, "Main job begins " + menu + ":" + phase)
+			if phase == "saving": approach()
+			else: reach_stage(phase)
 			if phase == "saving":
 				for i in 61: world.tick(1.0/30,Vector2.ZERO)
 			check(world.pond_growth.stage == phase, "Main stage before menu " + menu + ":" + phase)
