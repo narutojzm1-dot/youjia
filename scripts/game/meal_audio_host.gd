@@ -1,5 +1,8 @@
 extends Node
 ## Live presentation only. Completion truth remains in the shared meal ledger.
+## Hearing batch 2026-10-11: #13 rejected by user on 2026-10-12.
+## Keep observing meal edges, but do not dispatch the unapproved recording.
+const HUNGER_AUDIO_APPROVED := false
 const Schedule := preload("res://scripts/game/meal_schedule.gd")
 var leaf: Node
 var last_day := -1
@@ -43,4 +46,4 @@ func sync(world: Node2D, store: Node, active: bool, blocked: bool, allowed: bool
 	for receipt: Dictionary in ledger.receipts:
 		if int(receipt.day) == day and str(receipt.meal) == prior_meal: return
 	# A fatigued breakfast earns zero but still has a receipt: never use AP here.
-	if leaf.play_hunger(): missed_count += 1
+	if HUNGER_AUDIO_APPROVED and leaf.play_hunger(): missed_count += 1

@@ -47,8 +47,8 @@ func run() -> void:
 	host.suspend()
 	check(not host.leaf.is_cook_playing(), "focus loss immediately stops")
 	world.house.stage = ""
-	# Each genuine meal-window end emits at most once; existing zero-AP
-	# receipts count as eaten. No load, rollback, skip, invalid or unknown cue.
+	# Hearing batch13 is rejected: no meal edge may dispatch this asset.
+	# Keep receipt/clock cases so a future replacement retains their coverage.
 	for end_hour in [10.0, 15.0, 21.0]:
 		var before: float = (end_hour - 6.0) / 24.0 - 0.001
 		var after: float = before + 0.002
@@ -69,12 +69,13 @@ func run() -> void:
 			world.fraction = after + (0.1 if scenario == "jump" else 0.0)
 			var count: int = host.missed_count
 			host.sync(world, store, true, scenario == "paused", scenario != "denied")
-			check(host.missed_count == count + (1 if scenario == "missed" else 0), "meal edge " + str(end_hour) + ":" + scenario)
+			check(host.missed_count == count, "meal edge " + str(end_hour) + ":" + scenario)
 			store.idle = true
 			host.sync(world, store, true, false, true)
-			check(host.missed_count <= count + 1, "edge never repeats")
+			check(host.missed_count == count, "edge never repeats")
 			# Real short-cue cooldown is wall-clock based; space independent cases.
 			if scenario == "missed": await create_timer(0.4).timeout
+	check(host.leaf.hunger_play_count == 0, "rejected batch13 never reaches audio playback")
 	host.queue_free()
 	world.queue_free()
 	store.queue_free()
