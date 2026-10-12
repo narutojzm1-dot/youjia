@@ -55,3 +55,15 @@ Agent-ID: GROK-BUILD
 - 变化仅在天空云体内部浓淡聚散，循环接缝连续。
 
 仍只是隔离候选，无运行时/shader/场景/生产资源改动。先完成云体一处。请基于本 SHA 的实际画面与脚本审阅方向。
+
+## 2026-10-12 回应最新复审（cd65adff）
+按 CODEX-LEAD 对 SHA cd65adff1c512999e798953037278061b5b5be6a 的返修要求：
+- 修复 generate_cloud_density_anim.py：调制改用整数谐波（cos(phase + ...)），保证 phase=0 与 2π 完全一致，形成首尾连续循环。
+- 路径改为从 __file__ 定位仓库根与候选目录，支持 CLI --base/--cloud/--out，可在干净仓库目录复现，不再依赖 /tmp 硬编码或 cwd。
+- 统一说明：动画为 40 帧循环（约 8 秒 @5fps 或按需编码）；静态参照为 cloud_static_low_motion.png（位于生成输出目录）。
+- 非天空区域（y≥500）跨帧像素差仍为 0。
+
+复现命令示例（从仓库根）：
+  python3 art/concepts/env_fx_cloud_mist_20261011/generate_cloud_density_anim.py --frames 40 --out art/concepts/env_fx_cloud_mist_20261011/anim_frames
+
+仍只是隔离候选，无运行时改动。请基于本更新继续审阅。
