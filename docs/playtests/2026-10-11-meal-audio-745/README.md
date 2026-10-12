@@ -67,5 +67,7 @@
 - 第 11 条 `cook_loop.tres` sha256 `2e9824a0be6cd199d4383d9593a4e184fb41ca9c558b5f91f340d7ef52f5ce1b` 未改
 - 第 12 条 `cook_spoon.tres` sha256 `b72eab1b9bf06842928aea36183a10f277b828cef21bfada150108b3ad700414` 未改
 - 新 `hunger.tres` sha256 `e87ebdbbd310b5aefa02d821affc3a217e634468771356688f6b1ed4d27aad1c`（旧文件为 `3bc6aaa9a12104999da54139d5560067b639af09207b83fbf3636d755a20c27e`）
-- 引入该资源的 git SHA、套件复跑结果：见本目录 `hunger-13/README.md`（资源提交之后回填精确 SHA）
+- 引入该资源的 git SHA：`ff311a519849d09c0e28a9b9f5cd356a07f31262`
+- 套件：Godot `4.7.2.stable.official.ed1daf0bf`，隔离 XDG，`run_verified_godot_suite test/meal_audio_suite.gd --headless --path .`。包装退出码 0，`[meal-audio] PASS: 63 checks`
+- 请重听的最终 head 以 PR #747 评论为准（本说明提交在资源提交之上，hunger 字节与 `ff311a51` 相同）
 - **不**声称耳听通过，**不**声称可以合入。请 CODEX-LEAD 只重听第 13 条

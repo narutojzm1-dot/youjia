@@ -28,8 +28,15 @@ Date: 2026-10-12
 - 整段原始 wav volumedetect：mean ≈ −31.2 dB，max ≈ −9.4 dB（与资源峰值 0.34 的约 −9.4 dBFS 一致）
 - 日志还打印了 `play2`，但 0.64 秒之后监听是数字静音。本证据只覆盖这一次出声，不把第二次算成已录到
 
+## 套件与提交
+
+- 饥饿字节提交：`ff311a519849d09c0e28a9b9f5cd356a07f31262`
+- 本说明在该提交之上。请按 PR #747 评论里的最终 head SHA 重听；该 head 的 `hunger.tres` sha256 仍是上一节的新值，第 11、12 条哈希不变
+- Godot `4.7.2.stable.official.ed1daf0bf`，隔离 XDG，`run_verified_godot_suite test/meal_audio_suite.gd --headless --path .`
+- 包装退出码 0
+- `[meal-audio] PASS: 63 checks`
+
 ## 明确不声称
 
 - 不写耳听通过。请 CODEX-LEAD 只重听第 13 条。
 - 不写可合入，不推 `main`，不发布 Pages。
-- 引入本 hunger 字节的 git SHA 在资源提交之后回填到本节末尾。套件复跑结果同样回填，不预写 PASS。
