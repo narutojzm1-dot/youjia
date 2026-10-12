@@ -46,6 +46,11 @@ const SIDE_MARGIN := 4.0
 const MIN_SLOT := 40.0
 ## 武装态在选中描边之外加 3px 墨色底边，一眼区分「仅选中」与「点地投放已武装」。
 const ARMED_ACCENT_PX := 3
+## 键盘焦点圈画在格子外、留 1px 纸缝，与底栏按钮同一枚赭色；不盖住选中 / 武装描边，
+## 选中格被 Tab 到时也看得出。外扩不能超过 GAP / 2，否则会压到相邻格。
+const FOCUS_RING := Color("a85d28")
+const FOCUS_RING_PX := 2
+const FOCUS_RING_OUTSET := 3.0
 
 var strip: HBoxContainer
 ## 按格序的五个按钮；cells / icons / counts_labels 只收已配置的种类，键是物品种类
@@ -262,11 +267,10 @@ func _apply_cell_style(cell: Button, selected_slot: bool, armed: bool, empty: bo
 		cell.add_theme_stylebox_override(state, box)
 	var focus := StyleBoxFlat.new()
 	focus.draw_center = false
-	focus.border_color = SELECT_EDGE if selected_slot else DROP_EDGE
-	focus.set_border_width_all(2)
-	if show_armed:
-		focus.set_border_width(SIDE_BOTTOM, 2 + ARMED_ACCENT_PX)
-	focus.set_corner_radius_all(8)
+	focus.border_color = FOCUS_RING
+	focus.set_border_width_all(FOCUS_RING_PX)
+	focus.set_expand_margin_all(FOCUS_RING_OUTSET)
+	focus.set_corner_radius_all(10)
 	cell.add_theme_stylebox_override("focus", focus)
 
 

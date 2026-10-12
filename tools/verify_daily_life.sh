@@ -125,6 +125,7 @@ run_godot suite test/notice_column_clear_suite.gd
 
 run_godot suite test/hold_hotbar_mount_suite.gd
 run_godot suite test/hold_hotbar_armed_style_suite.gd
+run_godot suite test/hotbar_focus_ring_suite.gd
 run_godot suite test/painted_blink_suite.gd
 run_godot suite test/painted_rest_breath_suite.gd
 run_godot suite test/resting_eyelids_suite.gd
