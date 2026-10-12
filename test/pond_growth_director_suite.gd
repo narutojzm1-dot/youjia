@@ -165,9 +165,67 @@ func run() -> void:
 	world.queue_free()
 	await process_frame
 	await check_real_menus()
+	await check_growth_feedback()
 	print("POND_GROWTH_DIRECTOR checks=%d failures=%d" % [checks,failures.size()])
 	for failure in failures: push_error(failure)
 	quit(0 if failures.is_empty() else 1)
+
+func check_growth_feedback() -> void:
+	var main = load("res://scenes/main.tscn").instantiate()
+	root.add_child(main)
+	await process_frame
+	main.set_process(false)
+	await main._start_holiday()
+	world = main._world
+	world.pond_growth.autonomous_enabled = false
+	var confirmed_snapshot := {}
+	for scenario in ["confirmed", "blocked", "rejected"]:
+		store.request_patch("feedback-fixture", fixture.duplicate(true))
+		check(await store.flush_pending(), "feedback fixture " + scenario)
+		main._growth_bark_revision = int(store.get_pond_edging().get("revision", -1))
+		main._resident_barks.reset()
+		main._resident_bubble.dismiss()
+		main._bark_clock = 100.0
+		world.get_player().position = Vector2(480,545)
+		# Apply normal frame transforms before taking a visual baseline.
+		main._process(0.0)
+		var budget: Dictionary = store.get_growth_budget("lunch")
+		var materials: Dictionary = store.plan_growth_materials({STONE:{"id":"pond_edging","materials":{STONE:1}}},RandomNumberGenerator.new())
+		if scenario == "blocked": main._toggle_pause()
+		if scenario == "rejected": budget.day = 99
+		var id: String = store.request_pond_growth(budget,"rim_04",materials,1,1,1)
+		check(not main._resident_bubble.is_showing(), "no feedback before confirmation " + scenario)
+		await store.flush_pending()
+		if scenario == "confirmed":
+			confirmed_snapshot = preload("res://scripts/persistence/save_files.gd").new().read_record(store.SAVE_PATH).get("data", {})
+			check(not id.is_empty() and main._resident_bubble.is_showing(), "actual durable growth produces a bark")
+			check(main._resident_bubble._label.text == root.get_node("I18n").t("bark.growth_completed"), "growth text resolves")
+			main._process(0.0)
+			await capture("growth-feedback")
+			main._resident_bubble.dismiss()
+			main._bark_clock = 200.0
+			main._on_save_confirmed(id,"growth")
+			check(not main._resident_bubble.is_showing(), "duplicate acknowledgement never replays after cooldown")
+		else:
+			check(not main._resident_bubble.is_showing(), "blocked or rejected growth has no cheer " + scenario)
+		if scenario == "blocked":
+			main._toggle_pause()
+			main._tick_resident_barks(0.0)
+			check(not main._resident_bubble.is_showing(), "closing menu does not replay suppressed completion")
+	main.queue_free()
+	await process_frame
+	# The rejection scenario is independent; reopen an actual successful record.
+	check(not confirmed_snapshot.get("pond_edging", {}).get("sections", {}).is_empty(), "reopen fixture includes persisted growth")
+	store.request_patch("feedback-reopen", confirmed_snapshot)
+	check(await store.flush_pending(), "restore confirmed record before reopening")
+	main = load("res://scenes/main.tscn").instantiate()
+	root.add_child(main)
+	await process_frame
+	main.set_process(false)
+	await main._start_holiday()
+	check(not main._resident_bubble.is_showing(), "reopening does not replay old growth feedback")
+	main.queue_free()
+	await process_frame
 
 # Main deliberately stops World.tick while these menus own input. Exercise the
 # actual open/close methods without manually ticking the blocked World.

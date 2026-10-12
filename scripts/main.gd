@@ -88,6 +88,7 @@ var _resident_bubble: Control
 var _resident_barks: RefCounted
 var _crop_kind_watch := ""
 var _bark_clock := 0.0
+var _growth_bark_revision := -1
 var _fatigue_bark_day := -1
 var _fatigue_bark_ready_seconds := 0.0
 const FATIGUE_BARK_SETTLE_SECONDS := 15.0
@@ -1414,6 +1415,7 @@ func _notification(what: int) -> void:
 
 func _start_holiday(save_progress: bool = true) -> void:
 	if _holiday_start_pending or not SaveStore.can_play(): return
+	_growth_bark_revision = int(SaveStore.get_pond_edging().get("revision", -1))
 	_holiday_start_pending = true
 	_leave_exploration()
 	if save_progress and _world != null: _world._save_progress()
@@ -1932,6 +1934,8 @@ func _exploration_save_covers(accepted: Dictionary, problem: Dictionary) -> bool
 
 func _on_save_confirmed(op_id: String, kind: String) -> void:
 	_on_crops_confirmed_for_bark(kind)
+	if kind == "growth":
+		_on_growth_confirmed_for_bark()
 	if _save_exploration_coverage.has(op_id) and _save_exploration_coverage[op_id].kind == kind:
 		_clear_covered_save_problems(_save_exploration_coverage[op_id].problems)
 		_save_exploration_coverage.erase(op_id)
@@ -3583,6 +3587,18 @@ func _on_crops_confirmed_for_bark(kind: String) -> void:
 	if bark_id.is_empty():
 		return
 	_show_resident_bark(bark_id)
+
+
+func _on_growth_confirmed_for_bark() -> void:
+	var revision := int(SaveStore.get_pond_edging().get("revision", -1))
+	if revision <= _growth_bark_revision: return
+	# Save error bookkeeping clears on idle, so it cannot dedupe presentation.
+	_growth_bark_revision = revision
+	if _resident_barks == null or _resident_bubble == null or _world == null: return
+	# A menu/house/scene owns attention: discard rather than queue a late cheer.
+	var blocked: bool = _resident_bark_blocked() or _resident_bubble.is_showing()
+	var bark_id: String = _resident_barks.try_growth_completed(_bark_clock, blocked)
+	if not bark_id.is_empty(): _show_resident_bark(bark_id)
 
 
 func _try_chick_bark() -> void:
