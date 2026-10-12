@@ -264,6 +264,20 @@ func plan_growth_materials(eligible_actions: Dictionary, rng: RandomNumberGenera
 	return preload("res://scripts/game/growth_materials.gd").plan(_data, eligible_actions, rng)
 
 
+## Inactive until a director supplies validated period, target and action costs.
+func get_growth_budget(period: String) -> Dictionary:
+	return preload("res://scripts/game/growth_budget.gd").budget(_data, period)
+
+
+func request_pond_growth(expected: Dictionary, section: String, proposal: Dictionary, ap_cost: int, stones: int, experience: int) -> String:
+	var frozen_budget := expected.duplicate(true)
+	var frozen_proposal := proposal.duplicate(true)
+	return request_intent("growth", func(current: Dictionary) -> Variant:
+		var result := preload("res://scripts/game/growth_budget.gd").complete(current, frozen_budget, section, frozen_proposal, ap_cost, stones, experience)
+		if result.has("error"): return CoordinatorType.IntentRejection.new(result.error)
+		return result.candidate)
+
+
 ## Inactive foundation until the cooking director validates recipe/time.
 ## Capture the cost now; the FIFO head validates both revisions and the game day.
 func request_meal_completion(revision: int, inventory_revision: int, day: int, meal: String, ingredients: Dictionary) -> String:

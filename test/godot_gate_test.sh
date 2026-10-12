@@ -259,3 +259,13 @@ run_case growth-missing block 0 '' none suite "$growth_entry"
 run_case growth-prefix block 0 'debug: GROWTH_MATERIALS checks=77 failures=0' none suite "$growth_entry"
 run_case growth-nonzero block 1 'GROWTH_MATERIALS checks=77 failures=0' none suite "$growth_entry"
 echo 'GROWTH COMPLETION CONTRACT PASS 7'
+
+budget_entry=test/growth_budget_suite.gd
+run_case budget-valid pass 0 'GROWTH_BUDGET checks=74 failures=0' none suite "$budget_entry"
+run_case budget-zero block 0 'GROWTH_BUDGET checks=0 failures=0' none suite "$budget_entry"
+run_case budget-failed block 0 'GROWTH_BUDGET checks=74 failures=1' none suite "$budget_entry"
+run_case budget-wrong-suite block 0 'GROWTH_MATERIALS checks=77 failures=0' none suite "$budget_entry"
+run_case budget-missing block 0 '' none suite "$budget_entry"
+run_case budget-prefix block 0 'debug: GROWTH_BUDGET checks=74 failures=0' none suite "$budget_entry"
+run_case budget-nonzero block 1 'GROWTH_BUDGET checks=74 failures=0' none suite "$budget_entry"
+echo 'GROWTH BUDGET COMPLETION CONTRACT PASS 7'
