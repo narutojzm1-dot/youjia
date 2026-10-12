@@ -31,7 +31,7 @@ func _run() -> void:
 	check(Notices.latest_status({"sourceCommit":sha, "entry":"game-c874273"}, "older").contains("不同"), "old build")
 	for invalid in [null, [], {}, {"sourceCommit":sha, "entry":"wrong"}]:
 		check(Notices.latest_status(invalid, sha).contains("无法"), "never claim latest on failed check")
-	for dims in [Vector2i(1280,720),Vector2i(390,844),Vector2i(280,640),Vector2i(640,300)]:
+	for dims in [Vector2i(1280,720),Vector2i(390,844),Vector2i(280,640),Vector2i(640,300),Vector2i(844,390)]:
 		root.size = dims
 		main = load("res://scenes/main.tscn").instantiate()
 		root.add_child(main)

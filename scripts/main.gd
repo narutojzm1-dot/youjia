@@ -1133,6 +1133,10 @@ func _fit_pause_panel() -> void:
 	_pause_session.add_theme_constant_override("separation", sep)
 	_pause_audio.add_theme_constant_override("separation", sep)
 	_pause_title.add_theme_font_size_override("font_size", 18 if short else 26)
+	var release_ui = preload("res://scripts/ui/release_notes.gd")
+	var release_build: String = release_ui.build_name().replace("本地开发版（未发布）", "本地开发版")
+	_release_button.text = release_ui.version() + " · 公告" + (" · " if short else "\n") + release_build
+	_release_button.custom_minimum_size = Vector2(120, 24 if short else 36)
 	for button in [_resume_button, _restart_button, _pause_title_button, _music_toggle, _ambience_toggle, _mute_toggle]:
 		button.custom_minimum_size = Vector2(120.0, button_h)
 		button.add_theme_font_size_override("font_size", 13 if short else 16)
