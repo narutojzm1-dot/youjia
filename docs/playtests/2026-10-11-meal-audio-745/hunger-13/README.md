@@ -1,8 +1,12 @@
-# 饥饿第 13 条返修 — 只听 hunger
+# 饥饿第 13 条 R3 — 参考真实肚子咕噜后再合成
 
 Agent-ID: GROK-CONTRIBUTOR  
-Date: 2026-10-12  
-范围：只重做 `assets/holiday/audio/meal_grok/hunger.tres`（cue `meal.hunger` / `play_hunger`）。第 11、12 条锁定文件未改。
+Date: 2026-10-12 ~21:55 CST  
+范围：只重做 `assets/holiday/audio/meal_grok/hunger.tres`（cue `meal.hunger` / `play_hunger`）。第 11、12 条锁定文件未改。未改 Main / house_sleep / #738 宿主。
+
+## 回执
+
+已读 CODEX-LEAD 2026-10-12T13:21:12Z：用户再听 R2（`e2b30e85` / hunger `e87ebdbb…`）仍认为肚子咕噜不对，要求先参考真实肚子咕噜再返修；R2 未批准，继续禁播。ENGINEERING-SUPERVISOR 已说明缺件 tone fallback 由 Leader 沿 #738 副本安静降级，本叶子本轮**不**重写 Main/Host、**不**开启 13 派发。
 
 ## 资源身份
 
@@ -10,33 +14,30 @@ Date: 2026-10-12
 | --- | --- | --- |
 | `cook_loop.tres` | `2e9824a0be6cd199d4383d9593a4e184fb41ca9c558b5f91f340d7ef52f5ce1b` | 未改（第 11 条） |
 | `cook_spoon.tres` | `b72eab1b9bf06842928aea36183a10f277b828cef21bfada150108b3ad700414` | 未改（第 12 条） |
-| `hunger.tres` | `e87ebdbbd310b5aefa02d821affc3a217e634468771356688f6b1ed4d27aad1c` | 新（第 13 条） |
+| `hunger.tres` | `bc04bc71cd6152e77a5affda9fa063edc39c65fa7abad8217d9df86f743e1d89` | **R3 新**（第 13 条） |
 
-旧 hunger sha256：`3bc6aaa9a12104999da54139d5560067b639af09207b83fbf3636d755a20c27e`。
+R2 hunger sha256：`e87ebdbbd310b5aefa02d821affc3a217e634468771356688f6b1ed4d27aad1c`（已废，勿再送听）。
 
-旧波形能量约 96% 在 80 Hz 以下，200–800 Hz 几乎为空，所以听起来像闷响，不像肚子饿。新波形约 0.64 秒：软起软收，低频蠕动垫底，两声空腔气泡向下滑（约 440→130 Hz，再约 300→90 Hz）。2 kHz 以上几乎没有能量，避免点击。峰值约 0.34（满幅以下），保持轻。
+### 合成说明（原创，无外部采样）
 
-叶子 API 未改。未改 Main、house_sleep、#738 宿主、存档和餐食规则。
+参考真实 borborygmi 的可描述声学特征后程序合成：
+1. 轻腹垫（支持，不再当主声部）
+2. 四声错落湿腔咕噜：带通噪声 × 向下滑的腔体共鸣；时间不规则
+3. 软起软收，无尖锐瞬态；约 0.92 s；峰值约 −8 dBFS
 
-## Native Pulse（仅饥饿）
+粗谱能量（合成后自检，非听感结论）：约 49% &lt;80 Hz，约 22% 在 80–200，约 25% 在 200–500，约 4% 在 500–2000。相对 R2 的「两声干净下滑气泡」，本版更偏湿噪声腔体。
 
-- Godot `4.7.2.stable.official.ed1daf0bf`，非 headless，`--audio-driver PulseAudio`
-- 设备列表含 `Default` 与 `auto_null.2`；`ffmpeg -f pulse -i auto_null.2.monitor` 录音
-- 临时脚本只 `load` 并播放 `hunger.tres`，不播 cook / spoon，不进 Main。脚本未入库
-- 引擎报告 `length=0.64`，`play1 playing=true`
-- 监听到的一次波形见 `13-hunger-only.ogg`（从原始 wav 裁到 0.70 秒）
-- 整段原始 wav volumedetect：mean ≈ −31.2 dB，max ≈ −9.4 dB（与资源峰值 0.34 的约 −9.4 dBFS 一致）
-- 日志还打印了 `play2`，但 0.64 秒之后监听是数字静音。本证据只覆盖这一次出声，不把第二次算成已录到
+## 听音材料
 
-## 套件与提交
+- `13-hunger-r3.wav`：与 tres 同源 PCM（22.05 kHz / mono / 16-bit）
+- `13-hunger-only.ogg`：同内容 Vorbis，便于快速试听
+- 本 executor **无 Godot / Pulse 实跑**；未写 Native 出声通过，未写耳听通过
 
-- 饥饿字节提交：`ff311a519849d09c0e28a9b9f5cd356a07f31262`
-- 本说明在该提交之上。请按 PR #747 评论里的最终 head SHA 重听；该 head 的 `hunger.tres` sha256 仍是上一节的新值，第 11、12 条哈希不变
-- Godot `4.7.2.stable.official.ed1daf0bf`，隔离 XDG，`run_verified_godot_suite test/meal_audio_suite.gd --headless --path .`
-- 包装退出码 0
-- `[meal-audio] PASS: 63 checks`
+## 套件
+
+本小时未在本机复跑 Godot 套件（无 Godot 二进制）。叶子 API 与 11/12 字节未变；请 CODEX-LEAD / CI 实跑 `test/meal_audio_suite.gd`。预期仍为登记/播放契约级检查，不依赖 hunger PCM 波形哈希。
 
 ## 明确不声称
 
-- 不写耳听通过。请 CODEX-LEAD 只重听第 13 条。
-- 不写可合入，不推 `main`，不发布 Pages。
+- 不写耳听通过。请 CODEX-LEAD **只重听第 13 条 R3**。
+- 不写可合入；不推 `main`；不发布 Pages；不恢复 13 生产派发。

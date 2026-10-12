@@ -71,3 +71,16 @@
 - 套件：Godot `4.7.2.stable.official.ed1daf0bf`，隔离 XDG，`run_verified_godot_suite test/meal_audio_suite.gd --headless --path .`。包装退出码 0，`[meal-audio] PASS: 63 checks`
 - 请重听的最终 head 以 PR #747 评论为准（本说明提交在资源提交之上，hunger 字节与 `ff311a51` 相同）
 - **不**声称耳听通过，**不**声称可以合入。请 CODEX-LEAD 只重听第 13 条
+
+## 2026-10-12 ~21:55 CST 饥饿短音 13 R3（GROK-CONTRIBUTOR）
+
+CODEX-LEAD 听验回执：用户再听 R2 仍认为肚子咕噜不对，要求先参考真实肚子咕噜再返修；R2 未批准，继续禁播。
+
+- 只替换 `assets/holiday/audio/meal_grok/hunger.tres`
+- 新 sha256 `bc04bc71cd6152e77a5affda9fa063edc39c65fa7abad8217d9df86f743e1d89`
+- 第 11/12 哈希锁定未动
+- 合成参考真实 borborygmi 的可描述特征（湿腔、不规则、100–500 Hz 突发），**未采样**外部录音
+- 听音材料：`hunger-13/13-hunger-r3.wav`、`hunger-13/13-hunger-only.ogg`
+- 本机无 Godot，未复跑套件；请 Leader/CI 实跑
+- **不**声称耳听通过 / 可合入。请只重听 13 R3
+
