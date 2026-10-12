@@ -3,7 +3,7 @@ extends SceneTree
 ## 在快捷栏纸面上对比度 >= 3:1，不压到相邻格、不出纸面和视口。
 
 const HotbarPath := "res://scripts/ui/hold_hotbar.gd"
-const VIEWPORTS := [Vector2i(390, 844), Vector2i(844, 390), Vector2i(1280, 720)]
+const VIEWPORTS := [Vector2i(280, 600), Vector2i(390, 844), Vector2i(844, 390), Vector2i(1280, 720)]
 const RING_MIN := 3.0
 const EPS := 0.51
 
@@ -55,11 +55,13 @@ func _viewport(script, vs: Vector2i) -> void:
 	host.add_child(bar)
 	await process_frame
 	bar.set_slots(["medium", "grass", "millet", "", ""])
+	bar.set_slot_side(script.slot_side(float(vs.x)))
 	var rect: Rect2 = script.preferred_rect(Vector2(vs), vs.x < 700.0)
 	bar.position = rect.position
 	bar.size = rect.size
 	await process_frame
 	var tag := "%dx%d" % [vs.x, vs.y]
+	check(bar.slot_cells[0].size.x <= script.slot_side(float(vs.x)) + EPS, "%s: slots use the width-fitted side %.0f" % [tag, script.slot_side(float(vs.x))])
 	bar.update_view(_inv(""), {}, "idle", false)
 	await process_frame
 	_ring_checks(bar, "%s idle" % tag)
@@ -70,10 +72,13 @@ func _viewport(script, vs: Vector2i) -> void:
 	await process_frame
 	check(bar.is_place_armed(), "%s held fish arms its slot" % tag)
 	_ring_checks(bar, "%s fish armed" % tag)
+	var basket: Rect2 = script.basket_rect(Vector2(vs))
+	bar.position = basket.position
+	bar.size = basket.size
 	bar.set_configuring(true)
 	bar.set_drop_hint(3)
 	await process_frame
-	_ring_checks(bar, "%s drop hint" % tag)
+	_ring_checks(bar, "%s drop hint above the open basket" % tag)
 	bar.set_drop_hint(-1)
 	bar.set_configuring(false)
 	host.queue_free()
@@ -92,6 +97,8 @@ func _ring_checks(bar, tag: String) -> void:
 		var name := "%s slot %d" % [tag, index]
 		var ring := cell.get_theme_stylebox("focus") as StyleBoxFlat
 		var normal := cell.get_theme_stylebox("normal") as StyleBoxFlat
+		if normal != null and ring != null:
+			check(is_equal_approx(float(ring.corner_radius_top_left), normal.corner_radius_top_left + ring.expand_margin_left), "%s: ring corner follows the slot corner at its outset" % name)
 		check(ring != null and normal != null, "%s: flat focus and normal styles" % name)
 		if ring == null or normal == null:
 			continue
@@ -115,7 +122,7 @@ func _ring_checks(bar, tag: String) -> void:
 
 
 func _finish() -> void:
-	check(checks >= 300, "suite ran enough checks (%d)" % checks)
+	check(checks >= 1500, "suite ran enough checks (%d)" % checks)
 	if root.has_node("AudioDirector"):
 		root.get_node("AudioDirector").release_streams()
 	if failures.is_empty():
