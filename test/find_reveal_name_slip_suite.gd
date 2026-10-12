@@ -188,6 +188,9 @@ func _in_scroll() -> void:
 
 func finish() -> void:
 	root.get_node("AudioDirector").release_streams()
+	# The approved pickup WAV now plays during this visual suite. Let the
+	# native mixer retire the stopped playbacks before checking engine exit.
+	await create_timer(0.15).timeout
 	if failures.is_empty():
 		print("PASS find_reveal_name_slip_suite: %d checks" % checks)
 		quit(0)

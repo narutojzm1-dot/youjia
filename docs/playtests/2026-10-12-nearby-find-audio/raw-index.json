@@ -1045,9 +1045,10 @@
   },
   {
     "path": "raw/import.log",
-    "original": "D:\\games\\youjia-test\\assistant-recovery\\nearby-find-audio-oct12\\import.log",
+    "original": "D:\\games\\youjia-test\\assistant-recovery\\nearby-find-audio-verified-originals-7\\raw\\import.log",
     "bytes": 1087,
-    "sha256": "d41e6300cf6ac491b0a0d10ec7fdc44455cf584b0662d6fb50d14a917682c3a3"
+    "sha256": "d41e6300cf6ac491b0a0d10ec7fdc44455cf584b0662d6fb50d14a917682c3a3",
+    "recoveredFromVerifiedGitHead": "7eecb186ec18250bc4dc2100d4c3e51d60edcbdd"
   },
   {
     "path": "raw/native-results-first-compile-failure.json",
@@ -1069,9 +1070,10 @@
   },
   {
     "path": "raw/native-results.json",
-    "original": "D:\\games\\youjia-test\\assistant-recovery\\nearby-find-audio-oct12\\native-results.json",
+    "original": "D:\\games\\youjia-test\\assistant-recovery\\nearby-find-audio-verified-originals-7\\raw\\native-results.json",
     "bytes": 2526,
-    "sha256": "f27305c44a694a884f86f4ee3a4dc2032261fa09632fe460f802a04f7e828e9b"
+    "sha256": "f27305c44a694a884f86f4ee3a4dc2032261fa09632fe460f802a04f7e828e9b",
+    "recoveredFromVerifiedGitHead": "7eecb186ec18250bc4dc2100d4c3e51d60edcbdd"
   },
   {
     "path": "raw/nearby_direct_pick.log",
@@ -1483,9 +1485,10 @@
   },
   {
     "path": "drivers/verify-near-find-audio-oct12.ps1",
-    "original": "D:\\games\\youjia-test\\assistant-recovery\\verify-near-find-audio-oct12.ps1",
+    "original": "D:\\games\\youjia-test\\assistant-recovery\\nearby-find-audio-verified-originals-7\\drivers\\verify-near-find-audio-oct12.ps1",
     "bytes": 3845,
-    "sha256": "27226a24c3ad180ebad73dc0abceb5560ffbdc44239d01e99fa9bbce2e24597a"
+    "sha256": "27226a24c3ad180ebad73dc0abceb5560ffbdc44239d01e99fa9bbce2e24597a",
+    "recoveredFromVerifiedGitHead": "7eecb186ec18250bc4dc2100d4c3e51d60edcbdd"
   },
   {
     "path": "drivers/analyze-near-find-audio-recordings-oct12.py",
@@ -1495,8 +1498,105 @@
   },
   {
     "path": "candidate-source.json",
-    "original": "D:\\games\\youjia-test\\assistant-recovery\\nearby-find-audio-web-oct12\\candidate-source.json",
+    "original": "D:\\games\\youjia-test\\assistant-recovery\\nearby-find-audio-verified-originals-7\\candidate-source.json",
     "bytes": 347,
-    "sha256": "a1017fe663e02a00e8a8ac29cf66a992e4d0dbb50f219f78a18eb14cc5f31be4"
+    "sha256": "a1017fe663e02a00e8a8ac29cf66a992e4d0dbb50f219f78a18eb14cc5f31be4",
+    "recoveredFromVerifiedGitHead": "7eecb186ec18250bc4dc2100d4c3e51d60edcbdd"
+  },
+  {
+    "path": "raw/ci-lifecycle-repair/ci-38260359242-failed.log",
+    "original": "D:\\games\\youjia-test\\assistant-recovery\\nearby-find-audio-oct12\\ci-38260359242-failed.log",
+    "bytes": 353566,
+    "sha256": "6db42a78ac1856a86704ce53cc0aeed213b4226f6ad891c7a5dbc3267c692849"
+  },
+  {
+    "path": "raw/ci-lifecycle-repair/ci-lifecycle-test-repair.patch",
+    "original": "D:\\games\\youjia-test\\assistant-recovery\\nearby-find-audio-oct12\\ci-lifecycle-test-repair.patch",
+    "bytes": 1113,
+    "sha256": "ecaa9fe8576dccc8edca2058d4a5934a65336992b451333e1b74540214599bf0"
+  },
+  {
+    "path": "raw/ci-lifecycle-repair/native-results.json",
+    "original": "D:\\games\\youjia-test\\assistant-recovery\\nearby-find-audio-oct12\\native-results.json",
+    "bytes": 3394,
+    "sha256": "cee72e5f5c218a666faf9b43071a33cc1efcc2755ec150b2b8719bc0fe120fe8"
+  },
+  {
+    "path": "raw/ci-lifecycle-repair/import.log",
+    "original": "D:\\games\\youjia-test\\assistant-recovery\\nearby-find-audio-oct12\\import.log",
+    "bytes": 65490,
+    "sha256": "a0bad3402040172d8f98cc821e94cb24335284e0f612f8bb5f006e36037ca86b"
+  },
+  {
+    "path": "raw/ci-lifecycle-repair/find_reveal_name_slip.log",
+    "original": "D:\\games\\youjia-test\\assistant-recovery\\nearby-find-audio-oct12\\find_reveal_name_slip.log",
+    "bytes": 121,
+    "sha256": "a690cb9a405b3fe6387ddb4685c3231ce258be4c92b4117cc6a85ae7e07e9e2d"
+  },
+  {
+    "path": "raw/ci-lifecycle-repair/find_reveal_name_fade.log",
+    "original": "D:\\games\\youjia-test\\assistant-recovery\\nearby-find-audio-oct12\\find_reveal_name_fade.log",
+    "bytes": 120,
+    "sha256": "265411b77714cbc80fe8b53f30114f475cdd670815dcbd401ee3075e2bd86e56"
+  },
+  {
+    "path": "raw/ci-lifecycle-repair/nearby_find_audio.log",
+    "original": "D:\\games\\youjia-test\\assistant-recovery\\nearby-find-audio-oct12\\nearby_find_audio.log",
+    "bytes": 115,
+    "sha256": "b06c92f39afcfe0c8897a1260ad4e294367b967f5084690898cc70f4e653b76b"
+  },
+  {
+    "path": "raw/ci-lifecycle-repair/exploration_slice.log",
+    "original": "D:\\games\\youjia-test\\assistant-recovery\\nearby-find-audio-oct12\\exploration_slice.log",
+    "bytes": 166,
+    "sha256": "859024ea64a514591a848b2213c08e59f8cf65a1cbdba6bff106552ecf193bdc"
+  },
+  {
+    "path": "raw/ci-lifecycle-repair/nearby_direct_pick.log",
+    "original": "D:\\games\\youjia-test\\assistant-recovery\\nearby-find-audio-oct12\\nearby_direct_pick.log",
+    "bytes": 117,
+    "sha256": "680da918f151e62a06d3e2c14922847f85eafa987961e16d2b0a0fa7df564627"
+  },
+  {
+    "path": "raw/ci-lifecycle-repair/exploration_trip_capacity.log",
+    "original": "D:\\games\\youjia-test\\assistant-recovery\\nearby-find-audio-oct12\\exploration_trip_capacity.log",
+    "bytes": 123,
+    "sha256": "0954796d5bf176fc05cb8c9973cf65db80ec6e9f00b8394eb954a95382d15d08"
+  },
+  {
+    "path": "raw/ci-lifecycle-repair/hud_pointer_input.log",
+    "original": "D:\\games\\youjia-test\\assistant-recovery\\nearby-find-audio-oct12\\hud_pointer_input.log",
+    "bytes": 115,
+    "sha256": "609280670354455334f42706d022685740c4cca7aca217328fbc9284ffd07529"
+  },
+  {
+    "path": "raw/ci-lifecycle-repair/verify-native.ps1",
+    "original": "D:\\games\\youjia-test\\assistant-recovery\\verify-near-find-audio-oct12.ps1",
+    "bytes": 3893,
+    "sha256": "28bff784a055636bc64ef287bcd97a011baa5f0ca07f0592b1afd08fce705686"
+  },
+  {
+    "path": "raw/export-metadata-extra/horse-rest.png.import",
+    "original": "D:\\games\\youjia-test\\assistant-recovery\\nearby-find-audio-export-metadata-oct12\\horse-rest.png.import",
+    "bytes": 968,
+    "sha256": "9b9e167b3bbeeef34136752ab46b7310c65b347f8ce8a3e29a9542c0a41d7f2b"
+  },
+  {
+    "path": "raw/export-metadata-extra/index.json",
+    "original": "D:\\games\\youjia-test\\assistant-recovery\\nearby-find-audio-export-metadata-oct12\\index.json",
+    "bytes": 1339,
+    "sha256": "ead4e7cb9e03c3434109ddcb0fce93186a4c0db64d06403f44e8110efa945b07"
+  },
+  {
+    "path": "raw/export-metadata-extra/llama-rest.png.import",
+    "original": "D:\\games\\youjia-test\\assistant-recovery\\nearby-find-audio-export-metadata-oct12\\llama-rest.png.import",
+    "bytes": 968,
+    "sha256": "1bdf9491a98478e41242dac381d1179848ee672c2fa3f44a87c073828eeb78b6"
+  },
+  {
+    "path": "raw/ci-lifecycle-repair/context.json",
+    "original": "D:\\games\\youjia-test\\assistant-recovery\\nearby-find-audio-oct12\\ci-lifecycle-repair-context.json",
+    "bytes": 941,
+    "sha256": "fda992688112f82a9b0a5402f9a90abef6e8318ca5b6b3942a97c2839cc6a515"
   }
 ]

@@ -1,0 +1,82 @@
+[
+  {
+    "status": "PASS",
+    "completionPattern": null,
+    "generatedImportMetadata": "separate snapshot; five existing source imports normalized by Godot",
+    "profile": "youjia-assistant-find16-d7c8b4800cb94d6c8c4f19af2df65d44",
+    "source": "7eecb186ec18250bc4dc2100d4c3e51d60edcbdd",
+    "name": "import",
+    "exit": 0,
+    "seconds": 48.2441795
+  },
+  {
+    "status": "PASS",
+    "completionPattern": "PASS find_reveal_name_slip_suite: [1-9][0-9]* checks",
+    "generatedImportMetadata": "separate snapshot; five existing source imports normalized by Godot",
+    "profile": "youjia-assistant-find16-ee5a79f5a1c8471d838d38c464ee7642",
+    "source": "7eecb186ec18250bc4dc2100d4c3e51d60edcbdd",
+    "name": "find_reveal_name_slip",
+    "exit": 0,
+    "seconds": 4.5720771
+  },
+  {
+    "status": "PASS",
+    "completionPattern": "PASS find_reveal_name_fade_suite: [1-9][0-9]* checks",
+    "generatedImportMetadata": "separate snapshot; five existing source imports normalized by Godot",
+    "profile": "youjia-assistant-find16-faddf7775270495da644dbb8957fd41e",
+    "source": "7eecb186ec18250bc4dc2100d4c3e51d60edcbdd",
+    "name": "find_reveal_name_fade",
+    "exit": 0,
+    "seconds": 1.0771013
+  },
+  {
+    "status": "PASS",
+    "completionPattern": "NEARBY_FIND_AUDIO checks=[1-9][0-9]* failures=0",
+    "generatedImportMetadata": "separate snapshot; five existing source imports normalized by Godot",
+    "profile": "youjia-assistant-find16-7c80ec5b1aae448f8fca75bc41cadcf7",
+    "source": "7eecb186ec18250bc4dc2100d4c3e51d60edcbdd",
+    "name": "nearby_find_audio",
+    "exit": 0,
+    "seconds": 1.6372699
+  },
+  {
+    "status": "PASS",
+    "completionPattern": "EXPLORATION SLICE PASS ([1-9][0-9]*)/\\1 failures=\\[\\]",
+    "generatedImportMetadata": "separate snapshot; five existing source imports normalized by Godot",
+    "profile": "youjia-assistant-find16-2a2c931caa3049fe8bb7e3797f124951",
+    "source": "7eecb186ec18250bc4dc2100d4c3e51d60edcbdd",
+    "name": "exploration_slice",
+    "exit": 0,
+    "seconds": 8.8947641
+  },
+  {
+    "status": "PASS",
+    "completionPattern": "NEARBY_DIRECT_PICK checks=[1-9][0-9]* failures=0",
+    "generatedImportMetadata": "separate snapshot; five existing source imports normalized by Godot",
+    "profile": "youjia-assistant-find16-95e20d1a107b48138a4b4848c5a18c7a",
+    "source": "7eecb186ec18250bc4dc2100d4c3e51d60edcbdd",
+    "name": "nearby_direct_pick",
+    "exit": 0,
+    "seconds": 5.9766007
+  },
+  {
+    "status": "PASS",
+    "completionPattern": "EXPLORATION_TRIP_CAPACITY checks=[1-9][0-9]* failures=0",
+    "generatedImportMetadata": "separate snapshot; five existing source imports normalized by Godot",
+    "profile": "youjia-assistant-find16-9bc9e2a095bb4ddb972cba9ff1ccc6d3",
+    "source": "7eecb186ec18250bc4dc2100d4c3e51d60edcbdd",
+    "name": "exploration_trip_capacity",
+    "exit": 0,
+    "seconds": 2.9228121
+  },
+  {
+    "status": "PASS",
+    "completionPattern": "HUD_POINTER_INPUT checks=[1-9][0-9]* failures=0",
+    "generatedImportMetadata": "separate snapshot; five existing source imports normalized by Godot",
+    "profile": "youjia-assistant-find16-ce10b396d56f454d8202b2ca322627c2",
+    "source": "7eecb186ec18250bc4dc2100d4c3e51d60edcbdd",
+    "name": "hud_pointer_input",
+    "exit": 0,
+    "seconds": 3.120873
+  }
+]

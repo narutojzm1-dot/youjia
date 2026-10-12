@@ -166,6 +166,7 @@ func _drawn_alpha() -> void:
 func finish() -> void:
 	if root.has_node("AudioDirector"):
 		root.get_node("AudioDirector").release_streams()
+	await create_timer(0.15).timeout
 	if failures.is_empty():
 		print("PASS find_reveal_name_fade_suite: %d checks" % checks)
 		quit(0)

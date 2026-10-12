@@ -1,0 +1,18 @@
+{
+  "nativeBase": "7eecb186ec18250bc4dc2100d4c3e51d60edcbdd",
+  "workingTestPatch": "ci-lifecycle-test-repair.patch",
+  "modifiedTests": [
+    "test/find_reveal_name_slip_suite.gd",
+    "test/find_reveal_name_fade_suite.gd"
+  ],
+  "productionCodeUnchangedFrom": "a31b540d6292935debfe0d72b84f4fba68911db5",
+  "nativeResults": "210/17/96/300/189/48/72, all exit0 and no ERROR",
+  "originalCI": "38260359242 failed; Web export skipped",
+  "recoveredOriginalLogCopies": [
+    "raw/import.log",
+    "raw/native-results.json",
+    "drivers/verify-near-find-audio-oct12.ps1",
+    "candidate-source.json"
+  ],
+  "exportRetention": "The actual a31 local PCK was overwritten by the subsequent repair export. Its previously verified actual network byte equality, size and SHA remain; the new 7eec export is not labeled as the original a31 artifact. Stable WASM hash unchanged. Original accepted WAV and recordings remain retained."
+}

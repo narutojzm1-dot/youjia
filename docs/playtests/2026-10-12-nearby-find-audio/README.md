@@ -1,14 +1,14 @@
 # 近郊获批拾物短音16：接入与实际软件验证
 
-Agent-ID: CODEX-LEAD-ASSISTANT。来源#565及PR359接收6125018905；本片消费已有成功拾物/公共音频接口，不新建Host/库存/时钟，不接管623或738。原始文件索引 [raw-index.json](raw-index.json)：250份原件47,214,809B，包含失败、最终日志、实际录音、捕获图、驱动和生成元数据；PCK/WASM不重复上传，只保留准确哈希及实际网络字节核对。
+Agent-ID: CODEX-LEAD-ASSISTANT。来源#565及PR359接收6125018905；本片消费已有成功拾物/公共音频接口，不新建Host/库存/时钟，不接管623或738。原始文件索引 [raw-index.json](raw-index.json)：266份原件47,647,358B，包含失败、最终日志、实际录音、捕获图、驱动和生成元数据；PCK/WASM不重复上传，只保留准确哈希及实际网络字节核对。
 
 ## 版本与素材
 
-- 基线main `c874273bc16f6b99e43da49de8907008f52d44d9`；运行实现最终 `a31b540d6292935debfe0d72b84f4fba68911db5`，本地原生与Web实际绑定此提交。后续报告提交只增加导出排除的文档/证据，代码/生产音频差异单独核对，不能把文档头说成另跑了同一套实玩。
+- 基线main `c874273bc16f6b99e43da49de8907008f52d44d9`；声音运行实现 `a31b540d6292935debfe0d72b84f4fba68911db5`，第一组本地原生与普通Web实际绑定此提交。后续7eec报告头只增排除文档；CI发现旧视觉测试退出资源未退役后，仅修两份测试的退出等待，生产代码/音频未再变。修订原生210/17/96/300/189/48/72实际基于7eec＋[两份工作树测试补丁](raw/ci-lifecycle-repair/ci-lifecycle-test-repair.patch)，不冒充新PR头另跑Web，最终完整CI单独绑定新头。
 - 用户2026-10-12批准听验16；原GAME-PRODUCER359 `0e07ef5eabcd5766726d1c9d95904b1ad8ef54e3` 的 `discovery_soft.wav`，91,244B / SHA256 `14d19c82019fe48ee7fa9b2d843e8bfc69fe155c59ef736e255ac40e8975aea3`，原字节映射到 `assets/holiday/audio/exploration_find_get.wav`，不重新合成/转OGG/改电平。原作者/生成器及获批回执保留。
 - 48kHz/mono/PCM16、45,600帧/0.95秒、不循环，不归一化/裁剪/压缩。原生导入PCM SHA256 `936184f59a29c5d519f1d1ca831916e8fef997e373778a15a50f26adb90e443e` 与获批WAV数据相同。
 - 实际候选PCK 74,551,948B / SHA256 `e402cc5f3a83273e8af88476ad0f9e44d072d7699666a84c31116b64d5566e9a`；WASM 39,514,754B / `fc74679e3b97f76878947fcd4fbe1268cbfa6188182a2e33bbc3f5dc9bfa57d0`。网页实际响应逐字节比本机导出，见 [package](raw/web/package.json)。不是正式发布证明。
-- Godot4.7.2自动修正5份已有贴图import的UID/缓存路径并生成162份其他UID，原件/索引在 [生成元数据](raw/generated-metadata.json)。它们属于实际本机导入输入，不冒作本片生产改动；新WAV自己的不压缩import及新测试UID在实现提交中。
+- Godot4.7.2自动修正5份已有贴图import的UID/缓存路径并生成162份其他UID，原件/索引在 [生成元数据](raw/generated-metadata.json)；清理时另发现两份已有棚内姿态的自动import，[原始描述符及未变源图哈希](raw/export-metadata-extra/index.json)补存。它们属于实际本机导入输入，不冒作本片生产改动；新WAV自己的不压缩import及新测试UID在实现提交中。
 
 ## 原生与Web导出
 
@@ -32,6 +32,9 @@ Chrome154.0.8037.98、实际AMD/D3D11 WebGL2、本机127.0.0.1:8798、新隔离�
 2. 一次原生结束虽96项完成却资源未退役报ERROR，保留 [shutdown failure](raw/first-shutdown-resource-failure.log)。测试在退出前给AudioServer混音退役时间，后续最终检查无该错误，不靠忽略ERROR放行。
 3. 第一网页驱动把动态HUD“看花箱”当出门，超时原件在 `raw/web-first-entry-failure/`；改走可见石板小路。首轮包装器后置Get-Content造成命令exit0，Python traceback仍按失败处理；后续保留Python真实退出码及完成标记。
 4. `b7a2bfd1c3beae914470ce435ed54c746c7658a5` 的原AudioStreamPlayer Web sample路径：确有一个0.95秒source、原音非零峰值0.07937864，但所有目的端监测窗口为0。两轮零信号和完整连接/增益原件分别保留 `web-first-zero-signal` / `web-sample-routing-diagnostic`。没有把play调用当声音通过，也未改引擎或共享AudioDirector。近郊侧复用已经发版的BrowserBgmPlayer后，获批原PCM和SFX混音保持，最终软件信号/次数/停止/缓存通过；复杂原生Web总线路由未另做根因修复结论。
+5. [完整CI38260359242原始失败](raw/ci-lifecycle-repair/ci-38260359242-failed.log)在旧find_reveal_name_slip_suite的210项通过后报告5个ObjectDB/1资源未退役，Web导出skipped，未算完整CI通过。名字纸签及淡出测试退出前加入混音退役等待；[修订本机原生](raw/ci-lifecycle-repair/native-results.json)210/17/96/300/189/48/72退出0且无ERROR，不删断言、不放宽门禁。修订完整CI另核，不沿用失败run或旧头结果。
+
+再次运行验证时4份可变本地日志/驱动原件已被新执行覆盖；旧原件从先前逐字节验证并已上传的7eec Git blob精确恢复到独立归档，索引注明来源，不重新编造。a31本机PCK也被后续导出覆盖，旧实际网络字节相等及SHA证据仍在；新的7eec导出不标成a31原件，未恢复的旧PCK实物如实列出。[修订版本及保留范围](raw/ci-lifecycle-repair/context.json)。获批原WAV、实际录音和图片仍完整保留。
 
 ## 边界与下一步
 
