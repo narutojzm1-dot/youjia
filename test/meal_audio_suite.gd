@@ -165,6 +165,20 @@ func run() -> void:
 	check(int(audio.call("get_stop_cue_count", "meal.hunger")) > stops_hunger_before, "exit stop_cue hunger invoked")
 	check(not bool(audio.call("is_cue_voice_active", "meal.hunger")), "hunger voice cleared after leaf exit")
 
+	# Use a known cue: unknown IDs are rejected before asset loading and would
+	# make this negative test pass even with the old fallback implementation.
+	var missing := "res://assets/holiday/audio/meal_grok/__missing_suite__.tres"
+	var quiet: Node = MealAudioScript.new()
+	check(quiet.call("_load_cook_stream", missing) == null, "missing cook asset stays silent")
+	check(quiet.call("_load_cook_stream", "res://scripts/presentation/meal_audio.gd") == null, "non-audio cook resource stays silent")
+	check(quiet.call("_load_cook_stream") != null, "approved cook asset remains loadable")
+	check(bool(audio.call("register_cue", "meal.spoon", MealAudioScript.SPOON_PATH)), "seed known approved cue before negative check")
+	quiet.call("_register", "meal.spoon", missing)
+	check(audio.call("get_cue_stream", "meal.spoon") == null, "missing known cue unregisters without fallback tone")
+	quiet.call("_register", "meal.spoon", MealAudioScript.SPOON_PATH)
+	check(audio.call("get_cue_stream", "meal.spoon") != null, "approved cue restores after resource recovery")
+	quiet.free()
+
 	# The suite deliberately starts real native AudioStreamPlayers even headless.
 	# Match yard_audio_suite teardown: release fixture references and allow the
 	# mixer to retire stopped playback before terminating the test process.

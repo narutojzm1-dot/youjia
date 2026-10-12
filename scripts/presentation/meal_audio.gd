@@ -66,8 +66,8 @@ func ensure_registered() -> void:
 	if _registered:
 		return
 	_registered = true
-	_register(CUE_SPOON, SPOON_PATH, 310.0)
-	_register(CUE_HUNGER, HUNGER_PATH, 62.0)
+	_register(CUE_SPOON, SPOON_PATH)
+	_register(CUE_HUNGER, HUNGER_PATH)
 
 
 ## Start / stop cooking loop. Same value is a no-op (no second player, no restart).
@@ -178,6 +178,8 @@ func _apply() -> void:
 	if should:
 		if _cook_player.stream == null:
 			_cook_player.stream = _load_cook_stream()
+		if _cook_player.stream == null:
+			return # Missing approved asset stays silent; never synthesize a substitute.
 		if not _cook_player.playing:
 			_cook_player.stream_paused = false
 			_cook_player.play()
@@ -213,16 +215,10 @@ func _count_cook_players() -> int:
 	return n
 
 
-func _load_cook_stream() -> AudioStream:
-	if ResourceLoader.exists(COOK_LOOP_PATH):
-		var stream := ResourceLoader.load(COOK_LOOP_PATH) as AudioStream
-		if stream != null:
-			return stream
-	# Procedural fallback if tres missing.
-	var ProceduralSfx = load("res://scripts/manus/procedural_sfx.gd")
-	if ProceduralSfx == null:
+func _load_cook_stream(resource_path: String = COOK_LOOP_PATH) -> AudioStream:
+	if not ResourceLoader.exists(resource_path):
 		return null
-	return ProceduralSfx.tone(72.0, 0.4, 0.12, 88.0)
+	return ResourceLoader.load(resource_path) as AudioStream
 
 
 func _stop_leaf_cue(cue_id: String) -> void:
@@ -238,12 +234,7 @@ func _director() -> Node:
 	return tree.root.get_node("AudioDirector")
 
 
-func _register(cue_id: String, resource_path: String, fallback_hz: float) -> void:
-	var audio: Node = _director()
-	if bool(audio.call("register_cue", cue_id, resource_path)):
-		return
-	var ProceduralSfx = load("res://scripts/manus/procedural_sfx.gd")
-	if ProceduralSfx == null:
-		return
-	var stream: AudioStream = ProceduralSfx.tone(fallback_hz, 0.16, 0.14, fallback_hz * 0.85)
-	audio.call("register_stream", cue_id, stream)
+func _register(cue_id: String, resource_path: String) -> void:
+	# AudioDirector unregisters a known cue when its approved asset is missing.
+	# Do not install unapproved generated tones after a failed registration.
+	_director().call("register_cue", cue_id, resource_path)
