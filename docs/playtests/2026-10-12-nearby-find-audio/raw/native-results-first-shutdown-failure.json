@@ -1,0 +1,22 @@
+[
+  {
+    "profile": "youjia-assistant-find16-adc91917aca5461a84dfa48243d69d4c",
+    "exit": 0,
+    "generatedImportMetadata": "separate snapshot; five existing source imports normalized by Godot",
+    "completionPattern": null,
+    "seconds": 5.5234578,
+    "name": "import",
+    "source": "f975ef65e8eb53046ecf1b8b02d546a74d93253a",
+    "status": "PASS"
+  },
+  {
+    "profile": "youjia-assistant-find16-476b623baccd427384de6be7f5045b4f",
+    "exit": 0,
+    "generatedImportMetadata": "separate snapshot; five existing source imports normalized by Godot",
+    "completionPattern": "NEARBY_FIND_AUDIO checks=[1-9][0-9]* failures=0",
+    "seconds": 1.653362,
+    "name": "nearby_find_audio",
+    "source": "f975ef65e8eb53046ecf1b8b02d546a74d93253a",
+    "status": "FAIL"
+  }
+]

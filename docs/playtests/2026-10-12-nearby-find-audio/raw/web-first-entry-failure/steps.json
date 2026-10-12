@@ -1,0 +1,530 @@
+[
+  {
+    "stage": "title-quiet",
+    "audio": {
+      "wallMs": 4700.799999952316,
+      "signal": [
+        {
+          "node": 1,
+          "context": 1,
+          "type": "GainNode",
+          "contextState": "running",
+          "audioTime": 2.112,
+          "sampleRate": 48000,
+          "gain": 1,
+          "rms": 0,
+          "peak": 0,
+          "nonFinite": 0
+        },
+        {
+          "node": 2,
+          "context": 1,
+          "type": "AudioWorkletNode",
+          "contextState": "running",
+          "audioTime": 2.112,
+          "sampleRate": 48000,
+          "gain": null,
+          "rms": 0,
+          "peak": 0,
+          "nonFinite": 0
+        }
+      ],
+      "sources": [],
+      "failures": [],
+      "backend": null,
+      "jsHeap": {
+        "used": 266848546,
+        "total": 275716506,
+        "limit": 4395630592
+      }
+    },
+    "payload": {
+      "album": [],
+      "animal_relationship_memory": {},
+      "exploration": null,
+      "exploration_committed_serial": 0,
+      "first_fish_caught": false,
+      "holiday_day": 1,
+      "holiday_day_elapsed": 0,
+      "keepsakes": {},
+      "locale": "zh-CN",
+      "photo_moments": {},
+      "plant_day_planted": 0,
+      "plant_state": 0,
+      "plant_watered_day": -1,
+      "tutorial_version": 0,
+      "version": 5,
+      "world_weather": {},
+      "yard_gate_open": false
+    },
+    "inputs": [
+      {
+        "kind": "focus",
+        "trusted": true,
+        "x": null,
+        "y": null,
+        "key": null,
+        "visibility": "visible",
+        "t": 637.7000000476837
+      }
+    ],
+    "errors": []
+  },
+  {
+    "stage": "yard",
+    "audio": {
+      "wallMs": 7315.5,
+      "signal": [
+        {
+          "node": 1,
+          "context": 1,
+          "type": "GainNode",
+          "contextState": "running",
+          "audioTime": 4.730666666666667,
+          "sampleRate": 48000,
+          "gain": 1,
+          "rms": 0,
+          "peak": 0,
+          "nonFinite": 0
+        },
+        {
+          "node": 2,
+          "context": 1,
+          "type": "AudioWorkletNode",
+          "contextState": "running",
+          "audioTime": 4.730666666666667,
+          "sampleRate": 48000,
+          "gain": null,
+          "rms": 0,
+          "peak": 0,
+          "nonFinite": 0
+        },
+        {
+          "node": 3,
+          "context": 2,
+          "type": "GainNode",
+          "contextState": "running",
+          "audioTime": 2.192,
+          "sampleRate": 48000,
+          "gain": 0.15000000596046448,
+          "rms": 0.011316831955081938,
+          "peak": 0.034105848520994186,
+          "nonFinite": 0
+        },
+        {
+          "node": 5,
+          "context": 2,
+          "type": "GainNode",
+          "contextState": "running",
+          "audioTime": 2.192,
+          "sampleRate": 48000,
+          "gain": 0.3981071710586548,
+          "rms": 0.035905404917821994,
+          "peak": 0.09367210417985916,
+          "nonFinite": 0
+        }
+      ],
+      "sources": [
+        {
+          "wallMs": 6398.899999976158,
+          "audioTime": 1.272,
+          "node": 4,
+          "outputGainNode": 3,
+          "buffer": 1,
+          "frames": 6144000,
+          "channels": 2,
+          "sampleRate": 48000,
+          "duration": 128,
+          "loop": true,
+          "loopStart": 0,
+          "loopEnd": 128,
+          "startArgs": [
+            0,
+            0
+          ]
+        },
+        {
+          "wallMs": 7073.5,
+          "audioTime": 1.952,
+          "node": 6,
+          "outputGainNode": 5,
+          "buffer": 2,
+          "frames": 6144000,
+          "channels": 2,
+          "sampleRate": 48000,
+          "duration": 128,
+          "loop": true,
+          "loopStart": 0,
+          "loopEnd": 128,
+          "startArgs": [
+            0,
+            0
+          ]
+        }
+      ],
+      "failures": [],
+      "backend": {
+        "buffers": 2,
+        "bytes": 98304000,
+        "decoded": 2,
+        "starts": 2,
+        "players": 2,
+        "playing": 2,
+        "state": "running"
+      },
+      "jsHeap": {
+        "used": 348509114,
+        "total": 357400614,
+        "limit": 4395630592
+      }
+    },
+    "payload": {
+      "album": [],
+      "animal_relationship_memory": {},
+      "exploration": null,
+      "exploration_committed_serial": 0,
+      "first_fish_caught": false,
+      "holiday_day": 1,
+      "holiday_day_elapsed": 0,
+      "keepsakes": {},
+      "locale": "zh-CN",
+      "photo_moments": {},
+      "plant_day_planted": 0,
+      "plant_state": 0,
+      "plant_watered_day": -1,
+      "resident_rest": {
+        "cause": "legacy",
+        "day": 1,
+        "schema": 1
+      },
+      "tutorial_version": 0,
+      "version": 5,
+      "world_residents": {
+        "beibei": {
+          "adopted_clock": null,
+          "stage": "unmet"
+        },
+        "chicken": {
+          "settled_clock": {
+            "day": 1,
+            "elapsed": 0
+          },
+          "stage": "chick"
+        },
+        "revision": 1,
+        "schema": 3,
+        "turtle": {
+          "found_trip": "",
+          "stage": "unmet"
+        }
+      },
+      "world_weather": {
+        "episode": 0,
+        "remaining": 1108.3935546875,
+        "seed": 112138147,
+        "weather": "sun"
+      },
+      "yard_crops": {
+        "kind": "",
+        "planted_day": 0,
+        "revision": 0,
+        "schema": 1,
+        "watered_day": -1
+      },
+      "yard_gate_open": false,
+      "yard_inventory": {
+        "corn": 2,
+        "fish": {},
+        "grass": 0,
+        "ground": [],
+        "held": "",
+        "millet": 0,
+        "next_food_id": 1,
+        "revision": 1,
+        "schema": 4,
+        "wheat": 2
+      }
+    },
+    "inputs": [
+      {
+        "kind": "focus",
+        "trusted": true,
+        "x": null,
+        "y": null,
+        "key": null,
+        "visibility": "visible",
+        "t": 637.7000000476837
+      },
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 640,
+        "y": 368,
+        "key": null,
+        "visibility": "visible",
+        "t": 4991.700000047684
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 640,
+        "y": 368,
+        "key": null,
+        "visibility": "visible",
+        "t": 5088.799999952316
+      }
+    ],
+    "errors": []
+  },
+  {
+    "stage": "music-environment-off",
+    "audio": {
+      "wallMs": 43260.89999997616,
+      "signal": [
+        {
+          "node": 1,
+          "context": 1,
+          "type": "GainNode",
+          "contextState": "running",
+          "audioTime": 40.68,
+          "sampleRate": 48000,
+          "gain": 1,
+          "rms": 0,
+          "peak": 0,
+          "nonFinite": 0
+        },
+        {
+          "node": 2,
+          "context": 1,
+          "type": "AudioWorkletNode",
+          "contextState": "running",
+          "audioTime": 40.68,
+          "sampleRate": 48000,
+          "gain": null,
+          "rms": 0,
+          "peak": 0,
+          "nonFinite": 0
+        },
+        {
+          "node": 3,
+          "context": 2,
+          "type": "GainNode",
+          "contextState": "running",
+          "audioTime": 38.13066666666667,
+          "sampleRate": 48000,
+          "gain": 0.059716079384088516,
+          "rms": 0,
+          "peak": 0,
+          "nonFinite": 0
+        },
+        {
+          "node": 5,
+          "context": 2,
+          "type": "GainNode",
+          "contextState": "running",
+          "audioTime": 38.13066666666667,
+          "sampleRate": 48000,
+          "gain": 0.15848931670188904,
+          "rms": 0,
+          "peak": 0,
+          "nonFinite": 0
+        }
+      ],
+      "sources": [
+        {
+          "wallMs": 6398.899999976158,
+          "audioTime": 1.272,
+          "node": 4,
+          "outputGainNode": 3,
+          "buffer": 1,
+          "frames": 6144000,
+          "channels": 2,
+          "sampleRate": 48000,
+          "duration": 128,
+          "loop": true,
+          "loopStart": 0,
+          "loopEnd": 128,
+          "startArgs": [
+            0,
+            0
+          ]
+        },
+        {
+          "wallMs": 7073.5,
+          "audioTime": 1.952,
+          "node": 6,
+          "outputGainNode": 5,
+          "buffer": 2,
+          "frames": 6144000,
+          "channels": 2,
+          "sampleRate": 48000,
+          "duration": 128,
+          "loop": true,
+          "loopStart": 0,
+          "loopEnd": 128,
+          "startArgs": [
+            0,
+            0
+          ]
+        }
+      ],
+      "failures": [],
+      "backend": {
+        "buffers": 2,
+        "bytes": 98304000,
+        "decoded": 2,
+        "starts": 2,
+        "players": 2,
+        "playing": 0,
+        "state": "running"
+      },
+      "jsHeap": {
+        "used": 195955949,
+        "total": 200021173,
+        "limit": 4395630592
+      }
+    },
+    "payload": {
+      "album": [],
+      "animal_relationship_memory": {},
+      "exploration": null,
+      "exploration_committed_serial": 0,
+      "first_fish_caught": false,
+      "holiday_day": 1,
+      "holiday_day_elapsed": 0,
+      "keepsakes": {},
+      "locale": "zh-CN",
+      "photo_moments": {},
+      "plant_day_planted": 0,
+      "plant_state": 0,
+      "plant_watered_day": -1,
+      "resident_rest": {
+        "cause": "legacy",
+        "day": 1,
+        "schema": 1
+      },
+      "tutorial_version": 0,
+      "version": 5,
+      "world_residents": {
+        "beibei": {
+          "adopted_clock": null,
+          "stage": "unmet"
+        },
+        "chicken": {
+          "settled_clock": {
+            "day": 1,
+            "elapsed": 0
+          },
+          "stage": "chick"
+        },
+        "revision": 1,
+        "schema": 3,
+        "turtle": {
+          "found_trip": "",
+          "stage": "unmet"
+        }
+      },
+      "world_weather": {
+        "episode": 0,
+        "remaining": 1108.3935546875,
+        "seed": 112138147,
+        "weather": "sun"
+      },
+      "yard_crops": {
+        "kind": "",
+        "planted_day": 0,
+        "revision": 0,
+        "schema": 1,
+        "watered_day": -1
+      },
+      "yard_gate_open": false,
+      "yard_inventory": {
+        "corn": 2,
+        "fish": {},
+        "grass": 0,
+        "ground": [],
+        "held": "",
+        "millet": 0,
+        "next_food_id": 1,
+        "revision": 1,
+        "schema": 4,
+        "wheat": 2
+      }
+    },
+    "inputs": [
+      {
+        "kind": "focus",
+        "trusted": true,
+        "x": null,
+        "y": null,
+        "key": null,
+        "visibility": "visible",
+        "t": 637.7000000476837
+      },
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 640,
+        "y": 368,
+        "key": null,
+        "visibility": "visible",
+        "t": 4991.700000047684
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 640,
+        "y": 368,
+        "key": null,
+        "visibility": "visible",
+        "t": 5088.799999952316
+      },
+      {
+        "kind": "keydown",
+        "trusted": true,
+        "x": null,
+        "y": null,
+        "key": "Escape",
+        "visibility": "visible",
+        "t": 42012.799999952316
+      },
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 640,
+        "y": 335,
+        "key": null,
+        "visibility": "visible",
+        "t": 42392.60000002384
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 640,
+        "y": 335,
+        "key": null,
+        "visibility": "visible",
+        "t": 42461.39999997616
+      },
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 640,
+        "y": 469,
+        "key": null,
+        "visibility": "visible",
+        "t": 42475.39999997616
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 640,
+        "y": 469,
+        "key": null,
+        "visibility": "visible",
+        "t": 42542.89999997616
+      }
+    ],
+    "errors": []
+  }
+]

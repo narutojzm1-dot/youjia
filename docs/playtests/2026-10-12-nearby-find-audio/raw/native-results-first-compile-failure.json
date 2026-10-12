@@ -1,0 +1,22 @@
+[
+  {
+    "source": "c874273bc16f6b99e43da49de8907008f52d44d9",
+    "name": "import",
+    "profile": "youjia-assistant-find16-e4a46e1cdb0340fc92fae6285d8a21de",
+    "workingTreeDiff": true,
+    "completionPattern": null,
+    "seconds": 41.7295058,
+    "exit": 0,
+    "status": "PASS"
+  },
+  {
+    "source": "c874273bc16f6b99e43da49de8907008f52d44d9",
+    "name": "nearby_find_audio",
+    "profile": "youjia-assistant-find16-d295adf8fb54441ab1c86fa9393df0d5",
+    "workingTreeDiff": true,
+    "completionPattern": "NEARBY_FIND_AUDIO checks=[1-9][0-9]* failures=0",
+    "seconds": 1.4868644,
+    "exit": 0,
+    "status": "FAIL"
+  }
+]

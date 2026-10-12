@@ -1,0 +1,62 @@
+[
+  {
+    "profile": "youjia-assistant-find16-047bc2c6d3774af7b97e801f96043f89",
+    "status": "PASS",
+    "exit": 0,
+    "seconds": 5.1438722,
+    "name": "import",
+    "completionPattern": null,
+    "workingTreeDiff": true,
+    "source": "c874273bc16f6b99e43da49de8907008f52d44d9"
+  },
+  {
+    "profile": "youjia-assistant-find16-4389a794dc524ae8b1d3b28d4782f2e7",
+    "status": "PASS",
+    "exit": 0,
+    "seconds": 1.6593255,
+    "name": "nearby_find_audio",
+    "completionPattern": "NEARBY_FIND_AUDIO checks=[1-9][0-9]* failures=0",
+    "workingTreeDiff": true,
+    "source": "c874273bc16f6b99e43da49de8907008f52d44d9"
+  },
+  {
+    "profile": "youjia-assistant-find16-9455d6a5276c4e7995d9d977f4aecdf2",
+    "status": "PASS",
+    "exit": 0,
+    "seconds": 7.4777792,
+    "name": "exploration_slice",
+    "completionPattern": "EXPLORATION SLICE PASS ([1-9][0-9]*)/\\1 failures=\\[\\]",
+    "workingTreeDiff": true,
+    "source": "c874273bc16f6b99e43da49de8907008f52d44d9"
+  },
+  {
+    "profile": "youjia-assistant-find16-6d8a91bba6414681ba13dfdb1c0253c6",
+    "status": "PASS",
+    "exit": 0,
+    "seconds": 5.4588088,
+    "name": "nearby_direct_pick",
+    "completionPattern": "NEARBY_DIRECT_PICK checks=[1-9][0-9]* failures=0",
+    "workingTreeDiff": true,
+    "source": "c874273bc16f6b99e43da49de8907008f52d44d9"
+  },
+  {
+    "profile": "youjia-assistant-find16-8ba9e352a2804e23a544f86225ef9afd",
+    "status": "PASS",
+    "exit": 0,
+    "seconds": 3.1187061,
+    "name": "exploration_trip_capacity",
+    "completionPattern": "EXPLORATION_TRIP_CAPACITY checks=[1-9][0-9]* failures=0",
+    "workingTreeDiff": true,
+    "source": "c874273bc16f6b99e43da49de8907008f52d44d9"
+  },
+  {
+    "profile": "youjia-assistant-find16-804281e03165445d9fcace8c5d6d2e61",
+    "status": "PASS",
+    "exit": 0,
+    "seconds": 3.3043561,
+    "name": "hud_pointer_input",
+    "completionPattern": "HUD_POINTER_INPUT checks=[1-9][0-9]* failures=0",
+    "workingTreeDiff": true,
+    "source": "c874273bc16f6b99e43da49de8907008f52d44d9"
+  }
+]

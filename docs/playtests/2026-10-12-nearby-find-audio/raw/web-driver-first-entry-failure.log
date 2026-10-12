@@ -1,0 +1,15 @@
+{"stage": "title-quiet", "shortStarts": 0, "rms": [0, 0]}
+{"stage": "yard", "shortStarts": 0, "rms": [0, 0, 0.011316831955081938, 0.035905404917821994]}
+{"stage": "music-environment-off", "shortStarts": 0, "rms": [0, 0, 0, 0]}
+Traceback (most recent call last):
+  File "D:\games\youjia-test\assistant-recovery\browser-near-find-audio-oct12.py", line 100, in <module>
+    offer=find_offer();before=count();x,y=pickup(offer)
+          ^^^^^^^^^^^^
+  File "D:\games\youjia-test\assistant-recovery\browser-near-find-audio-oct12.py", line 70, in find_offer
+    enter();v=payload();offer=v['exploration']['session']['offers'].get('gate','')
+    ^^^^^^^
+  File "D:\games\youjia-test\assistant-recovery\browser-near-find-audio-oct12.py", line 62, in enter
+    wait(lambda v:((v.get('exploration') or {}).get('session') or {}).get('state')=='active','near entry')
+  File "D:\games\youjia-test\assistant-recovery\browser-near-find-audio-oct12.py", line 46, in wait
+    raise AssertionError(label+' timed out')
+AssertionError: near entry timed out

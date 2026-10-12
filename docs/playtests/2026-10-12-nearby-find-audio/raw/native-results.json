@@ -1,0 +1,62 @@
+[
+  {
+    "generatedImportMetadata": "separate snapshot; five existing source imports normalized by Godot",
+    "status": "PASS",
+    "completionPattern": null,
+    "profile": "youjia-assistant-find16-d1a85b5041f441b0b4aaf567705cbc48",
+    "source": "a31b540d6292935debfe0d72b84f4fba68911db5",
+    "exit": 0,
+    "seconds": 11.3070332,
+    "name": "import"
+  },
+  {
+    "generatedImportMetadata": "separate snapshot; five existing source imports normalized by Godot",
+    "status": "PASS",
+    "completionPattern": "NEARBY_FIND_AUDIO checks=[1-9][0-9]* failures=0",
+    "profile": "youjia-assistant-find16-ebdbb99960804badaf7afc6a245e1d54",
+    "source": "a31b540d6292935debfe0d72b84f4fba68911db5",
+    "exit": 0,
+    "seconds": 1.8571132,
+    "name": "nearby_find_audio"
+  },
+  {
+    "generatedImportMetadata": "separate snapshot; five existing source imports normalized by Godot",
+    "status": "PASS",
+    "completionPattern": "EXPLORATION SLICE PASS ([1-9][0-9]*)/\\1 failures=\\[\\]",
+    "profile": "youjia-assistant-find16-2438fffa86274952a5ab5bab7cc962e9",
+    "source": "a31b540d6292935debfe0d72b84f4fba68911db5",
+    "exit": 0,
+    "seconds": 9.048881,
+    "name": "exploration_slice"
+  },
+  {
+    "generatedImportMetadata": "separate snapshot; five existing source imports normalized by Godot",
+    "status": "PASS",
+    "completionPattern": "NEARBY_DIRECT_PICK checks=[1-9][0-9]* failures=0",
+    "profile": "youjia-assistant-find16-94de5f7d57fa4a21841de174a5703e59",
+    "source": "a31b540d6292935debfe0d72b84f4fba68911db5",
+    "exit": 0,
+    "seconds": 5.9668763,
+    "name": "nearby_direct_pick"
+  },
+  {
+    "generatedImportMetadata": "separate snapshot; five existing source imports normalized by Godot",
+    "status": "PASS",
+    "completionPattern": "EXPLORATION_TRIP_CAPACITY checks=[1-9][0-9]* failures=0",
+    "profile": "youjia-assistant-find16-fc2f0d14c3854859a07f2e0e27a2b5bb",
+    "source": "a31b540d6292935debfe0d72b84f4fba68911db5",
+    "exit": 0,
+    "seconds": 2.9451601,
+    "name": "exploration_trip_capacity"
+  },
+  {
+    "generatedImportMetadata": "separate snapshot; five existing source imports normalized by Godot",
+    "status": "PASS",
+    "completionPattern": "HUD_POINTER_INPUT checks=[1-9][0-9]* failures=0",
+    "profile": "youjia-assistant-find16-3d4236448a784d6c962e84418e06241a",
+    "source": "a31b540d6292935debfe0d72b84f4fba68911db5",
+    "exit": 0,
+    "seconds": 3.2142744,
+    "name": "hud_pointer_input"
+  }
+]
