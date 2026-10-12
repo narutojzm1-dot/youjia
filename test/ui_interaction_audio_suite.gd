@@ -70,8 +70,7 @@ func run() -> void:
 	var streams_neg: Dictionary = audio.get("_streams")
 	var missing_stream: Variant = streams_neg.get("ui.suite_missing")
 	check(missing_stream == null, "missing resource does not register procedural fallback stream")
-	check(not bool(sfx_neg.play_open()) or true, "neg helper constructed")  # keep structure; real open still via sfx
-	# Re-check approved cues remain real streams (not replaced by tones).
+	# Approved cues remain real streams after the missing-path attempt.
 	var open_stream: Variant = streams_neg.get("ui.confirm")
 	check(open_stream != null, "approved open cue still registered after missing-path attempt")
 
