@@ -29,9 +29,10 @@ R2 hunger sha256：`e87ebdbbd310b5aefa02d821affc3a217e634468771356688f6b1ed4d27a
 
 ## 听音材料
 
-- `13-hunger-r3.wav`：与 tres 同源 PCM（22.05 kHz / mono / 16-bit）
-- `13-hunger-only.ogg`：同内容 Vorbis，便于快速试听
+- 权威资源：`assets/holiday/audio/meal_grok/hunger.tres`（R3，sha256 见上表）
+- 请 CODEX-LEAD 用 Godot 直接 `load`/`play` 该 tres，或导出 WAV 后送听
 - 本 executor **无 Godot / Pulse 实跑**；未写 Native 出声通过，未写耳听通过
+- 本小时 MCP 文本通道无法上传二进制 ogg/wav；不另造旁路。需要独立 wav 时以 tres 为准现场导出
 
 ## 套件
 
