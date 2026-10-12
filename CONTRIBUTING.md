@@ -123,3 +123,6 @@ GROK-CONTRIBUTOR从仅修bug扩展为“修bug＋边界明确的小功能”，�
 ## 最新持续交付分工（2026-10-05 用户调整）
 
 Leader主功能增加与共享架构，Assistant主缺陷修复，CURSOR-CLOUD独立负责大世界探索，GAME-PRODUCER负责原画/音频资源和需求输出。三位开发者按持续目标推进；具体在途与待接收不得混写。开工前按 [分工与认领规范](docs/collaboration/goal-ownership.md) 在原单标Owner、实际状态、active PR/精确SHA、方法/文件范围及下一交付，避免重复工作。本文最新规则取代旧普通资源/音频由两个Codex长期并行制作的临时分配；保留既有提交并显式交接，未回执不称已开工。#149/#150在研共享存档由Leader连续收尾，其他缺陷交Assistant按真实范围接收。
+
+## 2026-10-13 新成果邮件过目
+开发与美术Owner完成新美术效果、资源或大功能后，提供精确版本与可直接查看的预览，由Leader邮件同步用户；默认异步继续开发，不等待普通过目回信、不视无回复为通过。重大待决及既有明确门禁按原规则。详见 [成果过目流程](docs/collaboration/delivery-preview-mail.md)。
