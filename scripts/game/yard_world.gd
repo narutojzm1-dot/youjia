@@ -977,6 +977,9 @@ func action_target_key(action: Dictionary) -> String:
 
 
 func cancel_scene_feedback() -> void:
+	# Main menus stop World.tick; interrupt before that clock is frozen.
+	# The director keeps accepted saving operations until their durable result.
+	if pond_growth != null: pond_growth.cancel()
 	if _player != null: _player.clear_idle_rest()
 	if pond_story != null: pond_story.cancel()
 	_cancel_goose_mount_encounter()

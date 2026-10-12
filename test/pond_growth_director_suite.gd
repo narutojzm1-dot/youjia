@@ -130,6 +130,55 @@ func run() -> void:
 	check(store.get_growth_budget("lunch").available == 3,"menu interruption has no charge")
 	world.queue_free()
 	await process_frame
+	await check_real_menus()
 	print("POND_GROWTH_DIRECTOR checks=%d failures=%d" % [checks,failures.size()])
 	for failure in failures: push_error(failure)
 	quit(0 if failures.is_empty() else 1)
+
+# Main deliberately stops World.tick while these menus own input. Exercise the
+# actual open/close methods without manually ticking the blocked World.
+func check_real_menus() -> void:
+	var main = load("res://scenes/main.tscn").instantiate()
+	root.add_child(main)
+	await process_frame
+	main.set_process(false)
+	await main._start_holiday()
+	world = main._world
+	for menu in ["basket", "album", "pause"]:
+		for phase in ["walking", "working", "saving"]:
+			world.pond_growth.cancel()
+			world._consume_pending_action()
+			store.request_patch("fixture", fixture.duplicate(true))
+			check(await store.flush_pending(), "menu fixture " + menu + ":" + phase)
+			world.simulation_active = true
+			world.input_enabled = true
+			world.inventory_busy = false
+			world.get_player().position = Vector2(440,545)
+			period = "lunch"
+			check(begin(2.0), "Main job begins " + menu + ":" + phase)
+			if phase != "walking": approach()
+			if phase == "saving":
+				for i in 61: world.tick(1.0/30,Vector2.ZERO)
+			check(world.pond_growth.stage == phase, "Main stage before menu " + menu + ":" + phase)
+			var accepted: String = world.pond_growth.pending
+			match menu:
+				"basket": main._show_basket()
+				"album": main._show_album()
+				"pause": main._toggle_pause()
+			if phase == "saving":
+				check(not accepted.is_empty() and world.pond_growth.pending == accepted and world.pond_growth.stage == "saving", "menu retains accepted write " + menu)
+			else:
+				check(not world.pond_growth.busy() and world.pond_growth.pending.is_empty(), "menu cancels before any World tick " + menu + ":" + phase)
+			match menu:
+				"basket": main._hide_basket()
+				"album": main._hide_album()
+				"pause": main._toggle_pause()
+			check(await store.flush_pending(), "menu resolves outstanding writes " + menu + ":" + phase)
+			for i in 120: main._process(1.0/30)
+			check(await store.flush_pending(), "no late write " + menu + ":" + phase)
+			var spent: int = 1 if phase == "saving" else 0
+			check(store.get_growth_budget("lunch").available == 3 - spent, "AP unchanged or charged once " + menu + ":" + phase)
+			check(store.get_pond_edging().sections.size() == spent, "no resumed duplicate world result " + menu + ":" + phase)
+			check(int(store.get_keepsakes().get(STONE,0)) == 20 - spent, "materials unchanged or charged once " + menu + ":" + phase)
+	main.queue_free()
+	await process_frame
