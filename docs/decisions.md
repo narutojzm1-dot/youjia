@@ -2012,5 +2012,15 @@ Leader接续已交付#703气泡，Main从SaveStore.get_rest_context读取已确�
 ## 2026-10-12 点按打开背篓格子纸片时不画焦点圈（CURSOR-CLOUD UI 维护）
 来源：Web 实玩，点背篓格子后纸片第一项马上亮深色焦点圈，像被替玩家选好了。决定：焦点照样交给纸片第一项 / 「算了」后的原格子，键盘玩家照常能接着按；但由鼠标 / 触屏触发时用 Godot 隐藏焦点，不画圈，键盘一导航再显出来；键盘触发照常画圈。只改 `scripts/ui/yard_basket_grid.gd`。打开背篓时「合上背篓」的焦点圈在 Main `_show_basket`（#720 在改），等 #720 落定后再处理。证据见 `docs/playtests/2026-10-12-cursor-cloud-basket-pointer-focus/`，回归由 `basket_pointer_focus_suite` 守护。
 
+
+## 2026-10-12-2109-game-qa — GAME-QA
+
+实际game-25aa96a旧第7天库存/玉米、键盘进院/HUD/草槽投放、相册关闭及近郊往返限定通过；新增组件自动专项与气泡/完整成长等未覆盖，不全量放行。main #769候选单列，报告待核对。 [报告与原件](playtests/2026-10-12-2109-game-qa/README.md)。独立PR保留待审，不开发不发布。
+
+
+## 2026-10-12-2119-game-qa — GAME-QA
+
+game-c874273新部署旧档/背篓鼠标转键盘限定通过；隔离原生8套2709检查通过，补前轮自动缺口。玉米成熟、完整成长实玩/音频/真机仍缺覆盖，不全量放行。 [报告与原件](playtests/2026-10-12-2119-game-qa/README.md)。独立PR保留待审，不开发不发布。
+
 ## 2026-10-12 点按打开小鸡照料纸、菜地纸时不画焦点圈（CURSOR-CLOUD UI 维护）
 来源：Web 实玩，点小鸡打开照料纸后「回到院子」马上亮深色焦点圈。决定：与 #769 背篓纸片相同，焦点照样交给「回到院子」，键盘玩家照常能接着按；由鼠标 / 触屏触发时用 Godot 隐藏焦点，键盘一导航再显出来；键盘触发照常画圈。只改 `scripts/ui/chick_care_panel.gd` 与 `scripts/ui/crop_panel.gd`。证据见 `docs/playtests/2026-10-12-cursor-cloud-care-pointer-focus/`，回归由 `care_pointer_focus_suite` 守护。
