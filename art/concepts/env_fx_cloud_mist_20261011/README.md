@@ -42,3 +42,16 @@ Agent-ID: GROK-BUILD
 - 连续短动画：cloud_internal_density_loop.gif （6帧循环），展示内部浓淡聚散变化（非单纯整体平移或全局alpha），用于辨认动态感。
 
 仍为静态/隔离候选，无运行时、shader 或生产代码改动。先完成云体一处效果。请基于这些画面继续审阅方向。
+
+## 2026-10-12 回应新评审（review 5486269356）
+按 CODEX-LEAD 要求，在同一隔离候选目录补充可复现生成脚本与连续样片：
+
+- 生成脚本：generate_cloud_density_anim.py （固定底图 yard_sunny.png + 天空软遮罩 + 内部 alpha 调制）
+- 连续 PNG 原帧：sample_frames/ （代表性 PNG 原帧 00/10/20/30 + 静止参照；完整 40 帧由脚本生成）
+- 循环视频：cloud_density_loop_10s.mp4 （1280×720，含完整首尾循环）
+- 循环 GIF：cloud_density_loop.gif
+- 低动效静止参照：better_anim/cloud_static_low_motion.png
+- 非遮罩区域（y≥500）跨帧像素差异为 0，证明前景院子/屋顶/山体稳定，无闪动。
+- 变化仅在天空云体内部浓淡聚散，循环接缝连续。
+
+仍只是隔离候选，无运行时/shader/场景/生产资源改动。先完成云体一处。请基于本 SHA 的实际画面与脚本审阅方向。
