@@ -518,20 +518,31 @@ func _menu_default_button(menu: Control) -> Button:
 
 
 ## 院内底栏按钮平时不拿焦点：鼠标点过按钮后空格仍是互动，Web 上点击也由 _input 手动命中。
-## 纯键盘玩家原来打不开手帐、背篓、天气。Tab / Shift+Tab 只在轮转期间临时让按钮可聚焦并显示焦点框，
-## 回车/空格按下；方向键、WASD、鼠标或触屏一操作就放下焦点，按钮失焦即恢复不可聚焦。
+## 纯键盘玩家原来打不开手帐、背篓、天气，也够不着快捷栏格子。Tab / Shift+Tab 按画面从左到右轮转
+## 手帐、天气、背篓、快捷栏五格、行动、歇一会儿，只有轮到的那一个显示焦点框；回车/空格按下，
+## 方向键、WASD、鼠标或触屏一操作就放下。只认键盘轮转选中的那一个：鼠标点格子拿到的焦点不改空格互动。
+var _hud_keyboard_target: Button
+
+
+func _hud_chips() -> Array[Button]:
+	return [_album_chip, _weather_chip, _basket_chip, _action_button, _pause_button]
+
+
 func _hud_keyboard_buttons() -> Array[Button]:
+	var ring: Array[Button] = [_album_chip, _weather_chip, _basket_chip]
+	if _hold_hotbar != null and _hold_hotbar.is_visible_in_tree() and not _hold_hotbar.configuring:
+		ring.append_array(_hold_hotbar.slot_cells)
+	ring.append_array([_action_button, _pause_button])
 	var out: Array[Button] = []
-	for button: Button in [_album_chip, _weather_chip, _basket_chip, _action_button, _pause_button]:
+	for button: Button in ring:
 		if button != null and button.is_visible_in_tree() and not button.disabled and button.self_modulate.a > 0.0:
 			out.append(button)
 	return out
 
 
 func _hud_keyboard_focus() -> Button:
-	var focused := get_viewport().gui_get_focus_owner()
-	if focused != null and focused in [_album_chip, _weather_chip, _basket_chip, _action_button, _pause_button]:
-		return focused as Button
+	if _hud_keyboard_target != null and is_instance_valid(_hud_keyboard_target) and _hud_keyboard_target.has_focus():
+		return _hud_keyboard_target
 	return null
 
 
@@ -542,15 +553,20 @@ func _cycle_hud_focus(step: int) -> void:
 	var current := buttons.find(_hud_keyboard_focus())
 	var index := (current + step + buttons.size()) % buttons.size() if current >= 0 else (0 if step > 0 else buttons.size() - 1)
 	var button := buttons[index]
-	button.focus_mode = Control.FOCUS_ALL
+	if button in _hud_chips():
+		button.focus_mode = Control.FOCUS_ALL
 	if not button.has_meta(&"hud_keyboard_focus"):
 		button.set_meta(&"hud_keyboard_focus", true)
 		button.focus_exited.connect(_on_hud_button_focus_exited.bind(button))
+	_hud_keyboard_target = button
 	button.grab_focus()
 
 
 func _on_hud_button_focus_exited(button: Button) -> void:
-	button.focus_mode = Control.FOCUS_NONE
+	if button in _hud_chips():
+		button.focus_mode = Control.FOCUS_NONE
+	if _hud_keyboard_target == button:
+		_hud_keyboard_target = null
 
 
 func _focus_menu_default(event: InputEvent) -> bool:
