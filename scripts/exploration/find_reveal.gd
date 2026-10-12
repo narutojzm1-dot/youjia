@@ -6,6 +6,7 @@ extends Node2D
 
 # 用户2026-10-12批准听验16；原PR359 WAV逐字节接入，不合成或替换缺件。
 const SOUND_PATH := "res://assets/holiday/audio/exploration_find_get.wav"
+const BrowserBgmPlayer := preload("res://scripts/manus/browser_bgm_player.gd")
 const RISE := 0.35
 const HOLD := 0.9
 const FLY := 0.4
@@ -47,7 +48,7 @@ var sound: AudioStream
 var sound_plays := 0
 # Node2D 拿不到 UI 主题；不设时 ThemeDB.fallback_font 在 Web 上没有中文字形，名字会成方框
 var label_font: Font
-var _player: AudioStreamPlayer
+var _player: BrowserBgmPlayer
 var _name_slip: StyleBoxFlat
 var _application_active := true
 var _audio: Node
@@ -56,12 +57,21 @@ var _audio: Node
 func _ready() -> void:
 	if sound == null and ResourceLoader.exists(SOUND_PATH):
 		sound = load(SOUND_PATH) as AudioStream
-	_player = AudioStreamPlayer.new()
+	# Reuse the shipped browser renderer; native Web sample routing produced
+	# a nonzero source but zero destination PCM in the ordinary pickup check.
+	_player = BrowserBgmPlayer.new()
 	_player.bus = "SFX" if AudioServer.get_bus_index("SFX") >= 0 else "Master"
 	add_child(_player)
 	_audio = get_node("/root/AudioDirector")
 	get_node("/root/TuningStore").value_changed.connect(_on_audio_setting_changed)
 	visible = false
+
+
+func _exit_tree() -> void:
+	settle(true)
+	if _player != null:
+		_player.stream = null
+	BrowserBgmPlayer.release_cached_stream(sound)
 
 
 func is_active() -> bool:
@@ -106,7 +116,11 @@ func _sound_allowed() -> bool:
 		if index >= 0 and (AudioServer.is_bus_mute(index) or AudioServer.get_bus_volume_db(index) <= -80.0):
 			return false
 	if OS.has_feature("web"):
-		return _audio != null and not _audio.awaiting_gesture() and _audio.backend_state() == "running"
+		if _audio == null or _audio.awaiting_gesture() or _audio.backend_state() != "running":
+			return false
+		var backend := JavaScriptBridge.get_interface("__manusBgm")
+		var state: Variant = JSON.parse_string(str(backend.diagnostics())) if backend != null else null
+		return state is Dictionary and state.get("state", "") == "running"
 	return true
 
 
