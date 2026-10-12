@@ -8,6 +8,8 @@ var portrait: TextureRect
 var progress: ProgressBar
 var note: Label
 var close_button: Button
+## 最近一次按下的是鼠标 / 触屏：点按打开时焦点照样给「回到院子」，但先不画焦点圈，键盘一导航再显出来。
+var _pointer_input := false
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
@@ -79,7 +81,7 @@ func open() -> void:
 	visible = true
 	scroll.scroll_vertical = 0
 	refresh()
-	close_button.grab_focus()
+	close_button.grab_focus(_pointer_input)
 
 func refresh() -> void:
 	var value: Dictionary = SaveStore.get_chick_growth()
@@ -105,3 +107,10 @@ func _fit() -> void:
 	scroll.custom_minimum_size = Vector2(width - 40.0, minf(maxf(160.0, size.y - 72.0), column.get_combined_minimum_size().y))
 	paper.size = Vector2(width, scroll.custom_minimum_size.y + 40.0)
 	paper.position = (size - paper.size) * 0.5
+
+
+func _input(event: InputEvent) -> void:
+	if event is InputEventMouseButton or event is InputEventScreenTouch:
+		if event.pressed: _pointer_input = true
+	elif event is InputEventKey or event is InputEventJoypadButton:
+		if event.pressed: _pointer_input = false
