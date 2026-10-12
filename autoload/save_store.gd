@@ -258,6 +258,32 @@ func plan_meal(meal: String, eligible_recipes: Dictionary, rng: RandomNumberGene
 	return preload("res://scripts/game/meal_planner.gd").plan(_data, meal, eligible_recipes, rng)
 
 
+## Read-only foundation; caller supplies executable actions, never raw materials
+## as implied recipes. Does not start autonomous work or spend action points.
+func plan_growth_materials(eligible_actions: Dictionary, rng: RandomNumberGenerator) -> Dictionary:
+	return preload("res://scripts/game/growth_materials.gd").plan(_data, eligible_actions, rng)
+
+
+## Confirmed world projection, validated against matching action receipts.
+func get_pond_edging() -> Dictionary:
+	# Do not project orphan world results without their matching AP receipts.
+	if preload("res://scripts/game/growth_budget.gd").read(_data).is_empty(): return {}
+	return preload("res://scripts/game/pond_edging.gd").read(_data)
+
+
+func get_growth_budget(period: String) -> Dictionary:
+	return preload("res://scripts/game/growth_budget.gd").budget(_data, period)
+
+
+func request_pond_growth(expected: Dictionary, section: String, proposal: Dictionary, ap_cost: int, stones: int, experience: int) -> String:
+	var frozen_budget := expected.duplicate(true)
+	var frozen_proposal := proposal.duplicate(true)
+	return request_intent("growth", func(current: Dictionary) -> Variant:
+		var result := preload("res://scripts/game/growth_budget.gd").complete(current, frozen_budget, section, frozen_proposal, ap_cost, stones, experience)
+		if result.has("error"): return CoordinatorType.IntentRejection.new(result.error)
+		return result.candidate)
+
+
 ## The cooking director validates recipe/time before submitting this completion.
 ## Capture the cost now; the FIFO head validates both revisions and the game day.
 func request_meal_completion(revision: int, inventory_revision: int, day: int, meal: String, ingredients: Dictionary, progress: Dictionary = {}) -> String:

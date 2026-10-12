@@ -126,6 +126,7 @@ run_godot suite test/notice_column_clear_suite.gd
 
 run_godot suite test/hold_hotbar_mount_suite.gd
 run_godot suite test/hold_hotbar_armed_style_suite.gd
+run_godot suite test/hotbar_focus_ring_suite.gd
 run_godot suite test/painted_blink_suite.gd
 run_godot suite test/painted_rest_breath_suite.gd
 run_godot suite test/resting_eyelids_suite.gd
@@ -162,3 +163,8 @@ run_godot suite test/cooking_smoke_suite.gd
 run_godot suite test/house_cooking_suite.gd
 
 run_godot suite test/meal_audio_host_suite.gd
+
+run_godot suite test/growth_materials_suite.gd
+
+run_godot suite test/growth_budget_suite.gd
+run_godot suite test/pond_edging_view_suite.gd
