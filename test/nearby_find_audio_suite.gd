@@ -33,6 +33,8 @@ func run() -> void:
 	check(seed_value >= 0, "real route offers all four ordinary finds")
 	for size: Vector2i in [Vector2i(1280, 720), Vector2i(390, 844), Vector2i(844, 390)]:
 		await events(seed_value, size)
+	# AudioServer retires stopped native playback on its next mix tick.
+	await create_timer(0.15).timeout
 	print("NEARBY_FIND_AUDIO checks=", checks, " failures=", failures.size())
 	quit(0 if failures.is_empty() else 1)
 
@@ -169,3 +171,4 @@ func events(seed_value: int, size: Vector2i) -> void:
 	check(reveal.sound_plays == before, tag + "restoring and returning never replay success events")
 	scroll.free()
 	store.free()
+	await process_frame
