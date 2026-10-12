@@ -253,7 +253,7 @@ func _refresh_counts() -> void:
 
 func _apply_cell_style(cell: Button, selected_slot: bool, armed: bool, empty: bool = false, hot: bool = false) -> void:
 	var show_armed := selected_slot and armed
-	for state: String in ["normal", "hover", "pressed", "disabled", "focus"]:
+	for state: String in ["normal", "hover", "pressed", "disabled"]:
 		var box := StyleBoxFlat.new()
 		box.bg_color = SLOT_HOT if selected_slot or hot else (EMPTY_FILL if empty else SLOT_FILL)
 		box.border_color = SELECT_EDGE if selected_slot else (DROP_EDGE if hot else EDGE)
@@ -270,7 +270,7 @@ func _apply_cell_style(cell: Button, selected_slot: bool, armed: bool, empty: bo
 	focus.border_color = FOCUS_RING
 	focus.set_border_width_all(FOCUS_RING_PX)
 	focus.set_expand_margin_all(FOCUS_RING_OUTSET)
-	focus.set_corner_radius_all(10)
+	focus.set_corner_radius_all(8 + int(FOCUS_RING_OUTSET))
 	cell.add_theme_stylebox_override("focus", focus)
 
 
