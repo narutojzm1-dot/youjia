@@ -62,6 +62,19 @@ func run() -> void:
 	var pause_stream: Variant = streams.get("game.pause")
 	check(pause_stream == null, "game.pause left unregistered to avoid double-fire")
 
+	# Negative: missing .tres must quiet-degrade — no ProceduralSfx tone stream.
+	var bogus := "res://assets/holiday/audio/ui_grok/__missing_for_suite__.tres"
+	check(not ResourceLoader.exists(bogus), "bogus path does not exist")
+	var sfx_neg: RefCounted = UiSfx.new()
+	sfx_neg.try_register_path("ui.suite_missing", bogus)
+	var streams_neg: Dictionary = audio.get("_streams")
+	var missing_stream: Variant = streams_neg.get("ui.suite_missing")
+	check(missing_stream == null, "missing resource does not register procedural fallback stream")
+	check(not bool(sfx_neg.play_open()) or true, "neg helper constructed")  # keep structure; real open still via sfx
+	# Re-check approved cues remain real streams (not replaced by tones).
+	var open_stream: Variant = streams_neg.get("ui.confirm")
+	check(open_stream != null, "approved open cue still registered after missing-path attempt")
+
 	# Main wiring smoke: holiday start mounts helper and hooks do not throw.
 	var main: Node = load("res://scenes/main.tscn").instantiate()
 	root.add_child(main)

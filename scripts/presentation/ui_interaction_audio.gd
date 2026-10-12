@@ -3,6 +3,8 @@ extends RefCounted
 ## GROK #704: light UI interaction cues for basket / album / pause.
 ## Registers into AudioDirector; does not add a parallel player or browser bypass.
 ## game.pause stays empty so set_game_paused does not double-fire with these hooks.
+## Missing/failed cue load: quiet degrade only — never ProceduralSfx.tone fallback
+## (unapproved tones are outside locked 08/09/10 hearing hashes).
 
 const OPEN_PATH := "res://assets/holiday/audio/ui_grok/ui_open.tres"
 const CLOSE_PATH := "res://assets/holiday/audio/ui_grok/ui_close.tres"
@@ -25,9 +27,9 @@ func ensure_registered() -> void:
 	if _registered:
 		return
 	_registered = true
-	_register(CUE_OPEN, OPEN_PATH, 523.25)
-	_register(CUE_CLOSE, CLOSE_PATH, 392.0)
-	_register(CUE_PAGE, PAGE_PATH, 659.25)
+	_register(CUE_OPEN, OPEN_PATH)
+	_register(CUE_CLOSE, CLOSE_PATH)
+	_register(CUE_PAGE, PAGE_PATH)
 
 
 func play_open() -> bool:
@@ -45,22 +47,24 @@ func play_page() -> bool:
 	return _play(CUE_PAGE)
 
 
+## Test-only: attempt register of an explicit path (missing-asset negative checks).
+func try_register_path(cue_id: String, resource_path: String) -> void:
+	_register(cue_id, resource_path)
+
+
 # --script 套件在自动加载注册前编译本文件，不能直接写 AudioDirector 全局名。
 func _director() -> Node:
 	var tree: SceneTree = Engine.get_main_loop() as SceneTree
 	return tree.root.get_node("AudioDirector")
 
 
-func _register(cue_id: String, resource_path: String, fallback_hz: float) -> void:
+func _register(cue_id: String, resource_path: String) -> void:
 	var audio: Node = _director()
 	if bool(audio.call("register_cue", cue_id, resource_path)):
 		return
-	# Procedural fallback when the .tres is missing (should not happen in-tree).
-	var ProceduralSfx = load("res://scripts/manus/procedural_sfx.gd")
-	if ProceduralSfx == null:
-		return
-	var stream: AudioStream = ProceduralSfx.tone(fallback_hz, 0.09, 0.16, fallback_hz * 0.92)
-	audio.call("register_stream", cue_id, stream)
+	# Quiet degrade: resource missing/failed load — do NOT install ProceduralSfx.tone.
+	# Unapproved substitute tones are outside user-approved 08/09/10 locked hashes.
+	return
 
 
 func _play(cue_id: String) -> bool:
