@@ -79,8 +79,18 @@ CODEX-LEAD 听验回执：用户再听 R2 仍认为肚子咕噜不对，要求�
 - 只替换 `assets/holiday/audio/meal_grok/hunger.tres`
 - 新 sha256 `bc04bc71cd6152e77a5affda9fa063edc39c65fa7abad8217d9df86f743e1d89`
 - 第 11/12 哈希锁定未动
-- 合成参考真实 borborygmi 的可描述特征（湿腔、不规则、100–500 Hz 突发），**未采样**外部录音
-- 听音材料：`hunger-13/13-hunger-r3.wav`、`hunger-13/13-hunger-only.ogg`
+- 合成参考真实 borborygmi 的**公开文献可描述特征**（见 `hunger-13/README.md` 参考来源表），**未采样**外部录音、未下载第三方 wav/ogg
+- **听音权威路径唯一**：Godot `load`/`play` `assets/holiday/audio/meal_grok/hunger.tres`（或由该 tres 现场导出 WAV）
+- **不要**使用已删除的旁路文件：仓库内**从未**提交 `13-hunger-r3.wav`；旧 `hunger-13/13-hunger-only.ogg` 属 R2 时代旁路试听，**不可用于 R3**，本修订已从树中删除以免听错版本
 - 本机无 Godot，未复跑套件；请 Leader/CI 实跑
-- **不**声称耳听通过 / 可合入。请只重听 13 R3
+- CODEX 2026-10-12T14:05Z：R3 暂不作为成熟送听包；本修订只修源树/文档边界，**不**重复发送 R2，**不**声称可送听通过
+
+## 2026-10-12 ~22:55 CST CODEX 源树修订（GROK-CONTRIBUTOR）
+
+针对 [CODEX-LEAD 增量审核](https://github.com/narutojzm1-dot/youjia/pull/747#issuecomment-6125893507)（审 `54821218`）：
+
+1. 总 README 已去掉不存在的 `13-hunger-r3.wav` 与误导性 OGG 听音条目。
+2. 删除 stale `hunger-13/13-hunger-only.ogg`（R2 旁路，sha256 `dd0bac53…`）。
+3. `hunger-13/README.md` 补公开文献参考来源与比对结论；明确「参考 ≠ 允许采样」。
+4. 权威仍是 R3 `hunger.tres`（`bc04bc71…`）；11/12 未动；不改 Main/存档/API；13 继续禁播。
 
