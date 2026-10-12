@@ -1,0 +1,29 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+FOOD_SCENARIO_SEED 0
+FAIL: one of two sheep reaches and eats the shared grass
+FOOD_FAILURE_TRACE { "items": [{ "id": 3, "kind": "grass", "x": 510.0, "y": 508.0 }], "targets": { "sheep_a": 3 }, "waiting": {  }, "busy": false, "input": true, "inventory": { "corn": 2, "fish": {  }, "grass": 0, "ground": [{ "id": 3, "kind": "grass", "x": 510.0, "y": 508.0 }], "held": "", "millet": 0, "next_food_id": 4, "revision": 10, "schema": 4, "wheat": 2 }, "sheep_a": [(360.4029, 472.1343), "wander"], "sheep_b": [(460.0, 532.0), "rest"] }
+FAIL: two real competitors produce exactly one durable consumption
+FAIL: only the successful consumer receives a feeding cooldown
+FAIL: sheep_a commits consumption exactly once
+YARD_GROUND_FOOD_RUNTIME checks=74 failures=4
+ERROR: one of two sheep reaches and eats the shared grass
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] run (res://test/yard_ground_food_runtime_suite.gd:285)
+       [1] settle (res://test/yard_ground_food_runtime_suite.gd:19)
+ERROR: two real competitors produce exactly one durable consumption
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] run (res://test/yard_ground_food_runtime_suite.gd:285)
+       [1] settle (res://test/yard_ground_food_runtime_suite.gd:19)
+ERROR: only the successful consumer receives a feeding cooldown
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] run (res://test/yard_ground_food_runtime_suite.gd:285)
+       [1] settle (res://test/yard_ground_food_runtime_suite.gd:19)
+ERROR: sheep_a commits consumption exactly once
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] run (res://test/yard_ground_food_runtime_suite.gd:285)
+       [1] settle (res://test/yard_ground_food_runtime_suite.gd:19)

@@ -1,0 +1,21 @@
+{
+  "base": "4588a2c21dde693fe6f5c6944bf8427f18602da0",
+  "source_blobs": {
+    "scripts/game/house_sleep.gd": "ff0ef4ca2283c3a292b382020c3690ced7b2d9f3",
+    "scripts/game/yard_world.gd": "81d68a5770d059d2254ad62740c22862f4f3ccf2",
+    "scripts/game/yard_interaction.gd": "19dde51c6a0032c557d453376e5df25f2d376fb6",
+    "scripts/main.gd": "69fe55cd9fb93b36035cd7a3fb014440b7957942",
+    "localization/en.json": "2d1ab180e445353742ce064009b4a90866cf0db4",
+    "localization/zh-CN.json": "ec8f681c31ee215d8a181cc00da146a2ede8bbf2",
+    "test/house_cooking_suite.gd": "7d1468519948f33cdcecf2680db19168858853af"
+  },
+  "pck_sha256": "72eeb381f436d10272ad1a07c7f374430dbebcbb49746a6e6f261e8f41142667",
+  "export_exit": 0,
+  "checks": {
+    "house_cooking": 113,
+    "hud_pointer": 72,
+    "sleep_same_director": 154,
+    "hud_under_menu": "pass"
+  },
+  "limits": "ordinary desktop Web; no physical mobile or audio acceptance; brushing images precede only persistent hint addition"
+}

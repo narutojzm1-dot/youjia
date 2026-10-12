@@ -13,6 +13,8 @@ var scroll: ScrollContainer
 var column: VBoxContainer
 var _op := ""
 var _error := ""
+## 最近一次按下的是鼠标 / 触屏：点按打开时焦点照样给「回到院子」，但先不画焦点圈，键盘一导航再显出来。
+var _pointer_input := false
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
@@ -140,7 +142,7 @@ func open() -> void:
 	_error = ""
 	visible = true
 	refresh()
-	close_button.grab_focus()
+	close_button.grab_focus(_pointer_input)
 
 func is_saving() -> bool:
 	return not _op.is_empty()
@@ -155,3 +157,10 @@ func _rejected(op_id: String, _kind: String, code: String) -> void:
 	if SaveStore.persistence_state() != "unknown": _op = ""
 	_error = code
 	refresh()
+
+
+func _input(event: InputEvent) -> void:
+	if event is InputEventMouseButton or event is InputEventScreenTouch:
+		if event.pressed: _pointer_input = true
+	elif event is InputEventKey or event is InputEventJoypadButton:
+		if event.pressed: _pointer_input = false

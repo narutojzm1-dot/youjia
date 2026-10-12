@@ -126,7 +126,18 @@ func review():
  tap(Vector2(100,100))
  await frames(1)
  check(w._leading,"rejected empty tap does not toggle lead")
- tap(Vector2(780,480));await frames(240)
+ # A roaming llama may cover the old fixed (780,480) click. Select actual
+ # empty walkable ground before dispatching the same real viewport touch.
+ var walk_point := Vector2.ZERO
+ for x in range(450, 850, 40):
+  var candidate := Vector2(x, 495)
+  if p.position.distance_to(candidate) > 70.0 and Geometry2D.is_point_in_polygon(candidate, w.player_ground()) and YardInteraction.pointer(w, candidate).target.is_empty():
+   walk_point = candidate
+   break
+ check(walk_point != Vector2.ZERO, "lead walking fixture selects empty walkable ground")
+ var lead_start: Vector2 = p.position
+ tap(walk_point);await frames(240)
+ check(p.position.distance_to(lead_start) > 2.0, "touch on empty ground actually moves the leading traveler")
  check(w._leading and w.actor_named("llama").state=="lead","touch walks while lead remains active")
  touch_button("_action_button");await frames(1)
  check(not w._leading,"actual action button releases lead")

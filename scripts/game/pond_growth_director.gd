@@ -48,7 +48,7 @@ func available() -> bool:
 		and not world.inventory_busy and not world._leading and world._fish_state == world.FISH_IDLE \
 		and not player.carrying_grass and not world._millet_held and world._grain_held.is_empty() \
 		and world._fish_carry_type.is_empty() and world._goose_mount_phase < 0 \
-		and (world.house == null or not world.house.busy())
+		and (world.house == null or not world.house.owns_actor())
 
 func begin(id: String, station: Vector2, config: Dictionary, current_period: Callable) -> bool:
 	if busy() or not available() or world._has_walk_goal or not current_period.is_valid(): return false

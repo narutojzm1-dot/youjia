@@ -1,0 +1,21 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+FAILED construction reserves actor against house activity
+FAILED idle meal does not steal construction actor
+FAILED meal basket route reserves actor before house animation
+POND_GROWTH_DIRECTOR checks=224 failures=3
+ERROR: construction reserves actor against house activity
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] run (res://test/pond_growth_director_suite.gd:165)
+       [1] check_real_menus (res://test/pond_growth_director_suite.gd:224)
+ERROR: idle meal does not steal construction actor
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] run (res://test/pond_growth_director_suite.gd:165)
+       [1] check_real_menus (res://test/pond_growth_director_suite.gd:224)
+ERROR: meal basket route reserves actor before house animation
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] run (res://test/pond_growth_director_suite.gd:165)
+       [1] check_real_menus (res://test/pond_growth_director_suite.gd:224)

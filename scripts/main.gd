@@ -106,6 +106,8 @@ var _pause_panel: PanelContainer
 var _pause_box: VBoxContainer
 var _pause_columns: HBoxContainer
 var _pause_session: VBoxContainer
+var _meal_audio_host: Node
+var _meal_audio_focused := true
 var _pause_audio: VBoxContainer
 var _pause_title: Label
 var _resume_button: Button
@@ -419,6 +421,7 @@ func _process(delta: float) -> void:
 	elif _screen == "exploring" and _world != null and not _pause_screen.visible and not _confirm_screen.visible and not _save_problem_active:
 		_world.advance_world_time(delta)
 		_sync_path_rain(delta)
+	_sync_meal_audio()
 	var reduced := bool(TuningStore.get_value("ui.reduced_motion", false))
 	var lerp_rate := 12.0 if reduced else 3.2
 	_cam_zoom = lerpf(_cam_zoom, _cam_target_zoom, 1.0 - exp(-delta * lerp_rate))
@@ -588,6 +591,8 @@ func _focus_menu_default(event: InputEvent) -> bool:
 
 
 func _input(event: InputEvent) -> void:
+	if _world != null and _world.house != null and ((event is InputEventMouseButton and event.pressed) or (event is InputEventScreenTouch and event.pressed) or (event is InputEventKey and event.pressed and not event.echo)):
+		_world.house.player_activity()
 	if _chick_panel != null and _chick_panel.visible:
 		if event.is_action_pressed("pause") and not event.is_echo():
 			_hide_chick_care()
@@ -1383,7 +1388,24 @@ func _refresh_volume_labels() -> void:
 		_ambience_slider.set_value_no_signal(round(AudioDirector.ambience_gain() * 100.0))
 
 
+func _sync_meal_audio() -> void:
+	var active := _screen in ["game", "exploring"] and _world != null
+	if _meal_audio_host == null:
+		if not active: return
+		_meal_audio_host = preload("res://scripts/game/meal_audio_host.gd").new()
+		add_child(_meal_audio_host)
+	var blocked: bool = _pause_screen.visible or _album_screen.visible or _confirm_screen.visible or _basket_panel.visible or _crop_panel.visible or _chick_panel.visible or _save_problem_active
+	_meal_audio_host.sync(_world, SaveStore, active, blocked, _meal_audio_focused and AudioDirector.effects_playback_allowed())
+
+
 func _notification(what: int) -> void:
+	if what in [NOTIFICATION_APPLICATION_PAUSED, NOTIFICATION_APPLICATION_FOCUS_OUT]:
+		_meal_audio_focused = false
+		if _meal_audio_host != null: _meal_audio_host.suspend()
+	elif what in [NOTIFICATION_APPLICATION_RESUMED, NOTIFICATION_APPLICATION_FOCUS_IN]:
+		_meal_audio_focused = true
+	if what in [NOTIFICATION_APPLICATION_PAUSED, NOTIFICATION_APPLICATION_RESUMED, NOTIFICATION_APPLICATION_FOCUS_IN, NOTIFICATION_APPLICATION_FOCUS_OUT] and _world != null and _world.house != null:
+		_world.house.player_activity()
 	if what == NOTIFICATION_APPLICATION_PAUSED:
 		AudioDirector.set_application_active(false)
 	elif what == NOTIFICATION_APPLICATION_RESUMED:
@@ -1491,6 +1513,7 @@ func _leave_exploration() -> void:
 
 
 func _clear_world(save_progress: bool = true) -> void:
+	if _meal_audio_host != null: _meal_audio_host.suspend()
 	if _night_sky_overlay != null: _night_sky_overlay.visible = false
 	_yard_night_sky = null
 	_path_night_sky = null
@@ -1644,7 +1667,7 @@ func _hide_crops() -> void:
 func _show_basket() -> void:
 	if _chick_panel != null and _chick_panel.visible: return
 	if _crop_panel != null and _crop_panel.visible: return
-	if _world != null and _world.house != null and _world.house.busy(): return
+	if _world != null and _world.house != null and _world.house.request_player_intent({"kind":"basket"}): return
 	if _screen != "game" or _world == null or _pause_screen.visible or _album_screen.visible:
 		return
 	_cancel_photo_arrivals()
@@ -1961,6 +1984,7 @@ func _on_save_rejected(op_id: String, kind: String, code: String) -> void:
 		_save_exploration_scopes.erase(op_id)
 		_save_exploration_coverage.erase(op_id)
 		return
+	if kind == "meal" and code.begins_with("MEAL_") and not _save_durable_ops.has(op_id): return
 	if kind == "crops" and code.begins_with("CROP_") and not _save_durable_ops.has(op_id): return
 	if kind == "inventory" and code == "BASKET_SEED_RESERVED" and not _save_durable_ops.has(op_id): return
 	if kind == "decor" and not _save_durable_ops.has(op_id) and code in ["DECOR_CHANGED", "DECOR_OCCUPIED", "DECOR_EMPTY", "DECOR_INVALID", "DECOR_LIMIT"]:
@@ -2108,7 +2132,7 @@ func _retry_save() -> void:
 	if _world != null and _world.house != null and _world.house.failed:
 		var coverage := {}
 		for old_id in _save_problems:
-			if _save_problems[old_id].kind == "house-sleep": coverage[old_id] = _save_problems[old_id].duplicate(true)
+			if _save_problems[old_id].kind in ["house-sleep", "meal"]: coverage[old_id] = _save_problems[old_id].duplicate(true)
 		var next: String = _world.house.retry()
 		if not next.is_empty(): _save_retry_coverage[next] = {"problems":coverage,"untracked_revision":-1}
 		return
@@ -2601,7 +2625,7 @@ func _sync_hold_hotbar_visibility() -> void:
 
 
 func _on_hold_withdraw(kind: String) -> void:
-	if _world != null and _world.house != null and _world.house.busy(): return
+	if _world != null and _world.house != null and _world.house.request_player_intent({"kind":"basket"}): return
 	if _inventory == null or kind.is_empty() or _inventory.busy():
 		return
 	_inventory.request("withdraw", kind)
@@ -3631,4 +3655,3 @@ func _sync_resident_bark_avoidance() -> void:
 	_resident_bubble.avoid_rect = Rect2()
 	if _crop_panel != null and _crop_panel.visible and _crop_panel.paper != null:
 		_resident_bubble.avoid_rect = _crop_panel.paper.get_global_rect()
-

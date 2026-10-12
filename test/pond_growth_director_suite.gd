@@ -48,6 +48,8 @@ func reach_stage(wanted: String) -> void:
 func capture(label: String) -> void:
 	var output := OS.get_environment("YOUJIA_DIRECTOR_CAPTURE")
 	if output.is_empty(): return
+	# CPUParticles use real render time, unlike the accelerated world fixture.
+	if label == "integrated-dinner": await create_timer(3.0).timeout
 	await process_frame
 	await process_frame
 	await RenderingServer.frame_post_draw
@@ -157,6 +159,7 @@ func run() -> void:
 	reach_stage("taking")
 	check(not world.pond_growth.busy() and not world.pond_growth.material.visible,"stale material plan cancels before pickup")
 	check(store.get_pond_edging().sections.is_empty() and store.get_growth_budget("lunch").available == 3,"stale retrieval has no world or AP result")
+	await check_meal_reservation()
 	world.queue_free()
 	await process_frame
 	await check_real_menus()
@@ -221,3 +224,68 @@ func check_real_menus() -> void:
 			check(int(store.get_keepsakes().get(STONE,0)) == 20 - spent, "materials unchanged or charged once " + menu + ":" + phase)
 	main.queue_free()
 	await process_frame
+
+# Integrate the actual house director with construction, including route-only
+# reservations before either director enters a visible animation stage.
+func check_meal_reservation() -> void:
+	await reset()
+	var food: Dictionary = fixture.duplicate(true)
+	food[Inventory.FIELD].millet = 3
+	food.holiday_day_elapsed = 320.0
+	store.request_patch("meal-construction-fixture", food)
+	check(await store.flush_pending(), "dinner fixture persisted")
+	world._day_elapsed = 320.0
+	period = "dinner"
+	check(begin(30.0), "lunch carry starts dinner construction")
+	approach()
+	check(world.pond_growth.stage == "working", "meal overlap test reaches production")
+	check(not world.house.available(), "construction reserves actor against house activity")
+	world.house.consider_meal(8.1, Vector2.ZERO)
+	check(world._pending_interaction != "meal_basket", "idle meal does not steal construction actor")
+	world.house.cancel_preparation()
+	world.pond_growth.cancel()
+	world.house.meal_cooldown = 0.0
+	world.house.consider_meal(8.1, Vector2.ZERO)
+	check(world._pending_interaction == "meal_basket", "released actor starts dinner retrieval")
+	check(not world.pond_growth.available(), "meal basket route reserves actor before house animation")
+	for i in 2400:
+		world.tick(1.0 / 30.0, Vector2.ZERO)
+		if not world.house.cooking_plan.is_empty():
+			check(not world.pond_growth.available(), "selected ingredients reserve actor through house route")
+			break
+	world.house.meal_rng.seed = 1
+	var cooking_captured := false
+	for i in 3600:
+		world.tick(1.0 / 30.0, Vector2.ZERO)
+		if world.house.stage == "cook" and world.house.seconds > 3.0 and not cooking_captured:
+			await capture("integrated-dinner")
+			cooking_captured = true
+		if not world.house.pending.is_empty(): await store.flush_pending()
+		if not world.house.busy() and world.house.cooking_plan.is_empty(): break
+	check(store.get_meal_ledger().receipts.size() == 2, "real dinner commits one additional receipt")
+	check(store.get_yard_inventory().millet == 2, "real dinner consumes exactly one ingredient")
+	check(store.get_growth_budget("dinner").available == 3, "real dinner grants two AP plus one carried AP")
+	world._consume_pending_action()
+	check(begin(), "construction resumes after real dinner")
+	approach()
+	for i in 61: world.tick(1.0 / 30.0, Vector2.ZERO)
+	check(await store.flush_pending(), "post-dinner construction saved")
+	check(store.get_growth_budget("dinner").available == 2, "post-dinner construction spends one AP")
+	var disk: Dictionary = preload("res://scripts/persistence/save_files.gd").new().read_record(store.SAVE_PATH).get("data", {})
+	check(Meals.read(disk).receipts.size() == 2, "meal receipts survive disk read")
+	check(preload("res://scripts/game/growth_budget.gd").budget(disk, "dinner").get("available", -1) == 2, "AP survives disk read")
+	check(disk.get("keepsakes", {}).get(STONE, -1) == 19, "material spent exactly once on disk")
+	check(disk.get("pond_edging", {}).get("sections", {}).get("rim_04", {}).get("experience", 0) == 1, "world result and experience survive disk read")
+	world.queue_free()
+	await process_frame
+	store._load()
+	world = load("res://scripts/game/yard_world.gd").new()
+	world.setup()
+	root.add_child(world)
+	await process_frame
+	check(store.get_meal_ledger().receipts.size() == 2 and store.get_yard_inventory().millet == 2, "fresh native load restores meal and inventory")
+	check(store.get_growth_budget("dinner").available == 2, "fresh native load preserves AP without regrant")
+	check(world.pond_edging_view.visuals.has("rim_04") and not world.pond_growth.busy(), "reopened world projects confirmed stones without restarting work")
+	world.simulation_active = true
+	world.tick(0.0, Vector2.ZERO)
+	await capture("integrated-reopened")

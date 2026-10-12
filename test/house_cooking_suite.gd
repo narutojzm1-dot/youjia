@@ -1,0 +1,286 @@
+extends SceneTree
+const Schedule := preload("res://scripts/game/meal_schedule.gd")
+const Inventory := preload("res://scripts/inventory/yard_inventory.gd")
+var failures: Array[String] = []
+var checks := 0
+var main: Node
+var world: Node2D
+var store: Node
+var captured := {}
+var seen_stages := {}
+
+func _initialize() -> void: call_deferred("run")
+func check(ok: bool, label: String) -> void:
+	checks += 1
+	if not ok: failures.append(label)
+
+func step_until(target: String, frames: int = 2400) -> bool:
+	for i in frames:
+		world.tick(1.0 / 30.0, Vector2.ZERO)
+		main._sync_meal_audio()
+		await process_frame
+		if not world.house.pending.is_empty(): await store.flush_pending()
+		var stage: String = world.house.stage
+		seen_stages[stage] = true
+		var folder := OS.get_environment("YOUJIA_COOK_CAPTURE")
+		if not folder.is_empty() and stage in ["take", "open", "cook", "balcony", "out"] and not captured.has(stage):
+			if (stage == "take" and world.house.seconds > 0.4) or (stage == "open" and world.house.seconds > 0.7) or (stage == "cook" and world.house.seconds > 3.0) or (stage == "balcony" and world.house.balcony.stage == "activity" and world.house.balcony.seconds > 1.0) or (stage == "out" and world.house.seconds > 1.0):
+				main._process(0.0)
+				await RenderingServer.frame_post_draw
+				root.get_texture().get_image().save_jpg(folder.path_join(stage + ".jpg"), 0.8)
+				captured[stage] = true
+		if stage == target: return true
+	return false
+
+func brush_seed(wanted: bool) -> int:
+	var rng := RandomNumberGenerator.new()
+	for seed_value in 100:
+		rng.seed = seed_value
+		if (rng.randf() < 0.8) == wanted: return seed_value
+	return -1
+
+func fixture(elapsed: float, millet: int = 3) -> void:
+	var inv := Inventory.empty()
+	inv.millet = millet
+	store.request_patch("cooking-fixture", {"holiday_day": 2, "holiday_day_elapsed": elapsed,
+		"resident_rest": {"schema": 1, "day": 2, "cause": "awake"},
+		"meal_ledger": {"schema": 1, "revision": 0, "receipts": []}, Inventory.FIELD: inv})
+	check(await store.flush_pending(), "fixture durably written")
+	world.holiday_day = 2
+	world._day_elapsed = elapsed
+	world.house.meal_idle = 0.0
+	world.house.meal_cooldown = 0.0
+	world.debug_place_player(Vector2(380, 520))
+
+func run() -> void:
+	var isolated := OS.get_environment("YOUJIA_TEST_ISOLATED_DATA").replace("\\", "/").to_lower()
+	if isolated.is_empty() or not OS.get_user_data_dir().replace("\\", "/").to_lower().begins_with(isolated.trim_suffix("/") + "/"):
+		quit(2)
+		return
+	for hours: Array in [[7.0,"breakfast"],[10.0,""],[12.0,"lunch"],[15.0,""],[18.0,"dinner"],[21.0,""]]:
+		check(Schedule.meal_at((hours[0] - 6.0) / 24.0) == hours[1], "meal window boundary")
+	check(not Schedule.RECIPES.has("wheat") and not Schedule.RECIPES.has("odd"), "no unmilled wheat or unusual fish recipes")
+	store = root.get_node("SaveStore")
+	main = load("res://scenes/main.tscn").instantiate()
+	root.add_child(main)
+	for i in 3: await process_frame
+	await main._start_holiday()
+	main.set_process(false)
+	world = main._world
+	check(world.house.smoke == null, "unused house allocates no cooking particles")
+	await fixture(50.0)
+	world.get_player().sync_grass(true)
+	world.house.begin(true)
+	check(not world.house.busy() and not world.house.meal_ingredient.visible, "held item cannot overlap a second cooking ingredient")
+	world.get_player().sync_grass(false)
+	world.house.meal_cooldown = 0.0
+	world.house.consider_meal(10.0, Vector2.RIGHT)
+	check(not world._has_walk_goal and not world.house.busy(), "manual movement prevents auto meal")
+	world.input_enabled = false
+	world.house.consider_meal(10.0, Vector2.ZERO)
+	check(not world._has_walk_goal, "modal input block prevents auto meal")
+	world.input_enabled = true
+	world.house.consider_meal(8.1, Vector2.ZERO)
+	check(world._has_walk_goal and world._pending_interaction == "meal_basket", "idle meal routes to physical basket")
+	check(world.get_player().position.distance_to(Vector2(380,520)) < 1.0, "meal request never teleports")
+	check(await step_until("take"), "meal first reaches physical basket")
+	check(world.get_player().position.distance_to(world.house.Basket.APPROACH) < 18.0, "retrieval stays at real basket approach")
+	check(world.house.meal_ingredient.visible and store.get_yard_inventory().millet == 3, "basket pickup is visible without predebit")
+	var picked: Dictionary = world.house.cooking_plan.duplicate(true)
+	check(await step_until("porch"), "chosen meal enters the porch")
+	check(world.house.cooking_plan == picked, "walk retains exact selected ingredient and revisions")
+	world.house._sync_meal_ingredient()
+	check(world.house.meal_ingredient.visible and world.house.meal_ingredient.texture.resource_path.ends_with("millet.png"), "porch carries the selected millet")
+	check(world.house.meal_ingredient.global_position.distance_to(world.get_player().grass_hand_global_position()) < 0.01, "ingredient follows actual hand anchor")
+	check(world.ground_food.held().is_empty() and store.get_yard_inventory().millet == 3, "ingredient visual neither changes held inventory nor predebits")
+	var original_ingredients: Dictionary = world.house.cooking_plan.ingredients.duplicate(true)
+	world.house.cooking_plan.ingredients = {"medium": 1}
+	world.house._sync_meal_ingredient()
+	check(world.house.meal_ingredient.texture.resource_path.ends_with("ground_fish.png"), "fish meal displays fish rather than grain")
+	world.house.cooking_plan.ingredients = original_ingredients
+	world.house._sync_meal_ingredient()
+	check(await step_until("cook"), "walk, open, enter, close reaches cooking")
+	check(not world.house.meal_ingredient.visible, "closed room hides ingredient")
+	var meal_arrival_elapsed: float = world._day_elapsed
+	check(main._meal_audio_host.leaf.is_cooking(), "production cook stage starts audio")
+	check(not world.get_player().visible and world.house.smoke.is_cooking(), "indoor cook hides one actor and emits smoke")
+	check(store.get_meal_ledger().receipts.is_empty() and store.get_yard_inventory().millet == 3, "unconfirmed cooking does not debit or grant")
+	world.house.meal_rng.seed = brush_seed(true)
+	check(await step_until(""), "confirmed cooking and optional balcony returns to yard")
+	check(world.get_player().visible and world.get_player().modulate.a == 1.0, "traveller restored after cooking")
+	check(seen_stages.has("balcony") and world.house.balcony.activity == "brush", "80-percent branch uses brushing, not morning activity rotation")
+	check(store.get_holiday_day() == 2 and world.holiday_day == 2, "meal never advances to tomorrow")
+	check(store.get_meal_ledger().receipts.size() == 1 and store.get_meal_ledger().receipts[0].earned == 0, "fatigued breakfast completes once with zero grant")
+	check(store.get_yard_inventory().millet == 2, "exactly one ingredient consumed")
+	check(store.get_growth_budget("breakfast").get("available", -1) == 0, "production zero-AP breakfast remains a valid growth budget")
+	check(not world.house.smoke.is_cooking(), "smoke stops after meal")
+	check(not main._meal_audio_host.leaf.is_cooking(), "production confirmed meal stops cook audio")
+	check(not world.house.meal_ingredient.visible, "returning traveller has no ingredient ghost")
+	store._load()
+	check(is_equal_approx(store.get_holiday_day_elapsed(), meal_arrival_elapsed), "meal arrival clock persists atomically with receipt after reopen")
+	check(store.get_meal_ledger().receipts.size() == 1 and store.get_yard_inventory().millet == 2, "native reopen preserves receipt and stock")
+	check(store.get_growth_budget("breakfast").get("available", -1) == 0, "native reopen does not grant tired breakfast AP")
+	world.house.meal_cooldown = 0.0
+	world.house.consider_meal(9.0, Vector2.ZERO)
+	check(not world._has_walk_goal and not world.house.busy(), "same breakfast cannot auto repeat after reload")
+	if not OS.get_environment("YOUJIA_COOK_CAPTURE").is_empty():
+		main.queue_free()
+		await process_frame
+		print("HOUSE_COOKING_CAPTURE failures=%d" % failures.size())
+		quit(0 if failures.is_empty() else 1)
+		return
+	# Real input resets the whole idle interval, including panels which stop world.tick.
+	await fixture(175.0)
+	world.house.consider_meal(7.0, Vector2.ZERO)
+	main._show_basket()
+	main._hide_basket()
+	world.house.consider_meal(1.1, Vector2.ZERO)
+	check(not world._has_walk_goal and world.house.meal_idle < 2.0, "basket close cannot reuse seven idle seconds")
+	world.house.meal_idle = 7.0
+	var key := InputEventKey.new()
+	key.keycode = KEY_A
+	key.pressed = true
+	main._input(key)
+	check(world.house.meal_idle == 0.0, "actual key press clears meal idle")
+	world.house.meal_idle = 7.0
+	main._notification(MainLoop.NOTIFICATION_APPLICATION_RESUMED)
+	check(world.house.meal_idle == 0.0, "foreground return clears meal idle")
+	world.house.consider_meal(8.1, Vector2.ZERO)
+	check(world._pending_interaction == "meal_basket", "first leg starts without reserving food")
+	world.request_pointer_action(Vector2(470, 540))
+	check(world._pending_interaction != "meal_basket" and world.house.meal_cooldown == 30.0, "one click cancels first leg with thirty-second cooldown")
+	world._consume_pending_action()
+	world.house.consider_meal(9.0, Vector2.ZERO)
+	check(not world._has_walk_goal, "cancelled first leg does not restart after eight seconds")
+	await fixture(175.0)
+	world.house.consider_meal(8.1, Vector2.ZERO)
+	check(await step_until("take"), "pointer handover reaches taking stage")
+	check(world.primary_action().label == "action.meal_cancel", "taking offers cook-later action")
+	check(world.hint_context() == "notice.meal.take", "taking has persistent stage hint")
+	world.request_pointer_action(Vector2(470, 540))
+	check(not world.house.busy() and world._has_walk_goal, "taking releases and applies original pointer in one click")
+	world._consume_pending_action()
+	await fixture(175.0)
+	world.house.consider_meal(8.1, Vector2.ZERO)
+	check(await step_until("cook"), "indoor handover starts cooking")
+	check(world.primary_action().label == "action.meal_return", "indoor meal offers return action")
+	check(world.hint_context() == "notice.meal.cook", "cooking has persistent stage hint")
+	world.request_pointer_action(Vector2(430, 540))
+	world.request_pointer_action(Vector2(470, 540))
+	check(not world.get_player().visible and world.house.stage == "wake", "indoor click does not teleport hidden actor")
+	check(await step_until(""), "one click returns through door")
+	await process_frame
+	check(world._has_walk_goal and world._walk_goal.distance_to(Vector2(470, 540)) < 1.0, "only latest destination executes after safe exit")
+	check(store.get_yard_inventory().millet == 3 and store.get_meal_ledger().receipts.is_empty(), "pointer cancellation preserves food and receipt")
+	world._consume_pending_action()
+	await fixture(175.0)
+	world.house.consider_meal(8.1, Vector2.ZERO)
+	check(await step_until("cook"), "basket handover starts cooking")
+	main._show_basket()
+	check(not main._basket_panel.visible, "basket waits for safe door exit")
+	check(await step_until(""), "basket handover exits house")
+	await process_frame
+	check(main._basket_panel.visible, "original basket click opens after exit")
+	main._hide_basket()
+	await fixture(175.0)
+	world.house.consider_meal(8.1, Vector2.ZERO)
+	check(await step_until("cook"), "brushing handover starts cooking")
+	world.house.meal_rng.seed = brush_seed(true)
+	check(await step_until("balcony"), "confirmed meal reaches brushing")
+	world.request_pointer_action(Vector2(470, 540))
+	check(main._cam_target_zoom == 1.0, "balcony click releases camera immediately")
+	check(await step_until(""), "brushing click returns normally")
+	await process_frame
+	check(world._has_walk_goal and store.get_yard_inventory().millet == 2 and store.get_meal_ledger().receipts.size() == 1, "brushing handover retains original single confirmed meal")
+	world._consume_pending_action()
+	# Taking and carrying are interruptible, with no inventory reservation.
+	await fixture(175.0)
+	world.house.consider_meal(8.1, Vector2.ZERO)
+	check(await step_until("take"), "cancel scenario reaches basket")
+	world.house.skip_balcony()
+	check(not world.house.busy() and world.house.cooking_plan.is_empty() and not world.house.meal_ingredient.visible, "cancel at basket immediately releases traveller and prop")
+	check(store.get_yard_inventory().millet == 3 and store.get_meal_ledger().receipts.is_empty(), "basket cancellation neither debits nor grants")
+	await fixture(175.0)
+	world.house.consider_meal(8.1, Vector2.ZERO)
+	check(await step_until("take"), "walking cancel fetches ingredient")
+	world.house.tick(1.1)
+	check(world._pending_interaction == "house_meal" and not world.house.busy(), "picked ingredient uses ordinary route from basket to house")
+	world.tick(0.1, Vector2.RIGHT)
+	check(world.house.cooking_plan.is_empty() and not world.house.meal_ingredient.visible and not world._has_walk_goal, "manual walking cancels carried meal immediately")
+	check(store.get_yard_inventory().millet == 3, "manual interruption returns virtual ingredient without changing stock")
+	await fixture(175.0)
+	world.house.consider_meal(8.1, Vector2.ZERO)
+	check(await step_until("take"), "stale carry fetches ingredient")
+	world.house.tick(1.1)
+	var carried_stock: Dictionary = store.get_yard_inventory()
+	carried_stock.revision += 1
+	carried_stock.millet = 2
+	store.request_patch("stock-during-carry", {Inventory.FIELD:carried_stock})
+	check(await store.flush_pending(), "stock change during carry committed")
+	world.tick(0.1, Vector2.ZERO)
+	check(world.house.cooking_plan.is_empty() and not world.house.busy() and not world.house.meal_ingredient.visible, "stale carried plan cancels instead of rerolling food")
+	check(store.get_meal_ledger().receipts.is_empty() and store.get_yard_inventory().millet == 2, "stale carried plan never consumes an extra ingredient")
+	await fixture(374.0)
+	world.debug_place_player(world.house.Basket.APPROACH)
+	world.house.take_from_basket()
+	check(world.house.stage == "take", "late meal can pick up during valid window")
+	world.house.tick(1.1)
+	world._day_elapsed = 375.1
+	world.tick(0.1, Vector2.ZERO)
+	check(not world.house.busy() and world.house.cooking_plan.is_empty() and world._pending_interaction.is_empty(), "deadline during carry cancels without entering sleep")
+	check(world.holiday_day == 2 and store.get_yard_inventory().millet == 3 and store.get_meal_ledger().receipts.is_empty(), "carry deadline preserves day, ingredients and meal receipts")
+	await fixture(325.0)
+	world.debug_place_player(world.house.APPROACH)
+	world.house.begin()
+	check(await step_until("cook"), "dinner starts")
+	seen_stages.clear()
+	world.house.meal_rng.seed = brush_seed(false)
+	check(await step_until(""), "20-percent direct exit branch completes")
+	check(not seen_stages.has("balcony") and store.get_meal_ledger().receipts[0].earned == 1, "direct exit omits brushing without losing fatigue-adjusted dinner")
+	check(store.get_growth_budget("dinner").get("available", -1) == 1, "production dinner receipt supplies growth AP exactly once")
+	await fixture(175.0)
+	world.debug_place_player(world.house.APPROACH)
+	world.house.begin()
+	check(await step_until("cook"), "lunch cooking starts")
+	world.house.skip_balcony()
+	check(not world.house.meal_ingredient.visible, "cancel hides ingredient immediately")
+	check(await step_until(""), "player interrupts uncommitted meal and exits")
+	check(store.get_yard_inventory().millet == 3 and store.get_meal_ledger().receipts.is_empty(), "interrupted meal keeps all food and grants nothing")
+	await fixture(175.0)
+	world.debug_place_player(world.house.APPROACH)
+	world.house.begin()
+	check(await step_until("cook"), "concurrent stock scenario enters cooking")
+	var changed: Dictionary = store.get_yard_inventory()
+	changed.revision += 1
+	changed.millet = 2
+	store.request_patch("concurrent-stock", {Inventory.FIELD:changed})
+	check(await store.flush_pending(), "concurrent inventory change lands")
+	check(await step_until(""), "stale plan rejects and restores actor")
+	check(store.get_yard_inventory().millet == 2 and store.get_meal_ledger().receipts.is_empty(), "rejected meal neither rerolls nor double consumes")
+	check(not main._save_problem_active and not world.house.failed, "stale inventory is a domain refusal, not a save modal that traps the hidden actor")
+	# A real autonomous approach crosses the dinner deadline before arrival.
+	await fixture(374.9)
+	world.house.consider_meal(8.1, Vector2.ZERO)
+	check(world._pending_interaction == "meal_basket", "late dinner queues only basket meal intent")
+	check(world.primary_action().target == "meal_basket", "HUD preserves queued meal intent")
+	for frame in 1800:
+		world.tick(1.0 / 30.0, Vector2.ZERO)
+		await process_frame
+		if not world._has_walk_goal and world._pending_interaction.is_empty(): break
+	check(world.get_player().position.distance_to(world.house.Basket.APPROACH) < 18.0, "late meal reaches basket before deadline revalidation")
+	check(world._day_elapsed >= 375.0 and not world.house.busy(), "expired dinner stays outside instead of starting sleep")
+	check(await store.flush_pending(), "late arrival pending saves settle")
+	check(store.get_holiday_day() == 2 and world.holiday_day == 2 and store.get_rest_context().cause == "awake", "autonomous late arrival does not advance day or grant sleep")
+	check(store.get_meal_ledger().receipts.is_empty() and store.get_yard_inventory().millet == 3, "expired meal changes neither receipt nor ingredients")
+	world.debug_place_player(world.house.APPROACH)
+	world._interact_with_target("house_door")
+	check(world.house.busy() and world.house.cooking_plan.is_empty(), "explicit player door action still starts nighttime sleep")
+	check(await step_until(""), "explicit sleep completes normally")
+	check(store.get_holiday_day() == 3 and world.holiday_day == 3, "only explicit sleep advances to next morning")
+	main._clear_world(false)
+	check(main._meal_audio_host.last_day == -1, "replacing world clears meal audio observation immediately")
+	main.queue_free()
+	await process_frame
+	for failure in failures: push_error(failure)
+	print("HOUSE_COOKING checks=%d failures=%d" % [checks, failures.size()])
+	quit(0 if failures.is_empty() else 1)
