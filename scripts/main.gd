@@ -108,6 +108,8 @@ var _pause_columns: HBoxContainer
 var _pause_session: VBoxContainer
 var _pause_audio: VBoxContainer
 var _pause_title: Label
+var _release_button: Button
+var _release_panel: Control
 var _resume_button: Button
 var _restart_button: Button
 var _pause_title_button: Button
@@ -588,6 +590,12 @@ func _focus_menu_default(event: InputEvent) -> bool:
 
 
 func _input(event: InputEvent) -> void:
+	if _release_panel != null and _release_panel.visible:
+		# Keep the paused world and underlying menu insulated; panel GUI handles scrolling/clicks.
+		if event.is_action_pressed("pause") and not event.is_echo():
+			_release_panel.close()
+			get_viewport().set_input_as_handled()
+		return
 	if _chick_panel != null and _chick_panel.visible:
 		if event.is_action_pressed("pause") and not event.is_echo():
 			_hide_chick_care()
@@ -712,7 +720,7 @@ func _input(event: InputEvent) -> void:
 	if _confirm_screen.visible:
 		buttons = [_confirm_accept_button, _confirm_cancel_button]
 	elif _pause_screen.visible:
-		buttons = [_resume_button, _restart_button, _pause_title_button, _music_toggle, _ambience_toggle, _mute_toggle]
+		buttons = [_release_button, _resume_button, _restart_button, _pause_title_button, _music_toggle, _ambience_toggle, _mute_toggle]
 	elif _album_screen.visible:
 		buttons = [_album_previous_button, _album_next_button, _album_back_button]
 	elif _screen == "title":
@@ -726,7 +734,7 @@ func _input(event: InputEvent) -> void:
 			# An emulated mouse press can already hold the native GUI button.
 			# Let its release complete the pause/modal action once. Hiding the
 			# overlay from a second manual emission can interrupt GUI visibility.
-			if not (is_touch_press and button in [_music_toggle, _ambience_toggle, _mute_toggle, _resume_button, _restart_button, _pause_title_button, _confirm_accept_button, _confirm_cancel_button] and button.is_pressed()):
+			if not (is_touch_press and button in [_release_button, _music_toggle, _ambience_toggle, _mute_toggle, _resume_button, _restart_button, _pause_title_button, _confirm_accept_button, _confirm_cancel_button] and button.is_pressed()):
 				button.pressed.emit()
 			get_viewport().set_input_as_handled()
 			return
@@ -1046,7 +1054,25 @@ func _build_pause_screen() -> void:
 	_pause_panel = _pause_box.get_parent()
 	_pause_title = _label(26, INK)
 	_pause_title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	_pause_box.add_child(_pause_title)
+	var heading := HBoxContainer.new()
+	_pause_box.add_child(heading)
+	_pause_title.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	_pause_title.vertical_alignment = VERTICAL_ALIGNMENT_TOP
+	_pause_title.size_flags_vertical = Control.SIZE_FILL
+	heading.add_child(_pause_title)
+	_release_button = _soft_button()
+	_release_button.text = preload("res://scripts/ui/release_notes.gd").version() + " · 公告\n" + preload("res://scripts/ui/release_notes.gd").build_name().replace("本地开发版（未发布）", "本地开发版")
+	_release_button.custom_minimum_size = Vector2(120, 36)
+	_release_button.add_theme_font_size_override("font_size", 12)
+	for state in ["normal", "hover", "pressed", "focus"]:
+		var style := _release_button.get_theme_stylebox(state).duplicate()
+		style.content_margin_top = 2
+		style.content_margin_bottom = 2
+		style.content_margin_left = 4
+		style.content_margin_right = 4
+		_release_button.add_theme_stylebox_override(state, style)
+	_release_button.pressed.connect(_show_release_notes)
+	heading.add_child(_release_button)
 	_pause_columns = HBoxContainer.new()
 	_pause_columns.add_theme_constant_override("separation", 12)
 	_pause_columns.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -1165,6 +1191,16 @@ func _place_pause(parent: Node, nodes: Array) -> void:
 			node.reparent(parent)
 	for i in nodes.size():
 		parent.move_child(nodes[i], i)
+
+
+func _show_release_notes() -> void:
+	if not _pause_screen.visible: return
+	if _release_panel == null:
+		_release_panel = preload("res://scripts/ui/release_notes.gd").new()
+		_ui_layer.add_child(_release_panel)
+		_release_panel.closed.connect(func(): _release_button.grab_focus())
+	_ui_layer.move_child(_release_panel, _ui_layer.get_child_count() - 1)
+	_release_panel.open()
 
 
 func _build_confirmation_screen() -> void:
