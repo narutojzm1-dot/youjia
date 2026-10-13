@@ -5,7 +5,8 @@ extends SceneTree
 ## - 手指按住时不提前撤悬停 / 按下态，抬起后再撤；
 ## - 抬指后浏览器补发的鼠标移动（同一位置、很快到达）不算换回鼠标；
 ## - 真鼠标移上去照常悬停，从没碰过触屏的鼠标玩家不受影响；
-## - 背篓里触屏点一格：照常弹出纸片，撤悬停用的移动不会被当成鼠标拖走这一格。
+## - 背篓里触屏点一格：照常弹出纸片，撤悬停用的移动不会被当成鼠标拖走这一格；
+## - 背篓里的按钮触屏点一下只生效一次：「放进快捷栏」不会随后又撤回，再点选中格合上的纸片不会又弹开。
 
 const VIEWS := [Vector2i(1280, 720), Vector2i(390, 844), Vector2i(844, 390)]
 
@@ -27,6 +28,7 @@ func _run() -> void:
 		await _check_synth_mouse(dims)
 		await _check_real_mouse_after_touch(dims)
 		await _check_basket_cell_tap(dims)
+		await _check_basket_no_double_fire(dims)
 	_finish()
 
 
@@ -195,6 +197,37 @@ func _check_basket_cell_tap(dims: Vector2i) -> void:
 	await _cool()
 
 
+func _tap(at: Vector2) -> void:
+	await _touch(true, at)
+	await _touch(false, at)
+	await create_timer(1.0).timeout
+	await _settle()
+
+
+func _check_basket_no_double_fire(dims: Vector2i) -> void:
+	var tag := "%s basket single fire" % dims
+	var bar = main._hold_hotbar
+	main._show_basket()
+	await _settle(6)
+	var panel = main._basket_panel
+	var grid = panel.grid
+	var cell: Button = grid.cells["wheat"]
+	panel.scroll.ensure_control_visible(cell)
+	await _settle()
+	var was_on_bar: bool = bar.slot_of("wheat") != -1
+	await _tap(cell.get_global_rect().get_center())
+	_check(grid.menu.visible, "%s: tap opens the wheat paper" % tag)
+	_check(grid.menu_hotbar.is_visible_in_tree(), "%s: 放进快捷栏 is shown" % tag)
+	await _tap(grid.menu_hotbar.get_global_rect().get_center())
+	_check((bar.slot_of("wheat") != -1) != was_on_bar, "%s: one tap on the hotbar button flips wheat's slot once and it stays (was %s, now slot %d)" % [tag, was_on_bar, bar.slot_of("wheat")])
+	if grid.menu.visible:
+		await _tap(cell.get_global_rect().get_center())
+	_check(not grid.menu.visible, "%s: tapping the selected cell closes the paper and it stays closed" % tag)
+	main._hide_basket()
+	await _settle()
+	await _cool()
+
+
 func _check(condition: bool, label: String) -> void:
 	checks += 1
 	if not condition:
@@ -205,7 +238,7 @@ func _check(condition: bool, label: String) -> void:
 func _finish() -> void:
 	if main != null:
 		main.queue_free()
-	_check(checks >= 36, "suite ran enough checks (%d)" % checks)
+	_check(checks >= 48, "suite ran enough checks (%d)" % checks)
 	for failure in failures:
 		print("FAIL: ", failure)
 	print("TOUCH_HOVER_RESET checks=%d failures=%d" % [checks, failures.size()])

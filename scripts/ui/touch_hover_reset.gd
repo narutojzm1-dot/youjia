@@ -5,16 +5,12 @@ extends Node
 ## 手机上没有鼠标移开，悬停永远不散。
 ##
 ## 与 InputHintMode 一样挂在 `scenes/main.tscn`，不改 `scripts/main.gd`，只读事件、不吞事件：
-## 最近一次指点是触屏、手指都已抬起、仍有控件处于悬停时，向视口补一次落在画面外的鼠标松开与移动，
-## 让 Godot 自己撤掉悬停。按下态、焦点、点按路由都不变；真鼠标一动（不是触屏合成的）就停止，
-## 桌面鼠标照常有悬停。
-## 补发要等 Main 的触屏 / 鼠标去重窗（400ms）过去：背篓里合成的按下会落到格子上、抬起却被去重吞掉，
-## 格子一直握着鼠标；先补一个画面外的松开把它放掉，否则补的移动会送到格子上、在左上角弹出提示。
+## 最近一次指点是触屏、手指都已抬起、仍有控件处于悬停时，向视口补一个落在画面外的鼠标移动，
+## 让 Godot 自己撤掉悬停。只补移动、不补按键，不会让任何按钮多触发一次；按下态、焦点、点按路由都不变。
+## 真鼠标一动（不是触屏合成的）就停止，桌面鼠标照常有悬停。
 
 ## 抬指后这段时间内到达的鼠标事件按触屏合成的算，不当作玩家换回了鼠标。
 const SYNTH_MS := 700
-## 抬指后等这么久再撤悬停，须长于 Main 的触屏 / 鼠标去重窗。
-const SETTLE_MS := 450
 const AWAY := Vector2(-10000, -10000)
 
 var touch := false
@@ -49,15 +45,10 @@ func _process(_delta: float) -> void:
 	var viewport := get_viewport()
 	if viewport == null or viewport.gui_get_hovered_control() == null:
 		return
-	if Time.get_ticks_msec() - _touch_ms < SETTLE_MS:
-		return
-	var release := InputEventMouseButton.new()
-	release.button_index = MOUSE_BUTTON_LEFT
 	var away := InputEventMouseMotion.new()
+	away.device = InputEvent.DEVICE_ID_EMULATION
+	away.position = AWAY
+	away.global_position = AWAY
 	_pushing = true
-	for event: InputEventMouse in [release, away]:
-		event.device = InputEvent.DEVICE_ID_EMULATION
-		event.position = AWAY
-		event.global_position = AWAY
-		viewport.push_input(event)
+	viewport.push_input(away)
 	_pushing = false

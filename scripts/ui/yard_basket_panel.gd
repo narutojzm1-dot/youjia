@@ -641,6 +641,13 @@ func _unhandled_key_input(event: InputEvent) -> void:
 		cancel_drag()
 		get_viewport().set_input_as_handled()
 
+## 背篓打开时触屏全由 handle_touch_event 接住；Godot 由触屏合成的鼠标按键不再进 GUI。
+## 合成的按下先于触屏到达、Main 的去重只吞得掉抬起，按下就会落到格子 / 纸片按钮 / 快捷格上，
+## 让它一直握着鼠标、停在悬停样式，之后补来的松开还会让它多触发一次。
+func _input(event: InputEvent) -> void:
+	if visible and event is InputEventMouseButton and event.device == InputEvent.DEVICE_ID_EMULATION:
+		get_viewport().set_input_as_handled()
+
 func _ink_row(label: Label, count: int) -> void:
 	label.add_theme_color_override("font_color", EMPTY_ROW_INK if count <= 0 else ROW_INK)
 
