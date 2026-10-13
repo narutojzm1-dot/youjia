@@ -7,7 +7,8 @@
 ## 证据
 
 - `native290.log`：最终原生 290 项通过。
-- `gpu299.log`：最终原生 GPU 299 项通过，包含截图保存检查；不是普通 Web 或手机证据。
+- `gpu301.log`：收尾原生 GPU 301 项通过（替代早先 `gpu299.log`），包含截图保存检查；不是普通 Web 或手机证据。
+- `scheduler192.log`：固定种子 0–7 共192项通过；复现入口 `tools/check_pond_schedule_seeds.gd`，须设置隔离 APPDATA / YOUJIA_TEST_ISOLATED_DATA。
 - `grass368.log`：原取草/投喂 368 项回归通过。
 - `motion.log` / [12 秒工序录像](production.mp4)：隔离库存/AP 夹具，Godot GPU 每 0.2 秒采样一帧，以 5fps 编码 61 帧，保留实际 12 秒模拟节奏，无声音；不是用户存档或自由试玩录像。生成入口 `tools/capture_pond_work_motion.gd`。
 - [工序中](settling.jpg)、[起身](rising.jpg)：实际 GPU 全画幅截图。仅抽查关键帧及代码/断言，不冒称真人完整动态体验通过。
@@ -16,5 +17,5 @@
 
 - 初轮本地旧 import 指向缺失 ctex，重新导入后发现 ground 局部变量类型推断错误，补 Vector2 后编译通过；见 `import-before.log`。
 - 初版生产姿势替换漏清行走惯性，正常/疲劳两项脚底固定断言失败。进入 working 调用 reset_locomotion 修复；`drift-before.log` 保留失败，最终两种工序脚底检查通过。
-- `gpu-before.log` 曾单次出现“next autonomous job skips completed bank”失败；最终原生及 GPU 均未复现。已保留失败并增加状态诊断，根因尚未确认，不能写成已修复或全量稳定放行。下一次在同一原单接续取实际 stage/idle/available/house/goose/save_idle 上下文。
-- 本地 HTTP 预览服务此前被自动批准审核拒绝，未以其他端口/服务绕过。普通 Web/手机、正式姿态和上述偶发调度问题仍未验收；完整 CI 以最终 SHA 的运行结果为准。仅三处可达岸段，完整成长/全池圈/园艺厨艺未因此完成。
+- `gpu-before.log` 曾出现“next autonomous job skips completed bank”失败；本轮继续以种子0稳定复现。根因是测试把12秒“空闲宽限”错当墙钟期限：劳动间的鹅骑马演出正常占用角色、结束后重新累计，随后场景保存又合理重置宽限；加速紧循环还会饿死保存异步回调。`scheduler-before.log` / `scheduler-starved-before.log` 保留两阶段证据。修订测试显式观察角色/保存占用、逐帧让出回调并限定40秒上限，不改生产逻辑或禁掉环境演出。种子0实际在第979帧启动下一岸段（见演出及保存），种子1–7均第360帧（无额外占用）；8种子192检查及完整GPU301通过。该测试假设问题已闭环，不再作为未知运行缺陷等待。
+- 本地 HTTP 预览服务此前被自动批准审核拒绝，未以其他端口/服务绕过。普通 Web/手机、正式姿态仍未验收；完整 CI 以最终 SHA 的运行结果为准。仅三处可达岸段，完整成长/全池圈/园艺厨艺未因此完成。

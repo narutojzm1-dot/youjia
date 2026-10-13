@@ -390,10 +390,11 @@ func check_meal_reservation() -> void:
 	world.tick(0.0, Vector2.ZERO)
 	await capture("integrated-reopened")
 
-func check_autonomous_work() -> void:
+func check_autonomous_work(test_seed := 0) -> void:
 	var schedule = preload("res://scripts/game/growth_schedule.gd")
 	for entry in [[0.0,"breakfast"],[0.24,"breakfast"],[0.25,"lunch"],[0.49,"lunch"],[0.5,"dinner"],[0.99,"dinner"],[1.0,""]]:
 		check(schedule.period(entry[0]) == entry[1], "live AP period boundary")
+	seed(test_seed)
 	await reset()
 	world._day_elapsed = 160.0
 	world.pond_growth.autonomous_enabled = true
@@ -422,12 +423,27 @@ func check_autonomous_work() -> void:
 	check(store.get_growth_budget("lunch").available == 2 and int(store.get_keepsakes()[STONE]) == 19, "autonomous action charges one AP and one stone")
 	check(world.pond_edging_view.visuals.has("rim_04"), "autonomous confirmed world effect visible")
 	world.pond_growth.autonomous_enabled = true
-	for i in 361:
+	var encounter_seen := false
+	var save_seen := false
+	var started_at := -1
+	# The 12-second grace counts free idle time. A legitimate goose/horse
+	# encounter between jobs may reserve the actor, finish, then restart grace.
+	for i in 1200:
 		world.tick(1.0/30, Vector2.ZERO)
-		if world.pond_growth.busy(): break
+		encounter_seen = encounter_seen or world._goose_mount_phase >= 0
+		save_seen = save_seen or not store.is_save_idle()
+		# Real play yields between ticks. Let incidental world saves settle;
+		# a tight accelerated loop otherwise starves their async callbacks.
+		await process_frame
+		if world.pond_growth.busy():
+			started_at = i
+			break
+	check(started_at <= 361 or encounter_seen or save_seen, "only observed actor/save ownership may extend next-job grace")
+	check(not encounter_seen or "goose_horse_mount" in world.collected, "idle encounter finishes before production reclaims actor")
+	print("NEXT_WORK_TIMING seed=",test_seed," tick=",started_at," encounter_seen=",encounter_seen," save_seen=",save_seen)
 	if world.pond_growth.section != "rim_05":
 		print("NEXT_WORK_CONTEXT stage=",world.pond_growth.stage," idle=",world.pond_growth.idle_seconds," available=",world.pond_growth.available()," goose=",world._goose_mount_phase," walk=",world._has_walk_goal," house=",world.house.stage," pending=",world._pending_interaction," save_idle=",store.is_save_idle())
-	check(world.pond_growth.section == "rim_05", "next autonomous job skips completed bank")
+	check(world.pond_growth.busy() and world.pond_growth.section == "rim_05", "next autonomous job skips completed bank")
 	world.cancel_scene_feedback()
 	check(not world.pond_growth.busy() and world.pond_growth.idle_seconds == 0.0, "menu takeover cancels and resets grace")
 	world.pond_growth.autonomous_enabled = false
