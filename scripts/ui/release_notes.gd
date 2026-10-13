@@ -9,6 +9,7 @@ var content: RichTextLabel
 var card: PanelContainer
 var request: HTTPRequest
 var _focus_input: Node
+var _opened_once := false
 
 static func version() -> String:
 	var notes: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(NOTES))
@@ -128,8 +129,10 @@ func open() -> void:
 	content.text = "\n".join(lines)
 	content.scroll_to_line(0)
 	# 第一次打开时本面板才建出来，没收到点「公告」的那次按下；按「公告」当时的焦点是否可见来判断。
-	var opener := get_viewport().gui_get_focus_owner()
-	_focus_input.pointer = opener == null or not opener.has_focus(true)
+	if not _opened_once:
+		var opener := get_viewport().gui_get_focus_owner()
+		_focus_input.pointer = opener == null or not opener.has_focus(true)
+		_opened_once = true
 	_focus_input.grab(back)
 	status.text = "离线公告 · 尚未检查线上版本。"
 	if OS.has_feature("web"):

@@ -105,6 +105,14 @@ func _check_pointer(dims: Vector2i, touch: bool) -> void:
 		_check(not panel.visible and main._pause_screen.visible, "%s: 返回歇一下 returns to the pause menu" % tag)
 		_check(_owner() == entry, "%s: focus returns to 公告, got %s" % [tag, _name(_owner())])
 		_check(not _ring(), "%s: pointer-closed notes leave no ring on 公告" % tag)
+	var etag := "%s %s-closed then Enter" % [dims, "touch" if touch else "mouse"]
+	await _key(KEY_ENTER)
+	await _settle()
+	var reopened = main._release_panel
+	_check(reopened.visible, "%s: Enter on the hidden-focused 公告 reopens the notes" % etag)
+	_check(_owner() == reopened.back and _ring(), "%s: keyboard reopen rings 返回歇一下, got %s" % [etag, _name(_owner())])
+	await _key(KEY_ESCAPE)
+	_check(not reopened.visible and _owner() == entry and _ring(), "%s: Escape returns a ringed focus to 公告, got %s" % [etag, _name(_owner())])
 	var ktag := "%s %s then keyboard" % [dims, "touch" if touch else "mouse"]
 	await _tap(entry, touch)
 	var notes = main._release_panel
