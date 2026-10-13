@@ -1,0 +1,75 @@
+[gd_scene load_steps=11 format=3]
+
+[ext_resource type="Shader" path="res://mist_density.gdshader" id="1_shader"]
+[ext_resource type="Script" path="res://mist_density_driver.gd" id="2_driver"]
+[ext_resource type="Texture2D" path="res://textures/near_path_base.png" id="3_base"]
+[ext_resource type="Texture2D" path="res://textures/mist_far.png" id="4_far"]
+[ext_resource type="Texture2D" path="res://textures/mist_near.png" id="5_near"]
+[ext_resource type="Texture2D" path="res://textures/mask_envelope.png" id="6_env"]
+[ext_resource type="Texture2D" path="res://textures/mask_path.png" id="7_path"]
+[ext_resource type="Texture2D" path="res://textures/mask_cottage.png" id="8_cottage"]
+[ext_resource type="Texture2D" path="res://textures/mask_bridge.png" id="9_bridge"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_mist"]
+shader = ExtResource("1_shader")
+shader_parameter/base_tex = ExtResource("3_base")
+shader_parameter/mist_far_tex = ExtResource("4_far")
+shader_parameter/mist_near_tex = ExtResource("5_near")
+shader_parameter/mask_envelope = ExtResource("6_env")
+shader_parameter/mask_path = ExtResource("7_path")
+shader_parameter/mask_cottage = ExtResource("8_cottage")
+shader_parameter/mask_bridge = ExtResource("9_bridge")
+shader_parameter/phase = 0.0
+shader_parameter/strength = 1.0
+shader_parameter/semantic_gate = 0.0
+shader_parameter/base_size = Vector2(1672, 941)
+shader_parameter/far_origin = Vector2(80, 340)
+shader_parameter/near_origin = Vector2(220, 420)
+shader_parameter/far_drift_px = 6.0
+shader_parameter/near_drift_px = -4.0
+shader_parameter/far_deform = 1.4
+shader_parameter/near_deform = 1.8
+shader_parameter/far_mod_xx = 95.0
+shader_parameter/far_mod_yy = 70.0
+shader_parameter/far_mod_fine = 38.0
+shader_parameter/near_mod_xx = 70.0
+shader_parameter/near_mod_yy = 55.0
+shader_parameter/near_mod_fine = 28.0
+
+[node name="MistDensityPreview" type="Node2D"]
+script = ExtResource("2_driver")
+
+[node name="Preview" type="Sprite2D" parent="."]
+centered = false
+texture = ExtResource("3_base")
+texture_filter = 1
+material = SubResource("ShaderMaterial_mist")
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="Panel" type="PanelContainer" parent="UI"]
+offset_left = 16.0
+offset_top = 700.0
+offset_right = 1480.0
+offset_bottom = 920.0
+
+[node name="VBox" type="VBoxContainer" parent="UI/Panel"]
+layout_mode = 2
+
+[node name="Buttons" type="HBoxContainer" parent="UI/Panel/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="PauseButton" type="Button" parent="UI/Panel/VBox/Buttons"]
+custom_minimum_size = Vector2(600, 100)
+layout_mode = 2
+text = "暂停 Pause (P)"
+
+[node name="LowMotionButton" type="Button" parent="UI/Panel/VBox/Buttons"]
+custom_minimum_size = Vector2(760, 100)
+layout_mode = 2
+text = "低动效 关 LowOff (L)"
+
+[node name="Status" type="Label" parent="UI/Panel/VBox"]
+layout_mode = 2
+text = "mist phase 0.000"
