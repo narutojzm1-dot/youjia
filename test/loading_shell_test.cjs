@@ -50,6 +50,12 @@ function setup(missing=[],config={focusCanvas:true},releaseFetch=null,href='http
  let publish;
  t=setup([],{mainPack:'game-aaaaaaa.pck'},()=>new Promise(r=>publish=r));
  assert.equal(t.constructed,0); assert.equal(t.runtime,'uninstalled','version check precedes save host');
+ assert.equal(t.nodes['game-title'].textContent,'悠长的假期','title is visible while the release check is pending');
+ assert.equal(t.nodes['loading-version'].textContent,'0.2.0 · 第2版内部测试');
+ assert.equal(t.nodes['loading-build'].textContent,'game-aaaaaaa','pending check shows this entry build');
+ assert.equal(t.document.documentElement.dataset.build,'game-aaaaaaa');
+ assert.equal(t.nodes['loading-retry'].textContent,'重试');
+ assert.equal(t.document.documentElement.lang,'zh-CN');
  publish({ok:true,json:async()=>({schema:'youjia.release/v1',sourceCommit:'b'.repeat(40),entry:'game-bbbbbbb'})});
  await flush(); await flush();
  assert.match(t.window.location.replaced,/release=game-bbbbbbb/);
@@ -57,6 +63,11 @@ function setup(missing=[],config={focusCanvas:true},releaseFetch=null,href='http
  assert.equal(t.runtime,'uninstalled','old page must not acquire save writer');
  t=setup([],{mainPack:'game-aaaaaaa.pck'},async()=>{throw Error('must not refetch')},'https://example.test/youjia/?release=game-bbbbbbb&_fresh='+Date.now());
  await flush();assert.equal(t.constructed,0);assert.equal(t.runtime,'uninstalled');assert.equal(t.nodes['loading-retry'].hidden,false);assert.match(t.nodes['loading-status'].textContent,/旧版本/);
+ assert.equal(t.nodes['game-title'].textContent,'悠长的假期','stale entry retains title without booting');
+ assert.equal(t.nodes['loading-retry'].textContent,'重试','stale-entry retry is localized before boot');
+ assert.equal(t.nodes['loading-build'].textContent,'game-aaaaaaa','stale entry must not display the desired build as loaded');
+ assert.equal(t.document.documentElement.dataset.build,'game-aaaaaaa');
+ assert.equal(t.nodes['loading-version'].textContent,'0.2.0 · 第2版内部测试');
  t.nodes['loading-retry'].click();assert.match(t.window.location.replaced,/release=game-bbbbbbb/);
  t=setup([],{mainPack:'game-bbbbbbb.pck'},async()=>{throw Error('must not refetch')},'https://example.test/youjia/?release=game-bbbbbbb&_fresh='+Date.now());
  await flush();assert.equal(t.window.cleaned,'https://example.test/youjia/');await t.modules();assert.equal(t.constructed,1);
