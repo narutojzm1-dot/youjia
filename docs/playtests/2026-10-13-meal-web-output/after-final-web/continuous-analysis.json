@@ -1,0 +1,1074 @@
+{
+  "schema": "youjia.web-meal-output-analysis/v1",
+  "source_commit": "48f02b32215629de6393ac6e6bec83786054b4d3",
+  "build": "game-48f02b3",
+  "raw_diagnostic": {
+    "bytes": 34749247,
+    "sha256": "8bef32f21c1f654906f9c18f9f4c676aa3307b425d066afe9684b2cdda1e0b35"
+  },
+  "sampling_ms": 100,
+  "window_ms": 10000,
+  "window_count": 152,
+  "sample_count": 15105,
+  "source_count": 15,
+  "observer_failures": [],
+  "marks": [
+    {
+      "atMs": 13012.799999952316,
+      "label": "recording start 1"
+    },
+    {
+      "atMs": 92561.39999997616,
+      "label": "baseline SFX on; music+environment off; dinner pending"
+    },
+    {
+      "atMs": 291393.6999999285,
+      "label": "after natural dinner/brush; paused for evidence; meal 233154-241200ms"
+    },
+    {
+      "atMs": 1480412.1000000238,
+      "label": "day7 lunch source12 paused; normal menu; master on"
+    },
+    {
+      "atMs": 1480602.1000000238,
+      "label": "day7 lunch master muted; about to resume cooking"
+    },
+    {
+      "atMs": 1495441.1999999285,
+      "label": "day7 lunch muted running 1.5s completed; paused"
+    },
+    {
+      "atMs": 1495566.6999999285,
+      "label": "day7 lunch unmuted; resume active cooking"
+    },
+    {
+      "atMs": 1510033.2999999523,
+      "label": "day7 lunch unmuted 1.2s then pause zero; final resume next"
+    },
+    {
+      "atMs": 1517202,
+      "label": "day7 lunch final resume and natural completion tail"
+    },
+    {
+      "atMs": 1517341.3999999762,
+      "label": "recording stop"
+    }
+  ],
+  "sources": [
+    {
+      "wallMs": 22541.699999928474,
+      "node": 4,
+      "context": 2,
+      "contextState": "running",
+      "audioTime": 0.9306666666666666,
+      "buffer": 1,
+      "frames": 6144000,
+      "channels": 2,
+      "sampleRate": 48000,
+      "duration": 128,
+      "shortPeak": null,
+      "loop": true,
+      "loopStart": 0,
+      "loopEnd": 128,
+      "startArgs": [
+        0,
+        0
+      ]
+    },
+    {
+      "wallMs": 23553.399999976158,
+      "node": 6,
+      "context": 2,
+      "contextState": "running",
+      "audioTime": 1.9413333333333334,
+      "buffer": 2,
+      "frames": 6144000,
+      "channels": 2,
+      "sampleRate": 48000,
+      "duration": 128,
+      "shortPeak": null,
+      "loop": true,
+      "loopStart": 0,
+      "loopEnd": 128,
+      "startArgs": [
+        0,
+        0
+      ]
+    },
+    {
+      "wallMs": 233154.69999992847,
+      "node": 8,
+      "context": 2,
+      "contextState": "running",
+      "audioTime": 211.54133333333334,
+      "buffer": 3,
+      "frames": 124800,
+      "channels": 2,
+      "sampleRate": 48000,
+      "duration": 2.6,
+      "shortPeak": null,
+      "loop": true,
+      "loopStart": 0,
+      "loopEnd": 2.5999999046325684,
+      "startArgs": [
+        0,
+        0
+      ]
+    },
+    {
+      "wallMs": 236356.5,
+      "node": 10,
+      "context": 2,
+      "contextState": "running",
+      "audioTime": 214.752,
+      "buffer": 4,
+      "frames": 5271,
+      "channels": 2,
+      "sampleRate": 48000,
+      "duration": 0.1098125,
+      "shortPeak": 0.3129386603832245,
+      "loop": false,
+      "loopStart": 0,
+      "loopEnd": 0.1098125,
+      "startArgs": [
+        0,
+        0
+      ]
+    },
+    {
+      "wallMs": 239557.10000002384,
+      "node": 11,
+      "context": 2,
+      "contextState": "running",
+      "audioTime": 217.952,
+      "buffer": 4,
+      "frames": 5271,
+      "channels": 2,
+      "sampleRate": 48000,
+      "duration": 0.1098125,
+      "shortPeak": 0.3129386603832245,
+      "loop": false,
+      "loopStart": 0,
+      "loopEnd": 0.1098125,
+      "startArgs": [
+        0,
+        0
+      ]
+    },
+    {
+      "wallMs": 885756.8999999762,
+      "node": 12,
+      "context": 2,
+      "contextState": "running",
+      "audioTime": 864.152,
+      "buffer": 3,
+      "frames": 124800,
+      "channels": 2,
+      "sampleRate": 48000,
+      "duration": 2.6,
+      "shortPeak": null,
+      "loop": true,
+      "loopStart": 0,
+      "loopEnd": 2.5999999046325684,
+      "startArgs": [
+        0,
+        0
+      ]
+    },
+    {
+      "wallMs": 888963.1000000238,
+      "node": 14,
+      "context": 2,
+      "contextState": "running",
+      "audioTime": 867.352,
+      "buffer": 5,
+      "frames": 5271,
+      "channels": 2,
+      "sampleRate": 48000,
+      "duration": 0.1098125,
+      "shortPeak": 0.3129386603832245,
+      "loop": false,
+      "loopStart": 0,
+      "loopEnd": 0.1098125,
+      "startArgs": [
+        0,
+        0
+      ]
+    },
+    {
+      "wallMs": 892178.3999999762,
+      "node": 15,
+      "context": 2,
+      "contextState": "running",
+      "audioTime": 870.5706666666666,
+      "buffer": 5,
+      "frames": 5271,
+      "channels": 2,
+      "sampleRate": 48000,
+      "duration": 0.1098125,
+      "shortPeak": 0.3129386603832245,
+      "loop": false,
+      "loopStart": 0,
+      "loopEnd": 0.1098125,
+      "startArgs": [
+        0,
+        0
+      ]
+    },
+    {
+      "wallMs": 1236350.1999999285,
+      "node": 16,
+      "context": 2,
+      "contextState": "running",
+      "audioTime": 1214.7413333333334,
+      "buffer": 3,
+      "frames": 124800,
+      "channels": 2,
+      "sampleRate": 48000,
+      "duration": 2.6,
+      "shortPeak": null,
+      "loop": true,
+      "loopStart": 0,
+      "loopEnd": 2.5999999046325684,
+      "startArgs": [
+        0,
+        0
+      ]
+    },
+    {
+      "wallMs": 1239539.1999999285,
+      "node": 18,
+      "context": 2,
+      "contextState": "running",
+      "audioTime": 1217.9306666666666,
+      "buffer": 6,
+      "frames": 5271,
+      "channels": 2,
+      "sampleRate": 48000,
+      "duration": 0.1098125,
+      "shortPeak": 0.3129386603832245,
+      "loop": false,
+      "loopStart": 0,
+      "loopEnd": 0.1098125,
+      "startArgs": [
+        0,
+        0
+      ]
+    },
+    {
+      "wallMs": 1242753.6000000238,
+      "node": 19,
+      "context": 2,
+      "contextState": "running",
+      "audioTime": 1221.1413333333333,
+      "buffer": 6,
+      "frames": 5271,
+      "channels": 2,
+      "sampleRate": 48000,
+      "duration": 0.1098125,
+      "shortPeak": 0.3129386603832245,
+      "loop": false,
+      "loopStart": 0,
+      "loopEnd": 0.1098125,
+      "startArgs": [
+        0,
+        0
+      ]
+    },
+    {
+      "wallMs": 1462000.8999999762,
+      "node": 20,
+      "context": 2,
+      "contextState": "running",
+      "audioTime": 1440.392,
+      "buffer": 3,
+      "frames": 124800,
+      "channels": 2,
+      "sampleRate": 48000,
+      "duration": 2.6,
+      "shortPeak": null,
+      "loop": true,
+      "loopStart": 0,
+      "loopEnd": 2.5999999046325684,
+      "startArgs": [
+        0,
+        0
+      ]
+    },
+    {
+      "wallMs": 1480664.1000000238,
+      "node": 21,
+      "context": 2,
+      "contextState": "running",
+      "audioTime": 1459.0506666666668,
+      "buffer": 3,
+      "frames": 124800,
+      "channels": 2,
+      "sampleRate": 48000,
+      "duration": 2.6,
+      "shortPeak": null,
+      "loop": true,
+      "loopStart": 0,
+      "loopEnd": 2.5999999046325684,
+      "startArgs": [
+        0,
+        0
+      ]
+    },
+    {
+      "wallMs": 1495603.8999999762,
+      "node": 22,
+      "context": 2,
+      "contextState": "running",
+      "audioTime": 1473.992,
+      "buffer": 3,
+      "frames": 124800,
+      "channels": 2,
+      "sampleRate": 48000,
+      "duration": 2.6,
+      "shortPeak": null,
+      "loop": true,
+      "loopStart": 0,
+      "loopEnd": 2.5999999046325684,
+      "startArgs": [
+        0,
+        0
+      ]
+    },
+    {
+      "wallMs": 1510122.8999999762,
+      "node": 23,
+      "context": 2,
+      "contextState": "running",
+      "audioTime": 1488.512,
+      "buffer": 3,
+      "frames": 124800,
+      "channels": 2,
+      "sampleRate": 48000,
+      "duration": 2.6,
+      "shortPeak": null,
+      "loop": true,
+      "loopStart": 0,
+      "loopEnd": 2.5999999046325684,
+      "startArgs": [
+        0,
+        0
+      ]
+    }
+  ],
+  "natural_complete_meals": [
+    {
+      "meal": 1,
+      "sources": [
+        {
+          "wallMs": 233154.69999992847,
+          "node": 8,
+          "context": 2,
+          "contextState": "running",
+          "audioTime": 211.54133333333334,
+          "buffer": 3,
+          "frames": 124800,
+          "channels": 2,
+          "sampleRate": 48000,
+          "duration": 2.6,
+          "shortPeak": null,
+          "loop": true,
+          "loopStart": 0,
+          "loopEnd": 2.5999999046325684,
+          "startArgs": [
+            0,
+            0
+          ]
+        },
+        {
+          "wallMs": 236356.5,
+          "node": 10,
+          "context": 2,
+          "contextState": "running",
+          "audioTime": 214.752,
+          "buffer": 4,
+          "frames": 5271,
+          "channels": 2,
+          "sampleRate": 48000,
+          "duration": 0.1098125,
+          "shortPeak": 0.3129386603832245,
+          "loop": false,
+          "loopStart": 0,
+          "loopEnd": 0.1098125,
+          "startArgs": [
+            0,
+            0
+          ]
+        },
+        {
+          "wallMs": 239557.10000002384,
+          "node": 11,
+          "context": 2,
+          "contextState": "running",
+          "audioTime": 217.952,
+          "buffer": 4,
+          "frames": 5271,
+          "channels": 2,
+          "sampleRate": 48000,
+          "duration": 0.1098125,
+          "shortPeak": 0.3129386603832245,
+          "loop": false,
+          "loopStart": 0,
+          "loopEnd": 0.1098125,
+          "startArgs": [
+            0,
+            0
+          ]
+        }
+      ],
+      "cook_destination": {
+        "requested_interval_ms": [
+          233153.7,
+          243154.7
+        ],
+        "snapshots": 100,
+        "tap_readings": 100,
+        "nonzero_readings": 81,
+        "max_rms": 0.05499167536543115,
+        "max_peak": 0.1377042979001999,
+        "first_nonzero_ms": 233225.79999995232,
+        "last_nonzero_ms": 241221,
+        "context_states": [
+          "running"
+        ],
+        "non_finite_readings": 0
+      },
+      "first_all_zero_after_cook_ms": 241316.19999992847,
+      "tail": {
+        "requested_interval_ms": [
+          241316.19999992847,
+          243154.7
+        ],
+        "snapshots": 19,
+        "tap_readings": 114,
+        "nonzero_readings": 0,
+        "max_rms": 0,
+        "max_peak": 0,
+        "first_nonzero_ms": null,
+        "last_nonzero_ms": null,
+        "context_states": [
+          "running"
+        ],
+        "non_finite_readings": 0
+      },
+      "spoon_destination": [
+        {
+          "source_wall_ms": 236356.5,
+          "destination_node": 9,
+          "tap_readings": 3,
+          "nonzero_readings": 2,
+          "max_rms": 0.04026476555855137,
+          "max_peak": 0.19745095074176788
+        },
+        {
+          "source_wall_ms": 239557.10000002384,
+          "destination_node": 9,
+          "tap_readings": 4,
+          "nonzero_readings": 2,
+          "max_rms": 0.04009159796488133,
+          "max_peak": 0.19745095074176788
+        }
+      ]
+    },
+    {
+      "meal": 2,
+      "sources": [
+        {
+          "wallMs": 885756.8999999762,
+          "node": 12,
+          "context": 2,
+          "contextState": "running",
+          "audioTime": 864.152,
+          "buffer": 3,
+          "frames": 124800,
+          "channels": 2,
+          "sampleRate": 48000,
+          "duration": 2.6,
+          "shortPeak": null,
+          "loop": true,
+          "loopStart": 0,
+          "loopEnd": 2.5999999046325684,
+          "startArgs": [
+            0,
+            0
+          ]
+        },
+        {
+          "wallMs": 888963.1000000238,
+          "node": 14,
+          "context": 2,
+          "contextState": "running",
+          "audioTime": 867.352,
+          "buffer": 5,
+          "frames": 5271,
+          "channels": 2,
+          "sampleRate": 48000,
+          "duration": 0.1098125,
+          "shortPeak": 0.3129386603832245,
+          "loop": false,
+          "loopStart": 0,
+          "loopEnd": 0.1098125,
+          "startArgs": [
+            0,
+            0
+          ]
+        },
+        {
+          "wallMs": 892178.3999999762,
+          "node": 15,
+          "context": 2,
+          "contextState": "running",
+          "audioTime": 870.5706666666666,
+          "buffer": 5,
+          "frames": 5271,
+          "channels": 2,
+          "sampleRate": 48000,
+          "duration": 0.1098125,
+          "shortPeak": 0.3129386603832245,
+          "loop": false,
+          "loopStart": 0,
+          "loopEnd": 0.1098125,
+          "startArgs": [
+            0,
+            0
+          ]
+        }
+      ],
+      "cook_destination": {
+        "requested_interval_ms": [
+          885755.9,
+          895756.9
+        ],
+        "snapshots": 100,
+        "tap_readings": 100,
+        "nonzero_readings": 81,
+        "max_rms": 0.05301382484147595,
+        "max_peak": 0.1347101330757141,
+        "first_nonzero_ms": 885816.6000000238,
+        "last_nonzero_ms": 893823.3999999762,
+        "context_states": [
+          "running"
+        ],
+        "non_finite_readings": 0
+      },
+      "first_all_zero_after_cook_ms": 893917.5,
+      "tail": {
+        "requested_interval_ms": [
+          893917.5,
+          895756.9
+        ],
+        "snapshots": 19,
+        "tap_readings": 133,
+        "nonzero_readings": 0,
+        "max_rms": 0,
+        "max_peak": 0,
+        "first_nonzero_ms": null,
+        "last_nonzero_ms": null,
+        "context_states": [
+          "running"
+        ],
+        "non_finite_readings": 0
+      },
+      "spoon_destination": [
+        {
+          "source_wall_ms": 888963.1000000238,
+          "destination_node": 13,
+          "tap_readings": 3,
+          "nonzero_readings": 2,
+          "max_rms": 0.04009159796488133,
+          "max_peak": 0.19745095074176788
+        },
+        {
+          "source_wall_ms": 892178.3999999762,
+          "destination_node": 13,
+          "tap_readings": 4,
+          "nonzero_readings": 2,
+          "max_rms": 0.03937810967911937,
+          "max_peak": 0.19745095074176788
+        }
+      ]
+    },
+    {
+      "meal": 3,
+      "sources": [
+        {
+          "wallMs": 1236350.1999999285,
+          "node": 16,
+          "context": 2,
+          "contextState": "running",
+          "audioTime": 1214.7413333333334,
+          "buffer": 3,
+          "frames": 124800,
+          "channels": 2,
+          "sampleRate": 48000,
+          "duration": 2.6,
+          "shortPeak": null,
+          "loop": true,
+          "loopStart": 0,
+          "loopEnd": 2.5999999046325684,
+          "startArgs": [
+            0,
+            0
+          ]
+        },
+        {
+          "wallMs": 1239539.1999999285,
+          "node": 18,
+          "context": 2,
+          "contextState": "running",
+          "audioTime": 1217.9306666666666,
+          "buffer": 6,
+          "frames": 5271,
+          "channels": 2,
+          "sampleRate": 48000,
+          "duration": 0.1098125,
+          "shortPeak": 0.3129386603832245,
+          "loop": false,
+          "loopStart": 0,
+          "loopEnd": 0.1098125,
+          "startArgs": [
+            0,
+            0
+          ]
+        },
+        {
+          "wallMs": 1242753.6000000238,
+          "node": 19,
+          "context": 2,
+          "contextState": "running",
+          "audioTime": 1221.1413333333333,
+          "buffer": 6,
+          "frames": 5271,
+          "channels": 2,
+          "sampleRate": 48000,
+          "duration": 0.1098125,
+          "shortPeak": 0.3129386603832245,
+          "loop": false,
+          "loopStart": 0,
+          "loopEnd": 0.1098125,
+          "startArgs": [
+            0,
+            0
+          ]
+        }
+      ],
+      "cook_destination": {
+        "requested_interval_ms": [
+          1236349.2,
+          1246350.2
+        ],
+        "snapshots": 100,
+        "tap_readings": 100,
+        "nonzero_readings": 81,
+        "max_rms": 0.054691214917038995,
+        "max_peak": 0.1377042979001999,
+        "first_nonzero_ms": 1236421,
+        "last_nonzero_ms": 1244416.6000000238,
+        "context_states": [
+          "running"
+        ],
+        "non_finite_readings": 0
+      },
+      "first_all_zero_after_cook_ms": 1244535.6000000238,
+      "tail": {
+        "requested_interval_ms": [
+          1244535.6000000238,
+          1246350.2
+        ],
+        "snapshots": 19,
+        "tap_readings": 152,
+        "nonzero_readings": 0,
+        "max_rms": 0,
+        "max_peak": 0,
+        "first_nonzero_ms": null,
+        "last_nonzero_ms": null,
+        "context_states": [
+          "running"
+        ],
+        "non_finite_readings": 0
+      },
+      "spoon_destination": [
+        {
+          "source_wall_ms": 1239539.1999999285,
+          "destination_node": 17,
+          "tap_readings": 3,
+          "nonzero_readings": 1,
+          "max_rms": 0.04027387305769636,
+          "max_peak": 0.19745095074176788
+        },
+        {
+          "source_wall_ms": 1242753.6000000238,
+          "destination_node": 17,
+          "tap_readings": 4,
+          "nonzero_readings": 2,
+          "max_rms": 0.040220371434849266,
+          "max_peak": 0.19745095074176788
+        }
+      ]
+    }
+  ],
+  "fourth_meal_output_transitions": [
+    {
+      "nonzero": false,
+      "start_ms": 1459020,
+      "end_ms": 1461924.8999999762,
+      "snapshots": 30,
+      "max_rms": 0,
+      "max_peak": 0,
+      "active_taps": []
+    },
+    {
+      "nonzero": true,
+      "start_ms": 1462023.5,
+      "end_ms": 1465116.6000000238,
+      "snapshots": 32,
+      "max_rms": 0.054425653690645455,
+      "max_peak": 0.1377042979001999,
+      "active_taps": [
+        [
+          2,
+          7
+        ]
+      ]
+    },
+    {
+      "nonzero": false,
+      "start_ms": 1465216.3999999762,
+      "end_ms": 1495518.1000000238,
+      "snapshots": 304,
+      "max_rms": 0,
+      "max_peak": 0,
+      "active_taps": []
+    },
+    {
+      "nonzero": true,
+      "start_ms": 1495618.1999999285,
+      "end_ms": 1496916.6999999285,
+      "snapshots": 14,
+      "max_rms": 0.05272660071231697,
+      "max_peak": 0.1347101330757141,
+      "active_taps": [
+        [
+          2,
+          7
+        ]
+      ]
+    },
+    {
+      "nonzero": false,
+      "start_ms": 1497018.6999999285,
+      "end_ms": 1510114.7999999523,
+      "snapshots": 132,
+      "max_rms": 0,
+      "max_peak": 0,
+      "active_taps": []
+    },
+    {
+      "nonzero": true,
+      "start_ms": 1510216.6000000238,
+      "end_ms": 1512116.8999999762,
+      "snapshots": 20,
+      "max_rms": 0.05497544560108292,
+      "max_peak": 0.1377042979001999,
+      "active_taps": [
+        [
+          2,
+          7
+        ]
+      ]
+    },
+    {
+      "nonzero": false,
+      "start_ms": 1512214.6999999285,
+      "end_ms": 1517719,
+      "snapshots": 54,
+      "max_rms": 0,
+      "max_peak": 0,
+      "active_taps": []
+    }
+  ],
+  "fourth_meal_lifecycle": {
+    "initial_cook": {
+      "requested_interval_ms": [
+        1462000,
+        1465200
+      ],
+      "snapshots": 32,
+      "tap_readings": 256,
+      "nonzero_readings": 32,
+      "max_rms": 0.054425653690645455,
+      "max_peak": 0.1377042979001999,
+      "first_nonzero_ms": 1462023.5,
+      "last_nonzero_ms": 1465116.6000000238,
+      "context_states": [
+        "running"
+      ],
+      "non_finite_readings": 0
+    },
+    "paused_before_muted_resume": {
+      "requested_interval_ms": [
+        1465216,
+        1480664
+      ],
+      "snapshots": 155,
+      "tap_readings": 1240,
+      "nonzero_readings": 0,
+      "max_rms": 0,
+      "max_peak": 0,
+      "first_nonzero_ms": null,
+      "last_nonzero_ms": null,
+      "context_states": [
+        "running"
+      ],
+      "non_finite_readings": 0
+    },
+    "muted_resume_until_unmute_mark_including_paused_tail": {
+      "requested_interval_ms": [
+        1480664.1,
+        1495566.7
+      ],
+      "snapshots": 149,
+      "tap_readings": 1192,
+      "nonzero_readings": 0,
+      "max_rms": 0,
+      "max_peak": 0,
+      "first_nonzero_ms": null,
+      "last_nonzero_ms": null,
+      "context_states": [
+        "running"
+      ],
+      "non_finite_readings": 0
+    },
+    "unmuted_active_resume": {
+      "requested_interval_ms": [
+        1495603.9,
+        1497000
+      ],
+      "snapshots": 14,
+      "tap_readings": 112,
+      "nonzero_readings": 14,
+      "max_rms": 0.05272660071231697,
+      "max_peak": 0.1347101330757141,
+      "first_nonzero_ms": 1495618.1999999285,
+      "last_nonzero_ms": 1496916.6999999285,
+      "context_states": [
+        "running"
+      ],
+      "non_finite_readings": 0
+    },
+    "paused_again": {
+      "requested_interval_ms": [
+        1497018,
+        1510122
+      ],
+      "snapshots": 132,
+      "tap_readings": 1056,
+      "nonzero_readings": 0,
+      "max_rms": 0,
+      "max_peak": 0,
+      "first_nonzero_ms": null,
+      "last_nonzero_ms": null,
+      "context_states": [
+        "running"
+      ],
+      "non_finite_readings": 0
+    },
+    "final_active_resume": {
+      "requested_interval_ms": [
+        1510122.9,
+        1512200
+      ],
+      "snapshots": 20,
+      "tap_readings": 160,
+      "nonzero_readings": 20,
+      "max_rms": 0.05497544560108292,
+      "max_peak": 0.1377042979001999,
+      "first_nonzero_ms": 1510216.6000000238,
+      "last_nonzero_ms": 1512116.8999999762,
+      "context_states": [
+        "running"
+      ],
+      "non_finite_readings": 0
+    },
+    "natural_completion_tail": {
+      "requested_interval_ms": [
+        1512214,
+        1517719
+      ],
+      "snapshots": 54,
+      "tap_readings": 432,
+      "nonzero_readings": 0,
+      "max_rms": 0,
+      "max_peak": 0,
+      "first_nonzero_ms": null,
+      "last_nonzero_ms": null,
+      "context_states": [
+        "running"
+      ],
+      "non_finite_readings": 0
+    }
+  },
+  "approved_assets": [
+    {
+      "number": "11",
+      "path": "assets/holiday/audio/meal_grok/cook_loop.tres",
+      "bytes": 387943,
+      "sha256": "2e9824a0be6cd199d4383d9593a4e184fb41ca9c558b5f91f340d7ef52f5ce1b",
+      "matches_locked_user_approved_source": true
+    },
+    {
+      "number": "12",
+      "path": "assets/holiday/audio/meal_grok/cook_spoon.tres",
+      "bytes": 16250,
+      "sha256": "b72eab1b9bf06842928aea36183a10f277b828cef21bfada150108b3ad700414",
+      "matches_locked_user_approved_source": true
+    }
+  ],
+  "recordings": [
+    {
+      "context": 1,
+      "session": 1,
+      "bytes": 396262,
+      "mime": "audio/webm;codecs=opus",
+      "startedAtMs": 13012.899999976158,
+      "endedAtMs": 1517421.1999999285,
+      "filename": "qa-audio-context-1-session-1.webm"
+    },
+    {
+      "context": 2,
+      "session": 1,
+      "bytes": 843304,
+      "mime": "audio/webm;codecs=opus",
+      "startedAtMs": 21477.399999976158,
+      "endedAtMs": 1517470.7999999523,
+      "filename": "qa-audio-context-2-session-1.webm"
+    }
+  ],
+  "recording_files": [
+    {
+      "path": "after-final-web/context-1-session-1.webm",
+      "bytes": 396262,
+      "sha256": "27af2f9b4d71718f158acbf168e2bc7fb63610963853cd1c2ed664c22e7fc3cc"
+    },
+    {
+      "path": "after-final-web/context-2-session-1.webm",
+      "bytes": 843304,
+      "sha256": "8f4094240b88d0830ddb502ae6b0d1bd41966ecf85217ebeb515b99b9c8c095a"
+    }
+  ],
+  "short_sound_replay": {
+    "sources_after_fourth_meal_start": [
+      {
+        "wallMs": 1462000.8999999762,
+        "node": 20,
+        "context": 2,
+        "contextState": "running",
+        "audioTime": 1440.392,
+        "buffer": 3,
+        "frames": 124800,
+        "channels": 2,
+        "sampleRate": 48000,
+        "duration": 2.6,
+        "shortPeak": null,
+        "loop": true,
+        "loopStart": 0,
+        "loopEnd": 2.5999999046325684,
+        "startArgs": [
+          0,
+          0
+        ]
+      },
+      {
+        "wallMs": 1480664.1000000238,
+        "node": 21,
+        "context": 2,
+        "contextState": "running",
+        "audioTime": 1459.0506666666668,
+        "buffer": 3,
+        "frames": 124800,
+        "channels": 2,
+        "sampleRate": 48000,
+        "duration": 2.6,
+        "shortPeak": null,
+        "loop": true,
+        "loopStart": 0,
+        "loopEnd": 2.5999999046325684,
+        "startArgs": [
+          0,
+          0
+        ]
+      },
+      {
+        "wallMs": 1495603.8999999762,
+        "node": 22,
+        "context": 2,
+        "contextState": "running",
+        "audioTime": 1473.992,
+        "buffer": 3,
+        "frames": 124800,
+        "channels": 2,
+        "sampleRate": 48000,
+        "duration": 2.6,
+        "shortPeak": null,
+        "loop": true,
+        "loopStart": 0,
+        "loopEnd": 2.5999999046325684,
+        "startArgs": [
+          0,
+          0
+        ]
+      },
+      {
+        "wallMs": 1510122.8999999762,
+        "node": 23,
+        "context": 2,
+        "contextState": "running",
+        "audioTime": 1488.512,
+        "buffer": 3,
+        "frames": 124800,
+        "channels": 2,
+        "sampleRate": 48000,
+        "duration": 2.6,
+        "shortPeak": null,
+        "loop": true,
+        "loopStart": 0,
+        "loopEnd": 2.5999999046325684,
+        "startArgs": [
+          0,
+          0
+        ]
+      }
+    ],
+    "all_are_cook_loop": true,
+    "observation": "No spoon source was created during fourth-meal pause/mute/resume/completion. This is observed coverage, not a proof for all possible timing."
+  },
+  "interpretation_limits": [
+    "RMS/peak are destination-adjacent software taps, not human hearing or physical speakers.",
+    "100 ms sampling yields measured transition bounds; it is not a sample-perfect stop-time trace.",
+    "The muted interval includes paused tail; actual approximately 1.5-second running mute is established by normal UI procedure, source13 and screenshot29, not a claim of 14.9 seconds of continuous gameplay.",
+    "Same approved .tres source hash does not mean browser-resampled PCM is byte-identical to the resource file.",
+    "No native WebM decoder available in PATH; raw WebM preserved without claiming independent decoded-waveform validation.",
+    "No item/time/save/private-game-state injection. The observation fixture differs from the ordinary entry only by one visible observer script.",
+    "Final uninjected ordinary index reopen is separately shown in screenshots33-35; music/environment settings revert to defaults, so sound-setting persistence is not claimed."
+  ],
+  "ci": {
+    "run_id": 38353346196,
+    "conclusion": "success",
+    "source_commit": "48f02b32215629de6393ac6e6bec83786054b4d3",
+    "provenance": "Root checked final exact-head workflow."
+  },
+  "remaining_delivery_gates": [
+    "public Actions/Pages/manifest/actual PCK verification"
+  ],
+  "merged": {
+    "pr": 766,
+    "main_commit": "d4c5b092a465186316c5ff35d0a17d2c57b0b379",
+    "tree_equals_measured_source": true,
+    "provenance": "Root merged after final review; software output itself was recorded against 48f02."
+  }
+}

@@ -1,0 +1,114 @@
+{
+  "schema": "youjia.meal-output-evidence/v1",
+  "owner": "CODEX-LEAD",
+  "status": "Web output/lifecycle passed and PR766 merged; public verification pending",
+  "before": {
+    "source_commit": "9783d956c20c95d4d244db328a69f82836549d9f",
+    "build": "game-9783d95",
+    "entry": "http://127.0.0.1:8775/audio-check.html",
+    "entry_type": "Ordinary player flow through locally instrumented output-observation fixture",
+    "fixture_scope": "Original connect/start forwarded; parallel destination analyser/MediaStream taps only; no game, save, time or __manusBgm access.",
+    "recording": "context-1.webm preserved unchanged; not separately decoded",
+    "measurement": {
+      "interval_ms": [
+        129000,
+        139000
+      ],
+      "sample_count": 99,
+      "context_1_readings": 198,
+      "context_1_max_rms": 0,
+      "context_1_max_peak": 0,
+      "context_2_readings": 198,
+      "context_2_max_rms": 0,
+      "context_2_max_peak": 0,
+      "context_1_total_readings": 2926,
+      "observer_failures": 0
+    },
+    "diagnostic": "before-9783d95/diagnostics.json.gz (lossless complete original)"
+  },
+  "fix": {
+    "commit": "eaaf41b9e96126cf30c816fade239052c4fd561c",
+    "parent": "9783d956c20c95d4d244db328a69f82836549d9f",
+    "tree": "0decb0ff1d82a2a08041f1c23ea4b557972390d5",
+    "files": [
+      "autoload/audio_director.gd",
+      "scripts/presentation/meal_audio.gd",
+      "test/meal_audio_suite.gd"
+    ],
+    "native_tests": {
+      "meal_audio": 107,
+      "meal_audio_host": 71,
+      "house_cooking": 119,
+      "audio_button_input": 648,
+      "yard_audio": 87
+    },
+    "test_provenance": "Tests ran during local work on top of 9783. Final 107-check meal suite covers the final direct-SFX-mute monitor; other suites passed before this last scoped monitor addition. Exact integrated SHA CI and real Web output are recorded separately under after_final_web; these local logs are not relabeled as final integrated-SHA runs.",
+    "source_assets": [
+      {
+        "number": "11",
+        "path": "assets/holiday/audio/meal_grok/cook_loop.tres",
+        "bytes": 387943,
+        "sha256": "2e9824a0be6cd199d4383d9593a4e184fb41ca9c558b5f91f340d7ef52f5ce1b",
+        "unchanged_between_before_and_fix": true,
+        "approved_source": true,
+        "approval_basis": "Previously recorded user listening approval for the locked 2026-10-11 batch; no private mail included."
+      },
+      {
+        "number": "12",
+        "path": "assets/holiday/audio/meal_grok/cook_spoon.tres",
+        "bytes": 16250,
+        "sha256": "b72eab1b9bf06842928aea36183a10f277b828cef21bfada150108b3ad700414",
+        "unchanged_between_before_and_fix": true,
+        "approved_source": true,
+        "approval_basis": "Previously recorded user listening approval for the locked 2026-10-11 batch; no private mail included."
+      }
+    ],
+    "hunger_13_enabled": false
+  },
+  "after_final_web": {
+    "status": "passed bounded software output/lifecycle; PR766 merged; public verification pending",
+    "source_commit": "48f02b32215629de6393ac6e6bec83786054b4d3",
+    "pck_sha256": "d0660003166c9856afa74b0f57d51650f64f2dde6fd595181218fea8f294c8d4",
+    "pck_bytes": 74659432,
+    "natural_dinner_analysis": "after-final-web/natural-dinner-analysis.json",
+    "recordings": [
+      {
+        "path": "after-final-web/context-1-session-1.webm",
+        "bytes": 396262,
+        "sha256": "27af2f9b4d71718f158acbf168e2bc7fb63610963853cd1c2ed664c22e7fc3cc"
+      },
+      {
+        "path": "after-final-web/context-2-session-1.webm",
+        "bytes": 843304,
+        "sha256": "8f4094240b88d0830ddb502ae6b0d1bd41966ecf85217ebeb515b99b9c8c095a"
+      }
+    ],
+    "tree": "2e8295c5cfa6638d74c6f37d9d4d37b03ed571e9",
+    "continuous_analysis": "after-final-web/continuous-analysis.json",
+    "continuous_diagnostic": "after-final-web/continuous-diagnostics.json.gz",
+    "raw_diagnostic_bytes": 34749247,
+    "raw_diagnostic_sha256": "8bef32f21c1f654906f9c18f9f4c676aa3307b425d066afe9684b2cdda1e0b35",
+    "ci": {
+      "run_id": 38353346196,
+      "conclusion": "success",
+      "source_commit": "48f02b32215629de6393ac6e6bec83786054b4d3",
+      "provenance": "Root checked final exact-head workflow."
+    },
+    "remaining_delivery_gates": [
+      "public Actions/Pages/manifest/actual PCK verification"
+    ],
+    "merged": {
+      "pr": 766,
+      "main_commit": "d4c5b092a465186316c5ff35d0a17d2c57b0b379",
+      "tree_equals_measured_source": true,
+      "provenance": "Root merged after final review; software output itself was recorded against 48f02."
+    }
+  },
+  "limits": [
+    "No human hearing approval in this capture; approved source decision is independent.",
+    "No physical-device, speaker, microphone or browser-WAV decode claim.",
+    "Controlled native tests and fake-AudioContext cache unit test are distinct from ordinary Web player flow.",
+    "No source or save/time injection during the ordinary Web failure capture.",
+    "Final ordinary reopen does not prove audio-setting persistence: music/environment reset to defaults."
+  ]
+}
