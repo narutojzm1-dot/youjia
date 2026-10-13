@@ -131,6 +131,14 @@ ffmpeg -framerate 5 -i narrow_preview/narrow_frame_%02d.png -c:v libx264 -pix_fm
   '
   ffmpeg -framerate 5 -i art/concepts/env_fx_cloud_mist_20261011/narrow_preview/narrow_frame_%02d.png -c:v libx264 -pix_fmt yuv420p -vf "scale=390:844" art/concepts/env_fx_cloud_mist_20261011/narrow_preview/narrow_cloud_density_loop.mp4
   ```
-- 本环境无 Godot 引擎。已在候选目录提供可运行隔离场景描述与最小 Shader 文件（cloud_density_preview.tscn / .gdshader），使用现有 yard_sunny + cloud_candidate，外部 phase 驱动内部浓淡，支持暂停/低动效开关。请 Leader 用 Godot 4.7.2 打开验证 390×844 与横屏覆盖屋顶/山体区域。生产门禁不变，仍只是隔离候选。
+- 本环境当时没有可直接打开的 Godot 工程。目录里只有着色器草稿和手动搭建说明，没有 project.godot / 场景。该项由下一节的独立预览补上。生产门禁不变，仍只是隔离候选。
 
-仍等待基于新 SHA 的实际运行证据复审。
+## 2026-10-13 可直接运行的 Godot 预览
+
+- 入口：`godot_preview/project.godot`（Godot 4.x / GL Compatibility，主场景 `cloud_density_preview.tscn`）。
+- 场景已绑定底图、1.8 倍云图、合成遮罩，以及屋顶 / 雪峰 / 树冠三张语义遮罩。着色器的原点 (180, 30)、缩放和调制分母与 `generate_cloud_density_anim.py` 相同。
+- 驱动脚本把 phase 从 0 转到 2π，正常 8 秒一圈。`P` / 空格暂停（停止累加），`L` 低动效（速度 ×0.25）。
+- 启动命令见 `godot_preview/README_run.md`：`--resolution 1280x720` 与 `--resolution 390x844`。
+- `sample_frames/`、`narrow_preview/`、`cloud_density_loop.gif`、`cloud_density_loop_10s.mp4`、`cloud_internal_density_loop.gif` 仍是保护遮罩之前的旧证据，已用 `MEDIA_OUTDATED.txt` 标明。当前原帧是 `anim_frames/`。
+
+仍只是隔离候选，不改生产场景、运行时资源和存档。请 Leader 用 Godot 4.7.2 打开上述工程复测。

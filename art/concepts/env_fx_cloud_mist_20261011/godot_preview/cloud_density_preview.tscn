@@ -1,0 +1,65 @@
+[gd_scene load_steps=10 format=3]
+
+[ext_resource type="Shader" path="res://cloud_density.gdshader" id="1_shader"]
+[ext_resource type="Script" path="res://cloud_density_driver.gd" id="2_driver"]
+[ext_resource type="Texture2D" path="res://textures/yard_sunny.png" id="3_base"]
+[ext_resource type="Texture2D" path="res://textures/cloud_scaled.png" id="4_cloud"]
+[ext_resource type="Texture2D" path="res://textures/mask_combined.png" id="5_combined"]
+[ext_resource type="Texture2D" path="res://textures/mask_roof.png" id="6_roof"]
+[ext_resource type="Texture2D" path="res://textures/mask_snow_peaks.png" id="7_snow"]
+[ext_resource type="Texture2D" path="res://textures/mask_canopy.png" id="8_canopy"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_cloud"]
+shader = ExtResource("1_shader")
+shader_parameter/base_tex = ExtResource("3_base")
+shader_parameter/cloud_tex = ExtResource("4_cloud")
+shader_parameter/mask_combined = ExtResource("5_combined")
+shader_parameter/mask_roof = ExtResource("6_roof")
+shader_parameter/mask_snow = ExtResource("7_snow")
+shader_parameter/mask_canopy = ExtResource("8_canopy")
+shader_parameter/phase = 0.0
+shader_parameter/strength = 1.0
+shader_parameter/semantic_gate = 0.0
+shader_parameter/base_size = Vector2(1920, 1080)
+shader_parameter/cloud_origin = Vector2(180, 30)
+shader_parameter/mod_xx = 70.0
+shader_parameter/mod_yy_sin = 50.0
+shader_parameter/mod_yy_cos = 90.0
+
+[node name="CloudDensityPreview" type="Node2D"]
+script = ExtResource("2_driver")
+
+[node name="Preview" type="Sprite2D" parent="."]
+centered = false
+texture = ExtResource("3_base")
+texture_filter = 1
+material = SubResource("ShaderMaterial_cloud")
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="Panel" type="PanelContainer" parent="UI"]
+offset_left = 16.0
+offset_top = 820.0
+offset_right = 1680.0
+offset_bottom = 1064.0
+
+[node name="VBox" type="VBoxContainer" parent="UI/Panel"]
+layout_mode = 2
+
+[node name="Buttons" type="HBoxContainer" parent="UI/Panel/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="PauseButton" type="Button" parent="UI/Panel/VBox/Buttons"]
+custom_minimum_size = Vector2(700, 120)
+layout_mode = 2
+text = "暂停 Pause (P)"
+
+[node name="LowMotionButton" type="Button" parent="UI/Panel/VBox/Buttons"]
+custom_minimum_size = Vector2(860, 120)
+layout_mode = 2
+text = "低动效 关 LowOff (L)"
+
+[node name="Status" type="Label" parent="UI/Panel/VBox"]
+layout_mode = 2
+text = "phase 0.000"
