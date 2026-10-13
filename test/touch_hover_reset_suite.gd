@@ -66,6 +66,12 @@ func _send(event: InputEvent) -> void:
 	await process_frame
 
 
+## 抬指后撤悬停要等 Main 的去重窗过去。
+func _after_lift() -> void:
+	await create_timer(0.55).timeout
+	await _settle()
+
+
 func _touch(down: bool, at: Vector2) -> void:
 	var t := InputEventScreenTouch.new()
 	t.position = at
@@ -116,7 +122,7 @@ func _check_touch_tap(dims: Vector2i) -> void:
 	var before := _chip().text
 	await _touch(true, _at())
 	await _touch(false, _at())
-	await _settle()
+	await _after_lift()
 	_check(_chip().text != before, "%s: tap toggles the weather (%s -> %s)" % [tag, before, _chip().text])
 	_check(not _hovered(), "%s: after the finger lifts the chip is not left in hover" % tag)
 	_check(_chip().get_draw_mode() == BaseButton.DRAW_NORMAL, "%s: chip draws normal, got draw mode %d" % [tag, _chip().get_draw_mode()])
@@ -126,10 +132,10 @@ func _check_touch_tap(dims: Vector2i) -> void:
 func _check_touch_hold(dims: Vector2i) -> void:
 	var tag := "%s touch hold" % dims
 	await _touch(true, _at())
-	await _settle()
+	await _after_lift()
 	_check(_chip().get_draw_mode() != BaseButton.DRAW_NORMAL, "%s: while the finger is down the chip keeps its pressed look, got %d" % [tag, _chip().get_draw_mode()])
 	await _touch(false, _at())
-	await _settle()
+	await _after_lift()
 	_check(not _hovered() and _chip().get_draw_mode() == BaseButton.DRAW_NORMAL, "%s: lifting the finger clears it" % tag)
 	await _cool()
 
@@ -139,7 +145,7 @@ func _check_synth_mouse(dims: Vector2i) -> void:
 	await _touch(true, _at())
 	await _touch(false, _at())
 	await _mouse_move(_at())
-	await _settle()
+	await _after_lift()
 	_check(not _hovered(), "%s: a compat mouse move right after the tap does not bring hover back" % tag)
 	await _cool()
 
@@ -168,10 +174,21 @@ func _check_basket_cell_tap(dims: Vector2i) -> void:
 	_check(panel.scroll.get_global_rect().has_point(at), "%s: wheat cell visible" % tag)
 	await _touch(true, at)
 	await _touch(false, at)
-	await _settle(6)
+	await create_timer(1.0).timeout
+	await _settle()
 	_check(panel.drag_kind.is_empty(), "%s: no drag starts after the tap, got '%s'" % [tag, panel.drag_kind])
 	_check(panel.grid.menu.visible, "%s: tap opens the wheat paper menu" % tag)
 	_check(root.gui_get_hovered_control() == null, "%s: nothing left in hover" % tag)
+	var tips := cell.get_children(true).filter(func(c: Node) -> bool: return c is PopupPanel and c.visible)
+	_check(tips.is_empty(), "%s: no stray tooltip pops up for the tapped cell" % tag)
+	var held := InputEventMouseMotion.new()
+	held.device = InputEvent.DEVICE_ID_EMULATION
+	held.button_mask = MOUSE_BUTTON_MASK_LEFT
+	held.position = at + Vector2(0, 200)
+	held.global_position = held.position
+	await _send(held)
+	await _settle()
+	_check(panel.drag_kind.is_empty(), "%s: a later held mouse move elsewhere does not drag the tapped cell" % tag)
 	panel.grid.close_menu()
 	main._hide_basket()
 	await _settle()
