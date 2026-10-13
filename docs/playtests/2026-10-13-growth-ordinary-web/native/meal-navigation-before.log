@@ -1,0 +1,43 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ERROR: occupied basket starts a real route without teleport
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] run (res://test/meal_navigation_suite.gd:130)
+ERROR: normal walk reaches a valid physical basket pickup
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] run (res://test/meal_navigation_suite.gd:130)
+ERROR: resident entering the destination cannot strand an existing meal route
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] run (res://test/meal_navigation_suite.gd:130)
+ERROR: dinner deadline releases first-leg meal navigation immediately
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] run (res://test/meal_navigation_suite.gd:130)
+ERROR: expired first leg clears cooking label without changing food
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] run (res://test/meal_navigation_suite.gd:130)
+ERROR: same meal window on a different day cannot retain yesterday's fetch
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] run (res://test/meal_navigation_suite.gd:130)
+ERROR: lost navigation goal cannot keep a phantom cooking action
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] run (res://test/meal_navigation_suite.gd:130)
+ERROR: stationary blocked meal route releases actor within twelve seconds
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] run (res://test/meal_navigation_suite.gd:130)
+ERROR: failed navigation observes its cooldown
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] run (res://test/meal_navigation_suite.gd:130)
+ERROR: later clear route can start a fresh valid meal
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] run (res://test/meal_navigation_suite.gd:130)
+MEAL_NAVIGATION checks=28 failures=10

@@ -1,0 +1,71 @@
+{
+  "manifest_excludes_itself": true,
+  "files": [
+    {
+      "path": ".gdignore",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "git_blob_sha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "README.md",
+      "bytes": 3003,
+      "sha256": "f0f8ca94b8a62da325fe927d35e3f8076316594345de9e362dc4387c110b225d",
+      "git_blob_sha1": "db734795e4154fd19a3d9585dace884caa3bad29"
+    },
+    {
+      "path": "capture.gd",
+      "bytes": 6321,
+      "sha256": "33d4319cbe3cae743c79ab1c041e06ec5f78810d6c64e15a0dc807eda9dc19e3",
+      "git_blob_sha1": "eb4345c1e5e8491032192894311e23d27c943697"
+    },
+    {
+      "path": "project.godot",
+      "bytes": 263,
+      "sha256": "adfed15681a03964acdbb6bceb60107213526cc54f3b3ce3c345cefc484807f8",
+      "git_blob_sha1": "0242fe06642acd5f1f9a24a67b9b116beca349c8"
+    },
+    {
+      "path": "capture-summary.json",
+      "bytes": 5295,
+      "sha256": "ffcf6d2ba8b06715aa86357adffdd90d68ed01d8bdde28bbdf5aed44d1680d3b",
+      "git_blob_sha1": "d1602cd62d3da90b805ff883d34952116ad5f420"
+    },
+    {
+      "path": "source-provenance.json",
+      "bytes": 3492,
+      "sha256": "f02410d24c90c30aeaad7580f34f3d6946be260a8daafa3931c222d14cea4268",
+      "git_blob_sha1": "d3710cd9148f97785e311035db9451b0b3392978"
+    },
+    {
+      "path": "gpu.stdout.paths-normalized.log",
+      "bytes": 580,
+      "sha256": "720ff800f31b983757e039900e22ca58d4fe7e68272a2a7e8b5be2634b590a81",
+      "git_blob_sha1": "d165a57caa76b7af1fe3211cef6681cb36ec2e62"
+    },
+    {
+      "path": "gpu.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "git_blob_sha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "script-check-only.log",
+      "bytes": 75,
+      "sha256": "83cf0b082206af2aa236c83064fbcfa76be1e00a4aa3558574b2f65965d9481c",
+      "git_blob_sha1": "1161b0135976584721c65b28c010e2526008639f"
+    },
+    {
+      "path": "millstone-sunny-gpu.png",
+      "bytes": 2133255,
+      "sha256": "5f3ecd4d71eb4f75a71735b962fe4ce1125685c0c4f2e08e1858c3a299fbdd9d",
+      "git_blob_sha1": "8e17b2608635d9f7ce008056f6a39860daec81b1"
+    },
+    {
+      "path": "millstone-overcast-gpu.png",
+      "bytes": 1903834,
+      "sha256": "dc7af8ebc3b263aee32dc0ea9e36f8659a76549f123411b2c100663b919f3cac",
+      "git_blob_sha1": "2bafc41d4bc84e0f3eb3cf834a459cde74f29c80"
+    }
+  ]
+}

@@ -1,0 +1,61 @@
+{
+  "sourceCommit": "c44cc7e077dfa8dae07faba5a3463634306b8bc5",
+  "pagesCommit": "5acef1f8c93b3076a7f2ff32c26622dd7485ab6a",
+  "checkedAt": "2026-10-13T05:11:54.978719+00:00",
+  "manifestFile": {
+    "url": "https://narutojzm1-dot.github.io/youjia/game-release.json?verify=1791868314978719100",
+    "filename": "public-manifest.json",
+    "http": 200,
+    "bytes": 2252,
+    "sha256": "d363d2b5404486f2d84e03910f93716acc792208b3db9de5fbc8d83263aaeb0d",
+    "startedAt": "2026-10-13T05:11:54.978719+00:00",
+    "completedAt": "2026-10-13T05:11:58.066304+00:00",
+    "headers": {
+      "Content-Length": "2252",
+      "Content-Type": "application/json; charset=utf-8",
+      "Last-Modified": "Tue, 13 Oct 2026 03:55:45 GMT",
+      "ETag": "\"6acdabc1-8cc\"",
+      "Cache-Control": "max-age=600"
+    }
+  },
+  "htmlFile": {
+    "url": "https://narutojzm1-dot.github.io/youjia/?verify=1791868314978719100",
+    "filename": "public-index.html",
+    "http": 200,
+    "bytes": 364139,
+    "sha256": "1c1a829fc315a453e73827dadf662b053ee291b79e09898a9cc12be64c4842ca",
+    "startedAt": "2026-10-13T05:11:58.066304+00:00",
+    "completedAt": "2026-10-13T05:11:59.498474+00:00",
+    "headers": {
+      "Content-Length": "364139",
+      "Content-Type": "text/html; charset=utf-8",
+      "Last-Modified": "Tue, 13 Oct 2026 03:55:46 GMT",
+      "ETag": "\"6acdabc2-58e6b\"",
+      "Cache-Control": "max-age=600"
+    }
+  },
+  "pagesManifestFile": {
+    "url": "https://raw.githubusercontent.com/narutojzm1-dot/youjia/5acef1f8c93b3076a7f2ff32c26622dd7485ab6a/game-release.json",
+    "filename": "pages-manifest.json",
+    "http": 200,
+    "bytes": 2252,
+    "sha256": "2b96fee58ab2a2e58579c360a75f21edf92241b39c8cd48d11a4dd3d0254c0c2",
+    "startedAt": "2026-10-13T05:11:59.498474+00:00",
+    "completedAt": "2026-10-13T05:12:01.396525+00:00",
+    "headers": {
+      "Content-Length": "2252",
+      "Cache-Control": "max-age=300",
+      "Content-Type": "text/plain; charset=utf-8",
+      "ETag": "\"14d91ccb1d08e35367acd642a01ee83fada6967c42bc372004168eef8d4a948e\""
+    }
+  },
+  "manifestSource": "eb8b93d2e452c468afadd3d91f71893612c19102",
+  "manifestEntry": "game-eb8b93d",
+  "publishedAt": "2026-10-13T03:54:17Z",
+  "htmlBuild": "game-eb8b93d",
+  "mainPack": "game-eb8b93d.pck",
+  "htmlPckHash": null,
+  "htmlPckBytes": null,
+  "result": "FAIL",
+  "error": "public manifest is not the requested source"
+}

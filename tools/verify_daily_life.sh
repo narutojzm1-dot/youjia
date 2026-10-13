@@ -38,6 +38,7 @@ run_godot suite test/save_status_paper_suite.gd
 run_godot suite test/pause_notice_suite.gd
 run_godot suite test/audio_button_input_suite.gd
 run_godot suite test/ambience_output_ceiling_suite.gd
+run_godot suite test/meal_audio_suite.gd
 run_godot suite test/modal_touch_input_suite.gd
 run_godot suite test/hud_pointer_input_suite.gd
 run_godot suite test/yard_inventory_suite.gd
@@ -87,6 +88,7 @@ run_godot suite test/web_save_bridge/legacy_suite.gd
 run_godot suite test/title_copy_balance_suite.gd
 run_godot suite test/touch_hint_mode_suite.gd
 node test/loading_shell_test.cjs
+node test/release_check_test.cjs
 node test/download_assets_test.mjs
 node test/sha256_stream_test.mjs
 
@@ -142,6 +144,8 @@ run_godot suite test/path_snail_fade_suite.gd
 run_godot suite test/find_reveal_name_fade_suite.gd
 run_godot suite test/yard_basket_dismiss_focus_suite.gd
 run_godot suite test/basket_pointer_focus_suite.gd
+run_godot suite test/care_pointer_focus_suite.gd
+run_godot suite test/touch_hover_reset_suite.gd
 run_godot suite test/yard_decor_settle_ring_suite.gd
 run_godot suite test/walk_goal_marker_suite.gd
 run_godot suite test/exploration_tap_feedback_suite.gd
@@ -155,12 +159,23 @@ run_godot suite test/photo_diary_weather_suite.gd
 
 run_godot suite test/resident_idle_rest_suite.gd
 run_godot suite test/exploration_trip_capacity_suite.gd
+run_godot suite test/yard_original_plants_suite.gd
+run_godot suite test/original_plant_runtime_suite.gd
 run_godot suite test/resident_barks_suite.gd
 
 run_godot suite test/meal_ledger_suite.gd
 run_godot suite test/rest_context_suite.gd
 run_godot suite test/meal_planner_suite.gd
+run_godot suite test/cooking_smoke_suite.gd
+run_godot suite test/house_cooking_suite.gd
+run_godot suite test/meal_navigation_suite.gd
+
+run_godot suite test/meal_audio_host_suite.gd
+
 run_godot suite test/growth_materials_suite.gd
 
 run_godot suite test/growth_budget_suite.gd
 run_godot suite test/pond_edging_view_suite.gd
+run_godot suite test/pond_growth_director_suite.gd
+run_godot suite test/release_notes_suite.gd
+run_godot suite test/release_notes_pointer_focus_suite.gd

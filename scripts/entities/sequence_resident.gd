@@ -9,6 +9,7 @@ const ACTION_SECONDS := {&"pickup": 0.60, &"feed": 0.54}
 var action_hands: Dictionary = {}
 var action_elapsed := 0.0
 var action_kind: StringName = &""
+var held_action_frame := -1
 const STRIDE := 52.0
 const NOMINAL_FPS := 12.0
 # Match the nearby path's 85px/s at unit depth (96 * 0.9 = 86.4).
@@ -43,6 +44,10 @@ func advance(delta: float,moved: Vector2,depth: float,face: float,reduced: bool,
 		if reduced or moved.length()/maxf(delta,0.0001)>=1.0:
 			reset_motion()
 		else:
+			if held_action_frame >= 0:
+				animation = action_kind
+				frame = held_action_frame
+				return
 			action_elapsed += delta
 			var duration: float = ACTION_SECONDS[action_kind]
 			if action_elapsed < duration:
@@ -59,6 +64,7 @@ func advance(delta: float,moved: Vector2,depth: float,face: float,reduced: bool,
 	set_frame_and_progress(int(progress),fmod(progress,1.0))
 
 func reset_motion() -> void:
+	held_action_frame = -1
 	action_kind = &""
 	action_elapsed = 0.0
 	pause()
@@ -77,3 +83,12 @@ func begin_action(kind: StringName, reduced: bool) -> void:
 func action_hand() -> Vector2:
 	var points: Array = action_hands[String(animation)]
 	return Vector2(points[frame][0], points[frame][1])
+
+# A production director owns this pose clock. Walking/reduced motion still
+# cancel it in advance(); ordinary pickup/feed retain their one-shot timing.
+func hold_action_frame(kind: StringName, index: int) -> void:
+	if not ACTION_SECONDS.has(kind): return
+	action_kind = kind
+	held_action_frame = clampi(index, 0, ACTION_FRAMES - 1)
+	animation = kind
+	frame = held_action_frame

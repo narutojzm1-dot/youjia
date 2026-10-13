@@ -8,8 +8,11 @@ var portrait: TextureRect
 var progress: ProgressBar
 var note: Label
 var close_button: Button
+var _focus_input: Node
 
 func _ready() -> void:
+	_focus_input = preload("res://scripts/ui/pointer_focus.gd").new()
+	add_child(_focus_input)
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	mouse_filter = Control.MOUSE_FILTER_STOP
@@ -79,7 +82,7 @@ func open() -> void:
 	visible = true
 	scroll.scroll_vertical = 0
 	refresh()
-	close_button.grab_focus()
+	_focus_input.grab(close_button)
 
 func refresh() -> void:
 	var value: Dictionary = SaveStore.get_chick_growth()

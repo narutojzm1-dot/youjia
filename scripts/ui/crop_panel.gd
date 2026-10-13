@@ -13,8 +13,11 @@ var scroll: ScrollContainer
 var column: VBoxContainer
 var _op := ""
 var _error := ""
+var _focus_input: Node
 
 func _ready() -> void:
+	_focus_input = preload("res://scripts/ui/pointer_focus.gd").new()
+	add_child(_focus_input)
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	mouse_filter = Control.MOUSE_FILTER_STOP
@@ -140,7 +143,7 @@ func open() -> void:
 	_error = ""
 	visible = true
 	refresh()
-	close_button.grab_focus()
+	_focus_input.grab(close_button)
 
 func is_saving() -> bool:
 	return not _op.is_empty()

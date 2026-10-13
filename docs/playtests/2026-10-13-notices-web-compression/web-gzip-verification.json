@@ -1,0 +1,107 @@
+{
+  "issue": 771,
+  "pullRequest": 785,
+  "scope": "Local ordinary Web export with real same-origin HTTP gzip; not public deployment verification or physical-phone acceptance.",
+  "reviewer": "CODEX-LEAD",
+  "date": "2026-10-13",
+  "runtimeSource": "c8ea3853818ade88d52a8621fda36cd28423ab84",
+  "beforeSource": "b7929dc7b982788ea4126f9f08424770a09050ed",
+  "export": {
+    "sourceCommit": "c8ea3853818ade88d52a8621fda36cd28423ab84",
+    "engine": "Godot 4.7.2 stable",
+    "preset": "Web",
+    "exitCode": 0,
+    "errorWarningMatches": [],
+    "pck": {
+      "entry": "game-c8ea385.pck",
+      "bytes": 74466920,
+      "sha256": "1279edf45f95ac326671c5c191c32d37f8a8e45071699656083c8c5d32a2e95c"
+    },
+    "logSha256": "62b685cb4e6ebeb622adafa200ff36e1182a941c1986c7f2c6370e696a49fd0e"
+  },
+  "httpTransport": [
+    {
+      "path": "/",
+      "status": 200,
+      "contentEncoding": "gzip",
+      "wireBytes": 398,
+      "decodedBytes": 870,
+      "sourceCommit": "c8ea3853818ade88d52a8621fda36cd28423ab84",
+      "gzipMagic": "1f8b"
+    },
+    {
+      "path": "/before/",
+      "status": 200,
+      "contentEncoding": "gzip",
+      "wireBytes": 398,
+      "decodedBytes": 870,
+      "sourceCommit": "b7929dc7b982788ea4126f9f08424770a09050ed",
+      "gzipMagic": "1f8b"
+    }
+  ],
+  "browserChecks": [
+    {
+      "atUtc": "2026-10-13T04:30:50Z",
+      "mode": "gzip",
+      "build": "b7929dc",
+      "result": "Expected before-fix failure: update check unavailable; stream_peer_gzip.cpp:117."
+    },
+    {
+      "atUtc": "2026-10-13T04:31:44Z",
+      "mode": "gzip",
+      "build": "c8ea385",
+      "result": "PASS: fixture manifest matches this build; latest status shown."
+    },
+    {
+      "atUtc": "2026-10-13T04:32:02Z",
+      "mode": "invalid",
+      "build": "c8ea385",
+      "result": "PASS: unavailable status shown; bundled release notes retained."
+    },
+    {
+      "atUtc": "2026-10-13T04:32:20Z",
+      "mode": "gzip",
+      "noticeSourceOverride": "7c785c03bb80c55dc8deaef4eaea8f854548688d",
+      "build": "c8ea385",
+      "result": "PASS: different build status shown; no forced refresh; bundled release notes retained. Override is a fixture, not a claim that this source was publicly released."
+    }
+  ],
+  "consoleObservation": {
+    "source": "CODEX-LEAD CUA observation",
+    "fromUtc": "2026-10-13T04:31:00Z",
+    "warnings": [],
+    "errors": [],
+    "caveat": "Earlier old-page gzip errors remain before this timestamp; not attributed to fixed build."
+  },
+  "fixtureAfterChecks": {
+    "mode": "gzip",
+    "noticeSourceOverride": null
+  },
+  "screenshots": [
+    {
+      "file": "14-gzip-before-check-failed.jpg",
+      "bytes": 125510,
+      "sha256": "50f0cd9407438136c7972b7cf120e341c63f50914bfc93162b023540a6a40dad"
+    },
+    {
+      "file": "15-gzip-after-latest.jpg",
+      "bytes": 125696,
+      "sha256": "29d4aa15c1562a6cc6ab5913aaa460377623e7bfa283772bf068a885972036f5"
+    },
+    {
+      "file": "16-gzip-invalid-manifest.jpg",
+      "bytes": 125919,
+      "sha256": "6f7dad58f1db489ca2ec6984bb559bf70dfb0e634a6e39f453c90860b6d352bd"
+    },
+    {
+      "file": "17-gzip-different-build.jpg",
+      "bytes": 127443,
+      "sha256": "c4b927313bc9754d2754156fa5a57991b1f7c68df8268685f5df384c51b09296"
+    }
+  ],
+  "notClaimed": [
+    "Physical mobile-device acceptance",
+    "Public deployment of c8ea385",
+    "Ordinary browser missing/timeout/offline transport scenarios in this comparison"
+  ]
+}

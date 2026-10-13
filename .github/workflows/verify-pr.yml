@@ -53,6 +53,9 @@ jobs:
         timeout-minutes: 30
         run: GODOT="$RUNNER_TEMP/godot/Godot_v4.7.2-stable_linux.x86_64" bash tools/verify_daily_life.sh
 
+      - name: Stamp bundled build identity
+        run: python3 tools/stamp_build_identity.py
+
       - name: Prepare Web export directory
         run: mkdir -p dist
 

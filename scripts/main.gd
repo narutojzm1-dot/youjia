@@ -84,10 +84,13 @@ var _chip_label_width := -1.0
 var _residents: RefCounted
 var _chick_panel: Control
 var _crop_panel: Control
+var _original_plant_panel: Control
+var _original_plants: RefCounted
 var _resident_bubble: Control
 var _resident_barks: RefCounted
 var _crop_kind_watch := ""
 var _bark_clock := 0.0
+var _growth_bark_revision := -1
 var _fatigue_bark_day := -1
 var _fatigue_bark_ready_seconds := 0.0
 const FATIGUE_BARK_SETTLE_SECONDS := 15.0
@@ -106,8 +109,12 @@ var _pause_panel: PanelContainer
 var _pause_box: VBoxContainer
 var _pause_columns: HBoxContainer
 var _pause_session: VBoxContainer
+var _meal_audio_host: Node
+var _meal_audio_focused := true
 var _pause_audio: VBoxContainer
 var _pause_title: Label
+var _release_button: Button
+var _release_panel: Control
 var _resume_button: Button
 var _restart_button: Button
 var _pause_title_button: Button
@@ -382,6 +389,15 @@ func _ready() -> void:
 	_decor = load("res://scripts/inventory/yard_decor_controller.gd").new(SaveStore)
 	_decor.changed.connect(_on_decor_changed)
 	_decor.resubmitted.connect(_on_decor_resubmitted)
+	_original_plants = preload("res://scripts/inventory/original_plant_controller.gd").new(SaveStore)
+	_original_plants.changed.connect(_on_original_plants_changed)
+	_original_plants.resubmitted.connect(_on_original_plants_resubmitted)
+	_original_plant_panel = preload("res://scripts/ui/original_plant_panel.gd").new()
+	_original_plant_panel.name = "OriginalPlantPanel"
+	_original_plant_panel.controller = _original_plants
+	_ui_layer.add_child(_original_plant_panel)
+	_original_plant_panel.visible = false
+	_original_plant_panel.close_requested.connect(_hide_original_plants)
 	_basket_panel.place_requested.connect(_place_from_basket)
 	_ensure_hold_hotbar()
 	I18n.locale_changed.connect(_on_locale_changed)
@@ -410,7 +426,7 @@ func _process(delta: float) -> void:
 	_sync_notice_visibility()
 	if _notice.visible:
 		_fit_notice()
-	if _screen == "game" and _world != null and not _pause_screen.visible and not _album_screen.visible and not _confirm_screen.visible and not _basket_panel.visible and not _crop_panel.visible and not _chick_panel.visible and not _save_problem_active:
+	if _screen == "game" and _world != null and not _pause_screen.visible and not _album_screen.visible and not _confirm_screen.visible and not _basket_panel.visible and not _crop_panel.visible and not _chick_panel.visible and not _original_plant_panel.visible and not _save_problem_active:
 		var move := Vector2.ZERO
 		if _world.input_enabled:
 			move = Input.get_vector("move_left", "move_right", "move_up", "move_down")
@@ -419,6 +435,7 @@ func _process(delta: float) -> void:
 	elif _screen == "exploring" and _world != null and not _pause_screen.visible and not _confirm_screen.visible and not _save_problem_active:
 		_world.advance_world_time(delta)
 		_sync_path_rain(delta)
+	_sync_meal_audio()
 	var reduced := bool(TuningStore.get_value("ui.reduced_motion", false))
 	var lerp_rate := 12.0 if reduced else 3.2
 	_cam_zoom = lerpf(_cam_zoom, _cam_target_zoom, 1.0 - exp(-delta * lerp_rate))
@@ -588,9 +605,25 @@ func _focus_menu_default(event: InputEvent) -> bool:
 
 
 func _input(event: InputEvent) -> void:
+	if _world != null and _world.house != null and ((event is InputEventMouseButton and event.pressed) or (event is InputEventScreenTouch and event.pressed) or (event is InputEventKey and event.pressed and not event.echo)):
+		_world.house.player_activity()
+	if _release_panel != null and _release_panel.visible:
+		# Keep the paused world and underlying menu insulated; panel GUI handles scrolling/clicks.
+		if event.is_action_pressed("pause") and not event.is_echo():
+			_release_panel.close()
+			get_viewport().set_input_as_handled()
+		return
 	if _chick_panel != null and _chick_panel.visible:
 		if event.is_action_pressed("pause") and not event.is_echo():
 			_hide_chick_care()
+			get_viewport().set_input_as_handled()
+		return
+	if _original_plant_panel != null and _original_plant_panel.visible:
+		if _original_plants.state == "saving" and (event is InputEventKey or event is InputEventJoypadButton):
+			get_viewport().set_input_as_handled()
+			return
+		if event.is_action_pressed("pause") and not event.is_echo():
+			_hide_original_plants()
 			get_viewport().set_input_as_handled()
 		return
 	if _crop_panel != null and _crop_panel.visible:
@@ -712,7 +745,7 @@ func _input(event: InputEvent) -> void:
 	if _confirm_screen.visible:
 		buttons = [_confirm_accept_button, _confirm_cancel_button]
 	elif _pause_screen.visible:
-		buttons = [_resume_button, _restart_button, _pause_title_button, _music_toggle, _ambience_toggle, _mute_toggle]
+		buttons = [_release_button, _resume_button, _restart_button, _pause_title_button, _music_toggle, _ambience_toggle, _mute_toggle]
 	elif _album_screen.visible:
 		buttons = [_album_previous_button, _album_next_button, _album_back_button]
 	elif _screen == "title":
@@ -726,7 +759,7 @@ func _input(event: InputEvent) -> void:
 			# An emulated mouse press can already hold the native GUI button.
 			# Let its release complete the pause/modal action once. Hiding the
 			# overlay from a second manual emission can interrupt GUI visibility.
-			if not (is_touch_press and button in [_music_toggle, _ambience_toggle, _mute_toggle, _resume_button, _restart_button, _pause_title_button, _confirm_accept_button, _confirm_cancel_button] and button.is_pressed()):
+			if not (is_touch_press and button in [_release_button, _music_toggle, _ambience_toggle, _mute_toggle, _resume_button, _restart_button, _pause_title_button, _confirm_accept_button, _confirm_cancel_button] and button.is_pressed()):
 				button.pressed.emit()
 			get_viewport().set_input_as_handled()
 			return
@@ -1046,7 +1079,25 @@ func _build_pause_screen() -> void:
 	_pause_panel = _pause_box.get_parent()
 	_pause_title = _label(26, INK)
 	_pause_title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	_pause_box.add_child(_pause_title)
+	var heading := HBoxContainer.new()
+	_pause_box.add_child(heading)
+	_pause_title.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	_pause_title.vertical_alignment = VERTICAL_ALIGNMENT_TOP
+	_pause_title.size_flags_vertical = Control.SIZE_FILL
+	heading.add_child(_pause_title)
+	_release_button = _soft_button()
+	_release_button.text = preload("res://scripts/ui/release_notes.gd").chip_label(false)
+	_release_button.custom_minimum_size = Vector2(120, 36)
+	_release_button.add_theme_font_size_override("font_size", 12)
+	for state in ["normal", "hover", "pressed", "focus"]:
+		var style := _release_button.get_theme_stylebox(state).duplicate()
+		style.content_margin_top = 2
+		style.content_margin_bottom = 2
+		style.content_margin_left = 4
+		style.content_margin_right = 4
+		_release_button.add_theme_stylebox_override(state, style)
+	_release_button.pressed.connect(_show_release_notes)
+	heading.add_child(_release_button)
 	_pause_columns = HBoxContainer.new()
 	_pause_columns.add_theme_constant_override("separation", 12)
 	_pause_columns.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -1107,6 +1158,8 @@ func _fit_pause_panel() -> void:
 	_pause_session.add_theme_constant_override("separation", sep)
 	_pause_audio.add_theme_constant_override("separation", sep)
 	_pause_title.add_theme_font_size_override("font_size", 18 if short else 26)
+	_release_button.text = preload("res://scripts/ui/release_notes.gd").chip_label(short)
+	_release_button.custom_minimum_size = Vector2(120, 24 if short else 36)
 	for button in [_resume_button, _restart_button, _pause_title_button, _music_toggle, _ambience_toggle, _mute_toggle]:
 		button.custom_minimum_size = Vector2(120.0, button_h)
 		button.add_theme_font_size_override("font_size", 13 if short else 16)
@@ -1165,6 +1218,16 @@ func _place_pause(parent: Node, nodes: Array) -> void:
 			node.reparent(parent)
 	for i in nodes.size():
 		parent.move_child(nodes[i], i)
+
+
+func _show_release_notes() -> void:
+	if not _pause_screen.visible: return
+	if _release_panel == null:
+		_release_panel = preload("res://scripts/ui/release_notes.gd").new()
+		_ui_layer.add_child(_release_panel)
+		_release_panel.closed.connect(func(): _release_button.grab_focus())
+	_ui_layer.move_child(_release_panel, _ui_layer.get_child_count() - 1)
+	_release_panel.open()
 
 
 func _build_confirmation_screen() -> void:
@@ -1383,7 +1446,24 @@ func _refresh_volume_labels() -> void:
 		_ambience_slider.set_value_no_signal(round(AudioDirector.ambience_gain() * 100.0))
 
 
+func _sync_meal_audio() -> void:
+	var active := _screen in ["game", "exploring"] and _world != null
+	if _meal_audio_host == null:
+		if not active: return
+		_meal_audio_host = preload("res://scripts/game/meal_audio_host.gd").new()
+		add_child(_meal_audio_host)
+	var blocked: bool = _pause_screen.visible or _album_screen.visible or _confirm_screen.visible or _basket_panel.visible or _crop_panel.visible or _chick_panel.visible or _original_plant_panel.visible or _save_problem_active
+	_meal_audio_host.sync(_world, SaveStore, active, blocked, _meal_audio_focused and AudioDirector.effects_playback_allowed())
+
+
 func _notification(what: int) -> void:
+	if what in [NOTIFICATION_APPLICATION_PAUSED, NOTIFICATION_APPLICATION_FOCUS_OUT]:
+		_meal_audio_focused = false
+		if _meal_audio_host != null: _meal_audio_host.suspend()
+	elif what in [NOTIFICATION_APPLICATION_RESUMED, NOTIFICATION_APPLICATION_FOCUS_IN]:
+		_meal_audio_focused = true
+	if what in [NOTIFICATION_APPLICATION_PAUSED, NOTIFICATION_APPLICATION_RESUMED, NOTIFICATION_APPLICATION_FOCUS_IN, NOTIFICATION_APPLICATION_FOCUS_OUT] and _world != null and _world.house != null:
+		_world.house.player_activity()
 	if what == NOTIFICATION_APPLICATION_PAUSED:
 		AudioDirector.set_application_active(false)
 	elif what == NOTIFICATION_APPLICATION_RESUMED:
@@ -1392,6 +1472,7 @@ func _notification(what: int) -> void:
 
 func _start_holiday(save_progress: bool = true) -> void:
 	if _holiday_start_pending or not SaveStore.can_play(): return
+	_growth_bark_revision = int(SaveStore.get_pond_edging().get("revision", -1))
 	_holiday_start_pending = true
 	_leave_exploration()
 	if save_progress and _world != null: _world._save_progress()
@@ -1430,6 +1511,7 @@ func _start_holiday(save_progress: bool = true) -> void:
 	_world.chick_care_requested.connect(_show_chick_care)
 	_world.basket_requested.connect(_show_basket)
 	_world.plant_bed_requested.connect(_show_crops)
+	_world.original_plant_requested.connect(_show_original_plants)
 	_world.notice_dismiss_requested.connect(_dismiss_notice_key)
 	_world.weather_changed.connect(func(_w: String) -> void: _refresh_hud())
 	_world.camera_focus_requested.connect(_on_focus)
@@ -1491,6 +1573,7 @@ func _leave_exploration() -> void:
 
 
 func _clear_world(save_progress: bool = true) -> void:
+	if _meal_audio_host != null: _meal_audio_host.suspend()
 	if _night_sky_overlay != null: _night_sky_overlay.visible = false
 	_yard_night_sky = null
 	_path_night_sky = null
@@ -1594,6 +1677,7 @@ func _show_title(save_progress: bool = true) -> void:
 
 
 func _show_chick_care() -> void:
+	if _original_plant_panel != null and _original_plant_panel.visible: return
 	if _screen != "game" or _world == null or _pause_screen.visible or _album_screen.visible or _basket_panel.visible or _crop_panel.visible: return
 	if _world.house != null and _world.house.busy(): return
 	_world._save_progress()
@@ -1616,6 +1700,7 @@ func _hide_chick_care() -> void:
 	_sync_hud_under_menu()
 
 func _show_crops() -> void:
+	if _original_plant_panel != null and _original_plant_panel.visible: return
 	if _chick_panel != null and _chick_panel.visible: return
 	if _screen != "game" or _world == null or _pause_screen.visible or _album_screen.visible: return
 	if _world.house != null and _world.house.busy(): return
@@ -1642,9 +1727,10 @@ func _hide_crops() -> void:
 	_sync_hud_under_menu()
 
 func _show_basket() -> void:
+	if _original_plant_panel != null and _original_plant_panel.visible: return
 	if _chick_panel != null and _chick_panel.visible: return
 	if _crop_panel != null and _crop_panel.visible: return
-	if _world != null and _world.house != null and _world.house.busy(): return
+	if _world != null and _world.house != null and _world.house.request_player_intent({"kind":"basket"}): return
 	if _screen != "game" or _world == null or _pause_screen.visible or _album_screen.visible:
 		return
 	_cancel_photo_arrivals()
@@ -1765,6 +1851,45 @@ func _on_decor_resubmitted(failed_ops: Array, op_id: String) -> void:
 		if _save_problems.get(failed_id, {}).get("kind", "") == "decor":
 			problems[failed_id] = _save_problems[failed_id].duplicate(true)
 	if not problems.is_empty(): _save_retry_coverage[op_id] = {"problems": problems, "untracked_revision": -1}
+
+
+func _show_original_plants(area: String) -> void:
+	if not preload("res://scripts/game/original_plant_view.gd").enabled(): return
+	if _screen != "game" or _world == null or _pause_screen.visible or _album_screen.visible or _basket_panel.visible or _chick_panel.visible or _crop_panel.visible: return
+	if _world.house != null and _world.house.busy(): return
+	_world._save_progress()
+	_world.cancel_scene_feedback()
+	_cancel_photo_arrivals()
+	_world.input_enabled = false
+	_original_plant_panel.open(area)
+	_ui_layer.move_child(_original_plant_panel,_ui_layer.get_child_count()-1)
+	get_tree().paused = true
+	AudioDirector.set_game_paused(true)
+	_sync_hold_hotbar_visibility()
+	_sync_hud_under_menu()
+
+
+func _hide_original_plants() -> void:
+	if _original_plants.busy(): return
+	_original_plant_panel.visible = false
+	get_tree().paused = false
+	AudioDirector.set_game_paused(false)
+	if _world != null: _world.input_enabled = true
+	get_viewport().gui_release_focus()
+	_sync_hold_hotbar_visibility()
+	_sync_hud_under_menu()
+
+
+func _on_original_plants_changed() -> void:
+	if _world != null and _world.original_plants_view != null: _world._apply_weather_art()
+	if _original_plant_panel != null: _original_plant_panel.refresh()
+
+
+func _on_original_plants_resubmitted(failed_ops: Array, op_id: String) -> void:
+	var problems := {}
+	for failed_id in failed_ops:
+		if _save_problems.get(failed_id,{}).get("kind","") == "original-plants": problems[failed_id] = _save_problems[failed_id].duplicate(true)
+	if not problems.is_empty(): _save_retry_coverage[op_id] = {"problems":problems,"untracked_revision":-1}
 
 
 func _on_ground_food_action(action: String, kind: String, details: Dictionary, actor_id: String) -> void:
@@ -1909,6 +2034,8 @@ func _exploration_save_covers(accepted: Dictionary, problem: Dictionary) -> bool
 
 func _on_save_confirmed(op_id: String, kind: String) -> void:
 	_on_crops_confirmed_for_bark(kind)
+	if kind == "growth":
+		_on_growth_confirmed_for_bark()
 	if _save_exploration_coverage.has(op_id) and _save_exploration_coverage[op_id].kind == kind:
 		_clear_covered_save_problems(_save_exploration_coverage[op_id].problems)
 		_save_exploration_coverage.erase(op_id)
@@ -1961,7 +2088,9 @@ func _on_save_rejected(op_id: String, kind: String, code: String) -> void:
 		_save_exploration_scopes.erase(op_id)
 		_save_exploration_coverage.erase(op_id)
 		return
+	if kind == "meal" and code.begins_with("MEAL_") and not _save_durable_ops.has(op_id): return
 	if kind == "crops" and code.begins_with("CROP_") and not _save_durable_ops.has(op_id): return
+	if kind == "original-plants" and code.begins_with("GARDEN_") and not _save_durable_ops.has(op_id): return
 	if kind == "inventory" and code == "BASKET_SEED_RESERVED" and not _save_durable_ops.has(op_id): return
 	if kind == "decor" and not _save_durable_ops.has(op_id) and code in ["DECOR_CHANGED", "DECOR_OCCUPIED", "DECOR_EMPTY", "DECOR_INVALID", "DECOR_LIMIT"]:
 		return
@@ -2105,10 +2234,13 @@ func _retryable_save_problems(include_fish: bool) -> Dictionary:
 
 
 func _retry_save() -> void:
+	if _original_plants != null and _original_plants.busy() and _original_plants.state in ["failed","unknown"]:
+		_original_plants.retry()
+		return
 	if _world != null and _world.house != null and _world.house.failed:
 		var coverage := {}
 		for old_id in _save_problems:
-			if _save_problems[old_id].kind == "house-sleep": coverage[old_id] = _save_problems[old_id].duplicate(true)
+			if _save_problems[old_id].kind in ["house-sleep", "meal"]: coverage[old_id] = _save_problems[old_id].duplicate(true)
 		var next: String = _world.house.retry()
 		if not next.is_empty(): _save_retry_coverage[next] = {"problems":coverage,"untracked_revision":-1}
 		return
@@ -2585,6 +2717,7 @@ func _sync_hold_hotbar_visibility() -> void:
 		and not _confirm_screen.visible
 		and (_chick_panel == null or not _chick_panel.visible)
 		and (_crop_panel == null or not _crop_panel.visible)
+		and (_original_plant_panel == null or not _original_plant_panel.visible)
 	)
 	var over_basket := _basket_panel != null and _basket_panel.visible
 	if over_basket and show:
@@ -2601,7 +2734,7 @@ func _sync_hold_hotbar_visibility() -> void:
 
 
 func _on_hold_withdraw(kind: String) -> void:
-	if _world != null and _world.house != null and _world.house.busy(): return
+	if _world != null and _world.house != null and _world.house.request_player_intent({"kind":"basket"}): return
 	if _inventory == null or kind.is_empty() or _inventory.busy():
 		return
 	_inventory.request("withdraw", kind)
@@ -2723,6 +2856,7 @@ func _open_yard_papers() -> Array[Control]:
 	if _basket_panel != null and _basket_panel.visible and _basket_panel.panel != null: out.append(_basket_panel.panel)
 	if _chick_panel != null and _chick_panel.visible and _chick_panel.paper != null: out.append(_chick_panel.paper)
 	if _crop_panel != null and _crop_panel.visible and _crop_panel.paper != null: out.append(_crop_panel.paper)
+	if _original_plant_panel != null and _original_plant_panel.visible and _original_plant_panel.paper != null: out.append(_original_plant_panel.paper)
 	# 背篓开着时快捷栏贴在底边当落点，它挡住的底栏也一并隐去
 	if _basket_panel != null and _basket_panel.visible and _hold_hotbar != null and _hold_hotbar.visible: out.append(_hold_hotbar)
 	return out
@@ -3313,6 +3447,8 @@ func _refresh_texts() -> void:
 	_licenses_button.text = I18n.t("ui.open_source_licenses")
 	_title_hint.text = I18n.t("menu.hint")
 	_pause_title.text = I18n.t("pause.title")
+	if _release_button != null:
+		_release_button.text = preload("res://scripts/ui/release_notes.gd").chip_label(size.y < 500.0)
 	_resume_button.text = I18n.t("pause.resume")
 	_restart_button.text = I18n.t("pause.restart")
 	_pause_title_button.text = I18n.t("pause.main_menu")
@@ -3510,6 +3646,7 @@ func _tick_confirmed_fatigue_bark(delta: float) -> void:
 
 
 func _resident_bark_hard_blocked() -> bool:
+	if _original_plant_panel != null and _original_plant_panel.visible: return true
 	# Pause / album / confirm / leave-game: dismiss and do not replay.
 	if _screen != "game":
 		return true
@@ -3559,6 +3696,18 @@ func _on_crops_confirmed_for_bark(kind: String) -> void:
 	if bark_id.is_empty():
 		return
 	_show_resident_bark(bark_id)
+
+
+func _on_growth_confirmed_for_bark() -> void:
+	var revision := int(SaveStore.get_pond_edging().get("revision", -1))
+	if revision <= _growth_bark_revision: return
+	# Save error bookkeeping clears on idle, so it cannot dedupe presentation.
+	_growth_bark_revision = revision
+	if _resident_barks == null or _resident_bubble == null or _world == null: return
+	# A menu/house/scene owns attention: discard rather than queue a late cheer.
+	var blocked: bool = _resident_bark_blocked() or _resident_bubble.is_showing()
+	var bark_id: String = _resident_barks.try_growth_completed(_bark_clock, blocked)
+	if not bark_id.is_empty(): _show_resident_bark(bark_id)
 
 
 func _try_chick_bark() -> void:
@@ -3631,4 +3780,3 @@ func _sync_resident_bark_avoidance() -> void:
 	_resident_bubble.avoid_rect = Rect2()
 	if _crop_panel != null and _crop_panel.visible and _crop_panel.paper != null:
 		_resident_bubble.avoid_rect = _crop_panel.paper.get_global_rect()
-

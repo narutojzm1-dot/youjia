@@ -43,6 +43,14 @@ func review():
  w.debug_place_actor("sheep_b", Vector2(1090, 505))
  w.debug_place_player(w.actor_named("cow").position + Vector2(-50, 20))
  w.tick(0.016, Vector2.ZERO)
+ # The newly available pond flowers are nearer than the cow at this old
+ # fixture point. Explicitly select the cow from outside pet reach instead
+ # of assuming that an unselected, nearest-action HUD already marked it.
+ check(w.primary_action().target == "original_plant:pond_cluster", "unselected HUD respects the nearer pond flowers")
+ w.debug_place_player(w.actor_named("cow").position + Vector2(-100, 20))
+ tap(w.actor_named("cow").visual_hit_rect().get_center())
+ w.tick(0.016, Vector2.ZERO)
+ check(w._pending_interaction == "pet:cow", "raw touch selects the cow despite nearer pond flowers")
  main._refresh_hud()
  check(main._hint_label.text.contains("奶牛") and main._hint_label.text.contains("打个招呼") and main._action_button.text == i18n.t("action.pet"), "Chinese HUD names the marked cow and the same pet action as the button")
  check(w._effects_overlay.pet_pos.distance_to(w.actor_named("cow").position) < 0.1, "HUD's marked cow is the actual action target")
@@ -126,7 +134,18 @@ func review():
  tap(Vector2(100,100))
  await frames(1)
  check(w._leading,"rejected empty tap does not toggle lead")
- tap(Vector2(780,480));await frames(240)
+ # A roaming llama may cover the old fixed (780,480) click. Select actual
+ # empty walkable ground before dispatching the same real viewport touch.
+ var walk_point := Vector2.ZERO
+ for x in range(450, 850, 40):
+  var candidate := Vector2(x, 495)
+  if p.position.distance_to(candidate) > 70.0 and Geometry2D.is_point_in_polygon(candidate, w.player_ground()) and YardInteraction.pointer(w, candidate).target.is_empty():
+   walk_point = candidate
+   break
+ check(walk_point != Vector2.ZERO, "lead walking fixture selects empty walkable ground")
+ var lead_start: Vector2 = p.position
+ tap(walk_point);await frames(240)
+ check(p.position.distance_to(lead_start) > 2.0, "touch on empty ground actually moves the leading traveler")
  check(w._leading and w.actor_named("llama").state=="lead","touch walks while lead remains active")
  touch_button("_action_button");await frames(1)
  check(not w._leading,"actual action button releases lead")

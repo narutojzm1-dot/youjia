@@ -1,0 +1,9 @@
+config_version=5
+
+[application]
+config/name="Youjia Millstone Candidate GPU Diagnostic"
+
+[rendering]
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"
+environment/defaults/default_clear_color=Color(0.05,0.05,0.05,1)

@@ -72,11 +72,11 @@ var _layout_queued := false
 ## 外层（背篓纸面）给定的排版宽度；> 0 时按它排列，不跟着滚动条出现/消失来回变宽变窄。
 ## 否则格子变高 → 出滚动条 → 变窄 → 格子变矮 → 滚动条消失……会无限重排。
 var layout_width := -1.0
-## 最近一次按下的是鼠标 / 触屏：这时纸片和「算了」交出的焦点先不画焦点圈，
-## 键盘一导航 Godot 就把圈显出来；键盘打开时照常亮圈。
-var _pointer_input := false
+var _focus_input: Node
 
 func _ready() -> void:
+	_focus_input = preload("res://scripts/ui/pointer_focus.gd").new()
+	add_child(_focus_input)
 	mouse_filter = Control.MOUSE_FILTER_PASS
 	grid = GridContainer.new()
 	grid.add_theme_constant_override("h_separation", GAP)
@@ -345,9 +345,9 @@ func open_menu(kind: String) -> void:
 	menu_toggled.emit(true)
 	for button: Button in _menu_buttons():
 		if button.visible and not button.disabled:
-			button.grab_focus(_pointer_input)
+			_focus_input.grab(button)
 			return
-	menu_close.grab_focus(_pointer_input)
+	_focus_input.grab(menu_close)
 
 func close_menu() -> void:
 	var was_open := menu.visible
@@ -365,7 +365,7 @@ func dismiss_menu() -> void:
 	close_menu()
 	if cells.has(kind):
 		var cell: Button = cells[kind]
-		if not cell.disabled and cell.is_visible_in_tree(): cell.grab_focus(_pointer_input)
+		if not cell.disabled and cell.is_visible_in_tree(): _focus_input.grab(cell)
 
 func _fill_menu(kind: String) -> void:
 	var en := I18n.get_locale() == "en"
@@ -440,7 +440,7 @@ func _on_menu_hotbar() -> void:
 	if not selected.is_empty():
 		_fill_menu(selected)
 		_place_menu()
-		menu_hotbar.grab_focus(_pointer_input)
+		_focus_input.grab(menu_hotbar)
 
 func _menu_buttons() -> Array[Button]:
 	var result: Array[Button] = [menu_action, menu_hotbar]
@@ -473,7 +473,7 @@ func _on_menu_action() -> void:
 
 ## 触屏 / 外层统一点按入口：返回 true 表示这一下被格子或纸片接住了
 func press_at(at: Vector2) -> bool:
-	_pointer_input = true
+	_focus_input.pointer = true
 	if menu.visible:
 		for button: Button in _menu_buttons():
 			if button.is_visible_in_tree() and button.get_global_rect().has_point(at):
@@ -502,12 +502,6 @@ func _clip_rect() -> Rect2:
 		if node is ScrollContainer: return (node as Control).get_global_rect()
 		node = node.get_parent()
 	return Rect2()
-
-func _input(event: InputEvent) -> void:
-	if event is InputEventMouseButton or event is InputEventScreenTouch:
-		if event.pressed: _pointer_input = true
-	elif event is InputEventKey or event is InputEventJoypadButton:
-		if event.pressed: _pointer_input = false
 
 func _unhandled_key_input(event: InputEvent) -> void:
 	if menu.visible and event.is_action_pressed("ui_cancel"):

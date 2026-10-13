@@ -1,0 +1,21 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+FAILED autonomous action charges one AP and one stone
+FAILED autonomous confirmed world effect visible
+FAILED next autonomous job skips completed bank
+POND_GROWTH_DIRECTOR checks=248 failures=3
+ERROR: autonomous action charges one AP and one stone
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] run (res://test/pond_growth_director_suite.gd:169)
+       [1] check_real_menus (res://test/pond_growth_director_suite.gd:228)
+ERROR: autonomous confirmed world effect visible
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] run (res://test/pond_growth_director_suite.gd:169)
+       [1] check_real_menus (res://test/pond_growth_director_suite.gd:228)
+ERROR: next autonomous job skips completed bank
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] run (res://test/pond_growth_director_suite.gd:169)
+       [1] check_real_menus (res://test/pond_growth_director_suite.gd:228)

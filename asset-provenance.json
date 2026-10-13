@@ -901,6 +901,134 @@
       "regions": [],
       "usedBy": [],
       "declaredUseEvidence": []
+    },
+    "assets/holiday/environment/original_plants_v1/clean_sunny_v1.png": {
+      "origin": "generated",
+      "generator": {
+        "name": "OpenAI imagegen",
+        "brief": "Original three plant groups: same-position empty background with containers preserved; exact prompts in generation-notes.md."
+      },
+      "inputs": [
+        "art/concepts/lead_flower642_20261013/clean_sunny_v1.png"
+      ],
+      "license": {},
+      "source": {
+        "notes": "art/concepts/lead_flower642_20261013/generation-notes.md",
+        "stage": "runtime candidate; static GPU art reviewed, Web/public verification separate"
+      },
+      "sha256": "sha256:45f7deaf1dade96b05e43b882da597ad8d2048dd326bc5cc9548d3ebe8c51bcb",
+      "size": 3233634,
+      "status": "present",
+      "shipped": false,
+      "used": true,
+      "referenceEvidence": [
+        "scripts/game/original_plant_view.gd"
+      ],
+      "useEvidence": [
+        "scripts/game/original_plant_view.gd"
+      ],
+      "transformations": [
+        "Generated pixels copied byte-for-byte; standard Godot mipmaps with linear mipmap minification; registered UV crop limited to disjoint original group polygons; pond-only edge feather and overcast material color matching."
+      ],
+      "regions": [],
+      "usedBy": [],
+      "declaredUseEvidence": []
+    },
+    "assets/holiday/environment/original_plants_v1/clean_overcast_v1.png": {
+      "origin": "generated",
+      "generator": {
+        "name": "OpenAI imagegen",
+        "brief": "Original three plant groups: same-position empty background with containers preserved; exact prompts in generation-notes.md."
+      },
+      "inputs": [
+        "art/concepts/lead_flower642_20261013/clean_overcast_v1.png"
+      ],
+      "license": {},
+      "source": {
+        "notes": "art/concepts/lead_flower642_20261013/generation-notes.md",
+        "stage": "runtime candidate; static GPU art reviewed, Web/public verification separate"
+      },
+      "sha256": "sha256:5ddcae7e01bc9baaaea51b15b690abb939ad973e9f5daf93fec9d210c0dc66c3",
+      "size": 2848905,
+      "status": "present",
+      "shipped": false,
+      "used": true,
+      "referenceEvidence": [
+        "scripts/game/original_plant_view.gd"
+      ],
+      "useEvidence": [
+        "scripts/game/original_plant_view.gd"
+      ],
+      "transformations": [
+        "Generated pixels copied byte-for-byte; standard Godot mipmaps with linear mipmap minification; registered UV crop limited to disjoint original group polygons; pond-only edge feather and overcast material color matching."
+      ],
+      "regions": [],
+      "usedBy": [],
+      "declaredUseEvidence": []
+    },
+    "assets/holiday/environment/original_plants_v1/pond_sunny_v3.png": {
+      "origin": "generated",
+      "generator": {
+        "name": "OpenAI imagegen",
+        "brief": "Original three plant groups: same-position empty background with containers preserved; exact prompts in generation-notes.md."
+      },
+      "inputs": [
+        "art/concepts/lead_flower642_20261013/pond_sunny_v3.png"
+      ],
+      "license": {},
+      "source": {
+        "notes": "art/concepts/lead_flower642_20261013/generation-notes.md",
+        "stage": "runtime candidate; static GPU art reviewed, Web/public verification separate"
+      },
+      "sha256": "sha256:903c618bbde7d7bb2e06b20d0ba761c2240551b3536f415e2498e5bbfede7fe4",
+      "size": 2617973,
+      "status": "present",
+      "shipped": false,
+      "used": true,
+      "referenceEvidence": [
+        "scripts/game/original_plant_view.gd"
+      ],
+      "useEvidence": [
+        "scripts/game/original_plant_view.gd"
+      ],
+      "transformations": [
+        "Generated pixels copied byte-for-byte; standard Godot mipmaps with linear mipmap minification; registered UV crop limited to disjoint original group polygons; pond-only edge feather and overcast material color matching."
+      ],
+      "regions": [],
+      "usedBy": [],
+      "declaredUseEvidence": []
+    },
+    "assets/holiday/environment/original_plants_v1/pond_overcast_v2.png": {
+      "origin": "generated",
+      "generator": {
+        "name": "OpenAI imagegen",
+        "brief": "Original three plant groups: same-position empty background with containers preserved; exact prompts in generation-notes.md."
+      },
+      "inputs": [
+        "art/concepts/lead_flower642_20261013/pond_overcast_v2.png"
+      ],
+      "license": {},
+      "source": {
+        "notes": "art/concepts/lead_flower642_20261013/generation-notes.md",
+        "stage": "runtime candidate; static GPU art reviewed, Web/public verification separate"
+      },
+      "sha256": "sha256:72856c313891c1611e2f2d3c2c0c3a27740105620ea29b57a60a77f943bdc58f",
+      "size": 2310486,
+      "status": "present",
+      "shipped": false,
+      "used": true,
+      "referenceEvidence": [
+        "scripts/game/original_plant_view.gd"
+      ],
+      "useEvidence": [
+        "scripts/game/original_plant_view.gd"
+      ],
+      "transformations": [
+        "Generated pixels copied byte-for-byte; standard Godot mipmaps with linear mipmap minification; registered UV crop limited to disjoint original group polygons; pond-only edge feather and overcast material color matching."
+      ],
+      "regions": [],
+      "usedBy": [],
+      "declaredUseEvidence": []
     }
   },
   "discoveries": {},

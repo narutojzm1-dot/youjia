@@ -1,0 +1,55 @@
+{
+  "base": "9d85783d863aad7ef8f0c5a551fa0adf22243299",
+  "localCommit": "145041172f8dd08eabfbfeec00da3a7783d85512",
+  "remoteHead": "7df884ddae5a5a15bf6d46bde0ae192eead5e433",
+  "loaderSourceSha256": "9381596faa48c581395ff31122bf369d9e7bf2cf008c0ec7b3b566521fb33fe9",
+  "fixtureHtmlSha256": "f4a60dff4d7d8a69a13b99572166cbbb44bf8731f4757bd31456d56168899428",
+  "scope": "Actual browser rendering of copied loader HTML; stub Engine and modules; no Godot, PCK, save host, storage or real fault reproduction; real wall clock timer.",
+  "mergedSourceCommit": "8570565ed16d5bf7fb226809411936f9512da0b6",
+  "pr": 791,
+  "ciRun": 38367287256,
+  "ciConclusion": "success",
+  "leaderReviewId": 5500877431,
+  "browserExecutor": "CODEX-LEAD root",
+  "screenshots": [
+    {
+      "originalName": "43-first-frame-wait-desktop.png",
+      "originalSha256": "66fd7b6f339177428e1a442fa9c81da031d325a32a29b5f7f4c9c2546fb023a7",
+      "archivedName": "43-first-frame-wait-desktop.jpg",
+      "archivedSha256": "1c89951a39ec9807dda7645bd6b64e713755c09deb5edcacb56326a94731f5f1",
+      "dimensions": [
+        1280,
+        720
+      ],
+      "observedWaitSeconds": 41,
+      "observation": "Real browser: first-frame wait notice and manual retry visible at 1280x720",
+      "conversion": "JPEG quality 92, no crop or resize"
+    },
+    {
+      "originalName": "44-first-frame-wait-844x390.png",
+      "originalSha256": "683792a9798a989e3430d8ee895ed61097d159a5810d095898e906da964ec618",
+      "archivedName": "44-first-frame-wait-844x390.jpg",
+      "archivedSha256": "f654b1bda0da90f19348e9477fda2bae57aa5985597b61268fdbfab6a5c28dc2",
+      "dimensions": [
+        844,
+        390
+      ],
+      "observedWaitSeconds": 49,
+      "observation": "Same fixture resized to 844x390: wait notice and manual retry fit",
+      "conversion": "JPEG quality 92, no crop or resize"
+    },
+    {
+      "originalName": "45-first-frame-late-arrival.png",
+      "originalSha256": "5b2d221ee5a9d1544358e1257081b4ff2a1fc089ee3d37b6c303112899a69680",
+      "archivedName": "45-first-frame-late-arrival.jpg",
+      "archivedSha256": "6f9bd13ffd7e8b1f56c85ab363bdad842745c2021b0fd528bf5413356b46be2f",
+      "dimensions": [
+        844,
+        390
+      ],
+      "observedWaitSeconds": 71,
+      "observation": "After root clicked the explicit fixture first-frame button: loading shell hidden; blank fixture is not a game frame",
+      "conversion": "JPEG quality 92, no crop or resize"
+    }
+  ]
+}
