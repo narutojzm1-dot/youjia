@@ -1,0 +1,20 @@
+{
+  "build": "9783d956c20c95d4d244db328a69f82836549d9f",
+  "url": "http://127.0.0.1:8775/audio-check.html",
+  "startupCheck": "same data-build and same game-release entry => state current; no redirect. If deployment changes before use, regenerate fixture; mismatch intentionally retains original redirect.",
+  "indexUnchanged": true,
+  "files": {
+    "index.html": {
+      "bytes": 364254,
+      "sha256": "088cc9f59637ed652627f74a418d54049d7f068e4994fea71a498861d2e162a8"
+    },
+    "audio-check.html": {
+      "bytes": 364382,
+      "sha256": "7685c9cfa0d0cb722c5ccb3bba4d55295465eb993ab51ed1059cac98ff87e7d7"
+    },
+    "qa-audio-observer.js": {
+      "bytes": 9231,
+      "sha256": "088e343368b222ac8364e95b767e9cce131ead8602d80b0f3a9bf795e0a53ca6"
+    }
+  }
+}
