@@ -8,6 +8,7 @@ var status: Label
 var content: RichTextLabel
 var card: PanelContainer
 var request: HTTPRequest
+var _focus_input: Node
 
 static func version() -> String:
 	var notes: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(NOTES))
@@ -34,6 +35,8 @@ static func latest_status(data: Variant, current: String) -> String:
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
+	_focus_input = preload("res://scripts/ui/pointer_focus.gd").new()
+	add_child(_focus_input)
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	var shade := ColorRect.new()
 	shade.color = Color(0.2, 0.16, 0.12, 0.55)
@@ -124,7 +127,10 @@ func open() -> void:
 		lines.append("")
 	content.text = "\n".join(lines)
 	content.scroll_to_line(0)
-	back.grab_focus()
+	# 第一次打开时本面板才建出来，没收到点「公告」的那次按下；按「公告」当时的焦点是否可见来判断。
+	var opener := get_viewport().gui_get_focus_owner()
+	_focus_input.pointer = opener == null or not opener.has_focus(true)
+	_focus_input.grab(back)
 	status.text = "离线公告 · 尚未检查线上版本。"
 	if OS.has_feature("web"):
 		var url = JavaScriptBridge.eval("new URL('game-release.json', location.href).href", true)
@@ -139,6 +145,11 @@ func close() -> void:
 	request.cancel_request()
 	hide()
 	closed.emit()
+	# 收到 closed 的一方会把焦点交回「公告」；点按关上的就不画焦点圈，键盘一导航再显出来。
+	var returned := get_viewport().gui_get_focus_owner()
+	if _focus_input.pointer and returned != null and returned.has_focus(true):
+		returned.release_focus()
+		returned.grab_focus(true)
 
 func _checked(result: int, code: int, _headers: PackedStringArray, body: PackedByteArray) -> void:
 	if not visible: return
