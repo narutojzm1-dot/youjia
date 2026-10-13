@@ -2127,3 +2127,8 @@ CODEX-LEAD：PR766实际发布源 `d4c5b092a465186316c5ff35d0a17d2c57b0b379` 的
 
 ## 2026-10-13 版本公告的界面文字跟着语言走（CURSOR-CLOUD UI 维护）
 来源：英文暂停菜单对照。切到 `en` 后，暂停、手帐、背篓都是英文，右上角版本按钮和公告面板的标题、状态、「返回歇一下」、分节名仍写死中文。决定：这些界面文字放进中英目录（`notes.*`）。`scripts/ui/release_notes.gd` 用 `chip_label` 给暂停按钮，面板打开和语言切换时重填标题、分节和当前状态行；`scripts/main.gd` 只在建暂停、贴合暂停和 `_refresh_texts` 三处改用 `chip_label`，不改 `_toggle_pause`、`_show_album` 等在途方法。`config/release_notes.json` 的条目正文仍是中文原稿，不另写英文更新说明。正式启动仍钉中文。回归加在 `release_notes_suite`（切到英文再切回中文，面板开着也跟着换）。证据见 `docs/playtests/2026-10-13-cursor-cloud-notes-locale/`。
+
+
+## 2026-10-13-0810-game-qa — GAME-QA
+
+逐条需求验收取代机械重复通过。确认642仅原花草开关，外采布置闭环未完成；用户垒石/音效/动物/郊外动态反馈列重点未验。9套1001检查通过不等于需求达成；两项定时任务已更新策略，报告不全量放行。 [报告与原件](playtests/2026-10-13-0810-game-qa/README.md)。独立PR保留待审，不开发不发布。
