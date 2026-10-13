@@ -1,0 +1,62 @@
+{
+  "stage": "static GPU accepted; runtime enabled; ordinary Web/public verification pending",
+  "assets": [
+    {
+      "path": "assets/holiday/environment/original_plants_v1/clean_overcast_v1.png",
+      "sha256": "5ddcae7e01bc9baaaea51b15b690abb939ad973e9f5daf93fec9d210c0dc66c3",
+      "bytes": 2848905,
+      "dimensions": [
+        1672,
+        941
+      ],
+      "mipmaps": true
+    },
+    {
+      "path": "assets/holiday/environment/original_plants_v1/clean_sunny_v1.png",
+      "sha256": "45f7deaf1dade96b05e43b882da597ad8d2048dd326bc5cc9548d3ebe8c51bcb",
+      "bytes": 3233634,
+      "dimensions": [
+        1672,
+        941
+      ],
+      "mipmaps": true
+    },
+    {
+      "path": "assets/holiday/environment/original_plants_v1/pond_overcast_v2.png",
+      "sha256": "72856c313891c1611e2f2d3c2c0c3a27740105620ea29b57a60a77f943bdc58f",
+      "bytes": 2310486,
+      "dimensions": [
+        1435,
+        1096
+      ],
+      "mipmaps": true
+    },
+    {
+      "path": "assets/holiday/environment/original_plants_v1/pond_sunny_v3.png",
+      "sha256": "903c618bbde7d7bb2e06b20d0ba761c2240551b3536f415e2498e5bbfede7fe4",
+      "bytes": 2617973,
+      "dimensions": [
+        1435,
+        1096
+      ],
+      "mipmaps": true
+    }
+  ],
+  "source_rect": [
+    0.26016746411483255,
+    0.6854410201912858,
+    0.15669856459330145,
+    0.21253985122210414
+  ],
+  "pond_feather_world_pixels": 5,
+  "sun_grade": [
+    1,
+    1,
+    0
+  ],
+  "overcast_grade": [
+    0.82,
+    0.88,
+    0
+  ]
+}

@@ -43,6 +43,14 @@ func review():
  w.debug_place_actor("sheep_b", Vector2(1090, 505))
  w.debug_place_player(w.actor_named("cow").position + Vector2(-50, 20))
  w.tick(0.016, Vector2.ZERO)
+ # The newly available pond flowers are nearer than the cow at this old
+ # fixture point. Explicitly select the cow from outside pet reach instead
+ # of assuming that an unselected, nearest-action HUD already marked it.
+ check(w.primary_action().target == "original_plant:pond_cluster", "unselected HUD respects the nearer pond flowers")
+ w.debug_place_player(w.actor_named("cow").position + Vector2(-100, 20))
+ tap(w.actor_named("cow").visual_hit_rect().get_center())
+ w.tick(0.016, Vector2.ZERO)
+ check(w._pending_interaction == "pet:cow", "raw touch selects the cow despite nearer pond flowers")
  main._refresh_hud()
  check(main._hint_label.text.contains("奶牛") and main._hint_label.text.contains("打个招呼") and main._action_button.text == i18n.t("action.pet"), "Chinese HUD names the marked cow and the same pet action as the button")
  check(w._effects_overlay.pet_pos.distance_to(w.actor_named("cow").position) < 0.1, "HUD's marked cow is the actual action target")

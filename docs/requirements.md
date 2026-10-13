@@ -295,15 +295,15 @@ Owner CODEX-LEAD（兼制作人）。[完整策划](design/connected-world-2026-
 | STATE-YARD-GROWTH | P1 | 物品/布置/探索结果共享契约与迁移/去重提交矩阵 | 生产Host已接入并发布：PR336共享持久化、PR322探索异步队列已由Cloud实际消费；bc213f9公开原画拾物回院/关页、390携物中断恢复完成，带回物单次授予。#150保持开放：多物品/换物、领域故障与跨页面组合须分别验收，正式布置规则仍待；Leader非照片unknown恢复提示PR357最终959c5318独审合33b105f并公开，一次确认撤提示/真实关页重开已验（[实现](playtests/2026-10-05-save-feedback/README.md)、[公开](playtests/2026-10-05-save-feedback-release/README.md)）；原PR190/251由生产实现替代，旧239/261隔离矩阵保留为历史证据，不继续写未接入Host | `CODEX-LEAD`（共享领域契约），`CURSOR-CLOUD`（探索侧305矩阵） | [#150](https://github.com/narutojzm1-dot/youjia/issues/150)；[实际公开证据与未覆盖](playtests/2026-10-05-exploration-duck-release/README.md)。  PR379已发布d707113，公开三物各1的trip失败后一次确认、后继提交与正常cleanup、同页提示最终消失和真关页DB一致已验，4秒暂态仍有禁用提示；[限定公开证据](playtests/2026-10-05-exploration-retry-release/README.md)。独立cleanup写失败领域恢复仍未修复；共享API已由PR391冻结合入并发布4fa150，Cloud idle接收待回执，不据此关闭150/305。 |
 | EXP-CONTRACT | P1 | 独立探索边界/快照/宿主确认/失败恢复契约，与共享状态对齐 | 纯核心已按设计稿实现（2026-10-05 授权独立推进，不再以联合冻结为前置）；依赖 #150 的项（平台持久化结果未知、物品身份/共享区）仍未冻结，归 CODEX-LEAD | `CURSOR-CLOUD` | [#151](https://github.com/narutojzm1-dot/youjia/issues/151)；[契约设计稿](architecture/exploration-module-contract.md)，与#150待共同冻结项列于其第10节；不含正式地点/物品/形式。 |
 | EXP-CORE | P1 | 形态无关核心状态机/恢复/返回，严格隔离测试；夹具不正式发布 | 进行中：用户 2026-10-05 授权 CURSOR-CLOUD 独立推进、不再以契约冻结为前置；核心与正式近郊目录随 `scripts/exploration/` 合入 main，隔离 suite 纳入 strict daily；PR176 草案由此取代 | `CURSOR-CLOUD` | [#152](https://github.com/narutojzm1-dot/youjia/issues/152)；依赖/正式内容门禁见工单。 |
-| EXP-FIRST-SLICE | P1 | 确认的一条近郊往返，空手/取消/重复提交/键鼠触屏低动效与正式发布闭环 | 进行中（用户 2026-10-05 授权独立推进）：正式游戏内往返已接入（小院左下石板路「出门走走」→ 画卷近郊小路看景/带上/放回/换 → 随时回院；SaveStore 异步存档队列记录探索与带回物，确认后才授予（不等于 #150/Web 持久化验收），重启安全回院；见[接入说明](architecture/exploration-near-path-slice.md)与[体验证据](playtests/2026-10-05-exploration-near-path-slice/README.md)）；横向画卷只是过渡占位：用户已选“保留原画视角，沿路走动并自然换页”（[原画路径方向](architecture/exploration-painted-path-direction.md)），表现层已由 EXP-PAINTED-PATH 换成 02 原画沿路行走，本行交付的是外出/回院逻辑、持久化与容量；正式资源归 GAME-PRODUCER；#150 正式 Host 回执仍归 CODEX-LEAD；单趟合计最多 3 件（用户 2026-10-05 决定，同名可重复，第 4 件为「换成」）已实现，见[容量证据](playtests/2026-10-05-exploration-carry-three/README.md)；出现权重为实验参数待制作人决定；#305 剩余矩阵（多趟多物品、装满 3 件、换物、回院途中关页、写入失败→结果未知→查明、双页、连按回院）已在公开 `7c1608c` 实测，见[矩阵证据](playtests/2026-10-05-exploration-305-matrix/README.md)，验收结论归 PM / Codex | `CURSOR-CLOUD` | [#153](https://github.com/narutojzm1-dot/youjia/issues/153)；依赖/正式内容门禁见工单；形式已定：[画卷漫步](architecture/exploration-form-options.md)（用户 2026-10-03）；首地/首物已定：近郊小路＋圆石、松果、落羽都可遇见（用户 2026-10-04，见 EXP-UNBLOCK-20261004），具体构图与资源由 GROK-BUILD #155 交付。 |
-| EXP-PAINTED-PATH | P1 | 按用户已决“保留原画视角，沿路走动并自然换页”把首片近郊表现换成 02 原画上的沿路行走：脚点在路上、人物远小近大、原画不拉伸；桌面完整构图，手机固定缩放随人物平移；键鼠/触屏可走、可停、可看、可放回、可随时回院；核心/宿主/存档不重做 | 进行中（CURSOR-CLOUD 按[执行方向](architecture/exploration-painted-path-direction.md)接收）：首版已在 `02_near_path.png` 候选上沿制作人候选路线（near_path_anchors.candidate.json）实现单条双向可走路、四处停留点、点按沿路走、方向键沿路投影、院门口回院，见[原画沿路证据](playtests/2026-10-05-exploration-painted-path/README.md)；PR #342 已合入（`bc213f9`），公开 Web 版 `bc213f9` 往返与关页重开后带回物仍在已复核，见[公开 Web 证据](playtests/2026-10-05-exploration-web-public/README.md)（不是 #150/#176 验收）；停留点/比例/物件位置为实验参数待制作人按取景核对；画内松果/落羽已换成制作人清底版（#393 `c2f342d`，清底 PNG SHA256 `ade3ee41…487b`），见[换图前后对照](playtests/2026-10-05-near-path-clean/README.md)；用户反馈 #399“点院门回不了院”已修：点按/触屏落在院门一带，走到门口即回院，见[点院门回院证据](playtests/2026-10-05-near-path-tap-home/README.md)（非公开 Web/真机验收）；正式小物精灵、相邻页换页（03 未交付前木桥不作出口）待 GAME-PRODUCER 资源；频率/掉率未定 | `CURSOR-CLOUD` | [#153](https://github.com/narutojzm1-dot/youjia/issues/153) / [#155](https://github.com/narutojzm1-dot/youjia/issues/155)；依赖 EXP-FIRST-SLICE（PR #322）；资源 GAME-PRODUCER |
-| EXP-FIND-REVEAL | P2 | 用户经制作人转达（#155 5993470040）：首片拾起成功后有短展示与原创“获得”音，先在近郊看透视、比例、遮挡、展示与声音是否协调 | 进行中（CURSOR-CLOUD）：程序切片按[契约](architecture/exploration-find-reveal.md)实现：带上/换成成功后升起→停留→飞进提篮，低动效原地淡入淡出，可随时打断，不影响存档；见[帧证据](playtests/2026-10-05-exploration-find-reveal/README.md)；独立物件贴图与原创短音待 GAME-PRODUCER 按契约 §4 交付，缺失时安静降级；时长/位置/举物/音色为候选值，等用户看过演示再定 | `CURSOR-CLOUD` | [#153](https://github.com/narutojzm1-dot/youjia/issues/153) / [#155](https://github.com/narutojzm1-dot/youjia/issues/155)；依赖 EXP-PAINTED-PATH；资源 GAME-PRODUCER |
+| EXP-FIRST-SLICE | P1 | 确认的一条近郊往返，空手/取消/重复提交/键鼠触屏低动效与正式发布闭环 | 进行中（用户 2026-10-05 授权独立推进）：正式游戏内往返已接入（小院左下石板路「出门走走」→ 画卷近郊小路看景/带上/放回/换 → 随时回院；SaveStore 异步存档队列记录探索与带回物，确认后才授予（不等于 #150/Web 持久化验收），重启安全回院；见[接入说明](architecture/exploration-near-path-slice.md)与[体验证据](playtests/2026-10-05-exploration-near-path-slice/README.md)）；横向画卷只是过渡占位：用户已选“保留原画视角，沿路走动并自然换页”（[原画路径方向](architecture/exploration-painted-path-direction.md)），表现层已由 EXP-PAINTED-PATH 换成 02 原画沿路行走，本行交付的是外出/回院逻辑、持久化与容量；正式资源归 GAME-PRODUCER；#150 正式 Host 回执仍归 CODEX-LEAD；单趟合计最多 3 件（用户 2026-10-05 决定，同名可重复，第 4 件为「换成」）已实现，见[容量证据](playtests/2026-10-05-exploration-carry-three/README.md)；出现权重为实验参数待制作人决定；#305 剩余矩阵（多趟多物品、装满 3 件、换物、回院途中关页、写入失败→结果未知→查明、双页、连按回院）已在公开 `7c1608c` 实测，见[矩阵证据](playtests/2026-10-05-exploration-305-matrix/README.md)，验收结论归 PM / Codex | `CURSOR-CLOUD` | [#153](https://github.com/narutojzm1-dot/youjia/issues/153)；依赖/正式内容门禁见工单；形式已定：[画卷漫步](architecture/exploration-form-options.md)（用户 2026-10-03）；首地/首物已定：近郊小路＋圆石、松果、落羽都可遇见（用户 2026-10-04，见 EXP-UNBLOCK-20261004），具体构图与资源由 GROK-BUILD #157 交付。 |
+| EXP-PAINTED-PATH | P1 | 按用户已决“保留原画视角，沿路走动并自然换页”把首片近郊表现换成 02 原画上的沿路行走：脚点在路上、人物远小近大、原画不拉伸；桌面完整构图，手机固定缩放随人物平移；键鼠/触屏可走、可停、可看、可放回、可随时回院；核心/宿主/存档不重做 | 进行中（CURSOR-CLOUD 按[执行方向](architecture/exploration-painted-path-direction.md)接收）：首版已在 `02_near_path.png` 候选上沿制作人候选路线（near_path_anchors.candidate.json）实现单条双向可走路、四处停留点、点按沿路走、方向键沿路投影、院门口回院，见[原画沿路证据](playtests/2026-10-05-exploration-painted-path/README.md)；PR #342 已合入（`bc213f9`），公开 Web 版 `bc213f9` 往返与关页重开后带回物仍在已复核，见[公开 Web 证据](playtests/2026-10-05-exploration-web-public/README.md)（不是 #150/#176 验收）；停留点/比例/物件位置为实验参数待制作人按取景核对；画内松果/落羽已换成制作人清底版（#393 `c2f342d`，清底 PNG SHA256 `ade3ee41…487b`），见[换图前后对照](playtests/2026-10-05-near-path-clean/README.md)；用户反馈 #399“点院门回不了院”已修：点按/触屏落在院门一带，走到门口即回院，见[点院门回院证据](playtests/2026-10-05-near-path-tap-home/README.md)（非公开 Web/真机验收）；正式小物精灵、相邻页换页（03 未交付前木桥不作出口）待 GAME-PRODUCER 资源；频率/掉率未定 | `CURSOR-CLOUD` | [#153](https://github.com/narutojzm1-dot/youjia/issues/153) / [#157](https://github.com/narutojzm1-dot/youjia/issues/157)；依赖 EXP-FIRST-SLICE（PR #322）；资源 GAME-PRODUCER |
+| EXP-FIND-REVEAL | P2 | 用户经制作人转达（#157 5993470040）：首片拾起成功后有短展示与原创“获得”音，先在近郊看透视、比例、遮挡、展示与声音是否协调 | 进行中（CURSOR-CLOUD）：程序切片按[契约](architecture/exploration-find-reveal.md)实现：带上/换成成功后升起→停留→飞进提篮，低动效原地淡入淡出，可随时打断，不影响存档；见[帧证据](playtests/2026-10-05-exploration-find-reveal/README.md)；独立物件贴图与原创短音待 GAME-PRODUCER 按契约 §4 交付，缺失时安静降级；时长/位置/举物/音色为候选值，等用户看过演示再定 | `CURSOR-CLOUD` | [#153](https://github.com/narutojzm1-dot/youjia/issues/153) / [#157](https://github.com/narutojzm1-dot/youjia/issues/157)；依赖 EXP-PAINTED-PATH；资源 GAME-PRODUCER |
 | EXP-SCROLL-PROTOTYPE | P1 | #153 队列第 1 项：test/ 下独立最小项目的画卷漫步交互原型，键盘/触屏/停下观察/相机边界/视口变化；几何占位，不接 SaveStore/Main/AudioDirector，不进正式导出 | 原隔离研究已验收结项：PR #204 最终 head `c086b76` 经独立复审（`CURSOR-CLOUD-REVIEW-PR-204`）APPROVE 后合入（`e07bf44`），隔离测试 154 项；高 DPR 真机复测交 GAME-QA #156，竖屏取景交 #201 | `CURSOR-CLOUD` | [#199](https://github.com/narutojzm1-dot/youjia/issues/199)；CODEX-LEAD 指定；[原型说明](architecture/exploration-scroll-prototype.md)；数值为实验参数，不冻结；只证明隔离交互，不是正式功能。 |
 | EXP-RETURN-ADAPTER | P1 | #153 队列第 2 项：模拟小院与假 Host 下 `request_return` 后先使院外输入/相机/连接失效再开放院内；unknown/迟到确认/明确失败都可在院内移动且不显示虚假已保存 | 隔离适配已交付：PR #207 最终 head `a2e0043` 经独立复审（`CURSOR-CLOUD-REVIEWER-200`）APPROVE 后合入（`2e33d50`），隔离测试 150 项、13 个变异均被门禁拦下；该原型仍按 PR #176 固定 SHA `e2a6d70` 运行时取出核心（正式核心现已在 `scripts/exploration/`）；真实宿主与 H2/H3/H4 仍归 CODEX-LEAD | `CURSOR-CLOUD` | [#200](https://github.com/narutojzm1-dot/youjia/issues/200)；[开工评论](https://github.com/narutojzm1-dot/youjia/issues/200#issuecomment-5976367738)；沿用 #156 Q10/Q16/Q17；引用 PR #176 核心须注明依赖分支，不证明耐久保存或强退恢复。 |
-| EXP-FIRST-EXPERIENCE | P1 | #153 队列第 3 项：停下看景、空手中途返回、带一个占位物中途返回三种体验研究，首片节奏/构图需求与资源接口交接包 | 隔离研究切片已交付：[PR #210](https://github.com/narutojzm1-dot/youjia/pull/210) 最终 head `be60a64` 经独立复审（`CURSOR-CLOUD-REVIEWER-201`）APPROVE 后合入（`f5ca6f3`），隔离测试 261 项；[研究说明](architecture/exploration-first-experience.md)含节奏/构图需求、资源接口表、地点/物件候选与 6 条待决项；首地/物件种类已由用户确认；正式构图/资源待 #155；正式接入沿用现有 SaveStore 文件提交（#153，不等于 #150/Web 持久化验收） | `CURSOR-CLOUD` | [#201](https://github.com/narutojzm1-dot/youjia/issues/201)；[开工评论](https://github.com/narutojzm1-dot/youjia/issues/201#issuecomment-5976771165)；含 GAME-PRODUCER 补充的横竖屏同一停留点取景比较与「走近—松手观察—选择／不选择—中途回院」连续操作检查；与 GROK-BUILD #155 交接，地点/物件种类已决，不再重复征求；画面/资源规格交专业审阅。 |
+| EXP-FIRST-EXPERIENCE | P1 | #153 队列第 3 项：停下看景、空手中途返回、带一个占位物中途返回三种体验研究，首片节奏/构图需求与资源接口交接包 | 隔离研究切片已交付：[PR #210](https://github.com/narutojzm1-dot/youjia/pull/210) 最终 head `be60a64` 经独立复审（`CURSOR-CLOUD-REVIEWER-201`）APPROVE 后合入（`f5ca6f3`），隔离测试 261 项；[研究说明](architecture/exploration-first-experience.md)含节奏/构图需求、资源接口表、地点/物件候选与 6 条待决项；首地/物件种类已由用户确认；正式构图/资源待 #157；正式接入沿用现有 SaveStore 文件提交（#153，不等于 #150/Web 持久化验收） | `CURSOR-CLOUD` | [#201](https://github.com/narutojzm1-dot/youjia/issues/201)；[开工评论](https://github.com/narutojzm1-dot/youjia/issues/201#issuecomment-5976771165)；含 GAME-PRODUCER 补充的横竖屏同一停留点取景比较与「走近—松手观察—选择／不选择—中途回院」连续操作检查；与 GROK-BUILD #157 交接，地点/物件种类已决，不再重复征求；画面/资源规格交专业审阅。 |
 | EXP-HOST-RECOVERY-GATE | P1 | #150 R2/R3 真实浏览器验收驱动：同一 context、同 origin 下，在“意图已完成/提交前”和“提交完成/回执前”关页后用新页恢复；双页锁竞争；无 Web Locks 阻断；丢回执、错身份、重复/迟到回执与真实 abort 分别出证据；业务授予不重复 | R2/R3 测试侧已交付并合入：#247（`2d2054f`）、#257（`73fe3d5`）；本轮把 #257 中仅经代码审读的 resolve 持续失败上限（模拟错误）与 ack 真实事务 abort 加入正式矩阵，并修正夹具重开后 payload 写成浮点数的问题。驱动/夹具 `e4f9e24` + Gate `f096a4a` + R1 PR251 `2edb2e7`，Godot 4.7.2/Chrome 148 连续两次 14/14 PASS（109 项），变异验证能拦住修复前夹具；PR261 最终 `98d5182` 经独立复审 APPROVE 后合入 `3956afb`。#257 最终 head `47838bf`；CODEX-LEAD-ASSISTANT 的两条异常路径一次性补证 PR259 已合入 `b3f77cc`，已由本矩阵常驻覆盖。只证明隔离候选，不是正式 Host 冻结或 R4 | `CURSOR-CLOUD`（仅测试侧驱动） | [#239](https://github.com/narutojzm1-dot/youjia/issues/239)；[接收与接口候选 v1](https://github.com/narutojzm1-dot/youjia/issues/239#issuecomment-5981415664)。范围：`test/save_recovery_web/**`、`tools/verify_save_recovery_web.sh`、`docs/architecture/save-recovery-web-acceptance.md`。不复制或重写存储实现，不接正式 SaveStore/Main，不建第二套 Host；R1 封套/意图/协调器/恢复入口与 R4 迁移仍归 CODEX-LEAD，接口由 CODEX-LEAD 与 ENGINEERING-SUPERVISOR 核对。 |
 | YARD-DECOR-PROPOSAL | P1 | 仅同一占位物的可逆布置隔离对照：2–3 个候选位置与自由放置，预览/取消/确认/收起/换位置；键鼠/触屏横竖屏与低动效 | 隔离对照原型已交付（PR216）；PR232空间修订已合入70c170d，独立审及ART静态材料通过（5981854171）；正式布置/真机/持久化仍待 | `CODEX-LEAD-ASSISTANT`（仅此原型切片） | [#154](https://github.com/narutojzm1-dot/youjia/issues/154)；Leader 明确拆分见本单交接。仅 test/ 隔离项目与 docs，不改 Main/YardWorld/SaveStore/PhotoMoment；#125/#150 正式门禁保留，探索核心仍归 CURSOR-CLOUD。 |
-| ART-EXPLORATION-PROPOSAL | P1 | 先资源盘点/规格/构图提案与来源预算；最终画另批 | PR248构图/资源复用提案1d647c31ed0e76a912979940431aabab63ebce95已交，制作人5981844802候选方向通过/消费接口已核，ART5983411469已对同SHA批准仅构图提案，独立review5407926310已APPROVE并合入601d683896d811e2f17cb389e7d0d8104d16e36a；仅提案，不接入 | `CODEX-LEAD-ASSISTANT`（小物样张；关键背景GAME-PRODUCER） | [#155](https://github.com/narutojzm1-dot/youjia/issues/155)；依赖/正式内容门禁见工单。 |
+| ART-EXPLORATION-PROPOSAL | P1 | 先资源盘点/规格/构图提案与来源预算；最终画另批 | PR248构图/资源复用提案1d647c31ed0e76a912979940431aabab63ebce95已交，制作人5981844802候选方向通过/消费接口已核，ART5983411469已对同SHA批准仅构图提案，独立review5407926310已APPROVE并合入601d683896d811e2f17cb389e7d0d8104d16e36a；仅提案，不接入 | `CODEX-LEAD-ASSISTANT`（小物样张；关键背景GAME-PRODUCER） | [#157](https://github.com/narutojzm1-dot/youjia/issues/157)；依赖/正式内容门禁见工单。 |
 | QA-EXPLORATION-GATE | P1 | 独立失败矩阵/夹具与候选验收、发布和共同维护交接证据 | Q01–Q17矩阵已交；原型Web/真机补测已指定但待执行；正式平台联合验收待交付 | `CODEX-LEAD-ASSISTANT`矩阵 / `GAME-QA`原型补测 / `CODEX-LEAD`平台实现 | [#156](https://github.com/narutojzm1-dot/youjia/issues/156)；依赖/正式内容门禁见工单。 |
 
 
@@ -355,7 +355,7 @@ Owner CODEX-LEAD（兼制作人）。[完整策划](design/connected-world-2026-
 
 ### EXP-UNBLOCK-20261004 · 首片内容已决与存档验证协作
 
-- #153/#155/#201：用户已确认近郊小路＋圆石、松果、落羽均可遇见，解除首地/首物选择依赖。正式构图/资源由 GROK-BUILD #155 交付；探索核心仍归 CURSOR-CLOUD，#176 正式接入仍需 #150。
+- #153/#157/#201：用户已确认近郊小路＋圆石、松果、落羽均可遇见，解除首地/首物选择依赖。正式构图/资源由 GROK-BUILD #157 交付；探索核心仍归 CURSOR-CLOUD，#176 正式接入仍需 #150。
 - #239：Leader 指定 CURSOR-CLOUD 承担 #150 R2/R3 真实浏览器重载/双页验收驱动，CURSOR-CLOUD 已接收（[接收评论](https://github.com/narutojzm1-dot/youjia/issues/239#issuecomment-5981415664)，见 EXP-HOST-RECOVERY-GATE 行）；立即可开展驱动和最小故障屏障接口，真实最终验收依赖 Leader R1 实现，不能以假Host替代。详见工单的文件范围和证据矩阵。
 - CODEX-LEAD 保留 R1 封套/持久意图/写入协调/恢复入口及 R4 迁移责任，下一架构交付应为可运行实现；ENGINEERING-SUPERVISOR 评阅接口。GAME-PM 跟进接收、当前/下一交付和解除条件。此分工修正此前 R1–R4 均由 Leader 实现的安排；不重做已交付 #199/#200/#201。
 
@@ -404,15 +404,15 @@ GROK-CONTRIBUTOR已接测试子项并交PR276（8ffefdf，58项现状检查）�
 
 ### 探索/布置方向材料接力（PM 2026-10-05）
 
-制作人1545986931224已接232/248并给区域内轻量调整推荐，尚非用户最终自由度批准；唯一实物缺件为一个首批物件（建议圆石）的实际尺度，2–3安全语义位置、摆前/后/收起及正常拍照视角。用户新增提篮贯通与院外/家双核心方向见[策划同步](game-design.md#2026-10-05-用户探索与提篮方向制作人记录同步)；具体形态/容量/采集频率/自由度未定，不新增交易或第二套物品状态。PM155已将短画面序列与实物样张并入既有资源交接，不新开重复研究；执行顺序/窗口待GROK-BUILD接收，既有Owner/150门禁保持。
+制作人1545986931224已接232/248并给区域内轻量调整推荐，尚非用户最终自由度批准；唯一实物缺件为一个首批物件（建议圆石）的实际尺度，2–3安全语义位置、摆前/后/收起及正常拍照视角。用户新增提篮贯通与院外/家双核心方向见[策划同步](game-design.md#2026-10-05-用户探索与提篮方向制作人记录同步)；具体形态/容量/采集频率/自由度未定，不新增交易或第二套物品状态。PM157已将短画面序列与实物样张并入既有资源交接，不新开重复研究；执行顺序/窗口待GROK-BUILD接收，既有Owner/150门禁保持。
 
 后到用户资源分工由制作人1535987057979同步：新世界地图/重要背景由GAME-PRODUCER亲绘并交用户选择，小物件可保留GROK-BUILD；原其他认领不自动转移，旧B点材料如涉及新重要背景需按此边界协调，不默认GROK制作大图。A/B预览仅制作人会话未入仓，PM未见实际图、不代选择；工程规格/保存/专业门禁保持。
 
 ### GROK-BUILD额度耗尽与绘画Owner接力（2026-10-05用户通知）
 
-当前人员状态与新旧职责以[人员公告](collaboration/personnel-availability.md)为准：GROK-BUILD不可执行，预计10月9日恢复需实际核实。本次最初一揽子绘画移交已被用户最新分工细化：168关键背景归GAME-PRODUCER；155小物/119/121/122归CODEX-LEAD-ASSISTANT，120/123/126普通补绘归CODEX-LEAD，回执/首交未到，不把移交写开工；重要地图背景原已归制作人。音频194/235与工程195/234不随绘画自动转交，替代实现Owner待按真实能力明确，已发布功能和MANUS/LOCAL/Cloud/QA范围保持。历史GROK“可继续”等行此时不代表可执行，不等待其主动回报来推进新排期。
+当前人员状态与新旧职责以[人员公告](collaboration/personnel-availability.md)为准：GROK-BUILD不可执行，预计10月9日恢复需实际核实。本次最初一揽子绘画移交已被用户最新分工细化：168关键背景归GAME-PRODUCER；157小物/119/121/122归CODEX-LEAD-ASSISTANT，120/123/126普通补绘归CODEX-LEAD，回执/首交未到，不把移交写开工；重要地图背景原已归制作人。音频194/235与工程195/234不随绘画自动转交，替代实现Owner待按真实能力明确，已发布功能和MANUS/LOCAL/Cloud/QA范围保持。历史GROK“可继续”等行此时不代表可执行，不等待其主动回报来推进新排期。
 
-用户最新明确制作人低频巡检，优先重要决策/关键背景/大世界绘制，不承担普通物件队列。各任务实现Owner见[人员公告分表](collaboration/personnel-availability.md)；维护者先核已有资源只补缺件，Assistant下一首项为155实物尺度与提篮材料，Leader按现有主任务/真实缺口串行排资源，不能把队列分配视全部已开工。行为/核心/接入既有Owner与专业审核保持。
+用户最新明确制作人低频巡检，优先重要决策/关键背景/大世界绘制，不承担普通物件队列。各任务实现Owner见[人员公告分表](collaboration/personnel-availability.md)；维护者先核已有资源只补缺件，Assistant下一首项为157实物尺度与提篮材料，Leader按现有主任务/真实缺口串行排资源，不能把队列分配视全部已开工。行为/核心/接入既有Owner与专业审核保持。
 
 
 ### 2026-10-05 CODEX-LEAD普通资源接力回执
@@ -427,7 +427,7 @@ CODEX-LEAD指定CURSOR-CLOUD承担真实PhotoMoment/相册与旧档主备原文�
 
 ## 11:20轮当前接收与候选（实际03:17Z后）
 
-两维护者已接普通资源：Assistant1555987355414/2425987385196实际交Draft285 e6c780967c1d3c087d839099feb32655c689ae5a圆石9静态位置图/提篮文本；Leader1205987453733交并合入286 final3d32328aa3902f008f6f6837b7019067440282b3脚底固定倍率材料。均不代表ART/正式摄影/运行时通过，先收当前再串行119/121/122或123/126。Producer关键背景168接收仍待。
+两维护者已接普通资源：Assistant1575987355414/2425987385196实际交Draft285 e6c780967c1d3c087d839099feb32655c689ae5a圆石9静态位置图/提篮文本；Leader1205987453733交并合入286 final3d32328aa3902f008f6f6837b7019067440282b3脚底固定倍率材料。均不代表ART/正式摄影/运行时通过，先收当前再串行119/121/122或123/126。Producer关键背景168接收仍待。
 
 阴天v7已ART5987342220退回仅天空合成；晚到原Grok289/v8 3893d472594ec73624cc5e4c3b4fcbc9af78dec0实际PNG ec11fa32f498fa48a37ba43dc35235176f539102bc3ffc5946d4ffe4064f01c9/3586561bytes，专业/资源终审待。原产物保留，不撤用户额度暂停/不认其下轮可执行、不把关键背景Owner交回。LOCAL正式接图待最新批准；字段只读兼容提案可继续。
 
@@ -485,7 +485,7 @@ Assistant285新166c21d7a847d7325e82d81ff01d9f28c90eda5b实际水彩化中间图�
 
 用户直接通知：MANUS额度11月2日刷新，当前按额度暂停记录，预计2026-11-02恢复须核实际可用/接收，不自动恢复定时任务。此前向MANUS询问音频制作能力的等待取消，不继续催其交付。
 
-用户明确“音频暂时找assistant”：CODEX-LEAD-ASSISTANT临时接#194环境自然化与#235短音资源制作，先接收并核现有分轨/来源、缺件与实际工具/试听能力，给一个最小可听候选及来源/哈希/循环或一次播放说明和实际窗口。不能以图片生成、波形或整体调低音量代替音频候选/真实听验；无制作能力时及时具体上报，不重新等MANUS。先盘点与现有#155串行排期，不假定全部并行完成。
+用户明确“音频暂时找assistant”：CODEX-LEAD-ASSISTANT临时接#194环境自然化与#235短音资源制作，先接收并核现有分轨/来源、缺件与实际工具/试听能力，给一个最小可听候选及来源/哈希/循环或一次播放说明和实际窗口。不能以图片生成、波形或整体调低音量代替音频候选/真实听验；无制作能力时及时具体上报，不重新等MANUS。先盘点与现有#157串行排期，不假定全部并行完成。
 
 #30/#235成功事件接入等MANUS既有行为Owner保留但暂停，用户本次只明确音频接力；不自动接管其全部代码/音频后端。若资源完成后确需接线，PM另组织显式文件范围交接；公共cue接口/集成仍Leader，真实听验仍QA/可出声设备。已有素材、原分支与提交保留，独立最终SHA审查、必要验证/试听、合入及发布分别记录。留言不等Assistant已接收。
 
@@ -554,7 +554,7 @@ Assistant音频300 b8e5e6dc916dacd1eaf45b36c9f17584d36fc16c已接且实际交，
 
 ## GAME-PM 16:20：首片容量已决与资源/程序口径同步
 
-用户本轮直接选择单趟最多3件，合计不是每种3件；可空手/随时回院、不要求捡齐圆石松果落羽。此前上限1仅实验值，Cloud1535990862078已收到仓库通知，新范围接收和实现SHA待核，Owner不变。0/1/2/3、第四件处理、同篮回院/重载须在新最终SHA适用验收，频率/掉率未定；原画长卷/单幅串联已向用户呈现仍待选择，不当整条探索阻塞。1555990819693已纠正小物继续等Assistant的旧口径，新资源Producer接续；四份当前协作入口的旧资源分配同步319，历史台账保留。321实际已获得集成协助/独立再审并合入5f74afb，328生产候选提交边界已入e68e9a1；研发251最新3d418与生产Host未开启分别记录，Leader/Assistant仍有在途实现不重复调度。详见本轮逐人报告与公开体验证据。
+用户本轮直接选择单趟最多3件，合计不是每种3件；可空手/随时回院、不要求捡齐圆石松果落羽。此前上限1仅实验值，Cloud1535990862078已收到仓库通知，新范围接收和实现SHA待核，Owner不变。0/1/2/3、第四件处理、同篮回院/重载须在新最终SHA适用验收，频率/掉率未定；原画长卷/单幅串联已向用户呈现仍待选择，不当整条探索阻塞。1575990819693已纠正小物继续等Assistant的旧口径，新资源Producer接续；四份当前协作入口的旧资源分配同步319，历史台账保留。321实际已获得集成协助/独立再审并合入5f74afb，328生产候选提交边界已入e68e9a1；研发251最新3d418与生产Host未开启分别记录，Leader/Assistant仍有在途实现不重复调度。详见本轮逐人报告与公开体验证据。
 
 ## 2026-10-05 本地制作人接续：原画透视探索已决
 
@@ -568,7 +568,7 @@ Assistant音频300 b8e5e6dc916dacd1eaf45b36c9f17584d36fc16c已接且实际交，
 
 ## GAME-PM 17:20：已决与接收收尾
 
-用户原画视角/沿路走动/自然换页由本地制作人332同步，Cloud1535991376468明确接收并交32290ea8562c896641f48da224f80da97ec69921280容量3候选，独审/合入待，不重复问地点/容量/画幅。155brief/337路径候选有真实产物，PM校awaiting-receipt为in-progress，runtime_ready=false不冒正式美术；Producer300/317精确接收及285本地交接成立。阴天/圆石局部像素方式待用户、339真实听验待，只阻对应资源；338局部Main范围已Leader授权且本轮公网竖屏低对比复现，Grok首次回执待。Leader336/Assistant340341仍在途不重新调度。逐人SHAs/时间/范围/版本目标与4图公开补证见[本轮报告](pm/2026-10-05-1720-coordination.md)。
+用户原画视角/沿路走动/自然换页由本地制作人332同步，Cloud1535991376468明确接收并交32290ea8562c896641f48da224f80da97ec69921280容量3候选，独审/合入待，不重复问地点/容量/画幅。157brief/337路径候选有真实产物，PM校awaiting-receipt为in-progress，runtime_ready=false不冒正式美术；Producer300/317精确接收及285本地交接成立。阴天/圆石局部像素方式待用户、339真实听验待，只阻对应资源；338局部Main范围已Leader授权且本轮公网竖屏低对比复现，Grok首次回执待。Leader336/Assistant340341仍在途不重新调度。逐人SHAs/时间/范围/版本目标与4图公开补证见[本轮报告](pm/2026-10-05-1720-coordination.md)。
 
 ## REQ027假期天数小纸签
 
@@ -595,7 +595,7 @@ Assistant音频300 b8e5e6dc916dacd1eaf45b36c9f17584d36fc16c已接且实际交，
 
 ## GAME-PM 18:20：生产接口与探索接收已落地
 
-336已发布，149/40原范围347验收收口，322最终7e4b46b59014989b804f5b4cc273501a6eabb831异步队列适配独审合81d225c15962a32d7a48a066154859488a155aa4；305旧实验固定Host前置/queued已由PM更新生产组合范围，真实公开带回物验收仍待，不以模型代Web。345作者请求集成已由Leader独审合3de并公开DPR2/3验证，349归档待；350相册排版Assistant在途，348toast下一项待接收。Producer155实际三帧/比例遮挡已接，清底像素/阴天/圆石方式用户等待与339听验门禁保持。逐人SHAs/下一产物/实际窗口及game-3de05fc自然关页羊照片补证见[18:20报告](pm/2026-10-05-1820-coordination.md)。
+336已发布，149/40原范围347验收收口，322最终7e4b46b59014989b804f5b4cc273501a6eabb831异步队列适配独审合81d225c15962a32d7a48a066154859488a157aa4；305旧实验固定Host前置/queued已由PM更新生产组合范围，真实公开带回物验收仍待，不以模型代Web。345作者请求集成已由Leader独审合3de并公开DPR2/3验证，349归档待；350相册排版Assistant在途，348toast下一项待接收。Producer157实际三帧/比例遮挡已接，清底像素/阴天/圆石方式用户等待与339听验门禁保持。逐人SHAs/下一产物/实际窗口及game-3de05fc自然关页羊照片补证见[18:20报告](pm/2026-10-05-1820-coordination.md)。
 
 ## REQ028标题页文字纸片
 
@@ -621,7 +621,7 @@ Assistant音频300 b8e5e6dc916dacd1eaf45b36c9f17584d36fc16c已接且实际交，
 
 #305 保全修订候选（Leader认领6000660890）：427合入cdec仍保留INVALID_ARGUMENT普通写回退，真实Native未知扩展复现可覆盖current。现仅取消该回退，保留原记录/原失败并停止同页重交；普通写故障有限重试不改。新领域到Native51项修前15失败、修后通过，47bb完整70次strict与导出通过、真实Web受控单次cleanup故障恢复通过，普通单停点返院/真重开有限通过，待最终独审发布；不是已发生公开用户事故。证据见[候选档案](playtests/2026-10-06-cleanup-invalid-preservation/README.md)。
 
-### EXP-LIVING-WORLD 方向约束（用户2026-10-05补充，沿 #153 / #155 执行）
+### EXP-LIVING-WORLD 方向约束（用户2026-10-05补充，沿 #153 / #157 执行）
 
 探索程序 Owner CURSOR-CLOUD；原画/物件/音频与需求细化 GAME-PRODUCER。状态：用户方向已确认，内容/参数待首片体验后细化，非实现完成。近郊重访允许合理物品或空手，掉落遵循生态与季节；动物偶遇/天气同为风景；各片区环境音及音乐应契合环境，近郊可偶闻微弱家鹅叫。先完成首片人物透视+发现/获得动态音画体验，不一次扩展多季节、种子功能或全部动物事件。详见 game-design.md 的“探索是生活中的机缘与风景”；不以本记录替换未决概率/时间机制或现有可靠保存验收。
 
@@ -716,7 +716,7 @@ Leader已在305/6000660890实际接收并取消仅含风险cdec的发布37356141
 
 Cloud242/6000756272于18:38:12实际交375 Draft v2完整head18c049b1b1b11dd2f8b748689287be35182a355e，深暖灰纸片/竖屏稳定篮名底板、v2横竖帧、隔离191/191与daily通过。下一Producer审v2运行认可或具体返修→Cloud接合格资源/真实动态/最终独审；尚非runtime-ready或发布，音频真实听验另列。该新产物不代cleanup接力回执，不因部分风险写整人等待。
 
-434最终7d9d15e5001baa9dc208981af20b67dbe188014d独审6000711461合515f3550c41555dd4ccc160a767d0f72ccc584d2，已保留432正式空篮和松果1＋圆石2自然趟、触门返院及真关页新页的原档；数量为只读current封套前后相同gen12/session=null/serial1支持，无背包UI，不是全三种/全DB/故障/真机验收。399保持开放。433正式c6e5（427前）已由Leader18:34:43核PCK27086076B/SHA256 f80ba8f58617ca6d4e91ce86deb80416f71f09286d7e2faaca99c48ae6d340c3和十模块；其普通公开三尺寸相册复验在途。PM自己的四图被测仍96f，不冒本人重玩或听验。合并完整保留434原始证据，不制造重复测试。
+434最终7d9d15e5001baa9dc208981af20b67dbe188014d独审6000711461合515f3550c41575dd4ccc160a767d0f72ccc584d2，已保留432正式空篮和松果1＋圆石2自然趟、触门返院及真关页新页的原档；数量为只读current封套前后相同gen12/session=null/serial1支持，无背包UI，不是全三种/全DB/故障/真机验收。399保持开放。433正式c6e5（427前）已由Leader18:34:43核PCK27086076B/SHA256 f80ba8f58617ca6d4e91ce86deb80416f71f09286d7e2faaca99c48ae6d340c3和十模块；其普通公开三尺寸相册复验在途。PM自己的四图被测仍96f，不冒本人重玩或听验。合并完整保留434原始证据，不制造重复测试。
 
 
 ### GAME-PM 03:20最新接收覆盖
@@ -890,6 +890,8 @@ Owner CODEX-LEAD，小院三处花草分层及共享保存；近郊采花继续A
 PR #696 is merged and public source bfbf652d8c26f5da985f9bf5ab655e5e37d8dfd7 verified. Full-trip capacity refusal preserves deferred finds and retry; see [public receipt](playtests/2026-10-10-trip-capacity-public/README.md). #642 remains open: flower assets are local candidates only; planting, removal and photo persistence remain to implement.
 
 
+### 2026-10-10 #642 原布局确认式保存候选
+CODEX-LEAD 在 codex/lead-flower-original-state-642 接续三处原花草 remove/restore 数据和控制器：缺字段旧布局与显式移空区分、FIFO revision、未知/失败安全重试、未来schema保留。真实原生86项及容量48/旧摆件19/协调器86/反馈50通过。[候选证据与未完成范围](playtests/2026-10-10-original-plants-state/README.md)。无正式编辑入口、照片接入或花园发布；底板接缝仍需收尾，#642保持开放。
 ## 2026-10-10 下一阶段成长闭环（#700）
 
 用户已确认三餐1/3/2自主行动点、物品驱动实际世界行动与建筑/园艺/厨艺经验，近郊八格农田、基础工具/磨盘及相册/纪念册分离。早餐余点可到下午；下午余点最多1点到晚上；三种经验均到1级才统一显现相关UI。跨日/等级阈值等未定。Owner CODEX-LEAD，方向已接收、实现待进行；ASSISTANT近郊与Cursor UI按接口回执接入，不冒称开工。详细规则、交付顺序、兼容和待细化项见[成长基准](design/growth-phase-2026-10-10.md)及[原单#700](https://github.com/narutojzm1-dot/youjia/issues/700)。保留原#637/#642/#646等已交付事实，新规划不代表已上线。
@@ -1053,3 +1055,7 @@ Owner CODEX-LEAD；本片状态改为已合入、普通Web闭环通过，公开�
 ## 2026-10-13 #700 三餐与池岸自主劳动公开包核验
 
 CODEX-LEAD：PR766实际发布源 `d4c5b092a465186316c5ff35d0a17d2c57b0b379` 的 Publish38356713339、Pages38358583924 均成功；公共manifest/HTML与固定gh-pages `6a2beb29364ecacde9f13e3759c87f18be4e16c4` 一致。实际双端PCK均74,659,076 bytes，SHA-256 `c41dcb0f65c9fb18d00b10f24ae0770c9a1d6fadf162b0325f225b42177bf601`，匹配HTML声明，首次取包即通过。见[公开核验记录](playtests/2026-10-13-growth-public-d4c5b09/README.md)。普通公网新标签页已恢复同源第24天存档，暂停显示game-d4c5b09，公告核对最新及新增/修复/限制可读；844×390公告历史滚动/返回菜单通过，成功链console warning/error为空。首次长期测试页重载停在绘制阶段且CDP超时，关闭该页后新标签正常；原因未定，保留失败，不归因为缓存或宣称修复。北京时间14:57:28已发送一次上线阶段成果预览，非日推，无回信不等用户验收。文件身份与普通公网菜单通过不扩大为实体设备、人耳或全成长验收；完整成长与实体手机/窄屏全链仍未完成，#700保持开放。
+
+### 2026-10-13 #642 原三组运行接线候选
+
+Owner CODEX-LEAD，保留 PR699 与本地 ab97 原候选祖先/源版本，整合成长主线；独立热点/纸面、确认后投影、保存准确重试、照片冻结已接线。最终四资源经静态GPU修订审看后启用本地入口；最终原生86、GPU157、照片2523/48、热点92通过，保存反馈50、三餐Host71和旧照料焦点115已有适用证据。[证据](playtests/2026-10-13-original-plants-runtime/README.md)。普通Web、真关页恢复与公共包仍待验证，不关闭#642。

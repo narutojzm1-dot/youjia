@@ -2,6 +2,8 @@
 
 Owner：CODEX-LEAD；Leader 内部委派。基于 main `fbf87cd5c9a05663186756ed69c7aef8a42cd8c9`。这是磨粉端到端候选的共享前置，保持 Draft，**没有开放磨盘玩法、没有 Web 体验或发布结论**。原 #700 不关闭。
 
+随后融合 main `59409a25bd4f3d51cf8f9ec36c378a61d3aaf234`：保留 #699 原花草运行接入及其 `GARDEN_*` 拒绝码。唯一手动冲突是错误码声明，两边白名单均保留；SaveStore 和 daily/completion map 自动保留双方增量。融合后再验 production、SaveCoordinator、pond director；其他专项沿用未变模型代码的本轮结果，没有重复全库验证。
+
 ## 可接入契约
 
 - `Inventory.read()`：canonical schema5，新增 `flour` 和 `production_revision`；旧 schema1–4 只在读视图补零，首次正常写入随同事务迁移，原库存、手持、地面 ID 和 revision 保留。未知或损坏 schema 阻断。schema5 不向旧客户端降级写回。

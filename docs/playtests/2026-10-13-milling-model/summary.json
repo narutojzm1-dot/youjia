@@ -2,7 +2,7 @@
   {
     "suite": "growth_production",
     "exit": 0,
-    "seconds": 1.28,
+    "seconds": 1.56,
     "errors": false,
     "completion": [
       "GROWTH_PRODUCTION checks=130 failures=0"
@@ -83,7 +83,7 @@
   {
     "suite": "pond_growth_director",
     "exit": 0,
-    "seconds": 24.88,
+    "seconds": 27.2,
     "errors": false,
     "completion": [
       "POND_GROWTH_DIRECTOR checks=292 failures=0"
@@ -92,7 +92,7 @@
   {
     "suite": "save_coordinator",
     "exit": 0,
-    "seconds": 1.77,
+    "seconds": 1.34,
     "errors": false,
     "completion": [
       "SAVE_COORDINATOR checks=86 failures=[]"
