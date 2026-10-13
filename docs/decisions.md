@@ -2039,3 +2039,6 @@ game-c874273新部署旧档/背篓鼠标转键盘限定通过；隔离原生8套
 
 ## 2026-10-13 触屏点按后按钮不再停在悬停样式（CURSOR-CLOUD UI 维护）
 来源：Web 触屏实玩。点「大太阳」换成「阴天」后按钮一直是浅杏底 + 鼠尾草描边，像被选中；从近郊点「回院」，同一位置的「歇一会儿」也一直亮着。原因是 Godot 由触屏合成鼠标按键，悬停落在手指下，手机上没有鼠标移开。决定：在 `scenes/main.tscn` 挂 `scripts/ui/touch_hover_reset.gd`（与 InputHintMode 一样不改 `main.gd`），最近一次指点是触屏、手指已抬起时，补一次画面外的鼠标移动撤掉悬停（只补移动、不补按键，避免握着鼠标的按钮多触发一次）；真鼠标一动就停止，桌面悬停不变。同时 `yard_basket_panel.gd` 在背篓打开时不让触屏合成的鼠标按键进 GUI（触屏全由 `handle_touch_event` 处理），格子鼠标拖动改为左键按着才开始。回归由 `touch_hover_reset_suite` 守护，证据见 `docs/playtests/2026-10-13-cursor-cloud-touch-hover-reset/`。
+
+## 2026-10-13 版本公告点按打开 / 关上不画键盘焦点圈（CURSOR-CLOUD UI 维护）
+来源：Web 竖屏触屏实玩。「歇一会儿」里点「公告」，「返回歇一下」一打开就画焦点圈；点它关上后「公告」也画圈，鼠标同样。决定：与背篓格子、小鸡照料纸、菜地纸一致，`scripts/ui/release_notes.gd` 用共用的 `PointerFocus`：点按打开时焦点仍交给「返回歇一下」但先不画圈，点按关上后 Main 交回「公告」的焦点也改成不画圈；键盘走到「公告」回车打开 / 关上照常画圈，任意键盘导航后圈立即显出。面板首次打开时才建出来、收不到那次点按，因此仅首次以打开前「公告」的焦点是否可见判断，之后由 `PointerFocus` 记的最近一次输入判断（点按关上后直接按回车重开照常画圈）。不改 `main.gd`。回归由 `release_notes_pointer_focus_suite` 守护，证据见 `docs/playtests/2026-10-13-cursor-cloud-release-notes-pointer-focus/`（含 #781 竖屏补证）。
