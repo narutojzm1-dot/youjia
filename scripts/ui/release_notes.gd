@@ -96,6 +96,9 @@ func _ready() -> void:
 		content.set_focus_neighbor(direction, content.get_path_to(back))
 		back.set_focus_neighbor(direction, back.get_path_to(content))
 	request = HTTPRequest.new()
+	# Browser Fetch already decodes gzip/deflate but retains Content-Encoding.
+	# Do not run Godot's decompressor on the decoded Web response a second time.
+	request.accept_gzip = not OS.has_feature("web")
 	request.timeout = 8.0
 	request.body_size_limit = 65536
 	request.request_completed.connect(_checked)
