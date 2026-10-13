@@ -11,14 +11,14 @@ static func stock(snapshot: Dictionary) -> Dictionary:
 	var keepsakes := Decor.available(snapshot)
 	if inventory.is_empty() or keepsakes.is_empty(): return {}
 	var result := keepsakes.duplicate(true)
-	for material: String in Inventory.FOOD:
+	for material: String in Inventory.STORED:
 		result[material] = int(inventory.fish.get(material, 0) if material in Inventory.FISH else inventory.get(material, 0))
 	return result
 
 static func valid_cost(cost: Variant) -> bool:
 	if not cost is Dictionary or cost.is_empty(): return false
 	for material: Variant in cost:
-		if material not in Inventory.FOOD and material not in ExplorationRoutes.FINDS: return false
+		if material not in Inventory.STORED and material not in ExplorationRoutes.FINDS: return false
 		if Contract.as_int(cost[material], 1, Inventory.MAX_COUNT) == null: return false
 	return true
 
@@ -58,7 +58,7 @@ static func plan(snapshot: Dictionary, catalog: Dictionary, rng: RandomNumberGen
 		if not Contract.is_valid_stop_id(action.id) or not valid_cost(action.materials) or not action.materials.has(primary): return {}
 		var writable := true
 		for material: String in action.materials:
-			if material in Inventory.FOOD and source.inventory.revision >= Inventory.MAX_REVISION: writable = false
+			if material in Inventory.STORED and source.inventory.revision >= Inventory.MAX_REVISION: writable = false
 		if writable and can_afford(counts, action.materials): eligible[primary] = counts[primary]
 	if eligible.is_empty(): return {}
 	var maximum: Array[String] = []
