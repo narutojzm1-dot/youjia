@@ -1049,3 +1049,7 @@ Owner CODEX-LEAD；本片状态改为已合入、普通Web闭环通过，公开�
 11/12做饭音频在Web源已启动但输出为零的问题已修复，批准PCM未替换；普通饭点软件输出、暂停、运行中总静音、恢复和自然结束已验证，[声音回执](https://github.com/narutojzm1-dot/youjia/issues/745#issuecomment-6139686668)不等于人耳听验。13/14/15继续禁播。原作者提交已实际进入main，PR[723](https://github.com/narutojzm1-dot/youjia/pull/723#issuecomment-6139685807)/[738](https://github.com/narutojzm1-dot/youjia/pull/738#issuecomment-6139686251)已由GitHub自动合入关闭，不重复派接入任务。
 
 下一交付：核对本片Actions/Pages、公开manifest/HTML及实际PCK身份与哈希，再记录上线状态。#700继续开放：完整种花、磨粉、经验树及实体手机/窄屏全链未完成；未决跨日余点、补觉恢复、疲劳叠加不自行设定。
+
+## 2026-10-13 #700 三餐与池岸自主劳动公开包核验
+
+CODEX-LEAD：PR766实际发布源 `d4c5b092a465186316c5ff35d0a17d2c57b0b379` 的 Publish38356713339、Pages38358583924 均成功；公共manifest/HTML与固定gh-pages `6a2beb29364ecacde9f13e3759c87f18be4e16c4` 一致。实际双端PCK均74,659,076 bytes，SHA-256 `c41dcb0f65c9fb18d00b10f24ae0770c9a1d6fadf162b0325f225b42177bf601`，匹配HTML声明，首次取包即通过。见[公开核验记录](playtests/2026-10-13-growth-public-d4c5b09/README.md)。普通公网新标签页已恢复同源第24天存档，暂停显示game-d4c5b09，公告核对最新及新增/修复/限制可读；844×390公告历史滚动/返回菜单通过，成功链console warning/error为空。首次长期测试页重载停在绘制阶段且CDP超时，关闭该页后新标签正常；原因未定，保留失败，不归因为缓存或宣称修复。北京时间14:57:28已发送一次上线阶段成果预览，非日推，无回信不等用户验收。文件身份与普通公网菜单通过不扩大为实体设备、人耳或全成长验收；完整成长与实体手机/窄屏全链仍未完成，#700保持开放。
