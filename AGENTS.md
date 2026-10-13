@@ -85,3 +85,16 @@ CODEX-LEAD 以逐项验收并完成现有全部 issues 为持续目标。每次�
 ## 最新持续交付分工（2026-10-05 用户调整）
 
 Leader主功能增加与共享架构，Assistant主缺陷修复，CURSOR-CLOUD独立负责大世界探索，GAME-PRODUCER负责原画/音频资源和需求输出。三位开发者按持续目标推进；具体在途与待接收不得混写。开工前按 [分工与认领规范](docs/collaboration/goal-ownership.md) 在原单标Owner、实际状态、active PR/精确SHA、方法/文件范围及下一交付，避免重复工作。本文最新规则取代旧普通资源/音频由两个Codex长期并行制作的临时分配；保留既有提交并显式交接，未回执不称已开工。#149/#150在研共享存档由Leader连续收尾，其他缺陷交Assistant按真实范围接收。
+
+## Cursor Cloud specific instructions
+
+Cloud Agent 镜像提供 Godot 4.7.2（`/usr/local/bin/godot`）和同版本 Web 导出模板（`~/.local/share/godot/export_templates/4.7.2.stable`）。验证入口与 CI 一致，不要换成其他引擎版本：
+
+- `python3 test/web_bundle_retention_test.py`
+- `python3 test/publish_storage_modules_test.py`
+- `npm run verify:daily`
+- `npm run export` 写出 `dist/index.html`、`dist/index.js`、`dist/index.wasm`、`dist/index.pck`
+
+`npm run dev`、`npm run check`、`npm run doctor` 依赖工作区外的 `GAME_RUNTIME`（Manus 运行时）。本仓库没有这份运行时，不能把这些脚本当成游戏测试入口。
+
+本地打开 Web 导出时，加载壳会请求 `./web/save/bridge.mjs`。Godot 导出的 `dist/` 里默认没有这些模块。先把 `web/save/*.mjs` 复制到 `dist/web/save/`，再从 `dist/` 提供静态文件，并带上 `Cross-Origin-Opener-Policy: same-origin` 与 `Cross-Origin-Embedder-Policy: require-corp`。正式发布仍走 `tools/publish_gh_pages.sh`，它会把同一批模块改写进版本化目录。
