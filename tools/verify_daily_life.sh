@@ -87,6 +87,7 @@ run_godot suite test/web_save_bridge/legacy_suite.gd
 run_godot suite test/title_copy_balance_suite.gd
 run_godot suite test/touch_hint_mode_suite.gd
 node test/loading_shell_test.cjs
+node test/release_check_test.cjs
 node test/download_assets_test.mjs
 node test/sha256_stream_test.mjs
 
@@ -165,3 +166,4 @@ run_godot suite test/growth_materials_suite.gd
 
 run_godot suite test/growth_budget_suite.gd
 run_godot suite test/pond_edging_view_suite.gd
+run_godot suite test/release_notes_suite.gd

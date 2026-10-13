@@ -76,7 +76,7 @@ HTML="$WORK_DIR/index.html"
 sed -i "s|./web/save/|./${MODULE_ENTRY}/|g" "$HTML"
 sed -i "s|./web/boot/|./${BOOT_ENTRY}/|g" "$HTML"
 
-# 0. 注入 Cache-Control meta，防止浏览器将 index.html 长期缓存（gh-pages 无自定义响应头）
+# 0. 注入 Cache-Control meta，仅保留旧客户端的缓存提示；真正的新版本核对由加载器在启动前执行（Pages响应头仍有max-age=600）
 #    只在尚未注入时才添加，避免重复发布时重复插入。
 if ! grep -q 'Cache-Control.*no-cache' "$HTML"; then
     sed -i 's|<meta charset="utf-8">|<meta charset="utf-8">\n  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">\n  <meta http-equiv="Pragma" content="no-cache">\n  <meta http-equiv="Expires" content="0">|' "$HTML"
@@ -92,7 +92,7 @@ sed -i "s/href=\"index\.icon\.png\"/href=\"${ENTRY}.icon.png\"/" "$HTML"
 sed -i "s/href=\"index\.apple-touch-icon\.png\"/href=\"${ENTRY}.apple-touch-icon.png\"/" "$HTML"
 
 # 5. 注入 cache-control meta 标签至 <head>
-# GitHub Pages CDN (Fastly) 默认缓存 HTML；meta 标签可降低浏览器层缓存的生命周期
+# GitHub Pages CDN (Fastly) 默认缓存 HTML；meta 标签不能替代 HTTP Cache-Control，不能单靠它保证入口及时更新
 # 同时用 data-build 属性将版本 SHA 嵌入 <html> 根节点，便于控制台快速核验
 sed -i "s|<html|<html data-build=\"${ENTRY}\"|" "$HTML"
 sed -i "s|<head>|<head>\n  <meta http-equiv=\"Cache-Control\" content=\"no-cache, must-revalidate, max-age=0\">\n  <meta http-equiv=\"Pragma\" content=\"no-cache\">|" "$HTML"
