@@ -6,6 +6,10 @@ const FISH := ["small", "medium", "odd"]
 const FOOD_V2 := ["small", "medium", "odd", "grass"]
 const FOOD_V3 := ["small", "medium", "odd", "grass", "millet"]
 const FOOD := ["small", "medium", "odd", "grass", "millet", "wheat", "corn"]
+# Pantry products are durable stock, not yet hand/ground/animal-feed capabilities.
+# Keep FOOD unchanged until their presentation and interactions are connected.
+const PANTRY := ["flour"]
+const STORED := FOOD + PANTRY
 const GRAINS := ["wheat", "corn"]
 const MAX_GROUND := 32
 const MAX_COUNT := 9999
@@ -14,7 +18,7 @@ const Contract := preload("res://scripts/exploration/exploration_contract.gd")
 
 
 static func empty() -> Dictionary:
-	return {"schema": 4, "revision": 0, "fish": {}, "grass": 0, "millet": 0, "wheat": 0, "corn": 0, "held": "", "ground": [], "next_food_id": 1}
+	return {"schema": 5, "revision": 0, "fish": {}, "grass": 0, "millet": 0, "wheat": 0, "corn": 0, "flour": 0, "production_revision": 0, "held": "", "ground": [], "next_food_id": 1}
 
 
 ## Absent is a legacy empty inventory; present but unknown/corrupt is blocked.
@@ -25,11 +29,14 @@ static func read(snapshot: Dictionary) -> Dictionary:
 	var raw: Variant = snapshot[FIELD]
 	if not raw is Dictionary:
 		return {}
-	var schema: Variant = Contract.as_int(raw.get("schema"), 1, 4)
+	var schema: Variant = Contract.as_int(raw.get("schema"), 1, 5)
 	if schema == null: return {}
 	var keys := ["schema", "revision", "fish", "held"] if schema == 1 else ["schema", "revision", "fish", "grass", "held", "ground", "next_food_id"]
 	if schema >= 3: keys.append("millet")
-	if schema == 4: keys.append_array(GRAINS)
+	if schema >= 4: keys.append_array(GRAINS)
+	if schema >= 5:
+		keys.append_array(PANTRY)
+		keys.append("production_revision")
 	if raw.size() != keys.size(): return {}
 	for key: String in keys:
 		if not raw.has(key): return {}
@@ -44,12 +51,19 @@ static func read(snapshot: Dictionary) -> Dictionary:
 		if kind not in FISH or Contract.as_int(raw.fish[kind], 1, MAX_COUNT) == null:
 			return {}
 	var result: Dictionary = raw.duplicate(true)
-	result.schema = 4
+	result.schema = 5
 	if schema >= 3 and Contract.as_int(raw.millet, 0, MAX_COUNT) == null: return {}
 	result.millet = int(raw.millet) if schema >= 3 else 0
 	for grain: String in GRAINS:
-		if schema == 4 and Contract.as_int(raw[grain], 0, MAX_COUNT) == null: return {}
-		result[grain] = int(raw[grain]) if schema == 4 else 0
+		if schema >= 4 and Contract.as_int(raw[grain], 0, MAX_COUNT) == null: return {}
+		result[grain] = int(raw[grain]) if schema >= 4 else 0
+	for product: String in PANTRY:
+		if schema >= 5 and Contract.as_int(raw[product], 0, MAX_COUNT) == null: return {}
+		result[product] = int(raw[product]) if schema >= 5 else 0
+	# Links confirmed production to its AP/XP receipts; normal inventory writes
+	# retain this anchor, independently of their own optimistic revision.
+	if schema >= 5 and Contract.as_int(raw.production_revision,0,MAX_REVISION) == null: return {}
+	result.production_revision = int(raw.production_revision) if schema >= 5 else 0
 	result.revision = int(raw.revision)
 	for kind: String in result.fish: result.fish[kind] = int(result.fish[kind])
 	if schema == 1:

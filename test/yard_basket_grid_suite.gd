@@ -36,7 +36,7 @@ func run() -> void:
 	var tuning := root.get_node_or_null("TuningStore")
 	if tuning != null and tuning.has_method("end_run"): tuning.call("end_run")
 	var i18n := root.get_node("I18n")
-	var inventory := {"fish": {"small": 2, "medium": 0, "odd": 1}, "grass": 3, "millet": 0, "held": ""}
+	var inventory := {"fish": {"small": 2, "medium": 0, "odd": 1}, "grass": 3, "millet": 0, "flour": 1, "held": ""}
 	var keepsakes := {ExplorationRoutes.FIND_STONE: 1, ExplorationRoutes.FIND_PINE_CONE: 0, ExplorationRoutes.FIND_FEATHER: 2}
 	for loc: String in ["zh-CN", "en"]:
 		i18n.set_locale(loc)
@@ -55,13 +55,20 @@ func run() -> void:
 			await settle()
 			g.update_view(inventory, keepsakes, "ready", false)
 			await settle()
+			# The first opened paper has no previous label width to reuse. A
+			# wrapped flour note must not retain that initial narrow-width height.
+			g.open_menu("flour")
+			await settle()
+			check(g.menu.get_global_rect().end.y - g.menu_close.get_global_rect().end.y <= 12.0, tag + " first flour paper hugs its buttons: " + str(g.menu.get_global_rect()))
+			check(Rect2(Vector2.ZERO, Vector2(vs)).encloses(g.menu.get_global_rect()), tag + " first flour paper inside screen")
+			g.close_menu()
 			# --- grid shape ---
 			var cols: int = g.grid.columns
 			var expect_cols := 3 if inner_width(vs) < 4 * 64 + 3 * 8 else 4
 			check(cols == expect_cols, tag + " columns %d (expected %d)" % [cols, expect_cols])
-			check(g.cells.size() == 10, tag + " one cell for each of 10 items")
+			check(g.cells.size() == 11, tag + " one cell for each of 11 items including flour")
 			check((g.cells.size() + g.blanks.size()) % cols == 0, tag + " last row padded to full width")
-			check(g.blanks.size() == (cols - 10 % cols) % cols, tag + " blank slot count")
+			check(g.blanks.size() == (cols - 11 % cols) % cols, tag + " blank slot count")
 			var rects: Array[Rect2] = []
 			for kind: String in g.ORDER:
 				var r: Rect2 = g.cells[kind].get_global_rect()
@@ -141,6 +148,18 @@ func run() -> void:
 			check(not g.spot_row.visible and g.menu_note.text == ("Checking the save…" if en else "正在确认保存，先等一下。"), tag + " placing waits while the yard saves")
 			g.close_menu()
 			g.set_free_spots(free, false)
+			# Flour is pantry food: its longer recipe note must fit even at the bottom row.
+			g.open_menu("flour")
+			await settle()
+			check(Rect2(Vector2.ZERO, Vector2(vs)).encloses(g.menu.get_global_rect()), tag + " flour paper stays inside screen")
+			check(g.menu_action.disabled and not g.menu_hotbar.visible and g.menu_note.visible, tag + " flour shows cooking guidance without a false hand action")
+			check(g.menu.get_global_rect().end.y - g.menu_close.get_global_rect().end.y <= 12.0, tag + " flour paper hugs content after switching from a find")
+			g.update_view(inventory, keepsakes, "saving", true)
+			await settle()
+			g.update_view(inventory, keepsakes, "ready", false)
+			await settle()
+			check(g.menu.get_global_rect().end.y - g.menu_close.get_global_rect().end.y <= 12.0, tag + " flour paper re-hugs after save guidance changes")
+			g.close_menu()
 			# --- empty cell, switching, outside tap, never mind, Esc ---
 			emitted.clear()
 			check(g.press_at(center(g.cells["medium"])) and not g.menu.visible, tag + " zero cell opens nothing")

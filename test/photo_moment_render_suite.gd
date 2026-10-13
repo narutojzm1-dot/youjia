@@ -195,13 +195,21 @@ func _test_event(rule: Dictionary, index: int) -> void:
 	var found_hero := false
 	var found_llama := false
 	var found_rope := false
+	var mill_lines := 0
 	var previous_depth := -100000
 	for item: Dictionary in snapshot.items:
 		_check(int(item.depth) >= previous_depth, "%s sorted depth" % rule_id)
 		previous_depth = int(item.depth)
-		if item.kind == "line":
+		# Static production scenery also has lines. Identify the live lead rope
+		# by its own depth, then retain both its count and exact curve geometry.
+		if item.kind == "line" and int(item.depth) == Moment._depth(world._lead_rope, world):
 			found_rope = true
 			_check(item.points.size() == 17, "all actual lead curve points retained")
+			var live_points: Array = []
+			for point: Vector2 in world._lead_rope.points: live_points.append([point.x, point.y])
+			_check(_same_json_value(item.points, live_points), "actual lead curve geometry retained")
+		elif item.kind == "line" and int(item.depth) == roundi(world.mill_view.ANCHOR.y):
+			mill_lines += 1
 		if item.subject == "player" and item.kind == "sprite" and (item.texture.get("path", "").contains("resident_walk_authored_v1") or str(item.texture.get("atlas", "")).contains("resident_grass_actions_v1")):
 			found_hero = true
 			_check(item.texture == Moment._texture_data(player._sequence_walker.sprite_frames.get_frame_texture(player._sequence_walker.animation, player._sequence_walker.frame)), "exact accepted hero frame retained")
@@ -214,6 +222,7 @@ func _test_event(rule: Dictionary, index: int) -> void:
 	_check(found_hero == traveler_expected, "%s only includes the traveler when their action belongs in the photograph" % rule_id)
 	_check(found_llama, "%s retains the actual llama painting" % rule_id)
 	_check(found_rope == (world._lead_rope.visible and traveler_expected), "%s captures the rope only when its traveler is in the photograph" % rule_id)
+	_check(mill_lines == (2 if traveler_expected else 0), "%s retains stationary mill lines under the existing portrait policy" % rule_id)
 	if rule_id == "llama_fed_gentle":
 		_check(not player.carrying_grass, "feeding fixture actually consumes the bundle")
 		_check(_count_atlases(snapshot) == 2, "feeding record does not invent a consumed bundle")

@@ -1,0 +1,44 @@
+{
+  "source_base": "d0ff79270dbbab8920c559a4e45e3075e999f6cb",
+  "source_state": "uncommitted current-day AP isolation fix; ordinary Web remains pending",
+  "checks": 663,
+  "failures": 0,
+  "suites": [
+    {
+      "suite": "growth_budget",
+      "checks": 77,
+      "exit": 0,
+      "log": "growth_budget.log",
+      "log_sha256": "1261a1528c684c59e2008b1db3833fe48644b97816ca8beb57156b4926f68577"
+    },
+    {
+      "suite": "growth_production",
+      "checks": 132,
+      "exit": 0,
+      "log": "growth_production.log",
+      "log_sha256": "ff08b4f4965e390a67d2dc1ff6586032755a1c3bf67094e1d1ee0b50d5e77012"
+    },
+    {
+      "suite": "milling_director",
+      "checks": 162,
+      "exit": 0,
+      "log": "milling_director.log",
+      "log_sha256": "d23d887741b4ea7c762c855f10328f17dd8e5eac9a131617aa91df90a6539b0e"
+    },
+    {
+      "suite": "pond_growth_director",
+      "checks": 292,
+      "exit": 0,
+      "log": "pond_growth_director.log",
+      "log_sha256": "cf6493e3da651ee2bcb241780d1d574b099cbafbd4cb28f6a306aeb1722b745a"
+    }
+  ],
+  "source_files_sha256": {
+    "scripts/game/growth_budget.gd": "c077b20db2e75bb704610aad6db953f5f247b9e13b8d833b2c45a352618afe39",
+    "test/growth_budget_suite.gd": "a0b712daefe4e4bafba4e0c97b309fc5e5bd4c16d9b94bb688f31f8597f1f709",
+    "test/growth_production_suite.gd": "7b837083f1023a6f0f38e9ae8bd2881dc3ce80311de71fb616e85391d3119854",
+    "test/milling_director_suite.gd": "99ec6267e37306b55632180c0271eee7fb22015c5d29a8bf61b558c0cf948b05"
+  },
+  "initial_diagnostic": "../youjia-milling-autonomous-diagnostic.log: schema4/5 with old balance blocked by AP_CROSS_DAY_UNRESOLVED; no old balance completed; actual World after SaveStore native reopen, no browser injection",
+  "initial_test_failure": "milling_director-before-json-fixture.log: raw Dictionary numeric type equality across JSON; corrected assertions use canonical model reads and full normalized JSON values; no business-condition weakening"
+}

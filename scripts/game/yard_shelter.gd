@@ -99,6 +99,36 @@ func needs_trip(actor: FeltActor, _night: bool) -> bool:
 		return actor.position.distance_to(destination(actor)) >= 4.0
 	return world.gate.opened and inside(actor)
 
+func route_goal(actor: FeltActor) -> Vector2:
+	var goal := destination(actor)
+	# Clear the concave inner rail before turning toward the eastern beds.
+	if wants_pen(actor) and actor.position.x < 959.5:
+		goal = Vector2(960,444)
+	# First approach the inside of the doorway before leaving the eastern beds.
+	if not wants_pen(actor) and inside(actor) and actor.position.x > 936.0:
+		goal = Vector2(924,466)
+	return goal
+
+func yield_to_returning_blocker(actor: FeltActor, goal: Vector2, obstacles: Array) -> bool:
+	# An outdoor guest can occupy the only gate approach while waiting behind
+	# an incoming resident. Let it finish its own valid trip, never ignore its
+	# body during movement. Only incoming trips yield, so two guests cannot swap
+	# priority back and forth. Call only at the normal 0.6-second route refresh.
+	if not wants_pen(actor): return false
+	var radius := actor.body_radius * YardGround.depth_at(actor.position.y)
+	for id: String in GUESTS:
+		var guest = world.actor_named(id)
+		if player_owned(guest) or wants_pen(guest) or not needs_trip(guest, needs_shelter()): continue
+		var without_guest: Array = obstacles.filter(func(item: Dictionary) -> bool: return item.id != id)
+		if YardBodies.route(actor.position,goal,radius,without_guest,actor.walk_ground).is_empty(): continue
+		var route := YardBodies.route(guest.position,route_goal(guest),guest.body_radius * YardGround.depth_at(guest.position.y),world.physical_obstacles(id),guest.walk_ground)
+		if route.is_empty(): continue
+		active = id
+		paths.clear()
+		paths[id] = route
+		return true
+	return false
+
 func step(actor: FeltActor, delta: float) -> bool:
 	if not ALL_IDS.has(actor.actor_id) or not actor.has_meta("shelter_controlled"): return false
 	if player_owned(actor): return false
@@ -106,18 +136,14 @@ func step(actor: FeltActor, delta: float) -> bool:
 	if id != active or (not world.gate.opened and (inside(actor) or wants_pen(actor))):
 		rest(actor, delta)
 		return true
-	var goal := destination(actor)
-	# Clear the concave inner rail before turning toward the eastern beds.
-	if wants_pen(actor) and actor.position.x < 959.5:
-		goal = Vector2(960,444)
-	# First approach the inside of the doorway. A direct smoothed route from
-	# the eastern beds can skim the concave rail corner between grid samples.
-	if not wants_pen(actor) and inside(actor) and actor.position.x > 936.0:
-		goal = Vector2(924,466)
+	var goal := route_goal(actor)
 	var obstacles: Array = world.physical_obstacles(id)
 	if repath <= 0.0:
 		paths[id] = YardBodies.route(actor.position, goal, actor.body_radius * YardGround.depth_at(actor.position.y), obstacles, actor.walk_ground)
 		repath = 0.6
+		if paths[id].is_empty() and yield_to_returning_blocker(actor,goal,obstacles):
+			rest(actor, delta)
+			return true
 	var path: Array = paths.get(id, [])
 	# The inner fence corner is narrow. Dropping a waypoint several pixels early
 	# cuts across its rail at small frame steps and leaves the next resident stuck.

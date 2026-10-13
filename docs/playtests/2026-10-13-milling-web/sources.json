@@ -1,0 +1,167 @@
+{
+  "schema": 1,
+  "ordinary_web_renames": {
+    "07-repaired-dinner-exit.png": "01-day9-1921-autonomous-milling.png",
+    "09-wheat-one-flour-one.png": "02-day9-milling-result-wheat1-flour1.png",
+    "10-flour-paper-excess-space.png": "03-day9-flour-paper-excess-space-failure.png",
+    "11-reopened-flour-and-last-seed.png": "04-day9-real-reopen-wheat1-flour1.png",
+    "13-flour-consumed-breakfast-seed-retained.png": "05-day10-breakfast-flour0-last-wheat1.png"
+  },
+  "records": [
+    {
+      "source_group": "youjia-mill797-ordinary-web",
+      "source_name": "07-repaired-dinner-exit.png",
+      "source_bytes": 161002,
+      "source_sha256": "16ac5b9e150d80ea442d91dff8454bd0af01a4cb1315126d49c37a46662a016d",
+      "archive_path": "01-day9-1921-autonomous-milling.png",
+      "archive_bytes": 161002,
+      "archive_sha256": "16ac5b9e150d80ea442d91dff8454bd0af01a4cb1315126d49c37a46662a016d",
+      "normalization": "none; exact original bytes"
+    },
+    {
+      "source_group": "youjia-mill797-ordinary-web",
+      "source_name": "09-wheat-one-flour-one.png",
+      "source_bytes": 100397,
+      "source_sha256": "c6d16a8fcbdbc02fe7b4b0b7f71114dda159be6b8a5ca40f20c74fe36e445baf",
+      "archive_path": "02-day9-milling-result-wheat1-flour1.png",
+      "archive_bytes": 100397,
+      "archive_sha256": "c6d16a8fcbdbc02fe7b4b0b7f71114dda159be6b8a5ca40f20c74fe36e445baf",
+      "normalization": "none; exact original bytes"
+    },
+    {
+      "source_group": "youjia-mill797-ordinary-web",
+      "source_name": "10-flour-paper-excess-space.png",
+      "source_bytes": 93115,
+      "source_sha256": "1c129e42b2e94d5b087ce5bcd6cf36885a03908b2b7ba60a7d2309a615b1049f",
+      "archive_path": "03-day9-flour-paper-excess-space-failure.png",
+      "archive_bytes": 93115,
+      "archive_sha256": "1c129e42b2e94d5b087ce5bcd6cf36885a03908b2b7ba60a7d2309a615b1049f",
+      "normalization": "none; exact original bytes"
+    },
+    {
+      "source_group": "youjia-mill797-ordinary-web",
+      "source_name": "11-reopened-flour-and-last-seed.png",
+      "source_bytes": 101335,
+      "source_sha256": "00cb20fea92145af696b38e6d3addba5bb917f3943fb99dc70e69fc87f01c840",
+      "archive_path": "04-day9-real-reopen-wheat1-flour1.png",
+      "archive_bytes": 101335,
+      "archive_sha256": "00cb20fea92145af696b38e6d3addba5bb917f3943fb99dc70e69fc87f01c840",
+      "normalization": "none; exact original bytes"
+    },
+    {
+      "source_group": "youjia-mill797-ordinary-web",
+      "source_name": "13-flour-consumed-breakfast-seed-retained.png",
+      "source_bytes": 129632,
+      "source_sha256": "bc3cbc0538b70b00a32ef8276937bce611085b1a93c0a8c74c529968c1fe32ca",
+      "archive_path": "05-day10-breakfast-flour0-last-wheat1.png",
+      "archive_bytes": 129632,
+      "archive_sha256": "bc3cbc0538b70b00a32ef8276937bce611085b1a93c0a8c74c529968c1fe32ca",
+      "normalization": "none; exact original bytes"
+    },
+    {
+      "source_group": "youjia-flour-paper-hug",
+      "source_name": "after-en-1280x720.png",
+      "source_bytes": 123084,
+      "source_sha256": "8f3e0db723081fb11fd9d4cb268ff48919ea64607c9a247afd86847b2bbac1f2",
+      "archive_path": "ui-hug/after-en-1280x720.png",
+      "archive_bytes": 123084,
+      "archive_sha256": "8f3e0db723081fb11fd9d4cb268ff48919ea64607c9a247afd86847b2bbac1f2",
+      "normalization": "none; exact original bytes"
+    },
+    {
+      "source_group": "youjia-flour-paper-hug",
+      "source_name": "after-en-390x844.png",
+      "source_bytes": 76865,
+      "source_sha256": "44c59a12f78bdaed77f5a60d190dff769d520392449e65a8ba334864b9be6769",
+      "archive_path": "ui-hug/after-en-390x844.png",
+      "archive_bytes": 76865,
+      "archive_sha256": "44c59a12f78bdaed77f5a60d190dff769d520392449e65a8ba334864b9be6769",
+      "normalization": "none; exact original bytes"
+    },
+    {
+      "source_group": "youjia-flour-paper-hug",
+      "source_name": "after-zh-CN-1280x720.png",
+      "source_bytes": 142925,
+      "source_sha256": "19f9e576f5cdba24c584fe55f4f03d688f226c9687502b89ba5f2d7c85515f22",
+      "archive_path": "ui-hug/after-zh-CN-1280x720.png",
+      "archive_bytes": 142925,
+      "archive_sha256": "19f9e576f5cdba24c584fe55f4f03d688f226c9687502b89ba5f2d7c85515f22",
+      "normalization": "none; exact original bytes"
+    },
+    {
+      "source_group": "youjia-flour-paper-hug",
+      "source_name": "after-zh-CN-390x844.png",
+      "source_bytes": 79502,
+      "source_sha256": "99b34eedf79e40c666010aec34dcfb2c386cc59852a7f739ca1c64b25bf7ce5f",
+      "archive_path": "ui-hug/after-zh-CN-390x844.png",
+      "archive_bytes": 79502,
+      "archive_sha256": "99b34eedf79e40c666010aec34dcfb2c386cc59852a7f739ca1c64b25bf7ce5f",
+      "normalization": "none; exact original bytes"
+    },
+    {
+      "source_group": "youjia-flour-paper-hug",
+      "source_name": "after.log",
+      "source_bytes": 113,
+      "source_sha256": "42b52cf953d1143c982cc7c9c7b6e1fa1722b8b6ea76e79f1f29dbea5b0d42c6",
+      "archive_path": "ui-hug/after.log",
+      "archive_bytes": 113,
+      "archive_sha256": "42b52cf953d1143c982cc7c9c7b6e1fa1722b8b6ea76e79f1f29dbea5b0d42c6",
+      "normalization": "none; exact original bytes"
+    },
+    {
+      "source_group": "youjia-flour-paper-hug",
+      "source_name": "before.log",
+      "source_bytes": 4252,
+      "source_sha256": "00a1820e9caa8bcf5ea4c3c0fdedf16a2fb39de7ea05f94c200a4ee4bef04e76",
+      "archive_path": "ui-hug/before.log",
+      "archive_bytes": 4252,
+      "archive_sha256": "00a1820e9caa8bcf5ea4c3c0fdedf16a2fb39de7ea05f94c200a4ee4bef04e76",
+      "normalization": "none; exact original bytes"
+    },
+    {
+      "source_group": "youjia-flour-paper-hug",
+      "source_name": "gpu.stderr.log",
+      "source_bytes": 0,
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "archive_path": "ui-hug/gpu.stderr.log",
+      "archive_bytes": 0,
+      "archive_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "normalization": "none; exact original bytes"
+    },
+    {
+      "source_group": "youjia-flour-paper-hug",
+      "source_name": "gpu.stdout.log",
+      "source_bytes": 891,
+      "source_sha256": "98f8c720b8cfee97cbd9c329a3f8c8dafef807f8125f8e39c35432659a7fd148",
+      "archive_path": "ui-hug/gpu.stdout.log",
+      "archive_bytes": 891,
+      "archive_sha256": "98f8c720b8cfee97cbd9c329a3f8c8dafef807f8125f8e39c35432659a7fd148",
+      "normalization": "none; exact original bytes"
+    },
+    {
+      "source_group": "youjia-flour-paper-hug",
+      "source_name": "summary.json",
+      "source_bytes": 2208,
+      "source_sha256": "4eaa27b6548341426ef70e807951bd709510035d3386cdcd3dcd83db550a670c",
+      "archive_path": "ui-hug/summary.json",
+      "archive_bytes": 2208,
+      "archive_sha256": "4eaa27b6548341426ef70e807951bd709510035d3386cdcd3dcd83db550a670c",
+      "normalization": "none; exact original bytes"
+    },
+    {
+      "source_group": "youjia-flour-paper-hug",
+      "source_name": "capture.gd",
+      "source_bytes": 1188,
+      "source_sha256": "8019a20e991999d4e7a8ddd1cce47ce22ef50e0961b9350f2ddcf0f305d599a0",
+      "archive_path": "ui-hug/capture.gd",
+      "archive_bytes": 1444,
+      "archive_sha256": "61d2de753e1de366890872f1020f1b23ec16e081049a0399fcd7fda28bc5cc2f",
+      "normalization": "private absolute output path replaced by YOUJIA_FLOUR_PAPER_CAPTURE_DIR; added output guard; render operations unchanged; public script not rerun"
+    }
+  ],
+  "original_summary_note": "ui-hug/summary.json is the unchanged original source summary. Its capture.gd hash refers to the private executed version; this mapping supplies the separate public normalized hash.",
+  "ui_fix_commit_after_native_checks": "321735f6a7f17cf368cb7740f2690ac9024f79e6",
+  "ui_fix_tree": "e4f6fa5e41a075ebac0c317be3e3af6b8e5125a2",
+  "ui_fix_ordinary_web_recheck": "pending at archive creation",
+  "ci_and_public_release": "not established by this archive"
+}

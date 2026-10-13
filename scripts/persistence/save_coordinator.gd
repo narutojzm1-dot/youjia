@@ -12,10 +12,11 @@ signal ignored_receipt(reason: String)
 
 ## Typed local refusal. Never serialized, prepared, or sent to the backend.
 class IntentRejection extends RefCounted:
+	const GROWTH_CODES := ["AP_INVALID", "AP_CHANGED", "AP_EMPTY", "AP_LIMIT", "AP_PERIOD_CHANGED", "AP_CROSS_DAY_UNRESOLVED", "GROWTH_INVALID", "GROWTH_CHANGED", "GROWTH_EMPTY", "GROWTH_LIMIT", "PRODUCTION_INVALID", "PRODUCTION_CHANGED", "PRODUCTION_LIMIT"]
 	const CODES := ["GARDEN_INVALID", "GARDEN_CHANGED", "GARDEN_LIMIT", "GARDEN_EMPTY", "GARDEN_OCCUPIED", "REST_INVALID", "MEAL_INVALID", "MEAL_CHANGED", "MEAL_ALREADY_COMPLETED", "MEAL_LIMIT", "MEAL_EMPTY", "EXPLORATION_KEEPSAKE_LIMIT", "DECOR_CHANGED", "DECOR_OCCUPIED", "DECOR_EMPTY", "DECOR_INVALID", "DECOR_LIMIT", "EXPLORATION_CLEANUP_INVALID_ARGUMENT", "EXPLORATION_CLEANUP_PRECONDITION_CHANGED", "CROP_INVALID", "CROP_CHANGED", "CROP_LIMIT", "CROP_OCCUPIED", "CROP_EMPTY", "CROP_WATERED", "CROP_NOT_READY", "BASKET_SEED_RESERVED", "BASKET_INVALID", "BASKET_CHANGED", "BASKET_LIMIT", "BASKET_EMPTY", "BASKET_HAND_OCCUPIED", "RESIDENT_SOURCE_UNSUPPORTED", "RESIDENT_STALE", "RESIDENT_LIMIT", "RESIDENT_CLOCK_INVALID", "RESIDENT_ALREADY_HOME", "RESIDENT_NOT_PRESENT", "RESIDENT_NOT_PUPPY", "RESIDENT_NOT_CHICK", "RESIDENT_NOT_READY", "RESIDENT_ALREADY_FOUND", "RESIDENT_NOT_FOUND", "RESIDENT_ACTION_INVALID"]
 	var code: String
 	func _init(reason: String) -> void:
-		code = reason if reason in CODES else "INVALID_LOCAL_INTENT"
+		code = reason if reason in CODES or reason in GROWTH_CODES else "INVALID_LOCAL_INTENT"
 
 
 const WEB_NAMESPACE := "youjia-save-host-v1"
@@ -132,7 +133,7 @@ func _pump() -> void:
 		return
 	var candidate: Variant = _active.intent.call(_confirmed.duplicate(true))
 	if candidate is IntentRejection:
-		_finish_rejected(candidate.code if candidate.code in IntentRejection.CODES else "INVALID_LOCAL_INTENT")
+		_finish_rejected(candidate.code if candidate.code in IntentRejection.CODES or candidate.code in IntentRejection.GROWTH_CODES else "INVALID_LOCAL_INTENT")
 		return
 	if not candidate is Dictionary or candidate.get("version") != 5:
 		_finish_rejected("INVALID_LOCAL_CANDIDATE")

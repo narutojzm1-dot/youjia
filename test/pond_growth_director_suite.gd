@@ -14,14 +14,15 @@ func check(ok: bool, label: String) -> void:
 	if not ok:
 		failures.append(label)
 		print("FAILED "+label)
-func reset(tired := false) -> void:
+func reset(tired := false, initial_wheat := 20) -> void:
 	if is_instance_valid(world):
 		world.queue_free()
 		await process_frame
 	var inv := Inventory.empty()
-	inv.wheat = 20
+	inv.wheat = initial_wheat
 	fixture = {"version":5,"holiday_day":1,"keepsakes":{STONE:20},Inventory.FIELD:inv,
 		"growth_actions":{"schema":1,"revision":0,"actions":{}},"pond_edging":{"schema":1,"revision":0,"sections":{}},
+		"growth_production":preload("res://scripts/game/growth_production.gd").empty(),
 		"resident_rest":{"schema":1,"day":1,"cause":"awake" if tired else "sleep"}}
 	fixture = Meals.complete(fixture,0,0,1,"lunch",{"wheat":1},tired).candidate
 	# Explicit isolated recipe costs; never initialize a user's inventory.
@@ -395,7 +396,10 @@ func check_autonomous_work(test_seed := 0) -> void:
 	for entry in [[0.0,"breakfast"],[0.24,"breakfast"],[0.25,"lunch"],[0.49,"lunch"],[0.5,"dinner"],[0.99,"dinner"],[1.0,""]]:
 		check(schedule.period(entry[0]) == entry[1], "live AP period boundary")
 	seed(test_seed)
-	await reset()
+	# This scenario asserts the order of pond sections. Keep only the protected
+	# final wheat seed after lunch so milling is correctly ineligible; the mixed
+	# catalog and its one-draw behavior are covered in milling_director_suite.
+	await reset(false, 2)
 	world._day_elapsed = 160.0
 	world.pond_growth.autonomous_enabled = true
 	world.pond_growth.consider(1000.0, Vector2.ZERO)

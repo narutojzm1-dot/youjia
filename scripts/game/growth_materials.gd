@@ -11,14 +11,14 @@ static func stock(snapshot: Dictionary) -> Dictionary:
 	var keepsakes := Decor.available(snapshot)
 	if inventory.is_empty() or keepsakes.is_empty(): return {}
 	var result := keepsakes.duplicate(true)
-	for material: String in Inventory.FOOD:
+	for material: String in Inventory.STORED:
 		result[material] = int(inventory.fish.get(material, 0) if material in Inventory.FISH else inventory.get(material, 0))
 	return result
 
 static func valid_cost(cost: Variant) -> bool:
 	if not cost is Dictionary or cost.is_empty(): return false
 	for material: Variant in cost:
-		if material not in Inventory.FOOD and material not in ExplorationRoutes.FINDS: return false
+		if material not in Inventory.STORED and material not in ExplorationRoutes.FINDS: return false
 		if Contract.as_int(cost[material], 1, Inventory.MAX_COUNT) == null: return false
 	return true
 
@@ -58,7 +58,7 @@ static func plan(snapshot: Dictionary, catalog: Dictionary, rng: RandomNumberGen
 		if not Contract.is_valid_stop_id(action.id) or not valid_cost(action.materials) or not action.materials.has(primary): return {}
 		var writable := true
 		for material: String in action.materials:
-			if material in Inventory.FOOD and source.inventory.revision >= Inventory.MAX_REVISION: writable = false
+			if material in Inventory.STORED and source.inventory.revision >= Inventory.MAX_REVISION: writable = false
 		if writable and can_afford(counts, action.materials): eligible[primary] = counts[primary]
 	if eligible.is_empty(): return {}
 	var maximum: Array[String] = []
@@ -78,17 +78,23 @@ static func plan(snapshot: Dictionary, catalog: Dictionary, rng: RandomNumberGen
 	for material: String in catalog[chosen].materials: cost[material] = int(catalog[chosen].materials[material])
 	return {"source":source, "primary":chosen, "action_id":catalog[chosen].id, "materials":cost}
 
-## Pure subtransition only. The caller must compose AP, world result, experience
-## and a durable completion receipt into ONE SaveCoordinator intent. Never save
-## this candidate alone as an autonomous action completion.
-static func consume(snapshot: Dictionary, proposal: Dictionary) -> Dictionary:
-	if proposal.size() != 4 or not proposal.has_all(["source", "primary", "action_id", "materials"]): return {"error":"GROWTH_INVALID"}
-	if not proposal.source is Dictionary or not Contract.is_valid_stop_id(proposal.action_id) or not valid_cost(proposal.materials): return {"error":"GROWTH_INVALID"}
-	if not proposal.materials.has(proposal.primary): return {"error":"GROWTH_INVALID"}
+## Pure revalidation for a frozen proposal. No RNG, mutation or reservation.
+static func validate(snapshot: Dictionary, proposal: Dictionary) -> String:
+	if proposal.size() != 4 or not proposal.has_all(["source", "primary", "action_id", "materials"]): return "GROWTH_INVALID"
+	if not proposal.source is Dictionary or not Contract.is_valid_stop_id(proposal.action_id) or not valid_cost(proposal.materials): return "GROWTH_INVALID"
+	if not proposal.materials.has(proposal.primary): return "GROWTH_INVALID"
 	var source := guard(snapshot)
-	if source.is_empty(): return {"error":"GROWTH_INVALID"}
-	if source != proposal.source: return {"error":"GROWTH_CHANGED"}
-	if not can_afford(stock(snapshot), proposal.materials): return {"error":"GROWTH_EMPTY"}
+	if source.is_empty(): return "GROWTH_INVALID"
+	if source != proposal.source: return "GROWTH_CHANGED"
+	if not can_afford(stock(snapshot), proposal.materials): return "GROWTH_EMPTY"
+	return ""
+
+## Pure subtransition only. Compose AP, result, XP and durable receipt into ONE
+## SaveCoordinator intent; never save this material-only candidate on its own.
+static func consume(snapshot: Dictionary, proposal: Dictionary) -> Dictionary:
+	var error := validate(snapshot, proposal)
+	if not error.is_empty(): return {"error":error}
+	var source := guard(snapshot)
 	var inventory: Dictionary = source.inventory.duplicate(true)
 	var owned: Dictionary = source.keepsakes.duplicate(true)
 	var uses_inventory := false

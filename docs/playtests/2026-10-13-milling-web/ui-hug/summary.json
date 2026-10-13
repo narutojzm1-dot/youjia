@@ -1,0 +1,67 @@
+{
+  "base_commit": "a97966998d759a2ccf8cbe722ee3ab00f173a2b8",
+  "state": "uncommitted bounded flour-paper correction",
+  "before": "17/1700 failures; first flour paper retained 473px zh / 1348px en height",
+  "after": "1700 checks pass; panel GPU 148px zh / 173px en height, 10px bottom gap",
+  "scope": "flour menu only, no global UI or inventory behavior changes",
+  "ordinary_web_recheck_pending": true,
+  "sources": [
+    {
+      "path": "scripts/ui/yard_basket_grid.gd",
+      "bytes": 22468,
+      "sha256": "f58fabf74def7bf0af65b067780c89c130fd6f53a408e30b518c666d8973b678"
+    },
+    {
+      "path": "test/yard_basket_grid_suite.gd",
+      "bytes": 14585,
+      "sha256": "0c0d39fe30360cf4a9b5fcc64124a6a050848f0cc2abd034d4dbefe370baf80b"
+    }
+  ],
+  "evidence": [
+    {
+      "path": "after-en-1280x720.png",
+      "bytes": 123084,
+      "sha256": "8f3e0db723081fb11fd9d4cb268ff48919ea64607c9a247afd86847b2bbac1f2"
+    },
+    {
+      "path": "after-en-390x844.png",
+      "bytes": 76865,
+      "sha256": "44c59a12f78bdaed77f5a60d190dff769d520392449e65a8ba334864b9be6769"
+    },
+    {
+      "path": "after-zh-CN-1280x720.png",
+      "bytes": 142925,
+      "sha256": "19f9e576f5cdba24c584fe55f4f03d688f226c9687502b89ba5f2d7c85515f22"
+    },
+    {
+      "path": "after-zh-CN-390x844.png",
+      "bytes": 79502,
+      "sha256": "99b34eedf79e40c666010aec34dcfb2c386cc59852a7f739ca1c64b25bf7ce5f"
+    },
+    {
+      "path": "after.log",
+      "bytes": 113,
+      "sha256": "42b52cf953d1143c982cc7c9c7b6e1fa1722b8b6ea76e79f1f29dbea5b0d42c6"
+    },
+    {
+      "path": "before.log",
+      "bytes": 4252,
+      "sha256": "00a1820e9caa8bcf5ea4c3c0fdedf16a2fb39de7ea05f94c200a4ee4bef04e76"
+    },
+    {
+      "path": "capture.gd",
+      "bytes": 1188,
+      "sha256": "8019a20e991999d4e7a8ddd1cce47ce22ef50e0961b9350f2ddcf0f305d599a0"
+    },
+    {
+      "path": "gpu.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "gpu.stdout.log",
+      "bytes": 891,
+      "sha256": "98f8c720b8cfee97cbd9c329a3f8c8dafef807f8125f8e39c35432659a7fd148"
+    }
+  ]
+}

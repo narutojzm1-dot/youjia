@@ -10,6 +10,54 @@ func simulate(world: Node, seconds: float, clock := 150.0) -> void:
 		world._day_elapsed = clock
 		world._regional_weather.state.remaining = 9999.0
 		world.tick(1.0 / 60.0, Vector2.ZERO)
+func gate_blocker_regression(world: Node) -> void:
+	# Real post-rain positions from PR797's failed night return. A guest on the
+	# narrow gate approach must be able to leave before the incoming sheep.
+	var positions := {"sheep_a":Vector2(324.4749,502.532),"cow":Vector2(481.8008,497.9283),
+		"sheep_b":Vector2(373.8636,501.0109),"horse":Vector2(631.8738,482.8062),
+		"llama":Vector2(844.7318,528.4039),"goose":Vector2(759.2178,496.1522),
+		"chicken":Vector2(544.0468,519.9341)}
+	for id: String in positions: world.actor_named(id).position = positions[id]
+	world._day_elapsed = 400.0
+	world.shelter.active = ""
+	world.shelter.paths.clear()
+	world.shelter.prepare(0.0)
+	var sheep = world.actor_named("sheep_b")
+	var llama = world.actor_named("llama")
+	var horse = world.actor_named("horse")
+	var obstacles: Array = world.physical_obstacles("sheep_b")
+	var radius: Vector2 = sheep.body_radius * YardGround.depth_at(sheep.position.y)
+	var goal := Vector2(960,444)
+	check(world.shelter.active == "sheep_b" and YardBodies.route(sheep.position,goal,radius,obstacles,sheep.walk_ground).is_empty(), "fixed gate guest blocks incoming sheep's physical route")
+	check(not YardBodies.route(sheep.position,goal,radius,obstacles.filter(func(item: Dictionary): return item.id != "llama"),sheep.walk_ground).is_empty(), "llama body is the gate blocker, with mill collision still present")
+	world._leading = true
+	world.shelter.repath = 0.0
+	world.shelter.step(sheep,0.0)
+	check(world.shelter.active == "sheep_b", "queue cannot take a blocking llama from the player's rope")
+	world._leading = false
+	llama.position = world.shelter.HOME_REST.llama
+	horse.position = positions.llama
+	check(not YardBodies.route(horse.position,world.shelter.HOME_REST.horse,horse.body_radius * YardGround.depth_at(horse.position.y),world.physical_obstacles("horse"),horse.walk_ground).is_empty(), "blocking horse has a possible return before mounted-priority check")
+	world._goose_mount_phase = 0
+	world.shelter.repath = 0.0
+	world.shelter.step(sheep,0.0)
+	check(world.shelter.active == "sheep_b", "queue cannot take the player's mounted blocking horse")
+	world._goose_mount_phase = -1
+	llama.position = positions.llama
+	horse.position = positions.horse
+	world.get_player().position = world.shelter.HOME_REST.llama
+	world.shelter.repath = 0.0
+	world.shelter.step(sheep,0.0)
+	check(world.shelter.active == "sheep_b", "guest with blocked home route cannot take queue priority")
+	world.get_player().position = Vector2(390,550)
+	world.shelter.repath = 0.3
+	world.shelter.step(sheep,0.0)
+	check(world.shelter.active == "sheep_b" and world.shelter.repath == 0.3, "empty-route blocker search waits for existing repath interval")
+	world.shelter.repath = 0.0
+	world.shelter.step(sheep,0.0)
+	check(world.shelter.active == "llama" and not world.shelter.paths.get("llama",[]).is_empty(), "reachable gate blocker receives one legal homeward route")
+	check(sheep.position == positions.sheep_b and llama.position == positions.llama, "yield schedules movement without teleporting either animal")
+	check(not world.shelter.yield_to_returning_blocker(llama,world.shelter.HOME_REST.llama,world.physical_obstacles("llama")) and world.shelter.active == "llama", "outgoing guest cannot yield back and oscillate the queue")
 func run() -> void:
 	var isolated := OS.get_environment("YOUJIA_TEST_ISOLATED_DATA").replace("\\", "/").to_lower()
 	if isolated.is_empty() or not OS.get_user_data_dir().replace("\\", "/").to_lower().begins_with(isolated):
@@ -79,7 +127,10 @@ func run() -> void:
 	for id in ["horse","llama"]:
 		print("SUN_RETURN ",id," ",world.actor_named(id).position," active=",world.shelter.active," ",world.shelter.paths)
 		check(not world.shelter.inside(world.actor_named(id)), id+" walks outside after rain")
+	gate_blocker_regression(world)
 	simulate(world,240,400.0)
+	for id: String in world.shelter.IDS:
+		check(world.shelter.at_bed(world.actor_named(id)), id+" reaches own night bed after blocked gate clears")
 	for id in world.shelter.ALL_IDS: print('NIGHT_ALL ',id,' ',world.actor_named(id).position,' paths=',world.shelter.paths)
 	for id in ["horse","llama"]:
 		var actor = world.actor_named(id)
