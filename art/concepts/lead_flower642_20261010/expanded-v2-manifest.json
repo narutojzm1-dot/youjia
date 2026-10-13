@@ -1,0 +1,39 @@
+{
+  "owner": "CODEX-LEAD",
+  "issue": 642,
+  "assets": [
+    {
+      "file": "left_clear_patch_expanded_v2.png",
+      "bytes": 2695911,
+      "sha256": "10b300f85e49d40a56bc40771f3ed26e0d5da2c9d258119a63835df40b1ed7d7",
+      "tool": "built-in image_gen edit",
+      "toolOutput": "exec-f5e52a6f-c030-4cad-b966-d1cc73a3c30f",
+      "sourceCrop": [
+        0,
+        570,
+        370,
+        440
+      ],
+      "status": "candidate not runtime integrated or accepted"
+    },
+    {
+      "file": "left_clear_patch_overcast_expanded_v2.png",
+      "bytes": 2499993,
+      "sha256": "4fb4f509d1cabdd822d0d8cf576f634b1d9bee099d19b4f73c6f62613caa0050",
+      "tool": "built-in image_gen edit",
+      "toolOutput": "exec-a909ea25-7c8e-453e-8571-2e4eda74675c",
+      "sourceCrop": [
+        0,
+        570,
+        370,
+        440
+      ],
+      "status": "candidate not runtime integrated or accepted"
+    }
+  ],
+  "promptSet": [
+    "Edit expanded sunny crop: remove pink bush, blue iris and spreading ground-cover; retain exact wall/rocks/path/door pots/ivy and framing.",
+    "Relight cleared sunny patch to original overcast crop illumination only, preserve clear geometry."
+  ],
+  "remaining": "GPU registration/edge acceptance, renderer, basket, frozen photos, browser persistence"
+}

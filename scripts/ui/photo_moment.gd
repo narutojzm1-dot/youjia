@@ -92,6 +92,7 @@ static func capture(world: Node2D, rule: Dictionary) -> Dictionary:
 		"background": background, "items": items, "shadows": shadows,
 		"house_lights": float(world.house.lights) if _property(world,"house") != null else 0.0,
 		"yard_gate": world.gate_view.record.duplicate(true) if _property(world,"gate_view") != null else {},
+		"original_plants": world.original_plants_view.record.duplicate(true) if _property(world,"original_plants_view") != null else {},
 		"rain": world.rain.snapshot() if _property(world,"rain") != null else {},
 		"night_sky": world.get_node("RegionalNightSky").snapshot() if world.has_node("RegionalNightSky") else {},
 	})
@@ -153,6 +154,8 @@ static func sanitize(data: Variant) -> Dictionary:
 	var gate: Variant = data.get("yard_gate", {})
 	if gate is Dictionary and gate.get("opened") is bool and _number(gate.get("mix"),0.0,1.0) and _numbers(gate.get("sun"),4,0.0,2.0) and _numbers(gate.get("cloud"),4,0.0,2.0):
 		cleaned.yard_gate = gate.duplicate(true)
+	var original_plants := preload("res://scripts/game/original_plant_view.gd").sanitize(data.get("original_plants",{}))
+	if not original_plants.is_empty() and not original_plants.removed.is_empty(): cleaned.original_plants = original_plants
 	return cleaned
 
 
@@ -247,6 +250,12 @@ func setup(snapshot: Dictionary) -> void:
 		# Keep legacy items (including negative-depth clouds) in their old order.
 		if item.kind == "sprite" and item.subject in ["weather_background", "weather_cloud"]:
 			_stage.move_child(visual, _shadows.get_index())
+	if _snapshot.has("original_plants"):
+		var plants = preload("res://scripts/game/original_plant_view.gd").new()
+		_stage.add_child(plants)
+		plants.restore(_snapshot.original_plants)
+		for piece: Polygon2D in plants.get_children(): piece.z_index = 0
+		_stage.move_child(plants,_shadows.get_index())
 	if _snapshot.has("night_sky"):
 		var painted := Sprite2D.new()
 		painted.texture = _background_texture
@@ -331,6 +340,7 @@ func _draw_shadows() -> void:
 static func _collect(node: Node, world: Node2D, backdrop: Node, subject: String, items: Array) -> void:
 	# Shader output has its own bounded frozen record, never the unshaded source bitmap.
 	if node.get_script() == preload("res://scripts/game/regional_night_sky.gd"): return
+	if node.get_script() == preload("res://scripts/game/original_plant_view.gd"): return
 	if node is CanvasItem and not node.is_visible_in_tree():
 		return
 	var actor_id: Variant = _property(node, "actor_id", "")

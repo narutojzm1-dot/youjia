@@ -16,10 +16,12 @@ signal decor_recall_requested(spot: String)
 signal chick_care_requested
 signal basket_requested
 signal plant_bed_requested
+signal original_plant_requested(area: String)
 var crop_sprite: Sprite2D
 var _grain_held := ""
 var ground_food: Node2D
 var decor_view: Node2D
+var original_plants_view: Node2D
 var pond_growth: Node
 var pond_edging_view: Node2D
 var pond_story: Node
@@ -262,6 +264,10 @@ func setup(
 	add_child(ground_food)
 	decor_view = load("res://scripts/inventory/yard_decor_view.gd").new()
 	add_child(decor_view)
+	if preload("res://scripts/game/original_plant_view.gd").enabled():
+		original_plants_view = preload("res://scripts/game/original_plant_view.gd").new()
+		original_plants_view.name = "OriginalPlants"
+		add_child(original_plants_view)
 	pond_edging_view = preload("res://scripts/game/pond_edging_view.gd").new(SaveStore)
 	add_child(pond_edging_view)
 	pond_growth = preload("res://scripts/game/pond_growth_director.gd").new(self,SaveStore)
@@ -823,6 +829,12 @@ func _interact_with_target(target: String) -> void:
 	if not input_enabled or inventory_busy or _player == null:
 		return
 	TuningStore.apply_boundary("NEXT_ACTION")
+	if target.begins_with(YardSceneHotspots.ORIGINAL_PLANT_PREFIX):
+		var flower_action := YardSceneHotspots.resolve(self,target)
+		if flower_action.is_empty() or _player.position.distance_to(flower_action.point) >= flower_action.reach: return
+		_consume_pending_action()
+		original_plant_requested.emit(target.get_slice(":",1))
+		return
 	if target == YardSceneHotspots.BASKET:
 		var basket_action := YardSceneHotspots.resolve(self, target)
 		if basket_action.is_empty() or _player.position.distance_to(basket_action.point) >= basket_action.reach: return
@@ -1647,6 +1659,7 @@ func _tick_weather_transition(delta: float, refresh_tint: bool = false) -> void:
 			band.visible = float(_weather_cloud_weights[i]) > 0.0
 	if _scene_feedback != null: _scene_feedback.modulate = sun_tint.lerp(rain_tint, _weather_mix)
 	if pond_edging_view != null: pond_edging_view.modulate = sun_tint.lerp(rain_tint, _weather_mix)
+	if original_plants_view != null: original_plants_view.sync(SaveStore.get_yard_original_plants(),_weather_mix,sun_tint,rain_tint)
 	if gate_view != null: gate_view.refresh(gate.opened, _weather_mix, sun_tint, rain_tint)
 	_weather_art_initialized = true
 	_layout_cloud_bands()
