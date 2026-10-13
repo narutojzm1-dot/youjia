@@ -1,0 +1,16 @@
+{
+  "fixture": "actual loading.html with mocked Engine/startGame and clock; not a browser reproduction",
+  "atMs": 96000,
+  "hidden": false,
+  "status": "游戏画面尚未绘制完成。",
+  "detail": "引擎已启动 · 等待画面 96 秒",
+  "notice": "可以继续等待；也可以点“重试”重新加载，原有进度会保留。",
+  "retryHidden": false,
+  "runtime": "resolved",
+  "timings": {
+    "engineScriptReady": 0,
+    "bootstrapReady": 0,
+    "engineReady": 0,
+    "firstFrameWaitNotice": 96000
+  }
+}

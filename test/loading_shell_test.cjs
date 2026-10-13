@@ -18,7 +18,44 @@ function setup(missing=[],config={focusCanvas:true},releaseFetch=null,href='http
   async moduleFailure(){imports.get('./web/save/bridge.mjs').reject(Error('module fetch failed'));await flush()},
   progress:(a,b)=>onProgress(a,b),resolve:()=>resolve(),reject:()=>reject(Error('engine start failed')),frame:()=>listeners['youjia:first-frame']?.(),blocked:(detail='quarantined')=>listeners['youjia:save-blocked']?.({detail}),tick(t){clock=t;interval()}};
 }
+async function firstFrameWaitCases(){
+ let t=setup();await t.modules();let reloads=0;t.window.location.reload=()=>reloads++;
+ t.resolve();await flush();t.tick(96000);
+ assert.equal(t.nodes['loading-status'].textContent,'游戏画面尚未绘制完成。');
+ assert.equal(t.nodes['loading-detail'].textContent,'引擎已启动 · 等待画面 96 秒');
+ assert.match(t.nodes['loading-notice'].textContent,/继续等待.*重试.*进度.*保留/);
+ assert.equal(t.nodes['loading-notice'].hidden,false);assert.equal(t.nodes['loading-retry'].hidden,false);
+ assert.equal(t.nodes.loading.hidden,false);assert.equal(t.runtime,'resolved');
+ assert.equal(t.window.youjiaLoadTimings.failed,undefined);assert.equal(t.window.youjiaReleaseCheck,undefined);
+ assert.equal(reloads,0);assert.equal(t.window.location.replaced,undefined);assert.equal(t.starts,1);
+ t.progress(1,2);assert.equal(t.nodes['loading-status'].textContent,'游戏画面尚未绘制完成。','late progress must not overwrite first-frame wait');
+ assert.equal(t.nodes['loading-detail'].textContent,'引擎已启动 · 等待画面 96 秒');
+ t.frame();assert.equal(t.nodes.loading.hidden,true,'a late first frame still completes startup');
+ t.tick(180000);t.progress(2,2);assert.equal(t.nodes.loading.hidden,true,'completed startup never shows the wait shell again');
+ t=setup();await t.modules();t.tick(90000);assert.equal(t.window.youjiaLoadTimings.firstFrameWaitNotice,undefined,'download/engine wait is not first-frame wait');
+ t.resolve();await flush();t.tick(119999);assert.equal(t.window.youjiaLoadTimings.firstFrameWaitNotice,undefined,'wait starts when the engine becomes ready');
+ t.tick(120000);assert.equal(t.nodes['loading-detail'].textContent,'引擎已启动 · 等待画面 30 秒');
+ assert.equal(t.window.youjiaLoadTimings.firstFrameWaitNotice,120000);
+ for(const code of ['SAVE_WRITER_OWNED','quarantined']){
+  t=setup();await t.modules();t.resolve();await flush();t.tick(96000);t.blocked(code);
+  const status=t.nodes['loading-status'].textContent,detail=t.nodes['loading-detail'].textContent;
+  t.tick(180000);t.frame();t.progress(1,2);
+  assert.equal(t.nodes.loading.hidden,false,'save blocking survives a late frame and later timers');
+  assert.equal(t.nodes['loading-status'].textContent,status);assert.equal(t.nodes['loading-detail'].textContent,detail);
+  assert.equal(status,code==='SAVE_WRITER_OWNED'?'另一页正在游玩':'游戏加载失败，请重试。');
+ }
+ t=setup();await t.modules();t.frame();t.resolve();await flush();t.tick(180000);
+ assert.equal(t.nodes.loading.hidden,true);assert.equal(t.window.youjiaLoadTimings.firstFrameWaitNotice,undefined,'normal first-frame order never shows the wait notice');
+ t=setup([],{mainPack:'game-aaaaaaa.pck'},async()=>{throw Error('offline')});await flush();await flush();await t.modules();
+ t.resolve();await flush();t.tick(96000);
+ assert.equal(t.window.youjiaReleaseCheck,'unknown','waiting for a frame cannot turn an unchecked release into latest');
+ assert.equal(t.nodes['loading-build'].textContent,'game-aaaaaaa');assert.equal(t.window.location.replaced,undefined);
+ assert.equal(t.window.youjiaLoadTimings.failed,undefined);
+ t.window.location.reload=()=>reloads++;assert.equal(reloads,0);
+ t.nodes['loading-retry'].click();assert.equal(reloads,1,'only the existing manual retry reloads');
+}
 (async()=>{
+ await firstFrameWaitCases();
  let timedOut=setup();timedOut.tick(60000);assert.match(timedOut.nodes['loading-detail'].textContent,/启动模块下载超时/);
  await timedOut.modules();assert.equal(timedOut.starts,0,'late modules cannot launch after startup timeout');assert.equal(timedOut.runtime,'rejected');
  let published=setup([],{executable:'engine-123',mainPack:'game-abc.pck'});await published.modules();
@@ -71,5 +108,5 @@ function setup(missing=[],config={focusCanvas:true},releaseFetch=null,href='http
  t.nodes['loading-retry'].click();assert.match(t.window.location.replaced,/release=game-bbbbbbb/);
  t=setup([],{mainPack:'game-bbbbbbb.pck'},async()=>{throw Error('must not refetch')},'https://example.test/youjia/?release=game-bbbbbbb&_fresh='+Date.now());
  await flush();assert.equal(t.window.cleaned,'https://example.test/youjia/');await t.modules();assert.equal(t.constructed,1);
- console.log('Loading shell PASS: module ordering, runtime readiness/rejection, persistentPaths isolation, save-blocked gate, bytes, unknown totals, stall and both first-frame orders');
+ console.log('Loading shell PASS: module ordering, runtime readiness/rejection, persistentPaths isolation, save-blocked gate, bytes, unknown totals, stall, first-frame wait feedback/recovery/priority and both first-frame orders');
 })().catch(e=>{console.error(e);process.exitCode=1});

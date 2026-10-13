@@ -146,6 +146,7 @@ Source SHA-256: 38f4c5f927f746b3dfa4c3a5d7edf0b7a3e828e27438418fa54f9e1565289412
       let failed = false;
       let ready = false;
       let engineReady = false;
+      let engineReadyAt = 0;
       let firstFrame = false;
       let bootstrapReady = false;
       const timings = window.youjiaLoadTimings = {};
@@ -173,6 +174,18 @@ Source SHA-256: 38f4c5f927f746b3dfa4c3a5d7edf0b7a3e828e27438418fa54f9e1565289412
         const seconds = Math.floor((performance.now() - startedAt) / 1000);
         if (seconds >= 60 && !bootstrapReady) {
           fail(new Error('游戏启动模块下载超时，请检查网络连接后重试。'));
+          return;
+        }
+        // A missing first frame is not proof of failure. Keep waiting recoverable,
+        // with only the existing user-initiated retry; no save or version changes.
+        const frameWaitSeconds = engineReady ? Math.floor((performance.now() - engineReadyAt) / 1000) : 0;
+        if (engineReady && !firstFrame && frameWaitSeconds >= 30) {
+          stamp('firstFrameWaitNotice');
+          status.textContent = '游戏画面尚未绘制完成。';
+          detail.textContent = `引擎已启动 · 等待画面 ${frameWaitSeconds} 秒`;
+          notice.textContent = '可以继续等待；也可以点“重试”重新加载，原有进度会保留。';
+          notice.hidden = false;
+          retry.hidden = false;
           return;
         }
         detail.textContent = downloadComplete
@@ -235,6 +248,8 @@ Source SHA-256: 38f4c5f927f746b3dfa4c3a5d7edf0b7a3e828e27438418fa54f9e1565289412
       window.addEventListener('unhandledrejection', onUnhandledRejection);
       const onProgress = (current, total) => {
         if (failed || ready) return;
+        // A late download callback cannot move the shell back from first-frame wait.
+        if (engineReady) { updateNotice(); return; }
         // Repeated/unknown totals do not renew liveness; growing byte counts do.
         if (Number.isFinite(current) && current > downloadedBytes) {
           downloadedBytes = current;
@@ -282,6 +297,7 @@ Source SHA-256: 38f4c5f927f746b3dfa4c3a5d7edf0b7a3e828e27438418fa54f9e1565289412
           await engine.startGame({ onProgress, persistentPaths: [] });
           resolveSaveRuntime();
           if (failed) return;
+          engineReadyAt = performance.now();
           engineReady = true;
           stamp('engineReady');
           status.textContent = '引擎已启动，正在绘制画面…';
