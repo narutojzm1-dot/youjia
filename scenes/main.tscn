@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene load_steps=4 format=3]
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_main"]
 [ext_resource type="Script" path="res://scripts/ui/input_hint_mode.gd" id="2_hint"]
+[ext_resource type="Script" path="res://scripts/ui/touch_hover_reset.gd" id="3_hover"]
 
 [node name="Main" type="Control"]
 layout_mode = 3
@@ -14,3 +15,6 @@ script = ExtResource("1_main")
 
 [node name="InputHintMode" type="Node" parent="."]
 script = ExtResource("2_hint")
+
+[node name="TouchHoverReset" type="Node" parent="."]
+script = ExtResource("3_hover")

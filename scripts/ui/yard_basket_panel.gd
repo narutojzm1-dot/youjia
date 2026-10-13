@@ -628,7 +628,10 @@ func _on_cell_mouse(kind: String, event: InputEvent) -> void:
 			_mouse_kind = ""
 	elif event is InputEventMouseMotion and _mouse_kind == kind:
 		if drag_kind.is_empty():
-			if event.global_position.distance_to(_mouse_start) >= DRAG_START:
+			# 触屏合成的按下可能落到格子上、抬起却被 Main 去重吞掉；左键没按着的移动不算拖。
+			if not (event.button_mask & MOUSE_BUTTON_MASK_LEFT):
+				_mouse_kind = ""
+			elif event.global_position.distance_to(_mouse_start) >= DRAG_START:
 				begin_drag(kind, event.global_position)
 		else:
 			drag_to(event.global_position)
@@ -636,6 +639,13 @@ func _on_cell_mouse(kind: String, event: InputEvent) -> void:
 func _unhandled_key_input(event: InputEvent) -> void:
 	if not drag_kind.is_empty() and event.is_action_pressed("ui_cancel"):
 		cancel_drag()
+		get_viewport().set_input_as_handled()
+
+## 背篓打开时触屏全由 handle_touch_event 接住；Godot 由触屏合成的鼠标按键不再进 GUI。
+## 合成的按下先于触屏到达、Main 的去重只吞得掉抬起，按下就会落到格子 / 纸片按钮 / 快捷格上，
+## 让它一直握着鼠标、停在悬停样式，之后补来的松开还会让它多触发一次。
+func _input(event: InputEvent) -> void:
+	if visible and event is InputEventMouseButton and event.device == InputEvent.DEVICE_ID_EMULATION:
 		get_viewport().set_input_as_handled()
 
 func _ink_row(label: Label, count: int) -> void:
