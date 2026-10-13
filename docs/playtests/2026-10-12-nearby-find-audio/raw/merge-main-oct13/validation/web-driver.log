@@ -1,0 +1,13 @@
+{"stage": "title-quiet", "shortStarts": 0, "rms": [0, 0]}
+{"stage": "yard", "shortStarts": 0, "rms": [0, 0, 0.011200581180603741, 0.03732672512947447, 0]}
+{"stage": "music-environment-off", "shortStarts": 0, "rms": [0, 0, 0, 0, 0]}
+Traceback (most recent call last):
+  File "D:\games\youjia-test\assistant-recovery\browser-near-find-audio-main-oct13.py", line 102, in <module>
+    offer=find_offer();before=count();x,y=pickup(offer)
+          ^^^^^^^^^^^^
+  File "D:\games\youjia-test\assistant-recovery\browser-near-find-audio-main-oct13.py", line 74, in find_offer
+    returned()
+  File "D:\games\youjia-test\assistant-recovery\browser-near-find-audio-main-oct13.py", line 69, in returned
+    assert backend['buffers']<=2 and backend['players']<=2,('pickup cache/player retained after return',backend)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ('pickup cache/player retained after return', {'buffers': 3, 'bytes': 99302400, 'decoded': 3, 'starts': 2, 'players': 3, 'playing': 0, 'state': 'running'})

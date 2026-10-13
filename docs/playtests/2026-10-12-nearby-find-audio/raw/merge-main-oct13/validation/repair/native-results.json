@@ -1,0 +1,62 @@
+[
+  {
+    "name": "animal_hidden_find",
+    "profile": "youjia-assistant-find16-oct13-9d040a542264436885a1d79e5cd2653e",
+    "completionPattern": "ANIMAL_HIDDEN_FIND checks=[1-9][0-9]* failures=0",
+    "source": "2272b045a2acbe051196e1aafbff3f3217f942c6",
+    "seconds": 1.7568089,
+    "importMetadata": "Godot-generated metadata retained separately, not production changes",
+    "exit": 0,
+    "status": "PASS"
+  },
+  {
+    "name": "beibei_integration",
+    "profile": "youjia-assistant-find16-oct13-b311fb452fe7486fb5d66e7fc3c6a681",
+    "completionPattern": "BEIBEI_INTEGRATION checks=[1-9][0-9]* failures=0",
+    "source": "2272b045a2acbe051196e1aafbff3f3217f942c6",
+    "seconds": 2.7557619,
+    "importMetadata": "Godot-generated metadata retained separately, not production changes",
+    "exit": 0,
+    "status": "PASS"
+  },
+  {
+    "name": "pond_integration",
+    "profile": "youjia-assistant-find16-oct13-05f7cf362b5e41e69f1afa2241454285",
+    "completionPattern": "POND_INTEGRATION checks=[1-9][0-9]* failures=0",
+    "source": "2272b045a2acbe051196e1aafbff3f3217f942c6",
+    "seconds": 2.5629743,
+    "importMetadata": "Godot-generated metadata retained separately, not production changes",
+    "exit": 0,
+    "status": "PASS"
+  },
+  {
+    "name": "exploration_tap_feedback",
+    "profile": "youjia-assistant-find16-oct13-6fa341838d8941738e4797b67d69886e",
+    "completionPattern": "\\[exploration-tap-feedback\\] PASS: [1-9][0-9]* checks",
+    "source": "2272b045a2acbe051196e1aafbff3f3217f942c6",
+    "seconds": 4.8735565,
+    "importMetadata": "Godot-generated metadata retained separately, not production changes",
+    "exit": 0,
+    "status": "PASS"
+  },
+  {
+    "name": "nearby_direct_pick",
+    "profile": "youjia-assistant-find16-oct13-adb6bcb84d614e46aa4e3d7a6acb240c",
+    "completionPattern": "NEARBY_DIRECT_PICK checks=[1-9][0-9]* failures=0",
+    "source": "2272b045a2acbe051196e1aafbff3f3217f942c6",
+    "seconds": 5.7981048,
+    "importMetadata": "Godot-generated metadata retained separately, not production changes",
+    "exit": 0,
+    "status": "PASS"
+  },
+  {
+    "name": "exploration_slice",
+    "profile": "youjia-assistant-find16-oct13-2bf5baea943e48e5895f6d5602f5e3c4",
+    "completionPattern": "EXPLORATION SLICE PASS ([1-9][0-9]*)/\\1 failures=\\[\\]",
+    "source": "2272b045a2acbe051196e1aafbff3f3217f942c6",
+    "seconds": 7.2808675,
+    "importMetadata": "Godot-generated metadata retained separately, not production changes",
+    "exit": 0,
+    "status": "FAIL"
+  }
+]

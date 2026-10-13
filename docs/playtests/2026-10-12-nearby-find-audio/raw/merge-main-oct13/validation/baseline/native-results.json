@@ -1,0 +1,22 @@
+[
+  {
+    "exit": 0,
+    "seconds": 35.5069632,
+    "profile": "youjia-assistant-find16-oct13-8bd69e369786400b85396ddd22871b7f",
+    "name": "import",
+    "status": "PASS",
+    "importMetadata": "Godot-generated metadata retained separately, not production changes",
+    "completionPattern": null,
+    "source": "1abfd6abb3a1412e8024ca9d7b7c96f876953a3d"
+  },
+  {
+    "exit": 0,
+    "seconds": 1.6477706,
+    "profile": "youjia-assistant-find16-oct13-27c2be103fac4123b5dd69574ef17cb7",
+    "name": "animal_hidden_find",
+    "status": "FAIL",
+    "importMetadata": "Godot-generated metadata retained separately, not production changes",
+    "completionPattern": "ANIMAL_HIDDEN_FIND checks=[1-9][0-9]* failures=0",
+    "source": "1abfd6abb3a1412e8024ca9d7b7c96f876953a3d"
+  }
+]
