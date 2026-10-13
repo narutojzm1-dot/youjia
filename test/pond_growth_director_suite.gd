@@ -160,6 +160,7 @@ func run() -> void:
 	reach_stage("taking")
 	check(not world.pond_growth.busy() and not world.pond_growth.material.visible,"stale material plan cancels before pickup")
 	check(store.get_pond_edging().sections.is_empty() and store.get_growth_budget("lunch").available == 3,"stale retrieval has no world or AP result")
+	await check_work_poses()
 	await check_autonomous_work()
 	await check_meal_reservation()
 	world.queue_free()
@@ -169,6 +170,45 @@ func run() -> void:
 	print("POND_GROWTH_DIRECTOR checks=%d failures=%d" % [checks,failures.size()])
 	for failure in failures: push_error(failure)
 	quit(0 if failures.is_empty() else 1)
+
+func check_work_poses() -> void:
+	var normal_frame := -1
+	for tired in [false, true]:
+		await reset(tired)
+		check(begin(12.0), "production pose begins tired=" + str(tired))
+		approach()
+		var player = world.get_player()
+		var foot: Vector2 = player.position
+		for i in (180 if tired else 90): world.tick(1.0/30, Vector2.ZERO)
+		check(world.pond_growth.stage == "working", "pose follows unfinished production")
+		check(player._sequence_walker.frame in [3,4] and player._sequence_walker.held_action_frame >= 0, "settling holds authored crouch beyond one-shot duration")
+		check(player.position.distance_to(foot) < 0.01, "production keeps feet planted")
+		check(world.pond_growth.material.global_position.distance_to(player.global_position) < 22, "uncommitted material rests beside feet")
+		check(store.get_pond_edging().sections.is_empty() and int(store.get_keepsakes()[STONE]) == 20, "grounded presentation is not a saved/debited stone")
+		if tired:
+			check(player._sequence_walker.frame == normal_frame, "fatigue doubles production pose duration without extra cycles")
+		else:
+			normal_frame = player._sequence_walker.frame
+			await capture("settling-stone")
+		world.pond_growth.cancel()
+		check(player._sequence_walker.held_action_frame == -1 and not world.pond_growth.material.visible, "cancel clears held pose and temporary stone immediately")
+		player._play_grass_action(&"feed")
+		player.tick(0.7, Vector2.ZERO, world.WORLD_SIZE)
+		check(player._sequence_walker.action_kind.is_empty(), "ordinary feeding still completes as a one-shot")
+	await reset()
+	check(begin(12.0), "reduced motion production begins")
+	approach()
+	root.get_node("TuningStore").set_value("ui.reduced_motion", true, false)
+	for i in 90: world.tick(1.0/30,Vector2.ZERO)
+	check(world.get_player()._sequence_walker.held_action_frame == -1, "reduced motion disables production pose changes")
+	check(world.pond_growth.stage == "working" and world.pond_growth.material.visible, "reduced motion keeps production and material readable")
+	root.get_node("TuningStore").set_value("ui.reduced_motion", false, false)
+	for i in 240: world.tick(1.0/30,Vector2.ZERO)
+	check(world.get_player()._sequence_walker.frame >= 6, "production rises near completion")
+	await capture("rising-after-stone")
+	for i in 40: world.tick(1.0/30,Vector2.ZERO)
+	check(world.get_player()._sequence_walker.held_action_frame == -1 and not world.pond_growth.material.visible, "submission releases pose and hides temporary material")
+	check(await store.flush_pending(), "pose completion persists once")
 
 func check_growth_feedback() -> void:
 	var main = load("res://scenes/main.tscn").instantiate()
@@ -385,6 +425,8 @@ func check_autonomous_work() -> void:
 	for i in 361:
 		world.tick(1.0/30, Vector2.ZERO)
 		if world.pond_growth.busy(): break
+	if world.pond_growth.section != "rim_05":
+		print("NEXT_WORK_CONTEXT stage=",world.pond_growth.stage," idle=",world.pond_growth.idle_seconds," available=",world.pond_growth.available()," goose=",world._goose_mount_phase," walk=",world._has_walk_goal," house=",world.house.stage," pending=",world._pending_interaction," save_idle=",store.is_save_idle())
 	check(world.pond_growth.section == "rim_05", "next autonomous job skips completed bank")
 	world.cancel_scene_feedback()
 	check(not world.pond_growth.busy() and world.pond_growth.idle_seconds == 0.0, "menu takeover cancels and resets grace")

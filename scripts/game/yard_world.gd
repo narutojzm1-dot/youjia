@@ -604,6 +604,7 @@ func tick(delta: float, move: Vector2) -> void:
 		_player.tick(delta, move, WORLD_SIZE)
 	else:
 		_player.tick(delta, Vector2.ZERO, WORLD_SIZE)
+	if pond_growth != null: pond_growth.sync_presentation()
 	if _grass_patch != null: _grass_patch.tick(delta)
 	if shelter != null: shelter.prepare(delta)
 	if ground_food != null and inventory_enabled: ground_food.tick(delta)

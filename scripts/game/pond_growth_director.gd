@@ -127,7 +127,6 @@ func tick(delta: float, move: Vector2) -> void:
 		cancel()
 		return
 	elapsed += maxf(0,delta)
-	_sync_material()
 	if stage == "fetching":
 		if elapsed > 90:
 			cancel()
@@ -153,7 +152,6 @@ func tick(delta: float, move: Vector2) -> void:
 			return
 		stage = "walking"
 		elapsed = 0
-		_sync_material()
 		return
 	if stage == "walking":
 		if elapsed > 90:
@@ -161,7 +159,8 @@ func tick(delta: float, move: Vector2) -> void:
 		elif not world._has_walk_goal and world.get_player().position.distance_to(target) < 16:
 			stage = "working"
 			elapsed = 0
-			world.get_player()._play_grass_action(&"pickup")
+			world.get_player().reset_locomotion()
+			_pose_work()
 		return
 	if world.get_player().position.distance_to(target) >= 16:
 		cancel()
@@ -169,21 +168,46 @@ func tick(delta: float, move: Vector2) -> void:
 	# Only production work is slowed. Existing movement and animation clocks,
 	# earned AP, material/result quantities and experience stay unchanged.
 	work += maxf(0,delta) * Rest.work_speed(store.get_rest_context())
-	if work < float(recipe.seconds): return
+	if work < float(recipe.seconds):
+		_pose_work()
+		return
 	stage = "saving"
+	world.get_player()._sequence_walker.reset_motion()
 	material.hide()
 	pending = store.request_pond_growth(expected,section,proposal,recipe.ap,recipe.stones,recipe.experience)
 	if pending.is_empty():
 		stage = ""
 		finished.emit("rejected")
 
-func _sync_material() -> void:
+func _pose_work() -> void:
+	var walker = world.get_player()._sequence_walker
+	if bool(TuningStore.get_value("ui.reduced_motion", false)):
+		walker.reset_motion()
+		return
+	var progress := clampf(work / float(recipe.seconds), 0.0, 1.0)
+	var frame: int
+	if progress < 0.2:
+		frame = mini(4, int(progress / 0.2 * 5.0))
+	elif progress < 0.8:
+		# Reuse authored crouch poses to settle the stone, without deforming art.
+		frame = 4 if int(work / 0.75) % 2 == 0 else 3
+	else:
+		frame = mini(8, 4 + int((progress - 0.8) / 0.2 * 5.0))
+	walker.hold_action_frame(&"pickup", frame)
+
+func sync_presentation() -> void:
+	# Called after the actor tick so the stone uses this frame's hand/depth,
+	# including the first frame after arriving or cancelling.
 	# Presentation of this plan only, not a second inventory/held-item ledger.
 	# The existing atomic completion is still the sole material debit.
 	var player = world.get_player()
 	material.visible = stage in ["walking","working"] and player.visible
 	if not material.visible: return
 	material.global_position = player.grass_hand_global_position()
+	if stage == "working" and not bool(TuningStore.get_value("ui.reduced_motion", false)):
+		var ground: Vector2 = player.global_position + Vector2(14.0 * player.grass_hand_facing(), -4.0) * player.picture_depth
+		var placing := clampf(work / float(recipe.seconds) / 0.2, 0.0, 1.0)
+		material.global_position = material.global_position.lerp(ground, placing)
 	material.scale = Vector2(player.grass_hand_facing(),1) * 22.0 * player.picture_depth / material.texture.get_width()
 	material.modulate = player.modulate
 	material.z_index = player.z_index + 1
