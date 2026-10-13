@@ -8,11 +8,21 @@ var world: Node2D
 var store: Node
 var captured := {}
 var seen_stages := {}
+const GROUND_FIRST := Vector2(430, 510)
+const GROUND_LATEST := Vector2(470, 510)
 
 func _initialize() -> void: call_deferred("run")
 func check(ok: bool, label: String) -> void:
 	checks += 1
 	if not ok: failures.append(label)
+
+func request_ground_pointer(point: Vector2) -> void:
+	# The old (470, 540) destination is now a real pond-flower hotspot.
+	# Keep walking handover distinct from a deliberate object/paper interaction.
+	check(YardGround.allows(point, world.player_ground(), true), "handover destination is walkable")
+	check(YardInteraction.pointer(world, point).target.is_empty(), "handover pointer selects ordinary ground")
+	world.request_pointer_action(point)
+	check(not main._original_plant_panel.visible, "ground handover does not open flower paper")
 
 func step_until(target: String, frames: int = 2400) -> bool:
 	for i in frames:
@@ -147,17 +157,27 @@ func run() -> void:
 	check(world.house.meal_idle == 0.0, "foreground return clears meal idle")
 	world.house.consider_meal(8.1, Vector2.ZERO)
 	check(world._pending_interaction == "meal_basket", "first leg starts without reserving food")
-	world.request_pointer_action(Vector2(470, 540))
+	request_ground_pointer(GROUND_LATEST)
 	check(world._pending_interaction != "meal_basket" and world.house.meal_cooldown == 30.0, "one click cancels first leg with thirty-second cooldown")
 	world._consume_pending_action()
 	world.house.consider_meal(9.0, Vector2.ZERO)
 	check(not world._has_walk_goal, "cancelled first leg does not restart after eight seconds")
+	# Clicking a real object also takes control, but its paper correctly pauses
+	# autonomous meals until the player closes it through the ordinary button.
+	await fixture(175.0)
+	world.house.consider_meal(8.1, Vector2.ZERO)
+	check(YardInteraction.pointer(world, Vector2(470, 540)).target == "original_plant:pond_cluster", "pond flower click has an explicit object target")
+	world.request_pointer_action(Vector2(470, 540))
+	check(not world.house.owns_actor() and main._original_plant_panel.visible and not world.input_enabled and paused, "flower click cancels meal route and opens its paused paper")
+	check(store.get_yard_inventory().millet == 3 and store.get_meal_ledger().receipts.is_empty(), "flower handover preserves meal ingredients and receipt")
+	main._original_plant_panel.close_button.pressed.emit()
+	check(not main._original_plant_panel.visible and world.input_enabled and not paused, "closing flower paper restores ordinary input")
 	await fixture(175.0)
 	world.house.consider_meal(8.1, Vector2.ZERO)
 	check(await step_until("take"), "pointer handover reaches taking stage")
 	check(world.primary_action().label == "action.meal_cancel", "taking offers cook-later action")
 	check(world.hint_context() == "notice.meal.take", "taking has persistent stage hint")
-	world.request_pointer_action(Vector2(470, 540))
+	request_ground_pointer(GROUND_LATEST)
 	check(not world.house.busy() and world._has_walk_goal, "taking releases and applies original pointer in one click")
 	world._consume_pending_action()
 	await fixture(175.0)
@@ -165,12 +185,12 @@ func run() -> void:
 	check(await step_until("cook"), "indoor handover starts cooking")
 	check(world.primary_action().label == "action.meal_return", "indoor meal offers return action")
 	check(world.hint_context() == "notice.meal.cook", "cooking has persistent stage hint")
-	world.request_pointer_action(Vector2(430, 540))
-	world.request_pointer_action(Vector2(470, 540))
+	request_ground_pointer(GROUND_FIRST)
+	request_ground_pointer(GROUND_LATEST)
 	check(not world.get_player().visible and world.house.stage == "wake", "indoor click does not teleport hidden actor")
 	check(await step_until(""), "one click returns through door")
 	await process_frame
-	check(world._has_walk_goal and world._walk_goal.distance_to(Vector2(470, 540)) < 1.0, "only latest destination executes after safe exit")
+	check(world._has_walk_goal and world._walk_goal.distance_to(GROUND_LATEST) < 1.0, "only latest destination executes after safe exit")
 	check(store.get_yard_inventory().millet == 3 and store.get_meal_ledger().receipts.is_empty(), "pointer cancellation preserves food and receipt")
 	world._consume_pending_action()
 	await fixture(175.0)
@@ -187,7 +207,7 @@ func run() -> void:
 	check(await step_until("cook"), "brushing handover starts cooking")
 	world.house.meal_rng.seed = brush_seed(true)
 	check(await step_until("balcony"), "confirmed meal reaches brushing")
-	world.request_pointer_action(Vector2(470, 540))
+	request_ground_pointer(GROUND_LATEST)
 	check(main._cam_target_zoom == 1.0, "balcony click releases camera immediately")
 	check(await step_until(""), "brushing click returns normally")
 	await process_frame
