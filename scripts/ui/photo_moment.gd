@@ -345,7 +345,12 @@ static func _collect(node: Node, world: Node2D, backdrop: Node, subject: String,
 		return
 	var actor_id: Variant = _property(node, "actor_id", "")
 	var script: Script = node.get_script() as Script
-	if node is Sprite2D and node.name == "WeatherBackdropBlend" and node.get_parent() == world:
+	# Directors own these temporary sprites structurally, but they travel in the
+	# player's hand. Apply the existing portrait rule to the prop with its owner;
+	# do not mark the director subtree or static production scenery as a player.
+	if node is Sprite2D and node.get_meta("photo_player_carried", false) == true:
+		subject = "player"
+	elif node is Sprite2D and node.name == "WeatherBackdropBlend" and node.get_parent() == world:
 		subject = "weather_background"
 	elif node is Sprite2D and node.get_parent() == world and str(node.name) in [
 			"CloudBandA", "CloudBandB", "CloudMorningA", "CloudMorningB",

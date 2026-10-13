@@ -77,6 +77,7 @@ func _init(owner_world: Node2D, save_store: Node) -> void:
 func _ready() -> void:
 	material = Sprite2D.new()
 	material.name = "ConstructionMaterial"
+	material.set_meta("photo_player_carried", true)
 	material.texture = KeepsakeArt.texture(STONE)
 	material.z_as_relative = false
 	material.hide()

@@ -179,6 +179,7 @@ run_godot suite test/growth_production_suite.gd
 run_godot suite test/pond_edging_view_suite.gd
 run_godot suite test/pond_growth_director_suite.gd
 run_godot suite test/milling_director_suite.gd
+run_godot suite test/growth_carried_photo_suite.gd
 run_godot suite test/yard_mill_view_suite.gd
 run_godot suite test/release_notes_suite.gd
 run_godot suite test/release_notes_pointer_focus_suite.gd

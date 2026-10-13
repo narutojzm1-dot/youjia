@@ -54,6 +54,7 @@ func _init(owner_world: Node2D, save_store: Node) -> void:
 	meal_rng.randomize()
 	meal_ingredient = Sprite2D.new()
 	meal_ingredient.name = "MealIngredient"
+	meal_ingredient.set_meta("photo_player_carried", true)
 	meal_ingredient.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
 	meal_ingredient.z_as_relative = false
 	meal_ingredient.visible = false
