@@ -4,6 +4,7 @@ signal closed
 const NOTES := "res://config/release_notes.json"
 const IDENTITY := "res://config/build_identity.json"
 var back: Button
+var heading: Label
 var status: Label
 var content: RichTextLabel
 var card: PanelContainer
@@ -19,20 +20,30 @@ static func identity() -> Dictionary:
 	var value = JSON.parse_string(FileAccess.get_file_as_string(IDENTITY))
 	return value if value is Dictionary else {}
 
+static func _t(key: String, replacements: Dictionary = {}) -> String:
+	return Engine.get_main_loop().root.get_node("I18n").call("t", key, replacements)
+
 static func build_name() -> String:
 	var sha := str(identity().get("sourceCommit", ""))
-	return "game-" + sha.left(7) if sha.length() == 40 else "本地开发版（未发布）"
+	return "game-" + sha.left(7) if sha.length() == 40 else _t("notes.build.local")
+
+## 暂停纸片右上角那枚小按钮。矮屏排成一行，高屏分两行。
+static func chip_label(short: bool) -> String:
+	var build := build_name()
+	if build == _t("notes.build.local"):
+		build = _t("notes.build.local_short")
+	return "%s · %s%s%s" % [version(), _t("notes.chip"), " · " if short else "\n", build]
 
 static func latest_status(data: Variant, current: String) -> String:
-	if not data is Dictionary: return "暂时无法检查更新；以下仍是本版本公告。"
+	if not data is Dictionary: return _t("notes.status.unavailable")
 	var source := str(data.get("sourceCommit", ""))
 	# Match the loading shell's release identity contract before claiming latest.
 	var source_pattern := RegEx.create_from_string("^[a-f0-9]{40}$")
 	if data.get("schema", "") != "youjia.release/v1" or source.length() != 40 or source_pattern.search(source) == null or str(data.get("entry", "")) != "game-" + source.left(7):
-		return "暂时无法检查更新；以下仍是本版本公告。"
-	if current.is_empty(): return "本地开发版，未发布。"
-	if source == current: return "已与线上核对：当前是最新发布版本。"
-	return "线上版本为 game-%s，与当前不同。请保存进度后重新打开试玩入口。" % source.left(7)
+		return _t("notes.status.unavailable")
+	if current.is_empty(): return _t("notes.status.unpublished")
+	if source == current: return _t("notes.status.latest")
+	return _t("notes.status.different", {"build": source.left(7)})
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
@@ -58,8 +69,8 @@ func _ready() -> void:
 	var box := VBoxContainer.new()
 	box.add_theme_constant_override("separation", 10)
 	card.add_child(box)
-	var heading := Label.new()
-	heading.text = "更新公告"
+	heading = Label.new()
+	heading.text = _t("notes.heading")
 	heading.add_theme_font_size_override("font_size", 24)
 	heading.add_theme_color_override("font_color", Color("604936"))
 	box.add_child(heading)
@@ -76,7 +87,7 @@ func _ready() -> void:
 	content.focus_mode = Control.FOCUS_ALL
 	box.add_child(content)
 	back = Button.new()
-	back.text = "返回歇一下"
+	back.text = _t("notes.back")
 	back.custom_minimum_size.y = 42
 	back.add_theme_color_override("font_color", Color("604936"))
 	back.add_theme_color_override("font_hover_color", Color("604936"))
@@ -108,28 +119,39 @@ func _ready() -> void:
 	request.request_completed.connect(_checked)
 	add_child(request)
 	resized.connect(_fit)
+	Engine.get_main_loop().root.get_node("I18n").connect("locale_changed", _on_locale)
 	_fit()
 	hide()
+
+func _on_locale(_locale: String) -> void:
+	if heading != null: heading.text = _t("notes.heading")
+	if back != null: back.text = _t("notes.back")
+	if visible: _fill()
 
 func _fit() -> void:
 	if card == null: return
 	card.size = Vector2(minf(640, size.x - 24), minf(620, size.y - 24))
 	card.position = (size - card.size) * 0.5
 
-func open() -> void:
-	show()
+func _fill() -> void:
+	heading.text = _t("notes.heading")
+	back.text = _t("notes.back")
 	var notes: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(NOTES))
-	var lines := PackedStringArray(["当前版本 %s · %s" % [notes.version, notes.label], build_name(), ""])
+	var lines := PackedStringArray([_t("notes.current", {"version": notes.version, "label": notes.label}), build_name(), ""])
 	for release: Dictionary in notes.releases:
 		var build := build_name() if release.build == "current" else "game-" + str(release.build)
 		lines.append("%s · %s\n%s" % [release.date, release.title, build])
 		for field: String in ["features", "fixes"]:
 			if release.get(field, []).is_empty(): continue
-			lines.append("新增功能" if field == "features" else "问题修复")
+			lines.append(_t("notes.features" if field == "features" else "notes.fixes"))
 			for item: String in release[field]: lines.append("• " + item)
 		if release.has("note"): lines.append(str(release.note))
 		lines.append("")
 	content.text = "\n".join(lines)
+
+func open() -> void:
+	show()
+	_fill()
 	content.scroll_to_line(0)
 	# 第一次打开时本面板才建出来，没收到点「公告」的那次按下；按「公告」当时的焦点是否可见来判断。
 	if not _opened_once:
@@ -137,15 +159,15 @@ func open() -> void:
 		_focus_input.pointer = opener == null or not opener.has_focus(true)
 		_opened_once = true
 	_focus_input.grab(back)
-	status.text = "离线公告 · 尚未检查线上版本。"
+	status.text = _t("notes.status.offline")
 	if OS.has_feature("web"):
 		var url = JavaScriptBridge.eval("new URL('game-release.json', location.href).href", true)
 		if url is String:
-			status.text = "正在检查线上版本…"
+			status.text = _t("notes.status.checking")
 			if request.request(url + "?check=" + str(Time.get_unix_time_from_system()), ["Cache-Control: no-cache"]) != OK:
 				status.text = latest_status(null, "")
 	else:
-		status.text = "本地版本；未检查线上发布。"
+		status.text = _t("notes.status.local_only")
 
 func close() -> void:
 	request.cancel_request()
