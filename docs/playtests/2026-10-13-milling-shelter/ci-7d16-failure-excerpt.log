@@ -1,0 +1,44 @@
+2026-10-13T13:23:04.2563948Z RAIN_BED sheep_b (1103.0, 484.0)
+2026-10-13T13:23:04.2564266Z STATE rain active= cel=shelter_rest controlled=true
+2026-10-13T13:23:04.2564609Z RAIN_BED horse (1037.3, 444.0)
+2026-10-13T13:23:04.2564930Z STATE rain active= cel=shelter_rest controlled=true
+2026-10-13T13:23:04.2565283Z RAIN_BED llama (966.2545, 443.3746)
+2026-10-13T13:23:04.2565627Z STATE rain active= cel=shelter_rest controlled=true
+2026-10-13T13:23:15.6731186Z SUN_RETURN horse (631.8738, 482.8062) active= {  }
+2026-10-13T13:23:15.6731521Z SUN_RETURN llama (844.7318, 528.4039) active= {  }
+2026-10-13T13:23:25.5483776Z NIGHT_ALL sheep_a (324.4749, 502.532) paths={ "sheep_b": [] }
+2026-10-13T13:23:25.5484284Z NIGHT_ALL cow (481.8008, 497.9283) paths={ "sheep_b": [] }
+2026-10-13T13:23:25.5484712Z NIGHT_ALL sheep_b (373.8636, 501.0109) paths={ "sheep_b": [] }
+2026-10-13T13:23:25.5485035Z NIGHT_ALL horse (631.8738, 482.8062) paths={ "sheep_b": [] }
+2026-10-13T13:23:25.5485391Z NIGHT_ALL llama (844.7318, 528.4039) paths={ "sheep_b": [] }
+2026-10-13T13:23:25.5485774Z NIGHT horse (631.8738, 482.8062) active=sheep_b
+2026-10-13T13:23:25.5486110Z NIGHT llama (844.7318, 528.4039) active=sheep_b
+2026-10-13T13:23:25.7281977Z LARGE_ANIMAL_SHELTER checks=28 failures=4
+2026-10-13T13:23:25.7292547Z ERROR: horse returns to own outdoor night area
+2026-10-13T13:23:25.7293009Z    at: push_error (core/variant/variant_utility.cpp:1023)
+2026-10-13T13:23:25.7293574Z    GDScript backtrace (most recent call first):
+2026-10-13T13:23:25.7294016Z        [0] run (res://test/large_animal_shelter_suite.gd:96)
+2026-10-13T13:23:25.7304249Z ERROR: horse rests at night without crowding cow pen
+2026-10-13T13:23:25.7304709Z    at: push_error (core/variant/variant_utility.cpp:1023)
+2026-10-13T13:23:25.7305097Z    GDScript backtrace (most recent call first):
+2026-10-13T13:23:25.7305476Z        [0] run (res://test/large_animal_shelter_suite.gd:96)
+2026-10-13T13:23:25.7305883Z ERROR: llama returns to own outdoor night area
+2026-10-13T13:23:25.7306261Z    at: push_error (core/variant/variant_utility.cpp:1023)
+2026-10-13T13:23:25.7306644Z    GDScript backtrace (most recent call first):
+2026-10-13T13:23:25.7307000Z        [0] run (res://test/large_animal_shelter_suite.gd:96)
+2026-10-13T13:23:25.7307389Z ERROR: llama rests at night without crowding cow pen
+2026-10-13T13:23:25.7307771Z    at: push_error (core/variant/variant_utility.cpp:1023)
+2026-10-13T13:23:25.7308132Z    GDScript backtrace (most recent call first):
+2026-10-13T13:23:25.7308485Z        [0] run (res://test/large_animal_shelter_suite.gd:96)
+2026-10-13T13:23:25.8564998Z [daily-check] Godot/timeout exit=1; tee exit=0
+2026-10-13T13:23:25.9430729Z ##[error]Process completed with exit code 1.
+2026-10-13T13:23:25.9542530Z Post job cleanup.
+2026-10-13T13:23:26.0281206Z [command]/usr/bin/git version
+2026-10-13T13:23:26.0316396Z git version 2.55.0
+2026-10-13T13:23:26.0347183Z Temporarily overriding HOME='/home/runner/work/_temp/3c5e5d71-2d80-4a88-abf9-3ac1fffec1a9' before making global git config changes
+2026-10-13T13:23:26.0348290Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-13T13:23:26.0351091Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/youjia/youjia
+2026-10-13T13:23:26.0382454Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-13T13:23:26.0410938Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-13T13:23:26.0630740Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-13T13:23:26.0664986Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"

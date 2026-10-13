@@ -1,0 +1,57 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ROUTE_DEBUG true true [(672.0, 528.0), (888.0, 516.0), (912.0, 480.0), (960.0, 444.0), (1041.0, 444.0)]
+RAIN_BED sheep_a (977.0, 478.0)
+STATE rain active= cel=shelter_rest controlled=true
+RAIN_BED cow (1041.0, 476.0)
+STATE rain active= cel=shelter_rest controlled=true
+RAIN_BED sheep_b (1103.0, 484.0)
+STATE rain active= cel=shelter_rest controlled=true
+RAIN_BED horse (1037.3, 444.0)
+STATE rain active= cel=shelter_rest controlled=true
+RAIN_BED llama (966.2545, 443.3746)
+STATE rain active= cel=shelter_rest controlled=true
+SUN_RETURN horse (631.8738, 482.8062) active= {  }
+SUN_RETURN llama (844.7318, 528.4039) active= {  }
+COLLISION_DIAG start=(373.8636, 501.0109) radius=(21.77639, 9.467997) goal=(960.0, 444.0) all=[{ "id": "yard_basket", "position": (335.0, 485.0), "radius": (17.0, 8.0) }, { "id": "yard_mill", "position": (525.0, 469.0), "radius": (28.0, 9.0) }, { "id": "player", "position": (390.0, 550.0), "radius": (39.91565, 10.23478) }, { "id": "llama", "position": (844.7318, 528.4039), "radius": (23.75222, 10.88643) }, { "id": "goose", "position": (759.2178, 496.1522), "radius": (13.14873, 7.513558) }, { "id": "sheep_a", "position": (324.4749, 502.532), "radius": (21.83115, 9.491805) }, { "id": "cow", "position": (481.8008, 497.9283), "radius": (33.91109, 12.24567) }, { "id": "horse", "position": (631.8738, 482.8062), "radius": (33.05899, 11.93797) }, { "id": "chicken", "position": (544.0468, 519.9341), "radius": (8.787767, 4.882093) }]
+COLLISION_DIAG goal_clear=true route=[]
+COLLISION_DIAG without=yard_basket route=[]
+COLLISION_DIAG without=yard_mill route=[]
+COLLISION_DIAG without=player route=[]
+COLLISION_DIAG without=llama route=[(564.0, 540.0), (900.0, 504.0), (960.0, 444.0)]
+COLLISION_DIAG without=goose route=[]
+COLLISION_DIAG without=sheep_a route=[]
+COLLISION_DIAG without=cow route=[]
+COLLISION_DIAG without=horse route=[]
+COLLISION_DIAG without=chicken route=[]
+COLLISION_DIAG anchor=(525.0, 450.0) route=[]
+COLLISION_DIAG anchor=(550.0, 445.0) route=[]
+COLLISION_DIAG anchor=(575.0, 445.0) route=[]
+COLLISION_DIAG anchor=(540.0, 480.0) route=[]
+COLLISION_DIAG anchor=(555.0, 515.0) route=[]
+COLLISION_DIAG anchor=(520.0, 525.0) route=[]
+COLLISION_DIAG anchor=(545.0, 545.0) route=[]
+NIGHT_ALL sheep_a (324.4749, 502.532) paths={ "sheep_b": [] }
+NIGHT_ALL cow (481.8008, 497.9283) paths={ "sheep_b": [] }
+NIGHT_ALL sheep_b (373.8636, 501.0109) paths={ "sheep_b": [] }
+NIGHT_ALL horse (631.8738, 482.8062) paths={ "sheep_b": [] }
+NIGHT_ALL llama (844.7318, 528.4039) paths={ "sheep_b": [] }
+NIGHT horse (631.8738, 482.8062) active=sheep_b
+NIGHT llama (844.7318, 528.4039) active=sheep_b
+LARGE_ANIMAL_SHELTER checks=28 failures=4
+ERROR: horse returns to own outdoor night area
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] run (fixture/diagnostic.gd:110)
+ERROR: horse rests at night without crowding cow pen
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] run (fixture/diagnostic.gd:110)
+ERROR: llama returns to own outdoor night area
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] run (fixture/diagnostic.gd:110)
+ERROR: llama rests at night without crowding cow pen
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] run (fixture/diagnostic.gd:110)
