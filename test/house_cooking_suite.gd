@@ -267,7 +267,7 @@ func run() -> void:
 		world.tick(1.0 / 30.0, Vector2.ZERO)
 		await process_frame
 		if not world._has_walk_goal and world._pending_interaction.is_empty(): break
-	check(world.get_player().position.distance_to(world.house.Basket.APPROACH) < 18.0, "late meal reaches basket before deadline revalidation")
+	check(world._pending_interaction.is_empty() and not world.house.owns_actor(), "expired first-leg intent releases without needing basket arrival")
 	check(world._day_elapsed >= 375.0 and not world.house.busy(), "expired dinner stays outside instead of starting sleep")
 	check(await store.flush_pending(), "late arrival pending saves settle")
 	check(store.get_holiday_day() == 2 and world.holiday_day == 2 and store.get_rest_context().cause == "awake", "autonomous late arrival does not advance day or grant sleep")

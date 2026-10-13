@@ -1083,25 +1083,30 @@ func try_walk_to(goal: Vector2) -> bool:
 		return false
 	if _player.position.distance_to(goal) < 12.0:
 		return false
-	_walk_path = YardBodies.route(_player.position, goal, _player.body_radius*YardGround.depth_at(_player.position.y), _routing_obstacles(), player_ground())
+	_walk_goal = goal
+	_walk_path = _route_to_walk_goal(_routing_obstacles()) if _pending_interaction in ["meal_basket", "house_meal"] \
+		else YardBodies.route(_player.position, goal, _player.body_radius*YardGround.depth_at(_player.position.y), _routing_obstacles(), player_ground())
 	_body_repath = 0.7
 	# A valid lawn destination can be occupied by a moving animal at click time.
 	# Retain it and let the normal waiting/repath loop resume when it clears.
 	_has_walk_goal = true
-	_walk_goal = goal
 	_walk_goal_age = 0.0
 	return true
 
 
 # Residents can settle on a previously clear lawn destination. Approach within
 # the normal arrival tolerance instead of waiting forever inside their body.
-# Keep the original goal and all explicit interaction targets unchanged.
+# Meal routes may use a clear point inside their existing interaction reach;
+# the physical interaction center and arrival checks remain unchanged.
 func _route_to_walk_goal(obstacles: Array) -> Array[Vector2]:
 	var radius := _player.body_radius * YardGround.depth_at(_player.position.y)
 	var path := YardBodies.route(_player.position, _walk_goal, radius, obstacles, player_ground())
-	if not path.is_empty() or not _pending_interaction.is_empty() or YardBodies.clear_at(_walk_goal, radius, obstacles):
+	var meal_route := _pending_interaction in ["meal_basket", "house_meal"]
+	if not path.is_empty() or (not _pending_interaction.is_empty() and not meal_route) or YardBodies.clear_at(_walk_goal, radius, obstacles):
 		return path
-	for margin: float in [4.0, 8.0, 11.0]:
+	var margins: Array[float] = [4.0, 8.0, 11.0]
+	if meal_route: margins.append(YardInteraction.reach(_pending_interaction) - 3.0)
+	for margin: float in margins:
 		var candidates: Array[Vector2] = []
 		for i in 16:
 			candidates.append(_walk_goal + Vector2.from_angle(float(i) * TAU / 16.0) * margin)

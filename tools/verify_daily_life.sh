@@ -88,6 +88,7 @@ run_godot suite test/web_save_bridge/legacy_suite.gd
 run_godot suite test/title_copy_balance_suite.gd
 run_godot suite test/touch_hint_mode_suite.gd
 node test/loading_shell_test.cjs
+node test/release_check_test.cjs
 node test/download_assets_test.mjs
 node test/sha256_stream_test.mjs
 
@@ -143,6 +144,7 @@ run_godot suite test/find_reveal_name_fade_suite.gd
 run_godot suite test/yard_basket_dismiss_focus_suite.gd
 run_godot suite test/basket_pointer_focus_suite.gd
 run_godot suite test/care_pointer_focus_suite.gd
+run_godot suite test/touch_hover_reset_suite.gd
 run_godot suite test/yard_decor_settle_ring_suite.gd
 run_godot suite test/walk_goal_marker_suite.gd
 run_godot suite test/exploration_tap_feedback_suite.gd
@@ -163,6 +165,7 @@ run_godot suite test/rest_context_suite.gd
 run_godot suite test/meal_planner_suite.gd
 run_godot suite test/cooking_smoke_suite.gd
 run_godot suite test/house_cooking_suite.gd
+run_godot suite test/meal_navigation_suite.gd
 
 run_godot suite test/meal_audio_host_suite.gd
 
@@ -171,3 +174,4 @@ run_godot suite test/growth_materials_suite.gd
 run_godot suite test/growth_budget_suite.gd
 run_godot suite test/pond_edging_view_suite.gd
 run_godot suite test/pond_growth_director_suite.gd
+run_godot suite test/release_notes_suite.gd

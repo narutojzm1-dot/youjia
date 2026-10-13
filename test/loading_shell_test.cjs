@@ -1,16 +1,17 @@
 const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict');
 const shell=fs.readFileSync('web/loading.html','utf8').match(/<script>([\s\S]*?)<\/script>/)[1];
 const flush=()=>new Promise(setImmediate);
-function setup(missing=[],config={focusCanvas:true}){
+function setup(missing=[],config={focusCanvas:true},releaseFetch=null,href='https://example.test/youjia/'){
  const code=shell.replace('$GODOT_CONFIG',JSON.stringify(config)).replace('$GODOT_THREADS_ENABLED','false').replace(/\bimport\(/g,'__import(');
  const nodes={},listeners={};let onProgress,resolve,reject,clock=0,interval,starts=0,constructed=0,runtime='uninstalled',restored=0,assetOptions;
  const imports=new Map();
  const make=()=>({hidden:false,textContent:'',value:0,setAttribute(){},removeAttribute(k){delete this[k]},addEventListener(k,f){this[k]=f},focus(){this.focused=true}});
- const window={addEventListener(k,f){listeners[k]=f},removeEventListener(k){delete listeners[k]},location:{reload(){}}};
+ const window={addEventListener(k,f){listeners[k]=f},removeEventListener(k){delete listeners[k]},history:{replaceState(_,__,url){window.cleaned=url}},location:{href,reload(){},replace(url){this.replaced=url}}};
+ if(releaseFetch) window.fetch=releaseFetch;
  const document={title:'悠长的假期',documentElement:{dataset:{}},getElementById(k){return nodes[k]??=make()},createElement:make,head:{appendChild(s){s.load()}}};
  class Engine{static getMissingFeatures(){return missing} constructor(o){constructed++;assert.equal(o.persistentPaths.length,0)} startGame(o){starts++;assert.equal(o.persistentPaths.length,0);onProgress=o.onProgress;return new Promise((r,j)=>{resolve=r;reject=j})}}
  const captureLegacy=()=>{};
- vm.runInNewContext(code,{window,document,Engine,performance:{now:()=>clock},console:{error(){},info(){}},setInterval(f){interval=f;return 1},clearInterval(){},__import(path){return new Promise((resolve,reject)=>imports.set(path,{resolve,reject}))}});
+ vm.runInNewContext(code,{window,document,Engine,URL,AbortController,setTimeout,clearTimeout,performance:{now:()=>clock},console:{error(){},info(){}},setInterval(f){interval=f;return 1},clearInterval(){},__import(path){return new Promise((resolve,reject)=>imports.set(path,{resolve,reject}))}});
  const bridge={installSaveHost({runtimeReady,captureLegacy:capture}){assert.equal(capture,captureLegacy);runtime='pending';runtimeReady.then(()=>runtime='resolved',()=>runtime='rejected')}};
  return {nodes,window,document,get starts(){return starts},get constructed(){return constructed},get runtime(){return runtime},get restored(){return restored},assetFailure(){assetOptions.onError(Error('asset recovery failed'))},
   async modules(){imports.get('./web/save/bridge.mjs').resolve(bridge);await flush();assert.equal(starts,0,'reader must load before engine starts');imports.get('./web/save/idbfs_source.mjs').resolve({captureIdbfsSource:captureLegacy});await flush();assert.equal(constructed,0,'download recovery must install before engine construction');imports.get('./web/boot/download_assets.mjs').resolve({installAssetRecovery(cfg,options){assetOptions=options;return ()=>restored++}});await flush()},
@@ -46,5 +47,29 @@ function setup(missing=[],config={focusCanvas:true}){
  assert.equal(t.document.documentElement.dataset.playerVersion,'0.2.0');
  assert.equal(t.nodes['loading-build'].textContent,'game-abc');
  assert.notEqual(t.nodes['loading-version'].textContent, t.nodes['loading-build'].textContent);
+ let publish;
+ t=setup([],{mainPack:'game-aaaaaaa.pck'},()=>new Promise(r=>publish=r));
+ assert.equal(t.constructed,0); assert.equal(t.runtime,'uninstalled','version check precedes save host');
+ assert.equal(t.nodes['game-title'].textContent,'悠长的假期','title is visible while the release check is pending');
+ assert.equal(t.nodes['loading-version'].textContent,'0.2.0 · 第2版内部测试');
+ assert.equal(t.nodes['loading-build'].textContent,'game-aaaaaaa','pending check shows this entry build');
+ assert.equal(t.document.documentElement.dataset.build,'game-aaaaaaa');
+ assert.equal(t.nodes['loading-retry'].textContent,'重试');
+ assert.equal(t.document.documentElement.lang,'zh-CN');
+ publish({ok:true,json:async()=>({schema:'youjia.release/v1',sourceCommit:'b'.repeat(40),entry:'game-bbbbbbb'})});
+ await flush(); await flush();
+ assert.match(t.window.location.replaced,/release=game-bbbbbbb/);
+ assert.equal(t.constructed,0,'old engine must not start during update');
+ assert.equal(t.runtime,'uninstalled','old page must not acquire save writer');
+ t=setup([],{mainPack:'game-aaaaaaa.pck'},async()=>{throw Error('must not refetch')},'https://example.test/youjia/?release=game-bbbbbbb&_fresh='+Date.now());
+ await flush();assert.equal(t.constructed,0);assert.equal(t.runtime,'uninstalled');assert.equal(t.nodes['loading-retry'].hidden,false);assert.match(t.nodes['loading-status'].textContent,/旧版本/);
+ assert.equal(t.nodes['game-title'].textContent,'悠长的假期','stale entry retains title without booting');
+ assert.equal(t.nodes['loading-retry'].textContent,'重试','stale-entry retry is localized before boot');
+ assert.equal(t.nodes['loading-build'].textContent,'game-aaaaaaa','stale entry must not display the desired build as loaded');
+ assert.equal(t.document.documentElement.dataset.build,'game-aaaaaaa');
+ assert.equal(t.nodes['loading-version'].textContent,'0.2.0 · 第2版内部测试');
+ t.nodes['loading-retry'].click();assert.match(t.window.location.replaced,/release=game-bbbbbbb/);
+ t=setup([],{mainPack:'game-bbbbbbb.pck'},async()=>{throw Error('must not refetch')},'https://example.test/youjia/?release=game-bbbbbbb&_fresh='+Date.now());
+ await flush();assert.equal(t.window.cleaned,'https://example.test/youjia/');await t.modules();assert.equal(t.constructed,1);
  console.log('Loading shell PASS: module ordering, runtime readiness/rejection, persistentPaths isolation, save-blocked gate, bytes, unknown totals, stall and both first-frame orders');
 })().catch(e=>{console.error(e);process.exitCode=1});

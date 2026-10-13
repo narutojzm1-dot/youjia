@@ -9,6 +9,8 @@ const APPROACH := Vector2(263, 472)
 const PORCH := Vector2(263, 450)
 const INSIDE := Vector2(263, 434)
 const HIT := Rect2(233, 337, 63, 113)
+const MEAL_ROUTE_TIMEOUT := 90.0
+const MEAL_ROUTE_STALL := 10.0
 static var PASSAGE := PackedVector2Array([Vector2(239,422),Vector2(287,422),Vector2(287,493),Vector2(239,493)])
 var world: Node2D
 var store: Node
@@ -27,6 +29,8 @@ var meal_cooldown := 0.0
 var meal_rng := RandomNumberGenerator.new()
 var meal_succeeded := false
 var meal_ingredient: Sprite2D
+# A walking intention, never a stock reservation or durable meal receipt.
+var meal_route: Dictionary = {}
 # One latest player intent, never a queue of stale clicks. Not persistent.
 var player_intent: Dictionary = {}
 
@@ -83,7 +87,7 @@ func begin(meal_only: bool = false) -> void:
 		var plan: Dictionary = store.plan_meal(meal, Meals.RECIPES, meal_rng)
 		if not plan.is_empty():
 			# A door click also fetches food from the physical basket first.
-			world._request_action("meal_basket", Basket.APPROACH)
+			_request_meal_route("meal_basket", Basket.APPROACH, meal)
 			return
 	if not cooking_plan.is_empty():
 		cancel_preparation()
@@ -114,6 +118,7 @@ func take_from_basket() -> void:
 		cancel_preparation()
 		return
 	world._consume_pending_action()
+	meal_route = {}
 	meal_succeeded = false
 	_enter("take")
 	_sync_meal_ingredient()
@@ -127,6 +132,7 @@ func _prepared_meal_valid() -> bool:
 func cancel_preparation() -> void:
 	# Nothing is debited before the confirmed cooking transaction.
 	cooking_plan = {}
+	meal_route = {}
 	meal_ingredient.visible = false
 	meal_idle = 0.0
 	meal_cooldown = 30.0
@@ -136,6 +142,7 @@ func cancel_preparation() -> void:
 
 func _start_entry() -> void:
 	world._consume_pending_action()
+	meal_route = {}
 	world.cancel_scene_feedback()
 	world._cancel_quiet_sky_look()
 	world.camera_release_requested.emit()
@@ -228,7 +235,7 @@ func tick(delta: float) -> void:
 		"take":
 			if seconds >= 1.0:
 				stage = ""
-				world._request_action("house_meal", APPROACH)
+				_request_meal_route("house_meal", APPROACH, str(cooking_plan.meal))
 		"porch":
 			if _walk(delta,PORCH): _enter("open")
 		"open":
@@ -370,6 +377,12 @@ func _draw() -> void: pass
 func consider_meal(delta: float, move: Vector2) -> void:
 	if move.length() > 0.2:
 		request_player_intent({"kind":"move"})
+	if not busy() and not meal_route.is_empty():
+		# In particular, the first leg has no cooking_plan yet. Validate its
+		# original meal before the generic pending-action early return below.
+		if not _meal_route_valid(delta):
+			cancel_preparation()
+			return
 	if not busy() and not cooking_plan.is_empty():
 		if move.length() > 0.2 or world._pending_interaction != "house_meal" or not _prepared_meal_valid():
 			cancel_preparation()
@@ -394,7 +407,27 @@ func consider_meal(delta: float, move: Vector2) -> void:
 	# Use the normal walk route to the porch; never clamp/teleport from the yard
 	# into the narrow indoor passage. Input can replace this unreserved route.
 	world.notice_requested.emit("notice.meal.hungry")
-	world._request_action("meal_basket", Basket.APPROACH)
+	_request_meal_route("meal_basket", Basket.APPROACH, meal)
+
+func _request_meal_route(target: String, point: Vector2, meal: String) -> void:
+	meal_route = {"day":world.holiday_day, "meal":meal, "target":target,
+		"seconds":0.0, "still":0.0, "position":world.get_player().position}
+	world._request_action(target, point)
+	if not busy() and world._pending_interaction != target:
+		cancel_preparation()
+
+func _meal_route_valid(delta: float) -> bool:
+	if meal_route.day != world.holiday_day or meal_route.meal != Meals.meal_at(world.tod_fraction()) \
+			or world._pending_interaction != meal_route.target or not world._has_walk_goal:
+		return false
+	meal_route.seconds += maxf(0.0, delta)
+	meal_route.still += maxf(0.0, delta)
+	var point: Vector2 = world.get_player().position
+	if point.distance_to(meal_route.position) >= 1.0:
+		meal_route.position = point
+		meal_route.still = 0.0
+	# Fully blocked destinations may clear, but must not own the actor forever.
+	return meal_route.seconds < MEAL_ROUTE_TIMEOUT and meal_route.still < MEAL_ROUTE_STALL
 
 func _set_cooking_smoke(active: bool) -> void:
 	# Do not allocate a particle emitter for a house that has never cooked.
