@@ -1,5 +1,5 @@
 <!doctype html>
-<html data-build="game-453f605" lang="zh-CN">
+<html data-build="game-e13eec3" lang="zh-CN">
 <head>
   <meta http-equiv="Cache-Control" content="no-cache, must-revalidate, max-age=0">
   <meta http-equiv="Pragma" content="no-cache">
@@ -10,8 +10,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="manus-game-loading-screen" content="1">
   <title>悠长的假期</title>
-  <link id="-gd-engine-icon" rel="icon" type="image/png" href="game-453f605.icon.png" />
-<link rel="apple-touch-icon" href="game-453f605.apple-touch-icon.png"/>
+  <link id="-gd-engine-icon" rel="icon" type="image/png" href="game-e13eec3.icon.png" />
+<link rel="apple-touch-icon" href="game-e13eec3.apple-touch-icon.png"/>
 
   <!-- Project-owned starting point, not the platform default. Customize the presentation below. -->
   <!-- Embedded Noto Sans SC loader subset: SIL Open Font License 1.1; license text: assets/template/fonts/NotoSansSC-OFL.txt. -->
@@ -105,7 +105,7 @@ Source SHA-256: 38f4c5f927f746b3dfa4c3a5d7edf0b7a3e828e27438418fa54f9e1565289412
     }
     // RELEASE_CHECK_END
     (() => {
-      const config = {"args":[],"canvasResizePolicy":2,"emscriptenPoolSize":8,"ensureCrossOriginIsolationHeaders":true,"executable":"engine-3b105340f798ed0e7d6aa7725328dc8c0bf8cd94ffea14835e43f83045048c74","experimentalVK":false,"fileSizes":{"engine-3b105340f798ed0e7d6aa7725328dc8c0bf8cd94ffea14835e43f83045048c74.wasm":39514754,"game-453f605.pck":74661508},"focusCanvas":true,"gdextensionLibs":[],"godotPoolSize":4,"mainPack":"game-453f605.pck","fileHashes":{"engine-3b105340f798ed0e7d6aa7725328dc8c0bf8cd94ffea14835e43f83045048c74.wasm":"fc74679e3b97f76878947fcd4fbe1268cbfa6188182a2e33bbc3f5dc9bfa57d0","game-453f605.pck":"61d9d44f2d006d9d4355e3601125179ac8b27b2c792e6f82f0fd33a73f40b0fd"}};
+      const config = {"args":[],"canvasResizePolicy":2,"emscriptenPoolSize":8,"ensureCrossOriginIsolationHeaders":true,"executable":"engine-3b105340f798ed0e7d6aa7725328dc8c0bf8cd94ffea14835e43f83045048c74","experimentalVK":false,"fileSizes":{"engine-3b105340f798ed0e7d6aa7725328dc8c0bf8cd94ffea14835e43f83045048c74.wasm":39514754,"game-e13eec3.pck":85511664},"focusCanvas":true,"gdextensionLibs":[],"godotPoolSize":4,"mainPack":"game-e13eec3.pck","fileHashes":{"engine-3b105340f798ed0e7d6aa7725328dc8c0bf8cd94ffea14835e43f83045048c74.wasm":"fc74679e3b97f76878947fcd4fbe1268cbfa6188182a2e33bbc3f5dc9bfa57d0","game-e13eec3.pck":"3146be2c2ade327103353900280b263395b4ad39e67d182281ec73505162f9ad"}};
       // Keep the shell readable while the pre-boot check waits or stops on a stale entry.
       const buildLabel = document.getElementById('loading-build');
       const versionLabel = document.getElementById('loading-version');
@@ -130,12 +130,12 @@ Source SHA-256: 38f4c5f927f746b3dfa4c3a5d7edf0b7a3e828e27438418fa54f9e1565289412
       let resolveSaveRuntime, rejectSaveRuntime;
       const saveRuntimeReady = new Promise((resolve, reject) => { resolveSaveRuntime = resolve; rejectSaveRuntime = reject; });
       saveRuntimeReady.catch(() => {}); // Observe immediately; preserve original rejection.
-      const saveBridgeReady = import('./save-453f605/bridge.mjs').then(async ({installSaveHost}) => {
-        const {captureIdbfsSource} = await import('./save-453f605/idbfs_source.mjs');
+      const saveBridgeReady = import('./save-e13eec3/bridge.mjs').then(async ({installSaveHost}) => {
+        const {captureIdbfsSource} = await import('./save-e13eec3/idbfs_source.mjs');
         installSaveHost({runtimeReady: saveRuntimeReady, captureLegacy: captureIdbfsSource});
       });
       saveBridgeReady.catch(() => {});
-      const assetRecoveryReady = import('./boot-453f605/download_assets.mjs');
+      const assetRecoveryReady = import('./boot-e13eec3/download_assets.mjs');
       assetRecoveryReady.catch(() => {});
       let restoreAssetFetch = () => {};
       const threads = false;
