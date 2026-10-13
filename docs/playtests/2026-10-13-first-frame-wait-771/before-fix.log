@@ -1,0 +1,15 @@
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
++ actual - expected
+
++ '引擎已启动，正在绘制画面…'
+- '游戏画面尚未绘制完成。'
+
+    at firstFrameWaitCases (<worktree>\test\loading_shell_test.cjs:24:9)
+    at async <worktree>\test\loading_shell_test.cjs:52:2 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: '引擎已启动，正在绘制画面…',
+  expected: '游戏画面尚未绘制完成。',
+  operator: 'strictEqual',
+  diff: 'simple'
+}
