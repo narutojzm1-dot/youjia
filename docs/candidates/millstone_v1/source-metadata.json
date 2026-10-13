@@ -1,0 +1,116 @@
+{
+  "issue": 700,
+  "owner": "CODEX-LEAD",
+  "created_utc": "2026-10-13T10:14:14.329432+00:00",
+  "status": "candidate_only_not_runtime_approved_not_integrated_not_published",
+  "generation": {
+    "tool": "built-in image_gen.imagegen",
+    "mode": "new independent prop using repository images as style references",
+    "transparent_background": true,
+    "source_filename": "exec-65f6e420-186d-4ff7-8e9a-2a4d714c6ce5.png",
+    "source_sha256": "a9248478d8cea22d8244e355b72d71c860a7e4330f3154e844965192b6086f64",
+    "source_bytes": 2358584,
+    "postprocessing": "none; original generated PNG copied byte-for-byte"
+  },
+  "candidate": {
+    "path": "millstone-watercolor-v1.png",
+    "bytes": 2358584,
+    "sha256": "a9248478d8cea22d8244e355b72d71c860a7e4330f3154e844965192b6086f64",
+    "git_blob_sha1": "cf15698600d3fee7f3e1c35aacb6884ea4a28db6"
+  },
+  "prompt": {
+    "path": "prompt-v1.txt",
+    "bytes": 2236,
+    "sha256": "4b7690c7a73c1c8c0e0b151d7d8c73d80a1054bd50f787d10807a98e790eb4e4",
+    "git_blob_sha1": "0facd873056aa1031e4417954a5d5aeaaac06389"
+  },
+  "references": [
+    {
+      "repository_path": "assets/holiday/environment/yard_sunny.png",
+      "bytes": 4019432,
+      "sha256": "7f29181eac79c89b18eff65fe1a18c37230573b55f8c8993a0365dc480219d73",
+      "role": "Primary courtyard art style, light, stone material and perspective; scene not edited."
+    },
+    {
+      "repository_path": "assets/holiday/objects/yard_back_basket.png",
+      "bytes": 2512798,
+      "sha256": "de2c0112c76c1a3555be434affab5e63c01c571879a33ebf8222f3b197a9453a",
+      "role": "Secondary isolated prop material/presentation reference only; basket not included."
+    }
+  ],
+  "image": {
+    "size": [
+      1335,
+      1178
+    ],
+    "mode": "RGBA",
+    "alpha_bbox": [
+      0,
+      15,
+      1315,
+      1178
+    ],
+    "fully_transparent_pixels": 687166,
+    "fully_opaque_pixels": 570,
+    "partial_alpha_pixels": 884894,
+    "largest_alpha_bins": [
+      {
+        "alpha": 0,
+        "pixels": 687166
+      },
+      {
+        "alpha": 252,
+        "pixels": 592799
+      },
+      {
+        "alpha": 253,
+        "pixels": 207475
+      },
+      {
+        "alpha": 251,
+        "pixels": 50024
+      },
+      {
+        "alpha": 1,
+        "pixels": 9098
+      },
+      {
+        "alpha": 250,
+        "pixels": 5407
+      },
+      {
+        "alpha": 249,
+        "pixels": 2013
+      },
+      {
+        "alpha": 2,
+        "pixels": 1984
+      }
+    ],
+    "alpha_gt_16_bbox": [
+      98,
+      37,
+      1238,
+      1145
+    ]
+  },
+  "visual_review": {
+    "observed": "One complete mill with top feeding hole, upper rotating disc, lower stationary basin and front-right outlet, upright wooden handle and low stone supports; transparent surround; no text/UI/background/extra props.",
+    "limitations": "Review is of standalone source at full size. In-scene scale, background blend, occlusion, placement and final readability require Leader art/runtime review. Stone granulation is stronger than distant courtyard rocks at original resolution; must assess final display scale.",
+    "alpha_note": "Generated alpha retained unchanged. Most visible stone pixels have alpha 252/253, not 255; faint alpha-1 residuals reach outer bounds. Main visible object (alpha >16) bounds are [98,37,1238,1145], leaving margin. No manual alpha correction applied; assess final background compositing before acceptance."
+  },
+  "runtime_allowed": false,
+  "source_authorization": "User-authorized #700 starting millstone; CODEX-LEAD delegated standalone candidate preparation and archival. Uses existing project-owned reference assets; no external third-party asset downloaded. No legal exclusivity claim is made for AI-generated imagery.",
+  "repo_search": {
+    "filename_pattern": "mill|grind|mortar|磨盘|石磨|磨粉",
+    "content_pattern": "磨盘|石磨|磨粉|grindstone|gristmill|stone_mill|flour_mill",
+    "result": "No existing millstone image or accepted millstone resource located in current assets/art/docs. Design-only mentions found; millet filename false positive excluded."
+  },
+  "constraints": [
+    "No runtime, save, design ledger, existing artwork, or repository file edited.",
+    "Millstone location remains undecided; door-left shovel/hoe placement not occupied.",
+    "Leader final art approval and integration remain pending.",
+    "No flour recipe, action-point, resource consumption, garden or UI behavior implemented."
+  ],
+  "art_review": "Leader viewed source: upper/lower stones, central hole, wooden handle and flour outlet readable; style usable as candidate; heavy granulation requires actual display-scale scene review. This is not scene acceptance."
+}
