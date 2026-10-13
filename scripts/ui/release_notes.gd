@@ -24,7 +24,9 @@ static func build_name() -> String:
 static func latest_status(data: Variant, current: String) -> String:
 	if not data is Dictionary: return "暂时无法检查更新；以下仍是本版本公告。"
 	var source := str(data.get("sourceCommit", ""))
-	if source.length() != 40 or str(data.get("entry", "")) != "game-" + source.left(7):
+	# Match the loading shell's release identity contract before claiming latest.
+	var source_pattern := RegEx.create_from_string("^[a-f0-9]{40}$")
+	if data.get("schema", "") != "youjia.release/v1" or source.length() != 40 or source_pattern.search(source) == null or str(data.get("entry", "")) != "game-" + source.left(7):
 		return "暂时无法检查更新；以下仍是本版本公告。"
 	if current.is_empty(): return "本地开发版，未发布。"
 	if source == current: return "已与线上核对：当前是最新发布版本。"

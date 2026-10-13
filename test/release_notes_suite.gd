@@ -27,10 +27,20 @@ func key(code: Key) -> void:
 
 func _run() -> void:
 	var sha := "c874273bc16f6b99e43da49de8907008f52d44d9"
-	check(Notices.latest_status({"sourceCommit":sha, "entry":"game-c874273"}, sha).contains("最新"), "same build")
-	check(Notices.latest_status({"sourceCommit":sha, "entry":"game-c874273"}, "older").contains("不同"), "old build")
-	for invalid in [null, [], {}, {"sourceCommit":sha, "entry":"wrong"}]:
+	var release := {"schema":"youjia.release/v1", "sourceCommit":sha, "entry":"game-c874273"}
+	check(Notices.latest_status(release, sha).contains("最新"), "same build")
+	check(Notices.latest_status(release, "older").contains("不同"), "old build")
+	for invalid in [null, [], {}, {"schema":"youjia.release/v1", "sourceCommit":sha, "entry":"wrong"}]:
 		check(Notices.latest_status(invalid, sha).contains("无法"), "never claim latest on failed check")
+	var missing_schema := release.duplicate()
+	missing_schema.erase("schema")
+	check(Notices.latest_status(missing_schema, sha).contains("无法"), "missing schema cannot claim latest")
+	var wrong_schema := release.duplicate()
+	wrong_schema.schema = "youjia.release/v2"
+	check(Notices.latest_status(wrong_schema, sha).contains("无法"), "wrong schema cannot claim latest")
+	for invalid_source: String in ["g".repeat(40), sha.to_upper(), sha.left(39), sha + "0"]:
+		var invalid_release := {"schema":"youjia.release/v1", "sourceCommit":invalid_source, "entry":"game-" + invalid_source.left(7)}
+		check(Notices.latest_status(invalid_release, invalid_source).contains("无法"), "invalid source cannot claim latest: " + invalid_source)
 	for dims in [Vector2i(1280,720),Vector2i(390,844),Vector2i(280,640),Vector2i(640,300),Vector2i(844,390)]:
 		root.size = dims
 		main = load("res://scenes/main.tscn").instantiate()
