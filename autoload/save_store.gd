@@ -28,6 +28,7 @@ const SaveFilesType := preload("res://scripts/persistence/save_files.gd")
 const AnimalRelationshipsType := preload("res://scripts/game/animal_relationships.gd")
 const SaveDataCodec := preload("res://scripts/persistence/save_data_codec.gd")
 const YardInventory := preload("res://scripts/inventory/yard_inventory.gd")
+const RestContext := preload("res://scripts/game/rest_context.gd")
 const SAVE_VERSION := SaveDataCodec.SAVE_VERSION
 const TUTORIAL_VERSION := SaveDataCodec.TUTORIAL_VERSION
 
@@ -158,6 +159,9 @@ func set_holiday_progress(day: int, elapsed: float) -> void:
 	var candidate := _data.duplicate(true)
 	candidate.holiday_day = maxi(1, day)
 	candidate.holiday_day_elapsed = maxf(0.0, elapsed)
+	var rest := RestContext.assign_clock(_data, int(candidate.holiday_day))
+	if rest.is_empty(): return
+	candidate[RestContext.FIELD] = rest
 	_commit_candidate(candidate)
 
 
@@ -167,6 +171,9 @@ func set_yard_progress(day: int, elapsed: float, state: int, day_planted: int, w
 	var candidate: Dictionary = _data.duplicate(true)
 	candidate.holiday_day = maxi(1, day)
 	candidate.holiday_day_elapsed = maxf(0.0, elapsed)
+	var rest := RestContext.assign_clock(_data, int(candidate.holiday_day))
+	if rest.is_empty(): return false
+	candidate[RestContext.FIELD] = rest
 	candidate.plant_state = clampi(state, 0, 3)
 	candidate.plant_day_planted = maxi(0, day_planted)
 	candidate.plant_watered_day = watered_day
@@ -235,6 +242,69 @@ func get_yard_inventory() -> Dictionary:
 
 func get_yard_crops() -> Dictionary:
 	return preload("res://scripts/game/yard_crops.gd").read(_data)
+
+
+func get_meal_ledger() -> Dictionary:
+	return preload("res://scripts/game/meal_ledger.gd").read(_data)
+
+
+func get_rest_context() -> Dictionary:
+	return RestContext.read(_data)
+
+
+## Read-only proposal; caller supplies recipes whose world prerequisites pass.
+## It does not reserve materials, start cooking, infer a mealtime or grant AP.
+func plan_meal(meal: String, eligible_recipes: Dictionary, rng: RandomNumberGenerator) -> Dictionary:
+	return preload("res://scripts/game/meal_planner.gd").plan(_data, meal, eligible_recipes, rng)
+
+
+## Read-only foundation; caller supplies executable actions, never raw materials
+## as implied recipes. Does not start autonomous work or spend action points.
+func plan_growth_materials(eligible_actions: Dictionary, rng: RandomNumberGenerator) -> Dictionary:
+	return preload("res://scripts/game/growth_materials.gd").plan(_data, eligible_actions, rng)
+
+
+## Confirmed world projection, validated against matching action receipts.
+func get_pond_edging() -> Dictionary:
+	# Do not project orphan world results without their matching AP receipts.
+	if preload("res://scripts/game/growth_budget.gd").read(_data).is_empty(): return {}
+	return preload("res://scripts/game/pond_edging.gd").read(_data)
+
+
+func get_growth_budget(period: String) -> Dictionary:
+	return preload("res://scripts/game/growth_budget.gd").budget(_data, period)
+
+
+func request_pond_growth(expected: Dictionary, section: String, proposal: Dictionary, ap_cost: int, stones: int, experience: int) -> String:
+	var frozen_budget := expected.duplicate(true)
+	var frozen_proposal := proposal.duplicate(true)
+	return request_intent("growth", func(current: Dictionary) -> Variant:
+		var result := preload("res://scripts/game/growth_budget.gd").complete(current, frozen_budget, section, frozen_proposal, ap_cost, stones, experience)
+		if result.has("error"): return CoordinatorType.IntentRejection.new(result.error)
+		return result.candidate)
+
+
+## The cooking director validates recipe/time before submitting this completion.
+## Capture the cost now; the FIFO head validates both revisions and the game day.
+func request_meal_completion(revision: int, inventory_revision: int, day: int, meal: String, ingredients: Dictionary, progress: Dictionary = {}) -> String:
+	var cost := ingredients.duplicate(true)
+	var clock := progress.duplicate(true)
+	return request_intent("meal", func(current: Dictionary) -> Variant:
+		var rest := RestContext.read(current)
+		if rest.is_empty(): return CoordinatorType.IntentRejection.new("REST_INVALID")
+		var result := preload("res://scripts/game/meal_ledger.gd").complete(current, revision, inventory_revision, day, meal, cost, RestContext.fatigued(rest))
+		if result.has("error"): return CoordinatorType.IntentRejection.new(result.error)
+		if not clock.is_empty():
+			var elapsed: Variant = clock.get("elapsed")
+			if not (elapsed is float or elapsed is int) or not is_finite(float(elapsed)) or float(elapsed) < 0.0 or float(elapsed) >= 600.0:
+				return CoordinatorType.IntentRejection.new("MEAL_CLOCK_INVALID")
+			var climate := preload("res://scripts/game/world_weather.gd").sanitize(clock.get("weather", {}))
+			if climate.is_empty(): return CoordinatorType.IntentRejection.new("MEAL_CLOCK_INVALID")
+			# Preserve any newer queue-head clock/weather; never rewind another writer.
+			if float(elapsed) >= float(current.get("holiday_day_elapsed", 0.0)):
+				result.candidate.holiday_day_elapsed = float(elapsed)
+				result.candidate.world_weather = climate
+		return result.candidate)
 
 func has_yard_crops() -> bool:
 	return _data.has("yard_crops")
@@ -598,6 +668,18 @@ func request_album(photos: PackedStringArray, moments: Dictionary = {}) -> Strin
 		return current)
 
 
+func has_hotbar_slots() -> bool:
+	return _data.has("hotbar_slots")
+
+
+func get_hotbar_slots() -> Array:
+	return preload("res://scripts/persistence/hotbar_slots.gd").clean(_data.get("hotbar_slots", []))
+
+
+func request_hotbar_slots(slots: Array) -> String:
+	return request_patch("hotbar-slots", {"hotbar_slots": preload("res://scripts/persistence/hotbar_slots.gd").clean(slots)})
+
+
 func get_yard_gate_open() -> bool:
 	return _data.get("yard_gate_open", false) == true and _data.get("yard_gate_open", false) is bool
 
@@ -614,12 +696,15 @@ func request_yard_progress(day: int, elapsed: float, state: int, day_planted: in
 	var patch := {"holiday_day": maxi(1, day), "holiday_day_elapsed": maxf(0.0, elapsed), "plant_state": clampi(state, 0, 3), "plant_day_planted": maxi(0, day_planted), "plant_watered_day": watered_day}
 	var clean := preload("res://scripts/game/world_weather.gd").sanitize(climate)
 	if not clean.is_empty(): patch.world_weather = clean
-	return request_intent("yard", func(current: Dictionary) -> Dictionary:
+	return request_intent("yard", func(current: Dictionary) -> Variant:
 		# A queued pre-sleep autosave cannot overwrite a committed morning.
 		var saved_day := int(current.get("holiday_day", 1))
 		if int(patch.holiday_day) < saved_day: return current
 		if int(patch.holiday_day) == saved_day and float(patch.holiday_day_elapsed) < float(current.get("holiday_day_elapsed",0.0)): return current
+		var rest := RestContext.advance(current, int(patch.holiday_day), false)
+		if rest.is_empty(): return CoordinatorType.IntentRejection.new("REST_INVALID")
 		current.merge(patch,true)
+		current[RestContext.FIELD] = rest
 		return current)
 
 

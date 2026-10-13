@@ -9,7 +9,14 @@ const WINDOWBOX := "windowbox"
 const SHORE_STONES := "shore_stones"
 const FENCE_GATE := "fence_gate"
 const PATH_OUT := "path_out"
+const ORIGINAL_PLANT_PREFIX := "original_plant:"
 static var CATALOG: Array[Dictionary] = [
+	{"id":ORIGINAL_PLANT_PREFIX+"left_cluster", "hit_polygon":preload("res://scripts/game/original_plant_view.gd").points("left_cluster"),
+	"approach_points":[Vector2(209,567)],"reach":48.0,"label_key":"action.original_plants","target_key":"garden.area.left_cluster"},
+	{"id":ORIGINAL_PLANT_PREFIX+"door_pots", "hit_polygon":preload("res://scripts/game/original_plant_view.gd").points("door_pots"),
+	"approach_points":[Vector2(245,484)],"reach":48.0,"label_key":"action.original_plants","target_key":"garden.area.door_pots"},
+	{"id":ORIGINAL_PLANT_PREFIX+"pond_cluster", "hit_polygon":preload("res://scripts/game/original_plant_view.gd").points("pond_cluster"),
+	"approach_points":[Vector2(388,548)],"reach":48.0,"label_key":"action.original_plants","target_key":"garden.area.pond_cluster"},
 	{"id":BASKET, "hit_polygon":PackedVector2Array([Vector2(301,415),Vector2(369,415),Vector2(369,488),Vector2(301,488)]),
 	"approach_points":[Vector2(335,522)],"visual_anchor":Vector2(335,485),"reach":18.0,"label_key":"action.open_basket","target_key":"target.basket"},
 	{"id":HOUSE_DOOR, "hit_polygon":PackedVector2Array([Vector2(233,337),Vector2(296,337),Vector2(296,450),Vector2(233,450)]),
@@ -90,6 +97,7 @@ static func get_hotspot(target: String) -> Dictionary:
 
 static func resolve(world: Node2D, target: String) -> Dictionary:
 	var hotspot := get_hotspot(target)
+	if target.begins_with(ORIGINAL_PLANT_PREFIX) and (world.original_plants_view == null or not preload("res://scripts/game/original_plant_view.gd").enabled()): return {}
 	if target == HOUSE_DOOR and world.house != null and not world.house.available(): return {}
 	# Durable carried food can travel with the player. Keep ordinary ambient
 	# observations suppressed while carrying; explicit doors do not consume food.

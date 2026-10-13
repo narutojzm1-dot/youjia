@@ -16,10 +16,14 @@ signal decor_recall_requested(spot: String)
 signal chick_care_requested
 signal basket_requested
 signal plant_bed_requested
+signal original_plant_requested(area: String)
 var crop_sprite: Sprite2D
 var _grain_held := ""
 var ground_food: Node2D
 var decor_view: Node2D
+var original_plants_view: Node2D
+var pond_growth: Node
+var pond_edging_view: Node2D
 var pond_story: Node
 var gate: Node2D
 var gate_view: Node2D
@@ -83,6 +87,7 @@ var simulation_active := true
 var input_enabled := true:
 	set(value):
 		input_enabled = value
+		if house != null: house.player_activity()
 		if not value and _player != null: _player.clear_idle_rest()
 
 # ── 假期天数 / 昼夜 ───────────────────────────────────────────────────────────
@@ -259,6 +264,14 @@ func setup(
 	add_child(ground_food)
 	decor_view = load("res://scripts/inventory/yard_decor_view.gd").new()
 	add_child(decor_view)
+	if preload("res://scripts/game/original_plant_view.gd").enabled():
+		original_plants_view = preload("res://scripts/game/original_plant_view.gd").new()
+		original_plants_view.name = "OriginalPlants"
+		add_child(original_plants_view)
+	pond_edging_view = preload("res://scripts/game/pond_edging_view.gd").new(SaveStore)
+	add_child(pond_edging_view)
+	pond_growth = preload("res://scripts/game/pond_growth_director.gd").new(self,SaveStore)
+	add_child(pond_growth)
 	pond_story = load("res://scripts/game/pond_story_controller.gd").new(self)
 	add_child(pond_story)
 	_spawn_cast()
@@ -327,6 +340,7 @@ func tod_fraction() -> float:
 ## 根据玩家当前位置返回合适的上下文提示键
 ## 牵行/持草/持鱼时优先显示操作提示，其余按位置决定
 func hint_context() -> String:
+	if house != null and not house.meal_hint().is_empty(): return house.meal_hint()
 	var action := YardInteraction.primary(self)
 	var target := str(action.get("target", ""))
 	if target == "release": return "hud.hint.leading"
@@ -511,8 +525,8 @@ func tick(delta: float, move: Vector2) -> void:
 	if gate != null and not gate.pending.is_empty(): return
 	if not simulation_active:
 		return
+	if house != null: house.consider_meal(delta, move)
 	var house_owned_tick: bool = house != null and house.busy()
-	if house_owned_tick and move.length() > 0.2: house.skip_balcony()
 	if house != null: house.tick(delta)
 	if not house_owned_tick: advance_world_time(delta)
 	_rejected_seconds = maxf(0.0, _rejected_seconds - delta)
@@ -545,6 +559,8 @@ func tick(delta: float, move: Vector2) -> void:
 	if _player == null:
 		return
 	_player.body_obstacles = physical_obstacles("player")
+	if pond_growth != null: pond_growth.tick(delta,move)
+	if pond_growth != null: pond_growth.consider(delta,move)
 	_player.rest_allowed = _outdoor_rest_allowed(move)
 	_body_repath = maxf(0.0,_body_repath-delta)
 	if house != null and house.busy():
@@ -594,6 +610,7 @@ func tick(delta: float, move: Vector2) -> void:
 		_player.tick(delta, move, WORLD_SIZE)
 	else:
 		_player.tick(delta, Vector2.ZERO, WORLD_SIZE)
+	if pond_growth != null: pond_growth.sync_presentation()
 	if _grass_patch != null: _grass_patch.tick(delta)
 	if shelter != null: shelter.prepare(delta)
 	if ground_food != null and inventory_enabled: ground_food.tick(delta)
@@ -676,6 +693,9 @@ func tick(delta: float, move: Vector2) -> void:
 
 
 func _tick_goose_mount_encounter(delta: float, move: Vector2) -> void:
+	if pond_growth != null and pond_growth.busy():
+		_goose_mount_wait = 0.0
+		return
 	if pond_story != null and pond_story.busy():
 		_goose_mount_wait = 0.0
 		return
@@ -809,14 +829,23 @@ func _interact_with_target(target: String) -> void:
 	if not input_enabled or inventory_busy or _player == null:
 		return
 	TuningStore.apply_boundary("NEXT_ACTION")
+	if target.begins_with(YardSceneHotspots.ORIGINAL_PLANT_PREFIX):
+		var flower_action := YardSceneHotspots.resolve(self,target)
+		if flower_action.is_empty() or _player.position.distance_to(flower_action.point) >= flower_action.reach: return
+		_consume_pending_action()
+		original_plant_requested.emit(target.get_slice(":",1))
+		return
 	if target == YardSceneHotspots.BASKET:
 		var basket_action := YardSceneHotspots.resolve(self, target)
 		if basket_action.is_empty() or _player.position.distance_to(basket_action.point) >= basket_action.reach: return
 		_consume_pending_action()
 		basket_requested.emit()
 		return
-	if target == "house_door":
-		if _player.position.distance_to(house.APPROACH) < 20.0: house.begin()
+	if target == "meal_basket":
+		house.take_from_basket()
+		return
+	if target in ["house_door", "house_meal"]:
+		if _player.position.distance_to(house.APPROACH) < 20.0: house.begin(target == "house_meal")
 		return
 	if target == YardSceneHotspots.WINDOWBOX:
 		var scene_action := YardSceneHotspots.resolve(self, target)
@@ -970,6 +999,9 @@ func action_target_key(action: Dictionary) -> String:
 
 
 func cancel_scene_feedback() -> void:
+	# Main menus stop World.tick; interrupt before that clock is frozen.
+	# The director keeps accepted saving operations until their durable result.
+	if pond_growth != null: pond_growth.cancel()
 	if _player != null: _player.clear_idle_rest()
 	if pond_story != null: pond_story.cancel()
 	_cancel_goose_mount_encounter()
@@ -979,10 +1011,12 @@ func cancel_scene_feedback() -> void:
 
 
 func request_primary_action() -> void:
+	if pond_growth != null: pond_growth.cancel()
 	if _player != null: _player.idle_rest.wake(bool(TuningStore.get_value("ui.reduced_motion", false)))
-	if house != null and house.busy():
-		house.skip_balcony()
-		return
+	if house != null:
+		var was_in_house: bool = house.busy()
+		house.request_player_intent({"kind":"cancel"})
+		if was_in_house: return
 	if pond_story != null: pond_story.cancel()
 	if not input_enabled or inventory_busy or _player == null:
 		return
@@ -1002,9 +1036,9 @@ func request_primary_action() -> void:
 
 
 func request_pointer_action(point: Vector2) -> void:
+	if pond_growth != null: pond_growth.cancel()
 	if _player != null: _player.idle_rest.wake(bool(TuningStore.get_value("ui.reduced_motion", false)))
-	if house != null and house.busy():
-		house.skip_balcony()
+	if house != null and house.request_player_intent({"kind":"pointer", "point":point}):
 		return
 	if pond_story != null: pond_story.cancel()
 	if not input_enabled or _player == null:
@@ -1025,6 +1059,8 @@ func _interaction_actor(target: String) -> FeltActor:
 
 
 func _request_action(target: String, goal: Vector2) -> void:
+	if house != null and not house.busy() and target != "house_meal" and not house.cooking_plan.is_empty():
+		house.cancel_preparation()
 	_scene_feedback.cancel()
 	notice_dismiss_requested.emit("notice.cannot_walk")
 	_rejected_seconds = 0.0
@@ -1059,25 +1095,30 @@ func try_walk_to(goal: Vector2) -> bool:
 		return false
 	if _player.position.distance_to(goal) < 12.0:
 		return false
-	_walk_path = YardBodies.route(_player.position, goal, _player.body_radius*YardGround.depth_at(_player.position.y), _routing_obstacles(), player_ground())
+	_walk_goal = goal
+	_walk_path = _route_to_walk_goal(_routing_obstacles()) if _pending_interaction in ["meal_basket", "house_meal"] \
+		else YardBodies.route(_player.position, goal, _player.body_radius*YardGround.depth_at(_player.position.y), _routing_obstacles(), player_ground())
 	_body_repath = 0.7
 	# A valid lawn destination can be occupied by a moving animal at click time.
 	# Retain it and let the normal waiting/repath loop resume when it clears.
 	_has_walk_goal = true
-	_walk_goal = goal
 	_walk_goal_age = 0.0
 	return true
 
 
 # Residents can settle on a previously clear lawn destination. Approach within
 # the normal arrival tolerance instead of waiting forever inside their body.
-# Keep the original goal and all explicit interaction targets unchanged.
+# Meal routes may use a clear point inside their existing interaction reach;
+# the physical interaction center and arrival checks remain unchanged.
 func _route_to_walk_goal(obstacles: Array) -> Array[Vector2]:
 	var radius := _player.body_radius * YardGround.depth_at(_player.position.y)
 	var path := YardBodies.route(_player.position, _walk_goal, radius, obstacles, player_ground())
-	if not path.is_empty() or not _pending_interaction.is_empty() or YardBodies.clear_at(_walk_goal, radius, obstacles):
+	var meal_route := _pending_interaction in ["meal_basket", "house_meal"]
+	if not path.is_empty() or (not _pending_interaction.is_empty() and not meal_route) or YardBodies.clear_at(_walk_goal, radius, obstacles):
 		return path
-	for margin: float in [4.0, 8.0, 11.0]:
+	var margins: Array[float] = [4.0, 8.0, 11.0]
+	if meal_route: margins.append(YardInteraction.reach(_pending_interaction) - 3.0)
+	for margin: float in margins:
 		var candidates: Array[Vector2] = []
 		for i in 16:
 			candidates.append(_walk_goal + Vector2.from_angle(float(i) * TAU / 16.0) * margin)
@@ -1435,6 +1476,7 @@ func _make_cloud_sprite(node_name: String) -> Sprite2D:
 
 ## REQ-012 切片 C：安静停留后轻微抬头看天；走动立刻取消；无新提示/道具/相册。
 func _outdoor_rest_allowed(move: Vector2) -> bool:
+	if pond_growth != null and pond_growth.busy(): return false
 	if not input_enabled or inventory_busy or not _player.visible or not _player.sequence_walker_enabled: return false
 	if house != null and house.busy(): return false
 	if _leading or _has_walk_goal or not _pending_interaction.is_empty() or not move.is_zero_approx(): return false
@@ -1465,8 +1507,9 @@ func _tick_quiet_sky_look(delta: float, move: Vector2) -> void:
 	if _goose_mount_wait > 0.0:
 		_quiet_sky_still = 0.0
 		return
-	var player_busy := (
-		not input_enabled
+	var player_busy: bool = (
+		(pond_growth != null and pond_growth.busy())
+		or not input_enabled
 		or _leading
 		or _has_walk_goal
 		or move.length() > 0.2
@@ -1615,6 +1658,8 @@ func _tick_weather_transition(delta: float, refresh_tint: bool = false) -> void:
 			band.modulate = Color(_cloud_tint.r, _cloud_tint.g, _cloud_tint.b, float(_weather_cloud_weights[i]))
 			band.visible = float(_weather_cloud_weights[i]) > 0.0
 	if _scene_feedback != null: _scene_feedback.modulate = sun_tint.lerp(rain_tint, _weather_mix)
+	if pond_edging_view != null: pond_edging_view.modulate = sun_tint.lerp(rain_tint, _weather_mix)
+	if original_plants_view != null: original_plants_view.sync(SaveStore.get_yard_original_plants(),_weather_mix,sun_tint,rain_tint)
 	if gate_view != null: gate_view.refresh(gate.opened, _weather_mix, sun_tint, rain_tint)
 	_weather_art_initialized = true
 	_layout_cloud_bands()

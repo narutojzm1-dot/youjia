@@ -1,0 +1,17 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+FAILED production keeps feet planted
+FAILED production keeps feet planted
+AUTO_BEFORE_SAVE saving work=12.0333333333333 pos=(471.1088, 543.6272) target=(480.0, 545.0) elapsed=198.099999999998 pending= house=
+AUTO_AFTER_SAVE { "day": 1, "period": "lunch", "available": 2, "source": { "meals": { "schema": 1, "revision": 1, "receipts": [{ "day": 1, "meal": "lunch", "ingredients": { "wheat": 1 }, "fatigued": false, "earned": 3 }] }, "actions": { "schema": 1, "revision": 1, "actions": { "rim_04": { "day": 1, "period": "lunch", "ap": 1 } } } } } sections={ "schema": 1, "revision": 1, "sections": { "rim_04": { "day": 1, "stones": 1, "experience": 1 } } }
+POND_GROWTH_DIRECTOR checks=290 failures=2
+ERROR: production keeps feet planted
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] run (res://test/pond_growth_director_suite.gd:171)
+       [1] check_growth_feedback (res://test/pond_growth_director_suite.gd:268)
+ERROR: production keeps feet planted
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] run (res://test/pond_growth_director_suite.gd:171)
+       [1] check_growth_feedback (res://test/pond_growth_director_suite.gd:268)

@@ -1,4 +1,5 @@
 extends Control
+const HotbarSlotsPrefs := preload("res://scripts/ui/hotbar_slots_prefs.gd")
 const OpenSourceLicenses = preload("res://scripts/manus/open_source_licenses.gd")
 const YardWorldType := preload("res://scripts/game/yard_world.gd")
 const TITLE_PAPER := preload("res://assets/holiday/ui/scrapbook_paper.png")
@@ -77,10 +78,25 @@ var _album_chip: Button
 var _weather_chip: Button
 var _basket_chip: Button
 var _basket_panel: Control
+var _hotbar_save: Node
 var _hold_hotbar: Control
+var _chip_label_width := -1.0
 var _residents: RefCounted
 var _chick_panel: Control
 var _crop_panel: Control
+var _original_plant_panel: Control
+var _original_plants: RefCounted
+var _resident_bubble: Control
+var _resident_barks: RefCounted
+var _crop_kind_watch := ""
+var _bark_clock := 0.0
+var _growth_bark_revision := -1
+var _fatigue_bark_day := -1
+var _fatigue_bark_ready_seconds := 0.0
+const FATIGUE_BARK_SETTLE_SECONDS := 15.0
+## Chick proximity hysteresis: stay latched until beyond PET_REACH + margin.
+var _chick_proximity_latched := false
+const CHICK_LEAVE_MARGIN := 28.0
 var _inventory: RefCounted
 var _decor: RefCounted
 var _basket_drop: Dictionary = {}
@@ -93,8 +109,12 @@ var _pause_panel: PanelContainer
 var _pause_box: VBoxContainer
 var _pause_columns: HBoxContainer
 var _pause_session: VBoxContainer
+var _meal_audio_host: Node
+var _meal_audio_focused := true
 var _pause_audio: VBoxContainer
 var _pause_title: Label
+var _release_button: Button
+var _release_panel: Control
 var _resume_button: Button
 var _restart_button: Button
 var _pause_title_button: Button
@@ -121,6 +141,8 @@ var _album_spread: HBoxContainer
 var _album_previous_button: Button
 var _album_next_button: Button
 var _album_back_button: Button
+## 窄竖屏一行放不下三枚翻页按钮时，「合上」移到这第二行
+var _album_controls_low: HBoxContainer
 var _album_entries := PackedStringArray()
 var _album_index := 0
 var _album_two_pages := true
@@ -360,9 +382,22 @@ func _ready() -> void:
 	_crop_panel.flower_requested.connect(func() -> void:
 		_hide_crops()
 		if _world != null: _world._interact_legacy_plant())
+	_resident_barks = preload("res://scripts/presentation/resident_barks.gd").new()
+	_resident_bubble = preload("res://scripts/presentation/resident_bubble.gd").new()
+	_resident_bubble.name = "ResidentBubble"
+	_ui_layer.add_child(_resident_bubble)
 	_decor = load("res://scripts/inventory/yard_decor_controller.gd").new(SaveStore)
 	_decor.changed.connect(_on_decor_changed)
 	_decor.resubmitted.connect(_on_decor_resubmitted)
+	_original_plants = preload("res://scripts/inventory/original_plant_controller.gd").new(SaveStore)
+	_original_plants.changed.connect(_on_original_plants_changed)
+	_original_plants.resubmitted.connect(_on_original_plants_resubmitted)
+	_original_plant_panel = preload("res://scripts/ui/original_plant_panel.gd").new()
+	_original_plant_panel.name = "OriginalPlantPanel"
+	_original_plant_panel.controller = _original_plants
+	_ui_layer.add_child(_original_plant_panel)
+	_original_plant_panel.visible = false
+	_original_plant_panel.close_requested.connect(_hide_original_plants)
 	_basket_panel.place_requested.connect(_place_from_basket)
 	_ensure_hold_hotbar()
 	I18n.locale_changed.connect(_on_locale_changed)
@@ -384,12 +419,14 @@ func _report_web_first_frame() -> void:
 
 
 func _process(delta: float) -> void:
+	_bark_clock += delta
+	_tick_resident_barks(delta)
 	if _notice_time > 0.0 and _can_show_notice():
 		_notice_time = maxf(0.0, _notice_time - delta)
 	_sync_notice_visibility()
 	if _notice.visible:
 		_fit_notice()
-	if _screen == "game" and _world != null and not _pause_screen.visible and not _album_screen.visible and not _confirm_screen.visible and not _basket_panel.visible and not _crop_panel.visible and not _chick_panel.visible and not _save_problem_active:
+	if _screen == "game" and _world != null and not _pause_screen.visible and not _album_screen.visible and not _confirm_screen.visible and not _basket_panel.visible and not _crop_panel.visible and not _chick_panel.visible and not _original_plant_panel.visible and not _save_problem_active:
 		var move := Vector2.ZERO
 		if _world.input_enabled:
 			move = Input.get_vector("move_left", "move_right", "move_up", "move_down")
@@ -398,6 +435,7 @@ func _process(delta: float) -> void:
 	elif _screen == "exploring" and _world != null and not _pause_screen.visible and not _confirm_screen.visible and not _save_problem_active:
 		_world.advance_world_time(delta)
 		_sync_path_rain(delta)
+	_sync_meal_audio()
 	var reduced := bool(TuningStore.get_value("ui.reduced_motion", false))
 	var lerp_rate := 12.0 if reduced else 3.2
 	_cam_zoom = lerpf(_cam_zoom, _cam_target_zoom, 1.0 - exp(-delta * lerp_rate))
@@ -474,10 +512,118 @@ func _process(delta: float) -> void:
 			_last_tod_phase = phase
 
 
+const MENU_FOCUS_ACTIONS: Array[StringName] = [&"ui_focus_next", &"ui_focus_prev", &"ui_up", &"ui_down", &"ui_accept"]
+
+
+## 菜单打开时没有按钮拿着焦点，Godot 不会因 Tab/方向键自动选中按钮，纯键盘玩家在标题、暂停、
+## 确认和相册里按键毫无反应。第一次导航键只把焦点交给该界面的默认按钮，之后由 Godot 正常移动和按下；
+## 鼠标玩家不会凭空多出焦点框。焦点留在被确认框盖住的暂停按钮上时同样交给最上层菜单。
+## 相册左右键仍归翻页，不在此列。
+func _top_menu() -> Control:
+	if _confirm_screen.visible: return _confirm_screen
+	if _album_screen.visible: return _album_screen
+	if _pause_screen.visible: return _pause_screen
+	if _screen == "title" and _title_screen.visible: return _title_screen
+	return null
+
+
+func _menu_default_button(menu: Control) -> Button:
+	if menu == _confirm_screen: return _confirm_cancel_button
+	if menu == _album_screen: return _album_back_button
+	if menu == _pause_screen: return _resume_button
+	return _play_button
+
+
+## 院内底栏按钮平时不拿焦点：鼠标点过按钮后空格仍是互动，Web 上点击也由 _input 手动命中。
+## 纯键盘玩家原来打不开手帐、背篓、天气，也够不着快捷栏格子。Tab / Shift+Tab 按画面从左到右轮转
+## 手帐、天气、背篓、快捷栏五格、行动、歇一会儿，只有轮到的那一个显示焦点框；回车/空格按下，
+## 方向键、WASD、鼠标或触屏一操作就放下。只认键盘轮转选中的那一个：鼠标点格子拿到的焦点不改空格互动。
+var _hud_keyboard_target: Button
+
+
+func _hud_chips() -> Array[Button]:
+	return [_album_chip, _weather_chip, _basket_chip, _action_button, _pause_button]
+
+
+func _hud_keyboard_buttons() -> Array[Button]:
+	var ring: Array[Button] = [_album_chip, _weather_chip, _basket_chip]
+	if _hold_hotbar != null and _hold_hotbar.is_visible_in_tree() and not _hold_hotbar.configuring:
+		ring.append_array(_hold_hotbar.slot_cells)
+	ring.append_array([_action_button, _pause_button])
+	var out: Array[Button] = []
+	for button: Button in ring:
+		if button != null and button.is_visible_in_tree() and not button.disabled and button.self_modulate.a > 0.0:
+			out.append(button)
+	return out
+
+
+func _hud_keyboard_focus() -> Button:
+	if _hud_keyboard_target != null and is_instance_valid(_hud_keyboard_target) and _hud_keyboard_target.has_focus():
+		return _hud_keyboard_target
+	return null
+
+
+func _cycle_hud_focus(step: int) -> void:
+	var buttons := _hud_keyboard_buttons()
+	if buttons.is_empty():
+		return
+	var current := buttons.find(_hud_keyboard_focus())
+	var index := (current + step + buttons.size()) % buttons.size() if current >= 0 else (0 if step > 0 else buttons.size() - 1)
+	var button := buttons[index]
+	if button in _hud_chips():
+		button.focus_mode = Control.FOCUS_ALL
+	if not button.has_meta(&"hud_keyboard_focus"):
+		button.set_meta(&"hud_keyboard_focus", true)
+		button.focus_exited.connect(_on_hud_button_focus_exited.bind(button))
+	_hud_keyboard_target = button
+	button.grab_focus()
+
+
+func _on_hud_button_focus_exited(button: Button) -> void:
+	if button in _hud_chips():
+		button.focus_mode = Control.FOCUS_NONE
+	if _hud_keyboard_target == button:
+		_hud_keyboard_target = null
+
+
+func _focus_menu_default(event: InputEvent) -> bool:
+	if not (event is InputEventKey or event is InputEventJoypadButton) or event.is_echo():
+		return false
+	var menu := _top_menu()
+	if menu == null:
+		return false
+	var focused := get_viewport().gui_get_focus_owner()
+	if focused != null and focused.is_visible_in_tree() and menu.is_ancestor_of(focused):
+		return false
+	if not MENU_FOCUS_ACTIONS.any(func(action: StringName) -> bool: return event.is_action_pressed(action)):
+		return false
+	var target := _menu_default_button(menu)
+	if not target.is_visible_in_tree() or target.disabled:
+		return false
+	target.grab_focus()
+	return true
+
+
 func _input(event: InputEvent) -> void:
+	if _world != null and _world.house != null and ((event is InputEventMouseButton and event.pressed) or (event is InputEventScreenTouch and event.pressed) or (event is InputEventKey and event.pressed and not event.echo)):
+		_world.house.player_activity()
+	if _release_panel != null and _release_panel.visible:
+		# Keep the paused world and underlying menu insulated; panel GUI handles scrolling/clicks.
+		if event.is_action_pressed("pause") and not event.is_echo():
+			_release_panel.close()
+			get_viewport().set_input_as_handled()
+		return
 	if _chick_panel != null and _chick_panel.visible:
 		if event.is_action_pressed("pause") and not event.is_echo():
 			_hide_chick_care()
+			get_viewport().set_input_as_handled()
+		return
+	if _original_plant_panel != null and _original_plant_panel.visible:
+		if _original_plants.state == "saving" and (event is InputEventKey or event is InputEventJoypadButton):
+			get_viewport().set_input_as_handled()
+			return
+		if event.is_action_pressed("pause") and not event.is_echo():
+			_hide_original_plants()
 			get_viewport().set_input_as_handled()
 		return
 	if _crop_panel != null and _crop_panel.visible:
@@ -524,6 +670,9 @@ func _input(event: InputEvent) -> void:
 			_toggle_pause()
 		get_viewport().set_input_as_handled()
 		return
+	if _focus_menu_default(event):
+		get_viewport().set_input_as_handled()
+		return
 	if _album_screen.visible:
 		if event is InputEventKey and event.pressed and not event.is_echo():
 			if event.keycode == KEY_LEFT or event.keycode == KEY_RIGHT:
@@ -541,6 +690,19 @@ func _input(event: InputEvent) -> void:
 					get_viewport().set_input_as_handled()
 					return
 	if _screen == "game" and _world != null and _world.input_enabled and not _pause_screen.visible and not _album_screen.visible and not _confirm_screen.visible:
+		if event is InputEventKey and event.pressed and not event.is_echo() and (event.is_action_pressed("ui_focus_prev") or event.is_action_pressed("ui_focus_next")):
+			_cycle_hud_focus(-1 if event.is_action_pressed("ui_focus_prev") else 1)
+			get_viewport().set_input_as_handled()
+			return
+		var hud_focus := _hud_keyboard_focus()
+		if hud_focus != null:
+			if event.is_action_pressed("ui_accept") and not event.is_echo():
+				hud_focus.pressed.emit()
+				get_viewport().set_input_as_handled()
+				return
+			if (event is InputEventKey and event.pressed and (event.is_action("move_left") or event.is_action("move_right") or event.is_action("move_up") or event.is_action("move_down"))) \
+					or (event is InputEventMouseButton and event.pressed) or (event is InputEventScreenTouch and event.pressed):
+				hud_focus.release_focus()
 		if event.is_action_pressed("ui_accept") and not event.is_echo():
 			# 键盘 Space/Enter 触发动作时同步触发行动按钮视觉脉冲，保持键盘与触控体验一致
 			_pulse_button(_action_button)
@@ -571,6 +733,11 @@ func _input(event: InputEvent) -> void:
 		and event is InputEventMouseButton
 		and (event as InputEventMouseButton).pressed
 		and (event as InputEventMouseButton).button_index == MOUSE_BUTTON_LEFT)
+	# Web may deliver the synthesized mouse before its real touch. In the
+	# yard, the touch owns both HUD and world actions; do not emit twice.
+	if is_mouse_press and event.device == InputEvent.DEVICE_ID_EMULATION:
+		get_viewport().set_input_as_handled()
+		return
 	if not is_touch_press and not is_mouse_press:
 		return
 	var event_pos: Vector2 = (event as InputEventMouseButton).position if is_mouse_press else (event as InputEventScreenTouch).position
@@ -578,7 +745,7 @@ func _input(event: InputEvent) -> void:
 	if _confirm_screen.visible:
 		buttons = [_confirm_accept_button, _confirm_cancel_button]
 	elif _pause_screen.visible:
-		buttons = [_resume_button, _restart_button, _pause_title_button, _music_toggle, _ambience_toggle, _mute_toggle]
+		buttons = [_release_button, _resume_button, _restart_button, _pause_title_button, _music_toggle, _ambience_toggle, _mute_toggle]
 	elif _album_screen.visible:
 		buttons = [_album_previous_button, _album_next_button, _album_back_button]
 	elif _screen == "title":
@@ -588,18 +755,18 @@ func _input(event: InputEvent) -> void:
 	# get_global_rect() 在 web 导出的 CanvasLayer 中比 get_global_transform_with_canvas() 更可靠
 	for button: Button in buttons:
 		if button.is_visible_in_tree() and not button.disabled and button.get_global_rect().has_point(event_pos):
-			_last_touch_ms = Time.get_ticks_msec()
+			if is_touch_press: _last_touch_ms = Time.get_ticks_msec()
 			# An emulated mouse press can already hold the native GUI button.
 			# Let its release complete the pause/modal action once. Hiding the
 			# overlay from a second manual emission can interrupt GUI visibility.
-			if not (is_touch_press and button in [_music_toggle, _ambience_toggle, _mute_toggle, _resume_button, _restart_button, _pause_title_button, _confirm_accept_button, _confirm_cancel_button] and button.is_pressed()):
+			if not (is_touch_press and button in [_release_button, _music_toggle, _ambience_toggle, _mute_toggle, _resume_button, _restart_button, _pause_title_button, _confirm_accept_button, _confirm_cancel_button] and button.is_pressed()):
 				button.pressed.emit()
 			get_viewport().set_input_as_handled()
 			return
 	# 手持快捷栏触屏命中（与背篓格子同思路；不依赖 GUI 路由）
 	if _in_game_hud and _hold_hotbar != null and _hold_hotbar.visible:
 		if _hold_hotbar.press_at(event_pos):
-			_last_touch_ms = Time.get_ticks_msec()
+			if is_touch_press: _last_touch_ms = Time.get_ticks_msec()
 			get_viewport().set_input_as_handled()
 			return
 	# 触屏点到空白处：更新时间戳，交给 _unhandled_input 处理世界点击
@@ -738,7 +905,8 @@ func _fit_title_column() -> void:
 	_tagline_label.add_theme_font_size_override("font_size",14 if short else 16)
 	_title_hint.add_theme_font_size_override("font_size",12 if short else 14)
 	for button: Button in [_play_button, _album_button]:
-		button.custom_minimum_size = Vector2(260.0, 40.0 if tight else 44.0)
+		# 280 宽竖屏列只有 240，按钮不能把列撑出纸片
+		button.custom_minimum_size = Vector2(minf(260.0, title_width), 40.0 if tight else 44.0)
 		button.add_theme_font_size_override("font_size",14 if tight else 16)
 	_licenses_button.add_theme_font_size_override("font_size",12 if tight else 14)
 	_balance_title_copy()
@@ -911,7 +1079,25 @@ func _build_pause_screen() -> void:
 	_pause_panel = _pause_box.get_parent()
 	_pause_title = _label(26, INK)
 	_pause_title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	_pause_box.add_child(_pause_title)
+	var heading := HBoxContainer.new()
+	_pause_box.add_child(heading)
+	_pause_title.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	_pause_title.vertical_alignment = VERTICAL_ALIGNMENT_TOP
+	_pause_title.size_flags_vertical = Control.SIZE_FILL
+	heading.add_child(_pause_title)
+	_release_button = _soft_button()
+	_release_button.text = preload("res://scripts/ui/release_notes.gd").version() + " · 公告\n" + preload("res://scripts/ui/release_notes.gd").build_name().replace("本地开发版（未发布）", "本地开发版")
+	_release_button.custom_minimum_size = Vector2(120, 36)
+	_release_button.add_theme_font_size_override("font_size", 12)
+	for state in ["normal", "hover", "pressed", "focus"]:
+		var style := _release_button.get_theme_stylebox(state).duplicate()
+		style.content_margin_top = 2
+		style.content_margin_bottom = 2
+		style.content_margin_left = 4
+		style.content_margin_right = 4
+		_release_button.add_theme_stylebox_override(state, style)
+	_release_button.pressed.connect(_show_release_notes)
+	heading.add_child(_release_button)
 	_pause_columns = HBoxContainer.new()
 	_pause_columns.add_theme_constant_override("separation", 12)
 	_pause_columns.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -972,6 +1158,10 @@ func _fit_pause_panel() -> void:
 	_pause_session.add_theme_constant_override("separation", sep)
 	_pause_audio.add_theme_constant_override("separation", sep)
 	_pause_title.add_theme_font_size_override("font_size", 18 if short else 26)
+	var release_ui = preload("res://scripts/ui/release_notes.gd")
+	var release_build: String = release_ui.build_name().replace("本地开发版（未发布）", "本地开发版")
+	_release_button.text = release_ui.version() + " · 公告" + (" · " if short else "\n") + release_build
+	_release_button.custom_minimum_size = Vector2(120, 24 if short else 36)
 	for button in [_resume_button, _restart_button, _pause_title_button, _music_toggle, _ambience_toggle, _mute_toggle]:
 		button.custom_minimum_size = Vector2(120.0, button_h)
 		button.add_theme_font_size_override("font_size", 13 if short else 16)
@@ -1030,6 +1220,16 @@ func _place_pause(parent: Node, nodes: Array) -> void:
 			node.reparent(parent)
 	for i in nodes.size():
 		parent.move_child(nodes[i], i)
+
+
+func _show_release_notes() -> void:
+	if not _pause_screen.visible: return
+	if _release_panel == null:
+		_release_panel = preload("res://scripts/ui/release_notes.gd").new()
+		_ui_layer.add_child(_release_panel)
+		_release_panel.closed.connect(func(): _release_button.grab_focus())
+	_ui_layer.move_child(_release_panel, _ui_layer.get_child_count() - 1)
+	_release_panel.open()
 
 
 func _build_confirmation_screen() -> void:
@@ -1116,6 +1316,9 @@ func _build_album_screen() -> void:
 	_album_back_button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	_album_back_button.pressed.connect(_hide_album)
 	controls.add_child(_album_back_button)
+	_album_controls_low = HBoxContainer.new()
+	_album_controls_low.visible = false
+	box.add_child(_album_controls_low)
 
 
 func _build_notice() -> void:
@@ -1245,7 +1448,24 @@ func _refresh_volume_labels() -> void:
 		_ambience_slider.set_value_no_signal(round(AudioDirector.ambience_gain() * 100.0))
 
 
+func _sync_meal_audio() -> void:
+	var active := _screen in ["game", "exploring"] and _world != null
+	if _meal_audio_host == null:
+		if not active: return
+		_meal_audio_host = preload("res://scripts/game/meal_audio_host.gd").new()
+		add_child(_meal_audio_host)
+	var blocked: bool = _pause_screen.visible or _album_screen.visible or _confirm_screen.visible or _basket_panel.visible or _crop_panel.visible or _chick_panel.visible or _original_plant_panel.visible or _save_problem_active
+	_meal_audio_host.sync(_world, SaveStore, active, blocked, _meal_audio_focused and AudioDirector.effects_playback_allowed())
+
+
 func _notification(what: int) -> void:
+	if what in [NOTIFICATION_APPLICATION_PAUSED, NOTIFICATION_APPLICATION_FOCUS_OUT]:
+		_meal_audio_focused = false
+		if _meal_audio_host != null: _meal_audio_host.suspend()
+	elif what in [NOTIFICATION_APPLICATION_RESUMED, NOTIFICATION_APPLICATION_FOCUS_IN]:
+		_meal_audio_focused = true
+	if what in [NOTIFICATION_APPLICATION_PAUSED, NOTIFICATION_APPLICATION_RESUMED, NOTIFICATION_APPLICATION_FOCUS_IN, NOTIFICATION_APPLICATION_FOCUS_OUT] and _world != null and _world.house != null:
+		_world.house.player_activity()
 	if what == NOTIFICATION_APPLICATION_PAUSED:
 		AudioDirector.set_application_active(false)
 	elif what == NOTIFICATION_APPLICATION_RESUMED:
@@ -1254,6 +1474,7 @@ func _notification(what: int) -> void:
 
 func _start_holiday(save_progress: bool = true) -> void:
 	if _holiday_start_pending or not SaveStore.can_play(): return
+	_growth_bark_revision = int(SaveStore.get_pond_edging().get("revision", -1))
 	_holiday_start_pending = true
 	_leave_exploration()
 	if save_progress and _world != null: _world._save_progress()
@@ -1292,6 +1513,7 @@ func _start_holiday(save_progress: bool = true) -> void:
 	_world.chick_care_requested.connect(_show_chick_care)
 	_world.basket_requested.connect(_show_basket)
 	_world.plant_bed_requested.connect(_show_crops)
+	_world.original_plant_requested.connect(_show_original_plants)
 	_world.notice_dismiss_requested.connect(_dismiss_notice_key)
 	_world.weather_changed.connect(func(_w: String) -> void: _refresh_hud())
 	_world.camera_focus_requested.connect(_on_focus)
@@ -1353,6 +1575,7 @@ func _leave_exploration() -> void:
 
 
 func _clear_world(save_progress: bool = true) -> void:
+	if _meal_audio_host != null: _meal_audio_host.suspend()
 	if _night_sky_overlay != null: _night_sky_overlay.visible = false
 	_yard_night_sky = null
 	_path_night_sky = null
@@ -1399,6 +1622,7 @@ func _on_exploration_entered() -> void:
 ## Public regional weather layer. Near-path motion/geometry stays with its Owner.
 func _sync_path_rain(delta: float) -> void:
 	if _world == null or _exploration.scroll == null: return
+	_exploration.scroll.sync_environment(_world.environment_snapshot(), delta <= 0.0)
 	if not is_instance_valid(_path_rain):
 		_path_rain = preload("res://scripts/game/regional_rain.gd").new()
 		_exploration.scroll.add_child(_path_rain)
@@ -1455,6 +1679,7 @@ func _show_title(save_progress: bool = true) -> void:
 
 
 func _show_chick_care() -> void:
+	if _original_plant_panel != null and _original_plant_panel.visible: return
 	if _screen != "game" or _world == null or _pause_screen.visible or _album_screen.visible or _basket_panel.visible or _crop_panel.visible: return
 	if _world.house != null and _world.house.busy(): return
 	_world._save_progress()
@@ -1477,6 +1702,7 @@ func _hide_chick_care() -> void:
 	_sync_hud_under_menu()
 
 func _show_crops() -> void:
+	if _original_plant_panel != null and _original_plant_panel.visible: return
 	if _chick_panel != null and _chick_panel.visible: return
 	if _screen != "game" or _world == null or _pause_screen.visible or _album_screen.visible: return
 	if _world.house != null and _world.house.busy(): return
@@ -1503,9 +1729,10 @@ func _hide_crops() -> void:
 	_sync_hud_under_menu()
 
 func _show_basket() -> void:
+	if _original_plant_panel != null and _original_plant_panel.visible: return
 	if _chick_panel != null and _chick_panel.visible: return
 	if _crop_panel != null and _crop_panel.visible: return
-	if _world != null and _world.house != null and _world.house.busy(): return
+	if _world != null and _world.house != null and _world.house.request_player_intent({"kind":"basket"}): return
 	if _screen != "game" or _world == null or _pause_screen.visible or _album_screen.visible:
 		return
 	_cancel_photo_arrivals()
@@ -1626,6 +1853,45 @@ func _on_decor_resubmitted(failed_ops: Array, op_id: String) -> void:
 		if _save_problems.get(failed_id, {}).get("kind", "") == "decor":
 			problems[failed_id] = _save_problems[failed_id].duplicate(true)
 	if not problems.is_empty(): _save_retry_coverage[op_id] = {"problems": problems, "untracked_revision": -1}
+
+
+func _show_original_plants(area: String) -> void:
+	if not preload("res://scripts/game/original_plant_view.gd").enabled(): return
+	if _screen != "game" or _world == null or _pause_screen.visible or _album_screen.visible or _basket_panel.visible or _chick_panel.visible or _crop_panel.visible: return
+	if _world.house != null and _world.house.busy(): return
+	_world._save_progress()
+	_world.cancel_scene_feedback()
+	_cancel_photo_arrivals()
+	_world.input_enabled = false
+	_original_plant_panel.open(area)
+	_ui_layer.move_child(_original_plant_panel,_ui_layer.get_child_count()-1)
+	get_tree().paused = true
+	AudioDirector.set_game_paused(true)
+	_sync_hold_hotbar_visibility()
+	_sync_hud_under_menu()
+
+
+func _hide_original_plants() -> void:
+	if _original_plants.busy(): return
+	_original_plant_panel.visible = false
+	get_tree().paused = false
+	AudioDirector.set_game_paused(false)
+	if _world != null: _world.input_enabled = true
+	get_viewport().gui_release_focus()
+	_sync_hold_hotbar_visibility()
+	_sync_hud_under_menu()
+
+
+func _on_original_plants_changed() -> void:
+	if _world != null and _world.original_plants_view != null: _world._apply_weather_art()
+	if _original_plant_panel != null: _original_plant_panel.refresh()
+
+
+func _on_original_plants_resubmitted(failed_ops: Array, op_id: String) -> void:
+	var problems := {}
+	for failed_id in failed_ops:
+		if _save_problems.get(failed_id,{}).get("kind","") == "original-plants": problems[failed_id] = _save_problems[failed_id].duplicate(true)
+	if not problems.is_empty(): _save_retry_coverage[op_id] = {"problems":problems,"untracked_revision":-1}
 
 
 func _on_ground_food_action(action: String, kind: String, details: Dictionary, actor_id: String) -> void:
@@ -1769,6 +2035,9 @@ func _exploration_save_covers(accepted: Dictionary, problem: Dictionary) -> bool
 
 
 func _on_save_confirmed(op_id: String, kind: String) -> void:
+	_on_crops_confirmed_for_bark(kind)
+	if kind == "growth":
+		_on_growth_confirmed_for_bark()
 	if _save_exploration_coverage.has(op_id) and _save_exploration_coverage[op_id].kind == kind:
 		_clear_covered_save_problems(_save_exploration_coverage[op_id].problems)
 		_save_exploration_coverage.erase(op_id)
@@ -1821,7 +2090,9 @@ func _on_save_rejected(op_id: String, kind: String, code: String) -> void:
 		_save_exploration_scopes.erase(op_id)
 		_save_exploration_coverage.erase(op_id)
 		return
+	if kind == "meal" and code.begins_with("MEAL_") and not _save_durable_ops.has(op_id): return
 	if kind == "crops" and code.begins_with("CROP_") and not _save_durable_ops.has(op_id): return
+	if kind == "original-plants" and code.begins_with("GARDEN_") and not _save_durable_ops.has(op_id): return
 	if kind == "inventory" and code == "BASKET_SEED_RESERVED" and not _save_durable_ops.has(op_id): return
 	if kind == "decor" and not _save_durable_ops.has(op_id) and code in ["DECOR_CHANGED", "DECOR_OCCUPIED", "DECOR_EMPTY", "DECOR_INVALID", "DECOR_LIMIT"]:
 		return
@@ -1965,10 +2236,13 @@ func _retryable_save_problems(include_fish: bool) -> Dictionary:
 
 
 func _retry_save() -> void:
+	if _original_plants != null and _original_plants.busy() and _original_plants.state in ["failed","unknown"]:
+		_original_plants.retry()
+		return
 	if _world != null and _world.house != null and _world.house.failed:
 		var coverage := {}
 		for old_id in _save_problems:
-			if _save_problems[old_id].kind == "house-sleep": coverage[old_id] = _save_problems[old_id].duplicate(true)
+			if _save_problems[old_id].kind in ["house-sleep", "meal"]: coverage[old_id] = _save_problems[old_id].duplicate(true)
 		var next: String = _world.house.retry()
 		if not next.is_empty(): _save_retry_coverage[next] = {"problems":coverage,"untracked_revision":-1}
 		return
@@ -1980,6 +2254,13 @@ func _retry_save() -> void:
 		return
 	if _inventory != null and _inventory.busy():
 		_inventory.retry()
+		return
+	if _hotbar_save != null and _hotbar_save.state == "failed" and SaveStore.persistence_state() == "ready":
+		var coverage := {}
+		for old_id in _save_problems:
+			if _save_problems[old_id].kind == "hotbar-slots": coverage[old_id] = _save_problems[old_id].duplicate(true)
+		var next: String = _hotbar_save.retry()
+		if not next.is_empty(): _save_retry_coverage[next] = {"problems":coverage,"untracked_revision":_save_untracked_revision}
 		return
 	var before := SaveStore.persistence_state()
 	# Capture before retry: a native backend may complete synchronously.
@@ -2089,6 +2370,18 @@ func _render_album_pages() -> void:
 	_album_next_button.disabled = _album_entries.is_empty() or _album_index + stride >= _album_entries.size()
 
 
+const ALBUM_HEADING_PAD_X := 8.0
+const ALBUM_HEADING_PAD_Y := 2.0
+
+func _album_heading_paper() -> StyleBoxFlat:
+	var style := _flat(Color(PAPER, 0.88), Color(APRICOT, 0.45), 1, 6)
+	style.content_margin_left = ALBUM_HEADING_PAD_X
+	style.content_margin_right = ALBUM_HEADING_PAD_X
+	style.content_margin_top = ALBUM_HEADING_PAD_Y
+	style.content_margin_bottom = ALBUM_HEADING_PAD_Y
+	return style
+
+
 func _album_page(index: int) -> Control:
 	var page := Control.new()
 	page.custom_minimum_size = _album_page_size
@@ -2125,8 +2418,11 @@ func _album_page(index: int) -> Control:
 	content.offset_bottom = -10
 	content.add_theme_constant_override("separation", 5)
 	page.add_child(content)
-	var heading := _label(14, MUTED)
+	# 页眉压在相纸的薰衣草枝上读不清，垫一片贴字宽的小纸签，字用墨色（浅褐在纸签上不到 4.5:1）
+	var heading := _label(14, INK)
 	heading.text = I18n.t("album.page_label")
+	heading.add_theme_stylebox_override("normal", _album_heading_paper())
+	heading.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
 	content.add_child(heading)
 	var rule_id := _album_entries[index]
 	var rule := ExpressionCatalog.find_rule(rule_id)
@@ -2146,7 +2442,7 @@ func _album_page(index: int) -> Control:
 		return ceilf(font.get_height(font_size) * lines + get_theme_constant("line_spacing", "Label") * maxi(0, lines - 1))
 	var text_width := _album_page_size.x - 44.0
 	var note_height := maxf(36.0, text_height.call(note_text, text_width, 14))
-	var body_height: float = _album_page_size.y - 25.0 - text_height.call(heading.text, text_width, 14) - text_height.call(I18n.t("album.page", {"page": str(index + 1)}), text_width, 12) - 10.0
+	var body_height: float = _album_page_size.y - 25.0 - text_height.call(heading.text, text_width, 14) - ALBUM_HEADING_PAD_Y * 2.0 - text_height.call(I18n.t("album.page", {"page": str(index + 1)}), text_width, 12) - 10.0
 	var compact_page := _album_page_size.y < 370.0 or body_height - note_height - 5.0 < 300.0
 	var wide_page := compact_page and _album_page_size.x > _album_page_size.y * 1.6
 	var body: BoxContainer = HBoxContainer.new() if wide_page else VBoxContainer.new()
@@ -2375,17 +2671,39 @@ func _ensure_hold_hotbar() -> void:
 	_hold_hotbar.name = "HoldHotbar"
 	_ui_layer.add_child(_hold_hotbar)
 	_hold_hotbar.withdraw_requested.connect(_on_hold_withdraw)
+	_hotbar_save = preload("res://scripts/persistence/hotbar_save_controller.gd").new()
+	add_child(_hotbar_save)
+	_hotbar_save.view_changed.connect(_hold_hotbar.set_slots)
+	_hotbar_save.initialize(SaveStore, HotbarSlotsPrefs.load_slots())
+	if _hotbar_save.state == "failed": _show_save_pending(true)
+	_hold_hotbar.slots_changed.connect(_on_hotbar_slots_changed)
+	_hold_hotbar.basket_requested.connect(_show_basket)
 	_hold_hotbar.visible = false
+	if _basket_panel != null:
+		_basket_panel.set_hotbar(_hold_hotbar, _hold_hotbar.basket_rect(size).size.y + _hold_hotbar.BASKET_MARGIN * 2.0)
 	_layout_hold_hotbar()
+
+
+func _on_hotbar_slots_changed(slots: Array) -> void:
+	_hotbar_save.change(slots)
+	if _hotbar_save.state == "failed": _show_save_pending(true)
 
 
 func _layout_hold_hotbar() -> void:
 	if _hold_hotbar == null:
 		return
 	var Hotbar = load("res://scripts/ui/hold_hotbar.gd")
-	var rect: Rect2 = Hotbar.preferred_rect(size, _stacked_hud())
-	_hold_hotbar.position = rect.position
-	_hold_hotbar.size = rect.size
+	var over_basket := _basket_panel != null and _basket_panel.visible
+	_hold_hotbar.set_slot_side(Hotbar.slot_side(size.x))
+	if _basket_panel != null:
+		_basket_panel.reserve_bottom = Hotbar.basket_rect(size).size.y + Hotbar.BASKET_MARGIN * 2.0
+	if over_basket:
+		# 背篓开着：位置由背篓纸面排定（贴底边，或矮横屏里放进纸面右下角）
+		_basket_panel.fit()
+	else:
+		var rect: Rect2 = Hotbar.preferred_rect(size, _stacked_hud())
+		_hold_hotbar.position = rect.position
+		_hold_hotbar.size = rect.size
 	_sync_hold_hotbar_visibility()
 
 
@@ -2399,15 +2717,26 @@ func _sync_hold_hotbar_visibility() -> void:
 		and not _pause_screen.visible
 		and not _album_screen.visible
 		and not _confirm_screen.visible
-		and (_basket_panel == null or not _basket_panel.visible)
 		and (_chick_panel == null or not _chick_panel.visible)
 		and (_crop_panel == null or not _crop_panel.visible)
+		and (_original_plant_panel == null or not _original_plant_panel.visible)
 	)
+	var over_basket := _basket_panel != null and _basket_panel.visible
+	if over_basket and show:
+		# 背篓开着：快捷栏压在背篓纸面之上、贴屏幕底边，只当拖放落点
+		_ui_layer.move_child(_hold_hotbar, _ui_layer.get_child_count() - 1)
+	var was_over: bool = _hold_hotbar.configuring
+	var was_shown: bool = _hold_hotbar.visible
+	_hold_hotbar.set_configuring(over_basket)
 	_hold_hotbar.visible = show
+	if was_over != over_basket:
+		_layout_hold_hotbar()
+	elif over_basket and was_shown != show:
+		_basket_panel._queue_fit()
 
 
 func _on_hold_withdraw(kind: String) -> void:
-	if _world != null and _world.house != null and _world.house.busy(): return
+	if _world != null and _world.house != null and _world.house.request_player_intent({"kind":"basket"}): return
 	if _inventory == null or kind.is_empty() or _inventory.busy():
 		return
 	_inventory.request("withdraw", kind)
@@ -2529,6 +2858,9 @@ func _open_yard_papers() -> Array[Control]:
 	if _basket_panel != null and _basket_panel.visible and _basket_panel.panel != null: out.append(_basket_panel.panel)
 	if _chick_panel != null and _chick_panel.visible and _chick_panel.paper != null: out.append(_chick_panel.paper)
 	if _crop_panel != null and _crop_panel.visible and _crop_panel.paper != null: out.append(_crop_panel.paper)
+	if _original_plant_panel != null and _original_plant_panel.visible and _original_plant_panel.paper != null: out.append(_original_plant_panel.paper)
+	# 背篓开着时快捷栏贴在底边当落点，它挡住的底栏也一并隐去
+	if _basket_panel != null and _basket_panel.visible and _hold_hotbar != null and _hold_hotbar.visible: out.append(_hold_hotbar)
 	return out
 
 
@@ -2645,11 +2977,35 @@ func _fit_album_frame() -> void:
 		# Panel padding + title line + two gaps + buttons + 4 px slack.
 		var title_height := ceilf(_album_title.get_theme_font("font").get_height(title_size))
 		book_height = floorf(album_height - padding * 2.0 - title_height - separation * 2.0 - button_height - 4.0)
+	# 280 宽竖屏三枚按钮的字宽加间距超过书宽，整张手帐会被撑出屏幕；放不下就把「合上」移到第二行
+	var controls := _album_previous_button.get_parent() as HBoxContainer
+	var low := _album_controls_low
+	var two_rows := _album_buttons_need(book_width)
+	var back_row := low if two_rows else controls
+	if _album_back_button.get_parent() != back_row:
+		var had_focus := _album_back_button.has_focus()
+		_album_back_button.reparent(back_row, false)
+		if had_focus: _album_back_button.grab_focus()
+	low.visible = two_rows
+	if two_rows:
+		book_height -= button_height + separation
+		low.custom_minimum_size = Vector2(book_width, button_height)
 	_album_spread.custom_minimum_size = Vector2(book_width, book_height)
-	_album_previous_button.get_parent().custom_minimum_size = Vector2(book_width, button_height)
+	controls.custom_minimum_size = Vector2(book_width, button_height)
 	_album_page_size = Vector2((book_width - 10.0) * 0.5 if _album_two_pages else book_width, book_height)
 	if _album_screen.visible or was_two_pages != _album_two_pages:
 		_render_album_pages()
+
+
+## 三枚翻页按钮按当前语言的字宽排一行要多宽；超过书宽就要分两行
+func _album_buttons_need(book_width: float) -> bool:
+	var total := 8.0 * 2.0
+	for pair: Array in [[_album_previous_button, "album.previous"], [_album_next_button, "album.next"], [_album_back_button, "album.back"]]:
+		var button: Button = pair[0]
+		var paper := button.get_theme_stylebox("normal")
+		total += button.get_theme_font("font").get_string_size(I18n.t(pair[1]), HORIZONTAL_ALIGNMENT_LEFT, -1, button.get_theme_font_size("font_size")).x
+		total += paper.get_margin(SIDE_LEFT) + paper.get_margin(SIDE_RIGHT)
+	return total > book_width
 
 
 ## 底部按钮排两行（三枚小按钮在上、行动按钮整行在下）只给竖屏和窄屏。
@@ -2659,9 +3015,57 @@ const SINGLE_ROW_MIN_WIDTH := 568.0
 ## 一行排开时行动按钮至少这么宽，最长的英文动作「Turn in for the night」（按钮内约 175px）也放得下；
 ## 其余三枚分剩下的宽度，仍不超过 188。
 const ACTION_MIN_WIDTH := 180.0
+const CHIP_SIDE_MARGIN := 16.0
+const CHIP_TIGHT_SIDE_MARGIN := 8.0
+const CHIP_TIGHT_GAP := 10.0
 ## 小按钮按实际排版宽度放不下全名时，英文换短名：「Open journal」→「Journal」，
 ## 「Gentle rain」→「Rain」，「Overcast」→「Cloudy」。中文全名在各宽度都放得下。
 const SHORT_WEATHER_EN := {"rain": "Rain", "sun": "Sun", "overcast": "Cloudy"}
+
+## 竖屏三枚小按钮平分一排；中文全名「翻开手帐」放不进平分宽度时，先只让它变宽、收窄间距；
+## 最窄屏（280 宽）仍放不下再按各自文字宽度排，必要时收窄左右内边距，保证互不重叠、不出边距。
+## 天气按钮按所有天气里最长的名字留宽，换天气时不必重排。
+func _chip_row_plan(chips: Array[Button], equal: float, avail: float, pad: float) -> Dictionary:
+	var needs := _chip_text_needs(chips, equal)
+	if needs.max() <= equal + 0.5:
+		return {"widths": [equal, equal, equal], "gap": pad}
+	# 只差几像素（360 宽「翻开手帐」）：其余仍平分，只让放不下的那枚变宽，间距从 20 往 10 收
+	var grown: Array[float] = [maxf(equal, needs[0]), maxf(equal, needs[1]), maxf(equal, needs[2])]
+	var grown_gap := (avail - grown[0] - grown[1] - grown[2]) / 2.0
+	if grown_gap >= CHIP_TIGHT_GAP - 0.01:
+		return {"widths": grown, "gap": minf(pad, grown_gap)}
+	var total: float = needs[0] + needs[1] + needs[2]
+	if total + CHIP_TIGHT_GAP * 2.0 > avail:
+		_set_chip_side_margin(chips, CHIP_TIGHT_SIDE_MARGIN)
+		needs = _chip_text_needs(chips, equal)
+		total = needs[0] + needs[1] + needs[2]
+	var gap := clampf((avail - total) / 2.0, 0.0, CHIP_TIGHT_GAP)
+	var extra := maxf(0.0, (avail - total - gap * 2.0) / 3.0)
+	return {"widths": [needs[0] + extra, needs[1] + extra, needs[2] + extra], "gap": gap}
+
+
+func _chip_text_needs(chips: Array[Button], label_width: float) -> Array[float]:
+	var needs: Array[float] = []
+	for chip: Button in chips:
+		var keep := chip.text
+		var need := chip.get_minimum_size().x
+		if chip == _weather_chip:
+			for weather: String in SHORT_WEATHER_EN:
+				_fit_chip_text(chip, I18n.t("hud.weather.%s" % weather), str(SHORT_WEATHER_EN[weather]), label_width)
+				need = maxf(need, chip.get_minimum_size().x)
+		chip.text = keep
+		needs.append(ceilf(need))
+	return needs
+
+
+func _set_chip_side_margin(chips: Array[Button], margin: float) -> void:
+	for chip: Button in chips:
+		for state: String in ["normal", "hover", "pressed", "disabled"]:
+			var box := chip.get_theme_stylebox(state) as StyleBoxFlat
+			if box != null and box.content_margin_left != margin:
+				box.content_margin_left = margin
+				box.content_margin_right = margin
+
 
 func _stacked_hud() -> bool:
 	return size.x < 700.0 and not (size.x > size.y and size.x >= SINGLE_ROW_MIN_WIDTH)
@@ -2682,10 +3086,15 @@ func _layout() -> void:
 	if not compact:
 		action_width = maxf(minf(188.0, (size.x - pad * 5.0) / 4.0), ACTION_MIN_WIDTH)
 		chip_width = minf(188.0, (size.x - pad * 5.0 - action_width) / 3.0)
+	_chip_label_width = chip_width
 	_refresh_yard_chip_labels(chip_width)
-	for button in [_album_chip,_weather_chip,_basket_chip]:
-		button.custom_minimum_size = Vector2(chip_width,48)
-		button.size = Vector2(chip_width,48)
+	var chips: Array[Button] = [_album_chip,_weather_chip,_basket_chip]
+	_set_chip_side_margin(chips, CHIP_SIDE_MARGIN)
+	var row_plan := _chip_row_plan(chips, chip_width, size.x - pad * 2.0, pad) if compact else {"widths": [chip_width, chip_width, chip_width], "gap": pad}
+	for index in chips.size():
+		var width: float = row_plan.widths[index]
+		chips[index].custom_minimum_size = Vector2(width,48)
+		chips[index].size = Vector2(width,48)
 	_action_button.custom_minimum_size = Vector2(action_width,48)
 	_action_button.size = _action_button.custom_minimum_size
 	_pause_button.custom_minimum_size = Vector2(120.0 if size.x < 700.0 else 188.0,48)
@@ -2701,9 +3110,10 @@ func _layout() -> void:
 		_day_label.position = Vector2(_pause_button.position.x, _pause_button.position.y + _pause_button.size.y + 8.0)
 	_fit_save_status()
 	var row := size.y-124.0 if compact else size.y-68.0
-	_album_chip.position = Vector2(pad,row)
-	_weather_chip.position = Vector2(pad * 2.0 + chip_width,row)
-	_basket_chip.position = Vector2(pad * 3.0 + chip_width * 2.0,row)
+	var chip_x := pad
+	for chip: Button in chips:
+		chip.position = Vector2(chip_x,row)
+		chip_x += chip.size.x + float(row_plan.gap)
 	_action_button.position = Vector2(pad if compact else size.x-_action_button.size.x-pad,size.y-68.0)
 	_fit_pause_panel()
 	_fit_confirm_panel()
@@ -2812,12 +3222,12 @@ func _sync_regional_clock() -> void:
 	elif _exploration.scroll != null:
 		var place: Label = _exploration.scroll._place_label
 		_regional_clock.show_time(_world.tod_fraction(), Rect2(
-			place.position + Vector2(0, place.size.y), Vector2(minf(place.size.x, 180.0), 22)), 14)
+			place.position + Vector2(0, place.size.y + 4.0), Vector2(clampf(place.size.x, _exploration.scroll.CLOCK_MIN_WIDTH, _exploration.scroll.CLOCK_MAX_WIDTH), 22)), 14)
 
 
 func _refresh_yard_chip_labels(chip_width: float = -1.0) -> void:
 	if chip_width < 0.0:
-		chip_width = _album_chip.size.x
+		chip_width = _chip_label_width if _chip_label_width > 0.0 else _album_chip.size.x
 	_fit_chip_text(_album_chip, I18n.t("hud.album"), "Journal", chip_width)
 	if _world != null:
 		var weather := str(_world.weather)
@@ -3189,3 +3599,184 @@ func _flat(bg: Color, border: Color, width: int = 2, radius: int = 16) -> StyleB
 	style.content_margin_top = 10
 	style.content_margin_bottom = 10
 	return style
+
+## GROK #703: picture-book resident barks (chick / plant / Leader fatigue hook).
+func _tick_resident_barks(delta: float) -> void:
+	_sync_resident_bark_avoidance()
+	_tick_confirmed_fatigue_bark(delta)
+	if _crop_panel != null and _crop_panel.visible:
+		var bed := SaveStore.get_yard_crops()
+		if not bed.is_empty():
+			_crop_kind_watch = str(bed.get("kind", ""))
+	var hard_block := _resident_bark_hard_blocked()
+	# 暂停、近郊、进屋或旅人被藏起：收起正在显示的气泡，不保留补播。
+	if hard_block and _resident_bubble != null and _resident_bubble.visible:
+		_resident_bubble.dismiss()
+	if hard_block or _world == null or _screen != "game":
+		return
+	if _crop_panel != null and _crop_panel.visible:
+		return
+	if _chick_panel != null and _chick_panel.visible:
+		return
+	if _basket_panel != null and _basket_panel.visible:
+		return
+	_try_chick_bark()
+
+
+## Presentation only: the saved morning provenance, never the sky or AP count.
+## Require a fresh quiet interval after menus/house/scene changes; no overdue queue.
+func _tick_confirmed_fatigue_bark(delta: float) -> void:
+	var rest := SaveStore.get_rest_context()
+	if rest.is_empty() or rest.get("cause", "") != "awake":
+		_fatigue_bark_day = -1
+		_fatigue_bark_ready_seconds = 0.0
+		return
+	var day := int(rest.get("day", -1))
+	if day != _fatigue_bark_day:
+		_fatigue_bark_day = day
+		_fatigue_bark_ready_seconds = 0.0
+	if _world == null or _resident_bubble == null or _resident_bark_blocked() or not SaveStore.is_save_idle() or _resident_bubble.is_showing():
+		_fatigue_bark_ready_seconds = 0.0
+		return
+	_fatigue_bark_ready_seconds += maxf(delta, 0.0)
+	if _fatigue_bark_ready_seconds >= FATIGUE_BARK_SETTLE_SECONDS:
+		# Existing per-line 60s/global cooldowns still arbitrate with other barks.
+		if offer_fatigue_bark(true):
+			_fatigue_bark_ready_seconds = 0.0
+
+
+func _resident_bark_hard_blocked() -> bool:
+	if _original_plant_panel != null and _original_plant_panel.visible: return true
+	# Pause / album / confirm / leave-game: dismiss and do not replay.
+	if _screen != "game":
+		return true
+	if _pause_screen != null and _pause_screen.visible:
+		return true
+	if _album_screen != null and _album_screen.visible:
+		return true
+	if _confirm_screen != null and _confirm_screen.visible:
+		return true
+	if _save_problem_active:
+		return true
+	# 睡眠/阳台导演：house.busy 或旅人已不可见。一楼坐标还在，也不能据此冒泡。
+	if _world != null and _world.house != null and _world.house.busy():
+		return true
+	if _world != null and _world.get_player() != null and not _world.get_player().visible:
+		return true
+	return false
+
+
+func _resident_bark_blocked() -> bool:
+	if _resident_bark_hard_blocked():
+		return true
+	if _basket_panel != null and _basket_panel.visible:
+		return true
+	if _crop_panel != null and _crop_panel.visible:
+		return true
+	if _chick_panel != null and _chick_panel.visible:
+		return true
+	return false
+
+
+func _on_crops_confirmed_for_bark(kind: String) -> void:
+	if kind != "crops" or _resident_barks == null or _resident_bubble == null:
+		return
+	var bed := SaveStore.get_yard_crops()
+	if bed.is_empty():
+		return
+	var now_kind := str(bed.get("kind", ""))
+	var was_empty := _crop_kind_watch.is_empty()
+	_crop_kind_watch = now_kind
+	if not was_empty or now_kind.is_empty():
+		return
+	# Confirmed sow beats chick idle: may preempt a showing idle line and ignores
+	# global cooldown left by that idle. Only hard blocks stop it; panel may stay open.
+	var hard: bool = _resident_bark_hard_blocked()
+	var bark_id: String = _resident_barks.try_plant_sown(_bark_clock, hard)
+	if bark_id.is_empty():
+		return
+	_show_resident_bark(bark_id)
+
+
+func _on_growth_confirmed_for_bark() -> void:
+	var revision := int(SaveStore.get_pond_edging().get("revision", -1))
+	if revision <= _growth_bark_revision: return
+	# Save error bookkeeping clears on idle, so it cannot dedupe presentation.
+	_growth_bark_revision = revision
+	if _resident_barks == null or _resident_bubble == null or _world == null: return
+	# A menu/house/scene owns attention: discard rather than queue a late cheer.
+	var blocked: bool = _resident_bark_blocked() or _resident_bubble.is_showing()
+	var bark_id: String = _resident_barks.try_growth_completed(_bark_clock, blocked)
+	if not bark_id.is_empty(): _show_resident_bark(bark_id)
+
+
+func _try_chick_bark() -> void:
+	if _resident_barks == null or _resident_bubble == null or _world == null:
+		return
+	var growth := SaveStore.get_chick_growth()
+	if growth.is_empty() or str(growth.get("stage", "")) != "chick":
+		_chick_proximity_latched = false
+		_resident_barks.try_chick_proximity(_bark_clock, true, false)
+		return
+	var chick = _world.actor_named("chicken")
+	var player = _world.get_player()
+	if chick == null or player == null:
+		_chick_proximity_latched = false
+		_resident_barks.try_chick_proximity(_bark_clock, true, false)
+		return
+	var reach := YardInteraction.PET_REACH
+	var dist: float = player.position.distance_to(chick.position)
+	# Enter at PET_REACH; leave only beyond reach + margin (anti-jitter).
+	if _chick_proximity_latched:
+		_chick_proximity_latched = dist <= reach + CHICK_LEAVE_MARGIN
+	else:
+		_chick_proximity_latched = dist <= reach
+	# 人被藏进屋里时距离仍按一楼坐标算；硬阻断/已有气泡时不投骰，但仍同步靠近状态。
+	var soft_busy: bool = _resident_bark_hard_blocked() or _resident_bubble.is_showing()
+	var bark_id: String = _resident_barks.try_chick_proximity(
+		_bark_clock, soft_busy, _chick_proximity_latched
+	)
+	if bark_id.is_empty():
+		return
+	_show_resident_bark(bark_id)
+
+
+## Leader fatigue hook (#700 / #703): pass true only from real fatigue state.
+## Does not infer overnight or missed sleep.
+func offer_fatigue_bark(fatigue_active: bool) -> bool:
+	if _resident_barks == null or _resident_bubble == null:
+		return false
+	var busy: bool = _resident_bubble.is_showing() or _resident_bark_blocked()
+	var bark_id: String = _resident_barks.try_fatigue(_bark_clock, busy, fatigue_active)
+	if bark_id.is_empty():
+		return false
+	_show_resident_bark(bark_id)
+	return true
+
+
+func _show_resident_bark(bark_id: String) -> void:
+	var key: String = _resident_barks.i18n_key(bark_id)
+	if key.is_empty():
+		return
+	var text := I18n.t(key)
+	var anchor := Vector2.ZERO
+	var follow := Callable()
+	if _world != null and _world.get_player() != null:
+		var player = _world.get_player()
+		anchor = player.position
+		follow = func() -> Vector2:
+			if _world == null or _world.get_player() == null:
+				return anchor
+			return _world.get_player().position
+	if _ui_layer != null:
+		_ui_layer.move_child(_resident_bubble, _ui_layer.get_child_count() - 1)
+	_sync_resident_bark_avoidance()
+	_resident_bubble.show_bark(text, anchor, preload("res://scripts/presentation/resident_barks.gd").DISPLAY_SECONDS, follow)
+
+
+func _sync_resident_bark_avoidance() -> void:
+	if _resident_bubble == null:
+		return
+	_resident_bubble.avoid_rect = Rect2()
+	if _crop_panel != null and _crop_panel.visible and _crop_panel.paper != null:
+		_resident_bubble.avoid_rect = _crop_panel.paper.get_global_rect()

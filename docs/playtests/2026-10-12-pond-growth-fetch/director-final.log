@@ -1,0 +1,87 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+FAILED Main job begins basket:saving
+FAILED Main stage before menu basket:saving
+FAILED menu retains accepted write basket
+FAILED AP unchanged or charged once basket:saving
+FAILED no resumed duplicate world result basket:saving
+FAILED materials unchanged or charged once basket:saving
+FAILED Main job begins pause:fetching
+FAILED Main stage before menu pause:fetching
+FAILED Main job begins pause:saving
+FAILED Main stage before menu pause:saving
+FAILED menu retains accepted write pause
+FAILED AP unchanged or charged once pause:saving
+FAILED no resumed duplicate world result pause:saving
+FAILED materials unchanged or charged once pause:saving
+POND_GROWTH_DIRECTOR checks=205 failures=14
+ERROR: Main job begins basket:saving
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] run (res://test/pond_growth_director_suite.gd:164)
+       [1] check_real_menus (res://test/pond_growth_director_suite.gd:218)
+ERROR: Main stage before menu basket:saving
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] run (res://test/pond_growth_director_suite.gd:164)
+       [1] check_real_menus (res://test/pond_growth_director_suite.gd:218)
+ERROR: menu retains accepted write basket
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] run (res://test/pond_growth_director_suite.gd:164)
+       [1] check_real_menus (res://test/pond_growth_director_suite.gd:218)
+ERROR: AP unchanged or charged once basket:saving
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] run (res://test/pond_growth_director_suite.gd:164)
+       [1] check_real_menus (res://test/pond_growth_director_suite.gd:218)
+ERROR: no resumed duplicate world result basket:saving
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] run (res://test/pond_growth_director_suite.gd:164)
+       [1] check_real_menus (res://test/pond_growth_director_suite.gd:218)
+ERROR: materials unchanged or charged once basket:saving
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] run (res://test/pond_growth_director_suite.gd:164)
+       [1] check_real_menus (res://test/pond_growth_director_suite.gd:218)
+ERROR: Main job begins pause:fetching
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] run (res://test/pond_growth_director_suite.gd:164)
+       [1] check_real_menus (res://test/pond_growth_director_suite.gd:218)
+ERROR: Main stage before menu pause:fetching
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] run (res://test/pond_growth_director_suite.gd:164)
+       [1] check_real_menus (res://test/pond_growth_director_suite.gd:218)
+ERROR: Main job begins pause:saving
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] run (res://test/pond_growth_director_suite.gd:164)
+       [1] check_real_menus (res://test/pond_growth_director_suite.gd:218)
+ERROR: Main stage before menu pause:saving
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] run (res://test/pond_growth_director_suite.gd:164)
+       [1] check_real_menus (res://test/pond_growth_director_suite.gd:218)
+ERROR: menu retains accepted write pause
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] run (res://test/pond_growth_director_suite.gd:164)
+       [1] check_real_menus (res://test/pond_growth_director_suite.gd:218)
+ERROR: AP unchanged or charged once pause:saving
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] run (res://test/pond_growth_director_suite.gd:164)
+       [1] check_real_menus (res://test/pond_growth_director_suite.gd:218)
+ERROR: no resumed duplicate world result pause:saving
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] run (res://test/pond_growth_director_suite.gd:164)
+       [1] check_real_menus (res://test/pond_growth_director_suite.gd:218)
+ERROR: materials unchanged or charged once pause:saving
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] run (res://test/pond_growth_director_suite.gd:164)
+       [1] check_real_menus (res://test/pond_growth_director_suite.gd:218)

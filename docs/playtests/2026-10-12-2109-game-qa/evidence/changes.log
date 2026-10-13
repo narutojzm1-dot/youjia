@@ -1,0 +1,411 @@
+ autoload/save_store.gd                             |     26 +
+ docs/collaboration/assistant-nearby-goal-565.md    |      6 +
+ .../grok-small-features-2026-10-10.md              |      9 +-
+ docs/decisions.md                                  |     69 +
+ docs/decisions/REQ-20261011-703.md                 |     41 +
+ docs/design/growth-phase-2026-10-10.md             |     30 +
+ docs/game-design.md                                |     38 +
+ docs/playtests/2026-10-11-1304-game-qa/.gdignore   |      0
+ docs/playtests/2026-10-11-1304-game-qa/README.md   |     36 +
+ docs/playtests/2026-10-11-1304-game-qa/bugs.json   |    334 +
+ .../2026-10-11-1304-game-qa/evidence/.gdignore     |      0
+ .../2026-10-11-1304-game-qa/evidence/01-start.png  |    Bin 0 -> 74011 bytes
+ .../evidence/02-inventory.png                      |    Bin 0 -> 89262 bytes
+ .../evidence/03-hud-entry.png                      |    Bin 0 -> 83769 bytes
+ .../evidence/04-nearby-wide.png                    |    Bin 0 -> 180049 bytes
+ .../evidence/05-360-look.png                       |    Bin 0 -> 68057 bytes
+ .../evidence/06-360-picked.png                     |    Bin 0 -> 69198 bytes
+ .../evidence/07-feather3.png                       |    Bin 0 -> 88919 bytes
+ .../evidence/candidates.log                        |      6 +
+ .../evidence/changed-files.log                     |    538 +
+ .../2026-10-11-1304-game-qa/evidence/commits.log   |     43 +
+ .../2026-10-11-1304-game-qa/evidence/coverage.json |    156 +
+ .../evidence/engine-import.patch                   |    109 +
+ .../evidence/prior-review.json                     |      1 +
+ .../2026-10-11-1304-game-qa/evidence/releases.json |      1 +
+ .../2026-10-11-1304-game-qa/evidence/tags.json     |      1 +
+ .../2026-10-11-1304-game-qa/native/.gdignore       |      0
+ .../native/exploration_hud_readable-wrapper.log    |      3 +
+ .../native/exploration_hud_readable.log            |      3 +
+ .../native/exploration_hud_readable.sh             |      6 +
+ .../native/hud_pointer_input-wrapper.log           |      3 +
+ .../native/hud_pointer_input.log                   |      3 +
+ .../native/hud_pointer_input.sh                    |      6 +
+ .../native/import-wrapper.log                      |     77 +
+ .../2026-10-11-1304-game-qa/native/import.log      |     77 +
+ .../2026-10-11-1304-game-qa/native/import.sh       |      6 +
+ .../native/meal_planner-wrapper.log                |      3 +
+ .../native/meal_planner.log                        |      3 +
+ .../2026-10-11-1304-game-qa/native/meal_planner.sh |      6 +
+ .../native/nearby_mist-wrapper.log                 |      3 +
+ .../2026-10-11-1304-game-qa/native/nearby_mist.log |      3 +
+ .../2026-10-11-1304-game-qa/native/nearby_mist.sh  |      6 +
+ .../native/nearby_window_light-wrapper.log         |      3 +
+ .../native/nearby_window_light.log                 |      3 +
+ .../native/nearby_window_light.sh                  |      6 +
+ .../2026-10-11-1304-game-qa/native/profile.log     |      3 +
+ .../native/rest_context-wrapper.log                |      3 +
+ .../native/rest_context.log                        |      3 +
+ .../2026-10-11-1304-game-qa/native/rest_context.sh |      6 +
+ .../2026-10-11-1304-game-qa/native/results.json    |     63 +
+ .../native/save_candidate-wrapper.log              |      3 +
+ .../native/save_candidate.log                      |      3 +
+ .../native/save_candidate.sh                       |      6 +
+ .../2026-10-11-1304-game-qa/native/verify.sh       |      5 +
+ docs/playtests/2026-10-11-1914-game-qa/.gdignore   |      0
+ docs/playtests/2026-10-11-1914-game-qa/README.md   |     33 +
+ docs/playtests/2026-10-11-1914-game-qa/bugs.json   |    341 +
+ .../2026-10-11-1914-game-qa/evidence/.gdignore     |      0
+ .../evidence/01-inventory.png                      |    Bin 0 -> 89103 bytes
+ .../evidence/02-album-280.png                      |    Bin 0 -> 28283 bytes
+ .../evidence/03-album-next.png                     |    Bin 0 -> 29740 bytes
+ .../evidence/04-nearby-280.png                     |    Bin 0 -> 52671 bytes
+ .../evidence/05-feather4.png                       |    Bin 0 -> 87915 bytes
+ .../2026-10-11-1914-game-qa/evidence/changes.log   |    448 +
+ .../2026-10-11-1914-game-qa/evidence/coverage.json |    215 +
+ .../evidence/engine-import.patch                   |    109 +
+ .../evidence/pr743-review.json                     |      1 +
+ .../2026-10-11-1914-game-qa/evidence/releases.json |      1 +
+ .../2026-10-11-1914-game-qa/evidence/tags.json     |      1 +
+ .../2026-10-11-1914-game-qa/native/.gdignore       |      0
+ .../native/album_layout-wrapper.log                |      3 +
+ .../native/album_layout.log                        |      3 +
+ .../2026-10-11-1914-game-qa/native/album_layout.sh |      6 +
+ .../native/cjk_line_break-wrapper.log              |      3 +
+ .../native/cjk_line_break.log                      |      3 +
+ .../native/cjk_line_break.sh                       |      6 +
+ .../native/exploration_hud_readable-wrapper.log    |      3 +
+ .../native/exploration_hud_readable.log            |      3 +
+ .../native/exploration_hud_readable.sh             |      6 +
+ .../native/import-wrapper.log                      |     51 +
+ .../2026-10-11-1914-game-qa/native/import.log      |     51 +
+ .../2026-10-11-1914-game-qa/native/import.sh       |      6 +
+ .../2026-10-11-1914-game-qa/native/profile.log     |      3 +
+ .../2026-10-11-1914-game-qa/native/results.json    |     35 +
+ .../2026-10-11-1914-game-qa/native/verify.sh       |      5 +
+ docs/playtests/2026-10-11-2001-game-qa/.gdignore   |      0
+ docs/playtests/2026-10-11-2001-game-qa/README.md   |     46 +
+ docs/playtests/2026-10-11-2001-game-qa/bugs.json   |    348 +
+ .../2026-10-11-2001-game-qa/evidence/.gdignore     |      0
+ .../evidence/01-nearby-day.png                     |    Bin 0 -> 171368 bytes
+ .../evidence/02-ground-feather-picked.png          |    Bin 0 -> 158127 bytes
+ .../evidence/03-nearby-night.png                   |    Bin 0 -> 128620 bytes
+ .../evidence/04-feather5-night.png                 |    Bin 0 -> 72655 bytes
+ .../evidence/05-nearby-0312-windows.png            |    Bin 0 -> 129735 bytes
+ .../evidence/06-day6-wheat-one-day.png             |    Bin 0 -> 96996 bytes
+ .../2026-10-11-2001-game-qa/evidence/07-build.json |      1 +
+ .../evidence/08-reload-stall.png                   |    Bin 0 -> 73547 bytes
+ .../evidence/09-day6-reloaded.png                  |    Bin 0 -> 132148 bytes
+ .../evidence/10-overcast-nearby.png                |    Bin 0 -> 177148 bytes
+ .../evidence/11-before20-sleep-rejected.png        |    Bin 0 -> 71459 bytes
+ .../evidence/12-day7-sleep.png                     |    Bin 0 -> 99893 bytes
+ .../evidence/13-wheat-ripe.png                     |    Bin 0 -> 72307 bytes
+ .../evidence/14-wheat4-harvest.png                 |    Bin 0 -> 73408 bytes
+ .../evidence/15-corn-day7-watered.png              |    Bin 0 -> 74449 bytes
+ .../2026-10-11-2001-game-qa/evidence/coverage.json |    295 +
+ .../evidence/prior-review.json                     |      1 +
+ .../2026-10-11-2001-game-qa/evidence/releases.json |      1 +
+ .../2026-10-11-2001-game-qa/evidence/tags.json     |      1 +
+ .../evidence/worktree-status.log                   |    303 +
+ .../.gdignore                                      |      0
+ .../README.md                                      |     33 +
+ .../after-1280x720.png                             |    Bin 0 -> 1196048 bytes
+ .../after-280x653.png                              |    Bin 0 -> 211429 bytes
+ .../after-390x844.png                              |    Bin 0 -> 398770 bytes
+ .../after-640x300.png                              |    Bin 0 -> 205218 bytes
+ .../before-1280x720.png                            |    Bin 0 -> 1196537 bytes
+ .../before-280x653.png                             |    Bin 0 -> 211889 bytes
+ .../before-390x844.png                             |    Bin 0 -> 398991 bytes
+ .../before-640x300.png                             |    Bin 0 -> 205895 bytes
+ .../.gdignore                                      |      0
+ .../README.md                                      |     49 +
+ .../after-enter-basket-1280x720.png                |    Bin 0 -> 1118071 bytes
+ .../after-enter-weather-1280x720.png               |    Bin 0 -> 1387894 bytes
+ .../after-tab-album-1280x720.png                   |    Bin 0 -> 1536900 bytes
+ .../after-tab-basket-1280x720.png                  |    Bin 0 -> 1618902 bytes
+ .../after-walk-released-1280x720.png               |    Bin 0 -> 1387993 bytes
+ .../before-yard-tab-1280x720.png                   |    Bin 0 -> 1535672 bytes
+ .../.gdignore                                      |      0
+ .../README.md                                      |     49 +
+ .../after-confirm-cancel-up-1280x720.png           |    Bin 0 -> 1145880 bytes
+ .../after-confirm-tab-1280x720.png                 |    Bin 0 -> 1015908 bytes
+ .../after-pause-down-1280x720.png                  |    Bin 0 -> 1145880 bytes
+ .../after-title-tab-1280x720.png                   |    Bin 0 -> 1274174 bytes
+ .../after-title-tab-390x844.png                    |    Bin 0 -> 395338 bytes
+ .../before-pause-after-tab-1280x720.png            |    Bin 0 -> 813395 bytes
+ .../before-title-after-tab-1280x720.png            |    Bin 0 -> 1274527 bytes
+ docs/playtests/2026-10-11-daily-public/.gdignore   |      0
+ docs/playtests/2026-10-11-daily-public/README.md   |     11 +
+ .../2026-10-11-daily-public/game-release.json      |     38 +
+ .../keyboard-enter-old-save.png                    |    Bin 0 -> 151583 bytes
+ .../keyboard-pause-focus.png                       |    Bin 0 -> 116442 bytes
+ .../2026-10-11-daily-public/verification.json      |     49 +
+ .../2026-10-11-nearby-audio-web/.gdignore          |      0
+ .../2026-10-11-nearby-audio-web/.gitattributes     |      1 +
+ .../2026-10-11-nearby-audio-web/README.md          |     43 +
+ .../2026-10-11-nearby-audio-web/curation.json      |     17 +
+ .../evidence-index.json                            |   1040 +
+ .../export-auxiliary/candidate-source.json         |     11 +
+ .../export-auxiliary/index.apple-touch-icon.png    |    Bin 0 -> 59343 bytes
+ .../index.audio.position.worklet.js                |     66 +
+ .../export-auxiliary/index.audio.worklet.js        |    213 +
+ .../export-auxiliary/index.html                    |    270 +
+ .../export-auxiliary/index.icon.png                |    Bin 0 -> 389674 bytes
+ .../export-auxiliary/index.js                      |    909 +
+ .../export-auxiliary/index.png                     |    Bin 0 -> 1010767 bytes
+ .../export-auxiliary/web/boot/.gitattributes       |      1 +
+ .../export-auxiliary/web/boot/download_assets.mjs  |    169 +
+ .../export-auxiliary/web/boot/sha256_stream.mjs    |     65 +
+ .../export-auxiliary/web/loader-cjk.json           |    190 +
+ .../export-auxiliary/web/loading.html              |    267 +
+ .../export-auxiliary/web/save/bridge.mjs           |     24 +
+ .../export-auxiliary/web/save/budgets.mjs          |      4 +
+ .../export-auxiliary/web/save/host.mjs             |    125 +
+ .../export-auxiliary/web/save/idbfs_source.mjs     |     97 +
+ .../web/save/legacy_inspection.mjs                 |     38 +
+ .../export-auxiliary/web/save/legacy_seal.mjs      |     33 +
+ .../export-auxiliary/web/save/legacy_v5.mjs        |     35 +
+ .../export-auxiliary/web/save/lifecycle.mjs        |     38 +
+ .../export-auxiliary/web/save/source_decode.mjs    |     21 +
+ .../export-auxiliary/web/save/store.mjs            |    238 +
+ .../local-export-manifest.json                     |    127 +
+ .../merge-record/combination.json                  |      8 +
+ .../merge-record/docs/decisions.md                 |   1951 +
+ .../merge-record/docs/game-design.md               |    527 +
+ .../merge-record/docs/requirements.md              |    942 +
+ .../merge-record/resolutions.json                  |     38 +
+ .../merge-record/scripts/main.gd                   |   3319 +
+ .../tools/lib/godot_suite_completions.tsv          |    183 +
+ .../merge-record/tools/verify_daily_life.sh        |    162 +
+ ...alidation-initialization-interrupted-oct11.json |     50 +
+ .../metadata/audio196-live-oct11.json              |      1 +
+ .../metadata/audio542-live-oct11.json              |      1 +
+ .../metadata/audio623-live-oct11.json              |      1 +
+ .../nearby-audio-observer-calibration-oct11.json   |     53 +
+ ...audio-observer-calibration-preflight-oct11.json |     53 +
+ .../pr623-assistant-web-audio-scope-oct11.md       |      5 +
+ .../raw/audio-combination-recoverable.bundle       |    Bin 0 -> 18974 bytes
+ .../raw/audio-combination.bundle                   |    Bin 0 -> 17835 bytes
+ .../raw/bundle-verify-initial.log                  |      7 +
+ .../raw/bundle-verify-recoverable.log              |      7 +
+ .../raw/exploration_slice-missing-fixture.log      |     14 +
+ .../raw/exploration_slice.log                      |      4 +
+ .../raw/exploration_trip_capacity.log              |      3 +
+ .../raw/export-generated-state.json                |   1367 +
+ .../characters/shelter/horse-rest.png.import       |     40 +
+ .../characters/shelter/llama-rest.png.import       |     40 +
+ .../shaders/regional_night_sky.gdshader.uid        |      1 +
+ .../shaders/regional_rain.gdshader.uid             |      1 +
+ .../shaders/scene_tint.gdshader.uid                |      1 +
+ .../raw/godot-generated-import.diff                |    109 +
+ .../raw/http-8797-stop-identity.json               |      5 +
+ .../2026-10-11-nearby-audio-web/raw/http-8797.json |      6 +
+ .../raw/http-8797.stderr.log                       |     55 +
+ .../raw/http-8797.stdout.log                       |      1 +
+ .../raw/hud_pointer_input.log                      |      3 +
+ .../2026-10-11-nearby-audio-web/raw/import.log     |    869 +
+ .../raw/issue196-final-audit.json                  |      1 +
+ .../raw/long-driver.log                            |     52 +
+ .../raw/long/collected-return-pcm.json             |  24620 ++
+ .../raw/long/collected-return.png                  |    Bin 0 -> 1517099 bytes
+ .../raw/long/day-controls-both-off-pcm.json        |  16414 +
+ .../raw/long/day-controls-both-off-signal.json     |   1274 +
+ .../raw/long/day-controls-both-off.png             |    Bin 0 -> 1248505 bytes
+ .../long/day-controls-environment-only-pcm.json    |  16414 +
+ .../long/day-controls-environment-only-signal.json |   1274 +
+ .../raw/long/day-controls-environment-only.png     |    Bin 0 -> 1248637 bytes
+ .../raw/long/day-controls-master-muted-pcm.json    |  20517 ++
+ .../raw/long/day-controls-master-muted-signal.json |   1850 +
+ .../raw/long/day-controls-master-muted.png         |    Bin 0 -> 1248498 bytes
+ .../raw/long/day-controls-music-only-pcm.json      |  20517 ++
+ .../raw/long/day-controls-music-only-signal.json   |   1634 +
+ .../raw/long/day-controls-music-only.png           |    Bin 0 -> 1248592 bytes
+ .../raw/long/day-controls-pause-pcm.json           |  16414 +
+ .../raw/long/day-controls-pause.png                |    Bin 0 -> 1248707 bytes
+ .../raw/long/day-controls-restored-pcm.json        |  20517 ++
+ .../raw/long/day-controls-restored-signal.json     |   1850 +
+ .../raw/long/day-controls-restored.png             |    Bin 0 -> 1248845 bytes
+ .../raw/long/final-return-pcm.json                 |  28723 ++
+ .../raw/long/final-return.png                      |    Bin 0 -> 1508922 bytes
+ .../raw/long/long-complete-pcm.json                |  28723 ++
+ .../raw/long/long-complete.png                     |    Bin 0 -> 1936422 bytes
+ .../raw/long/long-context-1.webm                   |    Bin 0 -> 202539 bytes
+ .../raw/long/long-context-2.webm                   |    Bin 0 -> 9584436 bytes
+ .../raw/long/long-recordings.json                  |     20 +
+ .../raw/long/long-samples.json                     | 323342 ++++++++++++++++++
+ .../raw/long/midspan-near-pcm.json                 |  24620 ++
+ .../raw/long/midspan-near.png                      |    Bin 0 -> 1921207 bytes
+ .../raw/long/midspan-yard-pcm.json                 |  24620 ++
+ .../raw/long/midspan-yard.png                      |    Bin 0 -> 1515230 bytes
+ .../raw/long/natural-near-rain-night-pcm.json      |  28723 ++
+ .../raw/long/natural-near-rain-night.png           |    Bin 0 -> 1623810 bytes
+ .../raw/long/natural-pick-pcm.json                 |  24620 ++
+ .../raw/long/natural-pick.png                      |    Bin 0 -> 1922940 bytes
+ .../raw/long/near-rain-day-pcm.json                |  24620 ++
+ .../raw/long/near-rain-day-signal.json             |   2426 +
+ .../raw/long/near-rain-day.png                     |    Bin 0 -> 1920784 bytes
+ .../raw/long/night-controls-both-off-pcm.json      |  28723 ++
+ .../raw/long/night-controls-both-off-signal.json   |   3866 +
+ .../raw/long/night-controls-both-off.png           |    Bin 0 -> 1172953 bytes
+ .../long/night-controls-environment-only-pcm.json  |  28723 ++
+ .../night-controls-environment-only-signal.json    |   3866 +
+ .../raw/long/night-controls-environment-only.png   |    Bin 0 -> 1173071 bytes
+ .../raw/long/night-controls-master-muted-pcm.json  |  28723 ++
+ .../long/night-controls-master-muted-signal.json   |   4730 +
+ .../raw/long/night-controls-master-muted.png       |    Bin 0 -> 1172891 bytes
+ .../raw/long/night-controls-music-only-pcm.json    |  28723 ++
+ .../raw/long/night-controls-music-only-signal.json |   4082 +
+ .../raw/long/night-controls-music-only.png         |    Bin 0 -> 1173072 bytes
+ .../raw/long/night-controls-pause-pcm.json         |  28723 ++
+ .../raw/long/night-controls-pause.png              |    Bin 0 -> 1173128 bytes
+ .../raw/long/night-controls-restored-pcm.json      |  28723 ++
+ .../raw/long/night-controls-restored-signal.json   |   4730 +
+ .../raw/long/night-controls-restored.png           |    Bin 0 -> 1173202 bytes
+ .../raw/long/night-controls-resumed-pcm.json       |  28723 ++
+ .../raw/long/night-controls-resumed.png            |    Bin 0 -> 1623337 bytes
+ .../raw/long/package.json                          |     98 +
+ .../raw/long/point-ground-continue-pcm.json        |  24620 ++
+ .../raw/long/point-ground-continue.png             |    Bin 0 -> 1951377 bytes
+ .../raw/long/reload-context-1.webm                 |    Bin 0 -> 2799 bytes
+ .../raw/long/reload-context-2.webm                 |    Bin 0 -> 67094 bytes
+ .../raw/long/reload-recordings.json                |     20 +
+ .../raw/long/reload-title-pcm.json                 |   8208 +
+ .../raw/long/reload-title.png                      |    Bin 0 -> 1396889 bytes
+ .../raw/long/reload-yard-pcm.json                  |  20517 ++
+ .../raw/long/reload-yard-signal.json               |   1634 +
+ .../raw/long/reload-yard.png                       |    Bin 0 -> 1528077 bytes
+ .../raw/long/steps.json                            |  13941 +
+ .../raw/long/summary.json                          |     33 +
+ .../raw/long/title-pcm.json                        |   8208 +
+ .../2026-10-11-nearby-audio-web/raw/long/title.png |    Bin 0 -> 1396889 bytes
+ .../raw/long/yard-day-pcm.json                     |  16414 +
+ .../raw/long/yard-day-signal.json                  |   1274 +
+ .../raw/long/yard-day.png                          |    Bin 0 -> 1658004 bytes
+ .../raw/long/yard-rain-pcm.json                    |  24620 ++
+ .../raw/long/yard-rain.png                         |    Bin 0 -> 1606638 bytes
+ .../raw/native-results-first-marker-fail.json      |     20 +
+ .../raw/native-results-missing-fixture.json        |     56 +
+ .../raw/native-results.json                        |     65 +
+ .../raw/nearby_direct_pick.log                     |      3 +
+ .../raw/pr623-final-audit.json                     |      1 +
+ .../raw/pr623-inline-final-audit.json              |      1 +
+ .../raw/probe/context-1.webm                       |    Bin 0 -> 2503 bytes
+ .../raw/probe/context-2.webm                       |    Bin 0 -> 34153 bytes
+ .../raw/probe/pause.png                            |    Bin 0 -> 1226174 bytes
+ .../raw/probe/result.json                          |    166 +
+ .../raw/probe/title.png                            |    Bin 0 -> 1396889 bytes
+ .../2026-10-11-nearby-audio-web/raw/probe/yard.png |    Bin 0 -> 1664088 bytes
+ .../raw/recording-analysis-driver.log              |      5 +
+ .../raw/recording-analysis-first-launch.log        |     25 +
+ .../raw/recording-analysis-first-launch.py         |     55 +
+ .../raw/recording-software-analysis.json           |   9826 +
+ .../raw/regional_audio-first-marker-fail.log       |      3 +
+ .../raw/regional_audio.log                         |      3 +
+ .../raw/run-analysis.json                          |    533 +
+ .../raw/track-metadata.json                        |     54 +
+ .../raw/track-metadata.log                         |      3 +
+ .../2026-10-11-nearby-audio-web/raw/web-export.log |    659 +
+ .../2026-10-11-nearby-audio-web/raw/yard_audio.log |      3 +
+ .../scripts/analyze-near-audio-recordings-oct11.py |     56 +
+ .../scripts/analyze-near-audio-run-oct11.py        |     25 +
+ .../scripts/browser-near-audio-long-oct11.py       |    174 +
+ .../calibrate-nearby-audio-observer-oct11.py       |     32 +
+ .../scripts/curate-near-audio-web-oct11.py         |     36 +
+ .../scripts/nearby-web-audio-observer-oct11.js     |     91 +
+ .../nearby-web-audio-observer-preflight-oct11.js   |     89 +
+ .../probe-near-audio-track-metadata-oct11.gd       |     21 +
+ .../scripts/probe-web-audio-combination-oct11.py   |     37 +
+ .../resolve-audio-validation-merge-oct11.py        |     37 +
+ ...export-near-audio-combination-initial-oct11.ps1 |     57 +
+ .../verify-export-near-audio-combination-oct11.ps1 |     68 +
+ .../scripts/verify-near-audio-proof-git-oct11.py   |     11 +
+ .../2026-10-11-resident-bark-review/.gdignore      |      0
+ .../2026-10-11-resident-bark-review/README.md      |     11 +
+ .../ordinary-sow-bubble.png                        |    Bin 0 -> 167304 bytes
+ .../resident-barks.log                             |      3 +
+ .../2026-10-11-resident-bubble-703/README.md       |     85 +
+ .../bark-390-camera-follow.png                     |    Bin 0 -> 628084 bytes
+ .../bark-390-camera-zoom.png                       |    Bin 0 -> 529374 bytes
+ .../.gdignore                                      |      0
+ .../README.md                                      |     45 +
+ .../after-tab4-first-slot-1280x720.png             |    Bin 0 -> 1536578 bytes
+ .../after-tab4-first-slot-crop-1280x720.png        |    Bin 0 -> 68348 bytes
+ .../after-tab5-second-slot-390x844.png             |    Bin 0 -> 503298 bytes
+ .../before-tab4-first-slot-1280x720.png            |    Bin 0 -> 1547950 bytes
+ .../before-tab4-first-slot-crop-1280x720.png       |    Bin 0 -> 71625 bytes
+ .../.gdignore                                      |      0
+ .../README.md                                      |     46 +
+ .../after-enter-empty-slot-basket-1280x720.png     |    Bin 0 -> 1117235 bytes
+ .../after-tab4-first-slot-1280x720.png             |    Bin 0 -> 1548477 bytes
+ .../after-tab6-third-slot-1280x720.png             |    Bin 0 -> 1604793 bytes
+ .../after-walk-released-1280x720.png               |    Bin 0 -> 1552319 bytes
+ .../before-tab4-skips-hotbar-1280x720.png          |    Bin 0 -> 1447599 bytes
+ docs/playtests/2026-10-12-fatigue-barks/.gdignore  |      0
+ docs/playtests/2026-10-12-fatigue-barks/README.md  |     20 +
+ .../controlled-desktop.png                         |    Bin 0 -> 1884377 bytes
+ .../2026-10-12-fatigue-barks/controlled-narrow.png |    Bin 0 -> 600416 bytes
+ .../2026-10-12-fatigue-barks/hud-keyboard.log      |      3 +
+ .../2026-10-12-fatigue-barks/natural-midnight.png  |    Bin 0 -> 411105 bytes
+ .../2026-10-12-fatigue-barks/natural-morning.png   |    Bin 0 -> 599550 bytes
+ .../2026-10-12-fatigue-barks/natural-night.log     |      6 +
+ .../2026-10-12-fatigue-barks/resident-barks.log    |      3 +
+ .../2026-10-12-fatigue-barks/rest-context.log      |      3 +
+ docs/playtests/2026-10-12-growth-budget/.gdignore  |      0
+ docs/playtests/2026-10-12-growth-budget/README.md  |     10 +
+ .../2026-10-12-growth-budget/growth_budget.log     |      3 +
+ .../2026-10-12-growth-budget/growth_materials.log  |      3 +
+ .../initial-import-failure.log                     |    100 +
+ .../2026-10-12-growth-budget/meal_ledger.log       |      3 +
+ .../2026-10-12-growth-budget/rest_context.log      |      3 +
+ .../2026-10-12-growth-materials/.gdignore          |      0
+ .../2026-10-12-growth-materials/README.md          |     13 +
+ .../growth_materials.log                           |      3 +
+ .../initial-failure.log                            |      8 +
+ .../2026-10-12-growth-materials/meal_ledger.log    |      3 +
+ .../2026-10-12-growth-materials/meal_planner.log   |      3 +
+ .../2026-10-12-growth-materials/yard_decor.log     |      3 +
+ docs/playtests/2026-10-12-pond-edging/README.md    |     17 +
+ docs/playtests/2026-10-12-pond-edging/gate.log     |    257 +
+ .../2026-10-12-pond-edging/growth_budget.log       |      3 +
+ .../2026-10-12-pond-edging/growth_materials.log    |      3 +
+ .../native-confirmed-rim.png                       |    Bin 0 -> 2098548 bytes
+ .../2026-10-12-pond-edging/photo_moment_render.log |     20 +
+ .../2026-10-12-pond-edging/pond_edging_view.log    |      3 +
+ .../2026-10-12-pond-edging/world_daylight.log      |      3 +
+ .../yard_decor_integration.log                     |      3 +
+ .../README.md                                      |     25 +
+ .../narrow-before.png                              |    Bin 0 -> 56607 bytes
+ .../narrow-follow.png                              |    Bin 0 -> 60970 bytes
+ .../narrow-paused.png                              |    Bin 0 -> 42792 bytes
+ .../narrow-resumed.png                             |    Bin 0 -> 60494 bytes
+ .../narrow-sown-settled.png                        |    Bin 0 -> 56870 bytes
+ .../resident-barks.log                             |      3 +
+ docs/releases/2026-10-11.md                        |     60 +
+ docs/requirements.md                               |     38 +
+ localization/en.json                               |     10 +-
+ localization/zh-CN.json                            |     10 +-
+ scripts/game/growth_budget.gd                      |     83 +
+ scripts/game/growth_materials.gd                   |    112 +
+ scripts/game/pond_edging.gd                        |     49 +
+ scripts/game/pond_edging_view.gd                   |     66 +
+ scripts/game/yard_world.gd                         |      4 +
+ scripts/main.gd                                    |    313 +-
+ scripts/presentation/resident_barks.gd             |    141 +
+ scripts/presentation/resident_barks.gd.uid         |      1 +
+ scripts/presentation/resident_bubble.gd            |    149 +
+ scripts/presentation/resident_bubble.gd.uid        |      1 +
+ scripts/ui/hold_hotbar.gd                          |     16 +-
+ test/album_layout_suite.gd                         |     21 +
+ test/godot_gate_test.sh                            |     31 +
+ test/growth_budget_suite.gd                        |    152 +
+ test/growth_materials_suite.gd                     |    163 +
+ test/hotbar_focus_ring_suite.gd                    |    135 +
+ test/hud_keyboard_focus_suite.gd                   |    271 +
+ test/menu_keyboard_focus_suite.gd                  |    176 +
+ test/pond_edging_view_suite.gd                     |    131 +
+ test/resident_barks_suite.gd                       |    384 +
+ test/resident_barks_suite.gd.uid                   |      1 +
+ tools/capture_fatigue_bark.gd                      |     45 +
+ tools/lib/godot_suite_completions.tsv              |      8 +
+ tools/verify_daily_life.sh                         |      8 +
+ 410 files changed, 1029388 insertions(+), 19 deletions(-)

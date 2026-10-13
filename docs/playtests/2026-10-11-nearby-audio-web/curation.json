@@ -1,0 +1,17 @@
+{
+  "rawFiles": 173,
+  "rawBytes": 77172897,
+  "selection": "All actual native, preflight, long browser, software recordings and decode metrics; initialization, CRLF completion-marker failure and missing fixture failure retained. Merge records and recoverable Git bundles included. Local duplicate PCK/WASM retained with byte counts and SHA256 only. No physical-device, audible quality, public release or uninterrupted ten-minute hearing claim.",
+  "excludedLocallyRetained": [
+    {
+      "source": "nearby-audio-combination-web/index.pck",
+      "bytes": 75539060,
+      "sha256": "f6b70c584739b411e427208cafb02ede141b66305818bc9e3d229cb19b5e4d28"
+    },
+    {
+      "source": "nearby-audio-combination-web/index.wasm",
+      "bytes": 39514754,
+      "sha256": "fc74679e3b97f76878947fcd4fbe1268cbfa6188182a2e33bbc3f5dc9bfa57d0"
+    }
+  ]
+}

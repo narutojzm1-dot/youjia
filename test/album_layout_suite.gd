@@ -2,7 +2,8 @@ extends SceneTree
 
 # #350: isolated presentation fixture derived from an actual public photograph.
 # No save mutation, world stepping or browser injection is needed for geometry.
-const VIEWS := [Vector2i(390, 844), Vector2i(844, 390), Vector2i(1280, 720), Vector2i(360, 640), Vector2i(700, 400), Vector2i(700, 460), Vector2i(720, 460), Vector2i(700, 500)]
+const VIEWS := [Vector2i(390, 844), Vector2i(844, 390), Vector2i(1280, 720), Vector2i(360, 640), Vector2i(700, 400), Vector2i(700, 460), Vector2i(720, 460), Vector2i(700, 500),
+	Vector2i(320, 568), Vector2i(280, 653)]
 var checks := 0
 var failures: Array[String] = []
 
@@ -69,6 +70,15 @@ func scenario(moments: Dictionary, description: String) -> void:
 			for frame in range(3): await process_frame
 			inspect_pages(main, "%s %s empty" % [locale, dims])
 			main._album_entries = PackedStringArray(store._data.album)
+	# 键盘焦点停在「合上」时转屏跨过分行宽度，焦点跟着按钮走，不丢
+	for dims in [Vector2i(390, 844), Vector2i(280, 653), Vector2i(390, 844)]:
+		main._album_back_button.grab_focus()
+		root.size = dims
+		await process_frame
+		main._layout()
+		await process_frame
+		check(main._album_back_button.has_focus(), "close keeps keyboard focus after resizing to %s" % dims)
+		check(main._album_controls_low.visible == (dims.x < 336), "close sits on its own row only when one row cannot hold all three at %s" % dims)
 	check(store._data.album == before.album and store._data.photo_moments == before.photo_moments, "resizing, languages, legacy and empty pages preserve historical photographs")
 	main.queue_free()
 	await process_frame
@@ -82,11 +92,14 @@ func inspect_pages(main: Control, tag: String) -> void:
 		var navigation: Array[Control] = [main._album_previous_button, main._album_next_button, main._album_back_button]
 		for button in navigation:
 			check(not bounds.grow(-0.5).intersects(button.get_global_rect()), tag + " page clear of navigation")
+		_check_frame(main, tag)
 		var texts: Array[Label] = []
 		var photos: Array[Control] = []
 		for node in descendants(page):
 			if node is Label and not node.text.is_empty():
 				texts.append(node)
+				if node.text == root.get_node("I18n").t("album.page_label"):
+					_check_heading(node, tag)
 				check(bounds.encloses(node.get_global_rect()), tag + " text stays on page: " + node.text)
 				check(node.size.y + 0.5 >= node.get_minimum_size().y, tag + " text fits its height")
 			if node is PhotoMoment:
@@ -118,3 +131,38 @@ func inspect_pages(main: Control, tag: String) -> void:
 			for text in texts:
 				if text.text == expected: found = true
 			check(found, tag + " full original photograph date and caption remain present")
+
+## 窄竖屏（280、320 宽）：整张手帐和三枚翻页按钮都留在屏幕里，按钮字不被挤出按钮，按钮互不重叠
+func _check_frame(main: Control, tag: String) -> void:
+	var screen := Rect2(Vector2.ZERO, main.size)
+	check(screen.encloses(main._album_panel.get_global_rect()), tag + " album frame stays on screen %s" % main._album_panel.get_global_rect())
+	var navigation: Array[Button] = [main._album_previous_button, main._album_next_button, main._album_back_button]
+	for button in navigation:
+		var rect := button.get_global_rect()
+		check(main._album_panel.get_global_rect().grow(0.5).encloses(rect), tag + " '%s' stays inside the album frame" % button.text)
+		var paper := button.get_theme_stylebox("normal")
+		var need := button.get_theme_font("font").get_string_size(button.text, HORIZONTAL_ALIGNMENT_LEFT, -1, button.get_theme_font_size("font_size")).x + paper.get_margin(SIDE_LEFT) + paper.get_margin(SIDE_RIGHT)
+		check(need <= button.size.x + 0.5, tag + " '%s' label fits its button" % button.text)
+		check(button.size.y >= 40.0, tag + " '%s' keeps a touch height" % button.text)
+		for other in navigation:
+			if other != button:
+				check(not rect.intersects(other.get_global_rect()), tag + " '%s' clear of '%s'" % [button.text, other.text])
+
+## 页眉「假期里的小记」压在相纸薰衣草枝上：垫贴字宽的不透明小纸签，墨字对纸签至少 4.5:1
+func _check_heading(heading: Label, tag: String) -> void:
+	var paper := heading.get_theme_stylebox("normal") as StyleBoxFlat
+	check(paper != null and paper.bg_color.a >= 0.85, tag + " page heading sits on a mostly opaque paper")
+	if paper == null: return
+	check(_contrast(heading.get_theme_color("font_color"), Color(paper.bg_color, 1.0)) >= 4.5, tag + " page heading ink reaches 4.5:1 on its paper")
+	check(heading.size.x <= heading.get_minimum_size().x + 1.0, tag + " page heading paper hugs its text (%.0f vs %.0f)" % [heading.size.x, heading.get_minimum_size().x])
+
+func _luminance(c: Color) -> float:
+	var parts: Array[float] = []
+	for v: float in [c.r, c.g, c.b]:
+		parts.append(v / 12.92 if v <= 0.03928 else pow((v + 0.055) / 1.055, 2.4))
+	return 0.2126 * parts[0] + 0.7152 * parts[1] + 0.0722 * parts[2]
+
+func _contrast(a: Color, b: Color) -> float:
+	var la := _luminance(a)
+	var lb := _luminance(b)
+	return (maxf(la, lb) + 0.05) / (minf(la, lb) + 0.05)

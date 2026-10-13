@@ -64,6 +64,9 @@ static func project(candidate: Dictionary) -> Dictionary:
 	data.exploration = exploration.duplicate(true) if exploration is Dictionary or exploration is Array else exploration
 	data.exploration_committed_serial = committed_serial(candidate)
 	data.keepsakes = clean_keepsakes(candidate.get("keepsakes", {}))
+	# Absence permits one-time native cfg migration; an explicitly empty value wins.
+	if candidate.has("hotbar_slots"):
+		data.hotbar_slots = preload("res://scripts/persistence/hotbar_slots.gd").clean(candidate.hotbar_slots)
 
 	return data
 

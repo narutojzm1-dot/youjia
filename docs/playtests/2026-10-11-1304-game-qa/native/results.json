@@ -1,0 +1,63 @@
+{
+  "sourceSha": "3caeb1fe6082da0cf0db00e3bea20dc47eb50edf",
+  "startedUtc": "2026-10-11T05:05:20.370961+00:00",
+  "profileProbe": "D:/games/youjia-test/qa/native/2026-10-11-1304/roaming/Godot/app_userdata/youjia-qa-profile-probe",
+  "engine": "D:/games/youjia-tmp-godot/Godot_v4.7.2-stable_win64_console.exe",
+  "tests": [
+    {
+      "entry": "import",
+      "exit": 0,
+      "summary": []
+    },
+    {
+      "entry": "hud_pointer_input",
+      "exit": 0,
+      "summary": [
+        "HUD_POINTER_INPUT checks=72 failures=0"
+      ]
+    },
+    {
+      "entry": "exploration_hud_readable",
+      "exit": 0,
+      "summary": [
+        "[exploration-hud-readable] PASS: 2215 checks"
+      ]
+    },
+    {
+      "entry": "meal_planner",
+      "exit": 0,
+      "summary": [
+        "MEAL_PLANNER checks=28 failures=0"
+      ]
+    },
+    {
+      "entry": "rest_context",
+      "exit": 0,
+      "summary": [
+        "REST_CONTEXT checks=43 failures=0"
+      ]
+    },
+    {
+      "entry": "nearby_mist",
+      "exit": 0,
+      "summary": [
+        "NEARBY_MIST checks=34 failures=0"
+      ]
+    },
+    {
+      "entry": "nearby_window_light",
+      "exit": 0,
+      "summary": [
+        "NEARBY_WINDOW_LIGHT checks=29 failures=0"
+      ]
+    },
+    {
+      "entry": "save_candidate",
+      "exit": 0,
+      "summary": [
+        "save candidate: 82 checks, 0 failures"
+      ]
+    }
+  ],
+  "endedUtc": "2026-10-11T05:05:49.527566+00:00"
+}

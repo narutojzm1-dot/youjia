@@ -1,0 +1,17 @@
+{
+  "errors": [
+    "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    "[game-loading] Startup failed TypeError: Failed to fetch dynamically imported module: http://127.0.0.1:8790/web/save/bridge.mjs"
+  ],
+  "responses": [
+    "http://127.0.0.1:8790/web/save/bridge.mjs",
+    "http://127.0.0.1:8790/web/boot/download_assets.mjs",
+    "http://127.0.0.1:8790/web/save/host.mjs",
+    "http://127.0.0.1:8790/web/boot/sha256_stream.mjs",
+    "http://127.0.0.1:8790/web/save/legacy_inspection.mjs",
+    "http://127.0.0.1:8790/web/save/legacy_v5.mjs",
+    "http://127.0.0.1:8790/web/save/source_decode.mjs",
+    "http://127.0.0.1:8790/web/save/budgets.mjs",
+    "http://127.0.0.1:8790/web/save/lifecycle.mjs"
+  ]
+}

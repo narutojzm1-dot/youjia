@@ -1,0 +1,63 @@
+{
+  "sourceSha": "45673209c8e88b4f6a8320cb9bf4d1020de53bc6",
+  "startedUtc": "2026-10-11T00:11:56.275117+00:00",
+  "profileProbe": "D:/games/youjia-test/qa/native/2026-10-11-0810/roaming/Godot/app_userdata/youjia-qa-profile-probe",
+  "engine": "D:/games/youjia-tmp-godot/Godot_v4.7.2-stable_win64_console.exe",
+  "tests": [
+    {
+      "entry": "import",
+      "exit": 0,
+      "summary": []
+    },
+    {
+      "entry": "hotbar_persistence",
+      "exit": 0,
+      "summary": [
+        "HOTBAR_PERSISTENCE checks=48 failures=0"
+      ]
+    },
+    {
+      "entry": "hotbar_player_slots",
+      "exit": 0,
+      "summary": [
+        "[hotbar-player-slots] PASS: 159 checks"
+      ]
+    },
+    {
+      "entry": "meal_ledger",
+      "exit": 0,
+      "summary": [
+        "MEAL_LEDGER checks=72 failures=0"
+      ]
+    },
+    {
+      "entry": "hud_single_row",
+      "exit": 0,
+      "summary": [
+        "[hud-single-row] PASS: 7032 checks"
+      ]
+    },
+    {
+      "entry": "title_card",
+      "exit": 0,
+      "summary": [
+        "title_card suite: 327 checks passed"
+      ]
+    },
+    {
+      "entry": "nearby_motion",
+      "exit": 0,
+      "summary": [
+        "NEARBY_MOTION checks=44 failures=0"
+      ]
+    },
+    {
+      "entry": "save_recovery",
+      "exit": 0,
+      "summary": [
+        "SAVE RECOVERY PASS 24"
+      ]
+    }
+  ],
+  "endedUtc": "2026-10-11T00:12:52.577027+00:00"
+}

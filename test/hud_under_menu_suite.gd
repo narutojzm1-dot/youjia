@@ -113,7 +113,12 @@ func run() -> void:
 				await settle()
 				var paper: Control = (papers[kind][2] as Callable).call()
 				check(paper.is_visible_in_tree(), tag + " paper open")
-				var hidden := check_against(main, [paper.get_global_rect()], tag + ":")
+				var covers: Array[Rect2] = [paper.get_global_rect()]
+				# #597：背篓开着时快捷栏贴在底边当落点，它也算遮挡
+				if kind == "basket":
+					check(main._hold_hotbar.visible, tag + " hotbar stays at the bottom while the basket is open")
+					covers.append(main._hold_hotbar.get_global_rect())
+				var hidden := check_against(main, covers, tag + ":")
 				hidden_at["%s %s %s" % [kind, locale, viewport]] = hidden
 				check(flags(main) == before, tag + " opening changes no HUD visibility, input filter or disabled state")
 				(papers[kind][1] as Callable).call()
@@ -124,7 +129,8 @@ func run() -> void:
 				check(flags(main) == before, tag + " closing leaves HUD state as before")
 	for locale: String in ["zh-CN", "en"]:
 		check((hidden_at["basket %s (568, 320)" % locale] as Dictionary).size() == 3, locale + " 568x320: basket paper fades all three groups it covers")
-		check((hidden_at["basket %s (390, 844)" % locale] as Dictionary).is_empty(), locale + " 390x844: basket paper covers no HUD, all stay")
+		check((hidden_at["basket %s (390, 844)" % locale] as Dictionary).keys() == ["bottom row"], locale + " 390x844: basket paper covers no HUD; only the bottom row under the hotbar fades")
+		check((hidden_at["basket %s (1920, 1080)" % locale] as Dictionary).is_empty(), locale + " 1920x1080: basket and hotbar cover no HUD")
 		check((hidden_at["crop %s (1920, 1080)" % locale] as Dictionary).is_empty(), locale + " 1920x1080: crop paper covers no HUD")
 	if OS.get_environment("HUD_UNDER_MENU_REPORT") == "1":
 		for key: String in hidden_at: print("hidden ", key, " ", (hidden_at[key] as Dictionary).keys())

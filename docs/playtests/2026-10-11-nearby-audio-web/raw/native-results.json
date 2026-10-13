@@ -1,0 +1,65 @@
+[
+  {
+    "exit": 0,
+    "status": "PASS",
+    "completionPattern": null,
+    "seconds": 52.8070791,
+    "profile": "youjia-assistant-audio-565-830c9736319147b3ad44adb1ce24bd81",
+    "source": "4ac427ddbce543c9836cd2813d1575db2be6bbb4",
+    "name": "import"
+  },
+  {
+    "status": "PASS",
+    "source": "4ac427ddbce543c9836cd2813d1575db2be6bbb4",
+    "exit": 0,
+    "profile": "youjia-assistant-audio-565-108d45a56b5248c5a3375edcfe550716",
+    "name": "regional_audio",
+    "seconds": 3.39658,
+    "completionPattern": "REGIONAL_AUDIO checks=[1-9][0-9]* failures=0"
+  },
+  {
+    "status": "PASS",
+    "source": "4ac427ddbce543c9836cd2813d1575db2be6bbb4",
+    "exit": 0,
+    "profile": "youjia-assistant-audio-565-0deb723112274110947682de1d831c76",
+    "name": "yard_audio",
+    "seconds": 4.1337498,
+    "completionPattern": "YARD AUDIO PASS [1-9][0-9]*"
+  },
+  {
+    "status": "PASS",
+    "source": "4ac427ddbce543c9836cd2813d1575db2be6bbb4",
+    "exit": 0,
+    "profile": "youjia-assistant-audio-565-9fb72e34cfc44d69bed6f5a0521ed1c6",
+    "name": "hud_pointer_input",
+    "seconds": 4.8772928,
+    "completionPattern": "HUD_POINTER_INPUT checks=[1-9][0-9]* failures=0"
+  },
+  {
+    "status": "PASS",
+    "source": "4ac427ddbce543c9836cd2813d1575db2be6bbb4",
+    "exit": 0,
+    "profile": "youjia-assistant-audio-565-7a2cfaebb1f84bd79e385fa85f87dda9",
+    "name": "nearby_direct_pick",
+    "seconds": 7.3553215,
+    "completionPattern": "NEARBY_DIRECT_PICK checks=[1-9][0-9]* failures=0"
+  },
+  {
+    "status": "PASS",
+    "completionPattern": "EXPLORATION SLICE PASS ([1-9][0-9]*)/\\1 failures=\\[\\]",
+    "name": "exploration_slice",
+    "profile": "youjia-assistant-audio-565-095dcf1c49c442d9bbc816496ffe77ee",
+    "source": "5700377e248a4d871c9fb1711956dba1400d5e8f",
+    "exit": 0,
+    "seconds": 10.3210193
+  },
+  {
+    "status": "PASS",
+    "completionPattern": "EXPLORATION_TRIP_CAPACITY checks=[1-9][0-9]* failures=0",
+    "name": "exploration_trip_capacity",
+    "profile": "youjia-assistant-audio-565-164273e8354c44dfba58f868ae51bc1d",
+    "source": "5700377e248a4d871c9fb1711956dba1400d5e8f",
+    "exit": 0,
+    "seconds": 4.390033
+  }
+]

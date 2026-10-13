@@ -34,6 +34,14 @@ const DECOR_SPOTS_SCRIPT := "res://scripts/inventory/yard_decor.gd"
 ## 松在别处、Esc、背篓被收起或保存忙起来 = 取消，什么都不提交。
 ## 院子世界（Main._world）。Main 可直接赋值；未赋值时沿父节点找一次 `_world`。
 var world: Node2D
+## #597：手持快捷栏；背篓开着时它贴在屏幕底边当落点，纸面让出 reserve_bottom 这一条
+var hotbar: Control
+var reserve_bottom := 0.0
+## 矮横屏里纸面高度不够再让一条：快捷栏放进纸面右下角，与收窄的「合上背篓」同排
+var shared_row := false
+const SHARED_CLOSE_MIN := 140.0
+const SHARED_GAP := 8.0
+const SHARED_INSET := 4.0
 var drag_kind := ""
 var drag_spot := ""
 var drag_layer: Control
@@ -159,7 +167,7 @@ func _ready() -> void:
 			cancel_drag()
 			place_note = ""
 			grid.close_menu())
-	for kind: String in grid.KEEPSAKES:
+	for kind: String in grid.KEEPSAKES + grid.HOLDABLE:
 		grid.cells[kind].gui_input.connect(func(event: InputEvent) -> void: _on_cell_mouse(kind, event))
 		# 鼠标拖完松在原格上：格子自己会把这一下当点按开纸片，这里随即收起，拖出不顺带弹纸片
 		grid.cells[kind].toggled.connect(func(_on: bool) -> void:
@@ -263,8 +271,15 @@ static func state_style(mode: String) -> StyleBoxFlat:
 
 func fit() -> void:
 	if panel == null: return
-	var target := Vector2(minf(520, size.x - EDGE * 2.0), minf(620, size.y - EDGE * 2.0))
+	# 背篓合着时快捷栏归院里排（Main.preferred_rect），这里的延后 fit 不能把它挪到背篓位置
+	var bar_on := visible and _bar_ready() and hotbar.visible
+	var bar_size: Vector2 = hotbar.get_combined_minimum_size() if bar_on else Vector2.ZERO
+	var width := minf(520, size.x - EDGE * 2.0)
+	shared_row = bar_on and minf(620, size.y - EDGE * 2.0) <= COMPACT_HEIGHT and width - 32.0 - bar_size.x - SHARED_GAP >= SHARED_CLOSE_MIN
+	var room := size.y - (reserve_bottom if bar_on and not shared_row else 0.0)
+	var target := Vector2(width, minf(620, room - EDGE * 2.0))
 	_set_compact(target.y <= COMPACT_HEIGHT)
+	_sync_close_row(bar_size)
 	var row_width := NARROW_ROW_BUTTON_WIDTH if target.x < NARROW_WIDTH else ROW_BUTTON_WIDTH
 	for button: Button in fish_buttons.values():
 		button.custom_minimum_size.x = row_width
@@ -275,7 +290,38 @@ func fit() -> void:
 	# 内容放得下时纸面贴着内容收高，不在「收回背篓」和提示之间留一大块空白；放不下才按上限滚动
 	var natural := panel.get_combined_minimum_size().y - scroll.get_combined_minimum_size().y + rows.get_combined_minimum_size().y
 	panel.size = Vector2(target.x, minf(target.y, ceilf(natural)))
-	panel.position = (size - panel.size) * 0.5
+	panel.position = (Vector2(size.x, room) - panel.size) * 0.5
+	if bar_on: _place_hotbar(bar_size)
+
+func set_hotbar(bar: Control, reserve: float) -> void:
+	hotbar = bar
+	reserve_bottom = reserve
+	grid.hotbar = bar
+	fit()
+
+## 同排时「合上背篓」收窄、加高到快捷栏那么高，快捷栏压在它右边；否则快捷栏贴屏幕底边居中
+func _sync_close_row(bar_size: Vector2) -> void:
+	if shared_row:
+		var inner := panel.size.x - 32.0
+		close_button.custom_minimum_size = Vector2(maxf(SHARED_CLOSE_MIN, inner - bar_size.x - SHARED_GAP + SHARED_INSET * 2.0), bar_size.y - SHARED_INSET * 2.0)
+		close_button.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
+	else:
+		close_button.custom_minimum_size = Vector2(104, 44)
+		close_button.size_flags_horizontal = Control.SIZE_FILL
+
+func _place_hotbar(bar_size: Vector2) -> void:
+	var rect := hotbar_rect(bar_size)
+	hotbar.position = rect.position
+	hotbar.size = rect.size
+
+func hotbar_rect(bar_size: Vector2) -> Rect2:
+	if shared_row:
+		var end := panel.position + panel.size
+		return Rect2(end - bar_size - Vector2(16.0 - SHARED_INSET, 12.0 - SHARED_INSET), bar_size)
+	return Rect2(Vector2((size.x - bar_size.x) * 0.5, size.y - bar_size.y - (reserve_bottom - bar_size.y) * 0.5), bar_size)
+
+func _bar_ready() -> bool:
+	return hotbar != null and is_instance_valid(hotbar)
 
 func _queue_fit() -> void:
 	if _fit_queued: return
@@ -347,6 +393,13 @@ func update_view(inventory: Dictionary, keepsakes: Dictionary, state: String, bu
 	call_deferred("fit")
 
 func _on_grid_action(action: String, kind: String) -> void:
+	if action == "hotbar_add":
+		var index: int = hotbar.add_to_first_empty(kind) if _bar_ready() else -1
+		if index >= 0: _hotbar_note(kind, index)
+		return
+	if action == "hotbar_remove":
+		if _bar_ready() and hotbar.remove_kind(kind): _hotbar_note(kind, -1)
+		return
 	if action.begins_with("place:"):
 		var id: String = grid.FIND_IDS.get(kind, "")
 		var spot := action.trim_prefix("place:")
@@ -379,8 +432,10 @@ func _find_world() -> Node2D:
 		node = node.get_parent()
 	return null
 
-## 现在能不能把这一格拖出来：只有小物、背篓里有、背篓与布置都没在确认保存、布置已载入且还有空位
+## 现在能不能把这一格拖出来：可手持的东西拖到底下快捷格（只记种类，不受保存忙碌影响）；小物要背篓里有、背篓与布置都没在确认保存、布置已载入且还有空位
 func can_drag(kind: String) -> bool:
+	if kind in grid.HOLDABLE:
+		return _bar_ready() and hotbar.is_visible_in_tree() and (int(grid.counts.get(kind, 0)) > 0 or kind == grid._held)
 	if kind not in grid.KEEPSAKES or int(grid.counts.get(kind, 0)) <= 0 or grid._busy or not grid._loaded: return false
 	if decor_value.is_empty() or decor_busy or _find_world() == null: return false
 	return not legal_spots().is_empty()
@@ -431,6 +486,9 @@ func begin_drag(kind: String, at: Vector2) -> bool:
 func drag_to(at: Vector2) -> void:
 	if drag_kind.is_empty(): return
 	drag_ghost.position = at - drag_ghost.size * 0.5
+	if _dragging_to_bar():
+		hotbar.set_drop_hint(hotbar.slot_index_at(at))
+		return
 	drag_spot = zone_at(at)
 	drag_layer.queue_redraw()
 
@@ -438,6 +496,18 @@ func drag_to(at: Vector2) -> void:
 func end_drag(at: Vector2) -> String:
 	if drag_kind.is_empty(): return ""
 	var kind := drag_kind
+	if _dragging_to_bar():
+		var index: int = hotbar.slot_index_at(at)
+		_finish_drag()
+		if index < 0 or not hotbar.assign(kind, index):
+			var en_bar := I18n.get_locale() == "en"
+			place_note = "Drop it on a hotbar slot below. Nothing changed." if en_bar else "要松在下面的快捷格上；快捷栏没有变。"
+			status.text = place_note
+			_status_is_note = false
+			status.visible = true
+			return ""
+		_hotbar_note(kind, index)
+		return "hotbar"
 	var spot := zone_at(at)
 	_finish_drag()
 	if spot.is_empty():
@@ -476,6 +546,21 @@ func show_place_note(find_id: String, spot: String, stage: String) -> void:
 	_status_is_note = false
 	status.visible = true
 
+func _dragging_to_bar() -> bool:
+	return drag_kind in grid.HOLDABLE and _bar_ready()
+
+## 快捷栏配好后的一句话；index < 0 表示刚从快捷栏拿下
+func _hotbar_note(kind: String, index: int) -> void:
+	var en := I18n.get_locale() == "en"
+	var thing: String = grid._names.get(kind, kind)
+	if index < 0:
+		place_note = ("%s is off the hotbar. It is still in the basket." % thing) if en else "%s从快捷栏拿下了，东西还在背篓里。" % thing
+	else:
+		place_note = ("%s is on hotbar slot %d." % [thing, index + 1]) if en else "%s放进快捷栏第%d格了。" % [thing, index + 1]
+	status.text = place_note
+	_status_is_note = false
+	status.visible = true
+
 func cancel_drag() -> void:
 	if drag_kind.is_empty(): return
 	_finish_drag()
@@ -488,9 +573,10 @@ func _finish_drag() -> void:
 	panel.modulate.a = 1.0
 	shade.visible = true
 	drag_layer.visible = false
+	if _bar_ready(): hotbar.set_drop_hint(-1)
 
 func _draw_zones() -> void:
-	if drag_kind.is_empty(): return
+	if drag_kind.is_empty() or _dragging_to_bar(): return
 	var font := get_theme_default_font()
 	for spot: String in legal_spots():
 		var at := spot_screen_position(spot)
@@ -542,7 +628,10 @@ func _on_cell_mouse(kind: String, event: InputEvent) -> void:
 			_mouse_kind = ""
 	elif event is InputEventMouseMotion and _mouse_kind == kind:
 		if drag_kind.is_empty():
-			if event.global_position.distance_to(_mouse_start) >= DRAG_START:
+			# 触屏合成的按下可能落到格子上、抬起却被 Main 去重吞掉；左键没按着的移动不算拖。
+			if not (event.button_mask & MOUSE_BUTTON_MASK_LEFT):
+				_mouse_kind = ""
+			elif event.global_position.distance_to(_mouse_start) >= DRAG_START:
 				begin_drag(kind, event.global_position)
 		else:
 			drag_to(event.global_position)
@@ -550,6 +639,13 @@ func _on_cell_mouse(kind: String, event: InputEvent) -> void:
 func _unhandled_key_input(event: InputEvent) -> void:
 	if not drag_kind.is_empty() and event.is_action_pressed("ui_cancel"):
 		cancel_drag()
+		get_viewport().set_input_as_handled()
+
+## 背篓打开时触屏全由 handle_touch_event 接住；Godot 由触屏合成的鼠标按键不再进 GUI。
+## 合成的按下先于触屏到达、Main 的去重只吞得掉抬起，按下就会落到格子 / 纸片按钮 / 快捷格上，
+## 让它一直握着鼠标、停在悬停样式，之后补来的松开还会让它多触发一次。
+func _input(event: InputEvent) -> void:
+	if visible and event is InputEventMouseButton and event.device == InputEvent.DEVICE_ID_EMULATION:
 		get_viewport().set_input_as_handled()
 
 func _ink_row(label: Label, count: int) -> void:
@@ -584,10 +680,10 @@ func handle_touch_event(event: InputEvent) -> void:
 		if _touch_scrolled and scroll.get_global_rect().has_point(_touch_start):
 			scroll.scroll_vertical -= int(event.relative.y)
 
-## 手指按下处是不是一格小物（拖出只认圆石 / 松果 / 落羽，且在清单窗内可见）
+## 手指按下处是不是一格能拖的（小物拖到院里，可手持的东西拖到快捷格；且在清单窗内可见）
 func _keepsake_cell_at(at: Vector2) -> String:
 	if grid == null or not scroll.get_global_rect().has_point(at): return ""
-	for kind: String in grid.KEEPSAKES:
+	for kind: String in grid.KEEPSAKES + grid.HOLDABLE:
 		if grid.cells[kind].get_global_rect().has_point(at): return kind
 	return ""
 

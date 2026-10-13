@@ -1,0 +1,73 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+SCRIPT ERROR: Parse Error: Identifier "NearGroundFindArt" not declared in the current scope.
+   at: GDScript::reload (res://scripts/exploration/near_path_scroll.gd:428)
+   GDScript backtrace (most recent call first):
+       [0] run (res://test/nearby_direct_pick_suite.gd:25)
+SCRIPT ERROR: Parse Error: Identifier "NearGroundFindArt" not declared in the current scope.
+   at: GDScript::reload (res://scripts/exploration/near_path_scroll.gd:606)
+   GDScript backtrace (most recent call first):
+       [0] run (res://test/nearby_direct_pick_suite.gd:25)
+ERROR: Failed to load script "res://scripts/exploration/near_path_scroll.gd" with error "Parse error".
+   at: load (modules/gdscript/gdscript_resource_format.cpp:46)
+   GDScript backtrace (most recent call first):
+       [0] run (res://test/nearby_direct_pick_suite.gd:25)
+SCRIPT ERROR: Invalid call. Nonexistent function 'new' in base 'GDScript'.
+   at: _new_scene (res://test/nearby_direct_pick_suite.gd:59)
+   GDScript backtrace (most recent call first):
+       [0] _new_scene (res://test/nearby_direct_pick_suite.gd:59)
+       [1] _scene (res://test/nearby_direct_pick_suite.gd:83)
+       [2] run (res://test/nearby_direct_pick_suite.gd:30)
+SCRIPT ERROR: Invalid access to property or key 'scroll' on a base object of type 'Dictionary'.
+   at: _scene (res://test/nearby_direct_pick_suite.gd:84)
+   GDScript backtrace (most recent call first):
+       [0] _scene (res://test/nearby_direct_pick_suite.gd:84)
+       [1] run (res://test/nearby_direct_pick_suite.gd:30)
+SCRIPT ERROR: Invalid call. Nonexistent function 'new' in base 'GDScript'.
+   at: _new_scene (res://test/nearby_direct_pick_suite.gd:59)
+   GDScript backtrace (most recent call first):
+       [0] _new_scene (res://test/nearby_direct_pick_suite.gd:59)
+       [1] _scene (res://test/nearby_direct_pick_suite.gd:83)
+       [2] run (res://test/nearby_direct_pick_suite.gd:30)
+SCRIPT ERROR: Invalid access to property or key 'scroll' on a base object of type 'Dictionary'.
+   at: _scene (res://test/nearby_direct_pick_suite.gd:84)
+   GDScript backtrace (most recent call first):
+       [0] _scene (res://test/nearby_direct_pick_suite.gd:84)
+       [1] run (res://test/nearby_direct_pick_suite.gd:30)
+SCRIPT ERROR: Invalid call. Nonexistent function 'new' in base 'GDScript'.
+   at: _new_scene (res://test/nearby_direct_pick_suite.gd:59)
+   GDScript backtrace (most recent call first):
+       [0] _new_scene (res://test/nearby_direct_pick_suite.gd:59)
+       [1] _scene (res://test/nearby_direct_pick_suite.gd:83)
+       [2] run (res://test/nearby_direct_pick_suite.gd:30)
+SCRIPT ERROR: Invalid access to property or key 'scroll' on a base object of type 'Dictionary'.
+   at: _scene (res://test/nearby_direct_pick_suite.gd:84)
+   GDScript backtrace (most recent call first):
+       [0] _scene (res://test/nearby_direct_pick_suite.gd:84)
+       [1] run (res://test/nearby_direct_pick_suite.gd:30)
+SCRIPT ERROR: Invalid call. Nonexistent function 'new' in base 'GDScript'.
+   at: _new_scene (res://test/nearby_direct_pick_suite.gd:59)
+   GDScript backtrace (most recent call first):
+       [0] _new_scene (res://test/nearby_direct_pick_suite.gd:59)
+       [1] _pending_and_failure (res://test/nearby_direct_pick_suite.gd:207)
+       [2] run (res://test/nearby_direct_pick_suite.gd:31)
+SCRIPT ERROR: Invalid access to property or key 'scroll' on a base object of type 'Dictionary'.
+   at: _pending_and_failure (res://test/nearby_direct_pick_suite.gd:208)
+   GDScript backtrace (most recent call first):
+       [0] _pending_and_failure (res://test/nearby_direct_pick_suite.gd:208)
+       [1] run (res://test/nearby_direct_pick_suite.gd:31)
+SCRIPT ERROR: Invalid call. Nonexistent function 'new' in base 'GDScript'.
+   at: ExplorationDirector.try_begin (res://scripts/exploration/exploration_director.gd:64)
+   GDScript backtrace (most recent call first):
+       [0] try_begin (res://scripts/exploration/exploration_director.gd:64)
+       [1] _return_input (res://test/nearby_direct_pick_suite.gd:146)
+ERROR: return input opens scene mouse_first
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://test/nearby_direct_pick_suite.gd:15)
+       [1] _return_input (res://test/nearby_direct_pick_suite.gd:146)
+SCRIPT ERROR: Invalid access to property or key '_return_button' on a base object of type 'Nil'.
+   at: _return_input (res://test/nearby_direct_pick_suite.gd:148)
+   GDScript backtrace (most recent call first):
+       [0] _return_input (res://test/nearby_direct_pick_suite.gd:148)
+NEARBY_DIRECT_PICK checks=10 failures=1

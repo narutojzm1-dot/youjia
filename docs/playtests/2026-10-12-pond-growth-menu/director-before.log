@@ -1,0 +1,147 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+FAILED menu cancels before any World tick basket:walking
+FAILED AP unchanged or charged once basket:walking
+FAILED no resumed duplicate world result basket:walking
+FAILED materials unchanged or charged once basket:walking
+FAILED menu cancels before any World tick basket:working
+FAILED AP unchanged or charged once basket:working
+FAILED no resumed duplicate world result basket:working
+FAILED materials unchanged or charged once basket:working
+FAILED menu cancels before any World tick album:walking
+FAILED AP unchanged or charged once album:walking
+FAILED no resumed duplicate world result album:walking
+FAILED materials unchanged or charged once album:walking
+FAILED menu cancels before any World tick album:working
+FAILED AP unchanged or charged once album:working
+FAILED no resumed duplicate world result album:working
+FAILED materials unchanged or charged once album:working
+FAILED menu cancels before any World tick pause:walking
+FAILED AP unchanged or charged once pause:walking
+FAILED no resumed duplicate world result pause:walking
+FAILED materials unchanged or charged once pause:walking
+FAILED menu cancels before any World tick pause:working
+FAILED AP unchanged or charged once pause:working
+FAILED no resumed duplicate world result pause:working
+FAILED materials unchanged or charged once pause:working
+POND_GROWTH_DIRECTOR checks=126 failures=24
+ERROR: menu cancels before any World tick basket:walking
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] run (res://test/pond_growth_director_suite.gd:135)
+       [1] check_real_menus (res://test/pond_growth_director_suite.gd:184)
+ERROR: AP unchanged or charged once basket:walking
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] run (res://test/pond_growth_director_suite.gd:135)
+       [1] check_real_menus (res://test/pond_growth_director_suite.gd:184)
+ERROR: no resumed duplicate world result basket:walking
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] run (res://test/pond_growth_director_suite.gd:135)
+       [1] check_real_menus (res://test/pond_growth_director_suite.gd:184)
+ERROR: materials unchanged or charged once basket:walking
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] run (res://test/pond_growth_director_suite.gd:135)
+       [1] check_real_menus (res://test/pond_growth_director_suite.gd:184)
+ERROR: menu cancels before any World tick basket:working
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] run (res://test/pond_growth_director_suite.gd:135)
+       [1] check_real_menus (res://test/pond_growth_director_suite.gd:184)
+ERROR: AP unchanged or charged once basket:working
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] run (res://test/pond_growth_director_suite.gd:135)
+       [1] check_real_menus (res://test/pond_growth_director_suite.gd:184)
+ERROR: no resumed duplicate world result basket:working
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] run (res://test/pond_growth_director_suite.gd:135)
+       [1] check_real_menus (res://test/pond_growth_director_suite.gd:184)
+ERROR: materials unchanged or charged once basket:working
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] run (res://test/pond_growth_director_suite.gd:135)
+       [1] check_real_menus (res://test/pond_growth_director_suite.gd:184)
+ERROR: menu cancels before any World tick album:walking
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] run (res://test/pond_growth_director_suite.gd:135)
+       [1] check_real_menus (res://test/pond_growth_director_suite.gd:184)
+ERROR: AP unchanged or charged once album:walking
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] run (res://test/pond_growth_director_suite.gd:135)
+       [1] check_real_menus (res://test/pond_growth_director_suite.gd:184)
+ERROR: no resumed duplicate world result album:walking
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] run (res://test/pond_growth_director_suite.gd:135)
+       [1] check_real_menus (res://test/pond_growth_director_suite.gd:184)
+ERROR: materials unchanged or charged once album:walking
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] run (res://test/pond_growth_director_suite.gd:135)
+       [1] check_real_menus (res://test/pond_growth_director_suite.gd:184)
+ERROR: menu cancels before any World tick album:working
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] run (res://test/pond_growth_director_suite.gd:135)
+       [1] check_real_menus (res://test/pond_growth_director_suite.gd:184)
+ERROR: AP unchanged or charged once album:working
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] run (res://test/pond_growth_director_suite.gd:135)
+       [1] check_real_menus (res://test/pond_growth_director_suite.gd:184)
+ERROR: no resumed duplicate world result album:working
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] run (res://test/pond_growth_director_suite.gd:135)
+       [1] check_real_menus (res://test/pond_growth_director_suite.gd:184)
+ERROR: materials unchanged or charged once album:working
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] run (res://test/pond_growth_director_suite.gd:135)
+       [1] check_real_menus (res://test/pond_growth_director_suite.gd:184)
+ERROR: menu cancels before any World tick pause:walking
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] run (res://test/pond_growth_director_suite.gd:135)
+       [1] check_real_menus (res://test/pond_growth_director_suite.gd:184)
+ERROR: AP unchanged or charged once pause:walking
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] run (res://test/pond_growth_director_suite.gd:135)
+       [1] check_real_menus (res://test/pond_growth_director_suite.gd:184)
+ERROR: no resumed duplicate world result pause:walking
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] run (res://test/pond_growth_director_suite.gd:135)
+       [1] check_real_menus (res://test/pond_growth_director_suite.gd:184)
+ERROR: materials unchanged or charged once pause:walking
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] run (res://test/pond_growth_director_suite.gd:135)
+       [1] check_real_menus (res://test/pond_growth_director_suite.gd:184)
+ERROR: menu cancels before any World tick pause:working
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] run (res://test/pond_growth_director_suite.gd:135)
+       [1] check_real_menus (res://test/pond_growth_director_suite.gd:184)
+ERROR: AP unchanged or charged once pause:working
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] run (res://test/pond_growth_director_suite.gd:135)
+       [1] check_real_menus (res://test/pond_growth_director_suite.gd:184)
+ERROR: no resumed duplicate world result pause:working
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] run (res://test/pond_growth_director_suite.gd:135)
+       [1] check_real_menus (res://test/pond_growth_director_suite.gd:184)
+ERROR: materials unchanged or charged once pause:working
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] run (res://test/pond_growth_director_suite.gd:135)
+       [1] check_real_menus (res://test/pond_growth_director_suite.gd:184)

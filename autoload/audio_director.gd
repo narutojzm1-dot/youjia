@@ -15,6 +15,8 @@ const CUES := {
 	"music.gameplay": {"path": "", "kind": "music"},
 	"ui.confirm": {"path": "", "bus": "UI"},
 	"ui.cancel": {"path": "", "bus": "UI"},
+	"meal.spoon": {"path": "", "bus": "SFX", "web_renderer": "browser"},
+	"meal.hunger": {"path": "", "bus": "SFX"},
 	"player.action": {"path": "", "bus": "SFX"},
 	"enemy.impact": {"path": "", "bus": "SFX"},
 	"score.reward": {"path": "", "bus": "SFX"},
@@ -29,9 +31,13 @@ var _streams: Dictionary = {}
 var _music_players: Array[BrowserBgmPlayer] = []
 var _sfx_players: Array[AudioStreamPlayer] = []
 var _ui_players: Array[AudioStreamPlayer] = []
+# Only explicitly opted-in cues use the shipped Web renderer. Other pools stay native.
+var _browser_cue_players: Dictionary = {}
 var _music_index := 0
 var _music_cue := ""
 var _unlocked := false
+## cue_id -> stop_cue invocation count (suite ownership proof).
+var _stop_cue_counts: Dictionary = {}
 var _headless := false
 var _paused := false
 var _music_tween: Tween
@@ -84,6 +90,13 @@ func _ready() -> void:
 	_apply_bus_settings()
 
 
+func _process(_delta: float) -> void:
+	# Direct bus mute/solo changes also discard short voices instead of retaining
+	# an inaudible tail that could return when the bus opens again.
+	if not _browser_cue_players.is_empty():
+		_clear_silent_browser_cues()
+
+
 func _exit_tree() -> void:
 	release_streams()
 
@@ -97,6 +110,8 @@ func release_streams() -> void:
 	for player: AudioStreamPlayer in _sfx_players + _ui_players:
 		player.stop()
 		player.stream = null
+	for cue_id: String in _browser_cue_players.keys():
+		_release_browser_cue(cue_id)
 	for stream: AudioStream in _streams.values():
 		BrowserBgmPlayer.release_cached_stream(stream)
 	_streams.clear()
@@ -124,6 +139,7 @@ func register_stream(cue_id: String, stream: AudioStream) -> bool:
 
 
 func unregister_cue(cue_id: String) -> void:
+	_release_browser_cue(cue_id)
 	if cue_id == _music_cue:
 		stop_music(0.0)
 	var old_stream: AudioStream = _streams.get(cue_id)
@@ -182,6 +198,7 @@ func set_application_active(active: bool) -> void:
 		return
 	_application_active = active
 	if not active:
+		_stop_browser_cues()
 		_awaiting_gesture = false
 	elif _yard_active and _unlocked and not _headless:
 		_backend_state = _query_backend()
@@ -231,6 +248,10 @@ func ambience_gain() -> float:
 func set_ambience_volume_db(volume_db: float) -> void:
 	var db := clampf(volume_db, -40.0, 0.0)
 	set_ambience_gain(0.0 if db <= -40.0 else db_to_linear(db))
+
+
+func effects_playback_allowed() -> bool:
+	return _application_active and (_unlocked or _headless) and not _awaiting_gesture
 
 
 func yard_active() -> bool:
@@ -324,12 +345,114 @@ func play_cue(cue_id: String, pitch_scale: float = 1.0) -> bool:
 	if _headless:
 		return true
 	var cue: Dictionary = CUES[cue_id]
+	if OS.has_feature("web") and cue.get("web_renderer", "") == "browser":
+		# Automatic effects consume permission; never queue behind a suspended context.
+		if not effects_playback_allowed() or _backend_state != "running":
+			return false
+		var browser_player := _browser_cue_player(cue_id)
+		if _paused or is_zero_approx(float(browser_player.call("_effective_gain"))):
+			_release_browser_cue(cue_id)
+			return false
+		browser_player.stream = stream
+		browser_player.pitch_scale = clampf(pitch_scale, 0.75, 1.35)
+		browser_player.play()
+		return browser_player.playing
 	var players := _ui_players if str(cue.get("bus", "SFX")) == "UI" else _sfx_players
 	var player := _claim_voice(players)
 	player.stream = stream
 	player.pitch_scale = clampf(pitch_scale, 0.75, 1.35)
 	player.play()
 	return true
+
+
+## Stop SFX/UI voices currently playing this cue's stream. Narrow ownership stop; not release_streams.
+func stop_cue(cue_id: String) -> void:
+	if not CUES.has(cue_id):
+		return
+	var kind := str(CUES.get(cue_id, {}).get("kind", ""))
+	if kind == "music" or kind == "ambience":
+		return
+	_stop_cue_counts[cue_id] = int(_stop_cue_counts.get(cue_id, 0)) + 1
+	_release_browser_cue(cue_id)
+	var stream: AudioStream = _streams.get(cue_id)
+	if stream == null:
+		return
+	var cue: Dictionary = CUES[cue_id]
+	var players := _ui_players if str(cue.get("bus", "SFX")) == "UI" else _sfx_players
+	for player: AudioStreamPlayer in players:
+		if player.stream == stream and (player.playing or player.stream_paused):
+			player.stop()
+			player.stream = null
+
+
+func get_stop_cue_count(cue_id: String) -> int:
+	return int(_stop_cue_counts.get(cue_id, 0))
+
+
+func get_cue_stream(cue_id: String) -> AudioStream:
+	return _streams.get(cue_id) as AudioStream
+
+
+## Whether any SFX/UI voice currently holds this cue's stream (playing or paused).
+func is_cue_voice_active(cue_id: String) -> bool:
+	if not CUES.has(cue_id):
+		return false
+	var kind := str(CUES.get(cue_id, {}).get("kind", ""))
+	if kind == "music" or kind == "ambience":
+		return false
+	var browser_player: BrowserBgmPlayer = _browser_cue_players.get(cue_id)
+	if browser_player != null and (browser_player.playing or browser_player.stream_paused):
+		return true
+	var stream: AudioStream = _streams.get(cue_id)
+	if stream == null:
+		return false
+	var cue: Dictionary = CUES[cue_id]
+	var players := _ui_players if str(cue.get("bus", "SFX")) == "UI" else _sfx_players
+	for player: AudioStreamPlayer in players:
+		if player.stream == stream and (player.playing or player.stream_paused):
+			return true
+	return false
+
+
+## One logical channel per opted-in cue; stops remain owned by its existing cue ID.
+func _browser_cue_player(cue_id: String) -> BrowserBgmPlayer:
+	if CUES.get(cue_id, {}).get("web_renderer", "") != "browser":
+		return null
+	var player: BrowserBgmPlayer = _browser_cue_players.get(cue_id)
+	if player == null:
+		player = BrowserBgmPlayer.new()
+		player.name = "BrowserCue_" + cue_id.replace(".", "_")
+		player.bus = str(CUES[cue_id].get("bus", "SFX"))
+		player.process_mode = Node.PROCESS_MODE_ALWAYS
+		add_child(player)
+		_browser_cue_players[cue_id] = player
+	return player
+
+
+func _release_browser_cue(cue_id: String) -> void:
+	var player: BrowserBgmPlayer = _browser_cue_players.get(cue_id)
+	if player == null:
+		return
+	_browser_cue_players.erase(cue_id)
+	var old_stream: AudioStream = player.stream
+	player.stop()
+	player.stream = null
+	# Dispose its Web channel now, before parent shutdown can close the backend.
+	remove_child(player)
+	player.queue_free()
+	BrowserBgmPlayer.release_cached_stream(old_stream)
+
+
+func _stop_browser_cues() -> void:
+	for cue_id: String in _browser_cue_players.keys():
+		_release_browser_cue(cue_id)
+
+
+func _clear_silent_browser_cues() -> void:
+	for cue_id: String in _browser_cue_players.keys():
+		var player: BrowserBgmPlayer = _browser_cue_players[cue_id]
+		if is_zero_approx(float(player.call("_effective_gain"))):
+			_release_browser_cue(cue_id)
 
 
 func register_button(button: Button, cancel_cue: bool = false) -> void:
@@ -348,6 +471,7 @@ func set_game_paused(paused: bool) -> void:
 	_paused = paused
 	_apply_bus_settings()
 	if paused:
+		_stop_browser_cues()
 		play_cue("game.pause")
 
 
@@ -411,6 +535,7 @@ func _apply_bus_settings() -> void:
 	var master := AudioServer.get_bus_index("Master")
 	if master >= 0:
 		AudioServer.set_bus_mute(master, bool(TuningStore.get_value("audio.master.muted", false)))
+	_clear_silent_browser_cues()
 
 
 func _set_plain_bus(bus_name: String, volume_db: float) -> void:
@@ -504,6 +629,7 @@ func _on_browser_resume_settled(args: Array) -> void:
 		_reconcile()
 	elif _backend_state == "interrupted" or _backend_state == "closed":
 		_awaiting_gesture = true
+		_stop_browser_cues()
 
 
 func _backend_starts_now(state: String) -> bool:

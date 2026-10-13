@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1672" height="941" viewBox="0 0 1672 941">
+  <!-- Original code-native masks over the existing producer composition.
+       Small soft interiors keep sampling less than two pixels from the original.
+       Red water channels exclude the rocks; green clusters exclude trunks/roots. -->
+  <defs>
+    <radialGradient id="water"><stop offset="0" stop-color="#f00000"/><stop offset="0.5" stop-color="#b00000"/><stop offset="1" stop-color="#000000"/></radialGradient>
+    <radialGradient id="leaf"><stop offset="0" stop-color="#00e000"/><stop offset="0.5" stop-color="#009000"/><stop offset="1" stop-color="#000000"/></radialGradient>
+  </defs>
+  <rect width="1672" height="941" fill="#000000"/>
+  <g fill="url(#water)">
+    <ellipse cx="306" cy="573" rx="25" ry="6"/>
+    <ellipse cx="254" cy="589" rx="21" ry="7"/>
+    <ellipse cx="188" cy="610" rx="24" ry="8"/>
+    <ellipse cx="240" cy="640" rx="24" ry="9"/>
+    <ellipse cx="251" cy="694" rx="16" ry="15"/>
+    <ellipse cx="182" cy="718" rx="24" ry="9"/>
+    <ellipse cx="242" cy="763" rx="13" ry="13"/>
+    <ellipse cx="210" cy="790" rx="16" ry="8"/>
+  </g>
+  <g fill="url(#leaf)">
+    <ellipse cx="1098" cy="54" rx="25" ry="15"/>
+    <ellipse cx="1287" cy="45" rx="24" ry="16"/>
+    <ellipse cx="1350" cy="139" rx="25" ry="16"/>
+    <ellipse cx="1578" cy="220" rx="20" ry="23"/>
+    <ellipse cx="488" cy="475" rx="22" ry="24"/>
+    <ellipse cx="539" cy="545" rx="22" ry="20"/>
+    <ellipse cx="614" cy="692" rx="20" ry="20"/>
+    <ellipse cx="719" cy="670" rx="16" ry="20"/>
+    <ellipse cx="1422" cy="769" rx="23" ry="17"/>
+    <ellipse cx="850" cy="823" rx="18" ry="13"/>
+  </g>
+</svg>

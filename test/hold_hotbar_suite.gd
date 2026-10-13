@@ -133,6 +133,8 @@ func _hotbar_ui(HotbarScript) -> void:
 			var bar = HotbarScript.new()
 			host.add_child(bar)
 			await process_frame
+			# #597：五格不预设；这里先替玩家配好这五样，再测取用与武装
+			bar.set_slots(["small", "medium", "odd", "grass", "millet"])
 			var rect: Rect2 = HotbarScript.preferred_rect(Vector2(vs), vs.x < 700.0)
 			bar.position = rect.position
 			bar.size = rect.size

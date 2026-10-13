@@ -1,0 +1,70 @@
+{
+  "agent": "CODEX-LEAD",
+  "issue": 642,
+  "status": "local_unintegrated_candidate",
+  "mode": "built_in_imagegen",
+  "inputRects": {
+    "door": [
+      250,
+      590,
+      120,
+      115
+    ],
+    "left": [
+      0,
+      590,
+      270,
+      340
+    ],
+    "pond": [
+      550,
+      795,
+      190,
+      150
+    ]
+  },
+  "prompts": {
+    "door_clear": "precise-object-edit: Remove flowers/leaves/stems growing from both original terracotta pots, retain empty pots with soil, wall, masonry, paving and peripheral non-pot flowers; exact framing and original watercolor sunlight.",
+    "overcast": "lighting-weather, one call per patch: Image1 clean sunny patch is edit target; Image2 original overcast crop supplies lighting/palette only. Keep all geometry/framing, pots/rocks/grass unchanged; change only to muted overcast greens/ochres/terracotta and soft cool neutral shadows. No plants return, no new props or text.",
+    "atlas": "background-extraction: Three original flower groups only, left pink shrub with blue iris, door-left pink plant, pond-left purple/yellow stems; separate groups, no pots/rocks/soil, true alpha, original watercolor, no labels or stickers.",
+    "left_clear": "precise-object-edit: Remove pink flowering shrub and its broad leaves and all tall blue/purple/yellow flowering plants; reveal short grass/soil; preserve original stones, path, small upper-right pot, wall/bench/window edges, same framing, palette, watercolor sunlight; no new objects or flowers.",
+    "pond_clear": "precise-object-edit: Remove all flowering stalks, leaves and plants in/behind pond-left pot and rock; retain empty pot, big gray/tan rock, paving, partly hidden broken reddish object and crop edges; exact watercolor sunlight."
+  },
+  "assets": [
+    {
+      "file": "door_clear_patch_overcast_v1.png",
+      "bytes": 2160506,
+      "sha256": "9248285ca4e5866bad6ef6589a807127fed0674b8ebcb6f0a58b46ce2962038d"
+    },
+    {
+      "file": "door_clear_patch_v1.png",
+      "bytes": 2059748,
+      "sha256": "549a7127866fc7b2d51375ff2236be59d731607ba4b921c328108bfc63a372c9"
+    },
+    {
+      "file": "left_clear_patch_overcast_v1.png",
+      "bytes": 2519518,
+      "sha256": "93d1d8dd2ea7c312f16cdad79409ac7db32e92977788bf45e308fefe236d170c"
+    },
+    {
+      "file": "left_clear_patch_v1.png",
+      "bytes": 2822585,
+      "sha256": "eedf5092f96189523f4030ea0d0ffa878cd6e127b94f118f3753cabf66ad8b87"
+    },
+    {
+      "file": "pond_clear_patch_overcast_v1.png",
+      "bytes": 2474938,
+      "sha256": "407869ca7a5adc622394a188c624aa3f87103e1a5d0f2c9b00528af0bf02d464"
+    },
+    {
+      "file": "pond_clear_patch_v1.png",
+      "bytes": 2373208,
+      "sha256": "8add18e49203b1c5d53d051eef3c82ca63653c0f1b7ecd56f21d4bdc6634bfe2"
+    },
+    {
+      "file": "yard_flower_groups_v1.png",
+      "bytes": 2774655,
+      "sha256": "c3f3f859f0eac6bc8de8aa7acea684439dedd1556d06147b7b35bdf17bdf5ae4"
+    }
+  ]
+}

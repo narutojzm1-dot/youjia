@@ -1,0 +1,8 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+SCRIPT ERROR: Parse Error: Cannot infer the type of "before" variable because the value doesn't have a set type.
+   at: GDScript::reload (res://test/ui_interaction_audio_suite.gd:61)
+SCRIPT ERROR: Parse Error: Cannot infer the type of "at_end" variable because the value doesn't have a set type.
+   at: GDScript::reload (res://test/ui_interaction_audio_suite.gd:65)
+ERROR: Failed to load script "res://test/ui_interaction_audio_suite.gd" with error "Parse error".
+   at: load (modules/gdscript/gdscript_resource_format.cpp:46)

@@ -1,0 +1,78 @@
+{
+  "source": "2179e80e481797b195529108c197c19323cb87bb",
+  "renderer": "AMD Radeon(TM) 8060S Graphics",
+  "mask_bytes": 6293408,
+  "scope": "isolated painting only; desktop GPU, not physical mobile or total game FPS",
+  "draw_counter_note": "OpenGL returned zero; not accepted as a no-work assertion. Actual painted pixels and phase differences are recorded.",
+  "summary": [
+    {
+      "css": "(390, 844)",
+      "actual_paint_pixels": "(780, 1688)",
+      "phase_pixels_differ": true,
+      "static_pixels_restore": true,
+      "modes": {
+        "static_before": {
+          "gpu_median_ms": 0.0529999993741512,
+          "gpu_p95_ms": 0.0659999996423721,
+          "cpu_median_ms": 0.0140000004321337
+        },
+        "moving": {
+          "gpu_median_ms": 0.0540000014007092,
+          "gpu_p95_ms": 0.068000003695488,
+          "cpu_median_ms": 0.0179999992251396
+        },
+        "static_after": {
+          "gpu_median_ms": 0.0560000017285347,
+          "gpu_p95_ms": 0.0700000002980232,
+          "cpu_median_ms": 0.0199999995529652
+        }
+      }
+    },
+    {
+      "css": "(844, 390)",
+      "actual_paint_pixels": "(1688, 780)",
+      "phase_pixels_differ": true,
+      "static_pixels_restore": true,
+      "modes": {
+        "static_before": {
+          "gpu_median_ms": 0.0520000010728836,
+          "gpu_p95_ms": 0.0719999969005585,
+          "cpu_median_ms": 0.017000000923872
+        },
+        "moving": {
+          "gpu_median_ms": 0.0529999993741512,
+          "gpu_p95_ms": 0.0750000029802322,
+          "cpu_median_ms": 0.0160000007599592
+        },
+        "static_after": {
+          "gpu_median_ms": 0.0529999993741512,
+          "gpu_p95_ms": 0.0869999974966049,
+          "cpu_median_ms": 0.0179999992251396
+        }
+      }
+    },
+    {
+      "css": "(1280, 720)",
+      "actual_paint_pixels": "(2560, 1440)",
+      "phase_pixels_differ": true,
+      "static_pixels_restore": true,
+      "modes": {
+        "static_before": {
+          "gpu_median_ms": 0.119999997317791,
+          "gpu_p95_ms": 0.127000004053116,
+          "cpu_median_ms": 0.0140000004321337
+        },
+        "moving": {
+          "gpu_median_ms": 0.122000001370907,
+          "gpu_p95_ms": 0.126000002026558,
+          "cpu_median_ms": 0.0130000002682209
+        },
+        "static_after": {
+          "gpu_median_ms": 0.118000000715256,
+          "gpu_p95_ms": 0.123999997973442,
+          "cpu_median_ms": 0.0130000002682209
+        }
+      }
+    }
+  ]
+}

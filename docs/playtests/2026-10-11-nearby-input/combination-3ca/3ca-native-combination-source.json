@@ -1,0 +1,16 @@
+{
+  "checkedSource": "b1329f02771b6f6e593b59ef86a9a79a475589a6",
+  "runtimeMerge": "3caeb1fe6082da0cf0db00e3bea20dc47eb50edf",
+  "differenceFromRuntimeMerge": "docs only",
+  "utc": "2026-10-11T03:46:53.308928+00:00",
+  "suites": {
+    "hud_pointer_input": 72,
+    "exploration_trip_capacity": 48,
+    "nearby_direct_pick": 189,
+    "exploration_slice": 300
+  },
+  "failures": 0,
+  "nativeShell": "PowerShell7.6.5",
+  "earlierAttempts": "PowerShell5 dispatch blocked by ExecutionPolicy, then its native stderr warning threw during import. No suite ran in those attempts. Partial import log preserved, terminal dispatch error not captured to file. PowerShell7 successful import and all four actual suites independently completed.",
+  "controlledFixture": "restored exact Git near_path_anchors.candidate.json if absent; isolated per-suite profile. Capacity cases are seeded test fixtures, not ordinary production inventory."
+}

@@ -1,0 +1,94 @@
+{
+  "dateBeijing": "2026-10-11",
+  "updatedAt": "2026-10-11T08:17:24.793731+08:00",
+  "baseline": "e9e72920446705415c9a41da7380ab48fe75664e",
+  "tested": "45673209c8e88b4f6a8320cb9bf4d1020de53bc6",
+  "build": "0.2.0 game-4567320",
+  "features": [
+    {
+      "feature": "快捷配置共享保存",
+      "requirementPR": "#716/#717/#597",
+      "playerSteps": "背篓拖青草到槽1→关闭→刷新→进院→取用",
+      "actualResult": "实际1/1保留草槽和库存；旧缺口定向复测通过",
+      "automatic": "hotbar_persistence48 / hotbar_player_slots159 / save_recovery24",
+      "gapNext": "Web断网unknown恢复、跨设备尚未实测",
+      "sha": "45673209c8e88b4f6a8320cb9bf4d1020de53bc6",
+      "normal": "实际1/1保留草槽和库存；旧缺口定向复测通过",
+      "boundarySave": "Web断网unknown恢复、跨设备尚未实测",
+      "impact": "从前次受测部署增量选择"
+    },
+    {
+      "feature": "快捷栏样式缓存与底排避让",
+      "requirementPR": "#713/#719",
+      "playerSteps": "1280院子/背篓开关，280重复",
+      "actualResult": "实际底排可见可点；无逐帧性能测量",
+      "automatic": "hotbar_player_slots159",
+      "gapNext": "长时性能/其他状态组合待测",
+      "sha": "45673209c8e88b4f6a8320cb9bf4d1020de53bc6",
+      "normal": "实际底排可见可点；无逐帧性能测量",
+      "boundarySave": "长时性能/其他状态组合待测",
+      "impact": "从前次受测部署增量选择"
+    },
+    {
+      "feature": "窄屏小按钮与标题布局",
+      "requirementPR": "#721",
+      "playerSteps": "280×640院子→背篓→关闭",
+      "actualResult": "实际院子底排与背篓不重叠；标题窄屏未实测",
+      "automatic": "hud_single_row7032 / title_card327",
+      "gapNext": "360、英文/切语言、实体触屏和窄屏标题下轮补",
+      "sha": "45673209c8e88b4f6a8320cb9bf4d1020de53bc6",
+      "normal": "实际院子底排与背篓不重叠；标题窄屏未实测",
+      "boundarySave": "360、英文/切语言、实体触屏和窄屏标题下轮补",
+      "impact": "从前次受测部署增量选择"
+    },
+    {
+      "feature": "近郊局部动态与减少动态",
+      "requirementPR": "#586/#604/#565",
+      "playerSteps": "出门→点落羽→自动到达拾取→回院",
+      "actualResult": "实际入口/移动/拾取/回院通过，羽1→2；截图不作连续动效证明",
+      "automatic": "nearby_motion44",
+      "gapNext": "减少动态开关/连续视频/水流草木性能未测",
+      "sha": "45673209c8e88b4f6a8320cb9bf4d1020de53bc6",
+      "normal": "实际入口/移动/拾取/回院通过，羽1→2；截图不作连续动效证明",
+      "boundarySave": "减少动态开关/连续视频/水流草木性能未测",
+      "impact": "从前次受测部署增量选择"
+    },
+    {
+      "feature": "餐食成本与一次性获点凭据",
+      "requirementPR": "#722/#700",
+      "playerSteps": "当前无玩家入口；领域事务自动调用",
+      "actualResult": "自动通过；不是可用AP/做饭实玩通过",
+      "automatic": "meal_ledger72",
+      "gapNext": "待接入饭点/导演/食谱后补真实做饭与存档闭环",
+      "sha": "45673209c8e88b4f6a8320cb9bf4d1020de53bc6",
+      "normal": "自动通过；不是可用AP/做饭实玩通过",
+      "boundarySave": "待接入饭点/导演/食谱后补真实做饭与存档闭环",
+      "impact": "从前次受测部署增量选择"
+    },
+    {
+      "feature": "栅栏测试去随机依赖",
+      "requirementPR": "#715/#708",
+      "playerSteps": "仅测试夹具改动，未新增玩家功能",
+      "actualResult": "静态检查变更清单；本轮未重复旧栅栏专项",
+      "automatic": "未运行",
+      "gapNext": "游戏围栏行为无实现变化，不无故重跑",
+      "sha": "45673209c8e88b4f6a8320cb9bf4d1020de53bc6",
+      "normal": "静态检查变更清单；本轮未重复旧栅栏专项",
+      "boundarySave": "游戏围栏行为无实现变化，不无故重跑",
+      "impact": "从前次受测部署增量选择"
+    },
+    {
+      "feature": "熬夜疲劳、Grok小功能与审核规则",
+      "requirementPR": "#714/#707/#709/#712",
+      "playerSteps": "文档需求变更单列",
+      "actualResult": "静态，不冒充已实现疲劳/音效/烟囱",
+      "automatic": "不适用",
+      "gapNext": "跟踪后续实际部署",
+      "sha": "45673209c8e88b4f6a8320cb9bf4d1020de53bc6",
+      "normal": "静态，不冒充已实现疲劳/音效/烟囱",
+      "boundarySave": "跟踪后续实际部署",
+      "impact": "从前次受测部署增量选择"
+    }
+  ],
+  "carryover": "10月10日22组覆盖见PR706/710；未复测项不继承为当前SHA通过"
+}

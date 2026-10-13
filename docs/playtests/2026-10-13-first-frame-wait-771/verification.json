@@ -1,0 +1,57 @@
+{
+  "base_commit": "9d85783d863aad7ef8f0c5a551fa0adf22243299",
+  "source_files": [
+    {
+      "path": "web/loading.html",
+      "bytes": 363921,
+      "sha256": "9381596faa48c581395ff31122bf369d9e7bf2cf008c0ec7b3b566521fb33fe9"
+    },
+    {
+      "path": "test/loading_shell_test.cjs",
+      "bytes": 13449,
+      "sha256": "192704f08cf4bd95e7fba16ad14b84cd04b025ef1b2b34eee1f272bbfa9dd6dd"
+    }
+  ],
+  "baseline_fixture_result": "observed original 96-second generic waiting state",
+  "new_test_old_loader_exit": 1,
+  "new_test_new_loader_exit": 0,
+  "test_command": "node test/loading_shell_test.cjs",
+  "scope": "loader script VM fixture; not browser reproduction",
+  "evidence_files": [
+    {
+      "path": ".gdignore",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "README.md",
+      "bytes": 3735,
+      "sha256": "f75818d780a9867863483770cfddc849af3087b67803d3b3d07cc0adcd61ca6b"
+    },
+    {
+      "path": "after-96s.json",
+      "bytes": 523,
+      "sha256": "b9892ba087025c135b334a986b404649eee7f3dffb2606455bb2cc02c3cfc4df"
+    },
+    {
+      "path": "after-fix.log",
+      "bytes": 214,
+      "sha256": "d2068fa1d1997210cb2d97a91504ceb3ceb443f035d5060ea3c24ad39a6a6a82"
+    },
+    {
+      "path": "baseline-96s.json",
+      "bytes": 492,
+      "sha256": "a62906e29deb420494067cc2a8d53547257d264a6a6b576912e07481cb317916"
+    },
+    {
+      "path": "baseline-probe.cjs",
+      "bytes": 833,
+      "sha256": "b5304a5bd094424bfa49646b0e13c513d2870015b1902f3d38cffb0f777e1c20"
+    },
+    {
+      "path": "before-fix.log",
+      "bytes": 505,
+      "sha256": "d961f4a657f7fd5cf58cce05b1c1bf1e4c20a8da7601612acbffea2d32e5a1bb"
+    }
+  ]
+}

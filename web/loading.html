@@ -65,8 +65,61 @@ Source SHA-256: 38f4c5f927f746b3dfa4c3a5d7edf0b7a3e828e27438418fa54f9e1565289412
     <noscript>JavaScript is required to play this game.</noscript>
   </section>
   <script>
+    // RELEASE_CHECK_BEGIN: runs before save-host imports or engine downloads.
+    async function checkReleaseBeforeBoot(build, href, fetcher, timeoutMs = 4000) {
+      const current = new URL(href);
+      const expected = current.searchParams.get('release');
+      const fresh = (entry) => {
+        const target = new URL('./', current);
+        target.searchParams.set('release', entry);
+        target.searchParams.set('_fresh', String(Date.now()));
+        return target.href;
+      };
+      // One automatic attempt only. A stale CDN response must not reload forever.
+      const attemptAge = Date.now() - Number(current.searchParams.get('_fresh'));
+      if (expected && /^game-[a-f0-9]{7,40}$/.test(expected) && attemptAge >= 0 && attemptAge < 60000) {
+        return expected !== build ? {state:'stale', url:fresh(expected)} : {state:'target'};
+      }
+      const controller = new AbortController();
+      const timer = setTimeout(() => controller.abort(), timeoutMs);
+      try {
+        const url = new URL('game-release.json', current);
+        url.searchParams.set('_check', String(Date.now()));
+        const response = await fetcher(url.href, {cache:'no-store', signal:controller.signal});
+        if (!response.ok) throw new Error('release unavailable');
+        const release = await response.json();
+        if (release.schema !== 'youjia.release/v1' || !/^[a-f0-9]{40}$/.test(release.sourceCommit)
+            || release.entry !== 'game-' + release.sourceCommit.slice(0,7)) throw new Error('invalid release');
+        if (release.entry !== build) return {state:'update', url:fresh(release.entry)};
+        return {state:'current'};
+      } catch (_) {
+        return {state:'unknown'}; // Offline loading remains possible; never claim latest.
+      } finally { clearTimeout(timer); }
+    }
+    // RELEASE_CHECK_END
     (() => {
       const config = $GODOT_CONFIG;
+      // Keep the shell readable while the pre-boot check waits or stops on a stale entry.
+      const buildLabel = document.getElementById('loading-build');
+      const versionLabel = document.getElementById('loading-version');
+      document.getElementById('game-title').textContent = document.title;
+      // Player-facing version starts at 0.2.0 (第2版内部测试). Do not treat the
+      // internal pack name as the player version, and do not invent later rules.
+      const playerVersion = '0.2.0';
+      const playerVersionLabel = '0.2.0 · 第2版内部测试';
+      if (versionLabel) versionLabel.textContent = playerVersionLabel;
+      document.documentElement.dataset.playerVersion = playerVersion;
+      // The engine URL is shared by unchanged engine bytes across game builds.
+      const buildId = config.mainPack?.replace(/\.pck$/, '') || config.executable;
+      if (buildLabel && buildId) {
+        buildLabel.textContent = buildId;
+        // 内部构建号保留为次要诊断信息，方便对应真实构建。
+        document.documentElement.dataset.build = buildId;
+      }
+      // Single-language holiday: pin Simplified Chinese on the loader.
+      document.documentElement.lang = 'zh-CN';
+      document.getElementById('loading-retry').textContent = '重试';
+      const boot = () => {
       let resolveSaveRuntime, rejectSaveRuntime;
       const saveRuntimeReady = new Promise((resolve, reject) => { resolveSaveRuntime = resolve; rejectSaveRuntime = reject; });
       saveRuntimeReady.catch(() => {}); // Observe immediately; preserve original rejection.
@@ -86,32 +139,14 @@ Source SHA-256: 38f4c5f927f746b3dfa4c3a5d7edf0b7a3e828e27438418fa54f9e1565289412
       const detail = document.getElementById('loading-detail');
       const notice = document.getElementById('loading-notice');
       const retry = document.getElementById('loading-retry');
-      const buildLabel = document.getElementById('loading-build');
-      const versionLabel = document.getElementById('loading-version');
-      document.getElementById('game-title').textContent = document.title;
-      // Player-facing version starts at 0.2.0 (第2版内部测试). Do not treat the
-      // internal pack name as the player version, and do not invent later rules.
-      const playerVersion = '0.2.0';
-      const playerVersionLabel = '0.2.0 · 第2版内部测试';
-      if (versionLabel) versionLabel.textContent = playerVersionLabel;
-      document.documentElement.dataset.playerVersion = playerVersion;
-      // The engine URL is shared by unchanged engine bytes across game builds.
-      const buildId = config.mainPack?.replace(/\.pck$/, '') || config.executable;
-      if (buildLabel && buildId) {
-        buildLabel.textContent = buildId;
-        // 内部构建号保留为次要诊断信息，方便对应真实构建。
-        document.documentElement.dataset.build = buildId;
-      }
-      // Single-language holiday: pin Simplified Chinese on the loader.
       const zh = true;
-      document.documentElement.lang = 'zh-CN';
       status.textContent = zh ? '正在加载…' : 'Loading…';
-      retry.textContent = zh ? '重试' : 'Retry';
       progress.setAttribute('aria-label', zh ? '下载进度' : 'Download progress');
       retry.addEventListener('click', () => window.location.reload());
       let failed = false;
       let ready = false;
       let engineReady = false;
+      let engineReadyAt = 0;
       let firstFrame = false;
       let bootstrapReady = false;
       const timings = window.youjiaLoadTimings = {};
@@ -139,6 +174,18 @@ Source SHA-256: 38f4c5f927f746b3dfa4c3a5d7edf0b7a3e828e27438418fa54f9e1565289412
         const seconds = Math.floor((performance.now() - startedAt) / 1000);
         if (seconds >= 60 && !bootstrapReady) {
           fail(new Error('游戏启动模块下载超时，请检查网络连接后重试。'));
+          return;
+        }
+        // A missing first frame is not proof of failure. Keep waiting recoverable,
+        // with only the existing user-initiated retry; no save or version changes.
+        const frameWaitSeconds = engineReady ? Math.floor((performance.now() - engineReadyAt) / 1000) : 0;
+        if (engineReady && !firstFrame && frameWaitSeconds >= 30) {
+          stamp('firstFrameWaitNotice');
+          status.textContent = '游戏画面尚未绘制完成。';
+          detail.textContent = `引擎已启动 · 等待画面 ${frameWaitSeconds} 秒`;
+          notice.textContent = '可以继续等待；也可以点“重试”重新加载，原有进度会保留。';
+          notice.hidden = false;
+          retry.hidden = false;
           return;
         }
         detail.textContent = downloadComplete
@@ -201,6 +248,8 @@ Source SHA-256: 38f4c5f927f746b3dfa4c3a5d7edf0b7a3e828e27438418fa54f9e1565289412
       window.addEventListener('unhandledrejection', onUnhandledRejection);
       const onProgress = (current, total) => {
         if (failed || ready) return;
+        // A late download callback cannot move the shell back from first-frame wait.
+        if (engineReady) { updateNotice(); return; }
         // Repeated/unknown totals do not renew liveness; growing byte counts do.
         if (Number.isFinite(current) && current > downloadedBytes) {
           downloadedBytes = current;
@@ -248,6 +297,7 @@ Source SHA-256: 38f4c5f927f746b3dfa4c3a5d7edf0b7a3e828e27438418fa54f9e1565289412
           await engine.startGame({ onProgress, persistentPaths: [] });
           resolveSaveRuntime();
           if (failed) return;
+          engineReadyAt = performance.now();
           engineReady = true;
           stamp('engineReady');
           status.textContent = '引擎已启动，正在绘制画面…';
@@ -261,6 +311,39 @@ Source SHA-256: 38f4c5f927f746b3dfa4c3a5d7edf0b7a3e828e27438418fa54f9e1565289412
       script.addEventListener('load', start, { once: true });
       script.addEventListener('error', () => fail(new Error('Engine script could not be loaded')), { once: true });
       document.head.appendChild(script);
+      };
+      const currentBuild = config.mainPack?.replace(/\.pck$/, '') || '';
+      if (/^game-[a-f0-9]{7,40}$/.test(currentBuild) && typeof window.fetch === 'function') {
+        const status = document.getElementById('loading-status');
+        const detail = document.getElementById('loading-detail');
+        status.textContent = '正在核对游戏版本…';
+        checkReleaseBeforeBoot(currentBuild, window.location.href, window.fetch.bind(window)).then(result => {
+          if (result.state === 'update') {
+            status.textContent = '发现新版本，正在更新入口…';
+            window.location.replace(result.url);
+          } else if (result.state === 'stale') {
+            status.textContent = '入口仍是旧版本，暂未启动游戏。';
+            detail.textContent = '更新可能仍在传播，请稍后重试。原有存档已保留。';
+            const retry = document.getElementById('loading-retry');
+            retry.hidden = false;
+            retry.addEventListener('click', () => {
+              const target = new URL(result.url);
+              target.searchParams.set('_fresh', String(Date.now()));
+              window.location.replace(target.href);
+            });
+          } else {
+            if (result.state === 'target' && window.history?.replaceState) {
+              const clean = new URL(window.location.href);
+              clean.searchParams.delete('release');
+              clean.searchParams.delete('_fresh');
+              window.history.replaceState(null, '', clean.href);
+            }
+            window.youjiaReleaseCheck = result.state;
+            if (result.state === 'unknown') console.info('[game-loading] Latest release could not be checked');
+            boot();
+          }
+        });
+      } else { boot(); } // Unpublished local exports have no release manifest.
     })();
   </script>
 </body>

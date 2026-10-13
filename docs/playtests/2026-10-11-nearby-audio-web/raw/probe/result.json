@@ -1,0 +1,166 @@
+{
+  "source": "5700377e248a4d871c9fb1711956dba1400d5e8f",
+  "initial": {
+    "wallMs": 8200.200000047684,
+    "signal": [
+      {
+        "node": 1,
+        "context": 1,
+        "type": "GainNode",
+        "contextState": "running",
+        "audioTime": 4.010666666666666,
+        "sampleRate": 48000,
+        "gain": 1,
+        "rms": 0,
+        "peak": 0,
+        "nonFinite": 0
+      },
+      {
+        "node": 2,
+        "context": 1,
+        "type": "AudioWorkletNode",
+        "contextState": "running",
+        "audioTime": 4.010666666666666,
+        "sampleRate": 48000,
+        "gain": null,
+        "rms": 0,
+        "peak": 0,
+        "nonFinite": 0
+      }
+    ],
+    "sources": [],
+    "failures": [],
+    "backend": null,
+    "jsHeap": {
+      "used": 256318214,
+      "total": 262377798,
+      "limit": 4395630592
+    }
+  },
+  "yard": {
+    "wallMs": 12400.900000095367,
+    "signal": [
+      {
+        "node": 1,
+        "context": 1,
+        "type": "GainNode",
+        "contextState": "running",
+        "audioTime": 8.210666666666667,
+        "sampleRate": 48000,
+        "gain": 1,
+        "rms": 0,
+        "peak": 0,
+        "nonFinite": 0
+      },
+      {
+        "node": 2,
+        "context": 1,
+        "type": "AudioWorkletNode",
+        "contextState": "running",
+        "audioTime": 8.210666666666667,
+        "sampleRate": 48000,
+        "gain": null,
+        "rms": 0,
+        "peak": 0,
+        "nonFinite": 0
+      },
+      {
+        "node": 3,
+        "context": 2,
+        "type": "GainNode",
+        "contextState": "running",
+        "audioTime": 3.512,
+        "sampleRate": 48000,
+        "gain": 0.15000000596046448,
+        "rms": 0.012882513744075551,
+        "peak": 0.04021558165550232,
+        "nonFinite": 0
+      },
+      {
+        "node": 5,
+        "context": 2,
+        "type": "GainNode",
+        "contextState": "running",
+        "audioTime": 3.512,
+        "sampleRate": 48000,
+        "gain": 0.3981071710586548,
+        "rms": 0.036896379991739274,
+        "peak": 0.11020316183567047,
+        "nonFinite": 0
+      }
+    ],
+    "sources": [
+      {
+        "wallMs": 10952,
+        "audioTime": 2.0613333333333332,
+        "node": 4,
+        "buffer": 1,
+        "frames": 6144000,
+        "channels": 2,
+        "sampleRate": 48000,
+        "duration": 128,
+        "loop": true,
+        "loopStart": 0,
+        "loopEnd": 128,
+        "startArgs": [
+          0,
+          0
+        ]
+      },
+      {
+        "wallMs": 12142.900000095367,
+        "audioTime": 3.2506666666666666,
+        "node": 6,
+        "buffer": 2,
+        "frames": 6144000,
+        "channels": 2,
+        "sampleRate": 48000,
+        "duration": 128,
+        "loop": true,
+        "loopStart": 0,
+        "loopEnd": 128,
+        "startArgs": [
+          0,
+          0
+        ]
+      }
+    ],
+    "failures": [],
+    "backend": {
+      "buffers": 2,
+      "bytes": 98304000,
+      "decoded": 2,
+      "starts": 2,
+      "players": 2,
+      "playing": 2,
+      "state": "running"
+    },
+    "jsHeap": {
+      "used": 216502149,
+      "total": 220128905,
+      "limit": 4395630592
+    }
+  },
+  "errors": [],
+  "recordings": [
+    {
+      "context": 1,
+      "contextState": "running",
+      "sampleRate": 48000,
+      "mime": "audio/webm;codecs=opus",
+      "bytes": 2503,
+      "path": "context-1.webm",
+      "sha256": "95edf22cd4ae6b17c21fd8f8f62ea2bd27c2c5ce56b73527981f75fca6cc58ce"
+    },
+    {
+      "context": 2,
+      "contextState": "running",
+      "sampleRate": 48000,
+      "mime": "audio/webm;codecs=opus",
+      "bytes": 34153,
+      "path": "context-2.webm",
+      "sha256": "fc18d2f8932267b1847eefaa9c56c559b10427013ac39f38926f785bed913e8b"
+    }
+  ],
+  "purpose": "Preflight observer and ordinary pause layout; not 10-minute validation or listening"
+}

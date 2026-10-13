@@ -2,11 +2,13 @@ extends RefCounted
 ## Confirmed-only view for the future garden interaction; no eager art changes.
 signal changed
 signal completed(action: String, area: String)
+signal resubmitted(failed_ops: Array, op_id: String)
 var store: Object
 var state := "idle"
 var error := ""
 var pending: Dictionary = {}
 var operation := ""
+var _failed: Array = []
 
 func _init(save_store: Object) -> void:
 	store = save_store
@@ -28,6 +30,7 @@ func busy() -> bool:
 func request(action: String, area: String) -> bool:
 	if busy() or view().is_empty(): return false
 	pending = {"revision": int(view().revision), "action": action, "area": area}
+	_failed.clear()
 	return _submit()
 
 func _submit() -> bool:
@@ -37,6 +40,7 @@ func _submit() -> bool:
 	if operation.is_empty():
 		state = "failed"
 		error = "SAVE_UNAVAILABLE"
+	elif not _failed.is_empty(): resubmitted.emit(_failed.duplicate(),operation)
 	changed.emit()
 	return not operation.is_empty()
 
@@ -49,6 +53,7 @@ func _confirmed(id: String, _kind: String) -> void:
 	if id == operation and not pending.is_empty():
 		var finished := pending.duplicate()
 		pending.clear()
+		_failed.clear()
 		operation = ""
 		state = "idle"
 		error = ""
@@ -58,8 +63,10 @@ func _confirmed(id: String, _kind: String) -> void:
 func _rejected(id: String, _kind: String, code: String) -> void:
 	if id != operation: return
 	error = code
+	if id not in _failed: _failed.append(id)
 	if code.begins_with("GARDEN_"):
 		pending.clear()
+		_failed.clear()
 		operation = ""
 		state = "blocked"
 	else:

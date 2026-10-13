@@ -1,0 +1,534 @@
+{
+  "status": "partial: actual natural dinner output and natural stop passed; mid-cook pause and Master mute pending",
+  "source_commit": "48f02b32215629de6393ac6e6bec83786054b4d3",
+  "tree": "2e8295c5cfa6638d74c6f37d9d4d37b03ed571e9",
+  "pck": {
+    "name": "game-48f02b3.pck",
+    "bytes": 74659432,
+    "sha256": "d0660003166c9856afa74b0f57d51650f64f2dde6fd595181218fea8f294c8d4"
+  },
+  "diagnostics": {
+    "name": "natural-dinner-diagnostics.json",
+    "bytes": 5201373,
+    "sha256": "6d0bd759416ce6ff6e0b3c615d8e661ee25d467f95c8920d42d5ea30b89ab9b9"
+  },
+  "ordinary_inputs": "Parent reports only ordinary fishing for small fish; normal UI disabled music/environment and kept SFX enabled; natural dinner, brushing and exit. No game/save/time/stock injection.",
+  "observer_identical_to_before": true,
+  "fixture_is_original_index_plus_observer_only": true,
+  "windows": [
+    {
+      "from_ms": 233000,
+      "until_ms_exclusive": 242000,
+      "snapshots": 90,
+      "taps": {
+        "C1-node1-output0": {
+          "readings": 90,
+          "nonzero": 0,
+          "max_peak": 0,
+          "max_rms": 0,
+          "nonfinite": 0,
+          "states": [
+            "running"
+          ]
+        },
+        "C1-node2-output0": {
+          "readings": 90,
+          "nonzero": 0,
+          "max_peak": 0,
+          "max_rms": 0,
+          "nonfinite": 0,
+          "states": [
+            "running"
+          ]
+        },
+        "C2-node3-output0": {
+          "readings": 90,
+          "nonzero": 0,
+          "max_peak": 0,
+          "max_rms": 0,
+          "nonfinite": 0,
+          "states": [
+            "running"
+          ]
+        },
+        "C2-node5-output0": {
+          "readings": 90,
+          "nonzero": 0,
+          "max_peak": 0,
+          "max_rms": 0,
+          "nonfinite": 0,
+          "states": [
+            "running"
+          ]
+        },
+        "C2-node7-output0": {
+          "readings": 90,
+          "nonzero": 81,
+          "max_peak": 0.1377042979001999,
+          "max_rms": 0.05499167536543115,
+          "nonfinite": 0,
+          "states": [
+            "running"
+          ]
+        },
+        "C2-node9-output0": {
+          "readings": 56,
+          "nonzero": 4,
+          "max_peak": 0.19745095074176788,
+          "max_rms": 0.04026476555855137,
+          "nonfinite": 0,
+          "states": [
+            "running"
+          ]
+        }
+      }
+    },
+    {
+      "from_ms": 233154.7,
+      "until_ms_exclusive": 241200,
+      "snapshots": 80,
+      "taps": {
+        "C1-node1-output0": {
+          "readings": 80,
+          "nonzero": 0,
+          "max_peak": 0,
+          "max_rms": 0,
+          "nonfinite": 0,
+          "states": [
+            "running"
+          ]
+        },
+        "C1-node2-output0": {
+          "readings": 80,
+          "nonzero": 0,
+          "max_peak": 0,
+          "max_rms": 0,
+          "nonfinite": 0,
+          "states": [
+            "running"
+          ]
+        },
+        "C2-node3-output0": {
+          "readings": 80,
+          "nonzero": 0,
+          "max_peak": 0,
+          "max_rms": 0,
+          "nonfinite": 0,
+          "states": [
+            "running"
+          ]
+        },
+        "C2-node5-output0": {
+          "readings": 80,
+          "nonzero": 0,
+          "max_peak": 0,
+          "max_rms": 0,
+          "nonfinite": 0,
+          "states": [
+            "running"
+          ]
+        },
+        "C2-node7-output0": {
+          "readings": 80,
+          "nonzero": 80,
+          "max_peak": 0.1377042979001999,
+          "max_rms": 0.05499167536543115,
+          "nonfinite": 0,
+          "states": [
+            "running"
+          ]
+        },
+        "C2-node9-output0": {
+          "readings": 48,
+          "nonzero": 4,
+          "max_peak": 0.19745095074176788,
+          "max_rms": 0.04026476555855137,
+          "nonfinite": 0,
+          "states": [
+            "running"
+          ]
+        }
+      }
+    },
+    {
+      "from_ms": 236300,
+      "until_ms_exclusive": 236700,
+      "snapshots": 4,
+      "taps": {
+        "C1-node1-output0": {
+          "readings": 4,
+          "nonzero": 0,
+          "max_peak": 0,
+          "max_rms": 0,
+          "nonfinite": 0,
+          "states": [
+            "running"
+          ]
+        },
+        "C1-node2-output0": {
+          "readings": 4,
+          "nonzero": 0,
+          "max_peak": 0,
+          "max_rms": 0,
+          "nonfinite": 0,
+          "states": [
+            "running"
+          ]
+        },
+        "C2-node3-output0": {
+          "readings": 4,
+          "nonzero": 0,
+          "max_peak": 0,
+          "max_rms": 0,
+          "nonfinite": 0,
+          "states": [
+            "running"
+          ]
+        },
+        "C2-node5-output0": {
+          "readings": 4,
+          "nonzero": 0,
+          "max_peak": 0,
+          "max_rms": 0,
+          "nonfinite": 0,
+          "states": [
+            "running"
+          ]
+        },
+        "C2-node7-output0": {
+          "readings": 4,
+          "nonzero": 4,
+          "max_peak": 0.09941606968641281,
+          "max_rms": 0.04984752832579551,
+          "nonfinite": 0,
+          "states": [
+            "running"
+          ]
+        },
+        "C2-node9-output0": {
+          "readings": 3,
+          "nonzero": 2,
+          "max_peak": 0.19745095074176788,
+          "max_rms": 0.04026476555855137,
+          "nonfinite": 0,
+          "states": [
+            "running"
+          ]
+        }
+      }
+    },
+    {
+      "from_ms": 239500,
+      "until_ms_exclusive": 239900,
+      "snapshots": 4,
+      "taps": {
+        "C1-node1-output0": {
+          "readings": 4,
+          "nonzero": 0,
+          "max_peak": 0,
+          "max_rms": 0,
+          "nonfinite": 0,
+          "states": [
+            "running"
+          ]
+        },
+        "C1-node2-output0": {
+          "readings": 4,
+          "nonzero": 0,
+          "max_peak": 0,
+          "max_rms": 0,
+          "nonfinite": 0,
+          "states": [
+            "running"
+          ]
+        },
+        "C2-node3-output0": {
+          "readings": 4,
+          "nonzero": 0,
+          "max_peak": 0,
+          "max_rms": 0,
+          "nonfinite": 0,
+          "states": [
+            "running"
+          ]
+        },
+        "C2-node5-output0": {
+          "readings": 4,
+          "nonzero": 0,
+          "max_peak": 0,
+          "max_rms": 0,
+          "nonfinite": 0,
+          "states": [
+            "running"
+          ]
+        },
+        "C2-node7-output0": {
+          "readings": 4,
+          "nonzero": 4,
+          "max_peak": 0.13470947742462158,
+          "max_rms": 0.05235014722805214,
+          "nonfinite": 0,
+          "states": [
+            "running"
+          ]
+        },
+        "C2-node9-output0": {
+          "readings": 4,
+          "nonzero": 2,
+          "max_peak": 0.19745095074176788,
+          "max_rms": 0.04009159796488133,
+          "nonfinite": 0,
+          "states": [
+            "running"
+          ]
+        }
+      }
+    },
+    {
+      "from_ms": 241300,
+      "until_ms_exclusive": 260000,
+      "snapshots": 187,
+      "taps": {
+        "C1-node1-output0": {
+          "readings": 187,
+          "nonzero": 0,
+          "max_peak": 0,
+          "max_rms": 0,
+          "nonfinite": 0,
+          "states": [
+            "running"
+          ]
+        },
+        "C1-node2-output0": {
+          "readings": 187,
+          "nonzero": 0,
+          "max_peak": 0,
+          "max_rms": 0,
+          "nonfinite": 0,
+          "states": [
+            "running"
+          ]
+        },
+        "C2-node3-output0": {
+          "readings": 187,
+          "nonzero": 0,
+          "max_peak": 0,
+          "max_rms": 0,
+          "nonfinite": 0,
+          "states": [
+            "running"
+          ]
+        },
+        "C2-node5-output0": {
+          "readings": 187,
+          "nonzero": 0,
+          "max_peak": 0,
+          "max_rms": 0,
+          "nonfinite": 0,
+          "states": [
+            "running"
+          ]
+        },
+        "C2-node7-output0": {
+          "readings": 187,
+          "nonzero": 0,
+          "max_peak": 0,
+          "max_rms": 0,
+          "nonfinite": 0,
+          "states": [
+            "running"
+          ]
+        },
+        "C2-node9-output0": {
+          "readings": 187,
+          "nonzero": 0,
+          "max_peak": 0,
+          "max_rms": 0,
+          "nonfinite": 0,
+          "states": [
+            "running"
+          ]
+        }
+      }
+    },
+    {
+      "from_ms": 241300,
+      "until_ms_exclusive": 291419.70099992846,
+      "snapshots": 502,
+      "taps": {
+        "C1-node1-output0": {
+          "readings": 502,
+          "nonzero": 0,
+          "max_peak": 0,
+          "max_rms": 0,
+          "nonfinite": 0,
+          "states": [
+            "running"
+          ]
+        },
+        "C1-node2-output0": {
+          "readings": 502,
+          "nonzero": 0,
+          "max_peak": 0,
+          "max_rms": 0,
+          "nonfinite": 0,
+          "states": [
+            "running"
+          ]
+        },
+        "C2-node3-output0": {
+          "readings": 502,
+          "nonzero": 0,
+          "max_peak": 0,
+          "max_rms": 0,
+          "nonfinite": 0,
+          "states": [
+            "running"
+          ]
+        },
+        "C2-node5-output0": {
+          "readings": 502,
+          "nonzero": 0,
+          "max_peak": 0,
+          "max_rms": 0,
+          "nonfinite": 0,
+          "states": [
+            "running"
+          ]
+        },
+        "C2-node7-output0": {
+          "readings": 502,
+          "nonzero": 0,
+          "max_peak": 0,
+          "max_rms": 0,
+          "nonfinite": 0,
+          "states": [
+            "running"
+          ]
+        },
+        "C2-node9-output0": {
+          "readings": 502,
+          "nonzero": 0,
+          "max_peak": 0,
+          "max_rms": 0,
+          "nonfinite": 0,
+          "states": [
+            "running"
+          ]
+        }
+      }
+    }
+  ],
+  "meal_sources": [
+    {
+      "wallMs": 233154.69999992847,
+      "node": 8,
+      "context": 2,
+      "contextState": "running",
+      "audioTime": 211.54133333333334,
+      "buffer": 3,
+      "frames": 124800,
+      "channels": 2,
+      "sampleRate": 48000,
+      "duration": 2.6,
+      "shortPeak": null,
+      "loop": true,
+      "loopStart": 0,
+      "loopEnd": 2.5999999046325684,
+      "startArgs": [
+        0,
+        0
+      ]
+    },
+    {
+      "wallMs": 236356.5,
+      "node": 10,
+      "context": 2,
+      "contextState": "running",
+      "audioTime": 214.752,
+      "buffer": 4,
+      "frames": 5271,
+      "channels": 2,
+      "sampleRate": 48000,
+      "duration": 0.1098125,
+      "shortPeak": 0.3129386603832245,
+      "loop": false,
+      "loopStart": 0,
+      "loopEnd": 0.1098125,
+      "startArgs": [
+        0,
+        0
+      ]
+    },
+    {
+      "wallMs": 239557.10000002384,
+      "node": 11,
+      "context": 2,
+      "contextState": "running",
+      "audioTime": 217.952,
+      "buffer": 4,
+      "frames": 5271,
+      "channels": 2,
+      "sampleRate": 48000,
+      "duration": 0.1098125,
+      "shortPeak": 0.3129386603832245,
+      "loop": false,
+      "loopStart": 0,
+      "loopEnd": 0.1098125,
+      "startArgs": [
+        0,
+        0
+      ]
+    }
+  ],
+  "last_nonzero_cook_ms": 241221,
+  "first_zero_after_cook_ms": 241316.19999992847,
+  "sources": [
+    {
+      "number": "11",
+      "repository_path": "assets/holiday/audio/meal_grok/cook_loop.tres",
+      "sha256": "2e9824a0be6cd199d4383d9593a4e184fb41ca9c558b5f91f340d7ef52f5ce1b",
+      "matches_approved_source": true
+    },
+    {
+      "number": "12",
+      "repository_path": "assets/holiday/audio/meal_grok/cook_spoon.tres",
+      "sha256": "b72eab1b9bf06842928aea36183a10f277b828cef21bfada150108b3ad700414",
+      "matches_approved_source": true
+    }
+  ],
+  "hunger_13": "Production Host remains false; no meal hunger source observed in this capture.",
+  "observer_failures": [],
+  "recording_status_at_export": {
+    "contexts": [
+      {
+        "id": 1,
+        "state": "running",
+        "sampleRate": 48000,
+        "recording": "recording"
+      },
+      {
+        "id": 2,
+        "state": "running",
+        "sampleRate": 48000,
+        "recording": "recording"
+      }
+    ],
+    "completed_recordings": []
+  },
+  "coverage": {
+    "natural_cook_loop_destination_nonzero": true,
+    "spoon_destination_nonzero": true,
+    "natural_completion_stops_output": true,
+    "mid_cook_pause_resume": false,
+    "mid_cook_master_mute_restore": false,
+    "human_or_hardware_listening": false,
+    "webm_saved_and_decoded": false
+  },
+  "limits": [
+    "100 ms software destination-tap samples; not human hearing or physical device output.",
+    "Source provenance proved by approved file hashes in final source and current export identity; rendered Web PCM is resampled to 48 kHz, not byte-identical .tres file data.",
+    "Recording still in progress at JSON export, no finalized WebM files in this snapshot.",
+    "Later paused state after natural meal does not establish pause stopping an active cook."
+  ]
+}

@@ -120,7 +120,9 @@ func run() -> void:
 		var panel = main._basket_panel
 		var grid = panel.grid
 		var view_rect := Rect2(Vector2.ZERO, Vector2(viewport))
-		check(panel.can_drag("pine_cone") and not panel.can_drag(fish), tag + " finds can be dragged, fish cannot")
+		check(panel.can_drag("pine_cone"), tag + " finds can be dragged")
+		# #597：鱼只能拖到底下的快捷格（只配格子，不进院子的三处位置）
+		check(not panel.can_drag(fish) or main._hold_hotbar.visible, tag + " fish drags only toward the visible hotbar")
 		check(panel.legal_spots().size() == 3, tag + " all three fixed spots are free")
 		# Zones sit at the world spot converted through the yard camera, kept on screen.
 		var canvas: Transform2D = main._world.decor_view.get_global_transform_with_canvas()

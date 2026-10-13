@@ -1,0 +1,17 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+AUTO_BEFORE_SAVE saving work=12.0333333333333 pos=(469.0222, 543.4775) target=(480.0, 545.0) elapsed=199.233333333331 pending= house=
+AUTO_AFTER_SAVE { "day": 1, "period": "lunch", "available": 2, "source": { "meals": { "schema": 1, "revision": 1, "receipts": [{ "day": 1, "meal": "lunch", "ingredients": { "wheat": 1 }, "fatigued": false, "earned": 3 }] }, "actions": { "schema": 1, "revision": 1, "actions": { "rim_04": { "day": 1, "period": "lunch", "ap": 1 } } } } } sections={ "schema": 1, "revision": 1, "sections": { "rim_04": { "day": 1, "stones": 1, "experience": 1 } } }
+FAILED actual durable growth produces a bark
+FAILED growth text resolves
+POND_GROWTH_DIRECTOR checks=262 failures=2
+ERROR: actual durable growth produces a bark
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] run (res://test/pond_growth_director_suite.gd:170)
+       [1] check_growth_feedback (res://test/pond_growth_director_suite.gd:219)
+ERROR: growth text resolves
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] run (res://test/pond_growth_director_suite.gd:170)
+       [1] check_growth_feedback (res://test/pond_growth_director_suite.gd:219)
