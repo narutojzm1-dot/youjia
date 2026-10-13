@@ -1,0 +1,24 @@
+2026-10-13T12:44:22.8705903Z Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+2026-10-13T12:44:22.8892929Z 
+2026-10-13T12:44:24.1993001Z WORLD_WEATHER checks=199 failures=0
+2026-10-13T12:44:24.3256574Z Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+2026-10-13T12:44:24.3443934Z 
+2026-10-13T12:44:26.0691470Z WORLD_DAYLIGHT checks=226 failures=0
+2026-10-13T12:44:26.1566950Z Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+2026-10-13T12:44:26.1753223Z 
+2026-10-13T12:44:27.9012157Z SCRIPT ERROR: Invalid operands 'Dictionary' and 'String' in operator '=='.
+2026-10-13T12:44:27.9012682Z           at: <anonymous lambda> (res://test/regional_night_sky_suite.gd:57)
+2026-10-13T12:44:27.9013077Z           GDScript backtrace (most recent call first):
+2026-10-13T12:44:27.9013431Z               [0] <anonymous lambda> (res://test/regional_night_sky_suite.gd:57)
+2026-10-13T12:44:27.9013803Z               [1] run (res://test/regional_night_sky_suite.gd:57)
+2026-10-13T12:44:27.9014121Z               [2] _start_holiday (res://scripts/main.gd:1568)
+2026-10-13T12:44:27.9014774Z               [3] flush_pending (res://autoload/save_store.gd:780)
+2026-10-13T12:44:28.1217238Z REGIONAL_NIGHT_SKY checks=3759 failures=0
+2026-10-13T12:44:28.2454363Z [daily-check] Godot reported an error or failed assertion
+2026-10-13T12:44:28.2946160Z ##[error]Process completed with exit code 1.
+2026-10-13T12:44:28.3028451Z Post job cleanup.
+2026-10-13T12:44:28.3524147Z [command]/usr/bin/git version
+2026-10-13T12:44:28.3560681Z git version 2.55.0
+2026-10-13T12:44:28.3585488Z Temporarily overriding HOME='/home/runner/work/_temp/11d46cf4-31c6-4dd0-9fc3-e0b50c9e0292' before making global git config changes
+2026-10-13T12:44:28.3586071Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-13T12:44:28.3588890Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/youjia/youjia

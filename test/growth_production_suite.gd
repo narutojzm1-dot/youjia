@@ -78,7 +78,9 @@ func run() -> void:
 	check(Budget.budget(upgraded,"lunch").available == 2,"old pond spend still counts alongside milling")
 	var tomorrow := second.duplicate(true)
 	tomorrow.holiday_day = 2
-	check(Budget.budget(tomorrow,"breakfast").error == "AP_CROSS_DAY_UNRESOLVED","mixed old-day surplus remains unresolved")
+	check(Budget.budget(tomorrow,"breakfast").available == 0,"mixed old-day surplus is excluded from new-day AP")
+	check(Budget.budget(tomorrow,"breakfast").source == Budget.budget(second,"dinner").source,"mixed old receipts remain guarded without clearing or carrying")
+	check(mill(tomorrow,"breakfast").error == "AP_EMPTY","mixed historical surplus cannot buy today's milling")
 	var spent: Dictionary = pond(second,"lunch","second").candidate
 	spent.holiday_day = 2
 	check(Budget.budget(spent,"breakfast").available == 0,"zero mixed prior balance needs no new cross-day policy")

@@ -75,11 +75,78 @@ func run() -> void:
 	await interruptions_and_stale_plan()
 	await fatigue_and_ownership()
 	await actual_pause_boundary()
+	await prior_surplus_and_autonomous_dinner()
 	if is_instance_valid(world): world.queue_free()
 	await process_frame
 	print("MILLING_DIRECTOR checks=%d failures=%d" % [checks,failures.size()])
 	for failure in failures: push_error(failure)
 	quit(0 if failures.is_empty() else 1)
+
+func prior_surplus_and_autonomous_dinner() -> void:
+	# A real persisted old inventory, normal dinner route and autonomous work.
+	# Historical AP is retained, but never used or allowed to freeze this day.
+	for schema: int in [4,5]:
+		if is_instance_valid(world):
+			world.queue_free()
+			await process_frame
+		var inventory := Inventory.empty()
+		inventory.wheat = 2
+		inventory.corn = 2
+		inventory.fish = {"medium":1,"odd":2}
+		if schema == 4:
+			inventory.schema = 4
+			inventory.erase("flour")
+			inventory.erase("production_revision")
+		var old_receipt := {"day":7,"meal":"dinner","ingredients":{"small":1},"fatigued":true,"earned":1}
+		var source := {"holiday_day":8,"holiday_day_elapsed":351.67,Inventory.FIELD:inventory,
+			"meal_ledger":{"schema":1,"revision":1,"receipts":[old_receipt]},
+			"growth_actions":Budget.empty(),"pond_edging":{"schema":1,"revision":0,"sections":{}},
+			"growth_production":Production.empty(),"keepsakes":{},
+			"resident_rest":{"schema":1,"day":8,"cause":"awake"}}
+		store.request_patch("isolated-old-surplus-dinner",source)
+		check(await store.flush_pending(),"old surplus fixture persisted schema %d" % schema)
+		store._load()
+		check(store.get_yard_inventory().schema == 5 and store.get_growth_budget("dinner").available == 0,"old inventory reopens without spending or carrying old AP")
+		world = load("res://scripts/game/yard_world.gd").new()
+		world.setup([],{},store.get_holiday_day(),store.get_holiday_day_elapsed())
+		root.add_child(world)
+		await process_frame
+		world.get_player().position = Vector2(440,545)
+		world.sync_inventory("",false,[])
+		world.house.meal_rng.seed = 1
+		check(world.pond_growth.autonomous_enabled and world.pond_growth._mill_ready(world.pond_growth.milling_station,Schedule.MILL_RECIPE),"normal world enables reachable mill after old save")
+		var expected_work := {}
+		var planned_work := {}
+		var saw_brush := false
+		for frame in 3600:
+			world.tick(1.0/30,Vector2.ZERO)
+			if not store.is_save_idle(): await store.flush_pending()
+			if frame % 30 == 0: await process_frame
+			if world.house.stage == "balcony": saw_brush = true
+			if world.pond_growth.stage == "working" and expected_work.is_empty():
+				expected_work = world.pond_growth.expected.duplicate(true)
+				planned_work = world.pond_growth.proposal.duplicate(true)
+			if store.get_growth_production().revision > 0: break
+		check(saw_brush and store.get_meal_ledger().receipts.size() == 2,"normal tired dinner completes and brushes before autonomous milling")
+		check(not expected_work.is_empty() and expected_work.available == 1 and expected_work.period == "dinner","only today's tired dinner AP starts work after 21:00")
+		var result: Dictionary = store._data.duplicate(true)
+		check(store.get_yard_inventory().wheat == 1 and store.get_yard_inventory().flour == 1 and store.get_yard_inventory().revision == 2,"one dinner and one milling each update inventory once")
+		check(store.get_growth_budget("dinner").available == 0 and store.get_growth_production().revision == 1,"today's single AP consumed exactly once")
+		check(Meals.read(result).receipts[0] == old_receipt and Budget.read(result) == source.growth_actions,"old earnings and legacy consumption unchanged after JSON normalization")
+		check(result.growth_production.receipts[0].day == 8 and result.growth_production.receipts[0].experience.cooking == 1,"new output and XP belong only to today's receipt")
+		var old_day := source.duplicate(true)
+		old_day.holiday_day = 7
+		check(Budget.budget(old_day,"dinner").available == 1,"unchanged old source still reconstructs its unspent AP")
+		var config := {"ap":1,"wheat":1,"flour":1,"experience":1}
+		store.request_milling(expected_work,planned_work,config)
+		check(await store.flush_pending() and store._data == result,"duplicate completion cannot spend historic surplus or mint flour")
+		world.free()
+		store._load()
+		store.request_milling(expected_work,planned_work,config)
+		# JSON reads numeric tokens as floats; compare the complete serialized
+		# values, while canonical model reads above keep strict receipt checks.
+		check(await store.flush_pending() and JSON.parse_string(JSON.stringify(store._data)) == JSON.parse_string(JSON.stringify(result)),"native reopen and duplicate preserve all old receipts and single new result")
+		check(not Budget.budget(result,"dinner").source.meals.receipts.is_empty(),"full history remains in optimistic source guard")
 
 func one_draw_and_filters() -> void:
 	for wanted: String in [STONE,"wheat"]:
