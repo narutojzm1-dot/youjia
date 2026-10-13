@@ -59,6 +59,19 @@ func _run() -> void:
 		main._release_button.pressed.emit()
 		await settle()
 		var panel = main._release_panel
+		if dims == Vector2i(1280,720):
+			check(panel.request.accept_gzip == not OS.has_feature("web"), "only native HTTPRequest handles compressed transport")
+			var bundled_text: String = panel.content.text
+			# Browser Fetch supplies decoded JSON even when this header survives.
+			# This callback regression is not an actual browser gzip request test.
+			var decoded_json := JSON.stringify(release).to_utf8_buffer()
+			panel._checked(HTTPRequest.RESULT_SUCCESS, 200, PackedStringArray(["Content-Encoding: gzip"]), decoded_json)
+			check(panel.status.text == Notices.latest_status(release, str(Notices.identity().get("sourceCommit", ""))), "decoded browser response is parsed despite retained gzip header")
+			panel._checked(HTTPRequest.RESULT_SUCCESS, 200, PackedStringArray(["Content-Encoding: gzip"]), "{}".to_utf8_buffer())
+			check(panel.status.text.contains("无法"), "invalid decoded manifest cannot claim latest")
+			panel._checked(HTTPRequest.RESULT_BODY_DECOMPRESS_FAILED, 200, PackedStringArray(), decoded_json)
+			check(panel.status.text.contains("无法"), "transport decode failure cannot claim latest")
+			check(panel.content.text == bundled_text, "transport results never replace bundled notices")
 		check(paused and panel.visible and main._pause_screen.visible, "notes keep world paused")
 		check(Rect2(Vector2.ZERO,Vector2(dims)).encloses(panel.card.get_global_rect()), "notes fit %s" % dims)
 		check(panel.content.size.y > 32, "scrolling body has space")
