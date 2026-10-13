@@ -55,6 +55,13 @@ func run() -> void:
 			await settle()
 			g.update_view(inventory, keepsakes, "ready", false)
 			await settle()
+			# The first opened paper has no previous label width to reuse. A
+			# wrapped flour note must not retain that initial narrow-width height.
+			g.open_menu("flour")
+			await settle()
+			check(g.menu.get_global_rect().end.y - g.menu_close.get_global_rect().end.y <= 12.0, tag + " first flour paper hugs its buttons: " + str(g.menu.get_global_rect()))
+			check(Rect2(Vector2.ZERO, Vector2(vs)).encloses(g.menu.get_global_rect()), tag + " first flour paper inside screen")
+			g.close_menu()
 			# --- grid shape ---
 			var cols: int = g.grid.columns
 			var expect_cols := 3 if inner_width(vs) < 4 * 64 + 3 * 8 else 4
@@ -146,6 +153,12 @@ func run() -> void:
 			await settle()
 			check(Rect2(Vector2.ZERO, Vector2(vs)).encloses(g.menu.get_global_rect()), tag + " flour paper stays inside screen")
 			check(g.menu_action.disabled and not g.menu_hotbar.visible and g.menu_note.visible, tag + " flour shows cooking guidance without a false hand action")
+			check(g.menu.get_global_rect().end.y - g.menu_close.get_global_rect().end.y <= 12.0, tag + " flour paper hugs content after switching from a find")
+			g.update_view(inventory, keepsakes, "saving", true)
+			await settle()
+			g.update_view(inventory, keepsakes, "ready", false)
+			await settle()
+			check(g.menu.get_global_rect().end.y - g.menu_close.get_global_rect().end.y <= 12.0, tag + " flour paper re-hugs after save guidance changes")
 			g.close_menu()
 			# --- empty cell, switching, outside tap, never mind, Esc ---
 			emitted.clear()

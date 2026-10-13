@@ -414,6 +414,14 @@ func _place_menu() -> void:
 	menu.reset_size()
 	menu.size.x = width
 	_sort_menu()
+	if selected == "flour":
+		# On its first open the wrapped recipe was measured before the paper
+		# had a width. Discard that tall cached minimum after width is applied.
+		menu_note.update_minimum_size()
+		menu.get_child(0).update_minimum_size()
+		menu.update_minimum_size()
+		menu.size = Vector2(width, 0)
+		_sort_menu()
 	var h := menu.size.y
 	var y := cell_rect.end.y + 6.0
 	if y + h > view.size.y - 8.0: y = cell_rect.position.y - h - 6.0
