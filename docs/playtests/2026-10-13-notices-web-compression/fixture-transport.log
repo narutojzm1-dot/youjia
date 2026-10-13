@@ -1,0 +1,9 @@
+# Loopback HTTP fixture; log timestamps are Asia/Shanghai (UTC+08:00).
+127.0.0.1 - - [13/Oct/2026 12:28:05] fixture notice=True mode=gzip source=c8ea3853818ade88d52a8621fda36cd28423ab84 wire=398 decoded=870
+127.0.0.1 - - [13/Oct/2026 12:28:05] fixture notice=True mode=gzip source=b7929dc7b982788ea4126f9f08424770a09050ed wire=398 decoded=870
+127.0.0.1 - - [13/Oct/2026 12:30:09] fixture notice=False mode=gzip source=b7929dc7b982788ea4126f9f08424770a09050ed wire=398 decoded=870
+127.0.0.1 - - [13/Oct/2026 12:30:50] fixture notice=True mode=gzip source=b7929dc7b982788ea4126f9f08424770a09050ed wire=398 decoded=870
+127.0.0.1 - - [13/Oct/2026 12:31:00] fixture notice=False mode=gzip source=c8ea3853818ade88d52a8621fda36cd28423ab84 wire=398 decoded=870
+127.0.0.1 - - [13/Oct/2026 12:31:44] fixture notice=True mode=gzip source=c8ea3853818ade88d52a8621fda36cd28423ab84 wire=398 decoded=870
+127.0.0.1 - - [13/Oct/2026 12:32:02] fixture notice=True mode=invalid source=c8ea3853818ade88d52a8621fda36cd28423ab84 wire=399 decoded=871
+127.0.0.1 - - [13/Oct/2026 12:32:20] fixture notice=True mode=gzip source=7c785c03bb80c55dc8deaef4eaea8f854548688d wire=399 decoded=870
