@@ -1,0 +1,20 @@
+{
+  "runtimeTestedSource": "1252a05070b57ad5d738372734d3ba9bcfdacac0",
+  "laterReviewSource": "4e0e600cc02ffb756c28f14dce3d2236a32307eb",
+  "laterReviewTree": "6907d2bc82e05ec29764cf663f205e16b791df67",
+  "parent": "1252a05070b57ad5d738372734d3ba9bcfdacac0",
+  "changedFiles": [
+    "test/ui_interaction_suite.gd"
+  ],
+  "diffStat": "test/ui_interaction_suite.gd | 8 ++++++++\n 1 file changed, 8 insertions(+)",
+  "runtimeAssetsConfigChanged": false,
+  "ciRun": 38376438050,
+  "ciStatusAtOwnerHandoff": "completed_failure",
+  "ciStatusIsNotPass": true,
+  "basis": "read-only git object comparison; no new runtime test or export performed by archive preparer",
+  "ciRunUrl": "https://github.com/narutojzm1-dot/youjia/actions/runs/38376438050",
+  "ciFailedStep": "Run game verification",
+  "ciStepStartedAt": "2026-10-13T09:27:58Z",
+  "ciStepCompletedAt": "2026-10-13T09:51:48Z",
+  "ciEvidenceSource": "CODEX-LEAD verified CI handoff; failure under investigation"
+}

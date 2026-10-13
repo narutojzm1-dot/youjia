@@ -1,0 +1,187 @@
+{
+  "schema": "youjia.evidence-manifest/v1",
+  "status": "ordinary_web_archive_complete_ci_and_public_release_not_claimed",
+  "screenshots": 25,
+  "files": [
+    {
+      "path": ".gdignore",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "final-1252a05/21-final-console-before-reopen.json",
+      "bytes": 2,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    {
+      "path": "final-1252a05/23-final-console-after-reopen.json",
+      "bytes": 2,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    {
+      "path": "final-1252a05/identity/4e0e600-scope-proof.json",
+      "bytes": 984,
+      "sha256": "45503fab15ac496652f0cc7b4bb5cff3e6c84ec6dbd6b3bcb58a5c5f4e67846b"
+    },
+    {
+      "path": "final-1252a05/identity/4e0e600-test-only.diff",
+      "bytes": 1378,
+      "sha256": "39d30738d0e3dbbc5b649f0194501755073cce653d27da8b22894f5aa2ab1ad9"
+    },
+    {
+      "path": "final-1252a05/identity/export-evidence.json",
+      "bytes": 751,
+      "sha256": "951724ea8b9ce1ab82ca645662600ef259cf285fac1bbdc5ad12343a92cca3e8"
+    },
+    {
+      "path": "final-1252a05/identity/http-identity-evidence.json",
+      "bytes": 473,
+      "sha256": "8b35a8bc3fd5819649026d0ba1e3595e41d1b48a111173ff1f04ee48ead0ca60"
+    },
+    {
+      "path": "final-1252a05/screenshots/14-final-fresh-yard.png",
+      "bytes": 228161,
+      "sha256": "1269df3160697b8870bb20ee2729662b890e697a402dfffed2523885dfa24201"
+    },
+    {
+      "path": "final-1252a05/screenshots/15-final-panel-390x844.png",
+      "bytes": 55853,
+      "sha256": "121ea9fece4e0cbd84bbae79ea564353ee5442bdab9a4392943ecf92e56b8a66"
+    },
+    {
+      "path": "final-1252a05/screenshots/16-final-three-removed.png",
+      "bytes": 149797,
+      "sha256": "7d1e1f851569fe0e354c66ad6eb3b954700268956ccc629f1ae1cfff307f9f57"
+    },
+    {
+      "path": "final-1252a05/screenshots/17-final-new-photo-before-restore.png",
+      "bytes": 130572,
+      "sha256": "8e5651f5fb31c8cdba445adacb36cdb131ceeb60298f10246a081e68b64f1dab"
+    },
+    {
+      "path": "final-1252a05/screenshots/18-final-new-cow-photo-before-restore.png",
+      "bytes": 129978,
+      "sha256": "64b7d23581e7f26a5ba16f769b79b5c2760f18fe7c31bdc06225ebb9eb4ed572"
+    },
+    {
+      "path": "final-1252a05/screenshots/19-final-door-restored-after-photo.png",
+      "bytes": 115537,
+      "sha256": "34c604223db069d6fa772f12dfe81de7e2a05ff3e06a66d50d6981d782d7b207"
+    },
+    {
+      "path": "final-1252a05/screenshots/20-final-three-restored.png",
+      "bytes": 151471,
+      "sha256": "221cfeeed8e6927a24c7a5b4c973115b49b309a88f1f1197fdc8ded891230e54"
+    },
+    {
+      "path": "final-1252a05/screenshots/21-final-photo7-after-three-restored.png",
+      "bytes": 129966,
+      "sha256": "1ba773bd9b40e58767ce051aa23cdf291b9dff6cacbf99315b6a28e8f2b0dfdf"
+    },
+    {
+      "path": "final-1252a05/screenshots/22-final-reopened-three-restored.png",
+      "bytes": 145098,
+      "sha256": "70c008a724941240e30b7141ac6186c11d263d2c29a4aaf6c7ca4bab0b53928f"
+    },
+    {
+      "path": "final-1252a05/screenshots/23-final-reopened-photo7-frozen.png",
+      "bytes": 127827,
+      "sha256": "44ab69467cb2be37db298ea959aff3fe352bc21e3e000478ce398b6132f0ffb9"
+    },
+    {
+      "path": "final-1252a05/screenshots/24-final-build-chip.png",
+      "bytes": 113299,
+      "sha256": "f4e21af94eb83490b869a885b23c272d4f3b12acd71e5735c4cc1d0d1467e60a"
+    },
+    {
+      "path": "final-1252a05/screenshots/25-final-announcement.png",
+      "bytes": 99661,
+      "sha256": "8bf2b7341c47eb57e0df20a8b269f044e5c7523997713f8a72b690427bec7dd0"
+    },
+    {
+      "path": "prior-7fd74c3/10-console.json",
+      "bytes": 2,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    {
+      "path": "prior-7fd74c3/export-evidence.json",
+      "bytes": 746,
+      "sha256": "d0acaceaf6fa61168e9598c3fbb8ee1edd969aa15fa2223b25aac5c735eeaa98"
+    },
+    {
+      "path": "prior-7fd74c3/screenshots/01-original-yard.png",
+      "bytes": 171205,
+      "sha256": "5d4c37697f1d04bade04ce2fd9371bf85ebeb0ec9bfc333eb043a398ae9c133b"
+    },
+    {
+      "path": "prior-7fd74c3/screenshots/02-wall-panel.png",
+      "bytes": 129257,
+      "sha256": "2eb27b45a365463c4e29a705ddfd79c7d10af0b19cdf0532d3f731230c424d3d"
+    },
+    {
+      "path": "prior-7fd74c3/screenshots/03-wall-confirmed.png",
+      "bytes": 128258,
+      "sha256": "b06aa0f363189a83d1e56446239ac457514cc215971ac59f9cbdeb384e413eb9"
+    },
+    {
+      "path": "prior-7fd74c3/screenshots/04-door-confirmed.png",
+      "bytes": 126768,
+      "sha256": "1a6e76c5d970296b885703114c9297c0c9cfad9b4507b41f235a4fd56f9e86b1"
+    },
+    {
+      "path": "prior-7fd74c3/screenshots/05-pond-confirmed.png",
+      "bytes": 125749,
+      "sha256": "da97eb5410ef076c2824497260e1d0d175fda42a586f1bef9b8b42fde2ce8ee1"
+    },
+    {
+      "path": "prior-7fd74c3/screenshots/06-panel-844x390.png",
+      "bytes": 52019,
+      "sha256": "a24901a13de4e39e25b258aa70c264502371169d1dc34da4a345913ac0ad9f79"
+    },
+    {
+      "path": "prior-7fd74c3/screenshots/07-three-groups-removed.png",
+      "bytes": 172238,
+      "sha256": "57a27be2ff68e98e427ec70f863c2ce2b869725cd669834f70c3cae61bebc2e3"
+    },
+    {
+      "path": "prior-7fd74c3/screenshots/08-existing-photo-pages.png",
+      "bytes": 141216,
+      "sha256": "73053a830476af8194d692a87967c102e81351f3b23889c6ac8b6d90bba3dfee"
+    },
+    {
+      "path": "prior-7fd74c3/screenshots/09-legacy-and-day2-photos.png",
+      "bytes": 135055,
+      "sha256": "e5304828f30eda6864422b566a73cec5ed28ebe35836f78ff3d22d9a174180b4"
+    },
+    {
+      "path": "prior-7fd74c3/screenshots/10-candidate-version.png",
+      "bytes": 134529,
+      "sha256": "bcf9fb0cd33fb9ea364bd3cc41e8bb9b9a0e511e705af0867ea7fdb2ec171da7"
+    },
+    {
+      "path": "prior-7fd74c3/screenshots/11-reopened-three-removed.png",
+      "bytes": 171902,
+      "sha256": "eefdd95e0a62f45df4667696efbd1e42aee6f20fbebf10ede39702eb6049f437"
+    },
+    {
+      "path": "prior-7fd74c3/screenshots/12-door-restored.png",
+      "bytes": 129278,
+      "sha256": "3b84309929dd78115673e65e18dd7681b7c5c5dc132e7ab82a01ba9399599e60"
+    },
+    {
+      "path": "prior-7fd74c3/screenshots/13-old-save-three-restored.png",
+      "bytes": 173717,
+      "sha256": "bd567c5ef56bbbab5745302aab11d29ab3dd6d37d2915575993df4509be66b92"
+    },
+    {
+      "path": "README.md",
+      "bytes": 8302,
+      "sha256": "b3ac4077291e29150991241cc11acd585fde9dc1ec49c7eea9cab5a940e7a65d"
+    },
+    {
+      "path": "screenshot-sources.json",
+      "bytes": 16105,
+      "sha256": "a300a4b653cc64cece9ea03169f7aa8e18f13e6cea356ed0f909e0b1e96cbc02"
+    }
+  ]
+}
