@@ -1,0 +1,46 @@
+{
+  "source_base": "8b0413ed9b1100704713de257060528a9e945a4e",
+  "source_state": "uncommitted bounded carried-prop photo fix, no Web claim",
+  "checks": 2721,
+  "failures": 0,
+  "suites": [
+    {
+      "suite": "growth_carried_photo",
+      "checks": 39,
+      "exit": 0,
+      "log": "growth_carried_photo.log",
+      "log_sha256": "7e17196896fd27f612ee4ce0fdd70954bb55e1c2e7a22fc9be5af8066ede4757"
+    },
+    {
+      "suite": "photo_moment_save",
+      "checks": 48,
+      "exit": 0,
+      "log": "photo_moment_save.log",
+      "log_sha256": "68ca288eaf3d991d9c9a39ba4eeb6065ac4c90afb52b0c740553bfca7f6df672"
+    },
+    {
+      "suite": "photo_moment_render",
+      "checks": 2613,
+      "exit": 0,
+      "log": "photo_moment_render.log",
+      "log_sha256": "0ee40c779da4caa4fcdf9a897f6d5b749a561cb656de7284ba61bb59dcee75fb"
+    },
+    {
+      "suite": "yard_mill_view",
+      "checks": 21,
+      "exit": 0,
+      "log": "yard_mill_view.log",
+      "log_sha256": "c71f7b2196b7fb7382f89b212e11120b1d9cd632861d155f9a6f06e738ff7dfa"
+    }
+  ],
+  "source_files_sha256": {
+    "scripts/game/house_sleep.gd": "03e687368953d07fa6478516bb5345862e7bde8d3ff6ae2b97d6b37709f95c34",
+    "scripts/game/pond_growth_director.gd": "7f4ea63e7c733140cf88e7d9e8c4003ffa5e0e7b68ce93a679ed8e154dcdabde",
+    "scripts/ui/photo_moment.gd": "55b4783444448676ec42b463a4582337663a521e0c2495d511923b58cd5f8ba9",
+    "test/growth_carried_photo_suite.gd": "85e134e5653c6a0c12511011ce5910dbff07a9896cca268d48adcf57c35ba27e",
+    "test/photo_moment_render_suite.gd": "a9d23a94180580e01cf2ab5cd9769317b852e0a29f300f7ee6322890686a7a3b",
+    "tools/verify_daily_life.sh": "3c0ddda07461e645b0646fa3c34eee99f7835041faea6394d05389d01f23a0c0",
+    "tools/lib/godot_suite_completions.tsv": "fb5ac4076fd33e826999cd86fd9ed0a228a407de5ef5612672293bc4479c13a6"
+  },
+  "initial_failure": "photo_moment_render-before-line-fixture.log: 8 failures from treating new static mill Line2D as lead rope; exact rope geometry and independent mill checks now retained."
+}

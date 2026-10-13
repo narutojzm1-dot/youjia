@@ -264,6 +264,11 @@ func plan_growth_materials(eligible_actions: Dictionary, rng: RandomNumberGenera
 	return preload("res://scripts/game/growth_materials.gd").plan(_data, eligible_actions, rng)
 
 
+## Check the original plan without selecting another material or reserving stock.
+func validate_growth_materials(proposal: Dictionary) -> String:
+	return preload("res://scripts/game/growth_materials.gd").validate(_data, proposal)
+
+
 ## Confirmed world projection, validated against matching action receipts.
 func get_pond_edging() -> Dictionary:
 	# Do not project orphan world results without their matching AP receipts.
@@ -273,6 +278,21 @@ func get_pond_edging() -> Dictionary:
 
 func get_growth_budget(period: String) -> Dictionary:
 	return preload("res://scripts/game/growth_budget.gd").budget(_data, period)
+
+
+func get_growth_production() -> Dictionary:
+	return preload("res://scripts/game/growth_production.gd").read(_data)
+
+
+## Acceptance is not completion; reuse growth FIFO confirmation/unknown handling.
+func request_milling(expected: Dictionary, proposal: Dictionary, config: Dictionary) -> String:
+	var frozen_budget := expected.duplicate(true)
+	var frozen_proposal := proposal.duplicate(true)
+	var frozen_config := config.duplicate(true)
+	return request_intent("growth", func(current: Dictionary) -> Variant:
+		var result := preload("res://scripts/game/growth_budget.gd").complete_milling(current, frozen_budget, frozen_proposal, frozen_config)
+		if result.has("error"): return CoordinatorType.IntentRejection.new(result.error)
+		return result.candidate)
 
 
 func request_pond_growth(expected: Dictionary, section: String, proposal: Dictionary, ap_cost: int, stones: int, experience: int) -> String:

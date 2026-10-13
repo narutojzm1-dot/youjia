@@ -1,0 +1,23 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+FAILED old earnings and legacy consumption unchanged
+FAILED native reopen and duplicate preserve all old receipts and single new result
+FAILED old earnings and legacy consumption unchanged
+FAILED native reopen and duplicate preserve all old receipts and single new result
+MILLING_DIRECTOR checks=162 failures=4
+ERROR: old earnings and legacy consumption unchanged
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] run (res://test/milling_director_suite.gd:82)
+ERROR: native reopen and duplicate preserve all old receipts and single new result
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] run (res://test/milling_director_suite.gd:82)
+ERROR: old earnings and legacy consumption unchanged
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] run (res://test/milling_director_suite.gd:82)
+ERROR: native reopen and duplicate preserve all old receipts and single new result
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] run (res://test/milling_director_suite.gd:82)

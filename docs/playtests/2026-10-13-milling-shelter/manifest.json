@@ -1,0 +1,119 @@
+{
+  "schema": 1,
+  "generated_at_utc": "2026-10-13T13:42:05.215905+00:00",
+  "log_provenance": [
+    {
+      "path": "baseline-diagnostic.log",
+      "source_sha256": "0e2a43daa382f7e16fe250338b04a110d934a0e8de11a45c689c2499adf548db",
+      "archived_sha256": "87a1c344324ac15cf057d0b8f9f14b2ae7f388e844ebed9689028118620a0a5a",
+      "bytes": 3596,
+      "redaction": "personal temporary-fixture path replaced by fixture/"
+    },
+    {
+      "path": "first-guard-fixture-failure.log",
+      "source_sha256": "4293061cd6310a31f6b854f305cf4a9336977437e1979c9fc7ca1a0e2baf74f1",
+      "archived_sha256": "4293061cd6310a31f6b854f305cf4a9336977437e1979c9fc7ca1a0e2baf74f1",
+      "bytes": 1335,
+      "redaction": "none"
+    },
+    {
+      "path": "large-animal-final.log",
+      "source_sha256": "a7eb0c4656655951145655ab36c97f257267838109c35026fe0cb68961d280ee",
+      "archived_sha256": "a7eb0c4656655951145655ab36c97f257267838109c35026fe0cb68961d280ee",
+      "bytes": 1089,
+      "redaction": "none"
+    },
+    {
+      "path": "original-28-final.log",
+      "source_sha256": "e2ab5134158e7ac25ea0a33a5fed09f77457290968f3f3a4ebf363de3cbb4d99",
+      "archived_sha256": "e2ab5134158e7ac25ea0a33a5fed09f77457290968f3f3a4ebf363de3cbb4d99",
+      "bytes": 1089,
+      "redaction": "none"
+    },
+    {
+      "path": "yard-shelter-final.log",
+      "source_sha256": "384d323087ff1f224932f64d84d5f2dea2c701a452f46eb8cf6454435ffc1c05",
+      "archived_sha256": "384d323087ff1f224932f64d84d5f2dea2c701a452f46eb8cf6454435ffc1c05",
+      "bytes": 325,
+      "redaction": "none"
+    },
+    {
+      "path": "diagnostic-fixture.gd",
+      "source_sha256": "aa623ac066ebf2bf283f9c0f420631b6ab2ff6881ba4e624eee16bbe855c3284",
+      "archived_sha256": "aa623ac066ebf2bf283f9c0f420631b6ab2ff6881ba4e624eee16bbe855c3284",
+      "bytes": 6368,
+      "redaction": "none"
+    },
+    {
+      "path": "original-large-suite.gd",
+      "source_sha256": "be829014fedc3a1a3fba0970bbead0643f6ce358c84dfeb787c99b59966ad5fd",
+      "archived_sha256": "be829014fedc3a1a3fba0970bbead0643f6ce358c84dfeb787c99b59966ad5fd",
+      "bytes": 5110,
+      "redaction": "none"
+    },
+    {
+      "path": "ci-7d16-failure-excerpt.log",
+      "source_sha256": "75dd87a0bb8e63c970441659b15cbfa876a574a543bc1b4fc5adf7a261985abd",
+      "archived_sha256": "75dd87a0bb8e63c970441659b15cbfa876a574a543bc1b4fc5adf7a261985abd",
+      "bytes": 4003,
+      "redaction": "none"
+    }
+  ],
+  "files": [
+    {
+      "path": ".gdignore",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "baseline-diagnostic.log",
+      "bytes": 3596,
+      "sha256": "87a1c344324ac15cf057d0b8f9f14b2ae7f388e844ebed9689028118620a0a5a"
+    },
+    {
+      "path": "ci-7d16-failure-excerpt.log",
+      "bytes": 4003,
+      "sha256": "75dd87a0bb8e63c970441659b15cbfa876a574a543bc1b4fc5adf7a261985abd"
+    },
+    {
+      "path": "diagnostic-fixture.gd",
+      "bytes": 6368,
+      "sha256": "aa623ac066ebf2bf283f9c0f420631b6ab2ff6881ba4e624eee16bbe855c3284"
+    },
+    {
+      "path": "first-guard-fixture-failure.log",
+      "bytes": 1335,
+      "sha256": "4293061cd6310a31f6b854f305cf4a9336977437e1979c9fc7ca1a0e2baf74f1"
+    },
+    {
+      "path": "large-animal-final.log",
+      "bytes": 1089,
+      "sha256": "a7eb0c4656655951145655ab36c97f257267838109c35026fe0cb68961d280ee"
+    },
+    {
+      "path": "original-28-final.log",
+      "bytes": 1089,
+      "sha256": "e2ab5134158e7ac25ea0a33a5fed09f77457290968f3f3a4ebf363de3cbb4d99"
+    },
+    {
+      "path": "original-large-suite.gd",
+      "bytes": 5110,
+      "sha256": "be829014fedc3a1a3fba0970bbead0643f6ce358c84dfeb787c99b59966ad5fd"
+    },
+    {
+      "path": "README.md",
+      "bytes": 3138,
+      "sha256": "a4e195bd55734a50738e50d47693a7904a235379bfc714417f22c3e311589db8"
+    },
+    {
+      "path": "summary.json",
+      "bytes": 1496,
+      "sha256": "63eba60a49671c06d6922acd724a3c55aa3f1e3d7870a49b3d1e25ec763a8fb9"
+    },
+    {
+      "path": "yard-shelter-final.log",
+      "bytes": 325,
+      "sha256": "384d323087ff1f224932f64d84d5f2dea2c701a452f46eb8cf6454435ffc1c05"
+    }
+  ]
+}

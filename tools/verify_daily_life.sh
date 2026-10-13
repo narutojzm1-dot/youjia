@@ -166,6 +166,7 @@ run_godot suite test/resident_barks_suite.gd
 run_godot suite test/meal_ledger_suite.gd
 run_godot suite test/rest_context_suite.gd
 run_godot suite test/meal_planner_suite.gd
+run_godot suite test/flour_meal_suite.gd
 run_godot suite test/cooking_smoke_suite.gd
 run_godot suite test/house_cooking_suite.gd
 run_godot suite test/meal_navigation_suite.gd
@@ -175,7 +176,11 @@ run_godot suite test/meal_audio_host_suite.gd
 run_godot suite test/growth_materials_suite.gd
 
 run_godot suite test/growth_budget_suite.gd
+run_godot suite test/growth_production_suite.gd
 run_godot suite test/pond_edging_view_suite.gd
 run_godot suite test/pond_growth_director_suite.gd
+run_godot suite test/milling_director_suite.gd
+run_godot suite test/growth_carried_photo_suite.gd
+run_godot suite test/yard_mill_view_suite.gd
 run_godot suite test/release_notes_suite.gd
 run_godot suite test/release_notes_pointer_focus_suite.gd

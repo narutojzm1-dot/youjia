@@ -76,9 +76,15 @@ func run() -> void:
 	for i in 5: check(Budget.budget(night,"dinner").available == 3,"reads never regrant or compound cap")
 	var tomorrow := night.duplicate(true)
 	tomorrow.holiday_day = 2
-	check(Budget.budget(tomorrow,"breakfast").error == "AP_CROSS_DAY_UNRESOLVED","unspent old day not silently cleared/carried")
-	check(Budget.budget(tomorrow,"breakfast").remaining == {"1":3},"unresolved surplus remains inspectable")
-	check(not work(tomorrow,"breakfast","future").has("candidate"),"unresolved policy cannot debit")
+	check(Budget.budget(tomorrow,"breakfast").available == 0,"unspent old day is not carried into today's balance")
+	check(Budget.budget(tomorrow,"breakfast").source == Budget.budget(night,"dinner").source,"unresolved historical receipts remain intact and inspectable")
+	check(work(tomorrow,"breakfast","future").error == "AP_EMPTY","unresolved historical surplus cannot fund work")
+	var fresh_day := eat(tomorrow,"breakfast")
+	check(Budget.budget(fresh_day,"breakfast").available == 1,"old surplus cannot block today's actual breakfast")
+	fresh_day = eat(fresh_day,"lunch")
+	check(Budget.budget(fresh_day,"lunch").available == 4 and Budget.budget(fresh_day,"dinner").available == 1,"today's carry rules remain independent of historical surplus")
+	fresh_day = eat(fresh_day,"dinner")
+	check(Budget.budget(fresh_day,"dinner").available == 3,"today's evening cap and actual dinner still apply")
 	var empty_tomorrow := spent_night.duplicate(true)
 	empty_tomorrow.holiday_day = 2
 	check(Budget.budget(empty_tomorrow,"breakfast").available == 0,"zero prior balance needs no carry decision")

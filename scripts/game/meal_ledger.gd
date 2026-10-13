@@ -4,7 +4,7 @@ extends RefCounted
 ## Neither clock observation nor this API starts cooking or simulates offline meals.
 const FIELD := "meal_ledger"
 const GRANTS := {"breakfast": 1, "lunch": 3, "dinner": 2}
-const MATERIALS := ["wheat", "corn", "millet", "small", "medium", "odd"]
+const MATERIALS := ["wheat", "corn", "millet", "small", "medium", "odd", "flour"]
 const Inventory := preload("res://scripts/inventory/yard_inventory.gd")
 const Contract := preload("res://scripts/exploration/exploration_contract.gd")
 
