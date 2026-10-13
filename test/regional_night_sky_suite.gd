@@ -7,6 +7,8 @@ func check(ok: bool, label: String) -> void:
 	checks += 1
 	if not ok: failures.append(label)
 func fraction(h: float) -> float: return fposmod(h - 6.0, 24.0) / 24.0
+func is_backdrop_sprite(item: Dictionary, path: String) -> bool:
+	return item.subject.is_empty() and item.kind == "sprite" and item.texture.get("path", "") == path
 func run() -> void:
 	var isolated := OS.get_environment("YOUJIA_TEST_ISOLATED_DATA").replace("\\", "/").to_lower()
 	if isolated.is_empty() or not OS.get_user_data_dir().replace("\\", "/").to_lower().begins_with(isolated):
@@ -54,7 +56,10 @@ func run() -> void:
 	var photo := PhotoMoment.capture(world, ExpressionCatalog.find_rule("cow_pet_gentle"))
 	photo = PhotoMoment.sanitize(JSON.parse_string(JSON.stringify(photo)))
 	check(photo.get("night_sky", {}) == sky.snapshot(), "photo JSON freezes the actual celestial light")
-	check(photo.items.filter(func(item: Dictionary) -> bool: return item.subject.is_empty() and item.kind == "sprite" and item.texture == world._backdrop.texture.resource_path).is_empty(), "photo never captures sky as an opaque background copy")
+	var backdrop_path: String = world._backdrop.texture.resource_path
+	check(is_backdrop_sprite({"subject":"","kind":"sprite","texture":{"path":backdrop_path}}, backdrop_path), "background detector reads serialized texture path")
+	check(not is_backdrop_sprite({"subject":"","kind":"sprite","texture":{"path":"res://assets/holiday/props/millstone_v1/millstone-watercolor-v1.png"}}, backdrop_path), "ordinary mill sprite is not a sky copy")
+	check(photo.items.filter(func(item: Dictionary) -> bool: return is_backdrop_sprite(item, backdrop_path)).is_empty(), "photo never captures sky as an opaque background copy")
 	var card := PhotoMoment.new()
 	root.add_child(card)
 	card.setup(photo)

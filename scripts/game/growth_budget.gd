@@ -31,7 +31,8 @@ static func read(snapshot: Dictionary) -> Dictionary:
 	return result
 
 ## Recompute from durable earnings and spends, never add grants on every read.
-## Old-day surplus is retained and explicitly unresolved, not reset or carried.
+## Old-day surplus stays in its original receipts, neither reset nor carried.
+## It cannot fund today's work or block today's independently earned AP.
 static func budget(snapshot: Dictionary, period: String) -> Dictionary:
 	var day: Variant = Contract.as_int(snapshot.get("holiday_day",1),1,Inventory.MAX_REVISION)
 	var meals := Meals.read(snapshot)
@@ -53,7 +54,6 @@ static func budget(snapshot: Dictionary, period: String) -> Dictionary:
 	var current := PERIODS.find(period)
 	if days[int(day)].last > current: return {"error":"AP_PERIOD_CHANGED"}
 	var available := 0
-	var unresolved := {}
 	for date: int in days:
 		var record: Dictionary = days[date]
 		var balance := 0
@@ -62,8 +62,8 @@ static func budget(snapshot: Dictionary, period: String) -> Dictionary:
 			balance += int(record.earned[index]) - int(record.spent[index])
 			if balance < 0: return {"error":"AP_INVALID"}
 			if date == day and index == current: available = balance
-		if date < day and balance > 0: unresolved[str(date)] = balance
-	if not unresolved.is_empty(): return {"error":"AP_CROSS_DAY_UNRESOLVED", "remaining":unresolved}
+	# Keep every historical receipt in the optimistic source guard. Historical
+	# overdrafts still fail above; valid surplus is untouched and unavailable.
 	return {"day":int(day),"period":period,"available":available,"source":{"meals":meals,"actions":actions,"production":production}}
 
 ## Validate one shared budget, then return ALL milling effects in one snapshot.
