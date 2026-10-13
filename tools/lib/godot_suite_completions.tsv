@@ -182,6 +182,7 @@ test/meal_ledger_suite.gd	MEAL_LEDGER checks=[1-9][0-9]* failures=0
 test/rest_context_suite.gd	REST_CONTEXT checks=[1-9][0-9]* failures=0
 test/nearby_mist_suite.gd	NEARBY_MIST checks=[1-9][0-9]* failures=0
 test/meal_planner_suite.gd	MEAL_PLANNER checks=[1-9][0-9]* failures=0
+test/flour_meal_suite.gd	FLOUR_MEAL checks=[1-9][0-9]* failures=0
 test/growth_materials_suite.gd	GROWTH_MATERIALS checks=[1-9][0-9]* failures=0
 test/nearby_window_light_suite.gd	NEARBY_WINDOW_LIGHT checks=[1-9][0-9]* failures=0
 test/cooking_smoke_suite.gd	\[cooking-smoke\] PASS: [1-9][0-9]* checks
@@ -197,5 +198,8 @@ test/growth_budget_suite.gd	GROWTH_BUDGET checks=[1-9][0-9]* failures=0
 test/growth_production_suite.gd	GROWTH_PRODUCTION checks=[1-9][0-9]* failures=0
 test/pond_edging_view_suite.gd	POND_EDGING_VIEW checks=[1-9][0-9]* failures=0
 test/pond_growth_director_suite.gd	POND_GROWTH_DIRECTOR checks=[1-9][0-9]* failures=0
+test/milling_director_suite.gd	MILLING_DIRECTOR checks=[1-9][0-9]* failures=0
+test/growth_carried_photo_suite.gd	GROWTH_CARRIED_PHOTO checks=[1-9][0-9]* failures=0
+test/yard_mill_view_suite.gd	YARD_MILL_VIEW checks=[1-9][0-9]* failures=0
 test/release_notes_suite.gd	RELEASE_NOTES checks=[1-9][0-9]* failures=0
 test/release_notes_pointer_focus_suite.gd	RELEASE_NOTES_POINTER_FOCUS checks=[1-9][0-9]* failures=0

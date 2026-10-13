@@ -1,0 +1,52 @@
+{
+  "suites": [
+    {
+      "failures": 0,
+      "log": "milling_director.log",
+      "seconds": 20.23,
+      "suite": "milling_director",
+      "log_sha256": "c5f02f3143dc369da41b6cc92f1cf0a57d271ec1fe8725b713a229d6ce089329",
+      "exit": 0,
+      "checks": 136
+    },
+    {
+      "failures": 0,
+      "log": "pond_growth_director.log",
+      "seconds": 28.0,
+      "suite": "pond_growth_director",
+      "log_sha256": "cf6493e3da651ee2bcb241780d1d574b099cbafbd4cb28f6a306aeb1722b745a",
+      "exit": 0,
+      "checks": 292
+    },
+    {
+      "failures": 0,
+      "log": "meal_navigation.log",
+      "seconds": 5.94,
+      "suite": "meal_navigation",
+      "log_sha256": "4931cf1db532c69078dbe8d47ed6f8c118fdd88bd6d49117f061536c9964f4a7",
+      "exit": 0,
+      "checks": 28
+    },
+    {
+      "failures": 0,
+      "log": "physical_yard.log",
+      "seconds": 48.73,
+      "suite": "physical_yard",
+      "log_sha256": "5c9a1b3ca2846d77b8ada192c3f43f6c1ee5326398a3eabbc5e385542cdb1b54",
+      "exit": 0,
+      "checks": 676
+    },
+    {
+      "failures": 0,
+      "log": "growth_materials.log",
+      "seconds": 1.47,
+      "suite": "growth_materials",
+      "log_sha256": "57eab84dcffa85d7378c47b6cfef20d72794b54c0042a5b1d1de78cbc02f3c5f",
+      "exit": 0,
+      "checks": 77
+    }
+  ],
+  "notes": "Final mill constants 525/469 and 553/486; last Materials normalization-only change reran growth_materials. No Web, art acceptance, final CI or publication claim.",
+  "total_checks": 1209,
+  "stage": "local runtime candidate on uncommitted changes after PR797 45ea143"
+}

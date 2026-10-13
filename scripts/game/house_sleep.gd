@@ -54,6 +54,7 @@ func _init(owner_world: Node2D, save_store: Node) -> void:
 	meal_rng.randomize()
 	meal_ingredient = Sprite2D.new()
 	meal_ingredient.name = "MealIngredient"
+	meal_ingredient.set_meta("photo_player_carried", true)
 	meal_ingredient.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
 	meal_ingredient.z_as_relative = false
 	meal_ingredient.visible = false
@@ -84,7 +85,7 @@ func begin(meal_only: bool = false) -> void:
 				return
 			cancel_preparation()
 			return
-		var plan: Dictionary = store.plan_meal(meal, Meals.RECIPES, meal_rng)
+		var plan: Dictionary = store.plan_meal(meal, Meals.recipes_for(meal), meal_rng)
 		if not plan.is_empty():
 			# A door click also fetches food from the physical basket first.
 			_request_meal_route("meal_basket", Basket.APPROACH, meal)
@@ -113,7 +114,7 @@ func take_from_basket() -> void:
 	if meal.is_empty():
 		cancel_preparation()
 		return
-	cooking_plan = store.plan_meal(meal, Meals.RECIPES, meal_rng)
+	cooking_plan = store.plan_meal(meal, Meals.recipes_for(meal), meal_rng)
 	if cooking_plan.is_empty():
 		cancel_preparation()
 		return
@@ -157,7 +158,7 @@ func _enter(next: String) -> void:
 	stage = next
 	seconds = 0.0
 	if not cooking_plan.is_empty():
-		var hint: String = {"take":"notice.meal.take", "cook":"notice.meal.cook", "balcony":"notice.meal.brush"}.get(next, "")
+		var hint: String = {"take":"notice.meal.take", "cook":_cooking_hint(), "balcony":"notice.meal.brush"}.get(next, "")
 		if not hint.is_empty(): world.notice_requested.emit(hint)
 
 func inside_room() -> bool:
@@ -208,7 +209,7 @@ func meal_hint() -> String:
 	if cooking_plan.is_empty(): return ""
 	if stage == "take" or (stage.is_empty() and world._pending_interaction == "house_meal"): return "notice.meal.take"
 	if stage in ["porch", "open", "in"]: return "notice.meal.enter"
-	if stage in ["cook", "close", "saving"]: return "notice.meal.cook"
+	if stage in ["cook", "close", "saving"]: return _cooking_hint()
 	if stage == "balcony": return "notice.meal.brush"
 	return ""
 
@@ -402,7 +403,7 @@ func consider_meal(delta: float, move: Vector2) -> void:
 	meal_idle = 0.0
 	var meal := Meals.meal_at(world.tod_fraction())
 	if meal.is_empty(): return
-	var plan: Dictionary = store.plan_meal(meal, Meals.RECIPES, meal_rng)
+	var plan: Dictionary = store.plan_meal(meal, Meals.recipes_for(meal), meal_rng)
 	if plan.is_empty(): return
 	# Use the normal walk route to the porch; never clamp/teleport from the yard
 	# into the narrow indoor passage. Input can replace this unreserved route.
@@ -439,6 +440,12 @@ func _set_cooking_smoke(active: bool) -> void:
 		smoke.set_night_tint(Daylight.phase(world.tod_fraction()) == "night")
 	if smoke != null: smoke.set_cooking(active)
 
+func _cooking_hint() -> String:
+	match str(cooking_plan.get("recipe_id", "")):
+		"steamed_bun": return "notice.meal.buns"
+		"wheat_noodles": return "notice.meal.noodles"
+	return "notice.meal.cook"
+
 func _sync_meal_ingredient() -> void:
 	# Presentation of the chosen basket ingredient, never a second held ledger.
 	# Cancellation and hidden-room stages must not leave a floating item behind.
@@ -450,11 +457,11 @@ func _sync_meal_ingredient() -> void:
 		meal_ingredient.visible = false
 		return
 	var kind := str(ingredients.keys()[0])
-	if kind not in ["millet", "small", "medium"]:
+	if kind not in ["millet", "small", "medium", "flour"]:
 		meal_ingredient.visible = false
 		return
-	meal_ingredient.texture = preload("res://assets/holiday/objects/millet.png") if kind == "millet" else preload("res://assets/holiday/objects/ground_fish.png")
-	var width := 25.0 if kind == "millet" else 32.0 if kind == "medium" else 26.0
+	meal_ingredient.texture = preload("res://assets/holiday/objects/flour-pouch-v1.png") if kind == "flour" else preload("res://assets/holiday/objects/millet.png") if kind == "millet" else preload("res://assets/holiday/objects/ground_fish.png")
+	var width := 30.0 if kind == "flour" else 25.0 if kind == "millet" else 32.0 if kind == "medium" else 26.0
 	var size: float = width * player.picture_depth * float(TuningStore.get_value("player.visual.scale", 1.0)) / meal_ingredient.texture.get_width()
 	meal_ingredient.global_position = player.grass_hand_global_position()
 	meal_ingredient.scale = Vector2(player.grass_hand_facing(), 1.0) * size

@@ -264,6 +264,11 @@ func plan_growth_materials(eligible_actions: Dictionary, rng: RandomNumberGenera
 	return preload("res://scripts/game/growth_materials.gd").plan(_data, eligible_actions, rng)
 
 
+## Check the original plan without selecting another material or reserving stock.
+func validate_growth_materials(proposal: Dictionary) -> String:
+	return preload("res://scripts/game/growth_materials.gd").validate(_data, proposal)
+
+
 ## Confirmed world projection, validated against matching action receipts.
 func get_pond_edging() -> Dictionary:
 	# Do not project orphan world results without their matching AP receipts.
@@ -279,7 +284,6 @@ func get_growth_production() -> Dictionary:
 	return preload("res://scripts/game/growth_production.gd").read(_data)
 
 
-## Shared-model candidate only: no autonomous director or recipe enables this.
 ## Acceptance is not completion; reuse growth FIFO confirmation/unknown handling.
 func request_milling(expected: Dictionary, proposal: Dictionary, config: Dictionary) -> String:
 	var frozen_budget := expected.duplicate(true)
