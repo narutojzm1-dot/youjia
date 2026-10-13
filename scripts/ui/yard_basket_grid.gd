@@ -9,7 +9,7 @@ const KeepsakeArtScript := preload("res://scripts/exploration/keepsake_art.gd")
 signal action_requested(action: String, kind: String)
 signal menu_toggled(open: bool)
 
-const ORDER := ["small", "medium", "odd", "grass", "millet", "wheat", "corn", "round_stone", "pine_cone", "feather"]
+const ORDER := ["small", "medium", "odd", "grass", "millet", "wheat", "corn", "round_stone", "pine_cone", "feather", "flour"]
 const FISH := ["small", "medium", "odd"]
 const KEEPSAKES := ["round_stone", "pine_cone", "feather"]
 const FIND_IDS := {"round_stone": ExplorationRoutes.FIND_STONE, "pine_cone": ExplorationRoutes.FIND_PINE_CONE, "feather": ExplorationRoutes.FIND_FEATHER}
@@ -19,6 +19,7 @@ const ICONS := {
 	"odd": "res://assets/holiday/objects/ground_fish.png",
 	"grass": "res://assets/holiday/fx/grass_bundle.png",
 	"millet": "res://assets/holiday/objects/millet.png",
+	"flour": "res://assets/holiday/objects/flour-pouch-v1.png",
 }
 ## 小鱼 / 中鱼共用一张鱼的原画，用格内占比区分大小，不改色、不变形
 const ICON_SCALE := {"small": 0.62, "medium": 0.82}
@@ -268,6 +269,7 @@ func rows_for(cols: int) -> int:
 func update_view(inventory: Dictionary, keepsakes: Dictionary, state: String, busy: bool) -> void:
 	var en := I18n.get_locale() == "en"
 	_names = {"small": "Small fish" if en else "小鱼", "medium": "Fish" if en else "中鱼", "odd": "Curious fish" if en else "奇怪的鱼", "grass": "Grass" if en else "草束", "millet": "Millet" if en else "小米", "wheat": "Wheat" if en else "麦粒", "corn": "Corn" if en else "玉米粒", "round_stone": "Round stone" if en else "圆石", "pine_cone": "Pine cone" if en else "松果", "feather": "Feather" if en else "落羽"}
+	_names.flour = "Flour" if en else "面粉"
 	# 格内只放得下短名；完整名字在弹出的纸片标题和悬停提示里
 	var short := _names.duplicate()
 	if en: short.merge({"small": "Small", "odd": "Odd fish", "round_stone": "Stone", "pine_cone": "Cone"}, true)
@@ -310,6 +312,8 @@ func _fit_names() -> void:
 ## 这一格现在能做什么：[动作 id, 按钮文字, 不能做时的原因]
 func action_for(kind: String) -> Array:
 	var en := I18n.get_locale() == "en"
+	if kind == "flour":
+		return ["", "For cooking" if en else "留着做饭", _busy_note(en) if _busy or not _loaded else "At mealtimes, I can make steamed buns or noodles with this." if en else "到饭点可以拿来做馒头、面条。"]
 	if kind == _held and not _held.is_empty():
 		return ["return", "Put it back" if en else "收回背篓", "" if not _busy else _busy_note(en)]
 	var label := ""

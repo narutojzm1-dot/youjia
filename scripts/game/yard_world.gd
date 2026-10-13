@@ -24,6 +24,7 @@ var decor_view: Node2D
 var original_plants_view: Node2D
 var pond_growth: Node
 var pond_edging_view: Node2D
+var mill_view: Node2D
 var pond_story: Node
 var gate: Node2D
 var gate_view: Node2D
@@ -36,6 +37,7 @@ var inventory_busy := false
 signal exploration_requested
 
 const WalkGoalMarker := preload("res://scripts/game/walk_goal_marker.gd")
+const MillView := preload("res://scripts/game/yard_mill_view.gd")
 const SUNNY := preload("res://assets/holiday/environment/yard_sunny.png")
 const OVERCAST := preload("res://assets/holiday/environment/yard_overcast_aligned.png")
 ## 叠加云带：晴/阴各一帧半透明水彩带，不替换整张院子底图。
@@ -270,8 +272,13 @@ func setup(
 		add_child(original_plants_view)
 	pond_edging_view = preload("res://scripts/game/pond_edging_view.gd").new(SaveStore)
 	add_child(pond_edging_view)
+	mill_view = MillView.new()
+	add_child(mill_view)
 	pond_growth = preload("res://scripts/game/pond_growth_director.gd").new(self,SaveStore)
+	pond_growth.milling_station = MillView.APPROACH
+	pond_growth.milling_work_point = MillView.WORK_POINT
 	add_child(pond_growth)
+	pond_growth.finished.connect(func(_result: String): _sync_mill_work())
 	pond_story = load("res://scripts/game/pond_story_controller.gd").new(self)
 	add_child(pond_story)
 	_spawn_cast()
@@ -611,6 +618,7 @@ func tick(delta: float, move: Vector2) -> void:
 	else:
 		_player.tick(delta, Vector2.ZERO, WORLD_SIZE)
 	if pond_growth != null: pond_growth.sync_presentation()
+	_sync_mill_work()
 	if _grass_patch != null: _grass_patch.tick(delta)
 	if shelter != null: shelter.prepare(delta)
 	if ground_food != null and inventory_enabled: ground_food.tick(delta)
@@ -1129,8 +1137,16 @@ func _route_to_walk_goal(obstacles: Array) -> Array[Vector2]:
 	return []
 
 
+func _sync_mill_work() -> void:
+	if mill_view == null or pond_growth == null: return
+	var milling: bool = pond_growth.action_id == "mill_wheat" and pond_growth.stage == "working"
+	var progress: float = pond_growth.work / float(pond_growth.recipe.seconds) if milling else 0.0
+	mill_view.sync_work(milling,progress,bool(TuningStore.get_value("ui.reduced_motion",false)))
+
+
 func physical_obstacles(exclude_id: String = "") -> Array:
 	var result: Array = [{"id":"yard_basket", "position":Vector2(335,485), "radius":Vector2(17,8)}]
+	if mill_view != null: result.append({"id":"yard_mill","position":MillView.ANCHOR,"radius":MillView.BODY_RADIUS})
 	if exclude_id != "player" and _player != null:
 		result.append({"id":"player", "position":_player.position, "radius":(Vector2(39,10) if _player.idle_rest.active() else _player.body_radius)*YardGround.depth_at(_player.position.y)})
 	for id: String in _actors:
@@ -1659,6 +1675,7 @@ func _tick_weather_transition(delta: float, refresh_tint: bool = false) -> void:
 			band.visible = float(_weather_cloud_weights[i]) > 0.0
 	if _scene_feedback != null: _scene_feedback.modulate = sun_tint.lerp(rain_tint, _weather_mix)
 	if pond_edging_view != null: pond_edging_view.modulate = sun_tint.lerp(rain_tint, _weather_mix)
+	if mill_view != null: mill_view.sync_environment(_weather_mix,sun_tint,rain_tint)
 	if original_plants_view != null: original_plants_view.sync(SaveStore.get_yard_original_plants(),_weather_mix,sun_tint,rain_tint)
 	if gate_view != null: gate_view.refresh(gate.opened, _weather_mix, sun_tint, rain_tint)
 	_weather_art_initialized = true
