@@ -15,7 +15,7 @@ static func primary(world: Node2D) -> Dictionary:
 	if player == null:
 		return {}
 	if world.house != null and world.house.busy():
-		return action("",player.position,"action.house_resting",INF)
+		return action("",player.position,world.house.action_label(),INF)
 	if world.is_leading():
 		if world.inventory_enabled:
 			var exit_action := YardSceneHotspots.resolve(world, YardSceneHotspots.PATH_OUT)
@@ -77,6 +77,10 @@ static func selected(world: Node2D, target: String) -> Dictionary:
 	var player = world.get_player()
 	if player == null:
 		return {}
+	if target == "meal_basket" and world.house.available():
+		return action(target, world.house.Basket.APPROACH, "action.house_cooking", 18.0)
+	if target == "house_meal" and world.house.available():
+		return action(target, world.house.APPROACH, "action.house_cooking", 20.0)
 	if target.begins_with("decor:") and world.decor_view != null:
 		var placed: Dictionary = world.decor_view.placed(target.get_slice(":", 1))
 		if placed.is_empty(): return {}
@@ -193,6 +197,8 @@ static func fishing(world: Node2D) -> Dictionary:
 	return action("fishing", world._fishing_point(), label, 85.0)
 
 static func reach(target: String) -> float:
+	if target == "meal_basket": return 18.0
+	if target == "house_meal": return 20.0
 	if target == "drop_food": return INF
 	if target.begins_with("ground_food:") or target.begins_with("decor:"): return 48.0
 	if target.begins_with("chick_care:"): return PET_REACH

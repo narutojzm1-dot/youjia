@@ -6,11 +6,13 @@ extends RefCounted
 const BARK_CHICK_EGGS := "chick_eggs_hope"
 const BARK_PLANT_SOWN := "plant_sown"
 const BARK_FATIGUE := "fatigue_sleepy"
+const BARK_GROWTH := "growth_completed"
 
 const I18N_KEYS := {
 	BARK_CHICK_EGGS: "bark.chick_eggs_hope",
 	BARK_PLANT_SOWN: "bark.plant_sown",
 	BARK_FATIGUE: "bark.fatigue_sleepy",
+	BARK_GROWTH: "bark.growth_completed",
 }
 
 ## Global floor between any two barks (seconds). Plant success bypasses this
@@ -21,6 +23,7 @@ const PER_ID_COOLDOWN := {
 	BARK_CHICK_EGGS: 45.0,
 	BARK_PLANT_SOWN: 12.0,
 	BARK_FATIGUE: 60.0,
+	BARK_GROWTH: 12.0,
 }
 ## Chance when near a chick and otherwise eligible (0..1).
 const CHICK_CHANCE := 0.22
@@ -123,6 +126,12 @@ func try_plant_sown(now: float, hard_blocked: bool) -> String:
 	if not can_offer_plant(now, hard_blocked):
 		return ""
 	return _accept(BARK_PLANT_SOWN, now)
+
+
+## Only offered by a newly confirmed production transaction, never by loading.
+func try_growth_completed(now: float, blocked: bool) -> String:
+	if not can_offer(BARK_GROWTH, now, blocked): return ""
+	return _accept(BARK_GROWTH, now)
 
 
 ## Leader fatigue interface: call only with a real fatigue flag from growth state.
