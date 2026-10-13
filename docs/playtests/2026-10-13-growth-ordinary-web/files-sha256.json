@@ -1,0 +1,156 @@
+{
+  "algorithm": "SHA-256",
+  "scope": "Original screenshots, copied native logs and derived build evidence; this manifest, README and .gdignore are excluded.",
+  "files": [
+    {
+      "path": "01-caught-medium-fish.jpg",
+      "bytes": 155769,
+      "sha256": "4de3e40167fc743859b65d52d6bc44e2612e1d40ef4cc0633f6e15a3ac0be543"
+    },
+    {
+      "path": "02-stone-collected.jpg",
+      "bytes": 212487,
+      "sha256": "bb82bc4618b57848a9953b933e3487ee60bd75cb9cfd2ec3ce89143ee1d0f8bf"
+    },
+    {
+      "path": "03-returned-fish-and-stone.jpg",
+      "bytes": 118518,
+      "sha256": "7d8bde536cb0e30e4eb92664b52b8bc1835f162c700e6f6bc4a3476e4e0b3b83"
+    },
+    {
+      "path": "06-original-navigation-wait-paused.jpg",
+      "bytes": 87737,
+      "sha256": "51f1bf745bbcb31f716dd4b1cc4b15e8c401b2ae585f57fb91ae704d8402842b"
+    },
+    {
+      "path": "07-fixed-build-restored-fish-stone.jpg",
+      "bytes": 159777,
+      "sha256": "a250149e31a94ae84990b3c6f84e6b29d66ce3721036e6cefe0087eff1012dc9"
+    },
+    {
+      "path": "08-breakfast-completed-balcony-brushing.jpg",
+      "bytes": 226726,
+      "sha256": "570a7847b739a389eb34ea5bd7ff05b6a0b707c740add3c6586a0516916498cf"
+    },
+    {
+      "path": "09-autonomous-stone-carry-to-pond.jpg",
+      "bytes": 229771,
+      "sha256": "10d324d310fb478a63bfdfe3af1f752f496024b4c2c443345b164ff1391a667b"
+    },
+    {
+      "path": "10-confirmed-pond-edging.jpg",
+      "bytes": 229348,
+      "sha256": "74c672efa6804ee4eaea80d88536fc52f01b26b43cb458f5caa21a7be52f9bfc"
+    },
+    {
+      "path": "11-meal-stone-consumed-once.jpg",
+      "bytes": 157108,
+      "sha256": "6002d02b46d91b9cbac9ed75aae86e63b13e696269951e81bb53ee1286fb7081"
+    },
+    {
+      "path": "12-reload-inventory-preserved.jpg",
+      "bytes": 157842,
+      "sha256": "1ed0f816e4d97d2e7d161ebd20ad3b0307bace836d41802f34412336d185c5ce"
+    },
+    {
+      "path": "13-web-landscape-basket.jpg",
+      "bytes": 85019,
+      "sha256": "d57cefc4bcded48850c9f99f23636184c4efe7099d788b8b9962c66b30d4d735"
+    },
+    {
+      "path": "14-web-landscape-pause.jpg",
+      "bytes": 81468,
+      "sha256": "259da33b1eb64683d8a89549eb0e1b0813689b6eb020e953668b612242cd51d7"
+    },
+    {
+      "path": "15-web-landscape-notices.jpg",
+      "bytes": 69515,
+      "sha256": "bd12f3c598ae2768ae419e6eb1c541069a1561c5ca327c2ef0b98622e9cdbe1a"
+    },
+    {
+      "path": "16-web-landscape-notices-scrolled.jpg",
+      "bytes": 72886,
+      "sha256": "63645409e39af7dc10750c62001bb5eb8d3c99842e462d3cb610799c63c1fdd0"
+    },
+    {
+      "path": "17-web-portrait-notices.jpg",
+      "bytes": 85882,
+      "sha256": "844e2271c22575de8e23a555b0912a5a9f1031e8f75955c2558ef7678c5f8acf"
+    },
+    {
+      "path": "18-web-portrait-pause.jpg",
+      "bytes": 75688,
+      "sha256": "8ce0f4d4302fe74db8aea57c0aaa014fb5f512bf51d6cb5d908507dcd15f0a14"
+    },
+    {
+      "path": "20-web-portrait-basket.jpg",
+      "bytes": 74559,
+      "sha256": "4e69d481ac2f659a5e657b2f1a6cc10ebb16201979a0eee4f36395c0e23555f5"
+    },
+    {
+      "path": "21-web-portrait-paused-after-input.jpg",
+      "bytes": 74954,
+      "sha256": "32293c9ef1c2649853a1dad65a23e3f573afcd92a4e976d388d048416ffbcca6"
+    },
+    {
+      "path": "build-evidence.json",
+      "bytes": 1163,
+      "sha256": "8aba4decbd906726007b6e6646e5ad112660dd7d40b172d4f8b5a27584ce7728"
+    },
+    {
+      "path": "native/house-cooking.log",
+      "bytes": 112,
+      "sha256": "57748cb3990f77a2ce3c3682292f031548c4b62243af875dc2fe7c7361eb64d8"
+    },
+    {
+      "path": "native/house-sleep.log",
+      "bytes": 116,
+      "sha256": "7f6a984daf9f9fb9681331edb5ebf1b0b4b882a1ff6525ab925b92219f477d25"
+    },
+    {
+      "path": "native/hud-pointer-input.log",
+      "bytes": 115,
+      "sha256": "609280670354455334f42706d022685740c4cca7aca217328fbc9284ffd07529"
+    },
+    {
+      "path": "native/meal-audio-host.log",
+      "bytes": 113,
+      "sha256": "7d76115d4ae0911b9f19fac4decde7677722f4af364b607fceb47109a2ca9ff6"
+    },
+    {
+      "path": "native/meal-navigation-after.log",
+      "bytes": 113,
+      "sha256": "4931cf1db532c69078dbe8d47ed6f8c118fdd88bd6d49117f061536c9964f4a7"
+    },
+    {
+      "path": "native/meal-navigation-before.log",
+      "bytes": 2433,
+      "sha256": "15fb26d0eda2bba3177c197d07b28d1635be31188c250916c535a564bae2474b"
+    },
+    {
+      "path": "native/menu-keyboard-focus.log",
+      "bytes": 118,
+      "sha256": "bcb0dad875487f1bafd48ab3dd7dfd5581dc49abd4b533acaf609e256296c4cb"
+    },
+    {
+      "path": "native/navigation-natural-before.log",
+      "bytes": 1734,
+      "sha256": "f25d1654990bd993f1f2eb3e840d8e359d980925d3cf9bd17d1ae9298e4aee6f"
+    },
+    {
+      "path": "native/pond-growth.log",
+      "bytes": 771,
+      "sha256": "945e6a6682491efe34bed7a4c9a34090c1cc1a3894ccf8868f013b64e85accd7"
+    },
+    {
+      "path": "native/release-notes.log",
+      "bytes": 111,
+      "sha256": "94d2d1598247e526eb8e6e0665b7f0641fc663710c09ad71cc96e3000ea1c6ae"
+    },
+    {
+      "path": "native/touch-hover-reset.log",
+      "bytes": 115,
+      "sha256": "58598063e9bfcbdaad47305571f2e205b960e10f7489b6bbacb06208da924d18"
+    }
+  ]
+}
