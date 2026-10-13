@@ -1,0 +1,147 @@
+{
+  "created_utc": "2026-10-13T10:43:20.848146+00:00",
+  "mode": "isolated diagnostic Godot GPU composition; not production runtime integration",
+  "renderer": "Godot 4.7.2 OpenGL 3.3 Compatibility; NVIDIA GeForce RTX 4070 Laptop GPU",
+  "exit_code": 0,
+  "stderr_bytes": 0,
+  "source_png": {
+    "path": "docs/candidates/millstone_v1/millstone-watercolor-v1.png",
+    "bytes": 2358584,
+    "sha256": "a9248478d8cea22d8244e355b72d71c860a7e4330f3154e844965192b6086f64"
+  },
+  "reference_repo_head_at_capture": "55156f4736a910704f22412fbb565ee12ad13c2f",
+  "references": [
+    {
+      "path": "assets/holiday/environment/yard_sunny.png",
+      "bytes": 4019432,
+      "sha256": "7f29181eac79c89b18eff65fe1a18c37230573b55f8c8993a0365dc480219d73"
+    },
+    {
+      "path": "assets/holiday/environment/yard_overcast_aligned.png",
+      "bytes": 3704853,
+      "sha256": "dca81c2d54bb8e9e04f296e80f262ef168d6d0c540bfa4cd2e53452b4e098723"
+    },
+    {
+      "path": "assets/holiday/objects/yard_back_basket.png",
+      "bytes": 2512798,
+      "sha256": "de2c0112c76c1a3555be434affab5e63c01c571879a33ebf8222f3b197a9453a"
+    }
+  ],
+  "images": [
+    {
+      "path": "millstone-sunny-gpu.png",
+      "bytes": 2133255,
+      "sha256": "5f3ecd4d71eb4f75a71735b962fe4ce1125685c0c4f2e08e1858c3a299fbdd9d",
+      "size": [
+        1280,
+        1090
+      ]
+    },
+    {
+      "path": "millstone-overcast-gpu.png",
+      "bytes": 1903834,
+      "sha256": "dc7af8ebc3b263aee32dc0ea9e36f8659a76549f123411b2c100663b919f3cac",
+      "size": [
+        1280,
+        1090
+      ]
+    }
+  ],
+  "scene": {
+    "world_size": [
+      1280,
+      720
+    ],
+    "sheet_size": [
+      1280,
+      1090
+    ],
+    "full_scene_origin_in_sheet": [
+      0,
+      40
+    ],
+    "candidate_world_anchor": [
+      480,
+      495
+    ],
+    "source_pixel_pivot": [
+      667.5,
+      1145
+    ],
+    "widths_include_full_source_canvas": [
+      70,
+      90,
+      110
+    ],
+    "recommended_comparison_width": 90,
+    "scales": [
+      0.052434456928838954,
+      0.06741573033707865,
+      0.08239700374531835
+    ],
+    "visible_width_alpha_gt_16": [
+      59.7752808988764,
+      76.85393258426966,
+      93.93258426966293
+    ],
+    "source_bbox_alpha_gt_16": [
+      98,
+      37,
+      1238,
+      1145
+    ],
+    "lower_crop_world_origin": [
+      280,
+      375
+    ],
+    "lower_crop_size": [
+      400,
+      200
+    ],
+    "lower_crop_sheet_origins": [
+      [
+        14,
+        805
+      ],
+      [
+        438,
+        805
+      ],
+      [
+        862,
+        805
+      ]
+    ],
+    "crop_sampling": "Godot SubViewport at native 1:1 world pixel size; no screenshot processing",
+    "texture_sampling": "linear with mipmaps generated in memory; original PNGs unchanged",
+    "weather_modulation": "none; original unmodulated source over each weather backdrop intentionally shows raw compatibility"
+  },
+  "not_loaded": [
+    "Main",
+    "YardWorld",
+    "actors or animals",
+    "routing/collision",
+    "save services",
+    "inventory state",
+    "house/growth model",
+    "production UI",
+    "daylight/weather modulation"
+  ],
+  "observations": {
+    "70px": "Whole prop readable, outlet relatively small at native size.",
+    "90px": "Best initial scale among this comparison; discs, wood handle and outlet visible without dominating the nearby 70px-high basket.",
+    "110px": "Larger than needed for this near-house grass position; competes more with nearby original objects.",
+    "sunny": "Source granulation softens with mipmaps; no obvious hard rectangular edge in this view. Contact/grounding remains somewhat light because no production contact shadow is present.",
+    "overcast": "Raw original source noticeably brighter and warmer than overcast scene. Needs existing runtime weather/daylight treatment and repeat visual review; not an overcast approval."
+  },
+  "integration_suggestions_only": {
+    "placement": "Try anchor (480,495), on grass right/front of house; keeps door, door-left tools, physical basket (335,485) and three original plant patches visually clear.",
+    "depth": "Candidate bottom pivot y495 gives initial entity depth-sort value 495; confirm character/animal occlusion in real runtime.",
+    "approach": "A west/south candidate approach near (438,516) may avoid existing nearby interaction centers; actual reach/routing/dynamic blockers were not tested and must remain unapproved.",
+    "next_gate": "Actual scene placement, weather tint, contact shadow, actor occlusion, hit/reach/navigation and mobile readability remain pending."
+  },
+  "production_tracked_changes": "git status --porcelain --untracked-files=no empty before/after; no worktree files written",
+  "no_image_postprocessing": true,
+  "reproduction_status": "The archived script is parameterized after the original GPU capture. No additional screenshots were generated for archival.",
+  "leader_review": "Leader viewed both images and accepted 90 px full-source width at world anchor (480,495) as an initial point for real integration validation. Untinted overcast brightness/warmth and light grounding remain limitations; not production/scene acceptance."
+}
