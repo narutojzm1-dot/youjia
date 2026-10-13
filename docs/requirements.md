@@ -970,3 +970,6 @@ Leader接续已交付#703气泡，Main从SaveStore.get_rest_context读取已确�
 验证与画面见 docs/playtests/2026-10-12-pond-edging/README.md。Owner 下一步为真实时段导演、走近施工与三餐闭环；#738 做饭演出及已寄出的声音听验保持独立，未收到回信不判定通过。
 ## REQ-20261013-DELIVERY-PREVIEW — 新成果邮件过目
 Owner CODEX-LEAD；开发/美术Owner提供预览及精确版本。状态：已接收并落地流程，持续执行。新美术效果/资源/大功能完成后邮件附可视预览或入口，区分完成/接入/上线；默认异步继续，无回复不自动验收，重大待决说明原因和具体问题，仅暂停关联步骤。见 [执行与去重](collaboration/delivery-preview-mail.md)，关联#146。
+
+## 2026-10-13 #745 真实肚子叫参照交付（CODEX-LEAD）
+新增隔离录音参照候选 art/references/hunger-recording-2026-10-13/：作者来源/CC0、原MP3与仅衰减6dB的WAV、逐文件哈希。补实际可听录音，非文献文字替代。仅送听、不改PR747或生产路由；13保持禁播，14/15仍未完成。用户对该精确版本明确确认后才允许替换接入。
