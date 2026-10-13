@@ -108,3 +108,29 @@ ffmpeg -framerate 5 -i narrow_preview/narrow_frame_%02d.png -c:v libx264 -pix_fm
 ```
 
 仍只是隔离候选。请基于此对照审阅运动可辨识性、遮罩有效性与窄屏表现；独立审查尚未进行，未合入。
+
+## 2026-10-13 回应方向复审 5502597612（完整头 a55c017）
+
+- 已更新 generate_cloud_density_anim.py：天空渐变上限降至 y=420，并加入屋顶（椭圆 ~350-520,220-360）、雪峰（多边形 ~980-1120,140-280）及左侧树冠保护遮罩，再高斯模糊。重新生成完整 40 帧。
+- 验证：frame_00 vs frame_10 雪峰(1045,205) 差=0，屋顶木构(435,280) 差=0，y≥500 差=0；天空仍有内部浓淡变化。
+- narrow_preview 仅为中心顶裁片证据，不是真实 Godot 竖屏相机/跟随角色视口；已纠正描述，不声称等效运行时。
+- 完整复现命令（在仓库根）：
+  ```
+  python3 art/concepts/env_fx_cloud_mist_20261011/generate_cloud_density_anim.py --frames 40
+  ffmpeg -framerate 5 -i art/concepts/env_fx_cloud_mist_20261011/anim_frames/cloud_frame_%02d.png -c:v libx264 -pix_fmt yuv420p -vf "scale=1280:720" art/concepts/env_fx_cloud_mist_20261011/cloud_density_loop_10s.mp4
+  # 窄屏裁片示例（仅证据，非运行时相机）：
+  python3 -c '
+  from PIL import Image
+  import os
+  src_dir = "art/concepts/env_fx_cloud_mist_20261011/anim_frames"
+  out_dir = "art/concepts/env_fx_cloud_mist_20261011/narrow_preview"
+  os.makedirs(out_dir, exist_ok=True)
+  for i in range(40):
+      im = Image.open(f"{src_dir}/cloud_frame_{i:02d}.png")
+      im.crop((765, 0, 1155, 844)).save(f"{out_dir}/narrow_frame_{i:02d}.png")
+  '
+  ffmpeg -framerate 5 -i art/concepts/env_fx_cloud_mist_20261011/narrow_preview/narrow_frame_%02d.png -c:v libx264 -pix_fmt yuv420p -vf "scale=390:844" art/concepts/env_fx_cloud_mist_20261011/narrow_preview/narrow_cloud_density_loop.mp4
+  ```
+- 本环境无 Godot 引擎。已在候选目录提供可运行隔离场景描述与最小 Shader 文件（cloud_density_preview.tscn / .gdshader），使用现有 yard_sunny + cloud_candidate，外部 phase 驱动内部浓淡，支持暂停/低动效开关。请 Leader 用 Godot 4.7.2 打开验证 390×844 与横屏覆盖屋顶/山体区域。生产门禁不变，仍只是隔离候选。
+
+仍等待基于新 SHA 的实际运行证据复审。

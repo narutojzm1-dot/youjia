@@ -24,10 +24,18 @@ def generate(out_dir=None, n_frames=40, base_path=None, cloud_path=None):
     cloud = Image.open(cloud_path).convert("RGBA")
     mask = Image.new("L", base.size, 0)
     draw = ImageDraw.Draw(mask)
-    for y in range(500):
-        alpha = int(255 * max(0, 1 - y / 480.0))
+    # Sky gradient only in upper region; lower edge raised to protect roofs/mountains
+    for y in range(420):
+        alpha = int(255 * max(0, 1 - y / 380.0))
         draw.line([(0, y), (base.width, y)], fill=alpha)
-    mask = mask.filter(ImageFilter.GaussianBlur(radius=25))
+    # Explicit protection: zero out roof, mountain ridge and canopy areas
+    # Roof wood area around (435,280)
+    draw.ellipse([350, 220, 520, 360], fill=0)
+    # Snow peak area around (1045,205)
+    draw.polygon([(980, 140), (1120, 140), (1120, 280), (980, 280)], fill=0)
+    # Additional canopy/ridge protection on left-center
+    draw.ellipse([200, 180, 450, 320], fill=0)
+    mask = mask.filter(ImageFilter.GaussianBlur(radius=18))
     cloud_scaled = cloud.resize((int(cloud.width * 1.8), int(cloud.height * 1.8)), Image.LANCZOS)
     cx, cy = 180, 30
 
