@@ -11,6 +11,9 @@ var card: PanelContainer
 var request: HTTPRequest
 var _focus_input: Node
 var _opened_once := false
+var _status_phase := ""
+var _status_data: Variant = null
+var _status_current := ""
 
 static func version() -> String:
 	var notes: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(NOTES))
@@ -126,7 +129,9 @@ func _ready() -> void:
 func _on_locale(_locale: String) -> void:
 	if heading != null: heading.text = _t("notes.heading")
 	if back != null: back.text = _t("notes.back")
-	if visible: _fill()
+	if visible:
+		_fill()
+		_apply_status()
 
 func _fit() -> void:
 	if card == null: return
@@ -159,15 +164,15 @@ func open() -> void:
 		_focus_input.pointer = opener == null or not opener.has_focus(true)
 		_opened_once = true
 	_focus_input.grab(back)
-	status.text = _t("notes.status.offline")
+	_apply_status("offline")
 	if OS.has_feature("web"):
 		var url = JavaScriptBridge.eval("new URL('game-release.json', location.href).href", true)
 		if url is String:
-			status.text = _t("notes.status.checking")
+			_apply_status("checking")
 			if request.request(url + "?check=" + str(Time.get_unix_time_from_system()), ["Cache-Control: no-cache"]) != OK:
-				status.text = latest_status(null, "")
+				_apply_status("result", null, "")
 	else:
-		status.text = _t("notes.status.local_only")
+		_apply_status("local_only")
 
 func close() -> void:
 	request.cancel_request()
@@ -179,7 +184,19 @@ func close() -> void:
 		returned.release_focus()
 		returned.grab_focus(true)
 
+func _apply_status(phase: String = "", data: Variant = null, current: String = "") -> void:
+	if phase != "":
+		_status_phase = phase
+		_status_data = data
+		_status_current = current
+	if status == null or _status_phase == "": return
+	match _status_phase:
+		"offline": status.text = _t("notes.status.offline")
+		"checking": status.text = _t("notes.status.checking")
+		"local_only": status.text = _t("notes.status.local_only")
+		"result": status.text = latest_status(_status_data, _status_current)
+
 func _checked(result: int, code: int, _headers: PackedStringArray, body: PackedByteArray) -> void:
 	if not visible: return
 	var data = JSON.parse_string(body.get_string_from_utf8()) if result == HTTPRequest.RESULT_SUCCESS and code == 200 else null
-	status.text = latest_status(data, str(identity().get("sourceCommit", "")))
+	_apply_status("result", data, str(identity().get("sourceCommit", "")))

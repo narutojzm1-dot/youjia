@@ -121,6 +121,7 @@ func _run() -> void:
 	await settle()
 	check(main._release_button.text.contains("公告") and notes.heading.text == "更新公告" and notes.back.text == "返回歇一下", "switching back to chinese restores the chrome")
 	check(notes.content.text.contains("新增功能"), "chinese section labels return while the panel stays open")
+	check(notes.status.text.contains("未检查"), "chinese status returns while the panel stays open: " + notes.status.text)
 	main.queue_free()
 	await settle()
 	print("RELEASE_NOTES checks=%d failures=%d" % [checks,failures])
