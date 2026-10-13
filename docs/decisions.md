@@ -2109,3 +2109,7 @@ CODEX-LEAD在[最终审查6139651536](https://github.com/narutojzm1-dot/youjia/p
 
 ## 2026-10-13 版本公告点按打开 / 关上不画键盘焦点圈（CURSOR-CLOUD UI 维护）
 来源：Web 竖屏触屏实玩。「歇一会儿」里点「公告」，「返回歇一下」一打开就画焦点圈；点它关上后「公告」也画圈，鼠标同样。决定：与背篓格子、小鸡照料纸、菜地纸一致，`scripts/ui/release_notes.gd` 用共用的 `PointerFocus`：点按打开时焦点仍交给「返回歇一下」但先不画圈，点按关上后 Main 交回「公告」的焦点也改成不画圈；键盘走到「公告」回车打开 / 关上照常画圈，任意键盘导航后圈立即显出。面板首次打开时才建出来、收不到那次点按，因此仅首次以打开前「公告」的焦点是否可见判断，之后由 `PointerFocus` 记的最近一次输入判断（点按关上后直接按回车重开照常画圈）。不改 `main.gd`。回归由 `release_notes_pointer_focus_suite` 守护，证据见 `docs/playtests/2026-10-13-cursor-cloud-release-notes-pointer-focus/`（含 #781 竖屏补证）。
+
+## 2026-10-13 #700 三餐与池岸自主劳动公开包核验
+
+CODEX-LEAD：PR766实际发布源 `d4c5b092a465186316c5ff35d0a17d2c57b0b379` 的 Publish38356713339、Pages38358583924 均成功；公共manifest/HTML与固定gh-pages `6a2beb29364ecacde9f13e3759c87f18be4e16c4` 一致。实际双端PCK均74,659,076 bytes，SHA-256 `c41dcb0f65c9fb18d00b10f24ae0770c9a1d6fadf162b0325f225b42177bf601`，匹配HTML声明，首次取包即通过。见[公开核验记录](playtests/2026-10-13-growth-public-d4c5b09/README.md)。普通公网新标签页已恢复同源第24天存档，暂停显示game-d4c5b09，公告核对最新及新增/修复/限制可读；844×390公告历史滚动/返回菜单通过，成功链console warning/error为空。首次长期测试页重载停在绘制阶段且CDP超时，关闭该页后新标签正常；原因未定，保留失败，不归因为缓存或宣称修复。北京时间14:57:28已发送一次上线阶段成果预览，非日推，无回信不等用户验收。文件身份与普通公网菜单通过不扩大为实体设备、人耳或全成长验收；完整成长与实体手机/窄屏全链仍未完成，#700保持开放。

@@ -1,0 +1,91 @@
+{
+  "sourceCommit": "d4c5b092a465186316c5ff35d0a17d2c57b0b379",
+  "pagesCommit": "6a2beb29364ecacde9f13e3759c87f18be4e16c4",
+  "checkedAt": "2026-10-13T06:48:07.085928+00:00",
+  "manifestFile": {
+    "url": "https://narutojzm1-dot.github.io/youjia/game-release.json?verify=1791874087085928200",
+    "filename": "public-manifest.json",
+    "http": 200,
+    "bytes": 2252,
+    "sha256": "e5c6ee6712da5bcbbb09108ccaaa7e9bce4379960353627d5da9f2fcab8befd5",
+    "startedAt": "2026-10-13T06:48:07.085928+00:00",
+    "completedAt": "2026-10-13T06:48:08.301642+00:00",
+    "headers": {
+      "Content-Length": "2252",
+      "Content-Type": "application/json; charset=utf-8",
+      "Last-Modified": "Tue, 13 Oct 2026 06:47:14 GMT",
+      "ETag": "\"6acdd3f2-8cc\"",
+      "Cache-Control": "max-age=600"
+    }
+  },
+  "htmlFile": {
+    "url": "https://narutojzm1-dot.github.io/youjia/?verify=1791874087085928200",
+    "filename": "public-index.html",
+    "http": 200,
+    "bytes": 364139,
+    "sha256": "a87f95838bdc4ad0cc920fbd5966ee461c15803f8fbd8a1bb7a445cb4e934f1c",
+    "startedAt": "2026-10-13T06:48:08.301642+00:00",
+    "completedAt": "2026-10-13T06:48:10.106191+00:00",
+    "headers": {
+      "Content-Length": "364139",
+      "Content-Type": "text/html; charset=utf-8",
+      "Last-Modified": "Tue, 13 Oct 2026 06:47:14 GMT",
+      "ETag": "\"6acdd3f2-58e6b\"",
+      "Cache-Control": "max-age=600"
+    }
+  },
+  "pagesManifestFile": {
+    "url": "https://raw.githubusercontent.com/narutojzm1-dot/youjia/6a2beb29364ecacde9f13e3759c87f18be4e16c4/game-release.json",
+    "filename": "pages-manifest.json",
+    "http": 200,
+    "bytes": 2252,
+    "sha256": "e5c6ee6712da5bcbbb09108ccaaa7e9bce4379960353627d5da9f2fcab8befd5",
+    "startedAt": "2026-10-13T06:48:10.106191+00:00",
+    "completedAt": "2026-10-13T06:48:11.569566+00:00",
+    "headers": {
+      "Content-Length": "2252",
+      "Cache-Control": "max-age=300",
+      "Content-Type": "text/plain; charset=utf-8",
+      "ETag": "\"f83c3424ef5a5741cd6755fc51722759cc9be8c122ce71eb5eec29cc00fa9f0c\""
+    }
+  },
+  "manifestSource": "d4c5b092a465186316c5ff35d0a17d2c57b0b379",
+  "manifestEntry": "game-d4c5b09",
+  "publishedAt": "2026-10-13T06:45:47Z",
+  "htmlBuild": "game-d4c5b09",
+  "mainPack": "game-d4c5b09.pck",
+  "htmlPckHash": "c41dcb0f65c9fb18d00b10f24ae0770c9a1d6fadf162b0325f225b42177bf601",
+  "htmlPckBytes": 74659076,
+  "publicPck": {
+    "url": "https://narutojzm1-dot.github.io/youjia/game-d4c5b09.pck?verify=1791874087085928200",
+    "filename": "public-game-d4c5b09.pck",
+    "http": 200,
+    "bytes": 74659076,
+    "sha256": "c41dcb0f65c9fb18d00b10f24ae0770c9a1d6fadf162b0325f225b42177bf601",
+    "startedAt": "2026-10-13T06:48:11.574231+00:00",
+    "completedAt": "2026-10-13T06:49:10.257761+00:00",
+    "headers": {
+      "Content-Length": "74659076",
+      "Content-Type": "application/octet-stream",
+      "Last-Modified": "Tue, 13 Oct 2026 06:47:14 GMT",
+      "ETag": "\"6acdd3f2-4733504\"",
+      "Cache-Control": "max-age=600"
+    }
+  },
+  "pagesPck": {
+    "url": "https://raw.githubusercontent.com/narutojzm1-dot/youjia/6a2beb29364ecacde9f13e3759c87f18be4e16c4/game-d4c5b09.pck",
+    "filename": "pages-game-d4c5b09.pck",
+    "http": 200,
+    "bytes": 74659076,
+    "sha256": "c41dcb0f65c9fb18d00b10f24ae0770c9a1d6fadf162b0325f225b42177bf601",
+    "startedAt": "2026-10-13T06:48:11.574739+00:00",
+    "completedAt": "2026-10-13T06:49:10.743391+00:00",
+    "headers": {
+      "Content-Length": "74659076",
+      "Cache-Control": "max-age=300",
+      "Content-Type": "application/octet-stream",
+      "ETag": "\"c72ded6ec1db54b4c19413f429049744d2fa78b19901aa5641609899920fcc16\""
+    }
+  },
+  "result": "PASS"
+}
