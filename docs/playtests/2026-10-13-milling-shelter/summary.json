@@ -1,0 +1,42 @@
+{
+  "checked_at_utc": "2026-10-13T13:40:27.515562+00:00",
+  "base_local_head": "321735f6a7f17cf368cb7740f2690ac9024f79e6",
+  "remote_prior_head": "8b08e0540a5195627cc880f27b976fb923ba6a5c",
+  "status": "uncommitted bounded fix; root owns final commit/CI/Web",
+  "files": {
+    "scripts/game/yard_shelter.gd": "ef878af776a88fca567189956d5720db76213add14d501f18c9fcf75acc1b5bb",
+    "test/large_animal_shelter_suite.gd": "c00a86c95fd74633aba543aed8ae9e18a4805e68be33496de1132da1b8dfae66"
+  },
+  "results": [
+    {
+      "suite": "large_animal_shelter_suite updated fixed-position regression",
+      "checks": 41,
+      "failures": 0,
+      "log": "large-animal-final.log"
+    },
+    {
+      "suite": "unchanged HEAD large_animal_shelter_suite natural post-rain roaming",
+      "checks": 28,
+      "failures": 0,
+      "log": "original-28-final.log"
+    },
+    {
+      "suite": "yard_shelter_suite",
+      "checks": 34,
+      "failures": 0,
+      "log": "yard-shelter-final.log"
+    }
+  ],
+  "preserved_failures": [
+    "ci-7d16-failure-excerpt.log",
+    "baseline-diagnostic.log",
+    "first-guard-fixture-failure.log"
+  ],
+  "unchanged": [
+    "mill anchor/approach/work point/body radius",
+    "YardBodies navigation",
+    "save format",
+    "runtime art"
+  ],
+  "limitation": "Only yields an incoming pen trip to one actual blocking guest with a valid own return route; cannot force-move user-owned animals or solve arbitrary multiple-body deadlock."
+}
