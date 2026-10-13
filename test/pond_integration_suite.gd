@@ -132,6 +132,8 @@ func run() -> void:
 		if item.get("subject", "") == "turtle" and item.get("texture", {}).get("path", "") == TurtleArt.TEXTURE: contains_turtle = true
 	check(contains_turtle, "inert photo keeps actual turtle pose texture")
 	world.queue_free()
+	root.get_node("AudioDirector").release_streams()
+	await create_timer(0.15).timeout
 	print("POND_INTEGRATION checks=%d failures=%d" % [checks, failures])
 	quit(1 if failures else 0)
 func capture(label: String) -> void:

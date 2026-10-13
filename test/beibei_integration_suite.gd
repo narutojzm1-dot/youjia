@@ -142,6 +142,8 @@ func run() -> void:
 	check(world.actor_named("beibei") == adult, "native reload does not duplicate adult")
 	root.remove_child(world)
 	world.queue_free()
+	root.get_node("AudioDirector").release_streams()
+	await create_timer(0.15).timeout
 	print("BEIBEI_INTEGRATION checks=%d failures=%d" % [checks, failures])
 	quit(1 if failures else 0)
 

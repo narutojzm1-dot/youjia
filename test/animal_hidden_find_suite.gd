@@ -82,6 +82,10 @@ func run() -> void:
 		check(host.can_begin() and memory.get_keepsakes().get(ExplorationRoutes.FIND_PINE_CONE, 0) == 1, "return puts exactly one find in the shared basket")
 		memory.free()
 	await adapter()
+	root.get_node("AudioDirector").release_streams()
+	# A confirmed hidden pickup now plays the approved WAV. Retire the native
+	# mixer playback after the scene has been freed, before engine shutdown.
+	await create_timer(0.15).timeout
 	print("ANIMAL_HIDDEN_FIND checks=%d failures=%d" % [checks, failures.size()])
 	quit(0 if failures.is_empty() else 1)
 func full_basket() -> void:
