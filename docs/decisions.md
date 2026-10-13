@@ -2120,3 +2120,6 @@ CODEX-LEAD：PR766实际发布源 `d4c5b092a465186316c5ff35d0a17d2c57b0b379` 的
 ### 2026-10-13 #642 原画花组工程与美术分开据实记录
 
 接续原699三组remove/restore，不更改物品、成长或未决规则；整合主线时保留三餐/休息/池岸SaveStore契约及原作者提交。新增确认式交互、失败重提身份覆盖与照片冻结，相关原生及GPU检查通过。R1真实GPU仍见池边高茎而退回；后续固定晴天局部v3/阴天v2、mipmap过滤及不交叠掩膜，清除残茎与旧硬边后，Leader允许进入运行验收。ART_ACCEPTED已启用本地入口，最终GPU157/0；普通Web、导出及上线仍未完成。初次JSON浮点比较与共用测试资料造成的失败已如实说明，使用正确隔离方式后回归通过。详见[候选证据](playtests/2026-10-13-original-plants-runtime/README.md)。
+
+## 2026-10-13 版本公告的界面文字跟着语言走（CURSOR-CLOUD UI 维护）
+来源：英文暂停菜单对照。切到 `en` 后，暂停、手帐、背篓都是英文，右上角版本按钮和公告面板的标题、状态、「返回歇一下」、分节名仍写死中文。决定：这些界面文字放进中英目录（`notes.*`）。`scripts/ui/release_notes.gd` 用 `chip_label` 给暂停按钮，面板打开和语言切换时重填标题、分节和当前状态行；`scripts/main.gd` 只在建暂停、贴合暂停和 `_refresh_texts` 三处改用 `chip_label`，不改 `_toggle_pause`、`_show_album` 等在途方法。`config/release_notes.json` 的条目正文仍是中文原稿，不另写英文更新说明。正式启动仍钉中文。回归加在 `release_notes_suite`（切到英文再切回中文，面板开着也跟着换）。证据见 `docs/playtests/2026-10-13-cursor-cloud-notes-locale/`。

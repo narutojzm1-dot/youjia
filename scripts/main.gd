@@ -1086,7 +1086,7 @@ func _build_pause_screen() -> void:
 	_pause_title.size_flags_vertical = Control.SIZE_FILL
 	heading.add_child(_pause_title)
 	_release_button = _soft_button()
-	_release_button.text = preload("res://scripts/ui/release_notes.gd").version() + " · 公告\n" + preload("res://scripts/ui/release_notes.gd").build_name().replace("本地开发版（未发布）", "本地开发版")
+	_release_button.text = preload("res://scripts/ui/release_notes.gd").chip_label(false)
 	_release_button.custom_minimum_size = Vector2(120, 36)
 	_release_button.add_theme_font_size_override("font_size", 12)
 	for state in ["normal", "hover", "pressed", "focus"]:
@@ -1158,9 +1158,7 @@ func _fit_pause_panel() -> void:
 	_pause_session.add_theme_constant_override("separation", sep)
 	_pause_audio.add_theme_constant_override("separation", sep)
 	_pause_title.add_theme_font_size_override("font_size", 18 if short else 26)
-	var release_ui = preload("res://scripts/ui/release_notes.gd")
-	var release_build: String = release_ui.build_name().replace("本地开发版（未发布）", "本地开发版")
-	_release_button.text = release_ui.version() + " · 公告" + (" · " if short else "\n") + release_build
+	_release_button.text = preload("res://scripts/ui/release_notes.gd").chip_label(short)
 	_release_button.custom_minimum_size = Vector2(120, 24 if short else 36)
 	for button in [_resume_button, _restart_button, _pause_title_button, _music_toggle, _ambience_toggle, _mute_toggle]:
 		button.custom_minimum_size = Vector2(120.0, button_h)
@@ -3449,6 +3447,8 @@ func _refresh_texts() -> void:
 	_licenses_button.text = I18n.t("ui.open_source_licenses")
 	_title_hint.text = I18n.t("menu.hint")
 	_pause_title.text = I18n.t("pause.title")
+	if _release_button != null:
+		_release_button.text = preload("res://scripts/ui/release_notes.gd").chip_label(size.y < 500.0)
 	_resume_button.text = I18n.t("pause.resume")
 	_restart_button.text = I18n.t("pause.restart")
 	_pause_title_button.text = I18n.t("pause.main_menu")
