@@ -1,0 +1,75 @@
+{
+  "schema": "youjia.public-release-evidence/v1",
+  "preparedAtUtc": "2026-10-13T05:27:51.689756+00:00",
+  "status": "public release and ordinary Web UI verified; archive prepared for PR",
+  "issue": 771,
+  "implementationPr": 785,
+  "priorGzipEvidencePr": 786,
+  "sourceCommit": "c44cc7e077dfa8dae07faba5a3463634306b8bc5",
+  "pagesCommit": "5acef1f8c93b3076a7f2ff32c26622dd7485ab6a",
+  "build": "game-c44cc7e",
+  "publishedAt": "2026-10-13T05:10:08Z",
+  "pck": {
+    "bytes": 74466564,
+    "sha256": "0575be928650c5a59b2f37bd330952f5dc9762b671db503f4d01c52f550d3dac",
+    "publicUrl": "https://narutojzm1-dot.github.io/youjia/game-c44cc7e.pck",
+    "pinnedPagesUrl": "https://raw.githubusercontent.com/narutojzm1-dot/youjia/5acef1f8c93b3076a7f2ff32c26622dd7485ab6a/game-c44cc7e.pck"
+  },
+  "publicUi": {
+    "owner": "CODEX-LEAD",
+    "site": "https://narutojzm1-dot.github.io/youjia/",
+    "viewport": [
+      844,
+      390
+    ],
+    "existingSaveDayReportedByTester": 24,
+    "evidenceScope": "ordinary public Web UI; three screenshots visually inspected",
+    "steps": [
+      "Continue existing public day-24 save.",
+      "Open pause menu and read actual game-c44cc7e build.",
+      "Open announcements: initial online query unavailable, bundled notes retained, no new gzip error observed.",
+      "Return to pause and reopen announcements: latest-release status explicitly displayed."
+    ],
+    "transientFailureRootCause": "not established by these screenshots; do not label the first query failure as fully diagnosed",
+    "touchOrPhysicalMobileTested": false,
+    "screenshots": [
+      {
+        "file": "18-public-c44cc7e-pause.jpg",
+        "bytes": 49757,
+        "sha256": "4e208492125fc7b3c0ceea7055d20030ee8a4fe277836f1aeeeb190768f64e7a",
+        "width": 844,
+        "height": 390,
+        "sourceFileSavedAtUtc": "2026-10-13T05:23:09.300396+00:00",
+        "observation": "Public HTTPS game pause menu shows the actual bundled build game-c44cc7e."
+      },
+      {
+        "file": "19-public-c44cc7e-query-unavailable.jpg",
+        "bytes": 39121,
+        "sha256": "476d6e647b04769313990d5f88887e5653a6606b3be4cf69da64c6de9642b9c8",
+        "width": 844,
+        "height": 390,
+        "sourceFileSavedAtUtc": "2026-10-13T05:24:09.812171+00:00",
+        "observation": "First public online check reports unable to check; bundled announcements stay readable. Leader observed no new gzip error."
+      },
+      {
+        "file": "20-public-c44cc7e-latest.jpg",
+        "bytes": 38847,
+        "sha256": "c841ad1f4025e13f36dd17395455270dd87f401d2f54c77e36a011a0eefca3cf",
+        "width": 844,
+        "height": 390,
+        "sourceFileSavedAtUtc": "2026-10-13T05:24:54.988539+00:00",
+        "observation": "After returning to the pause menu and reopening announcements, public online check explicitly reports the current release is latest."
+      }
+    ]
+  },
+  "limitations": [
+    "No claim that every network check succeeds.",
+    "No physical phone or real-touch acceptance is asserted.",
+    "Screenshots 14-17 from the previous archive are local c8 candidate gzip fixtures, not public c44.",
+    "Growth candidate 9783d956 is outside this release evidence and is not declared accepted or published."
+  ],
+  "propagationHistory": {
+    "record": "before-pages-completed-verification.json",
+    "meaning": "At UTC 05:11:55, Pages deployment was still running and public entry remained eb8. Final verification passed after deployment completed."
+  }
+}

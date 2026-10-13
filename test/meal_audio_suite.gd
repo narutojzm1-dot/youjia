@@ -49,6 +49,34 @@ func run() -> void:
 		await process_frame
 
 	leaf.ensure_registered()
+	# The approved PCM/loop remains identical when the Web renderer changes.
+	var cook: Node = leaf._cook_player
+	check(cook.get_script().resource_path.ends_with("browser_bgm_player.gd"), "cook uses the shipped browser/native renderer")
+	var loop: AudioStreamWAV = cook.stream
+	check(loop != null and loop.mix_rate == 22050 and loop.loop_mode == AudioStreamWAV.LOOP_FORWARD, "approved mono PCM loop metadata survives renderer selection")
+	var loop_bounds: Dictionary = cook.call("_loop_settings")
+	check(bool(loop_bounds.enabled) and is_equal_approx(float(loop_bounds.begin), 0.0) and is_equal_approx(float(loop_bounds.end), 2.6), "browser renderer uses authored 2.6 second loop boundaries")
+	for locked: Array in [[MealAudioScript.COOK_LOOP_PATH, "2e9824a0be6cd199d4383d9593a4e184fb41ca9c558b5f91f340d7ef52f5ce1b"], [MealAudioScript.SPOON_PATH, "b72eab1b9bf06842928aea36183a10f277b828cef21bfada150108b3ad700414"]]:
+		check(FileAccess.get_sha256(locked[0]) == locked[1], "approved source bytes unchanged: " + str(locked[0]))
+	check(audio.call("_browser_cue_player", "ui.confirm") == null, "UI cues do not opt into meal renderer")
+	check(audio.call("_browser_cue_player", "meal.hunger") == null, "unapproved hunger keeps its old non-production route")
+	var master := AudioServer.get_bus_index("Master")
+	var sfx := AudioServer.get_bus_index("SFX")
+	var old_master_mute := AudioServer.is_bus_mute(master)
+	var old_sfx_mute := AudioServer.is_bus_mute(sfx)
+	var old_sfx_db := AudioServer.get_bus_volume_db(sfx)
+	AudioServer.set_bus_mute(master, true)
+	check(is_zero_approx(float(cook.call("_effective_gain"))), "cook Web gain follows Master mute")
+	AudioServer.set_bus_mute(master, false)
+	AudioServer.set_bus_mute(sfx, true)
+	check(is_zero_approx(float(cook.call("_effective_gain"))), "cook Web gain follows SFX mute")
+	AudioServer.set_bus_mute(sfx, false)
+	AudioServer.set_bus_volume_db(sfx, old_sfx_db - 6.0)
+	var quiet_gain := float(cook.call("_effective_gain"))
+	AudioServer.set_bus_volume_db(sfx, old_sfx_db)
+	check(is_equal_approx(quiet_gain, float(cook.call("_effective_gain")) * db_to_linear(-6.0)), "cook Web gain retains the existing SFX volume scale")
+	AudioServer.set_bus_mute(master, old_master_mute)
+	AudioServer.set_bus_mute(sfx, old_sfx_mute)
 	audio.call("unlock_audio")
 	check(not leaf.is_playback_allowed(), "playback starts denied")
 	check(not leaf.is_cooking(), "starts not cooking")
@@ -157,6 +185,14 @@ func run() -> void:
 	leaf.set_cooking(true)
 	check(bool(leaf.play_spoon_now()), "spoon before exit for stop ownership")
 
+	# Exercise the exact opted-in adapter on native fallback too, so stop/exit
+	# cannot merely pass via headless play_cue's early true return.
+	var spoon_player: Node = audio.call("_browser_cue_player", "meal.spoon")
+	check(spoon_player == audio.call("_browser_cue_player", "meal.spoon"), "one logical browser channel reused per meal spoon cue")
+	spoon_player.stream = audio.call("get_cue_stream", "meal.spoon")
+	spoon_player.play()
+	check(bool(audio.call("is_cue_voice_active", "meal.spoon")), "opted-in spoon holds a real native fallback voice")
+	check(spoon_player.bus == &"SFX" and not bool(spoon_player.call("_loop_settings").enabled), "spoon preserves SFX bus and one-shot metadata")
 	leaf.queue_free()
 	for _j in 3:
 		await process_frame
@@ -164,6 +200,8 @@ func run() -> void:
 	check(int(audio.call("get_stop_cue_count", "meal.spoon")) > stops_spoon_before, "exit stop_cue spoon invoked")
 	check(int(audio.call("get_stop_cue_count", "meal.hunger")) > stops_hunger_before, "exit stop_cue hunger invoked")
 	check(not bool(audio.call("is_cue_voice_active", "meal.hunger")), "hunger voice cleared after leaf exit")
+	check(not bool(audio.call("is_cue_voice_active", "meal.spoon")), "owned browser spoon voice cleared after leaf exit")
+	check(audio._browser_cue_players.is_empty(), "leaf exit releases its browser cue channel")
 
 	# Use a known cue: unknown IDs are rejected before asset loading and would
 	# make this negative test pass even with the old fallback implementation.
@@ -178,6 +216,52 @@ func run() -> void:
 	quiet.call("_register", "meal.spoon", MealAudioScript.SPOON_PATH)
 	check(audio.call("get_cue_stream", "meal.spoon") != null, "approved cue restores after resource recovery")
 	quiet.free()
+	var replace_player: Node = audio.call("_browser_cue_player", "meal.spoon")
+	replace_player.stream = audio.call("get_cue_stream", "meal.spoon")
+	replace_player.play()
+	var unrelated: AudioStreamPlayer = audio._sfx_players[0]
+	unrelated.stream = audio.call("get_cue_stream", "meal.hunger")
+	unrelated.play()
+	audio.call("stop_cue", "meal.spoon")
+	check(audio._browser_cue_players.is_empty() and not bool(audio.call("is_cue_voice_active", "meal.spoon")), "stop_cue retires the opted-in browser channel")
+	check(bool(audio.call("is_cue_voice_active", "meal.hunger")), "stopping spoon preserves another owned cue voice")
+	var missing_player: Node = audio.call("_browser_cue_player", "meal.spoon")
+	missing_player.stream = audio.call("get_cue_stream", "meal.spoon")
+	missing_player.play()
+	check(not bool(audio.call("register_cue", "meal.spoon", missing)), "known missing cue rejects after a real adapter start")
+	check(audio._browser_cue_players.is_empty() and not bool(audio.call("is_cue_voice_active", "meal.spoon")), "missing replacement also disposes active browser voice")
+	check(bool(audio.call("register_cue", "meal.spoon", MealAudioScript.SPOON_PATH)), "restore approved spoon after adapter negative test")
+	# Use a real adapter voice, not headless cue counts: interruptions must discard
+	# short sounds before Host.sync runs, and recovery must not recreate them.
+	for interruption: String in ["background", "pause", "master_mute", "sfx_mute", "backend_interrupted"]:
+		var voice: Node = audio.call("_browser_cue_player", "meal.spoon")
+		voice.stream = audio.call("get_cue_stream", "meal.spoon")
+		voice.play()
+		check(bool(audio.call("is_cue_voice_active", "meal.spoon")), interruption + " starts with a real voice")
+		match interruption:
+			"background": audio.call("set_application_active", false)
+			"pause": audio.call("set_game_paused", true)
+			"master_mute": root.get_node("TuningStore").call("set_value", "audio.master.muted", true)
+			"sfx_mute":
+				AudioServer.set_bus_mute(sfx, true)
+				await process_frame
+			"backend_interrupted":
+				audio._yard_active = true
+				audio.call("_on_browser_resume_settled", [JSON.stringify({"state": "interrupted", "token": audio._resume_token})])
+		check(audio._browser_cue_players.is_empty() and not bool(audio.call("is_cue_voice_active", "meal.spoon")), interruption + " immediately discards the short voice")
+		match interruption:
+			"background": audio.call("set_application_active", true)
+			"pause": audio.call("set_game_paused", false)
+			"master_mute": root.get_node("TuningStore").call("set_value", "audio.master.muted", false)
+			"sfx_mute": AudioServer.set_bus_mute(sfx, false)
+			"backend_interrupted":
+				audio._yard_active = false
+				audio._awaiting_gesture = false
+				audio._backend_state = "native"
+		check(audio._browser_cue_players.is_empty() and not bool(audio.call("is_cue_voice_active", "meal.spoon")), interruption + " recovery never replays a stale spoon")
+	var release_player: Node = audio.call("_browser_cue_player", "meal.spoon")
+	release_player.stream = audio.call("get_cue_stream", "meal.spoon")
+	release_player.play()
 
 	# The suite deliberately starts real native AudioStreamPlayers even headless.
 	# Match yard_audio_suite teardown: release fixture references and allow the
@@ -186,6 +270,7 @@ func run() -> void:
 	hunger_stream = null
 	audio.call("release_streams")
 	check(audio.call("get_cue_stream", "meal.hunger") == null, "fixture cue references released")
+	check(audio._browser_cue_players.is_empty(), "release_streams releases the opted-in adapter channel")
 	await create_timer(0.25).timeout
 	if failures == 0:
 		print("[meal-audio] PASS: %d checks" % checks)

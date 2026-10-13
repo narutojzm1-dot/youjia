@@ -175,3 +175,4 @@ run_godot suite test/growth_budget_suite.gd
 run_godot suite test/pond_edging_view_suite.gd
 run_godot suite test/pond_growth_director_suite.gd
 run_godot suite test/release_notes_suite.gd
+run_godot suite test/release_notes_pointer_focus_suite.gd

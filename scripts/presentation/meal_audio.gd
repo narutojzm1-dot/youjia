@@ -5,6 +5,8 @@ extends Node
 ## Leader supplies real cook start/end and missed-meal trigger; this leaf does not infer mealtime.
 ## Host playback permission is separate from game pause: default deny; restore rebuilds cook only.
 
+const BrowserBgmPlayer := preload("res://scripts/manus/browser_bgm_player.gd")
+
 const COOK_LOOP_PATH := "res://assets/holiday/audio/meal_grok/cook_loop.tres"
 const SPOON_PATH := "res://assets/holiday/audio/meal_grok/cook_spoon.tres"
 const HUNGER_PATH := "res://assets/holiday/audio/meal_grok/hunger.tres"
@@ -21,7 +23,7 @@ var _paused := false
 ## Host/browser playback permission. Default false (deny). Independent of _paused.
 var _playback_allowed := false
 var _registered := false
-var _cook_player: AudioStreamPlayer
+var _cook_player: BrowserBgmPlayer
 var _spoon_accum := 0.0
 var _last_hunger_at := -INF
 ## Successful hunger cue deliveries (headless play_cue truth counts).
@@ -49,6 +51,9 @@ func _exit_tree() -> void:
 		if _cook_player.playing or _cook_player.stream_paused:
 			_cook_player.stop()
 		_cook_player.stream_paused = false
+		var old_stream: AudioStream = _cook_player.stream
+		_cook_player.stream = null
+		BrowserBgmPlayer.release_cached_stream(old_stream)
 	exit_cleanup_done = true
 
 
@@ -197,20 +202,24 @@ func _ensure_cook_player() -> void:
 		return
 	# Tear accidental extras so repeated ensure never stacks players.
 	for child in get_children():
-		if child is AudioStreamPlayer and child.name.begins_with("MealCook"):
+		if child is BrowserBgmPlayer and child.name.begins_with("MealCook"):
 			child.queue_free()
-	_cook_player = AudioStreamPlayer.new()
+	# The default Godot Web sample route produced zero destination PCM.
+	# Reuse the shipped renderer without changing the approved stream/loop.
+	_cook_player = BrowserBgmPlayer.new()
 	_cook_player.name = "MealCookLoop"
 	_cook_player.bus = "SFX"
 	_cook_player.process_mode = Node.PROCESS_MODE_ALWAYS
 	_cook_player.stream = _load_cook_stream()
 	add_child(_cook_player)
+	# Decode once while the host is being set up; prepare never plays or unlocks.
+	_cook_player.prepare()
 
 
 func _count_cook_players() -> int:
 	var n := 0
 	for child in get_children():
-		if child is AudioStreamPlayer and str(child.name).begins_with("MealCook"):
+		if child is BrowserBgmPlayer and str(child.name).begins_with("MealCook"):
 			n += 1
 	return n
 
