@@ -4,7 +4,8 @@ extends SceneTree
 ## - 点「大太阳」：天气切换，按钮不留悬停；
 ## - 手指按住时不提前撤悬停 / 按下态，抬起后再撤；
 ## - 抬指后浏览器补发的鼠标移动（同一位置、很快到达）不算换回鼠标；
-## - 真鼠标移上去照常悬停，从没碰过触屏的鼠标玩家不受影响。
+## - 真鼠标移上去照常悬停，从没碰过触屏的鼠标玩家不受影响；
+## - 背篓里触屏点一格：照常弹出纸片，撤悬停用的移动不会被当成鼠标拖走这一格。
 
 const VIEWS := [Vector2i(1280, 720), Vector2i(390, 844), Vector2i(844, 390)]
 
@@ -25,6 +26,7 @@ func _run() -> void:
 		await _check_touch_hold(dims)
 		await _check_synth_mouse(dims)
 		await _check_real_mouse_after_touch(dims)
+		await _check_basket_cell_tap(dims)
 	_finish()
 
 
@@ -154,6 +156,28 @@ func _check_real_mouse_after_touch(dims: Vector2i) -> void:
 	await _cool()
 
 
+func _check_basket_cell_tap(dims: Vector2i) -> void:
+	var tag := "%s basket cell tap" % dims
+	main._show_basket()
+	await _settle(6)
+	var panel = main._basket_panel
+	var cell: Button = panel.grid.cells["wheat"]
+	panel.scroll.ensure_control_visible(cell)
+	await _settle()
+	var at := cell.get_global_rect().get_center()
+	_check(panel.scroll.get_global_rect().has_point(at), "%s: wheat cell visible" % tag)
+	await _touch(true, at)
+	await _touch(false, at)
+	await _settle(6)
+	_check(panel.drag_kind.is_empty(), "%s: no drag starts after the tap, got '%s'" % [tag, panel.drag_kind])
+	_check(panel.grid.menu.visible, "%s: tap opens the wheat paper menu" % tag)
+	_check(root.gui_get_hovered_control() == null, "%s: nothing left in hover" % tag)
+	panel.grid.close_menu()
+	main._hide_basket()
+	await _settle()
+	await _cool()
+
+
 func _check(condition: bool, label: String) -> void:
 	checks += 1
 	if not condition:
@@ -164,7 +188,7 @@ func _check(condition: bool, label: String) -> void:
 func _finish() -> void:
 	if main != null:
 		main.queue_free()
-	_check(checks >= 24, "suite ran enough checks (%d)" % checks)
+	_check(checks >= 36, "suite ran enough checks (%d)" % checks)
 	for failure in failures:
 		print("FAIL: ", failure)
 	print("TOUCH_HOVER_RESET checks=%d failures=%d" % [checks, failures.size()])

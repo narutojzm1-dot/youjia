@@ -628,7 +628,10 @@ func _on_cell_mouse(kind: String, event: InputEvent) -> void:
 			_mouse_kind = ""
 	elif event is InputEventMouseMotion and _mouse_kind == kind:
 		if drag_kind.is_empty():
-			if event.global_position.distance_to(_mouse_start) >= DRAG_START:
+			# 触屏合成的按下可能落到格子上、抬起却被 Main 去重吞掉；左键没按着的移动不算拖。
+			if not (event.button_mask & MOUSE_BUTTON_MASK_LEFT):
+				_mouse_kind = ""
+			elif event.global_position.distance_to(_mouse_start) >= DRAG_START:
 				begin_drag(kind, event.global_position)
 		else:
 			drag_to(event.global_position)
