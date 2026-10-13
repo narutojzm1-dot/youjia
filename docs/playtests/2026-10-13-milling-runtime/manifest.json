@@ -1,0 +1,203 @@
+{
+  "schema": 1,
+  "scope": "docs/playtests/2026-10-13-milling-runtime only",
+  "file_count_excluding_manifest": 39,
+  "bytes_excluding_manifest": 5804051,
+  "files": [
+    {
+      "path": ".gdignore",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "capture.gd",
+      "bytes": 2263,
+      "sha256": "7a3a118a0b6d870e33720ea53e120f4542142f4d7f850aaa3e463a13c6d8d8f7"
+    },
+    {
+      "path": "gpu/integrated-reduced-overcast.png",
+      "bytes": 1823943,
+      "sha256": "59c26cec8437838f32f37c17eb789c79703c8b2777875b077aec056874a64032"
+    },
+    {
+      "path": "gpu/integrated-working-overcast.png",
+      "bytes": 1823946,
+      "sha256": "44b0d1684db48fa3ac4902a28a2ea40e9d15b38c652febc6ffc565cdf3cb0e71"
+    },
+    {
+      "path": "gpu/integrated-working-sun.png",
+      "bytes": 2098010,
+      "sha256": "bad6f8237cb60c1d3dea30e4fb875eb176158d1bee6452b6f2f9105b7392211f"
+    },
+    {
+      "path": "logs/integration/growth_carried_photo.log",
+      "bytes": 118,
+      "sha256": "7e17196896fd27f612ee4ce0fdd70954bb55e1c2e7a22fc9be5af8066ede4757"
+    },
+    {
+      "path": "logs/integration/growth_materials-initial.log",
+      "bytes": 114,
+      "sha256": "57eab84dcffa85d7378c47b6cfef20d72794b54c0042a5b1d1de78cbc02f3c5f"
+    },
+    {
+      "path": "logs/integration/growth_materials.log",
+      "bytes": 114,
+      "sha256": "57eab84dcffa85d7378c47b6cfef20d72794b54c0042a5b1d1de78cbc02f3c5f"
+    },
+    {
+      "path": "logs/integration/meal_navigation.log",
+      "bytes": 113,
+      "sha256": "4931cf1db532c69078dbe8d47ed6f8c118fdd88bd6d49117f061536c9964f4a7"
+    },
+    {
+      "path": "logs/integration/milling_director.log",
+      "bytes": 115,
+      "sha256": "c5f02f3143dc369da41b6cc92f1cf0a57d271ec1fe8725b713a229d6ce089329"
+    },
+    {
+      "path": "logs/integration/photo_moment_render-before-line-fixture.log",
+      "bytes": 3454,
+      "sha256": "1947a6db17706ca93e5ff0758a97b33a97cc6889817e313999ef4f7bab1df9ab"
+    },
+    {
+      "path": "logs/integration/photo_moment_render.log",
+      "bytes": 1458,
+      "sha256": "0ee40c779da4caa4fcdf9a897f6d5b749a561cb656de7284ba61bb59dcee75fb"
+    },
+    {
+      "path": "logs/integration/photo_moment_save.log",
+      "bytes": 121,
+      "sha256": "68ca288eaf3d991d9c9a39ba4eeb6065ac4c90afb52b0c740553bfca7f6df672"
+    },
+    {
+      "path": "logs/integration/physical_yard.log",
+      "bytes": 5536,
+      "sha256": "5c9a1b3ca2846d77b8ada192c3f43f6c1ee5326398a3eabbc5e385542cdb1b54"
+    },
+    {
+      "path": "logs/integration/pond_growth_director-before-view.log",
+      "bytes": 833,
+      "sha256": "cf6493e3da651ee2bcb241780d1d574b099cbafbd4cb28f6a306aeb1722b745a"
+    },
+    {
+      "path": "logs/integration/pond_growth_director.log",
+      "bytes": 833,
+      "sha256": "cf6493e3da651ee2bcb241780d1d574b099cbafbd4cb28f6a306aeb1722b745a"
+    },
+    {
+      "path": "logs/integration/source-files.sha256.json",
+      "bytes": 1614,
+      "sha256": "3b4406810bf5b52f4e2dc2f00e1663dd2647dcbce211f767871fc1c4de652214"
+    },
+    {
+      "path": "logs/integration/summary-final.json",
+      "bytes": 1624,
+      "sha256": "75191555b468444475e1366b818971bb93acb82c7d52989193469394f5782065"
+    },
+    {
+      "path": "logs/integration/summary-photo-final.json",
+      "bytes": 2064,
+      "sha256": "3680c7560421d5adbc21c9b9a6db0dd9464051daaa6789dce488fd6423eff66a"
+    },
+    {
+      "path": "logs/integration/yard_mill_view.log",
+      "bytes": 112,
+      "sha256": "c71f7b2196b7fb7382f89b212e11120b1d9cd632861d155f9a6f06e738ff7dfa"
+    },
+    {
+      "path": "logs/leader/flour-meal-first.log",
+      "bytes": 108,
+      "sha256": "9869154900398257ca893d448dfa7c3c521e1e40787e98820ff43dc806ff6872"
+    },
+    {
+      "path": "logs/leader/flour_meal-final.log",
+      "bytes": 108,
+      "sha256": "9869154900398257ca893d448dfa7c3c521e1e40787e98820ff43dc806ff6872"
+    },
+    {
+      "path": "logs/leader/house_cooking-final.log",
+      "bytes": 112,
+      "sha256": "2c539f38a0d22b900d2575a57e377c74c969bff0ab3a844aa7eaeb9c618823b3"
+    },
+    {
+      "path": "logs/leader/house_sleep-final.log",
+      "bytes": 116,
+      "sha256": "7f6a984daf9f9fb9681331edb5ebf1b0b4b882a1ff6525ab925b92219f477d25"
+    },
+    {
+      "path": "logs/leader/import-initial.log",
+      "bytes": 4229,
+      "sha256": "6a6b116e4a04843f0f49f88abffd8b8ab802495d2c3c522b6364bb98053c0026"
+    },
+    {
+      "path": "logs/leader/import-mipmaps.log",
+      "bytes": 2233,
+      "sha256": "17410814781c272b668f76b34324d8df794d55c89dc9c7f99cd25b0a86a8d170"
+    },
+    {
+      "path": "logs/leader/meal_audio_host.log",
+      "bytes": 113,
+      "sha256": "7d76115d4ae0911b9f19fac4decde7677722f4af364b607fceb47109a2ca9ff6"
+    },
+    {
+      "path": "logs/leader/meal_ledger.log",
+      "bytes": 109,
+      "sha256": "8584c7f72251dfd94d690f80a9bc721493d6446695bcb9e3aa4aea596fcafcb9"
+    },
+    {
+      "path": "logs/leader/meal_planner.log",
+      "bytes": 110,
+      "sha256": "7d5c328258907435f2464993008f32e5e5d73278481550a4d2e4d059f1f23c53"
+    },
+    {
+      "path": "logs/leader/release_notes-final.log",
+      "bytes": 112,
+      "sha256": "259fb36d8586809bd3b50e80edd77685fa0ebcd1b67f8deabd46a10e0cad3e0e"
+    },
+    {
+      "path": "logs/leader/yard_basket_grid-flour.log",
+      "bytes": 113,
+      "sha256": "79dac40a6f4f672554c5820d828f3fb6244e089d721e119a07142174e764b0aa"
+    },
+    {
+      "path": "logs/leader/yard_basket_grid-order.log",
+      "bytes": 113,
+      "sha256": "8eb25688138e03e605c885ae8d4eeac319335939acb445afb6d53bd83a976c58"
+    },
+    {
+      "path": "logs/leader/yard_basket_grid.log",
+      "bytes": 1128,
+      "sha256": "da456d9a42ef67f8cc99d5e54a6eb0cdb3be9eaaeb9a00a524e5544c449b64d2"
+    },
+    {
+      "path": "logs/view/integrated.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "logs/view/integrated.stdout.log",
+      "bytes": 522,
+      "sha256": "737b9b7f1dec6ed78f742ed8b50f4f9b68012b20171995de667f7eb020659b43"
+    },
+    {
+      "path": "logs/view/yard-mill-view-suite.log",
+      "bytes": 112,
+      "sha256": "c71f7b2196b7fb7382f89b212e11120b1d9cd632861d155f9a6f06e738ff7dfa"
+    },
+    {
+      "path": "README.md",
+      "bytes": 8195,
+      "sha256": "9b6c04b84db754e3acb88aea70db8b8152fa38c95c35d8e9f7d06f8b6ab2a9fe"
+    },
+    {
+      "path": "reproduce.ps1",
+      "bytes": 1471,
+      "sha256": "3887a12f7c4cd41a1f83e560c32977074304dd04cc311940c47f198c63bbb60c"
+    },
+    {
+      "path": "sources.json",
+      "bytes": 18662,
+      "sha256": "1671c7d10dfb981f8579effea4f9b1b2dbc299421498c0c3158e3fc0c2c9f8b3"
+    }
+  ]
+}

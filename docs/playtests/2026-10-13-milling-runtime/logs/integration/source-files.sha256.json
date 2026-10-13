@@ -1,0 +1,45 @@
+{
+  "files": [
+    {
+      "sha256": "111a7244b366b3a4aa70bbbff9824adc3393bbc0a140596a0d7b6a0df5f26e00",
+      "path": "autoload/save_store.gd"
+    },
+    {
+      "sha256": "49c2789e68b327acea1ae9fe845fe49935aae5c9a3ce6cee29b7f64c098f17ee",
+      "path": "scripts/game/growth_materials.gd"
+    },
+    {
+      "sha256": "2573ffd584d15deab3ded884afd3c955ef8dcc5a342972898e109b0cc9518bc0",
+      "path": "scripts/game/growth_schedule.gd"
+    },
+    {
+      "sha256": "75d9f177c1ed7b6d7de0edd0aca67b71a227a6ecf76c0b1801392bed3976f636",
+      "path": "scripts/game/pond_growth_director.gd"
+    },
+    {
+      "sha256": "2d3d939e30645f1e6ffef76bd5aa47069c57c328e83f5791a922a8261e49b521",
+      "path": "scripts/game/yard_world.gd"
+    },
+    {
+      "sha256": "f9fdf01ae1efe447a1880088ec48c823ddb4abab363ee0bf406d3dcaa2e7abfc",
+      "path": "scripts/game/yard_mill_view.gd"
+    },
+    {
+      "sha256": "85b3458042aa8e67efd3df0393d826d44b55d69a92f1e4166be8c97248eb54ac",
+      "path": "test/pond_growth_director_suite.gd"
+    },
+    {
+      "sha256": "85d70c7b5f8bae960cfcf9640ca99d16fd8f1ef523e5e2b40b7b91645eefc35d",
+      "path": "test/milling_director_suite.gd"
+    },
+    {
+      "sha256": "8223813ef77c0a5711f15fb1a42b62c75eb29950ad962bda4671ab1fe105274d",
+      "path": "tools/verify_daily_life.sh"
+    },
+    {
+      "sha256": "08896c740456388e15bedbbde56eb3833fcfa37a91c67e2f911f9e42f68c5cf3",
+      "path": "tools/lib/godot_suite_completions.tsv"
+    }
+  ],
+  "note": "Candidate source hashes captured after targeted runtime checks; no commit/public/Web claim."
+}

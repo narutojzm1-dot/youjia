@@ -1,0 +1,391 @@
+{
+  "schema": 1,
+  "recorded_gpu_base_commit": "45ea143b64ba28e59431d1334610ee3321b5eaa6",
+  "gpu_stage": "uncommitted runtime candidate at capture; source bytes locked below",
+  "view_sources_at_capture": [
+    {
+      "path": "scripts/game/yard_mill_view.gd",
+      "bytes": 3505,
+      "sha256": "f9fdf01ae1efe447a1880088ec48c823ddb4abab363ee0bf406d3dcaa2e7abfc"
+    },
+    {
+      "path": "test/yard_mill_view_suite.gd",
+      "bytes": 5173,
+      "sha256": "158edb7349068572ffcde11cdbc80fc02fe5548b5e158fb79386c19d3b79474a"
+    },
+    {
+      "path": "assets/holiday/props/millstone_v1/millstone-watercolor-v1.png",
+      "bytes": 2358584,
+      "sha256": "a9248478d8cea22d8244e355b72d71c860a7e4330f3154e844965192b6086f64"
+    },
+    {
+      "path": "assets/holiday/props/millstone_v1/millstone-watercolor-v1.png.import",
+      "bytes": 1006,
+      "sha256": "f7a5b0ac972ff3ea86ae8bc4ca3c588272f9886c34a011c20140275d8ac996a2"
+    },
+    {
+      "path": "assets/holiday/props/millstone_v1/README.md",
+      "bytes": 817,
+      "sha256": "4385d18f273d8f7abed60f6ac5c6465a50fb03e39cd94ca44d8d5e4210928b25"
+    }
+  ],
+  "source_capture_script_sha256": "610c41739dc5a2460ab941ee9d95ee25c24caa15231fbdda2964f79e0a11cd3f",
+  "runtime_commit_after_tests": "0554df0199fddc90c96998795c3c9dfff4e8fd17",
+  "head_when_archiving": "8b0413ed9b1100704713de257060528a9e945a4e",
+  "source_records": [
+    {
+      "source_group": "youjia-mill797-view-gpu",
+      "source_name": "integrated-working-sun.png",
+      "source_bytes": 2098010,
+      "source_sha256": "bad6f8237cb60c1d3dea30e4fb875eb176158d1bee6452b6f2f9105b7392211f",
+      "archived_path": "gpu/integrated-working-sun.png",
+      "archive_bytes": 2098010,
+      "archive_sha256": "bad6f8237cb60c1d3dea30e4fb875eb176158d1bee6452b6f2f9105b7392211f",
+      "normalization": "none; exact original bytes"
+    },
+    {
+      "source_group": "youjia-mill797-view-gpu",
+      "source_name": "integrated-working-overcast.png",
+      "source_bytes": 1823946,
+      "source_sha256": "44b0d1684db48fa3ac4902a28a2ea40e9d15b38c652febc6ffc565cdf3cb0e71",
+      "archived_path": "gpu/integrated-working-overcast.png",
+      "archive_bytes": 1823946,
+      "archive_sha256": "44b0d1684db48fa3ac4902a28a2ea40e9d15b38c652febc6ffc565cdf3cb0e71",
+      "normalization": "none; exact original bytes"
+    },
+    {
+      "source_group": "youjia-mill797-view-gpu",
+      "source_name": "integrated-reduced-overcast.png",
+      "source_bytes": 1823943,
+      "source_sha256": "59c26cec8437838f32f37c17eb789c79703c8b2777875b077aec056874a64032",
+      "archived_path": "gpu/integrated-reduced-overcast.png",
+      "archive_bytes": 1823943,
+      "archive_sha256": "59c26cec8437838f32f37c17eb789c79703c8b2777875b077aec056874a64032",
+      "normalization": "none; exact original bytes"
+    },
+    {
+      "source_group": "youjia-mill797-view-gpu",
+      "source_name": "integrated.stdout.log",
+      "source_bytes": 522,
+      "source_sha256": "737b9b7f1dec6ed78f742ed8b50f4f9b68012b20171995de667f7eb020659b43",
+      "archived_path": "logs/view/integrated.stdout.log",
+      "archive_bytes": 522,
+      "archive_sha256": "737b9b7f1dec6ed78f742ed8b50f4f9b68012b20171995de667f7eb020659b43",
+      "normalization": "none; exact original bytes"
+    },
+    {
+      "source_group": "youjia-mill797-view-gpu",
+      "source_name": "integrated.stderr.log",
+      "source_bytes": 0,
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "archived_path": "logs/view/integrated.stderr.log",
+      "archive_bytes": 0,
+      "archive_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "normalization": "none; exact original bytes"
+    },
+    {
+      "source_group": "youjia-mill797-view-gpu",
+      "source_name": "yard-mill-view-suite.log",
+      "source_bytes": 112,
+      "source_sha256": "c71f7b2196b7fb7382f89b212e11120b1d9cd632861d155f9a6f06e738ff7dfa",
+      "archived_path": "logs/view/yard-mill-view-suite.log",
+      "archive_bytes": 112,
+      "archive_sha256": "c71f7b2196b7fb7382f89b212e11120b1d9cd632861d155f9a6f06e738ff7dfa",
+      "normalization": "none; exact original bytes"
+    },
+    {
+      "source_group": "youjia-milling-runtime-tests",
+      "source_name": "growth_materials-initial.log",
+      "source_bytes": 114,
+      "source_sha256": "57eab84dcffa85d7378c47b6cfef20d72794b54c0042a5b1d1de78cbc02f3c5f",
+      "archived_path": "logs/integration/growth_materials-initial.log",
+      "archive_bytes": 114,
+      "archive_sha256": "57eab84dcffa85d7378c47b6cfef20d72794b54c0042a5b1d1de78cbc02f3c5f",
+      "normalization": "none; exact original bytes"
+    },
+    {
+      "source_group": "youjia-milling-runtime-tests",
+      "source_name": "growth_materials.log",
+      "source_bytes": 114,
+      "source_sha256": "57eab84dcffa85d7378c47b6cfef20d72794b54c0042a5b1d1de78cbc02f3c5f",
+      "archived_path": "logs/integration/growth_materials.log",
+      "archive_bytes": 114,
+      "archive_sha256": "57eab84dcffa85d7378c47b6cfef20d72794b54c0042a5b1d1de78cbc02f3c5f",
+      "normalization": "none; exact original bytes"
+    },
+    {
+      "source_group": "youjia-milling-runtime-tests",
+      "source_name": "meal_navigation.log",
+      "source_bytes": 113,
+      "source_sha256": "4931cf1db532c69078dbe8d47ed6f8c118fdd88bd6d49117f061536c9964f4a7",
+      "archived_path": "logs/integration/meal_navigation.log",
+      "archive_bytes": 113,
+      "archive_sha256": "4931cf1db532c69078dbe8d47ed6f8c118fdd88bd6d49117f061536c9964f4a7",
+      "normalization": "none; exact original bytes"
+    },
+    {
+      "source_group": "youjia-milling-runtime-tests",
+      "source_name": "milling_director.log",
+      "source_bytes": 115,
+      "source_sha256": "c5f02f3143dc369da41b6cc92f1cf0a57d271ec1fe8725b713a229d6ce089329",
+      "archived_path": "logs/integration/milling_director.log",
+      "archive_bytes": 115,
+      "archive_sha256": "c5f02f3143dc369da41b6cc92f1cf0a57d271ec1fe8725b713a229d6ce089329",
+      "normalization": "none; exact original bytes"
+    },
+    {
+      "source_group": "youjia-milling-runtime-tests",
+      "source_name": "physical_yard.log",
+      "source_bytes": 5536,
+      "source_sha256": "5c9a1b3ca2846d77b8ada192c3f43f6c1ee5326398a3eabbc5e385542cdb1b54",
+      "archived_path": "logs/integration/physical_yard.log",
+      "archive_bytes": 5536,
+      "archive_sha256": "5c9a1b3ca2846d77b8ada192c3f43f6c1ee5326398a3eabbc5e385542cdb1b54",
+      "normalization": "none; exact original bytes"
+    },
+    {
+      "source_group": "youjia-milling-runtime-tests",
+      "source_name": "pond_growth_director-before-view.log",
+      "source_bytes": 833,
+      "source_sha256": "cf6493e3da651ee2bcb241780d1d574b099cbafbd4cb28f6a306aeb1722b745a",
+      "archived_path": "logs/integration/pond_growth_director-before-view.log",
+      "archive_bytes": 833,
+      "archive_sha256": "cf6493e3da651ee2bcb241780d1d574b099cbafbd4cb28f6a306aeb1722b745a",
+      "normalization": "none; exact original bytes"
+    },
+    {
+      "source_group": "youjia-milling-runtime-tests",
+      "source_name": "pond_growth_director.log",
+      "source_bytes": 833,
+      "source_sha256": "cf6493e3da651ee2bcb241780d1d574b099cbafbd4cb28f6a306aeb1722b745a",
+      "archived_path": "logs/integration/pond_growth_director.log",
+      "archive_bytes": 833,
+      "archive_sha256": "cf6493e3da651ee2bcb241780d1d574b099cbafbd4cb28f6a306aeb1722b745a",
+      "normalization": "none; exact original bytes"
+    },
+    {
+      "source_group": "youjia-milling-runtime-tests",
+      "source_name": "source-files.sha256.json",
+      "source_bytes": 1614,
+      "source_sha256": "3b4406810bf5b52f4e2dc2f00e1663dd2647dcbce211f767871fc1c4de652214",
+      "archived_path": "logs/integration/source-files.sha256.json",
+      "archive_bytes": 1614,
+      "archive_sha256": "3b4406810bf5b52f4e2dc2f00e1663dd2647dcbce211f767871fc1c4de652214",
+      "normalization": "none; exact original bytes"
+    },
+    {
+      "source_group": "youjia-milling-runtime-tests",
+      "source_name": "summary-final.json",
+      "source_bytes": 1624,
+      "source_sha256": "75191555b468444475e1366b818971bb93acb82c7d52989193469394f5782065",
+      "archived_path": "logs/integration/summary-final.json",
+      "archive_bytes": 1624,
+      "archive_sha256": "75191555b468444475e1366b818971bb93acb82c7d52989193469394f5782065",
+      "normalization": "none; exact original bytes"
+    },
+    {
+      "source_group": "youjia-milling-runtime-20261013",
+      "source_name": "flour-meal-first.log",
+      "source_bytes": 108,
+      "source_sha256": "9869154900398257ca893d448dfa7c3c521e1e40787e98820ff43dc806ff6872",
+      "archived_path": "logs/leader/flour-meal-first.log",
+      "archive_bytes": 108,
+      "archive_sha256": "9869154900398257ca893d448dfa7c3c521e1e40787e98820ff43dc806ff6872",
+      "normalization": "none; exact original bytes"
+    },
+    {
+      "source_group": "youjia-milling-runtime-20261013",
+      "source_name": "flour_meal-final.log",
+      "source_bytes": 108,
+      "source_sha256": "9869154900398257ca893d448dfa7c3c521e1e40787e98820ff43dc806ff6872",
+      "archived_path": "logs/leader/flour_meal-final.log",
+      "archive_bytes": 108,
+      "archive_sha256": "9869154900398257ca893d448dfa7c3c521e1e40787e98820ff43dc806ff6872",
+      "normalization": "none; exact original bytes"
+    },
+    {
+      "source_group": "youjia-milling-runtime-20261013",
+      "source_name": "house_cooking-final.log",
+      "source_bytes": 112,
+      "source_sha256": "2c539f38a0d22b900d2575a57e377c74c969bff0ab3a844aa7eaeb9c618823b3",
+      "archived_path": "logs/leader/house_cooking-final.log",
+      "archive_bytes": 112,
+      "archive_sha256": "2c539f38a0d22b900d2575a57e377c74c969bff0ab3a844aa7eaeb9c618823b3",
+      "normalization": "none; exact original bytes"
+    },
+    {
+      "source_group": "youjia-milling-runtime-20261013",
+      "source_name": "house_sleep-final.log",
+      "source_bytes": 116,
+      "source_sha256": "7f6a984daf9f9fb9681331edb5ebf1b0b4b882a1ff6525ab925b92219f477d25",
+      "archived_path": "logs/leader/house_sleep-final.log",
+      "archive_bytes": 116,
+      "archive_sha256": "7f6a984daf9f9fb9681331edb5ebf1b0b4b882a1ff6525ab925b92219f477d25",
+      "normalization": "none; exact original bytes"
+    },
+    {
+      "source_group": "youjia-milling-runtime-20261013",
+      "source_name": "import-initial.log",
+      "source_bytes": 4229,
+      "source_sha256": "6a6b116e4a04843f0f49f88abffd8b8ab802495d2c3c522b6364bb98053c0026",
+      "archived_path": "logs/leader/import-initial.log",
+      "archive_bytes": 4229,
+      "archive_sha256": "6a6b116e4a04843f0f49f88abffd8b8ab802495d2c3c522b6364bb98053c0026",
+      "normalization": "none; exact original bytes"
+    },
+    {
+      "source_group": "youjia-milling-runtime-20261013",
+      "source_name": "import-mipmaps.log",
+      "source_bytes": 2233,
+      "source_sha256": "17410814781c272b668f76b34324d8df794d55c89dc9c7f99cd25b0a86a8d170",
+      "archived_path": "logs/leader/import-mipmaps.log",
+      "archive_bytes": 2233,
+      "archive_sha256": "17410814781c272b668f76b34324d8df794d55c89dc9c7f99cd25b0a86a8d170",
+      "normalization": "none; exact original bytes"
+    },
+    {
+      "source_group": "youjia-milling-runtime-20261013",
+      "source_name": "meal_audio_host.log",
+      "source_bytes": 113,
+      "source_sha256": "7d76115d4ae0911b9f19fac4decde7677722f4af364b607fceb47109a2ca9ff6",
+      "archived_path": "logs/leader/meal_audio_host.log",
+      "archive_bytes": 113,
+      "archive_sha256": "7d76115d4ae0911b9f19fac4decde7677722f4af364b607fceb47109a2ca9ff6",
+      "normalization": "none; exact original bytes"
+    },
+    {
+      "source_group": "youjia-milling-runtime-20261013",
+      "source_name": "meal_ledger.log",
+      "source_bytes": 109,
+      "source_sha256": "8584c7f72251dfd94d690f80a9bc721493d6446695bcb9e3aa4aea596fcafcb9",
+      "archived_path": "logs/leader/meal_ledger.log",
+      "archive_bytes": 109,
+      "archive_sha256": "8584c7f72251dfd94d690f80a9bc721493d6446695bcb9e3aa4aea596fcafcb9",
+      "normalization": "none; exact original bytes"
+    },
+    {
+      "source_group": "youjia-milling-runtime-20261013",
+      "source_name": "meal_planner.log",
+      "source_bytes": 110,
+      "source_sha256": "7d5c328258907435f2464993008f32e5e5d73278481550a4d2e4d059f1f23c53",
+      "archived_path": "logs/leader/meal_planner.log",
+      "archive_bytes": 110,
+      "archive_sha256": "7d5c328258907435f2464993008f32e5e5d73278481550a4d2e4d059f1f23c53",
+      "normalization": "none; exact original bytes"
+    },
+    {
+      "source_group": "youjia-milling-runtime-20261013",
+      "source_name": "release_notes-final.log",
+      "source_bytes": 112,
+      "source_sha256": "259fb36d8586809bd3b50e80edd77685fa0ebcd1b67f8deabd46a10e0cad3e0e",
+      "archived_path": "logs/leader/release_notes-final.log",
+      "archive_bytes": 112,
+      "archive_sha256": "259fb36d8586809bd3b50e80edd77685fa0ebcd1b67f8deabd46a10e0cad3e0e",
+      "normalization": "none; exact original bytes"
+    },
+    {
+      "source_group": "youjia-milling-runtime-20261013",
+      "source_name": "yard_basket_grid-flour.log",
+      "source_bytes": 113,
+      "source_sha256": "79dac40a6f4f672554c5820d828f3fb6244e089d721e119a07142174e764b0aa",
+      "archived_path": "logs/leader/yard_basket_grid-flour.log",
+      "archive_bytes": 113,
+      "archive_sha256": "79dac40a6f4f672554c5820d828f3fb6244e089d721e119a07142174e764b0aa",
+      "normalization": "none; exact original bytes"
+    },
+    {
+      "source_group": "youjia-milling-runtime-20261013",
+      "source_name": "yard_basket_grid-order.log",
+      "source_bytes": 113,
+      "source_sha256": "8eb25688138e03e605c885ae8d4eeac319335939acb445afb6d53bd83a976c58",
+      "archived_path": "logs/leader/yard_basket_grid-order.log",
+      "archive_bytes": 113,
+      "archive_sha256": "8eb25688138e03e605c885ae8d4eeac319335939acb445afb6d53bd83a976c58",
+      "normalization": "none; exact original bytes"
+    },
+    {
+      "source_group": "youjia-milling-runtime-20261013",
+      "source_name": "yard_basket_grid.log",
+      "source_bytes": 1128,
+      "source_sha256": "da456d9a42ef67f8cc99d5e54a6eb0cdb3be9eaaeb9a00a524e5544c449b64d2",
+      "archived_path": "logs/leader/yard_basket_grid.log",
+      "archive_bytes": 1128,
+      "archive_sha256": "da456d9a42ef67f8cc99d5e54a6eb0cdb3be9eaaeb9a00a524e5544c449b64d2",
+      "normalization": "none; exact original bytes"
+    },
+    {
+      "source_group": "youjia-mill797-view-gpu",
+      "source_name": "capture-integrated.gd",
+      "source_bytes": 1778,
+      "source_sha256": "610c41739dc5a2460ab941ee9d95ee25c24caa15231fbdda2964f79e0a11cd3f",
+      "archived_path": "capture.gd",
+      "archive_bytes": 2263,
+      "archive_sha256": "7a3a118a0b6d870e33720ea53e120f4542142f4d7f850aaa3e463a13c6d8d8f7",
+      "normalization": "output path replaced by YOUJIA_MILL_CAPTURE_DIR; added isolation/output guard; rendering operations unchanged; archived version not rerun"
+    },
+    {
+      "source_group": "youjia-milling-runtime-tests",
+      "source_name": "growth_carried_photo.log",
+      "source_bytes": 118,
+      "source_sha256": "7e17196896fd27f612ee4ce0fdd70954bb55e1c2e7a22fc9be5af8066ede4757",
+      "archived_path": "logs/integration/growth_carried_photo.log",
+      "archive_bytes": 118,
+      "archive_sha256": "7e17196896fd27f612ee4ce0fdd70954bb55e1c2e7a22fc9be5af8066ede4757",
+      "normalization": "none; exact original bytes"
+    },
+    {
+      "source_group": "youjia-milling-runtime-tests",
+      "source_name": "photo_moment_save.log",
+      "source_bytes": 121,
+      "source_sha256": "68ca288eaf3d991d9c9a39ba4eeb6065ac4c90afb52b0c740553bfca7f6df672",
+      "archived_path": "logs/integration/photo_moment_save.log",
+      "archive_bytes": 121,
+      "archive_sha256": "68ca288eaf3d991d9c9a39ba4eeb6065ac4c90afb52b0c740553bfca7f6df672",
+      "normalization": "none; exact original bytes"
+    },
+    {
+      "source_group": "youjia-milling-runtime-tests",
+      "source_name": "photo_moment_render.log",
+      "source_bytes": 1458,
+      "source_sha256": "0ee40c779da4caa4fcdf9a897f6d5b749a561cb656de7284ba61bb59dcee75fb",
+      "archived_path": "logs/integration/photo_moment_render.log",
+      "archive_bytes": 1458,
+      "archive_sha256": "0ee40c779da4caa4fcdf9a897f6d5b749a561cb656de7284ba61bb59dcee75fb",
+      "normalization": "none; exact original bytes"
+    },
+    {
+      "source_group": "youjia-milling-runtime-tests",
+      "source_name": "yard_mill_view.log",
+      "source_bytes": 112,
+      "source_sha256": "c71f7b2196b7fb7382f89b212e11120b1d9cd632861d155f9a6f06e738ff7dfa",
+      "archived_path": "logs/integration/yard_mill_view.log",
+      "archive_bytes": 112,
+      "archive_sha256": "c71f7b2196b7fb7382f89b212e11120b1d9cd632861d155f9a6f06e738ff7dfa",
+      "normalization": "none; exact original bytes"
+    },
+    {
+      "source_group": "youjia-milling-runtime-tests",
+      "source_name": "photo_moment_render-before-line-fixture.log",
+      "source_bytes": 3454,
+      "source_sha256": "1947a6db17706ca93e5ff0758a97b33a97cc6889817e313999ef4f7bab1df9ab",
+      "archived_path": "logs/integration/photo_moment_render-before-line-fixture.log",
+      "archive_bytes": 3454,
+      "archive_sha256": "1947a6db17706ca93e5ff0758a97b33a97cc6889817e313999ef4f7bab1df9ab",
+      "normalization": "none; exact original bytes"
+    },
+    {
+      "source_group": "youjia-milling-runtime-tests",
+      "source_name": "summary-photo-final.json",
+      "source_bytes": 2064,
+      "source_sha256": "3680c7560421d5adbc21c9b9a6db0dd9464051daaa6789dce488fd6423eff66a",
+      "archived_path": "logs/integration/summary-photo-final.json",
+      "archive_bytes": 2064,
+      "archive_sha256": "3680c7560421d5adbc21c9b9a6db0dd9464051daaa6789dce488fd6423eff66a",
+      "normalization": "none; exact original bytes"
+    }
+  ],
+  "privacy": "No save directories, private mail, local usernames or absolute private paths are archived. Text normalization, if needed, is itemized. PNGs are untouched.",
+  "ordinary_web_verified": false,
+  "final_ci_verified": false,
+  "portrait_carry_regression_status": "native bounded fix verified by 39 + 48 + 2613 + 21 tests; ordinary Web and final CI pending"
+}
