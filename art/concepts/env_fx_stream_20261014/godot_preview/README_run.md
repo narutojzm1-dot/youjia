@@ -1,0 +1,54 @@
+# 溪流流向隔离预览（Godot 4.x）
+
+只打开本目录的 `project.godot`。这是 #749 溪流候选预览，不加载主游戏，不改 `assets/holiday` 运行时资源、生产场景、存档或导航。
+
+场景 `stream_flow_preview.tscn` 已经接好：
+
+- 底图 `textures/near_path_base.png`（从已批准 `assets/holiday/exploration/near_path_02.webp` 复制，1672×941）
+- 流向 `textures/flow_map.png`（RG 为单位流向，128 为零；+G 是画面下方，即下游）
+- 弧长坐标 `textures/coord_sn.png`（R 为沿溪床的周期相位，G 为横向）
+- 水纹 `textures/ripple_tile.png`（R/G 两层，横向一个周期）
+- 笔触 `textures/water_detail.png`（只含水色高频，岸上为中性灰）
+- 着色器 `stream_flow.gdshader` 的振幅、位移夹紧和双相位权重与 `generate_stream_flow_anim.py` 相同
+
+打开后 phase 自动从 0 走到 2π，一圈 8 秒（与 40 帧 @ 5fps 的 PNG 序列同一相位）。溪水里的亮条沿弯道往下游走；草地、桥面、石头和纸边保持不动。
+
+本环境若没有 Godot 可执行文件，用同目录上一级的 GIF / mp4 审阅即可。有 Godot 4.7 时再打开本工程。
+
+## 启动命令
+
+在仓库根目录执行。`godot` 换成本机 Godot 4.7 可执行文件名即可。
+
+横屏（与底图同比例）：
+
+```
+godot --path art/concepts/env_fx_stream_20261014/godot_preview --resolution 1280x720
+```
+
+竖屏窗口（整幅按比例缩进，上下留边）：
+
+```
+godot --path art/concepts/env_fx_stream_20261014/godot_preview --resolution 390x844
+```
+
+## 暂停和低动效
+
+- `P` 或空格，或「暂停」按钮：停止 phase 累加。
+- `L`，或「低动效」按钮：速度 ×0.25，仍往下游走，不改成左右摆。
+- 两开关同时开时，暂停优先。
+
+`strength` 默认 1。低动效静帧是生成脚本写出的 `stream_static_low_motion.png`，不是把着色器强度改成 0。
+
+## 重新导出贴图
+
+```
+python3 art/concepts/env_fx_stream_20261014/generate_stream_flow_anim.py --frames 40 --export-preview
+```
+
+## 本机自检（本环境有 Godot 4.7 时）
+
+```
+godot --path art/concepts/env_fx_stream_20261014/godot_preview --headless -- --self-check
+```
+
+仍只是隔离候选。请 ART-DIRECTOR / CODEX-LEAD 审阅连续播放下的流向是否单方向、岸线与桥石是否稳住。

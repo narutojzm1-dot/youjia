@@ -1,0 +1,26 @@
+; 隔离溪流流向预览。只打开本目录的 project.godot，不加载主游戏。
+config_version=5
+
+[application]
+
+config/name="Stream Flow Preview 749"
+config/description="Isolated preview for creek directional-flow candidate #749. Not the game."
+run/main_scene="res://stream_flow_preview.tscn"
+config/features=PackedStringArray("4.7", "GL Compatibility")
+boot_splash/show_image=false
+boot_splash/bg_color=Color(0, 0, 0, 1)
+
+[display]
+
+window/size/viewport_width=1672
+window/size/viewport_height=941
+window/stretch/mode="canvas_items"
+window/stretch/aspect="keep"
+window/size/resizable=true
+
+[rendering]
+
+textures/canvas_textures/default_texture_filter=0
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"
+environment/defaults/default_clear_color=Color(0, 0, 0, 1)

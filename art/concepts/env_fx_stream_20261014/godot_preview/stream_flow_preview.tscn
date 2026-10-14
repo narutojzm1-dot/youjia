@@ -1,0 +1,63 @@
+[gd_scene load_steps=10 format=3]
+
+[ext_resource type="Shader" path="res://stream_flow.gdshader" id="1_shader"]
+[ext_resource type="Script" path="res://stream_flow_driver.gd" id="2_driver"]
+[ext_resource type="Texture2D" path="res://textures/near_path_base.png" id="3_base"]
+[ext_resource type="Texture2D" path="res://textures/flow_map.png" id="4_flow"]
+[ext_resource type="Texture2D" path="res://textures/coord_sn.png" id="5_coord"]
+[ext_resource type="Texture2D" path="res://textures/ripple_tile.png" id="6_ripple"]
+[ext_resource type="Texture2D" path="res://textures/water_detail.png" id="7_detail"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_stream"]
+shader = ExtResource("1_shader")
+shader_parameter/base_tex = ExtResource("3_base")
+shader_parameter/flow_map = ExtResource("4_flow")
+shader_parameter/coord_sn = ExtResource("5_coord")
+shader_parameter/ripple_tile = ExtResource("6_ripple")
+shader_parameter/water_detail = ExtResource("7_detail")
+shader_parameter/phase = 0.0
+shader_parameter/strength = 1.0
+shader_parameter/base_size = Vector2(1672, 941)
+shader_parameter/advect_travel_px = 12.0
+shader_parameter/ripple_amp = 46.0
+shader_parameter/advect_gain = 0.5
+shader_parameter/advect_clamp = 8.0
+shader_parameter/detail_scale = 48.0
+
+[node name="StreamFlowPreview" type="Node2D"]
+script = ExtResource("2_driver")
+
+[node name="Preview" type="Sprite2D" parent="."]
+centered = false
+texture = ExtResource("3_base")
+texture_filter = 1
+material = SubResource("ShaderMaterial_stream")
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="Panel" type="PanelContainer" parent="UI"]
+offset_left = 16.0
+offset_top = 700.0
+offset_right = 1480.0
+offset_bottom = 920.0
+
+[node name="VBox" type="VBoxContainer" parent="UI/Panel"]
+layout_mode = 2
+
+[node name="Buttons" type="HBoxContainer" parent="UI/Panel/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="PauseButton" type="Button" parent="UI/Panel/VBox/Buttons"]
+custom_minimum_size = Vector2(600, 100)
+layout_mode = 2
+text = "暂停 Pause (P)"
+
+[node name="LowMotionButton" type="Button" parent="UI/Panel/VBox/Buttons"]
+custom_minimum_size = Vector2(760, 100)
+layout_mode = 2
+text = "低动效 关 LowOff (L)"
+
+[node name="Status" type="Label" parent="UI/Panel/VBox"]
+layout_mode = 2
+text = "stream phase 0.000"
