@@ -6,6 +6,8 @@ multi-scale continuous alpha/micro-deform modulation + soft spatial envelope.
 Foreground path / cottage / bridge / paper rim stay pixel-stable across frames.
 
 Aligned with godot_preview/mist_density.gdshader defaults.
+# 2026-10-14 加强运动：整数谐波聚散 + 可见漂移/抬升。phase 与 phase+2π 相同。
+# 手绘层本身横向几乎均匀，平移必须带动调制波；覆盖度只乘一次，避免运动被平方吃掉。
 """
 from __future__ import annotations
 
@@ -16,45 +18,60 @@ import shutil
 import numpy as np
 from PIL import Image, ImageDraw, ImageFilter
 
-# Defaults mirrored by mist_density.gdshader
+# Defaults mirrored by mist_density.gdshader / mist_density_preview.tscn
 BASE_SIZE = (1672, 941)
-FAR_ORIGIN = (80, 340)
-NEAR_ORIGIN = (220, 420)
+# 雾带重心放到谷地，而不是压在近景小路和屋顶上
+FAR_ORIGIN = (70, 220)
+NEAR_ORIGIN = (160, 300)
 FAR_SCALE = 1.0  # layers already pre-scaled into mist_far/near pngs
 NEAR_SCALE = 1.0
-# Multi-scale modulation denominators (pixel space on each layer)
-FAR_MOD_XX = 95.0
-FAR_MOD_YY = 70.0
-FAR_MOD_FINE = 38.0
-NEAR_MOD_XX = 70.0
-NEAR_MOD_YY = 55.0
-NEAR_MOD_FINE = 28.0
-# Optional slow horizontal drift (pixels over full 2π); small so motion is gather/disperse first
-FAR_DRIFT_PX = 6.0
-NEAR_DRIFT_PX = -4.0
-# Micro UV deform amplitude in pixels
-FAR_DEFORM = 1.4
-NEAR_DEFORM = 1.8
-BLUR_RADIUS = 22
-# Soft envelope: allow mist in mid valley/lake band; protect foreground path & cottage
-ENVELOPE_TOP = 280
-ENVELOPE_BOTTOM = 720
-ENVELOPE_LEFT = 40
+# 调制分母（层像素）。波长 = 2π * 分母；一圈平移一个大团波长。
+FAR_MOD_XX = 230.0
+FAR_MOD_YY = 160.0
+FAR_MOD_FINE = 92.0
+NEAR_MOD_XX = 145.0
+NEAR_MOD_YY = 110.0
+NEAR_MOD_FINE = 60.0
+# 水平漂移（像素，sin(phase)）。带动层空间里的浓淡波，不是空移一块均匀色带。
+FAR_DRIFT_PX = 150.0
+NEAR_DRIFT_PX = -120.0
+# 垂直抬升（像素）。(1-cos(phase))/2：起点贴谷底，中点抬到最高，一圈回到起点。
+FAR_LIFT_PX = 48.0
+NEAR_LIFT_PX = 62.0
+# 微形变幅度（像素）。空间周期须与 shader 常量一致。
+FAR_DEFORM = 22.0
+NEAR_DEFORM = 30.0
+DEFORM_X_PERIOD = 160.0
+DEFORM_Y_PERIOD = 300.0
+# 近层相位错开，避免两层同步呼吸
+NEAR_PHASE = 2.1
+# 远层相对强度
+FAR_STRENGTH = 0.90
+# 单层覆盖上限，峰值是乳白色雾团，不是铺满的死白
+CA_CAP = 170.0
+BLUR_RADIUS = 26
+# 谷地/湖面软带；前景小路、木屋屋顶、桥、纸边挖空
+ENVELOPE_TOP = 430
+ENVELOPE_BOTTOM = 740
+ENVELOPE_LEFT = 80
 ENVELOPE_RIGHT = 1500
 # Hard protect ellipses / polygons (black = protect) before blur
-PATH_ELLIPSE = (420, 620, 980, 920)  # foreground path lower center
-COTTAGE_BOX = (1180, 480, 1580, 780)
-BRIDGE_BOX = (180, 560, 420, 720)
+PATH_ELLIPSE = (400, 780, 1150, 970)  # 近景小路，留在雾带下方
+COTTAGE_BOX = (1120, 340, 1640, 800)  # 木屋含屋顶
+BRIDGE_BOX = (100, 500, 500, 760)
 PAPER_RIM = 28  # fade outer paper edge
 
 
 def mist_modulation(phase: float, xx: np.ndarray, yy: np.ndarray, mod_xx: float, mod_yy: float, mod_fine: float) -> np.ndarray:
-    """Integer-harmonic gather/disperse; phase=0 and 2π identical."""
-    coarse = np.sin(phase + xx / mod_xx + yy / mod_yy) * np.cos(phase * 0.5 + yy / (mod_yy * 1.3))
-    fine = np.sin(phase * 2.0 + xx / mod_fine - yy / (mod_fine * 1.1))
-    # Bias toward soft mist; never full wipe
-    mod = 0.42 + 0.38 * coarse + 0.12 * fine
-    return np.clip(mod, 0.18, 0.95)
+    """整数谐波聚散。只用 1× 与 2×，phase=0 与 phase=2π 相同，循环缝无跳变。
+
+    大团每圈平移一个波长（中点相对起点错开半个波长）；细团两圈、反向。
+    """
+    bank = np.sin(phase + xx / mod_xx + yy / (mod_yy * 1.7))
+    wisp = np.sin(phase * 2.0 - xx / mod_fine + yy / mod_yy)
+    # 薄隙仍留一点雾，峰值拉到明显的一团
+    mod = 0.12 + 0.58 * bank + 0.30 * wisp
+    return np.clip(mod, 0.02, 1.0)
 
 
 def build_envelope(size: tuple[int, int]) -> Image.Image:
@@ -65,13 +82,13 @@ def build_envelope(size: tuple[int, int]) -> Image.Image:
     # Vertical falloff: strongest mid band
     for y in range(h):
         if y < ENVELOPE_TOP:
-            a = int(255 * max(0.0, 1.0 - (ENVELOPE_TOP - y) / 120.0) * 0.35)
+            a = int(255 * max(0.0, 1.0 - (ENVELOPE_TOP - y) / 160.0) * 0.45)
         elif y > ENVELOPE_BOTTOM:
-            a = int(255 * max(0.0, 1.0 - (y - ENVELOPE_BOTTOM) / 140.0) * 0.25)
+            a = int(255 * max(0.0, 1.0 - (y - ENVELOPE_BOTTOM) / 160.0) * 0.35)
         else:
-            # Peak near lake mid
+            # 谷地中段留出足够浓度，雾团的浓淡才看得见
             t = (y - ENVELOPE_TOP) / max(1.0, ENVELOPE_BOTTOM - ENVELOPE_TOP)
-            a = int(255 * (0.55 + 0.45 * np.sin(np.pi * t)))
+            a = int(255 * (0.72 + 0.28 * np.sin(np.pi * t)))
         draw.line([(0, y), (w, y)], fill=a)
     # Horizontal soft sides
     side = Image.new("L", size, 0)
@@ -127,27 +144,25 @@ def sample_layer(
     origin: tuple[int, int],
     phase: float,
     drift_px: float,
+    lift_px: float,
     deform: float,
     mod_xx: float,
     mod_yy: float,
     mod_fine: float,
     strength: float,
 ) -> tuple[np.ndarray, np.ndarray]:
-    """Return RGB u8 and A u8 arrays for the layer contribution at base pixel coords."""
+    """直线 RGB 与覆盖度 ca。覆盖度稍后只与包络相乘一次。"""
     h, w = layer_rgba.shape[:2]
     ox, oy = origin
-    # Optional translation (optional component per #749)
+    # 水平漂移带动调制采样点；垂直抬升让雾带边缘一圈内升起再落下
     drift = drift_px * np.sin(phase)
-    # Local coords into layer
-    lx = base_px_x - ox - drift
-    ly = base_px_y - oy
-    # Micro deform
-    lx = lx + deform * np.sin(phase + base_px_y / 55.0)
-    ly = ly + deform * 0.6 * np.cos(phase + base_px_x / 70.0)
+    lift = lift_px * (1.0 - np.cos(phase)) * 0.5
+    lx = base_px_x - ox - drift + deform * 0.55 * np.sin(phase * 2.0 + base_px_y / DEFORM_X_PERIOD)
+    ly = base_px_y - oy - lift + deform * np.cos(phase + base_px_x / DEFORM_Y_PERIOD)
     xi = np.floor(lx).astype(np.int32)
     yi = np.floor(ly).astype(np.int32)
     inside = (xi >= 0) & (xi < w) & (yi >= 0) & (yi < h)
-    rgb = np.zeros(base_px_x.shape + (3,), dtype=np.int32)
+    rgb = np.zeros(base_px_x.shape + (3,), dtype=np.float64)
     a = np.zeros(base_px_x.shape, dtype=np.int32)
     if not inside.any():
         return rgb, a
@@ -155,16 +170,9 @@ def sample_layer(
     ys = yi[inside]
     pix = layer_rgba[ys, xs]
     mod = mist_modulation(phase, xs.astype(np.float64), ys.astype(np.float64), mod_xx, mod_yy, mod_fine)
-    ca = np.clip(np.floor(pix[:, 3].astype(np.float64) * mod * strength), 0, 255).astype(np.int32)
-    # paste-style: RGB and A each multiplied by ca
-    pr = _muldiv255(pix[:, 0], ca)
-    pg = _muldiv255(pix[:, 1], ca)
-    pb = _muldiv255(pix[:, 2], ca)
-    pa = _muldiv255(ca, ca)
-    rgb[inside, 0] = pr
-    rgb[inside, 1] = pg
-    rgb[inside, 2] = pb
-    a[inside] = pa
+    ca = np.clip(np.floor(pix[:, 3].astype(np.float64) * mod * strength), 0, CA_CAP).astype(np.int32)
+    rgb[inside] = pix[:, :3]
+    a[inside] = ca
     return rgb, a
 
 
@@ -179,22 +187,19 @@ def composite_frame(
     h, w = base_rgb.shape[:2]
     yy, xx = np.mgrid[0:h, 0:w].astype(np.float64)
     far_rgb, far_a = sample_layer(
-        far, xx, yy, FAR_ORIGIN, phase, FAR_DRIFT_PX, FAR_DEFORM,
-        FAR_MOD_XX, FAR_MOD_YY, FAR_MOD_FINE, strength * 0.85,
+        far, xx, yy, FAR_ORIGIN, phase, FAR_DRIFT_PX, FAR_LIFT_PX, FAR_DEFORM,
+        FAR_MOD_XX, FAR_MOD_YY, FAR_MOD_FINE, strength * FAR_STRENGTH,
     )
     near_rgb, near_a = sample_layer(
-        near, xx, yy, NEAR_ORIGIN, phase + 1.7, NEAR_DRIFT_PX, NEAR_DEFORM,
+        near, xx, yy, NEAR_ORIGIN, phase + NEAR_PHASE, NEAR_DRIFT_PX, NEAR_LIFT_PX, NEAR_DEFORM,
         NEAR_MOD_XX, NEAR_MOD_YY, NEAR_MOD_FINE, strength,
     )
-    # Over far then near (near sits closer)
+    # 先远后近。覆盖度 = ca 与包络各乘一次，雾色按这个比例盖到原画上。
     out = base_rgb.astype(np.float64)
+    mask_i = mask_u8.astype(np.int32)
     for rgb, a in ((far_rgb, far_a), (near_rgb, near_a)):
-        ma = _muldiv255(a, mask_u8.astype(np.int32)).astype(np.float64) / 255.0
-        mr = _muldiv255(rgb[:, :, 0], mask_u8.astype(np.int32)).astype(np.float64)
-        mg = _muldiv255(rgb[:, :, 1], mask_u8.astype(np.int32)).astype(np.float64)
-        mb = _muldiv255(rgb[:, :, 2], mask_u8.astype(np.int32)).astype(np.float64)
-        masked = np.stack([mr, mg, mb], axis=-1)
-        out = masked * ma[..., None] + out * (1.0 - ma[..., None])
+        cov = _muldiv255(a, mask_i).astype(np.float64) / 255.0
+        out = rgb * cov[..., None] + out * (1.0 - cov[..., None])
     return np.clip(np.round(out), 0, 255).astype(np.uint8)
 
 
@@ -260,17 +265,30 @@ def generate(out_dir=None, n_frames=40, base_path=None, far_path=None, near_path
             shutil.copy2(src, os.path.join(sample_dir, f"mist_frame_{idx:02d}.png"))
     shutil.copy2(os.path.join(out_dir, "mist_static_low_motion.png"), os.path.join(sample_dir, "mist_static_low_motion.png"))
 
-    # Stability check: protect zones should be near-identical
+    # 保护区应几乎不动；谷地浓淡在首帧与中帧必须肉眼可辨。循环缝应接近相邻帧，而不是跳变。
     f0 = np.array(Image.open(os.path.join(out_dir, "mist_frame_00.png")))
+    f1 = np.array(Image.open(os.path.join(out_dir, "mist_frame_01.png")))
     f10 = np.array(Image.open(os.path.join(out_dir, "mist_frame_10.png")))
-    protect = (mask_u8 < 8)
-    if protect.any():
-        diff = np.max(np.abs(f0[protect].astype(np.int16) - f10[protect].astype(np.int16)))
-        print(f"Protect-zone max channel diff frame00 vs 10: {diff}")
-    skyish = mask_u8 > 40
-    if skyish.any():
-        diff2 = np.max(np.abs(f0[skyish].astype(np.int16) - f10[skyish].astype(np.int16)))
-        print(f"Envelope-active max channel diff frame00 vs 10: {diff2}")
+    f20 = np.array(Image.open(os.path.join(out_dir, "mist_frame_20.png")))
+    f39 = np.array(Image.open(os.path.join(out_dir, "mist_frame_39.png")))
+    protect = mask_u8 < 8
+    valley = mask_u8 > 100
+
+    def _motion(a, b, label):
+        d = np.abs(a.astype(np.int16) - b.astype(np.int16))
+        ch = d.max(axis=2)
+        valley_mean = float(d[valley].mean()) if valley.any() else -1.0
+        protect_max = int(d[protect].max()) if protect.any() else -1
+        print(
+            f"{label} mean {d.mean():.2f} valley {valley_mean:.2f} "
+            f"frac>8 {(ch > 8).mean():.3f} frac>20 {(ch > 20).mean():.3f} "
+            f"max {int(d.max())} protect_max {protect_max}"
+        )
+
+    _motion(f0, f1, "frame00 vs 01")
+    _motion(f0, f10, "frame00 vs 10")
+    _motion(f0, f20, "frame00 vs 20")
+    _motion(f0, f39, "frame00 vs 39 seam")
 
     env.save(os.path.join(script_dir, "mask_envelope.png"), optimize=True)
     if export_preview_tex:

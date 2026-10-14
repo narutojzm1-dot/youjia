@@ -10,7 +10,7 @@
 - 语义遮罩 `mask_path.png` / `mask_cottage.png` / `mask_bridge.png`（白色允许雾，黑色保护）
 - 着色器 `mist_density.gdshader` 的原点、漂移、微形变与多尺度调制分母与 `generate_mist_density_anim.py` 相同
 
-打开后 phase 自动从 0 走到 2π，一圈 8 秒（与 40 帧 @ 5fps 的 PNG 序列同一相位）。运动以局部浓淡聚散与微形变为主，平移仅为可选小幅分量。
+打开后 phase 自动从 0 走到 2π，一圈 8 秒（与 40 帧 @ 5fps 的 PNG 序列同一相位）。谷地雾团会漂移并有浓淡呼吸；近景小路和屋顶保持可读。原点、漂移、抬升、形变、调制分母与 `ca_cap` 跟生成脚本一致。
 
 ## 启动命令
 
