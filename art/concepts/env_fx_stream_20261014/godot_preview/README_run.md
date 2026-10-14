@@ -9,9 +9,10 @@
 - 弧长坐标 `textures/coord_sn.png`（R 为沿溪床的周期相位，G 为横向）
 - 水纹 `textures/ripple_tile.png`（R/G 同一层，横向一整圈；相位直接平移）
 - 笔触 `textures/water_detail.png`（只含水色高频，岸上为中性灰）
-- 着色器 `stream_flow.gdshader` 的振幅、位移夹紧和双相位权重与 `generate_stream_flow_anim.py` 相同
+- 次级 `textures/secondary_map.png`（R 横纹相位，G 侧流相位，B 涡流角度，A 宽水面）与 `textures/secondary_weight.png`（R 横纹、G 侧流、B 涡流权重）
+- 着色器 `stream_flow.gdshader` 的振幅、位移夹紧、双相位权重和次级水流与 `generate_stream_flow_anim.py` 相同
 
-打开后 phase 自动从 0 走到 2π，一圈 8 秒（与 40 帧 @ 5fps 的 PNG 序列同一相位）。溪水里的亮条沿弯道往下游走；草地、桥面、石头和纸边保持不动。
+打开后 phase 自动从 0 走到 2π，一圈 8 秒（与 40 帧 @ 5fps 的 PNG 序列同一相位）。溪水里的亮条沿弯道往下游走。宽水面另有侧流、横向涟漪和轻涡流；草地、桥面、石头和纸边保持不动。
 
 本环境若没有 Godot 可执行文件，用同目录上一级的 GIF / mp4 审阅即可。有 Godot 4.7 时再打开本工程。
 

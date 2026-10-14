@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3]
+[gd_scene load_steps=12 format=3]
 
 [ext_resource type="Shader" path="res://stream_flow.gdshader" id="1_shader"]
 [ext_resource type="Script" path="res://stream_flow_driver.gd" id="2_driver"]
@@ -7,6 +7,8 @@
 [ext_resource type="Texture2D" path="res://textures/coord_sn.png" id="5_coord"]
 [ext_resource type="Texture2D" path="res://textures/ripple_tile.png" id="6_ripple"]
 [ext_resource type="Texture2D" path="res://textures/water_detail.png" id="7_detail"]
+[ext_resource type="Texture2D" path="res://textures/secondary_map.png" id="8_secondary"]
+[ext_resource type="Texture2D" path="res://textures/secondary_weight.png" id="9_secw"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_stream"]
 shader = ExtResource("1_shader")
@@ -23,6 +25,12 @@ shader_parameter/ripple_amp = 118.0
 shader_parameter/advect_gain = 0.5
 shader_parameter/advect_clamp = 8.0
 shader_parameter/detail_scale = 48.0
+shader_parameter/secondary_map = ExtResource("8_secondary")
+shader_parameter/secondary_weight = ExtResource("9_secw")
+shader_parameter/cross_amp = 112.0
+shader_parameter/side_amp = 148.0
+shader_parameter/eddy_amp = 132.0
+shader_parameter/secondary_clamp = 84.0
 
 [node name="StreamFlowPreview" type="Node2D"]
 script = ExtResource("2_driver")

@@ -3,6 +3,7 @@
 
 沿近郊小路原画左下溪床生成流向图。水纹贴图横向循环，相位直接往下游平移；
 笔触仍用双相位，避免非循环细节在回绕时跳一下。岸、桥、石、纸边逐像素保持不动。
+宽水面另加次级水流：侧向斜流、横向涟漪、绕宽水潭的轻涡流。窄渠不加。
 
 与 godot_preview/stream_flow.gdshader 使用同一套常量。
 # 2026-10-14 隔离候选：不改 assets/、不改生产 shader、不接入场景。
@@ -41,6 +42,39 @@ LOW_MOTION_STRENGTH = 0.20
 # 高光略偏纸色，暗部少减蓝，避免整条溪发青或发灰。
 POS_TINT = np.array([1.02, 0.98, 0.62], dtype=np.float64)
 NEG_TINT = np.array([-0.62, -0.48, -0.22], dtype=np.float64)
+
+# 宽水面的次级水流。主下游高光的相位、切线和振幅都不改。
+# 半宽来自 measure_radii（大约 11–24）。窄渠停在阈值下，权重为 0，像素与旧帧一致。
+WIDE_RADIUS_LO = 16.2
+WIDE_RADIUS_HI = 20.0
+# 横向一圈的像素。速度系数必须是整数，phase 0 与 1 才落在同一纹上。
+CROSS_PERIOD = 22.0
+CROSS_SPEED = 1.0
+SIDE_PERIOD_L = 64.0
+SIDE_PERIOD_R = 74.0
+SIDE_SPEED = 1.0
+EDDY_SPEED = 1.0
+EDDY_SIGMA_TURNS = 0.11
+EDDY_MIN_RADIUS = 17.4
+EDDY_MIN_SEPARATION = 52.0
+EDDY_MAX_COUNT = 4
+# 次级振幅要在已经偏亮的宽水面上看得见，但仍低于主水纹那一档。
+# 合成后再软夹，避免三层叠在同一像素上压成墨点。
+CROSS_AMP = 112.0
+SIDE_AMP = 148.0
+EDDY_AMP = 132.0
+SECONDARY_CLAMP = 84.0
+CROSS_CENTERS = (0.18, 0.62)
+CROSS_SIGMAS = (0.16, 0.09)
+CROSS_BASELINE = 0.42
+SIDE_CENTERS = (0.22, 0.67)
+SIDE_SIGMAS = (0.075, 0.060)
+SIDE_BASELINE = 0.40
+EDDY_ARM2 = 0.58
+EDDY_BASELINE = 0.46
+# 次级高光更淡，暗槽略偏冷，和主下游的暖亮带分开，但不要青霓虹。
+SEC_POS_TINT = np.array([0.74, 0.82, 0.60], dtype=np.float64)
+SEC_NEG_TINT = np.array([-0.50, -0.64, -0.76], dtype=np.float64)
 
 # 只在这扇窗里认溪水。窗外的湖、远山和草坪不进这条候选。
 CREEK_WINDOW = (155, 530, 390, 870)
@@ -551,6 +585,167 @@ def _sample_image(img: np.ndarray, x: np.ndarray, y: np.ndarray) -> np.ndarray:
     return top * (1.0 - fy) + bot * fy
 
 
+def _smoothstep(edge0: float, edge1: float, values: np.ndarray) -> np.ndarray:
+    span = max(edge1 - edge0, 1e-6)
+    t = np.clip((values - edge0) / span, 0.0, 1.0)
+    return t * t * (3.0 - 2.0 * t)
+
+
+def pick_eddies(arc: np.ndarray, radii: np.ndarray) -> list[dict[str, float]]:
+    """沿中心线挑几处局部最宽的水潭。相邻水潭旋转方向相反。
+
+    # 只在半宽够大的顶点里找峰，再按弧长隔开，避免一整段宽水叠成同一个旋涡。
+    """
+    peaks: list[int] = []
+    for i in range(1, len(radii) - 1):
+        if float(radii[i]) < EDDY_MIN_RADIUS:
+            continue
+        if float(radii[i]) >= float(radii[i - 1]) and float(radii[i]) >= float(radii[i + 1]):
+            peaks.append(i)
+    groups: list[list[int]] = []
+    for i in peaks:
+        if groups and i == groups[-1][-1] + 1:
+            groups[-1].append(i)
+        else:
+            groups.append([i])
+    reps = [group[len(group) // 2] for group in groups]
+    reps.sort(key=lambda i: -float(radii[i]))
+    chosen: list[int] = []
+    for i in reps:
+        if all(abs(float(arc[i]) - float(arc[j])) >= EDDY_MIN_SEPARATION for j in chosen):
+            chosen.append(i)
+        if len(chosen) >= EDDY_MAX_COUNT:
+            break
+    chosen.sort(key=lambda i: float(arc[i]))
+    eddies: list[dict[str, float]] = []
+    for k, i in enumerate(chosen):
+        # 偶数处顺时针（画面坐标），奇数处反过来，相邻宽水潭不要同一个旋向。
+        eddies.append(
+            {
+                "index": float(i),
+                "s": float(arc[i]),
+                "radius": float(radii[i]),
+                "spin": 1.0 if k % 2 == 0 else -1.0,
+                "offset": float(k) * 1.7,
+            }
+        )
+    return eddies
+
+
+def build_secondary(
+    field: dict[str, np.ndarray],
+    mask: np.ndarray,
+    eddies: list[dict[str, float]],
+) -> tuple[np.ndarray, np.ndarray]:
+    """宽水面的次级坐标和权重。水面外、窄渠都是 0。
+
+    # secondary_map：R 横向相位，G 侧流相位，B 涡流角度（0–1），A 宽水面权重。
+    # secondary_weight：R 横纹，G 侧流，B 涡流。着色器与合成都只加这三层，不改主切线。
+    ## 方向已经烘进相位：减 phase 时，有的水潭往左岸走，有的往右岸走。
+    """
+    s = field["s"].astype(np.float64)
+    n = field["n"].astype(np.float64)
+    radius = np.maximum(field["radius"].astype(np.float64), 1.0)
+    gate = np.clip(mask.astype(np.float64), 0.0, 1.0)
+    wide = _smoothstep(WIDE_RADIUS_LO, WIDE_RADIUS_HI, radius) * gate
+
+    # 横纹：主要沿法线走，略带一点顺水的斜，避免变成一根垂直闪条。
+    # 每 96 像素弧长换一次横穿方向。
+    cell = np.floor(s / 96.0)
+    cross_dir = np.where(np.mod(cell, 2.0) < 1.0, 1.0, -1.0)
+    u_cross = n / CROSS_PERIOD + s / 260.0
+    u_cross = np.mod(u_cross * cross_dir, 1.0)
+
+    # 侧流：左岸斜着往外漂，右岸斜着往另一侧漂，都还带着一段顺水。
+    u_left = (0.58 * s - 0.96 * n) / SIDE_PERIOD_L
+    u_right = (0.50 * s + 1.02 * n) / SIDE_PERIOD_R
+    u_side = np.where(n < 0.0, u_left, u_right)
+    u_side = np.mod(u_side, 1.0)
+
+    flank = _smoothstep(0.16, 0.55, np.abs(n) / radius)
+    side_w = wide * flank
+    cross_env = 1.0 - np.clip(np.abs(n) / np.maximum(radius * 1.02, 1.0), 0.0, 1.0) ** 2
+    cross_w = wide * (0.48 + 0.52 * cross_env)
+
+    eddy_angle = np.zeros_like(s)
+    eddy_w = np.zeros_like(s)
+    for eddy in eddies:
+        ds = s - eddy["s"]
+        dist = np.hypot(ds, n)
+        sigma = max(eddy["radius"] * 0.58, 8.0)
+        fall = np.exp(-0.5 * (dist / sigma) ** 2)
+        fall = np.where(dist < eddy["radius"] * 0.96, fall, 0.0)
+        ang = np.arctan2(n, ds)
+        # 旋向和起始角烘进角度。着色器始终用 stored - phase。
+        baked = eddy["spin"] * ang - eddy["spin"] * eddy["offset"]
+        stronger = fall > eddy_w
+        eddy_w = np.where(stronger, fall, eddy_w)
+        eddy_angle = np.where(stronger, baked, eddy_angle)
+    eddy_w *= gate
+    # 涡流只留在已经够宽的水里，不要在窄渠里转。
+    eddy_w *= np.clip(wide * 1.2, 0.0, 1.0)
+
+    inactive = mask <= 0.0
+    wide = np.where(inactive, 0.0, wide)
+    cross_w = np.where(inactive, 0.0, cross_w)
+    side_w = np.where(inactive, 0.0, side_w)
+    eddy_w = np.where(inactive, 0.0, eddy_w)
+    u_cross = np.where(inactive, 0.0, u_cross)
+    u_side = np.where(inactive, 0.0, u_side)
+    angle01 = np.mod(eddy_angle / (2.0 * np.pi), 1.0)
+    angle01 = np.where(eddy_w <= 0.0, 0.0, angle01)
+
+    sec_map = np.zeros(s.shape + (4,), dtype=np.uint8)
+    sec_w = np.zeros(s.shape + (3,), dtype=np.uint8)
+    sec_map[:, :, 0] = np.clip(np.round(u_cross * 255.0), 0, 255).astype(np.uint8)
+    sec_map[:, :, 1] = np.clip(np.round(u_side * 255.0), 0, 255).astype(np.uint8)
+    sec_map[:, :, 2] = np.clip(np.round(angle01 * 255.0), 0, 255).astype(np.uint8)
+    sec_map[:, :, 3] = np.clip(np.round(wide * 255.0), 0, 255).astype(np.uint8)
+    sec_w[:, :, 0] = np.clip(np.round(cross_w * 255.0), 0, 255).astype(np.uint8)
+    sec_w[:, :, 1] = np.clip(np.round(side_w * 255.0), 0, 255).astype(np.uint8)
+    sec_w[:, :, 2] = np.clip(np.round(eddy_w * 255.0), 0, 255).astype(np.uint8)
+    return sec_map, sec_w
+
+
+def _bumps(u: np.ndarray, centers: tuple[float, ...], sigmas: tuple[float, ...]) -> np.ndarray:
+    field = np.zeros_like(u, dtype=np.float64)
+    for center, sigma in zip(centers, sigmas):
+        du = np.abs(u - float(center))
+        du = np.minimum(du, 1.0 - du)
+        field += np.exp(-0.5 * (du / float(sigma)) ** 2)
+    return field
+
+
+def _signed_wave(raw: np.ndarray, baseline: float) -> np.ndarray:
+    """亮峰少抬，暗槽略重。水面已经偏亮，暗槽挪开才看得出来。"""
+    wave = raw - baseline
+    return np.where(wave >= 0.0, wave * 0.75, wave * 1.08)
+
+
+def _wrap_half(values: np.ndarray) -> np.ndarray:
+    return np.mod(values + 0.5, 1.0) - 0.5
+
+
+def secondary_scalar(sec_map: np.ndarray, sec_w: np.ndarray, phase_01: float) -> np.ndarray:
+    """次级水流的电平（尚未乘色）。phase 增加 1 时纹样重合。"""
+    phase = float(phase_01) % 1.0
+    u_cross = np.mod(sec_map[:, :, 0].astype(np.float64) / 255.0 - phase * CROSS_SPEED, 1.0)
+    u_side = np.mod(sec_map[:, :, 1].astype(np.float64) / 255.0 - phase * SIDE_SPEED, 1.0)
+    angle01 = sec_map[:, :, 2].astype(np.float64) / 255.0
+    cross_w = sec_w[:, :, 0].astype(np.float64) / 255.0
+    side_w = sec_w[:, :, 1].astype(np.float64) / 255.0
+    eddy_w = sec_w[:, :, 2].astype(np.float64) / 255.0
+    cross = _signed_wave(_bumps(u_cross, CROSS_CENTERS, CROSS_SIGMAS), CROSS_BASELINE)
+    side = _signed_wave(_bumps(u_side, SIDE_CENTERS, SIDE_SIGMAS), SIDE_BASELINE)
+    delta_turns = _wrap_half(angle01 - phase * EDDY_SPEED)
+    opposite = _wrap_half(delta_turns + 0.5)
+    arm = np.exp(-0.5 * (delta_turns / EDDY_SIGMA_TURNS) ** 2)
+    arm = arm + EDDY_ARM2 * np.exp(-0.5 * (opposite / EDDY_SIGMA_TURNS) ** 2)
+    eddy = _signed_wave(arm, EDDY_BASELINE)
+    delta = cross * CROSS_AMP * cross_w + side * SIDE_AMP * side_w + eddy * EDDY_AMP * eddy_w
+    return np.clip(delta, -SECONDARY_CLAMP, SECONDARY_CLAMP).astype(np.float64)
+
+
 def _dual_weight(p0: float) -> tuple[float, float, float]:
     """标准流向双相位权重。p0 回绕时权重为 1，另一层回绕时权重为 0。"""
     p0 = p0 % 1.0
@@ -567,8 +762,12 @@ def composite_frame(
     detail_enc: np.ndarray,
     phase_01: float,
     strength: float,
+    secondary: tuple[np.ndarray, np.ndarray] | None = None,
 ) -> np.ndarray:
-    """由已保存的贴图合成一帧。保护区蒙版为 0 的像素原样拷回。"""
+    """由已保存的贴图合成一帧。保护区蒙版为 0 的像素原样拷回。
+
+    # secondary 只在宽水面叠加。窄渠和保护区的权重是 0，那些像素保持主水流的结果。
+    """
     mask = flow[:, :, 3].astype(np.float32) / 255.0
     density = flow[:, :, 2].astype(np.float32) / 255.0
     dx = flow[:, :, 0].astype(np.float32) / 255.0 * 2.0 - 1.0
@@ -603,6 +802,32 @@ def composite_frame(
     rgb = rgb + shift * (m * ADVECT_GAIN)[:, None]
     rgb = rgb + pos[:, None] * amp[:, None] * POS_TINT + neg[:, None] * amp[:, None] * NEG_TINT
     out[ys, xs] = np.clip(np.round(rgb), 0, 255).astype(np.uint8)
+    if secondary is not None:
+        out = _apply_secondary(out, secondary[0], secondary[1], phase_01, strength)
+    return out
+
+
+def _apply_secondary(
+    image: np.ndarray,
+    sec_map: np.ndarray,
+    sec_w: np.ndarray,
+    phase_01: float,
+    strength: float,
+) -> np.ndarray:
+    """在主下游水流之上加宽水面的侧流、横纹和涡流。权重为 0 的像素不写。"""
+    weight = sec_w.astype(np.int16).sum(axis=2)
+    active = weight > 0
+    if not active.any() or strength == 0.0:
+        return image
+    delta = secondary_scalar(sec_map, sec_w, phase_01) * float(strength)
+    ys, xs = np.nonzero(active)
+    local = delta[ys, xs]
+    pos = np.clip(local, 0.0, None)
+    neg = np.clip(-local, 0.0, None)
+    rgb = image[ys, xs].astype(np.float64)
+    rgb = rgb + pos[:, None] * SEC_POS_TINT + neg[:, None] * SEC_NEG_TINT
+    out = image.copy()
+    out[ys, xs] = np.clip(np.round(rgb), 0, 255).astype(np.uint8)
     return out
 
 
@@ -633,7 +858,16 @@ def export_preview(script_dir: str, base: Image.Image) -> None:
     tex = os.path.join(script_dir, "godot_preview", "textures")
     os.makedirs(tex, exist_ok=True)
     base.convert("RGBA").save(os.path.join(tex, "near_path_base.png"), optimize=True)
-    for name in ("flow_map.png", "coord_sn.png", "ripple_tile.png", "water_detail.png", "mask_water.png", "mask_protect.png"):
+    for name in (
+        "flow_map.png",
+        "coord_sn.png",
+        "ripple_tile.png",
+        "water_detail.png",
+        "mask_water.png",
+        "mask_protect.png",
+        "secondary_map.png",
+        "secondary_weight.png",
+    ):
         shutil.copy2(os.path.join(script_dir, name), os.path.join(tex, name))
     print(f"Exported preview textures to {tex}")
 
@@ -742,25 +976,43 @@ def generate(out_dir: str | None = None, n_frames: int = 40, base_path: str | No
     _assert_tile_not_half_periodic(tile)
     detail = build_detail(rgb, cool_raw, masks["mask"])
     detail_enc = _encode_detail(detail)
+    eddies = pick_eddies(arc, radii)
+    sec_map, sec_w = build_secondary(field, masks["mask"], eddies)
     _save_maps(script_dir, flow, coord, tile, detail_enc, masks["mask"], masks["protect"])
+    Image.fromarray(sec_map, "RGBA").save(os.path.join(script_dir, "secondary_map.png"), optimize=True)
+    Image.fromarray(sec_w, "RGB").save(os.path.join(script_dir, "secondary_weight.png"), optimize=True)
 
     # 从刚写盘的贴图读回，帧和提交的 png 使用同一套 8-bit 量化。
     flow = np.array(Image.open(os.path.join(script_dir, "flow_map.png")).convert("RGBA"))
     coord = np.array(Image.open(os.path.join(script_dir, "coord_sn.png")).convert("RGBA"))
     tile = np.array(Image.open(os.path.join(script_dir, "ripple_tile.png")).convert("RGB")).astype(np.float32) / 255.0
     detail_enc = np.array(Image.open(os.path.join(script_dir, "water_detail.png")).convert("RGB"))
+    sec_map = np.array(Image.open(os.path.join(script_dir, "secondary_map.png")).convert("RGBA"))
+    sec_w = np.array(Image.open(os.path.join(script_dir, "secondary_weight.png")).convert("RGB"))
+    secondary = (sec_map, sec_w)
 
     print(f"centerline points {len(pts)} arc_px {arc[-1]:.1f}")
     print("centerline", " ".join(f"({p[0]:.0f},{p[1]:.0f})" for p in pts[::3]))
     water_px = int((masks["mask"] > 0.2).sum())
     print(f"water px>0.2 {water_px} protect px {int(masks['protect'].sum())}")
+    for eddy in eddies:
+        i = int(eddy["index"])
+        print(
+            f"eddy s{eddy['s']:.1f} r{eddy['radius']:.1f} spin{eddy['spin']:+.0f} "
+            f"at ({pts[i][0]:.0f},{pts[i][1]:.0f})"
+        )
+    wide_px = int((sec_map[:, :, 3] > 40).sum())
+    sec_px = int((sec_w.sum(axis=2) > 0).sum())
+    print(f"wide px>40 {wide_px} secondary px {sec_px}")
+    if int(sec_w[masks["protect"]].max()) != 0:
+        raise RuntimeError("secondary weight leaked onto the protected mask")
 
     for i in range(n_frames):
         phase = i / n_frames
-        frame = composite_frame(rgb, flow, coord, tile, detail_enc, phase, 1.0)
+        frame = composite_frame(rgb, flow, coord, tile, detail_enc, phase, 1.0, secondary)
         Image.fromarray(frame, "RGB").save(os.path.join(out_dir, f"stream_frame_{i:02d}.png"), optimize=True)
 
-    static = composite_frame(rgb, flow, coord, tile, detail_enc, 0.0, LOW_MOTION_STRENGTH)
+    static = composite_frame(rgb, flow, coord, tile, detail_enc, 0.0, LOW_MOTION_STRENGTH, secondary)
     Image.fromarray(static, "RGB").save(os.path.join(out_dir, "stream_static_low_motion.png"), optimize=True)
 
     sample_dir = os.path.join(script_dir, "sample_frames")
@@ -800,6 +1052,35 @@ def generate(out_dir: str | None = None, n_frames: int = 40, base_path: str | No
         delta = np.abs(f0.astype(np.int16) - f_last.astype(np.int16))
         print(f"{name}_max {int(delta[region].max())}")
     _direction_diagnostic(coord, tile, masks["mask"], n_frames)
+
+    # 次级水流：phase 0 与 1 必须重合；宽水面在四分之一圈上要能看出来。
+    looped = composite_frame(rgb, flow, coord, tile, detail_enc, 1.0, 1.0, secondary)
+    seam = np.abs(f0.astype(np.int16) - looped.astype(np.int16))
+    if int(seam.max()) != 0:
+        raise RuntimeError(f"phase 0 and phase 1 differ (max {int(seam.max())}); loop is not seamless")
+    # 主水流在四分之一圈也会变。这里只比次级标量，确认宽水面的附加层自己在动。
+    sec0 = secondary_scalar(sec_map, sec_w, 0.0)
+    sec_q = secondary_scalar(sec_map, sec_w, 0.25)
+    wide = sec_map[:, :, 3] > 80
+    if wide.any():
+        sec_motion = float(np.abs(sec0[wide] - sec_q[wide]).mean())
+        print(f"secondary wide scalar |phase0-0.25| {sec_motion:.2f} wide_px {int(wide.sum())}")
+        if sec_motion < 6.0:
+            raise RuntimeError(f"secondary flow in wide water is too faint ({sec_motion:.2f})")
+    # 窄渠（宽权重为 0）不应被次级层改写。用无次级的合成对一下第 0 帧。
+    plain = composite_frame(rgb, flow, coord, tile, detail_enc, 0.0, 1.0, None)
+    narrow = (masks["mask"] > 0.35) & (sec_w.sum(axis=2) == 0)
+    if narrow.any():
+        narrow_delta = np.abs(f0.astype(np.int16) - plain.astype(np.int16))
+        narrow_max = int(narrow_delta[narrow].max())
+        print(f"narrow_vs_main_only_max {narrow_max}")
+        if narrow_max != 0:
+            raise RuntimeError("secondary flow changed the narrow channel")
+    outside = masks["mask"] <= 0.0
+    outside_max = int(np.abs(f0.astype(np.int16) - plain.astype(np.int16))[outside].max()) if outside.any() else 0
+    print(f"outside_water_vs_main_only_max {outside_max}")
+    if outside_max != 0:
+        raise RuntimeError("secondary flow changed pixels outside the water mask")
 
     if export_preview_tex:
         export_preview(script_dir, base_img)
