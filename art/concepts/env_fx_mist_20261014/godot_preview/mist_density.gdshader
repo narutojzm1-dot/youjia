@@ -1,7 +1,7 @@
 shader_type canvas_item;
 // # 与 generate_mist_density_anim.py 同一套双层雾体变换。
 // # 远/近两层手绘薄雾 + 整数谐波浓淡（1× 大团、2× 细团）+ 漂移/抬升 + 微形变。
-// # 覆盖度只与包络相乘一次。前景小路/木屋屋顶/桥与纸边由 envelope 保护。
+// # 覆盖度只与包络相乘一次。包络只留湖面与溪水；草地、小路、屋顶、桥面与纸边保护。
 
 uniform sampler2D base_tex : filter_nearest, repeat_disable;
 uniform sampler2D mist_far_tex : filter_nearest, repeat_disable;
@@ -14,8 +14,8 @@ uniform float phase = 0.0;
 uniform float strength : hint_range(0.0, 1.0) = 1.0;
 uniform float semantic_gate : hint_range(0.0, 1.0) = 0.0;
 uniform vec2 base_size = vec2(1672.0, 941.0);
-uniform vec2 far_origin = vec2(70.0, 220.0);
-uniform vec2 near_origin = vec2(160.0, 300.0);
+uniform vec2 far_origin = vec2(40.0, 70.0);
+uniform vec2 near_origin = vec2(20.0, 380.0);
 uniform float far_drift_px = 150.0;
 uniform float near_drift_px = -120.0;
 uniform float far_lift_px = 48.0;

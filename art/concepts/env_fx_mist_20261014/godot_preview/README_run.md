@@ -6,11 +6,11 @@
 
 - 底图 `textures/near_path_base.png`（从已批准 `assets/holiday/exploration/near_path_02.webp` 复制，1672×941）
 - 远层 `textures/mist_far.png`、近层 `textures/mist_near.png`（由已批准 `mist_candidate.png` 派生的 1–2 层手绘薄雾）
-- 空间包络 `textures/mask_envelope.png`（山谷/湖面软带 + 前景小路/木屋/桥/纸边保护）
+- 空间包络 `textures/mask_envelope.png`（湖面与溪水软带 + 草地/小路/木屋/桥/纸边保护）
 - 语义遮罩 `mask_path.png` / `mask_cottage.png` / `mask_bridge.png`（白色允许雾，黑色保护）
 - 着色器 `mist_density.gdshader` 的原点、漂移、微形变与多尺度调制分母与 `generate_mist_density_anim.py` 相同
 
-打开后 phase 自动从 0 走到 2π，一圈 8 秒（与 40 帧 @ 5fps 的 PNG 序列同一相位）。谷地雾团会漂移并有浓淡呼吸；近景小路和屋顶保持可读。原点、漂移、抬升、形变、调制分母与 `ca_cap` 跟生成脚本一致。
+打开后 phase 自动从 0 走到 2π，一圈 8 秒（与 40 帧 @ 5fps 的 PNG 序列同一相位）。湖面和溪水上的雾会漂移并有浓淡呼吸；草地、近景小路和屋顶保持可读。原点、漂移、抬升、形变、调制分母与 `ca_cap` 跟生成脚本一致。
 
 ## 启动命令
 

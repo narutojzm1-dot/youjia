@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Reproducible generator for lake/valley mist isolation candidate (#749).
+"""Reproducible generator for lake/creek mist isolation candidate (#749).
 
 Two hand-painted mist layers (derived from approved mist_candidate.png) +
 multi-scale continuous alpha/micro-deform modulation + soft spatial envelope.
@@ -20,9 +20,11 @@ from PIL import Image, ImageDraw, ImageFilter
 
 # Defaults mirrored by mist_density.gdshader / mist_density_preview.tscn
 BASE_SIZE = (1672, 941)
-# 雾带重心放到谷地，而不是压在近景小路和屋顶上
-FAR_ORIGIN = (70, 220)
-NEAR_ORIGIN = (160, 300)
+# 雾带重心放到湖面与溪水上方。手绘层是横向均匀的竖向渐变，落点由原点决定。
+# 远层在 phase=π（抬升最大）时，密度峰值落在湖面 y≈430，而不是近岸草地。
+# 近层密度峰值落在前景溪床。草地靠包络挖空，运动幅度不减弱。
+FAR_ORIGIN = (40, 70)
+NEAR_ORIGIN = (20, 380)
 FAR_SCALE = 1.0  # layers already pre-scaled into mist_far/near pngs
 NEAR_SCALE = 1.0
 # 调制分母（层像素）。波长 = 2π * 分母；一圈平移一个大团波长。
@@ -49,17 +51,40 @@ NEAR_PHASE = 2.1
 FAR_STRENGTH = 0.90
 # 单层覆盖上限，峰值是乳白色雾团，不是铺满的死白
 CA_CAP = 170.0
+# 旧谷地整条软带的模糊半径。水面包络改用 WATER_BLUR / EDGE_BLUR，这个值留着对照。
 BLUR_RADIUS = 26
-# 谷地/湖面软带；前景小路、木屋屋顶、桥、纸边挖空
-ENVELOPE_TOP = 430
-ENVELOPE_BOTTOM = 740
-ENVELOPE_LEFT = 80
-ENVELOPE_RIGHT = 1500
-# Hard protect ellipses / polygons (black = protect) before blur
-PATH_ELLIPSE = (400, 780, 1150, 970)  # 近景小路，留在雾带下方
+# 只在这两扇窗里认水面。窗外的蓝灰是远山和松林，不能收成雾。
+LAKE_WINDOW = (590, 408, 870, 476)
+CREEK_WINDOW = (155, 530, 390, 870)
+# 膨胀之后还允许留雾的范围。比检测窗宽一圈，仍然不进中央草地。
+LAKE_ALLOW = (545, 372, 905, 484)
+CREEK_ALLOW = (120, 520, 390, 890)
+LAKE_LOFT_PX = (16, 34)
+# 溪水细脊，只补蓝水检测的断口，半宽很小，膨胀后才形成贴水面的雾。
+CREEK_CENTERLINE = (
+    (318, 548),
+    (286, 590),
+    (262, 635),
+    (248, 680),
+    (232, 730),
+    (236, 780),
+    (218, 825),
+    (206, 870),
+)
+CREEK_SPINE_RADIUS = 8
+# 水面外扩。太大就会盖住河岸草地。
+WATER_DILATE = 14
+LOFT_DILATE = 8
+# 中央与右侧草坪。溪水在这条线左侧，湖面在这条线上方。
+MEADOW_BOX = (430, 508, 1672, 941)
+# Hard protect ellipses / polygons (black = protect) before the last soft blur
+PATH_ELLIPSE = (400, 780, 1150, 970)  # 近景小路
 COTTAGE_BOX = (1120, 340, 1640, 800)  # 木屋含屋顶
-BRIDGE_BOX = (100, 500, 500, 760)
+# 只挖桥面，不再用大矩形把桥下溪水一起挖掉
+BRIDGE_BOX = (150, 468, 430, 552)
 PAPER_RIM = 28  # fade outer paper edge
+WATER_BLUR = 18
+EDGE_BLUR = 8
 
 
 def mist_modulation(phase: float, xx: np.ndarray, yy: np.ndarray, mod_xx: float, mod_yy: float, mod_fine: float) -> np.ndarray:
@@ -74,39 +99,85 @@ def mist_modulation(phase: float, xx: np.ndarray, yy: np.ndarray, mod_xx: float,
     return np.clip(mod, 0.02, 1.0)
 
 
-def build_envelope(size: tuple[int, int]) -> Image.Image:
-    """White = allow mist, black = protect. Soft valley/lake band + foreground cutouts."""
-    w, h = size
-    env = Image.new("L", size, 0)
+def _stroke_ribbon(draw: ImageDraw.ImageDraw, points: tuple[tuple[int, int], ...], radius: int) -> None:
+    """沿溪水中心线画圆头雾带。白=允许雾。"""
+    if len(points) >= 2:
+        draw.line(list(points), fill=255, width=max(1, radius * 2), joint="curve")
+    for x, y in points:
+        draw.ellipse((x - radius, y - radius, x + radius, y + radius), fill=255)
+
+
+def _dilate_mask(mask_u8: np.ndarray, radius: int) -> np.ndarray:
+    """方形最大值膨胀。半径按像素，用来让雾贴着水面稍稍挂出来。"""
+    im = Image.fromarray(mask_u8, "L")
+    left = int(radius)
+    while left > 0:
+        step = min(7, left)
+        im = im.filter(ImageFilter.MaxFilter(step * 2 + 1))
+        left -= step
+    return np.array(im)
+
+
+def _water_core(base_img: Image.Image) -> np.ndarray:
+    """蓝水面，外加溪廊里的白沫。返回 0/255。"""
+    rgb = np.array(base_img.convert("RGB")).astype(np.int16)
+    rr, gg, bb = rgb[:, :, 0], rgb[:, :, 1], rgb[:, :, 2]
+    h, w = rr.shape
+    ys = np.arange(h)[:, None]
+    xs = np.arange(w)[None, :]
+
+    def _inside(window: tuple[int, int, int, int]) -> np.ndarray:
+        x0, y0, x1, y1 = window
+        return (xs >= x0) & (xs < x1) & (ys >= y0) & (ys < y1)
+
+    # 溪、湖的蓝水。纸边、远山蓝灰和暖色草地进不来。
+    water = (bb > rr + 14) & (bb > gg + 2) & (bb > 85) & (rr < 235)
+    water &= _inside(LAKE_WINDOW) | _inside(CREEK_WINDOW)
+    # 溪床白沫不够蓝，只在溪廊里收，避免把云和纸边算成水。
+    foam = (bb > 168) & (bb + 8 >= gg) & (bb + 6 >= rr) & (rr < 240)
+    foam &= _inside(CREEK_WINDOW)
+    core = np.where(water | foam, 255, 0).astype(np.uint8)
+    # 湖面再向上抬一层，雾浮在湖水上方，不向近岸草地铺。
+    lx0, ly0, lx1, ly1 = LAKE_WINDOW
+    lake = (core > 0) & (ys >= ly0) & (ys <= ly1) & (xs >= lx0) & (xs <= lx1)
+    loft = np.zeros_like(lake)
+    for shift in LAKE_LOFT_PX:
+        loft[:-shift] |= lake[shift:]
+    spine = Image.new("L", (w, h), 0)
+    _stroke_ribbon(ImageDraw.Draw(spine), CREEK_CENTERLINE, CREEK_SPINE_RADIUS)
+    out = np.maximum(core, np.array(spine))
+    out = np.maximum(out, np.where(loft, 255, 0).astype(np.uint8))
+    return out
+
+
+def build_envelope(base_img: Image.Image) -> Image.Image:
+    """白=允许雾，黑=保护。雾贴着湖面和溪水，中央草地挖空。"""
+    w, h = base_img.size
+    core = _water_core(base_img)
+    # 湖面抬升那一层少扩一点，避免爬上远岸山坡；水面本身按 WATER_DILATE 挂出一圈。
+    lx0, ly0, lx1, ly1 = LAKE_WINDOW
+    ys = np.arange(h)[:, None]
+    xs = np.arange(w)[None, :]
+    lake_band = (ys >= ly0 - max(LAKE_LOFT_PX)) & (ys <= ly1) & (xs >= lx0) & (xs <= lx1)
+    halo = _dilate_mask(core, WATER_DILATE)
+    # 抬升层如果被同样膨胀，会在山坡上摊开。山坡上只留未膨胀的核心。
+    hillside = lake_band & (ys < ly0)
+    halo[hillside] = core[hillside]
+    # 膨胀不得逃出湖面/溪水允许区，远山和中央草地保持无雾。
+    allow = np.zeros_like(halo, dtype=bool)
+    for window in (LAKE_ALLOW, CREEK_ALLOW):
+        x0, y0, x1, y1 = window
+        allow |= (xs >= x0) & (xs < x1) & (ys >= y0) & (ys < y1)
+    halo[~allow] = 0
+    # 绿岸压低。水面核心保持满强度，草地只留很窄的一圈软边。
+    rgb = np.array(base_img.convert("RGB")).astype(np.int16)
+    green = (rgb[:, :, 1] > rgb[:, :, 2] + 10) & (core == 0)
+    halo = halo.astype(np.float32)
+    halo[green] *= 0.22
+    env = Image.fromarray(np.clip(halo, 0, 255).astype(np.uint8), "L").filter(ImageFilter.GaussianBlur(radius=WATER_BLUR))
+    # 草坪、小路、屋顶、桥面、纸边。先挖再轻模糊，岸边软、草地不铺雾。
     draw = ImageDraw.Draw(env)
-    # Vertical falloff: strongest mid band
-    for y in range(h):
-        if y < ENVELOPE_TOP:
-            a = int(255 * max(0.0, 1.0 - (ENVELOPE_TOP - y) / 160.0) * 0.45)
-        elif y > ENVELOPE_BOTTOM:
-            a = int(255 * max(0.0, 1.0 - (y - ENVELOPE_BOTTOM) / 160.0) * 0.35)
-        else:
-            # 谷地中段留出足够浓度，雾团的浓淡才看得见
-            t = (y - ENVELOPE_TOP) / max(1.0, ENVELOPE_BOTTOM - ENVELOPE_TOP)
-            a = int(255 * (0.72 + 0.28 * np.sin(np.pi * t)))
-        draw.line([(0, y), (w, y)], fill=a)
-    # Horizontal soft sides
-    side = Image.new("L", size, 0)
-    sdraw = ImageDraw.Draw(side)
-    for x in range(w):
-        if x < ENVELOPE_LEFT:
-            a = int(255 * max(0.0, x / max(1.0, ENVELOPE_LEFT)))
-        elif x > ENVELOPE_RIGHT:
-            a = int(255 * max(0.0, 1.0 - (x - ENVELOPE_RIGHT) / max(1.0, w - ENVELOPE_RIGHT)))
-        else:
-            a = 255
-        sdraw.line([(x, 0), (x, h)], fill=a)
-    env = Image.fromarray(
-        (np.array(env, dtype=np.float32) * np.array(side, dtype=np.float32) / 255.0).astype(np.uint8),
-        "L",
-    )
-    # Protect foreground path / cottage / bridge / paper rim
-    draw = ImageDraw.Draw(env)
+    draw.rectangle(list(MEADOW_BOX), fill=0)
     draw.ellipse(list(PATH_ELLIPSE), fill=0)
     draw.rectangle(list(COTTAGE_BOX), fill=0)
     draw.rectangle(list(BRIDGE_BOX), fill=0)
@@ -114,7 +185,7 @@ def build_envelope(size: tuple[int, int]) -> Image.Image:
     draw.rectangle([0, h - PAPER_RIM, w, h], fill=0)
     draw.rectangle([0, 0, PAPER_RIM, h], fill=0)
     draw.rectangle([w - PAPER_RIM, 0, w, h], fill=0)
-    env = env.filter(ImageFilter.GaussianBlur(radius=BLUR_RADIUS))
+    env = env.filter(ImageFilter.GaussianBlur(radius=EDGE_BLUR))
     return env
 
 
@@ -240,7 +311,7 @@ def generate(out_dir=None, n_frames=40, base_path=None, far_path=None, near_path
         print(f"WARN: base size {base_img.size} != {BASE_SIZE}")
     far_img = Image.open(far_path).convert("RGBA")
     near_img = Image.open(near_path).convert("RGBA")
-    env = build_envelope(base_img.size)
+    env = build_envelope(base_img)
     path_m, cottage_m, bridge_m = build_protect_masks(base_img.size)
     mask_u8 = np.array(env.convert("L"))
     base_rgb = np.array(base_img.convert("RGB"))
@@ -265,22 +336,23 @@ def generate(out_dir=None, n_frames=40, base_path=None, far_path=None, near_path
             shutil.copy2(src, os.path.join(sample_dir, f"mist_frame_{idx:02d}.png"))
     shutil.copy2(os.path.join(out_dir, "mist_static_low_motion.png"), os.path.join(sample_dir, "mist_static_low_motion.png"))
 
-    # 保护区应几乎不动；谷地浓淡在首帧与中帧必须肉眼可辨。循环缝应接近相邻帧，而不是跳变。
+    # 保护区应几乎不动；水面浓淡在首帧与中帧必须肉眼可辨。循环缝应接近相邻帧，而不是跳变。
     f0 = np.array(Image.open(os.path.join(out_dir, "mist_frame_00.png")))
     f1 = np.array(Image.open(os.path.join(out_dir, "mist_frame_01.png")))
     f10 = np.array(Image.open(os.path.join(out_dir, "mist_frame_10.png")))
     f20 = np.array(Image.open(os.path.join(out_dir, "mist_frame_20.png")))
     f39 = np.array(Image.open(os.path.join(out_dir, "mist_frame_39.png")))
     protect = mask_u8 < 8
-    valley = mask_u8 > 100
+    # 包络里较实的部分现在是湖面和溪水，不再是整条谷地。
+    water_band = mask_u8 > 100
 
     def _motion(a, b, label):
         d = np.abs(a.astype(np.int16) - b.astype(np.int16))
         ch = d.max(axis=2)
-        valley_mean = float(d[valley].mean()) if valley.any() else -1.0
+        water_mean = float(d[water_band].mean()) if water_band.any() else -1.0
         protect_max = int(d[protect].max()) if protect.any() else -1
         print(
-            f"{label} mean {d.mean():.2f} valley {valley_mean:.2f} "
+            f"{label} mean {d.mean():.2f} water {water_mean:.2f} "
             f"frac>8 {(ch > 8).mean():.3f} frac>20 {(ch > 20).mean():.3f} "
             f"max {int(d.max())} protect_max {protect_max}"
         )
