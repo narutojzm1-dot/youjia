@@ -12,7 +12,7 @@ Agent-ID: GROK-BUILD
 | 做了 | 没做 |
 |---|---|
 | 沿溪床弯道的 RG 流向图，水纹与短笔触只往下游走 | 未接线到 `shaders/near_path_motion.gdshader` 或任何生产场景 |
-| 双相位采样淡入淡出；纹样周期与一圈位移成整数倍，首尾相接 | 未做流体模拟、全幅视频循环或生产路线 |
+| 水纹贴图横向循环，相位直接平移；笔触双相位藏住回绕 | 未做流体模拟、全幅视频循环或生产路线 |
 | 岸、桥面、石头、纸边逐像素不动（脚本打印 protect_max） | 未改 `assets/holiday/**`、`shaders/` 正式资源 |
 | 可复现生成脚本 + Godot 4.x 隔离预览工程 | 未宣称美术验收完成，未测量 Web/GPU 成本 |
 | PNG 序列 / GIF / mp4，供无 Godot 时看连续流向 | 未做晴阴昼夜、照片回放或竖屏生产适配 |
@@ -25,7 +25,7 @@ Agent-ID: GROK-BUILD
 - `mask_water.png`：软水面（白=可动）
 - `mask_protect.png`：硬保护（白=必须与原画一致）
 - `coord_sn.png`：R 为弧长相对 `TRAVEL_PX` 的小数相位，G 为横向
-- `ripple_tile.png`：两层水纹（R/G），横向一个周期
+- `ripple_tile.png`：水纹（R/G 同一层），横向一整圈才重复
 - `water_detail.png`：只含水色的高频笔触，岸上是中性灰
 - `generate_stream_flow_anim.py`：可复现帧生成；`--export-preview` 写出 Godot 贴图
 - `anim_frames/`：40 帧循环 + `stream_static_low_motion.png`
@@ -37,8 +37,10 @@ Agent-ID: GROK-BUILD
 
 - **下游**：从桥下出水口走向画面前景（+Y），中心线跟着冷色水面弯，单步限制横向，避免跳进石滩。切线的 Y 分量保持为正，整段不会掉头向上游。
 - **流向图**：每个水面像素取最近的中心线段切线，再在水面内平滑。窄处疏密更高，宽处更轻；疏密不随时间来回，所以不会整条溪一起闪。
-- **双相位**：同一条偶数圈亮带采两次，相位差半圈。三角权重在某一层回到起点时为 0，笔触重置发生在看不见的那一层。偶数圈（一圈两道、四道）错开半个周期后与自身重合，所以淡入淡出不会把亮带抵消成原地闪，也不会在半圈往上游退。半个 `TRAVEL_PX` 正好走完一条波长，画面接上起点。
-- **整数周期**：水纹贴图横向一圈等于 `TRAVEL_PX`（96 像素弧长）。phase 0 与 phase 1 落在同一纹样上。
+- **水纹平移**：贴图是三道宽高光加几道细纹，横向一整圈才重复，半圈不是同一条纹。采样坐标是弧长相位减去播放相位，亮带沿着弯道往下游（画面下方 / 前景）挪。`TRAVEL_PX` 是 180，8 秒走完一圈，大约半条溪床。
+- **为什么不用偶数谐波**：2 次、4 次谐波平移半圈后与自己重合。若再按双相位去混「差半圈」的两层，两层采到同一个纹素，每一帧的水纹都一样。上一版因此第 0 帧和第 20 帧逐像素相同，看起来是静帧。
+- **笔触双相位**：高频细节贴图不循环。两层相位差半圈，三角权重在某一层回到起点时为 0，重置发生在看不见的那一层。位移仍约 12 像素。
+- **整数周期**：水纹贴图横向一圈等于 `TRAVEL_PX`。phase 0 与 phase 1 落在同一纹样上，首尾相接。半圈是另一组亮带，不是回到同一张静帧。
 - **笔触**：高频只从水色里取，位移约 12 像素并夹在 ±8 电平，避免亮沫盖到暗水上闪成硬斑，也避免采样越界拖进岸色。
 - **保护**：桥面矩形与雾体候选相同 `(150, 468, 430, 552)`；纸边外圈 28 像素；石头与绿岸在蒙版里挖掉。这些像素不进混合，protect_max 应为 0。
 - **低动效静帧**：phase 0、强度 0.20，仍是一幅完成的水彩，不是抽掉水面的线框。
@@ -49,18 +51,19 @@ Agent-ID: GROK-BUILD
 python3 art/concepts/env_fx_stream_20261014/generate_stream_flow_anim.py --frames 40 --export-preview
 
 ffmpeg -y -framerate 5 -i art/concepts/env_fx_stream_20261014/anim_frames/stream_frame_%02d.png \
-  -c:v libx264 -crf 18 -pix_fmt yuv420p -vf "scale=1280:-2" \
+  -c:v libx264 -qp 0 -pix_fmt yuv420p -vf "scale=1280:-2" \
   art/concepts/env_fx_stream_20261014/stream_flow_loop_10s.mp4
 
 ffmpeg -y -framerate 5 -i art/concepts/env_fx_stream_20261014/anim_frames/stream_frame_%02d.png \
   -vf "fps=5,scale=836:-1:flags=lanczos,palettegen=stats_mode=full" /tmp/stream_pal.png
 ffmpeg -y -framerate 5 -i art/concepts/env_fx_stream_20261014/anim_frames/stream_frame_%02d.png \
   -i /tmp/stream_pal.png \
-  -lavfi "fps=5,scale=836:-1:flags=lanczos[x];[x][1:v]paletteuse=dither=bayer:bayer_scale=4" \
+  -lavfi "fps=5,scale=836:-1:flags=lanczos[x];[x][1:v]paletteuse=dither=bayer:bayer_scale=3:diff_mode=rectangle" \
+  -loop 0 \
   art/concepts/env_fx_stream_20261014/stream_flow_loop.gif
 ```
 
-40 帧 @ 5fps = 8 秒一整圈（文件名沿用雾体候选的 `_10s` 叫法）。GIF 宽 836。看的时候盯左下溪床，不要看整幅的平均亮度。
+40 帧 @ 5fps = 8 秒一整圈（文件名沿用雾体候选的 `_10s` 叫法）。GIF 宽 836，帧延迟 200ms。mp4 用 `-qp 0`，避免有损量化把岸线抹进桥和草地；水面亮带的电平差会留在解码结果里。看的时候盯左下溪床，不要看整幅的平均亮度。
 
 ```bash
 godot --path art/concepts/env_fx_stream_20261014/godot_preview --resolution 1280x720
@@ -75,7 +78,7 @@ godot --path art/concepts/env_fx_stream_20261014/godot_preview --headless -- --s
 请 ART-DIRECTOR / CODEX-LEAD 看 `stream_flow_loop.gif`（或 mp4）时核对这几件事：
 
 - 亮条是否沿着弯道一直往下游（画面下方 / 前景）走，循环接缝没有整段倒退。
-- 这不是生产 shader 那种左右来回晃：同一条亮纹不应在半圈时走回上游。
+- 这不是生产 shader 那种左右来回晃：同一条亮纹不应在半圈时走回上游。半圈时应换成往下游走过的另一组亮带，而不是回到第 0 帧。
 - 草地、小路、木屋、桥面、石头、纸边应稳住。脚本会打印 `protect_max`，以及 bridge / paper / meadow 的最大差。
 - 水纹应是低对比水彩，不要霓虹青、不要一块矩形贴片。
 - 低动效静帧 `stream_static_low_motion.png` 应仍像一幅画完的原画。

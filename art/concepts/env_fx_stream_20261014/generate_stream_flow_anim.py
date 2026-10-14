@@ -1,11 +1,14 @@
 #!/usr/bin/env python3
 """可复现的溪流隔离流向候选（#749）。
 
-沿近郊小路原画左下溪床生成流向图，双相位采样水纹与笔触细节，
-只在水面内往下游移动。岸、桥、石、纸边逐像素保持不动。
+沿近郊小路原画左下溪床生成流向图。水纹贴图横向循环，相位直接往下游平移；
+笔触仍用双相位，避免非循环细节在回绕时跳一下。岸、桥、石、纸边逐像素保持不动。
 
 与 godot_preview/stream_flow.gdshader 使用同一套常量。
 # 2026-10-14 隔离候选：不改 assets/、不改生产 shader、不接入场景。
+# 2026-10-14 修正：旧水纹只用 2/4 次偶数谐波，半圈平移后与自身重合。
+## 双相位正好差半圈，两层采到同一个纹素，亮带在每一帧都一样。
+## 第 0 帧和第 20 帧因此逐像素相同，看起来是静帧。水纹改为整圈才重复。
 """
 from __future__ import annotations
 
@@ -18,12 +21,14 @@ from PIL import Image, ImageDraw, ImageFilter
 
 # 与 stream_flow.gdshader / stream_flow_preview.tscn 的默认值一致
 BASE_SIZE = (1672, 941)
-# 一圈沿弧长往下游走的距离（像素）。纹样周期与它成整数倍，phase 0 与 2π 重合。
-TRAVEL_PX = 96.0
+# 一圈沿弧长往下游走的距离（像素）。水纹贴图横向正好一圈，phase 0 与 1 重合。
+# 溪床弧长大约 314 像素。180 像素/8 秒大约是半条溪，亮带能跟着弯走到前景。
+TRAVEL_PX = 180.0
 # 笔触细节只走很短的一段，避免沿切线抄近路时捞到岸上的颜色。
 ADVECT_TRAVEL_PX = 12.0
 # 水纹振幅（约等于 0–255 的电平）。正值偏暖高光，负值只略压暗，避免霓虹青。
-RIPPLE_AMP = 46.0
+# 水面本身已经偏亮，振幅要大到亮带挪开后电平差仍能被人看见，并扛住 mp4/gif 量化。
+RIPPLE_AMP = 118.0
 ADVECT_GAIN = 0.50
 # 笔触位移的电平上限。不夹的话，亮沫挪到暗水上会闪成一块硬斑。
 ADVECT_CLAMP = 8.0
@@ -382,25 +387,61 @@ def _blur_wrap_x(img: np.ndarray, radius: int) -> np.ndarray:
 
 
 def make_ripple_tile(width: int = 256, height: int = 96) -> np.ndarray:
-    """水纹贴图。R/G 是同一层偶数圈亮带，横向一个周期等于 TRAVEL_PX。
+    """水纹贴图。R/G 是同一层亮带，横向一整圈才重复，长度对应 TRAVEL_PX。
 
-    # 主波长约 48 像素（一圈两道），缩小成 GIF 后仍能跟上。
-    ## 偶数圈在半周期错开后与自身重合，亮带只往下游平移。
+    # 三道宽高光加几道细纹，位置故意不按半圈对称。
+    ## 旧版只用偶数谐波，平移半圈后纹样不变；双相位又正好差半圈，亮带静止。
+    ## 这里半圈必须是另一组亮带。相位增加时，亮带沿弧长往下游挪。
     """
-    # 两层用同一条纹。只用偶数圈（2 与 4），半周期错开后纹样重合，
-    # 双相位淡入淡出不会把亮带抵消成原地闪，也不会在半圈倒着走。
-    u = np.linspace(0.0, 1.0, width, endpoint=False)[None, :]
-    v = np.linspace(0.0, 1.0, height)[:, None]
-    band2 = np.power(np.clip(np.cos(2.0 * np.pi * (2.0 * u)), 0.0, 1.0), 1.35)
-    band4 = np.power(np.clip(np.cos(2.0 * np.pi * (4.0 * u + 0.17)), 0.0, 1.0), 1.8)
-    across = 0.86 + 0.14 * np.cos(2.0 * np.pi * v)
-    img = (band2 * 0.78 + band4 * 0.22) * across
-    img = _blur_wrap_x(img, 3)
+    u = np.linspace(0.0, 1.0, width, endpoint=False)
+    v = np.linspace(0.0, 1.0, height)
+    # 横断面上略错开，亮带跟着弯，不是一根垂直的硬杠。
+    shear = (v - 0.5)[:, None] * 0.06
+    uu = u[None, :] + shear
+
+    def wrapped_bands(centers: np.ndarray, sigmas: np.ndarray, power: float) -> np.ndarray:
+        field = np.zeros((height, width), dtype=np.float64)
+        for center, sigma in zip(centers, sigmas):
+            du = np.abs(uu - float(center))
+            du = np.minimum(du, 1.0 - du)
+            field += np.exp(-0.5 * (du / float(sigma)) ** 2)
+        field /= np.max(field) + 1e-8
+        return np.power(field, power)
+
+    # 中心不落在 +0.5 的另一组上，避免再变成半周期纹样。
+    wide = wrapped_bands(
+        np.array([0.07, 0.41, 0.73]),
+        np.array([0.062, 0.048, 0.055]),
+        1.2,
+    )
+    thin = wrapped_bands(
+        np.array([0.19, 0.33, 0.56, 0.86]),
+        np.array([0.020, 0.016, 0.018, 0.015]),
+        1.55,
+    )
+    # 溪心更亮，贴岸收一些，亮边不要啃到石头上。
+    across = (0.48 + 0.52 * np.sin(np.pi * np.clip(v, 0.0, 1.0)) ** 1.2)[:, None]
+    img = (wide * 0.80 + thin * 0.20) * across
+    img = _blur_wrap_x(img, 2)
     img = img - img.mean()
-    img = img / (np.max(np.abs(img)) + 1e-8) * 0.40
-    img = np.clip(0.5 + img, 0.08, 0.92).astype(np.float32)
-    blue = np.full_like(img, 0.5)
-    return np.dstack([img, img, blue])
+    peak = np.max(np.abs(img)) + 1e-8
+    wave = img / peak
+    # 高光留足摆幅，暗槽只压浅一点，避免把已经偏亮的水色压脏。
+    shaped = np.where(wave >= 0.0, wave, wave * 0.62)
+    shaped = shaped / (np.max(np.abs(shaped)) + 1e-8)
+    enc = 0.5 + shaped * 0.48
+    enc = np.clip(enc - enc.mean() + 0.5, 0.06, 0.96).astype(np.float32)
+    blue = np.full_like(enc, 0.5)
+    return np.dstack([enc, enc, blue])
+
+
+def _assert_tile_not_half_periodic(tile: np.ndarray) -> None:
+    """半圈重合的贴图配上差半圈的双相位，画面会完全不动。"""
+    rolled = np.roll(tile, tile.shape[1] // 2, axis=1)
+    diff = float(np.abs(tile - rolled).mean())
+    if diff < 0.02:
+        raise RuntimeError(f"ripple tile is half-period invariant (mean diff {diff:.4f}); flow would be still")
+    print(f"ripple tile half-shift mean diff {diff:.4f}")
 
 
 def build_detail(rgb: np.ndarray, cool: np.ndarray, mask: np.ndarray) -> np.ndarray:
@@ -540,9 +581,9 @@ def composite_frame(
     if not active.any():
         return out
     ys, xs = np.nonzero(active)
-    ra = _sample_tile(tile, u[ys, xs] - p0, v[ys, xs], 0)
-    rb = _sample_tile(tile, u[ys, xs] - p1, v[ys, xs], 1)
-    rip = (1.0 - weight) * ra + weight * rb
+    # 贴图自己横向循环，相位直接平移。不要再把差半圈的两层混在一起：
+    # 那会在偶数谐波上采到同一个纹素，亮带停在原地。
+    rip = _sample_tile(tile, u[ys, xs] - phase_01, v[ys, xs], 0)
     centered = (rip - 0.5) * 2.0
     # 笔触：两层都沿流向的反方向取样，等于把上游细节送到这里。
     x = xs.astype(np.float32)
@@ -597,16 +638,19 @@ def export_preview(script_dir: str, base: Image.Image) -> None:
     print(f"Exported preview textures to {tex}")
 
 
-def _motion(a: np.ndarray, b: np.ndarray, water: np.ndarray, protect: np.ndarray, label: str) -> None:
+def _motion(a: np.ndarray, b: np.ndarray, water: np.ndarray, protect: np.ndarray, label: str) -> float:
     delta = np.abs(a.astype(np.int16) - b.astype(np.int16))
     channel = delta.max(axis=2)
     water_mean = float(delta[water].mean()) if water.any() else -1.0
     protect_max = int(delta[protect].max()) if protect.any() else -1
+    water_gt20 = float((channel[water] > 20).mean()) if water.any() else -1.0
     print(
         f"{label} mean {delta.mean():.2f} water {water_mean:.2f} "
         f"frac>8 {(channel > 8).mean():.3f} frac>20 {(channel > 20).mean():.3f} "
+        f"water_frac>20 {water_gt20:.3f} "
         f"max {int(delta.max())} protect_max {protect_max}"
     )
+    return water_mean
 
 
 def _direction_diagnostic(coord: np.ndarray, tile: np.ndarray, mask: np.ndarray, n_frames: int) -> None:
@@ -631,10 +675,8 @@ def _direction_diagnostic(coord: np.ndarray, tile: np.ndarray, mask: np.ndarray,
     samples_v = np.array([v[y, x] for y, x in cols], dtype=np.float64)
 
     def rip_at(phase: float) -> np.ndarray:
-        p0, p1, weight = _dual_weight(phase)
-        ra = _sample_tile(tile, samples_u - p0, samples_v, 0)
-        rb = _sample_tile(tile, samples_u - p1, samples_v, 1)
-        return (1.0 - weight) * ra + weight * rb
+        # 与 composite_frame 相同：整圈平移，不混半圈那一层。
+        return _sample_tile(tile, samples_u - phase, samples_v, 0)
 
     def smooth_line(arr: np.ndarray) -> np.ndarray:
         kernel = np.exp(-0.5 * (np.arange(-5, 6) / 2.2) ** 2)
@@ -664,9 +706,12 @@ def _direction_diagnostic(coord: np.ndarray, tile: np.ndarray, mask: np.ndarray,
             delta = int(np.min(forward))
         cursor = (cursor + delta) % n
         print(f"  frame {step:02d} crest {cursor:3d} step {delta:+d}")
-    # 偶数圈亮带平移半个 TRAVEL（正好一条波长）后与起点重合。差为 0 是接上了，不是左右摆。
+    # 半圈必须换成另一组亮带。差接近 0 表示贴图又退化成半周期，画面会像静帧。
+    quarter_diff = float(np.mean(np.abs(rip_at(0.0) - rip_at(0.25))))
     half_diff = float(np.mean(np.abs(rip_at(0.0) - rip_at(0.5))))
-    print(f"half-travel ripple diff {half_diff:.4f}")
+    print(f"quarter-travel ripple diff {quarter_diff:.4f} half-travel {half_diff:.4f}")
+    if quarter_diff < 0.08 or half_diff < 0.08:
+        raise RuntimeError("ripple phase shift is not visible along the creek")
 
 
 def generate(out_dir: str | None = None, n_frames: int = 40, base_path: str | None = None, export_preview_tex: bool = False) -> None:
@@ -694,6 +739,7 @@ def generate(out_dir: str | None = None, n_frames: int = 40, base_path: str | No
     flow = _encode_flow(dx, dy, masks["density"], masks["mask"])
     coord = _encode_coord(field["s"], field["n"], masks["density"], masks["mask"])
     tile = make_ripple_tile()
+    _assert_tile_not_half_periodic(tile)
     detail = build_detail(rgb, cool_raw, masks["mask"])
     detail_enc = _encode_detail(detail)
     _save_maps(script_dir, flow, coord, tile, detail_enc, masks["mask"], masks["protect"])
@@ -734,7 +780,10 @@ def generate(out_dir: str | None = None, n_frames: int = 40, base_path: str | No
     _motion(f0, f1, water, protect, "frame00 vs 01")
     if n_frames > 10:
         f10 = np.array(Image.open(os.path.join(out_dir, f"stream_frame_{min(10, last):02d}.png")))
-        _motion(f0, f10, water, protect, "frame00 vs 10")
+        water_0_vs_10 = _motion(f0, f10, water, protect, "frame00 vs 10")
+        # 水面平均电平差要明显高于预审那条「看不出在动」的线。
+        if water_0_vs_10 < 12.0:
+            raise RuntimeError(f"water-band frame00 vs 10 diff {water_0_vs_10:.2f} is still too small")
     if n_frames > 20:
         f20 = np.array(Image.open(os.path.join(out_dir, "stream_frame_20.png")))
         _motion(f0, f20, water, protect, "frame00 vs 20")

@@ -7,7 +7,7 @@
 - 底图 `textures/near_path_base.png`（从已批准 `assets/holiday/exploration/near_path_02.webp` 复制，1672×941）
 - 流向 `textures/flow_map.png`（RG 为单位流向，128 为零；+G 是画面下方，即下游）
 - 弧长坐标 `textures/coord_sn.png`（R 为沿溪床的周期相位，G 为横向）
-- 水纹 `textures/ripple_tile.png`（R/G 两层，横向一个周期）
+- 水纹 `textures/ripple_tile.png`（R/G 同一层，横向一整圈；相位直接平移）
 - 笔触 `textures/water_detail.png`（只含水色高频，岸上为中性灰）
 - 着色器 `stream_flow.gdshader` 的振幅、位移夹紧和双相位权重与 `generate_stream_flow_anim.py` 相同
 

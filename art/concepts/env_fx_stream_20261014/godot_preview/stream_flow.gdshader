@@ -1,7 +1,8 @@
 shader_type canvas_item;
-// # 与 generate_stream_flow_anim.py 同一套溪流双相位。
-// # 流向贴图 RG 驱动水纹和短距离笔触；沿弧长往下游走，不是左右来回推 UV。
-// # 权重在某一层回绕时把它藏起来，减轻拉长和循环跳变。岸、桥、石、纸边蒙版为 0。
+// # 与 generate_stream_flow_anim.py 同一套溪流。
+// # 水纹贴图横向一圈才重复，phase 直接沿弧长往下游平移。
+// # 笔触仍是双相位：非循环细节回绕时把那一层权重藏起来。岸、桥、石、纸边蒙版为 0。
+// # 不要把水纹也差半圈混在一起。偶数谐波贴图配半圈偏移会采到同一个纹素，亮带不动。
 
 uniform sampler2D base_tex : filter_nearest, repeat_disable;
 uniform sampler2D flow_map : filter_nearest, repeat_disable;
@@ -12,7 +13,7 @@ uniform float phase = 0.0;
 uniform float strength : hint_range(0.0, 1.0) = 1.0;
 uniform vec2 base_size = vec2(1672.0, 941.0);
 uniform float advect_travel_px = 12.0;
-uniform float ripple_amp = 46.0;
+uniform float ripple_amp = 118.0;
 uniform float advect_gain = 0.50;
 uniform float advect_clamp = 8.0;
 uniform float detail_scale = 48.0;
@@ -42,9 +43,8 @@ void fragment() {
 	if (mask > 0.0) {
 		float u = sn.r;
 		float v = clamp(sn.g, 0.001, 0.999);
-		float ra = texture(ripple_tile, vec2(fract(u - p0), v)).r;
-		float rb = texture(ripple_tile, vec2(fract(u - p1), v)).g;
-		float rip = mix(ra, rb, weight);
+		// # 贴图自身循环，用 p0 平移。p1/weight 只给下面的笔触。
+		float rip = texture(ripple_tile, vec2(fract(u - p0), v)).r;
 		float centered = (rip - 0.5) * 2.0;
 
 		vec3 local = decode_detail(texture(water_detail, texel).rgb);
