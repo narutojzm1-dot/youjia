@@ -135,6 +135,15 @@ func run() -> void:
 	director.call("set_game_paused", false)
 	main.queue_free()
 	await process_frame
+	# Linux's mixer can still hold the just-stopped fallback playback at quit.
+	# Retire our explicit adapter fixtures and their streams before terminating,
+	# preserving the strict post-PASS log gate rather than hiding exit errors.
+	ui_voice = null
+	meal_voice = null
+	audio = null
+	director.call("release_streams")
+	await create_timer(0.25).timeout
+	await process_frame
 	print("UI_INTERACTION_AUDIO_INPUT checks=%d failures=%d" % [checks, failures.size()])
 	for failure in failures: push_error(failure)
 	quit(0 if failures.is_empty() else 1)
