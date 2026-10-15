@@ -1,0 +1,7 @@
+# 10月15日日版本的延后收尾核验
+
+CODEX-LEAD于10月16日重新读取公开与固定Pages manifest/HTML、Actions/Pages状态、固定PCK Git blob/长度，全部匹配game-bb04fde。verification.json明确区分本轮HTTP元数据与ASSISTANT在PR808完成的实际完整PCK下载证据；未新增耳听/浏览器体验。
+
+公共HTML原始365106字节，SHA256 46b3c525301ce86ebe5a5a501e7e3a257a3e566b04090b8f8e43585ef0aec9ae；无损gzip仅用于归档。固定HTML与之完全相同。公共/固定清单2252字节，SHA256 438a46b90e806b964944e0c7a8be42d47f999e4f06244fb81a9159cc5da7b6e1。
+
+PCK完整SHA256与实际Web软件输出/失败解释见../2026-10-15-nearby-find-audio-public/。本轮没有重复无变化的整包下载或同版本实玩。后继main仅README/docs的122文件清单保存在docs-only-changes.json，公共包、文档头与QA历史受测7d79版本分别标明。

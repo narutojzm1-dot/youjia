@@ -1,0 +1,616 @@
+{
+  "base": "bb04fde115877380e3fda8fa80b96ee8753d7180",
+  "head": "b65b13cd8c81fe9d35b472acedf2ff3ed4e2c7d2",
+  "files": [
+    {
+      "path": "README.md",
+      "status": "modified",
+      "sha": "0aa21b8b6d6f2b774d39d38b5f5d25e827975f2a"
+    },
+    {
+      "path": "docs/agents.md",
+      "status": "modified",
+      "sha": "e53398af7c50a0c41deb1d958940312cadb87fb8"
+    },
+    {
+      "path": "docs/audio/nearby-find-16-2026-10-12.md",
+      "status": "modified",
+      "sha": "e2b15c2b27853651f368cf654030e60e015dd0f6"
+    },
+    {
+      "path": "docs/collaboration/assistant-nearby-goal-565.md",
+      "status": "modified",
+      "sha": "a8fff4613e91140a79496bbb1ed4567a16051c9b"
+    },
+    {
+      "path": "docs/collaboration/leader-rest-2026-10-13.md",
+      "status": "added",
+      "sha": "5501c6b9102603043a5fd1831cdd7476ecfa5ffb"
+    },
+    {
+      "path": "docs/collaboration/personnel-availability.md",
+      "status": "modified",
+      "sha": "1669861aebc837232439ab8b2d108b87bf6f6a20"
+    },
+    {
+      "path": "docs/decisions.md",
+      "status": "modified",
+      "sha": "9b0452ad0f83a703a434cb9cb390b42f944c13bf"
+    },
+    {
+      "path": "docs/design/growth-phase-2026-10-10.md",
+      "status": "modified",
+      "sha": "f36c714833d42d699894f8167cdf54fded5bd79c"
+    },
+    {
+      "path": "docs/game-design.md",
+      "status": "modified",
+      "sha": "0e645f338467305f59a3ba148460f39e5ab811c3"
+    },
+    {
+      "path": "docs/playtests/2026-10-12-nearby-find-audio/README.md",
+      "status": "modified",
+      "sha": "1d45431f47aa7835402aff79009e68b023aed926"
+    },
+    {
+      "path": "docs/playtests/2026-10-13-milling-public/.gdignore",
+      "status": "added",
+      "sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "docs/playtests/2026-10-13-milling-public/README.md",
+      "status": "added",
+      "sha": "8bc50ecacc0c0919d99b23ce5ebe259275b650c2"
+    },
+    {
+      "path": "docs/playtests/2026-10-13-milling-public/actions-receipt.json",
+      "status": "added",
+      "sha": "d48d4403955725c4d914d534c79684223bb40473"
+    },
+    {
+      "path": "docs/playtests/2026-10-13-milling-public/before-release-day24.jpg",
+      "status": "added",
+      "sha": "efda665029b1bdd3d84a30a9a7fddffc9935cd34"
+    },
+    {
+      "path": "docs/playtests/2026-10-13-milling-public/day-summary.md",
+      "status": "added",
+      "sha": "a34e7c38186391a7d3587dc765fdcbb513d69770"
+    },
+    {
+      "path": "docs/playtests/2026-10-13-milling-public/final-pr-ci.json",
+      "status": "added",
+      "sha": "a2e3eefcc64cf4284a7b179334a8f434c80473f8"
+    },
+    {
+      "path": "docs/playtests/2026-10-13-milling-public/final-public-world.jpg",
+      "status": "added",
+      "sha": "0bcbdfe0a954414ca7e624a2961d9c0c92e58cee"
+    },
+    {
+      "path": "docs/playtests/2026-10-13-milling-public/intermediate-299-actions.json",
+      "status": "added",
+      "sha": "70d15c73568bcf52f3d95db9fd343bd3b389f8c1"
+    },
+    {
+      "path": "docs/playtests/2026-10-13-milling-public/manifest.json",
+      "status": "added",
+      "sha": "76bef5f89770f5724e538d0eb1d38ff92d8b4d6f"
+    },
+    {
+      "path": "docs/playtests/2026-10-13-milling-public/old-tab-kept-playing-after-intermediate-release.jpg",
+      "status": "added",
+      "sha": "efda665029b1bdd3d84a30a9a7fddffc9935cd34"
+    },
+    {
+      "path": "docs/playtests/2026-10-13-milling-public/pages-manifest.json",
+      "status": "added",
+      "sha": "ca87f7373cd51ad16e28215b10a2510bd732039d"
+    },
+    {
+      "path": "docs/playtests/2026-10-13-milling-public/public-manifest.json",
+      "status": "added",
+      "sha": "ca87f7373cd51ad16e28215b10a2510bd732039d"
+    },
+    {
+      "path": "docs/playtests/2026-10-13-milling-public/verification.json",
+      "status": "added",
+      "sha": "1877dfa8f09e2cb914a3189618e2ae5512491032"
+    },
+    {
+      "path": "docs/playtests/2026-10-13-milling-web/final-candidate/.gdignore",
+      "status": "added",
+      "sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "docs/playtests/2026-10-13-milling-web/final-candidate/14-final-flour-paper-normal-web.jpg",
+      "status": "added",
+      "sha": "fcdb5ebce4bb82fa4ee8becc223dde6fdc3bbceb"
+    },
+    {
+      "path": "docs/playtests/2026-10-13-milling-web/final-candidate/15-final-flour-paper-844x390.jpg",
+      "status": "added",
+      "sha": "a28f78494db824abed5899142cc99de3bb16c9a6"
+    },
+    {
+      "path": "docs/playtests/2026-10-13-milling-web/final-candidate/16-final-flour-paper-390x844.jpg",
+      "status": "added",
+      "sha": "6409019e2c7149ca89201460bfbfcc4e097ed31f"
+    },
+    {
+      "path": "docs/playtests/2026-10-13-milling-web/final-candidate/README.md",
+      "status": "added",
+      "sha": "845fce4441ff8db4d577b6e7c8c1d6fdc1a47a18"
+    },
+    {
+      "path": "docs/playtests/2026-10-13-milling-web/final-candidate/manifest.json",
+      "status": "added",
+      "sha": "8cf5a72139728a19dafda6fb7416259728813e6b"
+    },
+    {
+      "path": "docs/playtests/2026-10-15-nearby-find-audio-public/.gdignore",
+      "status": "added",
+      "sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "docs/playtests/2026-10-15-nearby-find-audio-public/.gitattributes",
+      "status": "added",
+      "sha": "180b3975c85bd3bff87902bf1dd35bef9175efc4"
+    },
+    {
+      "path": "docs/playtests/2026-10-15-nearby-find-audio-public/README.md",
+      "status": "added",
+      "sha": "4e606f240b4c0c224ea2fa7292ea6babbcf2eb39"
+    },
+    {
+      "path": "docs/playtests/2026-10-15-nearby-find-audio-public/raw-index.json",
+      "status": "added",
+      "sha": "c2b17fa2a0c61b07c49345ac9994f00b758693a2"
+    },
+    {
+      "path": "docs/playtests/2026-10-15-nearby-find-audio-public/raw/actual-public-packed-checks.json",
+      "status": "added",
+      "sha": "0940b81ffe2236e3c205f050751d9558594b18bc"
+    },
+    {
+      "path": "docs/playtests/2026-10-15-nearby-find-audio-public/raw/actual-public-packed-checks.log",
+      "status": "added",
+      "sha": "934592083f5c4a078c53ad87d5860c646e67c18f"
+    },
+    {
+      "path": "docs/playtests/2026-10-15-nearby-find-audio-public/raw/boot-bb04fde/download_assets.mjs",
+      "status": "added",
+      "sha": "05730914b8af66673d1eead09194b0838d607475"
+    },
+    {
+      "path": "docs/playtests/2026-10-15-nearby-find-audio-public/raw/boot-bb04fde/sha256_stream.mjs",
+      "status": "added",
+      "sha": "229e8b41caf171eca75f7c62ad87fd4f694c494d"
+    },
+    {
+      "path": "docs/playtests/2026-10-15-nearby-find-audio-public/raw/browser-public.log",
+      "status": "added",
+      "sha": "b310f57c0e61e4893d3d3e65f9c9e525efe04edf"
+    },
+    {
+      "path": "docs/playtests/2026-10-15-nearby-find-audio-public/raw/engine-3b105340f798ed0e7d6aa7725328dc8c0bf8cd94ffea14835e43f83045048c74.audio.position.worklet.js",
+      "status": "added",
+      "sha": "4e512c1e3c99c63cc69b0345b7bb250679e0d313"
+    },
+    {
+      "path": "docs/playtests/2026-10-15-nearby-find-audio-public/raw/engine-3b105340f798ed0e7d6aa7725328dc8c0bf8cd94ffea14835e43f83045048c74.audio.worklet.js",
+      "status": "added",
+      "sha": "3b94cab85cb937fa27056d17648cdbb73e44bdbd"
+    },
+    {
+      "path": "docs/playtests/2026-10-15-nearby-find-audio-public/raw/engine-3b105340f798ed0e7d6aa7725328dc8c0bf8cd94ffea14835e43f83045048c74.js",
+      "status": "added",
+      "sha": "c84b7de50f26f0dd21bd4b2885de851a3ea6ff39"
+    },
+    {
+      "path": "docs/playtests/2026-10-15-nearby-find-audio-public/raw/expected-audio-hashes.json",
+      "status": "added",
+      "sha": "043c8725aafa541c11b691796e340fdfebaa8ee3"
+    },
+    {
+      "path": "docs/playtests/2026-10-15-nearby-find-audio-public/raw/game-release.json",
+      "status": "added",
+      "sha": "610e883621f1e63fee38a3f392845577af74001b"
+    },
+    {
+      "path": "docs/playtests/2026-10-15-nearby-find-audio-public/raw/independent-source-decoder-8192.gd",
+      "status": "added",
+      "sha": "b908a36506b1170b465efec7cd387a68fa1a866b"
+    },
+    {
+      "path": "docs/playtests/2026-10-15-nearby-find-audio-public/raw/independent-source-decoder-8192.json",
+      "status": "added",
+      "sha": "e2c7b844f48000a4943cc47c80e546b7ea50eb2b"
+    },
+    {
+      "path": "docs/playtests/2026-10-15-nearby-find-audio-public/raw/independent-source-decoder-first-method.gd",
+      "status": "added",
+      "sha": "f07dc966c68f8a0cb0c5e3699c29d095535281bf"
+    },
+    {
+      "path": "docs/playtests/2026-10-15-nearby-find-audio-public/raw/independent-source-decoder-first-method.log",
+      "status": "added",
+      "sha": "12ff726b754f8ca2eb305379411e2575f92a0bd2"
+    },
+    {
+      "path": "docs/playtests/2026-10-15-nearby-find-audio-public/raw/independent-source-decoder.json",
+      "status": "added",
+      "sha": "4a2ac40e07ce671975d1fbca8a891ac3e2b61c7b"
+    },
+    {
+      "path": "docs/playtests/2026-10-15-nearby-find-audio-public/raw/independent-source-decoder.log",
+      "status": "added",
+      "sha": "3d1c34c762ae1f873d95032b8c953ba0161b4155"
+    },
+    {
+      "path": "docs/playtests/2026-10-15-nearby-find-audio-public/raw/index.html",
+      "status": "added",
+      "sha": "be3d04a41ff90d4b88b9305a3f7c025bd9f57a63"
+    },
+    {
+      "path": "docs/playtests/2026-10-15-nearby-find-audio-public/raw/init-script-syntax-check.js",
+      "status": "added",
+      "sha": "b50525b60a94eeb2ca34218e422d719f5d24d4ec"
+    },
+    {
+      "path": "docs/playtests/2026-10-15-nearby-find-audio-public/raw/manifest-observed-1792073618649551600.json",
+      "status": "added",
+      "sha": "610e883621f1e63fee38a3f392845577af74001b"
+    },
+    {
+      "path": "docs/playtests/2026-10-15-nearby-find-audio-public/raw/packed-verification-driver.log",
+      "status": "added",
+      "sha": "f5f674912fd09460c2e1c5d496c56241711e3bdf"
+    },
+    {
+      "path": "docs/playtests/2026-10-15-nearby-find-audio-public/raw/pages-result.json",
+      "status": "added",
+      "sha": "22bc1df94879bf530b8e4bc34e3b89ac97f40142"
+    },
+    {
+      "path": "docs/playtests/2026-10-15-nearby-find-audio-public/raw/pages-tree.json",
+      "status": "added",
+      "sha": "bd04b970b19abbfb9d0c5273c5d4454f959fd814"
+    },
+    {
+      "path": "docs/playtests/2026-10-15-nearby-find-audio-public/raw/pages-watch.log",
+      "status": "added",
+      "sha": "99c9c52e8782d15b3f86f2965f631d2eb9873675"
+    },
+    {
+      "path": "docs/playtests/2026-10-15-nearby-find-audio-public/raw/post-run-validation.log",
+      "status": "added",
+      "sha": "43073f799027df7fdd39ef4a73d4e8baaf7cf4ee"
+    },
+    {
+      "path": "docs/playtests/2026-10-15-nearby-find-audio-public/raw/prepare-drivers-first-assertion.py",
+      "status": "added",
+      "sha": "e1a1c903413aebcda0e86b549b96f9888c3b5b5a"
+    },
+    {
+      "path": "docs/playtests/2026-10-15-nearby-find-audio-public/raw/public-byte-verification.log",
+      "status": "added",
+      "sha": "e5cd8f8787d73c889b78bbf38fffa91aec839cb6"
+    },
+    {
+      "path": "docs/playtests/2026-10-15-nearby-find-audio-public/raw/public-files.json",
+      "status": "added",
+      "sha": "410ce4b9767ebe78dd296eb3f6509f404f736ff5"
+    },
+    {
+      "path": "docs/playtests/2026-10-15-nearby-find-audio-public/raw/publish-full.log",
+      "status": "added",
+      "sha": "ec4d02eed86c611e5435186b2849d261c93aaf54"
+    },
+    {
+      "path": "docs/playtests/2026-10-15-nearby-find-audio-public/raw/publish-result.json",
+      "status": "added",
+      "sha": "517626d946c6fb7738e3764962ad85ce291c87c3"
+    },
+    {
+      "path": "docs/playtests/2026-10-15-nearby-find-audio-public/raw/publish-watch.log",
+      "status": "added",
+      "sha": "fb89fb3fcb76a3462ee3f5f926ff6e620bb9b842"
+    },
+    {
+      "path": "docs/playtests/2026-10-15-nearby-find-audio-public/raw/recording-analysis.log",
+      "status": "added",
+      "sha": "55b2879c6d81050098aa87d758d445ce93f830cd"
+    },
+    {
+      "path": "docs/playtests/2026-10-15-nearby-find-audio-public/raw/recording-software-analysis.json",
+      "status": "added",
+      "sha": "a687a22caca347fb07b255fdb06213284a353818"
+    },
+    {
+      "path": "docs/playtests/2026-10-15-nearby-find-audio-public/raw/save-bb04fde/bridge.mjs",
+      "status": "added",
+      "sha": "b28e79f06de1d727e3fe454b0442082ba77c33c5"
+    },
+    {
+      "path": "docs/playtests/2026-10-15-nearby-find-audio-public/raw/save-bb04fde/budgets.mjs",
+      "status": "added",
+      "sha": "2a2abebdd318a04d63c9eeee3fb275f59e1d58ae"
+    },
+    {
+      "path": "docs/playtests/2026-10-15-nearby-find-audio-public/raw/save-bb04fde/host.mjs",
+      "status": "added",
+      "sha": "ffba045c0a3d0f2fe736f715bedb34da1c3c3e47"
+    },
+    {
+      "path": "docs/playtests/2026-10-15-nearby-find-audio-public/raw/save-bb04fde/idbfs_source.mjs",
+      "status": "added",
+      "sha": "bc1bf875e6726864b93299c469eb53c36956d18f"
+    },
+    {
+      "path": "docs/playtests/2026-10-15-nearby-find-audio-public/raw/save-bb04fde/legacy_inspection.mjs",
+      "status": "added",
+      "sha": "908794da407c525d1b68cac46737e6de61872784"
+    },
+    {
+      "path": "docs/playtests/2026-10-15-nearby-find-audio-public/raw/save-bb04fde/legacy_seal.mjs",
+      "status": "added",
+      "sha": "ae76de7400979664b23df34ac4300bf086f96fd7"
+    },
+    {
+      "path": "docs/playtests/2026-10-15-nearby-find-audio-public/raw/save-bb04fde/legacy_v5.mjs",
+      "status": "added",
+      "sha": "d5074e50774eb985e5d9c6e95fa6dcfdc0c4c12c"
+    },
+    {
+      "path": "docs/playtests/2026-10-15-nearby-find-audio-public/raw/save-bb04fde/lifecycle.mjs",
+      "status": "added",
+      "sha": "d30f5af087694e6dbf30d19e021b5509a8f74801"
+    },
+    {
+      "path": "docs/playtests/2026-10-15-nearby-find-audio-public/raw/save-bb04fde/source_decode.mjs",
+      "status": "added",
+      "sha": "3fb4b38fd00d399c6258ad4f7b5d08aa89ffbc26"
+    },
+    {
+      "path": "docs/playtests/2026-10-15-nearby-find-audio-public/raw/save-bb04fde/store.mjs",
+      "status": "added",
+      "sha": "4a05c51fd980f64ebb5033d8915ea6f4b044a3b6"
+    },
+    {
+      "path": "docs/playtests/2026-10-15-nearby-find-audio-public/raw/scripts/analyze-find16-public-oct15.py.txt",
+      "status": "added",
+      "sha": "797931dd4688d23ea17033f6e5c15dcc1ff69e8d"
+    },
+    {
+      "path": "docs/playtests/2026-10-15-nearby-find-audio-public/raw/scripts/archive-find16-public-oct15.py.txt",
+      "status": "added",
+      "sha": "c80d5d1c6144738cd499505072cdebed29717766"
+    },
+    {
+      "path": "docs/playtests/2026-10-15-nearby-find-audio-public/raw/scripts/browser-find16-public-oct15.py.txt",
+      "status": "added",
+      "sha": "1ebbf26c87a790505178a7722e07f4fa93c73905"
+    },
+    {
+      "path": "docs/playtests/2026-10-15-nearby-find-audio-public/raw/scripts/decode-approved-find16-oct15.gd.txt",
+      "status": "added",
+      "sha": "bf61376c313b4765b3537397ee08ca78a57615cd"
+    },
+    {
+      "path": "docs/playtests/2026-10-15-nearby-find-audio-public/raw/scripts/find16-public-observer-oct15.js.txt",
+      "status": "added",
+      "sha": "0587723fc541c474192243f6ff287d0475a06135"
+    },
+    {
+      "path": "docs/playtests/2026-10-15-nearby-find-audio-public/raw/scripts/independent-decoder-project.godot.txt",
+      "status": "added",
+      "sha": "ad4a452ee63d203581f30af4f290b871f4aaf047"
+    },
+    {
+      "path": "docs/playtests/2026-10-15-nearby-find-audio-public/raw/scripts/prepare-find16-public-drivers-oct15.py.txt",
+      "status": "added",
+      "sha": "2b2002869ec0c5d7ad12b1155d84c7e22371e635"
+    },
+    {
+      "path": "docs/playtests/2026-10-15-nearby-find-audio-public/raw/scripts/validate-find16-public-observations-oct15.py.txt",
+      "status": "added",
+      "sha": "c2f4512335b47335ecfc86836da43fa49549f546"
+    },
+    {
+      "path": "docs/playtests/2026-10-15-nearby-find-audio-public/raw/scripts/verify-find16-public-oct15.py.txt",
+      "status": "added",
+      "sha": "6aebd490a3afdb78b15e1dbe74cec68476465981"
+    },
+    {
+      "path": "docs/playtests/2026-10-15-nearby-find-audio-public/raw/scripts/verify-find16-public-pack-oct15.gd.txt",
+      "status": "added",
+      "sha": "0e94a1322557b50ef4c4934823e0833881946259"
+    },
+    {
+      "path": "docs/playtests/2026-10-15-nearby-find-audio-public/raw/scripts/verify-find16-public-pack-oct15.py.txt",
+      "status": "added",
+      "sha": "bd7194a38939171e736200e836d6c24b18090638"
+    },
+    {
+      "path": "docs/playtests/2026-10-15-nearby-find-audio-public/raw/transport-retries.jsonl",
+      "status": "added",
+      "sha": "eb3755b1be36f68351e96cb421319cbe03959969"
+    },
+    {
+      "path": "docs/playtests/2026-10-15-nearby-find-audio-public/raw/verified.json",
+      "status": "added",
+      "sha": "7220dfa88cab08270e0c5205b444bc29e6c8da64"
+    },
+    {
+      "path": "docs/playtests/2026-10-15-nearby-find-audio-public/raw/web/accepted-direct-pick.png",
+      "status": "added",
+      "sha": "706fed41bf47f775f435d3f1468daaaa4a125556"
+    },
+    {
+      "path": "docs/playtests/2026-10-15-nearby-find-audio-public/raw/web/actual-short-source-hashes.json",
+      "status": "added",
+      "sha": "fc86a60aeeb47f4ac068a31293cc5c6d2ef74a96"
+    },
+    {
+      "path": "docs/playtests/2026-10-15-nearby-find-audio-public/raw/web/baseline-backend.json",
+      "status": "added",
+      "sha": "1e47e78df799c457f0822ccdf78010447ea1ba9b"
+    },
+    {
+      "path": "docs/playtests/2026-10-15-nearby-find-audio-public/raw/web/cold-loading-progress.json",
+      "status": "added",
+      "sha": "bde8d3b42f81e8f6fd9af2ca827153c7f9575e74"
+    },
+    {
+      "path": "docs/playtests/2026-10-15-nearby-find-audio-public/raw/web/failure.json",
+      "status": "added",
+      "sha": "401b97b85cc130d249418aacc56452a8daa77e57"
+    },
+    {
+      "path": "docs/playtests/2026-10-15-nearby-find-audio-public/raw/web/failure.png",
+      "status": "added",
+      "sha": "171472fc52ede8f100acb94d0ff3527d9aae83b0"
+    },
+    {
+      "path": "docs/playtests/2026-10-15-nearby-find-audio-public/raw/web/music-environment-off.png",
+      "status": "added",
+      "sha": "1118895e8215bbd0498c39aa7b35d3ef1245764d"
+    },
+    {
+      "path": "docs/playtests/2026-10-15-nearby-find-audio-public/raw/web/muted-pickup-retained.png",
+      "status": "added",
+      "sha": "a76ea7b139ec37bcbcfdf7273cc1accf2c2aef4e"
+    },
+    {
+      "path": "docs/playtests/2026-10-15-nearby-find-audio-public/raw/web/ordinary-context-1.webm",
+      "status": "added",
+      "sha": "02a4aa65bcb8d7f8bd76f7f0d98d8bb2d3458626"
+    },
+    {
+      "path": "docs/playtests/2026-10-15-nearby-find-audio-public/raw/web/ordinary-context-2.webm",
+      "status": "added",
+      "sha": "ad0eddd86e934441d05b18163ebf9202ee928e13"
+    },
+    {
+      "path": "docs/playtests/2026-10-15-nearby-find-audio-public/raw/web/ordinary-recordings.json",
+      "status": "added",
+      "sha": "4616a765bc457a6bbf1842b6a41af7afec1f0cdb"
+    },
+    {
+      "path": "docs/playtests/2026-10-15-nearby-find-audio-public/raw/web/other-tab-after-pickup.png",
+      "status": "added",
+      "sha": "54dd7cdafaf677b58b2c2caf89bde26c8e1677e8"
+    },
+    {
+      "path": "docs/playtests/2026-10-15-nearby-find-audio-public/raw/web/package.json",
+      "status": "added",
+      "sha": "a396d0799d29fbd8a7809871cd5d7eb2811a31fa"
+    },
+    {
+      "path": "docs/playtests/2026-10-15-nearby-find-audio-public/raw/web/pause-stops-tail.png",
+      "status": "added",
+      "sha": "201215d2a8b9b0c86a8bb07eb379e08cd7178c35"
+    },
+    {
+      "path": "docs/playtests/2026-10-15-nearby-find-audio-public/raw/web/point-ground-and-return.png",
+      "status": "added",
+      "sha": "52bd7a97bd17baa73d01d01675340f1985fc39a3"
+    },
+    {
+      "path": "docs/playtests/2026-10-15-nearby-find-audio-public/raw/web/portrait-touch-pick.png",
+      "status": "added",
+      "sha": "ac5721433282b597621b47149c02b62bd1baedcc"
+    },
+    {
+      "path": "docs/playtests/2026-10-15-nearby-find-audio-public/raw/web/recordings.json",
+      "status": "added",
+      "sha": "2459d51cf812e54cbde627eb4015ce1dc3bb4a93"
+    },
+    {
+      "path": "docs/playtests/2026-10-15-nearby-find-audio-public/raw/web/reload-context-1.webm",
+      "status": "added",
+      "sha": "e3e99fd14f49e9e488086664db512fc8ef3ee071"
+    },
+    {
+      "path": "docs/playtests/2026-10-15-nearby-find-audio-public/raw/web/reload-context-2.webm",
+      "status": "added",
+      "sha": "0e1924f2954658e3f77d955dccbd660d444704a8"
+    },
+    {
+      "path": "docs/playtests/2026-10-15-nearby-find-audio-public/raw/web/reload-preserves-all-finds.png",
+      "status": "added",
+      "sha": "0c058ba527622463fc22c7d75f02dcf0476fa894"
+    },
+    {
+      "path": "docs/playtests/2026-10-15-nearby-find-audio-public/raw/web/reload-title-no-replay.png",
+      "status": "added",
+      "sha": "bb3b55139916aedbd4a021b9627967abb8a4bf7e"
+    },
+    {
+      "path": "docs/playtests/2026-10-15-nearby-find-audio-public/raw/web/repeat-ground-no-second-sound.png",
+      "status": "added",
+      "sha": "d01b39b2a0c1048f8b2559a7a88aad8c8e76ab75"
+    },
+    {
+      "path": "docs/playtests/2026-10-15-nearby-find-audio-public/raw/web/resume-no-replay.png",
+      "status": "added",
+      "sha": "5bc00043dec9de6c5d5f488f76686c2c3237b83a"
+    },
+    {
+      "path": "docs/playtests/2026-10-15-nearby-find-audio-public/raw/web/return-stops-tail.png",
+      "status": "added",
+      "sha": "e7cdcc397151cac4196e51b1aca874f157b750fc"
+    },
+    {
+      "path": "docs/playtests/2026-10-15-nearby-find-audio-public/raw/web/signal-windows.json",
+      "status": "added",
+      "sha": "61dab282780b5808bfb07bce73c4936e624d23de"
+    },
+    {
+      "path": "docs/playtests/2026-10-15-nearby-find-audio-public/raw/web/startup-observation.json",
+      "status": "added",
+      "sha": "da2058485587055ebd60084d35d6c26a79c7abb0"
+    },
+    {
+      "path": "docs/playtests/2026-10-15-nearby-find-audio-public/raw/web/steps.json",
+      "status": "added",
+      "sha": "e959b8be5f33b2cf963e11f40000e79eb1439d32"
+    },
+    {
+      "path": "docs/playtests/2026-10-15-nearby-find-audio-public/raw/web/tab-return-no-second-start.png",
+      "status": "added",
+      "sha": "16855b62cad2f23d993a5db6907617f262dfb945"
+    },
+    {
+      "path": "docs/playtests/2026-10-15-nearby-find-audio-public/raw/web/title-quiet.png",
+      "status": "added",
+      "sha": "c3994832cb9988fd75669e81d32ff93244e6b345"
+    },
+    {
+      "path": "docs/playtests/2026-10-15-nearby-find-audio-public/raw/web/unmute-no-replay.png",
+      "status": "added",
+      "sha": "53b69c98b62a75e42925fc01efa612fc74b44bd2"
+    },
+    {
+      "path": "docs/playtests/2026-10-15-nearby-find-audio-public/raw/web/validated-summary.json",
+      "status": "added",
+      "sha": "7982045b409812cd4d0ed5fc007690aac400ebbc"
+    },
+    {
+      "path": "docs/playtests/2026-10-15-nearby-find-audio-public/raw/web/yard.png",
+      "status": "added",
+      "sha": "4a1dff16882c36f3bf58418d451014d1ccdaa618"
+    },
+    {
+      "path": "docs/releases/2026-10-13.md",
+      "status": "added",
+      "sha": "a97567619eceb78738b0a5a1b1f45b370b916467"
+    },
+    {
+      "path": "docs/requirements.md",
+      "status": "modified",
+      "sha": "9d9aac98a5d830b55504540508259ee20e476def"
+    }
+  ]
+}
