@@ -1,0 +1,138 @@
+{
+  "dateBeijing": "2026-10-15",
+  "updatedAt": "2026-10-15T11:15:12.498293+08:00",
+  "build": "game-7d79ae6",
+  "sha": "7d79ae681a2acc21aabfce9b1db36b772d513f28",
+  "main": "f29b0563f195c91833127da17c0a9cb9aac714b0",
+  "baseline": "e13eec3f5956de7d2c3a6e4c21876fa6375cbcc6",
+  "features": [
+    {
+      "requirement": "#749/#644 雾与云",
+      "owner": "ASSISTANT正式近郊 / GROK-BUILD候选",
+      "criteria": "可见连续动态且水面局部遮罩正确",
+      "evidence": "PR803明确仅art/concepts隔离候选、未接near_path_mist；候选合入不是实际功能发布",
+      "status": "尚未发布（本次新雾候选）；旧动态整体仍证据不足",
+      "steps": "核原单/PR边界及当前页面；详细实玩见报告",
+      "normal": "PR803明确仅art/concepts隔离候选、未接near_path_mist；候选合入不是实际功能发布",
+      "boundary": "完整取消/保存/异常流程未完成",
+      "save": "旧第7天和快捷草槽恢复；未全面检查库存",
+      "gapNext": "按criteria补玩家证据，不用合入/自动检查替代"
+    },
+    {
+      "requirement": "#700/#801 灶台",
+      "owner": "CODEX-LEAD",
+      "criteria": "取石搬至院内施工点，打造动作与分阶段灶台形成；阶段持久化和去重",
+      "evidence": "有效方向已改，PR801仅策划文档；生产growth_schedule仍POND_RECIPE、rim站点",
+      "status": "尚未实现新方向，旧垒石不能替代验收",
+      "steps": "核原单/PR边界及当前页面；详细实玩见报告",
+      "normal": "有效方向已改，PR801仅策划文档；生产growth_schedule仍POND_RECIPE、rim站点",
+      "boundary": "完整取消/保存/异常流程未完成",
+      "save": "旧第7天和快捷草槽恢复；未全面检查库存",
+      "gapNext": "按criteria补玩家证据，不用合入/自动检查替代"
+    },
+    {
+      "requirement": "#700/#797 磨粉",
+      "owner": "CODEX-LEAD",
+      "criteria": "物品与AP支持的磨粉/入库/用面粉计餐，普通玩家完整闭环",
+      "evidence": "旧第7天能看到磨盘；本轮未获得计餐食材/AP并实际完成磨粉",
+      "status": "部分实现证据；完整需求证据不足",
+      "steps": "核原单/PR边界及当前页面；详细实玩见报告",
+      "normal": "旧第7天能看到磨盘；本轮未获得计餐食材/AP并实际完成磨粉",
+      "boundary": "完整取消/保存/异常流程未完成",
+      "save": "旧第7天和快捷草槽恢复；未全面检查库存",
+      "gapNext": "按criteria补玩家证据，不用合入/自动检查替代"
+    },
+    {
+      "requirement": "#642 花草",
+      "owner": "CODEX-LEAD/ASSISTANT",
+      "criteria": "外采→携回→重新布置、保存/取消边界",
+      "evidence": "沿用PR800原花草开关的已确认差距；本轮未重复收放",
+      "status": "部分实现，未关闭",
+      "steps": "核原单/PR边界及当前页面；详细实玩见报告",
+      "normal": "沿用PR800原花草开关的已确认差距；本轮未重复收放",
+      "boundary": "完整取消/保存/异常流程未完成",
+      "save": "旧第7天和快捷草槽恢复；未全面检查库存",
+      "gapNext": "按criteria补玩家证据，不用合入/自动检查替代"
+    },
+    {
+      "requirement": "#704/#745 声音；动物运动",
+      "owner": "原Owner",
+      "criteria": "可听真实输出；持续运动无短周期左右卡死",
+      "evidence": "未完成听验/连续复现，不把组件通过当验收",
+      "status": "证据不足",
+      "steps": "核原单/PR边界及当前页面；详细实玩见报告",
+      "normal": "未完成听验/连续复现，不把组件通过当验收",
+      "boundary": "完整取消/保存/异常流程未完成",
+      "save": "旧第7天和快捷草槽恢复；未全面检查库存",
+      "gapNext": "按criteria补玩家证据，不用合入/自动检查替代"
+    },
+    {
+      "requirement": "main背篓首次纸片修复",
+      "owner": "CURSOR-CLOUD",
+      "criteria": "首次打开贴合布局",
+      "evidence": "main f29b056，受测页面7d79ae6，不混同",
+      "status": "候选未按本轮发布验收",
+      "steps": "核原单/PR边界及当前页面；详细实玩见报告",
+      "normal": "main f29b056，受测页面7d79ae6，不混同",
+      "boundary": "完整取消/保存/异常流程未完成",
+      "save": "旧第7天和快捷草槽恢复；未全面检查库存",
+      "gapNext": "按criteria补玩家证据，不用合入/自动检查替代"
+    }
+  ],
+  "native": {
+    "sourceSha": "7d79ae681a2acc21aabfce9b1db36b772d513f28",
+    "startedUtc": "2026-10-15T03:08:31.669755+00:00",
+    "profileProbe": "D:/games/youjia-test/qa/native/2026-10-15-1106/roaming/Godot/app_userdata/youjia-qa-profile-probe",
+    "engine": "D:/games/youjia-tmp-godot/Godot_v4.7.2-stable_win64_console.exe",
+    "tests": [
+      {
+        "entry": "import",
+        "exit": 0,
+        "summary": []
+      },
+      {
+        "entry": "growth_production",
+        "exit": 0,
+        "summary": [
+          "GROWTH_PRODUCTION checks=132 failures=0"
+        ]
+      },
+      {
+        "entry": "milling_director",
+        "exit": 0,
+        "summary": [
+          "MILLING_DIRECTOR checks=162 failures=0"
+        ]
+      },
+      {
+        "entry": "flour_meal",
+        "exit": 0,
+        "summary": [
+          "FLOUR_MEAL checks=24 failures=0"
+        ]
+      },
+      {
+        "entry": "yard_mill_view",
+        "exit": 0,
+        "summary": [
+          "YARD_MILL_VIEW checks=21 failures=0"
+        ]
+      },
+      {
+        "entry": "growth_budget",
+        "exit": 0,
+        "summary": [
+          "GROWTH_BUDGET checks=77 failures=0"
+        ]
+      },
+      {
+        "entry": "growth_carried_photo",
+        "exit": 0,
+        "summary": [
+          "GROWTH_CARRIED_PHOTO checks=39 failures=0"
+        ]
+      }
+    ],
+    "endedUtc": "2026-10-15T03:15:01.773147+00:00"
+  }
+}
