@@ -1,0 +1,55 @@
+"""Validate unchanged real UI observations against independent source decoding.
+
+The original browser process exited1 ONLY at its new raw-mono-float assumption,
+after all16 states and recordings. Keep that failure intact; do not relabel its
+exit or rerun unchanged UI to hide it. This separate analysis has its own result.
+"""
+import json, pathlib
+
+root = pathlib.Path(r'D:\games\youjia-test\assistant-recovery\find16-public-bb04-oct15')
+web = root / 'web'
+read = lambda p: json.loads(p.read_text(encoding='utf-8-sig'))
+steps = read(web / 'steps.json')
+failure = read(web / 'failure.json')
+decoded = read(root / 'independent-source-decoder.json')
+assert "s['frames']==45600" in failure['traceback'] and not failure['errors'], 'Do not reinterpret another failure'
+stages = ['title-quiet','yard','music-environment-off','accepted-direct-pick','repeat-ground-no-second-sound','point-ground-and-return','muted-pickup-retained','unmute-no-replay','pause-stops-tail','resume-no-replay','other-tab-after-pickup','tab-return-no-second-start','return-stops-tail','portrait-touch-pick','reload-title-no-replay','reload-preserves-all-finds']
+counts = [0,0,0,1,1,1,1,1,2,2,3,3,4,5,0,0]
+assert [row['stage'] for row in steps] == stages
+assert all(not r['errors'] and not r['audio']['failures'] for r in steps)
+short = lambda r: [s for s in r['audio']['sources'] if abs(s.get('duration',0)-.95)<.002 and not s['loop']]
+assert [len(short(r)) for r in steps] == counts
+assert decoded['rawPcmSha256'] == '936184f59a29c5d519f1d1ca831916e8fef997e373778a15a50f26adb90e443e'
+assert decoded['decodedFrames'] == 45596 and decoded['targetRate'] == decoded['nativeMixRate'] == 48000
+sources = short(steps[13])
+assert len(sources) == 5
+for source in sources:
+    assert source['frames'] == decoded['decodedFrames'] and source['channels'] == 2 and source['sampleRate'] == decoded['targetRate']
+    assert source['floatHashes'] == decoded['channelHashes'] and not source['hashErrors']
+    assert not source['loop']
+windows = read(web / 'signal-windows.json')
+signals = []
+for window in windows:
+    signal = [s for row in window['rows'] for s in row['signal']]
+    assert all(s['nonFinite'] == 0 and 0 <= s['peak'] <= 1 for s in signal)
+    maximum = max(s['rms'] for s in signal)
+    if window['stage'] in ('accepted-one-shot','portrait-touch-one-shot'):
+        assert maximum > 1e-6
+    else:
+        assert maximum < 1e-7
+    signals.append({'stage': window['stage'], 'maximumRms': maximum, 'maximumPeak': max(s['peak'] for s in signal)})
+baseline = read(web / 'baseline-backend.json')
+for stage in ('point-ground-and-return','return-stops-tail'):
+    backend = next(r for r in steps if r['stage'] == stage)['audio']['backend']
+    assert all(backend[k] <= baseline[k] for k in ('buffers','players','bytes'))
+finds = steps[-1]['payload']['keepsakes']
+assert sum(finds.values()) == 6 and finds == steps[-2]['payload']['keepsakes']
+assert len(read(web / 'ordinary-recordings.json')) == len(read(web / 'recordings.json')) == 2
+package = read(web / 'package.json')
+assert package['candidate']['source'] == 'bb04fde115877380e3fda8fa80b96ee8753d7180'
+assert all(f['matchedPagesBlob'] for f in package['files'])
+life = [e for r in steps for e in r['inputs'] if e['kind'] in ('blur','visibilitychange')]
+result = {'status': 'PASS', 'validationKind': 'Independent post-run validation of preserved16 ordinary UI states and source-buffer identity, not a new browser run or zero exit of the original driver', 'source': package['candidate']['source'], 'states': len(steps), 'acceptedPickups': 6, 'audibleSoftwareStarts': 5, 'mutedSkipped': 1, 'keepsakesAfterReload': finds, 'signals': signals, 'browserSourceChannels': 2, 'browserSourceFrames': 45596, 'browserChannelHashes': decoded['channelHashes'], 'originalBrowserDriverExit': 1, 'originalFailureResolved': 'The extra final assertion expected raw mono45600 frames/c11b hash. Shipped BrowserBgmPlayer calls Godot mix_audio, yielding stereo45596 frames. Independently decoding the approved original WAV with the same16384-frame path produces the exact two observed2c4d hashes; production files and original observations were not changed.', 'realBackgroundEventCount': len(life), 'limitations': 'Software output only. Headless default mute-audio, simulated390 touch viewport, no actual headphones/speakers/physical mobile/lock-screen/623 routing acceptance. Other tab did not count as background without real lifecycle events. Concurrent download makes startup observational, not isolated performance benchmarking.'}
+(web / 'validated-summary.json').write_text(json.dumps(result, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+(web / 'actual-short-source-hashes.json').write_text(json.dumps(sources, indent=2) + '\n', encoding='utf-8')
+print(json.dumps(result, ensure_ascii=False), flush=True)

@@ -1,0 +1,91 @@
+"""Download real published bytes; match release, HTML and Pages Git tree."""
+import datetime, hashlib, json, pathlib, re, subprocess, time, urllib.request
+
+OUT = pathlib.Path(r'D:\games\youjia-test\assistant-recovery\find16-public-bb04-oct15')
+OUT.mkdir(exist_ok=True)
+BASE = 'https://narutojzm1-dot.github.io/youjia/'
+EXPECTED = 'bb04fde115877380e3fda8fa80b96ee8753d7180'
+
+def small(name):
+    req = urllib.request.Request(BASE + name, headers={'Cache-Control': 'no-cache', 'Accept-Encoding': 'identity'})
+    with urllib.request.urlopen(req, timeout=30) as response:
+        assert response.status == 200
+        return response.read()
+
+stamp = str(time.time_ns())
+raw = small('game-release.json?find16=' + stamp)
+manifest = json.loads(raw)
+(OUT / ('manifest-observed-' + stamp + '.json')).write_bytes(raw)
+assert manifest['sourceCommit'] == EXPECTED, ('not current public build', manifest['sourceCommit'])
+(OUT / 'game-release.json').write_bytes(raw)
+html = small('index.html?find16=' + stamp)
+(OUT / 'index.html').write_bytes(html)
+cfg = json.loads(re.search(rb'const config = (\{.*?\});', html)[1])
+assert cfg['mainPack'] == manifest['entry'] + '.pck'
+assert cfg['executable'] == manifest['engineAssets']['entry']
+tree = json.loads(subprocess.check_output(['gh', 'api', 'repos/narutojzm1-dot/youjia/git/trees/gh-pages?recursive=1'], timeout=60))
+assert not tree['truncated']
+(OUT / 'pages-tree.json').write_text(json.dumps(tree, indent=2) + '\n', encoding='utf-8')
+blobs = {x['path']: x for x in tree['tree'] if x['type'] == 'blob'}
+paths = list(cfg['fileSizes'])
+for name in manifest['engineAssets']['sha256']:
+    if name not in paths: paths.append(name)
+for section in ('storageModules', 'loaderModules'):
+    for name in manifest[section]['sha256']:
+        paths.append(manifest[section]['entry'] + '/' + name)
+records = []
+for name in paths:
+    assert '..' not in pathlib.PurePosixPath(name).parts and not name.startswith('/')
+    dest = OUT / name
+    dest.parent.mkdir(exist_ok=True)
+    if name in cfg['fileSizes']:
+        size = cfg['fileSizes'][name]
+        # Preserve partial downloads across transport retries; final bytes are always checked.
+        partial = dest.with_name(dest.name + '.part')
+        offset = partial.stat().st_size if partial.exists() else 0
+        if dest.exists():
+            assert dest.stat().st_size == size
+        else:
+            assert 0 <= offset <= size
+            with partial.open('ab') as f:
+                while offset < size:
+                    end = min(size - 1, offset + 4 * 1048576 - 1)
+                    for attempt in range(3):
+                        try:
+                            req = urllib.request.Request(BASE + name, headers={'Range': f'bytes={offset}-{end}', 'Accept-Encoding': 'identity'})
+                            with urllib.request.urlopen(req, timeout=30) as response:
+                                assert response.status == 206
+                                assert response.headers.get('Content-Range') == f'bytes {offset}-{end}/{size}'
+                                assert not response.headers.get('Content-Encoding')
+                                data = response.read(end - offset + 2)
+                                assert len(data) == end - offset + 1
+                            break
+                        except Exception as exc:
+                            with (OUT / 'transport-retries.jsonl').open('a', encoding='utf-8') as log:
+                                log.write(json.dumps({'file': name, 'start': offset, 'attempt': attempt + 1, 'error': str(exc)}) + '\n')
+                            if attempt == 2: raise
+                    f.write(data); f.flush(); offset = end + 1
+                    print(json.dumps({'file': name, 'read': offset, 'size': size}), flush=True)
+            partial.replace(dest)
+    elif not dest.exists():
+        dest.write_bytes(small(name))
+    data = dest.read_bytes()
+    sha = hashlib.sha256(data).hexdigest()
+    oid = hashlib.sha1(b'blob ' + str(len(data)).encode() + b'\0' + data).hexdigest()
+    assert oid == blobs[name]['sha'] and len(data) == blobs[name]['size'], name
+    if name in cfg.get('fileHashes', {}): assert sha == cfg['fileHashes'][name], name
+    if name in manifest['engineAssets']['sha256']: assert sha == manifest['engineAssets']['sha256'][name], name
+    for section in ('storageModules', 'loaderModules'):
+        if name.startswith(manifest[section]['entry'] + '/'):
+            assert sha == manifest[section]['sha256'][name.rsplit('/', 1)[1]], name
+    records.append({'path': name, 'bytes': len(data), 'sha256': sha, 'gitBlob': oid, 'matchedPagesBlob': True})
+    (OUT / 'public-files.json').write_text(json.dumps(records, indent=2) + '\n', encoding='utf-8')
+for name, data in [('index.html', html), ('game-release.json', raw)]:
+    oid = hashlib.sha1(b'blob ' + str(len(data)).encode() + b'\0' + data).hexdigest()
+    assert oid == blobs[name]['sha'] and len(data) == blobs[name]['size'], name
+    records.append({'path': name, 'bytes': len(data), 'sha256': hashlib.sha256(data).hexdigest(), 'gitBlob': oid, 'matchedPagesBlob': True})
+assert json.loads(small('game-release.json?find16end=' + str(time.time_ns()))) == manifest, 'Public source changed during verification'
+result = {'source': EXPECTED, 'entry': manifest['entry'], 'pagesTree': tree['sha'], 'verifiedAt': datetime.datetime.now(datetime.timezone.utc).isoformat(), 'files': records, 'actualPublicDownloads': True, 'status': 'PASS'}
+(OUT / 'public-files.json').write_text(json.dumps(records, indent=2) + '\n', encoding='utf-8')
+(OUT / 'verified.json').write_text(json.dumps(result, indent=2) + '\n', encoding='utf-8')
+print('FIND16_PUBLIC_BYTES_COMPLETE ' + json.dumps({'source': EXPECTED, 'entry': manifest['entry'], 'files': len(records), 'pagesTree': tree['sha']}), flush=True)

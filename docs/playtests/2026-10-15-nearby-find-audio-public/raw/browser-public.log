@@ -1,0 +1,26 @@
+FIND16_PUBLIC_COLD_START https://narutojzm1-dot.github.io/youjia/
+PUBLIC_LOADING {"elapsedSeconds": 0.06199999991804361, "text": "�Ƴ��ļ���\n\n0.2.0 �� ��2���ڲ�����\n\n���ں˶���Ϸ�汾��\n\ngame-bb04fde", "resources": 0, "networkFailures": []}
+PUBLIC_LOADING {"elapsedSeconds": 15.452999999979511, "text": "�Ƴ��ļ���\n\n0.2.0 �� ��2���ڲ�����\n\n������Դ 27% �� 33.9 / 122.7 MiB����ѹ��\n\n�Ѷ�ȡ 33.9 MiB ��Դ���ݣ���ѹ�󣩡� 15 ��\n\ngame-bb04fde", "resources": 15, "networkFailures": []}
+PUBLIC_LOADING {"elapsedSeconds": 30.796000000089407, "text": "�Ƴ��ļ���\n\n0.2.0 �� ��2���ڲ�����\n\n������Դ 57% �� 70.5 / 122.7 MiB����ѹ��\n\n�Ѷ�ȡ 70.5 MiB ��Դ���ݣ���ѹ�󣩡� 30 ��\n\n���ڼ��ء����Լ����ȴ��������ԡ�\n\n����\n\ngame-bb04fde", "resources": 15, "networkFailures": []}
+PUBLIC_LOADING {"elapsedSeconds": 46.125, "text": "�Ƴ��ļ���\n\n0.2.0 �� ��2���ڲ�����\n\n������Դ 86% �� 105.6 / 122.7 MiB����ѹ��\n\n�Ѷ�ȡ 105.6 MiB ��Դ���ݣ���ѹ�󣩡� 45 ��\n\n���ڼ��ء����Լ����ȴ��������ԡ�\n\n����\n\ngame-bb04fde", "resources": 15, "networkFailures": []}
+{"stage": "title-quiet", "shortStarts": 0, "rms": [0, 0]}
+{"stage": "yard", "shortStarts": 0, "rms": [0, 0, 0.011854016402012972, 0.03702019047193592, 0]}
+{"stage": "music-environment-off", "shortStarts": 0, "rms": [0, 0, 0, 0, 0]}
+{"stage": "accepted-direct-pick", "shortStarts": 1, "rms": [0, 0, 0, 0, 0, 0]}
+{"stage": "repeat-ground-no-second-sound", "shortStarts": 1, "rms": [0, 0, 0, 0, 0, 0]}
+{"stage": "point-ground-and-return", "shortStarts": 1, "rms": [0, 0, 0, 0, 0, 0]}
+{"stage": "muted-pickup-retained", "shortStarts": 1, "rms": [0, 0, 0, 0, 0, 0]}
+{"stage": "unmute-no-replay", "shortStarts": 1, "rms": [0, 0, 0, 0, 0, 0]}
+{"stage": "pause-stops-tail", "shortStarts": 2, "rms": [0, 0, 0, 0, 0, 0, 0]}
+{"stage": "resume-no-replay", "shortStarts": 2, "rms": [0, 0, 0, 0, 0, 0, 0]}
+{"stage": "other-tab-after-pickup", "shortStarts": 3, "rms": [0, 0, 0, 0, 0, 0, 0, 0.011951668027977728]}
+{"stage": "tab-return-no-second-start", "shortStarts": 3, "rms": [0, 0, 0, 0, 0, 0, 0, 0]}
+{"stage": "return-stops-tail", "shortStarts": 4, "rms": [0, 0, 0, 0, 0, 0, 0, 0, 0]}
+{"stage": "portrait-touch-pick", "shortStarts": 5, "rms": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]}
+{"stage": "reload-title-no-replay", "shortStarts": 0, "rms": [0, 0]}
+{"stage": "reload-preserves-all-finds", "shortStarts": 0, "rms": [0, 0, 0.012399149693580773, 0.03756342073516452, 0]}
+Traceback (most recent call last):
+  File "D:\games\youjia-test\assistant-recovery\browser-find16-public-oct15.py", line 171, in <module>
+    assert all(s['frames']==45600 and s['channels']==1 and s['sampleRate']==48000 and s.get('floatHashes')==[expected_hash] and not s.get('hashErrors') for s in short_sources),short_sources
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: [{'wallMs': 113666.70000004768, 'audioTime': 53.872, 'node': 25, 'outputGainNode': 24, 'buffer': 3, 'frames': 45596, 'channels': 2, 'sampleRate': 48000, 'duration': 0.9499166666666666, 'shortPeak': 0.079378642141819, 'loop': False, 'loopStart': 0, 'loopEnd': 0.9499166666666666, 'startArgs': [0, 0], 'floatHashes': ['2c4de9f4f772fc2300d2557b5e5215ba64e6a72c29e54782c297a410f0ca04e5', '2c4de9f4f772fc2300d2557b5e5215ba64e6a72c29e54782c297a410f0ca04e5'], 'hashErrors': []}, {'wallMs': 124830.5, 'audioTime': 65.04, 'node': 27, 'outputGainNode': 26, 'buffer': 4, 'frames': 45596, 'channels': 2, 'sampleRate': 48000, 'duration': 0.9499166666666666, 'shortPeak': 0.079378642141819, 'loop': False, 'loopStart': 0, 'loopEnd': 0.9499166666666666, 'startArgs': [0, 0], 'floatHashes': ['2c4de9f4f772fc2300d2557b5e5215ba64e6a72c29e54782c297a410f0ca04e5', '2c4de9f4f772fc2300d2557b5e5215ba64e6a72c29e54782c297a410f0ca04e5'], 'hashErrors': []}, {'wallMs': 128561.40000009537, 'audioTime': 68.77066666666667, 'node': 29, 'outputGainNode': 28, 'buffer': 5, 'frames': 45596, 'channels': 2, 'sampleRate': 48000, 'duration': 0.9499166666666666, 'shortPeak': 0.079378642141819, 'loop': False, 'loopStart': 0, 'loopEnd': 0.9499166666666666, 'startArgs': [0, 0], 'floatHashes': ['2c4de9f4f772fc2300d2557b5e5215ba64e6a72c29e54782c297a410f0ca04e5', '2c4de9f4f772fc2300d2557b5e5215ba64e6a72c29e54782c297a410f0ca04e5'], 'hashErrors': []}, {'wallMs': 136727.5, 'audioTime': 76.93066666666667, 'node': 31, 'outputGainNode': 30, 'buffer': 6, 'frames': 45596, 'channels': 2, 'sampleRate': 48000, 'duration': 0.9499166666666666, 'shortPeak': 0.079378642141819, 'loop': False, 'loopStart': 0, 'loopEnd': 0.9499166666666666, 'startArgs': [0, 0], 'floatHashes': ['2c4de9f4f772fc2300d2557b5e5215ba64e6a72c29e54782c297a410f0ca04e5', '2c4de9f4f772fc2300d2557b5e5215ba64e6a72c29e54782c297a410f0ca04e5'], 'hashErrors': []}, {'wallMs': 140180.40000009537, 'audioTime': 80.38133333333333, 'node': 33, 'outputGainNode': 32, 'buffer': 7, 'frames': 45596, 'channels': 2, 'sampleRate': 48000, 'duration': 0.9499166666666666, 'shortPeak': 0.079378642141819, 'loop': False, 'loopStart': 0, 'loopEnd': 0.9499166666666666, 'startArgs': [0, 0], 'floatHashes': ['2c4de9f4f772fc2300d2557b5e5215ba64e6a72c29e54782c297a410f0ca04e5', '2c4de9f4f772fc2300d2557b5e5215ba64e6a72c29e54782c297a410f0ca04e5'], 'hashErrors': []}]

@@ -1,0 +1,28 @@
+extends SceneTree
+func _initialize() -> void:
+	var path := "D:/games/youjia-test/assistant/assets/holiday/audio/exploration_find_get.wav"
+	var wav := AudioStreamWAV.load_from_file(path)
+	assert(wav != null and wav.data.sha256_text() == "936184f59a29c5d519f1d1ca831916e8fef997e373778a15a50f26adb90e443e")
+	var sample_rate := AudioServer.get_mix_rate()
+	var target_rate := 48000.0
+	var requested := int(ceil(wav.get_length() * target_rate))
+	var decoder := wav.instantiate_playback()
+	decoder.start(0.0)
+	var left := PackedFloat32Array()
+	var right := PackedFloat32Array()
+	while left.size() < requested:
+		var count := mini(8192, requested - left.size())
+		# Match the shipped player's mix_audio path. The ratio only compensates
+		# if this independent native process uses another output sample rate.
+		var samples := decoder.mix_audio(float(sample_rate) / target_rate, count)
+		for value in samples:
+			left.append(value.x)
+			right.append(value.y)
+		if samples.size() < count:
+			break
+	decoder.stop()
+	var result := {"rawPcmSha256": wav.data.sha256_text(), "sourceFrames": 45600, "nativeMixRate": sample_rate, "targetRate": target_rate, "decodedFrames": left.size(), "channelHashes": [left.to_byte_array().sha256_text(), right.to_byte_array().sha256_text()], "method": "Independent native Godot4.7.2 loading approved raw WAV; same 8192-frame mix_audio path as shipped BrowserBgmPlayer, no game or browser mutation."}
+	var output := FileAccess.open("D:/games/youjia-test/assistant-recovery/find16-public-bb04-oct15/independent-source-decoder.json", FileAccess.WRITE)
+	output.store_string(JSON.stringify(result, "  ") + "\n")
+	print(JSON.stringify(result))
+	quit()

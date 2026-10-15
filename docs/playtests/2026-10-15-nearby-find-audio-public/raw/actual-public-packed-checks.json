@@ -1,0 +1,20 @@
+{
+  "source": "bb04fde115877380e3fda8fa80b96ee8753d7180",
+  "pck": "game-bb04fde.pck",
+  "command": [
+    "D:\\games\\youjia-test\\producer-recovery\\godot472\\Godot_v4.7.2-stable_win64_console.exe",
+    "--headless",
+    "--path",
+    "D:\\games\\youjia-test\\assistant-recovery\\find16-public-bb04-oct15",
+    "--main-pack",
+    "D:\\games\\youjia-test\\assistant-recovery\\find16-public-bb04-oct15\\game-bb04fde.pck",
+    "--script",
+    "D:\\games\\youjia-test\\assistant-recovery\\verify-find16-public-pack-oct15.gd"
+  ],
+  "isolatedProfile": "D:\\games\\youjia-test\\assistant-recovery\\find16-public-bb04-oct15\\native-pack-profile-949092020c4c427cb7e1eb3294e8fcbf",
+  "startedAt": "2026-10-15T14:24:29.089127+00:00",
+  "exit": 0,
+  "checks": 64,
+  "status": "PASS",
+  "method": "Read the actual downloaded public PCK with the standalone SceneTree helper; inspect its identity/announcement/glyphs/approved PCM bytes and nonloop format. AppData scoped only to this child process."
+}
