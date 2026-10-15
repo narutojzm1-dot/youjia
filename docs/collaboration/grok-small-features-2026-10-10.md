@@ -7,7 +7,7 @@
 | 顺序 | 原单 | Owner / 状态 | 产物与依赖 |
 | --- | --- | --- | --- |
 | 1 | [#703 绘本气泡](https://github.com/narutojzm1-dot/youjia/issues/703) | GROK-CONTRIBUTOR / #758保留作者合入并公开验收，#703关闭 | 独立气泡及小鸡/已确认播种情境已接入；无成长数值/存档改动 |
-| 2 | [#704 轻交互音](https://github.com/narutojzm1-dot/youjia/issues/704) | GROK-CONTRIBUTOR / #720源码及软件录音已审，真实听验/操作链待验 | 背篓/相册/暂停开关与翻页短音制作、接入、真实听验，可独立推进 |
+| 2 | [#704 轻交互音](https://github.com/narutojzm1-dot/youjia/issues/704) | GROK-CONTRIBUTOR / #810保留720作者祖先；已批准08–10集成及Web/触屏模拟输出通过，最终CI/公开阶段见原PR | 背篓/相册/暂停开关与翻页短音制作、接入、真实听验，可独立推进 |
 | 3 | [#705 做饭烟雾](https://github.com/narutojzm1-dot/youjia/issues/705) | GROK-CONTRIBUTOR / #723叶子已审，Leader #738生产接入候选 | 烟囱局部效果先制作；正式接入依赖Leader真实做饭开始/结束事件，不以隔离演示冒上线 |
 
 每项原单定义具体范围和验收。前三项来自用户#700，不是任意扩展玩法。2026-10-11已核对#703/#704本人回执及PR；#705也已回执提交#723，当前待返修。核对最新#242：Grok此前仅在修#598/PR651，后续已由Leader#676完成；旧界面PR已交Cloud，不能因重新授权小功能重复接回。

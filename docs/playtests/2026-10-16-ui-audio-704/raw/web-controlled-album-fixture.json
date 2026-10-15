@@ -1,0 +1,25 @@
+{
+  "before": {
+    "schema": "youjia.save-envelope/v1",
+    "store_id": "9461fa2bf5e148e7b488bf2ea533580e",
+    "commit_id": "20b93daa080c4796a9000ac132b3019c",
+    "request_id": "b1a8beed8f9b4ec38233c77463791c64",
+    "parent_commit_id": "77d3bb9e94bd4a43a51f5b058e8cf9fc",
+    "generation": "4",
+    "payload_bytes": "{\"album\":[],\"animal_relationship_memory\":{},\"exploration\":null,\"exploration_committed_serial\":0,\"first_fish_caught\":false,\"holiday_day\":1,\"holiday_day_elapsed\":0.0,\"keepsakes\":{},\"locale\":\"zh-CN\",\"photo_moments\":{},\"plant_day_planted\":0,\"plant_state\":0,\"plant_watered_day\":-1,\"resident_rest\":{\"cause\":\"legacy\",\"day\":1,\"schema\":1},\"tutorial_version\":0,\"version\":5,\"world_residents\":{\"beibei\":{\"adopted_clock\":null,\"stage\":\"unmet\"},\"chicken\":{\"settled_clock\":{\"day\":1,\"elapsed\":0.0},\"stage\":\"chick\"},\"revision\":1,\"schema\":3,\"turtle\":{\"found_trip\":\"\",\"stage\":\"unmet\"}},\"world_weather\":{\"episode\":0,\"remaining\":645.59521484375,\"seed\":1551981386,\"weather\":\"sun\"},\"yard_crops\":{\"kind\":\"\",\"planted_day\":0,\"revision\":0,\"schema\":1,\"watered_day\":-1},\"yard_gate_open\":false,\"yard_inventory\":{\"corn\":2,\"fish\":{},\"flour\":0,\"grass\":0,\"ground\":[],\"held\":\"\",\"millet\":0,\"next_food_id\":1,\"production_revision\":0,\"revision\":1,\"schema\":5,\"wheat\":2}}",
+    "payload_sha256": "6d98d0a4c3760c1f58dae8ec2f3a29ace84a457406396f0468eeeab1df428224",
+    "envelope_sha256": "094536a1ba9805e6b0c1da3264a6da902f28de03da32e5b8f08d594b00503c0e"
+  },
+  "after": {
+    "schema": "youjia.save-envelope/v1",
+    "store_id": "9461fa2bf5e148e7b488bf2ea533580e",
+    "commit_id": "6a1f166e2b034d5d9df9477d99007f64",
+    "request_id": "d7a09ee63f4140bb948995c7f72f221f",
+    "parent_commit_id": "20b93daa080c4796a9000ac132b3019c",
+    "generation": "5",
+    "payload_bytes": "{\"album\":[\"pond_hen_ride\",\"pond_goose_refused\",\"goose_horse_mount\",\"llama_overcast_goose_annoyed\"],\"animal_relationship_memory\":{},\"exploration\":null,\"exploration_committed_serial\":0,\"first_fish_caught\":false,\"holiday_day\":1,\"holiday_day_elapsed\":0,\"keepsakes\":{},\"locale\":\"zh-CN\",\"photo_moments\":{},\"plant_day_planted\":0,\"plant_state\":0,\"plant_watered_day\":-1,\"resident_rest\":{\"cause\":\"legacy\",\"day\":1,\"schema\":1},\"tutorial_version\":0,\"version\":5,\"world_residents\":{\"beibei\":{\"adopted_clock\":null,\"stage\":\"unmet\"},\"chicken\":{\"settled_clock\":{\"day\":1,\"elapsed\":0},\"stage\":\"chick\"},\"revision\":1,\"schema\":3,\"turtle\":{\"found_trip\":\"\",\"stage\":\"unmet\"}},\"world_weather\":{\"episode\":0,\"remaining\":645.59521484375,\"seed\":1551981386,\"weather\":\"sun\"},\"yard_crops\":{\"kind\":\"\",\"planted_day\":0,\"revision\":0,\"schema\":1,\"watered_day\":-1},\"yard_gate_open\":false,\"yard_inventory\":{\"corn\":2,\"fish\":{},\"flour\":0,\"grass\":0,\"ground\":[],\"held\":\"\",\"millet\":0,\"next_food_id\":1,\"production_revision\":0,\"revision\":1,\"schema\":5,\"wheat\":2}}",
+    "payload_sha256": "26cd7eb4802f243740fb09723e89c369cad3d11a1cab853f44cbeca26a439eda",
+    "envelope_sha256": "a44195b6a254ef45443ed45174e0485e0992751560a2153693013c40361f4b59"
+  },
+  "fixture": "four photos for UI page navigation only"
+}
