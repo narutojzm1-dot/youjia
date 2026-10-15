@@ -414,9 +414,11 @@ func _place_menu() -> void:
 	menu.reset_size()
 	menu.size.x = width
 	_sort_menu()
-	if selected == "flour":
-		# On its first open the wrapped recipe was measured before the paper
-		# had a width. Discard that tall cached minimum after width is applied.
+	if menu_note.visible:
+		# A wrapped note is measured before the paper has a width. On the first
+		# open that cached minimum stays tall: flour was the reported case, and
+		# the same cache hits every other note (full spots, keep-one, saving).
+		# Discard it after width is applied.
 		menu_note.update_minimum_size()
 		menu.get_child(0).update_minimum_size()
 		menu.update_minimum_size()
