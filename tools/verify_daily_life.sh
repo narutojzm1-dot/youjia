@@ -8,6 +8,7 @@ export YOUJIA_TEST_ISOLATED_DATA="$XDG_DATA_HOME"
 mkdir -p "$XDG_DATA_HOME" "$XDG_CONFIG_HOME" "$XDG_CACHE_HOME"
 source tools/lib/verified_godot.sh
 bash test/godot_gate_test.sh
+node test/browser_bgm_visibility_test.cjs
 case_number=0
 run_godot() {
   local mode="$1"
