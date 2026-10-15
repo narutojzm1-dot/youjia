@@ -1,0 +1,56 @@
+{
+  "sourceSha": "7d79ae681a2acc21aabfce9b1db36b772d513f28",
+  "startedUtc": "2026-10-15T03:08:31.669755+00:00",
+  "profileProbe": "D:/games/youjia-test/qa/native/2026-10-15-1106/roaming/Godot/app_userdata/youjia-qa-profile-probe",
+  "engine": "D:/games/youjia-tmp-godot/Godot_v4.7.2-stable_win64_console.exe",
+  "tests": [
+    {
+      "entry": "import",
+      "exit": 0,
+      "summary": []
+    },
+    {
+      "entry": "growth_production",
+      "exit": 0,
+      "summary": [
+        "GROWTH_PRODUCTION checks=132 failures=0"
+      ]
+    },
+    {
+      "entry": "milling_director",
+      "exit": 0,
+      "summary": [
+        "MILLING_DIRECTOR checks=162 failures=0"
+      ]
+    },
+    {
+      "entry": "flour_meal",
+      "exit": 0,
+      "summary": [
+        "FLOUR_MEAL checks=24 failures=0"
+      ]
+    },
+    {
+      "entry": "yard_mill_view",
+      "exit": 0,
+      "summary": [
+        "YARD_MILL_VIEW checks=21 failures=0"
+      ]
+    },
+    {
+      "entry": "growth_budget",
+      "exit": 0,
+      "summary": [
+        "GROWTH_BUDGET checks=77 failures=0"
+      ]
+    },
+    {
+      "entry": "growth_carried_photo",
+      "exit": 0,
+      "summary": [
+        "GROWTH_CARRIED_PHOTO checks=39 failures=0"
+      ]
+    }
+  ],
+  "endedUtc": "2026-10-15T03:15:01.773147+00:00"
+}
