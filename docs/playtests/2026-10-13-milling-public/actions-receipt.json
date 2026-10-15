@@ -1,0 +1,226 @@
+{
+  "schema": 1,
+  "observedAt": "2026-10-13T15:12:43.632Z",
+  "sourceCommit": "34740e7e55ab0faebf7b2a2af3d2edf75600c2f7",
+  "entry": "game-34740e7",
+  "pinnedPagesCommit": "1da8e14a977eebb9d668db05bebfa2d86a962691",
+  "manifestPublishedAt": "2026-10-13T15:07:25Z",
+  "publish": {
+    "runId": 38414209271,
+    "url": "https://github.com/narutojzm1-dot/youjia/actions/runs/38414209271",
+    "headSha": "34740e7e55ab0faebf7b2a2af3d2edf75600c2f7",
+    "conclusion": "success",
+    "jobs": [
+      {
+        "id": 115360632376,
+        "name": "verify-export-publish",
+        "status": "completed",
+        "conclusion": "success",
+        "run_id": 38414209271,
+        "logs_url": null,
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1
+          },
+          {
+            "name": "Check out source with Pages write access",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2
+          },
+          {
+            "name": "Install Godot 4.7.2 and Web export templates",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3
+          },
+          {
+            "name": "Verify web bundle retention",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 4
+          },
+          {
+            "name": "Verify versioned persistence module publication",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 5
+          },
+          {
+            "name": "Run game verification",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 6
+          },
+          {
+            "name": "Stamp bundled build identity",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 7
+          },
+          {
+            "name": "Prepare Web export directory",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 8
+          },
+          {
+            "name": "Export Web build",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 9
+          },
+          {
+            "name": "Configure Pages commit identity",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 10
+          },
+          {
+            "name": "Publish versioned build to GitHub Pages",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 11
+          },
+          {
+            "name": "Post Check out source with Pages write access",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 22
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 23
+          }
+        ]
+      }
+    ]
+  },
+  "pages": {
+    "runId": 38419361858,
+    "url": "https://github.com/narutojzm1-dot/youjia/actions/runs/38419361858",
+    "headSha": "1da8e14a977eebb9d668db05bebfa2d86a962691",
+    "conclusion": "success",
+    "jobs": [
+      {
+        "id": 115372279542,
+        "name": "build",
+        "status": "completed",
+        "conclusion": "success",
+        "run_id": 38419361858,
+        "logs_url": null,
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1
+          },
+          {
+            "name": "Checkout",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2
+          },
+          {
+            "name": "Upload artifact",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3
+          },
+          {
+            "name": "Post Checkout",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 6
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 7
+          }
+        ]
+      },
+      {
+        "id": 115372694549,
+        "name": "report-build-status",
+        "status": "completed",
+        "conclusion": "success",
+        "run_id": 38419361858,
+        "logs_url": null,
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1
+          },
+          {
+            "name": "Report Build Status",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3
+          }
+        ]
+      },
+      {
+        "id": 115372694575,
+        "name": "deploy",
+        "status": "completed",
+        "conclusion": "success",
+        "run_id": 38419361858,
+        "logs_url": null,
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1
+          },
+          {
+            "name": "Deploy to GitHub Pages",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3
+          }
+        ]
+      }
+    ]
+  },
+  "finalCi": {
+    "runId": 38409019162,
+    "headSha": "db2d8993dfeb76a5cab3f8f26cfbeb3b5d3a87f0",
+    "jobId": 115336111358,
+    "conclusion": "success",
+    "godotSuites": 201,
+    "nodeTests": 5,
+    "gateContract": 1,
+    "workflowPythonChecks": 2
+  },
+  "intermediateSource": {
+    "sourceCommit": "29904febf394818ee97ae033c821bb0c77fa726c",
+    "publishRunId": 38412871898,
+    "pagesRunId": 38416042137,
+    "pinnedPagesCommit": "dca01e198f692044b180e75649cc94a1cd311b1d",
+    "publicPckDownloaded": false
+  },
+  "scope": "Fixed final source 34740e7; later contributor releases are separate handoff, not part of this receipt. Public-package bytes are recorded by verification.json."
+}
