@@ -1,0 +1,92 @@
+[
+	{
+		"audio_driver": "WASAPI",
+		"case": "day",
+		"frames": 192000,
+		"listening": "not reviewed",
+		"mix_rate": 48000,
+		"no_dropped_frames": true,
+		"passed": true,
+		"peak": 0.174962386488914,
+		"rms": 0.0355970522035809
+	},
+	{
+		"audio_driver": "WASAPI",
+		"case": "night",
+		"frames": 192512,
+		"listening": "not reviewed",
+		"mix_rate": 48000,
+		"no_dropped_frames": true,
+		"passed": true,
+		"peak": 0.0434327460825443,
+		"rms": 0.0035230309822559
+	},
+	{
+		"audio_driver": "WASAPI",
+		"case": "rain-night",
+		"frames": 192512,
+		"listening": "not reviewed",
+		"mix_rate": 48000,
+		"no_dropped_frames": true,
+		"passed": true,
+		"peak": 0.0193329360336065,
+		"rms": 0.0036862596373706
+	},
+	{
+		"audio_driver": "WASAPI",
+		"case": "sleep",
+		"frames": 192000,
+		"listening": "not reviewed",
+		"mix_rate": 48000,
+		"no_dropped_frames": true,
+		"passed": true,
+		"peak": 0.0438143499195576,
+		"rms": 0.0078762921100089
+	},
+	{
+		"audio_driver": "WASAPI",
+		"case": "environment-off",
+		"frames": 192000,
+		"listening": "not reviewed",
+		"mix_rate": 48000,
+		"no_dropped_frames": true,
+		"passed": true,
+		"peak": 0.0,
+		"rms": 0.0
+	},
+	{
+		"audio_driver": "WASAPI",
+		"case": "wake",
+		"frames": 192000,
+		"listening": "not reviewed",
+		"mix_rate": 48000,
+		"no_dropped_frames": true,
+		"passed": true,
+		"peak": 0.174962386488914,
+		"rms": 0.0356631299505254
+	},
+	{
+		"case": "loop-boundary-night.ambience",
+		"listening": "not reviewed",
+		"passed": true,
+		"position": 0.530624985694885
+	},
+	{
+		"case": "loop-boundary-rain.ambience",
+		"listening": "not reviewed",
+		"passed": true,
+		"position": 0.594624996185303
+	},
+	{
+		"case": "loop-boundary-sleep.ambience",
+		"listening": "not reviewed",
+		"passed": true,
+		"position": 0.594666659832001
+	},
+	{
+		"case": "loop-boundary-night.music",
+		"listening": "not reviewed",
+		"passed": true,
+		"position": 0.594624996185303
+	}
+]
