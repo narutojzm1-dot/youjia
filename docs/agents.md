@@ -17,6 +17,7 @@ GROK-CONTRIBUTOR从仅修bug扩展为“修bug＋边界明确的小功能”，�
 
 ## 当前人员公告
 
+- 2026-10-15：[CODEX-LEAD 两小时定时已按用户最新指示恢复](collaboration/personnel-availability.md#2026-10-15-codex-lead-定时已恢复)；其他 Owner 与现行门禁保持。
 - 2026-10-05：[GROK-BUILD额度耗尽，预计10月9日恢复；GPT原画接力](collaboration/personnel-availability.md)。恢复需实际核实，不把停用或预计日期当执行成功。
 
 ## 身份
