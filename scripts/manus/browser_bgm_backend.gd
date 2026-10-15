@@ -16,6 +16,7 @@ const SOURCE = """
   let starts = 0;
   let listening = false;
   let pageHidden = false;
+  let cachedPage = false;
   let useClock = 0;
   let resumeToken = 0;
   let resumeHook = null;
@@ -39,13 +40,16 @@ const SOURCE = """
     for (const event of ['pointerdown', 'touchend', 'keydown']) globalThis.addEventListener(event, resume, true);
     globalThis.addEventListener('pagehide', pageHide);
     globalThis.addEventListener('pageshow', pageShow);
+    globalThis.document?.addEventListener('visibilitychange', visibilityChange);
     listening = true;
+    if (cachedPage || globalThis.document?.visibilityState === 'hidden') visibilityChange();
   }
   function unlisten() {
     if (!listening) return;
     for (const event of ['pointerdown', 'touchend', 'keydown']) globalThis.removeEventListener(event, resume, true);
     globalThis.removeEventListener('pagehide', pageHide);
     globalThis.removeEventListener('pageshow', pageShow);
+    globalThis.document?.removeEventListener('visibilitychange', visibilityChange);
     listening = false;
   }
   function ensureContext() {
@@ -88,6 +92,7 @@ const SOURCE = """
     const old = context;
     context = null;
     pageHidden = false;
+    cachedPage = false;
     try { if (old) Promise.resolve(old.close()).catch(() => {}); } catch (_) {}
   }
   function suspendForCache(old) {
@@ -101,11 +106,22 @@ const SOURCE = """
     if (!event.persisted) { teardown(); return; }
     // BFCache is a suspended page, not the end of its game. Freeze the audio
     // clock and preserve explicit player pause state and decoded resources.
-    pageHidden = true;
-    suspendForCache(context);
+    cachedPage = true;
+    visibilityChange();
   }
   function pageShow(event) {
-    if (event.persisted) { pageHidden = false; resume(); }
+    if (event.persisted) { cachedPage = false; visibilityChange(); }
+  }
+  function visibilityChange() {
+    // Web does not promise mobile APPLICATION_PAUSED notifications. Handle the
+    // real document transition before rendering/timers can be throttled.
+    pageHidden = cachedPage || globalThis.document?.visibilityState === 'hidden';
+    if (pageHidden) {
+      for (const player of players.values()) player.discardTransient();
+      suspendForCache(context);
+    } else {
+      resume();
+    }
   }
   function channel(id) {
     if (!ensureContext()) return null;
@@ -184,6 +200,9 @@ const SOURCE = """
     const player = {
       play(bufferKey, from = 0, loop = false, begin = 0, end = 0) {
         if (disposed || failed || context.state === 'closed') return false;
+        // Hidden one-shots are intentionally discarded, not backend failures
+        // (which would trigger native fallback) or sounds queued for return.
+        if (pageHidden && !loop) { player.stop(); return true; }
         const next = buffers.get(String(bufferKey));
         if (!next || !next.ready) return false;
         disconnect();
@@ -200,6 +219,7 @@ const SOURCE = """
         return paused || start();
       },
       stop() { disconnect(); active = false; offset = 0; releaseEntry(); },
+      discardTransient() { if (!looping) player.stop(); },
       setPaused(value) {
         value = Boolean(value);
         if (disposed || paused === value) return;
