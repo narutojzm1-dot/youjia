@@ -1,0 +1,16 @@
+{
+  "phase": "release",
+  "expected": "9946b35f89b970c094f1a7ff68aef78c08550064",
+  "started": "2026-10-15T21:18:56.733Z",
+  "records": [],
+  "pageErrors": [],
+  "console": [],
+  "browser": "155.0.8059.40",
+  "responses": [
+    {
+      "url": "https://narutojzm1-dot.github.io/youjia/game-9946b35.pck",
+      "status": 200
+    }
+  ],
+  "error": "page.waitForFunction: Timeout 30000ms exceeded.\n    at C:\\Users\\Zengm\\AppData\\Local\\Temp\\youjia-ui704-public-web.cjs:30:50"
+}
