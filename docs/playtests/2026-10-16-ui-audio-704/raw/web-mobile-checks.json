@@ -1,0 +1,139 @@
+{
+  "records": [
+    {
+      "label": "touch basket open",
+      "t": 95382.70000004768,
+      "sources": [
+        {
+          "t": 95409.5,
+          "context": 1,
+          "state": "running",
+          "frames": 5271,
+          "channels": 2,
+          "rate": 48000,
+          "loop": false,
+          "gainConnectionOnly": true,
+          "sourcePeak": 0.2337801605463028,
+          "channel0FloatSha256": "ad05f454dc3be93b55e19a0264b5537f0f74fa920c5c74ab8a9cbd93335c3e85"
+        }
+      ],
+      "peak": 0.11716762185096741,
+      "samples": 52,
+      "expected": 1
+    },
+    {
+      "label": "touch basket Esc close",
+      "t": 99774.20000004768,
+      "sources": [
+        {
+          "t": 99785.09999990463,
+          "context": 1,
+          "state": "running",
+          "frames": 4792,
+          "channels": 2,
+          "rate": 48000,
+          "loop": false,
+          "gainConnectionOnly": true,
+          "sourcePeak": 0.21466167271137238,
+          "channel0FloatSha256": "284ce66de811a78139100f16a173a19305a54ae4e9d9f84aebae5d30a5ed677d"
+        }
+      ],
+      "peak": 0.10758568346500397,
+      "samples": 43,
+      "expected": 1
+    },
+    {
+      "label": "touch album open",
+      "t": 104611.79999995232,
+      "sources": [
+        {
+          "t": 104640.20000004768,
+          "context": 1,
+          "state": "running",
+          "frames": 5271,
+          "channels": 2,
+          "rate": 48000,
+          "loop": false,
+          "gainConnectionOnly": true,
+          "sourcePeak": 0.2337801605463028,
+          "channel0FloatSha256": "ad05f454dc3be93b55e19a0264b5537f0f74fa920c5c74ab8a9cbd93335c3e85"
+        }
+      ],
+      "peak": 0.11716762185096741,
+      "samples": 53,
+      "expected": 1
+    },
+    {
+      "label": "touch invalid page",
+      "t": 142895.89999985695,
+      "sources": [],
+      "peak": 0,
+      "samples": 54,
+      "expected": 0
+    },
+    {
+      "label": "touch album close",
+      "t": 148074.79999995232,
+      "sources": [
+        {
+          "t": 148091.89999985695,
+          "context": 1,
+          "state": "running",
+          "frames": 4792,
+          "channels": 2,
+          "rate": 48000,
+          "loop": false,
+          "gainConnectionOnly": true,
+          "sourcePeak": 0.21466167271137238,
+          "channel0FloatSha256": "284ce66de811a78139100f16a173a19305a54ae4e9d9f84aebae5d30a5ed677d"
+        }
+      ],
+      "peak": 0.10758568346500397,
+      "samples": 42,
+      "expected": 1
+    },
+    {
+      "label": "touch pause open",
+      "t": 152629.59999990463,
+      "sources": [
+        {
+          "t": 152790.79999995232,
+          "context": 1,
+          "state": "running",
+          "frames": 5271,
+          "channels": 2,
+          "rate": 48000,
+          "loop": false,
+          "gainConnectionOnly": true,
+          "sourcePeak": 0.2337801605463028,
+          "channel0FloatSha256": "ad05f454dc3be93b55e19a0264b5537f0f74fa920c5c74ab8a9cbd93335c3e85"
+        }
+      ],
+      "peak": 0.11716762185096741,
+      "samples": 39,
+      "expected": 1
+    },
+    {
+      "label": "touch pause resume",
+      "t": 159996.70000004768,
+      "sources": [
+        {
+          "t": 160012,
+          "context": 1,
+          "state": "running",
+          "frames": 4792,
+          "channels": 2,
+          "rate": 48000,
+          "loop": false,
+          "gainConnectionOnly": true,
+          "sourcePeak": 0.21466167271137238,
+          "channel0FloatSha256": "284ce66de811a78139100f16a173a19305a54ae4e9d9f84aebae5d30a5ed677d"
+        }
+      ],
+      "peak": 0.10758568346500397,
+      "samples": 37,
+      "expected": 1
+    }
+  ],
+  "scope": "390x844 desktop Chrome touch simulation, not physical phone"
+}

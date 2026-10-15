@@ -1,0 +1,419 @@
+{
+  "browser": "155.0.8059.40",
+  "source": "ab26805fef668c030236b021776cf374f4bc47d3",
+  "records": [
+    {
+      "label": "basket mouse open",
+      "t": 19818,
+      "sources": [
+        {
+          "t": 19835.60000014305,
+          "context": 1,
+          "state": "running",
+          "frames": 5271,
+          "channels": 2,
+          "rate": 48000,
+          "loop": false,
+          "gainConnectionOnly": true,
+          "sourcePeak": 0.2337801605463028,
+          "channel0FloatSha256": "ad05f454dc3be93b55e19a0264b5537f0f74fa920c5c74ab8a9cbd93335c3e85"
+        }
+      ],
+      "peak": 0.03845582157373428,
+      "samples": 38,
+      "expected": 1,
+      "passed": true
+    },
+    {
+      "label": "basket Esc close",
+      "t": 21512.60000014305,
+      "sources": [
+        {
+          "t": 21521.10000014305,
+          "context": 1,
+          "state": "running",
+          "frames": 4792,
+          "channels": 2,
+          "rate": 48000,
+          "loop": false,
+          "gainConnectionOnly": true,
+          "sourcePeak": 0.21466167271137238,
+          "channel0FloatSha256": "284ce66de811a78139100f16a173a19305a54ae4e9d9f84aebae5d30a5ed677d"
+        }
+      ],
+      "peak": 0.10758568346500397,
+      "samples": 47,
+      "expected": 1,
+      "passed": true
+    },
+    {
+      "label": "album mouse open",
+      "t": 22772.700000047684,
+      "sources": [
+        {
+          "t": 22783.299999952316,
+          "context": 1,
+          "state": "running",
+          "frames": 5271,
+          "channels": 2,
+          "rate": 48000,
+          "loop": false,
+          "gainConnectionOnly": true,
+          "sourcePeak": 0.2337801605463028,
+          "channel0FloatSha256": "ad05f454dc3be93b55e19a0264b5537f0f74fa920c5c74ab8a9cbd93335c3e85"
+        }
+      ],
+      "peak": 0.11716762185096741,
+      "samples": 45,
+      "expected": 1,
+      "passed": true
+    },
+    {
+      "label": "empty album right boundary",
+      "t": 24280.60000014305,
+      "sources": [],
+      "peak": 0,
+      "samples": 54,
+      "expected": 0,
+      "passed": true
+    },
+    {
+      "label": "empty album left boundary",
+      "t": 25426.60000014305,
+      "sources": [],
+      "peak": 0,
+      "samples": 54,
+      "expected": 0,
+      "passed": true
+    },
+    {
+      "label": "album Esc close",
+      "t": 26579,
+      "sources": [
+        {
+          "t": 26581.299999952316,
+          "context": 1,
+          "state": "running",
+          "frames": 4792,
+          "channels": 2,
+          "rate": 48000,
+          "loop": false,
+          "gainConnectionOnly": true,
+          "sourcePeak": 0.21466167271137238,
+          "channel0FloatSha256": "284ce66de811a78139100f16a173a19305a54ae4e9d9f84aebae5d30a5ed677d"
+        }
+      ],
+      "peak": 0.10758568346500397,
+      "samples": 36,
+      "expected": 1,
+      "passed": true
+    },
+    {
+      "label": "pause Esc open",
+      "t": 31890,
+      "sources": [
+        {
+          "t": 31903.299999952316,
+          "context": 1,
+          "state": "running",
+          "frames": 5271,
+          "channels": 2,
+          "rate": 48000,
+          "loop": false,
+          "gainConnectionOnly": true,
+          "sourcePeak": 0.2337801605463028,
+          "channel0FloatSha256": "ad05f454dc3be93b55e19a0264b5537f0f74fa920c5c74ab8a9cbd93335c3e85"
+        }
+      ],
+      "peak": 0.11716762185096741,
+      "samples": 50,
+      "expected": 1,
+      "passed": true
+    },
+    {
+      "label": "pause mouse resume",
+      "t": 33166.700000047684,
+      "sources": [
+        {
+          "t": 33173.200000047684,
+          "context": 1,
+          "state": "running",
+          "frames": 4792,
+          "channels": 2,
+          "rate": 48000,
+          "loop": false,
+          "gainConnectionOnly": true,
+          "sourcePeak": 0.21466167271137238,
+          "channel0FloatSha256": "284ce66de811a78139100f16a173a19305a54ae4e9d9f84aebae5d30a5ed677d"
+        }
+      ],
+      "peak": 0.10758568346500397,
+      "samples": 34,
+      "expected": 1,
+      "passed": true
+    },
+    {
+      "label": "pause for mute",
+      "t": 36321.10000014305,
+      "sources": [
+        {
+          "t": 36325.799999952316,
+          "context": 1,
+          "state": "running",
+          "frames": 5271,
+          "channels": 2,
+          "rate": 48000,
+          "loop": false,
+          "gainConnectionOnly": true,
+          "sourcePeak": 0.2337801605463028,
+          "channel0FloatSha256": "ad05f454dc3be93b55e19a0264b5537f0f74fa920c5c74ab8a9cbd93335c3e85"
+        }
+      ],
+      "peak": 0.11716762185096741,
+      "samples": 53,
+      "expected": 1,
+      "passed": true
+    },
+    {
+      "label": "master mute on",
+      "t": 37855,
+      "sources": [],
+      "peak": 0,
+      "samples": 54,
+      "expected": 0,
+      "passed": true
+    },
+    {
+      "label": "muted pause close",
+      "t": 39112.799999952316,
+      "sources": [],
+      "peak": 0,
+      "samples": 32,
+      "expected": 0,
+      "passed": true
+    },
+    {
+      "label": "muted basket open",
+      "t": 43272.799999952316,
+      "sources": [],
+      "peak": 0,
+      "samples": 28,
+      "expected": 0,
+      "passed": true
+    },
+    {
+      "label": "muted basket close",
+      "t": 44727.60000014305,
+      "sources": [],
+      "peak": 0,
+      "samples": 34,
+      "expected": 0,
+      "passed": true
+    },
+    {
+      "label": "muted pause open",
+      "t": 46142.799999952316,
+      "sources": [],
+      "peak": 0,
+      "samples": 45,
+      "expected": 0,
+      "passed": true
+    },
+    {
+      "label": "master mute off",
+      "t": 49051.60000014305,
+      "sources": [],
+      "peak": 0,
+      "samples": 55,
+      "expected": 0,
+      "passed": true
+    },
+    {
+      "label": "unmute no stale replay",
+      "t": 50226.799999952316,
+      "sources": [],
+      "peak": 0,
+      "samples": 51,
+      "expected": 0,
+      "passed": true
+    },
+    {
+      "label": "unmuted pause close",
+      "t": 51536.799999952316,
+      "sources": [
+        {
+          "t": 51544.200000047684,
+          "context": 1,
+          "state": "running",
+          "frames": 4792,
+          "channels": 2,
+          "rate": 48000,
+          "loop": false,
+          "gainConnectionOnly": true,
+          "sourcePeak": 0.21466167271137238,
+          "channel0FloatSha256": "284ce66de811a78139100f16a173a19305a54ae4e9d9f84aebae5d30a5ed677d"
+        }
+      ],
+      "peak": 0.10758568346500397,
+      "samples": 38,
+      "expected": 1,
+      "passed": true
+    },
+    {
+      "label": "controlled context suspend",
+      "t": 53951,
+      "sources": [],
+      "peak": 0,
+      "samples": 34,
+      "expected": 0,
+      "passed": true
+    },
+    {
+      "label": "first trusted gesture after suspend",
+      "t": 57007,
+      "sources": [],
+      "peak": 0,
+      "samples": 47,
+      "expected": null,
+      "passed": true
+    },
+    {
+      "label": "resumed no delayed replay",
+      "t": 58456.60000014305,
+      "sources": [],
+      "peak": 0,
+      "samples": 47,
+      "expected": 0,
+      "passed": true
+    },
+    {
+      "label": "unlocked basket close",
+      "t": 60028,
+      "sources": [
+        {
+          "t": 60041.40000009537,
+          "context": 1,
+          "state": "running",
+          "frames": 4792,
+          "channels": 2,
+          "rate": 48000,
+          "loop": false,
+          "gainConnectionOnly": true,
+          "sourcePeak": 0.21466167271137238,
+          "channel0FloatSha256": "284ce66de811a78139100f16a173a19305a54ae4e9d9f84aebae5d30a5ed677d"
+        }
+      ],
+      "peak": 0.10758568346500397,
+      "samples": 40,
+      "expected": 1,
+      "passed": true
+    },
+    {
+      "label": "fixture album open",
+      "t": 16162.100000143051,
+      "sources": [
+        {
+          "t": 16175.400000095367,
+          "context": 1,
+          "state": "running",
+          "frames": 5271,
+          "channels": 2,
+          "rate": 48000,
+          "loop": false,
+          "gainConnectionOnly": true,
+          "sourcePeak": 0.2337801605463028,
+          "channel0FloatSha256": "ad05f454dc3be93b55e19a0264b5537f0f74fa920c5c74ab8a9cbd93335c3e85"
+        }
+      ],
+      "peak": 0.11716762185096741,
+      "samples": 51,
+      "expected": 1,
+      "passed": true
+    },
+    {
+      "label": "fixture first page boundary",
+      "t": 17372.299999952316,
+      "sources": [],
+      "peak": 0,
+      "samples": 49,
+      "expected": 0,
+      "passed": true
+    },
+    {
+      "label": "fixture valid page right",
+      "t": 19437.60000014305,
+      "sources": [
+        {
+          "t": 19550.5,
+          "context": 1,
+          "state": "running",
+          "frames": 3832,
+          "channels": 2,
+          "rate": 48000,
+          "loop": false,
+          "gainConnectionOnly": true,
+          "sourcePeak": 0.19723115861415863,
+          "channel0FloatSha256": "13d1096705f2a3b6b7007c57283c5f5daa4e6bb8ca0f367c1cb0d375675689eb"
+        }
+      ],
+      "peak": 0.09884973615407944,
+      "samples": 46,
+      "expected": 1,
+      "passed": true
+    },
+    {
+      "label": "fixture last page boundary",
+      "t": 20719.400000095367,
+      "sources": [],
+      "peak": 0,
+      "samples": 52,
+      "expected": 0,
+      "passed": true
+    },
+    {
+      "label": "fixture valid page left",
+      "t": 21884.10000014305,
+      "sources": [
+        {
+          "t": 21893.299999952316,
+          "context": 1,
+          "state": "running",
+          "frames": 3832,
+          "channels": 2,
+          "rate": 48000,
+          "loop": false,
+          "gainConnectionOnly": true,
+          "sourcePeak": 0.19723115861415863,
+          "channel0FloatSha256": "13d1096705f2a3b6b7007c57283c5f5daa4e6bb8ca0f367c1cb0d375675689eb"
+        }
+      ],
+      "peak": 0.09884973615407944,
+      "samples": 52,
+      "expected": 1,
+      "passed": true
+    },
+    {
+      "label": "fixture album close",
+      "t": 23033.60000014305,
+      "sources": [
+        {
+          "t": 23040.200000047684,
+          "context": 1,
+          "state": "running",
+          "frames": 4792,
+          "channels": 2,
+          "rate": 48000,
+          "loop": false,
+          "gainConnectionOnly": true,
+          "sourcePeak": 0.21466167271137238,
+          "channel0FloatSha256": "284ce66de811a78139100f16a173a19305a54ae4e9d9f84aebae5d30a5ed677d"
+        }
+      ],
+      "peak": 0.10758568346500397,
+      "samples": 39,
+      "expected": 1,
+      "passed": true
+    }
+  ],
+  "errors": []
+}

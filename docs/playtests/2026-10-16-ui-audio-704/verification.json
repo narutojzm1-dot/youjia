@@ -1,0 +1,58 @@
+{
+  "runtime_sha": "ab26805fef668c030236b021776cf374f4bc47d3",
+  "runtime_tree": "ccc797f79d01fbf62df43eaffbd617e7e8311873",
+  "integration_parent": "c71972e9cc7cdbcbe05b26df1c0da42d8eae246d",
+  "grok_author_head": "3e9bf647041dffd254bab5f16a532fec730294eb",
+  "main_base": "84d7132d59d42e3c34496bd9bc6c7cc9790879fa",
+  "local_pack": {
+    "bytes": 89116972,
+    "sha256": "5598bb51c4c5a629be9112296c402d42599695bac7852e93ccfd5f43c58f19cf",
+    "build_identity": "local development; no public claim"
+  },
+  "approved_assets_sha256": {
+    "ui_close.tres": "c670c37223508ff27bad6779d6f48e39cb29e3090eae643854c37231f7d6a718",
+    "ui_open.tres": "6e094f93b74226defa0df05e5272176cf74b3ac7d5f564b161efd954325297d7",
+    "ui_page.tres": "72227f6cd751846f7b352bd2b268ca1e4250aab628a5552ac5fc9c56c6c19f90"
+  },
+  "desktop_web": {
+    "driver_exit": 0,
+    "checks": 27,
+    "page_errors": []
+  },
+  "mobile_simulation": {
+    "persisted_records_independently_verified": 7,
+    "physical_phone": false,
+    "original_final_invocation": "post-record probe/cleanup timed out"
+  },
+  "native_final_runtime": {
+    "ui_interaction_audio": 29,
+    "ui_interaction_audio_input": 61,
+    "yard_audio": 87,
+    "ambience_output_ceiling": 30,
+    "meal_audio_host": 71,
+    "meal_audio": 107
+  },
+  "native_integration_before_web_renderer_fix": {
+    "audio_button_input": 648,
+    "pause_notice": 168,
+    "menu_keyboard_focus": 207,
+    "release_notes_pointer_focus": 136,
+    "nearby_find_audio": 96
+  },
+  "source_approval_is_not_hardware_hearing": true,
+  "public_release": "pending; no publish from this evidence archive",
+  "validated_head": "70601abfa45975cd4eb84d66a0466e2de964634a",
+  "ci_initial": {
+    "run": 38787599051,
+    "head": "ab26805fef668c030236b021776cf374f4bc47d3",
+    "status": "failure",
+    "reason": "obsolete UI blanket prohibition and leaked inspection channel in meal suite; corrected in 70601ab"
+  },
+  "ci_final": "pending; original PR tracks final run",
+  "desktop_web_rapid": {
+    "driver_exit": 0,
+    "checks": 3,
+    "event_gap_ms": 15,
+    "delayed_replay": false
+  }
+}

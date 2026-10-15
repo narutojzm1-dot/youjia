@@ -1,0 +1,143 @@
+{
+  "results": [
+    {
+      "label": "real mouse double click basket opens with one cue",
+      "sources": [
+        {
+          "t": 18796.39999985695,
+          "context": 1,
+          "state": "running",
+          "frames": 5271,
+          "channels": 2,
+          "rate": 48000,
+          "loop": false,
+          "gainConnectionOnly": true,
+          "sourcePeak": 0.2337801605463028,
+          "channel0FloatSha256": "ad05f454dc3be93b55e19a0264b5537f0f74fa920c5c74ab8a9cbd93335c3e85"
+        }
+      ],
+      "events": [
+        {
+          "t": 18794.39999985695,
+          "type": "pointerdown",
+          "x": 527,
+          "y": 676,
+          "trusted": true,
+          "target": "CANVAS"
+        },
+        {
+          "t": 18801.099999904633,
+          "type": "pointerup",
+          "x": 527,
+          "y": 676,
+          "trusted": true,
+          "target": "CANVAS"
+        },
+        {
+          "t": 18801.5,
+          "type": "pointerdown",
+          "x": 527,
+          "y": 676,
+          "trusted": true,
+          "target": "CANVAS"
+        },
+        {
+          "t": 18801.89999985695,
+          "type": "pointerup",
+          "x": 527,
+          "y": 676,
+          "trusted": true,
+          "target": "CANVAS"
+        }
+      ],
+      "peak": 0.11716762185096741,
+      "expected": 1
+    },
+    {
+      "label": "close after double click",
+      "sources": [
+        {
+          "t": 21242.599999904633,
+          "context": 1,
+          "state": "running",
+          "frames": 4792,
+          "channels": 2,
+          "rate": 48000,
+          "loop": false,
+          "gainConnectionOnly": true,
+          "sourcePeak": 0.21466167271137238,
+          "channel0FloatSha256": "284ce66de811a78139100f16a173a19305a54ae4e9d9f84aebae5d30a5ed677d"
+        }
+      ],
+      "events": [
+        {
+          "t": 21240.699999809265,
+          "type": "keydown",
+          "key": "Escape",
+          "trusted": true,
+          "target": "CANVAS"
+        },
+        {
+          "t": 21256,
+          "type": "keyup",
+          "key": "Escape",
+          "trusted": true,
+          "target": "CANVAS"
+        }
+      ],
+      "peak": 0.10758568346500397,
+      "expected": 1
+    },
+    {
+      "label": "real rapid mouse-open plus Esc-close has no stacked or queued close cue",
+      "sources": [
+        {
+          "t": 22684.39999985695,
+          "context": 1,
+          "state": "running",
+          "frames": 5271,
+          "channels": 2,
+          "rate": 48000,
+          "loop": false,
+          "gainConnectionOnly": true,
+          "sourcePeak": 0.2337801605463028,
+          "channel0FloatSha256": "ad05f454dc3be93b55e19a0264b5537f0f74fa920c5c74ab8a9cbd93335c3e85"
+        }
+      ],
+      "events": [
+        {
+          "t": 22683,
+          "type": "pointerdown",
+          "x": 527,
+          "y": 676,
+          "trusted": true,
+          "target": "CANVAS"
+        },
+        {
+          "t": 22687.39999985695,
+          "type": "pointerup",
+          "x": 527,
+          "y": 676,
+          "trusted": true,
+          "target": "CANVAS"
+        },
+        {
+          "t": 22697.799999952316,
+          "type": "keydown",
+          "key": "Escape",
+          "trusted": true,
+          "target": "CANVAS"
+        },
+        {
+          "t": 22708.599999904633,
+          "type": "keyup",
+          "key": "Escape",
+          "trusted": true,
+          "target": "CANVAS"
+        }
+      ],
+      "peak": 0.08998675644397736,
+      "expected": 1
+    }
+  ]
+}
