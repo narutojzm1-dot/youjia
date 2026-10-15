@@ -22,6 +22,79 @@ func check(ok: bool, label: String) -> void:
 func settle() -> void:
 	for i in 3: await process_frame
 
+func paper_gap(g: Control) -> float:
+	return g.menu.get_global_rect().end.y - g.menu_close.get_global_rect().end.y
+
+func mount_grid(vs: Vector2i) -> Array:
+	var host := Control.new()
+	host.position = Vector2((vs.x - inner_width(vs)) * 0.5, 60)
+	host.size = Vector2(inner_width(vs), 10)
+	root.add_child(host)
+	var g: Control = load("res://scripts/ui/yard_basket_grid.gd").new()
+	g.size = host.size
+	host.add_child(g)
+	return [host, g]
+
+## The first opened paper has no previous label width. Every visible note,
+## not only the flour recipe, used to keep that narrow-width minimum.
+func check_first_notes(vs: Vector2i, tag: String, en: bool) -> void:
+	var keeps := {ExplorationRoutes.FIND_STONE: 1, ExplorationRoutes.FIND_PINE_CONE: 1, ExplorationRoutes.FIND_FEATHER: 1}
+	var stock := {"fish": {"small": 2}, "wheat": 1, "flour": 1}
+	var screen := Rect2(Vector2.ZERO, Vector2(vs))
+	var mounted: Array = mount_grid(vs)
+	var host: Control = mounted[0]
+	var g: Control = mounted[1]
+	await settle()
+	g.update_view(stock, keeps, "ready", false)
+	var none: Array[String] = []
+	g.set_free_spots(none, false)
+	await settle()
+	g.open_menu("round_stone")
+	await settle()
+	check(g.menu_note.visible and g.menu_note.text.contains("All three" if en else "三处"), tag + " first stone paper explains full spots")
+	check(paper_gap(g) <= 12.0, tag + " first stone paper hugs its buttons: " + str(g.menu.get_global_rect()))
+	check(screen.encloses(g.menu.get_global_rect()), tag + " first stone paper inside screen")
+	host.queue_free()
+	await settle()
+	mounted = mount_grid(vs)
+	host = mounted[0]
+	g = mounted[1]
+	await settle()
+	g.update_view(stock, keeps, "ready", false)
+	await settle()
+	g.open_menu("wheat")
+	await settle()
+	check(g.menu_note.visible and g.menu_note.text.contains("planting" if en else "播种"), tag + " first wheat paper shows the keep-one note")
+	check(paper_gap(g) <= 12.0, tag + " first wheat paper hugs its buttons: " + str(g.menu.get_global_rect()))
+	check(screen.encloses(g.menu.get_global_rect()), tag + " first wheat paper inside screen")
+	host.queue_free()
+	await settle()
+	mounted = mount_grid(vs)
+	host = mounted[0]
+	g = mounted[1]
+	await settle()
+	g.update_view({"fish": {"small": 2}}, keeps, "saving", true)
+	await settle()
+	g.open_menu("small")
+	await settle()
+	check(g.menu_note.text == ("Checking the save…" if en else "正在确认保存，先等一下。"), tag + " first busy paper shows the save note")
+	check(paper_gap(g) <= 12.0, tag + " first busy paper hugs its buttons: " + str(g.menu.get_global_rect()))
+	check(screen.encloses(g.menu.get_global_rect()), tag + " first busy paper inside screen")
+	host.queue_free()
+	await settle()
+	mounted = mount_grid(vs)
+	host = mounted[0]
+	g = mounted[1]
+	await settle()
+	g.update_view({"fish": {"small": 2}}, keeps, "ready", false)
+	await settle()
+	g.open_menu("small")
+	await settle()
+	check(not g.menu_note.visible, tag + " first fish paper has no note")
+	check(paper_gap(g) <= 12.0, tag + " first fish paper without a note hugs its buttons: " + str(g.menu.get_global_rect()))
+	host.queue_free()
+	await settle()
+
 func inner_width(vs: Vector2i) -> float:
 	# Same paper as yard_basket_panel.fit(): min(520, w - 2 * 12), 16px margins each side.
 	return minf(520.0, vs.x - 24.0) - 32.0
@@ -44,6 +117,7 @@ func run() -> void:
 		for vs: Vector2i in VIEWPORTS:
 			var tag := "%s %dx%d" % [loc, vs.x, vs.y]
 			root.size = vs
+			await check_first_notes(vs, tag, en)
 			var host := Control.new()
 			host.position = Vector2((vs.x - inner_width(vs)) * 0.5, 60)
 			host.size = Vector2(inner_width(vs), 10)
