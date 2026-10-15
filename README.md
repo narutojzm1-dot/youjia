@@ -6,7 +6,7 @@
 
 **在线游玩：** https://narutojzm1-dot.github.io/youjia/
 
-**协作公告：** [CODEX-LEAD 已于10月15日发布归档收尾时休整，其他成员继续原有工作](docs/collaboration/personnel-availability.md#2026-10-15-codex-lead-休整)。
+**协作公告：** [10月13日版本已归档，Leader两小时定时已恢复](docs/collaboration/personnel-availability.md#2026-10-15-codex-lead-定时已恢复)。
 
 ## 操作
 
