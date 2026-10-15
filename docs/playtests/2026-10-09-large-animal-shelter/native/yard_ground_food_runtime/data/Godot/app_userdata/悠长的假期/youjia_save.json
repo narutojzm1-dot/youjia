@@ -1,0 +1,73 @@
+{
+  "_youjia_native_legacy_sha256": "a3249e49f70ded661f514cd04c5f222e12f43da19bf6205bac7cf719d0f47ad0",
+  "album": [],
+  "animal_relationship_memory": {},
+  "exploration": null,
+  "exploration_committed_serial": 0.0,
+  "first_fish_caught": false,
+  "holiday_day": 1.0,
+  "holiday_day_elapsed": 0.0,
+  "keepsakes": {},
+  "locale": "zh-CN",
+  "photo_moments": {},
+  "plant_day_planted": 0.0,
+  "plant_state": 0.0,
+  "plant_watered_day": -1.0,
+  "tutorial_version": 0.0,
+  "version": 5.0,
+  "world_residents": {
+    "beibei": {
+      "adopted_clock": null,
+      "stage": "unmet"
+    },
+    "chicken": {
+      "settled_clock": {
+        "day": 1.0,
+        "elapsed": 0.0
+      },
+      "stage": "chick"
+    },
+    "revision": 1.0,
+    "schema": 3.0,
+    "turtle": {
+      "found_trip": "",
+      "stage": "unmet"
+    }
+  },
+  "world_weather": {
+    "episode": 0.0,
+    "remaining": 966.913635253906,
+    "seed": 881477184.0,
+    "weather": "sun"
+  },
+  "yard_gate_open": false,
+  "yard_inventory": {
+    "fish": {},
+    "grass": 0.0,
+    "ground": [
+      {
+        "id": 7.0,
+        "kind": "grass",
+        "x": 240.0,
+        "y": 580.0
+      },
+      {
+        "id": 9.0,
+        "kind": "grass",
+        "x": 285.0,
+        "y": 618.0
+      },
+      {
+        "id": 10.0,
+        "kind": "grass",
+        "x": 220.0,
+        "y": 603.0
+      }
+    ],
+    "held": "",
+    "millet": 0.0,
+    "next_food_id": 12.0,
+    "revision": 33.0,
+    "schema": 3.0
+  }
+}
