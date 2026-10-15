@@ -1,0 +1,26 @@
+diff --git a/test/find_reveal_name_fade_suite.gd b/test/find_reveal_name_fade_suite.gd
+index 35999a68..dce6ffcd 100644
+--- a/test/find_reveal_name_fade_suite.gd
++++ b/test/find_reveal_name_fade_suite.gd
+@@ -166,6 +166,7 @@ func _drawn_alpha() -> void:
+ func finish() -> void:
+ 	if root.has_node("AudioDirector"):
+ 		root.get_node("AudioDirector").release_streams()
++	await create_timer(0.15).timeout
+ 	if failures.is_empty():
+ 		print("PASS find_reveal_name_fade_suite: %d checks" % checks)
+ 		quit(0)
+diff --git a/test/find_reveal_name_slip_suite.gd b/test/find_reveal_name_slip_suite.gd
+index bfb16c8b..4ee7c101 100644
+--- a/test/find_reveal_name_slip_suite.gd
++++ b/test/find_reveal_name_slip_suite.gd
+@@ -188,6 +188,9 @@ func _in_scroll() -> void:
+ 
+ func finish() -> void:
+ 	root.get_node("AudioDirector").release_streams()
++	# The approved pickup WAV now plays during this visual suite. Let the
++	# native mixer retire the stopped playbacks before checking engine exit.
++	await create_timer(0.15).timeout
+ 	if failures.is_empty():
+ 		print("PASS find_reveal_name_slip_suite: %d checks" % checks)
+ 		quit(0)

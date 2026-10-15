@@ -30,6 +30,8 @@ func run() -> void:
 		await _scene(seed_value, view_size)
 	await _pending_and_failure(seed_value)
 	await _return_input()
+	root.get_node("AudioDirector").release_streams()
+	await create_timer(0.15).timeout
 	print("NEARBY_DIRECT_PICK checks=", checks, " failures=", failures.size())
 	quit(0 if failures.is_empty() else 1)
 

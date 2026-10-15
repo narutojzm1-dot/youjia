@@ -42,6 +42,8 @@ func run() -> void:
 	await _main_round_trip()
 	for store in stores:
 		store.free()
+	root.get_node("AudioDirector").release_streams()
+	await create_timer(0.15).timeout
 	print("EXPLORATION SLICE PASS ", checks - failures.size(), "/", checks, " failures=", failures)
 	quit(0 if failures.is_empty() else 1)
 

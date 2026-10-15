@@ -1,0 +1,42 @@
+[
+  {
+    "seconds": 7.308104,
+    "name": "exploration_slice",
+    "status": "PASS",
+    "exit": 0,
+    "importMetadata": "Godot-generated metadata retained separately, not production changes",
+    "completionPattern": "EXPLORATION SLICE PASS ([1-9][0-9]*)/\\1 failures=\\[\\]",
+    "source": "2272b045a2acbe051196e1aafbff3f3217f942c6",
+    "profile": "youjia-assistant-find16-oct13-8373433ec2704f4cbf2c23a5d55ea8ce"
+  },
+  {
+    "seconds": 1.7339525,
+    "name": "nearby_find_audio",
+    "status": "PASS",
+    "exit": 0,
+    "importMetadata": "Godot-generated metadata retained separately, not production changes",
+    "completionPattern": "NEARBY_FIND_AUDIO checks=[1-9][0-9]* failures=0",
+    "source": "2272b045a2acbe051196e1aafbff3f3217f942c6",
+    "profile": "youjia-assistant-find16-oct13-a49d370d29cb43b4a4ad5cfb106240a2"
+  },
+  {
+    "seconds": 4.2311666,
+    "name": "find_reveal_name_slip",
+    "status": "PASS",
+    "exit": 0,
+    "importMetadata": "Godot-generated metadata retained separately, not production changes",
+    "completionPattern": "PASS find_reveal_name_slip_suite: [1-9][0-9]* checks",
+    "source": "2272b045a2acbe051196e1aafbff3f3217f942c6",
+    "profile": "youjia-assistant-find16-oct13-0e4c7b7dcc0c4ab58d124146f02f693f"
+  },
+  {
+    "seconds": 1.0756799,
+    "name": "find_reveal_name_fade",
+    "status": "PASS",
+    "exit": 0,
+    "importMetadata": "Godot-generated metadata retained separately, not production changes",
+    "completionPattern": "PASS find_reveal_name_fade_suite: [1-9][0-9]* checks",
+    "source": "2272b045a2acbe051196e1aafbff3f3217f942c6",
+    "profile": "youjia-assistant-find16-oct13-5d9d9d95029548ceb75ce948841d234c"
+  }
+]

@@ -1,5 +1,7 @@
 # 探索「发现与获得」短展示：程序切片与资源契约（CURSOR-CLOUD，#153 / #155）
 
+> 2026-10-12接续：近郊当前Owner为CODEX-LEAD-ASSISTANT。用户已批准16号 `discovery_soft.wav`，本片沿既有成功take/swap→FindReveal入口映射原始WAV（不转OGG、不改电平），播放许可与停止消费现有公共状态。当前准确来源与规则见 [声音16](../audio/nearby-find-16-2026-10-12.md)。下文旧“候选短音待许可”和Cloud/独立Producer分工保留历史，不能代替最新许可、运行证据或正式发布状态。
+
 来源：用户经 GAME-PRODUCER 转达（[#155 5993470040](https://github.com/narutojzm1-dot/youjia/issues/155#issuecomment-5993470040)）。用户想要“类似在森林里拿到东西时的音效和展示效果”，要求先在近郊首片做出来，看人物透视、近远比例、遮挡、物件展示和声音是否协调，再决定后续场景。GAME-PM 衔接要求见 [#155 5993506217](https://github.com/narutojzm1-dot/youjia/issues/155#issuecomment-5993506217)。
 
 借鉴的只是发现与获得的反馈感：不用现成游戏的音频，也不照搬演出。时长、位置、角色是否举物、音色都还没有获得用户批准，下面的数值都是可调整的候选。已决定的规则不变：单趟合计最多 3 件、可空手、随时回院、不设稀有度、成就或捡齐目标。

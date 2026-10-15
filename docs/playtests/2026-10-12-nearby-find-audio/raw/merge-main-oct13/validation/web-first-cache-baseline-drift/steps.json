@@ -1,0 +1,1368 @@
+[
+  {
+    "stage": "title-quiet",
+    "audio": {
+      "wallMs": 4559.399999976158,
+      "signal": [
+        {
+          "node": 3,
+          "context": 1,
+          "type": "GainNode",
+          "contextState": "running",
+          "audioTime": 1.88,
+          "sampleRate": 48000,
+          "gain": 1,
+          "rms": 0,
+          "peak": 0,
+          "nonFinite": 0
+        },
+        {
+          "node": 17,
+          "context": 1,
+          "type": "AudioWorkletNode",
+          "contextState": "running",
+          "audioTime": 1.88,
+          "sampleRate": 48000,
+          "gain": null,
+          "rms": 0,
+          "peak": 0,
+          "nonFinite": 0
+        }
+      ],
+      "sources": [],
+      "failures": [],
+      "connections": [
+        {
+          "from": 1,
+          "to": 2,
+          "fromType": "GainNode",
+          "toType": "GainNode"
+        },
+        {
+          "from": 2,
+          "to": 3,
+          "fromType": "GainNode",
+          "toType": "GainNode"
+        },
+        {
+          "from": 3,
+          "to": 4,
+          "fromType": "GainNode",
+          "toType": "AudioDestinationNode"
+        },
+        {
+          "from": 5,
+          "to": 6,
+          "fromType": "GainNode",
+          "toType": "GainNode"
+        },
+        {
+          "from": 6,
+          "to": 7,
+          "fromType": "GainNode",
+          "toType": "GainNode"
+        },
+        {
+          "from": 7,
+          "to": 1,
+          "fromType": "GainNode",
+          "toType": "GainNode"
+        },
+        {
+          "from": 3,
+          "to": 5,
+          "fromType": "GainNode",
+          "toType": "GainNode"
+        },
+        {
+          "from": 8,
+          "to": 9,
+          "fromType": "GainNode",
+          "toType": "GainNode"
+        },
+        {
+          "from": 9,
+          "to": 10,
+          "fromType": "GainNode",
+          "toType": "GainNode"
+        },
+        {
+          "from": 10,
+          "to": 5,
+          "fromType": "GainNode",
+          "toType": "GainNode"
+        },
+        {
+          "from": 3,
+          "to": 8,
+          "fromType": "GainNode",
+          "toType": "GainNode"
+        },
+        {
+          "from": 11,
+          "to": 12,
+          "fromType": "GainNode",
+          "toType": "GainNode"
+        },
+        {
+          "from": 12,
+          "to": 13,
+          "fromType": "GainNode",
+          "toType": "GainNode"
+        },
+        {
+          "from": 13,
+          "to": 8,
+          "fromType": "GainNode",
+          "toType": "GainNode"
+        },
+        {
+          "from": 3,
+          "to": 8,
+          "fromType": "GainNode",
+          "toType": "GainNode"
+        },
+        {
+          "from": 14,
+          "to": 15,
+          "fromType": "GainNode",
+          "toType": "GainNode"
+        },
+        {
+          "from": 15,
+          "to": 16,
+          "fromType": "GainNode",
+          "toType": "GainNode"
+        },
+        {
+          "from": 16,
+          "to": 8,
+          "fromType": "GainNode",
+          "toType": "GainNode"
+        },
+        {
+          "from": 3,
+          "to": 8,
+          "fromType": "GainNode",
+          "toType": "GainNode"
+        },
+        {
+          "from": 17,
+          "to": 4,
+          "fromType": "AudioWorkletNode",
+          "toType": "AudioDestinationNode"
+        }
+      ],
+      "nodes": [
+        {
+          "node": 1,
+          "type": "GainNode",
+          "gain": 0.15000000596046448,
+          "context": "running"
+        },
+        {
+          "node": 2,
+          "type": "GainNode",
+          "gain": 1,
+          "context": "running"
+        },
+        {
+          "node": 3,
+          "type": "GainNode",
+          "gain": 1,
+          "context": "running"
+        },
+        {
+          "node": 4,
+          "type": "AudioDestinationNode",
+          "gain": null,
+          "context": "running"
+        },
+        {
+          "node": 5,
+          "type": "GainNode",
+          "gain": 0.5011872053146362,
+          "context": "running"
+        },
+        {
+          "node": 6,
+          "type": "GainNode",
+          "gain": 1,
+          "context": "running"
+        },
+        {
+          "node": 7,
+          "type": "GainNode",
+          "gain": 1,
+          "context": "running"
+        },
+        {
+          "node": 8,
+          "type": "GainNode",
+          "gain": 1,
+          "context": "running"
+        },
+        {
+          "node": 9,
+          "type": "GainNode",
+          "gain": 1,
+          "context": "running"
+        },
+        {
+          "node": 10,
+          "type": "GainNode",
+          "gain": 1,
+          "context": "running"
+        },
+        {
+          "node": 11,
+          "type": "GainNode",
+          "gain": 0.3981071710586548,
+          "context": "running"
+        },
+        {
+          "node": 12,
+          "type": "GainNode",
+          "gain": 1,
+          "context": "running"
+        },
+        {
+          "node": 13,
+          "type": "GainNode",
+          "gain": 1,
+          "context": "running"
+        },
+        {
+          "node": 14,
+          "type": "GainNode",
+          "gain": 0.6309573650360107,
+          "context": "running"
+        },
+        {
+          "node": 15,
+          "type": "GainNode",
+          "gain": 1,
+          "context": "running"
+        },
+        {
+          "node": 16,
+          "type": "GainNode",
+          "gain": 1,
+          "context": "running"
+        },
+        {
+          "node": 17,
+          "type": "AudioWorkletNode",
+          "gain": null,
+          "context": "running"
+        }
+      ],
+      "backend": null,
+      "jsHeap": {
+        "used": 272939020,
+        "total": 280980384,
+        "limit": 4395630592
+      }
+    },
+    "payload": {
+      "album": [],
+      "animal_relationship_memory": {},
+      "exploration": null,
+      "exploration_committed_serial": 0,
+      "first_fish_caught": false,
+      "holiday_day": 1,
+      "holiday_day_elapsed": 0,
+      "keepsakes": {},
+      "locale": "zh-CN",
+      "photo_moments": {},
+      "plant_day_planted": 0,
+      "plant_state": 0,
+      "plant_watered_day": -1,
+      "tutorial_version": 0,
+      "version": 5,
+      "world_weather": {},
+      "yard_gate_open": false
+    },
+    "inputs": [
+      {
+        "kind": "focus",
+        "trusted": true,
+        "x": null,
+        "y": null,
+        "key": null,
+        "visibility": "visible",
+        "t": 696.3999999761581
+      }
+    ],
+    "errors": []
+  },
+  {
+    "stage": "yard",
+    "audio": {
+      "wallMs": 7117.799999952316,
+      "signal": [
+        {
+          "node": 3,
+          "context": 1,
+          "type": "GainNode",
+          "contextState": "running",
+          "audioTime": 4.44,
+          "sampleRate": 48000,
+          "gain": 1,
+          "rms": 0,
+          "peak": 0,
+          "nonFinite": 0
+        },
+        {
+          "node": 17,
+          "context": 1,
+          "type": "AudioWorkletNode",
+          "contextState": "running",
+          "audioTime": 4.44,
+          "sampleRate": 48000,
+          "gain": null,
+          "rms": 0,
+          "peak": 0,
+          "nonFinite": 0
+        },
+        {
+          "node": 18,
+          "context": 2,
+          "type": "GainNode",
+          "contextState": "running",
+          "audioTime": 2.16,
+          "sampleRate": 48000,
+          "gain": 0.15000000596046448,
+          "rms": 0.011200581180603741,
+          "peak": 0.034105848520994186,
+          "nonFinite": 0
+        },
+        {
+          "node": 21,
+          "context": 2,
+          "type": "GainNode",
+          "contextState": "running",
+          "audioTime": 2.16,
+          "sampleRate": 48000,
+          "gain": 0.3981071710586548,
+          "rms": 0.03732672512947447,
+          "peak": 0.11020316183567047,
+          "nonFinite": 0
+        },
+        {
+          "node": 23,
+          "context": 2,
+          "type": "GainNode",
+          "contextState": "running",
+          "audioTime": 2.16,
+          "sampleRate": 48000,
+          "gain": 0.6309573650360107,
+          "rms": 0,
+          "peak": 0,
+          "nonFinite": 0
+        }
+      ],
+      "sources": [
+        {
+          "wallMs": 6211.199999928474,
+          "audioTime": 1.2506666666666666,
+          "node": 20,
+          "outputGainNode": 18,
+          "buffer": 1,
+          "frames": 6144000,
+          "channels": 2,
+          "sampleRate": 48000,
+          "duration": 128,
+          "shortPeak": null,
+          "loop": true,
+          "loopStart": 0,
+          "loopEnd": 128,
+          "startArgs": [
+            0,
+            0
+          ]
+        },
+        {
+          "wallMs": 6833.600000023842,
+          "audioTime": 1.872,
+          "node": 22,
+          "outputGainNode": 21,
+          "buffer": 2,
+          "frames": 6144000,
+          "channels": 2,
+          "sampleRate": 48000,
+          "duration": 128,
+          "shortPeak": null,
+          "loop": true,
+          "loopStart": 0,
+          "loopEnd": 128,
+          "startArgs": [
+            0,
+            0
+          ]
+        }
+      ],
+      "failures": [],
+      "connections": [
+        {
+          "from": 1,
+          "to": 2,
+          "fromType": "GainNode",
+          "toType": "GainNode"
+        },
+        {
+          "from": 2,
+          "to": 3,
+          "fromType": "GainNode",
+          "toType": "GainNode"
+        },
+        {
+          "from": 3,
+          "to": 4,
+          "fromType": "GainNode",
+          "toType": "AudioDestinationNode"
+        },
+        {
+          "from": 5,
+          "to": 6,
+          "fromType": "GainNode",
+          "toType": "GainNode"
+        },
+        {
+          "from": 6,
+          "to": 7,
+          "fromType": "GainNode",
+          "toType": "GainNode"
+        },
+        {
+          "from": 7,
+          "to": 1,
+          "fromType": "GainNode",
+          "toType": "GainNode"
+        },
+        {
+          "from": 3,
+          "to": 5,
+          "fromType": "GainNode",
+          "toType": "GainNode"
+        },
+        {
+          "from": 8,
+          "to": 9,
+          "fromType": "GainNode",
+          "toType": "GainNode"
+        },
+        {
+          "from": 9,
+          "to": 10,
+          "fromType": "GainNode",
+          "toType": "GainNode"
+        },
+        {
+          "from": 10,
+          "to": 5,
+          "fromType": "GainNode",
+          "toType": "GainNode"
+        },
+        {
+          "from": 3,
+          "to": 8,
+          "fromType": "GainNode",
+          "toType": "GainNode"
+        },
+        {
+          "from": 11,
+          "to": 12,
+          "fromType": "GainNode",
+          "toType": "GainNode"
+        },
+        {
+          "from": 12,
+          "to": 13,
+          "fromType": "GainNode",
+          "toType": "GainNode"
+        },
+        {
+          "from": 13,
+          "to": 8,
+          "fromType": "GainNode",
+          "toType": "GainNode"
+        },
+        {
+          "from": 3,
+          "to": 8,
+          "fromType": "GainNode",
+          "toType": "GainNode"
+        },
+        {
+          "from": 14,
+          "to": 15,
+          "fromType": "GainNode",
+          "toType": "GainNode"
+        },
+        {
+          "from": 15,
+          "to": 16,
+          "fromType": "GainNode",
+          "toType": "GainNode"
+        },
+        {
+          "from": 16,
+          "to": 8,
+          "fromType": "GainNode",
+          "toType": "GainNode"
+        },
+        {
+          "from": 3,
+          "to": 8,
+          "fromType": "GainNode",
+          "toType": "GainNode"
+        },
+        {
+          "from": 17,
+          "to": 4,
+          "fromType": "AudioWorkletNode",
+          "toType": "AudioDestinationNode"
+        },
+        {
+          "from": 18,
+          "to": 19,
+          "fromType": "GainNode",
+          "toType": "AudioDestinationNode"
+        },
+        {
+          "from": 20,
+          "to": 18,
+          "fromType": "AudioBufferSourceNode",
+          "toType": "GainNode"
+        },
+        {
+          "from": 21,
+          "to": 19,
+          "fromType": "GainNode",
+          "toType": "AudioDestinationNode"
+        },
+        {
+          "from": 22,
+          "to": 21,
+          "fromType": "AudioBufferSourceNode",
+          "toType": "GainNode"
+        },
+        {
+          "from": 23,
+          "to": 19,
+          "fromType": "GainNode",
+          "toType": "AudioDestinationNode"
+        }
+      ],
+      "nodes": [
+        {
+          "node": 1,
+          "type": "GainNode",
+          "gain": 0.15000000596046448,
+          "context": "running"
+        },
+        {
+          "node": 2,
+          "type": "GainNode",
+          "gain": 1,
+          "context": "running"
+        },
+        {
+          "node": 3,
+          "type": "GainNode",
+          "gain": 1,
+          "context": "running"
+        },
+        {
+          "node": 4,
+          "type": "AudioDestinationNode",
+          "gain": null,
+          "context": "running"
+        },
+        {
+          "node": 5,
+          "type": "GainNode",
+          "gain": 0.5011872053146362,
+          "context": "running"
+        },
+        {
+          "node": 6,
+          "type": "GainNode",
+          "gain": 1,
+          "context": "running"
+        },
+        {
+          "node": 7,
+          "type": "GainNode",
+          "gain": 1,
+          "context": "running"
+        },
+        {
+          "node": 8,
+          "type": "GainNode",
+          "gain": 1,
+          "context": "running"
+        },
+        {
+          "node": 9,
+          "type": "GainNode",
+          "gain": 1,
+          "context": "running"
+        },
+        {
+          "node": 10,
+          "type": "GainNode",
+          "gain": 1,
+          "context": "running"
+        },
+        {
+          "node": 11,
+          "type": "GainNode",
+          "gain": 0.3981071710586548,
+          "context": "running"
+        },
+        {
+          "node": 12,
+          "type": "GainNode",
+          "gain": 1,
+          "context": "running"
+        },
+        {
+          "node": 13,
+          "type": "GainNode",
+          "gain": 1,
+          "context": "running"
+        },
+        {
+          "node": 14,
+          "type": "GainNode",
+          "gain": 0.6309573650360107,
+          "context": "running"
+        },
+        {
+          "node": 15,
+          "type": "GainNode",
+          "gain": 1,
+          "context": "running"
+        },
+        {
+          "node": 16,
+          "type": "GainNode",
+          "gain": 1,
+          "context": "running"
+        },
+        {
+          "node": 17,
+          "type": "AudioWorkletNode",
+          "gain": null,
+          "context": "running"
+        },
+        {
+          "node": 18,
+          "type": "GainNode",
+          "gain": 0.15000000596046448,
+          "context": "running"
+        },
+        {
+          "node": 19,
+          "type": "AudioDestinationNode",
+          "gain": null,
+          "context": "running"
+        },
+        {
+          "node": 20,
+          "type": "AudioBufferSourceNode",
+          "gain": null,
+          "context": "running"
+        },
+        {
+          "node": 21,
+          "type": "GainNode",
+          "gain": 0.3981071710586548,
+          "context": "running"
+        },
+        {
+          "node": 22,
+          "type": "AudioBufferSourceNode",
+          "gain": null,
+          "context": "running"
+        },
+        {
+          "node": 23,
+          "type": "GainNode",
+          "gain": 0.6309573650360107,
+          "context": "running"
+        }
+      ],
+      "backend": {
+        "buffers": 3,
+        "bytes": 99302400,
+        "decoded": 3,
+        "starts": 2,
+        "players": 3,
+        "playing": 2,
+        "state": "running"
+      },
+      "jsHeap": {
+        "used": 364408516,
+        "total": 372560960,
+        "limit": 4395630592
+      }
+    },
+    "payload": {
+      "album": [],
+      "animal_relationship_memory": {},
+      "exploration": null,
+      "exploration_committed_serial": 0,
+      "first_fish_caught": false,
+      "holiday_day": 1,
+      "holiday_day_elapsed": 0,
+      "keepsakes": {},
+      "locale": "zh-CN",
+      "photo_moments": {},
+      "plant_day_planted": 0,
+      "plant_state": 0,
+      "plant_watered_day": -1,
+      "resident_rest": {
+        "cause": "legacy",
+        "day": 1,
+        "schema": 1
+      },
+      "tutorial_version": 0,
+      "version": 5,
+      "world_residents": {
+        "beibei": {
+          "adopted_clock": null,
+          "stage": "unmet"
+        },
+        "chicken": {
+          "settled_clock": {
+            "day": 1,
+            "elapsed": 0
+          },
+          "stage": "chick"
+        },
+        "revision": 1,
+        "schema": 3,
+        "turtle": {
+          "found_trip": "",
+          "stage": "unmet"
+        }
+      },
+      "world_weather": {
+        "episode": 0,
+        "remaining": 1534.22082519531,
+        "seed": 433856823,
+        "weather": "sun"
+      },
+      "yard_crops": {
+        "kind": "",
+        "planted_day": 0,
+        "revision": 0,
+        "schema": 1,
+        "watered_day": -1
+      },
+      "yard_gate_open": false,
+      "yard_inventory": {
+        "corn": 2,
+        "fish": {},
+        "grass": 0,
+        "ground": [],
+        "held": "",
+        "millet": 0,
+        "next_food_id": 1,
+        "revision": 1,
+        "schema": 4,
+        "wheat": 2
+      }
+    },
+    "inputs": [
+      {
+        "kind": "focus",
+        "trusted": true,
+        "x": null,
+        "y": null,
+        "key": null,
+        "visibility": "visible",
+        "t": 696.3999999761581
+      },
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 640,
+        "y": 368,
+        "key": null,
+        "visibility": "visible",
+        "t": 4810
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 640,
+        "y": 368,
+        "key": null,
+        "visibility": "visible",
+        "t": 4900.899999976158
+      }
+    ],
+    "errors": []
+  },
+  {
+    "stage": "music-environment-off",
+    "audio": {
+      "wallMs": 46170.799999952316,
+      "signal": [
+        {
+          "node": 3,
+          "context": 1,
+          "type": "GainNode",
+          "contextState": "running",
+          "audioTime": 43.501333333333335,
+          "sampleRate": 48000,
+          "gain": 1,
+          "rms": 0,
+          "peak": 0,
+          "nonFinite": 0
+        },
+        {
+          "node": 17,
+          "context": 1,
+          "type": "AudioWorkletNode",
+          "contextState": "running",
+          "audioTime": 43.501333333333335,
+          "sampleRate": 48000,
+          "gain": null,
+          "rms": 0,
+          "peak": 0,
+          "nonFinite": 0
+        },
+        {
+          "node": 18,
+          "context": 2,
+          "type": "GainNode",
+          "contextState": "running",
+          "audioTime": 41.21066666666667,
+          "sampleRate": 48000,
+          "gain": 0.059716079384088516,
+          "rms": 0,
+          "peak": 0,
+          "nonFinite": 0
+        },
+        {
+          "node": 21,
+          "context": 2,
+          "type": "GainNode",
+          "contextState": "running",
+          "audioTime": 41.21066666666667,
+          "sampleRate": 48000,
+          "gain": 0.15848931670188904,
+          "rms": 0,
+          "peak": 0,
+          "nonFinite": 0
+        },
+        {
+          "node": 23,
+          "context": 2,
+          "type": "GainNode",
+          "contextState": "running",
+          "audioTime": 41.21066666666667,
+          "sampleRate": 48000,
+          "gain": 0.6309573650360107,
+          "rms": 0,
+          "peak": 0,
+          "nonFinite": 0
+        }
+      ],
+      "sources": [
+        {
+          "wallMs": 6211.199999928474,
+          "audioTime": 1.2506666666666666,
+          "node": 20,
+          "outputGainNode": 18,
+          "buffer": 1,
+          "frames": 6144000,
+          "channels": 2,
+          "sampleRate": 48000,
+          "duration": 128,
+          "shortPeak": null,
+          "loop": true,
+          "loopStart": 0,
+          "loopEnd": 128,
+          "startArgs": [
+            0,
+            0
+          ]
+        },
+        {
+          "wallMs": 6833.600000023842,
+          "audioTime": 1.872,
+          "node": 22,
+          "outputGainNode": 21,
+          "buffer": 2,
+          "frames": 6144000,
+          "channels": 2,
+          "sampleRate": 48000,
+          "duration": 128,
+          "shortPeak": null,
+          "loop": true,
+          "loopStart": 0,
+          "loopEnd": 128,
+          "startArgs": [
+            0,
+            0
+          ]
+        }
+      ],
+      "failures": [],
+      "connections": [
+        {
+          "from": 1,
+          "to": 2,
+          "fromType": "GainNode",
+          "toType": "GainNode"
+        },
+        {
+          "from": 2,
+          "to": 3,
+          "fromType": "GainNode",
+          "toType": "GainNode"
+        },
+        {
+          "from": 3,
+          "to": 4,
+          "fromType": "GainNode",
+          "toType": "AudioDestinationNode"
+        },
+        {
+          "from": 5,
+          "to": 6,
+          "fromType": "GainNode",
+          "toType": "GainNode"
+        },
+        {
+          "from": 6,
+          "to": 7,
+          "fromType": "GainNode",
+          "toType": "GainNode"
+        },
+        {
+          "from": 7,
+          "to": 1,
+          "fromType": "GainNode",
+          "toType": "GainNode"
+        },
+        {
+          "from": 3,
+          "to": 5,
+          "fromType": "GainNode",
+          "toType": "GainNode"
+        },
+        {
+          "from": 8,
+          "to": 9,
+          "fromType": "GainNode",
+          "toType": "GainNode"
+        },
+        {
+          "from": 9,
+          "to": 10,
+          "fromType": "GainNode",
+          "toType": "GainNode"
+        },
+        {
+          "from": 10,
+          "to": 5,
+          "fromType": "GainNode",
+          "toType": "GainNode"
+        },
+        {
+          "from": 3,
+          "to": 8,
+          "fromType": "GainNode",
+          "toType": "GainNode"
+        },
+        {
+          "from": 11,
+          "to": 12,
+          "fromType": "GainNode",
+          "toType": "GainNode"
+        },
+        {
+          "from": 12,
+          "to": 13,
+          "fromType": "GainNode",
+          "toType": "GainNode"
+        },
+        {
+          "from": 13,
+          "to": 8,
+          "fromType": "GainNode",
+          "toType": "GainNode"
+        },
+        {
+          "from": 3,
+          "to": 8,
+          "fromType": "GainNode",
+          "toType": "GainNode"
+        },
+        {
+          "from": 14,
+          "to": 15,
+          "fromType": "GainNode",
+          "toType": "GainNode"
+        },
+        {
+          "from": 15,
+          "to": 16,
+          "fromType": "GainNode",
+          "toType": "GainNode"
+        },
+        {
+          "from": 16,
+          "to": 8,
+          "fromType": "GainNode",
+          "toType": "GainNode"
+        },
+        {
+          "from": 3,
+          "to": 8,
+          "fromType": "GainNode",
+          "toType": "GainNode"
+        },
+        {
+          "from": 17,
+          "to": 4,
+          "fromType": "AudioWorkletNode",
+          "toType": "AudioDestinationNode"
+        },
+        {
+          "from": 18,
+          "to": 19,
+          "fromType": "GainNode",
+          "toType": "AudioDestinationNode"
+        },
+        {
+          "from": 20,
+          "to": 18,
+          "fromType": "AudioBufferSourceNode",
+          "toType": "GainNode"
+        },
+        {
+          "from": 21,
+          "to": 19,
+          "fromType": "GainNode",
+          "toType": "AudioDestinationNode"
+        },
+        {
+          "from": 22,
+          "to": 21,
+          "fromType": "AudioBufferSourceNode",
+          "toType": "GainNode"
+        },
+        {
+          "from": 23,
+          "to": 19,
+          "fromType": "GainNode",
+          "toType": "AudioDestinationNode"
+        }
+      ],
+      "nodes": [
+        {
+          "node": 1,
+          "type": "GainNode",
+          "gain": 0.059716079384088516,
+          "context": "running"
+        },
+        {
+          "node": 2,
+          "type": "GainNode",
+          "gain": 1,
+          "context": "running"
+        },
+        {
+          "node": 3,
+          "type": "GainNode",
+          "gain": 1,
+          "context": "running"
+        },
+        {
+          "node": 4,
+          "type": "AudioDestinationNode",
+          "gain": null,
+          "context": "running"
+        },
+        {
+          "node": 5,
+          "type": "GainNode",
+          "gain": 0.5011872053146362,
+          "context": "running"
+        },
+        {
+          "node": 6,
+          "type": "GainNode",
+          "gain": 1,
+          "context": "running"
+        },
+        {
+          "node": 7,
+          "type": "GainNode",
+          "gain": 1,
+          "context": "running"
+        },
+        {
+          "node": 8,
+          "type": "GainNode",
+          "gain": 1,
+          "context": "running"
+        },
+        {
+          "node": 9,
+          "type": "GainNode",
+          "gain": 1,
+          "context": "running"
+        },
+        {
+          "node": 10,
+          "type": "GainNode",
+          "gain": 1,
+          "context": "running"
+        },
+        {
+          "node": 11,
+          "type": "GainNode",
+          "gain": 0.15848931670188904,
+          "context": "running"
+        },
+        {
+          "node": 12,
+          "type": "GainNode",
+          "gain": 1,
+          "context": "running"
+        },
+        {
+          "node": 13,
+          "type": "GainNode",
+          "gain": 1,
+          "context": "running"
+        },
+        {
+          "node": 14,
+          "type": "GainNode",
+          "gain": 0.6309573650360107,
+          "context": "running"
+        },
+        {
+          "node": 15,
+          "type": "GainNode",
+          "gain": 1,
+          "context": "running"
+        },
+        {
+          "node": 16,
+          "type": "GainNode",
+          "gain": 1,
+          "context": "running"
+        },
+        {
+          "node": 17,
+          "type": "AudioWorkletNode",
+          "gain": null,
+          "context": "running"
+        },
+        {
+          "node": 18,
+          "type": "GainNode",
+          "gain": 0.059716079384088516,
+          "context": "running"
+        },
+        {
+          "node": 19,
+          "type": "AudioDestinationNode",
+          "gain": null,
+          "context": "running"
+        },
+        {
+          "node": 20,
+          "type": "AudioBufferSourceNode",
+          "gain": null,
+          "context": "running"
+        },
+        {
+          "node": 21,
+          "type": "GainNode",
+          "gain": 0.15848931670188904,
+          "context": "running"
+        },
+        {
+          "node": 22,
+          "type": "AudioBufferSourceNode",
+          "gain": null,
+          "context": "running"
+        },
+        {
+          "node": 23,
+          "type": "GainNode",
+          "gain": 0.6309573650360107,
+          "context": "running"
+        }
+      ],
+      "backend": {
+        "buffers": 3,
+        "bytes": 99302400,
+        "decoded": 3,
+        "starts": 2,
+        "players": 3,
+        "playing": 0,
+        "state": "running"
+      },
+      "jsHeap": {
+        "used": 205228592,
+        "total": 207921428,
+        "limit": 4395630592
+      }
+    },
+    "payload": {
+      "album": [],
+      "animal_relationship_memory": {},
+      "exploration": null,
+      "exploration_committed_serial": 0,
+      "first_fish_caught": false,
+      "holiday_day": 1,
+      "holiday_day_elapsed": 0,
+      "keepsakes": {},
+      "locale": "zh-CN",
+      "photo_moments": {},
+      "plant_day_planted": 0,
+      "plant_state": 0,
+      "plant_watered_day": -1,
+      "resident_rest": {
+        "cause": "legacy",
+        "day": 1,
+        "schema": 1
+      },
+      "tutorial_version": 0,
+      "version": 5,
+      "world_residents": {
+        "beibei": {
+          "adopted_clock": null,
+          "stage": "unmet"
+        },
+        "chicken": {
+          "settled_clock": {
+            "day": 1,
+            "elapsed": 0
+          },
+          "stage": "chick"
+        },
+        "revision": 1,
+        "schema": 3,
+        "turtle": {
+          "found_trip": "",
+          "stage": "unmet"
+        }
+      },
+      "world_weather": {
+        "episode": 0,
+        "remaining": 1534.22082519531,
+        "seed": 433856823,
+        "weather": "sun"
+      },
+      "yard_crops": {
+        "kind": "",
+        "planted_day": 0,
+        "revision": 0,
+        "schema": 1,
+        "watered_day": -1
+      },
+      "yard_gate_open": false,
+      "yard_inventory": {
+        "corn": 2,
+        "fish": {},
+        "grass": 0,
+        "ground": [],
+        "held": "",
+        "millet": 0,
+        "next_food_id": 1,
+        "revision": 1,
+        "schema": 4,
+        "wheat": 2
+      }
+    },
+    "inputs": [
+      {
+        "kind": "focus",
+        "trusted": true,
+        "x": null,
+        "y": null,
+        "key": null,
+        "visibility": "visible",
+        "t": 696.3999999761581
+      },
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 640,
+        "y": 368,
+        "key": null,
+        "visibility": "visible",
+        "t": 4810
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 640,
+        "y": 368,
+        "key": null,
+        "visibility": "visible",
+        "t": 4900.899999976158
+      },
+      {
+        "kind": "keydown",
+        "trusted": true,
+        "x": null,
+        "y": null,
+        "key": "Escape",
+        "visibility": "visible",
+        "t": 44921.5
+      },
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 640,
+        "y": 335,
+        "key": null,
+        "visibility": "visible",
+        "t": 45293.89999997616
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 640,
+        "y": 335,
+        "key": null,
+        "visibility": "visible",
+        "t": 45359.89999997616
+      },
+      {
+        "kind": "pointerdown",
+        "trusted": true,
+        "x": 640,
+        "y": 469,
+        "key": null,
+        "visibility": "visible",
+        "t": 45377.299999952316
+      },
+      {
+        "kind": "pointerup",
+        "trusted": true,
+        "x": 640,
+        "y": 469,
+        "key": null,
+        "visibility": "visible",
+        "t": 45453.799999952316
+      }
+    ],
+    "errors": []
+  }
+]

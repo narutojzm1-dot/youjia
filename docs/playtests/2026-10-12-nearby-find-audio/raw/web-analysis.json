@@ -1,0 +1,135 @@
+{
+  "source": "a31b540d6292935debfe0d72b84f4fba68911db5",
+  "states": 16,
+  "acceptedPickups": 6,
+  "audibleSoftwareStarts": 5,
+  "mutedSkipped": 1,
+  "keepsakesAfterReload": {
+    "formal.find.feather": 4,
+    "formal.find.brook_stone": 2
+  },
+  "errors": [],
+  "limitations": "Native96 covers low-motion, swap/full/failed/restore and lifecycle policies. Ordinary Web covers direct mouse/touch pickup, repeats, mute/pause/return/reload and another tab. Software audio only; no headphone/speaker perceptual mix, physical phone, OS lock-screen, or current623 regional audio integration claim.",
+  "signalWindows": [
+    {
+      "stage": "baseline-quiet",
+      "samples": 10,
+      "maximumRms": 0,
+      "maximumPeak": 0,
+      "nonFinite": 0
+    },
+    {
+      "stage": "accepted-one-shot",
+      "samples": 36,
+      "maximumRms": 0.023744466350658962,
+      "maximumPeak": 0.050084538757801056,
+      "nonFinite": 0
+    },
+    {
+      "stage": "muted-pickup",
+      "samples": 36,
+      "maximumRms": 0,
+      "maximumPeak": 0,
+      "nonFinite": 0
+    },
+    {
+      "stage": "unmute-no-replay",
+      "samples": 13,
+      "maximumRms": 0,
+      "maximumPeak": 0,
+      "nonFinite": 0
+    },
+    {
+      "stage": "pause-stops-tail",
+      "samples": 8,
+      "maximumRms": 0,
+      "maximumPeak": 0,
+      "nonFinite": 0
+    },
+    {
+      "stage": "resume-no-replay",
+      "samples": 8,
+      "maximumRms": 0,
+      "maximumPeak": 0,
+      "nonFinite": 0
+    },
+    {
+      "stage": "return-stops-tail",
+      "samples": 9,
+      "maximumRms": 0,
+      "maximumPeak": 0,
+      "nonFinite": 0
+    },
+    {
+      "stage": "portrait-touch-one-shot",
+      "samples": 35,
+      "maximumRms": 0.023744466350658962,
+      "maximumPeak": 0.050084538757801056,
+      "nonFinite": 0
+    }
+  ],
+  "otherTab": [
+    {
+      "stage": "other-tab-after-pickup",
+      "lastWindowEvents": [
+        {
+          "kind": "focus",
+          "trusted": true,
+          "x": null,
+          "y": null,
+          "key": null,
+          "visibility": "visible",
+          "t": 420.6999999284744
+        }
+      ],
+      "contextStates": [
+        "running",
+        "running",
+        "running",
+        "running",
+        "running",
+        "running",
+        "running"
+      ],
+      "note": "No stop assertion during this probe; not evidence of background or focus-stop behavior."
+    },
+    {
+      "stage": "tab-return-no-second-start",
+      "lastWindowEvents": [
+        {
+          "kind": "focus",
+          "trusted": true,
+          "x": null,
+          "y": null,
+          "key": null,
+          "visibility": "visible",
+          "t": 420.6999999284744
+        }
+      ],
+      "contextStates": [
+        "running",
+        "running",
+        "running",
+        "running",
+        "running",
+        "running",
+        "running"
+      ],
+      "note": "No stop assertion during this probe; not evidence of background or focus-stop behavior."
+    }
+  ],
+  "maxBackendBuffers": 3,
+  "maxBackendPlayers": 3,
+  "candidateFiles": [
+    {
+      "name": "index.pck",
+      "bytes": 74551948,
+      "sha256": "e402cc5f3a83273e8af88476ad0f9e44d072d7699666a84c31116b64d5566e9a"
+    },
+    {
+      "name": "index.wasm",
+      "bytes": 39514754,
+      "sha256": "fc74679e3b97f76878947fcd4fbe1268cbfa6188182a2e33bbc3f5dc9bfa57d0"
+    }
+  ]
+}

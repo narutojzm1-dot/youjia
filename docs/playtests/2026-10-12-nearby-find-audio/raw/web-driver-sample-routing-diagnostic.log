@@ -1,0 +1,8 @@
+{"stage": "title-quiet", "shortStarts": 0, "rms": [0, 0]}
+{"stage": "yard", "shortStarts": 0, "rms": [0, 0, 0.011245322349974681, 0.035905404917821994]}
+{"stage": "music-environment-off", "shortStarts": 0, "rms": [0, 0, 0, 0]}
+Traceback (most recent call last):
+  File "D:\games\youjia-test\assistant-recovery\browser-near-find-audio-oct12.py", line 101, in <module>
+    peak=signal('accepted-one-shot');assert count()==before+1 and peak>1e-6,(count(),before,peak)
+                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: (1, 0, 0)

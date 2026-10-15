@@ -1,0 +1,69 @@
+{
+  "source": "2272b045a2acbe051196e1aafbff3f3217f942c6",
+  "main": "53d1b38a96260f0186f181167c5d6bca5201c168",
+  "rawFiles": 717,
+  "rawBytes": 34952036,
+  "softwareWindows": [
+    {
+      "stage": "baseline-quiet",
+      "rms": 0,
+      "peak": 0,
+      "nonFinite": 0
+    },
+    {
+      "stage": "accepted-one-shot",
+      "rms": 0.024633921617551235,
+      "peak": 0.050084538757801056,
+      "nonFinite": 0
+    },
+    {
+      "stage": "muted-pickup",
+      "rms": 0,
+      "peak": 0,
+      "nonFinite": 0
+    },
+    {
+      "stage": "unmute-no-replay",
+      "rms": 0,
+      "peak": 0,
+      "nonFinite": 0
+    },
+    {
+      "stage": "pause-stops-tail",
+      "rms": 0,
+      "peak": 0,
+      "nonFinite": 0
+    },
+    {
+      "stage": "resume-no-replay",
+      "rms": 0,
+      "peak": 0,
+      "nonFinite": 0
+    },
+    {
+      "stage": "return-stops-tail",
+      "rms": 0,
+      "peak": 0,
+      "nonFinite": 0
+    },
+    {
+      "stage": "portrait-touch-one-shot",
+      "rms": 0.024350577893086308,
+      "peak": 0.050084538757801056,
+      "nonFinite": 0
+    }
+  ],
+  "maxBackendBuffers": 4,
+  "maxBackendPlayers": 4,
+  "baseline": {
+    "buffers": 3,
+    "bytes": 99302400,
+    "decoded": 3,
+    "starts": 2,
+    "players": 3,
+    "playing": 0,
+    "state": "running"
+  },
+  "original266Archive": "Unchanged. Verify its own raw-index.json independently; do not combine new counts into the historical index.",
+  "uncovered": "No physical phone/background/lock-screen or perceptual device mix acceptance; 623 regional draft remains separate."
+}

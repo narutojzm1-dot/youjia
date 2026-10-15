@@ -1,0 +1,186 @@
+{
+  "error": "near entry timed out",
+  "traceback": "Traceback (most recent call last):\n  File \"D:\\games\\youjia-test\\assistant-recovery\\browser-near-find-audio-oct12.py\", line 100, in <module>\n    offer=find_offer();before=count();x,y=pickup(offer)\n          ^^^^^^^^^^^^\n  File \"D:\\games\\youjia-test\\assistant-recovery\\browser-near-find-audio-oct12.py\", line 70, in find_offer\n    enter();v=payload();offer=v['exploration']['session']['offers'].get('gate','')\n    ^^^^^^^\n  File \"D:\\games\\youjia-test\\assistant-recovery\\browser-near-find-audio-oct12.py\", line 62, in enter\n    wait(lambda v:((v.get('exploration') or {}).get('session') or {}).get('state')=='active','near entry')\n  File \"D:\\games\\youjia-test\\assistant-recovery\\browser-near-find-audio-oct12.py\", line 46, in wait\n    raise AssertionError(label+' timed out')\nAssertionError: near entry timed out\n",
+  "candidate": {
+    "candidateOnly": true,
+    "pckSha256": "aa3e7c917ee31c33ca8000a8fbe374750d22ab1c9a632b8e0730d9db7a5a59b1",
+    "generatedImportMetadata": "separate snapshot; five existing source imports normalized by Godot",
+    "source": "b7a2bfd1c3beae914470ce435ed54c746c7658a5",
+    "exportedAt": "2026-10-12T21:26:50.2859633+08:00",
+    "exportExit": 0
+  },
+  "errors": [],
+  "payload": {
+    "album": [],
+    "animal_relationship_memory": {},
+    "exploration": null,
+    "exploration_committed_serial": 0,
+    "first_fish_caught": false,
+    "holiday_day": 1,
+    "holiday_day_elapsed": 0,
+    "keepsakes": {},
+    "locale": "zh-CN",
+    "photo_moments": {},
+    "plant_day_planted": 0,
+    "plant_state": 0,
+    "plant_watered_day": -1,
+    "resident_rest": {
+      "cause": "legacy",
+      "day": 1,
+      "schema": 1
+    },
+    "tutorial_version": 0,
+    "version": 5,
+    "world_residents": {
+      "beibei": {
+        "adopted_clock": null,
+        "stage": "unmet"
+      },
+      "chicken": {
+        "settled_clock": {
+          "day": 1,
+          "elapsed": 0
+        },
+        "stage": "chick"
+      },
+      "revision": 1,
+      "schema": 3,
+      "turtle": {
+        "found_trip": "",
+        "stage": "unmet"
+      }
+    },
+    "world_weather": {
+      "episode": 0,
+      "remaining": 1108.3935546875,
+      "seed": 112138147,
+      "weather": "sun"
+    },
+    "yard_crops": {
+      "kind": "",
+      "planted_day": 0,
+      "revision": 0,
+      "schema": 1,
+      "watered_day": -1
+    },
+    "yard_gate_open": false,
+    "yard_inventory": {
+      "corn": 2,
+      "fish": {},
+      "grass": 0,
+      "ground": [],
+      "held": "",
+      "millet": 0,
+      "next_food_id": 1,
+      "revision": 1,
+      "schema": 4,
+      "wheat": 2
+    }
+  },
+  "audio": {
+    "wallMs": 64200.299999952316,
+    "signal": [
+      {
+        "node": 1,
+        "context": 1,
+        "type": "GainNode",
+        "contextState": "running",
+        "audioTime": 61.62133333333333,
+        "sampleRate": 48000,
+        "gain": 1,
+        "rms": 0,
+        "peak": 0,
+        "nonFinite": 0
+      },
+      {
+        "node": 2,
+        "context": 1,
+        "type": "AudioWorkletNode",
+        "contextState": "running",
+        "audioTime": 61.62133333333333,
+        "sampleRate": 48000,
+        "gain": null,
+        "rms": 0,
+        "peak": 0,
+        "nonFinite": 0
+      },
+      {
+        "node": 3,
+        "context": 2,
+        "type": "GainNode",
+        "contextState": "running",
+        "audioTime": 59.072,
+        "sampleRate": 48000,
+        "gain": 0.059716079384088516,
+        "rms": 0,
+        "peak": 0,
+        "nonFinite": 0
+      },
+      {
+        "node": 5,
+        "context": 2,
+        "type": "GainNode",
+        "contextState": "running",
+        "audioTime": 59.072,
+        "sampleRate": 48000,
+        "gain": 0.15848931670188904,
+        "rms": 0,
+        "peak": 0,
+        "nonFinite": 0
+      }
+    ],
+    "sources": [
+      {
+        "wallMs": 6398.899999976158,
+        "audioTime": 1.272,
+        "node": 4,
+        "outputGainNode": 3,
+        "buffer": 1,
+        "frames": 6144000,
+        "channels": 2,
+        "sampleRate": 48000,
+        "duration": 128,
+        "loop": true,
+        "loopStart": 0,
+        "loopEnd": 128,
+        "startArgs": [
+          0,
+          0
+        ]
+      },
+      {
+        "wallMs": 7073.5,
+        "audioTime": 1.952,
+        "node": 6,
+        "outputGainNode": 5,
+        "buffer": 2,
+        "frames": 6144000,
+        "channels": 2,
+        "sampleRate": 48000,
+        "duration": 128,
+        "loop": true,
+        "loopStart": 0,
+        "loopEnd": 128,
+        "startArgs": [
+          0,
+          0
+        ]
+      }
+    ],
+    "failures": [],
+    "backend": {
+      "buffers": 2,
+      "bytes": 98304000,
+      "decoded": 2,
+      "starts": 2,
+      "players": 2,
+      "playing": 0,
+      "state": "running"
+    },
+    "jsHeap": {
+      "used": 193145197,
+      "total": 195269473,
+      "limit": 4395630592
+    }
+  }
+}

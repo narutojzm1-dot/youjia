@@ -1,0 +1,61 @@
+{
+  "stampedRuntime": "b784c2cb9020c11cf17821db4f534c3bcceeb328",
+  "stampedMain": "34740e7e55ab0faebf7b2a2af3d2edf75600c2f7",
+  "currentUiRuntime": "8b5907e5843b4b818c7aea7638bdeefe6e11b713",
+  "currentMain": "f29b0563f195c91833127da17c0a9cb9aac714b0",
+  "rawFiles": 744,
+  "rawBytes": 29818473,
+  "softwareWindows": [
+    {
+      "stage": "baseline-quiet",
+      "rms": 0,
+      "peak": 0,
+      "nonFinite": 0
+    },
+    {
+      "stage": "accepted-one-shot",
+      "rms": 0.024570051062034384,
+      "peak": 0.050084538757801056,
+      "nonFinite": 0
+    },
+    {
+      "stage": "muted-pickup",
+      "rms": 0,
+      "peak": 0,
+      "nonFinite": 0
+    },
+    {
+      "stage": "unmute-no-replay",
+      "rms": 0,
+      "peak": 0,
+      "nonFinite": 0
+    },
+    {
+      "stage": "pause-stops-tail",
+      "rms": 0,
+      "peak": 0,
+      "nonFinite": 0
+    },
+    {
+      "stage": "resume-no-replay",
+      "rms": 0,
+      "peak": 0,
+      "nonFinite": 0
+    },
+    {
+      "stage": "return-stops-tail",
+      "rms": 0,
+      "peak": 0,
+      "nonFinite": 0
+    },
+    {
+      "stage": "portrait-touch-one-shot",
+      "rms": 0.024919170834411985,
+      "peak": 0.050084538757801056,
+      "nonFinite": 0
+    }
+  ],
+  "scope": "B784 ordinary Web16 states/943 native checks/export and actual packed identity+announcement+Unicode glyph61; latest UI8b native1978 checks. No claim that b784 ordinary Web was rerun on8b or any future head. Current8b differs in unrelated basket-note layout plus its existing regression; no pickup runtime changes.",
+  "fullCi": "38415704326 succeeded for prior343; final new-head CI must be checked independently.",
+  "limitations": "No physical device, actual focus/background/lock-screen or perceptual output-device mix acceptance. First glyph probe incorrectly iterated UTF32 bytes; original probe and failure retained, corrected Unicode codepoints pass61 with no font change."
+}

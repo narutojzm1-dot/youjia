@@ -1,0 +1,721 @@
+{
+  "reason": "Git status also reports 143 import stat/line-ending changes with zero content diff; preserve these before restoring only known metadata.",
+  "source": "94a71da8aa496c2eaafb8ac9d29e8edc252f525e",
+  "files": [
+    {
+      "path": "assets/holiday/audio/bed_yard_env.ogg.import",
+      "bytes": 413,
+      "sha256": "fbfc1eb0aa9b8a888620b7b22af359764f23ea6490063e2a9660428d74345271"
+    },
+    {
+      "path": "assets/holiday/audio/bed_yard_music.ogg.import",
+      "bytes": 419,
+      "sha256": "cdd4cedaf33ebe202df01c297a0279b63b413d04df28331febb8d73960a66a84"
+    },
+    {
+      "path": "assets/holiday/characters/approved_resident_upper_v1.png.import",
+      "bytes": 1009,
+      "sha256": "575f8ba89eae295b2c02471cda133be3ef6a67df9abe60d8a687af58fe2b5520"
+    },
+    {
+      "path": "assets/holiday/characters/approved_traveler_pants_v1.png.import",
+      "bytes": 1008,
+      "sha256": "3462d8bec192aa21748e02edd8a4be72948f7d9598034fec3c9290b05f6cfbfd"
+    },
+    {
+      "path": "assets/holiday/characters/approved_traveler_upper_v1.png.import",
+      "bytes": 1008,
+      "sha256": "714c0114d7deb0b9a2f3faacb4478d61e13d932fa281ff9942736528097d8d52"
+    },
+    {
+      "path": "assets/holiday/characters/beibei/grown.png.import",
+      "bytes": 952,
+      "sha256": "71acddca438456a3c3d4d0099632afb2b45f5a56f403df31b8b4c282da9dca97"
+    },
+    {
+      "path": "assets/holiday/characters/beibei/puppy.png.import",
+      "bytes": 952,
+      "sha256": "dcd22f0245e4113c8a3c9e50e11e59921c49249a1966295cd24687a7b3c2147f"
+    },
+    {
+      "path": "assets/holiday/characters/beibei/search.png.import",
+      "bytes": 954,
+      "sha256": "8e117788b2f586e42ee68d8b8317fc3c6fc65b41064b754c8e2f554b8337fb32"
+    },
+    {
+      "path": "assets/holiday/characters/cast_v2/cow.png.import",
+      "bytes": 948,
+      "sha256": "c4381e4154fbb723df06fa33a38d9333d5a14aeef3c789686fe6f082de11da4c"
+    },
+    {
+      "path": "assets/holiday/characters/cast_v2/cow_chew.png.import",
+      "bytes": 962,
+      "sha256": "0eba3bc4e76d36995564b2115fc509591db5e2b0f5744fb3084161ab9934836a"
+    },
+    {
+      "path": "assets/holiday/characters/cast_v2/cow_chew_blink.png.import",
+      "bytes": 980,
+      "sha256": "4748429ac5f93732734ed79758814abf98bf4afd978058fe9c00d0d881a3f00d"
+    },
+    {
+      "path": "assets/holiday/characters/cast_v2/cow_glance.png.import",
+      "bytes": 968,
+      "sha256": "afab648c826ee238f809634336a08fac61fc8e15b45643bac713f0279dd7fde9"
+    },
+    {
+      "path": "assets/holiday/characters/cast_v2/duck.png.import",
+      "bytes": 951,
+      "sha256": "d32186b89f6ce395e657fe192b4c991fad864ea1af8eb4d4af370f18e4705aa7"
+    },
+    {
+      "path": "assets/holiday/characters/cast_v2/duck_attend.png.import",
+      "bytes": 971,
+      "sha256": "ef01f4719bcf025f3ebb6f1de87b44709da58a9444fbb1adcd83047bc024ac39"
+    },
+    {
+      "path": "assets/holiday/characters/cast_v2/duck_preen.png.import",
+      "bytes": 968,
+      "sha256": "e2e11770276d3e895cc2e229dd6aa3f65f748527fb0dbec78ed588f3602e9d1a"
+    },
+    {
+      "path": "assets/holiday/characters/cast_v2/goose.png.import",
+      "bytes": 954,
+      "sha256": "3526d1536ac6877f72aaa260b9a1564ec8fdf93d472534f79c0adae0b70e85b3"
+    },
+    {
+      "path": "assets/holiday/characters/cast_v2/goose_calm.png.import",
+      "bytes": 968,
+      "sha256": "7d14e86476966ae88d0333df69c42ada915297768cc728cff18dd0324dbcb240"
+    },
+    {
+      "path": "assets/holiday/characters/cast_v2/goose_rest.png.import",
+      "bytes": 968,
+      "sha256": "8041175d75e3ee6676163b30780c3d641b65bdf6e03816808050242283af2b4e"
+    },
+    {
+      "path": "assets/holiday/characters/cast_v2/goose_rest_blink.png.import",
+      "bytes": 985,
+      "sha256": "08fb5b618939427ca9161575439cb7e5786c7145763e9e5bea9ec8e18880708f"
+    },
+    {
+      "path": "assets/holiday/characters/cast_v2/goose_riding_down.png.import",
+      "bytes": 989,
+      "sha256": "9184a9d76e284aca41864b5b22fa9a17615fc77a29bd1135c74b330dde414016"
+    },
+    {
+      "path": "assets/holiday/characters/cast_v2/horse.png.import",
+      "bytes": 953,
+      "sha256": "83879126528d120197b2fb709205c6b6e10a4c6cb6273e5d7bea7dd619d96242"
+    },
+    {
+      "path": "assets/holiday/characters/cast_v2/horse_blink.png.import",
+      "bytes": 971,
+      "sha256": "39866d104836101678857a4b6639e54188de9ff1196e5ef129727717545518ce"
+    },
+    {
+      "path": "assets/holiday/characters/cast_v2/horse_tail.png.import",
+      "bytes": 967,
+      "sha256": "3fc21d7abb1f62d66d953e79f0a20dc556b91463d7086849faa5fd41e9c61e54"
+    },
+    {
+      "path": "assets/holiday/characters/cast_v2/llama_annoyed.png.import",
+      "bytes": 978,
+      "sha256": "6fef56fdea75f49cf06d602043468f6fcafb0a7b5a4a6e6c02d9d2a6a6ea8c4e"
+    },
+    {
+      "path": "assets/holiday/characters/cast_v2/llama_happy.png.import",
+      "bytes": 972,
+      "sha256": "37ec28b1fd5a90667b25daad3e0c7b5b2afd28237d7b4ea32847ba7e5d9115f7"
+    },
+    {
+      "path": "assets/holiday/characters/cast_v2/llama_idle.png.import",
+      "bytes": 969,
+      "sha256": "f3ff3ed23199be540a61a2a8c7e05b4b33fcc78e0227df2d0bfc5e3783150fbf"
+    },
+    {
+      "path": "assets/holiday/characters/cast_v2/llama_search.png.import",
+      "bytes": 974,
+      "sha256": "a0de501b1c63cf3f18e52ffc66bbc6064375226e993506e8d0755970f04020c6"
+    },
+    {
+      "path": "assets/holiday/characters/cast_v2/llama_smirk.png.import",
+      "bytes": 971,
+      "sha256": "96d4b5d8d36f36af1fb7a63dfc2b961c7728de44a41750101d710e2f5ad1b5de"
+    },
+    {
+      "path": "assets/holiday/characters/cast_v2/llama_smirk_blink.png.import",
+      "bytes": 988,
+      "sha256": "de4c13cb3aada3e0f7ca671c59f561e2cd748a2932b57fa0b3348dacbd7ca4f8"
+    },
+    {
+      "path": "assets/holiday/characters/cast_v2/sheep_clingy.png.import",
+      "bytes": 975,
+      "sha256": "8230194a3db3884b520f525f9e201bf5e12cc3fa08941b4b3eb434d95c76e466"
+    },
+    {
+      "path": "assets/holiday/characters/cast_v2/sheep_clingy_attend_v2.png.import",
+      "bytes": 1004,
+      "sha256": "5a0714aa665df1e5304f9ee8c1f34c06a770adfc48d31b53920b9b223ec08b87"
+    },
+    {
+      "path": "assets/holiday/characters/cast_v2/sheep_clingy_blink.png.import",
+      "bytes": 992,
+      "sha256": "a92f4a5594fabdbfa15319032f4d1a030b02a73351eec20a099d643c0b66dabf"
+    },
+    {
+      "path": "assets/holiday/characters/cast_v2/sheep_dull.png.import",
+      "bytes": 969,
+      "sha256": "b00b1b840b82473d0c8bd61307badaaece83f83fb2e7660efaa725b573c282d9"
+    },
+    {
+      "path": "assets/holiday/characters/cast_v2/sheep_dull_blink.png.import",
+      "bytes": 985,
+      "sha256": "6b190342ef04add7fe2ad9e38c7eacbeaac7d2e952770385605dc4203867257e"
+    },
+    {
+      "path": "assets/holiday/characters/cast_v2/sheep_dull_glance_v3.png.import",
+      "bytes": 998,
+      "sha256": "0cbc49da22ebea05e0c1506b312b9300b0b5c72e5c4d96c905f23d1215c55e08"
+    },
+    {
+      "path": "assets/holiday/characters/cast_v2/sheep_shake.png.import",
+      "bytes": 971,
+      "sha256": "18f5b34f3e58e969b2dc83fa964fc37f9314ab78df59882f48cf23b82b286fda"
+    },
+    {
+      "path": "assets/holiday/characters/chicken/chick-peck.png.import",
+      "bytes": 967,
+      "sha256": "8a94b1ab936ffea1c9632700cf656faf199e6dd1e83825ff362fd7bdb82e487b"
+    },
+    {
+      "path": "assets/holiday/characters/chicken/chick.png.import",
+      "bytes": 952,
+      "sha256": "3126dde5cce39bfce47af38fa0cb3fe5a9d68085dc2e507d619000d232852c42"
+    },
+    {
+      "path": "assets/holiday/characters/chicken/hen-peck.png.import",
+      "bytes": 961,
+      "sha256": "e5ba5274e5b2b7e85002898388f504a578dd97c32f81759045018a9201693b9f"
+    },
+    {
+      "path": "assets/holiday/characters/chicken/hen.png.import",
+      "bytes": 947,
+      "sha256": "502512661f61fc493f4bc490245c8415d8d4e598a0cd4b6500b65c0921f73e45"
+    },
+    {
+      "path": "assets/holiday/characters/cow.png.import",
+      "bytes": 940,
+      "sha256": "aaec04c645e55fe57de2cac5339d36a4ce0c6bc0deec66defa99a5114f0719d5"
+    },
+    {
+      "path": "assets/holiday/characters/duck.png.import",
+      "bytes": 943,
+      "sha256": "ee78bf00ff5aa45f52084a4180119576182fda8e9e40c9deb2c2741ca3434271"
+    },
+    {
+      "path": "assets/holiday/characters/goose.png.import",
+      "bytes": 946,
+      "sha256": "fd9685717577d9c75623d2fb18e11c43e44c4c0be8a52e22e6283d025c03cc74"
+    },
+    {
+      "path": "assets/holiday/characters/ground_feed/cow-graze-v2.png.import",
+      "bytes": 978,
+      "sha256": "5b2c78d9eb9fea6724b7357dcd29a3efa07d1f98e71f666a6d0d62b3badc91d4"
+    },
+    {
+      "path": "assets/holiday/characters/ground_feed/sheep-clingy-graze-v1.png.import",
+      "bytes": 1004,
+      "sha256": "16eac43b2d4fd11aefcb1018751aca9142607728a05aeca3a0a17ca706e17892"
+    },
+    {
+      "path": "assets/holiday/characters/ground_feed/sheep-dull-graze-v1.png.import",
+      "bytes": 999,
+      "sha256": "4d9642cedc51bd4d24c1d6334bb0c5243f7df4f75b5da81d5f08daf7fb6e6178"
+    },
+    {
+      "path": "assets/holiday/characters/llama.png.import",
+      "bytes": 945,
+      "sha256": "500cb651dd14a242d7e871eebcf8694619262c134db4b9da79fc72eb76b729e2"
+    },
+    {
+      "path": "assets/holiday/characters/llama_annoyed.png.import",
+      "bytes": 970,
+      "sha256": "05134ccf1c796e97513660f381279ffe400d951185811ca2a1140d6871ed23d4"
+    },
+    {
+      "path": "assets/holiday/characters/llama_happy.png.import",
+      "bytes": 964,
+      "sha256": "f55831e9b7baa4e4b1d072a84e96376a2a0582f9b08389c247bed6bec63bfbf5"
+    },
+    {
+      "path": "assets/holiday/characters/llama_legs_atlas_v1.png.import",
+      "bytes": 988,
+      "sha256": "fc8efa9d9d7002907b3787d97fa6859115b8d36701bee12072fac42fa7b5eecd"
+    },
+    {
+      "path": "assets/holiday/characters/llama_smirk.png.import",
+      "bytes": 964,
+      "sha256": "6f76b476663b30338241a1889cadf718f5f5e5be8e6422c014ae23acdb47a4cb"
+    },
+    {
+      "path": "assets/holiday/characters/player.png.import",
+      "bytes": 949,
+      "sha256": "f2ea0664b6640c534c52f65e0d2117d42fe03cd26ba655df7c047a6f32cc8cd1"
+    },
+    {
+      "path": "assets/holiday/characters/player_rig_atlas_v1.png.import",
+      "bytes": 988,
+      "sha256": "4fbacd9e3fbea48d8419d055756f0e57bb2328b44f587ad40f969bc5a4ea430b"
+    },
+    {
+      "path": "assets/holiday/characters/pond/goose-turtle-peck-miss.png.import",
+      "bytes": 1001,
+      "sha256": "544076fbdeac5fbc27f58895f02cdcae30d9d48b70c5c15d1be9cffd17dbe2e1"
+    },
+    {
+      "path": "assets/holiday/characters/pond/turtle-hen-ride.png.import",
+      "bytes": 980,
+      "sha256": "229d7bd5693f9523b2045c3cc86c7974714033e108b359c6b2289aa306e72399"
+    },
+    {
+      "path": "assets/holiday/characters/pond/turtle.png.import",
+      "bytes": 953,
+      "sha256": "347008411a786ffae17cfb86b7384e17aec53168263ffa9cd67c59c8326b87a6"
+    },
+    {
+      "path": "assets/holiday/characters/resident_balcony_v1/actions.png.import",
+      "bytes": 971,
+      "sha256": "b84375aa3eeb91f2fc2050a1f24df3c8ba0c6da05b4183d7666655db0e9c162c"
+    },
+    {
+      "path": "assets/holiday/characters/resident_grass_actions_v1/actions.png.import",
+      "bytes": 977,
+      "sha256": "1f473e747578dda3a2a9b3ec5c2a6c8cf1220c717c503bbfe4148601fae0aadf"
+    },
+    {
+      "path": "assets/holiday/characters/resident_idle_rest_v1/poses.png.import",
+      "bytes": 967,
+      "sha256": "2477e6d1a193a25b555832d18cc4692ed9db8da4e71f05d8aa045752b2305d9a"
+    },
+    {
+      "path": "assets/holiday/characters/resident_walk_authored_v1/00.png.import",
+      "bytes": 963,
+      "sha256": "1d662bc142bbad986b807a589fbe7fc9dbbeedeae00374e13bff042dba8ac14d"
+    },
+    {
+      "path": "assets/holiday/characters/resident_walk_authored_v1/01.png.import",
+      "bytes": 961,
+      "sha256": "854c44fa6bfd1cb7cac61e8f5996db875e7e6f1c66aa5497769c995b953e1657"
+    },
+    {
+      "path": "assets/holiday/characters/resident_walk_authored_v1/02.png.import",
+      "bytes": 963,
+      "sha256": "c8601e45c149e38c5d42fb960e6f3969527d9590cb74063a378d48dc10f6cbaf"
+    },
+    {
+      "path": "assets/holiday/characters/resident_walk_authored_v1/03.png.import",
+      "bytes": 962,
+      "sha256": "d58e1dc883e1dae0afc09a1964f1db0bd5261732893e4e166e2aaa6e85bf7579"
+    },
+    {
+      "path": "assets/holiday/characters/resident_walk_authored_v1/04.png.import",
+      "bytes": 963,
+      "sha256": "2beeb006463dbe60526656825b77d0107b274112eba70dde0801e4b32f5c4de6"
+    },
+    {
+      "path": "assets/holiday/characters/resident_walk_authored_v1/05.png.import",
+      "bytes": 963,
+      "sha256": "0de5e84acf720d9b36f569a8e05ad46e2d48683fec761971afccbd60c479c543"
+    },
+    {
+      "path": "assets/holiday/characters/resident_walk_authored_v1/06.png.import",
+      "bytes": 963,
+      "sha256": "220552ecc05ec4f55108f2e2ef71c63fb05d4999c5ff06789cb61c1027bef8dc"
+    },
+    {
+      "path": "assets/holiday/characters/resident_walk_authored_v1/07.png.import",
+      "bytes": 963,
+      "sha256": "7b74e3bcb2c8be051db79521995d9adef85085da2beeff3378cab8dbd7fd46df"
+    },
+    {
+      "path": "assets/holiday/characters/resident_walk_authored_v1/08.png.import",
+      "bytes": 963,
+      "sha256": "839c8d279f05a19cc570e11d7aa2c2b87b650fa43dad26a12321861375473eca"
+    },
+    {
+      "path": "assets/holiday/characters/resident_walk_authored_v1/09.png.import",
+      "bytes": 962,
+      "sha256": "e77141c5369a9ed57552884068d27b5aac3c216d70688dcb25d4791ee1663120"
+    },
+    {
+      "path": "assets/holiday/characters/resident_walk_authored_v1/10.png.import",
+      "bytes": 963,
+      "sha256": "f8a0d68de3c279440095aa6e79f08d9e25db2313427c5d498af246e13d05a5c1"
+    },
+    {
+      "path": "assets/holiday/characters/resident_walk_authored_v1/11.png.import",
+      "bytes": 962,
+      "sha256": "264b4bd59a33cbe6c6d6cbb5740bc54ca6803f0b2f6804b4938c5c1631b37741"
+    },
+    {
+      "path": "assets/holiday/characters/resident_walk_authored_v1/12.png.import",
+      "bytes": 963,
+      "sha256": "595e38b9436df9a312c3e3a51d5f8aa053346d82a1e08ae2d21ae78b6cb5f4f1"
+    },
+    {
+      "path": "assets/holiday/characters/resident_walk_authored_v1/13.png.import",
+      "bytes": 963,
+      "sha256": "0806bf502a1a8c893a845bc499f0abd445d1fb00b60d798f36cec6f5e42c8d7c"
+    },
+    {
+      "path": "assets/holiday/characters/resident_walk_authored_v1/14.png.import",
+      "bytes": 963,
+      "sha256": "0cae06bc32f8496bc01bda0c47c0919a8a122d89fd1ce2c8a1ec353cae25139d"
+    },
+    {
+      "path": "assets/holiday/characters/resident_walk_authored_v1/15.png.import",
+      "bytes": 963,
+      "sha256": "f42c825bd0fe20fd56c444d0f5cca19e4d07749172c00b1b4ecb399b4b60ad9a"
+    },
+    {
+      "path": "assets/holiday/characters/resident_walk_authored_v1/idle.png.import",
+      "bytes": 969,
+      "sha256": "84f79bc2b0f966fce1662ca1cb89e8236d8c5b6f38e0ea8854beb4212c99db8c"
+    },
+    {
+      "path": "assets/holiday/characters/sheep_clingy.png.import",
+      "bytes": 967,
+      "sha256": "12f9f0622f26dd6aec4ff372a768f38fd965c043830b8e066e297eb8237f2109"
+    },
+    {
+      "path": "assets/holiday/characters/sheep_dull.png.import",
+      "bytes": 960,
+      "sha256": "d8005caace579e8654deab712dcf864e28883c0ce5489c63fffff3e4c51ff3c6"
+    },
+    {
+      "path": "assets/holiday/characters/shelter/cow-rest-blink.png.import",
+      "bytes": 980,
+      "sha256": "801f6522706ac0b59e11fdd31da8d7349dd4bf52025cefe8e4962c2999d9ba40"
+    },
+    {
+      "path": "assets/holiday/characters/shelter/cow-rest.png.import",
+      "bytes": 962,
+      "sha256": "63329a4b426ec0b1a931aee37cc7873b989aa6a7cb2d5a79d916dac0c9e7119d"
+    },
+    {
+      "path": "assets/holiday/characters/shelter/sheep-clingy-rest-blink.png.import",
+      "bytes": 1007,
+      "sha256": "1fd1083c4a08b8a7e01001566bbc93abfff9344e82a017531af14b2653166235"
+    },
+    {
+      "path": "assets/holiday/characters/shelter/sheep-clingy-rest.png.import",
+      "bytes": 988,
+      "sha256": "b96097cf6682b1fd6241155a6e454158adb130a94c853045183b44ca0848b69a"
+    },
+    {
+      "path": "assets/holiday/characters/shelter/sheep-dull-rest-blink.png.import",
+      "bytes": 1001,
+      "sha256": "23115a509dbb67331d13bf67f6e460fb524388767fda5107d3e20edfcc7db84f"
+    },
+    {
+      "path": "assets/holiday/characters/shelter/sheep-dull-rest.png.import",
+      "bytes": 983,
+      "sha256": "104c628afa7e51e3aeb6f18464ada34961c9ae294697951592a29ba5b147f26e"
+    },
+    {
+      "path": "assets/holiday/environment/house_open.png.import",
+      "bytes": 961,
+      "sha256": "fb046d56faa8856019f4613e7b10507af5d44838031c05e7b8ccd7c61ac49790"
+    },
+    {
+      "path": "assets/holiday/environment/yard_gate_clean.png.import",
+      "bytes": 975,
+      "sha256": "c4a91ddcb73ed02bc84eac3d1d538f257850769c03661e4dd01023bad3f8f072"
+    },
+    {
+      "path": "assets/holiday/environment/yard_overcast.png.import",
+      "bytes": 971,
+      "sha256": "e94e8a3030f93a655a9e02bb591a887aba52387f0e5ff43e7a9e7c5304773b8b"
+    },
+    {
+      "path": "assets/holiday/environment/yard_overcast_aligned.png.import",
+      "bytes": 995,
+      "sha256": "b049e0bb7dae932845f68f6761e377e7f8e5cc31da7c67332a35ca9f65a8c912"
+    },
+    {
+      "path": "assets/holiday/environment/yard_sunny.png.import",
+      "bytes": 961,
+      "sha256": "06d38cb99d22f2a5b06fd1ddc5093382a05df96412d8c2f8ec86dc55861b7959"
+    },
+    {
+      "path": "assets/holiday/exploration/finds/brook_stone.png.import",
+      "bytes": 972,
+      "sha256": "b4ca17e9e96db7a43e77e76c7cf7abb134eb7b414e7e0bf801e2d1aca8fe988d"
+    },
+    {
+      "path": "assets/holiday/exploration/finds/feather.webp.import",
+      "bytes": 961,
+      "sha256": "3ee7b7d505165ee23d5e2902d88c5ea4be81f3e599944b8746cb3610523f9901"
+    },
+    {
+      "path": "assets/holiday/exploration/finds/feather_ground_643.png.import",
+      "bytes": 991,
+      "sha256": "7a620296787b82716d0e028232e67a6dfd4285bc9723fa020cd7b5420979d935"
+    },
+    {
+      "path": "assets/holiday/exploration/finds/leaf_pile.png.import",
+      "bytes": 964,
+      "sha256": "54620733d14e1a0ab8dbe31e28f62b123503f21b8755e5e567aa6155d3604d65"
+    },
+    {
+      "path": "assets/holiday/exploration/finds/pine_cone.webp.import",
+      "bytes": 966,
+      "sha256": "d9b109ad6a0e55b0a1c563dfa8853837491623bb87ddb0cd8781e6df96b4cdd0"
+    },
+    {
+      "path": "assets/holiday/exploration/lakeside_village.png.import",
+      "bytes": 979,
+      "sha256": "c8047e2d6397d72655da204931d162cf87ec77d829167d82d5d550d9c05545be"
+    },
+    {
+      "path": "assets/holiday/exploration/near_path_02.webp.import",
+      "bytes": 970,
+      "sha256": "f88d07037198d5d25f6f2d95b284f42ec7732c57ca97bf2802093731e30ad723"
+    },
+    {
+      "path": "assets/holiday/exploration/near_path_mist_mask.svg.import",
+      "bytes": 1084,
+      "sha256": "b17388e3ce786845e9d949b94b3ef9aea4c660c60e7d4e24e49b6410621dfc8f"
+    },
+    {
+      "path": "assets/holiday/exploration/near_path_motion_mask.svg.import",
+      "bytes": 1091,
+      "sha256": "aac34bfd99c50809dcfd995c671650bc6227a13e4ed352955f713bdba8f6f421"
+    },
+    {
+      "path": "assets/holiday/exploration/near_path_window_mask.svg.import",
+      "bytes": 1091,
+      "sha256": "2180acbdfbff43a2a064fdb934c3e258c990477c3143e04db1f8db72e2f2fb4b"
+    },
+    {
+      "path": "assets/holiday/fx/felt_spit.png.import",
+      "bytes": 950,
+      "sha256": "663408822f3631f2a289860b993050d3051b819e877f311cea4b118ab89f2827"
+    },
+    {
+      "path": "assets/holiday/fx/fence_grass_bent.png.import",
+      "bytes": 970,
+      "sha256": "85ec17ffe2160521c34a52cd2bca839e575c682f67afba5bdf57f73e3eaa7d21"
+    },
+    {
+      "path": "assets/holiday/fx/fence_grass_still.png.import",
+      "bytes": 973,
+      "sha256": "ee7a68fd0997fd8fe4590219281da22ef39df03de6a22d13afa60c097e6d22c7"
+    },
+    {
+      "path": "assets/holiday/fx/grass_bundle.png.import",
+      "bytes": 959,
+      "sha256": "f185a76c08d34acb47fac7a8586fcdfe3771e97bc5cff1c9f3946af03330fdb6"
+    },
+    {
+      "path": "assets/holiday/fx/grass_states_v2.png.import",
+      "bytes": 968,
+      "sha256": "bb2ceff2aad2776bca290e2f95a91ab427e1a851e6e60348f441d8f24f300b1b"
+    },
+    {
+      "path": "assets/holiday/fx/path_clover.png.import",
+      "bytes": 955,
+      "sha256": "00d4d6c636ae264a73871593f834aced05519e92ef4d401a53b42dc8923bdd55"
+    },
+    {
+      "path": "assets/holiday/fx/path_snail.png.import",
+      "bytes": 952,
+      "sha256": "a915086b0006de46db4eb3c3107f12a52c2eee2b32d06c5bb485ddc99e3f4959"
+    },
+    {
+      "path": "assets/holiday/fx/pet_heart_watercolor.png.import",
+      "bytes": 981,
+      "sha256": "1f0ec926904cf6b279ceecb705703400a65ccaeb8104ac3b927a041582776dd5"
+    },
+    {
+      "path": "assets/holiday/fx/shed_feather.png.import",
+      "bytes": 958,
+      "sha256": "bcbce8a9143f6bba087f825f359d3bbceebc9e95a537e67be01dda5452dc9ce2"
+    },
+    {
+      "path": "assets/holiday/fx/shore_dragonfly_flight.png.import",
+      "bytes": 988,
+      "sha256": "a8eb32b963ed15806367c1fbf0c92ba05de3999edcde1217d4e75e9fe7c3389c"
+    },
+    {
+      "path": "assets/holiday/fx/shore_dragonfly_rest.png.import",
+      "bytes": 982,
+      "sha256": "badf413d726055311267f27417d20367312cb0e0b826ff466ec2624f21321a18"
+    },
+    {
+      "path": "assets/holiday/fx/shore_ripple_start.png.import",
+      "bytes": 976,
+      "sha256": "a5ce720b4782db5b8f1d032aa1524de326d5d8309428906c8f2532a4a693508f"
+    },
+    {
+      "path": "assets/holiday/fx/shore_ripple_wide.png.import",
+      "bytes": 972,
+      "sha256": "b3a6cc239ffc796f132b4bce18186e0ce9b0cac00f83e6b1e67d99c754654605"
+    },
+    {
+      "path": "assets/holiday/fx/water_splash_watercolor.png.import",
+      "bytes": 991,
+      "sha256": "76fd5f19387e19edec911ebd0bf5e514c962235e62786556a1511cdc6dd4da82"
+    },
+    {
+      "path": "assets/holiday/fx/windowbox_butterfly_open.png.import",
+      "bytes": 994,
+      "sha256": "c7aadd8f8c61e0fbcf15b7830e5ae1c19b1861ac608e55fc7128df6e02a3c635"
+    },
+    {
+      "path": "assets/holiday/fx/windowbox_butterfly_rest.png.import",
+      "bytes": 993,
+      "sha256": "895f5d8de1fb2f38852c350e226993db78a03987c56fa6eab284fe93fe1f63ca"
+    },
+    {
+      "path": "assets/holiday/fx/windowbox_petals.png.import",
+      "bytes": 970,
+      "sha256": "5c44198de815b3d9106f3deecbce1ef6109ec29cce84a160a1c90b08f3b07e44"
+    },
+    {
+      "path": "assets/holiday/objects/corn-crop-atlas.png.import",
+      "bytes": 972,
+      "sha256": "a42c68474e61746f5db97612a234ca5d0732bd3b439edd1f221bbbff47bae3b1"
+    },
+    {
+      "path": "assets/holiday/objects/ground_fish.png.import",
+      "bytes": 960,
+      "sha256": "e166f949089e240be0236f57fb778a5e190c724f43c839414e9bcae813ffaa5d"
+    },
+    {
+      "path": "assets/holiday/objects/millet.png.import",
+      "bytes": 945,
+      "sha256": "086b483fc254ba155b085863141cc85f02861c8abf7fe6d86c50ef60e25d1b3d"
+    },
+    {
+      "path": "assets/holiday/objects/wheat-crop-atlas.png.import",
+      "bytes": 975,
+      "sha256": "1bbe06d8f39633a370ec6f57ae37efd82818684782dee1063a702848f889d357"
+    },
+    {
+      "path": "assets/holiday/objects/yard_back_basket.png.import",
+      "bytes": 975,
+      "sha256": "aade33f26d217c764aebf8f55483ad99e2541ca2ff8802efa8541ab7bfa52862"
+    },
+    {
+      "path": "assets/holiday/sharing/favicon.png.import",
+      "bytes": 948,
+      "sha256": "06d2ca17699e2176c3a032e715a17ae86f364e5c72753c1afd043cbc009befb3"
+    },
+    {
+      "path": "assets/holiday/sharing/favicon_fallback.png.import",
+      "bytes": 975,
+      "sha256": "9727d03fadf7171bdccde44b346b2e3fb84441f9591e40e131ea9fa76fbbaa13"
+    },
+    {
+      "path": "assets/holiday/sharing/og.png.import",
+      "bytes": 933,
+      "sha256": "a7df4bb820ba62aba071053a78730c6c8bfaa95f84aac9044e70585733889097"
+    },
+    {
+      "path": "assets/holiday/ui/polaroid_frame.png.import",
+      "bytes": 965,
+      "sha256": "9baade07c2ec16831cacae2ce91506fda030f1afe87373387a7d68870ce77d5e"
+    },
+    {
+      "path": "assets/holiday/ui/scrapbook_paper.png.import",
+      "bytes": 968,
+      "sha256": "26ec3bcdab0d52672b4c5310bafe9d024456d4926b2870765c4d4e4bb63aed24"
+    },
+    {
+      "path": "assets/share/favicon.png.import",
+      "bytes": 938,
+      "sha256": "beb8949165bc0b412dbbb5cc93bf3d273a4c03f1db77574463f0055fbba9b60c"
+    },
+    {
+      "path": "assets/share/og.png.import",
+      "bytes": 922,
+      "sha256": "b1e9d70b6eece2380695a2d8a7f91bcd28b513fe2dadaed1d16ab90018fbb8dc"
+    },
+    {
+      "path": "assets/template/characters/runner.png.import",
+      "bytes": 947,
+      "sha256": "bbad8b049fc9b9755bf3aa36f536304a3ece46073b46f5b1b28266d78e67095a"
+    },
+    {
+      "path": "assets/template/characters/sentinel.png.import",
+      "bytes": 955,
+      "sha256": "61742cd4700daf4213b4df885595cba6377893144b925125f15daa149f59cdc7"
+    },
+    {
+      "path": "assets/template/environment/backdrop.png.import",
+      "bytes": 955,
+      "sha256": "2b03ecfd8a9d7ec82aefd82c4570b94f4a5a9119e8398460e59b55ff5fbe69d5"
+    },
+    {
+      "path": "assets/template/environment/foreground.png.import",
+      "bytes": 962,
+      "sha256": "9f0a8098a4cb363ae349495afaf7c1e98e8e8064e9b8115e60b7033bacf2608a"
+    },
+    {
+      "path": "assets/template/fonts/Figtree-VF.subset.woff2.import",
+      "bytes": 805,
+      "sha256": "81d2b3db00475943c0c20384aeaed2bd8aee858cf488711ca455872f0804d78a"
+    },
+    {
+      "path": "assets/template/fonts/NotoSansSC-VF.subset.woff2.import",
+      "bytes": 814,
+      "sha256": "b16160761ddf523042abd3bc5be8e304a8636e00c3f70180504459c0c840894c"
+    },
+    {
+      "path": "assets/template/fonts/display/Sora-VF.subset.woff2.import",
+      "bytes": 804,
+      "sha256": "17b1e275ebdac01bfd6df014731fce385b8ba844c29e7ecae86638c58c12907e"
+    },
+    {
+      "path": "assets/template/powerups/energy.png.import",
+      "bytes": 947,
+      "sha256": "17312c18fc75cf67f74684302f585aef2b249c057fbea3876d21e5d30f89e4d3"
+    },
+    {
+      "path": "assets/template/powerups/magnet.png.import",
+      "bytes": 946,
+      "sha256": "17350a4ee783681e0e15e4267bb4e24774290fe7718466860636a7e14bcae7cb"
+    },
+    {
+      "path": "assets/template/powerups/overdrive.png.import",
+      "bytes": 956,
+      "sha256": "93e2f08f68f7e10981a386818f851ddaba5783b08f8cdd3aee26a30553b8baac"
+    },
+    {
+      "path": "assets/template/powerups/shield.png.import",
+      "bytes": 946,
+      "sha256": "72f0219fb804a963f304020cb34a66dd77ffaba14c7644ea9e4390abb717cf02"
+    },
+    {
+      "path": "assets/template/powerups/slow_field.png.import",
+      "bytes": 959,
+      "sha256": "d75680905babf1da5485f497030fdcdd3d7873eb08622ab2c5f6ca14586c6975"
+    },
+    {
+      "path": "assets/template/ui/loading-background.png.import",
+      "bytes": 977,
+      "sha256": "83a03983fcf51fdbfc31cd8b2c9aa89910fdc7f484ecd1112618dcf578f772af"
+    },
+    {
+      "path": "assets/template/ui/pause_glass.png.import",
+      "bytes": 956,
+      "sha256": "7b56a8382cbd951a3003251be177ace5ea7a64efccef8fcf1d7a02f93633ad23"
+    },
+    {
+      "path": "assets/template/ui/title_glass.png.import",
+      "bytes": 956,
+      "sha256": "cca989225b6e26d3cdc1d52c89eea7addf5a9b089b5d185e64f17554a8339ff2"
+    }
+  ]
+}
