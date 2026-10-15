@@ -58,7 +58,12 @@ func run() -> void:
 	check(bool(loop_bounds.enabled) and is_equal_approx(float(loop_bounds.begin), 0.0) and is_equal_approx(float(loop_bounds.end), 2.6), "browser renderer uses authored 2.6 second loop boundaries")
 	for locked: Array in [[MealAudioScript.COOK_LOOP_PATH, "2e9824a0be6cd199d4383d9593a4e184fb41ca9c558b5f91f340d7ef52f5ce1b"], [MealAudioScript.SPOON_PATH, "b72eab1b9bf06842928aea36183a10f277b828cef21bfada150108b3ad700414"]]:
 		check(FileAccess.get_sha256(locked[0]) == locked[1], "approved source bytes unchanged: " + str(locked[0]))
-	check(audio.call("_browser_cue_player", "ui.confirm") == null, "UI cues do not opt into meal renderer")
+	# #704 explicitly opts approved UI cues into the shared Web renderer.
+	# Inspect its separate bus, then retire this fixture channel so the meal
+	# ownership checks below still start from an empty browser-channel pool.
+	var ui_channel: Node = audio.call("_browser_cue_player", "ui.confirm")
+	check(ui_channel != null and ui_channel.bus == &"UI", "UI adapter stays on its own bus, separate from meal SFX")
+	audio.call("_release_browser_cue", "ui.confirm")
 	check(audio.call("_browser_cue_player", "meal.hunger") == null, "unapproved hunger keeps its old non-production route")
 	var master := AudioServer.get_bus_index("Master")
 	var sfx := AudioServer.get_bus_index("SFX")

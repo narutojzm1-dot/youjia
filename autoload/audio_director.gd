@@ -13,10 +13,11 @@ const DEFAULT_AMBIENCE_GAIN := 0.5
 const CUES := {
 	"music.title": {"path": "", "kind": "music"},
 	"music.gameplay": {"path": "", "kind": "music"},
-	"ui.confirm": {"path": "", "bus": "UI"},
-	"ui.cancel": {"path": "", "bus": "UI"},
+	"ui.confirm": {"path": "", "bus": "UI", "web_renderer": "browser"},
+	"ui.cancel": {"path": "", "bus": "UI", "web_renderer": "browser"},
 	"meal.spoon": {"path": "", "bus": "SFX", "web_renderer": "browser"},
 	"meal.hunger": {"path": "", "bus": "SFX"},
+	"ui.page": {"path": "", "bus": "UI", "web_renderer": "browser"},
 	"player.action": {"path": "", "bus": "SFX"},
 	"enemy.impact": {"path": "", "bus": "SFX"},
 	"score.reward": {"path": "", "bus": "SFX"},
@@ -350,7 +351,8 @@ func play_cue(cue_id: String, pitch_scale: float = 1.0) -> bool:
 		if not effects_playback_allowed() or _backend_state != "running":
 			return false
 		var browser_player := _browser_cue_player(cue_id)
-		if _paused or is_zero_approx(float(browser_player.call("_effective_gain"))):
+		# Pause paper controls remain audible on UI; automatic gameplay SFX stop.
+		if (_paused and str(cue.get("bus", "SFX")) != "UI") or is_zero_approx(float(browser_player.call("_effective_gain"))):
 			_release_browser_cue(cue_id)
 			return false
 		browser_player.stream = stream
@@ -443,8 +445,10 @@ func _release_browser_cue(cue_id: String) -> void:
 	BrowserBgmPlayer.release_cached_stream(old_stream)
 
 
-func _stop_browser_cues() -> void:
+func _stop_browser_cues(include_ui: bool = true) -> void:
 	for cue_id: String in _browser_cue_players.keys():
+		if not include_ui and str(CUES.get(cue_id, {}).get("bus", "SFX")) == "UI":
+			continue
 		_release_browser_cue(cue_id)
 
 
@@ -471,7 +475,8 @@ func set_game_paused(paused: bool) -> void:
 	_paused = paused
 	_apply_bus_settings()
 	if paused:
-		_stop_browser_cues()
+		# Opening pause already submitted its UI cue; do not cut it immediately.
+		_stop_browser_cues(false)
 		play_cue("game.pause")
 
 
