@@ -48,5 +48,11 @@
     "status": "failure",
     "reason": "obsolete UI blanket prohibition and leaked inspection channel in meal suite; corrected in 70601ab"
   },
-  "ci_final": "pending; original PR tracks final run"
+  "ci_final": "pending; original PR tracks final run",
+  "desktop_web_rapid": {
+    "driver_exit": 0,
+    "checks": 3,
+    "event_gap_ms": 15,
+    "delayed_replay": false
+  }
 }
