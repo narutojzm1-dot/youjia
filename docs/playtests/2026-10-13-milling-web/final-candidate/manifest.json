@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "stage": "ordinary local Web candidate, not public release evidence",
+  "local_source_sha": "58b473abcd12dcbe2b6709dfd5204419a3216ec4",
+  "equivalent_remote_sha": "db2d8993dfeb76a5cab3f8f26cfbeb3b5d3a87f0",
+  "tree_sha": "e86f1801ae52486a2d19e228837e041097bb1fec",
+  "pck_bytes": 89005492,
+  "pck_sha256": "f0abd38435b7c37ff0671eb3a65abcb7a042d2eeac134750798b590da250f80c",
+  "manifest_excludes_itself": true,
+  "files": [
+    {
+      "path": "14-final-flour-paper-normal-web.jpg",
+      "source_filename": "14-final-flour-paper-normal-web.png",
+      "bytes": 134127,
+      "sha256": "e5d3bd19c91b2c1f0139df88cdf4aee696e18dc78e1a32cb5838508183636fd9",
+      "source_sha256": "e5d3bd19c91b2c1f0139df88cdf4aee696e18dc78e1a32cb5838508183636fd9",
+      "media_type": "image/jpeg",
+      "original_bytes_unchanged": true,
+      "width": 1280,
+      "height": 720,
+      "extension_corrected_without_reencoding": true
+    },
+    {
+      "path": "15-final-flour-paper-844x390.jpg",
+      "source_filename": "15-final-flour-paper-844x390.png",
+      "bytes": 52155,
+      "sha256": "28e7c0d7b0a5fae8846139a8f3f85c95826884ff2cf3d30ff6e0ce2168c4aab0",
+      "source_sha256": "28e7c0d7b0a5fae8846139a8f3f85c95826884ff2cf3d30ff6e0ce2168c4aab0",
+      "media_type": "image/jpeg",
+      "original_bytes_unchanged": true,
+      "width": 844,
+      "height": 390,
+      "extension_corrected_without_reencoding": true
+    },
+    {
+      "path": "16-final-flour-paper-390x844.jpg",
+      "source_filename": "16-final-flour-paper-390x844.png",
+      "bytes": 47266,
+      "sha256": "4854c34ea245968f68a0721d3319d6703195d8a7b7d6068c6c7632f191f3f821",
+      "source_sha256": "4854c34ea245968f68a0721d3319d6703195d8a7b7d6068c6c7632f191f3f821",
+      "media_type": "image/jpeg",
+      "original_bytes_unchanged": true,
+      "width": 390,
+      "height": 844,
+      "extension_corrected_without_reencoding": true
+    },
+    {
+      "path": ".gdignore",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "README.md",
+      "bytes": 1901,
+      "sha256": "8142d9c962b8ab65424a224c9e52166f124e0a0a1b9b1737babcaca6b6ae0ced"
+    }
+  ]
+}

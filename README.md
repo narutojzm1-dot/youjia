@@ -6,6 +6,8 @@
 
 **在线游玩：** https://narutojzm1-dot.github.io/youjia/
 
+**协作公告：** [10月13日版本已归档，Leader两小时定时已恢复](docs/collaboration/personnel-availability.md#2026-10-15-codex-lead-定时已恢复)。
+
 ## 操作
 
 | 按键 | 作用 |
