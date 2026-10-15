@@ -114,6 +114,25 @@ func run() -> void:
 			await gap()
 			await key(KEY_ESCAPE)
 			check(not main.get("_pause_screen").visible and audio.accepted.size() == pause_before+2, tag+" pause resumes once")
+	# Exercise actual adapter voices on native fallback, as the meal suite does.
+	# Pause must stop automatic SFX without cutting the just-submitted UI cue;
+	# application background must stop both, without replay on return.
+	var director: Node = root.get_node("AudioDirector")
+	var ui_voice: Node = director.call("_browser_cue_player", "ui.confirm")
+	ui_voice.stream = load(UiInteractionAudio.OPEN_PATH)
+	ui_voice.play()
+	var meal_voice: Node = director.call("_browser_cue_player", "meal.spoon")
+	meal_voice.stream = load("res://assets/holiday/audio/meal_grok/cook_spoon.tres")
+	meal_voice.play()
+	check(bool(director.call("is_cue_voice_active", "ui.confirm")), "UI adapter has actual native fallback voice")
+	director.call("set_game_paused", true)
+	check(bool(director.call("is_cue_voice_active", "ui.confirm")), "game pause preserves UI feedback")
+	check(not bool(director.call("is_cue_voice_active", "meal.spoon")), "game pause still retires meal SFX")
+	director.call("set_application_active", false)
+	check(not bool(director.call("is_cue_voice_active", "ui.confirm")), "application background retires UI feedback")
+	director.call("set_application_active", true)
+	check(not bool(director.call("is_cue_voice_active", "ui.confirm")), "foreground does not replay discarded UI")
+	director.call("set_game_paused", false)
 	main.queue_free()
 	await process_frame
 	print("UI_INTERACTION_AUDIO_INPUT checks=%d failures=%d" % [checks, failures.size()])
