@@ -1,0 +1,43 @@
+{
+  "phase": "release",
+  "expected": "9946b35f89b970c094f1a7ff68aef78c08550064",
+  "started": "2026-10-15T21:21:25.999Z",
+  "records": [
+    {
+      "label": "public basket open",
+      "sources": [
+        {
+          "t": 67485.60000014305,
+          "context": 1,
+          "state": "running",
+          "frames": 5271,
+          "channels": 2,
+          "rate": 48000,
+          "loop": false,
+          "gainConnectionOnly": true,
+          "sourcePeak": 0.2337801605463028,
+          "channel0FloatSha256": "ad05f454dc3be93b55e19a0264b5537f0f74fa920c5c74ab8a9cbd93335c3e85"
+        }
+      ],
+      "peak": 0,
+      "samples": 0,
+      "expected": 1
+    }
+  ],
+  "pageErrors": [],
+  "console": [],
+  "browser": "155.0.8059.40",
+  "responses": [
+    {
+      "url": "https://narutojzm1-dot.github.io/youjia/game-9946b35.pck",
+      "status": 200
+    }
+  ],
+  "htmlBuild": "game-9946b35",
+  "prePlaySave": {
+    "generation": "5",
+    "payload_sha256": "30702fdfbd8bbfeaab36fc8e0b258ee4cb2cf7380ff9845f7c71493676d7e01a"
+  },
+  "preUpgradeSavePreserved": true,
+  "error": "AssertionError [ERR_ASSERTION]: public basket open destination samples\n    at action (C:\\Users\\Zengm\\AppData\\Local\\Temp\\youjia-ui704-public-web.cjs:17:2)\n    at async C:\\Users\\Zengm\\AppData\\Local\\Temp\\youjia-ui704-public-web.cjs:54:4"
+}

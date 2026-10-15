@@ -1,0 +1,53 @@
+{
+  "runtime_sha": "2ca748c8e11c98340a4709cf1059d8fd2c2330d8",
+  "candidate_local_pack": {
+    "bytes": 90228176,
+    "sha256": "f4346647fa006b0f24259344ff92e3f578e94e51553f0d01ad42e72c98fed98d"
+  },
+  "ci": 38806615097,
+  "ci_job": 116668996042,
+  "driver_exit": 0,
+  "software_seconds": 623.543,
+  "nearby_distinct_source": true,
+  "confirmed_sleep_source": true,
+  "long_sources_loop": true,
+  "master_muted_zero": true,
+  "max_buffers": 9,
+  "max_cache_bytes": 192115152,
+  "actual_document_hidden": false,
+  "page_errors": [],
+  "console_warning_webgl_count": 58,
+  "normal_reopen": {
+    "source": "2ca748c8e11c98340a4709cf1059d8fd2c2330d8",
+    "state": {
+      "generation": "17",
+      "payload_sha256": "79f91f7c45cd9af5a785233c4cfa6b53fe05d023b4f81806ad5e4f17febcf6ff",
+      "day": 3,
+      "elapsed": 480.163277777764,
+      "rest": {
+        "cause": "sleep",
+        "day": 3,
+        "schema": 1
+      },
+      "inventory": {
+        "corn": 2,
+        "fish": {},
+        "flour": 0,
+        "grass": 0,
+        "ground": [],
+        "held": "",
+        "millet": 0,
+        "next_food_id": 1,
+        "production_revision": 0,
+        "revision": 2,
+        "schema": 5,
+        "wheat": 2
+      },
+      "exploration_serial": 1
+    },
+    "normal_reopen_to_play_then_pause": true
+  },
+  "public": false,
+  "hardware_hearing": false,
+  "physical_phone": false
+}

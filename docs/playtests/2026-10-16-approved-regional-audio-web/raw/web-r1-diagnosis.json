@@ -1,0 +1,11 @@
+{
+  "root_cause": "Fixture resident_rest.cause=\"slept\" violates scripts/game/rest_context.gd valid values legacy/sleep/awake; guard correctly rejects clock transition. Not established as a product save defect.",
+  "source_changed": false,
+  "runtime_sha": "2ca748c8e11c98340a4709cf1059d8fd2c2330d8",
+  "other_driver_fixes": [
+    "allow one resampling frame around76.800003s track",
+    "measure stable mute within latest1000ms instead of last110 samples across2s boundary"
+  ],
+  "r1_result": "aborted at341.355s; no natural night/sleep or ten-minute pass claimed",
+  "r2": "fresh owned web-profile-r2, valid sleep cause; production code unchanged"
+}

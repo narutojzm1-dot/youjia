@@ -1,0 +1,589 @@
+{
+  "phase": "release",
+  "expected": "9946b35f89b970c094f1a7ff68aef78c08550064",
+  "started": "2026-10-15T21:27:47.748Z",
+  "records": [
+    {
+      "label": "public basket open",
+      "command_t": 17815.799999952316,
+      "event_anchor": 17832.39999985695,
+      "trusted_events": [
+        {
+          "t": 17832.39999985695,
+          "type": "pointerdown",
+          "x": 527,
+          "y": 676,
+          "trusted": true,
+          "target": "CANVAS"
+        },
+        {
+          "t": 17844,
+          "type": "pointerup",
+          "x": 527,
+          "y": 676,
+          "trusted": true,
+          "target": "CANVAS"
+        }
+      ],
+      "sources": [
+        {
+          "t": 17836.39999985695,
+          "context": 1,
+          "state": "running",
+          "frames": 5271,
+          "channels": 2,
+          "rate": 48000,
+          "loop": false,
+          "gainConnectionOnly": true,
+          "sourcePeak": 0.2337801605463028,
+          "channel0FloatSha256": "ad05f454dc3be93b55e19a0264b5537f0f74fa920c5c74ab8a9cbd93335c3e85"
+        }
+      ],
+      "ui_sources": [
+        {
+          "t": 17836.39999985695,
+          "context": 1,
+          "state": "running",
+          "frames": 5271,
+          "channels": 2,
+          "rate": 48000,
+          "loop": false,
+          "gainConnectionOnly": true,
+          "sourcePeak": 0.2337801605463028,
+          "channel0FloatSha256": "ad05f454dc3be93b55e19a0264b5537f0f74fa920c5c74ab8a9cbd93335c3e85"
+        }
+      ],
+      "peak": 0.11716762185096741,
+      "samples": 65,
+      "expected": 1,
+      "passed": true
+    },
+    {
+      "label": "public basket close",
+      "command_t": 19549.200000047684,
+      "event_anchor": 19554.200000047684,
+      "trusted_events": [
+        {
+          "t": 19554.200000047684,
+          "type": "keydown",
+          "key": "Escape",
+          "trusted": true,
+          "target": "CANVAS"
+        },
+        {
+          "t": 19555.099999904633,
+          "type": "keyup",
+          "key": "Escape",
+          "trusted": true,
+          "target": "CANVAS"
+        }
+      ],
+      "sources": [
+        {
+          "t": 19556.5,
+          "context": 1,
+          "state": "running",
+          "frames": 4792,
+          "channels": 2,
+          "rate": 48000,
+          "loop": false,
+          "gainConnectionOnly": true,
+          "sourcePeak": 0.21466167271137238,
+          "channel0FloatSha256": "284ce66de811a78139100f16a173a19305a54ae4e9d9f84aebae5d30a5ed677d"
+        }
+      ],
+      "ui_sources": [
+        {
+          "t": 19556.5,
+          "context": 1,
+          "state": "running",
+          "frames": 4792,
+          "channels": 2,
+          "rate": 48000,
+          "loop": false,
+          "gainConnectionOnly": true,
+          "sourcePeak": 0.21466167271137238,
+          "channel0FloatSha256": "284ce66de811a78139100f16a173a19305a54ae4e9d9f84aebae5d30a5ed677d"
+        }
+      ],
+      "peak": 0.10758568346500397,
+      "samples": 50,
+      "expected": 1,
+      "passed": true
+    },
+    {
+      "label": "public album open",
+      "command_t": 23133,
+      "event_anchor": 23149.799999952316,
+      "trusted_events": [
+        {
+          "t": 23149.799999952316,
+          "type": "pointerdown",
+          "x": 112,
+          "y": 676,
+          "trusted": true,
+          "target": "CANVAS"
+        },
+        {
+          "t": 23154.599999904633,
+          "type": "pointerup",
+          "x": 112,
+          "y": 676,
+          "trusted": true,
+          "target": "CANVAS"
+        }
+      ],
+      "sources": [
+        {
+          "t": 23151,
+          "context": 1,
+          "state": "running",
+          "frames": 5271,
+          "channels": 2,
+          "rate": 48000,
+          "loop": false,
+          "gainConnectionOnly": true,
+          "sourcePeak": 0.2337801605463028,
+          "channel0FloatSha256": "ad05f454dc3be93b55e19a0264b5537f0f74fa920c5c74ab8a9cbd93335c3e85"
+        }
+      ],
+      "ui_sources": [
+        {
+          "t": 23151,
+          "context": 1,
+          "state": "running",
+          "frames": 5271,
+          "channels": 2,
+          "rate": 48000,
+          "loop": false,
+          "gainConnectionOnly": true,
+          "sourcePeak": 0.2337801605463028,
+          "channel0FloatSha256": "ad05f454dc3be93b55e19a0264b5537f0f74fa920c5c74ab8a9cbd93335c3e85"
+        }
+      ],
+      "peak": 0.11716762185096741,
+      "samples": 68,
+      "expected": 1,
+      "passed": true
+    },
+    {
+      "label": "public empty album boundary",
+      "command_t": 24652.5,
+      "event_anchor": 24656,
+      "trusted_events": [
+        {
+          "t": 24656,
+          "type": "keydown",
+          "key": "ArrowRight",
+          "trusted": true,
+          "target": "CANVAS"
+        },
+        {
+          "t": 24660,
+          "type": "keyup",
+          "key": "ArrowRight",
+          "trusted": true,
+          "target": "CANVAS"
+        }
+      ],
+      "sources": [],
+      "ui_sources": [],
+      "peak": 0,
+      "samples": 67,
+      "expected": 0,
+      "passed": true
+    },
+    {
+      "label": "public album close",
+      "command_t": 27642.39999985695,
+      "event_anchor": 27644,
+      "trusted_events": [
+        {
+          "t": 27644,
+          "type": "keydown",
+          "key": "Escape",
+          "trusted": true,
+          "target": "CANVAS"
+        },
+        {
+          "t": 27651.200000047684,
+          "type": "keyup",
+          "key": "Escape",
+          "trusted": true,
+          "target": "CANVAS"
+        }
+      ],
+      "sources": [
+        {
+          "t": 27660,
+          "context": 1,
+          "state": "running",
+          "frames": 4792,
+          "channels": 2,
+          "rate": 48000,
+          "loop": false,
+          "gainConnectionOnly": true,
+          "sourcePeak": 0.21466167271137238,
+          "channel0FloatSha256": "284ce66de811a78139100f16a173a19305a54ae4e9d9f84aebae5d30a5ed677d"
+        }
+      ],
+      "ui_sources": [
+        {
+          "t": 27660,
+          "context": 1,
+          "state": "running",
+          "frames": 4792,
+          "channels": 2,
+          "rate": 48000,
+          "loop": false,
+          "gainConnectionOnly": true,
+          "sourcePeak": 0.21466167271137238,
+          "channel0FloatSha256": "284ce66de811a78139100f16a173a19305a54ae4e9d9f84aebae5d30a5ed677d"
+        }
+      ],
+      "peak": 0.10758568346500397,
+      "samples": 43,
+      "expected": 1,
+      "passed": true
+    },
+    {
+      "label": "public pause open",
+      "command_t": 31378.5,
+      "event_anchor": 31391.200000047684,
+      "trusted_events": [
+        {
+          "t": 31391.200000047684,
+          "type": "keydown",
+          "key": "Escape",
+          "trusted": true,
+          "target": "CANVAS"
+        },
+        {
+          "t": 31415.200000047684,
+          "type": "keyup",
+          "key": "Escape",
+          "trusted": true,
+          "target": "CANVAS"
+        }
+      ],
+      "sources": [
+        {
+          "t": 31392.599999904633,
+          "context": 1,
+          "state": "running",
+          "frames": 5271,
+          "channels": 2,
+          "rate": 48000,
+          "loop": false,
+          "gainConnectionOnly": true,
+          "sourcePeak": 0.2337801605463028,
+          "channel0FloatSha256": "ad05f454dc3be93b55e19a0264b5537f0f74fa920c5c74ab8a9cbd93335c3e85"
+        }
+      ],
+      "ui_sources": [
+        {
+          "t": 31392.599999904633,
+          "context": 1,
+          "state": "running",
+          "frames": 5271,
+          "channels": 2,
+          "rate": 48000,
+          "loop": false,
+          "gainConnectionOnly": true,
+          "sourcePeak": 0.2337801605463028,
+          "channel0FloatSha256": "ad05f454dc3be93b55e19a0264b5537f0f74fa920c5c74ab8a9cbd93335c3e85"
+        }
+      ],
+      "peak": 0.11716762185096741,
+      "samples": 61,
+      "expected": 1,
+      "passed": true
+    },
+    {
+      "label": "public pause for mute",
+      "command_t": 36350.799999952316,
+      "event_anchor": 36352.5,
+      "trusted_events": [
+        {
+          "t": 36352.5,
+          "type": "keydown",
+          "key": "Escape",
+          "trusted": true,
+          "target": "CANVAS"
+        },
+        {
+          "t": 36363.799999952316,
+          "type": "keyup",
+          "key": "Escape",
+          "trusted": true,
+          "target": "CANVAS"
+        }
+      ],
+      "sources": [
+        {
+          "t": 36353.59999990463,
+          "context": 1,
+          "state": "running",
+          "frames": 5271,
+          "channels": 2,
+          "rate": 48000,
+          "loop": false,
+          "gainConnectionOnly": true,
+          "sourcePeak": 0.2337801605463028,
+          "channel0FloatSha256": "ad05f454dc3be93b55e19a0264b5537f0f74fa920c5c74ab8a9cbd93335c3e85"
+        }
+      ],
+      "ui_sources": [
+        {
+          "t": 36353.59999990463,
+          "context": 1,
+          "state": "running",
+          "frames": 5271,
+          "channels": 2,
+          "rate": 48000,
+          "loop": false,
+          "gainConnectionOnly": true,
+          "sourcePeak": 0.2337801605463028,
+          "channel0FloatSha256": "ad05f454dc3be93b55e19a0264b5537f0f74fa920c5c74ab8a9cbd93335c3e85"
+        }
+      ],
+      "peak": 0.11716762185096741,
+      "samples": 62,
+      "expected": 1,
+      "passed": true
+    },
+    {
+      "label": "public master mute",
+      "command_t": 39985,
+      "event_anchor": 39991.799999952316,
+      "trusted_events": [
+        {
+          "t": 39991.799999952316,
+          "type": "pointerdown",
+          "x": 640,
+          "y": 605,
+          "trusted": true,
+          "target": "CANVAS"
+        },
+        {
+          "t": 39992.09999990463,
+          "type": "pointerup",
+          "x": 640,
+          "y": 605,
+          "trusted": true,
+          "target": "CANVAS"
+        }
+      ],
+      "sources": [],
+      "ui_sources": [],
+      "peak": 0,
+      "samples": 59,
+      "expected": 0,
+      "passed": true
+    },
+    {
+      "label": "public muted resume",
+      "command_t": 41811.09999990463,
+      "event_anchor": 41816.700000047684,
+      "trusted_events": [
+        {
+          "t": 41816.700000047684,
+          "type": "keydown",
+          "key": "Escape",
+          "trusted": true,
+          "target": "CANVAS"
+        },
+        {
+          "t": 41818.299999952316,
+          "type": "keyup",
+          "key": "Escape",
+          "trusted": true,
+          "target": "CANVAS"
+        }
+      ],
+      "sources": [],
+      "ui_sources": [],
+      "peak": 0,
+      "samples": 46,
+      "expected": 0,
+      "passed": true
+    },
+    {
+      "label": "public muted basket open",
+      "command_t": 46545.09999990463,
+      "event_anchor": 46564.59999990463,
+      "trusted_events": [
+        {
+          "t": 46564.59999990463,
+          "type": "pointerdown",
+          "x": 527,
+          "y": 676,
+          "trusted": true,
+          "target": "CANVAS"
+        },
+        {
+          "t": 46569.59999990463,
+          "type": "pointerup",
+          "x": 527,
+          "y": 676,
+          "trusted": true,
+          "target": "CANVAS"
+        }
+      ],
+      "sources": [],
+      "ui_sources": [],
+      "peak": 0,
+      "samples": 66,
+      "expected": 0,
+      "passed": true
+    },
+    {
+      "label": "public muted basket close",
+      "command_t": 48221.200000047684,
+      "event_anchor": 48230.59999990463,
+      "trusted_events": [
+        {
+          "t": 48230.59999990463,
+          "type": "keydown",
+          "key": "Escape",
+          "trusted": true,
+          "target": "CANVAS"
+        },
+        {
+          "t": 48245.39999985695,
+          "type": "keyup",
+          "key": "Escape",
+          "trusted": true,
+          "target": "CANVAS"
+        }
+      ],
+      "sources": [],
+      "ui_sources": [],
+      "peak": 0,
+      "samples": 52,
+      "expected": 0,
+      "passed": true
+    },
+    {
+      "label": "public muted pause",
+      "command_t": 54950.200000047684,
+      "event_anchor": 54960.39999985695,
+      "trusted_events": [
+        {
+          "t": 54960.39999985695,
+          "type": "keydown",
+          "key": "Escape",
+          "trusted": true,
+          "target": "CANVAS"
+        },
+        {
+          "t": 54973.200000047684,
+          "type": "keyup",
+          "key": "Escape",
+          "trusted": true,
+          "target": "CANVAS"
+        }
+      ],
+      "sources": [],
+      "ui_sources": [],
+      "peak": 0,
+      "samples": 65,
+      "expected": 0,
+      "passed": true
+    },
+    {
+      "label": "public unmute no queued cue",
+      "command_t": 57434,
+      "event_anchor": 57436,
+      "trusted_events": [
+        {
+          "t": 57436,
+          "type": "pointerdown",
+          "x": 640,
+          "y": 605,
+          "trusted": true,
+          "target": "CANVAS"
+        },
+        {
+          "t": 57445.39999985695,
+          "type": "pointerup",
+          "x": 640,
+          "y": 605,
+          "trusted": true,
+          "target": "CANVAS"
+        }
+      ],
+      "sources": [],
+      "ui_sources": [],
+      "peak": 0,
+      "samples": 65,
+      "expected": 0,
+      "passed": true
+    },
+    {
+      "label": "public unmuted resume",
+      "command_t": 59723.200000047684,
+      "event_anchor": 59729.09999990463,
+      "trusted_events": [
+        {
+          "t": 59729.09999990463,
+          "type": "keydown",
+          "key": "Escape",
+          "trusted": true,
+          "target": "CANVAS"
+        },
+        {
+          "t": 59756.39999985695,
+          "type": "keyup",
+          "key": "Escape",
+          "trusted": true,
+          "target": "CANVAS"
+        }
+      ],
+      "sources": [
+        {
+          "t": 59733.89999985695,
+          "context": 1,
+          "state": "running",
+          "frames": 4792,
+          "channels": 2,
+          "rate": 48000,
+          "loop": false,
+          "gainConnectionOnly": true,
+          "sourcePeak": 0.21466167271137238,
+          "channel0FloatSha256": "284ce66de811a78139100f16a173a19305a54ae4e9d9f84aebae5d30a5ed677d"
+        }
+      ],
+      "ui_sources": [
+        {
+          "t": 59733.89999985695,
+          "context": 1,
+          "state": "running",
+          "frames": 4792,
+          "channels": 2,
+          "rate": 48000,
+          "loop": false,
+          "gainConnectionOnly": true,
+          "sourcePeak": 0.21466167271137238,
+          "channel0FloatSha256": "284ce66de811a78139100f16a173a19305a54ae4e9d9f84aebae5d30a5ed677d"
+        }
+      ],
+      "peak": 0.10758568346500397,
+      "samples": 50,
+      "expected": 1,
+      "passed": true
+    }
+  ],
+  "pageErrors": [],
+  "console": [],
+  "browser": "155.0.8059.40",
+  "responses": [],
+  "htmlBuild": "game-9946b35",
+  "prePlaySave": {
+    "generation": "5",
+    "payload_sha256": "30702fdfbd8bbfeaab36fc8e0b258ee4cb2cf7380ff9845f7c71493676d7e01a"
+  },
+  "preUpgradeSavePreserved": true,
+  "finished": "2026-10-15T21:28:56.891Z",
+  "passed": true
+}
