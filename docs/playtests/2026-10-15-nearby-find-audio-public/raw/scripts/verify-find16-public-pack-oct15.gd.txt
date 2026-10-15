@@ -1,0 +1,37 @@
+extends SceneTree
+var failures: Array[String] = []
+var checks := 0
+func _initialize() -> void: call_deferred("run")
+func check(ok: bool, label: String) -> void:
+	checks += 1
+	if not ok:
+		failures.append(label)
+		push_error(label)
+func run() -> void:
+	var identity: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://config/build_identity.json"))
+	check(identity.get("sourceCommit") == "bb04fde115877380e3fda8fa80b96ee8753d7180", "actual packed identity matches the validated source")
+	var notes: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://config/release_notes.json"))
+	var feature := "近郊拾起小物时，会响一声轻柔的提示音。"
+	var fix := "静音、歇一下或返院会停止拾物声音，恢复或重新进入不补播。"
+	check(feature in notes.releases[0].features and fix in notes.releases[0].fixes, "actual pack contains the pickup announcement")
+	var font := load("res://assets/template/fonts/ui_regular.tres") as Font
+	var text: String = feature + fix + str(notes.releases[0].title)
+	for index in text.length():
+		var point := text.unicode_at(index)
+		if point >= 32: check(font != null and font.has_char(point), "actual packed announcement glyph " + str(point))
+	check(ResourceLoader.exists("res://assets/holiday/audio/exploration_find_get.wav"), "approved pickup resource is retained")
+	var wav := load("res://assets/holiday/audio/exploration_find_get.wav") as AudioStreamWAV
+	check(wav != null, "actual public approved WAV loads")
+	if wav != null:
+		check(wav.data.size() == 91200 and digest(wav.data) == "936184f59a29c5d519f1d1ca831916e8fef997e373778a15a50f26adb90e443e", "actual public decoded PCM is approved source16")
+		check(wav.mix_rate == 48000 and not wav.stereo and wav.format == AudioStreamWAV.FORMAT_16_BITS and wav.loop_mode == AudioStreamWAV.LOOP_DISABLED, "actual public short sound format/nonloop retained")
+	root.get_node("AudioDirector").release_streams()
+	await create_timer(0.15).timeout
+	print("FIND16_STAMPED_PACK checks=%d failures=%d identity=%s" % [checks,failures.size(),identity.get("sourceCommit", "")])
+	quit(0 if failures.is_empty() else 1)
+
+func digest(bytes: PackedByteArray) -> String:
+	var context := HashingContext.new()
+	context.start(HashingContext.HASH_SHA256)
+	context.update(bytes)
+	return context.finish().hex_encode()

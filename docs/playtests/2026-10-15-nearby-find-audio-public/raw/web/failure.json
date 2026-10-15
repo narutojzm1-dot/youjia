@@ -1,0 +1,497 @@
+{
+  "error": "[{'wallMs': 113666.70000004768, 'audioTime': 53.872, 'node': 25, 'outputGainNode': 24, 'buffer': 3, 'frames': 45596, 'channels': 2, 'sampleRate': 48000, 'duration': 0.9499166666666666, 'shortPeak': 0.079378642141819, 'loop': False, 'loopStart': 0, 'loopEnd': 0.9499166666666666, 'startArgs': [0, 0], 'floatHashes': ['2c4de9f4f772fc2300d2557b5e5215ba64e6a72c29e54782c297a410f0ca04e5', '2c4de9f4f772fc2300d2557b5e5215ba64e6a72c29e54782c297a410f0ca04e5'], 'hashErrors': []}, {'wallMs': 124830.5, 'audioTime': 65.04, 'node': 27, 'outputGainNode': 26, 'buffer': 4, 'frames': 45596, 'channels': 2, 'sampleRate': 48000, 'duration': 0.9499166666666666, 'shortPeak': 0.079378642141819, 'loop': False, 'loopStart': 0, 'loopEnd': 0.9499166666666666, 'startArgs': [0, 0], 'floatHashes': ['2c4de9f4f772fc2300d2557b5e5215ba64e6a72c29e54782c297a410f0ca04e5', '2c4de9f4f772fc2300d2557b5e5215ba64e6a72c29e54782c297a410f0ca04e5'], 'hashErrors': []}, {'wallMs': 128561.40000009537, 'audioTime': 68.77066666666667, 'node': 29, 'outputGainNode': 28, 'buffer': 5, 'frames': 45596, 'channels': 2, 'sampleRate': 48000, 'duration': 0.9499166666666666, 'shortPeak': 0.079378642141819, 'loop': False, 'loopStart': 0, 'loopEnd': 0.9499166666666666, 'startArgs': [0, 0], 'floatHashes': ['2c4de9f4f772fc2300d2557b5e5215ba64e6a72c29e54782c297a410f0ca04e5', '2c4de9f4f772fc2300d2557b5e5215ba64e6a72c29e54782c297a410f0ca04e5'], 'hashErrors': []}, {'wallMs': 136727.5, 'audioTime': 76.93066666666667, 'node': 31, 'outputGainNode': 30, 'buffer': 6, 'frames': 45596, 'channels': 2, 'sampleRate': 48000, 'duration': 0.9499166666666666, 'shortPeak': 0.079378642141819, 'loop': False, 'loopStart': 0, 'loopEnd': 0.9499166666666666, 'startArgs': [0, 0], 'floatHashes': ['2c4de9f4f772fc2300d2557b5e5215ba64e6a72c29e54782c297a410f0ca04e5', '2c4de9f4f772fc2300d2557b5e5215ba64e6a72c29e54782c297a410f0ca04e5'], 'hashErrors': []}, {'wallMs': 140180.40000009537, 'audioTime': 80.38133333333333, 'node': 33, 'outputGainNode': 32, 'buffer': 7, 'frames': 45596, 'channels': 2, 'sampleRate': 48000, 'duration': 0.9499166666666666, 'shortPeak': 0.079378642141819, 'loop': False, 'loopStart': 0, 'loopEnd': 0.9499166666666666, 'startArgs': [0, 0], 'floatHashes': ['2c4de9f4f772fc2300d2557b5e5215ba64e6a72c29e54782c297a410f0ca04e5', '2c4de9f4f772fc2300d2557b5e5215ba64e6a72c29e54782c297a410f0ca04e5'], 'hashErrors': []}]",
+  "traceback": "Traceback (most recent call last):\n  File \"D:\\games\\youjia-test\\assistant-recovery\\browser-find16-public-oct15.py\", line 171, in <module>\n    assert all(s['frames']==45600 and s['channels']==1 and s['sampleRate']==48000 and s.get('floatHashes')==[expected_hash] and not s.get('hashErrors') for s in short_sources),short_sources\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: [{'wallMs': 113666.70000004768, 'audioTime': 53.872, 'node': 25, 'outputGainNode': 24, 'buffer': 3, 'frames': 45596, 'channels': 2, 'sampleRate': 48000, 'duration': 0.9499166666666666, 'shortPeak': 0.079378642141819, 'loop': False, 'loopStart': 0, 'loopEnd': 0.9499166666666666, 'startArgs': [0, 0], 'floatHashes': ['2c4de9f4f772fc2300d2557b5e5215ba64e6a72c29e54782c297a410f0ca04e5', '2c4de9f4f772fc2300d2557b5e5215ba64e6a72c29e54782c297a410f0ca04e5'], 'hashErrors': []}, {'wallMs': 124830.5, 'audioTime': 65.04, 'node': 27, 'outputGainNode': 26, 'buffer': 4, 'frames': 45596, 'channels': 2, 'sampleRate': 48000, 'duration': 0.9499166666666666, 'shortPeak': 0.079378642141819, 'loop': False, 'loopStart': 0, 'loopEnd': 0.9499166666666666, 'startArgs': [0, 0], 'floatHashes': ['2c4de9f4f772fc2300d2557b5e5215ba64e6a72c29e54782c297a410f0ca04e5', '2c4de9f4f772fc2300d2557b5e5215ba64e6a72c29e54782c297a410f0ca04e5'], 'hashErrors': []}, {'wallMs': 128561.40000009537, 'audioTime': 68.77066666666667, 'node': 29, 'outputGainNode': 28, 'buffer': 5, 'frames': 45596, 'channels': 2, 'sampleRate': 48000, 'duration': 0.9499166666666666, 'shortPeak': 0.079378642141819, 'loop': False, 'loopStart': 0, 'loopEnd': 0.9499166666666666, 'startArgs': [0, 0], 'floatHashes': ['2c4de9f4f772fc2300d2557b5e5215ba64e6a72c29e54782c297a410f0ca04e5', '2c4de9f4f772fc2300d2557b5e5215ba64e6a72c29e54782c297a410f0ca04e5'], 'hashErrors': []}, {'wallMs': 136727.5, 'audioTime': 76.93066666666667, 'node': 31, 'outputGainNode': 30, 'buffer': 6, 'frames': 45596, 'channels': 2, 'sampleRate': 48000, 'duration': 0.9499166666666666, 'shortPeak': 0.079378642141819, 'loop': False, 'loopStart': 0, 'loopEnd': 0.9499166666666666, 'startArgs': [0, 0], 'floatHashes': ['2c4de9f4f772fc2300d2557b5e5215ba64e6a72c29e54782c297a410f0ca04e5', '2c4de9f4f772fc2300d2557b5e5215ba64e6a72c29e54782c297a410f0ca04e5'], 'hashErrors': []}, {'wallMs': 140180.40000009537, 'audioTime': 80.38133333333333, 'node': 33, 'outputGainNode': 32, 'buffer': 7, 'frames': 45596, 'channels': 2, 'sampleRate': 48000, 'duration': 0.9499166666666666, 'shortPeak': 0.079378642141819, 'loop': False, 'loopStart': 0, 'loopEnd': 0.9499166666666666, 'startArgs': [0, 0], 'floatHashes': ['2c4de9f4f772fc2300d2557b5e5215ba64e6a72c29e54782c297a410f0ca04e5', '2c4de9f4f772fc2300d2557b5e5215ba64e6a72c29e54782c297a410f0ca04e5'], 'hashErrors': []}]\n",
+  "candidate": {
+    "source": "bb04fde115877380e3fda8fa80b96ee8753d7180",
+    "entry": "game-bb04fde"
+  },
+  "errors": [],
+  "payload": {
+    "album": [],
+    "animal_relationship_memory": {},
+    "exploration": {
+      "contract_version": 1,
+      "next_trip_serial": 9,
+      "session": null
+    },
+    "exploration_committed_serial": 8,
+    "first_fish_caught": false,
+    "holiday_day": 1,
+    "holiday_day_elapsed": 71.8489053333315,
+    "keepsakes": {
+      "formal.find.brook_stone": 4,
+      "formal.find.feather": 2
+    },
+    "locale": "zh-CN",
+    "photo_moments": {},
+    "plant_day_planted": 0,
+    "plant_state": 0,
+    "plant_watered_day": -1,
+    "resident_rest": {
+      "cause": "legacy",
+      "day": 1,
+      "schema": 1
+    },
+    "tutorial_version": 0,
+    "version": 5,
+    "world_residents": {
+      "beibei": {
+        "adopted_clock": null,
+        "stage": "unmet"
+      },
+      "chicken": {
+        "settled_clock": {
+          "day": 1,
+          "elapsed": 0
+        },
+        "stage": "chick"
+      },
+      "revision": 1,
+      "schema": 3,
+      "turtle": {
+        "found_trip": "",
+        "stage": "unmet"
+      }
+    },
+    "world_weather": {
+      "episode": 0,
+      "remaining": 995.16330169798,
+      "seed": 1027148059,
+      "weather": "sun"
+    },
+    "yard_crops": {
+      "kind": "",
+      "planted_day": 0,
+      "revision": 0,
+      "schema": 1,
+      "watered_day": -1
+    },
+    "yard_gate_open": false,
+    "yard_inventory": {
+      "corn": 2,
+      "fish": {},
+      "flour": 0,
+      "grass": 0,
+      "ground": [],
+      "held": "",
+      "millet": 0,
+      "next_food_id": 1,
+      "production_revision": 0,
+      "revision": 1,
+      "schema": 5,
+      "wheat": 2
+    }
+  },
+  "audio": {
+    "wallMs": 8258.599999904633,
+    "signal": [
+      {
+        "node": 3,
+        "context": 1,
+        "type": "GainNode",
+        "contextState": "running",
+        "audioTime": 6.250666666666667,
+        "sampleRate": 48000,
+        "gain": 1,
+        "rms": 0,
+        "peak": 0,
+        "nonFinite": 0
+      },
+      {
+        "node": 17,
+        "context": 1,
+        "type": "AudioWorkletNode",
+        "contextState": "running",
+        "audioTime": 6.250666666666667,
+        "sampleRate": 48000,
+        "gain": null,
+        "rms": 0,
+        "peak": 0,
+        "nonFinite": 0
+      },
+      {
+        "node": 18,
+        "context": 2,
+        "type": "GainNode",
+        "contextState": "running",
+        "audioTime": 3.632,
+        "sampleRate": 48000,
+        "gain": 0.15000000596046448,
+        "rms": 0.012798363216073305,
+        "peak": 0.03979905694723129,
+        "nonFinite": 0
+      },
+      {
+        "node": 21,
+        "context": 2,
+        "type": "GainNode",
+        "contextState": "running",
+        "audioTime": 3.632,
+        "sampleRate": 48000,
+        "gain": 0.3981071710586548,
+        "rms": 0.0373621459417201,
+        "peak": 0.11871224641799927,
+        "nonFinite": 0
+      },
+      {
+        "node": 23,
+        "context": 2,
+        "type": "GainNode",
+        "contextState": "running",
+        "audioTime": 3.632,
+        "sampleRate": 48000,
+        "gain": 0.6309573650360107,
+        "rms": 0,
+        "peak": 0,
+        "nonFinite": 0
+      }
+    ],
+    "sources": [
+      {
+        "wallMs": 5363.200000047684,
+        "audioTime": 0.7306666666666667,
+        "node": 20,
+        "outputGainNode": 18,
+        "buffer": 1,
+        "frames": 6144000,
+        "channels": 2,
+        "sampleRate": 48000,
+        "duration": 128,
+        "shortPeak": null,
+        "loop": true,
+        "loopStart": 0,
+        "loopEnd": 128,
+        "startArgs": [
+          0,
+          0
+        ]
+      },
+      {
+        "wallMs": 6035.700000047684,
+        "audioTime": 1.4106666666666667,
+        "node": 22,
+        "outputGainNode": 21,
+        "buffer": 2,
+        "frames": 6144000,
+        "channels": 2,
+        "sampleRate": 48000,
+        "duration": 128,
+        "shortPeak": null,
+        "loop": true,
+        "loopStart": 0,
+        "loopEnd": 128,
+        "startArgs": [
+          0,
+          0
+        ]
+      }
+    ],
+    "failures": [],
+    "connections": [
+      {
+        "from": 1,
+        "to": 2,
+        "fromType": "GainNode",
+        "toType": "GainNode"
+      },
+      {
+        "from": 2,
+        "to": 3,
+        "fromType": "GainNode",
+        "toType": "GainNode"
+      },
+      {
+        "from": 3,
+        "to": 4,
+        "fromType": "GainNode",
+        "toType": "AudioDestinationNode"
+      },
+      {
+        "from": 5,
+        "to": 6,
+        "fromType": "GainNode",
+        "toType": "GainNode"
+      },
+      {
+        "from": 6,
+        "to": 7,
+        "fromType": "GainNode",
+        "toType": "GainNode"
+      },
+      {
+        "from": 7,
+        "to": 1,
+        "fromType": "GainNode",
+        "toType": "GainNode"
+      },
+      {
+        "from": 3,
+        "to": 5,
+        "fromType": "GainNode",
+        "toType": "GainNode"
+      },
+      {
+        "from": 8,
+        "to": 9,
+        "fromType": "GainNode",
+        "toType": "GainNode"
+      },
+      {
+        "from": 9,
+        "to": 10,
+        "fromType": "GainNode",
+        "toType": "GainNode"
+      },
+      {
+        "from": 10,
+        "to": 5,
+        "fromType": "GainNode",
+        "toType": "GainNode"
+      },
+      {
+        "from": 3,
+        "to": 8,
+        "fromType": "GainNode",
+        "toType": "GainNode"
+      },
+      {
+        "from": 11,
+        "to": 12,
+        "fromType": "GainNode",
+        "toType": "GainNode"
+      },
+      {
+        "from": 12,
+        "to": 13,
+        "fromType": "GainNode",
+        "toType": "GainNode"
+      },
+      {
+        "from": 13,
+        "to": 8,
+        "fromType": "GainNode",
+        "toType": "GainNode"
+      },
+      {
+        "from": 3,
+        "to": 8,
+        "fromType": "GainNode",
+        "toType": "GainNode"
+      },
+      {
+        "from": 14,
+        "to": 15,
+        "fromType": "GainNode",
+        "toType": "GainNode"
+      },
+      {
+        "from": 15,
+        "to": 16,
+        "fromType": "GainNode",
+        "toType": "GainNode"
+      },
+      {
+        "from": 16,
+        "to": 8,
+        "fromType": "GainNode",
+        "toType": "GainNode"
+      },
+      {
+        "from": 3,
+        "to": 8,
+        "fromType": "GainNode",
+        "toType": "GainNode"
+      },
+      {
+        "from": 17,
+        "to": 4,
+        "fromType": "AudioWorkletNode",
+        "toType": "AudioDestinationNode"
+      },
+      {
+        "from": 18,
+        "to": 19,
+        "fromType": "GainNode",
+        "toType": "AudioDestinationNode"
+      },
+      {
+        "from": 20,
+        "to": 18,
+        "fromType": "AudioBufferSourceNode",
+        "toType": "GainNode"
+      },
+      {
+        "from": 21,
+        "to": 19,
+        "fromType": "GainNode",
+        "toType": "AudioDestinationNode"
+      },
+      {
+        "from": 22,
+        "to": 21,
+        "fromType": "AudioBufferSourceNode",
+        "toType": "GainNode"
+      },
+      {
+        "from": 23,
+        "to": 19,
+        "fromType": "GainNode",
+        "toType": "AudioDestinationNode"
+      }
+    ],
+    "nodes": [
+      {
+        "node": 1,
+        "type": "GainNode",
+        "gain": 0.15000000596046448,
+        "context": "running"
+      },
+      {
+        "node": 2,
+        "type": "GainNode",
+        "gain": 1,
+        "context": "running"
+      },
+      {
+        "node": 3,
+        "type": "GainNode",
+        "gain": 1,
+        "context": "running"
+      },
+      {
+        "node": 4,
+        "type": "AudioDestinationNode",
+        "gain": null,
+        "context": "running"
+      },
+      {
+        "node": 5,
+        "type": "GainNode",
+        "gain": 0.5011872053146362,
+        "context": "running"
+      },
+      {
+        "node": 6,
+        "type": "GainNode",
+        "gain": 1,
+        "context": "running"
+      },
+      {
+        "node": 7,
+        "type": "GainNode",
+        "gain": 1,
+        "context": "running"
+      },
+      {
+        "node": 8,
+        "type": "GainNode",
+        "gain": 1,
+        "context": "running"
+      },
+      {
+        "node": 9,
+        "type": "GainNode",
+        "gain": 1,
+        "context": "running"
+      },
+      {
+        "node": 10,
+        "type": "GainNode",
+        "gain": 1,
+        "context": "running"
+      },
+      {
+        "node": 11,
+        "type": "GainNode",
+        "gain": 0.3981071710586548,
+        "context": "running"
+      },
+      {
+        "node": 12,
+        "type": "GainNode",
+        "gain": 1,
+        "context": "running"
+      },
+      {
+        "node": 13,
+        "type": "GainNode",
+        "gain": 1,
+        "context": "running"
+      },
+      {
+        "node": 14,
+        "type": "GainNode",
+        "gain": 0.6309573650360107,
+        "context": "running"
+      },
+      {
+        "node": 15,
+        "type": "GainNode",
+        "gain": 1,
+        "context": "running"
+      },
+      {
+        "node": 16,
+        "type": "GainNode",
+        "gain": 1,
+        "context": "running"
+      },
+      {
+        "node": 17,
+        "type": "AudioWorkletNode",
+        "gain": null,
+        "context": "running"
+      },
+      {
+        "node": 18,
+        "type": "GainNode",
+        "gain": 0.15000000596046448,
+        "context": "running"
+      },
+      {
+        "node": 19,
+        "type": "AudioDestinationNode",
+        "gain": null,
+        "context": "running"
+      },
+      {
+        "node": 20,
+        "type": "AudioBufferSourceNode",
+        "gain": null,
+        "context": "running"
+      },
+      {
+        "node": 21,
+        "type": "GainNode",
+        "gain": 0.3981071710586548,
+        "context": "running"
+      },
+      {
+        "node": 22,
+        "type": "AudioBufferSourceNode",
+        "gain": null,
+        "context": "running"
+      },
+      {
+        "node": 23,
+        "type": "GainNode",
+        "gain": 0.6309573650360107,
+        "context": "running"
+      }
+    ],
+    "backend": {
+      "buffers": 3,
+      "bytes": 99302400,
+      "decoded": 3,
+      "starts": 2,
+      "players": 3,
+      "playing": 2,
+      "state": "running"
+    },
+    "jsHeap": {
+      "used": 315800389,
+      "total": 342838689,
+      "limit": 4395630592
+    }
+  }
+}
