@@ -1,0 +1,17 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+WARNING: Could not set V-Sync mode, as changing V-Sync mode is not supported by the graphics driver.
+     at: set_use_vsync (platform/linuxbsd/x11/gl_manager_x11.cpp:372)
+OpenGL API 4.5 (Core Profile) Mesa 25.0.7-2+deb13u1 - Compatibility - Using Device: Mesa - llvmpipe (LLVM 19.1.7, 256 bits)
+
+[ui704-listen] display=X11 mix_rate=44100.0 devices=["Default", "auto_null.2"]
+[ui704-listen] MARK open 1962
+[ui704-listen] MARK close 2913
+[ui704-listen] MARK page 3864
+[ui704-listen] MARK pair_open 4815
+[ui704-listen] MARK pair_close 5367
+[ui704-listen] MARK rapid 6318
+[ui704-listen] MARK mute 7394
+[ui704-listen] MARK unmute 9066
+[ui704-listen] MARK gap_no_play 10169
+[ui704-listen] close_cue_count=3
+[ui704-listen] PASS

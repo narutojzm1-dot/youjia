@@ -17,6 +17,7 @@ const CUES := {
 	"ui.cancel": {"path": "", "bus": "UI"},
 	"meal.spoon": {"path": "", "bus": "SFX", "web_renderer": "browser"},
 	"meal.hunger": {"path": "", "bus": "SFX"},
+	"ui.page": {"path": "", "bus": "UI"},
 	"player.action": {"path": "", "bus": "SFX"},
 	"enemy.impact": {"path": "", "bus": "SFX"},
 	"score.reward": {"path": "", "bus": "SFX"},

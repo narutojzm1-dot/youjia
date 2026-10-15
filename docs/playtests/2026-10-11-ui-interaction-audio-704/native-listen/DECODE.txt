@@ -1,0 +1,3 @@
+These *.ogg.b64 files are base64 (no newlines) of the corresponding Native Pulse listen OGG clips.
+Decode: base64 -d 01-open.ogg.b64 > 01-open.ogg
+Pushed as text because this box cannot git-push binary blobs via available MCP file helpers.
