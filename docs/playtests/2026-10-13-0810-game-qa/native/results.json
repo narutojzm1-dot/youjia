@@ -1,0 +1,88 @@
+{
+  "sourceSha": "e13eec3f5956de7d2c3a6e4c21876fa6375cbcc6",
+  "startedUtc": "2026-10-13T14:05:45.320024+00:00",
+  "profileProbe": "D:/games/youjia-test/qa/native/2026-10-13-0810/roaming/Godot/app_userdata/youjia-qa-profile-probe",
+  "engine": "D:/games/youjia-tmp-godot/Godot_v4.7.2-stable_win64_console.exe",
+  "tests": [
+    {
+      "entry": "import",
+      "exit": 0,
+      "summary": []
+    },
+    {
+      "entry": "house_cooking",
+      "exit": 0,
+      "summary": [
+        "HOUSE_COOKING checks=139 failures=0"
+      ]
+    },
+    {
+      "entry": "meal_navigation",
+      "exit": 0,
+      "summary": [
+        "MEAL_NAVIGATION checks=28 failures=0"
+      ]
+    },
+    {
+      "entry": "pond_growth_director",
+      "exit": 0,
+      "summary": [
+        "POND_GROWTH_DIRECTOR checks=292 failures=0"
+      ]
+    },
+    {
+      "entry": "yard_original_plants",
+      "exit": 0,
+      "summary": [
+        "YARD_ORIGINAL_PLANTS checks=86 failures=0"
+      ]
+    },
+    {
+      "entry": "original_plant_runtime",
+      "exit": 0,
+      "summary": [
+        "ORIGINAL_PLANT_RUNTIME checks=153 failures=0"
+      ]
+    },
+    {
+      "entry": "meal_audio_host",
+      "exit": 0,
+      "summary": [
+        "MEAL_AUDIO_HOST checks=71 failures=0"
+      ]
+    },
+    {
+      "entry": "ui_interaction",
+      "exit": 0,
+      "summary": [
+        "AUDIT PASS overcast night keeps the overcast cloud band",
+        "AUDIT PASS sunny noon after night restores the bright cloud band",
+        "AUDIT PASS reduced motion keeps cloud band static",
+        "AUDIT PASS cloud band drifts when motion is allowed",
+        "AUDIT PASS real windowbox observation paints a temporary world response",
+        "AUDIT PASS real pause button clears painted windowbox encounter immediately",
+        "AUDIT PASS actual pond-side stone action paints a ripple, never an unearned fish",
+        "AUDIT PASS actual pause button clears a successful shore ripple immediately",
+        "AUDIT PASS real gate action waits for durable confirmation",
+        "AUDIT PASS real gate action opens after persistence confirmation",
+        "AUDIT PASS actual pause button clears the painted fence breeze",
+        "[ui-interaction-tests] checks=69 failures=[]"
+      ]
+    },
+    {
+      "entry": "release_notes",
+      "exit": 0,
+      "summary": [
+        "RELEASE_NOTES checks=102 failures=0"
+      ]
+    },
+    {
+      "entry": "touch_hover_reset",
+      "exit": 0,
+      "summary": [
+        "TOUCH_HOVER_RESET checks=61 failures=0"
+      ]
+    }
+  ],
+  "endedUtc": "2026-10-13T14:08:45.761284+00:00"
+}
