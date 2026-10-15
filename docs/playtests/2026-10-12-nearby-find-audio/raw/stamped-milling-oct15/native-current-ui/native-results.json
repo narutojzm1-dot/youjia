@@ -1,0 +1,42 @@
+[
+  {
+    "seconds": 87.6049548,
+    "status": "PASS",
+    "exit": 0,
+    "source": "8b5907e5843b4b818c7aea7638bdeefe6e11b713",
+    "profile": "youjia-assistant-find16-oct13-f9312c6bfca8461ba753f2472fd76817",
+    "importMetadata": "Godot-generated metadata retained separately, not production changes",
+    "completionPattern": null,
+    "name": "import"
+  },
+  {
+    "seconds": 12.0090907,
+    "status": "PASS",
+    "exit": 0,
+    "source": "8b5907e5843b4b818c7aea7638bdeefe6e11b713",
+    "profile": "youjia-assistant-find16-oct13-320f3414050f4c3f808d795eaa298339",
+    "importMetadata": "Godot-generated metadata retained separately, not production changes",
+    "completionPattern": "\\[yard-basket-grid\\] PASS: [1-9][0-9]* checks",
+    "name": "yard_basket_grid"
+  },
+  {
+    "seconds": 7.4820671,
+    "status": "PASS",
+    "exit": 0,
+    "source": "8b5907e5843b4b818c7aea7638bdeefe6e11b713",
+    "profile": "youjia-assistant-find16-oct13-2a2e3c47edc941a39d4adc23c6470a25",
+    "importMetadata": "Godot-generated metadata retained separately, not production changes",
+    "completionPattern": "HUD_POINTER_INPUT checks=[1-9][0-9]* failures=0",
+    "name": "hud_pointer_input"
+  },
+  {
+    "seconds": 3.1143541,
+    "status": "PASS",
+    "exit": 0,
+    "source": "8b5907e5843b4b818c7aea7638bdeefe6e11b713",
+    "profile": "youjia-assistant-find16-oct13-b3c9e5939a0c4bd3b8b3d4a88293a345",
+    "importMetadata": "Godot-generated metadata retained separately, not production changes",
+    "completionPattern": "NEARBY_FIND_AUDIO checks=[1-9][0-9]* failures=0",
+    "name": "nearby_find_audio"
+  }
+]

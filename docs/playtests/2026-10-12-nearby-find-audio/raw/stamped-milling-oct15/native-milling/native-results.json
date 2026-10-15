@@ -1,0 +1,82 @@
+[
+  {
+    "seconds": 33.8451008,
+    "importMetadata": "Godot-generated metadata retained separately, not production changes",
+    "source": "b784c2cb9020c11cf17821db4f534c3bcceeb328",
+    "name": "import",
+    "profile": "youjia-assistant-find16-oct13-283fcff482834bbf9338afbd0a23af01",
+    "exit": 0,
+    "status": "PASS",
+    "completionPattern": null
+  },
+  {
+    "seconds": 6.6391986,
+    "importMetadata": "Godot-generated metadata retained separately, not production changes",
+    "source": "b784c2cb9020c11cf17821db4f534c3bcceeb328",
+    "name": "release_notes",
+    "profile": "youjia-assistant-find16-oct13-c3648fd1305b4d91b1b640b55def2e5e",
+    "exit": 0,
+    "status": "PASS",
+    "completionPattern": "RELEASE_NOTES checks=[1-9][0-9]* failures=0"
+  },
+  {
+    "seconds": 22.8364696,
+    "importMetadata": "Godot-generated metadata retained separately, not production changes",
+    "source": "b784c2cb9020c11cf17821db4f534c3bcceeb328",
+    "name": "release_notes_pointer_focus",
+    "profile": "youjia-assistant-find16-oct13-ae771b6f3fdc466eae18dbf80c30f2bc",
+    "exit": 0,
+    "status": "PASS",
+    "completionPattern": "RELEASE_NOTES_POINTER_FOCUS checks=[1-9][0-9]* failures=0"
+  },
+  {
+    "seconds": 1.8251577,
+    "importMetadata": "Godot-generated metadata retained separately, not production changes",
+    "source": "b784c2cb9020c11cf17821db4f534c3bcceeb328",
+    "name": "nearby_find_audio",
+    "profile": "youjia-assistant-find16-oct13-808e9cc751674c298b9b784be13f58d2",
+    "exit": 0,
+    "status": "PASS",
+    "completionPattern": "NEARBY_FIND_AUDIO checks=[1-9][0-9]* failures=0"
+  },
+  {
+    "seconds": 7.4920572,
+    "importMetadata": "Godot-generated metadata retained separately, not production changes",
+    "source": "b784c2cb9020c11cf17821db4f534c3bcceeb328",
+    "name": "exploration_slice",
+    "profile": "youjia-assistant-find16-oct13-dc08cfd2545a4d5dbaef9dbed4bea0e3",
+    "exit": 0,
+    "status": "PASS",
+    "completionPattern": "EXPLORATION SLICE PASS ([1-9][0-9]*)/\\1 failures=\\[\\]"
+  },
+  {
+    "seconds": 5.812425,
+    "importMetadata": "Godot-generated metadata retained separately, not production changes",
+    "source": "b784c2cb9020c11cf17821db4f534c3bcceeb328",
+    "name": "nearby_direct_pick",
+    "profile": "youjia-assistant-find16-oct13-fbfa7684e6e84061a2e26b16e6cb837f",
+    "exit": 0,
+    "status": "PASS",
+    "completionPattern": "NEARBY_DIRECT_PICK checks=[1-9][0-9]* failures=0"
+  },
+  {
+    "seconds": 3.4808208,
+    "importMetadata": "Godot-generated metadata retained separately, not production changes",
+    "source": "b784c2cb9020c11cf17821db4f534c3bcceeb328",
+    "name": "exploration_trip_capacity",
+    "profile": "youjia-assistant-find16-oct13-33874aa564f6469ea3ecb43a00634a3e",
+    "exit": 0,
+    "status": "PASS",
+    "completionPattern": "EXPLORATION_TRIP_CAPACITY checks=[1-9][0-9]* failures=0"
+  },
+  {
+    "seconds": 3.6719064,
+    "importMetadata": "Godot-generated metadata retained separately, not production changes",
+    "source": "b784c2cb9020c11cf17821db4f534c3bcceeb328",
+    "name": "hud_pointer_input",
+    "profile": "youjia-assistant-find16-oct13-309a8cb1ffa34471874940fe12b95e49",
+    "exit": 0,
+    "status": "PASS",
+    "completionPattern": "HUD_POINTER_INPUT checks=[1-9][0-9]* failures=0"
+  }
+]

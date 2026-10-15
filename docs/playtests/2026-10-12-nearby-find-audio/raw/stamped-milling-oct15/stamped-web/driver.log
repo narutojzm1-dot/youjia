@@ -1,0 +1,17 @@
+{"stage": "title-quiet", "shortStarts": 0, "rms": [0, 0]}
+{"stage": "yard", "shortStarts": 0, "rms": [0, 0, 0.011323145800867684, 0.03677217791937791, 0]}
+{"stage": "music-environment-off", "shortStarts": 0, "rms": [0, 0, 0, 0, 0]}
+{"stage": "accepted-direct-pick", "shortStarts": 1, "rms": [0, 0, 0, 0, 0, 0]}
+{"stage": "repeat-ground-no-second-sound", "shortStarts": 1, "rms": [0, 0, 0, 0, 0, 0]}
+{"stage": "point-ground-and-return", "shortStarts": 1, "rms": [0, 0, 0, 0, 0, 0]}
+{"stage": "muted-pickup-retained", "shortStarts": 1, "rms": [0, 0, 0, 0, 0, 0]}
+{"stage": "unmute-no-replay", "shortStarts": 1, "rms": [0, 0, 0, 0, 0, 0]}
+{"stage": "pause-stops-tail", "shortStarts": 2, "rms": [0, 0, 0, 0, 0, 0, 0]}
+{"stage": "resume-no-replay", "shortStarts": 2, "rms": [0, 0, 0, 0, 0, 0, 0]}
+{"stage": "other-tab-after-pickup", "shortStarts": 3, "rms": [0, 0, 0, 0, 0, 0, 0, 0.011951668027977728]}
+{"stage": "tab-return-no-second-start", "shortStarts": 3, "rms": [0, 0, 0, 0, 0, 0, 0, 0]}
+{"stage": "return-stops-tail", "shortStarts": 4, "rms": [0, 0, 0, 0, 0, 0, 0, 0, 0]}
+{"stage": "portrait-touch-pick", "shortStarts": 5, "rms": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]}
+{"stage": "reload-title-no-replay", "shortStarts": 0, "rms": [0, 0]}
+{"stage": "reload-preserves-all-finds", "shortStarts": 0, "rms": [0, 0, 0.012681327615274914, 0.039221661815282076, 0]}
+NEAR_FIND_AUDIO_WEB_COMPLETE {"source": "b784c2cb9020c11cf17821db4f534c3bcceeb328", "states": 16, "acceptedPickups": 6, "audibleSoftwareStarts": 5, "mutedSkipped": 1, "keepsakesAfterReload": {"formal.find.brook_stone": 3, "formal.find.feather": 3}, "errors": [], "limitations": "Native96 covers low-motion, swap/full/failed/restore and lifecycle policies. Ordinary Web covers direct mouse/touch pickup, repeats, mute/pause/return/reload and another tab. Software audio only; no headphone/speaker perceptual mix, physical phone, OS lock-screen, or current623 regional audio integration claim."}
