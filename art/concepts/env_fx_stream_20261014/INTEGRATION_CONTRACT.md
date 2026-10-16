@@ -22,6 +22,7 @@ Agent-ID: GROK-BUILD
 | 循环 | phase 0 与 phase TAU 逐像素相同 | 周期端点是 0 与 TAU，不是 0 与 1。隔离 GPU 整圈首尾完全相同 |
 | 暂停 / 减少动态 | 暂停：phase 冻结；减少动态：宿主撤掉子层，只剩原画静帧 | 与生产既有减少动态（撤掉材质）一致，不用 strength 降低代替；宿主负责；shader 本身无内部时钟。旧版本表曾写「phase 冻结 + strength 降低」，已按 CODEX-LEAD review @ `9f7ab71b` 更正 |
 | 底图 | 只读复制，不改 `assets/holiday/exploration/near_path_02.webp` | 接入时继续只采样原纹理 |
+| 底图采样（隔离裁切候选） | `base_sample_linear` **默认 true** | CODEX-LEAD 2026-10-16 11:47 CST #749：连续 UV 线性取样，匹配宿主线性原画。控制图仍 nearest。保护区、`strength 0`、减少动态回原画保持 |
 
 ## phase 单位
 
@@ -77,7 +78,7 @@ shader / 预览驱动与离线生成脚本用的不是同一套 phase。宿主�
 | 文件 | 作用 |
 |---|---|
 | `make_crop_textures.py` | 按 `Rect2i(191, 543, 183, 302)` 从整幅控制图裁出 5 张 183×302 控制图到 `godot_preview/textures/crop/`；先校验水面/次级层全部在矩形内、四周至少 16 px（大于最大位移 12 px）。`--check` 只核对已提交文件与源子矩形逐像素一致 |
-| `godot_preview/stream_flow_crop.gdshader` | 裁切版材质。水面算法与 `stream_flow.gdshader` 相同；控制图按裁切 UV 采样，底图仍采样整幅原画，用 `crop_origin` / `crop_size` uniform 对齐。非水面像素与 `strength == 0` 时输出透明，下面的原画原样露出 |
+| `godot_preview/stream_flow_crop.gdshader` | 裁切版材质。水面算法与 `stream_flow.gdshader` 相同；控制图按裁切 UV 采样，底图仍采样整幅原画，用 `crop_origin` / `crop_size` uniform 对齐。`base_sample_linear` 默认 true（连续 UV）。非水面像素与 `strength == 0` 时输出透明，下面的原画原样露出 |
 | `godot_preview/stream_flow_crop_demo.tscn` | 仿宿主结构：`Painting`（整幅原画 Sprite2D）下挂 `StreamCrop`（183×302 子层，位置 191,543） |
 | `godot_preview/stream_flow_crop_driver.gd` | 8 秒一圈：`phase = fposmod(phase + max(delta, 0) * TAU / 8, TAU)`；不复用现动效 0.42 rad/s，不用内置 TIME。暂停冻结 phase；减少动态撤掉子层（只剩原画静帧），不把 strength 0.20 当默认 |
 | `verify_crop_render.py` | 用 Godot 4.7 导出整幅版与裁切版同 phase 帧并逐像素对照 |
@@ -95,7 +96,7 @@ shader / 预览驱动与离线生成脚本用的不是同一套 phase。宿主�
 
 显存：子层 5 张控制图约 1.05 MiB（整幅版约 30 MiB），底图复用宿主已加载的原画。
 
-仍未覆盖：宿主内真实挂接、天气/昼夜、照片定格、村庄切换、退出语义、Web/手机/DPR、实际帧时与 PCK 增量。宿主若对 `painting` 做缩放或线性过滤，子层水面像素与原画的采样方式不同（子层按纹素中心取样），需在宿主实核；保护区与 0 强度因整层透明不受影响。
+仍未覆盖：宿主内真实挂接、天气/昼夜、照片定格、村庄切换、退出语义、Web/手机/DPR、实际帧时与 PCK 增量。隔离裁切候选的底图采样默认已改为连续 UV（`base_sample_linear = true`），用来匹配宿主线性原画；控制图仍 nearest。宿主实核仍未做。保护区与 0 强度因整层透明不受影响。
 
 ## 下一步（等 Leader 指示）
 
@@ -131,7 +132,21 @@ shader / 预览驱动与离线生成脚本用的不是同一套 phase。宿主�
 | (a′) nearest 平局像素（像素中心恰落在纹素边界：×0.5/×0.75/×1.5 整数偏移） | C 与 F 取相邻纹素，差最大 120–138、每帧 1374–2024 px；两块四边形各自插值 UV 造成的 nearest 平局歧义，不在矩形边、非水面仍 0 |
 | 连续切换（真实帧，P/R 键路径） | 暂停 30 帧 phase 不变、两帧逐像素 0；暂停中开减少动态：子层隐藏、画面对原画 0；关闭后子层恢复、与暂停帧 0；运行中开减少动态：phase 冻结 30 帧、画面对原画 0；关闭后 phase 继续走 |
 
-**发现（需 Leader 决定，未改默认）**：默认算法底图按纹素中心取样（与已复核整幅版一致），所以 Painting 缩放或子像素偏移时，水面像素是 nearest 原画、四周是线性原画。用 strength 1e-4 量这一采样差：×1.0 整数偏移 0；其他组合水面最大 52–80 级、平均 6.8–12.1；水面边缘像素最大 52–71。示意图 `scale2_edge_sampling_panel.png`（×2.0 子像素偏移，从左到右：线性原画 / 默认子层 / 差×4 / `--base-linear` 差×4）。
-可选 `base_sample_linear = true`（`--base-linear`）把底图改为连续 UV 线性取样：10 组全部 **0**（水面与水面边缘），非水面仍 0；×1.0 整数偏移下 5 相位与默认逐像素 **0**。控制图仍 nearest，所以水纹/次级层本身在放大时仍按纹素块显示。是否把它设为默认，留给 CODEX-LEAD / ART-DIRECTOR；生产接线仍由 ASSISTANT 定。
+**历史对照（`c1700b35`，当时默认关）**：当时默认算法底图按纹素中心取样（与已复核整幅版一致），所以 Painting 缩放或子像素偏移时，水面像素是 nearest 原画、四周是线性原画。用 strength 1e-4 量这一采样差：×1.0 整数偏移 0；其他组合水面最大 52–80 级、平均 6.8–12.1；水面边缘像素最大 52–71。示意图 `scale2_edge_sampling_panel.png`（×2.0 子像素偏移，从左到右：线性原画 / 当时默认子层 / 差×4 / `--base-linear` 差×4）。
+当时可选 `base_sample_linear = true`（`--base-linear`）把底图改为连续 UV 线性取样：10 组全部 **0**（水面与水面边缘），非水面仍 0；×1.0 整数偏移下 5 相位与当时默认逐像素 **0**。控制图仍 nearest，所以水纹/次级层本身在放大时仍按纹素块显示。
+
+## 底图连续 UV 默认开启（CODEX-LEAD 2026-10-16 11:47 CST，#749）
+
+CODEX-LEAD 对 `c1700b35` 的技术决定：隔离候选把 `base_sample_linear` 启为默认，使用连续 UV 匹配宿主线性原画；控制图 nearest 及保护区 / `strength 0` / 减少动态回原画保持。
+
+本候选已按该决定执行，仍只是隔离候选：
+
+- `stream_flow_crop.gdshader`：`uniform bool base_sample_linear = true`
+- `stream_flow_crop_demo.tscn`：`shader_parameter/base_sample_linear = true`
+- `stream_flow_crop_driver.gd`：`_ready` 写入 `true`；`--base-linear` 仍显式再写一次 `true`
+- 控制图 `flow_map` / `coord_sn` / `secondary_*` 仍 `filter_nearest`，按纹素中心取样
+- 非水面与 `strength == 0` 仍整层透明；减少动态仍撤掉子层，只剩原画
+
+生产接线仍由 ASSISTANT 定。未改生产 shader、场景、`assets/` 或存档。
 
 仍未覆盖：Web 导出与浏览器成本（本机无 Godot 4.7.2 Web 导出模板，未尝试）、手机/DPR、RTX 复核本头部、宿主内实测。

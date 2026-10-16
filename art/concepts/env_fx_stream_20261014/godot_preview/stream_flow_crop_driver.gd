@@ -6,8 +6,9 @@ extends Node2D
 ## 不复用现有近郊动效的 0.42 rad/s，也不用内置 TIME。
 ## 暂停：phase 冻结。减少动态：撤掉子层（隐藏），只剩原画静帧，phase 冻结。
 ## strength 0 时子层整层透明，同样只剩原画。
-## 线性过滤 / 缩放：--scale 把整幅 Painting（含子层）按比例缩放，用于观察不同分辨率下的采样；
-## 控制图与底图采样方式见 shader 头注释（detail/ripple 已 linear，其余 nearest）。
+## 线性过滤 / 缩放：--scale 把整幅 Painting（含子层）按比例缩放，用于观察不同分辨率下的采样。
+## CODEX-LEAD 2026-10-16 #749：base_sample_linear 默认 true，底图连续 UV 匹配宿主线性原画。
+## 控制图仍 nearest。保护区、strength 0、减少动态回原画保持。
 
 const PERIOD_SEC := 8.0
 const CROP_RECT := Rect2i(191, 543, 183, 302)
@@ -30,6 +31,8 @@ var _self_check: bool = false
 
 func _ready() -> void:
 	_parse_user_args()
+	# # 隔离候选默认开启。--base-linear 仍会再写一次 true，不提供关闭开关。
+	_material().set_shader_parameter("base_sample_linear", true)
 	_crop.position = Vector2(CROP_RECT.position)
 	_painting.scale = Vector2(scale_factor, scale_factor)
 	_painting.position = painting_offset
@@ -37,7 +40,8 @@ func _ready() -> void:
 	_push_phase()
 	print("Stream crop demo ready. phase=", phase, " paused=", paused, " reduced=", reduced_motion,
 		" strength=", _material().get_shader_parameter("strength"), " crop=", CROP_RECT,
-		" scale=", scale_factor, " offset=", painting_offset)
+		" scale=", scale_factor, " offset=", painting_offset,
+		" base_sample_linear=", _material().get_shader_parameter("base_sample_linear"))
 	if _self_check:
 		_run_self_check()
 	elif _sequence_dir != "":

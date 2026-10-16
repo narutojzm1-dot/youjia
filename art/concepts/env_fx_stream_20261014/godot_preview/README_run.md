@@ -73,6 +73,7 @@ GODOT=godot python3 art/concepts/env_fx_stream_20261014/verify_crop_render.py --
 ### 线性过滤与缩放
 
 - 着色器中 `ripple_tile` 与 `water_detail` 使用 `filter_linear`，控制图保持 `filter_nearest`。
+- `base_sample_linear` **默认开**（CODEX-LEAD 2026-10-16 11:47 CST，#749）：底图按连续 UV 线性取样，匹配宿主线性原画。控制图仍 nearest。保护区、`strength 0`、减少动态回原画保持。
 - 驱动支持 `--scale <float>` 或键盘 `[` `]` 调整 Painting 缩放（0.25–3.0），用于观察不同分辨率下的采样行为。shader 内部仍按裁切像素坐标计算，不随 scale 改变逻辑。
 - 示例：`godot --path art/concepts/env_fx_stream_20261014/godot_preview res://stream_flow_crop_demo.tscn -- --scale 1.5`
 
@@ -91,4 +92,4 @@ GODOT=godot xvfb-run -a -s "-screen 0 1800x1000x24" \
 
 - 驱动新增 `--offset X Y`（Painting 屏幕位置，可带小数）；整幅预览也接受 `--scale` / `--offset`，仅供同变换对照。
 - `--sequence-check DIR`：真实帧里经 `Input.parse_input_event` 按 P / R，连续切换暂停与减少动态，逐步存帧。
-- `--base-linear`：可选 uniform `base_sample_linear`（默认关），底图按连续 UV 线性取样；结果见 `INTEGRATION_CONTRACT.md` 同名小节。
+- `--base-linear`：显式再把 `base_sample_linear` 设为 true。该开关默认已经是开（CODEX-LEAD 2026-10-16 #749），底图按连续 UV 线性取样。对照结果见 `INTEGRATION_CONTRACT.md`。

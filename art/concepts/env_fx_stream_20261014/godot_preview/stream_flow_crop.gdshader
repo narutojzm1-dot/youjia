@@ -11,6 +11,8 @@ shader_type canvas_item;
 // # base_tex 使用 filter_linear，匹配宿主 near_path_scroll.gd 的 painting.texture_filter = TEXTURE_FILTER_LINEAR。
 // # ripple_tile / water_detail 保持 filter_linear；控制图 flow_map / coord_sn / secondary_* 保持 filter_nearest。
 // # 缩放由宿主 Sprite2D.scale 驱动，shader 采样仍按裁切像素坐标，不随 scale 改变逻辑。
+// # CODEX-LEAD 2026-10-16 11:47 CST #749：base_sample_linear 默认开，底图按连续 UV 线性取样，匹配宿主线性原画。
+// # 控制图仍 nearest。保护区、strength 0、减少动态回原画不因这个默认值改变。
 
 uniform sampler2D base_tex : filter_linear, repeat_disable;
 uniform sampler2D flow_map : filter_nearest, repeat_disable;
@@ -23,9 +25,9 @@ uniform float strength : hint_range(0.0, 1.0) = 1.0;
 uniform vec2 base_size = vec2(1672.0, 941.0);
 uniform vec2 crop_origin = vec2(191.0, 543.0);
 uniform vec2 crop_size = vec2(183.0, 302.0);
-// # 可选（默认关，保持已复核算法）：底图按连续 UV 线性取样，与宿主线性过滤的 Painting 对齐；
-// # 控制图仍按纹素中心 nearest。仅供缩放对照，是否启用待 Leader 定。
-uniform bool base_sample_linear = false;
+// # 默认开（CODEX-LEAD 2026-10-16 #749）：底图按连续 UV 线性取样，匹配宿主线性原画。
+// # 控制图仍按纹素中心 nearest。false 只保留纹素中心对照路径，不是当前默认。
+uniform bool base_sample_linear = true;
 uniform float advect_travel_px = 12.0;
 uniform float ripple_amp = 118.0;
 uniform float advect_gain = 0.50;

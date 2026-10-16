@@ -22,6 +22,7 @@ shader_parameter/strength = 1.0
 shader_parameter/base_size = Vector2(1672, 941)
 shader_parameter/crop_origin = Vector2(191, 543)
 shader_parameter/crop_size = Vector2(183, 302)
+shader_parameter/base_sample_linear = true
 shader_parameter/advect_travel_px = 12.0
 shader_parameter/ripple_amp = 118.0
 shader_parameter/advect_gain = 0.5
