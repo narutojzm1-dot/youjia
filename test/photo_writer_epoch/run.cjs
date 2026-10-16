@@ -48,11 +48,15 @@ let context;
     const rawRead=async(name=namespace)=>{
       const db=await request(indexedDB.open(name));
       const tx=db.transaction([...db.objectStoreNames],'readonly');
+      // Request success precedes transaction completion. Wait for the latter so
+      // this diagnostic connection is not itself a close-pending v1 blocker.
+      const completed=new Promise((yes,no)=>{tx.oncomplete=yes;tx.onabort=()=>no(tx.error);});
       const rows={};
       await Promise.all([...db.objectStoreNames].map(async n=>{
         const s=tx.objectStore(n);const [keys,values]=await Promise.all([request(s.getAllKeys()),request(s.getAll())]);
         rows[n]=keys.map((k,i)=>[k,values[i]]);
       }));
+      await completed;
       const answer={version:db.version,rows};db.close();return answer;
     };
     const rawPut=async(db,values)=>new Promise((yes,no)=>{
