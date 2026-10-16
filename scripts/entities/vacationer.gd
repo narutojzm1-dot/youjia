@@ -227,7 +227,7 @@ func grass_hand_global_position() -> Vector2:
 		var palm := Vector2(242, 253)
 		if _sequence_walker.animation == &"walk":
 			palm = GRASS_SEQUENCE_HAND[_sequence_walker.frame % GRASS_SEQUENCE_HAND.size()]
-		elif _sequence_walker.animation in [&"pickup", &"feed"]:
+		elif _sequence_walker.animation in [&"pickup", &"feed", &"stove_low", &"stove_high", &"stove_top"]:
 			palm = _sequence_walker.action_hand()
 		return _sequence_walker.to_global(_sequence_walker.offset + palm)
 	if native_walker_enabled and is_instance_valid(_native_walker) and _native_walker.forearms.size() > 1:

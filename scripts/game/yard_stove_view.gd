@@ -5,8 +5,8 @@ const Ledger := preload("res://scripts/game/yard_stove.gd")
 const ART := preload("res://assets/holiday/props/stove_v1/stove-stages-watercolor-v1.png")
 ## Foreground lawn keeps the work surface out of the basket/resident cluster.
 const ANCHOR := Vector2(365,558)
-const APPROACH := Vector2(401,565)
-const WORK_POINT := Vector2(385,538)
+const APPROACH := Vector2(410,565)
+const WORK_POINT := Vector2(395,538)
 const RADIUS := Vector2(29,10)
 const WIDTH := 86.0
 var store: Node

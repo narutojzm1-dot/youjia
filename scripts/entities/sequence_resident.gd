@@ -4,8 +4,9 @@ extends AnimatedSprite2D
 const WALK := preload("res://scenes/experimental/resident_walk_authored_v1.tres")
 const IDLE := preload("res://assets/holiday/characters/resident_walk_authored_v1/idle.png")
 const ACTION_ATLAS := preload("res://assets/holiday/characters/resident_grass_actions_v1/actions.png")
+const STOVE_ATLAS := preload("res://assets/holiday/characters/resident_stove_actions_v1/actions.png")
 const ACTION_FRAMES := 9
-const ACTION_SECONDS := {&"pickup": 0.60, &"feed": 0.54}
+const ACTION_SECONDS := {&"pickup": 0.60, &"feed": 0.54, &"stove_low":2.16, &"stove_high":2.16, &"stove_top":2.16}
 var action_hands: Dictionary = {}
 var action_elapsed := 0.0
 var action_kind: StringName = &""
@@ -32,6 +33,17 @@ func _ready() -> void:
 			picture.region = Rect2(index * 384, row * 448, 384, 448)
 			picture.filter_clip = true
 			sprite_frames.add_frame(kind, picture)
+	var masonry: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://assets/holiday/characters/resident_stove_actions_v1/manifest.json"))
+	for row: int in 3:
+		var kind: StringName = [&"stove_low",&"stove_high",&"stove_top"][row]
+		action_hands[String(kind)] = masonry.hands[String(kind)]
+		sprite_frames.add_animation(kind)
+		for index: int in ACTION_FRAMES:
+			var picture := AtlasTexture.new()
+			picture.atlas = STOVE_ATLAS
+			picture.region = Rect2(index*384,row*448,384,448)
+			picture.filter_clip = true
+			sprite_frames.add_frame(kind,picture)
 	centered=false
 	offset=Vector2(-192,-420)
 	texture_filter=CanvasItem.TEXTURE_FILTER_LINEAR
@@ -41,7 +53,7 @@ func advance(delta: float,moved: Vector2,depth: float,face: float,reduced: bool,
 	scale=Vector2(face,1.0)*0.25*depth*visual_scale
 	pause()
 	if not action_kind.is_empty():
-		if reduced or moved.length()/maxf(delta,0.0001)>=1.0:
+		if (reduced and not action_kind in [&"stove_low",&"stove_high",&"stove_top"]) or moved.length()/maxf(delta,0.0001)>=1.0:
 			reset_motion()
 		else:
 			if held_action_frame >= 0:
