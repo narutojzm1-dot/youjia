@@ -148,7 +148,7 @@ python3 art/concepts/env_fx_stream_20261014/verify_realtime_movie.py /tmp/mv749
 - 1200 帧 / 30fps / 40 秒，一圈 240 帧。
 - 第 2 圈起第 k 帧与第 k+240 帧逐像素相同（loop_max_diff 0），4 个圈界（8/16/24/32 秒）相邻帧水面平均差都是 0.7968，全片相邻帧差 0.6565–0.9505、中位 0.7779，圈界没有尖峰。
 - 水遮罩以外与硬保护区 40 秒内逐像素不动（0 / 0）；半圈时水面有 7069 像素变化。
-- 已知启动段：第 1 圈的第 2–4 帧与后面各圈同位帧最多差 3 个电平（第 2 帧 2910 像素有差），第 0、1 帧及第 5 帧以后一致。只在录制启动出现，不在圈界；原因未定位，脚本单独报告为 `first_vs_second_cycle_max_diff`，不并入稳态循环判定。
+- 已知启动段：第 1 圈的第 2–4 帧与后面各圈同位帧最多差 3 个电平（第 2 帧 2910 像素有差），第 0、1 帧及第 5 帧以后一致。只在录制启动出现，不在圈界；原因已定位为 Godot 主循环 physics jitter fix 的启动过渡（见下文「启动帧核对」），脚本单独报告为 `first_vs_second_cycle_max_diff`，不并入稳态循环判定。
 - mp4 是有损 H.264（像素核对以 PNG 序列为准）。软件 GL 录制速度不代表帧时；不是宿主接入、实体 GPU/手机或美术验收。
 
 
@@ -202,8 +202,37 @@ python3 art/concepts/env_fx_stream_20261014/verify_toggle_sequence.py /tmp/mvtog
 - phase 步长逐帧符合：正常 2π/240、低动效 2π/960、暂停 0（容差 1e-6，0 处不符）；每次继续都从暂停值接着走一步，无跳变。
 - 像素：121 对暂停中相邻帧整画面差 0；运动帧水域都有变化；水域平均帧差 正常 1.1531、低动效 0.4053（比 0.3515，非线性映射所以不是 0.25）；水遮罩外与保护区 12 秒内差 0 / 0。
 - 负向自检：只改日志副本（暂停中插 phase 跳变、漏掉隔帧快切）时脚本都 exit 1（见 `toggle_check_20261017/negative_selftest.txt`）。
-- 记录到的一点：Movie Maker 首帧 `delta` 是 0.025 而不是 1/30，之后都是 1/30；脚本按每帧实际 delta 计算期望步长，单独报告 `first_frame_delta`。这与上面原速录屏「第 1 圈第 2–4 帧」差异是否有关未验证。
+- 记录到的一点：Movie Maker 首帧 `delta` 是 0.025 而不是 1/30；脚本按每帧实际 delta 计算期望步长，单独报告 `first_frame_delta`。（补正：实测第 0、2、3、4、5 帧都不是 1/30，第 6 帧起才全是 1/30；与原速录屏第 2–4 帧差异同一原因，见下文「启动帧核对」。）
 
 `toggle_check_20261017/`：`toggle_seq_frames.jsonl`（每帧状态原始输出）、`godot_movie_maker_log.txt`（录制日志）、`verify_result.txt`（核对原始输出）、`negative_selftest.txt`。360 张原 PNG 没有入库，可按命令确定性重录复算。
 
 边界：只证明隔离预览里暂停/低动效按键的逐帧行为与像素冻结，不是宿主接线、实体设备性能、无障碍设置接入或美术验收。仍只是隔离候选。
+
+## 启动帧核对：首帧 delta 0.025 与第 1 圈第 2–4 帧差异（#749 隔离剩余项）
+
+结论：两者同一原因——Godot `MainTimerSync` 的 physics jitter fix（项目默认 `physics_jitter_fix=0.5`、`physics_ticks_per_second=60`）。
+Movie Maker 固定 30fps 时，引擎把每帧 1/30 秒对齐到 1/60 物理步并限幅在 ±1/120 秒内；启动时物理步数历史未填满，
+前 6 帧 delta 为 0.025、1/30、0.041667、0.029167、0.03、0.0325，第 6 帧起精确 1/30，整条时间线此后恒定落后帧号/30 恰好 1/120 秒。
+第 0、1 帧与稳态偏差相同，所以和后面各圈一致；第 2、3、4 帧处于过渡，phase 比稳态同位帧多 6.5e-3 / 3.3e-3 / 6.5e-4 rad，
+对应 2910 / 1990 / 391 个像素、最多 3 个电平。不是着色器/纹理预热：只在 /tmp 副本里把 `physics_jitter_fix` 设 0 或物理改 30 tick，
+第 0 帧起 delta 全为 1/30，第 1 圈与第 2 圈逐像素 0 差。原 1200 帧报告里相邻帧差极值 0.9505 / 0.6565 也是这几帧。
+
+不改驱动和工程默认值（真实 delta 累加是预期行为，1/120 秒偏移不可见）；需要严格按帧号录制时用临时 override.cfg 即可。
+
+```bash
+# 仓库根；每次把 godot_preview/ 复制到 /tmp/startup749/<name>/proj，只加 override.cfg + delta_log.gd
+S=art/concepts/env_fx_stream_20261014/startup_check_20261017
+$S/run_case.sh A_default 270
+$S/run_case.sh B_jitterfix0 270 '[physics]' 'common/physics_jitter_fix=0.0'
+$S/run_case.sh C_ticks30 270 '[physics]' 'common/physics_ticks_per_second=30'
+EXTRA_ARGS=--toggle-sequence $S/run_case.sh D_toggle_jitterfix0 360 '[physics]' 'common/physics_jitter_fix=0.0'
+python3 $S/analyze_startup.py /tmp/startup749/A_default /tmp/startup749/B_jitterfix0 /tmp/startup749/C_ticks30
+python3 art/concepts/env_fx_stream_20261014/verify_realtime_movie.py /tmp/startup749/A_default/frames --expect-frames 270
+python3 art/concepts/env_fx_stream_20261014/verify_toggle_sequence.py /tmp/startup749/D_toggle_jitterfix0/frames /tmp/startup749/D_toggle_jitterfix0/log.txt
+```
+
+作者侧 box 实测（Godot 4.7.2、xvfb + Mesa 软件 GL）：A 默认 first_cycle_frames_differing [2,3,4]、max 3；B/C 为 []、0；
+既有 `verify_realtime_movie.py`（270 帧子集）A/B/C 均 ok=true；`verify_toggle_sequence.py` 对原默认录制重跑 ok=true，对 D（jitter fix 0 的 360 帧切换录制）ok=true 且 first_frame_delta=1/30、无一帧非 1/30。
+详细表格与文件说明见 `startup_check_20261017/FINDINGS.md`。
+
+边界：只解释隔离预览录制的启动帧，不涉及宿主运行时、实体 GPU/手机或美术验收。仍只是隔离候选。
