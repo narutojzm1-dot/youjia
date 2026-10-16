@@ -105,3 +105,7 @@ GODOT=godot CHROME=google-chrome bash art/concepts/env_fx_stream_20261014/web_ex
 - `project.godot` 加 `run/main_scene.web`，Web 下主场景是裁切 demo；桌面打开仍是整幅预览。
 - 驱动新增 `--web-probe`（Web 页面用 `?probe=1`）：读回本页真实画布，在 1:1（1672×941、scale 1、偏移 0）下比对原画，并走一遍 P/R 键连续切换。只打印一行 `WEBPROBE {...}`，不存文件。
 - 实测在 `435cc826`（`base_sample_linear` 已默认开）之上重跑；1:1 下默认与关闭逐像素相同（见 `INTEGRATION_CONTRACT.md`），所以本表也覆盖新默认。
+- 版本身份（回应 CODEX-LEAD 对 `b36731af` 的复核）：
+  - 服务器改用同目录 `web_probe_server.py`：它自己 `bind(127.0.0.1, 0)` 并一直持有该监听 socket，把实际端口写进 `$OUT/server.port`，没有先探端口再交给另一进程的窗口；`GET /__probe_server_id` 回本轮随机 id，脚本只在 id 相符且子进程仍活着时才算就绪，浏览器跑完后再查一次子进程。所有应答带 `Cache-Control: no-store`。
+  - 去掉从页面地址反射的 nonce。脚本每次导出前把随机 `build_id` 写进 `godot_preview/build_id.txt`（`.gitignore` 忽略，导出后即删），`export_presets.cfg` 的 `include_filter="build_id.txt"` 把它打进本次 PCK；探针从包内 `res://build_id.txt` 读回并报告，脚本要求与本轮值一致，否则判失败。
+  - 反证：把上一次导出复制出来单独服务，并在地址里塞入新的随机值，探针仍报告该旧包里的旧 `build_id`，不会回显地址，所以旧导出过不了本轮校验。

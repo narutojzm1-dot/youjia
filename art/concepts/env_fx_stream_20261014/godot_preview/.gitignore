@@ -2,3 +2,5 @@
 .godot/
 *.import
 *.uid
+# web_export_check.sh 每次导出前生成的导出身份，不提交。
+build_id.txt

@@ -25,7 +25,7 @@ var _dump_path: String = ""
 var _dump_started: bool = false
 var _self_check: bool = false
 var _web_probe: bool = false
-var _probe_nonce: String = ""
+var _build_id: String = ""
 
 var base_sample_linear: bool = true
 
@@ -111,14 +111,6 @@ func _parse_user_args() -> void:
 		var query := str(JavaScriptBridge.eval("window.location.search", true))
 		if query.contains("probe=1"):
 			_web_probe = true
-		# Extract nonce if present for identity verification.
-		var nonce_idx := query.find("nonce=")
-		if nonce_idx != -1:
-			var start := nonce_idx + 6
-			var end := query.find("&", start)
-			if end == -1:
-				end = query.length()
-			_probe_nonce = query.substr(start, end - start)
 	var i := 0
 	while i < args.size():
 		var token := str(args[i])
@@ -339,12 +331,20 @@ func _frame_stats(n: int) -> Dictionary:
 		"p95_ms": snappedf(samples[int(n * 0.95)], 0.01), "max_ms": snappedf(samples[n - 1], 0.01)}
 
 
+## 导出身份：web_export_check.sh 每次导出前写入 res://build_id.txt（不进仓库），随本次 PCK 打包。
+## 探针只回报包内读到的值，不读页面地址，所以旧导出无法回显本轮身份。
+func _read_build_id() -> String:
+	if not FileAccess.file_exists("res://build_id.txt"):
+		return ""
+	return FileAccess.get_file_as_string("res://build_id.txt").strip_edges()
+
+
 func _run_web_probe() -> void:
 	var out := {"web": OS.has_feature("web"), "renderer": RenderingServer.get_video_adapter_name(),
 		"vendor": RenderingServer.get_video_adapter_vendor(), "api": RenderingServer.get_video_adapter_api_version(),
 		"window": DisplayServer.window_get_size(), "viewport": get_viewport().get_visible_rect().size,
 		"base_sample_linear": _material().get_shader_parameter("base_sample_linear"),
-		"nonce": _probe_nonce}
+		"build_id": _read_build_id()}
 	var ok := DisplayServer.window_get_size() == Vector2i(1672, 941) and get_viewport().get_visible_rect().size == Vector2(1672, 941) and scale_factor == 1.0 and painting_offset == Vector2.ZERO
 	var mask := _water_mask()
 	var mat := _material()

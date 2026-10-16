@@ -11,34 +11,41 @@ OUT="${1:-/tmp/web749}"
 HERE="$(cd "$(dirname "$0")" && pwd)"
 PROJ="$HERE/godot_preview"
 rm -rf "$OUT" && mkdir -p "$OUT"
+# 导出身份：每次导出前写进工程（.gitignore 已忽略），随本次 PCK 打包；探针从包内读回，不从页面地址反射。
+BUILD_ID="$(openssl rand -hex 16)"
+printf '%s\n' "$BUILD_ID" >"$PROJ/build_id.txt"
+trap 'rm -f "$PROJ/build_id.txt"' EXIT
 "$GODOT" --headless --path "$PROJ" --import >/dev/null 2>&1 || true
 "$GODOT" --headless --path "$PROJ" --export-release "Web crop demo 749" "$OUT/index.html"
+rm -f "$PROJ/build_id.txt"
 ls -l "$OUT"/index.pck "$OUT"/index.wasm
+echo "build_id=$BUILD_ID"
 
-# Exclusive free port for this run; do not kill foreign listeners.
-PORT="$(python3 -c 'import socket; s=socket.socket(); s.bind(("127.0.0.1",0)); print(s.getsockname()[1]); s.close()')"
-NONCE="$(openssl rand -hex 8)"
+# 服务器自己 bind(0) 并持有该 socket，把实际端口写进 PORT_FILE；不先探端口再移交，不杀别人的监听。
+SERVER_ID="$(openssl rand -hex 16)"
+PORT_FILE="$OUT/server.port"
 SERVER_LOG="$OUT/server.log"
-python3 -m http.server "$PORT" --bind 127.0.0.1 --directory "$OUT" >"$SERVER_LOG" 2>&1 &
+python3 "$HERE/web_probe_server.py" --directory "$OUT" --port-file "$PORT_FILE" --server-id "$SERVER_ID" >"$SERVER_LOG" 2>&1 &
 SERVER=$!
-trap 'kill $SERVER 2>/dev/null || true' EXIT
-# Wait for ready or fail on bind error.
-for i in 1 2 3 4 5; do
-  if curl -s -o /dev/null -w "%{http_code}" "http://127.0.0.1:$PORT/index.html" | grep -q 200; then
-    break
-  fi
-  if ! kill -0 $SERVER 2>/dev/null; then
-    echo "http.server failed to start (see $SERVER_LOG)"
-    cat "$SERVER_LOG"
-    exit 1
-  fi
-  sleep 0.4
+trap 'kill $SERVER 2>/dev/null || true; rm -f "$PROJ/build_id.txt"' EXIT
+server_alive() { kill -0 "$SERVER" 2>/dev/null; }
+PORT=""
+for _ in $(seq 1 50); do
+  [ -s "$PORT_FILE" ] && { PORT="$(cat "$PORT_FILE")"; break; }
+  server_alive || { echo "probe server exited before binding (see $SERVER_LOG)"; cat "$SERVER_LOG"; exit 1; }
+  sleep 0.1
 done
-if ! curl -s -o /dev/null -w "%{http_code}" "http://127.0.0.1:$PORT/index.html" | grep -q 200; then
-  echo "server did not become ready on $PORT (see $SERVER_LOG)"
-  cat "$SERVER_LOG"
-  exit 1
-fi
+[ -n "$PORT" ] || { echo "probe server did not report a port (see $SERVER_LOG)"; exit 1; }
+# 健康检查：必须是本轮服务器（回 SERVER_ID）且子进程仍活着，才算就绪。
+READY=0
+for _ in $(seq 1 25); do
+  GOT="$(curl -s --max-time 2 "http://127.0.0.1:$PORT/__probe_server_id" || true)"
+  if [ "$GOT" = "$SERVER_ID" ] && server_alive; then READY=1; break; fi
+  server_alive || { echo "probe server died (see $SERVER_LOG)"; cat "$SERVER_LOG"; exit 1; }
+  sleep 0.2
+done
+[ "$READY" = 1 ] || { echo "port $PORT is not answered by this run's server (see $SERVER_LOG)"; exit 1; }
+echo "server pid=$SERVER port=$PORT (self-bound)"
 
 PROFILE="$(mktemp -d)"
 # headless=new 的 --window-size 含约 87 px 浏览器边框；1028 高才得到 1672×941 画布（probe 会核对，尺寸不对即 ok=false）。
@@ -47,10 +54,11 @@ LOG="$OUT/chrome_probe.log"
 timeout "${PROBE_TIMEOUT:-100}" "$CHROME" --headless=new --no-first-run --no-default-browser-check \
   --user-data-dir="$PROFILE" --window-size=1672,1028 --force-device-scale-factor=1 \
   ${CHROME_GL_FLAGS:---use-angle=swiftshader --enable-unsafe-swiftshader} \
-  --enable-logging=stderr --v=0 "http://127.0.0.1:$PORT/index.html?probe=1&nonce=$NONCE" >"$LOG" 2>&1 || true
+  --enable-logging=stderr --v=0 "http://127.0.0.1:$PORT/index.html?probe=1" >"$LOG" 2>&1 || true
 LINE="$(grep -o 'WEBPROBE {.*}' "$LOG" || true)"
 [ -n "$LINE" ] || { echo "no WEBPROBE line (see $LOG)"; exit 1; }
 echo "$LINE"
-# Verify identity: the probe must echo our nonce, proving it served this export.
-case "$LINE" in *"\"nonce\":\"$NONCE\""*) ;; *) echo "nonce mismatch or missing (expected $NONCE)"; exit 1 ;; esac
+# 身份：探针回报的是本次 PCK 里打包的 build_id，必须等于本轮导出前写入的值；旧导出没有它或值不同。
+case "$LINE" in *"\"build_id\":\"$BUILD_ID\""*) ;; *) echo "build_id mismatch or missing (expected $BUILD_ID): page did not load this run's export"; exit 1 ;; esac
+server_alive || { echo "probe server died during the browser run (see $SERVER_LOG)"; exit 1; }
 case "$LINE" in *'"ok":true'*) exit 0 ;; *) exit 1 ;; esac
