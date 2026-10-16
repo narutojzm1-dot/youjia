@@ -34,6 +34,9 @@ Agent-ID: GROK-BUILD
 - `secondary_weight.png`：R 横纹、G 侧流、B 涡流。窄渠和水面外为 0
 - `stream_flow_loop.gif` / `stream_flow_loop_10s.mp4` / `stream_flow_loop_40s.mp4`：循环预览（40s 覆盖约 5 圈循环边界）
 - `stream_crop_lowerleft.mp4`：1280×720 左下溪床邻域（420×360）
+- `stream_flow_realtime_30fps_40s.mp4`：**原速**录屏。Godot Movie Maker 直接录 `stream_flow_preview.tscn` 的真实着色器输出，固定 30fps、1200 帧、40 秒，phase 按 8 秒一圈的真实 delta 推进（不是 Python 生成帧、不是 5fps 抽帧或加速）；1672×941 录、1280×720 H.264 crf16 编码
+- `stream_flow_realtime_creek_8s.gif`：同一录屏第 1 圈 8 秒的左下溪床裁切（420×360，15fps），供快速过目
+- `verify_realtime_movie.py`：核对原速录屏 PNG 序列（帧数、整圈逐像素循环、水面外与保护区不动、圈界相邻帧差无尖峰）
 - `stream_zoom.mp4`：溪床裁切后最近邻放大 2 倍（280×456）
 - `godot_preview/`：可直接打开的 Godot 工程（见 `godot_preview/README_run.md`）
 
@@ -130,3 +133,20 @@ godot --path art/concepts/env_fx_stream_20261014/godot_preview --headless -- --s
 - 低动效静帧 `stream_static_low_motion.png` 应仍像一幅画完的原画。
 
 仍只是候选。方向确认之前不接入运行时。
+
+## 原速 30fps 录屏（回应 #749「普通原速连续 30–60 秒」与 CODEX-LEAD 对 5fps 视频的覆盖限制）
+
+```bash
+xvfb-run -a -s "-screen 0 1800x1000x24" godot --path art/concepts/env_fx_stream_20261014/godot_preview \
+  --resolution 1672x941 --write-movie /tmp/mv749/f.png --fixed-fps 30 --quit-after 1200 -- --hide-ui
+python3 art/concepts/env_fx_stream_20261014/verify_realtime_movie.py /tmp/mv749
+```
+
+`--hide-ui` 只藏按钮面板，phase 照常走。作者侧 box 实测（Godot 4.7.2、xvfb + Mesa 软件 GL，非 RTX/手机）：
+
+- 1200 帧 / 30fps / 40 秒，一圈 240 帧。
+- 第 2 圈起第 k 帧与第 k+240 帧逐像素相同（loop_max_diff 0），4 个圈界（8/16/24/32 秒）相邻帧水面平均差都是 0.7968，全片相邻帧差 0.6565–0.9505、中位 0.7779，圈界没有尖峰。
+- 水遮罩以外与硬保护区 40 秒内逐像素不动（0 / 0）；半圈时水面有 7069 像素变化。
+- 已知启动段：第 1 圈的第 2–4 帧与后面各圈同位帧最多差 3 个电平（第 2 帧 2910 像素有差），第 0、1 帧及第 5 帧以后一致。只在录制启动出现，不在圈界；原因未定位，脚本单独报告为 `first_vs_second_cycle_max_diff`，不并入稳态循环判定。
+- mp4 是有损 H.264（像素核对以 PNG 序列为准）。软件 GL 录制速度不代表帧时；不是宿主接入、实体 GPU/手机或美术验收。
+

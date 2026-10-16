@@ -141,6 +141,10 @@ func _parse_user_args() -> void:
 		elif token == "--self-check":
 			_self_check = true
 			i += 1
+		elif token == "--hide-ui":
+			# 仅供原速录屏（Movie Maker --write-movie）：藏起按钮面板，phase 照常按真实 delta 走。
+			_ui.visible = false
+			i += 1
 		elif token == "--scale" and i + 1 < args.size():
 			# 仅供 verify_scale_linear.py 做同变换对照：整幅预览四边形缩放。
 			$Preview.scale = Vector2.ONE * float(args[i + 1])
