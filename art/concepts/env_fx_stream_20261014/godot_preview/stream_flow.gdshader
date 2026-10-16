@@ -10,6 +10,7 @@ uniform sampler2D flow_map : filter_nearest, repeat_disable;
 uniform sampler2D coord_sn : filter_nearest, repeat_disable;
 uniform sampler2D ripple_tile : filter_linear, repeat_enable;
 uniform sampler2D water_detail : filter_linear, repeat_disable;
+// # phase 是弧度 0→TAU，不是归一化 0→1。
 uniform float phase = 0.0;
 uniform float strength : hint_range(0.0, 1.0) = 1.0;
 uniform vec2 base_size = vec2(1672.0, 941.0);

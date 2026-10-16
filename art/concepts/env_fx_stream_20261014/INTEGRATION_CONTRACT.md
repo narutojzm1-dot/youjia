@@ -4,6 +4,8 @@ Agent-ID: GROK-BUILD
 
 本文件是对 CODEX-LEAD 在 PR #804 review（完整 SHA `2e03211f3e3f850b27f7d8236b10ce5e7fe13e41`）的回应：隔离 GPU 核对通过后，补充接入契约 / 遮罩 / 成本说明，便于 Leader 接宿主实核。**不修改任何生产资源、shader、场景或存档。** 生产合入许可尚未给出。
 
+本轮另回应 codex dot reviewer 对 `c1d4bbddd2473a0f7368b0b9d35e34abc1eafe25` 的静态审查（PR #804）：宿主 `phase` 锁定为弧度 0→TAU。仍只是候选，不改生产资源、运行时、场景或存档。
+
 ## 建议接入点
 
 现有生产水面动效在 `shaders/near_path_motion.gdshader`，由外部 `phase` 驱动，`region_mask` 区分水/草。本候选不覆盖该文件。建议在宿主（近郊探索场景）为溪床单独挂一个 CanvasItem 材质，使用本目录 `godot_preview/stream_flow.gdshader` 的逻辑（或抽成共享材质），底图仍是原 `near_path_02`。
@@ -12,14 +14,25 @@ Agent-ID: GROK-BUILD
 
 | 项 | 契约 | 说明 |
 |---|---|---|
-| 驱动时钟 | 外部 `phase`（float，建议 0–TAU 或归一化） | 与 `near_path_mist.gd` / 现有 motion 相同，不依赖内置 TIME，支持暂停冻结、减少动态、照片定格 |
+| 驱动时钟 | 外部 `phase`（float，**弧度 0→TAU**） | 必须与 `godot_preview/stream_flow.gdshader` 的 `fract(phase / TAU)` 及 `stream_flow_driver.gd` 一致。离线 `generate_stream_flow_anim.py` 使用归一化 `phase_01`（0→1）；宿主若持有归一化进度，**必须先乘 TAU** 再写入本 shader。不依赖内置 TIME，支持暂停冻结、减少动态、照片定格 |
 | 强度 | `strength` 0.0–1.0 | 低动效时降到 0.20 仍是完整绘本；0 时输出纯原画 |
 | 保护区 | `flow.a == 0` 或独立 `mask_protect` | 岸、桥、石、纸边、草地必须像素级不变；脚本已验证 protect_max=0 |
 | 水面蒙版 | `flow_map.a` + `secondary_weight` | 窄渠只主下游；宽水面才加次级层 |
 | 流向 | `flow_map.rg` 解码为方向 | 切线 Y 始终为正（往下游 / 画面下方） |
-| 循环 | phase 0 与 phase 1 逐像素相同 | 已在隔离 GPU 整圈首尾完全相同 |
+| 循环 | phase 0 与 phase TAU 逐像素相同 | 周期端点是 0 与 TAU，不是 0 与 1。隔离 GPU 整圈首尾完全相同 |
 | 暂停 / 减少动态 | phase 冻结 + strength 降低 | 宿主负责；shader 本身无内部时钟 |
 | 底图 | 只读复制，不改 `assets/holiday/exploration/near_path_02.webp` | 接入时继续只采样原纹理 |
+
+## phase 单位
+
+shader / 预览驱动与离线生成脚本用的不是同一套 phase。宿主接口只认弧度。
+
+| 约定 | 范围 | 用在哪 |
+|---|---|---|
+| 弧度 | 0→TAU | `godot_preview/stream_flow.gdshader`（`fract(phase / TAU)`）与 `stream_flow_driver.gd`（`fposmod` 到 TAU，一圈 8 秒） |
+| 归一化 | `phase_01` 0→1 | 仅离线 `generate_stream_flow_anim.py`。脚本里 phase 0 与 phase 1 才是同一帧 |
+
+宿主自己的时钟若是 0→1 进度，在 `set_shader_parameter("phase", …)` 之前乘 TAU。错误用法是把 0→1 直接喂进本 shader：`fract(phase / TAU)` 在 phase=1 时只走出完整周期的约 15.9%（1/TAU），宿主再重置到 0 时从这一小段跳回起点。循环比较的是 phase 0 与 phase TAU。
 
 ## 所需贴图（已在本目录生成，可直接引用或导入为资源）
 
