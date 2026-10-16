@@ -40,11 +40,11 @@ script = ExtResource("2_driver")
 [node name="Painting" type="Sprite2D" parent="."]
 centered = false
 texture = ExtResource("3_base")
-texture_filter = 1
+texture_filter = 2
 
 [node name="StreamCrop" type="Sprite2D" parent="Painting"]
 position = Vector2(191, 543)
 centered = false
 texture = ExtResource("4_flow")
-texture_filter = 1
+texture_filter = 2
 material = SubResource("ShaderMaterial_crop")
