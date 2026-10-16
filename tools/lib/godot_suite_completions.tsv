@@ -196,6 +196,9 @@ test/resident_barks_suite.gd	\[resident-barks\] PASS: [1-9][0-9]* checks
 
 test/growth_budget_suite.gd	GROWTH_BUDGET checks=[1-9][0-9]* failures=0
 test/growth_production_suite.gd	GROWTH_PRODUCTION checks=[1-9][0-9]* failures=0
+test/yard_stove_suite.gd	YARD_STOVE checks=[1-9][0-9]* failures=0
+test/stove_cross_version_suite.gd	STOVE_CROSS_VERSION checks=[1-9][0-9]* failures=0
+test/stove_director_suite.gd	STOVE_DIRECTOR checks=[1-9][0-9]* failures=0
 test/pond_edging_view_suite.gd	POND_EDGING_VIEW checks=[1-9][0-9]* failures=0
 test/nearby_find_audio_suite.gd	NEARBY_FIND_AUDIO checks=[1-9][0-9]* failures=0
 test/pond_growth_director_suite.gd	POND_GROWTH_DIRECTOR checks=[1-9][0-9]* failures=0
