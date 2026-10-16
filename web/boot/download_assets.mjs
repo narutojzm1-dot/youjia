@@ -116,8 +116,10 @@ export function installAssetRecovery(config, {
       ]);
       cache = cached?.store;
       const saved = cached?.saved;
-      if (saved?.headers.get('x-youjia-asset-size') === String(size) &&
-          (!hash || saved.headers.get('x-youjia-asset-sha256') === hash)) {
+      // A cached prefix can only be joined with a later network response when
+      // the whole decoded body is pinned. Raw development exports use fetch.
+      if (hash && saved?.headers.get('x-youjia-asset-size') === String(size) &&
+          saved.headers.get('x-youjia-asset-sha256') === hash) {
         if (!stopped) {
           onCacheHit({url});
           return new Response(checked(cachedBody(saved.body, url, {size, hash}, cache), size, hash,
@@ -206,7 +208,7 @@ export function installAssetRecovery(config, {
       'x-youjia-asset-size': String(size),
       ...(hash ? {'x-youjia-asset-sha256': hash} : {}),
     }});
-    if (cache) {
+    if (cache && hash) {
       // put() rejects if any part of the body fails. No partial pack is stored.
       try { cache.put(url, response.clone()).then(async () => {
         const keys = await cache.keys();
