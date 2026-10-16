@@ -141,6 +141,13 @@ func _parse_user_args() -> void:
 		elif token == "--self-check":
 			_self_check = true
 			i += 1
+		elif token == "--scale" and i + 1 < args.size():
+			# 仅供 verify_scale_linear.py 做同变换对照：整幅预览四边形缩放。
+			$Preview.scale = Vector2.ONE * float(args[i + 1])
+			i += 2
+		elif token == "--offset" and i + 2 < args.size():
+			$Preview.position = Vector2(float(args[i + 1]), float(args[i + 2]))
+			i += 3
 		elif token == "--keep-ui":
 			_keep_ui = true
 			i += 1

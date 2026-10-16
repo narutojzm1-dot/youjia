@@ -16,6 +16,9 @@ var phase: float = 0.0
 var paused: bool = false
 var reduced_motion: bool = false
 var scale_factor: float = 1.0
+var painting_offset: Vector2 = Vector2.ZERO
+
+var _sequence_dir: String = ""
 
 var _dump_path: String = ""
 var _dump_started: bool = false
@@ -29,13 +32,16 @@ func _ready() -> void:
 	_parse_user_args()
 	_crop.position = Vector2(CROP_RECT.position)
 	_painting.scale = Vector2(scale_factor, scale_factor)
+	_painting.position = painting_offset
 	_apply_motion()
 	_push_phase()
 	print("Stream crop demo ready. phase=", phase, " paused=", paused, " reduced=", reduced_motion,
 		" strength=", _material().get_shader_parameter("strength"), " crop=", CROP_RECT,
-		" scale=", scale_factor)
+		" scale=", scale_factor, " offset=", painting_offset)
 	if _self_check:
 		_run_self_check()
+	elif _sequence_dir != "":
+		_run_sequence_check()
 
 
 func _material() -> ShaderMaterial:
@@ -103,6 +109,16 @@ func _parse_user_args() -> void:
 		elif token == "--scale" and i + 1 < args.size():
 			scale_factor = float(args[i + 1])
 			i += 2
+		elif token == "--offset" and i + 2 < args.size():
+			# 整幅 Painting 的屏幕位置（可带小数，用于线性过滤子像素相位对照）。
+			painting_offset = Vector2(float(args[i + 1]), float(args[i + 2]))
+			i += 3
+		elif token == "--sequence-check" and i + 1 < args.size():
+			_sequence_dir = str(args[i + 1])
+			i += 2
+		elif token == "--base-linear":
+			_material().set_shader_parameter("base_sample_linear", true)
+			i += 1
 		elif token == "--reduced":
 			reduced_motion = true
 			i += 1
@@ -147,3 +163,76 @@ func _dump_and_quit() -> void:
 	var err := image.save_png(_dump_path)
 	print("dump ", _dump_path, " err ", err, " size ", image.get_size(), " phase ", phase)
 	get_tree().quit()
+
+
+## 连续暂停 / 减少动态切换实测（需要窗口；xvfb-run 可）：走真实 _process 帧，
+## 通过 Input.parse_input_event 发 P / R 键，与玩家按键同一路径；每步存一帧 PNG 给 verify_scale_linear.py 比较。
+func _press(keycode: Key) -> void:
+	var ev := InputEventKey.new()
+	ev.keycode = keycode
+	ev.pressed = true
+	Input.parse_input_event(ev)
+	await get_tree().process_frame
+	await get_tree().process_frame
+
+
+func _frames(n: int) -> void:
+	for _i in n:
+		await get_tree().process_frame
+
+
+func _snap(tag: String) -> String:
+	await RenderingServer.frame_post_draw
+	await RenderingServer.frame_post_draw
+	var path := _sequence_dir.path_join("seq_%s.png" % tag)
+	get_viewport().get_texture().get_image().save_png(path)
+	return path
+
+
+func _run_sequence_check() -> void:
+	var rows: Array[String] = []
+	var ok := true
+	paused = false
+	reduced_motion = false
+	_apply_motion()
+	await _frames(30)
+	var p_run := phase
+	ok = ok and p_run > 0.0
+	rows.append("run30 phase=%.6f visible=%s" % [p_run, _crop.visible])
+	await _press(KEY_P)
+	var p_pause := phase
+	await _snap("1_paused_a")
+	await _frames(30)
+	ok = ok and paused and phase == p_pause
+	rows.append("paused+30 phase=%.6f (at pause %.6f) paused=%s" % [phase, p_pause, paused])
+	await _snap("2_paused_b")
+	await _press(KEY_R)
+	ok = ok and reduced_motion and not _crop.visible
+	await _snap("3_paused_reduced")
+	await _frames(30)
+	ok = ok and phase == p_pause
+	rows.append("paused+reduced+30 phase=%.6f visible=%s" % [phase, _crop.visible])
+	await _press(KEY_R)
+	ok = ok and not reduced_motion and _crop.visible and phase == p_pause
+	await _snap("4_paused_restored")
+	rows.append("restore phase=%.6f visible=%s" % [phase, _crop.visible])
+	await _press(KEY_P)
+	await _frames(30)
+	var p_resume := phase
+	ok = ok and not paused and p_resume != p_pause
+	rows.append("resume+30 phase=%.6f" % p_resume)
+	await _press(KEY_R)
+	var p_red := phase
+	await _snap("5_running_reduced")
+	await _frames(30)
+	ok = ok and reduced_motion and not _crop.visible and phase == p_red
+	rows.append("running+reduced+30 phase=%.6f (at toggle %.6f) visible=%s" % [phase, p_red, _crop.visible])
+	await _press(KEY_R)
+	ok = ok and _crop.visible
+	await _frames(30)
+	ok = ok and phase != p_red
+	rows.append("reduced off +30 phase=%.6f visible=%s" % [phase, _crop.visible])
+	for r in rows:
+		print("seq ", r)
+	print("sequence-check ok=", ok)
+	get_tree().quit(0 if ok else 1)

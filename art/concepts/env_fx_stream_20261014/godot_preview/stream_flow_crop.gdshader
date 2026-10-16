@@ -23,6 +23,9 @@ uniform float strength : hint_range(0.0, 1.0) = 1.0;
 uniform vec2 base_size = vec2(1672.0, 941.0);
 uniform vec2 crop_origin = vec2(191.0, 543.0);
 uniform vec2 crop_size = vec2(183.0, 302.0);
+// # 可选（默认关，保持已复核算法）：底图按连续 UV 线性取样，与宿主线性过滤的 Painting 对齐；
+// # 控制图仍按纹素中心 nearest。仅供缩放对照，是否启用待 Leader 定。
+uniform bool base_sample_linear = false;
 uniform float advect_travel_px = 12.0;
 uniform float ripple_amp = 118.0;
 uniform float advect_gain = 0.50;
@@ -64,7 +67,7 @@ void fragment() {
 	vec2 local_texel = (floor(local_px) + vec2(0.5)) / crop_size;
 	vec2 base_px = local_px + crop_origin;
 	vec2 texel = (floor(base_px) + vec2(0.5)) / base_size;
-	vec4 base = texture(base_tex, texel);
+	vec4 base = base_sample_linear ? texture(base_tex, base_px / base_size) : texture(base_tex, texel);
 	vec4 flow = texture(flow_map, local_texel);
 	vec4 sn = texture(coord_sn, local_texel);
 	vec3 sw = texture(secondary_weight, local_texel).rgb;

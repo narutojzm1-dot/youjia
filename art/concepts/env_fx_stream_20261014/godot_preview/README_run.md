@@ -81,3 +81,14 @@ GODOT=godot python3 art/concepts/env_fx_stream_20261014/verify_crop_render.py --
 裁切矩形 183×302 ≈ 55 276 像素，约占整幅 1672×941 的 3.5%。片元着色器只在子层四边形上执行。整幅 5 张 RGBA8 控制图约 30 MiB 显存；裁切后约 1.05 MiB。实际 Web 帧时 / GPU / PCK 增量仍待生产宿主接入后实测。本隔离 demo 未导出 Web。
 
 仍只是隔离候选。请 ART-DIRECTOR / CODEX-LEAD 审阅连续播放下的流向是否单方向、岸线与桥石是否稳住。
+
+### 线性过滤缩放 / 边缘对照与连续切换（`verify_scale_linear.py`）
+
+```
+GODOT=godot xvfb-run -a -s "-screen 0 1800x1000x24" \
+  python3 art/concepts/env_fx_stream_20261014/verify_scale_linear.py --out /tmp/scale749
+```
+
+- 驱动新增 `--offset X Y`（Painting 屏幕位置，可带小数）；整幅预览也接受 `--scale` / `--offset`，仅供同变换对照。
+- `--sequence-check DIR`：真实帧里经 `Input.parse_input_event` 按 P / R，连续切换暂停与减少动态，逐步存帧。
+- `--base-linear`：可选 uniform `base_sample_linear`（默认关），底图按连续 UV 线性取样；结果见 `INTEGRATION_CONTRACT.md` 同名小节。
