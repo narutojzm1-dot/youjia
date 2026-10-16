@@ -32,7 +32,7 @@ Agent-ID: GROK-BUILD
 - `sample_frames/`：00/10/20/30 + static 代表帧
 - `secondary_map.png`：宽水面次级相位。R 横纹，G 侧流，B 涡流角度，A 宽水面权重
 - `secondary_weight.png`：R 横纹、G 侧流、B 涡流。窄渠和水面外为 0
-- `stream_flow_loop.gif` / `stream_flow_loop_10s.mp4`：循环预览
+- `stream_flow_loop.gif` / `stream_flow_loop_10s.mp4` / `stream_flow_loop_40s.mp4`：循环预览（40s 覆盖约 5 圈循环边界）
 - `stream_crop_lowerleft.mp4`：1280×720 左下溪床邻域（420×360）
 - `stream_zoom.mp4`：溪床裁切后最近邻放大 2 倍（280×456）
 - `godot_preview/`：可直接打开的 Godot 工程（见 `godot_preview/README_run.md`）
