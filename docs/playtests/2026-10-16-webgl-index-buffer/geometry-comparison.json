@@ -1,0 +1,30 @@
+[
+  {
+    "kind": "original",
+    "dimensions": [
+      600,
+      800,
+      3
+    ],
+    "different_pixels": 17052,
+    "max_channel_delta": 166,
+    "invalid_operations": 116,
+    "wasm_valid": true,
+    "page_errors": [],
+    "png_sha256": "83ce82928da60aa04320fafd1ca74d03535f86c5dcdd5744fdd5e38814d1f209"
+  },
+  {
+    "kind": "repaired",
+    "dimensions": [
+      600,
+      800,
+      3
+    ],
+    "different_pixels": 0,
+    "max_channel_delta": 0,
+    "invalid_operations": 0,
+    "wasm_valid": true,
+    "page_errors": [],
+    "png_sha256": "789a833574bd0f706eb62f217f2aa2b341d9445604d9109cfb5220fb5c8d2bb1"
+  }
+]

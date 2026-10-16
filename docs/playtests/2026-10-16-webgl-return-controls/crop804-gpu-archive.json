@@ -1,0 +1,171 @@
+{
+  "label": "crop804-gpu",
+  "file": "crop804-gpu.tar.xz",
+  "bytes": 11932576,
+  "sha256": "1cb052a78528b4a54e840ff349b10ee19a181a8bccab49beba328256dfaad4c1",
+  "git_blob": "367c44e7902f99f0c1cfa9f60e39cee44d1f0af7",
+  "originals": [
+    {
+      "path": "youjia-crop804-gpu-review.py",
+      "bytes": 3332,
+      "sha256": "835fa12eaf74cef0b0f621f53b2868530a0428d372756d849850209c957a3c88",
+      "git_blob": "90128ac847e024fd0888e27306c5f96e1b8ad716"
+    },
+    {
+      "path": "youjia-review-crop804.py",
+      "bytes": 1422,
+      "sha256": "c7f86437e8d3d7bb7e935c140af3745adaf4da335863852154a6c558c76d0f1a",
+      "git_blob": "801abdeda98c3b3e8736ab8e4870675936fac5cd"
+    },
+    {
+      "path": "crop-0.log",
+      "bytes": 415,
+      "sha256": "d12869592b0a961eec98019566a481164146e9c5b3cbe897314d34c0decef181",
+      "git_blob": "a3b4565c38a819258904feb67391330cab90aa9b"
+    },
+    {
+      "path": "crop-0.png",
+      "bytes": 3698858,
+      "sha256": "112eb22816e3196c8ebe194bc5403c68452290e68eaffa83063462613259c051",
+      "git_blob": "a05b21b1271d85fbea99f1ed78dfeebd2fe77626"
+    },
+    {
+      "path": "crop-check.log",
+      "bytes": 391,
+      "sha256": "24e5e906c0957f9c6f98db7d744b8a9b5c65cb61f54428d1464074e9e27943fc",
+      "git_blob": "4144043dfb68a0e3cea462a11ccfde1af7dc76a4"
+    },
+    {
+      "path": "crop-full.log",
+      "bytes": 444,
+      "sha256": "1bb39b07b86eecbfd9997309dfc8a096ab2b2649ca686c5de37f733e381683b0",
+      "git_blob": "b1a38ed0d5970c4ba168444e90d1d49d9ac0f3de"
+    },
+    {
+      "path": "crop-full.png",
+      "bytes": 3698858,
+      "sha256": "112eb22816e3196c8ebe194bc5403c68452290e68eaffa83063462613259c051",
+      "git_blob": "a05b21b1271d85fbea99f1ed78dfeebd2fe77626"
+    },
+    {
+      "path": "crop-half.log",
+      "bytes": 444,
+      "sha256": "58ba13b1f8a6f62f9e4d3e9ea78b1af75a63ed5c4b92c9da555ae20f2f9aa1cf",
+      "git_blob": "eb88ee77d64d7740080347ac9aa484f1124bcf62"
+    },
+    {
+      "path": "crop-half.png",
+      "bytes": 3698672,
+      "sha256": "bc57f067430782db43aa4f6d0a720c5c48441d50c009f3a8a1b60017f2850ad4",
+      "git_blob": "01c0593b6453e4c6ec2bb631facb851c43e37ba2"
+    },
+    {
+      "path": "crop-quarter.log",
+      "bytes": 445,
+      "sha256": "cd08f5376c1904bd9bfd2cc1bbee8661885ee824100d3b2927d364bbfb3d4fb0",
+      "git_blob": "f9dbbeffaaa5a4146dd306b9a870ded21d18bfc7"
+    },
+    {
+      "path": "crop-quarter.png",
+      "bytes": 3698616,
+      "sha256": "84b8052901ca3bcb9370a453c1135d0f9fdb946c867df78ab1ad10cb1fa9b9d7",
+      "git_blob": "843b63c11e93d40660d0a8b1b80556e57234dd8b"
+    },
+    {
+      "path": "crop-reduced.log",
+      "bytes": 444,
+      "sha256": "1e7b867f77e1ab8fd7ec85b28d26f64aa639956e115527e0a4b59fe7d90944d7",
+      "git_blob": "ecf44d40619f2f8cee70a1fb04e1f787ec9de285"
+    },
+    {
+      "path": "crop-reduced.png",
+      "bytes": 3699281,
+      "sha256": "8463c5f0fb45a033420a4d47b52056a5e01b46d46a3c4e52bb8ec879e39a5217",
+      "git_blob": "202c06a2fd39e7869ce32737975daf2eec51971b"
+    },
+    {
+      "path": "crop-self-check.log",
+      "bytes": 267,
+      "sha256": "dfd593f8174e966819628e4c236276322532e4f1db6c5748040dd5d5245c566b",
+      "git_blob": "b53450b419860beb01e351abc9644b672c3cdfdc"
+    },
+    {
+      "path": "crop-zero.log",
+      "bytes": 442,
+      "sha256": "8b53d04de69a3a70d75c4a8d66c8f40761a1f6ba602e8ee487aa548601870635",
+      "git_blob": "0bc767415df97c04300d133672812d36206dfd21"
+    },
+    {
+      "path": "crop-zero.png",
+      "bytes": 3699281,
+      "sha256": "8463c5f0fb45a033420a4d47b52056a5e01b46d46a3c4e52bb8ec879e39a5217",
+      "git_blob": "202c06a2fd39e7869ce32737975daf2eec51971b"
+    },
+    {
+      "path": "full-0.log",
+      "bytes": 418,
+      "sha256": "a6ea09b275e9bfbf0650867826f9096a55452d72c8057309b155a50ce7c9c955",
+      "git_blob": "613b379ed2fe50e80d7f0e05f8fecf96a6eff8da"
+    },
+    {
+      "path": "full-0.png",
+      "bytes": 3698858,
+      "sha256": "5819b42a98f91e5eef9ccc14145057ed1b5a022b295d8dc3184df5b566e6c53f",
+      "git_blob": "b3eef6e443063eeb97c3c2b7cb8f23f0fa0f0a3b"
+    },
+    {
+      "path": "full-full.log",
+      "bytes": 447,
+      "sha256": "2026c9ef59b4629c704b6ef49e8f3f1fa4b1280834b0de7d33331b76295eb74b",
+      "git_blob": "96352c485726b1c9736f460810a6b51af0ea38a8"
+    },
+    {
+      "path": "full-full.png",
+      "bytes": 3698858,
+      "sha256": "5819b42a98f91e5eef9ccc14145057ed1b5a022b295d8dc3184df5b566e6c53f",
+      "git_blob": "b3eef6e443063eeb97c3c2b7cb8f23f0fa0f0a3b"
+    },
+    {
+      "path": "full-half.log",
+      "bytes": 447,
+      "sha256": "b14afa560258ac3bc3af0ae4e7bb1d3323a221c73b3cb8d12d2775110fa22cdd",
+      "git_blob": "5524af93d575c10fb6c18c4fd1f80770f48dd0a0"
+    },
+    {
+      "path": "full-half.png",
+      "bytes": 3698663,
+      "sha256": "f6c87bb3db22b94426b69c726ac2130edce78943486fbae5876e5e390de8642a",
+      "git_blob": "4656a87bfbee5f23daa670d8dd154b8ed199408a"
+    },
+    {
+      "path": "full-quarter.log",
+      "bytes": 448,
+      "sha256": "1442bbc6229ed16dbf009e4bddecfa5f5a0861907360adc1cf63ca00e243f731",
+      "git_blob": "7ef49437dd089ccd653fd738059d192a143941d3"
+    },
+    {
+      "path": "full-quarter.png",
+      "bytes": 3698617,
+      "sha256": "dd99412e7108953fb032078d8c4612c417565914de218d6e2215d0044ab04811",
+      "git_blob": "4c8f375203d52f7ed803e6158ee2e20f4da1e4ce"
+    },
+    {
+      "path": "gpu-review.json",
+      "bytes": 2142,
+      "sha256": "77178712a159551257e573217566975d9257401011b9d2e533627f2a51bde0d2",
+      "git_blob": "454ff47d961903f32c40fc09637d262cd0c06101"
+    },
+    {
+      "path": "import.log",
+      "bytes": 5320,
+      "sha256": "1ebd3073e93e75c2ad09012b420c125055a69c95fa41474a4af9c5d28271509a",
+      "git_blob": "e063b356184c2e74dd2f1828f30a63df753503d0"
+    },
+    {
+      "path": "receipt.json",
+      "bytes": 949,
+      "sha256": "f9c4c103c2715e56d9afcbb0f3ebc61f9bbd8760849a05df044ac87fad8450be",
+      "git_blob": "2b1762bb6e19a343cedf911c6d1db1d078e51848"
+    }
+  ]
+}

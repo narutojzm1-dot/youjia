@@ -1,0 +1,106 @@
+{
+  "schema": "youjia.evidence-parts/v1",
+  "reason": "Some large Git blob writes returned no result; originals preserved byte-for-byte in smaller content-addressed chunks. This is storage encoding, not an image edit.",
+  "files": [
+    {
+      "path": "813/web-r10-sleep-attempt.jpg",
+      "bytes": 186468,
+      "sha256": "3300095e17da4dd97bd8132497f8046f388bd4bf930c7aa4be196c4684e5c139",
+      "git_blob": "60c1c5f24ac7cee1413b9c629ad6632abe0d57e1",
+      "parts": [
+        {
+          "path": "large/60c1c5f24ac7cee1413b9c629ad6632abe0d57e1-000.bin",
+          "bytes": 131072,
+          "sha256": "b004814745d405311dd44e2d5de76c867d2b4d75c4be3e5b84e062ebc128961f"
+        },
+        {
+          "path": "large/60c1c5f24ac7cee1413b9c629ad6632abe0d57e1-001.bin",
+          "bytes": 55396,
+          "sha256": "7ac8c92bee9f8e66ede4c70a3cba8fc773c041f71ea2e2bc0efc39f7883e91be"
+        }
+      ]
+    },
+    {
+      "path": "813/web-long-output-probe-r12.json.gz",
+      "bytes": 418706,
+      "sha256": "932efe0d7610d3e1caa9e2b41c79550491106ed065960b6ee5e931b7fdf84df8",
+      "git_blob": "a70930fbc8196f299c0cc479c3e5a8306eb7c08a",
+      "parts": [
+        {
+          "path": "large/a70930fbc8196f299c0cc479c3e5a8306eb7c08a-000.bin",
+          "bytes": 131072,
+          "sha256": "5325343a307a2c5fe32fd175f454305553c3626b6028add3ca2bba7b567fb14b"
+        },
+        {
+          "path": "large/a70930fbc8196f299c0cc479c3e5a8306eb7c08a-001.bin",
+          "bytes": 131072,
+          "sha256": "e029ac87150fc4c40a7e3c234c25490c9f22c8c0c3a34b7b13c7fa26703d77cc"
+        },
+        {
+          "path": "large/a70930fbc8196f299c0cc479c3e5a8306eb7c08a-002.bin",
+          "bytes": 131072,
+          "sha256": "5c752ea138d8d23148fc304a3803e9381d6b71c8dd54581ae5e2ba24dd96eef8"
+        },
+        {
+          "path": "large/a70930fbc8196f299c0cc479c3e5a8306eb7c08a-003.bin",
+          "bytes": 25490,
+          "sha256": "5de388a182ec0c45233d9673643f069106f1d0c9447363de90e490e3be4639ac"
+        }
+      ]
+    },
+    {
+      "path": "813/web-r12-night.jpg",
+      "bytes": 140543,
+      "sha256": "33c323dc0cebc6cd48cc6af29d03bd23099fa231abe788fa42518a6652a6ee5e",
+      "git_blob": "94d5e161ba3c5b1962b8c2ea973b655299efd107",
+      "parts": [
+        {
+          "path": "large/94d5e161ba3c5b1962b8c2ea973b655299efd107-000.bin",
+          "bytes": 131072,
+          "sha256": "49dddb768de4021d3ad438ac8ad4e88883e630f7bafc04d07c01d775f0d55d80"
+        },
+        {
+          "path": "large/94d5e161ba3c5b1962b8c2ea973b655299efd107-001.bin",
+          "bytes": 9471,
+          "sha256": "d8bc13714f8177cab2ed52bd7a4dec8e7b240eee0dadcf56b0dfec567d623dea"
+        }
+      ]
+    },
+    {
+      "path": "813/web-r12-sleep-attempt.jpg",
+      "bytes": 186328,
+      "sha256": "d136a261dcf144db6904bb5270c276d45a800d0ec95e33967e2fca878d5994cc",
+      "git_blob": "166f85e41da99716d60b80a45e6fffa6ae12b1f7",
+      "parts": [
+        {
+          "path": "large/166f85e41da99716d60b80a45e6fffa6ae12b1f7-000.bin",
+          "bytes": 131072,
+          "sha256": "f05284c4c84680a1353759dc09e02a4c4561af4ee8923d461fa350adc708b73e"
+        },
+        {
+          "path": "large/166f85e41da99716d60b80a45e6fffa6ae12b1f7-001.bin",
+          "bytes": 55256,
+          "sha256": "4cf8fabe2738b47dda57cb994d3e4cb38796a9829aec6fdadd6364f8c446bbf9"
+        }
+      ]
+    },
+    {
+      "path": "817/public/release-basket.jpg",
+      "bytes": 142937,
+      "sha256": "c0ba1d5887e55d3f4491bfe1baa7a7233986c1ba8fc5a4f982841e29c22b1c8c",
+      "git_blob": "818b36fb002e21b93af85c28e31e40adadde6d47",
+      "parts": [
+        {
+          "path": "large/818b36fb002e21b93af85c28e31e40adadde6d47-000.bin",
+          "bytes": 131072,
+          "sha256": "1e437fef6c695f9ba2a8127de093cfaa040411df0f0ad2b6fb2537b88ee5e305"
+        },
+        {
+          "path": "large/818b36fb002e21b93af85c28e31e40adadde6d47-001.bin",
+          "bytes": 11865,
+          "sha256": "9cb514ddcb7b2328cbfa20cc55636c23e4b864d2fadfb0cfaf734ebb0e08816d"
+        }
+      ]
+    }
+  ]
+}

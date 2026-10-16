@@ -1,0 +1,171 @@
+{
+  "label": "webgl-controls",
+  "file": "webgl-controls.tar.xz",
+  "bytes": 2033412,
+  "sha256": "0701ecc401d079d27bd3ae46fdbe022393e2ddc11e4d106fbae0a5be8f391887",
+  "git_blob": "45b86400fb6ba877748286233377ea6db4e828e6",
+  "originals": [
+    {
+      "path": "public-no-observer/01-yard-start.jpg",
+      "bytes": 140721,
+      "sha256": "ebc6f6efd93166ba80111ffa74c4ca8f214a100569027de34af435ca9570e7af",
+      "git_blob": "f61a64907b01707598636f061789d4e31dc48db9"
+    },
+    {
+      "path": "public-no-observer/02-near-entry.jpg",
+      "bytes": 221086,
+      "sha256": "1c9bd6bd21a9f76d1cf2c19b3c9741af1e19b0310b4a61a935e5b932b0bef15d",
+      "git_blob": "6492ed5c43678c0f151c59eb511cfbe4e0aa58ac"
+    },
+    {
+      "path": "public-no-observer/03-night-before-return.jpg",
+      "bytes": 136906,
+      "sha256": "c8535ec93943b67bfd4ff91d3c106be5de4ac7f477dd10aefa72f929917430fc",
+      "git_blob": "9e61fbaf9301cc252390d54edb4cfc04d4af8284"
+    },
+    {
+      "path": "public-no-observer/04-returned.jpg",
+      "bytes": 88658,
+      "sha256": "89016f32555f7f66a774e2bb3d01fbad244f47c419f5bbefda80be9372c31d2a",
+      "git_blob": "fb53d2f69d82405bb39c37dffe16936978dd7ee5"
+    },
+    {
+      "path": "public-no-observer/05-sleep.jpg",
+      "bytes": 184226,
+      "sha256": "2d4ddae2eaaf27465d75dd65674e5364df6bfa2f63b2ac8cd6bf708004642a1f",
+      "git_blob": "461599dab32966cd488f5916a43ad1eda7f614e4"
+    },
+    {
+      "path": "public-no-observer/06-muted.jpg",
+      "bytes": 142469,
+      "sha256": "c661a4e35af078217cd75ac0cd34a02fde2733d5f45bb69473c452dc3a82bd0b",
+      "git_blob": "40b546b86175370bb4cbe384f564bffd232de7d8"
+    },
+    {
+      "path": "public-no-observer/07-long-final.jpg",
+      "bytes": 86804,
+      "sha256": "f8903f4038fb7fe476e17f4de8c8b2b706d01af881ab9071555eb3701cdee1c8",
+      "git_blob": "054ddfc9d20d57c58c2ccb226dfe8c1b4ba8fd42"
+    },
+    {
+      "path": "public-no-observer/driver-used.cjs",
+      "bytes": 8241,
+      "sha256": "c4548e947029969f4140dc23592d6b4d24a69efd4ef377d0523f81611d2819dd",
+      "git_blob": "6890c33ed1b7040da2faf17a5ee16f933412007a"
+    },
+    {
+      "path": "public-no-observer/result.json",
+      "bytes": 89418,
+      "sha256": "c1fbe0b9c92129621f61882767a90de93727a5b24e899f4982f962571e910df0",
+      "git_blob": "139f53501ca5494841b312b742dd3bf3f10f6474"
+    },
+    {
+      "path": "candidate-no-observer/01-yard-start.jpg",
+      "bytes": 140595,
+      "sha256": "8f5cf89fbf6dc9ce4d86f30b16ea1a518e06cc5291e4254c88962df5e8dc3c16",
+      "git_blob": "11ea6d111c41b55ae1d5a6d30faa19e99592c41b"
+    },
+    {
+      "path": "candidate-no-observer/02-near-entry.jpg",
+      "bytes": 224021,
+      "sha256": "5da8789def7d27ea2c849ea15b4a4d54cf867f29da0f51a7a572c2142beb5813",
+      "git_blob": "3b3abe6cd02582e291ed5f8fc1f47fb789284a7d"
+    },
+    {
+      "path": "candidate-no-observer/03-night-before-return.jpg",
+      "bytes": 140348,
+      "sha256": "b4064407ca9c46951b6ca36019e15481f13d69bb07a9642466baf3c974417300",
+      "git_blob": "ee818dfd8900ffe43888ec6973f3b7ee377775b4"
+    },
+    {
+      "path": "candidate-no-observer/04-returned.jpg",
+      "bytes": 90889,
+      "sha256": "1add4a8d0e02b3a634e00a4bcef204e3df17cba89f7cfc3a4fc02b963d25e0a5",
+      "git_blob": "e3198285cade725e8344b71686404f37c6ec8c3b"
+    },
+    {
+      "path": "candidate-no-observer/05-sleep.jpg",
+      "bytes": 189527,
+      "sha256": "e7de09ea97663fa9201ef7c969e8f7d2839ad68cfbd83bd9cdc8bab5b99df529",
+      "git_blob": "4ed29790669da2c1454e2d1cb9ec333500540264"
+    },
+    {
+      "path": "candidate-no-observer/06-muted.jpg",
+      "bytes": 142456,
+      "sha256": "a97f9dd725080f5056eb3a94d34be382317d32e1000a83fa3ac2ceea7e9525df",
+      "git_blob": "cb4d04f94ad1a02c2352895d1f2496ea7dc185c5"
+    },
+    {
+      "path": "candidate-no-observer/07-long-final.jpg",
+      "bytes": 85864,
+      "sha256": "c88329a02a18e64a4206bc696a490d4bc2082e3b3a1d0755f2442875bf060d1a",
+      "git_blob": "264301ff983adf58ac5839a1476b92e8d52a0dc8"
+    },
+    {
+      "path": "candidate-no-observer/cleanup.json",
+      "bytes": 119,
+      "sha256": "aa0585702eedb565c398feb49b7601ace8c62b19fc0c0158f8b66f77721d868c",
+      "git_blob": "c89cadbee74248a48f462e79ea466f593016ac9c"
+    },
+    {
+      "path": "candidate-no-observer/result.json",
+      "bytes": 82721,
+      "sha256": "68bf1308017168fb5211a162d459565971fc78a52742c4b143b2470828af51c1",
+      "git_blob": "3c9af06d73c0ae8e9057e8abd3717c054305b16f"
+    },
+    {
+      "path": "public-gl-trace-no-capture/after-complete.jpg",
+      "bytes": 85125,
+      "sha256": "fd15149502ab99850b5f902a87b5b770fd28cb7bc990af0eca61929a86025247",
+      "git_blob": "fbdeef963a05bc1790865cce65ddff3868c4cf06"
+    },
+    {
+      "path": "public-gl-trace-no-capture/cleanup.json",
+      "bytes": 119,
+      "sha256": "1b2af6339b305ecced4e1f873ddc5f303b6b0c94078541c8946eda02616fed9f",
+      "git_blob": "d6cde473eb62e2bc3d92d7cccd8e7bfecee46da5"
+    },
+    {
+      "path": "public-gl-trace-no-capture/result.json",
+      "bytes": 75534,
+      "sha256": "b0311ffe11c82a202c5bdb87986cea1d31db8df3840c38f88b4a143dbeeba879",
+      "git_blob": "f6944dca1df00169717041a4532ec25efe678edd"
+    },
+    {
+      "path": "drivers/youjia-webgl-matched.cjs",
+      "bytes": 8825,
+      "sha256": "af5c28e6d64951c8ec5ab1add554fc576e362961e3b61a526ca2c174659d5ffb",
+      "git_blob": "59af00de23d322103181898263e52fed68fee1ff"
+    },
+    {
+      "path": "drivers/youjia-webgl-trace.cjs",
+      "bytes": 9355,
+      "sha256": "a671c12c8c3fd65b263df7ccc959c8e932a3678d07addcbc1a59bd5713d12436",
+      "git_blob": "806e5635e85c70c1b63fb058fc02ace17b436201"
+    },
+    {
+      "path": "drivers/youjia-webgl-trace.js",
+      "bytes": 1269,
+      "sha256": "5c36c424d3b89a17528fee40b83d5572d89f4198d3aa79a58d9fa7137a1f9947",
+      "git_blob": "5d6b2acd64e5aa2d5a4a6d526625728ce937036f"
+    },
+    {
+      "path": "drivers/youjia-prepare-webgl-trace.py",
+      "bytes": 1211,
+      "sha256": "93db2372755ccd6016544b25793122c6444f1ce172943410f34cd85a23f10ded",
+      "git_blob": "e9321cd0a6e285d0a66996058e6cc73244ebb02b"
+    },
+    {
+      "path": "drivers/youjia-webgl-server.py",
+      "bytes": 370,
+      "sha256": "6913f77a5c5518c24ec179d552bb3cfa76d6f9dbbaccaf22b10b589b6f006b4f",
+      "git_blob": "ab1c507695e7258e1622c8bc0b2b1fac155162b6"
+    },
+    {
+      "path": "drivers/youjia-stage-webgl-proof.py",
+      "bytes": 3577,
+      "sha256": "6ee69440fc736a4b9df4a2e474e917d7ab28a0cbc0f65cbd46e1b36c3420c7b1",
+      "git_blob": "2b7294fa7263cbcd92dacba5266a97810faa56e4"
+    }
+  ]
+}

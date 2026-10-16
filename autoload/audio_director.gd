@@ -30,7 +30,7 @@ const CUES := {
 	"game.pause": {"path": "", "bus": "UI"},
 	"game.victory": {"path": "", "bus": "SFX"},
 	"game.defeat": {"path": "", "bus": "SFX", "kind": "sfx"},
-	"yard.ambience": {"path": "res://assets/holiday/audio/bed_yard_env.ogg", "kind": "ambience"},
+	"yard.ambience": {"path": "res://assets/holiday/audio/bed_yard_gust.ogg", "kind": "ambience"},
 	"yard.music": {"path": "res://assets/holiday/audio/bed_yard_music.ogg", "kind": "music"},
 	"near_path.music": {"path": "res://assets/holiday/audio/bed_near_path_music.ogg", "kind": "music"},
 }

@@ -33,7 +33,7 @@ func _run() -> void:
 	_check(heard, "headless-native resume reports the gesture path without claiming a speaker")
 	_check(_music_stream(audio) != null and _ambience_stream(audio) != null, "after unlock both yard layers are armed")
 	_check(str(_music_stream(audio).resource_path).ends_with("bed_yard_music.ogg"), "music uses the music stem")
-	_check(str(_ambience_stream(audio).resource_path).ends_with("bed_yard_env.ogg"), "ambience uses the environment stem")
+	_check(str(_ambience_stream(audio).resource_path).ends_with("bed_yard_gust.ogg"), "ambience uses approved17 in the existing single environment voice")
 	var index: int = audio._music_index
 	var music_stream: AudioStream = _music_stream(audio)
 	var ambience_stream: AudioStream = _ambience_stream(audio)

@@ -1,0 +1,19 @@
+<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>环境阵风对照候选</title>
+<style>body{max-width:760px;margin:36px auto;padding:0 20px;font:18px/1.65 system-ui;background:#faf7ef;color:#343b36}audio{width:100%}section{padding:16px 0;border-bottom:1px solid #ccc}button{padding:10px;margin:8px 8px 8px 0}small{color:#62675e}</style>
+<h1>环境阵风对照候选</h1><p>尚未通过听验，未替换游戏声音。三条对照统一 RMS 电平，仍不代表主观等响。手动播放，保持设备音量一致。</p>
+<section><h2>原始环境轨 · RMS 对照</h2><audio controls preload="metadata" src="compare_original.ogg"></audio></section>
+<section><h2>上一稿 · 32 秒规律起伏</h2><audio controls preload="metadata" src="compare_previous.ogg"></audio></section>
+<section><h2>新稿 · 不等间隔起伏</h2><audio controls preload="metadata" src="compare_irregular.ogg"></audio></section>
+<section><h2>新稿原电平 · 128 秒</h2><audio id="candidate" controls preload="metadata" src="env_irregular_candidate.ogg"></audio><button id="long">开始10分钟循环试听</button><button id="stop">全部停止</button><p id="status" role="status">未开始连续试听</p></section>
+<section><h2>接缝 · 第8秒</h2><audio controls preload="metadata" src="seam_once.ogg"></audio><p>此16秒检查片不循环。</p></section>
+<p>检查：持续嘶声、机械规律、突兀起落、接缝和长时间疲劳。切换音轨或离开页面将停止连续试听。此页没有配乐混合或游戏画面，不能证明混音及同步通过。</p><small>GAME-PRODUCER · #194 · 来源与精确hash见 README.md / measurements.json</small>
+<script>
+const tracks=[...document.querySelectorAll('audio')],candidate=document.querySelector('#candidate'),status=document.querySelector('#status');let timer=null;
+function cancel(){if(timer!==null){clearTimeout(timer);timer=null;status.textContent='连续试听已停止；未作听感判断'}candidate.loop=false}
+function stop(){cancel();tracks.forEach(a=>{a.pause();a.currentTime=0})}
+tracks.forEach(a=>{a.addEventListener('play',()=>{if(a!==candidate)cancel();tracks.filter(b=>b!==a).forEach(b=>{b.pause();b.currentTime=0})});a.addEventListener('error',()=>{cancel();status.textContent='媒体加载失败，请检查文件或浏览器 OGG 支持'});});
+candidate.addEventListener('pause',()=>{if(timer!==null)cancel()});
+document.querySelector('#stop').onclick=stop;
+document.querySelector('#long').onclick=async()=>{stop();candidate.loop=true;try{await candidate.play();status.textContent='连续试听中；计时不代表人耳验收';timer=setTimeout(()=>{timer=null;candidate.loop=false;candidate.pause();candidate.currentTime=0;status.textContent='10分钟计时结束，请另行记录实际听取时长和感受'},600000)}catch(e){cancel();status.textContent='未能播放，请手动启动音频'}};
+document.addEventListener('visibilitychange',()=>{if(document.hidden)stop()});
+</script></html>

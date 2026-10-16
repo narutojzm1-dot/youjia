@@ -24,3 +24,7 @@
 ## 2026-10-09 夜间候选
 
 night_music/night_air/rain_air/sleep_breath 为原创合成候选；来源、哈希、完整生成器、循环测量与未听验边界在 [资源记录](../../../art/concepts/night_soundscape_20261009/README.md)。生产接线只在Draft分支，未发布。
+
+## 2026-10-16 获批17阵风运行候选
+
+`bed_yard_gust.ogg`逐字节来自75b0834994ad0b20e2b7cf2835b06fbad443e223的`art/concepts/producer_env_irregular_v1/env_irregular_candidate.ogg`，SHA256 `17c1eeee67fae2dbf5790a5d2a7a8d14e8462b0c0660a06c831bc5eb60d595d9`，用户锁定17号源音已批准。只替换既有yard.ambience路由，04 bed_yard_env.ogg保留但未另注册/叠播；原30%环境总线与音景预算不变。128秒有界循环，程序原创风噪而非实录，不称永不重复。接入/软件体验/设备听验/公开阶段分列，13–15禁播保持。

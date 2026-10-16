@@ -1,0 +1,123 @@
+{
+  "source": "9f7ab71b3d1fadeec0973f49ca4e33c4355b0760",
+  "isolated": true,
+  "started": 1792115339.9548566,
+  "runs": [
+    {
+      "name": "import",
+      "exit": 0,
+      "errors": []
+    },
+    {
+      "name": "crop-self-check",
+      "exit": 0,
+      "errors": []
+    },
+    {
+      "name": "full-0",
+      "exit": 0,
+      "errors": []
+    },
+    {
+      "name": "crop-0",
+      "exit": 0,
+      "errors": []
+    },
+    {
+      "name": "full-quarter",
+      "exit": 0,
+      "errors": []
+    },
+    {
+      "name": "crop-quarter",
+      "exit": 0,
+      "errors": []
+    },
+    {
+      "name": "full-half",
+      "exit": 0,
+      "errors": []
+    },
+    {
+      "name": "crop-half",
+      "exit": 0,
+      "errors": []
+    },
+    {
+      "name": "full-full",
+      "exit": 0,
+      "errors": []
+    },
+    {
+      "name": "crop-full",
+      "exit": 0,
+      "errors": []
+    },
+    {
+      "name": "crop-zero",
+      "exit": 0,
+      "errors": []
+    },
+    {
+      "name": "crop-reduced",
+      "exit": 0,
+      "errors": []
+    }
+  ],
+  "comparisons": [
+    {
+      "phase": "0",
+      "shape": [
+        941,
+        1672,
+        3
+      ],
+      "crop_vs_full_max": 1,
+      "different_pixels": 5,
+      "outside_max": 0,
+      "protected_max": 0
+    },
+    {
+      "phase": "quarter",
+      "shape": [
+        941,
+        1672,
+        3
+      ],
+      "crop_vs_full_max": 1,
+      "different_pixels": 3,
+      "outside_max": 0,
+      "protected_max": 0
+    },
+    {
+      "phase": "half",
+      "shape": [
+        941,
+        1672,
+        3
+      ],
+      "crop_vs_full_max": 1,
+      "different_pixels": 8,
+      "outside_max": 0,
+      "protected_max": 0
+    },
+    {
+      "phase": "full",
+      "shape": [
+        941,
+        1672,
+        3
+      ],
+      "crop_vs_full_max": 1,
+      "different_pixels": 5,
+      "outside_max": 0,
+      "protected_max": 0
+    }
+  ],
+  "loop_max": 0,
+  "half_changed": 7077,
+  "zero_max": 0,
+  "reduced_max": 0,
+  "finished": 1792115385.8495882,
+  "pass": true
+}

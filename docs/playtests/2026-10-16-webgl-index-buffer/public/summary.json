@@ -1,0 +1,95 @@
+{
+  "source": "70de87a63b8d6f325772f8b046a69e639b1eec84",
+  "pages": "fb244eb04d5fbe896f4e8967df7d55a3b994fd5d",
+  "ci": 38847591432,
+  "ci_job": 116801527486,
+  "ci_review": 5543004321,
+  "publish": 38849760523,
+  "publish_job": 116808144578,
+  "publish_full_log_bytes": 554434,
+  "publish_full_log_read": true,
+  "pages_run": 38851640443,
+  "complete_actual_files_verified": 38,
+  "pck": {
+    "phase": "public",
+    "file": "game-70de87a.pck",
+    "url": "https://narutojzm1-dot.github.io/youjia/game-70de87a.pck",
+    "bytes": 89118616,
+    "sha256": "38f62a448a30c6089ae002b02ce377eaf90e27bc2ba73d229b886eab379afba4",
+    "git_blob": "0dba8d85ee50182776e61585316a8579eabc22ff",
+    "headers": {
+      "Content-Length": "89118616",
+      "Content-Type": "application/octet-stream",
+      "Last-Modified": "Fri, 16 Oct 2026 04:39:23 GMT",
+      "ETag": "\"6ad1aa7b-54fd798\""
+    }
+  },
+  "wasm": {
+    "phase": "public",
+    "file": "engine-e232d3881ea999631bbb4a08ccc86fa54dd2bc8a5b42fb6cb281cb86dd85bc48.wasm",
+    "url": "https://narutojzm1-dot.github.io/youjia/engine-e232d3881ea999631bbb4a08ccc86fa54dd2bc8a5b42fb6cb281cb86dd85bc48.wasm",
+    "bytes": 39514754,
+    "sha256": "fdab8cf15509d9042cd7f6f9f9eafb5201c85a59ed161d91346046b2a9268fe4",
+    "git_blob": "b73097a4dc112506269309978ef5b4914a8ba6f8",
+    "headers": {
+      "Content-Length": "39514754",
+      "Content-Type": "application/wasm",
+      "Last-Modified": "Fri, 16 Oct 2026 04:39:23 GMT",
+      "ETag": "\"6ad1aa7b-25af282\""
+    }
+  },
+  "html_and_manifest_exact_both_endpoints": true,
+  "packed_build_and_notes_match": true,
+  "ui14": true,
+  "page_errors": 0,
+  "gl_errors": 0,
+  "real_old_profile_no_fixture_writes": true,
+  "pre_and_post_reopen_payload_exact": "fc53c9a95c8dafaaefbc0f6aa798724570a8f3a291c2b2d062070438ff55805d",
+  "inventory": {
+    "corn": 1,
+    "fish": {},
+    "flour": 0,
+    "grass": 0,
+    "ground": [],
+    "held": "corn",
+    "millet": 0,
+    "next_food_id": 1,
+    "production_revision": 0,
+    "revision": 2,
+    "schema": 5,
+    "wheat": 2
+  },
+  "background": {
+    "source": "70de87a63b8d6f325772f8b046a69e639b1eec84",
+    "actual_hidden": true,
+    "frozen_backend_context_indices": [
+      1
+    ],
+    "backend_clock": 8.170666666666667,
+    "hidden_interval_ms": 2521.0,
+    "long_source_starts_counts": [
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2
+    ],
+    "software_nonzero_after_returns": true,
+    "own_headless_window_minimize": true,
+    "controlled_suspend_recovery_separate": true,
+    "page_errors": 0,
+    "gl_errors": 0,
+    "frozen_analyzer_not_mistaken_for_ongoing_output": true,
+    "hardware_listening": false,
+    "physical_phone": false,
+    "pass": true,
+    "native_engine_context0_observed_running_during_hidden": true,
+    "asserted_clock_is_bgm_backend_context1": true
+  },
+  "ordinary_runtime_scope": "Chrome155 WebGL2 software output; no hardware hearing or physical phone; not all old stop-drawing root causes solved",
+  "daily16_node_not_early_completed": true
+}

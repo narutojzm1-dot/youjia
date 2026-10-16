@@ -1,0 +1,31 @@
+{
+  "source": "4f8dc8de59aa9c9d150cfefc900d2c61df867ada",
+  "raw": "results.json",
+  "checks_passed": true,
+  "software_only": true,
+  "cases": [
+    {
+      "label": "candidate",
+      "hidden_clock": 5.141333333333334,
+      "same_clock_after_ms": 6463.5,
+      "long_starts_before_after": [
+        4,
+        4
+      ],
+      "page_errors": [],
+      "console": [
+        {
+          "type": "error",
+          "text": "Failed to load resource: the server responded with a status of 404 (File not found)",
+          "location": {
+            "url": "http://127.0.0.1:8175/favicon.ico",
+            "line": 0,
+            "column": 0,
+            "lineNumber": 0,
+            "columnNumber": 0
+          }
+        }
+      ]
+    }
+  ]
+}
