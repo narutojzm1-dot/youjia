@@ -1,0 +1,113 @@
+{
+  "source": "7a4bc8a8d47e13e9fbb571e860f0050b9d0bdf76",
+  "candidate_pr": 813,
+  "candidate_not_merged_or_public": true,
+  "tree": "2fa283aa0c8e099a268b51087f75bfb4d180596e",
+  "native_checks": [
+    104,
+    129,
+    30,
+    71,
+    648
+  ],
+  "native_total": 982,
+  "node_checks": 38,
+  "long_seconds": 620.774,
+  "actual_hidden": true,
+  "page_errors": [],
+  "gl_warnings": [],
+  "mixed_peak": 0.2645719647407532,
+  "max_cache_bytes": 192115152,
+  "max_buffers": 9,
+  "reopen_day": 3,
+  "reopen_inventory": {
+    "corn": 2,
+    "fish": {},
+    "flour": 0,
+    "grass": 0,
+    "ground": [],
+    "held": "",
+    "millet": 0,
+    "next_food_id": 1,
+    "production_revision": 0,
+    "revision": 2,
+    "schema": 5,
+    "wheat": 2
+  },
+  "actual_wind_sources": [
+    {
+      "t": 7426.200000047684,
+      "context": 1,
+      "state": "running",
+      "frames": 6144000,
+      "channels": 2,
+      "rate": 48000,
+      "loop": true,
+      "gainConnectionOnly": true,
+      "sourcePeak": 0.6697537899017334,
+      "observedRuntimeBufferKey": "file:res://assets/holiday/audio/bed_yard_gust.ogg",
+      "channel0FloatSha256": "df81f3b48a2169a5a389816be1529217a080f98684345aa07d6f264659434143"
+    }
+  ],
+  "old04_not_dispatched": true,
+  "actual_pcm_matches_long_route": true,
+  "same128s_is_not_identity_proof": true,
+  "native44100_reference_is_diagnostic_not_web48000_hash_comparison": true,
+  "ci": {
+    "head": "7a4bc8a8d47e13e9fbb571e860f0050b9d0bdf76",
+    "run": 38857529378,
+    "job": 116832233625,
+    "status": "completed",
+    "success": true,
+    "full_log_read": true,
+    "full_log_bytes": 455066,
+    "full_log_chars": 454797,
+    "lines": 4181,
+    "action_error_lines": [],
+    "build_identity": [
+      "2026-10-16T05:47:00.9963458Z HEAD is now at 810622d Merge 7a4bc8a8d47e13e9fbb571e860f0050b9d0bdf76 into cec64baffb8fec407bbe308d366bcf417950e42a",
+      "2026-10-16T06:01:35.3464167Z YARD AUDIO PASS 104",
+      "2026-10-16T06:13:26.3373579Z REGIONAL_AUDIO checks=129 failures=0",
+      "2026-10-16T06:13:26.5969973Z Bundled build identity: 810622ddb2947ebddcd461fb462d42ffaf1a075f",
+      "2026-10-16T06:13:36.4874298Z [web-index-buffer] actual template / exact delta / idempotence / 5 rejection cases PASS"
+    ],
+    "last_lines": [
+      "2026-10-16T06:13:36.8347239Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\\.gitdir:",
+      "2026-10-16T06:13:36.8407245Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url",
+      "2026-10-16T06:13:36.8805301Z Cleaning up orphan processes",
+      "2026-10-16T06:13:36.9255273Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/",
+      ""
+    ],
+    "proposed_merge": "810622ddb2947ebddcd461fb462d42ffaf1a075f",
+    "proposed_merge_tree": "2fa283aa0c8e099a268b51087f75bfb4d180596e",
+    "tree_same_as_candidate": true,
+    "raw_sha256": "5fe9c2c5bf8956c0d22de34220bccb56da9d02b5ca3e90cf83750f2c68e52b34"
+  },
+  "pck": {
+    "source": "7a4bc8a8d47e13e9fbb571e860f0050b9d0bdf76",
+    "game": "game-7a4bc8a",
+    "pck_bytes": 91628832,
+    "pck_sha256": "2fa1f3fdaad87f091008e45a59fd6b475e5e1d244a54f6df81e03ea95aa910d1",
+    "engine": {
+      "entry": "engine-e232d3881ea999631bbb4a08ccc86fa54dd2bc8a5b42fb6cb281cb86dd85bc48",
+      "sha256": {
+        "engine-e232d3881ea999631bbb4a08ccc86fa54dd2bc8a5b42fb6cb281cb86dd85bc48.js": "33c94cb3175f3333b82e2a3be5e8e86f77986f0aa2042b1631f6367a4e5bb6ba",
+        "engine-e232d3881ea999631bbb4a08ccc86fa54dd2bc8a5b42fb6cb281cb86dd85bc48.wasm": "fdab8cf15509d9042cd7f6f9f9eafb5201c85a59ed161d91346046b2a9268fe4",
+        "engine-e232d3881ea999631bbb4a08ccc86fa54dd2bc8a5b42fb6cb281cb86dd85bc48.audio.worklet.js": "5b476a9c9ce642c0ee4256436d1bc31d9c38f868aca0f9a8e2a57c18d2dec2a3",
+        "engine-e232d3881ea999631bbb4a08ccc86fa54dd2bc8a5b42fb6cb281cb86dd85bc48.audio.position.worklet.js": "be33985bc7160d6bf9646f259cd86b259cd67b02ccb297ee5c44f8ac84327bc8"
+      },
+      "repairs": [
+        {
+          "id": "godot-4.7.2-webgl2-index-update-target-v1",
+          "upstreamSha256": "fc74679e3b97f76878947fcd4fbe1268cbfa6188182a2e33bbc3f5dc9bfa57d0",
+          "sha256": "fdab8cf15509d9042cd7f6f9f9eafb5201c85a59ed161d91346046b2a9268fe4",
+          "scope": "MeshStorage::mesh_surface_update_index_region; three buffer targets"
+        }
+      ]
+    },
+    "source17_sha256": "17c1eeee67fae2dbf5790a5d2a7a8d14e8462b0c0660a06c831bc5eb60d595d9",
+    "local_candidate_not_public": true
+  },
+  "hardware_listening": false,
+  "physical_phone": false
+}
