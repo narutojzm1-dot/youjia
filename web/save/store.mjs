@@ -1,6 +1,10 @@
 import {makeLegacySeal, validLegacySeal} from './legacy_seal.mjs';
 // Dedicated Host database. Never writes the legacy /userfs IDBFS database.
 export const NAMESPACE = 'youjia-save-host-v1';
+// Writer capability epoch, independent of the unchanged envelope/payload schemas.
+// Opening v2 closes live v1 connections; cached v1 writers cannot reopen and
+// sanitize away resources introduced by newer game packs (#827).
+const WRITER_VERSION = 2;
 const SCHEMA = 'youjia.save-envelope/v1';
 const SEALED_SCHEMA = 'youjia.save-envelope/v2';
 const FIELDS = ['schema', 'store_id', 'commit_id', 'request_id', 'parent_commit_id',
@@ -70,11 +74,22 @@ export async function openStore() {
   // A missing lock service must not create even an empty database.
   if (!navigator.locks) throw Error('no_web_locks');
   const db = await new Promise((resolve, reject) => {
-    const r = indexedDB.open(name, 1);
-    r.onupgradeneeded = () => r.result.createObjectStore('records');
-    r.onsuccess = () => resolve(r.result);
+    let abandoned = false;
+    const r = indexedDB.open(name, WRITER_VERSION);
+    r.onupgradeneeded = event => {
+      // An already reported blocked open must never perform a late upgrade.
+      if (abandoned) { r.transaction.abort(); return; }
+      if (event.oldVersion === 0) r.result.createObjectStore('records');
+      // Existing records, pending intents, archives and legacy seals stay exact.
+      // A damaged existing database is not an invitation to initialize a new one.
+      else if (!r.result.objectStoreNames.contains('records')) r.transaction.abort();
+    };
+    r.onsuccess = () => {
+      if (abandoned) r.result.close();
+      else resolve(r.result);
+    };
     r.onerror = () => reject(r.error);
-    r.onblocked = () => reject(Error('database blocked'));
+    r.onblocked = () => { abandoned = true; reject(Error('database blocked')); };
   });
   db.onversionchange = () => db.close();
   function transact(mode, apply, stage = '') {

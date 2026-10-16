@@ -8,6 +8,7 @@ const Edging := preload("res://scripts/game/pond_edging.gd")
 const Contract := preload("res://scripts/exploration/exploration_contract.gd")
 const Inventory := preload("res://scripts/inventory/yard_inventory.gd")
 const Production := preload("res://scripts/game/growth_production.gd")
+const Stove := preload("res://scripts/game/yard_stove.gd")
 
 static func empty() -> Dictionary:
 	return {"schema":1, "revision":0, "actions":{}}
@@ -38,7 +39,8 @@ static func budget(snapshot: Dictionary, period: String) -> Dictionary:
 	var meals := Meals.read(snapshot)
 	var actions := read(snapshot)
 	var production := Production.read(snapshot)
-	if day == null or period not in PERIODS or meals.is_empty() or actions.is_empty() or production.is_empty(): return {"error":"AP_INVALID"}
+	var stove := Stove.read(snapshot)
+	if day == null or period not in PERIODS or meals.is_empty() or actions.is_empty() or production.is_empty() or stove.is_empty(): return {"error":"AP_INVALID"}
 	var days := {int(day):{"earned":[0,0,0],"spent":[0,0,0],"last":-1}}
 	for receipt: Dictionary in meals.receipts:
 		if receipt.day > day: return {"error":"AP_INVALID"}
@@ -46,7 +48,7 @@ static func budget(snapshot: Dictionary, period: String) -> Dictionary:
 		var index := PERIODS.find(receipt.meal)
 		days[receipt.day].earned[index] = receipt.earned
 		days[receipt.day].last = maxi(days[receipt.day].last,index)
-	for receipt: Dictionary in actions.actions.values() + production.receipts:
+	for receipt: Dictionary in actions.actions.values() + production.receipts + stove.receipts:
 		if not days.has(receipt.day): return {"error":"AP_INVALID"}
 		var index := PERIODS.find(receipt.period)
 		days[receipt.day].spent[index] += receipt.ap
@@ -64,7 +66,24 @@ static func budget(snapshot: Dictionary, period: String) -> Dictionary:
 			if date == day and index == current: available = balance
 	# Keep every historical receipt in the optimistic source guard. Historical
 	# overdrafts still fail above; valid surplus is untouched and unavailable.
-	return {"day":int(day),"period":period,"available":available,"source":{"meals":meals,"actions":actions,"production":production}}
+	return {"day":int(day),"period":period,"available":available,"source":{"meals":meals,"actions":actions,"production":production,"stove":stove}}
+
+static func complete_stove(snapshot: Dictionary, expected: Dictionary, stage: int, proposal: Dictionary, config: Dictionary) -> Dictionary:
+	if expected.size() != 4 or not expected.has_all(["day","period","available","source"]) or not expected.period is String: return {"error":"AP_INVALID"}
+	var current := budget(snapshot,expected.period)
+	if current.has("error"): return current
+	if current != expected: return {"error":"AP_CHANGED"}
+	var cost: Variant = Contract.as_int(config.get("ap"),1,6)
+	if cost == null: return {"error":"AP_INVALID"}
+	if current.available < cost: return {"error":"AP_EMPTY"}
+	var changed := Stove.complete(snapshot,stage,current.day,current.period,proposal,config)
+	if changed.has("error"): return changed
+	# Advance AP scope in this SAME atomic candidate, even before any milling.
+	# Older clients reject schema 2 rather than re-spend unseen stove costs.
+	var production: Dictionary = current.source.production.duplicate(true)
+	production.schema = 2
+	changed.candidate[Production.FIELD] = production
+	return changed
 
 ## Validate one shared budget, then return ALL milling effects in one snapshot.
 ## Production IDs/revisions are independent of the legacy pond section pairing.

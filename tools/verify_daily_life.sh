@@ -182,6 +182,9 @@ run_godot suite test/growth_materials_suite.gd
 
 run_godot suite test/growth_budget_suite.gd
 run_godot suite test/growth_production_suite.gd
+run_godot suite test/yard_stove_suite.gd
+run_godot suite test/stove_cross_version_suite.gd
+run_godot suite test/stove_director_suite.gd
 run_godot suite test/pond_edging_view_suite.gd
 run_godot suite test/pond_growth_director_suite.gd
 run_godot suite test/milling_director_suite.gd
