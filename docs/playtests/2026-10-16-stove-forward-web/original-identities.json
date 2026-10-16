@@ -1,0 +1,117 @@
+{
+  "originals": [
+    {
+      "name": "sources.json",
+      "encoding": "gzip+base64",
+      "original_bytes": 1061,
+      "sha256": "bc9397d7eb8eedc3cfe2cf1874583224c7bec6bf31981010f671ddd4a9f8a8fb"
+    },
+    {
+      "name": "red-complete-stove_cross_version.log",
+      "encoding": "gzip+base64",
+      "original_bytes": 3822,
+      "sha256": "9ef5a2586ed6dd3ddc824416aac24b9d6cc7243c4b7f8e112f469cd2d724f630"
+    },
+    {
+      "name": "green-stove_cross_version.log",
+      "encoding": "gzip+base64",
+      "original_bytes": 315,
+      "sha256": "b90fd3def61947eca490d91ffb2546775497094617cb24c95fd7d383a4e3a5fe"
+    },
+    {
+      "name": "green-yard_stove.log",
+      "encoding": "gzip+base64",
+      "original_bytes": 108,
+      "sha256": "3ccae5af79b23dbcd1e78d26e5dd958f1216b953a2f8b40006aaac40686ca3eb"
+    },
+    {
+      "name": "green-growth_production.log",
+      "encoding": "gzip+base64",
+      "original_bytes": 116,
+      "sha256": "ff08b4f4965e390a67d2dc1ff6586032755a1c3bf67094e1d1ee0b50d5e77012"
+    },
+    {
+      "name": "green-growth_budget.log",
+      "encoding": "gzip+base64",
+      "original_bytes": 111,
+      "sha256": "1261a1528c684c59e2008b1db3833fe48644b97816ca8beb57156b4926f68577"
+    },
+    {
+      "name": "regression-stove_director.log",
+      "encoding": "gzip+base64",
+      "original_bytes": 112,
+      "sha256": "676f8f6e0487e34b7a84b633af1f390854c6eef0f93845a1f21cf3e482649d10"
+    },
+    {
+      "name": "regression-milling_director.log",
+      "encoding": "gzip+base64",
+      "original_bytes": 115,
+      "sha256": "d23d887741b4ea7c762c855f10328f17dd8e5eac9a131617aa91df90a6539b0e"
+    },
+    {
+      "name": "regression-pond_growth_director.log",
+      "encoding": "gzip+base64",
+      "original_bytes": 872,
+      "sha256": "fd4fe53af6f8a1242de7625830ed0a324a0147683e5a4c24d2c8af6a55931ab0"
+    },
+    {
+      "name": "regression-growth_carried_photo.log",
+      "encoding": "gzip+base64",
+      "original_bytes": 118,
+      "sha256": "7e17196896fd27f612ee4ce0fdd70954bb55e1c2e7a22fc9be5af8066ede4757"
+    },
+    {
+      "name": "regression-yard_mill_view.log",
+      "encoding": "gzip+base64",
+      "original_bytes": 112,
+      "sha256": "c71f7b2196b7fb7382f89b212e11120b1d9cd632861d155f9a6f06e738ff7dfa"
+    },
+    {
+      "name": "web-sequence.json",
+      "encoding": "gzip+base64",
+      "original_bytes": 228394,
+      "sha256": "fe04cc58a47175361b5c83f972ff9188a7642cb3f1507acc3bc81b34d1e6acad"
+    },
+    {
+      "name": "old-web-compatibility.json",
+      "encoding": "gzip+base64",
+      "original_bytes": 174105,
+      "sha256": "5574020f214d8a3d9cc9119a3650ef2c6de38225622fbe08cd0edf9ca24bdfd6"
+    },
+    {
+      "name": "export-identity.json",
+      "encoding": "gzip+base64",
+      "original_bytes": 1465,
+      "sha256": "23243b968dd064c25873c620b873b8919216ae46808b0519ae1dec2ac09e321f"
+    },
+    {
+      "name": "embedded-pack.json",
+      "encoding": "gzip+base64",
+      "original_bytes": 1033,
+      "sha256": "5c4d2ee873978265ca1639c501ba5825f1ee7900df150f6b78d6693bd3f942a5"
+    },
+    {
+      "name": "embedded-pack.log",
+      "encoding": "gzip+base64",
+      "original_bytes": 977,
+      "sha256": "2bff585469ae57669347b774ee6ddfd299b928fa45a1ef46d3da2af606a8f97e"
+    },
+    {
+      "name": "remote-source-verification.json",
+      "encoding": "gzip+base64",
+      "original_bytes": 1463,
+      "sha256": "b592b61a5d2b5e7166760edad750dc70d1deebf10cb57bf67434c1ab085321db"
+    },
+    {
+      "name": "old70-staged-assets.json",
+      "encoding": "gzip+base64",
+      "original_bytes": 3107,
+      "sha256": "0ad20b86e8287934495862a2905d623fb16cb01e4bc2749bfb59415d746ee279"
+    }
+  ],
+  "new_video_retained_in_migration_backup": {
+    "bytes": 4629355,
+    "sha256": "c3ae78cb5335ab7cab4d31371350f0ebcfa230212fcc1001af9677d2ddcca00f",
+    "public_archive": "unchanged visuals also have source1a55 original/preview in sibling archive; this new full video is retained in migration supplement, not claimed uploaded"
+  }
+}
