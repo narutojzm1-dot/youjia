@@ -1,0 +1,664 @@
+diff --git a/art/concepts/env_fx_stream_20261014/README.md b/art/concepts/env_fx_stream_20261014/README.md
+index 4b81ce2ebf..932f57f7de 100644
+--- a/art/concepts/env_fx_stream_20261014/README.md
++++ b/art/concepts/env_fx_stream_20261014/README.md
+@@ -184,3 +184,26 @@ python3 art/concepts/env_fx_stream_20261014/verify_mp4_vs_png.py /tmp/mv749full
+ ```
+ 
+ 边界：完整 1200 张原 PNG（约 4.2 GB）没有入库，上面的 PNG 统计仍是作者侧 box（xvfb + Mesa 软件 GL）结果；录制是确定性的，可按命令重录复算。单 GOP 文件拖动定位会慢一些，只作演示。仍只是隔离候选，未接入运行时，不是宿主接线、实体设备或美术验收。
++
++## 连续暂停 / 低动效切换的原速录屏核对（#749 隔离剩余项）
++
++`stream_flow_driver.gd` 新增 `--toggle-sequence`（仅隔离预览）：Movie Maker 固定 30fps 下按帧号注入真实按键事件（P 暂停/继续、L 低动效），走和玩家相同的 `_unhandled_input`，不直接改状态；每帧打印一行 `TOGGLE_SEQ` JSON（帧号、phase、paused、low、delta）。排定序列 360 帧 / 12 秒：60 暂停、120 继续、150 低动效开、180 低动效中暂停、210 继续、240 低动效关、270/271 隔帧快切暂停、280/281 隔帧快切低动效、300 同帧 L+P、330 同帧 P+L。
++
++```bash
++xvfb-run -a -s "-screen 0 1800x1000x24" godot --path art/concepts/env_fx_stream_20261014/godot_preview \
++  --resolution 1672x941 --write-movie /tmp/mvtog/f.png --fixed-fps 30 --quit-after 360 \
++  -- --hide-ui --toggle-sequence > /tmp/mvtog_log.txt 2>&1
++python3 art/concepts/env_fx_stream_20261014/verify_toggle_sequence.py /tmp/mvtog /tmp/mvtog_log.txt
++```
++
++作者侧 box 实测（Godot 4.7.2、xvfb + Mesa 软件 GL，非实体 GPU/手机），`ok=true`：
++
++- 360 帧日志与 360 张 PNG 对齐；状态切换全部落在排定帧，隔帧快切与同帧双键都生效（state_mismatch 0）。
++- phase 步长逐帧符合：正常 2π/240、低动效 2π/960、暂停 0（容差 1e-6，0 处不符）；每次继续都从暂停值接着走一步，无跳变。
++- 像素：121 对暂停中相邻帧整画面差 0；运动帧水域都有变化；水域平均帧差 正常 1.1531、低动效 0.4053（比 0.3515，非线性映射所以不是 0.25）；水遮罩外与保护区 12 秒内差 0 / 0。
++- 负向自检：只改日志副本（暂停中插 phase 跳变、漏掉隔帧快切）时脚本都 exit 1（见 `toggle_check_20261017/negative_selftest.txt`）。
++- 记录到的一点：Movie Maker 首帧 `delta` 是 0.025 而不是 1/30，之后都是 1/30；脚本按每帧实际 delta 计算期望步长，单独报告 `first_frame_delta`。这与上面原速录屏「第 1 圈第 2–4 帧」差异是否有关未验证。
++
++`toggle_check_20261017/`：`toggle_seq_frames.jsonl`（每帧状态原始输出）、`godot_movie_maker_log.txt`（录制日志）、`verify_result.txt`（核对原始输出）、`negative_selftest.txt`。360 张原 PNG 没有入库，可按命令确定性重录复算。
++
++边界：只证明隔离预览里暂停/低动效按键的逐帧行为与像素冻结，不是宿主接线、实体设备性能、无障碍设置接入或美术验收。仍只是隔离候选。
+diff --git a/art/concepts/env_fx_stream_20261014/godot_preview/stream_flow_driver.gd b/art/concepts/env_fx_stream_20261014/godot_preview/stream_flow_driver.gd
+index d5f77f7213..11a184fb06 100644
+--- a/art/concepts/env_fx_stream_20261014/godot_preview/stream_flow_driver.gd
++++ b/art/concepts/env_fx_stream_20261014/godot_preview/stream_flow_driver.gd
+@@ -19,6 +19,17 @@ var _keep_ui: bool = false
+ var _button_text_ready: bool = false
+ var _shown_paused: bool = false
+ var _shown_low_motion: bool = false
++var _toggle_seq: bool = false
++var _seq_frame: int = 0
++
++## 仅供 verify_toggle_sequence.py：Movie Maker 固定 30fps 下按帧号注入真实按键（P 暂停/继续，L 低动效），
++## 走与玩家相同的 _unhandled_input 路径，不直接改状态。帧号 → 按键列表。
++const TOGGLE_SCHEDULE := {
++	60: [KEY_P], 120: [KEY_P],
++	150: [KEY_L], 180: [KEY_P], 210: [KEY_P], 240: [KEY_L],
++	270: [KEY_P], 271: [KEY_P], 280: [KEY_L], 281: [KEY_L],
++	300: [KEY_L, KEY_P], 330: [KEY_P, KEY_L],
++}
+ 
+ @onready var _preview: CanvasItem = $Preview
+ @onready var _ui: CanvasLayer = $UI
+@@ -56,9 +67,14 @@ func _advance(delta: float) -> float:
+ 
+ 
+ func _process(delta: float) -> void:
++	if _toggle_seq:
++		_inject_scheduled_keys()
+ 	if _advance(delta) != 0.0:
+ 		_push_phase()
+ 	_refresh_status()
++	if _toggle_seq:
++		print("TOGGLE_SEQ ", JSON.stringify({"frame": _seq_frame, "phase": phase, "paused": paused, "low": low_motion, "delta": delta}))
++		_seq_frame += 1
+ 	if _dump_path != "" and not _dump_started:
+ 		_dump_started = true
+ 		_dump_and_quit()
+@@ -74,6 +90,23 @@ func _unhandled_input(event: InputEvent) -> void:
+ 		_toggle_low_motion()
+ 
+ 
++func _inject_scheduled_keys() -> void:
++	if not TOGGLE_SCHEDULE.has(_seq_frame):
++		return
++	for code in TOGGLE_SCHEDULE[_seq_frame]:
++		var ev := InputEventKey.new()
++		ev.keycode = code
++		ev.physical_keycode = code
++		ev.pressed = true
++		Input.parse_input_event(ev)
++		var up := InputEventKey.new()
++		up.keycode = code
++		up.physical_keycode = code
++		up.pressed = false
++		Input.parse_input_event(up)
++	Input.flush_buffered_events()
++
++
+ func _toggle_paused() -> void:
+ 	paused = not paused
+ 	_refresh_status()
+@@ -152,6 +185,10 @@ func _parse_user_args() -> void:
+ 		elif token == "--offset" and i + 2 < args.size():
+ 			$Preview.position = Vector2(float(args[i + 1]), float(args[i + 2]))
+ 			i += 3
++		elif token == "--toggle-sequence":
++			# 仅供连续暂停/低动效切换录屏核对；与 --write-movie --fixed-fps 30 --hide-ui 合用。
++			_toggle_seq = true
++			i += 1
+ 		elif token == "--keep-ui":
+ 			_keep_ui = true
+ 			i += 1
+diff --git a/art/concepts/env_fx_stream_20261014/toggle_check_20261017/godot_movie_maker_log.txt b/art/concepts/env_fx_stream_20261014/toggle_check_20261017/godot_movie_maker_log.txt
+new file mode 100644
+index 0000000000..48cf2c2dee
+--- /dev/null
++++ b/art/concepts/env_fx_stream_20261014/toggle_check_20261017/godot_movie_maker_log.txt
+@@ -0,0 +1,15 @@
++Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
++WARNING: Could not set V-Sync mode, as changing V-Sync mode is not supported by the graphics driver.
++     at: set_use_vsync (platform/linuxbsd/x11/gl_manager_x11.cpp:372)
++OpenGL API 4.5 (Core Profile) Mesa 25.0.7-2+deb13u1 - Compatibility - Using Device: Mesa - llvmpipe (LLVM 19.1.7, 256 bits)
++
++Movie Maker mode enabled, recording movie in 1672×941 @ 30 FPS...
++Stream flow preview ready. phase=0.0 paused=false low_motion=false
++window (1672, 941) viewport (1672.0, 941.0)
++--------------------------------------------------------------------------------
++Done recording movie at path: /tmp/mvtog/f.png
++360 frames at 30 FPS (movie length: 00:00:12:00), recorded in 00:03:00 (6% of real-time speed).
++CPU render time: 1.88 seconds (average: 5.22 ms/frame)
++GPU render time: 1.75 seconds (average: 4.86 ms/frame)
++Encoding time: 174.10 seconds (average: 483.61 ms/frame)
++--------------------------------------------------------------------------------
+diff --git a/art/concepts/env_fx_stream_20261014/toggle_check_20261017/negative_selftest.txt b/art/concepts/env_fx_stream_20261014/toggle_check_20261017/negative_selftest.txt
+new file mode 100644
+index 0000000000..2cdd51f327
+--- /dev/null
++++ b/art/concepts/env_fx_stream_20261014/toggle_check_20261017/negative_selftest.txt
+@@ -0,0 +1,3 @@
++负向自检（只改日志副本，帧不变；用于确认核对脚本会拒绝错误）：
++- phase_jump_in_pause：把暂停中第 90 帧 phase +0.01 → exit 1，ok=false，step_mismatch_count=2
++- missed_rapid_toggle：把隔帧快切的第 271 帧标成仍暂停 → exit 1，ok=false，state_mismatch=[271]，该帧像素差 8≠0
+diff --git a/art/concepts/env_fx_stream_20261014/toggle_check_20261017/toggle_seq_frames.jsonl b/art/concepts/env_fx_stream_20261014/toggle_check_20261017/toggle_seq_frames.jsonl
+new file mode 100644
+index 0000000000..bef86f9b99
+--- /dev/null
++++ b/art/concepts/env_fx_stream_20261014/toggle_check_20261017/toggle_seq_frames.jsonl
+@@ -0,0 +1,360 @@
++TOGGLE_SEQ {"delta":0.025,"frame":0,"low":false,"paused":false,"phase":0.0196349540849362}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":1,"low":false,"paused":false,"phase":0.0458148928648511}
++TOGGLE_SEQ {"delta":0.0416666666666667,"frame":2,"low":false,"paused":false,"phase":0.0785398163397448}
++TOGGLE_SEQ {"delta":0.0291666666666667,"frame":3,"low":false,"paused":false,"phase":0.10144726277217}
++TOGGLE_SEQ {"delta":0.03,"frame":4,"low":false,"paused":false,"phase":0.125009207674094}
++TOGGLE_SEQ {"delta":0.0325,"frame":5,"low":false,"paused":false,"phase":0.150534647984511}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":6,"low":false,"paused":false,"phase":0.176714586764426}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":7,"low":false,"paused":false,"phase":0.202894525544341}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":8,"low":false,"paused":false,"phase":0.229074464324256}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":9,"low":false,"paused":false,"phase":0.255254403104171}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":10,"low":false,"paused":false,"phase":0.281434341884086}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":11,"low":false,"paused":false,"phase":0.307614280664001}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":12,"low":false,"paused":false,"phase":0.333794219443915}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":13,"low":false,"paused":false,"phase":0.35997415822383}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":14,"low":false,"paused":false,"phase":0.386154097003745}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":15,"low":false,"paused":false,"phase":0.41233403578366}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":16,"low":false,"paused":false,"phase":0.438513974563575}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":17,"low":false,"paused":false,"phase":0.46469391334349}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":18,"low":false,"paused":false,"phase":0.490873852123405}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":19,"low":false,"paused":false,"phase":0.51705379090332}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":20,"low":false,"paused":false,"phase":0.543233729683235}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":21,"low":false,"paused":false,"phase":0.56941366846315}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":22,"low":false,"paused":false,"phase":0.595593607243065}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":23,"low":false,"paused":false,"phase":0.62177354602298}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":24,"low":false,"paused":false,"phase":0.647953484802895}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":25,"low":false,"paused":false,"phase":0.67413342358281}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":26,"low":false,"paused":false,"phase":0.700313362362725}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":27,"low":false,"paused":false,"phase":0.72649330114264}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":28,"low":false,"paused":false,"phase":0.752673239922555}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":29,"low":false,"paused":false,"phase":0.77885317870247}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":30,"low":false,"paused":false,"phase":0.805033117482385}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":31,"low":false,"paused":false,"phase":0.8312130562623}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":32,"low":false,"paused":false,"phase":0.857392995042215}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":33,"low":false,"paused":false,"phase":0.88357293382213}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":34,"low":false,"paused":false,"phase":0.909752872602045}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":35,"low":false,"paused":false,"phase":0.93593281138196}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":36,"low":false,"paused":false,"phase":0.962112750161875}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":37,"low":false,"paused":false,"phase":0.98829268894179}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":38,"low":false,"paused":false,"phase":1.0144726277217}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":39,"low":false,"paused":false,"phase":1.04065256650162}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":40,"low":false,"paused":false,"phase":1.06683250528153}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":41,"low":false,"paused":false,"phase":1.09301244406145}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":42,"low":false,"paused":false,"phase":1.11919238284136}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":43,"low":false,"paused":false,"phase":1.14537232162128}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":44,"low":false,"paused":false,"phase":1.17155226040119}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":45,"low":false,"paused":false,"phase":1.19773219918111}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":46,"low":false,"paused":false,"phase":1.22391213796102}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":47,"low":false,"paused":false,"phase":1.25009207674094}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":48,"low":false,"paused":false,"phase":1.27627201552085}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":49,"low":false,"paused":false,"phase":1.30245195430077}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":50,"low":false,"paused":false,"phase":1.32863189308068}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":51,"low":false,"paused":false,"phase":1.3548118318606}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":52,"low":false,"paused":false,"phase":1.38099177064051}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":53,"low":false,"paused":false,"phase":1.40717170942043}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":54,"low":false,"paused":false,"phase":1.43335164820034}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":55,"low":false,"paused":false,"phase":1.45953158698026}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":56,"low":false,"paused":false,"phase":1.48571152576017}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":57,"low":false,"paused":false,"phase":1.51189146454009}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":58,"low":false,"paused":false,"phase":1.53807140332}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":59,"low":false,"paused":false,"phase":1.56425134209992}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":60,"low":false,"paused":true,"phase":1.56425134209992}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":61,"low":false,"paused":true,"phase":1.56425134209992}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":62,"low":false,"paused":true,"phase":1.56425134209992}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":63,"low":false,"paused":true,"phase":1.56425134209992}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":64,"low":false,"paused":true,"phase":1.56425134209992}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":65,"low":false,"paused":true,"phase":1.56425134209992}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":66,"low":false,"paused":true,"phase":1.56425134209992}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":67,"low":false,"paused":true,"phase":1.56425134209992}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":68,"low":false,"paused":true,"phase":1.56425134209992}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":69,"low":false,"paused":true,"phase":1.56425134209992}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":70,"low":false,"paused":true,"phase":1.56425134209992}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":71,"low":false,"paused":true,"phase":1.56425134209992}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":72,"low":false,"paused":true,"phase":1.56425134209992}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":73,"low":false,"paused":true,"phase":1.56425134209992}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":74,"low":false,"paused":true,"phase":1.56425134209992}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":75,"low":false,"paused":true,"phase":1.56425134209992}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":76,"low":false,"paused":true,"phase":1.56425134209992}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":77,"low":false,"paused":true,"phase":1.56425134209992}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":78,"low":false,"paused":true,"phase":1.56425134209992}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":79,"low":false,"paused":true,"phase":1.56425134209992}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":80,"low":false,"paused":true,"phase":1.56425134209992}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":81,"low":false,"paused":true,"phase":1.56425134209992}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":82,"low":false,"paused":true,"phase":1.56425134209992}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":83,"low":false,"paused":true,"phase":1.56425134209992}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":84,"low":false,"paused":true,"phase":1.56425134209992}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":85,"low":false,"paused":true,"phase":1.56425134209992}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":86,"low":false,"paused":true,"phase":1.56425134209992}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":87,"low":false,"paused":true,"phase":1.56425134209992}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":88,"low":false,"paused":true,"phase":1.56425134209992}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":89,"low":false,"paused":true,"phase":1.56425134209992}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":90,"low":false,"paused":true,"phase":1.56425134209992}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":91,"low":false,"paused":true,"phase":1.56425134209992}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":92,"low":false,"paused":true,"phase":1.56425134209992}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":93,"low":false,"paused":true,"phase":1.56425134209992}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":94,"low":false,"paused":true,"phase":1.56425134209992}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":95,"low":false,"paused":true,"phase":1.56425134209992}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":96,"low":false,"paused":true,"phase":1.56425134209992}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":97,"low":false,"paused":true,"phase":1.56425134209992}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":98,"low":false,"paused":true,"phase":1.56425134209992}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":99,"low":false,"paused":true,"phase":1.56425134209992}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":100,"low":false,"paused":true,"phase":1.56425134209992}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":101,"low":false,"paused":true,"phase":1.56425134209992}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":102,"low":false,"paused":true,"phase":1.56425134209992}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":103,"low":false,"paused":true,"phase":1.56425134209992}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":104,"low":false,"paused":true,"phase":1.56425134209992}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":105,"low":false,"paused":true,"phase":1.56425134209992}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":106,"low":false,"paused":true,"phase":1.56425134209992}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":107,"low":false,"paused":true,"phase":1.56425134209992}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":108,"low":false,"paused":true,"phase":1.56425134209992}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":109,"low":false,"paused":true,"phase":1.56425134209992}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":110,"low":false,"paused":true,"phase":1.56425134209992}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":111,"low":false,"paused":true,"phase":1.56425134209992}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":112,"low":false,"paused":true,"phase":1.56425134209992}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":113,"low":false,"paused":true,"phase":1.56425134209992}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":114,"low":false,"paused":true,"phase":1.56425134209992}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":115,"low":false,"paused":true,"phase":1.56425134209992}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":116,"low":false,"paused":true,"phase":1.56425134209992}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":117,"low":false,"paused":true,"phase":1.56425134209992}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":118,"low":false,"paused":true,"phase":1.56425134209992}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":119,"low":false,"paused":true,"phase":1.56425134209992}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":120,"low":false,"paused":false,"phase":1.59043128087983}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":121,"low":false,"paused":false,"phase":1.61661121965975}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":122,"low":false,"paused":false,"phase":1.64279115843966}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":123,"low":false,"paused":false,"phase":1.66897109721958}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":124,"low":false,"paused":false,"phase":1.69515103599949}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":125,"low":false,"paused":false,"phase":1.72133097477941}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":126,"low":false,"paused":false,"phase":1.74751091355932}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":127,"low":false,"paused":false,"phase":1.77369085233924}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":128,"low":false,"paused":false,"phase":1.79987079111915}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":129,"low":false,"paused":false,"phase":1.82605072989907}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":130,"low":false,"paused":false,"phase":1.85223066867898}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":131,"low":false,"paused":false,"phase":1.8784106074589}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":132,"low":false,"paused":false,"phase":1.90459054623881}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":133,"low":false,"paused":false,"phase":1.93077048501872}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":134,"low":false,"paused":false,"phase":1.95695042379864}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":135,"low":false,"paused":false,"phase":1.98313036257855}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":136,"low":false,"paused":false,"phase":2.00931030135847}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":137,"low":false,"paused":false,"phase":2.03549024013838}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":138,"low":false,"paused":false,"phase":2.0616701789183}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":139,"low":false,"paused":false,"phase":2.08785011769821}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":140,"low":false,"paused":false,"phase":2.11403005647813}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":141,"low":false,"paused":false,"phase":2.14020999525804}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":142,"low":false,"paused":false,"phase":2.16638993403796}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":143,"low":false,"paused":false,"phase":2.19256987281788}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":144,"low":false,"paused":false,"phase":2.21874981159779}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":145,"low":false,"paused":false,"phase":2.24492975037771}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":146,"low":false,"paused":false,"phase":2.27110968915762}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":147,"low":false,"paused":false,"phase":2.29728962793754}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":148,"low":false,"paused":false,"phase":2.32346956671745}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":149,"low":false,"paused":false,"phase":2.34964950549737}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":150,"low":true,"paused":false,"phase":2.35619449019234}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":151,"low":true,"paused":false,"phase":2.36273947488732}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":152,"low":true,"paused":false,"phase":2.3692844595823}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":153,"low":true,"paused":false,"phase":2.37582944427728}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":154,"low":true,"paused":false,"phase":2.38237442897226}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":155,"low":true,"paused":false,"phase":2.38891941366724}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":156,"low":true,"paused":false,"phase":2.39546439836222}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":157,"low":true,"paused":false,"phase":2.4020093830572}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":158,"low":true,"paused":false,"phase":2.40855436775217}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":159,"low":true,"paused":false,"phase":2.41509935244715}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":160,"low":true,"paused":false,"phase":2.42164433714213}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":161,"low":true,"paused":false,"phase":2.42818932183711}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":162,"low":true,"paused":false,"phase":2.43473430653209}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":163,"low":true,"paused":false,"phase":2.44127929122707}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":164,"low":true,"paused":false,"phase":2.44782427592205}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":165,"low":true,"paused":false,"phase":2.45436926061703}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":166,"low":true,"paused":false,"phase":2.460914245312}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":167,"low":true,"paused":false,"phase":2.46745923000698}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":168,"low":true,"paused":false,"phase":2.47400421470196}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":169,"low":true,"paused":false,"phase":2.48054919939694}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":170,"low":true,"paused":false,"phase":2.48709418409192}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":171,"low":true,"paused":false,"phase":2.4936391687869}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":172,"low":true,"paused":false,"phase":2.50018415348188}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":173,"low":true,"paused":false,"phase":2.50672913817686}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":174,"low":true,"paused":false,"phase":2.51327412287183}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":175,"low":true,"paused":false,"phase":2.51981910756681}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":176,"low":true,"paused":false,"phase":2.52636409226179}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":177,"low":true,"paused":false,"phase":2.53290907695677}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":178,"low":true,"paused":false,"phase":2.53945406165175}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":179,"low":true,"paused":false,"phase":2.54599904634673}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":180,"low":true,"paused":true,"phase":2.54599904634673}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":181,"low":true,"paused":true,"phase":2.54599904634673}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":182,"low":true,"paused":true,"phase":2.54599904634673}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":183,"low":true,"paused":true,"phase":2.54599904634673}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":184,"low":true,"paused":true,"phase":2.54599904634673}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":185,"low":true,"paused":true,"phase":2.54599904634673}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":186,"low":true,"paused":true,"phase":2.54599904634673}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":187,"low":true,"paused":true,"phase":2.54599904634673}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":188,"low":true,"paused":true,"phase":2.54599904634673}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":189,"low":true,"paused":true,"phase":2.54599904634673}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":190,"low":true,"paused":true,"phase":2.54599904634673}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":191,"low":true,"paused":true,"phase":2.54599904634673}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":192,"low":true,"paused":true,"phase":2.54599904634673}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":193,"low":true,"paused":true,"phase":2.54599904634673}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":194,"low":true,"paused":true,"phase":2.54599904634673}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":195,"low":true,"paused":true,"phase":2.54599904634673}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":196,"low":true,"paused":true,"phase":2.54599904634673}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":197,"low":true,"paused":true,"phase":2.54599904634673}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":198,"low":true,"paused":true,"phase":2.54599904634673}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":199,"low":true,"paused":true,"phase":2.54599904634673}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":200,"low":true,"paused":true,"phase":2.54599904634673}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":201,"low":true,"paused":true,"phase":2.54599904634673}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":202,"low":true,"paused":true,"phase":2.54599904634673}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":203,"low":true,"paused":true,"phase":2.54599904634673}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":204,"low":true,"paused":true,"phase":2.54599904634673}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":205,"low":true,"paused":true,"phase":2.54599904634673}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":206,"low":true,"paused":true,"phase":2.54599904634673}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":207,"low":true,"paused":true,"phase":2.54599904634673}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":208,"low":true,"paused":true,"phase":2.54599904634673}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":209,"low":true,"paused":true,"phase":2.54599904634673}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":210,"low":true,"paused":false,"phase":2.55254403104171}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":211,"low":true,"paused":false,"phase":2.55908901573669}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":212,"low":true,"paused":false,"phase":2.56563400043167}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":213,"low":true,"paused":false,"phase":2.57217898512664}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":214,"low":true,"paused":false,"phase":2.57872396982162}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":215,"low":true,"paused":false,"phase":2.5852689545166}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":216,"low":true,"paused":false,"phase":2.59181393921158}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":217,"low":true,"paused":false,"phase":2.59835892390656}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":218,"low":true,"paused":false,"phase":2.60490390860154}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":219,"low":true,"paused":false,"phase":2.61144889329652}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":220,"low":true,"paused":false,"phase":2.6179938779915}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":221,"low":true,"paused":false,"phase":2.62453886268647}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":222,"low":true,"paused":false,"phase":2.63108384738145}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":223,"low":true,"paused":false,"phase":2.63762883207643}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":224,"low":true,"paused":false,"phase":2.64417381677141}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":225,"low":true,"paused":false,"phase":2.65071880146639}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":226,"low":true,"paused":false,"phase":2.65726378616137}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":227,"low":true,"paused":false,"phase":2.66380877085635}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":228,"low":true,"paused":false,"phase":2.67035375555133}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":229,"low":true,"paused":false,"phase":2.6768987402463}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":230,"low":true,"paused":false,"phase":2.68344372494128}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":231,"low":true,"paused":false,"phase":2.68998870963626}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":232,"low":true,"paused":false,"phase":2.69653369433124}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":233,"low":true,"paused":false,"phase":2.70307867902622}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":234,"low":true,"paused":false,"phase":2.7096236637212}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":235,"low":true,"paused":false,"phase":2.71616864841618}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":236,"low":true,"paused":false,"phase":2.72271363311116}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":237,"low":true,"paused":false,"phase":2.72925861780613}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":238,"low":true,"paused":false,"phase":2.73580360250111}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":239,"low":true,"paused":false,"phase":2.74234858719609}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":240,"low":false,"paused":false,"phase":2.76852852597601}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":241,"low":false,"paused":false,"phase":2.79470846475592}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":242,"low":false,"paused":false,"phase":2.82088840353584}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":243,"low":false,"paused":false,"phase":2.84706834231575}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":244,"low":false,"paused":false,"phase":2.87324828109567}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":245,"low":false,"paused":false,"phase":2.89942821987558}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":246,"low":false,"paused":false,"phase":2.9256081586555}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":247,"low":false,"paused":false,"phase":2.95178809743541}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":248,"low":false,"paused":false,"phase":2.97796803621533}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":249,"low":false,"paused":false,"phase":3.00414797499524}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":250,"low":false,"paused":false,"phase":3.03032791377516}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":251,"low":false,"paused":false,"phase":3.05650785255507}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":252,"low":false,"paused":false,"phase":3.08268779133499}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":253,"low":false,"paused":false,"phase":3.1088677301149}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":254,"low":false,"paused":false,"phase":3.13504766889482}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":255,"low":false,"paused":false,"phase":3.16122760767473}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":256,"low":false,"paused":false,"phase":3.18740754645465}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":257,"low":false,"paused":false,"phase":3.21358748523456}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":258,"low":false,"paused":false,"phase":3.23976742401448}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":259,"low":false,"paused":false,"phase":3.26594736279439}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":260,"low":false,"paused":false,"phase":3.29212730157431}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":261,"low":false,"paused":false,"phase":3.31830724035422}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":262,"low":false,"paused":false,"phase":3.34448717913414}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":263,"low":false,"paused":false,"phase":3.37066711791405}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":264,"low":false,"paused":false,"phase":3.39684705669397}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":265,"low":false,"paused":false,"phase":3.42302699547388}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":266,"low":false,"paused":false,"phase":3.4492069342538}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":267,"low":false,"paused":false,"phase":3.47538687303371}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":268,"low":false,"paused":false,"phase":3.50156681181363}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":269,"low":false,"paused":false,"phase":3.52774675059354}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":270,"low":false,"paused":true,"phase":3.52774675059354}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":271,"low":false,"paused":false,"phase":3.55392668937346}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":272,"low":false,"paused":false,"phase":3.58010662815337}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":273,"low":false,"paused":false,"phase":3.60628656693329}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":274,"low":false,"paused":false,"phase":3.63246650571321}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":275,"low":false,"paused":false,"phase":3.65864644449312}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":276,"low":false,"paused":false,"phase":3.68482638327304}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":277,"low":false,"paused":false,"phase":3.71100632205295}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":278,"low":false,"paused":false,"phase":3.73718626083287}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":279,"low":false,"paused":false,"phase":3.76336619961278}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":280,"low":true,"paused":false,"phase":3.76991118430776}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":281,"low":false,"paused":false,"phase":3.79609112308767}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":282,"low":false,"paused":false,"phase":3.82227106186759}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":283,"low":false,"paused":false,"phase":3.8484510006475}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":284,"low":false,"paused":false,"phase":3.87463093942742}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":285,"low":false,"paused":false,"phase":3.90081087820733}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":286,"low":false,"paused":false,"phase":3.92699081698725}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":287,"low":false,"paused":false,"phase":3.95317075576716}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":288,"low":false,"paused":false,"phase":3.97935069454708}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":289,"low":false,"paused":false,"phase":4.00553063332699}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":290,"low":false,"paused":false,"phase":4.03171057210691}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":291,"low":false,"paused":false,"phase":4.05789051088682}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":292,"low":false,"paused":false,"phase":4.08407044966674}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":293,"low":false,"paused":false,"phase":4.11025038844666}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":294,"low":false,"paused":false,"phase":4.13643032722657}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":295,"low":false,"paused":false,"phase":4.16261026600649}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":296,"low":false,"paused":false,"phase":4.1887902047864}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":297,"low":false,"paused":false,"phase":4.21497014356632}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":298,"low":false,"paused":false,"phase":4.24115008234623}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":299,"low":false,"paused":false,"phase":4.26733002112615}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":300,"low":true,"paused":true,"phase":4.26733002112615}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":301,"low":true,"paused":true,"phase":4.26733002112615}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":302,"low":true,"paused":true,"phase":4.26733002112615}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":303,"low":true,"paused":true,"phase":4.26733002112615}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":304,"low":true,"paused":true,"phase":4.26733002112615}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":305,"low":true,"paused":true,"phase":4.26733002112615}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":306,"low":true,"paused":true,"phase":4.26733002112615}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":307,"low":true,"paused":true,"phase":4.26733002112615}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":308,"low":true,"paused":true,"phase":4.26733002112615}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":309,"low":true,"paused":true,"phase":4.26733002112615}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":310,"low":true,"paused":true,"phase":4.26733002112615}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":311,"low":true,"paused":true,"phase":4.26733002112615}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":312,"low":true,"paused":true,"phase":4.26733002112615}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":313,"low":true,"paused":true,"phase":4.26733002112615}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":314,"low":true,"paused":true,"phase":4.26733002112615}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":315,"low":true,"paused":true,"phase":4.26733002112615}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":316,"low":true,"paused":true,"phase":4.26733002112615}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":317,"low":true,"paused":true,"phase":4.26733002112615}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":318,"low":true,"paused":true,"phase":4.26733002112615}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":319,"low":true,"paused":true,"phase":4.26733002112615}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":320,"low":true,"paused":true,"phase":4.26733002112615}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":321,"low":true,"paused":true,"phase":4.26733002112615}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":322,"low":true,"paused":true,"phase":4.26733002112615}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":323,"low":true,"paused":true,"phase":4.26733002112615}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":324,"low":true,"paused":true,"phase":4.26733002112615}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":325,"low":true,"paused":true,"phase":4.26733002112615}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":326,"low":true,"paused":true,"phase":4.26733002112615}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":327,"low":true,"paused":true,"phase":4.26733002112615}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":328,"low":true,"paused":true,"phase":4.26733002112615}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":329,"low":true,"paused":true,"phase":4.26733002112615}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":330,"low":false,"paused":false,"phase":4.29350995990606}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":331,"low":false,"paused":false,"phase":4.31968989868598}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":332,"low":false,"paused":false,"phase":4.34586983746589}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":333,"low":false,"paused":false,"phase":4.37204977624581}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":334,"low":false,"paused":false,"phase":4.39822971502572}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":335,"low":false,"paused":false,"phase":4.42440965380564}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":336,"low":false,"paused":false,"phase":4.45058959258555}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":337,"low":false,"paused":false,"phase":4.47676953136547}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":338,"low":false,"paused":false,"phase":4.50294947014538}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":339,"low":false,"paused":false,"phase":4.5291294089253}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":340,"low":false,"paused":false,"phase":4.55530934770521}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":341,"low":false,"paused":false,"phase":4.58148928648513}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":342,"low":false,"paused":false,"phase":4.60766922526504}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":343,"low":false,"paused":false,"phase":4.63384916404496}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":344,"low":false,"paused":false,"phase":4.66002910282487}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":345,"low":false,"paused":false,"phase":4.68620904160479}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":346,"low":false,"paused":false,"phase":4.7123889803847}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":347,"low":false,"paused":false,"phase":4.73856891916462}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":348,"low":false,"paused":false,"phase":4.76474885794453}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":349,"low":false,"paused":false,"phase":4.79092879672445}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":350,"low":false,"paused":false,"phase":4.81710873550436}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":351,"low":false,"paused":false,"phase":4.84328867428428}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":352,"low":false,"paused":false,"phase":4.86946861306419}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":353,"low":false,"paused":false,"phase":4.89564855184411}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":354,"low":false,"paused":false,"phase":4.92182849062402}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":355,"low":false,"paused":false,"phase":4.94800842940394}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":356,"low":false,"paused":false,"phase":4.97418836818385}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":357,"low":false,"paused":false,"phase":5.00036830696377}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":358,"low":false,"paused":false,"phase":5.02654824574368}
++TOGGLE_SEQ {"delta":0.0333333333333333,"frame":359,"low":false,"paused":false,"phase":5.0527281845236}
+diff --git a/art/concepts/env_fx_stream_20261014/toggle_check_20261017/verify_result.txt b/art/concepts/env_fx_stream_20261014/toggle_check_20261017/verify_result.txt
+new file mode 100644
+index 0000000000..29a302fd89
+--- /dev/null
++++ b/art/concepts/env_fx_stream_20261014/toggle_check_20261017/verify_result.txt
+@@ -0,0 +1,2 @@
++TOGGLE_MOVIE {"frames": 360, "log_frames": 360, "png_frames": 360, "fps": 30, "first_frame_delta": 0.025, "state_mismatch_frames": [], "step_mismatch": [], "step_mismatch_count": 0, "resume_jump_frames": [], "paused_frame_pairs": 121, "paused_pairs_max_diff": 0, "moving_frames_without_water_change": [], "normal_water_step_mean": 1.1531, "low_water_step_mean": 0.4053, "low_over_normal": 0.3515, "still_outside_water_max_diff": 0, "protect_max_diff": 0, "ok": true}
++exit=0
+diff --git a/art/concepts/env_fx_stream_20261014/verify_toggle_sequence.py b/art/concepts/env_fx_stream_20261014/verify_toggle_sequence.py
+new file mode 100644
+index 0000000000..8be069f46a
+--- /dev/null
++++ b/art/concepts/env_fx_stream_20261014/verify_toggle_sequence.py
+@@ -0,0 +1,151 @@
++#!/usr/bin/env python3
++"""#749 溪流候选：连续暂停 / 低动效切换的原速录屏核对（仍只是候选，不改生产）。
++
++Agent-ID: GROK-BUILD
++输入：Godot Movie Maker 对 stream_flow_preview.tscn 以固定 30fps 录出的 PNG 序列，以及同次运行的
++stdout 日志（含每帧 TOGGLE_SEQ JSON）。驱动按帧号注入真实按键事件（P 暂停/继续、L 低动效），
++走与玩家相同的 _unhandled_input 路径。本脚本只读帧目录与日志，不改仓库文件。
++
++录制（仓库根，无显示器时加 xvfb-run）：
++  xvfb-run -a -s "-screen 0 1800x1000x24" godot --path art/concepts/env_fx_stream_20261014/godot_preview \
++    --resolution 1672x941 --write-movie /tmp/mvtog/f.png --fixed-fps 30 --quit-after 360 \
++    -- --hide-ui --toggle-sequence > /tmp/mvtog_log.txt 2>&1
++核对：
++  python3 art/concepts/env_fx_stream_20261014/verify_toggle_sequence.py /tmp/mvtog /tmp/mvtog_log.txt
++
++检查项：
++  1. 状态切换只发生在排定帧（与 TOGGLE_SCHEDULE 一致），同帧双键/隔帧快切都生效。
++  2. 每帧 phase 步长：正常 2π/240、低动效 2π/960、暂停 0（容差 1e-6；首帧 Godot 给的 delta 另记）。
++  3. 继续时 phase 从暂停值接着走一步，无跳变。
++  4. 像素：暂停中相邻帧整画面差 0；运动段水域有变化；低动效段平均帧差小于正常段；
++     水遮罩外与保护区全程差 0。
++不能当作实体设备 30fps 性能、宿主接线或正式美术验收。
++"""
++import argparse
++import glob
++import json
++import math
++import os
++import sys
++
++import numpy as np
++from PIL import Image
++
++HERE = os.path.dirname(os.path.abspath(__file__))
++TEX = os.path.join(HERE, "godot_preview", "textures")
++TAU = 2 * math.pi
++FPS = 30
++NORMAL_STEP = TAU / 8.0 / FPS
++LOW_STEP = NORMAL_STEP * 0.25
++# 与 stream_flow_driver.gd 的 TOGGLE_SCHEDULE 一致：帧号 → 按键
++SCHEDULE = {60: "P", 120: "P", 150: "L", 180: "P", 210: "P", 240: "L",
++            270: "P", 271: "P", 280: "L", 281: "L", 300: "LP", 330: "PL"}
++
++
++def load(p):
++    return np.asarray(Image.open(p).convert("RGB"), dtype=np.int16)
++
++
++def mask(name):
++    m = np.asarray(Image.open(os.path.join(TEX, name)))
++    return (m[..., 0] if m.ndim == 3 else m) > 0
++
++
++def expected_states(n):
++    paused = low = False
++    out = []
++    for f in range(n):
++        for k in SCHEDULE.get(f, ""):
++            if k == "P":
++                paused = not paused
++            else:
++                low = not low
++        out.append((paused, low))
++    return out
++
++
++def main():
++    ap = argparse.ArgumentParser()
++    ap.add_argument("frames_dir")
++    ap.add_argument("log")
++    ap.add_argument("--expect-frames", type=int, default=360)
++    a = ap.parse_args()
++
++    log = []
++    with open(a.log, encoding="utf-8", errors="replace") as fh:
++        for line in fh:
++            if line.startswith("TOGGLE_SEQ "):
++                log.append(json.loads(line[len("TOGGLE_SEQ "):]))
++    files = sorted(glob.glob(os.path.join(a.frames_dir, "f*.png")))
++    n = min(len(files), len(log))
++    exp = expected_states(len(log))
++
++    state_mismatch = [r["frame"] for r, e in zip(log, exp) if (r["paused"], r["low"]) != e]
++    step_bad = []
++    resume_jumps = []
++    prev_phase = 0.0
++    for i, r in enumerate(log):
++        step = (r["phase"] - prev_phase) % TAU
++        if r["paused"]:
++            want = 0.0
++        else:
++            base = TAU / 8.0 * r["delta"]
++            want = base * (0.25 if r["low"] else 1.0)
++        if i > 0 and abs(step - want) > 1e-6:
++            step_bad.append({"frame": r["frame"], "step": step, "want": want})
++        if i > 0 and log[i - 1]["paused"] and not r["paused"] and abs(step - want) > 1e-6:
++            resume_jumps.append(r["frame"])
++        prev_phase = r["phase"]
++    first_delta = log[0]["delta"] if log else None
++
++    water = mask("mask_water.png")
++    prot = mask("mask_protect.png")
++    still = ~water
++    paused_pairs_max = 0
++    still_max = 0
++    prot_max = 0
++    seg = {"normal": [], "low": []}
++    moving_zero = []
++    prev = load(files[0])
++    for i in range(1, n):
++        cur = load(files[i])
++        d = np.abs(cur - prev).max(axis=2)
++        still_max = max(still_max, int(d[still].max()))
++        prot_max = max(prot_max, int(d[prot].max()))
++        p, lo = log[i]["paused"], log[i]["low"]
++        if p:
++            paused_pairs_max = max(paused_pairs_max, int(d.max()))
++        else:
++            m = float(d[water].mean())
++            seg["low" if lo else "normal"].append(m)
++            if int(d[water].max()) == 0:
++                moving_zero.append(i)
++        prev = cur
++    normal_mean = float(np.mean(seg["normal"])) if seg["normal"] else None
++    low_mean = float(np.mean(seg["low"])) if seg["low"] else None
++    paused_frames = sum(1 for r in log[1:n] if r["paused"])
++
++    res = {
++        "frames": n, "log_frames": len(log), "png_frames": len(files), "fps": FPS,
++        "first_frame_delta": first_delta,
++        "state_mismatch_frames": state_mismatch,
++        "step_mismatch": step_bad[:10], "step_mismatch_count": len(step_bad),
++        "resume_jump_frames": resume_jumps,
++        "paused_frame_pairs": paused_frames, "paused_pairs_max_diff": paused_pairs_max,
++        "moving_frames_without_water_change": moving_zero,
++        "normal_water_step_mean": round(normal_mean, 4) if normal_mean is not None else None,
++        "low_water_step_mean": round(low_mean, 4) if low_mean is not None else None,
++        "low_over_normal": round(low_mean / normal_mean, 4) if normal_mean and low_mean is not None else None,
++        "still_outside_water_max_diff": still_max, "protect_max_diff": prot_max,
++    }
++    ok = (n == a.expect_frames and len(log) == a.expect_frames and not state_mismatch and not step_bad
++          and not resume_jumps and paused_frames > 0 and paused_pairs_max == 0 and not moving_zero
++          and normal_mean is not None and low_mean is not None and low_mean < normal_mean
++          and still_max == 0 and prot_max == 0)
++    res["ok"] = ok
++    print("TOGGLE_MOVIE " + json.dumps(res, ensure_ascii=False))
++    return 0 if ok else 1
++
++
++if __name__ == "__main__":
++    sys.exit(main())

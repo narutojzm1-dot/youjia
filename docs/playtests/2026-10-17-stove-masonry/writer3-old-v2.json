@@ -1,0 +1,66 @@
+{
+  "checks": [
+    "actual old-PCK forensic fixture records resource rejection",
+    "actual frozen old submit accepts the photo-cleaned payload",
+    "v2 to v3 preserves every raw record exactly",
+    "live old connection is closed and cannot overwrite photos",
+    "old reopen refuses higher writer epoch",
+    "failed old writes leave exact photo envelope intact",
+    "new writer still saves and acknowledges same photo",
+    "new writer close/reopen retains photo",
+    "prepared records unchanged by upgrade",
+    "prepared uses existing recovery and retains photo",
+    "prepared recovery resolves correct intent",
+    "committed records unchanged by upgrade",
+    "committed uses existing recovery and retains photo",
+    "committed recovery resolves correct intent",
+    "sealed import and legacy_sources remain byte exact",
+    "existing legacy seal remains valid",
+    "legacy source DB never upgraded or written",
+    "blocked upgrade reports failure",
+    "late blocked request aborts: version and records remain v1",
+    "explicit retry can upgrade safely",
+    "missing records aborts upgrade without replacement or version change",
+    "v4 refuses v3 client without changing data",
+    "actual Chrome process restart retains exact envelope and photo"
+  ],
+  "failures": [],
+  "cases": [
+    {
+      "name": "known old writer loses new photo without fence",
+      "status": "completed"
+    },
+    {
+      "name": "upgrade fences live and reopened old writers",
+      "status": "completed"
+    },
+    {
+      "name": "prepared intent survives upgrade before recovery",
+      "status": "completed"
+    },
+    {
+      "name": "committed intent survives upgrade before recovery",
+      "status": "completed"
+    },
+    {
+      "name": "legacy seal and source namespace remain exact",
+      "status": "completed"
+    },
+    {
+      "name": "blocked upgrade is abandoned instead of applied late",
+      "status": "completed"
+    },
+    {
+      "name": "malformed existing DB is not recreated",
+      "status": "completed"
+    },
+    {
+      "name": "future DB remains untouched",
+      "status": "completed"
+    }
+  ],
+  "oldVersion": 2,
+  "browser": "155.0.8059.40",
+  "currentStoreSha256": "4997cbdda2263251ba6a0f1cea80196a78eb42815694c82365a7c09979e82854",
+  "status": "PASS"
+}
