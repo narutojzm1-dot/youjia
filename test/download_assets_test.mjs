@@ -127,3 +127,4 @@ t=fixture(()=>new Response(bytes.map(v=>v^1)),{caches});
 await assert.rejects(t.read('game-ab.pck'),/内容校验/);await new Promise(resolve=>setTimeout(resolve,20));
 assert.equal(saved.has('https://example.invalid/game/game-ab.pck'),false,'checksum failure must never enter cache');t.restore();
 console.log('Asset cache PASS: recovered reload, incomplete rejection, bounded retention, current-build protection and storage-denied fallback');
+await import('./cache_body_recovery_test.mjs');

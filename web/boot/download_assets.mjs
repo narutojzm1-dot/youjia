@@ -46,23 +46,84 @@ export function installAssetRecovery(config, {
       },
     }));
   }
-  async function recover(url, {size, hash}) {
+  function cachedBody(body, url, metadata, cache) {
+    let reader = body.getReader(), network = false, delivered = 0, skip = 0;
+    const abort = new AbortController();
+    active.add(abort);
+    const discardReader = () => { reader.cancel().catch(() => {}); };
+    const read = async () => {
+      if (stopped) throw new Error('资源下载已取消');
+      if (network) return reader.read(); // Network recovery has its own watchdog.
+      let timer, cancelled;
+      try {
+        return await Promise.race([
+          reader.read(),
+          new Promise((resolve, reject) => {
+            timer = setTimeout(() => reject(new Error('缓存资源读取停滞')), idleMs);
+            cancelled = () => reject(new Error('资源下载已取消'));
+            abort.signal.addEventListener('abort', cancelled, {once: true});
+          }),
+        ]);
+      } finally {
+        clearTimeout(timer);
+        abort.signal.removeEventListener('abort', cancelled);
+      }
+    };
+    return new ReadableStream({
+      async pull(output) {
+        try {
+          while (true) {
+            let chunk;
+            try {
+              chunk = await read();
+              if (!network && chunk.done && delivered !== metadata.size) throw new Error('缓存资源读取中断');
+            } catch (error) {
+              if (stopped || network) throw error;
+              // CacheStorage body reads are not covered by fetch's idle timer.
+              // Switch once to the bounded network path. Do not wait for a
+              // broken cache reader/deletion, and never touch the save store.
+              discardReader();
+              cache.delete(url).catch(() => {});
+              onRetry({url, offset: delivered, retry: 1, maxRetries: maxRetries + 1, source: 'cache'});
+              const response = await recover(url, metadata, true);
+              reader = response.body.getReader(); network = true; skip = delivered;
+              continue;
+            }
+            if (chunk.done) { active.delete(abort); output.close(); return; }
+            const ignored = Math.min(skip, chunk.value.byteLength);
+            skip -= ignored;
+            const value = chunk.value.subarray(ignored);
+            if (!value.byteLength) continue;
+            delivered += value.byteLength;
+            output.enqueue(value); return;
+          }
+        } catch (error) {
+          active.delete(abort); output.error(error);
+        }
+      },
+      cancel() { discardReader(); restore(); },
+    });
+  }
+  async function recover(url, {size, hash}, skipCache = false) {
     let cache, cacheTimer;
     try {
       const cached = target.caches && await Promise.race([
         (async () => {
           const store = await target.caches.open('youjia-startup-assets-v1');
-          return {store, saved: await store.match(url)};
+          return {store, saved: skipCache ? null : await store.match(url)};
         })(),
         new Promise(resolve => { cacheTimer = setTimeout(() => resolve(null), cacheWaitMs); }),
       ]);
       cache = cached?.store;
       const saved = cached?.saved;
-      if (saved?.headers.get('x-youjia-asset-size') === String(size) &&
-          (!hash || saved.headers.get('x-youjia-asset-sha256') === hash)) {
+      // A cached prefix can only be joined with a later network response when
+      // the whole decoded body is pinned. Raw development exports use fetch.
+      if (hash && saved?.headers.get('x-youjia-asset-size') === String(size) &&
+          saved.headers.get('x-youjia-asset-sha256') === hash) {
         if (!stopped) {
           onCacheHit({url});
-          return new Response(checked(saved.body, size, hash, () => cache.delete(url).catch(() => {})), {headers: saved.headers});
+          return new Response(checked(cachedBody(saved.body, url, {size, hash}, cache), size, hash,
+            () => cache.delete(url).catch(() => {})), {headers: saved.headers});
         }
       }
       else if (saved) cache.delete(url).catch(() => {});
@@ -147,7 +208,7 @@ export function installAssetRecovery(config, {
       'x-youjia-asset-size': String(size),
       ...(hash ? {'x-youjia-asset-sha256': hash} : {}),
     }});
-    if (cache) {
+    if (cache && hash) {
       // put() rejects if any part of the body fails. No partial pack is stored.
       try { cache.put(url, response.clone()).then(async () => {
         const keys = await cache.keys();
