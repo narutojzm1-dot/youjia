@@ -6,6 +6,7 @@ from pathlib import Path
 import re
 import shutil
 import sys
+from repair_web_index_buffer import ORIGINAL_SHA256, repair_record
 
 
 def stage(dist: Path, work: Path, game: str) -> dict:
@@ -14,6 +15,8 @@ def stage(dist: Path, work: Path, game: str) -> dict:
     if not {'js', 'wasm'} <= files.keys():
         raise ValueError('Godot engine JS/WASM missing')
     hashes = {ext: hashlib.sha256(path.read_bytes()).hexdigest() for ext, path in files.items()}
+    if hashes['wasm'] == ORIGINAL_SHA256:
+        raise ValueError('Unrepaired Godot 4.7.2 Web template; run tools/repair_web_index_buffer.py first')
     signature = hashlib.sha256(json.dumps(hashes, sort_keys=True).encode()).hexdigest()
     engine = f'engine-{signature}'
     for ext, path in files.items():
@@ -39,7 +42,11 @@ def stage(dist: Path, work: Path, game: str) -> dict:
         raise ValueError('Godot script URL missing')
     text = text.replace(script, f"script.src = '{engine}.js'")
     html.write_text(text, encoding='utf-8')
-    return {'entry': engine, 'sha256': {f'{engine}.{ext}': digest for ext, digest in hashes.items()}}
+    record = {'entry': engine, 'sha256': {f'{engine}.{ext}': digest for ext, digest in hashes.items()}}
+    fixes = repair_record(hashes['wasm'])
+    if fixes:
+        record['repairs'] = fixes
+    return record
 
 
 if __name__ == '__main__':

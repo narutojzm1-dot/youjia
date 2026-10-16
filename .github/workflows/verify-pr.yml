@@ -66,3 +66,8 @@ jobs:
           for output in dist/index.html dist/index.js dist/index.wasm dist/index.pck; do
             test -s "$output"
           done
+
+      - name: Verify and repair pinned WebGL2 index buffer target
+        run: |
+          python3 test/web_index_buffer_repair_test.py dist/index.wasm
+          python3 tools/repair_web_index_buffer.py dist/index.wasm

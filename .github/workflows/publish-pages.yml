@@ -59,6 +59,11 @@ jobs:
       - name: Export Web build
         run: GODOT="$RUNNER_TEMP/godot/Godot_v4.7.2-stable_linux.x86_64" "$RUNNER_TEMP/godot/Godot_v4.7.2-stable_linux.x86_64" --headless --path . --export-release Web dist/index.html
 
+      - name: Verify and repair pinned WebGL2 index buffer target
+        run: |
+          python3 test/web_index_buffer_repair_test.py dist/index.wasm
+          python3 tools/repair_web_index_buffer.py dist/index.wasm
+
       - name: Configure Pages commit identity
         run: |
           git config user.name "github-actions[bot]"
