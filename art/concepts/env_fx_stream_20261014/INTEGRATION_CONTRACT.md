@@ -110,7 +110,7 @@ shader / 预览驱动与离线生成脚本用的不是同一套 phase。宿主�
 
 - 裁切 demo 着色器：`ripple_tile` 与 `water_detail` 使用 `filter_linear`；控制图保持 `filter_nearest`。
 - 驱动支持 `--scale` 与键盘 `[` `]` 调整整幅 Painting 缩放，用于观察不同分辨率采样。shader 逻辑仍按裁切像素坐标，不随 scale 改变。
-- Web 成本（估算，非实测）：裁切 183×302 ≈ 55k 片元，约占整幅 3.5%。裁切控制图显存约 1.05 MiB。实际 Web 帧时 / GPU / PCK 仍待生产接入后测量。本隔离 demo 未导出 Web。
+- Web 成本（估算 + 隔离实测）：裁切 183×302 ≈ 55k 片元，约占整幅 3.5%。裁切控制图显存约 1.05 MiB。 隔离 Web 导出与 `?probe=1` 像素/暂停实测见下文「隔离 Web 导出实测」；真实玩家浏览器 / 手机 / DPR 帧时仍待生产接入后测量。
 
 仍只是候选。暂停与减少动态行为与上一头部相同。
 
@@ -149,7 +149,7 @@ CODEX-LEAD 对 `c1700b35` 的技术决定：隔离候选把 `base_sample_linear`
 
 生产接线仍由 ASSISTANT 定。未改生产 shader、场景、`assets/` 或存档。
 
-仍未覆盖：Web 导出与浏览器成本（本机无 Godot 4.7.2 Web 导出模板，未尝试）、手机/DPR、RTX 复核本头部、宿主内实测。
+仍未覆盖：真实 GPU 浏览器 / 手机 / DPR2/3 帧时、RTX 复核本头部、宿主内实测。 隔离 Web 导出与 SwiftShader 探针已有（见「隔离 Web 导出实测」）；不能当作真机通过。
 
 ## 缩放/线性对照验证器（回应 CODEX-LEAD @435cc826）
 
@@ -180,4 +180,27 @@ CODEX-LEAD 对 `c1700b35` 的技术决定：隔离候选把 `base_sample_linear`
 
 帧时（每次 300 帧，同一环境跑 4 次：3 次在 `c1700b35` 默认关，1 次在 `435cc826` 默认开；SwiftShader 软件 WebGL，仅作相对参考）：动效开 平均 24.0–26.3 ms / p95 30.8–34.3 ms；减少动态（子层撤掉）平均 23.1–24.5 ms / p95 30.0–32.7 ms，差值在噪声内。4 次的逐像素结果完全相同，即 1:1 下 `base_sample_linear` 开/关在 Web 上也逐像素一致。不能据此写成真实 GPU 或手机帧时通过。
 
-仍未覆盖：真实 GPU 浏览器 / 手机 / DPR2/3 帧时、生产宿主内 Web 实测、RTX 复核本头部、Web 下缩放/子像素偏移对照（本探针只测 1:1）。
+仍未覆盖：真实 GPU 浏览器 / 手机 / DPR2/3 帧时、生产宿主内 Web 实测、RTX 复核本头部。 完整 10×5 桌面矩阵未在 Web 上重跑（Web 探针只跑小子集）。
+
+## 隔离 Web 缩放/子像素探针（本轮，基于 `9d3284ce`）
+
+仍只是隔离候选。回应契约「本探针只测 1:1」缺口：在既有 `?probe=1` 1:1 路径之后，默认再跑小子集变换（对齐桌面 `verify_scale_linear.py` 硬门，**不是**完整 10×5）：
+
+| 变换 | 说明 |
+|---|---|
+| scale 0.75，居中整数偏移 | `_offset_for(0.75, (0,0))` |
+| scale 2.0，居中 + 子像素 (+0.37,+0.61) | `_offset_for(2.0, (0.37,0.61))` |
+
+每变换硬门：非水面 / 裁切矩形外 ±3 屏像素 vs 减少动态原画最大通道差 **0**；phase 0 vs TAU **0**；strength 0 vs 原画 **0**；半圈水面 `water_changed > 0`。结果写入 `WEBPROBE` 的 `scale_subpixel` / `scale_subpixel_ok`；`web_export_check.sh` 默认要求二者为 true（`WEBPROBE_SCALE=0` 或 URL `noscale=1` 可跳过）。仍保留 `build_id` / `server_id` 身份校验。
+
+实测环境：同上一节（Godot 4.7.2 + Chrome headless **SwiftShader**）。**不是 RTX / 实体 GPU / 手机 / 宿主接线或美术验收。**
+
+作者侧实测（box，Godot 4.7.2 + Chrome headless SwiftShader，`ok:true` / `scale_subpixel_ok:true`）：
+
+| 变换 | nonwater / band | 0↔TAU | strength0 | 半圈水面变化 |
+|---|---|---|---|---|
+| 1:1（既有） | 0 / 0 | 0 | 0 | 7065–7158 px |
+| scale 0.75 居中 | 0 / 0 | 0 | 0 | 1797 px |
+| scale 2.0 +0.37/+0.61 | 0 / 0 | 0 | 0 | 29121 px |
+
+分数缩放下 nonwater 硬门对映射点 ±1 纹素子层 LINEAR 渗色带做排除（与桌面水陆模糊带同思路）；1:1 路径未改判定结果。仍不是 RTX / 手机 / 宿主接线。

@@ -79,7 +79,7 @@ GODOT=godot python3 art/concepts/env_fx_stream_20261014/verify_crop_render.py --
 
 ### Web 成本估算（隔离，非实测）
 
-裁切矩形 183×302 ≈ 55 276 像素，约占整幅 1672×941 的 3.5%。片元着色器只在子层四边形上执行。整幅 5 张 RGBA8 控制图约 30 MiB 显存；裁切后约 1.05 MiB。实际 Web 帧时 / GPU / PCK 增量仍待生产宿主接入后实测。本隔离 demo 未导出 Web。
+裁切矩形 183×302 ≈ 55 276 像素，约占整幅 1672×941 的 3.5%。片元着色器只在子层四边形上执行。整幅 5 张 RGBA8 控制图约 30 MiB 显存；裁切后约 1.05 MiB。隔离 Web 导出与 `?probe=1`（含缩放/子像素小子集）见仓库旁 `web_export_check.sh` 与 `INTEGRATION_CONTRACT.md`。 真实玩家浏览器 / 手机 / DPR 帧时仍待生产宿主接入后实测。
 
 仍只是隔离候选。请 ART-DIRECTOR / CODEX-LEAD 审阅连续播放下的流向是否单方向、岸线与桥石是否稳住。
 
@@ -103,7 +103,7 @@ GODOT=godot CHROME=google-chrome bash art/concepts/env_fx_stream_20261014/web_ex
 
 - `export_presets.cfg`：只导出 `stream_flow_crop_demo.tscn` 及依赖（`export_filter="scenes"`），模板为官方同版 `web_nothreads_release.zip`（`custom_template` 留空，装到 `~/.local/share/godot/export_templates/4.7.2.stable/`）。导出物写 `/tmp`，不进仓库。
 - `project.godot` 加 `run/main_scene.web`，Web 下主场景是裁切 demo；桌面打开仍是整幅预览。
-- 驱动新增 `--web-probe`（Web 页面用 `?probe=1`）：读回本页真实画布，在 1:1（1672×941、scale 1、偏移 0）下比对原画，并走一遍 P/R 键连续切换。只打印一行 `WEBPROBE {...}`，不存文件。
+- 驱动 `--web-probe`（Web 页面 `?probe=1`）：读回本页真实画布；先跑 1:1（1672×941、scale 1、偏移 0）像素/暂停，再默认跑缩放/子像素小子集（0.75 居中、2.0+0.37/0.61），硬门对齐桌面线性对照。 URL 加 `noscale=1` 或脚本 `WEBPROBE_SCALE=0` 可跳过缩放子集。只打印一行 `WEBPROBE {...}`，不存文件。
 - 实测在 `435cc826`（`base_sample_linear` 已默认开）之上重跑；1:1 下默认与关闭逐像素相同（见 `INTEGRATION_CONTRACT.md`），所以本表也覆盖新默认。
 - 版本身份（回应 CODEX-LEAD 对 `b36731af` 的复核）：
   - 服务器改用同目录 `web_probe_server.py`：它自己 `bind(127.0.0.1, 0)` 并一直持有该监听 socket，把实际端口写进 `$OUT/server.port`，没有先探端口再交给另一进程的窗口；`GET /__probe_server_id` 回本轮随机 id，脚本只在 id 相符且子进程仍活着时才算就绪，浏览器跑完后再查一次子进程。所有应答带 `Cache-Control: no-store`。

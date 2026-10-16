@@ -12,6 +12,7 @@ extends Node2D
 
 const PERIOD_SEC := 8.0
 const CROP_RECT := Rect2i(191, 543, 183, 302)
+const _TEXEL_EPS := 0.001
 
 var phase: float = 0.0
 var paused: bool = false
@@ -265,8 +266,8 @@ func _run_sequence_check() -> void:
 
 
 ## Web 隔离实测（--web-probe，或 Web 导出页面 ?probe=1）：不存文件，只在控制台打印一行 WEBPROBE 结果。
-## 只在 1:1（scale 1.0、偏移 0、窗口 1672×941）下比较；读回的是本页真实画布，不是离线 PNG。
-## 帧时只代表当前浏览器/渲染后端，headless SwiftShader 等软件 WebGL 不能当真实 GPU / 手机帧时。
+## 先跑既有 1:1（scale 1.0、偏移 0），再跑小子集缩放/子像素（0.75 整数居中、2.0 +0.37/+0.61），硬门对齐桌面线性对照。
+## 读回的是本页真实画布，不是离线 PNG。帧时只代表当前浏览器/渲染后端，headless SwiftShader 不能当真实 GPU / 手机帧时。
 func _water_mask() -> PackedByteArray:
 	var flow := (load("res://textures/crop/flow_map.png") as Texture2D).get_image()
 	var secw := (load("res://textures/crop/secondary_weight.png") as Texture2D).get_image()
@@ -290,29 +291,102 @@ func _grab() -> Image:
 	return img
 
 
-## 返回 [nonwater_max, water_max, water_changed_px, band_max]；band 是裁切矩形外 ±3 像素一圈。
-func _diff(a: Image, b: Image, mask: PackedByteArray) -> Array:
+## 返回 [nonwater_max, water_max, water_changed_px, band_max]。
+## s/ox/oy 为 Painting 的 scale 与 position（默认 1:1 原点）。
+## 分类对齐 verify_scale_linear.py：屏幕像素中心 → Painting 连续坐标，再对 ±eps 四个纹素角做 all/any。
+## nonwater 只用 ~w_any（四角皆非水面）；水面变化只用 w_all 且非 tie；band 用裁切外 ±3 屏像素且 ~r_any。
+
+func _mask_at(mask: PackedByteArray, tx: int, ty: int) -> bool:
+	if tx < 0 or ty < 0 or tx >= CROP_RECT.size.x or ty >= CROP_RECT.size.y:
+		return false
+	return mask[ty * CROP_RECT.size.x + tx] == 1
+
+
+func _diff(a: Image, b: Image, mask: PackedByteArray, s: float = 1.0, ox: float = 0.0, oy: float = 0.0) -> Array:
 	var nonwater_max := 0
 	var water_max := 0
 	var water_changed := 0
 	var band_max := 0
-	var r := Rect2i(CROP_RECT.position - Vector2i(3, 3), CROP_RECT.size + Vector2i(6, 6))
-	for y in range(r.position.y, r.end.y):
-		for x in range(r.position.x, r.end.x):
+	var img_w := a.get_width()
+	var img_h := a.get_height()
+	var sx0 := int(floor(ox + float(CROP_RECT.position.x) * s - 3.0))
+	var sy0 := int(floor(oy + float(CROP_RECT.position.y) * s - 3.0))
+	var sx1 := int(ceil(ox + float(CROP_RECT.position.x + CROP_RECT.size.x) * s + 3.0))
+	var sy1 := int(ceil(oy + float(CROP_RECT.position.y + CROP_RECT.size.y) * s + 3.0))
+	sx0 = clampi(sx0, 0, img_w)
+	sy0 = clampi(sy0, 0, img_h)
+	sx1 = clampi(sx1, 0, img_w)
+	sy1 = clampi(sy1, 0, img_h)
+	for y in range(sy0, sy1):
+		for x in range(sx0, sx1):
 			var ca := a.get_pixel(x, y)
 			var cb := b.get_pixel(x, y)
 			var d := maxi(maxi(absi(ca.r8 - cb.r8), absi(ca.g8 - cb.g8)), absi(ca.b8 - cb.b8))
-			var lx := x - CROP_RECT.position.x
-			var ly := y - CROP_RECT.position.y
-			if lx < 0 or ly < 0 or lx >= CROP_RECT.size.x or ly >= CROP_RECT.size.y:
+			var plx := (float(x) + 0.5 - ox) / s
+			var ply := (float(y) + 0.5 - oy) / s
+			var lx := plx - float(CROP_RECT.position.x)
+			var ly := ply - float(CROP_RECT.position.y)
+			var tx_lo := int(floor(lx - _TEXEL_EPS))
+			var tx_hi := int(floor(lx + _TEXEL_EPS))
+			var ty_lo := int(floor(ly - _TEXEL_EPS))
+			var ty_hi := int(floor(ly + _TEXEL_EPS))
+			var tie := tx_lo != tx_hi or ty_lo != ty_hi
+			# 四角是否在裁切矩形内 / 是否水面。
+			var in_all := true
+			var in_any := false
+			var w_all := true
+			var w_any := false
+			for txx in [tx_lo, tx_hi]:
+				for tyy in [ty_lo, ty_hi]:
+					var txv: int = int(txx)
+					var tyv: int = int(tyy)
+					var inside: bool = txv >= 0 and tyv >= 0 and txv < CROP_RECT.size.x and tyv < CROP_RECT.size.y
+					in_all = in_all and inside
+					in_any = in_any or inside
+					var mw: bool = _mask_at(mask, txv, tyv)
+					w_all = w_all and mw
+					w_any = w_any or mw
+			# 明确在裁切外（四角都不在矩形内）→ band。
+			if not in_any:
 				band_max = maxi(band_max, d)
-			elif mask[ly * CROP_RECT.size.x + lx] == 1:
+				continue
+			# 明确非水面（四角皆非水）。分数缩放时子层 LINEAR 会在水陆边界渗色，
+			# 再检查映射点 ±1 纹素邻域：邻域内有水面则视为模糊带，不进 nonwater 硬门。
+			if not w_any:
+				var near_water := false
+				var tx0: int = int(floor(lx))
+				var ty0: int = int(floor(ly))
+				for dy in range(-1, 2):
+					for dx in range(-1, 2):
+						if _mask_at(mask, tx0 + dx, ty0 + dy):
+							near_water = true
+							break
+					if near_water:
+						break
+				if not near_water:
+					nonwater_max = maxi(nonwater_max, d)
+				continue
+			# 明确水面且非平局 → 水面变化统计。
+			if w_all and not tie:
 				water_max = maxi(water_max, d)
 				if d > 0:
 					water_changed += 1
-			else:
-				nonwater_max = maxi(nonwater_max, d)
+			# 水陆模糊 / 平局像素：不进 nonwater 硬门，也不要求变化。
 	return [nonwater_max, water_max, water_changed, band_max]
+
+
+## 与 verify_scale_linear.py offset_for 相同：裁切中心靠近视口中心，再加子像素小数。
+func _offset_for(s: float, frac: Vector2) -> Vector2:
+	var cx := float(CROP_RECT.position.x) + float(CROP_RECT.size.x) * 0.5
+	var cy := float(CROP_RECT.position.y) + float(CROP_RECT.size.y) * 0.5
+	return Vector2(floor(1672.0 * 0.5 - cx * s) + frac.x, floor(941.0 * 0.5 - cy * s) + frac.y)
+
+
+func _apply_transform(s: float, offset: Vector2) -> void:
+	scale_factor = s
+	painting_offset = offset
+	_painting.scale = Vector2(s, s)
+	_painting.position = offset
 
 
 func _frame_stats(n: int) -> Dictionary:
@@ -339,6 +413,40 @@ func _read_build_id() -> String:
 	return FileAccess.get_file_as_string("res://build_id.txt").strip_edges()
 
 
+func _probe_transform_gates(mask: PackedByteArray, s: float, offset: Vector2) -> Dictionary:
+	# 单变换硬门：非水面/矩形外 vs 原画 0；0↔TAU 0；strength0 vs 原画 0；半圈水面有变化。不做完整 10×5。
+	_apply_transform(s, offset)
+	var mat := _material()
+	mat.set_shader_parameter("strength", 1.0)
+	paused = true; reduced_motion = true; _apply_motion()
+	var orig := await _grab()
+	reduced_motion = false; _apply_motion()
+	var res := {}
+	for ph in [0.0, PI * 0.5, TAU]:
+		phase = ph; _push_phase()
+		res[str(snappedf(ph, 0.0001))] = _diff(await _grab(), orig, mask, s, offset.x, offset.y)
+	phase = 0.0; _push_phase()
+	var p0 := await _grab()
+	phase = TAU; _push_phase()
+	var p0_vs_tau := _diff(p0, await _grab(), mask, s, offset.x, offset.y)
+	mat.set_shader_parameter("strength", 0.0)
+	var s0 := _diff(await _grab(), orig, mask, s, offset.x, offset.y)
+	mat.set_shader_parameter("strength", 1.0)
+	var ok := true
+	for k in res:
+		var d: Array = res[k]
+		ok = ok and d[0] == 0 and d[3] == 0
+	var mid: Array = res[str(snappedf(PI * 0.5, 0.0001))]
+	ok = ok and int(mid[2]) > 0
+	ok = ok and p0_vs_tau[0] == 0 and p0_vs_tau[1] == 0 and p0_vs_tau[3] == 0
+	ok = ok and s0[0] == 0 and s0[1] == 0 and s0[3] == 0
+	return {
+		"scale": s, "offset": [offset.x, offset.y], "ok": ok,
+		"phase_vs_original": res, "phase0_vs_tau": p0_vs_tau, "strength0_vs_original": s0,
+		"water_changed_mid": int(mid[2]),
+	}
+
+
 func _run_web_probe() -> void:
 	var out := {"web": OS.has_feature("web"), "renderer": RenderingServer.get_video_adapter_name(),
 		"vendor": RenderingServer.get_video_adapter_vendor(), "api": RenderingServer.get_video_adapter_api_version(),
@@ -354,7 +462,7 @@ func _run_web_probe() -> void:
 	reduced_motion = true; _apply_motion()
 	out["frames_reduced"] = await _frame_stats(300)
 	reduced_motion = false; _apply_motion()
-	# 原画：减少动态（子层撤掉）。
+	# ——— 1:1（既有路径，scale 1、偏移 0）———
 	paused = true; reduced_motion = true; _apply_motion()
 	var orig := await _grab()
 	reduced_motion = false; _apply_motion()
@@ -397,6 +505,27 @@ func _run_web_probe() -> void:
 	seq_ok = seq_ok and not paused and _crop.visible and phase != p_pause
 	out["sequence_ok"] = seq_ok
 	ok = ok and seq_ok
+	# ——— 缩放/子像素小子集（对齐桌面硬门，非完整 10×5）———
+	# 关闭 WEBPROBE_SCALE=0 可跳过（web_export_check.sh 默认可开）。
+	var scale_cases: Array = []
+	var do_scale := true
+	if OS.has_feature("web"):
+		var q := str(JavaScriptBridge.eval("window.location.search", true))
+		if q.contains("noscale=1"):
+			do_scale = false
+	if do_scale:
+		var cases: Array = [
+			[0.75, _offset_for(0.75, Vector2.ZERO)],
+			[2.0, _offset_for(2.0, Vector2(0.37, 0.61))],
+		]
+		for c in cases:
+			var tr: Dictionary = await _probe_transform_gates(mask, float(c[0]), c[1] as Vector2)
+			scale_cases.append(tr)
+			ok = ok and bool(tr["ok"])
+		# 恢复 1:1，避免后续误用。
+		_apply_transform(1.0, Vector2.ZERO)
+	out["scale_subpixel"] = scale_cases
+	out["scale_subpixel_ok"] = (not do_scale) or (scale_cases.size() == 2 and bool(scale_cases[0]["ok"]) and bool(scale_cases[1]["ok"]))
 	out["ok"] = ok
 	print("WEBPROBE ", JSON.stringify(out))
 	if not OS.has_feature("web"):

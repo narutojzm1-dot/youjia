@@ -98,6 +98,8 @@ godot --path art/concepts/env_fx_stream_20261014/godot_preview --headless -- --s
 
 裁切隔离 demo 的 `base_sample_linear` **默认开**（CODEX-LEAD 2026-10-16 11:47 CST，#749）：底图按连续 UV 线性取样，匹配宿主线性原画。控制图仍 nearest。保护区、`strength 0`、减少动态回原画保持。详见 `INTEGRATION_CONTRACT.md` 与 `godot_preview/README_run.md`。仍只是候选。
 
+隔离 Web：`web_export_check.sh` 的 `?probe=1` 现默认含缩放/子像素小子集（SwiftShader）；详见契约。仍不是 RTX/手机/宿主验收。
+
 ## 与 fde40165 的像素差
 
 对照上一版头部 `fde40165`（只有主下游高光）。主切线、水纹贴图和窄渠合成没有改，所以差集就是宽水面的次级水流。
