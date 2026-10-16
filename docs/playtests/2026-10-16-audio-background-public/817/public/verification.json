@@ -1,0 +1,500 @@
+{
+  "checked_at": "2026-10-16T00:38:47.821798+00:00",
+  "source": "49230855694b58ed95e10d56abd214dece0c64ed",
+  "pages_commit": "379884e7cc5a0556bded896bb4e8f58eed795bda",
+  "manifest": {
+    "schema": "youjia.release/v1",
+    "sourceCommit": "49230855694b58ed95e10d56abd214dece0c64ed",
+    "engine": "4.7.2.stable.official.ed1daf0bf",
+    "entry": "game-4923085",
+    "publishedAt": "2026-10-16T00:27:37Z",
+    "storageModules": {
+      "entry": "save-4923085",
+      "sha256": {
+        "bridge.mjs": "ef18687554fdc0d745c1d18d4d091e959cc78559da0d61d6a093e562ff9bbc91",
+        "budgets.mjs": "52984153977dcafd1d2682e848f1999f091d0966e17d46e902de76f5735a7018",
+        "host.mjs": "9de8dc0ef4bfc037a8ad0bff575d40c3dd4341bcc723351a412b2061bb661904",
+        "idbfs_source.mjs": "16eb57d471537f13d3e50018b56c2d416d2847f0d0249ba44433dd9ebb65f4d8",
+        "legacy_inspection.mjs": "db3a23a0221aa5d34a58a6a49aeeff930295ffe20bfcf73a7c11f0d49cffd671",
+        "legacy_seal.mjs": "9642132f5d4e7523e5966e802069af7f4bae803fae8e2e7c28ae55ee97d85610",
+        "legacy_v5.mjs": "8e7f4ad2d87aab77ac05361e4f46060476e933aa079ae94301998d08d4599621",
+        "lifecycle.mjs": "1cfaebb9a8745e2dc3e4f694ef475f250640870938f04160be1a5c9acd62935d",
+        "source_decode.mjs": "411f3bc784cb32a07f32eed5fc7d88f71b59a667cc0d68a50fe13c55bfdba18a",
+        "store.mjs": "2193b4397b8662a8ebc754dc4468e4d62964d209b4e1d0f0924a2ec81b409cbe"
+      }
+    },
+    "engineAssets": {
+      "entry": "engine-3b105340f798ed0e7d6aa7725328dc8c0bf8cd94ffea14835e43f83045048c74",
+      "sha256": {
+        "engine-3b105340f798ed0e7d6aa7725328dc8c0bf8cd94ffea14835e43f83045048c74.js": "33c94cb3175f3333b82e2a3be5e8e86f77986f0aa2042b1631f6367a4e5bb6ba",
+        "engine-3b105340f798ed0e7d6aa7725328dc8c0bf8cd94ffea14835e43f83045048c74.wasm": "fc74679e3b97f76878947fcd4fbe1268cbfa6188182a2e33bbc3f5dc9bfa57d0",
+        "engine-3b105340f798ed0e7d6aa7725328dc8c0bf8cd94ffea14835e43f83045048c74.audio.worklet.js": "5b476a9c9ce642c0ee4256436d1bc31d9c38f868aca0f9a8e2a57c18d2dec2a3",
+        "engine-3b105340f798ed0e7d6aa7725328dc8c0bf8cd94ffea14835e43f83045048c74.audio.position.worklet.js": "be33985bc7160d6bf9646f259cd86b259cd67b02ccb297ee5c44f8ac84327bc8"
+      }
+    },
+    "loaderModules": {
+      "entry": "boot-4923085",
+      "sha256": {
+        "download_assets.mjs": "0c0e0f179641bd524a8d0d4f520e4158152bcc884f0d17ff3b0e0a0b0b21e238",
+        "sha256_stream.mjs": "c26338f465688208706256f83aef6a510f01b671c6e679ae1a0d9ab7797af85e"
+      }
+    }
+  },
+  "html_config": {
+    "args": [],
+    "canvasResizePolicy": 2,
+    "emscriptenPoolSize": 8,
+    "ensureCrossOriginIsolationHeaders": true,
+    "executable": "engine-3b105340f798ed0e7d6aa7725328dc8c0bf8cd94ffea14835e43f83045048c74",
+    "experimentalVK": false,
+    "fileSizes": {
+      "engine-3b105340f798ed0e7d6aa7725328dc8c0bf8cd94ffea14835e43f83045048c74.wasm": 39514754,
+      "game-4923085.pck": 89118232
+    },
+    "focusCanvas": true,
+    "gdextensionLibs": [],
+    "godotPoolSize": 4,
+    "mainPack": "game-4923085.pck",
+    "fileHashes": {
+      "engine-3b105340f798ed0e7d6aa7725328dc8c0bf8cd94ffea14835e43f83045048c74.wasm": "fc74679e3b97f76878947fcd4fbe1268cbfa6188182a2e33bbc3f5dc9bfa57d0",
+      "game-4923085.pck": "406bf028b1c739a5903b95c2aa4b7d465807cf6cd2c18c84dfeeb37f9db65b8d"
+    }
+  },
+  "files": [
+    {
+      "phase": "public",
+      "file": "game-release.json",
+      "url": "https://narutojzm1-dot.github.io/youjia/game-release.json",
+      "bytes": 2252,
+      "sha256": "49f1f75cdd326f58c4014ef64debdfdeff06214e475e565c4b46985584920b81",
+      "git_blob": "d8d2097f034ae4bdf8c981dec0b8dd4b1dfdaa42",
+      "headers": {
+        "Content-Length": "2252",
+        "Content-Type": "application/json; charset=utf-8",
+        "Last-Modified": "Fri, 16 Oct 2026 00:29:09 GMT",
+        "ETag": "\"6ad16fd5-8cc\""
+      }
+    },
+    {
+      "phase": "public",
+      "file": "index.html",
+      "url": "https://narutojzm1-dot.github.io/youjia/index.html",
+      "bytes": 365106,
+      "sha256": "69b6fed71030d6d713baf0ee2ce0343a5bc3ba615be4b4b0875c62c91cdaddc9",
+      "git_blob": "b1507ca56255341898fd10b1fe1dc54e500a7747",
+      "headers": {
+        "Content-Length": "365106",
+        "Content-Type": "text/html; charset=utf-8",
+        "Last-Modified": "Fri, 16 Oct 2026 00:29:08 GMT",
+        "ETag": "\"6ad16fd4-59232\""
+      }
+    },
+    {
+      "phase": "fixed",
+      "file": "game-release.json",
+      "url": "https://raw.githubusercontent.com/narutojzm1-dot/youjia/379884e7cc5a0556bded896bb4e8f58eed795bda/game-release.json",
+      "bytes": 2252,
+      "sha256": "49f1f75cdd326f58c4014ef64debdfdeff06214e475e565c4b46985584920b81",
+      "git_blob": "d8d2097f034ae4bdf8c981dec0b8dd4b1dfdaa42",
+      "headers": {
+        "Content-Length": "2252",
+        "Content-Type": "text/plain; charset=utf-8",
+        "ETag": "\"c8fba3c0c6f04ebf7dcefd1ecb799d9e0c43c700e1f79b1fa5e846a6ecb17d93\""
+      }
+    },
+    {
+      "phase": "fixed",
+      "file": "index.html",
+      "url": "https://raw.githubusercontent.com/narutojzm1-dot/youjia/379884e7cc5a0556bded896bb4e8f58eed795bda/index.html",
+      "bytes": 365106,
+      "sha256": "69b6fed71030d6d713baf0ee2ce0343a5bc3ba615be4b4b0875c62c91cdaddc9",
+      "git_blob": "b1507ca56255341898fd10b1fe1dc54e500a7747",
+      "headers": {
+        "Content-Length": "365106",
+        "Content-Type": "text/plain; charset=utf-8",
+        "ETag": "\"7bfbfa1c59d6e2008914c23ce114509257ab2139f327b8c4810bb7d9766a1a4a\""
+      }
+    },
+    {
+      "phase": "fixed",
+      "file": "save-4923085/bridge.mjs",
+      "url": "https://raw.githubusercontent.com/narutojzm1-dot/youjia/379884e7cc5a0556bded896bb4e8f58eed795bda/save-4923085/bridge.mjs",
+      "bytes": 1856,
+      "sha256": "ef18687554fdc0d745c1d18d4d091e959cc78559da0d61d6a093e562ff9bbc91",
+      "git_blob": "b28e79f06de1d727e3fe454b0442082ba77c33c5",
+      "headers": {
+        "reused-verified-complete-download": "true"
+      }
+    },
+    {
+      "phase": "public",
+      "file": "save-4923085/budgets.mjs",
+      "url": "https://narutojzm1-dot.github.io/youjia/save-4923085/budgets.mjs",
+      "bytes": 340,
+      "sha256": "52984153977dcafd1d2682e848f1999f091d0966e17d46e902de76f5735a7018",
+      "git_blob": "2a2abebdd318a04d63c9eeee3fb275f59e1d58ae",
+      "headers": {
+        "reused-verified-complete-download": "true"
+      }
+    },
+    {
+      "phase": "fixed",
+      "file": "save-4923085/budgets.mjs",
+      "url": "https://raw.githubusercontent.com/narutojzm1-dot/youjia/379884e7cc5a0556bded896bb4e8f58eed795bda/save-4923085/budgets.mjs",
+      "bytes": 340,
+      "sha256": "52984153977dcafd1d2682e848f1999f091d0966e17d46e902de76f5735a7018",
+      "git_blob": "2a2abebdd318a04d63c9eeee3fb275f59e1d58ae",
+      "headers": {
+        "reused-verified-complete-download": "true"
+      }
+    },
+    {
+      "phase": "public",
+      "file": "save-4923085/host.mjs",
+      "url": "https://narutojzm1-dot.github.io/youjia/save-4923085/host.mjs",
+      "bytes": 7730,
+      "sha256": "9de8dc0ef4bfc037a8ad0bff575d40c3dd4341bcc723351a412b2061bb661904",
+      "git_blob": "ffba045c0a3d0f2fe736f715bedb34da1c3c3e47",
+      "headers": {
+        "reused-verified-complete-download": "true"
+      }
+    },
+    {
+      "phase": "fixed",
+      "file": "save-4923085/host.mjs",
+      "url": "https://raw.githubusercontent.com/narutojzm1-dot/youjia/379884e7cc5a0556bded896bb4e8f58eed795bda/save-4923085/host.mjs",
+      "bytes": 7730,
+      "sha256": "9de8dc0ef4bfc037a8ad0bff575d40c3dd4341bcc723351a412b2061bb661904",
+      "git_blob": "ffba045c0a3d0f2fe736f715bedb34da1c3c3e47",
+      "headers": {
+        "reused-verified-complete-download": "true"
+      }
+    },
+    {
+      "phase": "public",
+      "file": "save-4923085/idbfs_source.mjs",
+      "url": "https://narutojzm1-dot.github.io/youjia/save-4923085/idbfs_source.mjs",
+      "bytes": 5550,
+      "sha256": "16eb57d471537f13d3e50018b56c2d416d2847f0d0249ba44433dd9ebb65f4d8",
+      "git_blob": "bc1bf875e6726864b93299c469eb53c36956d18f",
+      "headers": {
+        "reused-verified-complete-download": "true"
+      }
+    },
+    {
+      "phase": "fixed",
+      "file": "save-4923085/idbfs_source.mjs",
+      "url": "https://raw.githubusercontent.com/narutojzm1-dot/youjia/379884e7cc5a0556bded896bb4e8f58eed795bda/save-4923085/idbfs_source.mjs",
+      "bytes": 5550,
+      "sha256": "16eb57d471537f13d3e50018b56c2d416d2847f0d0249ba44433dd9ebb65f4d8",
+      "git_blob": "bc1bf875e6726864b93299c469eb53c36956d18f",
+      "headers": {
+        "reused-verified-complete-download": "true"
+      }
+    },
+    {
+      "phase": "public",
+      "file": "save-4923085/legacy_inspection.mjs",
+      "url": "https://narutojzm1-dot.github.io/youjia/save-4923085/legacy_inspection.mjs",
+      "bytes": 2886,
+      "sha256": "db3a23a0221aa5d34a58a6a49aeeff930295ffe20bfcf73a7c11f0d49cffd671",
+      "git_blob": "908794da407c525d1b68cac46737e6de61872784",
+      "headers": {
+        "reused-verified-complete-download": "true"
+      }
+    },
+    {
+      "phase": "fixed",
+      "file": "save-4923085/legacy_inspection.mjs",
+      "url": "https://raw.githubusercontent.com/narutojzm1-dot/youjia/379884e7cc5a0556bded896bb4e8f58eed795bda/save-4923085/legacy_inspection.mjs",
+      "bytes": 2886,
+      "sha256": "db3a23a0221aa5d34a58a6a49aeeff930295ffe20bfcf73a7c11f0d49cffd671",
+      "git_blob": "908794da407c525d1b68cac46737e6de61872784",
+      "headers": {
+        "reused-verified-complete-download": "true"
+      }
+    },
+    {
+      "phase": "public",
+      "file": "save-4923085/legacy_seal.mjs",
+      "url": "https://narutojzm1-dot.github.io/youjia/save-4923085/legacy_seal.mjs",
+      "bytes": 2510,
+      "sha256": "9642132f5d4e7523e5966e802069af7f4bae803fae8e2e7c28ae55ee97d85610",
+      "git_blob": "ae76de7400979664b23df34ac4300bf086f96fd7",
+      "headers": {
+        "reused-verified-complete-download": "true"
+      }
+    },
+    {
+      "phase": "fixed",
+      "file": "save-4923085/legacy_seal.mjs",
+      "url": "https://raw.githubusercontent.com/narutojzm1-dot/youjia/379884e7cc5a0556bded896bb4e8f58eed795bda/save-4923085/legacy_seal.mjs",
+      "bytes": 2510,
+      "sha256": "9642132f5d4e7523e5966e802069af7f4bae803fae8e2e7c28ae55ee97d85610",
+      "git_blob": "ae76de7400979664b23df34ac4300bf086f96fd7",
+      "headers": {
+        "reused-verified-complete-download": "true"
+      }
+    },
+    {
+      "phase": "public",
+      "file": "save-4923085/legacy_v5.mjs",
+      "url": "https://narutojzm1-dot.github.io/youjia/save-4923085/legacy_v5.mjs",
+      "bytes": 2245,
+      "sha256": "8e7f4ad2d87aab77ac05361e4f46060476e933aa079ae94301998d08d4599621",
+      "git_blob": "d5074e50774eb985e5d9c6e95fa6dcfdc0c4c12c",
+      "headers": {
+        "reused-verified-complete-download": "true"
+      }
+    },
+    {
+      "phase": "fixed",
+      "file": "save-4923085/legacy_v5.mjs",
+      "url": "https://raw.githubusercontent.com/narutojzm1-dot/youjia/379884e7cc5a0556bded896bb4e8f58eed795bda/save-4923085/legacy_v5.mjs",
+      "bytes": 2245,
+      "sha256": "8e7f4ad2d87aab77ac05361e4f46060476e933aa079ae94301998d08d4599621",
+      "git_blob": "d5074e50774eb985e5d9c6e95fa6dcfdc0c4c12c",
+      "headers": {
+        "reused-verified-complete-download": "true"
+      }
+    },
+    {
+      "phase": "public",
+      "file": "save-4923085/lifecycle.mjs",
+      "url": "https://narutojzm1-dot.github.io/youjia/save-4923085/lifecycle.mjs",
+      "bytes": 1878,
+      "sha256": "1cfaebb9a8745e2dc3e4f694ef475f250640870938f04160be1a5c9acd62935d",
+      "git_blob": "d30f5af087694e6dbf30d19e021b5509a8f74801",
+      "headers": {
+        "reused-verified-complete-download": "true"
+      }
+    },
+    {
+      "phase": "fixed",
+      "file": "save-4923085/lifecycle.mjs",
+      "url": "https://raw.githubusercontent.com/narutojzm1-dot/youjia/379884e7cc5a0556bded896bb4e8f58eed795bda/save-4923085/lifecycle.mjs",
+      "bytes": 1878,
+      "sha256": "1cfaebb9a8745e2dc3e4f694ef475f250640870938f04160be1a5c9acd62935d",
+      "git_blob": "d30f5af087694e6dbf30d19e021b5509a8f74801",
+      "headers": {
+        "reused-verified-complete-download": "true"
+      }
+    },
+    {
+      "phase": "public",
+      "file": "save-4923085/source_decode.mjs",
+      "url": "https://narutojzm1-dot.github.io/youjia/save-4923085/source_decode.mjs",
+      "bytes": 1542,
+      "sha256": "411f3bc784cb32a07f32eed5fc7d88f71b59a667cc0d68a50fe13c55bfdba18a",
+      "git_blob": "3fb4b38fd00d399c6258ad4f7b5d08aa89ffbc26",
+      "headers": {
+        "reused-verified-complete-download": "true"
+      }
+    },
+    {
+      "phase": "fixed",
+      "file": "save-4923085/source_decode.mjs",
+      "url": "https://raw.githubusercontent.com/narutojzm1-dot/youjia/379884e7cc5a0556bded896bb4e8f58eed795bda/save-4923085/source_decode.mjs",
+      "bytes": 1542,
+      "sha256": "411f3bc784cb32a07f32eed5fc7d88f71b59a667cc0d68a50fe13c55bfdba18a",
+      "git_blob": "3fb4b38fd00d399c6258ad4f7b5d08aa89ffbc26",
+      "headers": {
+        "reused-verified-complete-download": "true"
+      }
+    },
+    {
+      "phase": "public",
+      "file": "save-4923085/store.mjs",
+      "url": "https://narutojzm1-dot.github.io/youjia/save-4923085/store.mjs",
+      "bytes": 13890,
+      "sha256": "2193b4397b8662a8ebc754dc4468e4d62964d209b4e1d0f0924a2ec81b409cbe",
+      "git_blob": "4a05c51fd980f64ebb5033d8915ea6f4b044a3b6",
+      "headers": {
+        "reused-verified-complete-download": "true"
+      }
+    },
+    {
+      "phase": "fixed",
+      "file": "save-4923085/store.mjs",
+      "url": "https://raw.githubusercontent.com/narutojzm1-dot/youjia/379884e7cc5a0556bded896bb4e8f58eed795bda/save-4923085/store.mjs",
+      "bytes": 13890,
+      "sha256": "2193b4397b8662a8ebc754dc4468e4d62964d209b4e1d0f0924a2ec81b409cbe",
+      "git_blob": "4a05c51fd980f64ebb5033d8915ea6f4b044a3b6",
+      "headers": {
+        "reused-verified-complete-download": "true"
+      }
+    },
+    {
+      "phase": "public",
+      "file": "boot-4923085/download_assets.mjs",
+      "url": "https://narutojzm1-dot.github.io/youjia/boot-4923085/download_assets.mjs",
+      "bytes": 7714,
+      "sha256": "0c0e0f179641bd524a8d0d4f520e4158152bcc884f0d17ff3b0e0a0b0b21e238",
+      "git_blob": "05730914b8af66673d1eead09194b0838d607475",
+      "headers": {
+        "reused-verified-complete-download": "true"
+      }
+    },
+    {
+      "phase": "fixed",
+      "file": "boot-4923085/download_assets.mjs",
+      "url": "https://raw.githubusercontent.com/narutojzm1-dot/youjia/379884e7cc5a0556bded896bb4e8f58eed795bda/boot-4923085/download_assets.mjs",
+      "bytes": 7714,
+      "sha256": "0c0e0f179641bd524a8d0d4f520e4158152bcc884f0d17ff3b0e0a0b0b21e238",
+      "git_blob": "05730914b8af66673d1eead09194b0838d607475",
+      "headers": {
+        "reused-verified-complete-download": "true"
+      }
+    },
+    {
+      "phase": "public",
+      "file": "boot-4923085/sha256_stream.mjs",
+      "url": "https://narutojzm1-dot.github.io/youjia/boot-4923085/sha256_stream.mjs",
+      "bytes": 3448,
+      "sha256": "c26338f465688208706256f83aef6a510f01b671c6e679ae1a0d9ab7797af85e",
+      "git_blob": "229e8b41caf171eca75f7c62ad87fd4f694c494d",
+      "headers": {
+        "reused-verified-complete-download": "true"
+      }
+    },
+    {
+      "phase": "fixed",
+      "file": "boot-4923085/sha256_stream.mjs",
+      "url": "https://raw.githubusercontent.com/narutojzm1-dot/youjia/379884e7cc5a0556bded896bb4e8f58eed795bda/boot-4923085/sha256_stream.mjs",
+      "bytes": 3448,
+      "sha256": "c26338f465688208706256f83aef6a510f01b671c6e679ae1a0d9ab7797af85e",
+      "git_blob": "229e8b41caf171eca75f7c62ad87fd4f694c494d",
+      "headers": {
+        "reused-verified-complete-download": "true"
+      }
+    },
+    {
+      "phase": "public",
+      "file": "engine-3b105340f798ed0e7d6aa7725328dc8c0bf8cd94ffea14835e43f83045048c74.js",
+      "url": "https://narutojzm1-dot.github.io/youjia/engine-3b105340f798ed0e7d6aa7725328dc8c0bf8cd94ffea14835e43f83045048c74.js",
+      "bytes": 279815,
+      "sha256": "33c94cb3175f3333b82e2a3be5e8e86f77986f0aa2042b1631f6367a4e5bb6ba",
+      "git_blob": "c84b7de50f26f0dd21bd4b2885de851a3ea6ff39",
+      "headers": {
+        "reused-verified-complete-download": "true"
+      }
+    },
+    {
+      "phase": "fixed",
+      "file": "engine-3b105340f798ed0e7d6aa7725328dc8c0bf8cd94ffea14835e43f83045048c74.js",
+      "url": "https://raw.githubusercontent.com/narutojzm1-dot/youjia/379884e7cc5a0556bded896bb4e8f58eed795bda/engine-3b105340f798ed0e7d6aa7725328dc8c0bf8cd94ffea14835e43f83045048c74.js",
+      "bytes": 279815,
+      "sha256": "33c94cb3175f3333b82e2a3be5e8e86f77986f0aa2042b1631f6367a4e5bb6ba",
+      "git_blob": "c84b7de50f26f0dd21bd4b2885de851a3ea6ff39",
+      "headers": {
+        "reused-verified-complete-download": "true"
+      }
+    },
+    {
+      "phase": "public",
+      "file": "engine-3b105340f798ed0e7d6aa7725328dc8c0bf8cd94ffea14835e43f83045048c74.wasm",
+      "url": "https://narutojzm1-dot.github.io/youjia/engine-3b105340f798ed0e7d6aa7725328dc8c0bf8cd94ffea14835e43f83045048c74.wasm",
+      "bytes": 39514754,
+      "sha256": "fc74679e3b97f76878947fcd4fbe1268cbfa6188182a2e33bbc3f5dc9bfa57d0",
+      "git_blob": "8f900d00d644a698bbce67439bf6daf73bdfa4b7",
+      "headers": {
+        "reused-verified-complete-download": "true"
+      }
+    },
+    {
+      "phase": "public",
+      "file": "game-4923085.pck",
+      "url": "https://narutojzm1-dot.github.io/youjia/game-4923085.pck",
+      "bytes": 89118232,
+      "sha256": "406bf028b1c739a5903b95c2aa4b7d465807cf6cd2c18c84dfeeb37f9db65b8d",
+      "git_blob": "9423fae17b04f18320ac2245d879590d3b28b5a1",
+      "headers": {
+        "reused-verified-complete-download": "true"
+      }
+    },
+    {
+      "phase": "public",
+      "file": "engine-3b105340f798ed0e7d6aa7725328dc8c0bf8cd94ffea14835e43f83045048c74.audio.worklet.js",
+      "url": "https://narutojzm1-dot.github.io/youjia/engine-3b105340f798ed0e7d6aa7725328dc8c0bf8cd94ffea14835e43f83045048c74.audio.worklet.js",
+      "bytes": 7298,
+      "sha256": "5b476a9c9ce642c0ee4256436d1bc31d9c38f868aca0f9a8e2a57c18d2dec2a3",
+      "git_blob": "3b94cab85cb937fa27056d17648cdbb73e44bdbd",
+      "headers": {
+        "reused-verified-complete-download": "true"
+      }
+    },
+    {
+      "phase": "fixed",
+      "file": "engine-3b105340f798ed0e7d6aa7725328dc8c0bf8cd94ffea14835e43f83045048c74.audio.worklet.js",
+      "url": "https://raw.githubusercontent.com/narutojzm1-dot/youjia/379884e7cc5a0556bded896bb4e8f58eed795bda/engine-3b105340f798ed0e7d6aa7725328dc8c0bf8cd94ffea14835e43f83045048c74.audio.worklet.js",
+      "bytes": 7298,
+      "sha256": "5b476a9c9ce642c0ee4256436d1bc31d9c38f868aca0f9a8e2a57c18d2dec2a3",
+      "git_blob": "3b94cab85cb937fa27056d17648cdbb73e44bdbd",
+      "headers": {
+        "reused-verified-complete-download": "true"
+      }
+    },
+    {
+      "phase": "public",
+      "file": "engine-3b105340f798ed0e7d6aa7725328dc8c0bf8cd94ffea14835e43f83045048c74.audio.position.worklet.js",
+      "url": "https://narutojzm1-dot.github.io/youjia/engine-3b105340f798ed0e7d6aa7725328dc8c0bf8cd94ffea14835e43f83045048c74.audio.position.worklet.js",
+      "bytes": 2973,
+      "sha256": "be33985bc7160d6bf9646f259cd86b259cd67b02ccb297ee5c44f8ac84327bc8",
+      "git_blob": "4e512c1e3c99c63cc69b0345b7bb250679e0d313",
+      "headers": {
+        "reused-verified-complete-download": "true"
+      }
+    },
+    {
+      "phase": "fixed",
+      "file": "engine-3b105340f798ed0e7d6aa7725328dc8c0bf8cd94ffea14835e43f83045048c74.audio.position.worklet.js",
+      "url": "https://raw.githubusercontent.com/narutojzm1-dot/youjia/379884e7cc5a0556bded896bb4e8f58eed795bda/engine-3b105340f798ed0e7d6aa7725328dc8c0bf8cd94ffea14835e43f83045048c74.audio.position.worklet.js",
+      "bytes": 2973,
+      "sha256": "be33985bc7160d6bf9646f259cd86b259cd67b02ccb297ee5c44f8ac84327bc8",
+      "git_blob": "4e512c1e3c99c63cc69b0345b7bb250679e0d313",
+      "headers": {
+        "reused-verified-complete-download": "true"
+      }
+    },
+    {
+      "phase": "fixed",
+      "file": "engine-3b105340f798ed0e7d6aa7725328dc8c0bf8cd94ffea14835e43f83045048c74.wasm",
+      "url": "https://raw.githubusercontent.com/narutojzm1-dot/youjia/379884e7cc5a0556bded896bb4e8f58eed795bda/engine-3b105340f798ed0e7d6aa7725328dc8c0bf8cd94ffea14835e43f83045048c74.wasm",
+      "bytes": 39514754,
+      "sha256": "fc74679e3b97f76878947fcd4fbe1268cbfa6188182a2e33bbc3f5dc9bfa57d0",
+      "git_blob": "8f900d00d644a698bbce67439bf6daf73bdfa4b7",
+      "headers": {
+        "reused-verified-complete-download": "true"
+      }
+    },
+    {
+      "phase": "public",
+      "file": "save-4923085/bridge.mjs",
+      "url": "https://narutojzm1-dot.github.io/youjia/save-4923085/bridge.mjs",
+      "bytes": 1856,
+      "sha256": "ef18687554fdc0d745c1d18d4d091e959cc78559da0d61d6a093e562ff9bbc91",
+      "git_blob": "b28e79f06de1d727e3fe454b0442082ba77c33c5",
+      "headers": {
+        "Content-Length": "1856",
+        "Content-Type": "text/javascript; charset=utf-8",
+        "Last-Modified": "Fri, 16 Oct 2026 00:29:08 GMT",
+        "ETag": "\"6ad16fd4-740\""
+      }
+    },
+    {
+      "phase": "fixed",
+      "file": "game-4923085.pck",
+      "url": "https://raw.githubusercontent.com/narutojzm1-dot/youjia/379884e7cc5a0556bded896bb4e8f58eed795bda/game-4923085.pck",
+      "bytes": 89118232,
+      "sha256": "406bf028b1c739a5903b95c2aa4b7d465807cf6cd2c18c84dfeeb37f9db65b8d",
+      "git_blob": "9423fae17b04f18320ac2245d879590d3b28b5a1",
+      "headers": {
+        "Content-Length": "89118232",
+        "Content-Type": "application/octet-stream",
+        "ETag": "\"1ad1fc24e70ab0abeff1c6ec729ab0708ab2c23ba0c695cee6290641ed3d4d48\""
+      }
+    }
+  ],
+  "complete_pck_download_both_endpoints": true,
+  "checks": "manifest identity, HTML identity/config, all declared modules/engine bytes, actual full PCK hash and length"
+}

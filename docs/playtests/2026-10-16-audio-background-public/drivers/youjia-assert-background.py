@@ -2,6 +2,7 @@ import json, pathlib, sys
 
 path = pathlib.Path(sys.argv[1])
 r = json.loads(path.read_text(encoding='utf-8-sig'))
+expected_starts = int(sys.argv[2]) if len(sys.argv) > 2 else 2
 assert r['driverExit'] == 0
 proof = []
 for c in r['cases']:
@@ -11,7 +12,7 @@ for c in r['cases']:
     records = {x['label']: x for x in c['records']}
     active = records['active night']
     assert not active['hidden'] and active['diag']['state'] == 'running'
-    assert active['diag']['starts'] == 2
+    assert active['diag']['starts'] == expected_starts
     a, b = records['other tab foreground'], records['hidden sustained']
     for x in [a, b, records['own window minimized']]:
         assert x['hidden'] and x['visibility'] == 'hidden'
