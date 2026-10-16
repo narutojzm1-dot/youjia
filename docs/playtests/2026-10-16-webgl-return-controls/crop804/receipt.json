@@ -1,0 +1,32 @@
+{
+  "source": "9f7ab71b3d1fadeec0973f49ca4e33c4355b0760",
+  "test": "author crop source equality --check, no rendering performed",
+  "exit": 0,
+  "files": [
+    {
+      "file": "coord_sn.png",
+      "bytes": 17979,
+      "sha256": "2d96f777078cb4edf32f9c303a6eb1b0fde5370b630aee6268a72efe15bb65f7"
+    },
+    {
+      "file": "flow_map.png",
+      "bytes": 18319,
+      "sha256": "8cceb5291a57335150d06dce90dd4192f0f0b740c7acea619762d4e187d7a542"
+    },
+    {
+      "file": "secondary_map.png",
+      "bytes": 18882,
+      "sha256": "c71cfef3408d9b7f743b09d73b714e0e05da267e58713dadd048b0a5666996d0"
+    },
+    {
+      "file": "secondary_weight.png",
+      "bytes": 13174,
+      "sha256": "ed6ebde2798c714978ee331dc77e3d1d624a8a851658942d92727d7cbaf6e1e8"
+    },
+    {
+      "file": "water_detail.png",
+      "bytes": 20772,
+      "sha256": "b069854e7a876be7938a8bb380fb7f2e3ac26c2a2ac088d0ca85a0defacb7654"
+    }
+  ]
+}
