@@ -47,6 +47,13 @@ jobs:
       - name: Verify versioned persistence module publication
         run: python3 test/publish_storage_modules_test.py
 
+      - name: Verify cached photo writer fencing in real Chrome
+        timeout-minutes: 5
+        shell: bash
+        run: |
+          npm install --prefix "$RUNNER_TEMP/photo-writer" --ignore-scripts --no-audit --no-fund playwright-core@1.62.1
+          PLAYWRIGHT_MODULE="$RUNNER_TEMP/photo-writer/node_modules/playwright-core" CHROME_PATH="$(command -v google-chrome)" node test/photo_writer_epoch/run.cjs "$RUNNER_TEMP/photo-writer-evidence"
+
       - name: Run game verification
         run: GODOT="$RUNNER_TEMP/godot/Godot_v4.7.2-stable_linux.x86_64" bash tools/verify_daily_life.sh
 
