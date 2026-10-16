@@ -1,0 +1,72 @@
+{
+  "head": "a7c3b47ce31333e5d1ffef49f894e5cba9d5d6b2",
+  "files": [
+    {
+      "file": "README.md",
+      "bytes": 12378,
+      "sha256": "3b2ce3d12913f26fe1144f4f18747cee6bf875178b2bcf495bbb9a1221c6d904"
+    },
+    {
+      "file": "verify_realtime_movie.py",
+      "bytes": 4418,
+      "sha256": "2baf9a192428bd3771b7b71c5bb64522c5eb2514b4f8ebb8a12b2ff684265534"
+    },
+    {
+      "file": "godot_preview/stream_flow_driver.gd",
+      "bytes": 5581,
+      "sha256": "821db0fb822b7e281ca47186f5fa16480db10febf468da0e383c0362e3c4fcb8"
+    },
+    {
+      "file": "stream_flow_realtime_30fps_40s.mp4",
+      "bytes": 3696449,
+      "sha256": "fc71d03cb31c1791d50e955317ac3ed4cf48a082461b5589d8c0694cfe768af1"
+    },
+    {
+      "file": "stream_flow_realtime_creek_8s.gif",
+      "bytes": 717629,
+      "sha256": "f95761103d209dcf4829079a17e730be95145fd52bf175152f1da812324c8782"
+    }
+  ],
+  "video": {
+    "fps": 30.0,
+    "frames": 1200,
+    "decoded": 1200,
+    "seconds": 40.0,
+    "width": 1280,
+    "height": 720,
+    "rgb_step_median": 0.004634693287037037,
+    "rgb_step_max": 1.4228938802083333,
+    "boundary_rgb_steps": [
+      0.007522063078703704,
+      0.004010054976851852,
+      0.006410951967592593,
+      0.0039178240740740744
+    ]
+  },
+  "original_PNG_sequence_not_available": true,
+  "movie_maker_fixed_step_not_real_time_performance": true,
+  "mp4_lossy_not_exact_pixel_gate": true,
+  "mp4_adjacent_rgb_spikes": [
+    {
+      "frame": 250,
+      "seconds": 8.333333333333334,
+      "mean_absdiff": 1.4228938802083333
+    },
+    {
+      "frame": 500,
+      "seconds": 16.666666666666668,
+      "mean_absdiff": 0.2847265625
+    },
+    {
+      "frame": 750,
+      "seconds": 25,
+      "mean_absdiff": 0.28115234375
+    },
+    {
+      "frame": 1000,
+      "seconds": 33.333333333333336,
+      "mean_absdiff": 0.28324580439814817
+    }
+  ],
+  "spike_cause_not_determined": "250-frame spacing suggests encoding keyframes; inference only, original PNG not available"
+}
