@@ -1,0 +1,30 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+FAIL: (844, 390) zh-CN: empty paper above the title 31.0 <= 26.0 (was ~75px at 844x390)
+FAIL: (844, 390) en: empty paper above the title 31.0 <= 26.0 (was ~75px at 844x390)
+FAIL: (915, 412) zh-CN: empty paper above the title 31.0 <= 26.0 (was ~75px at 844x390)
+FAIL: (915, 412) en: empty paper above the title 31.0 <= 26.0 (was ~75px at 844x390)
+FAIL: (700, 400) zh-CN: empty paper above the title 31.0 <= 26.0 (was ~75px at 844x390)
+FAIL: (700, 400) en: empty paper above the title 31.0 <= 26.0 (was ~75px at 844x390)
+FAIL: (640, 360) zh-CN: empty paper above the title 31.0 <= 26.0 (was ~75px at 844x390)
+FAIL: (640, 360) en: empty paper above the title 31.0 <= 26.0 (was ~75px at 844x390)
+FAIL: (640, 300) zh-CN: paper [P: (12.0, 12.0), S: (616.0, 280.0)] inside the screen with 12px margin
+FAIL: (640, 300) zh-CN: paper [P: (12.0, 12.0), S: (616.0, 280.0)] centred
+FAIL: (640, 300) zh-CN: short paper height 280.0 hugs content (276.0)
+FAIL: (640, 300) en: paper [P: (12.0, 12.0), S: (616.0, 280.0)] inside the screen with 12px margin
+FAIL: (640, 300) en: paper [P: (12.0, 12.0), S: (616.0, 280.0)] centred
+FAIL: (640, 300) en: short paper height 280.0 hugs content (276.0)
+FAIL: (390, 844) zh-CN: paper [P: (15.0, 112.0), S: (360.0, 620.0)] leaves HUD @Button@2663 [P: (20.0, 720.0), S: (103.3333, 48.0)] uncovered
+FAIL: (390, 844) zh-CN: paper [P: (15.0, 112.0), S: (360.0, 620.0)] leaves HUD @Button@2664 [P: (143.3333, 720.0), S: (103.3333, 48.0)] uncovered
+FAIL: (390, 844) zh-CN: paper [P: (15.0, 112.0), S: (360.0, 620.0)] leaves HUD @Button@2665 [P: (266.6667, 720.0), S: (103.3333, 48.0)] uncovered
+FAIL: (390, 844) en: paper [P: (15.0, 112.0), S: (360.0, 620.0)] leaves HUD @Button@2663 [P: (20.0, 720.0), S: (103.3333, 48.0)] uncovered
+FAIL: (390, 844) en: paper [P: (15.0, 112.0), S: (360.0, 620.0)] leaves HUD @Button@2664 [P: (143.3333, 720.0), S: (103.3333, 48.0)] uncovered
+FAIL: (390, 844) en: paper [P: (15.0, 112.0), S: (360.0, 620.0)] leaves HUD @Button@2665 [P: (266.6667, 720.0), S: (103.3333, 48.0)] uncovered
+FAIL: resize->(844, 390): empty paper above the title 31.0 <= 26.0 (was ~75px at 844x390)
+FAIL: resize->(390, 844): paper [P: (15.0, 112.0), S: (360.0, 620.0)] leaves HUD @Button@3775 [P: (20.0, 720.0), S: (103.3333, 48.0)] uncovered
+FAIL: resize->(390, 844): paper [P: (15.0, 112.0), S: (360.0, 620.0)] leaves HUD @Button@3776 [P: (143.3333, 720.0), S: (103.3333, 48.0)] uncovered
+FAIL: resize->(390, 844): paper [P: (15.0, 112.0), S: (360.0, 620.0)] leaves HUD @Button@3777 [P: (266.6667, 720.0), S: (103.3333, 48.0)] uncovered
+FAIL: resize->(640, 360): empty paper above the title 31.0 <= 26.0 (was ~75px at 844x390)
+FAIL: resize->(844, 390): empty paper above the title 31.0 <= 26.0 (was ~75px at 844x390)
+FAIL: locale switch while paused 844x390: empty paper above the title 31.0 <= 26.0 (was ~75px at 844x390)
+pause_panel_fit: 27 of 1291 checks FAILED
