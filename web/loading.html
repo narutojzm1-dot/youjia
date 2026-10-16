@@ -155,6 +155,29 @@ Source SHA-256: 38f4c5f927f746b3dfa4c3a5d7edf0b7a3e828e27438418fa54f9e1565289412
       };
       const mib = (bytes) => (bytes / 1048576).toFixed(1);
       const startedAt = performance.now();
+      // Keep the existing global timings, plus bounded resource-specific facts.
+      // A WASM cache hit must not be mistaken for a PCK cache hit or retry.
+      const assetNames = Object.entries(config.fileSizes || {})
+        .filter(([name, size]) => /\.(wasm|pck)$/.test(name) && Number.isSafeInteger(size) && size > 0)
+        .map(([name]) => name);
+      const recordAsset = (kind, event = {}) => {
+        if (failed || ready) return;
+        try {
+          if (typeof event.url !== 'string') return;
+          const href = new URL(event.url, window.location.href).href;
+          const asset = assetNames.find(name => new URL(name, window.location.href).href === href);
+          if (!asset) return; // Do not retain arbitrary URLs, query strings or error payloads.
+          const record = {at: Math.round(performance.now() - startedAt), asset, kind,
+            source: kind === 'cache-hit' || event.source === 'cache' ? 'cache'
+              : event.source === undefined ? 'network' : 'unknown'};
+          for (const key of ['offset', 'retry', 'maxRetries']) {
+            if (Number.isSafeInteger(event[key]) && event[key] >= 0) record[key] = event[key];
+          }
+          const events = timings.assetEvents ||= [];
+          if (events.length >= 32) events.shift();
+          events.push(record);
+        } catch { /* Optional diagnostics must never block or restart loading. */ }
+      };
       let lastProgressAt = startedAt;
       let downloadedBytes = 0;
       let downloadComplete = false;
@@ -285,9 +308,16 @@ Source SHA-256: 38f4c5f927f746b3dfa4c3a5d7edf0b7a3e828e27438418fa54f9e1565289412
           stamp('bootstrapReady');
           restoreAssetFetch = installAssetRecovery(config, {
             onError: fail,
-            onCacheHit: () => stamp('assetCacheHit'),
-            onRetry: ({url, offset, retry: attempt, maxRetries}) => {
+            onCacheHit: event => {
+              if (failed || ready) return;
+              stamp('assetCacheHit');
+              recordAsset('cache-hit', event);
+            },
+            onRetry: event => {
+              if (failed || ready) return;
+              const {url, offset, retry: attempt, maxRetries} = event;
               stamp('downloadRetry');
+              recordAsset('retry', event);
               notice.hidden = false;
               notice.textContent = `下载连接中断，正在恢复（${attempt}/${maxRetries}）…`;
               console.info('[game-loading] resume', url, offset, attempt);
