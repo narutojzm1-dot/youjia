@@ -1,0 +1,31 @@
+{
+  "source": "0a1b56e16f90d3712d4b9f8360a1da3f87d6420f",
+  "raw": "results.json",
+  "checks_passed": true,
+  "software_only": true,
+  "cases": [
+    {
+      "label": "public",
+      "hidden_clock": 16.792,
+      "same_clock_after_ms": 5097.799999952316,
+      "long_starts_before_after": [
+        2,
+        2
+      ],
+      "page_errors": [],
+      "console": [
+        {
+          "type": "error",
+          "text": "Failed to load resource: the server responded with a status of 404 ()",
+          "location": {
+            "url": "https://narutojzm1-dot.github.io/favicon.ico",
+            "line": 0,
+            "column": 0,
+            "lineNumber": 0,
+            "columnNumber": 0
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+AssertionError [ERR_ASSERTION]: new hidden token cannot let an older resume bypass suspension
+    at check (C:\Users\Zengm\.codex\worktrees\ui-audio-704\youjia\test\browser_bgm_visibility_test.cjs:3:51)
+    at C:\Users\Zengm\.codex\worktrees\ui-audio-704\youjia\test\browser_bgm_visibility_test.cjs:32:129 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
