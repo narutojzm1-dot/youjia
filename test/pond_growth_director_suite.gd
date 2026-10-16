@@ -23,6 +23,7 @@ func reset(tired := false, initial_wheat := 20) -> void:
 	fixture = {"version":5,"holiday_day":1,"keepsakes":{STONE:20},Inventory.FIELD:inv,
 		"growth_actions":{"schema":1,"revision":0,"actions":{}},"pond_edging":{"schema":1,"revision":0,"sections":{}},
 		"growth_production":preload("res://scripts/game/growth_production.gd").empty(),
+		"yard_stove":preload("res://scripts/game/yard_stove.gd").empty(),
 		"resident_rest":{"schema":1,"day":1,"cause":"awake" if tired else "sleep"}}
 	fixture = Meals.complete(fixture,0,0,1,"lunch",{"wheat":1},tired).candidate
 	# Explicit isolated recipe costs; never initialize a user's inventory.
@@ -396,7 +397,7 @@ func check_autonomous_work(test_seed := 0) -> void:
 	for entry in [[0.0,"breakfast"],[0.24,"breakfast"],[0.25,"lunch"],[0.49,"lunch"],[0.5,"dinner"],[0.99,"dinner"],[1.0,""]]:
 		check(schedule.period(entry[0]) == entry[1], "live AP period boundary")
 	seed(test_seed)
-	# This scenario asserts the order of pond sections. Keep only the protected
+	# This scenario asserts PR801 staged stove continuation. Keep only the protected
 	# final wheat seed after lunch so milling is correctly ineligible; the mixed
 	# catalog and its one-draw behavior are covered in milling_director_suite.
 	await reset(false, 2)
@@ -412,20 +413,20 @@ func check_autonomous_work(test_seed := 0) -> void:
 	for i in 360:
 		world.tick(1.0/30, Vector2.ZERO)
 		if world.pond_growth.busy(): break
-	check(world.pond_growth.stage == "fetching" and world.pond_growth.section == "rim_04", "ordinary world automatically chooses first accessible unfinished bank")
+	check(world.pond_growth.stage == "fetching" and world.pond_growth.section == "stove" and world.pond_growth.action_id == "build_stove", "ordinary world automatically chooses the courtyard stove")
 	world.pond_growth.autonomous_enabled = false
 	approach()
-	check(world.pond_growth.stage == "working", "autonomous actor really reaches the bank")
+	check(world.pond_growth.stage == "working", "autonomous actor really reaches the stove")
 	world._goose_mount_wait = 3.49
 	world._tick_goose_mount_encounter(1.0/30, Vector2.ZERO)
 	check(world._goose_mount_phase < 0 and world._goose_mount_wait == 0.0, "ambient encounter cannot steal production actor")
 	await capture("autonomous-working")
-	for i in 361: world.tick(1.0/30, Vector2.ZERO)
+	for i in 481: world.tick(1.0/30, Vector2.ZERO)
 	print("AUTO_BEFORE_SAVE ",world.pond_growth.stage," work=",world.pond_growth.work," pos=",world.get_player().position," target=",world.pond_growth.target," elapsed=",world._day_elapsed," pending=",world._pending_interaction," house=",world.house.stage)
 	check(await store.flush_pending(), "autonomous completion durably confirmed")
 	print("AUTO_AFTER_SAVE ",store.get_growth_budget("lunch")," sections=",store.get_pond_edging())
 	check(store.get_growth_budget("lunch").available == 2 and int(store.get_keepsakes()[STONE]) == 19, "autonomous action charges one AP and one stone")
-	check(world.pond_edging_view.visuals.has("rim_04"), "autonomous confirmed world effect visible")
+	check(world.stove_view.art.visible and int(world.stove_view.confirmed.revision) == 1, "autonomous confirmed world effect visible")
 	world.pond_growth.autonomous_enabled = true
 	var encounter_seen := false
 	var save_seen := false
@@ -445,9 +446,9 @@ func check_autonomous_work(test_seed := 0) -> void:
 	check(started_at <= 361 or encounter_seen or save_seen, "only observed actor/save ownership may extend next-job grace")
 	check(not encounter_seen or "goose_horse_mount" in world.collected, "idle encounter finishes before production reclaims actor")
 	print("NEXT_WORK_TIMING seed=",test_seed," tick=",started_at," encounter_seen=",encounter_seen," save_seen=",save_seen)
-	if world.pond_growth.section != "rim_05":
+	if world.pond_growth.section != "stove" or world.pond_growth.stove_stage != 1:
 		print("NEXT_WORK_CONTEXT stage=",world.pond_growth.stage," idle=",world.pond_growth.idle_seconds," available=",world.pond_growth.available()," goose=",world._goose_mount_phase," walk=",world._has_walk_goal," house=",world.house.stage," pending=",world._pending_interaction," save_idle=",store.is_save_idle())
-	check(world.pond_growth.busy() and world.pond_growth.section == "rim_05", "next autonomous job skips completed bank")
+	check(world.pond_growth.busy() and world.pond_growth.section == "stove" and world.pond_growth.stove_stage == 1, "next autonomous job advances the same stove")
 	world.cancel_scene_feedback()
 	check(not world.pond_growth.busy() and world.pond_growth.idle_seconds == 0.0, "menu takeover cancels and resets grace")
 	world.pond_growth.autonomous_enabled = false
