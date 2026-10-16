@@ -1,0 +1,68 @@
+[
+  {
+    "file": "verification.json.gz.b64",
+    "original_bytes": 26314,
+    "sha256": "6bb6d5d5d20dca3a35ed6f1c170eac36d09b13cda4863759dae84cc3fb1bd9bf",
+    "encoding": "base64(gzip(original JSON))"
+  },
+  {
+    "file": "ui14.json.gz.b64",
+    "original_bytes": 15047,
+    "sha256": "bb50a1ded0975aaad8f1bb048b01bcaa663245e38c983126dc2d16c4eb3b00ad",
+    "encoding": "base64(gzip(original JSON))"
+  },
+  {
+    "file": "ui-software-output.json.gz.b64",
+    "original_bytes": 231037,
+    "sha256": "197d496cdfcd81289b3fac2c1911c510ba5c861239ab7938f112c1b5e00d9b2e",
+    "encoding": "base64(gzip(original JSON))"
+  },
+  {
+    "file": "actual-old-origin-baseline.json.gz.b64",
+    "original_bytes": 514,
+    "sha256": "70f2da094b5d22b982851e3ef641b84368547e787eafe273308d282cf1621309",
+    "encoding": "base64(gzip(original JSON))"
+  },
+  {
+    "file": "actual-old-origin-save.json.gz.b64",
+    "original_bytes": 1558,
+    "sha256": "fc558ae505bf0683f0bbae9094c7b5599ef4acf4adde14cd73873732bb883755",
+    "encoding": "base64(gzip(original JSON))"
+  },
+  {
+    "file": "actual-public-reopen.json.gz.b64",
+    "original_bytes": 3514,
+    "sha256": "a2dccbfb0f9e9603154298a4c2ec499dfd4dcc28b56fe8fcb8f6eec7a132cb3b",
+    "encoding": "base64(gzip(original JSON))"
+  },
+  {
+    "file": "embedded-pack.json.gz.b64",
+    "original_bytes": 546,
+    "sha256": "00b27acb820bd3837243a6ae7edf012115aca4bb522cd02978b8a4172db1e04f",
+    "encoding": "base64(gzip(original JSON))"
+  },
+  {
+    "file": "background-full.json.gz.b64",
+    "original_bytes": 106548,
+    "sha256": "ea7b079a90bdd9ee77f86dddc1e7952e6d99e11e9d41fc74df312ba41593a2a6",
+    "encoding": "base64(gzip(original JSON))"
+  },
+  {
+    "file": "background-verified.json.gz.b64",
+    "original_bytes": 718,
+    "sha256": "4583816a93655f2b602b5b75d9b64412ff8710c08a5299bce5cacc62eecc0017",
+    "encoding": "base64(gzip(original JSON))"
+  },
+  {
+    "file": "publish-full.log.gz.b64",
+    "original_bytes": 554434,
+    "sha256": "9b5e2f85db063ec1db42d4d89ba23ce45c5b2887cfcf83470e372460f73e5ac6",
+    "encoding": "base64(gzip(original full workflow log))"
+  },
+  {
+    "file": "release-notes.jpg",
+    "original_bytes": 108023,
+    "sha256": "f58e73effd10d4312882decb43dadac1a26f74c078ebb82f50e8284a5139af6e",
+    "encoding": "original public Chrome JPEG"
+  }
+]
