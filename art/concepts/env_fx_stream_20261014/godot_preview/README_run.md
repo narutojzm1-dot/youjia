@@ -70,4 +70,14 @@ godot --path art/concepts/env_fx_stream_20261014/godot_preview --headless res://
 GODOT=godot python3 art/concepts/env_fx_stream_20261014/verify_crop_render.py --out /tmp/crop749
 ```
 
+### 线性过滤与缩放
+
+- 着色器中 `ripple_tile` 与 `water_detail` 使用 `filter_linear`，控制图保持 `filter_nearest`。
+- 驱动支持 `--scale <float>` 或键盘 `[` `]` 调整 Painting 缩放（0.25–3.0），用于观察不同分辨率下的采样行为。shader 内部仍按裁切像素坐标计算，不随 scale 改变逻辑。
+- 示例：`godot --path art/concepts/env_fx_stream_20261014/godot_preview res://stream_flow_crop_demo.tscn -- --scale 1.5`
+
+### Web 成本估算（隔离，非实测）
+
+裁切矩形 183×302 ≈ 55 276 像素，约占整幅 1672×941 的 3.5%。片元着色器只在子层四边形上执行。整幅 5 张 RGBA8 控制图约 30 MiB 显存；裁切后约 1.05 MiB。实际 Web 帧时 / GPU / PCK 增量仍待生产宿主接入后实测。本隔离 demo 未导出 Web。
+
 仍只是隔离候选。请 ART-DIRECTOR / CODEX-LEAD 审阅连续播放下的流向是否单方向、岸线与桥石是否稳住。

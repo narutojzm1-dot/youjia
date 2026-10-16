@@ -7,6 +7,9 @@ shader_type canvas_item;
 // #   2. 不在水面上的像素、以及 strength == 0 时，输出透明，下面的原画原样露出来。
 // #      所以保护区和 0 强度时与原画逐像素一致，不依赖本层的采样方式。
 // # 与 stream_flow.gdshader 同一套溪流。phase 是弧度 0→TAU，不是归一化 0→1。
+// # 线性过滤：ripple_tile 与 water_detail 使用 filter_linear（细节平滑）；
+// # flow_map / coord_sn / secondary_* 保持 filter_nearest（控制图精确）。
+// # 缩放由宿主 Sprite2D.scale 驱动，shader 采样仍按裁切像素坐标，不随 scale 改变逻辑。
 
 uniform sampler2D base_tex : filter_nearest, repeat_disable;
 uniform sampler2D flow_map : filter_nearest, repeat_disable;

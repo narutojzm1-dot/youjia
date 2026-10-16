@@ -104,3 +104,11 @@ shader / 预览驱动与离线生成脚本用的不是同一套 phase。宿主�
 3. 本文件与现有 GIF/mp4/shader 仍只是候选；#749 保持开放。
 
 不关闭 #749，不宣称美术验收或听验通过。
+
+## 隔离 demo 线性过滤 / 缩放 / Web 成本（本轮补充）
+
+- 裁切 demo 着色器：`ripple_tile` 与 `water_detail` 使用 `filter_linear`；控制图保持 `filter_nearest`。
+- 驱动支持 `--scale` 与键盘 `[` `]` 调整整幅 Painting 缩放，用于观察不同分辨率采样。shader 逻辑仍按裁切像素坐标，不随 scale 改变。
+- Web 成本（估算，非实测）：裁切 183×302 ≈ 55k 片元，约占整幅 3.5%。裁切控制图显存约 1.05 MiB。实际 Web 帧时 / GPU / PCK 仍待生产接入后测量。本隔离 demo 未导出 Web。
+
+仍只是候选。暂停与减少动态行为与上一头部相同。

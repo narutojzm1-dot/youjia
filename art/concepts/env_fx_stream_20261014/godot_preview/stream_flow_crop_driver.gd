@@ -6,6 +6,8 @@ extends Node2D
 ## 不复用现有近郊动效的 0.42 rad/s，也不用内置 TIME。
 ## 暂停：phase 冻结。减少动态：撤掉子层（隐藏），只剩原画静帧，phase 冻结。
 ## strength 0 时子层整层透明，同样只剩原画。
+## 线性过滤 / 缩放：--scale 把整幅 Painting（含子层）按比例缩放，用于观察不同分辨率下的采样；
+## 控制图与底图采样方式见 shader 头注释（detail/ripple 已 linear，其余 nearest）。
 
 const PERIOD_SEC := 8.0
 const CROP_RECT := Rect2i(191, 543, 183, 302)
@@ -13,21 +15,25 @@ const CROP_RECT := Rect2i(191, 543, 183, 302)
 var phase: float = 0.0
 var paused: bool = false
 var reduced_motion: bool = false
+var scale_factor: float = 1.0
 
 var _dump_path: String = ""
 var _dump_started: bool = false
 var _self_check: bool = false
 
+@onready var _painting: Sprite2D = $Painting
 @onready var _crop: Sprite2D = $Painting/StreamCrop
 
 
 func _ready() -> void:
 	_parse_user_args()
 	_crop.position = Vector2(CROP_RECT.position)
+	_painting.scale = Vector2(scale_factor, scale_factor)
 	_apply_motion()
 	_push_phase()
 	print("Stream crop demo ready. phase=", phase, " paused=", paused, " reduced=", reduced_motion,
-		" strength=", _material().get_shader_parameter("strength"), " crop=", CROP_RECT)
+		" strength=", _material().get_shader_parameter("strength"), " crop=", CROP_RECT,
+		" scale=", scale_factor)
 	if _self_check:
 		_run_self_check()
 
@@ -61,6 +67,12 @@ func _unhandled_input(event: InputEvent) -> void:
 	elif key.keycode == KEY_R:
 		reduced_motion = not reduced_motion
 		_apply_motion()
+	elif key.keycode == KEY_BRACKETLEFT:
+		scale_factor = maxf(0.25, scale_factor - 0.25)
+		_painting.scale = Vector2(scale_factor, scale_factor)
+	elif key.keycode == KEY_BRACKETRIGHT:
+		scale_factor = minf(3.0, scale_factor + 0.25)
+		_painting.scale = Vector2(scale_factor, scale_factor)
 
 
 func _apply_motion() -> void:
@@ -87,6 +99,9 @@ func _parse_user_args() -> void:
 			i += 2
 		elif token == "--strength" and i + 1 < args.size():
 			_material().set_shader_parameter("strength", float(args[i + 1]))
+			i += 2
+		elif token == "--scale" and i + 1 < args.size():
+			scale_factor = float(args[i + 1])
 			i += 2
 		elif token == "--reduced":
 			reduced_motion = true
