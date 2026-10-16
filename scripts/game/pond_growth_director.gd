@@ -7,6 +7,8 @@ const View := preload("res://scripts/game/pond_edging_view.gd")
 const Inventory := preload("res://scripts/inventory/yard_inventory.gd")
 const Basket := preload("res://scripts/game/physical_basket.gd")
 const Schedule := preload("res://scripts/game/growth_schedule.gd")
+const Stove := preload("res://scripts/game/yard_stove.gd")
+const StoveView := preload("res://scripts/game/yard_stove_view.gd")
 const STONE := ExplorationRoutes.FIND_STONE
 signal finished(result: String)
 var world: Node2D
@@ -29,6 +31,7 @@ var action_id := ""
 var milling_station := Vector2(INF, INF)
 var milling_work_point := Vector2(INF, INF)
 var material_rng := RandomNumberGenerator.new()
+var stove_stage := -1
 
 func consider(delta: float, move: Vector2) -> void:
 	if not autonomous_enabled or busy() or not available() or not move.is_zero_approx() \
@@ -50,12 +53,11 @@ func begin_available(current_period: Callable) -> bool:
 	var budget: Dictionary = store.get_growth_budget(period)
 	if budget.has("error"): return false
 	var jobs := {}
-	if budget.available >= Schedule.POND_RECIPE.ap:
-		for id: String in Schedule.ORDER:
-			if _pond_ready(id, Schedule.station(id), Schedule.POND_RECIPE):
-				jobs[STONE] = {"id":id,"station":Schedule.station(id),"recipe":Schedule.POND_RECIPE,
-					"action":{"id":"pond_edging","materials":{STONE:Schedule.POND_RECIPE.stones}}}
-				break
+	# PR801 replaces FUTURE autonomous stone work. Legacy pond receipts and
+	# explicit compatibility entry points remain intact, never converted/rewarded.
+	if budget.available >= Schedule.STOVE_RECIPE.ap and _stove_ready(Schedule.STOVE_RECIPE):
+		jobs[STONE] = {"id":"stove","station":StoveView.APPROACH,"recipe":Schedule.STOVE_RECIPE,
+			"action":{"id":"build_stove","materials":{STONE:Schedule.STOVE_RECIPE.stones}}}
 	if budget.available >= Schedule.MILL_RECIPE.ap and _mill_ready(milling_station, Schedule.MILL_RECIPE):
 		jobs["wheat"] = {"id":"","station":milling_station,"recipe":Schedule.MILL_RECIPE,
 			"action":{"id":"mill_wheat","materials":{"wheat":Schedule.MILL_RECIPE.wheat}}}
@@ -107,6 +109,15 @@ func begin_milling(station: Vector2, config: Dictionary, current_period: Callabl
 	if not _can_start(current_period) or station != milling_station or not _mill_ready(station, config): return false
 	return _begin_explicit("", station, config, current_period, {"wheat":{"id":"mill_wheat","materials":{"wheat":config.wheat}}})
 
+func begin_stove(config: Dictionary, current_period: Callable) -> bool:
+	if not _can_start(current_period) or not _stove_ready(config): return false
+	return _begin_explicit("stove",StoveView.APPROACH,config,current_period,{STONE:{"id":"build_stove","materials":{STONE:config.stones}}})
+
+func _stove_ready(config: Dictionary) -> bool:
+	if not _valid_recipe(config,["ap","stones","experience"]): return false
+	var value: Dictionary = store.get_yard_stove()
+	return not value.is_empty() and value.revision < Stove.STAGES and YardGround.allows(StoveView.APPROACH,world.player_ground(),true) and not YardGround.route(Basket.APPROACH,StoveView.APPROACH).is_empty()
+
 func _can_start(current_period: Callable) -> bool:
 	return not busy() and available() and not world._has_walk_goal and world._pending_interaction.is_empty() and current_period.is_valid()
 
@@ -156,6 +167,7 @@ func _start(id: String, station: Vector2, config: Dictionary, current_period: Ca
 	expected = budget.duplicate(true)
 	proposal = chosen.duplicate(true)
 	action_id = str(proposal.action_id)
+	stove_stage = int(store.get_yard_stove().get("revision",-1)) if action_id == "build_stove" else -1
 	material.texture = preload("res://scripts/game/crop_art.gd").texture("wheat") if action_id == "mill_wheat" else KeepsakeArt.texture(STONE)
 	period_reader = current_period
 	section = id
@@ -239,6 +251,8 @@ func tick(delta: float, move: Vector2) -> void:
 	material.hide()
 	if action_id == "mill_wheat":
 		pending = store.request_milling(expected,proposal,{"ap":recipe.ap,"wheat":recipe.wheat,"flour":recipe.flour,"experience":recipe.experience})
+	elif action_id == "build_stove":
+		pending = store.request_stove_growth(expected,stove_stage,proposal,{"ap":recipe.ap,"stones":recipe.stones,"experience":recipe.experience})
 	else:
 		pending = store.request_pond_growth(expected,section,proposal,recipe.ap,recipe.stones,recipe.experience)
 	if pending.is_empty():
@@ -254,6 +268,14 @@ func _pose_work() -> void:
 		walker.reset_motion()
 		return
 	var progress := clampf(work / float(recipe.seconds), 0.0, 1.0)
+	if action_id == "build_stove":
+		var player = world.get_player()
+		player.facing = -1.0
+		player._gait.face = -1.0
+		# First course uses grounded crouch; raised courses use the authored
+		# reaching cels. Contact is toward the real work surface, no body shake.
+		walker.hold_action_frame(&"pickup" if stove_stage == 0 else &"feed",4 if int(work/0.8)%2 == 0 else 3)
+		return
 	if action_id == "mill_wheat":
 		# Reuse the authored reaching sequence for the handle; the character and
 		# stone are never stretched or spun as a whole cutout.
@@ -285,7 +307,10 @@ func sync_presentation() -> void:
 		material.visible = false
 	if not material.visible: return
 	material.global_position = player.grass_hand_global_position()
-	if stage == "working" and action_id == "mill_wheat" and milling_work_point.is_finite():
+	if stage == "working" and action_id == "build_stove":
+		var point := StoveView.WORK_POINT + Vector2(0,18 if stove_stage == 0 else 0)
+		material.global_position = material.global_position.lerp(world.to_global(point),clampf(work / float(recipe.seconds) / 0.2,0.0,1.0))
+	elif stage == "working" and action_id == "mill_wheat" and milling_work_point.is_finite():
 		material.global_position = material.global_position.lerp(world.to_global(milling_work_point),clampf(work / float(recipe.seconds) / 0.2,0.0,1.0))
 	elif stage == "working" and not bool(TuningStore.get_value("ui.reduced_motion", false)):
 		var ground: Vector2 = player.global_position + Vector2(14.0 * player.grass_hand_facing(), -4.0) * player.picture_depth

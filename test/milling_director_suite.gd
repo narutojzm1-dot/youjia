@@ -32,6 +32,7 @@ func reset(wheat := 20, stones := 20, tired := false, flour := 0) -> void:
 		Inventory.FIELD:inventory,"keepsakes":{STONE:stones} if stones > 0 else {},
 		"growth_actions":Budget.empty(),"pond_edging":{"schema":1,"revision":0,"sections":{}},
 		"growth_production":Production.empty(),"meal_ledger":Meals.empty(),
+		"yard_stove":preload("res://scripts/game/yard_stove.gd").empty(),
 		"resident_rest":{"schema":1,"day":1,"cause":"awake" if tired else "sleep"}}
 	fixture = Meals.complete(fixture,0,0,1,"lunch",{"wheat":1},tired).candidate
 	store.request_patch("isolated-milling-fixture",fixture)
@@ -151,7 +152,7 @@ func prior_surplus_and_autonomous_dinner() -> void:
 func one_draw_and_filters() -> void:
 	for wanted: String in [STONE,"wheat"]:
 		await reset()
-		var catalog := {STONE:{"id":"pond_edging","materials":{STONE:1}},"wheat":{"id":"mill_wheat","materials":{"wheat":1}}}
+		var catalog := {STONE:{"id":"build_stove","materials":{STONE:1}},"wheat":{"id":"mill_wheat","materials":{"wheat":1}}}
 		var reference := RandomNumberGenerator.new()
 		var reference_plan := {}
 		var chosen_seed := -1
@@ -175,8 +176,8 @@ func one_draw_and_filters() -> void:
 	for constraint: String in ["last_seed","full","unavailable"]:
 		await reset(2 if constraint == "last_seed" else 20,20,false,Inventory.MAX_COUNT if constraint == "full" else 0)
 		if constraint == "unavailable": world.pond_growth.milling_station = Vector2(INF,INF)
-		check(world.pond_growth.begin_available(func(): return period),"pond remains executable " + constraint)
-		check(world.pond_growth.action_id == "pond_edging","unexecutable milling filtered before draw " + constraint)
+		check(world.pond_growth.begin_available(func(): return period),"stove remains executable " + constraint)
+		check(world.pond_growth.action_id == "build_stove","unexecutable milling filtered before draw " + constraint)
 		world.pond_growth.cancel()
 	await reset(2,0)
 	var rng_before: int = world.pond_growth.material_rng.state
