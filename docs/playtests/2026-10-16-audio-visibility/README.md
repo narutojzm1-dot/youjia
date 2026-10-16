@@ -1,0 +1,11 @@
+# Web 后台音频暂停返修
+
+CODEX-LEAD；#195 / #196，候选阶段。现行公开源码9946b35f89b970c094f1a7ff68aef78c08550064及音景候选813/2ca748c的实际DOM后台对照发现：document.hidden=true、真实visibilitychange已发生，WebAudio仍running，连续输出采样仍变化且非零。不是只有一次冻结的分析器读数。软件Chrome检查不冒充硬件听验。
+
+原来只靠Main的APPLICATION_PAUSED和后端pagehide/pageshow。Godot当前Web显示层的canvas focus/blur不能代替document visibility；后台标签不一定进入BFCache或得到手机暂停通知。此前129项等原生逻辑检查没有覆盖这一真实浏览器边界，旧结论保留适用范围。
+
+修订只在既有BrowserBgmBackend中监听document visibility：隐藏时挂起共享音频时钟，保留长轨、显式暂停和增益；丢弃正在播放/后台发起的一次性短音，避免回来补响或被当成后端错误走原生降级。缓存页面状态与document隐藏状态同时约束恢复；迟到resume仍须检查最新隐藏状态。退出撤销所有监听和资源。没有增加AudioContext、存档字段或改变源音/音量规则。
+
+Node直接执行生产SOURCE的37项行为回归已通过，包括隐藏时钟、一次性短音引用、前后景、明确暂停、迟到resume、BFCache叠加、首次隐藏及监听重建。完整CI、最终同包普通Web、公开阶段仍须各自完成，不以此提前称已上线。音景813和实体设备/真实混音门禁保持。
+
+本轮背景对照的驱动注意事项也如实保留：Playwright默认启用焦点覆盖，headed或换标签仍可能显示visible；另一个会话发false不能撤销原会话覆盖。R6通过只连接Owner独立Chrome、noDefaults=true观察到浏览器真实隐藏事件。R5有头启动在本环境始终hidden、等待首帧超时，不作为产品挂死结论。AudioContext挂起后分析器可返回冻结的旧值，不能将其解释成实际仍在输出；最终检查须结合context状态/时钟和真实恢复游标。
