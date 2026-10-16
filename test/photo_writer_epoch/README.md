@@ -1,3 +1,11 @@
+## 2026-10-17 / #700 新施工动作照片写端门槛3
+
+本片引入 resident_stove_actions_v1 新图集。实际公开c8d994f完整PCK的SaveDataCodec.project对本片实际PhotoMoment.capture照片作负向复现：资源不存在、1条照片变为0。原件由本片PR归档；此为隔离取证，不称公开旧档已经丢失。
+
+运行门槛由2推进到3，复用原有versionchange关闭和旧打开VersionError机制，records/envelope/payload、intent、archive与旧/userfs不改。当前run.cjs默认分别用真实70de87a(v1)与c8d994f(v2)冻结原模块跑完整Chrome矩阵，未来版本夹具改为4；均须保留全部记录并拒绝旧写端。new-photo.json与old-clean-result.json现在为本片真实新姿态/实际c8旧包取证；下文2026-10-16对应的旧样张说明、原结果和版本2证据是历史，原字节仍在原提交。
+
+新增资源并不意味着所有旧包永久兼容；后续新增照片资源须核对最低写端能力，不能把本门槛当成将来无条件通行。保护从新Host成功打开同库后生效；未到访前旧库不具备此门槛，不远程改旧原生包。
+
 # #827 旧照片写端隔离
 
 Owner：CODEX-LEAD。`run.cjs` 运行真实 Chrome 的 IndexedDB/Web Locks，使用新的 loopback origin 和自己创建的临时 profile；不访问用户浏览器档案，不以 IndexedDB mock 代替存储升级。需要 Node 和 Playwright（CI 固定 playwright-core 1.62.1）。

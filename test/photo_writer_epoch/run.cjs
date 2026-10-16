@@ -6,9 +6,22 @@ const {chromium} = require(process.env.PLAYWRIGHT_MODULE || 'playwright-core');
 const root = path.resolve(__dirname, '../..');
 const out = process.argv[2] || fs.mkdtempSync(path.join(os.tmpdir(), 'youjia-photo-writer-'));
 fs.mkdirSync(out, {recursive:true});
-const old = path.join(__dirname, 'old-70de87a');
+// Exercise both actual released writer epochs in separate owned origins.
+if (!process.env.PHOTO_OLD_VERSION) {
+  const {spawnSync}=require('node:child_process');const children=[];
+  for(const version of [1,2]){
+    const dir=path.join(out,'old-v'+version);
+    const run=spawnSync(process.execPath,[__filename,dir],{env:{...process.env,PHOTO_OLD_VERSION:String(version)},stdio:'inherit'});
+    if(run.status!==0)process.exit(run.status||1);
+    children.push(JSON.parse(fs.readFileSync(path.join(dir,'result.json'),'utf8')));
+  }
+  const result={status:'PASS',oldVersions:[1,2],checks:children.flatMap((r,i)=>r.checks.map(c=>'v'+(i+1)+': '+c)),failures:children.flatMap(r=>r.failures)};
+  fs.writeFileSync(path.join(out,'result.json'),JSON.stringify(result,null,2)+'\n');console.log('PHOTO_WRITER_EPOCH3 '+JSON.stringify(result));process.exit(0);
+}
+const oldVersion=Number(process.env.PHOTO_OLD_VERSION);assert([1,2].includes(oldVersion));
+const old = path.join(__dirname, oldVersion===1?'old-70de87a':'old-c8d994f');
 const oldHash = crypto.createHash('sha256').update(fs.readFileSync(path.join(old,'store.mjs'))).digest('hex');
-assert.equal(oldHash, '2193b4397b8662a8ebc754dc4468e4d62964d209b4e1d0f0924a2ec81b409cbe');
+assert.equal(oldHash, oldVersion===1?'2193b4397b8662a8ebc754dc4468e4d62964d209b4e1d0f0924a2ec81b409cbe':'dbfafb071e6d7e08c51c96374232147fb28d3ea011f5ee749de4f319c2198521');
 const current = process.env.CURRENT_STORE_DIR || path.join(root,'web/save');
 const files = new Map([['/', [Buffer.from('<!doctype html><title>Owned photo writer regression</title>'), 'text/html']]]);
 for (const [prefix, dir] of [['current',current],['old',old]]) {
@@ -31,7 +44,7 @@ let context;
     ...(process.env.CHROME_PATH ? {executablePath:process.env.CHROME_PATH} : {} )});
   context=await launch();
   const page=await context.newPage(); await page.goto(base);
-  const result=await page.evaluate(async()=>{
+  const result=await page.evaluate(async oldVersion=>{
     const newer=await import('/current/store.mjs'), older=await import('/old/store.mjs');
     const photo=await (await fetch('/new-photo.json')).json();
     const oldClean=await (await fetch('/old-clean-result.json')).json();
@@ -66,7 +79,7 @@ let context;
     });
     const reset=async()=>request(indexedDB.deleteDatabase(namespace));
     const count=s=>Object.keys(JSON.parse(s.current.payload_bytes).photo_moments||{}).length;
-    const payload=JSON.stringify({version:5,photo_album:['fish_first_catch'],photo_moments:{fish_first_catch:photo},
+    const payload=JSON.stringify({version:5,album:['fish_first_catch'],photo_moments:{fish_first_catch:photo},
       untouched:'raw Unicode 灶台',integer_text:'9007199254740993',growth_production:{schema:2,revision:0}});
     check(oldClean.before_records===1 && oldClean.after_old_album_clean===0 && !oldClean.old_asset_available,
       'actual old-PCK forensic fixture records resource rejection');
@@ -83,7 +96,7 @@ let context;
     await scenario('upgrade fences live and reopened old writers',async()=>{
       const oldStore=await older.openStore(),parent=await oldStore.initialize(payload);
       const before=await rawRead();const s=await newer.openStore();const after=await rawRead();
-      check(after.version===2 && equal(before.rows,after.rows),'v1 to v2 preserves every raw record exactly');
+      check(after.version===3 && equal(before.rows,after.rows),'v'+oldVersion+' to v3 preserves every raw record exactly');
       const bad=JSON.parse(payload);bad.photo_moments=oldClean.cleaned;
       let rejected=false;try{await oldStore.submit(await older.envelope(JSON.stringify(bad),parent));}catch(e){rejected=e.name==='InvalidStateError';}
       check(rejected,'live old connection is closed and cannot overwrite photos');oldStore.close();
@@ -120,33 +133,33 @@ let context;
     });
     await scenario('blocked upgrade is abandoned instead of applied late',async()=>{
       const s=await older.openStore();await s.initialize(payload);s.close();
-      const blocker=await request(indexedDB.open(namespace,1));blocker.onversionchange=()=>{};
+      const blocker=await request(indexedDB.open(namespace,oldVersion));blocker.onversionchange=()=>{};
       const before=await rawRead();let error;
       try{const n=await newer.openStore();n.close();}catch(e){error=String(e);}
       check(error?.includes('database blocked'),'blocked upgrade reports failure');
       blocker.close();
       // A following open is queued behind the abandoned upgrade, so this verifies
       // its actual terminal state without guessing with a delay.
-      const after=await rawRead();check(equal(before,after),'late blocked request aborts: version and records remain v1');
+      const after=await rawRead();check(equal(before,after),'late blocked request aborts: version and records remain v'+oldVersion);
       const n=await newer.openStore();check(count(await n.recover())===1,'explicit retry can upgrade safely');n.close();
     });
     await scenario('malformed existing DB is not recreated',async()=>{
-      const db=await rawOpen(namespace,1,d=>d.createObjectStore('other'));
+      const db=await rawOpen(namespace,oldVersion,d=>d.createObjectStore('other'));
       const tx=db.transaction('other','readwrite');tx.objectStore('other').put('keep','sentinel');
       await new Promise((r,j)=>{tx.oncomplete=r;tx.onabort=j;});db.close();const before=await rawRead();
       let error;try{const n=await newer.openStore();n.close();}catch(e){error=e.name;}
       check(error==='AbortError' && equal(before,await rawRead()),'missing records aborts upgrade without replacement or version change');
     });
     await scenario('future DB remains untouched',async()=>{
-      const db=await rawOpen(namespace,3,d=>d.createObjectStore('records'));await rawPut(db,{current:{future:'retain'}});db.close();
+      const db=await rawOpen(namespace,4,d=>d.createObjectStore('records'));await rawPut(db,{current:{future:'retain'}});db.close();
       const before=await rawRead();let error;try{const n=await newer.openStore();n.close();}catch(e){error=e.name;}
-      check(error==='VersionError' && equal(before,await rawRead()),'v3 refuses v2 client without changing data');
+      check(error==='VersionError' && equal(before,await rawRead()),'v4 refuses v3 client without changing data');
     });
     // Leave a valid upgraded save for a real browser process restart below.
     await reset();const final=await older.openStore();await final.initialize(payload);final.close();
     const n=await newer.openStore();window.restartEnvelope=(await n.snapshot()).current;n.close();
-    return {checks,failures,cases,restartEnvelope:window.restartEnvelope,oldHash:'2193b4397b8662a8ebc754dc4468e4d62964d209b4e1d0f0924a2ec81b409cbe'};
-  });
+    return {checks,failures,cases,restartEnvelope:window.restartEnvelope,oldVersion};
+  },oldVersion);
   await context.close();context=await launch();const reopened=await context.newPage();await reopened.goto(base);
   const after=await reopened.evaluate(async()=>{const m=await import('/current/store.mjs'),s=await m.openStore();const r=await s.recover();s.close();return {verdict:r.verdict,current:r.current};});
   if(after.verdict==='clean' && JSON.stringify(after.current)===JSON.stringify(result.restartEnvelope))result.checks.push('actual Chrome process restart retains exact envelope and photo');

@@ -181,6 +181,7 @@ var _move_held := false
 var _has_walk_goal := false
 var _walk_goal_age := 0.0
 var _walk_goal := Vector2.ZERO
+var _walk_precision := 0.0
 var _pending_interaction := ""
 var _selected_target := ""
 var _walk_path: Array[Vector2] = []
@@ -607,11 +608,12 @@ func tick(delta: float, move: Vector2) -> void:
 			var destination := _walk_path[0] if not _walk_path.is_empty() else _walk_goal
 			# Rounding a waypoint early must not cut across the concave pond rim.
 			var next_leg_clear := _walk_path.size() < 2 or YardBodies._ground_segment(_player.position, _walk_path[1], player_ground(), true)
-			if not _walk_path.is_empty() and next_leg_clear and _player.position.distance_to(destination) < ((12.0 if destination.distance_to(_walk_goal) < 0.01 else 2.0) if _walk_path.size() == 1 else 4.0):
+			if not _walk_path.is_empty() and next_leg_clear and _player.position.distance_to(destination) < (((_walk_precision if _walk_precision > 0 else 12.0) if destination.distance_to(_walk_goal) < 0.01 else 2.0) if _walk_path.size() == 1 else 4.0):
 				_walk_path.pop_front()
 				destination = _walk_path[0] if not _walk_path.is_empty() else _walk_goal
 			var to_goal := destination - _player.position
-			if not _has_walk_goal or (to_goal.length() < (16.0 if not YardBodies.clear_at(_walk_goal, _player.body_radius * YardGround.depth_at(_player.position.y), obstacles) else 14.0) and _walk_path.is_empty()):
+			var arrival := _walk_precision if _walk_precision > 0 else (16.0 if not YardBodies.clear_at(_walk_goal, _player.body_radius * YardGround.depth_at(_player.position.y), obstacles) else 14.0)
+			if not _has_walk_goal or (to_goal.length() < arrival and _walk_path.is_empty()):
 				_has_walk_goal = false
 				move = Vector2.ZERO
 			elif _walk_path.is_empty():
@@ -1097,7 +1099,7 @@ func _request_action(target: String, goal: Vector2) -> void:
 		notice_requested.emit("notice.cannot_walk")
 
 
-func try_walk_to(goal: Vector2) -> bool:
+func try_walk_to(goal: Vector2, precision: float = 0.0) -> bool:
 	if house != null and house.busy(): return false
 	if not input_enabled or _player == null:
 		return false
@@ -1105,7 +1107,10 @@ func try_walk_to(goal: Vector2) -> bool:
 	# replace an explicit llama destination with nearby grass or another animal.
 	if not YardGround.allows(goal, player_ground(), true):
 		return false
-	if _player.position.distance_to(goal) < 12.0:
+	# A physical work surface needs a close approach. Ordinary pointer/animal
+	# routes keep their existing tolerances; never snap or bypass body routing.
+	_walk_precision = clampf(precision,1.0,12.0) if is_finite(precision) and precision > 0 else 0.0
+	if _player.position.distance_to(goal) < (_walk_precision if _walk_precision > 0 else 12.0):
 		return false
 	_walk_goal = goal
 	_walk_path = _route_to_walk_goal(_routing_obstacles()) if _pending_interaction in ["meal_basket", "house_meal"] \

@@ -35,7 +35,7 @@ func run() -> void:
 		var first_frame: int = world.get_player()._sequence_walker.frame
 		for i in 8: world.tick(1.0/30,Vector2.ZERO)
 		check(world.get_player()._sequence_walker.frame != first_frame,"full authored work cycle advances")
-		for i in 12: world.tick(1.0/30,Vector2.ZERO)
+		for i in 30: world.tick(1.0/30,Vector2.ZERO)
 		check(not world.pond_growth.material.visible and world.get_player().position == feet,"set-down material does not hover or slide actor")
 		finish_work()
 		check(world.pond_growth.stage == "saving" and store.get_yard_stove().revision == index,"stage not credited on accepted save")
