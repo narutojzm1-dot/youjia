@@ -1,0 +1,327 @@
+{
+  "source": "435cc826fcfd22172745118a2f23fa8b3fa0987c",
+  "display_override": {
+    "viewport": [
+      400,
+      300
+    ],
+    "original_project_sha256": "f6c341b7437af08725b5d0e6ca1fdaf2eba0bb10e7d8fa0786e31c96682dc867",
+    "modified_project_sha256": "23f48862d47d4e7d3846a2f6bc022a32366cef9cfa7f16dd443bd647e507a009",
+    "images_not_resized_or_cropped": true
+  },
+  "runs": [
+    {
+      "name": "import",
+      "exit": 0,
+      "errors": [],
+      "gpu": []
+    },
+    {
+      "name": "0.75-reduced",
+      "exit": 0,
+      "errors": [],
+      "gpu": [
+        "OpenGL API 3.3.0 NVIDIA 561.00 - Compatibility - Using Device: NVIDIA - NVIDIA GeForce RTX 4070 Laptop GPU"
+      ]
+    },
+    {
+      "name": "0.75-zero",
+      "exit": 0,
+      "errors": [],
+      "gpu": [
+        "OpenGL API 3.3.0 NVIDIA 561.00 - Compatibility - Using Device: NVIDIA - NVIDIA GeForce RTX 4070 Laptop GPU"
+      ]
+    },
+    {
+      "name": "0.75-tiny",
+      "exit": 0,
+      "errors": [],
+      "gpu": [
+        "OpenGL API 3.3.0 NVIDIA 561.00 - Compatibility - Using Device: NVIDIA - NVIDIA GeForce RTX 4070 Laptop GPU"
+      ]
+    },
+    {
+      "name": "0.75-phase0",
+      "exit": 0,
+      "errors": [],
+      "gpu": [
+        "OpenGL API 3.3.0 NVIDIA 561.00 - Compatibility - Using Device: NVIDIA - NVIDIA GeForce RTX 4070 Laptop GPU"
+      ]
+    },
+    {
+      "name": "0.75-half",
+      "exit": 0,
+      "errors": [],
+      "gpu": [
+        "OpenGL API 3.3.0 NVIDIA 561.00 - Compatibility - Using Device: NVIDIA - NVIDIA GeForce RTX 4070 Laptop GPU"
+      ]
+    },
+    {
+      "name": "0.75-loop",
+      "exit": 0,
+      "errors": [],
+      "gpu": [
+        "OpenGL API 3.3.0 NVIDIA 561.00 - Compatibility - Using Device: NVIDIA - NVIDIA GeForce RTX 4070 Laptop GPU"
+      ]
+    },
+    {
+      "name": "0.75-legacy_full",
+      "exit": 0,
+      "errors": [],
+      "gpu": [
+        "OpenGL API 3.3.0 NVIDIA 561.00 - Compatibility - Using Device: NVIDIA - NVIDIA GeForce RTX 4070 Laptop GPU"
+      ]
+    },
+    {
+      "name": "2.0-reduced",
+      "exit": 0,
+      "errors": [],
+      "gpu": [
+        "OpenGL API 3.3.0 NVIDIA 561.00 - Compatibility - Using Device: NVIDIA - NVIDIA GeForce RTX 4070 Laptop GPU"
+      ]
+    },
+    {
+      "name": "2.0-zero",
+      "exit": 0,
+      "errors": [],
+      "gpu": [
+        "OpenGL API 3.3.0 NVIDIA 561.00 - Compatibility - Using Device: NVIDIA - NVIDIA GeForce RTX 4070 Laptop GPU"
+      ]
+    },
+    {
+      "name": "2.0-tiny",
+      "exit": 0,
+      "errors": [],
+      "gpu": [
+        "OpenGL API 3.3.0 NVIDIA 561.00 - Compatibility - Using Device: NVIDIA - NVIDIA GeForce RTX 4070 Laptop GPU"
+      ]
+    },
+    {
+      "name": "2.0-phase0",
+      "exit": 0,
+      "errors": [],
+      "gpu": [
+        "OpenGL API 3.3.0 NVIDIA 561.00 - Compatibility - Using Device: NVIDIA - NVIDIA GeForce RTX 4070 Laptop GPU"
+      ]
+    },
+    {
+      "name": "2.0-half",
+      "exit": 0,
+      "errors": [],
+      "gpu": [
+        "OpenGL API 3.3.0 NVIDIA 561.00 - Compatibility - Using Device: NVIDIA - NVIDIA GeForce RTX 4070 Laptop GPU"
+      ]
+    },
+    {
+      "name": "2.0-loop",
+      "exit": 0,
+      "errors": [],
+      "gpu": [
+        "OpenGL API 3.3.0 NVIDIA 561.00 - Compatibility - Using Device: NVIDIA - NVIDIA GeForce RTX 4070 Laptop GPU"
+      ]
+    },
+    {
+      "name": "2.0-legacy_full",
+      "exit": 0,
+      "errors": [],
+      "gpu": [
+        "OpenGL API 3.3.0 NVIDIA 561.00 - Compatibility - Using Device: NVIDIA - NVIDIA GeForce RTX 4070 Laptop GPU"
+      ]
+    }
+  ],
+  "comparisons": [
+    {
+      "scale": 0.75,
+      "offset": [
+        -11.63,
+        -370.39
+      ],
+      "actual_dimensions": [
+        400,
+        300
+      ],
+      "zero_vs_reduced_max": 0,
+      "tiny_default_vs_linear_painting_max": 1,
+      "outside_crop_max": 0,
+      "nonwater_max": 0,
+      "protected_max": 0,
+      "loop_max": 0,
+      "half_changed_pixels": 4005,
+      "legacy_full_reference_water_max": 67,
+      "water_safe_pixels": 4369,
+      "protected_tested_pixels": 115631,
+      "nonwater_tested_pixels": 115631
+    },
+    {
+      "scale": 2.0,
+      "offset": [
+        -364.63,
+        -1237.39
+      ],
+      "actual_dimensions": [
+        400,
+        300
+      ],
+      "zero_vs_reduced_max": 0,
+      "tiny_default_vs_linear_painting_max": 1,
+      "outside_crop_max": 0,
+      "nonwater_max": 0,
+      "protected_max": 0,
+      "loop_max": 0,
+      "half_changed_pixels": 17165,
+      "legacy_full_reference_water_max": 80,
+      "water_safe_pixels": 18494,
+      "protected_tested_pixels": 101506,
+      "nonwater_tested_pixels": 101506
+    }
+  ],
+  "scope": "two subpixel scales, direct400x300 nativeGPU only, not full10transform/continuous/Web/host/phone/performance acceptance; old full-reference <=1 oracle no longer valid under intentional continuousUV default",
+  "pass": true,
+  "files": [
+    {
+      "name": "0.75-half.log",
+      "bytes": 500,
+      "sha256": "1d06ad2d31fcd73181a3e66bfa2afe0e70a117ae6c95331ee22714c6f01fa85a"
+    },
+    {
+      "name": "0.75-half.png",
+      "bytes": 297389,
+      "sha256": "a2dd10f2261beab1a3877c3a358224f52c63b53ea6f00ca1d432444ee0c780f2"
+    },
+    {
+      "name": "0.75-legacy_full.log",
+      "bytes": 421,
+      "sha256": "a07bbedb077ba504dc47a1c3067021b79966c494c2ce846ebaf44b6b5f3344c8"
+    },
+    {
+      "name": "0.75-legacy_full.png",
+      "bytes": 299051,
+      "sha256": "1619e2297581888b448546fb379f97d5f9f27cc6f538c006159743ab7ea3e21d"
+    },
+    {
+      "name": "0.75-loop.log",
+      "bytes": 500,
+      "sha256": "b1a993b23d4d90768eab486f8ad87c534f4e4780efa1020212d1a18002c473e7"
+    },
+    {
+      "name": "0.75-loop.png",
+      "bytes": 297452,
+      "sha256": "8883ebc8c5520c59afa524ee68e3746cc3668813c399113804fc9272321fe739"
+    },
+    {
+      "name": "0.75-phase0.log",
+      "bytes": 476,
+      "sha256": "666ecb55fc9a12fd9c5f946b84b7caf04552b31a4c8c95bb297d4c64534f5845"
+    },
+    {
+      "name": "0.75-phase0.png",
+      "bytes": 297452,
+      "sha256": "8883ebc8c5520c59afa524ee68e3746cc3668813c399113804fc9272321fe739"
+    },
+    {
+      "name": "0.75-reduced.log",
+      "bytes": 476,
+      "sha256": "95e5bd6074adb4e0a0ed600b02c7ef9d38dde0ab77f168b0e53a8671659dd2b5"
+    },
+    {
+      "name": "0.75-reduced.png",
+      "bytes": 297549,
+      "sha256": "b4640b66456515d646fe5d9cd8e038a74642d0b7ff125e05bfffb1a0fa518a85"
+    },
+    {
+      "name": "0.75-tiny.log",
+      "bytes": 477,
+      "sha256": "a66bc523e0c08d7602614951221377453d99444c93d46362da0813b7c9b24ff2"
+    },
+    {
+      "name": "0.75-tiny.png",
+      "bytes": 297575,
+      "sha256": "5b5e87ab4d90b88dcd10300ce2257ec5ea5357d78a68861e32f390ba2298e7cd"
+    },
+    {
+      "name": "0.75-zero.log",
+      "bytes": 474,
+      "sha256": "7072221df6e4a5a7baa5b70f2f6728f40a0cec45bb4712830f4baf8d3623c88d"
+    },
+    {
+      "name": "0.75-zero.png",
+      "bytes": 297549,
+      "sha256": "b4640b66456515d646fe5d9cd8e038a74642d0b7ff125e05bfffb1a0fa518a85"
+    },
+    {
+      "name": "2.0-half.log",
+      "bytes": 500,
+      "sha256": "00f01b47adeeda1a6d8e3d862f50b99cb8ff16715c28c75522fb52bc4547cb6b"
+    },
+    {
+      "name": "2.0-half.png",
+      "bytes": 229549,
+      "sha256": "1b3a4e8b0c814f51addde68d1266db53b1fe194c12bab4ece68e6fb1f6f886ff"
+    },
+    {
+      "name": "2.0-legacy_full.log",
+      "bytes": 420,
+      "sha256": "7872674ae2870ddad918165eeee2776e2ad91659e53855352802633db825b8c1"
+    },
+    {
+      "name": "2.0-legacy_full.png",
+      "bytes": 102040,
+      "sha256": "5a1e8e1ca6503c10945d377264130378ab56df6e75ad88e48dc5dc7ccbedddc8"
+    },
+    {
+      "name": "2.0-loop.log",
+      "bytes": 500,
+      "sha256": "b0fc40d7404c2fcef7efaa5f71fdaaa9d2ceaf0eaa8f0ec8291f8d51bb136074"
+    },
+    {
+      "name": "2.0-loop.png",
+      "bytes": 230478,
+      "sha256": "cd0621b4ff364fb7940f3a7b025aa04f59e8e231fdbbff4edf06d0517017fb48"
+    },
+    {
+      "name": "2.0-phase0.log",
+      "bytes": 476,
+      "sha256": "8284e4ea48d5ef015bf05ce87c22dc76b9dc83485182710c8b5fd9a20b9408b7"
+    },
+    {
+      "name": "2.0-phase0.png",
+      "bytes": 230478,
+      "sha256": "cd0621b4ff364fb7940f3a7b025aa04f59e8e231fdbbff4edf06d0517017fb48"
+    },
+    {
+      "name": "2.0-reduced.log",
+      "bytes": 476,
+      "sha256": "00cd9f5a6367e323fcbd8c84db0467d68c61754034242252b0dbea8b19234cfe"
+    },
+    {
+      "name": "2.0-reduced.png",
+      "bytes": 229090,
+      "sha256": "f27071d864b21239f9d291374c9383330335a4686d79e981f1b495a604308cc2"
+    },
+    {
+      "name": "2.0-tiny.log",
+      "bytes": 477,
+      "sha256": "a11545941a5e342ab0e83f492b0673b7cb496c0166b55684005b4fb791631a8e"
+    },
+    {
+      "name": "2.0-tiny.png",
+      "bytes": 229201,
+      "sha256": "d54b8bf61bbf943aa6ed6eb84bc157b64412ff5468bcfad5aefaba7e80fd664f"
+    },
+    {
+      "name": "2.0-zero.log",
+      "bytes": 474,
+      "sha256": "46c815727fca26672e8cc8421ad7b12d26fb199f7b2f1c2e336cd7a76a261832"
+    },
+    {
+      "name": "2.0-zero.png",
+      "bytes": 229090,
+      "sha256": "f27071d864b21239f9d291374c9383330335a4686d79e981f1b495a604308cc2"
+    },
+    {
+      "name": "import.log",
+      "bytes": 5056,
+      "sha256": "4a5d09ec904bc3efe199af3f8883610d31b5c81d904cb4f3892be3bb57d45833"
+    }
+  ]
+}
