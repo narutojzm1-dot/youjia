@@ -1,0 +1,26 @@
+{
+  "original_file": "stove-continuous.webm",
+  "bytes": 4230353,
+  "sha256": "8780279e60a0678e7af4e401121b52bc33123ee36482d85ff2f0a6a4048997d7",
+  "parts": [
+    {
+      "path": "docs/playtests/2026-10-16-stove-ordinary-web/stove-continuous.webm.part01",
+      "bytes": 1411000,
+      "blob": "3866cf47e845be84b096c36f1d42973dd29d5233",
+      "sha256": "0df376ee713b6c10c2821f5716452e984425d65f3a3b8daecaf3c4a544dc254d"
+    },
+    {
+      "path": "docs/playtests/2026-10-16-stove-ordinary-web/stove-continuous.webm.part02",
+      "bytes": 1411000,
+      "blob": "e6ffe441283b79dad3476280511e7720d6621664",
+      "sha256": "ea385ad5a5882de3568129a3ee281122f9d785270452772e7043dfdc322ae1ec"
+    },
+    {
+      "path": "docs/playtests/2026-10-16-stove-ordinary-web/stove-continuous.webm.part03",
+      "bytes": 1408353,
+      "blob": "0e1aed66e34557cbc92ba8b8292cc1eac64b312a",
+      "sha256": "bea6d7f768ce10810a910bb290a03ad4782222602b1c8aa372fa0ee200648f83"
+    }
+  ],
+  "reason": "4.2MB single binary transfer not confirmed by connector; exact ordered parts preserve original, do not claim the single remote file exists"
+}
