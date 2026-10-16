@@ -1,0 +1,23 @@
+{
+  "source": "fe58482180534a86ab3f36f504a4a247455d4f9d",
+  "existing_loading_shell_suite_plus_asset_cases_pass": true,
+  "first_added_fixture_failure": {
+    "actual": "pending",
+    "expected": "rejected",
+    "cause": "assertion before rejected Promise microtask; added await flush; production code unchanged"
+  },
+  "real_chrome_fixture_cases": [
+    "network",
+    "cache",
+    "warm",
+    "cancel"
+  ],
+  "Git_blob_read_failure": {
+    "head": "b739519cc52a41873a9eb19d2abb53abeff7bcbc",
+    "path": "keyframe_check_20261017/mp4_gop250_f0499_crop.png",
+    "timeout_seconds": 60,
+    "fallback": "fixed SHA HTTP complete bytes verified against Git blob SHA for all21 files"
+  },
+  "full_candidate_CI": "38957029528/job117162361393 still running at evidence preparation",
+  "not_public_diagnostics_yet": true
+}

@@ -1,0 +1,74 @@
+{
+  "source": "fe58482180534a86ab3f36f504a4a247455d4f9d",
+  "base_pck_source": "be0f59a910057078a50763e1246a520dc9c2f0e0",
+  "hybrid_local_html_test": true,
+  "not_full_candidate_export_or_public": true,
+  "no_fault_injection": true,
+  "no_save_fixture_writes": true,
+  "errors": [],
+  "console": [],
+  "raw_source_html_sha256": "2044b5e388688e1aa1d1567c51c1234c64f9307b7d421816531df322be819b2d",
+  "hybrid_html_sha256": "d7cf5edb6f660687daf0deb12246fd9092ac081368fb177bc7e2d032f3785068",
+  "first": {
+    "engineScriptReady": 22,
+    "bootstrapReady": 46,
+    "assetCacheHit": 57,
+    "assetEvents": [
+      {
+        "at": 57,
+        "asset": "game-be0f59a.pck",
+        "kind": "cache-hit",
+        "source": "cache"
+      }
+    ],
+    "engineReady": 8138,
+    "firstFrame": 8529
+  },
+  "before_close": {
+    "schema": "youjia.save-envelope/v1",
+    "store_id": "24dba0136dab46b6b47a1664ad01aa6e",
+    "commit_id": "afc5e0e121da43a2a345f3afecb0b1fd",
+    "request_id": "51f0e67595da43a38b8798af597a73f7",
+    "parent_commit_id": "cafdcb1656f042adad7d7b23ea554de5",
+    "generation": "4",
+    "payload_bytes": "{\"album\":[],\"animal_relationship_memory\":{},\"exploration\":null,\"exploration_committed_serial\":0,\"first_fish_caught\":false,\"holiday_day\":1,\"holiday_day_elapsed\":0.0,\"keepsakes\":{},\"locale\":\"zh-CN\",\"photo_moments\":{},\"plant_day_planted\":0,\"plant_state\":0,\"plant_watered_day\":-1,\"resident_rest\":{\"cause\":\"legacy\",\"day\":1,\"schema\":1},\"tutorial_version\":0,\"version\":5,\"world_residents\":{\"beibei\":{\"adopted_clock\":null,\"stage\":\"unmet\"},\"chicken\":{\"settled_clock\":{\"day\":1,\"elapsed\":0.0},\"stage\":\"chick\"},\"revision\":1,\"schema\":3,\"turtle\":{\"found_trip\":\"\",\"stage\":\"unmet\"}},\"world_weather\":{\"episode\":0,\"remaining\":966.410583496094,\"seed\":1409507813,\"weather\":\"sun\"},\"yard_crops\":{\"kind\":\"\",\"planted_day\":0,\"revision\":0,\"schema\":1,\"watered_day\":-1},\"yard_gate_open\":false,\"yard_inventory\":{\"corn\":2,\"fish\":{},\"flour\":0,\"grass\":0,\"ground\":[],\"held\":\"\",\"millet\":0,\"next_food_id\":1,\"production_revision\":0,\"revision\":1,\"schema\":5,\"wheat\":2}}",
+    "payload_sha256": "a7919998b550b14547a3b6731219781370682cfb2c6434bd7a4d7632a5d397d2",
+    "envelope_sha256": "288378d5f7dc18f823117102ebc4750bfce4a4f10a408e02856a0b430d433a8a"
+  },
+  "real_chrome_process_closed": true,
+  "reopen": {
+    "engineScriptReady": 17,
+    "bootstrapReady": 31,
+    "assetCacheHit": 36,
+    "assetEvents": [
+      {
+        "at": 37,
+        "asset": "game-be0f59a.pck",
+        "kind": "cache-hit",
+        "source": "cache"
+      },
+      {
+        "at": 38,
+        "asset": "engine-e232d3881ea999631bbb4a08ccc86fa54dd2bc8a5b42fb6cb281cb86dd85bc48.wasm",
+        "kind": "cache-hit",
+        "source": "cache"
+      }
+    ],
+    "downloadComplete": 1002,
+    "engineReady": 5285,
+    "firstFrame": 6005
+  },
+  "reopened": {
+    "schema": "youjia.save-envelope/v1",
+    "store_id": "24dba0136dab46b6b47a1664ad01aa6e",
+    "commit_id": "afc5e0e121da43a2a345f3afecb0b1fd",
+    "request_id": "51f0e67595da43a38b8798af597a73f7",
+    "parent_commit_id": "cafdcb1656f042adad7d7b23ea554de5",
+    "generation": "4",
+    "payload_bytes": "{\"album\":[],\"animal_relationship_memory\":{},\"exploration\":null,\"exploration_committed_serial\":0,\"first_fish_caught\":false,\"holiday_day\":1,\"holiday_day_elapsed\":0.0,\"keepsakes\":{},\"locale\":\"zh-CN\",\"photo_moments\":{},\"plant_day_planted\":0,\"plant_state\":0,\"plant_watered_day\":-1,\"resident_rest\":{\"cause\":\"legacy\",\"day\":1,\"schema\":1},\"tutorial_version\":0,\"version\":5,\"world_residents\":{\"beibei\":{\"adopted_clock\":null,\"stage\":\"unmet\"},\"chicken\":{\"settled_clock\":{\"day\":1,\"elapsed\":0.0},\"stage\":\"chick\"},\"revision\":1,\"schema\":3,\"turtle\":{\"found_trip\":\"\",\"stage\":\"unmet\"}},\"world_weather\":{\"episode\":0,\"remaining\":966.410583496094,\"seed\":1409507813,\"weather\":\"sun\"},\"yard_crops\":{\"kind\":\"\",\"planted_day\":0,\"revision\":0,\"schema\":1,\"watered_day\":-1},\"yard_gate_open\":false,\"yard_inventory\":{\"corn\":2,\"fish\":{},\"flour\":0,\"grass\":0,\"ground\":[],\"held\":\"\",\"millet\":0,\"next_food_id\":1,\"production_revision\":0,\"revision\":1,\"schema\":5,\"wheat\":2}}",
+    "payload_sha256": "a7919998b550b14547a3b6731219781370682cfb2c6434bd7a4d7632a5d397d2",
+    "envelope_sha256": "288378d5f7dc18f823117102ebc4750bfce4a4f10a408e02856a0b430d433a8a"
+  },
+  "game_generated_save_fields_preserved": true,
+  "pass": true
+}

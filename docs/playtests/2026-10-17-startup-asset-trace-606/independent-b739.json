@@ -1,0 +1,170 @@
+{
+  "head": "b739519cc52a41873a9eb19d2abb53abeff7bcbc",
+  "previous": "a7c3b47ce31333e5d1ffef49f894e5cba9d5d6b2",
+  "old_video_independent": {
+    "bytes": 3696449,
+    "sha256": "fc71d03cb31c1791d50e955317ac3ed4cf48a082461b5589d8c0694cfe768af1",
+    "fps": 30.0,
+    "frames": 1200,
+    "dimensions": [
+      1280,
+      720
+    ],
+    "seconds": 40.0,
+    "mp4_stss_sync_frames": [
+      0,
+      250,
+      500,
+      750,
+      1000
+    ],
+    "x264_keyint_header": "keyint=250 keyint_min=25 scenecut=40 intra_refresh=0 rc_lookahead=50 rc=crf mbtree=1 crf=1",
+    "rgb_adjacent_median": 0.004634693287037037,
+    "rgb_adjacent_max": 1.4228938802083333,
+    "rgb_adjacent_argmax": [
+      249,
+      250
+    ],
+    "previous_spike_positions": [
+      {
+        "frame": 250,
+        "diff": 1.4228938802083333
+      },
+      {
+        "frame": 500,
+        "diff": 0.2847265625
+      },
+      {
+        "frame": 750,
+        "diff": 0.28115234375
+      },
+      {
+        "frame": 1000,
+        "diff": 0.28324580439814817
+      }
+    ]
+  },
+  "new_video_independent": {
+    "bytes": 916236,
+    "sha256": "054d983a4bee0660d189ba58ae667c595f4f4b5a3f51dfcf4d343aa1c4f81271",
+    "fps": 30.0,
+    "frames": 1200,
+    "dimensions": [
+      1280,
+      720
+    ],
+    "seconds": 40.0,
+    "mp4_stss_sync_frames": [
+      0
+    ],
+    "x264_keyint_header": "keyint=1200 keyint_min=601 scenecut=0 intra_refresh=0 rc_lookahead=50 rc=crf mbtree=1 crf=",
+    "rgb_adjacent_median": 0.004846643518518518,
+    "rgb_adjacent_max": 0.01154369212962963,
+    "rgb_adjacent_argmax": [
+      3,
+      4
+    ],
+    "previous_spike_positions": [
+      {
+        "frame": 250,
+        "diff": 0.004087456597222222
+      },
+      {
+        "frame": 500,
+        "diff": 0.009825665509259259
+      },
+      {
+        "frame": 750,
+        "diff": 0.0035561342592592593
+      },
+      {
+        "frame": 1000,
+        "diff": 0.008648365162037036
+      }
+    ]
+  },
+  "provided_lossless_crop_comparison": [
+    {
+      "prefix": "png_native",
+      "from": 249,
+      "to": 250,
+      "shape": [
+        360,
+        420,
+        3
+      ],
+      "mean": 0.03971119929453263,
+      "max": 8,
+      "changed_pixels": 5134
+    },
+    {
+      "prefix": "mp4_gop250",
+      "from": 249,
+      "to": 250,
+      "shape": [
+        276,
+        322,
+        3
+      ],
+      "mean": 1.7154971944669488,
+      "max": 19,
+      "changed_pixels": 81301
+    },
+    {
+      "prefix": "mp4_singlegop",
+      "from": 249,
+      "to": 250,
+      "shape": [
+        276,
+        322,
+        3
+      ],
+      "mean": 0.042386803492663605,
+      "max": 8,
+      "changed_pixels": 2370
+    },
+    {
+      "prefix": "png_native",
+      "from": 499,
+      "to": 500,
+      "shape": [
+        360,
+        420,
+        3
+      ],
+      "mean": 0.03928130511463845,
+      "max": 8,
+      "changed_pixels": 5051
+    },
+    {
+      "prefix": "mp4_gop250",
+      "from": 499,
+      "to": 500,
+      "shape": [
+        276,
+        322,
+        3
+      ],
+      "mean": 0.7214195697182465,
+      "max": 23,
+      "changed_pixels": 41634
+    },
+    {
+      "prefix": "mp4_singlegop",
+      "from": 499,
+      "to": 500,
+      "shape": [
+        276,
+        322,
+        3
+      ],
+      "mean": 0.0640434182494674,
+      "max": 8,
+      "changed_pixels": 4254
+    }
+  ],
+  "author_raw_realtime_movie_present": true,
+  "full_1200_original_PNG_sequence_not_independently_recomputed": true,
+  "fixed_step_movie_is_not_hardware_performance": true,
+  "scope": "independent encoding-spike closure for provided samples and new full decoded demo; no production Host or final art acceptance"
+}

@@ -1,0 +1,12 @@
+diff --git a/art/concepts/env_fx_stream_20261014/README.md b/art/concepts/env_fx_stream_20261014/README.md
+index ca473e934d..4b81ce2ebf 100644
+--- a/art/concepts/env_fx_stream_20261014/README.md
++++ b/art/concepts/env_fx_stream_20261014/README.md
+@@ -35,6 +35,7 @@ Agent-ID: GROK-BUILD
+ - `stream_flow_loop.gif` / `stream_flow_loop_10s.mp4` / `stream_flow_loop_40s.mp4`：循环预览（40s 覆盖约 5 圈循环边界）
+ - `stream_crop_lowerleft.mp4`：1280×720 左下溪床邻域（420×360）
+ - `stream_flow_realtime_30fps_40s.mp4`：**原速**录屏。Godot Movie Maker 直接录 `stream_flow_preview.tscn` 的真实着色器输出，固定 30fps、1200 帧、40 秒，phase 按 8 秒一圈的真实 delta 推进（不是 Python 生成帧、不是 5fps 抽帧或加速）；1672×941 录、1280×720 H.264 crf16 编码
++- `stream_flow_realtime_30fps_40s_singlegop.mp4`：**原速**录屏单 GOP 重编（推荐过目）。同参数但 keyint=1200，无关键帧刷新峰。CODEX-LEAD review 5552801720 接受作为 40 秒等速演示，解除编码对照等待。SHA256 `054d983a4bee0660d189ba58ae667c595f4f4b5a3f51dfcf4d343aa1c4f81271`
+ - `stream_flow_realtime_creek_8s.gif`：同一录屏第 1 圈 8 秒的左下溪床裁切（420×360，15fps），供快速过目
+ - `verify_realtime_movie.py`：核对原速录屏 PNG 序列（帧数、整圈逐像素循环、水面外与保护区不动、圈界相邻帧差无尖峰）
+ - `stream_zoom.mp4`：溪床裁切后最近邻放大 2 倍（280×456）
