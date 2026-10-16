@@ -1,0 +1,236 @@
+{
+  "source": "fe58482180534a86ab3f36f504a4a247455d4f9d",
+  "fixture": true,
+  "actual_chrome": true,
+  "production_html_and_recovery_module": true,
+  "default_watchdog_ms": 20000,
+  "not_gameplay_or_public_release": true,
+  "cases": [
+    {
+      "kind": "network",
+      "actual": {
+        "timings": {
+          "engineScriptReady": 8,
+          "bootstrapReady": 11,
+          "assetCacheHit": 12,
+          "assetEvents": [
+            {
+              "at": 12,
+              "asset": "engine-bbbbbbb.wasm",
+              "kind": "cache-hit",
+              "source": "cache"
+            },
+            {
+              "at": 20017,
+              "asset": "game-aaaaaaa.pck",
+              "kind": "retry",
+              "source": "network",
+              "offset": 4,
+              "retry": 1,
+              "maxRetries": 3
+            }
+          ],
+          "downloadRetry": 20016,
+          "downloadComplete": 20034,
+          "firstFrame": 20034,
+          "engineReady": 20034
+        },
+        "bytes": [
+          [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ]
+        ],
+        "idb": 0,
+        "runtime": "resolved",
+        "hidden": true
+      },
+      "requests": [
+        {
+          "kind": "network",
+          "range": null
+        },
+        {
+          "kind": "network",
+          "range": "bytes=4-"
+        }
+      ],
+      "errors": [],
+      "console": []
+    },
+    {
+      "kind": "cache",
+      "actual": {
+        "timings": {
+          "engineScriptReady": 11,
+          "bootstrapReady": 14,
+          "assetCacheHit": 15,
+          "assetEvents": [
+            {
+              "at": 15,
+              "asset": "engine-bbbbbbb.wasm",
+              "kind": "cache-hit",
+              "source": "cache"
+            },
+            {
+              "at": 16,
+              "asset": "game-aaaaaaa.pck",
+              "kind": "cache-hit",
+              "source": "cache"
+            },
+            {
+              "at": 20019,
+              "asset": "game-aaaaaaa.pck",
+              "kind": "retry",
+              "source": "cache",
+              "offset": 4,
+              "retry": 1,
+              "maxRetries": 4
+            }
+          ],
+          "downloadRetry": 20019,
+          "downloadComplete": 20027,
+          "firstFrame": 20027,
+          "engineReady": 20027
+        },
+        "bytes": [
+          [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ]
+        ],
+        "idb": 0,
+        "runtime": "resolved",
+        "hidden": true
+      },
+      "requests": [
+        {
+          "kind": "cache",
+          "range": null
+        }
+      ],
+      "errors": [],
+      "console": []
+    },
+    {
+      "kind": "warm",
+      "actual": {
+        "timings": {
+          "engineScriptReady": 11,
+          "bootstrapReady": 15,
+          "assetCacheHit": 15,
+          "assetEvents": [
+            {
+              "at": 16,
+              "asset": "engine-bbbbbbb.wasm",
+              "kind": "cache-hit",
+              "source": "cache"
+            },
+            {
+              "at": 16,
+              "asset": "game-aaaaaaa.pck",
+              "kind": "cache-hit",
+              "source": "cache"
+            }
+          ],
+          "downloadComplete": 18,
+          "firstFrame": 18,
+          "engineReady": 18
+        },
+        "bytes": [
+          [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ]
+        ],
+        "idb": 0,
+        "runtime": "resolved",
+        "hidden": true
+      },
+      "requests": [],
+      "errors": [],
+      "console": []
+    },
+    {
+      "kind": "cancel",
+      "actual": {
+        "timings": {
+          "engineScriptReady": 12,
+          "bootstrapReady": 21,
+          "assetCacheHit": 22,
+          "assetEvents": [
+            {
+              "at": 22,
+              "asset": "engine-bbbbbbb.wasm",
+              "kind": "cache-hit",
+              "source": "cache"
+            }
+          ],
+          "failed": 1271
+        },
+        "idb": 0,
+        "runtime": "rejected",
+        "hidden": false
+      },
+      "requests": [
+        {
+          "kind": "cancel",
+          "range": null
+        }
+      ],
+      "errors": [],
+      "console": [
+        "[game-loading] Startup failed Error: 存档暂时无法确认，原有内容已保留：controlled-stop\n    at http://127.0.0.1:63287/?case=cancel:231:23\n    at http://127.0.0.1:63287/engine.js:1:215"
+      ]
+    }
+  ],
+  "pass": true
+}
