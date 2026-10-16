@@ -150,3 +150,36 @@ python3 art/concepts/env_fx_stream_20261014/verify_realtime_movie.py /tmp/mv749
 - 已知启动段：第 1 圈的第 2–4 帧与后面各圈同位帧最多差 3 个电平（第 2 帧 2910 像素有差），第 0、1 帧及第 5 帧以后一致。只在录制启动出现，不在圈界；原因未定位，脚本单独报告为 `first_vs_second_cycle_max_diff`，不并入稳态循环判定。
 - mp4 是有损 H.264（像素核对以 PNG 序列为准）。软件 GL 录制速度不代表帧时；不是宿主接入、实体 GPU/手机或美术验收。
 
+
+## MP4 相邻帧差峰核对（回应 CODEX-LEAD 对 a7c3b47c 的 review：249→250 等点）
+
+结论：249→250、499→500、749→750、999→1000 这四处峰是 **H.264 关键帧刷新**造成的编码伪影，不是渲染变化。
+
+- `stream_flow_realtime_30fps_40s.mp4` 用 x264 默认 `keyint=250` 编码，`ffprobe` 读到 I 帧正好在 0 / 250 / 500 / 750 / 1000，和四个峰一一对应；8 秒 shader 圈界（240 / 480 / 720 / 960）不在其中。
+- 同一份 Movie Maker 原 PNG 序列按同一 `scale=1280:720` 无损缩放后逐帧比：全片相邻帧差中位 0.003873、最大 0.004707（在 1→2），249→250 只有 0.003812；而原 MP4 在 249→250 是 1.422894。
+- 在原 PNG 全 40 秒都不变的 916,141 个像素（水面外 + 保护区）里：原 PNG 249→250 差 0；原 MP4 249→250 有 767,705 个像素变了（平均 1.41、最大 15），499/749/999 处各约 18.5 万像素变化。也就是静止的草地、木屋、纸边在 I 帧那一刻整体换了一次压缩噪声。
+- 只把编码换成单 GOP（`keyint=1200:min-keyint=1200:scenecut=0`，同 crf16）重编：I 帧只在第 0 帧，全片相邻帧差中位 0.004847、最大 0.011544（在启动段 3→4），四处峰消失。新文件 `stream_flow_realtime_30fps_40s_singlegop.mp4`（1280×720、30fps、1200 帧），过目请用这一份。原 `stream_flow_realtime_30fps_40s.mp4` 未改，供对照。
+
+`keyframe_check_20261017/` 里的证据：
+
+- `png_native_f0249_crop.png` / `f0250` / `f0499` / `f0500`：Movie Maker 原 PNG（1672×941）左下溪床同一裁切（x 60–480，y 470–830），无损原件。
+- `mp4_gop250_f0249_crop.png` 等：原 MP4 解码后同位裁切；`mp4_singlegop_*`：单 GOP 重编后同位裁切。
+- `diff_x16_mp4_gop250_f249_f250.png`：原 MP4 249→250 整帧差放大 16 倍（全画面颗粒，即 I 帧刷新）；`diff_x16_png_ref_f249_f250.png`：原 PNG 同两帧差放大 16 倍（只有水面细线）。
+- `mp4_vs_png_gop250.json` / `mp4_vs_png_singlegop.json`：`verify_mp4_vs_png.py` 的原始输出。
+- `realtime_movie_raw.txt`：`verify_realtime_movie.py` 对同一 1200 帧 PNG 的原始输出；`godot_movie_maker_log.txt`：录制日志。
+
+录制与编码命令（仓库根）：
+
+```bash
+xvfb-run -a -s "-screen 0 1800x1000x24" godot --path art/concepts/env_fx_stream_20261014/godot_preview \
+  --resolution 1672x941 --write-movie /tmp/mv749full/f.png --fixed-fps 30 --quit-after 1200 -- --hide-ui
+python3 art/concepts/env_fx_stream_20261014/verify_realtime_movie.py /tmp/mv749full
+# 原 a7c3b47c 演示：文件内 x264 头记录为 crf=16、ref=5/subme=8（即 -preset slow）、keyint=250（x264 默认）
+ffmpeg -framerate 30 -i /tmp/mv749full/f%08d.png -vf scale=1280:720 -c:v libx264 -crf 16 -preset slow -pix_fmt yuv420p stream_flow_realtime_30fps_40s.mp4
+# 单 GOP 重编（本次）
+ffmpeg -framerate 30 -i /tmp/mv749full/f%08d.png -vf scale=1280:720 -c:v libx264 -crf 16 -preset slow -pix_fmt yuv420p \
+  -x264-params keyint=1200:min-keyint=1200:scenecut=0 -movflags +faststart stream_flow_realtime_30fps_40s_singlegop.mp4
+python3 art/concepts/env_fx_stream_20261014/verify_mp4_vs_png.py /tmp/mv749full stream_flow_realtime_30fps_40s_singlegop.mp4
+```
+
+边界：完整 1200 张原 PNG（约 4.2 GB）没有入库，上面的 PNG 统计仍是作者侧 box（xvfb + Mesa 软件 GL）结果；录制是确定性的，可按命令重录复算。单 GOP 文件拖动定位会慢一些，只作演示。仍只是隔离候选，未接入运行时，不是宿主接线、实体设备或美术验收。
