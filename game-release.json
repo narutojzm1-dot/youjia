@@ -1,11 +1,11 @@
 {
   "schema": "youjia.release/v1",
-  "sourceCommit": "be0f59a910057078a50763e1246a520dc9c2f0e0",
+  "sourceCommit": "c8d994fecf83195e2949820324c24520dec19302",
   "engine": "4.7.2.stable.official.ed1daf0bf",
-  "entry": "game-be0f59a",
-  "publishedAt": "2026-10-16T19:00:19Z",
+  "entry": "game-c8d994f",
+  "publishedAt": "2026-10-16T20:39:54Z",
   "storageModules": {
-    "entry": "save-be0f59a",
+    "entry": "save-c8d994f",
     "sha256": {
       "bridge.mjs": "ef18687554fdc0d745c1d18d4d091e959cc78559da0d61d6a093e562ff9bbc91",
       "budgets.mjs": "52984153977dcafd1d2682e848f1999f091d0966e17d46e902de76f5735a7018",
@@ -37,7 +37,7 @@
     ]
   },
   "loaderModules": {
-    "entry": "boot-be0f59a",
+    "entry": "boot-c8d994f",
     "sha256": {
       "download_assets.mjs": "fdaa3ea937b6ee2ed76111c6daa5dad673c52c29f3f5f9a142dcbfdc203492a9",
       "sha256_stream.mjs": "c26338f465688208706256f83aef6a510f01b671c6e679ae1a0d9ab7797af85e"

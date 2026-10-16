@@ -1,5 +1,5 @@
 <!doctype html>
-<html data-build="game-be0f59a" lang="zh-CN">
+<html data-build="game-c8d994f" lang="zh-CN">
 <head>
   <meta http-equiv="Cache-Control" content="no-cache, must-revalidate, max-age=0">
   <meta http-equiv="Pragma" content="no-cache">
@@ -10,8 +10,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="manus-game-loading-screen" content="1">
   <title>悠长的假期</title>
-  <link id="-gd-engine-icon" rel="icon" type="image/png" href="game-be0f59a.icon.png" />
-<link rel="apple-touch-icon" href="game-be0f59a.apple-touch-icon.png"/>
+  <link id="-gd-engine-icon" rel="icon" type="image/png" href="game-c8d994f.icon.png" />
+<link rel="apple-touch-icon" href="game-c8d994f.apple-touch-icon.png"/>
 
   <!-- Project-owned starting point, not the platform default. Customize the presentation below. -->
   <!-- Embedded Noto Sans SC loader subset: SIL Open Font License 1.1; license text: assets/template/fonts/NotoSansSC-OFL.txt. -->
@@ -105,7 +105,7 @@ Source SHA-256: 38f4c5f927f746b3dfa4c3a5d7edf0b7a3e828e27438418fa54f9e1565289412
     }
     // RELEASE_CHECK_END
     (() => {
-      const config = {"args":[],"canvasResizePolicy":2,"emscriptenPoolSize":8,"ensureCrossOriginIsolationHeaders":true,"executable":"engine-e232d3881ea999631bbb4a08ccc86fa54dd2bc8a5b42fb6cb281cb86dd85bc48","experimentalVK":false,"fileSizes":{"engine-e232d3881ea999631bbb4a08ccc86fa54dd2bc8a5b42fb6cb281cb86dd85bc48.wasm":39514754,"game-be0f59a.pck":90525076},"focusCanvas":true,"gdextensionLibs":[],"godotPoolSize":4,"mainPack":"game-be0f59a.pck","fileHashes":{"engine-e232d3881ea999631bbb4a08ccc86fa54dd2bc8a5b42fb6cb281cb86dd85bc48.wasm":"fdab8cf15509d9042cd7f6f9f9eafb5201c85a59ed161d91346046b2a9268fe4","game-be0f59a.pck":"5751f931817782ad066720d0235382686f1fad4283dd4a913f3a16ed65a3bbec"}};
+      const config = {"args":[],"canvasResizePolicy":2,"emscriptenPoolSize":8,"ensureCrossOriginIsolationHeaders":true,"executable":"engine-e232d3881ea999631bbb4a08ccc86fa54dd2bc8a5b42fb6cb281cb86dd85bc48","experimentalVK":false,"fileSizes":{"engine-e232d3881ea999631bbb4a08ccc86fa54dd2bc8a5b42fb6cb281cb86dd85bc48.wasm":39514754,"game-c8d994f.pck":90525076},"focusCanvas":true,"gdextensionLibs":[],"godotPoolSize":4,"mainPack":"game-c8d994f.pck","fileHashes":{"engine-e232d3881ea999631bbb4a08ccc86fa54dd2bc8a5b42fb6cb281cb86dd85bc48.wasm":"fdab8cf15509d9042cd7f6f9f9eafb5201c85a59ed161d91346046b2a9268fe4","game-c8d994f.pck":"f81562a030441efead75846279ee5879c1ff80c8c126f828a8b97b5f9436dc50"}};
       // Keep the shell readable while the pre-boot check waits or stops on a stale entry.
       const buildLabel = document.getElementById('loading-build');
       const versionLabel = document.getElementById('loading-version');
@@ -130,12 +130,12 @@ Source SHA-256: 38f4c5f927f746b3dfa4c3a5d7edf0b7a3e828e27438418fa54f9e1565289412
       let resolveSaveRuntime, rejectSaveRuntime;
       const saveRuntimeReady = new Promise((resolve, reject) => { resolveSaveRuntime = resolve; rejectSaveRuntime = reject; });
       saveRuntimeReady.catch(() => {}); // Observe immediately; preserve original rejection.
-      const saveBridgeReady = import('./save-be0f59a/bridge.mjs').then(async ({installSaveHost}) => {
-        const {captureIdbfsSource} = await import('./save-be0f59a/idbfs_source.mjs');
+      const saveBridgeReady = import('./save-c8d994f/bridge.mjs').then(async ({installSaveHost}) => {
+        const {captureIdbfsSource} = await import('./save-c8d994f/idbfs_source.mjs');
         installSaveHost({runtimeReady: saveRuntimeReady, captureLegacy: captureIdbfsSource});
       });
       saveBridgeReady.catch(() => {});
-      const assetRecoveryReady = import('./boot-be0f59a/download_assets.mjs');
+      const assetRecoveryReady = import('./boot-c8d994f/download_assets.mjs');
       assetRecoveryReady.catch(() => {});
       let restoreAssetFetch = () => {};
       const threads = false;
@@ -162,6 +162,29 @@ Source SHA-256: 38f4c5f927f746b3dfa4c3a5d7edf0b7a3e828e27438418fa54f9e1565289412
       };
       const mib = (bytes) => (bytes / 1048576).toFixed(1);
       const startedAt = performance.now();
+      // Keep the existing global timings, plus bounded resource-specific facts.
+      // A WASM cache hit must not be mistaken for a PCK cache hit or retry.
+      const assetNames = Object.entries(config.fileSizes || {})
+        .filter(([name, size]) => /\.(wasm|pck)$/.test(name) && Number.isSafeInteger(size) && size > 0)
+        .map(([name]) => name);
+      const recordAsset = (kind, event = {}) => {
+        if (failed || ready) return;
+        try {
+          if (typeof event.url !== 'string') return;
+          const href = new URL(event.url, window.location.href).href;
+          const asset = assetNames.find(name => new URL(name, window.location.href).href === href);
+          if (!asset) return; // Do not retain arbitrary URLs, query strings or error payloads.
+          const record = {at: Math.round(performance.now() - startedAt), asset, kind,
+            source: kind === 'cache-hit' || event.source === 'cache' ? 'cache'
+              : event.source === undefined ? 'network' : 'unknown'};
+          for (const key of ['offset', 'retry', 'maxRetries']) {
+            if (Number.isSafeInteger(event[key]) && event[key] >= 0) record[key] = event[key];
+          }
+          const events = timings.assetEvents ||= [];
+          if (events.length >= 32) events.shift();
+          events.push(record);
+        } catch { /* Optional diagnostics must never block or restart loading. */ }
+      };
       let lastProgressAt = startedAt;
       let downloadedBytes = 0;
       let downloadComplete = false;
@@ -292,9 +315,16 @@ Source SHA-256: 38f4c5f927f746b3dfa4c3a5d7edf0b7a3e828e27438418fa54f9e1565289412
           stamp('bootstrapReady');
           restoreAssetFetch = installAssetRecovery(config, {
             onError: fail,
-            onCacheHit: () => stamp('assetCacheHit'),
-            onRetry: ({url, offset, retry: attempt, maxRetries}) => {
+            onCacheHit: event => {
+              if (failed || ready) return;
+              stamp('assetCacheHit');
+              recordAsset('cache-hit', event);
+            },
+            onRetry: event => {
+              if (failed || ready) return;
+              const {url, offset, retry: attempt, maxRetries} = event;
               stamp('downloadRetry');
+              recordAsset('retry', event);
               notice.hidden = false;
               notice.textContent = `下载连接中断，正在恢复（${attempt}/${maxRetries}）…`;
               console.info('[game-loading] resume', url, offset, attempt);
