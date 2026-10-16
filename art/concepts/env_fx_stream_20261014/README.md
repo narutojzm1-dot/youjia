@@ -184,3 +184,26 @@ python3 art/concepts/env_fx_stream_20261014/verify_mp4_vs_png.py /tmp/mv749full 
 ```
 
 边界：完整 1200 张原 PNG（约 4.2 GB）没有入库，上面的 PNG 统计仍是作者侧 box（xvfb + Mesa 软件 GL）结果；录制是确定性的，可按命令重录复算。单 GOP 文件拖动定位会慢一些，只作演示。仍只是隔离候选，未接入运行时，不是宿主接线、实体设备或美术验收。
+
+## 连续暂停 / 低动效切换的原速录屏核对（#749 隔离剩余项）
+
+`stream_flow_driver.gd` 新增 `--toggle-sequence`（仅隔离预览）：Movie Maker 固定 30fps 下按帧号注入真实按键事件（P 暂停/继续、L 低动效），走和玩家相同的 `_unhandled_input`，不直接改状态；每帧打印一行 `TOGGLE_SEQ` JSON（帧号、phase、paused、low、delta）。排定序列 360 帧 / 12 秒：60 暂停、120 继续、150 低动效开、180 低动效中暂停、210 继续、240 低动效关、270/271 隔帧快切暂停、280/281 隔帧快切低动效、300 同帧 L+P、330 同帧 P+L。
+
+```bash
+xvfb-run -a -s "-screen 0 1800x1000x24" godot --path art/concepts/env_fx_stream_20261014/godot_preview \
+  --resolution 1672x941 --write-movie /tmp/mvtog/f.png --fixed-fps 30 --quit-after 360 \
+  -- --hide-ui --toggle-sequence > /tmp/mvtog_log.txt 2>&1
+python3 art/concepts/env_fx_stream_20261014/verify_toggle_sequence.py /tmp/mvtog /tmp/mvtog_log.txt
+```
+
+作者侧 box 实测（Godot 4.7.2、xvfb + Mesa 软件 GL，非实体 GPU/手机），`ok=true`：
+
+- 360 帧日志与 360 张 PNG 对齐；状态切换全部落在排定帧，隔帧快切与同帧双键都生效（state_mismatch 0）。
+- phase 步长逐帧符合：正常 2π/240、低动效 2π/960、暂停 0（容差 1e-6，0 处不符）；每次继续都从暂停值接着走一步，无跳变。
+- 像素：121 对暂停中相邻帧整画面差 0；运动帧水域都有变化；水域平均帧差 正常 1.1531、低动效 0.4053（比 0.3515，非线性映射所以不是 0.25）；水遮罩外与保护区 12 秒内差 0 / 0。
+- 负向自检：只改日志副本（暂停中插 phase 跳变、漏掉隔帧快切）时脚本都 exit 1（见 `toggle_check_20261017/negative_selftest.txt`）。
+- 记录到的一点：Movie Maker 首帧 `delta` 是 0.025 而不是 1/30，之后都是 1/30；脚本按每帧实际 delta 计算期望步长，单独报告 `first_frame_delta`。这与上面原速录屏「第 1 圈第 2–4 帧」差异是否有关未验证。
+
+`toggle_check_20261017/`：`toggle_seq_frames.jsonl`（每帧状态原始输出）、`godot_movie_maker_log.txt`（录制日志）、`verify_result.txt`（核对原始输出）、`negative_selftest.txt`。360 张原 PNG 没有入库，可按命令确定性重录复算。
+
+边界：只证明隔离预览里暂停/低动效按键的逐帧行为与像素冻结，不是宿主接线、实体设备性能、无障碍设置接入或美术验收。仍只是隔离候选。

@@ -19,6 +19,17 @@ var _keep_ui: bool = false
 var _button_text_ready: bool = false
 var _shown_paused: bool = false
 var _shown_low_motion: bool = false
+var _toggle_seq: bool = false
+var _seq_frame: int = 0
+
+## 仅供 verify_toggle_sequence.py：Movie Maker 固定 30fps 下按帧号注入真实按键（P 暂停/继续，L 低动效），
+## 走与玩家相同的 _unhandled_input 路径，不直接改状态。帧号 → 按键列表。
+const TOGGLE_SCHEDULE := {
+	60: [KEY_P], 120: [KEY_P],
+	150: [KEY_L], 180: [KEY_P], 210: [KEY_P], 240: [KEY_L],
+	270: [KEY_P], 271: [KEY_P], 280: [KEY_L], 281: [KEY_L],
+	300: [KEY_L, KEY_P], 330: [KEY_P, KEY_L],
+}
 
 @onready var _preview: CanvasItem = $Preview
 @onready var _ui: CanvasLayer = $UI
@@ -56,9 +67,14 @@ func _advance(delta: float) -> float:
 
 
 func _process(delta: float) -> void:
+	if _toggle_seq:
+		_inject_scheduled_keys()
 	if _advance(delta) != 0.0:
 		_push_phase()
 	_refresh_status()
+	if _toggle_seq:
+		print("TOGGLE_SEQ ", JSON.stringify({"frame": _seq_frame, "phase": phase, "paused": paused, "low": low_motion, "delta": delta}))
+		_seq_frame += 1
 	if _dump_path != "" and not _dump_started:
 		_dump_started = true
 		_dump_and_quit()
@@ -72,6 +88,23 @@ func _unhandled_input(event: InputEvent) -> void:
 		_toggle_paused()
 	elif key.keycode == KEY_L:
 		_toggle_low_motion()
+
+
+func _inject_scheduled_keys() -> void:
+	if not TOGGLE_SCHEDULE.has(_seq_frame):
+		return
+	for code in TOGGLE_SCHEDULE[_seq_frame]:
+		var ev := InputEventKey.new()
+		ev.keycode = code
+		ev.physical_keycode = code
+		ev.pressed = true
+		Input.parse_input_event(ev)
+		var up := InputEventKey.new()
+		up.keycode = code
+		up.physical_keycode = code
+		up.pressed = false
+		Input.parse_input_event(up)
+	Input.flush_buffered_events()
 
 
 func _toggle_paused() -> void:
@@ -152,6 +185,10 @@ func _parse_user_args() -> void:
 		elif token == "--offset" and i + 2 < args.size():
 			$Preview.position = Vector2(float(args[i + 1]), float(args[i + 2]))
 			i += 3
+		elif token == "--toggle-sequence":
+			# 仅供连续暂停/低动效切换录屏核对；与 --write-movie --fixed-fps 30 --hide-ui 合用。
+			_toggle_seq = true
+			i += 1
 		elif token == "--keep-ui":
 			_keep_ui = true
 			i += 1
