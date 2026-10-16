@@ -6,6 +6,8 @@ config_version=5
 config/name="Stream Flow Preview 749"
 config/description="Isolated preview for creek directional-flow candidate #749. Not the game."
 run/main_scene="res://stream_flow_preview.tscn"
+; Web 导出只含裁切 demo（export_presets.cfg 只导出该场景），所以 Web 下主场景换成它。
+run/main_scene.web="res://stream_flow_crop_demo.tscn"
 config/features=PackedStringArray("4.7", "GL Compatibility")
 boot_splash/show_image=false
 boot_splash/bg_color=Color(0, 0, 0, 1)

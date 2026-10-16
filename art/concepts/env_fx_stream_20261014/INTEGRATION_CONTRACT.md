@@ -150,3 +150,24 @@ CODEX-LEAD 对 `c1700b35` 的技术决定：隔离候选把 `base_sample_linear`
 生产接线仍由 ASSISTANT 定。未改生产 shader、场景、`assets/` 或存档。
 
 仍未覆盖：Web 导出与浏览器成本（本机无 Godot 4.7.2 Web 导出模板，未尝试）、手机/DPR、RTX 复核本头部、宿主内实测。
+
+## 隔离 Web 导出实测（本轮，基于 `435cc826`：`base_sample_linear` 已默认开）
+
+仍只是隔离候选：只改 `art/concepts/env_fx_stream_20261014/`，不碰生产宿主，不导出主游戏。复现：`web_export_check.sh`。
+
+实测环境：Godot 4.7.2 官方 `web_nothreads_release` 模板 → 本机 `python3 -m http.server` → Chrome headless，WebGL 2.0（OpenGL ES 3.0）经 **SwiftShader 软件渲染**，画布 1672×941、DPR 1。**不是 RTX / 真实 GPU，也不是手机、DPR2/3 或真实玩家浏览器的帧时证据。**
+
+| 检查（Web 画布读回，phase 0、π/2、π、3π/2、TAU） | Web 结果 | 同探针桌面 llvmpipe |
+|---|---|---|
+| 裁切矩形内非水面像素 vs 原画（减少动态帧） | 全部最大差 **0** | 0 |
+| 裁切矩形外 ±3 像素一圈 vs 原画 | 全部 **0** | 0 |
+| 水面像素确有变化（不是静帧） | 7065–7158 px 变化，最大 99–121 级 | 7070–7159 px，99–121 级 |
+| phase 0 vs TAU | **0** | 0 |
+| strength 0 vs 原画 | **0** | 0 |
+| 连续 P/R（运行 30 帧 → 暂停 30 帧 phase 不变 → 暂停中减少动态：子层隐藏、画面对原画 0 → 关闭 → 恢复后 phase 继续） | 通过 | 通过 |
+
+体积（导出物实测）：`index.pck` 2 547 676 B，其中原画 `near_path_base` 导入纹理 2 438 474 B；动效专用的 5 张裁切控制图 + 水纹贴图 + shader/脚本合计约 0.1 MiB。`index.wasm` 39.5 MB 是引擎本身，与本动效无关，生产已有同一引擎。
+
+帧时（每次 300 帧，同一环境跑 4 次：3 次在 `c1700b35` 默认关，1 次在 `435cc826` 默认开；SwiftShader 软件 WebGL，仅作相对参考）：动效开 平均 24.0–26.3 ms / p95 30.8–34.3 ms；减少动态（子层撤掉）平均 23.1–24.5 ms / p95 30.0–32.7 ms，差值在噪声内。4 次的逐像素结果完全相同，即 1:1 下 `base_sample_linear` 开/关在 Web 上也逐像素一致。不能据此写成真实 GPU 或手机帧时通过。
+
+仍未覆盖：真实 GPU 浏览器 / 手机 / DPR2/3 帧时、生产宿主内 Web 实测、RTX 复核本头部、Web 下缩放/子像素偏移对照（本探针只测 1:1）。

@@ -93,3 +93,14 @@ GODOT=godot xvfb-run -a -s "-screen 0 1800x1000x24" \
 - 驱动新增 `--offset X Y`（Painting 屏幕位置，可带小数）；整幅预览也接受 `--scale` / `--offset`，仅供同变换对照。
 - `--sequence-check DIR`：真实帧里经 `Input.parse_input_event` 按 P / R，连续切换暂停与减少动态，逐步存帧。
 - `--base-linear`：显式再把 `base_sample_linear` 设为 true。该开关默认已经是开（CODEX-LEAD 2026-10-16 #749），底图按连续 UV 线性取样。对照结果见 `INTEGRATION_CONTRACT.md`。
+
+### 隔离 Web 导出实测（`web_export_check.sh`，回应 CODEX-LEAD 11:47 CST 回执）
+
+```
+GODOT=godot CHROME=google-chrome bash art/concepts/env_fx_stream_20261014/web_export_check.sh /tmp/web749
+```
+
+- `export_presets.cfg`：只导出 `stream_flow_crop_demo.tscn` 及依赖（`export_filter="scenes"`），模板为官方同版 `web_nothreads_release.zip`（`custom_template` 留空，装到 `~/.local/share/godot/export_templates/4.7.2.stable/`）。导出物写 `/tmp`，不进仓库。
+- `project.godot` 加 `run/main_scene.web`，Web 下主场景是裁切 demo；桌面打开仍是整幅预览。
+- 驱动新增 `--web-probe`（Web 页面用 `?probe=1`）：读回本页真实画布，在 1:1（1672×941、scale 1、偏移 0）下比对原画，并走一遍 P/R 键连续切换。只打印一行 `WEBPROBE {...}`，不存文件。
+- 实测在 `435cc826`（`base_sample_linear` 已默认开）之上重跑；1:1 下默认与关闭逐像素相同（见 `INTEGRATION_CONTRACT.md`），所以本表也覆盖新默认。

@@ -24,6 +24,7 @@ var _sequence_dir: String = ""
 var _dump_path: String = ""
 var _dump_started: bool = false
 var _self_check: bool = false
+var _web_probe: bool = false
 
 @onready var _painting: Sprite2D = $Painting
 @onready var _crop: Sprite2D = $Painting/StreamCrop
@@ -44,6 +45,8 @@ func _ready() -> void:
 		" base_sample_linear=", _material().get_shader_parameter("base_sample_linear"))
 	if _self_check:
 		_run_self_check()
+	elif _web_probe:
+		_run_web_probe()
 	elif _sequence_dir != "":
 		_run_sequence_check()
 
@@ -96,6 +99,11 @@ func _push_phase() -> void:
 
 func _parse_user_args() -> void:
 	var args := OS.get_cmdline_user_args()
+	# Web 导出没有命令行：页面地址带 ?probe=1 时跑同一套 --web-probe。
+	if OS.has_feature("web"):
+		var query := str(JavaScriptBridge.eval("window.location.search", true))
+		if query.contains("probe=1"):
+			_web_probe = true
 	var i := 0
 	while i < args.size():
 		var token := str(args[i])
@@ -125,6 +133,9 @@ func _parse_user_args() -> void:
 			i += 1
 		elif token == "--reduced":
 			reduced_motion = true
+			i += 1
+		elif token == "--web-probe":
+			_web_probe = true
 			i += 1
 		elif token == "--self-check":
 			_self_check = true
@@ -240,3 +251,133 @@ func _run_sequence_check() -> void:
 		print("seq ", r)
 	print("sequence-check ok=", ok)
 	get_tree().quit(0 if ok else 1)
+
+
+## Web 隔离实测（--web-probe，或 Web 导出页面 ?probe=1）：不存文件，只在控制台打印一行 WEBPROBE 结果。
+## 只在 1:1（scale 1.0、偏移 0、窗口 1672×941）下比较；读回的是本页真实画布，不是离线 PNG。
+## 帧时只代表当前浏览器/渲染后端，headless SwiftShader 等软件 WebGL 不能当真实 GPU / 手机帧时。
+func _water_mask() -> PackedByteArray:
+	var flow := (load("res://textures/crop/flow_map.png") as Texture2D).get_image()
+	var secw := (load("res://textures/crop/secondary_weight.png") as Texture2D).get_image()
+	flow.convert(Image.FORMAT_RGBA8)
+	secw.convert(Image.FORMAT_RGBA8)
+	var mask := PackedByteArray()
+	mask.resize(CROP_RECT.size.x * CROP_RECT.size.y)
+	for y in CROP_RECT.size.y:
+		for x in CROP_RECT.size.x:
+			var f := flow.get_pixel(x, y)
+			var w := secw.get_pixel(x, y)
+			mask[y * CROP_RECT.size.x + x] = 1 if (f.a8 > 0 or w.r8 > 0 or w.g8 > 0 or w.b8 > 0) else 0
+	return mask
+
+
+func _grab() -> Image:
+	await RenderingServer.frame_post_draw
+	await RenderingServer.frame_post_draw
+	var img := get_viewport().get_texture().get_image()
+	img.convert(Image.FORMAT_RGBA8)
+	return img
+
+
+## 返回 [nonwater_max, water_max, water_changed_px, band_max]；band 是裁切矩形外 ±3 像素一圈。
+func _diff(a: Image, b: Image, mask: PackedByteArray) -> Array:
+	var nonwater_max := 0
+	var water_max := 0
+	var water_changed := 0
+	var band_max := 0
+	var r := Rect2i(CROP_RECT.position - Vector2i(3, 3), CROP_RECT.size + Vector2i(6, 6))
+	for y in range(r.position.y, r.end.y):
+		for x in range(r.position.x, r.end.x):
+			var ca := a.get_pixel(x, y)
+			var cb := b.get_pixel(x, y)
+			var d := maxi(maxi(absi(ca.r8 - cb.r8), absi(ca.g8 - cb.g8)), absi(ca.b8 - cb.b8))
+			var lx := x - CROP_RECT.position.x
+			var ly := y - CROP_RECT.position.y
+			if lx < 0 or ly < 0 or lx >= CROP_RECT.size.x or ly >= CROP_RECT.size.y:
+				band_max = maxi(band_max, d)
+			elif mask[ly * CROP_RECT.size.x + lx] == 1:
+				water_max = maxi(water_max, d)
+				if d > 0:
+					water_changed += 1
+			else:
+				nonwater_max = maxi(nonwater_max, d)
+	return [nonwater_max, water_max, water_changed, band_max]
+
+
+func _frame_stats(n: int) -> Dictionary:
+	var samples: Array[float] = []
+	var last := Time.get_ticks_usec()
+	for _i in n:
+		await get_tree().process_frame
+		var now := Time.get_ticks_usec()
+		samples.append((now - last) / 1000.0)
+		last = now
+	samples.sort()
+	var total := 0.0
+	for v in samples:
+		total += v
+	return {"mean_ms": snappedf(total / n, 0.01), "p50_ms": snappedf(samples[n / 2], 0.01),
+		"p95_ms": snappedf(samples[int(n * 0.95)], 0.01), "max_ms": snappedf(samples[n - 1], 0.01)}
+
+
+func _run_web_probe() -> void:
+	var out := {"web": OS.has_feature("web"), "renderer": RenderingServer.get_video_adapter_name(),
+		"vendor": RenderingServer.get_video_adapter_vendor(), "api": RenderingServer.get_video_adapter_api_version(),
+		"window": DisplayServer.window_get_size(), "viewport": get_viewport().get_visible_rect().size,
+		"base_sample_linear": _material().get_shader_parameter("base_sample_linear")}
+	var ok := DisplayServer.window_get_size() == Vector2i(1672, 941) and get_viewport().get_visible_rect().size == Vector2(1672, 941) and scale_factor == 1.0 and painting_offset == Vector2.ZERO
+	var mask := _water_mask()
+	var mat := _material()
+	await _frames(60)
+	paused = false; reduced_motion = false; _apply_motion()
+	out["frames_running"] = await _frame_stats(300)
+	reduced_motion = true; _apply_motion()
+	out["frames_reduced"] = await _frame_stats(300)
+	reduced_motion = false; _apply_motion()
+	# 原画：减少动态（子层撤掉）。
+	paused = true; reduced_motion = true; _apply_motion()
+	var orig := await _grab()
+	reduced_motion = false; _apply_motion()
+	var res := {}
+	for ph in [0.0, PI * 0.5, PI, PI * 1.5, TAU]:
+		phase = ph; _push_phase()
+		var img := await _grab()
+		res[str(snappedf(ph, 0.0001))] = _diff(img, orig, mask)
+	out["phase_vs_original"] = res
+	phase = 0.0; _push_phase()
+	var p0 := await _grab()
+	phase = TAU; _push_phase()
+	var pt := await _grab()
+	out["phase0_vs_tau"] = _diff(p0, pt, mask)
+	mat.set_shader_parameter("strength", 0.0)
+	out["strength0_vs_original"] = _diff(await _grab(), orig, mask)
+	mat.set_shader_parameter("strength", 1.0)
+	for k in res:
+		var d: Array = res[k]
+		ok = ok and d[0] == 0 and d[3] == 0
+	ok = ok and int(res[str(snappedf(PI * 0.5, 0.0001))][2]) > 0
+	ok = ok and out["phase0_vs_tau"][1] == 0 and out["strength0_vs_original"][1] == 0 and out["strength0_vs_original"][0] == 0
+	# 连续暂停 / 减少动态（与 --sequence-check 同一套 P/R 键路径，只比 phase 与可见性）。
+	phase = 0.0; paused = false; reduced_motion = false; _apply_motion(); _push_phase()
+	await _frames(30)
+	var p_run := phase
+	await _press(KEY_P)
+	var p_pause := phase
+	await _frames(30)
+	var seq_ok := p_run > 0.0 and paused and phase == p_pause
+	await _press(KEY_R)
+	await _frames(30)
+	seq_ok = seq_ok and reduced_motion and not _crop.visible and phase == p_pause
+	var red_img := await _grab()
+	var rd := _diff(red_img, orig, mask)
+	seq_ok = seq_ok and rd[0] == 0 and rd[1] == 0 and rd[3] == 0
+	await _press(KEY_R)
+	await _press(KEY_P)
+	await _frames(30)
+	seq_ok = seq_ok and not paused and _crop.visible and phase != p_pause
+	out["sequence_ok"] = seq_ok
+	ok = ok and seq_ok
+	out["ok"] = ok
+	print("WEBPROBE ", JSON.stringify(out))
+	if not OS.has_feature("web"):
+		get_tree().quit(0 if ok else 1)
