@@ -1,0 +1,10 @@
+file:///C:/Users/Zengm/AppData/Local/Temp/youjia-round-20261017-0130/cache-baseline/run.mjs:1
+await Promise.race([import('./test/cache_body_recovery_test.mjs'),new Promise((_,no)=>setTimeout(()=>no(new Error('BASELINE_CACHE_BODY_STALLED')),250))]);
+                                                                                                        ^
+
+Error: BASELINE_CACHE_BODY_STALLED
+    at Timeout._onTimeout (file:///C:/Users/Zengm/AppData/Local/Temp/youjia-round-20261017-0130/cache-baseline/run.mjs:1:105)
+    at listOnTimeout (node:internal/timers:605:17)
+    at process.processTimers (node:internal/timers:541:7)
+
+Node.js v24.12.0
