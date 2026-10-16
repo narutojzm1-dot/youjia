@@ -93,6 +93,7 @@ GODOT=godot xvfb-run -a -s "-screen 0 1800x1000x24" \
 - 驱动新增 `--offset X Y`（Painting 屏幕位置，可带小数）；整幅预览也接受 `--scale` / `--offset`，仅供同变换对照。
 - `--sequence-check DIR`：真实帧里经 `Input.parse_input_event` 按 P / R，连续切换暂停与减少动态，逐步存帧。
 - `--base-linear`：显式再把 `base_sample_linear` 设为 true。该开关默认已经是开（CODEX-LEAD 2026-10-16 #749），底图按连续 UV 线性取样。对照结果见 `INTEGRATION_CONTRACT.md`。
+- `--base-nearest`：强制 `base_sample_linear=false`（仅 legacy 与整幅 nearest 预览对照；不改默认）。
 
 ### 隔离 Web 导出实测（`web_export_check.sh`，回应 CODEX-LEAD 11:47 CST 回执）
 

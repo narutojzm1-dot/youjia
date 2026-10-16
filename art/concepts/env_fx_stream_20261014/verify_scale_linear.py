@@ -3,23 +3,25 @@
 
 Agent-ID: GROK-BUILD
 仍只是候选，不改生产文件。只写到 --out 目录。
-每个 (scale, offset) 组合导出：
-  R  = 减少动态（子层撤掉，只剩线性过滤的 Painting）——同变换下的「原画」
-  S0 = strength 0
-  NZ = strength 1e-4（水面像素≈按纹素中心取的原画，用来量子层与线性原画的采样差）
-  C(phase) = 裁切 demo；F(phase) = 整幅预览（同缩放/偏移，整幅 nearest，仅用于水面像素对照）
-检查：
-  (a) 确定水面像素 C vs F 最大差/像素数；像素中心恰落在纹素边界（nearest 平局）的另列，不计入判定
-      ——两块四边形各自插值 UV，平局时可能取相邻纹素，属于 nearest 采样本身的歧义，不是接缝
-  (b) 确定非水面像素（含矩形外、保护区、矩形内非水面）C vs R 必须 0
-  (c) phase 0 vs TAU 完全一致
-  (d) S0 与 R 全画布差 0；scale 1 且整数偏移时 R 与原画 PNG 逐像素一致
-  (e) 裁切矩形边框 ±3 纹素带 C vs R（找线性过滤的接缝/光晕）
-  另报：NZ vs R 在水面像素与水面边缘像素的差（子层按纹素中心取底图 vs 线性原画），
-  以及可选 --base-linear（底图连续 UV 线性取样）下同一量，供 Leader 决定是否启用
-另跑一遍 --sequence-check：真实帧里按 P / R 连续切换暂停与减少动态。
+
+对照目的（回应 CODEX-LEAD 对 435cc826 的审查）：
+  A) 当前默认（base_sample_linear=true）对独立 LINEAR Painting：
+     R=减少动态原画；S0=strength0；C(phase)=裁切 demo 默认线性底图。
+     判定：S0==R；非水面/矩形外/保护区/矩形边±3 的 C vs R 差 0；
+     0 vs TAU 一致；半圈水面有变化；sequence 暂停/减少动态。
+     不再把默认 C 与整幅 nearest 预览 F 的水面差当作通过门。
+  B) 历史/受控 legacy（同底图 nearest）：
+     C_near=--base-nearest；F=整幅 stream_flow_preview（base_tex nearest）。
+     硬门只在 scale=1.0 且整数偏移（历史 1:1 对照条件）；其他变换只汇报，
+     因为整幅预览 Sprite 仍 nearest，而裁切 demo Painting/子层是 LINEAR，
+     分数缩放下的差来自 Sprite 过滤，不是 base_sample_linear 判据。
+
+每个 (scale, offset) 另报：
+  NZ = strength 1e-4 + --base-nearest（纹素中心底图 vs 线性 Painting）
+  NL = strength 1e-4 默认线性底图（连续 UV vs 线性 Painting）
+
 用法（仓库根，需显示器或 xvfb-run）：
-  GODOT=/path/to/godot xvfb-run -a -s "-screen 0 1800x1000x24" \
+  GODOT=/path/to/godot xvfb-run -a -s "-screen 0 1800x1000x24" \\
     python3 art/concepts/env_fx_stream_20261014/verify_scale_linear.py --out /tmp/scale749
 """
 import argparse
@@ -109,6 +111,7 @@ def main():
     band[Y + 3:Y + H - 3, X + 3:X + W - 3] = False
     ok = True
     print("renderer: Godot 4.7.2 GL Compatibility / OpenGL3 via Mesa llvmpipe (software, Xvfb). Not RTX/Web/phone/frame-time.")
+    print("gates: (A) default linear base vs LINEAR Painting; (B) legacy nearest crop vs full nearest preview.")
     for s in SCALES:
         for frac in SUBPIX:
             ox, oy = offset_for(s, frac)
@@ -134,8 +137,9 @@ def main():
             b_all, _ = classify(band, sets, False)
             R = dump(godot, CROP, os.path.join(a.out, f"R_{tag}.png"), "--phase", "0", "--reduced", *xf)
             S0 = dump(godot, CROP, os.path.join(a.out, f"S0_{tag}.png"), "--phase", "0", "--strength", "0", *xf)
-            NZ = dump(godot, CROP, os.path.join(a.out, f"NZ_{tag}.png"), "--phase", "0", "--strength", "0.0001", *xf)
-            NL = dump(godot, CROP, os.path.join(a.out, f"NL_{tag}.png"), "--phase", "0", "--strength", "0.0001", "--base-linear", *xf)
+            NZ = dump(godot, CROP, os.path.join(a.out, f"NZ_{tag}.png"), "--phase", "0", "--strength", "0.0001",
+                      "--base-nearest", *xf)
+            NL = dump(godot, CROP, os.path.join(a.out, f"NL_{tag}.png"), "--phase", "0", "--strength", "0.0001", *xf)
             s0d = int(np.abs(S0 - R).max())
             line_ok = s0d == 0
             extra = ""
@@ -154,31 +158,46 @@ def main():
             print(f"[{tag}] offset=({ox},{oy}) water px {int(w_all.sum())} (nearest-tie {int(w_tie.sum())}, "
                   f"water/land-ambiguous {int((w_any & ~w_all).sum())}, water-edge {int(w_edge.sum())}); "
                   f"strength0 vs R max {s0d};{extra}")
-            print(f"  base sampling vs linear Painting @strength1e-4: default texel-center water {st(nz, w_all)}, "
-                  f"water-edge {st(nz, w_edge)}; --base-linear water {st(nl, w_all)}, water-edge {st(nl, w_edge)}; "
+            print(f"  base sampling vs linear Painting @strength1e-4: --base-nearest water {st(nz, w_all)}, "
+                  f"water-edge {st(nz, w_edge)}; default-linear water {st(nl, w_all)}, water-edge {st(nl, w_edge)}; "
                   f"nonwater max {int(nz[nonwater].max())}/{int(nl[nonwater].max())}")
             ok = ok and line_ok and int(nz[nonwater].max()) == 0 and int(nl[nonwater].max()) == 0
             crops = {}
             for ph in PHASES:
                 pt = f"{ph:.4f}"
                 C = dump(godot, CROP, os.path.join(a.out, f"C_{tag}_{pt}.png"), "--phase", repr(ph), *xf)
+                C_near = dump(godot, CROP, os.path.join(a.out, f"Cnear_{tag}_{pt}.png"),
+                              "--phase", repr(ph), "--base-nearest", *xf)
                 F = dump(godot, FULL, os.path.join(a.out, f"F_{tag}_{pt}.png"), "--phase", repr(ph), *xf)
                 crops[ph] = C
                 dcr = np.abs(C - R).max(axis=2)
-                dcf = np.abs(C - F).max(axis=2)
-                wa = int(dcf[w_cmp].max(initial=0))
-                wn = int((dcf[w_cmp] > 0).sum())
-                ta = int(dcf[w_tie].max(initial=0))
-                tn = int((dcf[w_tie] > 0).sum())
+                dcf_legacy = np.abs(C_near - F).max(axis=2)
+                # A) default linear vs LINEAR Painting boundaries
                 nw = int(dcr[nonwater].max())
                 outm = int(dcr[outside].max())
                 prm = int(dcr[p_all].max()) if p_all.any() else 0
                 bdm = int(dcr[b_all].max()) if b_all.any() else 0
-                good = wa <= a.tolerance and nw == 0 and outm == 0 and prm == 0 and bdm == 0
+                water_changed = int((dcr[w_cmp] > 0).sum()) if w_cmp.any() else 0
+                a_ok = nw == 0 and outm == 0 and prm == 0 and bdm == 0
+                # B) legacy nearest crop vs full nearest
+                wa = int(dcf_legacy[w_cmp].max(initial=0))
+                wn = int((dcf_legacy[w_cmp] > 0).sum())
+                ta = int(dcf_legacy[w_tie].max(initial=0))
+                tn = int((dcf_legacy[w_tie] > 0).sum())
+                legacy_gate = (s == 1.0 and frac == (0.0, 0.0))
+                b_ok = wa <= a.tolerance
+                if legacy_gate:
+                    good = a_ok and b_ok
+                    b_label = 'OK' if b_ok else 'FAIL'
+                else:
+                    good = a_ok
+                    b_label = ('OK' if b_ok else 'INFO-diff') + ' (report-only; not 1:1 integer)'
                 ok = ok and good
-                print(f"  phase {pt}: water C-vs-F max {wa} ({wn}/{int(w_cmp.sum())} px) [tie px differ {tn}, max {ta}]; changed vs R {int((dcr > 0).sum())} px; "
-                      f"nonwater max {nw}; outside-rect max {outm}; protect max {prm}; rect-border±3 max {bdm} "
-                      f"{'OK' if good else 'FAIL'}")
+                print(f"  phase {pt}: (A) default-linear vs Painting: nonwater max {nw}; outside-rect max {outm}; "
+                      f"protect max {prm}; rect-border±3 max {bdm}; water-changed-vs-R {water_changed} px "
+                      f"{'OK' if a_ok else 'FAIL'}")
+                print(f"           (B) legacy nearest C-vs-F water max {wa} ({wn}/{int(w_cmp.sum())} px) "
+                      f"[tie px differ {tn}, max {ta}] {b_label}")
             loop = int(np.abs(crops[PHASES[0]] - crops[PHASES[-1]]).max())
             half = int((np.abs(crops[PHASES[0]] - crops[PHASES[2]]).max(axis=2) > 0).sum())
             print(f"  loop 0 vs TAU max {loop}; half-cycle changed px {half}")

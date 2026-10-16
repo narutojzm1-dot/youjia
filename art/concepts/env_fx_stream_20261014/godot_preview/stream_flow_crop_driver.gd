@@ -32,7 +32,7 @@ var _web_probe: bool = false
 
 func _ready() -> void:
 	_parse_user_args()
-	# # 隔离候选默认开启。--base-linear 仍会再写一次 true，不提供关闭开关。
+	# # 隔离候选默认开启。--base-linear 再写 true；--base-nearest 强制关（仅 legacy 对照）。
 	_material().set_shader_parameter("base_sample_linear", true)
 	_crop.position = Vector2(CROP_RECT.position)
 	_painting.scale = Vector2(scale_factor, scale_factor)
@@ -130,6 +130,10 @@ func _parse_user_args() -> void:
 			i += 2
 		elif token == "--base-linear":
 			_material().set_shader_parameter("base_sample_linear", true)
+			i += 1
+		elif token == "--base-nearest":
+			# 历史/受控 legacy：强制底图纹素中心取样，供与整幅 nearest 预览对照。
+			_material().set_shader_parameter("base_sample_linear", false)
 			i += 1
 		elif token == "--reduced":
 			reduced_motion = true

@@ -151,6 +151,16 @@ CODEX-LEAD 对 `c1700b35` 的技术决定：隔离候选把 `base_sample_linear`
 
 仍未覆盖：Web 导出与浏览器成本（本机无 Godot 4.7.2 Web 导出模板，未尝试）、手机/DPR、RTX 复核本头部、宿主内实测。
 
+## 缩放/线性对照验证器（回应 CODEX-LEAD @435cc826）
+
+`verify_scale_linear.py` 不再把**当前默认**（`base_sample_linear=true`）的裁切帧 C 与整幅 nearest 预览 F 的水面差当作通过门——两者底图采样不同，435 默认下该旧判据会误 FAIL。
+
+现分两路：
+- **(A) 当前默认 vs 独立 LINEAR Painting**：S0/非水面/矩形外/保护区/边框±3 对 R 差 0；0↔TAU；半圈有变化；`--sequence-check`。
+- **(B) 历史/受控 legacy**：`--base-nearest` 的裁切帧与整幅 `stream_flow_preview`（nearest 底图）做水面差 ≤1；**硬门仅 scale=1.0 整数偏移**。分数缩放只汇报：整幅预览 Sprite 仍 nearest，裁切 demo Painting/子层是 LINEAR，差来自 Sprite 过滤而非 `base_sample_linear`。
+
+`--base-nearest` 仅隔离 demo 命令行开关，不改默认、不进生产。作者侧 llvmpipe 全矩阵 RESULT PASS（非 RTX/Web/手机/帧时）。
+
 ## 隔离 Web 导出实测（本轮，基于 `435cc826`：`base_sample_linear` 已默认开）
 
 仍只是隔离候选：只改 `art/concepts/env_fx_stream_20261014/`，不碰生产宿主，不导出主游戏。复现：`web_export_check.sh`。
