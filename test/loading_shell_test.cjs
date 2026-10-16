@@ -13,10 +13,34 @@ function setup(missing=[],config={focusCanvas:true},releaseFetch=null,href='http
  const captureLegacy=()=>{};
  vm.runInNewContext(code,{window,document,Engine,URL,AbortController,setTimeout,clearTimeout,performance:{now:()=>clock},console:{error(){},info(){}},setInterval(f){interval=f;return 1},clearInterval(){},__import(path){return new Promise((resolve,reject)=>imports.set(path,{resolve,reject}))}});
  const bridge={installSaveHost({runtimeReady,captureLegacy:capture}){assert.equal(capture,captureLegacy);runtime='pending';runtimeReady.then(()=>runtime='resolved',()=>runtime='rejected')}};
- return {nodes,window,document,get starts(){return starts},get constructed(){return constructed},get runtime(){return runtime},get restored(){return restored},assetFailure(){assetOptions.onError(Error('asset recovery failed'))},
+ return {nodes,window,document,get starts(){return starts},get constructed(){return constructed},get runtime(){return runtime},get restored(){return restored},assetFailure(){assetOptions.onError(Error('asset recovery failed'))},assetHit:event=>assetOptions.onCacheHit(event),assetRetry:event=>assetOptions.onRetry(event),
   async modules(){imports.get('./web/save/bridge.mjs').resolve(bridge);await flush();assert.equal(starts,0,'reader must load before engine starts');imports.get('./web/save/idbfs_source.mjs').resolve({captureIdbfsSource:captureLegacy});await flush();assert.equal(constructed,0,'download recovery must install before engine construction');imports.get('./web/boot/download_assets.mjs').resolve({installAssetRecovery(cfg,options){assetOptions=options;return ()=>restored++}});await flush()},
   async moduleFailure(){imports.get('./web/save/bridge.mjs').reject(Error('module fetch failed'));await flush()},
   progress:(a,b)=>onProgress(a,b),resolve:()=>resolve(),reject:()=>reject(Error('engine start failed')),frame:()=>listeners['youjia:first-frame']?.(),blocked:(detail='quarantined')=>listeners['youjia:save-blocked']?.({detail}),tick(t){clock=t;interval()}};
+}
+async function assetTraceCases(){
+ const cfg={mainPack:'game-aaaaaaa.pck',fileSizes:{'game-aaaaaaa.pck':1000,'engine-bbbbbbb.wasm':2000,'not-asset.json':100}};
+ const pck='https://example.test/youjia/game-aaaaaaa.pck',wasm='https://example.test/youjia/engine-bbbbbbb.wasm';
+ let t=setup([],cfg);await t.modules();t.tick(100);t.assetHit({url:wasm,arbitrary:'must not retain'});
+ t.tick(20100);t.assetRetry({url:pck,offset:456,retry:1,maxRetries:3});
+ t.tick(40100);t.assetRetry({url:wasm,offset:123,retry:1,maxRetries:4,source:'cache'});
+ const events=()=>JSON.parse(JSON.stringify(t.window.youjiaLoadTimings.assetEvents));
+ assert.deepEqual(events(),[
+  {at:100,asset:'engine-bbbbbbb.wasm',kind:'cache-hit',source:'cache'},
+  {at:20100,asset:'game-aaaaaaa.pck',kind:'retry',source:'network',offset:456,retry:1,maxRetries:3},
+  {at:40100,asset:'engine-bbbbbbb.wasm',kind:'retry',source:'cache',offset:123,retry:1,maxRetries:4}
+ ]);
+ assert.equal(t.window.youjiaLoadTimings.assetCacheHit,100);assert.equal(t.window.youjiaLoadTimings.downloadRetry,20100,'legacy globals remain first-event timings');
+ for(const url of [pck+'?token=secret','https://elsewhere.test/game-aaaaaaa.pck','not a valid URL','https://example.test/youjia/not-asset.json'])t.assetHit({url});
+ assert.equal(events().length,3,'unknown resources and URL query payloads are not retained');
+ const snapshot=JSON.stringify(events());t.resolve();await flush();t.frame();
+ t.assetHit({url:pck});t.assetRetry({url:pck,offset:999,retry:2,maxRetries:3});
+ assert.equal(JSON.stringify(events()),snapshot,'completed startup does not append late facts');assert.equal(t.starts,1);
+ t=setup([],cfg);await t.modules();
+ for(let i=0;i<100;i++){t.tick(i*100);t.assetRetry({url:pck,offset:i,retry:1,maxRetries:3})}
+ assert.equal(events().length,32);assert.equal(events()[0].offset,68);assert.equal(events()[31].offset,99,'repeated retries stay bounded');
+ t.assetFailure();await flush();const failed=JSON.stringify(events());t.assetRetry({url:pck,offset:999,retry:3,maxRetries:3});t.assetHit({url:wasm});
+ assert.equal(JSON.stringify(events()),failed,'failed startup does not append late facts');assert.equal(t.runtime,'rejected');
 }
 async function firstFrameWaitCases(){
  let t=setup();await t.modules();let reloads=0;t.window.location.reload=()=>reloads++;
@@ -55,6 +79,7 @@ async function firstFrameWaitCases(){
  t.nodes['loading-retry'].click();assert.equal(reloads,1,'only the existing manual retry reloads');
 }
 (async()=>{
+ await assetTraceCases();
  await firstFrameWaitCases();
  let timedOut=setup();timedOut.tick(60000);assert.match(timedOut.nodes['loading-detail'].textContent,/启动模块下载超时/);
  await timedOut.modules();assert.equal(timedOut.starts,0,'late modules cannot launch after startup timeout');assert.equal(timedOut.runtime,'rejected');
