@@ -27,8 +27,9 @@ const SOURCE = """
       const old = context;
       const token = resumeToken;
       try { Promise.resolve(old.resume()).then(() => {
-        if (context !== old || token !== resumeToken) return;
+        if (context !== old) return;
         if (pageHidden) { suspendForCache(old); return; }
+        if (token !== resumeToken) return;
         if (typeof resumeHook === 'function') {
           try { resumeHook(JSON.stringify({ state: old.state || 'unknown', token: token })); } catch (_) {}
         }
