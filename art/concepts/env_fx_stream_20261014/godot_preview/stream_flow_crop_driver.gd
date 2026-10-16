@@ -25,6 +25,7 @@ var _dump_path: String = ""
 var _dump_started: bool = false
 var _self_check: bool = false
 var _web_probe: bool = false
+var _probe_nonce: String = ""
 
 var base_sample_linear: bool = true
 
@@ -110,6 +111,14 @@ func _parse_user_args() -> void:
 		var query := str(JavaScriptBridge.eval("window.location.search", true))
 		if query.contains("probe=1"):
 			_web_probe = true
+		# Extract nonce if present for identity verification.
+		var nonce_idx := query.find("nonce=")
+		if nonce_idx != -1:
+			var start := nonce_idx + 6
+			var end := query.find("&", start)
+			if end == -1:
+				end = query.length()
+			_probe_nonce = query.substr(start, end - start)
 	var i := 0
 	while i < args.size():
 		var token := str(args[i])
@@ -334,7 +343,8 @@ func _run_web_probe() -> void:
 	var out := {"web": OS.has_feature("web"), "renderer": RenderingServer.get_video_adapter_name(),
 		"vendor": RenderingServer.get_video_adapter_vendor(), "api": RenderingServer.get_video_adapter_api_version(),
 		"window": DisplayServer.window_get_size(), "viewport": get_viewport().get_visible_rect().size,
-		"base_sample_linear": _material().get_shader_parameter("base_sample_linear")}
+		"base_sample_linear": _material().get_shader_parameter("base_sample_linear"),
+		"nonce": _probe_nonce}
 	var ok := DisplayServer.window_get_size() == Vector2i(1672, 941) and get_viewport().get_visible_rect().size == Vector2(1672, 941) and scale_factor == 1.0 and painting_offset == Vector2.ZERO
 	var mask := _water_mask()
 	var mat := _material()

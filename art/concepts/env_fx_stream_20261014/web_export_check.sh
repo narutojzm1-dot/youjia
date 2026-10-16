@@ -8,17 +8,38 @@ set -euo pipefail
 GODOT="${GODOT:-godot}"
 CHROME="${CHROME:-google-chrome}"
 OUT="${1:-/tmp/web749}"
-PORT="${PORT:-8749}"
 HERE="$(cd "$(dirname "$0")" && pwd)"
 PROJ="$HERE/godot_preview"
 rm -rf "$OUT" && mkdir -p "$OUT"
 "$GODOT" --headless --path "$PROJ" --import >/dev/null 2>&1 || true
 "$GODOT" --headless --path "$PROJ" --export-release "Web crop demo 749" "$OUT/index.html"
 ls -l "$OUT"/index.pck "$OUT"/index.wasm
-python3 -m http.server "$PORT" --bind 127.0.0.1 --directory "$OUT" >/dev/null 2>&1 &
+
+# Exclusive free port for this run; do not kill foreign listeners.
+PORT="$(python3 -c 'import socket; s=socket.socket(); s.bind(("127.0.0.1",0)); print(s.getsockname()[1]); s.close()')"
+NONCE="$(openssl rand -hex 8)"
+SERVER_LOG="$OUT/server.log"
+python3 -m http.server "$PORT" --bind 127.0.0.1 --directory "$OUT" >"$SERVER_LOG" 2>&1 &
 SERVER=$!
 trap 'kill $SERVER 2>/dev/null || true' EXIT
-sleep 1
+# Wait for ready or fail on bind error.
+for i in 1 2 3 4 5; do
+  if curl -s -o /dev/null -w "%{http_code}" "http://127.0.0.1:$PORT/index.html" | grep -q 200; then
+    break
+  fi
+  if ! kill -0 $SERVER 2>/dev/null; then
+    echo "http.server failed to start (see $SERVER_LOG)"
+    cat "$SERVER_LOG"
+    exit 1
+  fi
+  sleep 0.4
+done
+if ! curl -s -o /dev/null -w "%{http_code}" "http://127.0.0.1:$PORT/index.html" | grep -q 200; then
+  echo "server did not become ready on $PORT (see $SERVER_LOG)"
+  cat "$SERVER_LOG"
+  exit 1
+fi
+
 PROFILE="$(mktemp -d)"
 # headless=new 的 --window-size 含约 87 px 浏览器边框；1028 高才得到 1672×941 画布（probe 会核对，尺寸不对即 ok=false）。
 LOG="$OUT/chrome_probe.log"
@@ -26,8 +47,10 @@ LOG="$OUT/chrome_probe.log"
 timeout "${PROBE_TIMEOUT:-100}" "$CHROME" --headless=new --no-first-run --no-default-browser-check \
   --user-data-dir="$PROFILE" --window-size=1672,1028 --force-device-scale-factor=1 \
   ${CHROME_GL_FLAGS:---use-angle=swiftshader --enable-unsafe-swiftshader} \
-  --enable-logging=stderr --v=0 "http://127.0.0.1:$PORT/index.html?probe=1" >"$LOG" 2>&1 || true
+  --enable-logging=stderr --v=0 "http://127.0.0.1:$PORT/index.html?probe=1&nonce=$NONCE" >"$LOG" 2>&1 || true
 LINE="$(grep -o 'WEBPROBE {.*}' "$LOG" || true)"
 [ -n "$LINE" ] || { echo "no WEBPROBE line (see $LOG)"; exit 1; }
 echo "$LINE"
+# Verify identity: the probe must echo our nonce, proving it served this export.
+case "$LINE" in *"\"nonce\":\"$NONCE\""*) ;; *) echo "nonce mismatch or missing (expected $NONCE)"; exit 1 ;; esac
 case "$LINE" in *'"ok":true'*) exit 0 ;; *) exit 1 ;; esac
