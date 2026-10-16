@@ -274,7 +274,9 @@ func _pose_work() -> void:
 		player._gait.face = -1.0
 		# First course uses grounded crouch; raised courses use the authored
 		# reaching cels. Contact is toward the real work surface, no body shake.
-		walker.hold_action_frame(&"pickup" if stove_stage == 0 else &"feed",4 if int(work/0.8)%2 == 0 else 3)
+		# Reuse the complete authored reach/return cycle, rather than holding
+		# two near-identical idle cels for the entire construction interval.
+		walker.hold_action_frame(&"pickup" if stove_stage == 0 else &"feed",int(work/0.18)%9)
 		return
 	if action_id == "mill_wheat":
 		# Reuse the authored reaching sequence for the handle; the character and
@@ -303,6 +305,10 @@ func sync_presentation() -> void:
 	# The existing atomic completion is still the sole material debit.
 	var player = world.get_player()
 	material.visible = stage in ["walking","working"] and player.visible
+	if action_id == "build_stove" and stage == "working" and work >= float(recipe.seconds)*0.2:
+		# The stone has been set down. Do not leave a detached blue stone
+		# hovering between the worker's moving hand and the work surface.
+		material.visible = false
 	if action_id == "mill_wheat" and stage == "working" and work >= float(recipe.seconds) * 0.2:
 		material.visible = false
 	if not material.visible: return
