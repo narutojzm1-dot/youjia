@@ -3,7 +3,7 @@
 # 需要：Godot 4.7.2 编辑器，官方同版 web_nothreads_release.zip 已装到
 #   ~/.local/share/godot/export_templates/4.7.2.stable/（取自 Godot_v4.7.2-stable_export_templates.tpz）
 # 用法（仓库根）：GODOT=godot CHROME=google-chrome bash art/concepts/env_fx_stream_20261014/web_export_check.sh [OUT_DIR]
-# 结果在控制台一行 WEBPROBE {...}；ok=true 且（默认）scale_subpixel_ok=true 才算通过。
+# 结果在控制台一行 WEBPROBE {...}；由 webprobe_verdict.py 解析 JSON：顶层 ok=true、build_id 一致且（默认）顶层 scale_subpixel_ok=true 才算通过。
 # 默认含缩放/子像素小子集；WEBPROBE_SCALE=0 跳过。帧时只代表当前浏览器/渲染后端。
 set -euo pipefail
 GODOT="${GODOT:-godot}"
@@ -59,14 +59,11 @@ timeout "${PROBE_TIMEOUT:-180}" "$CHROME" --headless=new --no-first-run --no-def
   --user-data-dir="$PROFILE" --window-size=1672,1028 --force-device-scale-factor=1 \
   ${CHROME_GL_FLAGS:---use-angle=swiftshader --enable-unsafe-swiftshader} \
   --enable-logging=stderr --v=0 "http://127.0.0.1:$PORT/index.html?${PROBE_QUERY}" >"$LOG" 2>&1 || true
-LINE="$(grep -o 'WEBPROBE {.*}' "$LOG" || true)"
-[ -n "$LINE" ] || { echo "no WEBPROBE line (see $LOG)"; exit 1; }
-echo "$LINE"
-# 身份：探针回报的是本次 PCK 里打包的 build_id，必须等于本轮导出前写入的值；旧导出没有它或值不同。
-case "$LINE" in *"\"build_id\":\"$BUILD_ID\""*) ;; *) echo "build_id mismatch or missing (expected $BUILD_ID): page did not load this run's export"; exit 1 ;; esac
+# 只显示，不用于判定：判定交给 webprobe_verdict.py 按 JSON 顶层字段做（缩放子项里也有 "ok":true，子串匹配会误过）。
+grep -o 'WEBPROBE {.*}' "$LOG" || echo "no WEBPROBE line (see $LOG)"
 server_alive || { echo "probe server died during the browser run (see $SERVER_LOG)"; exit 1; }
-# ok=true 已含 scale 子集（除非 WEBPROBE_SCALE=0）；再显式核对 scale_subpixel_ok，避免旧探针误过。
-if [ "${WEBPROBE_SCALE:-1}" != "0" ]; then
-  case "$LINE" in *'"scale_subpixel_ok":true'*) ;; *) echo "scale_subpixel_ok missing or false (see $LOG)"; exit 1 ;; esac
-fi
-case "$LINE" in *'"ok":true'*) exit 0 ;; *) exit 1 ;; esac
+# 顶层 ok 必须是布尔 true；build_id 必须等于本轮导出前写入 PCK 的值；默认还要求顶层 scale_subpixel_ok=true 且两项缩放子项 ok。
+# 日志里必须恰好一条可解析的 WEBPROBE；缺失、格式错误、类型不对或多条都非零退出。
+VERDICT_ARGS=(--log "$LOG" --build-id "$BUILD_ID")
+if [ "${WEBPROBE_SCALE:-1}" = "0" ]; then VERDICT_ARGS+=(--no-scale); fi
+python3 "$HERE/webprobe_verdict.py" "${VERDICT_ARGS[@]}"
