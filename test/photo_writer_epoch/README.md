@@ -13,3 +13,9 @@ node test/photo_writer_epoch/run.cjs '测试证据输出绝对路径'
 测试先证明旧模块实际接受被旧包清洗掉照片的回写，再验证新模块升级库时记录逐字节不变、旧活连接关闭、旧重开 VersionError、新保存及真实 Chrome 进程关闭重开、prepared/committed intent、封存导入及原 /userfs、阻塞后的延迟升级撤销、缺 records 的损坏库和未来版本保护。测试中的裸库写入只用于建立明确协议夹具，不当作普通游戏链。`CURRENT_STORE_DIR` 可指定旧模块目录复现修前失败；运行失败返回非零。
 
 数据库名称、记录/envelope/payload格式保持。DB version2 是网页写入能力门槛；旧网页遇到拒绝不能继续写，不强刷已在玩的页面、不清档。保护从新 Host 成功打开该库开始生效；新客户端尚未到访前，未升级的旧库不具备此门槛。此修复不声称远程改变旧原生可执行文件的本地存档行为，也不声称所有未来新增业务格式永久兼容。
+
+## 发布夹具收尾修正
+
+PR828 完整CI38890823015通过后，merge6b8c06a的Publish38894023274在同一真实Chrome检查遇到`database blocked`，后续游戏检查/导出/发布均跳过，照片修复并未上线。保留完整失败日志，不以合入当上线。诊断rawRead此前等到getAll请求成功即close，但事务完成更晚，自己的close-pending连接可能阻塞随后升级。修正只在测试中先等tx.oncomplete，再关闭诊断连接；Web存储实现及全部拒绝/保留断言不改。
+
+针对该失败重复验证：原夹具10次中2次失败（不同收尾场景）；修正夹具20次、每次23检查全部通过。`quiescence-stress.json`保留逐次结论；`publish-first-failure.log.original.json`完整保留解码日志。修前旧写端与仅改版本号的突变体仍必须失败，不能用减少断言或重试吞掉故障。
