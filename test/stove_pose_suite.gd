@@ -42,6 +42,10 @@ func run() -> void:
 		world.tick(0.1,Vector2.ZERO)
 		check(walker.animation == expected_pose and walker.frame == 4,"reduced motion keeps a still work contact")
 		root.get_node("TuningStore").set_value("ui.reduced_motion",false)
+		for i in 12:
+			if world.pond_growth.work >= 2.9: break
+			world.tick(1.0/30,Vector2.ZERO)
+		check(world.pond_growth.stage == "working" and walker.frame == 0 and world.get_player().position == feet,"stand back up before durable completion")
 		observations.append({"stage":index,"feet":[feet.x,feet.y],"hand":[hand.x,hand.y],"contact_error":distance,"pose":String(expected_pose)})
 		finish_work()
 		check(await store.flush_pending(),"real atomic completion")

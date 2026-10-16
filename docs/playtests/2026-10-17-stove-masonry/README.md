@@ -1,6 +1,8 @@
+当前接续为[39候选返修与普通Web](final-39/README.md)，完整CI尚在途；下文中间8ee原件不换标。
+
 # 灶台三高度施工与新动作照片保护（CODEX-LEAD / #700）
 
-当前代码候选8eeaa34e01da7f3fd251bbcf6ac7912cd5077055，tree c94b97f8838203aeccb18371f6fddfea3dee2a7e；沿main d45e16fa完整祖先。PR836仍Draft，最终完整CI38975440690/job117223778294在途，尚未公开上线。下列均已实际执行，不将旧候选证据换标新头；发布后另附实际公开身份及原件。
+以下记录中间代码候选8eeaa34e01da7f3fd251bbcf6ac7912cd5077055，tree c94b97f8838203aeccb18371f6fddfea3dee2a7e；沿main d45e16fa完整祖先。PR836仍Draft，当时CI38975440690/job117223778294在途（后因39新头取消，非通过），尚未公开上线。下列均已实际执行，不将旧候选证据换标新头；发布后另附实际公开身份及原件。
 
 ## 玩家变化和边界
 
@@ -8,7 +10,7 @@
 
 ## 实际验证
 
-- 原生9套适用回归，原始逐套日志和summary保留；GPU32、灶台95、碰撞676、照片29等各自按实际日志计数。GPU动作图在首个41a0源码内容上捕获；后继8ee的动作GD/PNG字节相同，后继完整软件链另测。
+- 原生9套适用回归，原始逐套日志和summary保留；GPU32、灶台95、碰撞676、成长携物照片39、headless姿态29等各自按实际日志计数。GPU动作图在首个41a0源码内容上捕获；后继8ee的动作GD/PNG字节相同，后继完整软件链另测。
 - 新动作照片实际capture→JSON→sanitize保留三个atlas区域。真实已公开c8d994f完整PCK的SaveDataCodec.project负向取证：新图集不存在，1照片变0；不是宣称已公开旧档发生此候选损失。
 - 网页写端门槛3；实际70de(v1)/c8(v2)冻结模块的Chrome各8场景共46检查通过，所有raw records、envelope、payload、prepared/committed、legacy seal及/userfs边界、blocked迟到、损坏/未来库和真实进程重开。以旧v2作为current的负向确实失败。仅网页能力隔离，不远程改变旧原生程序，也不承诺未来所有资源自动兼容。
 - 同包8ee普通Web实际91,679,648B/SHA256 be473c3ac943d3d07530ec1da406111d41f5dea1741c8cd2e3831502022f1ea1，PCK内身份/公告/3×9图集/manifest实读通过。受控合法起始档及新动作照片由真实旧v2模块初始化，随后真实游戏loader自然打开v3；完整raw records相等，旧live写拒绝InvalidStateError、旧重开VersionError。之后无直接游戏调用或改档：普通页面输入/自然自主三阶段148.604秒，3石/3AP/3XP，旧池岸与凭据保持；真实关Chrome进程重开、新动作照片与施工/库存保持。390×844和844×390仅桌面模拟视口，非手机硬件。
