@@ -62,13 +62,40 @@ shader / 预览驱动与离线生成脚本用的不是同一套 phase。宿主�
 | 片元数 | 整幅四边形 1,573,352；裁切四边形 55,266（3.5%） |
 | 低动效静帧（strength 0.20，phase 0）对原画 | 保护区最大差 0；裁切矩形外最大差 0；水面平均差 3.01；变化 5964 px |
 
-结论（建议，待 Leader 实核）：**不要把 5 张整幅控制图原样接入**。溪床只占 0.49%，整幅 RGBA8 会白占约 30 MiB 显存。接入时应把材质挂在 183×302 的溪床裁切节点上，控制图也按同一矩形裁切（底图仍采样原 `near_path_02`，用偏移 uniform 对齐），显存约降到 1 MiB、片元降到 3.5%。裁切版贴图与偏移 uniform 本轮**未制作**，等 Leader 确认宿主挂点后随最小接线补丁一起交。
+结论（建议，待 Leader 实核）：**不要把 5 张整幅控制图原样接入**。溪床只占 0.49%，整幅 RGBA8 会白占约 30 MiB 显存。接入时应把材质挂在 183×302 的溪床裁切节点上，控制图也按同一矩形裁切（底图仍采样原 `near_path_02`，用偏移 uniform 对齐），显存约降到 1 MiB、片元降到 3.5%。裁切版贴图、偏移 uniform 与隔离 demo 已补，见下节「裁切子层隔离 demo」。
 
 ### 仍未覆盖
 
 - 隔离 GPU（Godot 4.7.2 / OpenGL 3.3 / RTX4070，CODEX-LEAD 核对 `2e03211f`）已验证半圈 4155 像素变化、水面外与保护区差 0、整圈首尾相同。
 - 尚未在完整天气/昼夜、照片回放、Web/手机、DPR2/3 上测帧时或实际 PCK 增量；上表是离线资源估算，不是运行成本证据。390×844 窗口导出仅含 390×219 内容，不构成完整竖屏证据。
 - 低动效静帧上表只证明离线合成边界；宿主侧暂停冻结与低动效切换仍需实机证据。
+
+## 裁切子层隔离 demo（回应 CODEX-LEAD review @ `bab9c32d`）
+
+仍只是隔离候选：只在 `godot_preview/` 里，不改 `scripts/exploration/near_path_scroll.gd`、`near_path_motion.gd`、`near_path_mist.gd` 或任何生产资源。生产近郊 Owner 仍是 ASSISTANT，正式接线按文件边界另行协调。
+
+| 文件 | 作用 |
+|---|---|
+| `make_crop_textures.py` | 按 `Rect2i(191, 543, 183, 302)` 从整幅控制图裁出 5 张 183×302 控制图到 `godot_preview/textures/crop/`；先校验水面/次级层全部在矩形内、四周至少 16 px（大于最大位移 12 px）。`--check` 只核对已提交文件与源子矩形逐像素一致 |
+| `godot_preview/stream_flow_crop.gdshader` | 裁切版材质。水面算法与 `stream_flow.gdshader` 相同；控制图按裁切 UV 采样，底图仍采样整幅原画，用 `crop_origin` / `crop_size` uniform 对齐。非水面像素与 `strength == 0` 时输出透明，下面的原画原样露出 |
+| `godot_preview/stream_flow_crop_demo.tscn` | 仿宿主结构：`Painting`（整幅原画 Sprite2D）下挂 `StreamCrop`（183×302 子层，位置 191,543） |
+| `godot_preview/stream_flow_crop_driver.gd` | 8 秒一圈：`phase = fposmod(phase + max(delta, 0) * TAU / 8, TAU)`；不复用现动效 0.42 rad/s，不用内置 TIME。暂停冻结 phase；减少动态撤掉子层（只剩原画静帧），不把 strength 0.20 当默认 |
+| `verify_crop_render.py` | 用 Godot 4.7 导出整幅版与裁切版同 phase 帧并逐像素对照 |
+
+本轮实测（Godot 4.7.2 / OpenGL 3.3 兼容渲染 / Mesa llvmpipe 软件渲染，Xvfb，1672×941；**不是 RTX 实机，也不是 Web/手机**）：
+
+| 检查 | 结果 |
+|---|---|
+| 裁切版 vs 整幅版，phase 0、π/2、π、3π/2、TAU | 最大通道差 ≤1，每帧 0–2 px（GPU 采样舍入） |
+| 裁切版 vs 原画：矩形外 / 保护区 | 最大差 0 / 0 |
+| 每帧水面变化 | 7070–7159 px；半圈对首帧变化 7081 px |
+| 循环 phase 0 vs TAU | 最大差 0 |
+| `strength 0` 与「减少动态」对原画 | 全画布最大差 0 |
+| demo 自检（`--self-check`，无头） | 正常步长 TAU/8×delta；负 delta 不倒退；暂停/减少动态冻结；子层 183×302 位于 191,543；ok=true |
+
+显存：子层 5 张控制图约 1.05 MiB（整幅版约 30 MiB），底图复用宿主已加载的原画。
+
+仍未覆盖：宿主内真实挂接、天气/昼夜、照片定格、村庄切换、退出语义、Web/手机/DPR、实际帧时与 PCK 增量。宿主若对 `painting` 做缩放或线性过滤，子层水面像素与原画的采样方式不同（子层按纹素中心取样），需在宿主实核；保护区与 0 强度因整层透明不受影响。
 
 ## 下一步（等 Leader 指示）
 

@@ -52,4 +52,22 @@ python3 art/concepts/env_fx_stream_20261014/generate_stream_flow_anim.py --frame
 godot --path art/concepts/env_fx_stream_20261014/godot_preview --headless -- --self-check
 ```
 
+## 裁切子层 demo（183×302，仍只是候选）
+
+```
+godot --path art/concepts/env_fx_stream_20261014/godot_preview res://stream_flow_crop_demo.tscn --resolution 1280x720
+```
+
+`P`/空格暂停，`R` 切换减少动态（撤掉子层，只剩原画）。无头自检：
+
+```
+godot --path art/concepts/env_fx_stream_20261014/godot_preview --headless res://stream_flow_crop_demo.tscn -- --self-check
+```
+
+整幅版与裁切版逐像素对照（需要显示器或 xvfb-run）：
+
+```
+GODOT=godot python3 art/concepts/env_fx_stream_20261014/verify_crop_render.py --out /tmp/crop749
+```
+
 仍只是隔离候选。请 ART-DIRECTOR / CODEX-LEAD 审阅连续播放下的流向是否单方向、岸线与桥石是否稳住。

@@ -1,0 +1,50 @@
+[gd_scene load_steps=10 format=3]
+
+[ext_resource type="Shader" path="res://stream_flow_crop.gdshader" id="1_shader"]
+[ext_resource type="Script" path="res://stream_flow_crop_driver.gd" id="2_driver"]
+[ext_resource type="Texture2D" path="res://textures/near_path_base.png" id="3_base"]
+[ext_resource type="Texture2D" path="res://textures/crop/flow_map.png" id="4_flow"]
+[ext_resource type="Texture2D" path="res://textures/crop/coord_sn.png" id="5_coord"]
+[ext_resource type="Texture2D" path="res://textures/ripple_tile.png" id="6_ripple"]
+[ext_resource type="Texture2D" path="res://textures/crop/water_detail.png" id="7_detail"]
+[ext_resource type="Texture2D" path="res://textures/crop/secondary_map.png" id="8_secondary"]
+[ext_resource type="Texture2D" path="res://textures/crop/secondary_weight.png" id="9_secw"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_crop"]
+shader = ExtResource("1_shader")
+shader_parameter/base_tex = ExtResource("3_base")
+shader_parameter/flow_map = ExtResource("4_flow")
+shader_parameter/coord_sn = ExtResource("5_coord")
+shader_parameter/ripple_tile = ExtResource("6_ripple")
+shader_parameter/water_detail = ExtResource("7_detail")
+shader_parameter/phase = 0.0
+shader_parameter/strength = 1.0
+shader_parameter/base_size = Vector2(1672, 941)
+shader_parameter/crop_origin = Vector2(191, 543)
+shader_parameter/crop_size = Vector2(183, 302)
+shader_parameter/advect_travel_px = 12.0
+shader_parameter/ripple_amp = 118.0
+shader_parameter/advect_gain = 0.5
+shader_parameter/advect_clamp = 8.0
+shader_parameter/detail_scale = 48.0
+shader_parameter/secondary_map = ExtResource("8_secondary")
+shader_parameter/secondary_weight = ExtResource("9_secw")
+shader_parameter/cross_amp = 112.0
+shader_parameter/side_amp = 148.0
+shader_parameter/eddy_amp = 132.0
+shader_parameter/secondary_clamp = 84.0
+
+[node name="StreamCropDemo" type="Node2D"]
+script = ExtResource("2_driver")
+
+[node name="Painting" type="Sprite2D" parent="."]
+centered = false
+texture = ExtResource("3_base")
+texture_filter = 1
+
+[node name="StreamCrop" type="Sprite2D" parent="Painting"]
+position = Vector2(191, 543)
+centered = false
+texture = ExtResource("4_flow")
+texture_filter = 1
+material = SubResource("ShaderMaterial_crop")
