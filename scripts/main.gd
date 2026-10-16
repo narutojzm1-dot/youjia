@@ -423,9 +423,17 @@ func _report_web_first_frame() -> void:
 	JavaScriptBridge.eval("window.dispatchEvent(new Event('youjia:first-frame'));", true)
 
 
+func _sync_world_sound() -> void:
+	if _world == null or _screen not in ["game", "exploring"]: return
+	var night := preload("res://scripts/game/world_daylight.gd").phase(_world.tod_fraction()) == "night"
+	var sleeping: bool = _screen == "game" and _world.house != null and _world.house.stage == "sleep"
+	AudioDirector.set_world_sound(night, _world.weather == "rain", sleeping)
+
+
 func _process(delta: float) -> void:
 	_bark_clock += delta
 	_tick_resident_barks(delta)
+	_sync_world_sound()
 	if _notice_time > 0.0 and _can_show_notice():
 		_notice_time = maxf(0.0, _notice_time - delta)
 	_sync_notice_visibility()
@@ -1567,6 +1575,8 @@ func _start_holiday(save_progress: bool = true) -> void:
 	# a new/legacy save closes before the first periodic checkpoint.
 	if SaveStore.get_world_weather().is_empty(): _world._save_progress()
 	_refresh_hud()
+	AudioDirector.set_music_scene("yard")
+	_sync_world_sound()
 	AudioDirector.set_yard_active(true)
 	if _world.holiday_day == 1 and SaveStore.get_album().is_empty():
 		_show_delayed_soft_hint()
@@ -1610,6 +1620,7 @@ func _on_exploration_requested() -> void:
 ## 画卷有自己的相机与界面；小院隐藏，公共时钟继续推进。
 func _on_exploration_entered() -> void:
 	_screen = "exploring"
+	AudioDirector.set_music_scene("near_path")
 	_cancel_photo_arrivals()
 	_on_cinematic_view_changed("")
 	_world.cancel_scene_feedback()
@@ -1643,6 +1654,7 @@ func _on_exploration_returned(notice_key: String) -> void:
 	if _screen != "exploring" or _world == null:
 		return
 	_screen = "game"
+	AudioDirector.set_music_scene("yard")
 	_world.visible = true
 	_world.input_enabled = true
 	_world.return_from_path(_exploration.last_companion)

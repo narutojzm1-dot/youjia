@@ -42,6 +42,8 @@ run_godot suite test/ui_interaction_audio_suite.gd
 run_godot suite test/ui_interaction_audio_input_suite.gd
 run_godot suite test/ambience_output_ceiling_suite.gd
 run_godot suite test/meal_audio_suite.gd
+
+run_godot suite test/yard_audio_suite.gd
 run_godot suite test/modal_touch_input_suite.gd
 run_godot suite test/hud_pointer_input_suite.gd
 run_godot suite test/yard_inventory_suite.gd
@@ -190,3 +192,6 @@ run_godot suite test/growth_carried_photo_suite.gd
 run_godot suite test/yard_mill_view_suite.gd
 run_godot suite test/release_notes_suite.gd
 run_godot suite test/release_notes_pointer_focus_suite.gd
+
+
+run_godot suite test/regional_audio_suite.gd

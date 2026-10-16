@@ -2,6 +2,8 @@ extends Node
 
 const BrowserBgmPlayer = preload("res://scripts/manus/browser_bgm_player.gd")
 
+const Soundscape := preload("res://scripts/audio/regional_soundscape.gd")
+
 const MAX_SFX_VOICES := 8
 const MAX_UI_VOICES := 2
 # PLAYTEST-20261007: a full ambience slider is 30% of its previous output.
@@ -11,6 +13,10 @@ const DEFAULT_AMBIENCE_GAIN := 0.5
 # Optional resource paths. Empty means intentionally silent; add project audio
 # here or call register_cue() after importing an AudioStream resource.
 const CUES := {
+	"night.music": {"path":"res://assets/holiday/audio/night_music.ogg", "kind":"music"},
+	"night.ambience": {"path":"res://assets/holiday/audio/night_air.ogg", "kind":"ambience"},
+	"rain.ambience": {"path":"res://assets/holiday/audio/rain_air.ogg", "kind":"ambience"},
+	"sleep.ambience": {"path":"res://assets/holiday/audio/sleep_breath.ogg", "kind":"ambience"},
 	"music.title": {"path": "", "kind": "music"},
 	"music.gameplay": {"path": "", "kind": "music"},
 	"ui.confirm": {"path": "", "bus": "UI", "web_renderer": "browser"},
@@ -24,9 +30,15 @@ const CUES := {
 	"game.pause": {"path": "", "bus": "UI"},
 	"game.victory": {"path": "", "bus": "SFX"},
 	"game.defeat": {"path": "", "bus": "SFX", "kind": "sfx"},
-	"yard.ambience": {"path": "res://assets/holiday/audio/bed_yard_env.ogg", "kind": "ambience"},
+	"yard.ambience": {"path": "res://assets/holiday/audio/bed_yard_gust.ogg", "kind": "ambience"},
 	"yard.music": {"path": "res://assets/holiday/audio/bed_yard_music.ogg", "kind": "music"},
+	"near_path.music": {"path": "res://assets/holiday/audio/bed_near_path_music.ogg", "kind": "music"},
 }
+
+var _soundscape: Node
+var _night := false
+var _rain := false
+var _sleeping := false
 
 var _streams: Dictionary = {}
 var _music_players: Array[BrowserBgmPlayer] = []
@@ -36,6 +48,7 @@ var _ui_players: Array[AudioStreamPlayer] = []
 var _browser_cue_players: Dictionary = {}
 var _music_index := 0
 var _music_cue := ""
+var _music_scene := "yard"
 var _unlocked := false
 ## cue_id -> stop_cue invocation count (suite ownership proof).
 var _stop_cue_counts: Dictionary = {}
@@ -86,16 +99,39 @@ func _ready() -> void:
 		_sfx_players.append(_make_player("Sfx%d" % index, "SFX"))
 	for index: int in MAX_UI_VOICES:
 		_ui_players.append(_make_player("Ui%d" % index, "UI"))
+	_soundscape = Soundscape.new()
+	add_child(_soundscape)
 	_load_streams()
 	TuningStore.value_changed.connect(_on_tuning_changed)
 	_apply_bus_settings()
 
 
-func _process(_delta: float) -> void:
-	# Direct bus mute/solo changes also discard short voices instead of retaining
-	# an inaudible tail that could return when the bus opens again.
+func set_world_sound(night: bool, rain: bool, sleeping: bool) -> void:
+	if _night == night and _rain == rain and _sleeping == sleeping: return
+	_night = night
+	_rain = rain
+	_sleeping = sleeping
+	_reconcile()
+
+
+func _desired_music() -> String:
+	return "night.music" if _night or _sleeping else _music_scene + ".music"
+
+
+func _sync_soundscape() -> void:
+	if _soundscape == null: return
+	var allowed := _yard_active and _ambience_enabled and (_unlocked or _headless) and not _awaiting_gesture
+	_soundscape.configure(_streams,_night,_rain,_sleeping,allowed,not _application_active,_paused,_headless)
+
+
+func _process(delta: float) -> void:
+	# Preserve the released UI/meal short-voice mute cleanup.
 	if not _browser_cue_players.is_empty():
 		_clear_silent_browser_cues()
+	if _soundscape == null: return
+	_soundscape.tick(delta)
+	if _ambience_player != null:
+		_ambience_player.volume_linear = _soundscape.gains["yard.ambience"]
 
 
 func _exit_tree() -> void:
@@ -106,6 +142,10 @@ func release_streams() -> void:
 	_epoch += 1
 	_resume_token += 1
 	_yard_active = false
+	_music_scene = "yard"
+	_night = false
+	_rain = false
+	_sleeping = false
 	stop_music(0.0)
 	_stop_ambience_immediate()
 	for player: AudioStreamPlayer in _sfx_players + _ui_players:
@@ -145,13 +185,15 @@ func unregister_cue(cue_id: String) -> void:
 		stop_music(0.0)
 	var old_stream: AudioStream = _streams.get(cue_id)
 	if old_stream != null:
+		if _soundscape != null: _soundscape.forget(old_stream)
 		for players in [_music_players, _sfx_players, _ui_players]:
 			for player in players:
 				if player.stream == old_stream:
 					player.stop()
 					player.stream = null
 		if _ambience_player != null and _ambience_player.stream == old_stream:
-			_stop_ambience_immediate()
+			_ambience_player.stop()
+			_ambience_player.stream = null
 		BrowserBgmPlayer.release_cached_stream(old_stream)
 	_streams.erase(cue_id)
 
@@ -188,9 +230,20 @@ func set_yard_active(active: bool) -> void:
 		_awaiting_gesture = false
 		stop_music(0.0)
 		_stop_ambience_immediate()
+		_sync_soundscape()
 		_release_idle_yard_caches()
 		return
 	_reconcile()
+
+
+## Scene is an independent fact: changing it while muted/backgrounded must
+## choose the correct track when transport is allowed to resume.
+func set_music_scene(scene_id: String) -> bool:
+	if scene_id != "yard" and scene_id != "near_path":
+		return false
+	_music_scene = scene_id
+	_reconcile()
+	return true
 
 
 func set_application_active(active: bool) -> void:
@@ -473,6 +526,7 @@ func set_game_paused(paused: bool) -> void:
 	if _paused == paused:
 		return
 	_paused = paused
+	_sync_soundscape()
 	_apply_bus_settings()
 	if paused:
 		# Opening pause already submitted its UI cue; do not cut it immediately.
@@ -487,7 +541,7 @@ func get_cue_ids() -> Array:
 func get_voice_capacity() -> Dictionary:
 	return {
 		"music": _music_players.size(),
-		"ambience": 1 if _ambience_player != null else 0,
+		"ambience": 4 if _ambience_player != null else 0,
 		"sfx": _sfx_players.size(),
 		"ui": _ui_players.size(),
 	}
@@ -590,7 +644,7 @@ func _retire_faded_music(player: BrowserBgmPlayer, epoch: int, generation: int) 
 
 
 func _release_idle_yard_caches() -> void:
-	for cue_id: String in ["yard.music", "yard.ambience"]:
+	for cue_id: String in CUES:
 		var stream: AudioStream = _streams.get(cue_id)
 		if stream != null:
 			BrowserBgmPlayer.release_cached_stream(stream)
@@ -642,7 +696,7 @@ func _backend_starts_now(state: String) -> bool:
 
 
 func _music_continues() -> bool:
-	return _yard_active and _application_active and _music_enabled and _music_cue == "yard.music" and (_unlocked or _headless) and not _awaiting_gesture
+	return _yard_active and _application_active and _music_enabled and _music_cue == _desired_music() and (_unlocked or _headless) and not _awaiting_gesture
 
 
 func _ambience_continues() -> bool:
@@ -650,6 +704,7 @@ func _ambience_continues() -> bool:
 
 
 func _reconcile() -> void:
+	_sync_soundscape()
 	if not _yard_active:
 		return
 	if not _music_enabled:
@@ -666,7 +721,7 @@ func _reconcile() -> void:
 	if _ambience_enabled:
 		_start_ambience()
 	if _music_enabled:
-		play_music("yard.music")
+		play_music(_desired_music(), 2.5)
 
 
 func _apply_transport_pause(paused: bool) -> void:
@@ -679,7 +734,9 @@ func _apply_transport_pause(paused: bool) -> void:
 func _start_ambience() -> void:
 	var stream: AudioStream = _streams.get("yard.ambience")
 	if stream == null or _ambience_player == null:
-		_stop_ambience_immediate()
+		if _ambience_player != null:
+			_ambience_player.stop()
+			_ambience_player.stream = null
 		return
 	if _ambience_player.stream == stream and (_ambience_player.playing or _headless):
 		return
@@ -694,6 +751,7 @@ func _start_ambience() -> void:
 
 
 func _stop_ambience_immediate() -> void:
+	if _soundscape != null: _soundscape.stop()
 	if _ambience_player == null:
 		return
 	_ambience_player.stream_paused = false
