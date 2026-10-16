@@ -1,0 +1,101 @@
+[
+  {
+    "name": "verification.json",
+    "bytes": 25225,
+    "sha256": "83a015a478db142918b62581a8fcfbbb8b9f26f1f5fd02977a895bbf7ed21cbc",
+    "gzip": {
+      "path": "docs/playtests/2026-10-16-daily-release/verification.json.gz",
+      "bytes": 4124,
+      "sha256": "69b0e5986e8ab18e843a6c631af559b065d0894d204d1f84e7de2213d3331b5b",
+      "git_sha": "89e86d41fe41bf8658766a69443a29bf3471c9a7"
+    }
+  },
+  {
+    "name": "embedded-pack.json",
+    "bytes": 997,
+    "sha256": "54b8b7efd1e1c7c5d61a8133ef9e5648ede6d7811d388b642a28dab9503b2c6d",
+    "gzip": {
+      "path": "docs/playtests/2026-10-16-daily-release/embedded-pack.json.gz",
+      "bytes": 620,
+      "sha256": "295d9ffda9bec21d34323602c3e3fcd07b4483017f4f43ebd6322a9b54df7f0c",
+      "git_sha": "aa45c333e84527e2e8538e6cf08763a6fd871d75"
+    }
+  },
+  {
+    "name": "public-old-upgrade.json",
+    "bytes": 5068,
+    "sha256": "93bcdca30e3bf086140e09b56a414899af279024e67ec0cff7b6e3c470aa0073",
+    "gzip": {
+      "path": "docs/playtests/2026-10-16-daily-release/public-old-upgrade.json.gz",
+      "bytes": 1508,
+      "sha256": "2743b8399b1f32ba642007d0043b95d67a0fa2cfbbeb1c96c73b5d6dae3d488d",
+      "git_sha": "8f4fc752765a326d104dc9b598ed8751be59d6c4"
+    }
+  },
+  {
+    "name": "first-public-startup-timeout.original.json",
+    "bytes": 1154,
+    "sha256": "74c6aa763d1f2d4ca51d61f822687dc87cffb32a1874d4a27f9c1594a1f4a50b",
+    "gzip": {
+      "path": "docs/playtests/2026-10-16-daily-release/first-public-startup-timeout.original.json.gz",
+      "bytes": 696,
+      "sha256": "cc38e1a3e6c1a2018dc3f9d454d0ff4ac7a39028d201f5fbbd0860edf1e9b006",
+      "git_sha": "03fd90be6dfd16583ca15169ec1483c0d0cd5adf"
+    }
+  },
+  {
+    "name": "publish-full.log",
+    "bytes": 562540,
+    "sha256": "241dc9b82a0447f111b19eedb1aff49845310162132277e6d843bd09f4feefa6",
+    "gzip": {
+      "path": "docs/playtests/2026-10-16-daily-release/publish-full.log.gz",
+      "bytes": 85368,
+      "sha256": "0b53780d76cadbd6830cf8c9a92721722cbb850aa1dbd0db1cd773a6f2a54498",
+      "git_sha": "ebb1a843260d591383d11db7e0b634b188d2e2ea"
+    }
+  },
+  {
+    "name": "publish-job.json",
+    "bytes": 5290,
+    "sha256": "d924223e0d65680af4925e44492a468bac253eef91002819b576b07e4adeee6c",
+    "gzip": {
+      "path": "docs/playtests/2026-10-16-daily-release/publish-job.json.gz",
+      "bytes": 959,
+      "sha256": "c54abd4b3f737d5bb89e445f696b7387862d7f1c106930fac09078c7e479339d",
+      "git_sha": "08fa9159dd6d8e657ef7d2d9a6e2fd8ab2cc54f2"
+    }
+  },
+  {
+    "name": "pages-run.json",
+    "bytes": 14393,
+    "sha256": "d8e181fa38b63dc7c756d1c7fdba621e25d00daf9052d822797c4c7fbecad3fa",
+    "gzip": {
+      "path": "docs/playtests/2026-10-16-daily-release/pages-run.json.gz",
+      "bytes": 1921,
+      "sha256": "4d2947ecba9db770fc9b5f242096857f82336cc9b978c47e6884ca390aaf1d65",
+      "git_sha": "1812080102b07bfee5875d50eae93a32123945d0"
+    }
+  },
+  {
+    "name": "pages-ref.json",
+    "bytes": 402,
+    "sha256": "ce7dd200c341335de02f06294dd4639bc7247858d0b2b62582a5fc5bf2e68c4e",
+    "gzip": {
+      "path": "docs/playtests/2026-10-16-daily-release/pages-ref.json.gz",
+      "bytes": 243,
+      "sha256": "4b07ee66a70c90a98d6943c276d8787dc637584ab371025dab00d69f6c6baa92",
+      "git_sha": "28849b35bf1c5a5dad164ec24ccce43a3eff1165"
+    }
+  },
+  {
+    "name": "sequential-old-save-check.log",
+    "bytes": 311,
+    "sha256": "42c75b7a0f0f0432cc26e51579cce4462338b2e9fc326e6a20b49c1c7905aa25",
+    "gzip": {
+      "path": "docs/playtests/2026-10-16-daily-release/sequential-old-save-check.log.gz",
+      "bytes": 225,
+      "sha256": "413f8d7dedd089146ffce04d928af7c62b9580829ed16538703a9cd6e95be2cd",
+      "git_sha": "857c5a235d85eca0d622aadd3dde46bc30226540"
+    }
+  }
+]
