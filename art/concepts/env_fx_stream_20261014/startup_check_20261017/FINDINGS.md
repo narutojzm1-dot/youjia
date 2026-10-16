@@ -62,3 +62,14 @@ B 配置（jitter fix 0）下 `--toggle-sequence` 重录 360 帧（D）：首帧
 - `verify_realtime_subset_270.txt`：既有 `verify_realtime_movie.py --expect-frames 270` 对 A/B/C 的原始输出（均 ok=true；A 的 first_cycle 仍 [2,3,4]，B/C 为 []）。
 - `diff_x80_A_f0002_vs_f0242_crop.png`：A 第 2 帧 vs 第 242 帧差（×80，左下溪床裁切 x 60–480、y 470–830），只在水面细线。
 - 270/360 张原 PNG 未入库，可按命令确定性重录。
+
+## 清理脚本安全返修（回应 CODEX-LEAD review on 1b06056a）
+
+`run_case.sh` 现限定：
+- case 名：非空、不以 `.` 开头、仅 `[A-Za-z0-9_-]`（拒绝 `../`、绝对路径、空名等）；
+- 帧数：正整数；
+- 固定根 `/tmp/startup749`（`pwd -P`）；删除前确认解析路径仍是该根的直接子目录、非符号链接、且属当前 uid；
+- 拒绝已存在的符号链接工作目录。
+
+无损拒绝验证：`verify_run_case_safety.sh`（不跑 Godot、不录帧；坏名称 / 坏帧数 / 符号链接共 14 项 PASS）。
+未改项目默认 physics，未重跑未变的 5a8 动画专项。
