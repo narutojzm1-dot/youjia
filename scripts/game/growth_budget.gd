@@ -76,7 +76,14 @@ static func complete_stove(snapshot: Dictionary, expected: Dictionary, stage: in
 	var cost: Variant = Contract.as_int(config.get("ap"),1,6)
 	if cost == null: return {"error":"AP_INVALID"}
 	if current.available < cost: return {"error":"AP_EMPTY"}
-	return Stove.complete(snapshot,stage,current.day,current.period,proposal,config)
+	var changed := Stove.complete(snapshot,stage,current.day,current.period,proposal,config)
+	if changed.has("error"): return changed
+	# Advance AP scope in this SAME atomic candidate, even before any milling.
+	# Older clients reject schema 2 rather than re-spend unseen stove costs.
+	var production: Dictionary = current.source.production.duplicate(true)
+	production.schema = 2
+	changed.candidate[Production.FIELD] = production
+	return changed
 
 ## Validate one shared budget, then return ALL milling effects in one snapshot.
 ## Production IDs/revisions are independent of the legacy pond section pairing.
