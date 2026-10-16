@@ -1,0 +1,85 @@
+{
+  "zip_bytes": 13981053,
+  "zip_sha256": "843391ea384394a58b4f8c101560109a1a04333dc6146204022ab6c5bcb7b355",
+  "parts": [
+    {
+      "path": "originals.zip.part01.bin",
+      "bytes": 1411000,
+      "sha256": "45236af60f86e977306319c0efb04bcecb47d0bc6c164e3b51231e74a1fe0601"
+    },
+    {
+      "path": "originals.zip.part02.bin",
+      "bytes": 1411000,
+      "sha256": "625c833788a77f0707e032def8caf1bd7c59f3457e9b957db3caadb3ece992b5"
+    },
+    {
+      "path": "originals.zip.part03.bin",
+      "bytes": 1411000,
+      "sha256": "18a6385f2a508644804425a54f29d9b774fa2dcf86df585f55f5df3c0e8e11c5"
+    },
+    {
+      "path": "originals.zip.part04.bin",
+      "bytes": 1411000,
+      "sha256": "0285e94d8813b2be1578cb3e652ed03e5778ae2fc2eb891496c36e18a2db62d6"
+    },
+    {
+      "path": "originals.zip.part05.bin",
+      "bytes": 1411000,
+      "sha256": "f374745017c9d652eba70c6b3a4c39bcda08a17245f6799a768ee9f9a8e4d41a"
+    },
+    {
+      "path": "originals.zip.part06.bin",
+      "bytes": 1411000,
+      "sha256": "cf6a08ae2009b81196fd203916b83f5a197d6303cdfc6ec4fe865f0e300fd38a"
+    },
+    {
+      "path": "originals.zip.part07.bin",
+      "bytes": 1411000,
+      "sha256": "a7eb662bd1d700ccde44bf824d9ec1c378e2219ec0e9f77f55012d8a6d377a74"
+    },
+    {
+      "path": "originals.zip.part08.bin",
+      "bytes": 1411000,
+      "sha256": "c357089d8e29988f8869b0463c12efe6f7ede13d224335e79f2b1222118040d2"
+    },
+    {
+      "path": "originals.zip.part09.bin",
+      "bytes": 1411000,
+      "sha256": "892addb397458663f8472f18c01286027267c9c81aeb65c048104d29eb8a0e14"
+    },
+    {
+      "path": "originals.zip.part10.bin",
+      "bytes": 1282053,
+      "sha256": "a2cefabf184433294353c811aac4ab22572f09c69c7227642eb61ba4c8d02237"
+    }
+  ],
+  "zip_entries": [
+    {
+      "path": "restore-archives.py",
+      "bytes": 1587,
+      "sha256": "341d2c6e7c44ad85f3addfd8bcd41e414bfb93e8d12f43b4751656a7d30d6f97"
+    },
+    {
+      "path": "crop804-gpu-archive.json",
+      "bytes": 6134,
+      "sha256": "adeeb511eca4e3a84b374416416e7b39841299451c9b4826f435e400eb4999ff"
+    },
+    {
+      "path": "crop804-gpu.tar.xz",
+      "bytes": 11932576,
+      "sha256": "1cb052a78528b4a54e840ff349b10ee19a181a8bccab49beba328256dfaad4c1"
+    },
+    {
+      "path": "webgl-controls-archive.json",
+      "bytes": 6724,
+      "sha256": "f6ce9994a775464ad126700923c76b3e2b3f93fa31902055740c7bba5734d857"
+    },
+    {
+      "path": "webgl-controls.tar.xz",
+      "bytes": 2033412,
+      "sha256": "0701ecc401d079d27bd3ae46fdbe022393e2ddc11e4d106fbae0a5be8f391887"
+    }
+  ],
+  "originals": 54,
+  "source_pr": 819
+}
