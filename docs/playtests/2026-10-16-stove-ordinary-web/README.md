@@ -1,3 +1,5 @@
+> **追加门禁更正：** 本归档source1a55的同版本证据不能证明旧客户端AP安全。PR823合入后已复现旧70de忽略灶台支出，发布38875759141已取消、导出/发布skipped；返修PR825及追加证据见[旧客户端返修](../2026-10-16-stove-forward-web/README.md)。尚未公开，不重跑旧发布。
+
 # #700 院内灶台普通 Web 与重开（候选，未上线）
 
 Owner CODEX-LEAD。源码PR823最终1a55d635216cd9818e31eb42e0f62c7673e45b24，tree0b0e6e75e60cb5c48e55a10625800c2999a8ef29；基线main34988a6。a859初稿→fa48前移空地→1a55完整劳动帧循环/放下石材清理，祖先保留。原画来源和完整image_gen提示词在源码assets/holiday/props/stove_v1/README.md。
