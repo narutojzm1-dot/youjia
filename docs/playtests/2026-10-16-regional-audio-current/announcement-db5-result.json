@@ -1,0 +1,22 @@
+{
+  "source": "db5a88a6c126e3c3a1edf2147aaf5fa4b48f05ef",
+  "runtime_same_as_80ac": true,
+  "only_release_history_changed": true,
+  "previous_real_public": "f18413d",
+  "results": [
+    {
+      "case": "import",
+      "exit": 0,
+      "pass": true,
+      "bytes": 40844,
+      "sha256": "007c487fc4376397adedbc431abd14a5754142fe7580a8f08bcb84aed3292703"
+    },
+    {
+      "case": "release_notes",
+      "exit": 0,
+      "pass": true,
+      "bytes": 112,
+      "sha256": "259fb36d8586809bd3b50e80edd77685fa0ebcd1b67f8deabd46a10e0cad3e0e"
+    }
+  ]
+}
