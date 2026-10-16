@@ -26,14 +26,16 @@ var _dump_started: bool = false
 var _self_check: bool = false
 var _web_probe: bool = false
 
+var base_sample_linear: bool = true
+
 @onready var _painting: Sprite2D = $Painting
 @onready var _crop: Sprite2D = $Painting/StreamCrop
 
 
 func _ready() -> void:
 	_parse_user_args()
-	# # 隔离候选默认开启。--base-linear 再写 true；--base-nearest 强制关（仅 legacy 对照）。
-	_material().set_shader_parameter("base_sample_linear", true)
+	# 默认 true；--base-nearest 在解析时覆写为 false。只在解析后提交一次。
+	_material().set_shader_parameter("base_sample_linear", base_sample_linear)
 	_crop.position = Vector2(CROP_RECT.position)
 	_painting.scale = Vector2(scale_factor, scale_factor)
 	_painting.position = painting_offset
@@ -43,6 +45,10 @@ func _ready() -> void:
 		" strength=", _material().get_shader_parameter("strength"), " crop=", CROP_RECT,
 		" scale=", scale_factor, " offset=", painting_offset,
 		" base_sample_linear=", _material().get_shader_parameter("base_sample_linear"))
+	# 启动断言：实际提交值必须与解析结果一致（默认 true，--base-nearest 为 false）。
+	var actual := bool(_material().get_shader_parameter("base_sample_linear"))
+	if actual != base_sample_linear:
+		push_error("base_sample_linear startup mismatch: wanted %s got %s" % [base_sample_linear, actual])
 	if _self_check:
 		_run_self_check()
 	elif _web_probe:
@@ -129,11 +135,11 @@ func _parse_user_args() -> void:
 			_sequence_dir = str(args[i + 1])
 			i += 2
 		elif token == "--base-linear":
-			_material().set_shader_parameter("base_sample_linear", true)
+			base_sample_linear = true
 			i += 1
 		elif token == "--base-nearest":
 			# 历史/受控 legacy：强制底图纹素中心取样，供与整幅 nearest 预览对照。
-			_material().set_shader_parameter("base_sample_linear", false)
+			base_sample_linear = false
 			i += 1
 		elif token == "--reduced":
 			reduced_motion = true
