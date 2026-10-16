@@ -1,11 +1,11 @@
 {
   "schema": "youjia.release/v1",
-  "sourceCommit": "49230855694b58ed95e10d56abd214dece0c64ed",
+  "sourceCommit": "70de87a63b8d6f325772f8b046a69e639b1eec84",
   "engine": "4.7.2.stable.official.ed1daf0bf",
-  "entry": "game-4923085",
-  "publishedAt": "2026-10-16T00:27:37Z",
+  "entry": "game-70de87a",
+  "publishedAt": "2026-10-16T04:37:55Z",
   "storageModules": {
-    "entry": "save-4923085",
+    "entry": "save-70de87a",
     "sha256": {
       "bridge.mjs": "ef18687554fdc0d745c1d18d4d091e959cc78559da0d61d6a093e562ff9bbc91",
       "budgets.mjs": "52984153977dcafd1d2682e848f1999f091d0966e17d46e902de76f5735a7018",
@@ -20,16 +20,24 @@
     }
   },
   "engineAssets": {
-    "entry": "engine-3b105340f798ed0e7d6aa7725328dc8c0bf8cd94ffea14835e43f83045048c74",
+    "entry": "engine-e232d3881ea999631bbb4a08ccc86fa54dd2bc8a5b42fb6cb281cb86dd85bc48",
     "sha256": {
-      "engine-3b105340f798ed0e7d6aa7725328dc8c0bf8cd94ffea14835e43f83045048c74.js": "33c94cb3175f3333b82e2a3be5e8e86f77986f0aa2042b1631f6367a4e5bb6ba",
-      "engine-3b105340f798ed0e7d6aa7725328dc8c0bf8cd94ffea14835e43f83045048c74.wasm": "fc74679e3b97f76878947fcd4fbe1268cbfa6188182a2e33bbc3f5dc9bfa57d0",
-      "engine-3b105340f798ed0e7d6aa7725328dc8c0bf8cd94ffea14835e43f83045048c74.audio.worklet.js": "5b476a9c9ce642c0ee4256436d1bc31d9c38f868aca0f9a8e2a57c18d2dec2a3",
-      "engine-3b105340f798ed0e7d6aa7725328dc8c0bf8cd94ffea14835e43f83045048c74.audio.position.worklet.js": "be33985bc7160d6bf9646f259cd86b259cd67b02ccb297ee5c44f8ac84327bc8"
-    }
+      "engine-e232d3881ea999631bbb4a08ccc86fa54dd2bc8a5b42fb6cb281cb86dd85bc48.js": "33c94cb3175f3333b82e2a3be5e8e86f77986f0aa2042b1631f6367a4e5bb6ba",
+      "engine-e232d3881ea999631bbb4a08ccc86fa54dd2bc8a5b42fb6cb281cb86dd85bc48.wasm": "fdab8cf15509d9042cd7f6f9f9eafb5201c85a59ed161d91346046b2a9268fe4",
+      "engine-e232d3881ea999631bbb4a08ccc86fa54dd2bc8a5b42fb6cb281cb86dd85bc48.audio.worklet.js": "5b476a9c9ce642c0ee4256436d1bc31d9c38f868aca0f9a8e2a57c18d2dec2a3",
+      "engine-e232d3881ea999631bbb4a08ccc86fa54dd2bc8a5b42fb6cb281cb86dd85bc48.audio.position.worklet.js": "be33985bc7160d6bf9646f259cd86b259cd67b02ccb297ee5c44f8ac84327bc8"
+    },
+    "repairs": [
+      {
+        "id": "godot-4.7.2-webgl2-index-update-target-v1",
+        "upstreamSha256": "fc74679e3b97f76878947fcd4fbe1268cbfa6188182a2e33bbc3f5dc9bfa57d0",
+        "sha256": "fdab8cf15509d9042cd7f6f9f9eafb5201c85a59ed161d91346046b2a9268fe4",
+        "scope": "MeshStorage::mesh_surface_update_index_region; three buffer targets"
+      }
+    ]
   },
   "loaderModules": {
-    "entry": "boot-4923085",
+    "entry": "boot-70de87a",
     "sha256": {
       "download_assets.mjs": "0c0e0f179641bd524a8d0d4f520e4158152bcc884f0d17ff3b0e0a0b0b21e238",
       "sha256_stream.mjs": "c26338f465688208706256f83aef6a510f01b671c6e679ae1a0d9ab7797af85e"

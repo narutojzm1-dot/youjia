@@ -1,5 +1,5 @@
 <!doctype html>
-<html data-build="game-4923085" lang="zh-CN">
+<html data-build="game-70de87a" lang="zh-CN">
 <head>
   <meta http-equiv="Cache-Control" content="no-cache, must-revalidate, max-age=0">
   <meta http-equiv="Pragma" content="no-cache">
@@ -10,8 +10,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="manus-game-loading-screen" content="1">
   <title>悠长的假期</title>
-  <link id="-gd-engine-icon" rel="icon" type="image/png" href="game-4923085.icon.png" />
-<link rel="apple-touch-icon" href="game-4923085.apple-touch-icon.png"/>
+  <link id="-gd-engine-icon" rel="icon" type="image/png" href="game-70de87a.icon.png" />
+<link rel="apple-touch-icon" href="game-70de87a.apple-touch-icon.png"/>
 
   <!-- Project-owned starting point, not the platform default. Customize the presentation below. -->
   <!-- Embedded Noto Sans SC loader subset: SIL Open Font License 1.1; license text: assets/template/fonts/NotoSansSC-OFL.txt. -->
@@ -105,7 +105,7 @@ Source SHA-256: 38f4c5f927f746b3dfa4c3a5d7edf0b7a3e828e27438418fa54f9e1565289412
     }
     // RELEASE_CHECK_END
     (() => {
-      const config = {"args":[],"canvasResizePolicy":2,"emscriptenPoolSize":8,"ensureCrossOriginIsolationHeaders":true,"executable":"engine-3b105340f798ed0e7d6aa7725328dc8c0bf8cd94ffea14835e43f83045048c74","experimentalVK":false,"fileSizes":{"engine-3b105340f798ed0e7d6aa7725328dc8c0bf8cd94ffea14835e43f83045048c74.wasm":39514754,"game-4923085.pck":89118232},"focusCanvas":true,"gdextensionLibs":[],"godotPoolSize":4,"mainPack":"game-4923085.pck","fileHashes":{"engine-3b105340f798ed0e7d6aa7725328dc8c0bf8cd94ffea14835e43f83045048c74.wasm":"fc74679e3b97f76878947fcd4fbe1268cbfa6188182a2e33bbc3f5dc9bfa57d0","game-4923085.pck":"406bf028b1c739a5903b95c2aa4b7d465807cf6cd2c18c84dfeeb37f9db65b8d"}};
+      const config = {"args":[],"canvasResizePolicy":2,"emscriptenPoolSize":8,"ensureCrossOriginIsolationHeaders":true,"executable":"engine-e232d3881ea999631bbb4a08ccc86fa54dd2bc8a5b42fb6cb281cb86dd85bc48","experimentalVK":false,"fileSizes":{"engine-e232d3881ea999631bbb4a08ccc86fa54dd2bc8a5b42fb6cb281cb86dd85bc48.wasm":39514754,"game-70de87a.pck":89118616},"focusCanvas":true,"gdextensionLibs":[],"godotPoolSize":4,"mainPack":"game-70de87a.pck","fileHashes":{"engine-e232d3881ea999631bbb4a08ccc86fa54dd2bc8a5b42fb6cb281cb86dd85bc48.wasm":"fdab8cf15509d9042cd7f6f9f9eafb5201c85a59ed161d91346046b2a9268fe4","game-70de87a.pck":"38f62a448a30c6089ae002b02ce377eaf90e27bc2ba73d229b886eab379afba4"}};
       // Keep the shell readable while the pre-boot check waits or stops on a stale entry.
       const buildLabel = document.getElementById('loading-build');
       const versionLabel = document.getElementById('loading-version');
@@ -130,12 +130,12 @@ Source SHA-256: 38f4c5f927f746b3dfa4c3a5d7edf0b7a3e828e27438418fa54f9e1565289412
       let resolveSaveRuntime, rejectSaveRuntime;
       const saveRuntimeReady = new Promise((resolve, reject) => { resolveSaveRuntime = resolve; rejectSaveRuntime = reject; });
       saveRuntimeReady.catch(() => {}); // Observe immediately; preserve original rejection.
-      const saveBridgeReady = import('./save-4923085/bridge.mjs').then(async ({installSaveHost}) => {
-        const {captureIdbfsSource} = await import('./save-4923085/idbfs_source.mjs');
+      const saveBridgeReady = import('./save-70de87a/bridge.mjs').then(async ({installSaveHost}) => {
+        const {captureIdbfsSource} = await import('./save-70de87a/idbfs_source.mjs');
         installSaveHost({runtimeReady: saveRuntimeReady, captureLegacy: captureIdbfsSource});
       });
       saveBridgeReady.catch(() => {});
-      const assetRecoveryReady = import('./boot-4923085/download_assets.mjs');
+      const assetRecoveryReady = import('./boot-70de87a/download_assets.mjs');
       assetRecoveryReady.catch(() => {});
       let restoreAssetFetch = () => {};
       const threads = false;
@@ -314,7 +314,7 @@ Source SHA-256: 38f4c5f927f746b3dfa4c3a5d7edf0b7a3e828e27438418fa54f9e1565289412
         }
       };
       const script = document.createElement('script');
-      script.src = 'engine-3b105340f798ed0e7d6aa7725328dc8c0bf8cd94ffea14835e43f83045048c74.js';
+      script.src = 'engine-e232d3881ea999631bbb4a08ccc86fa54dd2bc8a5b42fb6cb281cb86dd85bc48.js';
       script.addEventListener('load', start, { once: true });
       script.addEventListener('error', () => fail(new Error('Engine script could not be loaded')), { once: true });
       document.head.appendChild(script);
