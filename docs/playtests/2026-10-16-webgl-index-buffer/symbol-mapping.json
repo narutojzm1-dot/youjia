@@ -1,0 +1,23 @@
+{
+  "template_sha256": "fc74679e3b97f76878947fcd4fbe1268cbfa6188182a2e33bbc3f5dc9bfa57d0",
+  "bytes": 39514754,
+  "wasm_function": 67027,
+  "function_offset": 33047519,
+  "function_bytes": 344,
+  "function_sha256": "c0779bd094d8caeae344bda5ef35a9470a05be009ade6647c1b4f45d5bae166c",
+  "embedded_assertion_strings": {
+    "307908": "mesh_surface_update_index_region",
+    "258952": "drivers/gles3/storage/mesh_storage.cpp"
+  },
+  "target_instruction_offsets_relative_to_function": [
+    311,
+    322,
+    335
+  ],
+  "original_target": 34962,
+  "repaired_target": 36663,
+  "before": "i32.const 34962; glBindBuffer / glBufferSubData / glBindBuffer(0)",
+  "after": "i32.const 36663; otherwise same function",
+  "initial_buffer_creation_function": 67034,
+  "same_reproduction_stack_as_public492_return": true
+}
