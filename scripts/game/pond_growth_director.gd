@@ -9,6 +9,7 @@ const Basket := preload("res://scripts/game/physical_basket.gd")
 const Schedule := preload("res://scripts/game/growth_schedule.gd")
 const Stove := preload("res://scripts/game/yard_stove.gd")
 const StoveView := preload("res://scripts/game/yard_stove_view.gd")
+const MillView := preload("res://scripts/game/yard_mill_view.gd")
 const STONE := ExplorationRoutes.FIND_STONE
 signal finished(result: String)
 var world: Node2D
@@ -219,7 +220,7 @@ func tick(delta: float, move: Vector2) -> void:
 		# Presentation timing only; fatigue does not slow material retrieval.
 		if elapsed < 0.8: return
 		leg_target = target
-		var precision := 1.5 if action_id == "build_stove" else 0.0
+		var precision := 1.5 if action_id in ["build_stove","mill_wheat"] else 0.0
 		if world.get_player().position.distance_to(target) >= (precision if precision > 0 else 14.0) and not world.try_walk_to(target,precision):
 			cancel()
 			return
@@ -285,20 +286,27 @@ func _pose_work() -> void:
 		var kind: StringName = [&"stove_low",&"stove_high",&"stove_top"][clampi(stove_stage,0,2)]
 		walker.hold_action_frame(kind,frame)
 		return
+	if action_id == "mill_wheat":
+		var player = world.get_player()
+		player.facing = -1.0
+		player._gait.face = player.facing
+		walker.scale.x = -absf(walker.scale.x)
+		var reduced := bool(TuningStore.get_value("ui.reduced_motion",false))
+		var entering := clampf(work/_mill_entry_seconds(),0.0,1.0)
+		var exiting := clampf((work-float(recipe.seconds)+_mill_exit_seconds())/_mill_exit_seconds(),0.0,1.0)
+		var grip := smoothstep(0.0,0.4,entering)*(1.0-smoothstep(0.0,1.0,exiting))
+		var contact: Vector2 = milling_work_point.lerp(MillView.HANDLE_POINT,smoothstep(0.45,1.0,entering))
+		var pressure := 0.5+0.5*sin(maxf(0.0,work-_mill_entry_seconds())*TAU/2.4)
+		if reduced:
+			contact = MillView.HANDLE_POINT
+			grip = 1.0
+			pressure = 0.5
+		walker.hold_milling_pose(world.to_global(contact),grip,pressure)
+		return
 	if bool(TuningStore.get_value("ui.reduced_motion", false)):
 		walker.reset_motion()
 		return
 	var progress := clampf(work / float(recipe.seconds), 0.0, 1.0)
-	if action_id == "mill_wheat":
-		# Reuse the authored reaching sequence for the handle; the character and
-		# stone are never stretched or spun as a whole cutout.
-		if milling_work_point.is_finite():
-			var player = world.get_player()
-			player.facing = 1.0 if milling_work_point.x >= player.position.x else -1.0
-			player._gait.face = player.facing
-		var reach_frame := mini(4, int(progress / 0.2 * 5.0)) if progress < 0.2 else 4 + int(work / 0.75) % 2
-		walker.hold_action_frame(&"feed", reach_frame)
-		return
 	var frame: int
 	if progress < 0.2:
 		frame = mini(4, int(progress / 0.2 * 5.0))
@@ -308,6 +316,12 @@ func _pose_work() -> void:
 	else:
 		frame = mini(8, 4 + int((progress - 0.8) / 0.2 * 5.0))
 	walker.hold_action_frame(&"pickup", frame)
+
+func _mill_entry_seconds() -> float:
+	return maxf(0.001,minf(1.4,float(recipe.seconds)*0.25))
+
+func _mill_exit_seconds() -> float:
+	return maxf(0.001,minf(0.8,float(recipe.seconds)*0.20))
 
 func sync_presentation() -> void:
 	# Called after the actor tick so the stone uses this frame's hand/depth,
@@ -320,12 +334,12 @@ func sync_presentation() -> void:
 		# The first full contact sets down the stone. Later cycles press the
 		# same course; no second material or premature confirmed stage is shown.
 		material.visible = false
-	if action_id == "mill_wheat" and stage == "working" and work >= float(recipe.seconds) * 0.2:
+	if action_id == "mill_wheat" and stage == "working" and (work >= _mill_entry_seconds()*0.5 or bool(TuningStore.get_value("ui.reduced_motion",false))):
 		material.visible = false
 	if not material.visible: return
 	material.global_position = player.grass_hand_global_position()
 	if stage == "working" and action_id == "mill_wheat" and milling_work_point.is_finite():
-		material.global_position = material.global_position.lerp(world.to_global(milling_work_point),clampf(work / float(recipe.seconds) / 0.2,0.0,1.0))
+		material.global_position = material.global_position.lerp(world.to_global(milling_work_point),clampf(work/(_mill_entry_seconds()*0.5),0.0,1.0))
 	elif stage == "working" and action_id != "build_stove" and not bool(TuningStore.get_value("ui.reduced_motion", false)):
 		var ground: Vector2 = player.global_position + Vector2(14.0 * player.grass_hand_facing(), -4.0) * player.picture_depth
 		var placing := clampf(work / float(recipe.seconds) / 0.2, 0.0, 1.0)
