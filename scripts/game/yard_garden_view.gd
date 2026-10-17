@@ -5,6 +5,7 @@ const Schedule := preload("res://scripts/game/growth_schedule.gd")
 const ART_PATH := "res://assets/holiday/props/garden_v1/flower-garden-atlas-v1.png"
 const ANCHOR := Vector2(450,535)
 const APPROACH := Vector2(430,550)
+const CONTACT_POINT := Vector2(444,537)
 const WIDTH := 64.0
 var store: Node
 var art: Sprite2D

@@ -185,6 +185,7 @@ run_godot suite test/stove_cross_version_suite.gd
 run_godot suite test/stove_director_suite.gd
 run_godot suite test/garden_growth_suite.gd
 run_godot suite test/garden_director_suite.gd
+run_godot suite test/garden_pose_suite.gd
 run_godot suite test/stove_pose_suite.gd
 run_godot suite test/pond_edging_view_suite.gd
 run_godot suite test/pond_growth_director_suite.gd
