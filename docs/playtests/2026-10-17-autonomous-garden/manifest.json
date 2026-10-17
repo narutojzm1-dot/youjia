@@ -35,6 +35,11 @@
     "sha256": "89f707dbea2969291c741e17b8b6a3c9b2bd49bee21dd7f4d6434677a6120c20"
   },
   {
+    "path": "logs/ci-39042305606-failed.log.gz",
+    "raw_sha256": "50f0f913d9434c784a7baa5b9cae382f5ee56ebf53e4b28783b66686dd5f39b7",
+    "sha256": "0d867591d6ea4fbe21737b2549490fcda91088da8c0d8bf8bd5d328b880afcd9"
+  },
+  {
     "path": "logs/exploration_core-r2.log.gz",
     "raw_sha256": "e79778e284f0778655e1e7bf08322f8ea916892240648ead9fbeef5d1d2e64e5",
     "sha256": "b3c649bc5df937ddec70471b2656794dc8c68e396aa9362343438538ee048605"
@@ -155,6 +160,11 @@
     "sha256": "184a00317f7ad093d228edf550baad3db7e708219692a076790e79589a36d40f"
   },
   {
+    "path": "logs/shadow-scope.log.gz",
+    "raw_sha256": "1f274543140c1a91eed46673e38e0f52bd3815496a7e3e50874ed7794c5317ad",
+    "sha256": "82817ec848034b00835467b10a9aabbe9dea8f32e9dd2a79b97bc886a9315722"
+  },
+  {
     "path": "logs/source-chain-r2.log.gz",
     "raw_sha256": "81971490fa231ff9bc6af70affeffeacb35633e0c52424070932e5e2d0bb4f48",
     "sha256": "f7b8b68992886aef5539769d093e35228fb13ad87fbe5293587abeae806550a7"
@@ -173,6 +183,261 @@
     "path": "logs/stove_director-r2.log.gz",
     "raw_sha256": "676f8f6e0487e34b7a84b633af1f390854c6eef0f93845a1f21cf3e482649d10",
     "sha256": "7d7f5dc6782696a945039d0f05d7b7a1c958ecb325fd06ed4004f6ed1574024c"
+  },
+  {
+    "path": "logs/tail-basket_pointer_focus_suite.log.gz",
+    "raw_sha256": "0ad93de2e3e0c31a4b642c57c1e8ca481c9ec3ee141d794ac48576086d6ecb7e",
+    "sha256": "f4567243aa65732dd6d4449379cef44fc229a4c43a32ef56dd34742d6d433527"
+  },
+  {
+    "path": "logs/tail-care_pointer_focus_suite.log.gz",
+    "raw_sha256": "cb6c62313587e5d91e637c58662750ab2f1fd2c082419d40c5eec0c25ed8ef43",
+    "sha256": "577e6747bd03bbf2424e367a4da92e0d3bf07a8a5a15a36dae8a25876f28ed60"
+  },
+  {
+    "path": "logs/tail-cjk_line_break_suite.log.gz",
+    "raw_sha256": "af4168aa7a7cc92ccbda389ccdc2e88a768b48dc8d6b878843cd83c41fa5ceaa",
+    "sha256": "dd68c29df8f9b81973e5280cc0c2a82fc3fa40be04e64a1483c0672ef0c0c76a"
+  },
+  {
+    "path": "logs/tail-cooking_smoke_suite.log.gz",
+    "raw_sha256": "b98faf4047cf5713cce63bf9013322a10069e26210fee49f5281e4af7f34c9dd",
+    "sha256": "46852740397160d12e5f0abbde54c93e0b489f104a7856543280e262ecb7ef2d"
+  },
+  {
+    "path": "logs/tail-exploration_hud_readable_suite.log.gz",
+    "raw_sha256": "d45f191917e60e693364da07611daf47ffc6eb853f658054254cd30a6b107199",
+    "sha256": "cd8e9cda3c570d5cc29c832d0ff8565f27c887ba58453e371ab95c2a9a8c8288"
+  },
+  {
+    "path": "logs/tail-exploration_tap_feedback_suite.log.gz",
+    "raw_sha256": "f93380da32e41ac282cac297617b7ceeabbfbc24c022102ae975a080eaab3ed5",
+    "sha256": "e8944634a1ab873bb1760656c8329f89f354d0266b79c35459fa3866a464353f"
+  },
+  {
+    "path": "logs/tail-exploration_trip_capacity_suite.log.gz",
+    "raw_sha256": "0954796d5bf176fc05cb8c9973cf65db80ec6e9f00b8394eb954a95382d15d08",
+    "sha256": "705dd5f25ef21bf15a502349d86a56f08d76fa01e6aab1e860e4006c8417d65c"
+  },
+  {
+    "path": "logs/tail-final-release_notes.log.gz",
+    "raw_sha256": "259fb36d8586809bd3b50e80edd77685fa0ebcd1b67f8deabd46a10e0cad3e0e",
+    "sha256": "e164e976fc8dc2fe6d5b319c7b79dbd0c850a3f8b5240279774bf26160d35c39"
+  },
+  {
+    "path": "logs/tail-final-release_notes_pointer_focus.log.gz",
+    "raw_sha256": "5001fdab3f4be5852dff15c1cc655798a88d0472db5a535f0484390e9344d35d",
+    "sha256": "a7812c47089226f2b543bd09b2e0c9bc86aac4f22a83772522a588cb4edf837c"
+  },
+  {
+    "path": "logs/tail-find_reveal_name_fade_suite.log.gz",
+    "raw_sha256": "265411b77714cbc80fe8b53f30114f475cdd670815dcbd401ee3075e2bd86e56",
+    "sha256": "75390195af11749d121cab7ae351dfd3b28e3cd00589473bfc85b6220dbdda48"
+  },
+  {
+    "path": "logs/tail-fish_catch_palette_suite.log.gz",
+    "raw_sha256": "e02d844654ea8644d507bce50240988857e8b944fa08ca7d8944935f2295adba",
+    "sha256": "d75b60ddd290dc3593116cc31cccfe1b959310f9090769345807852da9014b34"
+  },
+  {
+    "path": "logs/tail-flour_meal_suite.log.gz",
+    "raw_sha256": "9869154900398257ca893d448dfa7c3c521e1e40787e98820ff43dc806ff6872",
+    "sha256": "b95d5f1c3f33e3dffb5295a8717b9bc67aa008ab707c94eb9b0ca18bb1e85928"
+  },
+  {
+    "path": "logs/tail-garden_director_suite.log.gz",
+    "raw_sha256": "533662a597c127c79a64478f1a8ff6385a15231922981c7447c7e9fc20d27763",
+    "sha256": "029aac2be878e563320fdc1a3b95554b0683d763dfdaf529448d15d0eb6e8cac"
+  },
+  {
+    "path": "logs/tail-garden_growth_suite.log.gz",
+    "raw_sha256": "b69586f59c348dd44bd428627b9b5e271acfe8333be77b439675d03abe43194a",
+    "sha256": "0701ddb99577886a62d54d95fe846ae67bdb94011702e5293116154d3f7fcb35"
+  },
+  {
+    "path": "logs/tail-growth_budget_suite.log.gz",
+    "raw_sha256": "1261a1528c684c59e2008b1db3833fe48644b97816ca8beb57156b4926f68577",
+    "sha256": "18facf749c13fb1b591d5f34ee5dbb4d31e9f829ae173d4ea63f5bcb101723e6"
+  },
+  {
+    "path": "logs/tail-growth_carried_photo_suite.log.gz",
+    "raw_sha256": "7e17196896fd27f612ee4ce0fdd70954bb55e1c2e7a22fc9be5af8066ede4757",
+    "sha256": "5c9af2c091f6539124670769dd33f21c84889ac898b9a30e43098fc3c482a89a"
+  },
+  {
+    "path": "logs/tail-growth_materials_suite.log.gz",
+    "raw_sha256": "57eab84dcffa85d7378c47b6cfef20d72794b54c0042a5b1d1de78cbc02f3c5f",
+    "sha256": "6228acf43df3e032e15eb14c86ad4228991e1cf537d81ecf23911e9e2e70b3fb"
+  },
+  {
+    "path": "logs/tail-growth_production_suite.log.gz",
+    "raw_sha256": "ff08b4f4965e390a67d2dc1ff6586032755a1c3bf67094e1d1ee0b50d5e77012",
+    "sha256": "869d1e30643e8587e58847182e62166e002ff63bc26dd3549203bb517e4b3a06"
+  },
+  {
+    "path": "logs/tail-house_cooking_suite.log.gz",
+    "raw_sha256": "2c539f38a0d22b900d2575a57e377c74c969bff0ab3a844aa7eaeb9c618823b3",
+    "sha256": "cc209e8e26e5cd23ba8d262f0b36d2e8094e0d5e4399d65ccc6322b2f0153882"
+  },
+  {
+    "path": "logs/tail-hud_keyboard_focus_suite.log.gz",
+    "raw_sha256": "401908457af8046b87b10a6ecd185c5ee1d2d051172fdf95b01eeeb8eb753c01",
+    "sha256": "909039236500415f35aa6088cbd7ab850a27692c66c420f2db2bb7f7747f02a1"
+  },
+  {
+    "path": "logs/tail-meal_audio_host_suite.log.gz",
+    "raw_sha256": "7d76115d4ae0911b9f19fac4decde7677722f4af364b607fceb47109a2ca9ff6",
+    "sha256": "2f7c363322696b62fb9d493750645876ed7630c98bb6c22822fba13adf599a11"
+  },
+  {
+    "path": "logs/tail-meal_ledger_suite.log.gz",
+    "raw_sha256": "8584c7f72251dfd94d690f80a9bc721493d6446695bcb9e3aa4aea596fcafcb9",
+    "sha256": "5081dc125e3c534d4b837ea4ace49e4d3c0fdcdcc0a2de6f2a9bcecbee109637"
+  },
+  {
+    "path": "logs/tail-meal_navigation_suite.log.gz",
+    "raw_sha256": "4931cf1db532c69078dbe8d47ed6f8c118fdd88bd6d49117f061536c9964f4a7",
+    "sha256": "e0eeb9895fd918748eb89bea240ffe8b359731703ade1670da8e366cdf0e40a0"
+  },
+  {
+    "path": "logs/tail-meal_planner_suite.log.gz",
+    "raw_sha256": "7d5c328258907435f2464993008f32e5e5d73278481550a4d2e4d059f1f23c53",
+    "sha256": "c9cb1387eeee58f63e96e502241b8b6aeacc1825fefaa9bba83e0579114f127e"
+  },
+  {
+    "path": "logs/tail-menu_keyboard_focus_suite.log.gz",
+    "raw_sha256": "bcb0dad875487f1bafd48ab3dd7dfd5581dc49abd4b533acaf609e256296c4cb",
+    "sha256": "4458ebbc69d87833a3954fb5d9dcfaa3eab3f8c7ec642a042f50fed2a188218d"
+  },
+  {
+    "path": "logs/tail-milling_director_suite.log.gz",
+    "raw_sha256": "d23d887741b4ea7c762c855f10328f17dd8e5eac9a131617aa91df90a6539b0e",
+    "sha256": "e0fb4e3d81d3acf1ec2664184d9a46a02e949ebde46749bedf3de3b842e9f901"
+  },
+  {
+    "path": "logs/tail-mill_pose_suite.log.gz",
+    "raw_sha256": "2625d11b092eeaa6c6768fe59b445e33d50fd41945d72cb34882ae3e6d682131",
+    "sha256": "c6312709ef89887b1a1d3e6402f292d9f549539d35adb3f19e23d886b3e658f8"
+  },
+  {
+    "path": "logs/tail-original_plant_runtime_suite.log.gz",
+    "raw_sha256": "506ebf79594c7f3c56ef4a5d70d13e480bacbafcf550e8f14f308e102ae11c98",
+    "sha256": "7ca55d4ce8e34f69ecd03e32366895480eab9deb71218d8988fdc9098c00551d"
+  },
+  {
+    "path": "logs/tail-path_snail_fade_suite.log.gz",
+    "raw_sha256": "c09e5222f065eb9d1e1eb2502998218628ee89b67efabcf4dc1898085b26392e",
+    "sha256": "7ec2d6ccbaa369209467c3a3a353c49ad68e510a4dc0851684d51f15a54d0b6d"
+  },
+  {
+    "path": "logs/tail-photo_arrival_fade_in_suite.log.gz",
+    "raw_sha256": "1910fee3c4ce51f82f4c343b45c2b3c42fbdac4ab05e64589938a56ce73c72c8",
+    "sha256": "c30fb3596c420c70af0a03e693c14c2d081eb65f3009b17335359c37c327e925"
+  },
+  {
+    "path": "logs/tail-photo_diary_weather_suite.log.gz",
+    "raw_sha256": "c4edb6f1e81f9441c1c84102f33601e518bf2299f7cb3a0c501418c73d317c8b",
+    "sha256": "1bf745d0aac9747549525d59aa80c113eaa845f67294297fd093f25865d6426a"
+  },
+  {
+    "path": "logs/tail-physical_basket_suite.log.gz",
+    "raw_sha256": "81fb9e23f5279a7ade6c1d2a8f5321b4212b0a83717cb03219e115db6f4556b8",
+    "sha256": "c98812218017351f29c0ac81269b9d847dd451b73c5957c680f9a3994f90bdee"
+  },
+  {
+    "path": "logs/tail-pond_edging_view_suite.log.gz",
+    "raw_sha256": "e7fa4e9a4c950bd7fb70007ad159174fbd0ce853752f4bfffe77a1bc3e328118",
+    "sha256": "c3830e126ba0bd67241e44073ec457f5a3f5148c21da11d26d954a68943b14d5"
+  },
+  {
+    "path": "logs/tail-pond_growth_director_suite.log.gz",
+    "raw_sha256": "e16f86aeac3bfdeb7b551081e7cb69a34612a31d64268f59f90cbecc0a851cb7",
+    "sha256": "83907733c994ea2d43cc8cb262fb7a4530de32349892f045a7dddf3ba8575302"
+  },
+  {
+    "path": "logs/tail-regional_clock_suite.log.gz",
+    "raw_sha256": "3828e15d86c9683c25f19ab42167421601bb55a837a64789b0c5eeb43e74f56f",
+    "sha256": "795380157808b81c559cafabbdab4d884e7545113b4509c5a9f574e154f999a3"
+  },
+  {
+    "path": "logs/tail-release_notes_suite.log.gz",
+    "raw_sha256": "158a14431d9768129b3718465d6bdc35edc5377714f0352c42936a52b308c0e4",
+    "sha256": "b508105d8f0a58d054b30ca725222143163ca6fc1b6aa5ba08a3dadd7f54e9ca"
+  },
+  {
+    "path": "logs/tail-resident_barks_suite.log.gz",
+    "raw_sha256": "0030ab691f9646917e1617b2d9670c5dac36f01a639686d6af53ab03ab16f798",
+    "sha256": "75b6291d86eeb9a062e549120aa6858c231c4aea0581e86853d5282a67316415"
+  },
+  {
+    "path": "logs/tail-resident_idle_rest_suite.log.gz",
+    "raw_sha256": "2a1f2ac10a60bad775f3d9efa6569a59fdc424d6fb53a9dc189f02fe60eed9f9",
+    "sha256": "7e03a537816477138d8d98022e58772fd2e6eda37653da7f2bdf796f8395ddbb"
+  },
+  {
+    "path": "logs/tail-rest_context_suite.log.gz",
+    "raw_sha256": "6406ce58769364b574ef9db582745473e5e8314457ff2c1710c775a673ae9b42",
+    "sha256": "e940920ebc37884774725ab4183ce711d4f29b195e38ed8e2f31063d9f0b0470"
+  },
+  {
+    "path": "logs/tail-stove_cross_version_suite.log.gz",
+    "raw_sha256": "b90fd3def61947eca490d91ffb2546775497094617cb24c95fd7d383a4e3a5fe",
+    "sha256": "0abb12bda2a845754e8d7d25c8db49017c2bf1b5da5e45e195eb24af9318fb30"
+  },
+  {
+    "path": "logs/tail-stove_director_suite.log.gz",
+    "raw_sha256": "676f8f6e0487e34b7a84b633af1f390854c6eef0f93845a1f21cf3e482649d10",
+    "sha256": "7d7f5dc6782696a945039d0f05d7b7a1c958ecb325fd06ed4004f6ed1574024c"
+  },
+  {
+    "path": "logs/tail-stove_pose_suite.log.gz",
+    "raw_sha256": "b9e250a2911706834a50ce0255882109589bdd8176f532ea585c13842753ba5b",
+    "sha256": "3656cd172ea303d4c4c4ccbed2551b5396cd4eff7fa364abe673690b1d0604d7"
+  },
+  {
+    "path": "logs/tail-touch_hover_reset_suite.log.gz",
+    "raw_sha256": "58598063e9bfcbdaad47305571f2e205b960e10f7489b6bbacb06208da924d18",
+    "sha256": "1eaa48c8f8341885d486b7a9f462bf82a8127e62095a6a9bf1a104005167c09e"
+  },
+  {
+    "path": "logs/tail-walk_goal_marker_suite.log.gz",
+    "raw_sha256": "faf6d924009bbfaa06d0de900edbb260c2de44bfa977b46ee5755cd0bcc9fe0c",
+    "sha256": "ef6faa6f293ae1d6e1469d4fbb7b2f989d49cdb0a37da2af992993cfb054c0e4"
+  },
+  {
+    "path": "logs/tail-yard_basket_dismiss_focus_suite.log.gz",
+    "raw_sha256": "0fb3d6f4be35360185bb86c565b7a6a994cc2cf42f1f99ba6b72d5af673ce948",
+    "sha256": "615e4c5cc4b97e85f09dbf78a978ad4db08b6c57106323026fccf91fecbd7327"
+  },
+  {
+    "path": "logs/tail-yard_basket_zone_label_suite.log.gz",
+    "raw_sha256": "476341235faf4873b566ec95abbd8fd08fa7253e1736925cb7e7c760b230a7b3",
+    "sha256": "9ab341936d219bdbb0124de8cecd834be74adce2aefebd378a53797abe64a31a"
+  },
+  {
+    "path": "logs/tail-yard_decor_settle_ring_suite.log.gz",
+    "raw_sha256": "16bf2f5a7c7e99b67340cd2e63c33d879b65f735e4596fb7a5c2b2e19fe17088",
+    "sha256": "9bc55d3361364cd1614009ce5c9a6d918fc84613c869632a590f2b9f13df7fbf"
+  },
+  {
+    "path": "logs/tail-yard_keepsake_shadow_suite.log.gz",
+    "raw_sha256": "1f274543140c1a91eed46673e38e0f52bd3815496a7e3e50874ed7794c5317ad",
+    "sha256": "82817ec848034b00835467b10a9aabbe9dea8f32e9dd2a79b97bc886a9315722"
+  },
+  {
+    "path": "logs/tail-yard_mill_view_suite.log.gz",
+    "raw_sha256": "c71f7b2196b7fb7382f89b212e11120b1d9cd632861d155f9a6f06e738ff7dfa",
+    "sha256": "5626529e7a28a3466b8ebd599e1ee91beb988ea8d5750ab42ff246df43822431"
+  },
+  {
+    "path": "logs/tail-yard_original_plants_suite.log.gz",
+    "raw_sha256": "4153b76713d7d7810d320b57c26d01128ebb3833304dfdc1bd8e3624e390b100",
+    "sha256": "7b4f2cc916cb13320d084581a2592ae9d52b89f0ef0e67b8cf024909090245ae"
+  },
+  {
+    "path": "logs/tail-yard_stove_suite.log.gz",
+    "raw_sha256": "3ccae5af79b23dbcd1e78d26e5dd958f1216b953a2f8b40006aaac40686ca3eb",
+    "sha256": "95f3c43c22a745ed103640e89736f866c9e5d1b1cfe09e9af7f0de876bfbabd5"
   },
   {
     "path": "logs/writer4-driver.log.gz",
@@ -283,6 +548,46 @@
     "path": "drivers/candidate-pack.json",
     "bytes": 328,
     "sha256": "c3f0c6d51c2daba26f5f89ed71730a7af77ab8852546eafff44938e8b7d69575"
+  },
+  {
+    "path": "drivers/candidate-pack-r2.json",
+    "bytes": 310,
+    "sha256": "ff87d150f1853d7a0228ed88343268aa3dcd0c922ef77491cddb230be9207e09"
+  },
+  {
+    "path": "drivers/runtime-code-equivalence.json",
+    "bytes": 241,
+    "sha256": "cbcddd59149f201b2f83dbf0973b052634cad442c86d1f935083795aadb9798a"
+  },
+  {
+    "path": "drivers/remaining-validation.json",
+    "bytes": 338,
+    "sha256": "a7a3bc0d7bec505af67a843424bf24f0af1a2b8e5005b3183f7e4b31b10ddb75"
+  },
+  {
+    "path": "drivers/tail-run-index.json",
+    "bytes": 13899,
+    "sha256": "66281193d3e088c78fd479d9499ee7d1b022fb03eeb0ebbd47e1feece8b0e44d"
+  },
+  {
+    "path": "drivers/garden-public.cjs",
+    "bytes": 8915,
+    "sha256": "2628af006e7929566555d349edaa16840f9f16dff5d555ab660911bc2b96c81a"
+  },
+  {
+    "path": "drivers/audit-public.py",
+    "bytes": 2720,
+    "sha256": "c4465206fdb52e9981590aec1f18c81fb3f8d3a9e220a1c76d6c01eeeae80f91"
+  },
+  {
+    "path": "drivers/garden-source-ui.cjs",
+    "bytes": 5475,
+    "sha256": "d6f64d5dda58b0a404c82d48167488d3b9177afe2c6030712c8b9afa360331d0"
+  },
+  {
+    "path": "drivers/make-explore-driver.py",
+    "bytes": 2190,
+    "sha256": "d74d980dc431906936a670e62d909a7a77e67916c5def4f412132d3cd64ecf21"
   },
   {
     "path": "web-actual/result.json",
@@ -473,5 +778,25 @@
     "path": "writer4-r3/old-v3/result.json",
     "bytes": 2291,
     "sha256": "50234e4c3ae1e5c02ac03cd8c3608afa0223a61d48a090b9e2b1f206f9aee355"
+  },
+  {
+    "path": "web-source-ui-r2/result.json",
+    "bytes": 12318,
+    "sha256": "3e599fe01992b800c31e0a4a0652e8ef028b3ed7a97552a68140f894e89fa689"
+  },
+  {
+    "path": "web-source-ui-r2/source-ui-00.jpg",
+    "bytes": 426411,
+    "sha256": "cf248d185246e231b2ed57c58017dea198978c46ffc9babb2bcc24258e3b7799"
+  },
+  {
+    "path": "web-source-ui-r2/source-ui-02.jpg",
+    "bytes": 393967,
+    "sha256": "75e328b5a5bebac70cbe677ebf45bec30418e3aa3fee2d92365dcddf0f482c22"
+  },
+  {
+    "path": "web-source-ui-r2/source-ui-10.jpg",
+    "bytes": 436288,
+    "sha256": "c37cf408d8b83d62711f6b9195a1d3ff9d708d72aefeb9812f33b2d78622191e"
   }
 ]
