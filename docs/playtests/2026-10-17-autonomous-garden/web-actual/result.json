@@ -1,0 +1,107 @@
+{
+  "source": "1ab59c1113dd0a1c7d55ca9e34cf3f89ab152814",
+  "controlled_legal_start_only": true,
+  "no_post_start_fixture_writes": true,
+  "no_direct_game_calls": true,
+  "no_http_substitution": true,
+  "errors": [],
+  "console": [
+    "Failed to load resource: the server responded with a status of 404 (Not Found)"
+  ],
+  "samples": [],
+  "initialFixture": {
+    "album": [],
+    "animal_relationship_memory": {},
+    "exploration": null,
+    "exploration_committed_serial": 0,
+    "first_fish_caught": false,
+    "holiday_day": 1,
+    "holiday_day_elapsed": 160,
+    "keepsakes": {
+      "formal.find.flower_seeds": 2
+    },
+    "locale": "zh-CN",
+    "meal_ledger": {
+      "receipts": [
+        {
+          "day": 1,
+          "earned": 3,
+          "fatigued": false,
+          "ingredients": {
+            "wheat": 1
+          },
+          "meal": "lunch"
+        }
+      ],
+      "revision": 1,
+      "schema": 1
+    },
+    "photo_moments": {},
+    "plant_day_planted": 0,
+    "plant_state": 0,
+    "plant_watered_day": -1,
+    "resident_rest": {
+      "cause": "sleep",
+      "day": 1,
+      "schema": 1
+    },
+    "tutorial_version": 1,
+    "version": 5,
+    "world_weather": {},
+    "yard_gate_open": true,
+    "yard_inventory": {
+      "corn": 0,
+      "fish": {},
+      "flour": 0,
+      "grass": 0,
+      "ground": [],
+      "held": "",
+      "millet": 0,
+      "next_food_id": 1,
+      "production_revision": 0,
+      "revision": 1,
+      "schema": 5,
+      "wheat": 1
+    }
+  },
+  "rawBefore": {
+    "version": 3,
+    "keys": [
+      "current"
+    ],
+    "rows": [
+      {
+        "schema": "youjia.save-envelope/v1",
+        "store_id": "73567e35a8624fc496047026dc9b1701",
+        "commit_id": "7e2dd2a4be7f43fd8b78fd2a9289113c",
+        "request_id": "d77b47a7ace04966be33e0a651a185f0",
+        "parent_commit_id": "",
+        "generation": "1",
+        "payload_bytes": "{\"album\":[],\"animal_relationship_memory\":{},\"exploration\":null,\"exploration_committed_serial\":0,\"first_fish_caught\":false,\"holiday_day\":1,\"holiday_day_elapsed\":160,\"keepsakes\":{\"formal.find.flower_seeds\":2},\"locale\":\"zh-CN\",\"meal_ledger\":{\"receipts\":[{\"day\":1,\"earned\":3,\"fatigued\":false,\"ingredients\":{\"wheat\":1},\"meal\":\"lunch\"}],\"revision\":1,\"schema\":1},\"photo_moments\":{},\"plant_day_planted\":0,\"plant_state\":0,\"plant_watered_day\":-1,\"resident_rest\":{\"cause\":\"sleep\",\"day\":1,\"schema\":1},\"tutorial_version\":1,\"version\":5,\"world_weather\":{},\"yard_gate_open\":true,\"yard_inventory\":{\"corn\":0,\"fish\":{},\"flour\":0,\"grass\":0,\"ground\":[],\"held\":\"\",\"millet\":0,\"next_food_id\":1,\"production_revision\":0,\"revision\":1,\"schema\":5,\"wheat\":1}}",
+        "payload_sha256": "15d6a1a60307eeccdee425d2799b7b1da35228dc45c93356d248d968c3bf8998",
+        "envelope_sha256": "058e484e1af0945771212104d1a579b8509b13627782041aaa9be479aeab93fa"
+      }
+    ]
+  },
+  "bootMs": 6118,
+  "rawAfterUpgrade": {
+    "version": 4,
+    "keys": [
+      "current"
+    ],
+    "rows": [
+      {
+        "schema": "youjia.save-envelope/v1",
+        "store_id": "73567e35a8624fc496047026dc9b1701",
+        "commit_id": "4942aa02203949ca9b58f6d9ff80a48a",
+        "request_id": "4ce5aa5cba794310b4f1056eb88811a9",
+        "parent_commit_id": "7e2dd2a4be7f43fd8b78fd2a9289113c",
+        "generation": "2",
+        "payload_bytes": "{\"album\":[],\"animal_relationship_memory\":{},\"exploration\":null,\"exploration_committed_serial\":0,\"first_fish_caught\":false,\"holiday_day\":1,\"holiday_day_elapsed\":160.0,\"keepsakes\":{\"formal.find.flower_seeds\":2},\"locale\":\"zh-CN\",\"meal_ledger\":{\"receipts\":[{\"day\":1.0,\"earned\":3.0,\"fatigued\":false,\"ingredients\":{\"wheat\":1.0},\"meal\":\"lunch\"}],\"revision\":1.0,\"schema\":1.0},\"photo_moments\":{},\"plant_day_planted\":0,\"plant_state\":0,\"plant_watered_day\":-1,\"resident_rest\":{\"cause\":\"sleep\",\"day\":1.0,\"schema\":1.0},\"tutorial_version\":1,\"version\":5,\"world_weather\":{},\"yard_crops\":{\"kind\":\"\",\"planted_day\":0,\"revision\":0,\"schema\":1,\"watered_day\":-1},\"yard_gate_open\":true,\"yard_inventory\":{\"corn\":2,\"fish\":{},\"flour\":0,\"grass\":0,\"ground\":[],\"held\":\"\",\"millet\":0,\"next_food_id\":1,\"production_revision\":0,\"revision\":2,\"schema\":5,\"wheat\":3}}",
+        "payload_sha256": "ee270fdca8f51baff9d51b87601a6588ff6d39c8a877199c5a2e146d41b85590",
+        "envelope_sha256": "be867634c8092c5742342b6133dd5df9e5832e713ac6092cd47edc2ba751e360"
+      }
+    ]
+  },
+  "failure": "AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:\n+ actual - expected\n\n  [\n    {\n+     commit_id: '7e2dd2a4be7f43fd8b78fd2a9289113c',\n+     envelope_sha256: '058e484e1af0945771212104d1a579b8509b13627782041aaa9be479aeab93fa',\n+     generation: '1',\n+     parent_commit_id: '',\n+     payload_bytes: '{\"album\":[],\"animal_relationship_memory\":{},\"exploration\":null,\"exploration_committed_serial\":0,\"first_fish_caught\":false,\"holiday_day\":1,\"holiday_day_elapsed\":160,\"keepsakes\":{\"formal.find.flower_seeds\":2},\"locale\":\"zh-CN\",\"meal_ledger\":{\"receipts\":[{\"day\":1,\"earned\":3,\"fatigued\":false,\"ingredients\":{\"wheat\":1},\"meal\":\"lunch\"}],\"revision\":1,\"schema\":1},\"photo_moments\":{},\"plant_day_planted\":0,\"plant_state\":0,\"plant_watered_day\":-1,\"resident_rest\":{\"cause\":\"sleep\",\"day\":1,\"schema\":1},\"tutorial_version\":1,\"version\":5,\"world_weather\":{},\"yard_gate_open\":true,\"yard_inventory\":{\"corn\":0,\"fish\":{},\"flour\":0,\"grass\":0,\"ground\":[],\"held\":\"\",\"millet\":0,\"next_food_id\":1,\"production_revision\":0,\"revision\":1,\"schema\":5,\"wheat\":1}}',\n+     payload_sha256: '15d6a1a60307eeccdee425d2799b7b1da35228dc45c93356d248d968c3bf8998',\n+     request_id: 'd77b47a7ace04966be33e0a651a185f0',\n-     commit_id: '4942aa02203949ca9b58f6d9ff80a48a',\n-     envelope_sha256: 'be867634c8092c5742342b6133dd5df9e5832e713ac6092cd47edc2ba751e360',\n-     generation: '2',\n-     parent_commit_id: '7e2dd2a4be7f43fd8b78fd2a9289113c',\n-     payload_bytes: '{\"album\":[],\"animal_relationship_memory\":{},\"exploration\":null,\"exploration_committed_serial\":0,\"first_fish_caught\":false,\"holiday_day\":1,\"holiday_day_elapsed\":160.0,\"keepsakes\":{\"formal.find.flower_seeds\":2},\"locale\":\"zh-CN\",\"meal_ledger\":{\"receipts\":[{\"day\":1.0,\"earned\":3.0,\"fatigued\":false,\"ingredients\":{\"wheat\":1.0},\"meal\":\"lunch\"}],\"revision\":1.0,\"schema\":1.0},\"photo_moments\":{},\"plant_day_planted\":0,\"plant_state\":0,\"plant_watered_day\":-1,\"resident_rest\":{\"cause\":\"sleep\",\"day\":1.0,\"schema\":1.0},\"tutorial_version\":1,\"version\":5,\"world_weather\":{},\"yard_crops\":{\"kind\":\"\",\"planted_day\":0,\"revision\":0,\"schema\":1,\"watered_day\":-1},\"yard_gate_open\":true,\"yard_inventory\":{\"corn\":2,\"fish\":{},\"flour\":0,\"grass\":0,\"ground\":[],\"held\":\"\",\"millet\":0,\"next_food_id\":1,\"production_revision\":0,\"revision\":2,\"schema\":5,\"wheat\":3}}',\n-     payload_sha256: 'ee270fdca8f51baff9d51b87601a6588ff6d39c8a877199c5a2e146d41b85590',\n-     request_id: '4ce5aa5cba794310b4f1056eb88811a9',\n      schema: 'youjia.save-envelope/v1',\n      store_id: '73567e35a8624fc496047026dc9b1701'\n    }\n  ]\n\n    at D:\\work\\outputs\\garden-700-20261017\\garden-web.cjs:18:188"
+}

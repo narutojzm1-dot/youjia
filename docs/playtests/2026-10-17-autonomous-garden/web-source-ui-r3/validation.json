@@ -1,0 +1,47 @@
+{
+  "pass": true,
+  "source": "1ab59c1113dd0a1c7d55ca9e34cf3f89ab152814",
+  "actual_local_pck_normal_web_source_chain": true,
+  "controlled_start_no_flower_seeds": true,
+  "trips": [
+    {
+      "trip": 1,
+      "rng_seed_observed_not_forced": "2977975699398288129",
+      "slope": "formal.find.feather"
+    },
+    {
+      "trip": 2,
+      "rng_seed_observed_not_forced": "7007783998393247980",
+      "slope": "formal.find.feather"
+    },
+    {
+      "trip": 3,
+      "rng_seed_observed_not_forced": "-7701628379593770920",
+      "slope": "formal.find.flower_seeds"
+    }
+  ],
+  "real_ui_returned_seed_image": "source-ui-14.jpg",
+  "auto_plant_result_image": "source-ui-15.jpg",
+  "meal_carry": "lunch to dinner max1, spent1",
+  "garden": {
+    "receipts": [
+      {
+        "ap": 1,
+        "bed": "starter",
+        "day": 1,
+        "experience": 1,
+        "period": "dinner",
+        "seeds": 1
+      }
+    ],
+    "revision": 1,
+    "schema": 1
+  },
+  "no_game_error": true,
+  "console_preserved": [
+    "Failed to load resource: the server responded with a status of 404 (Not Found)"
+  ],
+  "owned_chrome_processes_after_close": 0,
+  "not_public_pack_or_real_phone": true,
+  "recorded_utc": "2026-10-17T15:52:30.199997+00:00"
+}
