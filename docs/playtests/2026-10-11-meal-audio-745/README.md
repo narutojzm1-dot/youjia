@@ -48,3 +48,49 @@
 - 基于 SHA `023d8000`：非 headless Godot 4.7.2 → PulseAudio `auto_null` → `ffmpeg` 录 `auto_null.monitor`
 - 已切 OGG：cook / hunger+spoon / pause 静音 / unpause / mute 静音 / unmute / deny allow 静音 / reallow
 - **未**冒充 Web 听验；**未**写合入通过。详见该目录 README。
+
+## 2026-10-11 ~21:28 CST Web 听验 blocker（GROK）
+
+- 路径：`docs/playtests/2026-10-11-meal-audio-745/web-listen/`
+- 本小时尝试 HTML5 导出听验：**未能捕获**。
+- 原因：本机 Godot 4.7.2 export templates 目录为空；官方 tpz ≈1.28GB，本小时未下载。Chrome 154 + Pulse `auto_null` 可用，但无 WASM 构建可录。
+- **未**伪造 Web 通过；**未**写合入通过。详见该目录 README。
+
+## 2026-10-12 饥饿短音 13 返修（GROK-CONTRIBUTOR）
+
+用户听感：第 11 条 cook loop、第 12 条 spoon 已通过并锁定；第 13 条肚子饿「听起来不像」。Leader 已在 Draft #738 停止派发 13。本叶子只重做饥饿短声，不改 Main / house_sleep / #738 宿主。
+
+- 只替换 `assets/holiday/audio/meal_grok/hunger.tres`（cue `meal.hunger`，API `play_hunger()`）
+- 叶子接口未改：`set_cooking` / `set_paused` / `set_playback_allowed` / `play_hunger`
+- 新声音约 0.64 秒，软包络。低频蠕动加上两声向下的空腔气泡，避免旧版几乎只有 80 Hz 以下闷响
+- 无尖锐点击；原创程序合成，不是 Minecraft / 塞尔达采样
+- 第 11 条 `cook_loop.tres` sha256 `2e9824a0be6cd199d4383d9593a4e184fb41ca9c558b5f91f340d7ef52f5ce1b` 未改
+- 第 12 条 `cook_spoon.tres` sha256 `b72eab1b9bf06842928aea36183a10f277b828cef21bfada150108b3ad700414` 未改
+- 新 `hunger.tres` sha256 `e87ebdbbd310b5aefa02d821affc3a217e634468771356688f6b1ed4d27aad1c`（旧文件为 `3bc6aaa9a12104999da54139d5560067b639af09207b83fbf3636d755a20c27e`）
+- 引入该资源的 git SHA：`ff311a519849d09c0e28a9b9f5cd356a07f31262`
+- 套件：Godot `4.7.2.stable.official.ed1daf0bf`，隔离 XDG，`run_verified_godot_suite test/meal_audio_suite.gd --headless --path .`。包装退出码 0，`[meal-audio] PASS: 63 checks`
+- 请重听的最终 head 以 PR #747 评论为准（本说明提交在资源提交之上，hunger 字节与 `ff311a51` 相同）
+- **不**声称耳听通过，**不**声称可以合入。请 CODEX-LEAD 只重听第 13 条
+
+## 2026-10-12 ~21:55 CST 饥饿短音 13 R3（GROK-CONTRIBUTOR）
+
+CODEX-LEAD 听验回执：用户再听 R2 仍认为肚子咕噜不对，要求先参考真实肚子咕噜再返修；R2 未批准，继续禁播。
+
+- 只替换 `assets/holiday/audio/meal_grok/hunger.tres`
+- 新 sha256 `bc04bc71cd6152e77a5affda9fa063edc39c65fa7abad8217d9df86f743e1d89`
+- 第 11/12 哈希锁定未动
+- 合成参考真实 borborygmi 的**公开文献可描述特征**（见 `hunger-13/README.md` 参考来源表），**未采样**外部录音、未下载第三方 wav/ogg
+- **听音权威路径唯一**：Godot `load`/`play` `assets/holiday/audio/meal_grok/hunger.tres`（或由该 tres 现场导出 WAV）
+- **不要**使用已删除的旁路文件：仓库内**从未**提交 `13-hunger-r3.wav`；旧 `hunger-13/13-hunger-only.ogg` 属 R2 时代旁路试听，**不可用于 R3**，本修订已从树中删除以免听错版本
+- 本机无 Godot，未复跑套件；请 Leader/CI 实跑
+- CODEX 2026-10-12T14:05Z：R3 暂不作为成熟送听包；本修订只修源树/文档边界，**不**重复发送 R2，**不**声称可送听通过
+
+## 2026-10-12 ~22:55 CST CODEX 源树修订（GROK-CONTRIBUTOR）
+
+针对 [CODEX-LEAD 增量审核](https://github.com/narutojzm1-dot/youjia/pull/747#issuecomment-6125893507)（审 `54821218`）：
+
+1. 总 README 已去掉不存在的 `13-hunger-r3.wav` 与误导性 OGG 听音条目。
+2. 删除 stale `hunger-13/13-hunger-only.ogg`（R2 旁路，sha256 `dd0bac53…`）。
+3. `hunger-13/README.md` 补公开文献参考来源与比对结论；明确「参考 ≠ 允许采样」。
+4. 权威仍是 R3 `hunger.tres`（`bc04bc71…`）；11/12 未动；不改 Main/存档/API；13 继续禁播。
+
