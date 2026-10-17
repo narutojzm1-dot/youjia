@@ -26,6 +26,7 @@ var pond_growth: Node
 var pond_edging_view: Node2D
 var mill_view: Node2D
 var stove_view: Node2D
+var garden_view: Node2D
 var pond_story: Node
 var gate: Node2D
 var gate_view: Node2D
@@ -279,6 +280,8 @@ func setup(
 	add_child(mill_view)
 	stove_view = StoveView.new(SaveStore)
 	add_child(stove_view)
+	garden_view = preload("res://scripts/game/yard_garden_view.gd").new(SaveStore)
+	add_child(garden_view)
 	pond_growth = preload("res://scripts/game/pond_growth_director.gd").new(self,SaveStore)
 	pond_growth.milling_station = MillView.APPROACH
 	pond_growth.milling_work_point = MillView.WORK_POINT
@@ -1147,6 +1150,9 @@ func _route_to_walk_goal(obstacles: Array) -> Array[Vector2]:
 
 
 func _sync_mill_work() -> void:
+	if garden_view != null and pond_growth != null:
+		garden_view.sync_work(pond_growth.action_id == "plant_flowers" and pond_growth.busy(),pond_growth.stage)
+		garden_view.sync_day(holiday_day)
 	if stove_view != null and pond_growth != null:
 		stove_view.sync_work(pond_growth.action_id == "build_stove" and pond_growth.busy(),pond_growth.stage)
 	if mill_view == null or pond_growth == null: return
@@ -1689,6 +1695,7 @@ func _tick_weather_transition(delta: float, refresh_tint: bool = false) -> void:
 	if pond_edging_view != null: pond_edging_view.modulate = sun_tint.lerp(rain_tint, _weather_mix)
 	if mill_view != null: mill_view.sync_environment(_weather_mix,sun_tint,rain_tint)
 	if stove_view != null: stove_view.sync_environment(_weather_mix,sun_tint,rain_tint)
+	if garden_view != null: garden_view.sync_environment(_weather_mix,sun_tint,rain_tint)
 	if original_plants_view != null: original_plants_view.sync(SaveStore.get_yard_original_plants(),_weather_mix,sun_tint,rain_tint)
 	if gate_view != null: gate_view.refresh(gate.opened, _weather_mix, sun_tint, rain_tint)
 	_weather_art_initialized = true

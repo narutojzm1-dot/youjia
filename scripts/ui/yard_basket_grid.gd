@@ -9,7 +9,7 @@ const KeepsakeArtScript := preload("res://scripts/exploration/keepsake_art.gd")
 signal action_requested(action: String, kind: String)
 signal menu_toggled(open: bool)
 
-const ORDER := ["small", "medium", "odd", "grass", "millet", "wheat", "corn", "round_stone", "pine_cone", "feather", "flour"]
+const ORDER := ["small", "medium", "odd", "grass", "millet", "wheat", "corn", "round_stone", "pine_cone", "feather", "flour", "flower_seeds"]
 const FISH := ["small", "medium", "odd"]
 const KEEPSAKES := ["round_stone", "pine_cone", "feather"]
 const FIND_IDS := {"round_stone": ExplorationRoutes.FIND_STONE, "pine_cone": ExplorationRoutes.FIND_PINE_CONE, "feather": ExplorationRoutes.FIND_FEATHER}
@@ -192,6 +192,7 @@ func _cell(kind: String) -> Button:
 	return cell
 
 static func _icon_texture(kind: String) -> Texture2D:
+	if kind == "flower_seeds": return KeepsakeArtScript.texture(ExplorationRoutes.FIND_FLOWER_SEEDS)
 	if kind in ["wheat", "corn"]: return preload("res://scripts/game/crop_art.gd").texture(kind)
 	if kind in KEEPSAKES:
 		return KeepsakeArtScript.texture(FIND_IDS[kind])
@@ -270,15 +271,17 @@ func update_view(inventory: Dictionary, keepsakes: Dictionary, state: String, bu
 	var en := I18n.get_locale() == "en"
 	_names = {"small": "Small fish" if en else "小鱼", "medium": "Fish" if en else "中鱼", "odd": "Curious fish" if en else "奇怪的鱼", "grass": "Grass" if en else "草束", "millet": "Millet" if en else "小米", "wheat": "Wheat" if en else "麦粒", "corn": "Corn" if en else "玉米粒", "round_stone": "Round stone" if en else "圆石", "pine_cone": "Pine cone" if en else "松果", "feather": "Feather" if en else "落羽"}
 	_names.flour = "Flour" if en else "面粉"
+	_names.flower_seeds = "Flower seeds" if en else "花种"
 	# 格内只放得下短名；完整名字在弹出的纸片标题和悬停提示里
 	var short := _names.duplicate()
-	if en: short.merge({"small": "Small", "odd": "Odd fish", "round_stone": "Stone", "pine_cone": "Cone"}, true)
+	if en: short.merge({"small": "Small", "odd": "Odd fish", "round_stone": "Stone", "pine_cone": "Cone", "flower_seeds":"Seeds"}, true)
 	_held = str(inventory.get("held", ""))
 	_busy = busy or state in ["saving", "unknown", "failed", "blocked"]
 	_loaded = not inventory.is_empty()
 	for kind: String in ORDER:
 		var count := 0
 		if kind in FISH: count = int(inventory.get("fish", {}).get(kind, 0))
+		elif kind == "flower_seeds": count = int(keepsakes.get(ExplorationRoutes.FIND_FLOWER_SEEDS,0))
 		elif kind in KEEPSAKES: count = int(keepsakes.get(FIND_IDS[kind], 0))
 		else: count = int(inventory.get(kind, 0))
 		counts[kind] = count
@@ -312,6 +315,8 @@ func _fit_names() -> void:
 ## 这一格现在能做什么：[动作 id, 按钮文字, 不能做时的原因]
 func action_for(kind: String) -> Array:
 	var en := I18n.get_locale() == "en"
+	if kind == "flower_seeds":
+		return ["", "For the garden" if en else "留着种花", _busy_note(en) if _busy or not _loaded else "After a meal, I can plant a little flower bed with these." if en else "吃过饭歇一会儿，可以拿它在院里种一小畦花。"]
 	if kind == "flour":
 		return ["", "For cooking" if en else "留着做饭", _busy_note(en) if _busy or not _loaded else "At mealtimes, I can make steamed buns or noodles with this." if en else "到饭点可以拿来做馒头、面条。"]
 	if kind == _held and not _held.is_empty():

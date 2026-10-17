@@ -2,10 +2,10 @@ import {makeLegacySeal, validLegacySeal} from './legacy_seal.mjs';
 // Dedicated Host database. Never writes the legacy /userfs IDBFS database.
 export const NAMESPACE = 'youjia-save-host-v1';
 // Writer capability epoch, independent of the unchanged envelope/payload schemas.
-// Opening v3 closes live v1/v2 connections. The new masonry atlas can occur
-// in frozen photos; cached older packs must not sanitize it away (#700/#827).
+// Opening v4 closes live v1/v2/v3 connections. New flower finds and the garden
+// atlas can occur in saves/photos; older packs must not sanitize them away.
 // No records, envelopes, payload schemas or legacy namespaces are rewritten.
-const WRITER_VERSION = 3;
+const WRITER_VERSION = 4;
 const SCHEMA = 'youjia.save-envelope/v1';
 const SEALED_SCHEMA = 'youjia.save-envelope/v2';
 const FIELDS = ['schema', 'store_id', 'commit_id', 'request_id', 'parent_commit_id',

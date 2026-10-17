@@ -12,6 +12,10 @@ static var _textures := {}
 
 
 static func texture(find_id: String) -> Texture2D:
+	if find_id == ExplorationRoutes.FIND_FLOWER_SEEDS:
+		if not _textures.has("flower_seeds"):
+			_textures["flower_seeds"] = preload("res://scripts/game/yard_garden_view.gd").texture(0)
+		return _textures.flower_seeds
 	var slug := find_id.get_slice(".", 2)
 	if not _textures.has(slug):
 		var path := TEXTURE_DIR + slug + (".png" if slug == "brook_stone" else ".webp")

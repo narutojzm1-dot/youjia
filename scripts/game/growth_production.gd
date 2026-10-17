@@ -7,6 +7,7 @@ const Inventory := preload("res://scripts/inventory/yard_inventory.gd")
 const Materials := preload("res://scripts/game/growth_materials.gd")
 const Contract := preload("res://scripts/exploration/exploration_contract.gd")
 const Stove := preload("res://scripts/game/yard_stove.gd")
+const Garden := preload("res://scripts/game/yard_garden.gd")
 
 static func empty() -> Dictionary:
 	return {"schema":1, "revision":0, "receipts":[]}
@@ -16,13 +17,17 @@ static func read(snapshot: Dictionary) -> Dictionary:
 	var inventory := Inventory.read(snapshot)
 	var today: Variant = Contract.as_int(snapshot.get("holiday_day",1),1,Inventory.MAX_REVISION)
 	if today == null or not raw is Dictionary or raw.size() != 3 or not raw.has_all(empty().keys()): return {}
-	var scope: Variant = Contract.as_int(raw.schema,1,2)
+	var scope: Variant = Contract.as_int(raw.schema,1,3)
 	if scope == null or Contract.as_int(raw.revision,0,Inventory.MAX_REVISION) == null: return {}
 	# Schema 2 fences AP work in pre-stove clients, whose strict schema-1
 	# reader cannot count stove spends. Both directions of the link must exist:
 	# never downgrade a fence or silently lose construction receipts.
 	var stove := Stove.read(snapshot)
-	if stove.is_empty() or (scope == 1 and stove.revision > 0) or (scope == 2 and stove.revision == 0): return {}
+	var garden := Garden.read(snapshot)
+	if stove.is_empty() or garden.is_empty(): return {}
+	if (scope == 1 and stove.revision > 0) or (scope == 2 and stove.revision == 0): return {}
+	# Schema 3 prevents pre-garden clients from re-spending unseen garden AP.
+	if (scope < 3 and garden.revision > 0) or (scope == 3 and garden.revision == 0): return {}
 	if inventory.is_empty() or inventory.production_revision != raw.revision: return {}
 	if not raw.receipts is Array or raw.receipts.size() != raw.revision: return {}
 	var result := empty()

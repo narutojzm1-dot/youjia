@@ -10,6 +10,8 @@ const Schedule := preload("res://scripts/game/growth_schedule.gd")
 const Stove := preload("res://scripts/game/yard_stove.gd")
 const StoveView := preload("res://scripts/game/yard_stove_view.gd")
 const MillView := preload("res://scripts/game/yard_mill_view.gd")
+const GardenView := preload("res://scripts/game/yard_garden_view.gd")
+const SEEDS := ExplorationRoutes.FIND_FLOWER_SEEDS
 const STONE := ExplorationRoutes.FIND_STONE
 signal finished(result: String)
 var world: Node2D
@@ -62,6 +64,9 @@ func begin_available(current_period: Callable) -> bool:
 	if budget.available >= Schedule.MILL_RECIPE.ap and _mill_ready(milling_station, Schedule.MILL_RECIPE):
 		jobs["wheat"] = {"id":"","station":milling_station,"recipe":Schedule.MILL_RECIPE,
 			"action":{"id":"mill_wheat","materials":{"wheat":Schedule.MILL_RECIPE.wheat}}}
+	if budget.available >= Schedule.GARDEN_RECIPE.ap and _garden_ready(Schedule.GARDEN_RECIPE):
+		jobs[SEEDS] = {"id":"starter","station":GardenView.APPROACH,"recipe":Schedule.GARDEN_RECIPE,
+			"action":{"id":"plant_flowers","materials":{SEEDS:Schedule.GARDEN_RECIPE.seeds}}}
 	var catalog := {}
 	for primary: String in jobs: catalog[primary] = jobs[primary].action
 	if catalog.is_empty(): return false
@@ -113,6 +118,15 @@ func begin_milling(station: Vector2, config: Dictionary, current_period: Callabl
 func begin_stove(config: Dictionary, current_period: Callable) -> bool:
 	if not _can_start(current_period) or not _stove_ready(config): return false
 	return _begin_explicit("stove",StoveView.APPROACH,config,current_period,{STONE:{"id":"build_stove","materials":{STONE:config.stones}}})
+
+func begin_garden(config: Dictionary, current_period: Callable) -> bool:
+	if not _can_start(current_period) or not _garden_ready(config): return false
+	return _begin_explicit("starter",GardenView.APPROACH,config,current_period,{SEEDS:{"id":"plant_flowers","materials":{SEEDS:config.seeds}}})
+
+func _garden_ready(config: Dictionary) -> bool:
+	if not _valid_recipe(config,["ap","seeds","experience"]): return false
+	var value: Dictionary = store.get_yard_garden()
+	return not value.is_empty() and value.revision == 0 and GardenView.texture(1) != null and YardGround.allows(GardenView.APPROACH,world.player_ground(),true) and not YardGround.route(Basket.APPROACH,GardenView.APPROACH).is_empty()
 
 func _stove_ready(config: Dictionary) -> bool:
 	if not _valid_recipe(config,["ap","stones","experience"]): return false
@@ -170,6 +184,7 @@ func _start(id: String, station: Vector2, config: Dictionary, current_period: Ca
 	action_id = str(proposal.action_id)
 	stove_stage = int(store.get_yard_stove().get("revision",-1)) if action_id == "build_stove" else -1
 	material.texture = preload("res://scripts/game/crop_art.gd").texture("wheat") if action_id == "mill_wheat" else KeepsakeArt.texture(STONE)
+	if action_id == "plant_flowers": material.texture = KeepsakeArt.texture(SEEDS)
 	period_reader = current_period
 	section = id
 	elapsed = 0.0
@@ -255,6 +270,8 @@ func tick(delta: float, move: Vector2) -> void:
 		pending = store.request_milling(expected,proposal,{"ap":recipe.ap,"wheat":recipe.wheat,"flour":recipe.flour,"experience":recipe.experience})
 	elif action_id == "build_stove":
 		pending = store.request_stove_growth(expected,stove_stage,proposal,{"ap":recipe.ap,"stones":recipe.stones,"experience":recipe.experience})
+	elif action_id == "plant_flowers":
+		pending = store.request_garden_growth(expected,proposal,{"ap":recipe.ap,"seeds":recipe.seeds,"experience":recipe.experience})
 	else:
 		pending = store.request_pond_growth(expected,section,proposal,recipe.ap,recipe.stones,recipe.experience)
 	if pending.is_empty():

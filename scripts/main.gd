@@ -94,6 +94,7 @@ var _bark_clock := 0.0
 var _growth_bark_revision := -1
 var _production_bark_revision := -1
 var _stove_bark_revision := -1
+var _garden_bark_revision := -1
 var _fatigue_bark_day := -1
 var _fatigue_bark_ready_seconds := 0.0
 const FATIGUE_BARK_SETTLE_SECONDS := 15.0
@@ -1480,6 +1481,7 @@ func _start_holiday(save_progress: bool = true) -> void:
 	_growth_bark_revision = int(SaveStore.get_pond_edging().get("revision", -1))
 	_production_bark_revision = int(SaveStore.get_growth_production().get("revision", -1))
 	_stove_bark_revision = int(SaveStore.get_yard_stove().get("revision", -1))
+	_garden_bark_revision = int(SaveStore.get_yard_garden().get("revision", -1))
 	_holiday_start_pending = true
 	_leave_exploration()
 	if save_progress and _world != null: _world._save_progress()
@@ -3723,11 +3725,13 @@ func _on_growth_confirmed_for_bark() -> void:
 	var revision := int(SaveStore.get_pond_edging().get("revision", -1))
 	var production_revision := int(SaveStore.get_growth_production().get("revision", -1))
 	var stove_revision := int(SaveStore.get_yard_stove().get("revision", -1))
-	if revision <= _growth_bark_revision and production_revision <= _production_bark_revision and stove_revision <= _stove_bark_revision: return
+	var garden_revision := int(SaveStore.get_yard_garden().get("revision", -1))
+	if revision <= _growth_bark_revision and production_revision <= _production_bark_revision and stove_revision <= _stove_bark_revision and garden_revision <= _garden_bark_revision: return
 	# Save error bookkeeping clears on idle, so it cannot dedupe presentation.
 	_growth_bark_revision = revision
 	_production_bark_revision = production_revision
 	_stove_bark_revision = stove_revision
+	_garden_bark_revision = garden_revision
 	if _resident_barks == null or _resident_bubble == null or _world == null: return
 	# A menu/house/scene owns attention: discard rather than queue a late cheer.
 	var blocked: bool = _resident_bark_blocked() or _resident_bubble.is_showing()

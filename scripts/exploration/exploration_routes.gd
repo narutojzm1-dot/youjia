@@ -8,7 +8,8 @@ const NEAR_PATH := "formal.near_path"
 const FIND_STONE := "formal.find.brook_stone"
 const FIND_PINE_CONE := "formal.find.pine_cone"
 const FIND_FEATHER := "formal.find.feather"
-const FINDS := [FIND_STONE, FIND_PINE_CONE, FIND_FEATHER]
+const FIND_FLOWER_SEEDS := "formal.find.flower_seeds"
+const FINDS := [FIND_STONE, FIND_PINE_CONE, FIND_FEATHER, FIND_FLOWER_SEEDS]
 
 # 停留点按画卷从院门往外的顺序排列；彼此都可直接到达，经过但不停下看不算到过。
 const ORDINARY_STOPS := ["gate", "brook", "shade", "slope"]
@@ -41,6 +42,9 @@ static func routes() -> Dictionary:
 		{"find_id": FIND_PINE_CONE, "weight": 2},
 		{"find_id": FIND_STONE, "weight": 1},
 		{"find_id": FIND_FEATHER, "weight": 1},
+		# #700 first gardening source; weight is producer tuning. The existing
+		# session persists offers, so an already visited stop is never rerolled.
+		{"find_id": FIND_FLOWER_SEEDS, "weight": 1},
 	]
 	# Extra discovery; ordinary solo stops keep their original pools and seeds.
 	stops["leaf_pile"]["hidden"] = {"actor_id": "llama", "find_id": FIND_PINE_CONE}
