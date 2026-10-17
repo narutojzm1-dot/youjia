@@ -1,0 +1,12 @@
+{
+  "source": "a6361372066c2925cea75e5856babb85ad18120d",
+  "unmodified_run_case_sha256": "8f6d855ea6a91a51c073ee86f768588e15b3148bcf3979b950b1323a6670aa45",
+  "actual_environment": "Windows Git Bash",
+  "destructive_rm_replaced_with_noop_exit97": true,
+  "real_deletion_executed": false,
+  "bad_arguments_rejected_before_rm": 12,
+  "same_uid_unknown_directory_still_requested_rm": true,
+  "sentinel_unchanged": true,
+  "conclusion": "remaining ownership guard defect reproduced; not a passing safety acceptance",
+  "output": "BAD_ARGUMENTS_REJECTED_BEFORE_RM=12\nSAME_UID_UNKNOWN_EXIT=97\nCASE=/tmp/startup749/CODEX_A636_SAFETY_1718\nRM_REACHED -rf -- /tmp/startup749/CODEX_A636_SAFETY_1718\n"
+}

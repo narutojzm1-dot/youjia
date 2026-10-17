@@ -1,0 +1,74 @@
+[
+  {
+    "file": "test-explicit_target.log",
+    "last_lines": [
+      "AUDIT PASS invalid newer pointer cancels previous route and intent",
+      "AUDIT PASS invalid pointer never consumes grass or toggles lead",
+      "[explicit-target-tests] checks=26 failures=[]"
+    ]
+  },
+  {
+    "file": "test-growth_carried_photo.log",
+    "last_lines": [
+      "Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org",
+      "",
+      "GROWTH_CARRIED_PHOTO checks=39 failures=0"
+    ]
+  },
+  {
+    "file": "test-milling_director.log",
+    "last_lines": [
+      "Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org",
+      "",
+      "MILLING_DIRECTOR checks=162 failures=0"
+    ]
+  },
+  {
+    "file": "test-physical_yard.log",
+    "last_lines": [
+      "[physical-yard-tests] multiple natural resident routes at 120Hz frames=4558 travel=3034.9 llama=194.6 min_gap=1.0000 overlap=0 depth=0",
+      "[physical-yard-tests] leading around residents at 120Hz frames=9186 travel=1952.4 llama=1189.7 min_gap=1.0000 overlap=0 depth=0",
+      "[physical-yard-tests] PASS: 676 checks"
+    ]
+  },
+  {
+    "file": "test-pond_growth_director.log",
+    "last_lines": [
+      "AUTO_AFTER_SAVE { \"day\": 1, \"period\": \"lunch\", \"available\": 2, \"source\": { \"meals\": { \"schema\": 1, \"revision\": 1, \"receipts\": [{ \"day\": 1, \"meal\": \"lunch\", \"ingredients\": { \"wheat\": 1 }, \"fatigued\": false, \"earned\": 3 }] }, \"actions\": { \"schema\": 1, \"revision\": 0, \"actions\": {  } }, \"production\": { \"schema\": 2, \"revision\": 0, \"receipts\": [] }, \"stove\": { \"schema\": 1, \"revision\": 1, \"receipts\": [{ \"stage\": 1, \"day\": 1, \"period\": \"lunch\", \"ap\": 1, \"stones\": 1, \"experience\": 1 }] } } } sections={ \"schema\": 1, \"revision\": 0, \"sections\": {  } }",
+      "NEXT_WORK_TIMING seed=0 tick=360 encounter_seen=false save_seen=false",
+      "POND_GROWTH_DIRECTOR checks=292 failures=0"
+    ]
+  },
+  {
+    "file": "test-release_notes.log",
+    "last_lines": [
+      "Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org",
+      "",
+      "RELEASE_NOTES checks=102 failures=0"
+    ]
+  },
+  {
+    "file": "test-stove_director.log",
+    "last_lines": [
+      "Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org",
+      "",
+      "STOVE_DIRECTOR checks=95 failures=0"
+    ]
+  },
+  {
+    "file": "test-stove_pose.log",
+    "last_lines": [
+      "",
+      "STOVE_POSE_OBSERVATIONS {\"checks\":29,\"failures\":[],\"observations\":[{\"contact_error\":3.57391858100891,\"feet\":[411.032836914063,564.211547851563],\"hand\":[396.392730712891,552.708618164063],\"pose\":\"stove_low\",\"stage\":0},{\"contact_error\":1.91779291629791,\"feet\":[411.121673583984,564.322204589844],\"hand\":[396.479125976563,539.220703125],\"pose\":\"stove_high\",\"stage\":1},{\"contact_error\":1.51335215568542,\"feet\":[411.125091552734,564.323425292969],\"hand\":[396.482513427734,518.303955078125],\"pose\":\"stove_top\",\"stage\":2}]}",
+      "STOVE_POSE checks=29 failures=0"
+    ]
+  },
+  {
+    "file": "test-yard_stove.log",
+    "last_lines": [
+      "Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org",
+      "",
+      "YARD_STOVE checks=66 failures=0"
+    ]
+  }
+]

@@ -1,0 +1,9 @@
+== A_default
+REALTIME_MOVIE {"frames": 270, "fps": 30, "seconds": 9.0, "period_frames": 240, "loop_max_diff": 0, "first_vs_second_cycle_max_diff": 3, "first_cycle_frames_differing": [2, 3, 4], "still_outside_water_max_diff": 0, "protect_max_diff": 0, "half_cycle_changed_water_px": 7069, "step_mean_median": 0.7729, "step_mean_max": 0.9505, "step_mean_min": 0.6565, "boundary_steps": [0.7968], "ok": true}
+exit 0
+== B_jitterfix0
+REALTIME_MOVIE {"frames": 270, "fps": 30, "seconds": 9.0, "period_frames": 240, "loop_max_diff": 0, "first_vs_second_cycle_max_diff": 0, "first_cycle_frames_differing": [], "still_outside_water_max_diff": 0, "protect_max_diff": 0, "half_cycle_changed_water_px": 7058, "step_mean_median": 0.7734, "step_mean_max": 0.8963, "step_mean_min": 0.6998, "boundary_steps": [0.7994], "ok": true}
+exit 0
+== C_ticks30
+REALTIME_MOVIE {"frames": 270, "fps": 30, "seconds": 9.0, "period_frames": 240, "loop_max_diff": 0, "first_vs_second_cycle_max_diff": 0, "first_cycle_frames_differing": [], "still_outside_water_max_diff": 0, "protect_max_diff": 0, "half_cycle_changed_water_px": 7058, "step_mean_median": 0.7734, "step_mean_max": 0.8963, "step_mean_min": 0.6998, "boundary_steps": [0.7994], "ok": true}
+exit 0

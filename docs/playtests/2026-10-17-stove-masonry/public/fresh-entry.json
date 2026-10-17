@@ -1,0 +1,50 @@
+{
+  "source": "24c9dd33cb32934ff3727492fb561fe86bcdfdd7",
+  "actual_formal_site": true,
+  "no_fixture_writes": true,
+  "new_own_browser_profile": true,
+  "pageErrors": [],
+  "console": [],
+  "requests": [],
+  "timings": {
+    "engineScriptReady": 342,
+    "bootstrapReady": 1246,
+    "engineReady": 21353,
+    "firstFrame": 21735
+  },
+  "before": {
+    "version": 3,
+    "records": [
+      {
+        "schema": "youjia.save-envelope/v1",
+        "store_id": "c0f7dccae98b437ab12fc5c2aa9c36cd",
+        "commit_id": "5d4271d5a87144fea5ef08f3977c3aa1",
+        "request_id": "05fb17c1e1ed4f8c8a887816d3c7ee49",
+        "parent_commit_id": "",
+        "generation": "1",
+        "payload_bytes": "{\"album\":[],\"animal_relationship_memory\":{},\"exploration\":null,\"exploration_committed_serial\":0,\"first_fish_caught\":false,\"holiday_day\":1,\"holiday_day_elapsed\":0.0,\"keepsakes\":{},\"locale\":\"zh-CN\",\"photo_moments\":{},\"plant_day_planted\":0,\"plant_state\":0,\"plant_watered_day\":-1,\"tutorial_version\":0,\"version\":5,\"world_weather\":{},\"yard_gate_open\":false}",
+        "payload_sha256": "b938a21005aa62fa9fa2a3ddad4c28d142e9467974a3bb8f0d2016f746173172",
+        "envelope_sha256": "f20ed32e91ce8dcaaa7e3f0a7819d80be7c44edda7a9b65a13da2392b5a399d4"
+      }
+    ]
+  },
+  "after": {
+    "version": 3,
+    "records": [
+      {
+        "schema": "youjia.save-envelope/v1",
+        "store_id": "c0f7dccae98b437ab12fc5c2aa9c36cd",
+        "commit_id": "cd00b96a5b254c9fb9bf4dd670498887",
+        "request_id": "f61346bcc8c5454289c4fe47c9cc3ee9",
+        "parent_commit_id": "5d4271d5a87144fea5ef08f3977c3aa1",
+        "generation": "2",
+        "payload_bytes": "{\"album\":[],\"animal_relationship_memory\":{},\"exploration\":null,\"exploration_committed_serial\":0,\"first_fish_caught\":false,\"holiday_day\":1,\"holiday_day_elapsed\":0.0,\"keepsakes\":{},\"locale\":\"zh-CN\",\"photo_moments\":{},\"plant_day_planted\":0,\"plant_state\":0,\"plant_watered_day\":-1,\"tutorial_version\":0,\"version\":5,\"world_weather\":{},\"yard_crops\":{\"kind\":\"\",\"planted_day\":0,\"revision\":0,\"schema\":1,\"watered_day\":-1},\"yard_gate_open\":false,\"yard_inventory\":{\"corn\":2,\"fish\":{},\"flour\":0,\"grass\":0,\"ground\":[],\"held\":\"\",\"millet\":0,\"next_food_id\":1,\"production_revision\":0,\"revision\":1,\"schema\":5,\"wheat\":2}}",
+        "payload_sha256": "5668c3edc294ea915bf86f196248083c4582fd6d4331ba4bd28defe8d8c22b2f",
+        "envelope_sha256": "5793f3621099ed2918a0e09d4bfca29b21fe2afef9ba2e50e9b872680532a2e1"
+      }
+    ]
+  },
+  "initialEnvelopeValid": true,
+  "day": 1,
+  "pass": true
+}
