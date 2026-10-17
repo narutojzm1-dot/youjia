@@ -1,0 +1,15 @@
+extends SceneTree
+func _initialize() -> void:
+	var args := OS.get_cmdline_user_args()
+	assert(args.size() == 2)
+	assert(ProjectSettings.load_resource_pack(args[0]))
+	var identity: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://config/build_identity.json"))
+	var notes: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://config/release_notes.json"))
+	var manifest: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://assets/holiday/characters/resident_stove_actions_v1/manifest.json"))
+	var texture: Texture2D = load("res://assets/holiday/characters/resident_stove_actions_v1/actions.png")
+	assert(identity.sourceCommit == args[1])
+	assert(notes.releases[0].title == "小灶台施工动作" and notes.releases[1].build == "c8d994f")
+	assert(texture.get_size() == Vector2(3456,1344))
+	for kind: String in ["stove_low","stove_high","stove_top"]: assert(manifest.hands[kind].size() == 9)
+	print("STOVE_PACK "+JSON.stringify({"identity":identity,"notes":notes.releases.slice(0,2),"texture_size":[texture.get_width(),texture.get_height()],"manifest":manifest,"pass":true}))
+	quit(0)
