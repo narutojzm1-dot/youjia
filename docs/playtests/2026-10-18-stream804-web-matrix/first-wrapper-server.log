@@ -1,0 +1,1832 @@
+serving D:\work\outputs\garden-contact-700-20261018\stream804-matrix\site on 127.0.0.1:55869
+127.0.0.1 - - [18/Oct/2026 02:52:41] "GET /__probe_server_id HTTP/1.1" 200 -
+127.0.0.1 - - [18/Oct/2026 02:52:42] "GET /index.pck HTTP/1.1" 200 -
+127.0.0.1 - - [18/Oct/2026 02:52:42] "GET /index.html?matrix=1 HTTP/1.1" 200 -
+127.0.0.1 - - [18/Oct/2026 02:52:42] "GET /index.png HTTP/1.1" 200 -
+127.0.0.1 - - [18/Oct/2026 02:52:42] "GET /index.js HTTP/1.1" 200 -
+127.0.0.1 - - [18/Oct/2026 02:52:42] "GET /index.wasm HTTP/1.1" 200 -
+127.0.0.1 - - [18/Oct/2026 02:52:42] "GET /index.pck HTTP/1.1" 200 -
+127.0.0.1 - - [18/Oct/2026 02:52:42] code 404, message File not found
+127.0.0.1 - - [18/Oct/2026 02:52:42] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [18/Oct/2026 02:52:44] "GET /index.audio.position.worklet.js HTTP/1.1" 200 -
+127.0.0.1 - - [18/Oct/2026 02:52:44] "GET /index.audio.worklet.js HTTP/1.1" 200 -
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 60692)
+Traceback (most recent call last):
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 691, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 361, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 671, in __init__
+    super().__init__(*args, **kwargs)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 755, in __init__
+    self.handle()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "D:\work\outputs\garden-contact-700-20261018\stream804-matrix\source\art\concepts\env_fx_stream_20261014\web_probe_server.py", line 78, in do_POST
+    with open(path, "xb") as f:
+         ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'D:\\work\\outputs\\garden-contact-700-20261018\\stream804-matrix\\uploads\\R_s0.5_o0.0.png'
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 49436)
+Traceback (most recent call last):
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 691, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 361, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 671, in __init__
+    super().__init__(*args, **kwargs)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 755, in __init__
+    self.handle()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "D:\work\outputs\garden-contact-700-20261018\stream804-matrix\source\art\concepts\env_fx_stream_20261014\web_probe_server.py", line 78, in do_POST
+    with open(path, "xb") as f:
+         ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'D:\\work\\outputs\\garden-contact-700-20261018\\stream804-matrix\\uploads\\S0_s0.5_o0.0.png'
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 63994)
+Traceback (most recent call last):
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 691, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 361, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 671, in __init__
+    super().__init__(*args, **kwargs)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 755, in __init__
+    self.handle()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "D:\work\outputs\garden-contact-700-20261018\stream804-matrix\source\art\concepts\env_fx_stream_20261014\web_probe_server.py", line 78, in do_POST
+    with open(path, "xb") as f:
+         ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'D:\\work\\outputs\\garden-contact-700-20261018\\stream804-matrix\\uploads\\NL_s0.5_o0.0.png'
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 60678)
+Traceback (most recent call last):
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 691, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 361, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 671, in __init__
+    super().__init__(*args, **kwargs)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 755, in __init__
+    self.handle()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "D:\work\outputs\garden-contact-700-20261018\stream804-matrix\source\art\concepts\env_fx_stream_20261014\web_probe_server.py", line 78, in do_POST
+    with open(path, "xb") as f:
+         ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'D:\\work\\outputs\\garden-contact-700-20261018\\stream804-matrix\\uploads\\NZ_s0.5_o0.0.png'
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 57360)
+Traceback (most recent call last):
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 691, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 361, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 671, in __init__
+    super().__init__(*args, **kwargs)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 755, in __init__
+    self.handle()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "D:\work\outputs\garden-contact-700-20261018\stream804-matrix\source\art\concepts\env_fx_stream_20261014\web_probe_server.py", line 78, in do_POST
+    with open(path, "xb") as f:
+         ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'D:\\work\\outputs\\garden-contact-700-20261018\\stream804-matrix\\uploads\\C_s0.5_o0.0_0.0000.png'
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 53887)
+Traceback (most recent call last):
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 691, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 361, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 671, in __init__
+    super().__init__(*args, **kwargs)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 755, in __init__
+    self.handle()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "D:\work\outputs\garden-contact-700-20261018\stream804-matrix\source\art\concepts\env_fx_stream_20261014\web_probe_server.py", line 78, in do_POST
+    with open(path, "xb") as f:
+         ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'D:\\work\\outputs\\garden-contact-700-20261018\\stream804-matrix\\uploads\\C_s0.5_o0.0_1.5708.png'
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 63192)
+Traceback (most recent call last):
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 691, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 361, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 671, in __init__
+    super().__init__(*args, **kwargs)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 755, in __init__
+    self.handle()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "D:\work\outputs\garden-contact-700-20261018\stream804-matrix\source\art\concepts\env_fx_stream_20261014\web_probe_server.py", line 78, in do_POST
+    with open(path, "xb") as f:
+         ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'D:\\work\\outputs\\garden-contact-700-20261018\\stream804-matrix\\uploads\\C_s0.5_o0.0_3.1416.png'
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 51221)
+Traceback (most recent call last):
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 691, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 361, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 671, in __init__
+    super().__init__(*args, **kwargs)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 755, in __init__
+    self.handle()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "D:\work\outputs\garden-contact-700-20261018\stream804-matrix\source\art\concepts\env_fx_stream_20261014\web_probe_server.py", line 78, in do_POST
+    with open(path, "xb") as f:
+         ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'D:\\work\\outputs\\garden-contact-700-20261018\\stream804-matrix\\uploads\\C_s0.5_o0.0_4.7124.png'
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 59633)
+Traceback (most recent call last):
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 691, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 361, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 671, in __init__
+    super().__init__(*args, **kwargs)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 755, in __init__
+    self.handle()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "D:\work\outputs\garden-contact-700-20261018\stream804-matrix\source\art\concepts\env_fx_stream_20261014\web_probe_server.py", line 78, in do_POST
+    with open(path, "xb") as f:
+         ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'D:\\work\\outputs\\garden-contact-700-20261018\\stream804-matrix\\uploads\\C_s0.5_o0.0_6.2832.png'
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 57731)
+Traceback (most recent call last):
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 691, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 361, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 671, in __init__
+    super().__init__(*args, **kwargs)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 755, in __init__
+    self.handle()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "D:\work\outputs\garden-contact-700-20261018\stream804-matrix\source\art\concepts\env_fx_stream_20261014\web_probe_server.py", line 78, in do_POST
+    with open(path, "xb") as f:
+         ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'D:\\work\\outputs\\garden-contact-700-20261018\\stream804-matrix\\uploads\\R_s0.5_o0.37.png'
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 65184)
+Traceback (most recent call last):
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 691, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 361, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 671, in __init__
+    super().__init__(*args, **kwargs)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 755, in __init__
+    self.handle()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "D:\work\outputs\garden-contact-700-20261018\stream804-matrix\source\art\concepts\env_fx_stream_20261014\web_probe_server.py", line 78, in do_POST
+    with open(path, "xb") as f:
+         ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'D:\\work\\outputs\\garden-contact-700-20261018\\stream804-matrix\\uploads\\S0_s0.5_o0.37.png'
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 64473)
+Traceback (most recent call last):
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 691, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 361, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 671, in __init__
+    super().__init__(*args, **kwargs)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 755, in __init__
+    self.handle()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "D:\work\outputs\garden-contact-700-20261018\stream804-matrix\source\art\concepts\env_fx_stream_20261014\web_probe_server.py", line 78, in do_POST
+    with open(path, "xb") as f:
+         ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'D:\\work\\outputs\\garden-contact-700-20261018\\stream804-matrix\\uploads\\NL_s0.5_o0.37.png'
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 55409)
+Traceback (most recent call last):
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 691, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 361, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 671, in __init__
+    super().__init__(*args, **kwargs)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 755, in __init__
+    self.handle()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "D:\work\outputs\garden-contact-700-20261018\stream804-matrix\source\art\concepts\env_fx_stream_20261014\web_probe_server.py", line 78, in do_POST
+    with open(path, "xb") as f:
+         ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'D:\\work\\outputs\\garden-contact-700-20261018\\stream804-matrix\\uploads\\NZ_s0.5_o0.37.png'
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 51184)
+Traceback (most recent call last):
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 691, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 361, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 671, in __init__
+    super().__init__(*args, **kwargs)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 755, in __init__
+    self.handle()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "D:\work\outputs\garden-contact-700-20261018\stream804-matrix\source\art\concepts\env_fx_stream_20261014\web_probe_server.py", line 78, in do_POST
+    with open(path, "xb") as f:
+         ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'D:\\work\\outputs\\garden-contact-700-20261018\\stream804-matrix\\uploads\\C_s0.5_o0.37_0.0000.png'
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 63024)
+Traceback (most recent call last):
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 691, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 361, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 671, in __init__
+    super().__init__(*args, **kwargs)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 755, in __init__
+    self.handle()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "D:\work\outputs\garden-contact-700-20261018\stream804-matrix\source\art\concepts\env_fx_stream_20261014\web_probe_server.py", line 78, in do_POST
+    with open(path, "xb") as f:
+         ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'D:\\work\\outputs\\garden-contact-700-20261018\\stream804-matrix\\uploads\\C_s0.5_o0.37_1.5708.png'
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 56433)
+Traceback (most recent call last):
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 691, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 361, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 671, in __init__
+    super().__init__(*args, **kwargs)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 755, in __init__
+    self.handle()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "D:\work\outputs\garden-contact-700-20261018\stream804-matrix\source\art\concepts\env_fx_stream_20261014\web_probe_server.py", line 78, in do_POST
+    with open(path, "xb") as f:
+         ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'D:\\work\\outputs\\garden-contact-700-20261018\\stream804-matrix\\uploads\\C_s0.5_o0.37_3.1416.png'
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 58310)
+Traceback (most recent call last):
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 691, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 361, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 671, in __init__
+    super().__init__(*args, **kwargs)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 755, in __init__
+    self.handle()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "D:\work\outputs\garden-contact-700-20261018\stream804-matrix\source\art\concepts\env_fx_stream_20261014\web_probe_server.py", line 78, in do_POST
+    with open(path, "xb") as f:
+         ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'D:\\work\\outputs\\garden-contact-700-20261018\\stream804-matrix\\uploads\\C_s0.5_o0.37_4.7124.png'
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 64945)
+Traceback (most recent call last):
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 691, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 361, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 671, in __init__
+    super().__init__(*args, **kwargs)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 755, in __init__
+    self.handle()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "D:\work\outputs\garden-contact-700-20261018\stream804-matrix\source\art\concepts\env_fx_stream_20261014\web_probe_server.py", line 78, in do_POST
+    with open(path, "xb") as f:
+         ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'D:\\work\\outputs\\garden-contact-700-20261018\\stream804-matrix\\uploads\\C_s0.5_o0.37_6.2832.png'
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 63597)
+Traceback (most recent call last):
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 691, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 361, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 671, in __init__
+    super().__init__(*args, **kwargs)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 755, in __init__
+    self.handle()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "D:\work\outputs\garden-contact-700-20261018\stream804-matrix\source\art\concepts\env_fx_stream_20261014\web_probe_server.py", line 78, in do_POST
+    with open(path, "xb") as f:
+         ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'D:\\work\\outputs\\garden-contact-700-20261018\\stream804-matrix\\uploads\\R_s0.75_o0.0.png'
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 55465)
+Traceback (most recent call last):
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 691, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 361, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 671, in __init__
+    super().__init__(*args, **kwargs)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 755, in __init__
+    self.handle()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "D:\work\outputs\garden-contact-700-20261018\stream804-matrix\source\art\concepts\env_fx_stream_20261014\web_probe_server.py", line 78, in do_POST
+    with open(path, "xb") as f:
+         ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'D:\\work\\outputs\\garden-contact-700-20261018\\stream804-matrix\\uploads\\S0_s0.75_o0.0.png'
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 51662)
+Traceback (most recent call last):
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 691, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 361, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 671, in __init__
+    super().__init__(*args, **kwargs)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 755, in __init__
+    self.handle()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "D:\work\outputs\garden-contact-700-20261018\stream804-matrix\source\art\concepts\env_fx_stream_20261014\web_probe_server.py", line 78, in do_POST
+    with open(path, "xb") as f:
+         ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'D:\\work\\outputs\\garden-contact-700-20261018\\stream804-matrix\\uploads\\NL_s0.75_o0.0.png'
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 49569)
+Traceback (most recent call last):
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 691, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 361, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 671, in __init__
+    super().__init__(*args, **kwargs)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 755, in __init__
+    self.handle()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "D:\work\outputs\garden-contact-700-20261018\stream804-matrix\source\art\concepts\env_fx_stream_20261014\web_probe_server.py", line 78, in do_POST
+    with open(path, "xb") as f:
+         ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'D:\\work\\outputs\\garden-contact-700-20261018\\stream804-matrix\\uploads\\NZ_s0.75_o0.0.png'
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 61299)
+Traceback (most recent call last):
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 691, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 361, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 671, in __init__
+    super().__init__(*args, **kwargs)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 755, in __init__
+    self.handle()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "D:\work\outputs\garden-contact-700-20261018\stream804-matrix\source\art\concepts\env_fx_stream_20261014\web_probe_server.py", line 78, in do_POST
+    with open(path, "xb") as f:
+         ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'D:\\work\\outputs\\garden-contact-700-20261018\\stream804-matrix\\uploads\\C_s0.75_o0.0_0.0000.png'
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 54852)
+Traceback (most recent call last):
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 691, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 361, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 671, in __init__
+    super().__init__(*args, **kwargs)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 755, in __init__
+    self.handle()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "D:\work\outputs\garden-contact-700-20261018\stream804-matrix\source\art\concepts\env_fx_stream_20261014\web_probe_server.py", line 78, in do_POST
+    with open(path, "xb") as f:
+         ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'D:\\work\\outputs\\garden-contact-700-20261018\\stream804-matrix\\uploads\\C_s0.75_o0.0_1.5708.png'
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 52469)
+Traceback (most recent call last):
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 691, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 361, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 671, in __init__
+    super().__init__(*args, **kwargs)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 755, in __init__
+    self.handle()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "D:\work\outputs\garden-contact-700-20261018\stream804-matrix\source\art\concepts\env_fx_stream_20261014\web_probe_server.py", line 78, in do_POST
+    with open(path, "xb") as f:
+         ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'D:\\work\\outputs\\garden-contact-700-20261018\\stream804-matrix\\uploads\\C_s0.75_o0.0_3.1416.png'
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 54252)
+Traceback (most recent call last):
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 691, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 361, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 671, in __init__
+    super().__init__(*args, **kwargs)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 755, in __init__
+    self.handle()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "D:\work\outputs\garden-contact-700-20261018\stream804-matrix\source\art\concepts\env_fx_stream_20261014\web_probe_server.py", line 78, in do_POST
+    with open(path, "xb") as f:
+         ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'D:\\work\\outputs\\garden-contact-700-20261018\\stream804-matrix\\uploads\\C_s0.75_o0.0_4.7124.png'
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 62571)
+Traceback (most recent call last):
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 691, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 361, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 671, in __init__
+    super().__init__(*args, **kwargs)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 755, in __init__
+    self.handle()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "D:\work\outputs\garden-contact-700-20261018\stream804-matrix\source\art\concepts\env_fx_stream_20261014\web_probe_server.py", line 78, in do_POST
+    with open(path, "xb") as f:
+         ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'D:\\work\\outputs\\garden-contact-700-20261018\\stream804-matrix\\uploads\\C_s0.75_o0.0_6.2832.png'
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 57989)
+Traceback (most recent call last):
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 691, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 361, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 671, in __init__
+    super().__init__(*args, **kwargs)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 755, in __init__
+    self.handle()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "D:\work\outputs\garden-contact-700-20261018\stream804-matrix\source\art\concepts\env_fx_stream_20261014\web_probe_server.py", line 78, in do_POST
+    with open(path, "xb") as f:
+         ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'D:\\work\\outputs\\garden-contact-700-20261018\\stream804-matrix\\uploads\\R_s0.75_o0.37.png'
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 60529)
+Traceback (most recent call last):
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 691, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 361, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 671, in __init__
+    super().__init__(*args, **kwargs)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 755, in __init__
+    self.handle()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "D:\work\outputs\garden-contact-700-20261018\stream804-matrix\source\art\concepts\env_fx_stream_20261014\web_probe_server.py", line 78, in do_POST
+    with open(path, "xb") as f:
+         ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'D:\\work\\outputs\\garden-contact-700-20261018\\stream804-matrix\\uploads\\S0_s0.75_o0.37.png'
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 59384)
+Traceback (most recent call last):
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 691, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 361, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 671, in __init__
+    super().__init__(*args, **kwargs)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 755, in __init__
+    self.handle()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "D:\work\outputs\garden-contact-700-20261018\stream804-matrix\source\art\concepts\env_fx_stream_20261014\web_probe_server.py", line 78, in do_POST
+    with open(path, "xb") as f:
+         ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'D:\\work\\outputs\\garden-contact-700-20261018\\stream804-matrix\\uploads\\NL_s0.75_o0.37.png'
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 61466)
+Traceback (most recent call last):
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 691, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 361, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 671, in __init__
+    super().__init__(*args, **kwargs)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 755, in __init__
+    self.handle()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "D:\work\outputs\garden-contact-700-20261018\stream804-matrix\source\art\concepts\env_fx_stream_20261014\web_probe_server.py", line 78, in do_POST
+    with open(path, "xb") as f:
+         ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'D:\\work\\outputs\\garden-contact-700-20261018\\stream804-matrix\\uploads\\NZ_s0.75_o0.37.png'
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 64900)
+Traceback (most recent call last):
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 691, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 361, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 671, in __init__
+    super().__init__(*args, **kwargs)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 755, in __init__
+    self.handle()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "D:\work\outputs\garden-contact-700-20261018\stream804-matrix\source\art\concepts\env_fx_stream_20261014\web_probe_server.py", line 78, in do_POST
+    with open(path, "xb") as f:
+         ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'D:\\work\\outputs\\garden-contact-700-20261018\\stream804-matrix\\uploads\\C_s0.75_o0.37_0.0000.png'
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 65135)
+Traceback (most recent call last):
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 691, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 361, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 671, in __init__
+    super().__init__(*args, **kwargs)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 755, in __init__
+    self.handle()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "D:\work\outputs\garden-contact-700-20261018\stream804-matrix\source\art\concepts\env_fx_stream_20261014\web_probe_server.py", line 78, in do_POST
+    with open(path, "xb") as f:
+         ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'D:\\work\\outputs\\garden-contact-700-20261018\\stream804-matrix\\uploads\\C_s0.75_o0.37_1.5708.png'
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 53861)
+Traceback (most recent call last):
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 691, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 361, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 671, in __init__
+    super().__init__(*args, **kwargs)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 755, in __init__
+    self.handle()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "D:\work\outputs\garden-contact-700-20261018\stream804-matrix\source\art\concepts\env_fx_stream_20261014\web_probe_server.py", line 78, in do_POST
+    with open(path, "xb") as f:
+         ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'D:\\work\\outputs\\garden-contact-700-20261018\\stream804-matrix\\uploads\\C_s0.75_o0.37_3.1416.png'
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 63888)
+Traceback (most recent call last):
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 691, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 361, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 671, in __init__
+    super().__init__(*args, **kwargs)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 755, in __init__
+    self.handle()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "D:\work\outputs\garden-contact-700-20261018\stream804-matrix\source\art\concepts\env_fx_stream_20261014\web_probe_server.py", line 78, in do_POST
+    with open(path, "xb") as f:
+         ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'D:\\work\\outputs\\garden-contact-700-20261018\\stream804-matrix\\uploads\\C_s0.75_o0.37_4.7124.png'
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 51201)
+Traceback (most recent call last):
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 691, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 361, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 671, in __init__
+    super().__init__(*args, **kwargs)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 755, in __init__
+    self.handle()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "D:\work\outputs\garden-contact-700-20261018\stream804-matrix\source\art\concepts\env_fx_stream_20261014\web_probe_server.py", line 78, in do_POST
+    with open(path, "xb") as f:
+         ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'D:\\work\\outputs\\garden-contact-700-20261018\\stream804-matrix\\uploads\\C_s0.75_o0.37_6.2832.png'
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 51202)
+Traceback (most recent call last):
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 691, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 361, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 671, in __init__
+    super().__init__(*args, **kwargs)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 755, in __init__
+    self.handle()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "D:\work\outputs\garden-contact-700-20261018\stream804-matrix\source\art\concepts\env_fx_stream_20261014\web_probe_server.py", line 78, in do_POST
+    with open(path, "xb") as f:
+         ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'D:\\work\\outputs\\garden-contact-700-20261018\\stream804-matrix\\uploads\\R_s1.0_o0.0.png'
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 58136)
+Traceback (most recent call last):
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 691, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 361, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 671, in __init__
+    super().__init__(*args, **kwargs)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 755, in __init__
+    self.handle()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "D:\work\outputs\garden-contact-700-20261018\stream804-matrix\source\art\concepts\env_fx_stream_20261014\web_probe_server.py", line 78, in do_POST
+    with open(path, "xb") as f:
+         ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'D:\\work\\outputs\\garden-contact-700-20261018\\stream804-matrix\\uploads\\S0_s1.0_o0.0.png'
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 57743)
+Traceback (most recent call last):
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 691, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 361, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 671, in __init__
+    super().__init__(*args, **kwargs)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 755, in __init__
+    self.handle()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "D:\work\outputs\garden-contact-700-20261018\stream804-matrix\source\art\concepts\env_fx_stream_20261014\web_probe_server.py", line 78, in do_POST
+    with open(path, "xb") as f:
+         ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'D:\\work\\outputs\\garden-contact-700-20261018\\stream804-matrix\\uploads\\NL_s1.0_o0.0.png'
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 56896)
+Traceback (most recent call last):
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 691, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 361, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 671, in __init__
+    super().__init__(*args, **kwargs)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 755, in __init__
+    self.handle()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "D:\work\outputs\garden-contact-700-20261018\stream804-matrix\source\art\concepts\env_fx_stream_20261014\web_probe_server.py", line 78, in do_POST
+    with open(path, "xb") as f:
+         ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'D:\\work\\outputs\\garden-contact-700-20261018\\stream804-matrix\\uploads\\NZ_s1.0_o0.0.png'
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 58642)
+Traceback (most recent call last):
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 691, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 361, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 671, in __init__
+    super().__init__(*args, **kwargs)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 755, in __init__
+    self.handle()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "D:\work\outputs\garden-contact-700-20261018\stream804-matrix\source\art\concepts\env_fx_stream_20261014\web_probe_server.py", line 78, in do_POST
+    with open(path, "xb") as f:
+         ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'D:\\work\\outputs\\garden-contact-700-20261018\\stream804-matrix\\uploads\\C_s1.0_o0.0_0.0000.png'
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 50289)
+Traceback (most recent call last):
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 691, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 361, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 671, in __init__
+    super().__init__(*args, **kwargs)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 755, in __init__
+    self.handle()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "D:\work\outputs\garden-contact-700-20261018\stream804-matrix\source\art\concepts\env_fx_stream_20261014\web_probe_server.py", line 78, in do_POST
+    with open(path, "xb") as f:
+         ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'D:\\work\\outputs\\garden-contact-700-20261018\\stream804-matrix\\uploads\\C_s1.0_o0.0_1.5708.png'
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 50439)
+Traceback (most recent call last):
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 691, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 361, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 671, in __init__
+    super().__init__(*args, **kwargs)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 755, in __init__
+    self.handle()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "D:\work\outputs\garden-contact-700-20261018\stream804-matrix\source\art\concepts\env_fx_stream_20261014\web_probe_server.py", line 78, in do_POST
+    with open(path, "xb") as f:
+         ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'D:\\work\\outputs\\garden-contact-700-20261018\\stream804-matrix\\uploads\\C_s1.0_o0.0_3.1416.png'
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 57947)
+Traceback (most recent call last):
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 691, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 361, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 671, in __init__
+    super().__init__(*args, **kwargs)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 755, in __init__
+    self.handle()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "D:\work\outputs\garden-contact-700-20261018\stream804-matrix\source\art\concepts\env_fx_stream_20261014\web_probe_server.py", line 78, in do_POST
+    with open(path, "xb") as f:
+         ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'D:\\work\\outputs\\garden-contact-700-20261018\\stream804-matrix\\uploads\\C_s1.0_o0.0_4.7124.png'
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 53263)
+Traceback (most recent call last):
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 691, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 361, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 671, in __init__
+    super().__init__(*args, **kwargs)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 755, in __init__
+    self.handle()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "D:\work\outputs\garden-contact-700-20261018\stream804-matrix\source\art\concepts\env_fx_stream_20261014\web_probe_server.py", line 78, in do_POST
+    with open(path, "xb") as f:
+         ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'D:\\work\\outputs\\garden-contact-700-20261018\\stream804-matrix\\uploads\\C_s1.0_o0.0_6.2832.png'
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 57046)
+Traceback (most recent call last):
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 691, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 361, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 671, in __init__
+    super().__init__(*args, **kwargs)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 755, in __init__
+    self.handle()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "D:\work\outputs\garden-contact-700-20261018\stream804-matrix\source\art\concepts\env_fx_stream_20261014\web_probe_server.py", line 78, in do_POST
+    with open(path, "xb") as f:
+         ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'D:\\work\\outputs\\garden-contact-700-20261018\\stream804-matrix\\uploads\\R_s1.0_o0.37.png'
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 55350)
+Traceback (most recent call last):
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 691, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 361, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 671, in __init__
+    super().__init__(*args, **kwargs)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 755, in __init__
+    self.handle()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "D:\work\outputs\garden-contact-700-20261018\stream804-matrix\source\art\concepts\env_fx_stream_20261014\web_probe_server.py", line 78, in do_POST
+    with open(path, "xb") as f:
+         ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'D:\\work\\outputs\\garden-contact-700-20261018\\stream804-matrix\\uploads\\S0_s1.0_o0.37.png'
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 61667)
+Traceback (most recent call last):
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 691, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 361, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 671, in __init__
+    super().__init__(*args, **kwargs)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 755, in __init__
+    self.handle()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "D:\work\outputs\garden-contact-700-20261018\stream804-matrix\source\art\concepts\env_fx_stream_20261014\web_probe_server.py", line 78, in do_POST
+    with open(path, "xb") as f:
+         ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'D:\\work\\outputs\\garden-contact-700-20261018\\stream804-matrix\\uploads\\NL_s1.0_o0.37.png'
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 49898)
+Traceback (most recent call last):
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 691, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 361, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 671, in __init__
+    super().__init__(*args, **kwargs)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 755, in __init__
+    self.handle()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "D:\work\outputs\garden-contact-700-20261018\stream804-matrix\source\art\concepts\env_fx_stream_20261014\web_probe_server.py", line 78, in do_POST
+    with open(path, "xb") as f:
+         ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'D:\\work\\outputs\\garden-contact-700-20261018\\stream804-matrix\\uploads\\NZ_s1.0_o0.37.png'
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 64147)
+Traceback (most recent call last):
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 691, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 361, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 671, in __init__
+    super().__init__(*args, **kwargs)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 755, in __init__
+    self.handle()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "D:\work\outputs\garden-contact-700-20261018\stream804-matrix\source\art\concepts\env_fx_stream_20261014\web_probe_server.py", line 78, in do_POST
+    with open(path, "xb") as f:
+         ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'D:\\work\\outputs\\garden-contact-700-20261018\\stream804-matrix\\uploads\\C_s1.0_o0.37_0.0000.png'
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 64630)
+Traceback (most recent call last):
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 691, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 361, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 671, in __init__
+    super().__init__(*args, **kwargs)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 755, in __init__
+    self.handle()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "D:\work\outputs\garden-contact-700-20261018\stream804-matrix\source\art\concepts\env_fx_stream_20261014\web_probe_server.py", line 78, in do_POST
+    with open(path, "xb") as f:
+         ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'D:\\work\\outputs\\garden-contact-700-20261018\\stream804-matrix\\uploads\\C_s1.0_o0.37_1.5708.png'
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 61995)
+Traceback (most recent call last):
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 691, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 361, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 671, in __init__
+    super().__init__(*args, **kwargs)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 755, in __init__
+    self.handle()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "D:\work\outputs\garden-contact-700-20261018\stream804-matrix\source\art\concepts\env_fx_stream_20261014\web_probe_server.py", line 78, in do_POST
+    with open(path, "xb") as f:
+         ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'D:\\work\\outputs\\garden-contact-700-20261018\\stream804-matrix\\uploads\\C_s1.0_o0.37_3.1416.png'
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 54133)
+Traceback (most recent call last):
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 691, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 361, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 671, in __init__
+    super().__init__(*args, **kwargs)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 755, in __init__
+    self.handle()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "D:\work\outputs\garden-contact-700-20261018\stream804-matrix\source\art\concepts\env_fx_stream_20261014\web_probe_server.py", line 78, in do_POST
+    with open(path, "xb") as f:
+         ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'D:\\work\\outputs\\garden-contact-700-20261018\\stream804-matrix\\uploads\\C_s1.0_o0.37_4.7124.png'
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 65121)
+Traceback (most recent call last):
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 691, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 361, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 671, in __init__
+    super().__init__(*args, **kwargs)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 755, in __init__
+    self.handle()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "D:\work\outputs\garden-contact-700-20261018\stream804-matrix\source\art\concepts\env_fx_stream_20261014\web_probe_server.py", line 78, in do_POST
+    with open(path, "xb") as f:
+         ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'D:\\work\\outputs\\garden-contact-700-20261018\\stream804-matrix\\uploads\\C_s1.0_o0.37_6.2832.png'
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 49751)
+Traceback (most recent call last):
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 691, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 361, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 671, in __init__
+    super().__init__(*args, **kwargs)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 755, in __init__
+    self.handle()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "D:\work\outputs\garden-contact-700-20261018\stream804-matrix\source\art\concepts\env_fx_stream_20261014\web_probe_server.py", line 78, in do_POST
+    with open(path, "xb") as f:
+         ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'D:\\work\\outputs\\garden-contact-700-20261018\\stream804-matrix\\uploads\\R_s1.5_o0.0.png'
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 59342)
+Traceback (most recent call last):
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 691, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 361, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 671, in __init__
+    super().__init__(*args, **kwargs)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 755, in __init__
+    self.handle()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "D:\work\outputs\garden-contact-700-20261018\stream804-matrix\source\art\concepts\env_fx_stream_20261014\web_probe_server.py", line 78, in do_POST
+    with open(path, "xb") as f:
+         ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'D:\\work\\outputs\\garden-contact-700-20261018\\stream804-matrix\\uploads\\S0_s1.5_o0.0.png'
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 50565)
+Traceback (most recent call last):
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 691, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 361, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 671, in __init__
+    super().__init__(*args, **kwargs)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 755, in __init__
+    self.handle()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "D:\work\outputs\garden-contact-700-20261018\stream804-matrix\source\art\concepts\env_fx_stream_20261014\web_probe_server.py", line 78, in do_POST
+    with open(path, "xb") as f:
+         ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'D:\\work\\outputs\\garden-contact-700-20261018\\stream804-matrix\\uploads\\NL_s1.5_o0.0.png'
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 56303)
+Traceback (most recent call last):
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 691, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 361, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 671, in __init__
+    super().__init__(*args, **kwargs)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 755, in __init__
+    self.handle()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "D:\work\outputs\garden-contact-700-20261018\stream804-matrix\source\art\concepts\env_fx_stream_20261014\web_probe_server.py", line 78, in do_POST
+    with open(path, "xb") as f:
+         ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'D:\\work\\outputs\\garden-contact-700-20261018\\stream804-matrix\\uploads\\NZ_s1.5_o0.0.png'
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 57581)
+Traceback (most recent call last):
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 691, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 361, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 671, in __init__
+    super().__init__(*args, **kwargs)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 755, in __init__
+    self.handle()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "D:\work\outputs\garden-contact-700-20261018\stream804-matrix\source\art\concepts\env_fx_stream_20261014\web_probe_server.py", line 78, in do_POST
+    with open(path, "xb") as f:
+         ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'D:\\work\\outputs\\garden-contact-700-20261018\\stream804-matrix\\uploads\\C_s1.5_o0.0_0.0000.png'
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 50746)
+Traceback (most recent call last):
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 691, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 361, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 671, in __init__
+    super().__init__(*args, **kwargs)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 755, in __init__
+    self.handle()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "D:\work\outputs\garden-contact-700-20261018\stream804-matrix\source\art\concepts\env_fx_stream_20261014\web_probe_server.py", line 78, in do_POST
+    with open(path, "xb") as f:
+         ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'D:\\work\\outputs\\garden-contact-700-20261018\\stream804-matrix\\uploads\\C_s1.5_o0.0_1.5708.png'
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 60356)
+Traceback (most recent call last):
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 691, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 361, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 671, in __init__
+    super().__init__(*args, **kwargs)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 755, in __init__
+    self.handle()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "D:\work\outputs\garden-contact-700-20261018\stream804-matrix\source\art\concepts\env_fx_stream_20261014\web_probe_server.py", line 78, in do_POST
+    with open(path, "xb") as f:
+         ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'D:\\work\\outputs\\garden-contact-700-20261018\\stream804-matrix\\uploads\\C_s1.5_o0.0_3.1416.png'
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 64519)
+Traceback (most recent call last):
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 691, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 361, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 671, in __init__
+    super().__init__(*args, **kwargs)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 755, in __init__
+    self.handle()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "D:\work\outputs\garden-contact-700-20261018\stream804-matrix\source\art\concepts\env_fx_stream_20261014\web_probe_server.py", line 78, in do_POST
+    with open(path, "xb") as f:
+         ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'D:\\work\\outputs\\garden-contact-700-20261018\\stream804-matrix\\uploads\\C_s1.5_o0.0_4.7124.png'
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 59316)
+Traceback (most recent call last):
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 691, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 361, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 671, in __init__
+    super().__init__(*args, **kwargs)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 755, in __init__
+    self.handle()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "D:\work\outputs\garden-contact-700-20261018\stream804-matrix\source\art\concepts\env_fx_stream_20261014\web_probe_server.py", line 78, in do_POST
+    with open(path, "xb") as f:
+         ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'D:\\work\\outputs\\garden-contact-700-20261018\\stream804-matrix\\uploads\\C_s1.5_o0.0_6.2832.png'
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 59448)
+Traceback (most recent call last):
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 691, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 361, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 671, in __init__
+    super().__init__(*args, **kwargs)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 755, in __init__
+    self.handle()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "D:\work\outputs\garden-contact-700-20261018\stream804-matrix\source\art\concepts\env_fx_stream_20261014\web_probe_server.py", line 78, in do_POST
+    with open(path, "xb") as f:
+         ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'D:\\work\\outputs\\garden-contact-700-20261018\\stream804-matrix\\uploads\\R_s1.5_o0.37.png'
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 59744)
+Traceback (most recent call last):
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 691, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 361, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 671, in __init__
+    super().__init__(*args, **kwargs)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 755, in __init__
+    self.handle()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "D:\work\outputs\garden-contact-700-20261018\stream804-matrix\source\art\concepts\env_fx_stream_20261014\web_probe_server.py", line 78, in do_POST
+    with open(path, "xb") as f:
+         ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'D:\\work\\outputs\\garden-contact-700-20261018\\stream804-matrix\\uploads\\S0_s1.5_o0.37.png'
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 60430)
+Traceback (most recent call last):
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 691, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 361, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 671, in __init__
+    super().__init__(*args, **kwargs)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 755, in __init__
+    self.handle()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "D:\work\outputs\garden-contact-700-20261018\stream804-matrix\source\art\concepts\env_fx_stream_20261014\web_probe_server.py", line 78, in do_POST
+    with open(path, "xb") as f:
+         ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'D:\\work\\outputs\\garden-contact-700-20261018\\stream804-matrix\\uploads\\NL_s1.5_o0.37.png'
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 60284)
+Traceback (most recent call last):
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 691, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 361, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 671, in __init__
+    super().__init__(*args, **kwargs)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 755, in __init__
+    self.handle()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "D:\work\outputs\garden-contact-700-20261018\stream804-matrix\source\art\concepts\env_fx_stream_20261014\web_probe_server.py", line 78, in do_POST
+    with open(path, "xb") as f:
+         ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'D:\\work\\outputs\\garden-contact-700-20261018\\stream804-matrix\\uploads\\NZ_s1.5_o0.37.png'
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 60612)
+Traceback (most recent call last):
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 691, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 361, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 671, in __init__
+    super().__init__(*args, **kwargs)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 755, in __init__
+    self.handle()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "D:\work\outputs\garden-contact-700-20261018\stream804-matrix\source\art\concepts\env_fx_stream_20261014\web_probe_server.py", line 78, in do_POST
+    with open(path, "xb") as f:
+         ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'D:\\work\\outputs\\garden-contact-700-20261018\\stream804-matrix\\uploads\\C_s1.5_o0.37_0.0000.png'
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 55208)
+Traceback (most recent call last):
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 691, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 361, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 671, in __init__
+    super().__init__(*args, **kwargs)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 755, in __init__
+    self.handle()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "D:\work\outputs\garden-contact-700-20261018\stream804-matrix\source\art\concepts\env_fx_stream_20261014\web_probe_server.py", line 78, in do_POST
+    with open(path, "xb") as f:
+         ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'D:\\work\\outputs\\garden-contact-700-20261018\\stream804-matrix\\uploads\\C_s1.5_o0.37_1.5708.png'
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 61855)
+Traceback (most recent call last):
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 691, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 361, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 671, in __init__
+    super().__init__(*args, **kwargs)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 755, in __init__
+    self.handle()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "D:\work\outputs\garden-contact-700-20261018\stream804-matrix\source\art\concepts\env_fx_stream_20261014\web_probe_server.py", line 78, in do_POST
+    with open(path, "xb") as f:
+         ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'D:\\work\\outputs\\garden-contact-700-20261018\\stream804-matrix\\uploads\\C_s1.5_o0.37_3.1416.png'
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 49554)
+Traceback (most recent call last):
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 691, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 361, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 671, in __init__
+    super().__init__(*args, **kwargs)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 755, in __init__
+    self.handle()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "D:\work\outputs\garden-contact-700-20261018\stream804-matrix\source\art\concepts\env_fx_stream_20261014\web_probe_server.py", line 78, in do_POST
+    with open(path, "xb") as f:
+         ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'D:\\work\\outputs\\garden-contact-700-20261018\\stream804-matrix\\uploads\\C_s1.5_o0.37_4.7124.png'
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 60298)
+Traceback (most recent call last):
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 691, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 361, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 671, in __init__
+    super().__init__(*args, **kwargs)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 755, in __init__
+    self.handle()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "D:\work\outputs\garden-contact-700-20261018\stream804-matrix\source\art\concepts\env_fx_stream_20261014\web_probe_server.py", line 78, in do_POST
+    with open(path, "xb") as f:
+         ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'D:\\work\\outputs\\garden-contact-700-20261018\\stream804-matrix\\uploads\\C_s1.5_o0.37_6.2832.png'
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 53333)
+Traceback (most recent call last):
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 691, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 361, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 671, in __init__
+    super().__init__(*args, **kwargs)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 755, in __init__
+    self.handle()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "D:\work\outputs\garden-contact-700-20261018\stream804-matrix\source\art\concepts\env_fx_stream_20261014\web_probe_server.py", line 78, in do_POST
+    with open(path, "xb") as f:
+         ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'D:\\work\\outputs\\garden-contact-700-20261018\\stream804-matrix\\uploads\\R_s2.0_o0.0.png'
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 55901)
+Traceback (most recent call last):
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 691, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 361, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 671, in __init__
+    super().__init__(*args, **kwargs)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 755, in __init__
+    self.handle()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "D:\work\outputs\garden-contact-700-20261018\stream804-matrix\source\art\concepts\env_fx_stream_20261014\web_probe_server.py", line 78, in do_POST
+    with open(path, "xb") as f:
+         ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'D:\\work\\outputs\\garden-contact-700-20261018\\stream804-matrix\\uploads\\S0_s2.0_o0.0.png'
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 52423)
+Traceback (most recent call last):
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 691, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 361, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 671, in __init__
+    super().__init__(*args, **kwargs)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 755, in __init__
+    self.handle()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "D:\work\outputs\garden-contact-700-20261018\stream804-matrix\source\art\concepts\env_fx_stream_20261014\web_probe_server.py", line 78, in do_POST
+    with open(path, "xb") as f:
+         ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'D:\\work\\outputs\\garden-contact-700-20261018\\stream804-matrix\\uploads\\NL_s2.0_o0.0.png'
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 57096)
+Traceback (most recent call last):
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 691, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 361, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 671, in __init__
+    super().__init__(*args, **kwargs)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 755, in __init__
+    self.handle()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "D:\work\outputs\garden-contact-700-20261018\stream804-matrix\source\art\concepts\env_fx_stream_20261014\web_probe_server.py", line 78, in do_POST
+    with open(path, "xb") as f:
+         ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'D:\\work\\outputs\\garden-contact-700-20261018\\stream804-matrix\\uploads\\NZ_s2.0_o0.0.png'
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 49658)
+Traceback (most recent call last):
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 691, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 361, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 671, in __init__
+    super().__init__(*args, **kwargs)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 755, in __init__
+    self.handle()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "D:\work\outputs\garden-contact-700-20261018\stream804-matrix\source\art\concepts\env_fx_stream_20261014\web_probe_server.py", line 78, in do_POST
+    with open(path, "xb") as f:
+         ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'D:\\work\\outputs\\garden-contact-700-20261018\\stream804-matrix\\uploads\\C_s2.0_o0.0_0.0000.png'
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 59812)
+Traceback (most recent call last):
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 691, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 361, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 671, in __init__
+    super().__init__(*args, **kwargs)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 755, in __init__
+    self.handle()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "D:\work\outputs\garden-contact-700-20261018\stream804-matrix\source\art\concepts\env_fx_stream_20261014\web_probe_server.py", line 78, in do_POST
+    with open(path, "xb") as f:
+         ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'D:\\work\\outputs\\garden-contact-700-20261018\\stream804-matrix\\uploads\\C_s2.0_o0.0_1.5708.png'
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 53722)
+Traceback (most recent call last):
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 691, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 361, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 671, in __init__
+    super().__init__(*args, **kwargs)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 755, in __init__
+    self.handle()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "D:\work\outputs\garden-contact-700-20261018\stream804-matrix\source\art\concepts\env_fx_stream_20261014\web_probe_server.py", line 78, in do_POST
+    with open(path, "xb") as f:
+         ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'D:\\work\\outputs\\garden-contact-700-20261018\\stream804-matrix\\uploads\\C_s2.0_o0.0_3.1416.png'
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 53520)
+Traceback (most recent call last):
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 691, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 361, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 671, in __init__
+    super().__init__(*args, **kwargs)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 755, in __init__
+    self.handle()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "D:\work\outputs\garden-contact-700-20261018\stream804-matrix\source\art\concepts\env_fx_stream_20261014\web_probe_server.py", line 78, in do_POST
+    with open(path, "xb") as f:
+         ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'D:\\work\\outputs\\garden-contact-700-20261018\\stream804-matrix\\uploads\\C_s2.0_o0.0_4.7124.png'
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 55555)
+Traceback (most recent call last):
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 691, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 361, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 671, in __init__
+    super().__init__(*args, **kwargs)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 755, in __init__
+    self.handle()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "D:\work\outputs\garden-contact-700-20261018\stream804-matrix\source\art\concepts\env_fx_stream_20261014\web_probe_server.py", line 78, in do_POST
+    with open(path, "xb") as f:
+         ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'D:\\work\\outputs\\garden-contact-700-20261018\\stream804-matrix\\uploads\\C_s2.0_o0.0_6.2832.png'
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 57771)
+Traceback (most recent call last):
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 691, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 361, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 671, in __init__
+    super().__init__(*args, **kwargs)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 755, in __init__
+    self.handle()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "D:\work\outputs\garden-contact-700-20261018\stream804-matrix\source\art\concepts\env_fx_stream_20261014\web_probe_server.py", line 78, in do_POST
+    with open(path, "xb") as f:
+         ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'D:\\work\\outputs\\garden-contact-700-20261018\\stream804-matrix\\uploads\\R_s2.0_o0.37.png'
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 53218)
+Traceback (most recent call last):
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 691, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 361, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 671, in __init__
+    super().__init__(*args, **kwargs)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 755, in __init__
+    self.handle()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "D:\work\outputs\garden-contact-700-20261018\stream804-matrix\source\art\concepts\env_fx_stream_20261014\web_probe_server.py", line 78, in do_POST
+    with open(path, "xb") as f:
+         ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'D:\\work\\outputs\\garden-contact-700-20261018\\stream804-matrix\\uploads\\S0_s2.0_o0.37.png'
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 63513)
+Traceback (most recent call last):
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 691, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 361, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 671, in __init__
+    super().__init__(*args, **kwargs)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 755, in __init__
+    self.handle()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "D:\work\outputs\garden-contact-700-20261018\stream804-matrix\source\art\concepts\env_fx_stream_20261014\web_probe_server.py", line 78, in do_POST
+    with open(path, "xb") as f:
+         ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'D:\\work\\outputs\\garden-contact-700-20261018\\stream804-matrix\\uploads\\NL_s2.0_o0.37.png'
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 51984)
+Traceback (most recent call last):
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 691, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 361, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 671, in __init__
+    super().__init__(*args, **kwargs)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 755, in __init__
+    self.handle()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "D:\work\outputs\garden-contact-700-20261018\stream804-matrix\source\art\concepts\env_fx_stream_20261014\web_probe_server.py", line 78, in do_POST
+    with open(path, "xb") as f:
+         ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'D:\\work\\outputs\\garden-contact-700-20261018\\stream804-matrix\\uploads\\NZ_s2.0_o0.37.png'
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 55191)
+Traceback (most recent call last):
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 691, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 361, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 671, in __init__
+    super().__init__(*args, **kwargs)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 755, in __init__
+    self.handle()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "D:\work\outputs\garden-contact-700-20261018\stream804-matrix\source\art\concepts\env_fx_stream_20261014\web_probe_server.py", line 78, in do_POST
+    with open(path, "xb") as f:
+         ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'D:\\work\\outputs\\garden-contact-700-20261018\\stream804-matrix\\uploads\\C_s2.0_o0.37_0.0000.png'
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 62762)
+Traceback (most recent call last):
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 691, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 361, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 671, in __init__
+    super().__init__(*args, **kwargs)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 755, in __init__
+    self.handle()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "D:\work\outputs\garden-contact-700-20261018\stream804-matrix\source\art\concepts\env_fx_stream_20261014\web_probe_server.py", line 78, in do_POST
+    with open(path, "xb") as f:
+         ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'D:\\work\\outputs\\garden-contact-700-20261018\\stream804-matrix\\uploads\\C_s2.0_o0.37_1.5708.png'
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 64053)
+Traceback (most recent call last):
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 691, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 361, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 671, in __init__
+    super().__init__(*args, **kwargs)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 755, in __init__
+    self.handle()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "D:\work\outputs\garden-contact-700-20261018\stream804-matrix\source\art\concepts\env_fx_stream_20261014\web_probe_server.py", line 78, in do_POST
+    with open(path, "xb") as f:
+         ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'D:\\work\\outputs\\garden-contact-700-20261018\\stream804-matrix\\uploads\\C_s2.0_o0.37_3.1416.png'
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 57642)
+Traceback (most recent call last):
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 691, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 361, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 671, in __init__
+    super().__init__(*args, **kwargs)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 755, in __init__
+    self.handle()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "D:\work\outputs\garden-contact-700-20261018\stream804-matrix\source\art\concepts\env_fx_stream_20261014\web_probe_server.py", line 78, in do_POST
+    with open(path, "xb") as f:
+         ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'D:\\work\\outputs\\garden-contact-700-20261018\\stream804-matrix\\uploads\\C_s2.0_o0.37_4.7124.png'
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 63940)
+Traceback (most recent call last):
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 691, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 361, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 671, in __init__
+    super().__init__(*args, **kwargs)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 755, in __init__
+    self.handle()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "D:\work\outputs\garden-contact-700-20261018\stream804-matrix\source\art\concepts\env_fx_stream_20261014\web_probe_server.py", line 78, in do_POST
+    with open(path, "xb") as f:
+         ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'D:\\work\\outputs\\garden-contact-700-20261018\\stream804-matrix\\uploads\\C_s2.0_o0.37_6.2832.png'
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 59596)
+Traceback (most recent call last):
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 691, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 361, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 671, in __init__
+    super().__init__(*args, **kwargs)
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\socketserver.py", line 755, in __init__
+    self.handle()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\jiangzengming\AppData\Local\Programs\Python\Python311\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "D:\work\outputs\garden-contact-700-20261018\stream804-matrix\source\art\concepts\env_fx_stream_20261014\web_probe_server.py", line 78, in do_POST
+    with open(path, "xb") as f:
+         ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'D:\\work\\outputs\\garden-contact-700-20261018\\stream804-matrix\\uploads\\webmatrix_result.json'
+----------------------------------------
