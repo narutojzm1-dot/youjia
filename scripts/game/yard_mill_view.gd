@@ -9,8 +9,9 @@ const SOURCE_VISIBLE := Rect2(98, 37, 1140, 1108)
 # The starting cow occupies the previous preview's (480,495) point. Keep the
 # real body between cow and horse, with the player approaching from the front.
 const ANCHOR := Vector2(525, 469)
-const APPROACH := Vector2(553, 486)
-const WORK_POINT := ANCHOR + Vector2(5, -46)
+const APPROACH := Vector2(572, 486)
+const WORK_POINT := ANCHOR + (Vector2(650,350)-SOURCE_PIVOT)*WIDTH/1335.0
+const HANDLE_POINT := ANCHOR + (Vector2(1015,320)-SOURCE_PIVOT)*WIDTH/1335.0
 const BODY_RADIUS := Vector2(28, 9)
 const OVERCAST_TINT := Color(0.83, 0.87, 0.92)
 const SPOUT := Vector2(33.5, -18.4)

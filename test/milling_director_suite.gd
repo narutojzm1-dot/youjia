@@ -204,7 +204,7 @@ func physical_completion_and_reopen() -> void:
 	check(store.get_yard_inventory() == before,"retrieval is presentation only")
 	reach("working")
 	check(world.pond_growth.stage == "working" and world.get_player().position.distance_to(world.pond_growth.milling_station) < 16,"work only at mill station")
-	check(world.get_player()._sequence_walker.animation == &"feed","milling uses standing reaching art instead of pond crouch")
+	check(world.get_player()._sequence_walker.milling_pose_active,"milling uses the dedicated grip instead of pond crouch")
 	check(world.mill_view.working,"actual mill receives work presentation")
 	check(world.pond_growth.proposal == frozen,"station retains original proposal")
 	check(store.get_growth_production().receipts.is_empty(),"approach produces nothing")
