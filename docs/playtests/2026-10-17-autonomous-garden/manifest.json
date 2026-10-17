@@ -136,8 +136,8 @@
   },
   {
     "path": "drivers/preserve-final.py",
-    "bytes": 5087,
-    "sha256": "def5caf82a88230c9a04839e9493a4eeeede97124ec8b0f4302f51b23a2db72c"
+    "bytes": 6134,
+    "sha256": "abad628eb2c87782dd54ae567c3c69c3209c5524cfee009cdaf0a70c9344f772"
   },
   {
     "path": "drivers/push-evidence.py",
@@ -318,6 +318,26 @@
     "path": "logs/meal_ledger-r5.log.gz",
     "bytes": 124,
     "sha256": "5081dc125e3c534d4b837ea4ace49e4d3c0fdcdcc0a2de6f2a9bcecbee109637"
+  },
+  {
+    "path": "logs/migration-preservation-r2.log.gz",
+    "bytes": 1276,
+    "sha256": "d158b134a0e983e594bdd6bb0fee43b5338e596434a68238abd1c08cf04e098b"
+  },
+  {
+    "path": "logs/migration-preservation-r3.log.gz",
+    "bytes": 1281,
+    "sha256": "67f0a1c87d6c06a7fc02a5507181d849f70d545ae6048735f3868c3db5740e8d"
+  },
+  {
+    "path": "logs/migration-preservation-r4.log.gz",
+    "bytes": 882,
+    "sha256": "1bf8abd3e8fad3cdc9c15c441eabb73536463b87f10ef010bf592163ba6e919e"
+  },
+  {
+    "path": "logs/migration-preservation.log.gz",
+    "bytes": 769,
+    "sha256": "28a132cc1e9e149fdb4367603fe9967df7858d1c8534d5d7dc372ff0481a68b1"
   },
   {
     "path": "logs/milling_director-r2.log.gz",
