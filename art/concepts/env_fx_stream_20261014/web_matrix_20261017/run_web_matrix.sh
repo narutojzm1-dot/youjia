@@ -3,15 +3,22 @@
 # 与 ../web_export_check.sh 同一条隔离路径：导出前写入 PCK 内 build_id、探针服务器自 bind(0) 自持端口并回 server_id、
 # 页面读回真实画布。不同处：页面用 ?matrix=1（不走 ?probe=1 既有路径，也不改它），每帧无损 PNG 由页面算 SHA256 后
 # 同步上传给本轮服务器（服务器复算 SHA，不一致拒收），最后由 web_matrix_verdict.py 逐 PNG 离线复核并给顶层结论。
-# 用法（仓库根）：GODOT=godot CHROME=google-chrome bash art/concepts/env_fx_stream_20261014/web_matrix_20261017/run_web_matrix.sh [OUT_DIR]
+# 用法（仓库根）：GODOT=godot CHROME=google-chrome bash art/concepts/env_fx_stream_20261014/web_matrix_20261017/run_web_matrix.sh [OUTPUT_PARENT]
+# 输出：永不删除已有目录。参数只当父目录（默认 ${TMPDIR:-/tmp}），每轮在其中新建独占子目录 webmatrix749.<时间>.XXXXXXXX；
+# 依赖检查先于任何创建。见 ../safe_out_dir.sh 与 verify_out_dir_safety.sh（PR #804 审查 6231502792）。
 set -euo pipefail
 GODOT="${GODOT:-godot}"
 CHROME="${CHROME:-google-chrome}"
-OUT="${1:-/tmp/webmatrix749}"
 HERE="$(cd "$(dirname "$0")" && pwd)"
 CAND="$(dirname "$HERE")"
 PROJ="$CAND/godot_preview"
-rm -rf "$OUT" && mkdir -p "$OUT/site" "$OUT/uploads"
+# shellcheck source=../safe_out_dir.sh
+. "$CAND/safe_out_dir.sh"
+require_cmds "$GODOT" "$CHROME" python3 openssl curl sha256sum realpath mktemp
+[ -d "$PROJ" ] || { echo "refuse: missing project dir $PROJ (nothing created or deleted)" >&2; exit 20; }
+OUT="$(new_run_dir webmatrix749 "$@")"
+echo "out_dir=$OUT"
+mkdir "$OUT/site" "$OUT/uploads"
 BUILD_ID="$(openssl rand -hex 16)"
 printf '%s\n' "$BUILD_ID" >"$PROJ/build_id.txt"
 trap 'rm -f "$PROJ/build_id.txt"' EXIT

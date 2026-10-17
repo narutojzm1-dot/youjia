@@ -22,8 +22,11 @@ Agent-ID: GROK-BUILD
 ## 跑法（同一条已通过的隔离路径）
 
 ```
-GODOT=godot CHROME=google-chrome bash art/concepts/env_fx_stream_20261014/web_matrix_20261017/run_web_matrix.sh /tmp/webmatrix749
+GODOT=godot CHROME=google-chrome bash art/concepts/env_fx_stream_20261014/web_matrix_20261017/run_web_matrix.sh [OUTPUT_PARENT]
 ```
+
+- 输出目录（PR #804 审查 6231502792 后）：入口**永不删除已有目录或其内容**。参数只当父目录（默认 `${TMPDIR:-/tmp}`），每轮在其中 `mktemp` 新建独占子目录 `webmatrix749.<时间>.XXXXXXXX`，开头打印 `out_dir=...`；
+  依赖（Godot、Chrome、python3、openssl、curl 等）先检查，缺任何一项在创建目录前退出 20；空参数 21、符号链接父目录 22、不存在的父目录 23（不会被创建）、不可写 24、多参数 26。见 `../safe_out_dir.sh`、下文「输出目录安全」。
 
 - 导出前 `openssl rand` 生成 build_id 写进 `godot_preview/build_id.txt`，经 `include_filter` 打进本次 PCK；页面从包内读回（不读地址栏）。
 - `../web_probe_server.py` 自己 bind(127.0.0.1, 0) 并持有 socket，`/__probe_server_id` 回本轮 server_id；脚本另从该端口下载 `index.pck` 复算 SHA256，必须等于刚导出的那份。
@@ -84,6 +87,16 @@ run1 原始 90 张 PNG 未入库，清单与 SHA 在 `run1_floor_rule_20261017/m
   C 帧 ×1.0 整数偏移水面最大 1 级（约 750–850 px），×0.5/×0.75/×1.5 整数偏移水面 39–70 级（像素中心落在纹素边界，控制图 nearest 平局两边取法不同，同契约 (a′)），其余 2–6 级。
   所以本结论只针对 Web 画布自身对照（同一浏览器内 C vs R），不宣称 Web = 桌面。
 - 回归：改动后再跑 `../web_export_check.sh`（`?probe=1` 既有路径）仍 `WEBPROBE verdict: PASS`；`--self-check` ok=true。
+
+## 输出目录安全（回应 PR #804 审查 6231502792）
+
+858141cb 的 `run_web_matrix.sh` 对位置参数直接 `rm -rf "$OUT"`，且在依赖检查之前；同一模式来自 `../web_export_check.sh`，两处一并改为共用 `../safe_out_dir.sh`：不再删除任何输出目录，参数只当父目录、每轮 `mktemp` 独占子目录，依赖检查先于任何创建。
+两入口中剩下的删除只有本轮 `mktemp -d` 建的 Chrome profile 和本轮导出前写入的 `godot_preview/build_id.txt`（.gitignore 已忽略）。
+
+- `verify_out_dir_safety.sh`：在 `mktemp` 隔离夹具里复制两个入口，godot/chrome 用桩，不碰真实工程或个人目录。两个入口各 10 例 + 1 条静态检查，结果 `verify_out_dir_safety.txt` **PASS=21 FAIL=0**：
+  已有目录（放 sentinel 与旧轮子目录）作参数时只多出一个新子目录、原有内容一项不少；缺 Godot / 缺 Chrome 退出 20 且父目录内容不变；空参数 21；符号链接（含结尾 `/` 写法）22 且目标不变；不存在的父目录 23 且不被创建；
+  `../` 规范化到真实父目录下的新子目录；无参数落在 `$TMPDIR`；多参数 26；同一父目录连跑两次得到两个独立子目录、第一次产物保留；静态检查两入口无对 OUT 的 `rm -rf`。
+- 真实端到端：见 `out_dir_e2e_20261017.txt`（本轮用真实 Godot 4.7.2 + Chrome 155 跑新入口，父目录内放 sentinel）。
 
 ## 仍未覆盖
 

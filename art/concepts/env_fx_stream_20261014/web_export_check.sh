@@ -2,16 +2,22 @@
 # #749 溪流裁切隔离 demo：Web 导出 + 浏览器内逐像素/暂停/减少动态实测。仍只是候选，不导出主游戏。
 # 需要：Godot 4.7.2 编辑器，官方同版 web_nothreads_release.zip 已装到
 #   ~/.local/share/godot/export_templates/4.7.2.stable/（取自 Godot_v4.7.2-stable_export_templates.tpz）
-# 用法（仓库根）：GODOT=godot CHROME=google-chrome bash art/concepts/env_fx_stream_20261014/web_export_check.sh [OUT_DIR]
+# 用法（仓库根）：GODOT=godot CHROME=google-chrome bash art/concepts/env_fx_stream_20261014/web_export_check.sh [OUTPUT_PARENT]
+# 输出：永不删除已有目录。参数只当父目录（默认 ${TMPDIR:-/tmp}），每轮在其中新建独占子目录 web749.<时间>.XXXXXXXX；
+# 依赖检查先于任何创建。见 safe_out_dir.sh（PR #804 审查 6231502792 同类模式一并修）。
 # 结果在控制台一行 WEBPROBE {...}；由 webprobe_verdict.py 解析 JSON：顶层 ok=true、build_id 一致且（默认）顶层 scale_subpixel_ok=true 才算通过。
 # 默认含缩放/子像素小子集；WEBPROBE_SCALE=0 跳过。帧时只代表当前浏览器/渲染后端。
 set -euo pipefail
 GODOT="${GODOT:-godot}"
 CHROME="${CHROME:-google-chrome}"
-OUT="${1:-/tmp/web749}"
 HERE="$(cd "$(dirname "$0")" && pwd)"
 PROJ="$HERE/godot_preview"
-rm -rf "$OUT" && mkdir -p "$OUT"
+# shellcheck source=safe_out_dir.sh
+. "$HERE/safe_out_dir.sh"
+require_cmds "$GODOT" "$CHROME" python3 openssl curl timeout realpath mktemp
+[ -d "$PROJ" ] || { echo "refuse: missing project dir $PROJ (nothing created or deleted)" >&2; exit 20; }
+OUT="$(new_run_dir web749 "$@")"
+echo "out_dir=$OUT"
 # 导出身份：每次导出前写进工程（.gitignore 已忽略），随本次 PCK 打包；探针从包内读回，不从页面地址反射。
 BUILD_ID="$(openssl rand -hex 16)"
 printf '%s\n' "$BUILD_ID" >"$PROJ/build_id.txt"

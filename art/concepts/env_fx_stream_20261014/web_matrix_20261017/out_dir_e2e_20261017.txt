@@ -1,0 +1,26 @@
+# #749 输出目录安全修复后的真实端到端（GROK-BUILD，2026-10-17 16:23–16:28 北京时间）。仍只是隔离候选工具证据。
+# Godot 4.7.2.stable.official.ed1daf0bf，Google Chrome 155.0.8059.84 headless + SwiftShader。父目录事先放入 SENTINEL_existing_material.txt（内容 keep-me）。
+
+## 1. run_web_matrix.sh /tmp/wm749_real（父目录已存在且含 sentinel）
+out_dir=/tmp/wm749_real/webmatrix749.20261017-162305.0TQEXseP
+build_id=ab851af4cb079dd93791c8020aa89e31
+pck_sha256=cb47bc81f3ce08a47876218878ec62b059daadac070d33b0296c1b0b6758b312 bytes=2560576
+wasm_sha256=fc74679e3b97f76878947fcd4fbe1268cbfa6188182a2e33bbc3f5dc9bfa57d0
+server pid=113521 port=39765 (self-bound) served_pck_sha256=cb47bc81f3ce08a47876218878ec62b059daadac070d33b0296c1b0b6758b312
+chrome=Google Chrome 155.0.8059.84 
+browser wall time 93 s
+WEBMATRIX {"build_id":"ab851af4cb079dd93791c8020aa89e31","n_combos":50,"n_ok":50,"ok":true,"result_sha256":"24f002b32a05b7c84cdbef761257352e57f2164537eea9cfa0c65ec0ff877ea0","result_status":200,"uploads_ok":true}
+WEBMATRIX verdict: PASS 50/50 ok; browser/offline agree=True; fails=[]
+exit=0
+跑后父目录：SENTINEL_existing_material.txt webmatrix749.20261017-162305.0TQEXseP 
+sentinel 内容：keep-me
+新子目录 uploads 文件数：92（90 张 PNG + 结果 JSON + uploads.jsonl）
+
+## 2. 回归 web_export_check.sh /tmp/we749_real（?probe=1 既有路径，父目录已存在且含 sentinel）
+out_dir=/tmp/we749_real/web749.20261017-162525.t02fv27F
+build_id=65cb5539571c0978426dd3694a0a0434
+server pid=116711 port=40209 (self-bound)
+WEBPROBE verdict: PASS (ok)
+exit=0
+跑后父目录：SENTINEL_existing_material.txt web749.20261017-162525.t02fv27F 
+sentinel 内容：keep-me

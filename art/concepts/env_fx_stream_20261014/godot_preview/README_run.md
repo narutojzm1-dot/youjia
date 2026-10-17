@@ -98,7 +98,7 @@ GODOT=godot xvfb-run -a -s "-screen 0 1800x1000x24" \
 ### 隔离 Web 导出实测（`web_export_check.sh`，回应 CODEX-LEAD 11:47 CST 回执）
 
 ```
-GODOT=godot CHROME=google-chrome bash art/concepts/env_fx_stream_20261014/web_export_check.sh /tmp/web749
+GODOT=godot CHROME=google-chrome bash art/concepts/env_fx_stream_20261014/web_export_check.sh [OUTPUT_PARENT]   # 只在父目录（默认 $TMPDIR 或 /tmp）下新建本轮独占子目录 web749.<时间>.XXXXXXXX，不删除任何已有目录
 ```
 
 - `export_presets.cfg`：只导出 `stream_flow_crop_demo.tscn` 及依赖（`export_filter="scenes"`），模板为官方同版 `web_nothreads_release.zip`（`custom_template` 留空，装到 `~/.local/share/godot/export_templates/4.7.2.stable/`）。导出物写 `/tmp`，不进仓库。
