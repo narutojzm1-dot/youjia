@@ -1,0 +1,242 @@
+{
+  "source": "15fc174aa45f08917f4ca4e32b733ba81ff36873",
+  "no_save_fixture_writes": true,
+  "actual_old_profile": true,
+  "errors": [],
+  "console": [],
+  "requests": [],
+  "phases": [
+    {
+      "name": "first HTML loaded",
+      "at": "2026-10-17T04:24:37.032Z"
+    },
+    {
+      "name": "first actual first frame",
+      "at": "2026-10-17T04:25:20.971Z"
+    },
+    {
+      "name": "raw old envelope exact",
+      "at": "2026-10-17T04:25:20.979Z"
+    },
+    {
+      "name": "actual Chrome process closed",
+      "at": "2026-10-17T04:25:29.786Z"
+    },
+    {
+      "name": "reopen HTML loaded",
+      "at": "2026-10-17T04:25:30.829Z"
+    },
+    {
+      "name": "reopen actual first frame",
+      "at": "2026-10-17T04:25:37.804Z"
+    }
+  ],
+  "first_loading": {
+    "timings": {
+      "engineScriptReady": 543,
+      "bootstrapReady": 1398,
+      "assetCacheHit": 1406,
+      "assetEvents": [
+        {
+          "at": 1406,
+          "asset": "engine-e232d3881ea999631bbb4a08ccc86fa54dd2bc8a5b42fb6cb281cb86dd85bc48.wasm",
+          "kind": "cache-hit",
+          "source": "cache"
+        }
+      ],
+      "downloadComplete": 40024,
+      "engineReady": 43367,
+      "firstFrame": 43689
+    },
+    "samples": [
+      {
+        "at": 5790.099999904633,
+        "status": "下载资源 30% · 38.3 / 125.1 MiB（解压后）",
+        "detail": "已读取 38.3 MiB 资源数据（解压后）· 4 秒"
+      },
+      {
+        "at": 10779.5,
+        "status": "下载资源 50% · 63.0 / 125.1 MiB（解压后）",
+        "detail": "已读取 63.0 MiB 资源数据（解压后）· 9 秒"
+      },
+      {
+        "at": 15783.700000047684,
+        "status": "下载资源 62% · 77.6 / 125.1 MiB（解压后）",
+        "detail": "已读取 77.6 MiB 资源数据（解压后）· 14 秒"
+      },
+      {
+        "at": 20784.700000047684,
+        "status": "下载资源 62% · 77.6 / 125.1 MiB（解压后）",
+        "detail": "已读取 77.6 MiB 资源数据（解压后）· 19 秒"
+      },
+      {
+        "at": 25779.599999904633,
+        "status": "下载资源 66% · 82.7 / 125.1 MiB（解压后）",
+        "detail": "已读取 82.7 MiB 资源数据（解压后）· 24 秒"
+      },
+      {
+        "at": 30779.599999904633,
+        "status": "下载资源 71% · 89.8 / 125.1 MiB（解压后）",
+        "detail": "已读取 89.8 MiB 资源数据（解压后）· 29 秒"
+      },
+      {
+        "at": 35779.59999990463,
+        "status": "下载资源 87% · 108.9 / 125.1 MiB（解压后）",
+        "detail": "已读取 108.9 MiB 资源数据（解压后）· 34 秒"
+      },
+      {
+        "at": 40779.40000009537,
+        "status": "下载资源 95% · 119.8 / 125.1 MiB（解压后）",
+        "detail": "已读取 119.8 MiB 资源数据（解压后）· 39 秒"
+      }
+    ]
+  },
+  "all_original_records_exact": true,
+  "first_upgrade": {
+    "generation": "5",
+    "payload_sha256": "fc53c9a95c8dafaaefbc0f6aa798724570a8f3a291c2b2d062070438ff55805d",
+    "exact_old_envelope": true,
+    "version": 3
+  },
+  "before_close": {
+    "version": 3,
+    "current": {
+      "schema": "youjia.save-envelope/v1",
+      "store_id": "4ccd640d7a7141ac9b4239e6104525d7",
+      "commit_id": "6f64ecd85a3c490abda3e1186c7533c9",
+      "request_id": "d54bfe895bb44164b97b3c6bc9eed583",
+      "parent_commit_id": "bf398c7e616f46f8882ffb59418f784f",
+      "generation": "5",
+      "payload_bytes": "{\"album\":[],\"animal_relationship_memory\":{},\"exploration\":null,\"exploration_committed_serial\":0,\"first_fish_caught\":false,\"holiday_day\":1,\"holiday_day_elapsed\":0.0,\"keepsakes\":{},\"locale\":\"zh-CN\",\"photo_moments\":{},\"plant_day_planted\":0,\"plant_state\":0,\"plant_watered_day\":-1,\"resident_rest\":{\"cause\":\"legacy\",\"day\":1.0,\"schema\":1.0},\"tutorial_version\":0,\"version\":5,\"world_residents\":{\"beibei\":{\"adopted_clock\":null,\"stage\":\"unmet\"},\"chicken\":{\"settled_clock\":{\"day\":1.0,\"elapsed\":0.0},\"stage\":\"chick\"},\"revision\":1.0,\"schema\":3.0,\"turtle\":{\"found_trip\":\"\",\"stage\":\"unmet\"}},\"world_weather\":{\"episode\":0,\"remaining\":1739.71887207031,\"seed\":929335128,\"weather\":\"sun\"},\"yard_crops\":{\"kind\":\"\",\"planted_day\":0.0,\"revision\":0.0,\"schema\":1.0,\"watered_day\":-1.0},\"yard_gate_open\":false,\"yard_inventory\":{\"corn\":1,\"fish\":{},\"flour\":0,\"grass\":0,\"ground\":[],\"held\":\"corn\",\"millet\":0,\"next_food_id\":1,\"production_revision\":0,\"revision\":2,\"schema\":5,\"wheat\":2}}",
+      "payload_sha256": "fc53c9a95c8dafaaefbc0f6aa798724570a8f3a291c2b2d062070438ff55805d",
+      "envelope_sha256": "ee65b42960e20ea9a8f6341b23aaddf6f90be1a756dc3c1300bf91c0311b80de"
+    },
+    "records": [
+      [
+        "current",
+        {
+          "schema": "youjia.save-envelope/v1",
+          "store_id": "4ccd640d7a7141ac9b4239e6104525d7",
+          "commit_id": "6f64ecd85a3c490abda3e1186c7533c9",
+          "request_id": "d54bfe895bb44164b97b3c6bc9eed583",
+          "parent_commit_id": "bf398c7e616f46f8882ffb59418f784f",
+          "generation": "5",
+          "payload_bytes": "{\"album\":[],\"animal_relationship_memory\":{},\"exploration\":null,\"exploration_committed_serial\":0,\"first_fish_caught\":false,\"holiday_day\":1,\"holiday_day_elapsed\":0.0,\"keepsakes\":{},\"locale\":\"zh-CN\",\"photo_moments\":{},\"plant_day_planted\":0,\"plant_state\":0,\"plant_watered_day\":-1,\"resident_rest\":{\"cause\":\"legacy\",\"day\":1.0,\"schema\":1.0},\"tutorial_version\":0,\"version\":5,\"world_residents\":{\"beibei\":{\"adopted_clock\":null,\"stage\":\"unmet\"},\"chicken\":{\"settled_clock\":{\"day\":1.0,\"elapsed\":0.0},\"stage\":\"chick\"},\"revision\":1.0,\"schema\":3.0,\"turtle\":{\"found_trip\":\"\",\"stage\":\"unmet\"}},\"world_weather\":{\"episode\":0,\"remaining\":1739.71887207031,\"seed\":929335128,\"weather\":\"sun\"},\"yard_crops\":{\"kind\":\"\",\"planted_day\":0.0,\"revision\":0.0,\"schema\":1.0,\"watered_day\":-1.0},\"yard_gate_open\":false,\"yard_inventory\":{\"corn\":1,\"fish\":{},\"flour\":0,\"grass\":0,\"ground\":[],\"held\":\"corn\",\"millet\":0,\"next_food_id\":1,\"production_revision\":0,\"revision\":2,\"schema\":5,\"wheat\":2}}",
+          "payload_sha256": "fc53c9a95c8dafaaefbc0f6aa798724570a8f3a291c2b2d062070438ff55805d",
+          "envelope_sha256": "ee65b42960e20ea9a8f6341b23aaddf6f90be1a756dc3c1300bf91c0311b80de"
+        }
+      ]
+    ],
+    "all_rows": {
+      "records": [
+        [
+          "current",
+          {
+            "schema": "youjia.save-envelope/v1",
+            "store_id": "4ccd640d7a7141ac9b4239e6104525d7",
+            "commit_id": "6f64ecd85a3c490abda3e1186c7533c9",
+            "request_id": "d54bfe895bb44164b97b3c6bc9eed583",
+            "parent_commit_id": "bf398c7e616f46f8882ffb59418f784f",
+            "generation": "5",
+            "payload_bytes": "{\"album\":[],\"animal_relationship_memory\":{},\"exploration\":null,\"exploration_committed_serial\":0,\"first_fish_caught\":false,\"holiday_day\":1,\"holiday_day_elapsed\":0.0,\"keepsakes\":{},\"locale\":\"zh-CN\",\"photo_moments\":{},\"plant_day_planted\":0,\"plant_state\":0,\"plant_watered_day\":-1,\"resident_rest\":{\"cause\":\"legacy\",\"day\":1.0,\"schema\":1.0},\"tutorial_version\":0,\"version\":5,\"world_residents\":{\"beibei\":{\"adopted_clock\":null,\"stage\":\"unmet\"},\"chicken\":{\"settled_clock\":{\"day\":1.0,\"elapsed\":0.0},\"stage\":\"chick\"},\"revision\":1.0,\"schema\":3.0,\"turtle\":{\"found_trip\":\"\",\"stage\":\"unmet\"}},\"world_weather\":{\"episode\":0,\"remaining\":1739.71887207031,\"seed\":929335128,\"weather\":\"sun\"},\"yard_crops\":{\"kind\":\"\",\"planted_day\":0.0,\"revision\":0.0,\"schema\":1.0,\"watered_day\":-1.0},\"yard_gate_open\":false,\"yard_inventory\":{\"corn\":1,\"fish\":{},\"flour\":0,\"grass\":0,\"ground\":[],\"held\":\"corn\",\"millet\":0,\"next_food_id\":1,\"production_revision\":0,\"revision\":2,\"schema\":5,\"wheat\":2}}",
+            "payload_sha256": "fc53c9a95c8dafaaefbc0f6aa798724570a8f3a291c2b2d062070438ff55805d",
+            "envelope_sha256": "ee65b42960e20ea9a8f6341b23aaddf6f90be1a756dc3c1300bf91c0311b80de"
+          }
+        ]
+      ]
+    }
+  },
+  "processesBeforeClose": [
+    62628,
+    49656,
+    2376,
+    36816,
+    48376,
+    43116,
+    8008,
+    74688,
+    54404
+  ],
+  "processesAfterClose": [],
+  "actualBrowserProcessClose": true,
+  "reopen_loading": {
+    "timings": {
+      "engineScriptReady": 22,
+      "bootstrapReady": 33,
+      "assetCacheHit": 36,
+      "assetEvents": [
+        {
+          "at": 36,
+          "asset": "engine-e232d3881ea999631bbb4a08ccc86fa54dd2bc8a5b42fb6cb281cb86dd85bc48.wasm",
+          "kind": "cache-hit",
+          "source": "cache"
+        },
+        {
+          "at": 38,
+          "asset": "game-15fc174.pck",
+          "kind": "cache-hit",
+          "source": "cache"
+        }
+      ],
+      "downloadComplete": 1065,
+      "engineReady": 5209,
+      "firstFrame": 5526
+    },
+    "samples": [
+      {
+        "at": 6670.900000095367,
+        "status": "引擎已启动，正在绘制画面…",
+        "detail": "下载已完成 · 总计已用 5 秒"
+      }
+    ]
+  },
+  "actual_reopen": {
+    "version": 3,
+    "current": {
+      "schema": "youjia.save-envelope/v1",
+      "store_id": "4ccd640d7a7141ac9b4239e6104525d7",
+      "commit_id": "6f64ecd85a3c490abda3e1186c7533c9",
+      "request_id": "d54bfe895bb44164b97b3c6bc9eed583",
+      "parent_commit_id": "bf398c7e616f46f8882ffb59418f784f",
+      "generation": "5",
+      "payload_bytes": "{\"album\":[],\"animal_relationship_memory\":{},\"exploration\":null,\"exploration_committed_serial\":0,\"first_fish_caught\":false,\"holiday_day\":1,\"holiday_day_elapsed\":0.0,\"keepsakes\":{},\"locale\":\"zh-CN\",\"photo_moments\":{},\"plant_day_planted\":0,\"plant_state\":0,\"plant_watered_day\":-1,\"resident_rest\":{\"cause\":\"legacy\",\"day\":1.0,\"schema\":1.0},\"tutorial_version\":0,\"version\":5,\"world_residents\":{\"beibei\":{\"adopted_clock\":null,\"stage\":\"unmet\"},\"chicken\":{\"settled_clock\":{\"day\":1.0,\"elapsed\":0.0},\"stage\":\"chick\"},\"revision\":1.0,\"schema\":3.0,\"turtle\":{\"found_trip\":\"\",\"stage\":\"unmet\"}},\"world_weather\":{\"episode\":0,\"remaining\":1739.71887207031,\"seed\":929335128,\"weather\":\"sun\"},\"yard_crops\":{\"kind\":\"\",\"planted_day\":0.0,\"revision\":0.0,\"schema\":1.0,\"watered_day\":-1.0},\"yard_gate_open\":false,\"yard_inventory\":{\"corn\":1,\"fish\":{},\"flour\":0,\"grass\":0,\"ground\":[],\"held\":\"corn\",\"millet\":0,\"next_food_id\":1,\"production_revision\":0,\"revision\":2,\"schema\":5,\"wheat\":2}}",
+      "payload_sha256": "fc53c9a95c8dafaaefbc0f6aa798724570a8f3a291c2b2d062070438ff55805d",
+      "envelope_sha256": "ee65b42960e20ea9a8f6341b23aaddf6f90be1a756dc3c1300bf91c0311b80de"
+    },
+    "records": [
+      [
+        "current",
+        {
+          "schema": "youjia.save-envelope/v1",
+          "store_id": "4ccd640d7a7141ac9b4239e6104525d7",
+          "commit_id": "6f64ecd85a3c490abda3e1186c7533c9",
+          "request_id": "d54bfe895bb44164b97b3c6bc9eed583",
+          "parent_commit_id": "bf398c7e616f46f8882ffb59418f784f",
+          "generation": "5",
+          "payload_bytes": "{\"album\":[],\"animal_relationship_memory\":{},\"exploration\":null,\"exploration_committed_serial\":0,\"first_fish_caught\":false,\"holiday_day\":1,\"holiday_day_elapsed\":0.0,\"keepsakes\":{},\"locale\":\"zh-CN\",\"photo_moments\":{},\"plant_day_planted\":0,\"plant_state\":0,\"plant_watered_day\":-1,\"resident_rest\":{\"cause\":\"legacy\",\"day\":1.0,\"schema\":1.0},\"tutorial_version\":0,\"version\":5,\"world_residents\":{\"beibei\":{\"adopted_clock\":null,\"stage\":\"unmet\"},\"chicken\":{\"settled_clock\":{\"day\":1.0,\"elapsed\":0.0},\"stage\":\"chick\"},\"revision\":1.0,\"schema\":3.0,\"turtle\":{\"found_trip\":\"\",\"stage\":\"unmet\"}},\"world_weather\":{\"episode\":0,\"remaining\":1739.71887207031,\"seed\":929335128,\"weather\":\"sun\"},\"yard_crops\":{\"kind\":\"\",\"planted_day\":0.0,\"revision\":0.0,\"schema\":1.0,\"watered_day\":-1.0},\"yard_gate_open\":false,\"yard_inventory\":{\"corn\":1,\"fish\":{},\"flour\":0,\"grass\":0,\"ground\":[],\"held\":\"corn\",\"millet\":0,\"next_food_id\":1,\"production_revision\":0,\"revision\":2,\"schema\":5,\"wheat\":2}}",
+          "payload_sha256": "fc53c9a95c8dafaaefbc0f6aa798724570a8f3a291c2b2d062070438ff55805d",
+          "envelope_sha256": "ee65b42960e20ea9a8f6341b23aaddf6f90be1a756dc3c1300bf91c0311b80de"
+        }
+      ]
+    ],
+    "all_rows": {
+      "records": [
+        [
+          "current",
+          {
+            "schema": "youjia.save-envelope/v1",
+            "store_id": "4ccd640d7a7141ac9b4239e6104525d7",
+            "commit_id": "6f64ecd85a3c490abda3e1186c7533c9",
+            "request_id": "d54bfe895bb44164b97b3c6bc9eed583",
+            "parent_commit_id": "bf398c7e616f46f8882ffb59418f784f",
+            "generation": "5",
+            "payload_bytes": "{\"album\":[],\"animal_relationship_memory\":{},\"exploration\":null,\"exploration_committed_serial\":0,\"first_fish_caught\":false,\"holiday_day\":1,\"holiday_day_elapsed\":0.0,\"keepsakes\":{},\"locale\":\"zh-CN\",\"photo_moments\":{},\"plant_day_planted\":0,\"plant_state\":0,\"plant_watered_day\":-1,\"resident_rest\":{\"cause\":\"legacy\",\"day\":1.0,\"schema\":1.0},\"tutorial_version\":0,\"version\":5,\"world_residents\":{\"beibei\":{\"adopted_clock\":null,\"stage\":\"unmet\"},\"chicken\":{\"settled_clock\":{\"day\":1.0,\"elapsed\":0.0},\"stage\":\"chick\"},\"revision\":1.0,\"schema\":3.0,\"turtle\":{\"found_trip\":\"\",\"stage\":\"unmet\"}},\"world_weather\":{\"episode\":0,\"remaining\":1739.71887207031,\"seed\":929335128,\"weather\":\"sun\"},\"yard_crops\":{\"kind\":\"\",\"planted_day\":0.0,\"revision\":0.0,\"schema\":1.0,\"watered_day\":-1.0},\"yard_gate_open\":false,\"yard_inventory\":{\"corn\":1,\"fish\":{},\"flour\":0,\"grass\":0,\"ground\":[],\"held\":\"corn\",\"millet\":0,\"next_food_id\":1,\"production_revision\":0,\"revision\":2,\"schema\":5,\"wheat\":2}}",
+            "payload_sha256": "fc53c9a95c8dafaaefbc0f6aa798724570a8f3a291c2b2d062070438ff55805d",
+            "envelope_sha256": "ee65b42960e20ea9a8f6341b23aaddf6f90be1a756dc3c1300bf91c0311b80de"
+          }
+        ]
+      ]
+    }
+  },
+  "pass": true
+}
