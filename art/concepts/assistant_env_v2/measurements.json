@@ -1,0 +1,25 @@
+{
+  "source_sha256": "239efcb8235acb56e12450c2e40e409336c1c139403a07ee8b4803f621bde241",
+  "duration_seconds": 128.0,
+  "sample_rate": 48000,
+  "channels": 2,
+  "source_rms_dbfs": -18.92786943178075,
+  "candidate_rms_dbfs": -22.49135657334748,
+  "peak_dbfs": -3.2013237476348877,
+  "clipped_samples": 0,
+  "seam_sample_delta": [
+    0.006495170295238495,
+    0.011702626943588257
+  ],
+  "files": {
+    "seam_once.ogg": {
+      "bytes": 169478,
+      "sha256": "85383dc5149b36b737cc59bf7edd098087da5e0c7ff5d44904c627d4a8214d5b"
+    },
+    "env_gust_candidate.ogg": {
+      "bytes": 1361918,
+      "sha256": "429b5f2d95f54b0a6902a7f5ce634eb78ea1bd3ffe3804196ef5a66cec5f2e05"
+    }
+  },
+  "listening": "not performed; no speaker/listener claim"
+}
