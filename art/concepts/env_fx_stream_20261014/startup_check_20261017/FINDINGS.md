@@ -73,3 +73,19 @@ B 配置（jitter fix 0）下 `--toggle-sequence` 重录 360 帧（D）：首帧
 
 无损拒绝验证：`verify_run_case_safety.sh`（不跑 Godot、不录帧；坏名称 / 坏帧数 / 符号链接共 14 项 PASS）。
 未改项目默认 physics，未重跑未变的 5a8 动画专项。
+
+## 清理脚本第二轮返修（回应 CODEX-LEAD review on a6361372）
+
+问题：旧版只凭 `stat uid == 当前用户` 就 `rm -rf`，同账户下其他任务或手工建的未知目录也会被删；`verify_run_case_safety.sh` 把任何非零退出都算“拒绝”，exit 97 / 缺 SRC / 缺 xvfb 或 Godot 都可能假通过，且固定名 `symlink_case` / `nestlink` 可能撞上已有内容。
+
+`run_case.sh` 现改为：
+- 本脚本新建工作目录时写专属标记 `.run_case_owner`：魔数 `startup749-run_case-workdir v1`、case 名、uid、该目录 `dev:inode`、随机 token、UTC 时间；用 `mkdir`（不带 `-p`）确保目录是本次新建。
+- 已存在目录只有在标记是当前 uid 的普通文件（非符号链接、非目录），且魔数 / 名称 / uid / `dev:inode` 全部与该目录现状一致时才清理。没有标记、标记被复制（inode 不符）、名称或魔数不符，一律拒绝、不删除。
+- SRC（`godot_preview/project.godot`）、`xvfb-run`、Godot 可执行文件都在任何删除之前预检。
+- 每种拒绝有固定退出码，并在 stderr 打印 `REJECT <code> <reason>`：20 用法、21 case 名、22 帧数、23 缺 godot_preview、24 缺 xvfb-run、25 缺或不可执行 Godot、26 固定根异常、27 工作路径是符号链接、28 不是目录、29 越出固定根、30 非当前 uid、31 无标记、32 标记不是普通文件、33 标记内容不符。
+- 旧版留下的 `/tmp/startup749/A_default` 等无标记目录现在会被 31 拒绝；要重录需先手工确认后删除。
+
+`verify_run_case_safety.sh` 现改为：`xvfb-run` / Godot 用记录替身，删除阶段用 `rm` 记录替身（返回 97、实际不删）。每项同时核对精确退出码、stderr 的 `REJECT <code>`、rm 与 xvfb 替身调用次数、哨兵 `keep.txt` 仍在。自身临时目录用 `mktemp -d`，`/tmp/startup749` 下的测试 case 名带时间戳 + PID + 随机数并先查重，结束只清理本次登记的条目（最后一项核对已清空）。覆盖：13 项坏参数、4 项依赖缺失、符号链接、普通文件、同 UID 未知目录（负例），标记为符号链接 / 目录、复制标记、名称不符、魔数不符（负例），以及有效自有目录的新建、到达删除（rm 替身只收到该目录一个目标、哨兵仍在）、真实清理后重建（正例）。原始输出见 `verify_run_case_safety.txt`（PASS=42 FAIL=0，Linux 盒子）。退出码 30（非当前 uid）需要另一账户，未在本机构造。
+
+`run_case_e2e_check.txt`：真实 xvfb + Godot 4 录 3 帧的小样，新建、同名重跑（真实清理自有目录后重录）都成功；旧无标记目录 `A_default` 得到 `REJECT 31`、未删。没有重录 270/360 帧，没有改驱动、shader、Host、存档或工程默认值，5a8 动画专项结论不变。
+
