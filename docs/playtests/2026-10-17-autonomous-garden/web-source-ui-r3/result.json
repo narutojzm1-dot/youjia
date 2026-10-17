@@ -1,0 +1,684 @@
+{
+  "source": "1ab59c1113dd0a1c7d55ca9e34cf3f89ab152814",
+  "controlled_legal_start_only": true,
+  "no_post_start_fixture_writes": true,
+  "no_direct_game_calls": true,
+  "no_http_substitution": true,
+  "errors": [],
+  "console": [
+    "Failed to load resource: the server responded with a status of 404 (Not Found)"
+  ],
+  "samples": [
+    {
+      "image": "source-ui-00.jpg",
+      "exploration": {
+        "contract_version": 1,
+        "next_trip_serial": 2,
+        "session": {
+          "carried": [],
+          "catalog": "formal",
+          "companion": {},
+          "current_stop": "gate",
+          "failure": null,
+          "offers": {
+            "gate": "formal.find.feather"
+          },
+          "proposal": null,
+          "record_revision": 1,
+          "rng_seed": "2977975699398288129",
+          "route_id": "formal.near_path",
+          "started_clock": {
+            "day": 1,
+            "elapsed": 161.773966666668
+          },
+          "state": "active",
+          "taken": {},
+          "trip_id": "trip-1",
+          "trip_serial": 1,
+          "visited": [
+            "gate"
+          ]
+        }
+      },
+      "keepsakes": {}
+    },
+    {
+      "image": "source-ui-01.jpg",
+      "exploration": {
+        "contract_version": 1,
+        "next_trip_serial": 2,
+        "session": {
+          "carried": [],
+          "catalog": "formal",
+          "companion": {},
+          "current_stop": "gate",
+          "failure": null,
+          "offers": {
+            "gate": "formal.find.feather"
+          },
+          "proposal": null,
+          "record_revision": 1,
+          "rng_seed": "2977975699398288129",
+          "route_id": "formal.near_path",
+          "started_clock": {
+            "day": 1,
+            "elapsed": 161.773966666668
+          },
+          "state": "active",
+          "taken": {},
+          "trip_id": "trip-1",
+          "trip_serial": 1,
+          "visited": [
+            "gate"
+          ]
+        }
+      },
+      "keepsakes": {}
+    },
+    {
+      "image": "source-ui-02.jpg",
+      "exploration": {
+        "contract_version": 1,
+        "next_trip_serial": 2,
+        "session": {
+          "carried": [],
+          "catalog": "formal",
+          "companion": {},
+          "current_stop": "gate",
+          "failure": null,
+          "offers": {
+            "gate": "formal.find.feather"
+          },
+          "proposal": null,
+          "record_revision": 1,
+          "rng_seed": "2977975699398288129",
+          "route_id": "formal.near_path",
+          "started_clock": {
+            "day": 1,
+            "elapsed": 161.773966666668
+          },
+          "state": "active",
+          "taken": {},
+          "trip_id": "trip-1",
+          "trip_serial": 1,
+          "visited": [
+            "gate"
+          ]
+        }
+      },
+      "keepsakes": {}
+    },
+    {
+      "image": "source-ui-03.jpg",
+      "exploration": {
+        "contract_version": 1,
+        "next_trip_serial": 2,
+        "session": {
+          "carried": [
+            "formal.find.feather"
+          ],
+          "catalog": "formal",
+          "companion": {},
+          "current_stop": "slope",
+          "failure": null,
+          "offers": {
+            "gate": "formal.find.feather",
+            "slope": "formal.find.feather"
+          },
+          "proposal": null,
+          "record_revision": 3,
+          "rng_seed": "2977975699398288129",
+          "route_id": "formal.near_path",
+          "started_clock": {
+            "day": 1,
+            "elapsed": 161.773966666668
+          },
+          "state": "active",
+          "taken": {
+            "slope": "formal.find.feather"
+          },
+          "trip_id": "trip-1",
+          "trip_serial": 1,
+          "visited": [
+            "gate",
+            "slope"
+          ]
+        }
+      },
+      "keepsakes": {}
+    },
+    {
+      "image": "source-ui-04.jpg",
+      "exploration": {
+        "contract_version": 1,
+        "next_trip_serial": 2,
+        "session": null
+      },
+      "keepsakes": {
+        "formal.find.feather": 1
+      }
+    },
+    {
+      "image": "source-ui-05.jpg",
+      "exploration": {
+        "contract_version": 1,
+        "next_trip_serial": 3,
+        "session": {
+          "carried": [],
+          "catalog": "formal",
+          "companion": {},
+          "current_stop": "gate",
+          "failure": null,
+          "offers": {
+            "gate": ""
+          },
+          "proposal": null,
+          "record_revision": 1,
+          "rng_seed": "7007783998393247980",
+          "route_id": "formal.near_path",
+          "started_clock": {
+            "day": 1,
+            "elapsed": 246.603329333392
+          },
+          "state": "active",
+          "taken": {},
+          "trip_id": "trip-2",
+          "trip_serial": 2,
+          "visited": [
+            "gate"
+          ]
+        }
+      },
+      "keepsakes": {
+        "formal.find.feather": 1
+      }
+    },
+    {
+      "image": "source-ui-06.jpg",
+      "exploration": {
+        "contract_version": 1,
+        "next_trip_serial": 3,
+        "session": {
+          "carried": [],
+          "catalog": "formal",
+          "companion": {},
+          "current_stop": "gate",
+          "failure": null,
+          "offers": {
+            "gate": ""
+          },
+          "proposal": null,
+          "record_revision": 1,
+          "rng_seed": "7007783998393247980",
+          "route_id": "formal.near_path",
+          "started_clock": {
+            "day": 1,
+            "elapsed": 246.603329333392
+          },
+          "state": "active",
+          "taken": {},
+          "trip_id": "trip-2",
+          "trip_serial": 2,
+          "visited": [
+            "gate"
+          ]
+        }
+      },
+      "keepsakes": {
+        "formal.find.feather": 1
+      }
+    },
+    {
+      "image": "source-ui-07.jpg",
+      "exploration": {
+        "contract_version": 1,
+        "next_trip_serial": 3,
+        "session": {
+          "carried": [],
+          "catalog": "formal",
+          "companion": {},
+          "current_stop": "gate",
+          "failure": null,
+          "offers": {
+            "gate": ""
+          },
+          "proposal": null,
+          "record_revision": 1,
+          "rng_seed": "7007783998393247980",
+          "route_id": "formal.near_path",
+          "started_clock": {
+            "day": 1,
+            "elapsed": 246.603329333392
+          },
+          "state": "active",
+          "taken": {},
+          "trip_id": "trip-2",
+          "trip_serial": 2,
+          "visited": [
+            "gate"
+          ]
+        }
+      },
+      "keepsakes": {
+        "formal.find.feather": 1
+      }
+    },
+    {
+      "image": "source-ui-08.jpg",
+      "exploration": {
+        "contract_version": 1,
+        "next_trip_serial": 3,
+        "session": {
+          "carried": [
+            "formal.find.feather"
+          ],
+          "catalog": "formal",
+          "companion": {},
+          "current_stop": "slope",
+          "failure": null,
+          "offers": {
+            "gate": "",
+            "slope": "formal.find.feather"
+          },
+          "proposal": null,
+          "record_revision": 3,
+          "rng_seed": "7007783998393247980",
+          "route_id": "formal.near_path",
+          "started_clock": {
+            "day": 1,
+            "elapsed": 246.603329333392
+          },
+          "state": "active",
+          "taken": {
+            "slope": "formal.find.feather"
+          },
+          "trip_id": "trip-2",
+          "trip_serial": 2,
+          "visited": [
+            "gate",
+            "slope"
+          ]
+        }
+      },
+      "keepsakes": {
+        "formal.find.feather": 1
+      }
+    },
+    {
+      "image": "source-ui-09.jpg",
+      "exploration": {
+        "contract_version": 1,
+        "next_trip_serial": 3,
+        "session": null
+      },
+      "keepsakes": {
+        "formal.find.feather": 2
+      }
+    },
+    {
+      "image": "source-ui-10.jpg",
+      "exploration": {
+        "contract_version": 1,
+        "next_trip_serial": 4,
+        "session": {
+          "carried": [],
+          "catalog": "formal",
+          "companion": {
+            "actor_id": "sheep_a",
+            "mode": "nearby"
+          },
+          "current_stop": "gate",
+          "failure": null,
+          "offers": {
+            "gate": ""
+          },
+          "proposal": null,
+          "record_revision": 1,
+          "rng_seed": "-7701628379593770920",
+          "route_id": "formal.near_path",
+          "started_clock": {
+            "day": 1,
+            "elapsed": 287.514006000026
+          },
+          "state": "active",
+          "taken": {},
+          "trip_id": "trip-3",
+          "trip_serial": 3,
+          "visited": [
+            "gate"
+          ]
+        }
+      },
+      "keepsakes": {
+        "formal.find.feather": 2
+      }
+    },
+    {
+      "image": "source-ui-11.jpg",
+      "exploration": {
+        "contract_version": 1,
+        "next_trip_serial": 4,
+        "session": {
+          "carried": [],
+          "catalog": "formal",
+          "companion": {
+            "actor_id": "sheep_a",
+            "mode": "nearby"
+          },
+          "current_stop": "gate",
+          "failure": null,
+          "offers": {
+            "gate": ""
+          },
+          "proposal": null,
+          "record_revision": 1,
+          "rng_seed": "-7701628379593770920",
+          "route_id": "formal.near_path",
+          "started_clock": {
+            "day": 1,
+            "elapsed": 287.514006000026
+          },
+          "state": "active",
+          "taken": {},
+          "trip_id": "trip-3",
+          "trip_serial": 3,
+          "visited": [
+            "gate"
+          ]
+        }
+      },
+      "keepsakes": {
+        "formal.find.feather": 2
+      }
+    },
+    {
+      "image": "source-ui-12.jpg",
+      "exploration": {
+        "contract_version": 1,
+        "next_trip_serial": 4,
+        "session": {
+          "carried": [],
+          "catalog": "formal",
+          "companion": {
+            "actor_id": "sheep_a",
+            "mode": "nearby"
+          },
+          "current_stop": "gate",
+          "failure": null,
+          "offers": {
+            "gate": ""
+          },
+          "proposal": null,
+          "record_revision": 1,
+          "rng_seed": "-7701628379593770920",
+          "route_id": "formal.near_path",
+          "started_clock": {
+            "day": 1,
+            "elapsed": 287.514006000026
+          },
+          "state": "active",
+          "taken": {},
+          "trip_id": "trip-3",
+          "trip_serial": 3,
+          "visited": [
+            "gate"
+          ]
+        }
+      },
+      "keepsakes": {
+        "formal.find.feather": 2
+      }
+    },
+    {
+      "image": "source-ui-13.jpg",
+      "exploration": {
+        "contract_version": 1,
+        "next_trip_serial": 4,
+        "session": {
+          "carried": [
+            "formal.find.flower_seeds"
+          ],
+          "catalog": "formal",
+          "companion": {
+            "actor_id": "sheep_a",
+            "mode": "nearby"
+          },
+          "current_stop": "slope",
+          "failure": null,
+          "offers": {
+            "gate": "",
+            "slope": "formal.find.flower_seeds"
+          },
+          "proposal": null,
+          "record_revision": 3,
+          "rng_seed": "-7701628379593770920",
+          "route_id": "formal.near_path",
+          "started_clock": {
+            "day": 1,
+            "elapsed": 287.514006000026
+          },
+          "state": "active",
+          "taken": {
+            "slope": "formal.find.flower_seeds"
+          },
+          "trip_id": "trip-3",
+          "trip_serial": 3,
+          "visited": [
+            "gate",
+            "slope"
+          ]
+        }
+      },
+      "keepsakes": {
+        "formal.find.feather": 2
+      }
+    },
+    {
+      "image": "source-ui-14.jpg",
+      "exploration": {
+        "contract_version": 1,
+        "next_trip_serial": 4,
+        "session": null
+      },
+      "keepsakes": {
+        "formal.find.feather": 2,
+        "formal.find.flower_seeds": 1
+      }
+    },
+    {
+      "image": "source-ui-15.jpg",
+      "exploration": {
+        "contract_version": 1,
+        "next_trip_serial": 4,
+        "session": null
+      },
+      "keepsakes": {
+        "formal.find.feather": 2
+      },
+      "garden": {
+        "receipts": [
+          {
+            "ap": 1,
+            "bed": "starter",
+            "day": 1,
+            "experience": 1,
+            "period": "dinner",
+            "seeds": 1
+          }
+        ],
+        "revision": 1,
+        "schema": 1
+      }
+    }
+  ],
+  "initialFixture": {
+    "album": [],
+    "animal_relationship_memory": {},
+    "exploration": null,
+    "exploration_committed_serial": 0,
+    "first_fish_caught": false,
+    "holiday_day": 1,
+    "holiday_day_elapsed": 160,
+    "keepsakes": {},
+    "locale": "zh-CN",
+    "meal_ledger": {
+      "receipts": [
+        {
+          "day": 1,
+          "earned": 3,
+          "fatigued": false,
+          "ingredients": {
+            "wheat": 1
+          },
+          "meal": "lunch"
+        }
+      ],
+      "revision": 1,
+      "schema": 1
+    },
+    "photo_moments": {},
+    "plant_day_planted": 0,
+    "plant_state": 0,
+    "plant_watered_day": -1,
+    "resident_rest": {
+      "cause": "sleep",
+      "day": 1,
+      "schema": 1
+    },
+    "tutorial_version": 1,
+    "version": 5,
+    "world_weather": {},
+    "yard_crops": {
+      "kind": "",
+      "planted_day": 0,
+      "revision": 0,
+      "schema": 1,
+      "watered_day": -1
+    },
+    "yard_gate_open": true,
+    "yard_inventory": {
+      "corn": 0,
+      "fish": {},
+      "flour": 0,
+      "grass": 0,
+      "ground": [],
+      "held": "",
+      "millet": 0,
+      "next_food_id": 1,
+      "production_revision": 0,
+      "revision": 1,
+      "schema": 5,
+      "wheat": 1
+    }
+  },
+  "final": {
+    "album": [],
+    "animal_relationship_memory": {},
+    "exploration": {
+      "contract_version": 1,
+      "next_trip_serial": 4,
+      "session": null
+    },
+    "exploration_committed_serial": 3,
+    "first_fish_caught": false,
+    "growth_production": {
+      "receipts": [],
+      "revision": 0,
+      "schema": 3
+    },
+    "holiday_day": 1,
+    "holiday_day_elapsed": 340.028975333315,
+    "keepsakes": {
+      "formal.find.feather": 2
+    },
+    "locale": "zh-CN",
+    "meal_ledger": {
+      "receipts": [
+        {
+          "day": 1,
+          "earned": 3,
+          "fatigued": false,
+          "ingredients": {
+            "wheat": 1
+          },
+          "meal": "lunch"
+        }
+      ],
+      "revision": 1,
+      "schema": 1
+    },
+    "photo_moments": {},
+    "plant_day_planted": 0,
+    "plant_state": 0,
+    "plant_watered_day": -1,
+    "resident_rest": {
+      "cause": "sleep",
+      "day": 1,
+      "schema": 1
+    },
+    "tutorial_version": 1,
+    "version": 5,
+    "world_residents": {
+      "beibei": {
+        "adopted_clock": null,
+        "stage": "unmet"
+      },
+      "chicken": {
+        "settled_clock": {
+          "day": 1,
+          "elapsed": 160
+        },
+        "stage": "chick"
+      },
+      "revision": 1,
+      "schema": 3,
+      "turtle": {
+        "found_trip": "",
+        "stage": "unmet"
+      }
+    },
+    "world_weather": {
+      "episode": 0,
+      "remaining": 298.617539559396,
+      "seed": 1223083250,
+      "weather": "sun"
+    },
+    "yard_crops": {
+      "kind": "",
+      "planted_day": 0,
+      "revision": 0,
+      "schema": 1,
+      "watered_day": -1
+    },
+    "yard_garden": {
+      "receipts": [
+        {
+          "ap": 1,
+          "bed": "starter",
+          "day": 1,
+          "experience": 1,
+          "period": "dinner",
+          "seeds": 1
+        }
+      ],
+      "revision": 1,
+      "schema": 1
+    },
+    "yard_gate_open": true,
+    "yard_inventory": {
+      "corn": 0,
+      "fish": {},
+      "flour": 0,
+      "grass": 0,
+      "ground": [],
+      "held": "",
+      "millet": 0,
+      "next_food_id": 1,
+      "production_revision": 0,
+      "revision": 1,
+      "schema": 5,
+      "wheat": 1
+    }
+  },
+  "pass": true
+}
