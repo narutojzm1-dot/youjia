@@ -1,0 +1,26 @@
+{
+  "source_sha": "310d9a913b893216671baf79a8e2d854a87633e8",
+  "production_source_changed": false,
+  "attempts": [
+    {
+      "folder": "web-ordinary",
+      "invalid": "schema1 production ledger paired with completed schema2 stove and initial clock outside lunch; protection refused",
+      "expected_false_assertion": 2,
+      "actual_production": 0
+    },
+    {
+      "folder": "web-ordinary-valid",
+      "valid_save_but_wrong_expectation": "2 wheat permits one flour because final grain is reserved",
+      "expected_false_assertion": 2,
+      "actual_production": 1,
+      "remaining_wheat": 1
+    },
+    {
+      "folder": "web-ordinary-surplus",
+      "fixture": "schema2; lunch clock170; wheat3; expected two flour and reserve1",
+      "status": "pending"
+    }
+  ],
+  "authority": "existing docs/design/growth-phase-2026-10-10.md line193; growth_materials.gd can_afford retains1 for Inventory.GRAINS",
+  "negative_results_preserved": true
+}

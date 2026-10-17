@@ -1,0 +1,14 @@
+{"revision":0,"seconds":1.007,"wheat":2,"flour":0}
+{"revision":1,"seconds":31.215,"wheat":1,"flour":1}
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+1 !== 2
+
+    at C:\Users\Zengm\AppData\Local\Temp\youjia-round-20261017-1032\ordinary-web.cjs:36:9 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: 1,
+  expected: 2,
+  operator: 'strictEqual',
+  diff: 'simple'
+}

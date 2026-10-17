@@ -1,0 +1,10 @@
+{
+  "source": "32e1b966bc39d1b5f20fcd476b1e847fc7e302b7",
+  "run_case_sha256": "8356b706f79bd560172728900d3cb9a8ce81c3aa96085c4474ec0783be3731bd",
+  "environment": "Windows Git Bash",
+  "exit_code": 0,
+  "real_delete": false,
+  "recording": "xvfb/Godot stubs; not original Linux recording chain",
+  "original_run_case_unmodified": true,
+  "log": "FIXED_ROOT_WINDOWS=C:\\Users\\Zengm\\AppData\\Local\\Temp\\startup749\nPASS expected=21 args= 10\nPASS expected=21 args=. 10\nPASS expected=21 args=.. 10\nPASS expected=21 args=A/B 10\nPASS expected=21 args=/tmp 10\nPASS expected=21 args=.hidden 10\nPASS expected=21 args=A B 10\nPASS expected=21 args=A;rm 10\nPASS expected=22 args=CODEX_32E_696_19900_bad 0\nPASS expected=22 args=CODEX_32E_696_19900_bad -1\nPASS expected=22 args=CODEX_32E_696_19900_bad 12x\nPASS expected=22 args=CODEX_32E_696_19900_bad \nPASS expected=31 args=CODEX_32E_696_19900_unknown 3\nPASS expected=0 args=CODEX_32E_696_19900_own 3\nPASS expected=97 args=CODEX_32E_696_19900_own 3\nPASS expected=33 args=CODEX_32E_696_19900_copy 3\nPASS expected=28 args=CODEX_32E_696_19900_file 3\nCHECKS=17 REAL_DELETE=0 SENTINELS_INTACT=1\nOWN=/tmp/startup749/CODEX_32E_696_19900_own UNKNOWN=/tmp/startup749/CODEX_32E_696_19900_unknown\n"
+}
