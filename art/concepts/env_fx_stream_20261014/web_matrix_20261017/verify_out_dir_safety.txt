@@ -1,0 +1,22 @@
+ok   run_web_matrix.sh existing parent: sentinel kept, nothing removed, one new webmatrix749.20261017-162352.XvyD5hcF, new dir writable (rc=7 stub stop)
+ok   run_web_matrix.sh missing godot: rc=20 before any create, parent unchanged
+ok   run_web_matrix.sh missing chrome: rc=20 before any create, parent unchanged
+ok   run_web_matrix.sh empty arg: rc=21, nothing created
+ok   run_web_matrix.sh symlink parent: rc=22 (both forms), target unchanged
+ok   run_web_matrix.sh nonexistent parent: rc=23, not created
+ok   run_web_matrix.sh ../ parent: canonical new subdir webmatrix749.20261017-162352.LWo3ESJC, sentinel kept (rc=7 stub stop)
+ok   run_web_matrix.sh no arg: new webmatrix749.20261017-162352.jTuMSDfn under TMPDIR (rc=7 stub stop)
+ok   run_web_matrix.sh two args: rc=26, parent unchanged
+ok   run_web_matrix.sh repeat run: 2 separate run dirs, first run's files kept
+ok   web_export_check.sh existing parent: sentinel kept, nothing removed, one new web749.20261017-162352.VGYD9AEO, new dir writable (rc=7 stub stop)
+ok   web_export_check.sh missing godot: rc=20 before any create, parent unchanged
+ok   web_export_check.sh missing chrome: rc=20 before any create, parent unchanged
+ok   web_export_check.sh empty arg: rc=21, nothing created
+ok   web_export_check.sh symlink parent: rc=22 (both forms), target unchanged
+ok   web_export_check.sh nonexistent parent: rc=23, not created
+ok   web_export_check.sh ../ parent: canonical new subdir web749.20261017-162352.1aOMBjQM, sentinel kept (rc=7 stub stop)
+ok   web_export_check.sh no arg: new web749.20261017-162352.PMGh9npj under TMPDIR (rc=7 stub stop)
+ok   web_export_check.sh two args: rc=26, parent unchanged
+ok   web_export_check.sh repeat run: 2 separate run dirs, first run's files kept
+ok   static: no rm -rf on OUT in either entry
+PASS=21 FAIL=0

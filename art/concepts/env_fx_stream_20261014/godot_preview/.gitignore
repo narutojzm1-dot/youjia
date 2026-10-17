@@ -1,0 +1,6 @@
+# 本预览工程打开后 Godot 会在本地生成导入缓存，不提交。
+.godot/
+*.import
+*.uid
+# web_export_check.sh 每次导出前生成的导出身份，不提交。
+build_id.txt

@@ -1,0 +1,70 @@
+{
+ "mp4": "stream_flow_realtime_30fps_40s.mp4",
+ "size": [
+  1280,
+  720
+ ],
+ "frames": 1200,
+ "keyframes": [
+  0,
+  250,
+  500,
+  750,
+  1000
+ ],
+ "static_px": 916141,
+ "mp4_adj_median": 0.004635,
+ "mp4_adj_max": 1.422894,
+ "mp4_adj_argmax": [
+  249,
+  250
+ ],
+ "ref_adj_median": 0.003873,
+ "ref_adj_max": 0.004707,
+ "ref_adj_argmax": [
+  1,
+  2
+ ],
+ "at_keyframes": [
+  {
+   "from": 249,
+   "to": 250,
+   "mp4_adj": 1.422894,
+   "ref_adj": 0.003812,
+   "mp4_static_mean": 1.414903,
+   "mp4_static_max": 15,
+   "mp4_static_px_changed": 767705,
+   "ref_static_max": 0
+  },
+  {
+   "from": 499,
+   "to": 500,
+   "mp4_adj": 0.284727,
+   "ref_adj": 0.003789,
+   "mp4_static_mean": 0.270196,
+   "mp4_static_max": 11,
+   "mp4_static_px_changed": 187207,
+   "ref_static_max": 0
+  },
+  {
+   "from": 749,
+   "to": 750,
+   "mp4_adj": 0.281152,
+   "ref_adj": 0.003601,
+   "mp4_static_mean": 0.267478,
+   "mp4_static_max": 12,
+   "mp4_static_px_changed": 184872,
+   "ref_static_max": 0
+  },
+  {
+   "from": 999,
+   "to": 1000,
+   "mp4_adj": 0.283246,
+   "ref_adj": 0.003517,
+   "mp4_static_mean": 0.269172,
+   "mp4_static_max": 11,
+   "mp4_static_px_changed": 185784,
+   "ref_static_max": 0
+  }
+ ]
+}

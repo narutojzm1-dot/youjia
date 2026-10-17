@@ -1,0 +1,3 @@
+负向自检（只改日志副本，帧不变；用于确认核对脚本会拒绝错误）：
+- phase_jump_in_pause：把暂停中第 90 帧 phase +0.01 → exit 1，ok=false，step_mismatch_count=2
+- missed_rapid_toggle：把隔帧快切的第 271 帧标成仍暂停 → exit 1，ok=false，state_mismatch=[271]，该帧像素差 8≠0

@@ -1,0 +1,61 @@
+WEBMATRIX verdict: PASS 50/50 ok; browser/offline agree=True; fails=[]
+[s0.5_o0.0] S0 0 NL/NZ nonwater 0/0 (strict 0/40, floor-rule 0/0) 0vsTAU 0 half 1778  OK
+  phase 0.0000: nonwater 0 protect 0 outside 0 border±3 0 (strict nonwater/protect 0/0) water-changed 1833 OK web-vs-llvmpipe max 54 (296992 px)
+  phase 1.5708: nonwater 0 protect 0 outside 0 border±3 0 (strict nonwater/protect 0/0) water-changed 1827 OK web-vs-llvmpipe max 60 (296942 px)
+  phase 3.1416: nonwater 0 protect 0 outside 0 border±3 0 (strict nonwater/protect 0/0) water-changed 1831 OK web-vs-llvmpipe max 52 (296945 px)
+  phase 4.7124: nonwater 0 protect 0 outside 0 border±3 0 (strict nonwater/protect 0/0) water-changed 1809 OK web-vs-llvmpipe max 52 (297028 px)
+  phase 6.2832: nonwater 0 protect 0 outside 0 border±3 0 (strict nonwater/protect 0/0) water-changed 1833 OK web-vs-llvmpipe max 54 (296992 px)
+[s0.5_o0.37] S0 0 NL/NZ nonwater 0/0 (strict 1/24, floor-rule 0/0) 0vsTAU 0 half 1775  OK
+  phase 0.0000: nonwater 0 protect 0 outside 0 border±3 0 (strict nonwater/protect 1/1) water-changed 1817 OK web-vs-llvmpipe max 6 (265885 px)
+  phase 1.5708: nonwater 0 protect 0 outside 0 border±3 0 (strict nonwater/protect 1/1) water-changed 1829 OK web-vs-llvmpipe max 6 (265843 px)
+  phase 3.1416: nonwater 0 protect 0 outside 0 border±3 0 (strict nonwater/protect 1/1) water-changed 1823 OK web-vs-llvmpipe max 6 (265839 px)
+  phase 4.7124: nonwater 0 protect 0 outside 0 border±3 0 (strict nonwater/protect 1/1) water-changed 1812 OK web-vs-llvmpipe max 6 (265932 px)
+  phase 6.2832: nonwater 0 protect 0 outside 0 border±3 0 (strict nonwater/protect 1/1) water-changed 1817 OK web-vs-llvmpipe max 6 (265885 px)
+[s0.75_o0.0] S0 0 NL/NZ nonwater 0/0 (strict 1/47, floor-rule 0/19) 0vsTAU 0 half 3980  OK
+  phase 0.0000: nonwater 0 protect 0 outside 0 border±3 0 (strict nonwater/protect 1/1) water-changed 4093 OK web-vs-llvmpipe max 42 (361787 px)
+  phase 1.5708: nonwater 0 protect 0 outside 0 border±3 0 (strict nonwater/protect 1/1) water-changed 4079 OK web-vs-llvmpipe max 56 (361724 px)
+  phase 3.1416: nonwater 0 protect 0 outside 0 border±3 0 (strict nonwater/protect 1/1) water-changed 4092 OK web-vs-llvmpipe max 39 (361746 px)
+  phase 4.7124: nonwater 0 protect 0 outside 0 border±3 0 (strict nonwater/protect 1/1) water-changed 4070 OK web-vs-llvmpipe max 42 (361861 px)
+  phase 6.2832: nonwater 0 protect 0 outside 0 border±3 0 (strict nonwater/protect 1/1) water-changed 4093 OK web-vs-llvmpipe max 42 (361787 px)
+[s0.75_o0.37] S0 0 NL/NZ nonwater 0/0 (strict 1/46, floor-rule 0/0) 0vsTAU 0 half 4006  OK
+  phase 0.0000: nonwater 0 protect 0 outside 0 border±3 0 (strict nonwater/protect 1/1) water-changed 4054 OK web-vs-llvmpipe max 4 (305358 px)
+  phase 1.5708: nonwater 0 protect 0 outside 0 border±3 0 (strict nonwater/protect 1/1) water-changed 4077 OK web-vs-llvmpipe max 4 (305283 px)
+  phase 3.1416: nonwater 0 protect 0 outside 0 border±3 0 (strict nonwater/protect 1/1) water-changed 4088 OK web-vs-llvmpipe max 4 (305324 px)
+  phase 4.7124: nonwater 0 protect 0 outside 0 border±3 0 (strict nonwater/protect 1/1) water-changed 4031 OK web-vs-llvmpipe max 4 (305378 px)
+  phase 6.2832: nonwater 0 protect 0 outside 0 border±3 0 (strict nonwater/protect 1/1) water-changed 4054 OK web-vs-llvmpipe max 4 (305358 px)
+[s1.0_o0.0] S0 0 NL/NZ nonwater 0/0 (strict 0/0, floor-rule 0/0) 0vsTAU 0 half 7077 R-vs-PNG 0 OK
+  phase 0.0000: nonwater 0 protect 0 outside 0 border±3 0 (strict nonwater/protect 0/0) water-changed 7119 OK web-vs-llvmpipe max 1 (844 px)
+  phase 1.5708: nonwater 0 protect 0 outside 0 border±3 0 (strict nonwater/protect 0/0) water-changed 7149 OK web-vs-llvmpipe max 1 (843 px)
+  phase 3.1416: nonwater 0 protect 0 outside 0 border±3 0 (strict nonwater/protect 0/0) water-changed 7158 OK web-vs-llvmpipe max 1 (755 px)
+  phase 4.7124: nonwater 0 protect 0 outside 0 border±3 0 (strict nonwater/protect 0/0) water-changed 7065 OK web-vs-llvmpipe max 1 (768 px)
+  phase 6.2832: nonwater 0 protect 0 outside 0 border±3 0 (strict nonwater/protect 0/0) water-changed 7119 OK web-vs-llvmpipe max 1 (844 px)
+[s1.0_o0.37] S0 0 NL/NZ nonwater 0/0 (strict 1/81, floor-rule 0/0) 0vsTAU 0 half 7121  OK
+  phase 0.0000: nonwater 0 protect 0 outside 0 border±3 0 (strict nonwater/protect 1/1) water-changed 7276 OK web-vs-llvmpipe max 4 (466138 px)
+  phase 1.5708: nonwater 0 protect 0 outside 0 border±3 0 (strict nonwater/protect 1/1) water-changed 7305 OK web-vs-llvmpipe max 4 (466062 px)
+  phase 3.1416: nonwater 0 protect 0 outside 0 border±3 0 (strict nonwater/protect 1/1) water-changed 7311 OK web-vs-llvmpipe max 4 (466090 px)
+  phase 4.7124: nonwater 0 protect 0 outside 0 border±3 0 (strict nonwater/protect 1/1) water-changed 7233 OK web-vs-llvmpipe max 4 (466280 px)
+  phase 6.2832: nonwater 0 protect 0 outside 0 border±3 0 (strict nonwater/protect 1/1) water-changed 7276 OK web-vs-llvmpipe max 4 (466138 px)
+[s1.5_o0.0] S0 0 NL/NZ nonwater 0/0 (strict 1/63, floor-rule 0/20) 0vsTAU 0 half 15993  OK
+  phase 0.0000: nonwater 0 protect 0 outside 0 border±3 0 (strict nonwater/protect 1/1) water-changed 16377 OK web-vs-llvmpipe max 59 (574713 px)
+  phase 1.5708: nonwater 0 protect 0 outside 0 border±3 0 (strict nonwater/protect 1/1) water-changed 16447 OK web-vs-llvmpipe max 52 (574469 px)
+  phase 3.1416: nonwater 0 protect 0 outside 0 border±3 0 (strict nonwater/protect 1/1) water-changed 16453 OK web-vs-llvmpipe max 70 (574475 px)
+  phase 4.7124: nonwater 0 protect 0 outside 0 border±3 0 (strict nonwater/protect 1/1) water-changed 16295 OK web-vs-llvmpipe max 53 (575026 px)
+  phase 6.2832: nonwater 0 protect 0 outside 0 border±3 0 (strict nonwater/protect 1/1) water-changed 16377 OK web-vs-llvmpipe max 59 (574713 px)
+[s1.5_o0.37] S0 0 NL/NZ nonwater 0/0 (strict 1/57, floor-rule 0/0) 0vsTAU 0 half 15991  OK
+  phase 0.0000: nonwater 0 protect 0 outside 0 border±3 0 (strict nonwater/protect 1/1) water-changed 16402 OK web-vs-llvmpipe max 3 (565647 px)
+  phase 1.5708: nonwater 0 protect 0 outside 0 border±3 0 (strict nonwater/protect 1/1) water-changed 16482 OK web-vs-llvmpipe max 3 (565429 px)
+  phase 3.1416: nonwater 0 protect 0 outside 0 border±3 0 (strict nonwater/protect 1/1) water-changed 16473 OK web-vs-llvmpipe max 3 (565428 px)
+  phase 4.7124: nonwater 0 protect 0 outside 0 border±3 0 (strict nonwater/protect 1/1) water-changed 16307 OK web-vs-llvmpipe max 3 (565885 px)
+  phase 6.2832: nonwater 0 protect 0 outside 0 border±3 0 (strict nonwater/protect 1/1) water-changed 16402 OK web-vs-llvmpipe max 3 (565647 px)
+[s2.0_o0.0] S0 0 NL/NZ nonwater 0/0 (strict 1/58, floor-rule 0/0) 0vsTAU 0 half 28464  OK
+  phase 0.0000: nonwater 0 protect 0 outside 0 border±3 0 (strict nonwater/protect 1/1) water-changed 29061 OK web-vs-llvmpipe max 2 (699729 px)
+  phase 1.5708: nonwater 0 protect 0 outside 0 border±3 0 (strict nonwater/protect 1/1) water-changed 29162 OK web-vs-llvmpipe max 2 (699408 px)
+  phase 3.1416: nonwater 0 protect 0 outside 0 border±3 0 (strict nonwater/protect 1/1) water-changed 29215 OK web-vs-llvmpipe max 2 (699230 px)
+  phase 4.7124: nonwater 0 protect 0 outside 0 border±3 0 (strict nonwater/protect 1/1) water-changed 28906 OK web-vs-llvmpipe max 2 (700337 px)
+  phase 6.2832: nonwater 0 protect 0 outside 0 border±3 0 (strict nonwater/protect 1/1) water-changed 29061 OK web-vs-llvmpipe max 2 (699729 px)
+[s2.0_o0.37] S0 0 NL/NZ nonwater 0/0 (strict 1/91, floor-rule 0/0) 0vsTAU 0 half 28444  OK
+  phase 0.0000: nonwater 0 protect 0 outside 0 border±3 0 (strict nonwater/protect 1/1) water-changed 29133 OK web-vs-llvmpipe max 3 (625102 px)
+  phase 1.5708: nonwater 0 protect 0 outside 0 border±3 0 (strict nonwater/protect 1/1) water-changed 29210 OK web-vs-llvmpipe max 3 (624848 px)
+  phase 3.1416: nonwater 0 protect 0 outside 0 border±3 0 (strict nonwater/protect 1/1) water-changed 29265 OK web-vs-llvmpipe max 3 (624779 px)
+  phase 4.7124: nonwater 0 protect 0 outside 0 border±3 0 (strict nonwater/protect 1/1) water-changed 28935 OK web-vs-llvmpipe max 3 (625483 px)
+  phase 6.2832: nonwater 0 protect 0 outside 0 border±3 0 (strict nonwater/protect 1/1) water-changed 29133 OK web-vs-llvmpipe max 3 (625102 px)
