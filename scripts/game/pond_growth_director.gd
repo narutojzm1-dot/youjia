@@ -235,7 +235,7 @@ func tick(delta: float, move: Vector2) -> void:
 		# Presentation timing only; fatigue does not slow material retrieval.
 		if elapsed < 0.8: return
 		leg_target = target
-		var precision := 1.5 if action_id in ["build_stove","mill_wheat"] else 0.0
+		var precision := 1.5 if action_id in ["build_stove","mill_wheat","plant_flowers"] else 0.0
 		if world.get_player().position.distance_to(target) >= (precision if precision > 0 else 14.0) and not world.try_walk_to(target,precision):
 			cancel()
 			return
@@ -283,6 +283,20 @@ func _plan_valid() -> bool:
 
 func _pose_work() -> void:
 	var walker = world.get_player()._sequence_walker
+	if action_id == "plant_flowers":
+		var player = world.get_player()
+		player.facing = 1.0
+		player._gait.face = 1.0
+		walker.scale.x = absf(walker.scale.x)
+		var progress := clampf(work/float(recipe.seconds),0.0,1.0)
+		var entering := smoothstep(0.0,0.14,progress)
+		var exiting := 1.0-smoothstep(0.87,1.0,progress)
+		if bool(TuningStore.get_value("ui.reduced_motion",false)):
+			entering = 1.0
+			exiting = 1.0
+			progress = 0.72
+		walker.hold_gardening_pose(world.to_global(GardenView.CONTACT_POINT),entering*exiting,progress)
+		return
 	if action_id == "build_stove":
 		var player = world.get_player()
 		player.facing = -1.0
@@ -347,6 +361,8 @@ func sync_presentation() -> void:
 	# The existing atomic completion is still the sole material debit.
 	var player = world.get_player()
 	material.visible = stage in ["walking","working"] and player.visible
+	if action_id == "plant_flowers" and stage == "working" and (work >= float(recipe.seconds)*0.48 or bool(TuningStore.get_value("ui.reduced_motion",false))):
+		material.visible = false
 	if action_id == "build_stove" and stage == "working" and (work >= 1.20 or bool(TuningStore.get_value("ui.reduced_motion",false))):
 		# The first full contact sets down the stone. Later cycles press the
 		# same course; no second material or premature confirmed stage is shown.
@@ -355,13 +371,16 @@ func sync_presentation() -> void:
 		material.visible = false
 	if not material.visible: return
 	material.global_position = player.grass_hand_global_position()
-	if stage == "working" and action_id == "mill_wheat" and milling_work_point.is_finite():
+	if stage == "working" and action_id == "plant_flowers":
+		material.global_position = player._sequence_walker.gardening_hand_global_position(0)
+	elif stage == "working" and action_id == "mill_wheat" and milling_work_point.is_finite():
 		material.global_position = material.global_position.lerp(world.to_global(milling_work_point),clampf(work/(_mill_entry_seconds()*0.5),0.0,1.0))
 	elif stage == "working" and action_id != "build_stove" and not bool(TuningStore.get_value("ui.reduced_motion", false)):
 		var ground: Vector2 = player.global_position + Vector2(14.0 * player.grass_hand_facing(), -4.0) * player.picture_depth
 		var placing := clampf(work / float(recipe.seconds) / 0.2, 0.0, 1.0)
 		material.global_position = material.global_position.lerp(ground, placing)
 	material.scale = Vector2(player.grass_hand_facing(),1) * 22.0 * player.picture_depth / material.texture.get_width()
+	if action_id == "plant_flowers" and stage == "working": material.scale *= 0.6
 	material.modulate = player.modulate
 	material.z_index = player.z_index + 1
 

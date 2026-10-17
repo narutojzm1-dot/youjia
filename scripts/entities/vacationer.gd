@@ -224,6 +224,8 @@ func clear_idle_rest() -> void:
 
 func grass_hand_global_position() -> Vector2:
 	if sequence_walker_enabled and is_instance_valid(_sequence_walker):
+		if _sequence_walker.gardening_pose_active:
+			return _sequence_walker.gardening_hand_global_position()
 		if _sequence_walker.milling_pose_active:
 			return _sequence_walker.milling_hand_global_position()
 		var palm := Vector2(242, 253)
