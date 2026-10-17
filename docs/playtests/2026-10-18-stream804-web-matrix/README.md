@@ -9,3 +9,5 @@
 失败必须分开读：首次Leader手动Windows启动器漏建uploads目录，页面50个像素组合本身通过但上传失败，顶层ok=false；不是作者候选像素失败。第二轮补独占uploads目录后上传和页面顶层通过；启动器最初调用系统Python缺numpy，随后使用bundled Python对同一份原件真实复算通过，没有重录或覆盖失败。失败日志与两份身份保留。原作者此前40/50→50/50的floor/lo-hi边界问题仍留原PR，本轮不改标。
 
 此结论只解除完整隔离DPR1 Web矩阵的Leader复核等待。仍是Draft美术候选，未生产挂接/未合入；DPR2/3、实体手机、生产Host天气/昼夜/照片/切换和性能增量未验收，#749保持开放。旧方向“没问题”回执6194352528不当作后续所有范围验收，也无需重复索取同版方向批准。
+
+Raw Windows text artifacts retain their original bytes under raw-bytes/*.gz; raw-byte-records.json records the decoded hashes. Readable JSON and driver copies use LF. No original result or failure was deleted.
