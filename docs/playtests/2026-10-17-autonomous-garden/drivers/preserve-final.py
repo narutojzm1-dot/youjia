@@ -22,7 +22,7 @@ with zipfile.ZipFile(archive,'w',compression=zipfile.ZIP_DEFLATED,compresslevel=
 with zipfile.ZipFile(archive) as z:
  for item in files:assert hashlib.sha256(z.read(item['path'])).hexdigest()==item['sha256']
 before=git('rev-parse','--verify','refs/stash')
-subprocess.run(['git','stash','push','--include-untracked','-m','CODEX-LEAD migration garden700 generated imports 20261018'],cwd=root,check=True)
+subprocess.run(['git','-c','core.autocrlf=false','stash','push','--include-untracked','-m','CODEX-LEAD migration garden700 generated imports 20261018'],cwd=root,check=True)
 after=git('rev-parse','--verify','refs/stash');assert after!=before
 anchor='refs/codex-migration/garden-generated-20261018';git('update-ref',anchor,after)
 assert not git('status','--porcelain=v1','--untracked-files=all'),'Unpreserved workspace changes remain'

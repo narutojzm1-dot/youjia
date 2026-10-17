@@ -136,8 +136,8 @@
   },
   {
     "path": "drivers/preserve-final.py",
-    "bytes": 5060,
-    "sha256": "88adf57da8b91c24731e0e2b13d4f565e6c98efc54c86b2b1b9cdc0602410394"
+    "bytes": 5087,
+    "sha256": "def5caf82a88230c9a04839e9493a4eeeede97124ec8b0f4302f51b23a2db72c"
   },
   {
     "path": "drivers/push-evidence.py",
@@ -163,6 +163,11 @@
     "path": "drivers/source-web-validate.py",
     "bytes": 2458,
     "sha256": "842f39ba0b479729cf82e853b8ffb72c57ce979396269d3e788f96659fccf3c0"
+  },
+  {
+    "path": "drivers/sync-final-wording.py",
+    "bytes": 1413,
+    "sha256": "6e6aadfba119be57dcc0f15f3b63e83acf7126ab1224e16806d1048d1bb60946"
   },
   {
     "path": "drivers/tail-run-index.json",
