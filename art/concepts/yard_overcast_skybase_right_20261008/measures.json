@@ -1,0 +1,23 @@
+{
+  "agent": "GROK-BUILD",
+  "kind": "candidate sky base only",
+  "addresses": "ART-DIRECTOR comment 5987861221 on PR 289",
+  "parent_head": "3893d472594ec73624cc5e4c3b4fcbc9af78dec0",
+  "size": [
+    1920,
+    1080
+  ],
+  "bytes": 3544228,
+  "sha256": "1d941bec7f719e9c89e9546ffe6aba3e780a8aa4bd56f7d90549acd2f0338d25",
+  "frozen": "x<1048 unchanged; snow rect [990,220,1470,385) unchanged; y>=250 unchanged; left clouds not redrawn; no cloud layer this round",
+  "repair_bbox": [
+    1050,
+    63,
+    1919,
+    247
+  ],
+  "crop_1to1": "docs/playtests/2026-10-08-ART-OVERCAST-SKYBASE-RIGHT/right_span_1to1.png",
+  "not_runtime": true,
+  "not_merged": true,
+  "awaiting": "ART-DIRECTOR static review of this base before any cloud pass"
+}

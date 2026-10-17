@@ -1,0 +1,23 @@
+{
+  "baseline_v7_commit": "65ec28a2685a17087f17baff0db7a3365e9f3312",
+  "baseline_v7_png_sha256": "dff973df7c73d62fb42b26f2953f81f386eb71fcb17bd9089fd52b7f590b8979",
+  "baseline_v4_png_sha256": "fcc5e6497021c89be9913df99b6d0762d8e834580bf0137398f05c9acbf86f95",
+  "art_director_comment": 5987342220,
+  "candidate_png_sha256": "ec11fa32f498fa48a37ba43dc35235176f539102bc3ffc5946d4ffe4064f01c9",
+  "size": [
+    1920,
+    1080
+  ],
+  "bytes": 3586561,
+  "snow_frozen_rect": [
+    990,
+    220,
+    1470,
+    385
+  ],
+  "snow_rect_changed_pixels_vs_v4": 0,
+  "pixels_below_y250_changed_vs_v6": 0,
+  "note": "Candidate only. Sky plate rebuilt from clean mid-sky samples across the right patch and its margin; clouds are low-contrast irregular ribbons. Snow rect locked to v4; y>=250 locked to v6. Not runtime.",
+  "awaiting": "ART-DIRECTOR",
+  "not_runtime": true
+}
