@@ -1,11 +1,11 @@
 {
   "schema": "youjia.release/v1",
-  "sourceCommit": "15fc174aa45f08917f4ca4e32b733ba81ff36873",
+  "sourceCommit": "73c41fa714d4045d48d799c3dff7142dc43df595",
   "engine": "4.7.2.stable.official.ed1daf0bf",
-  "entry": "game-15fc174",
-  "publishedAt": "2026-10-17T04:21:45Z",
+  "entry": "game-73c41fa",
+  "publishedAt": "2026-10-17T16:12:32Z",
   "storageModules": {
-    "entry": "save-15fc174",
+    "entry": "save-73c41fa",
     "sha256": {
       "bridge.mjs": "ef18687554fdc0d745c1d18d4d091e959cc78559da0d61d6a093e562ff9bbc91",
       "budgets.mjs": "52984153977dcafd1d2682e848f1999f091d0966e17d46e902de76f5735a7018",
@@ -16,7 +16,7 @@
       "legacy_v5.mjs": "8e7f4ad2d87aab77ac05361e4f46060476e933aa079ae94301998d08d4599621",
       "lifecycle.mjs": "1cfaebb9a8745e2dc3e4f694ef475f250640870938f04160be1a5c9acd62935d",
       "source_decode.mjs": "411f3bc784cb32a07f32eed5fc7d88f71b59a667cc0d68a50fe13c55bfdba18a",
-      "store.mjs": "4997cbdda2263251ba6a0f1cea80196a78eb42815694c82365a7c09979e82854"
+      "store.mjs": "17dd3dfd20949b60cd82362265861f33d9e0e15062c1df007ad745c6fe2984f9"
     }
   },
   "engineAssets": {
@@ -37,7 +37,7 @@
     ]
   },
   "loaderModules": {
-    "entry": "boot-15fc174",
+    "entry": "boot-73c41fa",
     "sha256": {
       "download_assets.mjs": "fdaa3ea937b6ee2ed76111c6daa5dad673c52c29f3f5f9a142dcbfdc203492a9",
       "sha256_stream.mjs": "c26338f465688208706256f83aef6a510f01b671c6e679ae1a0d9ab7797af85e"
