@@ -6,6 +6,7 @@ const Contract := preload("res://scripts/exploration/exploration_contract.gd")
 const MAX_REVISION := 2147483647
 const SPOTS := {"house_edge": Vector2(290, 575), "fence_edge": Vector2(655, 465), "pond_path": Vector2(490, 516)}
 const NUDGE := Vector2(16, 8)
+const DECOR_FINDS := [ExplorationRoutes.FIND_STONE,ExplorationRoutes.FIND_PINE_CONE,ExplorationRoutes.FIND_FEATHER]
 
 static func empty() -> Dictionary:
 	return {"schema": 1, "revision": 0, "places": {}}
@@ -21,7 +22,7 @@ static func read(snapshot: Dictionary) -> Dictionary:
 		if spot not in SPOTS: return {}
 		var entry: Variant = raw.places[spot]
 		if not entry is Dictionary or entry.size() != 3 or not entry.has_all(["find_id", "dx", "dy"]): return {}
-		if not entry.find_id is String or not ExplorationRoutes.is_formal_find(entry.find_id): return {}
+		if not entry.find_id is String or entry.find_id not in DECOR_FINDS: return {}
 		if not offset_valid(entry): return {}
 		used[entry.find_id] = int(used.get(entry.find_id, 0)) + 1
 	var owned: Variant = snapshot.get("keepsakes", {})
@@ -91,7 +92,7 @@ static func transition(snapshot: Dictionary, revision: int, action: String, spot
 			if details.size() != 3 or not details.has_all(["find_id", "dx", "dy"]) or not offset_valid(details): return {"error": "DECOR_INVALID"}
 			if decor.places.has(spot): return {"error": "DECOR_OCCUPIED"}
 			var counts := available(snapshot)
-			if not details.find_id is String or details.find_id not in ExplorationRoutes.FINDS: return {"error": "DECOR_INVALID"}
+			if not details.find_id is String or details.find_id not in DECOR_FINDS: return {"error": "DECOR_INVALID"}
 			if int(counts.get(details.find_id, 0)) <= 0: return {"error": "DECOR_EMPTY"}
 			decor.places[spot] = details.duplicate(true)
 		"move":

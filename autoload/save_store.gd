@@ -289,6 +289,21 @@ func get_yard_stove() -> Dictionary:
 	return preload("res://scripts/game/yard_stove.gd").read(_data)
 
 
+func get_yard_garden() -> Dictionary:
+	if preload("res://scripts/game/growth_budget.gd").budget(_data,"dinner").has("error"): return {}
+	return preload("res://scripts/game/yard_garden.gd").read(_data)
+
+
+func request_garden_growth(expected: Dictionary, proposal: Dictionary, config: Dictionary) -> String:
+	var frozen_budget := expected.duplicate(true)
+	var frozen_proposal := proposal.duplicate(true)
+	var frozen_config := config.duplicate(true)
+	return request_intent("growth", func(current: Dictionary) -> Variant:
+		var result := preload("res://scripts/game/growth_budget.gd").complete_garden(current,frozen_budget,frozen_proposal,frozen_config)
+		if result.has("error"): return CoordinatorType.IntentRejection.new(result.error)
+		return result.candidate)
+
+
 func request_stove_growth(expected: Dictionary, stage: int, proposal: Dictionary, config: Dictionary) -> String:
 	var frozen_budget := expected.duplicate(true)
 	var frozen_proposal := proposal.duplicate(true)

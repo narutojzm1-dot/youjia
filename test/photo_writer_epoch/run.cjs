@@ -9,19 +9,19 @@ fs.mkdirSync(out, {recursive:true});
 // Exercise both actual released writer epochs in separate owned origins.
 if (!process.env.PHOTO_OLD_VERSION) {
   const {spawnSync}=require('node:child_process');const children=[];
-  for(const version of [1,2]){
+  for(const version of [1,2,3]){
     const dir=path.join(out,'old-v'+version);
     const run=spawnSync(process.execPath,[__filename,dir],{env:{...process.env,PHOTO_OLD_VERSION:String(version)},stdio:'inherit'});
     if(run.status!==0)process.exit(run.status||1);
     children.push(JSON.parse(fs.readFileSync(path.join(dir,'result.json'),'utf8')));
   }
-  const result={status:'PASS',oldVersions:[1,2],checks:children.flatMap((r,i)=>r.checks.map(c=>'v'+(i+1)+': '+c)),failures:children.flatMap(r=>r.failures)};
-  fs.writeFileSync(path.join(out,'result.json'),JSON.stringify(result,null,2)+'\n');console.log('PHOTO_WRITER_EPOCH3 '+JSON.stringify(result));process.exit(0);
+  const result={status:'PASS',oldVersions:[1,2,3],checks:children.flatMap((r,i)=>r.checks.map(c=>'v'+(i+1)+': '+c)),failures:children.flatMap(r=>r.failures)};
+  fs.writeFileSync(path.join(out,'result.json'),JSON.stringify(result,null,2)+'\n');console.log('PHOTO_WRITER_EPOCH4 '+JSON.stringify(result));process.exit(0);
 }
-const oldVersion=Number(process.env.PHOTO_OLD_VERSION);assert([1,2].includes(oldVersion));
-const old = path.join(__dirname, oldVersion===1?'old-70de87a':'old-c8d994f');
+const oldVersion=Number(process.env.PHOTO_OLD_VERSION);assert([1,2,3].includes(oldVersion));
+const old = path.join(__dirname, {1:'old-70de87a',2:'old-c8d994f',3:'old-15fc174'}[oldVersion]);
 const oldHash = crypto.createHash('sha256').update(fs.readFileSync(path.join(old,'store.mjs'))).digest('hex');
-assert.equal(oldHash, oldVersion===1?'2193b4397b8662a8ebc754dc4468e4d62964d209b4e1d0f0924a2ec81b409cbe':'dbfafb071e6d7e08c51c96374232147fb28d3ea011f5ee749de4f319c2198521');
+assert.equal(oldHash, {1:'2193b4397b8662a8ebc754dc4468e4d62964d209b4e1d0f0924a2ec81b409cbe',2:'dbfafb071e6d7e08c51c96374232147fb28d3ea011f5ee749de4f319c2198521',3:'4997cbdda2263251ba6a0f1cea80196a78eb42815694c82365a7c09979e82854'}[oldVersion]);
 const current = process.env.CURRENT_STORE_DIR || path.join(root,'web/save');
 const files = new Map([['/', [Buffer.from('<!doctype html><title>Owned photo writer regression</title>'), 'text/html']]]);
 for (const [prefix, dir] of [['current',current],['old',old]]) {
@@ -80,7 +80,8 @@ let context;
     const reset=async()=>request(indexedDB.deleteDatabase(namespace));
     const count=s=>Object.keys(JSON.parse(s.current.payload_bytes).photo_moments||{}).length;
     const payload=JSON.stringify({version:5,album:['fish_first_catch'],photo_moments:{fish_first_catch:photo},
-      untouched:'raw Unicode 灶台',integer_text:'9007199254740993',growth_production:{schema:2,revision:0}});
+      untouched:'raw Unicode 灶台 花畦',integer_text:'9007199254740993',growth_production:{schema:3,revision:0,receipts:[]},
+      keepsakes:{'formal.find.flower_seeds':1},yard_garden:{schema:1,revision:1,receipts:[{bed:'starter',day:1,period:'lunch',ap:1,seeds:1,experience:1}]}});
     check(oldClean.before_records===1 && oldClean.after_old_album_clean===0 && !oldClean.old_asset_available,
       'actual old-PCK forensic fixture records resource rejection');
     async function scenario(name,run){
@@ -96,7 +97,7 @@ let context;
     await scenario('upgrade fences live and reopened old writers',async()=>{
       const oldStore=await older.openStore(),parent=await oldStore.initialize(payload);
       const before=await rawRead();const s=await newer.openStore();const after=await rawRead();
-      check(after.version===3 && equal(before.rows,after.rows),'v'+oldVersion+' to v3 preserves every raw record exactly');
+      check(after.version===4 && equal(before.rows,after.rows),'v'+oldVersion+' to v4 preserves every raw record exactly');
       const bad=JSON.parse(payload);bad.photo_moments=oldClean.cleaned;
       let rejected=false;try{await oldStore.submit(await older.envelope(JSON.stringify(bad),parent));}catch(e){rejected=e.name==='InvalidStateError';}
       check(rejected,'live old connection is closed and cannot overwrite photos');oldStore.close();
@@ -151,9 +152,9 @@ let context;
       check(error==='AbortError' && equal(before,await rawRead()),'missing records aborts upgrade without replacement or version change');
     });
     await scenario('future DB remains untouched',async()=>{
-      const db=await rawOpen(namespace,4,d=>d.createObjectStore('records'));await rawPut(db,{current:{future:'retain'}});db.close();
+      const db=await rawOpen(namespace,5,d=>d.createObjectStore('records'));await rawPut(db,{current:{future:'retain'}});db.close();
       const before=await rawRead();let error;try{const n=await newer.openStore();n.close();}catch(e){error=e.name;}
-      check(error==='VersionError' && equal(before,await rawRead()),'v4 refuses v3 client without changing data');
+      check(error==='VersionError' && equal(before,await rawRead()),'v5 refuses v4 client without changing data');
     });
     // Leave a valid upgraded save for a real browser process restart below.
     await reset();const final=await older.openStore();await final.initialize(payload);final.close();
