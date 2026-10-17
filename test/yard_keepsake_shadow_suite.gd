@@ -31,8 +31,9 @@ func run() -> void:
 	check(bounds == Rect2(-14, -12, 28, 24), "keepsake bounds unchanged for decor occlusion and photo framing")
 	var available := has_static(script, "keepsake_shadow")
 	check(available, "YardPropVisual exposes keepsake_shadow(find_id)")
-	check(ExplorationRoutes.FINDS.size() == 3, "three formal finds to cover")
-	for find_id: String in ExplorationRoutes.FINDS:
+	var placeable: Array = preload("res://scripts/inventory/yard_decor.gd").DECOR_FINDS
+	check(placeable.size() == 3 and ExplorationRoutes.FIND_FLOWER_SEEDS not in placeable, "three placeable keepsakes; flower seeds are a material")
+	for find_id: String in placeable:
 		var tag := find_id.get_slice(".", 2)
 		check(KeepsakeArt.texture(find_id) != null, tag + " has its runtime texture")
 		var shadow: Dictionary = script.call("keepsake_shadow", find_id) if available else {}
