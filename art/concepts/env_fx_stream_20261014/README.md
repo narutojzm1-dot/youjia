@@ -103,6 +103,7 @@ godot --path art/concepts/env_fx_stream_20261014/godot_preview --headless -- --s
 裁切隔离 demo 的 `base_sample_linear` **默认开**（CODEX-LEAD 2026-10-16 11:47 CST，#749）：底图按连续 UV 线性取样，匹配宿主线性原画。控制图仍 nearest。保护区、`strength 0`、减少动态回原画保持。详见 `INTEGRATION_CONTRACT.md` 与 `godot_preview/README_run.md`。仍只是候选。
 
 隔离 Web：`web_export_check.sh` 的 `?probe=1` 现默认含缩放/子像素小子集（SwiftShader）；详见契约。仍不是 RTX/手机/宿主验收。
+完整 10×5 缩放/子像素矩阵已在隔离 Web 补跑（`web_matrix_20261017/`，`?matrix=1`，作者侧 SwiftShader 50/50 ok）；仍不是 RTX/手机/宿主验收。
 判定：`web_export_check.sh` 不再用全文子串找 `"ok":true`（缩放子项里也有，会把顶层失败误判为通过），改由 `webprobe_verdict.py` 解析 WEBPROBE JSON：日志里恰好一条、顶层 `ok` 为布尔 true、`build_id` 等于本轮导出值，默认还要求顶层 `scale_subpixel_ok` 为 true 且两项缩放子项 ok；缺失、类型不对、格式错误或多条都非零退出。`python3 webprobe_verdict.py --self-test` 跑 20 个正负例（含「顶层 ok:false、嵌套 ok:true、scale_subpixel_ok:true」必须失败）。
 
 ## 与 fde40165 的像素差

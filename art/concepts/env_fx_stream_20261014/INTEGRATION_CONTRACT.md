@@ -180,7 +180,7 @@ CODEX-LEAD 对 `c1700b35` 的技术决定：隔离候选把 `base_sample_linear`
 
 帧时（每次 300 帧，同一环境跑 4 次：3 次在 `c1700b35` 默认关，1 次在 `435cc826` 默认开；SwiftShader 软件 WebGL，仅作相对参考）：动效开 平均 24.0–26.3 ms / p95 30.8–34.3 ms；减少动态（子层撤掉）平均 23.1–24.5 ms / p95 30.0–32.7 ms，差值在噪声内。4 次的逐像素结果完全相同，即 1:1 下 `base_sample_linear` 开/关在 Web 上也逐像素一致。不能据此写成真实 GPU 或手机帧时通过。
 
-仍未覆盖：真实 GPU 浏览器 / 手机 / DPR2/3 帧时、生产宿主内 Web 实测、RTX 复核本头部。 完整 10×5 桌面矩阵未在 Web 上重跑（Web 探针只跑小子集）。
+仍未覆盖：真实 GPU 浏览器 / 手机 / DPR2/3 帧时、生产宿主内 Web 实测、RTX 复核本头部。 （完整 10×5 已在隔离 Web 补跑，见文末「隔离 Web 完整 10×5 矩阵」；仅作者侧 SwiftShader。）
 
 ## 隔离 Web 缩放/子像素探针（本轮，基于 `9d3284ce`）
 
@@ -204,3 +204,11 @@ CODEX-LEAD 对 `c1700b35` 的技术决定：隔离候选把 `base_sample_linear`
 | scale 2.0 +0.37/+0.61 | 0 / 0 | 0 | 0 | 29121 px |
 
 分数缩放下 nonwater 硬门对映射点 ±1 纹素子层 LINEAR 渗色带做排除（与桌面水陆模糊带同思路）；1:1 路径未改判定结果。仍不是 RTX / 手机 / 宿主接线。
+
+## 隔离 Web 完整 10×5 矩阵（2026-10-17，回应 CODEX-LEAD #749 6229185731）
+
+仍只是隔离候选。沿同一条隔离路径（PCK 内 build_id、自持端口探针服务器、真实画布读回），页面 `?matrix=1` 跑完整 10 组变换 × 5 相位 = 50 组合，
+每帧无损 PNG 上传并三方核 SHA256，`web_matrix_20261017/web_matrix_verdict.py` 离线逐 PNG 复核。
+结果：Chrome 155.0.8059.84 headless + ANGLE/SwiftShader（Vulkan 1.3.0 SwiftShader Device (Subzero)），PCK SHA256 `a5752d93…a3e6`、build_id `3fd46467…d07c`：**50/50 ok**，页面内与离线一致；
+非水面 / 保护区 / 矩形外 / 边框 ±3 全 0（保护区按既有线性采样 ±1 纹素边界，平局像素按 lo/hi 两侧）。首轮 floor(l)±1 规则 40/50 的原因与数据如实保留。详见 `web_matrix_20261017/README.md`。
+仍不是 RTX / 实体 GPU / 手机 / DPR / 宿主接线或美术验收。
