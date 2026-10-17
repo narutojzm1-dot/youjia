@@ -1,0 +1,13 @@
+from pathlib import Path
+p=Path(__file__).parent;s=(p/'garden-web.cjs').read_text(encoding='utf8')
+s=s.replace("const dir=path.resolve(__dirname,process.argv[2]||'web-actual'),root=path.join(__dirname,'web-versioned'),source='1ab59c1113dd0a1c7d55ca9e34cf3f89ab152814';", "const dir=path.resolve(__dirname,process.argv[2]||'web-public'),root=path.join(__dirname,'web-versioned'),source=process.argv[4],publicURL=process.argv[3];assert(/^[a-f0-9]{40}$/.test(source)&&/^https:/.test(publicURL));")
+s=s.replace('const result={source,','const result={source,actual_public_site:true,publicURL,')
+s=s.replace("path.join(__dirname,'fixture.json')","path.join(__dirname,'fixture-public-old-photo.json')")
+s=s.replace("await new Promise(r=>server.listen(0,'127.0.0.1',r));url='http://127.0.0.1:'+server.address().port+'/';",'url=publicURL;')
+s=s.replace("new URL('old3/store.mjs',url)","new URL('save-15fc174/store.mjs',url)")
+s=s.replace('server.close();','if(!publicURL)server.close();')
+s=s.replace("assert.deepEqual(result.final.meal_ledger,initial.meal_ledger);","assert.deepEqual(result.final.meal_ledger,initial.meal_ledger);samePhoto(result.final.photo_moments.fish_first_catch,initial.photo_moments.fish_first_catch);result.actualOld15fcPhotoRetained=true;result.photoComparison={keysAndArraysExact:true,numericAbsoluteTolerance:1e-12,reason:'Godot JSON formatting rounds two original transform components by 7.04e-18; raw database upgrade rows checked byte-exact separately'};")
+s=s.replace("assert.deepEqual(result.reopened.growth_production,result.final.growth_production);","assert.deepEqual(result.reopened.growth_production,result.final.growth_production);samePhoto(result.reopened.photo_moments.fish_first_catch,initial.photo_moments.fish_first_catch);")
+s=s.replace('async function save()',"function samePhoto(a,b){if(typeof a==='number'&&typeof b==='number'){assert(Math.abs(a-b)<=1e-12);return;}if(a&&b&&typeof a==='object'&&typeof b==='object'){assert.deepEqual(Object.keys(a).sort(),Object.keys(b).sort());for(const k of Object.keys(a))samePhoto(a[k],b[k]);return;}assert.deepEqual(a,b);}\nasync function save()")
+(p/'garden-public.cjs').write_text(s,encoding='utf8')
+print('Prepared direct public driver; actual source and URL required')

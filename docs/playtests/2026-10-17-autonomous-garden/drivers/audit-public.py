@@ -26,7 +26,11 @@ paths={'index.html':None,'game-release.json':None,manifest['entry']+'.pck':confi
 for name,digest in manifest['engineAssets']['sha256'].items():paths[name]=digest
 for key in ['storageModules','loaderModules']:
     for name,digest in manifest[key]['sha256'].items():paths[manifest[key]['entry']+'/'+name]=digest
-result={'source':source,'gh_pages_commit':sha,'recorded_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'full_files':[],'public_base':base,'fixed_base':fixed}
+repo=Path(r'C:/Users/jiangzengming/.codex/worktrees/growth-garden-700/youjia')
+for name in ['store.mjs','budgets.mjs','legacy_seal.mjs']:
+    raw=subprocess.check_output(['git','show',source+':test/photo_writer_epoch/old-15fc174/'+name],cwd=repo)
+    paths['save-15fc174/'+name]=hashlib.sha256(raw).hexdigest()
+result={'source':source,'gh_pages_commit':sha,'recorded_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'full_files':[],'public_base':base,'fixed_base':fixed,'prior_writer3_modules':'save-15fc174; exact hashes from frozen raw Git blobs in source commit test/photo_writer_epoch/old-15fc174'}
 for name,expected in paths.items():
     p=out/'public'/name;p.parent.mkdir(parents=True,exist_ok=True)
     size,digest,_=download(base+name,p)
