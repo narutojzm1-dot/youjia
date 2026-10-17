@@ -1,0 +1,24 @@
+# Agent-ID: GROK-BUILD — run_case.sh 真实 Godot 小样（3 帧）与旧无标记目录拒绝；2026-10-17T00:22:38Z
+## 1) 新建 e2e_1792196558
+done e2e_1792196558 -> /tmp/startup749/e2e_1792196558
+exit=0
+f.wav
+f00000000.png
+f00000001.png
+f00000002.png
+startup749-run_case-workdir v1
+name=e2e_1792196558
+uid=1000
+dev_ino=65040:2171681
+## 2) 同名重跑（真实清理自有目录后重录）
+run_case.sh: removing own previous workdir /tmp/startup749/e2e_1792196558
+done e2e_1792196558 -> /tmp/startup749/e2e_1792196558
+exit=0
+4
+## 3) 旧版脚本留下的无标记目录 A_default（应 REJECT 31，不删）
+REJECT 31 unknown directory (no .run_case_owner), refuse delete: /tmp/startup749/A_default
+run_case.sh: unknown directory (no .run_case_owner), refuse delete: /tmp/startup749/A_default
+exit=31
+frames
+log.txt
+proj

@@ -1,0 +1,43 @@
+PASS usage: one arg (exit 20, rm=0, xvfb=0)
+PASS empty name (exit 21, rm=0, xvfb=0)
+PASS dot name (exit 21, rm=0, xvfb=0)
+PASS dotdot name (exit 21, rm=0, xvfb=0)
+PASS path with slash (exit 21, rm=0, xvfb=0)
+PASS absolute path (exit 21, rm=0, xvfb=0)
+PASS dotfile (exit 21, rm=0, xvfb=0)
+PASS space in name (exit 21, rm=0, xvfb=0)
+PASS semicolon (exit 21, rm=0, xvfb=0)
+PASS zero frames (exit 22, rm=0, xvfb=0)
+PASS negative frames (exit 22, rm=0, xvfb=0)
+PASS non-integer frames (exit 22, rm=0, xvfb=0)
+PASS empty frames (exit 22, rm=0, xvfb=0)
+PASS missing godot_preview (exit 23, rm=0, xvfb=0)
+PASS missing xvfb-run (exit 24, rm=0, xvfb=0)
+PASS missing godot (exit 25, rm=0, xvfb=0)
+PASS non-executable godot (exit 25, rm=0, xvfb=0)
+PASS param/precheck rejects created no case dir
+PASS symlink work dir (exit 27, rm=0, xvfb=0)
+PASS symlink target sentinel intact
+PASS work path is a regular file (exit 28, rm=0, xvfb=0)
+PASS regular file intact
+PASS unknown same-UID dir without marker (exit 31, rm=0, xvfb=0)
+PASS unknown dir sentinel intact
+PASS create fresh own workdir (exit 0, rm=0, xvfb=1)
+PASS own workdir has marker with matching dev:inode
+PASS own workdir has proj copy and override.cfg
+PASS marker is a symlink (exit 32, rm=0, xvfb=0)
+PASS markerlink sentinel intact
+PASS marker is a directory (exit 32, rm=0, xvfb=0)
+PASS copied marker (dev:inode mismatch) (exit 33, rm=0, xvfb=0)
+PASS copied-marker sentinel intact
+PASS marker name mismatch (exit 33, rm=0, xvfb=0)
+PASS marker magic mismatch (exit 33, rm=0, xvfb=0)
+PASS bad-magic sentinel intact
+PASS own workdir reaches delete (rm stub) (exit 97, rm=1, xvfb=0)
+PASS rm stub target is exactly own workdir
+PASS own sentinel still there under rm stub
+PASS own workdir real cleanup + recreate (exit 0, rm=0, xvfb=1)
+PASS old sentinel removed after real cleanup
+PASS new marker token differs
+PASS all entries created by this run were removed
+verify_run_case_safety: PASS=42 FAIL=0

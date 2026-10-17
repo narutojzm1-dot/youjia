@@ -1,0 +1,38 @@
+{
+  "source_sha": "310d9a913b893216671baf79a8e2d854a87633e8",
+  "video_bytes": 2703311,
+  "decoded_frames": 739,
+  "last_ms": 75408.0,
+  "sample_seconds": [
+    18.0,
+    22.0,
+    26.0,
+    30.0,
+    63.0,
+    67.0,
+    71.0
+  ],
+  "gif_excerpts": [
+    {
+      "start": 22,
+      "duration": 2.4
+    },
+    {
+      "start": 66,
+      "duration": 2.4
+    }
+  ],
+  "gif_rate": 5,
+  "speed": 1,
+  "crop": [
+    490,
+    305,
+    650,
+    465
+  ],
+  "real_canvas": true,
+  "not_hardware_performance": true,
+  "seek_failure": "OpenCV random VP9 seek lacked references; full sequential decode used",
+  "display_scale": 2,
+  "not_native_resolution": true
+}

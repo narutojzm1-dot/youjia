@@ -1,0 +1,20 @@
+FIXED_ROOT_WINDOWS=C:\Users\Zengm\AppData\Local\Temp\startup749
+PASS expected=21 args= 10
+PASS expected=21 args=. 10
+PASS expected=21 args=.. 10
+PASS expected=21 args=A/B 10
+PASS expected=21 args=/tmp 10
+PASS expected=21 args=.hidden 10
+PASS expected=21 args=A B 10
+PASS expected=21 args=A;rm 10
+PASS expected=22 args=CODEX_32E_696_19900_bad 0
+PASS expected=22 args=CODEX_32E_696_19900_bad -1
+PASS expected=22 args=CODEX_32E_696_19900_bad 12x
+PASS expected=22 args=CODEX_32E_696_19900_bad 
+PASS expected=31 args=CODEX_32E_696_19900_unknown 3
+PASS expected=0 args=CODEX_32E_696_19900_own 3
+PASS expected=97 args=CODEX_32E_696_19900_own 3
+PASS expected=33 args=CODEX_32E_696_19900_copy 3
+PASS expected=28 args=CODEX_32E_696_19900_file 3
+CHECKS=17 REAL_DELETE=0 SENTINELS_INTACT=1
+OWN=/tmp/startup749/CODEX_32E_696_19900_own UNKNOWN=/tmp/startup749/CODEX_32E_696_19900_unknown

@@ -1,0 +1,26 @@
+{
+  "source": "15fc174aa45f08917f4ca4e32b733ba81ff36873",
+  "original_name": "mill-continuous.webm",
+  "original_bytes": 2971009,
+  "original_sha256": "ca26b0da0ae8a9bfedcc995b74dfd9f83f42ca13630a9d886932fbe552bbd9a8",
+  "unchanged_video_bytes": true,
+  "parts": [
+    {
+      "name": "mill-continuous.webm.part001",
+      "bytes": 1048576,
+      "sha256": "befd57cbdb31b05fe88eb33ddd45ebfe4f2f41c0666443d75b879e2885e79e4b"
+    },
+    {
+      "name": "mill-continuous.webm.part002",
+      "bytes": 1048576,
+      "sha256": "e230958db909bad1e81985e365a72ea49a92070afaa5d436b075793c057f0877"
+    },
+    {
+      "name": "mill-continuous.webm.part003",
+      "bytes": 873857,
+      "sha256": "487a21653c1d72d26155fef721e08a5dea150abab79eea04b97df78ac484def7"
+    }
+  ],
+  "reason": "create_blob300s timeout; fixed blob HEAD404; preserve complete original by lossless binary parts",
+  "original_full_file_also_in_migration": true
+}
